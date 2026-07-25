@@ -83,27 +83,29 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by
+lemma a_3 : a 3 = 11 := by
   delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 7 := by
+lemma a_4 : a 4 = 4 := by
   delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
 @[category test, AMS 11]
-lemma a_six : a 6 = 13 := by
+lemma a_5 : a 5 = 7 := by
   delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
 @[category test, AMS 11]
-lemma a_seven : a 7 = 31 := by
+lemma a_6 : a 6 = 13 := by
+  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+
+@[category test, AMS 11]
+lemma a_7 : a 7 = 31 := by
   delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
 
 
 /--
-Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
-The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
-
-The total value of the continued fraction $C_n$.
+A372761: $a(n)$ is the integer part of the continued fraction $n - \frac{n}{n-1 - \frac{n}{n-2 - \dots - \frac{n}{2}}}$.
+Every prime appears exactly once in the sequence.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

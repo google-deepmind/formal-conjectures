@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$.
 
 *References:*
-- [A28859](https://oeis.org/A28859)
+- [A028859](https://oeis.org/A028859)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -43,13 +43,19 @@ set_option linter.unusedVariables false
 
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 8 := by native_decide
+lemma a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 22 := by native_decide
+lemma a_1 : a 1 = 3 := by native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 60 := by native_decide
+lemma a_2 : a 2 = 8 := by native_decide
+
+@[category test, AMS 11]
+lemma a_3 : a 3 = 22 := by native_decide
+
+@[category test, AMS 11]
+lemma a_4 : a 4 = 60 := by native_decide
 
 
 /--

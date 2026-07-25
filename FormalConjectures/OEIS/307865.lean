@@ -58,19 +58,19 @@ def IsAbsoluteEulerPseudoprime (m : ℕ) : Prop :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 0 := by rfl
+lemma a_0 : a 0 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by rfl
+lemma a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by rfl
+lemma a_2 : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by rfl
+lemma a_3 : a 3 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 0 := by rfl
+lemma a_4 : a 4 = 0 := by rfl
 
 
 /--

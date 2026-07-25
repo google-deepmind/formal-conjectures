@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A278070
 
 a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
 This is equivalent to the combinatorial sum:
@@ -48,19 +48,19 @@ def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by rfl
+lemma a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 2 := by rfl
+lemma a_1 : a 1 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 11 := by rfl
+lemma a_2 : a 2 = 11 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 106 := by rfl
+lemma a_3 : a 3 = 106 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 1457 := by rfl
+lemma a_4 : a 4 = 1457 := by rfl
 
 
 /--

@@ -49,27 +49,27 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 /-- Definition of a Carmichael number $n$: a composite number s.t.
 $b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$. -/
-def is_carmichael_number (n : ℕ) : Prop :=
+def IsCarmichaelNumber (n : ℕ) : Prop :=
   (¬ Nat.Prime n ∧ n > 1) ∧ (∀ b : ℕ, Nat.gcd b n = 1 → b ^ (n - 1) ≡ 1 [MOD n])
 
 /-- Helper definition for "composite number" -/
-def is_composite (n : ℕ) : Prop := ¬ Nat.Prime n ∧ n > 1
+def IsComposite (n : ℕ) : Prop := ¬ Nat.Prime n ∧ n > 1
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by delta a; norm_num [bernoulli]
+lemma a_1 : a 1 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 1 := by delta a; norm_num [bernoulli]
+lemma a_2 : a 2 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 1 := by delta a; norm_num [bernoulli]
+lemma a_3 : a 3 = 1 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 16 := by delta a; norm_num [bernoulli]
+lemma a_4 : a 4 = 16 := by delta a; norm_num [bernoulli]
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 1 := by delta a; norm_num [bernoulli]
+lemma a_5 : a 5 = 1 := by delta a; norm_num [bernoulli]
 
 
 /--
@@ -83,7 +83,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/309132.wip.lean#L353"]
 theorem carmichael_iff_squarefree_a :
-    ∀ (n : ℕ), (is_composite n ∧ Squarefree (a n)) ↔ is_carmichael_number n := by
+    ∀ (n : ℕ), (IsComposite n ∧ Squarefree (a n)) ↔ IsCarmichaelNumber n := by
     sorry
 
 end OeisA309132

@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A382590
 
 Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
@@ -40,12 +40,12 @@ Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
 $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 -/
-def A382590_pair : ℕ → ℤ × ℤ
+def ab_pair : ℕ → ℤ × ℤ
 | 0 => (1, 1)
 | 1 => (2, 1)
 | n + 2 =>
-  let (a_n_plus_1, b_n_plus_1) := A382590_pair (n + 1)
-  let (a_n, b_n) := A382590_pair n
+  let (a_n_plus_1, b_n_plus_1) := ab_pair (n + 1)
+  let (a_n, b_n) := ab_pair n
   (a_n_plus_1 * b_n + a_n * b_n_plus_1, a_n_plus_1 * b_n - a_n * b_n_plus_1)
 
 /--
@@ -54,7 +54,7 @@ $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 starting with $a(0) = b(0) = b(1) = 1$ and a(1) = 2.
 The terms are in $\mathbb{Z}$ due to negative values.
 -/
-def a (n : ℕ) : ℤ := (A382590_pair n).fst
+def a (n : ℕ) : ℤ := (ab_pair n).fst
 
 open Nat
 
@@ -74,25 +74,24 @@ def kth_prime_factor (k : ℕ) (n : ℤ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by rfl
+lemma a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 2 := by rfl
+lemma a_1 : a 1 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 3 := by rfl
+lemma a_2 : a 2 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 5 := by rfl
+lemma a_3 : a 3 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 8 := by rfl
+lemma a_4 : a 4 = 8 := by rfl
 
 
 /--
-Helper function for a, computing the pair $(a(n), b(n))$ such that:
-$a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
-$b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
+A382590: $a(n)$ where $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$.
+For any $k \ge 2$, the sequence of $k$-th prime factors of $a(n)$ is ultimately periodic.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

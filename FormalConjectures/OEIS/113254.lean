@@ -52,19 +52,19 @@ def a (n : ℕ) : ℤ :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = -1 := by rfl
+lemma a_0 : a 0 = -1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 4 := by rfl
+lemma a_1 : a 1 = 4 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 176 := by rfl
+lemma a_2 : a 2 = 176 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3136 := by rfl
+lemma a_3 : a 3 = 3136 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = -15616 := by rfl
+lemma a_4 : a 4 = -15616 := by rfl
 
 
 /--

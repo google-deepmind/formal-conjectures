@@ -39,7 +39,7 @@ open List Finset Nat
 A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 -/
-def A306424_condition (k : ℕ) : Prop :=
+def Condition (k : ℕ) : Prop :=
   -- The bases $b$ range over $3 \le b \le k-1$, expressed as $3 \le b$ and $b < k$.
   ∀ b : ℕ, 3 ≤ b ∧ b < k → ((Nat.digits b k).toFinset.card) ≤ 2
 
@@ -47,23 +47,23 @@ def A306424_condition (k : ℕ) : Prop :=
 The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 -/
-noncomputable def a (n : ℕ) : ℕ := n.nth A306424_condition
+noncomputable def a (n : ℕ) : ℕ := n.nth Condition
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by sorry
+lemma a_1 : a 1 = 1 := by sorry
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by sorry
+lemma a_2 : a 2 = 2 := by sorry
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by sorry
+lemma a_3 : a 3 = 3 := by sorry
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by sorry
+lemma a_4 : a 4 = 4 := by sorry
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 5 := by sorry
+lemma a_5 : a 5 = 5 := by sorry
 
 
 /--
@@ -77,7 +77,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/306424.wip.lean#L276"]
-theorem forty_three_is_max : A306424_condition 43 ∧ ∀ k : ℕ, 43 < k → ¬A306424_condition k := by
+theorem forty_three_is_max : Condition 43 ∧ ∀ k : ℕ, 43 < k → ¬Condition k := by
     sorry
 
 end OeisA306424

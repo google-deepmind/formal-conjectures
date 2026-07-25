@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A363347
 
 Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
 For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
@@ -72,26 +72,24 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_3 : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_4 : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_5 : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_six : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_6 : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_seven : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_7 : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
 
 
 /--
-Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
-For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
-$$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
-The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
+A363347: $a(n) = n - \frac{n}{n-1 - \frac{n}{n-2 - \dots - \frac{n}{2}}}$.
+For every prime $p \equiv 1 \text{ or } 9 \pmod{10}$, there exists $n$ such that $a(n) = p$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

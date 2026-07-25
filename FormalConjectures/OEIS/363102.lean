@@ -62,19 +62,19 @@ def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 7 := by rfl
+lemma a_3 : a 3 = 7 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 7 := by rfl
+lemma a_4 : a 4 = 7 := by rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 23 := by rfl
+lemma a_5 : a 5 = 23 := by rfl
 
 @[category test, AMS 11]
-lemma a_six : a 6 = 17 := by rfl
+lemma a_6 : a 6 = 17 := by rfl
 
 @[category test, AMS 11]
-lemma a_seven : a 7 = 47 := by rfl
+lemma a_7 : a 7 = 47 := by rfl
 
 
 /--

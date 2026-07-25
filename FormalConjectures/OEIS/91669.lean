@@ -24,7 +24,7 @@ The sequence $a(n)$ is composed of natural numbers, thus we define it
 as a function $\mathbb{N} \to \mathbb{N}$.
 
 *References:*
-- [A91669](https://oeis.org/A91669)
+- [A091669](https://oeis.org/A091669)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -54,19 +54,19 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by rfl
+lemma a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 1 := by rfl
+lemma a_2 : a 2 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 2 := by rfl
+lemma a_3 : a 3 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 7 := by rfl
+lemma a_4 : a 4 = 7 := by rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 42 := by rfl
+lemma a_5 : a 5 = 42 := by rfl
 
 
 /--

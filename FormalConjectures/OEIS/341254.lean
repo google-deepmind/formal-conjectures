@@ -50,7 +50,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 4 := by
+lemma a_1 : a 1 = 4 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -71,7 +71,7 @@ lemma a_one : a 1 = 4 := by
   rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 8 := by
+lemma a_2 : a 2 = 8 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -91,7 +91,7 @@ lemma a_two : a 2 = 8 := by
   rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 12 := by
+lemma a_3 : a 3 = 12 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -111,7 +111,7 @@ lemma a_three : a 3 = 12 := by
   rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 16 := by
+lemma a_4 : a 4 = 16 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -131,7 +131,7 @@ lemma a_four : a 4 = 16 := by
   rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 21 := by
+lemma a_5 : a 5 = 21 := by
   unfold a r_const
   dsimp only
   push_cast
@@ -152,9 +152,8 @@ lemma a_five : a 5 = 21 := by
 
 
 /--
-The constant $r = (2 + \sqrt{5})/2$.
-
-The constant $r^2$.
+A341254: $a(n) = \lfloor n r^2 \rfloor - n$, where $r = (2+\sqrt{5})/2$.
+It is conjectured that $(1/4) < n r^2 - a(n) < 3$ for $n \ge 1$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

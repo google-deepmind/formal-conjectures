@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A340737
 
 a: Numerators of a sequence of fractions converging to $e$.
 $$a(1) = 3, a(2) = 5$$
@@ -29,7 +29,7 @@ $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
 *References:*
 - [A340737](https://oeis.org/A340737)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
-- [A340738](https://oeis.org/A340738)
+- [b](https://oeis.org/b)
 -/
 
 namespace OeisA340737
@@ -75,7 +75,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 termination_by n
 
 /--
-A340738: Denominators of a sequence of fractions converging to $e$.
+b: Denominators of a sequence of fractions converging to $e$.
 This sequence is defined by the same recurrence relation as a but with
 initial values $b(1)=1, b(2)=2$.
 $$b(1) = 1, b(2) = 2$$
@@ -84,7 +84,7 @@ $$b(n) = \begin{cases} \left(\frac{n+2}{2}\right) b(n-1) - b(n-2) -
 \left(\frac{n-2}{2}\right) b(n-3)
 & \text{if } n \text{ is even} \\ 2 b(n-1) + n b(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
-noncomputable def A340738 (n : ℕ) : ℕ :=
+noncomputable def b (n : ℕ) : ℕ :=
   match n with
   | 0 => 0
   | 1 => 1
@@ -92,9 +92,9 @@ noncomputable def A340738 (n : ℕ) : ℕ :=
   | n' + 3 => -- n $\ge$ 3
     let n := n' + 3
 
-    let b_nm1 := A340738 (n - 1)
-    let b_nm2 := A340738 (n - 2)
-    let b_nm3 := A340738 (n - 3)
+    let b_nm1 := b (n - 1)
+    let b_nm2 := b (n - 2)
+    let b_nm3 := b (n - 3)
 
     if n % 2 = 0 then
       -- n is even, n $\ge$ 4
@@ -111,19 +111,19 @@ termination_by n
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 3 := by unfold a; rfl
+lemma a_1 : a 1 = 3 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 5 := by unfold a; rfl
+lemma a_2 : a 2 = 5 := by unfold a; rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 19 := by unfold a; unfold a; unfold a; simp
+lemma a_3 : a 3 = 19 := by unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
+lemma a_4 : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
+lemma a_5 : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
 
 /--
@@ -139,7 +139,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/340737.wip.lean#L438"]
 theorem tendsto_exp_one :
-    Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (A340738 n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
+    Filter.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) Filter.atTop (nhds (Real.exp 1)) := by
     sorry
 
 end OeisA340737

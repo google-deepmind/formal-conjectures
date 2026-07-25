@@ -24,7 +24,7 @@ A000108 Catalan numbers: C(n) = binomial(2n,n)/(n+1).
 The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
 
 *References:*
-- [A108](https://oeis.org/A108)
+- [A000108](https://oeis.org/A000108)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -57,16 +57,19 @@ noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by rfl
+lemma a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by rfl
+lemma a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 5 := by rfl
+lemma a_2 : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 14 := by rfl
+lemma a_3 : a 3 = 5 := by rfl
+
+@[category test, AMS 11]
+lemma a_4 : a 4 = 14 := by rfl
 
 
 /--

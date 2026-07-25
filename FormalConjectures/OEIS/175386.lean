@@ -54,19 +54,19 @@ def S (n : ℕ) : ℚ :=
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by native_decide
+lemma a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by native_decide
+lemma a_2 : a 2 = 2 := by native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 6 := by native_decide
+lemma a_3 : a 3 = 6 := by native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by native_decide
+lemma a_4 : a 4 = 4 := by native_decide
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 5 := by native_decide
+lemma a_5 : a 5 = 5 := by native_decide
 
 
 /--

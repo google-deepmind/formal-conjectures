@@ -43,7 +43,7 @@ open BigOperators Matrix Nat
 A005259: The auxiliary sequence used for the Hankel matrix, defined as
 $$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
 -/
-def A005259' (n : ℕ) : ℕ :=
+def apery_like (n : ℕ) : ℕ :=
   Finset.sum (Finset.range (n + 1)) fun k =>
     (n.choose k)^2 * ((Nat.choose (n + k) k))^2
 
@@ -52,32 +52,35 @@ A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
 $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
 The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   let dim : Type := Fin (n + 1)
   -- Matrix entries are lifted to ℤ for determinant calculation
   let M : Matrix dim dim ℤ :=
-    Matrix.of fun i j => (A005259' (i.val + j.val) : ℤ)
+    Matrix.of fun i j => (apery_like (i.val + j.val) : ℤ)
   -- The sequence is known to be non-negative integers (nonn).
   M.det.natAbs
 
 open PowerSeries
 
 /-- The power series $A(x/3) = \sum_{n=0}^\infty \frac{a(n)}{3^n} x^n$ over ℚ. -/
-noncomputable def OGF_A_scaled : PowerSeries ℚ :=
+noncomputable def ogf_a_scaled : PowerSeries ℚ :=
   PowerSeries.mk fun n => (a n : ℚ) / (3 ^ n : ℚ)
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by sorry
+lemma a_0 : a 0 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 161856 := by sorry
+lemma a_1 : a 1 = 48 := by native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 39002646528 := by sorry
+lemma a_2 : a 2 = 161856 := by native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 674708032182398976 := by sorry
+lemma a_3 : a 3 = 39002646528 := by native_decide
+
+@[category test, AMS 11]
+lemma a_4 : a 4 = 674708032182398976 := by native_decide
 
 
 /--
@@ -93,7 +96,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/228143.wip.lean#L698"]
 theorem exists_power_series_eighth_pow_eq : ∃ C : PowerSeries ℤ,
-    (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = OGF_A_scaled := by
+    (PowerSeries.map (Int.castRingHom ℚ)) (C ^ 8) = ogf_a_scaled := by
     sorry
 
 end OeisA228143

@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A289411
 
 a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
 $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
@@ -48,19 +48,19 @@ def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 0 := by native_decide
+lemma a_0 : a 0 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by native_decide
+lemma a_1 : a 1 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 0 := by native_decide
+lemma a_2 : a 2 = 0 := by native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 1 := by native_decide
+lemma a_3 : a 3 = 1 := by native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 0 := by native_decide
+lemma a_4 : a 4 = 0 := by native_decide
 
 
 /--

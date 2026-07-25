@@ -78,19 +78,19 @@ def oeis_floor_term (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by rfl
+lemma a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 3 := by rfl
+lemma a_1 : a 1 = 3 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 6 := by rfl
+lemma a_2 : a 2 = 6 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 13 := by rfl
+lemma a_3 : a 3 = 13 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 26 := by rfl
+lemma a_4 : a 4 = 26 := by rfl
 
 
 /--

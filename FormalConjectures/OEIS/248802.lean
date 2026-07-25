@@ -37,31 +37,31 @@ A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
 def a (n : ℕ) : ℕ := (2 ^ (2 ^ n + 2) + 3).minFac
 
 /-- An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67. -/
-def covered_by_C1 (k : ℕ) : Prop := ∃ m : ℕ, k = 10 * m + 2
+def CoveredByC1 (k : ℕ) : Prop := ∃ m : ℕ, k = 10 * m + 2
 
 /-- An index k is covered by Conjecture 2 if k = 36m + 16 for some m >= 0,
 and m is not 1 mod 5, predicting a(k)=271. -/
-def covered_by_C2 (k : ℕ) : Prop := ∃ m : ℕ, k = 36 * m + 16 ∧ m % 5 ≠ 1
+def CoveredByC2 (k : ℕ) : Prop := ∃ m : ℕ, k = 36 * m + 16 ∧ m % 5 ≠ 1
 
 /-- An index k is covered by Conjecture 3 if k = 84m + 22 for some m >= 0,
 and m is not 0 mod 5, predicting a(k)=523. -/
-def covered_by_C3 (k : ℕ) : Prop := ∃ m : ℕ, k = 84 * m + 22 ∧ m % 5 ≠ 0
+def CoveredByC3 (k : ℕ) : Prop := ∃ m : ℕ, k = 84 * m + 22 ∧ m % 5 ≠ 0
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 11 := by native_decide
+lemma a_0 : a 0 = 11 := by native_decide
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 19 := by native_decide
+lemma a_1 : a 1 = 19 := by native_decide
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 67 := by native_decide
+lemma a_2 : a 2 = 67 := by native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 13 := by native_decide
+lemma a_3 : a 3 = 13 := by native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 262147 := by native_decide
+lemma a_4 : a 4 = 262147 := by native_decide
 
 
 /--
@@ -87,8 +87,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/248802.wip.lean#L982"]
 theorem a_fifty_eight_mul_add_twenty_six_eq (n : ℕ) :
-    (¬covered_by_C1 (58 * n + 26) ∧ ¬covered_by_C2 (58 * n + 26) ∧
-    ¬covered_by_C3 (58 * n + 26)) → a (58 * n + 26) = 1399 := by
+    (¬CoveredByC1 (58 * n + 26) ∧ ¬CoveredByC2 (58 * n + 26) ∧
+    ¬CoveredByC3 (58 * n + 26)) → a (58 * n + 26) = 1399 := by
     sorry
 
 end OeisA248802

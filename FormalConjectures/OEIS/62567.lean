@@ -25,7 +25,7 @@ A062567: First multiple of $n$ whose reverse is also divisible by $n$,
 or 0 if no such multiple exists.
 
 *References:*
-- [A62567](https://oeis.org/A62567)
+- [A062567](https://oeis.org/A062567)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -81,31 +81,29 @@ lemma reverse_nat_of_lt (k : ℕ) (hk0 : k ≠ 0) (hk10 : k < 10) : reverse_nat 
   rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by
+lemma a_1 : a 1 = 1 := by
   apply a_eq_self 1 (by omega) (by rw [reverse_nat_of_lt 1 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by
+lemma a_2 : a 2 = 2 := by
   apply a_eq_self 2 (by omega) (by rw [reverse_nat_of_lt 2 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by
+lemma a_3 : a 3 = 3 := by
   apply a_eq_self 3 (by omega) (by rw [reverse_nat_of_lt 3 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by
+lemma a_4 : a 4 = 4 := by
   apply a_eq_self 4 (by omega) (by rw [reverse_nat_of_lt 4 (by decide) (by decide)])
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 5 := by
+lemma a_5 : a 5 = 5 := by
   apply a_eq_self 5 (by omega) (by rw [reverse_nat_of_lt 5 (by decide) (by decide)])
 
 
 /--
-The number whose digits in base 10 are $n$'s digits reversed.
-
-A062567: First multiple of $n$ whose reverse is also divisible by $n$,
-or 0 if no such multiple exists.
+A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if no such multiple exists.
+$a(3^n) = 10^{3^{n-2}} - 1$ for $n \in \{2, 3, 4\}$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

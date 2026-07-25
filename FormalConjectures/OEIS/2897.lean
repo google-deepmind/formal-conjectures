@@ -27,7 +27,7 @@ This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finite
 We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
 
 *References:*
-- [A2897](https://oeis.org/A2897)
+- [A002897](https://oeis.org/A002897)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -72,19 +72,19 @@ noncomputable def P_n (n : ℕ) : P :=
 
 
 @[category test, AMS 11]
-lemma a_zero : a 0 = 1 := by rfl
+lemma a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 8 := by rfl
+lemma a_1 : a 1 = 8 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 216 := by rfl
+lemma a_2 : a 2 = 216 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 8000 := by rfl
+lemma a_3 : a 3 = 8000 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 343000 := by rfl
+lemma a_4 : a 4 = 343000 := by rfl
 
 
 /--

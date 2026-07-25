@@ -39,7 +39,7 @@ open BigOperators LinearRecurrence
 The sequence $b_n$ such that $A227582(n) = b_{n-1}$ for $n \ge 1$.
 This is the 0-indexed solution to the linear recurrence in $\mathbb{Z}$.
 -/
-def A227582_base (n : ℕ) : ℤ :=
+def base_seq (n : ℕ) : ℤ :=
   let order := 7
   -- Coefficients $c_i$ for the recurrence $u_{n+7} = \sum_{i=0}^6 c_i u_{n+i}$.
   -- This corresponds to the OEIS signature $(2, -1, 0, 0, 1, -2, 1)$ which means $c_i = s_{7-i}$.
@@ -55,22 +55,25 @@ The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-ind
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if 0 < n then
-    (A227582_base (n - 1)).toNat
+    (base_seq (n - 1)).toNat
   else
     0
 
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 7 := by dsimp [a]; native_decide
+lemma a_1 : a 1 = 2 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 14 := by dsimp [a]; native_decide
+lemma a_2 : a 2 = 7 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 23 := by dsimp [a]; native_decide
+lemma a_3 : a 3 = 14 := by dsimp [a]; native_decide
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 35 := by dsimp [a]; native_decide
+lemma a_4 : a 4 = 23 := by dsimp [a]; native_decide
+
+@[category test, AMS 11]
+lemma a_5 : a 5 = 35 := by dsimp [a]; native_decide
 
 
 /--

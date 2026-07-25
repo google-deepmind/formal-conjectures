@@ -72,19 +72,19 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 0 := by sorry
+lemma a_1 : a 1 = 0 := by sorry
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 1 := by sorry
+lemma a_2 : a 2 = 1 := by sorry
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by sorry
+lemma a_3 : a 3 = 3 := by sorry
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by sorry
+lemma a_4 : a 4 = 4 := by sorry
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 6 := by sorry
+lemma a_5 : a 5 = 6 := by sorry
 
 
 /--

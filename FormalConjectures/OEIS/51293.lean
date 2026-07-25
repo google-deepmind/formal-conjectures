@@ -31,7 +31,7 @@ The maximal magnitude of these periodic products is achieved when the order of t
 which bounds the error term magnitude strictly by $2 \cdot 2^{n/2}$.
 
 *References:*
-- [A51293](https://oeis.org/A51293)
+- [A051293](https://oeis.org/A051293)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
@@ -41,22 +41,6 @@ namespace OeisA51293
 open Polynomial
 
 open scoped Topology
-
-/-
-Copyright 2025 Google LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--/
 
 open Finset Nat Real Filter Asymptotics
 
@@ -73,19 +57,19 @@ noncomputable def a_real (n : ℕ) : ℝ := a n
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by rfl
+lemma a_1 : a 1 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by rfl
+lemma a_2 : a 2 = 2 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 5 := by rfl
+lemma a_3 : a 3 = 5 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 8 := by rfl
+lemma a_4 : a 4 = 8 := by rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 15 := by rfl
+lemma a_5 : a 5 = 15 := by rfl
 
 
 /--

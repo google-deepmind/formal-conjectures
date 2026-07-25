@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A258667
 
 The inner sum of the formula used in a:
 $$\sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j}$$
@@ -48,7 +48,7 @@ open BigOperators Nat Int Real Asymptotics Filter
 The inner sum of the formula used in a:
 $$\sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j}$$
 -/
-private def A258667_inner_sum (n k : ℕ) : ℤ :=
+private def inner_sum (n k : ℕ) : ℤ :=
   let L : ℕ := max 0 (k + 5 - n)
   let U : ℕ := min k 4
   Finset.sum (Finset.Icc L U) fun j =>
@@ -75,7 +75,7 @@ def a (n : ℕ) : ℕ :=
     -- Nat.factorial (n - 1 - k) is safe since h implies n > 5 and k < n.
     let fac_term : ℤ := ofNat (Nat.factorial (n - 1 - k))
 
-    sign * fac_term * A258667_inner_sum n k
+    sign * fac_term * inner_sum n k
   ).natAbs
 
 noncomputable def nat_fac_to_real (n : ℕ) : ℝ := (Nat.factorial n : ℝ)
@@ -89,7 +89,7 @@ noncomputable def menage_denom_term (n k : ℕ) : ℝ :=
 
 /-- The infinite series part of the asymptotic expansion:
 $\sum_{k \ge 1} \frac{(-1)^k}{k!(n-1)_k}$. -/
-noncomputable def A258667_asymptotic_sum_part (n : ℕ) : ℝ :=
+noncomputable def asymptotic_sum_part (n : ℕ) : ℝ :=
   -- The sum is effectively finite since (n-1)_k is 0 for k >= n.
   Finset.sum (Finset.range n) fun k =>
     if k = 0 then 0
@@ -100,29 +100,29 @@ noncomputable def A258667_asymptotic_sum_part (n : ℕ) : ℝ :=
       else ((-1 : ℝ) ^ k) / denom
 
 /-- The proposed asymptotic expression for a(n). -/
-noncomputable def A258667_asymptotic_term (n : ℕ) : ℝ :=
+noncomputable def asymptotic_term (n : ℕ) : ℝ :=
   if n ≤ 2 then 0 -- Avoid division by zero, irrelevant for n -> infinity
   else
     let n_R : ℝ := n
     let n_fac_R := nat_fac_to_real n
     let prefactor : ℝ := exp (-2) * (n_fac_R / (n_R - 2))
-    prefactor * (1 + A258667_asymptotic_sum_part n)
+    prefactor * (1 + asymptotic_sum_part n)
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 0 := by rfl
+lemma a_1 : a 1 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 0 := by rfl
+lemma a_2 : a 2 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 0 := by rfl
+lemma a_3 : a 3 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 0 := by rfl
+lemma a_4 : a 4 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 0 := by rfl
+lemma a_5 : a 5 = 0 := by rfl
 
 
 /--
@@ -144,7 +144,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/258667.wip.lean#L427"]
 theorem a_is_equivalent_asymptotic_term :
-    IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) A258667_asymptotic_term := by
+    IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) asymptotic_term := by
     sorry
 
 end OeisA258667

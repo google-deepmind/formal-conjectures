@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with a
+# Conjectures associated with A282779
 
 a: Period of cubes mod $n$.
 The $n$-th term $a(n)$ is the smallest positive integer $T$ such that
@@ -76,18 +76,18 @@ theorem period_of_power_mod_eq (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
 
 
 @[category test, AMS 11]
-lemma a_one : a 1 = 1 := by exact period_of_power_mod_eq 3 1 (by decide) (by decide)
+lemma a_1 : a 1 = 1 := by exact period_of_power_mod_eq 3 1 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_two : a 2 = 2 := by exact period_of_power_mod_eq 3 2 (by decide) (by decide)
+lemma a_2 : a 2 = 2 := by exact period_of_power_mod_eq 3 2 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_three : a 3 = 3 := by exact period_of_power_mod_eq 3 3 (by decide) (by decide)
+lemma a_3 : a 3 = 3 := by exact period_of_power_mod_eq 3 3 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 4 := by exact period_of_power_mod_eq 3 4 (by decide) (by decide)
+lemma a_4 : a 4 = 4 := by exact period_of_power_mod_eq 3 4 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 5 := by exact period_of_power_mod_eq 3 5 (by decide) (by decide)
+lemma a_5 : a 5 = 5 := by exact period_of_power_mod_eq 3 5 (by decide) (by decide)
 
 end OeisA282779

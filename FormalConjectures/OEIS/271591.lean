@@ -60,7 +60,7 @@ def a (n : ℕ) : ℕ :=
     let j_smsb : ℕ := T.log2 - 1
     if T.testBit j_smsb then 1 else 0
 
-def is_maximal_run (v : ℕ) (n L : ℕ) : Prop :=
+def IsMaximalRun (v : ℕ) (n L : ℕ) : Prop :=
   n ≥ 2 ∧ L ≥ 1 ∧
   -- The run consists of L consecutive $v$'s starting at n
   (∀ i : ℕ, i < L → a (n + i) = v) ∧
@@ -71,19 +71,19 @@ def is_maximal_run (v : ℕ) (n L : ℕ) : Prop :=
 
 
 @[category test, AMS 11]
-lemma a_four : a 4 = 0 := by rfl
+lemma a_4 : a 4 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_five : a 5 = 0 := by rfl
+lemma a_5 : a 5 = 0 := by rfl
 
 @[category test, AMS 11]
-lemma a_six : a 6 = 1 := by rfl
+lemma a_6 : a 6 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_seven : a 7 = 1 := by rfl
+lemma a_7 : a 7 = 1 := by rfl
 
 @[category test, AMS 11]
-lemma a_eight : a 8 = 1 := by rfl
+lemma a_8 : a 8 = 1 := by rfl
 
 
 /--
@@ -97,8 +97,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/271591.wip.lean#L497"]
-theorem maximal_run_lengths : (∀ n L, is_maximal_run 0 n L → (L = 4 ∨ L = 5)) ∧
-    (∀ n L, is_maximal_run 1 n L → (L = 3 ∨ L = 4)) := by
+theorem maximal_run_lengths : (∀ n L, IsMaximalRun 0 n L → (L = 4 ∨ L = 5)) ∧
+    (∀ n L, IsMaximalRun 1 n L → (L = 3 ∨ L = 4)) := by
     sorry
 
 end OeisA271591
