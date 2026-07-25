@@ -21,7 +21,6 @@ import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-- [Z. Zhang, A Structured Counterexample to WOWII 59](https://github.com/QDKStorm/wowii59-counterexample)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture59
