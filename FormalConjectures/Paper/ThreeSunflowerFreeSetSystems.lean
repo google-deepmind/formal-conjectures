@@ -14,23 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
+import FormalConjecturesUtil
 
 /-!
 # Three-sunflower-free set systems with bounded pairwise intersections
 
-*References:*
-* [Three-sunflower-free set systems with bounded pairwise intersections]
-  (https://doi.org/10.5281/zenodo.20693260), by *Cody Mitchell* (2026).
-* [sunflower-lean: paper-v2](https://doi.org/10.5281/zenodo.20693191),
-  companion Lean 4 formalization, release `paper-v2`.
-
-For `ℓ > t ≥ 1`, the paper studies the maximum size `M₃(ℓ,t)` of a
-family of distinct `ℓ`-sets with pairwise intersections of size at most `t`
+For $\ell > t \ge 1$, the paper studies the maximum size $M_3(\ell,t)$ of a
+family of distinct $\ell$-sets with pairwise intersections of size at most $t$
 and no three-sunflower. The empty-core case is included, so three pairwise
-disjoint sets form a three-sunflower. The variant `I₃(ℓ,t)` imposes the
+disjoint sets form a three-sunflower. The variant $I_3(\ell,t)$ imposes the
 additional condition that the family is intersecting.
+
+This is a bounded-intersection slice of the classical sunflower problem
+[ErRa60, Erdos20] and its finite-ground-set asymptotic form [Erdos857]. The
+$t=1$ rigidity result is related to Deza's constant-intersection theorem
+[Deza74], while the $t=2$ lower construction uses orthogoval projective planes
+[CIJSSS24]. Restricted-intersection threshold work also includes [Chi24].
+
+*References:*
+* [Mit26] C. Mitchell, *Three-sunflower-free set systems with bounded pairwise
+  intersections*, 2026,
+  [doi:10.5281/zenodo.20693260](https://doi.org/10.5281/zenodo.20693260).
+* [Mit26Lean] C. Mitchell,
+  [*sunflower-lean: paper-v2*](https://doi.org/10.5281/zenodo.20693191),
+  companion Lean 4 formalization, release `paper-v2`, 2026.
+* [ErRa60] P. Erdős and R. Rado, *Intersection theorems for systems of sets*,
+  J. London Math. Soc. 35 (1960), 85–90,
+  [doi:10.1112/jlms/s1-35.1.85](https://doi.org/10.1112/jlms/s1-35.1.85).
+* [Deza74] M. Deza, *Solution d'un problème de Erdős–Lovász*,
+  J. Combin. Theory Ser. B 16 (1974), 166–167,
+  [doi:10.1016/0095-8956(74)90059-8](https://doi.org/10.1016/0095-8956(74)90059-8).
+* [Chi24] J. Chizewer, *On restricted intersections and the sunflower problem*,
+  Graphs Combin. 40 (2024), article 31,
+  [arXiv:2307.01374](https://arxiv.org/abs/2307.01374).
+* [CIJSSS24] C. J. Colbourn, A. Ingalls, J. Jedwab, B. Saaltink, A. Smith,
+  and B. Stevens, *Sets of mutually orthogoval projective and affine planes*,
+  Combinatorial Theory 4 (2024), no. 1, article 8,
+  [doi:10.5070/C64163845](https://doi.org/10.5070/C64163845).
+* [Erdos20] [Erdős Problem 20](https://www.erdosproblems.com/20).
+* [Erdos857] [Erdős Problem 857](https://www.erdosproblems.com/857).
 -/
 
 open Filter
@@ -39,66 +61,63 @@ namespace ThreeSunflowerFreeSetSystems
 
 variable {α : Type}
 
-/-- A family is `ℓ`-uniform if every member is finite of cardinality `ℓ`. -/
+/-- A family is $\ell$-uniform if every member is finite of cardinality $\ell$. -/
 def IsUniform (ℓ : ℕ) (F : Set (Set α)) : Prop :=
   ∀ A ∈ F, A.Finite ∧ A.ncard = ℓ
 
-/-- Every two distinct members of `F` have intersection size at most `t`. -/
+/-- Every two distinct members of $F$ have intersection size at most $t$. -/
 def HasPairwiseIntersectionsAtMost (t : ℕ) (F : Set (Set α)) : Prop :=
   ∀ A ∈ F, ∀ B ∈ F, A ≠ B → (A ∩ B).ncard ≤ t
 
-/-- The family `F` contains no three-member sunflower. -/
+/-- The family $F$ contains no three-member sunflower. -/
 def ThreeSunflowerFree (F : Set (Set α)) : Prop :=
   ¬ ∃ S : Set (Set α), S ⊆ F ∧ S.ncard = 3 ∧ IsSunflower S
 
 /--
-An admissible family for `M₃(ℓ,t)`: a distinct family of `ℓ`-sets, all
-pairwise intersections have size at most `t`, and no three members form a
+An admissible family for $M_3(\ell,t)$: a distinct family of $\ell$-sets, all
+pairwise intersections have size at most $t$, and no three members form a
 sunflower.
 -/
 def M3Admissible (ℓ t : ℕ) (F : Set (Set α)) : Prop :=
   IsUniform ℓ F ∧ HasPairwiseIntersectionsAtMost t F ∧ ThreeSunflowerFree F
 
 /--
-An admissible family for `I₃(ℓ,t)`: an admissible family for `M₃(ℓ,t)` with
-no disjoint pair.
+An admissible family for $I_3(\ell,t)$: an admissible family for
+$M_3(\ell,t)$ with no disjoint pair.
 -/
 def I3Admissible (ℓ t : ℕ) (F : Set (Set α)) : Prop :=
   M3Admissible ℓ t F ∧ ∀ A ∈ F, ∀ B ∈ F, A ≠ B → (A ∩ B).Nonempty
 
 /--
-The extremal number `M₃(ℓ,t)`: the largest size, over finite ground sets, of
-a three-sunflower-free `ℓ`-uniform family whose pairwise intersections have
-size at most `t`.
+The extremal number $M_3(\ell,t)$: the largest size, over finite ground sets, of
+a three-sunflower-free $\ell$-uniform family whose pairwise intersections have
+size at most $t$.
 -/
 noncomputable def M3 (ℓ t : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ (α : Type) (_ : Fintype α) (F : Set (Set α)),
     M3Admissible ℓ t F ∧ F.ncard = m}
 
 /--
-The intersecting extremal number `I₃(ℓ,t)`: the same maximum as `M₃(ℓ,t)`,
-with the additional restriction that the family has no disjoint pair.
+The intersecting extremal number $I_3(\ell,t)$: the same maximum as
+$M_3(\ell,t)$, with the additional restriction that the family has no
+disjoint pair.
 -/
 noncomputable def I3 (ℓ t : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ (α : Type) (_ : Fintype α) (F : Set (Set α)),
     I3Admissible ℓ t F ∧ F.ncard = m}
 
 /--
-The restricted-intersection three-sunflower threshold: the least `N` such
-that every `n`-uniform family with pairwise intersections of size at most `t`
-and at least `N` members contains a three-sunflower.
+The restricted-intersection three-sunflower threshold: the least $N$ such
+that every $n$-uniform family with pairwise intersections of size at most $t$
+and at least $N$ members contains a three-sunflower.
 -/
 noncomputable def restrictedThreshold (n t : ℕ) : ℕ :=
   sInf {N : ℕ | ∀ {α : Type}, ∀ F : Set (Set α),
     IsUniform n F → HasPairwiseIntersectionsAtMost t F → N ≤ F.ncard →
       ∃ S ⊆ F, S.ncard = 3 ∧ IsSunflower S}
 
-/-- A natural number is a prime power. -/
-def IsPrimePower (q : ℕ) : Prop :=
-  ∃ p a : ℕ, p.Prime ∧ 0 < a ∧ q = p ^ a
-
 /--
-The two-copy decomposition supplied by the `t = 1` classification: the family
+The two-copy decomposition supplied by the $t=1$ classification: the family
 splits into two disjoint intersecting extremal pieces, and every cross pair is
 disjoint.
 -/
@@ -108,8 +127,8 @@ def HasTwoDisjointT1ExtremalPieces (ℓ : ℕ) (F : Set (Set α)) : Prop :=
     ∀ A ∈ G, ∀ B ∈ H, Disjoint A B
 
 /--
-The exact `t = 1` values from Mitchell's paper: for every `ℓ ≥ 2`,
-`I₃(ℓ,1) = ℓ + 1` and `M₃(ℓ,1) = 2ℓ + 2`.
+The exact $t=1$ values from [Mit26, Theorem 1.1]: for every $\ell \ge 2$,
+$I_3(\ell,1)=\ell+1$ and $M_3(\ell,1)=2\ell+2$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
@@ -118,10 +137,10 @@ theorem m3_t1_exact (ℓ : ℕ) (hℓ : 2 ≤ ℓ) :
   sorry
 
 /--
-The `t = 1` extremal classification implies that every extremal `M₃(ℓ,1)`
-family splits into two disjoint intersecting extremal pieces. The companion
-Lean development proves the sharper vertex-star incidence classification of
-those pieces.
+The $t=1$ extremal classification from [Mit26, Theorem 1.1] implies that every
+extremal $M_3(\ell,1)$ family splits into two disjoint intersecting extremal
+pieces. The companion Lean development proves the sharper vertex-star
+incidence classification of those pieces [Mit26Lean].
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
@@ -131,8 +150,8 @@ theorem m3_t1_extremal_decomposition (ℓ : ℕ) (hℓ : 2 ≤ ℓ) (F : Set (Se
   sorry
 
 /--
-The sharp counting upper bound at `t = 2`: for every `ℓ ≥ 3`,
-`M₃(ℓ,2) ≤ 3ℓ² - ℓ + 2`.
+The sharp counting upper bound from [Mit26, Theorem 1.2]: for every $\ell \ge 3$,
+$M_3(\ell,2) \le 3\ell^2-\ell+2$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
@@ -142,27 +161,32 @@ theorem m3_t2_upper_bound (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
 
 /--
 The orthogonal-projective-plane construction gives the lower bound
-`M₃(2q+2,2) ≥ 2(q²+q+1)` for every prime power `q`.
+$M_3(2q+2,2) \ge 2(q^2+q+1)$ for every prime power $q$ [Mit26, Theorem 1.2],
+using the orthogoval-plane existence theorem [CIJSSS24, Theorem 2.2]. The
+companion Lean development formalizes the construction conditional on that
+cited existence theorem [Mit26Lean].
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
-theorem m3_t2_prime_power_lower_bound (q : ℕ) (hq : IsPrimePower q) :
+@[category research solved, AMS 5]
+theorem m3_t2_prime_power_lower_bound (q : ℕ) (hq : IsPrimePow q) :
     2 * (q ^ 2 + q + 1) ≤ M3 (2 * q + 2) 2 := by
   sorry
 
 /--
-The paper's unconditional quadratic lower bound at `t = 2`, obtained from
-the prime-power construction by padding and Bertrand's postulate.
+The unconditional quadratic lower bound at $t=2$ from [Mit26, Theorem 1.2],
+obtained from the prime-power construction by padding and Bertrand's postulate:
+$(\ell-2)^2/8 \le M_3(\ell,2)$. The companion Lean development formalizes this
+bound conditional on [CIJSSS24, Theorem 2.2] [Mit26Lean].
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
+@[category research solved, AMS 5]
 theorem m3_t2_quadratic_lower_bound (ℓ : ℕ) (hℓ : 4 ≤ ℓ) :
     (ℓ - 2) ^ 2 / 8 ≤ M3 ℓ 2 := by
   sorry
 
 /--
-Corollary 1.3 of the paper: for bounded pairwise intersections, the
-three-sunflower threshold is one more than the extremal number.
+For bounded pairwise intersections, the three-sunflower threshold is one more
+than the extremal number [Mit26, Corollary 1.3]. This is the
+restricted-intersection form of the classical threshold question
+[ErRa60, Erdos20].
 -/
 @[category research solved, AMS 5]
 theorem restricted_threshold_eq_m3_add_one (n t : ℕ) (htn : t < n) :
@@ -178,7 +202,7 @@ def HasMantelTightDisjointness (F : Set (Set α)) : Prop :=
     2 * (F.ncard ^ 2 / 4)
 
 /--
-The family `F` splits into two intersecting admissible pieces, with every
+The family $F$ splits into two intersecting admissible pieces, with every
 cross pair disjoint.
 -/
 def SplitsIntoTwoIntersectingPieces (ℓ t : ℕ) (F : Set (Set α)) : Prop :=
@@ -187,9 +211,9 @@ def SplitsIntoTwoIntersectingPieces (ℓ t : ℕ) (F : Set (Set α)) : Prop :=
     ∀ A ∈ G, ∀ B ∈ H, Disjoint A B
 
 /--
-Version 2 structural reduction at `t = 2`: in the Mantel-tight
+The version 2 structural reduction at $t=2$: in the Mantel-tight
 disjointness regime, an admissible family is exactly two intersecting
-admissible pieces on disjoint supports.
+admissible pieces on disjoint supports [Mit26, Proposition 4.4].
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/SproutSeeds/sunflower-lean/tree/paper-v2"]
@@ -199,8 +223,8 @@ theorem m3_t2_mantel_tight_reduction {α : Type} (ℓ : ℕ) (F : Set (Set α))
   sorry
 
 /--
-Open exponent problem from the paper: is `M₃(ℓ,t)` quadratically bounded in
-`ℓ` for every fixed `t ≥ 2`?
+Open exponent problem from [Mit26, Section 6]: is $M_3(\ell,t)$ quadratically
+bounded in $\ell$ for every fixed $t \ge 2$?
 -/
 @[category research open, AMS 5]
 theorem m3_fixed_t_quadratic_exponent_problem :
@@ -209,8 +233,8 @@ theorem m3_fixed_t_quadratic_exponent_problem :
   sorry
 
 /--
-Open constant problem at `t = 2`: does the normalized sequence
-`M₃(ℓ,2) / ℓ²` converge?
+Open constant problem from [Mit26, Section 6]: does the normalized sequence
+$M_3(\ell,2)/\ell^2$ converge?
 -/
 @[category research open, AMS 5]
 theorem m3_t2_constant_problem :
@@ -219,8 +243,8 @@ theorem m3_t2_constant_problem :
   sorry
 
 /--
-Open structural problem at `t = 2`: is two-copy doubling of an optimal
-intersecting family asymptotically optimal up to an additive constant?
+Open structural problem from [Mit26, Section 6]: is two-copy doubling of an
+optimal intersecting family asymptotically optimal up to an additive constant?
 -/
 @[category research open, AMS 5]
 theorem m3_t2_doubling_optimal_problem :
