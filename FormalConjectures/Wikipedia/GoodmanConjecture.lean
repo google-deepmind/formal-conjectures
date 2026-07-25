@@ -50,7 +50,7 @@ structure IsPValent (f : ℂ → ℂ) (p : ℕ) : Prop where
   /-- Every value `w` is attained at most `p` times on the disk. -/
   atMost     : ∀ w : ℂ, {z ∈ unitDisk | f z = w}.encard ≤ p
   /-- Some value `w` is attained exactly `p` times on the disk. -/
-  exactly    : ∃ w : ℂ, {z ∈ unitDisk | f z = w}.ncard = p
+  exactly    : ∃ w : ℂ, {z ∈ unitDisk | f z = w}.encard = p
 
 /-- The `n`-th Taylor coefficient of `f` at `0`, i.e. `b_n = f⁽ⁿ⁾(0) / n!`. With the normalisation
 `f z = z + ∑_{n ≥ 2} b_n zⁿ` used below, `coeff f 1 = 1`. -/
