@@ -38,7 +38,7 @@ Let $G$ be a graph on $n$ vertices, $\alpha_1(G)$ be the maximum number of edges
 at most one edge from every triangle, and $\tau_1(G)$ be the minimum number of edges that
 contain at least one edge from every triangle.
 
-Is it true that\[\alpha_1(G)+\tau_1(G) \leq \frac{n^2}{4}?\]
+Is it true that$$\alpha_1(G)+\tau_1(G) \leq \frac{n^2}{4}?$$
 
 A problem of Erdős, Gallai, and Tuza [EGT96], who observe that this is probably quite difficult
 since there are different examples where equality hold: the complete graph, the complete
@@ -46,7 +46,7 @@ bipartite graph, and the graph obtained from $K_{m,m}$ by adding one vertex join
 other.
 
 This is true, and was proved by Norin and Sun [NoSu16], who in fact proved
-that\[\alpha_1(G)+\tau_B(G) \leq \frac{n^2}{4},\]where $\tau_B(G)$ is the minimum number of
+that$$\alpha_1(G)+\tau_B(G) \leq \frac{n^2}{4},$$where $\tau_B(G)$ is the minimum number of
 edges that need to be removed to make the graph bipartite.
 
 Here $\alpha_1(G)$ and $\tau_1(G)$ are taken over subsets of the edge set of $G$, and the

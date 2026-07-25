@@ -42,9 +42,9 @@ def limitPointSet : Set ℝ :=
 
 /--
 If $\tau(n)$ counts the number of divisors of $n$, then what is the set of limit points of
-\[
+$$
 \frac{\tau((n+1)!)}{\tau(n!)}?
-\]
+$$
 
 The limit points are exactly $\{1\} \cup \{1+1/k : k \geq 1\}$.
 -/
