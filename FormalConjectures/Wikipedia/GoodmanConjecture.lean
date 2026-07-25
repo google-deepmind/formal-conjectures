@@ -48,7 +48,7 @@ structure IsPValent (f : ℂ → ℂ) (p : ℕ) : Prop where
   one_le_p   : 1 ≤ p
   analyticOn : AnalyticOn ℂ f unitDisk
   /-- Every value `w` is attained at most `p` times on the disk. -/
-  atMost     : ∀ w : ℂ, {z ∈ unitDisk | f z = w}.ncard ≤ p
+  atMost     : ∀ w : ℂ, {z ∈ unitDisk | f z = w}.encard ≤ p
   /-- Some value `w` is attained exactly `p` times on the disk. -/
   exactly    : ∃ w : ℂ, {z ∈ unitDisk | f z = w}.ncard = p
 
