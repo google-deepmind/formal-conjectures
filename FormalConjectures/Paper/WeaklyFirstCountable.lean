@@ -36,6 +36,8 @@ open scoped Cardinal
 
 namespace WeaklyFirstCountable
 
+universe u
+
 /-- A topological space $X$ is called *weakly first countable* if there exists a function
 $N : X → ℕ → Set X, such that:
 
@@ -51,9 +53,10 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
 
 /-- A space has countable Souslin number if every pairwise-disjoint family of nonempty open
 sets has a countable index set. -/
-def HasCountableSouslinNumber (X : Type*) [TopologicalSpace X] : Prop :=
-  ∀ {ι : Type*} (U : ι → Set X) (a : Set ι), a.PairwiseDisjoint U →
-    (∀ i ∈ a, IsOpen (U i)) → (∀ i ∈ a, (U i).Nonempty) → a.Countable
+class HasCountableSouslinNumber (X : Type u) [TopologicalSpace X] : Prop where
+  countable_of_pairwiseDisjoint :
+    ∀ {ι : Type u} (U : ι → Set X) (a : Set ι), a.PairwiseDisjoint U →
+      (∀ i ∈ a, IsOpen (U i)) → (∀ i ∈ a, (U i).Nonempty) → a.Countable
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
@@ -85,10 +88,10 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
 
 /-- Every separable space has countable Souslin number. -/
 @[category test, AMS 54]
-theorem hasCountableSouslinNumber_of_separable (X : Type*) [TopologicalSpace X]
-    [SeparableSpace X] : HasCountableSouslinNumber X := by
-  intro ι U a hdisj hopen hnonempty
-  exact hdisj.countable_of_isOpen hopen hnonempty
+instance hasCountableSouslinNumber_of_separable (X : Type u) [TopologicalSpace X]
+    [SeparableSpace X] : HasCountableSouslinNumber X where
+  countable_of_pairwiseDisjoint := fun _ _ hdisj hopen hnonempty ↦
+    hdisj.countable_of_isOpen hopen hnonempty
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact Hausdorff space X such that $𝔠 < |X|$.
@@ -127,7 +130,7 @@ theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable
 Souslin number, then does its cardinality not exceed the continuum? -/
 @[category research open, AMS 54]
 theorem cardinalMk_le_continuum_of_weaklyFirstCountable_of_countableSouslinNumber :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X) (_ : T35Space X),
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T35Space X →
       WeaklyFirstCountableTopology X → HasCountableSouslinNumber X → #X ≤ 𝔠 := by
   sorry
 
