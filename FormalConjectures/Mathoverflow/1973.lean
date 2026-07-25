@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 1973
@@ -24,6 +25,8 @@ Does the 6-sphere $S^6$ admit the structure of a complex manifold?
 *Reference:* [mathoverflow/1973](https://mathoverflow.net/questions/1973/)
 asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ramos)
 -/
+
+@[expose] public section
 open scoped Manifold
 namespace Mathoverflow1973
 

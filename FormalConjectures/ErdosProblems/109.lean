@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 109
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [MRR19] J. Moreira, F.K. Richter, and D. Robertson, A proof of a sumset conjecture of Erdős,
   Annals of Math. 189 (2019), 605-652.
 -/
+
+@[expose] public section
 
 open Pointwise
 

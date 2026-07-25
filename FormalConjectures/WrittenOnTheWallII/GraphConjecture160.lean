@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 160
@@ -34,6 +35,8 @@ Conjecture 160 uses both $\max_v T(v)$ and $c_{C_4}(G)$ (the number of induced
 4-cycles) to lower bound the WOWII invariant $L_s(G)$, the maximum number of
 leaves over all spanning trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture160
 

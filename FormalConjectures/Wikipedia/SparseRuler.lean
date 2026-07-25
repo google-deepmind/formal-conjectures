@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«170»
-import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
+public import FormalConjectures.ErdosProblems.«170»
+public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
 
 /-!
 # Sparse Ruler
@@ -39,6 +40,8 @@ restated here.
   Mathematical Society 38 (1963): 465-466.
 - [Wikipedia](https://en.wikipedia.org/wiki/Sparse_ruler)
 -/
+
+@[expose] public section
 
 namespace SparseRuler
 

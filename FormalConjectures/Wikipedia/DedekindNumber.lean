@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dedekind Numbers
@@ -45,6 +46,8 @@ In particular, the value of $M(10)$ is currently unknown.
 - [Oeis/A372](https://oeis.org/A000372)
 
 -/
+
+@[expose] public section
 
 namespace DedekindNumber
 

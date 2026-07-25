@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 830
 
 *Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 open Classical Filter Real

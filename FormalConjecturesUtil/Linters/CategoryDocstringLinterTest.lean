@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil.Linters.CategoryDocstringLinter
+public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 
 /-!
 # Tests for the category docstring linter
@@ -23,6 +24,8 @@ This file contains test cases for the `CategoryDocstringLinter`, verifying that
 research-open, research-solved, and textbook declarations without docstrings are flagged,
 while declarations with docstrings or other categories are accepted.
 -/
+
+@[expose] public section
 
 namespace CategoryDocstringLinter
 

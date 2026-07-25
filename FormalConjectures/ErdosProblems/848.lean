@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 848
@@ -31,6 +32,8 @@ squarefree (for all $a, b \in A$) achieved by taking those $n \equiv 7 \pmod{25}
    https://www.math.columbia.edu/~msawhney/Problem_848.pdf
  - Full formal proof of asymptotic result: https://github.com/The-Obstacle-Is-The-Way/erdos-banger
 -/
+
+@[expose] public section
 
 namespace Erdos848
 

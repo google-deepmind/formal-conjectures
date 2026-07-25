@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Littlewood conjectures
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
 - [Bernard Mathan and Olivier Touli´e, *Problem`emes diophantiens simultan´es*][mathantoilie2004]
 -/
+
+@[expose] public section
 
 open Filter
 

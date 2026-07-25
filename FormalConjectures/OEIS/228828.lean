@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numbers $n$ such that $n^2 + \pi(n)$ is prime.
 
 *Reference:* [A228828](https://oeis.org/A228828)
 -/
+
+@[expose] public section
 
 namespace OeisA228828
 

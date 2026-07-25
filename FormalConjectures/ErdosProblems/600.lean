@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 600
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er87] Erdős, P., _Some problems on finite and infinite graphs_. Logic and combinatorics (Arcata, Calif., 1985) (1987), 223-228.
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
+
+@[expose] public section
 
 open Classical Filter
 open scoped Topology

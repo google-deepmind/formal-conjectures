@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Is Every Convex Polyhedron Rupert?
@@ -64,6 +65,8 @@ Question: are all convex polyhedra with nonempty interior Rupert?
   a proof that it is not Rupert, resolving the open question.
 
 -/
+
+@[expose] public section
 
 namespace Rupert
 

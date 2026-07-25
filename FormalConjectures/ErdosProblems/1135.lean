@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Wikipedia.CollatzConjecture
+public import FormalConjectures.Wikipedia.CollatzConjecture
 
 /-!
 # Erdős Problem 1135
@@ -34,6 +35,8 @@ number $m$ such that the $m$-th term of the sequence is 1.
 This file points to the canonical formalization in
 `FormalConjectures.Wikipedia.CollatzConjecture`.
 -/
+
+@[expose] public section
 
 namespace Erdos1135
 

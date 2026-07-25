@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 291
@@ -48,6 +49,8 @@ where $\gamma_t(G)$ is the total domination number, $k$ is the Havel-Hakimi zero
 step, and $\mathrm{frequency}(t_{\min}(v))$ is the number of vertices achieving
 the minimum triangle count.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture291
 

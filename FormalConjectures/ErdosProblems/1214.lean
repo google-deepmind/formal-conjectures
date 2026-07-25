@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1214
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [CoSc97] Corrales-Rodrigáñez, Capi and Schoof, René, The support problem and its
   elliptic analogue. J. Number Theory (1997) [Volume 64, Issue 2], 276--290.
 -/
+
+@[expose] public section
 
 namespace Erdos1214
 

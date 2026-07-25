@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Andrica's conjecture
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Andrica%27s_conjecture)
 - [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
+
+@[expose] public section
 open Filter
 namespace Andrica
 

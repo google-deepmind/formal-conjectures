@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 996
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
  - [Ma66] Matsuyama, Noboru. "On the strong law of large numbers." Tohoku Mathematical Journal,
     Second Series 18.3 (1966): 259-269.
 -/
+
+@[expose] public section
 
 open MeasureTheory AddCircle Filter Topology Asymptotics Finset Real
 

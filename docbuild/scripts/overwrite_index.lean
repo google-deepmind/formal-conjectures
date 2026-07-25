@@ -13,11 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import MD4Lean
-import Lean
-import Batteries.Data.String.Matcher
-import FormalConjecturesUtil.Attributes.Basic
-import Mathlib.Data.String.Defs
+module
+
+public import MD4Lean
+public import Lean
+public import Batteries.Data.String.Matcher
+public import FormalConjecturesUtil.Attributes.Basic
+public import Mathlib.Data.String.Defs
+
+@[expose] public section
 
 
 open Lean

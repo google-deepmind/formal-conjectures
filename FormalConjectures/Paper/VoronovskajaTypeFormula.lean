@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Voronovskaja-type Formula for the Bezier Variant of the Bernstein Operators
@@ -68,6 +69,8 @@ $\alpha \neq 1$:
 * [Voronovskaja-type Formula for the Bézier Variant of the Bernstein Operators](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf),
   by *Ulrich Abel*, in *Constructive Theory of Functions, Sozopol 2010*.
 -/
+
+@[expose] public section
 open Topology Filter Real unitInterval Polynomial
 namespace VoronovskajaTypeFormula
 

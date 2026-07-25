@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Köthe conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/K%C3%B6the_conjecture)
 -/
+
+@[expose] public section
 
 open Ideal TwoSidedIdeal Classical Polynomial
 

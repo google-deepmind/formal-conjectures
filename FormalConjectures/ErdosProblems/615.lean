@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 615
@@ -40,6 +41,8 @@ $\mathrm{rt}(n; 4, ne^{-f(n)}) = o(n^2)$ whenever $f(n)/\sqrt{\log n} \to \infty
 * [FLZ15] Fox, J., Loh, P.-S., and Zhao, Y., *The critical window for the classical
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
+
+@[expose] public section
 
 open Classical Filter SimpleGraph
 

@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import FormalConjecturesUtil
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Erdős Problem 508
@@ -29,6 +30,8 @@ or the [Golomb graph]
 *At least 4 colors are required:* [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph)
 *At least 5 colors are required:* [de Grey 2018](https://arxiv.org/abs/1804.02385)
 -/
+
+@[expose] public section
 
 open SimpleGraph
 open scoped EuclideanGeometry

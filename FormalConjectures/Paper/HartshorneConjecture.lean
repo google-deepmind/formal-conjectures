@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-! # Hartshorne's conjecture on Vector Bundles
 
@@ -21,6 +23,8 @@ import FormalConjecturesUtil
 * [Har1974] R. Hartshorne, [Varieties of small codimension in projective space](https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-80/issue-6/Varieties-of-small-codimension-in-projective-space/bams/1183535999.full).
 * [MO2010] [Evidences on Hartshorne's conjecture? References?](https://mathoverflow.net/questions/13990/evidences-on-hartshornes-conjecture-references)
 -/
+
+@[expose] public section
 
 namespace HartshorneConjecture
 

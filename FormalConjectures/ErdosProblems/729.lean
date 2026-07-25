@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 729
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., *On the prime factors of $\binom{2n}{n}$*. Math. Comp. (1975), 83-92.
 - [Er68c] Erdős, P., *Aufgabe 557*. Elemente Math. (1968), 111-113.
 -/
+
+@[expose] public section
 
 namespace Erdos729
 

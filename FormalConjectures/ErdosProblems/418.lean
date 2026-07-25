@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 418
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [PoPo16] Pollack, Paul and Pomerance, Carl, Some problems of Erdős on the sum-of-divisors
   function. Trans. Amer. Math. Soc. Ser. B (2016), 1-26.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 

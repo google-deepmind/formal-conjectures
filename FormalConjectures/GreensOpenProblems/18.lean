@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 18
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Go01] Gowers, William T. "A new proof of Szemerédi's theorem." Geometric & Functional Analysis
   GAFA 11.3 (2001): 465-588.
 -/
+
+@[expose] public section
 
 open Finset
 

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²
@@ -26,6 +28,8 @@ This file states that every convex set in ℝⁿ has finite VCₙ dimension, con
 ℝⁿ⁺² with infinite VCₙ dimension (even more strongly, which n-shatters an infinite set),
 and conjectures that every convex set in ℝⁿ⁺¹ has finite VCₙ dimension.
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry Pointwise
 

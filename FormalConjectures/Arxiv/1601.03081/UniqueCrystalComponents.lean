@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Unique Crystal Components
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **The Biharmonic mean**
 by *Marco Abrate, Stefano Barbero, Umberto Cerruti, Nadir Murru*
 -/
+
+@[expose] public section
 
 namespace Arxiv.«1601.03081»
 

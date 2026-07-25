@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Lacunary Sequences in Real Number Fields
@@ -27,6 +28,8 @@ The following problems were proposed and discussed by Dubickas as Conjecture 2 i
   - [Dub09] Dubickas, Artūras. "An approximation property of lacunary sequences."
     Israel Journal of Mathematics 170.1 (2009): 95-111.
 -/
+
+@[expose] public section
 
 namespace Bugeaud05
 

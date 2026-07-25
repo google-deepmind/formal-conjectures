@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«508»
+public import FormalConjectures.ErdosProblems.«508»
 
 /-!
 # The Hadwiger-Nelson Problem
@@ -27,3 +28,5 @@ the same color.
 
 This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«508»`.
 -/
+
+@[expose] public section

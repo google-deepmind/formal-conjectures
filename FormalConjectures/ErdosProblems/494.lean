@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 494
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   - [GFS62] Gordon, B. and Fraenkel, A. S. and Straus, E. G., On the determination of sets
       by the sets of sums of a certain order. Pacific J. Math. (1962), 187--196.
 -/
+
+@[expose] public section
 
 open Filter
 

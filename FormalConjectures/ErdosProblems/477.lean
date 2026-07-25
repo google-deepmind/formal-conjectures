@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 477
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/477](https://www.erdosproblems.com/477)
 - [Sek59](http://dml.cz/dmlcz/100376) Milan Sekanina, Замечания к фактoризации беcкoнечнoй цикличеcкoй группы, Czechoslovak Mathematical Journal, Vol. 9 (1959), No. 4, 485–495
 -/
+
+@[expose] public section
 
 open Polynomial Set
 

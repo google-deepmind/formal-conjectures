@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beaver Math Olympiad (BMO)
@@ -37,6 +38,8 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra web page](https://bbchallenge.org/antihydra)
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
+
+@[expose] public section
 
 namespace BeaverMathOlympiad
 

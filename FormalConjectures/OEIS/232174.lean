@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations with prime conditions
@@ -31,6 +32,8 @@ Zhi-Wei Sun has offered a $200 prize for the first proof.
   Vol. 220, Springer, 2017, pp. 279-310. https://arxiv.org/abs/1211.1588
 - D.A. Cox, "Primes of the Form x² + ny²," John Wiley & Sons, 1989.
 -/
+
+@[expose] public section
 
 namespace OeisA232174
 

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Factor bounds for Fermat numbers
@@ -25,6 +27,8 @@ $n$-th Fermat number exceeds $2^{2^n - k}$.
 - [A358684](https://oeis.org/A358684)
 - [SA22](https://doi.org/10.26493/2590-9770.1473.ec5) Lorenzo Sauras-Altuzarra, *Some properties of the factors of Fermat numbers*, Art Discrete Appl. Math. (2022).
 -/
+
+@[expose] public section
 
 
 namespace OeisA358684

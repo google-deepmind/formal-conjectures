@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 851
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/851](https://www.erdosproblems.com/851)
 - [Pr26] D. Price and GPT-5.2 Pro, [Erdős problem 851](https://www.overleaf.com/read/svgbjzpxxppv#4eea7e) (2026)
 -/
+
+@[expose] public section
 
 namespace Erdos851
 

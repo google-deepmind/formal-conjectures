@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rudin's conjecture on squares in arithmetic progressions
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - González-Jiménez, E. and Xarles, X., *On a conjecture of Rudin on squares in arithmetic
   progressions*, LMS J. Comput. Math. 17 (2014), 58–76.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 

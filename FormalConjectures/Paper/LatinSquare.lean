@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -27,6 +28,8 @@ This file formalizes some conjectures and theorems around latin squares.
   https://users.monash.edu.au/~iwanless/papers/transurveyBCC.pdf
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
+
+@[expose] public section
 
 namespace LatinSquare
 

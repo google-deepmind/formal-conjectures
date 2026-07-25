@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1063
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
  * [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
  * [Mo85] Monier (1985). No reference found.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Nat Topology

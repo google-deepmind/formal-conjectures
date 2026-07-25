@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 888
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er98] Erdős, Paul, Some of my new and almost new problems and results in combinatorial number
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
+
+@[expose] public section
 
 open Classical Filter
 

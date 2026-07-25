@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 134
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/134](https://www.erdosproblems.com/134)
 - [Er97b] Erdős, Paul, *Some old and new problems in various branches of combinatorics*. Discrete Math. (1997), 227-231.
 -/
+
+@[expose] public section
 
 namespace Erdos134
 

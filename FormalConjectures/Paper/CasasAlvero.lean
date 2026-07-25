@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Casas-Alvero Conjecture
@@ -37,6 +39,8 @@ The conjecture is now claimed to be proven in this paper:
 * [Proof of the Casas-Alvero conjecture: Soham Ghosh)](https://arxiv.org/pdf/2501.09272)
 
 -/
+
+@[expose] public section
 
 namespace CasasAlvero
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 533
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   *Geometric constructions for Ramsey–Turán theory*,
   [arXiv:2103.10423](https://arxiv.org/abs/2103.10423) (2021).
 -/
+
+@[expose] public section
 
 open Classical Filter SimpleGraph
 

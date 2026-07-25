@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1107
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/1107](https://www.erdosproblems.com/1107)
 - [He88] Heath-Brown, D. R., Ternary quadratic forms and sums of three square-full numbers. (1988)
 -/
+
+@[expose] public section
 
 namespace Erdos1107
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 688
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/688](https://www.erdosproblems.com/688)
 - [Er80] Erdős, Paul, _A survey of problems in combinatorial number theory_. Ann. Discrete Math. (1980), 89-115.
 -/
+
+@[expose] public section
 
 open Classical Real Filter
 

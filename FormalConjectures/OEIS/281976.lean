@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of four squares with square conditions
@@ -31,6 +32,8 @@ Zhi-Wei Sun has offered a $2,400 prize for the first proof.
 - Z.-W. Sun, "Restricted sums of four squares," *arXiv:1701.05868* [math.NT], 2017.
   https://arxiv.org/abs/1701.05868
 -/
+
+@[expose] public section
 
 namespace OeisA281976
 

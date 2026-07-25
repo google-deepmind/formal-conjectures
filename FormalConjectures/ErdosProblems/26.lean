@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 26
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   _Some of Erdős' unconventional problems in number theory, thirty-four years later_,
   arXiv:1908.00488 [math.NT] (2019)
 -/
+
+@[expose] public section
 
 namespace Erdos26
 

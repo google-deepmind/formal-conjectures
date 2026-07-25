@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Central Binomial Tail Bounds, Conjecture 6.3
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **Central Binomial Tail Bounds**
 by *Matus Telgarsky*
 -/
+
+@[expose] public section
 namespace Arxiv.«0911.2077»
 open NNReal ENNReal ProbabilityTheory
 

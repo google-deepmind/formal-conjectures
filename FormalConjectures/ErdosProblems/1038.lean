@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import FormalConjecturesUtil
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 
 /-!
 # Erdős Problem 1038
@@ -25,6 +26,8 @@ import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
  - [Tao25] Tao, Terence. Sublevel Sets of Logarithmic Potentials. Terry Tao’s Blog, Dec. 2025
   (https://terrytao.wordpress.com/wp-content/uploads/2025/12/erdos-1038-1.pdf)
 -/
+
+@[expose] public section
 
 open scoped Real ENNReal
 open MeasureTheory
