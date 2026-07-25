@@ -51,12 +51,18 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
       (∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n) ∧
         ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
-/-- A space has countable Souslin number if every pairwise-disjoint family of nonempty open
-sets has a countable index set. -/
+/-- A cellular family is a pairwise-disjoint collection of nonempty open sets. -/
+def IsCellularFamily (X : Type u) [TopologicalSpace X] (F : Set (Set X)) : Prop :=
+  F.PairwiseDisjoint id ∧ ∀ U ∈ F, IsOpen U ∧ U.Nonempty
+
+/-- The Souslin number of a topological space, with the standard convention that it is at
+least `ℵ₀`. -/
+noncomputable def souslinNumber (X : Type u) [TopologicalSpace X] : Cardinal.{u} :=
+  ℵ₀ ⊔ ⨆ F : {F : Set (Set X) // IsCellularFamily X F}, #(F : Set (Set X))
+
+/-- A space has countable Souslin number when its Souslin number is `ℵ₀`. -/
 class HasCountableSouslinNumber (X : Type u) [TopologicalSpace X] : Prop where
-  countable_of_pairwiseDisjoint :
-    ∀ {ι : Type u} (U : ι → Set X) (a : Set ι), a.PairwiseDisjoint U →
-      (∀ i ∈ a, IsOpen (U i)) → (∀ i ∈ a, (U i).Nonempty) → a.Countable
+  souslinNumber_eq : souslinNumber X = ℵ₀
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
@@ -90,8 +96,14 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
 @[category test, AMS 54]
 instance hasCountableSouslinNumber_of_separable (X : Type u) [TopologicalSpace X]
     [SeparableSpace X] : HasCountableSouslinNumber X where
-  countable_of_pairwiseDisjoint := fun _ _ hdisj hopen hnonempty ↦
-    hdisj.countable_of_isOpen hopen hnonempty
+  souslinNumber_eq := by
+    apply le_antisymm
+    · apply sup_le le_rfl
+      refine ciSup_le' fun F ↦ ?_
+      exact (F.property.1.countable_of_isOpen
+        (fun U hU ↦ (F.property.2 U hU).1)
+        (fun U hU ↦ (F.property.2 U hU).2)).le_aleph0
+    · exact le_sup_left
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact Hausdorff space X such that $𝔠 < |X|$.
