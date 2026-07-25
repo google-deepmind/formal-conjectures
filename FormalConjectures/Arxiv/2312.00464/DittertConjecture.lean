@@ -72,6 +72,17 @@ def J (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
 theorem J_one_memKn : MemKn (J 1) := by
   simp [MemKn, entrySum, J]
 
+/-- The row and column sums of the one-dimensional uniform matrix are both one. -/
+@[category test, AMS 15]
+theorem J_one_rowSum_and_columnSum (i j : Fin 1) :
+    rowSum (J 1) i = 1 ∧ columnSum (J 1) j = 1 := by
+  simp [rowSum, columnSum, J]
+
+/-- Dittert's objective evaluates to one on the one-dimensional uniform matrix. -/
+@[category test, AMS 15]
+theorem phi_J_one : phi (J 1) = 1 := by
+  simp [phi, rowSum, columnSum, J, Matrix.permanent]
+
 /--
 **Dittert conjecture.** For every positive `n`, `Jₙ` belongs to `Kₙ` and is the unique
 maximizer of `φ` on `Kₙ`.
