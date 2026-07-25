@@ -20,14 +20,14 @@ import FormalConjecturesUtil
 # Goodman's conjecture on coefficients of $p$-valent functions
 
 A regular (analytic) function is **$p$-valent** on the unit disk if it assumes each value at most
-$p$ times there, and some value exactly $p$ times. For such a function normalised as
-$f(z) = z + \sum_{n \ge 2} b_n z^n$, **Goodman's conjecture** (1948) asserts that its coefficients
-satisfy
+$p$ times there, and some value exactly $p$ times. For such a function $f(z) = \sum_{n \ge 1} b_n z^n$
+(so $f(0) = 0$), **Goodman's conjecture** (1948) asserts that its coefficients satisfy
 $$|b_n| \le \sum_{k=1}^{p} \frac{2k (n+p)!}{(p-k)!\,(p+k)!\,(n-p-1)!\,(n^2-k^2)} |b_k|
 \qquad (n > p).$$
 This generalises the classical coefficient bounds for univalent functions (the case $p = 1$,
-where the bound reads $|b_n| \le n$) to $p$-valent functions. It has been verified in several
-special cases, including $p$-valent typically-real functions.
+where the bound reads $|b_n| \le n\,|b_1|$, i.e. $|b_n| \le n$ under the classical normalisation
+$b_1 = 1$) to $p$-valent functions. It has been verified in several special cases, including
+$p$-valent typically-real functions.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Goodman%27s_conjecture)
@@ -39,24 +39,21 @@ open Complex Set
 
 namespace GoodmanConjecture
 
-/-- The open unit disk $\mathbb{D} = \{z : |z| < 1\}$ in the complex plane. -/
-def unitDisk : Set ℂ := {z | ‖z‖ < 1}
-
-/-- A function `f : ℂ → ℂ` is **`p`-valent** on the unit disk if it is analytic there, attains
-every value at most `p` times, and attains some value exactly `p` times. Here `p ≥ 1`. -/
+/-- A function `f : ℂ → ℂ` is **$p$-valent** on the open unit disk $\mathbb{D} = \{z : |z| < 1\}$
+if it is analytic there, attains every value at most $p$ times, and attains some value exactly
+$p$ times. Here $p \ge 1$. -/
 structure IsPValent (f : ℂ → ℂ) (p : ℕ) : Prop where
   one_le_p   : 1 ≤ p
-  analyticOn : AnalyticOn ℂ f unitDisk
-  /-- Every value `w` is attained at most `p` times on the disk. -/
-  atMost     : ∀ w : ℂ, {z ∈ unitDisk | f z = w}.encard ≤ p
-  /-- Some value `w` is attained exactly `p` times on the disk. -/
-  exactly    : ∃ w : ℂ, {z ∈ unitDisk | f z = w}.encard = p
+  analyticOn : AnalyticOn ℂ f (Metric.ball 0 1)
+  /-- Every value $w$ is attained at most $p$ times on the disk. -/
+  atMost     : ∀ w : ℂ, {z ∈ Metric.ball 0 1 | f z = w}.encard ≤ p
+  /-- Some value $w$ is attained exactly $p$ times on the disk. -/
+  exactly    : ∃ w : ℂ, {z ∈ Metric.ball 0 1 | f z = w}.encard = p
 
-/-- The `n`-th Taylor coefficient of `f` at `0`, i.e. `b_n = f⁽ⁿ⁾(0) / n!`. With the normalisation
-`f z = z + ∑_{n ≥ 2} b_n zⁿ` used below, `coeff f 1 = 1`. -/
+/-- The $n$-th Taylor coefficient of $f$ at $0$, i.e. $b_n = f^{(n)}(0) / n!$. -/
 noncomputable def coeff (f : ℂ → ℂ) (n : ℕ) : ℂ := iteratedDeriv n f 0 / n.factorial
 
-/-- Goodman's normalisation `f z = z + ∑_{n ≥ 2} b_n zⁿ`, i.e. `f 0 = 0` and `f'(0) = 1`. -/
+/-- Goodman's normalisation $f(z) = \sum_{n \ge 1} b_n z^n$, i.e. $f(0) = 0$. -/
 structure IsNormalized (f : ℂ → ℂ) : Prop where
   map_zero   : f 0 = 0
 
@@ -70,8 +67,8 @@ noncomputable def goodmanBound (f : ℂ → ℂ) (p n : ℕ) : ℝ :=
       ‖coeff f k‖
 
 /--
-**Goodman's conjecture.** For every `p`-valent normalised function `f` on the unit disk and every
-`n > p`, the `n`-th coefficient is bounded by the Goodman bound:
+**Goodman's conjecture.** For every $p$-valent normalised function $f$ on the unit disk and every
+$n > p$, the $n$-th coefficient is bounded by the Goodman bound:
 $$|b_n| \le \sum_{k=1}^{p} \frac{2k (n+p)!}{(p-k)!\,(p+k)!\,(n-p-1)!\,(n^2-k^2)} |b_k|.$$
 -/
 @[category research open, AMS 30]
@@ -81,10 +78,10 @@ theorem goodman_conjecture (f : ℂ → ℂ) (p n : ℕ) (hf : IsPValent f p)
   sorry
 
 /--
-Sanity check: in the univalent case `p = 1`, the Goodman bound reduces to the classical
-Bieberbach-type bound `|b_n| ≤ n` (using `b_1 = 1`). Concretely the single `k = 1` summand is
+Sanity check: in the univalent case $p = 1$, the Goodman bound reduces to the classical
+Bieberbach-type bound $|b_n| \le n\,|b_1|$. Concretely the single $k = 1$ summand is
 $$\frac{2 (n+1)!}{0!\,2!\,(n-2)!\,(n^2-1)} = \frac{(n+1)!}{(n-2)!\,(n^2-1)} = n,$$
-so `goodmanBound f 1 n = n * ‖coeff f 1‖`.
+so the bound equals $n\,|b_1|$.
 -/
 @[category test, AMS 30]
 theorem goodmanBound_one (f : ℂ → ℂ) (n : ℕ) (hn : 1 < n) :
