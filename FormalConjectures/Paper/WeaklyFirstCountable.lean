@@ -49,6 +49,12 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
       (∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n) ∧
         ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
 
+/-- A space has countable Souslin number if every pairwise-disjoint family of nonempty open
+sets has a countable index set. -/
+def HasCountableSouslinNumber (X : Type*) [TopologicalSpace X] : Prop :=
+  ∀ {ι : Type*} (U : ι → Set X) (a : Set ι), a.PairwiseDisjoint U →
+    (∀ i ∈ a, IsOpen (U i)) → (∀ i ∈ a, (U i).Nonempty) → a.Countable
+
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
 @[category textbook, AMS 54]
@@ -76,6 +82,13 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
   · exact (HasAntitoneBasis.mem_iff (hU x)).mp (h x hx)
   · obtain ⟨n, hn⟩ := h x hx
     exact mem_of_superset (HasAntitoneBasis.mem (hU x) n) hn
+
+/-- Every separable space has countable Souslin number. -/
+@[category test, AMS 54]
+theorem hasCountableSouslinNumber_of_separable (X : Type*) [TopologicalSpace X]
+    [SeparableSpace X] : HasCountableSouslinNumber X := by
+  intro ι U a hdisj hopen hnonempty
+  exact hdisj.countable_of_isOpen hopen hnonempty
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact Hausdorff space X such that $𝔠 < |X|$.
@@ -110,6 +123,12 @@ theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable
       WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ T2Space X ∧
         ¬ FirstCountableTopology X := by sorry
 
--- TODO: add Problem 4 in [Ar2013]
+/-- Problem 4 in [Ar2013]: If a Tychonoff weakly first-countable space has countable
+Souslin number, then does its cardinality not exceed the continuum? -/
+@[category research open, AMS 54]
+theorem cardinalMk_le_continuum_of_weaklyFirstCountable_of_countableSouslinNumber :
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X) (_ : T35Space X),
+      WeaklyFirstCountableTopology X → HasCountableSouslinNumber X → #X ≤ 𝔠 := by
+  sorry
 
 end WeaklyFirstCountable
