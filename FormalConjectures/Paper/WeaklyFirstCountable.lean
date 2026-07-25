@@ -55,14 +55,14 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
 def IsCellularFamily (X : Type u) [TopologicalSpace X] (F : Set (Set X)) : Prop :=
   F.PairwiseDisjoint id ∧ ∀ U ∈ F, IsOpen U ∧ U.Nonempty
 
-/-- The Souslin number of a topological space, with the standard convention that it is at
-least `ℵ₀`. -/
+/-- The Souslin number of a topological space is the supremum of the cardinalities of its
+cellular families. -/
 noncomputable def souslinNumber (X : Type u) [TopologicalSpace X] : Cardinal.{u} :=
-  ℵ₀ ⊔ ⨆ F : {F : Set (Set X) // IsCellularFamily X F}, #(F : Set (Set X))
+  ⨆ F : {F : Set (Set X) // IsCellularFamily X F}, #(F : Set (Set X))
 
-/-- A space has countable Souslin number when its Souslin number is `ℵ₀`. -/
+/-- A space has countable Souslin number when its Souslin number is at most `ℵ₀`. -/
 class HasCountableSouslinNumber (X : Type u) [TopologicalSpace X] : Prop where
-  souslinNumber_eq : souslinNumber X = ℵ₀
+  souslinNumber_le : souslinNumber X ≤ ℵ₀
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
@@ -96,14 +96,11 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
 @[category test, AMS 54]
 instance hasCountableSouslinNumber_of_separable (X : Type u) [TopologicalSpace X]
     [SeparableSpace X] : HasCountableSouslinNumber X where
-  souslinNumber_eq := by
-    apply le_antisymm
-    · apply sup_le le_rfl
-      refine ciSup_le' fun F ↦ ?_
-      exact (F.property.1.countable_of_isOpen
-        (fun U hU ↦ (F.property.2 U hU).1)
-        (fun U hU ↦ (F.property.2 U hU).2)).le_aleph0
-    · exact le_sup_left
+  souslinNumber_le := by
+    refine ciSup_le' fun F ↦ ?_
+    exact (F.property.1.countable_of_isOpen
+      (fun U hU ↦ (F.property.2 U hU).1)
+      (fun U hU ↦ (F.property.2 U hU).2)).le_aleph0
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact Hausdorff space X such that $𝔠 < |X|$.
