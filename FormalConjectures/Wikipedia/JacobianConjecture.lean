@@ -141,7 +141,7 @@ section Tests
 
 open RegularFunction
 
-variable {k σ τ ι : Type} [Fintype σ] [Fintype τ] [DecidableEq σ] [DecidableEq τ] [Field k]
+variable {k σ : Type} [Fintype σ] [DecidableEq σ] [Field k]
 
 -- Let's check that we've stated the "invertible Jacobian" condition correctly
 -- by proving an equivalence
