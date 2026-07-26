@@ -19,7 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Pebbling number conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Graph_pebbling)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Graph_pebbling)
+- [Pebbling on Graph Products and Other Binary Graph Constructions](https://arxiv.org/abs/1801.07808)
 -/
 variable {V : Type} {G : SimpleGraph V} [DecidableEq V]
 
@@ -121,11 +123,13 @@ theorem PebblingNumber_completeGraph [Fintype V] :
 
 /--
 The pebbling number conjecture:
-the pebbling number of a Cartesian product of graphs is at most equal to the product of the
-pebbling numbers of the factors.
+the pebbling number of a Cartesian product of connected graphs is at most equal to the product
+of the pebbling numbers of the factors. See
+[Asplund, Hurlbert, and Kenter](https://arxiv.org/abs/1801.07808).
 -/
 @[category research open, AMS 5]
-theorem pebbling_number_conjecture [Fintype V] (G H : SimpleGraph V) :
+theorem pebbling_number_conjecture {W : Type} [Fintype V] [Fintype W] [DecidableEq W]
+    (G : SimpleGraph V) (H : SimpleGraph W) (hG : G.Connected) (hH : H.Connected) :
     PebblingNumber (G □ H) ≤ PebblingNumber G * PebblingNumber H := by
   sorry
 

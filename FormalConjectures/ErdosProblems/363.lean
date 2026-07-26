@@ -46,7 +46,7 @@ def IsValidCollection (S : List (Finset ℕ)) : Prop :=
   IsSquare ((S.map (fun I => ∏ m ∈ I, m)).prod)
 
 /--
-Is it true that there are only finitely many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert \geq 4$ for $1\leq i\leq n$ such that\[\prod_{1\leq i\leq n}\prod_{m\in I_i}m\]is a square?
+Is it true that there are only finitely many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert \geq 4$ for $1\leq i\leq n$ such that$$\prod_{1\leq i\leq n}\prod_{m\in I_i}m$$is a square?
 
 This is false: Ulas [Ul05] constructed infinitely many such collections.
 -/
