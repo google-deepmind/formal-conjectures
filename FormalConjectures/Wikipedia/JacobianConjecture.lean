@@ -33,7 +33,7 @@ variable {σ τ ι : Type*}
 
 variable (k σ τ) in
 
-/-- Implicitly use `σ` as an index set and `k` as coefficient ring. -/
+/-- The type of regular functions from $k^σ$ to $k^τ$. -/
 abbrev RegularFunction := τ → MvPolynomial σ k
 
 namespace RegularFunction
