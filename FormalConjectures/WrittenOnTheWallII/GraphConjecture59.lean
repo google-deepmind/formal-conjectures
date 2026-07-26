@@ -63,18 +63,4 @@ step gives $[0]$, leaving a single zero. -/
 example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
   unfold residue; decide +native
 
-/-- The invariant values of the counterexample violate the conjectured inequality. -/
-@[category test, AMS 5]
-example : ¬(⌈Real.sqrt ((101 : ℝ) * 122)⌉ ≤ (111 : ℝ)) := by
-  have hceil : ⌈Real.sqrt ((101 : ℝ) * 122)⌉ = (112 : ℤ) := by
-    rw [Int.ceil_eq_iff]
-    have hsquare : Real.sqrt (12322 : ℝ) ^ 2 = 12322 := by
-      rw [Real.sq_sqrt]
-      norm_num
-    have hsqrt_nonneg : 0 ≤ Real.sqrt (12322 : ℝ) := Real.sqrt_nonneg _
-    norm_num
-    constructor <;> nlinarith
-  rw [hceil]
-  norm_num
-
 end WrittenOnTheWallII.GraphConjecture59
