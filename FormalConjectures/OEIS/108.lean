@@ -73,9 +73,8 @@ lemma a_4 : a 4 = 14 := by rfl
 
 
 /--
-A000108 Catalan numbers: C(n) = binomial(2n,n)/(n+1).
-
-The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
+Conjecture: All the rational numbers $\sum_{i=j}^k \frac{1}{a(i)}$ with
+$0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
