@@ -38,9 +38,11 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Set Topology
+open scoped Classical
+
+set_option maxRecDepth 100000
 
 namespace Green14
-
 /--
 The set of natural numbers $N$ such that any 2-coloring of ${1, ..., N}$ contains a monochromatic
 arithmetic progression of length $k$ (color 0) or length $r$ (color 1).
@@ -143,10 +145,251 @@ theorem green_14_variant_2r2 :
        (∃ s : Finset (Icc 1 (2 * r^2 - 1)), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength r ∧ ∀ x ∈ s, c x = 1)) := by
   sorry
 
+-- Helpers for the exact evaluation $W(3,3)=9$.
+
+private def colorOf (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) (n : ℕ) : Fin 2 :=
+  if h : n ∈ Finset.Icc (1 : ℕ) N then
+    c ⟨n, mem_Icc.mpr (Finset.mem_Icc.mp h)⟩
+  else
+    0
+
+@[reducible]
+private def hasMono3AP (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) : Prop :=
+  ∃ a ∈ Finset.Icc (1 : ℕ) N, ∃ d ∈ Finset.Icc (1 : ℕ) N,
+    0 < d ∧ a + 2 * d ∈ Finset.Icc (1 : ℕ) N ∧ a + d ∈ Finset.Icc (1 : ℕ) N ∧
+    colorOf N c a = colorOf N c (a + d) ∧ colorOf N c a = colorOf N c (a + 2 * d)
+
+private lemma isAP_three (a d : ℕ) (hd : 0 < d) :
+    ({a, a + d, a + 2 * d} : Set ℕ).IsAPOfLength 3 := by
+  refine ⟨a, d, ?_, ?_⟩
+  · haveI : Fintype ↑({a, a + d, a + 2 * d} : Set ℕ) := inferInstance
+    rw [ENat.card_eq_coe_fintype_card]
+    norm_cast
+    rw [← Set.toFinset_card]
+    have htf : ({a, a + d, a + 2 * d} : Set ℕ).toFinset = {a, a + d, a + 2 * d} := by
+      ext x; simp
+    rw [htf, Finset.card_insert_of_notMem, Finset.card_insert_of_notMem, Finset.card_singleton]
+    · simp only [Finset.mem_singleton]; omega
+    · simp only [Finset.mem_insert, Finset.mem_singleton]; omega
+  · ext x
+    simp only [mem_setOf_eq, mem_insert_iff, mem_singleton_iff]
+    constructor
+    · rintro (rfl | rfl | rfl)
+      · exact ⟨0, by norm_num, by simp⟩
+      · exact ⟨1, by norm_num, by simp⟩
+      · refine ⟨2, by norm_num, ?_⟩
+        simp only [two_nsmul]
+        ring
+    · rintro ⟨n, hn, rfl⟩
+      have : n < 3 := by exact_mod_cast hn
+      interval_cases n <;> simp
+
+private lemma colorOf_eq (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) {n : ℕ}
+    (hn : n ∈ Finset.Icc (1 : ℕ) N) :
+    colorOf N c n = c ⟨n, mem_Icc.mpr (Finset.mem_Icc.mp hn)⟩ := by
+  simp [colorOf, hn]
+
+private lemma fin2_eq_zero_or_one (x : Fin 2) : x = 0 ∨ x = 1 := by
+  match x with
+  | ⟨0, _⟩ => left; rfl
+  | ⟨1, _⟩ => right; rfl
+
+private lemma hasMono3AP_imp (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) (h : hasMono3AP N c) :
+    (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 0) ∨
+    (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 1) := by
+  obtain ⟨a, ha, d, _hd, hpos, hsum, had, heq1, heq2⟩ := h
+  have haS : a ∈ Icc (1 : ℕ) N := mem_Icc.mpr (Finset.mem_Icc.mp ha)
+  have hadS : a + d ∈ Icc (1 : ℕ) N := mem_Icc.mpr (Finset.mem_Icc.mp had)
+  have hsumS : a + 2 * d ∈ Icc (1 : ℕ) N := mem_Icc.mpr (Finset.mem_Icc.mp hsum)
+  let x0 : Icc 1 N := ⟨a, haS⟩
+  let x1 : Icc 1 N := ⟨a + d, hadS⟩
+  let x2 : Icc 1 N := ⟨a + 2 * d, hsumS⟩
+  have hcol1 : c x0 = c x1 := by
+    have := heq1
+    rwa [colorOf_eq N c ha, colorOf_eq N c had] at this
+  have hcol2 : c x0 = c x2 := by
+    have := heq2
+    rwa [colorOf_eq N c ha, colorOf_eq N c hsum] at this
+  let s : Finset (Icc 1 N) := {x0, x1, x2}
+  have hset : ({(s' : ℕ) | s' ∈ s} : Set ℕ) = {a, a + d, a + 2 * d} := by
+    ext n
+    constructor
+    · intro hn
+      simp only [s, mem_setOf_eq] at hn
+      obtain ⟨s', hs', rfl⟩ := hn
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hs'
+      rcases hs' with rfl | rfl | rfl <;> simp [x0, x1, x2]
+    · intro hn
+      simp only [mem_insert_iff, mem_singleton_iff] at hn
+      simp only [s, mem_setOf_eq]
+      rcases hn with rfl | rfl | rfl
+      · exact ⟨x0, by simp [x0], rfl⟩
+      · exact ⟨x1, by simp [x0, x1], rfl⟩
+      · exact ⟨x2, by simp [x0, x1, x2], rfl⟩
+  have hAP : ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 := by
+    rw [hset]; exact isAP_three a d hpos
+  rcases fin2_eq_zero_or_one (c x0) with h0 | h1
+  · left
+    refine ⟨s, hAP, ?_⟩
+    intro x hx
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl
+    · exact h0
+    · rwa [← hcol1]
+    · rwa [← hcol2]
+  · right
+    refine ⟨s, hAP, ?_⟩
+    intro x hx
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl
+    · exact h1
+    · rwa [← hcol1]
+    · rwa [← hcol2]
+
+private lemma mono_imp_hasMono3AP (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2)
+    (h : (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 0) ∨
+         (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 1)) :
+    hasMono3AP N c := by
+  have extract (col : Fin 2) (s : Finset (Icc 1 N))
+      (hAP : ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3)
+      (hcol : ∀ x ∈ s, c x = col) : hasMono3AP N c := by
+    obtain ⟨a, d, hcard, heq⟩ := hAP
+    have mem0 : a ∈ ({(s' : ℕ) | s' ∈ s} : Set ℕ) := by
+      rw [heq]; exact ⟨0, by norm_num, by simp⟩
+    have mem1 : a + d ∈ ({(s' : ℕ) | s' ∈ s} : Set ℕ) := by
+      rw [heq]; exact ⟨1, by norm_num, by simp⟩
+    have mem2 : a + 2 * d ∈ ({(s' : ℕ) | s' ∈ s} : Set ℕ) := by
+      rw [heq]
+      refine ⟨2, by norm_num, ?_⟩
+      simp only [two_nsmul]
+      ring
+    have hd : 0 < d := by
+      by_contra hdz
+      push_neg at hdz
+      have hd0 : d = 0 := by omega
+      subst hd0
+      have hsing : ({(s' : ℕ) | s' ∈ s} : Set ℕ) = ({a} : Set ℕ) := by
+        rw [heq]
+        ext x
+        simp only [nsmul_zero, add_zero, mem_setOf_eq, mem_singleton_iff]
+        constructor
+        · rintro ⟨n, _hn, rfl⟩; rfl
+        · rintro rfl
+          exact ⟨0, by norm_num, by simp⟩
+      have h1 : ENat.card ({a} : Set ℕ) = 1 := by
+        rw [ENat.card_eq_coe_fintype_card]
+        norm_cast
+      rw [hsing, h1] at hcard
+      exact absurd hcard (by norm_num)
+    have get_mem {m : ℕ} (hm : m ∈ ({(s' : ℕ) | s' ∈ s} : Set ℕ)) :
+        m ∈ Finset.Icc (1 : ℕ) N := by
+      obtain ⟨x, hx, rfl⟩ := hm
+      have px := x.property
+      simp only [mem_Icc] at px
+      simpa [Finset.mem_Icc] using px
+    have ha := get_mem mem0
+    have had := get_mem mem1
+    have hsum := get_mem mem2
+    have hd_mem : d ∈ Finset.Icc (1 : ℕ) N := by
+      have hsum' := Finset.mem_Icc.mp hsum
+      have ha' := Finset.mem_Icc.mp ha
+      simp only [Finset.mem_Icc]
+      constructor <;> omega
+    have col_eq {m : ℕ} (hm_set : m ∈ ({(s' : ℕ) | s' ∈ s} : Set ℕ))
+        (hm : m ∈ Finset.Icc (1 : ℕ) N) :
+        colorOf N c m = col := by
+      obtain ⟨x, hx, hxe⟩ := hm_set
+      have hxe' : x = ⟨m, mem_Icc.mpr (Finset.mem_Icc.mp hm)⟩ := Subtype.ext hxe
+      rw [colorOf_eq N c hm, ← hxe', hcol x hx]
+    refine ⟨a, ha, d, hd_mem, hd, hsum, had, ?_, ?_⟩
+    · rw [col_eq mem0 ha, col_eq mem1 had]
+    · rw [col_eq mem0 ha, col_eq mem2 hsum]
+  rcases h with ⟨s, hAP, hcol⟩ | ⟨s, hAP, hcol⟩
+  · exact extract 0 s hAP hcol
+  · exact extract 1 s hAP hcol
+
+private lemma all_colorings_9 : ∀ c : Icc (1 : ℕ) 9 → Fin 2, hasMono3AP 9 c := by
+  decide
+
+private lemma nine_in : 9 ∈ mixedMonoAPGuaranteeSet 3 3 := by
+  intro c
+  exact hasMono3AP_imp 9 c (all_colorings_9 c)
+
+private def avoid8 : Icc (1 : ℕ) 8 → Fin 2
+  | ⟨x, _⟩ => if x = 1 ∨ x = 2 ∨ x = 5 ∨ x = 6 then (0 : Fin 2) else (1 : Fin 2)
+
+private lemma avoid8_no_mono : ¬ hasMono3AP 8 avoid8 := by
+  decide
+
+private lemma eight_not_in : 8 ∉ mixedMonoAPGuaranteeSet 3 3 := by
+  intro h
+  exact avoid8_no_mono (mono_imp_hasMono3AP 8 avoid8 (h avoid8))
+
+private lemma not_mem_of_le {k r n N : ℕ} (hle : n ≤ N)
+    (hN : N ∉ mixedMonoAPGuaranteeSet k r) : n ∉ mixedMonoAPGuaranteeSet k r := by
+  intro hn
+  apply hN
+  intro cN
+  let c : Icc 1 n → Fin 2 := fun x =>
+    cN ⟨x.1, mem_Icc.mpr ⟨(mem_Icc.mp x.2).1, le_trans (mem_Icc.mp x.2).2 hle⟩⟩
+  have lift_set (s : Finset (Icc 1 n)) :
+      ∃ sN : Finset (Icc 1 N),
+        ({(s' : ℕ) | s' ∈ sN} : Set ℕ) = ({(s' : ℕ) | s' ∈ s} : Set ℕ) ∧
+        ∀ x ∈ sN, ∃ y ∈ s, (x : ℕ) = (y : ℕ) := by
+    let sN : Finset (Icc 1 N) :=
+      s.image fun x => ⟨x.1, mem_Icc.mpr ⟨(mem_Icc.mp x.2).1, le_trans (mem_Icc.mp x.2).2 hle⟩⟩
+    refine ⟨sN, ?_, ?_⟩
+    · ext m
+      constructor
+      · intro hm
+        simp only [sN, mem_setOf_eq] at hm
+        obtain ⟨xN, hxN, rfl⟩ := hm
+        simp only [Finset.mem_image] at hxN
+        obtain ⟨y, hy, rfl⟩ := hxN
+        exact ⟨y, hy, rfl⟩
+      · intro hm
+        simp only [mem_setOf_eq] at hm
+        obtain ⟨y, hy, rfl⟩ := hm
+        refine ⟨⟨y.1, mem_Icc.mpr ⟨(mem_Icc.mp y.2).1, le_trans (mem_Icc.mp y.2).2 hle⟩⟩, ?_, rfl⟩
+        simp only [sN, Finset.mem_image]
+        exact ⟨y, hy, rfl⟩
+    · intro x hx
+      simp only [sN, Finset.mem_image] at hx
+      obtain ⟨y, hy, rfl⟩ := hx
+      exact ⟨y, hy, rfl⟩
+  rcases hn c with ⟨s, hAP, hcol⟩ | ⟨s, hAP, hcol⟩
+  · obtain ⟨sN, hset, hmem⟩ := lift_set s
+    left
+    refine ⟨sN, ?_, ?_⟩
+    · rwa [hset]
+    · intro x hx
+      obtain ⟨y, hy, hyeq⟩ := hmem x hx
+      have : x = ⟨y.1, mem_Icc.mpr ⟨(mem_Icc.mp y.2).1, le_trans (mem_Icc.mp y.2).2 hle⟩⟩ :=
+        Subtype.ext hyeq
+      rw [this]
+      simpa [c] using hcol y hy
+  · obtain ⟨sN, hset, hmem⟩ := lift_set s
+    right
+    refine ⟨sN, ?_, ?_⟩
+    · rwa [hset]
+    · intro x hx
+      obtain ⟨y, hy, hyeq⟩ := hmem x hx
+      have : x = ⟨y.1, mem_Icc.mpr ⟨(mem_Icc.mp y.2).1, le_trans (mem_Icc.mp y.2).2 hle⟩⟩ :=
+        Subtype.ext hyeq
+      rw [this]
+      simpa [c] using hcol y hy
+
 -- Known exact values for `W(3,r)` from [AKS14].
 /-- $W(3, 3) = 9$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
-theorem W_3_3 : W 3 3 = 9 := by sorry
+theorem W_3_3 : W 3 3 = 9 := by
+  apply IsLeast.csInf_eq
+  refine ⟨nine_in, ?_⟩
+  intro m hm
+  by_contra hlt
+  simp only [not_le] at hlt
+  have hm8 : m ≤ 8 := by omega
+  exact absurd hm (not_mem_of_le hm8 eight_not_in)
 
 /-- $W(3, 4) = 18$ from [AKS14]. -/
 @[category research solved, AMS 5 11]
