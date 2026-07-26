@@ -90,8 +90,7 @@ lemma a_4 : a 4 = 8 := by rfl
 
 
 /--
-A382590: $a(n)$ where $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$.
-For any $k \ge 2$, the sequence of $k$-th prime factors of $a(n)$ is ultimately periodic.
+Conjecture: For any $k > 1$, if you take the $k$-th prime factor of each term, you get an eventually periodic sequence. - _Pontus von Brömssen_, Mar 30 2025
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

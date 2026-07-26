@@ -82,12 +82,7 @@ lemma a_4 : a 4 = 6 := by rfl
 
 
 /--
-A325046: G.f.: $\sum_{n \ge 0} x^n \cdot \frac{(1 + x^n)^n}{(1 - x^{n+1})^{n+1}}$.
-
-The term $a(N)$ is the coefficient of $x^N$ in the generating function.
-Expanding the terms, we get a formula for $a(N)$:
-$$a(N) = \sum_{n=0}^N \sum_{k=0}^n \mathbf{1}_{n + nk + (n+1)j = N} \binom{n}{k} \binom{n+j}{j}$$
-where $j = \frac{N - n(k+1)}{n+1}$.
+Conjecture: Odd terms occur only at positions $n(n+1)$ for $n \ge 0$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

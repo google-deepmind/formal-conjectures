@@ -70,9 +70,7 @@ lemma a_5 : a 5 = 42 := by rfl
 
 
 /--
-A091669: $a(n) = \frac{2^{n-1}}{n!} \prod_{k=1}^{n-1} (2^k-1)$.
-The sequence $a(n)$ is composed of natural numbers, thus we define it
-as a function $\mathbb{N} \to \mathbb{N}$.
+Conjecture (for $n > 2$): if $n \mid a(n-1) + 2^{n-2}$, then $n$ is a prime with primitive root 2 (A001122). - _Amiram Eldar_ and _Thomas Ordowski_, Jan 19 2020
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

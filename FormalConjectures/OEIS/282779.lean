@@ -59,12 +59,7 @@ noncomputable def period_of_power_mod (p n : ℕ) : ℕ :=
 
 
 /--
-a: Period of cubes mod $n$.
-The $n$-th term $a(n)$ is the smallest positive integer $T$ such that
-$\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
-
-The length of the minimal positive period of the sequence $k^p \pmod n$.
-$a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
+Conjecture: let $a_p(n)$ be the length of the period of the sequence $k^p \bmod n$ where $p$ is a prime, then $a_p(n) = n/p$ if $n \equiv 0 \pmod{p^2}$, else $a_p(n) = n$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

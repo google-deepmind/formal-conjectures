@@ -88,10 +88,7 @@ lemma a_5 : a 5 = 6 := by sorry
 
 
 /--
-A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
-automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of
-its mass, rounded down, to its right neighbor".
-The stable configuration is $n$ cells with mass 1.
+Conjecture: It appears that the finite difference of this sequence only contains 1's and 2's.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

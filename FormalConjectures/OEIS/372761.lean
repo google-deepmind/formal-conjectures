@@ -104,8 +104,7 @@ lemma a_7 : a 7 = 31 := by
 
 
 /--
-A372761: $a(n)$ is the integer part of the continued fraction $n - \frac{n}{n-1 - \frac{n}{n-2 - \dots - \frac{n}{2}}}$.
-Every prime appears exactly once in the sequence.
+Conjecture: Except for 3 and 5, all odd primes appear in the sequence once. - _Thomas Scheuerle_, May 11 2024
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

@@ -152,8 +152,7 @@ lemma a_5 : a 5 = 21 := by
 
 
 /--
-A341254: $a(n) = \lfloor n r^2 \rfloor - n$, where $r = (2+\sqrt{5})/2$.
-It is conjectured that $(1/4) < n r^2 - a(n) < 3$ for $n \ge 1$.
+Conjecture: $1/4 < n r^2 - a(n) < 3$ for $n \ge 1$, where $r = (2 + \sqrt{5})/2$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

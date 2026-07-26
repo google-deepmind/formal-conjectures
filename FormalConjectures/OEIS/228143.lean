@@ -84,12 +84,7 @@ lemma a_4 : a 4 = 674708032182398976 := by native_decide
 
 
 /--
-A005259: The auxiliary sequence used for the Hankel matrix, defined as
-$$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
-
-A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
-$(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
-The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
+Conjecture: if $A(x) = 1 + 48x + 161856 x^2 + \cdots$ denotes the o.g.f. then $A(x/3)^{1/8}$ has integer coefficients. - _Peter Bala_, Apr 22 2018
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

@@ -73,10 +73,7 @@ lemma a_5 : a 5 = 1 := by delta a; norm_num [bernoulli]
 
 
 /--
-A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
-
-Definition of a Carmichael number $n$: a composite number s.t.
-$b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$.
+Conjecture: composite numbers $n$ such that $a(n)$ is squarefree are only the Carmichael numbers (A002997). - _Thomas Ordowski_, Jul 15 2019
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

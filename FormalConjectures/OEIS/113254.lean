@@ -68,11 +68,7 @@ lemma a_4 : a 4 = -15616 := by rfl
 
 
 /--
-A113254: Corresponds to $m = 8$ in a family of 4th-order linear recurrence sequences.
-
-The sequence $a(n)$ is defined by the initial conditions $a(0)=-1, a(1)=4, a(2)=176, a(3)=3136$,
-and the linear recurrence relation
-$a(n) = -4 * a (n-1) + 256 * a (n-3) + 4096 * a (n-4)$ for $n \ge 4$.
+Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

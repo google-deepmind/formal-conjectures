@@ -96,15 +96,7 @@ lemma a_4 : a 4 = 23 := by
 
 
 /--
-a: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1$,
-$a(n) = -1 \text{ if there is no such } k$.
-This is equivalent to finding the smallest $k \in \mathbb{N}$
-such that $k^2 \oplus (k+1)^2 = (2n+1)^2$.
-We use the set infimum ($\operatorname{sInf}$) to denote the least element
-of the set of natural numbers satisfying the condition.
-Since Mathlib's `sInf` on a subset of `ℕ` gives a result in `ℕ`, this definition
-is only completely faithful to the OEIS when the set is non-empty.
-The OEIS definition implies that the set of k's is non-empty for all n.
+Conjecture: $a(n) \ge 0$, i.e., for every $n$ there exists $k$ such that $\sqrt{k^2 \oplus (k+1)^2} = 2n+1$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

@@ -59,7 +59,7 @@ lemma a_4 : a 4 = 60 := by native_decide
 
 
 /--
-A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$.
+Conjecture: Also the number of compositions of $n$ into positive integers such that adjacent parts and the largest part differ by at most 1. - _Gus Wiseman_, May 19 2020
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

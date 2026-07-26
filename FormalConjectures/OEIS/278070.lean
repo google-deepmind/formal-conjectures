@@ -64,11 +64,7 @@ lemma a_4 : a 4 = 1457 := by rfl
 
 
 /--
-a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
-This is equivalent to the combinatorial sum:
-$$a(n) = \sum_{k=0}^n \binom{n}{k} \binom{n+k-1}{k} k!$$
-The expression uses $\mathbb{N}$ arithmetic throughout, safely handling
-the subtraction via `Nat.pred`.
+Conjecture: $a(n+k) \equiv a(n) \pmod{k}$ for all $n$ and $k$. - _Peter Bala_, Mar 12 2023
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

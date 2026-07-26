@@ -60,9 +60,7 @@ lemma a_5 : a 5 = -91090 := by rfl
 
 
 /--
-A243106: The sequence
-$$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$
-where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
+Conjecture: When expressed in base $b \ge 5$, the absolute value of any partial sum $\sum \pm b^k$ only contains digits belonging to $\{0, 1, b-2, b-1\}$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

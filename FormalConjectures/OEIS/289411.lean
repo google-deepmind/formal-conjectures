@@ -64,9 +64,7 @@ lemma a_4 : a 4 = 0 := by native_decide
 
 
 /--
-a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
-$\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.
-The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mathbb{N}$.
+Conjecture: For $k \ge 1$, let $m_k = 10^k / 2 - 1$. Then for $i = 0, \ldots, m_k$, we have $a(m_k - i) = a(m_k + i)$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

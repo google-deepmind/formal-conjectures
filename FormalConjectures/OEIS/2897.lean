@@ -88,12 +88,7 @@ lemma a_4 : a 4 = 343000 := by rfl
 
 
 /--
-The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
-We use `Nat.choose (2 * n) n` for the central binomial coefficient.
-
-The finsupp corresponding to the monomial $x^n y^n z^n$.
-This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
-We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
+Conjecture: $a(n) = [x^n y^n z^n] (1+x+y+z)^{2n} (1+x+y-z)^n (1+x-y+z)^n$. - _Peter Bala_, Apr 10 2022
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

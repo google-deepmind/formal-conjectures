@@ -127,12 +127,7 @@ lemma a_5 : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; si
 
 
 /--
-a: Numerators of a sequence of fractions converging to $e$.
-$$a(1) = 3, a(2) = 5$$
-For $n > 2$:
-$$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
-\left(\frac{n-2}{2}\right) a(n-3)
-& \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+Conjecture: $\lim_{n \to \infty} a(n) / b(n) = e$, where $b(n)$ is the companion denominator sequence.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

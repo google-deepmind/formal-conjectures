@@ -102,8 +102,7 @@ lemma a_5 : a 5 = 5 := by
 
 
 /--
-A062567: First multiple of $n$ whose reverse is also divisible by $n$, or 0 if no such multiple exists.
-$a(3^n) = 10^{3^{n-2}} - 1$ for $n \in \{2, 3, 4\}$.
+Conjecture: For $n > 1$, $a(3^n) = 10^{3^{n-2}} - 1$. Disproved for $n > 4$ by _Farideh Firoozbakht_, Nov 13 2005.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

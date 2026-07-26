@@ -88,8 +88,7 @@ lemma a_7 : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; 
 
 
 /--
-A363347: $a(n) = n - \frac{n}{n-1 - \frac{n}{n-2 - \dots - \frac{n}{2}}}$.
-For every prime $p \equiv 1 \text{ or } 9 \pmod{10}$, there exists $n$ such that $a(n) = p$.
+Conjecture: The sequence contains all prime numbers which end with a 1 or 9 (i.e., primes $p \equiv 1$ or $9 \pmod{10}$).
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

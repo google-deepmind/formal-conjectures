@@ -77,10 +77,7 @@ lemma a_4 : a 4 = 2 := by rfl
 
 
 /--
-A323557: G.f.: $\sum_{n\ge 0} x^n \cdot \frac{(1 + x^n)^n}{(1 + x^{n+1})^{n+1}}$.
-The $m$-th term $a(m)$ is the coefficient of $x^m$, which is explicitly given by the sum:
-$$ a(m) = \sum_{n=0}^m \sum_{k=0}^n \binom{n}{k} (-1)^j \binom{n+j}{j},$$
-where $j = \frac{m - n(k+1)}{n+1}$, and the term is zero unless $j$ is a natural number.
+Conjecture: Odd terms occur only at positions $n(n+1)$ for $n \ge 0$ (verified for initial 32600 terms).
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

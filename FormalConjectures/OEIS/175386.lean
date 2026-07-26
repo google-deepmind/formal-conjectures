@@ -70,10 +70,7 @@ lemma a_5 : a 5 = 5 := by native_decide
 
 
 /--
-A175386: $a(n)$ is the denominator of the sum
-$$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
-
-The sum which A175386 $a(n)$ is the denominator of.
+We conjecture that $\sum_{i=1}^{n} \frac{1}{i} \binom{2n-i-1}{i-1}$ is not an integer for $n > 1$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

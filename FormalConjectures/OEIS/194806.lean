@@ -103,11 +103,7 @@ lemma a_5 : a 5 = 4 := by rfl
 
 
 /--
-The set of all products of elements from a Finset S.
-
-A194806: Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
-such that $S \cdot S$ contains $T$,
-where $S \cdot S$ is the set of all products of elements of $S$.
+Is $a(n) / \pi(n)$ bounded as $n \to \infty$? - _Robert Israel_, Jan 09 2017
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

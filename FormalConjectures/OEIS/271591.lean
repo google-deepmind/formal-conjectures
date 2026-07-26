@@ -87,11 +87,7 @@ lemma a_8 : a 8 = 1 := by rfl
 
 
 /--
-The Tribonacci numbers $T_n$ (A000073).
-$T_0=0, T_1=0, T_2=1$, and $T_n = T_{n-1} + T_{n-2} + T_{n-3}$ for $n \ge 3$.
-
-A271591: Second most significant bit of the tribonacci number A000073(n).
-This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor - 1$.
+It is conjectured that after the first two 0's, the number of consecutive 0's is only 4 or 5, and the number of consecutive 1's is only 3 or 4 (tested up to $n = 10^4$).
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

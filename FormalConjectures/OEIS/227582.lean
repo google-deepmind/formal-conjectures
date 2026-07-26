@@ -77,11 +77,7 @@ lemma a_5 : a 5 = 35 := by dsimp [a]; native_decide
 
 
 /--
-The sequence $b_n$ such that $A227582(n) = b_{n-1}$ for $n \ge 1$.
-This is the 0-indexed solution to the linear recurrence in $\mathbb{Z}$.
-
-A227582: Expansion of $(2+3*x+2*x^2+2*x^3+3*x^4+x^5-x^6)/(1-2x+x^2-x^5+2*x^6-x^7)$.
-The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-indexed solution.
+Conjecture: $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$, where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

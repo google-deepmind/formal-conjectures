@@ -74,12 +74,7 @@ lemma a_4 : a 4 = 0 := by rfl
 
 
 /--
-A307865: $a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
-The bases $b$ are interpreted as $b \in \{1, 2, \dots, 2n\}$.
-We check the condition in the ring $\mathbb{Z}/(2n+1)\mathbb{Z}$.
-
-A natural number $m > 1$ is an absolute Euler pseudoprime if it is composite and
-for all $b$ coprime to $m$, $b^{(m-1)/2} \equiv \pm 1 \pmod m$.
+Conjecture: if $2n+1$ is an absolute Euler pseudoprime, then $a(n) = 0$.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/

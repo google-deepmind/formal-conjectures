@@ -67,11 +67,7 @@ lemma a_5 : a 5 = 5 := by sorry
 
 
 /--
-A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
-$b = 3..k-1$ never contains more than two distinct digits.
-
-The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
-$b = 3..k-1$ never contains more than two distinct digits.
+Conjecture: The sequence is finite, with 43 being the last term.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
