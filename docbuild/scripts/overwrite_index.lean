@@ -15,11 +15,11 @@ limitations under the License.
 -/
 module
 
-public import MD4Lean
+public meta import MD4Lean
 public import Lean
 public import Batteries.Data.String.Matcher
 public import FormalConjecturesUtil.Attributes.Basic
-public import Mathlib.Data.String.Defs
+public meta import Mathlib.Data.String.Defs
 
 @[expose] public section
 
@@ -29,7 +29,7 @@ open ProblemAttributes
 
 -- TODO(firsching): make it possible to search for attributes in doc-gen4, likely depends on
 -- https://github.com/google-deepmind/formal-conjectures/issues/5
-def getCategoryStatsMarkdown : CoreM String := do
+meta def getCategoryStatsMarkdown : CoreM String := do
   let stats ← getCategoryStats
   let formalProofCount := (← getFormalProofTags).size
   let githubSearchBaseUrl := "https://github.com/search?type=code&q=repo%3Agoogle-deepmind%2Fformal-conjectures+"
@@ -44,7 +44,7 @@ def getCategoryStatsMarkdown : CoreM String := do
 
 -- TODO(firsching): make it possible to search for subjects in doc-gen4, likely depends on
 -- https://github.com/google-deepmind/formal-conjectures/issues/5
-def getSubjectStatsMarkdown : CoreM String := do
+meta def getSubjectStatsMarkdown : CoreM String := do
   let tags ← getSubjectTags
 
   let mut counts : Std.HashMap AMS Nat := {}
@@ -65,7 +65,7 @@ def getSubjectStatsMarkdown : CoreM String := do
   return markdownTable
 
 -- TODO(firsching): instead of re-inventing the wheel here use some html parsing library?
-def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String := do
+meta def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) : IO String := do
   let openTag := s!"<{tag}>"
   let closeTag := s!"</{tag}>"
 
@@ -99,7 +99,7 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
 Runs a `CoreM α` action in an environment where all FormalConjectures modules are imported.
 This is useful for accessing declarations and attributes defined in the project.
 -/
-unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
+meta unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   -- This assumes a run of `lake exe mk_all; mv FormalConjectures.lean FormalConjectures/All.lean` took place before.
   -- TODO(firsching): avoid this by instead using `Lake.Glob.forEachModuleIn` to generate a list of all modules instead.
   -- Then it would be easily possible to sort out the statements from the Util dir (in tests),
@@ -115,7 +115,7 @@ unsafe def runWithImports {α : Type} (actionToRun : CoreM α) : IO α := do
   let (result, _newState) ← Core.CoreM.toIO actionToRun currentCtx { env := env }
   return result
 
-unsafe def main (args : List String) : IO Unit := do
+meta unsafe def main (args : List String) : IO Unit := do
   let .some (file : String) := args[0]?
     | IO.println "Usage: stats <file>
 overwrites the contents of the `main` tag of a html `file` with a welcome page including stats."
