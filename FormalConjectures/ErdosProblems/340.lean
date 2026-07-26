@@ -32,10 +32,12 @@ namespace Erdos340
 
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
+  unfold greedySidon.go
   decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
+  unfold greedySidon.go Finset.instDecidableIsSidonCoeOfDecidableEq
   decide +native
 
 @[category test, AMS 5]
@@ -43,6 +45,7 @@ theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
+  unfold greedySidon greedySidon.aux greedySidon.go Finset.instDecidableIsSidonCoeOfDecidableEq
   decide +native
 
 @[category test, AMS 5]

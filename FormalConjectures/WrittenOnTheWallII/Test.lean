@@ -89,18 +89,18 @@ theorem house_dom : dominationNumber HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist HouseGraph = (7 / 5 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist HouseGraph = (7 / 5 : ℚ) from by decide]
   norm_num
 
 @[category test, AMS 5]
 theorem house_diameter : ediam HouseGraph = 2 := by
   rw [ediam_eq_computable HouseGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam HouseGraph = 2)
+  exact_mod_cast (by decide : computable_ediam HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_radius : radius HouseGraph = 2 := by
   rw [radius_eq_computable HouseGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_radius HouseGraph = 2)
+  exact_mod_cast (by decide : computable_radius HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_girth : HouseGraph.girth = 3 := by
@@ -109,9 +109,9 @@ theorem house_girth : HouseGraph.girth = 3 := by
       (Walk.cons (show HouseGraph.Adj 4 2 by decide) Walk.nil))).IsCycle := by
     rw [Walk.isCycle_def]
     refine ⟨?_, ?_, ?_⟩
-    · rw [Walk.isTrail_def]; decide
+    · rw [Walk.isTrail_def]; decide +native
     · simp
-    · decide
+    · decide +native
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
   simpa using girth_le_length hcyc
 
@@ -191,18 +191,18 @@ theorem K4_dom : dominationNumber K4 = 1 := by
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide]
   norm_num
 
 @[category test, AMS 5]
 theorem K4_diameter : ediam K4 = 1 := by
   rw [ediam_eq_computable K4 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam K4 = 1)
+  exact_mod_cast (by decide : computable_ediam K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_radius : radius K4 = 1 := by
   rw [radius_eq_computable K4 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius K4 = 1)
+  exact_mod_cast (by decide : computable_radius K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_girth : K4.girth = 3 := by
@@ -211,9 +211,9 @@ theorem K4_girth : K4.girth = 3 := by
       (Walk.cons (show K4.Adj 2 0 by decide) Walk.nil))).IsCycle := by
     rw [Walk.isCycle_def]
     refine ⟨?_, ?_, ?_⟩
-    · rw [Walk.isTrail_def]; decide
+    · rw [Walk.isTrail_def]; decide +native
     · simp
-    · decide
+    · decide +native
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
   simpa using girth_le_length hcyc
 
@@ -293,18 +293,18 @@ theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide]
   norm_num
 
 @[category test, AMS 5]
 theorem petersen_diameter : ediam PetersenGraph = 2 := by
   rw [ediam_eq_computable PetersenGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam PetersenGraph = 2)
+  exact_mod_cast (by decide : computable_ediam PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_radius : radius PetersenGraph = 2 := by
   rw [radius_eq_computable PetersenGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_radius PetersenGraph = 2)
+  exact_mod_cast (by decide : computable_radius PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
@@ -398,18 +398,18 @@ theorem C6_dom : dominationNumber C6 = 2 := by
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide]
   norm_num
 
 @[category test, AMS 5]
 theorem C6_diameter : ediam C6 = 3 := by
   rw [ediam_eq_computable C6 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam C6 = 3)
+  exact_mod_cast (by decide : computable_ediam C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_radius : radius C6 = 3 := by
   rw [radius_eq_computable C6 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius C6 = 3)
+  exact_mod_cast (by decide : computable_radius C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
@@ -494,18 +494,18 @@ theorem Star5_dom : dominationNumber Star5 = 1 := by
 
 @[category test, AMS 5]
 theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide]
   norm_num
 
 @[category test, AMS 5]
 theorem Star5_diameter : ediam Star5 = 2 := by
   rw [ediam_eq_computable Star5 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam Star5 = 2)
+  exact_mod_cast (by decide : computable_ediam Star5 = 2)
 
 @[category test, AMS 5]
 theorem Star5_radius : radius Star5 = 1 := by
   rw [radius_eq_computable Star5 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius Star5 = 1)
+  exact_mod_cast (by decide : computable_radius Star5 = 1)
 
 @[category test, AMS 5]
 theorem Star5_girth : Star5.egirth = ⊤ := by
