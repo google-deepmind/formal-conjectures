@@ -57,6 +57,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 (the neighbourhood of 0 consists of only vertex 1, which has no independent edges). -/
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 2)).maxDegree = 1 := by
-  decide +native
+  decide
 
 end WrittenOnTheWallII.GraphConjecture13

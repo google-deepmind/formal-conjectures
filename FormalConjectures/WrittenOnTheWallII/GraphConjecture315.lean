@@ -63,31 +63,31 @@ so there are exactly $2$ pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3))).card = 2 := by
   unfold pendantVertices
-  decide +native
+  decide
 
 /-- In $K_3$, all vertices have degree $2$, so there are no pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊤ : SimpleGraph (Fin 3))).card = 0 := by
   unfold pendantVertices
-  decide +native
+  decide
 
 /-- In $K_2$, both vertices have degree $1$, so both are pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊤ : SimpleGraph (Fin 2))).card = 2 := by
   unfold pendantVertices
-  decide +native
+  decide
 
 /-- In $K_2$, the pendant set is exactly $\{0, 1\}$. -/
 @[category test, AMS 5]
 example : pendantVertices (⊤ : SimpleGraph (Fin 2)) = Finset.univ := by
   unfold pendantVertices
-  decide +native
+  decide
 
 /-- In the edgeless graph on $3$ vertices, no vertex has degree $1$, so there are $0$ pendant vertices. -/
 @[category test, AMS 5]
 example : (pendantVertices (⊥ : SimpleGraph (Fin 3))).card = 0 := by
   unfold pendantVertices
-  decide +native
+  decide
 
 /-- $\{0, 1\}$ is a total dominating set of $K_2$: every vertex has a neighbor in $\{0, 1\}$. -/
 @[category test, AMS 5]

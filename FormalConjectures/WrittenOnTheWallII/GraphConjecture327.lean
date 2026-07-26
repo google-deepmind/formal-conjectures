@@ -76,10 +76,10 @@ theorem conjecture327 : answer(False) ↔
 
 /-- In `K₂`, the max degree is 1 (each vertex has exactly one neighbor). -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 2)).maxDegree = 1 := by decide +native
+example : (⊤ : SimpleGraph (Fin 2)).maxDegree = 1 := by decide
 
 /-- In the path graph `P₃`, vertex 1 has degree 2. -/
 @[category test, AMS 5]
 example : (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)).degree 1 = 2 := by
-  decide +native
+  decide
 end WrittenOnTheWallII.GraphConjecture327

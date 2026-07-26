@@ -121,7 +121,7 @@ theorem conjecture291 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In the path $P_3$, vertex $1$ has no triangles incident to it
 ($0$ and $2$ are neighbors of $1$ but not adjacent to each other). -/
@@ -129,13 +129,13 @@ example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
 example : numTrianglesAtVertex
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In $K_3$, the minimum triangle count is $1$ (every vertex has $1$ triangle). -/
 @[category test, AMS 5]
 example : minTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) = 1 := by
   unfold minTrianglesAtVertex numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- `havelHakimiZeroStep` is nonneg. -/
 @[category test, AMS 5]

@@ -56,6 +56,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
 /-- In `K₂`, the max degree is 1. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 2)).maxDegree = 1 := by decide +native
+example : (⊤ : SimpleGraph (Fin 2)).maxDegree = 1 := by decide
 
 end WrittenOnTheWallII.GraphConjecture16

@@ -56,7 +56,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero
 /-- In the complete graph `K₃`, min degree equals max degree (regular graph). -/
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).minDegree = (⊤ : SimpleGraph (Fin 3)).maxDegree := by
-  decide +native
+  decide
 
 /-- `distMin G S` is always nonneg. -/
 @[category test, AMS 5]

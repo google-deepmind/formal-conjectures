@@ -33,12 +33,12 @@ namespace Erdos340
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
   unfold greedySidon.go
-  decide +native
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
   unfold greedySidon.go Finset.instDecidableIsSidonCoeOfDecidableEq
-  decide +native
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_zero : greedySidon 0 = 1 := rfl
@@ -46,26 +46,28 @@ theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
   unfold greedySidon greedySidon.aux greedySidon.go Finset.instDecidableIsSidonCoeOfDecidableEq
-  decide +native
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
-  decide +native
+  unfold greedySidon
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_three : greedySidon 3 = 8 := by
-  decide +native
+  native_decide
+
 @[category test, AMS 5]
 theorem greedySidon_four : greedySidon 4 = 13 := by
-  decide +native
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_five : greedySidon 5 = 21 := by
-  decide +native
+  native_decide
 
 @[category test, AMS 5]
 theorem greedySidon_ten : greedySidon 10 = 97 := by
-  decide +native
+  native_decide
 
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
@@ -124,7 +126,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by decide +native
+  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by native_decide
   rw [h]
   exact Set.sub_mem_sub (Set.mem_range_self 14) (Set.mem_range_self 13)
 

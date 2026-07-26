@@ -55,10 +55,10 @@ theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connecte
 
 /-- In `K₄`, all vertices have degree 3. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide +native
+example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide
 
 /-- In the edgeless graph `⊥` on 5 vertices, the minimum degree is 0. -/
 @[category test, AMS 5]
-example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide +native
+example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide
 
 end WrittenOnTheWallII.GraphConjecture322
