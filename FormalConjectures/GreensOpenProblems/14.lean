@@ -159,6 +159,7 @@ private def hasMono3AP (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) : Prop :=
     0 < d ∧ a + 2 * d ∈ Finset.Icc (1 : ℕ) N ∧ a + d ∈ Finset.Icc (1 : ℕ) N ∧
     colorOf N c a = colorOf N c (a + d) ∧ colorOf N c a = colorOf N c (a + 2 * d)
 
+@[category test, AMS 5 11]
 private lemma isAP_three (a d : ℕ) (hd : 0 < d) :
     ({a, a + d, a + 2 * d} : Set ℕ).IsAPOfLength 3 := by
   refine ⟨a, d, ?_, ?_⟩
@@ -184,16 +185,19 @@ private lemma isAP_three (a d : ℕ) (hd : 0 < d) :
       have : n < 3 := by exact_mod_cast hn
       interval_cases n <;> simp
 
+@[category test, AMS 5 11]
 private lemma colorOf_eq (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) {n : ℕ}
     (hn : n ∈ Finset.Icc (1 : ℕ) N) :
     colorOf N c n = c ⟨n, mem_Icc.mpr (Finset.mem_Icc.mp hn)⟩ := by
   simp [colorOf, hn]
 
+@[category test, AMS 5 11]
 private lemma fin2_eq_zero_or_one (x : Fin 2) : x = 0 ∨ x = 1 := by
   match x with
   | ⟨0, _⟩ => left; rfl
   | ⟨1, _⟩ => right; rfl
 
+@[category test, AMS 5 11]
 private lemma hasMono3AP_imp (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) (h : hasMono3AP N c) :
     (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 0) ∨
     (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 1) := by
@@ -246,6 +250,7 @@ private lemma hasMono3AP_imp (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) (h : hasM
     · rwa [← hcol1]
     · rwa [← hcol2]
 
+@[category test, AMS 5 11]
 private lemma mono_imp_hasMono3AP (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2)
     (h : (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 0) ∨
          (∃ s : Finset (Icc 1 N), ({(s' : ℕ) | s' ∈ s}).IsAPOfLength 3 ∧ ∀ x ∈ s, c x = 1)) :
@@ -308,9 +313,11 @@ private lemma mono_imp_hasMono3AP (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2)
   · exact extract 0 s hAP hcol
   · exact extract 1 s hAP hcol
 
+@[category test, AMS 5 11]
 private lemma all_colorings_9 : ∀ c : Icc (1 : ℕ) 9 → Fin 2, hasMono3AP 9 c := by
   decide
 
+@[category test, AMS 5 11]
 private lemma nine_in : 9 ∈ mixedMonoAPGuaranteeSet 3 3 := by
   intro c
   exact hasMono3AP_imp 9 c (all_colorings_9 c)
@@ -318,13 +325,16 @@ private lemma nine_in : 9 ∈ mixedMonoAPGuaranteeSet 3 3 := by
 private def avoid8 : Icc (1 : ℕ) 8 → Fin 2
   | ⟨x, _⟩ => if x = 1 ∨ x = 2 ∨ x = 5 ∨ x = 6 then (0 : Fin 2) else (1 : Fin 2)
 
+@[category test, AMS 5 11]
 private lemma avoid8_no_mono : ¬ hasMono3AP 8 avoid8 := by
   decide
 
+@[category test, AMS 5 11]
 private lemma eight_not_in : 8 ∉ mixedMonoAPGuaranteeSet 3 3 := by
   intro h
   exact avoid8_no_mono (mono_imp_hasMono3AP 8 avoid8 (h avoid8))
 
+@[category test, AMS 5 11]
 private lemma not_mem_of_le {k r n N : ℕ} (hle : n ≤ N)
     (hN : N ∉ mixedMonoAPGuaranteeSet k r) : n ∉ mixedMonoAPGuaranteeSet k r := by
   intro hn
