@@ -96,6 +96,7 @@ jobs:
 
       - name: Build project
         if: steps.mode.outputs.website_only != 'true'
+        timeout-minutes: 30
         run: |
           lake --wfail build
 
@@ -191,7 +192,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
 
       - name: Generate conjectures data for website
         if: steps.mode.outputs.website_only != 'true'
