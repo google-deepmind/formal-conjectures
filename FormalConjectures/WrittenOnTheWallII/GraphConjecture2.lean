@@ -37,7 +37,9 @@ For a simple connected graph `G`,
 `Ls(G) ≥ 2 · (l(G) - 1)` where `l(G)` is the average independence number of
 the neighbourhoods of the vertices of `G`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/wowii-graph-conjecture-2-lean/blob/fc6cc1f5b857e9c3f9693b98587660eb09606abc/lean/GraphConjecture2.lean"]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
   2 * (averageIndepNeighbors G - 1) ≤ Ls G := by sorry
 
