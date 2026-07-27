@@ -123,7 +123,8 @@ domain is the compact interval $[0,1]$, this also explains why no separate
 boundedness assumption is included here. The variants below record the unknown
 smoothness threshold more explicitly.
 -/
-@[category research open, AMS 26 40 47]
+@[category research solved, AMS 26 40 47,
+  formal_proof using lean4 at "https://github.com/KitaKen1/bezier-bernstein-voronovskaja-lean/blob/3f35c631d215b3841242275bf3ed2c59ea153a2d/Voronovskaja.lean"]
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
