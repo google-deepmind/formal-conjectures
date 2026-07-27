@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Finset
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 56
 
 *Reference:* [erdosproblems.com/56](https://www.erdosproblems.com/56)
 -/
-
+open scoped Finset
 namespace Erdos56
 
 /--

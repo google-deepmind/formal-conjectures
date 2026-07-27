@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 23
@@ -42,7 +42,8 @@ and `dist_avg(M, V) = 10`.
 -/
 @[category research solved, AMS 5]
 theorem conjecture23 : answer(False) ↔
-  ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
+  ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+    (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
     let M : Set α := {v | G.degree v = G.maxDegree}
     ⌊(G.indepNum : ℝ) + distavg G M / 2⌋ ≤ (b G : ℝ) := by
   sorry

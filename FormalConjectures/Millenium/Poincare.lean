@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-! # The Poincaré Conjecture
 
@@ -22,7 +22,9 @@ References:
 - [Miln2022](https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf)
 - [Wang2017](https://annals.math.princeton.edu/2017/186-2/p03).
 - [mo296171](https://mathoverflow.net/questions/296171/unique-smooth-structure-on-3-manifolds)
+- [mathlib4](https://github.com/leanprover-community/mathlib4)
 
+The formalisations in this file are based on the ones written by Junyan Xu in Mathlib4.
 -/
 
 namespace PoincareConjecture

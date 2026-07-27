@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# Theorem 4
+# First Proof, Theorem 4
 
 *Reference:* [arxiv/2602.05192v2](https://arxiv.org/abs/2602.05192v2)
 **First Proof**

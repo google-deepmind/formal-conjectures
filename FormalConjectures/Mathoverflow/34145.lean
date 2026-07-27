@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Real MeasureTheory Measure Module
+import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 34145
@@ -31,7 +29,7 @@ $1 / (n + 2)$, so that the first rectangle is $1/1$ by $1/2$, the second is $1/2
 *Reference:* [mathoverflow/34145](https://mathoverflow.net/q/34145)
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
 -/
-
+open Real MeasureTheory Measure Module
 namespace Mathoverflow34145
 
 /-- A rectangle is specified by its width, height, starting point, and rotation.

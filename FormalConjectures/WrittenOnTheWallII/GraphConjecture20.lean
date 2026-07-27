@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 20
@@ -39,14 +39,14 @@ and `deg_avg(G) = (∑ v, deg(v)) / n(G)` is the average degree.
 @[category research solved, AMS 5]
 theorem conjecture20 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let deg_avg : ℝ := (∑ v : α, (G.degree v : ℝ)) / (Fintype.card α : ℝ)
-    n G / ⌊deg_avg⌋ ≤ b G := by
+    (Fintype.card α : ℝ) / (⌊deg_avg⌋ : ℝ) ≤ (b G : ℝ) := by
   sorry
 
 -- Sanity checks
 
 /-- The number of vertices of `K₃` is 3. -/
 @[category test, AMS 5]
-example : n (⊤ : SimpleGraph (Fin 3)) = 3 := by simp [n]
+example : Fintype.card (Fin 3) = 3 := by decide
 
 /-- The average degree of `K₃` is 2 (every vertex has degree 2 in the complete graph on 3 vertices). -/
 @[category test, AMS 5]
