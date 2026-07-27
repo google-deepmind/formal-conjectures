@@ -41,7 +41,9 @@ private def twistHomeomorph : ℝ ≃ₜ ℝ where
   invFun := untwist
   left_inv x := by
     simp only [twist, untwist]
-    split_ifs with h₁ h₂ <;> simp_all <;> linarith
+    split_ifs with h₁ h₂
+    all_goals simp_all
+    all_goals linarith
   right_inv x := by
     simp only [twist, untwist]
     split_ifs with h₁ h₂ <;> simp_all <;> linarith
@@ -61,7 +63,7 @@ private def twistHomeomorph : ℝ ≃ₜ ℝ where
     ring
 
 private def realToEuclideanOne : ℝ ≃ₜ EuclideanSpace ℝ (Fin 1) where
-  toFun x := PiLp.toLp 2 fun _ => x
+  toFun x := WithLp.toLp 2 fun _ => x
   invFun x := x 0
   left_inv x := by simp
   right_inv x := by
@@ -83,9 +85,82 @@ theorem hilbert_fifth_problem_implies_false : False := by
   letI : ChartedSpace (EuclideanSpace ℝ (Fin 1)) (Multiplicative ℝ) := badChartedSpace
   have hinv :=
     (hilbert_fifth_problem (G := Multiplicative ℝ) (n := 1)).contMDiff_inv.contMDiffAt
-      (x := (1 : Multiplicative ℝ))
+      (x := Multiplicative.ofAdd 0)
   rw [contMDiffAt_iff] at hinv
-  exact hinv
+  have hdiff := hinv.2.differentiableWithinAt (by simp)
+  rw [ModelWithCorners.range_eq_univ, differentiableWithinAt_univ] at hdiff
+  simp only [mfld_simps] at hdiff
+  let groupInv : Multiplicative ℝ → Multiplicative ℝ := fun a ↦ a⁻¹
+  change DifferentiableAt ℝ
+    (⇑badChart ∘
+      groupInv ∘
+      ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
+        (⇑badChart) badChartedSpace._proof_1).symm)
+    (badChart (Multiplicative.ofAdd 0)) at hdiff
+  have hbase :
+      badChart (Multiplicative.ofAdd 0) = realToEuclideanOne 0 := by
+    change badChart (0 : ℝ) = realToEuclideanOne 0
+    ext i
+    fin_cases i
+    simp [badChart, twistHomeomorph, twist, realToEuclideanOne]
+  rw [hbase] at hdiff
+  have hrealToEuclideanOne : DifferentiableAt ℝ realToEuclideanOne 0 := by
+    change DifferentiableAt ℝ
+      (fun x : ℝ ↦ WithLp.toLp 2 fun _ : Fin 1 ↦ x) 0
+    apply (PiLp.hasFDerivAt_toLp 2 (fun _ : Fin 1 ↦ (0 : ℝ))).differentiableAt.comp 0
+    fun_prop
+  have hcoord := hdiff.comp 0 hrealToEuclideanOne
+  have heval :
+      DifferentiableAt ℝ (fun z : EuclideanSpace ℝ (Fin 1) ↦ z 0)
+        (((⇑badChart ∘
+          groupInv ∘
+          ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
+            (⇑badChart) badChartedSpace._proof_1).symm) ∘
+          realToEuclideanOne) 0) :=
+    (PiLp.hasFDerivAt_apply 2 _ 0).differentiableAt
+  have hscalar := heval.fun_comp' 0 hcoord
+  let scalarInv : ℝ → ℝ := fun x ↦
+    (((⇑badChart ∘
+          groupInv ∘
+          ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
+            (⇑badChart) badChartedSpace._proof_1).symm) ∘
+        realToEuclideanOne) x) 0
+  change DifferentiableAt ℝ scalarInv 0 at hscalar
+  have hchart (x : ℝ) :
+      badChart (untwist x) = realToEuclideanOne x := by
+    simpa only [badChart, Homeomorph.trans_apply] using
+      congrArg realToEuclideanOne (twistHomeomorph.apply_symm_apply x)
+  have hinvChart (x : ℝ) :
+      (Topology.IsOpenEmbedding.toOpenPartialHomeomorph
+        (⇑badChart) badChartedSpace._proof_1).symm (realToEuclideanOne x) = untwist x := by
+    rw [← hchart x]
+    exact badChart.isOpenEmbedding.toOpenPartialHomeomorph_left_inv
+  have hscalarInv (x : ℝ) : scalarInv x = twist (-untwist x) := by
+    simp only [scalarInv, Function.comp_apply]
+    rw [hinvChart x]
+    rfl
+  have hkink : DifferentiableAt ℝ (fun x ↦ twist (-untwist x)) 0 :=
+    hscalar.congr_of_eventuallyEq <| Filter.Eventually.of_forall fun x ↦ (hscalarInv x).symm
+  have hlinear : DifferentiableAt ℝ (fun x : ℝ ↦ (5 / 4 : ℝ) * x) 0 := by
+    fun_prop
+  have hrecover :=
+    (hkink.add hlinear).const_mul (-4 / 3 : ℝ)
+  have hrecover_eq (x : ℝ) :
+      (-4 / 3 : ℝ) * (twist (-untwist x) + (5 / 4 : ℝ) * x) = |x| := by
+    by_cases hx : 0 ≤ x
+    · rcases hx.eq_or_lt with rfl | hxpos
+      · norm_num [twist, untwist]
+      · have hneg : ¬0 ≤ -x := by linarith
+        rw [untwist, if_pos hx, twist, if_neg hneg, abs_of_pos hxpos]
+        ring
+    · have hxneg : x < 0 := lt_of_not_ge hx
+      have hpos : 0 ≤ -(x / 2) := by linarith
+      rw [untwist, if_neg hx, twist, if_pos hpos, abs_of_neg hxneg]
+      ring
+  have habs : DifferentiableAt ℝ (abs : ℝ → ℝ) 0 :=
+    hrecover.congr_of_eventuallyEq <|
+      Filter.Eventually.of_forall fun x ↦ (hrecover_eq x).symm
+  exact not_differentiableAt_abs_zero habs
 
 end
 
