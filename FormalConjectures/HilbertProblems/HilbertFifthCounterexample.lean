@@ -36,6 +36,8 @@ private def twist (x : ℝ) : ℝ := if 0 ≤ x then x else 2 * x
 
 private def untwist (x : ℝ) : ℝ := if 0 ≤ x then x else x / 2
 
+private def coordinateInv (x : ℝ) : ℝ := twist (-untwist x)
+
 private def twistHomeomorph : ℝ ≃ₜ ℝ where
   toFun := twist
   invFun := untwist
@@ -83,49 +85,42 @@ private def badChartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin 1)) ℝ :=
 @[category test, AMS 22]
 theorem hilbert_fifth_problem_implies_false : False := by
   letI : ChartedSpace (EuclideanSpace ℝ (Fin 1)) (Multiplicative ℝ) := badChartedSpace
-  have hinv :=
+  have hContDiffInv :=
     (hilbert_fifth_problem (G := Multiplicative ℝ) (n := 1)).contMDiff_inv.contMDiffAt
       (x := Multiplicative.ofAdd 0)
-  rw [contMDiffAt_iff] at hinv
-  have hdiff := hinv.2.differentiableWithinAt (by simp)
-  rw [ModelWithCorners.range_eq_univ, differentiableWithinAt_univ] at hdiff
-  simp only [mfld_simps] at hdiff
+  rw [contMDiffAt_iff] at hContDiffInv
+  have hChartInv := hContDiffInv.2.differentiableWithinAt (by simp)
+  rw [ModelWithCorners.range_eq_univ, differentiableWithinAt_univ] at hChartInv
+  simp only [mfld_simps] at hChartInv
   let groupInv : Multiplicative ℝ → Multiplicative ℝ := fun a ↦ a⁻¹
-  change DifferentiableAt ℝ
+  let chartInv : EuclideanSpace ℝ (Fin 1) → EuclideanSpace ℝ (Fin 1) :=
     (⇑badChart ∘
       groupInv ∘
       ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
         (⇑badChart) badChartedSpace._proof_1).symm)
-    (badChart (Multiplicative.ofAdd 0)) at hdiff
+  change DifferentiableAt ℝ chartInv (badChart (Multiplicative.ofAdd 0)) at hChartInv
   have hbase :
       badChart (Multiplicative.ofAdd 0) = realToEuclideanOne 0 := by
     change badChart (0 : ℝ) = realToEuclideanOne 0
     ext i
     fin_cases i
     simp [badChart, twistHomeomorph, twist, realToEuclideanOne]
-  rw [hbase] at hdiff
+  rw [hbase] at hChartInv
   have hrealToEuclideanOne : DifferentiableAt ℝ realToEuclideanOne 0 := by
     change DifferentiableAt ℝ
       (fun x : ℝ ↦ WithLp.toLp 2 fun _ : Fin 1 ↦ x) 0
     apply (PiLp.hasFDerivAt_toLp 2 (fun _ : Fin 1 ↦ (0 : ℝ))).differentiableAt.comp 0
     fun_prop
-  have hcoord := hdiff.comp 0 hrealToEuclideanOne
+  let chartInvReal : ℝ → EuclideanSpace ℝ (Fin 1) := chartInv ∘ realToEuclideanOne
+  have hChartInvReal : DifferentiableAt ℝ chartInvReal 0 :=
+    hChartInv.comp 0 hrealToEuclideanOne
   have heval :
       DifferentiableAt ℝ (fun z : EuclideanSpace ℝ (Fin 1) ↦ z 0)
-        (((⇑badChart ∘
-          groupInv ∘
-          ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
-            (⇑badChart) badChartedSpace._proof_1).symm) ∘
-          realToEuclideanOne) 0) :=
+        (chartInvReal 0) :=
     (PiLp.hasFDerivAt_apply 2 _ 0).differentiableAt
-  have hscalar := heval.fun_comp' 0 hcoord
-  let scalarInv : ℝ → ℝ := fun x ↦
-    (((⇑badChart ∘
-          groupInv ∘
-          ↑(Topology.IsOpenEmbedding.toOpenPartialHomeomorph
-            (⇑badChart) badChartedSpace._proof_1).symm) ∘
-        realToEuclideanOne) x) 0
-  change DifferentiableAt ℝ scalarInv 0 at hscalar
+  have hScalarInv := heval.fun_comp' 0 hChartInvReal
+  let scalarInv : ℝ → ℝ := fun x ↦ chartInvReal x 0
+  change DifferentiableAt ℝ scalarInv 0 at hScalarInv
   have hchart (x : ℝ) :
       badChart (untwist x) = realToEuclideanOne x := by
     simpa only [badChart, Homeomorph.trans_apply] using
@@ -136,31 +131,35 @@ theorem hilbert_fifth_problem_implies_false : False := by
     rw [← hchart x]
     exact badChart.isOpenEmbedding.toOpenPartialHomeomorph_left_inv
   have hscalarInv (x : ℝ) : scalarInv x = twist (-untwist x) := by
-    simp only [scalarInv, Function.comp_apply]
+    simp only [scalarInv, chartInvReal, chartInv, Function.comp_apply]
     rw [hinvChart x]
     rfl
-  have hkink : DifferentiableAt ℝ (fun x ↦ twist (-untwist x)) 0 :=
-    hscalar.congr_of_eventuallyEq <| Filter.Eventually.of_forall fun x ↦ (hscalarInv x).symm
-  have hlinear : DifferentiableAt ℝ (fun x : ℝ ↦ (5 / 4 : ℝ) * x) 0 := by
-    fun_prop
-  have hrecover :=
-    (hkink.add hlinear).const_mul (-4 / 3 : ℝ)
-  have hrecover_eq (x : ℝ) :
-      (-4 / 3 : ℝ) * (twist (-untwist x) + (5 / 4 : ℝ) * x) = |x| := by
-    by_cases hx : 0 ≤ x
-    · rcases hx.eq_or_lt with rfl | hxpos
-      · norm_num [twist, untwist]
-      · have hneg : ¬0 ≤ -x := by linarith
-        rw [untwist, if_pos hx, twist, if_neg hneg, abs_of_pos hxpos]
-        ring
-    · have hxneg : x < 0 := lt_of_not_ge hx
-      have hpos : 0 ≤ -(x / 2) := by linarith
-      rw [untwist, if_neg hx, twist, if_pos hpos, abs_of_neg hxneg]
+  have hCoordinateInv : DifferentiableAt ℝ coordinateInv 0 :=
+    hScalarInv.congr_of_eventuallyEq <|
+      Filter.Eventually.of_forall fun x ↦ (hscalarInv x).symm
+  have hCoordinateInv_of_nonneg {x : ℝ} (hx : 0 ≤ x) :
+      coordinateInv x = -2 * x := by
+    rcases hx.eq_or_lt with rfl | hx
+    · norm_num [coordinateInv, twist, untwist]
+    · have hneg : ¬0 ≤ -x := by linarith
+      rw [coordinateInv, untwist, if_pos hx.le, twist, if_neg hneg]
       ring
-  have habs : DifferentiableAt ℝ (abs : ℝ → ℝ) 0 :=
-    hrecover.congr_of_eventuallyEq <|
-      Filter.Eventually.of_forall fun x ↦ (hrecover_eq x).symm
-  exact not_differentiableAt_abs_zero habs
+  have hCoordinateInv_of_nonpos {x : ℝ} (hx : x ≤ 0) :
+      coordinateInv x = (-1 / 2 : ℝ) * x := by
+    rcases hx.eq_or_lt with rfl | hx
+    · norm_num [coordinateInv, twist, untwist]
+    · have hpos : 0 ≤ -(x / 2) := by linarith
+      rw [coordinateInv, untwist, if_neg (not_le.mpr hx), twist, if_pos hpos]
+      ring
+  have hright : deriv coordinateInv 0 = -2 :=
+    (uniqueDiffOn_Ici 0 0 Set.self_mem_Ici).eq_deriv _ hCoordinateInv.hasDerivAt.hasDerivWithinAt <|
+      (hasDerivAt_const_mul (-2 : ℝ)).hasDerivWithinAt.congr_of_mem
+        (fun _ hx ↦ hCoordinateInv_of_nonneg hx) Set.self_mem_Ici
+  have hleft : deriv coordinateInv 0 = -1 / 2 :=
+    (uniqueDiffOn_Iic 0 0 Set.self_mem_Iic).eq_deriv _ hCoordinateInv.hasDerivAt.hasDerivWithinAt <|
+      (hasDerivAt_const_mul (-1 / 2 : ℝ)).hasDerivWithinAt.congr_of_mem
+        (fun _ hx ↦ hCoordinateInv_of_nonpos hx) Set.self_mem_Iic
+  linarith
 
 end
 
