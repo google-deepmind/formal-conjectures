@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-/-
+module
+
+import FormalConjecturesUtil
+
+/-!
 # Degree-1 Fourier Weight Conjecture
 
 Author: Alexey Milovanov
@@ -30,17 +34,13 @@ This lower bound is asymptotically tight and is achieved by the
 Majority function as $n \to \infty$.
 -/
 
-module
-
-import FormalConjectures.Util.ProblemImports
-
 open Finset BooleanAnalysis
 
 namespace Books.AnalysisOfBooleanFunctions
 
 /-- English version: "If `f : 𝔽₂ⁿ → {-1, 1}` is a linear threshold function,
 then its Fourier weight at degree at most 1 is at least `2/π`." -/
-@ [category research open, AMS 68 42]
+@[category research open, AMS 42 68]
 theorem degree_1_weight_conjecture (n : ℕ) (f : BooleanFunction n)
     (hf_bool : IsBooleanValued f)
     (h_ltf : IsLTF f) :
