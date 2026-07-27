@@ -186,10 +186,9 @@ theorem jacobian_conjecture_identity (H : JacobianConjectureProp k σ) :
     ∃ (G : RegularFunction k σ σ), G.comp (id k σ) = id k σ ∧
     (id k σ).comp G = id k σ := by
   apply H
-  suffices (RegularFunction.id k σ).Jacobian = 1 by simp only [this, isUnit_one, Matrix.det_one]
+  suffices (RegularFunction.id k σ).Jacobian = 1 by simp [this, isUnit_one, Matrix.det_one]
   ext i j
-  simp only [RegularFunction.Jacobian, RegularFunction.id, MvPolynomial.pderiv_X,
-    Matrix.of_apply, Matrix.one_eq_pi_single]
+  simp [RegularFunction.Jacobian, RegularFunction.id, Matrix.one_eq_pi_single]
 
 end Tests
 
