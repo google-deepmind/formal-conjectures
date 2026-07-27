@@ -28,7 +28,9 @@ namespace Mathoverflow507128
 invertible module. If `I ⊊ R` is such an example, `I` must have infinite order in the Picard group,
 and `R` must not be Noetherian (otherwise it must be semi-local and therefore have trivial Picard
 group). -/
-@[category research open, AMS 13]
+@[category research solved, AMS 13,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/mo507128-lean/commit/e9507429c01c4288089e4af1c92a03b7d1e17f74"]
 theorem exists_isFractionRing_self_ideal_ne_top_invertible :
     ∃ (R : Type) (_ : CommRing R) (_ : IsFractionRing R R) (I : Ideal R),
       I ≠ ⊤ ∧ Module.Invertible R I := by
