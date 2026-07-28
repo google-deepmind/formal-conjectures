@@ -38,15 +38,13 @@ namespace Hilbert5
 
 open scoped Manifold ContDiff EuclideanGeometry
 
+universe u
+
 variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
   [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
 
-/-- A presentation of `G` as a finite-dimensional real-analytic Lie group of dimension `n`.
-
-`IsManifold` requires analytic transition maps between charts, while `LieGroup` requires analytic
-multiplication and inversion. Both are needed to express the usual mathematical meaning of a
-real-analytic Lie group in Mathlib. -/
+/-- A continuous group isomorphism from `G` to an `n`-dimensional real-analytic Lie group. -/
 structure LieGroupPresentation (G : Type u) [TopologicalSpace G] [Group G] (n : ℕ) where
   carrier : Type u
   [topologicalSpace : TopologicalSpace carrier]
@@ -58,12 +56,12 @@ structure LieGroupPresentation (G : Type u) [TopologicalSpace G] [Group G] (n : 
   [lieGroup : LieGroup (𝓡 n) ω carrier]
   equiv : G ≃ₜ* carrier
 
-/-- A topological group admits a Lie group structure if it is continuously isomorphic to some
-finite-dimensional real-analytic Lie group. -/
+/-- A topological group admits a Lie group structure if it has a `LieGroupPresentation` in some
+finite dimension. -/
 def AdmitsLieGroupStructure (G : Type u) [Group G] [TopologicalSpace G] : Prop :=
   ∃ n, Nonempty (LieGroupPresentation G n)
 
-/-- Every Lie group trivially admits a Lie group structure. -/
+/-- Every finite-dimensional real-analytic Lie group admits a Lie group structure. -/
 @[category API, AMS 22]
 theorem admitsLieGroupStructure_of_lieGroup
     [T2Space G] [SecondCountableTopology G]
@@ -83,7 +81,7 @@ theorem locallyCompact_of_admitsLieGroupStructure
   haveI := (𝓡 k).locallyCompactSpace
   haveI : LocallyCompactSpace p.carrier :=
     ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) p.carrier
-  exact p.equiv.toHomeomorph.isClosedEmbedding.locallyCompactSpace
+  exact p.equiv.toHomeomorph.locallyCompactSpace_iff.mpr inferInstance
 
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
@@ -126,8 +124,12 @@ theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
     False := by
   sorry
 
-/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every locally Euclidean
-topological group is a Lie group. -/
+/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff,
+second-countable topological group modeled on a finite-dimensional Euclidean space is continuously
+isomorphic to a real-analytic Lie group.
+
+The input `ChartedSpace` supplies only a topological atlas. The compatible analytic atlas and
+analytic group operations belong to the output `LieGroupPresentation`. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
     [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G]
