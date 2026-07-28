@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Conjectures associated with A100434
@@ -146,18 +146,30 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
     rw [ih1, ih2']
 
 /--
-**Conjectures from Creighton Dement (A100434)**:
+**Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
-Then for all $n \ge 0$:
-1. $c(n) + d(n) = e(n) + f(n)$
-2. $e(n) + f(n) = g(n) + a(n)$
-3. $c(n) + d(n) = b(n)$
+Then for all $n \ge 0$, $c(n) + d(n) = b(n)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) :
-    c n + d n = e n + f n ∧
-    e n + f n = g n + a n ∧
-    c n + d n = b n :=
-  by sorry
+theorem conjecture1 (n : ℕ) : c n + d n = b n := by
+  sorry
+
+/--
+**Conjecture from Creighton Dement (A100434)**:
+Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
+Then for all $n \ge 0$, $e(n) + f(n) = b(n)$.
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (n : ℕ) : e n + f n = b n := by
+  sorry
+
+/--
+**Conjecture from Creighton Dement (A100434)**:
+Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
+Then for all $n \ge 0$, $g(n) + a(n) = b(n)$.
+-/
+@[category research open, AMS 11]
+theorem conjecture3 (n : ℕ) : g n + a n = b n := by
+  sorry
 
 end OeisA100434
