@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjectures.Util.Attributes.Basic
+public import FormalConjecturesUtil.Attributes.Basic
 public import Mathlib.Tactic.Lemma
 public meta import Batteries.Data.Array.Merge
 

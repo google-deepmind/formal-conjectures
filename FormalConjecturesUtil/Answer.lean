@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public meta import Lean.Elab.SyntheticMVars
-public import FormalConjectures.Util.Answer.Syntax
+public import FormalConjecturesUtil.Answer.Syntax
 
 import Batteries.Lean.Expr
 

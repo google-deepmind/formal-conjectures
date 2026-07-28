@@ -51,17 +51,34 @@ def havelHakimiStep (s : List ℕ) : List ℕ :=
     (decremented ++ remaining).mergeSort (· ≥ ·)
 
 /--
-Auxiliary function to calculate the residue recursively.
-Applies Havel-Hakimi steps until the sequence consists only of zeros or is empty.
+`havelHakimiStep` drops the list length by exactly one on a nonempty list:
+`(havelHakimiStep (d :: rest)).length = rest.length`. `splitAt` partitions `rest`,
+and `map`, `++`, and `mergeSort` all preserve the total length while the head `d`
+is dropped. This is the termination measure for the well-founded `residueAux` below.
 -/
-partial def residueAux : List ℕ → ℕ
-  | [] => 0        -- Empty sequence, residue is 0.
-  | 0 :: s => 1 + s.length -- If the largest degree is 0 (and the list is sorted), all are 0.
-  | s => residueAux (havelHakimiStep s) -- Apply one reduction step and recurse.
+theorem havelHakimiStep_length_cons (d : ℕ) (rest : List ℕ) :
+    (havelHakimiStep (d :: rest)).length = rest.length := by
+  grind [havelHakimiStep, List.length_mergeSort]
 
 /--
-Computes the residue of a graph G, ,i.e. the number of zeros remaining after iteratively applying the Havel-Hakimi
-algorithm to the degree sequence until all remaining degrees are zero.
+Auxiliary function to calculate the residue recursively.
+Applies Havel-Hakimi steps until the sequence consists only of zeros or is empty.
+Defined by well-founded recursion on the list length (via `havelHakimiStep_length_cons`),
+so that it admits equational and inductive reasoning.
+-/
+def residueAux : List ℕ → ℕ
+  | [] => 0        -- Empty sequence, residue is 0.
+  | 0 :: s => 1 + s.length -- If the largest degree is 0 (and the list is sorted), all are 0.
+  | d :: rest => residueAux (havelHakimiStep (d :: rest)) -- Apply one reduction step and recurse.
+termination_by l => l.length
+decreasing_by
+  simp_wf
+  rw [havelHakimiStep_length_cons]
+  omega
+
+/--
+Computes the residue of a graph `G`, i.e. the number of zeros remaining after iteratively
+applying the Havel-Hakimi algorithm to the degree sequence until all remaining degrees are zero.
 Starts with the descending degree sequence and applies the Havel-Hakimi process.
 -/
 noncomputable def residue (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=

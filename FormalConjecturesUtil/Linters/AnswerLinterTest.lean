@@ -15,8 +15,8 @@ limitations under the License.
 -/
 module
 
-public import FormalConjectures.Util.Linters.AnswerLinter
-public import FormalConjectures.Util.Answer
+public import FormalConjecturesUtil.Linters.AnswerLinter
+public import FormalConjecturesUtil.Answer
 
 /-!
 # Tests for the answer linter

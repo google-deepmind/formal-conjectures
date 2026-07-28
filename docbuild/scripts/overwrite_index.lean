@@ -16,7 +16,7 @@ limitations under the License.
 import MD4Lean
 import Lean
 import Batteries.Data.String.Matcher
-import FormalConjectures.Util.Attributes.Basic
+import FormalConjecturesUtil.Attributes.Basic
 import Mathlib.Data.String.Defs
 
 
@@ -68,7 +68,7 @@ def replaceTag (tag : String) (inputHtmlContent : String) (newContent : String) 
   let prefixParts := (inputHtmlContent.toSlice.split openTag).toArray
   if prefixParts.size < 2 then
     throw <| IO.userError s!"Opening {openTag} tag not found in inputHtmlContent."
-  
+
   -- Split string by closeTag
   let suffixParts := (inputHtmlContent.toSlice.split closeTag).toArray
   if suffixParts.size < 2 then

@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjectures.Util.Attributes.AMS
+public meta import FormalConjecturesUtil.Attributes.AMS
 
 import Qq
 
@@ -403,7 +403,7 @@ def verifyCategoryCounts (problems : List Name) (expected : List (String × Nat)
   let env ← getEnv
   let catTags := categoryExt.getState env
   let mut counts : List (String × Nat) := []
-  
+
   let incrementCount (counts : List (String × Nat)) (cat : String) : List (String × Nat) :=
     match counts.find? (·.1 == cat) with
     | some (_, n) => (cat, n + 1) :: counts.filter (·.1 != cat)
