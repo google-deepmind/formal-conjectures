@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import FormalConjectures.ErdosProblems.«688»
 
 /-!
@@ -26,6 +26,7 @@ import FormalConjectures.ErdosProblems.«688»
 -/
 
 open Classical Filter Finset
+open scoped ENNReal
 
 namespace Erdos1200
 
@@ -41,7 +42,7 @@ theorem erdos_1200 :
           (∀ p ∈ S, p.Prime) ∧
           (∀ p ∈ S, p < x) ∧
           (∑ p ∈ S, (1 : ℝ) / p < C) ∧
-          (∀ n : ℕ, 1 ≤ n ∧ n < x → ∃ p ∈ S, a p ≡ n [MOD p]) := by
+          (∀ n : ℕ, n < x → ∃ p ∈ S, a p ≡ n [MOD p]) := by
   sorry
 
 /--
@@ -56,8 +57,7 @@ theorem erdos_1200.variants.implied_by_erdos_688_variant :
 A predicate which decides whether (n : ℕ) avoids the congruences prescribed by
 (a : ℕ → ℕ) and (S : Finset ℕ), which will be used in erdos_rusza_question below.
 -/
-def AvoidsCongruences (S : Finset ℕ) (a : ℕ → ℕ) (n : ℕ) : Prop :=
-  ∀ p ∈ S, ¬(a p ≡ n [MOD p])
+def AvoidsCongruences (S : Finset ℕ) (a : ℕ → ℕ) (n : ℕ) : Prop := ∀ p ∈ S, ¬(a p ≡ n [MOD p])
 
 /--
 In [ErRu80] this is asked as a question: if $p_1 < \dots < p_k < x$ are primes with
@@ -86,8 +86,7 @@ by at least one $p \in P$ is $\gg_C x$.
 theorem erdos_1200.variants.erdos_ruzsa_theorem :
     ∀ C : ℝ, C > 0 → ∃ c : ℝ, ∃ P : Set ℕ, c > 0 ∧
       (∀ p ∈ P, p.Prime) ∧
-      (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p > 0) ∧
-      (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ) / k) p ≤ C) ∧
+      (∑' p : ℕ, Set.indicator P (fun (k : ℕ) ↦ (1 : ℝ≥0∞) / k) p ≤ ENNReal.ofReal C) ∧
       ∀ᶠ (x : ℝ) in atTop,
         (filter (fun (m : ℕ) ↦ ∃ p ∈ P, p ∣ m) <|
           Icc (1 : ℕ) (Int.toNat <| Int.floor x)).card ≥ c * x := by
