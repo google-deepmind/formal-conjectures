@@ -52,7 +52,7 @@ theorem a_5 : a 5 = 401 := by decide
 open Real
 
 /--
-Conjecture: a(n) = floor(1/(1/(4*n) - log(2) + 1/(n+1) + 1/(n+2) + ... + 1/(2*n))).
+Conjecture: $a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) + \frac{1}{n+1} + \frac{1}{n+2} + ... + \frac{1}{2n}} \right\rfloor$.
 -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : n > 0) :

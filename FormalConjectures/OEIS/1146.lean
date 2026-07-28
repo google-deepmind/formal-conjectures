@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # a(n) = 2^(2^n)
 
-a(n) = 2^(2^n).
+$a(n) = 2^{2^n}$.
 
 *References:*
 - [A001146](https://oeis.org/A001146)
@@ -29,7 +29,7 @@ namespace OeisA001146
 
 /--
 The primary defining sequence `a`.
-a(n) = 2^(2^n).
+$a(n) = 2^{2^n}$.
 -/
 def a (n : ℕ) : ℕ := 2 ^ (2 ^ n)
 
@@ -58,7 +58,7 @@ lemma n_add_two_le_two_pow (n : ℕ) (hn : 2 ≤ n) : n + 2 ≤ 2 ^ n := by
       _ = 2 ^ (k + 1) := by ring
 
 /--
-The forward direction: if k = a(n) for n >= 2, then k^4 - 1 divides 2^k - 1.
+The forward direction: if $k = a(n)$ for $n \ge 2$, then $k^4 - 1$ divides $2^k - 1$.
 -/
 @[category research solved, AMS 11]
 theorem divisibility_fact (n : ℕ) (hn : 2 ≤ n) : (((a n)^4 - 1) : ℕ) ∣ (2^(a n) - 1 : ℕ) := by
@@ -82,7 +82,7 @@ theorem divisibility_fact (n : ℕ) (hn : 2 ≤ n) : (((a n)^4 - 1) : ℕ) ∣ (
   exact Nat.sub_one_dvd_pow_sub_one (a n ^ 4) m
 
 /--
-I conjecture that { a(n) ; n>1 } are the numbers such that n^4-1 divides 2^n-1, intersection of A247219 and A247165. - M. F. Hasler, Jul 25 2015
+I conjecture that { $a(n)$ ; $n>1$ } are the numbers such that $n^4-1$ divides $2^n-1$, intersection of A247219 and A247165. - M. F. Hasler, Jul 25 2015
 This formalizes the reverse direction.
 -/
 @[category research open, AMS 11]

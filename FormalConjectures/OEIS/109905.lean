@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # A109905
 
-a(n) is the greatest prime of the form k*(n-k)+1, where k can take values from 1 to floor(n/2). a(n)=0 if no such prime exists.
+$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from $1$ to $\lfloor n/2 \rfloor$. $a(n)=0$ if no such prime exists.
 
 *References:*
 - [A109905](https://oeis.org/A109905)
@@ -28,8 +28,8 @@ a(n) is the greatest prime of the form k*(n-k)+1, where k can take values from 1
 namespace OeisA109905
 
 /--
-a(n) is the greatest prime of the form k*(n-k)+1, where k can take values from 1 to floor(n/2).
-a(n) = 0 if no such prime exists.
+$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from $1$ to $\lfloor n/2 \rfloor$.
+$a(n) = 0$ if no such prime exists.
 -/
 def a (n : ℕ) : ℕ :=
   (Finset.Icc 1 (n / 2))
@@ -53,7 +53,7 @@ theorem a_4 : a 4 = 5 := by decide
 theorem a_5 : a 5 = 7 := by decide
 
 /--
-a(n)=0 for n = 1, 6, 30 and 54. Are there any others?
+$a(n) = 0$ for $n = 1$, $6$, $30$ and $54$. Are there any others?
 -/
 @[category research open, AMS 11]
 theorem conjecture : answer(sorry) ↔ {n : ℕ | n > 0 ∧ a n = 0} = {1, 6, 30, 54} := by

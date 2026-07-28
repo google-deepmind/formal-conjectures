@@ -21,7 +21,7 @@ import Mathlib.Data.Nat.Prime.Basic
 # OEIS A109227
 
 Binary strings that have 1's where primes occur, 0's elsewhere and every term ends with the $n$-th prime index.
-Conjecture A109227: $a(2)$ and $a(121)$ are primes. Are there any more?
+Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 
 *References:*
 - [A109227](https://oeis.org/A109227)
@@ -46,7 +46,7 @@ noncomputable def a (n : ℕ) : ℕ :=
   ofDigits 10 prime_bits_trimmed.reverse
 
 /--
-Conjecture A109227 a(2) and a(121) are primes. Are there any more?
+Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 -/
 @[category research open, AMS 11]
 theorem conjecture :

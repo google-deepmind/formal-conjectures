@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Number of prime powers q<=n such that also q+2 is a prime power
 
-Number of prime powers q<=n such that also q+2 is a prime power.
+Number of prime powers $q<=n$ such that also $q+2$ is a prime power.
 
 *References:*
 - [A113609](https://oeis.org/A113609)
@@ -38,7 +38,7 @@ instance decidable_is_oeis_prime_power (n : ℕ) : Decidable (is_oeis_prime_powe
 
 /--
 The primary defining sequence `a`.
-a(n) is the number of prime powers q<=n such that also q+2 is a prime power.
+$a(n)$ is the number of prime powers $q<=n$ such that also $q+2$ is a prime power.
 $$a(n) = \operatorname{card} \{q \in \mathbb{N} \mid 1 \le q \le n \land P(q) \land P(q+2) \}$$
 -/
 def a (n : ℕ) : ℕ :=

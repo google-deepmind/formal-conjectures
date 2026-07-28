@@ -20,8 +20,8 @@ import FormalConjecturesUtil
 # Corresponds to m = 9 in a family of 4th-order linear recurrence sequences
 
 This sequence is defined by the recurrence relation
-a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4) for n > 3.
-Initial values are a(0) = -1, a(1) = 4, a(2) = 227, a(3) = 5329.
+$a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)$ for n > 3.
+Initial values are $a(0) = -1, a(1) = 4, a(2) = 227, a(3) = 5329$.
 
 *References:*
 - [A113255](https://oeis.org/A113255)
@@ -29,8 +29,8 @@ Initial values are a(0) = -1, a(1) = 4, a(2) = 227, a(3) = 5329.
 
 namespace OeisA113255
 
-/-- a n is the sequence defined by the linear recurrence a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)
-with initial values -1, 4, 227, 5329. -/
+/-- a n is the sequence defined by the linear recurrence $a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)$
+with initial values $-1, 4, 227, 5329$. -/
 def a : ℕ → ℤ
 | 0 => -1
 | 1 => 4
@@ -54,8 +54,8 @@ theorem a_3 : a 3 = 5329 := by rfl
 theorem a_4 : a 4 = -26581 := by rfl
 
 /--
-Conjecture: a(m, 2*n+1) is a perfect square for all m, n (see A113249).
-Specialized for m=9, which is A113255.
+Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m, n$ (see A113249).
+Specialized for $m=9$, which is A113255.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n : ℕ, ∃ k : ℤ, a (2 * n + 1) = k ^ 2 := by

@@ -76,7 +76,7 @@ theorem a_3 : a 3 = 691 := by
   norm_num only [Nat.choose, ←sub_eq_of_eq_add' (R _) ▸ mul_div_cancel_left₀ _, Finset.sum_range_succ]
 
 /--
-Conjecture: if an integer n > 1 is odd, then zeta(2n)/zeta(n)^2 is irrational. Cf. W. Kohnen (link) and my conjecture in A348829. - Thomas Ordowski, Jan 05 2022
+Conjecture: if an integer $n > 1$ is odd, then $\zeta(2n)/\zeta(n)^2$ is irrational. Cf. W. Kohnen (link) and my conjecture in A348829. - Thomas Ordowski, Jan 05 2022
 -/
 @[category research open, AMS 11]
 theorem conjecture1 (n : ℕ) (hn_gt_one : 1 < n) (hn_odd : Odd n) :
@@ -88,7 +88,7 @@ noncomputable def t (n : ℕ) : ℝ :=
   (riemannZeta (2 * (n : ℂ))).re / ((riemannZeta (n : ℂ)).re ^ 2)
 
 /--
-Conjecture: (1 - t(n))/(1 + t(n)) = 1/2^n + 1/3^n + 1/5^n + 1/7^n + O(1/11^n), where t(n) = zeta(2n)/zeta(n)^2. Cf. A348829. - Thomas Ordowski, Nov 13 2022
+Conjecture: $\frac{1 - t(n)}{1 + t(n)} = \frac{1}{2^n} + \frac{1}{3^n} + \frac{1}{5^n} + \frac{1}{7^n} + O(\frac{1}{11^n})$, where $t(n) = \zeta(2n)/\zeta(n)^2$. Cf. A348829. - Thomas Ordowski, Nov 13 2022
 -/
 @[category research open, AMS 11]
 theorem conjecture2 :

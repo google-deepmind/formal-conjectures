@@ -28,9 +28,9 @@ $a(2n+1) = a(n)$ and $a(2n) = a(n) + a(n-2)$ with $a(0)=1$, $a(1)=1$ and $a(n)=0
 
 namespace OeisA112970
 
-/-- 
+/--
 a n is the generalized Stern sequence, defined by the recurrence relations:
-a(2n+1) = a(n) and a(2n) = a(n) + a(n-2) with a(0)=1, a(1)=1 and a(n)=0 for n <= -1.
+$a(2n+1) = a(n)$ and $a(2n) = a(n)$ + $a(n-2)$ with $a(0) = 1$, $a(1) = 1$ and $a(n) = 0$ for $n \le -1$.
 -/
 def a (n : ℕ) : ℕ :=
   if n = 0 then 1

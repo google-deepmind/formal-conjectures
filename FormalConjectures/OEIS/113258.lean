@@ -29,7 +29,7 @@ namespace OeisA113258
 
 /--
 The primary defining sequence `a`.
-a(n) is the ascending descending base exponent transform of factorials.
+$a(n)$ is the ascending descending base exponent transform of factorials.
 $$a(n) = \sum_{i = 1}^n (i!) ^ {(n-i+1)!}$$
 -/
 def a (n : ℕ) : ℕ :=
@@ -48,7 +48,7 @@ theorem a_3 : a 3 = 11 := by rfl
 theorem a_4 : a 4 = 125 := by rfl
 
 /--
-Is there a nontrivial power after a(4) = 5^3?
+Is there a nontrivial power after $a(4) = 5^3$?
 -/
 @[category research open, AMS 11]
 theorem conjecture :

@@ -94,7 +94,7 @@ def IsUltimatelyPeriodic (f : ℕ → ℕ) : Prop :=
   ∃ N P, P > 0 ∧ ∀ n, n ≥ N → f (n + P) = f n
 
 /--
-Starting at other than a(n) = 1, does this sequence ever go into a loop?
+Starting at other than $a(n) = 1$, does this sequence ever go into a loop?
 -/
 @[category research open, AMS 11]
 theorem conjecture (x : ℕ) (h : x ≠ 1) :

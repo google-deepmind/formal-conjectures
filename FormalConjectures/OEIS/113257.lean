@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Ascending descending base exponent transform of squares
 
-a n is the sum from i=1 to n of (i^2)^((n-i+1)^2).
+a n is $\sum_{i=1}^n (i^2)^((n-i+1)^2)$.
 
 *References:*
 - [A113257](https://oeis.org/A113257)
@@ -47,7 +47,7 @@ theorem a_4 : a 4 = 268722 := by decide
 theorem a_5 : a 5 = 4682453347 := by decide
 
 /--
-The smallest prime in this sequence is a(2) = 5. What is the next prime?
+The smallest prime in this sequence is $a(2) = 5$. What is the next prime?
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :

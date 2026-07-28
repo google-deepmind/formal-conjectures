@@ -39,7 +39,7 @@ def a : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * a (n + 2) - a n
 
--- (c(n)) starts with (1, -3, -7, 17) and satisfies the same recurrence as a
+/-- $c(n)$ starts with (1, -3, -7, 17) and satisfies the same recurrence as `a` -/
 def c : ℕ → ℤ
   | 0 => 1
   | 1 => -3
@@ -47,7 +47,7 @@ def c : ℕ → ℤ
   | 3 => 17
   | n + 4 => -6 * c (n + 2) - c n
 
--- (d(n)) starts with (2, 4, -10, -24) and satisfies the same recurrence as a
+/-- $d(n)$ starts with (2, 4, -10, -24) and satisfies the same recurrence as `a` -/
 def d : ℕ → ℤ
   | 0 => 2
   | 1 => 4
@@ -55,12 +55,12 @@ def d : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * d (n + 2) - d n
 
--- b(2n) = c(2n+1), b(2n+1) = c(2n)
+/-- $b(2n) = c(2n+1)$, $b(2n+1) = c(2n)$ -/
 def b (n : ℕ) : ℤ :=
   if n % 2 = 0 then c (n + 1)
   else c (n - 1)
 
--- e(2n) = d(2n)/2, e(2n+1) = - d(2n)/2
+/-- $e(2n) = d(2n)/2$, $e(2n+1) = - d(2n)/2$ -/
 def e (n : ℕ) : ℤ :=
   if n % 2 = 0 then
     d n / 2
@@ -68,12 +68,12 @@ def e (n : ℕ) : ℤ :=
     -- n is positive, so n-1 is safe in ℕ
     - (d (n - 1) / 2)
 
--- f(2n) = f(2n+1) = d(2n+1)/2
+/-- $f(2n) = f(2n+1) = d(2n+1)/2$ -/
 def f (n : ℕ) : ℤ :=
   let m := n / 2
   d (2 * m + 1) / 2
 
--- g(2n) = 0, g(2n+1) = c(2n+1)
+/-- $g(2n) = 0, g(2n+1) = c(2n+1)$ -/
 def g (n : ℕ) : ℤ :=
   if n % 2 = 0 then 0
   else c n

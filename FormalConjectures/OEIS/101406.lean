@@ -71,7 +71,7 @@ theorem a_4 : a 4 = 2 := by eval_a
 theorem a_5 : a 5 = 2 := by eval_a
 
 /--
-Under the Bunyakovsky conjecture, a(n) exists for every n.
+Under the Bunyakovsky conjecture, $a(n)$ exists for every n.
 
 This formalizes the claim that for every $n \in \mathbb{N}^+$, the set of $k > 1$ for which
 $k^n(k^n-1)-1$ is prime is non-empty. This non-emptiness ensures that $a(n)$

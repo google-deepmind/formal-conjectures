@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Difference between first odd semiprime > 2^n and 2^n
 
-Difference between first odd semiprime > 2^n and 2^n.
+Difference between first odd semiprime > $2^n$ and $2^n$.
 
 *References:*
 - [A114137](https://oeis.org/A114137)
@@ -42,7 +42,7 @@ def is_odd_semiprime (n : ℕ) : Prop :=
 
 /--
 The primary defining sequence `a`.
-a(n) is the difference between first odd semiprime > 2^n and 2^n.
+$a(n)$ is the difference between first odd semiprime > $2^n$ and $2^n$.
 $$a(n) = \min \{s \mid s > 2^n \text{ and } s \text{ is an odd semiprime}\} - 2^n$$
 -/
 noncomputable def a (n : ℕ) : ℕ :=

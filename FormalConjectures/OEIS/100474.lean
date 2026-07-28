@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A100474
 
-a(1) = 1; a(n) is the smallest integer such that a(n) + a(n-1) has the first n distinct prime factors not used before in this construction.
+$a(1) = 1$; $a(n)$ is the smallest integer such that $a(n) + a(n-1)$ has the first $n$ distinct prime factors not used before in this construction.
 
 *References:*
 - [A100474](https://oeis.org/A100474)
@@ -157,14 +157,14 @@ def IsSemiprime (n : ℕ) : Prop :=
   ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ n = p * q
 
 /--
-After a(2) = 5, is there another prime?
+After $a(2) = 5$, is there another prime?
 -/
 @[category research open, AMS 11]
 theorem conjecture : answer(sorry) ↔ ∃ n > 2, Nat.Prime (a n) := by
   sorry
 
 /--
-What is the next semiprime in the sequence after a(11)?
+What is the next semiprime in the sequence after $a(11)$?
 -/
 @[category research open, AMS 11]
 theorem next_semiprime :

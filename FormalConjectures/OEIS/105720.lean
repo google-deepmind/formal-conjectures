@@ -99,7 +99,7 @@ theorem a_4 : a 4 = 67 := by
   eval_a
 
 /--
-Terms are squares at only(?) three values of n = 3, 6, 4072:
+Terms are squares at only(?) three values of $n = 3, 6, 4072$:
 corresponding terms are 6^2, 13^2, and 15735^2.
 -/
 @[category research open, AMS 11]

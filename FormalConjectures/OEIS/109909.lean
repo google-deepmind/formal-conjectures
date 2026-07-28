@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # A109909
 
-a(n) = number of primes of the form k*(n-k)-1.
+$a(n)$ = number of primes of the form $k(n-k)-1$.
 
 *References:*
 - [A109909](https://oeis.org/A109909)
@@ -28,8 +28,8 @@ a(n) = number of primes of the form k*(n-k)-1.
 namespace OeisA109909
 
 /--
-a(n) is the number of primes of the form k*(n-k)-1.
-This counts the number of distinct prime values in the set {k*(n-k)-1 | 1 <= k < n}.
+$a(n)$ is the number of primes of the form $k(n-k)-1$.
+This counts the number of distinct prime values in the set $\{k(n-k)-1 | 1 \le k < n\}$.
 -/
 def a (n : ℕ) : ℕ :=
   (Finset.Ico 1 n).image (fun k => k * (n - k) - 1)
@@ -52,7 +52,7 @@ theorem a_4 : a 4 = 2 := by decide
 theorem a_5 : a 5 = 2 := by decide
 
 /--
-Conjecture: a(n) > 0 for n > 3.
+Conjecture: $a(n) > 0$ for $n > 3$.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n > 3, a n > 0 := by

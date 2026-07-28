@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # A105210
 
-a(1) = 393; for n > 1, a(n) = a(n-1) + 1 + sum of distinct prime factors of a(n-1) that are < a(n-1).
+$a(1) = 393$; for $n > 1$, $a(n) = a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$ that are $< a(n-1)$.
 
 *References:*
 - [A105210](https://oeis.org/A105210)
@@ -34,7 +34,7 @@ def sum_relevant_prime_factors (n : ℕ) : ℕ :=
   (Nat.primeFactors n).sum (fun p => if p < n then p else 0)
 
 /-- The primary defining sequence `a`.
-a(1) = 393; for n > 1, a(n) = a(n-1) + 1 + sum of distinct prime factors of a(n-1) that are < a(n-1). -/
+$a(1) = 393$; for $n > 1$, $a(n)$ = $a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$ that are < $a(n-1)$. -/
 def a : ℕ → ℕ
 | 0 => 0
 | 1 => 393

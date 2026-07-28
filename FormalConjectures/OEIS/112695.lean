@@ -70,7 +70,7 @@ theorem a_4 : a 4 = 0 := by
   norm_num [collatz_steps_to_four]
 
 /--
-Conjecture: a(n) = number of iterations of the Collatz 3*x+1 map applied to n until the conjectured 4,2,1 sequence is reached.
+Conjecture: $a(n)$ = number of iterations of the Collatz 3*x+1 map applied to n until the conjectured 4,2,1 sequence is reached.
 This is the statement that the value `a n` is well-defined for all positive integers $n$.
 -/
 @[category research open, AMS 11]
