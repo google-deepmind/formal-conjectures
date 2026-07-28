@@ -29,9 +29,9 @@ namespace OeisA113019
 
 open Nat
 
-/-- 
-a n is the (Number of digits of n) raised to the power of (the digital root of n), 
-with appropriate adjustments for n=0.
+/--
+a n is the (Number of digits of n) raised to the power of (the digital root of n),
+with appropriate adjustments for $n=0$.
 -/
 def a (n : ℕ) : ℕ :=
   -- The base: number of digits of n (adjusting n=0 to have 1 digit, like n=1).
@@ -58,7 +58,7 @@ theorem a_3 : a 3 = 1 := by native_decide
 theorem a_4 : a 4 = 1 := by native_decide
 
 /--
-n=1 and 32 are fixed points. Are there any others?
+$n=1$ and $32$ are fixed points. Are there any others?
 -/
 @[category research open, AMS 11]
 theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by

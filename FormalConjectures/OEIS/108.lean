@@ -75,7 +75,7 @@ open Nat Real Finset Polynomial
 Catalan numbers: $C(n) = \binom{2n}{n}/(n+1)$. -/
 def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
 
--- Reciprocal of the n-th Catalan number as a rational number.
+/-- Reciprocal of the n-th Catalan number as a rational number. -/
 def a_rat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
 
 /-- The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers. -/
@@ -168,7 +168,7 @@ noncomputable def catalan_polynomial (n : ℕ) : ℚ[X] :=
 
 /--
 OEIS A000108 Conjecture: For any positive integer n, the polynomial
-Sum_{k=0..n} a(k)*x^k is irreducible over the field of rational numbers.
+$\sum_{k=0}^n a(k)x^k$ is irreducible over the field of rational numbers.
 -/
 @[category research open, AMS 11 12]
 theorem conjecture2 (n : ℕ) (h : n > 0) :

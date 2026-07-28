@@ -49,14 +49,14 @@ theorem a_3 : a 3 = 14 := by native_decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 26 := by native_decide
 
-/-- a(0), a(1), a(5), a(6), a(7) and a(11) are primes. -/
+/-- $a(0)$, $a(1)$, $a(5)$, $a(6)$, $a(7)$ and $a(11)$ are primes. -/
 @[category textbook, AMS 11]
 theorem primes_in_a :
     Nat.Prime (a 0) ∧ Nat.Prime (a 1) ∧ Nat.Prime (a 5) ∧
     Nat.Prime (a 6) ∧ Nat.Prime (a 7) ∧ Nat.Prime (a 11) := by
   sorry
 
-/-- a(0), a(1), a(5), a(6), a(7) and a(11) are primes. Are there any more? -/
+/-- $a(0)$, $a(1)$, $a(5)$, $a(6)$, $a(7)$ and $a(11)$ are primes. Are there any more? -/
 @[category research open, AMS 11]
 theorem conjecture : answer(sorry) ↔ ∃ n > 11, Nat.Prime (a n) := by
   sorry

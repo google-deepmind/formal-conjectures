@@ -51,7 +51,7 @@ theorem a_3 : a 3 = 0 := by native_decide
 theorem a_4 : a 4 = 0 := by native_decide
 
 /--
-Conjecture from N. J. A. Sloane: a(n) > 0 for n > 15.
+Conjecture from N. J. A. Sloane: $a(n) > 0$ for $n > 15$.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n : ℕ, 15 < n → a n > 0 := by

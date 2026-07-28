@@ -90,7 +90,7 @@ theorem a_4 : a 4 = 0 := by eval_a
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by eval_a
 
-/-- A102722 Conjecture: a(n) ~ (1-EulerGamma)n. -/
+/-- A102722 Conjecture: $a(n) \sim (1-\gamma)n$. -/
 @[category research open, AMS 11]
 theorem conjecture :
     Asymptotics.IsEquivalent Filter.atTop

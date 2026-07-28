@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Largest odd divisor of a(n-1) + prime(n)
 
-a(0)=0; thereafter a(n) = largest odd divisor of a(n-1) + prime(n).
+$a(0)=0$; thereafter $a(n)$ = largest odd divisor of $a(n-1) + \textrm{prime}(n)$.
 
 *References:*
 - [A114216](https://oeis.org/A114216)
@@ -29,7 +29,7 @@ namespace OeisA114216
 
 /--
 The primary defining sequence `a`.
-a(n) is the largest odd divisor of a(n-1) + prime(n).
+$a(n)$ is the largest odd divisor of $a(n-1)$+ \textrm{prime}(n)$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   match n with
@@ -50,7 +50,7 @@ theorem a_1 : a 1 = 1 := by
   simp [a]
 
 /--
-Is a(33900) the last term equal to 1?
+Is $a(33900)$ the last term equal to $1$?
 -/
 @[category research open, AMS 11]
 theorem conjecture :

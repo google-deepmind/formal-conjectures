@@ -71,7 +71,7 @@ def T (n k : ℕ) : ℤ :=
 termination_by n + k
 
 /--
-Conjecture: Starting with n=1, a(n) is the main diagonal of the array T(n, k).
+Conjecture: Starting with $n=1$, $a(n)$ is the main diagonal of the array $T(n, k)$.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ (n : ℕ), n ≥ 1 → (a n : ℤ) = T n n := by

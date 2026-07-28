@@ -68,7 +68,7 @@ def IsSemiprime (n : ℕ) : Prop :=
   1 < n ∧ ∃ p q, Nat.Prime p ∧ Nat.Prime q ∧ n = p * q
 
 /--
-Primes in this sequence include: a(8) = 2. Semiprimes in this sequence include: a(9) = 6 = 2 * 3, a(10) = 22 = 2 * 11, a(11) = 86 = 2 * 43, a(13) = 1366 = 2 * 683, a(14) = 5462 = 2 * 2731, a(16) = 87382 = 2 * 43691, a(17) = 348503 = 37 * 9419, a(27) = 358201316657 = 71 * 5045088967.
+Primes in this sequence include: $a(8) = 2$. Semiprimes in this sequence include: $a(9) = 6 = 2 * 3$, $a(10) = 22 = 2 * 11$, $a(11) = 86 = 2 * 43$, $a(13) = 1366 = 2 * 683$, $a(14) = 5462 = 2 * 2731$, $a(16) = 87382 = 2 * 43691$, $a(17) = 348503 = 37 * 9419$, $a(27) = 358201316657 = 71 * 5045088967$.
 (Note: The OEIS comment uses 1-based indexing, so their indices are shifted by +1 compared to this formalization).
 -/
 @[category textbook, AMS 11]
@@ -85,7 +85,7 @@ theorem known_prime_and_semiprimes :
   sorry
 
 /--
-Primes in this sequence include: a(8) = 2, which is next?
+Primes in this sequence include: $a(8) = 2$, which is next?
 -/
 @[category research open, AMS 11]
 theorem conjecture :

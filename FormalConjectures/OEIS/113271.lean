@@ -29,7 +29,7 @@ namespace OeisA113271
 
 /--
 The primary defining sequence `a`.
-a(n) is the ascending descending base exponent transform of 2^n.
+$a(n)$ is the ascending descending base exponent transform of $2^n$.
 $$a(n) = \sum_{i=0}^n 2^{i \cdot 2^{n-i}}$$
 -/
 def a (n : ℕ) : ℕ :=
@@ -51,7 +51,7 @@ theorem a_3 : a 3 = 41 := by rfl
 theorem a_4 : a 4 = 593 := by rfl
 
 /--
-The smallest primes in this (always odd) sequence are a(1) = 3, a(3) = 41 and a(5) = 543. What is the next prime?
+The smallest primes in this (always odd) sequence are $a(1) = 3$, $a(3) = 41$ and $a(5) = 543$. What is the next prime?
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :

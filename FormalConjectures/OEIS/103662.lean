@@ -81,7 +81,7 @@ theorem conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
   sorry
 
 /--
-a(40), if it exists, is not known.
+$a(40)$, if it exists, is not known.
 
 This claim is rooted in the finiteness conjecture. The most direct mathematical expression of the open problem concerning $a(40)$ is the negation of the existence of a valid base.
 -/

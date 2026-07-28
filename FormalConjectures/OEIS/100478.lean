@@ -79,7 +79,7 @@ theorem a_3 : a 3 = 1 := by rfl
 theorem a_4 : a 4 = 1 := by rfl
 
 /-- 
-Starting with other values of a(1), a(2), a(3), a(4), a(5) what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern? 
+Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern? 
 -/
 @[category research open, AMS 11]
 theorem conjecture :

@@ -33,7 +33,7 @@ open Nat
 
 /--
 The primary defining sequence `a`.
-a(n) is $\mathrm{prime}(2n+2) - \mathrm{prime}(2n+1) - \mathrm{prime}(2n) + \mathrm{prime}(2n-1)$.
+$a(n)$ is $\mathrm{prime}(2n+2) - \mathrm{prime}(2n+1) - \mathrm{prime}(2n) + \mathrm{prime}(2n-1)$.
 -/
 noncomputable def a (n : ℕ) : ℤ :=
   let p (k : ℕ) : ℤ := (Nat.nth Nat.Prime (k - 1)).cast

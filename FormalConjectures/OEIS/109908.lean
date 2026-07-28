@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # A109908
 
-a(n) = greatest prime of the form k(n-k)-1, or 0 if no such prime exists.
+$a(n)$ = greatest prime of the form $k(n-k)-1$, or $0$ if no such prime exists.
 
 *References:*
 - [A109908](https://oeis.org/A109908)
@@ -28,7 +28,7 @@ a(n) = greatest prime of the form k(n-k)-1, or 0 if no such prime exists.
 namespace OeisA109908
 
 /--
-a(n) = greatest prime of the form k(n-k)-1, or 0 if no such prime exists.
+$a(n)$ = greatest prime of the form $k(n-k)-1$, or $0$ if no such prime exists.
 -/
 def a (n : ℕ) : ℕ :=
   (Finset.Icc 1 (n / 2))
@@ -52,7 +52,7 @@ theorem a_4 : a 4 = 3 := by decide
 theorem a_5 : a 5 = 5 := by decide
 
 /--
-Conjecture: a(n) > 0 for n > 3.
+Conjecture: $a(n) > 0$ for $n > 3$.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n > 3, a n > 0 := by

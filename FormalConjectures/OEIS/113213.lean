@@ -29,9 +29,9 @@ namespace OeisA113213
 
 open Nat
 
-/-- 
-a n is the smallest number m such that 2^n - m and 2^n + m are primes.
-Computed by checking elements from 0 to 2^n, as any larger m would make 2^n - m = 0 which is not prime.
+/--
+a n is the smallest number m such that $2^n - m$ and $2^n + m$ are primes.
+Computed by checking elements from $0$ to $2^n$, as any larger $m$ would make $2^n - m = 0$ which is not prime.
 -/
 def a (n : ℕ) : ℕ :=
   let S := (List.range (2^n + 1)).filter (fun m => (2^n - m).Prime ∧ (2^n + m).Prime)
@@ -53,7 +53,7 @@ theorem a_4 : a 4 = 3 := by native_decide
 theorem a_5 : a 5 = 9 := by native_decide
 
 /--
-Conjecture: a(n) = O(n^3).
+Conjecture: $a(n) = O(n^3)$.
 -/
 @[category research open, AMS 11]
 theorem conjecture :

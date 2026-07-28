@@ -32,7 +32,7 @@ namespace OeisA110475
 
 /-- 
 The primary defining sequence `a`.
-a(n) is the number of symbols '*' and '^' to write the canonical prime factorization of n.
+$a(n)$ is the number of symbols '*' and '^' to write the canonical prime factorization of n.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let F := Nat.factorization n

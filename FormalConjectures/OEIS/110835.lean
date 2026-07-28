@@ -29,9 +29,9 @@ namespace OeisA110835
 
 open Nat Set
 
-/-- 
+/--
 The primary defining sequence `a`.
-a(n) is the smallest $m > 0$ such that there are no primes between $n \cdot m$ and $n \cdot (m+1)$ inclusive.
+$a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$ and $n \cdot (m+1)$ inclusive.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let is_prime_free_interval (m : ℕ) : Prop :=
@@ -40,7 +40,7 @@ noncomputable def a (n : ℕ) : ℕ :=
   sInf S
 
 /--
-Sierpinski's conjecture (1958) is precisely that a(n) >= n for all n.
+Sierpinski's conjecture (1958) is precisely that $a(n) >= n$ for all $n$.
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n > 0, a n ≥ n := by

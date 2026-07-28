@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # A116150
 
-a(n) = sum_{j=1..n} (3^j + (-2)^j).
+$a(n) = \sum_{j=1}^{n} (3^j + (-2)^j)$.
 
 *References:*
 - [A116150](https://oeis.org/A116150)
@@ -29,7 +29,7 @@ namespace OeisA116150
 
 open BigOperators
 
-/-- a n is the sum of 3^j + (-2)^j for j from 1 to n. -/
+/-- a n is the sum of $3^j + (-2)^j$ for j from 1 to n. -/
 def a (n : ℕ) : ℕ :=
   (Finset.sum (Finset.Icc 1 n) (fun j : ℕ => (3 : ℤ) ^ j + ((-2) : ℤ) ^ j)).toNat
 
@@ -49,8 +49,8 @@ theorem a_4 : a 4 = 130 := by decide
 theorem a_5 : a 5 = 341 := by decide
 
 /--
-First primes are a(11)=264353 and a(17)=193622861.
-Additional primes: a(71), a(91), a(431).
+First primes are $a(11) = 264353$ and $a(17) = 193622861$.
+Additional primes: $a(71)$, $a(91)$, $a(431)$.
 What is the next prime?
 -/
 @[category research open, AMS 11]

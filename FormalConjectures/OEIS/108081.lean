@@ -72,7 +72,7 @@ def x_n (n : ℕ) : Set Word :=
   {w : Word | x_word w ∧ w.length = n}
 
 /--
-"The number of words of length n for n<=12 is given by a(n+1). Is this always true?"
+"The number of words of length $n$ for $n \le 12$ is given by $a(n+1)$. Is this always true?"
 
 Formalized as $|X_n| = a(n-1)$ for $n \ge 1$, because the sequence values $a(0)=1, a(1)=2, a(2)=7$
 match the examples given for word lengths $n=1, 2, 3$ respectively.
