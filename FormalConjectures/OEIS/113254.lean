@@ -68,7 +68,7 @@ lemma a_4 : a 4 = -15616 := by rfl
 
 
 /--
-Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
+Conjecture: $a(8, 2n+1)$ is a perfect square for all $n$ (see A113249).
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
