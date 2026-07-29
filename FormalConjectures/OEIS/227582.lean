@@ -19,10 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A227582
 
-The sequence $b_n$ such that $A227582(n) = b_{n-1}$ for $n \ge 1$.
-This is the 0-indexed solution to the linear recurrence in $\mathbb{Z}$.
+A227582: Expansion of $(2+3x+2x^2+2x^3+3x^4+x^5-x^6)/(1-2x+x^2-x^5+2x^6-x^7)$.
 
-A227582: Expansion of $(2+3*x+2*x^2+2*x^3+3*x^4+x^5-x^6)/(1-2x+x^2-x^5+2*x^6-x^7)$.
+The sequence satisfies the linear recurrence:
+$$a(n) = 2 a(n-1) - a(n-2) + a(n-5) - 2 a(n-6) + a(n-7)$$
+with initial values $a(1) = 2, a(2) = 7, a(3) = 14, a(4) = 23, a(5) = 35, a(6) = 50, a(7) = 67$.
+
 The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-indexed solution.
 
 *References:*
@@ -75,9 +77,40 @@ lemma a_4 : a 4 = 23 := by dsimp [a]; native_decide
 @[category test, AMS 11]
 lemma a_5 : a 5 = 35 := by dsimp [a]; native_decide
 
+/--
+The linear recurrence:
+$$b(n + 7) = 2 b(n + 6) - b(n + 5) + b(n + 2) - 2 b(n + 1) + b(n)$$
+holds for `base_seq`. This follows directly from `LinearRecurrence.is_sol_mkSol`.
+-/
+@[category API, AMS 11]
+theorem base_seq_recurrence (n : ℕ) :
+    base_seq (n + 7) = 2 * base_seq (n + 6) - base_seq (n + 5) +
+    base_seq (n + 2) - 2 * base_seq (n + 1) + base_seq n := by
+  let E : LinearRecurrence ℤ := ⟨7, ![1, -2, 1, 0, 0, -1, 2]⟩
+  let init : Fin 7 → ℤ := ![2, 7, 14, 23, 35, 50, 67]
+  -- base_seq is definitionally E.mkSol init
+  change E.mkSol init (n + 7) =
+    2 * E.mkSol init (n + 6) - E.mkSol init (n + 5) +
+    E.mkSol init (n + 2) - 2 * E.mkSol init (n + 1) + E.mkSol init n
+  have h := E.is_sol_mkSol init n
+  -- h : mkSol(n+7) = ∑ i : Fin 7, coeffs[i] * mkSol(n+i)
+  rw [h]
+  -- Expand the sum and reduce all coefficient lookups
+  simp only [Fin.sum_univ_seven, E, Fin.isValue]
+  -- Reduce matrix lookups: ![1, -2, 1, 0, 0, -1, 2] i for all i : Fin 7
+  -- and Fin coercions: ↑(i : Fin 7) for each i
+  norm_num [show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 0 = 1 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 1 = -2 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 2 = 1 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 3 = 0 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 4 = 0 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 5 = -1 from rfl,
+    show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 6 = 2 from rfl]
+  ring
 
 /--
-Conjecture: $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$, where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.
+Conjecture (from A227581): $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$,
+where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
