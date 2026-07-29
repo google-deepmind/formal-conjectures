@@ -419,9 +419,11 @@ theorem eqSystem6_no_solution_d4 :
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c53403/lean/QuantumCR/FormalConjecturesWrappers.lean#L55-L62"]
 theorem eqSystem6_no_solution_d5 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℂ, EqSystemN 6 5 W := by
   sorry
 
@@ -516,9 +518,11 @@ theorem eqSystem10_no_solution_d8 :
 
 /-- For $N = 10$ and $D = 9$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c53403/lean/QuantumCR/FormalConjecturesWrappers.lean#L73-L80"]
 theorem eqSystem10_no_solution_d9 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 9 ℂ, EqSystemN 10 9 W := by
   sorry
 
@@ -595,9 +599,11 @@ theorem eqSystem6_no_solution_d3_real :
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c53403/lean/QuantumCR/FormalConjecturesWrappers.lean#L64-L71"]
 theorem eqSystem6_no_solution_d5_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℝ, EqSystemN 6 5 W := by
   sorry
 
