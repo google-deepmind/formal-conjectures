@@ -63,8 +63,7 @@ theorem a_209 : A 209 := by
     rw [eq1, eq2, totient_mul (by norm_num), totient_mul (by norm_num),
       totient_prime (by norm_num), totient_prime (by norm_num), totient_prime (by norm_num),
       totient_prime (by norm_num)]
-  ·
-    decide
+  · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
 @[category textbook, AMS 11]

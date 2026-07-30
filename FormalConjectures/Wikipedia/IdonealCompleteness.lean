@@ -88,7 +88,6 @@ set_option maxRecDepth 4096 in
 @[category test, AMS 11]
 theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdoneal n := by
   intro n hn
-  unfold IsIdoneal
   fin_cases hn <;>
     refine ⟨by norm_num, ?_⟩ <;>
     rw [exists_triple_iff_bounded] <;>
