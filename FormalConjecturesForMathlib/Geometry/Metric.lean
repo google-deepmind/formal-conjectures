@@ -28,9 +28,8 @@ variable {X : Type*} [MetricSpace X]
 -/
 noncomputable def unitDistNum (s : Finset X) : ℕ := #{p ∈ s.sym2 | dist p.out.1 p.out.2 = 1}
 
-/-- A set `A` in a metric space has *pairwise distinct distances* if any two pairs of distinct
-points of `A` realising the same distance are equal as unordered pairs: whenever
-`x, y, z, w ∈ A` with `x ≠ y`, `z ≠ w` and `dist x y = dist z w`, then `{x, y} = {z, w}`. -/
+/-- A set has pairwise distinct distances if equal distances between pairs of distinct points
+determine the same unordered pair. -/
 def PairwiseDistinctDistances (A : Set X) : Prop :=
   ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
     x ≠ y → z ≠ w → dist x y = dist z w → (x = z ∧ y = w) ∨ (x = w ∧ y = z)
