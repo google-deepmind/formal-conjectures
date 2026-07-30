@@ -106,8 +106,8 @@ theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ �
     -- difference of two primes `≤ 97`.
     refine ⟨by norm_num, ?_⟩
     rw [cluster_iff 97 (by norm_num)]
-    simp only [Nat.reduceSub, Finset.mem_range, Nat.reduceAdd, not_forall, Classical.not_imp,
-      not_exists, not_and, not_le]
+    simp only [Nat.reduceSub, Finset.mem_range, Nat.reduceAdd, not_forall, not_exists, not_and,
+      not_le]
     refine ⟨88, by norm_num, by norm_num, ?_⟩
     intro x xl hx xl
     suffices 9 < x by
