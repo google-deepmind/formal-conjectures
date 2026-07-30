@@ -38,22 +38,18 @@ open scoped Asymptotics
 
 namespace Erdos1208
 
-/-- A finite set $S$ of points has *distinct distances* if all of its pairwise distances are
-distinct: whenever two pairs $\{p, q\}$ and $\{r, s\}$ of distinct points of $S$ realise the same
-distance, the two pairs coincide. -/
+/-- A finite set has distinct distances if equal distances between pairs of distinct points
+determine the same unordered pair. -/
 def HasDistinctDistances {d : ℕ} (S : Finset (EuclideanSpace ℝ (Fin d))) : Prop :=
   PairwiseDistinctDistances (S : Set (EuclideanSpace ℝ (Fin d)))
 
-/-- The largest size of a distinct-distance subset of a finite point set $P$ in
-$\mathbb{R}^d$. -/
+/-- Largest cardinality of a distinct-distance subset of $P$. -/
 noncomputable def maxDistinctDistanceSubset {d : ℕ}
     (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
   sSup {m | ∃ S ⊆ P, HasDistinctDistances S ∧ S.card = m}
 
-/-- $F_d(n)$ is the largest size of a distinct-distance subset guaranteed in every $n$-point set
-in $\mathbb{R}^d$: the minimum, over all $n$-point sets $P$, of the largest distinct-distance
-subset of $P$. Equivalently, every $n$-point set contains $F_d(n)$ points with pairwise distinct
-distances, and some $n$-point set contains no larger such subset. -/
+/-- Minimum, over all $n$-point sets in $\mathbb{R}^d$, of the largest cardinality of a
+distinct-distance subset. -/
 noncomputable def F (d n : ℕ) : ℕ :=
   sInf {m | ∃ P : Finset (EuclideanSpace ℝ (Fin d)), P.card = n ∧ maxDistinctDistanceSubset P = m}
 
@@ -69,7 +65,7 @@ theorem erdos_1208.test.empty {d : ℕ} :
 For $d \geq 2$ let $F_d(n)$ be minimal such that every set of $n$ points in $\mathbb{R}^d$ contains
 a set of $F_d(n)$ points with distinct distances. Estimate $F_d(n)$ for fixed $d$ as $n \to \infty$.
 
-The conjectured estimate formalised here is $F_d(n) = n^{1/d - o(1)}$.
+Conjecturally, $F_d(n) = n^{1/d - o(1)}$.
 -/
 @[category research open, AMS 52]
 theorem erdos_1208 (d : ℕ) (hd : 2 ≤ d) :
@@ -78,8 +74,8 @@ theorem erdos_1208 (d : ℕ) (hd : 2 ≤ d) :
   sorry
 
 /--
-The integer grid $\{1, \ldots, n^{1/d}\}^d$ shows
-$F_d(n) \ll n^{1/d}$ for $d \geq 2$ [erdosproblems.com/1208].
+The integer grid gives $F_d(n) \ll n^{1/d}$ for $d \geq 2$
+[erdosproblems.com/1208].
 -/
 @[category research solved, AMS 52]
 theorem erdos_1208.upper_bound (d : ℕ) (hd : 2 ≤ d) :
@@ -88,8 +84,7 @@ theorem erdos_1208.upper_bound (d : ℕ) (hd : 2 ≤ d) :
 
 /--
 Conlon, Fox, Gasarch, Harris, Ulrich and Zbarsky [CFGHUZ15] proved
-$F_d(n) \gg_d n^{1/(3d-3)}$ for $d \geq 2$ (with an additional logarithmic factor), improving
-Thiele's $n^{1/(3d-2)}$ for $d \geq 3$.
+$F_d(n) \gg_d n^{1/(3d-3)}$ for $d \geq 2$, with an additional logarithmic factor.
 -/
 @[category research solved, AMS 52]
 theorem erdos_1208.lower_bound (d : ℕ) (hd : 2 ≤ d) :
@@ -97,9 +92,7 @@ theorem erdos_1208.lower_bound (d : ℕ) (hd : 2 ≤ d) :
   sorry
 
 /--
-In the plane, Clemen, Führer and Roche-Newton [CFR26] proved
-$F_2(n) \gg n^{1/3}$, removing the $(\log n)^{1/3}$ factor from the earlier bound of
-Charalambides [Ch13].
+Clemen, Führer and Roche-Newton [CFR26] proved $F_2(n) \gg n^{1/3}$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_1208.lower_bound_plane :
@@ -107,9 +100,8 @@ theorem erdos_1208.lower_bound_plane :
   sorry
 
 /--
-The upper bound for the plane is
-$F_2(n) \ll n^{1/2} / (\log n)^{1/4}$: the $\sqrt{n} \times \sqrt{n}$ grid determines
-$\ll n / \sqrt{\log n}$ distinct distances [erdosproblems.com/1208].
+The planar grid construction gives
+$F_2(n) \ll n^{1/2} / (\log n)^{1/4}$ [erdosproblems.com/1208].
 -/
 @[category research solved, AMS 52]
 theorem erdos_1208.upper_bound_plane :
