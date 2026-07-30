@@ -144,7 +144,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
-  erw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
+  rw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
   refine ⟨by aesop, fun n hn => ?_⟩
   simp [Nat.lt_one_iff.1 hn]
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
