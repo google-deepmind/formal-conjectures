@@ -412,7 +412,7 @@ theorem eqSystem6_no_solution_d3 :
 equation system over $\mathbb{C}$? -/
 @[category research solved, AMS 5 14 81,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/monochromatic-quantum-graph-n6-d4-lean/blob/7d30141a19714986d6f9e632314fd880c9a1e86e/lean4web/QuantumGraphSixFourStructuredLean4Web.lean#L32583-L32590"]
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-n6-d4-lean/blob/7d30141a19714986d6f9e632314fd880c9a1e86e/lean/QuantumCR/FormalConjecturesWrapper.lean#L30-L37"]
 theorem eqSystem6_no_solution_d4 :
     answer(True) ↔
       ¬ ∃ W : WeightsN 6 4 ℂ, EqSystemN 6 4 W := by
