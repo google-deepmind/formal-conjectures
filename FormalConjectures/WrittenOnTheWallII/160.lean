@@ -65,13 +65,15 @@ where:
 - $\max_v T(v)$ is the maximum number of triangles incident to any vertex,
 - $\chi_{C_4}(G)$ is `1` if $G$ has no cycle of length four and `0` otherwise.
 
-A formal proof joins a closest pair of a local-independence maximizer and a
-triangle-count maximizer by a shortest path and applies the connected-seed
-spanning-tree bound developed for Conjecture 2.
+A formal proof uses the $C_4$-free neighborhood identity $d(v) = \lambda(v) + T(v)$
+with a star/geodesic case analysis, routed through the connected-seed
+spanning-tree bound developed for Conjecture 2. An independent second proof,
+via a closest maximizer pair joined by a shortest path, is linked from the
+pull request that recorded the solution.
 -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at
-    "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/41d6835ad4325077c04122af476a08193110a933/WOWII160Proof.lean#L735"]
+    "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/f0d70dfa13f92a4b631289e44487690833be8798/WOWII160AltProof.lean#L714"]
 theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     let maxT := maxTrianglesAtVertex G
