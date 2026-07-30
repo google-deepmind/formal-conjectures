@@ -144,7 +144,7 @@ whose Jacobian is a non-zero constant has an inverse that
 is given by a regular function, where `k` is a field of characteristic `0`.
 
 This is false: `F` has Jacobian determinant `1` but identifies
-two distinct points, so it admits no inverse. This counterexample works in all characterstics. -/
+two distinct points, so it admits no inverse. This counterexample works in all characteristics. -/
 @[category research solved, AMS 14]
 theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
     answer(False) ↔ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
