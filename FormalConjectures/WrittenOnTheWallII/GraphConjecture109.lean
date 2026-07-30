@@ -38,9 +38,17 @@ largest induced bipartite subgraph.
 This is false. A connected graph on 21 vertices has an independent set of size
 15, residue 8, and no induced bipartite subgraph with more than 18 vertices, so
 the conjectured right-hand side is at most 14.
+
+A smaller counterexample is the connected 13-vertex graph
+$\overline K_7 \vee (K_3 \sqcup K_3)$. It has independence number $7$, residue
+$2$, and largest induced bipartite subgraph size $9$, so its conjectured
+right-hand side is $6$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture109.lean"]
+  formal_proof using formal_conjectures at
+    "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture109.lean",
+  formal_proof using lean4 at
+    "https://github.com/chelokot/wowii-109-counterexample/blob/543a66ee78565b553f4ba6dc7fd32b5610557913/lean/GraphConjecture109.lean#L29-L139"]
 theorem conjecture109 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected),

@@ -21,7 +21,7 @@ This document provides guidelines for AI agents working on the Formal Conjecture
   `FormalConjectures/ErdosProblems/README.md` defines naming patterns for multi-part questions,
   estimate questions, and variants that supplement the general conventions in this file.
 
-- **`FormalConjectures/Util/`**: Repository infrastructure and utilities:
+- **`FormalConjecturesUtil/`**: Repository infrastructure and utilities:
   - `Attributes/` - Defines the `category` and `AMS` attributes
   - `Answer.lean` - Implements the `answer()` elaborator for problems requiring answers
   - `Linters/` - Custom linters for the repository
