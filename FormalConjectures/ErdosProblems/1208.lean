@@ -84,7 +84,7 @@ theorem erdos_1208.upper_bound (d : ℕ) (hd : 2 ≤ d) :
 
 /--
 Conlon, Fox, Gasarch, Harris, Ulrich and Zbarsky [CFGHUZ15] proved
-$F_d(n) \gg_d n^{1/(3d-3)}$ for $d \geq 2$, with an additional logarithmic factor.
+$F_d(n) \gg_d n^{1/(3d-3)}$ for $d \geq 2$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_1208.lower_bound (d : ℕ) (hd : 2 ≤ d) :
