@@ -140,9 +140,9 @@ theorem house_max_deg : HouseGraph.maxDegree = 3 := by
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
-open Classical in
 @[category test, AMS 5]
 theorem house_matching : matchingNumber HouseGraph = 2 := by
+  classical
   have hbdd : BddAbove (Set.image (fun M : Subgraph HouseGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
     refine ⟨(Fintype.card (Fin 5) : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
@@ -243,9 +243,9 @@ theorem K4_max_deg : K4.maxDegree = 3 := by
 theorem K4_avg_deg : averageDegree K4 = 3 := by
   unfold averageDegree; simp [Fintype.card_fin]
 
-open Classical in
 @[category test, AMS 5]
 theorem K4_matching : matchingNumber K4 = 2 := by
+  classical
   have hbdd : BddAbove (Set.image (fun M : Subgraph K4 => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
     refine ⟨(Fintype.card (Fin 4) : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
@@ -337,9 +337,9 @@ theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
-open Classical in
 @[category test, AMS 5]
 theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
+  classical
   have hbdd : BddAbove (Set.image (fun M : Subgraph PetersenGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
     refine ⟨(Fintype.card (Fin 10) : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
@@ -443,9 +443,9 @@ theorem C6_max_deg : C6.maxDegree = 2 := by
 theorem C6_avg_deg : averageDegree C6 = 2 := by
   unfold averageDegree; simp [Fintype.card_fin]; decide +native
 
-open Classical in
 @[category test, AMS 5]
 theorem C6_matching : matchingNumber C6 = 3 := by
+  classical
   have hbdd : BddAbove (Set.image (fun M : Subgraph C6 => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
     refine ⟨(Fintype.card (Fin 6) : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
@@ -565,9 +565,9 @@ theorem Star5_max_deg : Star5.maxDegree = 5 := by
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
   unfold averageDegree; simp [Fintype.card_sum, Fintype.card_fin]; decide +native
 
-open Classical in
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
+  classical
   have hle : ∀ M : Subgraph Star5, M.IsMatching → M.edgeSet.toFinset.card ≤ 1 := by
     intro M hM
     have hcenter : ∀ e ∈ M.edgeSet, (Sum.inl 0 : Fin 1 ⊕ Fin 5) ∈ e := by

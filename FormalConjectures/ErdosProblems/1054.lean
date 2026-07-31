@@ -26,10 +26,10 @@ namespace Erdos1054
 
 open Filter Asymptotics
 
-open Classical in
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest
 divisors of $m$ for some $k\geq 1$. -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   if h : ∃ᵉ (m) (k ≥ 1), n = ∑ i < k, Nat.nth (· ∈ m.divisors) i then
     Nat.find h
   else 0

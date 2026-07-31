@@ -73,8 +73,8 @@ noncomputable def NG (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   else
     (Fintype.card α : ℝ)
 
-open Classical in
 noncomputable def S (G : SimpleGraph α) : ℝ :=
+  open scoped Classical in
   let card := Fintype.card α
   if card < 2 then 0 else
     let degrees := Multiset.ofList (List.map (fun v => G.degree v) Finset.univ.toList)

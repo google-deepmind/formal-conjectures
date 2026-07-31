@@ -249,7 +249,7 @@ theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
 Then for `X` larger than an absolute constant which can be made

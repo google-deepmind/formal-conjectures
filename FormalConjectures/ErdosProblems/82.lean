@@ -28,14 +28,13 @@ namespace Erdos82
 
 variable {V : Type*} [Fintype V]
 
-open Classical in
 /--
 A predicate that holds if $S$ is a regular induced subgraph of $G$
 -/
 def IsRegularInduced {G : SimpleGraph V} (S : Subgraph G) : Prop :=
+  open scoped Classical in
   S.IsInduced ∧ ∃ k, (S.coe).IsRegularOfDegree k
 
-open Classical in
 /--
 $F(n)$ is the maximal integer such that every graph on $n$ vertices
 contains a regular induced subgraph on at least $F(n)$ vertices.

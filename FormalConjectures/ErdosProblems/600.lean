@@ -30,7 +30,6 @@ open scoped Topology
 
 namespace Erdos600
 
-open Classical in
 /--
 Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n,r)$ edges,
 each edge contained in at least one triangle, must have an edge contained in at least
@@ -42,6 +41,7 @@ private noncomputable def trianglesContaining
   (uv : Sym2 α)
   [Fintype α] :
   Finset (Finset α) :=
+  open scoped Classical in
   (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
 
 def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=

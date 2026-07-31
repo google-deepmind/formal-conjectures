@@ -28,7 +28,6 @@ open scoped Pointwise
 
 namespace Erdos1146
 
-open Classical in
 /--
 We say that $A\subset \mathbb{N}$ is an essential component if $d_s(A \oplus B)>d_s(B)$ for every
 $B\subset \mathbb{N}$ with $0<d_s(B)<1$ where $d_s$ is the Schnirelmann density.
@@ -36,6 +35,7 @@ Here, the sumset is the appropriate one for Schnirelmann density, $A \oplus B = 
 This avoids the trivial case where the sumset misses $1$ simply because neither $A$ nor $B$ contains $0$.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
+  open scoped Classical in
   ∀ B : Set ℕ,
     let b := schnirelmannDensity B;
     0 < b → b < 1 → schnirelmannDensity ((A ∪ {0}) + (B ∪ {0})) > b

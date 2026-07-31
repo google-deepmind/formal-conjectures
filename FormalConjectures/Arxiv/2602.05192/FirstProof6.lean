@@ -32,7 +32,6 @@ open Matrix Polynomial SimpleGraph
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-open Classical in
 /--
 For a graph $G = (V, E)$, let $G_S = (V, E(S,S))$ denote the graph with the same vertex set,
 but only the edges between vertices in $S$.
@@ -42,6 +41,7 @@ I say that a set of vertices $S$ is $\epsilon$-light if the matrix $\epsilon L -
 positive semidefinite.
 -/
 def IsEpsilonLight (G : SimpleGraph V) (ε : ℝ) (S : Finset V) : Prop :=
+  open scoped Classical in
   letI G_S := G.induce S |>.spanningCoe
   letI L := lapMatrix ℝ G
   letI L_S := lapMatrix ℝ (G_S)

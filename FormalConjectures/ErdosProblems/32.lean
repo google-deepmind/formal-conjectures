@@ -38,7 +38,7 @@ large natural number can be written as $p + a$ for some prime $p$ and $a \in A$.
 def IsAdditiveComplementToPrimes (A : Set ℕ) : Prop :=
   ∀ᶠ n in atTop, ∃ p, p.Prime ∧ ∃ a ∈ A, n = p + a
 
-open Classical in
+open scoped Classical in
 /--
 Erdős proved in [Erd54] that there exists an additive complement $A$ to the primes with
 $|A \cap \{1, \ldots, N\}| = O((\log N)^2)$.
@@ -50,7 +50,7 @@ theorem erdos_32.variants.log_squared : ∃ A : Set ℕ,
       fun N => (Real.log N) ^ 2 := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Must every additive complement $A$ to the primes satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} > 1$?
@@ -62,7 +62,7 @@ theorem erdos_32.variants.liminf_gt_one : ∀ A : Set ℕ,
       atTop := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Does there exist a set $A \subseteq \mathbb{N}$ such that $|A \cap \{1, \ldots, N\}| = o((\log N)^2)$
 and every sufficiently large integer can be written as $p + a$ for some prime $p$ and $a \in A$?
@@ -74,7 +74,7 @@ theorem erdos_32 : answer(sorry) ↔ ∃ A : Set ℕ,
       fun N => (Real.log N) ^ 2 := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Guy04] writes
 that Erdős offered \$50 for the solution.
@@ -86,7 +86,7 @@ theorem erdos_32.variants.log_bound : answer(sorry) ↔ ∃ A : Set ℕ,
       fun N => Real.log N := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Ruzsa proved that any additive complement $A$ to the primes must satisfy
 $\liminf_{N \to \infty} \frac{|A \cap \{1, \ldots, N\}|}{\log N} \geq e^\gamma$,
