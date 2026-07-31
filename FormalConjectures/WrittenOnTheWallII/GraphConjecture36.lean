@@ -27,6 +27,7 @@ namespace WrittenOnTheWallII.GraphConjecture36
 
 open SimpleGraph
 
+open Classical in
 /-- `dp G` is the number of diametrical pairs of `G`: the number of unordered
 pairs `{u, v}` of vertices at distance `diam(G)`.  -/
 noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=

@@ -57,6 +57,7 @@ theorem erdos_961.variants.well_defined (k : ℕ) (hk : 0 < k): ∃ n, Erdos961P
   use k
   exact erdos_961.sylvester_schur k hk
 
+open Classical in
 /--
 For $k$, let $f(k)$ be the minimal $n$ such that every set of $n$ consecutive integers $>k$ contains
 an integer divisible by a prime $>k$, i.e. not $(k+1)$-smooth.

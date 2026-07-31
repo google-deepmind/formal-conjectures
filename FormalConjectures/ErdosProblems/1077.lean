@@ -26,6 +26,7 @@ open Finset Filter SimpleGraph
 
 namespace Erdos1077
 
+open Classical in
 /--
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.

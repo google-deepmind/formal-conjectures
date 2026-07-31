@@ -27,6 +27,7 @@ open Filter Real
 
 namespace Erdos830
 
+open Classical in
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
 -/

@@ -30,6 +30,7 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+open Classical in
 /--
 WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

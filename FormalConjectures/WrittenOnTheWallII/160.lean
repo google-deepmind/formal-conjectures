@@ -51,6 +51,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.image (numTrianglesAtVertex G)).max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
 
+open Classical in
 /--
 WOWII [Conjecture 160](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

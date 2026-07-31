@@ -26,6 +26,7 @@ open SimpleGraph Finset Filter
 
 namespace Erdos85
 
+open Classical in
 /--
 Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with minimal degree $\geq
 f(n)$ contains a $C_4$.

@@ -38,6 +38,7 @@ def Erdos962Prop (n k : ℕ) : Prop :=
   ∃ m ≤ n, ∀ i ∈ Set.Icc 1 k,
     ∃ p : ℕ, Nat.Prime p ∧ k < p ∧ p ∣ (m + i)
 
+open Classical in
 /--
 Let $k(n)$ be the maximal $k$ such that there exists $m \le n$ with
 $m+1, \ldots, m+k$ each divisible by a prime $> k$.
