@@ -23,10 +23,10 @@ public import Mathlib.Tactic.IntervalCases
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
+open Classical in
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
   if h : S.toFinset.Nonempty then
@@ -45,12 +45,14 @@ noncomputable def averageDistance (G : SimpleGraph α) : ℝ :=
 def isInducedPath (G : SimpleGraph α) (l : List α) : Prop :=
   l.Nodup ∧ ∀ i j : Fin l.length, G.Adj (l.get i) (l.get j) ↔ i.val + 1 = j.val ∨ j.val + 1 = i.val
 
+open Classical in
 /-- The path number of a graph: The number of vertices of a largest induced path of the graph. -/
 noncomputable def path (G : SimpleGraph α) : ℕ :=
   let induced_paths := Finset.univ.filter (fun s : Finset α =>
     ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
   (induced_paths.image Finset.card).max.getD 0
 
+open Classical in
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
@@ -58,6 +60,7 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
+open Classical in
 /-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
 $\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
 vertex outside $S$).

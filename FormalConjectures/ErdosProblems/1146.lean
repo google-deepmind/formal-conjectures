@@ -24,7 +24,6 @@ import FormalConjecturesUtil
 - [Ru99] Ruzsa, I., Erdős and the Integers. Journal of Number Theory (1999), 115-163.
 -/
 
-open Classical
 open scoped Pointwise
 
 namespace Erdos1146

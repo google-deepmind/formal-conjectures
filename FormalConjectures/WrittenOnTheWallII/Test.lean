@@ -36,7 +36,6 @@ open SimpleGraph
 
 namespace WrittenOnTheWallII.Test
 
-open Classical
 
 -- Bridge theorems for Sym2/edist-based invariants:
 -- All 6 (indep_num, dom_num, dist, wiener, avg_dist, szeged) are proved in

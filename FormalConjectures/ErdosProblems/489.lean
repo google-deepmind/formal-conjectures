@@ -24,7 +24,7 @@ import FormalConjecturesUtil
 
 namespace Erdos489
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 /-- The set of positive integers not divisible by any element of `A`. -/

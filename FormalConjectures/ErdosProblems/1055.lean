@@ -44,8 +44,8 @@ Show that for each $r$ there exists a prime $p$ of class $r$. -/
 theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 
-open Classical
 
+open Classical in
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.

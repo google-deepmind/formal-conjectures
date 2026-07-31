@@ -23,7 +23,7 @@ import FormalConjecturesUtil
 -/
 
 open scoped ArithmeticFunction.sigma
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos830
 

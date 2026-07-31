@@ -27,7 +27,6 @@ public import Mathlib.Order.CompletePartialOrder
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -74,6 +73,7 @@ noncomputable def NG (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   else
     (Fintype.card α : ℝ)
 
+open Classical in
 noncomputable def S (G : SimpleGraph α) : ℝ :=
   let card := Fintype.card α
   if card < 2 then 0 else

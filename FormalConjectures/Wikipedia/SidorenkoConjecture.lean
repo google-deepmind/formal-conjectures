@@ -30,7 +30,7 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
   *Trans. Amer. Math. Soc.* 370, pp. 8515--8552.
 -/
 
-open Classical Finset SimpleGraph
+open Finset SimpleGraph
 
 namespace SidorenkoConjecture
 

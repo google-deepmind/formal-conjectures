@@ -25,7 +25,7 @@ import FormalConjecturesUtil
   Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
 -/
 
-open Classical Set Pointwise
+open Set Pointwise
 
 namespace Erdos38
 

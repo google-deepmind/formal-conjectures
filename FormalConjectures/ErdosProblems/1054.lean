@@ -24,8 +24,9 @@ import FormalConjecturesUtil
 
 namespace Erdos1054
 
-open Classical Filter Asymptotics
+open Filter Asymptotics
 
+open Classical in
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest
 divisors of $m$ for some $k\geq 1$. -/
 noncomputable def f (n : ℕ) : ℕ :=

@@ -29,10 +29,10 @@ namespace Arxiv.«2602.05192»
 
 open Matrix Polynomial SimpleGraph
 
-open Classical
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
+open Classical in
 /--
 For a graph $G = (V, E)$, let $G_S = (V, E(S,S))$ denote the graph with the same vertex set,
 but only the edges between vertices in $S$.

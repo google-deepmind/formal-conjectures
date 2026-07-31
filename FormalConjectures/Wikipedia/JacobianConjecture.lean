@@ -92,7 +92,6 @@ noncomputable abbrev G [CommRing k] : RegularFunction k (Fin 3) (Fin 3) :=
     Y + 3 * X * (1 + 2 * X * Y) ^ 2 * Z + 12 * X * Y ^ 2 * (2 + 3 * (X * Y)),
     -X + 3 * X ^ 2 * Y + X ^ 3 * Z]
 
-open Classical
 
 @[category API, AMS 14]
 lemma det_jacobian_F [CommRing k] : (F k).Jacobian.det = -2 := by

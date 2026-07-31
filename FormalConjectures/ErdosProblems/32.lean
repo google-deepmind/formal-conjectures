@@ -27,7 +27,6 @@ import FormalConjecturesUtil
 * [Ru98c] Ruzsa, Imre Z., On the additive completion of primes. Acta Arith. (1998), 269-275.
 -/
 
-open Classical
 
 namespace Erdos32
 

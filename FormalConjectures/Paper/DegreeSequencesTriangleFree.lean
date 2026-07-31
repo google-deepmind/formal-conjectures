@@ -23,7 +23,6 @@ Published in Discrete Mathematics 92 (1991) 85–88.
 -/
 
 open BigOperators
-open Classical
 open scoped Finset
 
 namespace DegreeSequencesTriangleFree

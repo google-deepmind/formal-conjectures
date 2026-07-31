@@ -26,7 +26,7 @@ import FormalConjecturesUtil
 - [Tao](https://www.erdosproblems.com/forum/thread/962)
 -/
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos962
 

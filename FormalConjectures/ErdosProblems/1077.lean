@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/1077](https://www.erdosproblems.com/1077)
 -/
 
-open Classical Finset Filter SimpleGraph
+open Finset Filter SimpleGraph
 
 namespace Erdos1077
 

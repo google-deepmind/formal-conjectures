@@ -25,7 +25,7 @@ import FormalConjecturesUtil
   Matrix Multiplication" (Problem 4.7)
 -/
 
-open Classical Filter
+open Filter
 open scoped Pointwise
 
 namespace Green36

@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/82](https://www.erdosproblems.com/82)
 -/
 
-open Classical SimpleGraph Filter
+open SimpleGraph Filter
 
 namespace Erdos82
 

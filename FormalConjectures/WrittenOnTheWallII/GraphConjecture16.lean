@@ -26,7 +26,7 @@ import FormalConjecturesUtil
 
 namespace WrittenOnTheWallII.GraphConjecture16
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

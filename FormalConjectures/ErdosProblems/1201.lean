@@ -23,7 +23,6 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter Finset
-open Classical
 
 namespace Erdos1201
 

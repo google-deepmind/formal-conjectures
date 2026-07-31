@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 namespace Erdos600

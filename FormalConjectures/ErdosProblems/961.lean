@@ -24,7 +24,7 @@ import FormalConjecturesUtil
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos961
 

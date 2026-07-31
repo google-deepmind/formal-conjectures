@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/416](https://www.erdosproblems.com/416)
 -/
 
-open Classical Filter
+open Filter
 open scoped Topology Real
 
 namespace Erdos416

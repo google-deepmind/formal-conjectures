@@ -25,7 +25,7 @@ import FormalConjecturesUtil
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
 
-open Classical Filter
+open Filter
 
 namespace Erdos888
 

@@ -43,7 +43,7 @@ conjecture instead uses this binary $C_4$-free indicator.
 
 namespace WrittenOnTheWallII.GraphConjecture160
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
