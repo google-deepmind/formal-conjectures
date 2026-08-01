@@ -54,7 +54,7 @@ Additional primes: $a(71)$, $a(91)$, $a(431)$.
 What is the next prime?
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) = a (sInf {n : ℕ | 431 < n ∧ Nat.Prime (a n)}) := by
+theorem conjecture : answer(sorry) = a (sInf {n : ℕ | 431 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA116150

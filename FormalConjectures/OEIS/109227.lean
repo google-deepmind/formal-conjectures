@@ -40,7 +40,7 @@ noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0 else
   let p_n : ℕ := Nat.nth Nat.Prime (n - 1)
   let prime_bits_full : List ℕ := (range (p_n + 1)).map (fun i =>
-    if Nat.Prime i then 1 else 0
+    if i.Prime then 1 else 0
   )
   let prime_bits_trimmed := prime_bits_full.dropWhile (· = 0)
   ofDigits 10 prime_bits_trimmed.reverse
@@ -50,7 +50,7 @@ Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∃ n > 0, n ≠ 2 ∧ n ≠ 121 ∧ Nat.Prime (a n) := by
+    answer(sorry) ↔ ∃ n > 0, n ≠ 2 ∧ n ≠ 121 ∧ (a n).Prime := by
   sorry
 
 end OeisA109227

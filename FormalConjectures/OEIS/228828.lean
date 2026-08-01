@@ -37,7 +37,7 @@ theorem a_0 : a 0 = 2 := by
   unfold a
   convert Nat.nth_count _
   · norm_num [Nat.count_succ]
-  · exact Classical.decPred fun n ↦ Nat.Prime (n ^ 2 + π n)
+  · exact Classical.decPred fun n ↦ (n ^ 2 + π n).Prime
   · decide
 
 @[category test, AMS 11]
@@ -46,7 +46,7 @@ theorem a_1 : a 1 = 3 := by
   convert Nat.nth_count _
   · norm_num [Nat.count_succ]
     decide
-  · exact Classical.decPred fun n ↦ Nat.Prime (n ^ 2 + π n)
+  · exact Classical.decPred fun n ↦ (n ^ 2 + π n).Prime
   · decide
 
 @[category test, AMS 11]
@@ -55,7 +55,7 @@ theorem a_2 : a 2 = 7 := by
   convert Nat.nth_count _
   · norm_num [Nat.count_succ]
     rfl
-  · exact Classical.decPred fun n ↦ Nat.Prime (n ^ 2 + π n)
+  · exact Classical.decPred fun n ↦ (n ^ 2 + π n).Prime
   · decide
 
 /--

@@ -35,7 +35,7 @@ $a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let is_prime_free_interval (m : ℕ) : Prop :=
-    ∀ p : ℕ, Nat.Prime p → ¬ (n * m ≤ p ∧ p ≤ n * (m + 1))
+    ∀ p : ℕ, p.Prime → ¬ (n * m ≤ p ∧ p ≤ n * (m + 1))
   let S : Set ℕ := {m : ℕ | m > 0 ∧ is_prime_free_interval m}
   sInf S
 

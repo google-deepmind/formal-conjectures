@@ -51,7 +51,7 @@ The smallest prime in this sequence is $a(2) = 5$. What is the next prime?
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :
-    answer(sorry) = a (sInf {n : ℕ | 2 < n ∧ Nat.Prime (a n)}) := by
+    answer(sorry) = a (sInf {n : ℕ | 2 < n ∧ (a n).Prime}) := by
   sorry
 
 /--

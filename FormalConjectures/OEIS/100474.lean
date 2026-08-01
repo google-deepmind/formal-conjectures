@@ -38,47 +38,47 @@ noncomputable def a : ℕ → ℕ
 
 @[category API, AMS 11]
 lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by
-  have h1 : Nat.Prime 13 := by decide
+  have h1 : (13).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_six : Nat.nth Nat.Prime 6 = 17 := by
-  have h1 : Nat.Prime 17 := by decide
+  have h1 : (17).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_seven : Nat.nth Nat.Prime 7 = 19 := by
-  have h1 : Nat.Prime 19 := by decide
+  have h1 : (19).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_eight : Nat.nth Nat.Prime 8 = 23 := by
-  have h1 : Nat.Prime 23 := by decide
+  have h1 : (23).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_nine : Nat.nth Nat.Prime 9 = 29 := by
-  have h1 : Nat.Prime 29 := by decide
+  have h1 : (29).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_ten : Nat.nth Nat.Prime 10 = 31 := by
-  have h1 : Nat.Prime 31 := by decide
+  have h1 : (31).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_eleven : Nat.nth Nat.Prime 11 = 37 := by
-  have h1 : Nat.Prime 37 := by decide
+  have h1 : (37).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_twelve : Nat.nth Nat.Prime 12 = 41 := by
-  have h1 : Nat.Prime 41 := by decide
+  have h1 : (41).Prime := by decide
   exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_thirteen : Nat.nth Nat.Prime 13 = 43 := by
-  have h1 : Nat.Prime 43 := by decide
+  have h1 : (43).Prime := by decide
   exact Nat.nth_count h1
 
 /-- Value of the sequence `a` at 1. -/
@@ -136,13 +136,13 @@ theorem a_5 : a 5 = 58546472 := by
 
 /-- A natural number is a semiprime if it is the product of two prime numbers. -/
 def IsSemiprime (n : ℕ) : Prop :=
-  ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ n = p * q
+  ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ n = p * q
 
 /--
 After $a(2) = 5$, is there another prime?
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∃ n > 2, Nat.Prime (a n) := by
+theorem conjecture : answer(sorry) ↔ ∃ n > 2, (a n).Prime := by
   sorry
 
 /--
