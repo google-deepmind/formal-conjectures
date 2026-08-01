@@ -38,27 +38,30 @@ namespace Hilbert5
 
 open scoped Manifold ContDiff EuclideanGeometry
 
-universe u
-
 variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
   [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
 
-/-- A continuous group isomorphism from `G` to an `n`-dimensional real-analytic Lie group. -/
-structure LieGroupPresentation (G : Type u) [TopologicalSpace G] [Group G] (n : ℕ) where
-  carrier : Type u
-  [topologicalSpace : TopologicalSpace carrier]
-  [group : Group carrier]
-  [t2Space : T2Space carrier]
-  [secondCountableTopology : SecondCountableTopology carrier]
-  [chartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin n)) carrier]
-  [isManifold : IsManifold (𝓡 n) ω carrier]
-  [lieGroup : LieGroup (𝓡 n) ω carrier]
-  equiv : G ≃ₜ* carrier
+/-- An `n`-dimensional real-analytic Lie group structure compatible with the topology and group
+operations on `G`. Its analytic atlas need not be the ambient `ChartedSpace` instance. -/
+class LieGroupPresentation (G : Type*) [TopologicalSpace G] [Group G] (n : ℕ)
+    extends T2Space G, SecondCountableTopology G,
+      ChartedSpace (EuclideanSpace ℝ (Fin n)) G,
+      IsManifold (𝓡 n) ω G, LieGroup (𝓡 n) ω G
+
+instance [T2Space G] [SecondCountableTopology G]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G]
+    [IsManifold (𝓡 n) ω G] [LieGroup (𝓡 n) ω G] : LieGroupPresentation G n where
+  toT2Space := inferInstance
+  toSecondCountableTopology := inferInstance
+  toChartedSpace := inferInstance
+  toIsManifold := inferInstance
+  contMDiff_mul := ContMDiffMul.contMDiff_mul
+  contMDiff_inv := LieGroup.contMDiff_inv
 
 /-- A topological group admits a Lie group structure if it has a `LieGroupPresentation` in some
 finite dimension. -/
-def AdmitsLieGroupStructure (G : Type u) [Group G] [TopologicalSpace G] : Prop :=
+def AdmitsLieGroupStructure (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
   ∃ n, Nonempty (LieGroupPresentation G n)
 
 /-- Every finite-dimensional real-analytic Lie group admits a Lie group structure. -/
@@ -68,20 +71,16 @@ theorem admitsLieGroupStructure_of_lieGroup
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G]
     [IsManifold (𝓡 n) ω G] [LieGroup (𝓡 n) ω G] :
     AdmitsLieGroupStructure G :=
-  ⟨n, ⟨{ carrier := G, equiv := ContinuousMulEquiv.refl G }⟩⟩
+  ⟨n, ⟨inferInstance⟩⟩
 
 /-- A group admitting a Lie group structure is locally compact. -/
 @[category API, AMS 22]
 theorem locallyCompact_of_admitsLieGroupStructure
     (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
   obtain ⟨k, ⟨p⟩⟩ := h
-  letI := p.topologicalSpace
-  letI := p.group
-  letI := p.chartedSpace
+  letI := p
   haveI := (𝓡 k).locallyCompactSpace
-  haveI : LocallyCompactSpace p.carrier :=
-    ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) p.carrier
-  exact p.equiv.toHomeomorph.locallyCompactSpace_iff.mpr inferInstance
+  exact ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) G
 
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
@@ -125,11 +124,11 @@ theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
   sorry
 
 /-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff,
-second-countable topological group modeled on a finite-dimensional Euclidean space is continuously
-isomorphic to a real-analytic Lie group.
+second-countable topological group modeled on a finite-dimensional Euclidean space admits a
+compatible real-analytic Lie group structure.
 
-The input `ChartedSpace` supplies only a topological atlas. The compatible analytic atlas and
-analytic group operations belong to the output `LieGroupPresentation`. -/
+The input `ChartedSpace` supplies only a topological atlas. A potentially different compatible
+analytic atlas and the analytic group operations belong to the output `LieGroupPresentation`. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
     [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G]
