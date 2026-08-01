@@ -38,6 +38,14 @@ An odd semiprime is a semiprime that is odd.
 def is_odd_semiprime (n : ℕ) : Prop :=
   is_semiprime n ∧ Odd n
 
+instance (n : ℕ) : Decidable (is_semiprime n) := by
+  unfold is_semiprime
+  infer_instance
+
+instance (n : ℕ) : Decidable (is_odd_semiprime n) := by
+  unfold is_odd_semiprime
+  infer_instance
+
 /--
 The primary defining sequence `a`.
 $a(n)$ is the difference between first odd semiprime > $2^n$ and $2^n$.
@@ -47,6 +55,52 @@ noncomputable def a (n : ℕ) : ℕ :=
   let m := 2^n
   let S : Set ℕ := { s | s > m ∧ is_odd_semiprime s }
   sInf S - m
+
+@[category API, AMS 11]
+lemma a_eq_of (n val : ℕ)
+  (h_mem : is_odd_semiprime val)
+  (h_gt : 2^n < val)
+  (h_min : ∀ x, 2^n < x → x < val → ¬ is_odd_semiprime x) :
+  a n = val - 2^n := by
+  change sInf { s | s > 2^n ∧ is_odd_semiprime s } - 2^n = val - 2^n
+  have h_S : sInf { s | s > 2^n ∧ is_odd_semiprime s } = val := by
+    apply IsLeast.csInf_eq
+    constructor
+    · exact ⟨h_gt, h_mem⟩
+    · rintro x ⟨hx1, hx2⟩
+      by_contra! h
+      exact h_min x hx1 h hx2
+  rw [h_S]
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = 7 := by
+  apply a_eq_of 1 9 (by native_decide) (by norm_num)
+  intro x h1 h2
+  interval_cases x <;> native_decide
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 5 := by
+  apply a_eq_of 2 9 (by native_decide) (by norm_num)
+  intro x h1 h2
+  interval_cases x <;> native_decide
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 1 := by
+  apply a_eq_of 3 9 (by native_decide) (by norm_num)
+  intro x h1 h2
+  interval_cases x
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 5 := by
+  apply a_eq_of 4 21 (by native_decide) (by norm_num)
+  intro x h1 h2
+  interval_cases x <;> native_decide
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 1 := by
+  apply a_eq_of 5 33 (by native_decide) (by norm_num)
+  intro x h1 h2
+  interval_cases x
 
 /--
 In this powers of 2 sequence, does 1 occur infinitely often?
