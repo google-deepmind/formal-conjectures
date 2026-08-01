@@ -30,10 +30,10 @@ namespace OeisA113609
 /--
 A number $n$ is an "OEIS prime power" (for the context of A113609's definition) if $n=1$ or $n$ is a standard prime power.
 -/
-def is_oeis_prime_power (n : ℕ) : Prop := n = 1 ∨ IsPrimePow n
+def IsOeisPrimePower (n : ℕ) : Prop := n = 1 ∨ IsPrimePow n
 
-instance decidable_is_oeis_prime_power (n : ℕ) : Decidable (is_oeis_prime_power n) := by
-  simp only [is_oeis_prime_power]
+instance DecidableIsOeisPrimePower (n : ℕ) : Decidable (IsOeisPrimePower n) := by
+  simp only [IsOeisPrimePower]
   exact instDecidableOr
 
 /--
@@ -43,7 +43,22 @@ $$a(n) = \operatorname{card} \{q \in \mathbb{N} \mid 1 \le q \le n \land P(q) \l
 -/
 def a (n : ℕ) : ℕ :=
   Finset.card $ (Finset.range (n + 1)).filter fun q =>
-    is_oeis_prime_power q ∧ is_oeis_prime_power (q + 2) ∧ q ≥ 1
+    IsOeisPrimePower q ∧ IsOeisPrimePower (q + 2) ∧ q ≥ 1
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 2 := by native_decide
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 3 := by native_decide
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 3 := by native_decide
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 4 := by native_decide
 
 /--
 (25,27) is the smallest pair of prime powers (q,q+2) such that both q and q+2 are not primes, conjecture: there are more (but not < 10^6).
@@ -51,7 +66,7 @@ def a (n : ℕ) : ℕ :=
 @[category research open, AMS 11]
 theorem conjecture :
   answer(sorry) ↔ ∃ q ≥ 1000000,
-    is_oeis_prime_power q ∧ is_oeis_prime_power (q + 2) ∧
+    IsOeisPrimePower q ∧ IsOeisPrimePower (q + 2) ∧
     ¬ q.Prime ∧ ¬ (q + 2).Prime := by
   sorry
 

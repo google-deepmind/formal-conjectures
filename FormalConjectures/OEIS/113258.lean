@@ -27,13 +27,15 @@ Ascending descending base exponent transform of factorials.
 
 namespace OeisA113258
 
+open Nat
+
 /--
 The primary defining sequence `a`.
 $a(n)$ is the ascending descending base exponent transform of factorials.
 $$a(n) = \sum_{i = 1}^n (i!) ^ {(n-i+1)!}$$
 -/
 def a (n : ℕ) : ℕ :=
-  ∑ i ∈ Finset.range n, (Nat.factorial (i + 1)) ^ (Nat.factorial (n - i))
+  ∑ i ∈ Finset.range n, (i + 1)! ^ (n - i)!
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by rfl

@@ -59,6 +59,9 @@ theorem a_3 : a 3 = 6 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 4 := by decide
 
+@[category test, AMS 11]
+theorem a_5 : a 5 = 60 := by decide
+
 /--
 `T n k` is the array defined as $T(1,1) = 1$, $T(i,j) = 0$ if $i<1$ or $j<1$,
 $T(n,k) = T(n,k-2) + T(n,k-1) - 2 T(n-1,k-1) + T(n-1,k) + T(n-2,k)$.

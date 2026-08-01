@@ -70,7 +70,7 @@ Strictly speaking, this property, which is equivalent to the statement that the 
 theorem conjecture2 :
     ∀ n : ℕ, ¬ ∃ (k : ℤ),
       (Real.pi * (10 : ℝ) ^ n.cast < k.cast) ∧
-      (k.cast < Real.pi / Real.arctan (1 / (10 : ℝ) ^ n.cast)) :=
-  by sorry
+      (k.cast < Real.pi / Real.arctan (1 / (10 : ℝ) ^ n.cast)) := by
+  sorry
 
 end OeisA11545

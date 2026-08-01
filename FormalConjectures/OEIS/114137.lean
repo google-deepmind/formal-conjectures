@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Difference between first odd semiprime > 2^n and 2^n
 
-Difference between first odd semiprime > $2^n$ and $2^n$.
-
 *References:*
 - [A114137](https://oeis.org/A114137)
 -/

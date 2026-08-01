@@ -59,7 +59,7 @@ What is the first square value after 1?
 -/
 @[category research open, AMS 11]
 theorem conjecture2 :
-    answer(sorry) = a (sInf {n : ℕ | 1 < n ∧ ∃ k, a n = k ^ 2}) := by
+    answer(sorry) = a (sInf {n : ℕ | 1 < n ∧ IsSquare (a n)}) := by
   sorry
 
 end OeisA113257

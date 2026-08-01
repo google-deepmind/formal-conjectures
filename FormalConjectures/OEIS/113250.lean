@@ -58,7 +58,7 @@ Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m$ (see A113249).
 Specialized to $m = 4$, which is A113250.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∀ n : ℕ, ∃ k : ℤ, a (2 * n + 1) = k ^ 2 := by
+theorem conjecture : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by
   sorry
 
 end OeisA113250
