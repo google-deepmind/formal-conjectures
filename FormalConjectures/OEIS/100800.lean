@@ -30,8 +30,7 @@ namespace OeisA100800
 open Nat Function Classical
 
 /-- The sum of the decimal digits of a natural number. -/
-def sum_digits (n : ℕ) : ℕ :=
-  (Nat.digits 10 n).sum
+def sum_digits (n : ℕ) : ℕ := ((10).digits n).sum
 
 /-- The function $f(n) = n + \text{sum of the digits of } n$. -/
 def f (n : ℕ) : ℕ := n + sum_digits n

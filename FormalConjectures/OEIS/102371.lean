@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjectures.OEIS.«105033»
 
 /-!
 # Conjecture A102371
@@ -57,12 +58,6 @@ theorem a_4 : a 4 = 12 := by rfl
 @[category test, AMS 11]
 theorem a_5 : a 5 = 29 := by rfl
 
-/-- A105033: The number of positive integers $k$ such that $2^k$ divides $n-k$.
-This is defined as the cardinality of the set of such $k$. The set is finite
-for any fixed $n$. -/
-noncomputable def a105033 (n : ℕ) : ℕ :=
-  Nat.card { k : ℕ // 0 < k ∧ (2^k : ℤ) ∣ (Int.ofNat n - Int.ofNat k) }
-
 /--
 Do we have $a(n) = 2^n - 1 - \operatorname{A105033}(n-1)$ for $n \ge 1$?
 
@@ -71,7 +66,7 @@ as we assume $\operatorname{A105033}(\mathbb{N})$ is defined on $\mathbb{N}$.
 We include the case $n=1$ which relies on $A105033(0)$, which is 0.
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - a105033 (n - 1) := by
+theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - OeisA105033.a (n - 1) := by
   sorry
 
 end OeisA102371

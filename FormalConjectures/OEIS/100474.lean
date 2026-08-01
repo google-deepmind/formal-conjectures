@@ -38,66 +38,48 @@ noncomputable def a : ℕ → ℕ
 
 @[category API, AMS 11]
 lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by
-  have h1 : Nat.count Nat.Prime 13 = 5 := by decide
-  have h2 : Nat.Prime 13 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 13 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_six : Nat.nth Nat.Prime 6 = 17 := by
-  have h1 : Nat.count Nat.Prime 17 = 6 := by decide
-  have h2 : Nat.Prime 17 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 17 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_seven : Nat.nth Nat.Prime 7 = 19 := by
-  have h1 : Nat.count Nat.Prime 19 = 7 := by decide
-  have h2 : Nat.Prime 19 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 19 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_eight : Nat.nth Nat.Prime 8 = 23 := by
-  have h1 : Nat.count Nat.Prime 23 = 8 := by decide
-  have h2 : Nat.Prime 23 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 23 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_nine : Nat.nth Nat.Prime 9 = 29 := by
-  have h1 : Nat.count Nat.Prime 29 = 9 := by decide
-  have h2 : Nat.Prime 29 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 29 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_ten : Nat.nth Nat.Prime 10 = 31 := by
-  have h1 : Nat.count Nat.Prime 31 = 10 := by decide
-  have h2 : Nat.Prime 31 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 31 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_eleven : Nat.nth Nat.Prime 11 = 37 := by
-  have h1 : Nat.count Nat.Prime 37 = 11 := by decide
-  have h2 : Nat.Prime 37 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 37 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_twelve : Nat.nth Nat.Prime 12 = 41 := by
-  have h1 : Nat.count Nat.Prime 41 = 12 := by decide
-  have h2 : Nat.Prime 41 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 41 := by decide
+  exact Nat.nth_count h1
 
 @[category API, AMS 11]
 lemma nth_prime_thirteen : Nat.nth Nat.Prime 13 = 43 := by
-  have h1 : Nat.count Nat.Prime 43 = 13 := by decide
-  have h2 : Nat.Prime 43 := by decide
-  have h3 := Nat.nth_count h2
-  rwa [h1] at h3
+  have h1 : Nat.Prime 43 := by decide
+  exact Nat.nth_count h1
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
@@ -117,7 +99,7 @@ theorem a_2 : a 2 = 5 := by
 @[category test, AMS 11]
 theorem a_3 : a 3 = 380 := by
   change (Finset.Ico 2 5).prod (Nat.nth Nat.Prime) - a 2 = 380
-  rw [test_a_2]
+  rw [a_2]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -129,7 +111,7 @@ theorem a_3 : a 3 = 380 := by
 @[category test, AMS 11]
 theorem a_4 : a 4 = 96197 := by
   change (Finset.Ico 5 9).prod (Nat.nth Nat.Prime) - a 3 = 96197
-  rw [test_a_3]
+  rw [a_3]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -142,7 +124,7 @@ theorem a_4 : a 4 = 96197 := by
 @[category test, AMS 11]
 theorem a_5 : a 5 = 58546472 := by
   change (Finset.Ico 9 14).prod (Nat.nth Nat.Prime) - a 4 = 58546472
-  rw [test_a_4]
+  rw [a_4]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
   rw [Finset.prod_Ico_succ_top (by decide)]
@@ -172,5 +154,3 @@ theorem next_semiprime :
   sorry
 
 end OeisA100474
-
-

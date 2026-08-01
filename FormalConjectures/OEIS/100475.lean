@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Prime-th recurrence with reversal at each step
@@ -58,25 +57,25 @@ theorem a_0 : a 0 = 1 := by rfl
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
   rw [a_succ]
-  rw [test_a_0]
+  rw [a_0]
   simp [Nat.nth_prime_zero_eq_two, reverseDigits]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
   rw [a_succ]
-  rw [test_a_1]
+  rw [a_1]
   simp [Nat.nth_prime_one_eq_three, reverseDigits]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by
   rw [a_succ]
-  rw [test_a_2]
+  rw [a_2]
   simp [Nat.nth_prime_two_eq_five, reverseDigits]
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 11 := by
   rw [a_succ]
-  rw [test_a_3]
+  rw [a_3]
   simp [Nat.nth_prime_four_eq_eleven, reverseDigits]
   rfl
 
@@ -98,7 +97,7 @@ Starting at other than $a(n) = 1$, does this sequence ever go into a loop?
 -/
 @[category research open, AMS 11]
 theorem conjecture (x : ℕ) (h : x ≠ 1) :
-    IsUltimatelyPeriodic (aStartAt x) := by
+    answer(sorry) = IsUltimatelyPeriodic (aStartAt x) := by
   sorry
 
 end OeisA100475

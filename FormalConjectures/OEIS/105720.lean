@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Triangular matchstick numbers in the class of prime numbers
@@ -104,7 +103,7 @@ corresponding terms are 6^2, 13^2, and 15735^2.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-    ∀ n : ℕ, 0 < n → ((∃ m : ℕ, a n = m * m) ↔ (n = 3 ∨ n = 6 ∨ n = 4072)) := by
+    ∀ n : ℕ, 0 < n → (IsSquare (a n) ↔ (n = 3 ∨ n = 6 ∨ n = 4072)) := by
   sorry
 
 end OeisA105720

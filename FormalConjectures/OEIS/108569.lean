@@ -27,12 +27,14 @@ The sequence A108569 consists of numbers $n$ such that $\phi(n) = \phi(n + \phi(
 
 namespace OeisA108569
 
+open scoped Nat
+
 /--
 The primary defining sequence `a`.
 `a n` is the $(n+1)$-th positive integer $k$ such that $\phi(k) = \phi(k + \phi(k))$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  n.nth (fun k ↦ 0 < k ∧ k.totient = (k + k.totient).totient)
+  n.nth (fun k ↦ 0 < k ∧ φ k = φ (k + φ k))
 
 /-- Conjecture: Except for the first term all terms are even. -/
 @[category research open, AMS 11]

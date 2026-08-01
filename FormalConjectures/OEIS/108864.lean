@@ -34,7 +34,7 @@ open Nat Finset Int
 The condition for a number $n$ to be in the sequence.
 It satisfies $0 < n$ and its perfect deficiency is $\le 10$, using the sum of divisors function $\sigma_1(n)$.
 -/
-def condition (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   let sigma_one_n : ℕ := (Nat.divisors n).sum id
   0 < n ∧ ((sigma_one_n : ℤ) - 2 * (n : ℤ)).natAbs ≤ 10
 
@@ -43,7 +43,7 @@ The primary defining sequence `a`.
 `a n` is the `n`-th number (0-indexed) such that its perfect deficiency is $\le 10$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  n.nth condition
+  n.nth A
 
 /--
 Is 1155 the last odd number in this sequence?

@@ -76,6 +76,19 @@ def sequence_set (k : ℕ) : Set ℕ :=
   { m | ∃ n : ℕ, 1 ≤ n ∧ sequence_starting_at k n = m }
 
 /--
+Cormier and Selfridge found 5 starting values for which the sequences appear to not merge.
+The sequences were checked up to 10^8.
+-/
+@[category research open, AMS 11]
+theorem conjecture_disjoint_starting_values :
+    ∀ j k : ℕ,
+      j ∈ ({1, 393, 412, 668, 932} : Set ℕ) →
+      k ∈ ({1, 393, 412, 668, 932} : Set ℕ) →
+      j ≠ k →
+      sequence_set j ∩ sequence_set k = ∅ := by
+  sorry
+
+/--
 This suggests that there may be infinitely many different (non-merging) sequences obtained by choosing different starting values.
 -/
 @[category research open, AMS 11]

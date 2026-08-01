@@ -30,7 +30,7 @@ namespace OeisA105020
 /--
 Triangular number $T_c = c(c+1)/2$.
 -/
-def triangularNumber (c : ℕ) : ℕ := c * (c + 1) / 2
+def triangularNumber (c : ℕ) : ℕ := Nat.choose (c + 1) 2
 
 /--
 The index $c$ of the antidiagonal containing $n$, i.e., the largest $c$ such that $T_c \le n$.
