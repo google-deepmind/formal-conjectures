@@ -32,7 +32,7 @@ The primary defining sequence `a`.
 a n is the numerator of $\sum_{k=1}^n \frac{2^k}{k}$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  (Finset.sum (Finset.range n) fun i : ℕ => (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)).num.natAbs
+  (∑ i ∈ Finset.range n, (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)).num.natAbs
 
 local macro "eval_a" : tactic => `(tactic| (delta a; norm_num))
 

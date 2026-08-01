@@ -33,7 +33,7 @@ $a(n)$ is the ascending descending base exponent transform of $2^n$.
 $$a(n) = \sum_{i=0}^n 2^{i \cdot 2^{n-i}}$$
 -/
 def a (n : ℕ) : ℕ :=
-  Finset.sum (Finset.range (n + 1)) fun i => 2 ^ (i * 2 ^ (n - i))
+  ∑ i ∈ Finset.range (n + 1), 2 ^ (i * 2 ^ (n - i))
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by rfl
