@@ -67,11 +67,13 @@ theorem a_5 : a 5 = 3 := by
   rw [this]
   decide
 
+open Filter
+
 /--
 Conjecture: As $n \rightarrow \infty$, there are infinitely many n's such that $a(n)$ is greater than $a(n+1)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∀ N : ℕ, ∃ n : ℕ, n ≥ N ∧ n ≥ 2 ∧ a n > a (n + 1) := by
+theorem conjecture : ∃ᶠ n in atTop, a n > a (n + 1) := by
   sorry
 
 end OeisA111114

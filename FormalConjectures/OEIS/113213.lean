@@ -57,7 +57,7 @@ Conjecture: $a(n) = O(n^3)$.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-    Asymptotics.IsBigO Filter.atTop (fun n : ℕ => (a n : ℝ)) (fun n : ℕ => (n ^ 3 : ℝ)) := by
+    (fun n : ℕ => (a n : ℝ)) =O[Filter.atTop] (fun n : ℕ => (n ^ 3 : ℝ)) := by
   sorry
 
 end OeisA113213

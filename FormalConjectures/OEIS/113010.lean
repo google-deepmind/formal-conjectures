@@ -19,9 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Number of digits of n raised to the power of the sum of the digits of n
 
-A113010: {Number of digits of n} raised to the power of {the sum of the digits of n}.
-$$a(n) = (\text{number of digits of } n)^{\text{sum of the digits of } n}$$
-
 *References:*
 - [A113010](https://oeis.org/A113010)
 -/
@@ -34,7 +31,7 @@ open Nat
 a n is the {Number of digits of n} raised to the power of {the sum of the digits of n}.
 -/
 def a (n : ℕ) : ℕ :=
-  (List.length (Nat.digits 10 n)) ^ (List.sum (Nat.digits 10 n))
+  ((10).digits n).length ^ (List.sum ((10).digits n))
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by native_decide
