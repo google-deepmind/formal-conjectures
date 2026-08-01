@@ -81,6 +81,21 @@ def Conjecture : Prop :=
     (equilibria q a).encard ≤ ((n - 1) ^ 2 : ℕ)
 
 /--
+The second half of **Theorem 1** of Arathoon–Ball–Kvalheim: after a small perturbation of the
+charge strengths, the counterexample potential is a Morse function, i.e. it has finitely many
+critical points, all of which are non-degenerate, and there are still at least $24$ of them.
+
+*Reference:* [arXiv:2607.27197](https://arxiv.org/abs/2607.27197)
+-/
+@[category research solved, AMS 31 78]
+theorem maxwell_conjecture.counterexample_morse :
+    ∃ (q : Fin 5 → ℝ) (a : Fin 5 → EuclideanSpace ℝ (Fin 3)), Function.Injective a ∧
+      (∀ j, 0 < q j) ∧
+      (∀ x ∈ equilibria q a, HasNondegenerateHessianAt (potential q a) x) ∧
+      (equilibria q a).Finite ∧ 24 ≤ (equilibria q a).encard := by
+  sorry
+
+/--
 Is it true that the electrostatic potential of $n$ point charges, all of whose critical points
 are non-degenerate, has at most $(n-1)^2$ critical points?
 
@@ -91,7 +106,11 @@ Morse function with at least $24 > 16 = (5-1)^2$ critical points.
 -/
 @[category research solved, AMS 31 78]
 theorem maxwell_conjecture : answer(False) ↔ Conjecture := by
-  sorry
+  refine ⟨False.elim, fun h => ?_⟩
+  obtain ⟨q, a, hinj, hpos, hnd, _, h24⟩ := maxwell_conjecture.counterexample_morse
+  have hb := h 5 (by norm_num) q a hinj (fun j => (hpos j).ne') hnd
+  have : (24 : ℕ∞) ≤ ((5 - 1) ^ 2 : ℕ) := le_trans h24 hb
+  norm_num at this
 
 /-- The positions of the five charges of the counterexample: three vertices of an equilateral
 triangle in the plane $z = 0$, together with the two points $(0, 0, \pm\varepsilon)$ on its
@@ -141,21 +160,6 @@ theorem maxwell_conjecture.counterexample :
     ∃ ε₀ > 0, ∀ ε ∈ Set.Ioo 0 ε₀,
       24 ≤ (nondegenerateEquilibria (counterexampleCharges ε)
         (counterexamplePositions ε)).encard := by
-  sorry
-
-/--
-The second half of **Theorem 1** of Arathoon–Ball–Kvalheim: after a small perturbation of the
-charge strengths, the counterexample potential is a Morse function, i.e. it has finitely many
-critical points, all of which are non-degenerate, and there are still at least $24$ of them.
-
-*Reference:* [arXiv:2607.27197](https://arxiv.org/abs/2607.27197)
--/
-@[category research solved, AMS 31 78]
-theorem maxwell_conjecture.counterexample_morse :
-    ∃ (q : Fin 5 → ℝ) (a : Fin 5 → EuclideanSpace ℝ (Fin 3)), Function.Injective a ∧
-      (∀ j, 0 < q j) ∧
-      (∀ x ∈ equilibria q a, HasNondegenerateHessianAt (potential q a) x) ∧
-      (equilibria q a).Finite ∧ 24 ≤ (equilibria q a).encard := by
   sorry
 
 /-- The polynomial
