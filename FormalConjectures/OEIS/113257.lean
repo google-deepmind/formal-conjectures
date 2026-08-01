@@ -29,7 +29,7 @@ namespace OeisA113257
 
 /-- a n is the ascending descending base exponent transform of squares -/
 def a (n : ℕ) : ℕ :=
-  Finset.sum (Finset.Icc 1 n) (fun i ↦ (i ^ 2) ^ ((n - i + 1) ^ 2))
+  ∑ i ∈ Finset.Icc 1 n, (i ^ 2) ^ ((n - i + 1) ^ 2)
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by decide

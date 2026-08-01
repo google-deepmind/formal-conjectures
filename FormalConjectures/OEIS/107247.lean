@@ -43,7 +43,7 @@ The primary defining sequence `a`.
 The official sequence matches the sum up to `n + 1` of the standard nonacci numbers to align with the offset.
 -/
 def a (n : ℕ) : ℕ :=
-  Finset.sum (Finset.range (n + 2)) fun k => (nonacci k) ^ 2
+  ∑ k ∈ Finset.range (n + 2), (nonacci k) ^ 2
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]

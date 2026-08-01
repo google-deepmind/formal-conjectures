@@ -82,8 +82,8 @@ noncomputable def invert_seq_d (a b : ℕ) (n : ℕ) : ℕ :=
   Nat.strongRecOn n
     (fun m ih =>
       if m = 0 then 1
-      else Finset.sum (Finset.range m) (fun i =>
-        if h : i < m then invert_seq_c a b (m - i) * ih i h else 0))
+      else ∑ i ∈ Finset.range m,
+        if h : i < m then invert_seq_c a b (m - i) * ih i h else 0)
 
 /-- The general 2x2 matrix [(1,a); (1,b)]. -/
 def gen_matrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=

@@ -32,7 +32,7 @@ open Nat
 /-- The primary defining sequence `a`.
 $a(n) = \sum_{k=0}^n \binom{n+k-1}{k} F(n-k+1)$, where $F(m)$ is the $m$-th Fibonacci number. -/
 def a (n : ℕ) : ℕ :=
-  Finset.sum (Finset.range (n + 1)) fun k => (n + k - 1).choose k * fib (n - k + 1)
+  ∑ k ∈ Finset.range (n + 1), (n + k - 1).choose k * fib (n - k + 1)
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 5]

@@ -31,7 +31,7 @@ open BigOperators
 
 /-- a n is the sum of $3^j + (-2)^j$ for j from 1 to n. -/
 def a (n : ℕ) : ℕ :=
-  (Finset.sum (Finset.Icc 1 n) (fun j : ℕ => (3 : ℤ) ^ j + ((-2) : ℤ) ^ j)).toNat
+  (∑ j ∈ Finset.Icc 1 n, ((3 : ℤ) ^ j + ((-2) : ℤ) ^ j)).toNat
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by decide

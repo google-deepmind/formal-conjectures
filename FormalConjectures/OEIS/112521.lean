@@ -34,7 +34,7 @@ open Nat Int Finset
 `a n` is the $n$-th term of the sequence related to NOR bracketings.
 -/
 def a (n : ℕ) : ℕ :=
-  (Finset.sum (Finset.range n) fun j : ℕ =>
+  (∑ j ∈ range n,
     let c1 : ℕ := (2 * j).choose j
     let c2_top : ℕ := 2 * n - (j + 2)
     let c2_bot : ℕ := n - (j + 1)
