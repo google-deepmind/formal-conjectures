@@ -29,7 +29,7 @@ Conjecture: a(n) ~ (1-EulerGamma)n.
 
 namespace OeisA102722
 
-open BigOperators Finset Int
+open BigOperators Finset Int Asymptotics Filter
 
 /-- The primary defining sequence `a`.
 a n is the floor of the sum of all division remainders $\{n/k\}$, with $k=1,\dots,n$.
@@ -93,9 +93,7 @@ theorem a_5 : a 5 = 1 := by eval_a
 /-- A102722 Conjecture: $a(n) \sim (1-\gamma)n$. -/
 @[category research open, AMS 11]
 theorem conjecture :
-    Asymptotics.IsEquivalent Filter.atTop
-      (fun n : ℕ => (a n : ℝ))
-      (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by
+    (fun n : ℕ => (a n : ℝ)) ~[atTop] (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by
   sorry
 
 end OeisA102722

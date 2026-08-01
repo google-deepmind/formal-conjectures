@@ -17,46 +17,37 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A108211
-
-The sequence is defined by $a(n) = 16n^2 + 1$.
+# Sloping binary numbers: read array of binary numbers (right-justified) along diagonals of slope -1
 
 *References:*
-- [A108211](https://oeis.org/A108211)
+- [A105033](https://oeis.org/A105033)
 -/
 
-namespace OeisA108211
+namespace OeisA105033
 
-/--
-The primary defining sequence `a`.
-`a n` is defined as $16n^2 + 1$.
--/
-def a (n : ℕ) : ℕ := 16 * n ^ 2 + 1
+open Nat
+open Finset
+
+/-- The primary defining sequence `a`.
+`a n` is defined by the formula:
+$$a(n) = n - \sum_{k \ge 0, 2^{k+1} \le n, n \equiv k \pmod{2^{k+1}}} 2^{k+1}$$ -/
+def a (n : ℕ) : ℕ :=
+  n - (range n).sum (fun k => if 2^(k+1) <= n ∧ n % 2^(k+1) = k then 2^(k+1) else 0)
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 17 := by decide
+theorem a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 65 := by decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 145 := by decide
+theorem a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 257 := by decide
+theorem a_3 : a 3 = 3 := by decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 401 := by decide
+theorem a_4 : a 4 = 2 := by decide
 
-open Real
-
-/--
-Conjecture: $a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) + \frac{1}{n+1} + \frac{1}{n+2} + ... + \frac{1}{2n}} \right\rfloor$.
--/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : n > 0) :
-    (a n : ℝ) = (⌊ 1 / ((4 * n : ℝ)⁻¹ - log 2 + ∑ k ∈ (Finset.Icc (n + 1) (2 * n)), (k : ℝ)⁻¹) ⌋ : ℝ) := by
-  sorry
-
-end OeisA108211
+end OeisA105033

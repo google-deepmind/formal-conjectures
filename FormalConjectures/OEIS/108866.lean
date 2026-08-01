@@ -58,7 +58,7 @@ $$ -\frac{2}{n} + \sum_{k=1}^n \frac{2^k}{k} $$
 -/
 noncomputable def rat_expression (n : ℕ) : Rat :=
   if n > 0 then
-    (-2 : Rat) / (n : Rat) + Finset.sum (Finset.range n) fun i : ℕ => (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)
+    (-2 : Rat) / (n : Rat) + ∑ i ∈ (Finset.range n), (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)
   else
     0
 
@@ -67,7 +67,7 @@ Conjecture: for $n > 3$, $\textrm{numerator}(-2/n + \sum_{k=1}^{n} \frac{2^k}{k}
 -/
 @[category research open, AMS 11]
 theorem conjecture {n : ℕ} (hn : n > 3) :
-    (rat_expression n).num ≡ 0 [ZMOD (n^2 : ℤ)] ↔ Nat.Prime n := by
+    (rat_expression n).num ≡ 0 [ZMOD (n^2 : ℤ)] ↔ n.Prime := by
   sorry
 
 end OeisA108866

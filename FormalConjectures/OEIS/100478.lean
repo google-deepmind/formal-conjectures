@@ -82,9 +82,8 @@ theorem a_4 : a 4 = 1 := by rfl
 Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern? 
 -/
 @[category research open, AMS 11]
-theorem conjecture :
-  ∀ (v : Fin 5 → ℕ), (∀ i, v i > 0) →
-  ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → a_general v (n + P) = a_general v n) := by
+theorem conjecture (v : Fin 5 → ℕ) (h : ∀ i, v i > 0) :
+  answer(sorry) = ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → a_general v (n + P) = a_general v n) := by
   sorry
 
 end OeisA100478
