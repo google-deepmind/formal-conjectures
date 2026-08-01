@@ -41,21 +41,21 @@ noncomputable def a (n : ℕ) : ℕ :=
 @[category API, AMS 11]
 lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by
   have h1 : Nat.count Nat.Prime 13 = 5 := by decide
-  have h2 : Nat.Prime 13 := by decide
+  have h2 : (13).Prime := by decide
   have h3 := Nat.nth_count h2
   rwa [h1] at h3
 
 @[category API, AMS 11]
 lemma nth_prime_six : Nat.nth Nat.Prime 6 = 17 := by
   have h1 : Nat.count Nat.Prime 17 = 6 := by decide
-  have h2 : Nat.Prime 17 := by decide
+  have h2 : (17).Prime := by decide
   have h3 := Nat.nth_count h2
   rwa [h1] at h3
 
 @[category API, AMS 11]
 lemma nth_prime_seven : Nat.nth Nat.Prime 7 = 19 := by
   have h1 : Nat.count Nat.Prime 19 = 7 := by decide
-  have h2 : Nat.Prime 19 := by decide
+  have h2 : (19).Prime := by decide
   have h3 := Nat.nth_count h2
   rwa [h1] at h3
 

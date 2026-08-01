@@ -55,7 +55,7 @@ $a(6)$, added by Jonathan Vos Post, has 4 prime factors. $a(7) = 41 * 811^2 * 10
 When is the next prime in the sequence?
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ Nat.Prime (a n)} := by
+theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
   sorry
 
 end OeisA102847

@@ -36,7 +36,7 @@ def a (n : ℕ) : ℕ :=
   -- The range $p \le n$ is sufficient, as larger $p$ would make $q \le 1$, which is not prime.
   Finset.card (Finset.filter (fun p : ℕ =>
     -- p must be an odd prime.
-    Nat.Prime p ∧
+    p.Prime ∧
     p ≠ 2 ∧
     -- Ensure the expression for $q$ is positive, so Nat subtraction is well-defined for prime $q$.
     2 * p < 2 * n + 1 ∧

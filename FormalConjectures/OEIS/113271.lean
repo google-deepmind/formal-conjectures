@@ -55,7 +55,7 @@ The smallest primes in this (always odd) sequence are $a(1) = 3$, $a(3) = 41$ an
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :
-  answer(sorry) = a (sInf {n : ℕ | 5 < n ∧ Nat.Prime (a n)}) := by
+  answer(sorry) = a (sInf {n : ℕ | 5 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA113271

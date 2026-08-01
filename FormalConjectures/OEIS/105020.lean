@@ -77,7 +77,7 @@ theorem a_4 : a 4 = 8 := by
 
 /-- A natural number is a product of two primes (a semiprime or biprime) if it is the product of two natural numbers, both of which are prime. -/
 def IsSemiprime (k : ℕ) : Prop :=
-  ∃ p₁ p₂ : ℕ, Nat.Prime p₁ ∧ Nat.Prime p₂ ∧ k = p₁ * p₂
+  ∃ p₁ p₂ : ℕ, p₁.Prime ∧ p₂.Prime ∧ k = p₁ * p₂
 
 /-- A "Goldbach Conjecture" for this sequence: when there are $n$ terms between consecutive odd integers $(2n+1)$ and $(2n+3)$ for $n > 0$, at least one will be the product of 2 primes (not necessarily distinct). Example: $n=3$ for consecutive odd integers $a(7) = 7$ and $a(11) = 9$ and of the 3 sequence entries $a(8) = 12$, $a(9) = 15$ and $a(10) = 16$ between them, one is the product of 2 primes $a(9) = 15=3*5$. - _Michael Hiebl_, Jul 15 2007 -/
 @[category research open, AMS 11]

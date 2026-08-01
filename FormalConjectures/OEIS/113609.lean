@@ -52,7 +52,7 @@ def a (n : ℕ) : ℕ :=
 theorem conjecture :
   answer(sorry) ↔ ∃ q ≥ 1000000,
     is_oeis_prime_power q ∧ is_oeis_prime_power (q + 2) ∧
-    ¬ Nat.Prime q ∧ ¬ Nat.Prime (q + 2) := by
+    ¬ q.Prime ∧ ¬ (q + 2).Prime := by
   sorry
 
 end OeisA113609

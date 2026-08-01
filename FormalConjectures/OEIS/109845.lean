@@ -62,7 +62,7 @@ theorem a_4 : a 4 = 929 := by rfl
 Conjecture: There are infinitely many primes in this sequence.
 -/
 @[category research open, AMS 11]
-theorem conjecture : Set.Infinite {n : ℕ | Nat.Prime (a n)} := by
+theorem conjecture : Set.Infinite {n : ℕ | (a n).Prime} := by
   sorry
 
 end OeisA109845
