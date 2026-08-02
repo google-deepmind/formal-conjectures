@@ -25,7 +25,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical
 
 namespace Erdos488
 

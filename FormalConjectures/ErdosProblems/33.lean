@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 variable {α : Type} [AddCommMonoid α]
-open Classical Set
+open Set
 open scoped goldenRatio
 
 namespace Erdos33

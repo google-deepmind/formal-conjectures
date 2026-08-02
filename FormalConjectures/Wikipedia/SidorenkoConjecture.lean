@@ -33,7 +33,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 
 @[expose] public section
 
-open Classical Finset SimpleGraph
+open Finset SimpleGraph
 
 namespace SidorenkoConjecture
 
@@ -89,6 +89,7 @@ theorem sidorenko_K2 {W : Type} [Fintype W] [DecidableEq W]
 
 /- ## Sidorenko for `K_{2,2}`: auxiliary lemmas -/
 
+open scoped Classical in
 /-- `edgeCount` of `K_{2,2}` (complete bipartite graph on `Fin 2 + Fin 2`) is `4`.
 
 The four edges are `{inl 0, inr 0}`, `{inl 0, inr 1}`, `{inl 1, inr 0}`, `{inl 1, inr 1}`. -/
@@ -172,6 +173,7 @@ lemma homCount_completeGraph_fin_two_eq_two_mul_card_edgeFinset
         cases d
         rfl }
 
+open scoped Classical in
 /-- **The `Hom(K_{2,2}, G)` decomposition.** The number of homomorphisms from
 `K_{2,2}` to `G` equals `∑_{(a, b) ∈ W × W} |N(a) ∩ N(b)|^2`, where `N(v)` is the
 neighbourhood of `v` in `G`. Equivalently, summing over *ordered* pairs
@@ -337,6 +339,7 @@ lemma sum_inter_card_eq_sum_degree_sq
   simp only [Nat.cast_sum, Nat.cast_pow] at this
   exact this
 
+open scoped Classical in
 /--
 **Case `H = K_{2,2}` (four-cycle, also called `C_4`): Sidorenko's conjecture holds, by
 Cauchy–Schwarz.**
@@ -470,6 +473,7 @@ theorem sidorenko_K22 {W : Type} [Fintype W] [DecidableEq W]
   -- hmul : N^4 * n^4 ≤ (M * n^4) * n^4
   nlinarith [hmul, sq_nonneg ((n : ℝ))]
 
+open scoped Classical in
 /-- Consequence of `homDensity_le_one`: both sides of the Sidorenko K_{2,2}
 inequality are bounded above by 1. This is a trivial consequence, recorded
 as a sanity check on the helper infrastructure in

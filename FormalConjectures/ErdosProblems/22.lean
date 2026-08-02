@@ -43,7 +43,7 @@ and Zhao [FLZ15].
 
 @[expose] public section
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos22
 

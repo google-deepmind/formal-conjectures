@@ -30,7 +30,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Nat Filter Finset Set
-open scoped Asymptotics Classical BigOperators
+open scoped Asymptotics BigOperators
 
 namespace Erdos1192
 
@@ -102,6 +102,7 @@ theorem erdos_1192 :
           (fun (x : ℕ) ↦ (x : ℝ)) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős and Rényi proved by the probabilistic method that there exists a set $A$ such that
 $$\sum_{n\leq x}f_r(n)^2 \ll x$$ and $$\lvert A\cap [1,x]\rvert\gg x^{1/r}$$ for all $x$.

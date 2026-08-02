@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Filter Set
+open Filter Set
 
 namespace Erdos12
 

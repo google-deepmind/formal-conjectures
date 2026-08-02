@@ -34,7 +34,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter SimpleGraph Classical
+open Filter SimpleGraph
 
 namespace Erdos184
 
@@ -42,6 +42,7 @@ namespace Erdos184
 A graph $H$ is a cycle or an edge if it is connected and 2-regular, or if it has exactly one edge.
 -/
 def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
+  open scoped Classical in
   (H.Connected ∧ H.IsRegularOfDegree 2) ∨ H.edgeFinset.card = 1
 
 /-- D is a decomposition of G into subgraphs. -/
@@ -49,6 +50,7 @@ def IsDecomposition {V : Type*} (G : SimpleGraph V) (D : Finset G.Subgraph) : Pr
   Set.PairwiseDisjoint (D : Set G.Subgraph) (fun H ↦ H.edgeSet) ∧
   (⋃ H ∈ D, H.edgeSet) = G.edgeSet
 
+open scoped Classical in
 /--
 Any graph on $n$ vertices can be decomposed into $O(n)$ many edge-disjoint cycles and edges.
 -/
@@ -63,6 +65,7 @@ theorem erdos_184 :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős and Gallai [EGP66] proved that $O(n \log n)$ many cycles and edges suffices.
 -/
@@ -91,6 +94,7 @@ theorem erdos_184.variants.lower_bound :
         (1 + c) * (n : ℝ) ≤ (D.card : ℝ) := by
   sorry
 
+open scoped Classical in
 /--
 In [Er71] Erdős suggests that only $n-1$ many cycles and edges are required if we do not
 require them to be edge-disjoint.
@@ -105,6 +109,7 @@ theorem erdos_184.variants.covering :
         (D.card : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
   sorry
 
+open scoped Classical in
 /--
 The best bound available is due to Bucić and Montgomery [BM22], who prove that $O(n\log^* n)$ many
 cycles and edges suffice, where $\log^*$ is the iterated logarithm function.
@@ -120,6 +125,7 @@ theorem erdos_184.variants.bucic_montgomery :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 Conlon, Fox, and Sudakov [CFS14] proved that $O_\epsilon(n)$ cycles and edges suffice if $G$ has
 minimum degree at least $\epsilon n$, for any $\epsilon>0$.

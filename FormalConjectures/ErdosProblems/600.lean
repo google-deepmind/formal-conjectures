@@ -28,7 +28,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 namespace Erdos600
@@ -44,6 +44,7 @@ noncomputable def trianglesContaining
   (uv : Sym2 α)
   [Fintype α] :
   Finset (Finset α) :=
+  open scoped Classical in
   (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
 
 def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=

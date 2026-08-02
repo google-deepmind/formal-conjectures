@@ -26,10 +26,11 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open scoped ArithmeticFunction.sigma
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos830
 
+open scoped Classical in
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
 -/

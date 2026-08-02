@@ -52,7 +52,7 @@ $\overline{G}$.
 
 namespace WrittenOnTheWallII.GraphConjecture145
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

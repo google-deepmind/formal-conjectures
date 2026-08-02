@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Real Filter
+open Real Filter
 
 namespace Erdos688
 

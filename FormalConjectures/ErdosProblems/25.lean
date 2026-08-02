@@ -27,7 +27,6 @@ public import FormalConjecturesUtil
 
 open Filter Finset Real Nat Set
 open scoped Topology
-open Classical
 
 namespace Erdos25
 

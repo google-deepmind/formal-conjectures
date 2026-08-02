@@ -28,7 +28,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical
 open scoped Finset
 
 namespace ReedOmegaDeltaChi

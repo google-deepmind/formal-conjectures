@@ -29,7 +29,6 @@ public import FormalConjecturesUtil
 
 namespace Erdos1092
 
-open Classical
 open SimpleGraph
 open Finset
 open Asymptotics

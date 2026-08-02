@@ -32,7 +32,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Filter Finset
-open scoped Asymptotics Classical
+open scoped Asymptotics
 
 namespace Erdos241
 
@@ -43,6 +43,7 @@ $a,b,c\in A$ are all distinct (aside from the trivial coincidences).
 Formalization note: this is generalized to allow for different $r$.
 -/
 noncomputable def f (N r : ℕ) : ℕ :=
+  open scoped Classical in
   letI candidates := (Icc 1 N).powerset.filter (fun A ↦
     ∀ m₁ m₂ : Multiset ℕ,
       m₁.card = r → m₂.card = r →

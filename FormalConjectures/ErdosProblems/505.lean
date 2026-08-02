@@ -49,7 +49,7 @@ The mathematical content and references are the author's own work.
 
 @[expose] public section
 
-open Metric Set Classical
+open Metric Set
 
 namespace Erdos505
 

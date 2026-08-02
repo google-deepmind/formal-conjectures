@@ -54,7 +54,7 @@ the minimum triangle count.
 
 namespace WrittenOnTheWallII.GraphConjecture291
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

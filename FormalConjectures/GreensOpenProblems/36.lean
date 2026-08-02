@@ -28,7 +28,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Filter
+open Filter
 open scoped Pointwise
 
 namespace Green36
@@ -36,12 +36,14 @@ namespace Green36
 /-- The simultaneous double product property [CKS05, 4.1]. -/
 def SimultaneousDoubleProduct {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, i ≠ k → Disjoint (A i + B j) (A j + B k))
 
 /-- A variant of the simultaneous double product property, as stated in [Gr24, Problem 36]. -/
 def Green36Property {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, j ≠ k → Disjoint (A i + B i) (A j + B k))
 

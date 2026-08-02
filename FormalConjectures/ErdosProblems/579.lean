@@ -28,7 +28,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos579
 

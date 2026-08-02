@@ -32,7 +32,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open SimpleGraph Classical
+open SimpleGraph
 
 namespace Erdos621
 

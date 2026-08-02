@@ -30,7 +30,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos962
 
@@ -47,6 +47,7 @@ Let $k(n)$ be the maximal $k$ such that there exists $m \le n$ with
 $m+1, \ldots, m+k$ each divisible by a prime $> k$.
 -/
 noncomputable def k (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.findGreatest (fun k => Erdos962Prop n k) n
 
 /--

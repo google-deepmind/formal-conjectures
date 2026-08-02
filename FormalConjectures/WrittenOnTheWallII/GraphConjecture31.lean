@@ -37,7 +37,7 @@ $\mathrm{rad}(G)$ is the graph radius.
 
 namespace WrittenOnTheWallII.GraphConjecture31
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

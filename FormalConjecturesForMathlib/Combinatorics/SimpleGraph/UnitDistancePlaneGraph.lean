@@ -23,7 +23,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Basic
 namespace SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-open Classical Finset List
+open Finset List
 
 /-- A unit distance graph in ℝ²:
 A graph where the vertices V are a collection of points in ℝ² and there is

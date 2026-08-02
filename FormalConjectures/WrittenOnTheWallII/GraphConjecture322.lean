@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture322
 

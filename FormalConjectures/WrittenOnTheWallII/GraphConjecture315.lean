@@ -32,7 +32,6 @@ The notions `IsTotalDominatingSet`, `IsMinimalTotalDominatingSet`,
 
 @[expose] public section
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture315
 

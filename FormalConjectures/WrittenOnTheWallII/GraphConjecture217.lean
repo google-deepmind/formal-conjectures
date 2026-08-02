@@ -36,7 +36,7 @@ Per the WOWII definitions popup linked from this conjecture:
 
 namespace WrittenOnTheWallII.GraphConjecture217
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

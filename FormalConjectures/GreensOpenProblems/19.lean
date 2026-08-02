@@ -32,7 +32,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Finset Real Classical
+open Finset Real
 
 namespace Green19
 
@@ -50,6 +50,7 @@ From [FSS20]: given $A \subseteq G \times G$ and $d \in G$, let
 $$S_d(A) = \lbrace (x, y) \in G \times G : (x, y), (x + d, y), (x, y + d) \in A \rbrace$$
 -/
 noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
+  open scoped Classical in
   univ.filter (fun p => IsCorner A p.1 p.2 d)
 
 end GroupDefs

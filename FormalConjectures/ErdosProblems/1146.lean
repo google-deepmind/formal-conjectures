@@ -27,7 +27,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Classical
 open scoped Pointwise
 
 namespace Erdos1146
@@ -39,6 +38,7 @@ Here, the sumset is the appropriate one for Schnirelmann density, $A \oplus B = 
 This avoids the trivial case where the sumset misses $1$ simply because neither $A$ nor $B$ contains $0$.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
+  open scoped Classical in
   ∀ B : Set ℕ,
     let b := schnirelmannDensity B;
     0 < b → b < 1 → schnirelmannDensity ((A ∪ {0}) + (B ∪ {0})) > b

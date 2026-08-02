@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open MeasureTheory Classical Filter
+open MeasureTheory Filter
 open scoped ProbabilityTheory Topology Real
 
 namespace Erdos522
@@ -76,7 +76,9 @@ noncomputable def roots (c : KacCoefficients S Ω μ) (n : ℕ) : Ω → Multise
 
 /-- Counts the number of roots of a Kac polynomial in the unit disk with multiplicity. -/
 noncomputable def numRootsInUnitDisk [PseudoMetricSpace k] (c : KacCoefficients S Ω μ) (n : ℕ)
-    (ω : Ω) : ℕ := (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
+    (ω : Ω) : ℕ :=
+  open scoped Classical in
+  (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
 
 end KacCoefficients
 
@@ -131,6 +133,7 @@ theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
       (ℙ {ω | |(f.roots n ω).card / (n : ℝ).log - 2 / π| ≥ o n}).toReal ≤ p n := by
   sorry
 
+open scoped Classical in
 /--
 Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots in `{z∈C:|z|≤1}`.
 -/
