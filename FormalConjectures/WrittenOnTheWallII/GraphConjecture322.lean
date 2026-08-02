@@ -41,7 +41,8 @@ vertices `v` of `l(v)` — the independence number of the neighborhood `N(v)` of
 Here `l(v) = α(G[N(v)])` is the independence number of the subgraph induced by the
 open neighborhood of `v`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+    "https://github.com/MrBrain295/formal-conjectures/blob/322/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean"]
 theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (hn : 5 ≤ Fintype.card α)
     (h : ∀ v : α, indepNeighborsCard G v ≤ 1) :
