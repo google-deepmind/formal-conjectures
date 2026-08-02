@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 193
@@ -26,6 +27,8 @@ References:
 - [GeRa79] Gerver, Joseph L. and Ramsey, L. Thomas, "On certain sequences of lattice points."
   Pacific J. Math. (1979), 357-363.
 -/
+
+@[expose] public section
 
 open Set
 

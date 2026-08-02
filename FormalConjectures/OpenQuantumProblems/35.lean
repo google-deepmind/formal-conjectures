@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 35: existence of absolutely maximally entangled pure states
@@ -74,6 +75,8 @@ then the reduced state on the first $m$ parties is maximally mixed.
 As demonstration, we show that the Bell states with $n=2$ and GHZ states with $n=3$ are
 AME states, and the GHZ state with $n=4$ is not an AME state.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

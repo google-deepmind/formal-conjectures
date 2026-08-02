@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 160
@@ -40,6 +41,8 @@ The earlier formalization used the number of induced four-cycles. The historical
 conjecture instead uses this binary $C_4$-free indicator.
 
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture160
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 19
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Ch11] Chu, Qing. "Multiple recurrence for two commuting transformations." Ergodic Theory and
   Dynamical Systems 31.3 (2011): 771-792.
 -/
+
+@[expose] public section
 
 open Finset Real Classical
 

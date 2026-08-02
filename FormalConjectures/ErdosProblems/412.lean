@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 412
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 
 Reviewed by @b-mehta on 2025-05-27
 -/
+
+@[expose] public section
 
 open ArithmeticFunction.sigma
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 254
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ca60] Cassels, J. W. S., On the representation of integers as the sums of distinct summands taken
   from a fixed set. Acta Sci. Math. (Szeged) (1960), 111-124.
 -/
+
+@[expose] public section
 
 open Filter Set
 

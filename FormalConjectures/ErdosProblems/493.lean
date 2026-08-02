@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 493
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/493](https://www.erdosproblems.com/493)
 - [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961), 221-254.
 -/
+
+@[expose] public section
 
 namespace Erdos493
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 16
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
   (1950), 113-123.
 - [Ro34] Romanoff, N. P., Über einige Sätze der additiven Zahlentheorie. Math. Ann. (1934), 668-678.
 -/
+
+@[expose] public section
 
 open Nat Filter Set
 open scoped Topology Classical

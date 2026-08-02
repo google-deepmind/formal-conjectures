@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 38
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Po20] Polak, Sven. "New methods in coding theory: Error-correcting codes and the Shannon capacity."
   arXiv preprint arXiv:2005.02945 (2020).
 -/
+
+@[expose] public section
 
 open Filter Set
 open scoped Pointwise

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 62
@@ -26,6 +27,8 @@ This is a problem of Erdős, Odlyzko, and Sárközy [105] from 1987.
 
 *Reference:* [Ben Green's Open Problem 62](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.62)
 -/
+
+@[expose] public section
 open Filter
 namespace Green62
 

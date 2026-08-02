@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 532
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er77c] Erdős, Paul, *Problems and results on combinatorial number theory. III*. Number theory day (1977), 43-72.
 - [Hi74] Hindman, Neil, *Finite sums from sequences within cells of a partition of $\mathbb{N}$*. J. Combinatorial Theory Ser. A (1974), 1-11.
 -/
+
+@[expose] public section
 
 namespace Erdos532
 

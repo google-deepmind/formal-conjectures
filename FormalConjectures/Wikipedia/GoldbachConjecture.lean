@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Goldbach's conjecture
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Landau Problems Wikipedia Page](https://en.wikipedia.org/wiki/Landau%27s_problems#Twin_prime_conjecture)
 - [Goldbach's Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture)
 -/
+
+@[expose] public section
 
 namespace GoldbachConjecture
 

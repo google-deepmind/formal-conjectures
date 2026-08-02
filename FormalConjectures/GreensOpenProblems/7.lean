@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«342»
+public import FormalConjectures.ErdosProblems.«342»
 
 /-!
 # Ben Green's Open Problem 7
@@ -26,6 +27,8 @@ Can one explain the curious Fourier properties of Ulam's sequence?
 - [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1)
 - [erdosproblems.com/342](https://www.erdosproblems.com/342)
 -/
+
+@[expose] public section
 
 open Nat Set Filter
 open scoped Topology

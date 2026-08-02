@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 235893
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/235893](https://mathoverflow.net/questions/235893)
 asked by user [*Willie Wong*](https://mathoverflow.net/users/3948/willie-wong)
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry
 

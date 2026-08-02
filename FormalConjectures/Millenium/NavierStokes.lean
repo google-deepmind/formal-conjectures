@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Existence And Smoothness Of The Navier–Stokes Equation
@@ -52,6 +53,8 @@ pressure in the periodic case. The sign correction to the weak-solution identity
 the errata is not represented here, since this file formalizes the four prize
 alternatives rather than the later weak-solution discussion.
 -/
+
+@[expose] public section
 
 open ContDiff Set InnerProductSpace MeasureTheory EuclideanGeometry
 open scoped Laplacian

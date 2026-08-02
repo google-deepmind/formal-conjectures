@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 154
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., *On Sum Sets of Sidon Sets, I*.
   Journal of Number Theory (1994), 329-347.
 -/
+
+@[expose] public section
 
 open Filter Finset
 

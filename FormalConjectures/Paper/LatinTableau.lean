@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Latin Tableau Conjecture
@@ -31,6 +32,8 @@ the union of k independent sets of the graph.
 
 * [The Latin Tableau Conjecture](https://www.combinatorics.org/ojs/index.php/eljc/article/view/v32i2p48)
 -/
+
+@[expose] public section
 
 namespace LatinTableau
 

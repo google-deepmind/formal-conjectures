@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Lam--Litt conjecture
@@ -46,6 +47,8 @@ TODO:
 - Lam-Litt conjecture implies Grothendieck p-curvature conjecture.
 - Examples in Remark 1.1.3 and 1.1.5 on the conditions of the conjecture.
 -/
+
+@[expose] public section
 
 open Real MvPolynomial PowerSeries
 

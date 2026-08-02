@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Four-square conjecture with powers of 2, 3, and 5
@@ -34,6 +35,8 @@ Zhi-Wei Sun has offered a $2,500 prize for the first proof.
 - S. Banerjee, "On a conjecture of Sun about sums of restricted squares," *J. Number Theory*
   **256** (2024), 253-289.
 -/
+
+@[expose] public section
 
 namespace OeisA308734
 

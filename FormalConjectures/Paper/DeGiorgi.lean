@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # De Giorgi's conjecture
@@ -47,6 +48,8 @@ The cases $1 ≤ n ≤ 3$ are solved, while $4 ≤ n ≤ 8$ remains open.
 * [Del Pino, Kowalczyk, Wei](http://dx.doi.org/10.4007/annals.2011.174.3.3),
   Annals of Mathematics 174 (2011) shows that the condition $n ≤ 8$ is sharp.
 -/
+
+@[expose] public section
 
 open ContDiff Set InnerProductSpace MeasureTheory EuclideanGeometry
 open scoped Laplacian

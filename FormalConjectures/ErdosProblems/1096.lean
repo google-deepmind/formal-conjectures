@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1096
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Fe16] Feng, D.-J., On the topology of polynomials with bounded integer coefficients.
   J. Eur. Math. Soc. (2016), 181--193.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology

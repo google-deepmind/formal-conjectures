@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Modularity conjecture
@@ -33,6 +34,8 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 - [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
 
 -/
+
+@[expose] public section
 
 namespace ModularityConjecture
 

@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 445
@@ -26,6 +26,8 @@ import FormalConjecturesUtil
   (2000), 380--384.
 - [MathOverflow](https://mathoverflow.net/questions/69509/small-residue-classes-with-small-reciprocal)
 -/
+
+@[expose] public section
 
 open Filter
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 399
@@ -32,6 +33,8 @@ with $xy > 1$ and $k > 2$?
 - [PoSh73] Pollack, Richard M. and Shapiro, Harold N., The next to last case of a factorial
   diophantine equation. Comm. Pure Appl. Math. (1973), 313-325.
 -/
+
+@[expose] public section
 
 open Nat
 

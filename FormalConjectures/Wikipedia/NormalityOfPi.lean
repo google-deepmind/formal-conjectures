@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Normality of mathematical constants
@@ -28,6 +29,8 @@ normal in any base.
 * [Wikipedia (Normal number)](https://en.wikipedia.org/wiki/Normal_number)
 * [Wikipedia (Pi)](https://en.wikipedia.org/wiki/Pi)
 -/
+
+@[expose] public section
 
 open Real
 

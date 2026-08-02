@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Gap conjecture
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [On the Gap Conjecture concerning group growth](https://arxiv.org/pdf/1202.6044) by
   *Rostislav Grigorchuk*
 -/
+
+@[expose] public section
 
 namespace GapConjecture
 

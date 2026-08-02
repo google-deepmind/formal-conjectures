@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Infinite Regular Primes
@@ -25,6 +26,8 @@ infinitely many regular primes.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Regular_prime)
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

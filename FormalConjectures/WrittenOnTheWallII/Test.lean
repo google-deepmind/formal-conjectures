@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Testing Graph Invariants
@@ -31,6 +32,8 @@ independence_number, dominationNumber, average_distance, diameter, radius,
 girth, order, size, szeged_index, wiener_index, min_degree, max_degree,
 average_degree, matching_number, residue, annihilation_number, cvetkovic.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

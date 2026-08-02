@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Lychrel numbers in base 10
@@ -33,6 +34,8 @@ The smallest widely studied open case is `196`.
 * [OEIS A023108](https://oeis.org/A023108)
 * [OEIS A023109](https://oeis.org/A023109)
 -/
+
+@[expose] public section
 
 namespace LychrelNumbers
 

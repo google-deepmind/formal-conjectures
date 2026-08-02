@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sierpiński number
@@ -41,6 +42,8 @@ The *prime Sierpiński problem* asks: is 271129 the smallest *prime* Sierpiński
 
 The *extended Sierpiński problem* asks: is 271129 the second-smallest Sierpiński number?
 -/
+
+@[expose] public section
 
 namespace SierpinskiNumber
 

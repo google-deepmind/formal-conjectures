@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 539
@@ -37,6 +38,8 @@ it is not clear whether this remains open, but we include it here either way.
 - [GR99] Granville, A., & Roesler, F. (1999). _The Set of Differences of a Given Set_. The American Mathematical Monthly, 106(4), 338–344.
 - [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 -/
+
+@[expose] public section
 
 open Filter
 

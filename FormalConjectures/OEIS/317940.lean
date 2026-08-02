@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Nonnegativity of the Dirichlet square root of A046644
@@ -53,6 +54,8 @@ differential equation.
 - [A046644](https://oeis.org/A046644)
 - [A005187](https://oeis.org/A005187)
 -/
+
+@[expose] public section
 
 namespace OeisA317940
 

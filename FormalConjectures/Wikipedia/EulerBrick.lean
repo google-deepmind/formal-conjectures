@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Open questions regarding the existence of Euler bricks
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
 - [Sh12] Shapirov, Ruslan. Perfect cuboids and irreducible polynomials. https://arxiv.org/abs/1108.5348
 -/
+
+@[expose] public section
 
 namespace EulerBrick
 

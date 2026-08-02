@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 897
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Wi81] E. Wirsing, Additive and completely additive functions with restricted growth.
   Recent progress in analytic number theory, Vol. 2 (Durham, 1979), 231--280 (1981).
 -/
+
+@[expose] public section
 -- TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
 namespace Erdos897

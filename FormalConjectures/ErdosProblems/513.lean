@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 513
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [ClHa64] Clunie, J. and Hayman, W. K., The maximum term of a power series. J. Analyse Math.
   (1964), 143-186.
 -/
+
+@[expose] public section
 
 open scoped Nat Real
 open Filter Polynomial

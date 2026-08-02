@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 19.25
@@ -23,6 +24,8 @@ by B. Curtin, G. R. Pourgholi
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
+
+@[expose] public section
 
 open scoped Nat Group
 

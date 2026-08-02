@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A087719
@@ -27,6 +28,8 @@ The conjecture states that $a_n = 3^n + 3 \cdot 2^n + 6$ for $n \ge 1$.
 
 *Reference:* [A87719](https://oeis.org/A87719)
 -/
+
+@[expose] public section
 
 namespace OeisA87719
 

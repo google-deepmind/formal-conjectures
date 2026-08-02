@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1212
@@ -27,6 +28,8 @@ This file also records machine-checked cores of verified partial results (2026):
 a composite-anchor sufficient reduction and an impossibility theorem for periodic
 certificates; see the corresponding lemmas below.
 -/
+
+@[expose] public section
 
 open Filter
 

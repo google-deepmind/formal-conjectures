@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 14
 
 *Reference:* [erdosproblems.com/14](https://www.erdosproblems.com/14)
 -/
+
+@[expose] public section
 
 namespace Erdos14
 

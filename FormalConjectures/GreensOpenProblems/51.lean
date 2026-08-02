@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 51
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ruz91] Ruzsa, Imre Z. "Arithmetic progressions in sumsets."
   Acta Arithmetica 60.2 (1991): 191-202.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Pointwise

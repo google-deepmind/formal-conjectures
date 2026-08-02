@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 394
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [ErHa78] Erdős, P. and Hall, R. R., On some unconventional problems on the divisors of integers.
   J. Austral. Math. Soc. Ser. A (1978), 479--485.
 -/
+
+@[expose] public section
 
 open Nat Filter Finset
 open scoped Asymptotics Topology Nat

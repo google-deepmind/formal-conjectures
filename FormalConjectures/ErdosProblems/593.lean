@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 593
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Er95d] Erdős, Paul, Some of my favourite problems in various branches of combinatorics.
   Matematiche (Catania) 47 (1992), no. 2, 231–240 (1995).
 -/
+
+@[expose] public section
 
 open Cardinal Set SimpleGraph
 

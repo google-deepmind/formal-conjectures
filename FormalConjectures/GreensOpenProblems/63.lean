@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«424»
+public import FormalConjectures.ErdosProblems.«424»
 
 /-!
 # Ben Green's Open Problem 63
@@ -28,3 +29,5 @@ if $a_1, a_2 \in A$. Does $A$ have positive density?
 
 This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«424»`.
 -/
+
+@[expose] public section

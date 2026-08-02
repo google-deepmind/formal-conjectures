@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.Schinzel
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.Schinzel
 
 /-!
 # Erdős Problem 252
@@ -34,6 +35,8 @@ import FormalConjectures.Wikipedia.Schinzel
  - [Pr22] Pratt, K., The irrationality of a divisor function series of Erdős and Kac.
     arXiv:2209.11124 (2022).
 -/
+
+@[expose] public section
 
 open scoped Nat ArithmeticFunction.sigma
 

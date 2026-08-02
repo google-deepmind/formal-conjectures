@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import Mathlib.InformationTheory.Hamming
+public import FormalConjecturesUtil
+public import Mathlib.InformationTheory.Hamming
 
 /-!
 # Ben Green's Open Problem 40
@@ -28,6 +29,8 @@ import Mathlib.InformationTheory.Hamming
 - [St94] R. Struik, Covering codes, PhD Thesis, Eindhoven University of Technology, the Netherlands, 106 pp, 1994.
 
 -/
+
+@[expose] public section
 
 open Filter Topology Fintype
 open scoped ENNReal Pointwise

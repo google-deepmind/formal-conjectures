@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Claude's Cycles
@@ -37,6 +38,8 @@ The even case `m > 2` remains open.
 - [Aub82] J. Aubert, B. Schneider, "Graphes orientés indécomposables en circuits hamiltoniens",
   J. Combin. Theory Ser. B 32 (1982), 347–349.
 -/
+
+@[expose] public section
 
 namespace ClaudesCycles
 

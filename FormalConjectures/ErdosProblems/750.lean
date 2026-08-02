@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 750
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
 - [ErHa67b] Erdős, P. and Hajnal, András, On chromatic graphs. Mat. Lapok (1967), 1--4.
 - [UlamErdos750](https://www.ulam.ai/research/erdos750.pdf)
 -/
+
+@[expose] public section
 
 open Filter Finset NNReal
 

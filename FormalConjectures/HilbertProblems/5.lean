@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's Fifth Problem and the Hilbert–Smith Conjecture
@@ -31,6 +32,8 @@ connected finite-dimensional topological manifold.
 - [Pardon 2013, arXiv:1112.2324](https://arxiv.org/abs/1112.2324)
 - [arXiv:math/0103145](https://arxiv.org/abs/math/0103145)
 -/
+
+@[expose] public section
 
 namespace Hilbert5
 
