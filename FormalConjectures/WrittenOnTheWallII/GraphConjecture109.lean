@@ -68,7 +68,9 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
 example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
-  unfold residue
+  unfold residue SimpleGraph.residueAux SimpleGraph.havelHakimiStep SimpleGraph.degree
+    SimpleGraph.neighborFinset SimpleGraph.neighborSetFintype SimpleGraph.Top.adjDecidable
+  unfold SimpleGraph.residueAux
   decide +native
 
 end WrittenOnTheWallII.GraphConjecture109

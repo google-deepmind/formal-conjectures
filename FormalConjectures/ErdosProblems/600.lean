@@ -38,7 +38,7 @@ Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n
 each edge contained in at least one triangle, must have an edge contained in at least
 $r$ triangles.
 -/
-private noncomputable def trianglesContaining
+noncomputable def trianglesContaining
   {α : Type*}
   (G : SimpleGraph α)
   (uv : Sym2 α)

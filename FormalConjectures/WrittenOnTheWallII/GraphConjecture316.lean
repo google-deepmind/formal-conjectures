@@ -54,6 +54,7 @@ example : averageDegree (⊥ : SimpleGraph (Fin 3)) = 0 := by
 /-- In `P₃` (path 0-1-2), the average degree is 4/3 and there are 2 pendant vertices. -/
 @[category test, AMS 5]
 example : averageDegree (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 4/3 := by
-  unfold averageDegree; decide +native
+  unfold averageDegree
+  decide +kernel
 
 end WrittenOnTheWallII.GraphConjecture316

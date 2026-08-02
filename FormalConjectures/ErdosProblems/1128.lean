@@ -42,7 +42,7 @@ These establish key countability and boundedness properties of ω₁.
 -/
 
 /-- The set of countable ordinals, expressed using Mathlib's `ω_ 1`. -/
-private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
+abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 
 /-- The set of ordinals strictly below any $\gamma < \omega_1$ is countable. -/
 @[category API, AMS 5]

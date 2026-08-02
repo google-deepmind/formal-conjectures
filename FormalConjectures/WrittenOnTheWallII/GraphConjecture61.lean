@@ -57,6 +57,9 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero
 step gives $[0]$, leaving a single zero. -/
 @[category test, AMS 5]
 example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
-  unfold residue; decide +native
+  unfold residue SimpleGraph.residueAux SimpleGraph.havelHakimiStep SimpleGraph.degree
+    SimpleGraph.neighborFinset SimpleGraph.neighborSetFintype SimpleGraph.Top.adjDecidable
+  unfold SimpleGraph.residueAux
+  decide +native
 
 end WrittenOnTheWallII.GraphConjecture61
