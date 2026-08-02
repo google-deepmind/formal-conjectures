@@ -45,7 +45,7 @@ noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gam
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
-/-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
+/-- We need to reduce a rational modulo `p`, in practice we won't be dividing by zero since the
 conductor of the elliptic curve saves us. -/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
@@ -64,7 +64,7 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
   apply Subtype.fintype _
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
-infinty on this affine curve we only have `p` -/
+infinity on this affine curve we only have `p` -/
 noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
   p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
