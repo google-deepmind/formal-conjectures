@@ -40,6 +40,15 @@ vertices `v` of `l(v)` — the independence number of the neighborhood `N(v)` of
 
 Here `l(v) = α(G[N(v)])` is the independence number of the subgraph induced by the
 open neighborhood of `v`.
+
+If every open neighborhood has independence number at most one, then any two
+distinct neighbors of a vertex must be adjacent. Thus every open neighborhood is a
+clique. Connectedness then implies that the graph is complete: along any path,
+consecutive edges can be shortened using the clique condition until its endpoints
+are adjacent. Finally, in a nontrivial complete graph, every minimal total
+dominating set consists of exactly two vertices. Hence all minimal total
+dominating sets have equal cardinality, so the graph is well totally dominated.
+
 -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
     "https://github.com/MrBrain295/formal-conjectures/blob/322/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean"]
