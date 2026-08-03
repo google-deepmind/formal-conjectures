@@ -65,7 +65,7 @@ deriving Inhabited
   a new state `q' : Option Λ` and a `Stmt` describing what to do: a
   command to write a symbol and move left or right. Notice that there
   are two ways of halting at a given `(state, head)` pair: either
-  the machine halts immediatly (i.e. the function returns `none`),
+  the machine halts immediately (i.e. the function returns `none`),
   or the machine moves to the "halting state", i.e. `none : Option Λ`
   and performs one last action.
 

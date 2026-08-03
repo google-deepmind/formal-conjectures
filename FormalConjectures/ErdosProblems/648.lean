@@ -48,12 +48,12 @@ noncomputable def g (n : ℕ) : ℕ :=
 
 /--
 Let $g(n)$ denote the largest $t$ such that there exist integers $2\leq a_1<a_2<\cdots <a_t <n$
-such that \[P(a_1)>P(a_2)>\cdots >P(a_t)\] where $P(m)$ is the greatest prime factor of $m$.
+such that $$P(a_1)>P(a_2)>\cdots >P(a_t)$$ where $P(m)$ is the greatest prime factor of $m$.
 Estimate $g(n)$.
 
-Stijn Cambie has proved [Ca25b] \[g(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}.\]
+Stijn Cambie has proved [Ca25b] $$g(n) \asymp \left(\frac{n}{\log n}\right)^{1/2}.$$
 Cambie further asks whether there exists a constant $c$ such that
-\[g(n) \sim c \left(\frac{n}{\log n}\right)^{1/2}.\]
+$$g(n) \sim c \left(\frac{n}{\log n}\right)^{1/2}.$$
 Cambie's proof shows that such a $c$ must satisfy $2\leq c\leq 2\sqrt{2}$.
 
 The sequence $a_1<a_2<\cdots<a_t$ is packaged as a strictly monotone map `a : Fin t → ℕ`
