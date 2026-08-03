@@ -645,11 +645,13 @@ private def colorBit (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) (k : ℕ) : Bool 
 private def indexOfColor (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) : ℕ :=
   (List.range N).reverse.foldl (fun acc k => Nat.bit (colorBit N c k) acc) 0
 
+@[category test, AMS 5 11]
 private lemma colorOf_eq_testBit (N n a : ℕ) (ha : a ∈ Finset.Icc (1 : ℕ) N) :
     colorOf N (coloringOfIndex N n) a = 0 ↔ Nat.testBit n (a-1) := by
   unfold colorOf coloringOfIndex
   simp [ha]
 
+@[category test, AMS 5 11]
 private lemma rec_or_true_iff (f : ℕ → Bool) (n : ℕ) :
     (Nat.rec (motive := λ _ => Bool) false (λ k ih => ih || f k) n) = true ↔ ∃ i < n, f i = true := by
   induction n with
@@ -672,6 +674,7 @@ private lemma rec_or_true_iff (f : ℕ → Bool) (n : ℕ) :
           subst i
           right; exact hfi
 
+@[category test, AMS 5 11]
 private lemma hasRed3Mask_of_hasRed3 (N n : ℕ)
     (h : hasRed3 N (coloringOfIndex N n)) : hasRed3Mask n N := by
   rcases h with ⟨a, ha, d, hd, hd0, hsum, had, hca, hcad, hcas⟩
@@ -716,6 +719,7 @@ private lemma hasRed3Mask_of_hasRed3 (N n : ℕ)
   · rw [show ((a-1)+1+2*((d-1)+1)-1) = a+2*d-1 by omega]
     exact hb3
 
+@[category test, AMS 5 11]
 private lemma hasRed3_of_hasRed3Mask (N n : ℕ)
     (h : hasRed3Mask n N) : hasRed3 N (coloringOfIndex N n) := by
   unfold hasRed3Mask at h
@@ -739,12 +743,15 @@ private lemma hasRed3_of_hasRed3Mask (N n : ℕ)
   · exact (colorOf_eq_testBit N n (i+1+j+1) (Finset.mem_Icc.mpr (by constructor; omega; exact had))).mpr hb2
   · exact (colorOf_eq_testBit N n (i+1+2*(j+1)) (Finset.mem_Icc.mpr (by constructor; omega; exact hsum))).mpr hb3
 
+@[category test, AMS 5 11]
 private lemma hasRed3_iff_mask (N n : ℕ) : hasRed3 N (coloringOfIndex N n) ↔ hasRed3Mask n N :=
   ⟨hasRed3Mask_of_hasRed3 N n, hasRed3_of_hasRed3Mask N n⟩
 
+@[category test, AMS 5 11]
 private lemma not_bool_eq_true_iff (b : Bool) : (Bool.not b = true) ↔ b = false := by
   cases b <;> simp
 
+@[category test, AMS 5 11]
 private lemma not_testBit_iff_eq_false (n k : ℕ) :
     (¬ Nat.testBit n k) ↔ Nat.testBit n k = false := by
   constructor
@@ -757,6 +764,7 @@ private lemma not_testBit_iff_eq_false (n k : ℕ) :
     rw [h] at hnt
     contradiction
 
+@[category test, AMS 5 11]
 private lemma colorOf_eq_one_iff_testBit_false (N n a : ℕ) (ha : a ∈ Finset.Icc (1 : ℕ) N) :
     colorOf N (coloringOfIndex N n) a = 1 ↔ Nat.testBit n (a-1) = false := by
   constructor
@@ -780,6 +788,7 @@ private lemma colorOf_eq_one_iff_testBit_false (N n a : ℕ) (ha : a ∈ Finset.
     apply Fin.ext
     simpa using hval
 
+@[category test, AMS 5 11]
 private lemma hasBlue4Mask_of_hasBlue4 (N n : ℕ)
     (h : hasBlue4 N (coloringOfIndex N n)) : hasBlue4Mask n N := by
   rcases h with ⟨a, ha, d, hd, hd0, hsum, had, ha2d, hca, hcad, hcas, hca4⟩
@@ -833,6 +842,7 @@ private lemma hasBlue4Mask_of_hasBlue4 (N n : ℕ)
   · rw [show ((a-1)+1+3*((d-1)+1)-1) = a+3*d-1 by omega, not_bool_eq_true_iff]
     exact hb4
 
+@[category test, AMS 5 11]
 private lemma hasBlue4_of_hasBlue4Mask (N n : ℕ)
     (h : hasBlue4Mask n N) : hasBlue4 N (coloringOfIndex N n) := by
   unfold hasBlue4Mask at h
@@ -861,9 +871,11 @@ private lemma hasBlue4_of_hasBlue4Mask (N n : ℕ)
   · exact (colorOf_eq_one_iff_testBit_false N n (i+1+2*(j+1)) (Finset.mem_Icc.mpr (by constructor; omega; exact ha2d))).mpr hb3
   · exact (colorOf_eq_one_iff_testBit_false N n (i+1+3*(j+1)) (Finset.mem_Icc.mpr (by constructor; omega; exact hsum))).mpr hb4
 
+@[category test, AMS 5 11]
 private lemma hasBlue4_iff_mask (N n : ℕ) : hasBlue4 N (coloringOfIndex N n) ↔ hasBlue4Mask n N :=
   ⟨hasBlue4Mask_of_hasBlue4 N n, hasBlue4_of_hasBlue4Mask N n⟩
 
+@[category test, AMS 5 11]
 private lemma testBit_revFoldl (g : ℕ → Bool) : ∀ (n acc j : ℕ),
     Nat.testBit ((List.range n).reverse.foldl (fun acc k => Nat.bit (g k) acc) acc) j =
       (if j < n then g j else Nat.testBit acc (j - n))
@@ -885,6 +897,7 @@ private lemma testBit_revFoldl (g : ℕ → Bool) : ∀ (n acc j : ℕ),
           have hgt' : ¬ j < n + 1 := Nat.not_lt_of_ge (Nat.succ_le_of_lt hgt)
           simp [hlt, hgt']
 
+@[category test, AMS 5 11]
 private lemma revFoldl_lt (g : ℕ → Bool) : ∀ (n acc : ℕ),
     (List.range n).reverse.foldl (fun acc k => Nat.bit (g k) acc) acc < (acc + 1) * 2 ^ n
   | 0, acc => by
@@ -903,9 +916,11 @@ private lemma revFoldl_lt (g : ℕ → Bool) : ∀ (n acc : ℕ),
             rw [pow_succ]
             ring
 
+@[category test, AMS 5 11]
 private lemma indexOfColor_lt (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) : indexOfColor N c < 2 ^ N := by
   simpa [indexOfColor] using revFoldl_lt (colorBit N c) N 0
 
+@[category test, AMS 5 11]
 private lemma coloringOfIndex_indexOfColor (N : ℕ) (c : Icc (1 : ℕ) N → Fin 2) :
     coloringOfIndex N (indexOfColor N c) = c := by
   funext x
@@ -927,271 +942,404 @@ private lemma coloringOfIndex_indexOfColor (N : ℕ) (c : Icc (1 : ℕ) N → Fi
     · exact absurd hz h0
     · exact ho.symm
 
+@[category test, AMS 5 11]
 private lemma chunk_18_0 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (0 * 2000 + j) 18 || hasBlue4Mask (0 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_1 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (1 * 2000 + j) 18 || hasBlue4Mask (1 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_2 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (2 * 2000 + j) 18 || hasBlue4Mask (2 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_3 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (3 * 2000 + j) 18 || hasBlue4Mask (3 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_4 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (4 * 2000 + j) 18 || hasBlue4Mask (4 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_5 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (5 * 2000 + j) 18 || hasBlue4Mask (5 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_6 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (6 * 2000 + j) 18 || hasBlue4Mask (6 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_7 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (7 * 2000 + j) 18 || hasBlue4Mask (7 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_8 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (8 * 2000 + j) 18 || hasBlue4Mask (8 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_9 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (9 * 2000 + j) 18 || hasBlue4Mask (9 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_10 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (10 * 2000 + j) 18 || hasBlue4Mask (10 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_11 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (11 * 2000 + j) 18 || hasBlue4Mask (11 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_12 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (12 * 2000 + j) 18 || hasBlue4Mask (12 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_13 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (13 * 2000 + j) 18 || hasBlue4Mask (13 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_14 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (14 * 2000 + j) 18 || hasBlue4Mask (14 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_15 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (15 * 2000 + j) 18 || hasBlue4Mask (15 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_16 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (16 * 2000 + j) 18 || hasBlue4Mask (16 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_17 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (17 * 2000 + j) 18 || hasBlue4Mask (17 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_18 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (18 * 2000 + j) 18 || hasBlue4Mask (18 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_19 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (19 * 2000 + j) 18 || hasBlue4Mask (19 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_20 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (20 * 2000 + j) 18 || hasBlue4Mask (20 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_21 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (21 * 2000 + j) 18 || hasBlue4Mask (21 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_22 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (22 * 2000 + j) 18 || hasBlue4Mask (22 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_23 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (23 * 2000 + j) 18 || hasBlue4Mask (23 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_24 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (24 * 2000 + j) 18 || hasBlue4Mask (24 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_25 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (25 * 2000 + j) 18 || hasBlue4Mask (25 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_26 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (26 * 2000 + j) 18 || hasBlue4Mask (26 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_27 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (27 * 2000 + j) 18 || hasBlue4Mask (27 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_28 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (28 * 2000 + j) 18 || hasBlue4Mask (28 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_29 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (29 * 2000 + j) 18 || hasBlue4Mask (29 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_30 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (30 * 2000 + j) 18 || hasBlue4Mask (30 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_31 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (31 * 2000 + j) 18 || hasBlue4Mask (31 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_32 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (32 * 2000 + j) 18 || hasBlue4Mask (32 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_33 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (33 * 2000 + j) 18 || hasBlue4Mask (33 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_34 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (34 * 2000 + j) 18 || hasBlue4Mask (34 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_35 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (35 * 2000 + j) 18 || hasBlue4Mask (35 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_36 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (36 * 2000 + j) 18 || hasBlue4Mask (36 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_37 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (37 * 2000 + j) 18 || hasBlue4Mask (37 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_38 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (38 * 2000 + j) 18 || hasBlue4Mask (38 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_39 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (39 * 2000 + j) 18 || hasBlue4Mask (39 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_40 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (40 * 2000 + j) 18 || hasBlue4Mask (40 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_41 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (41 * 2000 + j) 18 || hasBlue4Mask (41 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_42 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (42 * 2000 + j) 18 || hasBlue4Mask (42 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_43 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (43 * 2000 + j) 18 || hasBlue4Mask (43 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_44 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (44 * 2000 + j) 18 || hasBlue4Mask (44 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_45 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (45 * 2000 + j) 18 || hasBlue4Mask (45 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_46 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (46 * 2000 + j) 18 || hasBlue4Mask (46 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_47 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (47 * 2000 + j) 18 || hasBlue4Mask (47 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_48 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (48 * 2000 + j) 18 || hasBlue4Mask (48 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_49 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (49 * 2000 + j) 18 || hasBlue4Mask (49 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_50 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (50 * 2000 + j) 18 || hasBlue4Mask (50 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_51 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (51 * 2000 + j) 18 || hasBlue4Mask (51 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_52 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (52 * 2000 + j) 18 || hasBlue4Mask (52 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_53 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (53 * 2000 + j) 18 || hasBlue4Mask (53 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_54 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (54 * 2000 + j) 18 || hasBlue4Mask (54 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_55 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (55 * 2000 + j) 18 || hasBlue4Mask (55 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_56 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (56 * 2000 + j) 18 || hasBlue4Mask (56 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_57 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (57 * 2000 + j) 18 || hasBlue4Mask (57 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_58 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (58 * 2000 + j) 18 || hasBlue4Mask (58 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_59 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (59 * 2000 + j) 18 || hasBlue4Mask (59 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_60 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (60 * 2000 + j) 18 || hasBlue4Mask (60 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_61 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (61 * 2000 + j) 18 || hasBlue4Mask (61 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_62 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (62 * 2000 + j) 18 || hasBlue4Mask (62 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_63 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (63 * 2000 + j) 18 || hasBlue4Mask (63 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_64 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (64 * 2000 + j) 18 || hasBlue4Mask (64 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_65 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (65 * 2000 + j) 18 || hasBlue4Mask (65 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_66 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (66 * 2000 + j) 18 || hasBlue4Mask (66 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_67 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (67 * 2000 + j) 18 || hasBlue4Mask (67 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_68 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (68 * 2000 + j) 18 || hasBlue4Mask (68 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_69 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (69 * 2000 + j) 18 || hasBlue4Mask (69 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_70 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (70 * 2000 + j) 18 || hasBlue4Mask (70 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_71 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (71 * 2000 + j) 18 || hasBlue4Mask (71 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_72 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (72 * 2000 + j) 18 || hasBlue4Mask (72 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_73 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (73 * 2000 + j) 18 || hasBlue4Mask (73 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_74 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (74 * 2000 + j) 18 || hasBlue4Mask (74 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_75 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (75 * 2000 + j) 18 || hasBlue4Mask (75 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_76 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (76 * 2000 + j) 18 || hasBlue4Mask (76 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_77 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (77 * 2000 + j) 18 || hasBlue4Mask (77 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_78 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (78 * 2000 + j) 18 || hasBlue4Mask (78 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_79 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (79 * 2000 + j) 18 || hasBlue4Mask (79 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_80 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (80 * 2000 + j) 18 || hasBlue4Mask (80 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_81 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (81 * 2000 + j) 18 || hasBlue4Mask (81 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_82 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (82 * 2000 + j) 18 || hasBlue4Mask (82 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_83 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (83 * 2000 + j) 18 || hasBlue4Mask (83 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_84 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (84 * 2000 + j) 18 || hasBlue4Mask (84 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_85 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (85 * 2000 + j) 18 || hasBlue4Mask (85 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_86 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (86 * 2000 + j) 18 || hasBlue4Mask (86 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_87 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (87 * 2000 + j) 18 || hasBlue4Mask (87 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_88 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (88 * 2000 + j) 18 || hasBlue4Mask (88 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_89 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (89 * 2000 + j) 18 || hasBlue4Mask (89 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_90 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (90 * 2000 + j) 18 || hasBlue4Mask (90 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_91 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (91 * 2000 + j) 18 || hasBlue4Mask (91 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_92 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (92 * 2000 + j) 18 || hasBlue4Mask (92 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_93 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (93 * 2000 + j) 18 || hasBlue4Mask (93 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_94 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (94 * 2000 + j) 18 || hasBlue4Mask (94 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_95 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (95 * 2000 + j) 18 || hasBlue4Mask (95 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_96 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (96 * 2000 + j) 18 || hasBlue4Mask (96 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_97 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (97 * 2000 + j) 18 || hasBlue4Mask (97 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_98 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (98 * 2000 + j) 18 || hasBlue4Mask (98 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_99 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (99 * 2000 + j) 18 || hasBlue4Mask (99 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_100 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (100 * 2000 + j) 18 || hasBlue4Mask (100 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_101 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (101 * 2000 + j) 18 || hasBlue4Mask (101 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_102 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (102 * 2000 + j) 18 || hasBlue4Mask (102 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_103 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (103 * 2000 + j) 18 || hasBlue4Mask (103 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_104 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (104 * 2000 + j) 18 || hasBlue4Mask (104 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_105 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (105 * 2000 + j) 18 || hasBlue4Mask (105 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_106 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (106 * 2000 + j) 18 || hasBlue4Mask (106 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_107 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (107 * 2000 + j) 18 || hasBlue4Mask (107 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_108 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (108 * 2000 + j) 18 || hasBlue4Mask (108 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_109 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (109 * 2000 + j) 18 || hasBlue4Mask (109 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_110 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (110 * 2000 + j) 18 || hasBlue4Mask (110 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_111 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (111 * 2000 + j) 18 || hasBlue4Mask (111 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_112 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (112 * 2000 + j) 18 || hasBlue4Mask (112 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_113 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (113 * 2000 + j) 18 || hasBlue4Mask (113 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_114 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (114 * 2000 + j) 18 || hasBlue4Mask (114 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_115 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (115 * 2000 + j) 18 || hasBlue4Mask (115 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_116 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (116 * 2000 + j) 18 || hasBlue4Mask (116 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_117 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (117 * 2000 + j) 18 || hasBlue4Mask (117 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_118 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (118 * 2000 + j) 18 || hasBlue4Mask (118 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_119 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (119 * 2000 + j) 18 || hasBlue4Mask (119 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_120 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (120 * 2000 + j) 18 || hasBlue4Mask (120 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_121 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (121 * 2000 + j) 18 || hasBlue4Mask (121 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_122 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (122 * 2000 + j) 18 || hasBlue4Mask (122 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_123 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (123 * 2000 + j) 18 || hasBlue4Mask (123 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_124 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (124 * 2000 + j) 18 || hasBlue4Mask (124 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_125 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (125 * 2000 + j) 18 || hasBlue4Mask (125 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_126 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (126 * 2000 + j) 18 || hasBlue4Mask (126 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_127 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (127 * 2000 + j) 18 || hasBlue4Mask (127 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_128 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (128 * 2000 + j) 18 || hasBlue4Mask (128 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_129 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (129 * 2000 + j) 18 || hasBlue4Mask (129 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_130 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (130 * 2000 + j) 18 || hasBlue4Mask (130 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
+@[category test, AMS 5 11]
 private lemma chunk_18_131 : ∀ j : ℕ, j < 2000 → (hasRed3Mask (131 * 2000 + j) 18 || hasBlue4Mask (131 * 2000 + j) 18) := by
   unfold hasRed3Mask hasBlue4Mask; decide
 
+@[category test, AMS 5 11]
 private lemma all_masks_18 : ∀ n : ℕ, n < 2 ^ 18 → (hasRed3Mask n 18 || hasBlue4Mask n 18) := by
   intro n hn
   have hb : 2 ^ 18 < 264000 := by norm_num
