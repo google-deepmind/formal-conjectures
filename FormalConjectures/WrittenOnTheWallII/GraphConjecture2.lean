@@ -26,10 +26,11 @@ import FormalConjecturesUtil
 
 namespace WrittenOnTheWallII.GraphConjecture2
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+open scoped Classical in
 /--
 WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
