@@ -24,7 +24,7 @@ import FormalConjecturesUtil
 
 namespace Erdos796
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 /-- The number of unordered representations `m = a₁ * a₂` by two distinct
@@ -35,6 +35,7 @@ def repCount (A : Finset ℕ) (m : ℕ) : ℕ :=
 /-- `A` has at most `k - 1` representations of every `m` (fewer than `k`). -/
 def HasRepBound (k : ℕ) (A : Finset ℕ) : Prop := ∀ m : ℕ, repCount A m < k
 
+open scoped Classical in
 /-- `g k n = g_k(n)` is the largest size of a subset `A ⊆ {1, …, n}` in which
 every `m` has fewer than `k` representations `m = a₁ a₂` with `a₁ < a₂ ∈ A`. -/
 noncomputable def g (k n : ℕ) : ℕ :=

@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 namespace Erdos1188
 
 open Filter
-open scoped Classical Topology
+open scoped Topology
 
 /-- A congruence class `(n, a)` represents `a (mod n)`. -/
 abbrev CongruenceClass := ℕ × ℕ
@@ -53,6 +53,7 @@ def IsMinimalDistinctCoveringSystem (S : Finset CongruenceClass) : Prop :=
 def ClassesUpTo (x : ℕ) : Finset CongruenceClass :=
   (Finset.Icc 2 x).biUnion fun n => (Finset.range n).image fun a => (n, a)
 
+open scoped Classical in
 /-- `F(x)`: the number of minimal distinct covering systems all of whose moduli
 lie in `[1, x]`. -/
 noncomputable def coveringCount (x : ℕ) : ℕ :=

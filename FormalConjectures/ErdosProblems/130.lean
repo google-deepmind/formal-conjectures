@@ -24,8 +24,6 @@ import FormalConjecturesUtil
 
 namespace Erdos130
 
-open scoped Classical
-
 /-- A point of the plane. -/
 abbrev Point := ℝ × ℝ
 
