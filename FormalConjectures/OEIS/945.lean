@@ -23,7 +23,6 @@ The Euclid-Mullin sequence starts with $a(1) = 2$. Each subsequent term is the s
 factor of one plus the product of all preceding terms. We extend the sequence by $a(0) = 1$ and
 write $b(n)$ for the product of the first $n$ official terms.
 
-It is an open problem whether every prime occurs in the sequence.
 
 *References:*
 - [A000945](https://oeis.org/A000945)
