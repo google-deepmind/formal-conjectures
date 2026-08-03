@@ -25,7 +25,7 @@ import FormalConjecturesUtil
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
 
-open Classical Filter
+open Filter
 
 namespace Erdos888
 
@@ -43,6 +43,7 @@ exists.
 -/
 def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n ∧ A.card = k
 
+open scoped Classical in
 /--
 What is the size of the largest $A\subseteq \{1,\ldots,n\}$ such that if
 $a\leq b\leq c\leq d\in A$ are such that $abcd$ is a square then $ad=bc$?
@@ -55,6 +56,7 @@ theorem erdos_888 :
       (fun n : ℕ ↦ (n : ℝ) * Real.log (Real.log n) / Real.log n) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős claims that Sárközy proved that $\lvert A\rvert =o(n)$ (a proof of this
 bound is provided by Tao in the comments).
@@ -64,6 +66,7 @@ theorem erdos_888.variants.sarkozy :
     (fun n ↦ (Nat.findGreatest (p n) n : ℝ)) =o[atTop] (Nat.cast : ℕ → ℝ) := by
   sorry
 
+open scoped Classical in
 /--
 The primes show that $\lvert A\rvert \gg n/\log n$ is possible.
 -/
@@ -72,6 +75,7 @@ theorem erdos_888.variants.primes :
     (fun n : ℕ ↦ (Nat.findGreatest (p n) n : ℝ)) ≫ (fun n : ℕ ↦ (n : ℝ) / Real.log n) := by
   sorry
 
+open scoped Classical in
 /--
 Cambie and Weisenberg have noted in the comments that the set of semiprimes
 also works, showing $(1+o(1))\frac{\log\log n}{\log n}n \leq \lvert A\rvert$ is achievable.

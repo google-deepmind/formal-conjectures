@@ -29,7 +29,6 @@ namespace Arxiv.«2602.05192»
 
 open Matrix Polynomial SimpleGraph
 
-open Classical
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -42,6 +41,7 @@ I say that a set of vertices $S$ is $\epsilon$-light if the matrix $\epsilon L -
 positive semidefinite.
 -/
 def IsEpsilonLight (G : SimpleGraph V) (ε : ℝ) (S : Finset V) : Prop :=
+  open scoped Classical in
   letI G_S := G.induce S |>.spanningCoe
   letI L := lapMatrix ℝ G
   letI L_S := lapMatrix ℝ (G_S)

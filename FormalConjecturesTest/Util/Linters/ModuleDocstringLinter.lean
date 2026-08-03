@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil.Linters.ModuleDocstringLinter
+public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 
 /-!
 # Tests for the module docstring linter
@@ -27,6 +28,8 @@ This file tests that the module docstring linter:
 The "missing module docstring" warning is tested in
 `ModuleDocstringLinterMissing.lean`.
 -/
+
+@[expose] public section
 
 -- Enable the linter for this test file
 -- (it is off by default; enabled via lakefile for FormalConjectures).
