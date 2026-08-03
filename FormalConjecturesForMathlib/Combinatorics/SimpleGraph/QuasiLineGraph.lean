@@ -21,7 +21,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Clique
 namespace SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-open Classical Finset List
+open scoped Classical Finset List in
 
 /-- A graph is a quasi-line graph if the neighborhood of every vertex can be partitioned into two cliques. -/
 def IsQuasiLineGraph {V : Type*} (G : SimpleGraph V) : Prop :=
