@@ -24,6 +24,7 @@ public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 public import FormalConjecturesUtil.Linters.CategoryLinter
 public import FormalConjecturesUtil.Linters.CopyrightLinter
 public import FormalConjecturesUtil.Linters.ExistsImplicationLinter
+public import FormalConjecturesUtil.Linters.LatexDocstringLinter
 public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 public import FormalConjecturesUtil.Linters.NamespaceLinter
 

@@ -41,7 +41,7 @@ $\mathrm{rt}(n; 4, ne^{-f(n)}) = o(n^2)$ whenever $f(n)/\sqrt{\log n} \to \infty
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos615
 
