@@ -31,16 +31,13 @@ open Filter
 
 namespace Erdos314
 
-/-- The block harmonic sum $\sum_{n\leq k\leq m}\frac{1}{k}$. -/
-noncomputable def harmonicSum (n m : ℕ) : ℝ := ∑ k ∈ Finset.Icc n m, (1 : ℝ) / k
-
 /-- `mMin n` is the minimal `m` such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$; such an `m`
 exists for `n ≥ 1` since the harmonic series diverges. -/
-noncomputable def mMin (n : ℕ) : ℕ := sInf {m | 1 ≤ harmonicSum n m}
+noncomputable def mMin (n : ℕ) : ℕ := sInf {m | 1 ≤ harmonicBlock ℝ n m}
 
 /-- $\epsilon(n) = \sum_{n\leq k\leq m}\frac{1}{k}-1$, the overshoot of the minimal block sum
 reaching $1$. -/
-noncomputable def epsilon (n : ℕ) : ℝ := harmonicSum n (mMin n) - 1
+noncomputable def epsilon (n : ℕ) : ℝ := harmonicBlock ℝ n (mMin n) - 1
 
 /--
 Let $n\geq 1$ and let $m$ be minimal such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$. We define
