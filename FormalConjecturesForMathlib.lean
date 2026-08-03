@@ -128,6 +128,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors
+public import FormalConjecturesForMathlib.NumberTheory.Harmonic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
