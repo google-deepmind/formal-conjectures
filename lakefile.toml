@@ -23,6 +23,8 @@ relaxedAutoImplicit = false
 # our own linters which we don't want to force upon downstream packages
 weak.linter.style.copyright.formalConjectures = true
 weak.linter.style.namespace = true
+# Don't open Classical globally
+weak.linter.style.openClassical = true
 
 [[require]]
 name = "mathlib"

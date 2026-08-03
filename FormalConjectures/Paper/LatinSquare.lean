@@ -240,7 +240,7 @@ If $n$ is even, then $f(n, 2) = n$; if $n$ is odd, then $f(n, 2) > n$.
 
 /-
 TODO(rao107): Conjecture 10.10 in [Wa2011]:
-Every latin hypercube of odd dimension or of odd oder has a transversal.
+Every latin hypercube of odd dimension or of odd order has a transversal.
 -/
 
 end LatinSquare

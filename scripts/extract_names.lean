@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
-import FormalConjecturesUtil.Attributes.Basic
-import FormalConjecturesUtil.Answer
+public import Lean
+public import FormalConjecturesUtil.Attributes.Basic
+public import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
@@ -39,6 +40,8 @@ non-Prop answer metadata). Otherwise, `answer(sorry)` simplifies to `True` durin
 default elaboration, and `answerKinds` will always be extracted as `[]` for `Prop`
 valued answers.
 -/
+
+@[expose] public meta section
 
 open Lean ProblemAttributes Google
 

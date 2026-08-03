@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 namespace Erdos600
@@ -41,6 +41,7 @@ private noncomputable def trianglesContaining
   (uv : Sym2 α)
   [Fintype α] :
   Finset (Finset α) :=
+  open scoped Classical in
   (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
 
 def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=
