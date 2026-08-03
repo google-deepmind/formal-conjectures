@@ -37,10 +37,10 @@ namespace Erdos502
 /--
 What is the size of the largest $A\subseteq \mathbb{R}^n$ such that there are only two distinct
 distances between elements of $A$? That is,
-\[\# \{ \lvert x-y\rvert : x\neq y\in A\} = 2.\]
+$$\# \{ \lvert x-y\rvert : x\neq y\in A\} = 2.$$
 
 Asked to Erdős by Coxeter. Bannai, Bannai, and Stanton [BBS83] have proved that
-\[\lvert A\rvert \leq \binom{n+2}{2}.\]
+$$\lvert A\rvert \leq \binom{n+2}{2}.$$
 A simple proof of this upper bound was given by Petrov and Pohoata [PePo21].
 
 The exact maximum is not known in general: a lower bound of $\binom{n+1}{2}$ follows from the

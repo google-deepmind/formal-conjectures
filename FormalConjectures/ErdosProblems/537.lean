@@ -33,7 +33,7 @@ namespace Erdos537
 Let $\epsilon>0$ and $N$ be sufficiently large. If $A\subseteq \{1,\ldots,N\}$ has
 $\lvert A\rvert \geq \epsilon N$ then must there exist $a_1,a_2,a_3\in A$ and distinct primes
 $p_1,p_2,p_3$ such that
-\[a_1p_1=a_2p_2=a_3p_3?\]
+$$a_1p_1=a_2p_2=a_3p_3?$$
 
 A positive answer would imply [536].
 

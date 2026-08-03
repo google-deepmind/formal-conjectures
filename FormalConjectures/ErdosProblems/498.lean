@@ -35,12 +35,12 @@ namespace Erdos498
 /--
 Let $z_1,\ldots,z_n\in\mathbb{C}$ with $1\leq \lvert z_i\rvert$ for $1\leq i\leq n$. Let $D$ be an
 arbitrary disc of radius $1$. Is it true that the number of sums of the shape
-\[\sum_{i=1}^n\epsilon_iz_i \textrm{ for }\epsilon_i\in \{-1,1\}\]
+$$\sum_{i=1}^n\epsilon_iz_i \textrm{ for }\epsilon_i\in \{-1,1\}$$
 which lie in $D$ is at most $\binom{n}{\lfloor n/2\rfloor}$?
 
 A strong form of the Littlewood-Offord problem. Erdős [Er45] proved this is true if
 $z_i\in\mathbb{R}$, and for general $z_i\in\mathbb{C}$ proved a weaker upper bound of
-\[\ll \frac{2^n}{\sqrt{n}}.\]
+$$\ll \frac{2^n}{\sqrt{n}}.$$
 This was solved in the affirmative by Kleitman [Kl65], who also later generalised this to
 arbitrary Hilbert spaces [Kl70].
 

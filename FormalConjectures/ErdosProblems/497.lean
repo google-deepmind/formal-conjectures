@@ -40,7 +40,7 @@ $A\not\subseteq B$?
 Sperner's theorem states that $\lvert \mathcal{F}\rvert \leq \binom{n}{\lfloor n/2\rfloor}$.
 This is also known as Dedekind's problem. Resolved by Kleitman [Kl69], who proved that the
 number of such families is
-\[2^{(1+o(1))\binom{n}{\lfloor n/2\rfloor}}.\]
+$$2^{(1+o(1))\binom{n}{\lfloor n/2\rfloor}}.$$
 -/
 @[category research solved, AMS 5 6, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos497.lean"]
 theorem erdos_497 :

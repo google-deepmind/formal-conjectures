@@ -36,12 +36,12 @@ def A (m : ℕ) : Finset ℕ := (Finset.Icc 1 (m / 2)).image fun k => k * (m - k
 
 /--
 Let $m,n\geq 1$. What is
-\[\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?\]
+$$\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?$$
 Can it be arbitrarily large?
 
 This was solved independently by Hegyvári [He25] and Cambie (unpublished), who show that if
 $m>n$ then the set in question has size
-\[\leq m^{O(1/\log\log m)},\]
+$$\leq m^{O(1/\log\log m)},$$
 and that for any integer $s$ there exist infinitely many pairs $(m,n)$ such that the set in
 question has size $s$.
 -/
@@ -52,12 +52,12 @@ theorem erdos_443.parts.i : answer(True) ↔
 
 /--
 Let $m,n\geq 1$. What is
-\[\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?\]
+$$\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?$$
 Is it $\leq (mn)^{o(1)}$ for all sufficiently large $m,n$?
 
 This was solved independently by Hegyvári [He25] and Cambie (unpublished), who show that if
 $m>n$ then the set in question has size
-\[\leq m^{O(1/\log\log m)},\]
+$$\leq m^{O(1/\log\log m)},$$
 and that for any integer $s$ there exist infinitely many pairs $(m,n)$ such that the set in
 question has size $s$.
 -/
