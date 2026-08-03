@@ -42,7 +42,7 @@ Let $R(k,l)$ be the Ramsey number, so the minimal $n$ such that every graph on a
 vertices contains either a $K_k$ or an independent set on $l$ vertices.
 
 Prove, for fixed $k\geq 3$, that
-\[\lim_{l\to \infty}\frac{R(k,l+1)}{R(k,l)}=1.\]
+$$\lim_{l\to \infty}\frac{R(k,l+1)}{R(k,l)}=1.$$
 
 This has been
 [solved](https://cdn.openai.com/pdf/6dc7175d-d9e7-4b8d-96b8-48fe5798cd5b/Ramsey.pdf)
@@ -55,7 +55,7 @@ theorem erdos_1014 : ∀ k : ℕ, 3 ≤ k →
 
 /--
 That proof in fact shows that
-\[R(k,l+1)\leq (1+O(l^{-c/k^2}))R(k,l)\]
+$$R(k,l+1)\leq (1+O(l^{-c/k^2}))R(k,l)$$
 for some constant $c>0$.
 -/
 @[category research solved, AMS 5]

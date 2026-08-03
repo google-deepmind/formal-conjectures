@@ -49,7 +49,7 @@ noncomputable def F (n : ℕ) : ℕ :=
 Let $F(n)$ be the maximal size of a family of subsets of $\{1,\ldots,n\}$ such that no set in
 this family is the union of other members of the family. Is it true that there is a constant
 $c>0$ such that
-\[F(n)\sim c \frac{2^n}{n^{1/2}}?\]
+$$F(n)\sim c \frac{2^n}{n^{1/2}}?$$
 
 Hunter observes in the comments that this follows from the solution to [447], which implies
 $F(n)\sim \binom{n}{n/2}$.
@@ -63,7 +63,7 @@ theorem erdos_1023 : answer(True) ↔
 
 /--
 Erdős and Kleitman proved in unpublished work that
-\[F(n)\asymp \frac{2^n}{n^{1/2}}.\]
+$$F(n)\asymp \frac{2^n}{n^{1/2}}.$$
 ([Er71] has an exponent of $3/2$, but this is presumably a typo.)
 -/
 @[category research solved, AMS 5]

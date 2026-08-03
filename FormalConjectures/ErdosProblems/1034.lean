@@ -27,7 +27,7 @@ import FormalConjecturesUtil
   [staff.ustc.edu.cn/~jiema/Erdos-1034.pdf](http://staff.ustc.edu.cn/~jiema/Erdos-1034.pdf)
 -/
 
-open Classical Filter
+open Filter
 
 namespace Erdos1034
 
@@ -52,7 +52,7 @@ adjacent to at least two of its vertices (note that $2-(5/2)^{1/2}\approx 0.4189
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1034.lean"]
 theorem erdos_1034 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε → ∀ᶠ (n : ℕ) in atTop, ∀ G : SimpleGraph (Fin n),
-      (n : ℝ) ^ 2 / 4 < (G.edgeFinset.card : ℝ) →
+      (n : ℝ) ^ 2 / 4 < (G.edgeSet.ncard : ℝ) →
         ∃ T : Finset (Fin n), G.IsNClique 3 T ∧ ∃ Y : Finset (Fin n),
           JoinedToTwo G T Y ∧ (1 / 2 - ε) * (n : ℝ) < (Y.card : ℝ) := by
   sorry
@@ -62,12 +62,12 @@ Erdős and Faudree asked about the threshold $h(n)$ such that every graph with $
 $>n^2/4$ edges contained a triangle and $h(n)$ other vertices which are connected to at least two
 vertices of the triangle. The fact that every graph with $>n^2/4$ edges contains a book of size
 $n/6$ shows that
-\[(1/6-o(1))n \leq h(n).\]
+$$(1/6-o(1))n \leq h(n).$$
 -/
 @[category research solved, AMS 5]
 theorem erdos_1034.variants.lower_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ (n : ℕ) in atTop, ∀ G : SimpleGraph (Fin n),
-      (n : ℝ) ^ 2 / 4 < (G.edgeFinset.card : ℝ) →
+      (n : ℝ) ^ 2 / 4 < (G.edgeSet.ncard : ℝ) →
         ∃ T : Finset (Fin n), G.IsNClique 3 T ∧ ∃ Y : Finset (Fin n),
           JoinedToTwo G T Y ∧ (1 / 6 - ε) * (n : ℝ) ≤ (Y.card : ℝ) := by
   sorry
@@ -76,12 +76,12 @@ theorem erdos_1034.variants.lower_bound (ε : ℝ) (hε : 0 < ε) :
 The construction of Ma and Tang [MaTa25] of a graph with $n$ vertices and $>n^2/4$ edges in which
 every triangle has at most $(2-(5/2)^{1/2}+o(1))n$ vertices adjacent to at least two of its
 vertices shows that, for the threshold $h(n)$ of `erdos_1034.variants.lower_bound`,
-\[h(n) \leq (2-(5/2)^{1/2}+o(1))n.\]
+$$h(n) \leq (2-(5/2)^{1/2}+o(1))n.$$
 -/
 @[category research solved, AMS 5]
 theorem erdos_1034.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ (n : ℕ) in atTop, ∃ G : SimpleGraph (Fin n),
-      (n : ℝ) ^ 2 / 4 < (G.edgeFinset.card : ℝ) ∧
+      (n : ℝ) ^ 2 / 4 < (G.edgeSet.ncard : ℝ) ∧
         ∀ T : Finset (Fin n), G.IsNClique 3 T → ∀ Y : Finset (Fin n),
           JoinedToTwo G T Y → (Y.card : ℝ) ≤ (2 - Real.sqrt (5 / 2) + ε) * (n : ℝ) := by
   sorry
@@ -96,7 +96,7 @@ $2\sqrt{3}-3\approx 0.464$).
 @[category research solved, AMS 5]
 theorem erdos_1034.variants.k4_free (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ (n : ℕ) in atTop, ∃ G : SimpleGraph (Fin n), G.CliqueFree 4 ∧
-      (n : ℝ) ^ 2 / 4 < (G.edgeFinset.card : ℝ) ∧
+      (n : ℝ) ^ 2 / 4 < (G.edgeSet.ncard : ℝ) ∧
         ∀ T : Finset (Fin n), G.IsNClique 3 T → ∀ Y : Finset (Fin n),
           JoinedToTwo G T Y → (Y.card : ℝ) ≤ (2 * Real.sqrt 3 - 3 + ε) * (n : ℝ) := by
   sorry

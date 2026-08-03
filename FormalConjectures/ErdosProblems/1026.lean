@@ -47,9 +47,9 @@ def monotonicSubsequenceSums {n : ℕ} (x : Fin n → ℝ) : Set ℝ :=
 /--
 The set of constants $c$ such that, for all sequences of $n$ distinct real numbers
 $x_1,\ldots,x_n$,
-\[
+$$
 \max\left(\sum x_{i_r}\right) > (c-o(1))\frac{1}{\sqrt{n}}\sum x_i
-\]
+$$
 (where the maximum is taken over all monotonic subsequences).
 -/
 def admissibleConstants : Set ℝ :=
@@ -58,9 +58,9 @@ def admissibleConstants : Set ℝ :=
 
 /--
 Let $x_1,\ldots,x_n$ be a sequence of distinct real numbers. Determine
-\[
+$$
 \max\left(\sum x_{i_r}\right),
-\]
+$$
 where the maximum is taken over all monotonic subsequences.
 
 This is as Erdős posed the problem in [Er71], which is rather ambiguous. Discussion between
@@ -69,9 +69,9 @@ posed by van Doorn:
 
 What is the largest constant $c$ such that, for all sequences of $n$ real numbers
 $x_1,\ldots,x_n$,
-\[
+$$
 \max\left(\sum x_{i_r}\right) > (c-o(1))\frac{1}{\sqrt{n}}\sum x_i
-\]
+$$
 (where again the maximum is taken over all monotonic subsequences)?
 
 Cambie makes the stronger conjecture that if $x_1,\ldots,x_{k^2}$ are distinct positive real

@@ -46,11 +46,11 @@ noncomputable def H (n : ℕ) : ℕ :=
 
 /--
 Let
-\[H(n)=\min_f \max_{X\subseteq \{1,\ldots,n\}} \left\lvert \sum_{x<y\in X} f(x,y)\right\rvert,\]
+$$H(n)=\min_f \max_{X\subseteq \{1,\ldots,n\}} \left\lvert \sum_{x<y\in X} f(x,y)\right\rvert,$$
 where $f$ ranges over all functions $f:\{1,\ldots,n\}^2\to \{-1,1\}$. Estimate $H(n)$.
 
 Erdős [Er63d] proved
-\[\frac{n}{4}\leq H(n) \ll n^{3/2}.\]
+$$\frac{n}{4}\leq H(n) \ll n^{3/2}.$$
 Erdős and Spencer [ErSp71] proved that $H(n)\gg n^{3/2}$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1028.lean"]
@@ -60,14 +60,16 @@ theorem erdos_1028 :
   sorry
 
 /-- Erdős [Er63d] proved
-\[\frac{n}{4}\leq H(n) \ll n^{3/2}.\] -/
+$$\frac{n}{4}\leq H(n) \ll n^{3/2}.$$
+-/
 @[category research solved, AMS 5]
 theorem erdos_1028.variants.lower_bound :
     ∀ᶠ n : ℕ in atTop, (n : ℝ) / 4 ≤ (H n : ℝ) := by
   sorry
 
 /-- Erdős [Er63d] proved
-\[\frac{n}{4}\leq H(n) \ll n^{3/2}.\] -/
+$$\frac{n}{4}\leq H(n) \ll n^{3/2}.$$
+-/
 @[category research solved, AMS 5]
 theorem erdos_1028.variants.upper_bound :
     (fun n => (H n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) := by

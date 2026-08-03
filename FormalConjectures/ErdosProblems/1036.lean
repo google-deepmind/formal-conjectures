@@ -67,7 +67,7 @@ theorem erdos_1036 : answer(True) ↔
 
 /--
 Alon and Hajnal [AlHa91] proved that $G$ must contain at least
-\[\exp\left(n(\log n)^{-O(\log\log n)}\right)\]
+$$\exp\left(n(\log n)^{-O(\log\log n)}\right)$$
 many non-isomorphic induced subgraphs.
 -/
 @[category research solved, AMS 5]
