@@ -19,44 +19,33 @@ import FormalConjectures.ErdosProblems.«246»
 /-!
 # Erdős Problem 1110
 
-Let `p > q ≥ 2` be coprime. A natural number is representable when it is a sum
-of terms `p^k * q^l` such that no selected term divides another selected term.
-The open problem asks, outside the exceptional pair `{2, 3}`, whether infinitely
-many non-representable numbers are coprime to `p * q`.
-
 *Reference:* [Erdős Problem 1110](https://www.erdosproblems.com/1110)
 -/
 
 namespace Erdos1110
 
-/-- A finite set is an antichain for divisibility. -/
-def IsDvdAntichain (s : Finset ℕ) : Prop :=
-  ∀ ⦃a b : ℕ⦄, a ∈ s → b ∈ s → a ∣ b → a = b
-
 /--
-`n` is representable with respect to `p` and `q` if it is the sum of a finite
-divisibility antichain of terms of the form `p^k * q^l`.
+$n$ is representable with respect to $p$ and $q$ if it is the sum of a finite
+divisibility antichain of terms of the form $p^kq^l$.
 -/
 def Representable (p q n : ℕ) : Prop :=
   ∃ s : Finset ℕ,
     (s : Set ℕ) ⊆ Erdos246.Gamma p q ∧
-    IsDvdAntichain s ∧
+    IsAntichain (· ∣ ·) (s : Set ℕ) ∧
     s.sum id = n
 
-/-- A number coprime to `p * q` which is not representable. -/
-def IsCoprimeNonrepresentable (p q n : ℕ) : Prop :=
-  Nat.Coprime n (p * q) ∧ ¬Representable p q n
-
 /--
-**Erdős Problem 1110.**
+Let $p>q\geq 2$ be two coprime integers. We call $n$ representable if it is the sum of
+integers of the form $p^kq^l$, none of which divide each other.
 
-For coprime `p > q ≥ 2`, outside the exceptional pair `(3, 2)`, are there
-infinitely many non-representable natural numbers coprime to `p * q`?
+If $\{p,q\}\neq \{2,3\}$ then what can be said about the density of non-representable
+numbers? Are there infinitely many coprime non-representable numbers?
 -/
 @[category research open, AMS 5 11]
-theorem erdos_1110 (p q : ℕ) (hpq : q < p) (hq : 2 ≤ q)
-    (hcoprime : Nat.Coprime p q) (hexceptional : ¬(p = 3 ∧ q = 2)) :
-    Set.Infinite {n : ℕ | IsCoprimeNonrepresentable p q n} := by
+theorem erdos_1110 :
+    answer(sorry) ↔ ∀ (p q : ℕ), q < p → 2 ≤ q →
+      Nat.Coprime p q → ¬(p = 3 ∧ q = 2) →
+      Set.Infinite {n : ℕ | Nat.Coprime n (p * q) ∧ ¬Representable p q n} := by
   sorry
 
 end Erdos1110
