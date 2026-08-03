@@ -29,7 +29,7 @@ import FormalConjecturesUtil
   Soc. (3) (1972), 590-624.
 -/
 
-open Polynomial Classical
+open Polynomial
 
 open scoped Real
 
@@ -41,6 +41,7 @@ The argument of a complex number, normalised to take values in the interval `[0,
 noncomputable def normArg (z : ℂ) : ℝ :=
   if Complex.arg z < 0 then Complex.arg z + 2 * π else Complex.arg z
 
+open scoped Classical in
 /--
 The number of roots of `f`, counted with multiplicity, whose argument lies in `I`.
 -/
@@ -59,21 +60,21 @@ noncomputable def M (f : ℂ[X]) : ℝ :=
 Let $f=a_0+\cdots+a_dx^d\in \mathbb{C}[x]$ be a polynomial. Is it true that, if $f$ has roots
 $z_1,\ldots,z_d$ with corresponding arguments $\theta_1,\ldots,\theta_d\in [0,2\pi]$, then for all
 intervals $I\subseteq [0,2\pi]$
-\[
+$$
 \left\lvert (\# \theta_i \in I) - \frac{\lvert I\rvert}{2\pi}d\right\rvert \ll
 \left(n\log M\right)^{1/2},
-\]
+$$
 where $n$ is the number of non-zero coefficients of $f$ and
-\[
+$$
 M=\frac{\lvert a_0\rvert+\cdots +\lvert a_d\rvert}{(\lvert a_0\rvert\lvert a_d\rvert)^{1/2}}.
-\]
+$$
 
 An internal OpenAI model (see [APSSV26b]) has disproved the conjecture, constructing, for every
 $n\geq 1$, a polynomial $f$ with $n$ non-zero coefficients such that $M<3$ and with a positive real
 zero of multiplicity $n-1$, whence letting $I=[0,c/d]$ for a suitably small $c>0$,
-\[
+$$
 \left\lvert (\# \theta_i \in I) - \frac{\lvert I\rvert}{2\pi}d\right\rvert \geq n-1.
-\]
+$$
 -/
 @[category research solved, AMS 12 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos990.lean"]
 theorem erdos_990 : answer(False) ↔
@@ -94,9 +95,9 @@ theorem erdos_990.variants.erdos_turan :
 
 /--
 Hayman [Ha72b] proved
-\[
+$$
 \left\lvert (\# \theta_i \in I) - \frac{\lvert I\rvert}{2\pi}d\right\rvert \leq n-1,
-\]
+$$
 and noted this is essentially sharp since $f(x)=(x^{p}-1)^{n-1}$ has $n$ non-zero coefficients and
 has $1$ as a positive real zero of multiplicity $n-1$ (although for this $f$ the parameter $M$
 becomes very large).

@@ -30,7 +30,7 @@ namespace Erdos907
 /--
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that $f(x+h)-f(x)$ is continuous for every $h>0$. Is it
 true that
-\[f=g+h\]
+$$f=g+h$$
 for some continuous $g$ and additive $h$ (i.e. $h(x+y)=h(x)+h(y)$)?
 
 A conjecture of Erdős from the early 1950s. Answered in the affirmative by de Bruijn [dB51].

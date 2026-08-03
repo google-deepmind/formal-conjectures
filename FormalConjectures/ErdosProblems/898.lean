@@ -33,9 +33,9 @@ namespace Erdos898
 /--
 If $A,B,C\in \mathbb{R}^2$ form a triangle and $P$ is a point in the interior then, if $N$ is
 where the perpendicular from $P$ to $AB$ meets the triangle, and similarly for $M$ and $L$,
-\[
+$$
 \overline{PA}+\overline{PB}+\overline{PC}\geq 2(\overline{PM}+\overline{PN}+\overline{PL}).
-\]
+$$
 
 Conjectured by Erdős in 1932 (according to [Er82e]) and proved by Mordell soon afterwards, now
 known as the Erdős-Mordell inequality.

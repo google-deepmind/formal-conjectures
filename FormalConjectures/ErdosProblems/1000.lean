@@ -35,9 +35,9 @@ namespace Erdos1000
 /--
 Given an infinite sequence of integers $A = \{n_1 < n_2 < \cdots\}$, `phiSeq n k` is
 $\phi_A(k)$: the number of $1\leq m\leq n_k$ such that
-\[
+$$
 \frac{n_k}{(m,n_k)}\neq n_j
-\]
+$$
 for all $1\leq j<k$.
 -/
 def phiSeq (n : ℕ → ℕ) (k : ℕ) : ℕ :=
@@ -53,15 +53,15 @@ noncomputable def phiAvg (n : ℕ → ℕ) (N : ℕ) : ℝ :=
 Let $A=\{n_1<n_2<\cdots\}$ be an infinite sequence of integers, and let $\phi_A(k)$ count the
 number of $1\leq m\leq n_k$ such that the fraction $\frac{m}{n_k}$ does not have denominator $n_j$
 for $j<k$ when written in lowest form; equivalently,
-\[
+$$
 \frac{n_k}{(m,n_k)}\neq n_j
-\]
+$$
 for all $1\leq j<k$.
 
 Is there a sequence $A$ such that
-\[
+$$
 \lim_{N\to \infty}\frac{1}{N}\sum_{k\leq N}\frac{\phi_A(k)}{n_k}=0?
-\]
+$$
 
 This was solved by Haight [Ha] who proved that such a sequence does exist (contrary to Erdős'
 expectations).
@@ -83,9 +83,9 @@ theorem erdos_1000.variants.totient_le (n : ℕ → ℕ) (hn : StrictMono n) (k 
 /--
 The study of $\phi_A$ was introduced by Cassels [Ca50b], who proved that there exist sequences
 such that
-\[
+$$
 \liminf_{N\to \infty}\frac{1}{N}\sum_{k\leq N}\frac{\phi_A(k)}{n_k}=0.
-\]
+$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_1000.variants.liminf_eq_zero :

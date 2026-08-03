@@ -38,7 +38,7 @@ noncomputable def summand (t : ℝ) (n : ℕ) : ℂ := 1 / (n : ℂ) ^ (1 + t * 
 /--
 Let $1<a_1<\cdots$ be a sequence of integers such that $\sum\frac{1}{a_i}<\infty$. Is it true
 that, for every $t\in \mathbb{R}$,
-\[1+\sum_{k}\frac{1}{a_k^{1+it}}\neq 0?\]
+$$1+\sum_{k}\frac{1}{a_k^{1+it}}\neq 0?$$
 
 Yip [Yi25] has proved that this is not always true - in fact, for any real $t\neq 0$, there
 exists a sequence of integers $1<a_1<\cdots$ such that $\sum \frac{1}{a_i}<\infty$ and
@@ -82,7 +82,7 @@ theorem erdos_967.variants.two_three_five : answer(sorry) ↔
 Their interest in this problem arose from their proof that the statement that there are no such
 zeros is equivalent to the fact that, for any non-decreasing $f:\mathbb{R}\to \mathbb{R}_{\geq 0}$
 which is bounded on every bounded interval and is $=0$ for $x<1$, the relationship
-\[f(x)+\sum_k f(x/a_k)=\left(1+\sum_k \frac{1}{a_k}+o(1)\right)x\]
+$$f(x)+\sum_k f(x/a_k)=\left(1+\sum_k \frac{1}{a_k}+o(1)\right)x$$
 implies $f(x)=(1+o(1))x$.
 -/
 @[category research solved, AMS 11 40]

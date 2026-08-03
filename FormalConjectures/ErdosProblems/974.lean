@@ -39,10 +39,10 @@ def IsTuranConfiguration {n : ℕ} (z : Fin n → ℂ) : Prop :=
 
 /--
 Let $z_1,\ldots,z_n\in \mathbb{C}$ be a sequence such that $z_1=1$. Suppose that the sequence of
-\[s_k=\sum_{1\leq i\leq n}z_i^k\]
+$$s_k=\sum_{1\leq i\leq n}z_i^k$$
 contains infinitely many $(n-1)$-tuples of consecutive values of $s_k$ which are all $0$. Then
 (essentially)
-\[z_j=e(j/n),\]
+$$z_j=e(j/n),$$
 where $e(x)=e^{2\pi ix}$.
 
 A conjecture of Turán.
