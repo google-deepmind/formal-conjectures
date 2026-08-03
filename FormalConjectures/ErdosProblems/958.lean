@@ -29,15 +29,6 @@ open Finset EuclideanGeometry
 
 namespace Erdos958
 
-/-- The set of distances determined by a finite set of points `A` in the plane. -/
-noncomputable def distanceSet (A : Finset ℝ²) : Finset ℝ :=
-  A.offDiag.image fun p => dist p.1 p.2
-
-/-- The multiplicity of the distance `d` determined by `A`, that is, the number of unordered
-pairs of distinct points of `A` at distance `d` apart. -/
-noncomputable def distanceMultiplicity (A : Finset ℝ²) (d : ℝ) : ℕ :=
-  #(A.offDiag.filter (fun p => dist p.1 p.2 = d)) / 2
-
 /-- `A` is a set of equidistant points on a line: there are a point `a` and a non-zero direction
 `v` such that `A` consists of the points `a + i • v` for `0 ≤ i < #A`. -/
 def IsEquidistantOnLine (A : Finset ℝ²) : Prop :=
