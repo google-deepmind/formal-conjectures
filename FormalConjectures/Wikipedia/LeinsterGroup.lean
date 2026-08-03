@@ -37,8 +37,6 @@ TODO: The following properties from the Wikipedia article can also be formalized
 
 namespace LeinsterGroup
 
-open scoped Classical
-
 /--
 A finite group `G` is a **Leinster group** if the sum of the orders of all its normal subgroups
 equals twice the group's order.
