@@ -23,13 +23,14 @@ import FormalConjecturesUtil
 -/
 
 open Filter
-open scoped Classical Topology
+open scoped Topology
 
 namespace Erdos450
 
 /-- `m` has a divisor strictly between `n` and `2n`. -/
 def HasMediumDivisor (n m : ℕ) : Prop := ∃ d : ℕ, n < d ∧ d < 2 * n ∧ d ∣ m
 
+open scoped Classical in
 /-- The number of integers strictly between `x` and `x + y` with a divisor in
 `(n, 2n)`. -/
 noncomputable def localCount (n x y : ℕ) : ℕ :=

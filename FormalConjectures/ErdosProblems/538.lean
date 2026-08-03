@@ -23,10 +23,11 @@ import FormalConjecturesUtil
 -/
 
 open Filter
-open scoped Classical Topology
+open scoped Topology
 
 namespace Erdos538
 
+open scoped Classical in
 /-- The representations `m = p * a` with `p` prime and `a ∈ A`. -/
 def representations (A : Finset ℕ) (m : ℕ) : Finset (ℕ × ℕ) :=
   (Finset.range (m + 1) ×ˢ A).filter (fun pa => Nat.Prime pa.1 ∧ m = pa.1 * pa.2)
