@@ -43,9 +43,6 @@ noncomputable def eps (m : ℕ) : ℝ :=
     (∀ n ∈ S, ∀ n' ∈ S, n ≠ n' → ¬ ∃ x : ℤ, x ≡ a n [ZMOD n] ∧ x ≡ a n' [ZMOD n']) ∧
     (∑ n ∈ S, (n : ℝ)⁻¹) = s}
 
-/-- $L(m)=\exp(\sqrt{\log m\log\log m})$. -/
-noncomputable def L (m : ℕ) : ℝ := exp (sqrt (log (m : ℝ) * log (log (m : ℝ))))
-
 /--
 Let
 $$\epsilon_m=\max \sum \frac{1}{n_i}$$
@@ -60,7 +57,7 @@ where $L(m)=\exp(\sqrt{\log m\log\log m})$.
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1190.lean"]
 theorem erdos_1190 : ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop,
-    L m ^ (-1 - ε : ℝ) < eps m ∧ eps m < L m ^ (-1 + ε : ℝ) := by
+    scaleL m ^ (-1 - ε : ℝ) < eps m ∧ eps m < scaleL m ^ (-1 + ε : ℝ) := by
   sorry
 
 /--
@@ -88,7 +85,7 @@ where $L(m)=\exp(\sqrt{\log m\log\log m})$. The lower bound is implicit in their
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1190.variants.lower_bound : ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop,
-    L m ^ (-1 - ε : ℝ) < eps m := by
+    scaleL m ^ (-1 - ε : ℝ) < eps m := by
   sorry
 
 /--
@@ -99,7 +96,7 @@ bound as reported in [202] and partial summation.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1190.variants.upper_bound : ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop,
-    eps m < L m ^ (-(sqrt 3 / 2) + ε : ℝ) := by
+    eps m < scaleL m ^ (-(sqrt 3 / 2) + ε : ℝ) := by
   sorry
 
 end Erdos1190
