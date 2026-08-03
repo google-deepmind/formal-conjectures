@@ -29,25 +29,23 @@ import FormalConjecturesUtil
 
 open Finset Filter
 
-open scoped Classical
-
 namespace Erdos862
 
 /--
 $A_1(N)$, the number of maximal Sidon subsets of $\{1, \dots, N\}$.
 -/
 noncomputable def numMaximalSidonSets (N : ℕ) : ℕ :=
-  ((Icc 1 N).powerset.filter fun A : Finset ℕ ↦ Set.IsMaximalSidonSetIn (A : Set ℕ) N).card
+  {A : Finset ℕ | A ⊆ Icc 1 N ∧ Set.IsMaximalSidonSetIn (A : Set ℕ) N}.ncard
 
 /--
 Let $A_1(N)$ be the number of maximal Sidon subsets of $\{1,\ldots,N\}$. Is it true that
-\[A_1(N) < 2^{o(N^{1/2})}?\]
+$$A_1(N) < 2^{o(N^{1/2})}?$$
 
 A problem of Cameron and Erdős. This is resolved as a consequence of results of Saxton and
 Thomason [SaTh15] - they prove that the number of Sidon sets in $\{1,\ldots,N\}$ is at least
 $2^{(1.16+o(1))N^{1/2}}$. Since each Sidon set is contained in a maximal Sidon set, and each
 maximal Sidon set contains at most $2^{(1+o(1))N^{1/2}}$ Sidon sets, it follows that
-\[A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.\]
+$$A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.$$
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos862.lean"]
 theorem erdos_862.parts.i : answer(False) ↔
@@ -57,13 +55,14 @@ theorem erdos_862.parts.i : answer(False) ↔
 
 /--
 Let $A_1(N)$ be the number of maximal Sidon subsets of $\{1,\ldots,N\}$. Is it true that
-\[A_1(N) > 2^{N^c}\]for some constant $c>0$?
+$$A_1(N) > 2^{N^c}$$
+for some constant $c>0$?
 
 A problem of Cameron and Erdős. This is resolved as a consequence of results of Saxton and
 Thomason [SaTh15] - they prove that the number of Sidon sets in $\{1,\ldots,N\}$ is at least
 $2^{(1.16+o(1))N^{1/2}}$. Since each Sidon set is contained in a maximal Sidon set, and each
 maximal Sidon set contains at most $2^{(1+o(1))N^{1/2}}$ Sidon sets, it follows that
-\[A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.\]
+$$A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.$$
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos862.lean"]
 theorem erdos_862.parts.ii : answer(True) ↔
@@ -76,7 +75,7 @@ This is resolved as a consequence of results of Saxton and Thomason [SaTh15] - t
 the number of Sidon sets in $\{1,\ldots,N\}$ is at least $2^{(1.16+o(1))N^{1/2}}$. Since each
 Sidon set is contained in a maximal Sidon set, and each maximal Sidon set contains at most
 $2^{(1+o(1))N^{1/2}}$ Sidon sets, it follows that
-\[A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.\]
+$$A_1(N) \geq 2^{(0.16+o(1))N^{1/2}}.$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_862.variants.lower_bound (ε : ℝ) (hε : 0 < ε) :

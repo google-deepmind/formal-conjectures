@@ -40,14 +40,14 @@ def ConsecutiveSumFree (A : Finset ℕ) : Prop :=
 
 /--
 Is it true that if $A=\{a_1<\cdots <a_t\}\subseteq \{1,\ldots,N\}$ has no solutions to
-\[a_i+a_{i+1}+\cdots+a_j\in A\]
+$$a_i+a_{i+1}+\cdots+a_j\in A$$
 then
-\[\lvert A\rvert \leq \frac{N}{2}+O(1)?\]
+$$\lvert A\rvert \leq \frac{N}{2}+O(1)?$$
 
 In fact this problem is false. Freud [Fr93] constructed a sequence with density $\geq 19/36$.
 The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
 maximal size of such an $A$ satisfies
-\[\frac{13}{24}N -O(1)\leq \lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.\]
+$$\frac{13}{24}N -O(1)\leq \lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.$$
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos867.lean"]
 theorem erdos_867 : answer(False) ↔
@@ -66,7 +66,7 @@ theorem erdos_867.variants.lower_bound :
 
 /--
 Adenwalla has observed that
-\[\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.\]
+$$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_867.variants.adenwalla (ε : ℝ) (hε : 0 < ε) :
@@ -86,7 +86,7 @@ theorem erdos_867.variants.freud :
 /--
 The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
 maximal size of such an $A$ satisfies
-\[\frac{13}{24}N -O(1)\leq \lvert A\rvert.\]
+$$\frac{13}{24}N -O(1)\leq \lvert A\rvert.$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_867.variants.coppersmith_phillips_lower_bound :
@@ -97,7 +97,7 @@ theorem erdos_867.variants.coppersmith_phillips_lower_bound :
 /--
 The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
 maximal size of such an $A$ satisfies
-\[\lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.\]
+$$\lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_867.variants.coppersmith_phillips_upper_bound :

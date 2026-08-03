@@ -33,14 +33,14 @@ colour the vertices of $G$ such that each colour class induces either a complete
 independent set.
 
 If $G$ is a graph with chromatic number $\chi(G)=m$ then must $G$ contain a subgraph $H$ with
-\[
+$$
 \zeta(H) \gg \frac{m}{\log m}?
-\]
+$$
 
 A problem of Erdős and Gimbel, who proved that there must exist a subgraph $H$ with
-\[
+$$
 \zeta(H) \gg \left(\frac{m}{\log m}\right)^{1/2}.
-\]
+$$
 The proposed bound would be best possible, as shown by taking $G$ to be a complete graph.
 
 The answer is yes, proved by Alon, Krivelevich, and Sudakov.
@@ -55,9 +55,9 @@ theorem erdos_760 : answer(True) ↔
 
 /--
 A problem of Erdős and Gimbel, who proved that there must exist a subgraph $H$ with
-\[
+$$
 \zeta(H) \gg \left(\frac{m}{\log m}\right)^{1/2}.
-\]
+$$
 -/
 @[category research solved, AMS 5]
 theorem erdos_760.variants.erdos_gimbel :

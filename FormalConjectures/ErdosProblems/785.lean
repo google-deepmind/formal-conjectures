@@ -42,19 +42,18 @@ import FormalConjecturesUtil
 -/
 
 open Filter Pointwise
-open Classical
 open scoped Topology
 
 namespace Erdos785
 
 /-- The counting function $A(x)=\lvert A\cap [1,x]\rvert$. -/
 noncomputable def counting (A : Set ℕ) (x : ℕ) : ℕ :=
-  ((Finset.Icc 1 x).filter (· ∈ A)).card
+  (A ∩ Set.Icc 1 x).ncard
 
 /-- The largest element of $A$ in $[1,x]$, that is $a^*(x)=\max A\cap [1,x]$
 (equal to $0$ when there is no such element). -/
 noncomputable def aStar (A : Set ℕ) (x : ℕ) : ℕ :=
-  ((Finset.Icc 1 x).filter (· ∈ A)).sup id
+  sSup (A ∩ Set.Icc 1 x)
 
 /-- Two sets $A, B\subseteq \mathbb{N}$ are *additive complements* if $A+B$ contains all
 large integers. -/
@@ -71,12 +70,12 @@ def IsExactAdditiveComplement (A B : Set ℕ) : Prop :=
 Let $A,B\subseteq \mathbb{N}$ be infinite sets such that $A+B$ contains all large integers.
 Let $A(x)=\lvert A\cap [1,x]\rvert$ and similarly for $B(x)$. Is it true that if
 $A(x)B(x)\sim x$ then
-\[A(x)B(x)-x\to \infty\]
+$$A(x)B(x)-x\to \infty$$
 as $x\to \infty$?
 
 A conjecture of Erdős and Danzer. The answer is yes, proved by Sárközy and Szemerédi [SaSz94],
 who actually proved that it is impossible for
-\[A(x)B(x)-x=o(A(x)).\]
+$$A(x)B(x)-x=o(A(x)).$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_785 : answer(True) ↔
@@ -95,7 +94,7 @@ theorem erdos_785.variants.danzer :
 
 /--
 Sárközy and Szemerédi [SaSz94] proved that it is impossible for
-\[A(x)B(x)-x=o(A(x)).\]
+$$A(x)B(x)-x=o(A(x)).$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.sarkozy_szemeredi (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
@@ -130,7 +129,7 @@ theorem erdos_785.variants.narkiewicz (A B : Set ℕ) (hA : A.Infinite) (hB : B.
 
 /--
 Ruzsa [Ru17] has constructed, for any function $w(x)\to \infty$, such a pair of sets with
-\[A(x)B(x)-x<w(x)\]
+$$A(x)B(x)-x<w(x)$$
 for infinitely many $x$.
 -/
 @[category research solved, AMS 11]
@@ -142,7 +141,7 @@ theorem erdos_785.variants.ruzsa_upper_bound (w : ℕ → ℝ) (hw : Tendsto w a
 /--
 Ruzsa [Ru17] proves that, if $a^*(x)=\max A \cap [1,x]$ and $A$ and $B$ satisfy the conditions
 in the problem then (after possibly changing the roles of $A$ and $B$)
-\[A(x)B(x)-x > (1-o(1))\frac{a^*(x)}{A(x)}.\]
+$$A(x)B(x)-x > (1-o(1))\frac{a^*(x)}{A(x)}.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.ruzsa_lower_bound (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
@@ -158,7 +157,7 @@ theorem erdos_785.variants.ruzsa_lower_bound (A B : Set ℕ) (hA : A.Infinite) (
 /--
 Chen and Fang [ChFa10] proved the stronger statement that $A(x)B(x)-x\to \infty$ if $A$ and $B$
 are infinite sets such that $A+B$ contains all large integers and
-\[\limsup_{x\to \infty}\frac{A(x)B(x)}{x}<\frac{5}{4}.\]
+$$\limsup_{x\to \infty}\frac{A(x)B(x)}{x}<\frac{5}{4}.$$
 They later [ChFa14] improved $5/4$ to $3-\sqrt{3}\approx 1.268$.
 -/
 @[category research solved, AMS 11]
@@ -182,7 +181,7 @@ theorem erdos_785.variants.chen_conjecture : answer(sorry) ↔
 
 /--
 This is sharp, as Chen and Fang [ChFa11] also proved that there exist such $A$ and $B$ with
-\[\limsup_{x\to \infty}\frac{A(x)B(x)}{x}=\frac{3}{2}\]
+$$\limsup_{x\to \infty}\frac{A(x)B(x)}{x}=\frac{3}{2}$$
 for which $A(x)B(x)-x=1$ for infinitely many $x$.
 -/
 @[category research solved, AMS 11]

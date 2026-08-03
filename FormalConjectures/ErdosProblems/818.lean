@@ -31,11 +31,11 @@ namespace Erdos818
 
 /--
 Let $A$ be a finite set of integers such that $\lvert A+A\rvert \ll \lvert A\rvert$. Is it true that
-\[\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{(\log \lvert A\rvert)^C}\]
+$$\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{(\log \lvert A\rvert)^C}$$
 for some constant $C>0$?
 
 This was proved by Solymosi [So09d], in the strong form
-\[\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.\]
+$$\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.$$
 See also [52].
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos818.lean"]
@@ -47,7 +47,7 @@ theorem erdos_818 : answer(True) ↔
 
 /--
 This was proved by Solymosi [So09d], in the strong form
-\[\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.\]
+$$\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_818.variants.solymosi :
