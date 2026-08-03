@@ -33,21 +33,6 @@ open scoped EuclideanGeometry
 
 variable {V : Type*}
 
-/--
-A graph `G` can be embedded in `ℝ^n` with every edge a unit line segment if there is an
-injective map from the vertices of `G` to `ℝ^n` sending any two adjacent vertices to a pair of
-points at distance `1`.
--/
-def UnitDistanceEmbeddable (G : SimpleGraph V) (n : ℕ) : Prop :=
-  ∃ f : V → ℝ^n, Function.Injective f ∧ ∀ u v : V, G.Adj u v → dist (f u) (f v) = 1
-
-/--
-`G` has dimension `n`, that is, `n` is the minimal natural number such that `G` can be embedded
-in `ℝ^n` with every edge of `G` a unit line segment.
--/
-def HasDimension (G : SimpleGraph V) (n : ℕ) : Prop :=
-  IsLeast {m | UnitDistanceEmbeddable G m} n
-
 /-- The complete tripartite graph $K_{1,3,3}$. -/
 abbrev K133 := SimpleGraph.completeMultipartiteGraph fun i : Fin 3 => Fin (![1, 3, 3] i)
 
@@ -63,7 +48,7 @@ number of edges in a graph of dimension $5$ is $15$ (achieved by $K_6$ and $K_{1
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1007 :
-    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 4 ∧ G.edgeSet.ncard = m}
+    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
       answer(sorry) := by
   sorry
 
@@ -72,7 +57,7 @@ The smallest number of edges in a graph of dimension $4$ is $9$.
 -/
 @[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1007.lean"]
 theorem erdos_1007.variants.dimension_four :
-    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 4 ∧ G.edgeSet.ncard = m}
+    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
       9 := by
   sorry
 
@@ -81,7 +66,7 @@ The smallest number of edges in a graph of dimension $4$ is achieved solely by $
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1007.variants.dimension_four_extremal (n : ℕ) (G : SimpleGraph (Fin n))
-    (hdim : HasDimension G 4) (hcard : G.edgeSet.ncard = 9)
+    (hdim : G.HasDimension 4) (hcard : G.edgeSet.ncard = 9)
     (hdeg : ∀ v : Fin n, ∃ w : Fin n, G.Adj v w) :
     Nonempty (G ≃g completeBipartiteGraph (Fin 3) (Fin 3)) := by
   sorry
@@ -91,7 +76,7 @@ The smallest number of edges in a graph of dimension $5$ is $15$.
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1007.variants.dimension_five :
-    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 5 ∧ G.edgeSet.ncard = m}
+    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 5 ∧ G.edgeSet.ncard = m}
       15 := by
   sorry
 
@@ -100,9 +85,9 @@ The smallest number of edges in a graph of dimension $5$ is achieved by $K_6$ an
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_1007.variants.dimension_five_extremal :
-    (HasDimension (SimpleGraph.completeGraph (Fin 6)) 5 ∧
+    ((SimpleGraph.completeGraph (Fin 6)).HasDimension 5 ∧
         (SimpleGraph.completeGraph (Fin 6)).edgeSet.ncard = 15) ∧
-      (HasDimension K133 5 ∧ K133.edgeSet.ncard = 15) := by
+      (K133.HasDimension 5 ∧ K133.edgeSet.ncard = 15) := by
   sorry
 
 end Erdos1007

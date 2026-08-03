@@ -30,18 +30,13 @@ import FormalConjecturesUtil
 
 namespace Erdos1022
 
-/-- A family `F` of finite sets has **property B** (equivalently, chromatic number `2`) if
-there is a `2`-colouring of the ground set under which no member of `F` is monochromatic. -/
-def HasPropertyB (F : Finset (Finset ℕ)) : Prop :=
-  ∃ f : ℕ → Fin 2, ∀ A ∈ F, ∃ x ∈ A, ∃ y ∈ A, f x ≠ f y
-
 /-- `SparseImpliesPropertyB t c` asserts that every finite family `F` of finite sets, all of
 size at least `t`, such that for every nonempty finite set `X` there are `< c * |X|` many
 `A ∈ F` with `A ⊆ X`, has property B. -/
 def SparseImpliesPropertyB (t : ℕ) (c : ℝ) : Prop :=
   ∀ F : Finset (Finset ℕ), (∀ A ∈ F, t ≤ A.card) →
     (∀ X : Finset ℕ, X.Nonempty → ((F.filter (· ⊆ X)).card : ℝ) < c * (X.card : ℝ)) →
-    HasPropertyB F
+    F.HasPropertyB
 
 /--
 Is there a constant $c_t$, where $c_t\to \infty$ as $t\to \infty$, such that if $\mathcal{F}$
