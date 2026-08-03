@@ -15,24 +15,18 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Finite
-public import Mathlib.Data.Real.Basic
-
+public import Mathlib.Combinatorics.SimpleGraph.Clique
 @[expose] public section
 
 namespace SimpleGraph
-
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-/-- `temp_v G v = deg(v)/(n(G) - deg(v))`. -/
-noncomputable def temp_v (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : ℝ :=
-  let n := Fintype.card α
-  let deg := G.degree v
-  if n = deg then 0 else (deg : ℝ) / ((n : ℝ) - (deg : ℝ))
+open scoped Classical Finset List in
 
-/-- Maximum of `temp_v` over all vertices. -/
-noncomputable def MaxTemp (G : SimpleGraph α) [DecidableRel G.Adj] [Fintype α] [Nonempty α] : ℝ :=
-  let temps := Finset.univ.image (temp_v G)
-  temps.max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
+/-- A graph is a quasi-line graph if the neighborhood of every vertex can be partitioned into two cliques. -/
+def IsQuasiLineGraph {V : Type*} (G : SimpleGraph V) : Prop :=
+  ∀ v : V, ∃ (s₁ s₂ : Set V),
+    s₁ ∪ s₂ = G.neighborSet v ∧ G.IsClique s₁ ∧ G.IsClique s₂
+
 
 end SimpleGraph

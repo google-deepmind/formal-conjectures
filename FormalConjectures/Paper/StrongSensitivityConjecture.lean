@@ -48,7 +48,7 @@ known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
 
 namespace StrongSensitivityConjecture
 
-open Finset Function Classical
+open Finset Function
 
 section Sensitivity
 
@@ -80,6 +80,7 @@ def IsValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
 /-- Local block sensitivity bs(f,x),
 maximum size of a collection of sensitive, disjoint blocks for `f` at `x`. -/
 noncomputable def blockSensitivityAt (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) : ℕ :=
+  open scoped Classical in
   Finset.sup {cB | IsValidBlockConfig f x cB} card
 
 /-- Global block sensitivity of `f`,
