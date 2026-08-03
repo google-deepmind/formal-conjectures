@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 505
@@ -46,7 +46,7 @@ Lean 4 code in this file was drafted with assistance from Claude (Anthropic).
 The mathematical content and references are the author's own work.
 -/
 
-open Metric Set Classical
+open Metric Set
 
 namespace Erdos505
 

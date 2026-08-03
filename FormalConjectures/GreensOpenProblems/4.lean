@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 4
@@ -30,7 +30,8 @@ def ProdFree {M : Type*} [Monoid M] (S : Set M) : Prop := ∀ x ∈ S, ∀ y ∈
 /-- What is the largest product-free set in the alternating group $A_n$? -/
 @[category research open, AMS 20]
 theorem green_4 (n : ℕ) :
-    MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard answer(sorry) := by
+    let S : ∀ n, Set (alternatingGroup <| Fin n) := answer(sorry)
+    MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard (S n) := by
   sorry
 
 /-- Defines a family of subsets of $A_n$ where each permutation $\pi$ in a subset obeys $\pi(x)$

@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Squarefree Set Order Filter Topology
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1102
 
 *Reference:* [erdosproblems.com/1102](https://www.erdosproblems.com/1102)
 -/
-
+open Squarefree Set Order Filter Topology
 namespace Erdos1102
 
 /--

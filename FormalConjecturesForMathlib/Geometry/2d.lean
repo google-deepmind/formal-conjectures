@@ -228,10 +228,34 @@ Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
 noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
   sSup {#(X.image (distinctDistancesFrom X)) | (X) (_ : #X = n)}
 
+/--
+Given a finite set of points, this function counts the number of **unordered pairs** of distinct
+points that are at a distance of exactly $1$ from each other.
+-/
+noncomputable def unitDistancePairsCount (points : Finset ℝ²) : ℕ :=
+  #(points.offDiag.filter (fun p => dist p.1 p.2 = 1)) / 2
+
 /-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
 if no three are collinear and no four lie on a circle. -/
 def InGeneralPosition (X : Finset ℝ²) : Prop :=
   NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
+
+/-- `a b c` are the vertices of a right-angled triangle: the (unoriented) angle at one of the
+three vertices equals `π / 2`. -/
+def IsRightAngled (a b c : P) : Prop :=
+  ∠ b a c = π / 2 ∨ ∠ a b c = π / 2 ∨ ∠ b c a = π / 2
+
+/--
+`a b c d` are the vertices, in counter-clockwise order, of an isosceles trapezoid: they are in
+strictly convex position, the side `ab` is parallel to the side `cd` (the two bases), and the
+diagonals `ac` and `bd` have equal length. One pair of parallel sides together with equal
+diagonals is the classical characterization of an isosceles trapezoid; in particular it rules
+out non-rectangular parallelograms.
+-/
+def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
+  IsCcwConvexPolygon ![a, b, c, d] ∧
+  (affineSpan ℝ {a, b}).Parallel (affineSpan ℝ {c, d}) ∧
+  dist a c = dist b d
 
 end EuclideanGeometry
 

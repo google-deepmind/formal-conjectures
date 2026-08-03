@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 263
@@ -28,15 +28,21 @@ open scoped Topology
 namespace Erdos263
 
 /--
-We call a sequence $a_n$ of positive integers an _irrationality sequence_
-if for any sequence $b_n$ of positive integers with $\frac{a_n}{b_n} \to 1$ as $n \to \infty$,
+We call a **strictly increasing** sequence $a_n$ of positive integers an
+_irrationality sequence_ if for any sequence $b_n$ of positive integers with
+$\frac{a_n}{b_n} \to 1$ as $n \to \infty$,
 the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
+
+Note: erdosproblems.com/263 was corrected on 2026-04-02 to require the sequence
+to be increasing; the pre-correction statement (no monotonicity hypothesis) had a
+counterexample to Q2 that is not increasing (see `erdos_263.parts.ii` below).
 
 Note: This is one of many possible notions of "irrationality sequences". See
 FormalConjectures/ErdosProblems/264.lean for another possible definition.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   (∀ n : ℕ, a n > 0) ∧
+    StrictMono a ∧
     (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
       atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
       Irrational (∑' n, 1 / (b n : ℝ)))
@@ -50,11 +56,17 @@ theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : �
 
 /--
 Must every irrationality sequence $a_n$ in the above sense
-satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$? 
-Answer: false.
+satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
+
+Note: this was answered **false** for the *pre-correction* statement, which did not
+require monotonicity — the counterexample sequence is not increasing. The problem
+was corrected on erdosproblems.com on 2026-04-02 to require increasing sequences;
+for the corrected statement this question is **open**. The earlier formal proof
+(for the pre-correction definition) is preserved at
+https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298"]
-theorem erdos_263.parts.ii : answer(False) ↔
+@[category research open, AMS 11]
+theorem erdos_263.parts.ii : answer(sorry) ↔
     ∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
         atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
