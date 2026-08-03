@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/82](https://www.erdosproblems.com/82)
 -/
 
-open Classical SimpleGraph Filter
+open SimpleGraph Filter
 
 namespace Erdos82
 
@@ -32,6 +32,7 @@ variable {V : Type*} [Fintype V]
 A predicate that holds if $S$ is a regular induced subgraph of $G$
 -/
 def IsRegularInduced {G : SimpleGraph V} (S : Subgraph G) : Prop :=
+  open scoped Classical in
   S.IsInduced ∧ ∃ k, (S.coe).IsRegularOfDegree k
 
 /--

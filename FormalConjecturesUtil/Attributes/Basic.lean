@@ -38,8 +38,8 @@ Provides information of the type of a statement. This can be:
 ### Values
 The values of this attribute are
 - `@[category textbook]` : a textbook level math problem.
-- `@[category research open]` : an open reseach level math problem.
-- `@[category research solved]` : a solved reseach level math problem.
+- `@[category research open]` : an open research level math problem.
+- `@[category research solved]` : a solved research level math problem.
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
@@ -154,7 +154,7 @@ def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
 inductive Category
   /-- A textbook level math problem (high school, undergraduate, or graduate). -/
   | textbook
-  /-- A reseach level math problem. This can be open, or already solved -/
+  /-- A research level math problem. This can be open, or already solved -/
   | research : ProblemStatus → Category
   /-- A test statement that serves as a sanity check (e.g. for a new definition)-/
   | test
@@ -262,8 +262,8 @@ syntax (name := Category_attr) "category" CategorySyntax : attr
 
 This is used as follows: `@[category my_cat]` where `my_cat` is one of:
 - `textbook` : a textbook level math problem.
-- `research open` : an open reseach level math problem.
-- `research solved` : a solved reseach level math problem.
+- `research open` : an open research level math problem.
+- `research solved` : a solved research level math problem.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
 - `API` : a statement that constructs basic theory around a new definition -/
 initialize Lean.registerBuiltinAttribute {
@@ -321,7 +321,7 @@ syntax subjectList := many(num)
 
 /-- Converts a syntax node to an array of `AMS` subjects.
 
-This also annotates the every natural number litteral encountered, with the
+This also annotates every natural number literal encountered with the
 description of the corresponding AMS subject (i.e. hovering over the number
 in VS Code will show the subject.)
 -/

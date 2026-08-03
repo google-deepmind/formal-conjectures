@@ -67,17 +67,6 @@ jobs:
           ./elan-init -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      - name: Generate All.lean
-        if: steps.mode.outputs.website_only != 'true'
-        run: |
-          lake exe mk_all --lib FormalConjectures || true
-          # Avoid including Test files from `Util/` to avoid inflating the
-          # stats. This stop-gap should be removed after doing the TODO at
-          # `fetchStatsMarkdown` in `docbuild/overwrite-index.lean`.
-          grep -v -E "FormalConjectures\.Util\.|FormalConjectures\.All" FormalConjectures.lean > FormalConjectures/All.lean
-          echo "" >> FormalConjectures/All.lean
-          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
-
       - name: Restore ~/.cache/mathlib
         if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache/restore@v3
@@ -94,15 +83,26 @@ jobs:
           lake exe cache unpack
           lake exe cache get
 
+      - name: Generate All.lean
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          rm -f FormalConjectures/All.lean
+          lake exe mk_all --lib FormalConjectures || true
+          mv FormalConjectures.lean FormalConjectures/All.lean
+          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
+
       - name: Build project
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake --wfail build
+          rm -f FormalConjectures/All.lean
 
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true'
         run: |
           cd docbuild
+          export MATHLIB_NO_CACHE_ON_UPDATE=1
+          lake update formal_conjectures
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
           # so we make this best-effort: render whatever succeeds.
           # TODO(firsching): examine exactly what fails and fix or report as bug to verso
@@ -129,41 +129,6 @@ jobs:
           path: ~/.cache
           key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
-      - name: Prepare documentation
-        if: steps.mode.outputs.website_only != 'true'
-        run: |
-          cd docbuild
-          export MATHLIB_NO_CACHE_ON_UPDATE=1  # avoids "Failed to prune ProofWidgets cloud release: no such file or directory"
-          lake update formal_conjectures
-
-      - name: Cache documentation
-        if: steps.mode.outputs.website_only != 'true'
-        uses: actions/cache@v5
-        with:
-          path: docbuild/.lake/build/doc
-          key: MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
-          restore-keys: |
-            MathlibDoc-${{ hashFiles('docbuild/lake-manifest.json') }}-
-            MathlibDoc-
-
-      - name: Build documentation
-        if: steps.mode.outputs.website_only != 'true'
-        run: |
-          cd docbuild
-          lake build FormalConjectures:docs
-
-      - name: Extract documentation
-        if: steps.mode.outputs.website_only != 'true'
-        run: |
-          cd docbuild
-          mkdir out
-          lake query FormalConjectures:docs > out-files.txt
-          sed -i 's|^.*\.lake/build/doc/||' out-files.txt
-          echo "::group::Generated files"
-          cat out-files.txt
-          echo "::endgroup::"
-          rsync -a --files-from=out-files.txt --relative .lake/build/doc ./out
-
       - name: Set up Python
         if: steps.mode.outputs.website_only != 'true'
         uses: actions/setup-python@v6
@@ -179,14 +144,8 @@ jobs:
       - name: Run plotting script
         if: steps.mode.outputs.website_only != 'true'
         run: |
-          python docbuild/scripts/plot_growth.py
-
-      - name: Inject stats into index.html
-        if: steps.mode.outputs.website_only != 'true'
-        shell: bash
-        run: |
-          cd docbuild
-          lake exe overwrite_index ./out/index.html ./out/file_counts_dark.html ./out/file_counts_white.html | tee -a "$GITHUB_STEP_SUMMARY"
+          mkdir -p site/data
+          python site/plot_growth.py
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -212,12 +171,12 @@ jobs:
         if: steps.mode.outputs.website_only == 'true'
         run: |
           LIVE_URL="https://google-deepmind.github.io/formal-conjectures"
-          mkdir -p site/data _literate_html docbuild/out
+          mkdir -p site/data _literate_html
           echo "Downloading conjectures data from $LIVE_URL ..."
           curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/live_conjectures.json
           echo "Downloading growth plots from $LIVE_URL ..."
-          curl -sfL "$LIVE_URL/doc/file_counts_white.html" -o docbuild/out/file_counts_white.html || true
-          curl -sfL "$LIVE_URL/doc/file_counts_dark.html" -o docbuild/out/file_counts_dark.html || true
+          curl -sfL "$LIVE_URL/data/file_counts_white.html" -o site/data/file_counts_white.html || true
+          curl -sfL "$LIVE_URL/data/file_counts_dark.html" -o site/data/file_counts_dark.html || true
           node -e "
             const fs = require('fs');
             const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
@@ -262,10 +221,6 @@ jobs:
           mkdir -p _deploy
           # Website goes at root
           cp -r site/site/* _deploy/
-          # Lean docs go under /doc (may not exist in website-only mode)
-          if [[ -d docbuild/out ]]; then
-            cp -r docbuild/out _deploy/doc
-          fi
           # Literate source pages go under /src (may not exist in website-only mode)
           if [[ -d _literate_html ]] && [[ -n "$(ls -A _literate_html 2>/dev/null)" ]]; then
             cp -r _literate_html _deploy/src

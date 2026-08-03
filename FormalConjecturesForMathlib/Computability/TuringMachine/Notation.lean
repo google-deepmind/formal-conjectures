@@ -154,7 +154,7 @@ def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
   /-
   We may want to have some smarter check done here, e.g. throw an error if the type of the
   constant isn't defeq to the one we want? (note that the instance command we elaborate below already
-  implicitely performs a very weak check). -/
+  implicitly performs a very weak check). -/
   unless ← hasConst stateName do
     let indName : Ident := Lean.mkIdent <| stateName
     -- First construct the inductive type
