@@ -26,7 +26,7 @@ import FormalConjecturesUtil
 * [McKay, Extremal graphs for bipartization of triangle-free graphs](https://users.cecs.anu.edu.au/~bdm/data/graphs.html)
 -/
 
-open SimpleGraph BigOperators Classical
+open SimpleGraph BigOperators
 
 namespace Erdos23
 
@@ -94,6 +94,7 @@ theorem blowupC5_tight (n : ℕ) (_hn : 0 < n) (H : SimpleGraph (ZMod 5 × Fin n
     n ^ 2 ≤ ((blowupC5 n).edgeFinset \ H.edgeFinset).card := by
   sorry
 
+open scoped Classical in
 /--
 Can every triangle-free graph on $5n$ vertices be made bipartite by deleting at most $n^2$ edges?
 -/

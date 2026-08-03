@@ -60,9 +60,9 @@ structure GamePos (n : ℕ) where
   claimed : Finset ℕ
   pool : Finset ℕ
 
-open scoped Classical in
 /-- The legal moves from a position: unclaimed elements whose insertion preserves primitiveness. -/
 def legalMoves {n : ℕ} (p : GamePos n) : Finset ℕ :=
+  open scoped Classical in
   p.pool.filter fun x => IsPrimitive n (insert x p.claimed)
 
 /-- Membership in `legalMoves`: a legal move is a pool element whose insertion preserves

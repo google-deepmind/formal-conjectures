@@ -23,10 +23,11 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter
-open scoped Asymptotics Classical
+open scoped Asymptotics
 
 namespace Erdos331
 
+open scoped Classical in
 /--
 Let $A,B\subseteq \mathbb{N}$ such that for all large $N$$$\lvert A\cap \{1,\ldots,N\}\rvert \gg
 N^{1/2}$$and$$\lvert B\cap \{1,\ldots,N\}\rvert \gg N^{1/2}.$$
@@ -51,6 +52,7 @@ theorem erdos_331 :
         a₁ ≠ a₂ ∧ a₁ + b₂ = a₂ + b₁ }.Infinite := by
   sorry
 
+open scoped Classical in
 /--
 Ruzsa suggests that a non-trivial variant of this problem arises if one imposes the stronger
 condition that $|A \cap \{1,\dots,N\}| \sim c_A N^{1/2}$ for some constant $c_A>0$, and similarly

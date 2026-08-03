@@ -29,7 +29,7 @@ import FormalConjecturesUtil
   (2016).
 -/
 
-open SimpleGraph Classical
+open SimpleGraph
 
 namespace Erdos621
 
