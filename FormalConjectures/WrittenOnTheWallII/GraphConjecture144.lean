@@ -41,7 +41,9 @@ eccentricity (the center of $G$), and $\mathrm{ecc}(\mathrm{Centers})$ is the
 eccentricity of the center set — the maximum distance from any non-center
 vertex to the nearest center vertex.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/beowulf127/wowii144-lean/blob/046429d509b28c90ee2ec38ae27c1ad377c6a5fc/WOWII144/Main.lean"]
 theorem conjecture144 (G : SimpleGraph α) (h : G.Connected) :
     (G.girth : ℝ) - 1 + (ecc G G.center : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
