@@ -33,11 +33,11 @@ namespace Erdos314
 
 /-- `mMin n` is the minimal `m` such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$; such an `m`
 exists for `n ≥ 1` since the harmonic series diverges. -/
-noncomputable def mMin (n : ℕ) : ℕ := sInf {m | 1 ≤ harmonicBlock ℝ n m}
+noncomputable def mMin (n : ℕ) : ℕ := sInf {m | 1 ≤ harmonicBlock n m}
 
 /-- $\epsilon(n) = \sum_{n\leq k\leq m}\frac{1}{k}-1$, the overshoot of the minimal block sum
 reaching $1$. -/
-noncomputable def epsilon (n : ℕ) : ℝ := harmonicBlock ℝ n (mMin n) - 1
+noncomputable def epsilon (n : ℕ) : ℝ := (harmonicBlock n (mMin n) : ℝ) - 1
 
 /--
 Let $n\geq 1$ and let $m$ be minimal such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$. We define
