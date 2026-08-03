@@ -21,7 +21,7 @@ public import Mathlib.Data.Real.Basic
 @[expose] public section
 
 namespace SimpleGraph
-open Classical Finset
+open Finset
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

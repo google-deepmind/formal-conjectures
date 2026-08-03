@@ -39,7 +39,7 @@ namespace ComplexityTheory
 The type of decision problems.
 
 We define these as functions from lists of booleans to booleans,
-implictly assuming the usual encodings.
+implicitly assuming the usual encodings.
 -/
 abbrev DecisionProblem := List Bool → Bool
 
