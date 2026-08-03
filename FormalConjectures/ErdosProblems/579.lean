@@ -25,7 +25,7 @@ import FormalConjecturesUtil
   type problems*, Combinatorica **3** (1983), 69–81.
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos579
 
