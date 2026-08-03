@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter
-open scoped Topology Classical Asymptotics
+open scoped Topology Asymptotics
 
 namespace Erdos456
 
@@ -41,6 +41,7 @@ Let $m_n$ be the smallest integer such that $n\mid \phi(m_n)$.
 noncomputable def m (n : ℕ) : ℕ :=
   sInf { k | 0 < k ∧ n ∣ totient k }
 
+open scoped Classical in
 /--
 Is it true that $m_n<p_n$ for almost all $n$?
 -/
@@ -50,6 +51,7 @@ theorem erdos_456.parts.i :
       Tendsto (fun N ↦ (count { n | m n < p n } N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
   sorry
 
+open scoped Classical in
 /--
 Does $p_n/m_n \to \infty$ for almost all $n$?
 -/
@@ -151,6 +153,7 @@ theorem erdos_456.variants.infinitely_many_n :
       omega
     omega
 
+open scoped Classical in
 /--
 Erdős [Er79e] writes it is 'easy to show' that $m_n/n \to \infty$ for almost all $n$.
 -/

@@ -44,13 +44,14 @@ Show that for each $r$ there exists a prime $p$ of class $r$. -/
 theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 
-open Classical
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Let $p_r$ is the least prime in class $r$. -/
-noncomputable def p (r : ℕ+) : ℕ := Nat.find (exists_p r)
+noncomputable def p (r : ℕ+) : ℕ :=
+  open scoped Classical in
+  Nat.find (exists_p r)
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
