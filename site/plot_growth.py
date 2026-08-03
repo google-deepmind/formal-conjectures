@@ -21,7 +21,7 @@ conf = {
     'start_date': '2025-05-28',
     'xlabel': 'Date',
     'ylabel': 'File Count',
-    'out_path_prefix': 'docbuild/out/file_counts'
+    'out_path_prefix': 'site/data/file_counts'
 }
 
 def get_file_counts_over_time(start_date, columns):

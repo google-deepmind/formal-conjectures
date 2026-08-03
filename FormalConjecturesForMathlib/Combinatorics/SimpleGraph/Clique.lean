@@ -24,7 +24,7 @@ public import Mathlib.Order.CompletePartialOrder
 namespace SimpleGraph
 variable {V : Type*} {G : SimpleGraph V}
 
-open Classical Finset List
+open Finset List
 
 @[inherit_doc] scoped notation "α(" G ")" => indepNum G
 

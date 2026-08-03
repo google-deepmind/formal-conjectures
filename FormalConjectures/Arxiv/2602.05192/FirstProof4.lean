@@ -27,7 +27,6 @@ by *Mohammed Abouzaid, Andrew J. Blumberg, Martin Hairer, Joe Kileel, Tamara G. 
 open Polynomial Finset ENNReal
 open scoped Nat
 
-open Classical
 
 namespace Arxiv.«2602.05192»
 
