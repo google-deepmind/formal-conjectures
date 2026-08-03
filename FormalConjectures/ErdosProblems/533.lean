@@ -33,7 +33,7 @@ import FormalConjecturesUtil
   [arXiv:2103.10423](https://arxiv.org/abs/2103.10423) (2021).
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos533
 

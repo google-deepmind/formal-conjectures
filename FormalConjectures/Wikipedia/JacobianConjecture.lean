@@ -92,7 +92,6 @@ noncomputable abbrev G [CommRing k] : RegularFunction k (Fin 3) (Fin 3) :=
     Y + 3 * X * (1 + 2 * X * Y) ^ 2 * Z + 12 * X * Y ^ 2 * (2 + 3 * (X * Y)),
     -X + 3 * X ^ 2 * Y + X ^ 3 * Z]
 
-open Classical
 
 @[category API, AMS 14]
 lemma det_jacobian_F [CommRing k] : (F k).Jacobian.det = -2 := by
@@ -144,7 +143,7 @@ whose Jacobian is a non-zero constant has an inverse that
 is given by a regular function, where `k` is a field of characteristic `0`.
 
 This is false: `F` has Jacobian determinant `1` but identifies
-two distinct points, so it admits no inverse. This counterexample works in all characterstics. -/
+two distinct points, so it admits no inverse. This counterexample works in all characteristics. -/
 @[category research solved, AMS 14]
 theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
     answer(False) ↔ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
