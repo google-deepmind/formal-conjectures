@@ -55,11 +55,6 @@ noncomputable def counting (A : Set ℕ) (x : ℕ) : ℕ :=
 noncomputable def aStar (A : Set ℕ) (x : ℕ) : ℕ :=
   sSup (A ∩ Set.Icc 1 x)
 
-/-- Two sets $A, B\subseteq \mathbb{N}$ are *additive complements* if $A+B$ contains all
-large integers. -/
-def IsAdditiveComplement (A B : Set ℕ) : Prop :=
-  ∀ᶠ n : ℕ in atTop, n ∈ A + B
-
 /-- Two sets $A, B\subseteq \mathbb{N}$ are *exact additive complements* if $A+B$ contains all
 large integers and $A(x)B(x)\sim x$. -/
 def IsExactAdditiveComplement (A B : Set ℕ) : Prop :=

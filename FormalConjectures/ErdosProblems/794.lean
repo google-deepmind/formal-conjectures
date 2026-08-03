@@ -31,15 +31,6 @@ open Filter
 
 namespace Erdos794
 
-/-- A finite family `H` of sets of vertices is a *`3`-uniform hypergraph* if every edge of `H`
-has exactly `3` vertices. -/
-def IsThreeUniform {V : Type*} (H : Finset (Finset V)) : Prop := ∀ e ∈ H, e.card = 3
-
-/-- `ContainsSubgraph H m k` holds when some set of `m` vertices spans at least `k` edges of
-`H`, that is, when `H` contains a subgraph on `m` vertices with `k` edges. -/
-def ContainsSubgraph {V : Type*} [DecidableEq V] (H : Finset (Finset V)) (m k : ℕ) : Prop :=
-  ∃ S : Finset V, S.card = m ∧ k ≤ (Finset.filter (fun e : Finset V => e ⊆ S) H).card
-
 /-- The `3`-uniform hypergraph on `Fin 9` given by Harris: the `27` triples containing exactly
 one vertex from each of the three parts `{0, 1, 2}`, `{3, 4, 5}`, `{6, 7, 8}`, together with the
 triple `{0, 1, 2}`. A triple is a transversal of the three parts exactly when the three values
@@ -62,8 +53,8 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
 theorem erdos_794 : answer(False) ↔
-    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), IsThreeUniform H →
-      n ^ 3 + 1 ≤ H.card → ContainsSubgraph H 4 3 ∨ ContainsSubgraph H 5 7 := by
+    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsThreeUniform →
+      n ^ 3 + 1 ≤ H.card → H.ContainsSubgraph 4 3 ∨ H.ContainsSubgraph 5 7 := by
   sorry
 
 /--
@@ -73,7 +64,7 @@ second condition can be dropped.
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.balogh {V : Type*} [DecidableEq V] (H : Finset (Finset V))
-    (hH : IsThreeUniform H) (h : ContainsSubgraph H 5 7) : ContainsSubgraph H 4 3 := by
+    (hH : H.IsThreeUniform) (h : H.ContainsSubgraph 5 7) : H.ContainsSubgraph 4 3 := by
   sorry
 
 /--
@@ -83,8 +74,8 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.harris :
-    IsThreeUniform harrisHypergraph ∧ harrisHypergraph.card = 28 ∧
-      ¬ ContainsSubgraph harrisHypergraph 4 3 ∧ ¬ ContainsSubgraph harrisHypergraph 5 7 := by
+    harrisHypergraph.IsThreeUniform ∧ harrisHypergraph.card = 28 ∧
+      ¬ harrisHypergraph.ContainsSubgraph 4 3 ∧ ¬ harrisHypergraph.ContainsSubgraph 5 7 := by
   sorry
 
 /--
@@ -96,8 +87,8 @@ so likely there is simply a typo in this problem's statement).
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.frankl_furedi (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), IsThreeUniform H ∧
-      ¬ ContainsSubgraph H 4 3 ∧ (2 / 7 - ε) * (n.choose 3 : ℝ) ≤ (H.card : ℝ) := by
+    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), H.IsThreeUniform ∧
+      ¬ H.ContainsSubgraph 4 3 ∧ (2 / 7 - ε) * (n.choose 3 : ℝ) ≤ (H.card : ℝ) := by
   sorry
 
 end Erdos794

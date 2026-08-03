@@ -30,20 +30,6 @@ open Filter
 
 namespace Erdos775
 
-/-- A finite set of vertices `S` spans a *complete subgraph* of the 3-uniform hypergraph `H`
-when every 3-element subset of `S` is an edge of `H`. -/
-def IsCompleteSubgraph {V : Type} (H : ThreeUniformHypergraph V) (S : Finset V) : Prop :=
-  ∀ e : Finset V, e ⊆ S → e.card = 3 → e ∈ H.edges
-
-/-- The set of sizes of the cliques (maximal complete subgraphs) of a 3-uniform
-hypergraph `H`. -/
-def cliqueSizes {V : Type} (H : ThreeUniformHypergraph V) : Set ℕ :=
-  { k | ∃ S : Finset V, Maximal (IsCompleteSubgraph H) S ∧ S.card = k }
-
-/-- The set of sizes of the cliques (maximal complete subgraphs) of a simple graph `G`. -/
-def graphCliqueSizes {V : Type} (G : SimpleGraph V) : Set ℕ :=
-  { k | ∃ S : Finset V, Maximal (fun T : Finset V => G.IsClique (T : Set V)) S ∧ S.card = k }
-
 /--
 Is there a $3$-uniform hypergraph on $n$ vertices which contains at least $n-O(1)$ different
 sizes of cliques (maximal complete subgraphs)?
@@ -55,7 +41,7 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
 theorem erdos_775 : answer(False) ↔
     ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : ThreeUniformHypergraph (Fin n),
-      n - C ≤ (cliqueSizes H).ncard := by
+      n - C ≤ (ThreeUniformHypergraph.cliqueSizes H).ncard := by
   sorry
 
 /--
@@ -67,7 +53,7 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 theorem erdos_775.variants.gao :
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
       ∀ᶠ n : ℕ in atTop, ∀ H : ThreeUniformHypergraph (Fin n),
-        (cliqueSizes H).ncard + f n ≤ n := by
+        (ThreeUniformHypergraph.cliqueSizes H).ncard + f n ≤ n := by
   sorry
 
 /--
@@ -77,7 +63,7 @@ $n-\log_2n+O(1)$ different sizes.
 @[category research solved, AMS 5]
 theorem erdos_775.variants.spencer :
     ∃ C : ℝ, ∀ n : ℕ, ∃ G : SimpleGraph (Fin n),
-      (n : ℝ) - Real.logb 2 (n : ℝ) - C ≤ ((graphCliqueSizes G).ncard : ℝ) := by
+      (n : ℝ) - Real.logb 2 (n : ℝ) - C ≤ ((SimpleGraph.cliqueSizes G).ncard : ℝ) := by
   sorry
 
 /--
@@ -87,7 +73,7 @@ $n-\log_2n+O(1)$ different sizes, which Moon and Moser [MoMo65] showed to be bes
 @[category research solved, AMS 5]
 theorem erdos_775.variants.moon_moser :
     ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
-      ((graphCliqueSizes G).ncard : ℝ) ≤ (n : ℝ) - Real.logb 2 (n : ℝ) + C := by
+      ((SimpleGraph.cliqueSizes G).ncard : ℝ) ≤ (n : ℝ) - Real.logb 2 (n : ℝ) + C := by
   sorry
 
 end Erdos775
