@@ -27,7 +27,7 @@ import FormalConjecturesUtil
   420-425.
 -/
 
-open Classical Filter Asymptotics
+open Filter Asymptotics
 
 open scoped Pointwise
 
@@ -36,7 +36,7 @@ namespace Erdos333
 /--
 Let $A\subseteq \mathbb{N}$ be a set of density zero. Does there exist a $B$ such that
 $A\subseteq B+B$ and
-\[\lvert B\cap \{1,\ldots,N\}\rvert =o(N^{1/2})\]
+$$\lvert B\cap \{1,\ldots,N\}\rvert =o(N^{1/2})$$
 for all large $N$?
 
 The answer is no. Erdős and Newman [ErNe77] have proved this is true when $A$ is the set of
@@ -49,7 +49,7 @@ See also [806].
 theorem erdos_333 : answer(False) ↔
     ∀ A : Set ℕ, A.HasDensity 0 →
       ∃ B : Set ℕ, A ⊆ B + B ∧
-        (fun N => (((Finset.Icc 1 N).filter (· ∈ B)).card : ℝ)) =o[atTop]
+        (fun N => ((B ∩ Set.Icc 1 N).ncard : ℝ)) =o[atTop]
           fun N => Real.sqrt N := by
   sorry
 

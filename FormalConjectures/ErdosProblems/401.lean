@@ -32,7 +32,7 @@ namespace Erdos401
 /--
 Is there some function $f(r)$ such that $f(r)\to \infty$ as $r\to\infty$, such that, for
 infinitely many $n$, there exist $a_1,a_2$ with
-\[a_1+a_2> n+f(r)\log n\]
+$$a_1+a_2> n+f(r)\log n$$
 such that $a_1!a_2! \mid n!2^n3^n\cdots p_r^n$?
 
 It is ambiguous in [ErGr80] what the intended quantifiers are on the variables (they write 'is

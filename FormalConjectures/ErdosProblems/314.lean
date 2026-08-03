@@ -44,13 +44,13 @@ noncomputable def epsilon (n : ℕ) : ℝ := harmonicSum n (mMin n) - 1
 
 /--
 Let $n\geq 1$ and let $m$ be minimal such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$. We define
-\[\epsilon(n) = \sum_{n\leq k\leq m}\frac{1}{k}-1.\]
+$$\epsilon(n) = \sum_{n\leq k\leq m}\frac{1}{k}-1.$$
 How small can $\epsilon(n)$ be? Is it true that
-\[\liminf n^2\epsilon(n)=0?\]
+$$\liminf n^2\epsilon(n)=0?$$
 
 This is true, and shown by Lim and Steinerberger [LiSt24], who further proved that, for any
 $\delta>0$, there exist infinitely many $n$ and $m$ such that
-\[n^2\left\lvert \sum_{n\leq k\leq m}\frac{1}{k}-1\right\rvert\ll \frac{1}{(\log n)^{5/4-\delta}}.\]
+$$n^2\left\lvert \sum_{n\leq k\leq m}\frac{1}{k}-1\right\rvert\ll \frac{1}{(\log n)^{5/4-\delta}}.$$
 Erdős and Graham (and also Lim and Steinerberger) believe that the exponent of $2$ is best
 possible here, in that $\liminf \epsilon(n) n^{2+\delta}=\infty$ for all $\delta>0$.
 -/

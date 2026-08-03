@@ -39,7 +39,7 @@ namespace Erdos164
 
 /--
 A set $A\subset \mathbb{N}$ is primitive if no member of $A$ divides another. Is the sum
-\[\sum_{n\in A}\frac{1}{n\log n}\]
+$$\sum_{n\in A}\frac{1}{n\log n}$$
 maximised over all primitive sets when $A$ is the set of primes?
 
 Erdős [Er35] proved that this sum always converges for a primitive set. Lichtman [Li23] proved
