@@ -48,7 +48,7 @@ multiplicity.)
 Barreto and Leeham, using ChatGPT and Aristotle, have proved a negative answer, which was
 quantified by Tao and Alexeev (see the comments): in fact there are infinitely many $n$ such that,
 for all $k$ with $2^k<n$, $n-2^k$ has at least
-\[\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}\]
+$$\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}$$
 many prime factors.
 -/
 @[category research solved, AMS 11]
@@ -86,7 +86,7 @@ theorem erdos_205.parts.iii : answer(False) ↔
 
 /--
 In fact there are infinitely many $n$ such that, for all $k$ with $2^k<n$, $n-2^k$ has at least
-\[\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}\]
+$$\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}$$
 many prime factors.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos205.lean"]

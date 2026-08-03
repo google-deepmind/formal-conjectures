@@ -88,8 +88,9 @@ theorem erdos_150.variants.seymour (m : ℕ) : 3 ^ m ≤ maxMinimalCuts (3 * m +
   sorry
 
 /--
-The current best-known bonds on $\alpha$ are\[1.4457\leq \alpha \leq \frac{1+\sqrt{5}}{2}\approx
-1.618.\]The lower bound is due to Gaspers and Mackenzie [GaMa18].
+The current best-known bounds on $\alpha$ are
+$$1.4457\leq \alpha \leq \frac{1+\sqrt{5}}{2}\approx 1.618.$$
+The lower bound is due to Gaspers and Mackenzie [GaMa18].
 -/
 @[category research solved, AMS 5]
 theorem erdos_150.variants.lower_bound (α : ℝ)
@@ -98,8 +99,9 @@ theorem erdos_150.variants.lower_bound (α : ℝ)
   sorry
 
 /--
-The current best-known bonds on $\alpha$ are\[1.4457\leq \alpha \leq \frac{1+\sqrt{5}}{2}\approx
-1.618.\]The upper bound is due to Fomin and Villanger [FoVi12] (with a simpler proof in [GaMa18]).
+The current best-known bounds on $\alpha$ are
+$$1.4457\leq \alpha \leq \frac{1+\sqrt{5}}{2}\approx 1.618.$$
+The upper bound is due to Fomin and Villanger [FoVi12] (with a simpler proof in [GaMa18]).
 -/
 @[category research solved, AMS 5]
 theorem erdos_150.variants.upper_bound (α : ℝ)

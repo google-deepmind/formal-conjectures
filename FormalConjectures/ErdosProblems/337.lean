@@ -40,10 +40,10 @@ open scoped Pointwise
 /--
 Let $A\subseteq \mathbb{N}$ be an additive basis (of any finite order) such that
 $\lvert A\cap \{1,\ldots,N\}\rvert=o(N)$. Is it true that
-\[
+$$
 \lim_{N\to \infty}\frac{\lvert (A+A)\cap \{1,\ldots,N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty?
-\]
+$$
 
 The answer is no, and a counterexample was provided by Turjányi [Tu84]. This was generalised (to
 the replacement of $A+A$ by the $h$-fold sumset $hA$ for any $h\geq 2$) by Ruzsa and Turjányi
@@ -72,10 +72,10 @@ theorem erdos_337.variants.h_fold : ∀ h : ℕ, 2 ≤ h →
 
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
-\[
+$$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
-\]
+$$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_337.variants.three_fold :
@@ -88,10 +88,10 @@ theorem erdos_337.variants.three_fold :
 
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
-\[
+$$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
-\]
+$$
 and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
 -/
 @[category research open, AMS 5 11]

@@ -95,7 +95,7 @@ theorem erdos_214.variants.csizmadia_toth : ¬ HasRedCopies 8 := by
 
 /--
 The best known bounds currently are
-\[4\leq k\leq 7.\]
+$$4\leq k\leq 7.$$
 -/
 @[category research solved, AMS 5 52]
 theorem erdos_214.variants.bounds : 4 ≤ k ∧ k ≤ 7 := by

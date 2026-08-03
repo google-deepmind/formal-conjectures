@@ -57,7 +57,7 @@ Let $f(N)$ be the maximum possible $r$, and let $L(N)=\exp(\sqrt{\log N\log\log 
 
 This was proved by GPT-5.4 Pro (prompted by Ho Boon Suan), using the argument of [BFV13] together
 with the resolution of the Kahn-Kalai conjecture by Park and Pham [PaPh24], so that
-\[f(N)= N L(N)^{-1+o(1)}.\]
+$$f(N)= N L(N)^{-1+o(1)}.$$
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos202.lean"]
 theorem erdos_202 : ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
