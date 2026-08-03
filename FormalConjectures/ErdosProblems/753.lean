@@ -49,14 +49,14 @@ vertices) a colouring of each vertex by a colour on its list can be chosen such 
 vertices receive distinct colours.
 
 Does there exist some constant $c>0$ such that
-\[\chi_L(G)+\chi_L(G^c)> n^{1/2+c}\]
+$$\chi_L(G)+\chi_L(G^c)> n^{1/2+c}$$
 for every graph $G$ on $n$ vertices (where $G^c$ is the complement of $G$)?
 
 A problem of Erdős, Rubin, and Taylor.
 
 The answer is no: Alon [Al92] proved that, for every $n$, there exists a graph $G$ on $n$ vertices
 such that
-\[\chi_L(G)+\chi_L(G^c)\ll (n\log n)^{1/2},\]
+$$\chi_L(G)+\chi_L(G^c)\ll (n\log n)^{1/2},$$
 where the implied constant is absolute.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos753.lean"]
@@ -68,7 +68,7 @@ theorem erdos_753 : answer(False) ↔
 
 /--
 Alon [Al92] proved that, for every $n$, there exists a graph $G$ on $n$ vertices such that
-\[\chi_L(G)+\chi_L(G^c)\ll (n\log n)^{1/2},\]
+$$\chi_L(G)+\chi_L(G^c)\ll (n\log n)^{1/2},$$
 where the implied constant is absolute.
 -/
 @[category research solved, AMS 5]

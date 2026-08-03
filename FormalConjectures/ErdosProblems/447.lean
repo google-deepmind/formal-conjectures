@@ -56,10 +56,10 @@ theorem erdos_447.parts.i : answer(True) ↔
 /--
 How large can a union-free collection $\mathcal{F}$ of subsets of $[n]$ be? By union-free we mean
 there are no solutions to $A\cup B=C$ with distinct $A,B,C\in \mathcal{F}$. Perhaps even
-\[\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}?\]
+$$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}?$$
 
 Solved by Kleitman [Kl71], who proved
-\[\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}.\]
+$$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}.$$
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
 theorem erdos_447.parts.ii : answer(True) ↔

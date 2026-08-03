@@ -77,7 +77,7 @@ theorem erdos_692.parts.ii (n : ℕ) :
 
 /--
 Erdős proved that
-\[\delta_1(n,m) \ll \frac{1}{(\log n)^c}\]
+$$\delta_1(n,m) \ll \frac{1}{(\log n)^c}$$
 for all $m$, for some constant $c>0$.
 -/
 @[category research solved, AMS 11]
@@ -88,7 +88,7 @@ theorem erdos_692.variants.erdos_upper_bound :
 
 /--
 Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$. For example,
-\[\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.\]
+$$\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_692.variants.cambie_three :

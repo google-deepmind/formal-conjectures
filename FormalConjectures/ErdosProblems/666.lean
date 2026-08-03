@@ -48,7 +48,7 @@ def Q (n : ℕ) : SimpleGraph (Fin n → Bool) where
 Let $Q_n$ be the $n$-dimensional hypercube graph (so that $Q_n$ has $2^n$ vertices and $n2^{n-1}$
 edges). Is it true that, for every $\epsilon>0$, if $n$ is sufficiently large, every subgraph of
 $Q_n$ with
-\[\geq \epsilon  n2^{n-1}\]
+$$\geq \epsilon  n2^{n-1}$$
 many edges contains a $C_6$?
 
 The answer to this problem is no: Chung [Ch92] and Brouwer, Dejter, and Thomassen [BDT93]

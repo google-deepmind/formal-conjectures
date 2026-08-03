@@ -33,10 +33,10 @@ open Filter
 
 /--
 Is there some $h(n)\to \infty$ such that for all $2\leq i<j\leq n/2$
-\[\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq h(n)?\]
+$$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq h(n)?$$
 
 This was resolved by Bergman [Be11], who proved that for any $2\leq i<j\leq n/2$
-\[\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},\]
+$$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},$$
 where the implied constant is absolute.
 -/
 @[category research solved, AMS 5 11]
@@ -48,8 +48,8 @@ theorem erdos_698 : answer(True) ↔
 
 /--
 A problem of Erdős and Szekeres, who observed that
-\[\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq \frac{\binom{n}{i}}{\binom{j}{i}}
-\geq 2^i\]
+$$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq \frac{\binom{n}{i}}{\binom{j}{i}}
+\geq 2^i$$
 (in particular the greatest common divisor is always $>1$).
 -/
 @[category research solved, AMS 5 11]
@@ -71,7 +71,7 @@ theorem erdos_698.variants.erdos_szekeres_sharp (p : ℕ) (hp : p.Prime) (hp2 : 
 
 /--
 This was resolved by Bergman [Be11], who proved that for any $2\leq i<j\leq n/2$
-\[\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},\]
+$$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},$$
 where the implied constant is absolute.
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos698.lean"]

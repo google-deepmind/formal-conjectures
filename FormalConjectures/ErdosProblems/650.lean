@@ -53,7 +53,7 @@ Estimate $f(m)$.
 GPT 5.4 Pro (prompted by He, Li, and Tang) proved $f(m)\leq \lceil 2\sqrt{m}\rceil$. A
 corresponding lower bound was given by GPT 5.4 Pro and Aristotle; it is now known (see the paper
 of van Doorn, Li, and Tang [VLT26]) that
-\[f(m) = \min(m, \lceil 2\sqrt{m}\rceil)\]
+$$f(m) = \min(m, \lceil 2\sqrt{m}\rceil)$$
 for all $m$.
 -/
 @[category research solved, AMS 5 11]
@@ -70,7 +70,7 @@ In particular is it true that $f(m)\leq \sqrt{m}$?
 GPT 5.4 Pro (prompted by He, Li, and Tang) proved $f(m)\leq \lceil 2\sqrt{m}\rceil$. A
 corresponding lower bound was given by GPT 5.4 Pro and Aristotle; it is now known (see the paper
 of van Doorn, Li, and Tang [VLT26]) that
-\[f(m) = \min(m, \lceil 2\sqrt{m}\rceil)\]
+$$f(m) = \min(m, \lceil 2\sqrt{m}\rceil)$$
 for all $m$.
 -/
 @[category research solved, AMS 5 11]
