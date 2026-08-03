@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 72
 
 More commonly known as the **no-three-in-line problem**.
 
-Given $N \lt 2$ and a more than $2 * N$ points on an $N \times N$-grid,
+Given $N > 2$ and more than $2 * N$ points on an $N \times N$-grid,
 are there $3$ of the points on a common line?
 
 *References:*
@@ -50,16 +50,16 @@ theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
     AllowedSetSize k N ≤ (k - 1) * N := by
   sorry
 
-/-- $N, k$ when the AllowedSetSize of $N$ for $k$ is $k * N$. -/
+/-- The proposition that the allowed-set size for $k$ and $N$ is $(k - 1) * N$. -/
 def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
 /-- The **no-k-in-line problem**:
-For $N \geq k$ and $k > 1$, the AllowedSetSize in $(k - 1) * N$, i. e. on an $N \times N$ subset,
-there is a set of $k * N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
+there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
 -/
 @[category research open, AMS 5 52]
-theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 1 < k) (h : k ≤ N) : NoKInLineFor k N := by
+theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
@@ -75,15 +75,16 @@ alias no_three_in_line := green_72
 theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
-/-- For $N \leq 60$, this has been verfied with computers. -/
+/-- For $N \leq 60$, this has been verified with computers. -/
 @[category research solved, AMS 5 52]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry
 
-/-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$. -/
+/-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$
+and $N \geq k$. -/
 @[category research solved, AMS 5 52]
-theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) :
+theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) (hN : k ≤ N) :
     NoKInLineFor k N := by
   sorry
 

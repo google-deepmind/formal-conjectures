@@ -23,12 +23,12 @@ public import Mathlib.Tactic.IntervalCases
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
+  open scoped Classical in
   if h : S.toFinset.Nonempty then
     (S.toFinset.image (fun s => G.dist v s)).min' (Finset.Nonempty.image h _)
   else 0
@@ -41,15 +41,20 @@ noncomputable def averageDistance (G : SimpleGraph α) : ℝ :=
   else
     0
 
-/-- The floor of the average distance of `G`. -/
+/-- Check if a list of vertices forms an induced path in `G`. -/
+def isInducedPath (G : SimpleGraph α) (l : List α) : Prop :=
+  l.Nodup ∧ ∀ i j : Fin l.length, G.Adj (l.get i) (l.get j) ↔ i.val + 1 = j.val ∨ j.val + 1 = i.val
+
+/-- The path number of a graph: The number of vertices of a largest induced path of the graph. -/
 noncomputable def path (G : SimpleGraph α) : ℕ :=
-  if G.Connected then
-    Nat.floor (averageDistance G)
-  else
-    0
+  open scoped Classical in
+  let induced_paths := Finset.univ.filter (fun s : Finset α =>
+    ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
+  (induced_paths.image Finset.card).max.getD 0
 
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
   if h : s_comp.Nonempty then
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
@@ -62,6 +67,7 @@ vertex outside $S$).
 Counterpart to `ecc`: the outer minimum (instead of maximum) of the
 distance-to-set function, restricted to vertices outside $S$. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let outside := Finset.univ.filter (fun v : α => v ∉ S)
   if h : outside.Nonempty then
     (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
@@ -73,11 +79,23 @@ which contribute distance `0`.) Returns `0` when `S` is empty.
 
 Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
 not exclude any vertex; it is the conventional definition of "set eccentricity"
-used in DeLaVina's WOWII conjectures 18, 145 and 146.
+used in DeLaVina's WOWII conjectures 142, 145 and 146.
 -/
 noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let dists := Finset.univ.image (fun v => distToSet G v S)
   if h : dists.Nonempty then dists.max' h else 0
+
+/-- The maximum distance between two vertices of a set `S`:
+$\operatorname{dist}_{\max}(S) = \max\{\operatorname{dist}_G(u,v) \mid u, v \in S\}$.
+Returns `0` when `S` is empty or a singleton.
+
+This is DeLaVina's `dist_max(S)` invariant ("distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 18. It is distinct from
+`eccSet`, which measures distances from arbitrary vertices *to* the set. -/
+noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
+  let members := Finset.univ.filter (fun v : α => v ∈ S)
+  (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
@@ -289,5 +307,35 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     ring
   · simp
 
+
+/-- The set of pairs of distinct vertices with even distance > 0. -/
+noncomputable def evenDistancePairs (G : SimpleGraph α) : Finset (α × α) :=
+  Finset.univ.filter (fun p => G.dist p.1 p.2 % 2 = 0 ∧ G.dist p.1 p.2 > 0)
+
+/-- Minimum even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def minEvenDistance (G : SimpleGraph α) : ℕ :=
+  letI pairs := G.evenDistancePairs
+  if h : pairs.Nonempty then
+    letI dists := pairs.image (fun p => G.dist p.1 p.2)
+    (dists.min' (Finset.Nonempty.image h _))
+  else 0
+
+/-- Maximum even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def maxEvenDistance (G : SimpleGraph α) : ℕ :=
+  letI pairs := G.evenDistancePairs
+  if h : pairs.Nonempty then
+    letI dists := pairs.image (fun p => G.dist p.1 p.2)
+    (dists.max' (Finset.Nonempty.image h _))
+  else 0
+
+/-- Average even distance between distinct vertices in `G`.
+    Only positive even distances are considered. Returns 0 if no such distance exists. -/
+noncomputable def averageEvenDistance (G : SimpleGraph α) : ℚ :=
+  letI pairs := G.evenDistancePairs
+  if pairs.card > 0 then
+    (∑ p ∈ pairs, (G.dist p.1 p.2 : ℚ)) / (pairs.card : ℚ)
+  else 0
 
 end SimpleGraph

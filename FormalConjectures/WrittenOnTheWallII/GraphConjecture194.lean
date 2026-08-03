@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 194
@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace WrittenOnTheWallII.GraphConjecture194
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -57,6 +57,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ averageIndepNeighbors G := by
 
 /-- The edgeless graph on 2 vertices has 2 vertices. -/
 @[category test, AMS 5]
-example : n (⊥ : SimpleGraph (Fin 2)) = 2 := by simp [n]
+example : Fintype.card (Fin 2) = 2 := by decide
 
 end WrittenOnTheWallII.GraphConjecture194

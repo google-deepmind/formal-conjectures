@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1
@@ -87,7 +87,7 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ �
 
 /--
 A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
-record $\sqrt{2 / \pi}$ first provied in unpublished work of Elkies and Gleason.
+record $\sqrt{2 / \pi}$ first provided in unpublished work of Elkies and Gleason.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
