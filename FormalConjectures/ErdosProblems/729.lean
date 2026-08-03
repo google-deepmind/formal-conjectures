@@ -29,7 +29,7 @@ namespace Erdos729
 
 /--
 Let $C>0$ be a constant. Are there infinitely many integers $a,b,n$ with $a+b> n+C\log n$ such
-that the denominator of\[\frac{n!}{a!b!}\]contains only primes $\ll_C 1$?
+that the denominator of $$\frac{n!}{a!b!}$$contains only primes $\ll_C 1$?
 
 Erdős [Er68c] proved that if $a!b!\mid n!$ then $a+b\leq n+O(\log n)$. This has been proved in the affirmative by Barreto and Leeham, using ChatGPT and Aristotle, with a modification of the argument used for [728].
 -/

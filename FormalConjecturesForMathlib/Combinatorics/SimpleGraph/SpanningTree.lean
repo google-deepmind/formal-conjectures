@@ -23,11 +23,12 @@ public import Mathlib.Data.Real.Archimedean
 namespace SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-open Classical Finset List
+open Finset List
 
 /-- `Ls G` is the maximum number of leaves over all spanning trees of `G`.
 It is defined to be `0` when `G` is not connected. -/
 noncomputable def Ls (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
+  open scoped Classical in
   letI spanningTrees := { T : Subgraph G | T.IsSpanning ∧ IsTree T.coe }
   letI leaves (T : Subgraph G) := T.verts.toFinset.filter (fun v => T.degree v = 1)
   letI num_leaves (T : Subgraph G) := (leaves T).card
