@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
 -/
 
-open Classical SimpleGraph Finset Filter
+open SimpleGraph Finset Filter
 
 namespace Erdos85
 
@@ -31,6 +31,7 @@ Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with mi
 f(n)$ contains a $C_4$.
 -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
 /--
