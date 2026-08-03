@@ -23,12 +23,12 @@ public import Mathlib.Tactic.IntervalCases
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
+  open scoped Classical in
   if h : S.toFinset.Nonempty then
     (S.toFinset.image (fun s => G.dist v s)).min' (Finset.Nonempty.image h _)
   else 0
@@ -47,12 +47,14 @@ def isInducedPath (G : SimpleGraph α) (l : List α) : Prop :=
 
 /-- The path number of a graph: The number of vertices of a largest induced path of the graph. -/
 noncomputable def path (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   let induced_paths := Finset.univ.filter (fun s : Finset α =>
     ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
   (induced_paths.image Finset.card).max.getD 0
 
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
   if h : s_comp.Nonempty then
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
@@ -65,6 +67,7 @@ vertex outside $S$).
 Counterpart to `ecc`: the outer minimum (instead of maximum) of the
 distance-to-set function, restricted to vertices outside $S$. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let outside := Finset.univ.filter (fun v : α => v ∉ S)
   if h : outside.Nonempty then
     (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
