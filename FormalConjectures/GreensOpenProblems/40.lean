@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import Mathlib.InformationTheory.Hamming
 
 /-!
@@ -34,8 +34,6 @@ open scoped ENNReal Pointwise
 
 namespace Green40
 
-/-- The vector space $\mathbb{F}_2^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /-- The Hamming ball of radius $r$ in $\mathbb{F}_2^n$. -/
 def hammingBall (n r : ℕ) : Set (𝔽₂ n) :=

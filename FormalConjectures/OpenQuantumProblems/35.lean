@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 35: existence of absolutely maximally entangled pure states
@@ -46,9 +46,13 @@ of the parties, the corresponding reduced density matrix is maximally mixed.
 - F. Huber, O. Gühne, and J. Siewert,
   *Absolutely maximally entangled states of seven qubits do not exist*,
   Phys. Rev. Lett. 118, 200502 (2017), arXiv:1608.06228.
+- F. Huber, C. Eltschka, J. Siewert, O. Gühne,
+  *Bounds on absolutely maximally entangled states from shadow inequalities, and the quantum MacWilliams identity*,
+  J. Phys. A: Math. Theor. 51 175301 (2018), arXiv:1708.06298.
 - F. Huber and M. Grassl,
   *Quantum Codes of Maximal Distance and Highly Entangled Subspaces*,
   Quantum 4, 284 (2020), arXiv:1907.07733.
+- F. Huber and N. Wyderka,  Table of AME states,  Online available at http://www.tp.nt.uni-siegen.de/+fhuber/ame.html.
 - S. A. Rather, A. Burchardt, W. Bruzda, G. Rajchel-Mieldzioć,
   A. Lakshminarayan, and K. Życzkowski,
   *Thirty-six entangled officers of Euler: Quantum solution to a classically impossible problem*,
@@ -805,10 +809,21 @@ theorem ame_11_3_open :
     answer(sorry) ↔ ExistsAME 11 3 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist?
+
+Answer: `AME(11, 4)` exists. The graph state defined by the circulant matrix Gamma
+    over $GF(4)$ with first row $(0, 0, 0, 1, ω, ω, ω, ω, 1, 0, 0)$ is an
+    absolutely maximally entangled state of $11$ ququarts.
+   This result has been found by Moritz Firsching and Goran Žužić using an
+experimental pipeline
+    
+    
+ Before, it was already known that there is a quantum code for `[11,0]]_5`, which corresponds to an `AME(11,4)` state (which is another approach to a solution). 
+      -/
+@[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/91bed229b434b68d66f5fd35cdcfee19a79985e8/FormalConjectures/OpenQuantumProblems/35.lean#L1861"]
 theorem ame_11_4_open :
-    answer(sorry) ↔ ExistsAME 11 4 := by
+    answer(True) ↔ ExistsAME 11 4 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist?

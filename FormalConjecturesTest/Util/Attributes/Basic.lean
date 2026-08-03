@@ -13,11 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Attributes.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.NumberTheory.FLT.Basic
-import Mathlib.RingTheory.Algebraic.Defs
+public import FormalConjecturesUtil.Attributes.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.NumberTheory.FLT.Basic
+public import Mathlib.RingTheory.Algebraic.Defs
+
+@[expose] public section
 
 
 -- The `Category` and `ProblemSubject` attributes
