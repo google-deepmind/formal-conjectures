@@ -69,9 +69,11 @@ theorem a_6 : a 6 = 53 := by norm_num [a, b]
 theorem a_7 : a 7 = 5 := by norm_num [a, b]
 
 /--
-"Does the sequence ... contain every prime?"
+"Does the sequence ... contain every prime? ... [It] was considered by Guy and Nowakowski and later by Shanks, [Wagstaff 1993] computed the sequence through the 43rd term. The computational problem inherent in continuing the sequence further is the enormous size of the numbers that must be factored. Already the number a(1)* ... *a(43) + 1 has 180 digits." - Crandall and Pomerance
 
-See [A000945](https://oeis.org/A000945).
+See  also A. A. Mullin,
+["Research Problem 8 (ii)"](https://doi.org/10.1090/S0002-9904-1963-11017-4),
+*Bull. Amer. Math. Soc.* **69** (1963), p. 737.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
