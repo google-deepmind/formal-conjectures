@@ -31,14 +31,9 @@ open Filter
 
 namespace Erdos447
 
-/-- A collection $\mathcal{F}$ of sets is *union-free* if there are no solutions to
-$A\cup B=C$ with distinct $A,B,C\in \mathcal{F}$. -/
-def UnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
-  ∀ A ∈ F, ∀ B ∈ F, ∀ C ∈ F, A ≠ B → A ≠ C → B ≠ C → A ∪ B ≠ C
-
 /-- The largest size of a union-free collection $\mathcal{F}$ of subsets of $[n]$. -/
 noncomputable def maxUnionFree (n : ℕ) : ℕ :=
-  sSup { k | ∃ F : Finset (Finset (Fin n)), UnionFree F ∧ F.card = k }
+  sSup { k | ∃ F : Finset (Finset (Fin n)), F.UnionFree ∧ F.card = k }
 
 /--
 How large can a union-free collection $\mathcal{F}$ of subsets of $[n]$ be? By union-free we mean

@@ -36,14 +36,6 @@ open scoped Finset
 
 namespace Erdos666
 
-/-- $Q_n$ is the $n$-dimensional hypercube graph: the vertices are the $n$-bit vectors, and two
-vertices are adjacent when they differ in exactly one coordinate. It has $2^n$ vertices and
-$n2^{n-1}$ edges. -/
-def Q (n : ℕ) : SimpleGraph (Fin n → Bool) where
-  Adj u v := #{i | u i ≠ v i} = 1
-  symm _ _ := by simp [eq_comm]
-  loopless _ := by simp
-
 /--
 Let $Q_n$ be the $n$-dimensional hypercube graph (so that $Q_n$ has $2^n$ vertices and $n2^{n-1}$
 edges). Is it true that, for every $\epsilon>0$, if $n$ is sufficiently large, every subgraph of
@@ -56,7 +48,7 @@ constructed an edge-partition of $Q_n$ into four subgraphs, each containing no $
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos666.lean"]
 theorem erdos_666 : answer(False) ↔
-    ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ H : SimpleGraph (Fin n → Bool), H ≤ Q n →
+    ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ H : SimpleGraph (Fin n → Bool), H ≤ hypercube n →
       ε * n * 2 ^ (n - 1 : ℕ) ≤ (H.edgeSet.ncard : ℝ) → (cycleGraph 6 ⊑ H) := by
   sorry
 

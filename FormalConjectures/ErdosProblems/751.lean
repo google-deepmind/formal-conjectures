@@ -29,10 +29,6 @@ import FormalConjecturesUtil
 
 namespace Erdos751
 
-/-- The set $\{m_1, m_2, \ldots\}$ of lengths of the cycles in a graph `G`. -/
-def cycleLengths {V : Type*} (G : SimpleGraph V) : Set ℕ :=
-  {m | ∃ (v : V) (c : G.Walk v v), c.IsCycle ∧ c.length = m}
-
 /--
 Let $G$ be a graph with chromatic number $\chi(G)=4$. If $m_1<m_2<\cdots$ are the lengths of the
 cycles in $G$ then can $\min(m_{i+1}-m_i)$ be arbitrarily large?
@@ -45,7 +41,7 @@ chromatic number $4$.
 theorem erdos_751.parts.i :
     answer(False) ↔
       ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
-        ∀ m ∈ cycleLengths G, ∀ m' ∈ cycleLengths G, m < m' → m + k ≤ m' := by
+        ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
   sorry
 
 /--
@@ -61,7 +57,7 @@ chromatic number $4$.
 theorem erdos_751.parts.ii :
     answer(False) ↔
       ∀ k g : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧ g ≤ G.girth ∧
-        ∀ m ∈ cycleLengths G, ∀ m' ∈ cycleLengths G, m < m' → m + k ≤ m' := by
+        ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
   sorry
 
 /--
@@ -71,7 +67,7 @@ whose lengths differ by at most $2$.
 @[category research solved, AMS 5]
 theorem erdos_751.variants.bondy_vince {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (hG : 3 ≤ G.minDegree) :
-    ∃ m ∈ cycleLengths G, ∃ m' ∈ cycleLengths G, m < m' ∧ m' ≤ m + 2 := by
+    ∃ m ∈ G.cycleLengths, ∃ m' ∈ G.cycleLengths, m < m' ∧ m' ≤ m + 2 := by
   sorry
 
 end Erdos751

@@ -47,13 +47,6 @@ def IsDelta₁ (n m : ℕ) (δ : ℝ) : Prop :=
   (exactlyOneDivisorIn n m).HasDensity δ
 
 /--
-The sequence $f$ is unimodular on $(a, \infty)$ if it increases until some point and
-decreases thereafter.
--/
-def UnimodularOn (f : ℕ → ℝ) (a : ℕ) : Prop :=
-  ∃ M > a, MonotoneOn f (Set.Ioc a M) ∧ AntitoneOn f (Set.Ici M)
-
-/--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 Is $\delta_1(n,m)$ unimodular for $m>n+1$ (i.e. increases until some $m$ then decreases
 thereafter)?
