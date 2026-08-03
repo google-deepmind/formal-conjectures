@@ -33,7 +33,7 @@ namespace Erdos1193
 Let $A\subset \mathbb{N}$ and let $g(n)$ be a non-decreasing function of $n$ which is always $>0$.
 
 Is the lower density of
-\[\{ n : 1_A\ast 1_A(n)=g(n)\}\]
+$$\{ n : 1_A\ast 1_A(n)=g(n)\}$$
 always $0$?
 
 The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming $0\in\mathbb{N}$)
@@ -50,7 +50,7 @@ theorem erdos_1193.parts.i : answer(False) ↔
 Let $A\subset \mathbb{N}$ and let $g(n)$ be a non-decreasing function of $n$ which is always $>0$.
 
 Is the upper density of
-\[\{ n : 1_A\ast 1_A(n)=g(n)\}\]
+$$\{ n : 1_A\ast 1_A(n)=g(n)\}$$
 always $<c$ for some constant $c<1$?
 
 The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming $0\in\mathbb{N}$)
