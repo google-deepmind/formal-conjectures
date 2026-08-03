@@ -85,6 +85,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SubgraphIsomorphism
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.UnitDistancePlaneGraph
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
@@ -127,6 +128,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors
+public import FormalConjecturesForMathlib.NumberTheory.Harmonic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
