@@ -51,7 +51,7 @@ and the existence of this limit was proved by Erdős.
 
 See also [208].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-489/F061/Erdos489.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
 theorem erdos_489 : answer(True) ↔
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
