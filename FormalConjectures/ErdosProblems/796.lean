@@ -56,9 +56,14 @@ for some constant $c$?
 
 The answer is yes: the rescaled error `normalizedError` converges.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-796/Research/CanonicalTail.lean"]
+@[category research open, AMS 11]
 theorem erdos_796 :
-    answer(True) ↔ ∃ c : ℝ, Tendsto normalizedError atTop (𝓝 c) := by
+    answer(sorry) ↔ ∃ c : ℝ, Tendsto normalizedError atTop (𝓝 c) := by
+  sorry
+
+/-- Star Fleet Math gives a machine-checked proof that the normalized error converges. -/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-796/Research/CanonicalTail.lean"]
+theorem erdos_796.error_converges : ∃ c : ℝ, Tendsto normalizedError atTop (𝓝 c) := by
   sorry
 
 end Erdos796

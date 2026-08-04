@@ -68,8 +68,15 @@ minimal distinct covering systems with all moduli in $[1,x]$. Estimate $F(x)$.
 
 The estimate is `log(log F(x)) / log x → 1`.
 -/
+@[category research open, AMS 11]
+theorem erdos_1188 : answer(sorry) ↔
+    Tendsto (fun x : ℕ => Real.log (Real.log (coveringCount x : ℝ)) / Real.log (x : ℝ))
+      atTop (𝓝 1) := by
+  sorry
+
+/-- Star Fleet Math gives a machine-checked proof of the estimate. -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-1188/Research/SparseAsymptotic.lean"]
-theorem erdos_1188 :
+theorem erdos_1188.loglog_ratio_tendsto_one :
     Tendsto (fun x : ℕ => Real.log (Real.log (coveringCount x : ℝ)) / Real.log (x : ℝ))
       atTop (𝓝 1) := by
   sorry
