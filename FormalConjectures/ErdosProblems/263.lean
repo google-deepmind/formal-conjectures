@@ -103,7 +103,8 @@ On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisf
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
 by the above folklore result `erdos_263.variants.folklore`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/arex1337/erdos-263-lean/blob/95de79a5cd49050df80e95be6cfc161580830799/Erdos263/Folklore.lean#L700"]
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : StrictMono a)
