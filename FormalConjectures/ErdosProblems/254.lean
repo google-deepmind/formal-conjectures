@@ -35,6 +35,19 @@ An integer `n` can be written as a sum of distinct elements of `A`.
 def IsSumOfDistinct (A : Set ℕ) (n : ℕ) : Prop :=
   ∃ S : Finset ℕ, (S : Set ℕ) ⊆ A ∧ S.sum (fun x ↦ x) = n
 
+/-- The hypothesis `¬ Summable (fun n : A ↦ distToNearestInt (θ * n))` used below says exactly
+that the partial sums of `‖θ n‖` over `n ∈ A` diverge, which is the form the linked proof uses.
+`distToNearestInt` is nonnegative, so this is an instance of
+`not_summable_subtype_iff_tendsto_sum_indicator`. -/
+@[category API, AMS 11]
+theorem not_summable_iff_tendsto_partial_sums (A : Set ℕ) (θ : ℝ) :
+    ¬ Summable (fun n : A ↦ distToNearestInt (θ * (n : ℝ))) ↔
+      Tendsto (fun N : ℕ =>
+          ∑ n ∈ Finset.range N, A.indicator (fun n => distToNearestInt (θ * (n : ℝ))) n)
+        atTop atTop :=
+  not_summable_subtype_iff_tendsto_sum_indicator
+    (f := fun m : ℕ => distToNearestInt (θ * (m : ℝ))) fun _ => distToNearestInt_nonneg _
+
 /--
 Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\cap [1,x]\rvert \to
 \infty\textrm{ as }x\to \infty$ and $\sum_{n\in A} \{ \theta n\}=\infty$ for every $\theta\in
