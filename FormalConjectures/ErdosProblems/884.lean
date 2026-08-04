@@ -78,9 +78,12 @@ This conjecture has been **disproved**:
 - Daniel Larsen subsequently gave an
   [unconditional disproof](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf).
 
+This was formalized in lean by Honicky using Claude Fable 5.
+
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/honicky/erdos884/blob/main/Erdos884.lean"]
 theorem erdos_884 :
     answer(False) ↔ Erdos884Prop := by
   sorry
