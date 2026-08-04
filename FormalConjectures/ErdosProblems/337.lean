@@ -52,8 +52,12 @@ the replacement of $A+A$ by the $h$-fold sumset $hA$ for any $h\geq 2$) by Ruzsa
 "Additive basis" is `Set.IsAsymptoticAddBasis`: some finite $h$ has $hA$ containing every
 sufficiently large integer. The exact notion `Set.IsAddBasis`, which asks that $hA$ be all of
 $\mathbb{N}$, would force $0, 1 \in A$ and is not the class these results are about.
+
+The linked file states the basis hypothesis as `∃ N₀, Set.Ici N₀ ⊆ iterated_sumset A k` and
+indexes both counting functions by a real $x$ through $\lfloor x\rfloor$, where the counting
+functions here are indexed by $N : \mathbb{N}$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos337.lean"]
 theorem erdos_337 : answer(False) ↔
     ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
