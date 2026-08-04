@@ -188,13 +188,32 @@ meta unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])
 
-/-- The `#AMS` outputs a list of the AMS Math Subjects and their corresponding indices -/
-elab "#AMS" : command => do
+/-- Records the subject list as a constant.
+
+This has to happen here, in the module that declares the constructor docstrings. Imported
+docstrings are only exported at `.server` level, so `Lean.findDocString?` returns `none` for
+every constructor once `AMS` is reached through an import: the list looks right in the editor
+and comes out empty under `lake build`. Reading the docstrings once, where they are still
+visible, and storing the result avoids that. -/
+elab "#recordAMSSubjects" : command => do
   let env ← Lean.getEnv
-  let lines ← (List.range 97).filterMapM fun n => do
+  let lines ← (List.range 98).filterMapM fun n => do
     let nm : Name := Name.str ``AMS (ToString.toString n)
     if ← Lean.hasConst nm then
       if let some doc := ← Lean.findDocString? env nm then
-        return s!"{n} {doc.trimAscii}"
+        return some s!"{n} {doc.trimAscii}"
     return none
-  Lean.logInfo ("\n".intercalate lines)
+  -- `mkIdent` rather than writing the name in the quotation: a quoted identifier picks up a
+  -- macro scope, and the constant then has a hygienic name no downstream module can find.
+  let name := Lean.mkIdent (.mkSimple "amsSubjects")
+  elabCommand (← `(command| @[expose] def $name : String := $(quote ("\n".intercalate lines))))
+
+#recordAMSSubjects
+
+/-- The `#AMS` outputs a list of the AMS Math Subjects and their corresponding indices -/
+elab "#AMS" : command => do
+  let some ci := (← Lean.getEnv).find? (.mkSimple "amsSubjects")
+    | throwError "`amsSubjects` is missing; `#recordAMSSubjects` should have declared it"
+  let some (.lit (.strVal subjects)) := ci.value?
+    | throwError "`amsSubjects` is not a string literal"
+  Lean.logInfo subjects
