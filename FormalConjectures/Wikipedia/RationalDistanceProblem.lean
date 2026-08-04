@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rational distance problem
@@ -26,6 +27,8 @@ asked by user [Yuan Yang](https://mathoverflow.net/users/177957/yuan-yang)
 - D19 in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
 by *Richard K. Guy*
 -/
+
+@[expose] public section
 
 namespace RationalDistanceProblem
 

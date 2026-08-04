@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Idoneal numbers completeness conjecture
@@ -33,6 +33,8 @@ The Idoneal Numbers Completeness Conjecture asserts that the following list of
 - [Wikipedia: Idoneal number](https://en.wikipedia.org/wiki/Idoneal_number)
 - [OEIS A000926](https://oeis.org/A000926)
 -/
+
+@[expose] public section
 
 namespace Idoneal
 

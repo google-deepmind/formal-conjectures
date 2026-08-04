@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 39
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BJR11] Bollobás, Béla, Svante Janson, and Oliver Riordan. "On covering by translates of a set."
   Random Structures & Algorithms 38.1‐2 (2011): 33-67.
 -/
+
+@[expose] public section
 
 open Filter Topology
 open scoped Pointwise

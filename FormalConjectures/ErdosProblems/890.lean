@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 890
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive
   integers. Illinois J. Math. (1967), 428--430.
 -/
+
+@[expose] public section
 
 open Filter Finset Real
 open scoped Nat.Prime ArithmeticFunction.omega

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
  - [EPS87] Erdős, P., Pomerance, C., and Sarkőzy, A., On locally repeated values of
    arithmetic functions. III. Proc. Amer. Math. Soc. (1987), 1--7.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped ArithmeticFunction.sigma

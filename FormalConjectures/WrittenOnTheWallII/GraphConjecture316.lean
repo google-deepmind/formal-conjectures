@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 316
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture316
 
@@ -51,6 +54,7 @@ example : averageDegree (⊥ : SimpleGraph (Fin 3)) = 0 := by
 /-- In `P₃` (path 0-1-2), the average degree is 4/3 and there are 2 pendant vertices. -/
 @[category test, AMS 5]
 example : averageDegree (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 4/3 := by
-  unfold averageDegree; decide +native
+  unfold averageDegree
+  decide +kernel
 
 end WrittenOnTheWallII.GraphConjecture316

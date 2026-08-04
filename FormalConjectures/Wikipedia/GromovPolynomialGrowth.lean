@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Gromov's theorem on groups of polynomial growth
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth)
 -/
+
+@[expose] public section
 
 /-
 Note: this was obtained in work with Kasia Jankiewicz and Catherine Pfaff, and using

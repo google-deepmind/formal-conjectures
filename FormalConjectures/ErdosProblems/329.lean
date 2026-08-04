@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 329: Maximum Density of Sidon Sets
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [AlMi25] B. Alexeev and D. G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof. [arXiv:2510.19804](https://arxiv.org/abs/2510.19804) (2025).
 - [Ha47] Hall, Jr., Marshall, Cyclic projective planes. Duke Math. J. (1947), 1079--1090.
 -/
+
+@[expose] public section
 
 open Function Set Filter
 

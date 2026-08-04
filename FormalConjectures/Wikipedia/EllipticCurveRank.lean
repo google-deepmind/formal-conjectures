@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
    elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 -/
+
+@[expose] public section
 
 namespace EllipticCurveRank
 

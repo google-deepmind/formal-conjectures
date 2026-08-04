@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Betrothed numbers
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Betrothed_numbers)
 - [OEIS A005276](https://oeis.org/A005276)
 -/
+
+@[expose] public section
 
 namespace BetrothedNumbers
 

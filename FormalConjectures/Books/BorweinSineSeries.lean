@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Convergence of the Borwein Series with Sinusoidal Coefficient
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - Borwein, J.; Bailey, D.; Girgensohn, R. *Experimentation in Mathematics: Computational Paths
   to Discovery*, A K Peters, 2004, p. 56.
 -/
+
+@[expose] public section
 
 namespace BorweinSineSeries
 

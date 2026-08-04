@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«20»
+public import FormalConjectures.ErdosProblems.«20»
 
 /-!
 # Erdős–Rado sunflower conjecture
@@ -24,3 +25,5 @@ This file is a Wikipedia-facing entry point for the formalization in
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 -/
+
+@[expose] public section

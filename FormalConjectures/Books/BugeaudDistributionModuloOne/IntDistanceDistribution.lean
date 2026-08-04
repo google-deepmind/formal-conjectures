@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Real.NearestInt
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Fractional Parts of Powers
 
@@ -37,6 +38,8 @@ Chapter 10 of the book collects open questions. This file formalizes Problems 10
     Diophantine Approximation: Lectures given at the CIME Summer School held in Cetraro, Italy,
     June 28–July 6, 2000. Berlin, Heidelberg: Springer Berlin Heidelberg, 2003. 249-344.
 -/
+
+@[expose] public section
 
 namespace Bugeaud01
 

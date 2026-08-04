@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 23: SIC-POVMs
@@ -104,6 +105,8 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   *Quantum Designs: Foundations of a Noncommutative Design Theory*,
   PhD thesis, University of Vienna (1999).
 -/
+
+@[expose] public section
 noncomputable section
 namespace OpenQuantumProblem23
 

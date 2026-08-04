@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 822
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [GIL24] Gabdullin, Mikhail R. and Iudelevich, Vitalii V. and Luca,
   Florian, Numbers of the form {$k+f(k)$}. J. Number Theory (2024), 58--85.
 -/
+
+@[expose] public section
 
 namespace Erdos822
 

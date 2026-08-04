@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 923
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er69b] Erdős, P., *Problems and results in chromatic graph theory*. Proof Techniques in Graph Theory (1969), 27-35.
 - [Ro77] Rödl, V., *On the chromatic number of subgraphs of a given graph*. Proc. Amer. Math. Soc. (1977), 370-371.
 -/
+
+@[expose] public section
 
 namespace Erdos923
 

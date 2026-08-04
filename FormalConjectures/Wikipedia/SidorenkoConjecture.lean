@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 
 /-!
 # Sidorenko's conjecture (1993)
@@ -29,6 +30,8 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 * [KLL18] Kim, J.H., Lee, C., Lee, J. (2018). "Two approaches to Sidorenko's conjecture."
   *Trans. Amer. Math. Soc.* 370, pp. 8515--8552.
 -/
+
+@[expose] public section
 
 open Finset SimpleGraph
 

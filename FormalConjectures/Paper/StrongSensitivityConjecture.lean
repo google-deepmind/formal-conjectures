@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Strong Sensitivity Conjecture (`bs(f) ≤ s(f)^2`)
@@ -45,6 +46,8 @@ known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
 * [On the Degree of Boolean Functions as Real Polynomials](https://link.springer.com/article/10.1007/BF01263419)
   by Noam Nisan, and Mario Szegedy (see Section 4, Open Problems)
 -/
+
+@[expose] public section
 
 namespace StrongSensitivityConjecture
 

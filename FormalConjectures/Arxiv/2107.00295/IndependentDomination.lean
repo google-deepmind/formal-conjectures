@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Independent Domination of Regular Graphs, Conjecture 1.6
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **On independent domination of regular graphs**
 by *Eun-Kyung Cho, Ilkyoo Choi, Boram Park*
 -/
+
+@[expose] public section
 namespace Arxiv.«2107.00295»
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
 

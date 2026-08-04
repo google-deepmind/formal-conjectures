@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1167
@@ -26,6 +27,8 @@ and $\kappa_\alpha > r$. Without $\gamma \geq 2$, the statement is false: taking
 $\kappa_0 = \aleph_1$ with $\lambda = \aleph_0$ gives a counterexample, since the partition relation
 with one color degenerates to a cardinality comparison (see `erdos_1167.unrestricted_is_false`).
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal Combinatorics
 

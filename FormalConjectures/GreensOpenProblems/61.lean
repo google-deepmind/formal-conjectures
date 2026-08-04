@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 61
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 
 This problem was originally considered by Erdős and Newman.
 -/
+
+@[expose] public section
 
 open scoped Pointwise Topology
 open Filter

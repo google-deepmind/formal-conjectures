@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # An Arithmetic Sum Associated with the Classical Theta Function
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 **An Arithmetic Sum Associated with the Classical Theta Function**
 by *Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alexandru Zaharescu*
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2501.03234»
 

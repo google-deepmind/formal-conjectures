@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets
@@ -24,6 +26,8 @@ import FormalConjecturesUtil
   Journal of mathematical analysis and applications 372.2 (2010): 439-447. [arXiv:0907.1379](https://arxiv.org/abs/0907.1379)
 - [Y2026] Yuksekgonul, Mert et al., "Learning to Discover at Test Time," 2026, [arXiv:2601.16175](https://arxiv.org/abs/2601.16175)
 -/
+
+@[expose] public section
 
 open Set
 

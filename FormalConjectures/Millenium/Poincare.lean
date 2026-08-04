@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-! # The Poincaré Conjecture
 
@@ -26,6 +27,8 @@ References:
 
 The formalisations in this file are based on the ones written by Junyan Xu in Mathlib4.
 -/
+
+@[expose] public section
 
 namespace PoincareConjecture
 

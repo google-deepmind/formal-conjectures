@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 33
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [CrLe07] Croot, Ernie, and Vsevolod F. Lev. "Open problems in additive combinatorics."
   Additive combinatorics 43.207-233 (2007): 1.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Pointwise

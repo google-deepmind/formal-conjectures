@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 18
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture18
 
@@ -55,7 +58,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
 /-- In $K_3$, the max degree is $2$. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
+example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide
 
 /-- `eccSet G S` is always nonneg. -/
 @[category test, AMS 5]

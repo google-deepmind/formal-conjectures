@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 904
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Fa92] Faudree, Ralph J., *Complete subgraphs with large degree sums*. J. Graph Theory (1992), 327-334.
 - [BoNi05] Bollobás, Béla and Nikiforov, Vladimir, *The sum of degrees in cliques*. Electron. J. Combin. (2005), Note 21, 10.
 -/
+
+@[expose] public section
 
 namespace Erdos904
 

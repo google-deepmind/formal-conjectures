@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Selfridge's conjectures
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/John_Selfridge#Selfridge's_conjecture_about_primality_testing)
 -/
+
+@[expose] public section
 
 namespace Selfridge
 
@@ -144,7 +147,9 @@ theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : P
   have h1 : fermatFactors n = 1 := by
     unfold fermatFactors
     rw [hp.primeFactors, Finset.card_singleton]
-  have h5 : fermatFactors 5 = 2 := by native_decide
+  have h5 : fermatFactors 5 = 2 := by
+    unfold fermatFactors Nat.fermatNumber
+    native_decide
   have hle := hmono hn'
   rw [h1, h5] at hle
   omega

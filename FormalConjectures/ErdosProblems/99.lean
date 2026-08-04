@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 99
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 * [BeFo99] Bezdek, Andr\'{a}s and Fodor, Ferenc, Minimal diameter of certain sets in the plane. J. Combin. Theory Ser. A (1999), 105-111.
 * [Er94b] Erd\H{o}s, Paul, Some problems in number theory, combinatorics and combinatorial geometry. Math. Pannon. (1994), 261-269.
 -/
+
+@[expose] public section
 open Set Metric EuclideanGeometry
 
 namespace Erdos99

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Packing
@@ -32,6 +33,8 @@ In each case, we provide a known upper bound, and ask for the least such size.
 - A website with visualizations of packings:
   [link](https://erich-friedman.github.io/packing/)
 -/
+
+@[expose] public section
 
 open EuclideanGeometry
 

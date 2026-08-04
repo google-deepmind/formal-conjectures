@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 101
 
 *Reference:* [erdosproblems.com/101](https://www.erdosproblems.com/101)
 -/
+
+@[expose] public section
 
 
 
@@ -31,7 +34,7 @@ open EuclideanGeometry Filter Asymptotics
 /--
 The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
 -/
-private noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
+noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
   let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
   { L ∈ determined_lines | (↑L ∩ S).ncard = k }
 

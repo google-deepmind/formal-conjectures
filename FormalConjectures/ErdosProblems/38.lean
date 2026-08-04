@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 38
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er56](Erdős, P., Problems and results in additive number theory.
   Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
 -/
+
+@[expose] public section
 
 open Set Pointwise
 

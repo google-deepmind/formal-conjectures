@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Real.NearestInt
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: $p$-adic Littlewood Conjecture
 
@@ -31,6 +32,8 @@ Teulié. A liminf-based formulation also appears in the file
   - [EK07] Einsiedler, Manfred, and Dmitry Kleinbock. "Measure rigidity and $p$-adic
     Littlewood-type problems." Compositio Mathematica 143.3 (2007): 689-702.
 -/
+
+@[expose] public section
 
 namespace Bugeaud08
 

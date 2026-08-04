@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 341
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 * [erdosproblems.com/341](https://www.erdosproblems.com/341)
 * [Ben Green's Open Problem 7](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.1)
 -/
+
+@[expose] public section
 
 open Nat Set Filter
 open scoped Topology

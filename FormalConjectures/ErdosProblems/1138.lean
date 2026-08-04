@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1138
@@ -28,6 +29,8 @@ Note that the conjecture has a claimed disproof found at:
 https://sourish-kumrawat.github.io/papers/Erdos_1138.pdf,
 see the discussion section on the Erdos problems website for more information.
 -/
+
+@[expose] public section
 
 open Nat Filter Asymptotics Real Set
 

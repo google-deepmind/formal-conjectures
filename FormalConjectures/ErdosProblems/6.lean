@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 6
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BFT15] Banks, William D. and Freiberg, Tristan and Turnage-Butterbaugh, Caroline L., Consecutive primes in tuples. Acta Arith. (2015), 261-266.
 - [Ma15] Maynard, James, Small gaps between primes. Ann. of Math. (2) (2015), 383-413.
 -/
+
+@[expose] public section
 
 namespace Erdos6
 

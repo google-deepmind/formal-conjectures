@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«510»
+public import FormalConjectures.ErdosProblems.«510»
 
 /-!
 # Ben Green's Open Problem 81
@@ -28,3 +29,5 @@ such that $\sum_{a \in A} \cos(a \theta) \leq - c \sqrt{n}$?
 
 This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«510»`.
 -/
+
+@[expose] public section

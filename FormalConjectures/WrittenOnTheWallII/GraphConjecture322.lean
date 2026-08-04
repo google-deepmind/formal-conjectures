@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 322
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 
 namespace WrittenOnTheWallII.GraphConjecture322
@@ -51,10 +54,10 @@ theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connecte
 
 /-- In `K₄`, all vertices have degree 3. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide +native
+example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide
 
 /-- In the edgeless graph `⊥` on 5 vertices, the minimum degree is 0. -/
 @[category test, AMS 5]
-example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide +native
+example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide
 
 end WrittenOnTheWallII.GraphConjecture322

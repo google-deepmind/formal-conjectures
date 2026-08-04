@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -27,6 +28,8 @@ This file formalizes some conjectures and theorems around latin squares.
   https://users.monash.edu.au/~iwanless/papers/transurveyBCC.pdf
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
+
+@[expose] public section
 
 namespace LatinSquare
 
@@ -101,13 +104,17 @@ def z (n : ℕ) : ℕ := numTransversals {
 
 /-- The $0 \times 0$ Cayley table has exactly $1$ transversal (vacuously). -/
 @[category test, AMS 5]
-theorem z_zero : z 0 = 1 := by native_decide
+theorem z_zero : z 0 = 1 := by
+  simp only [z, numTransversals]
+  native_decide
 
 /-- The number of transversals of the Cayley table of $\mathbb{Z}_n$ for odd $n$ forms
 [OEIS A006717](https://oeis.org/A006717), starting with
 $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 @[category test, AMS 5]
-theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decide
+theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by
+  simp only [z, numTransversals]
+  native_decide
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
 @[category textbook, AMS 5]

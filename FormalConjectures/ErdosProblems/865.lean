@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 865
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [CES75] Choi, S. L. G. and Erdős, P. and Szemerédi, E., Some additive and multiplicative problems
   in number theory. Acta Arith. (1975), 37--50.
 -/
+
+@[expose] public section
 
 open Finset Filter
 open scoped Asymptotics

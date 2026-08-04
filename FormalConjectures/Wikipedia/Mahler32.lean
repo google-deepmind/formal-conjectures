@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mahler's 3/2 Problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mahler%27s_3/2_problem)
 -/
+
+@[expose] public section
 
 namespace Mahler32
 
