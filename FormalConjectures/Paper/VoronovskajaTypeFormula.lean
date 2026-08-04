@@ -300,9 +300,9 @@ Conjecture: Voronovskaja-type formula for Bézier--Bernstein operators
 with shape parameter $\alpha > 0$, $\alpha \neq 1$.
 
 A proposed answer for the limit is
-\[
+$$
 \mu_\alpha\sqrt{x(1-x)}\,f'(x).
-\]
+$$
 This candidate is recorded here for future investigation, but is not asserted
 in the theorem statement.
 
