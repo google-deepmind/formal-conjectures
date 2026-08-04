@@ -49,14 +49,7 @@ theorem a_formally_solved_problem : 2 + 2 = 4 := by
 -- formal_proof on non-research categories
 #guard_msgs in
 @[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
-<<<<<<< HEAD
-theorem a_textbook_problem_with_formal_proof : 1 + 1 = 2 := by
-||||||| 064daf7e
-@[category graduate, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
 theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
-=======
-theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
->>>>>>> origin/main
   rfl
 
 #guard_msgs in
@@ -64,7 +57,6 @@ theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
 theorem a_test_with_formal_proof : 3 + 3 = 6 := by
   rfl
 
-<<<<<<< HEAD
 #guard_msgs in
 theorem conditional_formal_proof_hypothesis : 0 = 0 := by
   sorry
@@ -87,12 +79,12 @@ theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
 theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
   rfl
 
-#eval do
+run_meta do
   let conditions ← ProblemAttributes.getProofConditions ``a_conditionally_formally_solved_problem
   unless conditions = [``conditional_formal_proof_hypothesis] do
     throwError "unexpected proof conditions for a_conditionally_formally_solved_problem"
 
-#eval do
+run_meta do
   let conditions ← ProblemAttributes.getProofConditions
     ``a_conditionally_formally_solved_problem_with_two_hypotheses
   unless conditions = [``conditional_formal_proof_hypothesis,
@@ -120,8 +112,8 @@ error: an `assuming` clause requires the `conditional` modifier:
   formal_proof using lean4 at "https://github.com/example/not-conditional"
     assuming conditional_formal_proof_hypothesis]
 theorem assuming_without_conditional_formal_proof : 7 + 7 = 14 := by
-||||||| 064daf7e
-=======
+  rfl
+
 -- A `formal_proof` link is validated: external kinds must link to the proof, and
 -- any link that is given must be a URL.
 
@@ -139,7 +131,6 @@ warning: A `formal_proof` link should be a URL (http:// or https://), but got: "
 #guard_msgs in
 @[category test, formal_proof using lean4 at "not-a-url"]
 theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
->>>>>>> origin/main
   rfl
 
 -- The `#AMS` command
