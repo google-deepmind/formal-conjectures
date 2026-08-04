@@ -72,13 +72,13 @@ $$\frac{n}{4}\leq H(n) \ll n^{3/2}.$$
 -/
 @[category research solved, AMS 5]
 theorem erdos_1028.variants.upper_bound :
-    (fun n => (H n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) := by
+    (fun n => (H n : ℝ)) ≪ (fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) := by
   sorry
 
 /-- Erdős and Spencer [ErSp71] proved that $H(n)\gg n^{3/2}$. -/
 @[category research solved, AMS 5]
 theorem erdos_1028.variants.erdos_spencer :
-    (fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) =O[atTop] (fun n => (H n : ℝ)) := by
+    (fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) ≪ (fun n => (H n : ℝ)) := by
   sorry
 
 end Erdos1028

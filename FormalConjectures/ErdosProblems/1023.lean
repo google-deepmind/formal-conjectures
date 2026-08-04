@@ -32,18 +32,11 @@ open scoped Asymptotics
 namespace Erdos1023
 
 /--
-A family `S` of finite sets is union-free when no set in `S` is the union of other
-members of `S`.
--/
-def IsUnionFree {α : Type*} [DecidableEq α] (S : Finset (Finset α)) : Prop :=
-  ∀ A ∈ S, ∀ T ⊆ S.erase A, T.Nonempty → T.sup id ≠ A
-
-/--
 `F n` is the maximal size of a family of subsets of $\{1,\ldots,n\}$ such that no set in this
 family is the union of other members of the family.
 -/
 noncomputable def F (n : ℕ) : ℕ :=
-  sSup {m | ∃ S ⊆ (Finset.Icc 1 n).powerset, IsUnionFree S ∧ S.card = m}
+  sSup {m | ∃ S ⊆ (Finset.Icc 1 n).powerset, S.SubfamilyUnionFree ∧ S.card = m}
 
 /--
 Let $F(n)$ be the maximal size of a family of subsets of $\{1,\ldots,n\}$ such that no set in
