@@ -48,10 +48,14 @@ $$
 The answer is no, and a counterexample was provided by Turjányi [Tu84]. This was generalised (to
 the replacement of $A+A$ by the $h$-fold sumset $hA$ for any $h\geq 2$) by Ruzsa and Turjányi
 [RT85].
+
+"Additive basis" is `Set.IsAsymptoticAddBasis`: some finite $h$ has $hA$ containing every
+sufficiently large integer. The exact notion `Set.IsAddBasis`, which asks that $hA$ be all of
+$\mathbb{N}$, would force $0, 1 \in A$ and is not the class these results are about.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_337 : answer(False) ↔
-    ∀ A : Set ℕ, A.IsAddBasis →
+    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦ (((A + A) ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by
@@ -63,7 +67,7 @@ by Ruzsa and Turjányi [RT85].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_337.variants.h_fold : ∀ h : ℕ, 2 ≤ h →
-    ∃ A : Set ℕ, A.IsAddBasis ∧
+    ∃ A : Set ℕ, A.IsAsymptoticAddBasis ∧
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) ∧
       ¬ Tendsto (fun N : ℕ ↦
           ((h • A ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
@@ -79,7 +83,7 @@ $$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_337.variants.three_fold :
-    ∀ A : Set ℕ, A.IsAddBasis →
+    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦
           (((A + A + A) ∩ Icc 1 (3 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
@@ -96,7 +100,7 @@ and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in 
 -/
 @[category research open, AMS 5 11]
 theorem erdos_337.variants.ruzsa_turjanyi :
-    ∀ A : Set ℕ, A.IsAddBasis →
+    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦
           (((A + A) ∩ Icc 1 (2 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
