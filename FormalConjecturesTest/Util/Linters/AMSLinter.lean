@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Linters.AMSLinter
+public meta import FormalConjecturesUtil.Linters.AMSLinter
 
 @[expose] public section
 

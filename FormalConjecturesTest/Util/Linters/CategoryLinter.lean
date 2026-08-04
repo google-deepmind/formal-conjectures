@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Linters.CategoryLinter
+public meta import FormalConjecturesUtil.Linters.CategoryLinter
 
 @[expose] public section
 
@@ -74,7 +74,11 @@ Note: This linter can be disabled with `set_option linter.style.category_attribu
 example : 1 + 1 = 2 := by
   rfl
 
-/-- warning: If a problem has a sorry-free proof, it should not be categorised as `open`. -/
+-- This should warn that a sorry-free proof is categorised as `open`, and does not. The check
+-- runs in the `category` attribute at `.afterTypeChecking`, but theorem bodies elaborate
+-- asynchronously, so `value?` is still `none` by then and the branch never runs. It does fire
+-- for a `def`. This records current behaviour; see
+-- https://github.com/google-deepmind/formal-conjectures/issues/4732.
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[category research open]
