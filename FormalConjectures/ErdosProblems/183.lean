@@ -31,11 +31,15 @@ open scoped Topology
 
 namespace Erdos183
 
-/-- A `k`-colouring of the edges of `K_n` forces a monochromatic triangle when every colouring
-admits three distinct vertices whose three edges share a colour. -/
+/-- A `k`-colouring of the edges of `K_n` is triangle-free when no colour class contains a
+triangle. -/
+def TriangleFree {n k : ℕ} (C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k)) : Prop :=
+  ∀ colour : Fin k, (C.labelGraph colour).CliqueFree 3
+
+/-- `n` forces a monochromatic triangle on `k` colours when no `k`-colouring of the edges of
+`K_n` is triangle-free. -/
 def ForcesMonochromaticTriangle (n k : ℕ) : Prop :=
-  ∀ c : Sym2 (Fin n) → Fin k, ∃ x y z : Fin n, x ≠ y ∧ x ≠ z ∧ y ≠ z ∧
-    c s(x, y) = c s(x, z) ∧ c s(x, y) = c s(y, z)
+  ∀ C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k), ¬ TriangleFree C
 
 /-- $R(3;k)$, the minimal `n` such that every `k`-colouring of the edges of `K_n` contains a
 monochromatic triangle. -/

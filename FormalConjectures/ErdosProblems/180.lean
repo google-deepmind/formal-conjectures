@@ -30,17 +30,31 @@ open Filter SimpleGraph
 
 namespace Erdos180
 
-variable {V : Type*}
+/-- A finite graph, bundled with its vertex count, so that a family may mix orders. -/
+structure FiniteGraph where
+  order : ℕ
+  graph : SimpleGraph (Fin order)
 
-/-- A graph on `Fin n` is `F`-free when it contains no member of the family `F` as a subgraph. -/
-def FamilyFree {q : ℕ} (F : Finset (SimpleGraph (Fin q))) {n : ℕ} (G : SimpleGraph (Fin n)) :
-    Prop :=
-  ∀ H ∈ F, H.Free G
+/-- A host graph is `family`-free when it contains no member of `family` as a subgraph. -/
+def FamilyFree (family : Finset FiniteGraph) {n : ℕ} (host : SimpleGraph (Fin n)) : Prop :=
+  ∀ forbidden ∈ family, forbidden.graph.Free host
 
+open scoped Classical in
 /-- $\mathrm{ex}(n;\mathcal{F})$, the greatest number of edges of a graph on `n` vertices
-containing no member of `F`. -/
-noncomputable def familyExtremalNumber {q : ℕ} (F : Finset (SimpleGraph (Fin q))) (n : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ G : SimpleGraph (Fin n), FamilyFree F G ∧ G.edgeFinset.card = m}
+containing no member of `family`. -/
+noncomputable def familyExtremal (family : Finset FiniteGraph) (n : ℕ) : ℕ :=
+  (Finset.univ.filter (FamilyFree family)).sup
+    fun host : SimpleGraph (Fin n) => host.edgeFinset.card
+
+/-- No member of the family is acyclic. -/
+def IsCyclicFamily (family : Finset FiniteGraph) : Prop :=
+  ∀ forbidden ∈ family, ¬ forbidden.graph.IsAcyclic
+
+/-- The family is *compact*: some single member already controls the family extremal number. -/
+def IsCompactFamily (family : Finset FiniteGraph) : Prop :=
+  ∃ forbidden ∈ family, ∃ C : ℝ, 0 < C ∧
+    ∀ᶠ n : ℕ in atTop,
+      (extremalNumber n forbidden.graph : ℝ) ≤ C * (familyExtremal family n : ℝ)
 
 /--
 If $\mathcal{F}$ is a finite set of finite graphs then $\mathrm{ex}(n;\mathcal{F})$ is the maximum
@@ -56,23 +70,23 @@ the family extremal number. See `erdos_180.variants.counterexample`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_180 : answer(False) ↔
-    ∀ (q : ℕ) (F : Finset (SimpleGraph (Fin q))), F.Nonempty →
-      ∃ H ∈ F, ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
-        (extremalNumber n H : ℝ) ≤ C * (familyExtremalNumber F n : ℝ) := by
+    ∀ family : Finset FiniteGraph,
+      family.Nonempty → IsCyclicFamily family → IsCompactFamily family := by
   sorry
 
 /--
 The counterexample: a nonempty family of connected bipartite graphs, none acyclic, that is not
-compact in the sense of `erdos_180`.
+compact.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/openai/ten-proofs/blob/94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6/CompactnessAndDegeneracy.lean"]
 theorem erdos_180.variants.counterexample :
-    ∃ (q : ℕ) (F : Finset (SimpleGraph (Fin q))),
-      F.Nonempty ∧
-      (∀ H ∈ F, H.Connected ∧ H.IsBipartite ∧ ¬ H.IsAcyclic) ∧
-      ¬ ∃ H ∈ F, ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
-        (extremalNumber n H : ℝ) ≤ C * (familyExtremalNumber F n : ℝ) := by
+    ∃ family : Finset FiniteGraph,
+      family.Nonempty ∧
+      (∀ forbidden ∈ family,
+        forbidden.graph.Connected ∧ forbidden.graph.IsBipartite ∧
+          ¬ forbidden.graph.IsAcyclic) ∧
+      ¬ IsCompactFamily family := by
   sorry
 
 end Erdos180
