@@ -64,7 +64,8 @@ integer distance apart. How large can the chromatic number and clique number of
 this graph be? In particular, can the chromatic number be infinite?
 
 The chromatic number can be infinite: there is an infinite general-position set
-whose integer-distance graph admits no finite proper colouring.
+whose integer-distance graph admits no finite proper colouring. How large the
+*clique* number can be is not addressed here.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-130/Research/Basic.lean"]
 theorem erdos_130 :

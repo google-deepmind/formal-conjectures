@@ -73,7 +73,9 @@ $\{-1,1\}$. If $R_n$ counts the number of real roots of
 $f_n(z)=\sum_{0\leq k\leq n}\epsilon_k z^k$ then is it true that, almost surely,
 $$\lim_{n\to \infty}\frac{R_n}{\log n}=\frac{2}{\pi}?$$
 
-The answer is no: this almost-sure limit fails.
+The answer is no: this almost-sure limit fails. This result was obtained first by others, who
+deserve the credit for the problem; the link is to an independent machine-checked proof by
+Star Fleet Math.
 -/
 @[category research solved, AMS 11 60, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-521/Research/LateFourthFinal.lean"]
 theorem erdos_521 : answer(False) ↔ Claim := by
