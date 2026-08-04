@@ -15,22 +15,23 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Paths
-public import Mathlib.Data.Nat.Lattice
+
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import Mathlib.Data.Finset.Lattice.Basic
 
 @[expose] public section
 
-namespace SimpleGraph
+/-!
+# Union-free families
 
-/-- `G.cycleLengths` is the set of lengths of the cycles in `G`. -/
-def cycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
-  {m | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = m}
+A family of sets is *union-free* if no member is the union of two other distinct members.
+-/
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+namespace Finset
 
-/-- `circumference G` is the length of the longest cycle in `G`.
-    It is `0` when `G` is acyclic. -/
-noncomputable def circumference (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  sSup G.cycleLengths
+/-- A family `F` of finsets is *union-free* if there are no solutions to `A ∪ B = C` with
+`A`, `B`, `C` distinct members of `F`. -/
+def UnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
+  (F : Set (Finset α)).Triplewise fun A B C ↦ A ∪ B ≠ C
 
-end SimpleGraph
+end Finset
