@@ -49,6 +49,7 @@ public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
+public import FormalConjecturesForMathlib.Combinatorics.SetFamily.UnionFree
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
@@ -59,6 +60,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGrap
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degeneracy
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
@@ -122,6 +124,7 @@ public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basi
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
@@ -139,8 +142,10 @@ public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
+public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
 public import FormalConjecturesForMathlib.Order.Filter.Cofinite
+public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat

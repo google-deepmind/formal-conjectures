@@ -1,0 +1,37 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import Mathlib.Data.Finset.Lattice.Basic
+
+@[expose] public section
+
+/-!
+# Union-free families
+
+A family of sets is *union-free* if no member is the union of two other distinct members.
+-/
+
+namespace Finset
+
+/-- A family `F` of finsets is *union-free* if there are no solutions to `A ∪ B = C` with
+`A`, `B`, `C` distinct members of `F`. -/
+def UnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
+  (F : Set (Finset α)).Triplewise fun A B C ↦ A ∪ B ≠ C
+
+end Finset
