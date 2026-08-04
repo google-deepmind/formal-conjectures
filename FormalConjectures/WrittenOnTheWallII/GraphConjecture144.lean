@@ -40,6 +40,26 @@ $\mathrm{Centers} = G.\mathrm{center}$ is the set of vertices with minimum
 eccentricity (the center of $G$), and $\mathrm{ecc}(\mathrm{Centers})$ is the
 eccentricity of the center set — the maximum distance from any non-center
 vertex to the nearest center vertex.
+
+**Proof sketch.** Let $g = \mathrm{girth}(G)$ and
+$e = \mathrm{ecc}(G, \mathrm{center}(G))$. The acyclic and $e = 0$ cases are
+immediate. If $g \le e + 2$, the formalized Bacsó--Tuza induced-path argument,
+with an elementary $e = 1$ case, produces an induced tree on at least $2e + 1$
+vertices. Since $g - 1 + e \le 2e + 1$, this proves the result.
+
+Suppose instead that $e + 3 \le g$, and fix a shortest cycle $C$. Removing one
+vertex of $C$ leaves an induced tree on $g - 1$ vertices. Analyze the connected
+components outside $C$. If one has at least $e$ vertices, it supplies an
+attached rooted induced tree of order $e$. Otherwise, let $D$ be the sum of the
+components' attachment depths. If $D \ge e$, select pairwise edge-separated
+rooted branches of total order $e$ and attach them to $C$, deleting a suitable
+cycle vertex. If $D < e$, shortest-cycle contact restrictions bound
+corresponding exclusion arcs. Their complement consists of central cycle
+vertices and $D$-dominates the graph, forcing $e \le D$, a contradiction.
+
+Finite graph search was used only during discovery to test candidate
+structural lemmas and reject false proof templates; no finite-search result is
+used in the universal proof.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
