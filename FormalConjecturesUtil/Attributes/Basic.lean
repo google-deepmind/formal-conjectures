@@ -276,10 +276,10 @@ initialize Lean.registerBuiltinAttribute {
         let cat ← Syntax.toCategory s
         return (cat, "")
       | _ => throwUnsupportedSyntax
-    if status == .research .open then
-      let env ← getEnv
-      if (env.find? decl).bind (·.value?) |>.any (!·.hasSorry) then
-        logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
+    -- The "sorry-free proof categorised as `open`" check used to live here. It never fired for a
+    -- theorem: attributes run before the proof term exists, since theorem bodies elaborate
+    -- asynchronously, so `value?` was always `none`. It is now `CategoryLinter`'s
+    -- `checkNotOpenIfSorryFree`, which runs once the command has finished.
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }

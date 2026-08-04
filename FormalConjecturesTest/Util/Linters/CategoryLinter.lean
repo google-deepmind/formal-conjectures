@@ -74,11 +74,11 @@ Note: This linter can be disabled with `set_option linter.style.category_attribu
 example : 1 + 1 = 2 := by
   rfl
 
--- This should warn that a sorry-free proof is categorised as `open`, and does not. The check
--- runs in the `category` attribute at `.afterTypeChecking`, but theorem bodies elaborate
--- asynchronously, so `value?` is still `none` by then and the branch never runs. It does fire
--- for a `def`. This records current behaviour; see
--- https://github.com/google-deepmind/formal-conjectures/issues/4732.
+/--
+warning: If a problem has a sorry-free proof, it should not be categorised as `open`.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[category research open]

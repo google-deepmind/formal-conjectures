@@ -53,6 +53,25 @@ def toCategory
       | _ => return false
   | _ => return #[]
 
+/-- Warns when a problem categorised as `research open` turns out to have a sorry-free proof.
+
+This check cannot live in the `category` attribute, which is where it used to be. Attributes run
+before a theorem's proof term is available, because theorem bodies elaborate asynchronously, so
+`value?` is still `none` there and the check silently never fired for a theorem. It did fire for
+a `def`, which is why the gap went unnoticed.
+
+By the time a linter runs the command has finished, so waiting on the elaboration task with
+`findAsync?` is safe. -/
+def checkNotOpenIfSorryFree (declId : Syntax) : CommandElabM Unit := do
+  let declName := (← getCurrNamespace) ++ declId[0].getId
+  unless ← hasConst declName do return
+  unless (← ProblemAttributes.getTags).any
+      (fun t => t.declName == declName && t.category == .research .open) do return
+  let some asyncInfo := (← getEnv).findAsync? declName | return
+  if asyncInfo.toConstantInfo.value?.any (!·.hasSorry) then
+    logLintIf linter.style.category_attribute declId
+      "If a problem has a sorry-free proof, it should not be categorised as `open`."
+
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
 def categoryLinter : Linter where
@@ -72,6 +91,12 @@ def categoryLinter : Linter where
         if prob_status.size == 0 then
           logLintIf linter.style.category_attribute outStx
             "Missing problem category attribute"
+          return
+        match stx with
+          | `(command| $_:declModifiers theorem $declId $_:bracketedBinder* : $_ := $_)
+          | `(command| $_:declModifiers lemma $declId $_:bracketedBinder* : $_ := $_) =>
+            checkNotOpenIfSorryFree declId
+          | _ => return
       | _ => return
 
 initialize do
