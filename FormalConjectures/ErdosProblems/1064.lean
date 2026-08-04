@@ -36,24 +36,6 @@ os concerning the arithmetical functions {$\phi$} and
 theorem erdos_1064 : {n | φ n > φ (n - φ n)}.HasDensity 1 := by
   sorry
 
-/-- For the family `n = 30 * 2 ^ k = 2 ^ (k + 1) * 15`, `φ n = 8 * 2 ^ k`. -/
-private lemma phi_family (k : ℕ) : Nat.totient (30 * 2 ^ k) = 8 * 2 ^ k := by
-  have h1 : 30 * 2 ^ k = 2 ^ (k + 1) * 15 := by ring
-  rw [h1, Nat.totient_mul (by norm_num), Nat.totient_prime_pow Nat.prime_two (by omega),
-    show Nat.totient 15 = 8 from rfl, Nat.add_sub_cancel]
-  ring
-
-/-- For the family `n = 30 * 2 ^ k`, `n - φ n = 22 * 2 ^ k = 2 ^ (k + 1) * 11`. -/
-private lemma sub_family (k : ℕ) : 30 * 2 ^ k - Nat.totient (30 * 2 ^ k) = 22 * 2 ^ k := by
-  rw [phi_family]; omega
-
-/-- `φ (22 * 2 ^ k) = 10 * 2 ^ k`. -/
-private lemma phi_sub_family (k : ℕ) : Nat.totient (22 * 2 ^ k) = 10 * 2 ^ k := by
-  rw [show 22 * 2 ^ k = 2 ^ (k + 1) * 11 by ring, Nat.totient_mul (by norm_num),
-    Nat.totient_prime_pow (by norm_num) (by omega), show Nat.totient 11 = 10 from rfl,
-    Nat.add_sub_cancel]
-  ring
-
 /--
 Let $ϕ(n)$ be the Euler's totient function, there exist infinitely many $n$
 such that $ϕ(n)< ϕ(n - ϕ(n))$
@@ -69,7 +51,21 @@ theorem erdos_1064.variants.k2 : {n | φ n < φ (n - φ n)}.Infinite := by
     exact Nat.pow_right_injective (le_refl 2) this
   · intro k
     simp only [Set.mem_setOf_eq]
-    rw [sub_family, phi_family, phi_sub_family]
+    have hφ : Nat.totient (30 * 2 ^ k) = 8 * 2 ^ k := by
+      have h : 30 * 2 ^ k = 2 ^ (k + 1) * 15 := by ring
+      rw [h, Nat.totient_mul (by norm_num),
+        Nat.totient_prime_pow Nat.prime_two (by omega),
+        show Nat.totient 15 = 8 from rfl, Nat.add_sub_cancel]
+      ring
+    have hsub : 30 * 2 ^ k - Nat.totient (30 * 2 ^ k) = 22 * 2 ^ k := by
+      rw [hφ]
+      omega
+    have hφsub : Nat.totient (22 * 2 ^ k) = 10 * 2 ^ k := by
+      rw [show 22 * 2 ^ k = 2 ^ (k + 1) * 11 by ring,
+        Nat.totient_mul (by norm_num), Nat.totient_prime_pow (by norm_num) (by omega),
+        show Nat.totient 11 = 10 from rfl, Nat.add_sub_cancel]
+      ring
+    rw [hsub, hφ, hφsub]
     have : (0 : ℕ) < 2 ^ k := pow_pos (by norm_num) k
     omega
 
