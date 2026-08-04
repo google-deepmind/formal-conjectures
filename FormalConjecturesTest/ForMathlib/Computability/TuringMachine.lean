@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
-import Mathlib.Tactic.DeriveFintype
-import Mathlib.Tactic.FinCases
+public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
+public import Mathlib.Tactic.DeriveFintype
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 -- sanity checks for the definition of halting added in `ForMathlib`.
 -- These should be easy to prove

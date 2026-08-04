@@ -24,7 +24,7 @@ public import Mathlib.Order.CompletePartialOrder
 namespace SimpleGraph
 variable {V : Type*} {G : SimpleGraph V}
 
-open Classical Finset List
+open Finset List
 
 @[inherit_doc] scoped notation "α(" G ")" => indepNum G
 
@@ -43,6 +43,10 @@ with unbounded clique size is `∞` rather than 0.
 -/
 noncomputable
 def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
+
+/-- The set of sizes of the cliques (maximal complete subgraphs) of `G`. -/
+def cliqueSizes {V : Type} (G : SimpleGraph V) : Set ℕ :=
+  { k | ∃ S : Finset V, Maximal (fun T : Finset V => G.IsClique (T : Set V)) S ∧ S.card = k }
 
 
 end SimpleGraph
