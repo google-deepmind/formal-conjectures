@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
 public import Mathlib.Data.Finset.Lattice.Basic
 
 @[expose] public section
@@ -31,6 +32,6 @@ namespace Finset
 /-- A family `F` of finsets is *union-free* if there are no solutions to `A ∪ B = C` with
 `A`, `B`, `C` distinct members of `F`. -/
 def UnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
-  ∀ A ∈ F, ∀ B ∈ F, ∀ C ∈ F, A ≠ B → A ≠ C → B ≠ C → A ∪ B ≠ C
+  (F : Set (Finset α)).Triplewise fun A B C ↦ A ∪ B ≠ C
 
 end Finset
