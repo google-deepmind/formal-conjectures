@@ -34,6 +34,20 @@ def sign (b : Bool) : ℝ := if b then 1 else -1
 noncomputable def fairCoin : Measure Bool :=
   (2 : ENNReal)⁻¹ • (Measure.dirac true + Measure.dirac false)
 
+/-- `fairCoin` gives each of the two signs mass `1/2`. Together with
+`fairCoin_isProbabilityMeasure` this pins the definition down, so a proof stating the
+same problem with a `Bernoulli(1/2)` measure is stating the same thing. -/
+@[category API, AMS 60]
+theorem fairCoin_apply (b : Bool) : fairCoin {b} = 2⁻¹ := by
+  cases b <;> simp [fairCoin]
+
+/-- `fairCoin` is a probability measure. -/
+@[category API, AMS 60]
+theorem fairCoin_isProbabilityMeasure : IsProbabilityMeasure fairCoin := by
+  constructor
+  simp [fairCoin]
+  rw [ENNReal.inv_two_add_inv_two]
+
 /-- The law of an infinite sequence of independent fair coins `(ε_k)_{k ≥ 0}`,
 each uniform on `{-1, +1}`. -/
 noncomputable def rademacherMeasure : Measure (ℕ → Bool) :=
