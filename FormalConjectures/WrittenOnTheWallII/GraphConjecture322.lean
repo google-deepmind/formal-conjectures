@@ -45,7 +45,8 @@ the neighborhood `N(v)` of `v` — is at most 1, then `G` is well totally domina
 Here `l(v) = α(Gᶜ[N(v)])` is the independence number of the subgraph induced by the
 open neighborhood of `v` in `Gᶜ`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+  "https://github.com/SamuelSchlesinger/formal-conjectures/blob/78f39db3ea9f5a8b2e6841e7769f538ff263dbf2/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean#L50-L111"]
 theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connected)
     (hn : 5 ≤ Fintype.card α)
     (h : ∀ v : α, indepNeighborsCard Gᶜ v ≤ 1) :
