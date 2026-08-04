@@ -35,18 +35,14 @@ open scoped Real
 
 namespace Erdos990
 
-/--
-The argument of a complex number, normalised to take values in the interval `[0, 2π)`.
--/
-noncomputable def normArg (z : ℂ) : ℝ :=
-  if Complex.arg z < 0 then Complex.arg z + 2 * π else Complex.arg z
-
 open scoped Classical in
 /--
-The number of roots of `f`, counted with multiplicity, whose argument lies in `I`.
+The number of roots of `f`, counted with multiplicity, whose argument lies in `I`. The argument
+is normalised to `[0, 2π)`.
 -/
 noncomputable def rootArgCount (f : ℂ[X]) (I : Set ℝ) : ℕ :=
-  f.roots.countP (fun z => normArg z ∈ I)
+  f.roots.countP fun z =>
+    (if Complex.arg z < 0 then Complex.arg z + 2 * π else Complex.arg z) ∈ I
 
 /--
 For $f = a_0 + \cdots + a_dx^d$, the quantity

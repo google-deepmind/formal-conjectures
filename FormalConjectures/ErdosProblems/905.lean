@@ -30,12 +30,6 @@ namespace Erdos905
 
 open Finset
 
-/-- The triangles of `G` containing the edge `e`, that is, the `3`-cliques of `G` whose vertex
-set contains both endpoints of `e`. -/
-def trianglesContaining {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
-    (e : Sym2 (Fin n)) : Finset (Finset (Fin n)) :=
-  (G.cliqueFinset 3).filter (fun t ↦ e.toFinset ⊆ t)
-
 /--
 Every graph with $n$ vertices and $>n^2/4$ edges contains an edge which is in at least $n/6$
 triangles.
@@ -46,7 +40,7 @@ Khadzhiivanov and Nikiforov [KhNi79].
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos905.lean"]
 theorem erdos_905 (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (hG : (n : ℝ) ^ 2 / 4 < (#G.edgeFinset : ℝ)) :
-    ∃ e ∈ G.edgeFinset, (n : ℝ) / 6 ≤ (#(trianglesContaining G e) : ℝ) := by
+    ∃ e ∈ G.edgeFinset, (n : ℝ) / 6 ≤ (#(G.trianglesContaining e) : ℝ) := by
   sorry
 
 end Erdos905
