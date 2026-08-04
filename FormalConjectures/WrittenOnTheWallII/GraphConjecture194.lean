@@ -51,11 +51,6 @@ Counterexample (Graph6)
 The 18-vertex counterexample used in the accompanying PR is encoded in Graph6 as:
 `~?c_?eLo?Tz`
 
-You can visualize this in the Wolfram Language with:
-
-ImportString["`~?c_?eLo?Tz", "Graph6"]
-
-(See https://reference.wolfram.com/language/ref/format/Graph6.html for details.)
 -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/4bff865a14c2cd61fefbffbe9c49cbfc5a89ac45/FormalConjectures/WrittenOnTheWallII/GraphConjecture194.lean#L128-L140"]
