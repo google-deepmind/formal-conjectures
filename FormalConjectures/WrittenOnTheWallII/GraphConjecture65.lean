@@ -26,6 +26,7 @@ import FormalConjecturesUtil
 
 The conjecture is false. Start with the path $v_0-v_1-\cdots-v_{12}$ and attach one
 triangle at $v_1$ and another at $v_{11}$. The resulting graph has $17$ vertices.
+Its Graph_6 string is `PhCGGC@?G?_@?@O?G?G?G?@C`.
 Its only minimum-degree vertices are $v_0$ and $v_{12}$, at distance $12$, while its
 only maximum-degree vertices are $v_1$ and $v_{11}$, at distance $10$. Thus the
 conjectured lower bound is $12 + \lceil 10/3 \rceil = 16$.
