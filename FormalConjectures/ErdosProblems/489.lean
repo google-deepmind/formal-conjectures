@@ -51,8 +51,8 @@ and the existence of this limit was proved by Erdős.
 
 See also [208].
 -/
-@[category research open, AMS 11]
-theorem erdos_489 : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
+theorem erdos_489 : answer(True) ↔
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
         (fun x : ℕ => (x : ℝ).sqrt) →
@@ -67,18 +67,6 @@ theorem erdos_489.variants.squarefree :
     ∃ L : ℝ, Tendsto
       (fun x : ℕ => GapSumSq {n | ∃ p, Nat.Prime p ∧ n = p ^ 2} x / (x : ℝ))
       atTop (𝓝 L) := by
-  sorry
-
-open scoped Classical in
-/-- Star Fleet Math gives a machine-checked proof that the squared-gap average converges for
-every admissible `A`. -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
-theorem erdos_489.gap_average_converges :
-    ∀ (A : Set ℕ),
-      (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
-        (fun x : ℕ => (x : ℝ).sqrt) →
-      (sievedSet A).Infinite →
-      ∃ L : ℝ, Tendsto (fun x : ℕ => GapSumSq A x / (x : ℝ)) atTop (𝓝 L) := by
   sorry
 
 end Erdos489

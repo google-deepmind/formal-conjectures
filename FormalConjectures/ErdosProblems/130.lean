@@ -66,20 +66,10 @@ this graph be? In particular, can the chromatic number be infinite?
 The chromatic number can be infinite: there is an infinite general-position set
 whose integer-distance graph admits no finite proper colouring.
 -/
-@[category research open, AMS 5]
-theorem erdos_130 :
-    answer(sorry) ↔
-      ∃ A : Set Point, A.Infinite ∧ GeneralPosition A ∧ ∀ k : ℕ, ¬ HasKColoring A k := by
-  sorry
-
-/--
-Star Fleet Math gives a machine-checked construction of such a set, so the chromatic number
-can be infinite. The problem as posed also asks how large the clique number can be, which is
-not addressed here.
--/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-130/Research/Basic.lean"]
-theorem erdos_130.infinite_chromatic :
-    ∃ A : Set Point, A.Infinite ∧ GeneralPosition A ∧ ∀ k : ℕ, ¬ HasKColoring A k := by
+theorem erdos_130 :
+    answer(True) ↔
+      ∃ A : Set Point, A.Infinite ∧ GeneralPosition A ∧ ∀ k : ℕ, ¬ HasKColoring A k := by
   sorry
 
 end Erdos130

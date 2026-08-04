@@ -73,17 +73,8 @@ The `c(n) \gg n^n` conjecture is **false**: for odd `n`, one can tile the unit
 
 Determining good bounds for `c(n)` in general remains open.
 -/
-@[category research open, AMS 52]
-theorem erdos_769 : answer(sorry) ↔ Erdos769LowerBound := by
-  sorry
-
-/--
-Star Fleet Math gives a machine-checked disproof of the `c(n) ≫ n^n` conjecture: for odd `n`
-the unit cube tiles into `k` homothetic cubes for every `k` above a threshold that is `o(n^n)`.
-Determining good bounds for `c(n)` in general remains open.
--/
 @[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-769/Research/Solution.lean"]
-theorem erdos_769.lower_bound_false : ¬ Erdos769LowerBound := by
+theorem erdos_769 : answer(False) ↔ Erdos769LowerBound := by
   sorry
 
 end Erdos769

@@ -41,8 +41,8 @@ Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\ca
 (0,1)$, where $\{x\}$ is the distance of $x$ from the nearest integer. Then every sufficiently large
 integer is the sum of distinct elements of $A$.
 -/
-@[category research open, AMS 11]
-theorem erdos_254 : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-254/Research/Basic.lean"]
+theorem erdos_254 :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧
       (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ distToNearestInt (θ * (n : ℝ)))) →
@@ -60,15 +60,6 @@ theorem erdos_254.variants.cassels :
       (Tendsto (fun x : ℕ ↦ (((A ∩ Icc 1 (2 * x)).ncard : ℝ) -
         ((A ∩ Icc 1 x).ncard : ℝ)) / Real.log (Real.log x)) atTop atTop) ∧
       (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ (distToNearestInt (θ * (n : ℝ)))^2)) →
-        ∀ᶠ m in atTop, IsSumOfDistinct A m := by
-  sorry
-
-/-- Star Fleet Math gives a machine-checked proof that such an `A` is complete. -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-254/Research/Basic.lean"]
-theorem erdos_254.complete_of_dyadic_growth :
-    ∀ (A : Set ℕ),
-      (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧
-      (∀ θ : ℝ, 0 < θ → θ < 1 → ¬ Summable (fun n : A ↦ distToNearestInt (θ * (n : ℝ)))) →
         ∀ᶠ m in atTop, IsSumOfDistinct A m := by
   sorry
 

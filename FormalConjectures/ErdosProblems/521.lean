@@ -75,16 +75,8 @@ $$\lim_{n\to \infty}\frac{R_n}{\log n}=\frac{2}{\pi}?$$
 
 The answer is no: this almost-sure limit fails.
 -/
-@[category research open, AMS 11 60]
-theorem erdos_521 : answer(sorry) ↔ Claim := by
-  sorry
-
-/--
-The almost-sure limit fails. This result was obtained first by others, who deserve the credit
-for the problem; the link is to an independent machine-checked proof by Star Fleet Math.
--/
 @[category research solved, AMS 11 60, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-521/Research/LateFourthFinal.lean"]
-theorem erdos_521.claim_false : ¬ Claim := by
+theorem erdos_521 : answer(False) ↔ Claim := by
   sorry
 
 end Erdos521
