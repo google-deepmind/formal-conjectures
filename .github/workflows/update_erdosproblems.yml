@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     # Not running on forks
     if: github.repository == 'google-deepmind/formal-conjectures'
+    # The dispatch authenticates with REPO_DISPATCH_PAT, so GITHUB_TOKEN needs nothing.
+    permissions: {}
     steps:
       - name: Send repository dispatch event
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3
         with:
           # A Fine-grained personal access token with `Repository access` set to
           # "Only select repositories", namely "teorth/erdosproblems" and `permissions`
