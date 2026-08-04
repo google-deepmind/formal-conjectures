@@ -63,7 +63,7 @@ A translate-uniform **linear** scale suffices: there is a sufficient window
 length `Y` with `Y ε n ≤ C(ε) · n`. This is an upper bound on the optimal scale,
 not the exact threshold asked for in `erdos_450`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-450/Research/TuranAnswer.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-450/Research/TuranAnswer.lean"]
 theorem erdos_450.linear_scale_suffices :
     ∃ Y : ℝ → ℕ → ℕ,
       (∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ n : ℕ, (Y ε n : ℝ) ≤ C * n) ∧ IsSufficientScale Y := by

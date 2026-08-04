@@ -99,7 +99,7 @@ A superlinear lower bound: there is a `c > 0` such that for all large `n`,
 faster than any linear function of `n`. This is a proved lower bound; determining
 the exact order of `extremalGap` remains open (see `erdos_959`).
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-959/Research/FinalLowerBound.lean"]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-959/Research/FinalLowerBound.lean"]
 theorem erdos_959.lower_bound :
     ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, ∀ n ≥ N,
       (n : ℝ) ^ (1 + c / Real.log (Real.log n)) ≤ extremalGap n := by

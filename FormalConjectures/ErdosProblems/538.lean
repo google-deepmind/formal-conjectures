@@ -64,7 +64,7 @@ upper bound for every admissible `A`, together with a witnessing construction
 achieving the same order. This pins the order (up to the one iterated-logarithm
 factor) but not the sharp constant asked for in `erdos_538`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/main/starfleet/erdos-538/Research/FinalMatchingOrder.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-538/Research/FinalMatchingOrder.lean"]
 theorem erdos_538.matching_order (r N : ℕ) (hr : 2 ≤ r) (hN : 2 ≤ N) :
     (∀ A : Finset ℕ, Admissible r N A →
       Real.log (Real.log (N + 1)) * (reciprocalMass A : ℝ) ≤
