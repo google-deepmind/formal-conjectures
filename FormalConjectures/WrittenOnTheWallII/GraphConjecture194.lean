@@ -46,10 +46,7 @@ of the neighbourhood.
 A Hamiltonian path is a walk visiting every vertex exactly once. The answer is no, as witnessed by
 the 18-vertex graph described above.
 
-Counterexample (Graph6)
-
-The 18-vertex counterexample used in the accompanying PR is encoded in Graph6 as:
-`~?c_?eLo?Tz`
+Counterexample (Graph6): `Q~~~~~~~~~~~~}~}^~??G??_??_`
 
 -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
@@ -77,4 +74,3 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ averageIndepNeighbors G := by
 example : Fintype.card (Fin 2) = 2 := by decide
 
 end WrittenOnTheWallII.GraphConjecture194
-
