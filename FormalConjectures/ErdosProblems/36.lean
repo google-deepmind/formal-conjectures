@@ -58,6 +58,77 @@ private lemma one_le_overlap {A B : Finset ℤ} {a b : ℤ}
   Finset.card_pos.mpr ⟨(a, b), Finset.mem_filter.mpr
     ⟨Finset.mem_product.mpr ⟨ha, hb⟩, rfl⟩⟩
 
+/-- For a fixed difference `k`, the first coordinate determines the second, so an overlap is
+never larger than either side. This is what makes `MaxOverlap` a supremum of a bounded set. -/
+@[category API, AMS 5 11]
+private lemma overlap_le_card_left (A B : Finset ℤ) (k : ℤ) : Overlap A B k ≤ A.card := by
+  refine Finset.card_le_card_of_injOn Prod.fst (fun p hp => ?_) (fun p hp q hq h => ?_)
+  · exact (Finset.mem_product.mp (Finset.mem_filter.mp hp).1).1
+  · obtain ⟨-, hpk⟩ := Finset.mem_filter.mp hp
+    obtain ⟨-, hqk⟩ := Finset.mem_filter.mp hq
+    exact Prod.ext h (by omega)
+
+/-- The range of `Overlap A B` is bounded, so `MaxOverlap` is a genuine supremum rather than
+the junk value `sSup` returns on an unbounded set. -/
+@[category API, AMS 5 11]
+private lemma bddAbove_range_overlap (A B : Finset ℤ) :
+    BddAbove (Set.range (Overlap A B)) := by
+  refine ⟨A.card, ?_⟩
+  rintro x ⟨k, rfl⟩
+  exact overlap_le_card_left A B k
+
+@[category API, AMS 5 11]
+private lemma maxOverlap_le_card_left (A B : Finset ℤ) : MaxOverlap A B ≤ A.card :=
+  ciSup_le fun k => overlap_le_card_left A B k
+
+/-- An overlap can only be nonzero for a difference that is actually realised, which confines
+the search for `MaxOverlap` to a finite set. -/
+@[category API, AMS 5 11]
+private lemma overlap_eq_zero_of_notMem_sub (A B : Finset ℤ) {k : ℤ}
+    (hk : k ∉ (A ×ˢ B).image fun p => p.1 - p.2) : Overlap A B k = 0 := by
+  rw [Overlap, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  rintro ⟨a, b⟩ hab rfl
+  exact hk (Finset.mem_image.mpr ⟨(a, b), hab, rfl⟩)
+
+/-- `MaxOverlap` as a supremum over a finite set of differences. This is the form that makes it
+possible to evaluate: the `iSup` in the definition ranges over all of `ℤ`, but every difference
+outside `A - B` contributes `0`. -/
+@[category API, AMS 5 11]
+private lemma maxOverlap_eq_sup (A B : Finset ℤ) :
+    MaxOverlap A B = ((A ×ˢ B).image fun p => p.1 - p.2).sup (Overlap A B) := by
+  refine le_antisymm (ciSup_le fun k => ?_) (Finset.sup_le fun k _ => ?_)
+  · by_cases hk : k ∈ (A ×ˢ B).image fun p => p.1 - p.2
+    · exact Finset.le_sup hk
+    · simp [overlap_eq_zero_of_notMem_sub A B hk]
+  · exact le_ciSup (bddAbove_range_overlap A B) k
+
+/-- The pairs `M n` ranges over are exactly the `n`-element subsets of `{1, …, 2n}`, each paired
+with its complement. This turns the `sInf` over an unbounded family of `Finset ℤ` into an
+infimum over a `Finset`. -/
+@[category API, AMS 5 11]
+private lemma M_eq_image (n : ℕ) :
+    M n = sInf ((fun A : Finset ℤ => MaxOverlap A (Finset.Icc (1 : ℤ) (2 * n) \ A)) ''
+      {A | A ⊆ Finset.Icc (1 : ℤ) (2 * n) ∧ A.card = n}) := by
+  rw [M]
+  congr 1
+  ext m
+  constructor
+  · rintro ⟨A, B, hdisj, hunion, hcard, rfl⟩
+    have hA : A ⊆ Finset.Icc (1 : ℤ) (2 * n) := hunion ▸ Finset.subset_union_left
+    have hB : B = Finset.Icc (1 : ℤ) (2 * n) \ A := by
+      rw [← hunion, Finset.union_sdiff_cancel_left hdisj]
+    have hn : A.card = n := by
+      have := Finset.card_union_of_disjoint hdisj
+      rw [hunion] at this
+      simp only [Int.card_Icc] at this
+      omega
+    exact ⟨A, ⟨hA, hn⟩, by simp only [← hB]⟩
+  · rintro ⟨A, ⟨hA, hn⟩, rfl⟩
+    refine ⟨A, Finset.Icc (1 : ℤ) (2 * n) \ A, Finset.disjoint_sdiff, ?_, ?_, rfl⟩
+    · rw [Finset.union_sdiff_of_subset hA]
+    · rw [Finset.card_sdiff, Finset.inter_eq_left.mpr hA, Int.card_Icc, hn]
+      omega
+
 /-- `MaxOverlap {1} {2} = 1`: the only nonzero overlap is at `k = -1`. -/
 @[category API, AMS 5 11]
 private lemma maxOverlap_singleton_one_two :
