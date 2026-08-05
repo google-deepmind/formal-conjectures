@@ -58,11 +58,14 @@ theorem a_2 : a 2 = 3 := by
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by
-  norm_num [a, product, next]
+  norm_num [a, product, next,
+    show (6 : ℕ).divisors = {1, 2, 3, 6} by decide]
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 11 := by
-  norm_num [a, product, next]
+  norm_num [a, product, next,
+    show (6 : ℕ).divisors = {1, 2, 3, 6} by decide,
+    show (30 : ℕ).divisors = {1, 2, 3, 5, 6, 10, 15, 30} by decide]
 
 /-- Does Chua's sequence contain every prime? -/
 @[category research open, AMS 11]
