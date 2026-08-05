@@ -100,6 +100,11 @@ jobs:
           lake exe cache unpack
           lake exe cache get
 
+      - name: Generate FormalConjecturesForMathlib.lean
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          ./scripts/mk_all_formathlib.sh
+
       - name: Generate All.lean
         if: steps.mode.outputs.website_only != 'true'
         run: |
@@ -108,7 +113,13 @@ jobs:
           mv FormalConjectures.lean FormalConjectures/All.lean
           echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
 
-      - name: Build project
+      - name: Build ForMathlib, utilities, and test
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          lake --wfail build FormalConjecturesForMathlib FormalConjecturesUtil
+          lake --wfail test
+
+      - name: Build problems
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake --wfail build
