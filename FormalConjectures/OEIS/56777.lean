@@ -54,11 +54,15 @@ theorem a_65 : A 65 := by
 /-- $209$ is in the sequence A56777. -/
 @[category test, AMS 11]
 theorem a_209 : A 209 := by
-  set_option maxRecDepth 1000 in
-  refine ⟨?_, by norm_num, ?_, ?_⟩
-  · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
-    exact not_prime_mul (by norm_num) (by norm_num)
-  · decide
+  unfold A
+  simp only [one_lt_ofNat, reduceAdd, true_and]
+  refine ⟨?_, ?_, ?_⟩
+  · norm_num
+  · have eq1 : 221 = 13 * 17 := by norm_num
+    have eq2 : 209 = 11 * 19 := by norm_num
+    rw [eq1, eq2, totient_mul (by norm_num), totient_mul (by norm_num),
+      totient_prime (by norm_num), totient_prime (by norm_num), totient_prime (by norm_num),
+      totient_prime (by norm_num)]
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/

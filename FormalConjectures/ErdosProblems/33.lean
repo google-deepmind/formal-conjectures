@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/
 variable {α : Type} [AddCommMonoid α]
-open Classical Set
+open Set
 open scoped goldenRatio
 
 namespace Erdos33
