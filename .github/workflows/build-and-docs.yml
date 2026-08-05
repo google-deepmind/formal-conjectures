@@ -161,9 +161,9 @@ jobs:
 
       # `extract_names` notices `research open` problems with a sorry-free proof, and
       # `test`/`API` statements without one. Those warnings went to stderr behind the
-      # `|| true` above, so nothing ever read them. This does not require the existing
-      # backlog to be fixed; it fails only when a new case appears.
-      - name: Check category warnings have not grown
+      # `|| true` above, so nothing ever read them. The first is a contradiction and
+      # fails; the other two are reported to the run summary without blocking.
+      - name: Check category warnings
         if: steps.mode.outputs.website_only != 'true'
         run: python3 scripts/check_category_warnings.py extract_names.warnings
 
