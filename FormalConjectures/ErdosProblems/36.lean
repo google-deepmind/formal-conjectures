@@ -129,6 +129,42 @@ private lemma M_eq_image (n : ℕ) :
     · rw [Finset.card_sdiff, Finset.inter_eq_left.mpr hA, Int.card_Icc, hn]
       omega
 
+/-- A computable stand-in for `MaxOverlap`. `Overlap` is already computable; the only obstacle
+is the `iSup`, and `maxOverlap_eq_sup` says it agrees with this `Finset.sup`. -/
+private def maxOverlapC (A B : Finset ℤ) : ℕ :=
+  ((A ×ˢ B).image fun p => p.1 - p.2).sup (Overlap A B)
+
+@[category API, AMS 5 11]
+private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
+    MaxOverlap A B = maxOverlapC A B := maxOverlap_eq_sup A B
+
+/-- The `n`-element subsets of `{1, …, 2n}`. -/
+private def parts (n : ℕ) : Finset (Finset ℤ) :=
+  (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
+
+@[category API, AMS 5 11]
+private lemma mem_parts {n : ℕ} {A : Finset ℤ} :
+    A ∈ parts n ↔ A ⊆ Finset.Icc (1 : ℤ) (2 * n) ∧ A.card = n := by
+  simp [parts, Finset.mem_filter, Finset.mem_powerset]
+
+@[category API, AMS 5 11]
+private lemma parts_nonempty (n : ℕ) : (parts n).Nonempty := by
+  refine ⟨Finset.Icc (1 : ℤ) n, mem_parts.mpr ⟨?_, ?_⟩⟩
+  · exact Finset.Icc_subset_Icc le_rfl (by omega)
+  · rw [Int.card_Icc]; omega
+
+/-- `M n` as the minimum of a `Finset` of naturals, which is what makes it evaluable. -/
+@[category API, AMS 5 11]
+private lemma M_eq_min' (n : ℕ) :
+    M n = ((parts n).image fun A => maxOverlapC A (Finset.Icc (1 : ℤ) (2 * n) \ A)).min'
+      ((parts_nonempty n).image _) := by
+  rw [M_eq_image, ← Finset.Nonempty.csInf_eq_min']
+  congr 1
+  rw [Finset.coe_image,
+    show ((parts n : Finset (Finset ℤ)) : Set (Finset ℤ))
+        = {A | A ⊆ Finset.Icc (1 : ℤ) (2 * n) ∧ A.card = n} from by ext A; simp [mem_parts]]
+  exact Set.image_congr fun A _ => maxOverlap_eq_maxOverlapC _ _
+
 /-- `MaxOverlap {1} {2} = 1`: the only nonzero overlap is at `k = -1`. -/
 @[category API, AMS 5 11]
 private lemma maxOverlap_singleton_one_two :
@@ -187,22 +223,30 @@ For $n = 2$, the set is $\{1, 2, 3, 4\}$. The balanced partition $A = \{1, 4\}, 
 has all four pairwise differences ($\pm 1, \pm 2$) distinct, so `MaxOverlap = 1`.
 Any balanced partition has both pieces nonempty, so `MaxOverlap \geq 1`.
 -/
-@[category test, AMS 5 11, formal_proof using formal_conjectures at
-"https://github.com/google-deepmind/formal-conjectures/pull/4153/commits/2ce2d6345d0fcf3b023fe35fde9a9a490b131a86"]
+@[category test, AMS 5 11]
 theorem M_two : M 2 = 1 := by
-  sorry
+  rw [M_eq_min']
+  decide
 
+/-- For `n = 3` the best splitting of `{1, …, 6}` has maximum overlap `2`. -/
 @[category test, AMS 5 11]
 theorem M_three : M 3 = 2 := by
-  sorry
+  rw [M_eq_min']
+  decide
 
+set_option maxRecDepth 8000 in
+/-- For `n = 4` the best splitting of `{1, …, 8}` still has maximum overlap `2`. -/
 @[category test, AMS 5 11]
 theorem M_four : M 4 = 2 := by
-  sorry
+  rw [M_eq_min']
+  decide
 
+set_option maxRecDepth 40000 in
+/-- For `n = 5` the best splitting of `{1, …, 10}` has maximum overlap `3`. -/
 @[category test, AMS 5 11]
 theorem M_five : M 5 = 3 := by
-  sorry
+  rw [M_eq_min']
+  decide
 
 /--
 The quotient of the minimum maximum overlap $M(N)$ by $N$. The central question of the
