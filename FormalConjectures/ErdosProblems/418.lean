@@ -86,6 +86,12 @@ theorem erdos_418.variants.conditional
 /--
 Erdős [Er73b] has shown that a positive density set of natural numbers cannot be written as
 $\sigma(n)-n$ (numbers not of this form are called nonaliquot, or sometimes untouchable).
+
+The density sits in an existential, so `HasPosDensity` is the *stronger* reading: the witness
+`S` is ours to choose, and weakening it to positive lower density would claim less rather than
+more. That is the opposite of the usual situation for Erdős' "positive density", where the
+density is a hypothesis or a claim about a fixed set. Whether the nonaliquot numbers themselves
+have a density is a separate question and is not what this states.
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
