@@ -43,8 +43,11 @@ $$1+\sum_{k}\frac{1}{a_k^{1+it}}\neq 0?$$
 Yip [Yi25] has proved that this is not always true - in fact, for any real $t\neq 0$, there
 exists a sequence of integers $1<a_1<\cdots$ such that $\sum \frac{1}{a_i}<\infty$ and
 $1+\sum_{k}\frac{1}{a_k^{1+it}}=0$.
+
+This was formalized in Lean by Wu using Aristotle.
 -/
-@[category research solved, AMS 11 30]
+@[category research solved, AMS 11 30, formal_proof using lean4 at
+"https://gist.github.com/llllvvuu/d25f037d1f1000bdabd6ca928c74c9bb"]
 theorem erdos_967 : answer(False) ↔
     ∀ a : ℕ → ℕ, StrictMono a → 1 < a 0 → Summable (fun k : ℕ => 1 / (a k : ℝ)) →
       ∀ t : ℝ, 1 + (∑' k, summand t (a k)) ≠ 0 := by
