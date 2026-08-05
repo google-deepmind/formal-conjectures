@@ -22,7 +22,9 @@ import FormalConjecturesUtil
 A Pierpont prime is a prime of the form $2^a 3^b + 1$, where $a$ and $b$ are
 nonnegative integers. Marc Gleason conjectured that there are infinitely many.
 
-*Reference:* [Wikipedia, Pierpont prime](https://en.wikipedia.org/wiki/Pierpont_prime)
+*References:*
+- [Wikipedia, Pierpont prime](https://en.wikipedia.org/wiki/Pierpont_prime)
+- [OEIS A005109](https://oeis.org/A005109)
 -/
 
 namespace PierpontPrime
