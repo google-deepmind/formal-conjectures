@@ -142,18 +142,14 @@ jobs:
         run: |
           python3 site/fix_literate_html.py _literate_html
 
-      # Pull requests restore from the shared cache but do not write to it. A
-      # cache written here is keyed on the branch's own `.lean` hashes, so only
-      # a re-run of the same commit could ever hit it, while it counts against
-      # the repository's 10 GB limit and evicts entries every build needs.
       - name: Pack olean cache
-        if: steps.mode.outputs.website_only != 'true' && github.event_name != 'pull_request'
+        if: steps.mode.outputs.website_only != 'true'
         run: |
           lake exe cache pack
           ls ~/.cache/mathlib
 
       - name: Save ~/.cache/mathlib
-        if: steps.mode.outputs.website_only != 'true' && github.event_name != 'pull_request'
+        if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache/save@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache
