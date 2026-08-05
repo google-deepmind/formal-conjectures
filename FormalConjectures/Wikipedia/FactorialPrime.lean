@@ -22,7 +22,9 @@ import FormalConjecturesUtil
 A factorial prime is a prime that is one more or one less than a factorial. It
 is conjectured that there are infinitely many factorial primes.
 
-*Reference:* [Wikipedia, Factorial prime](https://en.wikipedia.org/wiki/Factorial_prime)
+*References:*
+- [Wikipedia, Factorial prime](https://en.wikipedia.org/wiki/Factorial_prime)
+- [OEIS A088054](https://oeis.org/A088054)
 -/
 
 namespace FactorialPrime
