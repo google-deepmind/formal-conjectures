@@ -23,8 +23,10 @@ A Cunningham chain is a sequence of primes satisfying either $p_{i+1}=2p_i+1$
 (first kind) or $p_{i+1}=2p_i-1$ (second kind). It is conjectured that there
 are infinitely many chains of every positive exact length, of both kinds.
 
-*Reference:* Lenny Jones,
-[Polynomial Cunningham Chains](https://arxiv.org/abs/1104.1579)
+*References:*
+- Lenny Jones, [Polynomial Cunningham Chains](https://arxiv.org/abs/1104.1579)
+- [OEIS A181697](https://oeis.org/A181697), first-kind chain lengths
+- [OEIS A181715](https://oeis.org/A181715), second-kind chain lengths
 -/
 
 namespace CunninghamChain
