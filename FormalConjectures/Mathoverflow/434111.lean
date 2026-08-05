@@ -57,4 +57,15 @@ theorem restricted_prime_number_theorem :
     answer(sorry) ↔ ((fun n : ℕ => (piRestricted n : ℝ)) ~[atTop] (fun n : ℕ => (n : ℝ) / (2 * Real.log n))) := by
   sorry
 
+/--
+Meštrović's original formulation [Me18, Conjecture 3.3]: the sequence of sums of the
+first $2m$ primes satisfies the Restricted Prime Number Theorem, $\pi(m, (S_{2m})) \sim \frac{m}{\ln m}$.
+-/
+@[category research open, AMS 11]
+theorem restricted_prime_number_theorem.variants.even_subsequence :
+    answer(sorry) ↔
+      ((fun m : ℕ => (((Finset.Icc 1 m).filter (fun k => Nat.Prime (S (2 * k)))).card : ℝ)) ~[atTop]
+        (fun m : ℕ => (m : ℝ) / Real.log m)) := by
+  sorry
+
 end MathOverflow434111
