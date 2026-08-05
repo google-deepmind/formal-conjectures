@@ -31,6 +31,23 @@ permissions:
   contents: read
 
 jobs:
+  # The category check is a policy gate, so it has tests of its own. They need
+  # no Lean build, so they run alongside it rather than after it.
+  scripts:
+    runs-on: ubuntu-latest
+    name: Test scripts
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12.9'
+
+      - name: Run script tests
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+
   build:
     runs-on: ubuntu-latest
     name: Build project
@@ -157,15 +174,15 @@ jobs:
         run: |
           mkdir -p site/data
           lake exe extract_names --exclude=statement,docstring,moduleDocstrings \
-            > site/data/conjectures.json 2> extract_names.warnings || true
+            > site/data/conjectures.json
 
-      # `extract_names` notices `research open` problems with a sorry-free proof, and
-      # `test`/`API` statements without one. Those warnings went to stderr behind the
-      # `|| true` above, so nothing ever read them. The first is a contradiction and
-      # fails; the other two are reported to the run summary without blocking.
+      # `extract_names` notices `research open` problems with a sorry-free proof,
+      # and `test`/`API` statements without one, all decidable from the JSON just
+      # written. The first is a contradiction and fails; the other two are counted
+      # in the run summary without blocking.
       - name: Check category warnings
         if: steps.mode.outputs.website_only != 'true'
-        run: python3 scripts/check_category_warnings.py extract_names.warnings
+        run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true'
