@@ -29,7 +29,7 @@ nonnegative integers. Marc Gleason conjectured that there are infinitely many.
 
 namespace PierpontPrime
 
-/-- A Pierpont prime is a prime of the form `2 ^ a * 3 ^ b + 1`. -/
+/-- A Pierpont prime is a prime of the form $2^a3^b + 1$. -/
 def IsPierpontPrime (p : ℕ) : Prop :=
   p.Prime ∧ ∃ a b : ℕ, p = 2 ^ a * 3 ^ b + 1
 
