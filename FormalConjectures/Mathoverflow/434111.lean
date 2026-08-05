@@ -29,14 +29,11 @@ Among the Sums of the First `2n` Primes*, [arXiv:1804.04198](https://arxiv.org/a
 
 namespace MathOverflow434111
 
-open Filter Topology Asymptotics
-
-/-- The $k$-th prime, $0$-indexed, matching `Nat.nth Nat.Prime`. -/
-noncomputable abbrev prime' (k : ℕ) : ℕ := Nat.nth Nat.Prime k
+open Nat Filter Topology Asymptotics
 
 /-- $S_n$ is the sum of the first `n` primes, i.e. $S_n=p_1+\dots+p_n$, $1$-indexed,
 matching the MathOverflow question. -/
-noncomputable def S (n : ℕ) : ℕ := ∑ k ∈ Finset.range n, prime' k
+noncomputable def S (n : ℕ) : ℕ := ∑ k ∈ Finset.range n, nth Nat.Prime k
 
 /-- $\pi_n$ counts how many of $S_1,S_2,\dots,S_n$ are themselves prime,
 i.e. $\pi_n$ as used on MathOverflow (compare to $\pi_n$ in [Me18, Conjecture 3.3],
