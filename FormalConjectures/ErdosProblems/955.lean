@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 955
@@ -38,7 +38,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter
-open scoped ArithmeticFunction ArithmeticFunction.sigma Topology Classical
+open scoped ArithmeticFunction ArithmeticFunction.sigma Topology
 
 namespace Erdos955
 
@@ -117,6 +117,7 @@ theorem erdos_955.variants.troupe_sum_of_two_squares :
     { x | ∃ a b : ℕ, s x = a^2 + b^2 }.HasDensity 0 := by
   sorry
 
+open scoped Classical in
 /--
 Pollack, Pomerance, and Thompson [PPT18] prove that if $\epsilon(x)=o(1)$ and $A\subset \mathbb{N}$
 has size at most $x^{1/2+\epsilon(x)}$ then $\#\{ n\leq x: s(n)\in A\} =o(x)$ as $x\to \infty$. It
