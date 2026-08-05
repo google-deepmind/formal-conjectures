@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Are prime numbers among sums of prime numbers distributed as $frac n{2\ln(n)}$?
+# Are prime numbers among sums of prime numbers distributed as $\frac n{2\ln(n)}$?
 
 *Reference:*
 
