@@ -36,9 +36,12 @@ upper density', which is likely what Erdős intended).
 The theorem below uses the positive-upper-density interpretation; the literal natural-density
 interpretation is recorded separately.
 
-This was formalized in Lean 3 by Bloom and Mehta.
+This was formalized in Lean 3 by Bloom and Mehta, as `unit_fractions_upper_density`, whose
+`upper_density` is the same limsup of partial densities as `Set.upperDensity` here. That proof
+carries no `0 ∉ A` hypothesis and does not need one: a solution containing `0` contributes
+`1 / 0 = 0` to the sum, so excluding `0` only narrows which sets are covered.
 -/
-@[category research solved, AMS 11, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean"]
+@[category research solved, AMS 11, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/10ef71a300cf29e5f19beb2bbc723a035a0678de/src/final_results.lean"]
 theorem erdos_298 : answer(True) ↔ (∀ (A : Set ℕ), 0 ∉ A → 0 < A.upperDensity →
     ∃ (S : Finset ℕ), ↑S ⊆ A ∧ ∑ n ∈ S, (1 / n : ℚ) = 1) := by
   sorry
