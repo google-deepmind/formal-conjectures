@@ -19,8 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Chua's Euclidean prime sequence
 
-For a product `n` of the preceding terms, Chua's sequence chooses the least
-prime dividing `d + n / d` for some divisor `d` of `n`. The open question is
+For a product $n$ of the preceding terms, Chua's sequence chooses the least
+prime dividing $d + n / d$ for some divisor $d$ of $n$. The open question is
 whether every prime occurs.
 
 *References:*
@@ -31,44 +31,42 @@ whether every prime occurs.
 
 namespace OeisA167604
 
-/-- The least prime occurring among the sums `d + n / d` for divisors `d` of `n`.
+/-- The least prime occurring among the sums $d + n / d$ for divisors $d$ of $n$.
 
 Taking the least prime factor of the product gives the same minimum and makes the definition
 directly executable. -/
 def next (n : ℕ) : ℕ :=
   Nat.minFac (∏ d ∈ n.divisors, (d + n / d))
 
-/-- Product of the first `n` terms of Chua's sequence. -/
+/-- Product of the first $n$ terms of Chua's sequence. -/
 def product : ℕ → ℕ
   | 0 => 1
   | n + 1 => product n * next (product n)
 
-/-- Chua's sequence, extended by `a 0 = 1`. -/
+/-- Chua's sequence, extended by $a(0) = 1$. -/
 def a : ℕ → ℕ
   | 0 => 1
   | n + 1 => next (product n)
 
 @[category test, AMS 11]
-theorem next_one : next 1 = 2 := by
-  norm_num [next]
+theorem a_1 : a 1 = 2 := by
+  norm_num [a, product, next]
 
 @[category test, AMS 11]
-theorem next_two : next 2 = 3 := by
-  norm_num [next]
+theorem a_2 : a 2 = 3 := by
+  norm_num [a, product, next]
 
 @[category test, AMS 11]
-theorem next_six : next 6 = 5 := by
-  rw [next, show (6 : ℕ).divisors = {1, 2, 3, 6} by decide]
+theorem a_3 : a 3 = 5 := by
+  rw [a, product, product, a_1, a_2, next,
+    show (6 : ℕ).divisors = {1, 2, 3, 6} by decide]
   norm_num
 
 @[category test, AMS 11]
-theorem next_thirty : next 30 = 11 := by
-  rw [next, show (30 : ℕ).divisors = {1, 2, 3, 5, 6, 10, 15, 30} by decide]
+theorem a_4 : a 4 = 11 := by
+  rw [a, product, product, product, a_1, a_2, a_3, next,
+    show (30 : ℕ).divisors = {1, 2, 3, 5, 6, 10, 15, 30} by decide]
   norm_num
-
-@[category test, AMS 11]
-theorem first_terms : a 1 = 2 ∧ a 2 = 3 ∧ a 3 = 5 ∧ a 4 = 11 := by
-  norm_num [a, product, next_one, next_two, next_six, next_thirty]
 
 /-- Does Chua's sequence contain every prime? -/
 @[category research open, AMS 11]
