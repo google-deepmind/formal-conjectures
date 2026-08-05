@@ -156,7 +156,16 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json || true
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings \
+            > site/data/conjectures.json 2> extract_names.warnings || true
+
+      # `extract_names` notices `research open` problems with a sorry-free proof, and
+      # `test`/`API` statements without one. Those warnings went to stderr behind the
+      # `|| true` above, so nothing ever read them. The first is a contradiction and
+      # fails; the other two are reported to the run summary without blocking.
+      - name: Check category warnings
+        if: steps.mode.outputs.website_only != 'true'
+        run: python3 scripts/check_category_warnings.py extract_names.warnings
 
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true'
