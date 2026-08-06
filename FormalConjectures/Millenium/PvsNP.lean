@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import FormalConjectures.Util.ProblemImports
+import FormalConjecturesForMathlib.Computability.ComplexityTheory
 
 /-!
 # Conjectures in Complexity Theory
@@ -34,52 +35,6 @@ in complexity theory, including
 open Computability Turing
 
 namespace ComplexityTheory
-
-/--
-The type of decision problems.
-
-We define these as functions from lists of booleans to booleans,
-implictly assuming the usual encodings.
--/
-abbrev DecisionProblem := List Bool → Bool
-
-/--
-The type of complexity classes. We define these as sets of decision problems.
--/
-abbrev ComplexityClass := Set DecisionProblem
-
-/--
-A simple definition to abstract the notion of a poly-time Turing machine into a predicate.
--/
-def IsComputableInPolyTime {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
-  Nonempty (TM2ComputableInPolyTime ea eb f)
-
-/--
-The class P is the set of decision problems
-decidable in polynomial time by a deterministic Turing machine.
--/
-def P : ComplexityClass :=
-  { L | IsComputableInPolyTime finEncodingListBool finEncodingBoolBool L }
-
-/--
-The class NP is the set of decision problems
-such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
-where for all `x`, `L x = true` iff there exists a `w` of length at most `p (|x|)`
-such that the Turing machine accepts the pair `(x,w)`.
-
-See Definition 2.1 in Arora-Barak (2009).
--/
-def NP : ComplexityClass :=
-  { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      IsComputableInPolyTime finEncodingListBoolProdListBool finEncodingBoolBool R ∧
-      ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
-
-/--
-The class coNP is the set of decision problems
-whose complements are in NP.
--/
-def coNP : ComplexityClass :=
-  { L | Lᶜ ∈ NP }
 
 /--
 **P ≠ NP**:
