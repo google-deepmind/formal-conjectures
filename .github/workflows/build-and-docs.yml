@@ -125,7 +125,6 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
-
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true'
         run: |

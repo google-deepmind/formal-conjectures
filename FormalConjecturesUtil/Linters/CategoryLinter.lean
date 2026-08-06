@@ -55,13 +55,14 @@ def toCategory
 
 /-- Warns when a problem categorised as `research open` turns out to have a sorry-free proof.
 
-This check cannot live in the `category` attribute, which is where it used to be. Attributes run
-before a theorem's proof term is available, because theorem bodies elaborate asynchronously, so
-`value?` is still `none` there and the check silently never fired for a theorem. It did fire for
+This check used to live in the `category` attribute, at `.afterTypeChecking`, where it never fired
+for a theorem: proof terms elaborate asynchronously, so `value?` was still `none`. It did fire for
 a `def`, which is why the gap went unnoticed.
 
-By the time a linter runs the command has finished, so waiting on the elaboration task with
-`findAsync?` is safe. -/
+`.afterCompilation` is late enough to see the proof term in an ordinary file, but not inside a
+module, and every file in `FormalConjecturesTest` is a module. An attribute-based check therefore
+cannot be given a test. A linter runs once the command has finished and works in both, so the
+check lives here and `findAsync?` waits on the elaboration task. -/
 def checkNotOpenIfSorryFree (declId : Syntax) : CommandElabM Unit := do
   let declName := (← getCurrNamespace) ++ declId[0].getId
   unless ← hasConst declName do return
@@ -93,8 +94,8 @@ def categoryLinter : Linter where
             "Missing problem category attribute"
           return
         match stx with
-          | `(command| $_:declModifiers theorem $declId $_:bracketedBinder* : $_ := $_)
-          | `(command| $_:declModifiers lemma $declId $_:bracketedBinder* : $_ := $_) =>
+          | `(command| $_:declModifiers theorem $declId:declId $_:declSig $_:declVal)
+          | `(command| $_:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
             checkNotOpenIfSorryFree declId
           | _ => return
       | _ => return
