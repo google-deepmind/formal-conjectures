@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil.Linters.ExistsImplicationLinter
+public import FormalConjecturesUtil.Linters.ExistsImplicationLinter
 public import Mathlib
 
 @[expose] public section

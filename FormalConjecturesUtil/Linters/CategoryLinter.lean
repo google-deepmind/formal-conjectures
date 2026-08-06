@@ -73,34 +73,40 @@ def checkNotOpenIfSorryFree (declId : Syntax) : CommandElabM Unit := do
     logLintIf linter.style.category_attribute declId
       "If a problem has a sorry-free proof, it should not be categorised as `open`."
 
+/-- Warns unless `a` carries exactly one category attribute. Returns whether it does, so the
+caller can go on to the checks that need one. `stx` is only used to place a warning when the
+modifiers carry no attribute list to point at. -/
+def checkExactlyOneCategory (a : TSyntax ``Lean.Parser.Command.declModifiers) (stx : Syntax) :
+    CommandElabM Bool := do
+  let prob_status ← toCategory a
+  let outStx := match a with
+  | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
+  | _ => stx
+  if prob_status.size > 1 then
+    logLintIf linter.style.category_attribute outStx
+      "Duplicate category attribute. There should be only one category attribute per declaration"
+    return false
+  if prob_status.size == 0 then
+    logLintIf linter.style.category_attribute outStx
+      "Missing problem category attribute"
+    return false
+  return true
+
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
 def categoryLinter : Linter where
   run := withSetOptionIn fun stx => do
     match stx with
-      | `(command| $a:declModifiers theorem $_ $_:bracketedBinder* : $_ := $_)
-      | `(command| $a:declModifiers lemma $_ $_:bracketedBinder* : $_ := $_)
-      | `(command| $a:declModifiers example $_:bracketedBinder* : $_ := $_) =>
-        let prob_status ← toCategory a
-        let outStx := match a with
-        | `(declModifiers| $(_)? $atts $(_)? $(_)? $(_)? $(_)?) => atts.raw
-        | _ => stx
-        if prob_status.size > 1 then
-          logLintIf linter.style.category_attribute outStx
-            "Duplicate category attribute. There should be only one category attribute per declaration"
-          return
-        if prob_status.size == 0 then
-          logLintIf linter.style.category_attribute outStx
-            "Missing problem category attribute"
-          return
-        match stx with
-          | `(command| $_:declModifiers theorem $declId:declId $_:declSig $_:declVal)
-          | `(command| $_:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
-            checkNotOpenIfSorryFree declId
-          | _ => return
+      | `(command| $a:declModifiers theorem $declId:declId $_:declSig $_:declVal)
+      | `(command| $a:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
+        if ← checkExactlyOneCategory a stx then checkNotOpenIfSorryFree declId
+      -- An `example` has no name to look a proof up under, so only the attribute check
+      -- applies to it.
+      | `(command| $a:declModifiers example $_:optDeclSig $_:declVal) =>
+        discard <| checkExactlyOneCategory a stx
       -- Definitions are not required to carry a category, so they are not part of the
-      -- match above, but seven of them do carry one and the check applied to them when
-      -- it lived in the attribute. It is the case that used to work, in fact.
+      -- attribute check, but seven of them do carry one and the sorry-free check applied to
+      -- them when it lived in the attribute. It is the case that used to work, in fact.
       | `(command| $_:declModifiers def $declId:declId $_:optDeclSig $_:declVal) =>
         checkNotOpenIfSorryFree declId
       | _ => return
