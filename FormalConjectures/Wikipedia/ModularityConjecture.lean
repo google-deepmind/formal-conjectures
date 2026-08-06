@@ -64,9 +64,9 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
   apply Subtype.fintype _
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
-infinity on this affine curve we only have `p` -/
-noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
-  p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
+infinity on this affine curve we only have `p`. The trace is integer-valued and can be negative. -/
+noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℤ :=
+  (p : ℤ) - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
 /-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
  Proposition 5.8.5 of [diamondshurman2005]. -/

@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 
@@ -44,5 +45,17 @@ def IntegerDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGra
     omega
 
 
+
+open scoped EuclideanGeometry
+
+/-- `G` can be embedded in `ℝ^n` with every edge a unit line segment if there is an injective map
+from the vertices of `G` to `ℝ^n` sending any two adjacent vertices to points at distance `1`. -/
+def UnitDistanceEmbeddable {V : Type*} (G : SimpleGraph V) (n : ℕ) : Prop :=
+  ∃ f : V → ℝ^n, Function.Injective f ∧ ∀ u v : V, G.Adj u v → dist (f u) (f v) = 1
+
+/-- `G` has dimension `n`: the least `m` for which `G` embeds in `ℝ^m` with every edge a unit
+line segment. -/
+def HasDimension {V : Type*} (G : SimpleGraph V) (n : ℕ) : Prop :=
+  IsLeast {m | UnitDistanceEmbeddable G m} n
 
 end SimpleGraph

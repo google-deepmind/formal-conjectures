@@ -102,12 +102,13 @@ theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) 
   sorry
 
 
-/-- Simple test example,
-A Boolean function whose block sensitivity is strictly greater than
-its sensitivity. Source: [Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038).
+/-- Simple test example.
+For multiples of four with $n \ge 12$, this Boolean function has block sensitivity
+strictly greater than its sensitivity. Source:
+[Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038).
 
-`nisanExample(x) = 1` iff the Hamming weight of `x` is either
-`n/2` or `n/2 + 1`. We assume `n` is a multiple of 4.
+`nisanExample(x) = 1` iff the Hamming weight of $x$ is either
+$n/2$ or $n/2 + 1$.
 The function is symmetric, so its value only depends on the Hamming weight
 of the input. -/
 @[category test, AMS 68]
@@ -115,19 +116,20 @@ def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
   decide ((w : ℚ) ∈ ({(n / 2 : ℚ), (n / 2 : ℚ) + 1} : Finset ℚ))
 
-/-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
-is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
+/-- Assuming `n` is a positive multiple of 4, the sensitivity of `nisanExample`
+is $n/2 + 2$. It is achieved by any $x$ with Hamming weight $n/2 + 2$: flipping
+any of its $n/2 + 2$ one-bits moves the input into the accepting layer of weight $n/2 + 1$. -/
 @[category test, AMS 68]
-lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
-    sensitivity (nisanExample n) = n / 2 := by
+lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) (hn_pos : 0 < n) :
+    sensitivity (nisanExample n) = n / 2 + 2 := by
   sorry
 
-/-- Assuming `n` is a multiple of 4, the block sensitivity of `nisanExample`
-is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
-An optimal block configuration uses all `n/2` 1-bits as singleton blocks
-and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
+/-- Assuming `n` is a multiple of 4 and $n \ge 8$, the block sensitivity of
+`nisanExample` is $3n/4$, achieved by any $x$ with Hamming weight $n/2$.
+An optimal block configuration uses all $n/2$ one-bits as singleton blocks
+and forms $n/4$ disjoint size-2 blocks from the zero-bits. -/
 @[category test, AMS 68]
-lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
+lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) (hn_large : 8 ≤ n) :
     blockSensitivity (nisanExample n) = 3 * n / 4 := by
   sorry
 
