@@ -19,6 +19,9 @@ public meta import FormalConjecturesUtil.Linters.CategoryLinter
 
 @[expose] public section
 
+-- Off by default; on here because this file is what tests it.
+set_option linter.style.category_attribute true
+
 namespace CategoryLinter
 
 -- Definitions aren't required to have a category attribute

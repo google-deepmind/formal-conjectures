@@ -98,6 +98,11 @@ def categoryLinter : Linter where
           | `(command| $_:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
             checkNotOpenIfSorryFree declId
           | _ => return
+      -- Definitions are not required to carry a category, so they are not part of the
+      -- match above, but seven of them do carry one and the check applied to them when
+      -- it lived in the attribute. It is the case that used to work, in fact.
+      | `(command| $_:declModifiers def $declId:declId $_:optDeclSig $_:declVal) =>
+        checkNotOpenIfSorryFree declId
       | _ => return
 
 initialize do

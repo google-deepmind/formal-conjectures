@@ -205,7 +205,7 @@ run_cmd do
     return none
   -- `mkIdent` rather than writing the name in the quotation: a quoted identifier picks up a
   -- macro scope, and the constant then has a hygienic name no downstream module can find.
-  let name := Lean.mkIdent (.mkSimple "amsSubjects")
+  let name := Lean.mkIdent `amsSubjects
   elabCommand (← `(command| @[expose] def $name : String := $(quote ("\n".intercalate lines))))
 
 /-- The `#AMS` outputs a list of the AMS Math Subjects and their corresponding indices -/
