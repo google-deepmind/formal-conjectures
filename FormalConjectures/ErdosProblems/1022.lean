@@ -48,8 +48,11 @@ This is false, and $c_t<2$ for all $t$: a counterexample is provided by Wood [Wo
 constructs, for any $r\geq 2$, a triangle-free $2$-degenerate $r$-uniform hypergraph with
 chromatic number $3$. A similar counterexample was found independently by KoishiChan in the
 comments.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1022.lean"]
 theorem erdos_1022 : answer(False) ↔
     ∃ c : ℕ → ℝ, Filter.Tendsto c Filter.atTop Filter.atTop ∧
       ∀ t : ℕ, SparseImpliesPropertyB t (c t) := by
