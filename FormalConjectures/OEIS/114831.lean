@@ -19,9 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Each term is previous term plus floor of harmonic mean of two previous terms.
 
-Each term is previous term plus floor of harmonic mean of two previous terms.
-$a(1) = 1, a(2) = 2$
-$a(n) = a(n-1) + \lfloor \frac{2 a(n-1) a(n-2)}{a(n-1) + a(n-2)} \rfloor$ for $n \ge 3$
+$a(1) = 1, a(2) = 2$ and
+$a(n) = a(n-1) + \lfloor \frac{2 a(n-1) a(n-2)}{a(n-1) + a(n-2)} \rfloor$ for $n \ge 3$.
 
 *References:*
 - [A114831](https://oeis.org/A114831)

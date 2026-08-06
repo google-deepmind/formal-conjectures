@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Largest odd divisor of a(n-1) + prime(n)
+# Largest odd divisor of $a(n-1) + \textrm{prime}(n)$
 
 $a(0)=0$; thereafter $a(n)$ = largest odd divisor of $a(n-1) + \textrm{prime}(n)$.
 

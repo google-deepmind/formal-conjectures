@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Smallest number k such that kn + 1 is prime
-
-Smallest number $k$ such that $kn + 1$ is prime.
+# Smallest number $k$ such that $kn + 1$ is prime
 
 *References:*
 - [A34693](https://oeis.org/A34693)

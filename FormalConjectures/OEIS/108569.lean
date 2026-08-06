@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Numbers n such that phi(n) = phi(n + phi(n))
-
-The sequence A108569 consists of numbers $n$ such that $\phi(n) = \phi(n + \phi(n))$.
+# Numbers $n$ such that $\phi(n) = \phi(n + \phi(n))$
 
 *References:*
 - [A108569](https://oeis.org/A108569)

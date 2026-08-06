@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A011545
-
-a(n) is the integer whose decimal digits are the first n+1 decimal digits of π.
+# $a(n)$ is the integer whose decimal digits are the first $n+1$ decimal digits of $\pi$
 
 *References:*
 - [A011545](https://oeis.org/A011545)
@@ -29,7 +27,7 @@ namespace OeisA11545
 
 open Real Int
 
-/-- a n is the integer whose decimal digits are the first n+1 decimal digits of π. -/
+/-- a n is the integer whose decimal digits are the first $n+1$ decimal digits of $\pi$. -/
 noncomputable def a (n : ℕ) : ℕ :=
   (floor (Real.pi * (10 : ℝ) ^ n.cast)).toNat
 
@@ -55,16 +53,16 @@ theorem a_3 : a 3 = 3141 := by
   exact (.symm ((congr_arg _) ((Int.floor_eq_iff.2 ⟨by linear_combination 1000*.pi_gt_d20,by linear_combination 1000*.pi_lt_d20⟩):⌊_⌋=3141)))
 
 /--
-Wolfgang Haken (1977) conjectured that no term of this sequence is a perfect square, and estimated the probability that this conjecture is false to be smaller than 10^-9.
+Wolfgang Haken (1977) conjectured that no term of this sequence is a perfect square, and estimated the probability that this conjecture is false to be smaller than $10^-9$.
 -/
 @[category research open, AMS 11]
 theorem conjecture1 : ∀ n, ¬ IsSquare (a n) := by
   sorry
 
 /--
-Number of collisions occurring in a system consisting of an infinitely massive, rigid wall at the origin, a ball with mass m stationary at position x1 > 0, and a ball with mass (10^2n)m at position x2 > x1 and rolling toward the origin, assuming perfectly elastic collisions and no friction.
+Number of collisions occurring in a system consisting of an infinitely massive, rigid wall at the origin, a ball with mass m stationary at position $x_1 > 0$, and a ball with mass $(10^2n)m$ at position $x_2 > x_1$ and rolling toward the origin, assuming perfectly elastic collisions and no friction.
 
-Strictly speaking, this property, which is equivalent to the statement that the interval (m*Pi, Pi/arctan(1/m)) does not contain an integer for all m = 10^n, is not known to be true for sure. In other words, we do not know for certain that A332045 does not contain a power of 10.
+Strictly speaking, this property, which is equivalent to the statement that the interval $(m\pi, \pi/\textrm{arctan}(1/m))$ does not contain an integer for all $m = 10^n$, is not known to be true for sure. In other words, we do not know for certain that A332045 does not contain a power of $10$.
 -/
 @[category research open, AMS 11]
 theorem conjecture2 :

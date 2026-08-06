@@ -18,9 +18,10 @@ import FormalConjecturesUtil
 import Mathlib.Data.Nat.Prime.Basic
 
 /-!
-# OEIS A109227
+# Conjectures associated with A109227
 
 Binary strings that have 1's where primes occur, 0's elsewhere and every term ends with the $n$-th prime index.
+
 Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 
 *References:*

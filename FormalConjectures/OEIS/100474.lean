@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A100474
-
-$a(1) = 1$; $a(n)$ is the smallest integer such that $a(n) + a(n-1)$ has the first $n$ distinct prime factors not used before in this construction.
+# $a(1) = 1$; $a(n)$ is the smallest integer such that $a(n) + a(n-1)$ has the first $n$ distinct prime factors not used before in this construction.
 
 *References:*
 - [A100474](https://oeis.org/A100474)

@@ -18,9 +18,8 @@ import FormalConjecturesUtil
 import Mathlib.Data.Nat.Prime.Nth
 
 /-!
-# A111114
+# Integer part of $\mathrm{prime}(n)/\pi(n)$
 
-Integer part of $\mathrm{prime}(n)/\pi(n)$.
 Here $\mathrm{prime}(n)$ is the $n$-th prime number, and $\pi(n)$ is the prime-counting function.
 
 *References:*

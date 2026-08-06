@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# OEIS A109074
+# Numerator of $\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right)$
 
-Numerator of $\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right)$.
 Conjecture: $\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right) = A005156(n+1)/A005156(n)$
 
 *References:*

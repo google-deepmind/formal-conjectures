@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A109909
+# Conjectures associated with A109909
 
 $a(n)$ = number of primes of the form $k(n-k)-1$.
 

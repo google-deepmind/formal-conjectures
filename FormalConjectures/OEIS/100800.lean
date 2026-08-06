@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A100800
+# Conjectures associated with A100800
 
 Let $f(n) = n + \text{sum of the digits of } n$. If $f(n)$ is multiple of $n$ then $a(n)= f(n)$ else $a(n) = f(f(f(n)))\dots$ until one gets a multiple of $n$; $a(n) = 0$ if no such number exists.
 
@@ -30,10 +30,10 @@ namespace OeisA100800
 open Nat Function Classical
 
 /-- The sum of the decimal digits of a natural number. -/
-def sum_digits (n : ℕ) : ℕ := ((10).digits n).sum
+def sumDigits (n : ℕ) : ℕ := ((10).digits n).sum
 
 /-- The function $f(n) = n + \text{sum of the digits of } n$. -/
-def f (n : ℕ) : ℕ := n + sum_digits n
+def f (n : ℕ) : ℕ := n + sumDigits n
 
 /--
 a n is the first iteration of $f(n) = n + \text{sum of the digits of } n$ that is a multiple of $n$.
@@ -57,13 +57,13 @@ noncomputable def a (n : ℕ) : ℕ :=
 theorem a_1 : a 1 = 2 := by
   delta a
   norm_num[f,bot_unique ∘Nat.find_min' _,id]
-  norm_num[sum_digits]
+  norm_num[sumDigits]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 4 := by
   rw [←eq_comm, a]
   delta f
-  norm_num[sum_digits,Exists.intro 1,Nat.find_eq_iff]
+  norm_num[sumDigits,Exists.intro 1,Nat.find_eq_iff]
   rw[Nat.find_eq_iff _|>.2,Function.iterate_zero_apply]
   decide
 
@@ -71,7 +71,7 @@ theorem a_2 : a 2 = 4 := by
 theorem a_3 : a 3 = 6 := by
   norm_num[a]
   delta f
-  norm_num[sum_digits,Exists.intro 0,Function.comp,Nat.find_eq_iff]
+  norm_num[sumDigits,Exists.intro 0,Function.comp,Nat.find_eq_iff]
   exact (congr_arg₂ _ ↑(bot_unique ↑(Nat.find_min' _ (by(norm_num)))) rfl )
 
 @[category test, AMS 11]
@@ -79,7 +79,7 @@ theorem a_4 : a 4 = 8 := by
   (inhabit ℝ)
   norm_num[a]
   delta f
-  norm_num[sum_digits,Exists.intro 0]
+  norm_num[sumDigits,Exists.intro 0]
   exact (congr_arg₂ _ (bot_unique (Nat.find_min' _ (by norm_num[Function.iterate_succ_apply _ _]))) rfl )
 
 @[category test, AMS 11]
@@ -87,7 +87,7 @@ theorem a_5 : a 5 = 10 := by
   (inhabit ℝ)
   norm_num[a]
   delta f
-  norm_num[sum_digits,Exists.intro 0]
+  norm_num[sumDigits,Exists.intro 0]
   exact (congr_arg₂ _ (bot_unique (Nat.find_min' _ (by norm_num[Function.iterate_succ_apply _ _]))) rfl )
 
 /-- A100800 Conjecture: No term is zero. -/

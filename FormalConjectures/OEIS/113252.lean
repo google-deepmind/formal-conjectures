@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Corresponds to m = 6 in a family of 4th order linear recurrence sequences
+# Conjectures associated with A113252
+
+Corresponds to m = 6 in a family of 4th order linear recurrence sequences
 
 This sequence is defined by the linear recurrence relation
 a(n) = -4 a(n-1) + 144 a(n-3) + 1296 a(n-4) for n > 3.
@@ -54,7 +56,7 @@ theorem a_3 : a 3 = 784 := by rfl
 theorem a_4 : a 4 = -3856 := by rfl
 
 /--
-Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m, n$ (see A113249).
+Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=6$, which is A113252.
 -/
 @[category research open, AMS 11]

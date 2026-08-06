@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A116150
-
-$a(n) = \sum_{j=1}^{n} (3^j + (-2)^j)$.
+# $a(n) = \sum_{j=1}^{n} (3^j + (-2)^j)$
 
 *References:*
 - [A116150](https://oeis.org/A116150)

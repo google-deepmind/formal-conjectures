@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A001157
-
-$a(n) = \sigma_2(n)$: sum of squares of divisors of $n$.
+# Sum of squares of divisors of $n$
 
 *References:*
 - [A001157](https://oeis.org/A001157)
@@ -27,7 +25,7 @@ $a(n) = \sigma_2(n)$: sum of squares of divisors of $n$.
 
 namespace OeisA1157
 
-/-- a n is the sum of squares of divisors of n. -/
+/-- a n is the sum of squares of divisors of $n$. -/
 def a (n : ℕ) : ℕ :=
   n.divisors.sum fun d => d ^ 2
 

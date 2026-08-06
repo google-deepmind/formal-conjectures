@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A105020: Array read by upward antidiagonals
+# Array read by upward antidiagonals
 
 Array read by upward antidiagonals: row $n$ ($n \ge 0$) contains the numbers $m^2 - n^2$, $m \ge n+1$.
 

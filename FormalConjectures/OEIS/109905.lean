@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A109905
+# Conjectures associated with A109905
 
 $a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from $1$ to $\lfloor n/2 \rfloor$. $a(n)=0$ if no such prime exists.
 

@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A110475: Number of symbols '*' and '^' to write the canonical prime factorization of n.
+# Number of symbols '*' and '^' to write the canonical prime factorization of n
 
 The canonical prime factorization is $n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$.
 The written form is $p_1^{\wedge} e_1 * p_2^{\wedge} e_2 * \cdots * p_k^{\wedge} e_k$,
@@ -30,9 +30,9 @@ $a(n) = (\text{number of distinct prime factors}) - 1 + (\text{number of distinc
 
 namespace OeisA110475
 
-/-- 
+/--
 The primary defining sequence `a`.
-$a(n)$ is the number of symbols '*' and '^' to write the canonical prime factorization of n.
+$a(n)$ is the number of symbols '*' and '^' to write the canonical prime factorization of $n$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let F := Nat.factorization n
@@ -49,7 +49,7 @@ def exceptional_set : Finset ℕ :=
   {1, 2, 3, 4, 5, 6, 7, 9, 11}
 
 /--
-It is conjectured that 1,2,3,4,5,6,7,9,11 are the only positive integers
+It is conjectured that $1,2,3,4,5,6,7,9,11$ are the only positive integers
 which cannot be represented as the sum of two elements of indices $n$ such that $a(n) = 1$.
 -/
 @[category research open, AMS 11]

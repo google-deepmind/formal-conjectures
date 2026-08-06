@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Number of prime powers q<=n such that also q+2 is a prime power
-
-Number of prime powers $q<=n$ such that also $q+2$ is a prime power.
+# Number of prime powers $q<=n$ such that also $q+2$ is a prime power
 
 *References:*
 - [A113609](https://oeis.org/A113609)

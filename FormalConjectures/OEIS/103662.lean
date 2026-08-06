@@ -19,7 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Smallest power with base>1 and exponent n whose decimal representation doesn't contain the digit 0
 
-A103662: Smallest power with base>1 and exponent $n$ whose decimal representation doesn't contain the digit 0.
 For statistical reasons it is conjectured that the sequence is finite.
 Also it is conjectured that $a(40)$ does not exist (i.e. the sequence is empty for $n=40$).
 
@@ -35,7 +34,7 @@ open Nat List Set
 A helper predicate: $b^n$ is a power with base $>1$ whose decimal representation does not contain the digit 0.
 We assume $n$ is the exponent, $n \ge 1$.
 -/
-def is_valid_zeroless_power (n b : ℕ) : Prop :=
+def IsValidZerolessPower (n b : ℕ) : Prop :=
   b > 1 ∧ 0 ∉ digits 10 (b ^ n)
 
 /--
@@ -45,7 +44,7 @@ $$a(n) = (\min \{ b \in \mathbb{N} \mid b > 1, \text{decimal representation of }
 If no such base exists, `sInf` of an empty set of naturals returns 0, so `a n = 0`.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let smallest_base := sInf { b | is_valid_zeroless_power n b }
+  let smallest_base := sInf { b | IsValidZerolessPower n b }
   smallest_base ^ n
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
@@ -56,19 +55,19 @@ theorem a_0 : a 0 = 1 := by
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
   simp_all[a]
-  norm_num[Iff,is_valid_zeroless_power]
+  norm_num[Iff,IsValidZerolessPower]
   exact ( IsLeast.csInf_eq ⟨.symm (by norm_num), fun and => And.left⟩)
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 4 := by
   norm_num[a]
-  delta is_valid_zeroless_power
+  delta IsValidZerolessPower
   exact (congr_arg) (.^2) (IsLeast.csInf_eq ⟨.symm (by norm_num), fun and=>And.left⟩)
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 8 := by
   norm_num[a]
-  delta is_valid_zeroless_power
+  delta IsValidZerolessPower
   exact (.trans (by rw [IsLeast.csInf_eq (by use ⟨by constructor,by norm_num⟩, fun and' => And.left)]) ( (by constructor)))
 
 /--
@@ -87,7 +86,7 @@ This claim is rooted in the finiteness conjecture. The most direct mathematical 
 -/
 @[category research open, AMS 11]
 theorem conjecture.variants.a_40 :
-  ¬ ∃ (b : ℕ), is_valid_zeroless_power 40 b := by
+  ¬ ∃ (b : ℕ), IsValidZerolessPower 40 b := by
   sorry
 
 end OeisA103662

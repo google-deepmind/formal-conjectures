@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A109908
+# Conjectures associated with A109908
 
 $a(n)$ = greatest prime of the form $k(n-k)-1$, or $0$ if no such prime exists.
 

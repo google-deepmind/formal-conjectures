@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A103885
+# $a(n) = [x^{2n}] \left(\frac{1 + x}{1 - x}\right)^n$
 
-The sequence $a(n) = [x^{2n}] \left(\frac{1 + x}{1 - x}\right)^n$.
 The sequence is given by the combinatorial identity:
 $a(n) = \sum_{k = 0}^n \binom{n}{k} \binom{2n+k-1}{n-1}$
 with $a(0) = 1$.
@@ -60,21 +59,21 @@ theorem a_3 : a 3 = 146 := by decide
 theorem a_4 : a 4 = 1408 := by decide
 
 /-- The sequence $b(n) = a(m*n)$ lifted to ℝ -/
-noncomputable def a_subsequence_real (m n : ℕ) : ℝ :=
+noncomputable def aSubsequenceReal (m n : ℕ) : ℝ :=
   (a (m * n) : ℝ)
 
 /-- The indices $k = 1$ to $2m$, used in the product -/
-private def product_indices (m : ℕ) : Finset ℕ :=
+private def productIndices (m : ℕ) : Finset ℕ :=
   Finset.Ioc 0 (2 * m)
 
 /-- The factor $\prod_{k=1}^{2m} (2mn + k)$ -/
-noncomputable def prod_factor_plus (m n : ℕ) : ℝ :=
-  (product_indices m).prod fun k =>
+noncomputable def prodFactorPlus (m n : ℕ) : ℝ :=
+  (productIndices m).prod fun k =>
     ((2 * m * n : ℝ) + (k : ℝ))
 
 /-- The factor $\prod_{k=1}^{2m} (2mn - k)$ -/
-noncomputable def prod_factor_minus (m n : ℕ) : ℝ :=
-  (product_indices m).prod fun k =>
+noncomputable def prodFactorMinus (m n : ℕ) : ℝ :=
+  (productIndices m).prod fun k =>
     ((2 * m * n : ℝ) - (k : ℝ))
 
 /--
@@ -95,11 +94,11 @@ theorem conjecture (m : ℕ) (hm : 1 ≤ m) :
       P.degree = (2 * m : ℕ) ∧ Q.degree = (2 * m : ℕ) ∧
       -- The recurrence relation holds for all n >= 1
       (∀ (n : ℕ) (hn : 1 ≤ n),
-        (prod_factor_plus m n * P.eval (n : ℝ)) * (a_subsequence_real m (n + 1)) +
+        (prodFactorPlus m n * P.eval (n : ℝ)) * (aSubsequenceReal m (n + 1)) +
 
-        ((-1 : ℝ) ^ m * prod_factor_minus m n * P.eval (-(n : ℝ))) * (a_subsequence_real m (n - 1)) =
+        ((-1 : ℝ) ^ m * prodFactorMinus m n * P.eval (-(n : ℝ))) * (aSubsequenceReal m (n - 1)) =
 
-        (Q.eval ((n : ℝ)^2)) * (a_subsequence_real m n)) ∧
+        (Q.eval ((n : ℝ)^2)) * (aSubsequenceReal m n)) ∧
 
       -- P symmetry: P(x) = P(1-x)
       (∀ x : ℝ, P.eval x = P.eval (1 - x)) ∧

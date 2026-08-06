@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A108211
-
-The sequence is defined by $a(n) = 16n^2 + 1$.
+# $a(n) = 16n^2 + 1$
 
 *References:*
 - [A108211](https://oeis.org/A108211)

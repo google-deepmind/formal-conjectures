@@ -17,15 +17,13 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# a(n) = 2^(2^n)
-
-$a(n) = 2^{2^n}$.
+# $a(n) = 2^(2^n)$
 
 *References:*
 - [A001146](https://oeis.org/A001146)
 -/
 
-namespace OeisA001146
+namespace OeisA1146
 
 /--
 The primary defining sequence `a`.
@@ -90,4 +88,4 @@ theorem conjecture :
   ∀ k : ℕ, ((k^4 - 1) : ℕ) ∣ (2^k - 1 : ℕ) → k > 1 → ∃ n : ℕ, 2 ≤ n ∧ k = a n := by
   sorry
 
-end OeisA001146
+end OeisA1146

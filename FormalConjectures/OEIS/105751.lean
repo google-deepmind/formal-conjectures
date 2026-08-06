@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Imaginary part of Product_{k=0..n} (1 + k*i), i = sqrt(-1)
-
-A105751(n) is the imaginary part of $\prod_{k=0}^n (1 + k \cdot i)$, where $i = \sqrt{-1}$.
+# Imaginary part of $\prod_{k=0}^n (1 + k \cdot i)$, $i = \sqrt{-1}$
 
 *References:*
 - [A105751](https://oeis.org/A105751)

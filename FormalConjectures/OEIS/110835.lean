@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A110835: Smallest m > 0 such that there are no primes between n*m and n*(m+1) inclusive.
+# Smallest $m > 0$ such that there are no primes between $nm$ and $n(m+1)$ inclusive.
 
 Sierpinski's conjecture (1958) is precisely that a(n) >= n for all n.
 
@@ -34,9 +34,9 @@ The primary defining sequence `a`.
 $a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$ and $n \cdot (m+1)$ inclusive.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let is_prime_free_interval (m : ℕ) : Prop :=
+  let IsPrimeFreeInterval (m : ℕ) : Prop :=
     ∀ p : ℕ, p.Prime → ¬ (n * m ≤ p ∧ p ≤ n * (m + 1))
-  let S : Set ℕ := {m : ℕ | m > 0 ∧ is_prime_free_interval m}
+  let S : Set ℕ := {m : ℕ | m > 0 ∧ IsPrimeFreeInterval m}
   sInf S
 
 /--

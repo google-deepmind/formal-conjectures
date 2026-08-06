@@ -79,13 +79,18 @@ def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
 def a_rat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
 
 /-- The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers. -/
-def catalan_reciprocal_sum (j k : ℕ) : ℚ :=
+def catalanReciprocalSum (j k : ℕ) : ℚ :=
   (Finset.Icc j k).sum a_rat
 
 /-- The index condition on $(j, k)$ from the conjecture: $0 < \min\{2,k\} \le j \le k$.
+<<<<<<< HEAD
 Since j and k are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/
 def oeis_108_index_cond (j k : ℕ) : Prop :=
 >>>>>>> abbc48a2 (Process the next 25 files.)
+=======
+Since $j$ and $k$ are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/
+def Oeis108IndexCond (j k : ℕ) : Prop :=
+>>>>>>> bda2dd95 (Update titles and follow style naming.)
   1 ≤ k ∧ min 2 k ≤ j ∧ j ≤ k
 
 open Int (fract)
@@ -128,7 +133,7 @@ theorem catalanReciprocalSum_fracPart_inj : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
 =======
 /-- The fractional part of a rational number, viewed as a real number. Must be noncomputable
 due to dependence on the real floor function. -/
-noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
+noncomputable def fracPart (q : ℚ) : ℝ := fract (q : ℝ)
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
@@ -147,15 +152,15 @@ theorem a_3 : a 3 = 5 := by decide
 theorem a_4 : a 4 = 14 := by decide
 
 /--
-A000108 Conjecture: All the rational numbers $\sum_{i=j..k} 1/a(i)$ with $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015
+A000108 Conjecture: All the rational numbers $\sum_{i=j}^k \frac{1}{a(i)}$ with $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :
   ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
-     oeis_108_index_cond j₁ k₁ →
-     oeis_108_index_cond j₂ k₂ →
+     Oeis108IndexCond j₁ k₁ →
+     Oeis108IndexCond j₂ k₂ →
      (j₁, k₁) ≠ (j₂, k₂) →
-     frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂)
+     fracPart (catalanReciprocalSum j₁ k₁) ≠ fracPart (catalanReciprocalSum j₂ k₂)
   := by sorry
 >>>>>>> abbc48a2 (Process the next 25 files.)
 
@@ -163,7 +168,7 @@ theorem conjecture1 :
 The polynomial $\sum_{k=0}^n a(k) x^k$, where $a(k)$ are the Catalan numbers.
 The coefficients $a(k) \in \mathbb{N}$ are coerced to $\mathbb{Q}$.
 -/
-noncomputable def catalan_polynomial (n : ℕ) : ℚ[X] :=
+noncomputable def catalanPolynomial (n : ℕ) : ℚ[X] :=
   (Finset.range (n + 1)).sum (fun k => C (a k : ℚ) * X^k)
 
 /--
@@ -172,7 +177,7 @@ $\sum_{k=0}^n a(k)x^k$ is irreducible over the field of rational numbers.
 -/
 @[category research open, AMS 11 12]
 theorem conjecture2 (n : ℕ) (h : n > 0) :
-    Irreducible (catalan_polynomial n) := by
+    Irreducible (catalanPolynomial n) := by
   sorry
 
 end OeisA108

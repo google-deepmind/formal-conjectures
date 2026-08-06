@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Numerator of Sum_{k=1..n} 2^k/k.
+# Numerator of $\sum_{k=1}^n 2^k/k$.
 
 Conjecture: for $n > 3$, $\textrm{numerator}(-2/n + \sum_{k=1}^{n} \frac{2^k}{k}) == 0 (\textrm{mod} n^2)$ if and only if n is prime.
 
@@ -32,7 +32,7 @@ The primary defining sequence `a`.
 a n is the numerator of $\sum_{k=1}^n \frac{2^k}{k}$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  (∑ i ∈ Finset.range n, (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)).num.natAbs
+  (∑ i ∈ Finset.range n, (2 : ℚ) ^ (i + 1) / ((i + 1) : ℚ)).num.natAbs
 
 local macro "eval_a" : tactic => `(tactic| (delta a; norm_num))
 
@@ -56,9 +56,9 @@ theorem a_4 : a 4 = 32 := by eval_a
 The rational number inside the numerator function in the conjecture.
 $$ -\frac{2}{n} + \sum_{k=1}^n \frac{2^k}{k} $$
 -/
-noncomputable def rat_expression (n : ℕ) : Rat :=
+noncomputable def ratExpression (n : ℕ) : ℚ :=
   if n > 0 then
-    (-2 : Rat) / (n : Rat) + ∑ i ∈ (Finset.range n), (2 : Rat) ^ (i + 1) / ((i + 1) : Rat)
+    (-2 : ℚ) / (n : ℚ) + ∑ i ∈ (Finset.range n), (2 : ℚ) ^ (i + 1) / ((i + 1) : ℚ)
   else
     0
 
@@ -67,7 +67,7 @@ Conjecture: for $n > 3$, $\textrm{numerator}(-2/n + \sum_{k=1}^{n} \frac{2^k}{k}
 -/
 @[category research open, AMS 11]
 theorem conjecture {n : ℕ} (hn : n > 3) :
-    (rat_expression n).num ≡ 0 [ZMOD (n^2 : ℤ)] ↔ n.Prime := by
+    (ratExpression n).num ≡ 0 [ZMOD (n^2 : ℤ)] ↔ n.Prime := by
   sorry
 
 end OeisA108866
