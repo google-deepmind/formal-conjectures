@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 533
@@ -33,7 +33,7 @@ import FormalConjectures.Util.ProblemImports
   [arXiv:2103.10423](https://arxiv.org/abs/2103.10423) (2021).
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos533
 

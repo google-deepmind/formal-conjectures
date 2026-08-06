@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 100
@@ -51,7 +51,7 @@ so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
 
 namespace WrittenOnTheWallII.GraphConjecture100
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

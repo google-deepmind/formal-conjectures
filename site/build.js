@@ -685,6 +685,10 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  const whitePlotPath = path.join('data', 'file_counts_white.html');
+  const darkPlotPath = path.join('data', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
+  if (fs.existsSync(darkPlotPath)) fs.copyFileSync(darkPlotPath, 'site/data/file_counts_dark.html');
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
@@ -715,8 +719,6 @@ async function main() {
 
   // ---- Stats page ----
   let growthPlot = '';
-  const whitePlotPath = path.join('..', 'docbuild', 'out', 'file_counts_white.html');
-  const darkPlotPath = path.join('..', 'docbuild', 'out', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
     const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
     const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');

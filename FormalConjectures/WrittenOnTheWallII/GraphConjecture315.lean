@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 315
@@ -29,7 +29,6 @@ The notions `IsTotalDominatingSet`, `IsMinimalTotalDominatingSet`,
 `FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated`.
 -/
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture315
 
