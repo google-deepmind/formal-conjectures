@@ -121,8 +121,6 @@ for all sufficiently large $n$. The exponent exceeds $2-1/r$ by a polynomial mar
 
 Due to [FGLO26], which strengthens the solution of [OpenAI26, Ch. 10] to every $r$ by leaving free
 the Gibbs weight [OpenAI26] fixed numerically, and which imports the [OpenAI26] Lean development.
-It does not subsume the $r=2$ case: the [OpenAI26] bound optimises the Hamming radius freely, and
-the bound below does not imply it.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/87510f34a7ffc521f7dd6d9b3978ba0b560a92d3/Theorem2.lean"]
 theorem erdos_146.variants.counterexample (r : ℕ) (hr : 2 ≤ r) :
