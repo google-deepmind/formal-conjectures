@@ -206,13 +206,8 @@ run_cmd do
   -- `mkIdent` rather than writing the name in the quotation: a quoted identifier picks up a
   -- macro scope, and the constant then has a hygienic name no downstream module can find.
   let name := Lean.mkIdent `amsSubjects
-  elabCommand (← `(command| @[expose] def $name : String := $(quote ("\n".intercalate lines))))
+  elabCommand (← `(command| @[expose] meta def $name : String := $(quote ("\n".intercalate lines))))
 
 /-- The `#AMS` outputs a list of the AMS Math Subjects and their corresponding indices -/
 elab "#AMS" : command => do
-  -- ``amsSubjects rather than a string: this fails to compile if the name above changes.
-  let some ci := (← Lean.getEnv).find? ``amsSubjects
-    | throwError "`amsSubjects` is missing"
-  let some (.lit (.strVal subjects)) := ci.value?
-    | throwError "`amsSubjects` is not a string literal"
-  Lean.logInfo subjects
+  Lean.logInfo amsSubjects
