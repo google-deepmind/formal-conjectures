@@ -63,8 +63,23 @@ a `def`, which is why the gap went unnoticed.
 module, and every file in `FormalConjecturesTest` is a module. An attribute-based check therefore
 cannot be given a test. A linter runs once the command has finished and works in both, so the
 check lives here and `findAsync?` waits on the elaboration task. -/
-def checkNotOpenIfSorryFree (declId : Syntax) : CommandElabM Unit := do
-  let declName := (← getCurrNamespace) ++ declId[0].getId
+def checkNotOpenIfSorryFree (mods : TSyntax ``Lean.Parser.Command.declModifiers)
+    (declId : Syntax) : CommandElabM Unit := do
+  -- `Lean.Elab.expandDeclId` is the natural thing to reach for here, but it calls
+  -- `applyVisibility`, which throws `already been declared` once the declaration exists, and a
+  -- linter runs after that. `expandDeclIdCore` is the pure part of it: it accepts the
+  -- bare-identifier form of `declId`, which indexing `declId[0]` does not. The `_root_` and
+  -- `private` cases are then handled the way `mkDeclName` handles them, the second being where
+  -- the repository's categorised `private` declarations used to be missed.
+  let modifiers ← elabModifiers mods
+  let (shortName, _) := Lean.Elab.expandDeclIdCore declId
+  let declName ←
+    if (`_root_).isPrefixOf shortName then
+      pure <| shortName.replacePrefix `_root_ .anonymous
+    else
+      pure <| (← getCurrNamespace) ++ shortName
+  let env ← getEnv
+  let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
   unless ← hasConst declName do return
   unless (← ProblemAttributes.getTags).any
       (fun t => t.declName == declName && t.category == .research .open) do return
@@ -99,7 +114,7 @@ def categoryLinter : Linter where
     match stx with
       | `(command| $a:declModifiers theorem $declId:declId $_:declSig $_:declVal)
       | `(command| $a:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
-        if ← checkExactlyOneCategory a stx then checkNotOpenIfSorryFree declId
+        if ← checkExactlyOneCategory a stx then checkNotOpenIfSorryFree a declId
       -- An `example` has no name to look a proof up under, so only the attribute check
       -- applies to it.
       | `(command| $a:declModifiers example $_:optDeclSig $_:declVal) =>
@@ -107,8 +122,8 @@ def categoryLinter : Linter where
       -- Definitions are not required to carry a category, so they are not part of the
       -- attribute check, but seven of them do carry one and the sorry-free check applied to
       -- them when it lived in the attribute. It is the case that used to work, in fact.
-      | `(command| $_:declModifiers def $declId:declId $_:optDeclSig $_:declVal) =>
-        checkNotOpenIfSorryFree declId
+      | `(command| $a:declModifiers def $declId:declId $_:optDeclSig $_:declVal) =>
+        checkNotOpenIfSorryFree a declId
       | _ => return
 
 initialize do

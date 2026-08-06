@@ -106,6 +106,16 @@ lemma test_lemma_sorry_free : 1 + 1 = 2 := by
 example : 1 + 1 = 2 := by
   rfl
 
+/--
+warning: If a problem has a sorry-free proof, it should not be categorised as `open`.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category research open]
+private theorem test_private_sorry_free : 1 + 1 = 2 := by
+  rfl
+
 -- A proof given by match alternatives rather than `:=` is still a `declVal`.
 /--
 warning: Missing problem category attribute

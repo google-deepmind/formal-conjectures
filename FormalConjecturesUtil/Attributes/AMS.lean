@@ -188,13 +188,13 @@ meta unsafe def numToAMSSubjects (n : Nat) : MetaM AMS := do
   let nm ← numToAMSName n
   Meta.evalExpr AMS q(AMS) (.const nm [])
 
--- Records the subject list as a constant.
---
--- This has to happen here, in the module that declares the constructor docstrings. Imported
--- docstrings are only exported at `.server` level, so `Lean.findDocString?` returns `none` for
--- every constructor once `AMS` is reached through an import: the list looks right in the editor
--- and comes out empty under `lake build`. Reading the docstrings once, where they are still
--- visible, and storing the result avoids that.
+/- Records the subject list as a constant.
+
+This has to happen here, in the module that declares the constructor docstrings. Imported
+docstrings are only exported at `.server` level, so `Lean.findDocString?` returns `none` for
+every constructor once `AMS` is reached through an import: the list looks right in the editor
+and comes out empty under `lake build`. Reading the docstrings once, where they are still
+visible, and storing the result avoids that. -/
 run_cmd do
   let env ← Lean.getEnv
   let lines ← (List.range 98).filterMapM fun n => do
