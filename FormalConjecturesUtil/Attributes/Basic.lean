@@ -318,17 +318,27 @@ syntax (name := FormalProof_attr) (&"conditional ")? "formal_proof" &"using" for
 
 /-- Records the existence and location of a formal proof for a statement.
 
-This is independent of the `category` attribute and can be used with any category.
-
 Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 - `formal_conjectures` : formally proved in this repository.
 - `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
 - `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.)
 
-A proof that only establishes the statement under unproven hypotheses is marked
-`conditional` and names the hypotheses, each stated as a declaration in the same
-file (with a `sorry` proof):
-`@[conditional formal_proof using <kind> at "<link>" assuming <decl> ...]`. -/
+This says a proof of *this statement* exists somewhere, so in practice it goes on
+problems we already consider settled, and attaching it to a `research open`
+problem warns. To record a conditional result about a problem that is still open,
+state the implication as its own `research solved` variant carrying the
+assumption as a hypothesis, and annotate that.
+
+`conditional` is for something else: the proof at the link establishes the
+statement only under hypotheses the author has not proved. That is a fact about
+their proof, not about the problem's status, and it is not visible from the proof
+term. `#print axioms` on a proof that takes its assumption as a parameter comes
+back clean, so it has to be written down:
+
+`@[conditional formal_proof using <kind> at "<link>" assuming <decl> ...]`
+
+Each named hypothesis is a declaration in the same file, stated with a `sorry`
+proof, so a reader can see what is being assumed. -/
 private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit := do
   let (kind, link, conds) ← match stx with
     | `(attr| formal_proof using $kind at $link) =>
@@ -360,7 +370,10 @@ private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit :=
       logWarning m!"The assumed hypothesis `{condName}` has a sorry-free proof, \
         so the formal proof may no longer need to be marked `conditional`."
     return condName
-  -- Warn if this is attached to a `research open` problem.
+  -- Warn if this is attached to a `research open` problem. `formal_proof` asserts
+  -- that a proof of this statement exists, which contradicts calling it open; a
+  -- conditional result about an open problem belongs on a `research solved`
+  -- variant that carries the assumption as a hypothesis. See the docstring above.
   let catTags := categoryExt.getState env
   if catTags.toArray.any fun tag => tag.declName == decl &&
       tag.category == .research .open then
