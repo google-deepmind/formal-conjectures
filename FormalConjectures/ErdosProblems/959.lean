@@ -24,54 +24,46 @@ import FormalConjecturesUtil
 
 namespace Erdos959
 
-open Filter
+open EuclideanGeometry Filter
 open scoped Topology
 
 noncomputable section
-
-/-- A point of the real affine plane, represented by Cartesian coordinates. -/
-abbrev Point := ℝ × ℝ
-
-/-- Squared Euclidean distance. Squaring is injective on nonnegative reals, so
-equality of `sqDist` is equivalent to equality of ordinary Euclidean distance,
-and the two determine the same distance classes and multiplicities. -/
-def sqDist (p q : Point) : ℝ := (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2
 
 /-- The unordered index pairs, represented uniquely by the orientation `i < j`. -/
 def indexPairs (n : ℕ) : Finset (Fin n × Fin n) :=
   (Finset.univ ×ˢ Finset.univ).filter fun ij => ij.1 < ij.2
 
-/-- The finite set of distinct squared distances determined by a configuration. -/
-def distanceValues {n : ℕ} (P : Fin n → Point) : Finset ℝ :=
-  (indexPairs n).image fun ij => sqDist (P ij.1) (P ij.2)
+/-- The finite set of distinct distances determined by a configuration. -/
+def distanceValues {n : ℕ} (P : Fin n → ℝ²) : Finset ℝ :=
+  (indexPairs n).image fun ij => dist (P ij.1) (P ij.2)
 
-/-- `f(d)`: the number of unordered pairs in `P` determining squared distance `d`. -/
-def frequency {n : ℕ} (P : Fin n → Point) (d : ℝ) : ℕ :=
-  ((indexPairs n).filter fun ij => sqDist (P ij.1) (P ij.2) = d).card
+/-- $f(d)$: the number of unordered pairs in $P$ determining distance $d$. -/
+def frequency {n : ℕ} (P : Fin n → ℝ²) (d : ℝ) : ℕ :=
+  ((indexPairs n).filter fun ij => dist (P ij.1) (P ij.2) = d).card
 
-/-- For a fixed distance `d`, the largest multiplicity among all *other*
-represented distances (`Finset.sup` returns `0` when there is no other value). -/
-def runnerUpFrequency {n : ℕ} (P : Fin n → Point) (d : ℝ) : ℕ :=
+/-- For a fixed distance $d$, the largest multiplicity among all *other*
+represented distances (`Finset.sup` returns $0$ when there is no other value). -/
+def runnerUpFrequency {n : ℕ} (P : Fin n → ℝ²) (d : ℝ) : ℕ :=
   ((distanceValues P).erase d).sup (frequency P)
 
-/-- `f(d₁) - f(d₂)`: the gap between the largest and second-largest distance
-multiplicities. The supremum over `d` handles both a unique winner and a tie:
-non-winners contribute `0` by truncated subtraction, and tied winners also
-contribute `0`. -/
-def multiplicityGap {n : ℕ} (P : Fin n → Point) : ℕ :=
+/-- $f(d_1) - f(d_2)$: the gap between the largest and second-largest distance
+multiplicities. The supremum over $d$ handles both a unique winner and a tie:
+non-winners contribute $0$ by truncated subtraction, and tied winners also
+contribute $0$. -/
+def multiplicityGap {n : ℕ} (P : Fin n → ℝ²) : ℕ :=
   (distanceValues P).sup fun d => frequency P d - runnerUpFrequency P d
 
-/-- A configuration represents a set of size `n` (injective) and has at least
-two distinct distances, so that `d₂` exists. -/
-def Admissible {n : ℕ} (P : Fin n → Point) : Prop :=
+/-- A configuration represents a set of size $n$ (injective) and has at least
+two distinct distances, so that $d_2$ exists. -/
+def Admissible {n : ℕ} (P : Fin n → ℝ²) : Prop :=
   Function.Injective P ∧ 2 ≤ (distanceValues P).card
 
 /-- A natural number occurs as the top-two multiplicity gap of some admissible
-`n`-point configuration. -/
+$n$-point configuration. -/
 def AttainableGap (n g : ℕ) : Prop :=
-  ∃ P : Fin n → Point, Admissible P ∧ multiplicityGap P = g
+  ∃ P : Fin n → ℝ², Admissible P ∧ multiplicityGap P = g
 
-/-- The extremal quantity of the problem, `max_{|A| = n} (f(d₁) - f(d₂))`. There
+/-- The extremal quantity of the problem, $\max_{|A| = n} (f(d_1) - f(d_2))$. There
 are `Nat.choose n 2` unordered pairs, so this is a valid finite search interval. -/
 def extremalGap (n : ℕ) : ℕ := by
   classical
@@ -94,10 +86,10 @@ theorem erdos_959 : answer(sorry) ↔
   sorry
 
 /--
-A superlinear lower bound: there is a `c > 0` such that for all large `n`,
-`extremalGap n ≥ n^{1 + c / log log n}`. In particular `max (f(d₁) - f(d₂))` grows
-faster than any linear function of `n`. This is a proved lower bound; determining
-the exact order of `extremalGap` remains open (see `erdos_959`).
+A superlinear lower bound: there is a $c>0$ with
+$$\text{extremalGap}(n)\geq n^{1 + c/\log\log n}$$
+for all large $n$, so $\max (f(d_1)-f(d_2))$ grows faster than any linear function
+of $n$. Determining the exact order remains open, which is `erdos_959`.
 -/
 @[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-959/Research/FinalLowerBound.lean"]
 theorem erdos_959.lower_bound :
