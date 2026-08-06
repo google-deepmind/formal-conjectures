@@ -34,4 +34,10 @@ namespace Finset
 def UnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
   (F : Set (Finset α)).Triplewise fun A B C ↦ A ∪ B ≠ C
 
+/-- A family `F` of finsets is *subfamily union-free* if no member is the union of a nonempty
+subfamily of the others. This is the arbitrary-subfamily strengthening of `UnionFree`, which
+only rules out unions of two members. -/
+def SubfamilyUnionFree {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
+  ∀ A ∈ F, ∀ T ⊆ F.erase A, T.Nonempty → T.sup id ≠ A
+
 end Finset
