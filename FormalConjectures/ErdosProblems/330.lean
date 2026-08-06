@@ -25,15 +25,25 @@ import FormalConjecturesUtil
 namespace Erdos330
 
 open Set
-open scoped BigOperators
+open scoped BigOperators Pointwise
 
-/-- `Rep A m h` means `m` is a sum of at most `h` elements of `A`x. -/
-def Rep (A : Set ℕ) (m h : ℕ) : Prop :=
-  ∃ k : ℕ, k ≤ h ∧ ∃ f : Fin k → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin k, f i) = m
+/-- `Rep A m h` means `m` is a sum of exactly `h` elements of `A`, which is `m ∈ h • A`.
 
-/-- Integers **not** representable as a finite sum of elements with at most `h` terms of `A`
+Exactly `h` rather than at most `h`, for two reasons. It is the notion Erdős states the problem
+with, via `f_2(m)`, the number of solutions of `m = a_i + a_j` [Er80]. And it is the notion
+`IsAsymptoticAddBasisOfOrder` uses below, so the statement is not switching between two meanings
+of "representable" partway through.
+
+Allowing fewer than `h` summands also breaks the statement outright: taking one summand makes
+every element of `A` count as represented, so `UnrepWithout A n h` would contain no element of
+`A` besides possibly `n`. Those are exactly the integers the problem is about. If `a ∈ A` with
+`a ≠ n` is only expressible as `a = n + b`, it cannot be represented without `n` and belongs in
+the set, but the one-element sum `a` itself would have excluded it. -/
+def Rep (A : Set ℕ) (m h : ℕ) : Prop := m ∈ h • A
+
+/-- Integers **not** representable as a sum of exactly `h` elements of `A`
 **while avoiding** `n`. -/
-def UnrepWithout (A : Set ℕ) (n h: ℕ) : Set ℕ :=
+def UnrepWithout (A : Set ℕ) (n h : ℕ) : Set ℕ :=
   {m | ¬ Rep (A \ {n}) m h}
 
 /-- An asymptotic additive basis of order `h` is minimal when one cannot obtain an asymptotic
@@ -46,15 +56,17 @@ Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
 such that, for any $n \in A$, the (upper) density of integers which
 cannot be represented without using $n$ is positive?
 
-The unrepresentable set is not asked to have a density, only to have positive upper density,
-so `Set.upperDensity` is used for it rather than `Set.HasPosDensity`. A set of integers that
-cannot be represented without $n$ has no reason to have a natural density, and requiring one
-would ask a strictly harder question than the one posed.
+Neither set is asked to have a density, only to have positive upper density, so
+`Set.upperDensity` is used for both rather than `Set.HasPosDensity`. As with many of Erdős'
+questions "positive density" here most likely means positive upper density, and in [Er80] he
+considers either the lower or the upper density for the integers not representable without a
+fixed `n`. Requiring the density to exist would ask a strictly harder question than the one
+posed. See #3979.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_330_statement :
-    answer(sorry) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧ A.HasPosDensity ∧
-    ∀ n ∈ A, 0 < (UnrepWithout A n h).upperDensity := by
+    answer(sorry) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
+    0 < A.upperDensity ∧ ∀ n ∈ A, 0 < (UnrepWithout A n h).upperDensity := by
   sorry
 
 end Erdos330
