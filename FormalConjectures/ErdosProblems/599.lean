@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 599
 
-*References:* 
+*References:*
 - [erdosproblems.com/599](https://www.erdosproblems.com/599)
 - [AhBe09] Aharoni, Ron and Berger, Eli, *Menger's theorem for infinite graphs*,
   *Invent. Math.* **176** (2009), 1--62.

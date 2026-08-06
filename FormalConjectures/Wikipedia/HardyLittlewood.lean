@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # First Hardy–Littlewood conjecture
@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-open scoped Nat.Prime Classical
+open scoped Nat.Prime
 
 /-  ## First Hardy-Littlewood Conjecture -/
 
@@ -55,6 +55,7 @@ For a given tuple $(m_1, \dots, m_k)$, this counts number of admissible
 prime constellations $(p, p + m_1, \dots, p + m_k)$ where $p \leq n$.
 -/
 noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=

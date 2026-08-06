@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 22
@@ -40,7 +40,7 @@ and Zhao [FLZ15].
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos22
 

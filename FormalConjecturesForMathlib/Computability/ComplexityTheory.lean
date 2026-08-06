@@ -13,7 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesForMathlib.Computability.Encoding
+public import Mathlib.Computability.TMComputable
 
 /-!
 # Conjectures in Complexity Theory
@@ -26,6 +29,8 @@ including `DecisionProblem`s, `ComplexityClass`es, `P`, `NP`, and `coNP`.
   Cambridge University Press, 2009.
 -/
 
+@[expose] public section
+
 open Computability Turing
 
 namespace ComplexityTheory
@@ -34,7 +39,7 @@ namespace ComplexityTheory
 The type of decision problems.
 
 We define these as functions from lists of booleans to booleans,
-implictly assuming the usual encodings.
+implicitly assuming the usual encodings.
 -/
 abbrev DecisionProblem := List Bool → Bool
 
