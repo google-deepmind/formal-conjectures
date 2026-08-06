@@ -41,7 +41,7 @@ any $n\geq 1$ there is exactly one solution to $n=a+b$ with $a\in A$ and $b\in B
 
 This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem%23331.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/d30552f64c55686d40b928a0a3b8e2396357a4ee/ErdosProblem331.lean"]
 theorem erdos_331 :
     answer(False) ↔
       ∀ A B : Set ℕ,
