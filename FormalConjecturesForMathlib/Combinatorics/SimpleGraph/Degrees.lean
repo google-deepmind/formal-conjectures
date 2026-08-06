@@ -27,7 +27,6 @@ public import Mathlib.Order.CompletePartialOrder
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -75,6 +74,7 @@ noncomputable def NG (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
     (Fintype.card α : ℝ)
 
 noncomputable def S (G : SimpleGraph α) : ℝ :=
+  open scoped Classical in
   let card := Fintype.card α
   if card < 2 then 0 else
     let degrees := Multiset.ofList (List.map (fun v => G.degree v) Finset.univ.toList)
