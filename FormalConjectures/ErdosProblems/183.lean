@@ -31,15 +31,10 @@ open scoped Topology
 
 namespace Erdos183
 
-/-- A `k`-colouring of the edges of `K_n` is triangle-free when no colour class contains a
-triangle. -/
-def TriangleFree {n k : ℕ} (C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k)) : Prop :=
-  ∀ colour : Fin k, (C.labelGraph colour).CliqueFree 3
-
-/-- `n` forces a monochromatic triangle on `k` colours when no `k`-colouring of the edges of
-`K_n` is triangle-free. -/
+/-- `n` forces a monochromatic triangle on `k` colours when every `k`-colouring of the edges
+of `K_n` has a colour class containing a triangle. -/
 def ForcesMonochromaticTriangle (n k : ℕ) : Prop :=
-  ∀ C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k), ¬ TriangleFree C
+  ∀ C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k), ¬ C.CliqueFree 3
 
 /-- $R(3;k)$, the minimal `n` such that every `k`-colouring of the edges of `K_n` contains a
 monochromatic triangle. -/
