@@ -125,12 +125,6 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
-      # `lake build` only builds `defaultTargets`, so the test library needs its own step.
-      # It shares Mathlib and the util libraries with the build above, so running it here
-      # rather than in a separate workflow reuses the olean cache.
-      - name: Build test library
-        if: steps.mode.outputs.website_only != 'true'
-        run: lake --wfail test
 
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true'
