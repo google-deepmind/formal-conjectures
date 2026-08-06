@@ -34,11 +34,11 @@ Catalan numbers: $C(n) = \binom{2n}{n}/(n+1)$. -/
 def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
 
 /-- Reciprocal of the n-th Catalan number as a rational number. -/
-def a_rat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
+def aRat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
 
 /-- The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers. -/
 def catalanReciprocalSum (j k : ℕ) : ℚ :=
-  (Finset.Icc j k).sum a_rat
+  (Finset.Icc j k).sum aRat
 
 /-- The index condition on $(j, k)$ from the conjecture: $0 < \min\{2,k\} \le j \le k$.
 Since $j$ and $k$ are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/

@@ -33,12 +33,12 @@ open Nat Int Filter
 noncomputable def a (n : ℕ) : ℤ :=
   if 0 < n then
     let k := 4 * n
-    let p_prime (i : ℕ) : ℤ := (Nat.nth Nat.Prime i : ℤ)
+    let pPrime (i : ℕ) : ℤ := (Nat.nth Nat.Prime i : ℤ)
 
-    let p₁ := p_prime (k - 4) -- p_{4n-4} in 0-indexed Mathlib
-    let p₂ := p_prime (k - 1) -- p_{4n-1} in 0-indexed Mathlib
-    let p₃ := p_prime (k - 3) -- p_{4n-3} in 0-indexed Mathlib
-    let p₄ := p_prime (k - 2) -- p_{4n-2} in 0-indexed Mathlib
+    let p₁ := pPrime (k - 4) -- p_{4n-4} in 0-indexed Mathlib
+    let p₂ := pPrime (k - 1) -- p_{4n-1} in 0-indexed Mathlib
+    let p₃ := pPrime (k - 3) -- p_{4n-3} in 0-indexed Mathlib
+    let p₄ := pPrime (k - 2) -- p_{4n-2} in 0-indexed Mathlib
 
     p₁ * p₂ - p₃ * p₄
   else

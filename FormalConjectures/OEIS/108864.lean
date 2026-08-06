@@ -34,8 +34,8 @@ The condition for a number $n$ to be in the sequence.
 It satisfies $0 < n$ and its perfect deficiency is $\le 10$, using the sum of divisors function $\sigma_1(n)$.
 -/
 def A (n : ℕ) : Prop :=
-  let sigma_one_n : ℕ := (Nat.divisors n).sum id
-  0 < n ∧ ((sigma_one_n : ℤ) - 2 * (n : ℤ)).natAbs ≤ 10
+  let sigmaOneN : ℕ := (Nat.divisors n).sum id
+  0 < n ∧ ((sigmaOneN : ℤ) - 2 * (n : ℤ)).natAbs ≤ 10
 
 /--
 The primary defining sequence `a`.

@@ -35,12 +35,12 @@ open Nat Int Finset
 def a (n : ℕ) : ℕ :=
   (∑ j ∈ range n,
     let c1 : ℕ := (2 * j).choose j
-    let c2_top : ℕ := 2 * n - (j + 2)
-    let c2_bot : ℕ := n - (j + 1)
-    let c2 : ℕ := c2_top.choose c2_bot
-    let term_magnitude : ℤ := c1 * c2
+    let c2Top : ℕ := 2 * n - (j + 2)
+    let c2Bot : ℕ := n - (j + 1)
+    let c2 : ℕ := c2Top.choose c2Bot
+    let termMagnitude : ℤ := c1 * c2
 
-    if j % 2 = 0 then term_magnitude else -term_magnitude
+    if j % 2 = 0 then termMagnitude else -termMagnitude
   ).toNat
 
 @[category test, AMS 11]

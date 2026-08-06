@@ -44,8 +44,8 @@ $$a(n) = (\min \{ b \in \mathbb{N} \mid b > 1, \text{decimal representation of }
 If no such base exists, `sInf` of an empty set of naturals returns 0, so `a n = 0`.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let smallest_base := sInf { b | IsValidZerolessPower n b }
-  smallest_base ^ n
+  let smallestBase := sInf { b | IsValidZerolessPower n b }
+  smallestBase ^ n
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]

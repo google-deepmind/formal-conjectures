@@ -72,21 +72,21 @@ theorem a_is_invert_transform_case (n : ℕ) :
   sorry
 
 /-- The c sequence for the general INVERT transform conjecture. $c(1) = 1$, $c(k)=ab^(k-2)$ for $k \ge 2$. -/
-def invert_seq_c (a b : ℕ) : ℕ → ℕ
+def invertSeqC (a b : ℕ) : ℕ → ℕ
   | 0 => 0
   | 1 => 1
   | (k + 2) => a * b^k
 
 /-- The INVERT transform of the sequence c. -/
-noncomputable def invert_seq_d (a b : ℕ) (n : ℕ) : ℕ :=
+noncomputable def invertSeqD (a b : ℕ) (n : ℕ) : ℕ :=
   Nat.strongRecOn n
     (fun m ih =>
       if m = 0 then 1
       else ∑ i ∈ Finset.range m,
-        if h : i < m then invert_seq_c a b (m - i) * ih i h else 0)
+        if h : i < m then invertSeqC a b (m - i) * ih i h else 0)
 
 /-- The general 2x2 matrix [(1,a); (1,b)]. -/
-def gen_matrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=
+def genMatrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=
   fun i j => match i, j with
   | 0, 0 => 1
   | 0, 1 => a
@@ -98,7 +98,7 @@ The conjecture: The INVERT transform of a sequence starting $(1, a, ab, ab^2, ab
 -/
 @[category research open, AMS 11]
 theorem conjecture (a_val b_val n : ℕ) :
-    invert_seq_d a_val b_val n = (gen_matrix a_val b_val ^ n) 0 0 := by
+    invertSeqD a_val b_val n = (genMatrix a_val b_val ^ n) 0 0 := by
   sorry
 
 end OeisA108306

@@ -61,15 +61,15 @@ def l (w : Word) : Word :=
 def r (w : Word) : Word :=
   w.reverse.map (fun x => x + 1)
 
-/-- `x_word` is the smallest set of words satisfying the inductive properties described in A108081. -/
-inductive x_word : Word → Prop
-  | base : x_word [0]
-  | step_left {u v : Word} (hu : x_word u) (hv : x_word v) : x_word (l u ++ v)
-  | step_right {u v : Word} (hu : x_word u) (hv : x_word v) : x_word (u ++ r v)
+/-- `XWord` is the smallest set of words satisfying the inductive properties described in A108081. -/
+inductive XWord : Word → Prop
+  | base : XWord [0]
+  | step_left {u v : Word} (hu : XWord u) (hv : XWord v) : XWord (l u ++ v)
+  | step_right {u v : Word} (hu : XWord u) (hv : XWord v) : XWord (u ++ r v)
 
-/-- `x_n n` is the set of words in `x_word` of length `n`. -/
-def x_n (n : ℕ) : Set Word :=
-  {w : Word | x_word w ∧ w.length = n}
+/-- `xN n` is the set of words in `XWord` of length `n`. -/
+def xN (n : ℕ) : Set Word :=
+  {w : Word | XWord w ∧ w.length = n}
 
 /--
 "The number of words of length $n$ for $n \le 12$ is given by $a(n+1)$. Is this always true?"
@@ -79,7 +79,7 @@ match the examples given for word lengths $n=1, 2, 3$ respectively.
 -/
 @[category research open, AMS 5]
 theorem count_words_in_x_is_a_shifted (n : ℕ) :
-    n ≥ 1 → Set.ncard (x_n n) = a (n - 1) := by
+    n ≥ 1 → Set.ncard (xN n) = a (n - 1) := by
   sorry
 
 end OeisA108081

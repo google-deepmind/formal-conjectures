@@ -35,17 +35,17 @@ The primary defining sequence `a`.
 $a(n)$ is the number of symbols '*' and '^' to write the canonical prime factorization of $n$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let F := Nat.factorization n
-  let S := F.support
-  let num_distinct_primes := S.card
-  let num_asterisks := num_distinct_primes - 1
-  let num_carets := (S.filter fun p => F p > 1).card
-  num_asterisks + num_carets
+  let f := Nat.factorization n
+  let s := f.support
+  let numDistinctPrimes := s.card
+  let numAsterisks := numDistinctPrimes - 1
+  let numCarets := (s.filter fun p => f p > 1).card
+  numAsterisks + numCarets
 
 
 
 /-- The set of exceptional integers. -/
-def exceptional_set : Finset ℕ :=
+def exceptionalSet : Finset ℕ :=
   {1, 2, 3, 4, 5, 6, 7, 9, 11}
 
 /--
@@ -54,7 +54,7 @@ which cannot be represented as the sum of two elements of indices $n$ such that 
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-  ∀ m > 0, m ∉ exceptional_set ↔ ∃ x y : ℕ, a x = 1 ∧ a y = 1 ∧ m = x + y := by
+  ∀ m > 0, m ∉ exceptionalSet ↔ ∃ x y : ℕ, a x = 1 ∧ a y = 1 ∧ m = x + y := by
   sorry
 
 end OeisA110475

@@ -62,7 +62,7 @@ theorem a_2 : a 2 = 7 := by
 Conjecture: the sequence A228828 is infinite.
 -/
 @[category research open, AMS 11]
-theorem a.infinite : {a n | n}.Infinite := by
+theorem conjecture : {a n | n}.Infinite := by
   sorry
 
 end OeisA228828

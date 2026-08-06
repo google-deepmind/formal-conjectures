@@ -39,12 +39,12 @@ where the $k$-th digit is $1$ if $k$ is prime and $0$ otherwise, with leading ze
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0 else
-  let p_n : ℕ := Nat.nth Nat.Prime (n - 1)
-  let prime_bits_full : List ℕ := (range (p_n + 1)).map (fun i =>
+  let pN : ℕ := Nat.nth Nat.Prime (n - 1)
+  let primeBitsFull : List ℕ := (range (pN + 1)).map (fun i =>
     if i.Prime then 1 else 0
   )
-  let prime_bits_trimmed := prime_bits_full.dropWhile (· = 0)
-  ofDigits 10 prime_bits_trimmed.reverse
+  let primeBitsTrimmed := primeBitsFull.dropWhile (· = 0)
+  ofDigits 10 primeBitsTrimmed.reverse
 
 /--
 Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?

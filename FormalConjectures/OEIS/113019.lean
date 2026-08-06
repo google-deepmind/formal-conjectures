@@ -33,12 +33,12 @@ with appropriate adjustments for $n=0$.
 -/
 def a (n : ℕ) : ℕ :=
   -- The base: number of digits of n (adjusting n=0 to have 1 digit, like n=1).
-  let num_digits : ℕ := (Nat.digits 10 (max 1 n)).length
+  let numDigits : ℕ := (Nat.digits 10 (max 1 n)).length
 
   -- The exponent: digital root of n. This correctly yields 0 for n=0, and the standard 1..9 for n>0.
-  let digital_root : ℕ := if n = 0 then 0 else (n - 1) % 9 + 1
+  let digitalRoot : ℕ := if n = 0 then 0 else (n - 1) % 9 + 1
 
-  num_digits ^ digital_root
+  numDigits ^ digitalRoot
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by native_decide

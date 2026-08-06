@@ -35,11 +35,11 @@ noncomputable def a (n : ℕ) : ℕ :=
   match n with
   | 0 => 0
   | n' + 1 =>
-    let p_n : ℕ := Nat.nth Nat.Prime n'
-    let prev_a : ℕ := a n'
-    let sum_val : ℕ := prev_a + p_n
-    let nu_2 : ℕ := padicValNat 2 sum_val
-    sum_val / (2 ^ nu_2)
+    let pN : ℕ := Nat.nth Nat.Prime n'
+    let prevA : ℕ := a n'
+    let sumVal : ℕ := prevA + pN
+    let nu2 : ℕ := padicValNat 2 sumVal
+    sumVal / (2 ^ nu2)
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 0 := by

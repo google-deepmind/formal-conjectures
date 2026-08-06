@@ -38,14 +38,14 @@ That is, $a(n) = 1$ if the number of indices $k \in \mathbb{N}$ such that $10^{n
 def a (n : ℕ) : ℕ :=
   if n > 0 then
     -- $n$ is the number of digits, so $n \ge 1$.
-    let lower_bound : ℕ := 10 ^ (n - 1)
-    let upper_bound : ℕ := 10 ^ n
+    let lowerBound : ℕ := 10 ^ (n - 1)
+    let upperBound : ℕ := 10 ^ n
 
     -- A safe upper bound for the index $k$.
-    let max_k : ℕ := 5 * n + 10
+    let maxK : ℕ := 5 * n + 10
 
-    -- Count the indices $k$ in the finite range $[0, max\_k)$ such that $\mathrm{fib}(k)$ has $n$ digits.
-    let count : ℕ := (filter (fun k => lower_bound ≤ Nat.fib k ∧ Nat.fib k < upper_bound) (range max_k)).card
+    -- Count the indices $k$ in the finite range $[0, maxK)$ such that $\mathrm{fib}(k)$ has $n$ digits.
+    let count : ℕ := (filter (fun k => lowerBound ≤ Nat.fib k ∧ Nat.fib k < upperBound) (range maxK)).card
 
     if count = 5 then 1 else 0
   else
