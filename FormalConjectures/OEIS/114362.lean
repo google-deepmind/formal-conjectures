@@ -42,11 +42,11 @@ noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then
     2
   else
-    let B_4n : ℚ := bernoulli (4 * n)
-    let B_2n : ℚ := bernoulli (2 * n)
-    let binom_qn : ℚ := ↑(Nat.choose (4 * n) (2 * n))
-    let Q_n : ℚ := -2 * B_4n / (B_2n * B_2n * binom_qn)
-    Q_n.num.natAbs
+    let b4n : ℚ := bernoulli (4 * n)
+    let b2n : ℚ := bernoulli (2 * n)
+    let binomQn : ℚ := ↑(Nat.choose (4 * n) (2 * n))
+    let qN : ℚ := -2 * b4n / (b2n * b2n * binomQn)
+    qN.num.natAbs
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 2 := by

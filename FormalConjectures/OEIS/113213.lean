@@ -33,8 +33,8 @@ a n is the smallest number m such that $2^n - m$ and $2^n + m$ are primes.
 Computed by checking elements from $0$ to $2^n$, as any larger $m$ would make $2^n - m = 0$ which is not prime.
 -/
 def a (n : ℕ) : ℕ :=
-  let S := (List.range (2^n + 1)).filter (fun m => (2^n - m).Prime ∧ (2^n + m).Prime)
-  S.headD 0
+  let s := (List.range (2^n + 1)).filter (fun m => (2^n - m).Prime ∧ (2^n + m).Prime)
+  s.headD 0
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by native_decide

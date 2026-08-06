@@ -44,14 +44,14 @@ noncomputable def a (n : ℕ) : ℕ :=
   | 3 => 1
   | 4 => 1
   | i + 5 =>
-    let sum_terms := a (i + 4) + a (i + 3) + a (i + 2) + a (i + 1) + a i
-    π sum_terms
+    let sumTerms := a (i + 4) + a (i + 3) + a (i + 2) + a (i + 1) + a i
+    π sumTerms
 
 /--
 A general sequence defined by the Pentanacci $\pi$ recurrence, starting with arbitrary initial values $v: \text{Fin } 5 \to \mathbb{N}$.
-The sequence $a_{general}(v, n)$ is the n-th term (0-indexed).
+The sequence $a_{\mathrm{general}}(v, n)$ is the n-th term (0-indexed).
 -/
-noncomputable def a_general (v : Fin 5 → ℕ) (n : ℕ) : ℕ :=
+noncomputable def aGeneral (v : Fin 5 → ℕ) (n : ℕ) : ℕ :=
   match n with
   | 0 => v 0
   | 1 => v 1
@@ -59,8 +59,8 @@ noncomputable def a_general (v : Fin 5 → ℕ) (n : ℕ) : ℕ :=
   | 3 => v 3
   | 4 => v 4
   | i + 5 =>
-    let sum_terms := a_general v (i + 4) + a_general v (i + 3) + a_general v (i + 2) + a_general v (i + 1) + a_general v i
-    π sum_terms
+    let sumTerms := aGeneral v (i + 4) + aGeneral v (i + 3) + aGeneral v (i + 2) + aGeneral v (i + 1) + aGeneral v i
+    π sumTerms
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
@@ -83,7 +83,7 @@ Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behavi
 -/
 @[category research open, AMS 11]
 theorem conjecture (v : Fin 5 → ℕ) (h : ∀ i, v i > 0) :
-  answer(sorry) = ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → a_general v (n + P) = a_general v n) := by
+  answer(sorry) = ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → aGeneral v (n + P) = aGeneral v n) := by
   sorry
 
 end OeisA100478

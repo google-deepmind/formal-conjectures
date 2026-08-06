@@ -36,8 +36,8 @@ $a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$
 noncomputable def a (n : ℕ) : ℕ :=
   let IsPrimeFreeInterval (m : ℕ) : Prop :=
     ∀ p : ℕ, p.Prime → ¬ (n * m ≤ p ∧ p ≤ n * (m + 1))
-  let S : Set ℕ := {m : ℕ | m > 0 ∧ IsPrimeFreeInterval m}
-  sInf S
+  let s : Set ℕ := {m : ℕ | m > 0 ∧ IsPrimeFreeInterval m}
+  sInf s
 
 /--
 Sierpinski's conjecture (1958) is precisely that $a(n) >= n$ for all $n$.

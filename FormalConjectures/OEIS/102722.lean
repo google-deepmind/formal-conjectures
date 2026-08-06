@@ -35,11 +35,11 @@ open BigOperators Finset Int Asymptotics Filter
 a n is the floor of the sum of all division remainders $\{n/k\}$, with $k=1,\dots,n$.
 $$a(n) = \left\lfloor \sum_{k=1}^n \left\{ \frac{n}{k} \right\} \right\rfloor$$ -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let sum_of_fract_parts : ℝ :=
+  let sumOfFractParts : ℝ :=
     (Icc 1 n).sum fun k : ℕ =>
       -- Int.fract is the fractional part function {x}.
       fract ((n : ℝ) / (k : ℝ))
-  (floor sum_of_fract_parts).toNat
+  (floor sumOfFractParts).toNat
 
 @[category API, AMS 11]
 lemma a_sum_1 (f : ℕ → ℝ) : (Icc 1 1).sum f = f 1 := by

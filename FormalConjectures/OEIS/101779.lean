@@ -32,9 +32,9 @@ open Nat Set
 open scoped Nat.Prime
 
 /--
-A101779: `A_k n k` is true if for all $i$ from $1$ to $n$, $i \cdot k + (i - 1)$ is prime.
+A101779: `Ak n k` is true if for all $i$ from $1$ to $n$, $i \cdot k + (i - 1)$ is prime.
 -/
-def A_k (n k : ℕ) : Prop :=
+def Ak (n k : ℕ) : Prop :=
   ∀ (i : ℕ), 1 ≤ i ∧ i ≤ n → (i * k + (i - 1)).Prime
 
 /--
@@ -42,37 +42,37 @@ The primary defining sequence `a`.
 $a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, \ldots, nk+n-1$ are primes, or $0$ if no such $k$ is found.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  sInf { k : ℕ | A_k n k }
+  sInf { k : ℕ | Ak n k }
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
   push_cast [a]
-  norm_num[A_k]
+  norm_num [Ak]
   apply Nat.isLeast_find ⟨2, by decide⟩ |>.csInf_eq
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by
   norm_num [a]
-  delta A_k
+  delta Ak
   exact IsLeast.csInf_eq ⟨ fun and =>And.elim (by decide +revert), (·.one_mul▸. (1) (by decide) |>.two_le)⟩
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 3 := by
   norm_num [a]
-  norm_num[A_k, Eq.comm]
+  norm_num [Ak, Eq.comm]
   exact (IsLeast.csInf_eq (by use (by decide),fun a s => (one_mul a▸s (1) (by constructor) (by decide)).two_le.lt_of_ne (by cases· with((contradiction))))).symm
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by
   delta a
-  norm_num[A_k]
+  norm_num [Ak]
   apply ((Nat.isLeast_find ⟨5,by decide⟩)).csInf_eq
 
 /--
 It is conjectured k always exists.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∀ (n : ℕ), 1 ≤ n → ∃ k : ℕ, A_k n k := by
+theorem conjecture : ∀ (n : ℕ), 1 ≤ n → ∃ k : ℕ, Ak n k := by
   sorry
 
 end OeisA101779

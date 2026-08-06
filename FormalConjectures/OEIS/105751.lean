@@ -32,8 +32,8 @@ The primary defining sequence `a`.
 a n is the imaginary part of $\prod_{k=0}^n (1 + k \cdot i)$, where $i = \sqrt{-1}$.
 -/
 noncomputable def a (n : ℕ) : ℤ :=
-  let product_term (k : ℕ) : ℂ := 1 + (k : ℂ) * I
-  Int.floor (((Finset.range (n + 1)).prod product_term).im)
+  let productTerm (k : ℕ) : ℂ := 1 + (k : ℂ) * I
+  Int.floor (((Finset.range (n + 1)).prod productTerm).im)
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]

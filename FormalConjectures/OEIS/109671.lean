@@ -39,12 +39,12 @@ def a (n : ℕ) : ℕ :=
     a (n / 2)
   else
     let k := (n - 1) / 2
-    let a_prev_odd := a (n - 2)
-    let a_k := a k
-    if a_prev_odd > a_k then
-      a_prev_odd - a_k
+    let aPrevOdd := a (n - 2)
+    let aMid := a k
+    if aPrevOdd > aMid then
+      aPrevOdd - aMid
     else
-      a_prev_odd + a_k
+      aPrevOdd + aMid
 termination_by n
 
 @[category test, AMS 11]

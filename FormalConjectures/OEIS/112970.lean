@@ -40,11 +40,11 @@ def a (n : ℕ) : ℕ :=
     if n % 2 = 1 then -- Odd case: a(2k + 1) = a(k)
       a k
     else -- Even case: a(2k) = a(k) + a(k - 2)
-      let a_k_minus_2 : ℕ :=
+      let aPrev : ℕ :=
         -- a(m) is 0 if m < 0. Equivalent to checking k < 2 for the argument k-2.
         if k < 2 then 0
         else a (k - 2)
-      a k + a_k_minus_2
+      a k + aPrev
 termination_by n
 
 @[category test, AMS 11]

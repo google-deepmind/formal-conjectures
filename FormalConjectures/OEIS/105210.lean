@@ -39,8 +39,8 @@ def a : ℕ → ℕ
 | 0 => 0
 | 1 => 393
 | n + 2 =>
-  let a_prev := a (n + 1)
-  a_prev + 1 + sumRelevantPrimeFactors a_prev
+  let aPrev := a (n + 1)
+  aPrev + 1 + sumRelevantPrimeFactors aPrev
 termination_by n => n
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/

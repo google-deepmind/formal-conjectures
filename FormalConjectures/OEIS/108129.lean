@@ -43,8 +43,8 @@ noncomputable def a (n : ℕ) : ℤ :=
     dite (∃ m : PNat, P m)
     (fun h_exists : ∃ m : PNat, P m =>
       -- PNat.find returns the minimum element. We coerce it to ℕ, then to ℤ.
-      let m_min := PNat.find h_exists
-      (m_min : ℕ)
+      let mMin := PNat.find h_exists
+      (mMin : ℕ)
     )
     (fun _ : ¬ ∃ m : PNat, P m =>
       (-1 : ℤ)

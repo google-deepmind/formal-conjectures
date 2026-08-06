@@ -39,12 +39,12 @@ noncomputable def a : ℕ → ℕ
 | 1 => 1
 | 2 => 2
 | n + 3 =>
-  let an_1 : ℕ := a (n + 2)
-  let an_2 : ℕ := a (n + 1)
-  let num : ℚ := (2 * an_1 * an_2 : ℕ).cast
-  let den : ℚ := (an_1 + an_2 : ℕ).cast
-  let harmonic_term_floor : ℕ := Int.toNat (num / den).floor
-  an_1 + harmonic_term_floor
+  let an1 : ℕ := a (n + 2)
+  let an2 : ℕ := a (n + 1)
+  let num : ℚ := (2 * an1 * an2 : ℕ).cast
+  let den : ℚ := (an1 + an2 : ℕ).cast
+  let harmonicTermFloor : ℕ := Int.toNat (num / den).floor
+  an1 + harmonicTermFloor
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by norm_num [a]

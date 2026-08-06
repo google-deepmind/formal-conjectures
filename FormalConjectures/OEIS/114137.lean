@@ -35,15 +35,15 @@ def IsSemiprime (n : ℕ) : Prop :=
 /--
 An odd semiprime is a semiprime that is odd.
 -/
-def ISOddSemiprime (n : ℕ) : Prop :=
+def IsOddSemiprime (n : ℕ) : Prop :=
   IsSemiprime n ∧ Odd n
 
 instance (n : ℕ) : Decidable (IsSemiprime n) := by
   unfold IsSemiprime
   infer_instance
 
-instance (n : ℕ) : Decidable (ISOddSemiprime n) := by
-  unfold ISOddSemiprime
+instance (n : ℕ) : Decidable (IsOddSemiprime n) := by
+  unfold IsOddSemiprime
   infer_instance
 
 /--
@@ -53,17 +53,17 @@ $$a(n) = \min \{s \mid s > 2^n \text{ and } s \text{ is an odd semiprime}\} - 2^
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let m := 2^n
-  let S : Set ℕ := { s | s > m ∧ ISOddSemiprime s }
-  sInf S - m
+  let s : Set ℕ := { s | s > m ∧ IsOddSemiprime s }
+  sInf s - m
 
 @[category API, AMS 11]
 lemma a_eq_of (n val : ℕ)
-  (h_mem : ISOddSemiprime val)
+  (h_mem : IsOddSemiprime val)
   (h_gt : 2^n < val)
-  (h_min : ∀ x, 2^n < x → x < val → ¬ ISOddSemiprime x) :
+  (h_min : ∀ x, 2^n < x → x < val → ¬ IsOddSemiprime x) :
   a n = val - 2^n := by
-  change sInf { s | s > 2^n ∧ ISOddSemiprime s } - 2^n = val - 2^n
-  have h_S : sInf { s | s > 2^n ∧ ISOddSemiprime s } = val := by
+  change sInf { s | s > 2^n ∧ IsOddSemiprime s } - 2^n = val - 2^n
+  have h_S : sInf { s | s > 2^n ∧ IsOddSemiprime s } = val := by
     apply IsLeast.csInf_eq
     constructor
     · exact ⟨h_gt, h_mem⟩

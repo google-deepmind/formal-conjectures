@@ -39,8 +39,8 @@ def a : ℕ → ℕ
 | 0 => 0
 | 1 => 1
 | (n' + 2) =>
-  let an_minus_1 := a (n' + 1)
-  an_minus_1 ^^^ (an_minus_1 + (n' + 2))
+  let anMinus1 := a (n' + 1)
+  anMinus1 ^^^ (anMinus1 + (n' + 2))
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
