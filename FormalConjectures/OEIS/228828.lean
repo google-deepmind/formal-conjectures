@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Numbers $n$ such that $n^2 + \pi(n)$ is prime.
+# Numbers $n$ such that $n^2 + \pi(n)$ is prime
 
 *References:*
 - [A228828](https://oeis.org/A228828)
@@ -28,7 +28,7 @@ namespace OeisA228828
 open scoped Nat.Prime
 
 /--
-Numbers n such that $n^2 + \pi(n)$ is prime.
+Numbers $n$ such that $n^2 + \pi(n)$ is prime.
 -/
 noncomputable def a (n : ℕ) : ℕ := n.nth (fun n => (n ^ 2 + π n).Prime)
 

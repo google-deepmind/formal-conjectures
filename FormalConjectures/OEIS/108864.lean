@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A108864: Perfect deficiency of n is <= 10
+# Numbers $n$ such that the perfect deficiency of $n$ is $\le 10$.
 
-Numbers $n$ such that the perfect deficiency of $n$ (A109883) is $\le 10$.
 We formally define the property satisfied by elements of the sequence, using the sum of divisors function $\sigma_1(n)$.
 
 *References:*

@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Corresponds to m = 9 in a family of 4th-order linear recurrence sequences
+# Conjectures associated with A113255
+
+Corresponds to m = 9 in a family of 4th-order linear recurrence sequences
 
 This sequence is defined by the recurrence relation
 $a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)$ for n > 3.
@@ -54,7 +56,7 @@ theorem a_3 : a 3 = 5329 := by rfl
 theorem a_4 : a 4 = -26581 := by rfl
 
 /--
-Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m, n$ (see A113249).
+Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=9$, which is A113255.
 -/
 @[category research open, AMS 11]

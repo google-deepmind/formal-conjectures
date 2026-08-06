@@ -17,10 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A110566
-
-$a(n) = \operatorname{lcm}\{1,2,\dots,n\}/\operatorname{denominator} \text{ of harmonic number } H(n)$.
-where $H_n = \sum_{k=1}^n \frac{1}{k}$.
+# $a(n) = \operatorname{lcm}\{1,2,\dots,n\}/\operatorname{denominator} \text{ of harmonic number } H(n)$
 
 *References:*
 - [A110566](https://oeis.org/A110566)
@@ -30,7 +27,7 @@ namespace OeisA110566
 
 open Nat Finset Rat
 
-/-- 
+/--
 The primary defining sequence `a`.
 $a(n) = \frac{\operatorname{lcm}_{k=1}^n k}{\operatorname{den}(H_n)}$
 -/

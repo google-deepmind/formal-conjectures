@@ -18,7 +18,7 @@ import FormalConjecturesUtil
 import Mathlib.Data.Nat.Prime.Nth
 
 /-!
-# A110854
+# Conjectures associated with A110854
 
 $a(n) = \mathrm{prime}(2n+2) - \mathrm{prime}(2n+1) - \mathrm{prime}(2n) + \mathrm{prime}(2n-1)$,
 where $\mathrm{prime}(k)$ is the $k$-th prime number.

@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Partial sums of binomial(2n,n)^2.
+# Partial sums of $\binom{2n}{n}^2$
 
-Partial sums of $\binom{2n}{n}^2$.
 $$a(n) = \sum_{k=0}^n \binom{2k}{k}^2$$
 
 *References:*
@@ -51,12 +50,12 @@ theorem a_3 : a 3 = 441 := by rfl
 
 /-- The polynomial $\sum_{k=0}^{n} \binom{2k}{k}^2 x^k$ over $\mathbb{Q}$. -/
 noncomputable
-def poly_P (n : ℕ) : Polynomial ℚ :=
+def polyP (n : ℕ) : Polynomial ℚ :=
   (Finset.range (n + 1)).sum (fun k => C ((Nat.centralBinom k : ℚ) ^ 2) * X ^ k)
 
 /-- The polynomial $\sum_{k=0}^{n} \frac{\binom{2k}{k}^2}{k+1} x^k$ over $\mathbb{Q}$. -/
 noncomputable
-def poly_Q (n : ℕ) : Polynomial ℚ :=
+def polyQ (n : ℕ) : Polynomial ℚ :=
   (Finset.range (n + 1)).sum (fun k => C (((Nat.centralBinom k : ℚ) ^ 2) / (k + 1 : ℚ)) * X ^ k)
 
 /--
@@ -64,7 +63,7 @@ Conjecture: For any positive integer n, the polynomials Sum_{k=0}^n binomial(2k,
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-  ∀ (n : ℕ), 1 ≤ n → Irreducible (poly_P n) ∧ Irreducible (poly_Q n) := by
+  ∀ (n : ℕ), 1 ≤ n → Irreducible (polyP n) ∧ Irreducible (polyQ n) := by
   sorry
 
 end OeisA115257

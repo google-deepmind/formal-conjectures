@@ -17,9 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Ascending descending base exponent transform of 2^n
-
-Ascending descending base exponent transform of 2^n.
+# Ascending descending base exponent transform of $2^n$
 
 *References:*
 - [A113271](https://oeis.org/A113271)

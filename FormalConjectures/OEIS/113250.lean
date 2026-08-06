@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Corresponds to m = 4 in a family of 4th-order linear recurrence sequences
+# Expansion of g.f. $-(1 - 48x^2 - 256x^3) / ((1 - 4x)(1 + 4x)(1 + 4x + 16x^2))$
+
+Corresponds to m = 4 in a family of 4th-order linear recurrence sequences
 
 This sequence is defined by the linear recurrence relation with signature $(-4, 0, 64, 256)$
 and initial values $a(0) = -1, a(1) = 4, a(2) = 32, a(3) = 64$.
@@ -54,7 +56,7 @@ theorem a_3 : a 3 = 64 := by rfl
 theorem a_4 : a 4 = -256 := by rfl
 
 /--
-Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m$ (see A113249).
+Conjecture: $a(m, 2n+1)$ is a perfect square for all $m$ (see A113249).
 Specialized to $m = 4$, which is A113250.
 -/
 @[category research open, AMS 11]

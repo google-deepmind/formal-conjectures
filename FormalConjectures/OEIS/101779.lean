@@ -17,10 +17,10 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A101779
+# Conjectures associated with A101779
 
-`a(n)` is the least `k` such that all of `k, 2k+1, 3k+2, ..., nk+n-1` are primes, or `0` if no such `k` is found.
-It is conjectured `k` always exists.
+$a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, ..., nk+n-1$ are primes, or $0$ if no such $k$ is found.
+It is conjectured $k$ always exists.
 
 *References:*
 - [A101779](https://oeis.org/A101779)

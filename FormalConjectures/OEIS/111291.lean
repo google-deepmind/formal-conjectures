@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A111291
+# Number of refactorable numbers (A033950) $\le 10^n$
 
-Number of refactorable numbers (A033950) $\le 10^n$.
 A number $k$ is refactorable if its number of divisors, $\tau(k)$, divides $k$.
 
 *References:*
@@ -31,7 +30,7 @@ namespace OeisA111291
 open Nat Finset Real
 
 /-- Helper function: number of refactorable numbers $\le m$. -/
-def count_refactorable_nat (m : ℕ) : ℕ :=
+def countRefactorableNat (m : ℕ) : ℕ :=
   (Icc 1 m).filter (fun k => k.divisors.card ∣ k) |>.card
 
 /--
@@ -39,7 +38,7 @@ def count_refactorable_nat (m : ℕ) : ℕ :=
 A number $k$ is refactorable if its number of divisors, $\tau(k)$, divides $k$.
 -/
 def a (n : ℕ) : ℕ :=
-  count_refactorable_nat (10 ^ n)
+  countRefactorableNat (10 ^ n)
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by native_decide
@@ -54,11 +53,11 @@ theorem a_2 : a 2 = 16 := by native_decide
 theorem a_3 : a 3 = 92 := by native_decide
 
 /--
-`count_refactorable x` is the number of refactorable numbers $\le x$.
+`countRefactorable x` is the number of refactorable numbers $\le x$.
 -/
-noncomputable def count_refactorable (x : ℝ) : ℕ :=
+noncomputable def countRefactorable (x : ℝ) : ℕ :=
   if _hx : x ≥ 1 then
-    count_refactorable_nat (Int.toNat (floor x))
+    countRefactorableNat (Int.toNat (floor x))
   else
     0
 
@@ -67,7 +66,7 @@ Simon Colton conjectures that the number of refactorables less than x is at leas
 -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ (x : ℝ), x > 1 →
-    (count_refactorable x : ℝ) ≥ x / (2 * Real.log x) := by
+    (countRefactorable x : ℝ) ≥ x / (2 * Real.log x) := by
   sorry
 
 end OeisA111291

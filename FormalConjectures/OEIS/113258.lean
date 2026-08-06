@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Ascending descending base exponent transform of factorials
 
-Ascending descending base exponent transform of factorials.
-
 *References:*
 - [A113258](https://oeis.org/A113258)
 -/

@@ -17,11 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Sequence A103425 contains infinitely many primes
-
-A103425 is defined by the recurrence relation $a(n) = 3 a(n-1) + a(n-2) - 3 a(n-3)$
-with initial terms $a(0)=1, a(1)=3, a(2)=5$. The conjecture states that this sequence
-contains infinitely many primes.
+# $a(n) = 3a(n-1) + a(n-2) - 3a(n-3)$
 
 *References:*
 - [A103425](https://oeis.org/A103425)
@@ -60,7 +56,7 @@ def IsWeightedTribonacci (a b c : ℤ) (x : ℕ → ℤ) : Prop :=
   ∀ n, x (n + 3) = a * x (n + 2) + b * x (n + 1) + c * x n
 
 /--
-The current sequence contains primes, including 3, 5, 41, 21523361. Is there an (a, b, c) weighted tribonacci sequence with a, b, c relatively prime which is prime-free?
+The current sequence contains primes, including $3, 5, 41, 21523361$. Is there an $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively prime which is prime-free?
 -/
 
 @[category research open, AMS 11]

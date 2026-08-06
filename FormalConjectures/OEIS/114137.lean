@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Difference between first odd semiprime > 2^n and 2^n
+# Difference between first odd semiprime $> 2^n$ and $2^n$
 
 *References:*
 - [A114137](https://oeis.org/A114137)
@@ -29,21 +29,21 @@ namespace OeisA114137
 A natural number $n$ is a semiprime if it has exactly two prime factors counting multiplicity, $\Omega(n)=2$.
 In Lean, `n.primeFactorsList.length` computes $\Omega(n)$.
 -/
-def is_semiprime (n : ℕ) : Prop :=
+def IsSemiprime (n : ℕ) : Prop :=
   n > 1 ∧ n.primeFactorsList.length = 2
 
 /--
 An odd semiprime is a semiprime that is odd.
 -/
-def is_odd_semiprime (n : ℕ) : Prop :=
-  is_semiprime n ∧ Odd n
+def ISOddSemiprime (n : ℕ) : Prop :=
+  IsSemiprime n ∧ Odd n
 
-instance (n : ℕ) : Decidable (is_semiprime n) := by
-  unfold is_semiprime
+instance (n : ℕ) : Decidable (IsSemiprime n) := by
+  unfold IsSemiprime
   infer_instance
 
-instance (n : ℕ) : Decidable (is_odd_semiprime n) := by
-  unfold is_odd_semiprime
+instance (n : ℕ) : Decidable (ISOddSemiprime n) := by
+  unfold ISOddSemiprime
   infer_instance
 
 /--
@@ -53,17 +53,17 @@ $$a(n) = \min \{s \mid s > 2^n \text{ and } s \text{ is an odd semiprime}\} - 2^
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let m := 2^n
-  let S : Set ℕ := { s | s > m ∧ is_odd_semiprime s }
+  let S : Set ℕ := { s | s > m ∧ ISOddSemiprime s }
   sInf S - m
 
 @[category API, AMS 11]
 lemma a_eq_of (n val : ℕ)
-  (h_mem : is_odd_semiprime val)
+  (h_mem : ISOddSemiprime val)
   (h_gt : 2^n < val)
-  (h_min : ∀ x, 2^n < x → x < val → ¬ is_odd_semiprime x) :
+  (h_min : ∀ x, 2^n < x → x < val → ¬ ISOddSemiprime x) :
   a n = val - 2^n := by
-  change sInf { s | s > 2^n ∧ is_odd_semiprime s } - 2^n = val - 2^n
-  have h_S : sInf { s | s > 2^n ∧ is_odd_semiprime s } = val := by
+  change sInf { s | s > 2^n ∧ ISOddSemiprime s } - 2^n = val - 2^n
+  have h_S : sInf { s | s > 2^n ∧ ISOddSemiprime s } = val := by
     apply IsLeast.csInf_eq
     constructor
     · exact ⟨h_gt, h_mem⟩

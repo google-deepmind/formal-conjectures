@@ -17,9 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A105565: Indicator sequence for 5 Fibonacci numbers with n digits
+# Indicator sequence for 5 Fibonacci numbers with n digits
 
-`a(n) = 1` if exactly 5 Fibonacci numbers exist with exactly `n` digits, otherwise `0`.
+$a(n) = 1$ if exactly 5 Fibonacci numbers exist with exactly $n$ digits, otherwise $0$.
 For the partial sums $S(n) = \sum_{k=1}^n a(k)$, it is conjectured that $\beta-2 < S(n)-\alpha n < \beta-1$, where $\alpha = \log(10)/\log(\phi) - 4$ and $\beta = \log(5)/(2\log(\phi)) - 1$.
 
 *References:*
@@ -71,10 +71,10 @@ theorem a_5 : a 5 = 1 := by decide
 noncomputable def phi : Real := goldenRatio
 
 /-- The constant $\alpha = \log(10)/\log(\phi) - 4$. -/
-noncomputable def alpha_const : Real := Real.log 10 / Real.log phi - 4
+noncomputable def alphaConst : Real := Real.log 10 / Real.log phi - 4
 
 /-- The constant $\beta = \log(5)/(2\log(\phi)) - 1$. -/
-noncomputable def beta_const : Real := Real.log 5 / (2 * Real.log phi) - 1
+noncomputable def betaConst : Real := Real.log 5 / (2 * Real.log phi) - 1
 
 /-- The partial sum $S(n) = \sum_{k=1}^n a(k)$. -/
 noncomputable def s (n : ℕ) : Real :=
@@ -85,7 +85,7 @@ Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$. The constants $\alpha$ and $\be
 -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
-    beta_const - 2 < s n - alpha_const * (n : Real) ∧ s n - alpha_const * (n : Real) < beta_const - 1 := by
+    betaConst - 2 < s n - alphaConst * (n : Real) ∧ s n - alphaConst * (n : Real) < betaConst - 1 := by
   sorry
 
 end OeisA105565

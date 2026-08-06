@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A109845
+# Conjectures associated with A109845
 
 $a(1) = 2$; $a(2n)$ = lcm of all previous terms + 1; $a(2n+1)$ = lcm of all previous terms - 1.
 

@@ -17,7 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Corresponds to m = 8 in a family of 4th-order linear recurrence sequences
+# Conjectures associated with A113254
+
+Corresponds to m = 8 in a family of 4th-order linear recurrence sequences
 
 This sequence is defined by the linear recurrence relation
 $a(n) = -4 a(n-1) + 256 a(n-3) + 4096 a(n-4)$ for n > 3.
@@ -54,7 +56,7 @@ theorem a_3 : a 3 = 3136 := by rfl
 theorem a_4 : a 4 = -15616 := by rfl
 
 /--
-Conjecture: $a(m, 2*n+1)$ is a perfect square for all $m, n$ (see A113249).
+Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=8$, which is A113254.
 -/
 @[category research open, AMS 11]

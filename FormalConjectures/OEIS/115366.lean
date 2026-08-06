@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# a(n) = the number of values of k <= 10^n such that sqrt(k*(k+1)*(k+2)*(k+3)+1) is prime.
+# $a(n)$ = the number of values of $k <= 10^n$ such that $\sqrt{k(k+1)(k+2)(k+3)+1}$ is prime
 
-$a(n)$ = the number of values of $k <= 10^n$ such that $\sqrt{k(k+1)(k+2)(k+3)+1}$ is prime.
 Since $\sqrt{k(k+1)(k+2)(k+3)+1} = k^2 + 3k + 1$,
 $a(n) = \#\{k \in \mathbb{N} \mid 1 \le k \le 10^n \land (k^2 + 3k + 1) \text{ is prime} \}.$
 

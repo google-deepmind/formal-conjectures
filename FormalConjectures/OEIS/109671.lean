@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# OEIS A109671
+# Conjectures associated with A109671
 
 $a(1)=1$; thereafter, $a(2n)=a(n)$, $a(2n+1)$ is the smallest positive number such that $|a(2n+1)-a(2n-1)|=a(n)$.
 Conjecture: Does the sequence contain every positive integer?

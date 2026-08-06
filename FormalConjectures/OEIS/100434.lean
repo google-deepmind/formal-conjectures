@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A100434
+# Expansion of g.f. $(1+x)(3+x)/(1+6x^2+x^4)$
 
 A100434 is the expansion of the generating function $(1+x)(3+x)/(1+6x^2+x^4)$.
 This sequence is defined by the linear recurrence relation $a(n) = -6 a(n-2) - a(n-4)$ for $n \ge 4$,
@@ -39,7 +39,7 @@ def a : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * a (n + 2) - a n
 
-/-- $c(n)$ starts with (1, -3, -7, 17) and satisfies the same recurrence as `a` -/
+/-- $c(n)$ starts with $(1, -3, -7, 17)$ and satisfies the same recurrence as `a` -/
 def c : ℕ → ℤ
   | 0 => 1
   | 1 => -3
@@ -47,7 +47,7 @@ def c : ℕ → ℤ
   | 3 => 17
   | n + 4 => -6 * c (n + 2) - c n
 
-/-- $d(n)$ starts with (2, 4, -10, -24) and satisfies the same recurrence as `a` -/
+/-- $d(n)$ starts with $(2, 4, -10, -24)$ and satisfies the same recurrence as `a` -/
 def d : ℕ → ℤ
   | 0 => 2
   | 1 => 4

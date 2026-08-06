@@ -17,9 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A108306: Expansion of (3x+1)/(1-3x-3x^2)
+# A108306: Expansion of $(3x+1)/(1-3x-3x^2)$
 
-Expansion of $(3x+1)/(1-3x-3x^2)$. This sequence satisfies the linear recurrence relation $a(0)=1$, $a(1)=6$, and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
+This sequence satisfies the linear recurrence relation $a(0)=1$, $a(1)=6$, and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
 
 *References:*
 - [A108306](https://oeis.org/A108306)

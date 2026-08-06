@@ -52,25 +52,27 @@ noncomputable def a (n : ℕ) : ℤ :=
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
-  simp_all[a]
-  rw_mod_cast[dif_pos (by exists@2),PNat.find_eq_iff]
-  refine ⟨by decide,fun R L => match R with|(1)=>by decide⟩
+  delta a
+  rw [dif_pos ⟨2, by decide⟩]
+  decide
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
   delta a
-  norm_num[Exists.intro (1 : ℕ+),PNat.find_eq_iff]
+  rw [dif_pos ⟨1, by decide⟩]
+  decide
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2 := by
-  norm_num[a ·]
-  use if a:_ then(dif_pos a▸mod_cast(PNat.find_eq_iff _).2 ((.symm @?_)))else a.elim<|by exists@2
-  exists(fun a s=>match a with|1=>by decide)
+  delta a
+  rw [dif_pos ⟨2, by decide⟩]
+  decide
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
   delta a
-  norm_num[Exists.intro (1 : ℕ+),PNat.find_eq_iff]
+  rw [dif_pos ⟨1, by decide⟩]
+  decide
 
 /--
 It is conjectured that the integer $k = 509203$ is the smallest Riesel number,

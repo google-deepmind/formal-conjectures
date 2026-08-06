@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A112521
+# Sequence related to NOR bracketings
 
-Sequence related to NOR bracketings.
 $$a(n) = \sum_{j=0}^{n-1} (-1)^j \binom{2j}{j} \binom{2n-j-2}{n-j-1}$$
 
 *References:*

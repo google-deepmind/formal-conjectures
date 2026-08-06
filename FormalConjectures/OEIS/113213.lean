@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Smallest number m such that 2^n - m and 2^n + m are primes
+# Smallest number $m$ such that $2^n - m$ and $2^n + m$ are primes
 
-A113213: Smallest number $m$ such that $2^n - m$ and $2^n + m$ are primes.
 
 *References:*
 - [A113213](https://oeis.org/A113213)

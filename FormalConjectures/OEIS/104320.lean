@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Number of zeros in ternary representation of $2^n$
 
-`a n` is the number of zeros in the ternary representation of $2^n$.
-
 *References:*
 - [A104320](https://oeis.org/A104320)
 -/

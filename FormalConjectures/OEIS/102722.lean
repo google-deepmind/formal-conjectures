@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A102722 Conjecture
+# Floor of sum of $\{n/k\}$
 
 Given $n$, sum all division remainders $\{n/k\}$, with $k=1,\dots,n$.
 The value $a(n)$ is given by the floor of that sum. Note that $\{x\}:=x-[x]$.

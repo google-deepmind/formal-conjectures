@@ -17,9 +17,8 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# A117027
+# Determinants of 2 X 2 matrices of non-overlapping blocks of 4 consecutive primes
 
-Determinants of 2 X 2 matrices of non-overlapping blocks of 4 consecutive primes.
 $a(n) = p_{4n-3}p_{4n} - p_{4n-2}p_{4n-1}$ where $p_k$ is the k-th prime number (1-indexed).
 
 *References:*
@@ -55,19 +54,19 @@ theorem a_1 : a 1 = -1 := by
   norm_num
 
 /-- The count of positive terms among $a(1)$, ..., $a(N)$. -/
-noncomputable def positive_count (N : ℕ) : ℕ :=
+noncomputable def positiveCount (N : ℕ) : ℕ :=
   (List.range N).countP (fun n => 0 < a (n + 1))
 
 /-- The count of negative terms among $a(1)$, ..., $a(N)$. -/
-noncomputable def negative_count (N : ℕ) : ℕ :=
+noncomputable def negativeCount (N : ℕ) : ℕ :=
   (List.range N).countP (fun n => a (n + 1) < 0)
 
 /-- The sequence of ratios $P(N)/Neg(N)$ as a sequence of real numbers. -/
-noncomputable def ratio_seq (N : ℕ) : ℝ :=
-  if negative_count N = 0 then
+noncomputable def ratioSeq (N : ℕ) : ℝ :=
+  if negativeCount N = 0 then
     0
   else
-    (positive_count N : ℝ) / (negative_count N : ℝ)
+    (positiveCount N : ℝ) / (negativeCount N : ℝ)
 
 /--
 This suggests the ratio is approaching a limit close to 0.87.
@@ -77,7 +76,7 @@ and L is in the interval (0.8, 0.9).
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-  ∃ L : ℝ, Tendsto ratio_seq atTop (nhds L) ∧ 0.8 < L ∧ L < 0.9 :=
+  ∃ L : ℝ, Tendsto ratioSeq atTop (nhds L) ∧ 0.8 < L ∧ L < 0.9 :=
 by sorry
 
 end OeisA117027

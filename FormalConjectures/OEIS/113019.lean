@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Number of digits of n raised to the power of the digital root of n
 
-A113019: (Number of digits of n) raised to the power of (the digital root of n).
-
 *References:*
 - [A113019](https://oeis.org/A113019)
 -/
