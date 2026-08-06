@@ -366,9 +366,6 @@ private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit :=
   let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
     let condName ← resolveGlobalConstNoOverload c.raw
     Elab.addConstInfo c.raw condName
-    if (env.find? condName).bind (·.value?) |>.any (!·.hasSorry) then
-      logWarning m!"The assumed hypothesis `{condName}` has a sorry-free proof, \
-        so the formal proof may no longer need to be marked `conditional`."
     return condName
   -- Warn if this is attached to a `research open` problem. `formal_proof` asserts
   -- that a proof of this statement exists, which contradicts calling it open; a
