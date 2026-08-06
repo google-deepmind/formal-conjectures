@@ -24,37 +24,7 @@ import FormalConjecturesUtil
 
 namespace Erdos130
 
-/-- A point of the plane. -/
-abbrev Point := ℝ × ℝ
-
-/-- Squared Euclidean distance. -/
-def sqDist (p q : Point) : ℝ := (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2
-
-/-- The three points `p, q, r` are collinear (vanishing signed area). -/
-def Collinear (p q r : Point) : Prop :=
-  (q.1 - p.1) * (r.2 - p.2) = (q.2 - p.2) * (r.1 - p.1)
-
-/-- The four points `p, q, r, s` lie on a common circle: there is a centre `o`
-equidistant from all four. -/
-def Concyclic4 (p q r s : Point) : Prop :=
-  ∃ o : Point, sqDist o p = sqDist o q ∧ sqDist o p = sqDist o r ∧ sqDist o p = sqDist o s
-
-/-- General position: no three points collinear and no four points concyclic. -/
-def GeneralPosition (A : Set Point) : Prop :=
-  (∀ ⦃p q r⦄, p ∈ A → q ∈ A → r ∈ A →
-      p ≠ q → p ≠ r → q ≠ r → ¬ Collinear p q r) ∧
-  (∀ ⦃p q r s⦄, p ∈ A → q ∈ A → r ∈ A → s ∈ A →
-      p ≠ q → p ≠ r → p ≠ s → q ≠ r → q ≠ s → r ≠ s → ¬ Concyclic4 p q r s)
-
-/-- Two points are adjacent in the integer-distance graph iff they are distinct
-and their distance is a positive integer (equivalently `sqDist` is a positive
-perfect square). -/
-def Adjacent (p q : Point) : Prop :=
-  p ≠ q ∧ ∃ n : ℕ, 0 < n ∧ sqDist p q = (n : ℝ) ^ 2
-
-/-- The integer-distance graph on `A` has a proper colouring with `k` colours. -/
-def HasKColoring (A : Set Point) (k : ℕ) : Prop :=
-  ∃ color : A → Fin k, ∀ x y : A, Adjacent x.1 y.1 → color x ≠ color y
+open EuclideanGeometry SimpleGraph
 
 /--
 Let $A\subset\mathbb{R}^2$ be an infinite set which contains no three points on a
@@ -70,7 +40,8 @@ whose integer-distance graph admits no finite proper colouring. How large the
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-130/Research/Basic.lean"]
 theorem erdos_130 :
     answer(True) ↔
-      ∃ A : Set Point, A.Infinite ∧ GeneralPosition A ∧ ∀ k : ℕ, ¬ HasKColoring A k := by
+      ∃ A : Set ℝ², A.Infinite ∧ InGeneralPosition A ∧
+        (IntegerDistancePlaneGraph A).chromaticNumber = ⊤ := by
   sorry
 
 end Erdos130
