@@ -29,7 +29,7 @@ import FormalConjecturesUtil
   The number of regular simplices in higher dimensions. arXiv:2507.19841 (2025).
 -/
 
-open Filter Metric Classical
+open Filter Metric
 open scoped EuclideanGeometry Asymptotics
 
 namespace Erdos755
@@ -52,11 +52,13 @@ def IsAnySizeEquilateralTriangle {d : ℕ}
 /-- Number of unit equilateral triangles spanned by a finite point set. -/
 noncomputable def unitEquilateralTriangleCount (d : ℕ)
     (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
+  open scoped Classical in
   ((P.powersetCard 3).filter fun T => IsUnitEquilateralTriangle T).card
 
 /-- Number of equilateral triangles of any positive side length spanned by a finite point set. -/
 noncomputable def anySizeEquilateralTriangleCount (d : ℕ)
     (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
+  open scoped Classical in
   ((P.powersetCard 3).filter fun T => IsAnySizeEquilateralTriangle T).card
 
 /-- Maximum number of unit equilateral triangles spanned by $n$ points in $\mathbb{R}^d$. -/

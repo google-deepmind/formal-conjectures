@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil.Linters.LatexDocstringLinter
+public import FormalConjecturesUtil.Linters.LatexDocstringLinter
 
 /-!
 # Tests for the LaTeX docstring linter
@@ -22,6 +23,8 @@ import FormalConjecturesUtil.Linters.LatexDocstringLinter
 This file contains test cases for the `LatexDocstringLinter`, verifying that
 docstrings with backslash-bracket or backslash-parenthesis are flagged.
 -/
+
+@[expose] public section
 
 namespace LatexDocstringLinter
 
