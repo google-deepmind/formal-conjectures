@@ -107,7 +107,13 @@ theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A 
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
-#TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
+#TODO: prove this lemma by assuming `erdos_318.contain_single_even`.
+
+The density sits in an existential, so `HasPosDensity` is the *stronger* reading here and
+weakening it to positive lower density would claim less, which is the opposite of the usual
+situation for Erdős' "positive density". It also costs nothing: by
+`erdos_318.variants.contain_single_even` a witness only needs exactly one even element, and the
+odd numbers together with one even number have density `1 / 2` on the nose. -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
