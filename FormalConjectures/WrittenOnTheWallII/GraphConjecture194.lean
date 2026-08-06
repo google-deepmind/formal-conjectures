@@ -34,7 +34,7 @@ path, which is impossible.
 
 namespace WrittenOnTheWallII.GraphConjecture194
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /--
 WOWII [Conjecture 194](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)

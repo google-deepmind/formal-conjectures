@@ -31,12 +31,12 @@ namespace Erdos403
 
 /--
 Does the equation
-\[2^m=a_1!+\cdots+a_k!\]
+$$2^m=a_1!+\cdots+a_k!$$
 with $a_1<a_2<\cdots <a_k$ have only finitely many solutions?
 
 Asked by Burr and Erdős. Frankl and Lin [Li76] independently showed that the answer is yes, and
 the largest solution is
-\[2^7=2!+3!+5!.\]
+$$2^7=2!+3!+5!.$$
 In fact Lin showed that the largest power of $2$ which can divide a sum of distinct factorials
 containing $2$ is $2^{254}$, and that there are only 5 solutions to $3^m=a_1!+\cdots+a_k!$
 (when $m=0,1,2,3,6$).
@@ -46,8 +46,12 @@ See also [404].
 A solution is encoded below as a pair $(m, s)$ where $s$ is the finite set
 $\{a_1 < a_2 < \cdots < a_k\}$ of positive integers, so the distinctness of the $a_i$ is
 given by set membership. The empty set contributes no solutions since $2^m \geq 1 > 0$.
+
+The linked proof gives more than finiteness: it classifies the solutions outright, as
+$(0,\{1\})$, $(1,\{2\})$, $(3,\{2,3\})$, $(5,\{2,3,4\})$ and $(7,\{2,3,5\})$, so the set below
+has exactly five elements.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/403/Erdos403.lean"]
 theorem erdos_403 : answer(True) ↔
     {p : ℕ × Finset ℕ | (∀ a ∈ p.2, 0 < a) ∧
       2 ^ p.1 = ∑ a ∈ p.2, a.factorial}.Finite := by
