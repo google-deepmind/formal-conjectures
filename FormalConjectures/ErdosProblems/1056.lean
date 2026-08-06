@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Nat
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1056
 
 *Reference:* [erdosproblems.com/1056](https://www.erdosproblems.com/1056)
 -/
-
+open Nat
 namespace Erdos1056
 
 /--

@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 2
@@ -26,10 +26,11 @@ import FormalConjectures.Util.ProblemImports
 
 namespace WrittenOnTheWallII.GraphConjecture2
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+open scoped Classical in
 /--
 WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
@@ -39,6 +40,6 @@ the neighbourhoods of the vertices of `G`.
 -/
 @[category research open, AMS 5]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
-  2 * (l G - 1) ≤ Ls G := by sorry
+  2 * (averageIndepNeighbors G - 1) ≤ Ls G := by sorry
 
 end WrittenOnTheWallII.GraphConjecture2
