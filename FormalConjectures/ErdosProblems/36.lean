@@ -121,9 +121,74 @@ Any balanced partition has both pieces nonempty, so `MaxOverlap \geq 1`.
 theorem M_two : M 2 = 1 := by
   sorry
 
+/-- A simple upper bound: `Overlap A B k ≤ |A| * |B|`. -/
+@[category API, AMS 5 11]
+private lemma overlap_le_card_mul {A B : Finset ℤ} (k : ℤ) :
+    Overlap A B k ≤ A.card * B.card := by
+  refine (Finset.card_filter_le _ _).trans ?_
+  rw [Finset.product_eq_sprod, Finset.card_product]
+
+/-- If some difference `k` is achieved at least twice, then `MaxOverlap` is at least `2`. -/
+@[category API, AMS 5 11]
+private lemma two_le_maxOverlap_of_overlap {A B : Finset ℤ} {k : ℤ}
+    (hk : 2 ≤ Overlap A B k) : 2 ≤ MaxOverlap A B :=
+  le_ciSup_of_le ⟨A.card * B.card, fun _ ⟨j, hj⟩ => hj ▸ overlap_le_card_mul j⟩ k hk
+
+/-- If some difference in `[-5, 5]` is achieved at least twice, then `MaxOverlap ≥ 2`.
+Convenient for discharging a concrete partition by `decide`. -/
+@[category API, AMS 5 11]
+private lemma two_le_maxOverlap_of_exists {A B : Finset ℤ}
+    (h : ∃ k ∈ Finset.Icc (-5 : ℤ) 5, 2 ≤ Overlap A B k) : 2 ≤ MaxOverlap A B := by
+  obtain ⟨k, -, hk⟩ := h
+  exact two_le_maxOverlap_of_overlap hk
+
+/-- `MaxOverlap {1, 4, 5} {2, 3, 6} = 2`: an optimal balanced partition of `{1, …, 6}`, whose
+nine pairwise differences hit each value at most twice. -/
+@[category API, AMS 5 11]
+private lemma maxOverlap_145_236 :
+    MaxOverlap ({1, 4, 5} : Finset ℤ) ({2, 3, 6} : Finset ℤ) = 2 := by
+  apply le_antisymm
+  · refine ciSup_le fun k => ?_
+    by_cases hk : k ∈ Finset.Icc (-5 : ℤ) 3
+    · fin_cases hk <;> decide
+    · have h0 : Overlap ({1, 4, 5} : Finset ℤ) ({2, 3, 6} : Finset ℤ) k = 0 := by
+        rw [Overlap, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+        rintro ⟨a, b⟩ hp
+        obtain ⟨ha, hb⟩ := Finset.mem_product.mp hp
+        simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb
+        simp only [Finset.mem_Icc, not_and_or, not_le] at hk
+        rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> omega
+      omega
+  · refine le_ciSup_of_le ⟨9, fun x hx => ?_⟩ (-1) (by decide)
+    obtain ⟨k, rfl⟩ := hx
+    exact (overlap_le_card_mul k).trans (by decide)
+
+/--
+For $n = 3$, one optimal balanced partition of $\{1, …, 6\}$ is $A = \{1, 4, 5\}, B = \{2, 3, 6\}$,
+whose `MaxOverlap` is $2$. Conversely every balanced partition has `MaxOverlap ≥ 2`, checked over
+all $\binom{6}{3}$ partitions.
+-/
 @[category test, AMS 5 11]
 theorem M_three : M 3 = 2 := by
-  sorry
+  apply le_antisymm
+  · exact Nat.sInf_le
+      ⟨{1, 4, 5}, {2, 3, 6}, by decide, by decide, by decide, maxOverlap_145_236⟩
+  · apply le_csInf
+    · exact ⟨_, {1, 4, 5}, {2, 3, 6}, by decide, by decide, by decide, maxOverlap_145_236⟩
+    rintro x ⟨A, B, hd, hu, hsc, rfl⟩
+    have hcard : A.card + B.card = 6 := by
+      rw [← Finset.card_union_of_disjoint hd, hu]; decide
+    have hca : A.card = 3 := by omega
+    have hu6 : A ∪ B = Finset.Icc (1 : ℤ) 6 := by rw [hu]; decide
+    have hAsub : A ⊆ Finset.Icc (1 : ℤ) 6 := by
+      have h : A ⊆ A ∪ B := Finset.subset_union_left
+      rwa [hu6] at h
+    have hBeq : B = Finset.Icc (1 : ℤ) 6 \ A := by
+      rw [← hu6, Finset.union_sdiff_cancel_left hd]
+    have hmem : A ∈ (Finset.Icc (1 : ℤ) 6).powersetCard 3 :=
+      Finset.mem_powersetCard.mpr ⟨hAsub, hca⟩
+    subst hBeq
+    fin_cases hmem <;> exact two_le_maxOverlap_of_exists (by decide)
 
 @[category test, AMS 5 11]
 theorem M_four : M 4 = 2 := by
