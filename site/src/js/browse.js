@@ -89,7 +89,7 @@ function writeURL() {
 // Filter / sort
 // ---------------------------------------------------------------------------
 // The statement text lives in the Verso fragments, as HTML. Strip the tags once per
-// theorem and keep the result, so typing does not re-parse 3551 documents on every keystroke.
+// theorem and keep the result, so typing does not re-parse every entry on every keystroke.
 const statementTextCache = new Map();
 
 function statementText(c) {
