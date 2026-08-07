@@ -35,11 +35,6 @@ open Computability Turing
 
 namespace ComplexityTheory
 
-/-- Sanity check: the identity function is polynomial-time computable. -/
-@[category test, AMS 68]
-theorem isPolyTime_id {α : Type} [BitstringEncoding α] : IsPolyTime (id : α → α) :=
-  ⟨Turing.idComputableInPolyTime (BitstringEncoding.toFinEncoding α)⟩
-
 /--
 The class P is the set of decision problems
 decidable in polynomial time by a deterministic Turing machine.
