@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Four-square conjecture with powers of 2, 3, and 5
@@ -39,27 +39,35 @@ namespace OeisA308734
 
 /-- The predicate that `n` can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
 for nonnegative integers $a, b, c, d, x, y$. -/
-def IsSumOfFourSquaresWithPowers (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ a b c d x y : ℕ, n = (2 ^ a * 3 ^ b) ^ 2 + (2 ^ c * 5 ^ d) ^ 2 + x ^ 2 + y ^ 2
 
 @[category test, AMS 11]
-theorem isSumOfFourSquaresWithPowers_2 : IsSumOfFourSquaresWithPowers 2 :=
+theorem a_2 : A 2 :=
   ⟨0, 0, 0, 0, 0, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfFourSquaresWithPowers_3 : IsSumOfFourSquaresWithPowers 3 :=
+theorem a_3 : A 3 :=
   ⟨0, 0, 0, 0, 0, 1, by norm_num⟩
 
 @[category test, AMS 11]
-theorem isSumOfFourSquaresWithPowers_5 : IsSumOfFourSquaresWithPowers 5 :=
+theorem a_4 : A 4 :=
+  ⟨0, 0, 0, 0, 1, 1, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_5 : A 5 :=
   ⟨1, 0, 0, 0, 0, 0, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_6 : A 6 :=
+  ⟨0, 0, 0, 0, 2, 0, by norm_num⟩
 
 /--
 **Zhi-Wei Sun's Four-Square Conjecture (A308734)**: Any integer $n > 1$ can be written as
 $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$ for nonnegative integers $a, b, c, d, x, y$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 < n) : IsSumOfFourSquaresWithPowers n := by
+theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
   sorry
 
 end OeisA308734
