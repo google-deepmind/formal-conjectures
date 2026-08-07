@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 38
@@ -32,8 +32,6 @@ open scoped Pointwise
 
 namespace Green38
 
-/-- The vector space $\mathbb{F}_7^n$. -/
-abbrev 𝔽₇ (n : ℕ) := Fin n → ZMod 7
 
 /-- $A - A$ intersects $\{-1, 0, 1\}^n$ only at $0$. -/
 def IntersectsOnlyAtZero {n : ℕ} (A : Finset (𝔽₇ n)) : Prop :=
