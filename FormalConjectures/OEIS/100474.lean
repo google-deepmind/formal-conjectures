@@ -132,10 +132,6 @@ theorem a_5 : a 5 = 58546472 := by
   rw [nth_prime_nine, nth_prime_ten, nth_prime_eleven, nth_prime_twelve, nth_prime_thirteen]
   rfl
 
-/-- A natural number is a semiprime if it is the product of two prime numbers. -/
-def IsSemiprime (n : ℕ) : Prop :=
-  ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ n = p * q
-
 /--
 After $a(2) = 5$, is there another prime?
 -/
@@ -148,7 +144,7 @@ What is the next semiprime in the sequence after $a(11)$?
 -/
 @[category research open, AMS 11]
 theorem next_semiprime :
-    answer(sorry) = a (sInf {n : ℕ | 11 < n ∧ IsSemiprime (a n)}) := by
+    answer(sorry) = a (sInf {n : ℕ | 11 < n ∧ (a n).IsSemiprime}) := by
   sorry
 
 end OeisA100474

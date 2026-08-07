@@ -24,27 +24,7 @@ import FormalConjecturesUtil
 -/
 
 namespace OeisA114137
-
-/--
-A natural number $n$ is a semiprime if it has exactly two prime factors counting multiplicity, $\Omega(n)=2$.
-In Lean, `n.primeFactorsList.length` computes $\Omega(n)$.
--/
-def IsSemiprime (n : ℕ) : Prop :=
-  n > 1 ∧ n.primeFactorsList.length = 2
-
-/--
-An odd semiprime is a semiprime that is odd.
--/
-def IsOddSemiprime (n : ℕ) : Prop :=
-  IsSemiprime n ∧ Odd n
-
-instance (n : ℕ) : Decidable (IsSemiprime n) := by
-  unfold IsSemiprime
-  infer_instance
-
-instance (n : ℕ) : Decidable (IsOddSemiprime n) := by
-  unfold IsOddSemiprime
-  infer_instance
+open Nat
 
 /--
 The primary defining sequence `a`.
