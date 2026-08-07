@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import FormalConjectures.Wikipedia.Schinzel
 
 /-!
@@ -43,6 +43,7 @@ namespace Erdos252
 /-- The series `∑ σ k n / n!`. -/
 noncomputable def erdos_252_sum (k : ℕ) : ℝ := ∑' n, σ k n / (n ! : ℝ)
 
+/-- Erdős Problem 252: irrationality of the sum for a given $k$. -/
 @[category research open, AMS 11]
 theorem erdos_252 :
     answer(sorry) ↔ ∀ k ≥ 1, Irrational (erdos_252_sum k) := by

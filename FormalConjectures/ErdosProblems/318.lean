@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 318
@@ -27,13 +27,14 @@ import FormalConjectures.Util.ProblemImports
     Indag. Math. (1982), 347--352.
   - [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
     theory. Monographies de L'Enseignement Mathematique (1980).
+  - [La26] D. Larsen, [Erdős problem 318](https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.pdf) (2026)
 -/
 
 open Set Real
 
 namespace Erdos318
 
-/-- A set `A : Set ℕ` is said to have propery `P₁` if for any nonconstant sequence
+/-- A set `A : Set ℕ` is said to have property `P₁` if for any nonconstant sequence
 `f : A → {-1, 1}`, one can always select a finite, nonempty subset `S ⊆ A \ {0}` such that
 `∑ n ∈ S, fₙ / n = 0`. This is defined in [Sa82b]. -/
 def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
@@ -106,7 +107,13 @@ theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A 
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
-#TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
+#TODO: prove this lemma by assuming `erdos_318.contain_single_even`.
+
+The density sits in an existential, so `HasPosDensity` is the *stronger* reading here and
+weakening it to positive lower density would claim less, which is the opposite of the usual
+situation for Erdős' "positive density". It also costs nothing: by
+`erdos_318.variants.contain_single_even` a witness only needs exactly one even element, and the
+odd numbers together with one even number have density `1 / 2` on the nose. -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
@@ -116,9 +123,13 @@ theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
 theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
-/-- Does the set of squares excluding 1 have property `P₁`? -/
-@[category research open, AMS 11]
-theorem erdos_318.parts.ii : answer(sorry) ↔  P₁ ({n | IsSquare n} \ {1}) := by
+/--
+Does the set of squares excluding 1 have property `P₁`?
+
+Larsen [La26] proved that this set does have property `P₁`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_318.parts.ii : answer(True) ↔  P₁ ({n | IsSquare n} \ {1}) := by
   sorry
 
 end Erdos318

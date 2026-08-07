@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Invariant Subspace Problem
@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem),
 [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
+
+namespace InvariantSubspaceProblem
 
 variable {H : Type*} [NormedAddCommGroup H]
 
@@ -115,3 +117,5 @@ theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
   sorry
+
+end InvariantSubspaceProblem

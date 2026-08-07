@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -28,7 +28,27 @@ This file formalizes some conjectures and theorems around latin squares.
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
 
+namespace LatinSquare
+
 variable {n : ℕ}
+
+/--
+Two latin squares of the same order are orthogonal if superimposing them gives each ordered pair of
+symbols at most once.
+-/
+def Orthogonal (L M : LatinSquare n) : Prop :=
+  Function.Injective fun p : Fin n × Fin n => (L.mat p.1 p.2, M.mat p.1 p.2)
+
+/-- A family of latin squares is mutually orthogonal if any two distinct members are orthogonal. -/
+def MutuallyOrthogonal {k n : ℕ} (L : Fin k → LatinSquare n) : Prop :=
+  ∀ ⦃i j : Fin k⦄, i ≠ j → Orthogonal (L i) (L j)
+
+/--
+A complete set of mutually orthogonal latin squares (MOLS) of order `n` consists of `n - 1`
+latin squares of order `n`, pairwise orthogonal to each other.
+-/
+def HasCompleteMOLS (n : ℕ) : Prop :=
+  0 < n ∧ ∃ L : Fin (n - 1) → LatinSquare n, MutuallyOrthogonal L
 
 /--
 Conjecture 3.2 in [Wa2011]:
@@ -90,9 +110,48 @@ $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decide
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem z_even (n : ℕ) : z (2 * (n + 1)) = 0 := by
-  sorry
+  set N := 2 * (n + 1) with hN_def
+  have hNpos : 0 < N := by positivity
+  haveI : NeZero N := ⟨hNpos.ne'⟩
+  rw [z, numTransversals, Fintype.card_eq_zero_iff]
+  refine ⟨fun ⟨σ, hσ, himg⟩ => ?_⟩
+  simp only [Matrix.of_apply] at himg
+  let σE : Fin N ≃ Fin N := Equiv.ofBijective σ
+    ((Fintype.bijective_iff_injective_and_card _).mpr ⟨hσ, rfl⟩)
+  let fE : Fin N ≃ Fin N := Equiv.ofBijective (fun i => i + σ i)
+    ((Fintype.bijective_iff_injective_and_card _).mpr ⟨himg, rfl⟩)
+  -- Sum the cell labels in `ZMod N` via `Nat.cast ∘ Fin.val`.
+  let g : Fin N → ZMod N := fun i => ((i : ℕ) : ZMod N)
+  set S : ZMod N := ∑ i : Fin N, g i with hS_def
+  have hcast : ∀ i : Fin N, g (i + σ i) = g i + g (σ i) := by
+    intro i; simp only [g, Fin.val_add, ZMod.natCast_mod, Nat.cast_add]
+  have h1 : (∑ i : Fin N, g (i + σ i)) = S := Equiv.sum_comp fE g
+  have h2 : (∑ i : Fin N, g (σ i)) = S := Equiv.sum_comp σE g
+  have hSS : S + S = S := by
+    calc S + S = (∑ i, g i) + ∑ i, g (σ i) := by rw [h2]
+      _ = ∑ i, (g i + g (σ i)) := (Finset.sum_add_distrib).symm
+      _ = ∑ i, g (i + σ i) := by simp_rw [← hcast]
+      _ = S := h1
+  have hS0 : S = 0 := by linear_combination hSS
+  -- `S = ∑_{i < N} i = N(N-1)/2 = (n+1)(2n+1)` in `ZMod N`.
+  have hval : S = (((Finset.range N).sum id : ℕ) : ZMod N) := by
+    rw [hS_def]
+    push_cast [g, Fin.sum_univ_eq_sum_range fun k => ((k : ℕ) : ZMod N), id]
+    rfl
+  rw [hval, show (Finset.range N).sum id = ∑ i ∈ Finset.range N, i from rfl,
+    Finset.sum_range_id] at hS0
+  have hdiv : N * (N - 1) / 2 = (n + 1) * (2 * n + 1) := by
+    rw [hN_def, show 2 * (n + 1) - 1 = 2 * n + 1 from by omega,
+      show 2 * (n + 1) * (2 * n + 1) = 2 * ((n + 1) * (2 * n + 1)) from by ring,
+      Nat.mul_div_cancel_left _ (by norm_num : 0 < 2)]
+  rw [hdiv] at hS0
+  have hdvd : N ∣ (n + 1) * (2 * n + 1) := (ZMod.natCast_eq_zero_iff _ _).mp hS0
+  -- `N = (n+1) * 2`; cancelling `(n+1)` forces `2 ∣ 2n+1`, impossible.
+  rw [hN_def, show 2 * (n + 1) = (n + 1) * 2 from by ring,
+    mul_dvd_mul_iff_left (Nat.succ_ne_zero n)] at hdvd
+  omega
 
 /--
 Conjecture 6.7 in [Wa2011]:
@@ -112,13 +171,15 @@ theorem numTransversalsZn : answer(sorry) ↔
 /--
 Conjecture 6.9 in [Wa2011]:
 $$
-\lim_{n \to \infty} \frac{1}{n} \log(z_n / n!) = -1
+\lim_{\substack{n \to \infty \\ n \text{ odd}}} \frac{1}{n} \log(z_n / n!) = -1
 $$
-It is not even known if this limit exists.
+It is not even known if this limit exists. Note that $z_n = 0$ for even $n$ (see `z_even`), so the
+limit must be restricted to odd $n$; here we parametrise odd $n$ as $2k + 1$.
 -/
 @[category research open, AMS 5]
 theorem growthRateZn : answer(sorry) ↔
-    Filter.Tendsto (fun n => (1 : ℝ) / n * Real.log (z n / n.factorial)) Filter.atTop
+    Filter.Tendsto (fun k => (1 : ℝ) / (2 * k + 1) *
+      Real.log (z (2 * k + 1) / (2 * k + 1).factorial)) Filter.atTop
       (nhds (-1)) := by
   sorry
 
@@ -138,6 +199,25 @@ theorem maxTransversalsBound :
     let c := Real.sqrt ((3 - Real.sqrt 3) / 6) * Real.exp (Real.sqrt 3 / 6)
     ∀ n : ℕ, n ≥ 5 →
       (T n : ℝ) ∈ Set.Icc ((15 : ℝ) ^ ((n : ℝ) / 5)) (c ^ n * Real.sqrt n * n.factorial) := by
+  sorry
+
+/--
+MOLS existence problem: determine exactly which orders `n` admit a complete set of `n - 1`
+mutually orthogonal latin squares.
+
+Equivalently, this asks for which orders affine planes of order `n` exist. Complete sets are known
+for prime-power orders; the smallest currently unresolved order is `12`.
+-/
+@[category research open, AMS 5]
+theorem molsExistenceProblem : answer(sorry) = {n : ℕ | HasCompleteMOLS n} := by
+  sorry
+
+/--
+The smallest unresolved case of the MOLS existence problem: whether there are `11` mutually
+orthogonal latin squares of order `12`.
+-/
+@[category research open, AMS 5]
+theorem molsOrder12 : answer(sorry) ↔ HasCompleteMOLS 12 := by
   sorry
 
 /-
@@ -160,5 +240,7 @@ If $n$ is even, then $f(n, 2) = n$; if $n$ is odd, then $f(n, 2) > n$.
 
 /-
 TODO(rao107): Conjecture 10.10 in [Wa2011]:
-Every latin hypercube of odd dimension or of odd oder has a transversal.
+Every latin hypercube of odd dimension or of odd order has a transversal.
 -/
+
+end LatinSquare
