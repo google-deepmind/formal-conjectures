@@ -244,9 +244,11 @@ noncomputable def unitDistancePairsCount (points : Finset ℝ²) : ℕ :=
   #(points.offDiag.filter (fun p => dist p.1 p.2 = 1)) / 2
 
 /-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
-if no three are collinear and no four lie on a circle. -/
-def InGeneralPosition (X : Finset ℝ²) : Prop :=
-  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
+if no three are collinear and no four lie on a circle.
+
+Stated for `Set ℝ²` so that infinite collections are covered; a `Finset` argument coerces. -/
+def InGeneralPosition (X : Set ℝ²) : Prop :=
+  NonTrilinear X ∧ ∀ T ⊆ X, T.ncard = 4 → ¬Cospherical T
 
 /-- `a b c` are the vertices of a right-angled triangle: the (unoriented) angle at one of the
 three vertices equals `π / 2`. -/

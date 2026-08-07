@@ -62,10 +62,13 @@ questions "positive density" here most likely means positive upper density, and 
 considers either the lower or the upper density for the integers not representable without a
 fixed `n`. Requiring the density to exist would ask a strictly harder question than the one
 posed. See #3979.
+
+Such a set exists, so the answer is yes. The linked proof gives one of order `2`.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/Jayyhk/erdos-lean/blob/a5ffc87b3d684fc00ea906b9e746c283740da900/problems/330/Erdos330.lean"]
 theorem erdos_330_statement :
-    answer(sorry) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
+    answer(True) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
     0 < A.upperDensity ∧ ∀ n ∈ A, 0 < (UnrepWithout A n h).upperDensity := by
   sorry
 

@@ -29,8 +29,8 @@ Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n-1}$ be the Fibonacci sequence.
 Let $n_1 < n_2 < \dots$ be an infinite sequence with $\frac{n_{k+1}}{n_k} \ge c > 1$. Must
 $\sum_k \frac 1 {F_{n_k}}$ be irrational?
 -/
-@[category research open, AMS 11]
-theorem erdos_267 : answer(sorry) ↔ ∀ᵉ (n : ℕ → ℕ) (c > (1 : ℚ)), StrictMono n → (∀ k, c ≤ n (k+1) / n k) →
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-267/Research/Basic.lean"]
+theorem erdos_267 : answer(True) ↔ ∀ᵉ (n : ℕ → ℕ) (c > (1 : ℚ)), StrictMono n → (∀ k, c ≤ n (k+1) / n k) →
     Irrational (∑' k, 1 / (Nat.fib <| n k)) := by
   sorry
 
