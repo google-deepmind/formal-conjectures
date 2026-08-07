@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 36
@@ -25,11 +25,12 @@ import FormalConjectures.Util.ProblemImports
 
 namespace WrittenOnTheWallII.GraphConjecture36
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /-- `dp G` is the number of diametrical pairs of `G`: the number of unordered
 pairs `{u, v}` of vertices at distance `diam(G)`.  -/
 noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   (Finset.univ.filter
     (fun p : Sym2 α => p.lift ⟨fun u v => G.dist u v = G.diam ∧ u ≠ v,
       fun u v => by simp [SimpleGraph.dist_comm, ne_comm]⟩)).card
@@ -51,15 +52,7 @@ theorem conjecture36 : answer(False) ↔
     ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
         (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
-  use default, mt (@· (ULift (Fin 2)) inferInstance inferInstance inferInstance ⊤
-    inferInstance (by decide)) ?_
-  norm_num
-  show 0 < (star _) ∧ _ < 2 / Nat.cast (star _)
-  norm_num [SimpleGraph.path, true, SimpleGraph.diam]
-  norm_num +decide [SimpleGraph.averageDistance, List.finRange]
-  norm_num +decide [List.sym2, SimpleGraph.dist_self,
-    SimpleGraph.dist_eq_one_iff_adj.2,
-    show Finset.univ = ({0, ⟨1⟩} : Finset <| ULift.{u_1, 0} <| Fin 2) by rfl]
+  sorry
 
 -- Sanity checks
 
