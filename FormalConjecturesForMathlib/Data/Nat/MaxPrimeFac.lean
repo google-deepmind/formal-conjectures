@@ -24,46 +24,36 @@ namespace Nat
 
 /-- The greatest prime divisor of a natural number `n > 1`.
 
-Takes the junk value `0` for `n = 0` and `n = 1`.
-
-TODO Consider redefining this using the computable implementation:
-`n.primeFactorsList.getLastI`. -/
-noncomputable def maxPrimeFac (n : ℕ) : ℕ := sSup {p : ℕ | p.Prime ∧ p ∣ n}
+Takes the junk value `0` for `n = 0` and `n = 1`. -/
+def maxPrimeFac (n : ℕ) : ℕ := n.primeFactorsList.getLastI
 
 @[simp]
 lemma maxPrimeFac_zero :
     maxPrimeFac 0 = 0 := by
-  simpa [maxPrimeFac] using Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime
+  simp [maxPrimeFac, List.getLastI]
 
 @[simp]
 lemma maxPrimeFac_one :
     maxPrimeFac 1 = 0 := by
-  suffices {p : ℕ | p.Prime ∧ p = 1} = ∅ by simp [maxPrimeFac, this]
-  aesop
+  simp [maxPrimeFac, List.getLastI]
 
 lemma prime_maxPrimeFac_of_one_lt (n : ℕ) (h : 1 < n) :
     Prime (maxPrimeFac n) := by
-  set s := {p : ℕ | p.Prime ∧ p ∣ n} with hs
-  have hs₀ : s.Nonempty := by
-    simp only [Set.Nonempty, Set.mem_setOf_eq, ← ne_one_iff_exists_prime_dvd, hs]
-    omega
-  have hs₁ : BddAbove s := by
-    use n
-    simp only [hs, mem_upperBounds, Set.mem_setOf_eq, and_imp]
-    exact fun p _ hp ↦ Nat.le_of_dvd (zero_lt_of_lt h) hp
-  exact (Nat.sSup_mem hs₀ hs₁).1
+  have hn : n.primeFactorsList ≠ [] := (primeFactorsList_ne_nil n).2 h
+  have hmem : n.primeFactorsList.getLast hn ∈ n.primeFactorsList := List.getLast_mem hn
+  have hprime : Prime (n.primeFactorsList.getLast hn) := prime_of_mem_primeFactorsList hmem
+  simpa [maxPrimeFac, List.getLastI_eq_getLast?_getD,
+    List.getLast?_eq_getLast_of_ne_nil hn] using hprime
 
 lemma maxPrimeFac_eq_of_dvd_of_le
     (n p : ℕ) (hn : 0 < n) (hp : p.Prime) (h_dvd : p ∣ n) (h_le : maxPrimeFac n ≤ p) :
     maxPrimeFac n = p := by
   refine le_antisymm h_le ?_
-  replace hn : 1 < n := Nat.lt_of_lt_of_le hp.one_lt (Nat.le_of_dvd hn h_dvd)
-  set s := {p : ℕ | p.Prime ∧ p ∣ n} with hs
-  have hs₁ : BddAbove s := by
-    use n
-    simp only [hs, mem_upperBounds, Set.mem_setOf_eq, and_imp]
-    exact fun p _ hp ↦ Nat.le_of_dvd (zero_lt_of_lt hn) hp
-  exact ConditionallyCompleteLattice.le_csSup s p hs₁ ⟨hp, h_dvd⟩
+  have hmem : p ∈ n.primeFactorsList := (mem_primeFactorsList hn.ne').2 ⟨hp, h_dvd⟩
+  have hp_last : p ≤ n.primeFactorsList.getLast (List.ne_nil_of_mem hmem) :=
+    (primeFactorsList_sorted n).pairwise.rel_getLast hmem
+  simpa [maxPrimeFac, List.getLastI_eq_getLast?_getD,
+    List.getLast?_eq_getLast_of_ne_nil (List.ne_nil_of_mem hmem)] using hp_last
 
 @[simp]
 lemma one_lt_maxPrimeFac_iff (n : ℕ) :
