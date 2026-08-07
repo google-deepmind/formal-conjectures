@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Boxicity
@@ -59,7 +59,7 @@ An open related conjecture is whether the bound can be improved to
 
 namespace WrittenOnTheWallII.GraphBoxicity
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
