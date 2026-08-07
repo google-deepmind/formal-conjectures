@@ -27,3 +27,9 @@ variable {X : Type*} [MetricSpace X]
 /-- The number of pairs of points of a finite set `s` in a metric space that are distance 1 apart.
 -/
 noncomputable def unitDistNum (s : Finset X) : ℕ := #{p ∈ s.sym2 | dist p.out.1 p.out.2 = 1}
+
+/-- A set has pairwise distinct distances if equal distances between pairs of distinct points
+determine the same unordered pair. -/
+def PairwiseDistinctDistances (A : Set X) : Prop :=
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
+    x ≠ y → z ≠ w → dist x y = dist z w → (x = z ∧ y = w) ∨ (x = w ∧ y = z)
