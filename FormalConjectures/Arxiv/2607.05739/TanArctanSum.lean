@@ -22,10 +22,11 @@ import FormalConjecturesUtil
 *References:*
 - [arxiv/2607.05739](https://arxiv.org/abs/2607.05739)
   **Integer values of $\tan(\arctan 1+\arctan 2+\cdots+\arctan n)$ are rare** by *Ken Ono*
-- [AMM08] T. Amdeberhan, L. A. Medina, V. H. Moll, *Arithmetical properties of a sequence of
-  integers related to the arctangent function*. The Ramanujan Journal 16(2) (2008), 225-230.
+- [AMM08] T. Amdeberhan, L. A. Medina, and V. H. Moll, *Arithmetical properties of a sequence
+  arising from an arctangent sum*, J. Number Theory 128 (2008), no. 6, 1807-1846.
 - [TanArctan](https://github.com/AxiomMath/TanArctan), a Lean formalisation of the three
-  results of [Ono26], MIT licensed. Its , ,  and  are the definitions used here.
+  results of [Ono26], MIT licensed. Its `P`, `A`, `B` and `x` are the definitions used
+  here.
 -/
 
 open Finset
@@ -66,13 +67,13 @@ theorem tan_arctan_sum_not_integer :
 
 /-- $x_n$ satisfies $x_1 = 1$ and $x_n = \dfrac{x_{n-1} + n}{1 - n x_{n-1}}$, which is the
 tangent addition formula. -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem x_succ (n : ℕ) (hn : 1 ≤ n) :
     x (n + 1) = (x n + (n + 1)) / (1 - (n + 1) * x n) := by
   sorry
 
 /-- $x_n$ is the tangent of the partial sum of arctangents it is named for. -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem x_eq_tan_sum_arctan (n : ℕ) (hn : 1 ≤ n) :
     (x n : ℝ) = Real.tan (∑ k ∈ Finset.Icc 1 n, Real.arctan k) := by
   sorry
@@ -97,7 +98,7 @@ An integer value is divisible in a way that forces it to be large: if $x_n = m$ 
 $K_n \mid 1 + m^2$, and $|m| \geq \sqrt{K_n - 1}$ once $K_n > 1$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean#L176"]
 theorem kernel_dvd_of_eq_intCast {n : ℕ} (hn : 1 ≤ n) (hA : A n ≠ 0) {m : ℤ}
     (hx : x n = (m : ℚ)) :
     ((kernel n : ℤ) ∣ (1 + m ^ 2)) ∧
@@ -106,7 +107,7 @@ theorem kernel_dvd_of_eq_intCast {n : ℕ} (hn : 1 ≤ n) (hA : A n ≠ 0) {m : 
 
 /-- Every exceptional index sits close to a multiple of $\pi/2$ in angle. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean#L453"]
 theorem exists_near_half_pi {n : ℕ} (hn : n ∈ exceptional) :
     ∃ j : ℤ, |angleSum n - (j : ℝ) * (Real.pi / 2)| < 2 / (n : ℝ) := by
   sorry
@@ -114,7 +115,7 @@ theorem exists_near_half_pi {n : ℕ} (hn : n ∈ exceptional) :
 /-- The exceptional indices are sparse: $\#(E \cap [1,N]) = O(\log N)$. This is the sense in
 which integer values are rare, and it is what [Ono26] proves. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean#L975"]
 theorem exceptional_ncard_le : ∃ (C : ℝ) (N₀ : ℕ), 0 < C ∧ ∀ N : ℕ, N₀ ≤ N →
     ((exceptional ∩ Set.Icc 1 N).ncard : ℝ) ≤ C * Real.log N := by
   sorry
