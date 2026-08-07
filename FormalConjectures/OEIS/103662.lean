@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Smallest power with base>1 and exponent n whose decimal representation doesn't contain the digit 0
+# Smallest power with base>1 and exponent $n$ whose decimal representation doesn't contain the digit 0
 
 For statistical reasons it is conjectured that the sequence is finite.
 Also it is conjectured that $a(40)$ does not exist (i.e. the sequence is empty for $n=40$).

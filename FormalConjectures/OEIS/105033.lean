@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Sloping binary numbers: read array of binary numbers (right-justified) along diagonals of slope -1
+# Sloping binary numbers: read array of binary numbers (right-justified) along diagonals of slope $-1$
 
 *References:*
 - [A105033](https://oeis.org/A105033)
