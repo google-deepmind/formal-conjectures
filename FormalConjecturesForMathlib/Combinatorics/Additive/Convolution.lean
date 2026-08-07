@@ -41,7 +41,7 @@ This file defines the sum (`∗`) convolution of functions `ℕ → R`.
 
 namespace AdditiveCombinatorics
 
-open Finset Classical Set
+open Finset Set
 
 variable {R : Type*} [Semiring R]
 
@@ -55,7 +55,7 @@ infixl:70 " ∗ " => sumConv
 function with itself: $1_A\ast 1_A(n)$. -/
 noncomputable def sumRep (A : Set ℕ) : ℕ → ℕ := (𝟙_A ∗ 𝟙_A)
 
-
+open scoped Classical in
 @[simp]
 lemma sumRep_def (A : Set ℕ) (n : ℕ) :
     sumRep A n = ((antidiagonal n).filter (fun (p : ℕ × ℕ) ↦ p.1 ∈ A ∧ p.2 ∈ A)).card := by
