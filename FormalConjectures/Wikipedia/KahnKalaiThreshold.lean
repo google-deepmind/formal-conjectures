@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # The Kahn–Kalai threshold conjecture (Kahn–Kalai 2007, proved Park–Pham 2022)
@@ -27,7 +27,7 @@ import FormalConjectures.Util.ProblemImports
   Math. Soc.* 37, pp. 235--243.
 -/
 
-open Classical Finset
+open Finset
 
 namespace KahnKalai
 
@@ -51,7 +51,7 @@ i.e. the probability of `F` under the `Bernoulli(p)` product measure on `2^X`. -
 as a measure-theoretic integral. -/
 noncomputable def familyMeasure (F : Set (Finset X)) (p : ℝ) : ℝ :=
   ∑ A ∈ (Finset.univ : Finset X).powerset,
-    (if A ∈ F then (1 : ℝ) else 0) *
+    F.indicator (fun _ => (1 : ℝ)) A *
       p ^ A.card * (1 - p) ^ (Fintype.card X - A.card)
 
 /-- The **probability threshold** `p_c(F)` of a monotone family `F`: the infimum of `p ∈ [0,1]`
@@ -76,6 +76,7 @@ happen to lie inside the random subset equals
 independently over the $|A|$ mandatory vertices; sum of indicator expectations over a finite
 set is the finite sum.) -/
 noncomputable def expectedMinimalCount (F : Set (Finset X)) (q : ℝ) : ℝ :=
+  letI : DecidablePred fun A : Finset X => Minimal (· ∈ F) A := Classical.decPred _
   ∑ A ∈ (Finset.univ : Finset X).powerset.filter (fun A => Minimal (· ∈ F) A),
     q ^ A.card
 
@@ -83,6 +84,7 @@ noncomputable def expectedMinimalCount (F : Set (Finset X)) (q : ℝ) : ℝ :=
 $\ell(F)$ appearing in the sharp Kahn–Kalai bound $p_c \le K \cdot q_c \cdot \log \ell(F)$.
 Returns `0` if $F$ has no minimal elements (e.g. $F$ is empty). -/
 noncomputable def largestMinimalSize (F : Set (Finset X)) : ℕ :=
+  letI : DecidablePred fun A : Finset X => Minimal (· ∈ F) A := Classical.decPred _
   ((Finset.univ : Finset X).powerset.filter (fun A => Minimal (· ∈ F) A)).sup Finset.card
 
 /-- The **expectation threshold** `q_c(F)`: the infimum of `q ∈ [0,1]` such that the expected
