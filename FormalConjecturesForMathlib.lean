@@ -91,7 +91,6 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistan
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
-public import FormalConjecturesForMathlib.Computability.ComplexityTheory
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Encoding
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers

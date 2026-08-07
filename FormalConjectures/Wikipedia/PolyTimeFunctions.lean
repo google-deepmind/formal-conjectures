@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import FormalConjectures.Millenium.PvsNP
 import FormalConjecturesUtil
 
 /-!
 # Polynomial-time computability of factoring
 
-This file formalizes the open problem of whether integer factorization can be computed in polynomial time on a deterministic classical Turing machine.
+This file formalizes the open problem of whether integer factorization can be computed in
+polynomial time on a deterministic classical Turing machine.
 
-More precisely, it formalizes the follwoing statement:
+More precisely, it formalizes the following statement:
 Can the prime factorization of a natural number be computed in polynomial time
 (on a deterministic classical Turing machine)?
 
