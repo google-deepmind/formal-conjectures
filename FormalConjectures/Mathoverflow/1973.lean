@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Manifold
+import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 1973
@@ -26,7 +24,7 @@ Does the 6-sphere $S^6$ admit the structure of a complex manifold?
 *Reference:* [mathoverflow/1973](https://mathoverflow.net/questions/1973/)
 asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ramos)
 -/
-
+open scoped Manifold
 namespace Mathoverflow1973
 
 /-- The unit `n`-sphere, defined as `Metric.sphere 0 1` in `EuclideanSpace ℝ (Fin (n + 1))`. -/

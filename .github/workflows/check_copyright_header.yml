@@ -20,12 +20,15 @@ on:
 jobs:
   check-copyright:
     runs-on: ubuntu-latest
+    # The check only reads the working tree; it makes no API calls.
+    permissions:
+      contents: read
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v6
+      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
     - name: Run copyright check script
-      uses: actions/github-script@v8
+      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
       with:
         script: |
           const script = require('./scripts/check_copyright_header.js')

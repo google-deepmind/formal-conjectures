@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -49,9 +49,8 @@ open Module (finrank)
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-instance {K} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
-    [AddCommMonoid E⟮K⟯] [Module ℤ E⟮K⟯] :
-      Module.Finite ℤ E⟮K⟯ := by
+instance {K} [Field K] [NumberField K] [DecidableEq K] (E : WeierstrassCurve K) [E.IsElliptic] :
+    Module.Finite ℤ E⟮K⟯ := by
   sorry
 
 namespace RatEllipticCurve
@@ -81,7 +80,7 @@ open Filter (atTop)
 
 /-- Formula (5.1.1) of [PPVW2016]: The number of elliptic curves over ℚ with naïve height at most
 `H` is asymptotically `2^(4/3)*3^(-3/2)/ζ(10) * H^(5/6)`. -/
-@[category graduate, AMS 11 14]
+@[category textbook, AMS 11 14]
 theorem card_heightLE_div_pow_five_div_six_tensto :
     atTop.Tendsto (fun H ↦ (heightLE H).ncard / (H : ℝ) ^ (5 / 6 : ℝ))
       (𝓝 (2 ^ (4 / 3 : ℝ) * 3 ^ (-3 / 2 : ℝ) / (riemannZeta 10).re)) := by
@@ -183,10 +182,12 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
 instance : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
+/-- The rank of the Elkies-Klagsbrun curve is at least 29. -/
 @[category research solved, AMS 11 14]
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
   sorry
 
+/-- The rank of the Elkies-Klagsbrun curve is exactly 29. -/
 @[category research open, AMS 11 14]
 theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ = 29 := by
   sorry
@@ -212,10 +213,12 @@ theorem Δ_elkies28 : elkies28.Δ =
 instance : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
+/-- The rank of the Elkies curve is at least 28. -/
 @[category research solved, AMS 11 14]
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
   sorry
 
+/-- The rank of the Elkies curve is exactly 28. -/
 @[category research open, AMS 11 14]
 theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
   sorry

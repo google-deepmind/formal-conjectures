@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 
 /-!
@@ -36,6 +36,8 @@ The conjecture has been proven for:
   [Critical points and values of complex polynomials](https://doi.org/10.1016/0885-064X(89)90019-8)
   by *David Tischler*
 -/
+
+namespace MeanValueProblem
 
 /--
 Given a complex polynomial $p$ of degree $d ≥ 2$ and a complex number $z$
@@ -83,3 +85,5 @@ lemma mean_value_problem_of_roots_same_norm (p : Polynomial ℂ) (hp : 2 ≤ p.n
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
       ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ := by
   sorry
+
+end MeanValueProblem

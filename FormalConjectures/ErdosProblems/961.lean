@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 961
@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos961
 
@@ -51,6 +51,7 @@ theorem erdos_961.variants.sylvester_schur_1_1 : Erdos961Prop 1 1 := by
     obtain ⟨p, hp, hpm⟩ := Nat.exists_prime_and_dvd (by omega : m ≠ 1)
     exact ⟨p, (Nat.mem_primeFactorsList hm0).mpr ⟨hp, hpm⟩, hp.two_le⟩
 
+/-- There exists $n$ such that `Erdos961Prop k n` holds. -/
 @[category research solved, AMS 11]
 theorem erdos_961.variants.well_defined (k : ℕ) (hk : 0 < k): ∃ n, Erdos961Prop k n := by
   use k
@@ -61,6 +62,7 @@ For $k$, let $f(k)$ be the minimal $n$ such that every set of $n$ consecutive in
 an integer divisible by a prime $>k$, i.e. not $(k+1)$-smooth.
 -/
 noncomputable def f (k : ℕ) : ℕ :=
+  open scoped Classical in
   if hk : 0 < k then Nat.find (erdos_961.variants.well_defined k hk) else 0
 
 /--
