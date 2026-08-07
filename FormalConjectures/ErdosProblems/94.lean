@@ -33,16 +33,6 @@ open Filter EuclideanGeometry
 
 namespace Erdos94
 
-/-- The set of distances $\{u_1,\ldots,u_t\}$ determined by a finite set of points in
-$\mathbb{R}^2$. -/
-noncomputable def distanceSet (P : Finset ℝ²) : Finset ℝ :=
-  P.offDiag.image fun p => dist p.1 p.2
-
-/-- The number $f(u)$ of unordered pairs of distinct points of $P$ which are at distance $u$
-apart. -/
-noncomputable def distanceMultiplicity (P : Finset ℝ²) (u : ℝ) : ℕ :=
-  (P.offDiag.filter (fun p => dist p.1 p.2 = u)).card / 2
-
 /-- The regular $n$-gon inscribed in the unit circle. -/
 noncomputable def regularNGon (n : ℕ) : Finset ℝ² :=
   (Finset.range n).image fun k : ℕ =>
