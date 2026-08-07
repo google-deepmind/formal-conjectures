@@ -24,6 +24,8 @@ import FormalConjecturesUtil
   **Integer values of $\tan(\arctan 1+\arctan 2+\cdots+\arctan n)$ are rare** by *Ken Ono*
 - [AMM08] T. Amdeberhan, L. A. Medina, V. H. Moll, *Arithmetical properties of a sequence of
   integers related to the arctangent function*. The Ramanujan Journal 16(2) (2008), 225-230.
+- [TanArctan](https://github.com/AxiomMath/TanArctan), a Lean formalisation of the three
+  results of [Ono26], MIT licensed. Its , ,  and  are the definitions used here.
 -/
 
 open Finset
@@ -73,6 +75,48 @@ theorem x_succ (n : ℕ) (hn : 1 ≤ n) :
 @[category research solved, AMS 11]
 theorem x_eq_tan_sum_arctan (n : ℕ) (hn : 1 ≤ n) :
     (x n : ℝ) = Real.tan (∑ k ∈ Finset.Icc 1 n, Real.arctan k) := by
+  sorry
+
+/-- $\omega_n = A_n^2 + B_n^2 = \prod_{k=1}^n (1 + k^2)$, the norm of $Z_n$. -/
+def omega (n : ℕ) : ℕ := (A n).natAbs ^ 2 + (B n).natAbs ^ 2
+
+/-- The squarefree kernel $K_n$ of $\omega_n$: the product of the primes dividing it to an
+odd power, so `1` when there are none. -/
+def kernel (n : ℕ) : ℕ :=
+  ∏ p ∈ (omega n).primeFactors.filter (fun p => Odd ((omega n).factorization p)), p
+
+/-- $a_n = \sum_{k=1}^n \arctan(1/k)$. -/
+noncomputable def angleSum (n : ℕ) : ℝ := ∑ k ∈ Finset.Icc 1 n, Real.arctan (1 / (k : ℝ))
+
+/-- The exceptional set $E = \{n \geq 5 : |x_n| > n/2 + 1\}$. An index with $A_n = 0$ is a
+pole of the tangent rather than a large value, and is counted in, reading $|x_n|$ as infinite. -/
+def exceptional : Set ℕ := {n | 5 ≤ n ∧ (A n = 0 ∨ ((n : ℚ) / 2 + 1 < |x n|))}
+
+/--
+An integer value is divisible in a way that forces it to be large: if $x_n = m$ then
+$K_n \mid 1 + m^2$, and $|m| \geq \sqrt{K_n - 1}$ once $K_n > 1$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+theorem kernel_dvd_of_eq_intCast {n : ℕ} (hn : 1 ≤ n) (hA : A n ≠ 0) {m : ℤ}
+    (hx : x n = (m : ℚ)) :
+    ((kernel n : ℤ) ∣ (1 + m ^ 2)) ∧
+      (1 < kernel n → Real.sqrt ((kernel n : ℝ) - 1) ≤ |(m : ℝ)|) := by
+  sorry
+
+/-- Every exceptional index sits close to a multiple of $\pi/2$ in angle. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+theorem exists_near_half_pi {n : ℕ} (hn : n ∈ exceptional) :
+    ∃ j : ℤ, |angleSum n - (j : ℝ) * (Real.pi / 2)| < 2 / (n : ℝ) := by
+  sorry
+
+/-- The exceptional indices are sparse: $\#(E \cap [1,N]) = O(\log N)$. This is the sense in
+which integer values are rare, and it is what [Ono26] proves. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean"]
+theorem exceptional_ncard_le : ∃ (C : ℝ) (N₀ : ℕ), 0 < C ∧ ∀ N : ℕ, N₀ ≤ N →
+    ((exceptional ∩ Set.Icc 1 N).ncard : ℝ) ≤ C * Real.log N := by
   sorry
 
 /-- The four integer values the conjecture leaves out. -/
