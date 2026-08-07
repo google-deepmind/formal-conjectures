@@ -38,7 +38,7 @@ pattern of Conjectures 23/24/25.
 
 namespace WrittenOnTheWallII.GraphConjecture63
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

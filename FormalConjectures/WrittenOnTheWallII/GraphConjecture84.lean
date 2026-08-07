@@ -33,7 +33,7 @@ HTML, rendered as `<font face="Symbol">d</font>`), not the average distance.
 
 namespace WrittenOnTheWallII.GraphConjecture84
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

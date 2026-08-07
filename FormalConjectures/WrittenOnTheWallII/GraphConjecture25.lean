@@ -34,7 +34,7 @@ counterexample as in #24"). Following the upstream pattern established in
 
 namespace WrittenOnTheWallII.GraphConjecture25
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /--
 WOWII [Conjecture 25](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25)

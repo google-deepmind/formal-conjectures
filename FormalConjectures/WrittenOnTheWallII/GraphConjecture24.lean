@@ -34,7 +34,7 @@ we record the disproof using `answer(False) ↔ ...`.
 
 namespace WrittenOnTheWallII.GraphConjecture24
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /--
 WOWII [Conjecture 24](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24)
