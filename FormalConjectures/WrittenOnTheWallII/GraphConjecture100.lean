@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 100
@@ -51,7 +51,7 @@ so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
 
 namespace WrittenOnTheWallII.GraphConjecture100
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -76,8 +76,7 @@ docstring above.
 theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hGc : Gᶜ.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
-    let diamCompl := Gᶜ.ediam.toNat
-    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (diamCompl : ℝ)) / 2⌉ := by
+    (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (degreeL2Norm Gᶜ : ℝ)) / 2⌉ := by
   sorry
 
 -- Sanity checks

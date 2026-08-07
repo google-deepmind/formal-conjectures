@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Wolstenholme Prime
@@ -52,11 +52,15 @@ Formal proof linked here provided by AlphaProof
 @[category test, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/d833ed31d82693f10bed7a4c9ac329545b556a03/FormalConjectures/Wikipedia/WolstenholmePrime.lean#L73"]
 theorem wolstenholme_prime_16483 : IsWolstenholmePrime 16843 := by
-  sorry
+  unfold IsWolstenholmePrime Nat.ModEq
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  native_decide
 
 @[category test, AMS 11]
 theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
-  sorry
+  unfold IsWolstenholmePrime Nat.ModEq
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  native_decide
 
 /--
 Equivalently, a prime $p > 7$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.

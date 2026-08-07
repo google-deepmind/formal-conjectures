@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures around homogeneous topological spaces
@@ -51,21 +51,21 @@ instance DiscreteTopology.toHomogeneousSpace (X : Type*) [TopologicalSpace X] [D
     rw [IsHomeomorph.homeomorph_apply, Equiv.swap_apply_left]
 
 /-- Problem 13 in [Ar2013]:
-Is it true that every infinite homogeneous compact
+Is it true that every infinite homogeneous compact hausdorff
 space contains a non-trivial convergent sequence? -/
 @[category research open, AMS 54]
 theorem homogeneousSpace_exists_inj_tendsto :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), ¬ Finite X → CompactSpace X →
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), ¬ Finite X → T2Space X → CompactSpace X →
       HomogeneousSpace X → ∃ s : ℕ → X, s.Injective ∧ ∃ a : X, Tendsto s atTop (nhds a) := by
   sorry
 
 /-- Problem 14 in [Ar2013]:
-Is it possible to represent an arbitrary compact space as an image
+Is it possible to represent an arbitrary compact hausdorff space as an image
 of a homogeneous compact space under a continuous mapping? -/
 @[category research open, AMS 54]
 theorem homogeneousSpace_exists_surjective :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X →
-      ∃ (Y : Type) (_ : TopologicalSpace Y), CompactSpace Y ∧ HomogeneousSpace Y ∧
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+      ∃ (Y : Type) (_ : TopologicalSpace Y), T2Space Y ∧ CompactSpace Y ∧ HomogeneousSpace Y ∧
         ∃ f : Y → X, Continuous f ∧ f.Surjective := by
   sorry
 
@@ -83,31 +83,31 @@ instance MetrizableSpace.countablyMonolithicSpace
   infer_instance
 
 /-- Problem 15 in [Ar2013]:
-Is every homogeneous ω-monolithic compact space first countable? -/
+Is every homogeneous ω-monolithic compact hausdorff space first countable? -/
 @[category research open, AMS 54]
 theorem firstCountableTopology_of_countablyMonolithicSpace :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
-      CountablyMonolithicSpace X → FirstCountableTopology X := by
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+      HomogeneousSpace X → CountablyMonolithicSpace X → FirstCountableTopology X := by
   sorry
 
 /-- Problem 16 in [Ar2013]:
-Is the cardinality of every homogeneous ω-monolithic compact space not greater than 𝔠? -/
+Is the cardinality of every homogeneous ω-monolithic compact hausdorff space not greater than 𝔠? -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_card_lt :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X → HomogeneousSpace X →
-      CountablyMonolithicSpace X → #X ≤ 𝔠 := by
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+      HomogeneousSpace X → CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
 /-- Problem 17 in [Ar2013]:
-Is it true that every nonempty ω-monolithic compact space contains a point with a
+Is it true that every nonempty ω-monolithic compact hausdorff space contains a point with a
 first countable neighborhood basis?
 
 Note: `Nonempty X` is required since the conclusion asserts the existence of a point.
 -/
 @[category research open, AMS 54]
 theorem countablyMonolithicSpace_exists_nhds_generated_countable :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), CompactSpace X → Nonempty X →
-      CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+      Nonempty X → CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 
 end Homogeneous
