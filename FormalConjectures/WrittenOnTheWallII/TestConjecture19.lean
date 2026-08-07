@@ -18,6 +18,14 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture19
 import Mathlib.Combinatorics.SimpleGraph.Coloring
 import Mathlib.Combinatorics.SimpleGraph.Bipartite
 
+/-!
+# Written on the Wall II - Conjecture 19: verification for `K₃`
+
+This file verifies WOWII Conjecture 19 on the concrete graph `K₃`
+(the complete graph on three vertices), computing both sides of the
+conjectured inequality explicitly.
+-/
+
 open SimpleGraph
 
 namespace WrittenOnTheWallII.GraphConjecture19
@@ -46,7 +54,7 @@ lemma K3_b : b K3 = 2 := by
       have h_bip : K3.IsBipartite := by
         have h_iso : K3.induce (Set.univ : Set (Fin 3)) ≃g K3 := SimpleGraph.induceUnivIso K3
         rw [← Finset.coe_univ] at h_iso
-        exact hs.1.of_embedding h_iso.symm.toEmbedding
+        exact hs.1.of_hom h_iso.symm.toHom
       have h_not_bip : ¬ K3.IsBipartite := by
         dsimp [SimpleGraph.IsBipartite]
         rw [← SimpleGraph.chromaticNumber_le_iff_colorable]
@@ -152,7 +160,6 @@ lemma K3_indepNeighbors (v : Fin 3) : indepNeighbors K3 v = 1 := by
   have h_induced : K3.induce (K3.neighborSet v) = completeGraph (K3.neighborSet v) := by
     ext a b
     simp [K3, completeGraph]
-    simp [Subtype.coe_ne_coe]
   dsimp [indepNeighborsCard]
   rw [h_induced]
   haveI : Nonempty (K3.neighborSet v) := by
@@ -163,12 +170,13 @@ lemma K3_indepNeighbors (v : Fin 3) : indepNeighbors K3 v = 1 := by
   norm_cast
 
 theorem K3_not_counterexample :
-    FLOOR ((∑ v ∈ Finset.univ, ecc K3 {v}) / (Fintype.card (Fin 3) : ℝ) + sSup (Set.range (fun (v : Fin 3) => indepNeighbors K3 v)))
-      ≤ b K3 := by
-  rw [K3_b]
-  have h_ecc : ∀ v, ecc K3 {v} = 1 := K3_ecc
+    ⌊(∑ v ∈ Finset.univ, ((K3.eccent v).toNat : ℝ)) / (Fintype.card (Fin 3) : ℝ) +
+      sSup (Set.range (indepNeighbors K3))⌋ ≤ b K3 := by
+  have h_ecc : ∀ v : Fin 3, K3.eccent v = 1 := fun v => by
+    rw [K3, completeGraph_eq_top]
+    exact SimpleGraph.eccent_top v
+  have h_range : Set.range (indepNeighbors K3) = {1} := by
+    ext x
+    simp [K3_indepNeighbors, eq_comm]
+  rw [K3_b, h_range]
   simp [h_ecc]
-  have h_indep : ∀ v, indepNeighbors K3 v = 1 := K3_indepNeighbors
-  simp [h_indep]
-  rw [FLOOR]
-  norm_num
