@@ -1,6 +1,7 @@
 # Formal Conjectures
 
 [![.github/workflows/push_master.yml](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.13171-b31b1b.svg)](https://arxiv.org/abs/2605.13171)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/google-deepmind/formal-conjectures)
 
 A collection of formalised statements of conjectures in
@@ -58,9 +59,9 @@ lake build
 The directory structure is organised by the type of sources of the conjectures.
 There are two special directories:
 
--   `FormalConjectures/Util` contains utilities like the
-    [`category` attribute](./FormalConjectures/Util/Attributes/Basic.lean), the
-    [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
+-   `FormalConjecturesUtil` contains utilities like the
+    [`category` attribute](./FormalConjecturesUtil/Attributes/Basic.lean), the
+    [`answer( )` elaborator](./FormalConjecturesUtil/Answer.lean) and some
     linters.
 -   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
@@ -95,6 +96,26 @@ Stable benchmark snapshots are tagged using the format
 
 Tags are immutable: fixes to misformalizations are never patched into an existing
 benchmark version but instead go into `v{N+1}`.
+
+## Citing formal-conjectures
+If your work has used formal-conjectures, please consider citing it via
+```
+@misc{FormalConjectures,
+  author       = {{The Formal Conjectures Authors}}
+  title        = {{T}he {F}ormal {C}onjectures {R}epository},
+  year         = {2025},
+  url          = {https://github.com/google-deepmind/formal-conjectures},
+}
+
+@article{FormalConjecturesPaper,
+  authors = {Firsching, Moritz and Lezeau, Paul and Mercuri, Salvatore
+    and Horv{\'a}th, Mikl{\'o}s Z and Dillies, Ya{\"e}l and S{\"o}nne, Calle and Wieser, Eric and
+    Zhang, Fred and Hubert, Thomas and Ag{\"u}era y Arcas, Blaise and Kohli, Pushmeet},
+  title = {{F}ormal {C}onjectures: {A}n {O}pen and {E}volving {B}enchmark for {V}erified {D}iscovery in {M}athematics},
+  year = {2026},
+  url = {https://arxiv.org/abs/2605.13171v1},
+}
+```
 
 ## Licensing
 

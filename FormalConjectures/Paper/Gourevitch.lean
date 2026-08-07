@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Gourevitch's series identity
@@ -26,10 +26,10 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 namespace Gourevitch
-  
+
 
 /-- The Gourevitch series identity:
-The following idenitity holds:
+The following identity holds:
 $\sum_{n=0}^{\infty} \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7 = \frac{32}{\pi^3}.$
 This was originally conjectured in [G2003] by Guillera and proven in [A2025] by Au.
 -/
