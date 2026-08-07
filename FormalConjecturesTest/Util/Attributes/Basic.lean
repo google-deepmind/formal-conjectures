@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Attributes.Basic
+public meta import FormalConjecturesUtil.Attributes.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.NumberTheory.FLT.Basic
 public import Mathlib.RingTheory.Algebraic.Defs
@@ -198,6 +198,7 @@ info: 0 General and overarching topics
 92 Biology and other natural sciences
 93 Systems theory; control
 94 Information and communication, circuits
+97 Mathematics education
 -/
 #guard_msgs in
 #AMS
