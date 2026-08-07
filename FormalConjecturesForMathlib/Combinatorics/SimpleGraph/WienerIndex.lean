@@ -20,7 +20,6 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistan
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
