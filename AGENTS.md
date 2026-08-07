@@ -27,7 +27,7 @@ Quote it. The guillemets in a numbered file are part of the module name.
 ```bash
 lake --wfail build FormalConjecturesForMathlib   # if you changed a shared definition
 lake --wfail test                                # if you changed anything under FormalConjecturesUtil
-lake --wfail build                               # over an hour; leave it to CI
+lake --wfail build                               # ~25 min warm; leave it to CI
 ```
 
 `--wfail` turns warnings into failures, which is how CI runs. Two that catch people out:
