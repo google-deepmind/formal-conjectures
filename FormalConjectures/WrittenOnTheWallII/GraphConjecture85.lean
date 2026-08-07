@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 85
@@ -24,9 +24,16 @@ import FormalConjectures.Util.ProblemImports
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj85
 
+This conjecture is **false**: Kuber Mehta found the counterexample `G = C₅[K₄]`
+(the 5-cycle with each vertex replaced by a `K₄`, consecutive cliques completely
+joined), for which `tree(G) = 4` while the conjectured lower bound is
+`⌈√(1 + 2·9)⌉ = 5`. The same graph also refutes WOWII Conjecture 63. We
+therefore record the statement as disproved, using the `answer(False) ↔ ...`
+pattern of Conjectures 23/24/25.
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [Counterexample certificates for WOWII 63 and 85 (Kuber Mehta)](https://github.com/Kuberwastaken/wowii-63-85-counterexample)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture85
@@ -35,22 +42,25 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- `largestInducedTreeSize G` is the number of vertices in a largest induced subtree of `G`. -/
-noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
-
 /--
 WOWII [Conjecture 85](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+(disproved, 2026):
 
 For a simple connected graph `G`,
 `tree(G) ≥ ⌈√(1 + 2 · min_v distEven(v))⌉`
 where `tree(G)` is the number of vertices in a largest induced tree and
 `distEven(v)` is the number of vertices at even distance from `v`.
+
+Disproved by the counterexample `C₅[K₄]` (Kuber Mehta, 2026): there
+`tree(G) = 4 < 5 = ⌈√19⌉`. More generally, in `C₅[K_m]` every induced tree has
+at most 4 vertices while the right-hand side grows like `2√m`.
 -/
-@[category research open, AMS 5]
-theorem conjecture85 (G : SimpleGraph α) (h : G.Connected) :
-    let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
-    ⌈Real.sqrt (1 + 2 * (minDistEven : ℝ))⌉ ≤ (largestInducedTreeSize G : ℝ) := by
+@[category research solved, AMS 5]
+theorem conjecture85 : answer(False) ↔
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) (_ : G.Connected),
+        let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
+        ⌈Real.sqrt (1 + 2 * (minDistEven : ℝ))⌉ ≤ (G.largestInducedTreeSize : ℝ) := by
   sorry
 
 -- Sanity checks

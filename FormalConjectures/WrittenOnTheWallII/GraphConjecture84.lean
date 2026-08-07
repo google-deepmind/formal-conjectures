@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 84
@@ -36,10 +36,6 @@ namespace WrittenOnTheWallII.GraphConjecture84
 open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- `largestInducedTreeSize G` is the number of vertices in a largest induced subtree of `G`. -/
-noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
 
 /--
 WOWII [Conjecture 84](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj84)
