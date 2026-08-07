@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős 1959: graphs of large chromatic number and large girth
@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 * [AlSp16] Alon, N. and Spencer, J. (2016). *The Probabilistic Method* (4th ed.), §3.3.
 -/
 
-open Classical SimpleGraph
+open SimpleGraph
 
 namespace ErdosHighChromaticHighGirth
 
