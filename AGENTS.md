@@ -7,6 +7,13 @@ says, and almost every problem is `sorry`.
 [CONTRIBUTING.md](CONTRIBUTING.md) is the reference for conventions, folders, and the
 attributes. This file is what an agent needs on top of it.
 
+For the shape of a file, copy one rather than a template. *File structure conventions* in
+CONTRIBUTING gives the skeleton, and
+[`FormalConjectures/ErdosProblems/13.lean`](FormalConjectures/ErdosProblems/13.lean) is 62
+lines showing the rest: a definition with its docstring, a `research solved` headline citing
+its source, and a `research open` variant using `answer(sorry)`. A file in the repository
+cannot drift away from the repository.
+
 ## Commands
 
 Build the module you touched, not the project:
