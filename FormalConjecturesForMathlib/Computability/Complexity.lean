@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Computability.Encoding
+public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import Mathlib.Computability.TMComputable
 
 @[expose] public section
