@@ -17,8 +17,6 @@ import subprocess
 import sys
 import urllib.request
 
-import yaml
-
 YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
 )
@@ -62,6 +60,10 @@ FORMALLY_SOLVED_STATES = {
 
 
 def fetch_yaml():
+    # Imported here rather than at the top so the module can be imported without pyyaml,
+    # which the tests do and the script-test CI job does not install.
+    import yaml
+
     with urllib.request.urlopen(YAML_URL) as resp:
         return yaml.safe_load(resp.read())
 
