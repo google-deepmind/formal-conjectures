@@ -43,7 +43,7 @@ here.
   on Erdős's Discrepancy Threshold N(k,2).
   [Zenodo](https://doi.org/10.5281/zenodo.20763838).
 - [Ly26] Lystad, T. A. Erdős Problem 176 — exact small values of the discrepancy
-  threshold N(k,2) with machine-checkable DRAT certificates (v1.2: N(15,2) = 225).
+  threshold N(k,2) with machine-checkable DRAT certificates (v1.3: split packaging).
   [Zenodo](https://doi.org/10.5281/zenodo.21739846) (concept DOI; resolves to the
   latest version).
 -/
