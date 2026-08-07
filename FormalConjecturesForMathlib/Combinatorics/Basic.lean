@@ -27,10 +27,20 @@ open scoped Pointwise
 variable {α : Type*} [AddCommMonoid α]
 
 /--
+A set $S$ is said to be product-free if the product set $S \cdot S$ is disjoint from $S$,
+i.e. if the equation $x \cdot y = z$ has no solution with $x, y, z \in S$.
+-/
+@[to_additive IsSumFree /--
 A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
 if the equation $a + b = c$ has no solution with $a, b, c \in A$.
--/
-def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
+-/]
+def IsProductFree {M : Type*} [Mul M] (S : Set M) : Prop := Disjoint (S * S) S
+
+@[to_additive isSumFree_iff]
+theorem isProductFree_iff {M : Type*} [Mul M] {S : Set M} :
+    IsProductFree S ↔ ∀ x ∈ S, ∀ y ∈ S, x * y ∉ S := by
+  simp [IsProductFree, Set.disjoint_left, Set.mem_mul]
+  aesop
 
 /--
 `allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
@@ -181,5 +191,41 @@ theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon
   · split_ifs with hs
     · exact insert_ge_max' h hA hs
     · exact insert_ge_max' h hA le_rfl
+
+/-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
+such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
+the lower bound is required to avoid `0` being a contender in some cases. -/
+def greedySidon.go (A : Finset ℕ) (hA : IsSidon (A : Set ℕ)) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ)} :=
+  if h : A.Nonempty then
+    have : ∃ m', m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ) := by
+      simpa [and_assoc] using Finset.IsSidon.exists_insert_ge h hA m
+    ⟨Nat.find this, Nat.find_spec this⟩
+  else ⟨m, by simp_all [IsSidon]⟩
+
+/-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
+finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
+the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
+called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
+number. -/
+def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon (A : Set ℕ)} × ℕ) :=
+  match n with
+  | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
+  | k + 1 =>
+    let (A, s) := greedySidon.aux k
+    let s := if h : A.1.Nonempty then A.1.max' h + 1 else s
+    let s' := greedySidon.go A.1 A.2 s
+    (⟨A.1 ∪ {s'.1}, s'.2.2.2⟩, s'.1)
+
+/-- `greedySidon` is the sequence obtained by the initial set $\{1\}$ and iteratively obtaining
+the next smallest integer that preserves the Sidon property of the set. This gives the
+sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
+def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
+
+/-- The greedy Sidon set in `{1, …, N}`: starting from `∅`, iterate through `1, …, N` and
+include `x` if and only if `A ∪ {x}` remains Sidon.
+Alternatively, this is precisely the set of elements in the greedy Sidon sequence that are `≤ N`. -/
+def greedySidonBelow (N : ℕ) : Finset ℕ :=
+  (greedySidon.aux N).1.1.filter (· ≤ N)
 
 end Finset

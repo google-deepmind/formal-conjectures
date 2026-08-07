@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjecture 19.25
@@ -37,6 +37,7 @@ $H$ necessarily simple?
 @[category research open, AMS 20]
 theorem kourovka.«19.25» : answer(sorry) ↔
     ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
+       Fintype.card G = Fintype.card H →
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →
        IsSimpleGroup G → IsSimpleGroup H := by
   sorry

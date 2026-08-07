@@ -20,7 +20,6 @@ public import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
