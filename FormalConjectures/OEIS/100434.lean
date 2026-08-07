@@ -19,7 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Expansion of g.f. $(1+x)(3+x)/(1+6x^2+x^4)$
 
-A100434 is the expansion of the generating function $(1+x)(3+x)/(1+6x^2+x^4)$.
 This sequence is defined by the linear recurrence relation $a(n) = -6 a(n-2) - a(n-4)$ for $n \ge 4$,
 with initial values $a(0)=3$, $a(1)=4$, $a(2)=-17$, $a(3)=-24$.
 
