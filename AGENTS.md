@@ -73,6 +73,37 @@ The same applies to a proof you cite with `formal_proof`. Read the file for `sor
 are claiming. A repository saying it proves a conjecture may prove something weaker, and the
 statement is often the same theorem under a different name.
 
+## Checking your own work
+
+Each of these has produced a wrong claim in this repository, and each is cheap to avoid.
+
+**Read what matched, not how many.** Searching the site for `coprime` returned four results,
+which looked like the search covering statement text. All four matched the theorem *name*.
+A count tells you nothing about why something matched.
+
+**`grep sorry` hits prose.** A file whose only two `sorry` matches were inside a comment
+describing a plan was nearly written off as incomplete. Use `#print axioms` to decide, and
+grep only to find where to look.
+
+**Check the data before describing it.** "The statements are already in `conjectures.json`"
+was wrong: `extract_names` is run with `--exclude=statement`, so they are not. Open the file.
+
+**Measure at the right moment.** An environment probe run from a later command says nothing
+about what an attribute saw while elaborating, because the declaration is rewound in between.
+If a claim is about when something happens, instrument that point.
+
+**A no-op edit looks like a successful one.** A `str.replace` whose pattern no longer matches
+changes nothing and reports nothing; so does a `PATCH` that writes back identical content.
+Assert that the edit landed, and re-read the file rather than the exit code.
+
+**Shell quoting eats Lean source silently.** An unquoted heredoc expanded `` `A` `` and `$K_n`
+in docstrings to nothing. The file still compiled, so only a reader noticed. Quote the
+delimiter, and reread any docstring a script wrote.
+
+**Dry-run anything that closes or deletes.** A comparison between an `int` and a set of
+strings matched nothing, which would have closed 34 of 35 issues rather than the 6 intended.
+Print what a destructive step would do, against real data, before letting it do it.
+
 ## Statement fidelity
 
 The docstring quotes the source, and the Lean says exactly that. When they can differ, the
@@ -96,6 +127,7 @@ left `sorry` exercises nothing.
 - [ ] `#print axioms` on anything claimed to be proved
 - [ ] no `sorry` under `FormalConjecturesForMathlib/`
 - [ ] `git status` before `git add`: generated files and `__pycache__` sweep in easily
+- [ ] any file a script edited has been reread, not just rebuilt
 - [ ] `Fixes #1, fixes #2` in the description, with the keyword repeated. `Fixes #1, #2`
       closes only the first
 - [ ] formalisation choices and caveats in the pull request description, not in the Lean file
