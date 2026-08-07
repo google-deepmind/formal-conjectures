@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 145
@@ -49,7 +49,7 @@ $\overline{G}$.
 
 namespace WrittenOnTheWallII.GraphConjecture145
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -75,7 +75,7 @@ to avoid division.
 @[category research open, AMS 5]
 theorem conjecture145 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hlMin : 0 < localIndependenceMin Gᶜ) :
-    2 * eccSet G (boundaryVertices G : Set α) ≤
+    2 * eccSet G (maxEccentricityVertices G : Set α) ≤
     largestInducedTreeSize G * localIndependenceMin Gᶜ := by
   sorry
 
@@ -91,13 +91,13 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ localIndependenceMin G := Nat.zero_le 
 
 /-- For any graph on `Fin 3`, `eccSet` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ eccSet G (boundaryVertices G : Set (Fin 3)) :=
+example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] : 0 ≤ eccSet G (maxEccentricityVertices G) :=
   Nat.zero_le _
 
-/-- `boundaryVertices` is a subset of all vertices. -/
+/-- `maxEccentricityVertices` is a subset of all vertices. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) : boundaryVertices G ⊆ Finset.univ := by
-  intro v _; exact Finset.mem_univ v
+example (G : SimpleGraph (Fin 4)) : maxEccentricityVertices G ⊆ Set.univ := by
+  intro v _; exact Set.mem_univ v
 
 /-- `localIndependenceMin G` is at most `indepNeighborsCard G v` for any vertex `v`.
 This follows from the definition of `inf'` as the minimum. -/

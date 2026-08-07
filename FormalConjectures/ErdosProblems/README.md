@@ -35,6 +35,8 @@ Choose a name that is descriptive of the variant. A common case is when the vari
 ## Docstrings
 Please keep docstrings as close as possible to the text on the Erdős Problems website. You should generally be able to copy and paste the LaTeX statements into the docstrings with only minor formatting adjustments.
 
+The verbatim problem text should appear **only once** — in the theorem docstring, not repeated in the module header docstring (`/-! ... -/`). The module header should contain the problem title and references only.
+
 ## References
 If the website lists references, include them at the top of the file and reference them via their citation. You can copy these directly from the "View the LaTeX source" section of the website.
 An example of this would be:
@@ -46,3 +48,16 @@ An example of this would be:
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 ```
+
+## Before requesting review
+
+The general checklist lives in
+[`AGENTS.md`](../../AGENTS.md#quality-checklist). Two corrections specific to
+Erdős problems come up most often in review:
+
+1. **Docstrings quote the website verbatim.** Copy the LaTeX from
+   erdosproblems.com rather than rephrasing it. Only deviate to fix a genuine
+   error or inaccuracy in the original formulation.
+2. **Solved problems cite the solution.** The text below the problem box
+   typically explains who solved it and in which paper; copy that sentence
+   verbatim into the docstring as well.
