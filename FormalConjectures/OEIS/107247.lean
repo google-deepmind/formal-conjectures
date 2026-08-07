@@ -62,26 +62,20 @@ theorem a_3 : a 3 = 0 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 /--
-A natural number is a semiprime if it is the product of exactly two primes (not necessarily distinct).
--/
-def IsSemiprime (n : ℕ) : Prop :=
-  1 < n ∧ ∃ p q, p.Prime ∧ q.Prime ∧ n = p * q
-
-/--
 Primes in this sequence include: $a(8) = 2$. Semiprimes in this sequence include: $a(9) = 6 = 2 * 3$, $a(10) = 22 = 2 * 11$, $a(11) = 86 = 2 * 43$, $a(13) = 1366 = 2 * 683$, $a(14) = 5462 = 2 * 2731$, $a(16) = 87382 = 2 * 43691$, $a(17) = 348503 = 37 * 9419$, $a(27) = 358201316657 = 71 * 5045088967$.
 (Note: The OEIS comment uses 1-based indexing, so their indices are shifted by +1 compared to this formalization).
 -/
 @[category textbook, AMS 11]
 theorem known_prime_and_semiprimes :
   (a 8).Prime ∧
-  IsSemiprime (a 9) ∧
-  IsSemiprime (a 10) ∧
-  IsSemiprime (a 11) ∧
-  IsSemiprime (a 13) ∧
-  IsSemiprime (a 14) ∧
-  IsSemiprime (a 16) ∧
-  IsSemiprime (a 17) ∧
-  IsSemiprime (a 27) := by
+  (a 9).IsSemiprime ∧
+  (a 10).IsSemiprime ∧
+  (a 11).IsSemiprime ∧
+  (a 13).IsSemiprime ∧
+  (a 14).IsSemiprime ∧
+  (a 16).IsSemiprime ∧
+  (a 17).IsSemiprime ∧
+  (a 27).IsSemiprime := by
   sorry
 
 /--
