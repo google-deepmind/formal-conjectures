@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 20
@@ -22,6 +22,9 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 * [erdosproblems.com/20](https://www.erdosproblems.com/20)
 * [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
+* [ErRa60] Erdős, Paul and Rado, Richard. Intersection theorems for systems of sets.
+  J. London Math. Soc. 35 (1960), 85--90.
+
 -/
 namespace Erdos20
 
@@ -49,4 +52,15 @@ theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+
+/--
+Erdős and Rado [ErRa60] proved the factorial upper bound for the $k$-sunflower
+threshold: any family of $n$-uniform sets with more than $(k-1)^n \, n!$ members
+contains a $k$-sunflower, hence $f(n,k) \le (k-1)^n \, n! + 1$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_20.variants.erdos_rado_bound :
+    ∀ n k, n > 0 → 2 ≤ k → f n k ≤ (k - 1) ^ n * n.factorial + 1 := by
+  sorry
+
 end Erdos20
