@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 199
@@ -34,10 +34,6 @@ namespace WrittenOnTheWallII.GraphConjecture199
 open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- `largestInducedTreeSize G` is the number of vertices in a largest induced subtree of `G`. -/
-noncomputable def largestInducedTreeSize (G : SimpleGraph α) : ℕ :=
-  sSup { n | ∃ s : Finset α, s.card = n ∧ (G.induce (s : Set α)).IsTree }
 
 /-- The vertex connectivity `κ(G)`: the minimum number of vertices whose removal
 disconnects the graph (or `n - 1` when the graph is complete).

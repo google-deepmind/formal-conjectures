@@ -24,6 +24,12 @@ import FormalConjecturesUtil
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj63
 
+This conjecture is **false**: Kuber Mehta found the counterexample `G = C₅[K₄]`
+(the 5-cycle with each vertex replaced by a `K₄`, consecutive cliques completely
+joined), for which `f(G) = 4` while the conjectured lower bound is
+`⌈(9 + 4 + 1)/3⌉ = 5`. The same graph also refutes WOWII Conjecture 85. We
+therefore record the statement as disproved, using the `answer(False) ↔ ...`
+pattern of Conjectures 23/24/25.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 91
@@ -24,9 +24,17 @@ import FormalConjectures.Util.ProblemImports
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj91
 
+This conjecture is **false**: Max Talwar found an 11-vertex counterexample
+(graph6 `JBza_CB?wF_`): take `K₃,₃` minus an edge together with a `K₅`, joined
+by two bridges into one `K₅`-vertex. There the average neighbourhood
+independence number is exactly `2`, the largest induced forest has `6` vertices,
+and the largest induced bipartite subgraph has `8`, so the conjectured bound
+reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`. We therefore record the statement as disproved,
+using the `answer(False) ↔ ...` pattern of Conjectures 23/24/25.
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [Counterexample certificate for WOWII 91 (Max Talwar)](https://github.com/maxtalwar/wowii91-counterexample/releases/tag/v1.0.0)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture91
@@ -37,16 +45,23 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 91](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+(disproved, 2026):
 
 For a simple connected graph `G`,
 `b(G) ≤ 1 + f(G) · ⌈avg_v l(v)⌉ / 2`
 where `b(G)` is the largest induced bipartite subgraph size,
 `f(G) = largestInducedForestSize G` is the largest induced forest size, and
 `avg_v l(v) = l G` is the average independence number of the neighbourhoods.
+
+Disproved by an 11-vertex counterexample (Max Talwar, 2026; graph6
+`JBza_CB?wF_`) with `b(G) = 8`, `f(G) = 6` and `l G = 2`, violating
+`8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 -/
-@[category research open, AMS 5]
-theorem conjecture91 (G : SimpleGraph α) (h : G.Connected) :
-    b G ≤ 1 + (G.largestInducedForestSize : ℝ) * ⌈l G⌉ / 2 := by
+@[category research solved, AMS 5]
+theorem conjecture91 : answer(False) ↔
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) (_ : G.Connected),
+        b G ≤ 1 + (G.largestInducedForestSize : ℝ) * ⌈l G⌉ / 2 := by
   sorry
 
 -- Sanity checks
