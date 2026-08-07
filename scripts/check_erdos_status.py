@@ -31,8 +31,11 @@ ERDOS_DIR = os.path.join(
 # Matches the category annotation line immediately before any erdos theorem.
 # Captures the category and the problem number.
 # Note: 'formally solved' is no longer a valid category value.
+# `[^\]]*` rather than `.*`: a character class crosses newlines, so an attribute wrapped
+# over two lines is still matched, and it stops at the attribute's own `]` rather than
+# running into the next declaration. 25 problem files wrap theirs and were invisible here.
 CATEGORY_THEN_THEOREM = re.compile(
-    r"@\[category research (open|solved).*\]\s*\n"
+    r"@\[category research (open|solved)[^\]]*\]\s*\n"
     r"theorem erdos_(\d+)([\w.]*)\s",
     re.MULTILINE,
 )
@@ -44,7 +47,9 @@ FORMAL_PROOF_ATTR = re.compile(
     re.MULTILINE,
 )
 
-OPEN_STATES = {"open", "falsifiable", "verifiable"}
+# `open (Lean)` is the open counterpart of `solved (Lean)`: the problem is open and a Lean
+# statement of it exists. Without it the four problems carrying that state are skipped.
+OPEN_STATES = {"open", "falsifiable", "verifiable", "open (Lean)"}
 SOLVED_STATES = {
     "solved",
     "proved",

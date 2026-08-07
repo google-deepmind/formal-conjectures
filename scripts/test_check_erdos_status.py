@@ -16,7 +16,11 @@
 
 import unittest
 
-from check_erdos_status import issues_to_close
+from check_erdos_status import (
+    CATEGORY_THEN_THEOREM,
+    issues_to_close,
+    yaml_status_to_category,
+)
 
 
 def issue(number, problem, repo="solved", site="formally solved"):
@@ -58,6 +62,49 @@ class IssuesToCloseTest(unittest.TestCase):
         issues = [issue(1, "71"), issue(2, "209"), issue(3, "353")]
         self.assertEqual(
             issues_to_close(issues, still_open={"209"}, known={"71", "209"}), [1])
+
+
+class CategoryScanTest(unittest.TestCase):
+
+    def test_reads_an_attribute_on_one_line(self):
+        src = "@[category research open, AMS 11]\ntheorem erdos_42 : True := by sorry\n"
+        self.assertEqual([m.groups() for m in CATEGORY_THEN_THEOREM.finditer(src)],
+                         [("open", "42", "")])
+
+    def test_reads_an_attribute_wrapped_over_two_lines(self):
+        # 25 problem files wrap theirs, usually to fit a `formal_proof` URL, and were
+        # invisible to this scanner while the pattern used `.*`.
+        src = ('@[category research solved, AMS 5, formal_proof using lean4 at\n'
+               '  "https://example.com/x.lean"]\n'
+               'theorem erdos_183 : True := by sorry\n')
+        self.assertEqual([m.groups() for m in CATEGORY_THEN_THEOREM.finditer(src)],
+                         [("solved", "183", "")])
+
+    def test_does_not_run_past_its_own_attribute(self):
+        src = ("@[category research open]\ntheorem erdos_1 : True := by sorry\n\n"
+               "@[category research solved]\ntheorem erdos_2 : True := by sorry\n")
+        self.assertEqual([m.group(2) for m in CATEGORY_THEN_THEOREM.finditer(src)],
+                         ["1", "2"])
+
+    def test_keeps_the_variant_suffix(self):
+        src = "@[category research solved]\ntheorem erdos_42.variants.foo : True := by sorry\n"
+        self.assertEqual([m.groups() for m in CATEGORY_THEN_THEOREM.finditer(src)],
+                         [("solved", "42", ".variants.foo")])
+
+
+class YamlStatusTest(unittest.TestCase):
+
+    def test_open_with_a_lean_statement_is_still_open(self):
+        self.assertEqual(yaml_status_to_category("open (Lean)"), "open")
+
+    def test_solved_in_lean_is_formally_solved(self):
+        self.assertEqual(yaml_status_to_category("solved (Lean)"), "formally solved")
+
+    def test_plain_solved_is_solved(self):
+        self.assertEqual(yaml_status_to_category("proved"), "solved")
+
+    def test_unknown_state_is_none(self):
+        self.assertIsNone(yaml_status_to_category("something new"))
 
 
 if __name__ == "__main__":
