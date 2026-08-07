@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 244
@@ -34,7 +34,7 @@ theorem erdos_244 : answer(sorry) ↔
 /-- Romanoff [Ro34] proved that the answer is yes if $C$ is an integer.
 
 [Ro34] Romanoff, N. P., _Über einige Sätze der additiven Zahlentheorie_.
-Math. Ann. (1934), 668-678.-/
+Math. Ann. (1934), 668-678. -/
 @[category research solved, AMS 11]
 theorem erdos_244.variants.Romanoff {C : ℕ} (hC : 1 < C) :
     0 < { p + ⌊C ^ k⌋₊ | (p) (k) (_ : p.Prime) }.lowerDensity := by

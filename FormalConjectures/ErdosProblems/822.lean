@@ -13,25 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 822
 
-Does the set of integers of the form `n + φ(n)` have positive (lower) density?
-Gabdullin, Iudelevich, and Luca proved this was true.
-
-*Reference:* [erdosproblems.com/822](https://www.erdosproblems.com/822)
+*References:*
+- [erdosproblems.com/822](https://www.erdosproblems.com/822)
+- [GIL24] Gabdullin, Mikhail R. and Iudelevich, Vitalii V. and Luca,
+  Florian, Numbers of the form {$k+f(k)$}. J. Number Theory (2024), 58--85.
 -/
 
 namespace Erdos822
 
 /--
-**Erdős Problem 822.**
-
 Does the set of integers of the form $n + \varphi(n)$ have positive (lower) density?
 
-The problem is known to have an affirmative answer.
+[GIL24] proved this was true.
 -/
 @[category research solved, AMS 11]
 theorem erdos_822 :

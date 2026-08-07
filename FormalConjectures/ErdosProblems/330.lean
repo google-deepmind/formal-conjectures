@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 330
@@ -25,31 +25,51 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos330
 
 open Set
-open scoped BigOperators
+open scoped BigOperators Pointwise
 
-/-- `Rep A m` means `m` is a sum of **finitely many** elements of `A`
-    (i.e., representable by *some* finite number of terms, not a fixed order). -/
-def Rep (A : Set ℕ) (m : ℕ) : Prop :=
-  ∃ k : ℕ, ∃ f : Fin k → ℕ, (∀ i, f i ∈ A) ∧ (∑ i : Fin k, f i) = m
+/-- `Rep A m h` means `m` is a sum of exactly `h` elements of `A`, which is `m ∈ h • A`.
 
-/-- Integers **not** representable as a finite sum of elements of `A` **while avoiding** `n`. -/
-def UnrepWithout (A : Set ℕ) (n : ℕ) : Set ℕ :=
-  {m | ¬ Rep (A \ {n}) m}
+Exactly `h` rather than at most `h`, for two reasons. It is the notion Erdős states the problem
+with, via `f_2(m)`, the number of solutions of `m = a_i + a_j` [Er80]. And it is the notion
+`IsAsymptoticAddBasisOfOrder` uses below, so the statement is not switching between two meanings
+of "representable" partway through.
 
-/-- An asymptotic additive basis is minimal when one cannot obtain an asymptotic
+Allowing fewer than `h` summands also breaks the statement outright: taking one summand makes
+every element of `A` count as represented, so `UnrepWithout A n h` would contain no element of
+`A` besides possibly `n`. Those are exactly the integers the problem is about. If `a ∈ A` with
+`a ≠ n` is only expressible as `a = n + b`, it cannot be represented without `n` and belongs in
+the set, but the one-element sum `a` itself would have excluded it. -/
+def Rep (A : Set ℕ) (m h : ℕ) : Prop := m ∈ h • A
+
+/-- Integers **not** representable as a sum of exactly `h` elements of `A`
+**while avoiding** `n`. -/
+def UnrepWithout (A : Set ℕ) (n h : ℕ) : Set ℕ :=
+  {m | ¬ Rep (A \ {n}) m h}
+
+/-- An asymptotic additive basis of order `h` is minimal when one cannot obtain an asymptotic
 additive basis by removing any element from it. -/
-def MinAsymptoticAddBasis (A : Set ℕ) : Prop :=
-  IsAsymptoticAddBasis A ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasis (A \ {n})
+def MinAsymptoticAddBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
+  IsAsymptoticAddBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasisOfOrder (A \ {n}) h
 
 /--
 Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
 such that, for any $n \in A$, the (upper) density of integers which
 cannot be represented without using $n$ is positive?
+
+Neither set is asked to have a density, only to have positive upper density, so
+`Set.upperDensity` is used for both rather than `Set.HasPosDensity`. As with many of Erdős'
+questions "positive density" here most likely means positive upper density, and in [Er80] he
+considers either the lower or the upper density for the integers not representable without a
+fixed `n`. Requiring the density to exist would ask a strictly harder question than the one
+posed. See #3979.
+
+Such a set exists, so the answer is yes. The linked proof gives one of order `2`.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/Jayyhk/erdos-lean/blob/a5ffc87b3d684fc00ea906b9e746c283740da900/problems/330/Erdos330.lean"]
 theorem erdos_330_statement :
-    answer(sorry) ↔ ∃ (A : Set ℕ),  MinAsymptoticAddBasis A ∧ A.HasPosDensity ∧
-    ∀ n ∈ A, Set.HasPosDensity (UnrepWithout A n) := by
+    answer(True) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
+    0 < A.upperDensity ∧ ∀ n ∈ A, 0 < (UnrepWithout A n h).upperDensity := by
   sorry
 
 end Erdos330

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 326
@@ -48,7 +48,7 @@ Erdős originally asked whether this was true with `A = B`, but this was disprov
 @[category research solved, AMS 5 11]
 theorem erdos_326.variants.eq :
     ∃ (a : ℕ → ℕ) (_ : StrictMono a) (_ : Set.range a |>.IsAddBasisOfOrder 2) (x : ℝ) (_ : 0 < x),
-      Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) :=
+      Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 x) := by
   sorry
 
 end Erdos326

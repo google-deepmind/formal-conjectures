@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 253
@@ -27,7 +27,7 @@ namespace Erdos253
 open scoped Topology
 
 /-- The predicate that `a : ℕ → ℕ` is a strictly monotone sequence such that every infinite
-arithmetic progression contains infinitely many integers that are the sum of distinct $a_i$s.-/
+arithmetic progression contains infinitely many integers that are the sum of distinct $a_i$s. -/
 @[inline]
 def RepresentsAPs (a : ℕ → ℕ) : Prop :=
     StrictMono a ∧ ∀ l, l.IsAPOfLength ⊤ → (subsetSums (Set.range a) ∩ l).Infinite

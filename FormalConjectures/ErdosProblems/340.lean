@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 340
@@ -27,63 +27,35 @@ open scoped Real Pointwise
 
 namespace Erdos340
 
-/-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
-such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
-the lower bound is required to avoid `0` being a contender in some cases. -/
-private def greedySidon.go (A : Finset ℕ) (hA : IsSidon A) (m : ℕ) :
-    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (A ∪ {m'})} :=
-  if h : A.Nonempty then
-    ⟨Nat.find (hA.exists_insert_ge h m), Nat.find_spec (hA.exists_insert_ge h m)⟩
-  else ⟨m, by simp_all [IsSidon]⟩
-
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
-  decide
-
-/-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
-finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
-the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
-called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
-number. -/
-private def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon A} × ℕ) :=
-  match n with
-  | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
-  | k + 1 =>
-    let (A, s) := greedySidon.aux k
-    let s := if h : A.1.Nonempty then A.1.max' h + 1 else s
-    let s' := greedySidon.go A.1 A.2 s
-    (⟨A ∪ {s'.1}, s'.2.2.2⟩, s')
-
-/-- `greedySidon` is the sequence obtained by the initial set $\{1\}$ and iteratively obtaining
-then next smallest integer that preserves the Sidon property of the set. This gives the
-sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
-def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_three : greedySidon 3 = 8 := by
-  decide
+  decide +native
 @[category test, AMS 5]
 theorem greedySidon_four : greedySidon 4 = 13 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_five : greedySidon 5 = 21 := by
-  decide
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_ten : greedySidon 10 = 97 := by
@@ -118,7 +90,7 @@ theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
 /--
 It is trivial that this sequence grows at least like $\gg N^{1/3}$.
 -/
-@[category undergraduate, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_340.variants.third (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ (n : ℝ) ^ ((1 : ℝ) / 3)) =O[atTop]
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ) := by
@@ -133,7 +105,7 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.sub_hasPosDensity :
-    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) :=
+    Set.HasPosDensity (Set.range greedySidon - Set.range greedySidon) := by
   sorry
 
 /--
@@ -146,14 +118,16 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry
+  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by decide +native
+  rw [h]
+  exact Set.sub_mem_sub (Set.mem_range_self 14) (Set.mem_range_self 13)
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
 @[category research open, AMS 5]
 theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
-    33 ∈ Set.range greedySidon - Set.range greedySidon :=
+    33 ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 -- Formalisation note: there is some slight ambiguity in the meaning of
@@ -165,7 +139,7 @@ It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.cofinite_sub : answer(sorry) ↔
-    ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon :=
+    ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 /--
@@ -173,7 +147,7 @@ It may be true that all or almost all integers are in $A - A$.
 -/
 @[category research open, AMS 5]
 theorem erdos_340.variants.co_density_zero_sub : answer(sorry) ↔
-    ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon :=
+    ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 end Erdos340

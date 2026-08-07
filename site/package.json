@@ -1,0 +1,12 @@
+{
+  "name": "formal-conjectures-website",
+  "version": "1.0.0",
+  "description": "Website for the Formal Conjectures Lean repository",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node --watch build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theorem — Formal Conjectures</title>
+  <meta name="description" content="The emoji reactions on this post carry special meaning:
+ * 👍: I believe the corresponding conjecture is True
+ * 👎: I believe the corresponding conjecture is False
+ * ❤️: I like the conjecture">
+  <meta property="og:title" content="">
+  <meta name="giscus:backlink" content="#">
+  <link rel="preload" href="/assets/fonts/LibertinusSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
+  <!-- KaTeX for rendering LaTeX in docstrings -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand"><img src="/assets/img/formal_conjectures_logo.svg" alt=""
+        class="site-nav__logo">Formal Conjectures</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    <ul class="site-nav__links" id="nav-links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/stats/">Stats</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container theorem-detail" id="theorem-detail">
+    <div class="empty-state">
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+</main>
+
+<div class="container">
+<script>
+  /* Set og:title and description first line using the page URL, before loading giscus. */
+  (function() {
+    var name = new URLSearchParams(location.search).get('name') || '';
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle && name) ogTitle.content = name;
+
+    var url = new URL(location.href);
+    url.searchParams.delete('giscus');
+    url.hash = '';
+    var cleanHref = url.toString();
+
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.content = 'Discussion page for ' + cleanHref + '.\n' + desc.content;
+  })();
+</script>
+<script src="https://giscus.app/client.js"
+        data-repo="google-deepmind/formal-conjectures"
+        data-repo-id="R_kgDOOogmBw"
+        data-category="Problems"
+        data-category-id="DIC_kwDOOogmB84C_EMz"
+        data-mapping="og:title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="1"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="/contribute/">Contribute</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/giscus_voting.js"></script>
+<script src="/assets/js/theorem.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 319
@@ -37,7 +37,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$.-/
+for all non-empty $A'\subsetneq A$. -/
 @[category research open, AMS 5]
 theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)

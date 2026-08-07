@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 3
@@ -34,6 +34,6 @@ theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry
 
---TODO(firsching): add the various known bounds as variants.
+-- TODO(firsching): add the various known bounds as variants.
 
 end Erdos3

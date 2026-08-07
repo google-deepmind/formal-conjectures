@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ForMathlib.Computability.Encoding
+import FormalConjecturesUtil
 
 /-!
 # Conjectures in Complexity Theory
@@ -41,7 +39,7 @@ namespace ComplexityTheory
 The type of decision problems.
 
 We define these as functions from lists of booleans to booleans,
-implictly assuming the usual encodings.
+implicitly assuming the usual encodings.
 -/
 abbrev DecisionProblem := List Bool → Bool
 
@@ -105,7 +103,7 @@ The theorem that the set of complements of languages in P is itself P.
 This can be proven by observing that the boolean negation function is computable in polynomial time,
 and that compositions of poly-time computable functions are also poly-time computable.
 -/
-@[category undergraduate, AMS 68]
+@[category textbook, AMS 68]
 theorem coP_eq_P :
     { L | Lᶜ ∈ P } = P := by
   sorry
@@ -117,7 +115,7 @@ This can be proven by observing that for any language in P,
 we can construct a verifier that ignores the witness and simply runs the poly-time decider for the
 language.
 -/
-@[category undergraduate, AMS 68]
+@[category textbook, AMS 68]
 theorem P_subset_NP :
     P ⊆ NP := by
   sorry
@@ -125,7 +123,7 @@ theorem P_subset_NP :
 /--
 The theorem that P is a subset of coNP.
 -/
-@[category undergraduate, AMS 68]
+@[category textbook, AMS 68]
 theorem P_subset_coNP :
     P ⊆ coNP := by
   rw [coNP, ← coP_eq_P]

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1055
@@ -26,7 +26,7 @@ namespace Erdos1055
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
-of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.-/
+of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor. -/
 def IsOfClass : ℕ+ → ℕ → Prop := fun r ↦
   PNat.caseStrongInductionOn (p := fun (_ : ℕ+) ↦ ℕ → Prop) r
     (fun p ↦ (p + 1).primeFactors ⊆ {2, 3})
@@ -40,17 +40,18 @@ def IsOfClass : ℕ+ → ℕ → Prop := fun r ↦
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Show that for each $r$ there exists a prime $p$ of class $r$. -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 
-open Classical
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
-Let $p_r$ is the least prime in class $r$.-/
-noncomputable def p (r : ℕ+) : ℕ := Nat.find (exists_p r)
+Let $p_r$ is the least prime in class $r$. -/
+noncomputable def p (r : ℕ+) : ℕ :=
+  open scoped Classical in
+  Nat.find (exists_p r)
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
@@ -80,6 +81,6 @@ theorem erdos_1055.variants.selfridge_limit :
     ∃ M, ∀ r, (p r : ℝ) ^ (1 / r : ℝ) ≤ M := by
   sorry
 
---TODO(Paul-Lez): formalize the rest of the problems on the page.
+-- TODO(Paul-Lez): formalize the rest of the problems on the page.
 
 end Erdos1055

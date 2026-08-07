@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1052
@@ -40,8 +40,12 @@ theorem erdos_1052 :
     answer(sorry) ↔ {n | IsUnitaryPerfect n}.Finite := by
   sorry
 
-/-- All unitary perfect numbers are even. -/
-@[category research solved, AMS 11]
+/--
+All unitary perfect numbers are even.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/b70a2ddf5e55f743aac9d4f4a907786b39bc9807/FormalConjectures/ErdosProblems/1052.lean#L46"]
 theorem even_of_isUnitaryPerfect (n : ℕ) (hn : IsUnitaryPerfect n) : Even n := by
   sorry
 
@@ -62,10 +66,12 @@ theorem isUnitaryPerfect_90 : IsUnitaryPerfect 90 := by
 
 @[category test, AMS 11]
 theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
+  -- TODO: Find a quicker proof. This one is too slow.
+  stop
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
-@[category test, AMS 11]
+@[category test, AMS 11, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/be8aed15e8888a08bbe723170698e26c046412a4/FormalConjectures/ErdosProblems/1052.lean#L346"]
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
   sorry
 
