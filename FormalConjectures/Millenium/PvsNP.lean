@@ -36,33 +36,6 @@ open Computability Turing
 namespace ComplexityTheory
 
 /--
-The class P is the set of decision problems
-decidable in polynomial time by a deterministic Turing machine.
--/
-def P : ComplexityClass :=
-  { L | IsPolyTime L }
-
-/--
-The class NP is the set of decision problems
-such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
-where for all `x`, `L x = true` iff there exists a `w` of length at most `p (|x|)`
-such that the Turing machine accepts the pair `(x,w)`.
-
-See Definition 2.1 in Arora-Barak (2009).
--/
-def NP : ComplexityClass :=
-  { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      IsPolyTime R ∧
-      ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
-
-/--
-The class coNP is the set of decision problems
-whose complements are in NP.
--/
-def coNP : ComplexityClass :=
-  { L | Lᶜ ∈ NP }
-
-/--
 **P ≠ NP**:
 
 The conjecture that the complexity classes P and NP are not equal.
