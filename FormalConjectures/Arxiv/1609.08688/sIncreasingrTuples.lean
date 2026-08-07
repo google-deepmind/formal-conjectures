@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # The length of an $s$-increasing sequence of $r$-tuples
@@ -35,7 +35,7 @@ namespace Arxiv.«1609.08688»
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
-two co-ordinates $i$.
+two coordinates $i$.
 -/
 def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
@@ -144,7 +144,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
-  erw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
+  rw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
   refine ⟨by aesop, fun n hn => ?_⟩
   simp [Nat.lt_one_iff.1 hn]
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
@@ -156,15 +156,59 @@ theorem maximalLength_four : maximalLength 4 = 8 := by
 /-- In a set of more than $n^2$ triples with coordinates from $\{1, ..., n\}$ we must
 have two triples that are equal in their first two coordinates. -/
 @[category API, AMS 5]
-lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (hn : 2 ≤ n)
+lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (_hn : 2 ≤ n)
     (hs₁ : ∀ a ∈ s, Set.range a ⊆ Set.Icc 1 n) (hs₂ : s.length > n ^ 2) :
     ∃ (i j : Fin s.length), i ≠ j ∧ s[i] 0 = s[j] 0 ∧ s[i] 1 = s[j] 1 := by
-  sorry
+  classical
+  let f : Fin s.length → ℕ × ℕ := fun k => (s[k] 0, s[k] 1)
+  let t : Finset (ℕ × ℕ) := Finset.Icc 1 n ×ˢ Finset.Icc 1 n
+  have ht_card : t.card < (Finset.univ : Finset (Fin s.length)).card := by
+    simp only [t, Finset.card_univ, Fintype.card_fin, Finset.card_product,
+      Nat.card_Icc, Nat.add_sub_cancel, ← sq]
+    exact hs₂
+  have hf : ∀ k ∈ (Finset.univ : Finset (Fin s.length)), f k ∈ t := by
+    intro k _
+    have hmem : s[k] ∈ s := List.getElem_mem k.isLt
+    have h0 := hs₁ _ hmem ⟨0, rfl⟩
+    have h1 := hs₁ _ hmem ⟨1, rfl⟩
+    rw [Set.mem_Icc] at h0 h1
+    simp only [t, f, Finset.mem_product, Finset.mem_Icc]
+    exact ⟨h0, h1⟩
+  obtain ⟨i, _, j, _, hij, hfij⟩ :=
+    Finset.exists_ne_map_eq_of_card_lt_of_maps_to ht_card hf
+  exact ⟨i, j, hij, congrArg Prod.fst hfij, congrArg Prod.snd hfij⟩
 
-/-- For all $n$ we have $F(n) \leq n^2$. -/
+/--
+For all $n$ we have $F(n) \leq n^2$.
+
+This is the upper bound in [GoLo21, Proposition 1.4], proved by applying the
+pigeonhole principle to the first two coordinates.
+-/
 @[category research solved, AMS 5]
 theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
-  sorry
+  by_cases hn : 2 ≤ n
+  · rw [maximalLength]
+    refine csSup_le ?_ ?_
+    · exact ⟨0, ⟨[], by simp, isIncreasing₂_nil, rfl⟩⟩
+    · intro _ hm
+      rcases hm with ⟨s, hs_range, hs_inc, rfl⟩
+      by_contra hle
+      have hs_length : n ^ 2 < s.length := Nat.lt_of_not_ge hle
+      obtain ⟨i, j, hij, h0, h1⟩ :=
+        exists_pair_of_mem_Icc hn hs_range hs_length
+      have hp : s.Pairwise lt₂ := hs_inc
+      rcases lt_or_gt_of_ne hij with hij | hji
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.ge h1.ge)
+          (List.pairwise_iff_get.1 hp i j hij)
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.le h1.le)
+          (List.pairwise_iff_get.1 hp j i hji)
+  · cases n with
+    | zero => simp [maximalLength_zero]
+    | succ n =>
+      cases n with
+      | zero => simp [maximalLength_one]
+      | succ n =>
+        exact (hn (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le _)))).elim
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
 @[category research solved, AMS 5]
