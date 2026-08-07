@@ -27,7 +27,7 @@ Let $f(n) = n + \text{sum of the digits of } n$. If $f(n)$ is multiple of $n$ th
 
 namespace OeisA100800
 
-open Nat Function Classical
+open Nat Function
 
 /-- The sum of the decimal digits of a natural number. -/
 def sumDigits (n : ℕ) : ℕ := ((10).digits n).sum
@@ -35,6 +35,7 @@ def sumDigits (n : ℕ) : ℕ := ((10).digits n).sum
 /-- The function $f(n) = n + \text{sum of the digits of } n$. -/
 def f (n : ℕ) : ℕ := n + sumDigits n
 
+open Classical in
 /--
 a n is the first iteration of $f(n) = n + \text{sum of the digits of } n$ that is a multiple of $n$.
 $a(n) = 0$ if no such number exists.

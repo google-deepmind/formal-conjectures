@@ -27,8 +27,9 @@ Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that $k
 
 namespace OeisA108129
 
-open Nat Classical
+open Nat
 
+open Classical in
 /-- The primary defining sequence `a`.
 Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that $k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
 We use PNat for the exponent $m$ to correctly model $m \ge 1$. -/
