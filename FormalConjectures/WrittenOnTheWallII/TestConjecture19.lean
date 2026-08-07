@@ -32,6 +32,7 @@ namespace WrittenOnTheWallII.GraphConjecture19
 
 def K3 : SimpleGraph (Fin 3) := completeGraph (Fin 3)
 
+@[category test, AMS 5]
 lemma K3_b : b K3 = 2 := by
   rw [SimpleGraph.b, SimpleGraph.largestInducedBipartiteSubgraphSize]
   norm_cast
@@ -91,6 +92,7 @@ lemma K3_b : b K3 = 2 := by
           exfalso; apply huv_ne; ext; simp only [u_eq_1, v_eq_1]
       · simp
 
+@[category test, AMS 5]
 lemma K3_ecc (v : Fin 3) : ecc K3 {v} = 1 := by
   unfold ecc
   have h_dist : ∀ w, w ≠ v → distToSet K3 w {v} = 1 := by
@@ -127,6 +129,7 @@ lemma K3_ecc (v : Fin 3) : ecc K3 {v} = 1 := by
     simp [h_image]
   · exact h_cond (by convert h_nonempty)
 
+@[category test, AMS 5]
 lemma indepNum_completeGraph {V : Type*} [Fintype V] [DecidableEq V] [Nonempty V] :
     (completeGraph V).indepNum = 1 := by
   rw [SimpleGraph.indepNum, completeGraph_eq_top]
@@ -155,6 +158,7 @@ lemma indepNum_completeGraph {V : Type*} [Fintype V] [DecidableEq V] [Nonempty V
     · use {Classical.arbitrary V}
       simp [SimpleGraph.isNIndepSet_iff]
 
+@[category test, AMS 5]
 lemma K3_indepNeighbors (v : Fin 3) : indepNeighbors K3 v = 1 := by
   unfold indepNeighbors
   have h_induced : K3.induce (K3.neighborSet v) = completeGraph (K3.neighborSet v) := by
@@ -169,6 +173,7 @@ lemma K3_indepNeighbors (v : Fin 3) : indepNeighbors K3 v = 1 := by
   rw [indepNum_completeGraph]
   norm_cast
 
+@[category test, AMS 5]
 theorem K3_not_counterexample :
     ⌊(∑ v ∈ Finset.univ, ((K3.eccent v).toNat : ℝ)) / (Fintype.card (Fin 3) : ℝ) +
       sSup (Set.range (indepNeighbors K3))⌋ ≤ b K3 := by
