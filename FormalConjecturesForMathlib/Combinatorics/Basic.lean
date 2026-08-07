@@ -158,6 +158,150 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
     i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
   rfl
 
+/-- Ordered-pair characterisation of the Sidon property for a `Finset ℕ`: the coercion
+`(A : Set ℕ)` is Sidon iff for all pairs `(a₁, b₁), (a₂, b₂)` of elements of `A` with
+`a₁ ≤ b₁` and `a₂ ≤ b₂`, the equation `a₁ + b₁ = a₂ + b₂` forces `a₁ = a₂` and `b₁ = b₂`.
+This ordered form is often more convenient than the up-to-commutativity disjunction in
+`IsSidon` for counting arguments. -/
+theorem isSidon_coe_iff (A : Finset ℕ) :
+    IsSidon ((A : Set ℕ)) ↔
+      ∀ a₁ ∈ A, ∀ b₁ ∈ A, ∀ a₂ ∈ A, ∀ b₂ ∈ A,
+        a₁ ≤ b₁ → a₂ ≤ b₂ → a₁ + b₁ = a₂ + b₂ → a₁ = a₂ ∧ b₁ = b₂ := by
+  constructor
+  · -- IsSidon → ordered form. IsSidon's signature is (i₁, j₁, i₂, j₂) with sum
+    -- i₁ + i₂ = j₁ + j₂. We have the ordered hsum : a₁ + b₁ = a₂ + b₂, so we
+    -- map i₁=a₁, j₁=a₂, i₂=b₁, j₂=b₂ to align the sums.
+    intro hS a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ hab₁ hab₂ hsum
+    have h_mem_a₁ : a₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₁
+    have h_mem_b₁ : b₁ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₁
+    have h_mem_a₂ : a₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr ha₂
+    have h_mem_b₂ : b₂ ∈ ((A : Set ℕ)) := Finset.mem_coe.mpr hb₂
+    have h_disj := hS a₁ h_mem_a₁ a₂ h_mem_a₂ b₁ h_mem_b₁ b₂ h_mem_b₂ hsum
+    -- h_disj : (a₁ = a₂ ∧ b₁ = b₂) ∨ (a₁ = b₂ ∧ b₁ = a₂)
+    cases h_disj with
+    | inl h => exact h
+    | inr h =>
+      -- Case: a₁ = b₂, b₁ = a₂. With a₁ ≤ b₁ and a₂ ≤ b₂ this forces all four
+      -- values equal, so the conclusion still holds.
+      obtain ⟨ha, hb⟩ := h
+      refine ⟨?_, ?_⟩ <;> omega
+  · -- ordered form → IsSidon. Sort each pair to invoke the ordered hypothesis.
+    intro hS i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+    rw [Finset.mem_coe] at hi₁ hj₁ hi₂ hj₂
+    by_cases h₁ : i₁ ≤ i₂
+    · by_cases h₂ : j₁ ≤ j₂
+      · have := hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum
+        exact Or.inl ⟨this.1, this.2⟩
+      · push_neg at h₂
+        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
+        have hsum' : i₁ + i₂ = j₂ + j₁ := by omega
+        have := hS i₁ hi₁ i₂ hi₂ j₂ hj₂ j₁ hj₁ h₁ h₂' hsum'
+        exact Or.inr ⟨this.1, this.2⟩
+    · push_neg at h₁
+      have h₁' : i₂ ≤ i₁ := Nat.le_of_lt h₁
+      by_cases h₂ : j₁ ≤ j₂
+      · have hsum' : i₂ + i₁ = j₁ + j₂ := by omega
+        have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁' h₂ hsum'
+        exact Or.inr ⟨this.2, this.1⟩
+      · push_neg at h₂
+        have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
+        have hsum' : i₂ + i₁ = j₂ + j₁ := by omega
+        have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁' h₂' hsum'
+        exact Or.inl ⟨this.2, this.1⟩
+
+/-- In a Sidon set, a positive common difference determines its endpoints: if
+`a₁ - b₁ = a₂ - b₂` with `b₁ < a₁` and `b₂ < a₂`, then `a₁ = a₂` and `b₁ = b₂`. -/
+theorem sidon_diff_injective {A : Finset ℕ} (hS : IsSidon ((A : Set ℕ)))
+    {a₁ b₁ a₂ b₂ : ℕ} (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
+    (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂) (heq : a₁ - b₁ = a₂ - b₂) :
+    a₁ = a₂ ∧ b₁ = b₂ := by
+  rw [isSidon_coe_iff] at hS
+  by_cases h1 : b₂ ≤ a₁
+  · by_cases h2 : b₁ ≤ a₂
+    · have h_sidon := hS b₂ hb₂ a₁ ha₁ b₁ hb₁ a₂ ha₂ h1 h2 (by omega)
+      exact ⟨h_sidon.right, h_sidon.left.symm⟩
+    · push_neg at h2
+      have h_sidon := hS b₂ hb₂ a₁ ha₁ a₂ ha₂ b₁ hb₁ h1 (Nat.le_of_lt h2) (by omega)
+      exact absurd h_sidon.right.symm (Nat.ne_of_lt hlt₁)
+  · push_neg at h1
+    by_cases h2 : b₁ ≤ a₂
+    · have h_sidon := hS a₁ ha₁ b₂ hb₂ b₁ hb₁ a₂ ha₂ (Nat.le_of_lt h1) h2 (by omega)
+      exact absurd h_sidon.left.symm (Nat.ne_of_lt hlt₁)
+    · push_neg at h2
+      have h_sidon := hS a₁ ha₁ b₂ hb₂ a₂ ha₂ b₁ hb₁ (Nat.le_of_lt h1)
+        (Nat.le_of_lt h2) (by omega)
+      exact ⟨h_sidon.left, h_sidon.right.symm⟩
+
+/-- For a finite set of naturals, twice the number of strictly increasing pairs
+`(a, b) ∈ A ×ˢ A` (those with `a < b`) equals `|A| * (|A| - 1)`: each unordered pair of
+distinct elements is counted exactly once. -/
+theorem two_mul_card_product_filter_lt (A : Finset ℕ) :
+    2 * ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2)).card = A.card * (A.card - 1) := by
+  have h_filter_eq : (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2) =
+      A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2) := by
+    ext ⟨a, b⟩
+    simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_offDiag]
+    constructor
+    · intro ⟨⟨ha, hb⟩, hab⟩; exact ⟨⟨ha, hb, Nat.ne_of_lt hab⟩, hab⟩
+    · intro ⟨⟨ha, hb, _⟩, hab⟩; exact ⟨⟨ha, hb⟩, hab⟩
+  rw [h_filter_eq]
+  have h_union : A.offDiag =
+      A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2) ∪
+      A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1) := by
+    ext ⟨a, b⟩
+    simp only [Finset.mem_offDiag, Finset.mem_union, Finset.mem_filter]
+    constructor
+    · intro ⟨ha, hb, hab⟩
+      rcases lt_or_gt_of_ne hab with h | h
+      · exact Or.inl ⟨⟨ha, hb, hab⟩, h⟩
+      · exact Or.inr ⟨⟨ha, hb, hab⟩, h⟩
+    · rintro (⟨h, _⟩ | ⟨h, _⟩) <;> exact h
+  have h_disj : Disjoint
+      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2))
+      (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)) :=
+    Finset.disjoint_filter.mpr
+      (fun ⟨_a, _b⟩ _ h1 h2 => absurd h1 (not_lt.mpr (le_of_lt h2)))
+  have h_swap : (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)).card =
+      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card :=
+    Finset.card_bij' (fun p _ => (p.2, p.1)) (fun p _ => (p.2, p.1))
+      (fun ⟨_a, _b⟩ h => by
+        simp only [Finset.mem_filter, Finset.mem_offDiag] at h ⊢
+        exact ⟨⟨h.1.2.1, h.1.1, Ne.symm h.1.2.2⟩, h.2⟩)
+      (fun ⟨_a, _b⟩ h => by
+        simp only [Finset.mem_filter, Finset.mem_offDiag] at h ⊢
+        exact ⟨⟨h.1.2.1, h.1.1, Ne.symm h.1.2.2⟩, h.2⟩)
+      (fun _ _ => rfl) (fun _ _ => rfl)
+  have h_card : A.offDiag.card =
+      (A.offDiag.filter (fun p : ℕ × ℕ => p.1 < p.2)).card +
+      (A.offDiag.filter (fun p : ℕ × ℕ => p.2 < p.1)).card := by
+    rw [← Finset.card_union_of_disjoint h_disj, ← h_union]
+  have h_mul_sub : A.card * (A.card - 1) = A.card * A.card - A.card := by
+    cases A.card with
+    | zero => simp
+    | succ n =>
+      simp only [Nat.succ_sub_one]
+      rw [show (n + 1) * (n + 1) = (n + 1) * n + (n + 1) from by ring, Nat.add_sub_cancel]
+  have h_offDiag_eq : A.offDiag.card = A.card * (A.card - 1) :=
+    A.offDiag_card.trans h_mul_sub.symm
+  omega
+
+/-- The strict lower-triangle companion of `Finset.two_mul_card_product_filter_lt`: twice the
+number of strictly decreasing pairs `(a, b) ∈ A ×ˢ A` (those with `b < a`) equals
+`|A| * (|A| - 1)`. -/
+theorem two_mul_card_product_filter_gt (A : Finset ℕ) :
+    2 * ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.2 < p.1)).card = A.card * (A.card - 1) := by
+  have h_swap : ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.2 < p.1)).card =
+      ((A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2)).card := by
+    refine Finset.card_bij' (fun p _ => (p.2, p.1)) (fun p _ => (p.2, p.1)) ?_ ?_ ?_ ?_
+    · rintro ⟨a, b⟩ h
+      simp only [Finset.mem_filter, Finset.mem_product] at h ⊢
+      exact ⟨⟨h.1.2, h.1.1⟩, h.2⟩
+    · rintro ⟨a, b⟩ h
+      simp only [Finset.mem_filter, Finset.mem_product] at h ⊢
+      exact ⟨⟨h.1.2, h.1.1⟩, h.2⟩
+    · rintro ⟨a, b⟩ _; rfl
+    · rintro ⟨a, b⟩ _; rfl
+  rw [h_swap, two_mul_card_product_filter_lt]
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
