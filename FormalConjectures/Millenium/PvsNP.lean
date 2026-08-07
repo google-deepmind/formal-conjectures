@@ -31,8 +31,6 @@ in complexity theory, including
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
 -/
 
-open Computability Turing
-
 namespace ComplexityTheory
 
 /--

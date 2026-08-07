@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib.Computability.Encoding
-public import Mathlib.Data.List.SplitOn
 public import Mathlib.Algebra.Field.Rat
 
 @[expose] public section
@@ -132,7 +131,7 @@ theorem undelimit_delimit (l rest : List Bool) :
   | cons b l ih => simp [delimit, undelimit, ih]
 
 @[simp]
-theorem delimit_length (l : List Bool) : (delimit l).length = 2 * l.length + 1 := by
+theorem length_delimit (l : List Bool) : (delimit l).length = 2 * l.length + 1 := by
   induction l with
   | nil => rfl
   | cons b l ih => simp [delimit, ih]; omega
@@ -163,7 +162,7 @@ theorem length_le_length_flatten_delimit (l : List (List Bool)) :
   | nil => simp
   | cons b t ih =>
     simp only [List.map_cons, List.flatten_cons, List.length_append, List.length_cons,
-      delimit_length]
+      length_delimit]
     omega
 
 private theorem undelimitBlocksAux_flatten_delimit (l : List (List Bool)) :
@@ -184,23 +183,12 @@ theorem undelimitBlocks_flatten_delimit (l : List (List Bool)) :
     undelimitBlocks ((l.map delimit).flatten) = some l :=
   undelimitBlocksAux_flatten_delimit l _ (length_le_length_flatten_delimit l)
 
-/-- Decode every block in a list of bitstrings, failing if any block fails to decode.
-
-(This is `List.mapM decode` in the `Option` monad, written out by hand so that it works
-for `α` in any universe.) -/
-def decodeAll [BitstringEncoding α] : List (List Bool) → Option (List α)
-  | [] => some []
-  | b :: t =>
-    match decode b, decodeAll t with
-    | some a, some l => some (a :: l)
-    | _, _ => none
-
 @[simp]
-theorem decodeAll_map_encode [BitstringEncoding α] (l : List α) :
-    decodeAll (l.map encode) = some l := by
+theorem mapM_decode_map_encode [BitstringEncoding α] (l : List α) :
+    (l.map encode).mapM decode = some l := by
   induction l with
   | nil => rfl
-  | cons a t ih => simp [decodeAll, ih]
+  | cons a t ih => simp [ih]
 
 /- ## Derived instances -/
 
@@ -220,13 +208,10 @@ instance [BitstringEncoding α] [BitstringEncoding β] : BitstringEncoding (α �
 /-- A list is encoded as the concatenation of self-delimiting blocks for its elements. -/
 instance [BitstringEncoding α] : BitstringEncoding (List α) where
   encode l := ((l.map encode).map delimit).flatten
-  decode input :=
-    match undelimitBlocks input with
-    | none => none
-    | some blocks => decodeAll blocks
+  decode input := (undelimitBlocks input).bind (·.mapM decode)
   decode_encode l := by
     rw [undelimitBlocks_flatten_delimit (l.map encode)]
-    exact decodeAll_map_encode l
+    exact mapM_decode_map_encode l
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
 defining predicate. -/
