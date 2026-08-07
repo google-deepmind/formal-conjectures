@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 146
@@ -34,7 +34,7 @@ $$\mathrm{rad}(G^2) = \min_{v \in V} \max_{u \in V} \mathrm{dist}_{G^2}(u, v).$$
 
 namespace WrittenOnTheWallII.GraphConjecture146
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -50,7 +50,7 @@ For a simple connected graph $G$,
 $\mathrm{tree}(G) \ge 2 \cdot \mathrm{ecc}(B) / \mathrm{rad}(G^2)$
 where $\mathrm{tree}(G)$ is the number of vertices in a largest induced subtree,
 $\mathrm{ecc}(B)$ is the eccentricity of the boundary vertices of $G$ (`eccSet`
-and `boundaryVertices`), and $\mathrm{rad}(G^2)$ is the radius of the square
+and `maxEccentricityVertices`), and $\mathrm{rad}(G^2)$ is the radius of the square
 graph of $G$.
 
 We state the inequality in the form
@@ -59,7 +59,7 @@ $\mathrm{tree}(G) \cdot \mathrm{rad}(G^2) \ge 2 \cdot \mathrm{ecc}(B)$ to avoid 
 @[category research open, AMS 5]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hrad : 0 < graphSquareRadius G) :
-    2 * eccSet G (boundaryVertices G : Set α) ≤
+    2 * eccSet G (maxEccentricityVertices G : Set α) ≤
     largestInducedTreeSize G * graphSquareRadius G := by
   sorry
 

@@ -685,6 +685,10 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  const whitePlotPath = path.join('data', 'file_counts_white.html');
+  const darkPlotPath = path.join('data', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
+  if (fs.existsSync(darkPlotPath)) fs.copyFileSync(darkPlotPath, 'site/data/file_counts_dark.html');
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
@@ -714,9 +718,30 @@ async function main() {
   copyStaticTemplate('about.html', 'site/about/index.html');
 
   // ---- Stats page ----
+  let growthPlot = '';
+  if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
+    const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
+    const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');
+    growthPlot = `
+      <style>
+        .theme-dark { display: none; }
+        @media (prefers-color-scheme: dark) {
+          .theme-light { display: none; }
+          .theme-dark { display: block; }
+        }
+      </style>
+      <div class="theme-light">${graphHtmlLight}</div>
+      <div class="theme-dark">${graphHtmlDark}</div>
+    `;
+    console.log('  Loaded repository growth plots.');
+  } else {
+    console.log('  Repository growth plots not found (skipping growth plot).');
+  }
+
   const statsHtml = readTemplate('stats.html');
   writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
     totalCount:           stats.total,
+    growthPlot:           growthPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
 
