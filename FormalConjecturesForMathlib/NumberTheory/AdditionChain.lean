@@ -34,21 +34,6 @@ confinement here is that an addition step at most doubles, so `r` steps cannot r
 `2 ^ r` (`getLast_le_two_pow`), giving `lt_additionChainLength_of_two_pow_lt`.
 -/
 
-namespace List
-
-/-- In a strictly increasing list, the last entry is the largest. -/
-theorem le_getLast_of_pairwise_lt {c : List ℕ} (h : c.Pairwise (· < ·)) {x : ℕ} (hx : x ∈ c)
-    (hne : c ≠ []) : x ≤ c.getLast hne := by
-  induction c using List.reverseRecOn with
-  | nil => simp at hne
-  | append_singleton ys y ih =>
-    rw [List.getLast_append_singleton]
-    rcases List.mem_append.mp hx with hy | hy
-    · exact le_of_lt ((List.pairwise_append.mp h).2.2 _ hy _ (by simp))
-    · simp only [List.mem_singleton] at hy; omega
-
-end List
-
 /-- An *addition chain* is a strictly increasing sequence
 $1 = a_0 < a_1 < \cdots < a_r$ in which every entry after the first is the sum of two
 (not necessarily distinct) earlier entries.
@@ -152,8 +137,9 @@ theorem IsAdditionChain.getLast_le_two_pow {c : List ℕ} (h : IsAdditionChain c
         rcases List.mem_append.mp hb with h' | h'
         · exact h'
         · exact absurd (List.mem_singleton.mp h') (by rintro rfl; omega)
-      have hla := List.le_getLast_of_pairwise_lt (List.pairwise_append.mp hsorted).1 hays hys
-      have hlb := List.le_getLast_of_pairwise_lt (List.pairwise_append.mp hsorted).1 hbys hys
+      have hsub := (List.pairwise_append.mp hsorted).1.imp le_of_lt
+      have hla := hsub.rel_getLast hays
+      have hlb := hsub.rel_getLast hbys
       have hih := ih hchain hys
       have hlen : (ys ++ [y]).length - 1 = ys.length := by simp
       rw [hlen]
