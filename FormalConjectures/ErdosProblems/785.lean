@@ -71,8 +71,11 @@ as $x\to \infty$?
 A conjecture of Erdős and Danzer. The answer is yes, proved by Sárközy and Szemerédi [SaSz94],
 who actually proved that it is impossible for
 $$A(x)B(x)-x=o(A(x)).$$
+
+This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+"https://github.com/Woett/Lean-files/blob/main/ErdosProblem785.lean"]
 theorem erdos_785 : answer(True) ↔
     ∀ A B : Set ℕ, A.Infinite → B.Infinite → IsExactAdditiveComplement A B →
       Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) atTop atTop := by
