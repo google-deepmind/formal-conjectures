@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-variable {α : Type} [AddCommMonoid α]
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 33
 
 *Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/
-
-open Classical Set
+variable {α : Type} [AddCommMonoid α]
+open Set
 open scoped goldenRatio
 
 namespace Erdos33
