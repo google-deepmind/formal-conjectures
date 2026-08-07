@@ -16,6 +16,7 @@ limitations under the License.
 
 import FormalConjecturesUtil
 import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Conjectures associated with A109227
@@ -45,6 +46,35 @@ noncomputable def a (n : ℕ) : ℕ :=
   )
   let primeBitsTrimmed := primeBitsFull.dropWhile (· = 0)
   ofDigits 10 primeBitsTrimmed.reverse
+
+/-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
+@[category test, AMS 11]
+theorem a_0 : a 0 = 0 := by
+  rfl
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = 1 := by
+  dsimp [a]
+  rw [Nat.nth_prime_zero_eq_two]
+  decide
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 11 := by
+  dsimp [a]
+  rw [Nat.nth_prime_one_eq_three]
+  decide
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 1101 := by
+  dsimp [a]
+  rw [Nat.nth_prime_two_eq_five]
+  decide
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 110101 := by
+  dsimp [a]
+  rw [Nat.nth_prime_three_eq_seven]
+  decide
 
 /--
 Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?

@@ -109,6 +109,12 @@ theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     rw [e1, e2, e6, e8]
     ring
 
+/-- $11009$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_11009 : A 11009 := by
+  apply a_of_comesFromPrimeQuadruple
+  exact ⟨101, by decide, by decide, by decide, by decide, by rfl⟩
+
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
 theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : A n) : ComesFromPrimeQuadruple n := by
