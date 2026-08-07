@@ -42,6 +42,40 @@ noncomputable def a (n : ℕ) : ℕ :=
   let numCarets := (s.filter fun p => f p > 1).card
   numAsterisks + numCarets
 
+/-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
+@[category test, AMS 11]
+theorem a_1 : a 1 = 0 := by
+  dsimp [a]
+  simp
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 0 := by
+  dsimp [a]
+  have h2 : Nat.Prime 2 := by decide
+  rw [Nat.Prime.factorization h2]
+  simp
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 0 := by
+  dsimp [a]
+  have h3 : Nat.Prime 3 := by decide
+  rw [Nat.Prime.factorization h3]
+  simp
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 1 := by
+  dsimp [a]
+  have : (4 : ℕ) = 2 ^ 2 := by rfl
+  rw [this, Nat.Prime.factorization_pow (by decide)]
+  simp [Finset.filter_singleton]
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 0 := by
+  dsimp [a]
+  have h5 : Nat.Prime 5 := by decide
+  rw [Nat.Prime.factorization h5]
+  simp
+
 
 
 /-- The set of exceptional integers. -/

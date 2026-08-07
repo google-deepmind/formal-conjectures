@@ -31,8 +31,27 @@ open Nat Finset Rat
 The primary defining sequence `a`.
 $a(n) = \frac{\operatorname{lcm}_{k=1}^n k}{\operatorname{den}(H_n)}$
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   (Icc 1 n).lcm id / (harmonic n).den
+
+/-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
+@[category test, AMS 11]
+theorem a_1 : a 1 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 1 := by native_decide
+
+@[category test, AMS 11]
+theorem a_6 : a 6 = 3 := by native_decide
 
 
 

@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Determinants of 2 X 2 matrices of non-overlapping blocks of 4 consecutive primes
@@ -44,13 +45,62 @@ noncomputable def a (n : ℕ) : ℤ :=
   else
     0
 
+@[category API, AMS 11]
+lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by
+  have h1 : (13).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_six : Nat.nth Nat.Prime 6 = 17 := by
+  have h1 : (17).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_seven : Nat.nth Nat.Prime 7 = 19 := by
+  have h1 : (19).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_eight : Nat.nth Nat.Prime 8 = 23 := by
+  have h1 : (23).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_nine : Nat.nth Nat.Prime 9 = 29 := by
+  have h1 : (29).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_ten : Nat.nth Nat.Prime 10 = 31 := by
+  have h1 : (31).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category API, AMS 11]
+lemma nth_prime_eleven : Nat.nth Nat.Prime 11 = 37 := by
+  have h1 : (37).Prime := by decide
+  exact Nat.nth_count h1
+
+@[category test, AMS 11]
+theorem a_0 : a 0 = 0 := by
+  rfl
+
 @[category test, AMS 11]
 theorem a_1 : a 1 = -1 := by
   dsimp [a]
-  rw [Nat.nth_prime_zero_eq_two]
-  rw [Nat.nth_prime_one_eq_three]
-  rw [Nat.nth_prime_two_eq_five]
-  rw [Nat.nth_prime_three_eq_seven]
+  rw [Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three, Nat.nth_prime_two_eq_five,
+      Nat.nth_prime_three_eq_seven]
+  norm_num
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = -12 := by
+  dsimp [a]
+  rw [Nat.nth_prime_four_eq_eleven, nth_prime_seven, nth_prime_five, nth_prime_six]
+  norm_num
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = -48 := by
+  dsimp [a]
+  rw [nth_prime_eight, nth_prime_eleven, nth_prime_nine, nth_prime_ten]
   norm_num
 
 /-- The count of positive terms among $a(1)$, ..., $a(N)$. -/

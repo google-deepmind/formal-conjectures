@@ -39,6 +39,67 @@ noncomputable def a (n : ℕ) : ℕ :=
   let s : Set ℕ := {m : ℕ | m > 0 ∧ IsPrimeFreeInterval m}
   sInf s
 
+/-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
+@[category test, AMS 11]
+theorem a_1 : a 1 = 8 := by
+  dsimp [a]
+  have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (1 * m ≤ p ∧ p ≤ 1 * (m + 1))} 8 := by
+    constructor
+    · simp only [mem_setOf_eq, one_mul]
+      refine ⟨by decide, ?_⟩
+      intro p hp ⟨hge, hle⟩
+      interval_cases p <;> revert hp <;> decide
+    · rintro m ⟨hmpos, hfree⟩
+      by_contra! hlt
+      simp only [one_mul] at hfree
+      interval_cases m
+      · specialize hfree 2 (by decide); revert hfree; decide
+      · specialize hfree 2 (by decide); revert hfree; decide
+      · specialize hfree 3 (by decide); revert hfree; decide
+      · specialize hfree 5 (by decide); revert hfree; decide
+      · specialize hfree 5 (by decide); revert hfree; decide
+      · specialize hfree 7 (by decide); revert hfree; decide
+      · specialize hfree 7 (by decide); revert hfree; decide
+  exact hleast.csInf_eq
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 4 := by
+  dsimp [a]
+  have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (2 * m ≤ p ∧ p ≤ 2 * (m + 1))} 4 := by
+    constructor
+    · simp only [mem_setOf_eq]
+      refine ⟨by decide, ?_⟩
+      intro p hp ⟨hge, hle⟩
+      interval_cases p <;> revert hp <;> decide
+    · rintro m ⟨hmpos, hfree⟩
+      by_contra! hlt
+      interval_cases m
+      · specialize hfree 2 (by decide); revert hfree; decide
+      · specialize hfree 5 (by decide); revert hfree; decide
+      · specialize hfree 7 (by decide); revert hfree; decide
+  exact hleast.csInf_eq
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 8 := by
+  dsimp [a]
+  have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (3 * m ≤ p ∧ p ≤ 3 * (m + 1))} 8 := by
+    constructor
+    · simp only [mem_setOf_eq]
+      refine ⟨by decide, ?_⟩
+      intro p hp ⟨hge, hle⟩
+      interval_cases p <;> revert hp <;> decide
+    · rintro m ⟨hmpos, hfree⟩
+      by_contra! hlt
+      interval_cases m
+      · specialize hfree 3 (by decide); revert hfree; decide
+      · specialize hfree 7 (by decide); revert hfree; decide
+      · specialize hfree 11 (by decide); revert hfree; decide
+      · specialize hfree 13 (by decide); revert hfree; decide
+      · specialize hfree 17 (by decide); revert hfree; decide
+      · specialize hfree 19 (by decide); revert hfree; decide
+      · specialize hfree 23 (by decide); revert hfree; decide
+  exact hleast.csInf_eq
+
 /--
 Sierpinski's conjecture (1958) is precisely that $a(n) >= n$ for all $n$.
 -/
