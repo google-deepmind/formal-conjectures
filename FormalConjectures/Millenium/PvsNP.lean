@@ -26,8 +26,6 @@ in complexity theory, including
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
-- Arora, Sanjeev, and Boaz Barak. Computational complexity: a modern approach.
-  Cambridge University Press, 2009.
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
 -/
 

@@ -18,6 +18,17 @@ module
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import Mathlib.Computability.TMComputable
 
+/-!
+# Complexity Classes
+
+This file contains formal definitions of notions from complexity theory,
+including the complexity classes P, NP, and coNP.
+
+*References:*
+- Sanjeev Arora and Boaz Barak. Computational Complexity: A Modern Approach.
+  Cambridge University Press, 2009.
+-/
+
 @[expose] public section
 
 open Computability Turing
