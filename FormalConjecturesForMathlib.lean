@@ -28,6 +28,7 @@ public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
+public import FormalConjecturesForMathlib.AlgebraicGeometry.Varieties
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
