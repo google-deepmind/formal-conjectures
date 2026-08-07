@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 92
@@ -53,16 +53,22 @@ noncomputable def possible_f_values (n : ℕ) : Set ℕ :=
 
 /--
 A sanity check to ensure the set of possible `f(n)` values is bounded above. A trivial bound is
-`n-1`, since any point can have at most `n-1` other points equidistant from it.
+`n`, since the points equidistant from any `x` form a subset of the other `n - 1` points.
 This ensures `sSup` is well-defined.
 -/
 @[category test, AMS 52]
 theorem possible_f_values_BddAbove (n : ℕ) : BddAbove (possible_f_values n) := by
-  use n - 1
-  rintro k ⟨points, h_card, h_prop⟩
-  unfold Erdos92.hasMinEquidistantProperty at *
-  unfold Erdos92.maxEquidistantPointsAt at *
-  sorry
+  refine ⟨n, fun k hk => ?_⟩
+  obtain ⟨points, hcard, ⟨x, hx⟩, hall⟩ := hk
+  refine (hall x hx).trans ?_
+  unfold maxEquidistantPointsAt
+  refine csSup_le' fun m hm => ?_
+  rw [Finset.mem_coe, Finset.mem_image] at hm
+  obtain ⟨d, hd, rfl⟩ := hm
+  calc ((points.erase x).filter fun p => dist x p = d).card
+      ≤ (points.erase x).card := Finset.card_filter_le _ _
+    _ ≤ points.card := Finset.card_erase_le
+    _ = n := hcard
 
 /--
 Let $f(n)$ be maximal such that there exists a set $A$ of $n$ points in $\mathbb^2$
