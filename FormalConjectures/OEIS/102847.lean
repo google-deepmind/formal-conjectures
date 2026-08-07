@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# a(0) = 1, a(n) = a(n-1)*a(n-1) + 2.
+# $a(0) = 1$, $a(n) = a(n-1)a(n-1) + 2$
 
 *References:*
 - [A102847](https://oeis.org/A102847)

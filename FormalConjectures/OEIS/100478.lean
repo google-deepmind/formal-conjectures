@@ -17,9 +17,9 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Pentanacci pi sequence
+# Pentanacci $\pi$ sequence
 
-Pentanacci $\pi$ sequence: $a(1)=a(2)=a(3)=a(4)=a(5)=1$;
+Start with $a(1)=a(2)=a(3)=a(4)=a(5)=1$ and
 for $n>5$, $a(n) = \pi(\sum_{j=1}^5 a(n-j))$ where $\pi = A000720$.
 
 *References:*
@@ -30,7 +30,7 @@ namespace OeisA100478
 
 open scoped Nat.Prime
 
-/-- 
+/--
 The primary defining sequence `a`.
 Pentanacci $\pi$ sequence: $a(1)=a(2)=a(3)=a(4)=a(5)=1$;
 for $n>5$, $a(n) = \pi(\sum_{j=1}^5 a(n-j))$ where $\pi = A000720$.
@@ -78,8 +78,8 @@ theorem a_3 : a 3 = 1 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by rfl
 
-/-- 
-Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern? 
+/--
+Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern?
 -/
 @[category research open, AMS 11]
 theorem conjecture (v : Fin 5 → ℕ) (h : ∀ i, v i > 0) :
