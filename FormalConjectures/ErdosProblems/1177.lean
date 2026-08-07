@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1177
@@ -30,7 +30,6 @@ import FormalConjectures.Util.ProblemImports
 
 open Cardinal Set
 open scoped Cardinal
-open Classical
 
 namespace Erdos1177
 
@@ -39,7 +38,7 @@ $H$ is a 3-uniform hypergraph on $V$ with chromatic cardinal exactly $\kappa$ th
 contain $G$ as a sub-hypergraph. -/
 def FamilyAvoids {W : Type} (G : ThreeUniformHypergraph W)
     (κ : Cardinal.{0}) : Set (Σ V : Type, ThreeUniformHypergraph V) :=
-  {p | p.2.chromaticCardinal = κ ∧ ¬ G.Appears p.2}
+  {p | haveI := Classical.decEq p.1; p.2.chromaticCardinal = κ ∧ ¬ G.Appears p.2}
 
 /--
 **Erdős–Galvin–Hajnal Problem 1177, Conjecture 1.**
@@ -67,6 +66,7 @@ theorem erdos_1177.conjectures.two :
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       (FamilyAvoids H (ℵ_ 1)).Nonempty →
       ∃ V : Type, ∃ X : ThreeUniformHypergraph V,
+        haveI := Classical.decEq V
         X.chromaticCardinal = ℵ_ 1 ∧ ¬ G.Appears X ∧ ¬ H.Appears X := by
   sorry
 
@@ -100,6 +100,7 @@ theorem erdos_1177 :
       (FamilyAvoids G (ℵ_ 1)).Nonempty →
       (FamilyAvoids H (ℵ_ 1)).Nonempty →
       ∃ V : Type, ∃ X : ThreeUniformHypergraph V,
+        haveI := Classical.decEq V
         X.chromaticCardinal = ℵ_ 1 ∧ ¬ G.Appears X ∧ ¬ H.Appears X) ∧
     (∀ {W : Type} [Fintype W] (G : ThreeUniformHypergraph W)
        (κ μ : Cardinal.{0}),
@@ -136,7 +137,7 @@ appears in $H$.
 -/
 @[category textbook, AMS 5]
 theorem erdos_1177.variants.appears_trans
-    {W₁ W₂ V : Type}
+    {W₁ W₂ V : Type} [DecidableEq W₂] [DecidableEq V]
     {G₁ : ThreeUniformHypergraph W₁} {G₂ : ThreeUniformHypergraph W₂}
     {H : ThreeUniformHypergraph V}
     (h12 : G₁.Appears G₂) (h2H : G₂.Appears H) :
@@ -154,12 +155,13 @@ $\mathcal{F}_{G_2}(\kappa) \subseteq \mathcal{F}_{G_1}(\kappa)$.
 -/
 @[category textbook, AMS 5]
 theorem erdos_1177.variants.family_avoids_mono
-    {W₁ W₂ : Type}
+    {W₁ W₂ : Type} [DecidableEq W₁]
     {G₁ : ThreeUniformHypergraph W₁} {G₂ : ThreeUniformHypergraph W₂}
     (h : G₂.Appears G₁)
     (κ : Cardinal.{0}) :
     FamilyAvoids G₂ κ ⊆ FamilyAvoids G₁ κ := by
   intro ⟨V, X⟩ ⟨hχ, hno⟩
+  classical
   refine ⟨hχ, fun hG₁ => hno ?_⟩
   exact erdos_1177.variants.appears_trans h hG₁
 
