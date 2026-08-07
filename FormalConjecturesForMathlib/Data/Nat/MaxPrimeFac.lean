@@ -27,6 +27,10 @@ namespace Nat
 Takes the junk value `0` for `n = 0` and `n = 1`. -/
 def maxPrimeFac (n : ℕ) : ℕ := n.primeFactorsList.getLastI
 
+/-- The executable representation of the greatest prime factor. -/
+lemma maxPrimeFac_eq_getLastI (n : ℕ) :
+    maxPrimeFac n = n.primeFactorsList.getLastI := rfl
+
 @[simp]
 lemma maxPrimeFac_zero :
     maxPrimeFac 0 = 0 := by
@@ -68,6 +72,35 @@ lemma maxPrimeFac_eq_of_dvd_of_le
     (n p : ℕ) (hn : 0 < n) (hp : p.Prime) (h_dvd : p ∣ n) (h_le : maxPrimeFac n ≤ p) :
     maxPrimeFac n = p := by
   exact le_antisymm h_le (le_maxPrimeFac n p hn hp h_dvd)
+
+/-- The greatest prime factor of a prime is the prime itself. -/
+@[simp]
+lemma Prime.maxPrimeFac {p : ℕ} (hp : p.Prime) :
+    maxPrimeFac p = p := by
+  apply maxPrimeFac_eq_of_dvd_of_le p p hp.pos hp (dvd_refl p)
+  exact Nat.le_of_dvd hp.pos (maxPrimeFac_dvd p hp.one_lt)
+
+/-- The greatest prime factor of a nontrivial prime power is its prime base. -/
+lemma Prime.maxPrimeFac_pow {p k : ℕ} (hp : p.Prime) (hk : k ≠ 0) :
+    Nat.maxPrimeFac (p ^ k) = p := by
+  rw [Nat.maxPrimeFac, hp.primeFactorsList_pow]
+  obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
+  have hrep : List.replicate (j + 1) p ≠ [] := by
+    simp
+  simp [List.getLastI_eq_getLast?_getD,
+    List.getLast?_eq_getLast_of_ne_nil hrep]
+
+/-- The greatest prime factor of a natural number is at most that number. -/
+lemma maxPrimeFac_le (n : ℕ) :
+    maxPrimeFac n ≤ n := by
+  rcases lt_trichotomy n 1 with hn | rfl | hn
+  case inr.inr =>
+    exact Nat.le_of_dvd (zero_lt_of_lt hn) (maxPrimeFac_dvd n hn)
+  case inl =>
+    simp only [lt_one_iff] at hn
+    subst n
+    simp
+  case inr.inl => simp
 
 /-- The computable greatest prime factor agrees with its supremum characterization. -/
 lemma maxPrimeFac_eq_sSup (n : ℕ) :
