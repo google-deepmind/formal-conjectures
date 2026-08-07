@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Thickness
@@ -57,7 +57,7 @@ and the formula is uniform using ceiling division.
 
 namespace WrittenOnTheWallII.GraphThickness
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

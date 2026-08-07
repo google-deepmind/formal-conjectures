@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Crossing Number
@@ -53,7 +53,7 @@ of the complete bipartite graph `K_{m,n}`.  The conjecture is known to hold for
 
 namespace WrittenOnTheWallII.GraphCrossingNumber
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
