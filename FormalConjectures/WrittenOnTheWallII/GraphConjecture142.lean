@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 142
@@ -25,7 +25,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace WrittenOnTheWallII.GraphConjecture142
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -41,7 +41,7 @@ the eccentricity of the set $B$.
 -/
 @[category research open, AMS 5]
 theorem conjecture142 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    let B : Set α := (boundaryVertices G : Set α)
+    let B : Set α := (maxEccentricityVertices G : Set α)
     (2 : ℝ) / 3 * (G.girth : ℝ) + (eccSet G B : ℝ) ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
 
@@ -54,7 +54,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_l
 /-- `eccSet G` returns a natural number (nonneg). -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] :
-    0 ≤ eccSet G ((boundaryVertices G : Finset _) : Set _) :=
+    0 ≤ eccSet G (maxEccentricityVertices G) :=
   Nat.zero_le _
 
 end WrittenOnTheWallII.GraphConjecture142

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Representations with prime conditions
@@ -36,19 +36,31 @@ namespace OeisA232174
 
 /-- The predicate that `n` can be written as $x + y$ with $x, y > 0$ such that both
 $x + ny$ and $x^2 + ny^2$ are prime. -/
-def HasPrimeRepresentation (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ n = x + y ∧ (x + n * y).Prime ∧ (x ^ 2 + n * y ^ 2).Prime
 
 @[category test, AMS 11]
-theorem hasPrimeRepresentation_2 : HasPrimeRepresentation 2 :=
+theorem a_2 : A 2 :=
   ⟨1, 1, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 @[category test, AMS 11]
-theorem hasPrimeRepresentation_5 : HasPrimeRepresentation 5 :=
+theorem a_3 : A 3 :=
+  ⟨2, 1, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_4 : A 4 :=
+  ⟨1, 3, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_5 : A 5 :=
   ⟨3, 2, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 @[category test, AMS 11]
-theorem hasPrimeRepresentation_8 : HasPrimeRepresentation 8 :=
+theorem a_6 : A 6 :=
+  ⟨5, 1, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_8 : A 8 :=
   ⟨5, 3, by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 /--
@@ -56,7 +68,7 @@ theorem hasPrimeRepresentation_8 : HasPrimeRepresentation 8 :=
 $x, y > 0$ such that both $x + ny$ and $x^2 + ny^2$ are prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 < n) : HasPrimeRepresentation n := by
+theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
   sorry
 
 end OeisA232174
