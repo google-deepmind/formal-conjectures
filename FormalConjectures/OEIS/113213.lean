@@ -37,19 +37,19 @@ def a (n : ℕ) : ℕ :=
   s.headD 0
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by native_decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by native_decide
+theorem a_3 : a 3 = 3 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 3 := by native_decide
+theorem a_4 : a 4 = 3 := by decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 9 := by native_decide
+theorem a_5 : a 5 = 9 := by decide
 
 /--
 Conjecture: $a(n) = O(n^3)$.

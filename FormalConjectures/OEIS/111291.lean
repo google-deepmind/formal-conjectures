@@ -41,13 +41,13 @@ def a (n : ℕ) : ℕ :=
   countRefactorableNat (10 ^ n)
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 4 := by native_decide
+theorem a_1 : a 1 = 4 := by rfl
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 16 := by native_decide
+theorem a_2 : a 2 = 16 := by rfl
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 92 := by native_decide

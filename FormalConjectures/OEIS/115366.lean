@@ -41,10 +41,10 @@ def a (n : ℕ) : ℕ :=
       (Finset.Icc 1 (10 ^ n))
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 9 := by native_decide
+theorem a_1 : a 1 = 9 := by decide
 
 /--
 Conjecture: $a(n)$A006880(n) \rightarrow 1.77...$
