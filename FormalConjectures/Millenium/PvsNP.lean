@@ -49,19 +49,16 @@ The type of complexity classes. We define these as sets of decision problems.
 abbrev ComplexityClass := Set DecisionProblem
 
 /--
-`IsPolyTimeWithEncoding ea eb f` asserts that `f` is computable in polynomial time when its
-input and output are encoded via the given `FinEncoding`s `ea` and `eb`.
+`IsPolyTimeWithEncoding ea eb f` asserts that `f` is computable in polynomial time
+when its input and output are encoded via the given `FinEncoding`s `ea` and `eb`.
 -/
 def IsPolyTimeWithEncoding {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
   Nonempty (TM2ComputableInPolyTime ea eb f)
 
 /--
-A function between `BitstringEncoding` types is **polynomial-time computable** when it is
-`IsPolyTimeWithEncoding` for the canonical `Bool`-alphabet encodings of its domain and
-codomain. Keeping the encodings implicit lets complexity-theoretic statements be written
-succinctly, e.g. "integer factorization is in P" is literally `IsPolyTime Nat.primeFactorsList`.
-
-(Mathlib's `TM2ComputableInPolyTime` is restricted to `Type 0`, so this is too.)
+A function is polynomial-time computable when it is `IsPolyTimeWithEncoding`
+for the canonical `Bool`-alphabet encodings of its domain and codomain
+as given by the `BitstringEncoding` typeclass.
 -/
 def IsPolyTime {α β : Type} [BitstringEncoding α] [BitstringEncoding β] (f : α → β) : Prop :=
   IsPolyTimeWithEncoding (BitstringEncoding.toFinEncoding α) (BitstringEncoding.toFinEncoding β) f

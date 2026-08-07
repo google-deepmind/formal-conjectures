@@ -78,28 +78,29 @@ section BitstringEncodings
 /-!
 # Bitstring encodings
 
-This section provides a type`class`-inferrable version of Mathlib's `Computability.Encoding`,
-specialized to the alphabet `Bool`.
-(Note that `Computability.Encoding` itself has undergone a rewrite.)
+This section provides a type`class`-inferrable version of
+Mathlib's `Computability.Encoding`, specialized to the alphabet `Bool`.
+
+(Note that Mathlib#37928 redefined `Computability.Encoding`, see PR for details.)
 
 Making it a `class` makes it easier to quickly ask if a function is computable in polynomial time,
-without having to explicitly pass around the encoding (See `IsPolyTime` in FormalConjectures).
+without having to explicitly pass around the encoding (See `IsPolyTime`).
 
-The idea of this class is to set up instances for common types like Bool, ℕ, ℤ, ℚ,
-and instance derivations for product and list types,
-so that the resulting instance for any common type will be polytime-transcodable
-with any other reasonable binary encoding of that type.
+We set up instances for common types like Bool, ℕ, ℤ, ℚ,
+and instance derivations for `Prod` and `List` types,
+so that we obtain instances for many common types appearing in algorithms and complexity theory.
 
-Thus, while it may not be obvious without looking carefully
+While different references may choose different encodings, generally our encodings should be
+polytime-transcodable with any other reasonable binary encoding for a given type.
+Thus, while it may not be obvious without further examination
 which of several essentially equivalent encodings of a type is being used,
 we can at least be sure that for functions between types with `BitstringEncoding` instances,
-questions of polynomial-time computability are well-defined, in the sense that
-the formalization will capture the intended meaning.
+formalizations of questions of polynomial-time computability will capture the intended meaning.
 -/
 
 /-- A canonical encoding of a type as bitstrings (`List Bool`).
 
-This is a class version of Mathlib's (bundled) `Computability.Encoding`, specialized to the
+This is a class version of Mathlib v4.32's `Computability.Encoding`, specialized to the
 alphabet `Bool`. -/
 class BitstringEncoding (α : Type*) where
   /-- The encoding function. -/
@@ -278,7 +279,7 @@ instance [BitstringEncoding α] : BitstringEncoding (List α) where
     exact decodeAll_map_encode l
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
-defining predicate. This yields encodings for `ℕ+` and friends for free. -/
+defining predicate. -/
 instance {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
     BitstringEncoding (Subtype p) where
   encode x := encode x.val
