@@ -185,7 +185,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Problem Title
@@ -358,10 +358,11 @@ Any user can add or remove certain labels on pull requests and issues by
 leaving a comment. The supported labels are: `awaiting-author`, `WIP`, `Easy`,
 and `documentation`.
 
-- **To add a label**: Leave a comment with the exact label name on a line by
-  itself. For example:
+- **To add a label**: Leave a comment with `+` followed by the exact label
+  name on a line by itself. For compatibility, the exact label name without
+  `+` also works. For example:
   ```text
-  awaiting-author
+  +awaiting-author
   ```
 - **To remove a label**: Leave a comment with `-` followed by the exact label
   name on a line by itself. For example:

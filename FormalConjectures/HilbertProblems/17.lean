@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Hilbert's 17th problem
@@ -31,8 +31,6 @@ $f = g_1^2 + g_2^2 + \cdots + g_m^2$. Resolved affirmatively by Artin in 1927.
 open Real MvPolynomial
 
 namespace Hilbert17
-
-abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
 
 /--
 Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# Theorem 4
+# First Proof, Theorem 4
 
 *Reference:* [arxiv/2602.05192v2](https://arxiv.org/abs/2602.05192v2)
 **First Proof**
@@ -27,7 +27,6 @@ by *Mohammed Abouzaid, Andrew J. Blumberg, Martin Hairer, Joe Kileel, Tamara G. 
 open Polynomial Finset ENNReal
 open scoped Nat
 
-open Classical
 
 namespace Arxiv.«2602.05192»
 
