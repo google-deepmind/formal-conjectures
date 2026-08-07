@@ -99,7 +99,8 @@ Tsimerman–Wang–Matchett Wood, [*Remarks on the disproof of the unit distance
 unit distance problem*](https://arxiv.org/abs/2605.20579) (2026); see
 `erdos_90.variants.sawin_explicit` below.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+"https://github.com/plby/Erdos90"]
 theorem erdos_90.variants.polynomial_lower_bound :
     ∃ c > (0 : ℝ),
       {n : ℕ | (n : ℝ) ^ (1 + c) ≤ (maxUnitDistances n : ℝ)}.Infinite := by
