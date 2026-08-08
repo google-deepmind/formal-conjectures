@@ -19,9 +19,19 @@ import FormalConjecturesUtil
 /-!
 # Minimum modulus for the unique multiset-sum problem
 
-*Reference:* [arxiv/2607.08366](https://arxiv.org/abs/2607.08366)
-**Minimum modulus for the unique multiset-sum problem**
-by *José A. R. Fonollosa*
+*References:*
+- [arxiv/2607.08366](https://arxiv.org/abs/2607.08366)
+  **Minimum modulus for the unique multiset-sum problem**
+  by *José A. R. Fonollosa*
+- [jarfo/min-modulus](https://github.com/jarfo/min-modulus), the author's Lean development of
+  the paper's Main Theorem. Section 7 of the paper describes it.
+
+The paper's Main Theorem and its Conjecture 1 differ in what they quantify over, and only the
+first is proved. Theorems A and B fix the super-increasing set $\{2^k - 1\}$ and pin the least
+modulus at which *it* is valid; Conjecture 1 says no other set of $n$ residues does better.
+`jarfo/min-modulus` covers the Main Theorem, kernel-checked and sorry-free. Conjecture 1 has
+CP-SAT infeasibility certificates per modulus rather than a proof, which is why it is stated
+here as `research open`.
 -/
 
 open Finset
@@ -64,6 +74,13 @@ theorem min_modulus :
 The half of the conjecture that is not in question: the bound is attained, so no smaller
 modulus can be claimed for `n` residues in general. The witness is the super-increasing set
 $\{2^k - 1 : 0 \leq k \leq n - 1\}$.
+
+This is Theorem A, and `theoremA` in [jarfo/min-modulus](https://github.com/jarfo/min-modulus)
+proves it. That development works in `ℕ` with `Nat.ModEq` and indexes the multiset by position
+in `[0, n)`, where this indexes by residue, so the two are the same statement through a
+translation rather than literally. The translation is sound here: the residues $2^k - 1$ for
+$k < n$ are distinct and below $2^n - 2^{\lfloor\log_2 n\rfloor}$, so nothing collapses when
+they are collected into a `Finset (ZMod N)`.
 -/
 @[category research solved, AMS 11]
 theorem exists_isValidMod_minModulus (n : ℕ) (hn : 2 ≤ n) :
