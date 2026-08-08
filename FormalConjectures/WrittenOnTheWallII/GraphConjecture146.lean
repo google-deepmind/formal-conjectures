@@ -56,7 +56,9 @@ graph of $G$.
 We state the inequality in the form
 $\mathrm{tree}(G) \cdot \mathrm{rad}(G^2) \ge 2 \cdot \mathrm{ecc}(B)$ to avoid division.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/Mapika/formal-conjectures/blob/60a80606e38cb743326b70defe2cfe55f5b9fc1f/FormalConjectures/WrittenOnTheWallII/GraphConjecture146Proof.lean"]
 theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hrad : 0 < graphSquareRadius G) :
     2 * eccSet G (maxEccentricityVertices G : Set α) ≤
