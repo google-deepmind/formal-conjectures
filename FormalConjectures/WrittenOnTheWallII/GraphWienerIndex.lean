@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Wiener Index Conjecture
@@ -45,7 +45,7 @@ independence number: `wienerIndex(G) ≥ (n choose 2) + α(G) − 1`.
 
 namespace WrittenOnTheWallII.GraphWienerIndex
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphMode
+import FormalConjecturesUtil
 
 /-!
 # Graph Even Mode-Min Count Invariant
@@ -46,15 +45,9 @@ statistics with neighbourhood invariants.
 
 namespace WrittenOnTheWallII.GraphEvenModeMin
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphMode
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The number of vertices whose degree equals `modeDegreeMin G` **and** is even.
-When `modeDegreeMin G` is odd, every vertex counted by `modeDegreeMin G` has an
-odd degree, so `evenModeMinCount G = 0`. -/
-noncomputable def evenModeMinCount (G : SimpleGraph α) : ℕ :=
-  (Finset.univ.filter (fun v => G.degree v = modeDegreeMin G ∧ Even (G.degree v))).card
 
 /--
 **WOWII-style open conjecture**: For a simple connected graph `G`,
@@ -78,7 +71,7 @@ theorem evenModeMinCount_indepNum_bound (G : SimpleGraph α) [DecidableRel G.Adj
 3 vertices qualify; `evenModeMinCount K₃ = 3`. -/
 @[category test, AMS 5]
 example : evenModeMinCount (⊤ : SimpleGraph (Fin 3)) = 3 := by
-  unfold evenModeMinCount modeDegreeMin maxDegreeCount degreeCount
+  unfold evenModeMinCount modeDegreeMin maxDegreeCount countDegreeK
   sorry
 
 /-- In the path `P₃` (0–1–2), degrees are `[1, 2, 1]`.  `modeDegreeMin P₃ = 1`
@@ -87,12 +80,12 @@ qualifies; `evenModeMinCount P₃ = 0`. -/
 @[category test, AMS 5]
 example : evenModeMinCount
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 0 := by
-  unfold evenModeMinCount modeDegreeMin maxDegreeCount degreeCount
+  unfold evenModeMinCount modeDegreeMin maxDegreeCount countDegreeK
   sorry
 
 /-- `evenModeMinCount` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) : 0 ≤ evenModeMinCount G :=
+example (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] : 0 ≤ evenModeMinCount G :=
   Nat.zero_le _
 
 end WrittenOnTheWallII.GraphEvenModeMin

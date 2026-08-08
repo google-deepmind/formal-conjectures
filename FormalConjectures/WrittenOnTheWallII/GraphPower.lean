@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Power and Radius of Power
@@ -44,24 +44,9 @@ the former.
 
 namespace WrittenOnTheWallII.GraphPower
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **k-th power** of a graph `G`: vertices `u` and `v` are adjacent iff
-`u ≠ v` and `G.dist u v ≤ k`.  For `k = 0` this gives the empty graph; for `k = 1`
-it coincides with `G` on connected components (any walk of length ≤ 1 is an edge). -/
-noncomputable def graphPower (G : SimpleGraph α) (k : ℕ) : SimpleGraph α where
-  Adj u v := u ≠ v ∧ G.dist u v ≤ k
-  symm u v h := by
-    obtain ⟨hne, hdist⟩ := h
-    exact ⟨hne.symm, dist_comm (G := G) ▸ hdist⟩
-  loopless v h := h.1 rfl
-
-/-- The radius of the k-th power of `G`, i.e., the minimum eccentricity of
-`graphPower G k`. -/
-noncomputable def radiusOfPower (G : SimpleGraph α) (k : ℕ) : ℕ :=
-  (graphPower G k).radius.toNat
 
 /--
 WOWII-style conjecture: for a connected graph `G` and any `k ≥ 1`,

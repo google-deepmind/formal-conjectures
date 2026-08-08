@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Arboricity and the Nash-Williams Formula
@@ -41,16 +41,9 @@ We state the classical upper bound `a(G) ≤ ⌈Δ(G) / 2⌉ + 1`
 
 namespace WrittenOnTheWallII.GraphArboricity
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **arboricity** of `G` is the minimum number of forests whose edge-union
-covers `G`.  Each forest is represented as a `SimpleGraph α` with `IsAcyclic`.
-The value is `0` for the edgeless graph and `∞`-safe via `sInf`. -/
-noncomputable def arboricity (G : SimpleGraph α) : ℕ :=
-  sInf {k | ∃ F : Fin k → SimpleGraph α,
-    (∀ i, (F i).IsAcyclic) ∧ G ≤ ⨆ i, F i}
 
 /-- **Nash-Williams formula** (1964) — resolved.
 

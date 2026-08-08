@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Metric Dimension of Graphs
@@ -41,20 +41,9 @@ We also state the trivial resolved lower bound `dim(G) ≥ 1` for `|V(G)| ≥ 2`
 
 namespace WrittenOnTheWallII.GraphMetricDimension
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- A set `R` of vertices **resolves** the graph `G` if, for every pair of
-distinct vertices `u ≠ v`, some `r ∈ R` has `dist(u, r) ≠ dist(v, r)`. -/
-def IsResolvingSet (G : SimpleGraph α) (R : Finset α) : Prop :=
-  ∀ u v : α, u ≠ v → ∃ r ∈ R, G.dist u r ≠ G.dist v r
-
-/-- The **metric dimension** of `G`: the minimum size of a resolving set.
-Returns 0 when no resolving set exists (e.g., `G` has ≤ 1 vertex), which is
-consistent since `sInf ∅ = 0` for `ℕ`. -/
-noncomputable def metricDimension (G : SimpleGraph α) : ℕ :=
-  sInf {k | ∃ R : Finset α, R.card = k ∧ IsResolvingSet G R}
 
 /-- **Metric dimension lower bound** — resolved.
 

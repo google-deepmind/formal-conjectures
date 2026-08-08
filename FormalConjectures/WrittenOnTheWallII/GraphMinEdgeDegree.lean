@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Minimum Edge Degree Conjecture
@@ -43,17 +43,9 @@ This is a strengthening of the greedy bound `α ≥ n / (1 + Δ)` since
 
 namespace WrittenOnTheWallII.GraphMinEdgeDegree
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **minimum edge degree** of `G` is the minimum over all edges `uv` of
-`min(deg(u), deg(v))`.  Returns 0 if `G` has no edges. -/
-noncomputable def minEdgeDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  if h : G.edgeFinset.Nonempty then
-    G.edgeFinset.inf' h (fun e =>
-      e.lift ⟨fun u v => min (G.degree u) (G.degree v), fun u v => by simp [min_comm]⟩)
-  else 0
 
 /-- For a connected graph `G`, the independence number satisfies
 `α(G) ≥ n(G) / (1 + minEdgeDegree(G))`.

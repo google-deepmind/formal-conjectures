@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Isoperimetric Number (Cheeger Constant) of a Graph
@@ -46,25 +46,9 @@ has a small boundary.
 
 namespace WrittenOnTheWallII.GraphIsoperimetric
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- The **edge boundary cardinality** `|∂(S)|`: the number of edges of `G` with
-exactly one endpoint in `S`. -/
-noncomputable def edgeBoundaryCard (G : SimpleGraph α) [DecidableRel G.Adj]
-    (S : Finset α) : ℕ :=
-  (G.edgeFinset.filter (fun e =>
-    Sym2.lift ⟨fun u v => (u ∈ S) ≠ (v ∈ S), fun u v => by simp [Iff.comm]⟩ e)).card
-
-/-- The **isoperimetric number** (Cheeger constant) `h(G)`:
-  `h(G) = inf { |∂(S)| / |S| | S ⊆ V, S ≠ ∅, 2·|S| ≤ n }`.
-
-We take the infimum over nonempty vertex subsets `S` satisfying `2 · |S| ≤ n`
-of the ratio `|∂(S)| / |S|` as a real number. -/
-noncomputable def isoperimetricNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  sInf {r | ∃ S : Finset α, S.Nonempty ∧ 2 * S.card ≤ Fintype.card α ∧
-    r = (edgeBoundaryCard G S : ℝ) / (S.card : ℝ)}
 
 /-- **Maximum-degree upper bound** (resolved): `h(G) ≤ Δ(G)`.
 

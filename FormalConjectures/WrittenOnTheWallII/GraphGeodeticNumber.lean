@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Geodetic Number of Graphs
@@ -47,24 +47,9 @@ graphs with at least 2 vertices, and the Graffiti.pc-style upper bound
 
 namespace WrittenOnTheWallII.GraphGeodeticNumber
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- A set `S` is a **geodetic set** of `G` if every vertex `v` lies on a
-shortest `u`-`w` path for some `u, w ∈ S`.
-
-A walk `p` is a shortest path from `u` to `w` if it is a path and its length
-equals `G.dist u w`. -/
-def IsGeodeticSet (G : SimpleGraph α) (S : Finset α) : Prop :=
-  ∀ v : α, ∃ u ∈ S, ∃ w ∈ S,
-    ∃ p : G.Walk u w, p.IsPath ∧ p.length = G.dist u w ∧ v ∈ p.support
-
-/-- The **geodetic number** of `G`: the minimum size of a geodetic set.
-Returns 0 when no geodetic set exists; for any connected graph with ≥ 2 vertices
-the value is at least 2. -/
-noncomputable def geodeticNumber (G : SimpleGraph α) : ℕ :=
-  sInf {k | ∃ S : Finset α, S.card = k ∧ IsGeodeticSet G S}
 
 /-- **Geodetic number lower bound** — resolved.
 

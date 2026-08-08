@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Median Degree Invariant
@@ -42,21 +42,9 @@ sorted degree sequence is at least 1; in particular the middle entry is ≥ 1.
 
 namespace WrittenOnTheWallII.GraphMedianDegree
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **median degree** of `G`.
-
-We form the list of degrees of all vertices, sort it in non-decreasing order, and
-return the element at position `Fintype.card α / 2`.  When the graph has no
-vertices the degree list is empty; we return 0 in that case. -/
-noncomputable def medianDegree (G : SimpleGraph α) : ℕ :=
-  if Fintype.card α = 0 then 0
-  else
-    let degList : List ℕ := Finset.univ.toList.map (fun v => G.degree v)
-    let sorted : List ℕ := degList.mergeSort (· ≤ ·)
-    sorted.getD (Fintype.card α / 2) 0
 
 /--
 **WOWII-style conjecture**: For a simple connected graph `G` with at least
@@ -91,7 +79,7 @@ example : medianDegree
 
 /-- `medianDegree` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 5)) : 0 ≤ medianDegree G :=
+example (G : SimpleGraph (Fin 5)) [DecidableRel G.Adj] : 0 ≤ medianDegree G :=
   Nat.zero_le _
 
 end WrittenOnTheWallII.GraphMedianDegree

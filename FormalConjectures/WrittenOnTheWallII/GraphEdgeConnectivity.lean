@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Edge Connectivity
@@ -51,20 +51,9 @@ disconnects at most `α(G)` vertices.
 
 namespace WrittenOnTheWallII.GraphEdgeConnectivity
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **edge connectivity** `λ(G)` of a simple graph `G`.
-
-We define it as the minimum size of a set of edges `F ⊆ E(G)` whose removal
-renders `G` disconnected.  If no such set exists (i.e., `G` has ≤ 1 vertex or
-is already disconnected), we define `λ(G) = 0`. -/
-noncomputable def edgeConnectivity (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  sInf { k | ∃ F : Finset (Sym2 α),
-    F.card = k ∧
-    (↑F : Set (Sym2 α)) ⊆ G.edgeSet ∧
-    ¬ (G.deleteEdges ↑F).Connected }
 
 /--
 **Classical bound:** `λ(G) ≤ δ(G)`.

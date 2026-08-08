@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # distOdd Invariant and WOWII Conjecture
@@ -51,26 +51,18 @@ from any fixed vertex in one part; so `distOdd` tracks the "opposite part" size.
 
 namespace WrittenOnTheWallII.GraphDistOdd
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-/-- `distOdd G v` counts the number of vertices at odd distance from `v` in `G`.
-Note: since `G.dist v v = 0` is even, `v` itself is never counted here. -/
-noncomputable def distOdd (G : SimpleGraph α) (v : α) : ℕ :=
-  (Finset.univ.filter (fun w => Odd (G.dist v w))).card
-
-/-- `distEven G v` counts the number of vertices at even distance from `v` in `G`,
-including `v` itself (at distance 0). -/
-noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
-  (Finset.univ.filter (fun w => Even (G.dist v w))).card
-
-/-- For any vertex `v`, `distEven G v + distOdd G v = Fintype.card α`:
-every vertex is at either even or odd distance from `v`. -/
+/-- For any vertex `v`, the number of vertices at even distance from `v`
+(including `v` itself, at distance 0) plus `distOdd G v` equals the total number
+of vertices: every vertex is at either even or odd distance from `v`. -/
 @[category research solved, AMS 5]
-theorem distEven_add_distOdd (G : SimpleGraph α) (v : α) :
-    distEven G v + distOdd G v = Fintype.card α := by
-  unfold distEven distOdd
+theorem card_even_dist_add_distOdd (G : SimpleGraph α) (v : α) :
+    (Finset.univ.filter (fun w => Even (G.dist v w))).card + distOdd G v =
+      Fintype.card α := by
+  unfold distOdd
   rw [← Finset.card_union_of_disjoint]
   · rw [← Finset.filter_or]
     congr 1
@@ -112,10 +104,11 @@ example : distOdd (⊤ : SimpleGraph (Fin 3)) 0 = 2 := by
   unfold distOdd
   sorry
 
-/-- `distEven K₃ 0 + distOdd K₃ 0 = 3 = Fintype.card (Fin 3)`. -/
+/-- `distOdd` never exceeds the number of vertices. -/
 @[category test, AMS 5]
-example : distEven (⊤ : SimpleGraph (Fin 3)) 0 + distOdd (⊤ : SimpleGraph (Fin 3)) 0 = 3 := by
-  have := distEven_add_distOdd (⊤ : SimpleGraph (Fin 3)) 0
-  simpa using this
+example (G : SimpleGraph (Fin 3)) (v : Fin 3) : distOdd G v ≤ 3 := by
+  have := card_even_dist_add_distOdd G v
+  simp only [Fintype.card_fin] at this
+  omega
 
 end WrittenOnTheWallII.GraphDistOdd
