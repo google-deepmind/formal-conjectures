@@ -42,7 +42,7 @@ is the *total* number of reduction steps until *every* entry is zero, whereas $k
 only requires that *some* entry has hit zero — and a $0$ typically appears well
 before the all-zero state is reached.
 
-**Conjecture 291:** For a simple connected graph $G$ with $n > 2$,
+**Conjecture 291:** For a simple connected graph $G$,
 $\gamma_t(G) \le k + \mathrm{frequency}(t_{\min}(v))$
 where $\gamma_t(G)$ is the total domination number, $k$ is the Havel-Hakimi zero
 step, and $\mathrm{frequency}(t_{\min}(v))$ is the number of vertices achieving
@@ -96,7 +96,7 @@ noncomputable def havelHakimiZeroStep (G : SimpleGraph α) [DecidableRel G.Adj] 
 /--
 WOWII [Conjecture 291](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph $G$ with $n > 2$,
+For a simple connected graph $G$,
 $\gamma_t(G) \le k + \mathrm{frequency}(t_{\min}(v))$
 where:
 
@@ -106,8 +106,7 @@ where:
   minimum triangle count.
 -/
 @[category research open, AMS 5]
-theorem conjecture291 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
-    (hn : 2 < Fintype.card α) :
+theorem conjecture291 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     G.totalDominationNumber ≤
     havelHakimiZeroStep G + freqMinTriangles G := by
   sorry
