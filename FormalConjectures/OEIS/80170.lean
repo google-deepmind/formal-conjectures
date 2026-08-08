@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import Mathlib.Algebra.IsPrimePow
 
 /-!
 # Conjecture relating two characterizations of a set of integers.
 
 Informal Statement:
-For an integer $k ≥ 2$, the following are equivalent:
+For an integer $k \ge 2$, the following are equivalent:
 
 1. The greatest common divisor of the binomial coefficients
     $\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 
-2. Writing prime factorization of k as
+2. Writing prime factorization of $k$ as
     $k = \prod p_i^{e_i}$, and let
     $P = \max_i p_i^{e_i}$,
     one has $k / P > P$.
@@ -34,7 +34,7 @@ For an integer $k ≥ 2$, the following are equivalent:
 This conjecture asserts that the sequence defined by 1. is obtained by
 taking 1 off each number in the sequence defined by 2.
 
-*Reference:*
+*References:*
 - [A80170](https://oeis.org/A80170)
 - [A51283](https://oeis.org/A51283)
 -/
@@ -45,16 +45,31 @@ namespace OeisA80170
 The gcd of the binomial coefficients
 $\binom{2k}{k}, \binom{3k}{k}, \dots, \binom{(k+1)k}{k} = 1$.
 -/
-def GCDCondition (k : ℕ) : Prop :=
+def A (k : ℕ) : Prop :=
   (Finset.range k).gcd (fun i => Nat.choose ((i + 2) * k) k) = 1
 
 /--
-Let P be the largest prime power dividing `k`.
+Let $P$ be the largest prime power dividing `k`.
 Then $k / P > P$.
 -/
-def PrimePowerCondition (k : ℕ) : Prop :=
+def B (k : ℕ) : Prop :=
   let P := ((Nat.divisors k).filter IsPrimePow).max.getD 0
   k / P > P
+
+@[category test, AMS 11]
+theorem a_2 : ¬A 2 := by unfold A; decide
+
+@[category test, AMS 11]
+theorem a_3 : ¬A 3 := by unfold A; decide
+
+@[category test, AMS 11]
+theorem a_4 : ¬A 4 := by unfold A; decide
+
+@[category test, AMS 11]
+theorem a_5 : ¬A 5 := by unfold A; decide
+
+@[category test, AMS 11]
+theorem a_6 : ¬A 6 := by unfold A; decide
 
 /--
 Conjecture: The gcd condition is equivalent to the prime power condition.
@@ -71,7 +86,7 @@ by the KLMM MechMath Agent Team; see the `formal_proof` attribute.
 formal_proof using formal_conjectures at
 "https://github.com/guodk/formal-conjectures/blob/0720658844d76a50d48e4baa152eef14d4462907/FormalConjectures/OEIS/80170.lean#L1823"]
 theorem gcdCondition_iff_primePowerCondition (k : ℕ) (hk : 2 ≤ k) :
-    GCDCondition k ↔ PrimePowerCondition (k + 1) := by
+    A k ↔ B (k + 1) := by
   sorry
 
 end OeisA80170
