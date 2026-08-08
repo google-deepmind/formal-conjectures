@@ -36,8 +36,11 @@ cycles in $G$ then can $\min(m_{i+1}-m_i)$ be arbitrarily large?
 The answer is no: Bondy and Vince [BoVi98] proved that every graph with minimum degree at least $3$
 has two cycles whose lengths differ by at most $2$, and hence the same is true for every graph with
 chromatic number $4$.
+
+This was formalized in Lean by SpringSense Innovation Institute using ChatGPT.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+"https://github.com/SpringSense-Innovation-Institute/ai-for-math-lean/blob/main/erdos-problems/erdos751/Erdos751/Main.lean"]
 theorem erdos_751.parts.i :
     answer(False) ↔
       ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
