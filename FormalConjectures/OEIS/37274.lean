@@ -71,6 +71,11 @@ theorem primeFactorSplice_55 : primeFactorSplice 55 = 511 := by
 theorem primeFactorSplice_511 : primeFactorSplice 511 = 773 := by
   norm_num [primeFactorSplice, decimalAppend, decimalDigitCount, Nat.primeFactorsList]
 
+/-- A prime is a fixed point of prime-factor splicing. -/
+@[category test, AMS 11]
+theorem primeFactorSplice_prime {p : ℕ} (hp : p.Prime) : primeFactorSplice p = p := by
+  simp [primeFactorSplice, Nat.primeFactorsList_prime hp, decimalAppend]
+
 /-- The trajectory from $25$ reaches the prime $773$ after three steps. -/
 @[category test, AMS 11]
 theorem reachesPrime_25 : ReachesPrime 25 := by
