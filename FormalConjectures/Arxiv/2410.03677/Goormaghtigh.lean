@@ -19,9 +19,9 @@ import FormalConjecturesUtil
 /-!
 # The Goormaghtigh conjecture
 
-A repunit is a number whose digits in some base are all $1$. The Goormaghtigh conjecture says that
-$31$ and $8191$ are the only numbers having nontrivial repunit representations in two different
-bases.
+A repunit is a number whose digits in some base are all $1$. Here a nontrivial representation has
+at least three digits. The Goormaghtigh conjecture says that $31$ and $8191$ are the only numbers
+having nontrivial repunit representations in two different bases.
 
 *Reference:*
 * J. Grantham,
@@ -57,6 +57,11 @@ theorem isGoormaghtighNumber_31 : IsGoormaghtighNumber 31 := by
 @[category test, AMS 11]
 theorem isGoormaghtighNumber_8191 : IsGoormaghtighNumber 8191 := by
   refine ⟨2, 90, 13, 3, ?_⟩
+  norm_num [repunit]
+
+/-- Allowing two-digit repunits would make $13$ a representation in two distinct bases. -/
+@[category test, AMS 11]
+theorem repunit_two_digits : repunit 3 3 = 13 ∧ repunit 12 2 = 13 := by
   norm_num [repunit]
 
 end Goormaghtigh
