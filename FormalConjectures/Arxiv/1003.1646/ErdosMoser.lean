@@ -53,4 +53,9 @@ theorem powerSum_one_three : powerSum 1 3 = 3 ^ 1 := by
 theorem powerSum_two_three : powerSum 2 3 = 5 ∧ powerSum 2 3 ≠ 3 ^ 2 := by
   decide
 
+/-- Zero is a solution for every positive exponent, so the conjecture must require $m>0$. -/
+@[category test, AMS 11]
+theorem powerSum_zero (k : ℕ) (hk : 0 < k) : powerSum k 0 = 0 ^ k := by
+  simp [powerSum, Nat.zero_pow hk]
+
 end ErdosMoser
