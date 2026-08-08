@@ -26,12 +26,8 @@ import FormalConjecturesUtil
 - [jarfo/min-modulus](https://github.com/jarfo/min-modulus), the author's Lean development of
   the paper's Main Theorem. Section 7 of the paper describes it.
 
-The paper's Main Theorem and its Conjecture 1 differ in what they quantify over, and only the
-first is proved. Theorems A and B fix the super-increasing set $\{2^k - 1\}$ and pin the least
-modulus at which *it* is valid; Conjecture 1 says no other set of $n$ residues does better.
-`jarfo/min-modulus` covers the Main Theorem, kernel-checked and sorry-free. Conjecture 1 has
-CP-SAT infeasibility certificates per modulus rather than a proof, which is why it is stated
-here as `research open`.
+The paper's Main Theorem fixes the super-increasing set $\{2^k - 1\}$ and pins the least modulus
+at which *it* is valid. Conjecture 1 says no other set of $n$ residues does better, and is open.
 -/
 
 open Finset
@@ -59,10 +55,8 @@ $N < 2^n - 2^{\lfloor \log_2 n\rfloor}$, no set of $n$ residues mod $N$ is valid
 Equivalently the super-increasing set $\{2^k - 1 : 0 \leq k \leq n-1\}$ attains the least
 valid modulus, which is `minModulus n`.
 
-`0 < N` is needed and not decoration. `minModulus 2 = 2`, so the range includes `N = 0`, and
-`ZMod 0` is `ℤ` rather than a finite modulus: `{1, 2} ⊆ ℤ` has two elements and the only way
-to pick two of them summing to `3` is one of each, so it is valid and the statement would be
-false there for a reason that has nothing to do with the question.
+`0 < N` excludes `N = 0`, where `ZMod 0` is `ℤ` rather than a finite modulus and `{1, 2}` is
+valid, which would make the statement false for a reason unrelated to the question.
 -/
 @[category research open, AMS 11]
 theorem min_modulus :
@@ -71,18 +65,13 @@ theorem min_modulus :
   sorry
 
 /--
-The half of the conjecture that is not in question: the bound is attained, so no smaller
-modulus can be claimed for `n` residues in general. The witness is the super-increasing set
-$\{2^k - 1 : 0 \leq k \leq n - 1\}$.
-
-This is Theorem A, and `theoremA` in [jarfo/min-modulus](https://github.com/jarfo/min-modulus)
-proves it. That development works in `ℕ` with `Nat.ModEq` and indexes the multiset by position
-in `[0, n)`, where this indexes by residue, so the two are the same statement through a
-translation rather than literally. The translation is sound here: the residues $2^k - 1$ for
-$k < n$ are distinct and below $2^n - 2^{\lfloor\log_2 n\rfloor}$, so nothing collapses when
-they are collected into a `Finset (ZMod N)`.
+**Theorem A (Fonollosa, 2026).** `minModulus n` admits a valid set of `n` residues, the
+super-increasing set $\{2^k - 1 : 0 \leq k \leq n - 1\}$. This bounds the least valid modulus
+from above; that no smaller modulus works is the open half, stated in `min_modulus`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/jarfo/min-modulus/blob/e7c78dd63955092b5f8d8a5fa826476337c0f4be/MinModulus/UniqueSums.lean#L837-L838"]
 theorem exists_isValidMod_minModulus (n : ℕ) (hn : 2 ≤ n) :
     ∃ A : Finset (ZMod (minModulus n)), #A = n ∧ IsValidMod A := by
   sorry
