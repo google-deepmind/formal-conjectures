@@ -203,9 +203,9 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
-/-- The set of distances determined by a finite set of points in the plane. -/
-noncomputable def distanceSet (points : Finset ℝ²) : Finset ℝ :=
-  points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2
+/-- The set of distances determined by a finite set of points in a metric space. -/
+noncomputable def distanceSet {E : Type*} [MetricSpace E] (points : Finset E) : Finset ℝ :=
+  points.offDiag.image fun (pair : E × E) => dist pair.1 pair.2
 
 /-- The multiplicity of the distance `d` determined by `points`, that is, the number of unordered
 pairs of distinct points at distance `d` apart. -/
@@ -213,10 +213,11 @@ noncomputable def distanceMultiplicity (points : Finset ℝ²) (d : ℝ) : ℕ :
   #(points.offDiag.filter fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2 = d) / 2
 
 /--
-Given a finite set of points in the plane, we define the number of distinct distances between pairs
-of points.
+Given a finite set of points in a metric space, we define the number of distinct distances
+between pairs of points.
 -/
-noncomputable def distinctDistances (points : Finset ℝ²) : ℕ := #(distanceSet points)
+noncomputable def distinctDistances {E : Type*} [MetricSpace E] (points : Finset E) : ℕ :=
+  #(distanceSet points)
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.
