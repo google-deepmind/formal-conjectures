@@ -19,7 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 80
 
-*Reference:* [erdosproblems.com/80](https://www.erdosproblems.com/80)
+*References:*
+- [erdosproblems.com/80](https://www.erdosproblems.com/80)
+- [erdosproblems.com/600](https://www.erdosproblems.com/600), stated in
+  `FormalConjectures/ErdosProblems/600.lean`
+
+600 asks the same question from the other side. `Erdos600.eFunction n r` is the least edge
+count forcing some edge into `r` triangles; `f c n` here is the largest book forced once the
+edge count is at least $cn^2$. So `r ≤ f c n` and `Erdos600.eFunction n r ≤ c * n^2` say the
+same thing, and the two functions are inverse to each other in that sense. Both are built on
+`SimpleGraph.trianglesContaining`, which 600 introduced.
 -/
 
 open Filter Finset SimpleGraph
@@ -70,8 +79,8 @@ The weaker question from the same problem: is $f_c(n) \gg \log n$?
 -/
 @[category research open, AMS 5]
 theorem erdos_80.variants.log :
-    answer(sorry) ↔ ∀ c : ℝ, 0 < c → ∃ C > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
-      C * Real.log n ≤ f c n := by
+    answer(sorry) ↔ ∀ c : ℝ, 0 < c →
+      (fun n : ℕ ↦ (f c n : ℝ)) ≫ (fun n : ℕ ↦ Real.log n) := by
   sorry
 
 omit [DecidableEq α] in
