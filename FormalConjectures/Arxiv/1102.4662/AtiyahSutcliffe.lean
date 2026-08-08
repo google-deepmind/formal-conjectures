@@ -69,6 +69,18 @@ theorem directionLift_xAxis :
   simp [directionLift]
 
 @[category test, AMS 51 70]
+theorem linearFactor_directionLift_ne_zero (v : Point) :
+    linearFactor (directionLift v) ≠ 0 := by
+  rw [directionLift]
+  split
+  · intro h
+    have := congrArg (MvPolynomial.coeff (Finsupp.single 0 1)) h
+    simp [linearFactor, coeff_X'] at this
+  · intro h
+    have := congrArg (MvPolynomial.coeff (Finsupp.single 1 1)) h
+    simp [linearFactor, coeff_X', Finsupp.single_eq_single_iff] at this
+
+@[category test, AMS 51 70]
 theorem onePoint_polynomial (x : Fin 1 → Point) : pointPolynomial x 0 = 1 := by
   simp [pointPolynomial]
 
