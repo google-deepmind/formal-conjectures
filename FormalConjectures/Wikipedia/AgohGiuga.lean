@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Agoh-Giuga conjecture
@@ -50,7 +50,7 @@ def AgohGiugaCongr : Prop :=
 
 /--
 The **Agoh-Giuga Conjecture**, Giuga's formulation.
-An integer `p ≥ 2` is prime if and only if it satifies the congruence
+An integer `p ≥ 2` is prime if and only if it satisfies the congruence
 `∑_{i=1}^{p-1} i^{p-1} ≡ -1 [MOD p]`.
 -/
 def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
@@ -249,7 +249,7 @@ theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
 Then for `X` larger than an absolute constant which can be made

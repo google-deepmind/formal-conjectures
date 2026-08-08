@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Moving Sofa Problem
@@ -207,7 +207,7 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
 
 /-- What is the sofa constant? -/
 @[category research solved, AMS 49]
-theorem sofaConstant_eq : sofaConstant = answer(sorry) := by
+theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/

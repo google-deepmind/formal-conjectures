@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1092
@@ -26,7 +26,6 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1092
 
-open Classical
 open SimpleGraph
 open Finset
 open Asymptotics
