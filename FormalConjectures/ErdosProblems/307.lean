@@ -89,4 +89,19 @@ theorem erdos_307.barrier {P Q : Finset ℕ}
     59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
+/--
+A stronger machine-checked **barrier** (Bonfioli, 2026), closing the 59-prime level: any solution of
+Erdős 307 in fact uses at least `60` primes in total. The full `sorry`-free proof is `erdos307_sixty`
+in the linked repository (`Sixty.lean` at tag `v1.1.1`); its only non-logical input is a `native_decide`
+depth-first search establishing that no admissible 59-prime support survives the Pythagorean
+`plus`-value square test, with axioms `propext, Classical.choice, Quot.sound` together with that
+`native_decide`.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ElVec1o/erdos307/blob/v1.1.1/lean/Erdos307/Sixty.lean"]
+theorem erdos_307.barrier_sixty {P Q : Finset ℕ}
+    (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime)
+    (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
+    60 ≤ #(P ∪ Q) := by
+  sorry
+
 end Erdos307
