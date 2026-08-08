@@ -49,9 +49,11 @@ theorem erdos_367.parts.i : answer(sorry) ↔ ∀ k : ℕ, 1 ≤ k →
 
 /--
 Or perhaps even $\prod_{n \leq m < n+k} B_2(m) \ll_k n^2$?
+
+van Doorn notes in the comments that this fails for all $k \geq 3$.
 -/
-@[category research open, AMS 11]
-theorem erdos_367.parts.ii : answer(sorry) ↔ ∀ k : ℕ, 1 ≤ k →
+@[category research solved, AMS 11]
+theorem erdos_367.parts.ii : answer(False) ↔ ∀ k : ℕ, 1 ≤ k →
     (fun n ↦ ((∏ m ∈ .Ico n (n + k), B 2 m : ℕ) : ℝ)) =O[atTop]
       fun n ↦ (n : ℝ) ^ (2 : ℝ) := by
   sorry
