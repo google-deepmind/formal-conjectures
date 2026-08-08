@@ -55,22 +55,37 @@ def HasMicroscopicWeighting (X : Type*) [Fintype X] [DecidableEq X] [MetricSpace
   ∃ w : X → ℝ, Tendsto (weighting X) (𝓝[>] 0) (𝓝 w)
 
 /-- `g` is a *gauging* for `M` with concentration `c`: it sums to `1` and `M g` is the constant
-vector `c`. -/
+vector `c`. This is Definition 2.3 of the source, which states it for symmetric `M`. -/
 def IsGauging (M : Matrix X X ℝ) (g : X → ℝ) (c : ℝ) : Prop :=
   ∑ i, g i = 1 ∧ M *ᵥ g = Function.const X c
+
+omit [DecidableEq X] [Nonempty X] [MetricSpace X] in
+/-- All gaugings of a symmetric matrix share one concentration, so $\mathrm{con}$ is an
+attribute of the matrix. The source records this after Definition 2.3, as the calculation
+$c = c\mathbf{1}^T v' = (v^TA^T)v' = v^T(c'\mathbf{1}) = c'$, and Definition 2.4 rests on it. -/
+@[category textbook, AMS 15]
+theorem concentration_unique {M : Matrix X X ℝ} (hM : M.IsSymm) {g g' : X → ℝ} {c c' : ℝ}
+    (h : IsGauging M g c) (h' : IsGauging M g' c') : c = c' := by
+  obtain ⟨hs, hg⟩ := h
+  obtain ⟨hs', hg'⟩ := h'
+  have key : g' ⬝ᵥ (M *ᵥ g) = (M *ᵥ g') ⬝ᵥ g := by
+    rw [dotProduct_mulVec, ← mulVec_transpose, hM.eq]
+  rw [hg, hg'] at key
+  simpa [dotProduct, Function.const, ← Finset.sum_mul, ← Finset.mul_sum, hs, hs'] using key
 
 /-- `M` has finite concentration, written $\mathrm{con}(M) \neq \infty$ in the source: some
 gauging for `M` exists.
 
-The source defines $\mathrm{con}(M)$ as the concentration of a gauging and sets it to $\infty$
-when there is none, so `con(M) ≠ ∞` is exactly this. Phrasing it as existence avoids having to
-say which value $\mathrm{con}$ takes when different gaugings give different constants. -/
+Definition 2.4 sets $\mathrm{con}(M)$ to the concentration of any gauging, and to $\infty$ when
+there is none, so `con(M) ≠ ∞` is exactly this. Stating it as existence keeps the value of
+$\mathrm{con}$ out of the statement; `concentration_unique` above is what makes that value
+well defined in the first place. -/
 def HasFiniteConcentration (M : Matrix X X ℝ) : Prop :=
   ∃ g c, IsGauging M g c
 
 /--
-**Conjecture (Roff-Willerton, 2026).** A finite metric space admits a microscopic weighting if
-and only if its distance matrix has finite concentration.
+**Conjecture 3.3 (Roff-Willerton, 2026).** A finite metric space admits a microscopic weighting
+if and only if its distance matrix has finite concentration.
 
 `Nonempty` is needed and not just tidiness. On the empty space every gauging condition fails,
 since `∑ i, g i` is `0` rather than `1`, while `X → ℝ` is a subsingleton so the weighting
@@ -84,8 +99,8 @@ theorem microscopic_weighting_iff_finite_concentration :
   sorry
 
 /--
-One direction is known: infinite concentration rules a microscopic weighting out. Together with
-the conjecture above this leaves the converse, that finite concentration is enough.
+One direction is known: a microscopic weighting implies finite concentration (Theorem 3.1(3)).
+Together with the conjecture above this leaves the converse, that finite concentration is enough.
 -/
 @[category research solved, AMS 15 51]
 theorem hasFiniteConcentration_of_hasMicroscopicWeighting
@@ -93,7 +108,8 @@ theorem hasFiniteConcentration_of_hasMicroscopicWeighting
   sorry
 
 /--
-The conjecture is known when the distance matrix is invertible.
+Theorem 3.8: the conjecture is known when the distance matrix is invertible, and the microscopic
+weighting is then the unique gauging.
 -/
 @[category research solved, AMS 15 51]
 theorem hasMicroscopicWeighting_iff_of_isUnit (h : IsUnit (distanceMatrix X).det) :
