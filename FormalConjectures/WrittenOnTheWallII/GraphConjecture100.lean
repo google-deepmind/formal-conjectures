@@ -26,27 +26,18 @@ import FormalConjecturesUtil
 
 The WOWII HTML uses `length(Ḡ)` (the bar denotes graph complement); the
 extracted JSON in our private repo previously dropped the overline. The
-formal statement below uses the diameter of `Gᶜ`.
+formal statement below uses the Euclidean norm of the degree sequence of `Gᶜ`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-## Definitional choice
+## Definition of graph length
 
-DeLaVina does not give a stand-alone definition for `length(H)` on the WOWII
-page. We interpret it as the **diameter** of `H` (the maximum eccentricity,
-i.e. `H.ediam`), which is the most natural graph-theoretic notion
-of "length" of a graph. Combined with the overline above, the inequality reads:
-  `α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(Gᶜ)) / 2⌉`
-where `l(v) = indepNeighbors G v` and `diam(Gᶜ) = Gᶜ.ediam.toNat`.
-
-## Connectedness of the complement
-
-When `Gᶜ` is **disconnected**, `Gᶜ.ediam = ⊤` and
-`Gᶜ.ediam.toNat = 0`, so the right-hand side silently degenerates
-to `⌈max_v l(v) / 2⌉` — a much weaker (and often vacuously false) statement
-than the conjecture intends. We therefore add the hypothesis `hGc : Gᶜ.Connected`
-so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
+The WOWII definitions popup defines `length(H)` as the square root of the sum
+of the squares of the vertex degrees. This is `degreeL2Norm H` in Lean.
+Combined with the overline above, the inequality reads:
+  `α(G) ≤ ⌈(max_v l(v) + 0.5 · degreeL2Norm(Gᶜ)) / 2⌉`
+where `l(v) = indepNeighbors G v`.
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture100
@@ -60,21 +51,14 @@ WOWII [Conjecture 100](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.h
 (status O):
 
 For a simple connected graph `G`,
-`α(G) ≤ ⌈(max_v l(v) + 0.5 · diam(Gᶜ)) / 2⌉`
+`α(G) ≤ ⌈(max_v l(v) + 0.5 · degreeL2Norm(Gᶜ)) / 2⌉`
 where `α(G) = G.indepNum` is the independence number,
 `max_v l(v)` is the maximum over all vertices of the independence number of
-the neighbourhood (in `G`), and `diam(Gᶜ)` is the diameter of the
-complement `Gᶜ`.
-
-**Note:** `length(Ḡ)` in DeLaVina's original is interpreted here as the
-diameter of the complement. The hypothesis `hGc : Gᶜ.Connected` is added so
-that `diam(Gᶜ)` is finite (otherwise `Gᶜ.ediam = ⊤` and
-`Gᶜ.ediam.toNat` collapses silently to `0`); see the module
-docstring above.
+the neighbourhood (in `G`), and `degreeL2Norm(Gᶜ)` is the square root of the
+sum of the squares of the degrees in the complement `Gᶜ`.
 -/
 @[category research open, AMS 5]
-theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
-    (hGc : Gᶜ.Connected) :
+theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     (G.indepNum : ℝ) ≤ ⌈((maxL : ℝ) + (1 / 2) * (degreeL2Norm Gᶜ : ℝ)) / 2⌉ := by
   sorry
@@ -85,9 +69,8 @@ theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ G.indepNum := Nat.zero_le _
 
-/-- `ediam` on a two-vertex complete graph is `⊤` since all eccentricities
-are computed via `sSup` and the distance between the two vertices is 1. -/
+/-- The Euclidean norm of the degree sequence is nonnegative. -/
 @[category test, AMS 5]
-example : 0 ≤ (⊤ : SimpleGraph (Fin 2)).ediam.toNat := Nat.zero_le _
+example (G : SimpleGraph (Fin 2)) : 0 ≤ degreeL2Norm G := Real.sqrt_nonneg _
 
 end WrittenOnTheWallII.GraphConjecture100
