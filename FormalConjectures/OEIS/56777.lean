@@ -24,7 +24,8 @@ $\sigma(n+12) = \sigma(n) + 12$.
 The conjectures state identities connecting A56777 and prime quadruples (A7530), as
 well as congruences satisfied by the members of A56777.
 
-*Reference:* [A56777](https://oeis.org/A56777)
+*References:*
+- [A56777](https://oeis.org/A56777)
 -/
 
 namespace OeisA56777
@@ -107,6 +108,12 @@ theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
       simpa using this
     rw [e1, e2, e6, e8]
     ring
+
+/-- $11009$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_11009 : A 11009 := by
+  apply a_of_comesFromPrimeQuadruple
+  exact ⟨101, by decide, by decide, by decide, by decide, by rfl⟩
 
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]

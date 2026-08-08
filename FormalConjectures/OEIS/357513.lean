@@ -22,7 +22,8 @@ import FormalConjecturesUtil
 $a(n)$ is the numerator of $\sum_{k = 1}^n \frac{1}{k^3} \binom{n}{k}^2 \binom{n+k}{k}^2$ for $n \ge 1$
 with $a(0) = 0$.
 
-*Reference:* [A357513](https://oeis.org/A357513)
+*References:*
+- [A357513](https://oeis.org/A357513)
 -/
 namespace OeisA357513
 
@@ -71,7 +72,7 @@ proved by AlphaProof
 -/
 @[category research solved, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
-theorem a357513_supercongruence (p : ℕ) (hp : Nat.Prime p) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
+theorem a357513_supercongruence (p : ℕ) (hp : p.Prime) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
     (a (p - 1) : ℤ) ≡ 0 [ZMOD (p : ℤ) ^ 4] := by
   sorry
 
