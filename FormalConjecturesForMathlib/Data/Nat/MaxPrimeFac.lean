@@ -31,6 +31,13 @@ def maxPrimeFac (n : ℕ) : ℕ := n.primeFactorsList.getLastI
 lemma maxPrimeFac_eq_getLastI (n : ℕ) :
     maxPrimeFac n = n.primeFactorsList.getLastI := rfl
 
+example : maxPrimeFac 0 = 0 := by decide +kernel
+example : maxPrimeFac 1 = 0 := by decide +kernel
+example : maxPrimeFac 12 = 3 := by decide +kernel
+example : maxPrimeFac 97 = 97 := by decide +kernel
+example : maxPrimeFac 125 = 5 := by decide +kernel
+example : maxPrimeFac 360 = 5 := by decide +kernel
+
 @[simp]
 lemma maxPrimeFac_zero :
     maxPrimeFac 0 = 0 := by
