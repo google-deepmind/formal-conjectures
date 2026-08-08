@@ -108,12 +108,30 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
      1,  1, -1,  -1,  1,  1,  -1, -1,  1,  -1,  1, -1;
      1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
      1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
+set_option maxHeartbeats 1600000 in
 /--
 which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  have hmul : H12.transpose * H12 = (12 : ℝ) • (1 : Matrix (Fin 12) (Fin 12) ℝ) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [H12, Matrix.mul_apply, Matrix.transpose_apply, Fin.sum_univ_succ,
+        Matrix.smul_apply, Matrix.one_apply]
+  constructor
+  · intro i j
+    fin_cases i <;> fin_cases j <;> norm_num [H12]
+  · have hdet : H12.det ^ 2 = (12 : ℝ) ^ 12 := by
+      have h1 : (H12.transpose * H12).det = (12 : ℝ) ^ 12 := by
+        rw [hmul, Matrix.det_smul, Matrix.det_one]
+        simp
+      rwa [Matrix.det_mul, Matrix.det_transpose, ← sq] at h1
+    have habs : |H12.det| = (2985984 : ℝ) := by
+      have h2 : ((12 : ℝ) ^ 12) = (2985984 : ℝ) ^ 2 := by norm_num
+      rw [← Real.sqrt_sq_eq_abs, hdet, h2, Real.sqrt_sq (by norm_num : (0:ℝ) ≤ 2985984)]
+    rw [habs, show ((12 : ℕ) : ℝ) / 2 = ((6 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
+    norm_num
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
