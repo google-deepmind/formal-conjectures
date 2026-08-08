@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
-import FormalConjecturesUtil.Attributes.Basic
-import FormalConjecturesUtil.Answer
+public import Lean
+public import FormalConjecturesUtil.Attributes.Basic
+public import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
@@ -39,6 +40,8 @@ non-Prop answer metadata). Otherwise, `answer(sorry)` simplifies to `True` durin
 default elaboration, and `answerKinds` will always be extracted as `[]` for `Prop`
 valued answers.
 -/
+
+@[expose] public meta section
 
 open Lean ProblemAttributes Google
 
@@ -113,8 +116,8 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "fileFirstAdded",
-   "fileLastModified"]
+   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "proofConditions",
+   "fileFirstAdded", "fileLastModified"]
 
 structure TheoremInfo where
   «theorem» : String
@@ -128,6 +131,7 @@ structure TheoremInfo where
   hasSorryFreeProof : Bool
   subsets : List String
   answerKinds : List String
+  proofConditions : List String
   fileFirstAdded : Option String
   fileLastModified : Option String
 
@@ -150,6 +154,8 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
+    ++ (if exclude.contains "proofConditions" || info.proofConditions.isEmpty then [] else
+        [("proofConditions", toJson info.proofConditions)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
     ++ (if exclude.contains "fileLastModified" then [] else
@@ -301,6 +307,10 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
+              -- The unproven hypotheses a conditional formal proof assumes,
+              -- as declaration names.
+              let proofConditions :=
+                ((formalProofMap.get? name).map (·.conditions.map Name.toString)).getD []
               -- Determine answerKinds from the elaborated type
               let answerKinds ← Meta.MetaM.run'
                 (getAnswerKinds info.type)
@@ -318,6 +328,7 @@ unsafe def main (args : List String) : IO Unit := do
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
                 answerKinds := answerKinds
+                proofConditions := proofConditions
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified
               } :: allResults

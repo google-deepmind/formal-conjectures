@@ -23,12 +23,12 @@ public import Mathlib.Tactic.IntervalCases
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
+  open scoped Classical in
   if h : S.toFinset.Nonempty then
     (S.toFinset.image (fun s => G.dist v s)).min' (Finset.Nonempty.image h _)
   else 0
@@ -47,27 +47,27 @@ def isInducedPath (G : SimpleGraph α) (l : List α) : Prop :=
 
 /-- The path number of a graph: The number of vertices of a largest induced path of the graph. -/
 noncomputable def path (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   let induced_paths := Finset.univ.filter (fun s : Finset α =>
     ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
   (induced_paths.image Finset.card).max.getD 0
 
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
   if h : s_comp.Nonempty then
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
-/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
-$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
-vertex outside $S$).
-
-Counterpart to `ecc`: the outer minimum (instead of maximum) of the
-distance-to-set function, restricted to vertices outside $S$. -/
+/-- The minimum distance between distinct vertices of $S$:
+$\min \{\operatorname{dist}_G(u, v) \mid u, v \in S, u \ne v\}$. Returns `0` when $S$
+contains fewer than two vertices. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let outside := Finset.univ.filter (fun v : α => v ∉ S)
-  if h : outside.Nonempty then
-    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  open scoped Classical in
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => G.dist p.1 p.2)).min' (Finset.Nonempty.image h _)
   else 0
 
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
@@ -76,11 +76,23 @@ which contribute distance `0`.) Returns `0` when `S` is empty.
 
 Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
 not exclude any vertex; it is the conventional definition of "set eccentricity"
-used in DeLaVina's WOWII conjectures 18, 145 and 146.
+used in DeLaVina's WOWII conjectures 142, 145 and 146.
 -/
 noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let dists := Finset.univ.image (fun v => distToSet G v S)
   if h : dists.Nonempty then dists.max' h else 0
+
+/-- The maximum distance between two vertices of a set `S`:
+$\operatorname{dist}_{\max}(S) = \max\{\operatorname{dist}_G(u,v) \mid u, v \in S\}$.
+Returns `0` when `S` is empty or a singleton.
+
+This is DeLaVina's `dist_max(S)` invariant ("distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 18. It is distinct from
+`eccSet`, which measures distances from arbitrary vertices *to* the set. -/
+noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
+  let members := Finset.univ.filter (fun v : α => v ∈ S)
+  (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
@@ -139,6 +151,13 @@ Returns 0 if u = v or if v is unreachable from u. -/
 def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
   if u = v then 0
   else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
+
+/-- A computable version of `distMin` for a `Finset` of vertices. -/
+def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
+  let pairs := (S ×ˢ S).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => computable_dist G p.1 p.2)).min' (Finset.Nonempty.image h _)
+  else 0
 
 /-- Computable average distance as a rational. -/
 def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
@@ -275,6 +294,22 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
             · exact h_not_found d (by omega)
             · subst hd; rwa [h_inv] at hv)
           (by omega)
+
+/-- `computableDistMin` agrees with `distMin` on a finite vertex set. -/
+theorem distMin_eq_computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj]
+    (S : Finset α) : distMin G (S : Set α) = computableDistMin G S := by
+  unfold distMin computableDistMin
+  simp only [Finset.toFinset_coe]
+  split_ifs
+  · congr 1
+    ext n
+    simp only [Finset.mem_image]
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, (dist_eq_computable G p.1 p.2).symm⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, dist_eq_computable G p.1 p.2⟩
+  · rfl
 
 theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     averageDistance G = (computable_avg_dist G : ℝ) := by

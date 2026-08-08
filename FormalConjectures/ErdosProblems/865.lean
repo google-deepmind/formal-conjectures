@@ -36,8 +36,13 @@ size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a
 
 A problem of Erdős and Sós (also earlier considered by Choi, Erdős, and Szemerédi [CES75], but Erdős
 had forgotten this).
+
+This is true. The linked proof gives it in the contrapositive and with the constant cleared:
+every triple-free $A\subseteq\{1,\ldots,N\}$ satisfies $8\lvert A\rvert\leq 5N+C$ for a fixed
+$C$, for every $N$ rather than only for large $N$. It also shows the threshold is sharp, by
+exhibiting triple-free sets of size $(5N+16)/8$ for every $N$ divisible by $8$.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/865/Erdos865.lean"]
 theorem erdos_865 :
     ∃ C > 0, ∀ᶠ (N : ℕ) in atTop,
       ∀ A ⊆ Icc 1 N, A.card ≥ (5 / 8 : ℝ) * N + C →

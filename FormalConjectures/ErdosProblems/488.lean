@@ -22,7 +22,6 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/488](https://www.erdosproblems.com/488)
 -/
 
-open Classical
 
 namespace Erdos488
 
