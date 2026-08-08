@@ -49,6 +49,11 @@ theorem isWilsonPrime_five : IsWilsonPrime 5 := by
 theorem isWilsonPrime_thirteen : IsWilsonPrime 13 := by
   norm_num [IsWilsonPrime, Nat.factorial]
 
+/-- The primality condition excludes $1$, which satisfies the divisibility condition alone. -/
+@[category test, AMS 11]
+theorem not_isWilsonPrime_one : ¬ IsWilsonPrime 1 := by
+  norm_num [IsWilsonPrime]
+
 /-- The prime $7$ is not a Wilson prime. -/
 @[category test, AMS 11]
 theorem not_isWilsonPrime_seven : ¬ IsWilsonPrime 7 := by
