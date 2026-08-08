@@ -55,6 +55,23 @@ def LargeDifferencePattern (P : ℤ → Prop) : Prop :=
       (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
         ∃ d ∈ differenceSet A, P d
 
+/-- Without "sufficiently large `N`" the question is false for every `c`:
+`A = {1} ⊆ [1]` has `|A| = 1 = 1 ^ (1 - c)` and `A - A = {0}`. -/
+@[category test, AMS 5 11]
+theorem not_forall_of_isNonzeroSquare :
+    ¬ ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ N : ℕ, ∀ A : Finset ℤ,
+      A ⊆ interval N → (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
+        ∃ d ∈ differenceSet A, IsNonzeroSquare d := by
+  rintro ⟨c, -, -, h⟩
+  obtain ⟨d, ⟨a, ha, b, hb, rfl⟩, n, hn, hdn⟩ :=
+    h 1 {1} (by decide) (by norm_num [Real.one_rpow])
+  simp only [Finset.mem_singleton] at ha hb
+  subst ha
+  subst hb
+  rw [eq_comm] at hdn
+  simp at hdn
+  exact hn hdn
+
 /--
 Is there `c > 0` such that every sufficiently large subset `A ⊆ [N]` of size at least
 `N^(1-c)` has a difference that is a nonzero square?
