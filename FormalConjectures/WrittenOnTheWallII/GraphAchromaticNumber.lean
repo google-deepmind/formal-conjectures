@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Achromatic Number
@@ -47,20 +47,9 @@ exists.
 
 namespace WrittenOnTheWallII.GraphAchromaticNumber
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- A **complete proper `k`-coloring**: a proper vertex coloring `c : V → Fin k`
-such that every pair of distinct color classes is connected by at least one edge. -/
-def IsCompleteProperColoring (G : SimpleGraph α) {k : ℕ} (c : α → Fin k) : Prop :=
-  (∀ u v : α, G.Adj u v → c u ≠ c v) ∧
-  (∀ i j : Fin k, i ≠ j → ∃ u v : α, c u = i ∧ c v = j ∧ G.Adj u v)
-
-/-- The **achromatic number** `ψ(G)`: the maximum number of colors in a
-complete proper coloring. -/
-noncomputable def achromaticNumber (G : SimpleGraph α) : ℕ :=
-  sSup {k | ∃ c : α → Fin k, IsCompleteProperColoring G c}
 
 /-- **Lower bound** (resolved): `χ(G) ≤ ψ(G)`.
 

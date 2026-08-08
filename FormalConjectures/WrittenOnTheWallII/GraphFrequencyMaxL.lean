@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 209
@@ -38,18 +38,9 @@ edge count of the complement of `G`.
 
 namespace WrittenOnTheWallII.GraphFrequencyMaxL
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The maximum value of `indepNeighborsCard G v` over all vertices `v`. -/
-noncomputable def maxLValue (G : SimpleGraph α) : ℕ :=
-  Finset.univ.sup (indepNeighborsCard G)
-
-/-- The number of vertices `v` that achieve the maximum value of
-`indepNeighborsCard G v`. This is the "frequency of `λ_max(G)`". -/
-noncomputable def frequencyMaxL (G : SimpleGraph α) : ℕ :=
-  (Finset.univ.filter (fun v => indepNeighborsCard G v = maxLValue G)).card
 
 /--
 WOWII [Conjecture 209](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj209)
@@ -74,8 +65,8 @@ theorem conjecture209 (G : SimpleGraph α)
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) : 0 ≤ frequencyMaxL G := Nat.zero_le _
 
-/-- `maxLValue` is nonneg. -/
+/-- `maxLocalIndependence` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ maxLValue G := Nat.zero_le _
+example (G : SimpleGraph (Fin 3)) : 0 ≤ maxLocalIndependence G := Nat.zero_le _
 
 end WrittenOnTheWallII.GraphFrequencyMaxL

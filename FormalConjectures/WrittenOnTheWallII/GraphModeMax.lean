@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.WrittenOnTheWallII.GraphMode
+import FormalConjecturesUtil
 
 /-!
 # Graph Degree Mode Maximum Invariant
@@ -25,7 +24,7 @@ import FormalConjectures.WrittenOnTheWallII.GraphMode
 
 ## Definitions
 
-For a graph `G`, recall that `degreeCount G d` is the number of vertices having
+For a graph `G`, recall that `countDegreeK G d` is the number of vertices having
 degree exactly `d`, and `maxDegreeCount G` is the mode frequency (the highest
 frequency among all degree values).
 
@@ -46,16 +45,9 @@ picks the *smallest* such degree.
 
 namespace WrittenOnTheWallII.GraphModeMax
 
-open Classical SimpleGraph WrittenOnTheWallII.GraphMode
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The largest degree value achieving the mode frequency.
-Defined as the supremum of the set of modal degree values (those `d` for which
-`degreeCount G d = maxDegreeCount G`).  When the graph has no vertices the set
-may be empty; by convention `sSup ℕ ∅ = 0`. -/
-noncomputable def modeDegreeMax (G : SimpleGraph α) : ℕ :=
-  sSup {d | degreeCount G d = maxDegreeCount G}
 
 /--
 **modeDegreeMin ≤ modeDegreeMax** (trivially true).
@@ -88,17 +80,17 @@ theorem modeDegreeMin_add_modeDegreeMax_compl (G : SimpleGraph α) [DecidableRel
 /-- In `K₃`, every vertex has degree 2.  So `modeDegreeMax K₃ = 2`. -/
 @[category test, AMS 5]
 example : modeDegreeMax (⊤ : SimpleGraph (Fin 3)) = 2 := by
-  unfold modeDegreeMax maxDegreeCount degreeCount
+  unfold modeDegreeMax maxDegreeCount countDegreeK
   sorry
 
 /-- `modeDegreeMin ≤ modeDegreeMax` holds trivially for any graph. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) : modeDegreeMin G ≤ modeDegreeMax G := by
+example (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] : modeDegreeMin G ≤ modeDegreeMax G := by
   sorry
 
 /-- `modeDegreeMax` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ modeDegreeMax G :=
+example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] : 0 ≤ modeDegreeMax G :=
   Nat.zero_le _
 
 end WrittenOnTheWallII.GraphModeMax

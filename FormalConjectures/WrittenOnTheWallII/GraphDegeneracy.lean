@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Degeneracy and the Coloring Bound
@@ -39,19 +39,9 @@ The bound is tight: for the complete graph `Kₙ`, `d(Kₙ) = n − 1` and `χ(K
 
 namespace WrittenOnTheWallII.GraphDegeneracy
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **degeneracy** of `G`: the maximum, over all nonempty induced subgraphs `H`,
-of the minimum degree of `H`.
-
-We take the supremum over all nonempty vertex subsets `S : Finset α` of
-`minDegree(G[S])`.  For the empty set we contribute 0 so the `sup` is over a
-nonempty domain (`Finset.univ` includes `∅`). -/
-noncomputable def degeneracy (G : SimpleGraph α) : ℕ :=
-  Finset.univ.sup (fun S : Finset α =>
-    if S.Nonempty then (G.induce (S : Set α)).minDegree else 0)
 
 /-- **Degeneracy coloring bound** — resolved (greedy coloring).
 

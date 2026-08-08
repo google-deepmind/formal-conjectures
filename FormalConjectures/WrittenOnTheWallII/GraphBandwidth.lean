@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Bandwidth
@@ -48,19 +48,9 @@ at least `(n − 1) / diam(G)`.
 
 namespace WrittenOnTheWallII.GraphBandwidth
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **bandwidth** of `G` is the minimum, over all bijections
-`f : α ≃ Fin (Fintype.card α)`, of the maximum edge label-difference.
-
-`sInf` over a set of natural numbers returns 0 when the set is empty;
-here the set is always nonempty because `Fin (Fintype.card α)` is in bijection
-with `α` (via `Fintype.equivFin`), so the bandwidth is well-defined. -/
-noncomputable def bandwidth (G : SimpleGraph α) : ℕ :=
-  sInf {k | ∃ f : α ≃ Fin (Fintype.card α),
-    ∀ u v : α, G.Adj u v → (Int.natAbs ((f u : ℤ) - (f v : ℤ))) ≤ k}
 
 /-- **Diameter lower bound for bandwidth** — resolved.
 

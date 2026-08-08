@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Odd Girth Conjecture
@@ -42,15 +42,9 @@ roughly `oddGirth / (oddGirth − 1) + 1`.  In particular, for `oddGirth = 3`
 
 namespace WrittenOnTheWallII.GraphOddGirth
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- The **odd girth** of `G` is the length of a shortest odd-length cycle.
-Returns 0 if `G` has no odd cycle (i.e., `G` is bipartite or acyclic). -/
-noncomputable def oddGirth (G : SimpleGraph α) : ℕ :=
-  let oddCycleLengths := {k | Odd k ∧ ∃ v : α, ∃ w : G.Walk v v, w.IsCycle ∧ w.length = k}
-  if oddCycleLengths.Nonempty then sInf oddCycleLengths else 0
 
 /-- For a non-bipartite connected graph `G`, the chromatic number satisfies
 `χ(G) ≥ (oddGirth(G) + 1) / 2`.

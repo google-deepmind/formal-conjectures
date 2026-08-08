@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Roman Domination Number
@@ -47,19 +47,9 @@ domination number `γ(G)`:
 
 namespace WrittenOnTheWallII.GraphRomanDomination
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- A **Roman dominating function** is a labeling `f : V → Fin 3` (values 0, 1, 2)
-such that every vertex `v` with `f(v) = 0` has a neighbor `w` with `f(w) = 2`. -/
-def IsRomanDominatingFunction (G : SimpleGraph α) (f : α → Fin 3) : Prop :=
-  ∀ v, (f v).val = 0 → ∃ w, G.Adj v w ∧ (f w).val = 2
-
-/-- The **Roman domination number** `γ_R(G)`: the minimum weight of a Roman
-dominating function, where weight = `∑ v, (f v).val`. -/
-noncomputable def romanDominationNumber (G : SimpleGraph α) : ℕ :=
-  sInf {w | ∃ f : α → Fin 3, IsRomanDominatingFunction G f ∧ w = ∑ v, (f v).val}
 
 /-- **Lower bound** (resolved): the Roman domination number is at least the
 ordinary domination number, `γ(G) ≤ γ_R(G)`.

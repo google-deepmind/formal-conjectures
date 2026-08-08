@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Rainbow Connection Number
@@ -47,23 +47,9 @@ unordered pairs; values on non-edges are ignored).
 
 namespace WrittenOnTheWallII.GraphRainbowConnection
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- A `k`-edge-coloring `c : Sym2 α → Fin k` is **rainbow-connected** if for every
-pair of distinct vertices there is a path (as a `Walk`) whose dart-colors are all
-distinct (i.e., the list of colors along the path has no duplicates). -/
-def IsRainbowConnected (G : SimpleGraph α) {k : ℕ} (c : Sym2 α → Fin k) : Prop :=
-  ∀ u v : α, u ≠ v →
-    ∃ p : G.Walk u v, p.IsPath ∧
-      List.Nodup (p.darts.map (fun d => c (Sym2.mk d.toProd)))
-
-/-- The **rainbow connection number** `rc(G)`: the minimum number of colors in a
-rainbow-connected edge-coloring.  The value `sInf ∅ = 0` in Lean's `sInf`
-convention is harmless for disconnected or trivial graphs. -/
-noncomputable def rainbowConnectionNumber (G : SimpleGraph α) : ℕ :=
-  sInf {k | ∃ c : Sym2 α → Fin k, IsRainbowConnected G c}
 
 /-- **Diameter lower bound** (resolved): `diam(G) ≤ rc(G)`.
 

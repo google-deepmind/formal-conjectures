@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Graph Toughness and Chvátal's Conjecture
@@ -48,34 +48,9 @@ which was disproved.  The current open conjecture is that `τ ≥ 3/2` suffices.
 
 namespace WrittenOnTheWallII.GraphToughness
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
-/-- Number of connected components of the induced subgraph of `G` on the set
-of vertices NOT in `S`.  We count equivalence classes of `Reachable` restricted
-to `Sᶜ`. -/
-noncomputable def numComponents (G : SimpleGraph α) (S : Finset α) : ℕ :=
-  Fintype.card (ConnectedComponent (G.induce (↑Sᶜ : Set α)))
-
-/-- The **toughness** `τ(G)` of a simple graph `G`.
-
-For each nonempty proper vertex set `S` such that `G - S` is disconnected,
-we form the ratio `|S| / c(G - S)`.  The toughness is the infimum of these
-ratios.  If no such `S` exists (e.g., `G` is complete or has ≤ 1 vertex),
-the toughness is defined as `Fintype.card α - 1`, matching the convention
-that `Kₙ` has toughness `+∞`.
-
-Note: `numComponents G S = 1` iff `G - S` is connected; we require strictly
-more than one component (i.e. `G - S` is disconnected). -/
-noncomputable def toughness (G : SimpleGraph α) : ℝ :=
-  let separators : Finset (Finset α) :=
-    Finset.univ.powerset.filter (fun S =>
-      S.Nonempty ∧ S ≠ Finset.univ ∧ 2 ≤ numComponents G S)
-  if h : separators.Nonempty then
-    separators.inf' h (fun S => (S.card : ℝ) / (numComponents G S : ℝ))
-  else
-    (Fintype.card α - 1 : ℝ)
 
 /--
 **Chvátal's toughness conjecture (1973)** — open.
