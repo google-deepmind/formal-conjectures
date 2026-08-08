@@ -430,6 +430,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   color: #064e3b;
   border: 1px solid #6ee7b7;
 }
+.cat-conditional { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
 .cat-textbook   { background: var(--cat-grad-bg);   color: #1e40af; border: 1px solid #bfdbfe; }
 .cat-test       { background: var(--cat-other-bg);  color: #374151; border: 1px solid #e5e7eb; }
 .cat-api        { background: var(--cat-other-bg);  color: #374151; border: 1px solid #e5e7eb; }
