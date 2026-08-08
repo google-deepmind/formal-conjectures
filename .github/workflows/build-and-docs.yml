@@ -174,14 +174,22 @@ jobs:
         run: |
           python3 site/fix_literate_html.py _literate_html
 
+      # Only a push writes to the shared cache. An entry saved from anywhere
+      # else is scoped to a ref nothing later restores from, while it takes
+      # 0.37 GB of a 10 GB repository budget that is currently full, evicting
+      # the `main` entries every build falls back to through `restore-keys`.
+      # A pull request entry is visible only to that pull request's own later
+      # runs. A merge queue entry is worse: `gh-readonly-queue/...` is deleted
+      # as soon as the batch merges, so the entry is unreachable the moment it
+      # is written.
       - name: Pack olean cache
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
         run: |
           lake exe cache pack
           ls ~/.cache/mathlib
 
       - name: Save ~/.cache/mathlib
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
         uses: actions/cache/save@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache
