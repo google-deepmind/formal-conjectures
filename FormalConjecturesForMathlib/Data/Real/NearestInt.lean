@@ -24,3 +24,7 @@ public import Mathlib.Data.Real.Basic
 
 /-- The distance from a real number to the nearest integer. -/
 noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|
+
+/-- The distance to the nearest integer is nonnegative. -/
+@[simp]
+theorem distToNearestInt_nonneg (x : ℝ) : 0 ≤ distToNearestInt x := abs_nonneg _

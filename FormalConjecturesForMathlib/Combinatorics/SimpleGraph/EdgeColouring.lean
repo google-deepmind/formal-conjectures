@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.EdgeLabeling
 
 @[expose] public section
 
@@ -29,6 +31,10 @@ the edges of `H` into colour classes indexed by `ι`. The classes must (1) cover
 This unifies the previous local `IsNEdgeColouring` (`ι = Fin n`) and `IsCountableEdgeColouring`
 (`ι = ℕ`) shapes used in `FormalConjectures/ErdosProblems/596.lean`. The two are now special
 cases of `IsEdgeColouring` parameterised by the index type.
+
+`SimpleGraph.TopEdgeLabeling.CliqueFree` is the Ramsey-theoretic condition on the other
+edge-colouring shape Mathlib provides, a labelling of the edges of the complete graph: no
+colour class contains a clique of the given size.
 -/
 
 namespace SimpleGraph
@@ -37,5 +43,10 @@ namespace SimpleGraph
 of `H`: the colour classes cover `H` (`H = ⨆ i, c i`) and are pairwise disjoint. -/
 def IsEdgeColouring {V ι : Type*} (H : SimpleGraph V) (c : ι → SimpleGraph V) : Prop :=
   H = ⨆ i, c i ∧ ∀ i j, i ≠ j → Disjoint (c i) (c j)
+
+/-- A labelling of the edges of the complete graph on `V` by `ι` is `n`-clique-free when no
+colour class contains an `n`-clique, that is, when it admits no monochromatic `n`-clique. -/
+def TopEdgeLabeling.CliqueFree {V ι : Type*} (C : TopEdgeLabeling V ι) (n : ℕ) : Prop :=
+  ∀ i : ι, (C.labelGraph i).CliqueFree n
 
 end SimpleGraph
