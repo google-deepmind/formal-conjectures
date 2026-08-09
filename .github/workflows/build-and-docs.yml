@@ -20,6 +20,9 @@ on:
       - main
       - '*-webtest'
   pull_request:
+  # The merge queue builds the branch as it will land, so the checks below have
+  # to report on it or the queue never dequeues anything.
+  merge_group:
   workflow_dispatch:
     inputs:
       website_only:
@@ -58,15 +61,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Detect whether this is a website-only build (skip slow Lean compilation).
-      # Triggers:
+      # Two independent halves of this job, each with its own switch.
+      #
+      # `website_only` skips the slow Lean compilation and takes the data from
+      # the live site instead. Triggers:
       #   - Branches ending in -webtest
       #   - Manual workflow_dispatch with website_only=true
+      #
+      # `site` builds the website and the literate source pages. Rendering the
+      # literate pages alone takes longer than the Lean build, and a pull
+      # request cannot deploy the result: the `deploy` job below is restricted
+      # to `main` and `-webtest` branches. So a pull request skips it, and it
+      # runs in the merge queue and on `main`, which is where breaking it
+      # would matter. A pull request that changes the site itself still builds
+      # it, so the author sees the failure before the queue does.
       - name: Detect build mode
         id: mode
         env:
           WEBSITE_ONLY: ${{ inputs.website_only }}
           REF_NAME: ${{ github.ref_name }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           if [[ "$WEBSITE_ONLY" == "true" ]] || \
              [[ "$REF_NAME" == *-webtest ]]; then
@@ -75,6 +89,22 @@ jobs:
           else
             echo "website_only=false" >> "$GITHUB_OUTPUT"
           fi
+
+          site=true
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            # A pull request is checked out as a merge commit, so HEAD^1 is the
+            # base and this diff is exactly what the pull request changes. If
+            # that fails for any reason, fall back to building the site.
+            touched=$(git diff --name-only HEAD^1 HEAD -- \
+              site docbuild .github/workflows/build-and-docs.yml 2>/dev/null || echo unknown)
+            if [[ -z "$touched" ]]; then
+              site=false
+              echo "::notice::Pull request leaves the site untouched: validating Lean only."
+            else
+              echo "::notice::Pull request touches the site, building it."
+            fi
+          fi
+          echo "site=$site" >> "$GITHUB_OUTPUT"
 
       - name: Install elan
         if: steps.mode.outputs.website_only != 'true'
@@ -126,7 +156,7 @@ jobs:
           rm -f FormalConjectures/All.lean
 
       - name: Build literate source pages
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1
@@ -140,7 +170,7 @@ jobs:
           lake exe verso-html .lake/build/literate ../_literate_html || true
 
       - name: Post-process literate HTML
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           python3 site/fix_literate_html.py _literate_html
 
@@ -163,19 +193,22 @@ jobs:
         with:
           python-version: '3.12.9'
 
+      # Only the plotting and Verso-fragment scripts need these; the category
+      # check below is standard library only.
       - name: Install Python dependencies
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
 
       - name: Run plotting script
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           mkdir -p site/data
           python site/plot_growth.py
 
       - name: Set up Node.js
+        if: steps.mode.outputs.site == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '18'
@@ -196,7 +229,7 @@ jobs:
         run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
       - name: Extract Verso fragments for website
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
 
@@ -247,6 +280,7 @@ jobs:
           "
 
       - name: Build website
+        if: steps.mode.outputs.site == 'true'
         run: |
           cd site
           node build.js
@@ -255,6 +289,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Assemble deploy artifact
+        if: steps.mode.outputs.site == 'true'
         run: |
           mkdir -p _deploy
           # Website goes at root
@@ -266,6 +301,7 @@ jobs:
 
       - name: Upload deploy artifact
         id: deployment
+        if: steps.mode.outputs.site == 'true'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: _deploy
