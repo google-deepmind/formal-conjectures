@@ -26,7 +26,8 @@ $$S_k(m)=1^k+2^k+\cdots+(m-1)^k.$$
 The Erdős–Moser conjecture says that $S_k(m)=m^k$ has only the solution
 $(k,m)=(1,3)$.
 
-*Reference:*
+*References:*
+* [Wikipedia: Erdős–Moser equation](https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Moser_equation)
 * B. C. Kellner,
   [On stronger conjectures that imply the Erdős–Moser conjecture](https://arxiv.org/abs/1003.1646)
 -/
