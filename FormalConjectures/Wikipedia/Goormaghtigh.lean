@@ -23,7 +23,8 @@ A repunit is a number whose digits in some base are all $1$. Here a nontrivial r
 at least three digits. The Goormaghtigh conjecture says that $31$ and $8191$ are the only numbers
 having nontrivial repunit representations in two different bases.
 
-*Reference:*
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Goormaghtigh_conjecture)
 * J. Grantham,
   [No new Goormaghtigh primes up to $10^{700}$](https://math.colgate.edu/~integers/y98/y98.pdf)
 -/
