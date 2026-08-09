@@ -37,10 +37,13 @@ The answer is no: Bondy and Vince [BoVi98] proved that every graph with minimum 
 has two cycles whose lengths differ by at most $2$, and hence the same is true for every graph with
 chromatic number $4$.
 
-This was formalized in Lean by SpringSense Innovation Institute using ChatGPT.
+`erdos_751.variants.finite` below carries the Lean proof. It assumes a finite vertex type,
+where this quantifies over any `V : Type`, and the two are joined by de Bruijn-Erdős: a graph
+that is not $3$-colourable has a finite subgraph that is not $3$-colourable, and cycles of that
+subgraph are cycles of the whole. Mathlib does not have de Bruijn-Erdős, so that step is not
+formalised here.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-"https://github.com/SpringSense-Innovation-Institute/ai-for-math-lean/blob/main/erdos-problems/erdos751/Erdos751/Main.lean"]
+@[category research solved, AMS 5]
 theorem erdos_751.parts.i :
     answer(False) ↔
       ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
@@ -70,6 +73,24 @@ whose lengths differ by at most $2$.
 @[category research solved, AMS 5]
 theorem erdos_751.variants.bondy_vince {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (hG : 3 ≤ G.minDegree) :
+    ∃ m ∈ G.cycleLengths, ∃ m' ∈ G.cycleLengths, m < m' ∧ m' ≤ m + 2 := by
+  sorry
+
+/--
+The finite case of `erdos_751.parts.i`, which is what the Lean proof establishes: a finite graph
+with chromatic number at least $4$ has two cycles whose lengths differ by $1$ or $2$.
+
+The proof reaches this through a $4$-critical subgraph, which supplies the $2$-connectivity and
+the vertex count its Bondy-Vince step needs on top of minimum degree $3$. Those extra hypotheses
+are why it does not also settle `erdos_751.variants.bondy_vince`, which asks for minimum degree
+$3$ alone.
+
+This was formalized in Lean by SpringSense Innovation Institute using ChatGPT.
+-/
+@[category research solved, AMS 5, formal_proof using lean4 at
+"https://github.com/SpringSense-Innovation-Institute/ai-for-math-lean/blob/ae3ead960a494cf81b28541c477e50997cb03999/erdos-problems/erdos751/Erdos751/Main.lean#L40-L69"]
+theorem erdos_751.variants.finite {V : Type*} [Fintype V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hG : (4 : ℕ∞) ≤ G.chromaticNumber) :
     ∃ m ∈ G.cycleLengths, ∃ m' ∈ G.cycleLengths, m < m' ∧ m' ≤ m + 2 := by
   sorry
 
