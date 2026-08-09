@@ -61,8 +61,11 @@ That $\alpha<2$ was proved by Fomin, Kratsch, Todinca, and Villanger [FKTV08], w
 $\alpha \leq 1.7087$. This was independently studied by Bradač [Br24] (unaware of this earlier
 work), who proved that $\alpha \leq 2^{H(1/3)}\approx 1.8899$, where $H(\cdot)$ is the binary
 entropy function.
+
+This was formalized in Lean by Monticone using Aristotle.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos150.lean"]
 theorem erdos_150 : answer(True) ↔
     ∃ α : ℝ, α < 2 ∧
       Tendsto (fun n : ℕ ↦ (maxMinimalCuts n : ℝ) ^ (1 / n : ℝ)) atTop (𝓝 α) := by

@@ -55,8 +55,11 @@ corresponding lower bound was given by GPT 5.4 Pro and Aristotle; it is now know
 of van Doorn, Li, and Tang [VLT26]) that
 $$f(m) = \min(m, \lceil 2\sqrt{m}\rceil)$$
 for all $m$.
+
+This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+"https://github.com/Woett/Lean-files/blob/main/ErdosProblem650.lean"]
 theorem erdos_650.parts.i (m : ℕ) : f m = min m ⌈2 * Real.sqrt m⌉₊ := by
   sorry
 
@@ -72,8 +75,11 @@ corresponding lower bound was given by GPT 5.4 Pro and Aristotle; it is now know
 of van Doorn, Li, and Tang [VLT26]) that
 $$f(m) = \min(m, \lceil 2\sqrt{m}\rceil)$$
 for all $m$.
+
+This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+"https://github.com/Woett/Lean-files/blob/main/ErdosProblem650.lean"]
 theorem erdos_650.parts.ii : answer(False) ↔ ∀ m : ℕ, (f m : ℝ) ≤ Real.sqrt m := by
   sorry
 

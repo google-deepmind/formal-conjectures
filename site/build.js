@@ -195,6 +195,7 @@ function processEntry(entry) {
     hasFormalProof,
     formalProofKind: entry.formalProofKind || null,
     formalProofLink: entry.formalProofLink || null,
+    proofConditions: entry.proofConditions || [],
   };
 }
 
