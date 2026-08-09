@@ -22,6 +22,7 @@ public import Mathlib.Geometry.Euclidean.Triangle
 public import Mathlib.Data.Set.Card
 public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
+public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
@@ -203,21 +204,10 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
-/-- The set of distances determined by a finite set of points in a metric space. -/
-noncomputable def distanceSet {E : Type*} [MetricSpace E] (points : Finset E) : Finset ℝ :=
-  points.offDiag.image fun (pair : E × E) => dist pair.1 pair.2
-
 /-- The multiplicity of the distance `d` determined by `points`, that is, the number of unordered
 pairs of distinct points at distance `d` apart. -/
 noncomputable def distanceMultiplicity (points : Finset ℝ²) (d : ℝ) : ℕ :=
   #(points.offDiag.filter fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2 = d) / 2
-
-/--
-Given a finite set of points in a metric space, we define the number of distinct distances
-between pairs of points.
--/
-noncomputable def distinctDistances {E : Type*} [MetricSpace E] (points : Finset E) : ℕ :=
-  #(distanceSet points)
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.

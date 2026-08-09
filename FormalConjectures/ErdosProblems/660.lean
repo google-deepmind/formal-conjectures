@@ -45,16 +45,16 @@ Let $x_1, \ldots, x_n \in \mathbb{R}^3$ be the vertices of a convex polyhedron. 
 $$(1 - o(1)) \frac{n}{2}$$
 many distinct distances between the $x_i$?
 
-The $(1 - o(1)) \frac{n}{2}$ lower bound is formalised as: for every $\varepsilon > 0$ there is an
-$N$ such that every set of $n \ge N$ vertices of a convex polyhedron determines at least
+The $(1 - o(1)) \frac{n}{2}$ lower bound is formalised as: for every $\varepsilon > 0$, every set
+of $n$ vertices of a convex polyhedron with $n$ sufficiently large determines at least
 $(1 - \varepsilon) \frac{n}{2}$ distinct distances.
 -/
 @[category research open, AMS 51 52]
 theorem erdos_660 :
     answer(sorry) ↔
-      ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → ∀ P : Finset ℝ³,
+      ∀ ε : ℝ, 0 < ε → ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
         P.card = n → IsPolyhedronVertices P →
-        (1 - ε) * ((n : ℝ) / 2) ≤ (EuclideanGeometry.distinctDistances P : ℝ) := by
+        (1 - ε) * ((n : ℝ) / 2) ≤ (distinctDistances P : ℝ) := by
   sorry
 
 /--
@@ -65,7 +65,7 @@ Altman [Al63].
 theorem erdos_660.variants.altman_planar (n : ℕ) (P : Finset ℝ²)
     (hcard : P.card = n) (hconv : ConvexIndependent ℝ ((↑) : ↥(P : Set ℝ²) → ℝ²))
     (haff : affineSpan ℝ (P : Set ℝ²) = ⊤) :
-    n / 2 ≤ EuclideanGeometry.distinctDistances P := by
+    n / 2 ≤ distinctDistances P := by
   sorry
 
 /--
@@ -76,7 +76,7 @@ distances, but gives no reference.
 theorem erdos_660.variants.Er75f :
     answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
       P.card = n → IsPolyhedronVertices P →
-      c * n ≤ (EuclideanGeometry.distinctDistances P : ℝ) := by
+      c * n ≤ (distinctDistances P : ℝ) := by
   sorry
 
 end Erdos660
