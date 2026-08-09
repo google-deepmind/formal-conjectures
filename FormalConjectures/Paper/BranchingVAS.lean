@@ -79,16 +79,18 @@ inductive Bvas.Reachable {d : ℕ} (b : Bvas d) : (Fin d → ℤ) → Prop
       (hr : r ∈ b.binaryRules) (hcfg : 0 ≤ w) (hw : w = v₁ + v₂ + r) : b.Reachable w
 
 /--
-Is the reachability problem for branching vector addition systems decidable?
+The reachability problem for branching vector addition systems is decidable.
 
 That is, is the predicate taking a branching vector addition system `b` together
-with a target vector `t` and returning whether `t` is reachable in `b` a
-computable predicate?
+with a target vector `t` and returning whether `t` is reachable in `b` is a
+computable predicate.
+
+As of August 2026, the solution is quite recently announced and is not
+yet peer-reviewed.
 -/
-@[category research open, AMS 3 68]
+@[category research solved, AMS 3 68]
 theorem reachability_decidable :
-    answer(sorry) ↔
-      ∀ {d : ℕ}, ComputablePred fun p : Bvas d × (Fin d → ℤ) => p.1.Reachable p.2 := by
+    ∀ {d : ℕ}, ComputablePred fun p : Bvas d × (Fin d → ℤ) => p.1.Reachable p.2 := by
   sorry
 
 /-- Every axiom that is non-negative is reachable. -/
