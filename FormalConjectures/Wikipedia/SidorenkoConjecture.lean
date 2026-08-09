@@ -28,6 +28,8 @@ import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
   *Geom. Funct. Anal.* 22, pp. 1191--1256.
 * [KLL18] Kim, J.H., Lee, C., Lee, J. (2018). "Two approaches to Sidorenko's conjecture."
   *Trans. Amer. Math. Soc.* 370, pp. 8515--8552.
+* [BR65] Blakley, G. R. and Roy, P. (1965). "A Hölder type inequality for symmetric matrices
+  with nonnegative entries." *Proc. Amer. Math. Soc.* 16, pp. 1244--1245.
 -/
 
 open Finset SimpleGraph
@@ -588,5 +590,116 @@ theorem sidorenko_tree {V W : Type} [Fintype V] [Fintype W]
     --
     -- Deferred to a future commit; see `docs/PHASE2_PROOF_ROADMAP.md` §6.
     sorry
+
+/- ## Further variants of Sidorenko's conjecture -/
+
+/--
+**Case: complete bipartite graphs `K_{s,t}` (Sidorenko 1993).**
+
+Sidorenko's inequality holds when `H = K_{s,t}` is a complete bipartite graph. This is one
+of the earliest known cases; it follows from repeated applications of the Cauchy–Schwarz /
+Hölder inequality. The `s = t = 2` instance is `sidorenko_K22`.
+
+*Reference:* [Si93].
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_conjecture.variants.complete_bipartite (s t : ℕ)
+    [DecidableRel (completeBipartiteGraph (Fin s) (Fin t)).Adj]
+    {W : Type} [Fintype W] [DecidableEq W] [Nonempty W]
+    (G : SimpleGraph W) [DecidableRel G.Adj] :
+    homDensity (completeGraph (Fin 2)) G ^
+        ((completeBipartiteGraph (Fin s) (Fin t)).edgeFinset.card) ≤
+      homDensity (completeBipartiteGraph (Fin s) (Fin t)) G := by
+  sorry
+
+/--
+**Case: even cycles `C_{2k}` (Sidorenko 1993).**
+
+Sidorenko's inequality holds for every even cycle `C_{2k}` with `k ≥ 2`
+(`cycleGraph (2 * k)`). Even cycles are bipartite; the `k = 2` case `C_4` coincides
+with `K_{2,2}` (`sidorenko_K22`).
+
+*Reference:* [Si93].
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_conjecture.variants.even_cycle (k : ℕ) (hk : 2 ≤ k)
+    {W : Type} [Fintype W] [DecidableEq W] [Nonempty W]
+    (G : SimpleGraph W) [DecidableRel G.Adj] :
+    homDensity (completeGraph (Fin 2)) G ^
+        ((cycleGraph (2 * k)).edgeFinset.card) ≤
+      homDensity (cycleGraph (2 * k)) G := by
+  sorry
+
+/--
+**Case: paths, the Blakley–Roy inequality (1965).**
+
+For the path `P_n` on `n` vertices (`pathGraph n`), Sidorenko's inequality
+`t(K_2, G)^{e(P_n)} ≤ t(P_n, G)` is the Blakley–Roy inequality, established well before
+Sidorenko's general conjecture. Paths are trees, so this is also a special case of
+`sidorenko_tree`.
+
+*Reference:* [BR65].
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_conjecture.variants.path_blakley_roy (n : ℕ)
+    [DecidableRel (pathGraph n).Adj]
+    {W : Type} [Fintype W] [DecidableEq W] [Nonempty W]
+    (G : SimpleGraph W) [DecidableRel G.Adj] :
+    homDensity (completeGraph (Fin 2)) G ^ ((pathGraph n).edgeFinset.card) ≤
+      homDensity (pathGraph n) G := by
+  sorry
+
+/--
+**Bipartiteness is necessary: the triangle is not a Sidorenko graph.**
+
+The hypothesis `H.IsBipartite` in `sidorenko_conjecture` cannot be dropped. For the
+triangle `H = K_3` (chromatic number `3`, hence not bipartite) and the single edge
+`G = K_2`, Sidorenko's inequality fails: the putative lower bound is
+`t(K_2, K_2)^{e(K_3)} = (1/2)^3 = 1/8`, while the actual density is `t(K_3, K_2) = 0`,
+because there is no graph homomorphism from `K_3` into the triangle-free graph `K_2`
+(such a homomorphism would be an injection `Fin 3 ↪ Fin 2`). So the lower bound `1/8`
+strictly exceeds the true value `0`.
+
+More generally, any `H` containing an odd cycle fails Sidorenko's inequality against a
+suitable bipartite `G`, since then `t(H, G) = 0 < t(K_2, G)^{e(H)}`.
+-/
+@[category research solved, AMS 5]
+theorem sidorenko_conjecture.variants.non_bipartite_necessary :
+    homDensity (completeGraph (Fin 3)) (completeGraph (Fin 2)) <
+      homDensity (completeGraph (Fin 2)) (completeGraph (Fin 2)) ^
+        ((completeGraph (Fin 3)).edgeFinset.card) := by
+  -- `e(K_3) = 3`.
+  have hK3edges : (completeGraph (Fin 3)).edgeFinset.card = 3 := by
+    rw [SimpleGraph.card_edgeFinset_completeGraph_fin]; decide
+  -- `t(K_2, K_2) = homCount(K_2, K_2) / 2^2 = 2 / 4 = 1/2`.
+  have hRHSbase : homDensity (completeGraph (Fin 2)) (completeGraph (Fin 2)) = 1 / 2 := by
+    unfold homDensity
+    rw [homCount_completeGraph_fin_two_eq_two_mul_card_edgeFinset,
+      SimpleGraph.card_edgeFinset_completeGraph_fin]
+    simp only [Fintype.card_fin, Nat.choose_self]
+    norm_num
+  -- `t(K_3, K_2) = 0`: there is no homomorphism `K_3 →g K_2`.
+  have hLHS : homDensity (completeGraph (Fin 3)) (completeGraph (Fin 2)) = 0 := by
+    have hempty : IsEmpty (completeGraph (Fin 3) →g completeGraph (Fin 2)) := by
+      refine ⟨fun f => ?_⟩
+      -- Any homomorphism into a complete graph is injective on adjacent (i.e. distinct) vertices.
+      have hinj : Function.Injective (f : Fin 3 → Fin 2) := by
+        intro a b hab
+        by_contra hne
+        have hadj : (completeGraph (Fin 3)).Adj a b := by
+          rw [completeGraph_eq_top, top_adj]; exact hne
+        have hadj' : (completeGraph (Fin 2)).Adj (f a) (f b) := f.map_adj hadj
+        exact hadj'.ne hab
+      have hle := Fintype.card_le_of_injective _ hinj
+      simp only [Fintype.card_fin] at hle
+      omega
+    have hcount : homCount (completeGraph (Fin 3)) (completeGraph (Fin 2)) = 0 := by
+      haveI := hempty
+      simp [homCount]
+    unfold homDensity
+    rw [hcount]
+    simp
+  rw [hLHS, hK3edges, hRHSbase]
+  norm_num
 
 end SidorenkoConjecture
