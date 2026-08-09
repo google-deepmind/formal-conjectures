@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import FormalConjectures.ErdosProblems.«470»
 
-/-
+/-!
 # Existence of Odd Weird Numbers
 
 *References:*
 - [Wikipedia] (https://en.wikipedia.org/wiki/Weird_number)
 - [A006037] (https://oeis.org/A006037)
 -/
-

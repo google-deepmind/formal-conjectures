@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Finset
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 56
 
 *Reference:* [erdosproblems.com/56](https://www.erdosproblems.com/56)
 -/
-
+open scoped Finset
 namespace Erdos56
 
 /--
@@ -37,7 +35,7 @@ def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
 lemma weaklyDivisible_empty (k : ℕ): WeaklyDivisible k {} := by
   simp [WeaklyDivisible]
 
-/-- A singleton is `k`-weakly divisble if `k ≠ 0`. -/
+/-- A singleton is `k`-weakly divisible if `k ≠ 0`. -/
 @[category API, AMS 11]
 lemma weaklyDivisible_singleton {k : ℕ} (hk : k ≠ 0) (l : ℕ) : WeaklyDivisible k {l} := by
   simp [WeaklyDivisible, hk]

@@ -21,7 +21,6 @@
       <li><a href="/stats/">Stats</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contribute/">Contribute</a></li>
-      <li><a href="/doc/" target="_blank" rel="noopener">Docs</a></li>
       <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </div>
@@ -30,11 +29,21 @@
 <header class="page-header">
   <div class="container">
     <h1 class="page-header__title">Statistics</h1>
-    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the {{totalCount}} indexed entries.</p>
+    <p class="page-header__subtitle">Cross-tabulations and derived metrics across the {{totalCount}} indexed statements.</p>
   </div>
 </header>
 
 <main>
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Repository growth</h2>
+      <p class="section__lede">
+        The number of Lean files in Formal Conjectures over time.
+      </p>
+      {{growthPlot}}
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <h2 class="section__title">Subject &times; status</h2>

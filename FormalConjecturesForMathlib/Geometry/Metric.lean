@@ -27,3 +27,14 @@ variable {X : Type*} [MetricSpace X]
 /-- The number of pairs of points of a finite set `s` in a metric space that are distance 1 apart.
 -/
 noncomputable def unitDistNum (s : Finset X) : ℕ := #{p ∈ s.sym2 | dist p.out.1 p.out.2 = 1}
+
+/-- The set of distances determined by a finite set of points in a metric space. -/
+noncomputable def distanceSet (points : Finset X) : Finset ℝ :=
+  points.offDiag.image fun (pair : X × X) => dist pair.1 pair.2
+
+/--
+Given a finite set of points in a metric space, we define the number of distinct distances
+between pairs of points.
+-/
+noncomputable def distinctDistances (points : Finset X) : ℕ :=
+  #(distanceSet points)

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 416
@@ -22,13 +22,14 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/416](https://www.erdosproblems.com/416)
 -/
 
-open Classical Filter
+open Filter
 open scoped Topology Real
 
 namespace Erdos416
 
 /-- Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. -/
 noncomputable abbrev V (x : ℝ) : ℝ :=
+  open scoped Classical in
   (Finset.Icc 1 ⌊x⌋₊ |>.filter (fun n => ∃ (m : ℕ), m.totient = n)).card
 
 /--
