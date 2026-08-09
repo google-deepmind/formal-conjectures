@@ -45,12 +45,20 @@ A formal proof has been found with the methods described in
 
 Another formal proof combines a spanning-tree leaf bound from connected domination
 with an ordered-pair double-counting argument for adjacent neighbourhoods.
+
+A third formal proof starts from a triangle-free spanning subgraph of $G$ with the maximum
+number of edges. Maximality bounds the neighbourhood independence number of each vertex by its
+degree in that subgraph; an edge whose endpoint degrees sum to at least $2 \cdot l(G)$ then
+carries a double star, which is acyclic and extends to a spanning tree with at least
+$2 \cdot (l(G) - 1)$ leaves.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
     "https://github.com/google-deepmind/alphaproof-nexus-results/blob/0647711a71183c1ea492ad60860776617ce1ea88/APNOutputs/AICollaborator/Graphs/GraphConjecture2.lean#L704",
   formal_proof using formal_conjectures at
-    "https://github.com/kingcharlezz/formal-conjectures/blob/7d88e8b7946791ff53c322651f73de8d4df0ba53/FormalConjectures/WrittenOnTheWallII/Proofs/GraphConjecture2.lean#L622"]
+    "https://github.com/kingcharlezz/formal-conjectures/blob/7d88e8b7946791ff53c322651f73de8d4df0ba53/FormalConjectures/WrittenOnTheWallII/Proofs/GraphConjecture2.lean#L622",
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/wowii-graph-conjecture-2-lean/blob/fc6cc1f5b857e9c3f9693b98587660eb09606abc/lean/GraphConjecture2.lean#L673"]
 theorem conjecture2 (G : SimpleGraph α) (h : G.Connected) :
   2 * (averageIndepNeighbors G - 1) ≤ Ls G := by sorry
 
