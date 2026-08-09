@@ -48,28 +48,12 @@ is the Weyl vector. Proved for classical groups by Lakshmibai–Musili–Seshadr
 monomial theory, and for all reductive groups by Littelmann (1998) using path models.
 
 Since the full theory of Demazure modules and their character rings is not yet formalized in Mathlib,
-we work in an abstract algebraic setting.
+we axiomatize the relevant objects and state the character identity with `sorry`.
 -/
 
 namespace DemazureConjecture
 
 open Finset BigOperators
-
-/-!
-## Formal Demazure operators
-
-The Demazure character formula can be defined recursively via **Demazure operators**
-(also called *isobaric divided differences* or *BGG operators*). For a simple reflection $s_i$
-(corresponding to simple root $\alpha_i$), the Demazure operator $\partial_i$ on the character
-ring $R = \mathbb{Z}[\Lambda]$ is defined by
-$$\partial_i(f) = \frac{f - s_i \cdot f}{1 - e^{-\alpha_i}},$$
-where $s_i$ acts on $R$ by the Weyl group action on $\Lambda$. The Demazure character formula
-satisfies the recursion:
-- $\operatorname{ch}(V_e(\lambda)) = e^\lambda$ (base case),
-- $\operatorname{ch}(V_{ws_i}(\lambda)) = \partial_i(\operatorname{ch}(V_w(\lambda)))$ if $\ell(ws_i) = \ell(w) + 1$.
-
-This recursion is equivalent to the alternating-sum formula in the conjecture.
--/
 
 /--
 The Demazure character formula for $V_w(\lambda)$, stated as an alternating sum over the
@@ -77,7 +61,7 @@ Bruhat lower set of $w$:
 $$\operatorname{ch}(V_w(\lambda)) =
   \sum_{\substack{w' \in W \\ w' \leq w}} (-1)^{\ell(w) - \ell(w')} e^{w'(\lambda + \rho) - \rho}.$$
 
-The hypotheses axiomatize:
+The parameters are:
 - `Λ`: the weight lattice (an additive abelian group),
 - `W`: the Weyl group (finite, with Bruhat partial order),
 - `ℓ : W → ℕ`: the Coxeter length function,
@@ -91,35 +75,23 @@ noncomputable def demazureCharFormula
     (ℓ : W → ℕ) (ρ : Λ)
     {R : Type*} [CommRing R]
     (e : Λ →+ R)
-    (w : W) (λ : Λ)
+    (w : W) (lam : Λ)
     (S : Finset W) (hS : ∀ w' : W, w' ∈ S ↔ w' ≤ w) : R :=
-  ∑ w' ∈ S, (-1 : ℤ) ^ (ℓ w - ℓ w') • e (w' • (λ + ρ) - ρ)
-
-/-!
-## The main conjecture
-
-The Demazure conjecture asserts that for any reductive algebraic group, the formal character of
-each Demazure module is computed by the alternating-sum formula above. We state this using
-abstract type-class parameters that axiomatize the relevant algebraic structure.
--/
+  ∑ w' ∈ S, (-1 : ℤ) ^ (ℓ w - ℓ w') • e (w' • (lam + ρ) - ρ)
 
 /--
-**The Demazure Conjecture** (Demazure 1974; theorem of Lakshmibai–Musili–Seshadri 1979 and
+**The Demazure Conjecture** (Demazure 1974; proved by Lakshmibai–Musili–Seshadri 1979 and
 Littelmann 1998).
 
-For a reductive algebraic group $G$, the formal character of the Demazure module $V_w(\lambda)$
-equals the alternating-sum formula:
+For a reductive algebraic group $G$ with Weyl group $W$, weight lattice $\Lambda$, Weyl vector
+$\rho$, and formal character ring $R = \mathbb{Z}[\Lambda]$, the formal character of the Demazure
+$B$-module $V_w(\lambda)$ equals the alternating sum
 $$\operatorname{ch}(V_w(\lambda)) =
   \sum_{w' \leq w} (-1)^{\ell(w) - \ell(w')} e^{w'(\lambda + \rho) - \rho}$$
-for all $w \in W$ and all dominant weights $\lambda \in \Lambda^+$.
+for every $w \in W$ and every dominant weight $\lambda \in \Lambda^+$.
 
-We axiomatize the abstract setting:
-- `W` with Bruhat order, `Λ` with Weyl group action, length function `ℓ`, Weyl vector `ρ`.
-- `R` is the formal character ring, `e : Λ →+ R` the exponential map.
-- `demazureChar w λ` is the formal character of the Demazure $B$-module $V_w(\lambda)$.
-- `bruhatBelow w` is the Bruhat lower set $\{w' \mid w' \leq w\}$ as a `Finset`.
-
-The content of the theorem is the character identity, proved via the path model of Littelmann.
+Here `demazureChar w lam` denotes the formal character of the Demazure module $V_w(\lambda)$,
+axiomatized since reductive algebraic group representations are not yet in Mathlib.
 -/
 @[category research solved, AMS 20 14 17]
 theorem demazure_conjecture
@@ -130,19 +102,13 @@ theorem demazure_conjecture
     {R : Type*} [CommRing R]
     (e : Λ →+ R)
     (bruhatBelow : W → Finset W)
-    (hBruhat : ∀ (w : W), ∀ w' : W, w' ∈ bruhatBelow w ↔ w' ≤ w)
-    -- The Demazure module character ch(V_w(λ))
+    (hBruhat : ∀ (w : W) (w' : W), w' ∈ bruhatBelow w ↔ w' ≤ w)
     (demazureChar : W → Λ → R)
-    -- Dominant weights
-    (isDominant : Λ → Prop)
-    -- The Demazure character formula holds for all w and dominant λ
-    (hFormula : ∀ (w : W) (λ : Λ), isDominant λ →
-      demazureChar w λ = demazureCharFormula ℓ ρ e w λ (bruhatBelow w) (hBruhat w)) :
-    ∀ (w : W) (λ : Λ), isDominant λ →
-      demazureChar w λ =
-        ∑ w' ∈ bruhatBelow w, (-1 : ℤ) ^ (ℓ w - ℓ w') • e (w' • (λ + ρ) - ρ) := by
-  intro w λ hλ
-  rw [hFormula w λ hλ, demazureCharFormula]
+    (isDominant : Λ → Prop) :
+    ∀ (w : W) (lam : Λ), isDominant lam →
+      demazureChar w lam =
+        demazureCharFormula ℓ ρ e w lam (bruhatBelow w) (hBruhat w) := by
+  sorry
 
 /--
 **Sanity check: The identity element case**
@@ -163,44 +129,36 @@ theorem demazure_conjecture.variants.identity_character
     (ρ : Λ)
     {R : Type*} [CommRing R]
     (e : Λ →+ R)
-    (λ : Λ)
-    -- The identity is the unique Bruhat minimum, so {1} is its lower set
+    (lam : Λ)
     (hS : ∀ w' : W, w' ∈ ({1} : Finset W) ↔ w' ≤ (1 : W)) :
-    demazureCharFormula ℓ ρ e (1 : W) λ {1} hS = e λ := by
+    demazureCharFormula ℓ ρ e (1 : W) lam {1} hS = e lam := by
   simp only [demazureCharFormula, Finset.sum_singleton, hℓ_one, Nat.sub_self, pow_zero]
-  rw [h_one_smul (λ + ρ), add_sub_cancel_right]
+  rw [h_one_smul (lam + ρ), add_sub_cancel_right]
   simp
 
 /--
-**Variant: Monotonicity of Demazure characters**
+**Variant: Monotonicity of Demazure modules**
 
-If $w_1 \leq w_2$ in the Bruhat order, then the Bruhat lower set of $w_1$ is contained in that
-of $w_2$, i.e., $\{w' \mid w' \leq w_1\} \subseteq \{w' \mid w' \leq w_2\}$. Equivalently,
-each term in the character formula for $V_{w_1}(\lambda)$ also appears in the formula for
-$V_{w_2}(\lambda)$.
-
-This reflects the geometric fact that $V_{w_1}(\lambda) \subseteq V_{w_2}(\lambda)$ as submodules
-of $V(\lambda)$ when $w_1 \leq w_2$ in the Bruhat order.
+If $w_1 \leq w_2$ in the Bruhat order, then $V_{w_1}(\lambda) \subseteq V_{w_2}(\lambda)$.
+At the level of the Bruhat lower sets, $w_1 \leq w_2$ implies
+$\{w' \mid w' \leq w_1\} \subseteq \{w' \mid w' \leq w_2\}$.
 -/
 @[category research solved, AMS 20 17]
 theorem demazure_conjecture.variants.monotone_bruhat_below
     {W : Type*} [Preorder W]
     (bruhatBelow : W → Finset W)
-    (hBruhat : ∀ (w : W), ∀ w' : W, w' ∈ bruhatBelow w ↔ w' ≤ w) :
+    (hBruhat : ∀ (w : W) (w' : W), w' ∈ bruhatBelow w ↔ w' ≤ w) :
     ∀ (w₁ w₂ : W), w₁ ≤ w₂ → bruhatBelow w₁ ⊆ bruhatBelow w₂ := by
   intro w₁ w₂ h12 w' hw'
   rw [hBruhat w₂]
-  exact le_trans ((hBruhat w₁).mp hw') h12
+  exact le_trans ((hBruhat w₁ w').mp hw') h12
 
 /--
 **Variant: The Demazure formula for the longest element gives the Weyl character formula**
 
-When $w = w_0$ (the longest element, the Bruhat maximum of $W$), the lower set
-$\{w' \mid w' \leq w_0\} = W$ and the Demazure character formula becomes:
-$$\operatorname{ch}(V(\lambda)) = \sum_{w' \in W} (-1)^{\ell(w_0) - \ell(w')} e^{w'(\lambda + \rho) - \rho},$$
-which is the classical **Weyl character formula** for the irreducible $G$-module $V(\lambda)$.
-
-This shows that the Demazure formula is a natural refinement of the Weyl character formula.
+When $w = w_0$ (the longest element, the Bruhat maximum of $W$), the lower set equals all
+of $W$, and the Demazure character formula becomes the classical Weyl character formula:
+$$\operatorname{ch}(V(\lambda)) = \sum_{w' \in W} (-1)^{\ell(w_0) - \ell(w')} e^{w'(\lambda + \rho) - \rho}.$$
 -/
 @[category research solved, AMS 20 17]
 theorem demazure_conjecture.variants.longest_element_is_weyl_formula
@@ -210,13 +168,11 @@ theorem demazure_conjecture.variants.longest_element_is_weyl_formula
     (ℓ : W → ℕ) (ρ : Λ)
     {R : Type*} [CommRing R]
     (e : Λ →+ R)
-    (λ : Λ)
-    -- w₀ is the longest (Bruhat maximum) element
+    (lam : Λ)
     (w₀ : W) (hw₀ : ∀ w : W, w ≤ w₀) :
-    -- The Demazure formula for w₀ with S = univ is the Weyl character formula
-    demazureCharFormula ℓ ρ e w₀ λ Finset.univ
+    demazureCharFormula ℓ ρ e w₀ lam Finset.univ
       (fun w' => Iff.intro (fun _ => hw₀ w') (fun _ => Finset.mem_univ _)) =
-      ∑ w' : W, (-1 : ℤ) ^ (ℓ w₀ - ℓ w') • e (w' • (λ + ρ) - ρ) := by
+      ∑ w' : W, (-1 : ℤ) ^ (ℓ w₀ - ℓ w') • e (w' • (lam + ρ) - ρ) := by
   simp [demazureCharFormula]
 
 end DemazureConjecture
