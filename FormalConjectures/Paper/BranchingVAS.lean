@@ -103,7 +103,7 @@ theorem reachable_imp_pos {d : ℕ} (v : Fin d → ℤ) (b : Bvas d) :
     b.Reachable v → 0 ≤ v := by
   intro h; cases h; all_goals assumption
 
-/-- A small BVAS of dimension3 used for a test below. -/
+/-- A small BVAS of dimension 3 used for a test below. -/
 def exampleBvas : Bvas 3 := {
   axioms := [![3,1,0], ![0,0,0]],
   unaryRules := [![1,-10,-10], ![-1,0,1]],
