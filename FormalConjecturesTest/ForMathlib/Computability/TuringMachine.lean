@@ -15,7 +15,8 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
+public meta import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
+public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import Mathlib.Tactic.DeriveFintype
 public import Mathlib.Tactic.FinCases
 

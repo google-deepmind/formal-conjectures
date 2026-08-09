@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Linters.NamespaceLinter
+public meta import FormalConjecturesUtil.Linters.NamespaceLinter
 
 @[expose] public section
 
