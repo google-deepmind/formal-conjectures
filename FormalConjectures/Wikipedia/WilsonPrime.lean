@@ -23,6 +23,7 @@ A Wilson prime is a prime $p$ for which $p^2$ divides $(p-1)!+1$. The only known
 $5$, $13$, and $563$. It is conjectured that infinitely many Wilson primes exist.
 
 *References:*
+* [Wikipedia, Wilson prime](https://en.wikipedia.org/wiki/Wilson_prime)
 * [OEIS A007540](https://oeis.org/A007540)
 * E. Costa, R. Gerbicz, and D. Harvey,
   [A search for Wilson primes](https://arxiv.org/abs/1209.3436)
