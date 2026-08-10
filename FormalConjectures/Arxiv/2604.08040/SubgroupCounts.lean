@@ -68,19 +68,30 @@ theorem solvable_of_cyc_lt_two_pow_succ (h : cyc G < 2 ^ (numPrimeFactors G + 1)
     IsSolvable G := by
   sorry
 
+/-- The alternating group on five letters has order $60 = 2^2 \cdot 3 \cdot 5$. -/
+@[category test, AMS 20]
+theorem card_alternatingGroup_fin_five :
+    Fintype.card (alternatingGroup (Fin 5)) = 60 := by
+  rw [← Nat.card_eq_fintype_card, ← Nat.mul_left_cancel_iff (by norm_num : 0 < 2),
+      two_mul_nat_card_alternatingGroup, Nat.card_perm]
+  norm_num [Fintype.card_fin]
+
 /-- The alternating group on five letters has exactly $32$ cyclic subgroups: the trivial one,
 $15$ of order $2$, $10$ of order $3$ and $6$ of order $5$. -/
-@[category API, AMS 20]
+@[category test, AMS 20]
 theorem cyc_alternatingGroup_five : cyc (alternatingGroup (Fin 5)) = 32 := by
   sorry
 
-/-- `A₅` is where the bound bites. It has $\pi = 3$ and $\mathrm{cyc} = 32 = 2^{3+2}$, so it
+/-- $A_5$ is where the bound bites. It has $\pi = 3$ and $\mathrm{cyc} = 32 = 2^{3+2}$, so it
 misses the hypothesis by one and stays consistent with the conjecture despite being insoluble.
 Any threshold above $2^{t+2}$ would be refuted by it. -/
-@[category API, AMS 20]
+@[category test, AMS 20]
 theorem not_cyc_alternatingGroup_five_lt :
     ¬ cyc (alternatingGroup (Fin 5)) < 2 ^ (numPrimeFactors (alternatingGroup (Fin 5)) + 2) := by
-  sorry
+  rw [cyc_alternatingGroup_five]
+  unfold numPrimeFactors
+  rw [card_alternatingGroup_fin_five, show Nat.primeFactors 60 = {2, 3, 5} from by decide +kernel]
+  norm_num
 
 /-- The trivial group has one cyclic subgroup and no prime divisors, so the hypothesis holds
 and the conclusion is immediate. -/
