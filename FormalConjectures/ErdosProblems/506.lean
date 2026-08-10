@@ -61,6 +61,22 @@ theorem erdos_506 (n : ℕ) (hn : 393 < n) :
   sorry
 
 /--
+The problem appears to remain open for small $n$: Elliott's answer is established only for
+$n > 393$, so the minimum number of circles determined by $n$ points, not all on a line and not all
+on a circle, is unknown for $n \le 393$.
+-/
+-- Formalisation note: the hypothesis `4 ≤ n` is not a restriction of the problem, but excludes the
+-- degenerate range where no admissible configuration exists: fewer than three points are collinear,
+-- and any three non-collinear points lie on a common circle, so the set below is empty for `n < 4`.
+@[category research open, AMS 51 52]
+theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
+    IsLeast { k : ℕ | ∃ P : Finset ℝ²,
+        P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
+        numCircles (P : Set ℝ²) = k }
+      answer(sorry) := by
+  sorry
+
+/--
 Segre's observation: the lower bound $\binom{n-1}{2}$ (without the Purdy–Smith correction) is
 already false for $n = 8$, as witnessed by the projection of a cube onto a plane. Hence the minimum
 number of circles determined by $8$ such points is strictly less than $\binom{7}{2} = 21$.
