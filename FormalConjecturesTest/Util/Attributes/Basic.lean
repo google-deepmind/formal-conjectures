@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Attributes.Basic
+public meta import FormalConjecturesUtil.Attributes.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.NumberTheory.FLT.Basic
 public import Mathlib.RingTheory.Algebraic.Defs
@@ -55,6 +55,63 @@ theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
 #guard_msgs in
 @[category test, formal_proof using formal_conjectures at ""]
 theorem a_test_with_formal_proof : 3 + 3 = 6 := by
+  rfl
+
+#guard_msgs in
+theorem conditional_formal_proof_hypothesis : 0 = 0 := by
+  sorry
+
+#guard_msgs in
+theorem another_conditional_formal_proof_hypothesis : 1 = 1 := by
+  sorry
+
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
+  rfl
+
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/two-hypotheses"
+    assuming conditional_formal_proof_hypothesis another_conditional_formal_proof_hypothesis]
+theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
+  rfl
+
+run_meta do
+  let conditions ← ProblemAttributes.getProofConditions ``a_conditionally_formally_solved_problem
+  unless conditions = [``conditional_formal_proof_hypothesis] do
+    throwError "unexpected proof conditions for a_conditionally_formally_solved_problem"
+
+run_meta do
+  let conditions ← ProblemAttributes.getProofConditions
+    ``a_conditionally_formally_solved_problem_with_two_hypotheses
+  unless conditions = [``conditional_formal_proof_hypothesis,
+      ``another_conditional_formal_proof_hypothesis] do
+    throwError
+      "unexpected proof conditions for a_conditionally_formally_solved_problem_with_two_hypotheses"
+
+/--
+error: a `conditional` formal proof must name the hypotheses it assumes: state each hypothesis as
+a declaration in this file (with a `sorry` proof) and reference it as
+`conditional formal_proof using <kind> at "<link>" assuming <decl>`.
+-/
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/missing-hypothesis"]
+theorem conditional_formal_proof_without_assuming : 6 + 6 = 12 := by
+  rfl
+
+/--
+error: an `assuming` clause requires the `conditional` modifier:
+`conditional formal_proof using <kind> at "<link>" assuming <decl>`.
+-/
+#guard_msgs in
+@[category research solved,
+  formal_proof using lean4 at "https://github.com/example/not-conditional"
+    assuming conditional_formal_proof_hypothesis]
+theorem assuming_without_conditional_formal_proof : 7 + 7 = 14 := by
   rfl
 
 -- A `formal_proof` link is validated: external kinds must link to the proof, and
@@ -141,6 +198,7 @@ info: 0 General and overarching topics
 92 Biology and other natural sciences
 93 Systems theory; control
 94 Information and communication, circuits
+97 Mathematics education
 -/
 #guard_msgs in
 #AMS

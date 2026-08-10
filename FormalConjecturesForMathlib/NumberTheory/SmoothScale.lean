@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,20 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+@[expose] public section
 
 /-!
-# ForMathlib (deprecated)
+# The scale `L`
 
-This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
+`L n = exp (sqrt (log n * log (log n)))` is the scale that shows up in smooth-number and
+covering-system estimates, usually as `n ^ (1 + o(1))` corrections of the form `L n ^ (-1 + o(1))`.
 -/
 
-deprecated_module (since := "2026-01-08")
+open Real
+
+/-- The scale $L(n)=\exp(\sqrt{\log n\log\log n})$. -/
+noncomputable def scaleL (n : ℕ) : ℝ := exp (sqrt (log n * log (log n)))
