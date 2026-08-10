@@ -215,10 +215,17 @@ theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
-/-- Gerver's sofa is the unique sofa that attains the sofa constant. -/
+/--
+Gerver's sofa is the unique sofa that attains the sofa constant, up to a rigid motion.
+
+The motion is needed: `horizontalHallway` is $(-\infty, 1] \times [0, 1]$, so a leftward
+translate of any moving sofa is again one, obtained by sliding right and then following the
+original motion. It has the same area, so uniqueness cannot hold on the nose.
+-/
 @[category research open, AMS 49]
-theorem sofaConstant_eq_volume_iff_eq_gerversSofa :
-    ∀ s : Set ℝ², sofaConstant = volume s ↔ s = gerversSofa := by
+theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
+    (hs : ∃ m, IsMovingSofa s m) :
+    volume s = sofaConstant ↔ ∃ g : E(2), s = g '' gerversSofa := by
   sorry
 
 end MovingSofa
