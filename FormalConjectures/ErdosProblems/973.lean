@@ -24,6 +24,8 @@ import FormalConjecturesUtil
 - [Er92f] Erdős, L., On some problems of {P}. Turán concerning power sums of
   complex numbers. Acta Math. Hungar. (1992), 11--24.
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
+- [LYZ26] Luo, Yanping and Yang, Ruiyi and Zhu, Keheng, Exterior power sums.
+  [arxiv/2607.22017](https://arxiv.org/abs/2607.22017)
 - [Tu84b] Turán, Paul, On a new method of analysis and its applications. (1984), xvi+584.
 -/
 
@@ -37,15 +39,35 @@ $z_i\in \mathbb{C}$ with $z_1=1$ and $\lvert z_i\rvert \geq 1$ for all $1\leq i\
 $\max_{2\leq k\leq n+1}\left\lvert \sum_{1\leq i\leq n}z_i^k\right\rvert < C^{-n}$?
 
 This is Problem 7.3 in [Ha74], where it is attributed to Erdős.
+
+The answer is no, by Luo, Yang and Zhu [LYZ26]: the maximum exceeds $e^{-\lambda n}$ for every
+fixed $\lambda>0$ once $n$ is large, so it decays subexponentially and no such $C$ exists. See
+`erdos_973.variants.luo_yang_zhu` below.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_973 :
-    answer(sorry) ↔
+    answer(False) ↔
       ∃ C : ℝ, C > 1 ∧
         ∀ n : ℕ, n ≥ 2 → ∃ z : ℕ → ℂ,
           z 1 = 1 ∧
           (∀ i ∈ Icc 1 n, 1 ≤ ‖z i‖) ∧
           (∀ k ∈ Icc 2 (n + 1), ‖∑ i ∈ Icc 1 n, z i ^ k‖ < C ^ (-(n : ℝ))) := by
+  sorry
+
+/--
+The result of [LYZ26] that settles the problem: for every fixed $\lambda>0$ and all large enough
+$n$, any $z_1,\dots,z_n$ with $\lvert z_j\rvert\geq 1$ satisfy
+$\max_{2\leq k\leq n+1}\left\lvert\sum_j z_j^k\right\rvert > e^{-\lambda n}$.
+
+This is sharper than `erdos_973.variants.tang`, whose bound $(2e)^{-(1+o(1))n}$ pins the rate at
+$\log(2e) = 1 + \log 2$, still exponential decay.
+-/
+@[category research solved, AMS 11]
+theorem erdos_973.variants.luo_yang_zhu (lam : ℝ) (hlam : 0 < lam) :
+    ∀ᶠ n in atTop, ∀ z : ℕ → ℂ,
+      (∀ i ∈ Icc 1 n, 1 ≤ ‖z i‖) →
+      ∃ k ∈ Icc 2 (n + 1),
+        Real.exp (-lam * n) < ‖∑ i ∈ Icc 1 n, z i ^ k‖ := by
   sorry
 
 /--
