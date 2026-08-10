@@ -29,14 +29,12 @@ relative to $2^t$ forces structure: nilpotency below $5 \cdot 2^{t-2}$, supersol
 below $2^{t+1}$. Conjecture 5.5 asks for the solvability threshold.
 -/
 
-open scoped Classical
-
 namespace Arxiv.«2604.08040»
 
 variable (G : Type*) [Group G] [Fintype G]
 
 /-- $\mathrm{cyc}(G)$, the number of cyclic subgroups of `G`. -/
-noncomputable def cyc : ℕ := Fintype.card {H : Subgroup G // IsCyclic H}
+noncomputable def cyc : ℕ := Nat.card {H : Subgroup G // IsCyclic H}
 
 /-- $\pi(G)$, the number of distinct primes dividing `|G|`. -/
 noncomputable def numPrimeFactors : ℕ := (Fintype.card G).primeFactors.card
@@ -88,7 +86,7 @@ theorem not_cyc_alternatingGroup_five_lt :
 and the conclusion is immediate. -/
 @[category test, AMS 20]
 theorem cyc_punit : cyc PUnit = 1 := by
-  rw [cyc, Fintype.card_eq_one_iff]
-  exact ⟨⟨⊥, inferInstance⟩, fun H => Subtype.ext (Subsingleton.elim _ _)⟩
+  rw [cyc, Nat.card_eq_one_iff_unique]
+  exact ⟨⟨fun H H' => Subtype.ext (Subsingleton.elim _ _)⟩, ⟨⊥, inferInstance⟩⟩
 
 end Arxiv.«2604.08040»
