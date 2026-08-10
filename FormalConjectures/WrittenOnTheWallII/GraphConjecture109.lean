@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 
 namespace WrittenOnTheWallII.GraphConjecture109
 
-open Classical SimpleGraph
+open SimpleGraph
 /--
 WOWII [Conjecture 109](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

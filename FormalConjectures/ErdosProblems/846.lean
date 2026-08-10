@@ -26,7 +26,6 @@ open EuclideanGeometry
 namespace Erdos846
 
 section Prelims
-open Classical
 
 /-- We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`. -/

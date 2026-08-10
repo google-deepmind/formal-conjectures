@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 
 namespace WrittenOnTheWallII.GraphConjecture103
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /-- The 11-vertex counterexample: a triangle with four leaves on each of two vertices. -/
 abbrev wowii103Counterexample : SimpleGraph (Fin 11) :=
