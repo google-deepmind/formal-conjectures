@@ -41,19 +41,34 @@ noncomputable def numCircles (P : Set ℝ²) : ℕ :=
   Set.ncard { s : Sphere ℝ² | 3 ≤ {p ∈ P | p ∈ s}.ncard }
 
 /--
-What is the minimum number of circles determined by $n$ points in $\mathbb{R}^2$, not all on a
+What is the minimum number of circles determined by any $n$ points in $\mathbb{R}^2$, not all on a
 circle?
 
 There is a non-degeneracy condition intended here; following Elliott we assume the points are not
 all on a single line and not all on a single circle.
 
+The answer is known for $n > 393$ (see `erdos_506.variants.large_n`) but the problem appears to
+remain open for small $n$ (see `erdos_506.variants.small_n`).
+-/
+-- Formalisation note: the hypothesis `4 ≤ n` is not a restriction of the problem, but excludes the
+-- degenerate range where no admissible configuration exists: fewer than three points are collinear,
+-- and any three non-collinear points lie on a common circle, so the set below is empty for `n < 4`.
+@[category research open, AMS 51 52]
+theorem erdos_506 (n : ℕ) (hn : 4 ≤ n) :
+    IsLeast { k : ℕ | ∃ P : Finset ℝ²,
+        P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
+        numCircles (P : Set ℝ²) = k }
+      answer(sorry) := by
+  sorry
+
+/--
 For $n > 393$ the answer is $\binom{n-1}{2} + 1 - \left\lfloor \frac{n-1}{2} \right\rfloor$
 (Elliott [El67], with the correction of Purdy–Smith reported in [BaBa94]): this is both a lower
 bound for every such configuration and is attained, e.g. by a circle with $n - 1$ points together
 with a single point off the circle.
 -/
 @[category research solved, AMS 51 52]
-theorem erdos_506 (n : ℕ) (hn : 393 < n) :
+theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
@@ -65,9 +80,6 @@ The problem appears to remain open for small $n$: Elliott's answer is establishe
 $n > 393$, so the minimum number of circles determined by $n$ points, not all on a line and not all
 on a circle, is unknown for $n \le 393$.
 -/
--- Formalisation note: the hypothesis `4 ≤ n` is not a restriction of the problem, but excludes the
--- degenerate range where no admissible configuration exists: fewer than three points are collinear,
--- and any three non-collinear points lie on a common circle, so the set below is empty for `n < 4`.
 @[category research open, AMS 51 52]
 theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
