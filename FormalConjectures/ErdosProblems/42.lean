@@ -52,7 +52,7 @@ every maximal Sidon set A ⊆ {1,…,N} has another Sidon set B ⊆ {1,…,N} of
 disjoint difference sets (apart from 0).
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/KitaKen1/erdos-42-constructive-variant/blob/1f82c76be43cb56f22e2f7f792e392d5fb3ff78c/lean/Erdos42Constructive.lean"]
+  formal_proof using formal_conjectures at "https://github.com/KitaKen1/erdos-42-constructive-variant/blob/1f82c76be43cb56f22e2f7f792e392d5fb3ff78c/lean/Erdos42Constructive.lean"]
 theorem erdos_42.variants.constructive : answer(True) ↔
     ∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),
     ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N), ∃ᵉ (B : Set ℕ),
