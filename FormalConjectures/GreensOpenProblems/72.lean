@@ -45,7 +45,8 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
 points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
-@[category textbook, AMS 5 52]
+@[category textbook, AMS 5 52, formal_proof using formal_conjectures at
+  "https://github.com/christianTNG/formal-conjectures/blob/d5aaa2cb443e948637e695c5810fb70e93a9cbcd/FormalConjectures/GreensOpenProblems/72.lean#L49"]
 theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
     AllowedSetSize k N ≤ (k - 1) * N := by
   sorry
