@@ -84,9 +84,13 @@ theorem erdos_539.variants.isBigO_sq :
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(n^{2/3})$? -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3) := by
+    answer(False) ↔
+      ((fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop]
+        fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) := by
   sorry
 
 /-- Granville and Roesler [GR99] showed that $$h(n)\ll n^{2/3}$$.-/
@@ -96,9 +100,13 @@ theorem erdos_539.variants.isBigO_sq_cube_root :
   sorry
 
 /-- To prove `erdos_539.variants.sq_cube_root` it suffices to show $$n^{2/3}\ll h(n)$$. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root_isBigO :
-    (fun n : ℕ ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
+    answer(False) ↔
+      ((fun n : ℕ ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) =O[atTop]
+        fun n ↦ (cofactorThreshold n : ℝ)) := by
   sorry
 
 /-- From [Er73]: The determination of
@@ -108,9 +116,13 @@ $$
 will perhaps be not too difficult.
 -/
 -- Formalisation note: it is not clear if this problem has since been solved
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.limit :
-    atTop.Tendsto (fun n ↦ Real.log (cofactorThreshold n) / Real.log n) answer(sorry) := by
+    atTop.Tendsto
+      (fun n ↦ Real.log (cofactorThreshold n) / Real.log n)
+      answer(𝓝 ((1 : ℝ) / 2)) := by
   sorry
 
 end Erdos539
