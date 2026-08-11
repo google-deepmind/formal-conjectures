@@ -54,6 +54,13 @@ def productSet {n m : ℕ} (A : Set (Fin n → ℝ)) (B : Set (Fin m → ℝ)) :
     Set (Fin (n + m) → ℝ) :=
   {x | (fun i ↦ x (Fin.castAdd m i)) ∈ A ∧ (fun j ↦ x (Fin.natAdd n j)) ∈ B}
 
+/-- Spectrality of a product with an `n`-dimensional convex body forces spectrality of its
+bounded, measurable `m`-dimensional right factor. -/
+def spectralProductImpliesRightSpectral (n m : ℕ) : Prop :=
+  ∀ (A : ConvexBody (Fin n → ℝ)) (B : Set (Fin m → ℝ)),
+    Bornology.IsBounded B → MeasurableSet B →
+      isSpectral (productSet (A : Set (Fin n → ℝ)) B) → isSpectral B
+
 /--
 [KLM2023, Problem 7.2; GL16] For a one-dimensional convex body $A$ and a bounded,
 measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
@@ -61,10 +68,7 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 @[category research solved, AMS 42 46]
 theorem isSpectral_right_of_product_one_dimensional :
     answer(True) ↔
-      ∀ (m : ℕ), 0 < m →
-        ∀ (A : ConvexBody (Fin 1 → ℝ)) (B : Set (Fin m → ℝ)),
-          Bornology.IsBounded B → MeasurableSet B →
-            isSpectral (productSet (A : Set (Fin 1 → ℝ)) B) → isSpectral B := by
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
   sorry
 
 /--
@@ -74,10 +78,7 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 @[category research solved, AMS 42 46]
 theorem isSpectral_right_of_product_two_dimensional :
     answer(True) ↔
-      ∀ (m : ℕ), 0 < m →
-        ∀ (A : ConvexBody (Fin 2 → ℝ)) (B : Set (Fin m → ℝ)),
-          Bornology.IsBounded B → MeasurableSet B →
-            isSpectral (productSet (A : Set (Fin 2 → ℝ)) B) → isSpectral B := by
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
   sorry
 
 /--
@@ -87,10 +88,7 @@ measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 @[category research open, AMS 42 46]
 theorem isSpectral_right_of_product_three_dimensional :
     answer(sorry) ↔
-      ∀ (m : ℕ), 0 < m →
-        ∀ (A : ConvexBody (Fin 3 → ℝ)) (B : Set (Fin m → ℝ)),
-          Bornology.IsBounded B → MeasurableSet B →
-            isSpectral (productSet (A : Set (Fin 3 → ℝ)) B) → isSpectral B := by
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
   sorry
 
 /--
@@ -101,9 +99,7 @@ measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 theorem isSpectral_right_of_product_of_convexBody :
     answer(sorry) ↔
       ∀ (n m : ℕ), 0 < n → 0 < m →
-        ∀ (A : ConvexBody (Fin n → ℝ)) (B : Set (Fin m → ℝ)),
-          Bornology.IsBounded B → MeasurableSet B →
-            isSpectral (productSet (A : Set (Fin n → ℝ)) B) → isSpectral B := by
+        spectralProductImpliesRightSpectral n m := by
   sorry
 
 end SpectralSetProduct
