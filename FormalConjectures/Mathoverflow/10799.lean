@@ -168,8 +168,10 @@ Conjecture 7 from Kahn–Kalai 2006: the same statement as the original
 conjecture, but with the additional assumption that $t$ is the critical probability for $F$,
 namely $\mu_t(F) = 1/2$.
 -/
-@[category research open, AMS 5 60]
-theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(sorry) ↔
+@[category research solved, AMS 5 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample/blob/5446d2f/lean/MO10799CounterexampleFC.lean#L2597-L2604"]
+theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
     ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
