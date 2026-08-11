@@ -36,6 +36,19 @@ import FormalConjecturesUtil
   17 (1966), 155–157.
 - [Va99] Various, *Some of Paul's favorite problems*. Booklet produced for the conference
   "Paul Erdős and his mathematics", Budapest, July 1999 (1999).
+- [Informal disproof](https://github.com/seanm27lol/erdos-1131-lean/blob/31574acf09ae50430c08da92288800fe7d26c7fd/SOLUTION.md)
+
+For the disproof of part (ii), take the $N+1$ roots in $(-1,1)$ of
+$T_{N+1}-\frac16T_{N-1}$. Alternating signs at the Chebyshev extrema show that these roots are
+distinct, and an exact Chebyshev-basis Gram-matrix calculation gives
+$$
+I\leq 2-\frac{107}{105N}+\frac{118}{N^2}.
+$$
+Since $M(N+1)$ is the infimum over admissible configurations, for every $N\geq 24780$ this yields
+$$
+(N+1)(2-M(N+1))\geq\frac{106}{105}>1,
+$$
+which rules out convergence to $1$.
 -/
 
 open scoped BigOperators Interval
