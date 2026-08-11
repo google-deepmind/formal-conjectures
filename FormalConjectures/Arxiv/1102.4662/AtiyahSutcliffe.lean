@@ -39,10 +39,16 @@ open MvPolynomial
 /-- A point of Euclidean three-space. -/
 abbrev Point := EuclideanSpace ℝ (Fin 3)
 
-/-- A deterministic projective lift of a direction in `ℝ³` to a pair of complex numbers.
+/-- A deterministic projective lift of a direction in $\mathbb{R}^3$ to a pair of complex
+numbers.
 
-Away from the north pole this is the representative `(z / w, 1)` from stereographic
-projection. At the north pole the denominator vanishes, so we use `(1, 0)`. -/
+Away from the north pole this is the representative $(z / w, 1)$ from stereographic
+projection. At the north pole the denominator vanishes, so we use $(1, 0)$.
+
+This is an unnormalized lift that does not impose the antisymmetric $\mathrm{SU}(2)$ convention
+of Atiyah–Sutcliffe. Since linear independence is invariant under rescaling each polynomial by
+a nonzero constant, this suffices for Conjecture 1. It would not suffice for Conjectures 2 or 3,
+which depend on the normalization $|z|^2 + |w|^2 = 1$. -/
 def directionLift (v : Point) : ℂ × ℂ :=
   if ‖v‖ - v 2 = 0 then
     (1, 0)
@@ -99,7 +105,9 @@ theorem twoPoint_xAxis_polynomial :
   rw [pointPolynomial, show (Finset.univ : Finset (Fin 2)) = {0, 1} by decide]
   simp [linearFactor, directionLift]
 
-/-- Atiyah--Sutcliffe Conjecture 1: the configuration polynomials are linearly independent. -/
+/-- [Atiyah–Sutcliffe Conjecture 1](https://doi.org/10.1098/rspa.2001.0913), stated as
+Conjecture 1.1 in [Mazur–Petrenko](https://arxiv.org/abs/1102.4662): the configuration
+polynomials are linearly independent. -/
 @[category research open, AMS 51 70]
 theorem conjecture_one {n : ℕ} (x : Fin n → Point) (hx : Function.Injective x) :
     LinearIndependent ℂ (pointPolynomial x) := by
