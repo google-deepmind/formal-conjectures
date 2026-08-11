@@ -122,7 +122,7 @@ will perhaps be not too difficult.
 theorem erdos_539.variants.limit :
     atTop.Tendsto
       (fun n ↦ Real.log (cofactorThreshold n) / Real.log n)
-      answer(𝓝 ((1 : ℝ) / 2)) := by
+      answer(nhds ((1 : ℝ) / 2)) := by
   sorry
 
 end Erdos539
