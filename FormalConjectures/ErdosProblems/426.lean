@@ -58,8 +58,13 @@ $$f(n) = o\left(\frac{2^{\binom{n}{2}}}{n!}\right).$$
 The $\gg$ below is read as: some constant $c>0$ works for arbitrarily large $n$. The negation
 of the proposition on the right is then exactly $f(n) = o(2^{\binom{n}{2}}/n!)$, the form in
 which Bradač and Christoph [BrCh24] resolved the problem.
+
+The linked file states the resolution in that negated form, as
+`Tendsto fSeq atTop (nhds 0)`. It counts the isomorphism classes occurring as unique subgraphs,
+whereas `uniqueSubgraphCount` counts their representatives $G\leq H$; uniqueness forces exactly
+one representative per class, so the two counts agree.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos426.lean"]
 theorem erdos_426 : answer(False) ↔
     ∃ c : ℝ, 0 < c ∧ ∃ᶠ (n : ℕ) in atTop, ∃ H : SimpleGraph (Fin n),
       c * ((2 : ℝ) ^ n.choose 2 / n.factorial) ≤ (uniqueSubgraphCount H : ℝ) := by
