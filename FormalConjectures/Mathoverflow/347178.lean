@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,17 +22,23 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/347178](https://mathoverflow.net/questions/347178)
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
+
 open Real Set
 open scoped EuclideanGeometry
+
 namespace Mathoverflow347178
 
 /--
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is it true that
 $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$?
+
+Answer: No. A counterexample in $\mathbb R^2$ is recorded in the linked formal proof.
 -/
-@[category research open, AMS 26]
+@[category research solved, AMS 26,
+  formal_proof using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/commit/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b"]
 theorem mathoverflow_347178 :
-    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
+    answer(False) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (_ : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
         (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal) := by
   sorry
@@ -40,10 +46,14 @@ theorem mathoverflow_347178 :
 /--
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is the boundedness of
 $\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ equivalent?
+
+Answer: No. The same counterexample is recorded in the linked formal proof.
 -/
-@[category research open, AMS 26]
+@[category research solved, AMS 26,
+  formal_proof using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/commit/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b"]
 theorem mathoverflow_347178.variants.bounded_iff :
-    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f),
+    answer(False) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (_ : ContDiff ℝ 1 f),
         BddAbove (range f) ↔ BddAbove (range fun x ↦ f (x + gradient f x)) := by
   sorry
 

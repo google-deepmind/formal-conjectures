@@ -38,10 +38,7 @@ open scoped Finset
 
 /-- $Q_3$ is the 3-dimensional hypercube graph (8 vertices, 12 edges).
 Vertices are 3-bit vectors. Two vertices are adjacent iff they differ in exactly one bit. -/
-def Q3 : SimpleGraph (Fin 3 → Bool) where
-  Adj u v := #{i | u i ≠ v i} = 1
-  symm _ _ := by simp [eq_comm]
-  loopless _ := by simp
+abbrev Q3 : SimpleGraph (Fin 3 → Bool) := hypercube 3
 
 /-- $K_{3,3}$ is the complete bipartite graph with partition sizes 3, 3 (6 vertices, 9 edges). -/
 def K33 : SimpleGraph (Fin 3 ⊕ Fin 3) := completeBipartiteGraph (Fin 3) (Fin 3)
