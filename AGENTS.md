@@ -1,140 +1,149 @@
 # Agent guidelines
 
-Formal Conjectures states open mathematical problems in Lean 4. It is a statement
-repository, not a proof repository: the value is in the statement saying what the source
-says, and almost every problem is `sorry`.
+Formal Conjectures states open mathematical problems in Lean 4. This is a repository of
+statements, not a repository of proofs. Each statement must say what its source says. Almost
+every problem contains `sorry`.
 
-[CONTRIBUTING.md](CONTRIBUTING.md) is the reference for conventions, folders, and the
-attributes. This file is what an agent needs on top of it.
+[CONTRIBUTING.md](CONTRIBUTING.md) gives the conventions, the directories and the attributes.
+This file adds only what CONTRIBUTING does not tell you.
 
-For the shape of a file, copy one rather than a template. *File structure conventions* in
-CONTRIBUTING gives the skeleton, and
-[`FormalConjectures/ErdosProblems/13.lean`](FormalConjectures/ErdosProblems/13.lean) is 62
-lines showing the rest: a definition with its docstring, a `research solved` headline citing
-its source, and a `research open` variant using `answer(sorry)`. A file in the repository
-cannot drift away from the repository.
+Copy an existing file. Do not copy a template. *File structure conventions* in CONTRIBUTING
+gives the skeleton.
+[`FormalConjectures/ErdosProblems/13.lean`](FormalConjectures/ErdosProblems/13.lean) gives the
+remainder in 62 lines: a definition with its docstring, a `research solved` statement with its
+source, and a `research open` variant with `answer(sorry)`. A template can become incorrect. A
+file in the repository cannot, because the build compiles it.
 
 ## Commands
 
-Build the module you touched, not the project:
+Build only the module that you changed. Do not build the project.
 
 ```bash
 lake --wfail build 'FormalConjectures.ErdosProblems.«361»'
 ```
 
-Quote it. The guillemets in a numbered file are part of the module name.
+Put the module name in quotation marks. The guillemets in a numbered file are part of the
+module name.
 
 ```bash
 lake --wfail build FormalConjecturesForMathlib   # if you changed a shared definition
-lake --wfail test                                # if you changed anything under FormalConjecturesUtil
-lake --wfail build                               # ~25 min warm; leave it to CI
+lake --wfail test                                # if you changed FormalConjecturesUtil
+lake --wfail build                               # 25 minutes when warm. Let CI do this.
 ```
 
-`--wfail` turns warnings into failures, which is how CI runs. Two that catch people out:
+`--wfail` makes each warning into a failure. CI uses the same option. Two warnings cause most
+of these failures:
 
-- `open Classical` trips `linter.style.openClassical`. Use `open scoped Classical in` on the
-  declaration that needs it, or a `Decidable` instance.
-- AMS tags must be ascending: `AMS 15 51`, not `AMS 51 15`.
+- `open Classical` causes the `linter.style.openClassical` warning. Write
+  `open scoped Classical in` before the declaration that needs it. As an alternative, supply
+  a `Decidable` instance.
+- The AMS tags must be in ascending order. Write `AMS 15 51`. Do not write `AMS 51 15`.
 
-## Where a statement goes
+## Where to put a statement
 
-`FormalConjectures/<Source>/` for problems, one file per problem, named for it. Reusable
-mathematics goes in `FormalConjecturesForMathlib/`, which must be `sorry`-free. `sorry` is
-expected in `FormalConjectures/` and nowhere else.
+Put a problem in `FormalConjectures/<Source>/`. Use one file for each problem. Give the file
+the name of the problem. Put reusable mathematics in `FormalConjecturesForMathlib/`. That
+directory must not contain `sorry`. Only `FormalConjectures/` can contain `sorry`.
 
-Search before you define. Much of what a problem needs is already in Mathlib, in
-`FormalConjecturesForMathlib/`, or in a neighbouring problem file, under a name you would not
-guess: `trianglesContaining`, `InGeneralPosition`, `NonTrilinear`, `distinctDistances`.
+Search before you write a definition. Mathlib, `FormalConjecturesForMathlib/` and the adjacent
+problem files already contain much of what a problem needs. The names are difficult to guess.
+Examples: `trianglesContaining`, `InGeneralPosition`, `NonTrilinear`, `distinctDistances`.
 
 ## Check the degenerate cases
 
-The usual way a formalisation is wrong is not a typo. It is a statement that is vacuous,
-trivially true, or false on an input nobody pictured, and Lean's junk values hide it because
-the file still compiles and still reads well. Try the smallest and emptiest inputs:
+Most incorrect formalisations are not typographical errors. They are statements that are
+vacuous, or trivially true, or false on an input that the author did not think about. Lean
+gives a junk value in these cases. Thus the file compiles, and the statement continues to read
+correctly. Test the smallest inputs and the empty inputs:
 
 | | |
 |---|---|
-| empty type or set | `∑ i, f i = 0`, and `X → ℝ` is a subsingleton, so contradictory-looking conditions can both hold |
-| `ZMod 0` | it is `ℤ`, not a finite modulus |
-| `x / 0` | it is `0`, so `∃ m : ℤ, q = m` counts a pole as an integer. Say `a ∣ b` instead |
-| `sInf ∅` | it is `0`, so a "least such `n`" is `0` when nothing qualifies |
-| `Nat` subtraction | it truncates at zero |
+| empty type or set | `∑ i, f i = 0`. Also, `X → ℝ` is a subsingleton. Thus two conditions that look contradictory can both hold |
+| `ZMod 0` | This type is `ℤ`. It is not a finite modulus |
+| `x / 0` | The result is `0`. Thus `∃ m : ℤ, q = m` accepts a pole as an integer. Write `a ∣ b` |
+| `sInf ∅` | The result is `0`. Thus the least such `n` is `0` when no `n` qualifies |
+| `Nat` subtraction | The result truncates to zero |
 
-If a hypothesis such as `0 < N`, `[Nonempty X]` or `2 ≤ n` is what keeps the statement
-honest, say so in a sentence in the docstring. A reviewer cannot otherwise tell a
-load-bearing hypothesis from a decorative one.
+Some statements are correct only because of a hypothesis such as `0 < N`, `[Nonempty X]` or
+`2 ≤ n`. Write one sentence in the docstring for each such hypothesis. A reviewer cannot
+otherwise know which hypotheses are necessary.
 
-## Compiling is not proving
+## Compilation is not proof
 
-A file containing `sorry` compiles. If you claim something is proved, check:
+A file that contains `sorry` compiles. Run this command before you write that a theorem is
+proved:
 
 ```lean
 #print axioms my_theorem
 -- [propext, Classical.choice, Quot.sound]
 ```
 
-Anything else, `sorryAx` above all, means it is not proved.
+Any other axiom shows that the theorem is not proved. `sorryAx` is the most important example.
 
-The same applies to a proof you cite with `formal_proof`. Read the file for `sorry`, run
-`#print axioms` on the theorem you are citing, and check that its statement is the one you
-are claiming. A repository saying it proves a conjecture may prove something weaker, and the
-statement is often the same theorem under a different name.
+Do the same for a proof that you cite with `formal_proof`. Read the file and look for `sorry`.
+Run `#print axioms` on the theorem that you cite. Then make sure that this theorem states what
+you claim. A repository can claim a proof of a conjecture and prove a weaker result. The
+correct theorem frequently has a different name.
 
-## Checking your own work
+## Check your own work
 
-Each of these has produced a wrong claim in this repository, and each is cheap to avoid.
+Each item below caused an incorrect claim in this repository. Each check is quick.
 
-**Read what matched, not how many.** Searching the site for `coprime` returned four results,
-which looked like the search covering statement text. All four matched the theorem *name*.
-A count tells you nothing about why something matched.
+**Read the matches. Do not count them.** A site search for `coprime` gave four results. This
+looked like a search of the statement text. All four results matched the theorem *name*. A
+count does not tell you why a search matched.
 
-**`grep sorry` hits prose.** A file whose only two `sorry` matches were inside a comment
-describing a plan was nearly written off as incomplete. Use `#print axioms` to decide, and
-grep only to find where to look.
+**`grep sorry` also matches prose.** One file had two matches for `sorry`, both in a comment
+that described a plan. The file was almost recorded as incomplete. Use `#print axioms` to
+decide. Use grep only to find the location.
 
-**Check the data before describing it.** "The statements are already in `conjectures.json`"
-was wrong: `extract_names` is run with `--exclude=statement`, so they are not. Open the file.
+**Look at the data before you describe it.** The claim "the statements are already in
+`conjectures.json`" was incorrect. `extract_names` uses the `--exclude=statement` option, and
+does not write them. Open the file.
 
-**Measure at the right moment.** An environment probe run from a later command says nothing
-about what an attribute saw while elaborating, because the declaration is rewound in between.
-If a claim is about when something happens, instrument that point.
+**Measure at the correct time.** An environment probe in a later command does not show what an
+attribute saw during elaboration. Lean rewinds the declaration between the two points. Add the
+instrument at the point that your claim is about.
 
-**A no-op edit looks like a successful one.** A `str.replace` whose pattern no longer matches
-changes nothing and reports nothing; so does a `PATCH` that writes back identical content.
-Assert that the edit landed, and re-read the file rather than the exit code.
+**An edit that does nothing looks like an edit that works.** A `str.replace` whose pattern no
+longer matches changes nothing and reports nothing. A `PATCH` that writes identical content
+does the same. Make sure that the edit occurred. Read the file again. Do not use the exit
+code.
 
-**Shell quoting eats Lean source silently.** An unquoted heredoc expanded `` `A` `` and `$K_n`
-in docstrings to nothing. The file still compiled, so only a reader noticed. Quote the
-delimiter, and reread any docstring a script wrote.
+**The shell can remove Lean source silently.** An unquoted heredoc expanded `` `A` `` and
+`$K_n` in docstrings to nothing. The file compiled, thus only a reader found the error. Put
+the delimiter in quotation marks. Read again each docstring that a script wrote.
 
-**Dry-run anything that closes or deletes.** A comparison between an `int` and a set of
-strings matched nothing, which would have closed 34 of 35 issues rather than the 6 intended.
-Print what a destructive step would do, against real data, before letting it do it.
+**Do a dry run of each step that closes or deletes.** A comparison between an `int` and a set
+of strings matched nothing. This would have closed 34 of the 35 issues. The correct number was
+6. Print the effect of a destructive step on the real data first.
 
 ## Statement fidelity
 
-The docstring quotes the source, and the Lean says exactly that. When they can differ, the
-Lean is wrong. Things to reread before submitting:
+The docstring quotes the source. The Lean must agree with the docstring. If they disagree, the
+Lean is incorrect. Read these again before you submit:
 
-- quantifier order and scope
-- `≤` against `<`, `∀ᶠ` against `∀`, asymptotic equivalence against same order
-- a hypothesis the prose states and the Lean drops
-- `∃ x, P x → Q`, which is almost always meant as `∃ x, P x ∧ Q` and is trivially true as
-  written. There is a linter for it
+- the order and the scope of the quantifiers
+- `≤` against `<`, `∀ᶠ` against `∀`, asymptotic equivalence against the same order
+- a hypothesis that the prose gives and the Lean omits
+- `∃ x, P x → Q`. The intended statement is almost always `∃ x, P x ∧ Q`. As written, the
+  statement is trivially true. A linter finds this
 
-Prove the `test` and `API` statements you add. They exist to exercise a definition, and one
-left `sorry` exercises nothing.
+Prove each `test` statement and each `API` statement that you add. These statements must test
+a definition. A statement that contains `sorry` tests nothing.
 
-## Before opening a pull request
+## Before you open a pull request
 
-- [ ] `lake --wfail build <module>` passes for what you touched
-- [ ] docstring quotes the source, with a reference in the module docstring
-- [ ] every theorem has `category` and at least one `AMS` tag, in ascending order
-- [ ] degenerate inputs tried: empty, zero, division
-- [ ] `#print axioms` on anything claimed to be proved
-- [ ] no `sorry` under `FormalConjecturesForMathlib/`
-- [ ] `git status` before `git add`: generated files and `__pycache__` sweep in easily
-- [ ] any file a script edited has been reread, not just rebuilt
-- [ ] `Fixes #1, fixes #2` in the description, with the keyword repeated. `Fixes #1, #2`
-      closes only the first
-- [ ] formalisation choices and caveats in the pull request description, not in the Lean file
+- [ ] `lake --wfail build <module>` passes for each module that you changed
+- [ ] the docstring quotes the source, and the module docstring gives a reference
+- [ ] each theorem has a `category` and at least one `AMS` tag, in ascending order
+- [ ] you tested the degenerate inputs: empty, zero, division
+- [ ] you ran `#print axioms` on each theorem that you claim is proved
+- [ ] `FormalConjecturesForMathlib/` contains no `sorry`
+- [ ] you ran `git status` before `git add`. Generated files and `__pycache__` are easy to add
+      by mistake
+- [ ] you read again each file that a script changed. A build that passes is not sufficient
+- [ ] the description contains `Fixes #1, fixes #2`. Repeat the keyword. `Fixes #1, #2` closes
+      only the first issue
+- [ ] the description gives the formalisation decisions and the limitations. Do not put them
+      in the Lean file
