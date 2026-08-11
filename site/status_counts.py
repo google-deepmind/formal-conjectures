@@ -176,7 +176,7 @@ def get_status_counts_over_time(start_date, columns):
     counted_blobs = {}
     reader = subprocess.Popen(['git', 'cat-file', '--batch'],
                              stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    try:
+    with reader:
         for line in commit_lines:
             sha, timestamp = line.split(',')
             timestamp = int(timestamp)
@@ -207,8 +207,8 @@ def get_status_counts_over_time(start_date, columns):
 
             data.append([datetime.fromtimestamp(timestamp)] +
                         [totals[status] for status in STATUSES])
-    finally:
+        # `git cat-file` only exits once its input is closed, and `Popen` as a
+        # context manager waits for it.
         reader.stdin.close()
-        reader.wait()
 
     return data
