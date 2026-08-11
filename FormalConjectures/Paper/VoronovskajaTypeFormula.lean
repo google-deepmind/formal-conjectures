@@ -324,6 +324,23 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
   sorry
 
 /--
+Conjecture: the limit for sufficiently smooth functions is
+$$
+μ_α\sqrt{x(1-x)}\,f'(x).
+$$
+
+*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
+-/
+@[category research open, AMS 26 40 47]
+theorem voronovskaja_theorem.bezier_bernstein_operators.variants.proposed_formula
+    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
+    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
+    (hf : ContDiffOn ℝ 2 f I) :
+    Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
+      (𝓝 (bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x)) := by
+  sorry
+
+/--
 The proposed asymptotic formula holds unconditionally at the two endpoints of the unit interval.
 
 *Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
