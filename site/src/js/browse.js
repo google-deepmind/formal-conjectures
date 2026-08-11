@@ -88,10 +88,31 @@ function writeURL() {
 // ---------------------------------------------------------------------------
 // Filter / sort
 // ---------------------------------------------------------------------------
+// The statement text lives in the Verso fragments, as HTML. Strip the tags once per
+// theorem and keep the result, so typing does not re-parse every entry on every keystroke.
+const statementTextCache = new Map();
+
+function statementText(c) {
+  if (!statementTextCache.has(c.theorem)) {
+    const html = FC.problemDocHTML(c, versoFragments);
+    let text = '';
+    if (html) {
+      const el = document.createElement('div');
+      el.innerHTML = html;
+      text = (el.textContent || '').toLowerCase();
+    }
+    statementTextCache.set(c.theorem, text);
+  }
+  return statementTextCache.get(c.theorem);
+}
+
 function applyFilters() {
   const q = state.query.toLowerCase();
   filtered = allConjectures.filter(c => {
-    if (q && !c.displayTheorem.toLowerCase().includes(q)) return false;
+    // Match the statement as well as the name: someone looking for "distinct distances"
+    // knows the mathematics, not that we call it `Erdos307.erdos_307.variants.coprime`.
+    if (q && !c.displayTheorem.toLowerCase().includes(q) && !statementText(c).includes(q))
+      return false;
     if (state.categories.size  && !state.categories.has(c.category))   return false;
     if (state.collections.size && !state.collections.has(c.collection)) return false;
     if (state.subjects.size) {
@@ -297,6 +318,7 @@ async function init() {
 
   allConjectures = data.conjectures;
   versoFragments = data.versoFragments || { moduleDocs: {}, constLinks: {} };
+  statementTextCache.clear();
 
   // Handle OAuth callback and prefetch votes (disabled)
   // await FC.voting.handleOAuthCallback();

@@ -29,7 +29,6 @@ The notions `IsTotalDominatingSet`, `IsMinimalTotalDominatingSet`,
 `FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated`.
 -/
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture315
 
