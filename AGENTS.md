@@ -1,11 +1,11 @@
 # Agent guidelines
 
-Formal Conjectures states open mathematical problems in Lean 4. This is a repository of
-statements, not a repository of proofs. Each statement must say what its source says. Almost
-every problem contains `sorry`.
+Formal Conjectures states open mathematical problems in Lean 4. It is a statement
+repository, not a proof repository: almost every problem is `sorry`. Each statement must say
+what its source says.
 
-[CONTRIBUTING.md](CONTRIBUTING.md) gives the conventions, the directories and the attributes.
-This file adds only what CONTRIBUTING does not tell you.
+[CONTRIBUTING.md](CONTRIBUTING.md) is the reference for conventions, folders, and the
+attributes. This file adds only what CONTRIBUTING does not tell you.
 
 Copy an existing file. Do not copy a template. *File structure conventions* in CONTRIBUTING
 gives the skeleton.
