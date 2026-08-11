@@ -51,7 +51,7 @@ so the inequality is genuinely about a finite `length(Ḡ) = diam(Gᶜ)`.
 
 namespace WrittenOnTheWallII.GraphConjecture100
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

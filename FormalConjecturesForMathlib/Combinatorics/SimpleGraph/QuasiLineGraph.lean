@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,18 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+@[expose] public section
 
-/-!
-# ForMathlib (deprecated)
+namespace SimpleGraph
+variable {α : Type*} [Fintype α] [DecidableEq α]
 
-This module is deprecated since 2026-01-08. Use `FormalConjecturesForMathlib` directly.
--/
+open scoped Classical Finset List in
 
-deprecated_module (since := "2026-01-08")
+/-- A graph is a quasi-line graph if the neighborhood of every vertex can be partitioned into two cliques. -/
+def IsQuasiLineGraph {V : Type*} (G : SimpleGraph V) : Prop :=
+  ∀ v : V, ∃ (s₁ s₂ : Set V),
+    s₁ ∪ s₂ = G.neighborSet v ∧ G.IsClique s₁ ∧ G.IsClique s₂
+
+
+end SimpleGraph
