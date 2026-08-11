@@ -358,6 +358,13 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
+      # The stats plot counts categories by reading the Lean source, which is
+      # the only way to count them for past commits. This confirms that doing
+      # so still agrees with `extract_names` over the tree both just saw.
+      - name: Check status counts
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: python3 site/check_status_counts.py site/data/conjectures.json
+
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
