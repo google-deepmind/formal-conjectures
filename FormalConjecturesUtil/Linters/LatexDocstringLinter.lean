@@ -16,13 +16,14 @@ limitations under the License.
 module
 
 public import Lean
+public meta import Init.Data.String.Legacy
 
 /-! # The LaTeX Docstring Linter
 
 The `LatexDocstringLinter` ensures that docstrings use `$ $` or `$$ $$` for math formulas instead of `\[ \]` or `\( \)`.
 -/
 
-public section
+public meta section
 
 open Lean Elab Meta Linter Command Parser
 

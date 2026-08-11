@@ -40,7 +40,7 @@ union covers `G`.
 
 Note that this differs from `Partition (α := Subgroup G)` because the covering condition there
 invokes `Subgroup.sup` which is subgroup generation and thus stronger than union. This definition
-is easier to use in this contect than the alternative `Partition (α := Set G)`, which lacks
+is easier to use in this context than the alternative `Partition (α := Set G)`, which lacks
 subgroup definitions such as `Subgroup.index`. -/
 structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] where
   parts : ι → Subgroup G
