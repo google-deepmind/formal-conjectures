@@ -60,7 +60,7 @@ The sequence $a_1<a_2<\cdots<a_t$ is packaged as a strictly monotone map `a : Fi
 with $2\leq a_i<n$, the greatest prime factor $P$ is `Nat.maxPrimeFac`, and $g(n)$ is the
 supremum in `ℕ` of the achievable lengths $t$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos648.lean"]
 theorem erdos_648 :
     (fun n => (g n : ℝ)) =Θ[atTop] fun n => Real.sqrt ((n : ℝ) / Real.log (n : ℝ)) := by
   sorry

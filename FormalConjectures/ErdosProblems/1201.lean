@@ -23,7 +23,6 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter Finset
-open Classical
 
 namespace Erdos1201
 
@@ -35,6 +34,7 @@ noncomputable def Erdos1201Set (ε : ℝ) (k : ℕ) : Set ℕ :=
   { n : ℕ |
     ((sSup {p : ℕ | p.Prime ∧ p ∣ ∏ i ∈ range (k + 1), (n + i)} : ℕ) : ℝ) > (n : ℝ) ^ (1 - ε) }
 
+open scoped Classical in
 /--
 Is it true that for every $\epsilon,\eta>0$ there exists a $k$ such that the density of $n$
 for which $P(n(n+1)\cdots(n+k))>n^{1-\epsilon}$ is at least $1-\eta$ (where $P(m)$ is the greatest
@@ -48,6 +48,7 @@ theorem erdos_1201 :
           (((count (Erdos1201Set ε k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős wrote he could prove this for $\epsilon=1/2$.
 -/
