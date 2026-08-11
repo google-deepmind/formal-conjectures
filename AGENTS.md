@@ -78,7 +78,12 @@ proved:
 -- [propext, Classical.choice, Quot.sound]
 ```
 
-Any other axiom shows that the theorem is not proved. `sorryAx` is the most important example.
+`sorryAx` shows that the theorem is not proved.
+
+The three axioms above are the bar for a `research solved` statement. A `test` statement can
+use `native_decide`, which adds `Lean.ofReduceBool` and `Lean.trustCompiler`. These two move
+the proof out of the kernel, so name them in the pull request when a statement depends on
+them.
 
 Do the same for a proof that you cite with `formal_proof`. Read the file and look for `sorry`.
 Run `#print axioms` on the theorem that you cite. Then make sure that this theorem states what
@@ -104,19 +109,6 @@ does not write them. Open the file.
 **Measure at the correct time.** An environment probe in a later command does not show what an
 attribute saw during elaboration. Lean rewinds the declaration between the two points. Add the
 instrument at the point that your claim is about.
-
-**An edit that does nothing looks like an edit that works.** A `str.replace` whose pattern no
-longer matches changes nothing and reports nothing. A `PATCH` that writes identical content
-does the same. Make sure that the edit occurred. Read the file again. Do not use the exit
-code.
-
-**The shell can remove Lean source silently.** An unquoted heredoc expanded `` `A` `` and
-`$K_n` in docstrings to nothing. The file compiled, thus only a reader found the error. Put
-the delimiter in quotation marks. Read again each docstring that a script wrote.
-
-**Do a dry run of each step that closes or deletes.** A comparison between an `int` and a set
-of strings matched nothing. This would have closed 34 of the 35 issues. The correct number was
-6. Print the effect of a destructive step on the real data first.
 
 ## Statement fidelity
 
