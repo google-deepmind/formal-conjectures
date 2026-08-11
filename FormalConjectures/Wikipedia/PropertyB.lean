@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.ErdosProblems.«602»
+import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
+import FormalConjecturesUtil
 
 /-!
 # The Property B Number
@@ -24,6 +25,7 @@ with no monochromatic edge. The number `m(n)` is the minimum number of edges in 
 hypergraph without Property B.
 
 *References:*
+- [Wikipedia: Property B](https://en.wikipedia.org/wiki/Property_B)
 - [EL75] Erdős, Paul, and László Lovász. "Problems and results on 3-chromatic hypergraphs and some
   related questions." Infinite and Finite Sets (1975), 609-627.
   https://cs.nyu.edu/spencer/papers/french.pdf
@@ -40,9 +42,9 @@ namespace PropertyBNumber
 def IsNUniform {m v : ℕ} (n : ℕ) (A : Fin m → Finset (Fin v)) : Prop :=
   ∀ i, (A i).card = n
 
-/-- Property B for a finite set system, using the general definition from Erdős Problem 602. -/
+/-- Property B for a finite set system, using the shared `FormalConjecturesForMathlib` definition. -/
 def HasPropertyB {m v : ℕ} (A : Fin m → Finset (Fin v)) : Prop :=
-  Erdos602.HasPropertyB (Fin m) fun i ↦ (A i : Set (Fin v))
+  Finset.HasPropertyB (Finset.univ.image A)
 
 /-- An `n`-uniform finite set system that does not have Property B. -/
 def IsCounterexample {m v : ℕ} (n : ℕ) (A : Fin m → Finset (Fin v)) : Prop :=
