@@ -255,6 +255,8 @@ jobs:
           echo "Downloading growth plots from $LIVE_URL ..."
           curl -sfL "$LIVE_URL/data/file_counts_white.html" -o site/data/file_counts_white.html || true
           curl -sfL "$LIVE_URL/data/file_counts_dark.html" -o site/data/file_counts_dark.html || true
+          curl -sfL "$LIVE_URL/data/status_counts_white.html" -o site/data/status_counts_white.html || true
+          curl -sfL "$LIVE_URL/data/status_counts_dark.html" -o site/data/status_counts_dark.html || true
           node -e "
             const fs = require('fs');
             const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
