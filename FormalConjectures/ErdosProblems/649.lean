@@ -49,7 +49,8 @@ theorem erdos_649 : answer(False) ↔
 In fact, the answer to this question as written is easily seen to be no, since there are no
 solutions to $2^k\equiv -1\pmod{7}$, and hence this fails with $p=2$ and $q=7$.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/christianTNG/formal-conjectures/blob/35efde29598fd5104e5bc91f1e53d77931e7f856/FormalConjectures/ErdosProblems/649.lean#L53"]
 theorem erdos_649.variants.no_solution_two_seven :
     ¬ ∃ n : ℕ, n.maxPrimeFac = 2 ∧ (n + 1).maxPrimeFac = 7 := by
   sorry
