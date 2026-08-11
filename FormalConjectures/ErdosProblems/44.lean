@@ -28,7 +28,8 @@ namespace Erdos44
 
 -- Reference: https://arxiv.org/pdf/2103.15850
 /-- The maximum size of a Sidon set in `{1, ..., N}` is less than or equal to `2 * √N`. -/
-@[category textbook, AMS 5 11]
+@[category textbook, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/christianTNG/formal-conjectures/blob/2d9d7f1380c4897f30004f6c909e42e820d3c65f/FormalConjectures/ErdosProblems/44.lean#L32"]
 theorem maxSidonSubsetCard_icc_bound (N : ℕ) (hN : 1 ≤ N) :
     maxSidonSubsetCard (Icc 1 N) ≤ 2 * Real.sqrt N := by
   sorry
