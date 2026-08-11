@@ -48,8 +48,7 @@ there are two degree-one vertices. A maximal induced tree containing them must
 have an external vertex with two attachments; those attachments create a cycle
 whose length forces the tree to contain at least $\mathrm{girth}(G)+1$ vertices.
 -/
-@[category research solved, AMS 5,
-  formal_proof using formal_conjectures at "https://github.com/DomTheDeveloper/formal-conjectures/blob/693e9aa206a5c6c98598aa4e6e5f3db0994a79b7/FormalConjectures/WrittenOnTheWallII/Proofs/GraphConjecture143.lean"]
+@[category research solved, AMS 5]
 theorem conjecture143 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hσ : 0 < secondSmallestDegree G) :
     (G.girth : ℝ) + 1 ≤ (largestInducedTreeSize G : ℝ) * (secondSmallestDegree G : ℝ) := by
