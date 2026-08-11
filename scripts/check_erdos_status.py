@@ -281,7 +281,6 @@ def close_resolved_issues(mismatches):
     the label has been overtaken by a merge.
     """
     # `find_mismatches` keys problems by string, so compare as strings.
-    # `find_mismatches` keys problems by string, so compare as strings.
     still_open = {str(m["number"]) for m in mismatches}
     known = classifiable()
     result = subprocess.run(
