@@ -92,9 +92,11 @@ since `∑ i, g i` is `0` rather than `1`, while `X → ℝ` is a subsingleton s
 converges trivially. The equivalence would be false there for reasons that have nothing to do
 with the question.
 -/
-@[category research open, AMS 15 51]
+@[category research solved, AMS 15 51,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/microscopic-weighting-counterexample/blob/eff8979/lean/MicroscopicWeightingCounterexampleFC.lean#L886-L894"]
 theorem microscopic_weighting_iff_finite_concentration :
-    answer(sorry) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
+    answer(False) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
       HasMicroscopicWeighting X ↔ HasFiniteConcentration (distanceMatrix X) := by
   sorry
 
