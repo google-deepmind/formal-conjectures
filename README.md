@@ -59,9 +59,9 @@ lake build
 The directory structure is organised by the type of sources of the conjectures.
 There are two special directories:
 
--   `FormalConjectures/Util` contains utilities like the
-    [`category` attribute](./FormalConjectures/Util/Attributes/Basic.lean), the
-    [`answer( )` elaborator](./FormalConjectures/Util/Answer.lean) and some
+-   `FormalConjecturesUtil` contains utilities like the
+    [`category` attribute](./FormalConjecturesUtil/Attributes/Basic.lean), the
+    [`answer( )` elaborator](./FormalConjecturesUtil/Answer.lean) and some
     linters.
 -   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
