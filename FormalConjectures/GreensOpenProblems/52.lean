@@ -43,9 +43,11 @@ theorem green_52 :
 /--
 Could $2A$ even contain a coset of codimension $O(\log K)$?
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-52-log-counterexample/blob/16cb5d0/lean/Green52LogCounterexampleFC.lean#L661-L668"]
 theorem green_52_log :
-    answer(sorry) ↔ ∃ (C D : ℝ), ∀ (n K : ℕ) (A : Set (𝔽₂ n)) (S : Finset (𝔽₂ n)),
+    answer(False) ↔ ∃ (C D : ℝ), ∀ (n K : ℕ) (A : Set (𝔽₂ n)) (S : Finset (𝔽₂ n)),
       0 < K → S.card = K → A + (S : Set (𝔽₂ n)) = Set.univ →
       ∃ (V : AffineSubspace (ZMod 2) (𝔽₂ n)), (V : Set (𝔽₂ n)) ⊆ A + A ∧
         (n : ℝ) ≤ (Module.finrank (ZMod 2) V.direction : ℝ) + C * log (K : ℝ) + D := by
