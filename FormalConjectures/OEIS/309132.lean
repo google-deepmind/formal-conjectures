@@ -38,7 +38,7 @@ open Rat Nat
 /--
 $a(n)$ is the denominator of $F(n)$ = A027641(n-1)/n + A027642(n-1)/n^2.
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if n = 0 then 0
   else
     let n_q : ℚ := n

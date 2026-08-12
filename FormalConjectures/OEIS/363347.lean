@@ -62,7 +62,7 @@ The value of the continued fraction is $C_n = 1/R_2(n)$.
 If $R_2(n) = N/D$ in reduced form, $C_n = D/N$.
 The sequence $a(n)$ is the denominator of the final fraction, which is $\vert N \vert$.
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if n ≤ 2 then 0 -- The sequence is indexed starting from $n=3$.
   else
     let R2 := continuedFractionDenominator n 2

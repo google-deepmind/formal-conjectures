@@ -42,14 +42,14 @@ open scoped Real
 open Nat
 
 /--
-a: Numerators of a sequence of fractions converging to $e$.
+Numerators of a sequence of fractions converging to $e$.
 $$a(1) = 3, a(2) = 5$$
 For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
 \left(\frac{n-2}{2}\right) a(n-3)
 & \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   match n with
   | 0 => 0 -- Required for total function, O(1,1) suggests 0 is not relevant.
   | 1 => 3
@@ -75,7 +75,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 termination_by n
 
 /--
-b: Denominators of a sequence of fractions converging to $e$.
+Denominators of a sequence of fractions converging to $e$.
 This sequence is defined by the same recurrence relation as a but with
 initial values $b(1)=1, b(2)=2$.
 $$b(1) = 1, b(2) = 2$$
@@ -84,7 +84,7 @@ $$b(n) = \begin{cases} \left(\frac{n+2}{2}\right) b(n-1) - b(n-2) -
 \left(\frac{n-2}{2}\right) b(n-3)
 & \text{if } n \text{ is even} \\ 2 b(n-1) + n b(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
-noncomputable def b (n : ℕ) : ℕ :=
+def b (n : ℕ) : ℕ :=
   match n with
   | 0 => 0
   | 1 => 1

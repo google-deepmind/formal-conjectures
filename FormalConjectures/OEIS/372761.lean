@@ -54,7 +54,7 @@ termination_by n - k
 Denominator of the continued fraction
 $$ \frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{n+4}}}}}} $$
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if n < 3 then 0 -- Sequence starts at n=3.
   else (1 / continuedFractionDenominator n 2).den
 

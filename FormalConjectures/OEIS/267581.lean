@@ -61,7 +61,7 @@ The term $a(n)$ is the decimal value of the binary number $C_{0, 0} C_{1, 0} \do
 where $C_{i, 0}$ is the state of the center cell at time $i$.
 $$a(n) = \sum_{k=0}^n C_{k, 0} \cdot 2^{n-k}$$
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   Finset.sum (Finset.range (n + 1)) fun k => (middleColumnBit k) * (2^ (n - k))
 
 /-- The floor term in the conjectured recurrence relation for A267581.

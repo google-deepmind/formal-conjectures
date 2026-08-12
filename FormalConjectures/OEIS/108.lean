@@ -51,9 +51,8 @@ def IndexCond (j k : ℕ) : Prop :=
 
 open Int (fract)
 
-/-- The fractional part of a rational number, viewed as a real number. Must be noncomputable
-due to dependence on the real floor function. -/
-noncomputable def fracPart (q : ℚ) : ℝ := fract (q : ℝ)
+/-- The fractional part of a rational number. -/
+def fracPart (q : ℚ) : ℚ := fract q
 
 
 @[category test, AMS 11]

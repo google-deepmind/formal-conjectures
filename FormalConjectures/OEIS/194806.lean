@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Size of smallest subset of $\{1, 2, \dots, n\}$ with distinct subset sums
 
-The set of all products of elements from a Finset S.
-
 Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
 such that $S \cdot S$ contains $T$,
 where $S \cdot S$ is the set of all products of elements of $S$.
@@ -44,7 +42,7 @@ Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
 such that $S \cdot S$ contains $T$,
 where $S \cdot S$ is the set of all products of elements of $S$.
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if h : n = 0 then 0
   else
     let T_n := Icc 1 n

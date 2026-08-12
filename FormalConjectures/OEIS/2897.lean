@@ -44,7 +44,6 @@ abbrev Vars := Fin 3
 /--
 The finsupp corresponding to the monomial $x^n y^n z^n$.
 This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
-We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
 -/
 noncomputable def xyzPowN (n : ℕ) : Finsupp Vars ℕ :=
   Finsupp.ofSupportFinite (fun _ : Vars => n) (Set.toFinite _)
@@ -54,7 +53,6 @@ local notation "P" => MvPolynomial Vars ℤ
 /--
 The polynomial $pPoly(X, Y, Z) = (1 + X + Y + Z)^{2n} (1 + X + Y - Z)^n (1 + X - Y + Z)^n$.
 We identify $X_0, X_1, X_2$ with $X, Y, Z$.
-We mark it noncomputable due to dependencies in the polynomial ring structure.
 -/
 noncomputable def pPoly (n : ℕ) : P :=
   let X := MvPolynomial.X 0

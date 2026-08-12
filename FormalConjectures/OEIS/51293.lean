@@ -49,7 +49,7 @@ def a (n : ℕ) : ℕ :=
       S.Nonempty ∧ S.card ∣ S.sum id
   )
 
-noncomputable def aReal (n : ℕ) : ℝ := a n
+def aReal (n : ℕ) : ℝ := a n
 
 
 @[category test, AMS 11]

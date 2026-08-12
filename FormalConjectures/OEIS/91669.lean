@@ -38,7 +38,7 @@ $a(n) = \frac{2^{n-1}}{n!} \prod_{k=1}^{n-1} (2^k-1)$.
 The sequence $a(n)$ is composed of natural numbers, thus we define it
 as a function $\mathbb{N} \to \mathbb{N}$.
 -/
-noncomputable def a (n : ℕ) : ℕ :=
+def a (n : ℕ) : ℕ :=
   if n = 0 then 0 -- Sequence is defined for n >= 1.
   else
     let n_pred : ℕ := n.pred

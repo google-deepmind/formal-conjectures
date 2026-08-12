@@ -63,7 +63,7 @@ def a (n : ℕ) : ℕ :=
 open PowerSeries
 
 /-- The power series $A(x/3) = \sum_{n=0}^\infty \frac{a(n)}{3^n} x^n$ over ℚ. -/
-noncomputable def ogfAScaled : PowerSeries ℚ :=
+def ogfAScaled : PowerSeries ℚ :=
   PowerSeries.mk fun n => (a n : ℚ) / (3 ^ n : ℚ)
 
 
