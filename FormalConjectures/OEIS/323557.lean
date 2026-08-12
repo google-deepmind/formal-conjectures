@@ -32,8 +32,6 @@ where $j = \frac{m - n(k+1)}{n+1}$, and the term is zero unless $j$ is a natural
 namespace OeisA323557
 
 
-open scoped Classical
-
 open Nat
 
 /--

@@ -30,12 +30,13 @@ or 0 if no such multiple exists.
 namespace OeisA62567
 
 
-open Nat Classical
+open Nat
 
 /-- The number whose digits in base 10 are $n$'s digits reversed. -/
 def reverseNat (k : ℕ) : ℕ :=
   ofDigits 10 (digits 10 k).reverse
 
+open Classical in
 /--
 First multiple of $n$ whose reverse is also divisible by $n$,
 or 0 if no such multiple exists.
@@ -48,8 +49,6 @@ noncomputable def a (n : ℕ) : ℕ :=
 
     -- We check if a solution exists (using classical reasoning, since P is decidable).
     if h_ex : ∃ k, P k then
-      -- Nat.find requires a DecidablePred instance, which holds for this property on ℕ.
-      have HP : DecidablePred P := by infer_instance
       -- k_min is the smallest multiplier k >= 1.
       let k_min : ℕ := Nat.find h_ex
       k_min * n
@@ -57,6 +56,7 @@ noncomputable def a (n : ℕ) : ℕ :=
       0
 
 
+open Classical in
 @[category API, AMS 11]
 lemma a_eq_self (n : ℕ) (hn : n > 0) (h_rev : n ∣ reverseNat n) : a n = n := by
   unfold a

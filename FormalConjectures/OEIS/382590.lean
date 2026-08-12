@@ -30,8 +30,6 @@ where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(1)=1, a(2)=2, b(1)=1, b(2)=0
 namespace OeisA382590
 
 
-open scoped Classical
-
 open Int
 
 /--

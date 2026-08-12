@@ -34,10 +34,10 @@ $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equ
 namespace OeisA282779
 
 
-open Nat Set Classical
+open Nat Set
 
 /--
-a: Period of cubes mod $n$.
+Period of cubes mod $n$.
 The $n$-th term $a(n)$ is the smallest positive integer $T$ such that
 $\forall k \in \mathbb{N}$, $(k+T)^3 \equiv k^3 \pmod n$.
 -/
