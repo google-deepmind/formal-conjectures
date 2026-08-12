@@ -30,9 +30,9 @@ The paper establishes several structural results of the form
 "if $\mathrm{cyc}(G)$ or $\mathrm{sub}(G)$ is small relative to $2^t$, then $G$
 has a strong structural property":
 
-* $\mathrm{cyc}(G) < 5 \cdot 2^{t-2} \implies G$ is nilpotent (Theorem 3.2)
+* $\mathrm{cyc}(G) < 5 \cdot 2^{t-2} \implies G$ is nilpotent (Theorem 3.1)
 * $\mathrm{cyc}(G) < 2^{t+1} \implies G$ is supersolvable (Theorem 4.2)
-* $\mathrm{sub}(G) < 59 \cdot 2^{t-3} \implies G$ is solvable (Theorem 5.4)
+* $\mathrm{sub}(G) < 59 \cdot 2^{t-3} \implies G$ is solvable (Theorem 5.3)
 
 **Conjecture 5.5** proposes the analogue for solvability via cyclic subgroup count:
 if $\mathrm{cyc}(G) < 2^{t+2}$, then $G$ is solvable.
@@ -66,12 +66,13 @@ If a finite group `G` satisfies $\mathrm{cyc}(G) < 2^{t+2}$, where $t = \pi(G)$ 
 number of distinct prime divisors of $|G|$, then `G` is solvable.
 -/
 @[category research open, AMS 20]
-theorem group_solvable_of_cyc_lt (h : cyc G < 2 ^ (numPrimeFactors G + 2)) :
-    IsSolvable G := by
+theorem solvable_of_cyc_lt :
+    answer(sorry) ↔ ∀ (G : Type) [Group G] [Fintype G],
+      cyc G < 2 ^ (numPrimeFactors G + 2) → IsSolvable G := by
   sorry
 
 /--
-**Theorem 3.2.** Below $5 \cdot 2^{t-2}$ cyclic subgroups, the group is nilpotent.
+**Theorem 3.1.** Below $5 \cdot 2^{t-2}$ cyclic subgroups, the group is nilpotent.
 -/
 @[category research solved, AMS 20]
 theorem nilpotent_of_cyc_lt (h : cyc G < 5 * 2 ^ (numPrimeFactors G - 2)) :
