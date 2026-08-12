@@ -48,9 +48,9 @@ def abPair : ℕ → ℤ × ℤ
   (a_n_plus_1 * b_n + a_n * b_n_plus_1, a_n_plus_1 * b_n - a_n * b_n_plus_1)
 
 /--
-a: $a(n)$ is the sequence defined by the mutual recurrence relations:
+The sequence defined by the mutual recurrence relations:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
-starting with $a(0) = b(0) = b(1) = 1$ and a(1) = 2.
+starting with $a(0) = b(0) = b(1) = 1$ and $a(1) = 2$.
 The terms are in $\mathbb{Z}$ due to negative values.
 -/
 def a (n : ℕ) : ℤ := (abPair n).fst

@@ -19,8 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Reversible multiples $a(3^n) = 10^{3^{n-2}} - 1$ for powers of $3$
 
-The number whose digits in base 10 are $n$'s digits reversed.
-
 First multiple of $n$ whose reverse is also divisible by $n$,
 or 0 if no such multiple exists.
 
