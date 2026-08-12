@@ -49,7 +49,7 @@ of the set of natural numbers satisfying the condition.
 Since Mathlib's `sInf` on a subset of `ℕ` gives a result in `ℕ`, this definition
 is only completely faithful to the OEIS when the set is non-empty.
 The OEIS definition implies that the set of k's is non-empty for all n,
-which is legitimite as shown by the theorem `exists_xor_sq_eq` below.
+which is legitimate as shown by the theorem `exists_xor_sq_eq` below.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   -- The term (2*n + 1)^2 is the target value.
