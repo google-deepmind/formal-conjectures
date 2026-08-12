@@ -52,8 +52,7 @@ def base_seq (n : ℕ) : ℤ :=
   E.mkSol init n
 
 /--
-A227582: Expansion of $(2+3*x+2*x^2+2*x^3+3*x^4+x^5-x^6)/(1-2x+x^2-x^5+2*x^6-x^7)$.
-The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-indexed solution.
+Expansion of $(2+3x+2x^2+2x^3+3x^4+x^5-x^6)/(1-2x+x^2-x^5+2x^6-x^7)$, 1-indexed.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if 0 < n then

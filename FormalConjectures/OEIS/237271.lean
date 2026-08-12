@@ -19,8 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Number of parts in the symmetric representation of $\sigma(n)$
 
-A237271: Number of parts in the symmetric representation of $\sigma(n)$.
-a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
+Number of parts in the symmetric representation of $\sigma(n)$. $a(n)$ is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
 such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
 
 The formula used is
@@ -39,8 +38,7 @@ namespace OeisA237271
 open Nat Finset List
 
 /--
-A237271: Number of parts in the symmetric representation of $\sigma(n)$.
-a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
+Number of parts in the symmetric representation of $\sigma(n)$. $a(n)$ is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$
 such that $d_{k+1}$ is odd and $d_{k+1} \ge 2 d_k$.
 
 The formula used is

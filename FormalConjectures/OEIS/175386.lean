@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Denominators of $\sum_{k=1}^n \frac{1}{k 2^k}$
 
-A175386: $a(n)$ is the denominator of the sum
+$a(n)$ is the denominator of the sum
 $$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
 
 The sum which A175386 $a(n)$ is the denominator of.
@@ -33,7 +33,7 @@ namespace OeisA175386
 
 
 /--
-A175386: $a(n)$ is the denominator of the sum
+$a(n)$ is the denominator of the sum
 $$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
 -/
 def a (n : ℕ) : ℕ :=

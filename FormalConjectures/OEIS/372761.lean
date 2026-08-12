@@ -74,7 +74,7 @@ noncomputable def continued_fraction_val (n : ℕ) : ℚ :=
     if val = 0 then 0 else 1 / val
 
 /--
-A372761: Denominator of the continued fraction
+Denominator of the continued fraction
 $$ \frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{n+4}}}}}} $$
 -/
 noncomputable def a (n : ℕ) : ℕ :=

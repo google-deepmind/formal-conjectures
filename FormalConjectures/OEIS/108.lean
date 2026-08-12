@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Fractional parts of sums of reciprocals of Catalan numbers $C(n)$
 
-A000108: Catalan numbers $C(n) = \frac{1}{n+1}\binom{2n}{n}$.
+Catalan numbers $C(n) = \frac{1}{n+1}\binom{2n}{n}$.
 
 The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers.
 
@@ -34,7 +34,7 @@ namespace OeisA108
 open Nat Real Finset
 
 /--
-A000108: Catalan numbers $C(n) = \frac{1}{n+1}\binom{2n}{n}$.
+Catalan numbers $C(n) = \frac{1}{n+1}\binom{2n}{n}$.
 -/
 def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
 

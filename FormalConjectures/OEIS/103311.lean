@@ -19,7 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Fibonacci transform satisfying $|a(n)| = F(n+1)$
 
-A103311: A transform of the Fibonacci numbers.
 The sequence $a(n)$ satisfies the linear recurrence relation:
 $$a(n) = 3a(n-1) - 4a(n-2) + 2a(n-3) - a(n-4)$$
 with initial terms $a(0)=0, a(1)=1, a(2)=1, a(3)=0$.
@@ -34,7 +33,6 @@ namespace OeisA103311
 
 
 /--
-A103311: A transform of the Fibonacci numbers.
 The sequence $a(n)$ satisfies the linear recurrence relation:
 $$a(n) = 3a(n-1) - 4a(n-2) + 2a(n-3) - a(n-4)$$
 with initial terms $a(0)=0, a(1)=1, a(2)=1, a(3)=0$.
@@ -65,7 +63,7 @@ lemma a_4 : a 4 = -2 := by rfl
 
 
 /--
-A103311: A transform of the Fibonacci numbers.
+Fibonacci transform satisfying $|a(n)| = F(n+1)$.
 
 Conjecture: all elements in absolute value are Fibonacci numbers.
 

@@ -58,7 +58,7 @@ def ca_state (t : ℕ) (x : ℤ) : ℕ :=
 def middle_column_bit (t : ℕ) : ℕ := ca_state t 0
 
 /--
-A267581: Decimal representation of the middle column of the "Rule 167" elementary cellular automaton
+Decimal representation of the middle column of the "Rule 167" elementary cellular automaton
 starting with a single ON (black) cell.
 The term $a(n)$ is the decimal value of the binary number $C_{0, 0} C_{1, 0} \dots C_{n, 0}$,
 where $C_{i, 0}$ is the state of the center cell at time $i$.

@@ -19,10 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Maximality of $k = 43$ with restricted digit counts in bases $3 \le b < k$
 
-A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
+Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 
-The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
+The sequence Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 
 *References:*
@@ -36,7 +36,7 @@ namespace OeisA306424
 open List Finset Nat
 
 /--
-A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
+Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 -/
 def Condition (k : ℕ) : Prop :=
@@ -44,7 +44,7 @@ def Condition (k : ℕ) : Prop :=
   ∀ b : ℕ, 3 ≤ b ∧ b < k → ((Nat.digits b k).toFinset.card) ≤ 2
 
 /--
-The sequence A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
+The $n$-th number $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.
 -/
 noncomputable def a (n : ℕ) : ℕ := n.nth Condition

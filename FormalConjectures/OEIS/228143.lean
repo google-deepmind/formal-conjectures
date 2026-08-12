@@ -19,10 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Eighth root of the generating function of an Apéry-like sequence
 
-A005259: The auxiliary sequence used for the Hankel matrix, defined as
+The auxiliary sequence used for the Hankel matrix, defined as
 $$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
 
-A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
+Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
 $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
 The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
 
@@ -40,7 +40,7 @@ open Polynomial
 open BigOperators Matrix Nat
 
 /--
-A005259: The auxiliary sequence used for the Hankel matrix, defined as
+The auxiliary sequence used for the Hankel matrix, defined as
 $$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$
 -/
 def apery_like (n : ℕ) : ℕ :=
@@ -48,7 +48,7 @@ def apery_like (n : ℕ) : ℕ :=
     (n.choose k)^2 * ((Nat.choose (n + k) k))^2
 
 /--
-A228143: Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
+Determinant of the $(n+1) \times (n+1)$ Hankel-type matrix with
 $(i,j)$-entry equal to A005259$(i+j)$ for all $i,j = 0,\dots,n$.
 The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$.
 -/

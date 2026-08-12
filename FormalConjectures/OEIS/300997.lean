@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Step difference bound $a(n+1) - a(n) \in \{1, 2\}$ in mass-redistribution cellular automata
 
-A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
+$a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
 automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of
 its mass, rounded down, to its right neighbor".
 The stable configuration is $n$ cells with mass 1.
@@ -35,7 +35,7 @@ namespace OeisA300997
 open List Nat Function Set
 
 /--
-A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
+$a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
 automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of
 its mass, rounded down, to its right neighbor".
 The stable configuration is $n$ cells with mass 1.

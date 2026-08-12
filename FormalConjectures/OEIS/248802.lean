@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Smallest prime factors of $2^{2^n+2} + 3$
 
-A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
+Smallest prime factor of $2^{(2^n+2)} + 3$.
 
 An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
 
@@ -32,7 +32,7 @@ namespace OeisA248802
 
 
 /--
-A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
+Smallest prime factor of $2^{(2^n+2)} + 3$.
 -/
 def a (n : ℕ) : ℕ := (2 ^ (2 ^ n + 2) + 3).minFac
 
@@ -65,7 +65,7 @@ lemma a_4 : a 4 = 262147 := by native_decide
 
 
 /--
-A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
+Smallest prime factor of $2^{(2^n+2)} + 3$.
 
 An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
 

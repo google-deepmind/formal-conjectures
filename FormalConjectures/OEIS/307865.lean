@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Vanishing of bases with $b^n \equiv -1 \pmod{2n+1}$ for absolute Euler pseudoprimes
 
-A307865: $a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
+$a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
 The bases $b$ are interpreted as $b \in \{1, 2, \dots, 2n\}$.
 We check the condition in the ring $\mathbb{Z}/(2n+1)\mathbb{Z}$.
 
@@ -37,7 +37,7 @@ namespace OeisA307865
 open Nat Finset ZMod
 
 /--
-A307865: $a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
+$a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
 The bases $b$ are interpreted as $b \in \{1, 2, \dots, 2n\}$.
 We check the condition in the ring $\mathbb{Z}/(2n+1)\mathbb{Z}$.
 -/

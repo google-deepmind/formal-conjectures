@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Characterization of Carmichael numbers via squarefree denominators $a(n)$
 
-A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
+$a(n)$ is the denominator of $F(n)$ = A027641(n-1)/n + A027642(n-1)/n^2.
 
 Definition of a Carmichael number $n$: a composite number s.t.
 $b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$.
@@ -37,7 +37,7 @@ namespace OeisA309132
 open Rat Nat
 
 /--
-A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
+$a(n)$ is the denominator of $F(n)$ = A027641(n-1)/n + A027642(n-1)/n^2.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0

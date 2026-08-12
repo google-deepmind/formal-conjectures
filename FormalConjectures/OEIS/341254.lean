@@ -40,7 +40,7 @@ noncomputable def r_const : ℝ := (2 + sqrt 5) / 2
 noncomputable def r_sq : ℝ := r_const * r_const
 
 /--
-A341254: $a(n) = \lfloor r \cdot \lfloor r \cdot n \rfloor \rfloor$, where $r = (2 + \sqrt{5})/2$.
+$a(n) = \lfloor r \cdot \lfloor r \cdot n \rfloor \rfloor$, where $r = (2 + \sqrt{5})/2$.
 Note: The original OEIS definition has $n$ starting at 1. We define $a(n)$ for all $\mathbb{N}$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=

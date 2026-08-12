@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 The number whose digits in base 10 are $n$'s digits reversed.
 
-A062567: First multiple of $n$ whose reverse is also divisible by $n$,
+First multiple of $n$ whose reverse is also divisible by $n$,
 or 0 if no such multiple exists.
 
 *References:*
@@ -39,7 +39,7 @@ def reverse_nat (k : ℕ) : ℕ :=
   ofDigits 10 (digits 10 k).reverse
 
 /--
-A062567: First multiple of $n$ whose reverse is also divisible by $n$,
+First multiple of $n$ whose reverse is also divisible by $n$,
 or 0 if no such multiple exists.
 -/
 noncomputable def a (n : ℕ) : ℕ :=

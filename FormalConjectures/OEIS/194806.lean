@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 The set of all products of elements from a Finset S.
 
-A194806: Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
+Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
 such that $S \cdot S$ contains $T$,
 where $S \cdot S$ is the set of all products of elements of $S$.
 
@@ -40,7 +40,7 @@ def set_prod (S : Finset ℕ) : Finset ℕ :=
   (S.product S).image fun p : ℕ × ℕ => p.fst * p.snd
 
 /--
-A194806: Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
+Size of the smallest subset $S$ of $T = \{1,2,3,\dots,n\}$
 such that $S \cdot S$ contains $T$,
 where $S \cdot S$ is the set of all products of elements of $S$.
 -/

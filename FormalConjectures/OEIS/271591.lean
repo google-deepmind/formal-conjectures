@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 The Tribonacci numbers $T_n$ (A000073).
 $T_0=0, T_1=0, T_2=1$, and $T_n = T_{n-1} + T_{n-2} + T_{n-3}$ for $n \ge 3$.
 
-A271591: Second most significant bit of the tribonacci number A000073(n).
+Second most significant bit of the tribonacci number A000073(n).
 This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor - 1$.
 
 *References:*
@@ -48,7 +48,7 @@ def tribonacci (n : ℕ) : ℕ :=
   | n + 3 => (tribonacci (n + 2)) + (tribonacci (n + 1)) + (tribonacci n)
 
 /--
-A271591: Second most significant bit of the tribonacci number A000073(n).
+Second most significant bit of the tribonacci number A000073(n).
 This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor - 1$.
 -/
 def a (n : ℕ) : ℕ :=

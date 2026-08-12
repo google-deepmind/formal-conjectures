@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Signed digit sums in bases $b \ge 5$
 
-A243106: The sequence
+The sequence
 $$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$
 where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
 
@@ -34,7 +34,7 @@ namespace OeisA243106
 open Finset
 
 /--
-A243106: The sequence
+The sequence
 $$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$
 where the sign is $-1$ if $k$ is prime, and $1$ if $k$ is not prime.
 -/
