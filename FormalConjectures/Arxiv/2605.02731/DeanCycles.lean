@@ -30,7 +30,6 @@ import FormalConjecturesUtil
   J. Combin. Theory Ser. B (1994), 277--292.
 
 Every graph with minimum degree at least `k` has a cycle whose length `k` divides.
-Only the case `k = 5` is open.
 -/
 
 open SimpleGraph
