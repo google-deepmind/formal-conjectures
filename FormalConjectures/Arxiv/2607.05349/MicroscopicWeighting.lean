@@ -44,8 +44,8 @@ noncomputable def distanceMatrix (X : Type*) [Fintype X] [MetricSpace X] : Matri
 /-- The weighting $\vec{w}(t) = Z(t)^{-1}\mathbf{1}$ at scale `t`.
 
 `Matrix.inv` is `0` on singular matrices, so this is only the intended vector where `Z t` is
-invertible. That is enough here: `Z 0` is the all-ones matrix and `Z` is continuous, so `Z t`
-is invertible for all small enough `t > 0`, which is where the limit below is taken. -/
+invertible. The analytic function `t ↦ det (Z t)` tends to `1` as `t → ∞`, so its zeros are
+isolated. Hence `Z t` is invertible for all small enough `t > 0`, as required below. -/
 noncomputable def weighting (X : Type*) [Fintype X] [DecidableEq X] [MetricSpace X] (t : ℝ) :
     X → ℝ :=
   (similarityMatrix X t)⁻¹ *ᵥ 1
