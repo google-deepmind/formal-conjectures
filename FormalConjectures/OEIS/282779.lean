@@ -61,7 +61,8 @@ noncomputable def periodOfPowerMod (p n : ℕ) : ℕ :=
 /--
 Conjecture: let $a_p(n)$ be the length of the period of the sequence $k^p \bmod n$ where $p$ is a prime, then $a_p(n) = n/p$ if $n \equiv 0 \pmod{p^2}$, else $a_p(n) = n$.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/282779.wip.lean#L104"]

@@ -104,7 +104,8 @@ lemma a_5 : a 5 = 5 := by
 /--
 Conjecture: For $n > 1$, $a(3^n) = 10^{3^{n-2}} - 1$. Disproved for $n > 4$ by _Farideh Firoozbakht_, Nov 13 2005.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/62567.wip.lean#L324"]

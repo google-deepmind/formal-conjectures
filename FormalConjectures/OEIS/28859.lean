@@ -59,9 +59,11 @@ lemma a_4 : a 4 = 60 := by native_decide
 
 
 /--
-Conjecture: Also the number of compositions of $n$ into positive integers such that adjacent parts and the largest part differ by at most 1. - _Gus Wiseman_, May 19 2020
+Conjecture: The sequence a(n) is also the number of compositions of $n$ into positive integers
+such that adjacent parts and the largest part differ by at most 1. - _Gus Wiseman_, May 19 2020
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/28859.wip.lean#L402"]

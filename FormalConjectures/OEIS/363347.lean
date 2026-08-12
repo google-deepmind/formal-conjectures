@@ -88,7 +88,8 @@ lemma a_7 : a 7 = 59 := by delta a; repeat rw [continuedFractionDenominator]; no
 /--
 Conjecture: The sequence contains all prime numbers which end with a 1 or 9 (i.e., primes $p \equiv 1$ or $9 \pmod{10}$).
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/363347.wip.lean#L825"]

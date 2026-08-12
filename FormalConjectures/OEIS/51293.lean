@@ -75,7 +75,8 @@ lemma a_5 : a 5 = 15 := by rfl
 /--
 Conjecture: $a(n) \sim 2^{n+1}/n$. - _Benoit Cloitre_, Oct 20 2002
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/51293.wip.lean#L503"]

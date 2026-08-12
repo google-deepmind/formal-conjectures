@@ -93,7 +93,8 @@ lemma a_4 : a 4 = 26 := by rfl
 /--
 Conjecture: $a(n) = 2 a(n-1) + 1 - \lfloor (1/2)^{2^{n+1} \bmod n} \rfloor$ for $n \ge 2$. - _Andres Cicuttin_, Mar 29 2016
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/267581.wip.lean#L190"]

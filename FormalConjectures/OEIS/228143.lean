@@ -86,7 +86,8 @@ lemma a_4 : a 4 = 674708032182398976 := by native_decide
 /--
 Conjecture: if $A(x) = 1 + 48x + 161856 x^2 + \cdots$ denotes the o.g.f. then $A(x/3)^{1/8}$ has integer coefficients. - _Peter Bala_, Apr 22 2018
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/228143.wip.lean#L698"]

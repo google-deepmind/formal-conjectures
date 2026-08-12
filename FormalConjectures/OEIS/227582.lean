@@ -111,7 +111,8 @@ theorem baseSeq_recurrence (n : ℕ) :
 Conjecture (from A227581): $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$,
 where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/227582.wip.lean#L282"]

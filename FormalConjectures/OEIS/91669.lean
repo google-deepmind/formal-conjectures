@@ -72,7 +72,8 @@ lemma a_5 : a 5 = 42 := by rfl
 /--
 Conjecture (for $n > 2$): if $n \mid a(n-1) + 2^{n-2}$, then $n$ is a prime with primitive root 2 (A001122). - _Amiram Eldar_ and _Thomas Ordowski_, Jan 19 2020
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/91669.wip.lean#L250"]
