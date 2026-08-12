@@ -19,20 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Asymptotics of subsets of $\{1, 2, \dots, n\}$ with integer average
 
-a: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
 
-`S_real n k` is the number of $k$-element subsets of $\{1, 2, \dots, n\}$
-whose sum is divisible by $k$.
-By the roots of unity filter, this exact count can be written as:
-$S_{n,k} = \frac{1}{k} \sum_{j=0}^{k-1} \sum_{A \in \binom{n}{k}} \omega^{j \sum A}$.
-The main term $j=0$ yields exactly $\frac{1}{k} \binom{n}{k}$.
-For $j > 0$, the roots of unity evaluated over the subsets yield bounded periodic sums.
-The maximal magnitude of these periodic products is achieved when the order of the root is 2,
-which bounds the error term magnitude strictly by $2 \cdot 2^{n/2}$.
+Benoit Cloitre conjectured the asymptotic expansion:
+$$a(n) = \frac{2^{n+1}}{n} \left(1 + \frac{1}{n} + \frac{3}{n^2} + \frac{13}{n^3} + \frac{75}{n^4} + \frac{541}{n^5} + o\left(\frac{1}{n^5}\right)\right)$$
+where the coefficients $1, 1, 3, 13, 75, 541, \dots$ are the Fubini numbers (preferential arrangements, A000670).
 
 *References:*
 - [A051293](https://oeis.org/A051293)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
+- [A000670](https://oeis.org/A000670)
 -/
 
 namespace OeisA51293
@@ -45,7 +41,7 @@ open scoped Topology
 open Finset Nat Real Filter Asymptotics
 
 /--
-a: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
+Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
 -/
 def a (n : ℕ) : ℕ :=
   Finset.card (
@@ -73,7 +69,7 @@ lemma a_5 : a 5 = 15 := by rfl
 
 
 /--
-Conjecture: $a(n) \sim 2^{n+1}/n$. - _Benoit Cloitre_, Oct 20 2002
+Conjecture: $a(n) = 2^{n+1}/n \cdot (1 + 1/n + 3/n^2 + 13/n^3 + 75/n^4 + 541/n^5 + o(1/n^5))$. - _Benoit Cloitre_, Oct 20 2002
 
 A formal proof has been found with the methods described in
 [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
@@ -81,10 +77,10 @@ A formal proof has been found with the methods described in
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/51293.wip.lean#L503"]
 theorem tendsto_aReal_asymptotic :
-    Tendsto (fun n : ℕ => (aReal n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) *
-      ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) +
-        75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) /
-      (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by
+    Tendsto (fun n : ℕ =>
+      (aReal n - (2 ^ (n + 1) / (n : ℝ)) *
+        (1 + 1 / (n : ℝ) + 3 / (n : ℝ) ^ 2 + 13 / (n : ℝ) ^ 3 + 75 / (n : ℝ) ^ 4 + 541 / (n : ℝ) ^ 5)) /
+      (2 ^ (n + 1) / (n : ℝ) ^ 6)) atTop (nhds 0) := by
     sorry
 
 end OeisA51293
