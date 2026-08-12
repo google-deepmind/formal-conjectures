@@ -100,7 +100,8 @@ lemma a_5 : a 5 = 5 := by
 
 
 /--
-Conjecture: For $n > 1$, $a(3^n) = 10^{3^{n-2}} - 1$. Disproved for $n > 4$ by _Farideh Firoozbakht_, Nov 13 2005.
+The conjecture that $a(3^n) = 10^{3^{n-2}} - 1$ for $n > 1$ was shown to be false for $4 < n < 21$
+by Farideh Firoozbakht, who conjectured that for all $n > 4$, $a(3^n) \neq 10^{3^{n-2}} - 1$. 
 
 A formal proof has been found with the methods described in
 [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
