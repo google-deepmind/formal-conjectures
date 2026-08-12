@@ -19,9 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Smallest prime factors of $2^{2^n+2} + 3$
 
-Smallest prime factor of $2^{(2^n+2)} + 3$.
-
-An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
+Smallest prime factor of $2^{2^n+2} + 3$.
 
 *References:*
 - [A248802](https://oeis.org/A248802)
@@ -32,7 +30,7 @@ namespace OeisA248802
 
 
 /--
-Smallest prime factor of $2^{(2^n+2)} + 3$.
+Smallest prime factor of $2^{2^n+2} + 3$.
 -/
 def a (n : ℕ) : ℕ := (2 ^ (2 ^ n + 2) + 3).minFac
 
@@ -65,9 +63,7 @@ lemma a_4 : a 4 = 262147 := by native_decide
 
 
 /--
-Smallest prime factor of $2^{(2^n+2)} + 3$.
-
-An index k is covered by Conjecture 1 if k = 10m + 2 for some m >= 0, predicting a(k)=67.
+Conjecture 1: $a(10n+2) = 67$ for $n \ge 0$. - _Chai Wah Wu_, Oct 21 2019
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
@@ -78,7 +74,7 @@ theorem a_ten_mul_add_two_eq (n : ℕ) : a (10 * n + 2) = 67 := by
 
 
 /--
-Theorem: $a(2n+1) = 13$ for $n \ge 1$. Conjecture 1: $a(10n+2) = 67$ for $n \ge 0$. - _Chai Wah Wu_, Oct 21 2019
+Conjecture 4: $a(58n+26) = 1399$ for $n \ge 0$ and when it is not covered by Conjectures 1-3. - _Chai Wah Wu_, Oct 21 2019
 
 A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
