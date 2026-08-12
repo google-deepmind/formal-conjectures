@@ -265,7 +265,7 @@ theorem alphaTwo_arbitrary_subset_bound :
 from the source, although the arbitrary-subset theorem above does not need
 them. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-"https://github.com/Kuberwastaken/c5-k4/blob/e62f2164d91dd83439373dd23fd68479e5407ae5/lean/GraphConjecture438b.lean"]
+"https://github.com/Kuberwastaken/c5-k4/blob/e62f216625438bc099707e466d2825ab483717a4/lean/GraphConjecture438b.lean"]
 theorem conjecture438b : answer(True) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.Connected → 3 < Fintype.card V →
