@@ -32,7 +32,7 @@ namespace Arxiv.«2603.06203»
 
 open Function
 
-/-!
+/-
 ## Normal form of quadratic rational maps with $\mathrm{Aut}(f) \cong S_3$
 
 Every quadratic rational map $f : \mathbb{P}^1 \to \mathbb{P}^1$ defined over $\mathbb{Q}$
@@ -55,7 +55,7 @@ if the minimal period of $z$ under $f_{k,d}$ is exactly $N$. -/
 def IsRationalPeriodicPtOfPeriod (k d : ℚ) (N : ℕ) (z : ℚ) : Prop :=
   (normalFormMap k d).IsPeriodicPt N z ∧ minimalPeriod (normalFormMap k d) z = N
 
-/-!
+/-
 ## Bilgili-Sadek Conjecture (Conjecture 1.2)
 -/
 
@@ -80,7 +80,7 @@ theorem bilgili_sadek_conjecture :
     ∀ (z : ℚ), ¬ IsRationalPeriodicPtOfPeriod k d N z := by
   sorry
 
-/-!
+/-
 ## Known partial results (Theorem 1.1, Bilgili-Sadek)
 -/
 
