@@ -22,10 +22,6 @@ import FormalConjecturesUtil
 Integral factorial ratio sequence:
 $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
 
-The product term in the denominator of the general conjecture:
-$$\prod_{i = 1..r, i \text{ coprime to } 30} (30n - i)$$
-We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product might be negative.
-
 *References:*
 - [A211417](https://oeis.org/A211417)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.

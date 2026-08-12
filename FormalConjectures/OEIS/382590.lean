@@ -40,12 +40,12 @@ Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
 $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 -/
-def ab_pair : ℕ → ℤ × ℤ
+def abPair : ℕ → ℤ × ℤ
 | 0 => (1, 1)
 | 1 => (2, 1)
 | n + 2 =>
-  let (a_n_plus_1, b_n_plus_1) := ab_pair (n + 1)
-  let (a_n, b_n) := ab_pair n
+  let (a_n_plus_1, b_n_plus_1) := abPair (n + 1)
+  let (a_n, b_n) := abPair n
   (a_n_plus_1 * b_n + a_n * b_n_plus_1, a_n_plus_1 * b_n - a_n * b_n_plus_1)
 
 /--
@@ -54,7 +54,7 @@ $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$ and $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
 starting with $a(0) = b(0) = b(1) = 1$ and a(1) = 2.
 The terms are in $\mathbb{Z}$ due to negative values.
 -/
-def a (n : ℕ) : ℤ := (ab_pair n).fst
+def a (n : ℕ) : ℤ := (abPair n).fst
 
 open Nat
 
@@ -64,7 +64,7 @@ This is defined as the k-th element (0-indexed k-1) of `Nat.primeFactorsList n.n
 Returns 1 if n has fewer than k prime factors or if n is 0, 1, or -1,
 following the informal convention.
 -/
-def kth_prime_factor (k : ℕ) (n : ℤ) : ℕ :=
+def kthPrimeFactor (k : ℕ) (n : ℤ) : ℕ :=
   if h₀ : k = 0 then 1 else
   let n_abs := Int.natAbs n
   let L := primeFactorsList n_abs
@@ -96,8 +96,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/382590.wip.lean#L281"]
-theorem kth_prime_factor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
-    ∀ n : ℕ, n ≥ N₀ → kth_prime_factor k (a (n + p)) = kth_prime_factor k (a n) := by
+theorem kthPrimeFactor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
+    ∀ n : ℕ, n ≥ N₀ → kthPrimeFactor k (a (n + p)) = kthPrimeFactor k (a n) := by
     sorry
 
 end OeisA382590

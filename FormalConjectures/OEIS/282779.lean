@@ -51,7 +51,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 The length of the minimal positive period of the sequence $k^p \pmod n$.
 $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equiv k^p \pmod n \}$.
 -/
-noncomputable def period_of_power_mod (p n : ℕ) : ℕ :=
+noncomputable def periodOfPowerMod (p n : ℕ) : ℕ :=
   if n = 0 then 0
   else
     sInf { T : ℕ | 0 < T ∧ ∀ k : ℕ, (k + T) ^ p % n = k ^ p % n }
@@ -65,24 +65,24 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/282779.wip.lean#L104"]
-theorem period_of_power_mod_eq (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
-    period_of_power_mod p n = if p ^ 2 ∣ n then n / p else n := by
+theorem periodOfPowerMod_eq (p n : ℕ) (hp : Nat.Prime p) (hn : n > 0) :
+    periodOfPowerMod p n = if p ^ 2 ∣ n then n / p else n := by
     sorry
 
 
 @[category test, AMS 11]
-lemma a_1 : a 1 = 1 := by exact period_of_power_mod_eq 3 1 (by decide) (by decide)
+lemma a_1 : a 1 = 1 := by exact periodOfPowerMod_eq 3 1 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_2 : a 2 = 2 := by exact period_of_power_mod_eq 3 2 (by decide) (by decide)
+lemma a_2 : a 2 = 2 := by exact periodOfPowerMod_eq 3 2 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 3 := by exact period_of_power_mod_eq 3 3 (by decide) (by decide)
+lemma a_3 : a 3 = 3 := by exact periodOfPowerMod_eq 3 3 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 4 := by exact period_of_power_mod_eq 3 4 (by decide) (by decide)
+lemma a_4 : a 4 = 4 := by exact periodOfPowerMod_eq 3 4 (by decide) (by decide)
 
 @[category test, AMS 11]
-lemma a_5 : a 5 = 5 := by exact period_of_power_mod_eq 3 5 (by decide) (by decide)
+lemma a_5 : a 5 = 5 := by exact periodOfPowerMod_eq 3 5 (by decide) (by decide)
 
 end OeisA282779

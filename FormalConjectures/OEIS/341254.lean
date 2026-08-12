@@ -34,24 +34,24 @@ namespace OeisA341254
 open Real
 
 /-- The constant $r = (2 + \sqrt{5})/2$. -/
-noncomputable def r_const : ℝ := (2 + sqrt 5) / 2
+noncomputable def rConst : ℝ := (2 + sqrt 5) / 2
 
 /-- The constant $r^2$. -/
-noncomputable def r_sq : ℝ := r_const * r_const
+noncomputable def rSq : ℝ := rConst * rConst
 
 /--
 $a(n) = \lfloor r \cdot \lfloor r \cdot n \rfloor \rfloor$, where $r = (2 + \sqrt{5})/2$.
 Note: The original OEIS definition has $n$ starting at 1. We define $a(n)$ for all $\mathbb{N}$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  let r := r_const
+  let r := rConst
   let inner_floor : ℤ := Int.floor (r * n)
   (Int.floor (r * inner_floor.cast)).toNat
 
 
 @[category test, AMS 11]
 lemma a_1 : a 1 = 4 := by
-  unfold a r_const
+  unfold a rConst
   dsimp only
   push_cast
   rw [mul_one]
@@ -72,7 +72,7 @@ lemma a_1 : a 1 = 4 := by
 
 @[category test, AMS 11]
 lemma a_2 : a 2 = 8 := by
-  unfold a r_const
+  unfold a rConst
   dsimp only
   push_cast
   have h1 : ⌊(2 + Real.sqrt 5) / 2 * 2⌋ = 4 := by
@@ -92,7 +92,7 @@ lemma a_2 : a 2 = 8 := by
 
 @[category test, AMS 11]
 lemma a_3 : a 3 = 12 := by
-  unfold a r_const
+  unfold a rConst
   dsimp only
   push_cast
   have h1 : ⌊(2 + Real.sqrt 5) / 2 * 3⌋ = 6 := by
@@ -112,7 +112,7 @@ lemma a_3 : a 3 = 12 := by
 
 @[category test, AMS 11]
 lemma a_4 : a 4 = 16 := by
-  unfold a r_const
+  unfold a rConst
   dsimp only
   push_cast
   have h1 : ⌊(2 + Real.sqrt 5) / 2 * 4⌋ = 8 := by
@@ -132,7 +132,7 @@ lemma a_4 : a 4 = 16 := by
 
 @[category test, AMS 11]
 lemma a_5 : a 5 = 21 := by
-  unfold a r_const
+  unfold a rConst
   dsimp only
   push_cast
   have h1 : ⌊(2 + Real.sqrt 5) / 2 * 5⌋ = 10 := by
@@ -158,8 +158,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/341254.wip.lean#L188"]
-theorem a_bounds (n : ℕ) (hn : 1 ≤ n) : (1 / 4 : ℝ) < (n : ℝ) * r_sq - (a n : ℝ) ∧
-    (n : ℝ) * r_sq - (a n : ℝ) < 3 := by
+theorem a_bounds (n : ℕ) (hn : 1 ≤ n) : (1 / 4 : ℝ) < (n : ℝ) * rSq - (a n : ℝ) ∧
+    (n : ℝ) * rSq - (a n : ℝ) < 3 := by
     sorry
 
 end OeisA341254

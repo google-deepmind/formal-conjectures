@@ -53,7 +53,7 @@ def a (n : ℕ) : ℕ :=
       S.Nonempty ∧ S.card ∣ S.sum id
   )
 
-noncomputable def a_real (n : ℕ) : ℝ := a n
+noncomputable def aReal (n : ℕ) : ℝ := a n
 
 
 @[category test, AMS 11]
@@ -79,8 +79,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/51293.wip.lean#L503"]
-theorem tendsto_a_real_asymptotic :
-    Tendsto (fun n : ℕ => (a_real n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) *
+theorem tendsto_aReal_asymptotic :
+    Tendsto (fun n : ℕ => (aReal n - ((2 : ℝ) ^ (n + 1) / (n : ℝ)) *
       ((1 : ℝ) + 1 / (n : ℝ) + 3 / ((n : ℝ) ^ 2) + 13 / ((n : ℝ) ^ 3) +
         75 / ((n : ℝ) ^ 4) + 541 / ((n : ℝ) ^ 5))) /
       (((2 : ℝ) ^ (n + 1)) / ((n : ℝ) ^ 6))) atTop (nhds 0) := by

@@ -36,7 +36,7 @@ namespace OeisA267581
 open Nat Int
 
 /-- The rule function for Rule 167. Inputs must be 0 or 1. -/
-def ca_rule_167 (c_L c_C c_R : ℕ) : ℕ :=
+def caRule167 (c_L c_C c_R : ℕ) : ℕ :=
   let R : ℕ := 167
   let index : ℕ := 4 * c_L + 2 * c_C + c_R
   -- Rule 167 is determined by the index-th bit of R.
@@ -47,15 +47,15 @@ The state of the Rule 167 elementary cellular automaton at time $t$ and position
 The initial condition is a single ON cell at $x=0$.
 $C(t, x)$ is structurally recursive on $t$.
 -/
-def ca_state (t : ℕ) (x : ℤ) : ℕ :=
+def caState (t : ℕ) (x : ℤ) : ℕ :=
   match t with
   | 0 => if x = 0 then 1 else 0
   | t' + 1 =>
-    let C_t' (y : ℤ) := ca_state t' y
-    ca_rule_167 (C_t' (x - 1)) (C_t' x) (C_t' (x + 1))
+    let C_t' (y : ℤ) := caState t' y
+    caRule167 (C_t' (x - 1)) (C_t' x) (C_t' (x + 1))
 
 /-- The sequence of bits forming the middle column of the CA pattern, $C_{t, 0}$. -/
-def middle_column_bit (t : ℕ) : ℕ := ca_state t 0
+def middleColumnBit (t : ℕ) : ℕ := caState t 0
 
 /--
 Decimal representation of the middle column of the "Rule 167" elementary cellular automaton
@@ -65,14 +65,14 @@ where $C_{i, 0}$ is the state of the center cell at time $i$.
 $$a(n) = \sum_{k=0}^n C_{k, 0} \cdot 2^{n-k}$$
 -/
 noncomputable def a (n : ℕ) : ℕ :=
-  Finset.sum (Finset.range (n + 1)) fun k => (middle_column_bit k) * (2^ (n - k))
+  Finset.sum (Finset.range (n + 1)) fun k => (middleColumnBit k) * (2^ (n - k))
 
 /-- The floor term in the conjectured recurrence relation for A267581.
 This term, $\lfloor (1/2)^{(2^{n+1} \bmod n)} \rfloor$, simplifies to 1 if $(2^{n+1} \bmod n) = 0$
 (i.e., $n \mid 2^{n+1}$), and 0 otherwise.
 Since the recurrence is only stated for $n \ge 2$, the $n=0$ case is irrelevant
 to the conjecture. -/
-def oeis_floor_term (n : ℕ) : ℕ :=
+def oeisFloorTerm (n : ℕ) : ℕ :=
   if n = 0 then 0
   else if (2 ^ (n + 1)) % n = 0 then 1 else 0
 
@@ -100,7 +100,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/267581.wip.lean#L190"]
-theorem a_recurrence (n : ℕ) (hn : 2 ≤ n) : a n = 2 * a (n - 1) + 1 - oeis_floor_term n := by
+theorem a_recurrence (n : ℕ) (hn : 2 ≤ n) : a n = 2 * a (n - 1) + 1 - oeisFloorTerm n := by
     sorry
 
 end OeisA267581

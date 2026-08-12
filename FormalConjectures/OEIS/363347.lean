@@ -40,7 +40,7 @@ For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
 $$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
 The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
 -/
-def continued_fraction_denominator (n k : ℕ) : ℚ :=
+def continuedFractionDenominator (n k : ℕ) : ℚ :=
   if n ≤ 2 then 0
   else
     -- The recursive descent involves terms from $k=n-1$ down to $k=2$.
@@ -51,7 +51,7 @@ def continued_fraction_denominator (n k : ℕ) : ℚ :=
         (k : ℚ) + (n : ℚ) / 4
       -- Recursive Step: 2 <= k < n - 1.
       else
-        let R_next := continued_fraction_denominator n (k + 1)
+        let R_next := continuedFractionDenominator n (k + 1)
         -- R_k = k - (k+1) / R_{k+1}
         (k : ℚ) - (k + 1 : ℚ) / R_next
     else 0
@@ -67,24 +67,24 @@ The sequence $a(n)$ is the denominator of the final fraction, which is $\vert N 
 noncomputable def a (n : ℕ) : ℕ :=
   if n ≤ 2 then 0 -- The sequence is indexed starting from $n=3$.
   else
-    let R2 := continued_fraction_denominator n 2
+    let R2 := continuedFractionDenominator n 2
     R2.num.natAbs
 
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_3 : a 3 = 11 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 5 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_4 : a 4 = 5 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_5 : a 5 = 31 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_5 : a 5 = 31 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_6 : a 6 = 11 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_6 : a 6 = 11 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
-lemma a_7 : a 7 = 59 := by delta a; repeat rw [continued_fraction_denominator]; norm_num
+lemma a_7 : a 7 = 59 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 
 /--

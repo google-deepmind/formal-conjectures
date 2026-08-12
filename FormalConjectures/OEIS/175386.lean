@@ -22,8 +22,6 @@ import FormalConjecturesUtil
 $a(n)$ is the denominator of the sum
 $$\sum_{i=1}^n \frac{1}{i} \binom{2n-i-1}{i-1}$$
 
-The sum which A175386 $a(n)$ is the denominator of.
-
 *References:*
 - [A175386](https://oeis.org/A175386)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
@@ -44,12 +42,6 @@ def a (n : ℕ) : ℕ :=
     let num : ℕ := Nat.choose (2 * n - (i + 1)) (i - 1)
     (num : ℚ) / (i : ℚ)
   ).den
-
-/-- The sum which A175386 $a(n)$ is the denominator of. -/
-def S (n : ℕ) : ℚ :=
-  Finset.sum (Finset.Icc 1 n) fun i : ℕ =>
-    let num : ℕ := Nat.choose (2 * n - (i + 1)) (i - 1)
-    (num : ℚ) / (i : ℚ)
 
 
 

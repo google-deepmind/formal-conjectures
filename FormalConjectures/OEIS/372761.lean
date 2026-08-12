@@ -40,13 +40,13 @@ open Rat
 Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
 The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
 -/
-noncomputable def continued_fraction_tail (n : ℕ) : ℕ → ℚ
+noncomputable def continuedFractionTail (n : ℕ) : ℕ → ℚ
 | k =>
   if n ≥ 4 then
     if k = n - 1 then
       (n - 1 : ℚ) - (n : ℚ) / (n + 4 : ℚ)
     else if 3 ≤ k ∧ k < n - 1 then
-      let k_succ_val := continued_fraction_tail n (k + 1)
+      let k_succ_val := continuedFractionTail n (k + 1)
       -- Division by zero handling for total function definition
       if k_succ_val = 0 then 0 else
         (k : ℚ) - (k + 1 : ℚ) / k_succ_val
@@ -59,7 +59,7 @@ termination_by k => n - k
 /--
 The total value of the continued fraction $C_n$.
 -/
-noncomputable def continued_fraction_val (n : ℕ) : ℚ :=
+noncomputable def continuedFractionVal (n : ℕ) : ℚ :=
   if n ≤ 2 then
     0
   else if n = 3 then
@@ -67,7 +67,7 @@ noncomputable def continued_fraction_val (n : ℕ) : ℚ :=
     let val : ℚ := 2 - 3 / 7
     if val = 0 then 0 else 1 / val
   else -- n ≥ 4
-    let A3 := continued_fraction_tail n 3
+    let A3 := continuedFractionTail n 3
     let val : ℚ := 2 - 3 / A3
 
     -- Division by zero check for the final rational value
@@ -79,28 +79,28 @@ $$ \frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \f
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n < 3 then 0 -- Sequence starts at n=3.
-  else (continued_fraction_val n).den
+  else (continuedFractionVal n).den
 
 
 @[category test, AMS 11]
 lemma a_3 : a 3 = 11 := by
-  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
 
 @[category test, AMS 11]
 lemma a_4 : a 4 = 4 := by
-  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
 
 @[category test, AMS 11]
 lemma a_5 : a 5 = 7 := by
-  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
 
 @[category test, AMS 11]
 lemma a_6 : a 6 = 13 := by
-  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
 
 @[category test, AMS 11]
 lemma a_7 : a 7 = 31 := by
-  delta a continued_fraction_val; repeat rw [continued_fraction_tail]; norm_num
+  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
 
 
 /--

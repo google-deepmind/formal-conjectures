@@ -51,17 +51,17 @@ The finsupp corresponding to the monomial $x^n y^n z^n$.
 This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
 We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
 -/
-noncomputable def xyz_pow_n (n : ℕ) : Finsupp Vars ℕ :=
+noncomputable def xyzPowN (n : ℕ) : Finsupp Vars ℕ :=
   Finsupp.ofSupportFinite (fun _ : Vars => n) (Set.toFinite _)
 
 local notation "P" => MvPolynomial Vars ℤ
 
 /--
-The polynomial $P_n(X, Y, Z) = (1 + X + Y + Z)^{2n} (1 + X + Y - Z)^n (1 + X - Y + Z)^n$.
+The polynomial $pPoly(X, Y, Z) = (1 + X + Y + Z)^{2n} (1 + X + Y - Z)^n (1 + X - Y + Z)^n$.
 We identify $X_0, X_1, X_2$ with $X, Y, Z$.
 We mark it noncomputable due to dependencies in the polynomial ring structure.
 -/
-noncomputable def P_n (n : ℕ) : P :=
+noncomputable def pPoly (n : ℕ) : P :=
   let X := MvPolynomial.X 0
   let Y := MvPolynomial.X 1
   let Z := MvPolynomial.X 2
@@ -94,7 +94,7 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/2897.wip.lean#L408"]
-theorem a_eq_coeff (n : ℕ) : (a n : ℤ) = MvPolynomial.coeff (xyz_pow_n n) (P_n n) := by
+theorem a_eq_coeff (n : ℕ) : (a n : ℤ) = MvPolynomial.coeff (xyzPowN n) (pPoly n) := by
     sorry
 
 end OeisA2897
