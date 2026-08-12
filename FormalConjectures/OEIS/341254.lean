@@ -19,9 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Bounds on fractional parts $n r^2 - a(n)$ for $r = (2+\sqrt{5})/2$
 
-The constant $r = (2 + \sqrt{5})/2$.
-
-The constant $r^2$.
+$a(n) = \lfloor r \cdot \lfloor r \cdot n \rfloor \rfloor$, where $r = (2 + \sqrt{5})/2$.
 
 *References:*
 - [A341254](https://oeis.org/A341254)

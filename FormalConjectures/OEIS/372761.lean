@@ -19,10 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Unique realization of odd primes $p \notin \{3, 5\}$ by continued fraction values
 
-Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
-The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
-
-The total value of the continued fraction $C_n$.
+$a(n)$ is the denominator of the finite continued fraction
+$$\frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{n+4}}}}}}$$
 
 *References:*
 - [A372761](https://oeis.org/A372761)

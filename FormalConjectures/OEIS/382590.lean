@@ -19,9 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
 
-Helper function for a, computing the pair $(a(n), b(n))$ such that:
-$a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
-$b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$
+The sequence $a(n)$ is defined by $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
+where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(1)=1, a(2)=2, b(1)=1, b(2)=0$.
 
 *References:*
 - [A382590](https://oeis.org/A382590)

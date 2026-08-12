@@ -19,11 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Recurrence for Rule 167 cellular automaton sequence
 
-The rule function for Rule 167. Inputs must be 0 or 1.
-
-The state of the Rule 167 elementary cellular automaton at time $t$ and position $x$.
-The initial condition is a single ON cell at $x=0$.
-$C(t, x)$ is structurally recursive on $t$.
+Decimal representation of the middle column of the "Rule 167" elementary cellular automaton
+starting with a single ON (black) cell.
 
 *References:*
 - [A267581](https://oeis.org/A267581)

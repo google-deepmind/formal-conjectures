@@ -19,10 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Realization of primes $p \equiv \pm 1 \pmod{10}$ by continued fraction denominators
 
-Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
-For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:
-$$R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$$
-The base case is $R_{n-1}(n) = (n-1) - \frac{n}{-4}$.
+$a(n)$ is the denominator of the finite continued fraction
+$1 / (2 - 3 / (3 - 4 / (\dots - (n-1)/((n-1) - n/(-4)))))$.
 
 *References:*
 - [A363347](https://oeis.org/A363347)
