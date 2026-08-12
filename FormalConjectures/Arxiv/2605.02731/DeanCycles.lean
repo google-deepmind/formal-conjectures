@@ -28,8 +28,6 @@ import FormalConjecturesUtil
   Discrete Math. (1993), 133--139.
 - [ChSa94] Chen, G. and Saito, A., Graphs with a cycle of length divisible by three.
   J. Combin. Theory Ser. B (1994), 277--292.
-
-Every graph with minimum degree at least `k` has a cycle whose length `k` divides.
 -/
 
 open SimpleGraph
