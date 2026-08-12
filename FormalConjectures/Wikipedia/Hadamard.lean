@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjectures.Wikipedia.Hadamard668
 
 /-!
 # Hadamard's conjecture
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Hadamard_matrix#Hadamard_conjecture)
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
+ - [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
+   by *Levent Alpöge et al.* (2026)
 -/
 
 namespace Hadamard
@@ -41,37 +44,43 @@ def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
     (∀ (i j : Fin n), M i j ∈ ({1, -1} : Finset ℝ)) ∧
     M.transpose * M = ↑n
 
+/-- A sign matrix with orthogonal columns attains Hadamard's determinant bound. -/
+@[category API, AMS 15]
+theorem isHadamard_of_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) :
+    IsHadamard' M → IsHadamard M := by
+  rintro ⟨h_sign, h⟩
+  refine ⟨h_sign, ?_⟩
+  have h_det : (M.transpose * M).det = n ^ (n : ℝ) := by
+    have : Matrix.diagonal (fun _ : Fin n => (n : ℝ)) =
+        (n : Matrix (Fin n) (Fin n) ℝ) := by
+      rfl
+    rw [h, ← this]
+    norm_num
+  simp only [Matrix.det_mul, Matrix.det_transpose] at h_det
+  rw [← Real.sqrt_mul_self_eq_abs M.det, h_det]
+  have : √(↑n ^ (n : ℝ)) = (↑n ^ (n : ℝ)) ^ ((1 : ℝ) / 2) := by
+    rw [Real.rpow_div_two_eq_sqrt]
+    · simp only [Real.rpow_natCast, Real.rpow_one]
+    · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg]
+  rw [this]
+  simp
+  refine ((fun {x y z} hx hy hz => (Real.eq_rpow_inv hx hy hz).mpr) ?_ ?_ ?_ ?_).symm
+  · exact Real.rpow_nonneg (Nat.cast_nonneg' n) _
+  · simp only [Nat.cast_nonneg, pow_nonneg]
+  · norm_num
+  · rw [← Real.rpow_mul <| Nat.cast_nonneg' n]
+    norm_num
+
 /--
 Both definitions are equivalent.
 
-TODO(firsching): complete and golf the proof
+TODO(firsching): complete and golf the reverse implication.
 -/
 @[category test, AMS 15]
-theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
-  simp [IsHadamard, IsHadamard']
-  intro h
-  let N := M.transpose * M
+theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) :
+    IsHadamard' M ↔ IsHadamard M := by
   constructor
-  · intro h
-    have h_det : (M.transpose * M).det = n^((n : ℝ)) := by
-      have : Matrix.diagonal (fun x : Fin n => (n : ℝ)) = (n : Matrix (Fin n) (Fin n) ℝ) := by
-        rfl
-      rw [h, ← this]
-      norm_num
-    simp only [Matrix.det_mul, Matrix.det_transpose] at h_det
-    rw [← Real.sqrt_mul_self_eq_abs M.det, h_det]
-    have : √(↑n ^ (n : ℝ)) = (↑n ^ (n : ℝ)) ^ ((1 : ℝ)/2) := by
-      rw [Real.rpow_div_two_eq_sqrt]
-      · simp only [Real.rpow_natCast, Real.rpow_one]
-      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg]
-    rw [this]
-    simp
-    refine ((fun {x y z} hx hy hz ↦ (Real.eq_rpow_inv hx hy hz).mpr) ?_ ?_ ?_ ?_).symm
-    · exact Real.rpow_nonneg (Nat.cast_nonneg' n) _
-    · simp only [Nat.cast_nonneg, pow_nonneg]
-    · norm_num
-    · rw [← Real.rpow_mul <| Nat.cast_nonneg' n]
-      norm_num
+  · exact isHadamard_of_isHadamard' n M
   · sorry
 
 /- Note: the conjecture was originally formulated by
@@ -123,11 +132,35 @@ theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
     ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
+/-- The order-668 integer witness, cast entrywise to the real numbers. -/
+def H668 : Matrix (Fin 668) (Fin 668) ℝ := fun i j => H668Int i j
+
+/-- The exact Gram computation proves that `H668` satisfies the orthogonality definition. -/
+@[category test, AMS 15]
+theorem isHadamard'_H668 : IsHadamard' H668 := by
+  constructor
+  · intro i j
+    simp only [H668, H668Int]
+    split <;> simp
+  · ext i j
+    have h :=
+      congrArg (fun A : Matrix (Fin 668) (Fin 668) ℤ => (A i j : ℝ)) H668Int_gram
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, H668, Int.cast_sum, Int.cast_mul]
+      at h ⊢
+    simpa [Matrix.ofNat_apply] using h
+
+/-- The explicit matrix `H668` is a Hadamard matrix. -/
+@[category test, AMS 15]
+theorem isHadamard_H668 : IsHadamard H668 :=
+  isHadamard_of_isHadamard' 668 H668 isHadamard'_H668
+
 /--
-The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
+There exists a Hadamard matrix of order $668 = 4 * 167$.
+
+See the [2026 construction](https://x.com/__alpoge__/status/2087504785952182273).
 -/
-@[category research open, AMS 15]
+@[category research solved, AMS 15]
 theorem HadamardConjecture.variants.«167» : ∃ M, IsHadamard (n := 4 * 167) M := by
-  sorry
+  exact ⟨H668, isHadamard_H668⟩
 
 end Hadamard
