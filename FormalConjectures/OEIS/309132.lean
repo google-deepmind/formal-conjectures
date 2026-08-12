@@ -19,10 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Characterization of Carmichael numbers via squarefree denominators $a(n)$
 
-$a(n)$ is the denominator of $F(n)$ = A027641(n-1)/n + A027642(n-1)/n^2.
+$a(n)$ is the denominator of $F(n) = \operatorname{num}(B_{n-1})/n + \operatorname{den}(B_{n-1})/n^2$.
 
-Definition of a Carmichael number $n$: a composite number s.t.
-$b^{n-1} \equiv 1 \pmod n$ for all $b$ coprime to $n$.
+A composite number $n$ has squarefree $a(n)$ if and only if $n$ is a Carmichael number.
 
 *References:*
 - [A309132](https://oeis.org/A309132)
