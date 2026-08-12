@@ -81,14 +81,22 @@ $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
 for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = O(g(N)). -/
-@[category research open, AMS 5]
-theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/KitaKen1/erdos-319-linear-upper-bound/blob/main/lean/Erdos319LinearUpperBound.lean"]
+theorem erdos_319.variants.isBigO (_N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =O[atTop] (answer(sorry) : ℕ → ℝ) := by
-  sorry
+    c =O[atTop] (answer(fun N : ℕ ↦ (N : ℝ)) : ℕ → ℝ) := by
+  apply Asymptotics.IsBigO.of_bound 1
+  filter_upwards [] with n
+  rcases (h n).1 with ⟨A, hA, _, hc⟩
+  rw [← hc, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg A.card),
+    Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg n), one_mul]
+  have hcard : A.card ≤ n := by
+    simpa using Finset.card_le_card hA
+  exact_mod_cast hcard
 
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
