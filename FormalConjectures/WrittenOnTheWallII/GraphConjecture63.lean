@@ -32,7 +32,7 @@ bound is therefore $\lceil(9 + 4 + 1)/3\rceil = 5 > 4$.
 
 namespace WrittenOnTheWallII.GraphConjecture63
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /--
 WOWII [Conjecture 63](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)

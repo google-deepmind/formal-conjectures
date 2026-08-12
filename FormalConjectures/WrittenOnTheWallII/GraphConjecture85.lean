@@ -32,7 +32,7 @@ conjectured lower bound is therefore $\lceil\sqrt{1 + 2 \cdot 9}\rceil =
 
 namespace WrittenOnTheWallII.GraphConjecture85
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /--
 WOWII [Conjecture 85](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
