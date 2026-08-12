@@ -44,9 +44,9 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
   sSup {r | ∃ s, r = s.card ∧ AllowedSet k N s}
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
-points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
+points lie on a line is bounded by $\leq (k - 1) * N$. -/
 @[category textbook, AMS 5 52]
-theorem allowedSetSize_le {k : ℕ} {N : ℕ} (_h : k ≤ N) :
+theorem allowedSetSize_le {k : ℕ} {N : ℕ} :
     AllowedSetSize k N ≤ (k - 1) * N := by
   refine csSup_le' ?_
   rintro r ⟨s, rfl, hs⟩
