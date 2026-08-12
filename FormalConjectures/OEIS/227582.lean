@@ -41,7 +41,7 @@ open BigOperators LinearRecurrence
 The sequence $b_n$ such that $A227582(n) = b_{n-1}$ for $n \ge 1$.
 This is the 0-indexed solution to the linear recurrence in $\mathbb{Z}$.
 -/
-def base_seq (n : ℕ) : ℤ :=
+def baseSeq (n : ℕ) : ℤ :=
   let order := 7
   -- Coefficients $c_i$ for the recurrence $u_{n+7} = \sum_{i=0}^6 c_i u_{n+i}$.
   -- This corresponds to the OEIS signature $(2, -1, 0, 0, 1, -2, 1)$ which means $c_i = s_{7-i}$.
@@ -56,7 +56,7 @@ Expansion of $(2+3x+2x^2+2x^3+3x^4+x^5-x^6)/(1-2x+x^2-x^5+2x^6-x^7)$, 1-indexed.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if 0 < n then
-    (base_seq (n - 1)).toNat
+    (baseSeq (n - 1)).toNat
   else
     0
 
@@ -79,15 +79,15 @@ lemma a_5 : a 5 = 35 := by dsimp [a]; native_decide
 /--
 The linear recurrence:
 $$b(n + 7) = 2 b(n + 6) - b(n + 5) + b(n + 2) - 2 b(n + 1) + b(n)$$
-holds for `base_seq`. This follows directly from `LinearRecurrence.is_sol_mkSol`.
+holds for `baseSeq`. This follows directly from `LinearRecurrence.is_sol_mkSol`.
 -/
 @[category API, AMS 11]
-theorem base_seq_recurrence (n : ℕ) :
-    base_seq (n + 7) = 2 * base_seq (n + 6) - base_seq (n + 5) +
-    base_seq (n + 2) - 2 * base_seq (n + 1) + base_seq n := by
+theorem baseSeq_recurrence (n : ℕ) :
+    baseSeq (n + 7) = 2 * baseSeq (n + 6) - baseSeq (n + 5) +
+    baseSeq (n + 2) - 2 * baseSeq (n + 1) + baseSeq n := by
   let E : LinearRecurrence ℤ := ⟨7, ![1, -2, 1, 0, 0, -1, 2]⟩
   let init : Fin 7 → ℤ := ![2, 7, 14, 23, 35, 50, 67]
-  -- base_seq is definitionally E.mkSol init
+  -- baseSeq is definitionally E.mkSol init
   change E.mkSol init (n + 7) =
     2 * E.mkSol init (n + 6) - E.mkSol init (n + 5) +
     E.mkSol init (n + 2) - 2 * E.mkSol init (n + 1) + E.mkSol init n

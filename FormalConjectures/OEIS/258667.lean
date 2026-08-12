@@ -78,35 +78,35 @@ def a (n : ℕ) : ℕ :=
     sign * fac_term * inner_sum n k
   ).natAbs
 
-noncomputable def nat_fac_to_real (n : ℕ) : ℝ := (Nat.factorial n : ℝ)
+noncomputable def natFacToReal (n : ℕ) : ℝ := (Nat.factorial n : ℝ)
 
 /-- The denominator term $k! (n-1)_k$ represented as a Real number. -/
-noncomputable def menage_denom_term (n k : ℕ) : ℝ :=
-  let k_fac_R := nat_fac_to_real k
+noncomputable def menageDenomTerm (n k : ℕ) : ℝ :=
+  let k_fac_R := natFacToReal k
   -- (n-1)_k is the falling factorial. Nat.descFactorial (n-1) k is (n-1)!/(n-1-k)!
   let falling_fac := (Nat.descFactorial (n - 1) k : ℝ)
   k_fac_R * falling_fac
 
 /-- The infinite series part of the asymptotic expansion:
 $\sum_{k \ge 1} \frac{(-1)^k}{k!(n-1)_k}$. -/
-noncomputable def asymptotic_sum_part (n : ℕ) : ℝ :=
+noncomputable def asymptoticSumPart (n : ℕ) : ℝ :=
   -- The sum is effectively finite since (n-1)_k is 0 for k >= n.
   Finset.sum (Finset.range n) fun k =>
     if k = 0 then 0
     else
-      let denom := menage_denom_term n k
+      let denom := menageDenomTerm n k
       -- Denominator is non-zero if n >= 1 and 1 <= k < n.
       if denom = 0 then 0
       else ((-1 : ℝ) ^ k) / denom
 
 /-- The proposed asymptotic expression for a(n). -/
-noncomputable def asymptotic_term (n : ℕ) : ℝ :=
+noncomputable def asymptoticTerm (n : ℕ) : ℝ :=
   if n ≤ 2 then 0 -- Avoid division by zero, irrelevant for n -> infinity
   else
     let n_R : ℝ := n
-    let n_fac_R := nat_fac_to_real n
+    let n_fac_R := natFacToReal n
     let prefactor : ℝ := exp (-2) * (n_fac_R / (n_R - 2))
-    prefactor * (1 + asymptotic_sum_part n)
+    prefactor * (1 + asymptoticSumPart n)
 
 
 @[category test, AMS 11]
@@ -132,8 +132,8 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/258667.wip.lean#L427"]
-theorem a_is_equivalent_asymptotic_term :
-    IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) asymptotic_term := by
+theorem a_is_equivalent_asymptoticTerm :
+    IsEquivalent atTop (fun n : ℕ => (a n : ℝ)) asymptoticTerm := by
     sorry
 
 end OeisA258667

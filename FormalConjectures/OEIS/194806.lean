@@ -36,7 +36,7 @@ namespace OeisA194806
 open Finset Nat
 
 /-- The set of all products of elements from a Finset S. -/
-def set_prod (S : Finset ℕ) : Finset ℕ :=
+def setProd (S : Finset ℕ) : Finset ℕ :=
   (S.product S).image fun p : ℕ × ℕ => p.fst * p.snd
 
 /--
@@ -51,7 +51,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 
     -- The set of subsets $S \subseteq T_n$ such that $T_n \subseteq S \cdot S$.
     let valid_subsets : Finset (Finset ℕ) :=
-      T_n.powerset.filter (fun S : Finset ℕ => T_n ⊆ set_prod S)
+      T_n.powerset.filter (fun S : Finset ℕ => T_n ⊆ setProd S)
 
     -- Proof that $T_n$ is guaranteed to be a valid subset, ensuring `valid_subsets` is non-empty.
     have T_n_is_valid : T_n ∈ valid_subsets := by
@@ -59,15 +59,15 @@ noncomputable def a (n : ℕ) : ℕ :=
       constructor
       -- 1. T_n ∈ T_n.powerset (i.e., T_n ⊆ T_n)
       apply mem_powerset.mpr; rfl
-      -- 2. T_n ⊆ set_prod T_n
+      -- 2. T_n ⊆ setProd T_n
       intro k hk
 
       have one_le_n : 1 ≤ n := Nat.succ_le_of_lt (Nat.pos_of_ne_zero h)
       have h1 : 1 ∈ T_n := mem_Icc.mpr ⟨Nat.le_refl 1, one_le_n⟩
 
-      -- We show k = k * 1 is in set_prod T_n
-      -- set_prod T_n is the image of T_n × T_n under multiplication.
-      simp only [set_prod, mem_image, Prod.exists]
+      -- We show k = k * 1 is in setProd T_n
+      -- setProd T_n is the image of T_n × T_n under multiplication.
+      simp only [setProd, mem_image, Prod.exists]
       use k, 1
       constructor
       -- Show that (k, 1) ∈ T_n × T_n

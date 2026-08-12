@@ -38,22 +38,22 @@ Catalan numbers $C(n) = \frac{1}{n+1}\binom{2n}{n}$.
 -/
 def a (n : ℕ) : ℕ := (Nat.choose (2 * n) n) / (n + 1)
 
-def a_rat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
+def aRat (n : ℕ) : ℚ := (a n : ℚ)⁻¹
 
 /-- The sum $\sum_{i=j}^k \frac{1}{a(i)}$ of reciprocals of Catalan numbers. -/
-def catalan_reciprocal_sum (j k : ℕ) : ℚ :=
-  (Finset.Icc j k).sum a_rat
+def catalanReciprocalSum (j k : ℕ) : ℚ :=
+  (Finset.Icc j k).sum aRat
 
 /-- The index condition on $(j, k)$ from the conjecture: $0 < \min\{2,k\} \le j \le k$.
 Since j and k are natural numbers, $0 < \min\{2,k\}$ is equivalent to $1 \le k$. -/
-def oeis_108_index_cond (j k : ℕ) : Prop :=
+def IndexCond (j k : ℕ) : Prop :=
   1 ≤ k ∧ min 2 k ≤ j ∧ j ≤ k
 
 open Int (fract)
 
 /-- The fractional part of a rational number, viewed as a real number. Must be noncomputable
 due to dependence on the real floor function. -/
-noncomputable def frac_part (q : ℚ) : ℝ := fract (q : ℝ)
+noncomputable def fracPart (q : ℚ) : ℝ := fract (q : ℝ)
 
 
 @[category test, AMS 11]
@@ -80,10 +80,10 @@ A formal proof has been found with the methods described in [arxiv/2605.22763](h
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/108.wip.lean#L255"]
-theorem catalan_reciprocal_sum_frac_part_inj : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
-    oeis_108_index_cond j₁ k₁ → oeis_108_index_cond j₂ k₂ →
+theorem catalanReciprocalSum_fracPart_inj : ∀ ⦃j₁ k₁ j₂ k₂ : ℕ⦄,
+    IndexCond j₁ k₁ → IndexCond j₂ k₂ →
     (j₁, k₁) ≠ (j₂, k₂) →
-    frac_part (catalan_reciprocal_sum j₁ k₁) ≠ frac_part (catalan_reciprocal_sum j₂ k₂) := by
+    fracPart (catalanReciprocalSum j₁ k₁) ≠ fracPart (catalanReciprocalSum j₂ k₂) := by
     sorry
 
 end OeisA108

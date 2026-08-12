@@ -44,7 +44,7 @@ def a (n : ℕ) : ℕ :=
 
 open Nat Int Finset
 
-def coprime_indices (r : ℕ) : Finset ℕ :=
+def coprimeIndices (r : ℕ) : Finset ℕ :=
   (Finset.range (r + 1)).filter (fun i => 1 ≤ i ∧ Nat.gcd i 30 = 1)
 
 /--
@@ -52,8 +52,8 @@ The product term in the denominator of the general conjecture:
 $$\prod_{i = 1..r, i \text{ coprime to } 30} (30n - i)$$
 We define this in ℤ to handle the $n=0$ case where $30n-i$ in the product might be negative.
 -/
-def divisor_product (n r : ℕ) : ℤ :=
-  (coprime_indices r).prod (fun i : ℕ => 30 * (n : ℤ) - (i : ℤ))
+def divisorProduct (n r : ℕ) : ℤ :=
+  (coprimeIndices r).prod (fun i : ℕ => 30 * (n : ℤ) - (i : ℤ))
 
 
 @[category test, AMS 11]
@@ -128,7 +128,7 @@ This generalizes `thirty_mul_sub_one_dvd_a` (the $r = 1$ case where $D(1) = 1$).
 -/
 @[category research open, AMS 11]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
-    ∃ D : ℤ, ∀ n : ℕ, (divisor_product n r) ∣ (D * (a n : ℤ)) := by
+    ∃ D : ℤ, ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
 
 /--

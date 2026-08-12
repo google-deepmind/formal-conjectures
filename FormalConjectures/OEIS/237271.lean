@@ -63,15 +63,15 @@ def a (n : ℕ) : ℕ :=
   -- The sequence value is 1 + the count
   1 + count
 
-def sorted_divisors_list (n : ℕ) : List ℕ := (n.divisors.sort (· ≤ ·))
+def sortedDivisorsList (n : ℕ) : List ℕ := (n.divisors.sort (· ≤ ·))
 
 /--
 Number of maximal contiguous sublists of divisors of n where each adjacent pair (d_k, d_{k+1})
 satisfies d_{k+1} <= 2 * d_k.
 This is 1 + the number of "jumps" where d_{k+1} > 2 * d_k.
 -/
-def num_2_dense_sublists (n : ℕ) : ℕ :=
-  let divs_list := sorted_divisors_list n
+def num2DenseSublists (n : ℕ) : ℕ :=
+  let divs_list := sortedDivisorsList n
   let consecutive_pairs : List (ℕ × ℕ) := List.zip divs_list divs_list.tail
 
   -- A jump/break occurs when d_{k+1} > 2 * d_k
@@ -109,7 +109,7 @@ A formal proof has been found with the methods described in
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/237271.wip.lean#L102"]
-theorem conjecture_2 (n : ℕ) : a n = num_2_dense_sublists n := by
+theorem conjecture_2 (n : ℕ) : a n = num2DenseSublists n := by
     sorry
 
 /-- Number of odd divisors of n (A001227). -/
@@ -144,13 +144,13 @@ Conjecture 3: "a(n) is the number of divisors p of n such that p is greater than
 twice the adjacent previous divisor of n. The divisors p give the n-th row of A379288."
 - _Omar E. Pol_, Aug 02 2025
 
-Note: this is equivalent to `a_eq_num_2_dense_sublists` (Conjecture 2), since the divisors that
+Note: this is equivalent to `a_eq_num2DenseSublists` (Conjecture 2), since the divisors that
 start a new 2-dense sublist are exactly those greater than twice their predecessor (plus the
 smallest divisor).
 -/
 @[category research solved, AMS 11]
 theorem conjecture_3 (n : ℕ) :
-    a n = 1 + ((sorted_divisors_list n).zip (sorted_divisors_list n).tail).countP
+    a n = 1 + ((sortedDivisorsList n).zip (sortedDivisorsList n).tail).countP
       fun pair => pair.snd > 2 * pair.fst :=
   conjecture_2 n
 
