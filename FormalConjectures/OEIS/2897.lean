@@ -20,11 +20,6 @@ import FormalConjecturesUtil
 # Coefficient of $(xyz)^n$ in $((x+y)(y+z)(z+x))^n$ equaling $\binom{2n}{n}^3$
 
 The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
-We use `Nat.choose (2 * n) n` for the central binomial coefficient.
-
-The finsupp corresponding to the monomial $x^n y^n z^n$.
-This is the map $\lambda i. n$. Since `Fin 3` is finite, this function is finitely supported.
-We mark it noncomputable as it builds a mathematical object defined in terms of finite support.
 
 *References:*
 - [A002897](https://oeis.org/A002897)
