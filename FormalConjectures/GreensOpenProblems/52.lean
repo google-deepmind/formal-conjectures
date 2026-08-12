@@ -42,6 +42,14 @@ theorem green_52 :
 
 /--
 Could $2A$ even contain a coset of codimension $O(\log K)$?
+
+From [Green's 2025 update](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.52):
+
+> Update 2025. Kaave Hosseini and Ryan Alweiss have independently pointed out
+> that the second question is far too optimistic. To see this, let $A$ be a Hamming ball
+> of radius $n/2 - \sqrt{n}$. There is a set $S$ of size $O(n)$ such that
+> $A + S = \mathbb{F}_2^n$; a random choice of $S$ will work. However, every subspace
+> contained in $A - A$ has codimension $\gg \sqrt{n}$.
 -/
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at
