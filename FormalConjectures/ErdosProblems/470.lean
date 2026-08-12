@@ -51,6 +51,13 @@ theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
 /--
 Benkoski and Erdős [BeEr74](https://mathscinet.ams.org/mathscinet/relay-station?mr=347726) proved
 that the set of weird numbers has positive density.
+
+`HasPosDensity` is the right reading here, rather than the positive *lower* density that Erdős'
+"positive density" usually abbreviates. Their Theorem 5 is stated as "the density of weird
+numbers is positive", and they first establish that the density exists at all: "It is clear that
+the weird numbers have a density since both the abundant numbers and the pseudoperfect numbers
+have a density. (A weird number is abundant and not pseudoperfect.)" The work in the paper goes
+into showing that density is not `0`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity := by

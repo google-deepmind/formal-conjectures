@@ -80,7 +80,7 @@ This conjecture has been **disproved**:
 
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/884/Erdos884.lean"]
 theorem erdos_884 :
     answer(False) ↔ Erdos884Prop := by
   sorry
