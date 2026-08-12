@@ -35,41 +35,20 @@ open scoped Nat
 open Rat
 
 /--
-Recursive function to compute $A_k(n)$, the denominator tail $k - \frac{k+1}{A_{k+1}(n)}$.
-The base case is at $k = n - 1$, where $A_{n-1} = (n-1) - \frac{n}{n+4}$.
+Recursive helper computing the continued fraction denominator $R_k(n)$ for $2 \le k \le n-1$,
+where $R_k(n) = k - \frac{k+1}{R_{k+1}(n)}$ with base case $R_{n-1}(n) = (n-1) - \frac{n}{n+4}$.
 -/
-noncomputable def continuedFractionTail (n : ℕ) : ℕ → ℚ
-| k =>
-  if n ≥ 4 then
-    if k = n - 1 then
-      (n - 1 : ℚ) - (n : ℚ) / (n + 4 : ℚ)
-    else if 3 ≤ k ∧ k < n - 1 then
-      let k_succ_val := continuedFractionTail n (k + 1)
-      -- Division by zero handling for total function definition
-      if k_succ_val = 0 then 0 else
-        (k : ℚ) - (k + 1 : ℚ) / k_succ_val
-    else
-      0
+def continuedFractionDenominator (n k : ℕ) : ℚ :=
+  if n ≤ 2 then 0
   else
-    0
-termination_by k => n - k
-
-/--
-The total value of the continued fraction $C_n$.
--/
-noncomputable def continuedFractionVal (n : ℕ) : ℚ :=
-  if n ≤ 2 then
-    0
-  else if n = 3 then
-    -- Formula for n=3: 1 / (2 - 3 / (3 + 4)) = 7/11
-    let val : ℚ := 2 - 3 / 7
-    if val = 0 then 0 else 1 / val
-  else -- n ≥ 4
-    let A3 := continuedFractionTail n 3
-    let val : ℚ := 2 - 3 / A3
-
-    -- Division by zero check for the final rational value
-    if val = 0 then 0 else 1 / val
+    if 2 ≤ k ∧ k ≤ n - 1 then
+      if k = n - 1 then
+        (k : ℚ) - (n : ℚ) / (n + 4 : ℚ)
+      else
+        let R_next := continuedFractionDenominator n (k + 1)
+        if R_next = 0 then 0 else (k : ℚ) - (k + 1 : ℚ) / R_next
+    else 0
+termination_by n - k
 
 /--
 Denominator of the continued fraction
@@ -77,28 +56,28 @@ $$ \frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \f
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n < 3 then 0 -- Sequence starts at n=3.
-  else (continuedFractionVal n).den
+  else (1 / continuedFractionDenominator n 2).den
 
 
 @[category test, AMS 11]
 lemma a_3 : a 3 = 11 := by
-  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
+  delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
 lemma a_4 : a 4 = 4 := by
-  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
+  delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
 lemma a_5 : a 5 = 7 := by
-  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
+  delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
 lemma a_6 : a 6 = 13 := by
-  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
+  delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 @[category test, AMS 11]
 lemma a_7 : a 7 = 31 := by
-  delta a continuedFractionVal; repeat rw [continuedFractionTail]; norm_num
+  delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 
 /--
@@ -107,7 +86,7 @@ Conjecture: Except for 3 and 5, all odd primes appear in the sequence once. - _T
 A formal proof has been found with the methods described in
 [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, AMS 11, formal_proof using lean4 at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/372761.wip.lean#L733"]
 theorem exists_unique_a_eq_prime :
     ∀ p : ℕ, Nat.Prime p ∧ p % 2 = 1 ∧ p ≠ 3 ∧ p ≠ 5 → ∃! n, n ≥ 3 ∧ a n = p := by
