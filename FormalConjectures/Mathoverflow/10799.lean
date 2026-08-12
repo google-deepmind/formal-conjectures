@@ -164,9 +164,16 @@ theorem mathoverflow_10799 : answer(False) ↔
   sorry
 
 /--
-Conjecture 7 from Kahn–Kalai 2006: the same statement as the original
-conjecture, but with the additional assumption that $t$ is the critical probability for $F$,
+Conjecture 7 from Kahn–Kalai 2006: a fixed-`1000` variant of the original
+conjecture, with the additional assumption that $t$ is the critical probability for $F$,
 namely $\mu_t(F) = 1/2$.
+
+This variant is false by a counterexample due to Sahar Diskin and Uri Kreitner;
+see the [MathOverflow discussion](https://mathoverflow.net/questions/10799/optimal-monotone-families-for-the-discrete-isoperimetric-inequality)
+and the [counterexample note](https://gilkalai.wordpress.com/wp-content/uploads/2026/06/dual_tribes_more_readable.pdf).
+Their construction was adapted to this exact Formal Conjectures statement and
+[formalized in Lean](https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample)
+by Kenta Kitamura (KitaKen1).
 -/
 @[category research solved, AMS 5 60,
   formal_proof using lean4 at
