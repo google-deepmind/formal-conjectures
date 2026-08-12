@@ -20,7 +20,7 @@ import FormalConjecturesUtil
 # Realization of primes $p \equiv \pm 1 \pmod{10}$ by continued fraction denominators
 
 $a(n)$ is the denominator of the finite continued fraction
-$1 / (2 - 3 / (3 - 4 / (\dots - (n-1)/((n-1) - n/(-4)))))$.
+$$\frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{-4}}}}}}$$
 
 *References:*
 - [A363347](https://oeis.org/A363347)
@@ -56,7 +56,7 @@ def continuedFractionDenominator (n k : ℕ) : ℚ :=
 termination_by n - k
 
 /--
-a: Denominator of the continued fraction
+Denominator of the continued fraction
 $$\frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \frac{n}{-4}}}}}} $$
 The value of the continued fraction is $C_n = 1/R_2(n)$.
 If $R_2(n) = N/D$ in reduced form, $C_n = D/N$.
