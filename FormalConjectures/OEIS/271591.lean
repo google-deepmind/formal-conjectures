@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A271591
+# Maximal run lengths in the second MSB of Tribonacci numbers $T(n)$
 
 The Tribonacci numbers $T_n$ (A000073).
 $T_0=0, T_1=0, T_2=1$, and $T_n = T_{n-1} + T_{n-2} + T_{n-3}$ for $n \ge 3$.

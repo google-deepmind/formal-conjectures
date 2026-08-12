@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A91669
+# Primality and primitive root property from divisibility $n \mid (a(n-1) + 2^{n-2})$
 
 A091669: $a(n) = \frac{2^{n-1}}{n!} \prod_{k=1}^{n-1} (2^k-1)$.
 The sequence $a(n)$ is composed of natural numbers, thus we define it

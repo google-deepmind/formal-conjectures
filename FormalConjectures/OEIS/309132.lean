@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A309132
+# Characterization of Carmichael numbers via squarefree denominators $a(n)$
 
 A309132: a(n) is the denominator of F(n) = A027641(n-1)/n + A027642(n-1)/n^2.
 

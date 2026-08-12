@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A2897
+# Coefficient of $(xyz)^n$ in $((x+y)(y+z)(z+x))^n$ equaling $\binom{2n}{n}^3$
 
 The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
 We use `Nat.choose (2 * n) n` for the central binomial coefficient.

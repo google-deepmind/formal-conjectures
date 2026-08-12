@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A382590
+# Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
 
 Helper function for a, computing the pair $(a(n), b(n))$ such that:
 $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$

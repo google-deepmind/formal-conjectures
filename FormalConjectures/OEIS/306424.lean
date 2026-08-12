@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A306424
+# Maximality of $k = 43$ with restricted digit counts in bases $3 \le b < k$
 
 A306424: Numbers $k$ such that the base $b$ expansion of $k$ for each
 $b = 3..k-1$ never contains more than two distinct digits.

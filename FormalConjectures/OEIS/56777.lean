@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A56777
+# Divisibility of $2^n + 1$ by $n$
 
 A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.

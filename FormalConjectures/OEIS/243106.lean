@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A243106
+# Signed digit sums in bases $b \ge 5$
 
 A243106: The sequence
 $$a(n) = \sum_{k=1}^n (-1)^{\operatorname{isprime}(k)} 10^k$$

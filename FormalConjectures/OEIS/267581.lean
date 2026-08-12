@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A267581
+# Recurrence for Rule 167 cellular automaton sequence
 
 The rule function for Rule 167. Inputs must be 0 or 1.
 

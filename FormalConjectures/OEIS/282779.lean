@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A282779
+# Period of $p$-th powers modulo $n$
 
 a: Period of cubes mod $n$.
 The $n$-th term $a(n)$ is the smallest positive integer $T$ such that

@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A363347
+# Realization of primes $p \equiv \pm 1 \pmod{10}$ by continued fraction denominators
 
 Helper function for a, which computes the denominator $R_k(n)$ of the continued fraction expression.
 For $2 \le k \le n-1$, $R_k(n)$ is defined recursively:

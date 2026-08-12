@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A341254
+# Bounds on fractional parts $n r^2 - a(n)$ for $r = (2+\sqrt{5})/2$
 
 The constant $r = (2 + \sqrt{5})/2$.
 

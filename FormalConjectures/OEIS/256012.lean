@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A256012
+# Partitions of $n$ into distinct non-squarefree parts for $n > 23$
 
 a: Number of partitions of $n$ into distinct parts that are not squarefree.
 This is the number of finite subsets of positive integers $P$ such that

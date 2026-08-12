@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A340737
+# Convergence of fraction numerators $a(n)/b(n)$ to $e$
 
 a: Numerators of a sequence of fractions converging to $e$.
 $$a(1) = 3, a(2) = 5$$

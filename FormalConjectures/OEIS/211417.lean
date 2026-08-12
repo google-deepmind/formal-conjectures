@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A211417
+# Integrality and supercongruences of the factorial ratio $\frac{(6n)! n!}{(3n)! (2n)!^2}$
 
 Integral factorial ratio sequence:
 $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$

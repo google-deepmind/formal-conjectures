@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A103311
+# Fibonacci transform satisfying $|a(n)| = F(n+1)$
 
 A103311: A transform of the Fibonacci numbers.
 The sequence $a(n)$ satisfies the linear recurrence relation:

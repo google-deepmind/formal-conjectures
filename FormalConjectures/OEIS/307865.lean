@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A307865
+# Vanishing of bases with $b^n \equiv -1 \pmod{2n+1}$ for absolute Euler pseudoprimes
 
 A307865: $a(n)$ is the number of natural bases $b < 2n+1$ such that $b^n \equiv -1 \pmod{2n+1}$.
 The bases $b$ are interpreted as $b \in \{1, 2, \dots, 2n\}$.

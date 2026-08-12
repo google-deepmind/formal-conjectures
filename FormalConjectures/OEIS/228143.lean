@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A228143
+# Eighth root of the generating function of an Apéry-like sequence
 
 A005259: The auxiliary sequence used for the Hankel matrix, defined as
 $$\sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$$

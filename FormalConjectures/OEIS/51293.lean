@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A51293
+# Asymptotics of subsets of $\{1, 2, \dots, n\}$ with integer average
 
 a: Number of nonempty subsets of $\{1, 2, 3, \dots, n\}$ whose elements have an integer average.
 

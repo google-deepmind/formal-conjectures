@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A224515
+# Existence of integers $k$ with $k^2 \operatorname{XOR} (k+1)^2 = (2n+1)^2$
 
 a: $a(n) = \text{least } k \text{ such that } \sqrt{k^2 \operatorname{XOR} (k+1)^2} = 2n+1$,
 $a(n) = -1 \text{ if there is no such } k$.

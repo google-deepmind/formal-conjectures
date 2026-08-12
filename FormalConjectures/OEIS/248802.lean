@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A248802
+# Smallest prime factors of $2^{2^n+2} + 3$
 
 A248802: Smallest prime factor of $2^{(2^n+2)} + 3$.
 

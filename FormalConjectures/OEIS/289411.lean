@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A289411
+# Symmetry of digit sum differences $\operatorname{sign}(S_5(k) - S_1(k))$
 
 a: $\mathrm{a}(n) = \sum_{k=0}^n \mathrm{sign}(\mathrm{A007953}(5k) - \mathrm{A007953}(k))$.
 $\mathrm{A007953}(n)$ is the digital sum of $n$ in base 10.

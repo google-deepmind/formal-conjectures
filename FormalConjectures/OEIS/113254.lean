@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A113254
+# Square odd-indexed terms in the recurrence $a(n) = 8a(n-1) - 8a(n-2) + 8a(n-3) - a(n-4)$
 
 A113254: Corresponds to $m = 8$ in a family of 4th-order linear recurrence sequences.
 

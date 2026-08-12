@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A237271
+# Number of parts in the symmetric representation of $\sigma(n)$
 
 A237271: Number of parts in the symmetric representation of $\sigma(n)$.
 a(n) is $1$ plus the number of pairs $(d_k, d_{k+1})$ of consecutive divisors of $n$

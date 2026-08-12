@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A363102
+# Primality of continued fraction denominators $a(n)$ for $n \ge 3$
 
 Auxiliary sequence A051403, defined as
 $$\frac{(n+2) \sum_{k=0}^n k!}{2}$$

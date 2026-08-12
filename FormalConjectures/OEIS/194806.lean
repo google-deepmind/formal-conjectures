@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A194806
+# Size of smallest subset of $\{1, 2, \dots, n\}$ with distinct subset sums
 
 The set of all products of elements from a Finset S.
 

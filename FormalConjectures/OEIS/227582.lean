@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A227582
+# Representation of sequence terms by harmonic numbers $\lfloor \frac{1}{2H(n) - H(n^2+n-1) - \gamma} \rfloor$
 
 A227582: Expansion of $(2+3x+2x^2+2x^3+3x^4+x^5-x^6)/(1-2x+x^2-x^5+2x^6-x^7)$.
 

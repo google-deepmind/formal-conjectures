@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A368692
+# Integrality of the factorial ratio $\frac{(12n+6)! (6n+9)!}{108 (4n+2)! (2n+3)! ((6n+5)!)^2}$
 
 A368692:
 $$a(n) = \frac{(12n + 6)! \cdot (6n + 9)!}{108 \cdot (4n + 2)! \cdot

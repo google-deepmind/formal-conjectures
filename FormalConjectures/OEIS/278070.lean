@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A278070
+# Congruences $a(n+k) \equiv a(n) \pmod k$ for hypergeometric values ${}_2F_1(n, -n; ; -1)$
 
 a: $a(n) = \text{hypergeometric}([n, -n], [], -1)$.
 This is equivalent to the combinatorial sum:

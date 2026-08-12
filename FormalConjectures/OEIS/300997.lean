@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A300997
+# Step difference bound $a(n+1) - a(n) \in \{1, 2\}$ in mass-redistribution cellular automata
 
 A300997: $a(n)$ is the number of steps needed to reach a stable configuration in the 1D cellular
 automaton initialized with one cell with mass $n$ and based on the rule "each cell gives half of
