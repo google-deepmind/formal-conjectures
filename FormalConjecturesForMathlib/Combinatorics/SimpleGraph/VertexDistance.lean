@@ -328,6 +328,12 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
   · simp
 
 
+/-- `distEven G v` counts the vertices at even distance from `v` in `G`. This is
+DeLaVina's `dist_even(v)` invariant appearing in several WOWII conjectures.
+Distance zero is even, so `v` itself is always counted. -/
+noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
+  (Finset.univ.filter fun w => Even (G.dist v w)).card
+
 /-- The set of pairs of distinct vertices with even distance > 0. -/
 noncomputable def evenDistancePairs (G : SimpleGraph α) : Finset (α × α) :=
   Finset.univ.filter (fun p => G.dist p.1 p.2 % 2 = 0 ∧ G.dist p.1 p.2 > 0)
