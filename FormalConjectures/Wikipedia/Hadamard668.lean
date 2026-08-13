@@ -24,31 +24,43 @@ Saul Reynolds-Haertle, and Claude.
 
 ## Construction
 
-The input is four lists of 166 signs. A set bit represents $+1$ and an unset bit represents $-1$.
-For each list, the construction forms a $166 \times 166$ matrix whose rows are cyclic shifts of
-that list. It also uses the same matrices with their cyclic order reversed. Sixteen such matrices,
-with selected signs changed, make a $4 \times 4$ block matrix. Finally, four rows and four columns
-are added around the blocks. The resulting size is $4 + 4 \cdot 166 = 668$. This layout is the
-bordered Goethals--Seidel construction used here.
+Let $a,b,c,d : \mathbb Z/166\mathbb Z \to \{\pm1\}$ be the four lists stored in `seedBits`.
+Write $\operatorname{circ}(x)_{ij}=x_{i-j}$ for the matrix of cyclic shifts of $x$, and let $R$
+reverse the cyclic order. Set $A=\operatorname{circ}(a),\ldots,D=\operatorname{circ}(d)$. The
+$664 \times 664$ core is
 
-The four lists satisfy one key numerical condition. Compare each list with a cyclic shift of
-itself, multiply corresponding signs, and add the products. At shift zero, the four results add to
-664. At every other shift, they add to $-4$. For two different columns in the same block, the four
-added entries contribute $+4$. The chosen border signs make the remaining pairs cancel as well.
-Therefore distinct columns have inner product zero, while each column has squared length 668.
+$$
+G=\begin{pmatrix}
+A&BR&CR&DR\\
+-BR&A&D^\mathsf{T}R&-C^\mathsf{T}R\\
+-CR&-D^\mathsf{T}R&A&B^\mathsf{T}R\\
+-DR&C^\mathsf{T}R&-B^\mathsf{T}R&A
+\end{pmatrix}.
+$$
+
+Four rows and four columns are added to form
+$H=\left(\begin{smallmatrix}Z&\widetilde T\\\widetilde L&G\end{smallmatrix}\right)$, where
+$Z,T,L$ are the fixed $4 \times 4$ matrices below and each tilde repeats an entry 166 times. Thus
+$\dim H=4+4\cdot166=668$.
+
+## Why it works
+
+The four lists satisfy
+
+$$
+P(t)=\sum_i(a_i a_{i+t}+b_i b_{i+t}+c_i c_{i+t}+d_i d_{i+t})
+=\begin{cases}664,&t=0,\\-4,&t\ne0.\end{cases}
+$$
+
+Here $J_{166}$ is the all-ones matrix. The equation gives
+$G^\mathsf{T}G=I_4\otimes(668I_{166}-4J_{166})$. The border adds
+$I_4\otimes4J_{166}$ and cancels the remaining cross terms, so $H^\mathsf{T}H=668I_{668}$.
 
 ## Verification strategy
 
-The proof does not ask Lean to expand all $668^2$ inner products. Instead it:
-
-1. proves the block-matrix calculation for arbitrary cyclic-shift matrices;
-2. checks the four concrete lists, using the fact that shifts $t$ and $166-t$ give the same result;
-3. checks the small calculations involving the four added rows and columns; and
-4. combines these results and renumbers the rows and columns from 0 through 667.
-
-The 83 necessary nonzero shifts are checked in 21 batches of at most four shifts. Keeping the
-batches small avoids the large memory use caused by evaluating the full matrix at once. Lean's
-kernel checks every batch with `decide +kernel`; the proof does not use `native_decide`.
+Lean proves the block identities symbolically. Since $P(-t)=P(t)$, it checks only 83 nonzero
+shifts, split into 21 batches of at most four. Each batch is checked by the kernel with
+`decide +kernel`; the proof neither expands the full matrix nor uses `native_decide`.
 
 *References:*
 - [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
