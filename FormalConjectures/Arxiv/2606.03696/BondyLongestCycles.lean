@@ -38,13 +38,6 @@ namespace Arxiv.«2606.03696»
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-/-- `G` is `k`-connected: it has more than `k` vertices, and it stays connected after the
-removal of any set of fewer than `k` vertices.
-
-Mathlib has `SimpleGraph.IsEdgeConnected` but no vertex connectivity, so this file states it. -/
-def IsKConnected (G : SimpleGraph V) (k : ℕ) : Prop :=
-  k < Fintype.card V ∧ ∀ S : Finset V, S.card < k → (G.induce ((S : Set V)ᶜ)).Connected
-
 /-- The set of vertices that a walk does not touch. For a longest cycle `C` this set carries
 the graph `G - V(C)` of the conjecture. -/
 def offWalk {a b : V} {G : SimpleGraph V} (w : G.Walk a b) : Set V :=
@@ -117,12 +110,5 @@ theorem bondy_conjecture.variants.large :
       ∀ (u v : offWalk C) (P : (G.induce (offWalk C)).Walk u v), P.IsPath →
         P.support.length + 1 ≤ k := by
   sorry
-
-omit [DecidableEq V] in
-/-- A `k`-connected graph has more than `k` vertices, so the graph with no vertices is not
-`k`-connected for any `k`. This shows the hypothesis is not empty of content. -/
-@[category API, AMS 5]
-theorem not_isKConnected_of_card_le {G : SimpleGraph V} {k : ℕ} (h : Fintype.card V ≤ k) :
-    ¬ IsKConnected G k := fun hG => absurd hG.1 (not_lt.mpr h)
 
 end Arxiv.«2606.03696»
