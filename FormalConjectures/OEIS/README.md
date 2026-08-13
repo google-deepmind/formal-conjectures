@@ -8,12 +8,31 @@ When contributing to or reviewing formalizations in this directory, please follo
 
 - **Naming**: Files must be named after their OEIS number **without leading zeros** (e.g., `56777.lean`, `308734.lean`).
 
-## Sequence Definition Naming
+## Sequence and Auxiliary Definition Naming
 
-The primary sequence in each OEIS file must follow exact Mathlib capitalization conventions based on its return type:
-- **Value sequences (`ℕ → ℕ`, etc.)**: Use lowercase `a` (`def a (n : ℕ) : ℕ := ...`). Secondary auxiliary sequences may be named `b`, `c`, etc.
-- **Predicate sequences (`ℕ → Prop`)**: Definitions returning `Prop` define properties/propositions and must use capital `A` (`def A (n : ℕ) : Prop := ...`). Secondary auxiliary predicates may be named `B`, `C`, etc.
-Do not name the sequence function after the OEIS number itself (e.g. do not use `A224515`).
+Follow Mathlib's naming and capitalization conventions:
+- **Primary Sequence**:
+  - **Value sequences (`ℕ → ℕ`, `ℕ → ℚ`, etc.)**: Use lowercase `a` (`def a (n : ℕ) : ℕ := ...`). Secondary auxiliary sequences may be named `b`, `c`, etc.
+  - **Predicate sequences (`ℕ → Prop`)**: Use capital `A` (`def A (n : ℕ) : Prop := ...`). Secondary auxiliary predicates may be named `B`, `C`, etc.
+  - Do not name sequence functions after the OEIS number itself (e.g., do not use `A224515`).
+- **Auxiliary Definitions**:
+  - Functions returning non-`Prop` values must use `lowerCamelCase` (e.g., `catalanReciprocalSum`, `continuedFractionDenominator`, `kthPrimeFactor`, `reverseNat`, `middleColumnBit`).
+  - Types, structures, and predicates returning `Prop` or `Type` must use `UpperCamelCase` (e.g., `IndexCond`, `IsCarmichaelNumber`, `IsAbsoluteEulerPseudoprime`).
+- **Theorems and Lemmas**:
+  - Must use `snake_case` (e.g., `a_ten_mul_add_two_eq`, `catalanReciprocalSum_fracPart_inj`, `tendsto_aReal_asymptotic`).
+
+## Computability and `noncomputable`
+
+- **Avoid unnecessary `noncomputable`**: Only mark definitions as `noncomputable` when strictly required by Lean's compiler (e.g., definitions depending on real numbers $\mathbb{R}$, `sInf` on unbounded subsets of $\mathbb{N}$, `PowerSeries.X`, `Nat.nth`, or classical choice/`Nat.find` over general undecidable propositions).
+- **Prefer executable code**: If a sequence or helper is defined using computable operations—such as rational arithmetic ($\mathbb{Q}$), finite set operations (`Finset.sum`, `Finset.min'`), or structural/well-founded recursion on $\mathbb{N}$—it should be defined with `def` rather than `noncomputable def`.
+
+## Classical Decidability & `open Classical`
+
+- **Avoid top-level `open Classical`**: Do not use `open Classical` or `open scoped Classical` at the namespace or file level, as this triggers the `linter.style.openClassical` warning and causes build failures under `--wfail`.
+- **Scoped Usage**:
+  - For definitions that need classical decidability, use `open Classical in` scoped directly to that definition (placed before the docstring).
+  - For proofs, use the `classical` tactic inside the proof body.
+  - Alternatively, explicitly supply instances such as `have : Decidable ... := Classical.dec _` or `Classical.decPred _`.
 
 ## Namespaces
 
@@ -30,14 +49,17 @@ end OeisA308734
 ## Module Docstrings & References
 
 Every file must include a descriptive module docstring (`/-! ... -/`) immediately following the imports.
-- **Content**: The docstring should clearly explain the sequence definition and the statement of the conjecture or theorem being formalized.
-- **References**: It must conclude with a standardized `*References:*` section containing a Markdown link to the official OEIS page, along with any other papers or articles necessary to formulate the problem.
+- **Title**: By default, orient the title on the title/name of the OEIS entry, making it concise, descriptive, and properly LaTeX-formatted for any mathematical expressions (e.g., `# Reversible multiples $a(3^n) = 10^{3^{n-2}} - 1$ for powers of $3$` or `# Realization of primes $p \equiv \pm 1 \pmod{10}$ by continued fraction denominators`). Avoid generic placeholders like `# Conjectures associated with A123456`.
+- **Content**: The module docstring should contain only a clear mathematical description of the sequence itself. It must **not** duplicate the docstrings of the conjecture(s), as a file may formalize multiple conjectures or variants. Do not include internal technical details or private helper implementations in the module introduction.
+- **Math Formatting**: All mathematical symbols and expressions throughout docstrings must use LaTeX delimiters (`$ ... $` or `$$ ... $$`).
+- **No Redundant Prefixes**: Do not include redundant prefixes like `A123456: ...` or `a: ...` in the docstrings of `def a` or helper functions.
+- **References**: The module docstring must conclude with a standardized `*References:*` section containing a Markdown link to the official OEIS page, along with any other papers or articles necessary to formulate the problem.
 
 ```lean
 /-!
-# Four-square conjecture with powers of 2, 3, and 5
+# Number of representations of $n$ as $(2^a 3^b)^2 + (2^c 5^d)^2 + x^2 + y^2$
 
-Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
+The number of representations of $n$ as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$,
 where $a, b, c, d, x, y$ are nonnegative integers.
 
 *References:*
@@ -54,8 +76,8 @@ The main problem or conjecture (typically the last theorem in the file) must hav
 
 ```lean
 /--
-Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
-where $a, b, c, d, x, y$ are nonnegative integers.
+Conjecture: Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
+where $a, b, c, d, x, y$ are nonnegative integers. - _Zhi-Wei Sun_, Jun 12 2018
 
 A formal proof has been found with the methods described in
 [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
