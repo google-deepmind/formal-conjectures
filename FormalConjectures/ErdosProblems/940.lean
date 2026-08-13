@@ -56,12 +56,13 @@ theorem erdos_940.variants.three_cubes :
 
 
 /--
-It is not known if all large integers are the sum of at most $r$-many $r$-powerful numbers.
+Let $r \ge 3$. It is not known if all large integers are the sum of at most $r$-many
+$r$-powerful numbers.
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.large_integers :
     answer(sorry) ↔
-    ∀ r ≥ 2, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
+    ∀ r ≥ 3, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
   sorry
 
 /--
