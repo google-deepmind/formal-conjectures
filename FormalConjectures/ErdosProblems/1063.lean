@@ -102,14 +102,22 @@ theorem erdos_1063.variants.small_values :
       · exact absurd hb (by decide)
 
 /-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]), since $\binom{k!}{k}$ is divisible
-by $k! - i$ for $1 \le i < k$. -/
+by $k! - i$ for $1 \le i < k$.
+
+The hypothesis `3 ≤ k` is necessary. At $k = 2$ the bound is false: $n_2 = 4$ and $2! = 2$. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
   sorry
 
 /-- [Cambie observed](https://www.erdosproblems.com/1063) the improved bound
-$n_k \le k \cdot \operatorname{lcm}(1, \dotsc, k - 1)$. -/
+$n_k \le k \cdot \operatorname{lcm}(1, \dotsc, k - 1)$.
+
+The hypothesis `3 ≤ k` is necessary here too. At $k = 2$ the right hand side is
+$2 \cdot \operatorname{lcm}(1) = 2$, while $n_2 = 4$.
+
+The source writes the bound as $k[2, 3, \dotsc, k-1]$. That agrees with the range used here,
+because including $1$ does not change a least common multiple. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
