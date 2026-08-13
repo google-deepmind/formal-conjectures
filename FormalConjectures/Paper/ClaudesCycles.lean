@@ -29,13 +29,22 @@ edge-disjoint directed Hamiltonian cycles (each of length `m³`).
 
 Knuth describes an explicit construction, found by Claude (Anthropic), that achieves this
 decomposition for all odd `m ≥ 3`. The case `m = 2` is known to be impossible [Aub82].
-The even case `m > 2` remains open.
+The even case `m > 2` is also settled. Knuth's paper says so in its final section, added in the
+14 April 2026 revision: "Breaking news: The problem for even values of m is no longer in doubt!"
+Ho Boon Suan's algorithm [Ho26] is proved correct for even `m ≥ 8` in [GPT26], and
+Aquino-Michaels [AM26] gives a decomposition for the even case that is simpler.
 
 ## References
 
 - [Knu26] D. E. Knuth, "Claude's Cycles" (2026).
 - [Aub82] J. Aubert, B. Schneider, "Graphes orientés indécomposables en circuits hamiltoniens",
   J. Combin. Theory Ser. B 32 (1982), 347–349.
+- [Ho26] Ho Boon Suan, closed-form construction for even `m`,
+  <https://cs.stanford.edu/~knuth/even_closed_form.c>
+- [GPT26] A proof that [Ho26] yields three `m³`-cycles for every even `m ≥ 8`, 14 pages,
+  <https://cs.stanford.edu/~knuth/even_closed_form_proof_final.pdf>
+- [AM26] K. Aquino-Michaels, "Completing Claude's cycles: Multi-agent structured exploration on
+  an open combinatorial problem", <https://github.com/no-way-labs/residue>
 -/
 
 namespace ClaudesCycles
@@ -80,11 +89,12 @@ theorem cube_hamiltonian_arc_decomposition_impossible_m2 :
     ¬ HasHamiltonianArcDecomposition 2 := by
   sorry
 
-/-- For even `m > 2`, it is open whether the cube digraph on `(ZMod m)³` has a Hamiltonian
-arc decomposition. -/
-@[category research open, AMS 5]
+/-- For even `m > 2`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition.
+Knuth records this as settled in the final section of [Knu26], by [Ho26] with the proof in
+[GPT26] for even `m ≥ 8`, and by [AM26] for the even case generally. -/
+@[category research solved, AMS 5]
 theorem cube_hamiltonian_arc_decomposition_even :
-    answer(sorry) ↔ ∀ᵉ (m : ℕ) (_ : NeZero m) (_ : Even m) (_ : 2 < m),
+    answer(True) ↔ ∀ᵉ (m : ℕ) (_ : NeZero m) (_ : Even m) (_ : 2 < m),
       HasHamiltonianArcDecomposition m := by
   sorry
 
