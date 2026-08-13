@@ -140,8 +140,7 @@ def H668 : Matrix (Fin 668) (Fin 668) ℝ := fun i j => H668Int i j
 theorem isHadamard'_H668 : IsHadamard' H668 := by
   constructor
   · intro i j
-    simp only [H668, H668Int]
-    split <;> simp
+    rcases H668Int_sign i j with h | h <;> simp [H668, h]
   · ext i j
     have h :=
       congrArg (fun A : Matrix (Fin 668) (Fin 668) ℤ => (A i j : ℝ)) H668Int_gram
