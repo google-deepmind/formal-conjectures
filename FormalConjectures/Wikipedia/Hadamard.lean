@@ -20,6 +20,10 @@ import FormalConjectures.Wikipedia.Hadamard668
 /-!
 # Hadamard's conjecture
 
+The concrete order-668 matrix is constructed over the integers in `Hadamard668`. That file proves
+that every entry is a sign and that distinct columns are orthogonal. This file casts the entries to
+real numbers and connects those two facts to the general definition of a Hadamard matrix below.
+
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Hadamard_matrix#Hadamard_conjecture)
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
@@ -132,10 +136,14 @@ theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
     ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
-/-- The order-668 integer witness, cast entrywise to the real numbers. -/
+/-- The order-668 integer matrix from `Hadamard668`, cast entrywise to the real numbers. -/
 def H668 : Matrix (Fin 668) (Fin 668) ℝ := fun i j => H668Int i j
 
-/-- The exact Gram computation proves that `H668` satisfies the orthogonality definition. -/
+/--
+The integer proof gives two facts: every entry is $+1$ or $-1$, and multiplying the transpose by
+the matrix gives 668 times the identity matrix. Casting those facts to the real numbers proves that
+`H668` satisfies `IsHadamard'`.
+-/
 @[category test, AMS 15]
 theorem isHadamard'_H668 : IsHadamard' H668 := by
   constructor

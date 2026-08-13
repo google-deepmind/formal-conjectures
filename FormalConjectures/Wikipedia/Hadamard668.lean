@@ -22,28 +22,33 @@ import FormalConjecturesUtil
 This file formalizes the order-668 construction announced by Levent Alpöge, Philippe Voinov,
 Saul Reynolds-Haertle, and Claude.
 
-## Structure of the construction
+## Construction
 
-The announced data contain four sign sequences of length 166. Their positive supports have sizes
-84, 83, 83, and 83, and form a type $H_4^*$ supplementary difference family: the sum of their
-periodic autocorrelations is 664 at shift zero and $-4$ at every nonzero shift. The
-Wallis--Whiteman bordered Goethals--Seidel construction turns precisely this data into a Hadamard
-matrix of order $4(166+1)=668$.
+The input is four lists of 166 signs. A set bit represents $+1$ and an unset bit represents $-1$.
+For each list, the construction forms a $166 \times 166$ matrix whose rows are cyclic shifts of
+that list. It also uses the same matrices with their cyclic order reversed. Sixteen such matrices,
+with selected signs changed, make a $4 \times 4$ block matrix. Finally, four rows and four columns
+are added around the blocks. The resulting size is $4 + 4 \cdot 166 = 668$. This layout is the
+bordered Goethals--Seidel construction used here.
+
+The four lists satisfy one key numerical condition. Compare each list with a cyclic shift of
+itself, multiply corresponding signs, and add the products. At shift zero, the four results add to
+664. At every other shift, they add to $-4$. For two different columns in the same block, the four
+added entries contribute $+4$. The chosen border signs make the remaining pairs cancel as well.
+Therefore distinct columns have inner product zero, while each column has squared length 668.
 
 ## Verification strategy
 
-The proof deliberately does not ask Lean to reduce all $668^2$ inner products. Instead it:
+The proof does not ask Lean to expand all $668^2$ inner products. Instead it:
 
-1. proves the Goethals--Seidel block identity symbolically for arbitrary circulant matrices;
-2. proves autocorrelation symmetry, then checks the 83 representative nonzero shifts of the four
-   seeds in 21 independent batches of at most four shifts (and checks the four row sums separately);
-3. proves the three small border identities on $4\times4$ matrices; and
-4. assembles the bordered block Gram matrix and transports it along
-   `Fin 4 ⊕ (Fin 4 × Fin 166) ≃ Fin 668`.
+1. proves the block-matrix calculation for arbitrary cyclic-shift matrices;
+2. checks the four concrete lists, using the fact that shifts $t$ and $166-t$ give the same result;
+3. checks the small calculations involving the four added rows and columns; and
+4. combines these results and renumbers the rows and columns from 0 through 667.
 
-Thus the only construction-specific computation is linear in the seed length. All certificates are
-checked by Lean's kernel using `decide +kernel`; no native evaluator or trusted external result is
-used.
+The 83 necessary nonzero shifts are checked in 21 batches of at most four shifts. Keeping the
+batches small avoids the large memory use caused by evaluating the full matrix at once. Lean's
+kernel checks every batch with `decide +kernel`; the proof does not use `native_decide`.
 
 *References:*
 - [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
@@ -67,14 +72,17 @@ private def seedBits : Q → BitVec 166 :=
     0x71876112ff7760ef2e578e30ec225fd913e21a350#166,
     0x14c464e997f8fcd16f35c2988c8d32fce065d21947#166]
 
+/-- Read one bit of a stored list as the integer $+1$ or $-1$. -/
 private def seed (q : Q) (i : C) : ℤ := if (seedBits q).getLsb i then 1 else -1
 
 @[category test, AMS 15]
 private lemma seed_sum (q : Q) : ∑ i, seed q i = if q = 0 then 2 else 0 := by
   fin_cases q <;> decide +kernel
 
+/-- The permutation matrix that reverses cyclic order. -/
 private def rev : Matrix C C ℤ := (Equiv.neg C).permMatrix ℤ
 
+/-- The matrix whose rows are cyclic shifts of the list `x`. -/
 private def circ (x : C → ℤ) : Matrix C C ℤ := Matrix.circulant x
 
 @[category API, AMS 15]
@@ -184,6 +192,7 @@ private lemma circ_transpose_mul_circ_transpose_rev (x y : C → ℤ) :
   rw [← Matrix.mul_assoc, circ_transpose_comm_transpose]
   noncomm_ring
 
+/-- The sixteen cyclic-shift blocks before the four border rows and columns are added. -/
 private def gsBlocks (a b c d : C → ℤ) : Matrix Q Q (Matrix C C ℤ) :=
   let A := circ a
   let B := circ b
@@ -232,6 +241,7 @@ private lemma blockGram_all (a b c d : C → ℤ) (q r : Q) :
   all_goals try rw [circ_transpose_comm_transpose]
   all_goals abel
 
+/-- The dot product of a sign list with its cyclic shift by $t$. -/
 private def periodicCorrelation (x : C → ℤ) (t : C) : ℤ :=
   ∑ i : C, x i * x (i + t)
 
@@ -614,6 +624,7 @@ private def topExpanded : Matrix Q (Q × C) ℤ := fun i j => top i j.1
 
 private def leftExpanded : Matrix (Q × C) Q ℤ := fun i j => left i.1 j
 
+/-- The $4 + 4 \cdot 166$ matrix obtained by placing the fixed border around the block matrix. -/
 private def borderedMatrix : Matrix (Q ⊕ (Q × C)) (Q ⊕ (Q × C)) ℤ :=
   Matrix.fromBlocks border topExpanded leftExpanded coreMatrix
 
@@ -771,7 +782,10 @@ private lemma borderedMatrix_gram :
 private def indexEquiv : (Q ⊕ (Q × C)) ≃ Fin 668 :=
   (Equiv.sumCongr (Equiv.refl Q) finProdFinEquiv).trans finSumFinEquiv
 
-/-- The order-668 Wallis--Whiteman matrix over the integers. -/
+/--
+The constructed order-668 matrix over the integers. Its first four indices describe the border;
+the remaining indices describe one of four blocks and a position in a sign list.
+-/
 def H668Int : Matrix (Fin 668) (Fin 668) ℤ :=
   Matrix.reindex indexEquiv indexEquiv borderedMatrix
 
