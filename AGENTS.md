@@ -7,28 +7,23 @@ what its source says.
 [CONTRIBUTING.md](CONTRIBUTING.md) is the reference for conventions, folders, and the
 attributes. This file adds only what CONTRIBUTING does not tell you.
 
-Copy an existing file. Do not copy a template. *File structure conventions* in CONTRIBUTING
-gives the skeleton.
-[`FormalConjectures/ErdosProblems/13.lean`](FormalConjectures/ErdosProblems/13.lean) gives the
-remainder in 62 lines: a definition with its docstring, a `research solved` statement with its
-source, and a `research open` variant with `answer(sorry)`. A template can become incorrect. A
-file in the repository cannot, because the build compiles it.
+Follow the style of an existing file. Start by copying one from the same directory. *File
+structure conventions* in CONTRIBUTING gives the skeleton, and a neighbouring file gives the
+rest: a definition with its docstring, a statement with its source, and a variant. A template
+can become incorrect. A file in the repository cannot, because the build compiles it.
 
 ## Commands
 
-Build only the module that you changed. Do not build the project.
+Build only the modules that you changed. Do not build the project.
 
 ```bash
 lake --wfail build 'FormalConjectures.ErdosProblems.«361»'
 ```
 
-Put the module name in quotation marks. The guillemets in a numbered file are part of the
-module name.
-
 ```bash
 lake --wfail build FormalConjecturesForMathlib   # if you changed a shared definition
 lake --wfail test                                # if you changed FormalConjecturesUtil
-lake --wfail build                               # 25 minutes when warm. Let CI do this.
+lake --wfail build                               # the whole project. Let CI do this.
 ```
 
 `--wfail` makes each warning into a failure. CI uses the same option. Two warnings cause most
@@ -47,7 +42,9 @@ directory must not contain `sorry`. Only `FormalConjectures/` can contain `sorry
 
 Search before you write a definition. Mathlib, `FormalConjecturesForMathlib/` and the adjacent
 problem files already contain much of what a problem needs. The names are difficult to guess.
-Examples: `trianglesContaining`, `InGeneralPosition`, `NonTrilinear`, `distinctDistances`.
+Examples: `trianglesContaining`, `InGeneralPosition`, `NonTrilinear`, `distinctDistances`. The
+notation is also easy to miss: `ℝ²` for `EuclideanSpace ℝ (Fin 2)`, and `≪` for `IsBigO` at
+`atTop`.
 
 ## Check the degenerate cases
 
@@ -81,9 +78,10 @@ proved:
 `sorryAx` shows that the theorem is not proved.
 
 The three axioms above are the bar for a `research solved` statement. A `test` statement can
-use `native_decide`, which adds `Lean.ofReduceBool` and `Lean.trustCompiler`. These two move
-the proof out of the kernel, so name them in the pull request when a statement depends on
-them.
+use `decide +native`, which the repository prefers to `native_decide`. It adds at least
+`Lean.ofReduceBool` and `Lean.trustCompiler`, and the exact set depends on the proof. These
+axioms move the work out of the kernel, so run `#print axioms` and name the result in the pull
+request. `decide +kernel` stays within the three axioms above, where it is fast enough.
 
 Do the same for a proof that you cite with `formal_proof`. Read the file and look for `sorry`.
 Run `#print axioms` on the theorem that you cite. Then make sure that this theorem states what
