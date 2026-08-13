@@ -54,7 +54,12 @@ theorem erdos_918.parts.ii :
 
 /-- Is there a graph with $\aleph_2$ vertices and chromatic number $\aleph_2$ such that every
 subgraph on $\aleph_1$ vertices has chromatic number $\leq\aleph_0$? -/
--- Formalisation note: It is not clear whether this question for general subgraphs is open or not
+-- Formalisation note: for the `≤ ℵ₀` direction this is the same question as `parts.i`, not a
+-- separate one. Every subgraph on `W` is contained in the induced subgraph on `W`, so its
+-- chromatic cardinal is no larger; and the top subgraph induced on `W` has `coe` equal to
+-- `G.induce W`. So the two quantifications are equivalent and the answers cannot differ. The
+-- `= ℵ₀` pair below is genuinely different, because an edgeless subgraph has chromatic
+-- cardinal `1`, and that is the source's own reason for the impossibility there.
 @[category research open, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.i :
     answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
