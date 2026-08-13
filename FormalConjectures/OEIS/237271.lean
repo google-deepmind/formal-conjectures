@@ -159,7 +159,9 @@ Conjecture 4: "a(A000290(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 
 That is, the number of parts in the symmetric representation of $\sigma(n^2)$ is always odd.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a237271-square-hexagonal-parity/blob/430c09114d4ad3a3a2654b9816c8bfdc3cdf38de/lean/OeisA237271ParityFC.lean#L19-L24"]
 theorem conjecture_4 (n : ℕ) (hn : 0 < n) : Odd (a (n ^ 2)) := by
   sorry
 
@@ -169,7 +171,9 @@ Conjecture 5: "a(A000384(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 That is, the number of parts in the symmetric representation of $\sigma(n(2n-1))$ is always odd,
 where $n(2n-1)$ is the $n$-th hexagonal number.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a237271-square-hexagonal-parity/blob/430c09114d4ad3a3a2654b9816c8bfdc3cdf38de/lean/OeisA237271ParityFC.lean#L26-L32"]
 theorem conjecture_5 (n : ℕ) (hn : 0 < n) : Odd (a (n * (2 * n - 1))) := by
   sorry
 
