@@ -42,7 +42,7 @@ where `l(v) = indepNeighbors G v`.
 
 namespace WrittenOnTheWallII.GraphConjecture100
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

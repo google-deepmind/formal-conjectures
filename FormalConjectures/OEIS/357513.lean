@@ -17,13 +17,18 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-Numerator of $sum_{k = 1}^n \frac{1}{k^3} * \binom{n}{k}^2 * \binom{n+k}{k}^2 for $n \ge 1$
+# Numerator of a sum involving binomial coefficients
+
+$a(n)$ is the numerator of
+$\sum_{k = 1}^n \frac{1}{k^3} \binom{n}{k}^2 \binom{n+k}{k}^2$ for $n \ge 1$
 with $a(0) = 0$.
 
-*Reference:* [A357513](https://oeis.org/A357513)
+*References:*
+- [A357513](https://oeis.org/A357513)
 -/
-open Nat
 namespace OeisA357513
+
+open Nat
 
 /--
 A357513: $a(n) = \text{numerator of }
@@ -34,30 +39,30 @@ def a (n : ℕ) : ℕ :=
  ∑ k ∈ (Finset.Icc 1 n), ((n.choose k : ℚ) ^ 2 * ((n + k).choose k : ℚ) ^ 2) / k ^ 3 |>.num.natAbs
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := rfl
+theorem a_0 : a 0 = 0 := rfl
 
 @[category test, AMS 11]
-theorem one : a 1 = 4 := by
+theorem a_1 : a 1 = 4 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
 @[category test, AMS 11]
-theorem two : a 2 = 81 := by
+theorem a_2 : a 2 = 81 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
 @[category test, AMS 11]
-theorem three : a 3 = 14651 := by
+theorem a_3 : a 3 = 14651 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
 @[category test, AMS 11]
-theorem four : a 4 = 956875 := by
+theorem a_4 : a 4 = 956875 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
 @[category test, AMS 11]
-theorem five : a 5 = 1335793103 := by
+theorem a_5 : a 5 = 1335793103 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
@@ -67,8 +72,9 @@ We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 proved by AlphaProof
 -/
 @[category research solved, AMS 11,
-formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
-theorem a357513_supercongruence (p : ℕ) (hp : Nat.Prime p) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
+  formal_proof using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
+theorem a357513_supercongruence (p : ℕ) (hp : p.Prime) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
     (a (p - 1) : ℤ) ≡ 0 [ZMOD (p : ℤ) ^ 4] := by
   sorry
 

@@ -22,6 +22,7 @@ public import Mathlib.Geometry.Euclidean.Triangle
 public import Mathlib.Data.Set.Card
 public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
+public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
@@ -203,12 +204,10 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
-/--
-Given a finite set of points in the plane, we define the number of distinct distances between pairs
-of points.
--/
-noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  #(points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2)
+/-- The multiplicity of the distance `d` determined by `points`, that is, the number of unordered
+pairs of distinct points at distance `d` apart. -/
+noncomputable def distanceMultiplicity (points : Finset ℝ²) (d : ℝ) : ℕ :=
+  #(points.offDiag.filter fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2 = d) / 2
 
 /--
 The minimum number of distinct distances guaranteed for any set of $n$ points.
@@ -236,9 +235,28 @@ noncomputable def unitDistancePairsCount (points : Finset ℝ²) : ℕ :=
   #(points.offDiag.filter (fun p => dist p.1 p.2 = 1)) / 2
 
 /-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
-if no three are collinear and no four lie on a circle. -/
-def InGeneralPosition (X : Finset ℝ²) : Prop :=
-  NonTrilinear (SetLike.coe X) ∧ ∀ T ⊆ X, #T = 4 → ¬Cospherical (SetLike.coe T)
+if no three are collinear and no four lie on a circle.
+
+Stated for `Set ℝ²` so that infinite collections are covered; a `Finset` argument coerces. -/
+def InGeneralPosition (X : Set ℝ²) : Prop :=
+  NonTrilinear X ∧ ∀ T ⊆ X, T.ncard = 4 → ¬Cospherical T
+
+/-- `a b c` are the vertices of a right-angled triangle: the (unoriented) angle at one of the
+three vertices equals `π / 2`. -/
+def IsRightAngled (a b c : P) : Prop :=
+  ∠ b a c = π / 2 ∨ ∠ a b c = π / 2 ∨ ∠ b c a = π / 2
+
+/--
+`a b c d` are the vertices, in counter-clockwise order, of an isosceles trapezoid: they are in
+strictly convex position, the side `ab` is parallel to the side `cd` (the two bases), and the
+diagonals `ac` and `bd` have equal length. One pair of parallel sides together with equal
+diagonals is the classical characterization of an isosceles trapezoid; in particular it rules
+out non-rectangular parallelograms.
+-/
+def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
+  IsCcwConvexPolygon ![a, b, c, d] ∧
+  (affineSpan ℝ {a, b}).Parallel (affineSpan ℝ {c, d}) ∧
+  dist a c = dist b d
 
 end EuclideanGeometry
 

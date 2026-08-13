@@ -38,8 +38,8 @@ Provides information of the type of a statement. This can be:
 ### Values
 The values of this attribute are
 - `@[category textbook]` : a textbook level math problem.
-- `@[category research open]` : an open reseach level math problem.
-- `@[category research solved]` : a solved reseach level math problem.
+- `@[category research open]` : an open research level math problem.
+- `@[category research solved]` : a solved research level math problem.
   The criterion for being solved is that there exists an informal solution
   that is widely accepted by experts in the area. In particular, this
   does *not* require a formal solution to exist.
@@ -57,6 +57,20 @@ This is independent of the category attribute and can be used with any category.
 - `@[formal_proof using lean4 at "link"]` : formally proved in Lean 4 elsewhere.
 - `@[formal_proof using other_system at "link"]` : formally proved in another system
   (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+### Conditional formal proofs
+A formal proof that only establishes the statement under an unproven hypothesis
+(such as GRH) is marked with the `conditional` modifier. Each hypothesis is stated
+as a declaration in the same file (with a `sorry` proof) and named in the
+`assuming` clause:
+- `@[conditional formal_proof using lean4 at "link" assuming grh]` : formally proved
+  in Lean 4 elsewhere, assuming the statement of the declaration `grh`.
+
+This is the structured counterpart to the `conditional_*` naming convention already
+used in the repository (e.g. `conditional_artin_primitive_roots`): a proof can be
+`sorry`-free and still establish the statement only under an unproven hypothesis,
+so a reader and the site can see exactly what is assumed rather than infer it from
+a declaration name.
 
 ### Usage examples
 The tag should be used as follows:
@@ -76,6 +90,16 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 
 @[category research solved, formal_proof using lean4 at "https://example.com/proof"]
 theorem a_solved_problem_with_formal_proof : ... := by
+  sorry
+
+/-- The unproven hypothesis assumed by the conditional proof below (statement only). -/
+@[category research open]
+theorem grh : ... := by
+  sorry
+
+@[category research solved,
+  conditional formal_proof using lean4 at "https://example.com/proof" assuming grh]
+theorem a_conditionally_proved_problem : ... := by
   sorry
 
 @[category test]
@@ -154,7 +178,7 @@ def problemStatus.toName (stx : TSyntax ``problemStatus) : Option Name :=
 inductive Category
   /-- A textbook level math problem (high school, undergraduate, or graduate). -/
   | textbook
-  /-- A reseach level math problem. This can be open, or already solved -/
+  /-- A research level math problem. This can be open, or already solved -/
   | research : ProblemStatus → Category
   /-- A test statement that serves as a sanity check (e.g. for a new definition)-/
   | test
@@ -196,6 +220,9 @@ structure FormalProofTag where
   proofKind : FormalProofKind
   /-- A link to the formal proof. -/
   proofLink : String
+  /-- Declarations (stated in the same file, with `sorry` proofs) for the unproven
+  hypotheses the proof assumes. Empty for an unconditional proof. -/
+  conditions : List Name := []
   deriving Inhabited, BEq, Hashable, ToExpr
 
 /-- Defines the `formalProofExt` extension for recording formal proof annotations. -/
@@ -207,9 +234,11 @@ initialize formalProofExt :
   }
 
 def addFormalProofEntry {m : Type → Type} [MonadEnv m]
-    (declName : Name) (kind : FormalProofKind) (link : String) : m Unit :=
+    (declName : Name) (kind : FormalProofKind) (link : String)
+    (conditions : List Name := []) : m Unit :=
   modifyEnv (formalProofExt.addEntry ·
-    { declName := declName, proofKind := kind, proofLink := link })
+    { declName := declName, proofKind := kind, proofLink := link,
+      conditions := conditions })
 
 structure SubjectTag where
   /-- The name of the declaration with the given tag. -/
@@ -262,8 +291,8 @@ syntax (name := Category_attr) "category" CategorySyntax : attr
 
 This is used as follows: `@[category my_cat]` where `my_cat` is one of:
 - `textbook` : a textbook level math problem.
-- `research open` : an open reseach level math problem.
-- `research solved` : a solved reseach level math problem.
+- `research open` : an open research level math problem.
+- `research solved` : a solved research level math problem.
 - `test` : a statement that serves as a sanity check (e.g. for a new definition).
 - `API` : a statement that constructs basic theory around a new definition -/
 initialize Lean.registerBuiltinAttribute {
@@ -276,44 +305,96 @@ initialize Lean.registerBuiltinAttribute {
         let cat ← Syntax.toCategory s
         return (cat, "")
       | _ => throwUnsupportedSyntax
-    if status == .research .open then
-      let env ← getEnv
-      if (env.find? decl).bind (·.value?) |>.any (!·.hasSorry) then
-        logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
+    -- The "sorry-free proof categorised as `open`" check used to live here. It never fired for a
+    -- theorem: attributes run before the proof term exists, since theorem bodies elaborate
+    -- asynchronously, so `value?` was always `none`. It is now `CategoryLinter`'s
+    -- `checkNotOpenIfSorryFree`, which runs once the command has finished.
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }
 
-syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str : attr
+syntax (name := FormalProof_attr) (&"conditional ")? "formal_proof" &"using" formalProofKind
+  &"at" str (&"assuming" ident+)? : attr
 
 /-- Records the existence and location of a formal proof for a statement.
-
-This is independent of the `category` attribute and can be used with any category.
 
 Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 - `formal_conjectures` : formally proved in this repository.
 - `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
-- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.) -/
+- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+This says a proof of *this statement* exists somewhere, so in practice it goes on
+problems we already consider settled, and attaching it to a `research open`
+problem warns. To record a conditional result about a problem that is still open,
+state the implication as its own `research solved` variant carrying the
+assumption as a hypothesis, and annotate that.
+
+`conditional` is for something else: the proof at the link establishes the
+statement only under hypotheses the author has not proved. That is a fact about
+their proof, not about the problem's status, and it is not visible from the proof
+term. `#print axioms` on a proof that takes its assumption as a parameter comes
+back clean, so it has to be written down:
+
+`@[conditional formal_proof using <kind> at "<link>" assuming <decl> ...]`
+
+Each named hypothesis is a declaration in the same file, stated with a `sorry`
+proof, so a reader can see what is being assumed. -/
+private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit := do
+  let (kind, link, conds) ← match stx with
+    | `(attr| formal_proof using $kind at $link) =>
+      pure (kind, link, #[])
+    | `(attr| conditional formal_proof using $kind at $link assuming $conds*) =>
+      pure (kind, link, conds)
+    | `(attr| conditional formal_proof using $_ at $_) =>
+      throwError
+        "a `conditional` formal proof must name the hypotheses it assumes: \
+         state each hypothesis as a declaration in this file (with a `sorry` proof) \
+         and reference it as `conditional formal_proof using <kind> at \"<link>\" \
+         assuming <decl>`."
+    | `(attr| formal_proof using $_ at $_ assuming $_*) =>
+      throwError
+        "an `assuming` clause requires the `conditional` modifier: \
+         `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
+    | _ => throwUnsupportedSyntax
+  let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+  let pfKind ← Lean.Meta.MetaM.run' <|
+    unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+  Elab.addConstInfo kind n
+  let env ← getEnv
+  -- Resolve each assumed hypothesis to a declaration (so it is checked to exist
+  -- and hovering it jumps to the statement).
+  let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
+    let condName ← resolveGlobalConstNoOverload c.raw
+    Elab.addConstInfo c.raw condName
+    return condName
+  -- Warn if this is attached to a `research open` problem. `formal_proof` asserts
+  -- that a proof of this statement exists, which contradicts calling it open; a
+  -- conditional result about an open problem belongs on a `research solved`
+  -- variant that carries the assumption as a hypothesis. See the docstring above.
+  let catTags := categoryExt.getState env
+  if catTags.toArray.any fun tag => tag.declName == decl &&
+      tag.category == .research .open then
+    logWarning
+      "A `formal_proof` annotation on a `research open` problem is suspicious. \
+       If a formal proof exists, the problem should not be categorised as `open`."
+  -- Validate the proof link. A `lean4` or `other_system` proof lives outside
+  -- this repository and must be locatable, so its link is required; a
+  -- `formal_conjectures` proof is in this repository, so its link may be empty.
+  -- Any link that is given should be a URL.
+  let linkStr := link.getString
+  if linkStr.isEmpty then
+    if pfKind == .lean4 || pfKind == .otherSystem then
+      logWarningAt link
+        "A `lean4` or `other_system` `formal_proof` should include a link to the proof."
+  else if !(linkStr.toLower.startsWith "http://" || linkStr.toLower.startsWith "https://") then
+    logWarningAt link
+      s!"A `formal_proof` link should be a URL (http:// or https://), but got: \"{linkStr}\"."
+  addFormalProofEntry decl pfKind link.getString conditions
+
 initialize Lean.registerBuiltinAttribute {
   name := `FormalProof_attr
   descr := "Annotation of the existence and location of a formal proof."
-  add := fun decl stx _attrKind => do
-    match stx with
-    | `(attr| formal_proof using $kind at $link) => do
-      let some n := formalProofKind.toName kind | throwUnsupportedSyntax
-      let pfKind ← Lean.Meta.MetaM.run' <|
-        unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
-      Elab.addConstInfo kind n
-      -- Warn if this is attached to a `research open` problem.
-      let env ← getEnv
-      let catTags := categoryExt.getState env
-      if catTags.toArray.any fun tag => tag.declName == decl &&
-          tag.category == .research .open then
-        logWarning
-          "A `formal_proof` annotation on a `research open` problem is suspicious. \
-           If a formal proof exists, the problem should not be categorised as `open`."
-      addFormalProofEntry decl pfKind link.getString
-    | _ => throwUnsupportedSyntax
+  add := fun decl stx _attrKind => addFormalProofAttribute decl stx
   applicationTime := .afterTypeChecking
 }
 
@@ -321,7 +402,7 @@ syntax subjectList := many(num)
 
 /-- Converts a syntax node to an array of `AMS` subjects.
 
-This also annotates the every natural number litteral encountered, with the
+This also annotates every natural number literal encountered with the
 description of the corresponding AMS subject (i.e. hovering over the number
 in VS Code will show the subject.)
 -/
@@ -394,6 +475,12 @@ def getFormalProofTags : m (Array FormalProofTag) := do
 def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
   let tags ← getFormalProofTags
   return tags.find? (·.declName == declName)
+
+/-- Get the unproven hypotheses a given declaration's formal proof assumes.
+Empty when there is no formal proof or the proof is unconditional. -/
+def getProofConditions (declName : Name) : m (List Name) := do
+  let tag ← getFormalProofTag declName
+  return (tag.map (·.conditions)).getD []
 
 end Helper
 

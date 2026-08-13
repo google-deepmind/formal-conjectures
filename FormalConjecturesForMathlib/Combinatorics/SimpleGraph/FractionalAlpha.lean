@@ -22,7 +22,6 @@ public import Mathlib.Data.Real.Archimedean
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

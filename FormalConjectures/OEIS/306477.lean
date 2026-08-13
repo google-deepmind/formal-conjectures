@@ -35,27 +35,39 @@ namespace OeisA306477
 
 /-- The predicate that `n` can be written as $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$
 for nonnegative integers $w, x, y, z$. -/
-def IsSumOfBinomials (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ w x y z : ℕ, n = (w + 2).choose 2 + (x + 3).choose 4 + (y + 5).choose 6 + (z + 7).choose 8
 
 @[category test, AMS 11]
-theorem isSumOfBinomials_1 : IsSumOfBinomials 1 :=
+theorem a_1 : A 1 :=
   ⟨0, 0, 0, 0, by decide⟩
 
 @[category test, AMS 11]
-theorem isSumOfBinomials_3 : IsSumOfBinomials 3 :=
-  ⟨1, 0, 0, 0, by native_decide⟩
+theorem a_2 : A 2 :=
+  ⟨0, 1, 0, 0, by decide⟩
 
 @[category test, AMS 11]
-theorem isSumOfBinomials_6 : IsSumOfBinomials 6 :=
-  ⟨2, 0, 0, 0, by native_decide⟩
+theorem a_3 : A 3 :=
+  ⟨1, 0, 0, 0, by decide⟩
+
+@[category test, AMS 11]
+theorem a_4 : A 4 :=
+  ⟨1, 1, 0, 0, by decide⟩
+
+@[category test, AMS 11]
+theorem a_5 : A 5 :=
+  ⟨1, 1, 1, 0, by decide⟩
+
+@[category test, AMS 11]
+theorem a_6 : A 6 :=
+  ⟨2, 0, 0, 0, by decide⟩
 
 /--
 **Zhi-Wei Sun's 2-4-6-8 Conjecture (A306477)**: Any integer $n > 0$ can be written as
 $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$ for nonnegative integers $w, x, y, z$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) : IsSumOfBinomials n := by
+theorem conjecture (n : ℕ) (hn : 0 < n) : A n := by
   sorry
 
 end OeisA306477
