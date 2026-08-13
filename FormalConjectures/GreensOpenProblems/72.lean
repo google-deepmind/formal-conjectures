@@ -26,8 +26,10 @@ for $N$ sufficiently large, is it impossible to have a set of size $2N$ with thi
 The upper bound $2N$ is the easy half and is `allowedSetSize_le` below, by pigeonhole on the
 columns. The open content is whether $2N$ is attained. Green records that it is for $N$ up to
 around 50, that $(3/2 + o(1))N$ points are achievable for arbitrary $N$, and that his "personal
-suspicion is that this is optimal"; the Guy-Kelly heuristic in the Wikipedia reference points the
-same way, at $\pi/\sqrt3 \approx 1.814$. So the expected answer to the question above is yes.
+suspicion is that this is optimal". The Wikipedia reference points the same way: Guy and Kelly
+conjectured $c = \sqrt[3]{2\pi^2/3} \approx 1.874$, and after an error in the heuristic was found
+Guy corrected it to $c = \pi/\sqrt3 \approx 1.814$. Both are below $2$, so the expected answer to
+the question above is yes.
 
 *References:*
 - [Ben Green's Open Problem 72](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.72)
