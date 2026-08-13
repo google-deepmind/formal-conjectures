@@ -32,7 +32,9 @@ decomposition for all odd `m ≥ 3`. The case `m = 2` is known to be impossible 
 The even case `m > 2` is also settled. Knuth's paper says so in its final section, added in the
 14 April 2026 revision: "Breaking news: The problem for even values of m is no longer in doubt!"
 Ho Boon Suan's algorithm [Ho26] is proved correct for even `m ≥ 8` in [GPT26], and
-Aquino-Michaels [AM26] gives a decomposition for the even case that is simpler.
+Aquino-Michaels [AM26] gives a decomposition for the even case that is simpler. The statement
+below starts at `m = 4`, which is below the range [GPT26] covers, so it also rests on the
+explicit solutions in [Kn26], whose header gives even `m ≥ 4`.
 
 ## References
 
@@ -45,6 +47,8 @@ Aquino-Michaels [AM26] gives a decomposition for the even case that is simpler.
   <https://cs.stanford.edu/~knuth/even_closed_form_proof_final.pdf>
 - [AM26] K. Aquino-Michaels, "Completing Claude's cycles: Multi-agent structured exploration on
   an open combinatorial problem", <https://github.com/no-way-labs/residue>
+- [Kn26] Explicit even solutions for even `m ≥ 4`, recorded with [Knu26],
+  <https://cs.stanford.edu/~knuth/even_solution.py>
 - [KM26] K. Morrison, a Lean formalisation of the odd case,
   <https://github.com/kim-em/KnuthClaudeLean>
 -/
@@ -109,13 +113,8 @@ theorem not_hasHamiltonianArcDecomposition_one : ¬ HasHamiltonianArcDecompositi
   exact (hcyc 0).2.1.ne_one (Subsingleton.elim _ _)
 
 /-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
-into three directed cycles [Knu26].
-
-The `formal_proof` link names `Challenge.lean`, which states the theorem as
-`ClaudesCycles.hamiltonian_arc_decomposition`. That is the declaration `comparator.json` lists,
-and `Solution.lean` discharges it. Do not follow the link to `KnuthClaudeLean/Basic.lean`: it
-holds a different declaration that happens to share the name used here. -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean/blob/master/Challenge.lean"]
+into three directed cycles [Knu26]. -/
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean"]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
     HasHamiltonianArcDecomposition m := by
   sorry
