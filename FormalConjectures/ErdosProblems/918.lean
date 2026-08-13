@@ -81,17 +81,22 @@ theorem erdos_918.variants.erdos_hajnal (k : ℕ) (hk : 0 < k) : ∃ (V : Type u
       ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with induced subgraphs. -/
+-- Formalisation note: the source states the impossibility for general subgraphs, in a
+-- parenthetical, "assuming subgraph and not induced subgraph was intended". It does not
+-- assert it for induced subgraphs, and the argument for the general case does not carry
+-- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
+-- on `W`, so the edgeless-subgraph argument is unavailable here.
 @[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (W : Set V) (_ : #W = ℵ₁), (G.induce W).chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with all subgraphs. -/
@@ -101,17 +106,22 @@ theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.i :
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ₁), H.coe.chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with induced subgraphs. -/
+-- Formalisation note: the source states the impossibility for general subgraphs, in a
+-- parenthetical, "assuming subgraph and not induced subgraph was intended". It does not
+-- assert it for induced subgraphs, and the argument for the general case does not carry
+-- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
+-- on `W`, so the edgeless-subgraph argument is unavailable here.
 @[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with all subgraphs. -/
