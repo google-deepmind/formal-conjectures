@@ -45,6 +45,8 @@ Aquino-Michaels [AM26] gives a decomposition for the even case that is simpler.
   <https://cs.stanford.edu/~knuth/even_closed_form_proof_final.pdf>
 - [AM26] K. Aquino-Michaels, "Completing Claude's cycles: Multi-agent structured exploration on
   an open combinatorial problem", <https://github.com/no-way-labs/residue>
+- [KM26] K. Morrison, a Lean formalisation of the odd case,
+  <https://github.com/kim-em/KnuthClaudeLean>
 -/
 
 namespace ClaudesCycles
@@ -67,6 +69,29 @@ def IsDirectedHamiltonianCycle {V : Type*} [Fintype V] [DecidableEq V]
     (adj : V → V → Prop) (σ : Equiv.Perm V) : Prop :=
   (∀ v, adj v (σ v)) ∧ σ.IsCycle ∧ σ.support = Finset.univ
 
+@[category API, AMS 5]
+theorem bumpAt_apply_self {m : ℕ} [NeZero m] (b : Fin 3) (v : Vertex m) :
+    bumpAt b v b = v b + 1 := by
+  simp [bumpAt]
+
+@[category API, AMS 5]
+theorem bumpAt_apply_of_ne {m : ℕ} [NeZero m] {b b' : Fin 3} (h : b ≠ b') (v : Vertex m) :
+    bumpAt b v b' = v b' := by
+  simp [bumpAt, Function.update_of_ne (Ne.symm h)]
+
+/-- The three arcs leaving a vertex are distinct, which is what makes the `∃!` in
+`HasHamiltonianArcDecomposition` a condition about arcs rather than about heads that might
+coincide. It needs `1 < m`. -/
+@[category test, AMS 5]
+theorem bumpAt_injective {m : ℕ} [NeZero m] (hm : 1 < m) (v : Vertex m) :
+    Function.Injective fun b => bumpAt b v := by
+  haveI : Fact (1 < m) := ⟨hm⟩
+  intro b b' h
+  by_contra hne
+  have hb : bumpAt b v b = bumpAt b' v b := congrFun h b
+  rw [bumpAt_apply_self, bumpAt_apply_of_ne (Ne.symm hne)] at hb
+  simp at hb
+
 /-- The arcs of the cube digraph on `(ZMod m)³` can be decomposed into three directed
 Hamiltonian cycles: there exist three permutations, each forming a directed Hamiltonian
 cycle, such that every arc `(v, bumpAt b v)` belongs to exactly one cycle. -/
@@ -75,9 +100,22 @@ def HasHamiltonianArcDecomposition (m : ℕ) [NeZero m] : Prop :=
     (∀ c, IsDirectedHamiltonianCycle (cubeAdj (m := m)) (σ c)) ∧
     (∀ v : Vertex m, ∀ b : Fin 3, ∃! c : Fin 3, σ c v = bumpAt b v)
 
+/-- The hypothesis `1 < m` on `cube_hamiltonian_arc_decomposition` is load-bearing. At `m = 1`
+the vertex type has one element, so the only permutation of it is the identity, which is not a
+cycle. Note that `Odd 1` holds, so without `1 < m` the odd statement would be false. -/
+@[category test, AMS 5]
+theorem not_hasHamiltonianArcDecomposition_one : ¬ HasHamiltonianArcDecomposition 1 := by
+  rintro ⟨σ, hcyc, -⟩
+  exact (hcyc 0).2.1.ne_one (Subsingleton.elim _ _)
+
 /-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
-into three directed cycles [Knu26]. -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean"]
+into three directed cycles [Knu26].
+
+The `formal_proof` link names `Challenge.lean`, which states the theorem as
+`ClaudesCycles.hamiltonian_arc_decomposition`. That is the declaration `comparator.json` lists,
+and `Solution.lean` discharges it. Do not follow the link to `KnuthClaudeLean/Basic.lean`: it
+holds a different declaration that happens to share the name used here. -/
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean/blob/master/Challenge.lean"]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
     HasHamiltonianArcDecomposition m := by
   sorry
