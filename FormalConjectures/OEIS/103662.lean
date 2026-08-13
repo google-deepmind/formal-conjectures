@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Smallest power with base>1 and exponent $n$ whose decimal representation doesn't contain the digit 0
+# Smallest power with base>1 and exponent $n$ without digit 0
 
 For statistical reasons it is conjectured that the sequence is finite.
 Also it is conjectured that $a(40)$ does not exist (i.e. the sequence is empty for $n=40$).
@@ -31,7 +31,8 @@ namespace OeisA103662
 open Nat List Set
 
 /--
-A helper predicate: $b^n$ is a power with base $>1$ whose decimal representation does not contain the digit 0.
+A helper predicate: $b^n$ is a power with base $>1$ whose decimal representation
+does not contain the digit 0.
 We assume $n$ is the exponent, $n \ge 1$.
 -/
 def IsValidZerolessPower (n b : ℕ) : Prop :=
@@ -39,8 +40,10 @@ def IsValidZerolessPower (n b : ℕ) : Prop :=
 
 /--
 The primary defining sequence `a`.
-`a n` is the smallest power with base $>1$ and exponent $n$ whose decimal representation doesn't contain the digit 0.
-$$a(n) = (\min \{ b \in \mathbb{N} \mid b > 1, \text{decimal representation of } b^n \text{ contains no digit } 0 \})^n$$
+`a n` is the smallest power with base $>1$ and exponent $n$ whose decimal representation
+doesn't contain the digit 0.
+$$a(n) = (\min \{ b \in \mathbb{N} \mid b > 1,
+  \text{decimal representation of } b^n \text{ contains no digit } 0 \})^n$$
 If no such base exists, `sInf` of an empty set of naturals returns 0, so `a n = 0`.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
@@ -68,7 +71,9 @@ theorem a_2 : a 2 = 4 := by
 theorem a_3 : a 3 = 8 := by
   norm_num[a]
   delta IsValidZerolessPower
-  exact (.trans (by rw [IsLeast.csInf_eq (by use ⟨by constructor,by norm_num⟩, fun and' => And.left)]) ( (by constructor)))
+  exact (.trans (by
+    rw [IsLeast.csInf_eq (by use ⟨by constructor, by norm_num⟩, fun and' => And.left)])
+    (by constructor))
 
 /--
 For statistical reasons it is conjectured that the sequence is finite.
@@ -82,7 +87,8 @@ theorem conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
 /--
 $a(40)$, if it exists, is not known.
 
-This claim is rooted in the finiteness conjecture. The most direct mathematical expression of the open problem concerning $a(40)$ is the negation of the existence of a valid base.
+This claim is rooted in the finiteness conjecture. The most direct mathematical expression
+of the open problem concerning $a(40)$ is the negation of the existence of a valid base.
 -/
 @[category research open, AMS 11]
 theorem conjecture.variants.a_40 :

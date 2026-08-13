@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A100474
 
-$a(1) = 1$; $a(n)$ is the smallest integer such that $a(n) + a(n-1)$ has the first $n$ distinct prime factors not used before in this construction.
+$a(1) = 1$; $a(n)$ is the smallest integer such that $a(n) + a(n-1)$ has the first $n$ distinct
+prime factors not used before in this construction.
 
 *References:*
 - [A100474](https://oeis.org/A100474)
@@ -34,7 +35,9 @@ def triangular (n : ℕ) : ℕ := n * (n + 1) / 2
 noncomputable def a : ℕ → ℕ
   | 0 => 0
   | 1 => 1
-  | n + 2 => (Finset.Ico (triangular (n + 1) - 1) (triangular (n + 2) - 1)).prod (Nat.nth Nat.Prime) - a (n + 1)
+  | n + 2 =>
+    (Finset.Ico (triangular (n + 1) - 1) (triangular (n + 2) - 1)).prod (Nat.nth Nat.Prime) -
+      a (n + 1)
 
 @[category API, AMS 11]
 lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 := by

@@ -19,7 +19,10 @@ import FormalConjecturesUtil
 /-!
 # $a(n) = \sum_{i=0}^n \binom{2n-i}{n+i}$
 
-Alternatively the sequence `a` can be defined as $a(n) = \sum_{k=0}^n \binom{n+k-1}{k} F(n-k+1)$, where $F(m)$ is the $m$-th Fibonacci number. We formalize a conjecture about the number of words of length $n$ in a set $X$ being related to this sequence.
+Alternatively the sequence `a` can be defined as
+$a(n) = \sum_{k=0}^n \binom{n+k-1}{k} F(n-k+1)$, where $F(m)$ is the $m$-th Fibonacci number.
+We formalize a conjecture about the number of words of length $n$ in a set $X$ being related
+to this sequence.
 
 *References:*
 - [A108081](https://oeis.org/A108081)
@@ -61,7 +64,9 @@ def l (w : Word) : Word :=
 def r (w : Word) : Word :=
   w.reverse.map (fun x => x + 1)
 
-/-- `XWord` is the smallest set of words satisfying the inductive properties described in A108081. -/
+/--
+`XWord` is the smallest set of words satisfying the inductive properties described in A108081.
+-/
 inductive XWord : Word → Prop
   | base : XWord [0]
   | step_left {u v : Word} (hu : XWord u) (hv : XWord v) : XWord (l u ++ v)

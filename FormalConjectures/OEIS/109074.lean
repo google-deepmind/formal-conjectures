@@ -30,7 +30,8 @@ namespace OeisA109074
 open Nat
 
 /--
-The rational number defined by $\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right)$, whose numerator is A109074.
+The rational number defined by $\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right)$,
+whose numerator is A109074.
 -/
 def frac (n : ℕ) : ℚ :=
   let numTerm : ℕ := (6 * n - 2).choose (2 * n)

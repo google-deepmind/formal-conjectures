@@ -47,13 +47,16 @@ theorem a_5 : a 5 = 26 := by rfl
 open Nat Finset ArithmeticFunction
 
 /--
-Conjecture: For each k = 2,3,..., all the rational numbers $\frac{\sigma_k(n)}{n^k} = \sum_{d|n} \frac{1}{d^k}$ (n = 1,2,3,...) have pairwise distinct fractional parts. - Zhi-Wei Sun, Oct 15 2015
+Conjecture: For each k = 2,3,..., all the rational numbers
+$\frac{\sigma_k(n)}{n^k} = \sum_{d|n} \frac{1}{d^k}$ (n = 1,2,3,...) have pairwise distinct
+fractional parts. - Zhi-Wei Sun, Oct 15 2015
 -/
 @[category research open, AMS 11]
 theorem conjecture :
   ∀ k : ℕ, 2 ≤ k →
     ∀ n₁ n₂ : ℕ, 0 < n₁ → 0 < n₂ → n₁ ≠ n₂ →
-      Int.fract (↑((sigma k) n₁) / (↑n₁ ^ k : ℚ)) ≠ Int.fract (↑((sigma k) n₂) / (↑n₂ ^ k : ℚ)) := by
+      Int.fract (↑((sigma k) n₁) / (↑n₁ ^ k : ℚ)) ≠
+        Int.fract (↑((sigma k) n₂) / (↑n₂ ^ k : ℚ)) := by
   sorry
 
 end OeisA1157

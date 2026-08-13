@@ -22,7 +22,8 @@ import FormalConjecturesUtil
 The canonical prime factorization is $n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$.
 The written form is $p_1^{\wedge} e_1 * p_2^{\wedge} e_2 * \cdots * p_k^{\wedge} e_k$,
 where the $\wedge$ appears only if $e_i > 1$.
-$a(n) = (\text{number of distinct prime factors}) - 1 + (\text{number of distinct prime factors with exponent } > 1)$.
+$a(n) = (\text{number of distinct prime factors}) - 1 +$
+$(\text{number of distinct prime factors with exponent } > 1)$.
 
 *References:*
 - [A110475](https://oeis.org/A110475)

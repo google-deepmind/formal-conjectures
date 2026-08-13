@@ -59,7 +59,9 @@ def polyQ (n : ℕ) : Polynomial ℚ :=
   (Finset.range (n + 1)).sum (fun k => C (((Nat.centralBinom k : ℚ) ^ 2) / (k + 1 : ℚ)) * X ^ k)
 
 /--
-Conjecture: For any positive integer n, the polynomials Sum_{k=0}^n binomial(2k,k)^2*x^k and Sum_{k=0}^n binomial(2k,k)^2*x^k/(k+1) are irreducible over the field of rational numbers. - Zhi-Wei Sun, Mar 23 2013
+Conjecture: For any positive integer n, the polynomials Sum_{k=0}^n binomial(2k,k)^2*x^k
+and Sum_{k=0}^n binomial(2k,k)^2*x^k/(k+1) are irreducible over the field of rational numbers.
+- Zhi-Wei Sun, Mar 23 2013
 -/
 @[category research open, AMS 11]
 theorem conjecture :

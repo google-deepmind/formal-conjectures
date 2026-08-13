@@ -48,7 +48,8 @@ noncomputable def a (n : ℕ) : ℕ :=
     π sumTerms
 
 /--
-A general sequence defined by the Pentanacci $\pi$ recurrence, starting with arbitrary initial values $v: \text{Fin } 5 \to \mathbb{N}$.
+A general sequence defined by the Pentanacci $\pi$ recurrence, starting with arbitrary initial
+values $v: \text{Fin } 5 \to \mathbb{N}$.
 The sequence $a_{\mathrm{general}}(v, n)$ is the n-th term (0-indexed).
 -/
 noncomputable def aGeneral (v : Fin 5 → ℕ) (n : ℕ) : ℕ :=
@@ -59,7 +60,9 @@ noncomputable def aGeneral (v : Fin 5 → ℕ) (n : ℕ) : ℕ :=
   | 3 => v 3
   | 4 => v 4
   | i + 5 =>
-    let sumTerms := aGeneral v (i + 4) + aGeneral v (i + 3) + aGeneral v (i + 2) + aGeneral v (i + 1) + aGeneral v i
+    let sumTerms :=
+      aGeneral v (i + 4) + aGeneral v (i + 3) + aGeneral v (i + 2) + aGeneral v (i + 1) +
+        aGeneral v i
     π sumTerms
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
@@ -79,7 +82,9 @@ theorem a_3 : a 3 = 1 := by rfl
 theorem a_4 : a 4 = 1 := by rfl
 
 /--
-Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible? Does the sequence always stick at a single integer after some point, or can it go into a loop, or is there a third pattern?
+Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behaviors are possible?
+Does the sequence always stick at a single integer after some point, or can it go into a loop,
+or is there a third pattern?
 -/
 @[category research open, AMS 11]
 theorem conjecture (v : Fin 5 → ℕ) (h : ∀ i, v i > 0) :

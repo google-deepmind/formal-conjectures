@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A109671
 
-$a(1)=1$; thereafter, $a(2n)=a(n)$, $a(2n+1)$ is the smallest positive number such that $|a(2n+1)-a(2n-1)|=a(n)$.
+$a(1)=1$; thereafter, $a(2n)=a(n)$, $a(2n+1)$ is the smallest positive number
+such that $|a(2n+1)-a(2n-1)|=a(n)$.
 Conjecture: Does the sequence contain every positive integer?
 
 *References:*
@@ -30,7 +31,8 @@ namespace OeisA109671
 
 /--
 The primary defining sequence `a`.
-$a(1)=1$; thereafter, $a(2n)=a(n)$, $a(2n+1)$ is the smallest positive number such that $|a(2n+1)-a(2n-1)|=a(n)$.
+$a(1)=1$; thereafter, $a(2n)=a(n)$, $a(2n+1)$ is the smallest positive number
+such that $|a(2n+1)-a(2n-1)|=a(n)$.
 -/
 def a (n : ℕ) : ℕ :=
   if n = 0 then 0

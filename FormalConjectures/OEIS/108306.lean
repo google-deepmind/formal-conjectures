@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # A108306: Expansion of $(3x+1)/(1-3x-3x^2)$
 
-This sequence satisfies the linear recurrence relation $a(0)=1$, $a(1)=6$, and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
+This sequence satisfies the linear recurrence relation $a(0)=1$, $a(1)=6$,
+and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
 
 *References:*
 - [A108306](https://oeis.org/A108306)
@@ -28,7 +29,8 @@ This sequence satisfies the linear recurrence relation $a(0)=1$, $a(1)=6$, and $
 namespace OeisA108306
 
 /-- The primary defining sequence `a`.
-`a n` is the $n$-th term of the expansion of $(3x+1)/(1-3x-3x^2)$, satisfying $a(0)=1, a(1)=6, a(n)=3a(n-1)+3a(n-2)$. -/
+`a n` is the $n$-th term of the expansion of $(3x+1)/(1-3x-3x^2)$,
+satisfying $a(0)=1, a(1)=6, a(n)=3a(n-1)+3a(n-2)$. -/
 def a : ℕ → ℕ
   | 0 => 1
   | 1 => 6
@@ -63,7 +65,8 @@ def m : Matrix (Fin 2) (Fin 2) ℕ :=
   | 1, 1 => 2
 
 /--
-The sequence is the INVERT transform of (1, 5, 10, 20, 40, 80, 160, ...) and can be obtained by extracting the upper left terms of matrix powers of [(1,5); (1,2)].
+The sequence is the INVERT transform of (1, 5, 10, 20, 40, 80, 160, ...) and can be obtained
+by extracting the upper left terms of matrix powers of [(1,5); (1,2)].
 These results are a case (a=5, b=2) of the general conjecture below.
 -/
 @[category textbook, AMS 11]
@@ -71,7 +74,10 @@ theorem a_is_invert_transform_case (n : ℕ) :
     a n = (m ^ (n + 1)) 0 0 := by
   sorry
 
-/-- The c sequence for the general INVERT transform conjecture. $c(1) = 1$, $c(k)=ab^(k-2)$ for $k \ge 2$. -/
+/--
+The c sequence for the general INVERT transform conjecture.
+$c(1) = 1$, $c(k)=ab^(k-2)$ for $k \ge 2$.
+-/
 def invertSeqC (a b : ℕ) : ℕ → ℕ
   | 0 => 0
   | 1 => 1
@@ -94,7 +100,9 @@ def genMatrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=
   | 1, 1 => b
 
 /--
-The conjecture: The INVERT transform of a sequence starting $(1, a, ab, ab^2, ab^3, \ldots)$ is equivalent to extracting the upper left terms of powers of the 2x2 matrix [(1,a); (1,b)].
+The conjecture: The INVERT transform of a sequence starting
+$(1, a, ab, ab^2, ab^3, \ldots)$ is equivalent to extracting the upper left terms
+of powers of the 2x2 matrix [(1,a); (1,b)].
 -/
 @[category research open, AMS 11]
 theorem conjecture (a_val b_val n : ℕ) :

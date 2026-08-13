@@ -26,7 +26,8 @@ import FormalConjecturesUtil
 namespace OeisA113609
 
 /--
-A number $n$ is an "OEIS prime power" (for the context of A113609's definition) if $n=1$ or $n$ is a standard prime power.
+A number $n$ is an "OEIS prime power" (for the context of A113609's definition)
+if $n=1$ or $n$ is a standard prime power.
 -/
 def IsOeisPrimePower (n : ℕ) : Prop := n = 1 ∨ IsPrimePow n
 
@@ -59,7 +60,8 @@ theorem a_4 : a 4 = 3 := by native_decide
 theorem a_5 : a 5 = 4 := by native_decide
 
 /--
-(25,27) is the smallest pair of prime powers (q,q+2) such that both q and q+2 are not primes, conjecture: there are more (but not < 10^6).
+(25,27) is the smallest pair of prime powers (q,q+2) such that both q and q+2 are not primes,
+conjecture: there are more (but not < 10^6).
 -/
 @[category research open, AMS 11]
 theorem conjecture :

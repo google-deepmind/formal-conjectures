@@ -46,7 +46,8 @@ noncomputable def a : ℕ → ℕ
     else reverseDigits (Nat.nth Nat.Prime (k - 1))
 
 @[category API, AMS 11]
-lemma a_succ (n : ℕ) : a (n + 1) = if a n = 0 then 0 else reverseDigits (Nat.nth Nat.Prime (a n - 1)) := by
+lemma a_succ (n : ℕ) :
+    a (n + 1) = if a n = 0 then 0 else reverseDigits (Nat.nth Nat.Prime (a n - 1)) := by
   rfl
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/

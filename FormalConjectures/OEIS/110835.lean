@@ -31,7 +31,8 @@ open Nat Set
 
 /--
 The primary defining sequence `a`.
-$a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$ and $n \cdot (m+1)$ inclusive.
+$a(n)$ is the smallest $m > 0$ such that there are no primes between $n \cdot m$
+and $n \cdot (m+1)$ inclusive.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let IsPrimeFreeInterval (m : ℕ) : Prop :=

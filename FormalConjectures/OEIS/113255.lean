@@ -31,8 +31,10 @@ Initial values are $a(0) = -1, a(1) = 4, a(2) = 227, a(3) = 5329$.
 
 namespace OeisA113255
 
-/-- a n is the sequence defined by the linear recurrence $a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)$
-with initial values $-1, 4, 227, 5329$. -/
+/--
+a n is the sequence defined by the linear recurrence
+$a(n) = -4 a(n-1) + 324 a(n-3) + 6561 a(n-4)$ with initial values $-1, 4, 227, 5329$.
+-/
 def a : ℕ → ℤ
 | 0 => -1
 | 1 => 4

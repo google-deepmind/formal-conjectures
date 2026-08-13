@@ -80,7 +80,8 @@ theorem divisibility_fact (n : ℕ) (hn : 2 ≤ n) : (((a n)^4 - 1) : ℕ) ∣ (
   exact Nat.sub_one_dvd_pow_sub_one (a n ^ 4) m
 
 /--
-I conjecture that { $a(n)$ ; $n>1$ } are the numbers such that $n^4-1$ divides $2^n-1$, intersection of A247219 and A247165. - M. F. Hasler, Jul 25 2015
+I conjecture that { $a(n)$ ; $n>1$ } are the numbers such that $n^4-1$ divides $2^n-1$,
+intersection of A247219 and A247165. - M. F. Hasler, Jul 25 2015
 This formalizes the reverse direction.
 -/
 @[category research open, AMS 11]

@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Fibonacci-Collatz sequence
 
-Fibonacci-Collatz sequence: $a(1)=1, a(2)=2$; for $n > 2$, let $\mathrm{fib} = a(n-1) + a(n-2)$; if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \mathrm{fib}/2$.
+Fibonacci-Collatz sequence: $a(1)=1, a(2)=2$; for $n > 2$, let $\mathrm{fib} = a(n-1) + a(n-2)$;
+if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \mathrm{fib}/2$.
 
 *References:*
 - [A105801](https://oeis.org/A105801)
@@ -28,7 +29,9 @@ Fibonacci-Collatz sequence: $a(1)=1, a(2)=2$; for $n > 2$, let $\mathrm{fib} = a
 namespace OeisA105801
 
 /-- The primary defining sequence `a`.
-$a(n)$ is the Fibonacci-Collatz sequence: $a(1)=1, a(2)=2$; for $n > 2$, let $\mathrm{fib} = a(n-1) + a(n-2)$; if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \mathrm{fib}/2$. -/
+$a(n)$ is the Fibonacci-Collatz sequence: $a(1)=1, a(2)=2$; for $n > 2$,
+let $\mathrm{fib} = a(n-1) + a(n-2)$;
+if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \mathrm{fib}/2$. -/
 def a : ℕ → ℕ
   | 0 => 0 -- The sequence is 1-indexed, a(0) is a conventional filler.
   | 1 => 1
@@ -53,7 +56,10 @@ theorem a_4 : a 4 = 6 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 8 := by decide
 
-/-- Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$ have the same residue $\bmod 3^k$. -/
+/--
+Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$
+have the same residue $\bmod 3^k$.
+-/
 @[category research open, AMS 11]
 theorem conjecture :
     ∀ k : ℕ, 0 < k → ∃ m : ℕ, ∀ n : ℕ, m < n → a n ≡ a (m + 1) [MOD (3^k)] := by

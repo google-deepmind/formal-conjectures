@@ -40,7 +40,8 @@ def nonacci : ℕ → ℕ
 /--
 The primary defining sequence `a`.
 `a n` is the sum of squares of nonacci numbers (Fibonacci 9-step numbers).
-The official sequence matches the sum up to `n + 1` of the standard nonacci numbers to align with the offset.
+The official sequence matches the sum up to `n + 1` of the standard nonacci numbers
+to align with the offset.
 -/
 def a (n : ℕ) : ℕ :=
   ∑ k ∈ Finset.range (n + 2), (nonacci k) ^ 2
@@ -62,8 +63,13 @@ theorem a_3 : a 3 = 0 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 /--
-Primes in this sequence include: $a(8) = 2$. Semiprimes in this sequence include: $a(9) = 6 = 2 * 3$, $a(10) = 22 = 2 * 11$, $a(11) = 86 = 2 * 43$, $a(13) = 1366 = 2 * 683$, $a(14) = 5462 = 2 * 2731$, $a(16) = 87382 = 2 * 43691$, $a(17) = 348503 = 37 * 9419$, $a(27) = 358201316657 = 71 * 5045088967$.
-(Note: The OEIS comment uses 1-based indexing, so their indices are shifted by +1 compared to this formalization).
+Primes in this sequence include: $a(8) = 2$.
+Semiprimes in this sequence include: $a(9) = 6 = 2 * 3$, $a(10) = 22 = 2 * 11$,
+$a(11) = 86 = 2 * 43$, $a(13) = 1366 = 2 * 683$, $a(14) = 5462 = 2 * 2731$,
+$a(16) = 87382 = 2 * 43691$, $a(17) = 348503 = 37 * 9419$,
+$a(27) = 358201316657 = 71 * 5045088967$.
+(Note: The OEIS comment uses 1-based indexing, so their indices are shifted by +1 compared
+to this formalization).
 -/
 @[category textbook, AMS 11]
 theorem known_prime_and_semiprimes :

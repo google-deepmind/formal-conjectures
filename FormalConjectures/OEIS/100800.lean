@@ -19,7 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A100800
 
-Let $f(n) = n + \text{sum of the digits of } n$. If $f(n)$ is multiple of $n$ then $a(n)= f(n)$ else $a(n) = f(f(f(n)))\dots$ until one gets a multiple of $n$; $a(n) = 0$ if no such number exists.
+Let $f(n) = n + \text{sum of the digits of } n$. If $f(n)$ is multiple of $n$ then $a(n)= f(n)$
+else $a(n) = f(f(f(n)))\dots$ until one gets a multiple of $n$; $a(n) = 0$ if no such number
+exists.
 
 *References:*
 - [A100800](https://oeis.org/A100800)
@@ -81,7 +83,8 @@ theorem a_4 : a 4 = 8 := by
   norm_num[a]
   delta f
   norm_num[sumDigits,Exists.intro 0]
-  exact (congr_arg₂ _ (bot_unique (Nat.find_min' _ (by norm_num[Function.iterate_succ_apply _ _]))) rfl )
+  exact (congr_arg₂ _
+    (bot_unique (Nat.find_min' _ (by norm_num [Function.iterate_succ_apply _ _]))) rfl)
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 10 := by
@@ -89,7 +92,8 @@ theorem a_5 : a 5 = 10 := by
   norm_num[a]
   delta f
   norm_num[sumDigits,Exists.intro 0]
-  exact (congr_arg₂ _ (bot_unique (Nat.find_min' _ (by norm_num[Function.iterate_succ_apply _ _]))) rfl )
+  exact (congr_arg₂ _
+    (bot_unique (Nat.find_min' _ (by norm_num [Function.iterate_succ_apply _ _]))) rfl)
 
 /-- A100800 Conjecture: No term is zero. -/
 @[category research open, AMS 11]

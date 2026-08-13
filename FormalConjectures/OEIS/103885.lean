@@ -81,10 +81,14 @@ The recurrence given below can be rewritten in the form
 $$(2n+1)(2n+2)P(2,n)a(n+1) - (2n-1)(2n-2)P(2,-n)a(n-1) = Q(2,n^2)a(n),$$
 where the polynomial $Q(2,n) = 4(55n^2 - 34n + 3)$ and the polynomial $P(2,n) = 5n^2 - 5n + 1$
 satisfies the symmetry condition $P(2,n) = P(2,1-n)$ and has real zeros.
-More generally, for fixed $m = 1,2,3, \ldots$, we conjecture that the sequence $b(n) := a(mn)$ satisfies a recurrence of the form
-$$( \prod_{k = 1}^{2m} (2mn + k) )P(2m,n)b(n+1) + (-1)^m( \prod_{k = 1}^{2*m} (2mn - k) ) P(2m,-n)b(n-1) = Q(2m,n^2)b(n),$$
-where the polynomials $P(2m,n)$ and $Q(2m,n)$ have degree $2m$. Conjecturally, the polynomial $P(2m,n) = P(2m,1-n)$ and has real zeros in the interval [0, 1].
-The $4m$ zeros of the polynomial $Q(2m,n^2)$ seem to belong to the interval $[-1, 1]$ and $4m - 2$ of these zeros appear to be approximated by the rational numbers
+More generally, for fixed $m = 1,2,3, \ldots$, we conjecture that the sequence $b(n) := a(mn)$
+satisfies a recurrence of the form
+$$( \prod_{k = 1}^{2m} (2mn + k) )P(2m,n)b(n+1) + (-1)^m( \prod_{k = 1}^{2*m} (2mn - k) )
+  P(2m,-n)b(n-1) = Q(2m,n^2)b(n),$$
+where the polynomials $P(2m,n)$ and $Q(2m,n)$ have degree $2m$. Conjecturally, the polynomial
+$P(2m,n) = P(2m,1-n)$ and has real zeros in the interval [0, 1].
+The $4m$ zeros of the polynomial $Q(2m,n^2)$ seem to belong to the interval $[-1, 1]$ and
+$4m - 2$ of these zeros appear to be approximated by the rational numbers
 $\pm k/(3m)$, where $1 \le k \le 3m - 2$, $k$ not a multiple of $3$.
 -/
 @[category research open, AMS 11]

@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A109905
 
-$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from $1$ to $\lfloor n/2 \rfloor$. $a(n)=0$ if no such prime exists.
+$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from
+$1$ to $\lfloor n/2 \rfloor$. $a(n)=0$ if no such prime exists.
 
 *References:*
 - [A109905](https://oeis.org/A109905)
@@ -28,7 +29,8 @@ $a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values f
 namespace OeisA109905
 
 /--
-$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values from $1$ to $\lfloor n/2 \rfloor$.
+$a(n)$ is the greatest prime of the form $k(n-k)+1$, where $k$ can take values
+from $1$ to $\lfloor n/2 \rfloor$.
 $a(n) = 0$ if no such prime exists.
 -/
 def a (n : ℕ) : ℕ :=

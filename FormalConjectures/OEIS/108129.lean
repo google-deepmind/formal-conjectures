@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Riesel Problem
 
-Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that $k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
+Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that
+$k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
 
 *References:*
 - [A108129](https://oeis.org/A108129)
@@ -31,7 +32,8 @@ open Nat
 
 open Classical in
 /-- The primary defining sequence `a`.
-Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that $k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
+Riesel problem: let $k=2n-1$; then $a(n)$ is the smallest $m \ge 1$ such that
+$k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
 We use PNat for the exponent $m$ to correctly model $m \ge 1$. -/
 noncomputable def a (n : ℕ) : ℤ :=
   if n = 0 then 0

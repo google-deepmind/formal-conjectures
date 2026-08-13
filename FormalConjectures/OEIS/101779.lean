@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A101779
 
-$a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, ..., nk+n-1$ are primes, or $0$ if no such $k$ is found.
+$a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, ..., nk+n-1$ are primes,
+or $0$ if no such $k$ is found.
 It is conjectured $k$ always exists.
 
 *References:*
@@ -39,7 +40,8 @@ def Ak (n k : ℕ) : Prop :=
 
 /--
 The primary defining sequence `a`.
-$a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, \ldots, nk+n-1$ are primes, or $0$ if no such $k$ is found.
+$a(n)$ is the least $k$ such that all of $k, 2k+1, 3k+2, \ldots, nk+n-1$ are primes,
+or $0$ if no such $k$ is found.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   sInf { k : ℕ | Ak n k }
@@ -54,13 +56,17 @@ theorem a_1 : a 1 = 2 := by
 theorem a_2 : a 2 = 2 := by
   norm_num [a]
   delta Ak
-  exact IsLeast.csInf_eq ⟨ fun and =>And.elim (by decide +revert), (·.one_mul▸. (1) (by decide) |>.two_le)⟩
+  exact IsLeast.csInf_eq
+    ⟨fun and => And.elim (by decide +revert), (·.one_mul ▸ . (1) (by decide) |>.two_le)⟩
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 3 := by
   norm_num [a]
   norm_num [Ak, Eq.comm]
-  exact (IsLeast.csInf_eq (by use (by decide),fun a s => (one_mul a▸s (1) (by constructor) (by decide)).two_le.lt_of_ne (by cases· with((contradiction))))).symm
+  exact (IsLeast.csInf_eq (by
+    use (by decide), fun a s =>
+      (one_mul a ▸ s (1) (by constructor) (by decide)).two_le.lt_of_ne
+        (by cases · with ((contradiction))))).symm
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by

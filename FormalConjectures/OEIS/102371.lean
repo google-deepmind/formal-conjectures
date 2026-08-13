@@ -20,7 +20,8 @@ import FormalConjectures.OEIS.«105033»
 /-!
 # Conjectures associated with A102371
 
-The sequence $a(n)$ is defined by the recurrence relation $a(1)=1$, and for $n>1$, $a(n) = a(n-1) \operatorname{XOR} (a(n-1) + n)$.
+The sequence $a(n)$ is defined by the recurrence relation $a(1)=1$,
+and for $n>1$, $a(n) = a(n-1) \operatorname{XOR} (a(n-1) + n)$.
 The conjecture asks if $a(n) = 2^n - 1 - \operatorname{A105033}(n-1)$ for $n \ge 1$.
 
 *References:*
@@ -33,7 +34,8 @@ open Nat
 open Int
 
 /-- The primary defining sequence `a`.
-$a(n)$ is defined by the recurrence relation $a(1)=1$, and for $n>1$, $a(n) = a(n-1) \operatorname{XOR} (a(n-1) + n)$,
+$a(n)$ is defined by the recurrence relation $a(1)=1$, and for $n>1$,
+$a(n) = a(n-1) \operatorname{XOR} (a(n-1) + n)$,
 where $\operatorname{XOR}$ is the bitwise exclusive-or operator (`^^^`). -/
 def a : ℕ → ℕ
 | 0 => 0

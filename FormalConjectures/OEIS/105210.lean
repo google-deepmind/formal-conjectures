@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures associated with A105210
 
-$a(1) = 393$; for $n > 1$, $a(n) = a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$ that are $< a(n-1)$.
+$a(1) = 393$; for $n > 1$, $a(n) = a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$
+that are $< a(n-1)$.
 
 *References:*
 - [A105210](https://oeis.org/A105210)
@@ -34,7 +35,8 @@ def sumRelevantPrimeFactors (n : ℕ) : ℕ :=
   (Nat.primeFactors n).sum (fun p => if p < n then p else 0)
 
 /-- The primary defining sequence `a`.
-$a(1) = 393$; for $n > 1$, $a(n)$ = $a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$ that are < $a(n-1)$. -/
+$a(1) = 393$; for $n > 1$, $a(n)$ = $a(n-1)$ + 1 + sum of distinct prime factors of $a(n-1)$
+that are < $a(n-1)$. -/
 def a : ℕ → ℕ
 | 0 => 0
 | 1 => 393
@@ -89,7 +91,8 @@ theorem conjecture_disjoint_starting_values :
   sorry
 
 /--
-This suggests that there may be infinitely many different (non-merging) sequences obtained by choosing different starting values.
+This suggests that there may be infinitely many different (non-merging) sequences obtained
+by choosing different starting values.
 -/
 @[category research open, AMS 11]
 theorem conjecture :

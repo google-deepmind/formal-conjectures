@@ -30,7 +30,8 @@ namespace OeisA112970
 
 /--
 a n is the generalized Stern sequence, defined by the recurrence relations:
-$a(2n+1) = a(n)$ and $a(2n) = a(n)$ + $a(n-2)$ with $a(0) = 1$, $a(1) = 1$ and $a(n) = 0$ for $n \le -1$.
+$a(2n+1) = a(n)$ and $a(2n) = a(n)$ + $a(n-2)$ with $a(0) = 1$, $a(1) = 1$
+and $a(n) = 0$ for $n \le -1$.
 -/
 def a (n : ℕ) : ℕ :=
   if n = 0 then 1
@@ -62,7 +63,10 @@ theorem a_3 : a 3 = 1 := by unfold a; unfold a; rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
 
-/-- Conjectures: a(2^n)=a(2^(n+1)+1)=A033638(n). This formalizes the equality a(2^n) = a(2^(n+1)+1). -/
+/--
+Conjectures: a(2^n)=a(2^(n+1)+1)=A033638(n).
+This formalizes the equality a(2^n) = a(2^(n+1)+1).
+-/
 @[category research open, AMS 11]
 theorem conjecture1 (n : ℕ) : a (2^n) = a (2^(n + 1) + 1) := by
   sorry

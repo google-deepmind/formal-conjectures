@@ -78,7 +78,8 @@ theorem a_1 : a 1 = 1 := by
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
   dsimp [a]
-  rw [nth_prime_five, Nat.nth_prime_four_eq_eleven, Nat.nth_prime_three_eq_seven, Nat.nth_prime_two_eq_five]
+  rw [nth_prime_five, Nat.nth_prime_four_eq_eleven, Nat.nth_prime_three_eq_seven,
+    Nat.nth_prime_two_eq_five]
   norm_num
 
 @[category test, AMS 11]
@@ -96,7 +97,8 @@ theorem a_4 : a 4 = 4 := by
 /--
 Do the absolute values cover A004275?
 A004275 is the set of all differences between two prime numbers.
-The conjecture asks whether every possible difference between two prime numbers occurs as the absolute value of some term $a(n)$.
+The conjecture asks whether every possible difference between two prime numbers
+occurs as the absolute value of some term $a(n)$.
 -/
 @[category research open, AMS 11]
 theorem conjecture :

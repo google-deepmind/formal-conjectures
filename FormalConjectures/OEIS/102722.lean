@@ -54,18 +54,21 @@ lemma a_sum_2 (f : ℕ → ℝ) : (Icc 1 2).sum f = f 1 + f 2 := by
 @[category API, AMS 11]
 lemma a_sum_3 (f : ℕ → ℝ) : (Icc 1 3).sum f = f 1 + f 2 + f 3 := by
   have h : Icc 1 3 = {1, 2, 3} := rfl
-  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton, add_assoc]
+  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton,
+    add_assoc]
 
 @[category API, AMS 11]
 lemma a_sum_4 (f : ℕ → ℝ) : (Icc 1 4).sum f = f 1 + f 2 + f 3 + f 4 := by
   have h : Icc 1 4 = {1, 2, 3, 4} := rfl
-  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton]
+  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
   abel
 
 @[category API, AMS 11]
 lemma a_sum_5 (f : ℕ → ℝ) : (Icc 1 5).sum f = f 1 + f 2 + f 3 + f 4 + f 5 := by
   have h : Icc 1 5 = {1, 2, 3, 4, 5} := rfl
-  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton]
+  rw [h, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton]
   abel
 
 macro "eval_a" : tactic => `(tactic| (
@@ -93,7 +96,8 @@ theorem a_5 : a 5 = 1 := by eval_a
 /-- A102722 Conjecture: $a(n) \sim (1-\gamma)n$. -/
 @[category research open, AMS 11]
 theorem conjecture :
-    (fun n : ℕ => (a n : ℝ)) ~[atTop] (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by
+    (fun n : ℕ => (a n : ℝ)) ~[atTop]
+      (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by
   sorry
 
 end OeisA102722

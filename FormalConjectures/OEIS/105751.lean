@@ -59,9 +59,11 @@ theorem a_4 : a 4 = -40 := by
 /--
 Numerical calculation suggests that a similar division holds in this case.
 Type 1: primes p that do not divide any element of the sequence {$a(n)$}.
-In this case, unlike in A105750, the set of type 1 primes is empty; that is, every prime p divides some term of this sequence.
+In this case, unlike in A105750, the set of type 1 primes is empty;
+that is, every prime p divides some term of this sequence.
 
-Note: The triangular number n*(n+1)/2 divides $a(n)$ (see A164652). In particular, if $p$ is an odd prime then $p$ divides $a(p)$. For $p=2$, $2$ divides $a(4)=-40$.
+Note: The triangular number n*(n+1)/2 divides $a(n)$ (see A164652).
+In particular, if $p$ is an odd prime then $p$ divides $a(p)$. For $p=2$, $2$ divides $a(4)=-40$.
 -/
 @[category textbook, AMS 11]
 theorem prime_divides_some_term (p : ℕ) (hp : p.Prime) :
@@ -79,7 +81,8 @@ theorem conjecture :
 
 /--
 Moll's conjecture 5.5 extends to this sequence and takes the form:
-(ii) for the other primes of type $2$, the p-adic valuation $\nu_p(a(n)) \sim n/(p - 1)$ as $n \rightarrow \infty$.
+(ii) for the other primes of type $2$, the p-adic valuation
+$\nu_p(a(n)) \sim n/(p - 1)$ as $n \rightarrow \infty$.
 
 (Type 2 primes consists of primes p == 1 (mod 4))
 -/

@@ -59,7 +59,8 @@ theorem a_4 : a 4 = 1 := by decide
 theorem a_5 : a 5 = 1 := by decide
 
 /--
-Conjecture: all items for $n \ge 4$ are greater than or equal to $1$. This is a stronger conjecture than the Goldbach conjecture.
+Conjecture: all items for $n \ge 4$ are greater than or equal to $1$. This is a stronger
+conjecture than the Goldbach conjecture.
 -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : n ≥ 4) : a n ≥ 1 := by

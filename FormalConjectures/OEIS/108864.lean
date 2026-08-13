@@ -19,7 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Numbers $n$ such that the perfect deficiency of $n$ is $\le 10$.
 
-We formally define the property satisfied by elements of the sequence, using the sum of divisors function $\sigma_1(n)$.
+We formally define the property satisfied by elements of the sequence,
+using the sum of divisors function $\sigma_1(n)$.
 
 *References:*
 - [A108864](https://oeis.org/A108864)
@@ -31,7 +32,8 @@ open Nat Finset Int
 
 /--
 The condition for a number $n$ to be in the sequence.
-It satisfies $0 < n$ and its perfect deficiency is $\le 10$, using the sum of divisors function $\sigma_1(n)$.
+It satisfies $0 < n$ and its perfect deficiency is $\le 10$, using the sum of divisors
+function $\sigma_1(n)$.
 -/
 def A (n : ℕ) : Prop :=
   let sigmaOneN : ℕ := (Nat.divisors n).sum id

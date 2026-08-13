@@ -50,11 +50,14 @@ theorem a_5 : a 5 = 401 := by decide
 open Real
 
 /--
-Conjecture: $a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) + \frac{1}{n+1} + \frac{1}{n+2} + ... + \frac{1}{2n}} \right\rfloor$.
+Conjecture:
+$$a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) +
+  \frac{1}{n+1} + \frac{1}{n+2} + \dots + \frac{1}{2n}} \right\rfloor.$$
 -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : n > 0) :
-    (a n : ℝ) = (⌊ 1 / ((4 * n : ℝ)⁻¹ - log 2 + ∑ k ∈ (Finset.Icc (n + 1) (2 * n)), (k : ℝ)⁻¹) ⌋ : ℝ) := by
+    (a n : ℝ) =
+      (⌊ 1 / ((4 * n : ℝ)⁻¹ - log 2 + ∑ k ∈ (Finset.Icc (n + 1) (2 * n)), (k : ℝ)⁻¹) ⌋ : ℝ) := by
   sorry
 
 end OeisA108211

@@ -20,7 +20,9 @@ import FormalConjecturesUtil
 # Indicator sequence for 5 Fibonacci numbers with n digits
 
 $a(n) = 1$ if exactly 5 Fibonacci numbers exist with exactly $n$ digits, otherwise $0$.
-For the partial sums $S(n) = \sum_{k=1}^n a(k)$, it is conjectured that $\beta-2 < S(n)-\alpha n < \beta-1$, where $\alpha = \log(10)/\log(\phi) - 4$ and $\beta = \log(5)/(2\log(\phi)) - 1$.
+For the partial sums $S(n) = \sum_{k=1}^n a(k)$, it is conjectured that
+$\beta-2 < S(n)-\alpha n < \beta-1$, where $\alpha = \log(10)/\log(\phi) - 4$
+and $\beta = \log(5)/(2\log(\phi)) - 1$.
 
 *References:*
 - [A105565](https://oeis.org/A105565)
@@ -33,7 +35,8 @@ open Nat Finset Real
 /--
 The primary defining sequence `a`.
 $a(n) = 1$ if exactly 5 Fibonacci numbers exist with exactly $n$ digits, otherwise $0$.
-That is, $a(n) = 1$ if the number of indices $k \in \mathbb{N}$ such that $10^{n-1} \le \mathrm{fib}(k) < 10^n$ is 5.
+That is, $a(n) = 1$ if the number of indices $k \in \mathbb{N}$ such that
+$10^{n-1} \le \mathrm{fib}(k) < 10^n$ is 5.
 -/
 def a (n : ℕ) : ℕ :=
   if n > 0 then
@@ -44,8 +47,9 @@ def a (n : ℕ) : ℕ :=
     -- A safe upper bound for the index $k$.
     let maxK : ℕ := 5 * n + 10
 
-    -- Count the indices $k$ in the finite range $[0, maxK)$ such that $\mathrm{fib}(k)$ has $n$ digits.
-    let count : ℕ := (filter (fun k => lowerBound ≤ Nat.fib k ∧ Nat.fib k < upperBound) (range maxK)).card
+    -- Count indices $k$ in range $[0, maxK)$ such that $\mathrm{fib}(k)$ has $n$ digits.
+    let count : ℕ :=
+      (filter (fun k => lowerBound ≤ Nat.fib k ∧ Nat.fib k < upperBound) (range maxK)).card
 
     if count = 5 then 1 else 0
   else
@@ -81,11 +85,13 @@ noncomputable def s (n : ℕ) : Real :=
   (Finset.Icc 1 n).sum (fun k => (a k : Real))
 
 /--
-Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$. The constants $\alpha$ and $\beta$ are as defined in the formula section.
+Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$.
+The constants $\alpha$ and $\beta$ are as defined in the formula section.
 -/
 @[category research open, AMS 11]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
-    betaConst - 2 < s n - alphaConst * (n : Real) ∧ s n - alphaConst * (n : Real) < betaConst - 1 := by
+    betaConst - 2 < s n - alphaConst * (n : Real) ∧
+      s n - alphaConst * (n : Real) < betaConst - 1 := by
   sorry
 
 end OeisA105565

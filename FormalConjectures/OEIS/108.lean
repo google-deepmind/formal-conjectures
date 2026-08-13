@@ -152,7 +152,8 @@ theorem a_3 : a 3 = 5 := by decide
 theorem a_4 : a 4 = 14 := by decide
 
 /--
-A000108 Conjecture: All the rational numbers $\sum_{i=j}^k \frac{1}{a(i)}$ with $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015
+A000108 Conjecture: All the rational numbers $\sum_{i=j}^k \frac{1}{a(i)}$ with
+$0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts. - _Zhi-Wei Sun_, Sep 24 2015
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :
