@@ -410,9 +410,11 @@ theorem eqSystem6_no_solution_d3 :
 
 /-- For $N = 6$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-n6-d4-lean/blob/7d30141a19714986d6f9e632314fd880c9a1e86e/lean/QuantumCR/FormalConjecturesWrapper.lean#L30-L37"]
 theorem eqSystem6_no_solution_d4 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 4 ℂ, EqSystemN 6 4 W := by
   sorry
 
