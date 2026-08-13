@@ -14,88 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+import FormalConjectures.Wikipedia.Hadamard668Defs
 
 /-!
-# A Hadamard matrix of order 668
+# The order-668 construction is Hadamard
 
-This file formalizes the order-668 construction announced by Levent Alpöge, Philippe Voinov,
-Saul Reynolds-Haertle, and Claude.
+This file proves that every entry of `H668Int` is $\pm1$ and that
+$H668Int^\mathsf{T}H668Int=668I_{668}$.
 
-## Construction
-
-Let $a,b,c,d : \mathbb Z/166\mathbb Z \to \{\pm1\}$ be the four lists stored in `seedBits`.
-Write $\operatorname{circ}(x)_{ij}=x_{i-j}$ for the matrix of cyclic shifts of $x$, and let $R$
-reverse the cyclic order. Set $A=\operatorname{circ}(a),\ldots,D=\operatorname{circ}(d)$. The
-$664 \times 664$ core is
-
-$$
-G=\begin{pmatrix}
-A&BR&CR&DR\\
--BR&A&D^\mathsf{T}R&-C^\mathsf{T}R\\
--CR&-D^\mathsf{T}R&A&B^\mathsf{T}R\\
--DR&C^\mathsf{T}R&-B^\mathsf{T}R&A
-\end{pmatrix}.
-$$
-
-Four rows and four columns are added to form
-$H=\left(\begin{smallmatrix}Z&\widetilde T\\\widetilde L&G\end{smallmatrix}\right)$, where
-$Z,T,L$ are the fixed $4 \times 4$ matrices below and each tilde repeats an entry 166 times. Thus
-$\dim H=4+4\cdot166=668$.
-
-## Why it works
-
-The four lists satisfy
-
-$$
-P(t)=\sum_i(a_i a_{i+t}+b_i b_{i+t}+c_i c_{i+t}+d_i d_{i+t})
-=\begin{cases}664,&t=0,\\-4,&t\ne0.\end{cases}
-$$
-
-Here $J_{166}$ is the all-ones matrix. The equation gives
-$G^\mathsf{T}G=I_4\otimes(668I_{166}-4J_{166})$. The border adds
-$I_4\otimes4J_{166}$ and cancels the remaining cross terms, so $H^\mathsf{T}H=668I_{668}$.
-
-## Verification strategy
-
-Lean proves the block identities symbolically. Since $P(-t)=P(t)$, it checks only 83 nonzero
-shifts, split into 21 batches of at most four. Each batch is checked by the kernel with
-`decide +kernel`; the proof neither expands the full matrix nor uses `native_decide`.
-
-*References:*
-- [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
-  by *Levent Alpöge et al.* (2026)
-- [Construction credits](https://x.com/__alpoge__/status/2087504790435840207)
-- [Supplementary difference sets with symmetry for Hadamard matrices](https://arxiv.org/abs/1809.05253)
-  by *Dragomir Ž. Đoković* (2018)
+*Reference:* [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
+by *Levent Alpöge et al.* (2026)
 -/
 
 open Matrix
 
 namespace Hadamard
 
-private abbrev C := Fin 166
-private abbrev Q := Fin 4
-
-/-- The four binary seeds; set bits encode $+1$ and unset bits encode $-1$. -/
-private def seedBits : Q → BitVec 166 :=
-  ![0x125953fe2c4fbd9e46d5424b2a5fc58e084c372557#166,
-    0x383e32a915b5fb694a447f07c65522b4c092deb770#166,
-    0x71876112ff7760ef2e578e30ec225fd913e21a350#166,
-    0x14c464e997f8fcd16f35c2988c8d32fce065d21947#166]
-
-/-- Read one bit of a stored list as the integer $+1$ or $-1$. -/
-private def seed (q : Q) (i : C) : ℤ := if (seedBits q).getLsb i then 1 else -1
+-- Properties of the construction
 
 @[category test, AMS 15]
 private lemma seed_sum (q : Q) : ∑ i, seed q i = if q = 0 then 2 else 0 := by
   fin_cases q <;> decide +kernel
-
-/-- The permutation matrix that reverses cyclic order. -/
-private def rev : Matrix C C ℤ := (Equiv.neg C).permMatrix ℤ
-
-/-- The matrix whose rows are cyclic shifts of the list `x`. -/
-private def circ (x : C → ℤ) : Matrix C C ℤ := Matrix.circulant x
 
 @[category API, AMS 15]
 private lemma rev_transpose : rev.transpose = rev := by
@@ -204,39 +143,11 @@ private lemma circ_transpose_mul_circ_transpose_rev (x y : C → ℤ) :
   rw [← Matrix.mul_assoc, circ_transpose_comm_transpose]
   noncomm_ring
 
-/-- The sixteen cyclic-shift blocks before the four border rows and columns are added. -/
-private def gsBlocks (a b c d : C → ℤ) : Matrix Q Q (Matrix C C ℤ) :=
-  let A := circ a
-  let B := circ b
-  let C := circ c
-  let D := circ d
-  !![A, B * rev, C * rev, D * rev;
-     -(B * rev), A, D.transpose * rev, -(C.transpose * rev);
-     -(C * rev), -(D.transpose * rev), A, B.transpose * rev;
-     -(D * rev), C.transpose * rev, -(B.transpose * rev), A]
-
-private def gsBlocksT (a b c d : C → ℤ) : Matrix Q Q (Matrix C C ℤ) :=
-  let A := circ a
-  let B := circ b
-  let C := circ c
-  let D := circ d
-  !![A.transpose, -(B * rev), -(C * rev), -(D * rev);
-     B * rev, A.transpose, -(D.transpose * rev), C.transpose * rev;
-     C * rev, D.transpose * rev, A.transpose, -(B.transpose * rev);
-     D * rev, -(C.transpose * rev), B.transpose * rev, A.transpose]
-
 @[category API, AMS 15]
 private lemma gsBlocks_transpose (a b c d : C → ℤ) (p q : Q) :
     (gsBlocks a b c d p q).transpose = gsBlocksT a b c d q p := by
   fin_cases p <;> fin_cases q <;>
     simp [gsBlocks, gsBlocksT, rev_transpose, rev_mul_circ, rev_mul_circ_transpose]
-
-private def blockGram (a b c d : C → ℤ) (q r : Q) : Matrix C C ℤ :=
-  ∑ p : Q, (gsBlocks a b c d p q).transpose * gsBlocks a b c d p r
-
-private def autoSum (a b c d : C → ℤ) : Matrix C C ℤ :=
-  (circ a).transpose * circ a + (circ b).transpose * circ b +
-    (circ c).transpose * circ c + (circ d).transpose * circ d
 
 @[category API, AMS 15]
 private lemma blockGram_all (a b c d : C → ℤ) (q r : Q) :
@@ -252,10 +163,6 @@ private lemma blockGram_all (a b c d : C → ℤ) (q r : Q) :
   all_goals try rw [circ_comm]
   all_goals try rw [circ_transpose_comm_transpose]
   all_goals abel
-
-/-- The dot product of a sign list with its cyclic shift by $t$. -/
-private def periodicCorrelation (x : C → ℤ) (t : C) : ℤ :=
-  ∑ i : C, x i * x (i + t)
 
 @[category API, AMS 15]
 private lemma periodicCorrelation_neg (x : C → ℤ) (t : C) :
@@ -277,18 +184,11 @@ private lemma circ_gram_apply (x : C → ℤ) (i j : C) :
   intro k _
   congr 2 <;> simp [add_sub_assoc]
 
-private def autoKernel (a b c d : C → ℤ) : C → ℤ :=
-  fun t => periodicCorrelation a t + periodicCorrelation b t +
-    periodicCorrelation c t + periodicCorrelation d t
-
 @[category API, AMS 15]
 private lemma autoSum_eq_circulant (a b c d : C → ℤ) :
     autoSum a b c d = Matrix.circulant (autoKernel a b c d) := by
   ext i j
   simp [autoSum, autoKernel, circ_gram_apply, Matrix.circulant_apply]
-
-private def totalCorrelation (t : C) : ℤ :=
-  ∑ q : Q, periodicCorrelation (seed q) t
 
 @[category API, AMS 15]
 private lemma totalCorrelation_neg (t : C) : totalCorrelation (-t) = totalCorrelation t := by
@@ -507,12 +407,6 @@ private lemma circ_transpose_rev_col_sum (x : C → ℤ) (j : C) :
   rw [rev, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
   exact circ_transpose_col_sum x ((Equiv.neg C).symm j)
 
-private def gsBlockSums (sa sb sc sd : ℤ) : Matrix Q Q ℤ :=
-  !![sa, sb, sc, sd;
-     -sb, sa, sd, -sc;
-     -sc, -sd, sa, sb;
-     -sd, sc, -sb, sa]
-
 @[category API, AMS 15]
 private lemma gsBlocks_col_sum_general (a b c d : C → ℤ) (p q : Q) (j : C) :
     ∑ i, gsBlocks a b c d p q i j =
@@ -576,9 +470,6 @@ private lemma gsBlocks_col_sum (p q : Q) (j : C) :
     seed_three_sum, gsBlockSums_seed]
   simp [Matrix.ofNat_apply]
 
-private def coreMatrix : Matrix (Q × C) (Q × C) ℤ := fun i j =>
-  gsBlocks (seed 0) (seed 1) (seed 2) (seed 3) i.1 j.1 i.2 j.2
-
 @[category API, AMS 15]
 private lemma core_gram_apply (q r : Q) (i j : C) :
     (coreMatrix.transpose * coreMatrix) (q, i) (r, j) =
@@ -598,24 +489,6 @@ private lemma core_gram_apply (q r : Q) (i j : C) :
     simpa only [blockGram, Finset.sum_apply, Matrix.mul_apply, Matrix.transpose_apply,
       Matrix.zero_apply] using h
 
-private def border : Matrix Q Q ℤ :=
-  !![-1, 1, 1, -1;
-      1, -1, 1, -1;
-      1, 1, -1, -1;
-      -1, -1, -1, -1]
-
-private def top : Matrix Q Q ℤ :=
-  !![1, -1, -1, 1;
-     1, -1, 1, -1;
-     1, 1, -1, -1;
-     -1, -1, -1, -1]
-
-private def left : Matrix Q Q ℤ :=
-  !![-1, -1, -1, 1;
-     -1, -1, 1, -1;
-     -1, 1, -1, -1;
-     1, -1, -1, -1]
-
 @[category test, AMS 15]
 private lemma border_gram : border.transpose * border = (4 : Matrix Q Q ℤ) := by
   decide +kernel
@@ -631,16 +504,6 @@ private lemma left_gram : left.transpose * left = (4 : Matrix Q Q ℤ) := by
 @[category test, AMS 15]
 private lemma border_cross : border.transpose * top + 2 • left.transpose = 0 := by
   decide +kernel
-
-private def topExpanded : Matrix Q (Q × C) ℤ := fun i j => top i j.1
-
-private def leftExpanded : Matrix (Q × C) Q ℤ := fun i j => left i.1 j
-
-/-- The $4 + 4 \cdot 166$ matrix obtained by placing the fixed border around the block matrix. -/
-private def borderedMatrix : Matrix (Q ⊕ (Q × C)) (Q ⊕ (Q × C)) ℤ :=
-  Matrix.fromBlocks border topExpanded leftExpanded coreMatrix
-
-private def IsSign (z : ℤ) : Prop := z = 1 ∨ z = -1
 
 @[category API, AMS 15]
 private lemma seed_sign (q : Q) (i : C) : IsSign (seed q i) := by
@@ -790,16 +653,6 @@ private lemma borderedMatrix_gram :
   ext i j
   rcases i with i | i <;> rcases j with j | j <;>
     simp [Matrix.fromBlocks, Matrix.ofNat_apply]
-
-private def indexEquiv : (Q ⊕ (Q × C)) ≃ Fin 668 :=
-  (Equiv.sumCongr (Equiv.refl Q) finProdFinEquiv).trans finSumFinEquiv
-
-/--
-The constructed order-668 matrix over the integers. Its first four indices describe the border;
-the remaining indices describe one of four blocks and a position in a sign list.
--/
-def H668Int : Matrix (Fin 668) (Fin 668) ℤ :=
-  Matrix.reindex indexEquiv indexEquiv borderedMatrix
 
 /-- Every entry of `H668Int` is $+1$ or $-1$. -/
 @[category test, AMS 15]
