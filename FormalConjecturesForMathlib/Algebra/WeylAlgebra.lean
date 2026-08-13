@@ -34,7 +34,7 @@ indexed by `Sum.inl i` and `y i` for the one indexed by `Sum.inr i`,
 * `x i * y i = y i * x i + 1`.
 
 For `σ = Fin n` this is the `n`-th Weyl algebra $A_n(R)$: the associative `R`-algebra
-with `2n` generators $Y_1, \dots, Y_{2n}$ subject to $[Y_i, Y_{i+n}] = 1$ and all other
+with $2n$ generators $Y_1, \dots, Y_{2n}$ subject to $[Y_i, Y_{i+n}] = 1$ and all other
 pairs of generators commuting (`Sum.inl i` is $Y_i$, `Sum.inr i` is $Y_{i+n}$). Over a
 field of characteristic zero it is the algebra of polynomial-coefficient differential
 operators in `n` variables.
