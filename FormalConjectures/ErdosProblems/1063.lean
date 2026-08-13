@@ -23,7 +23,8 @@ import FormalConjecturesUtil
  * [erdosproblems.com/1063](https://www.erdosproblems.com/1063)
  * [ErSe83] Erdos, P. and Selfridge, J. L., Problem 6447. Amer. Math. Monthly (1983), 710.
  * [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
- * [Mo85] Monier (1985). No reference found.
+ * [Mo85] Monier, Jean-Marie, _Problems and Solutions: Solutions of Advanced Problems: 6447_.
+   Amer. Math. Monthly **92** (1985), 435-436.
 -/
 
 open Filter Real
@@ -100,9 +101,8 @@ theorem erdos_1063.variants.small_values :
       · exact absurd hb (by decide)
       · exact absurd hb (by decide)
 
-/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]).
-TODO: Find reference
--/
+/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]), since $\binom{k!}{k}$ is divisible
+by $k! - i$ for $1 \le i < k$. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
