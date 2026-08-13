@@ -19,7 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 939
 
-*Reference:* [erdosproblems.com/939](https://www.erdosproblems.com/939)
+*References:*
+- [erdosproblems.com/939](https://www.erdosproblems.com/939)
+- [Ni95] Nitaj, A., _On a conjecture of Erdős on 3-powerful numbers_. Bull. London Math. Soc.
+  (1995), 317-318.
 -/
 open Nat
 
@@ -27,13 +30,16 @@ namespace Erdos939
 
 /--
 A set `S` belongs to `Erdos939Sums r` if it meets the following criteria:
+- The elements are positive. `0` has no prime factors, so it is vacuously `r`-powerful, and
+  the source means positive integers.
 - The size of the set is `$|S| = r - 2$`.
 - The elements of the set are coprime (their greatest common divisor is 1).
 - Every element in `S` is an `$r$-powerful` number.
 - The sum of the elements in `S`, i.e., `$\sum_{s \in S} s$`, is also an `$r$-powerful` number.
 -/
 def Erdos939Sums (r : ℕ) :=
-    {S : Finset ℕ | S.card = r - 2 ∧ S.Coprime ∧ r.Full (∑ s ∈ S, s) ∧ ∀ s ∈ S, r.Full s}
+    {S : Finset ℕ | S.card = r - 2 ∧ S.Coprime ∧ r.Full (∑ s ∈ S, s) ∧
+      ∀ s ∈ S, 0 < s ∧ r.Full s}
 
 /--
 If $r≥4$ then can the sum of $r-2$ coprime $r$-powerful numbers ever be itself $r$-powerful?
@@ -52,10 +58,14 @@ theorem erdos_939.variants.infinite : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Su
 
 /--
 Are there infinitely many triples of coprime $3$-powerful numbers $a, b, c$ such that $a + b = c$?
+
+The answer is yes. Nitaj [Ni95] proved it, with $2^3\cdot 3^5\cdot 73^3 + 271^3 = 919^3$ as an
+example.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_939.variants.triples :
-    answer(sorry) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
+    answer(True) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
+      0 < a ∧ 0 < b ∧
       (3).Full a ∧ (3).Full b ∧ (3).Full c ∧
       a + b = c}.Infinite := by
   sorry
@@ -63,7 +73,7 @@ theorem erdos_939.variants.triples :
 /--
 Cambie has found several examples of the sum of $r - 2$ coprime $r$-powerful numbers being itself
 $r$-powerful. For example when $r=5$ we have
-$$3761^5=2^8\cdot3^{10}\cdot 5^7 + 2^{12}\cdot 23^6 + 11^5\cdot 13^5$$.
+$$3^7\cdot 61^5 = 2^8\cdot3^{10}\cdot 5^7 + 2^{12}\cdot 23^6 + 11^5\cdot 13^5$$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) := by
