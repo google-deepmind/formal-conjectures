@@ -18,6 +18,7 @@ import unittest
 
 from check_erdos_status import (
     issues_to_close,
+    problem_argument,
     problem_statuses,
     yaml_status_to_category,
 )
@@ -191,3 +192,19 @@ class ProblemStatusesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ProblemArgumentTest(unittest.TestCase):
+
+    def test_reads_the_number_after_the_flag(self):
+        self.assertEqual(problem_argument(["prog", "--problem", "80"]), "80")
+
+    def test_absent_flag_gives_none(self):
+        self.assertIsNone(problem_argument(["prog"]))
+
+    def test_absent_flag_with_other_arguments_gives_none(self):
+        self.assertIsNone(problem_argument(["prog", "--create-issues"]))
+
+    def test_flag_with_no_value_exits(self):
+        with self.assertRaises(SystemExit):
+            problem_argument(["prog", "--problem"])

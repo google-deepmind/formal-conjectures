@@ -7,6 +7,7 @@ on the main theorem in the corresponding .lean file.
 
 Usage:
   python check_erdos_status.py               # Print mismatches as JSON
+  python check_erdos_status.py --problem 80  # Only that problem
   python check_erdos_status.py --create-issues  # Also create GitHub issues
 """
 
@@ -300,8 +301,34 @@ def close_resolved_issues(mismatches):
         ])
 
 
+def problem_argument(argv):
+    """The value of `--problem N`, or None.
+
+    A reviewer working on one problem should not have to read a repository-wide list and
+    decide for themselves that their number is absent.
+    """
+    if "--problem" not in argv:
+        return None
+    index = argv.index("--problem")
+    if index + 1 >= len(argv):
+        sys.exit("--problem needs a problem number, for example --problem 80")
+    return argv[index + 1]
+
+
 def main():
     mismatches = find_mismatches()
+
+    wanted = problem_argument(sys.argv)
+    if wanted is not None:
+        mismatches = [m for m in mismatches if m["number"] == wanted]
+        json.dump(mismatches, sys.stdout, indent=2)
+        print()
+        # An empty list is the pass, and saying so beats printing `[]` at a reader.
+        if not mismatches:
+            print(f"Erdős problem {wanted}: the repository and erdosproblems.com agree.",
+                  file=sys.stderr)
+        return 1 if mismatches else 0
+
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
