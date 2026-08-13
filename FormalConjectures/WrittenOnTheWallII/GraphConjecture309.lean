@@ -56,8 +56,12 @@ def minComplementEdgeNeighborhood (G : SimpleGraph V)
           (Gᶜ.neighborFinset w ∪ Gᶜ.neighborFinset u).card
         rw [Finset.union_comm]⟩ e) |>.min
 
-/-- The universal inequality proposed in WOWII Conjecture 309. -/
-def Conjecture309Statement : Prop :=
+/--
+The universal inequality proposed in WOWII Conjecture 309. The `Option`-valued
+minimum makes the statement vacuous for complete graphs, whose complements
+have no edge; this totalization does not affect the counterexample.
+-/
+def conjecture309Statement : Prop :=
   ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]
     (G : SimpleGraph V) [DecidableRel G.Adj], G.Connected → 2 < Fintype.card V →
     ∀ mt ∈ minComplementEdgeNeighborhood G,
@@ -75,7 +79,7 @@ Gebendorfer disproved the statement with the family $C_5[K_k]$, $k \geq 3$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/c9daf0f594d6d5b264c6cd54dc9eec488cb64741/lean/GraphConjecture309.lean"]
-theorem conjecture309 : answer(False) ↔ Conjecture309Statement := by
+theorem conjecture309 : answer(False) ↔ conjecture309Statement := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture309
