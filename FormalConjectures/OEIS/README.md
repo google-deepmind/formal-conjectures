@@ -57,7 +57,8 @@ The main problem or conjecture (typically the last theorem in the file) must hav
 Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
 where $a, b, c, d, x, y$ are nonnegative integers.
 
-A formal proof has been found with the methods described in [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+A formal proof has been found with the methods described in
+[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at ...]
 theorem conjecture (n : ℕ) (hn : 1 < n) : A n := by
