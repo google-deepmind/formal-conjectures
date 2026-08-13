@@ -118,13 +118,15 @@ ul, ol { list-style: none; }
 /* ============================================================
    Navigation
    ============================================================ */
-/* ---- WIP Banner ---- */
+/* ---- WIP Banner / Notice ---- */
 .wip-banner {
   background: #fef3c7;
   color: #92400e;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  margin: 1rem 0 1.25rem;
 }
 
 .wip-banner a {
