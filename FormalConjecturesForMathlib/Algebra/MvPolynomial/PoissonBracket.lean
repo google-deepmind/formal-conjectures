@@ -21,7 +21,7 @@ public import Mathlib.Algebra.MvPolynomial.PDeriv
 public section
 
 /-!
-# The canonical Poisson bracket on a polynomial algebra in `2n` variables
+# The canonical Poisson bracket on a polynomial algebra in $2n$ variables
 
 For a commutative ring `R` and a finite type `σ`, we equip `MvPolynomial (σ ⊕ σ) R`
 with its canonical Poisson bracket
@@ -31,7 +31,7 @@ where $x_i$ (resp. $y_i$) denotes the variable indexed by `Sum.inl i` (resp. `Su
 This is the polynomial algebra underlying the `n`-th *canonical Poisson algebra* $P_n(R)$
 when `σ = Fin n`.
 
-Classical sources index the same object by `2n` variables $X_1, \dots, X_{2n}$ with bracket
+Classical sources index the same object by $2n$ variables $X_1, \dots, X_{2n}$ with bracket
 $\{f, g\} = \sum_{i=1}^n (\partial f/\partial X_i \cdot \partial g/\partial X_{i+n}
 - \partial f/\partial X_{i+n} \cdot \partial g/\partial X_i)$; here `Sum.inl i`
 plays the role of $X_i$ and `Sum.inr i` the role of $X_{i+n}$
