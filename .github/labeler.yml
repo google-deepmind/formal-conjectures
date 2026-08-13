@@ -2,9 +2,25 @@ arxiv:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Arxiv/**'
 
-books:
+attributes:
+  - changed-files:
+    - any-glob-to-any-file: 'FormalConjecturesUtil/Attributes/**'
+
+Books:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Books/**'
+
+CI:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/**'
+      - 'scripts/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'AUTHORS'
 
 erdos-problems:
   - changed-files:
@@ -21,6 +37,10 @@ green-problems:
 hilbert-problems:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/HilbertProblems/**'
+
+javascript:
+  - changed-files:
+    - any-glob-to-any-file: '**/*.js'
 
 kourovka:
   - changed-files:
@@ -61,6 +81,12 @@ other:
 paper:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Paper/**'
+
+website:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'site/**'
+      - 'docbuild/**'
 
 wikipedia:
   - changed-files:
