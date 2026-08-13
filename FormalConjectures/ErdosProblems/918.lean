@@ -27,7 +27,7 @@ import FormalConjecturesUtil
 
 universe u
 
-open scoped Cardinal
+open scoped Cardinal Ordinal
 
 namespace Erdos918
 
@@ -42,9 +42,12 @@ theorem erdos_918.parts.i :
 
 /-- Is there a graph with $\aleph_{\omega+1}$ vertices and chromatic number $\aleph_1$ such that
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
+-- Formalisation note: `ω` here is `Ordinal.omega0`, from `open scoped Ordinal`, as in 623.lean.
+-- It is the fixed first infinite ordinal, not a variable: `variants.erdos_hajnal` settles every
+-- finite `k`, and `ℵ_ω` is the limit of that family, so this asks the single next case.
 @[category research open, AMS 5]
 theorem erdos_918.parts.ii :
-    answer(sorry) ↔ ∀ (ω : Ordinal),
+    answer(sorry) ↔
     ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
@@ -62,7 +65,7 @@ theorem erdos_918.variants.all_subgraphs.parts.i :
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
 @[category research open, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.ii :
-    answer(sorry) ↔ ∀ (ω : Ordinal),
+    answer(sorry) ↔
       ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
@@ -103,7 +106,7 @@ a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with induced subgraphs. -/
 @[category textbook, AMS 5]
-theorem erdos_918.variants.eq_aleph_0.parts.ii (ω : Ordinal) :
+theorem erdos_918.variants.eq_aleph_0.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal = ℵ₀ := by
   sorry
@@ -113,7 +116,7 @@ a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with all subgraphs. -/
 @[category textbook, AMS 5]
-theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii (ω : Ordinal) :
+theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal = ℵ₀ := by
   sorry
