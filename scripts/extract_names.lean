@@ -166,7 +166,7 @@ instance : ToJson TheoremInfo where
   toJson info := info.toFilteredJson
 
 unsafe def runWithImports {α : Type} (moduleNames : Array Name) (actionToRun : CoreM α) : IO α := do
-  initSearchPath (← findSysroot)
+  initSearchPath (← getBuildDir)
   let imports := moduleNames.map fun n => { module := n }
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
@@ -217,16 +217,20 @@ unsafe def main (args : List String) : IO Unit := do
         "this script so that `answerKind` metadata is extracted correctly."
       throw <| IO.userError usageMsg
 
-  -- Pre-compute git timestamps for each file and build module name array
+  -- Pre-compute git timestamps for each file and build module name array (only when not excluded)
+  let needFirstAdded := !excludeSet.contains "fileFirstAdded"
+  let needLastModified := !excludeSet.contains "fileLastModified"
+  let needGitInfo := needFirstAdded || needLastModified
   let mut moduleNames := #[]
   let mut fileTimestamps : Std.HashMap Name (Option String × Option String) := {}
   for file in leanFiles do
     try
       let modName ← getModuleNameFromFile file
       moduleNames := moduleNames.push modName
-      let firstAdded ← getFileFirstAdded file
-      let lastModified ← getFileLastModified file
-      fileTimestamps := fileTimestamps.insert modName (firstAdded, lastModified)
+      if needGitInfo then
+        let firstAdded ← if needFirstAdded then getFileFirstAdded file else pure none
+        let lastModified ← if needLastModified then getFileLastModified file else pure none
+        fileTimestamps := fileTimestamps.insert modName (firstAdded, lastModified)
     catch _ => pure ()
 
   runWithImports moduleNames do
