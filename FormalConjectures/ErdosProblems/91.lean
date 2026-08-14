@@ -97,7 +97,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
       | contradiction | exact hd01 | exact hd02 | exact hd12
       | (rw [dist_comm]; first | exact hd01 | exact hd02 | exact hd12)
   have hmin : minimalDistinctDistances 3 = 1 := by
-    unfold minimalDistinctDistances
+    unfold EuclideanGeometry.minimalDistinctDistances
     apply le_antisymm
     · exact Nat.sInf_le ⟨equiTriangle, hcard, by exact_mod_cast hdist⟩
     · apply le_csInf
