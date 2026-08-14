@@ -132,6 +132,23 @@ class ProblemStatusesTest(unittest.TestCase):
                 row("42", "Erdos42.erdos_42.variants.x", "research open")),
             {"42": "solved"})
 
+    def test_variants_decide_it_when_there_is_nothing_else(self):
+        # Erdős 92 states both its questions as variants and has no bare `erdos_92`, so
+        # without this the problem is absent from the result and never compared against the
+        # source at all. It sat at `research open` against a source recording it as disproved.
+        self.assertEqual(
+            self.statuses(
+                row("42", "Erdos42.erdos_42.variants.weak", "research open"),
+                row("42", "Erdos42.erdos_42.variants.strong", "research open")),
+            {"42": "open"})
+
+    def test_a_variants_only_problem_can_be_solved(self):
+        self.assertEqual(
+            self.statuses(
+                row("42", "Erdos42.erdos_42.variants.weak", "research solved"),
+                row("42", "Erdos42.erdos_42.variants.strong", "research solved")),
+            {"42": "solved"})
+
     def test_test_and_api_statements_are_ignored(self):
         self.assertEqual(
             self.statuses(

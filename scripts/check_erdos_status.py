@@ -110,7 +110,7 @@ def problem_statuses(data=None):
     """
     data = fetch_conjectures() if data is None else data
     rows = data.get("conjectures") or data.get("problems") or []
-    by_problem, linked = {}, set()
+    by_problem, variant_parts, linked = {}, {}, set()
     for row in rows:
         match = ERDOS_MODULE_RE.match(row.get("module", ""))
         if not match:
@@ -126,11 +126,18 @@ def problem_statuses(data=None):
         # does not settle the problem.
         if row.get("formalProofKind") and not row.get("proofConditions"):
             linked.add(num)
-        if is_variant(row.get("theorem", "")):
-            continue
         if row.get("category") not in ("research open", "research solved"):
             continue
+        if is_variant(row.get("theorem", "")):
+            variant_parts.setdefault(num, []).append(row)
+            continue
         by_problem.setdefault(num, []).append(row)
+
+    # A file whose only research statements are variants has no main statement to read, so
+    # without this it is never compared against the source at all. Erdős 92 sat at
+    # `research open` against a source that records it as disproved for exactly that reason.
+    for num, parts in variant_parts.items():
+        by_problem.setdefault(num, parts)
 
     result = {}
     for num, parts in by_problem.items():
