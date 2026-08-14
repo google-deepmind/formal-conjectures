@@ -39,6 +39,11 @@ def finEncodingListBool : Computability.FinEncoding (List Bool) where
   decode_encode _ := rfl
   ΓFin := Bool.fintype
 
+class PolyTimeEncoding (α : Type) where
+  encoding : Computability.FinEncoding α
+
+instance : PolyTimeEncoding (List Bool) := ⟨finEncodingListBool⟩
+
 @[simp]
 lemma splitOnP_isNone_map_some {α : Type} (l : List α) :
     List.splitOnP Option.isNone (l.map some) = [l.map some] := by
@@ -70,4 +75,9 @@ def finEncodingListBoolProdListBool : Computability.FinEncoding (List Bool × Li
     simp
   ΓFin := instFintypeOption
 
+instance : PolyTimeEncoding (List Bool × List Bool) := ⟨finEncodingListBoolProdListBool⟩
+
+instance : PolyTimeEncoding Bool := ⟨finEncodingBoolBool⟩
+
 end Encodings
+

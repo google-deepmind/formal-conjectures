@@ -50,6 +50,8 @@ def finEncodingNat : Computability.FinEncoding ℕ where
     simp [bitsToNat_natToBits]
   ΓFin := Bool.fintype
 
+instance : PolyTimeEncoding ℕ := ⟨finEncodingNat⟩
+
 /-- Prefix-free encoding of a list of natural numbers into `List Bool`.
     A standard way is to double the bits of each number and use `01` as a separator. -/
 def encodeListNat (l : List ℕ) : List Bool := sorry
@@ -68,6 +70,8 @@ def finEncodingListNat : Computability.FinEncoding (List ℕ) where
   decode_encode := decode_encodeListNat
   ΓFin := Bool.fintype
 
+instance : PolyTimeEncoding (List ℕ) := ⟨finEncodingListNat⟩
+
 /-- A boolean encoding for pairs of natural numbers. -/
 def finEncodingNatProdNat : Computability.FinEncoding (ℕ × ℕ) where
   Γ := Bool
@@ -79,6 +83,8 @@ def finEncodingNatProdNat : Computability.FinEncoding (ℕ × ℕ) where
     intro ⟨n1, n2⟩
     simp [decode_encodeListNat]
   ΓFin := Bool.fintype
+
+instance : PolyTimeEncoding (ℕ × ℕ) := ⟨finEncodingNatProdNat⟩
 
 /-- A boolean encoding for 4-tuples of natural numbers (used for discrete log). -/
 def finEncodingNat4 : Computability.FinEncoding (ℕ × ℕ × ℕ × ℕ) where
@@ -92,6 +98,8 @@ def finEncodingNat4 : Computability.FinEncoding (ℕ × ℕ × ℕ × ℕ) where
     simp [decode_encodeListNat]
   ΓFin := Bool.fintype
 
+instance : PolyTimeEncoding (ℕ × ℕ × ℕ × ℕ) := ⟨finEncodingNat4⟩
+
 /-- A boolean encoding for pairs of `List ℕ` and `ℕ` (used for square-root sum). -/
 def finEncodingListNatProdNat : Computability.FinEncoding (List ℕ × ℕ) where
   Γ := Bool
@@ -104,4 +112,7 @@ def finEncodingListNatProdNat : Computability.FinEncoding (List ℕ × ℕ) wher
     simp [decode_encodeListNat]
   ΓFin := Bool.fintype
 
+instance : PolyTimeEncoding (List ℕ × ℕ) := ⟨finEncodingListNatProdNat⟩
+
 end ComplexityTheory
+

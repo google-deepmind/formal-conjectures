@@ -51,15 +51,15 @@ abbrev ComplexityClass := Set DecisionProblem
 /--
 A simple definition to abstract the notion of a poly-time Turing machine into a predicate.
 -/
-def IsComputableInPolyTime {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
-  Nonempty (TM2ComputableInPolyTime ea eb f)
+def IsComputableInPolyTime {α β : Type} [ea : PolyTimeEncoding α] [eb : PolyTimeEncoding β] (f : α → β) :=
+  Nonempty (TM2ComputableInPolyTime ea.encoding eb.encoding f)
 
 /--
 The class P is the set of decision problems
 decidable in polynomial time by a deterministic Turing machine.
 -/
 def P : ComplexityClass :=
-  { L | IsComputableInPolyTime finEncodingListBool finEncodingBoolBool L }
+  { L | IsComputableInPolyTime L }
 
 /--
 The class NP is the set of decision problems
@@ -71,7 +71,7 @@ See Definition 2.1 in Arora-Barak (2009).
 -/
 def NP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      IsComputableInPolyTime finEncodingListBoolProdListBool finEncodingBoolBool R ∧
+      IsComputableInPolyTime R ∧
       ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
 
 /--

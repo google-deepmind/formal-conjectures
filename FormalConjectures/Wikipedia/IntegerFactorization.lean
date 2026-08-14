@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Millenium.PvsNP
-import FormalConjecturesForMathlib.Computability.EncodingNat
-import Mathlib.Data.Real.Sqrt
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Integer Factorization in P
@@ -49,7 +47,7 @@ polynomial time on a classical computer.
 -/
 @[category research open, AMS 68]
 conjecture integer_factorization_not_in_P :
-  ¬ IsComputableInPolyTime finEncodingNatProdNat finEncodingBoolBool FactorizationDecision
+  ¬ IsComputableInPolyTime FactorizationDecision
 
 /--
 The decision problem of Discrete Logarithm:
@@ -67,7 +65,7 @@ polynomial time on a classical computer.
 -/
 @[category research open, AMS 68]
 conjecture discrete_logarithm_not_in_P :
-  ¬ IsComputableInPolyTime finEncodingNat4 finEncodingBoolBool DiscreteLogDecision
+  ¬ IsComputableInPolyTime DiscreteLogDecision
 
 /--
 The decision problem of Square-root Sum:
@@ -86,6 +84,6 @@ polynomial time on a classical computer. (This is a major open problem in numeri
 -/
 @[category research open, AMS 68]
 conjecture square_root_sum_in_P :
-  IsComputableInPolyTime finEncodingListNatProdNat finEncodingBoolBool SquareRootSumDecision
+  IsComputableInPolyTime SquareRootSumDecision
 
 end IntegerFactorization
