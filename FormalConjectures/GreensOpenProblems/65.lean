@@ -19,7 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Ben Green's Open Problem 65
 
-*Reference:* [Ben Green's Open Problem 65](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.65)
+*References:*
+- [Gr26] [Ben Green's Open Problem 65](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.65)
+- [Gr22] [Green, Ben. "On Sárközy's theorem for shifted primes."](https://arxiv.org/abs/2206.08001)
 -/
 
 open Filter
@@ -34,20 +36,20 @@ def IsNonzeroSquare (d : ℤ) : Prop :=
 def IsPrimeMinusOne (d : ℤ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ d = (p : ℤ) - 1
 
-/-- The interval `[N] = {1, ..., N}`, viewed as a finite set of integers. -/
+/-- The interval $[N] = \{1, \ldots, N\}$, viewed as a finite set of integers. -/
 def interval (N : ℕ) : Finset ℤ :=
   Finset.Icc (1 : ℤ) (N : ℤ)
 
-/-- The signed difference set `A - A`. -/
+/-- The signed difference set $A - A$. -/
 def differenceSet (A : Finset ℤ) : Set ℤ :=
   {d | ∃ a ∈ A, ∃ b ∈ A, d = a - b}
 
 /--
-There is a fixed density exponent `c > 0` such that every sufficiently large subset
-`A ⊆ [N]` with `|A| ≥ N^(1-c)` has a difference satisfying `P`.
+There is a fixed density exponent $c > 0$ such that every sufficiently large subset
+$A \subseteq [N]$ with $|A| \geq N^{1-c}$ has a difference satisfying $P$.
 
-We model `[N]` as the integer interval `{1, ..., N}` and use sufficiently large `N`, since the
-literal small-`N` version is false for the nonzero-square question.
+We model $[N]$ as the integer interval $\{1, \ldots, N\}$ and use sufficiently large $N$, since
+the literal small-$N$ version is false for the nonzero-square question.
 -/
 def LargeDifferencePattern (P : ℤ → Prop) : Prop :=
   ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℤ,
@@ -55,8 +57,8 @@ def LargeDifferencePattern (P : ℤ → Prop) : Prop :=
       (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
         ∃ d ∈ differenceSet A, P d
 
-/-- Without "sufficiently large `N`" the question is false for every `c`:
-`A = {1} ⊆ [1]` has `|A| = 1 = 1 ^ (1 - c)` and `A - A = {0}`. -/
+/-- Without "sufficiently large $N$" the question is false for every $c$:
+$A = \{1\} \subseteq [1]$ has $|A| = 1 = 1^{1-c}$ and $A - A = \{0\}$. -/
 @[category test, AMS 5 11]
 theorem not_forall_of_isNonzeroSquare :
     ¬ ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ N : ℕ, ∀ A : Finset ℤ,
@@ -73,8 +75,8 @@ theorem not_forall_of_isNonzeroSquare :
   exact hn hdn
 
 /--
-Is there `c > 0` such that every sufficiently large subset `A ⊆ [N]` of size at least
-`N^(1-c)` has a difference that is a nonzero square?
+Is there $c > 0$ such that every sufficiently large subset $A \subseteq [N]$ of size at least
+$N^{1-c}$ has a difference that is a nonzero square?
 -/
 @[category research open, AMS 5 11]
 theorem green_65 :
@@ -82,11 +84,12 @@ theorem green_65 :
   sorry
 
 /--
-Green asks the analogous question with "nonzero square" replaced by "prime minus one".
+Green asks the analogous question with a nonzero square replaced by $p - 1$ for a prime $p$.
+Green [Gr22, Theorem 1.1] solved this positively.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_65.variants.prime_minus_one :
-    answer(sorry) ↔ LargeDifferencePattern IsPrimeMinusOne := by
+    answer(True) ↔ LargeDifferencePattern IsPrimeMinusOne := by
   sorry
 
 end Green65
