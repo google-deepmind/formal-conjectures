@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A56777
+# Divisibility of $2^n + 1$ by $n$
 
 A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
@@ -24,7 +24,8 @@ $\sigma(n+12) = \sigma(n) + 12$.
 The conjectures state identities connecting A56777 and prime quadruples (A7530), as
 well as congruences satisfied by the members of A56777.
 
-*Reference:* [A56777](https://oeis.org/A56777)
+*References:*
+- [A56777](https://oeis.org/A56777)
 -/
 
 namespace OeisA56777
@@ -54,11 +55,15 @@ theorem a_65 : A 65 := by
 /-- $209$ is in the sequence A56777. -/
 @[category test, AMS 11]
 theorem a_209 : A 209 := by
-  set_option maxRecDepth 1000 in
-  refine ⟨?_, by norm_num, ?_, ?_⟩
-  · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
-    exact not_prime_mul (by norm_num) (by norm_num)
-  · decide
+  unfold A
+  simp only [one_lt_ofNat, reduceAdd, true_and]
+  refine ⟨?_, ?_, ?_⟩
+  · norm_num
+  · have eq1 : 221 = 13 * 17 := by norm_num
+    have eq2 : 209 = 11 * 19 := by norm_num
+    rw [eq1, eq2, totient_mul (by norm_num), totient_mul (by norm_num),
+      totient_prime (by norm_num), totient_prime (by norm_num), totient_prime (by norm_num),
+      totient_prime (by norm_num)]
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
@@ -103,6 +108,12 @@ theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
       simpa using this
     rw [e1, e2, e6, e8]
     ring
+
+/-- $11009$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_11009 : A 11009 := by
+  apply a_of_comesFromPrimeQuadruple
+  exact ⟨101, by decide, by decide, by decide, by decide, by rfl⟩
 
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
