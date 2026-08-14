@@ -58,9 +58,20 @@ theorem a_4 : a 4 = 1 := by native_decide
 
 /--
 $n=1$ and $32$ are fixed points. Are there any others?
+
+Yes: `387420489 = 9 ^ 9` is a third fixed point, so the proposed
+classification is false.
 -/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
-  sorry
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a113019-counterexample/blob/dc68e0b55c834b24c9e029525deaa562ae144296/lean/OeisA113019FC.lean#L14-L25"]
+theorem conjecture : answer(False) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
+  change False ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32
+  constructor
+  · exact False.elim
+  · intro h
+    have hfixed : a 387420489 = 387420489 := by
+      simp [a]
+    rcases h 387420489 hfixed with h | h <;> omega
 
 end OeisA113019
