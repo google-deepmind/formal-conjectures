@@ -16,7 +16,17 @@ limitations under the License.
 module
 
 public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import FormalConjecturesForMathlib.Geometry.Metric
 
 @[expose] public section
 
 scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)
+
+/--
+$f_d(n)$: the minimal number of distinct distances determined by any set of $n$ points
+in $\mathbb{R}^d$. This is the `d`-dimensional Euclidean analogue of
+`Metric.minimalDistinctDistances`.
+-/
+noncomputable def Module.minimalDistinctDistances (d n : ℕ) : ℕ :=
+  sInf {distinctDistances points |
+    (points : Finset (EuclideanSpace ℝ (Fin d))) (_ : points.card = n)}

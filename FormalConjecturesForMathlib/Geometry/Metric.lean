@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Data.Finset.Sym
 public import Mathlib.Topology.MetricSpace.Defs
+public import Mathlib.Data.Nat.Lattice
 
 @[expose] public section
 
@@ -38,3 +39,12 @@ between pairs of points.
 -/
 noncomputable def distinctDistances (points : Finset X) : ℕ :=
   #(distanceSet points)
+
+
+/--
+The minimal number of distinct distances determined by any set of $n$ points
+in a metric space.
+-/
+noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
+  sInf {distinctDistances points |
+    (points : Finset X) (_ : points.card = n)}
