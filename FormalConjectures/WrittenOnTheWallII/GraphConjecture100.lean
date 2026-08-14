@@ -71,6 +71,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.indepNum := Nat.zero_le _
 
 /-- The Euclidean norm of the degree sequence is nonnegative. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 2)) : 0 ≤ degreeL2Norm G := Real.sqrt_nonneg _
+example (G : SimpleGraph (Fin 2)) [DecidableRel G.Adj] : 0 ≤ degreeL2Norm G :=
+  Real.sqrt_nonneg _
 
 end WrittenOnTheWallII.GraphConjecture100
