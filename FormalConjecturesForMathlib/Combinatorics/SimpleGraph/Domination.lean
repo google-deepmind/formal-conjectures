@@ -158,4 +158,17 @@ theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
         (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
           hD.isDominating⟩)
 
+
+/-! ### Roman domination -/
+
+/-- A **Roman dominating function** is a labeling `f : V → Fin 3` (values 0, 1, 2)
+such that every vertex `v` with `f(v) = 0` has a neighbor `w` with `f(w) = 2`. -/
+def IsRomanDominatingFunction (G : SimpleGraph α) (f : α → Fin 3) : Prop :=
+  ∀ v, (f v).val = 0 → ∃ w, G.Adj v w ∧ (f w).val = 2
+
+/-- The **Roman domination number** `γ_R(G)`: the minimum weight of a Roman
+dominating function, where weight = `∑ v, (f v).val`. -/
+noncomputable def romanDominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {w | ∃ f : α → Fin 3, IsRomanDominatingFunction G f ∧ w = ∑ v, (f v).val}
+
 end SimpleGraph

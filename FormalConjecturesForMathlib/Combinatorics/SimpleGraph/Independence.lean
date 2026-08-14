@@ -98,5 +98,11 @@ noncomputable def minLocalIndependence (G : SimpleGraph α) : ℕ :=
   let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
   (locals.min).getD 0
 
+/-- The number of vertices `v` that achieve the maximum value
+`maxLocalIndependence G` of the neighbourhood independence number
+`indepNeighborsCard G v`. This is the "frequency of `λ_max(G)`" from the WOWII
+conjecture collection. -/
+noncomputable def frequencyMaxL (G : SimpleGraph α) : ℕ :=
+  (Finset.univ.filter (fun v => indepNeighborsCard G v = maxLocalIndependence G)).card
 
 end SimpleGraph
