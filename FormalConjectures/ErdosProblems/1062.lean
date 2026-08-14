@@ -33,10 +33,10 @@ other elements of `A`. -/
 def ForkFree (A : Set ℕ) : Prop :=
   ∀ a ∈ A, ({b | b ∈ A \ {a} ∧ a ∣ b} : Set ℕ).Subsingleton
 
-open scoped Classical in
 /-- The extremal function from Erdős problem 1062: the largest size of a fork-free subset of
 `{1,...,n}`. -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.findGreatest (fun k => ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k) n
 
 -- TODO: Add erdos_1062.parts.i: How large can $f(n)$ be?

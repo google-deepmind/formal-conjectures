@@ -24,7 +24,7 @@ import FormalConjecturesUtil
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos961
 
@@ -62,6 +62,7 @@ For $k$, let $f(k)$ be the minimal $n$ such that every set of $n$ consecutive in
 an integer divisible by a prime $>k$, i.e. not $(k+1)$-smooth.
 -/
 noncomputable def f (k : ℕ) : ℕ :=
+  open scoped Classical in
   if hk : 0 < k then Nat.find (erdos_961.variants.well_defined k hk) else 0
 
 /--

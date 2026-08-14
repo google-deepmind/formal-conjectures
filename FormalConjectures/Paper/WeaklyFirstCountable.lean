@@ -36,6 +36,8 @@ open scoped Cardinal
 
 namespace WeaklyFirstCountable
 
+universe u
+
 /-- A topological space $X$ is called *weakly first countable* if there exists a function
 $N : X → ℕ → Set X, such that:
 
@@ -48,6 +50,19 @@ class WeaklyFirstCountableTopology (X : Type*) [TopologicalSpace X] : Prop where
     ∃ V : X → ℕ → Set X,
       (∀ (x : X), Antitone (V x) ∧ ∀ (n : ℕ), x ∈ V x n) ∧
         ∀ O : Set X, IsOpen O ↔ ∀ x ∈ O, ∃ k : ℕ, V x k ⊆ O
+
+/-- A cellular family is a pairwise-disjoint collection of nonempty open sets. -/
+def IsCellularFamily (X : Type u) [TopologicalSpace X] (F : Set (Set X)) : Prop :=
+  F.PairwiseDisjoint id ∧ ∀ U ∈ F, IsOpen U ∧ U.Nonempty
+
+/-- The Souslin number of a topological space is the supremum of the cardinalities of its
+cellular families. -/
+noncomputable def souslinNumber (X : Type u) [TopologicalSpace X] : Cardinal.{u} :=
+  ⨆ F : {F : Set (Set X) // IsCellularFamily X F}, #(F : Set (Set X))
+
+/-- A space has countable Souslin number when its Souslin number is at most `ℵ₀`. -/
+class HasCountableSouslinNumber (X : Type u) [TopologicalSpace X] : Prop where
+  souslinNumber_le : souslinNumber X ≤ ℵ₀
 
 /-- There are weakly first countable spaces which are not first countable,
 for example the [Arens Space](https://topology.pi-base.org/spaces/S000156). -/
@@ -76,6 +91,16 @@ instance FirstCountableTopology.weaklyFirstCountableTopology (X : Type*) [Topolo
   · exact (HasAntitoneBasis.mem_iff (hU x)).mp (h x hx)
   · obtain ⟨n, hn⟩ := h x hx
     exact mem_of_superset (HasAntitoneBasis.mem (hU x) n) hn
+
+/-- Every separable space has countable Souslin number. -/
+@[category test, AMS 54]
+instance hasCountableSouslinNumber_of_separable (X : Type u) [TopologicalSpace X]
+    [SeparableSpace X] : HasCountableSouslinNumber X where
+  souslinNumber_le := by
+    refine ciSup_le' fun F ↦ ?_
+    exact (F.property.1.countable_of_isOpen
+      (fun U hU ↦ (F.property.2 U hU).1)
+      (fun U hU ↦ (F.property.2 U hU).2)).le_aleph0
 
 /-- Problem 2 in [Ar2013]: Give an example in ZFC of a weakly first-
 countable compact Hausdorff space X such that $𝔠 < |X|$.
@@ -110,6 +135,12 @@ theorem CH.existsWeaklyFirstCountableCompactNotFirstCountable
       WeaklyFirstCountableTopology X ∧ CompactSpace X ∧ T2Space X ∧
         ¬ FirstCountableTopology X := by sorry
 
--- TODO: add Problem 4 in [Ar2013]
+/-- Problem 4 in [Ar2013]: If a Tychonoff weakly first-countable space has countable
+Souslin number, then does its cardinality not exceed the continuum? -/
+@[category research open, AMS 54]
+theorem cardinalMk_le_continuum_of_weaklyFirstCountable_of_countableSouslinNumber :
+    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T35Space X →
+      WeaklyFirstCountableTopology X → HasCountableSouslinNumber X → #X ≤ 𝔠 := by
+  sorry
 
 end WeaklyFirstCountable
