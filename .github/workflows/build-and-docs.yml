@@ -225,7 +225,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,moduleDocstrings \
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified \
             > site/data/conjectures.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
