@@ -23,7 +23,7 @@ public import FormalConjecturesForMathlib.Geometry.Metric
 scoped[EuclideanGeometry] notation "ℝ^" n:65 => EuclideanSpace ℝ (Fin n)
 
 /--
-$f_d(n)$: the minimal number of distinct distances determined by any set of $n$ points
+The minimal number of distinct distances determined by any set of $n$ points
 in $\mathbb{R}^d$. This is the `d`-dimensional Euclidean analogue of
 `Metric.minimalDistinctDistances`.
 -/
