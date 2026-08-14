@@ -19,15 +19,29 @@ import FormalConjecturesUtil
 /-!
 # Bounded Burnside problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem)
+- [NA68] P. S. Novikov, S. I. Adian. "Infinite periodic groups I-III."
+  _Izv. Akad. Nauk SSSR Ser. Mat._ 32 (1968).
+- [Ad79] S. I. Adian. _The Burnside Problem and Identities in Groups._ Springer, 1979.
+- [Iv94] S. V. Ivanov. "The free Burnside groups of sufficiently large exponents."
+  _Internat. J. Algebra Comput._ 4 (1994).
 -/
 
 namespace BoundedBurnsideProblem
 
 /--
 Let $G$ be a finitely generated group, and assume there exists $n$ such that for every $g$ in $G$,
-$g^n = 1$. The answer is negative: infinite finitely generated groups of bounded exponent exist.
-See [Wikipedia](https://en.wikipedia.org/wiki/Burnside_problem#Bounded_Burnside_problem).
+$g^n = 1$. Must $G$ be finite?
+
+The answer is negative. Novikov and Adian proved that for every odd $n > 4381$ there exist
+infinite, finitely generated groups of exponent $n$ [NA68]; Adian later reduced this to odd
+$n > 665$ [Ad79], and Ivanov settled sufficiently large even exponents [Iv94]. Any such group,
+for example the free Burnside group $B(2, 667)$, refutes the statement below.
+
+Note this concerns only the universally quantified question stated here, which a single
+counterexample closes. The classification of which free Burnside groups $B(m, n)$ are finite
+remains open, with $B(2, 5)$ the best known open case.
 -/
 @[category research solved, AMS 20]
 theorem bounded_burnside_problem :
