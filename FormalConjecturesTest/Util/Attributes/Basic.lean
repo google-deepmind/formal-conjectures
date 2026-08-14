@@ -136,26 +136,31 @@ theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
 -- The `optimization_constant` attribute
 
 #guard_msgs in
-@[category test, optimization_constant "1a"]
-theorem an_optimization_constant_problem : 1 + 1 = 2 := by
-  sorry
+@[optimization_constant "1a"]
+noncomputable def anOptimizationConstant : ℝ := 1
 
 #guard_msgs in
-@[category test, optimization_constant "21"]
-theorem an_optimization_constant_problem_without_letter : 2 + 2 = 4 := by
-  sorry
+@[optimization_constant "21"]
+def anOptimizationConstantWithoutLetter : ℕ := 4
 
 run_meta do
-  let tags ← ProblemAttributes.getOptimizationConstants ``an_optimization_constant_problem
+  let tags ← ProblemAttributes.getOptimizationConstants ``anOptimizationConstant
   unless tags.map (·.constantId) = #["1a"] do
-    throwError "unexpected optimization constant tags for an_optimization_constant_problem"
+    throwError "unexpected optimization constant tags for anOptimizationConstant"
 
 /--
 warning: An `optimization_constant` id should be one or more digits followed by an optional lowercase letter (e.g. "21" or "1a"), but got: "a1".
 -/
 #guard_msgs in
-@[category research open, AMS 11, optimization_constant "a1"]
-theorem an_optimization_constant_problem_with_malformed_id : 3 + 3 = 6 := by
+@[optimization_constant "a1"]
+noncomputable def anOptimizationConstantWithMalformedId : ℝ := 3
+
+/--
+warning: An `optimization_constant` annotation should be applied to the definition of the constant, but `an_optimization_constant_theorem` is not a definition. Theorems about the constant (e.g. bounds) should not carry this attribute.
+-/
+#guard_msgs in
+@[category research open, AMS 11, optimization_constant "1a"]
+theorem an_optimization_constant_theorem : 3 + 3 = 6 := by
   sorry
 
 -- The `#AMS` command

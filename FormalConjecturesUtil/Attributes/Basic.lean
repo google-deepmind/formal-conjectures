@@ -129,17 +129,20 @@ in the AMS classification for completeness. Some are not relevant to this reposi
 
 ## The Optimization Constant Attribute
 
-Marks a statement as formalising (part of) an entry of the optimization problems
-database at https://teorth.github.io/optimizationproblems/. The attribute takes the
-entry's id as a string, e.g.:
+Marks the definition of a constant as formalising an entry of the optimization
+problems database at https://teorth.github.io/optimizationproblems/. The attribute
+takes the entry's id as a string, e.g.:
 ```
-@[category research open, AMS 5 11 26, optimization_constant "1a"]
-theorem c1a_eq : C1a = answer(sorry) := by
-  sorry
+@[optimization_constant "1a"]
+noncomputable def C1a : ℝ :=
+  ...
 ```
 The id consists of the entry's number followed by an optional letter suffix
 (`"21"`, `"1a"`, ...), matching the database's page
 `https://teorth.github.io/optimizationproblems/constants/<id>.html`.
+
+The attribute belongs on the definition of the constant itself, not on theorems
+about it (bounds, exact values): those may get a separate annotation later.
 
 -/
 
@@ -449,7 +452,7 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
-/-- A tag recording that a declaration formalises (part of) an entry of the
+/-- A tag recording that a definition formalises an entry of the
 optimization problems database at <https://teorth.github.io/optimizationproblems/>. -/
 structure OptimizationConstantTag where
   /-- The name of the declaration with the given tag. -/
@@ -481,16 +484,16 @@ def isValidOptimizationConstantId (id : String) : Bool :=
 
 syntax (name := OptimizationConstant_attr) "optimization_constant" str : attr
 
-/-- Marks a statement as formalising (part of) an entry of the optimization
+/-- Marks the definition of a constant as formalising an entry of the optimization
 problems database at <https://teorth.github.io/optimizationproblems/>.
 
-Usage: `@[optimization_constant "<id>"]` where `<id>` is the entry's id in the
-database, i.e. the entry's number followed by an optional letter suffix
-(`"21"`, `"1a"`, ...). The corresponding database page is
+Usage: `@[optimization_constant "<id>"]` on the definition of the constant, where
+`<id>` is the entry's id in the database, i.e. the entry's number followed by an
+optional letter suffix (`"21"`, `"1a"`, ...). The corresponding database page is
 `https://teorth.github.io/optimizationproblems/constants/<id>.html`. -/
 initialize Lean.registerBuiltinAttribute {
   name := `OptimizationConstant_attr
-  descr := "Annotation linking a statement to an entry of the optimization problems database."
+  descr := "Annotation linking the definition of a constant to an entry in the optimization problems database."
   add := fun decl stx _attrKind => do
     match stx with
     | `(attr| optimization_constant $id) =>
@@ -499,6 +502,10 @@ initialize Lean.registerBuiltinAttribute {
         logWarningAt id
           s!"An `optimization_constant` id should be one or more digits followed by an optional \
             lowercase letter (e.g. \"21\" or \"1a\"), but got: \"{idStr}\"."
+      unless (← getConstInfo decl) matches .defnInfo _ do
+        logWarning m!"An `optimization_constant` annotation should be applied to the \
+          definition of the constant, but `{decl}` is not a definition. Theorems about \
+          the constant (e.g. bounds) should not carry this attribute."
       addOptimizationConstantEntry decl idStr
     | _ => throwUnsupportedSyntax
   applicationTime := .afterTypeChecking
