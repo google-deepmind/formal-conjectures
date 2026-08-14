@@ -97,7 +97,8 @@ depth-first search establishing that no admissible 59-prime support survives the
 `plus`-value square test, with axioms `propext, Classical.choice, Quot.sound` together with that
 `native_decide`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ElVec1o/erdos307/blob/v1.1.1/lean/Erdos307/Sixty.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at
+"https://github.com/ElVec1o/erdos307/blob/080164a8db2eeb20f65c362894ec93f12448609a/lean/Erdos307/Sixty.lean#L367"]
 theorem erdos_307.barrier_sixty {P Q : Finset ℕ}
     (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime)
     (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
