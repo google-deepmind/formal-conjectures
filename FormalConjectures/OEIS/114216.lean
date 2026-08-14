@@ -31,7 +31,7 @@ namespace OeisA114216
 
 /--
 The primary defining sequence `a`.
-$a(n)$ is the largest odd divisor of $a(n-1)$+ \textrm{prime}(n)$.
+$a(n)$ is the largest odd divisor of $a(n-1) + \textrm{prime}(n)$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   match n with

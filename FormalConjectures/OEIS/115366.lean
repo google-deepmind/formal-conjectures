@@ -53,7 +53,7 @@ theorem a_2 : a 2 = 50 := by native_decide
 theorem a_3 : a 3 = 313 := by native_decide
 
 /--
-Conjecture: $a(n)$A006880(n) \rightarrow 1.77...$
+Conjecture: $a(n)/A006880(n) \rightarrow 1.77...$
 where A006880(n) is the number of primes $\le 10^n$.
 -/
 @[category research open, AMS 11]
