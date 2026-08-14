@@ -127,6 +127,20 @@ In order to access the list from within a Lean file, use the `#AMS` command.
 Note: the current implementation of the attribute includes all the main categories
 in the AMS classification for completeness. Some are not relevant to this repository.
 
+## The Optimization Constant Attribute
+
+Marks a statement as formalising (part of) an entry of the optimization problems
+database at https://teorth.github.io/optimizationproblems/. The attribute takes the
+entry's id as a string, e.g.:
+```
+@[category research open, AMS 5 11 26, optimization_constant "1a"]
+theorem c1a_eq : C1a = answer(sorry) := by
+  sorry
+```
+The id consists of the entry's number followed by an optional letter suffix
+(`"21"`, `"1a"`, ...), matching the database's page
+`https://teorth.github.io/optimizationproblems/constants/<id>.html`.
+
 -/
 
 -- TODO(lezeau): can we/should we do this using
@@ -435,6 +449,61 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
+/-- A tag recording that a declaration formalises (part of) an entry of the
+optimization problems database at <https://teorth.github.io/optimizationproblems/>. -/
+structure OptimizationConstantTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- The id of the database entry, e.g. `"21"` or `"1a"`. -/
+  constantId : String
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `optimizationConstantExt` extension for recording
+optimization constant annotations. -/
+initialize optimizationConstantExt :
+    SimplePersistentEnvExtension OptimizationConstantTag (Std.HashSet OptimizationConstantTag) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
+    addEntryFn := .insert
+  }
+
+def addOptimizationConstantEntry {m : Type → Type} [MonadEnv m]
+    (declName : Name) (constantId : String) : m Unit :=
+  modifyEnv (optimizationConstantExt.addEntry ·
+    { declName := declName, constantId := constantId })
+
+/-- Check that an optimization constant id has the form used by the database:
+one or more digits followed by an optional lowercase letter (e.g. `"21"` or `"1a"`). -/
+def isValidOptimizationConstantId (id : String) : Bool :=
+  match id.toList.span Char.isDigit with
+  | ([], _) => false
+  | (_, rest) => rest.isEmpty || (rest.length == 1 && rest.all Char.isLower)
+
+syntax (name := OptimizationConstant_attr) "optimization_constant" str : attr
+
+/-- Marks a statement as formalising (part of) an entry of the optimization
+problems database at <https://teorth.github.io/optimizationproblems/>.
+
+Usage: `@[optimization_constant "<id>"]` where `<id>` is the entry's id in the
+database, i.e. the entry's number followed by an optional letter suffix
+(`"21"`, `"1a"`, ...). The corresponding database page is
+`https://teorth.github.io/optimizationproblems/constants/<id>.html`. -/
+initialize Lean.registerBuiltinAttribute {
+  name := `OptimizationConstant_attr
+  descr := "Annotation linking a statement to an entry of the optimization problems database."
+  add := fun decl stx _attrKind => do
+    match stx with
+    | `(attr| optimization_constant $id) =>
+      let idStr := id.getString
+      unless isValidOptimizationConstantId idStr do
+        logWarningAt id
+          s!"An `optimization_constant` id should be one or more digits followed by an optional \
+            lowercase letter (e.g. \"21\" or \"1a\"), but got: \"{idStr}\"."
+      addOptimizationConstantEntry decl idStr
+    | _ => throwUnsupportedSyntax
+  applicationTime := .afterTypeChecking
+}
+
 section Helper
 
 /-- Split an array into preimages of a function.
@@ -470,6 +539,14 @@ def getSubjectTags : m (Array SubjectTag) := do
 
 def getFormalProofTags : m (Array FormalProofTag) := do
   return formalProofExt.getState (← MonadEnv.getEnv) |>.toArray
+
+def getOptimizationConstantTags : m (Array OptimizationConstantTag) := do
+  return optimizationConstantExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- Get the optimization constant tags for a given declaration. -/
+def getOptimizationConstants (declName : Name) : m (Array OptimizationConstantTag) := do
+  let tags ← getOptimizationConstantTags
+  return tags.filter (·.declName == declName)
 
 /-- Get the formal proof tag for a given declaration, if any. -/
 def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
