@@ -44,7 +44,7 @@ This conjecture is false. There is a connected counterexample on 123 vertices
 with `residue G = 101`, `b G = 122`, and `G.largestInducedForestSize = 111`.
 Indeed, `101 * 122 = 12322 = 111 ^ 2 + 1`, so the conjectured lower bound is 112.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean"]
 theorem conjecture59 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected),
