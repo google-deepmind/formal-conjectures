@@ -18,6 +18,8 @@ module
 public import Mathlib.Data.Fintype.Perm
 public import Mathlib.Data.Fintype.Pi
 public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Probability.Distributions.Uniform
+public import Mathlib.Probability.ProbabilityMassFunction.Integrals
 
 @[expose] public section
 
@@ -65,5 +67,16 @@ def IsStable {n : ℕ} (p : Profile n) (μ : Matching n) : Prop :=
 noncomputable def numStableMatchings {n : ℕ} (p : Profile n) : ℕ := by
   classical
   exact Fintype.card {μ : Matching n // IsStable p μ}
+
+/-- The discrete measurable structure on preference profiles. -/
+instance {n : ℕ} : MeasurableSpace (Profile n) := ⊤
+
+/-- The uniform probability mass function on preference profiles. -/
+noncomputable def uniformProfile (n : ℕ) : PMF (Profile n) :=
+  PMF.uniformOfFintype (Profile n)
+
+/-- The expected number of stable matchings under the uniform profile distribution. -/
+noncomputable def expectedNumStableMatchings (n : ℕ) : ℝ :=
+  ∫ p, (numStableMatchings p : ℝ) ∂((uniformProfile n).toMeasure)
 
 end StableMarriage
