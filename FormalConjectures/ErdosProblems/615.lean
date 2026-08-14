@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 615
@@ -41,7 +41,7 @@ $\mathrm{rt}(n; 4, ne^{-f(n)}) = o(n^2)$ whenever $f(n)/\sqrt{\log n} \to \infty
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
 
-open Classical Filter SimpleGraph
+open Filter SimpleGraph
 
 namespace Erdos615
 
