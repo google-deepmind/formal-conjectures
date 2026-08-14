@@ -50,7 +50,7 @@ constant $C > 0$ such that
 $$\sum_{1 \le q \le x^{\theta}} E(x; q) \le \frac{C x}{\log^A x}$$
 for all $x > 2$.
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 11, optimization_constant "66"]
 theorem elliott_halberstam (θ : ℝ) (hθ : θ < 1) (A : ℝ) (hA : 0 < A) :
     ∃ C > (0 : ℝ), ∀ x : ℕ, 2 < x →
       ∑ q ∈ Finset.Icc 1 ⌊(x : ℝ) ^ θ⌋₊, E x q ≤ C * x / Real.log x ^ A := by
@@ -61,7 +61,7 @@ The Bombieri–Vinogradov theorem: the Elliott–Halberstam conjecture holds for
 $\theta < 1/2$. This result may be regarded as an averaged form of the generalized
 Riemann hypothesis.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, optimization_constant "66"]
 theorem elliott_halberstam.variants.bombieri_vinogradov (θ : ℝ) (hθ : θ < 1 / 2) (A : ℝ)
     (hA : 0 < A) :
     ∃ C > (0 : ℝ), ∀ x : ℕ, 2 < x →
@@ -72,7 +72,7 @@ theorem elliott_halberstam.variants.bombieri_vinogradov (θ : ℝ) (hθ : θ < 1
 The Elliott–Halberstam conjecture fails at the endpoint $\theta = 1$, as shown by
 Friedlander and Granville [FG89].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, optimization_constant "66"]
 theorem elliott_halberstam.variants.friedlander_granville :
     ¬ ∀ A : ℝ, 0 < A → ∃ C > (0 : ℝ), ∀ x : ℕ, 2 < x →
       ∑ q ∈ Finset.Icc 1 x, E x q ≤ C * x / Real.log x ^ A := by

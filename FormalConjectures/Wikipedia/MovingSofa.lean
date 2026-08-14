@@ -206,12 +206,12 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49, optimization_constant "41a"]
 theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49, optimization_constant "41a"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
@@ -222,7 +222,7 @@ The motion is needed: `horizontalHallway` is $(-\infty, 1] \times [0, 1]$, so a 
 translate of any moving sofa is again one, obtained by sliding right and then following the
 original motion. It has the same area, so uniqueness cannot hold on the nose.
 -/
-@[category research open, AMS 49]
+@[category research open, AMS 49, optimization_constant "41a"]
 theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
     (hs : ∃ m, IsMovingSofa s m) :
     volume s = sofaConstant ↔ ∃ g : E(2), s = g '' gerversSofa := by

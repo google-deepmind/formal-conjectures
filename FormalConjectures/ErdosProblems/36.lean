@@ -345,7 +345,7 @@ theorem minimum_overlap.variants.upper.haugland_2022 :
 /--
 Find a better lower bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, AMS 5 11, optimization_constant "1b"]
 theorem erdos_36.variants.lower:
     ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = answer(sorry) := by
   sorry
@@ -353,7 +353,7 @@ theorem erdos_36.variants.lower:
 /--
 Find a better upper bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, AMS 5 11, optimization_constant "1b"]
 theorem erdos_36.variants.upper :
     ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = answer(sorry) := by
   sorry
@@ -368,7 +368,7 @@ theorem erdos_36.variants.exists : ∃ c, atTop.Tendsto MinOverlapQuotient (𝓝
 /--
 Find the value of the limit of `MinOverlapQuotient`!
 -/
-@[category research open, AMS 5 11]
+@[category research open, AMS 5 11, optimization_constant "1b"]
 theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 answer(sorry)) := by
   sorry
 

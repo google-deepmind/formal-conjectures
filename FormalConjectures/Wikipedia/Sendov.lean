@@ -48,7 +48,7 @@ def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
 $$f(z)=(z-r_{1})\cdots (z-r_{n}),\qquad (n\geq 2)$$
 with all roots $r_1, ..., r_n$ inside the closed unit disk $|z| ≤ 1$, each of the $n$ roots is at a
 distance no more than $1$ from at least one critical point. -/
-@[category research open, AMS 12 30 52]
+@[category research open, AMS 12 30 52, optimization_constant "69"]
 theorem sendov_conjecture (n : ℕ) (hn : 2 ≤ n) : n.SatisfiesSendovConjecture := by
   sorry
 
@@ -59,7 +59,7 @@ distance no more than $1$ from at least one critical point.
 
 It has been shown that Sendov's conjecture holds when the degree of $n$ is at most $9$.
 -/
-@[category research solved, AMS 12 30 52]
+@[category research solved, AMS 12 30 52, optimization_constant "69"]
 theorem sendov_conjecture.variants.le_nine (n : ℕ) (hn : n ∈ Set.Icc 2 9) :
     n.SatisfiesSendovConjecture := by
   sorry
@@ -71,7 +71,7 @@ distance no more than $1$ from at least one critical point.
 
 It has been shown that Sendov's conjecture holds for polynomials of sufficiently large degree.
 -/
-@[category research solved, AMS 12 30 52]
+@[category research solved, AMS 12 30 52, optimization_constant "69"]
 theorem sendov_conjecture.variants.eventually_true :
     ∀ᶠ (n : ℕ) in Filter.atTop, n.SatisfiesSendovConjecture := by
   sorry

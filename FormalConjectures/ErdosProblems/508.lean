@@ -41,7 +41,7 @@ scoped notation "χ(ℝ²)" => SimpleGraph.chromaticNumber (UnitDistancePlaneGra
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
 such that no two points at distance 1 from each other have the same color?
 -/
-@[category research open, AMS 52]
+@[category research open, AMS 52, optimization_constant "27a"]
 theorem HadwigerNelsonProblem :
     χ(ℝ²) = answer(sorry) := by
   sorry
@@ -53,7 +53,7 @@ to 5 in 2018 using a graph that has >1000 nodes.
 "The chromatic number of the plane is at least 5" Aubrey D. N. J. de Grey, 2018
 (https://doi.org/10.48550/arXiv.1804.02385)
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, optimization_constant "27a"]
 theorem HadwigerNelsonAtLeastFive :
     5 ≤ χ(ℝ²) := by
   sorry
@@ -77,7 +77,7 @@ Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Colorin
 
 An alternative approach that uses square tiling was highlighted by László Székely.
 -/
-@[category textbook, AMS 52]
+@[category textbook, AMS 52, optimization_constant "27a"]
 theorem HadwigerNelsonAtMostSeven :
     χ(ℝ²) ≤ 7 := by
   sorry
