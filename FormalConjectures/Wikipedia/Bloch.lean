@@ -117,13 +117,13 @@ noncomputable def blochConstant : ℝ :=
 
 /-- It is proved in [CP96] that the Bloch constant is bounded below by
 $\sqrt{3}/4 + 2 \times 10^{-4}$ -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57a"]
 theorem blochConstant_lower_bound : Real.sqrt 3 / 4 + 2 * 10 ^ (-4 : ℤ) ≤ blochConstant := by
   sorry
 
 /-- It is proved in [AG37] that the Bloch constant is bounded above by
 $\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(11/12)}{\Gamma(1/4)}$$. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57a"]
 theorem blochConstant_upper_bound :
     blochConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
@@ -131,7 +131,7 @@ theorem blochConstant_upper_bound :
 
 /-- Ahlfors and Grunsky also conjectured in [AG37] that this upper bound is the precise value of the
 Bloch constant. -/
-@[category research open, AMS 30]
+@[category research open, AMS 30, optimization_constant "57a"]
 theorem blochConstant_exact_value :
     blochConstant = Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /
     (Real.Gamma (1 / 4) * Real.sqrt (1 + Real.sqrt 3)) := by
@@ -145,13 +145,13 @@ noncomputable def univalentBlochConstant : ℝ :=
     deriv f 0 = 1 → ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
 
 /-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57c"]
 theorem univalentBlochConstant_lower_bound : 0.5708858 ≤ univalentBlochConstant := by
   sorry
 
 /-- The Univalent Bloch constant is trivially bounded above by the Bloch radius of the identity
 function, which is $1$. This is the best upper bound we know according to [OptimizationConstants]. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57c"]
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
   apply csSup_le
   · -- the set is nonempty: 0 is in it (ball x 0 = ∅ ⊆ anything)
@@ -172,20 +172,20 @@ noncomputable def landauConstant : ℝ :=
     ∃ x, ball x B ⊆ f '' (ball 0 1)}
 
 /-- It is proved in [Ya95] that the Landau constant is bounded below by $0.5 + 10 ^ {-335}$. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57b"]
 theorem landauConstant_lower_bound : 0.5 + 10 ^ (-335 : ℤ) ≤ landauConstant := by
   sorry
 
 /-- It is proved in [Ra43] that the Landau constant is bounded above by
 $\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(5/6)}{\Gamma(1/6)}$. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, optimization_constant "57b"]
 theorem landauConstant_upper_bound :
     landauConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry
 
 /-- In [Ra43], Rademacher says that he strongly believed that this upper bound is the precise value
 of the Landau constant. -/
-@[category research open, AMS 30]
+@[category research open, AMS 30, optimization_constant "57b"]
 theorem landauConstant_exact_value :
     landauConstant = Real.Gamma (1 / 3) * Real.Gamma (5 / 6) / Real.Gamma (1 / 6) := by
   sorry

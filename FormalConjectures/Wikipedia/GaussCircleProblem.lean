@@ -71,7 +71,7 @@ $$
   |E(r)| \neq o\left(r^{1/2}(\log r)^{1/4}\right)
 $$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, optimization_constant "64"]
 theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
   sorry
 
@@ -85,7 +85,7 @@ $$
 
 See also https://arxiv.org/abs/2305.03549
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 11, optimization_constant "64"]
 theorem error_isBigO : ∃ (o : ℝ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     E =O[atTop] fun r => r ^ (1/2 + o r) := by
   sorry

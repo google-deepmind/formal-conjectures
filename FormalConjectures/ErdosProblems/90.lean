@@ -84,7 +84,7 @@ by an internal model at OpenAI, which constructed (for infinitely many $n$) a se
 in $\mathbb{R}^2$ such that the number of unit distance pairs in $P$ is at least $n^{1+c}$, where
 $c > 0$ is an absolute constant.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, optimization_constant "84a"]
 theorem erdos_90 : answer(False) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
     (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
   sorry
@@ -99,7 +99,7 @@ Tsimerman–Wang–Matchett Wood, [*Remarks on the disproof of the unit distance
 unit distance problem*](https://arxiv.org/abs/2605.20579) (2026); see
 `erdos_90.variants.sawin_explicit` below.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, optimization_constant "84a"]
 theorem erdos_90.variants.polynomial_lower_bound :
     ∃ c > (0 : ℝ),
       {n : ℕ | (n : ℝ) ^ (1 + c) ≤ (maxUnitDistances n : ℝ)}.Infinite := by
@@ -111,7 +111,7 @@ theorem erdos_90.variants.polynomial_lower_bound :
 all large enough $n$). Reference: Theorem 1 of Sawin, [arXiv:2605.20579](https://arxiv.org/abs/2605.20579)
 (2026).
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, optimization_constant "84a"]
 theorem erdos_90.variants.sawin_explicit :
     {n : ℕ | (n : ℝ) ^ (1.014114 : ℝ) ≤ (maxUnitDistances n : ℝ)}.Infinite := by
   sorry

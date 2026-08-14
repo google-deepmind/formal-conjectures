@@ -40,7 +40,7 @@ noncomputable def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
 Let `M(f)` denote the Mahler measure of `f`.
 There exists a constant `μ>1` such that for any `f(x)∈ℤ[x], M(f)>1 → M(f)≥μ`.
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 11, optimization_constant "40a"]
 theorem lehmer_mahler_measure_problem :
     ∃ μ : ℝ, ∀ f : ℤ[X],
       μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f ≥ μ) := by
@@ -51,7 +51,7 @@ noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^
 /--
 `μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
 -/
-@[category research open, AMS 11]
+@[category research open, AMS 11, optimization_constant "40a"]
 theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) : mahlerMeasureZ f ≥ mahlerMeasureZ lehmerPolynomial := by
   sorry

@@ -67,13 +67,13 @@ theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 :=
   sorry
 
 /-- Brennan's conjecture, part 1: $B(-2) = 1$. -/
-@[category research open, AMS 30]
+@[category research open, AMS 30, optimization_constant "67"]
 theorem brennan_universalSpectrum :
     universalSpectrum (-2) = 1 := by
   sorry
 
 /-- Brennan's conjecture, part 2: $B_b(-2) = 1$. -/
-@[category research open, AMS 30]
+@[category research open, AMS 30, optimization_constant "67"]
 theorem brennan_universalSpectrumBounded :
     universalSpectrumBounded (-2) = 1 := by
   sorry
