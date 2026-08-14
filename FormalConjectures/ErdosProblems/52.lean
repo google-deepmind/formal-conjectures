@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 52
@@ -35,6 +35,6 @@ theorem erdos_52 : answer(sorry) ↔ ∀ (ε : ℝ), 0 < ε → ε < 1 → ∃ (
     (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (2 - ε) := by
   sorry
 
--- TODO(firsching): Add addtional material.
+-- TODO(firsching): Add additional material.
 
 end Erdos52

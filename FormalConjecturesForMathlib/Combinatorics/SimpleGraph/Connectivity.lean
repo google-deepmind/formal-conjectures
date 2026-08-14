@@ -22,7 +22,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Paths
 namespace SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-open Classical Finset List
+open Finset List
 
 /--
 Two walks are internally disjoint if they share no vertices other than their endpoints.

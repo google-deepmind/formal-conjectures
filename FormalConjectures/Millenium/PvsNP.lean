@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures in Complexity Theory
@@ -39,7 +39,7 @@ namespace ComplexityTheory
 The type of decision problems.
 
 We define these as functions from lists of booleans to booleans,
-implictly assuming the usual encodings.
+implicitly assuming the usual encodings.
 -/
 abbrev DecisionProblem := List Bool → Bool
 
