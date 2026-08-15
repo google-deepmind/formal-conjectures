@@ -148,9 +148,13 @@ theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
 noncomputable def f_all (r : ℕ) : ℝ≥0∞ :=
   limsup (fun n ↦ minDensity n r) atTop
 
-/-- Does $f_{\text{all}}(r) \to \infty$? [Gr24] -/
+/-- Does $f_{\text{all}}(r) \to \infty$? [Gr24]
+
+The target filter is `𝓝 ⊤`, as in `green_40` and `green_40.variants.arbitrary_subsets`. On
+`ℝ≥0∞`, `atTop` is the principal ultrafilter at `⊤`, so `Tendsto f_all atTop atTop` would say
+that `f_all r = ⊤` for all large `r` rather than that `f_all r → ∞`. -/
 @[category research open, AMS 5 94]
-theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop atTop := by
+theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop (𝓝 ⊤) := by
   sorry
 
 end Green40
