@@ -25,11 +25,13 @@ and no three-sunflower. The empty-core case is included, so three pairwise
 disjoint sets form a three-sunflower. The variant $I_3(\ell,t)$ imposes the
 additional condition that the family is intersecting.
 
-This is a bounded-intersection slice of the classical sunflower problem
-[ErRa60, Erdos20] and its finite-ground-set asymptotic form [Erdos857]. The
-$t=1$ rigidity result is related to Deza's constant-intersection theorem
-[Deza74], while the $t=2$ lower construction uses orthogoval projective planes
-[CIJSSS24]. Restricted-intersection threshold work also includes [Chi24].
+This is the $k=3$ bounded-intersection restriction of the uniform sunflower
+threshold problem [ErRa60, Erdos20]. Erdős Problem 857 studies the related but
+different non-uniform model of arbitrary families of subsets of a growing
+finite ground set [Erdos857]. The $t=1$ rigidity result is related to Deza's
+constant-intersection theorem [Deza74], while the $t=2$ lower construction uses
+orthogoval projective planes [CIJSSS24]. Restricted-intersection threshold work
+also includes [Chi24].
 
 *References:*
 * [Mit26] C. Mitchell, *Three-sunflower-free set systems with bounded pairwise
@@ -60,10 +62,6 @@ open Filter
 namespace ThreeSunflowerFreeSetSystems
 
 variable {α : Type}
-
-/-- A family is $\ell$-uniform if every member is finite of cardinality $\ell$. -/
-def IsUniform (ℓ : ℕ) (F : Set (Set α)) : Prop :=
-  ∀ A ∈ F, A.Finite ∧ A.ncard = ℓ
 
 /-- Every two distinct members of $F$ have intersection size at most $t$. -/
 def HasPairwiseIntersectionsAtMost (t : ℕ) (F : Set (Set α)) : Prop :=
