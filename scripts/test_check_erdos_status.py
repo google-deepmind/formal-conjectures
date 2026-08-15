@@ -109,14 +109,14 @@ class ProblemStatusesTest(unittest.TestCase):
             self.statuses(row("42", "Erdos42.erdos_42", "research solved", formal=True)),
             {"42": "formally solved"})
 
-    def test_a_link_on_a_variant_still_counts(self):
-        # The attribute-scanning version looked for `formal_proof` anywhere in the file, so
-        # this keeps that reading rather than changing statuses along with the data source.
+    def test_a_link_on_a_variant_does_not_upgrade_the_problem(self):
+        # A proof of `variants.x` proves the variant. Calling the problem
+        # formally solved for it would report something nobody established.
         self.assertEqual(
             self.statuses(
                 row("42", "Erdos42.erdos_42", "research solved"),
                 row("42", "Erdos42.erdos_42.variants.x", "research solved", formal=True)),
-            {"42": "formally solved"})
+            {"42": "solved"})
 
     def test_one_open_part_makes_the_problem_open(self):
         self.assertEqual(
@@ -132,22 +132,23 @@ class ProblemStatusesTest(unittest.TestCase):
                 row("42", "Erdos42.erdos_42.variants.x", "research open")),
             {"42": "solved"})
 
-    def test_variants_decide_it_when_there_is_nothing_else(self):
-        # Erdős 92 states both its questions as variants and has no bare `erdos_92`, so
-        # without this the problem is absent from the result and never compared against the
-        # source at all. It sat at `research open` against a source recording it as disproved.
+    def test_variants_do_not_stand_in_for_a_missing_main_statement(self):
+        # Erdős 92 states both its questions as variants and has no bare
+        # `erdos_92`. Guessing a status from the variants was wrong on 1104;
+        # silence was how 92 sat unnoticed. The state is reported as itself,
+        # so the mismatch checker still surfaces the problem.
         self.assertEqual(
             self.statuses(
                 row("42", "Erdos42.erdos_42.variants.weak", "research open"),
                 row("42", "Erdos42.erdos_42.variants.strong", "research open")),
-            {"42": "open"})
+            {"42": "no primary statement"})
 
-    def test_a_variants_only_problem_can_be_solved(self):
+    def test_a_variants_only_problem_reports_its_real_state(self):
         self.assertEqual(
             self.statuses(
                 row("42", "Erdos42.erdos_42.variants.weak", "research solved"),
                 row("42", "Erdos42.erdos_42.variants.strong", "research solved")),
-            {"42": "solved"})
+            {"42": "no primary statement"})
 
     def test_test_and_api_statements_are_ignored(self):
         self.assertEqual(
@@ -166,13 +167,25 @@ class ProblemStatusesTest(unittest.TestCase):
                     conditions=["Erdos427.erdos_427.variants.shiu"])),
             {"427": "solved"})
 
-    def test_an_unconditional_proof_alongside_a_conditional_one_still_counts(self):
+    def test_a_conditional_proof_on_the_main_statement_does_not_count(self):
+        # The main statement's own proof is conditional; the variant's
+        # unconditional proof proves the variant. Neither settles the problem.
         self.assertEqual(
             self.statuses(
                 row("42", "Erdos42.erdos_42", "research solved", formal=True,
                     conditions=["Erdos42.hypothesis"]),
                 row("42", "Erdos42.erdos_42.variants.x", "research solved", formal=True)),
-            {"42": "formally solved"})
+            {"42": "solved"})
+
+    def test_schema_two_proof_list_is_read(self):
+        # The `formalProofs` list carries conditions per proof; one
+        # unconditional entry on the main statement settles it.
+        r = row("42", "Erdos42.erdos_42", "research solved")
+        r["formalProofs"] = [
+            {"kind": "lean4", "link": "x", "conditions": ["h"]},
+            {"kind": "lean4", "link": "y", "conditions": []},
+        ]
+        self.assertEqual(self.statuses(r), {"42": "formally solved"})
 
     def test_an_in_repo_proof_counts_despite_its_empty_link(self):
         # A `formal_conjectures` proof lives in this repository and is written with an empty

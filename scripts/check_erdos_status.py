@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import urllib.request
+import pathlib
 
 YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
@@ -83,6 +84,32 @@ def is_variant(suffix):
 ERDOS_MODULE_RE = re.compile(r"^FormalConjectures\.ErdosProblems\.«?(\d+)»?$")
 
 
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+
+def local_conjectures(problem):
+    """Extract the metadata for one problem from this checkout.
+
+    `--problem N` is the review question: does the branch under review agree
+    with erdosproblems.com? The published extract answers a different
+    question, about whatever `main` was deployed last, and a reviewer
+    consulting it can be told yesterday's answer. So the single-problem path
+    elaborates the local file, the way the site build does, and never
+    silently consults the deployed site. `FC_CONJECTURES` still overrides,
+    for a pre-built extract.
+    """
+    path = ROOT / "FormalConjectures" / "ErdosProblems" / f"{problem}.lean"
+    if not path.exists():
+        sys.exit(f"no local file for Erdős problem {problem}: {path}")
+    proc = subprocess.run(
+        ["lake", "exe", "extract_names", str(path)],
+        capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode != 0:
+        sys.exit(f"extract_names failed on {path}:\n{proc.stderr.strip()[:500]}")
+    out = proc.stdout
+    return json.loads(out[out.index("{"):])
+
+
 def fetch_conjectures():
     """The repository's own extract of every problem it states.
 
@@ -110,34 +137,29 @@ def problem_statuses(data=None):
     """
     data = fetch_conjectures() if data is None else data
     rows = data.get("conjectures") or data.get("problems") or []
-    by_problem, variant_parts, linked = {}, {}, set()
+    by_problem, has_variants, linked = {}, set(), set()
     for row in rows:
         match = ERDOS_MODULE_RE.match(row.get("module", ""))
         if not match:
             continue
         num = match.group(1)
-        # A `formal_proof` anywhere in the file counts, variants included, which is what the
-        # attribute-scanning version this replaces did.
-        #
-        # Read `formalProofKind` rather than the link: a `formal_conjectures` proof lives in
-        # this repository and is written with an empty link, so testing the link would drop
-        # it. And skip a `conditional` proof, which is what `proofConditions` marks: it
-        # establishes the statement only under hypotheses its author has not proved, so it
-        # does not settle the problem.
-        if row.get("formalProofKind") and not row.get("proofConditions"):
-            linked.add(num)
         if row.get("category") not in ("research open", "research solved"):
             continue
         if is_variant(row.get("theorem", "")):
-            variant_parts.setdefault(num, []).append(row)
+            has_variants.add(num)
             continue
         by_problem.setdefault(num, []).append(row)
-
-    # A file whose only research statements are variants has no main statement to read, so
-    # without this it is never compared against the source at all. Erdős 92 sat at
-    # `research open` against a source that records it as disproved for exactly that reason.
-    for num, parts in variant_parts.items():
-        by_problem.setdefault(num, parts)
+        # Only a proof of a *main* statement counts. A `formal_proof` on
+        # `erdos_123.variants.foo` proves the variant, and upgrading the
+        # problem for it reports something nobody established. The
+        # file-anywhere rule this replaces predates declaration-level data.
+        #
+        # `formalProofKind` rather than the link: a `formal_conjectures`
+        # proof lives in this repository with an empty link. And a
+        # `conditional` proof, marked by `proofConditions`, establishes the
+        # statement only under hypotheses its author has not proved.
+        if unconditional_proof(row):
+            linked.add(num)
 
     result = {}
     for num, parts in by_problem.items():
@@ -147,7 +169,28 @@ def problem_statuses(data=None):
             result[num] = "formally solved"
         else:
             result[num] = "solved"
+    # A file whose research statements are all variants has no main
+    # statement, and pretending the variants define its status guessed
+    # wrong on 1104. Report the state itself: the mismatch checker turns it
+    # into "FC representation incomplete", which is what is actually true.
+    # Erdős 92 was found through exactly this hole, so it must not be
+    # silent.
+    for num in has_variants - set(result):
+        result[num] = "no primary statement"
     return result
+
+
+def unconditional_proof(row):
+    """Whether this declaration carries a proof that settles it outright.
+
+    Reads the `formalProofs` list when the extract provides one
+    (`schemaVersion` 2), and the flat fields of the older extract
+    otherwise, so the checker works against both while the schema lands.
+    """
+    proofs = row.get("formalProofs")
+    if proofs is not None:
+        return any(not p.get("conditions") for p in proofs)
+    return bool(row.get("formalProofKind")) and not row.get("proofConditions")
 
 
 def classifiable():
@@ -163,7 +206,7 @@ def classifiable():
     }
 
 
-def find_mismatches():
+def find_mismatches(data=None):
     problems = fetch_yaml()
     yaml_statuses = {}
     for p in problems:
@@ -173,7 +216,7 @@ def find_mismatches():
         if cat is not None:
             yaml_statuses[num] = cat
 
-    lean_statuses = problem_statuses()
+    lean_statuses = problem_statuses(data)
 
     mismatches = []
     for num, lean_cat in sorted(lean_statuses.items(), key=lambda x: int(x[0])):
@@ -323,9 +366,12 @@ def problem_argument(argv):
 
 
 def main():
-    mismatches = find_mismatches()
-
     wanted = problem_argument(sys.argv)
+    data = None
+    if wanted is not None and not os.environ.get("FC_CONJECTURES"):
+        data = local_conjectures(wanted)
+    mismatches = find_mismatches(data)
+
     if wanted is not None:
         mismatches = [m for m in mismatches if m["number"] == wanted]
         json.dump(mismatches, sys.stdout, indent=2)
