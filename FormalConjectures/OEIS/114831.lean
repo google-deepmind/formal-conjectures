@@ -70,7 +70,9 @@ So $a(n)$ grows exponentially, at least as fast as the Fibonnaci numbers.
 Assuming $\frac{a(n+1)}{a(n)}$ tend to a limit L, solving for L in the definition of $a(n)$
 gives $L=\sqrt{3}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a114831-asymptotic/blob/54cdeeed2ef5838e3aa61a3a228e6867802d20df/lean/OeisA114831FC.lean#L252-L285"]
 theorem conjecture3 :
     Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (nhds (Real.sqrt 3)) := by
   sorry
