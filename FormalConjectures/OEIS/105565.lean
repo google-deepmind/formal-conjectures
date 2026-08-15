@@ -93,7 +93,7 @@ linked by the `formal_proof` attribute below.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/HaigAd/formal-conjectures/commit/327b99914ce787ab41c67ba645626982e15b0124"]
+    "https://github.com/HaigAd/formal-conjectures/blob/327b99914ce787ab41c67ba645626982e15b0124/FormalConjectures/OEIS/105565.lean#L595"]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
     betaConst - 2 < s n - alphaConst * (n : Real) ∧
       s n - alphaConst * (n : Real) < betaConst - 1 := by
