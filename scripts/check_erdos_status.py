@@ -136,7 +136,7 @@ def problem_statuses(data=None):
     Variants and `test`/`API`/`textbook` statements do not count towards the status.
     """
     data = fetch_conjectures() if data is None else data
-    rows = data.get("conjectures") or data.get("problems") or []
+    rows = metadata_rows(data)
     by_problem, has_variants, linked = {}, set(), set()
     for row in rows:
         match = ERDOS_MODULE_RE.match(row.get("module", ""))
@@ -178,6 +178,53 @@ def problem_statuses(data=None):
     for num in has_variants - set(result):
         result[num] = "no primary statement"
     return result
+
+
+def metadata_rows(data):
+    """Return declaration rows, validating canonical schema 2 when declared.
+
+    The published extract is still schema 1 while #4894 is open, so an absent
+    version (or explicit version 1) retains the legacy compatibility path.
+    Once an input declares schema 2, however, it must provide the canonical
+    per-declaration proof list and cannot silently fall back to singular fields.
+    """
+    version = data.get("schemaVersion", 1)
+    if version not in (1, 2):
+        raise ValueError(f"unsupported conjectures schemaVersion: {version!r}")
+    if "conjectures" in data:
+        rows = data["conjectures"]
+    elif "problems" in data:
+        rows = data["problems"]
+    else:
+        rows = []
+    if not isinstance(rows, list):
+        raise ValueError("conjectures metadata rows must be a list")
+    if version == 2:
+        for index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                raise ValueError(f"schema 2 row {index} must be an object")
+            proofs = row.get("formalProofs")
+            if not isinstance(proofs, list):
+                raise ValueError(
+                    f"schema 2 row {index} formalProofs must be a list")
+            for proof_index, proof in enumerate(proofs):
+                if not isinstance(proof, dict):
+                    raise ValueError(
+                        f"schema 2 row {index} proof {proof_index} must be an object")
+                if not isinstance(proof.get("kind"), str):
+                    raise ValueError(
+                        f"schema 2 row {index} proof {proof_index} kind must be a string")
+                if not isinstance(proof.get("link"), str):
+                    raise ValueError(
+                        f"schema 2 row {index} proof {proof_index} link must be a string")
+                conditions = proof.get("conditions")
+                if not isinstance(conditions, list) or not all(
+                    isinstance(condition, str) for condition in conditions
+                ):
+                    raise ValueError(
+                        f"schema 2 row {index} proof {proof_index} conditions "
+                        "must be a list of strings")
+    return rows
 
 
 def unconditional_proof(row):

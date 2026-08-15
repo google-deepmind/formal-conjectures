@@ -18,6 +18,7 @@ import unittest
 
 from check_erdos_status import (
     issues_to_close,
+    metadata_rows,
     problem_argument,
     problem_statuses,
     yaml_status_to_category,
@@ -185,7 +186,32 @@ class ProblemStatusesTest(unittest.TestCase):
             {"kind": "lean4", "link": "x", "conditions": ["h"]},
             {"kind": "lean4", "link": "y", "conditions": []},
         ]
-        self.assertEqual(self.statuses(r), {"42": "formally solved"})
+        self.assertEqual(
+            problem_statuses({"schemaVersion": 2, "conjectures": [r]}),
+            {"42": "formally solved"})
+
+    def test_schema_two_rejects_a_singular_proof_shape(self):
+        r = row("42", "Erdos42.erdos_42", "research solved", formal=True)
+        with self.assertRaisesRegex(ValueError, "formalProofs must be a list"):
+            problem_statuses({"schemaVersion": 2, "conjectures": [r]})
+
+    def test_schema_two_rejects_malformed_conditions(self):
+        r = row("42", "Erdos42.erdos_42", "research solved")
+        r["formalProofs"] = [
+            {"kind": "lean4", "link": "x", "conditions": "not-a-list"}
+        ]
+        with self.assertRaisesRegex(ValueError, "conditions must be a list"):
+            problem_statuses({"schemaVersion": 2, "conjectures": [r]})
+
+    def test_unknown_schema_version_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "unsupported.*schemaVersion"):
+            metadata_rows({"schemaVersion": 3, "conjectures": []})
+
+    def test_legacy_shape_remains_supported_until_schema_two_lands(self):
+        r = row("42", "Erdos42.erdos_42", "research solved", formal=True)
+        self.assertEqual(
+            problem_statuses({"schemaVersion": 1, "conjectures": [r]}),
+            {"42": "formally solved"})
 
     def test_an_in_repo_proof_counts_despite_its_empty_link(self):
         # A `formal_conjectures` proof lives in this repository and is written with an empty
