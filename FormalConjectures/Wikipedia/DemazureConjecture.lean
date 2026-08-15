@@ -63,13 +63,33 @@ noncomputable def demazureCharFormula
   ∑ w' ∈ S, (-1 : ℤ) ^ (ℓ w - ℓ w') • e (w' • (lam + ρ) - ρ)
 
 /--
-**The Demazure Conjecture** (Demazure 1974; proved by Lakshmibai–Musili–Seshadri 1979 and Littelmann 1998).
+`IsDominant lam` asserts that `lam` is a dominant weight.
+Since reductive algebraic groups are not yet fully in Mathlib, this is axiomatized with `sorry`.
+-/
+def IsDominant {Λ : Type*} [AddCommGroup Λ] (lam : Λ) : Prop := sorry
 
-For a reductive algebraic group $G$ with Weyl group $W$, weight lattice $\Lambda$, Weyl vector $\rho$, and formal character ring $R = \mathbb{Z}[\Lambda]$, the formal character of the Demazure $B$-module $V_w(\lambda)$ equals the alternating sum
+/--
+`IsDemazureCharacter char` asserts that the function `char : W → Λ → R`
+maps `(w, lam)` to the formal character of the Demazure module $V_w(\lambda)$.
+Since Demazure modules are not in Mathlib, this is axiomatized with `sorry`.
+-/
+def IsDemazureCharacter
+    {W Λ R : Type*} [Group W] [AddCommGroup Λ] [CommRing R] [SMul W Λ]
+    (char : W → Λ → R) : Prop := sorry
+
+/--
+**The Demazure Conjecture** (Demazure 1974; proved by Lakshmibai–Musili–Seshadri 1979 and
+Littelmann 1998).
+
+For a reductive algebraic group $G$ with Weyl group $W$, weight lattice $\Lambda$, Weyl vector
+$\rho$, and formal character ring $R = \mathbb{Z}[\Lambda]$, the formal character of the Demazure
+$B$-module $V_w(\lambda)$ equals the alternating sum
 $$\operatorname{ch}(V_w(\lambda)) =
-  \sum_{w' \leq w} (-1)^{\ell(w) - \ell(w')} e^{w'(\lambda + \rho) - \rho}$$ for every $w \in W$ and every dominant weight $\lambda \in \Lambda^+$.
+  \sum_{w' \leq w} (-1)^{\ell(w) - \ell(w')} e^{w'(\lambda + \rho) - \rho}$$
+for every $w \in W$ and every dominant weight $\lambda \in \Lambda^+$.
 
-Here `demazureChar w lam` denotes the formal character of the Demazure module $V_w(\lambda)$, axiomatized since reductive algebraic group representations are not yet in Mathlib.
+Here `demazureChar w lam` denotes the formal character of the Demazure module $V_w(\lambda)$,
+constrained by the `IsDemazureCharacter` predicate.
 -/
 @[category research solved, AMS 20 14 17]
 theorem demazure_conjecture
@@ -82,8 +102,8 @@ theorem demazure_conjecture
     (bruhatBelow : W → Finset W)
     (hBruhat : ∀ (w : W) (w' : W), w' ∈ bruhatBelow w ↔ w' ≤ w)
     (demazureChar : W → Λ → R)
-    (isDominant : Λ → Prop) :
-    ∀ (w : W) (lam : Λ), isDominant lam →
+    (hChar : IsDemazureCharacter demazureChar) :
+    ∀ (w : W) (lam : Λ), IsDominant lam →
       demazureChar w lam =
         demazureCharFormula ℓ ρ e w lam (bruhatBelow w) (hBruhat w) := by
   sorry
