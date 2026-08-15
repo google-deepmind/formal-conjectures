@@ -58,12 +58,17 @@ theorem isEquidistributedModuloOne_three_halves_pow :
     IsEquidistributedModuloOne (fun n => (3 / 2 : ℝ)^n) := by
   sorry
 
-/-- For any transcendental number `x`, the sequence `x * (3 / 2) ^ n` is
-equidistributed modulo 1. -/
+/-- Is the sequence `x * (3 / 2) ^ n` equidistributed modulo `1` for every transcendental `x`?
+
+The reference states equidistribution of `(x ^ n)` for *almost all* `x > 1` (Chapter 1,
+Corollary 4.2), quoted in the module docstring above. It does not state anything for a
+particular `x`, and transcendence is not known to be sufficient for any single sequence of this
+kind — that is precisely the difficulty recorded for `(3 / 2) ^ n` itself. This is therefore
+asked rather than asserted. -/
 @[category research open, AMS 11]
-theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
-    (hx : Transcendental ℚ x) :
-    IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
+theorem isEquidistributedModuloOne_transcendental_three_halves_pow :
+    answer(sorry) ↔ ∀ (x : ℝ), Transcendental ℚ x →
+      IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
   sorry
 
 /--
