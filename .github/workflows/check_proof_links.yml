@@ -1,70 +1,31 @@
-# Copyright 2026 The Formal Conjectures Authors.
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-#     https://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
+# `formal_proof` links rot quietly: nothing builds them and nothing reads
+# them. The Python extracts the URLs; lychee, which owns link checking the
+# way comparator owns proof checking, does the HTTP.
 name: Check formal_proof links
 
-# `formal_proof` links are never built and never read by CI, so an upstream
-# rename leaves a dead link that nobody notices. On a pull request only the
-# links in changed files are checked, which keeps it quick and catches a bad
-# link while it is still being reviewed. The weekly run covers the rest.
 on:
   schedule:
-    - cron: '17 6 * * 1' # Mondays, 06:17 UTC
-  pull_request:
-    paths:
-      - 'FormalConjectures/**/*.lean'
-      - 'scripts/check_proof_links.py'
-      - '.github/workflows/check_proof_links.yml'
+    - cron: "17 6 * * 1"   # weekly; link rot is slow
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  check-links:
+  check:
     runs-on: ubuntu-latest
-    # Scheduled runs on forks would check the same links again to no purpose.
-    if: >-
-      github.event_name != 'schedule' ||
-      github.repository == 'google-deepmind/formal-conjectures'
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Extract formal_proof links
+        run: python3 scripts/check_proof_links.py > proof-links.txt
+
+      - name: Check them
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          # `git diff` against the base needs the history, not just the tip.
-          fetch-depth: 0
-
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.12'
-
-      - name: Check the links in changed files
-        if: github.event_name == 'pull_request'
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: |
-          # Only added and modified files; a deleted file has no links to check.
-          # Filtering on the extension here rather than with a git pathspec,
-          # because git globs do not treat `**` the way a shell does.
-          git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- FormalConjectures \
-            | grep '\.lean$' > changed.txt || true
-          if [[ ! -s changed.txt ]]; then
-            echo "No problem files changed."
-            exit 0
-          fi
-          echo "Changed files:"; cat changed.txt
-          xargs python3 scripts/check_proof_links.py < changed.txt
-
-      - name: Check every link
-        if: github.event_name != 'pull_request'
-        run: python3 scripts/check_proof_links.py
+          args: >-
+            --no-progress --max-retries 3 --timeout 30
+            --user-agent formal-conjectures-link-check
+            proof-links.txt
+          fail: true
