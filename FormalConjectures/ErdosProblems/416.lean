@@ -69,6 +69,8 @@ theorem erdos_416.variants.Erdos : ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ →
     ∀ᶠ x in Filter.atTop, V x = x * x.log ^ (-1 + f x) := by
   sorry
 
+-- The constant `C` is not known explicitly, so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
@@ -81,6 +83,8 @@ theorem erdos_416.variants.Maier_Pomerance :
       ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
   sorry
 
+-- The constants `C₁, C₂, C₃` are not known explicitly, so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`

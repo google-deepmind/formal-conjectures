@@ -56,6 +56,9 @@ def admissibleConstants : Set ℝ :=
   {c : ℝ | ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ x : Fin n → ℝ, Function.Injective x →
     ∃ S ∈ monotonicSubsequenceSums x, (c - ε) / Real.sqrt (n : ℝ) * (∑ i, x i) ≤ S}
 
+-- The headline keeps the question form; the answer is recorded in
+-- `erdos_1026.variants.eq_one` below.
+set_option linter.style.category_answer false in
 /--
 Let $x_1,\ldots,x_n$ be a sequence of distinct real numbers. Determine
 $$

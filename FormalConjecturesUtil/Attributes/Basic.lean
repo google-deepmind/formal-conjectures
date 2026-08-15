@@ -287,6 +287,32 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
 
 syntax (name := Category_attr) "category" CategorySyntax : attr
 
+section
+open Command Parser Term
+
+/-- Extract the `category` attributes from a declaration's modifiers. -/
+def toCategorySyntax
+    (stx : TSyntax ``Command.declModifiers) :
+    CommandElabM (Array <| TSyntax ``attrInstance) := do
+  match stx with
+  | `(declModifiers| $(_)? @[$[$atts],*] $(_)? $(_)? $(_)? $(_)?) =>
+    atts.filterM fun att ↦ do
+      match att with
+      | `(attrInstance | category $_) => return true
+      | _ => return false
+  | _ => return #[]
+
+/-- Extract the categories from a declaration's modifiers. -/
+def toCategories
+    (stx : TSyntax ``Command.declModifiers) :
+    CommandElabM (Array Category) := do
+  let cats ← toCategorySyntax stx
+  cats.mapM fun
+    | `(attrInstance | category $s) => liftCoreM <| Syntax.toCategory s
+    | _ => throwUnsupportedSyntax
+
+end
+
 /-- Specifies the type of a statement.
 
 This is used as follows: `@[category my_cat]` where `my_cat` is one of:
