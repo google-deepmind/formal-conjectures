@@ -140,7 +140,10 @@ The attribute state is a `HashSet`, so it does not preserve the order the annota
 written in and `toArray` may return them differently from one run to the next. Sorting keeps
 the extract stable. -/
 def FormalProofInfo.sortKey (proof : FormalProofInfo) : String :=
-  proof.kind ++ " " ++ proof.link
+  -- Conditions are part of the key: two proofs may share kind and link and
+  -- differ only in what they assume, and equal keys would let the HashSet's
+  -- order leak through for exactly that pair.
+  proof.kind ++ " " ++ proof.link ++ " " ++ String.intercalate "," proof.conditions
 
 structure TheoremInfo where
   «theorem» : String
@@ -367,7 +370,10 @@ unsafe def main (args : List String) : IO Unit := do
 
     -- Build structured output: { problems: [...], moduleDocstrings: {...} }
     let problemsJson := toJson (allResults.reverse.map (·.toFilteredJson excludeSet))
-    let mut outputFields : List (String × Json) := [("problems", problemsJson)]
+    -- Consumers should not have to guess whether they are reading the old
+    -- `formalProofKind` shape or the `formalProofs` list; say so.
+    let mut outputFields : List (String × Json) :=
+      [("schemaVersion", Lean.toJson (2 : Nat)), ("problems", problemsJson)]
     if !excludeSet.contains "moduleDocstrings" then
       let moduleDocJson := Json.mkObj (moduleDocstrings.reverse.map fun (k, v) => (k, toJson v))
       outputFields := outputFields ++ [("moduleDocstrings", moduleDocJson)]
