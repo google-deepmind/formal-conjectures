@@ -335,6 +335,13 @@ is outside of the scope of this repository.
   problem has been solved, `answer(sorry)` should be replaced by
   `answer(True)` or `answer(False)` accordingly.
 
+  The `linter.style.category_answer` linter enforces this: it warns when a
+  declaration tagged `@[category research solved]` still uses `answer(sorry)`.
+  A statement that deliberately keeps the placeholder, for instance because the
+  problem is independent of ZFC or because the answer is a constant that is not
+  known explicitly, can opt out with
+  `set_option linter.style.category_answer false in`.
+
   If the problem is not stated as a question, the following style is preferred:
 
   ```lean

@@ -36,6 +36,9 @@ variable {V : Type*}
 /-- The complete tripartite graph $K_{1,3,3}$. -/
 abbrev K133 := SimpleGraph.completeMultipartiteGraph fun i : Fin 3 => Fin (![1, 3, 3] i)
 
+-- The headline keeps the question form; the answer is recorded in
+-- `erdos_1007.variants.dimension_four` below.
+set_option linter.style.category_answer false in
 /--
 The dimension of a graph $G$ is the minimal $n$ such that $G$ can be embedded in $\mathbb{R}^n$
 such that every edge of $G$ is a unit line segment.
