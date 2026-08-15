@@ -27,7 +27,6 @@ const state = {
   sort:            'name',
 };
 
-const FORMAL_PROOF_LABELS = FC.FORMAL_PROOF_LABELS;
 
 // ---------------------------------------------------------------------------
 // DOM references
@@ -59,7 +58,7 @@ function readURL() {
   state.formalProofKinds.clear();
   if (params.get('formal_proof') === 'true') {
     // Landing page shortcut: select all proof kinds
-    for (const k of Object.keys(FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
+    for (const k of Object.keys(FC.FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
   } else {
     for (const v of params.getAll('formal_proof_kind')) state.formalProofKinds.add(v);
   }
@@ -341,7 +340,7 @@ async function init() {
 
   // Build filter UI
   buildCheckboxes(categoryFilters,    categories,      state.categories,      update);
-  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FORMAL_PROOF_LABELS);
+  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FC.FORMAL_PROOF_LABELS);
   buildCheckboxes(collectionFilters,  collections,     state.collections,     update);
   buildCheckboxes(subjectFilters,     subjects,        state.subjects,        update);
 
