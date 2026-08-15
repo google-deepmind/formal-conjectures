@@ -53,3 +53,34 @@ theorem conditional_on_a_proved_assumption : 6 + 6 = 12 := by
   rfl
 
 end FormalProofLinter
+
+#guard_msgs in
+/-- A statement with a formal proof that has a proper `by sorry` proof. -/
+@[category research solved,
+  formal_proof using lean4 at "https://example.com"]
+theorem a_formal_proof_with_sorry : 2 + 2 = 4 := by
+  sorry
+
+/--
+warning: A statement with a `formal_proof` annotation must be proved exactly `by sorry` in this repository (unless it has conditionals). Proofs should live in their own repository or branch.
+
+Note: This linter can be disabled with `set_option linter.style.conditional_formal_proof false`
+-/
+#guard_msgs in
+/-- A statement with a formal proof that does NOT have exactly `sorry` (it is proved). -/
+@[category research solved,
+  formal_proof using lean4 at "https://example.com"]
+theorem a_formal_proof_with_rfl : 2 + 2 = 4 := by
+  rfl
+
+/--
+warning: A statement with a `formal_proof` annotation must be proved exactly `by sorry` in this repository (unless it has conditionals). Proofs should live in their own repository or branch.
+
+Note: This linter can be disabled with `set_option linter.style.conditional_formal_proof false`
+-/
+#guard_msgs in
+/-- A statement with a formal proof that does NOT have exactly `sorry` (it has induction then sorry). -/
+@[category research solved,
+  formal_proof using lean4 at "https://example.com"]
+theorem a_formal_proof_with_partial_proof (n : Nat) : n = n := by
+  cases n <;> sorry
