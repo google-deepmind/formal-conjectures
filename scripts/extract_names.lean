@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Lean
+public meta import FormalConjecturesUtil.Metadata
 public import FormalConjecturesUtil.Attributes.Basic
 public import FormalConjecturesUtil.Answer
 
@@ -119,31 +120,9 @@ def validExcludeKeys : List String :=
    "hasSorryFreeProof", "moduleDocstrings", "answerKinds",
    "fileFirstAdded", "fileLastModified"]
 
-/-- One `formal_proof` annotation: where the proof is, and what it assumes.
-
-A declaration can carry several, so these are reported as a list. `conditions` is empty
-unless the annotation is `conditional`. -/
-structure FormalProofInfo where
-  kind : String
-  link : String
-  conditions : List String
-
-def FormalProofInfo.toJson (proof : FormalProofInfo) : Json :=
-  Json.mkObj
-    [("kind", Lean.toJson proof.kind),
-     ("link", Lean.toJson proof.link),
-     ("conditions", Lean.toJson proof.conditions)]
-
-/-- A key that orders the proofs of one declaration deterministically.
-
-The attribute state is a `HashSet`, so it does not preserve the order the annotations were
-written in and `toArray` may return them differently from one run to the next. Sorting keeps
-the extract stable. -/
-def FormalProofInfo.sortKey (proof : FormalProofInfo) : String :=
-  -- Conditions are part of the key: two proofs may share kind and link and
-  -- differ only in what they assume, and equal keys would let the HashSet's
-  -- order leak through for exactly that pair.
-  proof.kind ++ " " ++ proof.link ++ " " ++ String.intercalate "," proof.conditions
+-- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
+-- the shared home for facts more than one tool consumes.
+open FormalConjectures.Metadata
 
 structure TheoremInfo where
   «theorem» : String
