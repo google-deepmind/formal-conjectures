@@ -57,7 +57,9 @@ theorem a_127 : A 127 := by
 theorem not_a_91 : ¬ A 91 := by
   norm_num [A, Nat.prime_def_lt]
 
-/-- [OEIS A002407](https://oeis.org/A002407) states: "This sequence is believed to be infinite." -/
+/--
+This sequence is believed to be infinite.
+-/
 @[category research open, AMS 11]
 theorem conjecture : {p : ℕ | A p}.Infinite := by
   sorry
