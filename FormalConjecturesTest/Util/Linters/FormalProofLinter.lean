@@ -84,3 +84,32 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
   formal_proof using lean4 at "https://example.com"]
 theorem a_formal_proof_with_partial_proof (n : Nat) : n = n := by
   cases n <;> sorry
+
+/--
+warning: A statement with a `formal_proof` annotation must be proved exactly `by sorry` in this repository (unless it has conditionals). Proofs should live in their own repository or branch.
+
+Note: This linter can be disabled with `set_option linter.style.conditional_formal_proof false`
+-/
+#guard_msgs in
+/-- One unconditional proof among several makes the exact-sorry rule apply. -/
+@[category research solved,
+  conditional formal_proof using lean4 at "https://example.com/conditional"
+    assuming FormalProofLinter.an_open_assumption,
+  formal_proof using other_system at "https://example.com/unconditional"]
+theorem mixed_conditional_and_unconditional_proofs : 8 + 8 = 16 := by
+  rfl
+
+/--
+warning: The assumed hypothesis `FormalProofLinter.a_proved_assumption` has a sorry-free proof, so the formal proof may no longer need to be marked `conditional`.
+
+Note: This linter can be disabled with `set_option linter.style.conditional_formal_proof false`
+-/
+#guard_msgs in
+/-- Every proof condition is inspected, with duplicate conditions reported once. -/
+@[category research solved,
+  conditional formal_proof using lean4 at "https://example.com/first"
+    assuming FormalProofLinter.a_proved_assumption,
+  conditional formal_proof using other_system at "https://example.com/second"
+    assuming FormalProofLinter.a_proved_assumption]
+theorem multiple_conditional_proofs : 10 + 10 = 20 := by
+  rfl

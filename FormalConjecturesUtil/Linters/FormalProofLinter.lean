@@ -52,6 +52,15 @@ def isProved (declName : Name) : CommandElabM Bool := do
   let some info := (← getEnv).findAsync? declName | return false
   return info.toConstantInfo.value?.any (!·.hasSorry)
 
+/-- Return every formal-proof tag attached to `declName`.
+
+A declaration may have more than one proof. Linter policy must therefore be
+computed over the complete list rather than the legacy singular accessor. -/
+def getFormalProofTagsFor
+    (declName : Name) : CommandElabM (Array ProblemAttributes.FormalProofTag) := do
+  let tags ← liftTermElabM ProblemAttributes.getFormalProofTags
+  return tags.filter (·.declName == declName)
+
 /-- Warns when a hypothesis assumed by a `conditional formal_proof` has since been
 proved, so the proof may no longer be conditional on it. -/
 def checkAssumptionsStillOpen (mods : TSyntax ``Lean.Parser.Command.declModifiers) (declId : Syntax) : CommandElabM Unit := do
@@ -65,11 +74,15 @@ def checkAssumptionsStillOpen (mods : TSyntax ``Lean.Parser.Command.declModifier
   let env ← getEnv
   let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
   unless ← hasConst declName do return
-  for condName in ← liftTermElabM (ProblemAttributes.getProofConditions declName) do
-    if ← isProved condName then
-      logLintIf linter.style.conditional_formal_proof declId
-        m!"The assumed hypothesis `{condName}` has a sorry-free proof, so the \
-           formal proof may no longer need to be marked `conditional`."
+  let mut seen : Std.HashSet Name := {}
+  for tag in ← getFormalProofTagsFor declName do
+    for condName in tag.conditions do
+      unless seen.contains condName do
+        seen := seen.insert condName
+        if ← isProved condName then
+          logLintIf linter.style.conditional_formal_proof declId
+            m!"The assumed hypothesis `{condName}` has a sorry-free proof, so the \
+               formal proof may no longer need to be marked `conditional`."
 
 /-- Warns when a statement with a `formal_proof` annotation has a proof that is not exactly `sorry` or `by sorry`,
 unless it is conditional. The main branch is a statement repository, so proofs should live in
@@ -86,8 +99,8 @@ def checkProofIsSorryIfFormalProof (mods : TSyntax ``Lean.Parser.Command.declMod
   let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
   unless ← hasConst declName do return
 
-  let some tag ← liftTermElabM (ProblemAttributes.getFormalProofTag declName) | return
-  if tag.conditions.isEmpty then
+  let tags ← getFormalProofTagsFor declName
+  if tags.any (·.conditions.isEmpty) then
     let isSorry := match val with
       | `(Lean.Parser.Command.declVal| := by sorry) => true
       | `(Lean.Parser.Command.declVal| := sorry) => true
