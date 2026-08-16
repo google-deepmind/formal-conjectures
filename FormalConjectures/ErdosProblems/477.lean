@@ -30,8 +30,8 @@ namespace Erdos477
 
 /--
 Is there a polynomial $f:\mathbb{Z}\to \mathbb{Z}$ of degree at least $2$ and a set
-$A\subset \mathbb{Z}$ such that for any $z\in \mathbb{Z}$ there is exactly one $a\in A$ and
-$b\in \{ f(n) : n\in\mathbb{Z}\}$ such that $z=a+b$?
+$A\subset \mathbb{Z}$ such that for any $n\in \mathbb{Z}$ there is exactly one $a\in A$ and
+$b\in \{ f(k) : k\in\mathbb{Z}\}$ such that $n=a+b$?
 -/
 @[category research open, AMS 12]
 theorem erdos_477 : answer(sorry) ↔
