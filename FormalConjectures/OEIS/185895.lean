@@ -46,6 +46,12 @@ noncomputable def a (n : ℕ) : ℤ :=
 /-- A natural number $n$ is triangular if $n = k(k+1)/2$ for some $k \in \mathbb{N}$. -/
 def IsTriangular (n : ℕ) : Prop := ∃ k : ℕ, n = k * (k + 1) / 2
 
+@[category API, AMS 11]
+lemma C_mul_X_pow_mul (a b : ℚ) (n m : ℕ) :
+    (C a * X ^ n) * (C b * X ^ m) = C (a * b) * X ^ (n + m) := by
+  rw [C_mul, pow_add]
+  ring
+
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by rfl
@@ -63,38 +69,30 @@ theorem a_2 : a 2 = -1 := by
   dsimp [a, P]
   have hI : (Finset.Icc 1 2 : Finset ℕ) = {1, 2} := by decide
   rw [hI, Finset.prod_insert (by decide), Finset.prod_singleton]
-  simp only [mul_sub, sub_mul, one_mul, mul_one, coeff_sub, coeff_add, coeff_one,
-    coeff_X_pow, coeff_X, coeff_C_mul_X_pow]
-  norm_num
+  simp only [mul_sub, sub_mul, one_mul, mul_one, C_mul_X_pow_mul,
+    coeff_sub, coeff_one, coeff_C_mul_X_pow]
+  decide +native
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2 := by
   dsimp [a, P]
   have hI : (Finset.Icc 1 3 : Finset ℕ) = {1, 2, 3} := by decide
-  have h_prod : (∏ k ∈ Finset.Icc 1 3, (1 - C (1 / (k.factorial : ℚ)) * X ^ k)) =
-      1 - X - C (1/2 : ℚ) * X ^ 2 + C (1/3 : ℚ) * X ^ 3 + C (1/6 : ℚ) * X ^ 4 - C (1/12 : ℚ) * X ^ 5 := by
-    rw [hI, Finset.prod_insert (by decide), Finset.prod_insert (by decide), Finset.prod_singleton]
-    ring
-  rw [h_prod]
-  simp [sub_mul, mul_sub, coeff_sub, coeff_add, coeff_one, coeff_X, coeff_X_pow]
-  rfl
+  rw [hI, Finset.prod_insert (by decide), Finset.prod_insert (by decide), Finset.prod_singleton]
+  simp only [mul_sub, sub_mul, one_mul, mul_one, C_mul_X_pow_mul,
+    coeff_sub, coeff_one, coeff_C_mul_X_pow]
+  decide +native
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 3 := by
   dsimp [a, P]
   have hI : (Finset.Icc 1 4 : Finset ℕ) = {1, 2, 3, 4} := by decide
-  have h_prod : (∏ k ∈ Finset.Icc 1 4, (1 - C (1 / (k.factorial : ℚ)) * X ^ k)) =
-      1 - X - C (1/2 : ℚ) * X ^ 2 + C (1/3 : ℚ) * X ^ 3 + C (1/8 : ℚ) * X ^ 4 -
-      C (1/24 : ℚ) * X ^ 5 + C (1/48 : ℚ) * X ^ 6 - C (1/72 : ℚ) * X ^ 7 -
-      C (1/144 : ℚ) * X ^ 8 + C (1/288 : ℚ) * X ^ 9 := by
-    rw [hI, Finset.prod_insert (by decide), Finset.prod_insert (by decide),
-        Finset.prod_insert (by decide), Finset.prod_singleton]
-    ring
-  rw [h_prod]
-  simp [sub_mul, mul_sub, coeff_sub, coeff_add, coeff_one, coeff_X, coeff_X_pow]
-  rfl
+  rw [hI, Finset.prod_insert (by decide), Finset.prod_insert (by decide),
+      Finset.prod_insert (by decide), Finset.prod_singleton]
+  simp only [mul_sub, sub_mul, one_mul, mul_one, C_mul_X_pow_mul,
+    coeff_sub, coeff_one, coeff_C_mul_X_pow]
+  decide +native
 
 /--
 $a(n)$ differs in sign from $a(n-1)$ if and only if $n$ is a triangular number
@@ -102,8 +100,18 @@ $a(n)$ differs in sign from $a(n-1)$ if and only if $n$ is a triangular number
 - _Peter Bala_, Mar 17 2022
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
+theorem conjecture1 (n : ℕ) (hn : 0 < n) :
     a n * a (n - 1) < 0 ↔ IsTriangular n := by
+  sorry
+
+/--
+The Gauss congruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^k}$ hold
+for all primes $p$ and positive integers $n$ and $k$.
+- _Peter Bala_, Mar 17 2022
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
+    a (n * p ^ k) ≡ a (n * p ^ (k - 1)) [ZMOD (p : ℤ) ^ k] := by
   sorry
 
 end OeisA185895
