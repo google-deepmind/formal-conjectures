@@ -99,9 +99,9 @@ $\ell_p^n$ ball ($p > 1$, $p \neq 2$) witnesses that $n$ sources are not suffici
 The sharp minimal number $n+1$ is left open as this conjecture.
 -/
 @[category research open, AMS 52 53]
-theorem ellipsoid_of_flat_shadow_boundaries (hn : 3 ≤ n) :
+theorem ellipsoid_of_flat_shadow_boundaries :
     answer(sorry) ↔
-    ∀ (K : Set (EuclideanSpace ℝ (Fin n))),
+    ∀ (n : ℕ) (_ : 3 ≤ n) (K : Set (EuclideanSpace ℝ (Fin n))),
       IsConvexBody K →
       (∀ p ∈ frontier K,
         ∃ (ν : EuclideanSpace ℝ (Fin n)) (_ : ν ≠ 0)
