@@ -314,6 +314,9 @@ is outside of the scope of this repository.
 - Use `theorem` or `lemma` for problem statements.
 - Bespoke definitions are allowed when they help clarify problem statements;
   add basic API tests for them.
+- Do not introduce placeholder definitions (e.g. `def foo : Type := sorry` or
+  `opaque foo : Type*`), incomplete type annotations, holes, or new axioms. All
+  referenced definitions must exist, and all imports must be correct.
 - Every statement should have at least one `AMS` subject tag.
 - Every file should be put in the corresponding directory of the repository,
   e.g. a problem sourced from Wikipedia should live in

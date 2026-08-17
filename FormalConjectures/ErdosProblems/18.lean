@@ -156,7 +156,7 @@ theorem practicalH_twelve : practicalH 12 = 3 := by
           fin_cases ha <;> fin_cases hb <;> decide
         exact key B (Finset.mem_powerset.mpr hBp) hBsum.symm
 
-/-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
+/-- For any practical number $n$, $h(n)$ ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
     practicalH n ≤ n.divisors.card := by

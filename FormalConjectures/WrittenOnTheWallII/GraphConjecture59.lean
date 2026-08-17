@@ -19,8 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 59
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture59
@@ -39,10 +39,16 @@ after applying the Havel-Hakimi algorithm to the degree sequence until terminati
 and $b(G)$ is the size of a largest induced bipartite subgraph.
 
 See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
+
+This conjecture is false. There is a connected counterexample on 123 vertices
+with `residue G = 101`, `b G = 122`, and `G.largestInducedForestSize = 111`.
+Indeed, `101 * 122 = 12322 = 111 ^ 2 + 1`, so the conjectured lower bound is 112.
 -/
-@[category research open, AMS 5]
-theorem conjecture59 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    ⌈Real.sqrt ((residue G : ℝ) * b G)⌉ ≤ (G.largestInducedForestSize : ℝ) := by
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean"]
+theorem conjecture59 : answer(False) ↔
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected),
+      ⌈Real.sqrt ((residue G : ℝ) * b G)⌉ ≤ (G.largestInducedForestSize : ℝ) := by
   sorry
 
 -- Sanity checks
