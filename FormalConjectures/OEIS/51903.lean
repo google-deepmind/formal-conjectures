@@ -53,8 +53,29 @@ Are there composite numbers $n > 4$ such that $n \equiv a(n) \pmod{\phi(n)}$?
 - Thomas Ordowski, Dec 02 2019
 -/
 @[category research open, AMS 11]
-theorem conjecture :
+theorem conjecture1 :
     answer(sorry) ↔ ∃ n : ℕ, 4 < n ∧ ¬ n.Prime ∧ n.totient ∣ (n - a n) := by
   sorry
 
+/--
+Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\lambda(n)}$?
+(Equivalently, odd numbers $n$ such that $a(n) > 1$ and $b^n \equiv b^{a(n)} \pmod n$ for all $b$.)
+- Thomas Ordowski, Dec 02 2019
+-/
+@[category research open, AMS 11]
+theorem conjecture2 :
+    answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
+  sorry
+
+/--
+Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\operatorname{ord}_n(2)}$?
+(Equivalently, odd numbers $n$ such that $a(n) > 1$ and $2^n \equiv 2^{a(n)} \pmod n$.)
+- Thomas Ordowski, Dec 02 2019
+-/
+@[category research open, AMS 11]
+theorem conjecture3 :
+    answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
+  sorry
+
 end OeisA51903
+

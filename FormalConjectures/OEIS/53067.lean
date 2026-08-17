@@ -63,12 +63,19 @@ theorem a_4 : a 4 = 78910 := by
 theorem a_5 : a 5 = 1112131415 := by
   decide +native
 
+open scoped Classical in
 /--
 "The second term is a prime. When is the next prime, if there is another?
-- _N. J. A. Sloane_, Dec 16 2016"-/
+- _N. J. A. Sloane_, Dec 16 2016"
+-/
 @[category research open, AMS 11]
 theorem conjecture :
-    answer(sorry) = sInf {n : ℕ | 2 < n ∧ (a n).Prime} := by
+    answer(sorry) =
+      if h : ∃ n, 2 < n ∧ (a n).Prime then
+        some (sInf {n | 2 < n ∧ (a n).Prime})
+      else
+        none := by
   sorry
+
 
 end OeisA53067

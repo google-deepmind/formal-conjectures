@@ -56,7 +56,9 @@ theorem a_4 : a 4 = 35 := by
 def isFactorialPrime (n : ℕ) : Prop :=
   Nat.Prime (n.factorial + 1)
 
-/-- The least prime $p > \sqrt{n!}$ such that $(p - 1) \mid n!$ and $q = \frac{n!}{p - 1} + 1$ is prime. -/
+/-- The least prime $p > \sqrt{n!}$ such that $(p - 1) \mid n!$
+    and $q = \frac{n!}{p - 1} + 1$ is prime. -/
+
 noncomputable def p (n : ℕ) : ℕ :=
   sInf {p : ℕ | Nat.Prime p ∧ Nat.sqrt n.factorial < p ∧ (p - 1) ∣ n.factorial ∧
     Nat.Prime (n.factorial / (p - 1) + 1)}
@@ -69,9 +71,13 @@ noncomputable def q (n : ℕ) : ℕ :=
 Conjecture: unless $n! + 1$ is prime (i.e., $n \in \text{A002981}$), $a(n) = p q$ where $p$ is the
 least prime $> \sqrt{n!}$ such that $(p - 1) \mid n!$ and $q = \frac{n!}{p - 1} + 1$ is prime.
 - M. F. Hasler, Oct 04 2009
+
+We assume $a(n) \ne 0$ and $(p(n)).\text{Prime}$ to ensure the `sInf` searches are non-empty
+and do not collapse to $0 = 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 ≤ n) (h_not_prime : ¬ isFactorialPrime n) :
+theorem conjecture (n : ℕ) (hn : 1 ≤ n) (h_not_prime : ¬ isFactorialPrime n)
+    (ha : a n ≠ 0) (hp : (p n).Prime) :
     a n = p n * q n := by
   sorry
 

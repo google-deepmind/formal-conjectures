@@ -38,7 +38,8 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 4 := by
-  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ ((∏ i ∈ Finset.range 0, Nat.nth Nat.Prime i) + c).Prime } = 4
+  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧
+    ((∏ i ∈ Finset.range 0, Nat.nth Nat.Prime i) + c).Prime } = 4
   have hQ : (∏ i ∈ Finset.range 0, Nat.nth Nat.Prime i) = 1 := by rfl
   rw [hQ]
   have h_least : IsLeast { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ (1 + c).Prime } 4 := by
@@ -50,7 +51,8 @@ theorem a_0 : a 0 = 4 := by
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 9 := by
-  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ ((∏ i ∈ Finset.range 1, Nat.nth Nat.Prime i) + c).Prime } = 9
+  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧
+    ((∏ i ∈ Finset.range 1, Nat.nth Nat.Prime i) + c).Prime } = 9
   have hQ : (∏ i ∈ Finset.range 1, Nat.nth Nat.Prime i) = 2 := by
     rw [Finset.prod_range_one, Nat.nth_prime_zero_eq_two]
   rw [hQ]
@@ -63,7 +65,8 @@ theorem a_1 : a 1 = 9 := by
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 25 := by
-  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ ((∏ i ∈ Finset.range 2, Nat.nth Nat.Prime i) + c).Prime } = 25
+  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧
+    ((∏ i ∈ Finset.range 2, Nat.nth Nat.Prime i) + c).Prime } = 25
   have hQ : (∏ i ∈ Finset.range 2, Nat.nth Nat.Prime i) = 6 := by
     rw [Finset.prod_range_succ, Finset.prod_range_one,
       Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three]
@@ -78,7 +81,8 @@ theorem a_2 : a 2 = 25 := by
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 49 := by
-  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ ((∏ i ∈ Finset.range 3, Nat.nth Nat.Prime i) + c).Prime } = 49
+  change sInf { c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧
+    ((∏ i ∈ Finset.range 3, Nat.nth Nat.Prime i) + c).Prime } = 49
   have hQ : (∏ i ∈ Finset.range 3, Nat.nth Nat.Prime i) = 30 := by
     rw [Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_one,
       Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three, Nat.nth_prime_two_eq_five]
@@ -93,14 +97,30 @@ theorem a_3 : a 3 = 49 := by
 
 /--
 Conjecture:
-$\liminf_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 1 < \limsup_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 2$.
+$\liminf_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 1 <$
+$\limsup_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 2$.
 - Charles R Greathouse IV and Thomas Ordowski, Apr 24 2015
+
+We assume $a(n) \ne 0$ for all $n$ (i.e., that a suitable composite $c$ always exists),
+as `sInf` evaluates to $0$ on an empty set.
 -/
 @[category research open, AMS 11]
-theorem conjecture :
+theorem conjecture1 (ha : ∀ n, a n ≠ 0) :
     let p_next_sq (n : ℕ) : ℝ := ((Nat.nth Nat.Prime n : ℝ)) ^ 2
     let seq (n : ℕ) : ℝ := (a n : ℝ) / p_next_sq n
     (liminf seq atTop = 1) ∧ (limsup seq atTop = 2) := by
+  sorry
+
+/--
+All the terms in this sequence have exactly two prime factors.
+This conjecture is true for the first 133 terms.
+- [Dmitry Kamenetsky](https://oeis.org/wiki/User:Dmitry_Kamenetsky), Jan 06 2019
+
+We assume $a(n) \ne 0$ (i.e., that a suitable composite $c$ exists), as `sInf` evaluates to $0$
+on an empty set.
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (n : ℕ) (ha : a n ≠ 0) : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ a n = p * q := by
   sorry
 
 end OeisA38771

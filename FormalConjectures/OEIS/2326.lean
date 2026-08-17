@@ -69,10 +69,23 @@ theorem a_4 : a 4 = 6 := by
 If $p$ is an odd prime then $a((p^3-1)/2) = p \cdot a((p^2-1)/2)$.
 Because otherwise $a((p^3-1)/2) < p \cdot a((p^2-1)/2)$ iff $a((p^3-1)/2) = a((p-1)/2)$
 for a prime $p$. Equivalently $p^3$ divides $2^{p-1}-1$, but no such prime $p$ is known.
-- Thomas Ordowski, Feb 10 2014-/
+- Thomas Ordowski, Feb 10 2014
+-/
 @[category research open, AMS 11]
-theorem conjecture (p : ℕ) (hp : p.Prime) (hp_odd : p ≠ 2) :
+theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp_odd : p ≠ 2) :
     a ((p ^ 3 - 1) / 2) = p * a ((p ^ 2 - 1) / 2) := by
+  sorry
+
+/--
+A generalization of the previous conjecture: For each $k \ge 2$, if $p$ is an odd prime
+then $a((p^{k+1}-1)/2) = p \cdot a((p^k-1)/2)$.
+Computer testing of this generalized conjecture shows that there is no counterexample for $k$
+and $p$ both up to 1000.
+- [Ahmad J. Masad](https://oeis.org/wiki/User:Ahmad_J._Masad), Oct 17 2020
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (k : ℕ) (hk : 2 ≤ k) (p : ℕ) (hp : p.Prime) (hp_odd : p ≠ 2) :
+    a ((p ^ (k + 1) - 1) / 2) = p * a ((p ^ k - 1) / 2) := by
   sorry
 
 end OeisA2326

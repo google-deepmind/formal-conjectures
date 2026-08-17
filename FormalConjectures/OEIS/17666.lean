@@ -53,9 +53,11 @@ theorem a_4 : a 4 = 4 := by decide
 /--
 If $a(n)$ is in A005153, then $n$ is in A005153.
 - Jaycob Coleman, Sep 27 2014
+
+We require $0 < n$ because $a(0) = 1$ is in A005153 (practical numbers), but $0$ is not.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) : OeisA5153.A (a n) → OeisA5153.A n := by
+theorem conjecture (n : ℕ) (hn : 0 < n) : OeisA5153.A (a n) → OeisA5153.A n := by
   sorry
 
 end OeisA17666

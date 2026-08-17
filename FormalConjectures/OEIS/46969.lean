@@ -112,11 +112,26 @@ theorem a_5 : a 5 = 1188 := by
   rw [bernoulli_eq_bernoulli'_of_ne_one (by decide), bernoulli'_ten]
   norm_num
 
+/-- $A005382(n)$ is the $n$-th prime $p$ such that $2p-1$ is also prime (1-based). -/
+noncomputable def a005382 (n : ℕ) : ℕ :=
+  Nat.nth (fun p ↦ p.Prime ∧ (2 * p - 1).Prime) (n - 1)
+
 /--
-"Conjecture II: if $\frac{a(n)}{12}$ is prime, then $\frac{a(n-1)}{12} - (n-1)$, $\frac{a(n)}{12} - n$ and $\frac{a(n+2)}{12} - (n+2)$
-are multiples of 6. - _Lorenzo Sauras Altuzarra_, Oct 13 2020"-/
+Conjecture I: if $n > 2$, then $\frac{a(\text{A005382}(n))}{12}$ is prime,
+where A005382 is the sequence of primes $p$ such that $2p-1$ is also prime.
+- Lorenzo Sauras Altuzarra, Oct 13 2020
+-/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 2 ≤ n)
+theorem conjecture1 (n : ℕ) (hn : 2 < n) : (a (a005382 n) / 12).Prime := by
+  sorry
+
+/--
+Conjecture II: if $\frac{a(n)}{12}$ is prime, then $\frac{a(n-1)}{12} - (n-1)$,
+$\frac{a(n)}{12} - n$ and $\frac{a(n+2)}{12} - (n+2)$ are multiples of 6.
+- Lorenzo Sauras Altuzarra, Oct 13 2020
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (n : ℕ) (hn : 2 ≤ n)
     (h_div : 12 ∣ a n) (h_prime : Nat.Prime (a n / 12))
     (h_div_prev : 12 ∣ a (n - 1)) (h_div_succ : 12 ∣ a (n + 2)) :
     6 ∣ ((a (n - 1) / 12 : ℤ) - (n - 1 : ℤ)) ∧
@@ -125,3 +140,4 @@ theorem conjecture (n : ℕ) (hn : 2 ≤ n)
   sorry
 
 end OeisA46969
+
