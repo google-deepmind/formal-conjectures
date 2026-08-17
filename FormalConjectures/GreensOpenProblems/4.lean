@@ -35,7 +35,7 @@ theorem green_4 (n : ℕ) :
   sorry
 
 /-- Defines a family of subsets of $A_n$ where each permutation $\pi$ in a subset obeys $\pi(x)$
-and $\forall v \in I$, \pi(v)\notin I$ for a fixed $x$ and $I$. It is easy to demonstrate that such
+and $\forall v \in I$, $\pi(v)\notin I$ for a fixed $x$ and $I$. It is easy to demonstrate that such
 a subset is product-free, because for any a,b,c in such a set, $(a*b) (x)=a(b(x))\notin I$ but $c(x)
 in I$
 -/

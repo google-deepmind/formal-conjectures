@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 
 @[expose] public section
@@ -39,5 +40,17 @@ infinitely connected.
 def InfinitelyConnected {V : Type*} (G : SimpleGraph V) : Prop := Nontrivial V ∧
   Pairwise fun u v ↦ ∃ P : Set (G.Walk u v),
     P.Infinite ∧ (∀ p ∈ P, p.IsPath) ∧ P.Pairwise InternallyDisjoint
+
+/-- `G` is `k`-connected: it has more than `k` vertices, and it stays connected after the
+removal of any set of fewer than `k` vertices.
+
+Mathlib has `SimpleGraph.IsEdgeConnected`, but it has no vertex connectivity. -/
+def IsKConnected {V : Type*} [Fintype V] (G : SimpleGraph V) (k : ℕ) : Prop :=
+  k < Fintype.card V ∧ ∀ S : Finset V, S.card < k → (G.induce ((S : Set V)ᶜ)).Connected
+
+/-- A graph on at most `k` vertices is not `k`-connected. -/
+theorem not_isKConnected_of_card_le {V : Type*} [Fintype V] {G : SimpleGraph V} {k : ℕ}
+    (h : Fintype.card V ≤ k) : ¬ IsKConnected G k :=
+  fun hG => absurd hG.1 (not_lt.mpr h)
 
 end SimpleGraph

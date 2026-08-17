@@ -42,7 +42,7 @@ def IsCountableUnionOfTriangleFree {V : Type*} (G : SimpleGraph V) : Prop :=
 -/
 
 /--
-**Erdős Problem 595 ($250)**: Is there an infinite graph $G$ which contains no $K_4$ and is
+**Erdős Problem 595 (\$250)**: Is there an infinite graph $G$ which contains no $K_4$ and is
 not the union of countably many triangle-free graphs?
 
 A problem of Erdős and Hajnal [Er87].
