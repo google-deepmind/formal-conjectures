@@ -29,40 +29,32 @@ $$(2n+1)^3 a(n) = 32n^3 a(n-1) + (21n^3 + 22n^2 + 8n + 1) \binom{2n-1}{n}^4.$$
 
 namespace OeisA176477
 
-/-- Rational recurrence sequence for $a(n)$. -/
-def aQ : ℕ → ℚ
+/-- Rational recurrence sequence $a(n)$. -/
+def a : ℕ → ℚ
   | 0 => 0
   | 1 => 2
   | n + 2 =>
     let idx : ℚ := n + 2
-    let prev := aQ (n + 1)
+    let prev := a (n + 1)
     (32 * idx ^ 3 * prev +
       (21 * idx ^ 3 + 22 * idx ^ 2 + 8 * idx + 1) *
         ((2 * (n + 2) - 1).choose (n + 2) : ℚ) ^ 4) /
       (2 * idx + 1) ^ 3
 
-/-- The sequence $a(n)$. -/
-def a (n : ℕ) : ℕ := (aQ n).num.toNat
-
+/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by rfl
 
+/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 181 := by
-  have h1 : aQ 1 = 2 := rfl
-  have h2 : aQ 2 = 181 := by
-    rw [aQ, h1]
-    norm_num
-  show (aQ 2).num.toNat = 181
-  rw [h2]
-  rfl
+theorem a_2 : a 2 = 181 := by decide +native
 
 /--
 Each term $a(n)$ is a positive integer.
 - _Zhi-Wei Sun_, Apr 06 2010
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : (aQ n).den = 1 ∧ 0 < aQ n := by
+theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : (a n).den = 1 ∧ 0 < a n := by
   sorry
 
 /--
@@ -71,7 +63,8 @@ $a(n)$ is odd if and only if $n = 2, 2^2, 2^3, \dots$.
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n : ℕ) (hn : 1 ≤ n) :
-    Odd (a n) ↔ ∃ m : ℕ, 1 ≤ m ∧ n = 2 ^ m := by
+    ((a n).den = 1 ∧ Odd (a n).num) ↔ ∃ m : ℕ, 1 ≤ m ∧ n = 2 ^ m := by
   sorry
 
 end OeisA176477
+

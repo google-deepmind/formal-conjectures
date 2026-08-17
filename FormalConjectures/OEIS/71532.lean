@@ -59,17 +59,28 @@ theorem a_5 : a 5 = 3 := by
   decide
 
 /--
-Is $a(n) > 0$? For $n$ large enough does $a(n) > \sqrt{n}$ always hold?-/
+Is $a(n) > 0$ for all $n > 2$?
+-/
 @[category research open, AMS 11]
-theorem conjecture1 :
+theorem conjecture1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
+  sorry
+
+/--
+For $n$ large enough, does $a(n) > \sqrt{n}$ always hold?
+-/
+@[category research open, AMS 11]
+theorem conjecture2 :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → (a n : ℝ) > Real.sqrt (n : ℝ) := by
   sorry
 
 /--
-Conjecture: asymptotically, $a(n) \sim C \log(n)^2$ with $C = 1.4\dots$-/
+Conjecture: asymptotically, $a(n) \sim C \log(n)^2$ for some constant $C = 1.4\dots$.
+-/
 @[category research open, AMS 11]
-theorem conjecture2 :
-    ∃ C > (0 : ℝ), (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
+theorem conjecture3 :
+    (fun n : ℕ ↦ (a n : ℝ)) ~[atTop]
+      (fun n : ℕ ↦ (answer(sorry) : ℝ) * Real.log (n : ℝ) ^ 2) := by
   sorry
 
 end OeisA71532
+

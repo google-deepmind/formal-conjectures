@@ -94,6 +94,10 @@ theorem a_4 : a 4 = 3 := by
     coeff_sub, coeff_one, coeff_C_mul_X_pow]
   decide +native
 
+/-- The $n$-th coefficient of the square of the ordinary generating function $A(x)^2$. -/
+noncomputable def c (n : ℕ) : ℤ :=
+  ∑ k ∈ Finset.range (n + 1), a k * a (n - k)
+
 /--
 $a(n)$ differs in sign from $a(n-1)$ if and only if $n$ is a triangular number
 (checked up to $n = 1225 = (50 \cdot 51)/2$).
@@ -105,13 +109,24 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
   sorry
 
 /--
+The coefficients $c(n)$ of $A(x)^2 = (\sum_{n \ge 0} a(n) x^n)^2$ differ in sign from $c(n-1)$
+if and only if $n$ is a triangular number.
+- _Peter Bala_, Mar 17 2022
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (n : ℕ) (hn : 0 < n) :
+    c n * c (n - 1) < 0 ↔ IsTriangular n := by
+  sorry
+
+/--
 The Gauss congruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^k}$ hold
 for all primes $p$ and positive integers $n$ and $k$.
 - _Peter Bala_, Mar 17 2022
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
+theorem conjecture3 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
     a (n * p ^ k) ≡ a (n * p ^ (k - 1)) [ZMOD (p : ℤ) ^ k] := by
   sorry
 
 end OeisA185895
+

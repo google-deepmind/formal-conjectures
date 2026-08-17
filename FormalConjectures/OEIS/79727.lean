@@ -84,4 +84,14 @@ theorem conjecture3 (p : ℕ) (hp : OeisA3625.A p) :
     a ((p ^ 2 - 1) / 2) ≡ p ^ 2 [MOD p ^ 4] := by
   sorry
 
+/--
+Conjecture 4 (Peter Bala, 2024):
+If $n$ is a product of distinct primes from A003625 then $a((n-1)/2)$ is divisible by $n^2$.
+-/
+@[category research open, AMS 11]
+theorem conjecture4 (S : Finset ℕ) (hS : ∀ p ∈ S, OeisA3625.A p) :
+    (∏ p ∈ S, p) ^ 2 ∣ a ((∏ p ∈ S, p - 1) / 2) := by
+  sorry
+
 end OeisA79727
+

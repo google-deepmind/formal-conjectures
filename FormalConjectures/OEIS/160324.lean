@@ -86,4 +86,28 @@ The sequence contains every positive integer.
 theorem conjecture3 (k : ℕ) (hk : 0 < k) : ∃ n : ℕ, a n = k := by
   sorry
 
+/--
+Conjecture (Zhi-Wei Sun, Aug 21 2009):
+For any integer $m > 2$, each natural number $n$ can be expressed as
+$p_{m+1}(x_1) + p_{m+2}(x_2) + p_{m+3}(x_3) + r$ with $x_1, x_2, x_3 \in \mathbb{N}$ and
+$r \in \{0, \dots, m-3\}$.
+-/
+@[category research open, AMS 11]
+theorem conjecture4 (m : ℕ) (hm : 2 < m) (n : ℕ) :
+    ∃ x1 x2 x3 r : ℕ, r ≤ m - 3 ∧
+      n = polygonalNumber (m + 1) x1 + polygonalNumber (m + 2) x2 + polygonalNumber (m + 3) x3 + r := by
+  sorry
+
+/--
+Conjecture (Zhi-Wei Sun, Aug 21 2009):
+For each integer $m > 2$, all sufficiently large integers $n$ can be expressed in the form
+$p_{m+1}(x_1) + p_{m+2}(x_2) + p_{m+3}(x_3)$ with $x_1, x_2, x_3 \in \mathbb{N}$.
+-/
+@[category research open, AMS 11]
+theorem conjecture5 (m : ℕ) (hm : 2 < m) :
+    ∀ᶠ n in Filter.atTop,
+      ∃ x1 x2 x3 : ℕ, n = polygonalNumber (m + 1) x1 + polygonalNumber (m + 2) x2 + polygonalNumber (m + 3) x3 := by
+  sorry
+
 end OeisA160324
+

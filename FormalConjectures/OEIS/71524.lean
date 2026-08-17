@@ -63,10 +63,31 @@ theorem a_4 : a 4 = 1 := by
 theorem a_5 : a 5 = 1 := by
   decide +native
 
+/-- Determinant of the $n \times n$ matrix with $(i,j)$ entry $1$
+if $(i+1)^{2^m} + (j+1)^{2^m}$ is prime, and $0$ otherwise. -/
+
+def generalDet (m n : ℕ) : ℤ :=
+  let M : Matrix (Fin n) (Fin n) ℤ := fun i j =>
+    let i_idx : ℕ := i.val + 1
+    let j_idx : ℕ := j.val + 1
+    if (i_idx ^ (2 ^ m) + j_idx ^ (2 ^ m)).Prime then 1 else 0
+  M.det
+
 /--
-Conjecture: $a(n) = 0$ for no $n > 28$.-/
+Conjecture: $a(n) = 0$ for no $n > 28$.
+- _Zhi-Wei Sun_, Aug 26 2013
+-/
 @[category research open, AMS 11 15]
-theorem conjecture (n : ℕ) (hn : 28 < n) : a n ≠ 0 := by
+theorem conjecture1 (n : ℕ) (hn : 28 < n) : a n ≠ 0 := by
+  sorry
+
+/--
+Conjecture (Generalization): For every $m \in \mathbb{N}$, the determinant `generalDet m n` is
+nonzero for all sufficiently large $n$.
+- _Zhi-Wei Sun_, Aug 26-27 2013
+-/
+@[category research open, AMS 11 15]
+theorem conjecture2 (m : ℕ) : ∃ N : ℕ, ∀ n : ℕ, N < n → generalDet m n ≠ 0 := by
   sorry
 
 end OeisA71524

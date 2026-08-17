@@ -194,18 +194,25 @@ theorem a_4 : a 4 = 7 := by
 
 /--
 Conjecture: $f(n, k) = 2$ for infinitely many cases, where $k = a(n)$.
+
+We assume $a(n) \ne 0$ (i.e., that a suitable $k > n$ always exists), as `sInf` evaluates to $0$
+on an empty set.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (M : ℕ) :
+theorem conjecture1 (M : ℕ) (ha : ∀ n > 0, a n ≠ 0) :
     ∃ n : ℕ, n ≥ M ∧ n > 0 ∧ S (a n) = 2 * S n := by
   sorry
 
 /--
 Open problem: Whether the ratio $f(n, k)$ is bounded, where $k = a(n)$.
+
+We assume $a(n) \ne 0$ (i.e., that a suitable $k > n$ always exists), as `sInf` evaluates to $0$
+on an empty set.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 :
+theorem conjecture2 (ha : ∀ n > 0, a n ≠ 0) :
     ∃ C : ℕ, ∀ n : ℕ, n > 0 → S (a n) / S n ≤ C := by
   sorry
+
 
 end OeisA167918

@@ -59,7 +59,8 @@ $\sum_{k=0}^{p-1} (-1)^k a(k) \equiv 4x^2 - 2p \pmod{p^2}$.
 - _Zhi-Wei Sun_, Jul 17 2010
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (p : ℕ) [Fact p.Prime] (hp7 : p ≠ 7) (h_leg : legendreSym p 7 = 1)
+theorem conjecture1 (p : ℕ) [Fact p.Prime] (hp7 : p ≠ 7)
+    (h_leg : letI : Fact (Nat.Prime 7) := ⟨by decide⟩; legendreSym 7 p = 1)
     (x y : ℤ) (h_sq : (p : ℤ) = x ^ 2 + 7 * y ^ 2) :
     (∑ k ∈ Finset.range p, (-1 : ℤ) ^ k * a k) ≡
       4 * x ^ 2 - 2 * (p : ℤ) [ZMOD (p : ℤ) ^ 2] := by
@@ -71,7 +72,8 @@ $\sum_{k=0}^{p-1} (-1)^k a(k) \equiv 0 \pmod{p^2}$.
 - _Zhi-Wei Sun_, Jul 17 2010
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (p : ℕ) [Fact p.Prime] (hp7 : p ≠ 7) (h_leg : legendreSym p 7 = -1) :
+theorem conjecture2 (p : ℕ) [Fact p.Prime] (hp7 : p ≠ 7)
+    (h_leg : letI : Fact (Nat.Prime 7) := ⟨by decide⟩; legendreSym 7 p = -1) :
     (∑ k ∈ Finset.range p, (-1 : ℤ) ^ k * a k) ≡ 0 [ZMOD (p : ℤ) ^ 2] := by
   sorry
 
@@ -90,8 +92,10 @@ $\sum_{k=0}^{p-1} (42k + 37) (-1)^k a(k) \equiv p(21(p/7) + 16) \pmod{p^2}$ for 
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (p : ℕ) [Fact p.Prime] (_hp7 : p ≠ 7) :
+    letI : Fact (Nat.Prime 7) := ⟨by decide⟩
     (∑ k ∈ Finset.range p, ((42 * (k : ℤ) + 37) * (-1 : ℤ) ^ k * a k)) ≡
-      (p : ℤ) * (21 * legendreSym p 7 + 16) [ZMOD (p : ℤ) ^ 2] := by
+      (p : ℤ) * (21 * legendreSym 7 p + 16) [ZMOD (p : ℤ) ^ 2] := by
   sorry
+
 
 end OeisA179537

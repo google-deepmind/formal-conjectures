@@ -26,20 +26,26 @@ $a(n)$ is the smallest natural number $m \ge 1$ such that $n^3 + m^3 + 1$ is pri
 
 namespace OeisA159829
 
-/-- $a(n)$ is the smallest natural number $m \ge 1$ such that $n^3 + m^3 + 1$ is prime. -/
-noncomputable def a (n : ℕ) : ℕ :=
-  sInf {m : ℕ | 1 ≤ m ∧ (n ^ 3 + m ^ 3 + 1).Prime}
+open Classical in
+/-- $a(n)$ is the smallest natural number $m \ge 1$ such that $n^3 + m^3 + 1$ is prime,
+or `none` if no such $m$ exists. -/
+noncomputable def a (n : ℕ) : Option ℕ :=
+  if ∃ m : ℕ, 1 ≤ m ∧ (n ^ 3 + m ^ 3 + 1).Prime then
+    some (sInf {m : ℕ | 1 ≤ m ∧ (n ^ 3 + m ^ 3 + 1).Prime})
+  else
+    none
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by
+theorem a_1 : a 1 = some 1 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (1 ^ 3 + m ^ 3 + 1).Prime} 1 :=
     ⟨⟨le_rfl, by decide⟩, fun m hm => hm.1⟩
-  exact h.csInf_eq
+  have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (1 ^ 3 + m ^ 3 + 1).Prime := ⟨1, h.1⟩
+  rw [a, if_pos h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by
+theorem a_2 : a 2 = some 2 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (2 ^ 3 + m ^ 3 + 1).Prime} 2 :=
     ⟨⟨by decide, by decide⟩, fun m hm => by
       by_contra hc
@@ -49,18 +55,20 @@ theorem a_2 : a 2 = 2 := by
       interval_cases m
       revert hprime
       decide⟩
-  exact h.csInf_eq
+  have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (2 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
+  rw [a, if_pos h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by
+theorem a_3 : a 3 = some 1 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (3 ^ 3 + m ^ 3 + 1).Prime} 1 :=
     ⟨⟨le_rfl, by decide⟩, fun m hm => hm.1⟩
-  exact h.csInf_eq
+  have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (3 ^ 3 + m ^ 3 + 1).Prime := ⟨1, h.1⟩
+  rw [a, if_pos h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 2 := by
+theorem a_4 : a 4 = some 2 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (4 ^ 3 + m ^ 3 + 1).Prime} 2 :=
     ⟨⟨by decide, by decide⟩, fun m hm => by
       by_contra hc
@@ -70,14 +78,28 @@ theorem a_4 : a 4 = 2 := by
       interval_cases m
       revert hprime
       decide⟩
-  exact h.csInf_eq
+  have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (4 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
+  rw [a, if_pos h_ex, h.csInf_eq]
 
 /--
-"Exponent $k > 2$: Are there infinitely many primes of the forms $n^k + 
-    m^k$ and $n^k + m^k + 1^k$?"-/
+Conjecture 1: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k$
+for $n, m \ge 1$.
+- _Ulrich Krug_, 2009
+-/
 @[category research open, AMS 11]
-theorem conjecture (k : ℕ) (hk : 3 ≤ k) :
+theorem conjecture1 (k : ℕ) (hk : 3 ≤ k) :
+    Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧ p = n ^ k + m ^ k} := by
+  sorry
+
+/--
+Conjecture 2: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k + 1$
+for $n, m \ge 1$.
+- _Ulrich Krug_, 2009
+-/
+@[category research open, AMS 11]
+theorem conjecture2 (k : ℕ) (hk : 3 ≤ k) :
     Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧ p = n ^ k + m ^ k + 1} := by
   sorry
 
 end OeisA159829
+

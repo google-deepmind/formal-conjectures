@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
 /-!
 # Ratio of product of GCDs to product of factorials of floor divisions
@@ -28,9 +29,9 @@ $$a(n) = \frac{\prod_{j=1}^n \prod_{k=1}^n \gcd(j,k)}{\prod_{k=1}^n (\lfloor n/k
 namespace OeisA129365
 
 /-- $a(n) = \frac{\prod_{j=1}^n \prod_{k=1}^n \gcd(j,k)}{\prod_{k=1}^n (\lfloor n/k \rfloor!)^k}$. -/
-def a (n : ℕ) : ℕ :=
-  let num := (Finset.Icc 1 n).prod fun j => (Finset.Icc 1 n).prod fun k => Nat.gcd j k
-  let den := (Finset.Icc 1 n).prod fun k => (n / k).factorial ^ k
+def a (n : ℕ) : ℚ :=
+  let num : ℚ := (Finset.Icc 1 n).prod fun j => (Finset.Icc 1 n).prod fun k => Nat.gcd j k
+  let den : ℚ := (Finset.Icc 1 n).prod fun k => (n / k).factorial ^ k
   num / den
 
 /-- Sequence A004125: sum of remainders $n \bmod k$ for $1 \le k \le n$. -/
@@ -71,7 +72,7 @@ Conjecture (2): If $p$ is a prime, then $p \mid a(n)$ if and only if $p \le n/3$
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
-    p ∣ a n ↔ p ≤ n / 3 := by
+    (∃ m : ℕ, a n = m ∧ p ∣ m) ↔ p ≤ n / 3 := by
   sorry
 
 /--
@@ -80,7 +81,7 @@ $\mathrm{ord}_p(a(np)) = \mathrm{ord}_p(a(np + k))$.
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (n p k : ℕ) (hn : 0 < n) (hp : p.Prime) (hk : k < p) :
-    (a (n * p)).factorization p = (a (n * p + k)).factorization p := by
+    padicValRat p (a (n * p)) = padicValRat p (a (n * p + k)) := by
   sorry
 
 /--
@@ -89,7 +90,8 @@ $\mathrm{ord}_p(a(np)) = \sum_{i \ge 0} b(\lfloor n/p^i \rfloor)$.
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
-    (a (n * p)).factorization p = ∑' i : ℕ, b (n / p ^ i) := by
+    padicValRat p (a (n * p)) = ∑' i : ℕ, (b (n / p ^ i) : ℤ) := by
   sorry
 
 end OeisA129365
+
