@@ -53,29 +53,39 @@ noncomputable def a (n : ℕ) : ℤ :=
       (-1 : ℤ)
     )
 
-@[category test, AMS 11]
-theorem a_1 : a 1 = 2 := by
+/-- `PNat.find` does not reduce, so read off `a n` from the characterisation of the minimum
+instead of evaluating it. -/
+@[category API, AMS 11]
+private lemma a_eq (n : ℕ) (hn : n ≠ 0) (m : ℕ) (hm0 : 0 < m)
+    (hm : ((2 * n - 1) * 2 ^ m - 1).Prime)
+    (hmin : ∀ l, 0 < l → l < m → ¬((2 * n - 1) * 2 ^ l - 1).Prime) :
+    a n = m := by
+  have hex : ∃ l : ℕ+, ((2 * n - 1) * 2 ^ (l : ℕ) - 1).Prime := ⟨⟨m, hm0⟩, hm⟩
+  have hfind : PNat.find hex = ⟨m, hm0⟩ :=
+    (PNat.find_eq_iff hex).2 ⟨hm, fun l hl => hmin l l.pos hl⟩
   delta a
-  rw [dif_pos ⟨2, by decide⟩]
-  decide
+  rw [if_neg hn, dif_pos hex, hfind]
+  rfl
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by
-  delta a
-  rw [dif_pos ⟨1, by decide⟩]
-  decide
+theorem a_1 : a 1 = 2 :=
+  a_eq 1 (by norm_num) 2 (by norm_num) (by decide)
+    fun l h0 h2 => by obtain rfl : l = 1 := by omega
+                      decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 2 := by
-  delta a
-  rw [dif_pos ⟨2, by decide⟩]
-  decide
+theorem a_2 : a 2 = 1 :=
+  a_eq 2 (by norm_num) 1 (by norm_num) (by decide) fun l h0 h1 => by omega
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by
-  delta a
-  rw [dif_pos ⟨1, by decide⟩]
-  decide
+theorem a_3 : a 3 = 2 :=
+  a_eq 3 (by norm_num) 2 (by norm_num) (by decide)
+    fun l h0 h2 => by obtain rfl : l = 1 := by omega
+                      decide
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 1 :=
+  a_eq 4 (by norm_num) 1 (by norm_num) (by decide) fun l h0 h1 => by omega
 
 /--
 It is conjectured that the integer $k = 509203$ is the smallest Riesel number,

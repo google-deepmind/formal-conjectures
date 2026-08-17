@@ -48,9 +48,15 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
-  push_cast [a]
-  norm_num [Ak]
-  apply Nat.isLeast_find ⟨2, by decide⟩ |>.csInf_eq
+  have : IsLeast {k : ℕ | Ak 1 k} 2 := by
+    constructor
+    · intro i ⟨hi1, hi2⟩
+      interval_cases i
+      simpa using Nat.prime_two
+    · intro k hk
+      have h1 := hk 1 ⟨le_rfl, le_rfl⟩
+      simpa using h1.two_le
+  exact this.csInf_eq
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by
@@ -70,9 +76,18 @@ theorem a_3 : a 3 = 3 := by
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by
-  delta a
-  norm_num [Ak]
-  apply ((Nat.isLeast_find ⟨5,by decide⟩)).csInf_eq
+  have : IsLeast {k : ℕ | Ak 4 k} 5 := by
+    constructor
+    · intro i ⟨hi1, hi2⟩
+      interval_cases i <;> norm_num
+    · intro k hk
+      have h1 := hk 1 ⟨by norm_num, by norm_num⟩
+      have h2 := hk 2 ⟨by norm_num, by norm_num⟩
+      have h3 := hk 3 ⟨by norm_num, by norm_num⟩
+      have h4 := hk 4 ⟨by norm_num, by norm_num⟩
+      by_contra hlt
+      interval_cases k <;> revert h1 h2 h3 h4 <;> norm_num
+  exact this.csInf_eq
 
 /--
 It is conjectured k always exists.

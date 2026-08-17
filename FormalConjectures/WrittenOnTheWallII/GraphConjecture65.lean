@@ -40,6 +40,13 @@ namespace WrittenOnTheWallII.GraphConjecture65
 
 open SimpleGraph Finset
 
+/- The counterexample below has 18 edges, and synthesising `Fintype ↥(graph.neighborSet v)` unfolds
+the whole edge set literal to reach `DecidableRel graph.Adj`. That exceeds the default
+`synthInstance.maxSize`, whereupon the search backtracks onto
+`CategoryTheory.FinCategory.fintypeObj`, which no `decide` can reduce and which does not match the
+instance in `conjecture65`'s statement. -/
+set_option synthInstance.maxSize 400
+
 namespace Counterexample
 
 /-- The counterexample: a path on vertices $0,\ldots,12$, with triangles attached at

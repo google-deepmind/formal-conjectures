@@ -303,7 +303,7 @@ unsafe def main (args : List String) : IO Unit := do
                 |>.toArray.qsort (fun a b => a.sortKey < b.sortKey) |>.toList
               -- Check whether the proof term is sorry-free
               let hasSorryFreeProof :=
-                info.value? |>.any (!·.hasSorry)
+                info.value? (allowOpaque := true) |>.any (!·.hasSorry)
               -- Warn about suspicious category / sorry combinations
               if let some catTag := categoryFullMap.get? name then
                 match catTag.category, hasSorryFreeProof with

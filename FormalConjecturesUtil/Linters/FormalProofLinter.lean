@@ -47,7 +47,7 @@ namespace FormalProofLinter
 declaration to finish elaborating. -/
 def isProved (declName : Name) : CommandElabM Bool := do
   let some info := (← getEnv).findAsync? declName | return false
-  return info.toConstantInfo.value?.any (!·.hasSorry)
+  return info.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry)
 
 /-- Return every formal-proof tag attached to `declName`.
 
