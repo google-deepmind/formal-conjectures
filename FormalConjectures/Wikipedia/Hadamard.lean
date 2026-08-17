@@ -136,19 +136,19 @@ theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
   sorry
 
 /-- The order-668 integer matrix from `Hadamard668`, cast entrywise to the real numbers. -/
-def H668 : Matrix (Fin 668) (Fin 668) ℝ := fun i j => H668Int i j
+def H668 : Matrix (Fin 668) (Fin 668) ℝ := fun i j => H i j
 
 /--
-Cast `H668Int_sign` and $H^\mathsf{T}H=668I$ from the integers to the real numbers.
+Cast `H_sign` and $H^\mathsf{T}H=668I$ from the integers to the real numbers.
 -/
 @[category test, AMS 15]
 theorem isHadamard'_H668 : IsHadamard' H668 := by
   constructor
   · intro i j
-    rcases H668Int_sign i j with h | h <;> simp [H668, h]
+    rcases H_sign i j with h | h <;> simp [H668, h]
   · ext i j
     have h :=
-      congrArg (fun A : Matrix (Fin 668) (Fin 668) ℤ => (A i j : ℝ)) H668Int_gram
+      congrArg (fun A : Matrix (Fin 668) (Fin 668) ℤ => (A i j : ℝ)) H_gram
     simp only [Matrix.mul_apply, Matrix.transpose_apply, H668, Int.cast_sum, Int.cast_mul]
       at h ⊢
     simpa [Matrix.ofNat_apply] using h

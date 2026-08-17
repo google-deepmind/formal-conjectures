@@ -19,8 +19,8 @@ import FormalConjectures.Wikipedia.Hadamard668Defs
 /-!
 # The order-668 construction is Hadamard
 
-This file proves that every entry of `H668Int` is $\pm1$ and that
-$H668Int^\mathsf{T}H668Int=668I_{668}$.
+This file proves that every entry of `H` is $\pm1$ and that
+$H^\mathsf{T}H=668I_{668}$.
 
 *Reference:* [Order-668 construction](https://x.com/__alpoge__/status/2087504785952182273)
 by *Levent Alpöge et al.* (2026)
@@ -30,20 +30,62 @@ open Matrix
 
 namespace Hadamard
 
+-- Auxiliary definitions
+
+private def M_blocksT (a b c d : C → ℤ) : Matrix Q Q (Matrix C C ℤ) :=
+  let A := S a
+  let B := S b
+  let C := S c
+  let D := S d
+  !![A.transpose, -(B * R), -(C * R), -(D * R);
+     B * R, A.transpose, -(D.transpose * R), C.transpose * R;
+     C * R, D.transpose * R, A.transpose, -(B.transpose * R);
+     D * R, -(C.transpose * R), B.transpose * R, A.transpose]
+
+/-- The $(q,r)$ block of the Gram matrix of `M_blocks`. -/
+private def blockGram (a b c d : C → ℤ) (q r : Q) : Matrix C C ℤ :=
+  ∑ p : Q, (M_blocks a b c d p q).transpose * M_blocks a b c d p r
+
+/-- The sum of the four circulant Gram matrices. -/
+private def autoSum (a b c d : C → ℤ) : Matrix C C ℤ :=
+  (S a).transpose * S a + (S b).transpose * S b +
+    (S c).transpose * S c + (S d).transpose * S d
+
+private def M_block_sums (sa sb sc sd : ℤ) : Matrix Q Q ℤ :=
+  !![sa, sb, sc, sd;
+     -sb, sa, sd, -sc;
+     -sc, -sd, sa, sb;
+     -sd, sc, -sb, sa]
+
+/-- The dot product of a sign sequence with its cyclic shift by $t$. -/
+private def periodicCorrelation (x : C → ℤ) (t : C) : ℤ :=
+  ∑ i : C, x i * x (i + t)
+
+/-- The sum of the periodic autocorrelations of four sequences. -/
+private def autoKernel (a b c d : C → ℤ) : C → ℤ :=
+  fun t => periodicCorrelation a t + periodicCorrelation b t +
+    periodicCorrelation c t + periodicCorrelation d t
+
+/-- The total periodic autocorrelation of the four stored sequences. -/
+private def totalCorrelation (t : C) : ℤ :=
+  ∑ q : Q, periodicCorrelation (s q) t
+
+private def IsSign (z : ℤ) : Prop := z = 1 ∨ z = -1
+
 -- Properties of the construction
 
 @[category test, AMS 15]
-private lemma seed_sum (q : Q) : ∑ i, seed q i = if q = 0 then 2 else 0 := by
+private lemma s_sum (q : Q) : ∑ i, s q i = if q = 0 then 2 else 0 := by
   fin_cases q <;> decide +kernel
 
 @[category API, AMS 15]
-private lemma rev_transpose : rev.transpose = rev := by
+private lemma r_transpose : R.transpose = R := by
   change ((Equiv.neg C).permMatrix ℤ).transpose = (Equiv.neg C).permMatrix ℤ
   rw [Matrix.transpose_permMatrix]
   congr
 
 @[category API, AMS 15]
-private lemma rev_mul_rev : rev * rev = 1 := by
+private lemma r_mul_r : R * R = 1 := by
   have h : (Equiv.neg C : Equiv.Perm C) * Equiv.neg C = 1 := by
     ext i
     simp
@@ -52,116 +94,116 @@ private lemma rev_mul_rev : rev * rev = 1 := by
   rw [h, Matrix.permMatrix_one]
 
 @[category API, AMS 15]
-private lemma rev_mul_circ (x : C → ℤ) : rev * circ x = (circ x).transpose * rev := by
-  rw [rev, circ, PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
+private lemma r_mul_s (x : C → ℤ) : R * S x = (S x).transpose * R := by
+  rw [R, S, PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
   ext i j
   simp [Matrix.circulant, sub_eq_add_neg, add_comm]
 
 @[category API, AMS 15]
-private lemma rev_mul_circ_transpose (x : C → ℤ) :
-    rev * (circ x).transpose = circ x * rev := by
-  rw [rev, PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
+private lemma r_mul_s_transpose (x : C → ℤ) :
+    R * (S x).transpose = S x * R := by
+  rw [R, PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
   ext i j
-  simp [circ, Matrix.circulant, sub_eq_add_neg, add_comm]
+  simp [S, Matrix.circulant, sub_eq_add_neg, add_comm]
 
 @[category API, AMS 15]
-private lemma circ_comm (x y : C → ℤ) : circ x * circ y = circ y * circ x := by
+private lemma s_comm (x y : C → ℤ) : S x * S y = S y * S x := by
   exact Matrix.Fin.circulant_mul_comm x y
 
 @[category API, AMS 15]
-private lemma circ_transpose_comm (x y : C → ℤ) :
-    (circ x).transpose * circ y = circ y * (circ x).transpose := by
-  simpa only [circ, Matrix.transpose_circulant] using
+private lemma s_transpose_comm (x y : C → ℤ) :
+    (S x).transpose * S y = S y * (S x).transpose := by
+  simpa only [S, Matrix.transpose_circulant] using
     Matrix.Fin.circulant_mul_comm (fun i => x (-i)) y
 
 @[category API, AMS 15]
-private lemma circ_transpose_comm_transpose (x y : C → ℤ) :
-    (circ x).transpose * (circ y).transpose = (circ y).transpose * (circ x).transpose := by
-  simpa only [circ, Matrix.transpose_circulant] using
+private lemma s_transpose_comm_transpose (x y : C → ℤ) :
+    (S x).transpose * (S y).transpose = (S y).transpose * (S x).transpose := by
+  simpa only [S, Matrix.transpose_circulant] using
     Matrix.Fin.circulant_mul_comm (fun i => x (-i)) (fun i => y (-i))
 
 @[category API, AMS 15]
-private lemma circ_normal (x : C → ℤ) :
-    circ x * (circ x).transpose = (circ x).transpose * circ x := by
-  exact (circ_transpose_comm x x).symm
+private lemma s_normal (x : C → ℤ) :
+    S x * (S x).transpose = (S x).transpose * S x := by
+  exact (s_transpose_comm x x).symm
 
 @[category API, AMS 15]
-private lemma circ_rev_mul_circ_rev (x y : C → ℤ) :
-    (circ x * rev) * (circ y * rev) = circ x * (circ y).transpose := by
+private lemma s_r_mul_s_r (x y : C → ℤ) :
+    (S x * R) * (S y * R) = S x * (S y).transpose := by
   calc
-    (circ x * rev) * (circ y * rev) = circ x * (rev * circ y) * rev := by
+    (S x * R) * (S y * R) = S x * (R * S y) * R := by
       noncomm_ring
-    _ = circ x * ((circ y).transpose * rev) * rev := by rw [rev_mul_circ]
-    _ = circ x * (circ y).transpose * (rev * rev) := by noncomm_ring
-    _ = circ x * (circ y).transpose := by rw [rev_mul_rev, Matrix.mul_one]
+    _ = S x * ((S y).transpose * R) * R := by rw [r_mul_s]
+    _ = S x * (S y).transpose * (R * R) := by noncomm_ring
+    _ = S x * (S y).transpose := by rw [r_mul_r, Matrix.mul_one]
 
 @[category API, AMS 15]
-private lemma circ_rev_mul_circ_transpose_rev (x y : C → ℤ) :
-    (circ x * rev) * ((circ y).transpose * rev) = circ x * circ y := by
+private lemma s_r_mul_s_transpose_r (x y : C → ℤ) :
+    (S x * R) * ((S y).transpose * R) = S x * S y := by
   calc
-    (circ x * rev) * ((circ y).transpose * rev) =
-        circ x * (rev * (circ y).transpose) * rev := by noncomm_ring
-    _ = circ x * (circ y * rev) * rev := by rw [rev_mul_circ_transpose]
-    _ = circ x * circ y * (rev * rev) := by noncomm_ring
-    _ = circ x * circ y := by rw [rev_mul_rev, Matrix.mul_one]
+    (S x * R) * ((S y).transpose * R) =
+        S x * (R * (S y).transpose) * R := by noncomm_ring
+    _ = S x * (S y * R) * R := by rw [r_mul_s_transpose]
+    _ = S x * S y * (R * R) := by noncomm_ring
+    _ = S x * S y := by rw [r_mul_r, Matrix.mul_one]
 
 @[category API, AMS 15]
-private lemma circ_transpose_rev_mul_circ_rev (x y : C → ℤ) :
-    ((circ x).transpose * rev) * (circ y * rev) =
-      (circ x).transpose * (circ y).transpose := by
+private lemma s_transpose_r_mul_s_r (x y : C → ℤ) :
+    ((S x).transpose * R) * (S y * R) =
+      (S x).transpose * (S y).transpose := by
   calc
-    ((circ x).transpose * rev) * (circ y * rev) =
-        (circ x).transpose * (rev * circ y) * rev := by noncomm_ring
-    _ = (circ x).transpose * ((circ y).transpose * rev) * rev := by
-      rw [rev_mul_circ]
-    _ = (circ x).transpose * (circ y).transpose * (rev * rev) := by noncomm_ring
-    _ = (circ x).transpose * (circ y).transpose := by rw [rev_mul_rev, Matrix.mul_one]
+    ((S x).transpose * R) * (S y * R) =
+        (S x).transpose * (R * S y) * R := by noncomm_ring
+    _ = (S x).transpose * ((S y).transpose * R) * R := by
+      rw [r_mul_s]
+    _ = (S x).transpose * (S y).transpose * (R * R) := by noncomm_ring
+    _ = (S x).transpose * (S y).transpose := by rw [r_mul_r, Matrix.mul_one]
 
 @[category API, AMS 15]
-private lemma circ_transpose_rev_mul_circ_transpose_rev (x y : C → ℤ) :
-    ((circ x).transpose * rev) * ((circ y).transpose * rev) =
-      (circ x).transpose * circ y := by
+private lemma s_transpose_r_mul_s_transpose_r (x y : C → ℤ) :
+    ((S x).transpose * R) * ((S y).transpose * R) =
+      (S x).transpose * S y := by
   calc
-    ((circ x).transpose * rev) * ((circ y).transpose * rev) =
-        (circ x).transpose * (rev * (circ y).transpose) * rev := by noncomm_ring
-    _ = (circ x).transpose * (circ y * rev) * rev := by rw [rev_mul_circ_transpose]
-    _ = (circ x).transpose * circ y * (rev * rev) := by noncomm_ring
-    _ = (circ x).transpose * circ y := by rw [rev_mul_rev, Matrix.mul_one]
+    ((S x).transpose * R) * ((S y).transpose * R) =
+        (S x).transpose * (R * (S y).transpose) * R := by noncomm_ring
+    _ = (S x).transpose * (S y * R) * R := by rw [r_mul_s_transpose]
+    _ = (S x).transpose * S y * (R * R) := by noncomm_ring
+    _ = (S x).transpose * S y := by rw [r_mul_r, Matrix.mul_one]
 
 @[category API, AMS 15]
-private lemma circ_transpose_mul_circ_rev (x y : C → ℤ) :
-    (circ x).transpose * (circ y * rev) = (circ y * rev) * circ x := by
-  rw [Matrix.mul_assoc, rev_mul_circ]
-  rw [← Matrix.mul_assoc, circ_transpose_comm]
+private lemma s_transpose_mul_s_r (x y : C → ℤ) :
+    (S x).transpose * (S y * R) = (S y * R) * S x := by
+  rw [Matrix.mul_assoc, r_mul_s]
+  rw [← Matrix.mul_assoc, s_transpose_comm]
   noncomm_ring
 
 @[category API, AMS 15]
-private lemma circ_transpose_mul_circ_transpose_rev (x y : C → ℤ) :
-    (circ x).transpose * ((circ y).transpose * rev) =
-      ((circ y).transpose * rev) * circ x := by
-  rw [Matrix.mul_assoc, rev_mul_circ]
-  rw [← Matrix.mul_assoc, circ_transpose_comm_transpose]
+private lemma s_transpose_mul_s_transpose_r (x y : C → ℤ) :
+    (S x).transpose * ((S y).transpose * R) =
+      ((S y).transpose * R) * S x := by
+  rw [Matrix.mul_assoc, r_mul_s]
+  rw [← Matrix.mul_assoc, s_transpose_comm_transpose]
   noncomm_ring
 
 @[category API, AMS 15]
-private lemma gsBlocks_transpose (a b c d : C → ℤ) (p q : Q) :
-    (gsBlocks a b c d p q).transpose = gsBlocksT a b c d q p := by
+private lemma m_blocks_transpose (a b c d : C → ℤ) (p q : Q) :
+    (M_blocks a b c d p q).transpose = M_blocksT a b c d q p := by
   fin_cases p <;> fin_cases q <;>
-    simp [gsBlocks, gsBlocksT, rev_transpose, rev_mul_circ, rev_mul_circ_transpose]
+    simp [M_blocks, M_blocksT, r_transpose, r_mul_s, r_mul_s_transpose]
 
 @[category API, AMS 15]
 private lemma blockGram_all (a b c d : C → ℤ) (q r : Q) :
     blockGram a b c d q r = if q = r then autoSum a b c d else 0 := by
-  simp only [blockGram, gsBlocks_transpose]
+  simp only [blockGram, m_blocks_transpose]
   fin_cases q <;> fin_cases r
   all_goals
-    simp [gsBlocks, gsBlocksT, autoSum, Fin.sum_univ_four, circ_rev_mul_circ_rev,
-      circ_rev_mul_circ_transpose_rev, circ_transpose_rev_mul_circ_rev,
-      circ_transpose_rev_mul_circ_transpose_rev, circ_transpose_mul_circ_rev,
-      circ_transpose_mul_circ_transpose_rev, circ_normal]
-  all_goals try rw [circ_transpose_comm]
-  all_goals try rw [circ_comm]
-  all_goals try rw [circ_transpose_comm_transpose]
+    simp [M_blocks, M_blocksT, autoSum, Fin.sum_univ_four, s_r_mul_s_r,
+      s_r_mul_s_transpose_r, s_transpose_r_mul_s_r,
+      s_transpose_r_mul_s_transpose_r, s_transpose_mul_s_r,
+      s_transpose_mul_s_transpose_r, s_normal]
+  all_goals try rw [s_transpose_comm]
+  all_goals try rw [s_comm]
+  all_goals try rw [s_transpose_comm_transpose]
   all_goals abel
 
 @[category API, AMS 15]
@@ -174,10 +216,10 @@ private lemma periodicCorrelation_neg (x : C → ℤ) (t : C) :
   simp [mul_comm]
 
 @[category API, AMS 15]
-private lemma circ_gram_apply (x : C → ℤ) (i j : C) :
-    ((circ x).transpose * circ x) i j = periodicCorrelation x (i - j) := by
+private lemma s_gram_apply (x : C → ℤ) (i j : C) :
+    ((S x).transpose * S x) i j = periodicCorrelation x (i - j) := by
   rw [Matrix.mul_apply]
-  simp only [Matrix.transpose_apply, circ, Matrix.circulant_apply, periodicCorrelation]
+  simp only [Matrix.transpose_apply, S, Matrix.circulant_apply, periodicCorrelation]
   rw [← Equiv.sum_comp (Equiv.addRight i)
     (fun k : C => x (k - i) * x (k - j))]
   apply Finset.sum_congr rfl
@@ -188,7 +230,7 @@ private lemma circ_gram_apply (x : C → ℤ) (i j : C) :
 private lemma autoSum_eq_circulant (a b c d : C → ℤ) :
     autoSum a b c d = Matrix.circulant (autoKernel a b c d) := by
   ext i j
-  simp [autoSum, autoKernel, circ_gram_apply, Matrix.circulant_apply]
+  simp [autoSum, autoKernel, s_gram_apply, Matrix.circulant_apply]
 
 @[category API, AMS 15]
 private lemma totalCorrelation_neg (t : C) : totalCorrelation (-t) = totalCorrelation t := by
@@ -369,15 +411,15 @@ private lemma totalCorrelation_nonzero (t : C) (ht : t ≠ 0) : totalCorrelation
     apply totalCorrelation_first_half (-t) <;> omega
 
 @[category API, AMS 15]
-private lemma autoKernel_seed (t : C) :
-    autoKernel (seed 0) (seed 1) (seed 2) (seed 3) t = totalCorrelation t := by
+private lemma autoKernel_s (t : C) :
+    autoKernel (s 0) (s 1) (s 2) (s 3) t = totalCorrelation t := by
   simp [autoKernel, totalCorrelation, Fin.sum_univ_four]
 
 @[category API, AMS 15]
-private lemma autoSum_seed_apply (i j : C) :
-    autoSum (seed 0) (seed 1) (seed 2) (seed 3) i j =
+private lemma autoSum_s_apply (i j : C) :
+    autoSum (s 0) (s 1) (s 2) (s 3) i j =
       if i = j then 664 else -4 := by
-  rw [autoSum_eq_circulant, Matrix.circulant_apply, autoKernel_seed]
+  rw [autoSum_eq_circulant, Matrix.circulant_apply, autoKernel_s]
   by_cases hij : i = j
   · subst j
     simp [totalCorrelation_zero]
@@ -387,127 +429,127 @@ private lemma autoSum_seed_apply (i j : C) :
     exact sub_eq_zero.mp h
 
 @[category API, AMS 15]
-private lemma circ_col_sum (x : C → ℤ) (j : C) : ∑ i, circ x i j = ∑ i, x i := by
+private lemma s_col_sum (x : C → ℤ) (j : C) : ∑ i, S x i j = ∑ i, x i := by
   exact Equiv.sum_comp (Equiv.subRight j) x
 
 @[category API, AMS 15]
-private lemma circ_transpose_col_sum (x : C → ℤ) (j : C) :
-    ∑ i, (circ x).transpose i j = ∑ i, x i := by
+private lemma s_transpose_col_sum (x : C → ℤ) (j : C) :
+    ∑ i, (S x).transpose i j = ∑ i, x i := by
   exact Equiv.sum_comp (Equiv.subLeft j) x
 
 @[category API, AMS 15]
-private lemma circ_rev_col_sum (x : C → ℤ) (j : C) :
-    ∑ i, (circ x * rev) i j = ∑ i, x i := by
-  rw [rev, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
-  exact circ_col_sum x ((Equiv.neg C).symm j)
+private lemma s_r_col_sum (x : C → ℤ) (j : C) :
+    ∑ i, (S x * R) i j = ∑ i, x i := by
+  rw [R, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
+  exact s_col_sum x ((Equiv.neg C).symm j)
 
 @[category API, AMS 15]
-private lemma circ_transpose_rev_col_sum (x : C → ℤ) (j : C) :
-    ∑ i, ((circ x).transpose * rev) i j = ∑ i, x i := by
-  rw [rev, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
-  exact circ_transpose_col_sum x ((Equiv.neg C).symm j)
+private lemma s_transpose_r_col_sum (x : C → ℤ) (j : C) :
+    ∑ i, ((S x).transpose * R) i j = ∑ i, x i := by
+  rw [R, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
+  exact s_transpose_col_sum x ((Equiv.neg C).symm j)
 
 @[category API, AMS 15]
-private lemma gsBlocks_col_sum_general (a b c d : C → ℤ) (p q : Q) (j : C) :
-    ∑ i, gsBlocks a b c d p q i j =
-      gsBlockSums (∑ i, a i) (∑ i, b i) (∑ i, c i) (∑ i, d i) p q := by
+private lemma m_blocks_col_sum_general (a b c d : C → ℤ) (p q : Q) (j : C) :
+    ∑ i, M_blocks a b c d p q i j =
+      M_block_sums (∑ i, a i) (∑ i, b i) (∑ i, c i) (∑ i, d i) p q := by
   fin_cases p <;> fin_cases q
-  · change (∑ i, circ a i j) = ∑ i, a i
-    exact circ_col_sum a j
-  · change (∑ i, (circ b * rev) i j) = ∑ i, b i
-    exact circ_rev_col_sum b j
-  · change (∑ i, (circ c * rev) i j) = ∑ i, c i
-    exact circ_rev_col_sum c j
-  · change (∑ i, (circ d * rev) i j) = ∑ i, d i
-    exact circ_rev_col_sum d j
-  · change (∑ i, -(circ b * rev) i j) = -(∑ i, b i)
-    rw [Finset.sum_neg_distrib, circ_rev_col_sum]
-  · change (∑ i, circ a i j) = ∑ i, a i
-    exact circ_col_sum a j
-  · change (∑ i, ((circ d).transpose * rev) i j) = ∑ i, d i
-    exact circ_transpose_rev_col_sum d j
-  · change (∑ i, -((circ c).transpose * rev) i j) = -(∑ i, c i)
-    rw [Finset.sum_neg_distrib, circ_transpose_rev_col_sum]
-  · change (∑ i, -(circ c * rev) i j) = -(∑ i, c i)
-    rw [Finset.sum_neg_distrib, circ_rev_col_sum]
-  · change (∑ i, -((circ d).transpose * rev) i j) = -(∑ i, d i)
-    rw [Finset.sum_neg_distrib, circ_transpose_rev_col_sum]
-  · change (∑ i, circ a i j) = ∑ i, a i
-    exact circ_col_sum a j
-  · change (∑ i, ((circ b).transpose * rev) i j) = ∑ i, b i
-    exact circ_transpose_rev_col_sum b j
-  · change (∑ i, -(circ d * rev) i j) = -(∑ i, d i)
-    rw [Finset.sum_neg_distrib, circ_rev_col_sum]
-  · change (∑ i, ((circ c).transpose * rev) i j) = ∑ i, c i
-    exact circ_transpose_rev_col_sum c j
-  · change (∑ i, -((circ b).transpose * rev) i j) = -(∑ i, b i)
-    rw [Finset.sum_neg_distrib, circ_transpose_rev_col_sum]
-  · change (∑ i, circ a i j) = ∑ i, a i
-    exact circ_col_sum a j
+  · change (∑ i, S a i j) = ∑ i, a i
+    exact s_col_sum a j
+  · change (∑ i, (S b * R) i j) = ∑ i, b i
+    exact s_r_col_sum b j
+  · change (∑ i, (S c * R) i j) = ∑ i, c i
+    exact s_r_col_sum c j
+  · change (∑ i, (S d * R) i j) = ∑ i, d i
+    exact s_r_col_sum d j
+  · change (∑ i, -(S b * R) i j) = -(∑ i, b i)
+    rw [Finset.sum_neg_distrib, s_r_col_sum]
+  · change (∑ i, S a i j) = ∑ i, a i
+    exact s_col_sum a j
+  · change (∑ i, ((S d).transpose * R) i j) = ∑ i, d i
+    exact s_transpose_r_col_sum d j
+  · change (∑ i, -((S c).transpose * R) i j) = -(∑ i, c i)
+    rw [Finset.sum_neg_distrib, s_transpose_r_col_sum]
+  · change (∑ i, -(S c * R) i j) = -(∑ i, c i)
+    rw [Finset.sum_neg_distrib, s_r_col_sum]
+  · change (∑ i, -((S d).transpose * R) i j) = -(∑ i, d i)
+    rw [Finset.sum_neg_distrib, s_transpose_r_col_sum]
+  · change (∑ i, S a i j) = ∑ i, a i
+    exact s_col_sum a j
+  · change (∑ i, ((S b).transpose * R) i j) = ∑ i, b i
+    exact s_transpose_r_col_sum b j
+  · change (∑ i, -(S d * R) i j) = -(∑ i, d i)
+    rw [Finset.sum_neg_distrib, s_r_col_sum]
+  · change (∑ i, ((S c).transpose * R) i j) = ∑ i, c i
+    exact s_transpose_r_col_sum c j
+  · change (∑ i, -((S b).transpose * R) i j) = -(∑ i, b i)
+    rw [Finset.sum_neg_distrib, s_transpose_r_col_sum]
+  · change (∑ i, S a i j) = ∑ i, a i
+    exact s_col_sum a j
 
 @[category API, AMS 15]
-private lemma seed_zero_sum : ∑ i, seed 0 i = 2 := by simpa using seed_sum 0
+private lemma s_zero_sum : ∑ i, s 0 i = 2 := by simpa using s_sum 0
 
 @[category API, AMS 15]
-private lemma seed_one_sum : ∑ i, seed 1 i = 0 := by simpa using seed_sum 1
+private lemma s_one_sum : ∑ i, s 1 i = 0 := by simpa using s_sum 1
 
 @[category API, AMS 15]
-private lemma seed_two_sum : ∑ i, seed 2 i = 0 := by simpa using seed_sum 2
+private lemma s_two_sum : ∑ i, s 2 i = 0 := by simpa using s_sum 2
 
 @[category API, AMS 15]
-private lemma seed_three_sum : ∑ i, seed 3 i = 0 := by simpa using seed_sum 3
+private lemma s_three_sum : ∑ i, s 3 i = 0 := by simpa using s_sum 3
 
 @[category API, AMS 15]
-private lemma gsBlockSums_seed : gsBlockSums 2 0 0 0 = (2 : Matrix Q Q ℤ) := by
+private lemma m_block_sums_s : M_block_sums 2 0 0 0 = (2 : Matrix Q Q ℤ) := by
   ext p q
-  fin_cases p <;> fin_cases q <;> norm_num [gsBlockSums, Matrix.ofNat_apply]
+  fin_cases p <;> fin_cases q <;> norm_num [M_block_sums, Matrix.ofNat_apply]
 
 @[category API, AMS 15]
-private lemma gsBlocks_col_sum (p q : Q) (j : C) :
-    ∑ i, gsBlocks (seed 0) (seed 1) (seed 2) (seed 3) p q i j =
+private lemma m_blocks_col_sum (p q : Q) (j : C) :
+    ∑ i, M_blocks (s 0) (s 1) (s 2) (s 3) p q i j =
       if p = q then 2 else 0 := by
-  rw [gsBlocks_col_sum_general, seed_zero_sum, seed_one_sum, seed_two_sum,
-    seed_three_sum, gsBlockSums_seed]
+  rw [m_blocks_col_sum_general, s_zero_sum, s_one_sum, s_two_sum,
+    s_three_sum, m_block_sums_s]
   simp [Matrix.ofNat_apply]
 
 @[category API, AMS 15]
-private lemma core_gram_apply (q r : Q) (i j : C) :
-    (coreMatrix.transpose * coreMatrix) (q, i) (r, j) =
-      if q = r then autoSum (seed 0) (seed 1) (seed 2) (seed 3) i j else 0 := by
+private lemma m_gram_apply (q r : Q) (i j : C) :
+    (M.transpose * M) (q, i) (r, j) =
+      if q = r then autoSum (s 0) (s 1) (s 2) (s 3) i j else 0 := by
   by_cases hqr : q = r
   · subst r
     rw [if_pos rfl, Matrix.mul_apply, Fintype.sum_prod_type]
     have h := congrArg (fun M : Matrix C C ℤ => M i j)
-      (blockGram_all (seed 0) (seed 1) (seed 2) (seed 3) q q)
+      (blockGram_all (s 0) (s 1) (s 2) (s 3) q q)
     rw [if_pos rfl] at h
     simpa only [blockGram, Finset.sum_apply, Matrix.mul_apply, Matrix.transpose_apply]
       using h
   · rw [if_neg hqr, Matrix.mul_apply, Fintype.sum_prod_type]
     have h := congrArg (fun M : Matrix C C ℤ => M i j)
-      (blockGram_all (seed 0) (seed 1) (seed 2) (seed 3) q r)
+      (blockGram_all (s 0) (s 1) (s 2) (s 3) q r)
     rw [if_neg hqr] at h
     simpa only [blockGram, Finset.sum_apply, Matrix.mul_apply, Matrix.transpose_apply,
       Matrix.zero_apply] using h
 
 @[category test, AMS 15]
-private lemma border_gram : border.transpose * border = (4 : Matrix Q Q ℤ) := by
+private lemma x_gram : X.transpose * X = (4 : Matrix Q Q ℤ) := by
   decide +kernel
 
 @[category test, AMS 15]
-private lemma top_gram : top.transpose * top = (4 : Matrix Q Q ℤ) := by
+private lemma y_gram : Y.transpose * Y = (4 : Matrix Q Q ℤ) := by
   decide +kernel
 
 @[category test, AMS 15]
-private lemma left_gram : left.transpose * left = (4 : Matrix Q Q ℤ) := by
+private lemma z_gram : Z.transpose * Z = (4 : Matrix Q Q ℤ) := by
   decide +kernel
 
 @[category test, AMS 15]
-private lemma border_cross : border.transpose * top + 2 • left.transpose = 0 := by
+private lemma x_y_cross : X.transpose * Y + 2 • Z.transpose = 0 := by
   decide +kernel
 
 @[category API, AMS 15]
-private lemma seed_sign (q : Q) (i : C) : IsSign (seed q i) := by
-  simp only [IsSign, seed]
+private lemma s_sign (q : Q) (i : C) : IsSign (s q i) := by
+  simp only [IsSign, s]
   split <;> simp
 
 @[category API, AMS 15]
@@ -515,113 +557,113 @@ private lemma sign_neg {z : ℤ} (hz : IsSign z) : IsSign (-z) := by
   rcases hz with rfl | rfl <;> simp [IsSign]
 
 @[category API, AMS 15]
-private lemma circ_seed_sign (q : Q) (i j : C) : IsSign (circ (seed q) i j) := by
-  exact seed_sign q (i - j)
+private lemma s_matrix_sign (q : Q) (i j : C) : IsSign (S (s q) i j) := by
+  exact s_sign q (i - j)
 
 @[category API, AMS 15]
-private lemma circ_transpose_seed_sign (q : Q) (i j : C) :
-    IsSign ((circ (seed q)).transpose i j) := by
-  exact seed_sign q (j - i)
+private lemma s_transpose_sign (q : Q) (i j : C) :
+    IsSign ((S (s q)).transpose i j) := by
+  exact s_sign q (j - i)
 
 @[category API, AMS 15]
-private lemma circ_rev_apply (x : C → ℤ) (i j : C) :
-    (circ x * rev) i j = circ x i ((Equiv.neg C).symm j) := by
-  rw [rev, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
+private lemma s_r_apply (x : C → ℤ) (i j : C) :
+    (S x * R) i j = S x i ((Equiv.neg C).symm j) := by
+  rw [R, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
   rfl
 
 @[category API, AMS 15]
-private lemma circ_rev_seed_sign (q : Q) (i j : C) :
-    IsSign ((circ (seed q) * rev) i j) := by
-  rw [circ_rev_apply]
-  exact circ_seed_sign q i ((Equiv.neg C).symm j)
+private lemma s_r_sign (q : Q) (i j : C) :
+    IsSign ((S (s q) * R) i j) := by
+  rw [s_r_apply]
+  exact s_matrix_sign q i ((Equiv.neg C).symm j)
 
 @[category API, AMS 15]
-private lemma circ_transpose_rev_seed_sign (q : Q) (i j : C) :
-    IsSign (((circ (seed q)).transpose * rev) i j) := by
-  rw [rev, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
-  exact circ_transpose_seed_sign q i ((Equiv.neg C).symm j)
+private lemma s_transpose_r_sign (q : Q) (i j : C) :
+    IsSign (((S (s q)).transpose * R) i j) := by
+  rw [R, Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
+  exact s_transpose_sign q i ((Equiv.neg C).symm j)
 
 @[category API, AMS 15]
-private lemma coreMatrix_sign (i j : Q × C) : IsSign (coreMatrix i j) := by
+private lemma m_sign (i j : Q × C) : IsSign (M i j) := by
   rcases i with ⟨p, i⟩
   rcases j with ⟨q, j⟩
-  fin_cases p <;> fin_cases q <;> simp only [coreMatrix, gsBlocks]
+  fin_cases p <;> fin_cases q <;> simp only [M, M_blocks]
   all_goals first
-    | exact circ_seed_sign 0 i j
-    | exact circ_rev_seed_sign 1 i j
-    | exact circ_rev_seed_sign 2 i j
-    | exact circ_rev_seed_sign 3 i j
-    | exact sign_neg (circ_rev_seed_sign 1 i j)
-    | exact sign_neg (circ_rev_seed_sign 2 i j)
-    | exact sign_neg (circ_rev_seed_sign 3 i j)
-    | exact circ_transpose_rev_seed_sign 1 i j
-    | exact circ_transpose_rev_seed_sign 2 i j
-    | exact circ_transpose_rev_seed_sign 3 i j
-    | exact sign_neg (circ_transpose_rev_seed_sign 1 i j)
-    | exact sign_neg (circ_transpose_rev_seed_sign 2 i j)
-    | exact sign_neg (circ_transpose_rev_seed_sign 3 i j)
+    | exact s_matrix_sign 0 i j
+    | exact s_r_sign 1 i j
+    | exact s_r_sign 2 i j
+    | exact s_r_sign 3 i j
+    | exact sign_neg (s_r_sign 1 i j)
+    | exact sign_neg (s_r_sign 2 i j)
+    | exact sign_neg (s_r_sign 3 i j)
+    | exact s_transpose_r_sign 1 i j
+    | exact s_transpose_r_sign 2 i j
+    | exact s_transpose_r_sign 3 i j
+    | exact sign_neg (s_transpose_r_sign 1 i j)
+    | exact sign_neg (s_transpose_r_sign 2 i j)
+    | exact sign_neg (s_transpose_r_sign 3 i j)
 
 @[category API, AMS 15]
-private lemma borderedMatrix_sign (i j : Q ⊕ (Q × C)) : IsSign (borderedMatrix i j) := by
+private lemma h_blocks_sign (i j : Q ⊕ (Q × C)) : IsSign (H_blocks i j) := by
   rcases i with i | i <;> rcases j with j | j
-  · fin_cases i <;> fin_cases j <;> simp [borderedMatrix, border, Matrix.fromBlocks, IsSign]
+  · fin_cases i <;> fin_cases j <;> simp [H_blocks, X, Matrix.fromBlocks, IsSign]
   · fin_cases i <;> rcases j with ⟨q, _j⟩ <;> fin_cases q <;>
-      simp [borderedMatrix, topExpanded, top, Matrix.fromBlocks, IsSign]
+      simp [H_blocks, Y_tilde, Y, Matrix.fromBlocks, IsSign]
   · rcases i with ⟨p, _i⟩
     fin_cases p <;> fin_cases j <;>
-      simp [borderedMatrix, leftExpanded, left, Matrix.fromBlocks, IsSign]
-  · exact coreMatrix_sign i j
+      simp [H_blocks, Z_tilde, Z, Matrix.fromBlocks, IsSign]
+  · exact m_sign i j
 
 @[category API, AMS 15]
-private lemma leftExpanded_gram :
-    leftExpanded.transpose * leftExpanded = (664 : Matrix Q Q ℤ) := by
+private lemma z_tilde_gram :
+    Z_tilde.transpose * Z_tilde = (664 : Matrix Q Q ℤ) := by
   ext i j
   rw [Matrix.mul_apply, Fintype.sum_prod_type]
-  change (∑ p : Q, ∑ _k : C, left p i * left p j) = _
+  change (∑ p : Q, ∑ _k : C, Z p i * Z p j) = _
   calc
-    (∑ p : Q, ∑ _k : C, left p i * left p j) =
-        166 * ∑ p : Q, left p i * left p j := by
+    (∑ p : Q, ∑ _k : C, Z p i * Z p j) =
+        166 * ∑ p : Q, Z p i * Z p j := by
       simp [Finset.mul_sum]
-    _ = 166 * (left.transpose * left) i j := by simp [Matrix.mul_apply]
-    _ = (664 : Matrix Q Q ℤ) i j := by rw [left_gram]; simp [Matrix.ofNat_apply]
+    _ = 166 * (Z.transpose * Z) i j := by simp [Matrix.mul_apply]
+    _ = (664 : Matrix Q Q ℤ) i j := by rw [z_gram]; simp [Matrix.ofNat_apply]
 
 @[category API, AMS 15]
-private lemma topExpanded_gram_apply (q r : Q) (i j : C) :
-    (topExpanded.transpose * topExpanded) (q, i) (r, j) =
+private lemma y_tilde_gram_apply (q r : Q) (i j : C) :
+    (Y_tilde.transpose * Y_tilde) (q, i) (r, j) =
       if q = r then 4 else 0 := by
-  change (∑ x, top x q * top x r) = _
+  change (∑ x, Y x q * Y x r) = _
   calc
-    (∑ x, top x q * top x r) = (top.transpose * top) q r := by
+    (∑ x, Y x q * Y x r) = (Y.transpose * Y) q r := by
       rfl
-    _ = _ := by rw [top_gram]; simp [Matrix.ofNat_apply]
+    _ = _ := by rw [y_gram]; simp [Matrix.ofNat_apply]
 
 @[category API, AMS 15]
-private lemma left_core_mul_apply (j : Q) (q : Q) (b : C) :
-    (leftExpanded.transpose * coreMatrix) j (q, b) = 2 * left.transpose j q := by
+private lemma z_tilde_m_mul_apply (j : Q) (q : Q) (b : C) :
+    (Z_tilde.transpose * M) j (q, b) = 2 * Z.transpose j q := by
   rw [Matrix.mul_apply, Fintype.sum_prod_type]
-  change (∑ p : Q, ∑ k : C, left p j *
-    gsBlocks (seed 0) (seed 1) (seed 2) (seed 3) p q k b) = _
-  simp_rw [← Finset.mul_sum, gsBlocks_col_sum]
+  change (∑ p : Q, ∑ k : C, Z p j *
+    M_blocks (s 0) (s 1) (s 2) (s 3) p q k b) = _
+  simp_rw [← Finset.mul_sum, m_blocks_col_sum]
   simp [Matrix.transpose_apply]
   ring
 
 @[category API, AMS 15]
 private lemma boundary_gram :
-    border.transpose * border + leftExpanded.transpose * leftExpanded =
+    X.transpose * X + Z_tilde.transpose * Z_tilde =
       (668 : Matrix Q Q ℤ) := by
-  rw [border_gram, leftExpanded_gram]
+  rw [x_gram, z_tilde_gram]
   ext i j
   by_cases hij : i = j <;> simp [hij, Matrix.ofNat_apply]
 
 @[category API, AMS 15]
 private lemma core_border_gram :
-    topExpanded.transpose * topExpanded + coreMatrix.transpose * coreMatrix =
+    Y_tilde.transpose * Y_tilde + M.transpose * M =
       (668 : Matrix (Q × C) (Q × C) ℤ) := by
   ext ⟨q, i⟩ ⟨r, j⟩
-  rw [Matrix.add_apply, topExpanded_gram_apply, core_gram_apply]
+  rw [Matrix.add_apply, y_tilde_gram_apply, m_gram_apply]
   by_cases hqr : q = r
   · subst r
-    rw [if_pos rfl, autoSum_seed_apply]
+    rw [if_pos rfl, autoSum_s_apply]
     by_cases hij : i = j
     · subst j
       simp [Matrix.ofNat_apply]
@@ -630,45 +672,45 @@ private lemma core_border_gram :
 
 @[category API, AMS 15]
 private lemma border_core_cross :
-    border.transpose * topExpanded + leftExpanded.transpose * coreMatrix = 0 := by
+    X.transpose * Y_tilde + Z_tilde.transpose * M = 0 := by
   ext j ⟨q, b⟩
-  rw [Matrix.add_apply, left_core_mul_apply]
-  have h := congrArg (fun M : Matrix Q Q ℤ => M j q) border_cross
-  simpa only [topExpanded, Matrix.mul_apply, Matrix.transpose_apply, Matrix.add_apply,
+  rw [Matrix.add_apply, z_tilde_m_mul_apply]
+  have h := congrArg (fun M : Matrix Q Q ℤ => M j q) x_y_cross
+  simpa only [Y_tilde, Matrix.mul_apply, Matrix.transpose_apply, Matrix.add_apply,
     Matrix.smul_apply, Matrix.zero_apply, smul_eq_mul] using h
 
 @[category API, AMS 15]
 private lemma core_border_cross :
-    topExpanded.transpose * border + coreMatrix.transpose * leftExpanded = 0 := by
+    Y_tilde.transpose * X + M.transpose * Z_tilde = 0 := by
   have h := congrArg Matrix.transpose border_core_cross
   simpa only [Matrix.transpose_add, Matrix.transpose_mul, Matrix.transpose_transpose,
     Matrix.transpose_zero] using h
 
 @[category API, AMS 15]
-private lemma borderedMatrix_gram :
-    borderedMatrix.transpose * borderedMatrix =
+private lemma h_blocks_gram :
+    H_blocks.transpose * H_blocks =
       (668 : Matrix (Q ⊕ (Q × C)) (Q ⊕ (Q × C)) ℤ) := by
-  rw [borderedMatrix, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply,
+  rw [H_blocks, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply,
     boundary_gram, border_core_cross, core_border_cross, core_border_gram]
   ext i j
   rcases i with i | i <;> rcases j with j | j <;>
     simp [Matrix.fromBlocks, Matrix.ofNat_apply]
 
-/-- Every entry of `H668Int` is $+1$ or $-1$. -/
+/-- Every entry of `H` is $+1$ or $-1$. -/
 @[category test, AMS 15]
-theorem H668Int_sign (i j : Fin 668) : H668Int i j = 1 ∨ H668Int i j = -1 := by
-  exact borderedMatrix_sign (indexEquiv.symm i) (indexEquiv.symm j)
+theorem H_sign (i j : Fin 668) : H i j = 1 ∨ H i j = -1 := by
+  exact h_blocks_sign (indexEquiv.symm i) (indexEquiv.symm j)
 
 set_option maxRecDepth 10000 in
-/-- The columns of `H668Int` are pairwise orthogonal and have squared norm 668. -/
+/-- The columns of `H` are pairwise orthogonal and have squared norm 668. -/
 @[category test, AMS 15]
-theorem H668Int_gram :
-    H668Int.transpose * H668Int = (668 : Matrix (Fin 668) (Fin 668) ℤ) := by
-  change (Matrix.reindex indexEquiv indexEquiv borderedMatrix).transpose *
-    Matrix.reindex indexEquiv indexEquiv borderedMatrix = _
+theorem H_gram :
+    H.transpose * H = (668 : Matrix (Fin 668) (Fin 668) ℤ) := by
+  change (Matrix.reindex indexEquiv indexEquiv H_blocks).transpose *
+    Matrix.reindex indexEquiv indexEquiv H_blocks = _
   rw [Matrix.transpose_reindex]
   rw [← Matrix.reindexAlgEquiv_apply ℤ ℤ, ← Matrix.reindexAlgEquiv_apply ℤ ℤ,
-    ← map_mul, borderedMatrix_gram]
+    ← map_mul, h_blocks_gram]
   rw [Matrix.reindexAlgEquiv_apply]
   ext i j
   simp [Matrix.reindex, Matrix.ofNat_apply]
