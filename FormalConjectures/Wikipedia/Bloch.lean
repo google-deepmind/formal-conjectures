@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Bloch and Landau constants
@@ -122,7 +122,7 @@ theorem blochConstant_lower_bound : Real.sqrt 3 / 4 + 2 * 10 ^ (-4 : ℤ) ≤ bl
   sorry
 
 /-- It is proved in [AG37] that the Bloch constant is bounded above by
-$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(11/12)}{\Gamma(1/4)}$$. -/
+$\frac{1}{\sqrt{1 + \sqrt{3}}}\frac{\Gamma(1/3) \Gamma(11/12)}{\Gamma(1/4)}$. -/
 @[category research solved, AMS 30]
 theorem blochConstant_upper_bound :
     blochConstant ≤ Real.Gamma (1 / 3) * Real.Gamma (11 / 12) /

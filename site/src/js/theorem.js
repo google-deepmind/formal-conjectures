@@ -38,6 +38,8 @@ async function init() {
   }
 
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
@@ -487,6 +489,17 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
+  // Unproven hypotheses a conditional formal proof assumes, as the names of
+  // declarations stated (with sorry proofs) in the same file.
+  const proofConditions = theorem.proofConditions || [];
+  const proofConditionsSection = proofConditions.length ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Assumes</div>
+      <div class="detail-value">The formal proof assumes
+        ${proofConditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')},
+        stated in this file.</div>
+    </div>` : '';
+
   const contributorsSection = contributors.length ? `
     <div class="theorem-detail__section">
       <div class="detail-label">File contributors</div>
@@ -505,6 +518,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     <header class="theorem-detail__header">
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
+      ${proofConditions.length ? `<span class="badge cat-conditional" style="font-size:.9rem;padding:.3rem .9rem"
+        title="The formal proof depends on an unproven assumption">Conditional</span>` : ''}
     </header>
 
     ${moduleDocSection}
@@ -512,6 +527,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     ${docSection}
 
     ${codeSection}
+
+    ${proofConditionsSection}
 
     ${contributorsSection}
 
@@ -541,6 +558,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
       </a>
+      <a href="${_base}/about/#comments" class="btn btn-outline">About comments and votes</a>
     </nav>
   `;
 

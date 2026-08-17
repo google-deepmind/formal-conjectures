@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 593
@@ -36,7 +36,7 @@ namespace Erdos593
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 593 ($500)**: Characterize those finite 3-uniform hypergraphs which appear
+**Erdős Problem 593 (\$500)**: Characterize those finite 3-uniform hypergraphs which appear
 in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
 
 A natural conjectural characterization, recorded here, is that the obligatory finite 3-uniform

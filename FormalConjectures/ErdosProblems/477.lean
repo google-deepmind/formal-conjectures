@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 477
@@ -52,7 +52,7 @@ theorem erdos_477.variants.S_sq :
 
 /--
 There is no such $A$ for any polynomial $f(x) = aX^2 + bX + c$, if $a | b$
-with $a \ne 0$ and $b \ne 0.
+with $a \ne 0$ and $b \ne 0$.
 This was found be AlphaProof for the specific instance $X^2 - X + 1$ and then generalised.
  -/
 @[category research solved, AMS 12]
