@@ -122,6 +122,14 @@ Lean is incorrect. Read these again before you submit:
 Prove each `test` statement and each `API` statement that you add. These statements must test
 a definition. A statement that contains `sorry` tests nothing.
 
+## Completeness
+
+- No placeholder definitions (e.g., `def foo : Type := sorry` or `opaque foo : Type*`)
+- No incomplete type annotations or holes
+- All referenced definitions must exist
+- All imports must be correct
+- No new axioms
+
 ## Before you open a pull request
 
 - [ ] `lake --wfail build <module>` passes for each module that you changed

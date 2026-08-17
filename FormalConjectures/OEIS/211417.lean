@@ -83,7 +83,9 @@ theorem thirty_mul_sub_one_dvd_a (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ
 Conjecture: "7*a(n)/(2*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a211417/blob/cad1fb228b5b80573cab3eeb92c8be57fd73c506/lean/OeisA211417FC.lean#L866-L868"]
 theorem seven_mul_a_dvd_two_mul_add_one (n : ℕ) :
     (2 * (n : ℤ) + 1) ∣ 7 * (a n : ℤ) := by
   sorry
@@ -92,7 +94,9 @@ theorem seven_mul_a_dvd_two_mul_add_one (n : ℕ) :
 Conjecture: "a(n)/(3*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a211417/blob/cad1fb228b5b80573cab3eeb92c8be57fd73c506/lean/OeisA211417FC.lean#L1173-L1175"]
 theorem a_dvd_three_mul_add_one (n : ℕ) :
     (3 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
@@ -101,7 +105,9 @@ theorem a_dvd_three_mul_add_one (n : ℕ) :
 Conjecture: "a(n)/(5*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a211417/blob/cad1fb228b5b80573cab3eeb92c8be57fd73c506/lean/OeisA211417FC.lean#L1446-L1448"]
 theorem a_dvd_five_mul_add_one (n : ℕ) :
     (5 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
@@ -110,7 +116,9 @@ theorem a_dvd_five_mul_add_one (n : ℕ) :
 Conjecture: "42*a(n)/((2*n + 1)*(3*n + 1)*(5*n + 1)) [is an] integer for all n
 (checked up to n = 1000)." - _Peter Bala_, Aug 28 2025
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a211417/blob/cad1fb228b5b80573cab3eeb92c8be57fd73c506/lean/OeisA211417FC.lean#L1514-L1524"]
 theorem forty_two_mul_a_dvd_product (n : ℕ) :
     ((2 * (n : ℤ) + 1) * (3 * (n : ℤ) + 1) * (5 * (n : ℤ) + 1)) ∣
       42 * (a n : ℤ) := by
