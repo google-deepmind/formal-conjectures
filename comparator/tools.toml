@@ -1,0 +1,7 @@
+# The pinned external tools, one machine-readable source of truth. "At or
+# after" prose is not a lock; CI, local setup and documentation read this.
+[tools]
+comparator = "71b52ec29e06d4b7d882726553b1ceb99a2499e0"
+landrun = "5ed4a3db3a4ad930d577215c6b9abaa19df7f99f"
+# lean4export: the tag matching the workspace's lean-toolchain, v4.27.0 today.
+lean4export = "v4.27.0"

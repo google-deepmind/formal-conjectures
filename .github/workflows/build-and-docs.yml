@@ -155,6 +155,25 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
+      # The elaborator-to-generator boundary, exercised on the oleans the
+      # build above produced: one plain theorem, a Prop answer slot, a
+      # non-Prop answer slot, a forall-conclusion (whose binder must not be
+      # applied), and explicit parameters (which must be). The comparator run
+      # itself needs landrun and stays in a separate Linux job.
+      - name: Comparator generation smoke test
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          lake build comparator_facts
+          for d in exists_hadamard_zero erdos_940.variants.large_integers \
+                   erdos_1038.parts.i erdos_100.variants.strong \
+                   KotherConjecture.variants.le_KotherRadical; do
+            python3 scripts/make_comparator_workspace.py "$d" --out .comparator
+          done
+          grep -q "large_integers_answer : Prop" .comparator/erdos_940_variants_large_integers/Challenge.lean
+          grep -q "i_answer : ENNReal" .comparator/erdos_1038_parts_i/Challenge.lean
+          grep -q "Submission.erdos_100.variants.strong$" .comparator/erdos_100_variants_strong/Solution.lean
+          grep -q "le_KotherRadical hI" .comparator/KotherConjecture_variants_le_KotherRadical/Solution.lean
+
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
