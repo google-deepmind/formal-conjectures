@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Enumeration of Self-Avoiding Walks on Lattices
@@ -42,6 +42,7 @@ Duminil-Copin and Smirnov (2012) proved $\mu = \sqrt{2 + \sqrt{2}}$.
 - [The Self-Avoiding Walk, Madras and Slade (1993)](https://doi.org/10.1007/978-1-4614-6025-1)
 - [Exact critical point and critical exponents of O(n) models in two dimensions, Nienhuis (1982)](https://doi.org/10.1103/PhysRevLett.49.1062)
 - [The connective constant of the honeycomb lattice equals √(2 + √2), Duminil-Copin and Smirnov (2012)](https://arxiv.org/abs/1007.0575)
+- [Logarithmic correction for the susceptibility of the four-dimensional weakly self-avoiding walk, Bauerschmidt, Brydges and Slade (2015)](https://arxiv.org/abs/1403.7422)
 - [OEIS A001411](https://oeis.org/A001411) — SAWs on the square lattice $\mathbb{Z}^2$
 - [OEIS A001412](https://oeis.org/A001412) — SAWs on the simple cubic lattice $\mathbb{Z}^3$
 - [OEIS A001413](https://oeis.org/A001413) — SAWs on the four-dimensional hypercubic lattice $\mathbb{Z}^4$
@@ -170,18 +171,39 @@ theorem connectiveConstant_hexagonalLattice :
   sorry
 
 /--
-**Self-avoiding-walk critical exponent (open).**  In each dimension $d \ge 1$ the number of
-self-avoiding walks on $\mathbb{Z}^d$ is expected to grow as $c_n \sim A \mu^n n^{\gamma - 1}$,
+**Self-avoiding-walk critical exponent (open).**  In each dimension $d \ge 1$, $d \ne 4$, the
+number of self-avoiding walks on $\mathbb{Z}^d$ is expected to grow as $c_n \sim A \mu^n n^{\gamma - 1}$,
 where $\mu$ is the connective constant and $\gamma$ is the *critical exponent*.  The exponent is
-believed to exist for every $d$, but its value is *dimension-dependent*: $\gamma = 43/32$ in
+believed to exist for every such $d$, but its value is *dimension-dependent*: $\gamma = 43/32$ in
 $d = 2$ (Nienhuis, 1982), $\gamma \approx 1.16$ in $d = 3$, and the mean-field value $\gamma = 1$
-for $d \ge 5$ (with a logarithmic correction at the upper critical dimension $d = 4$).
+for $d \ge 5$.  The upper critical dimension $d = 4$ is excluded: there the predicted asymptotics
+carries a logarithmic correction, $c_n \sim A \mu^n (\log n)^{1/4}$, so the ratio below can never
+tend to $1$ (it diverges for $\gamma \le 1$ and vanishes for $\gamma > 1$); the $d = 4$ statement
+is `saw_critical_exponent_dim_four`.
 -/
 @[category research open, AMS 5 82]
 theorem saw_critical_exponent :
-    answer(sorry) ↔ ∀ d : ℕ, 0 < d → ∃ γ A : ℝ, 0 < A ∧
+    answer(sorry) ↔ ∀ d : ℕ, 0 < d → d ≠ 4 → ∃ γ A : ℝ, 0 < A ∧
       Tendsto (fun n => (cN d n : ℝ) /
           (A * connectiveConstant (integerLattice d) (0 : Fin d → ℤ) ^ n * (n : ℝ) ^ (γ - 1)))
+        atTop (𝓝 1) := by
+  sorry
+
+/--
+**Logarithmic correction at the upper critical dimension (open).**  In the upper critical
+dimension $d = 4$ the pure power law $c_n \sim A \mu^n n^{\gamma - 1}$ is expected to fail:
+renormalisation-group analysis predicts a logarithmic correction
+$c_n \sim A \mu^n (\log n)^{1/4}$.  The analogous logarithmic correction (with the same
+exponent $1/4$) for the susceptibility of the *weakly* self-avoiding walk in $d = 4$ was
+proved by Bauerschmidt, Brydges and Slade (2015); for the strict self-avoiding walk the
+question is open.
+-/
+@[category research open, AMS 5 82]
+theorem saw_critical_exponent_dim_four :
+    answer(sorry) ↔ ∃ A : ℝ, 0 < A ∧
+      Tendsto (fun n => (cN 4 n : ℝ) /
+          (A * connectiveConstant (integerLattice 4) (0 : Fin 4 → ℤ) ^ n *
+            Real.log (n : ℝ) ^ ((1 : ℝ) / 4)))
         atTop (𝓝 1) := by
   sorry
 
