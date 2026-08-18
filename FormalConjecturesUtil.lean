@@ -17,6 +17,7 @@ module
 
 public import Mathlib
 public import FormalConjecturesForMathlib
+public meta import FormalConjecturesForMathlib
 public import FormalConjecturesUtil.Answer
 public import FormalConjecturesUtil.Linters.AMSLinter
 public import FormalConjecturesUtil.Linters.AnswerLinter
