@@ -24,6 +24,8 @@ import FormalConjecturesUtil
 
 namespace Erdos257
 
+open scoped ENNReal
+
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set. Is
 $$
@@ -95,6 +97,37 @@ is irrational.
 @[category research solved, AMS 11]
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
+  sorry
+
+/--
+For a set `J` of allowed positive-exponent coordinates, the Mersenne
+achievement set restricted to `J` has an exact Lebesgue-measure dichotomy: if
+the forbidden coordinates form a finite set `F`, the measure is $2^{-|F|}$; if
+infinitely many coordinates are forbidden, the measure is zero.
+
+Coordinate `k` carries the term $1/(2^{k+1}-1)$. Taking `J = Set.univ`, so
+`F = ∅`, gives Lebesgue measure exactly `1` for the unrestricted achievement
+set of these weights.
+
+Kovač–Tao (doi:10.1007/s10474-025-01528-0, §2.1.2 and Remark 4.1) record the
+strict-tail inequality and Cantor-set structure for these exact Lambert
+weights; the measure of a fast achievement set is classical (Kakeya; see
+Bartoszewicz–Filipczak–Prus-Wiśniowski, doi:10.1007/s40879-020-00438-5). No
+claim of mathematical novelty or priority is made.
+
+This is a solved structural variant about the geometry of the value space. It
+does not decide whether every infinite-support subseries has an irrational
+sum, so `erdos_257` remains open.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/ceaee37f2df872af9e19c90f2b88d87f06fec85d/adapters/FormalConjecturesVariants.lean#L566-L573"]
+theorem erdos_257.variants.support_measure_dichotomy (J : Set ℕ) :
+    (∃ F : Finset ℕ,
+        J = (↑F : Set ℕ)ᶜ ∧
+          MeasureTheory.volume (supportedMersenneAchievementSet J) =
+            ((2 : ℝ≥0∞) ^ F.card)⁻¹) ∨
+      (Jᶜ.Infinite ∧
+        MeasureTheory.volume (supportedMersenneAchievementSet J) = 0) := by
   sorry
 
 end Erdos257
