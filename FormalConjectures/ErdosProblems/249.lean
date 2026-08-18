@@ -68,4 +68,26 @@ theorem erdos_249.variants.odd_core_basis :
         (Submodule.span ℚ (Set.range Nat.fullTotientKernelFamily))) := by
   sorry
 
+/--
+For every real $r$ with $0 \leq r < 1$, the ordinary generating function of
+Euler's totient is the $r$-weighted mass of the lattice points visible from the
+origin in the half-open first quadrant:
+$$\sum_{\substack{a > 0 \\ \gcd(a,b) = 1}} r^{a+b} = \sum_n \phi(n) r^n.$$
+
+The finite reason is exact. On the antidiagonal $a + b = n$ we have
+$\gcd(a, b) = \gcd(a, n)$, so the surviving points are the $a \in [1, n]$ coprime
+to $n$ -- precisely $\phi(n)$ of them. The half-open boundary is deliberate:
+$(1, 0)$ is what supplies $\phi(1) = 1$, and the empty antidiagonal at $n = 0$
+matches $\phi(0) = 0$.
+
+At $r = 1/2$ the right-hand side is the series in `erdos_249`. This is an exact
+re-indexing of that constant, not a step towards deciding its irrationality.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/c04870f7f7f2166f38fc4077033792ef6486f209/Erdos249257/GeometricCoprimality.lean#L120-L151"]
+theorem erdos_249.variants.visible_lattice_mass {r : ℝ} (hr0 : 0 ≤ r) (hr1 : r < 1) :
+    (∑' p : ℕ × ℕ, if 0 < p.1 ∧ Nat.Coprime p.1 p.2 then r ^ (p.1 + p.2) else 0) =
+      ∑' n : ℕ, (φ n : ℝ) * r ^ n := by
+  sorry
+
 end Erdos249
