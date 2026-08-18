@@ -69,10 +69,10 @@ theorem a_4 : a 4 = 6 := by eval_a
 
 /--
 $a(n)$ is an integer for all $n \ge 0$.
-- H. W. Gould, Problem E2384, Amer. Math. Monthly, 81 (1974), 170-171
+- Solution to Problem E2384 by H. W. Gould, Amer. Math. Monthly, 81 (1974), 170-171
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) : (a n).den = 1 := by
+@[category textbook, AMS 11]
+theorem a_is_integer (n : ℕ) : (a n).den = 1 := by
   sorry
 
 /--
@@ -81,7 +81,7 @@ holds for positive integers $n$ and $k$ and all primes $p \ge 5$.
 - Zhi-Wei Sun, Nov 16 2019
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n k p : ℕ) (hn : 0 < n) (hk : 0 < k) (hp : p.Prime) (hp_ge : 5 ≤ p) :
+theorem conjecture (n k p : ℕ) (hn : 0 < n) (hk : 0 < k) (hp : p.Prime) (hp_ge : 5 ≤ p) :
     (b (n * p ^ k)).num ≡ (b (n * p ^ (k - 1))).num [ZMOD (p : ℤ) ^ (3 * k)] := by
   sorry
 
