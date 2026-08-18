@@ -70,6 +70,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
@@ -82,6 +83,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SubgraphIsomorphism
