@@ -92,7 +92,8 @@ is irrational.
 
 [Er48] Erdős, P., _On arithmetical properties of Lambert series_. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/a9104f2f12aa0d4e9da8a93574b14990ed02dc2a/adapters/FormalConjecturesAdapter.lean#L119-L134"]
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
