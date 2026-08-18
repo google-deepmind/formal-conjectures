@@ -97,4 +97,30 @@ theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
+/-- The finite Erdős support series at integer base `b`, summed over a finite
+set of exponents. -/
+def finiteErdosSum (F : Finset ℕ) (b : ℕ) : ℚ :=
+  ∑ n ∈ F, 1 / ((b : ℚ) ^ n - 1)
+
+/--
+For every nonempty finite support not containing `0`, and every integer base
+`b ≥ 2` coprime to the reduced denominator of that finite sum, the
+multiplicative order of `b` modulo that denominator is exactly the lcm of the
+support: the period does not collapse.
+
+This is a finite-support fact. It does not decide the infinite-set
+irrationality asked about in `erdos_257`.
+
+The coprimality hypothesis is kept: discharging it is already proved in the
+linked development, but it is not a one-line Mathlib fact.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/c04870f7f7f2166f38fc4077033792ef6486f209/adapters/FormalConjecturesVariants.lean#L348-L354"]
+theorem erdos_257.variants.finite_period_noncollapse
+    (F : Finset ℕ) (b : ℕ)
+    (hF : F.Nonempty) (h0 : 0 ∉ F) (hb : 2 ≤ b)
+    (hcop : Nat.Coprime b (finiteErdosSum F b).den) :
+    orderOf (ZMod.unitOfCoprime b hcop) = F.lcm id := by
+  sorry
+
 end Erdos257
