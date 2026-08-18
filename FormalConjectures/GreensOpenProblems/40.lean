@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.InformationTheory.Hamming
 
 /-!
 # Ben Green's Open Problem 40

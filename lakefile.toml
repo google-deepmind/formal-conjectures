@@ -58,6 +58,7 @@ weak.linter.style.category_attribute = true
 weak.linter.style.conditional_formal_proof = true
 weak.linter.style.moduleDocstring = true
 weak.linter.style.latex_docstring = true
+weak.linter.style.imports = true
 
 [[lean_lib]]
 name = "FormalConjecturesAnswerPostpone"
@@ -71,6 +72,7 @@ weak.linter.style.category_attribute = true
 weak.linter.style.conditional_formal_proof = true
 weak.linter.style.moduleDocstring = true
 weak.linter.style.latex_docstring = true
+weak.linter.style.imports = true
 weak.google.answer = "postpone"
 
 

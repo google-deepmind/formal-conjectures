@@ -111,6 +111,8 @@ A random subset of 100 open research problems, drawn uniformly at random
 from all problems with the `category research open` tag.
 -/
 
+set_option linter.style.imports false
+
 namespace Subsets.FC100OpenSet1
 
 open Lean in
