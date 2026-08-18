@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Data.Finset.Powerset
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 public import Mathlib.Order.ConditionallyCompleteLattice.Finset
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 
@@ -63,7 +63,7 @@ theorem saturationNumber_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj]
           Finset.card) := by
     ext n
     simp only [Finset.coe_image, Set.mem_image, Finset.mem_coe, Finset.mem_filter,
-      Finset.mem_powerset, Set.mem_setOf_eq]
+      Finset.mem_powerset, Set.mem_ofPred_eq]
     refine ⟨fun ⟨M, hM, hn⟩ =>
         ⟨M, ⟨fun e he => mem_edgeFinset.mpr (hM.1.1 e he), hM⟩, hn⟩,
       fun ⟨M, ⟨_, hM⟩, hn⟩ => ⟨M, hM, hn⟩⟩
