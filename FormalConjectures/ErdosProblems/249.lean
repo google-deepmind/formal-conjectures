@@ -90,4 +90,20 @@ theorem erdos_249.variants.visible_lattice_mass {r : ℝ} (hr0 : 0 ≤ r) (hr1 :
       ∑' n : ℕ, (φ n : ℝ) * r ^ n := by
   sorry
 
+/--
+If $\sum_n \phi(n)/2^n$ is rational, its reduced denominator exceeds
+$79639646646701375323355774875831053$. Equivalently, the series is not equal
+to any rational $p$ with $p.\mathrm{den}$ at most that bound.
+
+This is a machine-checked finite exclusion for the constant in `erdos_249`.
+It does not prove irrationality: a rational with a still-larger denominator
+is not ruled out.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/f88e8b686908010a43e9078dda49abbabcfc4079/Erdos249257/CertificateKernel.lean#L18384-L18389"]
+theorem erdos_249.variants.denominator_gt_79639646646701375323355774875831053 :
+    ∀ p : ℚ, p.den ≤ 79639646646701375323355774875831053 →
+      (∑' n : ℕ, ((Nat.totient n : ℝ)) / (2 : ℝ) ^ n) ≠ (p : ℝ) := by
+  sorry
+
 end Erdos249
