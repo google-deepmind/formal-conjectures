@@ -44,7 +44,7 @@ This is a structural fact about the coefficients of $\sum_n \phi(n)/2^n$; it
 does not decide the irrationality asked about in `erdos_249`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/PENDING/adapters/FormalConjecturesErdos249.lean"]
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/92d73cf7a84a1993817020d615b9b046c6ac4b19/adapters/FormalConjecturesVariants.lean#L276-L280"]
 theorem erdos_249.variants.dyadic_kernel_rank (e : ℕ) (he : 1 ≤ e) :
     Module.finrank ℚ
         (Submodule.span ℚ (Set.range (Nat.totientKernelThroughLevelFamily e))) =
@@ -61,7 +61,7 @@ it has an explicit basis on that index. It does not decide the irrationality
 asked about in `erdos_249`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/PENDING/adapters/FormalConjecturesErdos249.lean"]
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/92d73cf7a84a1993817020d615b9b046c6ac4b19/adapters/FormalConjecturesVariants.lean#L284-L288"]
 theorem erdos_249.variants.odd_core_basis :
     Nonempty
       (Module.Basis Nat.TotientOddCoreIndex ℚ
