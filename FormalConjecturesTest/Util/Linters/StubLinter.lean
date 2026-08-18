@@ -60,6 +60,14 @@ warning: Placeholder definitions (e.g., `def foo : Type := sorry`) are not allow
 Note: This linter can be disabled with `set_option linter.style.stubs false`
 -/
 #guard_msgs(warning) in
+def MyDefByAdmit : Nat := by admit
+
+/--
+warning: Placeholder definitions (e.g., `def foo : Type := sorry`) are not allowed.
+
+Note: This linter can be disabled with `set_option linter.style.stubs false`
+-/
+#guard_msgs(warning) in
 def MyDefPattern : Nat → Nat | 0 => sorry | _ => 1
 
 /--

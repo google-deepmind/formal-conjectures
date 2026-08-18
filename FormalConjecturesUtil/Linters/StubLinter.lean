@@ -34,11 +34,12 @@ register_option linter.style.stubs : Bool := {
 
 namespace StubLinter
 
-/-- Checks whether a syntax node contains `sorry` or `sorryAx`. -/
+/-- Checks whether a syntax node contains `sorry`, `admit`, or `sorryAx`. -/
 def hasSorry (stx : Syntax) : Bool :=
   stx.find? (fun s =>
     s.isOfKind ``Lean.Parser.Term.sorry ||
     s.isOfKind ``Lean.Parser.Tactic.tacticSorry ||
+    s.isOfKind ``Lean.Parser.Tactic.tacticAdmit ||
     (s.isIdent && (s.getId == `sorry || s.getId == `sorryAx ||
                    s.getId.eraseMacroScopes == `sorry || s.getId.eraseMacroScopes == `sorryAx))
   ) != none
