@@ -55,9 +55,10 @@ def d : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * d (n + 2) - d n
 
-/-- $b(2n) = c(2n+1)$, $b(2n+1) = c(2n)$ -/
+/-- $b(2n) = -c(2n+1)$, $b(2n+1) = c(2n)$ -/
+-- Sign corrected (even branch): see https://github.com/google-deepmind/formal-conjectures/issues/5025
 def b (n : ℕ) : ℤ :=
-  if n % 2 = 0 then c (n + 1)
+  if n % 2 = 0 then -c (n + 1)
   else c (n - 1)
 
 /-- $e(2n) = d(2n)/2$, $e(2n+1) = - d(2n)/2$ -/
@@ -145,31 +146,205 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
       exact ih2
     rw [ih1, ih2']
 
+/- ### Auxiliary lemmas for `conjecture1`, `conjecture2`, `conjecture3` -/
+
+/-- For all $k \ge 0$, $c(2k) + d(2k) = -c(2k+1)$. -/
+@[category API, AMS 11]
+private theorem c_d_even (k : ℕ) : c (2 * k) + d (2 * k) = -c (2 * k + 1) := by
+  induction k using Nat.twoStepInduction with
+  | zero =>
+    rfl
+  | one =>
+    rfl
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) = 2 * k + 4 := by omega
+    have h_eq2 : 2 * (k + 2) + 1 = 2 * k + 5 := by omega
+    rw [h_eq2, h_eq]
+    have h_c : c (2 * k + 4) = -6 * c (2 * k + 2) - c (2 * k) := by rfl
+    have h_d : d (2 * k + 4) = -6 * d (2 * k + 2) - d (2 * k) := by rfl
+    have h_c5 : c (2 * k + 5) = -6 * c (2 * k + 3) - c (2 * k + 1) := by rfl
+    rw [h_c, h_d, h_c5]
+    have ih2' : c (2 * k + 2) + d (2 * k + 2) = -c (2 * k + 3) := by
+      have h_eq_ih : 2 * (k + 1) = 2 * k + 2 := by omega
+      have h_eq2_ih : 2 * (k + 1) + 1 = 2 * k + 3 := by omega
+      rw [← h_eq2_ih, ← h_eq_ih]
+      exact ih2
+    linarith [ih1, ih2']
+
+/-- For all $k \ge 0$, $c(2k+1) + d(2k+1) = c(2k)$. -/
+@[category API, AMS 11]
+private theorem c_d_odd (k : ℕ) : c (2 * k + 1) + d (2 * k + 1) = c (2 * k) := by
+  induction k using Nat.twoStepInduction with
+  | zero =>
+    rfl
+  | one =>
+    rfl
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) + 1 = 2 * k + 5 := by omega
+    have h_eq2 : 2 * (k + 2) = 2 * k + 4 := by omega
+    rw [h_eq, h_eq2]
+    have h_c5 : c (2 * k + 5) = -6 * c (2 * k + 3) - c (2 * k + 1) := by rfl
+    have h_d5 : d (2 * k + 5) = -6 * d (2 * k + 3) - d (2 * k + 1) := by rfl
+    have h_c4 : c (2 * k + 4) = -6 * c (2 * k + 2) - c (2 * k) := by rfl
+    rw [h_c5, h_d5, h_c4]
+    have ih2' : c (2 * k + 3) + d (2 * k + 3) = c (2 * k + 2) := by
+      have h_eq_ih : 2 * (k + 1) + 1 = 2 * k + 3 := by omega
+      have h_eq2_ih : 2 * (k + 1) = 2 * k + 2 := by omega
+      rw [← h_eq_ih, ← h_eq2_ih]
+      exact ih2
+    linarith [ih1, ih2']
+
+/-- For all $k \ge 0$, `(2 : ℤ) ∣ d (2 * k)`. -/
+@[category API, AMS 11]
+private theorem d_even_even (k : ℕ) : (2 : ℤ) ∣ d (2 * k) := by
+  induction k using Nat.twoStepInduction with
+  | zero => exact ⟨1, rfl⟩
+  | one => exact ⟨-5, rfl⟩
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) = 2 * k + 4 := by omega
+    rw [h_eq]
+    have h_d : d (2 * k + 4) = -6 * d (2 * k + 2) - d (2 * k) := by rfl
+    rw [h_d]
+    obtain ⟨m1, hm1⟩ := ih1
+    have h_eq_ih : 2 * (k + 1) = 2 * k + 2 := by omega
+    rw [h_eq_ih] at ih2
+    obtain ⟨m2, hm2⟩ := ih2
+    exact ⟨-6 * m2 - m1, by rw [hm1, hm2]; ring⟩
+
+/-- For all $k \ge 0$, `(2 : ℤ) ∣ d (2 * k + 1)`. -/
+@[category API, AMS 11]
+private theorem d_odd_even (k : ℕ) : (2 : ℤ) ∣ d (2 * k + 1) := by
+  induction k using Nat.twoStepInduction with
+  | zero => exact ⟨2, rfl⟩
+  | one => exact ⟨-12, rfl⟩
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) + 1 = 2 * k + 5 := by omega
+    rw [h_eq]
+    have h_d : d (2 * k + 5) = -6 * d (2 * k + 3) - d (2 * k + 1) := by rfl
+    rw [h_d]
+    obtain ⟨m1, hm1⟩ := ih1
+    have h_eq_ih : 2 * (k + 1) + 1 = 2 * k + 3 := by omega
+    rw [h_eq_ih] at ih2
+    obtain ⟨m2, hm2⟩ := ih2
+    exact ⟨-6 * m2 - m1, by rw [hm1, hm2]; ring⟩
+
+/-- For all $k \ge 0$, $d(2k) + d(2k+1) = -2 c(2k+1)$. -/
+@[category API, AMS 11]
+private theorem d_sum_even (k : ℕ) : d (2 * k) + d (2 * k + 1) = -2 * c (2 * k + 1) := by
+  induction k using Nat.twoStepInduction with
+  | zero =>
+    rfl
+  | one =>
+    rfl
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) = 2 * k + 4 := by omega
+    have h_eq2 : 2 * (k + 2) + 1 = 2 * k + 5 := by omega
+    rw [h_eq2, h_eq]
+    have h_d4 : d (2 * k + 4) = -6 * d (2 * k + 2) - d (2 * k) := by rfl
+    have h_d5 : d (2 * k + 5) = -6 * d (2 * k + 3) - d (2 * k + 1) := by rfl
+    have h_c5 : c (2 * k + 5) = -6 * c (2 * k + 3) - c (2 * k + 1) := by rfl
+    rw [h_d4, h_d5, h_c5]
+    have ih2' : d (2 * k + 2) + d (2 * k + 3) = -2 * c (2 * k + 3) := by
+      have h_eq_ih : 2 * (k + 1) = 2 * k + 2 := by omega
+      have h_eq2_ih : 2 * (k + 1) + 1 = 2 * k + 3 := by omega
+      rw [← h_eq2_ih, ← h_eq_ih]
+      exact ih2
+    linarith [ih1, ih2']
+
+/-- For all $k \ge 0$, $d(2k+1) - d(2k) = 2 c(2k)$. -/
+@[category API, AMS 11]
+private theorem d_diff (k : ℕ) : d (2 * k + 1) - d (2 * k) = 2 * c (2 * k) := by
+  induction k using Nat.twoStepInduction with
+  | zero =>
+    rfl
+  | one =>
+    rfl
+  | more k ih1 ih2 =>
+    have h_eq : 2 * (k + 2) + 1 = 2 * k + 5 := by omega
+    have h_eq2 : 2 * (k + 2) = 2 * k + 4 := by omega
+    rw [h_eq, h_eq2]
+    have h_d5 : d (2 * k + 5) = -6 * d (2 * k + 3) - d (2 * k + 1) := by rfl
+    have h_d4 : d (2 * k + 4) = -6 * d (2 * k + 2) - d (2 * k) := by rfl
+    have h_c4 : c (2 * k + 4) = -6 * c (2 * k + 2) - c (2 * k) := by rfl
+    rw [h_d5, h_d4, h_c4]
+    have ih2' : d (2 * k + 3) - d (2 * k + 2) = 2 * c (2 * k + 2) := by
+      have h_eq_ih : 2 * (k + 1) + 1 = 2 * k + 3 := by omega
+      have h_eq2_ih : 2 * (k + 1) = 2 * k + 2 := by omega
+      rw [← h_eq_ih, ← h_eq2_ih]
+      exact ih2
+    linarith [ih1, ih2']
+
+/-- Unfolds the `let`-binding in the definition of `f`. -/
+@[category API, AMS 11]
+private theorem f_eq (n : ℕ) : f n = d (2 * (n / 2) + 1) / 2 := rfl
+
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $c(n) + d(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture1 (n : ℕ) : c n + d n = b n := by
-  sorry
+  rcases Nat.even_or_odd n with ⟨k, rfl⟩ | ⟨k, rfl⟩
+  · rw [← two_mul k]
+    have hmod : (2 * k) % 2 = 0 := by omega
+    unfold b
+    rw [if_pos hmod]
+    exact c_d_even k
+  · have hmod : ¬ (2 * k + 1) % 2 = 0 := by omega
+    have hsub : 2 * k + 1 - 1 = 2 * k := by omega
+    unfold b
+    rw [if_neg hmod, hsub]
+    exact c_d_odd k
 
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $e(n) + f(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture2 (n : ℕ) : e n + f n = b n := by
-  sorry
+  rcases Nat.even_or_odd n with ⟨k, rfl⟩ | ⟨k, rfl⟩
+  · rw [← two_mul k]
+    have hmod : (2 * k) % 2 = 0 := by omega
+    have hdiv : (2 * k) / 2 = k := by omega
+    have hd1 : (2 : ℤ) ∣ d (2 * k) := d_even_even k
+    have hd2 : (2 : ℤ) ∣ d (2 * k + 1) := d_odd_even k
+    have hsum : d (2 * k) + d (2 * k + 1) = -2 * c (2 * k + 1) := d_sum_even k
+    rw [f_eq, hdiv]
+    unfold e b
+    rw [if_pos hmod, if_pos hmod]
+    omega
+  · have hmod : ¬ (2 * k + 1) % 2 = 0 := by omega
+    have hdiv : (2 * k + 1) / 2 = k := by omega
+    have hsub : 2 * k + 1 - 1 = 2 * k := by omega
+    have hd1 : (2 : ℤ) ∣ d (2 * k) := d_even_even k
+    have hd2 : (2 : ℤ) ∣ d (2 * k + 1) := d_odd_even k
+    have hdiff : d (2 * k + 1) - d (2 * k) = 2 * c (2 * k) := d_diff k
+    rw [f_eq, hdiv]
+    unfold e b
+    rw [if_neg hmod, if_neg hmod, hsub]
+    omega
 
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $g(n) + a(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture3 (n : ℕ) : g n + a n = b n := by
-  sorry
+  rcases Nat.even_or_odd n with ⟨k, rfl⟩ | ⟨k, rfl⟩
+  · rw [← two_mul k]
+    have hmod : (2 * k) % 2 = 0 := by omega
+    unfold g b
+    rw [if_pos hmod, if_pos hmod]
+    rw [a_even k]
+    ring
+  · have hmod : ¬ (2 * k + 1) % 2 = 0 := by omega
+    have hsub : 2 * k + 1 - 1 = 2 * k := by omega
+    unfold g b
+    rw [if_neg hmod, if_neg hmod, hsub]
+    rw [a_odd k]
+    exact c_d_odd k
 
 end OeisA100434
