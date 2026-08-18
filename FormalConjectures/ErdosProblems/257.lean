@@ -130,4 +130,37 @@ theorem erdos_257.variants.support_measure_dichotomy (J : Set ℕ) :
         MeasureTheory.volume (supportedMersenneAchievementSet J) = 0) := by
   sorry
 
+/--
+For a set `J` of allowed coordinates, the Mersenne digit map restricted to `J`
+is injective, and its range is compact, totally disconnected and nowhere
+dense; when `J` is infinite that range is perfect as well.
+
+Coordinate `k` carries the term $1/(2^{k+1}-1)$. At `J = Set.univ` this is the
+statement for the unrestricted achievement set, and the injectivity conjunct is
+then unique coding: distinct supports give distinct subseries sums. `IsClosed`
+is left out on purpose rather than overlooked -- the set is a compact subset of
+`ℝ`, and `Perfect` carries closedness in its own first component.
+
+Kovač–Tao (doi:10.1007/s10474-025-01528-0, Remark 4.1) prove the strict-tail
+inequality for these exact weights and record both the unique coding and the
+Cantor-set conclusion; the underlying achievement-set topology is classical,
+going back to Kakeya. No claim of novelty or priority is made for any of it.
+What is offered here is the Lean statement for arbitrary `J` -- total
+disconnectedness and nowhere density descend along `⊆`, so the restricted case
+costs nothing over the full one -- together with a machine-checked proof.
+
+This is a solved structural variant about the geometry of the value space. It
+does not decide whether every infinite-support subseries has an irrational sum,
+so `erdos_257` remains open.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/f88e8b686908010a43e9078dda49abbabcfc4079/adapters/FormalConjecturesVariants.lean#L597-L608"]
+theorem erdos_257.variants.supported_achievement_set_geometry (J : Set ℕ) :
+    Function.Injective (supportedMersenneDigitValue J) ∧
+      IsCompact (supportedMersenneAchievementSet J) ∧
+        IsTotallyDisconnected (supportedMersenneAchievementSet J) ∧
+          IsNowhereDense (supportedMersenneAchievementSet J) ∧
+            (J.Infinite → Perfect (supportedMersenneAchievementSet J)) := by
+  sorry
+
 end Erdos257
