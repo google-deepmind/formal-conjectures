@@ -1,1 +1,2 @@
+import FormalConjectures.Challenge
 import FormalConjectures.EulerBrick

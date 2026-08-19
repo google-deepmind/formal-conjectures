@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright (c) 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,30 +43,6 @@ Generalization of an Euler brick to $n$-dimensional space.
 -/
 def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
   Pairwise fun i j ↦ IsSquare ((sides i)^2 + (sides j)^2)
-
-/--
-Is there a perfect Euler brick?
--/
-@[category research open, AMS 11]
-theorem perfect_euler_brick_existence :
-    answer(sorry) ↔ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
-  sorry
-
-/--
-Is there an Euler brick in $4$-dimensional space?
--/
-@[category research open, AMS 11]
-theorem four_dim_euler_brick_existence :
-    answer(sorry) ↔ ∃ sides : Fin 4 → ℕ+, IsEulerHyperBrick 4 sides:= by
-  sorry
-
-/--
-Is there an Euler brick in $n$-dimensional space for any $n > 3$?
--/
-@[category research open, AMS 11]
-theorem n_dim_euler_brick_existence :
-answer(sorry) ↔ ∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides := by
-  sorry
 
 section Cuboid
 
