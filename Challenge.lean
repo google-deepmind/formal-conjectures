@@ -72,10 +72,10 @@ The DeepMind prover agent has found a formal disproof of this statement.
 An (independent) informal solution can be found here:
 *Reference:* [arxiv/2510.11768](https://arxiv.org/abs/2510.11768) **Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve** by *Valery Asiryan*
 -/
-theorem cuboidOne : CuboidOne := by
+theorem cuboid_one : CuboidOne := by
   sorry
 
-#print axioms cuboidOne
+#print axioms cuboid_one
 end Cuboid
 
 end EulerBrick

@@ -1,0 +1,188 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4. Replace every TEMPLATE value before submitting.
+# Replace a placeholder list with [] only when its adjacent comment permits it;
+# lists described as required must remain nonempty.
+version: "v0.4"
+
+project:
+  name: "Cuboid conjecture 1"
+  description: >-
+    Formal proof of the First Cuboid Conjecture, which states that for all
+    positive coprime integers a, b with a ≠ b, a certain degree-8 polynomial
+    P_{a,b}(t) over ℤ is irreducible. This conjecture was proposed by Shapirov
+    in "Perfect cuboids and irreducible polynomials" (arXiv:1108.5348) as part
+    of a family of three conjectures whose combined truth would imply the
+    nonexistence of a perfect Euler brick—a rectangular cuboid with all edges,
+    face diagonals, and the space diagonal having integer length (see
+    https://en.wikipedia.org/wiki/Euler_brick). The proof proceeds via
+    Fermat-style infinite descent on the Diophantine equation
+    x⁴ + 34x²y² + y⁴ = z², reducing polynomial reducibility to the existence
+    of integer solutions and then showing no nontrivial solution exists. Two
+    independent solutions have been found: a formal machine proof by
+    AlphaProof Nexus (arXiv:2605.22763) (this is the one formalised here),
+    and an informal proof by Valery Asiryan using rank-zero elliptic
+    curves (arXiv:2510.11768).
+  # Required nonempty list of name strings or mappings with a nonempty name.
+  authors:
+    - "The Formal Conjectures Authors"
+    - "George Tsoukalas"
+    - "Anton Kovsharov"
+    - "Sergey Shirobokov"
+    - "Anja Surina"
+    - "Moritz Firsching"
+    - "Gergely Bérczi"
+    - "Francisco J. R. Ruiz"
+    - "Arun Suggala"
+    - "Adam Zsolt Wagner"
+    - "Eric Wieser"
+    - "Lei Yu"
+    - "Aja Huang"
+    - "Miklós Z. Horváth"
+    - "Andrew Ferrauiolo"
+    - "Henryk Michalewski"
+    - "Codrut Grosu"
+    - "Thomas Hubert"
+    - "Matej Balog"
+    - "Pushmeet Kohli"
+    - "Swarat Chaudhuri"
+    - "Reklle"
+  # Required root licence. Keep this in sync with the Apache-2.0 LICENSE file.
+  license: "Apache-2.0"
+  # Required nonempty list of name strings or mappings with a nonempty name.
+  # For a thin wrapper, name people responsible for this submitted wrapper;
+  # submission authorization separately covers the underlying formalization.
+  responsible_maintainers:
+    - "Moritz Firsching"
+
+# Omit repository for an ordinary project: Palomar treats this submitted
+# repository as the substantive proof development. If this repository is only
+# a thin Comparator wrapper, uncomment and pin the actual formalization in this
+# exact shape:
+# repository:
+#   substantive_formalization:
+#     id: "TEMPLATE: owner/repository or https://github.com/owner/repository"
+#     revision: "TEMPLATE: full 40-character lowercase commit SHA"
+
+classification:
+  # Use 1–2 official arXiv identifiers such as math.LO and 1–8 five-character
+  # MSC 2020 identifiers such as 03B35.
+  arxiv: ["math.NT", "math.AG"]
+  msc2020: ["11D41", "12E05"]
+
+sources:
+  # Sources must be nonempty. Every source needs a title and relationship; the
+  # relationship must be exactly formalizes, adapts, independently-proves,
+  # background, or other.
+  # Choose one result origin:
+  # - For a theorem first presented by this formalization, set one source to
+  #   type: original-proof and relationship: other. All additional source
+  #   relationships must be background or other.
+  # - Otherwise, omit type: original-proof and give at least one source a
+  #   formalizes, adapts, or independently-proves relationship. A new proof of
+  #   a known published result is source-based and uses independently-proves.
+  # Type, authors, contributors, id, location, note, license, and
+  # author_endorsement are optional; remove them when genuinely inapplicable.
+  # Authors are bibliographic authors. Contributors record other source roles,
+  # with one name and free-form role such as editor or problem-proposer.
+  # Type is a concise free-text
+  # description such as article, paper, book, formalization, web post, folklore,
+  # conversation, or other. The exact value original-proof is reserved for the
+  # result-origin declaration described above.
+  # Original-result example:
+  # - title: "TEMPLATE: describe the result first presented here"
+  #   type: original-proof
+  #   relationship: other
+  - title: "Advancing Mathematics Research with AI-Driven Formal Proof Search"
+    authors:
+      - "George Tsoukalas"
+      - "Anton Kovsharov"
+      - "Sergey Shirobokov"
+      - "Anja Surina"
+      - "Moritz Firsching"
+      - "Gergely Bérczi"
+      - "Francisco J. R. Ruiz"
+      - "Arun Suggala"
+      - "Adam Zsolt Wagner"
+      - "Eric Wieser"
+      - "Lei Yu"
+      - "Aja Huang"
+      - "Miklós Z. Horváth"
+      - "Andrew Ferrauiolo"
+      - "Henryk Michalewski"
+      - "Codrut Grosu"
+      - "Thomas Hubert"
+      - "Matej Balog"
+      - "Pushmeet Kohli"
+      - "Swarat Chaudhuri"
+    id: "arXiv:2605.22763"
+    type: "article"
+    location: "https://arxiv.org/abs/2605.22763"
+    relationship: "formalizes"
+  - title: "Perfect cuboids and irreducible polynomials"
+    authors:
+      - "Ruslan Shapirov"
+    id: "arXiv:1108.5348"
+    type: "article"
+    location: "https://arxiv.org/abs/1108.5348"
+    relationship: "background"
+    note: "Proposes the three Cuboid conjectures whose combined truth implies the nonexistence of a perfect Euler brick."
+  - title: "Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve"
+    authors:
+      - "Valery Asiryan"
+    id: "arXiv:2510.11768"
+    type: "article"
+    location: "https://arxiv.org/abs/2510.11768"
+    relationship: "independently-proves"
+    note: "Independent informal proof of the First Cuboid Conjecture using rank-zero elliptic curves."
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/9f5ee773841921f460b4a26a3552f5eca4accaa0/FormalConjectures/Wikipedia/EulerBrick.lean"
+    relationship: "other"
+    note: "Contains related unproved Euler brick conjectures (e.g. existence of perfect cuboids, higher-dimensional Euler bricks)."
+
+status:
+  scope: >-
+    The formalization fully proves the First Cuboid Conjecture, demonstrating
+    the irreducibility of the degree-8 polynomial P_{a,b}(t) for all valid
+    parameters a, b.
+  # Count the proof development, excluding Challenge.lean's deliberate sorry.
+  # Replace each count with an unquoted nonnegative integer, for example 0.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+  # status.main_results is optional. Add it only when a short curated
+  # project-level list is useful; it need not mirror Comparator declarations.
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Gemini 3.1 Pro", "Gemini 3.0 Flash"]
+      framework: "AlphaProof Nexus"
+      tool_setup: "Asynchronous prover subagents (Gemini 3.1 Pro) using P-UCB tree-search sampling, with access to AlphaProof and search-replace tools. Concurrent rater subagents (Gemini 3.0 Flash) update Elo scores."
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "TPU v6e"
+      prompting_notes: "n/a"
+  spend_usd: "not tracked"
+  notes: "The full-featured AlphaProof Nexus agent autonomously discovered the formal proof by alternating LLM generation with Lean compiler feedback and AlphaProof tactic execution."
+
+fidelity:
+  divergences: "none known"
+
+review:
+  status: "manually deformalised the proof"
+  reviewers:
+    - "Codrut Grosu"
+  notes: ""
+
+alignment:
+  namespace: "EulerBrick"
+  statements:
+    - source: "First Cuboid conjecture"
+      lean: "EulerBrick.cuboid_one"
+      module: "Challenge"
+      status: "proved"
+      note: "The theorem statements perfectly match the formal definition of the First Cuboid conjecture."
+
+acknowledgements: "Thanks to the Lean community and Mathlib contributors and the Formal Conjectures contributors."

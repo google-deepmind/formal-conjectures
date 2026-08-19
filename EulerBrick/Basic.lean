@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 import Mathlib
 
 /-!
@@ -1086,14 +1087,55 @@ lemma exists_irreducible_factor_le_4 (P : Polynomial ℚ) (hP_monic : P.Monic) (
     use F'
     use (by assumption), (by assumption), h_eq▸.mul_left (by assumption) A,hF'_irr.natDegree_pos,.trans (natDegree_le_of_dvd (by assumption) fun and=>by simp_all) hB_le
 
+set_option maxHeartbeats 400000 in
 lemma dvd_of_comp_X2_dvd (M Q : Polynomial ℚ) (h : M.comp (X^2) ∣ Q.comp (X^2)) : M ∣ Q := by
-  refine if a : M=0 then by simp_all [comp_eq_zero_iff]else if a2 :Q=0 then (a2)▸dvd_zero M else M.as_sum_range_C_mul_X_pow▸ Q.as_sum_range_C_mul_X_pow▸(h.elim) ?_
-  refine M.as_sum_range_C_mul_X_pow▸Q.as_sum_range_C_mul_X_pow▸fun R L=>?_
-  rw [←modByMonic_add_div Q ((monic_mul_leadingCoeff_inv a))]at L⊢
-  norm_num [←eq_sub_iff_add_eq, mul_assoc] at L⊢
-  replace L : M.comp (X^2) ∣(Q%ₘ(M* C M.leadingCoeff⁻¹)).comp (X^2) :=⟨ _,by rw [ L,mul_sub]⟩
-  refine ⟨ _,add_eq_right.2 (by_contra fun and=>absurd (natDegree_le_of_dvd L (and ∘by norm_num+contextual[comp_eq_zero_iff])) ? _)⟩
-  norm_num[natDegree_comp, mul_lt_mul_right _,natDegree_lt_natDegree and ((Q.degree_modByMonic_lt ((monic_mul_leadingCoeff_inv a))).trans_eq (degree_mul_leadingCoeff_inv M a))|>.trans_eq]
+  by_cases hM : M = 0
+  · simp_all [Polynomial.comp_eq_zero_iff]
+  by_cases hQ : Q = 0
+  · exact hQ ▸ dvd_zero M
+  -- M' is a monic associate of M
+  set M' := M * C M.leadingCoeff⁻¹ with hM'_def
+  have hM'_monic : M'.Monic := monic_mul_leadingCoeff_inv hM
+  have hM'_ne : M' ≠ 0 := hM'_monic.ne_zero
+  -- M' divides M since C(lc) is a unit and M = M' * C(lc)
+  have hM'_dvd_M : M' ∣ M :=
+    ⟨C M.leadingCoeff, by rw [hM'_def, mul_assoc, ← C_mul,
+      inv_mul_cancel₀ (leadingCoeff_ne_zero.mpr hM), C_1, mul_one]⟩
+  -- It suffices to show M' ∣ Q, since M ∣ M'
+  suffices M' ∣ Q from dvd_trans (dvd_mul_right M (C M.leadingCoeff⁻¹)) this
+  -- Equivalently, M' ∣ Q %ₘ M'
+  rw [← dvd_modByMonic_iff_dvd]
+  -- Suppose for contradiction that r := Q %ₘ M' ≠ 0
+  by_contra h_rem
+  have h_rem_ne : Q %ₘ M' ≠ 0 := fun h0 => h_rem (h0 ▸ dvd_zero _)
+  -- We have Q = M' * q + r where deg r < deg M'
+  have h_div : Q %ₘ M' + M' * (Q /ₘ M') = Q := modByMonic_add_div Q M'
+  -- M'.comp(X²) divides Q.comp(X²)
+  have hM'_dvd_Qc : M'.comp (X ^ 2) ∣ Q.comp (X ^ 2) :=
+    dvd_trans (map_dvd (compRingHom (X ^ 2)) hM'_dvd_M) h
+  -- So M'.comp(X²) divides r.comp(X²)
+  have h_r_comp : M'.comp (X ^ 2) ∣ (Q %ₘ M').comp (X ^ 2) := by
+    have h_eq : Q.comp (X ^ 2) =
+        (Q %ₘ M').comp (X ^ 2) + M'.comp (X ^ 2) * (Q /ₘ M').comp (X ^ 2) := by
+      conv_lhs => rw [← h_div]
+      rw [add_comp, mul_comp]
+    rw [h_eq] at hM'_dvd_Qc
+    exact (dvd_add_right (dvd_mul_right _ _)).mp (by rwa [add_comm])
+  -- But deg(r.comp(X²)) < deg(M'.comp(X²)), contradiction
+  have h_r_comp_ne : (Q %ₘ M').comp (X ^ 2) ≠ 0 := by
+    intro h0
+    rw [Polynomial.comp_eq_zero_iff] at h0
+    cases h0 with
+    | inl h => exact h_rem_ne h
+    | inr h => exact absurd h.2 (by
+        intro heq
+        have := congr_arg natDegree heq
+        simp [natDegree_X_pow] at this)
+  have h_deg_lt : natDegree ((Q %ₘ M').comp (X ^ 2)) < natDegree (M'.comp (X ^ 2)) := by
+    rw [natDegree_comp, natDegree_comp, natDegree_X_pow]
+    exact Nat.mul_lt_mul_of_pos_right
+      (natDegree_lt_natDegree h_rem_ne (degree_modByMonic_lt Q hM'_monic)) (by omega)
+  exact absurd (natDegree_le_of_dvd h_r_comp h_r_comp_ne) (not_le.mpr h_deg_lt)
 
 
 set_option maxHeartbeats 10000000 in
@@ -1768,21 +1810,9 @@ lemma cuboid_poly_irreducible_Z (a b : ℤ) (hab : a ≠ b) (ha : 0 < a) (hb : 0
   rw [← h_map_eq] at h_irr_Q
   exact irreducible_of_irreducible_map_Q _ h_P_monic h_irr_Q
 
-/--
-The first Cuboid conjecture
 
-The DeepMind prover agent has found a formal disproof of this statement.
-
-An (independent) informal solution can be found here:
-*Reference:* [arxiv/2510.11768](https://arxiv.org/abs/2510.11768) **Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve** by *Valery Asiryan*
--/
-theorem cuboidOne : CuboidOne := by
-  intro a b hg ha hb hab
-  unfold CuboidOneFor
-  have h_irr := cuboid_poly_irreducible_Z a b hab ha hb
-  exact h_irr
-
-#print axioms cuboidOne
 end Cuboid
 
 end EulerBrick
+
+#min_imports

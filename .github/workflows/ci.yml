@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  license:
+    name: Check metadata and Apache licence default
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        with:
+          ruby-version: "3.3.12"
+          bundler-cache: true
+      - name: Test the metadata validator
+        run: ruby test/validate_formalization_test.rb
+      - name: Check the canonical template sentinel surface
+        if: github.repository == 'PalomarRegistry/EulerBrick'
+        run: ruby scripts/validate-formalization.rb --expect-template
+      - name: Reject retained template values in a derived repository
+        if: github.repository != 'PalomarRegistry/EulerBrick'
+        run: ruby scripts/validate-formalization.rb
+      - name: Detect the repository licence
+        run: |
+          bundle exec licensee detect LICENSE --json --no-packages --no-readme > "$RUNNER_TEMP/license.json"
+          ruby -rjson -e '
+            report = JSON.parse(File.read(ARGV.fetch(0)))
+            identifiers = report.fetch("licenses").map { |item| item.fetch("spdx_id") }
+            abort "LICENSE is not detected exactly as Apache-2.0" unless identifiers == ["Apache-2.0"]
+          ' "$RUNNER_TEMP/license.json"
+
+  submission-link:
+    name: Check where the README sends a submitter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check the submission form the README names
+        # Require the current destination as well as rejecting the retired one;
+        # a missing or misspelt link would pass a negative-only check. Limit the
+        # rejection to Palomar's form because other issue trackers are valid.
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import re
+
+          form = "https://submit.palomar-registry.org/"
+          retired = re.compile(r"PalomarSubmission/issues/new")
+          failed = False
+          if form not in pathlib.Path("README.md").read_text():
+              print(f"README.md: does not send a submitter to {form}")
+              failed = True
+          for document in sorted(pathlib.Path(".").rglob("*.md")):
+              if ".lake" in document.parts:
+                  continue
+              for number, line in enumerate(document.read_text().splitlines(), 1):
+                  if retired.search(line):
+                      print(f"{document}:{number}: that submission form was deleted; submissions go to {form}")
+                      failed = True
+          raise SystemExit(failed)
+          PY
+
+  sandbox:
+    name: Check the Landrun wrapper's flag policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Test the Landrun wrapper
+        run: ./test/landrun_wrapper_test.sh
+
+  build:
+    name: Build with Lean
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: true
+
+  docs:
+    name: Build API documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+      - name: Build doc-gen4 output
+        working-directory: docbuild
+        env:
+          MATHLIB_NO_CACHE_ON_UPDATE: "1"
+          DISABLE_EQUATIONS: "1"
+          DOCGEN_SRC: github
+        run: lake build EulerBrick:docs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: api-documentation
+          path: docbuild/.lake/build/doc
+          if-no-files-found: error
+
+  comparator:
+    name: Check statement against solution
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: "1.24.0"
+          cache: false
+      - name: Run pinned Comparator toolchain
+        run: ./scripts/verify-comparator.sh
