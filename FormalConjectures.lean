@@ -1,1 +1,1 @@
-import FormalConjectures.Basic
+import FormalConjectures.EulerBrick
