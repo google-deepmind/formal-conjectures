@@ -67,7 +67,8 @@ def CuboidOne : Prop := ∀ ⦃a b : ℤ⦄, gcd a b = 1 → 0 < a → 0 < b →
 /--
 The first Cuboid conjecture
 
-The DeepMind prover agent has found a formal disproof of this statement.
+A formal proof of this statement was discovered by the AlphaProof Nexus agent.
+*Reference:* [arXiv:2605.22763](https://arxiv.org/abs/2605.22763) **Advancing Mathematics Research with AI-Driven Formal Proof Search**
 
 An (independent) informal solution can be found here:
 *Reference:* [arxiv/2510.11768](https://arxiv.org/abs/2510.11768) **Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve** by *Valery Asiryan*
