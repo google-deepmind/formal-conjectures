@@ -1,0 +1,27 @@
+name = "fc_sum_of_three_cubes_lean433"
+testDriver = "workspace_test"
+defaultTargets = ["ChallengeDeps", "Challenge", "Solution", "Submission"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+
+[[lean_lib]]
+name = "ChallengeDeps"
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"
+
+[[lean_lib]]
+name = "Submission"
+
+[[lean_exe]]
+name = "workspace_test"
+root = "WorkspaceTest"

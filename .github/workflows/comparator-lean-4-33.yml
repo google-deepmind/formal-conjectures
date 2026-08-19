@@ -1,0 +1,76 @@
+name: Comparator Lean 4.33 pilot
+
+on:
+  push:
+    branches:
+      - comparator-workspaces
+    paths:
+      - 'comparator/pilots/fc_sum_of_three_cubes/**'
+      - '.github/workflows/comparator-lean-4-33.yml'
+  pull_request:
+    paths:
+      - 'comparator/pilots/fc_sum_of_three_cubes/**'
+      - '.github/workflows/comparator-lean-4-33.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-compare:
+    runs-on: ubuntu-latest
+    name: Build and run Comparator
+    steps:
+      - name: Checkout Formal Conjectures
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Install elan
+        run: |
+          set -o pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Verify pins and trusted-source fingerprint
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('comparator/pilots/fc_sum_of_three_cubes')
+          provenance = json.loads((root / 'provenance.json').read_text())
+          assert (root / 'lean-toolchain').read_text().strip() == provenance['target']['lean_toolchain']
+          lakefile = (root / 'lakefile.toml').read_text()
+          assert provenance['target']['mathlib_revision'] in lakefile
+          trusted = (root / 'ChallengeDeps.lean').read_text() + '\n' + (root / 'Challenge.lean').read_text()
+          actual = hashlib.sha256(trusted.encode()).hexdigest()
+          assert actual == provenance['trusted_files_sha256'], (actual, provenance['trusted_files_sha256'])
+          print(actual)
+          PY
+
+      - name: Build the Lean 4.33 workspace
+        working-directory: comparator/pilots/fc_sum_of_three_cubes
+        run: |
+          lake update
+          lake exe cache get
+          lake build
+
+      - name: Build pinned Comparator and Lean 4.33 exporter
+        env:
+          COMPARATOR_REV: 575674928e239f5bc452aab72d1dd7b0f1326494
+        run: |
+          git clone https://github.com/leanprover/comparator.git "$RUNNER_TEMP/comparator"
+          git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
+          git clone https://github.com/leanprover/lean4export.git "$RUNNER_TEMP/lean4export"
+          git -C "$RUNNER_TEMP/lean4export" checkout v4.33.0
+          (cd "$RUNNER_TEMP/comparator" && lake build comparator)
+          (cd "$RUNNER_TEMP/lean4export" && lake build lean4export)
+
+      - name: Run Comparator smoke test
+        working-directory: comparator/pilots/fc_sum_of_three_cubes
+        run: |
+          export COMPARATOR_BIN="$RUNNER_TEMP/comparator/.lake/build/bin/comparator"
+          export COMPARATOR_LANDRUN="$RUNNER_TEMP/comparator/scripts/fake-landrun.sh"
+          export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/lean4export/.lake/build/bin/lean4export"
+          lake test

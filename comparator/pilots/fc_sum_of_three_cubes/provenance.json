@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "google-deepmind/formal-conjectures",
+    "commit": "9f5ee773841921f460b4a26a3552f5eca4accaa0",
+    "path": "FormalConjectures/Wikipedia/SumOfThreeCubes.lean",
+    "blob_sha": "f36a362c53f254a14ed0e0fb9239abefb4b762f1",
+    "declarations": [
+      "SumOfThreeCubes.IsSumOfThreeCubes",
+      "SumOfThreeCubes.isSumOfThreeCubes_2",
+      "SumOfThreeCubes.isSumOfThreeCubes_iff_mod_9"
+    ],
+    "subset": "Subsets.FC100OpenSet1.problems",
+    "category": "research open"
+  },
+  "target": {
+    "repository": "leanprover/lean-eval",
+    "commit": "7699436464052268e6c04b41554bfbc2c6908ec5",
+    "lean_toolchain": "leanprover/lean4:v4.33.0",
+    "mathlib_revision": "6f1ef4e5dd604a435bddba4747b13970cd65d2a1",
+    "workspace_shape": "ChallengeDeps/Challenge/Submission/Solution"
+  },
+  "transformations": [
+    "removed Formal Conjectures category attributes",
+    "copied the trusted IsSumOfThreeCubes dependency",
+    "hoisted answer(sorry) into a Prop-valued definition hole",
+    "added a fixed Solution adapter delegating to Submission"
+  ],
+  "trusted_files_sha256": "ad2ddda464477fd13661730acda71e4e13eaf2e3f90c97a3821290ae9b82b4b3",
+  "review": {
+    "mathematical_status": "open",
+    "smoke_submission_is_not_a_resolution": true,
+    "human_definition_value_review_required": true
+  }
+}
