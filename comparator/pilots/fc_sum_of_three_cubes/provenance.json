@@ -18,6 +18,8 @@
     "commit": "7699436464052268e6c04b41554bfbc2c6908ec5",
     "lean_toolchain": "leanprover/lean4:v4.33.0",
     "mathlib_revision": "6f1ef4e5dd604a435bddba4747b13970cd65d2a1",
+    "comparator_commit": "575674928e239f5bc452aab72d1dd7b0f1326494",
+    "lean4export_commit": "15f6055e299ad5b89345e533cc2192f4cc00f659",
     "workspace_shape": "ChallengeDeps/Challenge/Submission/Solution"
   },
   "transformations": [
