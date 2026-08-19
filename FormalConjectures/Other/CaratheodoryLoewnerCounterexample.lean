@@ -126,7 +126,7 @@ theorem counterexample_two_is_support_function_with_unique_umbilic :
     ∃ (h : sphere (0 : ℝ³) 1 → ℝ) (F : sphere (0 : ℝ³) 1 → ℝ³) (K : Set ℝ³),
       ContMDiff (𝓡 2) 𝓘(ℝ, ℝ) ∞ h ∧
       (∀ z : ℂ, h (counterexampleSphereChart z) = counterexample 2 z) ∧
-      IsSmoothConvexSphere F (fun p ↦ (p : ℝ³)) ∧
+      IsConvexSphereOfClass ∞ F (fun p ↦ (p : ℝ³)) ∧
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧
       Set.range F = frontier K ∧ IsSupportParametrization h F K ∧
       IsUmbilic F (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) ∧
