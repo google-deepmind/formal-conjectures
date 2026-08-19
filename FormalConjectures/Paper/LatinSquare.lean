@@ -56,7 +56,7 @@ Each Latin square of odd order has at least one transversal.
 -/
 @[category research open, AMS 5]
 theorem oddOrderLatinSquareTransversal : answer(sorry) ↔
-    Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
+    ∀ (n : ℕ), Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
 /--
@@ -87,7 +87,7 @@ Every latin square has a near-transversal
 -/
 @[category research open, AMS 5]
 theorem latinSquareNearTransversal : answer(sorry) ↔
-    ∀ (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
+    ∀ (n : ℕ) (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
   sorry
 
 /-- The number of transversals of the Cayley table of the cyclic group $\mathbb{Z}_n$ -/
