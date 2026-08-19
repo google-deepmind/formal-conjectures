@@ -1,19 +1,90 @@
-# Comparator workspace adapter
+# Formal Conjectures to LeanEval adapter
 
-This directory contains a thin adapter from Formal Conjectures to
+This directory contains the Formal Conjectures side of the integration with
 [`leanprover/lean-eval`](https://github.com/leanprover/lean-eval) and
-[`leanprover/comparator`](https://github.com/leanprover/comparator). It does not
-implement another evaluator.
+[`leanprover/comparator`](https://github.com/leanprover/comparator).
 
-## How it works
+## Status and version boundary
 
-1. `scripts/comparator_facts.lean` asks Lean for the selected declaration's
-   source range, binders, and `answer(sorry)` slot types.
-2. `scripts/make_comparator_workspace.py` creates one pinned workspace.
-3. The generated project builds the challenge and submission.
-4. `lake test` runs Comparator against `config.json`.
+The code in this draft is a **conformance prototype**, not a second permanent
+workspace generator.
 
-The workspace contains:
+- Formal Conjectures currently elaborates its source under its own pinned
+  toolchain.
+- LeanEval is the benchmark host and target environment. Imported problems must
+  compile under LeanEval's pinned **Lean 4.33** toolchain and matching Mathlib
+  revision.
+- Formal Conjectures does not need a repository-wide toolchain upgrade merely
+  to support the integration.
+- LeanEval owns the shared Challenge/Solution/Submission generator and
+  Comparator execution path.
+- Formal Conjectures owns an importer that resolves declarations, preserves
+  provenance, maps `answer(sorry)` semantics, and emits reviewable LeanEval
+  source and manifests.
+
+The standalone workspace writer in this draft exercises the hard FC-side
+extraction cases while the shared generator interface is being separated from
+LeanEval's `EvalTools`. Once that interface exists, the importer must call it
+rather than retain parallel generation logic.
+
+This follows the ownership split proposed in
+[`lean-eval#536`](https://github.com/leanprover/lean-eval/pull/536), with
+coordination tracked in
+[`lean-eval#533`](https://github.com/leanprover/lean-eval/issues/533) and
+[`formal-conjectures#4930`](https://github.com/google-deepmind/formal-conjectures/issues/4930).
+
+## Final integration flow
+
+1. The FC importer resolves a declaration against an exact Formal Conjectures
+   commit and obtains its source range, binders, namespace, dependencies, and
+   `answer(sorry)` slot types from Lean.
+2. It emits vendored LeanEval source, one LeanEval problem manifest, and
+   immutable provenance containing at least the FC repository, commit, source
+   path, fully qualified declaration name, and frozen-set identity.
+3. LeanEval builds the vendored source under Lean 4.33 and its matching Mathlib
+   pin.
+4. The shared LeanEval generator creates `Challenge`, `ChallengeDeps`,
+   `Submission`, `Solution`, and Comparator configuration.
+5. LeanEval CI builds the generated workspace and runs Comparator with
+   `sorryAx` rejected.
+6. A deterministic trusted-statement fingerprint links the imported source,
+   generated challenge, result record, and later upstream corrections.
+
+The importer must fail closed on ambiguous declarations, source drift,
+inaccessible binders, unsupported dependencies, answer-slot types that cannot
+be matched safely, and existing output.
+
+## Conformance suite before a public import
+
+The adapter should cover these boundary cases before importing a frozen set:
+
+- a plain theorem proof;
+- a `Prop`-valued `answer(sorry)` slot;
+- a non-`Prop` answer slot;
+- explicit declaration parameters versus `∀` binders in the conclusion;
+- trusted helper dependencies requiring `ChallengeDeps` or multiple trusted
+  files.
+
+The smoke cases in this draft exercise those distinctions. They validate
+extraction and adapter behavior, not mathematical correctness or maintainer
+acceptance.
+
+The first public open-conjectures import also needs a corrected source set.
+`FC100OpenSet1` currently verifies itself as 92 `research open` entries and 8
+`research solved` entries, so it must not be imported wholesale as one hundred
+open conjectures.
+
+## Current prototype
+
+`scripts/comparator_facts.lean` asks Lean for the selected declaration's source
+range, binders, and `answer(sorry)` slot types.
+
+`scripts/make_comparator_workspace.py` then creates one pinned standalone
+workspace as a conformance harness. The generated workspace uses the Formal
+Conjectures toolchain and dependency pins. It is **not** the final LeanEval 4.33
+artifact.
+
+The prototype workspace contains:
 
 - `Challenge.lean`, with the trusted statement and proof hole;
 - `Submission.lean` and `Submission/`, where a solver works;
@@ -26,7 +97,7 @@ The workspace contains:
 statement. Comparator also rejects `sorryAx` because it is not in the permitted
 axiom list.
 
-## Generate one workspace
+### Generate one prototype workspace
 
 ```bash
 python3 scripts/make_comparator_workspace.py erdos_940.variants.large_integers
@@ -34,13 +105,13 @@ python3 scripts/make_comparator_workspace.py erdos_940.variants.large_integers
 
 Use `--out` to choose the parent directory. The generator refuses to overwrite
 an existing workspace. It writes into a temporary directory and renames the
-complete result into place.
+complete workspace into place.
 
 The generator also stops when the selected source differs from the pinned
 upstream revision. This prevents a workspace from combining a working-tree
 statement with an older imported context.
 
-## Supported inputs
+### Supported prototype inputs
 
 - theorem proofs;
 - definition answers represented by `answer(sorry)`;
@@ -49,10 +120,10 @@ statement with an older imported context.
 Plain-statement disproofs remain out of scope until Comparator provides an
 upstream interface for them.
 
-## Problem manifests
+## Prototype problem manifests
 
-Most declarations need no manifest. Add one TOML file under `problems/` only
-when the source cannot select the declaration by itself.
+Most declarations need no prototype manifest. Add one TOML file under
+`problems/` only when the source cannot select the declaration by itself.
 
 | Field | Meaning |
 |---|---|
@@ -71,9 +142,12 @@ python3 scripts/make_comparator_workspace.py --validate
 
 ## Tool pins
 
-`tools.toml` records the external tool revisions. Generated workspaces pin
-Mathlib from `lake-manifest.json` and Formal Conjectures to the current upstream
-revision. The workspace build fetches these dependencies; workspace generation
-itself does not run Comparator.
+`tools.toml` records the external tool revisions used by the prototype.
+Generated prototype workspaces pin Mathlib from `lake-manifest.json` and Formal
+Conjectures to the current upstream revision. Workspace generation itself does
+not run Comparator.
 
-Issue #4930 tracks the upstream integration and execution-service decisions.
+The final importer instead targets LeanEval's Lean 4.33 toolchain, Mathlib pin,
+manifest schema, shared generator revision, and CI policy. Those target pins
+belong on the LeanEval side and must be recorded in every generated import or
+its provenance record.
