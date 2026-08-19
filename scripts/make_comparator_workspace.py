@@ -6,17 +6,23 @@ module whose statement the maintainers trust, under a config that pins the
 permitted axioms. This script generates that shape for one Formal Conjectures
 declaration.
 
-Challenge.lean imports the problem's own module. lean-eval's generated
-Challenge is one `import Mathlib` and one statement, because its problems are
-authored self-contained; this repository's are not, so the import here is the
-problem's module and the statement's context comes with it. Only what Lean
-scopes to a file has to be copied: `open`, `variable`, `universe`,
-`set_option` and `local notation`.
+The generated workspace requires Mathlib and nothing else. lean-eval vendors
+its problems, so a Challenge cannot fetch this repository at evaluation time,
+which rules out importing the problem's own module. This repository's
+statements are not authored self-contained, so the declarations a statement
+needs are copied into `ChallengeDeps.lean` instead, dependencies first, each
+carrying the `open`, `variable`, `universe`, `set_option` and `local notation`
+in force where it was written.
+
+Copying is a construction and it can be wrong in ways only Lean sees, so
+`--verify` builds the generated workspace before you trust it.
 
 Layout produced:
 
   <out>/<id>/
-    lakefile.toml       pins: this checkout's Mathlib rev and FC commit
+    lakefile.toml       pins: this checkout's Mathlib rev
+    ChallengeDeps.lean  the statement's Formal Conjectures closure, copied,
+                        importing Mathlib alone
     Challenge.lean      the import, the file-scoped preamble, the target
                         statement with attributes stripped and its proof
                         replaced by `sorry`, and each `answer(sorry)` hoisted
@@ -276,6 +282,179 @@ def strip_decorations(block_text):
         block_text = stripped
 
 
+# Attributes this repository defines. A generated workspace requires Mathlib
+# and nothing else, so these have to go; everything else has to stay.
+FC_ATTRIBUTES = ("category", "AMS", "formal_proof")
+
+
+def strip_fc_attributes(block_text):
+    """Remove this repository's own attributes from a copied declaration.
+
+    Unlike `strip_decorations`, which clears every attribute off the target
+    statement, this keeps the rest. A dependency is copied to be elaborated,
+    not restated, and dropping `simp`, `reducible` or `instance` attributes
+    changes how the declarations after it in the same closure elaborate.
+    """
+
+    def replace(match):
+        inner = match.group(1)
+        # Nested brackets mean an argument this simple split would cut in
+        # half, so leave the whole attribute alone rather than mangle it.
+        if "[" in inner:
+            return match.group(0)
+        kept = [
+            part.strip()
+            for part in inner.split(",")
+            if part.strip() and part.strip().split()[0] not in FC_ATTRIBUTES
+        ]
+        return f"@[{', '.join(kept)}]" if kept else ""
+
+    text = re.sub(r"@\[([^\]]*)\]", replace, block_text)
+    # An attribute line that emptied out leaves a blank line behind.
+    return re.sub(r"^[ \t]*\n", "", text, flags=re.MULTILINE)
+
+
+def module_source_path(module):
+    """The file declaring a dotted Lean module name, undoing guillemets."""
+    parts = [
+        component[1:-1] if component.startswith("«") else component
+        for component in module.split(".")
+    ]
+    path = ROOT.joinpath(*parts).with_suffix(".lean")
+    if not path.is_file():
+        raise SystemExit(f"{module}: no source file at {path}")
+    return path
+
+
+def slice_range(lines, source_range):
+    """The source text a declaration range covers, and the line it starts on.
+
+    `open X in` binds to the declaration below it but sits above what the
+    range covers in some toolchains, so it is pulled in when present.
+    """
+    lo, hi = source_range["startLine"], source_range["endLine"]
+    end_column = source_range.get("endColumn")
+    while (
+        lo > 1
+        and lines[lo - 2].rstrip().endswith(" in")
+        and KEEP_LOOSE.match(lines[lo - 2])
+    ):
+        lo -= 1
+    sliced = lines[lo - 1 : hi]
+    if end_column is not None and sliced:
+        sliced = sliced[:-1] + [sliced[-1][:end_column]]
+    return "\n".join(sliced), lo
+
+
+def challenge_deps(dependencies, generated, declaration, opened_namespaces=()):
+    """One Mathlib-only module carrying a declaration's FC-local closure.
+
+    lean-eval vendors problems, so a generated Challenge cannot fetch this
+    repository at evaluation time and has to stand on Mathlib alone. That
+    rules out importing the problem's own module, and brings back the failure
+    modes an import does not have: file-scoped `open` and `variable` lost,
+    `local notation` unrecognised, a namespace swallowing what follows.
+
+    So each declaration is emitted inside its own `section`, carrying the
+    preamble in force where it was written and reopening the namespace it was
+    written in. That is a construction, not a proof, and the only check that
+    covers every one of those failure modes at once is building the generated
+    workspace, which `--verify` does.
+    """
+    copied = [dep["name"] for dep in dependencies]
+    orphans = [
+        name
+        for name in generated
+        if not any(name.startswith(parent + ".") for parent in copied)
+    ]
+    if orphans:
+        raise SystemExit(
+            f"{declaration}: {len(orphans)} elaborator-generated constant(s) "
+            "have no copied ancestor, so copying the closure would not "
+            f"reproduce them: {', '.join(orphans[:5])}"
+        )
+
+    # A constructor, a `where` auxiliary and a `_sparseCasesOn` all carry a
+    # source range inside the declaration that produces them, so copying them
+    # in their own right either duplicates a declaration or slices a fragment
+    # of one. `MonochromaticQuantumGraph.EdgeN.mk` covers line 88 of a
+    # structure spanning 83 to 93; `pmSumListAux._sparseCasesOn_1` has exactly
+    # its parent's range. Copying the outer declaration reproduces both.
+    def covered_by_another(dep):
+        inner = dep["range"]
+        for other in dependencies:
+            if other is dep or other["module"] != dep["module"]:
+                continue
+            outer = other["range"]
+            if outer is None or inner is None:
+                continue
+            if not (
+                outer["startLine"] <= inner["startLine"]
+                and outer["endLine"] >= inner["endLine"]
+            ):
+                continue
+            same_span = (
+                outer["startLine"] == inner["startLine"]
+                and outer["endLine"] == inner["endLine"]
+            )
+            # A tie on the span is broken by name: the parent is the prefix.
+            if not same_span or len(other["name"]) < len(dep["name"]):
+                return True
+        return False
+
+    subsumed = [dep["name"] for dep in dependencies if covered_by_another(dep)]
+    dependencies = [dep for dep in dependencies if dep["name"] not in subsumed]
+
+    blocks, provenance = [], []
+    for dep in dependencies:
+        if dep["range"] is None:
+            raise SystemExit(f"{declaration}: {dep['name']} has no source range")
+        path = module_source_path(dep["module"])
+        lines = path.read_text(encoding="utf-8").split("\n")
+        text, start = slice_range(lines, dep["range"])
+        preamble, namespaces = file_scoped_preamble(lines, start)
+        body = strip_fc_attributes(text).strip("\n")
+        if not body:
+            raise SystemExit(f"{declaration}: {dep['name']} sliced to nothing")
+        namespace = ".".join(namespaces)
+        chunk = [f"-- {dep['name']}, from {path.relative_to(ROOT)}", "section"]
+        chunk += preamble
+        if namespace:
+            chunk.append(f"namespace {namespace}")
+        chunk += ["", body, ""]
+        if namespace:
+            chunk.append(f"end {namespace}")
+        chunk.append("end")
+        blocks.append("\n".join(chunk))
+        provenance.append(dep["name"])
+
+    # Challenge.lean reopens the namespace stack the target sat in, so its
+    # statement can name siblings short. `open` on a namespace nothing has
+    # declared is an error, and with the problem's module no longer imported
+    # only the copied declarations can declare one. An empty namespace block
+    # is enough to make the name exist.
+    declared_namespaces = {
+        name.rsplit(".", 1)[0] for name in provenance if "." in name
+    }
+    for depth in range(len(opened_namespaces)):
+        prefix = ".".join(opened_namespaces[: depth + 1])
+        if not any(
+            ns == prefix or ns.startswith(prefix + ".") for ns in declared_namespaces
+        ):
+            blocks.append(f"namespace {prefix}\nend {prefix}")
+
+    listing = "\n".join(f"* `{name}`" for name in provenance)
+    return (
+        "import Mathlib\n\n"
+        "/-!\n"
+        f"The Formal Conjectures declarations `{declaration}` needs, copied so\n"
+        "that `Challenge.lean` requires Mathlib and nothing else. Dependencies\n"
+        "come before the declarations that use them:\n\n"
+        f"{listing}\n"
+        "-/\n\n" + "\n\n".join(blocks) + "\n"
+    )
+
+
 def replace_proof_with_sorry(text):
     """Cut the proof body after `:=`, keeping the statement.
 
@@ -403,6 +582,27 @@ def answer_spans(text):
     return spans
 
 
+def unwrap_answers(statement):
+    """Replace any surviving `answer(t)` with `(t)`.
+
+    `answer` is this repository's own elaborator, so a Mathlib-only workspace
+    cannot parse it. `hoist_answers` removes the `answer(sorry)` slots by
+    turning them into definition holes; a slot that already carries its answer,
+    which is how a `research solved` statement is written, is left behind and
+    used to reach Challenge.lean as literal text that does not parse.
+
+    Unwrapping is faithful. In the default `postpone` mode the elaborator
+    elaborates the term and attaches an annotation
+    (`FormalConjecturesUtil/Answer.lean`), so `answer(t)` and `t` denote the
+    same term and only the annotation is lost. The annotation is what marks
+    which part of the statement was the question, and a generated Challenge
+    records that in `holes.json` instead.
+    """
+    for start, end, argument in reversed(answer_spans(statement)):
+        statement = statement[:start] + f"({argument.strip()})" + statement[end:]
+    return statement
+
+
 def hoist_answers(statement, basename, slot_types, override=None):
     """Replace each `answer(sorry)` with a named definition hole.
 
@@ -488,10 +688,19 @@ def pins(source_path=None):
     return mathlib_rev, fc_rev
 
 
-def lakefile(workspace_id, mathlib_rev, fc_rev):
+def lakefile(workspace_id, mathlib_rev):
+    """Mathlib and nothing else.
+
+    The workspace used to require this repository too, so that Challenge.lean
+    could import the problem's module. lean-eval vendors its problems and
+    cannot fetch Formal Conjectures at evaluation time, so the closure travels
+    in `ChallengeDeps.lean` instead and the require is gone. The Formal
+    Conjectures commit the copy came from is recorded in `provenance.json`,
+    which is where a reader should look for it.
+    """
     return f"""name = "{workspace_id}"
 testDriver = "workspace_test"
-defaultTargets = ["Challenge", "Solution", "Submission"]
+defaultTargets = ["ChallengeDeps", "Challenge", "Solution", "Submission"]
 
 [leanOptions]
 autoImplicit = false
@@ -501,10 +710,8 @@ name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
 rev = "{mathlib_rev}"
 
-[[require]]
-name = "formal_conjectures"
-git = "https://github.com/google-deepmind/formal-conjectures.git"
-rev = "{fc_rev}"
+[[lean_lib]]
+name = "ChallengeDeps"
 
 [[lean_lib]]
 name = "Challenge"
@@ -548,17 +755,23 @@ def write_workspace(target, files):
 def generate(basename, out_dir, answer_type=None, module=None):
     """Write a comparator workspace for one declaration.
 
-    Challenge.lean imports the problem's own module rather than restating its
-    dependencies. `leanprover/lean-eval` generates a Challenge that is one
-    `import` and one statement, and reconstructing the surrounding definitions
-    by hand instead cost six defects that only Lean could find: file-scoped
-    `open` and `variable` lost, `local notation` unrecognised, a `namespace`
-    swallowing the declaration below it, `section` lines left unclosed. An
-    import has none of those failure modes.
+    Challenge.lean imports `ChallengeDeps`, which carries the statement's
+    Formal Conjectures closure and requires Mathlib alone. Importing the
+    problem's own module would be safer to construct and was what this script
+    did first, but lean-eval vendors its problems and cannot fetch this
+    repository at evaluation time, so the closure has to travel with the
+    workspace.
 
-    Importing a repository full of `sorry` is safe here because comparator
-    checks axioms. A solution closing the goal with the imported statement
-    reports `sorryAx`, which `permitted_axioms` does not allow.
+    That brings back the failure modes an import does not have. Reconstructing
+    definitions by hand cost six defects that only Lean could find: file-scoped
+    `open` and `variable` lost, `local notation` unrecognised, a `namespace`
+    swallowing the declaration below it, `section` lines left unclosed. The
+    answer is not to construct more carefully but to check: `--verify` builds
+    the workspace, which catches all six at once.
+
+    Copying a closure out of a repository full of `sorry` is safe because
+    comparator checks axioms. A solution closing the goal with a copied
+    statement reports `sorryAx`, which `permitted_axioms` does not allow.
     """
     manifest = load_manifest(basename)
     declaration = manifest.get("declaration", basename)
@@ -571,6 +784,7 @@ def generate(basename, out_dir, answer_type=None, module=None):
     facts = elaborator_facts(fc_module, declaration)
     if facts["range"] is None:
         raise SystemExit(f"{declaration}: no source range recorded")
+
 
     source_lines = path.read_text(encoding="utf-8").split("\n")
     lo, hi = facts["range"]["startLine"], facts["range"]["endLine"]
@@ -590,6 +804,12 @@ def generate(basename, out_dir, answer_type=None, module=None):
     statement = original
 
     preamble, namespaces_at_target = file_scoped_preamble(source_lines, lo)
+    deps_module = challenge_deps(
+        facts.get("dependencies", []),
+        facts.get("generatedDependencies", []),
+        declaration,
+        namespaces_at_target,
+    )
 
     statement = strip_decorations(statement)
     statement = replace_proof_with_sorry(statement)
@@ -604,6 +824,10 @@ def generate(basename, out_dir, answer_type=None, module=None):
     statement, holes = hoist_answers(
         statement, declared, facts.get("answerTypes", []), answer_type
     )
+    # A `research solved` statement carries its answer rather than a `sorry`
+    # slot, so nothing above removed it and `answer(` would reach a workspace
+    # that cannot parse it.
+    statement = unwrap_answers(statement)
 
     args = [b["name"] for b in facts["binders"] if b["explicit"]]
     bad = [a for a in args if "✝" in a or "._" in a]
@@ -633,7 +857,7 @@ def generate(basename, out_dir, answer_type=None, module=None):
         signature = signature[: -len(suffix)].rstrip()
 
     challenge = (
-        f"import {fc_module}\n\n"
+        "import ChallengeDeps\n\n"
         + header
         + "\n\n".join(holes)
         + ("\n\n" if holes else "")
@@ -644,7 +868,7 @@ def generate(basename, out_dir, answer_type=None, module=None):
     # The participant's file. The statement sits inside `namespace Submission`
     # so nothing here can collide with, or stand in for, the trusted names.
     submission = (
-        f"import {fc_module}\nimport Submission.Helpers\n\n"
+        "import ChallengeDeps\nimport Submission.Helpers\n\n"
         + header
         + "namespace Submission\n\n"
         + "\n\n".join(holes)
@@ -663,7 +887,7 @@ def generate(basename, out_dir, answer_type=None, module=None):
         for h, hn in zip(holes, hole_names_of(holes))
     ]
     solution = (
-        f"import {fc_module}\nimport Submission\n\n"
+        "import ChallengeDeps\nimport Submission\n\n"
         + header
         + "\n\n".join(delegated)
         + ("\n\n" if delegated else "")
@@ -761,9 +985,10 @@ def generate(basename, out_dir, answer_type=None, module=None):
     write_workspace(
         ws,
         {
-            "lakefile.toml": lakefile(workspace_id, mathlib_rev, fc_rev),
+            "lakefile.toml": lakefile(workspace_id, mathlib_rev),
             "lean-toolchain": (ROOT / "lean-toolchain").read_text(encoding="utf-8"),
             "README.md": workspace_readme,
+            "ChallengeDeps.lean": deps_module,
             "Challenge.lean": challenge,
             "Solution.lean": solution,
             "Submission.lean": submission,
@@ -771,6 +996,17 @@ def generate(basename, out_dir, answer_type=None, module=None):
             "WorkspaceTest.lean": (
                 COMPARATOR_DIR / "templates" / "WorkspaceTest.lean"
             ).read_text(encoding="utf-8"),
+            "provenance.json": json.dumps(
+                provenance(
+                    declared,
+                    fc_module,
+                    path.relative_to(ROOT),
+                    fc_rev,
+                    [dep["name"] for dep in facts.get("dependencies", [])],
+                ),
+                indent=2,
+            )
+            + "\n",
             "config.json": json.dumps(config, indent=2) + "\n",
             "holes.json": json.dumps(holes_payload, indent=2, ensure_ascii=False)
             + "\n",
@@ -802,6 +1038,85 @@ def validate():
     return 1 if bad else 0
 
 
+def provenance(declaration, module, source_path, fc_rev, dependencies):
+    """Where the copied statement and its dependencies came from.
+
+    Until this workspace carried its own copy of the closure, the lakefile's
+    `formal_conjectures` requirement named the commit and that was the record.
+    Nothing else did, so removing the requirement would have left a workspace
+    whose statement cannot be traced back to a revision of this repository.
+    """
+    blob = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", f"{fc_rev}:{source_path}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return {
+        "source_repository": "https://github.com/google-deepmind/formal-conjectures",
+        "source_commit": fc_rev,
+        "source_path": str(source_path),
+        "source_blob_sha": blob.stdout.strip() or None,
+        "declaration": declaration,
+        "module": module,
+        "copied_dependencies": dependencies,
+        "toolchain": (ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
+        "tools": tool_pins(),
+    }
+
+
+def verify(workspace):
+    """Elaborate the generated Challenge against its copied dependencies.
+
+    Copying a closure is a construction, and its failure modes are the ones
+    Lean sees and a reader does not: a lost `open`, an unrecognised
+    `local notation`, a namespace that no longer exists because nothing
+    declares it any more. Each of those is a clean build away from being
+    caught and a long review away from being spotted.
+
+    This concatenates `ChallengeDeps.lean` and `Challenge.lean` and elaborates
+    them with this checkout's Mathlib, which is the revision the workspace
+    pins, so the check is offline and does not fetch a second Mathlib. It
+    checks elaboration and not the lakefile; a comparator run is what
+    exercises the build.
+    """
+    deps = (workspace / "ChallengeDeps.lean").read_text(encoding="utf-8")
+    challenge = (workspace / "Challenge.lean").read_text(encoding="utf-8")
+    challenge = "\n".join(
+        line
+        for line in challenge.split("\n")
+        if line.strip() != "import ChallengeDeps"
+    )
+    with tempfile.NamedTemporaryFile(
+        "w", suffix=".lean", delete=False, encoding="utf-8"
+    ) as handle:
+        handle.write(deps + "\n" + challenge)
+        combined = handle.name
+    try:
+        proc = subprocess.run(
+            ["lake", "env", "lean", combined],
+            capture_output=True,
+            text=True,
+            cwd=ROOT,
+            check=False,
+        )
+    finally:
+        pathlib.Path(combined).unlink(missing_ok=True)
+    output = (proc.stdout + proc.stderr).replace(combined, "Challenge")
+    # Only errors fail the check. The target statement's proof is `sorry` by
+    # construction and each `answer(sorry)` hole is one the solver fills, so
+    # those warnings are the generator working. Linter warnings such as
+    # `unused variable` come from the copied source and say nothing about
+    # whether the copy is faithful.
+    errors = [line for line in output.splitlines() if "error:" in line]
+    if proc.returncode != 0 or errors:
+        raise SystemExit(
+            f"{workspace.name}: the generated workspace does not elaborate:\n"
+            + "\n".join(errors or output.splitlines()[-10:])
+        )
+    return 0
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument(
@@ -823,6 +1138,12 @@ def main(argv):
         "overrides the manifest's `module`",
     )
     ap.add_argument(
+        "--verify",
+        action="store_true",
+        help="elaborate the generated workspace against this checkout's "
+        "Mathlib before accepting it",
+    )
+    ap.add_argument(
         "--validate",
         action="store_true",
         help="check every manifest resolves, and generate nothing",
@@ -833,6 +1154,8 @@ def main(argv):
     if not args.declaration:
         ap.error("give a declaration, or --validate")
     ws = generate(args.declaration, args.out, args.answer_type, args.module)
+    if args.verify:
+        verify(pathlib.Path(ws))
     print(ws)
     return 0
 

@@ -59,6 +59,45 @@ partial def lambdaArity : Expr → Nat
 def binderJson (name : Name) (bi : BinderInfo) : Json :=
   Json.mkObj [("name", toJson name.toString), ("explicit", toJson bi.isExplicit)]
 
+def moduleOf (env : Environment) (n : Name) : String :=
+  match env.getModuleIdxFor? n with
+  | some idx => (env.header.moduleNames[idx.toNat]?.getD Name.anonymous).toString
+  | none => ""
+
+/-- Declared by this repository, as opposed to arriving with `import Mathlib`. -/
+def isFCLocal (env : Environment) (n : Name) : Bool :=
+  (moduleOf env n).startsWith "FormalConjectures"
+
+/-- The FC-local constants a declaration needs, dependencies before dependents.
+
+Post-order over the dependency graph, expanding through both the type and the
+value of each FC-local constant: a definition's body names constants its type
+does not, and `ChallengeDeps` has to carry them or the copy will not elaborate.
+Mathlib and core constants are not expanded, since they arrive with
+`import Mathlib`. -/
+partial def fcOrder (env : Environment) (n : Name)
+    (seen : Std.HashSet Name) (acc : Array Name) : Std.HashSet Name × Array Name :=
+  if seen.contains n then (seen, acc) else
+    let seen := seen.insert n
+    match env.find? n with
+    | none => (seen, acc)
+    | some info =>
+      let fromValue := match info.value? with
+        | some v => v.getUsedConstants
+        | none => #[]
+      -- An inductive has no value, and its fields live in the constructor
+      -- rather than in its own type: `structure EdgeN (N D : Nat) where u : V N`
+      -- has type `Nat → Nat → Type`, which never mentions `V`. Without the
+      -- constructors here the closure still contains `V`, reached some other
+      -- way, but orders it after `EdgeN`, and the copy does not elaborate.
+      let fromCtors := match info with
+        | .inductInfo val => val.ctors.toArray
+        | _ => #[]
+      let children := (info.type.getUsedConstants ++ fromValue ++ fromCtors).filter
+        fun c => isFCLocal env c && c != n
+      let (seen, acc) := children.foldl (fun p c => fcOrder env c p.1 p.2) (seen, acc)
+      (seen, acc.push n)
+
 unsafe def runWithImports {α : Type} (moduleNames : Array Name)
     (actionToRun : MetaM α) : IO α := do
   initSearchPath (← getBuildDir)
@@ -123,18 +162,43 @@ where
       (xs.extract 0 arity).mapM fun x => do
         let d ← x.fvarId!.getDecl
         pure (binderJson d.userName d.binderInfo)
-    let rangeJson := match ranges with
-      | some r => Json.mkObj [
-          ("startLine", toJson r.range.pos.line),
-          ("startColumn", toJson r.range.pos.column),
-          ("endLine", toJson r.range.endPos.line),
-          ("endColumn", toJson r.range.endPos.column)]
-      | none => Json.null
+    let rangeJson := rangeToJson ranges
+    -- Only the statement's dependencies: the proof is replaced by `sorry` in
+    -- the generated Challenge, so nothing the value names has to be carried.
+    let direct := info.type.getUsedConstants.filter (isFCLocal env)
+    let (_, ordered) := direct.foldl (fun p c => fcOrder env c p.1 p.2)
+      (({} : Std.HashSet Name), (#[] : Array Name))
+    -- The equation compiler and `decide` leave constants like
+    -- `Finset.greedySidon.aux._proof_1` and `.match_1` in the closure. They
+    -- have no source range because they have no source: copying the parent
+    -- declaration's text regenerates them. Emit them separately so the
+    -- generator can check each one has an ancestor that is being copied,
+    -- rather than dropping them silently.
+    let mut deps := #[]
+    let mut generated := #[]
+    for d in ordered.filter (· != name) do
+      match ← findDeclarationRanges? d with
+      | some r =>
+        deps := deps.push <| Json.mkObj [
+          ("name", toJson d.toString),
+          ("module", toJson (moduleOf env d)),
+          ("range", rangeToJson (some r))]
+      | none => generated := generated.push (toJson d.toString)
     let payload := Json.mkObj [
       ("declaration", toJson decl),
       ("name", toJson name.toString),
       ("range", rangeJson),
       ("binders", toJson binders.toList),
-      ("answerTypes", toJson answerTypes.toList)]
+      ("answerTypes", toJson answerTypes.toList),
+      ("dependencies", toJson deps.toList),
+      ("generatedDependencies", toJson generated.toList)]
     IO.println payload.pretty
     return 0
+  rangeToJson (ranges : Option DeclarationRanges) : Json :=
+    match ranges with
+    | some r => Json.mkObj [
+        ("startLine", toJson r.range.pos.line),
+        ("startColumn", toJson r.range.pos.column),
+        ("endLine", toJson r.range.endPos.line),
+        ("endColumn", toJson r.range.endPos.column)]
+    | none => Json.null
