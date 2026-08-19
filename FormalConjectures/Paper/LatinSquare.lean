@@ -30,13 +30,11 @@ This file formalizes some conjectures and theorems around latin squares.
 
 namespace LatinSquare
 
-variable {n : ℕ}
-
 /--
 Two latin squares of the same order are orthogonal if superimposing them gives each ordered pair of
 symbols at most once.
 -/
-def Orthogonal (L M : LatinSquare n) : Prop :=
+def Orthogonal {n : ℕ} (L M : LatinSquare n) : Prop :=
   Function.Injective fun p : Fin n × Fin n => (L.mat p.1 p.2, M.mat p.1 p.2)
 
 /-- A family of latin squares is mutually orthogonal if any two distinct members are orthogonal. -/
