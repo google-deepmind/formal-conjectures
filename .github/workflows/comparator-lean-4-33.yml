@@ -59,11 +59,12 @@ jobs:
       - name: Build pinned Comparator and Lean 4.33 exporter
         env:
           COMPARATOR_REV: 575674928e239f5bc452aab72d1dd7b0f1326494
+          LEAN4EXPORT_REV: 15f6055e299ad5b89345e533cc2192f4cc00f659
         run: |
           git clone https://github.com/leanprover/comparator.git "$RUNNER_TEMP/comparator"
           git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
           git clone https://github.com/leanprover/lean4export.git "$RUNNER_TEMP/lean4export"
-          git -C "$RUNNER_TEMP/lean4export" checkout v4.33.0
+          git -C "$RUNNER_TEMP/lean4export" checkout "$LEAN4EXPORT_REV"
           (cd "$RUNNER_TEMP/comparator" && lake build comparator)
           (cd "$RUNNER_TEMP/lean4export" && lake build lean4export)
 
