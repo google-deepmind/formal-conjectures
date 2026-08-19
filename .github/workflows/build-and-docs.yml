@@ -155,7 +155,7 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
-      # The elaborator-to-generator boundary, exercised on the oleans the
+      # The elaborator-to-importer boundary, exercised on the oleans the
       # build above produced: one plain theorem, a Prop answer slot, a
       # non-Prop answer slot, a forall-conclusion (whose binder must not be
       # applied), and explicit parameters (which must be). The comparator run
@@ -173,6 +173,42 @@ jobs:
           grep -q "i_answer : ENNReal" .comparator/erdos_1038_parts_i/Challenge.lean
           grep -q "Submission.erdos_100.variants.strong$" .comparator/erdos_100_variants_strong/Solution.lean
           grep -q "le_KotherRadical hI" .comparator/KotherConjecture_variants_le_KotherRadical/Solution.lean
+
+      # The importer-to-generator seam, on a real declaration. `--emit-import`
+      # writes only what this repository owns, and feeding those bytes back
+      # through the generator has to reproduce the workspace exactly; if it
+      # does not, the pair is not the whole interface and a pinned
+      # `lean-eval-generator` could not be dropped in. See comparator/OWNERSHIP.md.
+      - name: Importer to generator seam
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          python3 scripts/make_comparator_workspace.py erdos_1038.parts.i \
+            --emit-import .comparator-import
+          python3 - <<'PY'
+          import pathlib
+          import sys
+
+          sys.path.insert(0, "scripts")
+          import leaneval_generator as generator
+          from leaneval_interface import MarkedUpModule, ProblemManifest
+
+          handed_over = pathlib.Path(".comparator-import/erdos_1038_parts_i")
+          module = MarkedUpModule.parse(
+              (handed_over / "Problem.lean").read_text(encoding="utf-8")
+          )
+          manifest = ProblemManifest.from_json(
+              (handed_over / "manifest.json").read_text(encoding="utf-8")
+          )
+          assert len(manifest.source.commit) == 40, manifest.source.commit
+          assert manifest.source.declaration, "no FC declaration id"
+
+          workspace = pathlib.Path(".comparator/erdos_1038_parts_i")
+          regenerated = generator.generate(module, manifest)
+          for name, content in regenerated.items():
+              expected = (workspace / name).read_text(encoding="utf-8")
+              assert content == expected, name
+          print(f"{len(regenerated)} files reproduced from the module and manifest")
+          PY
 
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'

@@ -18,8 +18,8 @@ import FormalConjecturesUtil.Answer
 import FormalConjecturesUtil.Attributes.Basic
 
 /-!
-The elaborator-side facts `make_comparator_workspace.py` currently gets by
-reading Lean with regular expressions.
+The elaborator-side facts `scripts/fc_leaneval_importer.py` would otherwise
+get by reading Lean with regular expressions.
 
 Given a module and a declaration name, this prints JSON with what the
 elaborated environment knows exactly and the text layer can only guess:
@@ -27,14 +27,15 @@ elaborated environment knows exactly and the text layer can only guess:
 - the declaration's source range, for slicing its original text;
 - its binders, with names and explicitness, for the Solution adapter;
 - the type of each `sorry` inside the *statement*, which is the type of an
-  `answer(sorry)` slot. The generator's manifest `answer_type` field exists
-  only because surface syntax does not carry this; the environment does.
+  `answer(sorry)` slot. The `answer_type` field in a `comparator/problems`
+  file exists only because surface syntax does not carry this; the
+  environment does.
 
 Usage:
   lake exe comparator_facts <Module> <declaration>
 
 The declaration may be given in full or by any whole suffix, the same rule
-the Python generator uses.
+the Python importer uses.
 -/
 
 open Lean Meta
@@ -172,7 +173,7 @@ where
     -- `Finset.greedySidon.aux._proof_1` and `.match_1` in the closure. They
     -- have no source range because they have no source: copying the parent
     -- declaration's text regenerates them. Emit them separately so the
-    -- generator can check each one has an ancestor that is being copied,
+    -- importer can check each one has an ancestor that is being copied,
     -- rather than dropping them silently.
     let mut deps := #[]
     let mut generated := #[]
