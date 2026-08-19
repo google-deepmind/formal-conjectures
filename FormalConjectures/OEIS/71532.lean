@@ -74,12 +74,21 @@ theorem conjecture2 :
   sorry
 
 /--
-Conjecture: asymptotically, $a(n) \sim C \log(n)^2$ for some constant $C = 1.4\dots$.
+Conjecture: asymptotically, $a(n) \sim C \log(n)^2$ for some constant $C > 0$.
 -/
 @[category research open, AMS 11]
 theorem conjecture3 :
-    (fun n : ℕ ↦ (a n : ℝ)) ~[atTop]
-      (fun n : ℕ ↦ (answer(sorry) : ℝ) * Real.log (n : ℝ) ^ 2) := by
+    ∃ C : ℝ, 0 < C ∧ (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
+  sorry
+
+/--
+Conjecture: the constant $C$ in $a(n) \sim C \log(n)^2$ is approximately $1.4$.
+-/
+@[category research open, AMS 11]
+theorem conjecture3_value :
+    let C : ℝ := answer(sorry)
+    |C - 1.4| < 0.1 ∧
+      (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry
 
 end OeisA71532
