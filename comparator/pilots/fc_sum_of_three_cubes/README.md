@@ -10,6 +10,8 @@ does not claim to solve the open sum-of-three-cubes conjecture.
 - LeanEval reference commit: `7699436464052268e6c04b41554bfbc2c6908ec5`
 - Lean: `leanprover/lean4:v4.33.0`
 - Mathlib: `6f1ef4e5dd604a435bddba4747b13970cd65d2a1`
+- Comparator: `575674928e239f5bc452aab72d1dd7b0f1326494`
+- Lean 4.33 exporter: `15f6055e299ad5b89345e533cc2192f4cc00f659`
 
 `provenance.json` records the source declarations, transformation log, target
 pins, and a SHA-256 fingerprint over the exact trusted `ChallengeDeps.lean` and
@@ -43,7 +45,7 @@ lake build
 
 ## Comparator smoke test
 
-Build Comparator and a `lean4export` compatible with Lean 4.33, then run:
+Build the pinned Comparator and Lean 4.33 exporter recorded above, then run:
 
 ```bash
 COMPARATOR_BIN=/absolute/path/to/comparator \
