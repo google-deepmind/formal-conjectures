@@ -148,7 +148,7 @@ jobs:
 
       - name: Begin Lean problem matcher
         if: steps.mode.outputs.website_only != 'true'
-        uses: leanprover-community/gh-problem-matcher-wrap@65a654fcdf7b64ff7633bc7a558f7b46d59a27bf # 2026-06-25
+        uses: leanprover-community/gh-problem-matcher-wrap@65a654fcdf7b64ff7633bc7a558f7b46d59a27bf # master
         with:
           action: add
           linters: lean
@@ -167,7 +167,7 @@ jobs:
 
       - name: End Lean problem matcher
         if: always() && steps.mode.outputs.website_only != 'true'
-        uses: leanprover-community/gh-problem-matcher-wrap@65a654fcdf7b64ff7633bc7a558f7b46d59a27bf # 2026-06-25
+        uses: leanprover-community/gh-problem-matcher-wrap@65a654fcdf7b64ff7633bc7a558f7b46d59a27bf # master
         with:
           action: remove
           linters: lean
