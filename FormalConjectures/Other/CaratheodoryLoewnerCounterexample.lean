@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Other.CaratheodoryLoewner
+import FormalConjectures.Other.CaratheodoryConjecture
 
 /-!
 # The announced smooth counterexamples to the Carathéodory and Loewner conjectures
@@ -34,7 +34,9 @@ informal proof motivating the statements below.
 open scoped ContDiff EuclideanGeometry Manifold
 open Set Metric
 
-namespace CaratheodoryLoewner
+namespace CaratheodoryLoewnerCounterexample
+
+open CaratheodoryConjecture LoewnerConjecture
 
 /-- The periodic real-valued function used in the announced counterexample. -/
 noncomputable def counterexampleSeed (z : ℂ) : ℝ :=
@@ -131,4 +133,4 @@ theorem counterexample_two_is_support_function_with_unique_umbilic :
       ∀ p, IsUmbilic F (fun q ↦ (q : ℝ³)) p → p = counterexampleSphereChart 0 := by
   sorry
 
-end CaratheodoryLoewner
+end CaratheodoryLoewnerCounterexample
