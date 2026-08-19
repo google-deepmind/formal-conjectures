@@ -63,17 +63,11 @@ def LoewnerConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ (f : ℂ → ℝ) (z : ℂ) (m : ℤ), ContDiffAt ℝ k f z →
     HasIsolatedZeroIndex (traceFreeHessian f) z m → m ≤ 2
 
-/-- The smooth Loewner conjecture. -/
-abbrev SmoothLoewnerConjecture := LoewnerConjectureOfClass ∞
-
-/-- The real-analytic Loewner conjecture. -/
-abbrev AnalyticLoewnerConjecture := LoewnerConjectureOfClass ω
-
 /-- **The smooth Loewner conjecture.**
 
 The principal-line index at an isolated umbilic of a smooth Hessian is at most one. -/
 @[category research open, AMS 53 57]
-theorem loewner_conjecture : answer(sorry) ↔ SmoothLoewnerConjecture := by
+theorem loewner_conjecture : answer(sorry) ↔ LoewnerConjectureOfClass ∞ := by
   sorry
 
 /-- **The real-analytic Loewner conjecture.**
@@ -81,7 +75,7 @@ theorem loewner_conjecture : answer(sorry) ↔ SmoothLoewnerConjecture := by
 The principal-line index at an isolated umbilic of a real-analytic Hessian is at most one.
 This is the classical result attributed to Hamburger and subsequently treated by Titus. -/
 @[category research solved, AMS 53 57]
-theorem loewner_conjecture_analytic : AnalyticLoewnerConjecture := by
+theorem loewner_conjecture_analytic : LoewnerConjectureOfClass ω := by
   sorry
 
 end LoewnerConjecture

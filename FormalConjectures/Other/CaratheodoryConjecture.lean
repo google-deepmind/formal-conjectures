@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjecturesUtil
 import FormalConjectures.Other.LoewnerConjecture
 
 /-!
@@ -48,12 +49,6 @@ def IsConvexSphereOfClass (k : WithTop ℕ∞) (F n : sphere (0 : ℝ³) 1 → �
     ∃ K : Set ℝ³,
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
 
-/-- A smooth parametrized convex surface with a smooth choice of unit normal. -/
-abbrev IsSmoothConvexSphere := IsConvexSphereOfClass ∞
-
-/-- A real-analytic parametrized convex surface with a real-analytic choice of unit normal. -/
-abbrev IsAnalyticConvexSphere := IsConvexSphereOfClass ω
-
 /-- A point is umbilic when the derivative of the unit normal is a scalar multiple of the
 derivative of the immersion, equivalently when its shape operator is scalar. -/
 def IsUmbilic (F n : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : Prop :=
@@ -64,18 +59,12 @@ def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ (F n : sphere (0 : ℝ³) 1 → ℝ³), IsConvexSphereOfClass k F n →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧ IsUmbilic F n p₁ ∧ IsUmbilic F n p₂
 
-/-- The smooth Carathéodory conjecture. -/
-abbrev SmoothCaratheodoryConjecture := CaratheodoryConjectureOfClass ∞
-
-/-- The real-analytic Carathéodory conjecture. -/
-abbrev AnalyticCaratheodoryConjecture := CaratheodoryConjectureOfClass ω
-
 /-- **The smooth Carathéodory conjecture.**
 
 Every smoothly embedded two-sphere which bounds a convex body has at least two distinct
 umbilic points. -/
 @[category research open, AMS 52 53]
-theorem caratheodory_conjecture : answer(sorry) ↔ SmoothCaratheodoryConjecture := by
+theorem caratheodory_conjecture : answer(sorry) ↔ CaratheodoryConjectureOfClass ∞ := by
   sorry
 
 /-- **The real-analytic Carathéodory conjecture.**
@@ -83,14 +72,14 @@ theorem caratheodory_conjecture : answer(sorry) ↔ SmoothCaratheodoryConjecture
 Every real-analytically embedded two-sphere which bounds a convex body has at least two distinct
 umbilic points. This is the classical theorem of Hamburger. -/
 @[category research solved, AMS 52 53]
-theorem caratheodory_conjecture_analytic : AnalyticCaratheodoryConjecture := by
+theorem caratheodory_conjecture_analytic : CaratheodoryConjectureOfClass ω := by
   sorry
 
 /-- The smooth Loewner conjecture implies the smooth Carathéodory conjecture by the
 Poincaré–Hopf index theorem for principal line fields. -/
 @[category research solved, AMS 52 53 57]
 theorem loewner_implies_caratheodory :
-    LoewnerConjecture.SmoothLoewnerConjecture → SmoothCaratheodoryConjecture := by
+    LoewnerConjecture.LoewnerConjectureOfClass ∞ → CaratheodoryConjectureOfClass ∞ := by
   sorry
 
 end CaratheodoryConjecture
