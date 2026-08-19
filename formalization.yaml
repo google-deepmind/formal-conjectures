@@ -20,8 +20,8 @@ project:
     of integer solutions and then showing no nontrivial solution exists. Two
     independent solutions have been found: a formal machine proof by
     AlphaProof Nexus (arXiv:2605.22763) (this is the one formalised here),
-    and an informal proof by Valery Asiryan using rank-zero elliptic
-    curves (arXiv:2510.11768).
+    and an informal proof in a preprint by Valery Asiryan using
+    rank-zero elliptic curves (arXiv:2510.11768).
   # Required nonempty list of name strings or mappings with a nonempty name.
   authors:
     - "The Formal Conjectures Authors"

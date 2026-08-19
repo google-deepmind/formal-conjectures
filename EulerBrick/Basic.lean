@@ -1,3 +1,6 @@
+set_option linter.unusedVariables false
+set_option linter.unusedSimpArgs false
+
 /-
 Copyright (c) 2025 The Formal Conjectures Authors.
 
