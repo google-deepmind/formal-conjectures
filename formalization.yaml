@@ -63,6 +63,9 @@ project:
 #     id: "TEMPLATE: owner/repository or https://github.com/owner/repository"
 #     revision: "TEMPLATE: full 40-character lowercase commit SHA"
 
+repository:
+  role: substantive-development
+
 classification:
   # Use 1–2 official arXiv identifiers such as math.LO and 1–8 five-character
   # MSC 2020 identifiers such as 03B35.
@@ -174,7 +177,7 @@ review:
   status: "manually deformalised the proof"
   reviewers:
     - "Codrut Grosu"
-  notes: ""
+  notes: "n/a"
 
 alignment:
   namespace: "EulerBrick"
