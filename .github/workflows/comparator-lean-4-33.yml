@@ -56,22 +56,18 @@ jobs:
           lake exe cache get
           lake build
 
-      - name: Build pinned Comparator and Lean 4.33 exporter
+      - name: Build the pinned Lean 4.33 verifier stack
         env:
-          COMPARATOR_REV: 575674928e239f5bc452aab72d1dd7b0f1326494
-          LEAN4EXPORT_REV: 15f6055e299ad5b89345e533cc2192f4cc00f659
+          COMPARATOR_REV: c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809
         run: |
           git clone https://github.com/leanprover/comparator.git "$RUNNER_TEMP/comparator"
           git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
-          git clone https://github.com/leanprover/lean4export.git "$RUNNER_TEMP/lean4export"
-          git -C "$RUNNER_TEMP/lean4export" checkout "$LEAN4EXPORT_REV"
-          (cd "$RUNNER_TEMP/comparator" && lake build comparator)
-          (cd "$RUNNER_TEMP/lean4export" && lake build lean4export)
+          (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
 
       - name: Run Comparator smoke test
         working-directory: comparator/pilots/fc_sum_of_three_cubes
         run: |
           export COMPARATOR_BIN="$RUNNER_TEMP/comparator/.lake/build/bin/comparator"
           export COMPARATOR_LANDRUN="$RUNNER_TEMP/comparator/scripts/fake-landrun.sh"
-          export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/lean4export/.lake/build/bin/lean4export"
+          export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export"
           lake test
