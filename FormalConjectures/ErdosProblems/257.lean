@@ -38,7 +38,7 @@ theorem erdos_257 : answer(sorry) ↔ ∀ (A : Set ℕ), A.Infinite →
     Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1)) := by
   sorry
 
-/-! ### Settled infinite-support families
+/- ### Settled infinite-support families
 
 `erdos_257` asks whether *every* infinite support gives an irrational sum. The
 four statements below say yes for four named families. They are stated in the
