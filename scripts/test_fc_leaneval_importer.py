@@ -529,3 +529,30 @@ class ProblemGroupTest(unittest.TestCase):
             with self.subTest(category=category):
                 with self.assertRaises(SystemExit):
                     importer.problem_group(self._manifest(category))
+
+
+class FlattenDeclaredNameTest(unittest.TestCase):
+    """Dotted declaration names are restated as slugs for the generator."""
+
+    def test_the_declaring_occurrence_is_renamed(self):
+        name, statement = importer.flatten_declared_name(
+            "erdos_100.variants.strong",
+            "theorem erdos_100.variants.strong : True := by\n  sorry",
+        )
+        self.assertEqual(name, "erdos_100_variants_strong")
+        self.assertEqual(
+            statement, "theorem erdos_100_variants_strong : True := by\n  sorry"
+        )
+
+    def test_a_prefix_line_does_not_confuse_the_rename(self):
+        # `open X in` binds to the declaration below and travels with the
+        # slice; the declaring line is not the first line.
+        name, statement = importer.flatten_declared_name(
+            "a.b", "open Nat in\ntheorem a.b : True := by\n  sorry"
+        )
+        self.assertEqual(name, "a_b")
+        self.assertIn("theorem a_b :", statement)
+
+    def test_an_absent_declaration_is_refused(self):
+        with self.assertRaises(SystemExit):
+            importer.flatten_declared_name("a.b", "theorem c.d : True := sorry")

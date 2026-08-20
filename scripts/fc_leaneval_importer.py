@@ -519,6 +519,30 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
     ), provenance
 
 
+def flatten_declared_name(declared, statement):
+    """Restate a dotted declaration name as its slug, in the statement text.
+
+    Returns `(new_name, new_statement)`. Only the declaring occurrence is
+    rewritten — a statement does not reference its own name — and the
+    rewrite is refused rather than guessed if the name cannot be found where
+    the declaration keyword put it.
+    """
+    from leaneval_interface import slug
+
+    flattened = slug(declared)
+    lines = statement.split("\n")
+    for index, line in enumerate(lines):
+        match = DECL_START.match(line)
+        if not match:
+            continue
+        name = re.match(r"\s*([\w.«»]+)", line[match.end() :])
+        if name and name.group(1) == declared:
+            start = match.end() + name.start(1)
+            lines[index] = line[:start] + flattened + line[start + len(declared) :]
+            return flattened, "\n".join(lines)
+    raise SystemExit(f"{declared}: cannot find the declaring occurrence to rename")
+
+
 def replace_proof_with_sorry(text):
     """Cut the proof body after `:=`, keeping the statement.
 
@@ -823,6 +847,15 @@ def import_problem(problem, answer_type=None, module=None):
             break
     if declared is None:
         raise SystemExit(f"{declaration}: no declaration line in the slice")
+    original_declared = declared
+    if "." in declared:
+        # The generator anchors on the declaration's last name component —
+        # its own sources always declare a plain identifier inside a
+        # namespace — so a dotted name like `erdos_100.variants.strong`
+        # would come out as `theorem strong`, and `parts.i` as `theorem i`.
+        # Restate the declaration under its slug instead: single identifier,
+        # still meaningful, and the provenance sidecar records the FC name.
+        declared, statement = flatten_declared_name(declared, statement)
     statement, holes = hoist_answers(
         statement, declared, facts.get("answerTypes", []), answer_type
     )
@@ -854,7 +887,10 @@ def import_problem(problem, answer_type=None, module=None):
         statement=statement,
         dependency_declarations=tuple(copied),
     )
-    qualified = ".".join(namespaces_at_target + [declared])
+    # The FC name, under the namespaces the source declared it in; the
+    # workspace statement may carry the flattened `declared` instead, and
+    # this is what ties the two together.
+    qualified = ".".join(namespaces_at_target + [original_declared])
     manifest = ProblemManifest(
         # The default id is the qualified name: two modules declaring
         # `conjecture` in different namespaces must not share a workspace.
@@ -865,7 +901,7 @@ def import_problem(problem, answer_type=None, module=None):
         holes=tuple(holes),
         permitted_axioms=PERMITTED_AXIOMS,
         source=source_record(
-            declared,
+            qualified,
             fc_module,
             path.relative_to(ROOT),
             fc_rev,
