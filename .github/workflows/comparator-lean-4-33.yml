@@ -24,7 +24,7 @@ on:
   pull_request:
     paths:
       - 'scripts/fc_leaneval_importer.py'
-      - 'scripts/leaneval_generator.py'
+      - 'scripts/leaneval_generator_cli.py'
       - 'scripts/leaneval_interface.py'
       - 'scripts/make_comparator_workspace.py'
       - 'scripts/comparator_facts.lean'
@@ -78,6 +78,24 @@ jobs:
           lake exe cache get
           lake build comparator_facts FormalConjectures.Wikipedia.SumOfThreeCubes
 
+      # Workspace generation runs the extracted generator at the pinned
+      # revision. The package depends on nothing, so this is a small Lean
+      # build, not a Mathlib one.
+      - name: Build the pinned lean-eval-generator
+        run: |
+          read -r GEN_REPO GEN_REV <<< "$(python3 - <<'PY'
+          import tomllib
+
+          with open("comparator/tools.toml", "rb") as handle:
+              generator = tomllib.load(handle)["generator"]
+          print(generator["repository"], generator["rev"])
+          PY
+          )"
+          git clone "$GEN_REPO" "$RUNNER_TEMP/lean-eval-generator"
+          git -C "$RUNNER_TEMP/lean-eval-generator" checkout "$GEN_REV"
+          (cd "$RUNNER_TEMP/lean-eval-generator" && lake build)
+          echo "LEAN_EVAL_GENERATOR_BIN=$RUNNER_TEMP/lean-eval-generator/.lake/build/bin/lean-eval-generator" >> "$GITHUB_ENV"
+
       # `--verify` elaborates the marked-up module here, at 4.27. It is not a
       # substitute for the 4.33 build below; it is what keeps an FC-side
       # copying defect from being reported as a LeanEval build failure.
@@ -94,15 +112,15 @@ jobs:
           done
           # One plain theorem and one `answer(sorry)` slot typed at 4.27.
           grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" \
-            .comparator/isSumOfThreeCubes_iff_mod_9/Challenge.lean
+            .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9/Challenge.lean
           # Generated for LeanEval, not for here.
           grep -q "$TARGET_TOOLCHAIN" \
-            .comparator/isSumOfThreeCubes_2/lean-toolchain
+            .comparator/SumOfThreeCubes_isSumOfThreeCubes_2/lean-toolchain
 
       - name: Build both workspaces at Lean 4.33
         run: |
-          for ws in .comparator/isSumOfThreeCubes_2 \
-                    .comparator/isSumOfThreeCubes_iff_mod_9; do
+          for ws in .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 \
+                    .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9; do
             (cd "$ws" && lake update && lake exe cache get && lake build)
           done
 
@@ -126,7 +144,7 @@ jobs:
           #    adds `sorryAx`, which `permitted_axioms` does not allow. A
           #    generated workspace that passed before anyone proved anything
           #    would be worthless.
-          if (cd .comparator/isSumOfThreeCubes_2 && lake test); then
+          if (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 && lake test); then
             echo "::error::Comparator accepted an unproved generated workspace"
             exit 1
           fi
@@ -136,13 +154,13 @@ jobs:
           python3 - <<'PY'
           import pathlib
 
-          submission = pathlib.Path(".comparator/isSumOfThreeCubes_2/Submission.lean")
+          submission = pathlib.Path(".comparator/SumOfThreeCubes_isSumOfThreeCubes_2/Submission.lean")
           text = submission.read_text(encoding="utf-8")
           filled = text.replace(":= by\n  sorry", ":= by\n  exact ⟨1, 1, 0, by norm_num⟩")
           assert filled != text, "nothing to fill in the generated submission"
           submission.write_text(filled, encoding="utf-8")
           PY
-          (cd .comparator/isSumOfThreeCubes_2 && lake build && lake test)
+          (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 && lake build && lake test)
 
           # 3. The `answer(sorry)` workspace, with the hole filled by the
           #    proposition on the other side of the iff and the bridge closed
@@ -153,7 +171,7 @@ jobs:
           python3 - <<'PY'
           import pathlib
 
-          root = pathlib.Path(".comparator/isSumOfThreeCubes_iff_mod_9")
+          root = pathlib.Path(".comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9")
           submission = root / "Submission.lean"
           text = submission.read_text(encoding="utf-8")
           answer = (
@@ -167,5 +185,5 @@ jobs:
           text = text.replace(":= by\n  sorry", ":=\n  Iff.rfl")
           submission.write_text(text, encoding="utf-8")
           PY
-          (cd .comparator/isSumOfThreeCubes_iff_mod_9 && lake build && lake test)
+          (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9 && lake build && lake test)
           echo "Comparator accepted a gamed definition hole; hole values need a human."
