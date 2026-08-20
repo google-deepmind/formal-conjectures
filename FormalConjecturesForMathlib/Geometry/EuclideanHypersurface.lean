@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import Mathlib.Analysis.InnerProductSpace.LinearMap
+public import Mathlib.LinearAlgebra.BilinearForm.Hom
 
 @[expose] public section
 
@@ -37,49 +38,45 @@ variable {V E : Type*} [TopologicalSpace V] [AddCommGroup V] [Module ℝ V]
 
 /-- The first fundamental form induced by `dF`. -/
 noncomputable def firstFundamentalFormAt (dF : V →L[ℝ] E) : LinearMap.BilinForm ℝ V :=
-  LinearMap.mk₂ ℝ (fun v w ↦ inner ℝ (dF v) (dF w))
-    (by simp [inner_add_left]) (by simp [real_inner_smul_left])
-    (by simp [inner_add_right]) (by simp [real_inner_smul_right])
+  LinearMap.BilinForm.comp (innerₗ E) dF.toLinearMap dF.toLinearMap
 
 /-- The second fundamental form for the convention `II(v,w) = -⟪dn(v),dF(w)⟫`. -/
 noncomputable def secondFundamentalFormAt (dn dF : V →L[ℝ] E) :
     LinearMap.BilinForm ℝ V :=
-  LinearMap.mk₂ ℝ (fun v w ↦ -inner ℝ (dn v) (dF w))
-    (by simp [inner_add_left, add_comm]) (by simp [real_inner_smul_left])
-    (by simp [inner_add_right, add_comm]) (by simp [real_inner_smul_right])
+  -(LinearMap.BilinForm.comp (innerₗ E) dn.toLinearMap dF.toLinearMap)
 
 /-- A point is umbilic when its second fundamental form is a scalar multiple of its first. -/
-def IsUmbilicByFundamentalForms (dF dn : V →L[ℝ] E) : Prop :=
+def IsUmbilic (dF dn : V →L[ℝ] E) : Prop :=
   ∃ κ : ℝ, secondFundamentalFormAt dn dF = κ • firstFundamentalFormAt dF
 
 @[simp]
 theorem firstFundamentalFormAt_apply (dF : V →L[ℝ] E) (v w : V) :
     firstFundamentalFormAt dF v w = inner ℝ (dF v) (dF w) := by
-  rfl
+  simp [firstFundamentalFormAt]
 
 @[simp]
 theorem secondFundamentalFormAt_apply (dn dF : V →L[ℝ] E) (v w : V) :
     secondFundamentalFormAt dn dF v w = -inner ℝ (dn v) (dF w) := by
-  rfl
+  simp [secondFundamentalFormAt]
 
-/-- A scalar normal differential gives the corresponding scalar second fundamental form.
+/-- A scalar normal differential makes a point umbilic.
 
 The minus sign is forced by `secondFundamentalFormAt`'s shape-operator convention. -/
-theorem isUmbilicByFundamentalForms_of_normal_deriv_eq_smul
+theorem isUmbilic_of_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (c : ℝ) (h : dn = c • dF) :
-    IsUmbilicByFundamentalForms dF dn := by
+    IsUmbilic dF dn := by
   refine ⟨-c, ?_⟩
   ext v w
   change -inner ℝ (dn v) (dF w) = -c * inner ℝ (dF v) (dF w)
   rw [h, ContinuousLinearMap.smul_apply, real_inner_smul_left]
   ring
 
-/-- Under tangency hypotheses, the fundamental-form and scalar-normal-differential definitions
-of an umbilic are equivalent. The range hypothesis is exactly what rules out an undetected
-normal component of `dn`. -/
-theorem isUmbilicByFundamentalForms_iff_normal_deriv_eq_smul
+/-- Under a tangency hypothesis, umbilicity is equivalent to the normal differential being a
+scalar multiple of the immersion differential. The range hypothesis is exactly what rules out an
+undetected normal component of `dn`. -/
+theorem isUmbilic_iff_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (htangent : dn.range ≤ dF.range) :
-    IsUmbilicByFundamentalForms dF dn ↔ ∃ c : ℝ, dn = c • dF := by
+    IsUmbilic dF dn ↔ ∃ c : ℝ, dn = c • dF := by
   constructor
   · rintro ⟨κ, hκ⟩
     refine ⟨-κ, ?_⟩
@@ -101,6 +98,6 @@ theorem isUmbilicByFundamentalForms_iff_normal_deriv_eq_smul
     simpa only [ContinuousLinearMap.smul_apply, neg_smul] using
       eq_neg_of_add_eq_zero_left hzero
   · rintro ⟨c, hc⟩
-    exact isUmbilicByFundamentalForms_of_normal_deriv_eq_smul dF dn c hc
+    exact isUmbilic_of_normal_deriv_eq_smul dF dn c hc
 
 end EuclideanHypersurface
