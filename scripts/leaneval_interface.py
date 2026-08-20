@@ -403,13 +403,19 @@ def declaration_spans(module_text, declarations):
     return spans
 
 
-def build_problem(marked_up, manifest, module_name=None):
+def build_problem(marked_up, manifest, module_name=None, group=None):
     """One problem entry of the v1 request, and its `.ilean` declaration map.
 
     The module name is a single identifier on purpose: the generator resolves
     module names to paths by splitting on every dot, guillemets included, so
     a dotted or quoted name would trip the same decoder defect this
     repository fixed on its own side.
+
+    `group` overrides the category-derived group for members of a frozen
+    set: the set decides the display tab, because the list is immutable
+    while its members keep getting solved, and the category rides along as
+    a tag. The category is still validated either way — a declaration that
+    is not a problem has no business in any group.
 
     Returns `(problem, ilean_decls)`. The `.ilean` payload exists because the
     generator reads helper-declaration spans from compiled metadata it
@@ -449,14 +455,15 @@ def build_problem(marked_up, manifest, module_name=None):
                 "kind": span["kind"],
             }
         )
+    category_group = problem_group(manifest)
     problem = {
         "id": slug(manifest.id),
         "title": manifest.qualified_theorem,
-        "group": problem_group(manifest),
+        "group": group or category_group,
         "status": "draft",
         "visible": True,
         "statementRevision": 1,
-        "tags": ["formal-conjectures"],
+        "tags": ["formal-conjectures", manifest.category.replace(" ", "-")],
         "moduleName": module_name,
         "holes": [entry["declarationName"] for entry in resolved],
         "submitter": SUBMITTER,

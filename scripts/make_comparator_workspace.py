@@ -107,7 +107,7 @@ def write_tree(target, files):
     return target
 
 
-def seam_files(pairs):
+def seam_files(pairs, group=None):
     """The request and context for `(marked_up, manifest)` pairs, as files.
 
     This is the artifact the FC importer contributes once lean-eval consumes
@@ -116,7 +116,10 @@ def seam_files(pairs):
     source commit and declaration id §10 requires, which the v1 wire format
     has no field for, so they travel beside it rather than through it.
     """
-    problems = [build_problem(marked_up, manifest) for marked_up, manifest in pairs]
+    problems = [
+        build_problem(marked_up, manifest, group=group)
+        for marked_up, manifest in pairs
+    ]
     target = importer.target_pins()
     template = (
         importer.COMPARATOR_DIR / "templates" / "WorkspaceTest.lean"
@@ -137,9 +140,9 @@ def seam_files(pairs):
     return request, files
 
 
-def generate_workspaces(pairs, out_dir):
+def generate_workspaces(pairs, out_dir, group=None):
     """Generate one workspace per pair under `out_dir`, via the pinned binary."""
-    request, files = seam_files(pairs)
+    request, files = seam_files(pairs, group=group)
     staging = pathlib.Path(tempfile.mkdtemp(prefix=".fc-seam."))
     try:
         for relative, content in files.items():
@@ -232,7 +235,14 @@ def import_set(set_name, out_dir, verify=False, known_failures=None):
                 "status": "imported",
             }
         )
-    written = generate_workspaces(pairs, out_dir) if pairs else []
+    # The set decides the tab: a frozen list stays advertised whole, with
+    # solved members marked by their category tag, so every member goes to
+    # the open-conjectures group (google-deepmind/formal-conjectures#5075).
+    written = (
+        generate_workspaces(pairs, out_dir, group="open-conjectures")
+        if pairs
+        else []
+    )
     categories = {}
     for entry in results:
         if entry["status"] == "imported":

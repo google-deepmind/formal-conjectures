@@ -34,7 +34,7 @@ revision is normative). Per problem it carries:
 | `moduleContent` | the rendered marked-up module: the statement's copied FC-local closure, the scope directives in force where it was written, one `noncomputable def <name> : <type> := sorry` per `answer(sorry)` slot, and the statement with its proof replaced by `sorry` — in that order, requiring Mathlib and nothing else |
 | `resolvedHoles` | a source span, kind, and explicit parameters for each hole, computed from the rendered text — exactly, because this side rendered it |
 | `holes`, `id`, `moduleName` | the qualified declaration name, slugged; two modules declaring `conjecture` in different namespaces must not share a workspace |
-| `group` | the declaration's `@[category ...]` tag: `research open` is an open conjecture, settled statements are evaluation material, anything else is refused |
+| `group` | for a frozen-set import, the set itself: the list is immutable while its members keep getting solved, so every member stays in the open-conjectures display and the category rides along as a tag. For a single import, the declaration's `@[category ...]` tag decides; a declaration that is not a problem is refused either way |
 | `leanToolchain`, `mathlib` | LeanEval's pins, from `[target]` in `tools.toml` — the consumer's, never this repository's |
 | `templates.workspaceTest` | `comparator/templates/WorkspaceTest.lean`, which stays FC-supplied: the contract requires the consumer to provide it |
 | `contextRoot` | a directory this side materialises: the module file the generator byte-checks against `moduleContent`, and a synthesised `.ilean` carrying the spans above, because v1 still resolves declaration spans from compiled metadata |

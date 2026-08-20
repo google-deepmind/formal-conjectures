@@ -247,6 +247,27 @@ class BuildProblemTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             build_problem(A_MODULE, a_manifest(category="API"))
 
+    def test_the_category_rides_along_as_a_tag(self):
+        problem, _ = build_problem(A_MODULE, a_manifest(category="research solved"))
+        self.assertIn("research-solved", problem["tags"])
+
+    def test_a_set_override_keeps_a_solved_member_in_its_set(self):
+        # The frozen list is immutable while its members keep getting
+        # solved, so the set decides the tab and the tag says which are
+        # solved (formal-conjectures#5075).
+        problem, _ = build_problem(
+            A_MODULE,
+            a_manifest(category="research solved"),
+            group="open-conjectures",
+        )
+        self.assertEqual(problem["group"], "open-conjectures")
+
+    def test_a_set_override_does_not_admit_a_non_problem(self):
+        with self.assertRaises(SystemExit):
+            build_problem(
+                A_MODULE, a_manifest(category="API"), group="open-conjectures"
+            )
+
 
 class BuildRequestTest(unittest.TestCase):
     def test_the_request_carries_the_targets_pins(self):
