@@ -93,6 +93,19 @@ lemma Prime.maxPrimeFac_eq_self {p : ℕ} (hp : p.Prime) :
   apply maxPrimeFac_eq_of_dvd_of_le p p hp.pos hp (dvd_refl p)
   exact Nat.le_of_dvd hp.pos maxPrimeFac_dvd
 
+/-- The fixed points of `maxPrimeFac` are zero, one, and the primes. -/
+@[simp]
+lemma maxPrimeFac_eq_self_iff {n : ℕ} :
+    maxPrimeFac n = n ↔ n ≤ 1 ∨ n.Prime := by
+  constructor
+  · intro h
+    by_cases hn : n ≤ 1
+    · exact Or.inl hn
+    · exact Or.inr <| h ▸ prime_maxPrimeFac_of_one_lt n (lt_of_not_ge hn)
+  · rintro (hn | hn)
+    · obtain rfl | rfl := Nat.le_one_iff_eq_zero_or_eq_one.mp hn <;> simp
+    · exact hn.maxPrimeFac_eq_self
+
 /-- The greatest prime factor of a nontrivial prime power is its prime base. -/
 lemma Prime.maxPrimeFac_pow {p k : ℕ} (hp : p.Prime) (hk : k ≠ 0) :
     Nat.maxPrimeFac (p ^ k) = p := by
