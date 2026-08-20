@@ -43,9 +43,7 @@ noncomputable def ramseyCycleClique (k n : ℕ) : ℕ :=
     (cycleGraph k).IsContained G ∨ ∃ s : Finset (Fin N), G.IsNIndepSet n s}
 
 /--
-**Erdős Problem 551.** For all $k \ge n \ge 3$ with $(k, n) \neq (3, 3)$, the cycle–complete
-Ramsey number is
-$$R(C_k, K_n) = (k - 1)(n - 1) + 1.$$
+Prove that $$R(C_k,K_n)=(k-1)(n-1)+1$$ for $k\geq n\geq 3$ (except when $n=k=3$).
 -/
 @[category research open, AMS 5]
 theorem erdos_551 (k n : ℕ) (hn : 3 ≤ n) (hkn : n ≤ k) (hne : (k, n) ≠ (3, 3)) :
