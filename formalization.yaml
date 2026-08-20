@@ -12,39 +12,20 @@ project:
     P_{a,b}(t) over ℤ is irreducible. This conjecture was proposed by Shapirov
     in "Perfect cuboids and irreducible polynomials" (arXiv:1108.5348) as part
     of a family of three conjectures whose combined truth would imply the
-    nonexistence of a perfect Euler brick—a rectangular cuboid with all edges,
-    face diagonals, and the space diagonal having integer length (see
-    https://en.wikipedia.org/wiki/Euler_brick). The proof proceeds via
-    Fermat-style infinite descent on the Diophantine equation
-    x⁴ + 34x²y² + y⁴ = z², reducing polynomial reducibility to the existence
-    of integer solutions and then showing no nontrivial solution exists. Two
-    independent solutions have been found: a formal machine proof by
-    AlphaProof Nexus (arXiv:2605.22763) (this is the one formalised here),
-    and an informal proof in a preprint by Valery Asiryan using
-    rank-zero elliptic curves (arXiv:2510.11768).
+    nonexistence of a perfect Euler brick. The proof first analyses rational
+    factors and the symmetry F(−x) vs F(x) to reduce irreducibility of the
+    degree-8 polynomial to irreducibility of a degree-4 factor Q_{a,b}, and
+    the coprime branch to a Diophantine identity. Irreducibility of Q is in
+    turn reduced to the quartic Diophantine equation x⁴ + 34x²y² + y⁴ = z²,
+    whose only trivial solutions are established by Fermat-style infinite
+    descent. The formal proof was autonomously discovered by the AlphaProof
+    Nexus agent; an independent informal proof using rank-zero elliptic curves
+    was given by Asiryan (arXiv:2510.11768).
   # Required nonempty list of name strings or mappings with a nonempty name.
   authors:
     - "The Formal Conjectures Authors"
-    - "George Tsoukalas"
-    - "Anton Kovsharov"
-    - "Sergey Shirobokov"
-    - "Anja Surina"
     - "Moritz Firsching"
-    - "Gergely Bérczi"
-    - "Francisco J. R. Ruiz"
-    - "Arun Suggala"
-    - "Adam Zsolt Wagner"
-    - "Eric Wieser"
-    - "Lei Yu"
-    - "Aja Huang"
-    - "Miklós Z. Horváth"
-    - "Andrew Ferrauiolo"
-    - "Henryk Michalewski"
     - "Codrut Grosu"
-    - "Thomas Hubert"
-    - "Matej Balog"
-    - "Pushmeet Kohli"
-    - "Swarat Chaudhuri"
     - "Reklle"
   # Required root licence. Keep this in sync with the Apache-2.0 LICENSE file.
   license: "Apache-2.0"
@@ -120,7 +101,8 @@ sources:
     id: "arXiv:2605.22763"
     type: "article"
     location: "https://arxiv.org/abs/2605.22763"
-    relationship: "formalizes"
+    relationship: "background"
+    note: "Describes the AlphaProof Nexus agent that autonomously discovered the formal proof; the First Cuboid Conjecture is not discussed in the paper."
   - title: "Perfect cuboids and irreducible polynomials"
     authors:
       - "Ruslan Shapirov"
@@ -174,10 +156,17 @@ fidelity:
   divergences: "none known"
 
 review:
-  status: "manually deformalised the proof"
+  status: "deformalisation review"
   reviewers:
     - "Codrut Grosu"
-  notes: "n/a"
+  notes: >-
+    Codrut Grosu read the formal Lean proof and produced a complete informal
+    mathematical write-up of the argument (deformalisation). This involved
+    tracing every lemma and tactic step to reconstruct the proof architecture,
+    verify that each step is mathematically meaningful, and confirm the logical
+    flow from prerequisites through infinite descent to the final
+    irreducibility theorem. The deformalisation is the basis of the proof
+    outline in the README.
 
 alignment:
   namespace: "EulerBrick"

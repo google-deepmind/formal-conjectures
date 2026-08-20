@@ -1,160 +1,122 @@
-# EulerBrick
+# Cuboid Conjecture 1
 
 [![CI](https://github.com/PalomarRegistry/EulerBrick/actions/workflows/ci.yml/badge.svg)](https://github.com/PalomarRegistry/EulerBrick/actions/workflows/ci.yml)
 
-A best-practice starting point for a
-[Palomar](https://palomar-registry.org/) submission. Use this as a
-GitHub template, replace the toy theorem and all `TEMPLATE` metadata, and keep
-the separation between the human-auditable statement and the proof.
+A formal proof in Lean 4 / Mathlib of the **First Cuboid Conjecture**, posed by
+Shapirov in [*Perfect cuboids and irreducible
+polynomials*](https://arxiv.org/abs/1108.5348) (arXiv:1108.5348).
+
+## The conjecture
+
+An **Euler brick** is a rectangular cuboid whose edges and face diagonals all
+have integer length. A **perfect cuboid** would be an Euler brick whose space
+diagonal is also an integer; none has been found, and the existence question
+remains open.
+
+Shapirov reduced the perfect-cuboid problem to three polynomial-irreducibility
+conjectures. The first states:
+
+> **First Cuboid Conjecture.** For all positive coprime integers $a$, $b$ with
+> $a \neq b$, the degree-8 polynomial
+>
+> $$P_{a,b}(x) = x^8 + 6(a^2 - b^2)x^6 + (b^4 - 4a^2b^2 + a^4)x^4 - 6a^2b^2(a^2 - b^2)x^2 + a^4b^4$$
+>
+> is irreducible over $\mathbb{Z}$.
+
+This formalization proves the conjecture. The formal proof was autonomously
+discovered by the [AlphaProof
+Nexus](https://arxiv.org/abs/2605.22763) agent. An independent informal proof,
+using rank-zero elliptic curves, was given by Asiryan
+([arXiv:2510.11768](https://arxiv.org/abs/2510.11768)).
+
+## Proof outline
+
+The proof proceeds in four stages.
+
+### 1. No rational roots
+
+Write $Q_{a,b}(y)$ for the degree-4 polynomial satisfying $P_{a,b}(x) = Q_{a,b}(x^2)$.
+If $y_0$ is a rational root of $Q$, one can rewrite $Q(y_0) = 0$ as $u^2 = 2v^2$
+for certain rational expressions $u$, $v$ in $y_0$. Because $\sqrt{2}$ is irrational, $u = v = 0$,
+which forces $ab = 0$ — a contradiction. Hence $Q$ (and therefore $P$) has no
+rational root, ruling out any linear factor.
+
+### 2. Irreducibility of $Q_{a,b}$
+
+Suppose $Q_{a,b}$ factors over $\mathbb{Z}$ as $(x^2 + Ux + V)(x^2 + Wx + Z)$. Comparing
+coefficients and manipulating the resulting system yields a polynomial identity
+in $V + Z$ that factors as
+
+$$(V + Z + 2a^2b^2) \cdot [\text{quadratic in } V + Z] = 0.$$
+
+- **Case $V + Z = -2a^2b^2$:** Forces $(U - W)^2 = 2 \cdot (4(a^2 - b^2))^2$, so
+  $a^2 = b^2$ by irrationality of $\sqrt{2}$ — contradiction.
+- **Quadratic case:** The discriminant must be a perfect square, but it takes
+  the form $x^4 + 34x^2y^2 + y^4$ with $x = a^2 - b^2$, $y = 2ab$.
+  This is the Diophantine equation treated in stage 3 below, and
+  its only solutions are trivial, again yielding $a^2 = b^2$ or $ab = 0$.
+
+### 3. The Diophantine equation $x^4 + 34x^2y^2 + y^4 = z^2$
+
+The core of the proof shows this equation has only trivial integer solutions
+($x = 0$, $y = 0$, or $x = \pm y$) via Fermat-style **infinite descent**: given any
+nontrivial positive solution $(x, y, z)$ with $\gcd(x, y) = 1$, a strictly smaller
+positive solution is constructed.
+
+**$x$ odd, $y$ even.** A gcd analysis on $z \pm (x^2 + y^2)$ shows
+$\gcd = 2$. Factoring through 2 and distributing coprime prime powers yields
+coprime $u$, $v$ with $uv = xy$ and $x^2 + y^2 = u^2 - 8v^2$. One then further
+factors into pairwise coprime $a$, $b$, $c$, $d$ satisfying $b^2 - c^2 = kd^2$ and
+$b^2 + 8c^2 = ka^2$ with $k \mid 9$. The case $k = 3$ is excluded mod 8; the cases
+$k = 1$ and $k = 9$ each reduce (via Pythagorean-triple generators $m$, $n$) to a
+smaller solution of $x^4 + 34x^2y^2 + y^4 = z^2$.
+
+**Both $x$ and $y$ odd.** Here $z$ is even. Setting $A' = (x^2 - y^2)/2$ and
+$B' = 3xy$ gives a Pythagorean-type relation $A'^2 + B'^2 = (z/2)^2$. The gcd of
+$A'$ and $B'$ is 1 or 3; in each sub-case, Pythagorean generators again yield a
+smaller solution. The size bound $m + n < x + y$ is verified by
+comparing squares and using monotonicity of a cubic polynomial.
+
+### 4. Irreducibility of $P_{a,b}$
+
+Suppose $P_{a,b}(x)$ is reducible. Let $F(x)$ be a monic irreducible factor of
+degree $d \leq 4$ (since $P$ has degree 8). Since $P$ has no rational root, $d \geq 2$.
+
+- **Symmetry case $F(-x) = F(x)$:** Then $F$ is an even polynomial $F(x) = M(x^2)$,
+  and $M$ divides $Q_{a,b}$. But $Q$ is irreducible by stage 2 — contradiction.
+
+- **Coprime case $\gcd(F(x), F(-x)) = 1$:** Then $F(x) \cdot F(-x)$ divides $P_{a,b}(x)$.
+  Since $F \cdot F(-x)$ is even and has degree $2d$, it equals some $M(x^2)$ of degree $d$.
+  Irreducibility of $Q$ forces $M = Q$, hence $d = 4$ and $F \cdot F(-x) = P$. Writing
+  $F = x^4 + Ax^3 + Bx^2 + Cx + D$ and comparing the product against $P$'s
+  coefficients, one shows:
+  - **$D = a^2b^2$** leads to an identity matching the impossible structure of
+    Lemma `square_ident` (no real solutions).
+  - **$D = -a^2b^2$** forces $A = 0$, then $B = 3(a^2 - b^2)$, then
+    $9(a^2 - b^2)^2 = (a^2 - b^2)^2$, giving $a^2 = b^2$ — contradiction.
 
 ## Repository map
 
-- `Challenge.lean` is the small statement surface a reader audits.
-- `Solution.lean` connects the same declaration to the completed proof.
-- `EulerBrick/` contains the full proof development.
-- `comparator.json` tells Comparator which declarations must match.
-- `formalization.yaml` records the public result description, provenance,
-  authorship, automation, fidelity, and review information.
-- `LICENSE` contains the Apache License 2.0 terms declared by
-  `project.license`.
-- `docbuild/` is the recommended nested doc-gen4 project.
-- `scripts/verify-comparator.sh` runs pinned Comparator, lean4export, NanoDa,
-  and Landrun revisions using the checked-in `comparator.json`, which enables
-  the independent NanoDa replay; `scripts/landrun-wrapper.sh` preserves
-  lean4export's command delimiter when invoked through Landrun's current CLI
-  and refuses any Comparator request to switch off part of the sandbox.
+- `Challenge.lean` — the auditable theorem statement (with a deliberate `sorry`).
+- `Solution.lean` — connects the statement to the completed proof.
+- `EulerBrick/` — the full proof development.
+- `comparator.json` — tells Comparator which declarations must match.
+- `formalization.yaml` — provenance, authorship, automation, and review metadata.
+- `LICENSE` — Apache License 2.0.
+- `docbuild/` — nested doc-gen4 project.
+- `scripts/verify-comparator.sh` — runs pinned Comparator and lean4export.
 
-The root uses `lakefile.toml`, a supported stable Lean toolchain, and committed
-Lake manifests. The verifier reads `lean-toolchain` and checks that its pinned
-lean4export revision targets the same toolchain. When changing that exporter
-pin, review whether Comparator and NanoDa remain compatible with its export
-format. GitHub Actions builds the Lean project with `lean-action`, generates API
-documentation with doc-gen4, and independently checks the advertised statement
-with Comparator. Actions and verification tools are pinned to immutable
-commits.
+## Building
 
-## Start a real project
+```
+lake exe cache get
+lake build
+ruby scripts/validate-formalization.rb
+```
 
-1. Click **Use this template** on GitHub and clone the new repository.
-2. Rename `EulerBrick` in the Lake package, module directory, namespace,
-   Comparator declaration, and metadata.
-3. Replace the example library, `Challenge.lean`, and `Solution.lean`.
-   Keep `Challenge.lean` as the small statement-only surface, with one `sorry`
-   for each advertised declaration; put the proofs in `Solution.lean`, where
-   Comparator checks them against those statements. The proof-status counts in
-   `formalization.yaml` exclude the deliberate Challenge `sorry`s.
-4. Replace every `TEMPLATE` value in `formalization.yaml`. Values that might
-   otherwise look like plausible defaults—including repository role,
-   classifications, proof counts, automation method, and review status—are
-   deliberately invalid until you choose them. Replace a placeholder list with
-   an empty list only where its adjacent comment permits that; lists described
-   as required must remain nonempty.
-   Write `project.description` as the concise public registry abstract for the
-   formalization as a whole. It should let a mathematical reader identify the
-   subject and principal result families; it is not an inventory of Comparator
-   declarations, and the README and Challenge documentation can carry the
-   fuller account. `status.main_results` is optional: add it only when a short
-   curated project-level list is useful, not to mirror Comparator declarations.
-   The `sources` list must remain nonempty. Every source relationship must be
-   exactly `formalizes`, `adapts`, `independently-proves`, `background`, or
-   `other`. Choose one result origin: for a result first presented by the
-   formalization, include a descriptive source with `type: original-proof` and
-   `relationship: other`; every additional source must use `background` or
-   `other`. Otherwise, omit `type: original-proof`, and give at least one cited
-   mathematical source a `formalizes`, `adapts`, or `independently-proves`
-   relationship. A new proof of a known published result is source-based and
-   uses `independently-proves`, not `original-proof`.
+The build produces zero `sorry` axioms in `Solution.lean`; the only `sorry` is
+the deliberate one in `Challenge.lean`.
 
-   Every source needs a title and relationship. Its `type`, authors,
-   contributors, identifier, location, licence, and endorsement may be removed
-   when genuinely inapplicable. Use authors only for bibliographic authorship;
-   use contributors with a name and free-form role for credits such as editors
-   and problem proposers. A retained type is a concise free-text description
-   such as `article`, `paper`, `book`, `formalization`, `web post`,
-   `folklore`, or `conversation`. The exact value `original-proof` is
-   reserved for the result-origin declaration above. Set
-   `repository.role` to `substantive-development` and omit
-   `substantive_formalization`, or set it to `thin-wrapper` and provide the
-   underlying `owner/repository` or `https://github.com/owner/repository` URL
-   plus its full 40-character lowercase commit SHA. Remove
-   `related_formalizations` or set it to `[]` when none are known.
-   Keep the repository's Apache-2.0 `LICENSE` file and the matching
-   `project.license: "Apache-2.0"` metadata. This starter template supports
-   only that root licence. If the project deliberately uses another root
-   licence permitted by Palomar policy, use another starting point or own and
-   maintain the project's licence-validation CI contract. Cited sources and
-   dependencies retain their own licences.
-5. Update and commit dependency pins:
+## Acknowledgements
 
-   Before fetching and building the dependency closure, budget several GiB of
-   free space. After the root cache fetch and build, a clean local checkout of
-   the template's pinned Lean v4.32.0 manifest occupied about 7.7 GiB across
-   about 123,000 files under `.lake/`. The documentation build adds doc-gen4 and
-   its dependency closure under the shared `.lake/packages/` plus generated
-   output under `docbuild/.lake/`. The precise footprint changes with the
-   filesystem, cache contents, and any dependency updates. Both `.lake/`
-   directories are generated and must not be committed.
-
-   ```text
-   lake update
-   (cd docbuild && MATHLIB_NO_CACHE_ON_UPDATE=1 lake update)
-   ```
-
-6. Run the project checks before submitting:
-
-   ```text
-   lake exe cache get
-   lake build
-   (cd docbuild && lake build EulerBrick:docs)
-   ruby scripts/validate-formalization.rb
-   ./scripts/verify-comparator.sh
-   ```
-
-   The metadata command parses the YAML, requires the Apache-2.0 root-licence
-   declaration, and reports the path of every retained template sentinel. CI
-   also detects the checked-in `LICENSE` file independently and runs an
-   explicit `--expect-template` check only in the canonical
-   `PalomarRegistry/EulerBrick` repository, proving that the shipped toy
-   metadata still has exactly the intended sentinel surface. Pull requests
-   from contribution forks run in that upstream repository context. Every
-   other repository—including standalone forks and repositories made with
-   **Use this template**—runs the ordinary command and requires every sentinel
-   to be replaced. CI also runs the corresponding build, documentation, cache,
-   and Comparator checks. Run the final command from the repository root. The
-   full check set requires Linux, Git, Go, Ruby, Rust/Cargo, Python 3, and a
-   working Landrun sandbox.
-
-   The pinned `lean-action` likewise runs `lake exe cache get` in CI and caches
-   `.lake/`. A successful canonical starter run deliberately includes the
-   statement-surface `sorry` warning and demonstrates the wiring, not submission
-   completeness.
-
-7. Read the current
-   [Palomar submission policy](https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md),
-   commit the final snapshot, and
-   [open the submission form](https://submit.palomar-registry.org/)
-   with the full 40-character commit SHA.
-
-   Submit only if you are a responsible author or maintainer of the substantive
-   formalization, or have approval from one. For a thin wrapper, answer about
-   the underlying formalization rather than the wrapper; the form records that
-   relationship and allows optional evidence.
-
-## Important boundaries
-
-This repository is structurally valid but its toy theorem does **not** meet
-Palomar's editorial floor. A green build or Comparator check establishes only
-that Lean accepts the project and that the recorded solution proves the recorded
-statement using the permitted axioms. It does not establish mathematical
-significance, fidelity to a source, novelty, or peer review.
-
-Keep `Challenge.lean` ordinary and readable. Definitions needed by the statement
-must have precise mathematical meanings and docstrings. Its transitive imports
-must resolve to Lean core, Mathlib, Tau Ceti, or CSLib; a Tau Ceti or CSLib
-import enlarges the trust surface and is prominently flagged. Dependencies used
-only by the proof may be arbitrary pinned Git dependencies.
-The root licence covers this repository snapshot only; cited papers, reused
-formalizations, and dependencies retain their own licences.
-
-Questions are welcome in the
-[Palomar channel on the Lean Zulip](https://leanprover.zulipchat.com/#narrow/channel/621638-Palomar).
+Thanks to the Lean community and Mathlib contributors.
