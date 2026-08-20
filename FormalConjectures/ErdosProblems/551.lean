@@ -20,15 +20,6 @@ import FormalConjecturesUtil
 
 *Reference:* [erdosproblems.com/551](https://www.erdosproblems.com/551)
 
-Let $R(C_k, K_n)$ denote the Ramsey number for a cycle $C_k$ versus a complete graph $K_n$: the
-least $N$ such that every red/blue colouring of the edges of $K_N$ contains a red cycle of length
-$k$ or a blue $K_n$. Bondy and Erdős conjectured that for all $k \ge n \ge 3$ with
-$(k, n) \neq (3, 3)$,
-$$R(C_k, K_n) = (k - 1)(n - 1) + 1.$$
-
-We model a red/blue edge colouring of $K_N$ by a `SimpleGraph (Fin N)`: `G` is the red graph, so a
-red $C_k$ is a copy of `cycleGraph k` contained in `G`, and a blue $K_n$ is an independent set of
-size `n` in `G` (i.e. an `n`-clique in the complement).
 -/
 
 open SimpleGraph
