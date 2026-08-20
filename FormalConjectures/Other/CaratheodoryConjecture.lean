@@ -37,12 +37,19 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
-/-- A parametrized convex surface of class `C^k`, together with a `C^k` choice of unit normal.
+/-- A parametrized convex surface with a `C^k` Gauss parametrization: both the immersion and its
+chosen unit normal are of class `C^k`.
 
-The range condition says that the parametrization is the boundary of a convex body. Requiring
-nonempty interior rules out lower-dimensional convex sets. -/
+The first three conditions spell out the usual finite-dimensional notion of a smooth embedding:
+smoothness, a topological embedding, and an injective differential at every point. The range
+condition says that the parametrization is the boundary of a convex body. Requiring nonempty
+interior rules out lower-dimensional convex sets. For finite `k`, asking the normal itself to be
+`C^k` is stronger than asking only that the immersion be `C^k`; the distinction disappears for
+the smooth and analytic endpoints. -/
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F n : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
-  Manifold.IsSmoothEmbedding (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
+  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
+    Topology.IsEmbedding F ∧
+    (∀ p, Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) ∧
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k n ∧
     (∀ p, ‖n p‖ = 1) ∧
     (∀ p v, inner ℝ (n p) (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v) = 0) ∧
@@ -54,7 +61,7 @@ derivative of the immersion, equivalently when its shape operator is scalar. -/
 def IsUmbilic (F n : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : Prop :=
   ∃ c : ℝ, mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) n p = c • mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
 
-/-- Carathéodory's conjecture for convex surfaces of class `C^k`. -/
+/-- Carathéodory's conjecture for convex surfaces with a `C^k` Gauss parametrization. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ (F n : sphere (0 : ℝ³) 1 → ℝ³), IsConvexSphereOfClass k F n →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧ IsUmbilic F n p₁ ∧ IsUmbilic F n p₂

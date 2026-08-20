@@ -65,13 +65,43 @@ It vanishes exactly when the trace-free spherical Hessian vanishes. Its winding 
 the index of the corresponding principal line field. Multiplication of (3) by a positive scalar
 does not affect its zeros or winding number.
 
+There are two normalizations to keep separate in the Lean development. The repository's
+`traceFreeHessian` is \(q_{\mathrm E}=4u_{\bar z\bar z}\). In a chart whose metric is
+
+\[
+ ds^2=\lambda^2|dw|^2,
+\]
+
+the Lean expression called `sphericalTraceFreeHessian` is
+
+\[
+ q_{\mathrm E}(u)+8\frac{w}{D}u_{\bar w}=4Q_w(u),                       \tag{3a}
+\]
+
+where \(D=1+|w|^2\) in the original chart and \(D=10000+|w|^2\) in the
+reciprocal chart. The anti-linear coefficient of the metric-raised trace-free Hessian is
+
+\[
+ 2\lambda^{-2}Q_w(u)=\frac{\lambda^{-2}}2
+   \operatorname{sphericalTFH}(u).                                      \tag{3b}
+\]
+
+In the reciprocal chart, where \(\lambda^2=40000/D^2\), this coefficient is exactly
+
+\[
+ \frac{D^2}{80000}\operatorname{sphericalTFH}(u).                       \tag{3c}
+\]
+
+Thus the \(Q\)-normalization is convenient for the estimates below, while (3a)--(3c) give the
+literal constants needed to translate them to the current Lean definitions.
+
 We prove the following more explicit result.
 
 **Theorem.**
 
 1. Every \(g_k\) is \(C^\infty\) at the origin.
-2. If \(k>0\), the origin is an isolated zero of both the Euclidean operator (2) and the
-   spherical operator (3), and both have winding number \(k+2\) there.
+2. If \(k>0\), the origin is an isolated zero of the Euclidean operator (2), with winding
+   number \(k+2\) there.
 3. The function \(g_2\) extends smoothly to \(S^2\).
 4. The spherical operator (3) for \(g_2\) has no zero away from the origin.
 5. The tensor \(\nabla^2 g_2+g_2g_{S^2}\) is positive definite. Consequently \(g_2\) is the
@@ -166,12 +196,22 @@ They follow term by term from \(|\sin|,|\cos|\le1\). For example,
 \(|f_x|\le3/2\), \(|f_y|\le69/40\), and
 \(|f_{\bar w}|\le(|f_x|+|f_y|)/2=129/80\).
 
-Finally, \(f(-w)=f(w)\). Differentiating twice gives
-\(f_{ww}(-w)=f_{ww}(w)\). Because \(f_{ww}\) is nonzero on the simply connected plane, it
+Finally, \(f(-w)=f(w)\). Since \(f\) is real valued,
+\(f_{ww}=\overline{f_{\bar w\bar w}}\), so (6) also gives
+
+\[
+ |f_{ww}|\ge \frac7{200}.
+\]
+
+Differentiating the evenness twice gives \(f_{ww}(-w)=f_{ww}(w)\). Because \(f_{ww}\) is
+nonzero on the simply connected plane, it
 has a continuous argument. The evenness forces that argument to be even as well: the possible
 difference between the arguments at \(w\) and \(-w\) is a constant multiple of \(2\pi\), and it
 is zero at \(w=0\). Consequently the image under \(f_{ww}\) of any closed curve has winding
-number zero. This observation handles the half-integral powers occurring for odd \(k\).
+number zero. More particularly, when \(k\) is odd the continuously chosen branch path
+\(w(\theta)\) runs from \(w(0)\) to \(-w(0)\); the even argument has equal endpoint values, so
+its total argument change is still zero. This observation handles the half-integral powers
+occurring for odd \(k\).
 
 ## 3. A reusable exponential domination lemma
 
@@ -229,9 +269,9 @@ We also need a quantitative, global version later. If \(a,b>0\), then
  \sup_{y>0}y^a e^{-by}=\left(\frac{a}{be}\right)^a.                    \tag{10}
 \]
 
-This follows by differentiating \(a\log y-by\). In Lean it should be a standalone lemma for
-`Real.rpow`; all numerical estimates below are rational consequences of (10) and
-\(e>8/3\).
+This follows by differentiating \(a\log y-by\). The development proves the required
+`Real.rpow` inequalities locally in `Global.lean`, since only this numerical certificate uses
+them; all numerical estimates below are rational consequences of (10) and \(e>8/3\).
 
 ## 4. Smoothness of the planar family
 
@@ -273,7 +313,7 @@ expressions agree under \(w\mapsto-w\), the sectorwise smooth extensions glue.
 Work again on a branch sector. The most singular term in two \(\bar z\)-derivatives is
 
 \[
- A(r) f_{ww}(w(z))\,w_{\bar z}(z)^2.                                   \tag{12}
+ L_k(z):=A(r) f_{ww}(w(z))\,w_{\bar z}(z)^2.                            \tag{12}
 \]
 
 Since
@@ -284,29 +324,91 @@ Since
 
 the argument contributed by \(w_{\bar z}^2\) on \(z=re^{i\theta}\) is
 \((k+2)\theta\), up to a constant. The factor \(A(r)\) is positive, and the factor
-\(f_{ww}(w)\) has winding zero by Section 2.
+\(f_{ww}(w)\) has winding zero by Section 2. Changing an odd-\(k\) branch sends both
+\(w\) and \(w_{\bar z}\) to their negatives; evenness of \(f_{ww}\) and the square on
+\(w_{\bar z}\) therefore make \(L_k\) a single-valued function.
 
-All other terms are smaller uniformly on the circle as \(r\to0\). More explicitly, relative
-to (12):
+We now make the domination uniform on one punctured disc. On every branch,
+
+\[
+\begin{aligned}
+ (Af(w))_{\bar z\bar z}
+  &=L_k
+    +A f_w(w)w_{\bar z\bar z}
+    +2A_{\bar z}f_w(w)w_{\bar z}
+    +A_{\bar z\bar z}f(w).                                             \tag{12a}
+\end{aligned}
+\]
+
+For \(0<r\le r_0\), direct differentiation of \(\log A\) gives constants
+\(C_1,C_2>0\), independent of the angle, such that
+
+\[
+ \frac{|A_{\bar z}|}{A}\le C_1r^{-5/4},\qquad
+ \frac{|A_{\bar z\bar z}|}{A}\le C_2r^{-5/2}.                          \tag{12b}
+\]
+
+Also
+
+\[
+\begin{aligned}
+ |w|&=100^{k/2}r^{-k/2},\\
+ |w_{\bar z}|&=\frac{k}{2}\frac{|w|}{r},\\
+ |w_{\bar z\bar z}|&=\frac{k}{2}\left(\frac{k}{2}+1\right)
+                       \frac{|w|}{r^2}.                               \tag{12c}
+\end{aligned}
+\]
+
+Using (6)--(7), (12b), and (12c), there are constants \(C_{j,k}\) such that the
+ratios to \(|L_k|\) have the following uniform asymptotic orders:
 
 \[
 \begin{array}{c|c}
-\text{source of an error term}&\text{upper bound for the relative size}\\ \hline
-w_{\bar z\bar z}f_w&r^{k/2}\\
-(A_{\bar z}/A)w_{\bar z}f_w&r^{k/2-1/4}\\
-(A_{\bar z\bar z}/A)f&r^{k-1/2}\\
-\dfrac{2z}{1+r^2}(A f(w))_{\bar z}&r^{k/2+2}.
+\text{source of an error term}&\text{relative norm}\\ \hline
+A f_w w_{\bar z\bar z}
+  &\dfrac{|A f_w w_{\bar z\bar z}|}{|L_k|}\le C_{1,k}r^{k/2}\\
+2A_{\bar z}f_w w_{\bar z}
+  &\dfrac{|2A_{\bar z}f_w w_{\bar z}|}{|L_k|}\le C_{2,k}r^{k/2-1/4}\\
+A_{\bar z\bar z}f
+  &\dfrac{|A_{\bar z\bar z}f|}{|L_k|}\le C_{3,k}r^{k-1/2}.
 \end{array}                                                            \tag{13}
 \]
 
-The bounded derivatives in the numerators and the lower bound (6) make the estimates uniform.
-Every exponent in (13) is positive when \(k\ge1\). Therefore, on all sufficiently small
-circles, the full Euclidean operator (2), and also the spherical operator (3), are joined to
-(12) by the straight-line homotopy without crossing zero. Their winding number is thus
-\(k+2\), and the principal-line index is \(1+k/2\). This proves part 2.
+The factors \(100^{k/2}\), \(k/2\), and the bounds in (7) are absorbed only in the constants
+\(C_{j,k}\), not in the powers of \(r\). This is the literal meaning of the often-used shorthand
+\(O_k(r^\alpha)\) here. Put
 
-The same domination on a punctured disc shows that the zero at the origin is isolated, rather
-than merely giving the winding on a selected sequence of circles.
+\[
+ \alpha_k=\min\left\{\frac k2,\frac k2-\frac14,k-\frac12\right\}>0.
+\]
+
+After shrinking \(r_0\) to at most one and taking \(C_k\) to be the sum of the three constants,
+the normalized Euclidean error is bounded by \(C_kr^{\alpha_k}|L_k|\):
+
+\[
+ \left|\frac14q_{\mathrm E}(g_k)-L_k\right|
+   \le C_kr^{\alpha_k}|L_k|.                                           \tag{13a}
+\]
+
+Here \(L_k(z)\ne0\) on the punctured plane: \(A(r)>0\), (6) gives
+\(|f_{ww}|\ge7/200\), and \(w_{\bar z}\ne0\) for \(k>0\).
+The factor \(1/4\) is essential: the Euclidean operator (2) has leading term \(4L_k\).
+Choose one \(\delta_k\in(0,r_0)\) with \(C_k\delta_k^{\alpha_k}<1\). Then (13a) holds with
+strict error smaller than the leading norm for every \(0<|z|<\delta_k\), not only on a
+sequence of circles. The straight-line homotopy from \(\frac14q_{\mathrm E}(g_k)\) to \(L_k\)
+therefore never meets zero on any circle of radius \(r<\delta_k\). It also proves nonvanishing
+throughout the punctured disc, so the zero at the origin is isolated.
+
+For completeness, choose a continuous branch \(w_r(\theta)\) on \(0\le\theta\le2\pi\).
+The even continuous argument of \(f_{ww}\) from Section 2 has equal values at the two endpoints,
+even when odd \(k\) makes \(w_r(2\pi)=-w_r(0)\). The remaining nonconstant phase of \(L_k\) is
+the phase of \(w_{\bar z}^2\), so a lift of its normalized argument changes by
+\(2\pi(k+2)\). Extend this lift to all \(\theta\in\mathbb R\) by adding
+\(2\pi(k+2)\) on each period. The normalized straight-line homotopy lifts through the
+exponential covering, and its endpoint difference is constant during the homotopy. The
+Euclidean trace-free Hessian therefore has winding number \(k+2\), and the principal-line index is
+\(1+k/2\). This proves part 2. The spherical calculation needed for the global counterexample
+is carried out separately for \(k=2\) in Sections 6--8.
 
 ## 6. The second chart for \(g_2\)
 
@@ -364,6 +466,13 @@ cancel the Christoffel term exactly, leaving
 \]
 
 This cancellation is the reason for the factor \(|z|^2/(1+|z|^2)\) in (1).
+Multiplying (18) by four gives exactly the normalization used in Lean:
+
+\[
+ \frac{\operatorname{sphericalTFH}(Bf)}B
+ =q_{\mathrm E}(f)-8wp\,\operatorname{complexBarDeriv}(f)
+      +4w^2(p^2-p')f.                                                   \tag{18a}
+\]
 
 It remains to bound the last two terms in (18). Put \(x=s/10000\) and
 \(\phi(x)=x^{1/8}e^{-1/x}\), so that \(\psi(s)=\phi(x)\). Direct differentiation gives
@@ -412,9 +521,20 @@ Combining (6), (7), (18), and (20),
 \end{aligned}
 \]
 
-Since \(B>0\), (21) proves that \(Q_w(h_0)\ne0\) at every finite \(w\). Finite \(w\)
-parametrizes the entire sphere except the point \(z=0\). At that remaining point, Section 4
-shows that \(h_0\) is flat, hence umbilic. This proves part 4: it is the unique umbilic.
+The derivation through \(y=1/x\) applies when \(w\ne0\). At \(w=0\), the smooth extension of
+\(\psi\) is flat, so \(p(0)=p'(0)=0\), while \(B(0)=1\). Formula (18), evaluated using these
+extended derivatives, reduces to
+
+\[
+ Q_0(Bf)=f_{\bar w\bar w}(0)\ne0
+\]
+
+by (6). Thus, since \(B>0\), (21) and this separate origin calculation prove that
+\(Q_w(h_0)\ne0\) at every finite reciprocal coordinate \(w\). Finite \(w\) parametrizes the
+entire sphere except the point \(z=0\) of the original chart. At that remaining point, Section 4
+shows that the nonconstant part is flat, so its spherical trace-free Hessian vanishes. This proves
+part 4 at the level of the spherical Hessian; Section 8 identifies this condition with the
+repository's surface-level IsUmbilic predicate.
 
 ## 8. Convexity and the constant \(10^{10}\)
 
@@ -439,6 +559,9 @@ Here is a certificate for (23). In the \(w\)-chart put
       =2500(1+y^8)e^{-\psi}.                                            \tag{24}
 \]
 
+At \(y=0\), the expression \(y e^{-y^{-8}}\) in (24) means its continuous value zero; all
+subsequent uses of a negative power of \(y\) occur only in the case \(y>0\).
+
 - For \(0\le y\le2\), \(M(y)\le642500\).
 - For \(y\ge2\), the inequality \(e^{-y^{-8}}\ge1-y^{-8}\ge255/256\), followed by
   (10) and \(e>8/3\), gives
@@ -447,8 +570,9 @@ Here is a certificate for (23). In the \(w\)-chart put
       <2500(1+4^8)<1.64\cdot10^8.                                      \tag{25}
   \]
 
-Thus \(M<1.64\cdot10^8\) globally. Equation (18), the sharper upper bound
-\(|f_{\bar w\bar w}|\le47/40\) in (7), and (20) give the deliberately loose estimate
+Thus \(M<1.64\cdot10^8\) throughout the finite reciprocal chart. Equation (18), the sharper
+upper bound \(|f_{\bar w\bar w}|\le47/40\) in (7), and (20) give the deliberately loose
+estimate
 
 \[
  \frac{|Q_w(h_0)|}{B}
@@ -456,9 +580,16 @@ Thus \(M<1.64\cdot10^8\) globally. Equation (18), the sharper upper bound
  \qquad\text{hence}\qquad |Q_w(h_0)|\le5B.                              \tag{26}
 \]
 
-The operator norm of the trace-free spherical Hessian is
-\(2\lambda^{-2}|Q_w(h_0)|\), so (25)–(26) bound it by
-\(1.64\cdot10^9\).
+The operator norm of the metric-raised trace-free spherical Hessian is
+\(2\lambda^{-2}|Q_w(h_0)|\). Equivalently, (3a)--(3c) give
+
+\[
+ \frac{D^2}{80000}|\operatorname{sphericalTFH}(h_0)|
+ =\frac{D^2}{80000}|4Q_w(h_0)|
+ =2\lambda^{-2}|Q_w(h_0)|.
+\]
+
+Thus (25)--(26) bound it by \(1.64\cdot10^9\).
 
 For the trace, radial differentiation gives
 
@@ -495,7 +626,7 @@ Now (7), (20), (28), and \(s/D\le1\) give
 \end{aligned}
 \]
 
-The scalar part of the spherical Hessian has norm
+The scalar part of the metric-raised spherical Hessian has norm
 \(2\lambda^{-2}|(Bf)_{w\bar w}|<4M<6.56\cdot10^8\). Also \(B\le1\), so
 \(|h_0|\le253/160<2\). Consequently
 
@@ -506,7 +637,10 @@ The scalar part of the spherical Hessian has norm
  <3\cdot10^9,
 \]
 
-which proves (23).
+This proves (23) at every point represented by a finite reciprocal coordinate. That chart omits
+the south pole \(z=0\) of the original chart. There the nonconstant part \(h_0\), together with
+its first and second derivatives, vanishes by Section 4. Hence \(R_{h_0}=0\) at the omitted
+point, and (23) is genuinely global.
 
 Now set \(h=10^{10}+h_0\). Since the Hessian of a constant is zero,
 
@@ -517,48 +651,225 @@ Now set \(h=10^{10}+h_0\). Since the Hessian of a constant is zero,
 By (23), every eigenvalue of \(R_h\) is positive. In fact it is greater than
 \(7\cdot10^9\). Thus \(R_h\) is positive definite everywhere.
 
-The standard support-function construction is
+We also have the pointwise lower bound
 
 \[
- X_h(u)=h(u)u+\nabla h(u),\qquad u\in S^2.                              \tag{30}
+ h\ge 10^{10}-\frac{253}{160}>1,                                      \tag{29a}
 \]
 
-Its derivative on \(T_uS^2\) is \(R_h\), and its unit normal is \(u\). Positive definiteness
-of \(R_h\) implies that (30) is the Gauss parametrization of the boundary of the compact strictly
-convex body
+because \(0<B\le1\) in the reciprocal chart, and the same estimate follows directly from (1)
+in the original chart.
+
+We now give the global support-function argument rather than invoking it as a black box. Let
+\(H:\mathbb R^3\to\mathbb R\) be the degree-one radial extension
+
+\[
+ H(0)=0,\qquad H(x)=|x|h(x/|x|)\quad(x\ne0),
+\]
+
+and put
+
+\[
+ X_h(u)=\nabla H(u)=h(u)u+\nabla_{S^2}h(u),\qquad u\in S^2.             \tag{30}
+\]
+
+Euler's identity for the homogeneous function gives
+
+\[
+ \langle X_h(u),u\rangle=h(u).                                        \tag{31}
+\]
+
+After identifying \(T_uS^2\) with its tangent plane in \(\mathbb R^3\), and using the metric to
+identify it with its dual, the derivative of \(X_h\) is the raised radius operator
+
+\[
+ dX_h=R_h^\sharp:=g_{S^2}^{-1}R_h.                                    \tag{32}
+\]
+
+In particular, (23) makes \(dX_h\) injective and tangent to the sphere at \(u\); hence \(u\) is
+the chosen unit normal.
+
+It remains to prove the global supporting inequality. If \(u\ne v\) are not antipodal, the
+chord
+
+\[
+ \gamma(t)=(1-t)u+tv,\qquad 0\le t\le1,
+\]
+
+does not meet the origin. The Hessian of \(H\) has the radial direction as kernel and, on
+tangent directions at \(rp\), is \(r^{-1}R_h^\sharp\). The chord velocity \(v-u\) is never
+radial along this chord unless \(u\) and \(v\) are collinear. Positive definiteness of \(R_h\)
+therefore gives
+
+\[
+ \frac{d^2}{dt^2}H(\gamma(t))>0.
+\]
+
+Strict convexity on the chord and the derivative at \(t=0\) give
+
+\[
+ \langle X_h(u),v-u\rangle<h(v)-h(u),
+\]
+
+and (31) simplifies this to
+
+\[
+ \langle X_h(u),v\rangle<h(v).                                        \tag{33}
+\]
+
+If \(v=-u\), then instead
+
+\[
+ \langle X_h(u),v\rangle=-h(u)<h(-u)
+\]
+
+by (29a). Thus (33) holds for every pair \(u\ne v\), while equality holds for \(u=v\).
+Consequently, for every \(x\ne0\), with \(v=x/|x|\),
+
+\[
+ \langle X_h(u),x\rangle\le |x|h(v)=H(x),
+\]
+
+with equality at \(u=v\). Therefore \(H\) is the supremum of the linear functionals
+\(x\mapsto\langle X_h(u),x\rangle\), and in particular is convex.
+
+Define
 
 \[
  K_h=\{x\in\mathbb R^3:\langle x,u\rangle\le h(u)\text{ for every }u\in S^2\}.
 \]
 
-The shape operator is \(R_h^{-1}\). Therefore a point of this convex surface is umbilic exactly
-when the trace-free part of \(R_h\), equivalently the trace-free part of \(\nabla^2h\), vanishes.
-The constant \(10^{10}\) affects neither this trace-free tensor nor its zeros. Section 7 therefore
-shows that the surface has exactly one umbilic. This proves part 5 and the announced
-Carathéodory counterexample.
+This is an intersection of closed half-spaces, hence is closed and convex. Equation (29a) puts
+the open unit ball in its interior. It is bounded: if \(x\in K_h\) and \(x\ne0\), choosing
+\(u=x/|x|\) gives \(|x|\le h(u)\le\max_{S^2}h\). Thus \(K_h\) is compact and has nonempty
+interior. Equations (31) and (33) show that \(X_h(u)\in K_h\), with its unique contact
+hyperplane having outer normal \(u\).
+
+The range of \(X_h\) is exactly \(\partial K_h\). One inclusion follows because a point
+\(X_h(u)\) lies in \(K_h\) and on a supporting hyperplane, so it cannot be interior. Conversely,
+let \(x\in\partial K_h\). The finite-dimensional supporting-hyperplane theorem gives a unit
+normal \(u\) at \(x\). The defining inequality for \(K_h\), together with
+\(X_h(u)\in K_h\), forces
+
+\[
+ \langle x,u\rangle=h(u).
+\]
+
+Membership in \(K_h\) says that the linear function \(y\mapsto\langle x,y\rangle\) lies below
+the convex homogeneous function \(H\), with equality at \(u\). Since \(H\) is differentiable
+there, its supporting linear functional is unique, and hence \(x=\nabla H(u)=X_h(u)\).
+
+The strict inequality (33) also proves injectivity: if \(X_h(u)=X_h(v)\) for \(u\ne v\), then
+pairing with \(v\) contradicts (31). Since \(S^2\) is compact, the continuous injection \(X_h\)
+is a topological embedding; (32) makes it an immersion. It is therefore a smooth embedding onto
+\(\partial K_h\), with outer unit normal \(n(u)=u\). This supplies all the compactness,
+nonempty-interior, embedding, normal, and range conditions in IsConvexSphereOfClass. Moreover,
+the differentiability argument above makes the contact point for every supporting normal unique,
+so every supporting face is a singleton and \(K_h\) is strictly convex.
+
+We finish by spelling out the umbilic bridge. In a conformal complex chart
+\(\rho:\mathbb C\to S^2\), write \(u=h\circ\rho\). Relative to the chart differential
+\(d\rho\), (32) has the form
+
+\[
+ dX_h=d\rho\circ R_h^\sharp,\qquad dn=d\rho.
+\]
+
+The identity part \(h\,\mathrm{id}\) and the trace part of the Hessian are scalar. By (3b), the
+anti-linear coefficient of the remaining trace-free part is
+\(2\lambda^{-2}Q(u)\), or equivalently
+\(\lambda^{-2}\operatorname{sphericalTFH}(u)/2\). Thus \(R_h^\sharp\) is scalar exactly when
+\(Q(u)=0\). Since \(R_h^\sharp\) is positive and invertible,
+
+\[
+\begin{aligned}
+ \operatorname{IsUmbilic}(X_h,n,\rho(w))
+ &\Longleftrightarrow \exists c,\ dn=c\,dX_h\\
+ &\Longleftrightarrow \exists c,\ \mathrm{id}=cR_h^\sharp\\
+ &\Longleftrightarrow Q_w(u)=0.                                      \tag{34}
+\end{aligned}
+\]
+
+Equivalently, the shape operator is \((R_h^\sharp)^{-1}\), up to the conventional overall sign,
+and it is scalar precisely in (34). In the reciprocal chart, the exact anti-linear coefficient
+is the quantity \(D^2\operatorname{sphericalTFH}(u)/80000\) from (3c), whose prefactor never
+vanishes.
+
+Section 7 shows that this coefficient is nonzero at every finite reciprocal coordinate. At the
+one omitted point \(z=0\), the nonconstant part is flat, so the trace-free Hessian vanishes;
+there \(R_h=10^{10}g_{S^2}\), and the point is umbilic. Hence it is the unique umbilic. This
+proves part 5 and the announced Carathéodory counterexample.
 
 ## 9. Lean decomposition
 
-The Lean development should follow this dependency order.
+The files and declarations are arranged in the following dependency order. This list records the
+current implementation architecture rather than proposing a separate public Wirtinger API.
 
-1. **Wirtinger API.** Define first and second Wirtinger derivatives as real Fréchet derivatives,
-   and prove that `traceFreeHessian = 4 • wirtingerBar (wirtingerBar f)`.
-2. **Seed identities.** Prove (4), evenness, the bounds (7), and the three-case polynomial
-   certificate (6). These are finite `ring_nf`/`nlinarith` arguments after trigonometric bounds.
-3. **Flat functions.** Prove (8)–(10) in a reusable file under `FormalConjecturesForMathlib`.
-   This file must contain no `sorry`.
-4. **Branch-independent power.** Package `f ((100 / star z) ^ (k/2))` as a smooth function on
-   the punctured plane. For odd `k`, glue the two square-root branches using `f (-w) = f w`.
-5. **Smooth extension at zero.** Turn (11) into a general extension lemma and instantiate it.
-6. **Index.** Expand the Hessian, prove the relative estimates (13), and use homotopy invariance
-   of winding number to obtain `2 + k`.
-7. **Sphere charts.** Define the two chart representatives, prove their transition identity,
-   and derive the spherical operators (3) and (17).
-8. **Uniqueness.** Formalize (18)–(21). This part should use only differentiation, rational
-   inequalities, and the seed certificate.
-9. **Support functions.** Define (22) and (30), prove the support-function theorem, formalize
-   the numerical certificate (23), and conclude strict convexity and uniqueness of the umbilic.
+1. **Definitions.** `CaratheodoryLoewnerCounterexample/Defs.lean` contains
+   `counterexampleSeed`, `counterexample`, `counterexampleSphereChart`, and
+   `IsSupportParametrization`. These are the source-facing definitions; short one-use analytic
+   expressions remain local to the proof modules.
 
-The first four analytic estimates should be proved independently of the particular surface; this
-keeps the problem file short and leaves generally useful flatness and support-function API in
-`FormalConjecturesForMathlib`.
+2. **Reusable flatness.**
+   `FormalConjecturesForMathlib/Analysis/SpecialFunctions/FlatRpowExp.lean` defines
+   `Real.flatRpowExp` and proves its smoothness, zero Taylor series, and domination by arbitrary
+   real powers. The general extension lemmas
+   `ContDiff.at_zero_of_iteratedFDeriv_isLittleO` and
+   `ContDiff.isLittleO_norm_pow_of_iteratedFDeriv_zero` turn punctured estimates into smooth,
+   flat extensions. The elementary quantitative bounds corresponding to (10), which are used
+   only for this numerical certificate, remain private in `Global.lean`.
+
+3. **Planar smoothness.** `CaratheodoryLoewnerCounterexample/Smooth.lean` proves
+   `counterexampleSeed_contDiff`, glues the principal and alternate half-power branches using
+   `counterexampleSeed_cpow_eq_alt`, obtains the polynomial derivative estimates behind (11), and
+   concludes `counterexample_contDiff`. Its theorem `counterexample_fderiv_fderiv_zero` records
+   the exact second-derivative vanishing needed at the planar origin.
+
+4. **Seed and index calculation.** `CaratheodoryLoewnerCounterexample/Index.lean` keeps the
+   concrete first-Wirtinger and trace-free-Hessian expressions local as `seedWirtingerModel` and
+   `seedTraceFreeHessianModel`. It proves the public seed bounds
+   `counterexampleSeed_abs_le`, `counterexampleSeed_wirtinger_norm_upper`,
+   `counterexampleSeed_traceFreeHessian_norm_lower`, and
+   `counterexampleSeed_traceFreeHessian_norm_upper`. The identity
+   `traceFreeHessian_counterexampleSeed` connects the local model to the repository definition.
+   The three-case certificate for (6) is a finite ring-normalization and nonlinear-arithmetic
+   proof.
+
+5. **Dominant Hessian and winding.** The same `Index.lean` file defines local
+   `counterexampleHessianLeading` and `counterexampleHessianError` and proves
+   `counterexample_traceFreeHessian_decomposition`. Three positive powers tend to zero on the
+   punctured neighbourhood, giving one radius for both isolation and the normalized
+   straight-line homotopy. The covering-map lift preserves the endpoint argument change
+   \(2\pi(k+2)\), and `counterexample_hasIsolatedZeroIndex` stores the resulting integer
+   \(2+k\), twice the principal-line index.
+
+6. **Sphere charts.** `CaratheodoryLoewnerCounterexample/Global.lean` defines the reciprocal
+   exponent, damping, and chart representative; proves `counterexample_two_reciprocal`; and
+   glues it to the original chart in `counterexample_two_sphere_extension`. The reciprocal
+   origin and the original south pole are treated separately, exactly as in Sections 6--8.
+
+7. **Spherical trace-free calculation.** `Global.lean` uses the private definitions
+   `complexBarDeriv` and `sphericalTraceFreeHessian`. By definition the latter is \(4Q\), as in
+   (3a), not \(Q\). The product and radial differentiation lemmas yield the factorization (18a).
+   The seed perturbation estimate proves nonvanishing at every finite reciprocal coordinate,
+   with a separate proof at \(w=0\). The reciprocal radius formula converts this coordinate
+   expression to the anti-linear coefficient of the raised radius operator using exactly the
+   multiplier \(D^2/80000\) from (3c).
+
+8. **Reusable support geometry.**
+   `FormalConjecturesForMathlib/Geometry/SupportFunctionSphere.lean` supplies `radialExtension`,
+   `homogeneousGradient`, `body`, the contact and supporting inequalities, compactness and
+   interior lemmas, range-equals-frontier results, and injectivity/embedding from strict
+   cross-support. These declarations formalize the general steps following (30), rather than
+   duplicating them as problem-specific abbreviations.
+
+9. **Numerical radius tensor and the surface.** `Global.lean` contains the scalar estimates
+   behind (19)--(29), packages them as a global radius-tensor bound including the separate
+   omitted-south calculation, derives strict convexity on nonantipodal chords, handles antipodal
+   chords using \(h\ge1\), and implements the chart differential equivalence (34). The reusable
+   support API supplies the body and its Gauss parametrization, culminating in
+   `counterexample_two_is_support_function_with_unique_umbilic`.
+
+This decomposition keeps general flat-function and support-function results in
+`FormalConjecturesForMathlib`, while the oscillatory branches, seed certificates, numerical
+constants, and chart normalizations remain in the problem-specific modules.
