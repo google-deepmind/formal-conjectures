@@ -105,10 +105,9 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
       · refine (Nat.lt_mul_iff_one_lt_left ?_).2 ?_ <;> omega
       all_goals omega
 
-/-- warning: instance `Mathoverflow75792.Reachable.decide._unary` must be marked with `@[reducible]`
-or `@[implicit_reducible]` -/
--- TODO: I can't turn this warning off!
-#guard_msgs in
+-- The equation compiler emits `Reachable.decide._unary`, whose reducibility Lean warns about;
+-- the instance is deliberately semireducible, so the warning is switched off here.
+set_option warn.classDefReducibility false in
 instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
   | 0, n => isFalse (not_reachable_zero_fst n)
   | 1, 0 => isFalse (not_reachable_zero_snd 1)

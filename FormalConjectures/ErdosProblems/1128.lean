@@ -48,19 +48,21 @@ private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
   rwa [← le_aleph0_iff_set_countable, Cardinal.mk_Iio_ordinal, lift_le_aleph0,
     ← lt_aleph_one_iff, ← lt_omega_iff_card_lt]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Initial segments of ω₁ (as sets of `Omega1` elements) are countable.
 This is the subtype-order version of `countable_Iio_of_lt_omega1`. -/
 @[category API, AMS 5]
 private lemma countable_Iio_omega1 (γ : Omega1) : (Set.Iio γ : Set Omega1).Countable := by
   -- The injection a ↦ ⟨a.1.val, a.2⟩ sends ↑(Iio γ : Set Omega1) into ↑(Iio γ.val : Set Ord)
   -- and the codomain is countable by countable_Iio_of_lt_omega1.
-  haveI hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
+  have hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
   -- Goal: (Set.Iio γ : Set Omega1).Countable = Set.Countable (Set.Iio γ)
   -- = Countable ↥(Set.Iio γ : Set Omega1) (by definition of Set.Countable)
   show Countable ↑(Set.Iio γ : Set Omega1)
   -- Use Function.Injective.countable with the injection a ↦ ⟨a.1.val, a.2⟩.
   apply Function.Injective.countable (β := ↑(Set.Iio γ.val : Set Ordinal.{0}))
     (f := fun (a : ↑(Set.Iio γ : Set Omega1)) => (⟨a.1.val, a.2⟩ : ↑(Set.Iio γ.val)))
+  -- `h` arrives as an unreduced application of the injection.
   intro ⟨⟨av, hav_ω₁⟩, hav_γ⟩ ⟨⟨bv, hbv_ω₁⟩, hbv_γ⟩ h
   simp only [Subtype.mk.injEq] at h
   exact Subtype.ext (Subtype.ext h)

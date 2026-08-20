@@ -88,7 +88,7 @@ theorem erdos_933.variants.lower_bound :
       _ < (m : ℝ) * 3 := mul_lt_mul_of_pos_left (by linarith [Real.log_two_lt_d9]) (by positivity)
       _ = _ := by norm_num [m, pow_succ]
   change 2 ^ m ∈ {n | ((2 ^ k n * 3 ^ l n : ℕ) : ℝ) > (n : ℝ) * Real.log (n : ℝ)}
-  simp only [Set.mem_setOf_eq, hk, hl]
+  simp only [Set.mem_ofPred_eq, hk, hl]
   push_cast
   rw [Real.log_pow]
   exact mul_lt_mul_of_pos_left hlog (by positivity)

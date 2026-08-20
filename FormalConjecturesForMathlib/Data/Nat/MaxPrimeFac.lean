@@ -167,7 +167,7 @@ characterization. -/
 lemma maxPrimeFac_eq_sSup {n : ℕ} (hn_one : n ≠ 1) :
     maxPrimeFac n = sSup {p : ℕ | p.Prime ∧ p ∣ n} := by
   obtain rfl | hn : n = 0 ∨ 1 < n := by lia
-  · simpa using (Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime).symm
+  · simpa using (Set.Infinite.Nat.sSup_eq_zero infinite_setOfPred_prime).symm
   · have h_lub : IsLUB {p : ℕ | p.Prime ∧ p ∣ n} (maxPrimeFac n) :=
       isLeast_maxPrimeFac hn
     exact (h_lub.csSup_eq

@@ -172,11 +172,11 @@ def KT : NormalModalLogic := by
     exact KTExtendsK h
   case mp =>
     intro φ ψ h₁ h₂
-    simp [Set.mem_setOf_eq] at *
+    simp [Set.mem_ofPred_eq] at *
     exact KTProof.mp h₂ h₁
   case nec =>
     intro φ h
-    simp [Set.mem_setOf_eq] at *
+    simp [Set.mem_ofPred_eq] at *
     exact KTProof.nec h
 
 

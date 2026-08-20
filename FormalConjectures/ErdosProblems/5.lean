@@ -241,7 +241,7 @@ The set $S$ of limit points is closed, as Weisenberg notes in the acknowledgemen
 and `erdos_5.variants.limit_point_set` ask the same question.
 -/
 @[category test, AMS 11]
-theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOf_clusterPt
+theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOfPred_clusterPt
 
 /--
 Weisenberg's remark, as reported on [erdosproblems.com/5](https://www.erdosproblems.com/5):

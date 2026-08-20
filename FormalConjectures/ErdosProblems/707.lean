@@ -130,7 +130,7 @@ theorem erdos_707.variants.perfect_difference_set_size_bound (B : Set ℕ) (n : 
   by_contra h_abs; push Not at h_abs
   exact ((hfin.offDiag.image _).subset hB.surjOn).not_infinite (by
     rw [show (0 : ZMod 0) = (0 : ℤ) from rfl]; exact (Set.finite_singleton (0 : ℤ)).infinite_compl)
-  haveI : NeZero n := ⟨hn⟩
+  have : NeZero n := ⟨hn⟩
   suffices h : (B.ncard - 1) ^ 2 ≤ n by have := Nat.le_sqrt'.mpr h; omega
   lift B to Finset ℕ using hfin; simp
   have h_target : {x : ZMod n | x ≠ 0}.ncard ≤ n :=
@@ -185,7 +185,7 @@ theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ 
   refine ⟨?mapsTo, ?injOn, ?surjOn⟩
   · intro ⟨a, b⟩ hab; simp only [Set.mem_offDiag, Set.mem_insert_iff, Set.mem_singleton_iff] at hab
     obtain ⟨ha, hb, hne⟩ := hab
-    simp only [Set.mem_setOf]
+    simp only [Set.mem_ofPred]
     rcases ha with rfl | rfl | rfl <;>
     rcases hb with rfl | rfl | rfl <;>
     simp_all <;> decide
@@ -198,15 +198,15 @@ theorem erdos_707.variants.example_embedding : ∃ (B : Set ℕ), {1, 2, 4} ⊆ 
     rcases hb2 with rfl | rfl | rfl <;>
     simp_all (config := { decide := true })
   · intro x hx
-    simp only [Set.mem_setOf] at hx
+    simp only [Set.mem_ofPred] at hx
     fin_cases x
     · exact absurd rfl hx
-    · refine ⟨(2, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
-    · refine ⟨(4, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
-    · refine ⟨(4, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
-    · refine ⟨(1, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
-    · refine ⟨(2, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
-    · refine ⟨(1, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by decide⟩
+    · refine ⟨(2, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
+    · refine ⟨(4, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
+    · refine ⟨(4, 1), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
+    · refine ⟨(1, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
+    · refine ⟨(2, 4), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
+    · refine ⟨(1, 2), by simp [Set.mem_offDiag, Set.mem_insert_iff], by rfl⟩
 
 /--
 For small Sidon sets, we can check the conjecture directly.
