@@ -185,9 +185,24 @@ where
           ("module", toJson (moduleOf env d)),
           ("range", rangeToJson (some r))]
       | none => generated := generated.push (toJson d.toString)
+    -- The `@[category ...]` tag, spelled the way the attribute is written.
+    -- lean-eval displays open conjectures apart from its evaluation set, so
+    -- the importer needs to know which of the two a declaration is; the tag
+    -- lives in the environment extension, not in anything the text layer
+    -- could read reliably.
+    let category := match (ProblemAttributes.categoryExt.getState env).toList.find?
+        (·.declName == name) with
+      | some tag => Json.str <| match tag.category with
+        | .research .open => "research open"
+        | .research .solved => "research solved"
+        | .textbook => "textbook"
+        | .test => "test"
+        | .API => "API"
+      | none => Json.null
     let payload := Json.mkObj [
       ("declaration", toJson decl),
       ("name", toJson name.toString),
+      ("category", category),
       ("range", rangeJson),
       ("binders", toJson binders.toList),
       ("answerTypes", toJson answerTypes.toList),

@@ -870,8 +870,34 @@ def import_problem(problem, answer_type=None, module=None):
             mathlib_rev,
         ),
         source_url=docstring_reference(module_doc),
+        category=facts.get("category") or "",
     )
     return marked_up, manifest
+
+
+# The `@[category ...]` tags that name a problem, and the lean-eval group
+# each belongs to. `research open` is the point of the FC import and goes to
+# the open-conjectures display; everything already settled — solved research,
+# textbook and test statements — is evaluation material. `API` declarations
+# and untagged ones are not problems and are refused.
+CATEGORY_GROUPS = {
+    "research open": "open-conjectures",
+    "research solved": "formalization-evaluation",
+    "textbook": "formalization-evaluation",
+    "test": "formalization-evaluation",
+}
+
+
+def problem_group(manifest):
+    """The lean-eval problem group for an imported declaration's category."""
+    group = CATEGORY_GROUPS.get(manifest.category)
+    if group is None:
+        raise SystemExit(
+            f"{manifest.id}: category {manifest.category!r} is not a "
+            "problem category; expected one of "
+            + ", ".join(sorted(CATEGORY_GROUPS))
+        )
+    return group
 
 
 def elaborate(marked_up):

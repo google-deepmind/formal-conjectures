@@ -499,3 +499,33 @@ class QualifiedResolutionTest(unittest.TestCase):
             "Erdos125.erdos_125.variants.positive_unequal_density"
         )
         self.assertEqual(path.name, "125.lean")
+
+
+class ProblemGroupTest(unittest.TestCase):
+    """Categories map to lean-eval groups; non-problems are refused."""
+
+    def _manifest(self, category):
+        manifest = mock.Mock()
+        manifest.category = category
+        manifest.id = "some_problem"
+        return manifest
+
+    def test_open_research_is_an_open_conjecture(self):
+        self.assertEqual(
+            importer.problem_group(self._manifest("research open")),
+            "open-conjectures",
+        )
+
+    def test_settled_statements_are_evaluation_material(self):
+        for category in ("research solved", "textbook", "test"):
+            with self.subTest(category=category):
+                self.assertEqual(
+                    importer.problem_group(self._manifest(category)),
+                    "formalization-evaluation",
+                )
+
+    def test_api_and_untagged_declarations_are_refused(self):
+        for category in ("API", ""):
+            with self.subTest(category=category):
+                with self.assertRaises(SystemExit):
+                    importer.problem_group(self._manifest(category))

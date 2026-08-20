@@ -157,6 +157,12 @@ class ProblemManifest:
     permitted_axioms: tuple
     source: SourceRecord
     source_url: str = ""
+    # The `@[category ...]` tag as the source spells it: `research open`,
+    # `research solved`, `textbook` or `test`. lean-eval keeps open
+    # conjectures out of its evaluation set, so which group a problem joins
+    # is decided by this and nothing else; recording the raw tag rather than
+    # the mapped group keeps the mapping in one place, beside the request.
+    category: str = ""
 
     def __post_init__(self):
         for field in ("id", "theorem", "qualified_theorem"):
@@ -179,6 +185,7 @@ class ProblemManifest:
             "id": self.id,
             "theorem": self.theorem,
             "qualified_theorem": self.qualified_theorem,
+            "category": self.category,
             "apply_arguments": list(self.apply_arguments),
             "holes": [dataclasses.asdict(hole) for hole in self.holes],
             "permitted_axioms": list(self.permitted_axioms),
@@ -210,6 +217,7 @@ class ProblemManifest:
             permitted_axioms=tuple(payload["permitted_axioms"]),
             source=SourceRecord(**source),
             source_url=payload.get("source_url", ""),
+            category=payload.get("category", ""),
         )
 
     def to_json(self):

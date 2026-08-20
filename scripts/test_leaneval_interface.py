@@ -73,6 +73,7 @@ def a_manifest(**overrides):
         "permitted_axioms": ("propext", "Quot.sound", "Classical.choice"),
         "source": a_source(),
         "source_url": "https://www.erdosproblems.com/940",
+        "category": "research open",
     }
     fields.update(overrides)
     return ProblemManifest(**fields)
