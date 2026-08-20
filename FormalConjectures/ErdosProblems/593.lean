@@ -36,7 +36,7 @@ namespace Erdos593
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 593 ($500)**: Characterize those finite 3-uniform hypergraphs which appear
+**Erdős Problem 593 (\$500)**: Characterize those finite 3-uniform hypergraphs which appear
 in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
 
 A natural conjectural characterization, recorded here, is that the obligatory finite 3-uniform

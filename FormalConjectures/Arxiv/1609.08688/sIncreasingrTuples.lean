@@ -35,7 +35,7 @@ namespace Arxiv.«1609.08688»
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
-two co-ordinates $i$.
+two coordinates $i$.
 -/
 def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
@@ -76,7 +76,7 @@ theorem lt₂_example_2 : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by sim
 @[category test, AMS 5]
 theorem lt₂_example_3 : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
 
-/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4). -/
+/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4)$. -/
 @[category test, AMS 5]
 theorem not_lt₂_example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
 
@@ -144,7 +144,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
-  erw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
+  rw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
   refine ⟨by aesop, fun n hn => ?_⟩
   simp [Nat.lt_one_iff.1 hn]
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
@@ -178,10 +178,37 @@ lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (_hn : 2 ≤ n
     Finset.exists_ne_map_eq_of_card_lt_of_maps_to ht_card hf
   exact ⟨i, j, hij, congrArg Prod.fst hfij, congrArg Prod.snd hfij⟩
 
-/-- For all $n$ we have $F(n) \leq n^2$. -/
+/--
+For all $n$ we have $F(n) \leq n^2$.
+
+This is the upper bound in [GoLo21, Proposition 1.4], proved by applying the
+pigeonhole principle to the first two coordinates.
+-/
 @[category research solved, AMS 5]
 theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
-  sorry
+  by_cases hn : 2 ≤ n
+  · rw [maximalLength]
+    refine csSup_le ?_ ?_
+    · exact ⟨0, ⟨[], by simp, isIncreasing₂_nil, rfl⟩⟩
+    · intro _ hm
+      rcases hm with ⟨s, hs_range, hs_inc, rfl⟩
+      by_contra hle
+      have hs_length : n ^ 2 < s.length := Nat.lt_of_not_ge hle
+      obtain ⟨i, j, hij, h0, h1⟩ :=
+        exists_pair_of_mem_Icc hn hs_range hs_length
+      have hp : s.Pairwise lt₂ := hs_inc
+      rcases lt_or_gt_of_ne hij with hij | hji
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.ge h1.ge)
+          (List.pairwise_iff_get.1 hp i j hij)
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.le h1.le)
+          (List.pairwise_iff_get.1 hp j i hji)
+  · cases n with
+    | zero => simp [maximalLength_zero]
+    | succ n =>
+      cases n with
+      | zero => simp [maximalLength_one]
+      | succ n =>
+        exact (hn (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le _)))).elim
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
 @[category research solved, AMS 5]
