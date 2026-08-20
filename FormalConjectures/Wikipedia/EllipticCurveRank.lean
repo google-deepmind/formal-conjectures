@@ -26,6 +26,7 @@ import FormalConjecturesUtil
 - [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
    elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
+- [ICARM](https://elliptic-rank.icarm.cloud/curve/273)
 -/
 
 namespace EllipticCurveRank
@@ -152,6 +153,13 @@ theorem twentyone_le_rank_height_count_asymptotic :
       ∀ H : ℕ, 1 < H → {E ∈ heightLE H | 21 ≤ E.rank}.ncard ≤ (H : ℝ) ^ f H := by
   sorry
 
+/-- Is there an elliptic curve over ℚ of rank at least 31?
+The largest known rank of an elliptic curve over ℚ as of 2026 is at least 30.
+See https://elliptic-rank.icarm.cloud/curve/273. -/
+@[category research open, AMS 11 14]
+theorem exists_rank_ge_thirtyone : ∃ E : RatEllipticCurve, 31 ≤ E.rank := by
+  sorry
+
 end RatEllipticCurve
 
 namespace WeierstrassCurve
@@ -159,6 +167,38 @@ namespace WeierstrassCurve
 open _root_.WeierstrassCurve
 
 /-  See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
+
+/-- The elliptic curve over ℚ of rank at least 30 found by user `ranksunbounded` in 2026.
+It has rank exactly 30 assuming the generalized Riemann hypothesis and Birch and Swinnerton-Dyer
+conjecture. -/
+def ranksunbounded30 : WeierstrassCurve ℚ where
+  a₁ := 1
+  a₂ := 0
+  a₃ := 0
+  a₄ := -201769035260418549083594900060734240952308696994802735114305555
+  a₆ := 1151107939141058565733479426024323225135665982951300586808823640527729578307228357301072889377
+
+/-- See https://elliptic-rank.icarm.cloud/curve/273. -/
+@[category test, AMS 11 14]
+theorem Δ_ranksunbounded30 : ranksunbounded30.Δ =
+    -2 ^ 16 * 3 ^ 12 * 5 ^ 8 * 7 ^ 5 * 13 ^ 5 * 31 ^ 2 * 41 ^ 2 * 47 ^ 4 * 53 ^ 3 * 67 ^ 3 * 379 ^ 2 *
+    4349 * 25721454817 *
+    97018222656318846556561979214040553412450110580812087282349817173780902099339117104673990259247421230916714670243202937 := by
+  rw [ranksunbounded30, Δ, b₂, b₄, b₆, b₈]; norm_num
+
+@[category test, AMS 11 14]
+instance : ranksunbounded30.IsElliptic where
+  isUnit := by rw [Δ_ranksunbounded30]; norm_num
+
+/-- The rank of the ranksunbounded curve is at least 30. -/
+@[category research solved, AMS 11 14]
+theorem thirty_le_rank_ranksunbounded30 : 30 ≤ finrank ℤ ranksunbounded30⟮ℚ⟯ := by
+  sorry
+
+/-- The rank of the ranksunbounded curve is exactly 30. -/
+@[category research open, AMS 11 14]
+theorem rank_ranksunbounded30 : finrank ℤ ranksunbounded30⟮ℚ⟯ = 30 := by
+  sorry
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
 It has rank exactly 29 assuming the generalized Riemann hypothesis. -/
@@ -222,6 +262,8 @@ theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := b
 @[category research open, AMS 11 14]
 theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
   sorry
+
+
 
 -- TODO: compute the rank of some rank 0 / 1 curve.
 
