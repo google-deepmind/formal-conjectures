@@ -28,7 +28,7 @@ import unittest
 
 import leaneval_generator as generator
 from leaneval_generator import generate
-from test_leaneval_interface import A_MODULE, a_manifest
+from test_leaneval_interface import A_MODULE, a_manifest, a_target
 
 # The modules that live beside the generator in `scripts/`. Anything the
 # generator imports from here has to move with it into the pinned package.
@@ -71,9 +71,11 @@ class SplitTest(unittest.TestCase):
 
     def test_the_solution_delegates_the_hole_and_applies_the_arguments(self):
         solution = a_workspace()["Solution.lean"]
+        # Reducible, so the unifier is certain to unfold the Solution's copy of
+        # the hole into the Submission's when it checks the adapter.
         self.assertIn(
-            "noncomputable def erdos_940_answer : ENNReal := "
-            "Submission.erdos_940_answer",
+            "@[reducible] noncomputable def erdos_940_answer : ENNReal :=\n"
+            "  Submission.erdos_940_answer",
             solution,
         )
         self.assertTrue(solution.rstrip().endswith("Submission.erdos_940 n"))
@@ -95,9 +97,10 @@ class SplitTest(unittest.TestCase):
         self.assertIn("propext", config["permitted_axioms"])
         self.assertNotIn("sorryAx", config["permitted_axioms"])
 
-    def test_the_lakefile_pins_mathlib_and_requires_nothing_else(self):
+    def test_the_lakefile_pins_the_target_mathlib(self):
+        # Not this repository's Mathlib: the workspace is built in lean-eval.
         lakefile = a_workspace()["lakefile.toml"]
-        self.assertIn('rev = "' + "c" * 40 + '"', lakefile)
+        self.assertIn('rev = "' + "f" * 40 + '"', lakefile)
         self.assertEqual(lakefile.count("[[require]]"), 1)
         self.assertNotIn("formal-conjectures", lakefile)
 
@@ -107,8 +110,15 @@ class SplitTest(unittest.TestCase):
             'name = "erdos_940_variants_large_integers"', files["lakefile.toml"]
         )
 
-    def test_the_toolchain_file_is_the_one_the_manifest_pins(self):
-        self.assertEqual(a_workspace()["lean-toolchain"], "leanprover/lean4:v4.27.0\n")
+    def test_the_toolchain_file_is_the_target_toolchain(self):
+        self.assertEqual(a_workspace()["lean-toolchain"], "leanprover/lean4:v4.33.0\n")
+
+    def test_nothing_in_the_workspace_carries_this_repositorys_toolchain(self):
+        # A workspace built at FC's toolchain is not the artifact lean-eval
+        # vendors, and shipping one would hide the pin gap the manifest states.
+        files = a_workspace()
+        self.assertNotIn("v4.27.0", files["lean-toolchain"])
+        self.assertNotIn("v4.27.0", files["lakefile.toml"])
 
 
 class ManifestPassThroughTest(unittest.TestCase):

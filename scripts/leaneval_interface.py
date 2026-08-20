@@ -14,8 +14,8 @@ importer hands the generator and no code that produces or consumes them:
 
     MarkedUpModule   one Mathlib-only Lean module, in labelled regions
     ProblemManifest  the facts about the problem that the module's text does
-                     not carry, including the FC source commit and the FC
-                     declaration id
+                     not carry, including the FC source commit, the FC
+                     declaration id, and the pins the workspace is built with
 
 `scripts/fc_leaneval_importer.py` produces both. `scripts/leaneval_generator.py`
 consumes both and returns a workspace. When `lean-eval-generator` lands, the
@@ -92,6 +92,12 @@ class SourceRecord:
     something the generator can supply: the generator sees a module, not a
     repository. So they cross the seam here, and the generator's only duty is
     to carry them into the workspace unaltered.
+
+    `lean_toolchain` and `mathlib_revision` are Formal Conjectures' own, and
+    are not the pins the workspace is built with. They are here because the
+    hole types in the manifest were read from an environment elaborated at
+    them, so a reader comparing them with `TargetRecord` can see whether the
+    types were read where they will be used.
     """
 
     repository: str
@@ -102,6 +108,27 @@ class SourceRecord:
     declaration: str
     copied_dependencies: tuple
     original_declaration: str
+    lean_toolchain: str
+    mathlib_revision: str
+
+
+@dataclasses.dataclass(frozen=True)
+class TargetRecord:
+    """The pins the generated workspace is built and checked with.
+
+    These are LeanEval's, not this repository's: a workspace is vendored into
+    lean-eval and built there. Formal Conjectures records them so that a
+    generated workspace is buildable where it is going rather than only where
+    it was made, and `comparator/tools.toml` is the one place they are
+    written down.
+    """
+
+    repository: str
+    commit: str
+    lean_toolchain: str
+    mathlib_revision: str
+    comparator: str
+    lean4export: str
 
 
 @dataclasses.dataclass(frozen=True)
@@ -122,17 +149,17 @@ class ProblemManifest:
     apply_arguments: tuple
     holes: tuple
     permitted_axioms: tuple
-    lean_toolchain: str
-    mathlib_revision: str
     source: SourceRecord
-    tools: dict
+    target: TargetRecord
     source_url: str = ""
     notes: str = ""
 
     def __post_init__(self):
-        for field in ("id", "theorem", "qualified_theorem", "lean_toolchain"):
+        for field in ("id", "theorem", "qualified_theorem"):
             if not getattr(self, field):
                 raise SystemExit(f"manifest has no {field}")
+        if not self.target.lean_toolchain or not self.target.mathlib_revision:
+            raise SystemExit(f"manifest {self.id} records no target pins")
         # lean-eval#536 names these two explicitly, and a manifest without
         # them cannot be traced back to a revision of this repository or
         # regenerated when FC fixes a misformalisation upstream.
@@ -153,13 +180,11 @@ class ProblemManifest:
             "apply_arguments": list(self.apply_arguments),
             "holes": [dataclasses.asdict(hole) for hole in self.holes],
             "permitted_axioms": list(self.permitted_axioms),
-            "lean_toolchain": self.lean_toolchain,
-            "mathlib_revision": self.mathlib_revision,
             "source": {
                 **dataclasses.asdict(self.source),
                 "copied_dependencies": list(self.source.copied_dependencies),
             },
-            "tools": dict(self.tools),
+            "target": dataclasses.asdict(self.target),
         }
         if self.source_url:
             payload["source_url"] = self.source_url
@@ -184,10 +209,8 @@ class ProblemManifest:
             apply_arguments=tuple(payload["apply_arguments"]),
             holes=tuple(DefinitionHole(**hole) for hole in payload["holes"]),
             permitted_axioms=tuple(payload["permitted_axioms"]),
-            lean_toolchain=payload["lean_toolchain"],
-            mathlib_revision=payload["mathlib_revision"],
             source=SourceRecord(**source),
-            tools=dict(payload["tools"]),
+            target=TargetRecord(**payload["target"]),
             source_url=payload.get("source_url", ""),
             notes=payload.get("notes", ""),
         )

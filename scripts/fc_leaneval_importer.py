@@ -37,6 +37,7 @@ from leaneval_interface import (
     MarkedUpModule,
     ProblemManifest,
     SourceRecord,
+    TargetRecord,
 )
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -60,11 +61,31 @@ KEEP_LOOSE = re.compile(
 )
 
 
-def tool_pins():
-    """The locked external tool revisions; comparator/tools.toml is the one
-    machine-readable source, and this module refuses to restate it."""
+def _tools_file():
+    """comparator/tools.toml is the one machine-readable source of pins, and
+    this module refuses to restate it."""
     with (COMPARATOR_DIR / "tools.toml").open("rb") as handle:
-        return tomllib.load(handle)["tools"]
+        return tomllib.load(handle)
+
+
+def target_pins():
+    """LeanEval's pins, where a generated workspace is built and checked.
+
+    They are not this repository's, and the importer neither chooses them nor
+    elaborates against them. It records them because a workspace that is
+    vendored into lean-eval has to be buildable there, and because a manifest
+    that carries both pin sets makes the gap between where the hole types were
+    read and where they will be used a readable fact rather than an assumption.
+    """
+    target = _tools_file()["target"]
+    return TargetRecord(
+        repository=target["repository"],
+        commit=target["commit"],
+        lean_toolchain=target["lean_toolchain"],
+        mathlib_revision=target["mathlib_revision"],
+        comparator=target["comparator"],
+        lean4export=target["lean4export"],
+    )
 
 
 def elaborator_facts(module, declaration):
@@ -653,7 +674,9 @@ def pins(source_path=None):
     return mathlib_rev, fc_rev
 
 
-def source_record(declaration, module, source_path, fc_rev, dependencies, original):
+def source_record(
+    declaration, module, source_path, fc_rev, dependencies, original, mathlib_rev
+):
     """Where the copied statement and its dependencies came from.
 
     lean-eval#536 requires the manifest to record the FC source commit and
@@ -677,6 +700,8 @@ def source_record(declaration, module, source_path, fc_rev, dependencies, origin
         declaration=declaration,
         copied_dependencies=tuple(dependencies),
         original_declaration=original,
+        lean_toolchain=(ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
+        mathlib_revision=mathlib_rev,
     )
 
 
@@ -758,8 +783,6 @@ def import_problem(problem, answer_type=None, module=None):
         apply_arguments=tuple(args),
         holes=tuple(holes),
         permitted_axioms=PERMITTED_AXIOMS,
-        lean_toolchain=(ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
-        mathlib_revision=mathlib_rev,
         source=source_record(
             declared,
             fc_module,
@@ -767,8 +790,9 @@ def import_problem(problem, answer_type=None, module=None):
             fc_rev,
             [dep["name"] for dep in facts.get("dependencies", [])],
             original,
+            mathlib_rev,
         ),
-        tools=tool_pins(),
+        target=target_pins(),
         source_url=str(problem_file.get("source", "")),
         notes=str(problem_file.get("notes", "")),
     )
@@ -786,9 +810,12 @@ def elaborate(marked_up):
 
     The check runs here rather than on a generated workspace because the
     module is what this repository hands over: an FC-side defect should fail
-    on the FC side, not in lean-eval's CI. It is offline, and it uses the
-    Mathlib revision the manifest pins because that is this checkout's. It
-    checks elaboration, not a lakefile; a Comparator run exercises the build.
+    on the FC side, not in lean-eval's CI. It is offline, and it runs at this
+    repository's Lean and Mathlib, which are the manifest's `source` pins and
+    not its `target` pins: a module that elaborates here is not thereby known
+    to elaborate at LeanEval's toolchain, and only a build there settles that.
+    It checks elaboration, not a lakefile; a Comparator run exercises the
+    build.
     """
     with tempfile.NamedTemporaryFile(
         "w", suffix=".lean", delete=False, encoding="utf-8"

@@ -26,26 +26,8 @@ where it was written.
 Copying is a construction and it can be wrong in ways only Lean sees, so
 `--verify` elaborates the marked-up module before you trust it.
 
-Layout produced by the generator:
-
-  <out>/<id>/
-    lakefile.toml       pins: this checkout's Mathlib rev
-    ChallengeDeps.lean  the statement's Formal Conjectures closure, copied,
-                        importing Mathlib alone
-    Challenge.lean      the import, the file-scoped preamble, the target
-                        statement with attributes stripped and its proof
-                        replaced by `sorry`, and each `answer(sorry)` hoisted
-                        into a definition hole the solver must fill
-    Submission.lean     where the solver works; helper modules go under
-                        Submission/
-    Solution.lean       fixed: restates the statement and closes it with the
-                        Submission theorem, so the statement cannot drift
-    WorkspaceTest.lean  `lake test` runs comparator on config.json
-    README.md           what the solver needs to know, cache fetch included
-    config.json         theorem and definition names, permitted axioms
-    manifest.json       the manifest the importer handed the generator: the FC
-                        source commit and declaration id, the copied closure,
-                        the hole types, and the pins
+`comparator/README.md` describes the workspace this produces and the pins it
+carries; this file does not restate them.
 
 Lean reports the type of each `answer(sorry)` slot. The importer refuses a case
 when it cannot match the reported types to their source positions.

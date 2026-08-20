@@ -39,7 +39,7 @@ PROOF_SUFFIX = ":= by\n  sorry"
 
 
 def lakefile(package, mathlib_rev):
-    """Mathlib and nothing else.
+    """Mathlib at the target revision, and nothing else.
 
     The workspace used to require Formal Conjectures too, so that the
     Challenge could import the problem's module. lean-eval vendors its
@@ -83,7 +83,7 @@ def _readme(package, manifest):
         "\nFill each definition hole in `Submission.lean` too. Hole answers "
         "also get a\nhuman check, because a hole can be gamed in ways the "
         "comparator cannot see.\nChecking holes needs a comparator built at "
-        f"commit `{manifest.tools['comparator'][:8]}`, which\nadded definition "
+        f"commit `{manifest.target.comparator[:8]}`, which\nadded definition "
         "support.\n"
         if manifest.holes
         else ""
@@ -170,8 +170,15 @@ def generate(marked_up, manifest):
     # and closes it with the Submission theorem, so it fails to compile the
     # moment the submission proves anything else. The participant never edits
     # it, which is what keeps the statement pinned.
+    # `@[reducible]`: the Challenge's statement mentions the Solution's copy of
+    # the hole and the Submission theorem's type mentions the participant's, so
+    # the adapter only typechecks if the unifier unfolds one into the other.
+    # Default transparency does, but the one workspace known to have built at
+    # LeanEval's toolchain marks it reducible, and there is no reason to be the
+    # first to find out whether that mattered.
     delegated = "".join(
-        f"noncomputable def {hole.name} : {hole.type} := Submission.{hole.name}\n\n"
+        f"@[reducible] noncomputable def {hole.name} : {hole.type} :="
+        f"\n  Submission.{hole.name}\n\n"
         for hole in manifest.holes
     )
     solution = (
@@ -197,8 +204,11 @@ def generate(marked_up, manifest):
         config["definition_names"] = manifest.hole_names()
 
     return {
-        "lakefile.toml": lakefile(package, manifest.mathlib_revision),
-        "lean-toolchain": manifest.lean_toolchain + "\n",
+        # The workspace is built where it is going, not where it was made:
+        # these are LeanEval's pins, and the manifest carries this repository's
+        # beside them.
+        "lakefile.toml": lakefile(package, manifest.target.mathlib_revision),
+        "lean-toolchain": manifest.target.lean_toolchain + "\n",
         "README.md": _readme(package, manifest),
         "ChallengeDeps.lean": "import Mathlib\n\n"
         + marked_up.dependencies.strip("\n")

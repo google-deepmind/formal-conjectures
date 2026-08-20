@@ -28,6 +28,7 @@ from leaneval_interface import (
     MarkedUpModule,
     ProblemManifest,
     SourceRecord,
+    TargetRecord,
     slug,
 )
 
@@ -42,9 +43,24 @@ def a_source(**overrides):
         "declaration": "erdos_940",
         "copied_dependencies": ("Foo.bar",),
         "original_declaration": "theorem erdos_940 : True := by\n  sorry",
+        "lean_toolchain": "leanprover/lean4:v4.27.0",
+        "mathlib_revision": "c" * 40,
     }
     fields.update(overrides)
     return SourceRecord(**fields)
+
+
+def a_target(**overrides):
+    fields = {
+        "repository": "leanprover/lean-eval",
+        "commit": "e" * 40,
+        "lean_toolchain": "leanprover/lean4:v4.33.0",
+        "mathlib_revision": "f" * 40,
+        "comparator": "d" * 40,
+        "lean4export": "0" * 40,
+    }
+    fields.update(overrides)
+    return TargetRecord(**fields)
 
 
 def a_manifest(**overrides):
@@ -55,10 +71,8 @@ def a_manifest(**overrides):
         "apply_arguments": ("n",),
         "holes": (DefinitionHole(name="erdos_940_answer", type="ENNReal"),),
         "permitted_axioms": ("propext", "Quot.sound", "Classical.choice"),
-        "lean_toolchain": "leanprover/lean4:v4.27.0",
-        "mathlib_revision": "c" * 40,
         "source": a_source(),
-        "tools": {"comparator": "d" * 40},
+        "target": a_target(),
         "source_url": "https://www.erdosproblems.com/940",
         "notes": "a reviewer note",
     }
@@ -82,6 +96,18 @@ class ManifestTest(unittest.TestCase):
             a_manifest(source=a_source(commit=""))
         with self.assertRaisesRegex(SystemExit, "no FC declaration id"):
             a_manifest(source=a_source(declaration=""))
+
+    def test_target_pins_are_required(self):
+        # A workspace without them cannot be built where it is going.
+        with self.assertRaisesRegex(SystemExit, "no target pins"):
+            a_manifest(target=a_target(lean_toolchain=""))
+
+    def test_both_pin_sets_are_recorded(self):
+        # The hole types were read at the source pins and will be used at the
+        # target pins. A manifest that carried only one could not say so.
+        payload = a_manifest().to_json_object()
+        self.assertEqual(payload["source"]["lean_toolchain"], "leanprover/lean4:v4.27.0")
+        self.assertEqual(payload["target"]["lean_toolchain"], "leanprover/lean4:v4.33.0")
 
     def test_the_manifest_survives_a_round_trip(self):
         manifest = a_manifest()

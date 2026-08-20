@@ -46,8 +46,9 @@ here and not in lean-eval's CI.
 
 `ProblemManifest` carries what the Lean text does not say: the theorem's name
 and its explicit parameters, the hole types Lean reported, the permitted
-axioms, the toolchain and Mathlib pins, and a `source` record with the FC
-repository, commit, blob, module and declaration id. lean-eval#536 requires the
+axioms, a `source` record with the FC repository, commit, blob, module,
+declaration id and this repository's Lean and Mathlib pins, and a `target`
+record with LeanEval's pins, which are the ones the workspace is built at. lean-eval#536 requires the
 commit and the declaration id by name, and they are FC-side by necessity: the
 generator sees a Lean module, not a repository. They are also what makes
 regeneration possible when Formal Conjectures corrects a misformalisation
@@ -58,12 +59,12 @@ upstream. The generator writes the manifest into the workspace unaltered, as
 
 | File | Lines | Then |
 |---|---|---|
-| `scripts/leaneval_generator.py` | 218 | deleted; `generate` becomes a call into the pinned package |
-| `scripts/test_leaneval_generator.py` | 153 | deleted, less whatever remains useful as a contract test against the pinned generator |
+| `scripts/leaneval_generator.py` | 228 | deleted; `generate` becomes a call into the pinned package |
+| `scripts/test_leaneval_generator.py` | 163 | deleted, less whatever remains useful as a contract test against the pinned generator |
 | `comparator/templates/WorkspaceTest.lean` | 37 | deleted; the generator supplies its own workspace test |
-| `scripts/leaneval_interface.py` | 270 | replaced by an import from the pinned package, to the extent its types match |
+| `scripts/leaneval_interface.py` | 293 | replaced by an import from the pinned package, to the extent its types match |
 
-That is 408 lines deleted outright and 270 more replaced. Nothing in
+That is 428 lines deleted outright and 293 more replaced. Nothing in
 `scripts/fc_leaneval_importer.py` changes, and `make_comparator_workspace.py`
 changes by one import.
 
@@ -71,12 +72,13 @@ changes by one import.
 
 | File | Lines | Why it cannot move |
 |---|---|---|
-| `scripts/fc_leaneval_importer.py` | 843 | resolves a declaration against an exact FC commit, reads the elaborated environment, copies the FC-local closure, types each `answer(sorry)` slot, and records the provenance |
+| `scripts/fc_leaneval_importer.py` | 870 | resolves a declaration against an exact FC commit, reads the elaborated environment, copies the FC-local closure, types each `answer(sorry)` slot, and records the provenance |
 | `scripts/comparator_facts.lean` | 205 | the Lean extractor: source ranges, binder explicitness, and answer-slot types, all of which only this repository's elaborated environment knows |
 | `scripts/test_fc_leaneval_importer.py` | 400 | every case pins a real extraction defect |
-| `scripts/make_comparator_workspace.py` | 175 | the command, and the directory write that belongs to neither side |
+| `scripts/make_comparator_workspace.py` | 157 | the command, and the directory write that belongs to neither side |
 | `scripts/test_make_comparator_workspace.py` | 99 | asserts the emitted pair rebuilds the workspace exactly |
 | `comparator/problems/*.toml` | — | the choices FC source cannot make for itself: which module, and an answer type Lean reports ambiguously |
+| `comparator/tools.toml` | — | the pins, in one machine-readable place: this repository's under `[tools]`, LeanEval's under `[target]` |
 
 Nothing in the importer names a workspace file, a workspace layout, or an
 import graph. If a change to it would, the change belongs on the other side.
@@ -93,6 +95,11 @@ hand over the same declarations, and only the `dependencies` region's shape
 would have to say how they group. lean-eval#536 asks for this to be scoped
 against the actual FC100 statements rather than in the abstract, so it is not
 built here.
+
+**A vendored workspace.** A workspace checked into this repository is a copy
+of generator output, so it drifts from the generator, and it says nothing about
+the importer because a human wrote it. The Lean 4.33 evidence comes from
+generating one in CI instead.
 
 **Lifecycle.** Result records, resubmission, and revision tracking are
 LeanEval's, per lean-eval#536. This repository regenerates and opens a pull
@@ -119,10 +126,20 @@ would change bytes at the seam.
    `answer(sorry)` hole is only checkable against that build.
 4. **Answer-slot types are read under this repository's toolchain.** The
    importer asks Formal Conjectures' elaborated environment, at FC's Lean and
-   Mathlib pins, for the type of each slot; LeanEval builds at Lean 4.33 and
-   its own Mathlib. A type whose name or elaboration differs between the two
-   revisions would be wrong in a way `--verify` cannot see, because `--verify`
-   also runs at FC's pins. Only a build on the LeanEval side closes this.
+   Mathlib pins, for the type of each slot; the workspace is built at
+   LeanEval's Lean 4.33 and its own Mathlib. A type whose name or elaboration
+   differs between the two revisions would be wrong in a way `--verify` cannot
+   see, because `--verify` also runs at FC's pins.
+
+   `.github/workflows/comparator-lean-4-33.yml` now does both halves in one
+   job: it generates at 4.27 and builds and Comparator-checks at 4.33, on one
+   plain theorem and one `Prop`-valued `answer(sorry)` slot. So the gap is
+   observed rather than asserted, and every manifest states it —
+   `source.lean_toolchain` against `target.lean_toolchain`. What is still open
+   is the general case: two declarations passing says nothing about a slot
+   whose type name changed between the two Mathlib revisions. A frozen-set
+   import needs that job over the whole set, and the decision about which side
+   owns the answer when they disagree is lean-eval's.
 5. **Who triggers regeneration is unassigned.** The plan gives the importer the
    duty to regenerate and re-PR when Formal Conjectures fixes a
    misformalisation upstream, and gives lifecycle to LeanEval. Nothing yet says

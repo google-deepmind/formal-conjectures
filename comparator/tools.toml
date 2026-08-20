@@ -1,7 +1,23 @@
 # The pinned external tools, one machine-readable source of truth. "At or
 # after" prose is not a lock; CI, local setup and documentation read this.
+
+# What a local run of the importer uses, under this repository's toolchain.
 [tools]
 comparator = "71b52ec29e06d4b7d882726553b1ceb99a2499e0"
 landrun = "5ed4a3db3a4ad930d577215c6b9abaa19df7f99f"
-# lean4export: the tag matching the workspace's lean-toolchain, v4.27.0 today.
+# lean4export: the tag matching this repository's lean-toolchain, v4.27.0 today.
 lean4export = "v4.27.0"
+
+# Where a generated workspace is built and checked. These are LeanEval's pins,
+# not this repository's: a workspace is vendored into lean-eval and built
+# there, so it has to be buildable where it is going. The generator writes
+# `lean_toolchain` and `mathlib_revision` into every workspace, and every
+# manifest records the pair beside Formal Conjectures' own, which is what makes
+# the gap between the two readable rather than assumed.
+[target]
+repository = "leanprover/lean-eval"
+commit = "7699436464052268e6c04b41554bfbc2c6908ec5"
+lean_toolchain = "leanprover/lean4:v4.33.0"
+mathlib_revision = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+comparator = "c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809"
+lean4export = "15f6055e299ad5b89345e533cc2192f4cc00f659"

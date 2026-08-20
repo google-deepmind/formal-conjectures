@@ -1,15 +1,29 @@
-name: Comparator Lean 4.33 pilot
+name: Generated workspace at LeanEval pins
+
+# End to end: import a declaration from this repository's source, generate a
+# workspace, build it at LeanEval's Lean 4.33 and Mathlib, and run Comparator
+# on it. Nothing here is checked in. A workspace that lives in the tree is a
+# copy of generator output that drifts from the generator and says nothing
+# about the importer, because a human wrote it; this job says the importer, the
+# generator and Comparator work together, which is what
+# `leanprover/lean-eval#536` needs before FC opens problem pull requests.
+#
+# The two toolchains in this job are the point, not an accident. The importer
+# reads the declaration's source range, binders and `answer(sorry)` slot types
+# from an environment elaborated at this repository's Lean 4.27; the workspace
+# is built and checked at LeanEval's Lean 4.33. If those two disagree about a
+# statement or a slot type, this job is where it shows.
 
 on:
-  push:
-    branches:
-      - comparator-workspaces
-    paths:
-      - 'comparator/pilots/fc_sum_of_three_cubes/**'
-      - '.github/workflows/comparator-lean-4-33.yml'
   pull_request:
     paths:
-      - 'comparator/pilots/fc_sum_of_three_cubes/**'
+      - 'scripts/fc_leaneval_importer.py'
+      - 'scripts/leaneval_generator.py'
+      - 'scripts/leaneval_interface.py'
+      - 'scripts/make_comparator_workspace.py'
+      - 'scripts/comparator_facts.lean'
+      - 'comparator/**'
+      - 'FormalConjectures/Wikipedia/SumOfThreeCubes.lean'
       - '.github/workflows/comparator-lean-4-33.yml'
   workflow_dispatch:
 
@@ -17,12 +31,16 @@ permissions:
   contents: read
 
 jobs:
-  build-and-compare:
+  generate-build-and-compare:
     runs-on: ubuntu-latest
-    name: Build and run Comparator
+    name: Import, generate, build and run Comparator
     steps:
       - name: Checkout Formal Conjectures
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # The importer pins each workspace to the merge base with upstream
+          # main, so that ref has to be present.
+          fetch-depth: 0
 
       - name: Install elan
         run: |
@@ -31,43 +49,108 @@ jobs:
           ./elan-init -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      - name: Verify pins and trusted-source fingerprint
+      - name: Read the target pins
+        id: target
         run: |
-          python3 - <<'PY'
-          import hashlib
-          import json
-          from pathlib import Path
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import tomllib
 
-          root = Path('comparator/pilots/fc_sum_of_three_cubes')
-          provenance = json.loads((root / 'provenance.json').read_text())
-          assert (root / 'lean-toolchain').read_text().strip() == provenance['target']['lean_toolchain']
-          lakefile = (root / 'lakefile.toml').read_text()
-          assert provenance['target']['mathlib_revision'] in lakefile
-          trusted = (root / 'ChallengeDeps.lean').read_text() + '\n' + (root / 'Challenge.lean').read_text()
-          actual = hashlib.sha256(trusted.encode()).hexdigest()
-          assert actual == provenance['trusted_files_sha256'], (actual, provenance['trusted_files_sha256'])
-          print(actual)
+          with open("comparator/tools.toml", "rb") as handle:
+              target = tomllib.load(handle)["target"]
+          for key in ("comparator", "lean4export", "lean_toolchain"):
+              print(f"{key}={target[key]}")
           PY
 
-      - name: Build the Lean 4.33 workspace
-        working-directory: comparator/pilots/fc_sum_of_three_cubes
+      # At this repository's toolchain: the declaration's facts come from an
+      # elaborated environment, so the module it lives in has to be built.
+      - name: Build the source module and the extractor
         run: |
-          lake update
           lake exe cache get
-          lake build
+          lake build comparator_facts FormalConjectures.Wikipedia.SumOfThreeCubes
+
+      # `--verify` elaborates the marked-up module here, at 4.27. It is not a
+      # substitute for the 4.33 build below; it is what keeps an FC-side
+      # copying defect from being reported as a LeanEval build failure.
+      - name: Import and generate two workspaces
+        run: |
+          for d in isSumOfThreeCubes_2 isSumOfThreeCubes_iff_mod_9; do
+            python3 scripts/make_comparator_workspace.py "$d" \
+              --out .comparator --verify
+          done
+          # One plain theorem and one `answer(sorry)` slot typed at 4.27.
+          grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" \
+            .comparator/isSumOfThreeCubes_iff_mod_9/Challenge.lean
+          # Generated for LeanEval, not for here.
+          grep -q "${{ steps.target.outputs.lean_toolchain }}" \
+            .comparator/isSumOfThreeCubes_2/lean-toolchain
+
+      - name: Build both workspaces at Lean 4.33
+        run: |
+          for ws in .comparator/isSumOfThreeCubes_2 \
+                    .comparator/isSumOfThreeCubes_iff_mod_9; do
+            (cd "$ws" && lake update && lake exe cache get && lake build)
+          done
 
       - name: Build the pinned Lean 4.33 verifier stack
         env:
-          COMPARATOR_REV: c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809
+          COMPARATOR_REV: ${{ steps.target.outputs.comparator }}
         run: |
           git clone https://github.com/leanprover/comparator.git "$RUNNER_TEMP/comparator"
           git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
           (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
 
-      - name: Run Comparator smoke test
-        working-directory: comparator/pilots/fc_sum_of_three_cubes
+      # Three Comparator verdicts, each of which has to come out the stated way.
+      # A run that only ever accepts proves nothing about the gate.
+      - name: Run Comparator on the generated workspaces
         run: |
           export COMPARATOR_BIN="$RUNNER_TEMP/comparator/.lake/build/bin/comparator"
           export COMPARATOR_LANDRUN="$RUNNER_TEMP/comparator/scripts/fake-landrun.sh"
           export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export"
-          lake test
+
+          # 1. The workspace as generated. Its Submission is `sorry`, which
+          #    adds `sorryAx`, which `permitted_axioms` does not allow. A
+          #    generated workspace that passed before anyone proved anything
+          #    would be worthless.
+          if (cd .comparator/isSumOfThreeCubes_2 && lake test); then
+            echo "::error::Comparator accepted an unproved generated workspace"
+            exit 1
+          fi
+
+          # 2. The same workspace with the statement actually proved. The
+          #    witness is the one this repository's own source gives.
+          python3 - <<'PY'
+          import pathlib
+
+          submission = pathlib.Path(".comparator/isSumOfThreeCubes_2/Submission.lean")
+          text = submission.read_text(encoding="utf-8")
+          filled = text.replace(":= by\n  sorry", ":= by\n  exact ⟨1, 1, 0, by norm_num⟩")
+          assert filled != text, "nothing to fill in the generated submission"
+          submission.write_text(filled, encoding="utf-8")
+          PY
+          (cd .comparator/isSumOfThreeCubes_2 && lake build && lake test)
+
+          # 3. The `answer(sorry)` workspace, with the hole filled by the
+          #    proposition on the other side of the iff and the bridge closed
+          #    by `Iff.rfl`. Comparator accepts this, and it resolves nothing:
+          #    the definition hole is a place where a machine check cannot
+          #    stand in for a human reading the answer. The generated README
+          #    tells the solver so; this asserts it.
+          python3 - <<'PY'
+          import pathlib
+
+          root = pathlib.Path(".comparator/isSumOfThreeCubes_iff_mod_9")
+          submission = root / "Submission.lean"
+          text = submission.read_text(encoding="utf-8")
+          answer = (
+              "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop :=\n"
+              "  ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])"
+          )
+          text = text.replace(
+              "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop := sorry",
+              answer,
+          )
+          text = text.replace(":= by\n  sorry", ":=\n  Iff.rfl")
+          submission.write_text(text, encoding="utf-8")
+          PY
+          (cd .comparator/isSumOfThreeCubes_iff_mod_9 && lake build && lake test)
+          echo "Comparator accepted a gamed definition hole; hole values need a human."
