@@ -779,7 +779,10 @@ The identity part \(h\,\mathrm{id}\) and the trace part of the Hessian are scala
 anti-linear coefficient of the remaining trace-free part is
 \(2\lambda^{-2}Q(u)\), or equivalently
 \(\lambda^{-2}\operatorname{sphericalTFH}(u)/2\). Thus \(R_h^\sharp\) is scalar exactly when
-\(Q(u)=0\). Since \(R_h^\sharp\) is positive and invertible,
+\(Q(u)=0\). In Lean, `IsUmbilic` is stated as proportionality of the second and first
+fundamental forms. Normality puts the range of \(dX_h\) in the tangent plane, while coercivity
+makes \(dX_h\) injective; equality of the two-dimensional ranges then converts that form
+proportionality to \(dn=c\,dX_h\). Since \(R_h^\sharp\) is positive and invertible,
 
 \[
 \begin{aligned}
@@ -857,6 +860,9 @@ current implementation architecture rather than proposing a separate public Wirt
    multiplier \(D^2/80000\) from (3c).
 
 8. **Reusable support geometry.**
+   `FormalConjecturesForMathlib/Geometry/EuclideanHypersurface.lean` packages the first and
+   second fundamental forms and proves their umbilicity criterion equivalent to a scalar normal
+   differential when the normal derivative's range lies in the immersion derivative's range.
    `FormalConjecturesForMathlib/Geometry/SupportFunctionSphere.lean` supplies `radialExtension`,
    `homogeneousGradient`, `body`, the contact and supporting inequalities, compactness and
    interior lemmas, range-equals-frontier results, and injectivity/embedding from strict
