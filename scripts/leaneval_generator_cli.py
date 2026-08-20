@@ -52,27 +52,23 @@ def binary():
     )
 
 
-def write_context_root(root, problems):
-    """A minimal benchmark checkout for the request's problems.
+def context_files(problems):
+    """The minimal benchmark checkout for a request, as `{path: content}`.
 
     `problems` are `(problem, ilean_decls)` pairs from `build_problem`. Each
-    module lands at `<root>/<Module>.lean` — the byte-match the generator
-    enforces against `moduleContent` — and its spans at the `.ilean` path the
-    generator reads, `.lake/build/lib/lean/<Module>.ilean`.
+    module lands at `<Module>.lean` — the byte-match the generator enforces
+    against `moduleContent` — and its spans at the `.ilean` path the
+    generator reads. This is the one statement of that layout; whoever puts
+    the files on disk decides where the root lives.
     """
-    root = pathlib.Path(root)
-    ilean_dir = root / ".lake" / "build" / "lib" / "lean"
-    ilean_dir.mkdir(parents=True, exist_ok=True)
+    files = {}
     for problem, ilean in problems:
         module = problem["moduleName"]
-        (root / f"{module}.lean").write_text(
-            problem["moduleContent"], encoding="utf-8"
+        files[f"{module}.lean"] = problem["moduleContent"]
+        files[f".lake/build/lib/lean/{module}.ilean"] = (
+            json.dumps({"version": 1, "module": module, "decls": ilean}) + "\n"
         )
-        (ilean_dir / f"{module}.ilean").write_text(
-            json.dumps({"version": 1, "module": module, "decls": ilean}) + "\n",
-            encoding="utf-8",
-        )
-    return root
+    return files
 
 
 def generate(request):

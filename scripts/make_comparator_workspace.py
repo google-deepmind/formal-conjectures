@@ -129,12 +129,9 @@ def seam_files(pairs, group=None):
         [problem for problem, _ in problems], target, template, CONTEXT_DIR
     )
     files = {"request.json": json.dumps(request, indent=2, ensure_ascii=False) + "\n"}
-    for (problem, ilean), (_, manifest) in zip(problems, pairs):
-        module = problem["moduleName"]
-        files[f"{CONTEXT_DIR}/{module}.lean"] = problem["moduleContent"]
-        files[f"{CONTEXT_DIR}/.lake/build/lib/lean/{module}.ilean"] = (
-            json.dumps({"version": 1, "module": module, "decls": ilean}) + "\n"
-        )
+    for path, content in generator_cli.context_files(problems).items():
+        files[f"{CONTEXT_DIR}/{path}"] = content
+    for (problem, _), (_, manifest) in zip(problems, pairs):
         files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = manifest.to_json()
     return request, files
 
