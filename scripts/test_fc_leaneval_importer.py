@@ -466,3 +466,36 @@ class ModuleNameCodecTest(unittest.TestCase):
                     self.assertEqual(
                         importer.module_source_path(importer.module_name(rel)), path
                     )
+
+
+class QualifiedResolutionTest(unittest.TestCase):
+    """Qualified requests resolve through the namespace stack."""
+
+    def test_the_bare_colliding_name_is_ambiguous(self):
+        with self.assertRaises(SystemExit) as ctx:
+            importer.find_declaration("conjecture")
+        self.assertIn("ambiguous", str(ctx.exception))
+
+    def test_each_qualified_name_reaches_its_own_file(self):
+        for qualified, filename in (
+            ("OeisA303656.conjecture", "303656.lean"),
+            ("OeisA308734.conjecture", "308734.lean"),
+        ):
+            with self.subTest(qualified=qualified):
+                path, _, _, _ = importer.find_declaration(qualified)
+                self.assertEqual(path.name, filename)
+
+    def test_a_declared_name_with_dots_still_resolves(self):
+        # The declared name itself contains dots; no namespace split applies.
+        path, _, _, _ = importer.find_declaration(
+            "erdos_125.variants.positive_unequal_density"
+        )
+        self.assertEqual(path.name, "125.lean")
+
+    def test_longest_declared_suffix_wins(self):
+        # `Erdos125.erdos_125.variants.positive_unequal_density`: the first
+        # component is the namespace, the rest is the declared name.
+        path, _, _, _ = importer.find_declaration(
+            "Erdos125.erdos_125.variants.positive_unequal_density"
+        )
+        self.assertEqual(path.name, "125.lean")

@@ -213,9 +213,42 @@ def module_name(rel_path):
     return ".".join(parts)
 
 
+def _declaring_files(name):
+    """The files whose text declares `name` as a theorem or lemma."""
+    pattern = re.compile(
+        rf"(?:theorem|lemma)\s+(?:[\w.«»]*\.)?{re.escape(name)}[\s:]"
+    )
+    hits = []
+    for src in SOURCE_DIRS:
+        for path in sorted(src.rglob("*.lean")):
+            if pattern.search(path.read_text(encoding="utf-8")):
+                hits.append(path)
+    return hits
+
+
+def _declares_namespaces(text, components):
+    """True if the file opens namespaces spelling out `components` in order.
+
+    A single `namespace A.B` line declares both at once, so the check is on
+    the concatenated stack, not line by line. Text-level and approximate on
+    purpose — the elaborated environment settles the truth later; this only
+    ranks candidate files.
+    """
+    stack = []
+    for line in text.split("\n"):
+        m = re.match(r"\s*namespace\s+([\w.«»]+)", line)
+        if m:
+            stack.extend(m.group(1).split("."))
+    return any(
+        stack[i : i + len(components)] == list(components)
+        for i in range(len(stack) - len(components) + 1)
+    )
+
+
 def find_declaration(basename, module=None):
     """Locate the file declaring `basename`. Returns (path, imports, doc, body).
 
+    A fully qualified name resolves through the enclosing `namespace` stack;
     `module` names the file when more than one declares the name, and comes
     from the problem's FC problem file.
     """
@@ -224,14 +257,25 @@ def find_declaration(basename, module=None):
         if not named.exists():
             raise SystemExit(f"manifest names {module}, which does not exist")
         return _read_source(named)
-    hits = []
-    for src in SOURCE_DIRS:
-        for path in sorted(src.rglob("*.lean")):
-            text = path.read_text(encoding="utf-8")
-            if re.search(
-                rf"(?:theorem|lemma)\s+(?:[\w.«»]*\.)?{re.escape(basename)}[\s:]", text
-            ):
-                hits.append(path)
+    hits = _declaring_files(basename)
+    if not hits and "." in basename:
+        # A fully qualified request such as `OeisA303656.conjecture` names a
+        # declaration whose file spells only `conjecture`, the prefix coming
+        # from an enclosing `namespace`. Try each split of the request into
+        # (namespace prefix, declared suffix), keeping files that declare the
+        # suffix inside that namespace. Splits are tried longest-suffix first,
+        # because a declared name may itself contain dots
+        # (`erdos_125.variants.positive_unequal_density`).
+        parts = basename.split(".")
+        for cut in range(1, len(parts)):
+            prefix, suffix = parts[:cut], ".".join(parts[cut:])
+            hits = [
+                path
+                for path in _declaring_files(suffix)
+                if _declares_namespaces(path.read_text(encoding="utf-8"), prefix)
+            ]
+            if hits:
+                break
     if not hits:
         raise SystemExit(
             f"no declaration named {basename!r} found under FormalConjectures/"
@@ -806,10 +850,13 @@ def import_problem(problem, answer_type=None, module=None):
         holes="\n\n".join(hole.declaration() for hole in holes),
         statement=statement,
     )
+    qualified = ".".join(namespaces_at_target + [declared])
     manifest = ProblemManifest(
-        id=problem_file.get("id", declared),
+        # The default id is the qualified name: two modules declaring
+        # `conjecture` in different namespaces must not share a workspace.
+        id=problem_file.get("id", qualified),
         theorem=declared,
-        qualified_theorem=".".join(namespaces_at_target + [declared]),
+        qualified_theorem=qualified,
         apply_arguments=tuple(args),
         holes=tuple(holes),
         permitted_axioms=PERMITTED_AXIOMS,
