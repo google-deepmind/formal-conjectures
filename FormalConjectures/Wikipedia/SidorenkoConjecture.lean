@@ -30,7 +30,7 @@ import FormalConjecturesUtil
 * [ArXiv2605] [arXiv:2605.14138](https://arxiv.org/abs/2605.14138)
 -/
 
-open Classical Finset SimpleGraph LimitObjects MeasureTheory
+open Finset SimpleGraph
 
 namespace SidorenkoConjecture
 
@@ -104,6 +104,7 @@ theorem sidorenko_even_cycle_graphon (k : ℕ) (hk : 1 ≤ k)
       graphonHomDensity (cycleGraph (2 * k)) W := by
   sorry
 
+open scoped Classical in
 /--
 **Case: `H = K_{a,b}` is a complete bipartite graph (Sidorenko 1993, graphon version).**
 
@@ -118,6 +119,7 @@ theorem sidorenko_completeBipartiteGraph_graphon {A B : Type*} [Fintype A] [Fint
 
 /- ## Tournament Anti-Sidorenko (TAS) Trees Conjecture -/
 
+open scoped Classical in
 /--
 **Tournament Anti-Sidorenko (TAS) Trees Conjecture.**
 
@@ -138,6 +140,7 @@ theorem tournament_anti_sidorenko_trees_conjecture : answer(sorry) ↔
           Digraph.homDensity D G ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 **Tournament Anti-Sidorenko (TAS) Trees Conjecture (Tournamenton limit version).**
 
@@ -156,6 +159,7 @@ theorem tournament_anti_sidorenko_trees_conjecture_tournamenton : answer(sorry) 
           tournamentonHomDensity D W ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 **TAS Trees Conjecture: Trees with a single even-degree vertex.**
 
@@ -174,11 +178,12 @@ theorem tournament_anti_sidorenko_single_even_degree_tree {V : Type*} [Fintype V
         Digraph.homDensity D G ≤ (1 / 2 : ℝ) ^ T.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 **The $(2,3,4)$-spider tree.**
 A tree composed of three paths of lengths 2, 3, and 4 joined at a single central vertex.
 -/
-def IsSpider234 {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) : Prop :=
+def IsSpider234 {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj] : Prop :=
   T.IsTree ∧ Fintype.card V = 10 ∧
   ∃ (center l₁ l₂ l₃ : V),
     T.degree center = 3 ∧
@@ -186,6 +191,7 @@ def IsSpider234 {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) : Pr
     T.degree l₁ = 1 ∧ T.degree l₂ = 1 ∧ T.degree l₃ = 1 ∧
     ({T.dist center l₁, T.dist center l₂, T.dist center l₃} : Multiset ℕ) = {2, 3, 4}
 
+open scoped Classical in
 /--
 **TAS Trees Conjecture: The $(2,3,4)$-spider tree (Solved case).**
 
@@ -230,6 +236,7 @@ theorem sidorenko_K2 {W : Type} [Fintype W] [DecidableEq W]
 
 /- ## Sidorenko for `K_{2,2}`: auxiliary lemmas -/
 
+open scoped Classical in
 /-- `edgeCount` of `K_{2,2}` (complete bipartite graph on `Fin 2 + Fin 2`) is `4`.
 
 The four edges are `{inl 0, inr 0}`, `{inl 0, inr 1}`, `{inl 1, inr 0}`, `{inl 1, inr 1}`. -/
@@ -313,6 +320,7 @@ lemma homCount_completeGraph_fin_two_eq_two_mul_card_edgeFinset
         cases d
         rfl }
 
+open scoped Classical in
 /-- **The `Hom(K_{2,2}, G)` decomposition.** The number of homomorphisms from
 `K_{2,2}` to `G` equals `∑_{(a, b) ∈ W × W} |N(a) ∩ N(b)|^2`, where `N(v)` is the
 neighbourhood of `v` in `G`. Equivalently, summing over *ordered* pairs
@@ -478,6 +486,7 @@ lemma sum_inter_card_eq_sum_degree_sq
   simp only [Nat.cast_sum, Nat.cast_pow] at this
   exact this
 
+open scoped Classical in
 /--
 **Case `H = K_{2,2}` (four-cycle, also called `C_4`): Sidorenko's conjecture holds, by
 Cauchy–Schwarz.**
@@ -611,6 +620,7 @@ theorem sidorenko_K22 {W : Type} [Fintype W] [DecidableEq W]
   -- hmul : N^4 * n^4 ≤ (M * n^4) * n^4
   nlinarith [hmul, sq_nonneg ((n : ℝ))]
 
+open scoped Classical in
 /-- Consequence of `homDensity_le_one`: both sides of the Sidorenko K_{2,2}
 inequality are bounded above by 1. This is a trivial consequence, recorded
 as a sanity check on the helper infrastructure in
