@@ -155,61 +155,94 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
+      # Workspace generation runs the extracted generator at the pinned
+      # revision. The package depends on nothing, so this is a small Lean
+      # build, not a Mathlib one.
+      - name: Build the pinned lean-eval-generator
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          read -r GEN_REPO GEN_REV <<< "$(python3 - <<'PY'
+          import tomllib
+
+          with open("comparator/tools.toml", "rb") as handle:
+              generator = tomllib.load(handle)["generator"]
+          print(generator["repository"], generator["rev"])
+          PY
+          )"
+          git clone "$GEN_REPO" "$RUNNER_TEMP/lean-eval-generator"
+          git -C "$RUNNER_TEMP/lean-eval-generator" checkout "$GEN_REV"
+          (cd "$RUNNER_TEMP/lean-eval-generator" && lake build)
+          echo "LEAN_EVAL_GENERATOR_BIN=$RUNNER_TEMP/lean-eval-generator/.lake/build/bin/lean-eval-generator" >> "$GITHUB_ENV"
+
       # The elaborator-to-importer boundary, exercised on the oleans the
       # build above produced: one plain theorem, a Prop answer slot, a
       # non-Prop answer slot, a forall-conclusion (whose binder must not be
-      # applied), and explicit parameters (which must be). The comparator run
-      # itself needs landrun and stays in a separate Linux job.
+      # applied), explicit parameters (which must be), and the qualified-id
+      # collision pair. The comparator run itself needs landrun and stays in
+      # a separate Linux job.
       - name: Comparator generation smoke test
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake build comparator_facts
           for d in exists_hadamard_zero erdos_940.variants.large_integers \
                    erdos_1038.parts.i erdos_100.variants.strong \
-                   KotherConjecture.variants.le_KotherRadical; do
+                   KotherConjecture.variants.le_KotherRadical \
+                   OeisA303656.conjecture OeisA308734.conjecture \
+                   curling_number_conjecture; do
             python3 scripts/make_comparator_workspace.py "$d" --out .comparator
           done
-          grep -q "large_integers_answer : Prop" .comparator/erdos_940_variants_large_integers/Challenge.lean
-          grep -q "i_answer : ENNReal" .comparator/erdos_1038_parts_i/Challenge.lean
-          grep -q "Submission.erdos_100.variants.strong$" .comparator/erdos_100_variants_strong/Solution.lean
-          grep -q "le_KotherRadical hI" .comparator/KotherConjecture_variants_le_KotherRadical/Solution.lean
+          grep -q "large_integers_answer : Prop" .comparator/Erdos940_erdos_940_variants_large_integers/Challenge.lean
+          grep -q "i_answer : ENNReal" .comparator/Erdos1038_erdos_1038_parts_i/Challenge.lean
+          grep -q "Submission.erdos_100_variants_strong$" .comparator/Erdos100_erdos_100_variants_strong/Solution.lean
+          grep -q "le_KotherRadical hI" .comparator/Koethe_KotherConjecture_variants_le_KotherRadical/Solution.lean
+          # Two modules declare `conjecture`; qualified default ids keep the
+          # workspaces apart, and a guillemet module path decodes correctly.
+          test -d .comparator/OeisA303656_conjecture
+          test -d .comparator/OeisA308734_conjecture
+          test -d .comparator/Arxiv__0912_2382__curling_number_conjecture
 
-      # The importer-to-generator seam, on a real declaration. `--emit-import`
-      # writes only what this repository owns, and feeding those bytes back
-      # through the generator has to reproduce the workspace exactly; if it
-      # does not, the pair is not the whole interface and a pinned
-      # `lean-eval-generator` could not be dropped in. See comparator/OWNERSHIP.md.
+      # The importer-to-generator seam, on a real declaration.
+      # `--emit-import` writes the exact bytes that cross it — the v1
+      # request and its context directory — and running the pinned binary on
+      # those bytes from inside the emitted directory has to reproduce the
+      # workspace exactly; if it does not, the emitted artifact is not the
+      # whole interface. See comparator/OWNERSHIP.md.
       - name: Importer to generator seam
         if: steps.mode.outputs.website_only != 'true'
         run: |
           python3 scripts/make_comparator_workspace.py erdos_1038.parts.i \
             --emit-import .comparator-import
           python3 - <<'PY'
+          import json
+          import os
           import pathlib
           import sys
 
           sys.path.insert(0, "scripts")
-          import fc_leaneval_importer as importer
-          import leaneval_generator as generator
-          from leaneval_interface import MarkedUpModule, ProblemManifest
+          import leaneval_generator_cli as generator_cli
+          from leaneval_interface import ProblemManifest
 
-          handed_over = pathlib.Path(".comparator-import/erdos_1038_parts_i")
-          module = MarkedUpModule.parse(
-              (handed_over / "Problem.lean").read_text(encoding="utf-8")
-          )
+          handed_over = pathlib.Path(
+              ".comparator-import/Erdos1038_erdos_1038_parts_i"
+          ).resolve()
           manifest = ProblemManifest.from_json(
-              (handed_over / "manifest.json").read_text(encoding="utf-8")
+              (handed_over / "fc-provenance-Erdos1038_erdos_1038_parts_i.json")
+              .read_text(encoding="utf-8")
           )
           assert len(manifest.source.commit) == 40, manifest.source.commit
           assert manifest.source.declaration, "no FC declaration id"
 
-          workspace = pathlib.Path(".comparator/erdos_1038_parts_i")
-          # The consumer's pins are its own; locally that is comparator/tools.toml.
-          regenerated = generator.generate(module, manifest, importer.target_pins())
-          for name, content in regenerated.items():
+          request = json.loads(
+              (handed_over / "request.json").read_text(encoding="utf-8")
+          )
+          workspace = pathlib.Path(".comparator/Erdos1038_erdos_1038_parts_i").resolve()
+          os.chdir(handed_over)
+          regenerated = generator_cli.generate(request)
+          files = regenerated["Erdos1038_erdos_1038_parts_i"]
+          for name, content in files.items():
               expected = (workspace / name).read_text(encoding="utf-8")
               assert content == expected, name
-          print(f"{len(regenerated)} files reproduced from the module and manifest")
+          print(f"{len(files)} files reproduced from the emitted request")
           PY
 
       - name: Build literate source pages

@@ -1,0 +1,21 @@
+# Declarations the whole-set audit is expected to fail on, each with the
+# reason and the stage it fails at. `--known-failures` asserts this list
+# exactly: an unexpected failure and a silently fixed one both fail the run,
+# because a gate that only ever passes proves nothing.
+#
+#   declaration  the qualified FC declaration name
+#   workspace    the workspace id, for the target-stage compile report
+#   stage        "source" (import or --verify at FC pins) or
+#                "target" (compile at LeanEval pins)
+#   reason       what fails and why it is not fixed here
+
+[[failure]]
+declaration = "Erdos1092.f_asymptotic_general"
+workspace = "Erdos1092_f_asymptotic_general"
+stage = "target"
+reason = """The copied `f` definition synthesizes `Fintype ↑H.verts` and
+`Fintype ↑H.coe.edgeSet` at this repository's Mathlib but not at LeanEval's
+(observed at target pin 6f1ef4e5): instance drift between the two revisions,
+not a copying defect. Formal Conjectures' own bump to Lean 4.33 rewrites the
+source against the target-side Mathlib and retires the gap; re-run the audit
+after the bump and remove this entry."""

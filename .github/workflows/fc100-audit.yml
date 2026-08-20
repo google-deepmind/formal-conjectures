@@ -1,0 +1,135 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: FC100 whole-set audit
+
+# The whole-set run lean-eval#536 gates the FC import on, as a CI artifact:
+# import every declaration of the frozen set, elaborate each marked-up module
+# at this repository's pins, generate every workspace through the pinned
+# generator, and compile every generated Challenge at LeanEval's pins in one
+# shared project. Failures must match comparator/known_failures.toml exactly —
+# an unexpected failure and a silently fixed one both fail the job, because a
+# gate that only ever passes proves nothing.
+#
+# Two full Mathlib builds make this far too heavy for every pull request, so
+# it runs on demand and weekly; the per-PR jobs cover representative
+# declarations for each defect class instead.
+
+concurrency:
+  group: fc100-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly, early Monday UTC.
+    - cron: '17 4 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    name: Import, verify, generate and compile FC100
+    timeout-minutes: 300
+    steps:
+      - name: Checkout Formal Conjectures
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # The importer pins each workspace to the merge base with upstream
+          # main, so that ref has to be present.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install elan
+        run: |
+          set -o pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # The category tags, source ranges and answer-slot types come from the
+      # elaborated environment, so every module in the set has to be built.
+      - name: Build the source modules and the extractor
+        run: |
+          lake exe cache get
+          lake build FormalConjectures.Subsets.FC100OpenSet1 comparator_facts
+
+      - name: Build the pinned lean-eval-generator
+        run: |
+          read -r GEN_REPO GEN_REV <<< "$(python3 - <<'PY'
+          import tomllib
+
+          with open("comparator/tools.toml", "rb") as handle:
+              generator = tomllib.load(handle)["generator"]
+          print(generator["repository"], generator["rev"])
+          PY
+          )"
+          git clone "$GEN_REPO" "$RUNNER_TEMP/lean-eval-generator"
+          git -C "$RUNNER_TEMP/lean-eval-generator" checkout "$GEN_REV"
+          (cd "$RUNNER_TEMP/lean-eval-generator" && lake build)
+          echo "LEAN_EVAL_GENERATOR_BIN=$RUNNER_TEMP/lean-eval-generator/.lake/build/bin/lean-eval-generator" >> "$GITHUB_ENV"
+
+      # `--verify` elaborates every marked-up module at this repository's
+      # pins; generation runs each import through the pinned binary. Failures
+      # are recorded per declaration, and the run fails unless they are
+      # exactly the recorded ones.
+      - name: Import and verify the whole set
+        run: |
+          python3 scripts/make_comparator_workspace.py --set FC100OpenSet1 \
+            --verify --out .fc100 --report fc100-report.json \
+            --known-failures comparator/known_failures.toml
+
+      # The open/solved split is a fact about the set the report must state:
+      # lean-eval displays open conjectures apart from its evaluation set, so
+      # a silent reclassification upstream must fail loudly here. The counts
+      # are the audited 92 open + 8 solved, less whatever failed before its
+      # category could be read; a change means the frozen set itself changed
+      # and the import plan needs re-approval, not a quiet pass.
+      - name: Check the set classification
+        run: |
+          python3 - <<'PY'
+          import json
+
+          with open("fc100-report.json") as handle:
+              report = json.load(handle)
+          categories = report["categories"]
+          print("classification:", categories)
+          assert sum(categories.values()) == report["imported"], categories
+          solved = categories.get("research solved", 0)
+          open_count = categories.get("research open", 0)
+          assert open_count + solved + report["source_failed"] == 100, categories
+          assert solved <= 8, f"more solved entries than the audited 8: {solved}"
+          PY
+
+      # Kim's shared-project arrangement: every generated ChallengeDeps and
+      # Challenge compiles in one Lake project at LeanEval's pins, so Mathlib
+      # is built once for the whole set rather than once per workspace.
+      - name: Compile every generated Challenge at LeanEval pins
+        run: |
+          python3 scripts/compile_fc100_target.py .fc100 \
+            --project "$RUNNER_TEMP/fc100-target" \
+            --report fc100-target-report.json \
+            --known-failures comparator/known_failures.toml
+
+      - name: Upload the audit report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fc100-audit-report
+          path: |
+            fc100-report.json
+            fc100-target-report.json
+          if-no-files-found: warn
