@@ -49,7 +49,7 @@ open Module (finrank)
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-theorem mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : WeierstrassCurve K)
+instance mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : WeierstrassCurve K)
     [E.IsElliptic] : Module.Finite ℤ E⟮K⟯ := by
   sorry
 
