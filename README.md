@@ -1,7 +1,5 @@
 # Cuboid Conjecture 1
 
-[![CI](https://github.com/PalomarRegistry/EulerBrick/actions/workflows/ci.yml/badge.svg)](https://github.com/PalomarRegistry/EulerBrick/actions/workflows/ci.yml)
-
 A formal proof in Lean 4 / Mathlib of the **First Cuboid Conjecture**, posed by
 Shapirov in [*Perfect cuboids and irreducible
 polynomials*](https://arxiv.org/abs/1108.5348) (arXiv:1108.5348).
