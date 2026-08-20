@@ -61,9 +61,7 @@ $n=1$ and $32$ are fixed points. Are there any others?
 
 Yes: 9^9 = 387420489 is also a fixed point. - [Kenta Kitamura](https://oeis.org/wiki/User:Kenta_Kitamura), Aug 14 2026
 -/
-@[category research solved, AMS 11,
-  formal_proof using lean4 at
-    "https://github.com/KitaKen1/oeis-a113019-counterexample/blob/dc68e0b55c834b24c9e029525deaa562ae144296/lean/OeisA113019FC.lean#L14-L25"]
+@[category research solved, AMS 11]
 theorem conjecture : answer(False) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
   change False ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32
   constructor
