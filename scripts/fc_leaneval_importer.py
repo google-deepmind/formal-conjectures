@@ -11,9 +11,9 @@ all of that came from.
 What it produces is the pair defined in `scripts/leaneval_interface.py`: one
 marked-up Mathlib-only Lean module, and one manifest carrying the FC source
 commit and declaration id. Turning that pair into a Challenge / Solution /
-Submission workspace is the generator's job, not this module's; see
-`scripts/leaneval_generator.py`, which is the part that goes away when
-`leanprover/lean-eval-generator` is extracted.
+Submission workspace is the pinned `leanprover/lean-eval-generator` binary's
+job, not this module's; `leaneval_interface.build_request` is where the pair
+becomes that binary's input.
 
 Nothing here writes a workspace file, names a workspace layout, or decides
 which generated module imports which. If a change to this file would do one of
@@ -57,7 +57,14 @@ DECL_START = re.compile(
     r"(theorem|lemma|def|abbrev|structure|inductive|instance|notation)\s",
 )
 KEEP_LOOSE = re.compile(
-    r"^(open|variable|universe|section|namespace|end|attribute|set_option)\b"
+    # `local notation`, `local macro` and friends scope to the file exactly
+    # like `open` does, and a statement that names what they define does not
+    # parse without them. `noncomputable section` is a section for the scope
+    # stack and a compilation mode for everything inside it.
+    r"^(?:(?:local|scoped)\s+)?"
+    r"(open|variable|universe|section|namespace|end|attribute|set_option"
+    r"|notation|postfix|prefix|infixl|infixr|infix|macro|syntax|macro_rules)\b"
+    r"|^noncomputable section\b"
 )
 
 
@@ -123,25 +130,48 @@ def file_scoped_preamble(lines, start_line):
     and its scope still encloses it.
     """
     stack, preamble, depth = [], [], 0
-    for line in lines[: start_line - 1]:
+    lines = lines[: start_line - 1]
+    index = 0
+    while index < len(lines):
+        line = lines[index]
         if depth == 0 and KEEP_LOOSE.match(line) and not line.rstrip().endswith(" in"):
             kind = line.split()[0]
-            parts = line.split(None, 1)
-            name = parts[1].strip() if len(parts) > 1 else None
+            if kind == "noncomputable":
+                # `noncomputable section [name]` opens a section.
+                kind = "section"
+                parts = line.split(None, 2)
+                name = parts[2].strip() if len(parts) > 2 else None
+            else:
+                parts = line.split(None, 1)
+                name = parts[1].strip() if len(parts) > 1 else None
             if kind in ("namespace", "section"):
-                stack.append((kind, name))
+                stack.append((kind, name, line))
             elif kind == "end":
                 if stack and (
                     stack[-1][1] == name or (name is None and stack[-1][0] == "section")
                 ):
                     stack.pop()
             else:
-                preamble.append((line, list(stack)))
+                # A `macro` or `notation` body may continue on indented
+                # lines; a single kept line would be broken syntax.
+                text = [line]
+                while index + 1 < len(lines) and (
+                    lines[index + 1][:1].isspace() and lines[index + 1].strip()
+                ):
+                    index += 1
+                    text.append(lines[index])
+                preamble.append(("\n".join(text), list(stack)))
         depth += len(re.findall(r"/-", line)) - len(re.findall(r"-/", line))
         depth = max(depth, 0)
+        index += 1
     scope = list(stack)
     in_force = [text for text, s in preamble if s == scope[: len(s)]]
-    return in_force, [n for k, n in scope if k == "namespace" and n]
+    # A statement inside `noncomputable section` restates the mode, since the
+    # copy has left the section behind and a noncomputable definition in the
+    # statement's closure would otherwise fail to compile.
+    if any(k == "section" and line.startswith("noncomputable") for k, _, line in scope):
+        in_force.append("noncomputable section")
+    return in_force, [n for k, n, _ in scope if k == "namespace" and n]
 
 
 def load_manifest(problem_id):
@@ -411,7 +441,9 @@ def slice_range(lines, source_range):
     return "\n".join(sliced), lo
 
 
-def closure_region(dependencies, generated, declaration, opened_namespaces=()):
+def closure_region(
+    dependencies, generated, declaration, opened_namespaces=(), target_name=None
+):
     """A declaration's FC-local closure, copied, needing Mathlib and nothing else.
 
     lean-eval vendors problems, so a generated Challenge cannot fetch this
@@ -427,10 +459,15 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
     marked-up module, which `--verify` does.
     """
     copied = [dep["name"] for dep in dependencies]
+    # The statement's own `match` and `proof` auxiliaries have the statement
+    # as their ancestor, and the statement is restated in the workspace, so
+    # re-elaborating it regenerates them; only an auxiliary of something not
+    # being copied at all is unreachable.
+    ancestors = copied + ([target_name] if target_name else [])
     orphans = [
         name
         for name in generated
-        if not any(name.startswith(parent + ".") for parent in copied)
+        if not any(name.startswith(parent + ".") for parent in ancestors)
     ]
     if orphans:
         raise SystemExit(
@@ -471,6 +508,46 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
     dependencies = [dep for dep in dependencies if dep["name"] not in subsumed]
 
     blocks, provenance = [], []
+    # `open X` on a namespace nothing has declared yet is an error, and a
+    # copied preamble may open a namespace whose declaring block comes later
+    # in the copy, or never: with the problem's module no longer imported,
+    # only the copy itself can make a name exist. An empty namespace block
+    # up front is enough, and creating one that a later declaration fills is
+    # harmless. This covers the statement's own namespace stack and every
+    # namespace a copied preamble opens.
+    created = []
+    for dep in dependencies:
+        if dep["range"] is None:
+            continue
+        dep_path = module_source_path(dep["module"])
+        dep_lines = dep_path.read_text(encoding="utf-8").split("\n")
+        dep_preamble, dep_namespaces = file_scoped_preamble(
+            dep_lines, slice_range(dep_lines, dep["range"])[1]
+        )
+        for entry in dep_preamble:
+            words = entry.split("\n")[0].split()
+            if not words or words[0] != "open":
+                continue
+            for word in words[1:]:
+                if word == "scoped":
+                    continue
+                if not re.fullmatch(r"[\w.«»]+", word):
+                    break
+                created.append(word)
+        created.extend(
+            ".".join(dep_namespaces[: depth + 1])
+            for depth in range(len(dep_namespaces))
+        )
+    created.extend(
+        ".".join(opened_namespaces[: depth + 1])
+        for depth in range(len(opened_namespaces))
+    )
+    seen_namespaces = set()
+    for namespace in created:
+        if namespace in seen_namespaces:
+            continue
+        seen_namespaces.add(namespace)
+        blocks.append(f"namespace {namespace}\nend {namespace}")
     for dep in dependencies:
         if dep["range"] is None:
             raise SystemExit(f"{declaration}: {dep['name']} has no source range")
@@ -493,21 +570,6 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
         blocks.append("\n".join(chunk))
         provenance.append((dep["name"], body))
 
-    # The statement reopens the namespace stack the target sat in, so it can
-    # name siblings short. `open` on a namespace nothing has declared is an
-    # error, and with the problem's module no longer imported only the copied
-    # declarations can declare one. An empty namespace block is enough to make
-    # the name exist.
-    declared_namespaces = {
-        name.rsplit(".", 1)[0] for name, _ in provenance if "." in name
-    }
-    for depth in range(len(opened_namespaces)):
-        prefix = ".".join(opened_namespaces[: depth + 1])
-        if not any(
-            ns == prefix or ns.startswith(prefix + ".") for ns in declared_namespaces
-        ):
-            blocks.append(f"namespace {prefix}\nend {prefix}")
-
     listing = "\n".join(f"* `{name}`" for name, _ in provenance)
     return (
         "/-!\n"
@@ -517,6 +579,107 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
         f"{listing}\n"
         "-/\n\n" + "\n\n".join(blocks) + "\n"
     ), provenance
+
+
+NOTATION_COMMAND = re.compile(
+    r"^(?:@\[[^\]]*\]\s*)?(?:scoped\[[\w.«»]+\]\s+)?(?:scoped\s+)?"
+    r"(?:notation[0-9]*|postfix|prefix|infixl|infixr|infix)[:\s]"
+)
+
+_NOTATION_CACHE = None
+
+
+def fc_notation_commands():
+    """Every exportable notation command an FC module defines, with its token.
+
+    A notation is not a constant, so the elaborated closure never reports it:
+    a statement written as `ℝ²` names `EuclideanSpace ℝ (Fin 2)` in the
+    environment and `ℝ²` only in its text. The copy carries the text, so the
+    commands that make such tokens parse have to be found at the text layer.
+    `local` notations are file-scoped at their origin and cannot be in force
+    in a problem file, so they are not candidates.
+
+    Returns `[(tokens, command, namespaces)]`, where `tokens` are the
+    command's string literals that contain a non-ASCII character — the
+    distinctive ones worth matching on — and `namespaces` is the stack a
+    plain `scoped` command needs restated around it.
+    """
+    global _NOTATION_CACHE
+    if _NOTATION_CACHE is not None:
+        return _NOTATION_CACHE
+    commands = []
+    roots = [ROOT / "FormalConjecturesForMathlib", ROOT / "FormalConjecturesUtil"]
+    for src in roots + SOURCE_DIRS:
+        for path in sorted(src.rglob("*.lean")):
+            lines = path.read_text(encoding="utf-8").split("\n")
+            for index, line in enumerate(lines):
+                if not NOTATION_COMMAND.match(line):
+                    continue
+                text = [line]
+                follow = index + 1
+                while follow < len(lines) and (
+                    lines[follow][:1].isspace() and lines[follow].strip()
+                ):
+                    text.append(lines[follow])
+                    follow += 1
+                command = "\n".join(text)
+                tokens = [
+                    token
+                    for token in re.findall(r'"([^"]+)"', command)
+                    if any(ord(c) > 127 for c in token)
+                ]
+                if not tokens:
+                    continue
+                bracket = re.match(r"^(?:@\[[^\]]*\]\s*)?scoped\[([\w.«»]+)\]", line)
+                if bracket:
+                    scope = bracket.group(1)
+                elif re.match(r"^scoped\s", line):
+                    _, namespaces = file_scoped_preamble(lines, index + 1)
+                    scope = ".".join(namespaces)
+                else:
+                    scope = None
+                # A global notation in FormalConjecturesForMathlib or
+                # FormalConjecturesUtil is in force in every problem file,
+                # which imports both; one in a problem module is not, since
+                # problem files do not import each other, and the problem
+                # file's own notations travel with the preamble.
+                shared = src.name != "FormalConjectures"
+                commands.append((tokens, command, scope, shared))
+    _NOTATION_CACHE = commands
+    return commands
+
+
+def notation_blocks(module_texts, opened):
+    """The FC notation commands the module's text uses, as copyable blocks.
+
+    A token match alone over-copies: `⊆` from a modal-logic module matched
+    every statement about sets. A scoped notation can only have been in
+    force in the source file if its namespace is among the file's opens, so
+    `opened` — the namespaces the module's scope and copied preambles open —
+    gates every scoped command. A global `notation` in a module nothing
+    imports was never in force either, but the corpus keeps global notation
+    in the problem file itself, which the preamble already carries, so
+    unscoped commands from other files are not candidates at all.
+    """
+    combined = "\n".join(module_texts)
+    blocks, seen = [], set()
+    for tokens, command, scope, shared in fc_notation_commands():
+        if scope:
+            if scope not in opened:
+                continue
+        elif not shared:
+            continue
+        if command in seen or command in combined:
+            continue
+        if not any(token in combined for token in tokens):
+            continue
+        seen.add(command)
+        # A plain `scoped` command needs its namespace restated around it;
+        # the bracket form and a global command carry their own scope.
+        if scope and not command.startswith("scoped["):
+            command = f"namespace {scope}\n{command}\nend {scope}"
+        blocks.append(command)
+    return blocks
 
 
 def flatten_declared_name(declared, statement):
@@ -691,15 +854,49 @@ def unwrap_answers(statement):
     return statement
 
 
+def _ascribed_type(statement, start, end):
+    """The `T` of `(answer(sorry) : T)`, when the slot is written that way.
+
+    A type ascription is the one place the surface syntax states a slot's
+    type at its position, and it matters because the elaborated environment
+    can lose the annotation for exactly this shape: the ascribed term is
+    applied or rewritten during elaboration and the metadata does not
+    survive into the stored statement type.
+    """
+    before = statement[:start].rstrip()
+    if not before.endswith("("):
+        return None
+    index = end
+    while index < len(statement) and statement[index].isspace():
+        index += 1
+    if index >= len(statement) or statement[index] != ":":
+        return None
+    index += 1
+    depth, cursor = 1, index
+    while cursor < len(statement):
+        char = statement[cursor]
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0:
+                ascribed = statement[index:cursor].strip()
+                return ascribed or None
+        cursor += 1
+    return None
+
+
 def hoist_answers(statement, basename, slot_types, override=None):
     """Replace each `answer(sorry)` with a named definition hole.
 
-    The slot types come from the elaborated environment, where the `answer`
-    elaborator ran with the expected type in hand; the old surface-syntax
-    guess (an `↔` beside the slot means `Prop`) and the FC problem file's
-    hand-kept `answer_type` both survive only as overrides. Slots of different
-    types in one statement are refused: the environment reports the types as a
-    set, and matching them to positions would be a guess.
+    A slot written `(answer(sorry) : T)` states its own type at its own
+    position, and that reading wins. For the rest, the types come from the
+    elaborated environment, where the `answer` elaborator ran with the
+    expected type in hand; the old surface-syntax guess (an `↔` beside the
+    slot means `Prop`) and the FC problem file's hand-kept `answer_type`
+    both survive only as overrides. Unascribed slots of differing types are
+    refused: the environment reports the types as a set, and matching them
+    to positions would be a guess.
     """
     holes = []
     calls = answer_spans(statement)
@@ -707,31 +904,48 @@ def hoist_answers(statement, basename, slot_types, override=None):
     count = len(selected)
     if count == 0:
         return statement, holes
-    # Under the default `alwaysTrue` setting, the `answer` elaborator erases a
-    # slot to `True` if and only if its expected type is `Prop`
-    # (FormalConjecturesUtil/Answer.lean). So a slot the environment carries
-    # no annotation for is a `Prop` slot by the elaborator's own rule, not by
-    # guesswork, and no postpone build is needed.
-    missing = count - len(slot_types)
+    types = [None] * count
     if override:
         types = [override] * count
-    elif missing == count:
-        types = ["Prop"] * count
-    elif missing == 0 and len(set(slot_types)) == 1:
-        types = [slot_types[0]] * count
-    elif missing == 0:
-        raise SystemExit(
-            f"{basename} has {count} answer slots of differing types "
-            f"{slot_types}; pass --answer-type"
-        )
     else:
-        # Some slots are Prop and some are not: which positions are which
-        # cannot be read off an unordered set, so refuse rather than assign.
-        raise SystemExit(
-            f"{basename}: {missing} Prop slot(s) and {len(slot_types)} typed "
-            f"slot(s) {slot_types} cannot be matched to positions; pass "
-            "--answer-type"
-        )
+        remaining_env = list(slot_types)
+        for i, (start, end, _argument) in enumerate(selected):
+            ascribed = _ascribed_type(statement, start, end)
+            if ascribed is not None:
+                types[i] = ascribed
+                # The environment may have reported this slot too; retire one
+                # matching entry so the counting below stays honest.
+                if ascribed in remaining_env:
+                    remaining_env.remove(ascribed)
+        remaining = [i for i in range(count) if types[i] is None]
+        # Under the default `alwaysTrue` setting, the `answer` elaborator
+        # erases a slot to `True` if and only if its expected type is `Prop`
+        # (FormalConjecturesUtil/Answer.lean). So a slot the environment
+        # carries no annotation for is a `Prop` slot by the elaborator's own
+        # rule, not by guesswork, and no postpone build is needed.
+        missing = len(remaining) - len(remaining_env)
+        if missing == len(remaining):
+            for i in remaining:
+                types[i] = "Prop"
+        elif missing == 0 and remaining and len(set(remaining_env)) == 1:
+            for i in remaining:
+                types[i] = remaining_env[0]
+        elif missing == 0 and not remaining:
+            pass
+        elif missing == 0:
+            raise SystemExit(
+                f"{basename} has {len(remaining)} answer slots of differing "
+                f"types {remaining_env}; pass --answer-type"
+            )
+        else:
+            # Some slots are Prop and some are not: which positions are which
+            # cannot be read off an unordered set, so refuse rather than
+            # assign.
+            raise SystemExit(
+                f"{basename}: {missing} Prop slot(s) and {len(remaining_env)} "
+                f"typed slot(s) {remaining_env} cannot be matched to "
+                "positions; pass --answer-type"
+            )
     replacements = []
     for i, (start, end, _argument) in enumerate(selected):
         name = f"{basename}_answer" if count == 1 else f"{basename}_answer_{i + 1}"
@@ -835,6 +1049,7 @@ def import_problem(problem, answer_type=None, module=None):
         facts.get("generatedDependencies", []),
         declaration,
         namespaces_at_target,
+        target_name=facts.get("name"),
     )
 
     statement = strip_decorations(statement)
@@ -880,9 +1095,44 @@ def import_problem(problem, answer_type=None, module=None):
     ]
 
     mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
+    scope_text = "\n".join(opens + preamble)
+    # Notation is text, not a constant: a statement or copied declaration
+    # spelled with an FC-defined token needs the defining command copied too,
+    # and the elaborated closure cannot say so.
+    # Namespaces the module opens, at its scope and inside every copied
+    # block: a scoped notation can only have been in force where one of
+    # these opens it.
+    opened_for_notation = set()
+    for line in (dependencies + "\n" + scope_text).split("\n"):
+        words = line.split()
+        if words[:1] == ["open"]:
+            opened_for_notation.update(w for w in words[1:] if w != "scoped")
+    notations = notation_blocks(
+        [dependencies, scope_text, statement], opened_for_notation
+    )
+    if notations:
+        # A notation whose right-hand side names a copied declaration must
+        # come after the block declaring it; every other notation comes
+        # first, because copied declarations may use its token textually. A
+        # single notation needing both would need interleaving; none does,
+        # and `--verify` is what says so.
+        copied_last_components = {name.rsplit(".", 1)[-1] for name, _ in copied}
+        before, after = [], []
+        for block in notations:
+            rhs = block.split("=>", 1)[-1]
+            names = set(re.findall(r"[\w«»'.]+", rhs))
+            names |= {name.rsplit(".", 1)[-1] for name in names}
+            if names & copied_last_components:
+                after.append(block)
+            else:
+                before.append(block)
+        if before:
+            dependencies = "\n\n".join(before) + "\n\n" + dependencies
+        if after:
+            dependencies = dependencies + "\n\n" + "\n\n".join(after)
     marked_up = MarkedUpModule(
         dependencies=dependencies,
-        scope="\n".join(opens + preamble),
+        scope=scope_text,
         holes="\n\n".join(hole.declaration() for hole in holes),
         statement=statement,
         dependency_declarations=tuple(copied),

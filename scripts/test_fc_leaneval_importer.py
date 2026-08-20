@@ -369,7 +369,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
         out, _copied = closure_region([], [], "grimm_conjecture", ["Grimm"])
         self.assertIn("namespace Grimm\nend Grimm", out)
 
-    def test_a_namespace_a_dependency_declares_is_not_restated(self):
+    def test_namespaces_exist_before_any_copied_block_opens_them(self):
         deps = [
             {
                 "name": "Grimm.helper",
@@ -386,7 +386,12 @@ class MathlibOnlyClosureTest(unittest.TestCase):
             source.write_text("def Grimm.helper := 1\n", encoding="utf-8")
             resolve.return_value = source
             out, _copied = closure_region(deps, [], "t", ["Grimm"])
-        self.assertNotIn("namespace Grimm\nend Grimm", out)
+        # The empty block that makes the namespace exist comes before any
+        # copied block: a copied preamble may `open` it before anything
+        # declares it. Redundant creation is harmless.
+        self.assertLess(
+            out.index("namespace Grimm\nend Grimm"), out.index("def Grimm.helper")
+        )
 
     def test_the_closure_region_does_not_carry_the_import(self):
         # `import Mathlib` belongs to the module as a whole, and the generator
@@ -556,3 +561,106 @@ class FlattenDeclaredNameTest(unittest.TestCase):
     def test_an_absent_declaration_is_refused(self):
         with self.assertRaises(SystemExit):
             importer.flatten_declared_name("a.b", "theorem c.d : True := sorry")
+
+
+class PreambleNotationTest(unittest.TestCase):
+    """File-scoped notation and macros travel with the preamble."""
+
+    def test_local_notation_is_kept(self):
+        # Irrational.lean: dropping `local notation "e" => exp 1` left `e`
+        # to auto-bind as an implicit at FC pins and fail at LeanEval's.
+        lines = ['local notation "e" => exp 1', "theorem t : True := trivial"]
+        pre, _ = file_scoped_preamble(lines, 2)
+        self.assertEqual(pre, ['local notation "e" => exp 1'])
+
+    def test_a_macro_keeps_its_indented_body(self):
+        # Poincare.lean: the 𝕊ⁿ macro's body is on the next line; one kept
+        # line would be broken syntax.
+        lines = [
+            'local macro:max "𝕊" noWs n:superscript(term) : term =>',
+            "  `(Metric.sphere 0 1)",
+            "theorem t : True := trivial",
+        ]
+        pre, _ = file_scoped_preamble(lines, 3)
+        self.assertEqual(len(pre), 1)
+        self.assertIn("`(Metric.sphere 0 1)", pre[0])
+
+    def test_noncomputable_section_is_restated(self):
+        # OpenQuantumProblems/23: a copied def that was total inside
+        # `noncomputable section` fails to compile outside it.
+        lines = ["noncomputable section", "theorem t : True := trivial"]
+        pre, _ = file_scoped_preamble(lines, 2)
+        self.assertIn("noncomputable section", pre)
+
+    def test_a_closed_noncomputable_section_is_not_restated(self):
+        lines = ["noncomputable section", "end", "theorem t : True := trivial"]
+        pre, _ = file_scoped_preamble(lines, 3)
+        self.assertNotIn("noncomputable section", pre)
+
+
+class AscribedSlotTest(unittest.TestCase):
+    """`(answer(sorry) : T)` states its own type at its own position."""
+
+    def test_the_ascription_wins_over_the_erasure_rule(self):
+        # Erdos332: the annotation for an ascribed-and-applied slot does not
+        # survive elaboration, so the environment reports nothing and the
+        # erasure rule would call it Prop.
+        statement = (
+            "theorem erdos_332 (A : Set ℕ) : "
+            "(answer(sorry) : Set ℕ → Prop) A → True := by\n  sorry"
+        )
+        _, holes = hoist_answers(statement, "erdos_332", [])
+        self.assertEqual(holes[0].type, "Set ℕ → Prop")
+
+    def test_a_nested_paren_type_stays_whole(self):
+        statement = "theorem t : (answer(sorry) : (ℕ → ℕ) → Prop) f := by\n  sorry"
+        _, holes = hoist_answers(statement, "t", [])
+        self.assertEqual(holes[0].type, "(ℕ → ℕ) → Prop")
+
+    def test_an_unascribed_slot_still_follows_the_erasure_rule(self):
+        statement = "theorem t : answer(sorry) ↔ True := by\n  sorry"
+        _, holes = hoist_answers(statement, "t", [])
+        self.assertEqual(holes[0].type, "Prop")
+
+
+class NotationBlocksTest(unittest.TestCase):
+    """FC-defined notation is copied only where it was in force."""
+
+    def _with_commands(self, commands):
+        return mock.patch.object(
+            importer, "fc_notation_commands", return_value=commands
+        )
+
+    def test_a_scoped_notation_needs_its_namespace_opened(self):
+        commands = [
+            (["ℝ²"], 'scoped[EuclideanGeometry] notation "ℝ²" => E', "EuclideanGeometry", True),
+        ]
+        with self._with_commands(commands):
+            self.assertEqual(
+                importer.notation_blocks(["def f : ℝ² := sorry"], {"EuclideanGeometry"}),
+                ['scoped[EuclideanGeometry] notation "ℝ²" => E'],
+            )
+            # Green9's `⊆` false positive: same token, namespace never opened.
+            self.assertEqual(
+                importer.notation_blocks(["def f : ℝ² := sorry"], set()), []
+            )
+
+    def test_a_shared_global_notation_matches_without_opens(self):
+        commands = [(["≪"], 'notation g " ≪ " f => IsBigO g f', None, True)]
+        with self._with_commands(commands):
+            self.assertEqual(
+                importer.notation_blocks(["theorem t : a ≪ b := sorry"], set()),
+                ['notation g " ≪ " f => IsBigO g f'],
+            )
+
+    def test_a_problem_module_global_notation_is_never_copied(self):
+        commands = [(["≪"], 'notation g " ≪ " f => X g f', None, False)]
+        with self._with_commands(commands):
+            self.assertEqual(
+                importer.notation_blocks(["theorem t : a ≪ b := sorry"], set()), []
+            )
+
+    def test_an_unused_token_is_not_copied(self):
+        commands = [(["ℝ²"], 'notation "ℝ²" => E', None, True)]
+        with self._with_commands(commands):
+            self.assertEqual(importer.notation_blocks(["theorem t : True"], set()), [])
