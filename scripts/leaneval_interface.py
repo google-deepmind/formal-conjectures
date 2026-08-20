@@ -1,61 +1,74 @@
 #!/usr/bin/env python3
 """The one interface between the Formal Conjectures importer and the generator.
 
-`leanprover/lean-eval#536` splits this work in two. The generator core inside
-lean-eval's `EvalTools` — the part that turns a marked-up Lean module plus a
-manifest into a Challenge / Solution / Submission workspace — is being
-extracted into `leanprover/lean-eval-generator` and consumed as a pinned
-dependency. The Formal Conjectures side owns an importer that maps FC
-declarations and metadata to LeanEval modules and manifests. The FC importer
-does not fork the generation logic.
+`leanprover/lean-eval#536` splits this work in two, and the generator half now
+exists: `leanprover/lean-eval-generator` is a deterministic Lean CLI with a
+versioned JSON contract, pinned in `comparator/tools.toml`. The consumer sends
+one request on stdin — target pins, templates, and per problem a Lean module
+with resolved hole ranges — and receives the complete workspace file map with
+a SHA-256 digest per file. The Formal Conjectures side owns an importer that
+maps FC declarations and metadata to that request. The FC importer does not
+fork the generation logic.
 
-This module is that seam, and nothing else. It holds the two values the
-importer hands the generator and no code that produces or consumes them:
+This module is that seam, and nothing else. It holds the values that cross it
+and the code that turns them into contract JSON:
 
-    MarkedUpModule   one Mathlib-only Lean module, in labelled regions
+    MarkedUpModule   one Mathlib-only Lean module, in four internal regions
     ProblemManifest  the facts about the problem that the module's text does
-                     not carry, including the FC source commit, the FC
-                     declaration id, and the pins the workspace is built with
+                     not carry, including the FC source commit and the FC
+                     declaration id; written beside the generated workspace
+                     as `fc-provenance.json`, because the v1 contract has no
+                     provenance fields of its own
+    build_request    (module, manifest) pairs -> the v1 request object
+    parse_response   response text -> file maps, digests checked
 
-`scripts/fc_leaneval_importer.py` produces both. `scripts/leaneval_generator.py`
-consumes both and returns a workspace. When `lean-eval-generator` lands, the
-generator module goes and this file becomes an import from the pinned package;
-the importer keeps building the same two values and does not change.
+`scripts/fc_leaneval_importer.py` produces the pairs.
+`scripts/leaneval_generator_cli.py` runs the pinned binary. Nothing on the FC
+side decides a workspace file's contents any more.
 
-## Why a marked-up module rather than a bag of strings
+## Why one module rather than a bag of strings
 
 The generator's job includes the import and scope fidelity work from
 lean-eval#531: deciding which generated file imports which, and where the
 file-scoped `open`, `variable` and notation have to be restated so that the
 same statement text elaborates in Challenge, Submission and Solution alike.
 That decision belongs to the generator, so the importer must not pre-split the
-source into those files. It emits one module that elaborates on its own
-against Mathlib, with the four parts labelled, and the generator slices it.
+source. It emits one module that elaborates on its own against Mathlib, and
+the generator slices it by the hole ranges the request carries.
 
 Emitting one module also gives the importer a check it could not otherwise
 have: the module it is about to hand over is exactly the text it can elaborate
 locally (`--verify`), so a copied closure that has lost an `open` fails on the
-FC side rather than in lean-eval's CI.
+FC side rather than in lean-eval's CI. For the same reason the module carries
+no `@[eval_problem]` markers: that attribute does not exist outside lean-eval,
+and the ranges in the request already say where the holes are.
 
-The regions, in the order they must appear:
+The regions, in the order they are rendered:
 
     dependencies  the FC-local closure of the statement, copied, Mathlib-only
     scope         the `open` and file-scoped directives the statement needs
     holes         one `noncomputable def <name> : <type> := sorry` per
                   `answer(sorry)` slot the importer hoisted
     statement     the target statement, its proof replaced by `sorry`
+
+The regions are an internal structure. What crosses the seam is the rendered
+module inside the request, byte for byte.
 """
 
 import dataclasses
+import hashlib
 import json
 import re
 
-REGION_MARKER = "-- @region "
 REGIONS = ("dependencies", "scope", "holes", "statement")
 
 MODULE_PREAMBLE = "import Mathlib\n"
 
 MANIFEST_SCHEMA_VERSION = 1
+
+# The generator's frozen wire format; `schemas/request-v1.schema.json` and
+# `response-v1.schema.json` in the pinned revision are normative.
+CONTRACT_VERSION = 1
 
 
 def slug(name):
@@ -232,19 +245,21 @@ class ProblemManifest:
 class MarkedUpModule:
     """One Mathlib-only Lean module, in the four labelled regions.
 
-    Rendering and parsing are inverse on the region bodies, so the artifact
-    the importer emits for review is the artifact the generator reads.
+    `dependency_declarations` names each copied declaration and the exact
+    text the dependencies region carries for it, in order. The contract wants
+    a source span per declaration, and only the renderer knows which bytes
+    belong to which copied name.
     """
 
     dependencies: str
     scope: str
     holes: str
     statement: str
+    dependency_declarations: tuple = ()
 
     def __post_init__(self):
         # Rendering separates the regions itself, so leading and trailing
-        # blank lines are not part of a region's content. Normalising them
-        # here is what makes rendering and parsing inverse.
+        # blank lines are not part of a region's content.
         for name in REGIONS:
             object.__setattr__(self, name, getattr(self, name).strip("\n"))
 
@@ -252,47 +267,261 @@ class MarkedUpModule:
         return {name: getattr(self, name) for name in REGIONS}
 
     def render(self):
+        """The module as handed over: plain Lean, no markers of any kind."""
         parts = [MODULE_PREAMBLE]
-        for name, body in self.regions().items():
+        for body in self.regions().values():
             body = body.strip("\n")
-            # A copied declaration carrying a line that reads as a marker
-            # would split the module somewhere the importer did not choose,
-            # and the generator would never know. Refuse instead.
-            for line in body.split("\n"):
-                if line.startswith(REGION_MARKER):
-                    raise SystemExit(
-                        f"the {name} region contains a region marker: {line!r}"
-                    )
-            parts.append(f"\n{REGION_MARKER}{name}\n" + (body + "\n" if body else ""))
+            if body:
+                parts.append("\n" + body + "\n")
         return "".join(parts)
 
-    @classmethod
-    def parse(cls, text):
-        """Read a rendered module back, refusing anything the shape forbids."""
-        bodies, current = {}, None
-        for line in text.split("\n"):
-            if line.startswith(REGION_MARKER):
-                current = line[len(REGION_MARKER) :].strip()
-                if current not in REGIONS:
-                    raise SystemExit(f"unknown region {current!r} in marked-up module")
-                if current in bodies:
-                    raise SystemExit(f"region {current!r} appears twice")
-                bodies[current] = []
-                continue
-            if current is not None:
-                bodies[current].append(line)
-        missing = [name for name in REGIONS if name not in bodies]
-        if missing:
-            raise SystemExit(
-                "marked-up module has no " + ", ".join(f"`{m}`" for m in missing)
-                + " region"
-            )
-        if list(bodies) != list(REGIONS):
-            raise SystemExit(
-                "marked-up module regions are out of order: "
-                + ", ".join(bodies)
-                + f"; expected {', '.join(REGIONS)}"
-            )
-        return cls(
-            **{name: "\n".join(lines) for name, lines in bodies.items()}
+
+# The `@[category ...]` tags that name a problem, and the lean-eval group
+# each belongs to. `research open` is the point of the FC import and goes to
+# the open-conjectures display; everything already settled — solved research,
+# textbook and test statements — is evaluation material. `API` declarations
+# and untagged ones are not problems and are refused.
+CATEGORY_GROUPS = {
+    "research open": "open-conjectures",
+    "research solved": "formalization-evaluation",
+    "textbook": "formalization-evaluation",
+    "test": "formalization-evaluation",
+}
+
+
+def problem_group(manifest):
+    """The lean-eval problem group for an imported declaration's category."""
+    group = CATEGORY_GROUPS.get(manifest.category)
+    if group is None:
+        raise SystemExit(
+            f"{manifest.id}: category {manifest.category!r} is not a "
+            "problem category; expected one of "
+            + ", ".join(sorted(CATEGORY_GROUPS))
         )
+    return group
+
+
+MATHLIB_GIT = "https://github.com/leanprover-community/mathlib4.git"
+
+SUBMITTER = "formal-conjectures-importer"
+
+
+def module_declarations(marked_up, manifest):
+    """Every declaration in the rendered module, in order.
+
+    Returns `(name, body, kind, explicit_parameters)` tuples: the copied
+    dependencies first, then the hoisted answer holes, then the statement.
+    The generator needs a span for each — holes to slice, dependencies to
+    keep or drop per generated file — and the bodies are what the spans are
+    computed from.
+    """
+    declarations = [
+        (name, body, "helper", None)
+        for name, body in marked_up.dependency_declarations
+    ]
+    declarations += [
+        (hole.name, hole.declaration(), "def", None) for hole in manifest.holes
+    ]
+    declarations.append(
+        (
+            manifest.theorem,
+            marked_up.statement,
+            "theorem",
+            list(manifest.apply_arguments),
+        )
+    )
+    return declarations
+
+
+def _positions(text):
+    """Codepoint offset of the start of each 1-indexed line."""
+    starts = [0]
+    for line in text.split("\n")[:-1]:
+        starts.append(starts[-1] + len(line) + 1)
+    return starts
+
+
+def _utf16_column(line_text, column):
+    """The UTF-16 code-unit column for a codepoint column.
+
+    `.ilean` files store LSP ranges, and LSP counts UTF-16 code units; a
+    supplementary-plane character (𝔽, 𝕜) earlier in the line makes the two
+    disagree.
+    """
+    return sum(2 if ord(c) > 0xFFFF else 1 for c in line_text[:column])
+
+
+def declaration_spans(module_text, declarations):
+    """A source span for each declaration, located by its exact text.
+
+    The renderer wrote every declaration into the module verbatim, so each
+    body appears in the text; a body appearing more than once would make the
+    span a guess, and is refused. Lines are 1-indexed. `codepoint` columns
+    are what the contract's `resolvedHoles` carry; `utf16` columns are what
+    an `.ilean` carries.
+    """
+    line_starts = _positions(module_text)
+    lines = module_text.split("\n")
+
+    def line_of(offset):
+        low, high = 0, len(line_starts) - 1
+        while low < high:
+            mid = (low + high + 1) // 2
+            if line_starts[mid] <= offset:
+                low = mid
+            else:
+                high = mid - 1
+        return low
+
+    spans = []
+    for name, body, kind, explicit in declarations:
+        body = body.strip("\n")
+        first = module_text.find(body)
+        if first < 0:
+            raise SystemExit(f"{name}: declaration text not found in the module")
+        if module_text.find(body, first + 1) >= 0:
+            raise SystemExit(
+                f"{name}: declaration text appears more than once in the module"
+            )
+        end = first + len(body)
+        start_line, end_line = line_of(first), line_of(end)
+        start_col = first - line_starts[start_line]
+        end_col = end - line_starts[end_line]
+        spans.append(
+            {
+                "name": name,
+                "kind": kind,
+                "explicitParameters": explicit,
+                "startLine": start_line + 1,
+                "startColumn": start_col,
+                "endLine": end_line + 1,
+                "endColumn": end_col,
+                "utf16StartColumn": _utf16_column(lines[start_line], start_col),
+                "utf16EndColumn": _utf16_column(lines[end_line], end_col),
+            }
+        )
+    return spans
+
+
+def build_problem(marked_up, manifest, module_name=None):
+    """One problem entry of the v1 request, and its `.ilean` declaration map.
+
+    The module name is a single identifier on purpose: the generator resolves
+    module names to paths by splitting on every dot, guillemets included, so
+    a dotted or quoted name would trip the same decoder defect this
+    repository fixed on its own side.
+
+    Returns `(problem, ilean_decls)`. The `.ilean` payload exists because the
+    generator reads helper-declaration spans from compiled metadata it
+    expects to find under the context root; this consumer synthesises that
+    metadata from the spans it computed, which it can do exactly because it
+    rendered the module.
+    """
+    module_name = module_name or slug(manifest.id)
+    text = marked_up.render()
+    spans = declaration_spans(text, module_declarations(marked_up, manifest))
+    resolved, ilean = [], {}
+    for span in spans:
+        # `.ilean` lines are 0-indexed; `loadIleanDeclRanges` adds one back.
+        ilean[span["name"]] = [
+            span["startLine"] - 1,
+            span["utf16StartColumn"],
+            span["endLine"] - 1,
+            span["utf16EndColumn"],
+        ]
+        if span["kind"] == "helper":
+            continue
+        resolved.append(
+            {
+                "declarationName": span["name"],
+                "module": module_name,
+                "startLine": span["startLine"],
+                "startColumn": span["startColumn"],
+                "endLine": span["endLine"],
+                "endColumn": span["endColumn"],
+                "explicitParameters": span["explicitParameters"],
+                "sameModuleDependencies": (
+                    [name for name, _ in marked_up.dependency_declarations]
+                    if span["kind"] == "theorem"
+                    else []
+                ),
+                "holeDependentDependencies": [],
+                "kind": span["kind"],
+            }
+        )
+    problem = {
+        "id": slug(manifest.id),
+        "title": manifest.qualified_theorem,
+        "group": problem_group(manifest),
+        "status": "draft",
+        "visible": True,
+        "statementRevision": 1,
+        "tags": ["formal-conjectures"],
+        "moduleName": module_name,
+        "holes": [entry["declarationName"] for entry in resolved],
+        "submitter": SUBMITTER,
+        "notes": None,
+        "source": manifest.source_url or None,
+        "informalSolution": None,
+        "moduleContent": text,
+        "resolvedHoles": resolved,
+    }
+    return problem, ilean
+
+
+def build_request(problems, target, workspace_test, context_root):
+    """The complete v1 request for a batch of `(problem, ilean)` pairs.
+
+    `problems` are the entries `build_problem` returned; the ilean halves go
+    to whoever writes the context root, not into the request. Ids must be
+    unique across the batch — two problems generating into one directory is
+    the collision the qualified default id exists to prevent.
+    """
+    seen = set()
+    for problem in problems:
+        if problem["id"] in seen:
+            raise SystemExit(f"duplicate workspace id {problem['id']!r}")
+        seen.add(problem["id"])
+    return {
+        "schemaVersion": CONTRACT_VERSION,
+        "contextRoot": str(context_root),
+        "leanToolchain": target.lean_toolchain,
+        "mathlib": {
+            "name": "mathlib",
+            "git": MATHLIB_GIT,
+            "rev": target.mathlib_revision,
+        },
+        "templates": {"workspaceTest": workspace_test},
+        "problems": problems,
+    }
+
+
+def parse_response(text):
+    """The generator's file maps, with every digest checked.
+
+    Returns `{problem_id: {path: content}}`. A digest mismatch means the
+    bytes were damaged in transit or the pinned generator is not the one
+    this code was written against; either way the workspace cannot be
+    trusted, so refuse.
+    """
+    payload = json.loads(text)
+    version = payload.get("schemaVersion")
+    if version != CONTRACT_VERSION:
+        raise SystemExit(
+            f"generator response schema version {version!r} is not {CONTRACT_VERSION}"
+        )
+    workspaces = {}
+    for entry in payload["files"]:
+        digest = hashlib.sha256(entry["content"].encode("utf-8")).hexdigest()
+        if digest != entry["sha256"]:
+            raise SystemExit(
+                f"{entry['problemId']}/{entry['path']}: content does not match "
+                "its digest"
+            )
+        files = workspaces.setdefault(entry["problemId"], {})
+        if entry["path"] in files:
+            raise SystemExit(
+                f"{entry['problemId']}/{entry['path']}: appears twice in response"
+            )
+        files[entry["path"]] = entry["content"]
+    return workspaces

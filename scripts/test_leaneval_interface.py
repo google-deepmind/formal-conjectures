@@ -29,6 +29,12 @@ from leaneval_interface import (
     ProblemManifest,
     SourceRecord,
     TargetRecord,
+    _utf16_column,
+    build_problem,
+    build_request,
+    declaration_spans,
+    module_declarations,
+    parse_response,
     slug,
 )
 
@@ -68,7 +74,7 @@ def a_manifest(**overrides):
         "id": "erdos_940",
         "theorem": "erdos_940",
         "qualified_theorem": "Erdos.erdos_940",
-        "apply_arguments": ("n",),
+        "apply_arguments": (),
         "holes": (DefinitionHole(name="erdos_940_answer", type="ENNReal"),),
         "permitted_axioms": ("propext", "Quot.sound", "Classical.choice"),
         "source": a_source(),
@@ -84,6 +90,7 @@ A_MODULE = MarkedUpModule(
     scope="open Erdos",
     holes="noncomputable def erdos_940_answer : ENNReal := sorry",
     statement="theorem erdos_940 : erdos_940_answer = 0 := by\n  sorry",
+    dependency_declarations=(("Foo.bar", "def Foo.bar := 1"),),
 )
 
 
@@ -135,55 +142,32 @@ class MarkedUpModuleTest(unittest.TestCase):
     def test_the_module_stands_on_mathlib_alone(self):
         self.assertTrue(A_MODULE.render().startswith("import Mathlib\n"))
 
-    def test_the_module_survives_a_round_trip(self):
-        self.assertEqual(MarkedUpModule.parse(A_MODULE.render()), A_MODULE)
+    def test_the_module_carries_no_markers(self):
+        # The handed-over module is plain Lean: `@[eval_problem]` does not
+        # exist outside lean-eval, and the request's resolved holes already
+        # say where the declarations are.
+        rendered = A_MODULE.render()
+        self.assertNotIn("@[eval_problem]", rendered)
+        self.assertNotIn("-- @region", rendered)
 
-    def test_an_empty_region_still_round_trips(self):
-        # Most statements have no answer slot, so the holes region is empty
-        # and the generator must still find it.
+    def test_regions_render_in_declaration_order(self):
+        # A hole is used by the statement below it, and both need the scope
+        # above them.
+        rendered = A_MODULE.render()
+        positions = [
+            rendered.index(getattr(A_MODULE, region))
+            for region in ("dependencies", "scope", "holes", "statement")
+        ]
+        self.assertEqual(positions, sorted(positions))
+
+    def test_an_empty_region_leaves_no_blank_gap(self):
         module = MarkedUpModule(
             dependencies="def f := 1", scope="", holes="", statement="theorem t : True"
         )
-        self.assertEqual(MarkedUpModule.parse(module.render()), module)
-
-    def test_a_missing_region_is_refused(self):
-        text = A_MODULE.render().replace("-- @region holes\n", "")
-        with self.assertRaisesRegex(SystemExit, "`holes` region"):
-            MarkedUpModule.parse(text)
-
-    def test_an_unknown_region_is_refused(self):
-        with self.assertRaisesRegex(SystemExit, "unknown region"):
-            MarkedUpModule.parse("import Mathlib\n\n-- @region proof\n")
-
-    def test_a_repeated_region_is_refused(self):
-        with self.assertRaisesRegex(SystemExit, "appears twice"):
-            MarkedUpModule.parse(A_MODULE.render() + "\n-- @region scope\n")
-
-    def test_a_copied_declaration_that_looks_like_a_marker_is_refused(self):
-        # It would split the module somewhere the importer did not choose,
-        # and the generator would have no way to notice.
-        module = MarkedUpModule(
-            dependencies="-- @region statement\ndef f := 1",
-            scope="",
-            holes="",
-            statement="theorem t : True",
+        self.assertEqual(
+            module.render(),
+            "import Mathlib\n\ndef f := 1\n\ntheorem t : True\n",
         )
-        with self.assertRaisesRegex(SystemExit, "contains a region marker"):
-            module.render()
-
-    def test_regions_out_of_order_are_refused(self):
-        # The order is what makes the module elaborate: a hole is used by the
-        # statement below it, and both need the scope above them.
-        module = MarkedUpModule.parse(A_MODULE.render())
-        reordered = (
-            "import Mathlib\n"
-            f"\n-- @region scope\n{module.scope}\n"
-            f"\n-- @region dependencies\n{module.dependencies}\n"
-            f"\n-- @region holes\n{module.holes}\n"
-            f"\n-- @region statement\n{module.statement}\n"
-        )
-        with self.assertRaisesRegex(SystemExit, "out of order"):
-            MarkedUpModule.parse(reordered)
 
 
 class SlugTest(unittest.TestCase):
@@ -197,3 +181,114 @@ class SlugTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DeclarationSpanTest(unittest.TestCase):
+    """Spans are computed from the rendered text, exactly."""
+
+    def test_every_declaration_gets_the_span_of_its_own_text(self):
+        text = A_MODULE.render()
+        spans = declaration_spans(text, module_declarations(A_MODULE, a_manifest()))
+        lines = text.split("\n")
+        for span in spans:
+            with self.subTest(name=span["name"]):
+                sliced = "\n".join(
+                    lines[span["startLine"] - 1 : span["endLine"]]
+                )[span["startColumn"] :]
+                self.assertTrue(sliced.startswith(("def", "noncomputable", "theorem")))
+
+    def test_a_body_appearing_twice_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "more than once"):
+            declaration_spans(
+                "def f := 1\ndef f := 1\n", [("f", "def f := 1", "def", None)]
+            )
+
+    def test_a_missing_body_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "not found"):
+            declaration_spans("def g := 1\n", [("f", "def f := 1", "def", None)])
+
+    def test_utf16_columns_count_supplementary_plane_pairs(self):
+        # 𝕜 is beyond the BMP: one codepoint, two UTF-16 units. An `.ilean`
+        # column after it disagrees with the codepoint column by one.
+        text = "def 𝕜x := 1\ntheorem t : True := trivial\n"
+        (span,) = declaration_spans(
+            text, [("t", "theorem t : True := trivial", "theorem", None)]
+        )
+        self.assertEqual(span["startColumn"], span["utf16StartColumn"])
+        line = "abc𝕜 def f := 1"
+        self.assertEqual(_utf16_column(line, 5), 6)
+
+
+class BuildProblemTest(unittest.TestCase):
+    def test_the_problem_satisfies_the_contract_shape(self):
+        problem, ilean = build_problem(A_MODULE, a_manifest())
+        self.assertEqual(problem["id"], "erdos_940")
+        self.assertEqual(problem["group"], "open-conjectures")
+        self.assertEqual(problem["moduleName"], "erdos_940")
+        self.assertEqual(
+            problem["holes"], ["erdos_940_answer", "erdos_940"]
+        )
+        self.assertEqual(problem["moduleContent"], A_MODULE.render())
+        kinds = [hole["kind"] for hole in problem["resolvedHoles"]]
+        self.assertEqual(kinds, ["def", "theorem"])
+        # Helpers are `.ilean` material, not holes.
+        self.assertIn("Foo.bar", ilean)
+        self.assertNotIn(
+            "Foo.bar", [hole["declarationName"] for hole in problem["resolvedHoles"]]
+        )
+
+    def test_the_theorem_hole_carries_the_copied_dependencies(self):
+        problem, _ = build_problem(A_MODULE, a_manifest())
+        theorem = problem["resolvedHoles"][-1]
+        self.assertEqual(theorem["sameModuleDependencies"], ["Foo.bar"])
+        self.assertEqual(problem["resolvedHoles"][0]["sameModuleDependencies"], [])
+
+    def test_a_non_problem_category_is_refused(self):
+        with self.assertRaises(SystemExit):
+            build_problem(A_MODULE, a_manifest(category="API"))
+
+
+class BuildRequestTest(unittest.TestCase):
+    def test_the_request_carries_the_targets_pins(self):
+        problem, _ = build_problem(A_MODULE, a_manifest())
+        request = build_request([problem], a_target(), "-- test", "context")
+        self.assertEqual(request["schemaVersion"], 1)
+        self.assertEqual(request["leanToolchain"], "leanprover/lean4:v4.33.0")
+        self.assertEqual(request["mathlib"]["rev"], "f" * 40)
+        self.assertEqual(request["templates"]["workspaceTest"], "-- test")
+
+    def test_duplicate_ids_are_refused(self):
+        problem, _ = build_problem(A_MODULE, a_manifest())
+        with self.assertRaisesRegex(SystemExit, "duplicate workspace id"):
+            build_request([problem, problem], a_target(), "", "context")
+
+
+class ParseResponseTest(unittest.TestCase):
+    def _response(self, content="hello"):
+        import hashlib
+        import json
+
+        return json.dumps(
+            {
+                "schemaVersion": 1,
+                "files": [
+                    {
+                        "problemId": "p",
+                        "path": "a.txt",
+                        "sha256": hashlib.sha256(content.encode()).hexdigest(),
+                        "content": "hello",
+                    }
+                ],
+            }
+        )
+
+    def test_a_good_response_yields_the_file_map(self):
+        self.assertEqual(parse_response(self._response()), {"p": {"a.txt": "hello"}})
+
+    def test_a_damaged_digest_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "does not match"):
+            parse_response(self._response(content="tampered"))
+
+    def test_an_unknown_schema_version_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "schema version"):
+            parse_response('{"schemaVersion": 2, "files": []}')

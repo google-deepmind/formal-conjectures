@@ -324,7 +324,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
             resolve.return_value = source
             out, copied = closure_region(deps, ["Foo.bar._proof_1"], "t")
         self.assertIn("def Foo.bar := 1", out)
-        self.assertEqual(copied, ["Foo.bar"])
+        self.assertEqual(copied, [("Foo.bar", "def Foo.bar := 1")])
 
     def test_a_declaration_inside_another_s_range_is_not_copied_twice(self):
         # `EdgeN.mk` covers line 88 of a structure spanning 83 to 93, and

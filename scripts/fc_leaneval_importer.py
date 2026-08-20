@@ -37,6 +37,7 @@ from leaneval_interface import (
     ProblemManifest,
     SourceRecord,
     TargetRecord,
+    problem_group,
 )
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -490,14 +491,16 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
             chunk.append(f"end {namespace}")
         chunk.append("end")
         blocks.append("\n".join(chunk))
-        provenance.append(dep["name"])
+        provenance.append((dep["name"], body))
 
     # The statement reopens the namespace stack the target sat in, so it can
     # name siblings short. `open` on a namespace nothing has declared is an
     # error, and with the problem's module no longer imported only the copied
     # declarations can declare one. An empty namespace block is enough to make
     # the name exist.
-    declared_namespaces = {name.rsplit(".", 1)[0] for name in provenance if "." in name}
+    declared_namespaces = {
+        name.rsplit(".", 1)[0] for name, _ in provenance if "." in name
+    }
     for depth in range(len(opened_namespaces)):
         prefix = ".".join(opened_namespaces[: depth + 1])
         if not any(
@@ -505,7 +508,7 @@ def closure_region(dependencies, generated, declaration, opened_namespaces=()):
         ):
             blocks.append(f"namespace {prefix}\nend {prefix}")
 
-    listing = "\n".join(f"* `{name}`" for name in provenance)
+    listing = "\n".join(f"* `{name}`" for name, _ in provenance)
     return (
         "/-!\n"
         f"The Formal Conjectures declarations `{declaration}` needs, copied so\n"
@@ -849,6 +852,7 @@ def import_problem(problem, answer_type=None, module=None):
         scope="\n".join(opens + preamble),
         holes="\n\n".join(hole.declaration() for hole in holes),
         statement=statement,
+        dependency_declarations=tuple(copied),
     )
     qualified = ".".join(namespaces_at_target + [declared])
     manifest = ProblemManifest(
@@ -873,31 +877,6 @@ def import_problem(problem, answer_type=None, module=None):
         category=facts.get("category") or "",
     )
     return marked_up, manifest
-
-
-# The `@[category ...]` tags that name a problem, and the lean-eval group
-# each belongs to. `research open` is the point of the FC import and goes to
-# the open-conjectures display; everything already settled — solved research,
-# textbook and test statements — is evaluation material. `API` declarations
-# and untagged ones are not problems and are refused.
-CATEGORY_GROUPS = {
-    "research open": "open-conjectures",
-    "research solved": "formalization-evaluation",
-    "textbook": "formalization-evaluation",
-    "test": "formalization-evaluation",
-}
-
-
-def problem_group(manifest):
-    """The lean-eval problem group for an imported declaration's category."""
-    group = CATEGORY_GROUPS.get(manifest.category)
-    if group is None:
-        raise SystemExit(
-            f"{manifest.id}: category {manifest.category!r} is not a "
-            "problem category; expected one of "
-            + ", ".join(sorted(CATEGORY_GROUPS))
-        )
-    return group
 
 
 def elaborate(marked_up):

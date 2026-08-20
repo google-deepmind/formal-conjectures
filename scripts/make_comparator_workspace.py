@@ -6,14 +6,16 @@ module whose statement the maintainers trust, under a config that pins the
 permitted axioms. This command produces that shape for one Formal Conjectures
 declaration, in the two steps `leanprover/lean-eval#536` separates:
 
-    fc_leaneval_importer  FC declaration -> marked-up module + manifest
-    leaneval_generator    marked-up module + manifest -> workspace
+    fc_leaneval_importer   FC declaration -> marked-up module + manifest
+    lean-eval-generator    v1 request -> workspace file map
 
-The first half is Formal Conjectures'. The second half is lean-eval's, and is
-to be replaced by a pinned dependency on `leanprover/lean-eval-generator`; the
-module standing in for it here is the code that gets deleted when that lands.
-`comparator/OWNERSHIP.md` says exactly what goes and what stays. This file is
-the wiring between them and belongs to neither.
+The first half is Formal Conjectures'. The second is the pinned
+`leanprover/lean-eval-generator` binary — a deterministic Lean CLI with a
+versioned JSON contract — run by `scripts/leaneval_generator_cli.py` at the
+revision `comparator/tools.toml` pins. `scripts/leaneval_interface.py` builds
+the request and checks the response. `comparator/OWNERSHIP.md` says exactly
+what belongs to which side. This file is the wiring between them and belongs
+to neither.
 
 The marked-up module requires Mathlib and nothing else. lean-eval vendors its
 problems, so a Challenge cannot fetch this repository at evaluation time, which
@@ -38,22 +40,34 @@ Usage:
   python make_comparator_workspace.py ID --emit-import DIR
   python make_comparator_workspace.py --validate
 
+`--emit-import` writes the exact bytes that cross the seam — the v1 request,
+with its context directory — and generates no workspace; running the pinned
+binary on that request from inside the emitted directory yields the same file
+map this command would have written.
+
 The workspace's own build needs a network fetch of its pinned dependencies, so
-this command does not attempt it; generation is offline and the build belongs
-to the comparator run.
+this command does not attempt it; generation is offline apart from the
+generator binary, and the build belongs to the comparator run.
 """
 
 import argparse
+import json
 import pathlib
 import shutil
 import sys
 import tempfile
 
 import fc_leaneval_importer as importer
-import leaneval_generator as generator
-from leaneval_interface import slug
+import leaneval_generator_cli as generator_cli
+from leaneval_interface import build_problem, build_request, slug
 
 ROOT = importer.ROOT
+
+PROVENANCE_FILE = "fc-provenance.json"
+
+# The request's context directory, relative to the request file, so an
+# emitted seam artifact is self-contained and reproducible from any path.
+CONTEXT_DIR = "context"
 
 
 def write_tree(target, files):
@@ -62,7 +76,7 @@ def write_tree(target, files):
     Plumbing, and on neither side of the seam: the generator returns a
     path-to-content mapping and never touches the filesystem, so putting one
     on disk is the command's job whether the mapping is a workspace or the
-    pair this repository hands over.
+    request this repository hands over.
     """
     target = pathlib.Path(target)
     if target.exists():
@@ -83,18 +97,60 @@ def write_tree(target, files):
     return target
 
 
-def emit_import(marked_up, manifest, out_dir):
-    """Write only the pair this repository owns: the module and the manifest.
+def seam_files(pairs):
+    """The request and context for `(marked_up, manifest)` pairs, as files.
 
-    This is the artifact the FC importer contributes to a lean-eval problem
-    pull request once the generator is a pinned dependency there. Emitting it
-    on its own keeps the seam checkable today: the bytes here are the bytes
-    the generator gets, and nothing in this directory is workspace layout.
+    This is the artifact the FC importer contributes once lean-eval consumes
+    the shared generator: the request bytes, the context directory the v1
+    contract still reads, and one provenance record per problem — the FC
+    source commit and declaration id §10 requires, which the v1 wire format
+    has no field for, so they travel beside it rather than through it.
     """
-    return write_tree(
-        pathlib.Path(out_dir) / slug(manifest.id),
-        {"Problem.lean": marked_up.render(), "manifest.json": manifest.to_json()},
+    problems = [build_problem(marked_up, manifest) for marked_up, manifest in pairs]
+    target = importer.target_pins()
+    template = (
+        importer.COMPARATOR_DIR / "templates" / "WorkspaceTest.lean"
+    ).read_text(encoding="utf-8")
+    request = build_request(
+        [problem for problem, _ in problems], target, template, CONTEXT_DIR
     )
+    files = {"request.json": json.dumps(request, indent=2, ensure_ascii=False) + "\n"}
+    for (problem, ilean), (_, manifest) in zip(problems, pairs):
+        module = problem["moduleName"]
+        files[f"{CONTEXT_DIR}/{module}.lean"] = problem["moduleContent"]
+        files[f"{CONTEXT_DIR}/.lake/build/lib/lean/{module}.ilean"] = (
+            json.dumps({"version": 1, "module": module, "decls": ilean}) + "\n"
+        )
+        files[f"{PROVENANCE_FILE.removesuffix('.json')}-{problem['id']}.json"] = (
+            manifest.to_json()
+        )
+    return request, files
+
+
+def generate_workspaces(pairs, out_dir):
+    """Generate one workspace per pair under `out_dir`, via the pinned binary."""
+    request, files = seam_files(pairs)
+    staging = pathlib.Path(tempfile.mkdtemp(prefix=".fc-seam."))
+    try:
+        for relative, content in files.items():
+            destination = staging / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(content, encoding="utf-8")
+        request["contextRoot"] = str(staging / CONTEXT_DIR)
+        workspaces = generator_cli.generate(request)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    written = []
+    for _, manifest in pairs:
+        problem_id = slug(manifest.id)
+        if problem_id not in workspaces:
+            raise SystemExit(f"the generator returned no files for {problem_id}")
+        workspace = dict(workspaces[problem_id])
+        # The provenance sidecar rides in the workspace directory, not in the
+        # generator's file map: the generator neither knows nor checks it.
+        workspace[PROVENANCE_FILE] = manifest.to_json()
+        written.append(write_tree(pathlib.Path(out_dir) / problem_id, workspace))
+    return written
 
 
 def main(argv):
@@ -127,8 +183,8 @@ def main(argv):
         "--emit-import",
         default=None,
         metavar="DIR",
-        help="write only the marked-up module and its manifest, the pair this "
-        "repository hands the generator, and generate no workspace",
+        help="write only the v1 request and its context, the bytes this "
+        "repository hands the pinned generator, and generate no workspace",
     )
     ap.add_argument(
         "--validate",
@@ -146,12 +202,11 @@ def main(argv):
     if args.verify:
         importer.elaborate(marked_up)
     if args.emit_import:
-        print(emit_import(marked_up, manifest, args.emit_import))
+        _, files = seam_files([(marked_up, manifest)])
+        print(write_tree(pathlib.Path(args.emit_import) / slug(manifest.id), files))
         return 0
-    # The consumer supplies its own pins; see TargetRecord. Locally that is
-    # `[target]` in comparator/tools.toml, standing in for lean-eval's.
-    files = generator.generate(marked_up, manifest, importer.target_pins())
-    print(write_tree(pathlib.Path(args.out) / slug(manifest.id), files))
+    for path in generate_workspaces([(marked_up, manifest)], args.out):
+        print(path)
     return 0
 
 
