@@ -644,6 +644,34 @@ def fc_notation_commands():
     return commands
 
 
+NOTATION_FAMILY = re.compile(r"^(?:notation[0-9]*|postfix|prefix|infixl|infixr|infix)[:\s]")
+
+
+def localise_notation(preamble):
+    """File-scope the preamble's notation commands, with their set_options.
+
+    The generator reconstructs each workspace file's context by re-extracting
+    these commands from the module, so a *global* notation ends up declared
+    both in `ChallengeDeps` and in the file importing it — two identical
+    notations, and every use becomes ambiguous. `local` keeps each copy to
+    its own file. A standalone `set_option quotPrecheck false` does not
+    survive that reconstruction, so a notation that needs it gets it
+    attached as part of its own command.
+    """
+    precheck_off = any(
+        entry.split("\n")[0].strip() == "set_option quotPrecheck false"
+        for entry in preamble
+    )
+    out = []
+    for entry in preamble:
+        if NOTATION_FAMILY.match(entry):
+            entry = "local " + entry
+        if precheck_off and re.match(r"^(?:local\s+)?(?:notation|postfix|prefix|infix)", entry):
+            entry = "set_option quotPrecheck false in\n" + entry
+        out.append(entry)
+    return out
+
+
 def notation_blocks(module_texts, opened):
     """The FC notation commands the module's text uses, as copyable blocks.
 
@@ -670,9 +698,13 @@ def notation_blocks(module_texts, opened):
             continue
         seen.add(command)
         # A plain `scoped` command needs its namespace restated around it;
-        # the bracket form and a global command carry their own scope.
+        # the bracket form carries its own scope. A global command becomes
+        # `local`: the generator re-extracts it into every file that needs
+        # it, and a module-crossing global would be declared twice.
         if scope and not command.startswith("scoped["):
             command = f"namespace {scope}\n{command}\nend {scope}"
+        elif not scope:
+            command = "local " + command
         blocks.append(command)
     return blocks
 
@@ -1083,13 +1115,21 @@ def import_problem(problem, answer_type=None, module=None):
         )
 
     # `open A`, then `open A.B`: opening the inner namespace does not open the
-    # outer one, and a statement may name siblings from either.
-    opens = [
-        f"open {'.'.join(namespaces_at_target[: i + 1])}"
-        for i in range(len(namespaces_at_target))
-    ]
+    # outer one, and a statement may name siblings from either. With nothing
+    # copied there are no siblings to name and nothing declares the
+    # namespace, so an open would be an unresolvable orphan in a generated
+    # file that has no ChallengeDeps to import.
+    opens = (
+        [
+            f"open {'.'.join(namespaces_at_target[: i + 1])}"
+            for i in range(len(namespaces_at_target))
+        ]
+        if copied
+        else []
+    )
 
     mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
+    preamble = localise_notation(preamble)
     scope_text = "\n".join(opens + preamble)
     # Notation is text, not a constant: a statement or copied declaration
     # spelled with an FC-defined token needs the defining command copied too,

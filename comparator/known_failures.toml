@@ -19,3 +19,25 @@ reason = """The copied `f` definition synthesizes `Fintype ↑H.verts` and
 not a copying defect. Formal Conjectures' own bump to Lean 4.33 rewrites the
 source against the target-side Mathlib and retires the gap; re-run the audit
 after the bump and remove this entry."""
+
+[[failure]]
+declaration = "EllipticCurveRank.RatEllipticCurve.twentyone_le_rank_height_count_asymptotic"
+workspace = "EllipticCurveRank_RatEllipticCurve_twentyone_le_rank_height_count_asymptotic"
+stage = "target"
+reason = """The copied `toWeierstrass⟮ℚ⟯` Mordell-Weil notation elaborates at
+this repository's Mathlib but not at LeanEval's (observed at target pin
+6f1ef4e5): the notation's shape changed between the two revisions, in a
+dependency copied faithfully from source. Retired by the repository's 4.33
+bump; re-run the audit after it and remove this entry."""
+
+[[failure]]
+declaration = "Erdos125.erdos_125.variants.positive_unequal_density"
+workspace = "Erdos125_erdos_125_variants_positive_unequal_density"
+stage = "target"
+reason = """The statement's `local notation` uses set-builder syntax and needs
+`set_option quotPrecheck false`, which the source states file-scoped and the
+emitted module carries attached to the notation command. The generator's
+Challenge reconstruction re-extracts the notation line without its
+set_option, and `Challenge.lean` is generator-owned text this side cannot
+amend. Reported upstream as a context-reconstruction gap; remove this entry
+when the pinned generator carries set_option context."""

@@ -318,10 +318,20 @@ def module_declarations(marked_up, manifest):
     declarations += [
         (hole.name, hole.declaration(), "def", None) for hole in manifest.holes
     ]
+    # `open X in` prefix lines travel inside the statement slice, but the
+    # span the generator receives must start at the declaration keyword:
+    # the generator re-attaches whatever sits between the previous span and
+    # this one as the declaration's prefix, and a prefix hidden inside the
+    # span would be dropped from the reconstructed files.
+    statement = marked_up.statement
+    lines = statement.split("\n")
+    start = 0
+    while start < len(lines) - 1 and lines[start].rstrip().endswith(" in"):
+        start += 1
     declarations.append(
         (
             manifest.theorem,
-            marked_up.statement,
+            "\n".join(lines[start:]),
             "theorem",
             list(manifest.apply_arguments),
         )

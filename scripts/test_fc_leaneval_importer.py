@@ -28,7 +28,8 @@ import unittest
 from unittest import mock
 
 import fc_leaneval_importer as importer
-from leaneval_interface import problem_group
+from leaneval_interface import MarkedUpModule, problem_group
+from test_leaneval_interface import a_manifest
 from fc_leaneval_importer import (
     answer_spans,
     closure_region,
@@ -646,12 +647,14 @@ class NotationBlocksTest(unittest.TestCase):
                 importer.notation_blocks(["def f : ℝ² := sorry"], set()), []
             )
 
-    def test_a_shared_global_notation_matches_without_opens(self):
+    def test_a_shared_global_notation_is_copied_as_local(self):
+        # Global would be declared in ChallengeDeps and re-extracted into
+        # the importing file too; `local` keeps each copy to its own file.
         commands = [(["≪"], 'notation g " ≪ " f => IsBigO g f', None, True)]
         with self._with_commands(commands):
             self.assertEqual(
                 importer.notation_blocks(["theorem t : a ≪ b := sorry"], set()),
-                ['notation g " ≪ " f => IsBigO g f'],
+                ['local notation g " ≪ " f => IsBigO g f'],
             )
 
     def test_a_problem_module_global_notation_is_never_copied(self):
@@ -665,3 +668,45 @@ class NotationBlocksTest(unittest.TestCase):
         commands = [(["ℝ²"], 'notation "ℝ²" => E', None, True)]
         with self._with_commands(commands):
             self.assertEqual(importer.notation_blocks(["theorem t : True"], set()), [])
+
+
+class LocaliseNotationTest(unittest.TestCase):
+    def test_a_global_notation_becomes_local(self):
+        self.assertEqual(
+            importer.localise_notation(['notation "R(" k ")" => f k']),
+            ['local notation "R(" k ")" => f k'],
+        )
+
+    def test_quot_precheck_travels_with_the_notation(self):
+        out = importer.localise_notation(
+            ["set_option quotPrecheck false", 'local notation "A" => s']
+        )
+        self.assertEqual(
+            out[1],
+            'set_option quotPrecheck false in\nlocal notation "A" => s',
+        )
+
+    def test_other_preamble_lines_pass_through(self):
+        self.assertEqual(
+            importer.localise_notation(["open Nat", "variable (n : Nat)"]),
+            ["open Nat", "variable (n : Nat)"],
+        )
+
+
+class StatementPrefixSpanTest(unittest.TestCase):
+    def test_the_span_starts_at_the_declaration_keyword(self):
+        from leaneval_interface import module_declarations
+
+        module = MarkedUpModule(
+            dependencies="def Foo.bar := 1",
+            scope="",
+            holes="",
+            statement="open scoped Classical in\ntheorem t : True := by\n  sorry",
+            dependency_declarations=(("Foo.bar", "def Foo.bar := 1"),),
+        )
+        manifest = a_manifest(
+            theorem="t", qualified_theorem="t", holes=(), apply_arguments=()
+        )
+        *_, statement_entry = module_declarations(module, manifest)
+        self.assertTrue(statement_entry[1].startswith("theorem t"))
+        self.assertNotIn("Classical in", statement_entry[1])
