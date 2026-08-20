@@ -70,7 +70,7 @@ def LoewnerConjectureOfClass (k : WithTop ℕ∞) : Prop :=
 The principal-line index at an isolated umbilic of a smooth Hessian was conjectured to be at most
 one. Alpöge's smooth family gives isolated umbilics of larger index, so the answer is false. -/
 @[category research solved, AMS 53 57,
-  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/150d2159bd37294ac7ad45c4ae7f199fb7dcd871/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L53"]
+  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/a4677e237082ea8740b8a47d8f5f0086628b11d4/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L53"]
 theorem loewner_conjecture : answer(False) ↔ LoewnerConjectureOfClass ∞ := by
   sorry
 
