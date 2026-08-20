@@ -18,7 +18,7 @@ import FormalConjecturesUtil.Answer
 import FormalConjecturesUtil.Attributes.Basic
 
 /-!
-The elaborator-side facts `comparator/fc_leaneval_importer.py` would otherwise
+The elaborator-side facts `comparator/adapter/fc_leaneval_importer.py` would otherwise
 get by reading Lean with regular expressions.
 
 Given a module and a declaration name, this prints JSON with what the

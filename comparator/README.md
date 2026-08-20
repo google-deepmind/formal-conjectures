@@ -50,7 +50,7 @@ what turns the gap between them into something observed rather than assumed.
 ## Generate one workspace
 
 ```bash
-python3 comparator/make_comparator_workspace.py erdos_940.variants.large_integers
+python3 comparator/adapter/make_comparator_workspace.py erdos_940.variants.large_integers
 ```
 
 Use `--out` to choose the parent directory. Generation refuses to overwrite an
@@ -77,7 +77,7 @@ because it is not in the permitted axiom list.
 ### Emit only what this repository owns
 
 ```bash
-python3 comparator/make_comparator_workspace.py erdos_1038.parts.i \
+python3 comparator/adapter/make_comparator_workspace.py erdos_1038.parts.i \
   --emit-import .comparator-import
 ```
 
@@ -90,7 +90,7 @@ which is what makes the seam checkable rather than asserted.
 ### Import a whole set
 
 ```bash
-python3 comparator/make_comparator_workspace.py --set FC100OpenSet1 \
+python3 comparator/adapter/make_comparator_workspace.py --set FC100OpenSet1 \
   --verify --report fc100-report.json \
   --known-failures comparator/known_failures.toml
 ```
@@ -141,7 +141,7 @@ format nobody checks.
 Run the problem-file check after moving or renaming a declaration:
 
 ```bash
-python3 comparator/make_comparator_workspace.py --validate
+python3 comparator/adapter/make_comparator_workspace.py --validate
 ```
 
 ## Tool pins

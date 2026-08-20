@@ -8,7 +8,7 @@ commit, asks Lean what the elaborated environment knows about it, copies the
 declarations it depends on, types each `answer(sorry)` slot, and records where
 all of that came from.
 
-What it produces is the pair defined in `comparator/leaneval_interface.py`: one
+What it produces is the pair defined in `comparator/adapter/leaneval_interface.py`: one
 marked-up Mathlib-only Lean module, and one manifest carrying the FC source
 commit and declaration id. Turning that pair into a Challenge / Solution /
 Submission workspace is the pinned `leanprover/lean-eval-generator` binary's
@@ -39,7 +39,7 @@ from leaneval_interface import (
     TargetRecord,
 )
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 SOURCE_DIRS = [ROOT / "FormalConjectures"]
 COMPARATOR_DIR = ROOT / "comparator"
 MANIFEST_DIR = COMPARATOR_DIR / "problems"

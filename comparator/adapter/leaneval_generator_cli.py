@@ -5,7 +5,7 @@
 `leanprover/lean-eval-generator`, a deterministic Lean CLI: one JSON request
 on stdin, one JSON response on stdout, diagnostics on stderr. This module is
 the plumbing that runs it and the context directory it expects; everything
-the request and response mean lives in `comparator/leaneval_interface.py`, and
+the request and response mean lives in `comparator/adapter/leaneval_interface.py`, and
 the pinned revision lives in `comparator/tools.toml` under `[generator]`.
 
 The binary is found through `LEAN_EVAL_GENERATOR_BIN` or `PATH`. Building it
