@@ -83,7 +83,7 @@ Every smoothly embedded two-sphere which bounds a convex body has at least two d
 umbilic points. Alpöge's smooth support function has exactly one umbilic, so the answer is
 false. -/
 @[category research solved, AMS 52 53,
-  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/839ec1e2b992e91e13cfbb763f52fb256db04f50/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L75"]
+  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/bc0f1f714774256b9742b5d686d6bc15f5907246/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L75"]
 theorem caratheodory_conjecture : answer(False) ↔ CaratheodoryConjectureOfClass ∞ := by
   sorry
 
