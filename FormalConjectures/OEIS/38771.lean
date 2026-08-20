@@ -96,16 +96,26 @@ theorem a_3 : a 3 = 49 := by
   exact h_least.csInf_eq
 
 /--
+$a(n) \ne 0$ for all $n$ (i.e., a suitable composite $c$ always exists).
+The following more general statement follows from Dirichlet's theorem
+on primes in arithmetic progressions:
+  there doesn't exist a > 0 natural number such that p - a is prime for every prime p > a.
+
+Choose q prime such that q is coprime with a, and p > a + q prime such that q | p - a
+(such a p exists from Dirichlet's theorem). Then p - a is composite, a contradiction.
+-/
+@[category textbook, AMS 11]
+theorem a_n_exists (n : ℕ) : a n ≠ 0 := by
+  sorry
+
+/--
 Conjecture:
 $\liminf_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 1 <$
 $\limsup_{n \to \infty} \frac{a(n)}{p_{n+1}^2} = 2$.
 - Charles R Greathouse IV and Thomas Ordowski, Apr 24 2015
-
-We assume $a(n) \ne 0$ for all $n$ (i.e., that a suitable composite $c$ always exists),
-as `sInf` evaluates to $0$ on an empty set.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (ha : ∀ n, a n ≠ 0) :
+theorem conjecture1 :
     let p_next_sq (n : ℕ) : ℝ := ((Nat.nth Nat.Prime n : ℝ)) ^ 2
     let seq (n : ℕ) : ℝ := (a n : ℝ) / p_next_sq n
     (liminf seq atTop = 1) ∧ (limsup seq atTop = 2) := by
@@ -115,12 +125,9 @@ theorem conjecture1 (ha : ∀ n, a n ≠ 0) :
 All the terms in this sequence have exactly two prime factors.
 This conjecture is true for the first 133 terms.
 - [Dmitry Kamenetsky](https://oeis.org/wiki/User:Dmitry_Kamenetsky), Jan 06 2019
-
-We assume $a(n) \ne 0$ (i.e., that a suitable composite $c$ exists), as `sInf` evaluates to $0$
-on an empty set.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (ha : a n ≠ 0) : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ a n = p * q := by
+theorem conjecture2 (n : ℕ) : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ a n = p * q := by
   sorry
 
 end OeisA38771
