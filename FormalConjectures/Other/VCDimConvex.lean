@@ -65,7 +65,7 @@ lemma hasAddVCNDimAtMost_two_one_of_convex_r3 :
 $\mathrm{VC}_2$ dimension at most 2. -/
 @[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
-      HasAddVCNDimAtMost C 2 2 := sorry
+    HasAddVCNDimAtMost C 2 2 := sorry
 
 /-- For every $n$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most $d$. -/
