@@ -41,6 +41,10 @@ jobs:
           # The importer pins each workspace to the merge base with upstream
           # main, so that ref has to be present.
           fetch-depth: 0
+          # This job only reads the tree and builds; nothing here pushes, so
+          # the checkout token has no reason to stay in .git/config where a
+          # later step or a build script could reach it.
+          persist-credentials: false
 
       - name: Install elan
         run: |
