@@ -177,5 +177,51 @@ class PinnedGeneratorTest(unittest.TestCase):
             self.assertEqual(sorted(first), ["erdos_940"])
 
 
+
+class SubsetTest(unittest.TestCase):
+    def test_the_open_set_lists_one_hundred_declarations(self):
+        from make_comparator_workspace import subset_declarations
+
+        names = subset_declarations("FC100OpenSet1")
+        self.assertEqual(len(names), 100)
+        self.assertIn("OeisA308734.conjecture", names)
+        self.assertIn("Erdos125.erdos_125.variants.positive_unequal_density", names)
+
+    def test_a_missing_subset_is_refused(self):
+        from make_comparator_workspace import subset_declarations
+
+        with self.assertRaises(SystemExit):
+            subset_declarations("NoSuchSet")
+
+
+class KnownFailuresTest(unittest.TestCase):
+    def _load(self, text):
+        from make_comparator_workspace import load_known_failures
+
+        with tempfile.NamedTemporaryFile("w", suffix=".toml", delete=False) as f:
+            f.write(text)
+            name = f.name
+        try:
+            return load_known_failures(name)
+        finally:
+            os.unlink(name)
+
+    def test_entries_are_keyed_by_declaration(self):
+        failures = self._load(
+            '[[failure]]\ndeclaration = "A.b"\nstage = "source"\nreason = "x"\n'
+        )
+        self.assertEqual(failures["A.b"]["stage"], "source")
+
+    def test_an_unknown_stage_is_refused(self):
+        with self.assertRaises(SystemExit):
+            self._load(
+                '[[failure]]\ndeclaration = "A.b"\nstage = "later"\nreason = "x"\n'
+            )
+
+    def test_a_missing_field_is_refused(self):
+        with self.assertRaises(SystemExit):
+            self._load('[[failure]]\ndeclaration = "A.b"\nstage = "source"\n')
+
+
 if __name__ == "__main__":
     unittest.main()

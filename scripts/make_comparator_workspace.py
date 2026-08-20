@@ -38,7 +38,15 @@ Usage:
   python make_comparator_workspace.py (ID | DECLARATION) [--out DIR]
       [--answer-type T] [--module FILE] [--verify]
   python make_comparator_workspace.py ID --emit-import DIR
+  python make_comparator_workspace.py --set NAME [--out DIR] [--verify]
+      [--report FILE] [--known-failures FILE]
   python make_comparator_workspace.py --validate
+
+`--set` imports every declaration of a `FormalConjectures/Subsets` list,
+builds one request for all of them, and writes a per-declaration report.
+With `--known-failures`, the run fails unless the failures are exactly the
+recorded ones: an unexpected failure and a silently fixed one both count,
+because a gate that only ever passes proves nothing.
 
 `--emit-import` writes the exact bytes that cross the seam — the v1 request,
 with its context directory — and generates no workspace; running the pinned
@@ -53,9 +61,11 @@ generator binary, and the build belongs to the comparator run.
 import argparse
 import json
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
+import tomllib
 
 import fc_leaneval_importer as importer
 import leaneval_generator_cli as generator_cli
@@ -153,6 +163,117 @@ def generate_workspaces(pairs, out_dir):
     return written
 
 
+def subset_declarations(set_name):
+    """The declaration list of a `FormalConjectures/Subsets` module.
+
+    The subset files hold one `decl_name% <qualified name>` per line; the
+    `decl_name%` elaborator is what guarantees each name resolves, so the
+    text layer can read the list without re-proving that.
+    """
+    path = ROOT / "FormalConjectures" / "Subsets" / f"{set_name}.lean"
+    if not path.is_file():
+        raise SystemExit(f"no subset module at {path}")
+    names = re.findall(
+        r"decl_name%\s+([\w.«»]+)", path.read_text(encoding="utf-8")
+    )
+    if not names:
+        raise SystemExit(f"{path} lists no decl_name% entries")
+    return names
+
+
+def load_known_failures(path):
+    """The recorded failures, `{declaration: {stage, reason}}`."""
+    with open(path, "rb") as handle:
+        data = tomllib.load(handle)
+    failures = {}
+    for entry in data.get("failure", []):
+        for field in ("declaration", "stage", "reason"):
+            if field not in entry:
+                raise SystemExit(f"{path}: a failure entry has no `{field}`")
+        if entry["stage"] not in ("source", "target"):
+            raise SystemExit(
+                f"{path}: {entry['declaration']} has stage {entry['stage']!r}; "
+                "expected source or target"
+            )
+        failures[entry["declaration"]] = entry
+    return failures
+
+
+def import_set(set_name, out_dir, verify=False, known_failures=None):
+    """Import a whole subset, generate what imports, and report the rest.
+
+    Returns the report object. Source-side failures — the importer refusing,
+    or `--verify` elaboration failing — are recorded per declaration rather
+    than aborting the run, because the whole-set result is the artifact:
+    lean-eval#536 gates the FC import on this audit being reproducible.
+    """
+    declarations = subset_declarations(set_name)
+    pairs, results = [], []
+    for declaration in declarations:
+        try:
+            marked_up, manifest = importer.import_problem(declaration)
+            if verify:
+                importer.elaborate(marked_up)
+        except SystemExit as failure:
+            results.append(
+                {
+                    "declaration": declaration,
+                    "status": "source-failed",
+                    "reason": str(failure),
+                }
+            )
+            continue
+        pairs.append((marked_up, manifest))
+        results.append(
+            {
+                "declaration": declaration,
+                "id": slug(manifest.id),
+                "category": manifest.category,
+                "status": "imported",
+            }
+        )
+    written = generate_workspaces(pairs, out_dir) if pairs else []
+    categories = {}
+    for entry in results:
+        if entry["status"] == "imported":
+            categories[entry["category"]] = categories.get(entry["category"], 0) + 1
+    report = {
+        "set": set_name,
+        "total": len(declarations),
+        "imported": len(pairs),
+        "source_failed": len(declarations) - len(pairs),
+        "categories": dict(sorted(categories.items())),
+        "workspaces": [str(path) for path in written],
+        "declarations": results,
+    }
+    if known_failures is not None:
+        expected = {
+            name
+            for name, entry in known_failures.items()
+            if entry["stage"] == "source"
+        }
+        actual = {
+            entry["declaration"]
+            for entry in results
+            if entry["status"] == "source-failed"
+        }
+        unexpected = sorted(actual - expected)
+        fixed = sorted(expected - actual)
+        if unexpected or fixed:
+            for name in unexpected:
+                print(f"unexpected source failure: {name}", file=sys.stderr)
+            for name in fixed:
+                print(
+                    f"{name} is recorded as a known source failure but "
+                    "imported; remove it from the record",
+                    file=sys.stderr,
+                )
+            report["known_failures_match"] = False
+        else:
+            report["known_failures_match"] = True
+    return report
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument(
@@ -191,11 +312,45 @@ def main(argv):
         action="store_true",
         help="check every problem file resolves, and import nothing",
     )
+    ap.add_argument(
+        "--set",
+        default=None,
+        metavar="NAME",
+        help="import every declaration of FormalConjectures/Subsets/NAME.lean",
+    )
+    ap.add_argument(
+        "--report",
+        default=None,
+        metavar="FILE",
+        help="with --set: write the per-declaration report here as JSON",
+    )
+    ap.add_argument(
+        "--known-failures",
+        default=None,
+        metavar="FILE",
+        help="with --set: fail unless the failures are exactly the recorded ones",
+    )
     args = ap.parse_args(argv)
     if args.validate:
         return importer.validate()
+    if args.set:
+        known = (
+            load_known_failures(args.known_failures)
+            if args.known_failures
+            else None
+        )
+        report = import_set(
+            args.set, args.out, verify=args.verify, known_failures=known
+        )
+        text = json.dumps(report, indent=2, ensure_ascii=False) + "\n"
+        if args.report:
+            pathlib.Path(args.report).write_text(text, encoding="utf-8")
+        print(text, end="")
+        if known is not None and not report.get("known_failures_match", True):
+            return 1
+        return 0
     if not args.declaration:
-        ap.error("give a declaration, or --validate")
+        ap.error("give a declaration, --set, or --validate")
     marked_up, manifest = importer.import_problem(
         args.declaration, args.answer_type, args.module
     )
