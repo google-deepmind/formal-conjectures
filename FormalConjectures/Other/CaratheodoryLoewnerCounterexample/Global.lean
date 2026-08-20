@@ -3432,13 +3432,6 @@ private theorem counterexampleTwoReciprocal_radius_error_bound_of_laplacian (w :
   change ‖dF v - (10 ^ 10 : ℝ) • dρ v‖ ≤ 3000000000 * ‖dρ v‖
   exact hnorm.trans (mul_le_mul_of_nonneg_right hcoefficient.le (norm_nonneg _))
 
-/-- The derivative of a sphere-valued map into ambient Euclidean coordinates.  Naming this
-transport keeps the ambient codomain visible to typeclass inference. -/
-private noncomputable def sphereAmbientMfderiv
-    (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
-  mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
-
 /-- The reciprocal-chart radius bound transports to the intrinsic tangent space of the sphere.
 No choice of tangent coordinates remains in this statement. -/
 @[category API, AMS 53]
