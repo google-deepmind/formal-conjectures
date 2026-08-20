@@ -320,13 +320,27 @@ def strip_fc_attributes(block_text):
     return re.sub(r"^[ \t]*\n", "", text, flags=re.MULTILINE)
 
 
+def split_module(module):
+    """The components of a dotted module name, respecting guillemet quoting.
+
+    A guillemet-quoted component may itself contain dots —
+    `FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture` names the
+    directory `0912.2382` — so splitting on every dot decodes a path that
+    does not exist. This is the one place a module name is taken apart;
+    `module_name` is its inverse and a test holds the pair to that.
+    """
+    parts = re.findall(r"«[^»]*»|[^.«»]+", module)
+    if ".".join(parts) != module:
+        raise SystemExit(f"{module!r} is not a well-formed module name")
+    return [p[1:-1] if p.startswith("«") else p for p in parts]
+
+
 def module_source_path(module):
     """The file declaring a dotted Lean module name, undoing guillemets."""
-    parts = [
-        component[1:-1] if component.startswith("«") else component
-        for component in module.split(".")
-    ]
-    path = ROOT.joinpath(*parts).with_suffix(".lean")
+    parts = split_module(module)
+    # Not `with_suffix`: a final component containing a dot would lose its
+    # tail to the suffix replacement.
+    path = ROOT.joinpath(*parts[:-1], parts[-1] + ".lean")
     if not path.is_file():
         raise SystemExit(f"{module}: no source file at {path}")
     return path

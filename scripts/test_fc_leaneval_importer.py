@@ -431,3 +431,38 @@ class DocstringReferenceTest(unittest.TestCase):
 
     def test_a_module_without_a_docstring_has_no_citation(self):
         self.assertEqual(importer.docstring_reference(""), "")
+
+
+class ModuleNameCodecTest(unittest.TestCase):
+    """`module_name` and `module_source_path` are inverse on real modules."""
+
+    def test_a_guillemet_component_keeps_its_dots(self):
+        self.assertEqual(
+            importer.split_module(
+                "FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture"
+            ),
+            ["FormalConjectures", "Arxiv", "0912.2382", "CurlingNumberConjecture"],
+        )
+
+    def test_a_dotted_final_component_keeps_its_tail(self):
+        # `with_suffix` would have turned `«2501.03234»` into `«2501.lean`.
+        path = importer.module_source_path(
+            "FormalConjectures.Arxiv.«2501.03234».ArithmeticSumS"
+        )
+        self.assertEqual(path.name, "ArithmeticSumS.lean")
+        self.assertEqual(path.parent.name, "2501.03234")
+
+    def test_a_malformed_name_is_refused(self):
+        with self.assertRaises(SystemExit):
+            importer.split_module("FormalConjectures.«unterminated")
+
+    def test_every_real_module_round_trips(self):
+        # The property that keeps the codec from drifting again: for every
+        # file the importer can name, decoding the name reaches the file.
+        for src in importer.SOURCE_DIRS:
+            for path in src.rglob("*.lean"):
+                rel = path.relative_to(importer.ROOT)
+                with self.subTest(module=str(rel)):
+                    self.assertEqual(
+                        importer.module_source_path(importer.module_name(rel)), path
+                    )
