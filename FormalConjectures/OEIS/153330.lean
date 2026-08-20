@@ -61,7 +61,7 @@ theorem a_0 : a 0 = none := by rfl
 @[category test, AMS 11]
 theorem a_1 : a 1 = some 1 := by
   have h1 : IsLeast {k : ℕ | (collatzStep^[k]) 1 = 1} 0 :=
-    ⟨rfl, fun k _ => zero_le k⟩
+    ⟨rfl, fun k _ => by lia⟩
   have h2 : IsLeast {k : ℕ | (collatzStep^[k]) 2 = 1} 1 := by
     constructor
     · rfl

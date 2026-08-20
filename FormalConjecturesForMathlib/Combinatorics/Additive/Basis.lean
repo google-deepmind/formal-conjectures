@@ -161,7 +161,7 @@ lemma IsAsymptoticMulBasisOfOrder.mono [CanonicallyOrderedMul M] [IsCancelMul M]
         not_lt, le_iff_exists_mul, and_imp, forall_exists_index]
       rintro hx y rfl
       exact ⟨y, fun hy ↦ hx _ hy rfl, rfl⟩
-  simp only [m.add_comm, pow_add, setOf_mem_eq, this, sdiff_union_self, subset_def, mem_compl_iff,
+  simp only [m.add_comm, pow_add, ofPred_mem_eq, this, sdiff_union_self, subset_def, mem_compl_iff,
     mem_union, mem_Iio]
   rintro b hb
   contrapose! hb

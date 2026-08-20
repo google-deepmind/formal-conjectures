@@ -52,7 +52,7 @@ theorem erdos_949.variants.sidon : answer(True) ↔
   -- such that both `A` and `A + A` are disjoint from `S`.
   · obtain ⟨A, ⟨hAS, hAAS⟩, hAmax⟩ := by
       refine zorn_subset {A ⊆ Sᶜ | ∀ x ∈ A,∀ y ∈ A, x + y ∉ S} ?_
-      simp only [Set.setOf_and, Set.subset_inter_iff, Set.mem_inter_iff, Set.mem_setOf_eq, and_imp,
+      simp only [Set.ofPred_and, Set.subset_inter_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, and_imp,
         and_assoc]
       refine fun C hCS hSC hC ↦ ⟨_, Set.iUnion₂_subset hCS, ?_, Set.subset_iUnion₂⟩
       simp only [Set.mem_iUnion, exists_prop, forall_exists_index, and_imp]

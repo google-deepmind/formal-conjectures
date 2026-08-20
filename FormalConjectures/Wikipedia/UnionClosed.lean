@@ -128,12 +128,12 @@ theorem union_closed.variants.singleton_mem
   set B : Finset (Finset n) := {x ∈ A | i ∉ x}
   set C : Finset (Finset n) := {x ∈ A | i ∈ x}
   have h₁ : (B : Set <| Finset n).InjOn (insert i) := by
-    simp only [Set.InjOn, coe_filter, Set.mem_setOf_eq, and_imp, B]
+    simp only [Set.InjOn, coe_filter, Set.mem_ofPred_eq, and_imp, B]
     rintro x - hx y - hy hxy
     have := congr(($hxy).erase i)
     rwa [erase_insert hx, erase_insert hy] at this
   have h₂ : (B : Set <| Finset n).MapsTo (insert i) C := by
-    simp only [Set.MapsTo, coe_filter, Set.mem_setOf_eq, mem_insert, true_or, and_true,
+    simp only [Set.MapsTo, coe_filter, Set.mem_ofPred_eq, mem_insert, true_or, and_true,
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]

@@ -128,7 +128,7 @@ The theorem that P is a subset of coNP.
 theorem P_subset_coNP :
     P ⊆ coNP := by
   rw [coNP, ← coP_eq_P]
-  simp only [Set.setOf_subset_setOf]
+  simp only [Set.ofPred_subset_ofPred]
   intros L hL
   exact P_subset_NP hL
 

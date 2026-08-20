@@ -61,7 +61,7 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
   refine ((h.sdiff (Set.finite_singleton 2)).image (this.mono Set.sdiff_subset)).mono ?_
-  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
+  simp only [Set.image_subset_iff, Set.preimage_ofPred_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''
   have fac : (f p * (f p + 1)).factorization =
@@ -88,7 +88,7 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rw [← Nat.support_factorization, fac, Finsupp.support_single_add _ (by simp),
       Finset.cons_eq_insert, aux₁]
     simp [*]
-  simp only [Set.mem_setOf_eq]
+  simp only [Set.mem_ofPred_eq]
   rw [fac, pf]
   simp only [Finsupp.coe_add, Finset.coe_insert, Finset.coe_singleton]
   rw [Set.injOn_insert (by simp [*]), Set.injOn_insert (by simp [hp''])]

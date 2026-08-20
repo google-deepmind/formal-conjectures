@@ -103,7 +103,7 @@ theorem erdos_700.parts.iii :
 @[category API, AMS 11]
 lemma prime_dvd_of_not_dvd_choose (P n k : ℕ) (hP : P.Prime) (hPn : P ∣ n)
     (h : ¬ P ∣ n.choose k) : P ∣ k := by
-  haveI := Fact.mk hP
+  have := Fact.mk hP
   by_contra hk
   apply h
   have hmod : n.choose k ≡ (n % P).choose (k % P) * (n / P).choose (k / P) [MOD P] :=
@@ -176,8 +176,8 @@ so any `k` with `gcd(pq, C(pq,k)) = 1` must be a multiple of `pq`, of which ther
 @[category research solved, AMS 11]
 theorem erdos_700.variants.prime_mul (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p < q) :
     f (p * q) = p := by
-  haveI := Fact.mk hp
-  haveI := Fact.mk hq
+  have := Fact.mk hp
+  have := Fact.mk hq
   have hp2 : 2 ≤ p := hp.two_le
   have hq2 : 2 ≤ q := hq.two_le
   have hpndq : ¬ p ∣ q := fun h => by

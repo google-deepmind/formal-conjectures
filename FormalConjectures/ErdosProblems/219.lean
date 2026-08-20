@@ -33,7 +33,7 @@ def primeArithmeticProgressions : Set (Set ℕ) :=
 @[category test, AMS 5 11]
 theorem primeArithmeticProgression_3_5_7 : {3, 5, 7} ∈ primeArithmeticProgressions := by
   simp only [primeArithmeticProgressions, gt_iff_lt, Set.IsAPOfLength, Set.IsAPOfLengthWith,
-    smul_eq_mul, exists_prop, exists_and_left, existsAndEq, true_and, Set.mem_setOf_eq,
+    smul_eq_mul, exists_prop, exists_and_left, existsAndEq, true_and, Set.mem_ofPred_eq,
     Set.mem_insert_iff, Set.mem_singleton_iff, forall_eq_or_imp, forall_eq,
     ENat.card_eq_coe_fintype_card, Fintype.card_ofFinset, Set.toFinset_insert,
     Set.toFinset_singleton, Finset.mem_insert, Nat.reduceEqDiff, Finset.mem_singleton, or_self,

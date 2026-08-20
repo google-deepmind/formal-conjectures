@@ -33,7 +33,7 @@ noncomputable def maxPrimeFac (n : ℕ) : ℕ := sSup {p : ℕ | p.Prime ∧ p �
 @[simp]
 lemma maxPrimeFac_zero :
     maxPrimeFac 0 = 0 := by
-  simpa [maxPrimeFac] using Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime
+  simpa [maxPrimeFac] using Set.Infinite.Nat.sSup_eq_zero infinite_setOfPred_prime
 
 @[simp]
 lemma maxPrimeFac_one :
@@ -45,11 +45,11 @@ lemma prime_maxPrimeFac_of_one_lt (n : ℕ) (h : 1 < n) :
     Prime (maxPrimeFac n) := by
   set s := {p : ℕ | p.Prime ∧ p ∣ n} with hs
   have hs₀ : s.Nonempty := by
-    simp only [Set.Nonempty, Set.mem_setOf_eq, ← ne_one_iff_exists_prime_dvd, hs]
+    simp only [Set.Nonempty, Set.mem_ofPred_eq, ← ne_one_iff_exists_prime_dvd, hs]
     omega
   have hs₁ : BddAbove s := by
     use n
-    simp only [hs, mem_upperBounds, Set.mem_setOf_eq, and_imp]
+    simp only [hs, mem_upperBounds, Set.mem_ofPred_eq, and_imp]
     exact fun p _ hp ↦ Nat.le_of_dvd (zero_lt_of_lt h) hp
   exact (Nat.sSup_mem hs₀ hs₁).1
 
@@ -61,7 +61,7 @@ lemma maxPrimeFac_eq_of_dvd_of_le
   set s := {p : ℕ | p.Prime ∧ p ∣ n} with hs
   have hs₁ : BddAbove s := by
     use n
-    simp only [hs, mem_upperBounds, Set.mem_setOf_eq, and_imp]
+    simp only [hs, mem_upperBounds, Set.mem_ofPred_eq, and_imp]
     exact fun p _ hp ↦ Nat.le_of_dvd (zero_lt_of_lt hn) hp
   exact le_csSup hs₁ ⟨hp, h_dvd⟩
 

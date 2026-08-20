@@ -98,12 +98,12 @@ lemma S_7 : S 7 = 36 := by dsimp [S]; rw [P_7, P_8]
 theorem a_1 : a 1 = 6 := by
   have h_least : IsLeast { k : ℕ | k > 1 ∧ S 1 ∣ S k } 6 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       rw [S_1, S_6]
       decide
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_gt := hk.1
       interval_cases k
@@ -128,12 +128,12 @@ theorem a_1 : a 1 = 6 := by
 theorem a_2 : a 2 = 5 := by
   have h_least : IsLeast { k : ℕ | k > 2 ∧ S 2 ∣ S k } 5 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       rw [S_2, S_5]
       decide
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_gt := hk.1
       interval_cases k
@@ -152,12 +152,12 @@ theorem a_2 : a 2 = 5 := by
 theorem a_3 : a 3 = 5 := by
   have h_least : IsLeast { k : ℕ | k > 3 ∧ S 3 ∣ S k } 5 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       rw [S_3, S_5]
       decide
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_gt := hk.1
       interval_cases k
@@ -173,12 +173,12 @@ theorem a_3 : a 3 = 5 := by
 theorem a_4 : a 4 = 7 := by
   have h_least : IsLeast { k : ℕ | k > 4 ∧ S 4 ∣ S k } 7 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       rw [S_4, S_7]
       decide
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_gt := hk.1
       interval_cases k

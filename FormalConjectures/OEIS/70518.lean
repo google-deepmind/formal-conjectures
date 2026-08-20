@@ -52,7 +52,7 @@ theorem a_2 : a 2 = 3 := by
 @[category test, AMS 11]
 theorem a_3 : a 3 = 13 := by
   dsimp [a]
-  haveI : Fact (Nat.Prime 3) := ⟨by decide⟩
+  have : Fact (Nat.Prime 3) := ⟨by decide⟩
   rw [cyclotomic_prime ℤ 3]
   simp [Finset.sum_range_succ]
 
@@ -60,7 +60,7 @@ theorem a_3 : a 3 = 13 := by
 @[category test, AMS 11]
 theorem a_5 : a 5 = 781 := by
   dsimp [a]
-  haveI : Fact (Nat.Prime 5) := ⟨by decide⟩
+  have : Fact (Nat.Prime 5) := ⟨by decide⟩
   rw [cyclotomic_prime ℤ 5]
   simp [Finset.sum_range_succ]
 
