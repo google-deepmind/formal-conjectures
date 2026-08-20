@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.LinearAlgebra.Matrix.Permanent
 
 /-!
 # Squares of double factorials

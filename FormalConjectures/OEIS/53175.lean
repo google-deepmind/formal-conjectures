@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-!
 # Catalan-Larcombe-French sequence

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Number of primes $p$ such that $2^n \le p \le 2^n + \mathrm{prime}(n)$

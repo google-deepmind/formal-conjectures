@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
 /-!
 # Ratio of product of GCDs to product of factorials of floor divisions

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Number of prime powers strictly between $n$-th prime and $(n+1)$-th prime

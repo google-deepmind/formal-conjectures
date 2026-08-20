@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-!
 # Determinant of Hankel matrix of the first $2n-1$ prime numbers

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Sum of next $n$ primes

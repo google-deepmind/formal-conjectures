@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Rat.Defs
-import Mathlib.NumberTheory.Primorial
 
 /-!
 # Denominator of $\sum_{k=1}^n k^{\mu(k)}$

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.NumberTheory.Bernoulli
 
 /-!
 # Denominators of coefficients in Stirling's expansion for $\log(\Gamma(z))$

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.NumberTheory.ZetaValues
 
 /-!
 # Nearest integer to $n/\sqrt{2}$

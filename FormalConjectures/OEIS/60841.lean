@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-!
 # Numerator of $1/\det(M)$ for $M[i,j] = 1/\operatorname{lcm}(i,j)$

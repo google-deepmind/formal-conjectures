@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.LinearAlgebra.Matrix.Permanent
 
 /-!
 # Central factorial numbers: $((2n)!!)^2$

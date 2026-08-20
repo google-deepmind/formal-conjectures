@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
 
 /-!
 # Value of $n$-th cyclotomic polynomial at $n$

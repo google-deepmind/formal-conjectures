@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 
 /-!
 # Integer part of area of a regular polygon with $n$ sides each of length 1
