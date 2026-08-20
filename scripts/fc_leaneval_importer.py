@@ -37,7 +37,6 @@ from leaneval_interface import (
     ProblemManifest,
     SourceRecord,
     TargetRecord,
-    problem_group,
 )
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -86,12 +85,8 @@ def target_pins():
     """
     target = _tools_file()["target"]
     return TargetRecord(
-        repository=target["repository"],
-        commit=target["commit"],
         lean_toolchain=target["lean_toolchain"],
         mathlib_revision=target["mathlib_revision"],
-        comparator=target["comparator"],
-        lean4export=target["lean4export"],
     )
 
 

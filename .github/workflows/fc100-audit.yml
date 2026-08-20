@@ -76,19 +76,7 @@ jobs:
           lake build FormalConjectures.Subsets.FC100OpenSet1 comparator_facts
 
       - name: Build the pinned lean-eval-generator
-        run: |
-          read -r GEN_REPO GEN_REV <<< "$(python3 - <<'PY'
-          import tomllib
-
-          with open("comparator/tools.toml", "rb") as handle:
-              generator = tomllib.load(handle)["generator"]
-          print(generator["repository"], generator["rev"])
-          PY
-          )"
-          git clone "$GEN_REPO" "$RUNNER_TEMP/lean-eval-generator"
-          git -C "$RUNNER_TEMP/lean-eval-generator" checkout "$GEN_REV"
-          (cd "$RUNNER_TEMP/lean-eval-generator" && lake build)
-          echo "LEAN_EVAL_GENERATOR_BIN=$RUNNER_TEMP/lean-eval-generator/.lake/build/bin/lean-eval-generator" >> "$GITHUB_ENV"
+        uses: ./.github/actions/build-lean-eval-generator
 
       # `--verify` elaborates every marked-up module at this repository's
       # pins; generation runs each import through the pinned binary. Failures

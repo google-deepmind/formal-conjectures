@@ -73,7 +73,8 @@ from leaneval_interface import build_problem, build_request, slug
 
 ROOT = importer.ROOT
 
-PROVENANCE_FILE = "fc-provenance.json"
+PROVENANCE_STEM = "fc-provenance"
+PROVENANCE_FILE = f"{PROVENANCE_STEM}.json"
 
 # The request's context directory, relative to the request file, so an
 # emitted seam artifact is self-contained and reproducible from any path.
@@ -134,9 +135,7 @@ def seam_files(pairs, group=None):
         files[f"{CONTEXT_DIR}/.lake/build/lib/lean/{module}.ilean"] = (
             json.dumps({"version": 1, "module": module, "decls": ilean}) + "\n"
         )
-        files[f"{PROVENANCE_FILE.removesuffix('.json')}-{problem['id']}.json"] = (
-            manifest.to_json()
-        )
+        files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = manifest.to_json()
     return request, files
 
 
@@ -145,7 +144,11 @@ def generate_workspaces(pairs, out_dir, group=None):
     request, files = seam_files(pairs, group=group)
     staging = pathlib.Path(tempfile.mkdtemp(prefix=".fc-seam."))
     try:
+        # Only the context crosses to the binary; the request goes on stdin
+        # and the provenance sidecars are for the written workspaces.
         for relative, content in files.items():
+            if not relative.startswith(f"{CONTEXT_DIR}/"):
+                continue
             destination = staging / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(content, encoding="utf-8")

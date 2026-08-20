@@ -136,18 +136,14 @@ class TargetRecord:
     another repository's regime, and would go stale the moment that repository
     bumped anything, with nothing here to notice.
 
-    Formal Conjectures keeps a copy under `[target]` in `comparator/tools.toml`
-    for one purpose: the CI job that generates at this repository's toolchain
-    and builds at LeanEval's, which is how the gap between the two is observed
-    rather than assumed.
+    Formal Conjectures keeps the full pin set under `[target]` in
+    `comparator/tools.toml`; this record carries only the two fields the v1
+    request consumes. The comparator and lean4export pins are read from the
+    TOML directly by the CI job that runs them.
     """
 
-    repository: str
-    commit: str
     lean_toolchain: str
     mathlib_revision: str
-    comparator: str
-    lean4export: str
 
 
 @dataclasses.dataclass(frozen=True)

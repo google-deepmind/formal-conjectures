@@ -28,6 +28,8 @@ import pathlib
 import shutil
 import subprocess
 
+from leaneval_interface import parse_response
+
 BINARY_ENV = "LEAN_EVAL_GENERATOR_BIN"
 BINARY_NAME = "lean-eval-generator"
 
@@ -76,12 +78,8 @@ def write_context_root(root, problems):
 def generate(request):
     """The generator's verified file maps for one request.
 
-    Returns `{problem_id: {path: content}}`. Import here rather than at
-    module top keeps the arrow pointing one way: the interface never imports
-    this plumbing.
+    Returns `{problem_id: {path: content}}`.
     """
-    from leaneval_interface import parse_response
-
     proc = subprocess.run(
         [binary()],
         input=json.dumps(request),

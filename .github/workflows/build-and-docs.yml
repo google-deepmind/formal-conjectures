@@ -155,24 +155,9 @@ jobs:
           lake --wfail build
           rm -f FormalConjectures/All.lean
 
-      # Workspace generation runs the extracted generator at the pinned
-      # revision. The package depends on nothing, so this is a small Lean
-      # build, not a Mathlib one.
       - name: Build the pinned lean-eval-generator
         if: steps.mode.outputs.website_only != 'true'
-        run: |
-          read -r GEN_REPO GEN_REV <<< "$(python3 - <<'PY'
-          import tomllib
-
-          with open("comparator/tools.toml", "rb") as handle:
-              generator = tomllib.load(handle)["generator"]
-          print(generator["repository"], generator["rev"])
-          PY
-          )"
-          git clone "$GEN_REPO" "$RUNNER_TEMP/lean-eval-generator"
-          git -C "$RUNNER_TEMP/lean-eval-generator" checkout "$GEN_REV"
-          (cd "$RUNNER_TEMP/lean-eval-generator" && lake build)
-          echo "LEAN_EVAL_GENERATOR_BIN=$RUNNER_TEMP/lean-eval-generator/.lake/build/bin/lean-eval-generator" >> "$GITHUB_ENV"
+        uses: ./.github/actions/build-lean-eval-generator
 
       # The elaborator-to-importer boundary, exercised on the oleans the
       # build above produced: one plain theorem, a Prop answer slot, a

@@ -27,7 +27,6 @@ import pathlib
 import shutil
 import tempfile
 import unittest
-from unittest import mock
 
 import leaneval_generator_cli as generator_cli
 from make_comparator_workspace import (

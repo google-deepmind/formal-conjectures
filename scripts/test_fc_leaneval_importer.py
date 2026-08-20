@@ -28,6 +28,7 @@ import unittest
 from unittest import mock
 
 import fc_leaneval_importer as importer
+from leaneval_interface import problem_group
 from fc_leaneval_importer import (
     answer_spans,
     closure_region,
@@ -517,7 +518,7 @@ class ProblemGroupTest(unittest.TestCase):
 
     def test_open_research_is_an_open_conjecture(self):
         self.assertEqual(
-            importer.problem_group(self._manifest("research open")),
+            problem_group(self._manifest("research open")),
             "open-conjectures",
         )
 
@@ -525,7 +526,7 @@ class ProblemGroupTest(unittest.TestCase):
         for category in ("research solved", "textbook", "test"):
             with self.subTest(category=category):
                 self.assertEqual(
-                    importer.problem_group(self._manifest(category)),
+                    problem_group(self._manifest(category)),
                     "formalization-evaluation",
                 )
 
@@ -533,7 +534,7 @@ class ProblemGroupTest(unittest.TestCase):
         for category in ("API", ""):
             with self.subTest(category=category):
                 with self.assertRaises(SystemExit):
-                    importer.problem_group(self._manifest(category))
+                    problem_group(self._manifest(category))
 
 
 class FlattenDeclaredNameTest(unittest.TestCase):

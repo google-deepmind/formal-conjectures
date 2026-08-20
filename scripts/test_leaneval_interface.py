@@ -58,12 +58,8 @@ def a_source(**overrides):
 
 def a_target(**overrides):
     fields = {
-        "repository": "leanprover/lean-eval",
-        "commit": "e" * 40,
         "lean_toolchain": "leanprover/lean4:v4.33.0",
         "mathlib_revision": "f" * 40,
-        "comparator": "d" * 40,
-        "lean4export": "0" * 40,
     }
     fields.update(overrides)
     return TargetRecord(**fields)
