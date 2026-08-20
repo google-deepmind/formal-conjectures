@@ -3752,11 +3752,14 @@ private theorem counterexampleTwoHomogeneousGradient_mfderiv_south :
 /-- The south pole is an umbilic of the homogeneous-gradient contact map. -/
 @[category API, AMS 53]
 private theorem counterexampleTwoHomogeneousGradient_umbilic_south :
-    IsUmbilic
-      (SphereSupport.homogeneousGradient
-        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) := by
-  apply EuclideanHypersurface.isUmbilicByFundamentalForms_of_normal_deriv_eq_smul
+    EuclideanHypersurface.IsUmbilic
+      (sphereAmbientMfderiv
+        (SphereSupport.homogeneousGradient
+          (SphereSupport.radialExtension counterexampleTwoSphereExtension))
+        (counterexampleSphereChart 0))
+      (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+        (counterexampleSphereChart 0)) := by
+  apply EuclideanHypersurface.isUmbilic_of_normal_deriv_eq_smul
   change sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
       (counterexampleSphereChart 0) =
     (10 ^ 10 : ℝ)⁻¹ • sphereAmbientMfderiv
@@ -4281,22 +4284,22 @@ private theorem counterexampleTwoHomogeneousGradient_not_umbilic_away_south
             (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p v)
           (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v))
     (p : sphere (0 : ℝ³) 1) (hp : p ≠ counterexampleSphereChart 0) :
-    ¬IsUmbilic
-      (SphereSupport.homogeneousGradient
-        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun q ↦ (q : ℝ³)) p := by
+    ¬EuclideanHypersurface.IsUmbilic
+      (sphereAmbientMfderiv
+        (SphereSupport.homogeneousGradient
+          (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p)
+      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) := by
   intro humbilic
   let F := SphereSupport.homogeneousGradient
     (SphereSupport.radialExtension counterexampleTwoSphereExtension)
   let n : sphere (0 : ℝ³) 1 → ℝ³ := fun q ↦ (q : ℝ³)
   let dF := sphereAmbientMfderiv F p
   let dn := sphereAmbientMfderiv n p
-  change EuclideanHypersurface.IsUmbilicByFundamentalForms dF dn at humbilic
+  change EuclideanHypersurface.IsUmbilic dF dn at humbilic
   have hrange : dn.range ≤ dF.range := by
     rw [counterexampleTwoHomogeneousGradient_range_eq_of_coercive hCoercive p]
   have hscalar : ∃ c : ℝ, dn = c • dF :=
-    (EuclideanHypersurface.isUmbilicByFundamentalForms_iff_normal_deriv_eq_smul
-      dF dn hrange).mp humbilic
+    (EuclideanHypersurface.isUmbilic_iff_normal_deriv_eq_smul dF dn hrange).mp humbilic
   obtain ⟨w, rfl⟩ := exists_reciprocalSphereChart_of_ne_south hp
   exact sphericalTraceFreeHessian_counterexampleTwoReciprocal_ne_zero_all w
     (sphericalTraceFreeHessian_eq_zero_of_umbilic_reciprocal w (by
@@ -4585,14 +4588,17 @@ private theorem counterexampleTwoSupport_geometry_of_certificates
       inner ℝ (SphereSupport.homogeneousGradient
         (SphereSupport.radialExtension counterexampleTwoSphereExtension) p) (q : ℝ³) <
           counterexampleTwoSphereExtension q)
-    (humbilic : IsUmbilic
-      (SphereSupport.homogeneousGradient
+    (humbilic : EuclideanHypersurface.IsUmbilic
+      (sphereAmbientMfderiv (SphereSupport.homogeneousGradient
         (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0))
-    (hnoUmbilic : ∀ p, p ≠ counterexampleSphereChart 0 → ¬IsUmbilic
-      (SphereSupport.homogeneousGradient
-        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun q ↦ (q : ℝ³)) p) :
+        (counterexampleSphereChart 0))
+      (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+        (counterexampleSphereChart 0)))
+    (hnoUmbilic : ∀ p, p ≠ counterexampleSphereChart 0 →
+      ¬EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv (SphereSupport.homogeneousGradient
+          (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p)
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p)) :
     let F := SphereSupport.homogeneousGradient
       (SphereSupport.radialExtension counterexampleTwoSphereExtension)
     let K := SphereSupport.body counterexampleTwoSphereExtension
@@ -4600,8 +4606,14 @@ private theorem counterexampleTwoSupport_geometry_of_certificates
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧
       range F = frontier K ∧
       IsSupportParametrization counterexampleTwoSphereExtension F K ∧
-      IsUmbilic F (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) ∧
-      ∀ p, IsUmbilic F (fun q ↦ (q : ℝ³)) p → p = counterexampleSphereChart 0 := by
+      EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F (counterexampleSphereChart 0))
+        (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+          (counterexampleSphereChart 0)) ∧
+      ∀ p, EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F p)
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) →
+          p = counterexampleSphereChart 0 := by
   let F := SphereSupport.homogeneousGradient
     (SphereSupport.radialExtension counterexampleTwoSphereExtension)
   let K := SphereSupport.body counterexampleTwoSphereExtension
@@ -4620,11 +4632,18 @@ private theorem counterexampleTwoSupport_geometry_of_certificates
       (mfderiv_coe_sphere_injective p) (by norm_num) (hCoercive p)
   change ∀ (p q : sphere (0 : ℝ³) 1), p ≠ q →
     inner ℝ (F p) (q : ℝ³) < counterexampleTwoSphereExtension q at hstrict
-  change IsUmbilic F (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) at humbilic
+  change EuclideanHypersurface.IsUmbilic
+    (sphereAmbientMfderiv F (counterexampleSphereChart 0))
+    (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+      (counterexampleSphereChart 0)) at humbilic
   change ∀ p, p ≠ counterexampleSphereChart 0 →
-    ¬IsUmbilic F (fun q ↦ (q : ℝ³)) p at hnoUmbilic
-  have hunique : ∀ p, IsUmbilic F (fun q ↦ (q : ℝ³)) p →
-      p = counterexampleSphereChart 0 := by
+    ¬EuclideanHypersurface.IsUmbilic
+      (sphereAmbientMfderiv F p)
+      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) at hnoUmbilic
+  have hunique : ∀ p, EuclideanHypersurface.IsUmbilic
+      (sphereAmbientMfderiv F p)
+      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) →
+        p = counterexampleSphereChart 0 := by
     intro p hp
     by_contra hp0
     exact hnoUmbilic p hp0 hp
@@ -4668,8 +4687,14 @@ theorem counterexample_two_support_geometry
       IsConvexSphereOfClass ∞ F (fun p ↦ (p : ℝ³)) ∧
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧
       Set.range F = frontier K ∧ IsSupportParametrization h F K ∧
-      IsUmbilic F (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) ∧
-      ∀ p, IsUmbilic F (fun q ↦ (q : ℝ³)) p → p = counterexampleSphereChart 0 := by
+      EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F (counterexampleSphereChart 0))
+        (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+          (counterexampleSphereChart 0)) ∧
+      ∀ p, EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F p)
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) →
+          p = counterexampleSphereChart 0 := by
   have hextension := eq_counterexampleTwoSphereExtension h hsmooth hchart
   subst h
   let F := SphereSupport.homogeneousGradient
@@ -4701,8 +4726,14 @@ theorem counterexample_two_is_support_function_with_unique_umbilic :
       IsConvexSphereOfClass ∞ F (fun p ↦ (p : ℝ³)) ∧
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧
       Set.range F = frontier K ∧ IsSupportParametrization h F K ∧
-      IsUmbilic F (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) ∧
-      ∀ p, IsUmbilic F (fun q ↦ (q : ℝ³)) p → p = counterexampleSphereChart 0 := by
+      EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F (counterexampleSphereChart 0))
+        (sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+          (counterexampleSphereChart 0)) ∧
+      ∀ p, EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F p)
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p) →
+          p = counterexampleSphereChart 0 := by
   rcases counterexample_two_sphere_extension with ⟨h, hsmooth, hchart⟩
   rcases counterexample_two_support_geometry h hsmooth hchart with ⟨F, K, hgeometry⟩
   exact ⟨h, F, K, hsmooth, hchart, hgeometry⟩

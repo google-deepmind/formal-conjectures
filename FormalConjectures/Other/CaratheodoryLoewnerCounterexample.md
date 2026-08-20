@@ -533,8 +533,8 @@ by (6). Thus, since \(B>0\), (21) and this separate origin calculation prove tha
 \(Q_w(h_0)\ne0\) at every finite reciprocal coordinate \(w\). Finite \(w\) parametrizes the
 entire sphere except the point \(z=0\) of the original chart. At that remaining point, Section 4
 shows that the nonconstant part is flat, so its spherical trace-free Hessian vanishes. This proves
-part 4 at the level of the spherical Hessian; Section 8 identifies this condition with the
-repository's surface-level IsUmbilic predicate.
+part 4 at the level of the spherical Hessian; Section 8 identifies this condition with
+`EuclideanHypersurface.IsUmbilic`, the repository's fundamental-form predicate.
 
 ## 8. Convexity and the constant \(10^{10}\)
 
@@ -779,9 +779,10 @@ The identity part \(h\,\mathrm{id}\) and the trace part of the Hessian are scala
 anti-linear coefficient of the remaining trace-free part is
 \(2\lambda^{-2}Q(u)\), or equivalently
 \(\lambda^{-2}\operatorname{sphericalTFH}(u)/2\). Thus \(R_h^\sharp\) is scalar exactly when
-\(Q(u)=0\). In Lean, `IsUmbilic` is stated as proportionality of the second and first
-fundamental forms. Normality puts the range of \(dX_h\) in the tangent plane, while coercivity
-makes \(dX_h\) injective; equality of the two-dimensional ranges then converts that form
+\(Q(u)=0\). In Lean, `EuclideanHypersurface.IsUmbilic` is stated as proportionality of the
+second and first fundamental forms. Normality puts the range of \(dX_h\) in the tangent plane,
+while coercivity makes \(dX_h\) injective; equality of the two-dimensional ranges then converts
+that form
 proportionality to \(dn=c\,dX_h\). Since \(R_h^\sharp\) is positive and invertible,
 
 \[
