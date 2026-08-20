@@ -23,11 +23,11 @@ concurrency:
 on:
   pull_request:
     paths:
-      - 'scripts/fc_leaneval_importer.py'
-      - 'scripts/leaneval_generator_cli.py'
-      - 'scripts/leaneval_interface.py'
-      - 'scripts/make_comparator_workspace.py'
-      - 'scripts/comparator_facts.lean'
+      - 'comparator/fc_leaneval_importer.py'
+      - 'comparator/leaneval_generator_cli.py'
+      - 'comparator/leaneval_interface.py'
+      - 'comparator/make_comparator_workspace.py'
+      - 'comparator/comparator_facts.lean'
       - 'comparator/**'
       - 'FormalConjectures/Wikipedia/SumOfThreeCubes.lean'
       - '.github/workflows/comparator-lean-4-33.yml'
@@ -92,7 +92,7 @@ jobs:
           TARGET_TOOLCHAIN: ${{ steps.target.outputs.lean_toolchain }}
         run: |
           for d in isSumOfThreeCubes_2 isSumOfThreeCubes_iff_mod_9; do
-            python3 scripts/make_comparator_workspace.py "$d" \
+            python3 comparator/make_comparator_workspace.py "$d" \
               --out .comparator --verify
           done
           # One plain theorem and one `answer(sorry)` slot typed at 4.27.

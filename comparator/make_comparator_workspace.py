@@ -11,8 +11,8 @@ declaration, in the two steps `leanprover/lean-eval#536` separates:
 
 The first half is Formal Conjectures'. The second is the pinned
 `leanprover/lean-eval-generator` binary — a deterministic Lean CLI with a
-versioned JSON contract — run by `scripts/leaneval_generator_cli.py` at the
-revision `comparator/tools.toml` pins. `scripts/leaneval_interface.py` builds
+versioned JSON contract — run by `comparator/leaneval_generator_cli.py` at the
+revision `comparator/tools.toml` pins. `comparator/leaneval_interface.py` builds
 the request and checks the response. `comparator/OWNERSHIP.md` says exactly
 what belongs to which side. This file is the wiring between them and belongs
 to neither.

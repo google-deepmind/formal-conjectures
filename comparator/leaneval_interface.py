@@ -22,8 +22,8 @@ and the code that turns them into contract JSON:
     build_request    (module, manifest) pairs -> the v1 request object
     parse_response   response text -> file maps, digests checked
 
-`scripts/fc_leaneval_importer.py` produces the pairs.
-`scripts/leaneval_generator_cli.py` runs the pinned binary. Nothing on the FC
+`comparator/fc_leaneval_importer.py` produces the pairs.
+`comparator/leaneval_generator_cli.py` runs the pinned binary. Nothing on the FC
 side decides a workspace file's contents any more.
 
 ## Why one module rather than a bag of strings

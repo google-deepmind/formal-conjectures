@@ -79,7 +79,7 @@ weak.google.answer = "postpone"
 
 [[lean_exe]]
 name = "comparator_facts"
-srcDir = "scripts"
+srcDir = "comparator"
 root = "comparator_facts"
 exeName = "comparator_facts"
 supportInterpreter = true

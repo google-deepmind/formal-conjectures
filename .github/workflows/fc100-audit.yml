@@ -84,7 +84,7 @@ jobs:
       # exactly the recorded ones.
       - name: Import and verify the whole set
         run: |
-          python3 scripts/make_comparator_workspace.py --set FC100OpenSet1 \
+          python3 comparator/make_comparator_workspace.py --set FC100OpenSet1 \
             --verify --out .fc100 --report fc100-report.json \
             --known-failures comparator/known_failures.toml
 
@@ -112,7 +112,7 @@ jobs:
       # is built once for the whole set rather than once per workspace.
       - name: Compile every generated Challenge at LeanEval pins
         run: |
-          python3 scripts/compile_fc100_target.py .fc100 \
+          python3 comparator/compile_fc100_target.py .fc100 \
             --project "$RUNNER_TEMP/fc100-target" \
             --report fc100-target-report.json \
             --known-failures comparator/known_failures.toml
