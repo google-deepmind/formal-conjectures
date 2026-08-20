@@ -1,6 +1,6 @@
 # Checking a witness in Lean
 
-Read this when you are about to build a witness or a control. `defect-classes.md` says what to
+Read this when you are about to build a witness or a control. The rubrics under `../rubrics/` say what to
 look for. This says how to check it, and it is mostly a list of traps that have cost real time.
 
 ## Reviewing a pull request diff

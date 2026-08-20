@@ -39,28 +39,52 @@ escalate—not an audit transcript. Do not read `evals/`; it contains answer key
    extract the cited pages with `pdftotext -layout`. Read the statement and directly relevant
    qualifiers or remarks; do not read the whole document by default.
 
-4. **Compare meanings.** Inspect only definitions that control the declaration's meaning:
-   unfamiliar predicates, quantifier scope, bounds, coercions, `answer()` placement, and a
-   candidate boundary value. Substitute the smallest relevant value. Check whether the source
-   and Lean differ in scope, direction, status, or hypothesis.
+4. **Compare meanings, one angle at a time.** Three angles partition the judgement, and every
+   finding names its angle:
+
+   - **source-fidelity** — quantifiers, direction, constants, ranges against the source's words;
+     the file against its own docstring.
+   - **statement-soundness** — satisfiable hypotheses, junk values at a candidate boundary
+     (substitute the smallest relevant value), and `answer()` polarity, self-answer, and scope.
+   - **metadata-hygiene** — category against status, unfilled slots under `research solved`,
+     and what a `formal_proof` link actually shows.
+
+   Inspect only definitions that control the declaration's meaning. The angle files under
+   [`rubrics/`](rubrics/) hold the hunt lists and confirmed exemplars; on the fast path this
+   checklist suffices, and a rubric is read when its angle produces a candidate finding.
 
 5. **Report or stop.** If source, Lean, and boundary checks agree, return CLEAN. If they do not,
-   give a direct, bounded finding. Do not manufacture a witness, proof, or secondary concern.
+   give a direct, bounded finding, and check its witness in Lean or by computation before filing
+   it — a blocking finding whose witness is only argued is not done
+   ([`references/checking-in-lean.md`](references/checking-in-lean.md)). Do not manufacture a
+   witness, proof, or secondary concern.
 
 ## Escalate only when needed
 
 Escalate when the fast path leaves a material ambiguity: a revised-source/status claim, a
-conflicting imported definition, a `formal_proof` claim, an unclear boundary, a high-severity
-finding that needs a checked witness, or a proposed replacement that needs validation.
+conflicting imported definition, a `formal_proof` claim, an unclear boundary, or a proposed
+replacement that needs validation. And escalate always, not optionally, for **any finding that
+will set the verdict** — its witness gets built and checked in Lean or by computation before
+the report returns. "The repository has no lemma for this" is the signal to build a scratch
+witness from Mathlib, not to file the finding argued; a mismatch you can quote and a
+contradiction you have checked are different evidence classes, and a verdict rests only on the
+second.
 
 Then, and only then:
 
-- read [`references/definition-traps.md`](references/definition-traps.md) and the relevant part
-  of [`references/defect-classes.md`](references/defect-classes.md);
+- read the rubric for the angle in question — [`rubrics/source-fidelity.md`](rubrics/source-fidelity.md),
+  [`rubrics/statement-soundness.md`](rubrics/statement-soundness.md), or
+  [`rubrics/metadata-hygiene.md`](rubrics/metadata-hygiene.md) — plus
+  [`rubrics/_common.md`](rubrics/_common.md) for evidence and verdict rules, and
+  [`references/definition-traps.md`](references/definition-traps.md);
 - follow source cross-references, read revisions/addenda, or inspect history/overlapping PRs;
 - use [`references/checking-in-lean.md`](references/checking-in-lean.md) for a scratch witness,
   `#print axioms`, or a type-checked suggestion;
-- run a source construction or negative control only when it resolves the issue.
+- run a source construction as a **positive control** whenever a faithfulness claim or a
+  status flip rests on the source's construction existing: instantiate it against the Lean
+  predicate at a concrete value and report the check. "The source says so" verifies the
+  source's claim, not the formalisation's fit — only the control verifies both at once. Run
+  a negative control when it resolves the issue.
 
 State exactly which deeper check ran. If it cannot be checked, make it a Question rather than a
 Finding.
@@ -79,7 +103,8 @@ Return a review that can be published directly to GitHub:
 
 After the summary, use `### Findings` and `### Questions` only when needed. Each finding has:
 
-- exact `path:line` and a short title;
+- exact `path:line`, a short title, and its angle in brackets — `[source-fidelity]`,
+  `[statement-soundness]`, or `[metadata-hygiene]`;
 - direct evidence or witness;
 - what that evidence shows and does not show; and
 - the smallest proposed change.
