@@ -20,3 +20,6 @@ FormalConjectures/All.lean
 __pycache__/
 .comparator/
 .comparator-import/
+# Whole-set audit output (make_comparator_workspace.py --set)
+.fc100/
+.fc100v/
