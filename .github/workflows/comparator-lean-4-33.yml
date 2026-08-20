@@ -14,6 +14,12 @@ name: Generated workspace at LeanEval pins
 # is built and checked at LeanEval's Lean 4.33. If those two disagree about a
 # statement or a slot type, this job is where it shows.
 
+# Two Mathlib builds make this the most expensive job in the repository, so a
+# new push supersedes the run it replaces rather than queueing behind it.
+concurrency:
+  group: comparator-lean-4-33-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     paths:
@@ -76,6 +82,11 @@ jobs:
       # substitute for the 4.33 build below; it is what keeps an FC-side
       # copying defect from being reported as a LeanEval build failure.
       - name: Import and generate two workspaces
+        # The target toolchain arrives as an environment variable rather than a
+        # `${{ }}` expansion inside the script, so the shell never has workflow
+        # syntax substituted into it before it runs.
+        env:
+          TARGET_TOOLCHAIN: ${{ steps.target.outputs.lean_toolchain }}
         run: |
           for d in isSumOfThreeCubes_2 isSumOfThreeCubes_iff_mod_9; do
             python3 scripts/make_comparator_workspace.py "$d" \
@@ -85,7 +96,7 @@ jobs:
           grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" \
             .comparator/isSumOfThreeCubes_iff_mod_9/Challenge.lean
           # Generated for LeanEval, not for here.
-          grep -q "${{ steps.target.outputs.lean_toolchain }}" \
+          grep -q "$TARGET_TOOLCHAIN" \
             .comparator/isSumOfThreeCubes_2/lean-toolchain
 
       - name: Build both workspaces at Lean 4.33
