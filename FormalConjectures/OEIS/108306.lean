@@ -104,7 +104,9 @@ The conjecture: The INVERT transform of a sequence starting
 $(1, a, ab, ab^2, ab^3, \ldots)$ is equivalent to extracting the upper left terms
 of powers of the 2x2 matrix [(1,a); (1,b)].
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-108306/blob/2e01e81b20a56880993e174ee4af0f0d7af37bdd/lean/OeisA108306FC.lean#L101-L106"]
 theorem conjecture (a_val b_val n : ℕ) :
     invertSeqD a_val b_val n = (genMatrix a_val b_val ^ n) 0 0 := by
   sorry

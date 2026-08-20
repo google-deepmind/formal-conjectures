@@ -81,5 +81,6 @@ $n=1$ and $32$ and $387420489 = 9^9$ are the only fixed points.
 "https://github.com/google-deepmind/formal-conjectures/blob/7bc39939333bfaacfa9f7a8381e5287dc0491f86/FormalConjectures/OEIS/113019.lean#L191"]
 theorem three_fixed_points : ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 ∨ n = 387420489 := by
   sorry
+-/
 
 end OeisA113019

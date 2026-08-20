@@ -75,7 +75,9 @@ termination_by n + k
 /--
 Conjecture: Starting with $n=1$, $a(n)$ is the main diagonal of the array $T(n, k)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a112521-formal-conjectures/blob/d4ee80e997c20209a1f18b7b9aa3521150d5474d/lean/OeisA112521Proof.lean#L876-L885"]
 theorem conjecture : ∀ (n : ℕ), n ≥ 1 → (a n : ℤ) = T n n := by
   sorry
 

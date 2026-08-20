@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+
 
 /-!
 # Sidorenko's conjecture (1993)

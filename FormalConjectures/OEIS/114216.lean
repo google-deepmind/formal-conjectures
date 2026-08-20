@@ -15,8 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
 /-!
 # Largest odd divisor of $a(n-1) + \textrm{prime}(n)$

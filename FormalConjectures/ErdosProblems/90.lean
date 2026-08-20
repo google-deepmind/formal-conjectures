@@ -47,7 +47,7 @@ open Finset
 The set of all possible numbers of unit distances for a configuration of $n$ points.
 -/
 noncomputable def unitDistanceCounts (n : ℕ) : Set ℕ :=
-  {unitDistancePairsCount points | (points : Finset ℝ²) (_ : points.card = n)}
+  {unitDistNum points | (points : Finset ℝ²) (_ : points.card = n)}
 
 /--
 This lemma confirms that the set of possible unit distance counts is bounded above, which
@@ -56,14 +56,9 @@ the total number of pairs of points, $\binom{n}{2}$.
 -/
 @[category test, AMS 52]
 theorem unitDistanceCounts_BddAbove (n : ℕ) : BddAbove <| unitDistanceCounts n := by
-  unfold Erdos90.unitDistanceCounts
-  unfold unitDistancePairsCount
   use n.choose 2
   rintro _ ⟨points, rfl, rfl⟩
-  rw [points.card.choose_two_right]
-  gcongr
-  refine (card_filter_le _ _).trans_eq ?_
-  rw [offDiag_card, Nat.mul_sub_left_distrib, mul_one]
+  exact unitDistNum_le_choose_two points
 
 
 /--
@@ -171,7 +166,7 @@ theorem sawin_lattice_reduction
     (hS_proj : ∀ v ∈ S, ‖π v‖ = 1) :
     ∃ U : Finset ℝ², 0 < U.card ∧
       ((1 : ℝ) - 1/R) ^ (2*d) * (S.card : ℝ) * (U.card : ℝ) ≤
-        (unitDistancePairsCount U : ℝ) := by
+        (unitDistNum U : ℝ) := by
   sorry
 
 /--

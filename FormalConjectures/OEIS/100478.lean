@@ -86,9 +86,11 @@ Starting with other values of $a(1)$, $a(2)$, $a(3)$, $a(4)$, $a(5)$ what behavi
 Does the sequence always stick at a single integer after some point, or can it go into a loop,
 or is there a third pattern?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a100478-eventual-periodicity/blob/642eed0ffee26415528ab8c48c5181826be04860/lean/OeisA100478FC.lean#L158-L168"]
 theorem conjecture (v : Fin 5 → ℕ) (h : ∀ i, v i > 0) :
-  answer(sorry) = ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → aGeneral v (n + P) = aGeneral v n) := by
+  answer(True) = ∃ N P : ℕ, P > 0 ∧ (∀ n, n ≥ N → aGeneral v (n + P) = aGeneral v n) := by
   sorry
 
 end OeisA100478

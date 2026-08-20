@@ -147,9 +147,12 @@ theorem conjecture : answer(sorry) ↔ ∃ n > 2, (a n).Prime := by
 /--
 What is the next semiprime in the sequence after $a(11)$?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a100474-next-semiprime/blob/d7781751918e63fd1268b15525bf9554c92fdd4d/lean/OeisA100474NextSemiprimeFC.lean#L1285-L1288"]
 theorem next_semiprime :
-    answer(sorry) = a (sInf {n : ℕ | 11 < n ∧ (a n).IsSemiprime}) := by
+    answer(3852669607062814427999374038085094563026983841699038416757537720951140990693348082633155462564082456461927363575765861495986901576629) =
+      a (sInf {n : ℕ | 11 < n ∧ (a n).IsSemiprime}) := by
   sorry
 
 end OeisA100474
