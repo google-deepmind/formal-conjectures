@@ -66,7 +66,8 @@ The property of being a Diophantine tuple is closed under subsets. [Du16]
 -/
 @[category textbook, AMS 11]
 theorem isDiophantineTuple_of_subset (s t : Finset R) (h1 : IsDiophantineTuple t)
-    (h2 : s ⊆ t) : IsDiophantineTuple s := by sorry
+    (h2 : s ⊆ t) : IsDiophantineTuple s := by 
+  sorry
 
 /-
 Conjectures / theorems about existence of integral Diophantine m-tuples for various values of m
