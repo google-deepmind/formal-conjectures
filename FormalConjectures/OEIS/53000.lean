@@ -30,39 +30,52 @@ namespace OeisA53000
 noncomputable def a (n : ℕ) : ℕ :=
   (sInf {p | Nat.Prime p ∧ n ^ 2 < p}) - n ^ 2
 
+/-- The least prime above `N` is `q`, given that `q` is prime, exceeds `N`, and nothing strictly
+between `N` and `q` is prime. `Nat.find` does not reduce, so the minimum is pinned down by its
+characterisation rather than evaluated. -/
+@[category API, AMS 11]
+private lemma sInf_prime_gt {N q : ℕ} (hq : Nat.Prime q) (hNq : N < q)
+    (hmin : ∀ b < q, N < b → ¬ Nat.Prime b) :
+    sInf {p | Nat.Prime p ∧ N < p} = q := by
+  refine IsLeast.csInf_eq ⟨⟨hq, hNq⟩, ?_⟩
+  rintro b ⟨hb, hlt⟩
+  by_contra hlt2
+  push Not at hlt2
+  exact hmin b hlt2 hlt hb
+
 @[category test, AMS 11]
 theorem a_0 : a 0 = 2 := by
   dsimp [a]
   have h : sInf {p | Nat.Prime p ∧ 0 < p} = 2 :=
-    (Nat.isLeast_find ⟨2, by decide⟩).csInf_eq
+    sInf_prime_gt (by norm_num) (by norm_num) (by decide)
   rw [h]
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
   dsimp [a]
   have h : sInf {p | Nat.Prime p ∧ 1 < p} = 2 :=
-    (Nat.isLeast_find ⟨2, by decide⟩).csInf_eq
+    sInf_prime_gt (by norm_num) (by norm_num) (by decide)
   rw [h]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
   dsimp [a]
   have h : sInf {p | Nat.Prime p ∧ 4 < p} = 5 :=
-    (Nat.isLeast_find ⟨5, by decide⟩).csInf_eq
+    sInf_prime_gt (by norm_num) (by norm_num) (by decide)
   rw [h]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2 := by
   dsimp [a]
   have h : sInf {p | Nat.Prime p ∧ 9 < p} = 11 :=
-    (Nat.isLeast_find ⟨11, by decide⟩).csInf_eq
+    sInf_prime_gt (by norm_num) (by norm_num) (by decide)
   rw [h]
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
   dsimp [a]
   have h : sInf {p | Nat.Prime p ∧ 16 < p} = 17 :=
-    (Nat.isLeast_find ⟨17, by decide⟩).csInf_eq
+    sInf_prime_gt (by norm_num) (by norm_num) (by decide)
   rw [h]
 
 /--

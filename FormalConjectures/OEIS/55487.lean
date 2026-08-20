@@ -30,27 +30,39 @@ namespace OeisA55487
 noncomputable def a (n : ℕ) : ℕ :=
   sInf {m : ℕ | 0 < m ∧ m.totient = n.factorial}
 
+/-- Pin down the least `m > 0` with `φ m = k` by its characterisation, since `Nat.find` does not
+reduce. -/
+@[category API, AMS 11]
+private lemma sInf_eq_of {k q : ℕ} (hq : 0 < q) (htot : q.totient = k)
+    (hmin : ∀ b < q, ¬ (0 < b ∧ b.totient = k)) :
+    sInf {m : ℕ | 0 < m ∧ m.totient = k} = q := by
+  refine IsLeast.csInf_eq ⟨⟨hq, htot⟩, ?_⟩
+  rintro b hb
+  by_contra hlt
+  push Not at hlt
+  exact hmin b hlt hb
+
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
   dsimp [a]
-  exact (Nat.isLeast_find ⟨1, by decide⟩).csInf_eq
+  exact sInf_eq_of (by norm_num) (by decide) (by decide)
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
   dsimp [a]
-  exact (Nat.isLeast_find ⟨3, by decide⟩).csInf_eq
+  exact sInf_eq_of (by norm_num) (by decide) (by decide)
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 7 := by
   dsimp [a]
   change sInf {m | 0 < m ∧ m.totient = 6} = 7
-  exact (Nat.isLeast_find ⟨7, by decide⟩).csInf_eq
+  exact sInf_eq_of (by norm_num) (by decide) (by decide)
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 35 := by
   dsimp [a]
   change sInf {m | 0 < m ∧ m.totient = 24} = 35
-  exact (Nat.isLeast_find ⟨35, by decide⟩).csInf_eq
+  exact sInf_eq_of (by norm_num) (by decide) (by decide)
 
 /-- Factorial primes: $n$ such that $n! + 1$ is prime (A002981). -/
 def isFactorialPrime (n : ℕ) : Prop :=
