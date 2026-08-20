@@ -59,8 +59,7 @@ theorem a_4 : a 4 = 1 := by native_decide
 /--
 $n=1$ and $32$ are fixed points. Are there any others?
 
-Yes: `387420489 = 9 ^ 9` is a third fixed point, so the proposed
-classification is false.
+Yes: 9^9 = 387420489 is also a fixed point. - [Kenta Kitamura](https://oeis.org/wiki/User:Kenta_Kitamura), Aug 14 2026
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
