@@ -76,7 +76,7 @@ theorem lt₂_example_2 : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by sim
 @[category test, AMS 5]
 theorem lt₂_example_3 : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
 
-/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4). -/
+/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4)$. -/
 @[category test, AMS 5]
 theorem not_lt₂_example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
 

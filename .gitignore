@@ -15,3 +15,6 @@ site/data/conjectures.json
 # Generated all-imports file
 FormalConjectures.lean
 FormalConjectures/All.lean
+
+# Python bytecode from the scripts in `scripts/`.
+__pycache__/

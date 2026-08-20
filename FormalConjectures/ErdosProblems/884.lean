@@ -50,9 +50,9 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
- \frac{1}{d_{i + 1} - d_i}) \right)$?
+ \frac{1}{d_{i + 1} - d_i} \right)$?
 
 This conjecture has been **disproved**:
 - In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
@@ -68,9 +68,9 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
- \frac{1}{d_{i + 1} - d_i}) \right)$?
+ \frac{1}{d_{i + 1} - d_i} \right)$?
 
 This conjecture has been **disproved**:
 - In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
@@ -80,7 +80,7 @@ This conjecture has been **disproved**:
 
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/884/Erdos884.lean"]
 theorem erdos_884 :
     answer(False) ↔ Erdos884Prop := by
   sorry
