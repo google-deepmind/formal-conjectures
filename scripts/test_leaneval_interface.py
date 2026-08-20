@@ -72,7 +72,6 @@ def a_manifest(**overrides):
         "holes": (DefinitionHole(name="erdos_940_answer", type="ENNReal"),),
         "permitted_axioms": ("propext", "Quot.sound", "Classical.choice"),
         "source": a_source(),
-        "target": a_target(),
         "source_url": "https://www.erdosproblems.com/940",
     }
     fields.update(overrides)
@@ -96,17 +95,16 @@ class ManifestTest(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "no FC declaration id"):
             a_manifest(source=a_source(declaration=""))
 
-    def test_target_pins_are_required(self):
-        # A workspace without them cannot be built where it is going.
-        with self.assertRaisesRegex(SystemExit, "no target pins"):
-            a_manifest(target=a_target(lean_toolchain=""))
+    def test_the_manifest_does_not_carry_the_consumers_pins(self):
+        # lean-eval#536 gives LeanEval the pin regime. A manifest asserting it
+        # would go stale when LeanEval bumped, with nothing here to notice.
+        self.assertNotIn("target", a_manifest().to_json_object())
 
-    def test_both_pin_sets_are_recorded(self):
-        # The hole types were read at the source pins and will be used at the
-        # target pins. A manifest that carried only one could not say so.
+    def test_the_pins_the_hole_types_were_read_at_are_recorded(self):
+        # The consumer supplies its own pins, but it cannot know where these
+        # hole types were read unless the manifest says so.
         payload = a_manifest().to_json_object()
         self.assertEqual(payload["source"]["lean_toolchain"], "leanprover/lean4:v4.27.0")
-        self.assertEqual(payload["target"]["lean_toolchain"], "leanprover/lean4:v4.33.0")
 
     def test_the_manifest_survives_a_round_trip(self):
         manifest = a_manifest()

@@ -189,6 +189,7 @@ jobs:
           import sys
 
           sys.path.insert(0, "scripts")
+          import fc_leaneval_importer as importer
           import leaneval_generator as generator
           from leaneval_interface import MarkedUpModule, ProblemManifest
 
@@ -203,7 +204,8 @@ jobs:
           assert manifest.source.declaration, "no FC declaration id"
 
           workspace = pathlib.Path(".comparator/erdos_1038_parts_i")
-          regenerated = generator.generate(module, manifest)
+          # The consumer's pins are its own; locally that is comparator/tools.toml.
+          regenerated = generator.generate(module, manifest, importer.target_pins())
           for name, content in regenerated.items():
               expected = (workspace / name).read_text(encoding="utf-8")
               assert content == expected, name

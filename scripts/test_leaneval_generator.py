@@ -36,7 +36,7 @@ LOCAL = {path.name for path in pathlib.Path(generator.__file__).parent.glob("*.p
 
 
 def a_workspace(**overrides):
-    return generate(A_MODULE, a_manifest(**overrides))
+    return generate(A_MODULE, a_manifest(**overrides), a_target())
 
 
 class SplitTest(unittest.TestCase):
@@ -105,7 +105,7 @@ class SplitTest(unittest.TestCase):
         self.assertNotIn("formal-conjectures", lakefile)
 
     def test_the_package_name_is_an_identifier(self):
-        files = generate(A_MODULE, a_manifest(id="erdos_940.variants.large_integers"))
+        files = generate(A_MODULE, a_manifest(id="erdos_940.variants.large_integers"), a_target())
         self.assertIn(
             'name = "erdos_940_variants_large_integers"', files["lakefile.toml"]
         )
@@ -131,7 +131,7 @@ class ManifestPassThroughTest(unittest.TestCase):
 
     def test_the_manifest_is_passed_through_unaltered(self):
         manifest = a_manifest()
-        files = generate(A_MODULE, manifest)
+        files = generate(A_MODULE, manifest, a_target())
         self.assertEqual(files["manifest.json"], manifest.to_json())
 
 

@@ -78,12 +78,12 @@ root = "WorkspaceTest"
 """
 
 
-def _readme(package, manifest):
+def _readme(package, manifest, target):
     holes_line = (
         "\nFill each definition hole in `Submission.lean` too. Hole answers "
         "also get a\nhuman check, because a hole can be gamed in ways the "
         "comparator cannot see.\nChecking holes needs a comparator built at "
-        f"commit `{manifest.target.comparator[:8]}`, which\nadded definition "
+        f"commit `{target.comparator[:8]}`, which\nadded definition "
         "support.\n"
         if manifest.holes
         else ""
@@ -130,7 +130,7 @@ HELPERS = (
 )
 
 
-def generate(marked_up, manifest):
+def generate(marked_up, manifest, target):
     """The workspace files for one problem, as a path-to-content mapping.
 
     Pure: it writes nothing, and it reads nothing but its two arguments and
@@ -207,9 +207,9 @@ def generate(marked_up, manifest):
         # The workspace is built where it is going, not where it was made:
         # these are LeanEval's pins, and the manifest carries this repository's
         # beside them.
-        "lakefile.toml": lakefile(package, manifest.target.mathlib_revision),
-        "lean-toolchain": manifest.target.lean_toolchain + "\n",
-        "README.md": _readme(package, manifest),
+        "lakefile.toml": lakefile(package, target.mathlib_revision),
+        "lean-toolchain": target.lean_toolchain + "\n",
+        "README.md": _readme(package, manifest, target),
         "ChallengeDeps.lean": "import Mathlib\n\n"
         + marked_up.dependencies.strip("\n")
         + "\n",

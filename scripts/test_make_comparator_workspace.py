@@ -28,7 +28,7 @@ from unittest import mock
 import leaneval_generator as generator
 from leaneval_interface import MarkedUpModule, ProblemManifest
 from make_comparator_workspace import emit_import, write_tree
-from test_leaneval_interface import A_MODULE, a_manifest
+from test_leaneval_interface import a_target, A_MODULE, a_manifest
 
 
 class EmitImportTest(unittest.TestCase):
@@ -51,8 +51,8 @@ class EmitImportTest(unittest.TestCase):
                 (out / "manifest.json").read_text(encoding="utf-8")
             )
         self.assertEqual(
-            generator.generate(module, read_back),
-            generator.generate(A_MODULE, manifest),
+            generator.generate(module, read_back, a_target()),
+            generator.generate(A_MODULE, manifest, a_target()),
         )
 
     def test_an_existing_directory_is_not_overwritten(self):

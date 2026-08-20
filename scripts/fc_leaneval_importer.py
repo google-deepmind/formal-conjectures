@@ -808,7 +808,6 @@ def import_problem(problem, answer_type=None, module=None):
             original,
             mathlib_rev,
         ),
-        target=target_pins(),
         source_url=docstring_reference(module_doc),
     )
     return marked_up, manifest

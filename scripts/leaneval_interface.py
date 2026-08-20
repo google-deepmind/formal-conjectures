@@ -114,13 +114,19 @@ class SourceRecord:
 
 @dataclasses.dataclass(frozen=True)
 class TargetRecord:
-    """The pins the generated workspace is built and checked with.
+    """The pins a generated workspace is built and checked with.
 
-    These are LeanEval's, not this repository's: a workspace is vendored into
-    lean-eval and built there. Formal Conjectures records them so that a
-    generated workspace is buildable where it is going rather than only where
-    it was made, and `comparator/tools.toml` is the one place they are
-    written down.
+    These belong to whoever consumes the generator: lean-eval#536 says
+    LeanEval "remains the trusted statement repository and supplies the pin
+    regime and CI". So they are an argument to `generate`, not a field of the
+    manifest — a manifest carrying them would be Formal Conjectures asserting
+    another repository's regime, and would go stale the moment that repository
+    bumped anything, with nothing here to notice.
+
+    Formal Conjectures keeps a copy under `[target]` in `comparator/tools.toml`
+    for one purpose: the CI job that generates at this repository's toolchain
+    and builds at LeanEval's, which is how the gap between the two is observed
+    rather than assumed.
     """
 
     repository: str
@@ -150,15 +156,12 @@ class ProblemManifest:
     holes: tuple
     permitted_axioms: tuple
     source: SourceRecord
-    target: TargetRecord
     source_url: str = ""
 
     def __post_init__(self):
         for field in ("id", "theorem", "qualified_theorem"):
             if not getattr(self, field):
                 raise SystemExit(f"manifest has no {field}")
-        if not self.target.lean_toolchain or not self.target.mathlib_revision:
-            raise SystemExit(f"manifest {self.id} records no target pins")
         # lean-eval#536 names these two explicitly, and a manifest without
         # them cannot be traced back to a revision of this repository or
         # regenerated when FC fixes a misformalisation upstream.
@@ -183,7 +186,6 @@ class ProblemManifest:
                 **dataclasses.asdict(self.source),
                 "copied_dependencies": list(self.source.copied_dependencies),
             },
-            "target": dataclasses.asdict(self.target),
         }
         if self.source_url:
             payload["source_url"] = self.source_url
@@ -207,7 +209,6 @@ class ProblemManifest:
             holes=tuple(DefinitionHole(**hole) for hole in payload["holes"]),
             permitted_axioms=tuple(payload["permitted_axioms"]),
             source=SourceRecord(**source),
-            target=TargetRecord(**payload["target"]),
             source_url=payload.get("source_url", ""),
         )
 

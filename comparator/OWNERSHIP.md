@@ -17,7 +17,7 @@ than a rewrite. This file says exactly what goes.
 
     scripts/fc_leaneval_importer.py     FC declaration -> (module, manifest)
     scripts/leaneval_interface.py       the two values, and nothing else
-    scripts/leaneval_generator.py       (module, manifest) -> workspace files
+    scripts/leaneval_generator.py       (module, manifest, pins) -> workspace files
 
 `scripts/make_comparator_workspace.py` is the command that runs one after the
 other. The arrow points one way: the generator imports the interface and never

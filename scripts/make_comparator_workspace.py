@@ -148,7 +148,9 @@ def main(argv):
     if args.emit_import:
         print(emit_import(marked_up, manifest, args.emit_import))
         return 0
-    files = generator.generate(marked_up, manifest)
+    # The consumer supplies its own pins; see TargetRecord. Locally that is
+    # `[target]` in comparator/tools.toml, standing in for lean-eval's.
+    files = generator.generate(marked_up, manifest, importer.target_pins())
     print(write_tree(pathlib.Path(args.out) / slug(manifest.id), files))
     return 0
 
