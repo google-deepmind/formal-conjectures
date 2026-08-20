@@ -16,7 +16,6 @@ limitations under the License.
 
 import FormalConjecturesUtil
 import FormalConjectures.Other.CaratheodoryLoewnerCounterexample.Smooth
-import Mathlib.Topology.Homotopy.Lifting
 
 /-!
 # Index of the announced Carathéodory–Loewner counterexamples
