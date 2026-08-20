@@ -35,6 +35,14 @@ on:
   schedule:
     # Weekly, early Monday UTC.
     - cron: '17 4 * * 1'
+  # Dispatch and schedule only reach a workflow on the default branch, so a
+  # pull request introducing or reconfiguring the audit could never show its
+  # run. Trigger on the audit's own configuration instead: these paths change
+  # when the audit changes, and the artifact is the review evidence.
+  pull_request:
+    paths:
+      - '.github/workflows/fc100-audit.yml'
+      - 'comparator/known_failures.toml'
 
 permissions:
   contents: read
