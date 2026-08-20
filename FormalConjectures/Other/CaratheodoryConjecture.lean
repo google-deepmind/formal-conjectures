@@ -56,16 +56,14 @@ def IsConvexSphereOfClass (k : WithTop ℕ∞) (F n : sphere (0 : ℝ³) 1 → �
     ∃ K : Set ℝ³,
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
 
-/-- A point is umbilic when its second fundamental form is a scalar multiple of its first.
-The second form uses the convention `II(v,w) = -⟪dn(v),dF(w)⟫`. -/
-def IsUmbilic (F n : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : Prop :=
-  EuclideanHypersurface.IsUmbilicByFundamentalForms
-    (sphereAmbientMfderiv F p) (sphereAmbientMfderiv n p)
-
 /-- Carathéodory's conjecture for convex surfaces of class `C^k`. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ (F n : sphere (0 : ℝ³) 1 → ℝ³), IsConvexSphereOfClass k F n →
-    ∃ p₁ p₂, p₁ ≠ p₂ ∧ IsUmbilic F n p₁ ∧ IsUmbilic F n p₂
+    ∃ p₁ p₂, p₁ ≠ p₂ ∧
+      EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F p₁) (sphereAmbientMfderiv n p₁) ∧
+      EuclideanHypersurface.IsUmbilic
+        (sphereAmbientMfderiv F p₂) (sphereAmbientMfderiv n p₂)
 
 /-- **The smooth Carathéodory conjecture.**
 
