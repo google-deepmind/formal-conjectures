@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjecturesUtil
 import FormalConjectures.Other.CaratheodoryLoewnerCounterexample.Defs
-import FormalConjecturesForMathlib.Analysis.SpecialFunctions.FlatRpowExp
-import Mathlib.Analysis.Distribution.TemperateGrowth
 
 /-!
 # Smoothness of the announced Carathéodory–Loewner counterexamples

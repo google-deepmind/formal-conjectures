@@ -15,14 +15,8 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Analysis.SpecialFunctions.FlatRpowExp
-import FormalConjecturesForMathlib.Geometry.SupportFunctionSphere
 import FormalConjectures.Other.CaratheodoryLoewnerCounterexample.Smooth
 import FormalConjectures.Other.CaratheodoryLoewnerCounterexample.Index
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.Geometry.Manifold.ContMDiff.Atlas
-import Mathlib.Geometry.Manifold.Riemannian.Basic
 
 /-!
 # The global smooth Carathéodory counterexample
