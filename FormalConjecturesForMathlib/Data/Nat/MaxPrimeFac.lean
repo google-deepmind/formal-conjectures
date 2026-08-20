@@ -28,7 +28,7 @@ Takes the junk value `0` for `n = 0` and `1` for `n = 1`. -/
 def maxPrimeFac (n : ℕ) : ℕ := if n = 1 then 1 else n.primeFactorsList.getLastI
 
 example : maxPrimeFac 0 = 0 := by decide +kernel
-example : maxPrimeFac 1 = 1 := by decide
+example : maxPrimeFac 1 = 1 := rfl
 example : maxPrimeFac 12 = 3 := by decide +kernel
 example : maxPrimeFac 97 = 97 := by decide +kernel
 example : maxPrimeFac 125 = 5 := by decide +kernel
@@ -41,8 +41,7 @@ lemma maxPrimeFac_zero :
 
 @[simp]
 lemma maxPrimeFac_one :
-    maxPrimeFac 1 = 1 := by
-  simp [maxPrimeFac]
+    maxPrimeFac 1 = 1 := rfl
 
 lemma prime_maxPrimeFac_of_one_lt (n : ℕ) (h : 1 < n) :
     Prime (maxPrimeFac n) := by
@@ -53,21 +52,19 @@ lemma prime_maxPrimeFac_of_one_lt (n : ℕ) (h : 1 < n) :
     List.getLast?_eq_getLast_of_ne_nil hn] using hprime
 
 /-- The greatest prime factor of a natural number divides it. -/
-lemma maxPrimeFac_dvd {n : ℕ} :
-    maxPrimeFac n ∣ n := by
-  rcases lt_trichotomy n 1 with hn | rfl | hn
-  case inr.inr =>
-    have hlist : n.primeFactorsList ≠ [] := (primeFactorsList_ne_nil n).2 hn
-    have hmem : n.primeFactorsList.getLast hlist ∈ n.primeFactorsList :=
+lemma maxPrimeFac_dvd : ∀ {n : ℕ}, maxPrimeFac n ∣ n
+  | 0 => by simp
+  | 1 => by simp
+  | n + 2 => by
+    have hn : 1 < n + 2 := by omega
+    have hlist : (n + 2).primeFactorsList ≠ [] :=
+      (primeFactorsList_ne_nil (n + 2)).2 hn
+    have hmem : (n + 2).primeFactorsList.getLast hlist ∈ (n + 2).primeFactorsList :=
       List.getLast_mem hlist
-    have hdvd : n.primeFactorsList.getLast hlist ∣ n := dvd_of_mem_primeFactorsList hmem
+    have hdvd : (n + 2).primeFactorsList.getLast hlist ∣ n + 2 :=
+      dvd_of_mem_primeFactorsList hmem
     simpa [maxPrimeFac, hn.ne', List.getLastI_eq_getLast?_getD,
       List.getLast?_eq_getLast_of_ne_nil hlist] using hdvd
-  case inl =>
-    simp only [lt_one_iff] at hn
-    subst n
-    simp
-  case inr.inl => simp
 
 /-- Every prime factor of a nonzero natural number is at most its greatest prime factor. -/
 lemma le_maxPrimeFac
@@ -106,52 +103,84 @@ lemma maxPrimeFac_eq_self_iff {n : ℕ} :
     · obtain rfl | rfl := Nat.le_one_iff_eq_zero_or_eq_one.mp hn <;> simp
     · exact hn.maxPrimeFac_eq_self
 
-/-- The greatest prime factor of a nontrivial prime power is its prime base. -/
-lemma Prime.maxPrimeFac_pow {p k : ℕ} (hp : p.Prime) (hk : k ≠ 0) :
-    Nat.maxPrimeFac (p ^ k) = p := by
-  rw [Nat.maxPrimeFac, hp.primeFactorsList_pow]
+/-- The greatest prime factor of a product of nonzero natural numbers is the maximum of their
+greatest prime factors. -/
+lemma maxPrimeFac_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
+    maxPrimeFac (m * n) = max (maxPrimeFac m) (maxPrimeFac n) := by
+  by_cases hm_one : m = 1
+  · subst m
+    have hle : 1 ≤ maxPrimeFac n := by
+      by_cases hn_one : n = 1
+      · subst n
+        simp
+      · have hn_lt : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn, hn_one⟩
+        exact (prime_maxPrimeFac_of_one_lt n hn_lt).one_lt.le
+    simp [hle]
+  by_cases hn_one : n = 1
+  · subst n
+    have hm_lt : 1 < m := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hm, hm_one⟩
+    have hle : 1 ≤ maxPrimeFac m := (prime_maxPrimeFac_of_one_lt m hm_lt).one_lt.le
+    simp [hle]
+  have hm_lt : 1 < m := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hm, hm_one⟩
+  have hn_lt : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn, hn_one⟩
+  have hmn_lt : 1 < m * n := Nat.one_lt_mul_iff.mpr
+    ⟨zero_lt_of_lt hm_lt, zero_lt_of_lt hn_lt, Or.inl hm_lt⟩
+  apply le_antisymm
+  · have hp : Prime (maxPrimeFac (m * n)) := prime_maxPrimeFac_of_one_lt (m * n) hmn_lt
+    rcases hp.dvd_mul.mp maxPrimeFac_dvd with hpm | hpn
+    · exact (le_maxPrimeFac hm hp hpm).trans (le_max_left _ _)
+    · exact (le_maxPrimeFac hn hp hpn).trans (le_max_right _ _)
+  · apply max_le
+    · have hp : Prime (maxPrimeFac m) := prime_maxPrimeFac_of_one_lt m hm_lt
+      apply le_maxPrimeFac (mul_ne_zero hm hn) hp
+      exact dvd_mul_of_dvd_left maxPrimeFac_dvd n
+    · have hp : Prime (maxPrimeFac n) := prime_maxPrimeFac_of_one_lt n hn_lt
+      apply le_maxPrimeFac (mul_ne_zero hm hn) hp
+      exact dvd_mul_of_dvd_right maxPrimeFac_dvd m
+
+/-- The greatest prime factor of a nonzero power is the greatest prime factor of its base. -/
+@[simp]
+lemma maxPrimeFac_pow {k : ℕ} (hk : k ≠ 0) (n : ℕ) :
+    maxPrimeFac (n ^ k) = maxPrimeFac n := by
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
-  have hrep : List.replicate (j + 1) p ≠ [] := by
+  clear hk
+  by_cases hn : n = 0
+  · subst n
     simp
-  simp [hp.ne_one, List.getLastI_eq_getLast?_getD,
-    List.getLast?_eq_getLast_of_ne_nil hrep]
+  induction j with
+  | zero => simp
+  | succ j ih =>
+      rw [pow_succ, maxPrimeFac_mul (pow_ne_zero _ hn) hn, ih]
+      simp
 
 /-- The greatest prime factor of a natural number is at most that number. -/
-lemma maxPrimeFac_le (n : ℕ) :
-    maxPrimeFac n ≤ n := by
-  rcases lt_trichotomy n 1 with hn | rfl | hn
-  case inr.inr =>
-    exact Nat.le_of_dvd (zero_lt_of_lt hn) maxPrimeFac_dvd
-  case inl =>
-    simp only [lt_one_iff] at hn
-    subst n
-    simp
-  case inr.inl => simp
+lemma maxPrimeFac_le : ∀ {n : ℕ}, maxPrimeFac n ≤ n
+  | 0 => by simp
+  | 1 => by simp
+  | n + 2 => Nat.le_of_dvd (by omega) maxPrimeFac_dvd
+
+/-- The greatest prime factor of a natural number greater than one is the least upper bound of
+its prime factors. -/
+lemma isLeast_maxPrimeFac {n : ℕ} (hn : 1 < n) :
+    IsLeast (upperBounds {p : ℕ | p.Prime ∧ p ∣ n}) (maxPrimeFac n) := by
+  constructor
+  · rintro p ⟨hp, h_dvd⟩
+    exact le_maxPrimeFac (zero_lt_of_lt hn).ne' hp h_dvd
+  · intro b hb
+    exact hb ⟨prime_maxPrimeFac_of_one_lt n hn, maxPrimeFac_dvd⟩
 
 /-- Away from `n = 1`, the computable greatest prime factor agrees with its supremum
 characterization. -/
 lemma maxPrimeFac_eq_sSup {n : ℕ} (hn_one : n ≠ 1) :
     maxPrimeFac n = sSup {p : ℕ | p.Prime ∧ p ∣ n} := by
-  rcases lt_trichotomy n 1 with hn | rfl | hn
-  case inr.inr =>
-    set s := {p : ℕ | p.Prime ∧ p ∣ n}
-    have hs₀ : s.Nonempty :=
-      ⟨maxPrimeFac n, prime_maxPrimeFac_of_one_lt n hn, maxPrimeFac_dvd⟩
-    have hs₁ : BddAbove s := by
-      refine ⟨n, ?_⟩
-      rintro p ⟨_, hp⟩
-      exact Nat.le_of_dvd (zero_lt_of_lt hn) hp
-    apply le_antisymm
-    · exact le_csSup hs₁
-        ⟨prime_maxPrimeFac_of_one_lt n hn, maxPrimeFac_dvd⟩
-    · apply csSup_le hs₀
-      rintro p ⟨hp, h_dvd⟩
-      exact le_maxPrimeFac (zero_lt_of_lt hn).ne' hp h_dvd
-  case inl =>
-    simp only [lt_one_iff] at hn
-    subst n
+  by_cases hn_zero : n = 0
+  · subst n
     simpa using (Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime).symm
-  case inr.inl => exact (hn_one rfl).elim
+  · have hn : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn_zero, hn_one⟩
+    have h_lub : IsLUB {p : ℕ | p.Prime ∧ p ∣ n} (maxPrimeFac n) :=
+      isLeast_maxPrimeFac hn
+    exact (h_lub.csSup_eq
+      ⟨maxPrimeFac n, prime_maxPrimeFac_of_one_lt n hn, maxPrimeFac_dvd⟩).symm
 
 @[simp]
 lemma one_lt_maxPrimeFac_iff (n : ℕ) :
