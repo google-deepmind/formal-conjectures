@@ -10,10 +10,26 @@ coordination tracked in
 [`formal-conjectures#4930`](https://github.com/google-deepmind/formal-conjectures/issues/4930).
 
 **[`OWNERSHIP.md`](OWNERSHIP.md) is the map**: which code is Formal
-Conjectures' permanently, which code is standing in for
-`leanprover/lean-eval-generator` and is deleted when that lands, what crosses
-between them, and what the interface still needs from lean-eval. Read it first.
-This file is the operator's page: the commands, their inputs, and the pins.
+Conjectures' permanently, what crosses the seam to the pinned
+[`leanprover/lean-eval-generator`](https://github.com/leanprover/lean-eval-generator),
+and what the interface still needs from lean-eval. Read it first. This file is
+the operator's page: the commands, their inputs, and the pins.
+
+## The generator binary
+
+Workspace generation runs the extracted generator at the revision `tools.toml`
+pins under `[generator]`. Build it once — the package depends on nothing, so
+this is quick — and point the importer at it:
+
+```bash
+git clone https://github.com/leanprover/lean-eval-generator /tmp/lean-eval-generator
+git -C /tmp/lean-eval-generator checkout "$(python3 -c '
+import tomllib; print(tomllib.load(open("comparator/tools.toml","rb"))["generator"]["rev"])')"
+(cd /tmp/lean-eval-generator && lake build)
+export LEAN_EVAL_GENERATOR_BIN=/tmp/lean-eval-generator/.lake/build/bin/lean-eval-generator
+```
+
+Import and `--verify` are offline as before; only generation needs the binary.
 
 ## Two toolchains
 
@@ -25,8 +41,9 @@ does not require a repository-wide toolchain upgrade here.
 So the importer reads a declaration's source range, binders, dependencies and
 `answer(sorry)` slot types from an environment elaborated at *this*
 repository's toolchain, and the workspace it produces is pinned to *LeanEval's*
-toolchain and Mathlib. `manifest.json` records both pin sets, under `source`
-and `target`. `.github/workflows/comparator-lean-4-33.yml` generates a
+toolchain and Mathlib. The request carries LeanEval's pins; the provenance
+sidecar `fc-provenance.json` records the pins the hole types were read at.
+`.github/workflows/comparator-lean-4-33.yml` generates a
 workspace here and builds and Comparator-checks it there, in one job, which is
 what turns the gap between them into something observed rather than assumed.
 
@@ -52,7 +69,8 @@ The workspace contains `ChallengeDeps.lean` with the statement's copied Formal
 Conjectures closure, `Challenge.lean` with the trusted statement and its proof
 hole, `Submission.lean` and `Submission/` where a solver works, `Solution.lean`
 connecting the two, `config.json` with the theorem targets, definition targets
-and permitted axioms, and `manifest.json`. `Solution.lean` is fixed: it fails
+and permitted axioms, `holes.json`, and the `fc-provenance.json` sidecar this
+side adds beside the generator's files. `Solution.lean` is fixed: it fails
 to build if the submission changes the statement. Comparator rejects `sorryAx`,
 because it is not in the permitted axiom list.
 
@@ -63,9 +81,24 @@ python3 scripts/make_comparator_workspace.py erdos_1038.parts.i \
   --emit-import .comparator-import
 ```
 
-This writes `Problem.lean` and `manifest.json` and generates no workspace. It
-is the pair the importer contributes to a LeanEval problem pull request once
-the shared generator is a pinned dependency there.
+This writes the exact bytes that cross the seam — `request.json`, the
+`context/` directory the v1 contract reads, and the provenance sidecar — and
+generates no workspace. Running the pinned binary on that request from inside
+the emitted directory yields the same file map generation would have written,
+which is what makes the seam checkable rather than asserted.
+
+### Import a whole set
+
+```bash
+python3 scripts/make_comparator_workspace.py --set FC100OpenSet1 \
+  --verify --report fc100-report.json \
+  --known-failures comparator/known_failures.toml
+```
+
+One request carries every declaration that imports; failures are recorded per
+declaration in the report instead of aborting the run. With
+`--known-failures`, the run fails unless the failures are exactly the recorded
+ones — an unexpected failure and a silently fixed one both count.
 
 ### Supported inputs
 
@@ -84,8 +117,8 @@ safely, and existing output.
 
 `problems/*.toml` is an input, not the LeanEval manifest: it records the
 choices this repository's Lean source cannot make for itself, and the importer
-reads it. The manifest the generator receives, and writes into the workspace as
-`manifest.json`, is derived.
+reads it. The request the generator receives, and the provenance sidecar, are
+derived.
 
 Most declarations need no problem file. Add one TOML file under `problems/`
 only when two files declare the same name, which is the one thing the Lean
@@ -116,9 +149,10 @@ python3 scripts/make_comparator_workspace.py --validate
 `tools.toml` is the one machine-readable source. `[tools]` are the revisions a
 local run uses under this repository's toolchain. `[target]` are LeanEval's:
 the Lean toolchain and Mathlib revision every generated workspace is pinned to,
-and the Comparator and `lean4export` commits that check it. Every manifest
-records `[target]` beside the source pins. Generation itself does not run
-Comparator.
+and the Comparator and `lean4export` commits that check it. `[generator]` is
+the extracted generator revision every request is written against; bumping it
+is a contract change and has to survive the seam round-trip test. Generation
+itself does not run Comparator.
 
 ## Conformance before a public import
 
