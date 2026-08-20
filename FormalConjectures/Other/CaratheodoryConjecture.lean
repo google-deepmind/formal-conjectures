@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Geometry.EuclideanHypersurface
 import FormalConjectures.Other.LoewnerConjecture
 
 /-!
