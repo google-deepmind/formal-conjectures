@@ -398,3 +398,36 @@ class MathlibOnlyClosureTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DocstringReferenceTest(unittest.TestCase):
+    """The source citation is read from Formal Conjectures, not copied.
+
+    A hand-kept copy drifts. The Margulis module's docstring pins
+    `arxiv/2504.17644v3`; the problem file that used to carry the same
+    citation had the unversioned URL, so the copy was already less exact
+    than the docstring it was copied from.
+    """
+
+    def test_the_first_reference_link_is_the_citation(self):
+        doc = (
+            "/-!\n# Erdős Problem 1038\n\n*Reference:*\n"
+            " - [erdosproblems.com/1038](https://www.erdosproblems.com/1038)\n"
+            " - [Tao25] a blog post (https://example.com/other)\n-/"
+        )
+        self.assertEqual(
+            importer.docstring_reference(doc), "https://www.erdosproblems.com/1038"
+        )
+
+    def test_an_arxiv_version_suffix_is_preserved(self):
+        doc = "/-!\n*Reference:* [arxiv/2504.17644v3](https://arxiv.org/abs/2504.17644v3)\n-/"
+        self.assertEqual(
+            importer.docstring_reference(doc), "https://arxiv.org/abs/2504.17644v3"
+        )
+
+    def test_links_above_the_reference_line_are_not_the_citation(self):
+        doc = "/-!\n# A problem\n\nSee [Mathlib](https://leanprover-community.github.io).\n-/"
+        self.assertEqual(importer.docstring_reference(doc), "")
+
+    def test_a_module_without_a_docstring_has_no_citation(self):
+        self.assertEqual(importer.docstring_reference(""), "")

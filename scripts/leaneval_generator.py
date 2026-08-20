@@ -90,7 +90,7 @@ def _readme(package, manifest):
     )
     fields = "".join(
         f"- {label}: {' '.join(str(value).split())}\n"
-        for label, value in (("Source", manifest.source_url), ("Notes", manifest.notes))
+        for label, value in (("Source", manifest.source_url),)
         if value
     )
     return (

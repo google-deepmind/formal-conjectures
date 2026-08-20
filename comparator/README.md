@@ -88,16 +88,22 @@ reads it. The manifest the generator receives, and writes into the workspace as
 `manifest.json`, is derived.
 
 Most declarations need no problem file. Add one TOML file under `problems/`
-only when the source cannot select the declaration by itself.
+only when two files declare the same name, which is the one thing the Lean
+environment cannot resolve.
 
 | Field | Meaning |
 |---|---|
 | `id` | Workspace name. It must match the TOML filename. |
 | `declaration` | Lean declaration name. |
 | `module` | Source file when the declaration name is ambiguous. |
-| `answer_type` | Explicit override when slot types cannot be matched safely. |
-| `source` | Optional source link for the generated README. |
-| `notes` | Optional reviewer note for the generated README. |
+
+There is deliberately nothing else. The source citation comes from the module
+docstring's `*Reference:*` line, because a copy kept here drifts from the one
+the repository maintains — the copy this directory used to hold for
+`Margulis.lean` had already lost the `v3` the docstring pins. An answer-slot
+type Lean reports ambiguously is a `--answer-type` argument rather than a
+field, since no problem currently needs one and a field nothing sets is a
+format nobody checks.
 
 Run the problem-file check after moving or renaming a declaration:
 

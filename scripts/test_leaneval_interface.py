@@ -74,7 +74,6 @@ def a_manifest(**overrides):
         "source": a_source(),
         "target": a_target(),
         "source_url": "https://www.erdosproblems.com/940",
-        "notes": "a reviewer note",
     }
     fields.update(overrides)
     return ProblemManifest(**fields)

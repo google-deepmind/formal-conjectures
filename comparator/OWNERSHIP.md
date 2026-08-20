@@ -77,7 +77,7 @@ changes by one import.
 | `scripts/test_fc_leaneval_importer.py` | 400 | every case pins a real extraction defect |
 | `scripts/make_comparator_workspace.py` | 157 | the command, and the directory write that belongs to neither side |
 | `scripts/test_make_comparator_workspace.py` | 99 | asserts the emitted pair rebuilds the workspace exactly |
-| `comparator/problems/*.toml` | — | the choices FC source cannot make for itself: which module, and an answer type Lean reports ambiguously |
+| `comparator/problems/*.toml` | — | the one choice FC source cannot make for itself: which module, when two declare the same name |
 | `comparator/tools.toml` | — | the pins, in one machine-readable place: this repository's under `[tools]`, LeanEval's under `[target]` |
 
 Nothing in the importer names a workspace file, a workspace layout, or an

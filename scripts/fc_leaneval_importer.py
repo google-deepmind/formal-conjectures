@@ -19,9 +19,8 @@ Nothing here writes a workspace file, names a workspace layout, or decides
 which generated module imports which. If a change to this file would do one of
 those, it belongs on the other side of the seam.
 
-Two things the Lean source cannot settle live in `comparator/problems/<id>.toml`,
-one file per problem: an answer type Lean reports ambiguously, and which file
-is meant when two declare the same name. See that directory's README.
+One thing the Lean source cannot settle lives in `comparator/problems/<id>.toml`,
+one file per problem: which file is meant when two declare the same name.
 """
 
 import json
@@ -145,12 +144,11 @@ def file_scoped_preamble(lines, start_line):
 
 
 def load_manifest(problem_id):
-    """Read explicit choices that Lean source cannot select by itself.
+    """Read the one choice Lean source cannot select by itself.
 
-    An FC problem file selects the module when names collide. It may also
-    override an answer-slot type when Lean reports several types that cannot
-    be matched to source positions. The importer refuses both cases without an
-    explicit choice.
+    When two files declare the same name, nothing in the Lean environment says
+    which one was meant, so the importer refuses until a module is named. That
+    is the whole contract.
 
     `leanprover/lean-eval` keeps one TOML per problem, and the reason is worth
     copying: two pull requests adding different problems never touch the same
@@ -159,9 +157,12 @@ def load_manifest(problem_id):
       id           the filename stem, and the workspace directory name
       declaration  the Lean name, which need not be unique across the repository
       module       the file declaring it, relative to the repository root
-      answer_type  the type of a non-`Prop` answer slot
-      notes        free text for a reviewer
-      source       a citation or URL
+
+    Anything Formal Conjectures already states stays where it is stated. The
+    source citation is read from the module docstring rather than copied here,
+    because a copy can drift from the docstring the repository maintains. An
+    ambiguous answer-slot type is a `--answer-type` argument: it is rare, and
+    a field no problem uses is a format nobody can check.
     """
     path = MANIFEST_DIR / f"{problem_id}.toml"
     if not path.exists():
@@ -176,6 +177,22 @@ def load_manifest(problem_id):
     if "declaration" not in data:
         raise SystemExit(f"{path} has no `declaration` field")
     return data
+
+
+def docstring_reference(module_doc):
+    """The source citation Formal Conjectures already writes in the module.
+
+    Module docstrings carry a `*Reference:*` line naming where the problem
+    comes from, sometimes with several links under it. The first is the
+    problem's own; later ones are commentary and proof notes.
+    """
+    if not module_doc:
+        return ""
+    after = module_doc.split("*Reference:*", 1)
+    if len(after) != 2:
+        return ""
+    link = re.search(r"\]\((https?://[^)\s]+)\)", after[1])
+    return link.group(1) if link else ""
 
 
 def manifest_ids():
@@ -230,18 +247,18 @@ def find_declaration(basename, module=None):
 
 
 def _read_source(path):
-    text = path.read_text(encoding="utf-8")
-    # Drop the license header; keep the module docstring; the rest is the body.
-    text = re.sub(r"\A/-.*?-/\s*", "", text, flags=re.DOTALL)
-    doc = ""
-    m = re.match(r"\s*(/-!.*?-/)\s*", text, flags=re.DOTALL)
-    if m:
-        doc = m.group(1)
-        text = text[m.end() :]
-    # Imports precede the docstring in source order; recover them from the original.
-    imports = re.findall(
-        r"^import\s+(\S+)", path.read_text(encoding="utf-8"), re.MULTILINE
-    )
+    """Return (path, imports, module docstring, body after the licence header).
+
+    The docstring is read but not removed. It sits below the imports rather
+    than at the top, so it is found by searching; the body deliberately still
+    contains it, because `strip_decorations` removes docstrings per
+    declaration and the generated files are compared byte for byte.
+    """
+    original = path.read_text(encoding="utf-8")
+    text = re.sub(r"\A/-.*?-/\s*", "", original, flags=re.DOTALL)
+    found = re.search(r"/-!.*?-/", text, flags=re.DOTALL)
+    doc = found.group(0) if found else ""
+    imports = re.findall(r"^import\s+(\S+)", original, re.MULTILINE)
     return path, imports, doc, text
 
 
@@ -716,9 +733,8 @@ def import_problem(problem, answer_type=None, module=None):
     declaration = problem_file.get("declaration", problem)
     # An argument given on the command line is explicit, so it wins over the
     # problem file; the file is the durable record of the same choice.
-    answer_type = answer_type or problem_file.get("answer_type")
     module = module or problem_file.get("module")
-    path, _imports, _module_doc, _body = find_declaration(declaration, module)
+    path, _imports, module_doc, _body = find_declaration(declaration, module)
     fc_module = module_name(path.relative_to(ROOT))
     facts = elaborator_facts(fc_module, declaration)
     if facts["range"] is None:
@@ -793,8 +809,7 @@ def import_problem(problem, answer_type=None, module=None):
             mathlib_rev,
         ),
         target=target_pins(),
-        source_url=str(problem_file.get("source", "")),
-        notes=str(problem_file.get("notes", "")),
+        source_url=docstring_reference(module_doc),
     )
     return marked_up, manifest
 

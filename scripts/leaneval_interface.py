@@ -152,7 +152,6 @@ class ProblemManifest:
     source: SourceRecord
     target: TargetRecord
     source_url: str = ""
-    notes: str = ""
 
     def __post_init__(self):
         for field in ("id", "theorem", "qualified_theorem"):
@@ -188,8 +187,6 @@ class ProblemManifest:
         }
         if self.source_url:
             payload["source_url"] = self.source_url
-        if self.notes:
-            payload["notes"] = self.notes
         return payload
 
     @classmethod
@@ -212,7 +209,6 @@ class ProblemManifest:
             source=SourceRecord(**source),
             target=TargetRecord(**payload["target"]),
             source_url=payload.get("source_url", ""),
-            notes=payload.get("notes", ""),
         )
 
     def to_json(self):
