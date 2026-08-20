@@ -60,17 +60,14 @@ noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
-/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
-$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
-vertex outside $S$).
-
-Counterpart to `ecc`: the outer minimum (instead of maximum) of the
-distance-to-set function, restricted to vertices outside $S$. -/
+/-- The minimum distance between distinct vertices of $S$:
+$\min \{\operatorname{dist}_G(u, v) \mid u, v \in S, u \ne v\}$. Returns `0` when $S$
+contains fewer than two vertices. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
   open scoped Classical in
-  let outside := Finset.univ.filter (fun v : α => v ∉ S)
-  if h : outside.Nonempty then
-    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => G.dist p.1 p.2)).min' (Finset.Nonempty.image h _)
   else 0
 
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
@@ -79,11 +76,23 @@ which contribute distance `0`.) Returns `0` when `S` is empty.
 
 Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
 not exclude any vertex; it is the conventional definition of "set eccentricity"
-used in DeLaVina's WOWII conjectures 18, 145 and 146.
+used in DeLaVina's WOWII conjectures 142, 145 and 146.
 -/
 noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let dists := Finset.univ.image (fun v => distToSet G v S)
   if h : dists.Nonempty then dists.max' h else 0
+
+/-- The maximum distance between two vertices of a set `S`:
+$\operatorname{dist}_{\max}(S) = \max\{\operatorname{dist}_G(u,v) \mid u, v \in S\}$.
+Returns `0` when `S` is empty or a singleton.
+
+This is DeLaVina's `dist_max(S)` invariant ("distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 18. It is distinct from
+`eccSet`, which measures distances from arbitrary vertices *to* the set. -/
+noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
+  let members := Finset.univ.filter (fun v : α => v ∈ S)
+  (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
@@ -142,6 +151,13 @@ Returns 0 if u = v or if v is unreachable from u. -/
 def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
   if u = v then 0
   else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
+
+/-- A computable version of `distMin` for a `Finset` of vertices. -/
+def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
+  let pairs := (S ×ˢ S).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => computable_dist G p.1 p.2)).min' (Finset.Nonempty.image h _)
+  else 0
 
 /-- Computable average distance as a rational. -/
 def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
@@ -279,6 +295,22 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
             · subst hd; rwa [h_inv] at hv)
           (by omega)
 
+/-- `computableDistMin` agrees with `distMin` on a finite vertex set. -/
+theorem distMin_eq_computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj]
+    (S : Finset α) : distMin G (S : Set α) = computableDistMin G S := by
+  unfold distMin computableDistMin
+  simp only [Finset.toFinset_coe]
+  split_ifs
+  · congr 1
+    ext n
+    simp only [Finset.mem_image]
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, (dist_eq_computable G p.1 p.2).symm⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, dist_eq_computable G p.1 p.2⟩
+  · rfl
+
 theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     averageDistance G = (computable_avg_dist G : ℝ) := by
   unfold averageDistance computable_avg_dist
@@ -295,6 +327,12 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     ring
   · simp
 
+
+/-- `distEven G v` counts the vertices at even distance from `v` in `G`. This is
+DeLaVina's `dist_even(v)` invariant appearing in several WOWII conjectures.
+Distance zero is even, so `v` itself is always counted. -/
+noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
+  (Finset.univ.filter fun w => Even (G.dist v w)).card
 
 /-- The set of pairs of distinct vertices with even distance > 0. -/
 noncomputable def evenDistancePairs (G : SimpleGraph α) : Finset (α × α) :=

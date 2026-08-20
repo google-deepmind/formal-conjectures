@@ -100,7 +100,7 @@ If you need the site to reflect local Lean changes (new conjectures, etc.):
 lake exe cache get   # download prebuilt Mathlib oleans (first time only)
 lake build
 mkdir -p site/data
-lake exe extract_names --exclude=statement,docstring,moduleDocstrings > site/data/conjectures.json
+lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified > site/data/conjectures.json
 
 # (Optional) Generate Verso literate fragments for rendered docstrings.
 # Without this, theorem detail pages will lack formatted docstrings and source links.

@@ -68,7 +68,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
   have hcard : equiTriangle.card = 3 := by
     simp [equiTriangle, Finset.mem_insert, Finset.mem_singleton]
   have hdist : distinctDistances equiTriangle = 1 := by
-    unfold distinctDistances equiTriangle
+    unfold distinctDistances distanceSet equiTriangle
     have eucl_dist_one_of_sq : ∀ {x y : ℝ²}, dist x y ^ 2 = 1 → dist x y = 1 := by
       intro x y h; nlinarith [dist_nonneg (x := x) (y := y), sq_nonneg (dist x y)]
     have hd01 : dist (!₂[(0 : ℝ), 0]) (!₂[(1 : ℝ), 0]) = 1 := eucl_dist_one_of_sq <| by

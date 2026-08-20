@@ -33,16 +33,18 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 WOWII [Conjecture 18](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph $G$, the size $b(G)$ of a largest induced bipartite
-subgraph satisfies $b(G) \ge \alpha(G) + \lceil \sqrt{\mathrm{eccSet}(G, M)} \rceil$,
+subgraph satisfies
+$b(G) \ge \alpha(G) + \lceil \sqrt{\mathrm{dist}_{\max}(M)} \rceil$,
 where $\alpha(G)$ is the independence number, $M$ is the set of maximum-degree
-vertices, and $\mathrm{eccSet}(G, M)$ is the set eccentricity of $M$ — the maximum
-over all vertices of the minimum distance from that vertex to $M$. We use the
-`SimpleGraph.eccSet` invariant.
+vertices, and $\mathrm{dist}_{\max}(M) = \max\{\mathrm{dist}_G(u,v) \mid u, v \in M\}$
+is the maximum distance between two maximum-degree vertices (DeLaVina's
+`dist_max(M)`). Proven by Benny John (Feb. 2006), generalizing Schindl's proof
+of conjecture 17.
 -/
 @[category research solved, AMS 5]
 theorem conjecture18 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let M : Set α := {v | G.degree v = G.maxDegree}
-    (G.indepNum : ℝ) + ⌈Real.sqrt (eccSet G M : ℝ)⌉ ≤ b G := by
+    (G.indepNum : ℝ) + ⌈Real.sqrt (distMaxSet G M : ℝ)⌉ ≤ b G := by
   sorry
 
 -- Sanity checks

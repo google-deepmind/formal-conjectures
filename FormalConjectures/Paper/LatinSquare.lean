@@ -30,13 +30,11 @@ This file formalizes some conjectures and theorems around latin squares.
 
 namespace LatinSquare
 
-variable {n : ℕ}
-
 /--
 Two latin squares of the same order are orthogonal if superimposing them gives each ordered pair of
 symbols at most once.
 -/
-def Orthogonal (L M : LatinSquare n) : Prop :=
+def Orthogonal {n : ℕ} (L M : LatinSquare n) : Prop :=
   Function.Injective fun p : Fin n × Fin n => (L.mat p.1 p.2, M.mat p.1 p.2)
 
 /-- A family of latin squares is mutually orthogonal if any two distinct members are orthogonal. -/
@@ -56,7 +54,7 @@ Each Latin square of odd order has at least one transversal.
 -/
 @[category research open, AMS 5]
 theorem oddOrderLatinSquareTransversal : answer(sorry) ↔
-    Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
+    ∀ (n : ℕ), Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
 /--
@@ -87,7 +85,7 @@ Every latin square has a near-transversal
 -/
 @[category research open, AMS 5]
 theorem latinSquareNearTransversal : answer(sorry) ↔
-    ∀ (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
+    ∀ (n : ℕ) (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
   sorry
 
 /-- The number of transversals of the Cayley table of the cyclic group $\mathbb{Z}_n$ -/

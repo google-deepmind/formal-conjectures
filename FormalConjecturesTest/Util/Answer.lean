@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil.Answer
+import Lean.Expr
 
 @[expose] public section
 

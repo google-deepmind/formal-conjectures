@@ -149,7 +149,13 @@ section Main
 
 /-- `mkStateType n` adds to the environment an inductive type with `n` states
 names `State{n}` with constructors the symbols `A, B, ...`, together with the instance
-`Inhabited (State{n})`. -/
+`Inhabited (State{n})`.
+
+Both declarations have to be `public`. `liftCommandElabM` runs them in a fresh scope that does
+not carry the surrounding module's visibility, so without it they are declared private and end
+up named `_private.<module>.0.State{n}`. The lookup below then fails with `Unknown constant
+State{n}`, and the type would in any case be private while appearing in the type of the term
+this elaborator returns. -/
 def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
   /-
   We may want to have some smarter check done here, e.g. throw an error if the type of the
@@ -161,10 +167,10 @@ def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
     let typeConstructors ← (Array.range n).mapM fun i ↦
       `(Command.ctor| | $(Lean.mkIdent <|
         .mkSimple s!"{Alphabet[i]!}"):ident : $(indName))
-    let stx ← `(command| inductive $(indName) $typeConstructors:ctor*)
+    let stx ← `(command| public inductive $(indName) $typeConstructors:ctor*)
     liftCommandElabM <| elabCommand stx
   -- Create the `inhabited` instance as follows in order to have access to it e.g. in proofs
-  let inhabitedStx ← `(command | instance : Inhabited $(Lean.mkIdent stateName) :=
+  let inhabitedStx ← `(command | public instance : Inhabited $(Lean.mkIdent stateName) :=
     ⟨$(Lean.mkIdent <| (.str stateName "A"))⟩)
   liftCommandElabM <| elabCommand inhabitedStx
 
