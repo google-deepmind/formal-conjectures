@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjecturesForMathlib.Geometry.EuclideanHypersurface
 import FormalConjectures.Other.LoewnerConjecture
 
 /-!
@@ -39,6 +40,13 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
+/-- The manifold derivative of a sphere-valued parametrization, with its codomain exposed as the
+ambient Euclidean space. -/
+noncomputable def sphereAmbientMfderiv
+    (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
+    TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+  mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
+
 /-- A parametrized convex surface with a `C^k` Gauss parametrization: both the immersion and its
 chosen unit normal are of class `C^k`.
 
@@ -58,10 +66,11 @@ def IsConvexSphereOfClass (k : WithTop ℕ∞) (F n : sphere (0 : ℝ³) 1 → �
     ∃ K : Set ℝ³,
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
 
-/-- A point is umbilic when the derivative of the unit normal is a scalar multiple of the
-derivative of the immersion, equivalently when its shape operator is scalar. -/
+/-- A point is umbilic when its second fundamental form is a scalar multiple of its first.
+The second form uses the convention `II(v,w) = -⟪dn(v),dF(w)⟫`. -/
 def IsUmbilic (F n : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : Prop :=
-  ∃ c : ℝ, mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) n p = c • mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
+  EuclideanHypersurface.IsUmbilicByFundamentalForms
+    (sphereAmbientMfderiv F p) (sphereAmbientMfderiv n p)
 
 /-- Carathéodory's conjecture for convex surfaces with a `C^k` Gauss parametrization. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=

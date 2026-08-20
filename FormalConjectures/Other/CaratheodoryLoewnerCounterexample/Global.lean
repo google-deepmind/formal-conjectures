@@ -3769,7 +3769,7 @@ private theorem counterexampleTwoHomogeneousGradient_umbilic_south :
       (SphereSupport.homogeneousGradient
         (SphereSupport.radialExtension counterexampleTwoSphereExtension))
       (fun p ↦ (p : ℝ³)) (counterexampleSphereChart 0) := by
-  refine ⟨(10 ^ 10 : ℝ)⁻¹, ?_⟩
+  apply EuclideanHypersurface.isUmbilicByFundamentalForms_of_normal_deriv_eq_smul
   change sphereAmbientMfderiv (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
       (counterexampleSphereChart 0) =
     (10 ^ 10 : ℝ)⁻¹ • sphereAmbientMfderiv
@@ -3784,10 +3784,14 @@ coefficient of the chart radius tensor. -/
 @[category API, AMS 53]
 private theorem sphericalTraceFreeHessian_eq_zero_of_umbilic_reciprocal
     (w : ℂ)
-    (humbilic : IsUmbilic
-      (SphereSupport.homogeneousGradient
-        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun p ↦ (p : ℝ³)) (counterexampleTwoReciprocalSphereChart w)) :
+    (humbilic : ∃ c : ℝ,
+      sphereAmbientMfderiv
+        (fun p : sphere (0 : ℝ³) 1 ↦ (p : ℝ³))
+        (counterexampleTwoReciprocalSphereChart w) =
+      c • sphereAmbientMfderiv
+        (SphereSupport.homogeneousGradient
+          (SphereSupport.radialExtension counterexampleTwoSphereExtension))
+        (counterexampleTwoReciprocalSphereChart w)) :
     sphericalTraceFreeHessian 10000 counterexampleTwoReciprocal w = 0 := by
   let F := SphereSupport.homogeneousGradient
     (SphereSupport.radialExtension counterexampleTwoSphereExtension)
@@ -3840,20 +3844,6 @@ private theorem sphericalTraceFreeHessian_eq_zero_of_umbilic_reciprocal
       _ = c • dF a := by rw [hchainF]
   exact antiLinearCoefficient_eq_zero_of_umbilic dρ dF hdρ (10 ^ 10) r A L Q
     (by positivity) hformula hchartUmbilic
-
-/-- Every point other than the south pole is nonumbilic, because the reciprocal chart covers it
-and its spherical trace-free Hessian is nowhere zero. -/
-@[category API, AMS 53]
-private theorem counterexampleTwoHomogeneousGradient_not_umbilic_away_south
-    (p : sphere (0 : ℝ³) 1) (hp : p ≠ counterexampleSphereChart 0) :
-    ¬IsUmbilic
-      (SphereSupport.homogeneousGradient
-        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
-      (fun q ↦ (q : ℝ³)) p := by
-  obtain ⟨w, rfl⟩ := exists_reciprocalSphereChart_of_ne_south hp
-  intro humbilic
-  exact sphericalTraceFreeHessian_counterexampleTwoReciprocal_ne_zero_all w
-    (sphericalTraceFreeHessian_eq_zero_of_umbilic_reciprocal w humbilic)
 
 /-- The reciprocal radius estimate and the exact south-pole identity combine into global
 oriented coercivity. -/
@@ -4249,6 +4239,82 @@ private theorem continuousLinearMap_injective_of_coercive
   rw [map_sub] at this
   exact hN (sub_eq_zero.mp this)
 
+/-- Normality and oriented coercivity identify the differential range of the contact immersion
+with the tangent plane supplied by the Gauss map. -/
+@[category API, AMS 53]
+private theorem counterexampleTwoHomogeneousGradient_range_eq_of_coercive
+    (hCoercive : ∀ (p : sphere (0 : ℝ³) 1) (v : TangentSpace (𝓡 2) p),
+      7000000000 * ‖sphereAmbientMfderiv
+          (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v‖ ^ 2 ≤
+        inner ℝ
+          (sphereAmbientMfderiv (SphereSupport.homogeneousGradient
+            (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p v)
+          (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v))
+    (p : sphere (0 : ℝ³) 1) :
+    (sphereAmbientMfderiv (SphereSupport.homogeneousGradient
+      (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p).range =
+      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p).range := by
+  let F := SphereSupport.homogeneousGradient
+    (SphereSupport.radialExtension counterexampleTwoSphereExtension)
+  let n : sphere (0 : ℝ³) 1 → ℝ³ := fun q ↦ (q : ℝ³)
+  let dF := sphereAmbientMfderiv F p
+  let dn := sphereAmbientMfderiv n p
+  change dF.range = dn.range
+  have hdnInjective : Function.Injective dn := by
+    dsimp only [dn, n, sphereAmbientMfderiv]
+    exact mfderiv_coe_sphere_injective p
+  have hdFInjective : Function.Injective dF := by
+    apply continuousLinearMap_injective_of_coercive dn dF hdnInjective
+      (c := 7000000000) (by norm_num)
+    intro v
+    simpa only [dF, dn, F, n] using hCoercive p v
+  have hdF_le_dn : dF.range ≤ dn.range := by
+    rw [show dn.range = (ℝ ∙ (p : ℝ³))ᗮ by
+      dsimp only [dn, n, sphereAmbientMfderiv]
+      exact range_mfderiv_coe_sphere p]
+    rintro _ ⟨v, rfl⟩
+    rw [Submodule.mem_orthogonal_singleton_iff_inner_right]
+    simpa only [dF, F] using counterexampleTwoHomogeneousGradient_normal p v
+  apply Submodule.eq_of_le_of_finrank_eq hdF_le_dn
+  calc
+    Module.finrank ℝ dF.range = Module.finrank ℝ (TangentSpace (𝓡 2) p) :=
+      LinearMap.finrank_range_of_inj hdFInjective
+    _ = Module.finrank ℝ dn.range :=
+      (LinearMap.finrank_range_of_inj hdnInjective).symm
+
+/-- Every point other than the south pole is nonumbilic in the fundamental-form sense, because
+the reciprocal chart covers it and its spherical trace-free Hessian is nowhere zero. -/
+@[category API, AMS 53]
+private theorem counterexampleTwoHomogeneousGradient_not_umbilic_away_south
+    (hCoercive : ∀ (p : sphere (0 : ℝ³) 1) (v : TangentSpace (𝓡 2) p),
+      7000000000 * ‖sphereAmbientMfderiv
+          (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v‖ ^ 2 ≤
+        inner ℝ
+          (sphereAmbientMfderiv (SphereSupport.homogeneousGradient
+            (SphereSupport.radialExtension counterexampleTwoSphereExtension)) p v)
+          (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v))
+    (p : sphere (0 : ℝ³) 1) (hp : p ≠ counterexampleSphereChart 0) :
+    ¬IsUmbilic
+      (SphereSupport.homogeneousGradient
+        (SphereSupport.radialExtension counterexampleTwoSphereExtension))
+      (fun q ↦ (q : ℝ³)) p := by
+  intro humbilic
+  let F := SphereSupport.homogeneousGradient
+    (SphereSupport.radialExtension counterexampleTwoSphereExtension)
+  let n : sphere (0 : ℝ³) 1 → ℝ³ := fun q ↦ (q : ℝ³)
+  let dF := sphereAmbientMfderiv F p
+  let dn := sphereAmbientMfderiv n p
+  change EuclideanHypersurface.IsUmbilicByFundamentalForms dF dn at humbilic
+  have hrange : dn.range ≤ dF.range := by
+    rw [counterexampleTwoHomogeneousGradient_range_eq_of_coercive hCoercive p]
+  have hscalar : ∃ c : ℝ, dn = c • dF :=
+    (EuclideanHypersurface.isUmbilicByFundamentalForms_iff_normal_deriv_eq_smul
+      dF dn hrange).mp humbilic
+  obtain ⟨w, rfl⟩ := exists_reciprocalSphereChart_of_ne_south hp
+  exact sphericalTraceFreeHessian_counterexampleTwoReciprocal_ne_zero_all w
+    (sphericalTraceFreeHessian_eq_zero_of_umbilic_reciprocal w (by
+      simpa only [dF, dn, F, n] using hscalar))
+
 /-- Oriented coercivity of the radius tensor makes the degree-one extension strictly convex
 along every chord that does not pass through the origin. -/
 @[category API, AMS 53]
@@ -4628,7 +4694,7 @@ theorem counterexample_two_support_geometry
   refine ⟨F, K, ?_⟩
   simpa only [F, K] using counterexampleTwoSupport_geometry_of_certificates
     hCoercive hstrict counterexampleTwoHomogeneousGradient_umbilic_south
-      counterexampleTwoHomogeneousGradient_not_umbilic_away_south
+      (counterexampleTwoHomogeneousGradient_not_umbilic_away_south hCoercive)
 
 /-- **Alpöge's smooth Carathéodory counterexample.**
 
