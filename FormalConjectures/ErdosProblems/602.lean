@@ -331,18 +331,18 @@ the hypotheses of the main theorem are non-vacuous. All goals are fully closed: 
 private lemma evens_infinite : Set.Infinite {n : ℕ | Even n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma odds_infinite : Set.Infinite {n : ℕ | Odd n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n + 1)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma evens_inter_odds_empty : {n : ℕ | Even n} ∩ {n : ℕ | Odd n} = ∅ := by
   ext x
-  simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro ⟨k, hk⟩ ⟨m, hm⟩; omega
 
 /-- The empty family vacuously has Property B, exercising `erdos_602.variants.empty_index`. -/
@@ -398,9 +398,9 @@ example : HasPropertyB (Fin 2) (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → S
     have h0 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : Fin 2) else 0) 0 = 0 := by decide
     have h2 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : Fin 2) else 0) 2 = 1 := by decide
     have hmem0 : (0 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨0, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨0, by ring⟩
     have hmem2 : (2 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨1, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨1, by ring⟩
     have := hMono 0 hmem0 2 hmem2
     rw [h0, h2] at this; exact absurd this (by decide)
   · -- A 1 = odds: f(1) = 1 ≠ 0 = f(3)
@@ -420,7 +420,7 @@ This confirms the boundary condition is faithfully encoded. -/
 example : Set.ncard ({n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ Odd n}) = 1 := by
   have heq : {n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ Odd n} = {0} := by
     ext x
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨⟨k, hk⟩, rfl | ⟨m, hm⟩⟩ <;> omega
     · rintro rfl; exact ⟨⟨0, by ring⟩, Or.inl rfl⟩

@@ -67,7 +67,7 @@ theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ �
     and_imp, A]
   rintro a ha -
   refine Set.subsingleton_of_forall_eq (a * 2) ?_
-  simp only [Set.mem_setOf_eq, and_imp]
+  simp only [Set.mem_ofPred_eq, and_imp]
   rintro _ _ hk _ ⟨k, rfl⟩
   match k with
   | 0 | 1 | 2 => simp_all

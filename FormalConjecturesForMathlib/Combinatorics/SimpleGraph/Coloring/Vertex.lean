@@ -122,7 +122,7 @@ This is `⊤` (infinity) iff `G` isn't cocolorable with finitely many colors.
 
 If `G` is cocolorable, then `ENat.toNat G.cochromaticNumber` is the `ℕ`-valued cochromatic number.
 -/
-noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ setOf G.Cocolorable, (n : ℕ∞)
+noncomputable def cochromaticNumber (G : SimpleGraph V) : ℕ∞ := ⨅ n ∈ Set.ofPred G.Cocolorable, (n : ℕ∞)
 
 /-- The chromatic cardinal is the minimal number of colors need to color it. In contrast to
 `chromaticNumber`, which assigns `⊤ : ℕ∞` to all non-finitely colorable graphs, this definition

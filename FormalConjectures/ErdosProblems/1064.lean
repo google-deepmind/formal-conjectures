@@ -50,7 +50,7 @@ theorem erdos_1064.variants.k2 : {n | φ n < φ (n - φ n)}.Infinite := by
     have : (2 : ℕ) ^ a = 2 ^ b := by omega
     exact Nat.pow_right_injective (le_refl 2) this
   · intro k
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     have hφ : Nat.totient (30 * 2 ^ k) = 8 * 2 ^ k := by
       have h : 30 * 2 ^ k = 2 ^ (k + 1) * 15 := by ring
       rw [h, Nat.totient_mul (by norm_num),

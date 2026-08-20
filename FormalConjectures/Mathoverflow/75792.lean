@@ -105,9 +105,7 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
       · refine (Nat.lt_mul_iff_one_lt_left ?_).2 ?_ <;> omega
       all_goals omega
 
-/-- warning: instance `Mathoverflow75792.Reachable.decide._unary` must be marked with `@[reducible]`
-or `@[implicit_reducible]` -/
-#guard_msgs in
+set_option warn.classDefReducibility false in
 instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) :=
   match m, n with
   | 0, n => isFalse (not_reachable_zero_fst n)

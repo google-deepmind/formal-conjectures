@@ -82,7 +82,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
   · set p : ℕ → Prop := fun x => x ∈ m.divisors with hpdef
-    have hfin : (setOf p).Finite := Set.finite_mem_finset m.divisors
+    have hfin : (Set.ofPred p).Finite := Set.finite_mem_finset m.divisors
     have hg0 : Nat.nth p 0 = 1 := Nat.nth_divisors_zero hm
     -- The `j`-th smallest divisor is at least `j + 1` (for `j` below the number of divisors).
     have hlb : ∀ j, j < hfin.toFinset.card → j + 1 ≤ Nat.nth p j := by
