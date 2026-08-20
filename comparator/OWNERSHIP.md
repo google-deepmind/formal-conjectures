@@ -114,12 +114,35 @@ would change bytes at the seam.
 1. **The markup convention is invented here.** `-- @region <name>` and the four
    region names are local. The generator core is the natural owner of the
    convention, since it is the reader.
-2. **The manifest schema is invented here.** `schema_version = 1` and the field
-   names are this repository's. lean-eval#536 says the importer emits PRs that
-   lean-eval CI validates like any other problem PR, which needs a published
-   schema to validate against. The two fields the plan does name — the FC
-   source commit and the declaration id — are present under
-   `source.commit` and `source.declaration`.
+2. **The manifest schema is invented here, and part of it need not be.**
+   `schema_version = 1` and the field names are this repository's. lean-eval#536
+   says the importer emits PRs that lean-eval CI validates like any other
+   problem PR, which needs something published to validate against. The two
+   fields the plan does name — the FC source commit and the declaration id —
+   are present under `source.commit` and `source.declaration`.
+
+   `mathlib-initiative/formalization.yaml` already standardises much of this:
+   `repository.substantive_formalization` carries a source repository and
+   revision, `status.main_results[]` carries a declaration, its file, its
+   permitted axioms and its Comparator config. Formal Conjectures does not
+   currently carry that file, but `Paul-Lez/hadamard-668-comparator` uses it to
+   describe a wrapper around FC at revision `1721605c`.
+
+   It is not a drop-in replacement, for two reasons worth stating rather than
+   glossing. Its required `project`, `sources`, `automation` and `review`
+   sections describe who formalised something, from what, with what help, and
+   who reviewed it — an importer cannot fill those truthfully for an arbitrary
+   FC statement, because they belong to the FC contributor rather than to the
+   import. And it deliberately omits pins, on the stated grounds that the file
+   sits alongside the formalization it describes and the tree already encodes
+   them; a generated workspace has two pin sets and sits alongside neither.
+
+   So the open question is not "publish a schema" but which object is which: a
+   manifest that drives generation and crosses the seam, and possibly a
+   `formalization.yaml` describing the generated workspace as a thin wrapper
+   once it exists somewhere durable. Nothing here implements the second, since
+   filling its required sections without a real answer would be worse than
+   omitting it.
 3. **The `definition_names` config field is undocumented.** Comparator's
    published no-hole config does not carry it, and hole support depends on the
    comparator commit pinned in `tools.toml`. A generated workspace with an
