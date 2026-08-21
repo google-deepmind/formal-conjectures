@@ -122,6 +122,7 @@ public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.EuclideanHypersurface
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.SphereImmersion
+public import FormalConjecturesForMathlib.Geometry.SphereImmersionRegularity
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
