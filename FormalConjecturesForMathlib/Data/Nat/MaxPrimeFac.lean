@@ -107,22 +107,15 @@ lemma maxPrimeFac_eq_self_iff {n : ℕ} :
 greatest prime factors. -/
 lemma maxPrimeFac_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
     maxPrimeFac (m * n) = max (maxPrimeFac m) (maxPrimeFac n) := by
-  by_cases hm_one : m = 1
-  · subst m
-    have hle : 1 ≤ maxPrimeFac n := by
-      by_cases hn_one : n = 1
-      · subst n
-        simp
-      · have hn_lt : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn, hn_one⟩
-        exact (prime_maxPrimeFac_of_one_lt n hn_lt).one_lt.le
+  obtain rfl | hm_lt : m = 1 ∨ 1 < m := by omega
+  · have hle : 1 ≤ maxPrimeFac n := by
+      obtain rfl | hn_lt : n = 1 ∨ 1 < n := by omega
+      · simp
+      · exact (prime_maxPrimeFac_of_one_lt n hn_lt).one_lt.le
     simp [hle]
-  by_cases hn_one : n = 1
-  · subst n
-    have hm_lt : 1 < m := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hm, hm_one⟩
-    have hle : 1 ≤ maxPrimeFac m := (prime_maxPrimeFac_of_one_lt m hm_lt).one_lt.le
+  obtain rfl | hn_lt : n = 1 ∨ 1 < n := by omega
+  · have hle : 1 ≤ maxPrimeFac m := (prime_maxPrimeFac_of_one_lt m hm_lt).one_lt.le
     simp [hle]
-  have hm_lt : 1 < m := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hm, hm_one⟩
-  have hn_lt : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn, hn_one⟩
   have hmn_lt : 1 < m * n := Nat.one_lt_mul_iff.mpr
     ⟨zero_lt_of_lt hm_lt, zero_lt_of_lt hn_lt, Or.inl hm_lt⟩
   apply le_antisymm
@@ -141,17 +134,17 @@ lemma maxPrimeFac_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
 /-- The greatest prime factor of a nonzero power is the greatest prime factor of its base. -/
 @[simp]
 lemma maxPrimeFac_pow {k : ℕ} (hk : k ≠ 0) (n : ℕ) :
-    maxPrimeFac (n ^ k) = maxPrimeFac n := by
-  obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
-  clear hk
-  by_cases hn : n = 0
-  · subst n
-    simp
-  induction j with
-  | zero => simp
-  | succ j ih =>
-      rw [pow_succ, maxPrimeFac_mul (pow_ne_zero _ hn) hn, ih]
+    maxPrimeFac (n ^ k) = maxPrimeFac n :=
+  match k, hk with
+  | k + 1, _ => by
+    by_cases hn : n = 0
+    · subst n
       simp
+    induction k with
+    | zero => simp
+    | succ k ih =>
+        rw [pow_succ, maxPrimeFac_mul (pow_ne_zero _ hn) hn, ih (by omega)]
+        simp
 
 /-- The greatest prime factor of a natural number is at most that number. -/
 lemma maxPrimeFac_le : ∀ {n : ℕ}, maxPrimeFac n ≤ n
@@ -173,11 +166,9 @@ lemma isLeast_maxPrimeFac {n : ℕ} (hn : 1 < n) :
 characterization. -/
 lemma maxPrimeFac_eq_sSup {n : ℕ} (hn_one : n ≠ 1) :
     maxPrimeFac n = sSup {p : ℕ | p.Prime ∧ p ∣ n} := by
-  by_cases hn_zero : n = 0
-  · subst n
-    simpa using (Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime).symm
-  · have hn : 1 < n := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hn_zero, hn_one⟩
-    have h_lub : IsLUB {p : ℕ | p.Prime ∧ p ∣ n} (maxPrimeFac n) :=
+  obtain rfl | hn : n = 0 ∨ 1 < n := by lia
+  · simpa using (Set.Infinite.Nat.sSup_eq_zero infinite_setOf_prime).symm
+  · have h_lub : IsLUB {p : ℕ | p.Prime ∧ p ∣ n} (maxPrimeFac n) :=
       isLeast_maxPrimeFac hn
     exact (h_lub.csSup_eq
       ⟨maxPrimeFac n, prime_maxPrimeFac_of_one_lt n hn, maxPrimeFac_dvd⟩).symm
