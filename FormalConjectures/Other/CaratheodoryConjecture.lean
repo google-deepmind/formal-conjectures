@@ -37,33 +37,34 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
-/-- The manifold derivative of a sphere-valued parametrization, with its codomain exposed as the
-ambient Euclidean space. -/
-noncomputable def sphereAmbientMfderiv
-    (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
-  mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
+/-- A parametrized convex surface whose canonical normal is of class `C^k`.
 
-/-- A parametrized convex surface of class `C^k`, together with a `C^k` choice of unit normal.
-
-The range condition says that the parametrization is the boundary of a convex body. Requiring
-nonempty interior rules out lower-dimensional convex sets. -/
-def IsConvexSphereOfClass (k : WithTop ℕ∞) (F n : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
-  Manifold.IsSmoothEmbedding (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
-    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k n ∧
-    (∀ p, ‖n p‖ = 1) ∧
-    (∀ p v, inner ℝ (n p) (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v) = 0) ∧
+The canonical normal is constructed from the derivative of `F` by a globally
+orientation-corrected cross product. Its orthogonality is built into the construction, while the
+injective differential makes it a unit vector. For finite `k`, requiring this normal to be `C^k`
+is stronger than requiring only `F` to be `C^k`. The range condition identifies the surface with
+the boundary of a compact convex body with nonempty interior. -/
+def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
+  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
+    Topology.IsEmbedding F ∧
+    (∀ p, Function.Injective (EuclideanHypersurface.sphereAmbientMfderiv F p)) ∧
+    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) ∧
     ∃ K : Set ℝ³,
       Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
 
-/-- Carathéodory's conjecture for convex surfaces of class `C^k`. -/
+/-- Carathéodory's conjecture for convex surfaces with a `C^k` canonical normal constructed
+from the derivative of the parametrization. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
-  ∀ (F n : sphere (0 : ℝ³) 1 → ℝ³), IsConvexSphereOfClass k F n →
+  ∀ F : sphere (0 : ℝ³) 1 → ℝ³, IsConvexSphereOfClass k F →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧
       EuclideanHypersurface.IsUmbilic
-        (sphereAmbientMfderiv F p₁) (sphereAmbientMfderiv n p₁) ∧
+        (EuclideanHypersurface.sphereAmbientMfderiv F p₁)
+        (EuclideanHypersurface.sphereAmbientMfderiv
+          (EuclideanHypersurface.sphereNormal F) p₁) ∧
       EuclideanHypersurface.IsUmbilic
-        (sphereAmbientMfderiv F p₂) (sphereAmbientMfderiv n p₂)
+        (EuclideanHypersurface.sphereAmbientMfderiv F p₂)
+        (EuclideanHypersurface.sphereAmbientMfderiv
+          (EuclideanHypersurface.sphereNormal F) p₂)
 
 /-- **The smooth Carathéodory conjecture.**
 
