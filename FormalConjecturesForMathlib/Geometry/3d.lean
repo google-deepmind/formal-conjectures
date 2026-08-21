@@ -24,8 +24,8 @@ public import Mathlib.Topology.Algebra.Module.FiniteDimension
 # Three-dimensional Euclidean geometry
 
 This file supplies the preferred orientation on `ℝ³` and transports the usual cross product on
-coordinate triples to a bundled bilinear map on Euclidean space. It also records the standard
-algebraic and metric identities for this cross product.
+coordinate triples to a bundled continuous bilinear map on Euclidean space. It also records the
+standard algebraic and metric identities for this cross product.
 -/
 
 @[expose] public section
@@ -73,8 +73,7 @@ theorem euclideanCross_anticomm (a b : ℝ³) :
 /-- A vector has zero cross product with itself. -/
 @[simp]
 theorem euclideanCross_self (a : ℝ³) : euclideanCross a a = 0 := by
-  simpa only [euclideanCross_apply, map_zero] using
-    congrArg (WithLp.toLp 2) (cross_self (WithLp.ofLp a))
+  simp [euclideanCross_apply]
 
 /-- The cross product is orthogonal to its left input, with the inner-product arguments swapped. -/
 @[simp]
