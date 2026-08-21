@@ -85,10 +85,17 @@ theorem a_4 : a 4 = some 2 := by
 Conjecture 1: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k$
 for $n, m \ge 1$.
 - _Ulrich Krug_, 2009
+
+Answer: No.
+- _Kenta Kitamura_, 2026
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (k : ℕ) (hk : 3 ≤ k) :
-    Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧ p = n ^ k + m ^ k} := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a159829-conjecture1-counterexample/blob/6632e626baa7f28ad14045aa7408a84178ec128d/lean/A159829Conjecture1FC.lean#L52-L61"]
+theorem conjecture1 :
+    answer(False) ↔ ∀ (k : ℕ), 3 ≤ k →
+      Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧
+        p = n ^ k + m ^ k} := by
   sorry
 
 /--
@@ -102,4 +109,3 @@ theorem conjecture2 (k : ℕ) (hk : 3 ≤ k) :
   sorry
 
 end OeisA159829
-
