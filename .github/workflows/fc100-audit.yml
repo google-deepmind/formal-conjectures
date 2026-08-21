@@ -74,6 +74,7 @@ jobs:
         run: |
           lake exe cache get
           lake build FormalConjectures.Subsets.FC100OpenSet1 comparator_facts
+          lake exe comparator_facts --self-test
 
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator

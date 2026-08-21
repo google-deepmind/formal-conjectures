@@ -114,7 +114,7 @@ jobs:
           set -o pipefail
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
           ./elan-init -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Restore ~/.cache/mathlib
         if: steps.mode.outputs.website_only != 'true'
@@ -171,6 +171,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake build comparator_facts
+          lake exe comparator_facts --self-test
           for d in exists_hadamard_zero erdos_940.variants.large_integers \
                    erdos_1038.parts.i erdos_100.variants.strong \
                    KotherConjecture.variants.le_KotherRadical \

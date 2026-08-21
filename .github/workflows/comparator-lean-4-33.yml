@@ -77,6 +77,7 @@ jobs:
         run: |
           lake exe cache get
           lake build comparator_facts FormalConjectures.Wikipedia.SumOfThreeCubes
+          lake exe comparator_facts --self-test
 
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator

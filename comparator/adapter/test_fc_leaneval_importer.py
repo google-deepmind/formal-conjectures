@@ -326,7 +326,69 @@ class MathlibOnlyClosureTest(unittest.TestCase):
             resolve.return_value = source
             out, copied = closure_region(deps, ["Foo.bar._proof_1"], "t")
         self.assertIn("def Foo.bar := 1", out)
+        self.assertIn("noncomputable section", out)
         self.assertEqual(copied, [("Foo.bar", "def Foo.bar := 1")])
+
+    def test_an_explicit_source_only_dependency_carries_its_closure(self):
+        facts = {
+            "name": "Foo.opaqueLemma",
+            "range": {"startLine": 2, "endLine": 2, "endColumn": None},
+            "dependencies": [
+                {
+                    "name": "Foo.Predicate",
+                    "module": "FormalConjectures.Example",
+                    "range": {"startLine": 1, "endLine": 1, "endColumn": None},
+                }
+            ],
+            "generatedDependencies": ["Foo.opaqueLemma._proof_1"],
+        }
+        with tempfile.TemporaryDirectory() as tmp, _root_at(tmp):
+            module = pathlib.Path(tmp) / "FormalConjectures" / "Example.lean"
+            module.parent.mkdir(parents=True)
+            module.write_text("def Predicate := True\ntheorem opaqueLemma : Predicate := by trivial\n")
+            with mock.patch.object(importer, "elaborator_facts", return_value=facts):
+                records, generated = importer.explicit_copy_dependencies(
+                    {
+                        "copy_dependencies": [
+                            {
+                                "declaration": "Foo.opaqueLemma",
+                                "module": "FormalConjectures/Example.lean",
+                            }
+                        ]
+                    }
+                )
+        self.assertEqual(
+            [record["name"] for record in records],
+            ["Foo.Predicate", "Foo.opaqueLemma"],
+        )
+        self.assertEqual(generated, ["Foo.opaqueLemma._proof_1"])
+
+    def test_explicit_source_only_dependency_rejects_extra_fields(self):
+        with self.assertRaisesRegex(SystemExit, "must contain exactly"):
+            importer.explicit_copy_dependencies(
+                {
+                    "copy_dependencies": [
+                        {
+                            "declaration": "Foo.opaqueLemma",
+                            "module": "FormalConjectures/Example.lean",
+                            "guess": True,
+                        }
+                    ]
+                }
+            )
+
+    def test_explicit_source_only_dependency_stays_in_a_source_tree(self):
+        with self.assertRaisesRegex(SystemExit, "must stay under a source tree"):
+            importer.explicit_copy_dependencies(
+                {
+                    "copy_dependencies": [
+                        {
+                            "declaration": "Foo.opaqueLemma",
+                            "module": "../Elsewhere/Example.lean",
+                        }
+                    ]
+                }
+            )
 
     def test_a_declaration_inside_another_s_range_is_not_copied_twice(self):
         # `EdgeN.mk` covers line 88 of a structure spanning 83 to 93, and

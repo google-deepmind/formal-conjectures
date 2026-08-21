@@ -19,8 +19,10 @@ Nothing here writes a workspace file, names a workspace layout, or decides
 which generated module imports which. If a change to this file would do one of
 those, it belongs on the other side of the seam.
 
-One thing the Lean source cannot settle lives in `comparator/problems/<id>.toml`,
-one file per problem: which file is meant when two declare the same name.
+Two source-boundary facts may live in `comparator/problems/<id>.toml`, one
+file per problem: which file is meant when two declare the same name, and an
+explicit source-only proof dependency when Lean's opaque-value erasure makes
+that dependency unrecoverable from the compiled environment.
 """
 
 import json
@@ -116,6 +118,66 @@ def elaborator_facts(module, declaration):
     return json.loads(out[out.index("{") :])
 
 
+def explicit_copy_dependencies(problem_file):
+    """Source-only dependencies the compiled environment cannot retain.
+
+    Lean erases the values of opaque theorem constants.  If the source body
+    of a copied definition invokes such a theorem only to construct a proof
+    argument, the compiled definition refers to a generated `_proof_*`
+    constant and no longer records which source theorem produced it.  The
+    marked-up module still copies source text, so that theorem must be named
+    explicitly and audibly in the problem manifest.
+    """
+    records, generated = [], []
+    for entry in problem_file.get("copy_dependencies", []):
+        if set(entry) != {"declaration", "module"}:
+            raise SystemExit(
+                "each `copy_dependencies` entry must contain exactly "
+                "`declaration` and `module`"
+            )
+        relative = pathlib.Path(entry["module"])
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or not relative.parts
+            or relative.parts[0]
+            not in {"FormalConjectures", "FormalConjecturesForMathlib"}
+        ):
+            raise SystemExit(
+                f"copy dependency module must stay under a source tree: {relative}"
+            )
+        path = ROOT / relative
+        if not path.is_file() or relative.suffix != ".lean":
+            raise SystemExit(f"copy dependency module does not exist: {relative}")
+        module = module_name(relative)
+        facts = elaborator_facts(module, entry["declaration"])
+        records.extend(facts.get("dependencies", []))
+        records.append(
+            {
+                "name": facts["name"],
+                "module": module,
+                "range": facts["range"],
+            }
+        )
+        generated.extend(facts.get("generatedDependencies", []))
+    return records, generated
+
+
+def merge_dependency_records(*groups):
+    """Deduplicate topologically ordered dependency records, fail closed."""
+    merged, seen = [], {}
+    for group in groups:
+        for record in group:
+            name = record["name"]
+            if name in seen:
+                if seen[name] != record:
+                    raise SystemExit(f"conflicting dependency records for {name}")
+                continue
+            seen[name] = record
+            merged.append(record)
+    return merged
+
+
 def file_scoped_preamble(lines, start_line):
     """Directives in force at `start_line`, and the namespace stack there.
 
@@ -170,11 +232,13 @@ def file_scoped_preamble(lines, start_line):
 
 
 def load_manifest(problem_id):
-    """Read the one choice Lean source cannot select by itself.
+    """Read the rare source-boundary facts Lean cannot select by itself.
 
     When two files declare the same name, nothing in the Lean environment says
-    which one was meant, so the importer refuses until a module is named. That
-    is the whole contract.
+    which one was meant, so the importer refuses until a module is named.
+    `copy_dependencies` is the other exceptional field: it names a theorem
+    used only in copied source proof text when opaque-value erasure removes
+    the reference from Lean's compiled dependency graph.
 
     `leanprover/lean-eval` keeps one TOML per problem, and the reason is worth
     copying: two pull requests adding different problems never touch the same
@@ -183,6 +247,8 @@ def load_manifest(problem_id):
       id           the filename stem, and the workspace directory name
       declaration  the Lean name, which need not be unique across the repository
       module       the file declaring it, relative to the repository root
+      copy_dependencies  exact declaration/module pairs to copy before the
+                    environment-derived closure
 
     Anything Formal Conjectures already states stays where it is stated. The
     source citation is read from the module docstring rather than copied here,
@@ -554,7 +620,10 @@ def closure_region(
         if not body:
             raise SystemExit(f"{declaration}: {dep['name']} sliced to nothing")
         namespace = ".".join(namespaces)
-        chunk = [f"-- {dep['name']}, from {path.relative_to(ROOT)}", "section"]
+        chunk = [
+            f"-- {dep['name']}, from {path.relative_to(ROOT)}",
+            "noncomputable section",
+        ]
         chunk += preamble
         if namespace:
             chunk.append(f"namespace {namespace}")
@@ -1065,6 +1134,13 @@ def import_problem(problem, answer_type=None, module=None):
     facts = elaborator_facts(fc_module, declaration)
     if facts["range"] is None:
         raise SystemExit(f"{declaration}: no source range recorded")
+    explicit_dependencies, explicit_generated = explicit_copy_dependencies(problem_file)
+    facts["dependencies"] = merge_dependency_records(
+        explicit_dependencies, facts.get("dependencies", [])
+    )
+    facts["generatedDependencies"] = list(
+        dict.fromkeys(explicit_generated + facts.get("generatedDependencies", []))
+    )
 
     source_lines = path.read_text(encoding="utf-8").split("\n")
     original, lo = slice_range(source_lines, facts["range"])

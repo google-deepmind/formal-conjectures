@@ -80,12 +80,12 @@ Conjectures corrects a misformalisation upstream.
 | File | Why it cannot move |
 |---|---|
 | `comparator/adapter/fc_leaneval_importer.py` | resolves a declaration against an exact FC commit, reads the elaborated environment, copies the FC-local closure, types each `answer(sorry)` slot, and records the provenance |
-| `comparator/adapter/comparator_facts.lean` | the Lean extractor: source ranges, binder explicitness, answer-slot types, and the `@[category ...]` tag, all of which only this repository's elaborated environment knows |
+| `comparator/adapter/comparator_facts.lean` | the Lean extractor: source ranges, declaration-header binder boundaries, elaborated binder names/explicitness, answer-slot types, and the `@[category ...]` tag. The parsed source distinguishes header parameters from `∀` binders in the conclusion; every emitted binder fact still comes from the elaborated environment. |
 | `comparator/adapter/leaneval_interface.py` | the request builder and response checker — the FC side of the wire format, permanently, since the consumer owns hole resolution under the v1 contract |
 | `comparator/adapter/leaneval_generator_cli.py` | plumbing for the pinned binary |
 | `comparator/adapter/make_comparator_workspace.py` | the command, the emitted seam artifact, and the whole-set batch run |
 | `comparator/templates/WorkspaceTest.lean` | the workspace test template the contract requires the consumer to supply |
-| `comparator/problems/*.toml` | the one choice FC source cannot make for itself: which module, when two declare the same name |
+| `comparator/problems/*.toml` | the rare source-boundary facts the compiled environment cannot recover: which module when two declare the same name, and an explicit copied proof dependency when opaque theorem-value erasure removes it from the compiled dependency graph |
 | `comparator/tools.toml` | the pins, in one machine-readable place: this repository's under `[tools]`, LeanEval's under `[target]`, the generator revision under `[generator]` |
 
 The tests beside each file pin real defects: the importer suite covers
