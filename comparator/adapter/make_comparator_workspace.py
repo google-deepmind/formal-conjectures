@@ -69,7 +69,7 @@ import tomllib
 
 import fc_leaneval_importer as importer
 import leaneval_generator_cli as generator_cli
-from leaneval_interface import build_problem, build_request, slug
+from leaneval_interface import build_problem, build_request, slug, sha256_text
 
 ROOT = importer.ROOT
 
@@ -132,7 +132,10 @@ def seam_files(pairs, group=None):
     for path, content in generator_cli.context_files(problems).items():
         files[f"{CONTEXT_DIR}/{path}"] = content
     for (problem, _), (_, manifest) in zip(problems, pairs):
-        files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = manifest.to_json()
+        # Before generation the record binds the module bytes only; the
+        # workspace's copy adds the generated files.
+        bound = manifest.with_digests(sha256_text(problem["moduleContent"]), {})
+        files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = bound.to_json()
     return request, files
 
 
@@ -153,6 +156,7 @@ def generate_workspaces(pairs, out_dir, group=None):
         workspaces = generator_cli.generate(request)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
+    module_content = {p["id"]: p["moduleContent"] for p in request["problems"]}
     written = []
     for _, manifest in pairs:
         problem_id = slug(manifest.id)
@@ -160,8 +164,13 @@ def generate_workspaces(pairs, out_dir, group=None):
             raise SystemExit(f"the generator returned no files for {problem_id}")
         workspace = dict(workspaces[problem_id])
         # The provenance sidecar rides in the workspace directory, not in the
-        # generator's file map: the generator neither knows nor checks it.
-        workspace[PROVENANCE_FILE] = manifest.to_json()
+        # generator's file map: the generator neither knows nor checks it. It
+        # binds the exact module bytes sent and every file received.
+        bound = manifest.with_digests(
+            sha256_text(module_content[problem_id]),
+            {path: sha256_text(content) for path, content in workspace.items()},
+        )
+        workspace[PROVENANCE_FILE] = bound.to_json()
         written.append(write_tree(pathlib.Path(out_dir) / problem_id, workspace))
     return written
 

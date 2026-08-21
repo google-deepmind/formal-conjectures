@@ -309,3 +309,30 @@ class ParseResponseTest(unittest.TestCase):
     def test_an_unknown_schema_version_is_refused(self):
         with self.assertRaisesRegex(SystemExit, "schema version"):
             parse_response('{"schemaVersion": 2, "files": []}')
+
+
+class ProvenanceSidecarTest(unittest.TestCase):
+    """The sidecar is the v1 provenance boundary: strict, deterministic, digested."""
+
+    def test_digests_round_trip(self):
+        bound = a_manifest().with_digests("a" * 64, {"Challenge.lean": "b" * 64, "A.lean": "c" * 64})
+        again = ProblemManifest.from_json(bound.to_json())
+        self.assertEqual(again.module_sha256, "a" * 64)
+        self.assertEqual(dict(again.file_sha256), {"A.lean": "c" * 64, "Challenge.lean": "b" * 64})
+
+    def test_serialisation_is_key_sorted(self):
+        text = a_manifest().with_digests("a" * 64, {"b": "1" * 64, "a": "2" * 64}).to_json()
+        keys = [line.split('"')[1] for line in text.splitlines() if line.startswith('  "')]
+        self.assertEqual(keys, sorted(keys))
+
+    def test_unknown_keys_are_refused(self):
+        payload = a_manifest().to_json_object()
+        payload["notes"] = "anything"
+        with self.assertRaises(SystemExit):
+            ProblemManifest.from_json_object(payload)
+
+    def test_unknown_digest_keys_are_refused(self):
+        payload = a_manifest().with_digests("a" * 64, {}).to_json_object()
+        payload["digests"]["request"] = "d" * 64
+        with self.assertRaises(SystemExit):
+            ProblemManifest.from_json_object(payload)
