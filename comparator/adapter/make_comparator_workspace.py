@@ -59,7 +59,6 @@ generator binary, and the build belongs to the comparator run.
 """
 
 import argparse
-import json
 import pathlib
 import re
 import shutil
@@ -69,7 +68,7 @@ import tomllib
 
 import fc_leaneval_importer as importer
 import leaneval_generator_cli as generator_cli
-from leaneval_interface import build_problem, build_request, slug, sha256_text
+from leaneval_interface import build_problem, build_request, dump_json, sha256_text, slug
 
 ROOT = importer.ROOT
 
@@ -128,7 +127,7 @@ def seam_files(pairs, group=None):
     request = build_request(
         [problem for problem, _ in problems], target, template, CONTEXT_DIR
     )
-    files = {"request.json": json.dumps(request, indent=2, ensure_ascii=False) + "\n"}
+    files = {"request.json": dump_json(request)}
     for path, content in generator_cli.context_files(problems).items():
         files[f"{CONTEXT_DIR}/{path}"] = content
     for (problem, _), (_, manifest) in zip(problems, pairs):
@@ -361,7 +360,7 @@ def main(argv):
         report = import_set(
             args.set, args.out, verify=args.verify, known_failures=known
         )
-        text = json.dumps(report, indent=2, ensure_ascii=False) + "\n"
+        text = dump_json(report)
         if args.report:
             pathlib.Path(args.report).write_text(text, encoding="utf-8")
         print(text, end="")

@@ -52,13 +52,6 @@ jobs:
           # later step or a build script could reach it.
           persist-credentials: false
 
-      - name: Install elan
-        run: |
-          set -o pipefail
-          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./elan-init -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-
       - name: Read the target pins
         id: target
         run: |
@@ -73,11 +66,10 @@ jobs:
 
       # At this repository's toolchain: the declaration's facts come from an
       # elaborated environment, so the module it lives in has to be built.
-      - name: Build the source module and the extractor
-        run: |
-          lake exe cache get
-          lake build comparator_facts FormalConjectures.Wikipedia.SumOfThreeCubes
-          lake exe comparator_facts --self-test
+      - name: Prepare the extractor and the source module
+        uses: ./.github/actions/prepare-extractor
+        with:
+          modules: FormalConjectures.Wikipedia.SumOfThreeCubes
 
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator

@@ -46,6 +46,14 @@ def declares (declared : Name) (requested : String) : Bool :=
   let s := declared.toString
   s == requested || s.endsWith ("." ++ requested)
 
+/-! ## Declaration binder boundaries, from source syntax
+
+A theorem proved by bare `sorry` can be stored as a full-type `sorryAx`, so the
+proof value's lambda arity does not reliably separate header parameters from
+binders in the conclusion. This subsystem recovers that boundary from the
+declaration's source text and matches it against the elaborated telescope;
+every binder fact emitted still comes from the environment. -/
+
 /-- Collect every node of one syntax kind. A declaration command must contain
 exactly one `declSig`; finding zero or more than one means we did not parse the
 source range we thought we did, and the importer fails closed. -/
@@ -446,6 +454,8 @@ def binderBoundarySelfTest (env : Environment) : IO UInt32 := do
       return 1
   IO.println "binder-boundary self-test passed"
   return 0
+
+/-! ## Environment extraction -/
 
 def binderJson (name : Name) (bi : BinderInfo) : Json :=
   Json.mkObj [("name", toJson name.toString), ("explicit", toJson bi.isExplicit)]

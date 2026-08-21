@@ -23,12 +23,13 @@ exactly the recorded `target`-stage ones.
 """
 
 import argparse
-import json
 import pathlib
 import re
 import subprocess
 import sys
 import tomllib
+
+from leaneval_interface import dump_json
 
 
 def arrange_project(workspaces_dir, project_dir):
@@ -162,7 +163,7 @@ def main(argv):
     }
     if args.report:
         pathlib.Path(args.report).write_text(
-            json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            dump_json(report), encoding="utf-8"
         )
     print(f"{report['ok']}/{report['total']} Challenges compile at target pins")
 

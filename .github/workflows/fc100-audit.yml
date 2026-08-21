@@ -61,20 +61,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install elan
-        run: |
-          set -o pipefail
-          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./elan-init -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-
       # The category tags, source ranges and answer-slot types come from the
       # elaborated environment, so every module in the set has to be built.
-      - name: Build the source modules and the extractor
-        run: |
-          lake exe cache get
-          lake build FormalConjectures.Subsets.FC100OpenSet1 comparator_facts
-          lake exe comparator_facts --self-test
+      - name: Prepare the extractor and the whole set
+        uses: ./.github/actions/prepare-extractor
+        with:
+          modules: FormalConjectures.Subsets.FC100OpenSet1
 
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator

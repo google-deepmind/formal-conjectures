@@ -71,6 +71,11 @@ def sha256_text(text):
     """The digest the generator response uses: SHA-256 of the UTF-8 bytes."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
+
+def dump_json(obj, sort_keys=False):
+    """The one JSON serialisation every artifact here uses: readable, UTF-8, newline-terminated."""
+    return json.dumps(obj, indent=2, ensure_ascii=False, sort_keys=sort_keys) + "\n"
+
 # The generator's frozen wire format; `schemas/request-v1.schema.json` and
 # `response-v1.schema.json` in the pinned revision are normative.
 CONTRACT_VERSION = 1
@@ -279,10 +284,7 @@ class ProblemManifest:
 
     def to_json(self):
         # Key-sorted: the same record always serialises to the same bytes.
-        return (
-            json.dumps(self.to_json_object(), indent=2, ensure_ascii=False, sort_keys=True)
-            + "\n"
-        )
+        return dump_json(self.to_json_object(), sort_keys=True)
 
     @classmethod
     def from_json(cls, text):
@@ -577,8 +579,7 @@ def parse_response(text):
         )
     workspaces = {}
     for entry in payload["files"]:
-        digest = hashlib.sha256(entry["content"].encode("utf-8")).hexdigest()
-        if digest != entry["sha256"]:
+        if sha256_text(entry["content"]) != entry["sha256"]:
             raise SystemExit(
                 f"{entry['problemId']}/{entry['path']}: content does not match "
                 "its digest"
