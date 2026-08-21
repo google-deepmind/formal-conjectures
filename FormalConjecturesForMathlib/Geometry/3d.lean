@@ -18,7 +18,6 @@ module
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.LinearAlgebra.CrossProduct
 public import Mathlib.LinearAlgebra.Orientation
-public import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-!
 # Three-dimensional Euclidean geometry
@@ -93,8 +92,7 @@ theorem inner_euclideanCross_euclideanCross (a b c d : ℝ³) :
       inner ℝ a c * inner ℝ b d - inner ℝ a d * inner ℝ b c := by
   simp only [euclideanCross_apply, EuclideanSpace.inner_eq_star_dotProduct, star_trivial,
     cross_dot_cross]
-  rw [dotProduct_comm (WithLp.ofLp d) (WithLp.ofLp a)]
-  ring
+  rw [mul_comm (WithLp.ofLp c ⬝ᵥ WithLp.ofLp b)]
 
 /-- The right-nested vector triple-product identity. -/
 theorem euclideanCross_cross (u v w : ℝ³) :
@@ -130,13 +128,12 @@ theorem euclideanCross_eq_inner_smul_of_orthogonal
   let c := euclideanCross x y
   have hpc : euclideanCross p c = 0 := by
     dsimp only [c]
-    rw [euclideanCross_cross, hy, hx]
-    simp
+    simp only [euclideanCross_cross, hy, hx, zero_smul, sub_zero]
   have hpp : inner ℝ p p = 1 := by
     simp [hp]
   have hsecond := euclideanCross_cross p p c
   rw [hpc, map_zero, hpp, one_smul] at hsecond
-  have hc := (sub_eq_zero.mp hsecond.symm).symm
+  have hc : c = inner ℝ p c • p := (sub_eq_zero.mp hsecond.symm).symm
   simpa only [c, real_inner_comm] using hc
 
 end EuclideanHypersurface
