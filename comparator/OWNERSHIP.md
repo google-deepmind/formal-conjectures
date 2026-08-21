@@ -15,10 +15,13 @@ and declaration id for every problem.
 
 ## The seam
 
-    comparator/adapter/fc_leaneval_importer.py     FC declaration -> (module, manifest)
-    comparator/adapter/leaneval_interface.py       the request built from them, the
-                                        response checked against its digests
-    comparator/adapter/leaneval_generator_cli.py   runs the pinned binary, nothing else
+    comparator/adapter/fc_source.py              reading FC source: where a declaration
+                                                 is, its preamble, notation, answer slots
+    comparator/adapter/fc_leaneval_importer.py   FC declaration -> (module, manifest),
+                                                 assembled from those answers
+    comparator/adapter/leaneval_interface.py     the request built from them, the
+                                                 response checked against its digests
+    comparator/adapter/leaneval_generator_cli.py runs the pinned binary, nothing else
 
 `comparator/adapter/make_comparator_workspace.py` is the command that runs one after the
 other. The arrow points one way: the CLI plumbing imports the interface and
@@ -79,8 +82,9 @@ Conjectures corrects a misformalisation upstream.
 
 | File | Why it cannot move |
 |---|---|
-| `comparator/adapter/fc_leaneval_importer.py` | resolves a declaration against an exact FC commit, reads the elaborated environment, copies the FC-local closure, types each `answer(sorry)` slot, and records the provenance |
-| `comparator/adapter/comparator_facts.lean` | the Lean extractor: source ranges, declaration-header binder boundaries, elaborated binder names/explicitness, answer-slot types, and the `@[category ...]` tag. The parsed source distinguishes header parameters from `∀` binders in the conclusion; every emitted binder fact still comes from the elaborated environment. |
+| `comparator/adapter/fc_source.py` | reads this repository's own Lean: where a declaration is, the file-scoped directives in force where it was written, the FC-defined notation it uses, its `answer(sorry)` slots and their elaborated types, and the pins the text was read at |
+| `comparator/adapter/fc_leaneval_importer.py` | assembles the marked-up module and the provenance record from those answers: resolves the declaration against an exact FC commit, copies the FC-local closure, hoists each slot, and records the provenance |
+| `comparator/adapter/ComparatorFacts/` and `comparator_facts.lean` | the Lean extractor (a small library — `Binders.lean` recovers declaration-header binder boundaries from source syntax, `Extract.lean` reads the elaborated environment — and a thin executable): source ranges, declaration-header binder boundaries, elaborated binder names/explicitness, answer-slot types, and the `@[category ...]` tag. The parsed source distinguishes header parameters from `∀` binders in the conclusion; every emitted binder fact still comes from the elaborated environment. |
 | `comparator/adapter/leaneval_interface.py` | the request builder and response checker — the FC side of the wire format, permanently, since the consumer owns hole resolution under the v1 contract |
 | `comparator/adapter/leaneval_generator_cli.py` | plumbing for the pinned binary |
 | `comparator/adapter/make_comparator_workspace.py` | the command, the emitted seam artifact, and the whole-set batch run |

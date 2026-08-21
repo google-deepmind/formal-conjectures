@@ -28,14 +28,14 @@ import unittest
 from unittest import mock
 
 import fc_leaneval_importer as importer
+import fc_source
 from leaneval_interface import MarkedUpModule, problem_group
 from test_leaneval_interface import a_manifest
-from fc_leaneval_importer import (
+from fc_leaneval_importer import closure_region, load_manifest
+from fc_source import (
     answer_spans,
-    closure_region,
     file_scoped_preamble,
     hoist_answers,
-    load_manifest,
     pins,
     replace_proof_with_sorry,
     strip_decorations,
@@ -485,21 +485,21 @@ class DocstringReferenceTest(unittest.TestCase):
             " - [Tao25] a blog post (https://example.com/other)\n-/"
         )
         self.assertEqual(
-            importer.docstring_reference(doc), "https://www.erdosproblems.com/1038"
+            fc_source.docstring_reference(doc), "https://www.erdosproblems.com/1038"
         )
 
     def test_an_arxiv_version_suffix_is_preserved(self):
         doc = "/-!\n*Reference:* [arxiv/2504.17644v3](https://arxiv.org/abs/2504.17644v3)\n-/"
         self.assertEqual(
-            importer.docstring_reference(doc), "https://arxiv.org/abs/2504.17644v3"
+            fc_source.docstring_reference(doc), "https://arxiv.org/abs/2504.17644v3"
         )
 
     def test_links_above_the_reference_line_are_not_the_citation(self):
         doc = "/-!\n# A problem\n\nSee [Mathlib](https://leanprover-community.github.io).\n-/"
-        self.assertEqual(importer.docstring_reference(doc), "")
+        self.assertEqual(fc_source.docstring_reference(doc), "")
 
     def test_a_module_without_a_docstring_has_no_citation(self):
-        self.assertEqual(importer.docstring_reference(""), "")
+        self.assertEqual(fc_source.docstring_reference(""), "")
 
 
 class ModuleNameCodecTest(unittest.TestCase):
@@ -507,7 +507,7 @@ class ModuleNameCodecTest(unittest.TestCase):
 
     def test_a_guillemet_component_keeps_its_dots(self):
         self.assertEqual(
-            importer.split_module(
+            fc_source.split_module(
                 "FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture"
             ),
             ["FormalConjectures", "Arxiv", "0912.2382", "CurlingNumberConjecture"],
@@ -515,7 +515,7 @@ class ModuleNameCodecTest(unittest.TestCase):
 
     def test_a_dotted_final_component_keeps_its_tail(self):
         # `with_suffix` would have turned `«2501.03234»` into `«2501.lean`.
-        path = importer.module_source_path(
+        path = fc_source.module_source_path(
             "FormalConjectures.Arxiv.«2501.03234».ArithmeticSumS"
         )
         self.assertEqual(path.name, "ArithmeticSumS.lean")
@@ -523,17 +523,17 @@ class ModuleNameCodecTest(unittest.TestCase):
 
     def test_a_malformed_name_is_refused(self):
         with self.assertRaises(SystemExit):
-            importer.split_module("FormalConjectures.«unterminated")
+            fc_source.split_module("FormalConjectures.«unterminated")
 
     def test_every_real_module_round_trips(self):
         # The property that keeps the codec from drifting again: for every
         # file the importer can name, decoding the name reaches the file.
-        for src in importer.SOURCE_DIRS:
+        for src in fc_source.SOURCE_DIRS:
             for path in src.rglob("*.lean"):
                 rel = path.relative_to(importer.ROOT)
                 with self.subTest(module=str(rel)):
                     self.assertEqual(
-                        importer.module_source_path(importer.module_name(rel)), path
+                        fc_source.module_source_path(fc_source.module_name(rel)), path
                     )
 
 
@@ -542,7 +542,7 @@ class QualifiedResolutionTest(unittest.TestCase):
 
     def test_the_bare_colliding_name_is_ambiguous(self):
         with self.assertRaises(SystemExit) as ctx:
-            importer.find_declaration("conjecture")
+            fc_source.find_declaration("conjecture")
         self.assertIn("ambiguous", str(ctx.exception))
 
     def test_each_qualified_name_reaches_its_own_file(self):
@@ -551,12 +551,12 @@ class QualifiedResolutionTest(unittest.TestCase):
             ("OeisA308734.conjecture", "308734.lean"),
         ):
             with self.subTest(qualified=qualified):
-                path, _, _, _ = importer.find_declaration(qualified)
+                path, _, _, _ = fc_source.find_declaration(qualified)
                 self.assertEqual(path.name, filename)
 
     def test_a_declared_name_with_dots_still_resolves(self):
         # The declared name itself contains dots; no namespace split applies.
-        path, _, _, _ = importer.find_declaration(
+        path, _, _, _ = fc_source.find_declaration(
             "erdos_125.variants.positive_unequal_density"
         )
         self.assertEqual(path.name, "125.lean")
@@ -564,7 +564,7 @@ class QualifiedResolutionTest(unittest.TestCase):
     def test_longest_declared_suffix_wins(self):
         # `Erdos125.erdos_125.variants.positive_unequal_density`: the first
         # component is the namespace, the rest is the declared name.
-        path, _, _, _ = importer.find_declaration(
+        path, _, _, _ = fc_source.find_declaration(
             "Erdos125.erdos_125.variants.positive_unequal_density"
         )
         self.assertEqual(path.name, "125.lean")
@@ -604,7 +604,7 @@ class FlattenDeclaredNameTest(unittest.TestCase):
     """Dotted declaration names are restated as slugs for the generator."""
 
     def test_the_declaring_occurrence_is_renamed(self):
-        name, statement = importer.flatten_declared_name(
+        name, statement = fc_source.flatten_declared_name(
             "erdos_100.variants.strong",
             "theorem erdos_100.variants.strong : True := by\n  sorry",
         )
@@ -616,7 +616,7 @@ class FlattenDeclaredNameTest(unittest.TestCase):
     def test_a_prefix_line_does_not_confuse_the_rename(self):
         # `open X in` binds to the declaration below and travels with the
         # slice; the declaring line is not the first line.
-        name, statement = importer.flatten_declared_name(
+        name, statement = fc_source.flatten_declared_name(
             "a.b", "open Nat in\ntheorem a.b : True := by\n  sorry"
         )
         self.assertEqual(name, "a_b")
@@ -624,7 +624,7 @@ class FlattenDeclaredNameTest(unittest.TestCase):
 
     def test_an_absent_declaration_is_refused(self):
         with self.assertRaises(SystemExit):
-            importer.flatten_declared_name("a.b", "theorem c.d : True := sorry")
+            fc_source.flatten_declared_name("a.b", "theorem c.d : True := sorry")
 
 
 class PreambleNotationTest(unittest.TestCase):
@@ -692,7 +692,7 @@ class NotationBlocksTest(unittest.TestCase):
 
     def _with_commands(self, commands):
         return mock.patch.object(
-            importer, "fc_notation_commands", return_value=commands
+            fc_source, "fc_notation_commands", return_value=commands
         )
 
     def test_a_scoped_notation_needs_its_namespace_opened(self):
@@ -701,12 +701,12 @@ class NotationBlocksTest(unittest.TestCase):
         ]
         with self._with_commands(commands):
             self.assertEqual(
-                importer.notation_blocks(["def f : ℝ² := sorry"], {"EuclideanGeometry"}),
+                fc_source.notation_blocks(["def f : ℝ² := sorry"], {"EuclideanGeometry"}),
                 ['scoped[EuclideanGeometry] notation "ℝ²" => E'],
             )
             # Green9's `⊆` false positive: same token, namespace never opened.
             self.assertEqual(
-                importer.notation_blocks(["def f : ℝ² := sorry"], set()), []
+                fc_source.notation_blocks(["def f : ℝ² := sorry"], set()), []
             )
 
     def test_a_shared_global_notation_is_copied_as_local(self):
@@ -715,7 +715,7 @@ class NotationBlocksTest(unittest.TestCase):
         commands = [(["≪"], 'notation g " ≪ " f => IsBigO g f', None, True)]
         with self._with_commands(commands):
             self.assertEqual(
-                importer.notation_blocks(["theorem t : a ≪ b := sorry"], set()),
+                fc_source.notation_blocks(["theorem t : a ≪ b := sorry"], set()),
                 ['local notation g " ≪ " f => IsBigO g f'],
             )
 
@@ -723,24 +723,24 @@ class NotationBlocksTest(unittest.TestCase):
         commands = [(["≪"], 'notation g " ≪ " f => X g f', None, False)]
         with self._with_commands(commands):
             self.assertEqual(
-                importer.notation_blocks(["theorem t : a ≪ b := sorry"], set()), []
+                fc_source.notation_blocks(["theorem t : a ≪ b := sorry"], set()), []
             )
 
     def test_an_unused_token_is_not_copied(self):
         commands = [(["ℝ²"], 'notation "ℝ²" => E', None, True)]
         with self._with_commands(commands):
-            self.assertEqual(importer.notation_blocks(["theorem t : True"], set()), [])
+            self.assertEqual(fc_source.notation_blocks(["theorem t : True"], set()), [])
 
 
 class LocaliseNotationTest(unittest.TestCase):
     def test_a_global_notation_becomes_local(self):
         self.assertEqual(
-            importer.localise_notation(['notation "R(" k ")" => f k']),
+            fc_source.localise_notation(['notation "R(" k ")" => f k']),
             ['local notation "R(" k ")" => f k'],
         )
 
     def test_quot_precheck_travels_with_the_notation(self):
-        out = importer.localise_notation(
+        out = fc_source.localise_notation(
             ["set_option quotPrecheck false", 'local notation "A" => s']
         )
         self.assertEqual(
@@ -750,7 +750,7 @@ class LocaliseNotationTest(unittest.TestCase):
 
     def test_other_preamble_lines_pass_through(self):
         self.assertEqual(
-            importer.localise_notation(["open Nat", "variable (n : Nat)"]),
+            fc_source.localise_notation(["open Nat", "variable (n : Nat)"]),
             ["open Nat", "variable (n : Nat)"],
         )
 
