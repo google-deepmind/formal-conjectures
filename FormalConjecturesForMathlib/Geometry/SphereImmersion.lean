@@ -20,7 +20,6 @@ public import Mathlib.Analysis.Normed.Module.Normalize
 public import Mathlib.Geometry.Manifold.Instances.Sphere
 
 public import FormalConjecturesForMathlib.Geometry.«3d»
-public meta import FormalConjecturesUtil.Attributes.Basic
 
 /-!
 # A canonical normal for immersed two-spheres in three-space
@@ -95,7 +94,7 @@ private theorem sphereInclusionOrientationFactor_ne_zero (p : sphere (0 : ℝ³)
     hfactor, zero_smul]
 
 /-- The raw canonical normal is orthogonal to every image tangent vector. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem inner_sphereNormalRaw_sphereAmbientMfderiv
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (v : TangentSpace (𝓡 2) p) :
@@ -110,7 +109,7 @@ theorem inner_sphereNormalRaw_sphereAmbientMfderiv
     euclideanCross_inner_left, euclideanCross_inner_right, mul_zero, add_zero]
 
 /-- The canonical normal is orthogonal to every image tangent vector, even at a non-immersion. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem inner_sphereNormal_sphereAmbientMfderiv
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (v : TangentSpace (𝓡 2) p) :
@@ -146,7 +145,6 @@ private theorem sphereNormalRaw_ne_zero_iff
 
 /-- The canonical normal is nonzero exactly at the points where the manifold derivative is
 injective. -/
-@[category API, AMS 53]
 theorem sphereNormal_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
     sphereNormal F p ≠ 0 ↔ Function.Injective (sphereAmbientMfderiv F p) := by
@@ -155,7 +153,6 @@ theorem sphereNormal_ne_zero_iff
     (sphereNormalRaw_ne_zero_iff F p)
 
 /-- At an immersion point, the canonical normal has unit length. -/
-@[category API, AMS 53]
 theorem norm_sphereNormal_of_injective
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : Function.Injective (sphereAmbientMfderiv F p)) :
@@ -164,7 +161,6 @@ theorem norm_sphereNormal_of_injective
   exact NormedSpace.norm_normalize ((sphereNormalRaw_ne_zero_iff F p).mpr hF)
 
 /-- Normalizing a positive multiple of the radial vector recovers the radial vector. -/
-@[category API, AMS 53]
 theorem sphereNormal_eq_of_raw_eq_pos_smul
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) (c : ℝ) (hc : 0 < c)
     (hraw : sphereNormalRaw F p = c • (p : ℝ³)) :

@@ -19,8 +19,6 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.LinearAlgebra.CrossProduct
 public import Mathlib.LinearAlgebra.Orientation
 
-public meta import FormalConjecturesUtil.Attributes.Basic
-
 /-!
 # Three-dimensional Euclidean geometry
 
@@ -56,39 +54,37 @@ noncomputable def euclideanCross : ℝ³ →ₗ[ℝ] ℝ³ →ₗ[ℝ] ℝ³ :=
   ((crossProduct.comp e.toLinearMap).compl₂ e.toLinearMap).compr₂ e.symm.toLinearMap
 
 /-- The bundled Euclidean cross product agrees with the coordinate cross product. -/
-@[category API, AMS 53]
 theorem euclideanCross_apply (a b : ℝ³) :
     euclideanCross a b =
       WithLp.toLp 2 (crossProduct (WithLp.ofLp a) (WithLp.ofLp b)) :=
   rfl
 
 /-- Swapping the arguments of the cross product negates it. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem euclideanCross_anticomm (a b : ℝ³) :
     -euclideanCross a b = euclideanCross b a := by
   simpa only [euclideanCross_apply, map_neg] using
     congrArg (WithLp.toLp 2) (cross_anticomm (WithLp.ofLp a) (WithLp.ofLp b))
 
 /-- A vector has zero cross product with itself. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem euclideanCross_self (a : ℝ³) : euclideanCross a a = 0 := by
   simpa only [euclideanCross_apply, map_zero] using
     congrArg (WithLp.toLp 2) (cross_self (WithLp.ofLp a))
 
 /-- The cross product is orthogonal to its left input, with the inner-product arguments swapped. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem euclideanCross_inner_left (a b : ℝ³) : inner ℝ (euclideanCross a b) a = 0 := by
   rw [euclideanCross_apply]
   simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dot_self_cross]
 
 /-- The cross product is orthogonal to its right input, with the inner-product arguments swapped. -/
-@[simp, category API, AMS 53]
+@[simp]
 theorem euclideanCross_inner_right (a b : ℝ³) : inner ℝ (euclideanCross a b) b = 0 := by
   rw [euclideanCross_apply]
   simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dot_cross_self]
 
 /-- The inner product of two cross products is the corresponding Gram-determinant expression. -/
-@[category API, AMS 53]
 theorem inner_euclideanCross_euclideanCross (a b c d : ℝ³) :
     inner ℝ (euclideanCross a b) (euclideanCross c d) =
       inner ℝ a c * inner ℝ b d - inner ℝ a d * inner ℝ b c := by
@@ -98,7 +94,6 @@ theorem inner_euclideanCross_euclideanCross (a b c d : ℝ³) :
   ring
 
 /-- The right-nested vector triple-product identity. -/
-@[category API, AMS 53]
 theorem euclideanCross_cross (u v w : ℝ³) :
     euclideanCross u (euclideanCross v w) =
       inner ℝ u w • v - inner ℝ u v • w := by
@@ -111,7 +106,6 @@ theorem euclideanCross_cross (u v w : ℝ³) :
   rfl
 
 /-- A cross product is nonzero exactly when its two inputs are linearly independent. -/
-@[category API, AMS 53]
 theorem euclideanCross_ne_zero_iff_linearIndependent (a b : ℝ³) :
     euclideanCross a b ≠ 0 ↔ LinearIndependent ℝ ![a, b] := by
   let e := WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)
@@ -127,7 +121,6 @@ theorem euclideanCross_ne_zero_iff_linearIndependent (a b : ℝ³) :
   rwa [hf] at hLI
 
 /-- The cross product of two vectors orthogonal to a unit vector is parallel to that vector. -/
-@[category API, AMS 53]
 theorem euclideanCross_eq_inner_smul_of_orthogonal
     (p x y : ℝ³) (hp : ‖p‖ = 1) (hx : inner ℝ p x = 0) (hy : inner ℝ p y = 0) :
     euclideanCross x y = inner ℝ (euclideanCross x y) p • p := by
