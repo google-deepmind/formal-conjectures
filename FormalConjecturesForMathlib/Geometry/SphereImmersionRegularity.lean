@@ -48,8 +48,8 @@ private theorem euclideanCross_comp_basis
     (b : Module.Basis (Fin 2) ℝ V) (L : V →L[ℝ] ℝ³) (A : V →L[ℝ] V) :
     euclideanCross (L (A (b 0))) (L (A (b 1))) =
       LinearMap.det A.toLinearMap • euclideanCross (L (b 0)) (L (b 1)) := by
-  rw [← LinearMap.det_toMatrix b, Matrix.det_fin_two]
-  rw [← b.sum_repr (A (b 0)), ← b.sum_repr (A (b 1))]
+  rw [← LinearMap.det_toMatrix b, Matrix.det_fin_two,
+    ← b.sum_repr (A (b 0)), ← b.sum_repr (A (b 1))]
   simp only [Fin.sum_univ_two, map_add, map_smul, ContinuousLinearMap.add_apply,
     ContinuousLinearMap.smul_apply, euclideanCross_self, smul_zero, add_zero,
     LinearMap.toMatrix_apply]
@@ -134,12 +134,7 @@ private theorem contMDiffAt_sphereNormalRawInCoordinates
   have hs : ContMDiffAt (𝓡 2) 𝓘(ℝ) m
       (fun q ↦ inner ℝ (euclideanCross (dι q e0) (dι q e1)) (q : ℝ³)) p :=
     contDiff_inner.comp_contMDiffAt (hcι.prodMk_space hp)
-  rw [sphereNormalRawInCoordinates]
-  dsimp only
-  change ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m
-    (fun q ↦ inner ℝ (euclideanCross (dι q e0) (dι q e1)) (q : ℝ³) •
-      euclideanCross (dF q e0) (dF q e1)) p
-  exact hs.smul hcF
+  simpa only [sphereNormalRawInCoordinates] using hs.smul hcF
 
 private theorem sphereNormalRawInCoordinates_eq_smul
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p q : sphere (0 : ℝ³) 1)
@@ -160,20 +155,12 @@ private theorem sphereNormalRawInCoordinates_eq_smul
   have hι : dιc = dι.comp A := inTangentCoordinates_sphere_eq_comp
     (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) p q hq
   have hF : dFc = dF.comp A := inTangentCoordinates_sphere_eq_comp F p q hq
-  rw [sphereNormalRawInCoordinates, sphereNormalRaw]
-  dsimp only
   change inner ℝ (euclideanCross (dιc (b 0)) (dιc (b 1))) (q : ℝ³) •
       euclideanCross (dFc (b 0)) (dFc (b 1)) =
       LinearMap.det A.toLinearMap ^ 2 •
         (inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (q : ℝ³) •
           euclideanCross (dF (b 0)) (dF (b 1)))
-  rw [hι, hF]
-  simp only [ContinuousLinearMap.comp_apply]
-  change inner ℝ (euclideanCross (dι (A (b 0))) (dι (A (b 1)))) (q : ℝ³) •
-      euclideanCross (dF (A (b 0))) (dF (A (b 1))) =
-    LinearMap.det A.toLinearMap ^ 2 •
-      (inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (q : ℝ³) •
-        euclideanCross (dF (b 0)) (dF (b 1)))
+  simp only [hι, hF, ContinuousLinearMap.comp_apply]
   have hιcross := euclideanCross_comp_basis b dι A
   have hFcross := euclideanCross_comp_basis b dF A
   calc
@@ -183,16 +170,15 @@ private theorem sphereNormalRawInCoordinates_eq_smul
       congrArg₂ (fun (s : ℝ) (x : ℝ³) ↦ s • x)
         (congrArg (fun x ↦ inner ℝ x (q : ℝ³)) hιcross) hFcross
     _ = _ := by
-      rw [real_inner_smul_left, smul_smul, smul_smul]
-      congr 1
-      ring
+      rw [real_inner_smul_left]
+      module
 
 private theorem det_tangentCoordChange_ne_zero
     (p q : sphere (0 : ℝ³) 1) (hq : q ∈ (extChartAt (𝓡 2) p).source) :
     LinearMap.det (tangentCoordChange (𝓡 2) p q q :
       EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)).toLinearMap ≠ 0 := by
-  rw [Ne, LinearMap.det_eq_zero_iff_ker_ne_bot, not_not]
-  exact LinearMap.ker_eq_bot_of_injective (tangentCoordChange_injective p q hq)
+  simpa only [Ne, LinearMap.det_eq_zero_iff_ker_ne_bot, not_not] using
+    LinearMap.ker_eq_bot_of_injective (tangentCoordChange_injective p q hq)
 
 /-- At an immersion point, a locally `C^n` map has a locally `C^m` canonical unit normal when
 `m + 1 ≤ n`. -/

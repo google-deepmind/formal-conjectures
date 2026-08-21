@@ -19,8 +19,6 @@ module
 public import Mathlib.Analysis.InnerProductSpace.LinearMap
 public import Mathlib.LinearAlgebra.BilinearForm.Hom
 
-@[expose] public section
-
 /-!
 # Extrinsic fundamental forms in Euclidean space
 
@@ -28,6 +26,8 @@ This small API packages the first and second fundamental forms determined by the
 an immersion and a chosen normal field. The sign in the second form is the convention
 `II(v, w) = -⟪dn(v), dF(w)⟫`; consequently `dn = c • dF` corresponds to `II = (-c) • I`.
 -/
+
+@[expose] public section
 
 open scoped RealInnerProductSpace
 
@@ -51,13 +51,13 @@ def IsUmbilic (dF dn : V →L[ℝ] E) : Prop :=
 
 @[simp]
 theorem firstFundamentalFormAt_apply (dF : V →L[ℝ] E) (v w : V) :
-    firstFundamentalFormAt dF v w = inner ℝ (dF v) (dF w) := by
-  simp [firstFundamentalFormAt]
+    firstFundamentalFormAt dF v w = inner ℝ (dF v) (dF w) :=
+  rfl
 
 @[simp]
 theorem secondFundamentalFormAt_apply (dn dF : V →L[ℝ] E) (v w : V) :
-    secondFundamentalFormAt dn dF v w = -inner ℝ (dn v) (dF w) := by
-  simp [secondFundamentalFormAt]
+    secondFundamentalFormAt dn dF v w = -inner ℝ (dn v) (dF w) :=
+  rfl
 
 /-- A scalar normal differential makes a point umbilic.
 
@@ -68,8 +68,7 @@ theorem isUmbilic_of_normal_deriv_eq_smul
   refine ⟨-c, ?_⟩
   ext v w
   change -inner ℝ (dn v) (dF w) = -c * inner ℝ (dF v) (dF w)
-  rw [h, ContinuousLinearMap.smul_apply, real_inner_smul_left]
-  ring
+  rw [h, ContinuousLinearMap.smul_apply, real_inner_smul_left, neg_mul]
 
 /-- Under a tangency hypothesis, umbilicity is equivalent to the normal differential being a
 scalar multiple of the immersion differential. The range hypothesis is exactly what rules out an
@@ -85,16 +84,12 @@ theorem isUmbilic_iff_normal_deriv_eq_smul
     have horth (w : V) : inner ℝ (dn v + κ • dF v) (dF w) = 0 := by
       have h := congrArg (fun B : LinearMap.BilinForm ℝ V ↦ B v w) hκ
       change -inner ℝ (dn v) (dF w) = κ * inner ℝ (dF v) (dF w) at h
-      rw [inner_add_left, real_inner_smul_left]
-      linarith [h]
+      rw [inner_add_left, real_inner_smul_left, ← h, add_neg_cancel]
     have hrange : dn v + κ • dF v = dF (u + κ • v) := by
       change dF u = dn v at hu
       rw [map_add, map_smul, ← hu]
-    have := horth (u + κ • v)
-    rw [← hrange, real_inner_self_eq_norm_sq] at this
-    have hzero : dn v + κ • dF v = 0 := by
-      apply norm_eq_zero.mp
-      nlinarith [norm_nonneg (dn v + κ • dF v)]
+    have hzero := horth (u + κ • v)
+    rw [← hrange, real_inner_self_eq_norm_sq, sq_eq_zero_iff, norm_eq_zero] at hzero
     simpa only [ContinuousLinearMap.smul_apply, neg_smul] using
       eq_neg_of_add_eq_zero_left hzero
   · rintro ⟨c, hc⟩

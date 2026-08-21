@@ -36,33 +36,27 @@ open EuclideanHypersurface
 
 private def positiveAxis0 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[1, 0, 0], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis0 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[-1, 0, 0], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def positiveAxis1 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[0, 1, 0], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis1 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[0, -1, 0], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def positiveAxis2 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[0, 0, 1], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis2 : sphere (0 : ℝ³) 1 :=
   ⟨!₂[0, 0, -1], by
-    simp only [mem_sphere_zero_iff_norm]
-    norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
+    norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis0 =
