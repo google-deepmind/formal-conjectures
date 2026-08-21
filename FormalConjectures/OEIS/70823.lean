@@ -75,10 +75,16 @@ theorem a_5 : a 5 = 243 := by
 /--
 $a(n) \equiv 0 \pmod 3$ if $n > 2$. Is $a(n)$ always of the form $2^j \cdot 3^k \cdot s$
 where $s$ is a squarefree number?
+
+Answer: False, $a(20)$ is divisible by $13^2$ but not by $13^3$.
 -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 2 < n) :
-    a n ≡ 0 [MOD 3] ∧ ∃ j k s : ℕ, a n = 2 ^ j * 3 ^ k * s ∧ Squarefree s := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a070823-counterexample/blob/51399770e734616c6463be034e41f7469991d752/lean/OeisA70823CounterexampleFC.lean#L72-L81"]
+theorem conjecture :
+    answer(False) ↔ ∀ n : ℕ, 2 < n →
+      a n ≡ 0 [MOD 3] ∧
+        ∃ j k s : ℕ, a n = 2 ^ j * 3 ^ k * s ∧ Squarefree s := by
   sorry
 
 end OeisA70823
