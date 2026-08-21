@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
 import FormalConjecturesUtil
 
 /-!
@@ -38,17 +37,9 @@ open Filter Set
 
 namespace PropertyBNumber
 
-/-- A finite family of finite sets is `n`-uniform if every member has cardinality `n`. -/
-def IsNUniform {m v : ℕ} (n : ℕ) (A : Fin m → Finset (Fin v)) : Prop :=
-  ∀ i, (A i).card = n
-
-/-- Property B for a finite set system, using the shared `FormalConjecturesForMathlib` definition. -/
-def HasPropertyB {m v : ℕ} (A : Fin m → Finset (Fin v)) : Prop :=
-  Finset.HasPropertyB (Finset.univ.image A)
-
 /-- An `n`-uniform finite set system that does not have Property B. -/
 def IsCounterexample {m v : ℕ} (n : ℕ) (A : Fin m → Finset (Fin v)) : Prop :=
-  IsNUniform n A ∧ ¬HasPropertyB A
+  (∀ i, (A i).card = n) ∧ ¬Finset.HasPropertyB (Finset.univ.image A)
 
 /-- The possible edge counts of finite `n`-uniform hypergraphs without Property B. -/
 def counterexampleSizes (n : ℕ) : Set ℕ :=
