@@ -18,6 +18,7 @@ module
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.LinearAlgebra.CrossProduct
 public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-!
 # Three-dimensional Euclidean geometry
@@ -48,10 +49,13 @@ instance fact_finrank_euclideanSpace_fin_three : Fact (Module.finrank ℝ ℝ³ 
 
 namespace EuclideanHypersurface
 
-/-- The usual cross product on three-dimensional Euclidean space, as a bundled bilinear map. -/
-noncomputable def euclideanCross : ℝ³ →ₗ[ℝ] ℝ³ →ₗ[ℝ] ℝ³ :=
+/-- The usual cross product on three-dimensional Euclidean space, as a bundled continuous
+bilinear map. -/
+noncomputable def euclideanCross : ℝ³ →L[ℝ] ℝ³ →L[ℝ] ℝ³ :=
   let e := WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)
-  ((crossProduct.comp e.toLinearMap).compl₂ e.toLinearMap).compr₂ e.symm.toLinearMap
+  let f : ℝ³ →ₗ[ℝ] ℝ³ →ₗ[ℝ] ℝ³ :=
+    ((crossProduct.comp e.toLinearMap).compl₂ e.toLinearMap).compr₂ e.symm.toLinearMap
+  LinearMap.toContinuousLinearMap (LinearMap.toContinuousLinearMap.toLinearMap.comp f)
 
 /-- The bundled Euclidean cross product agrees with the coordinate cross product. -/
 theorem euclideanCross_apply (a b : ℝ³) :
