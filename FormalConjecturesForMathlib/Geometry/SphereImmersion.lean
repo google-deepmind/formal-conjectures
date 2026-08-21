@@ -66,13 +66,17 @@ noncomputable def sphereNormal
 
 /-- The orientation factor contributed by the standard sphere inclusion is nonzero. -/
 private theorem sphereInclusionOrientationFactor_ne_zero (p : sphere (0 : ℝ³) 1) :
-    let b := sphereTangentBasis p
-    let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-    inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) ≠ 0 := by
-  dsimp only
+    inner ℝ
+      (euclideanCross
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+          (sphereTangentBasis p 0))
+        (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+          (sphereTangentBasis p 1)))
+      (p : ℝ³) ≠ 0 := by
   letI : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
   let b := sphereTangentBasis p
   let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  change inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) ≠ 0
   have hι : Function.Injective dι := mfderiv_coe_sphere_injective p
   have hιLI : LinearIndependent ℝ ![dι (b 0), dι (b 1)] := by
     have hmap := b.linearIndependent.map' dι.toLinearMap
@@ -125,7 +129,6 @@ private theorem sphereNormalRaw_ne_zero_iff
   let b := sphereTangentBasis p
   let dF := sphereAmbientMfderiv F p
   have hfactor := sphereInclusionOrientationFactor_ne_zero p
-  dsimp only at hfactor
   rw [sphereNormalRaw]
   dsimp only
   rw [smul_ne_zero_iff, and_iff_right hfactor,
