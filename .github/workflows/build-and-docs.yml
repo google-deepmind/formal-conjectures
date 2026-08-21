@@ -160,6 +160,7 @@ jobs:
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1
+          lake update verso
           lake update formal_conjectures
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
           # so we make this best-effort: render whatever succeeds.

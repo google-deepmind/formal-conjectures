@@ -107,6 +107,7 @@ lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstA
 # Warning: the literate build step can take a long time (30+ minutes).
 cd docbuild
 export MATHLIB_NO_CACHE_ON_UPDATE=1
+lake update verso
 lake update formal_conjectures
 lake build FormalConjectures:literate || true
 find .lake/build/literate -name "*.json" -empty -delete 2>/dev/null || true
