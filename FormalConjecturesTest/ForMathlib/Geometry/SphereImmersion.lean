@@ -35,63 +35,63 @@ namespace SphereImmersionTest
 open EuclideanHypersurface
 
 private def positiveAxis0 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![1, 0, 0], by
+  ⟨!₂[1, 0, 0], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis0 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![-1, 0, 0], by
+  ⟨!₂[-1, 0, 0], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def positiveAxis1 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![0, 1, 0], by
+  ⟨!₂[0, 1, 0], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis1 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![0, -1, 0], by
+  ⟨!₂[0, -1, 0], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def positiveAxis2 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![0, 0, 1], by
+  ⟨!₂[0, 0, 1], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 private def negativeAxis2 : sphere (0 : ℝ³) 1 :=
-  ⟨WithLp.toLp 2 ![0, 0, -1], by
+  ⟨!₂[0, 0, -1], by
     simp only [mem_sphere_zero_iff_norm]
     norm_num [EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis0 =
-      WithLp.toLp 2 ![1, 0, 0] := by
+      !₂[1, 0, 0] := by
   simp [positiveAxis0]
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis0 =
-      WithLp.toLp 2 ![-1, 0, 0] := by
+      !₂[-1, 0, 0] := by
   simp [negativeAxis0]
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis1 =
-      WithLp.toLp 2 ![0, 1, 0] := by
+      !₂[0, 1, 0] := by
   simp [positiveAxis1]
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis1 =
-      WithLp.toLp 2 ![0, -1, 0] := by
+      !₂[0, -1, 0] := by
   simp [negativeAxis1]
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis2 =
-      WithLp.toLp 2 ![0, 0, 1] := by
+      !₂[0, 0, 1] := by
   simp [positiveAxis2]
 
 example :
     sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis2 =
-      WithLp.toLp 2 ![0, 0, -1] := by
+      !₂[0, 0, -1] := by
   simp [negativeAxis2]
 
 end SphereImmersionTest
