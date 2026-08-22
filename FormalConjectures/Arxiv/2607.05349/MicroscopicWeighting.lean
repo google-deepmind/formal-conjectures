@@ -44,8 +44,8 @@ noncomputable def distanceMatrix (X : Type*) [Fintype X] [MetricSpace X] : Matri
 /-- The weighting $\vec{w}(t) = Z(t)^{-1}\mathbf{1}$ at scale `t`.
 
 `Matrix.inv` is `0` on singular matrices, so this is only the intended vector where `Z t` is
-invertible. That is enough here: `Z 0` is the all-ones matrix and `Z` is continuous, so `Z t`
-is invertible for all small enough `t > 0`, which is where the limit below is taken. -/
+invertible. The analytic function `t ↦ det (Z t)` tends to `1` as `t → ∞`, so its zeros are
+isolated. Hence `Z t` is invertible for all small enough `t > 0`, as required below. -/
 noncomputable def weighting (X : Type*) [Fintype X] [DecidableEq X] [MetricSpace X] (t : ℝ) :
     X → ℝ :=
   (similarityMatrix X t)⁻¹ *ᵥ 1
@@ -92,9 +92,11 @@ since `∑ i, g i` is `0` rather than `1`, while `X → ℝ` is a subsingleton s
 converges trivially. The equivalence would be false there for reasons that have nothing to do
 with the question.
 -/
-@[category research open, AMS 15 51]
+@[category research solved, AMS 15 51,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/microscopic-weighting-counterexample/blob/eff8979/lean/MicroscopicWeightingCounterexampleFC.lean#L886-L894"]
 theorem microscopic_weighting_iff_finite_concentration :
-    answer(sorry) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
+    answer(False) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
       HasMicroscopicWeighting X ↔ HasFiniteConcentration (distanceMatrix X) := by
   sorry
 
