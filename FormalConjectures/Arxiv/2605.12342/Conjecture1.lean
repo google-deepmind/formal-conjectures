@@ -81,7 +81,9 @@ conclusion `∃ g₁ g₂, closure {g₁, g₂} = ⊤` encodes 2-generation (at 
 which $\Gamma_{2 \oplus 2}$ also satisfies. The other three exceptions $(3,3), (4,3), (4,4)$
 have rank $3$ and are genuinely not 2-generated.
 -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/fernandes-conjecture-1-lean/blob/c9360c5608ed2bb3bb5670a68d683cd5a83089d6/lean/FernandesConjecture/FormalConjecturesWrapper.lean#L14-L24"]
 theorem conjecture_1 {m n : ℕ} (hm2 : 2 ≤ m) (hn2 : 2 ≤ n) (hmn : n ≤ m)
     (h_except : (m, n) ∉ ({(2, 2), (3, 3), (4, 3), (4, 4)} : Set (ℕ × ℕ))) :
     ∃ g₁ g₂ : gammaSubgroup m n, Subgroup.closure {g₁, g₂} = ⊤ := by
