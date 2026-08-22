@@ -86,8 +86,10 @@ $p^a \mid n$ such that $p^{a+1} \nmid n$ and $a \geq r$). Is it true that, for e
 $r,k \geq 2$ and $\epsilon > 0$,
 $\limsup \frac{\prod_{n \leq m < n+k} B_r(m)}{n^{1+\epsilon}} \to \infty$?
 -/
-@[category research open, AMS 11]
-theorem erdos_367.variants.higher_full_parts : answer(sorry) ↔
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-367-higher-full-parts/blob/560d371b5d4fece41079d457f8f0306d0991554f/lean/Erdos367HigherFullPartsFC.lean#L16-L80"]
+theorem erdos_367.variants.higher_full_parts : answer(False) ↔
     ∀ r k : ℕ, 3 ≤ r → 2 ≤ k → ∀ ε : ℝ, 0 < ε →
       atTop.limsup (fun n ↦
         ((∏ m ∈ .Ico n (n + k), B r m : ℕ) / (n : ℝ) ^ (1 + ε) |>.toEReal)) = ⊤ := by
