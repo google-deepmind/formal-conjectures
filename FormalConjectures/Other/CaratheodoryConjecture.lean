@@ -54,6 +54,13 @@ def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ
     ∃ K : ConvexBody ℝ³,
       (interior (K : Set ℝ³)).Nonempty ∧ range F = frontier (K : Set ℝ³)
 
+/-- The canonical normal of an `IsConvexSphereOfClass k` surface is of class `C^k`. -/
+@[category test, AMS 52 53]
+theorem IsConvexSphereOfClass.contMDiff_sphereNormal
+    {k : WithTop ℕ∞} {F : sphere (0 : ℝ³) 1 → ℝ³} (hF : IsConvexSphereOfClass k F) :
+    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) :=
+  EuclideanHypersurface.contMDiff_sphereNormal F hF.1 hF.2.2.1
+
 /-- Carathéodory's conjecture for convex surfaces with a `C^k` canonical normal constructed
 from the derivative of the parametrization. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
