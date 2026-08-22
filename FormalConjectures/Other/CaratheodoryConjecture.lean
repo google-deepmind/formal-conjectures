@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Analysis.Convex.Body
-import FormalConjectures.Other.LoewnerConjecture
 import FormalConjecturesUtil
+import FormalConjectures.Other.LoewnerConjecture
 
 /-!
 # Carathéodory's conjecture
