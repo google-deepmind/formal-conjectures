@@ -36,30 +36,18 @@ variable {V : Type*}
 /-- The complete tripartite graph $K_{1,3,3}$. -/
 abbrev K133 := SimpleGraph.completeMultipartiteGraph fun i : Fin 3 => Fin (![1, 3, 3] i)
 
--- The headline keeps the question form; the answer is recorded in
--- `erdos_1007.variants.dimension_four` below.
-set_option linter.style.category_answer false in
 /--
 The dimension of a graph $G$ is the minimal $n$ such that $G$ can be embedded in $\mathbb{R}^n$
 such that every edge of $G$ is a unit line segment.
 
 What is the smallest number of edges in a graph with dimension $4$?
 
-The smallest number of edges is $9$, achieved solely by $K_{3,3}$, proved by House [Ho13]. An
+Answer: The smallest number of edges is $9$, achieved solely by $K_{3,3}$, proved by House [Ho13]. An
 alternative proof was given by Chaffee and Noble [ChNo16], who also prove that the smallest
 number of edges in a graph of dimension $5$ is $15$ (achieved by $K_6$ and $K_{1,3,3}$).
 -/
-@[category research solved, AMS 5 52]
-theorem erdos_1007 :
-    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
-      answer(sorry) := by
-  sorry
-
-/--
-The smallest number of edges in a graph of dimension $4$ is $9$.
--/
 @[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1007.lean"]
-theorem erdos_1007.variants.dimension_four :
+theorem erdos_1007 :
     IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
       9 := by
   sorry
