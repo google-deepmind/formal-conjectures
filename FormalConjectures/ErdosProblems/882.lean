@@ -57,7 +57,8 @@ $\lvert A\rvert \leq \log_2 n + \tfrac{1}{2}\log_2\log n + O(1)$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_882 :
-    (fun n => (maxAntichainCard n : ℝ)) ~[Filter.atTop] (fun n => Real.logb 2 n) := by
+    Filter.Tendsto (fun n : ℕ => (maxAntichainCard n : ℝ) / Real.logb 2 n)
+      Filter.atTop (nhds 1) := by
   sorry
 
 /--
@@ -99,7 +100,7 @@ The greedy algorithm shows that $\lvert A\rvert \geq (1-o(1))\log_3 n$ is possib
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_882.variants.greedy :
-    ∀ᶠ n in Filter.atTop, (Real.logb 3 n - 1 : ℝ) ≤ maxAntichainCard n := by
+    ∀ᶠ n : ℕ in Filter.atTop, (Real.logb 3 n - 1 : ℝ) ≤ (maxAntichainCard n : ℝ) := by
   sorry
 
 end Erdos882
