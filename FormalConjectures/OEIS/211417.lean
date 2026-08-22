@@ -131,7 +131,8 @@ D(r)*a(n)/Product_{i = 1..r, i coprime to 30} (30*n - i) is integral for all n."
 
 This generalizes `thirty_mul_sub_one_dvd_a` (the $r = 1$ case where $D(1) = 1$).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/fbc67063967895b34c8917701df2871a76de5d31/FormalConjectures/OEIS/211417.lean#L651"]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
     ∃ D : ℤ, ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
