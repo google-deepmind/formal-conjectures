@@ -155,7 +155,6 @@ structure NormalModalLogic : Type where
 
 def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
 
-
 scoped infixr:85 " ⊢ " => proves
 scoped notation L " ⊆ " L' =>
   NormalModalLogic.thms L ⊆ NormalModalLogic.thms L'

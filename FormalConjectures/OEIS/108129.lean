@@ -83,7 +83,7 @@ that is, the first $n$ such that $a(n) = -1$ is $254602$.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-  a 254602 = -1 ∧ (∀ n : ℕ, 1 ≤ n ∧ n < 254602 → a n ≠ -1) :=
-by sorry
+    a 254602 = -1 ∧ (∀ n : ℕ, 1 ≤ n ∧ n < 254602 → a n ≠ -1) := by
+  sorry
 
 end OeisA108129
