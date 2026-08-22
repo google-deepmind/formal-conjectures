@@ -31,14 +31,9 @@ open ArithmeticFunction.sigma
 
 namespace Superperfect
 
-/--
-A positive integer $n$ is $(m,k)$-perfect if $\sigma^m(n) = kn$ where $\sigma^m$ is the $m$-th iterate of $σ$.
--/
-def PerfectFor (n m k : ℕ) : Prop := 0 < n ∧ Nat.iterate (fun x => σ 1 x) m n = k * n
-
 /-- There does not exist a $(2,5)$-perfect number -/
 @[category research open, AMS 11]
-theorem twoFivePerfect : ¬ ∃ n, PerfectFor n 2 5 := by
+theorem twoFivePerfect : ¬ ∃ n, Nat.IsPerfectFor n 2 5 := by
   sorry
 
 end Superperfect
