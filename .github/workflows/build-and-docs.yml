@@ -167,6 +167,7 @@ jobs:
 
       - name: Build problems
         if: steps.mode.outputs.website_only != 'true'
+        timeout-minutes: 30
         run: |
           lake --wfail build
           rm -f FormalConjectures/All.lean
@@ -234,7 +235,7 @@ jobs:
         if: steps.mode.outputs.site == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '18'
+          node-version: '24'
 
       - name: Generate conjectures data for website
         if: steps.mode.outputs.website_only != 'true'
