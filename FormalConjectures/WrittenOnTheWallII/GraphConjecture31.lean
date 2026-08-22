@@ -19,17 +19,18 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 31
 
-The WOWII page records this as **Chung's theorem**: proved in F. R. K. Chung,
-*The average distance and the independence number*, J. Graph Theory **12** (1988),
-229-235. We state it here as a theorem; the formal proof is left as `sorry`
-pending a Lean port of Chung's argument.
+The WOWII page records this as **Chung's theorem**. This radius bound is proved
+in Section 2 of P. Erdős, M. Saks, and V. T. Sós, *Maximum Induced Trees in
+Graphs*, J. Combin. Theory Ser. B **41** (1986), 61–79; the authors credit
+Fan Chung for the proof. We state it here as a theorem; the formal proof is left
+as `sorry` pending a Lean port of the argument.
 
-Here $\mathrm{path}(G)$ is the floor of the average distance over ordered pairs
-of distinct vertices (definition `path` in `FormalConjecturesForMathlib`), and
-$\mathrm{rad}(G)$ is the graph radius.
+Here $\mathrm{path}(G)$ is the maximum number of vertices in an induced path,
+and $\mathrm{rad}(G)$ is the graph radius.
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [P. Erdős, M. Saks, V. T. Sós, Maximum Induced Trees in Graphs](https://doi.org/10.1016/0095-8956(86)90028-6)
 -/
 
 namespace WrittenOnTheWallII.GraphConjecture31
@@ -40,12 +41,12 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 31](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31)
-(Chung 1988):
+(Chung):
 
 For every simple connected graph $G$,
 $\mathrm{path}(G) \ge 2 \cdot \mathrm{rad}(G) - 1$,
-where $\mathrm{path}(G)$ is the floor of the average distance and
-$\mathrm{rad}(G)$ is the graph radius.
+where $\mathrm{path}(G)$ is the maximum number of vertices in an induced path
+and $\mathrm{rad}(G)$ is the graph radius.
 -/
 @[category research solved, AMS 5]
 theorem conjecture31 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
