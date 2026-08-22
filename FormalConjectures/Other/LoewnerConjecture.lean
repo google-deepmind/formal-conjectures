@@ -21,13 +21,16 @@ import FormalConjecturesUtil
 # Loewner's conjecture
 
 Loewner's conjecture says that an isolated umbilic point of a sufficiently smooth surface has
-principal-line index at most one. We record the smooth conjecture and real-analytic theorem.
+principal-line index at most one. We state the now-disproved smooth version for functions and the
+classical positive result for real-analytic functions. Levent Alpöge announced the smooth
+counterexample on 19 August 2026.
 
 *References:*
 - [M. Ghomi, *Open Problems in Geometry of Curves and Surfaces*, Problem
   8.2](https://ghomi.math.gatech.edu/Papers/op.pdf)
 - [C. J. Titus, *A proof of a conjecture of Loewner and of the conjecture of Carathéodory on
   umbilic points*](https://doi.org/10.1007/BF02392036)
+- [L. Alpöge, X post 2089971359921156203](https://x.com/__alpoge__/status/2089971359921156203)
 -/
 
 open Metric
@@ -64,9 +67,11 @@ def LoewnerConjectureOfClass (k : WithTop ℕ∞) : Prop :=
 
 /-- **The smooth Loewner conjecture.**
 
-The principal-line index at an isolated umbilic of a smooth Hessian is at most one. -/
-@[category research open, AMS 53 57]
-theorem loewner_conjecture : answer(sorry) ↔ LoewnerConjectureOfClass ∞ := by
+The principal-line index at an isolated umbilic of a smooth Hessian was conjectured to be at most
+one. Alpöge's smooth family gives isolated umbilics of larger index, so the answer is false. -/
+@[category research solved, AMS 53 57,
+  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/c0591a2d3c3c8fca852865c8ceecfe4dfb083d10/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L53"]
+theorem loewner_conjecture : answer(False) ↔ LoewnerConjectureOfClass ∞ := by
   sorry
 
 /-- **The real-analytic Loewner conjecture.**

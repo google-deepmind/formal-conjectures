@@ -22,14 +22,17 @@ import FormalConjecturesUtil
 # Carathéodory's conjecture
 
 Carathéodory's conjecture says that every sufficiently smooth closed convex surface in
-three-dimensional Euclidean space has at least two umbilic points. We record smooth and
-real-analytic versions and the implication from Loewner's local index conjecture.
+three-dimensional Euclidean space has at least two umbilic points. We state the now-disproved
+smooth version and the classical positive result for real-analytic surfaces. We also record that
+Loewner's local index conjecture implies Carathéodory's global conjecture. Levent Alpöge announced
+the smooth counterexample on 19 August 2026.
 
 *References:*
 - [M. Ghomi, *Open Problems in Geometry of Curves and Surfaces*, Problems 8.1 and
   8.2](https://ghomi.math.gatech.edu/Papers/op.pdf)
 - [C. J. Titus, *A proof of a conjecture of Loewner and of the conjecture of Carathéodory on
   umbilic points*](https://doi.org/10.1007/BF02392036)
+- [L. Alpöge, X post 2089971359921156203](https://x.com/__alpoge__/status/2089971359921156203)
 -/
 
 open Set Metric
@@ -72,9 +75,11 @@ def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
 /-- **The smooth Carathéodory conjecture.**
 
 Every smoothly embedded two-sphere which bounds a convex body has at least two distinct
-umbilic points. -/
-@[category research open, AMS 52 53]
-theorem caratheodory_conjecture : answer(sorry) ↔ CaratheodoryConjectureOfClass ∞ := by
+umbilic points. Alpöge's smooth support function has exactly one umbilic, so the answer is
+false. -/
+@[category research solved, AMS 52 53,
+  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/c0591a2d3c3c8fca852865c8ceecfe4dfb083d10/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L74"]
+theorem caratheodory_conjecture : answer(False) ↔ CaratheodoryConjectureOfClass ∞ := by
   sorry
 
 /-- **The real-analytic Carathéodory conjecture.**
