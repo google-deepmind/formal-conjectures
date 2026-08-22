@@ -35,10 +35,19 @@ namespace CaratheodoryLoewnerCounterexample
 open LoewnerConjecture
 
 @[category API, AMS 26]
+private theorem traceFreeHessian_eq_second_fderiv (f : ℂ → ℝ) (z : ℂ) :
+    traceFreeHessian f z =
+      let H := fderiv ℝ (fun w ↦ fderiv ℝ f w) z
+      (H 1 1 - H Complex.I Complex.I : ℝ) +
+        (2 * H 1 Complex.I : ℝ) * Complex.I := by
+  simp [traceFreeHessian, iteratedFDeriv_two_apply]
+
+@[category API, AMS 26]
 private theorem traceFreeHessian_eq_zero_of_second_fderiv_eq_zero (f : ℂ → ℝ) (z : ℂ)
     (h : fderiv ℝ (fun w ↦ fderiv ℝ f w) z = 0) :
     traceFreeHessian f z = 0 := by
-  simp [traceFreeHessian, h]
+  rw [traceFreeHessian_eq_second_fderiv, h]
+  simp
 
 /-- The explicit trace-free Hessian of the seed. Keeping this local avoids adding another
 public synonym for a one-line expression. -/
@@ -228,9 +237,7 @@ repository's Fréchet-derivative encoding. -/
 @[category API, AMS 26]
 private theorem traceFreeHessian_counterexampleSeed (z : ℂ) :
     traceFreeHessian counterexampleSeed z = seedTraceFreeHessianModel z := by
-  rw [traceFreeHessian]
-  change (let H := fderiv ℝ (fun w ↦ fderiv ℝ counterexampleSeed w) z
-    (H 1 1 - H Complex.I Complex.I : ℝ) + (2 * H 1 Complex.I : ℝ) * Complex.I) = _
+  rw [traceFreeHessian_eq_second_fderiv]
   rw [show (fun w ↦ fderiv ℝ counterexampleSeed w) = seedGradient by
     funext w
     exact (hasFDerivAt_counterexampleSeed w).fderiv]
@@ -1562,7 +1569,8 @@ private theorem traceFreeHessian_radial_mul_seed_branch (W B : ℂ → ℂ) (C :
     have h := second_derivative_symmetric_of_eventually_of_real hfirst hgradient
       (1 : ℂ) Complex.I
     simpa using h.symm
-  rw [traceFreeHessian, (hgradient.congr_of_eventuallyEq hfirst').fderiv]
+  rw [traceFreeHessian_eq_second_fderiv,
+    (hgradient.congr_of_eventuallyEq hfirst').fderiv]
   simp
   have hcontract :
       ((G' 1).re : ℂ) - ((G' Complex.I).im : ℂ) +
@@ -2117,11 +2125,10 @@ private theorem counterexample_traceFreeHessian_decomposition (k : ℕ) {z : ℂ
 @[category API, AMS 26]
 private theorem continuous_traceFreeHessian_counterexample (k : ℕ) (hk : 0 < k) :
     Continuous (traceFreeHessian (counterexample k)) := by
-  have hfirst : ContDiff ℝ ∞ (fderiv ℝ (counterexample k)) :=
-    (contDiff_infty_iff_fderiv.mp (counterexample_contDiff k hk)).2
   have hsecond : Continuous
-      (fderiv ℝ (fun z ↦ fderiv ℝ (counterexample k) z)) :=
-    hfirst.continuous_fderiv (by simp)
+      (iteratedFDeriv ℝ 2 (counterexample k)) :=
+    ContDiff.continuous_iteratedFDeriv (n := (⊤ : ℕ∞))
+      (WithTop.coe_le_coe.2 le_top) (counterexample_contDiff k hk)
   unfold traceFreeHessian
   fun_prop
 
@@ -2401,8 +2408,10 @@ theorem counterexample_traceFreeHessian_argument (k : ℕ) (hk : 0 < k)
 theorem counterexample_hasIsolatedZeroIndex (k : ℕ) (hk : 0 < k) :
     HasIsolatedZeroIndex (traceFreeHessian (counterexample k)) 0 (2 + k) := by
   rcases counterexample_traceFreeHessian_isolated k hk with ⟨ε, hε, hisolated⟩
-  refine ⟨ε, hε, counterexample_traceFreeHessian_zero k hk, hisolated, ?_⟩
-  simpa using counterexample_traceFreeHessian_argument k hk ε hε
+  refine ⟨ε, hε, (continuous_traceFreeHessian_counterexample k hk).continuousOn,
+    counterexample_traceFreeHessian_zero k hk, hisolated, ?_⟩
+  simpa [NormedSpace.normalize, div_eq_mul_inv, mul_comm] using
+    counterexample_traceFreeHessian_argument k hk ε hε
 
 /-- Every positive member with `k > 0` violates the index bound in the smooth Loewner
 conjecture. -/

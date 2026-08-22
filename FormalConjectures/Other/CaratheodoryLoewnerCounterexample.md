@@ -47,7 +47,8 @@ For a real \(C^2\) function \(u\) on a plane, put
 
 At an isolated zero of (2), our principal-line index is half the winding number of
 \(q_{\mathrm E}(u)\) on a small positively oriented circle. This is the convention used by
-`HasIsolatedZeroIndex` in the Lean statement.
+`HasIsolatedZeroIndex` in the Lean statement. That definition also records continuity on its
+witness ball; the formal proof supplies it from the global continuity of this trace-free Hessian.
 
 On the round sphere, use stereographic coordinates in which
 
@@ -686,8 +687,10 @@ identify it with its dual, the derivative of \(X_h\) is the raised radius operat
  dX_h=R_h^\sharp:=g_{S^2}^{-1}R_h.                                    \tag{32}
 \]
 
-In particular, (23) makes \(dX_h\) injective and tangent to the sphere at \(u\); hence \(u\) is
-the chosen unit normal.
+In particular, (23) makes \(dX_h\) injective and tangent to the sphere at \(u\). The canonical
+normal used in Lean is constructed from the cross product of two differential images. Its sign
+is corrected using the same two model directions under the standard sphere inclusion. Since
+(23) is positively oriented, normalizing this cross product gives precisely \(u\).
 
 It remains to prove the global supporting inequality. If \(u\ne v\) are not antipodal, the
 chord
@@ -762,8 +765,10 @@ there, its supporting linear functional is unique, and hence \(x=\nabla H(u)=X_h
 The strict inequality (33) also proves injectivity: if \(X_h(u)=X_h(v)\) for \(u\ne v\), then
 pairing with \(v\) contradicts (31). Since \(S^2\) is compact, the continuous injection \(X_h\)
 is a topological embedding; (32) makes it an immersion. It is therefore a smooth embedding onto
-\(\partial K_h\), with outer unit normal \(n(u)=u\). This supplies all the compactness,
-nonempty-interior, embedding, normal, and range conditions in IsConvexSphereOfClass. Moreover,
+\(\partial K_h\), and its canonical cross-product normal is the outer unit normal \(n(u)=u\).
+This supplies all the convex-body, nonempty-interior, embedding, immersion, and range conditions
+in `IsConvexSphereOfClass`; regularity of the canonical normal then follows from the general
+sphere-immersion theorem. Moreover,
 the differentiability argument above makes the contact point for every supporting normal unique,
 so every supporting face is a singleton and \(K_h\) is strictly convex.
 
@@ -772,7 +777,7 @@ We finish by spelling out the umbilic bridge. In a conformal complex chart
 \(d\rho\), (32) has the form
 
 \[
- dX_h=d\rho\circ R_h^\sharp,\qquad dn=d\rho.
+ dX_h=d\rho\circ R_h^\sharp,\qquad d n_{X_h}=d\rho,
 \]
 
 The identity part \(h\,\mathrm{id}\) and the trace part of the Hessian are scalar. By (3b), the
@@ -787,8 +792,8 @@ proportionality to \(dn=c\,dX_h\). Since \(R_h^\sharp\) is positive and invertib
 
 \[
 \begin{aligned}
- \operatorname{IsUmbilic}(X_h,n,\rho(w))
- &\Longleftrightarrow \exists c,\ dn=c\,dX_h\\
+ \operatorname{IsUmbilic}(X_h,\rho(w))
+ &\Longleftrightarrow \exists c,\ d n_{X_h}=c\,dX_h\\
  &\Longleftrightarrow \exists c,\ \mathrm{id}=cR_h^\sharp\\
  &\Longleftrightarrow Q_w(u)=0.                                      \tag{34}
 \end{aligned}
@@ -861,6 +866,9 @@ current implementation architecture rather than proposing a separate public Wirt
    multiplier \(D^2/80000\) from (3c).
 
 8. **Reusable support geometry.**
+   `FormalConjecturesForMathlib/Geometry/SphereImmersion.lean` constructs the canonical unit
+   normal of an immersed two-sphere from an orientation-corrected cross product, so the surface
+   and its umbilics require no separately quantified normal field.
    `FormalConjecturesForMathlib/Geometry/EuclideanHypersurface.lean` packages the first and
    second fundamental forms and proves their umbilicity criterion equivalent to a scalar normal
    differential when the normal derivative's range lies in the immersion derivative's range.

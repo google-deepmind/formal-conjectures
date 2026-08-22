@@ -61,12 +61,11 @@ theorem not_caratheodoryConjectureOfClass_of_le_infty (k : WithTop ℕ∞) (hk :
   intro h
   rcases counterexample_two_is_support_function_with_unique_umbilic with
     ⟨_, F, _, _, _, hsurface, _, _, _, _, _, humbilic, hunique⟩
-  rcases hsurface with ⟨hFsmooth, hFembedding, hFinjective, hnsmooth, hnnorm,
-    hnormal, K, hKconvex, hKcompact, hKinterior, hFrange⟩
-  have hsurfaceOfClass : IsConvexSphereOfClass k F (fun p ↦ (p : ℝ³)) :=
-    ⟨hFsmooth.of_le hk, hFembedding, hFinjective, hnsmooth.of_le hk, hnnorm,
-      hnormal, K, hKconvex, hKcompact, hKinterior, hFrange⟩
-  rcases h F (fun p ↦ (p : ℝ³)) hsurfaceOfClass with
+  rcases hsurface with ⟨hFsmooth, hFembedding, hFinjective, K, hKinterior, hFrange⟩
+  have hsurfaceOfClass : IsConvexSphereOfClass k F :=
+    ⟨hFsmooth.of_le (add_le_add hk le_rfl), hFembedding, hFinjective,
+      K, hKinterior, hFrange⟩
+  rcases h F hsurfaceOfClass with
     ⟨p₁, p₂, hpne, hp₁, hp₂⟩
   exact hpne ((hunique p₁ hp₁).trans (hunique p₂ hp₂).symm)
 
