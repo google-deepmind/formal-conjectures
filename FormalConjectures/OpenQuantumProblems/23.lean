@@ -183,7 +183,7 @@ lemma isSICFamily_one_of_normalized {ψ : StateVector 1} (hψ : IsNormalized ψ)
 @[category test, AMS 15 47 81]
 theorem hasSICPOVM_one : HasSICPOVM 1 := by
   refine ⟨fun _ => EuclideanSpace.single 0 1, isSICFamily_one_of_normalized ?_⟩
-  simp [IsNormalized, EuclideanSpace.norm_single]
+  simp [IsNormalized]
 
 /- ## Explicit low-dimensional witnesses -/
 

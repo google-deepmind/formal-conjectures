@@ -32,6 +32,8 @@ namespace Erdos1043
 
 open MeasureTheory Polynomial
 
+attribute [local instance] Measure.Subtype.measureSpace
+
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ ≤ 1}

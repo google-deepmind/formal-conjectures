@@ -39,12 +39,10 @@ points are adjacent exactly when the distance between them is a positive whole n
 def IntegerDistancePlaneGraph (V : Set (EuclideanSpace ℝ (Fin 2))) : SimpleGraph V where
   Adj x y := ∃ n : ℕ, 0 < n ∧ Dist.dist x y = n
   symm x y := by simp [PseudoMetricSpace.dist_comm]
-  loopless x := by
+  loopless.irrefl x := by
     rintro ⟨n, hn, h⟩
     rw [dist_self, eq_comm, Nat.cast_eq_zero] at h
-    omega
-
-
+    lia
 
 open scoped EuclideanGeometry
 

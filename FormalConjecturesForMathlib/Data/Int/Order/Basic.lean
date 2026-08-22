@@ -15,17 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Data.Int.Order.Basic
 
-@[expose] public section
-
-namespace SimpleGraph
-
-variable {α : Type*} [Fintype α] [DecidableEq α]
-
-/-- The cycle rank of `G` (or cyclomatic number) is the minimum number of edges
-    that must be removed to eliminate all cycles. -/
-noncomputable def cycleRank (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  G.edgeFinset.card + Fintype.card G.ConnectedComponent - Fintype.card α
-
-end SimpleGraph
+instance : Preorder ℤ := inferInstance
+instance : PartialOrder ℤ := inferInstance

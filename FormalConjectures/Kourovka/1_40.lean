@@ -30,6 +30,8 @@ guarantees that the product of two normal nilpotent subgroups is nilpotent.
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
 
+open scoped commutatorElement
+
 namespace Kourovka.«1.40»
 
 variable {G : Type*} [Group G]
