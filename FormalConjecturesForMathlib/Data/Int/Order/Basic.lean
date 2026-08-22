@@ -13,17 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-
 module
 
-public import Mathlib.Algebra.Order.Archimedean.Real.Basic
-public import Mathlib.Algebra.Order.Round
+public import Mathlib.Data.Int.Order.Basic
 
-@[expose] public section
-
-/-- The distance from a real number to the nearest integer. -/
-noncomputable def distToNearestInt (x : ℝ) : ℝ := |x - round x|
-
-/-- The distance to the nearest integer is nonnegative. -/
-@[simp]
-theorem distToNearestInt_nonneg (x : ℝ) : 0 ≤ distToNearestInt x := abs_nonneg _
+instance : Preorder ℤ := inferInstance
+instance : PartialOrder ℤ := inferInstance

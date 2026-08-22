@@ -63,7 +63,7 @@ theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ �
     _ ≤ f n := Nat.le_findGreatest (by omega)
       ⟨A, by simp only [Finset.coe_Icc, A]; gcongr; omega, ?_, by
         simp [A, -Finset.coe_Icc]⟩
-  simp only [ForkFree, Finset.coe_Icc, Set.mem_Icc, Set.mem_diff, Set.mem_singleton_iff, and_assoc,
+  simp only [ForkFree, Finset.coe_Icc, Set.mem_Icc, Set.mem_sdiff, Set.mem_singleton_iff, and_assoc,
     and_imp, A]
   rintro a ha -
   refine Set.subsingleton_of_forall_eq (a * 2) ?_
