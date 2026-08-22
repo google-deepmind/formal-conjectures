@@ -17,6 +17,7 @@ module
 
 public import Lean
 public meta import Init.Data.String.Legacy
+public meta import Lean.Linter.Basic
 
 /-! # The LaTeX Docstring Linter
 

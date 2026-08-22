@@ -530,7 +530,7 @@ theorem sidorenko_K22 {W : Type} [Fintype W] [DecidableEq W]
     rw [show Fintype.card (Fin 2 ⊕ Fin 2) = 4 by decide]
     norm_num
   -- Now `W` is nonempty.
-  haveI : Nonempty W := not_isEmpty_iff.mp hW
+  have : Nonempty W := not_isEmpty_iff.mp hW
   have hWpos : 0 < (Fintype.card W : ℝ) := by exact_mod_cast Fintype.card_pos
   -- Unfold densities.
   unfold homDensity
@@ -719,7 +719,7 @@ theorem sidorenko_tree {V W : Type} [Fintype V] [Fintype W]
     (hTree : H.IsTree) :
     homDensity (completeGraph (Fin 2)) G ^ (H.edgeFinset.card) ≤ homDensity H G := by
   -- A tree's vertex set is nonempty.
-  haveI : Nonempty V := hTree.isConnected.nonempty
+  have : Nonempty V := hTree.nonempty
   -- Split on whether `V` is a subsingleton.
   by_cases hSub : Subsingleton V
   · -- Base case: `|V| ≤ 1`, so `H` has no edges and both sides equal `1`.

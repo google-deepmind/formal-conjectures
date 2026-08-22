@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-module  -- shake: keep-all
+module  -- shake: keep-all --deprecated_module: ignore
 
 public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
@@ -24,7 +24,6 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
-public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
@@ -61,7 +60,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Annihilation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
-public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cvetkovic
@@ -105,6 +104,7 @@ public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
+public import FormalConjecturesForMathlib.Data.Int.Order.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Full
 public import FormalConjecturesForMathlib.Data.Nat.Init
@@ -136,6 +136,7 @@ public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.NumberTheory.AdditionChain
 public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
+public import FormalConjecturesForMathlib.NumberTheory.AlmostPrime
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
 public import FormalConjecturesForMathlib.NumberTheory.Carmichael
@@ -152,7 +153,6 @@ public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
-public import FormalConjecturesForMathlib.NumberTheory.Semiprime
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
