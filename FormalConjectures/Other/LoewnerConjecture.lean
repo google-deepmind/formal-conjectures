@@ -21,8 +21,7 @@ import FormalConjecturesUtil
 # Loewner's conjecture
 
 Loewner's conjecture says that an isolated umbilic point of a sufficiently smooth surface has
-principal-line index at most one. We state the conjecture for smooth functions and the classical
-positive result for real-analytic functions.
+principal-line index at most one. We record the smooth conjecture and real-analytic theorem.
 
 *References:*
 - [M. Ghomi, *Open Problems in Geometry of Curves and Surfaces*, Problem
@@ -36,10 +35,8 @@ open scoped ContDiff
 
 namespace LoewnerConjecture
 
-/-- The trace-free part of the Hessian of `f : ℂ → ℝ`, encoded as a complex number.
-
-Its zeros are precisely the points where the two eigendirections of the Hessian are not
-distinct. The argument of this complex number is twice the angle of a principal line. -/
+/-- The trace-free Hessian of `f : ℂ → ℝ`, encoded so its argument is twice the principal-line
+angle. Its zeros are exactly the points where the Hessian has a repeated eigenvalue. -/
 noncomputable def traceFreeHessian (f : ℂ → ℝ) (z : ℂ) : ℂ :=
   let H := iteratedFDeriv ℝ 2 f z
   (H ![1, 1] - H ![Complex.I, Complex.I] : ℝ) +
@@ -47,9 +44,8 @@ noncomputable def traceFreeHessian (f : ℂ → ℝ) (z : ℂ) : ℂ :=
 
 /-- A complex-valued function `q` has an isolated zero at `z` with winding number `m`.
 
-The function `q` is continuous on the ball witnessing isolation, so its winding number is
-independent of the sufficiently small positively oriented circle used below. The lift `θ` records
-the argument of `q` on one such circle. For a trace-free Hessian, the corresponding principal-line
+Continuity on the witness ball makes the winding number independent of the sufficiently small
+circle; `θ` is an argument lift on one such circle. For a trace-free Hessian, the principal-line
 index is `m / 2`. -/
 def HasIsolatedZeroIndex (q : ℂ → ℂ) (z : ℂ) (m : ℤ) : Prop :=
   ∃ ε > 0,

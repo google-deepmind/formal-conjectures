@@ -26,13 +26,9 @@ public import FormalConjecturesForMathlib.Geometry.«3d»
 /-!
 # A canonical normal for immersed two-spheres in three-space
 
-Mathlib represents every tangent space of the sphere by a copy of the fixed model space `ℝ²`.
-The basis below is the standard basis of that model space, not a continuous global tangent frame.
-The preferred sphere charts identify the geometric tangent plane with the model space through a
-possibly orientation-reversing orthonormal map. This file constructs a normal from the corresponding
-cross product and corrects its sign using the standard sphere inclusion. A change of model frame
-therefore occurs in both cross products, so its determinant appears squared and the normalized
-normal is independent of the chart orientation.
+Mathlib models each sphere tangent space on a fixed copy of `ℝ²`. We orient the cross product
+using the standard sphere inclusion; changing the model frame then contributes a squared
+determinant, which disappears after normalization.
 -/
 
 @[expose] public section
@@ -42,10 +38,7 @@ open scoped EuclideanGeometry EuclideanSpace Manifold RealInnerProductSpace
 
 namespace EuclideanHypersurface
 
-/-- The standard basis of Mathlib's fixed model copy of `ℝ²` for the tangent space at `p`.
-
-This is a coordinate basis used to evaluate the manifold derivative, not a global tangent frame on
-the sphere. -/
+/-- The standard coordinate basis of the model tangent space at `p`, not a global tangent frame. -/
 noncomputable def sphereTangentBasis (p : sphere (0 : ℝ³) 1) :
     Module.Basis (Fin 2) ℝ (TangentSpace (𝓡 2) p) :=
   (trivializationAt (EuclideanSpace ℝ (Fin 2)) (TangentSpace (𝓡 2)) p).basisAt
@@ -134,16 +127,13 @@ noncomputable def sphereNormalRaw
   inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) •
     euclideanCross (dF (b 0)) (dF (b 1))
 
-/-- The canonical unit normal of a map from the unit two-sphere to three-space.
-
-Its orientation is induced by the outward orientation of the domain sphere. Thus it need not be
-the outward normal of the image when `F` reverses orientation. For a non-immersion its raw normal
-can vanish, in which case this definition is zero. -/
+/-- The canonical unit normal, oriented by the outward orientation of the domain sphere.
+It may point inward on the image if `F` reverses orientation and is zero where its raw normal
+vanishes. -/
 noncomputable def sphereNormal
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : ℝ³ :=
   NormedSpace.normalize (sphereNormalRaw F p)
 
-/-- The cross product of the inclusion frame is its radial component. -/
 private theorem sphere_inclusion_cross_eq_smul (p : sphere (0 : ℝ³) 1) :
     let b := sphereTangentBasis p
     let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
@@ -158,7 +148,6 @@ private theorem sphere_inclusion_cross_eq_smul (p : sphere (0 : ℝ³) 1) :
   · exact Submodule.mem_orthogonal_singleton_iff_inner_right.mp <|
       range_mfderiv_coe_sphere (n := 2) p ▸ ⟨sphereTangentBasis p 1, rfl⟩
 
-/-- The orientation factor contributed by the standard sphere inclusion has square one. -/
 private theorem sphere_inclusion_orientation_factor_sq (p : sphere (0 : ℝ³) 1) :
     let b := sphereTangentBasis p
     let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
@@ -223,8 +212,6 @@ theorem inner_sphereNormal_mfderiv
   rw [sphereNormal, NormedSpace.normalize, real_inner_smul_left,
     inner_sphereNormalRaw_mfderiv, mul_zero]
 
-/-- The raw canonical normal is nonzero exactly at the points where the manifold derivative is
-injective. -/
 private theorem sphereNormalRaw_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
     sphereNormalRaw F p ≠ 0 ↔ Function.Injective

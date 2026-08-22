@@ -24,12 +24,9 @@ public import FormalConjecturesForMathlib.Geometry.SphereImmersion
 /-!
 # Regularity of the canonical normal of a sphere immersion
 
-Although Mathlib's preferred sphere charts do not give a continuous global tangent frame, the
-canonical normal is regular. Locally, `inTangentCoordinates` gives a regular frame for the
-derivative. Changing from that frame to the pointwise model basis scales both cross products in the
-raw normal by the same determinant, so the raw normal scales by its positive square. Normalization
-therefore removes the coordinate dependence. In particular, a `C^(m + 1)` immersion has a `C^m`
-canonical normal.
+Although the sphere charts do not give a continuous global tangent frame, `sphereNormal` is
+regular. In local tangent coordinates, a frame change scales its raw normal by a positive square,
+which normalization removes. Thus a `C^(m + 1)` immersion has a `C^m` canonical normal.
 -/
 
 @[expose] public section

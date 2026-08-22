@@ -22,9 +22,8 @@ import FormalConjecturesUtil
 # Carathéodory's conjecture
 
 Carathéodory's conjecture says that every sufficiently smooth closed convex surface in
-three-dimensional Euclidean space has at least two umbilic points. We state the conjecture for
-smooth surfaces and the classical positive result for real-analytic surfaces. We also record
-that Loewner's local index conjecture implies Carathéodory's global conjecture.
+three-dimensional Euclidean space has at least two umbilic points. We record smooth and
+real-analytic versions and the implication from Loewner's local index conjecture.
 
 *References:*
 - [M. Ghomi, *Open Problems in Geometry of Curves and Surfaces*, Problems 8.1 and
@@ -38,14 +37,8 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
-/-- A parametrized convex surface of class `C^(k + 1)`, whose canonical normal is of class
-`C^k`.
-
-The canonical normal is constructed from the derivative of `F` by a globally
-orientation-corrected cross product. Its orthogonality is built into the construction, while the
-injective differential makes it a unit vector. Its `C^k` regularity follows from the `C^(k + 1)`
-regularity of `F`. The range condition identifies the surface with the boundary of a compact
-convex body with nonempty interior. -/
+/-- A `C^(k + 1)` parametrized convex surface. Its canonical normal is `C^k` by
+`EuclideanHypersurface.contMDiff_sphereNormal`. -/
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
   ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (k + 1) F ∧
     Topology.IsEmbedding F ∧
@@ -61,8 +54,7 @@ theorem IsConvexSphereOfClass.contMDiff_sphereNormal
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) :=
   EuclideanHypersurface.contMDiff_sphereNormal F hF.1 hF.2.2.1
 
-/-- Carathéodory's conjecture for convex surfaces with a `C^k` canonical normal constructed
-from the derivative of the parametrization. -/
+/-- Carathéodory's conjecture for `IsConvexSphereOfClass k` surfaces. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ F : sphere (0 : ℝ³) 1 → ℝ³, IsConvexSphereOfClass k F →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧

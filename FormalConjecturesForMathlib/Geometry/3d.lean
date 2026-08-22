@@ -22,9 +22,7 @@ public import Mathlib.LinearAlgebra.Orientation
 /-!
 # Three-dimensional Euclidean geometry
 
-This file supplies the preferred orientation on `ℝ³` and transports the usual cross product on
-coordinate triples to a bundled continuous bilinear map on Euclidean space. It also records the
-standard algebraic and metric identities for this cross product.
+This file defines the preferred orientation and bundled continuous cross product on `ℝ³`.
 -/
 
 @[expose] public section
@@ -44,8 +42,7 @@ noncomputable instance Module.orientedEuclideanSpaceFinThree : Module.Oriented �
 
 namespace EuclideanHypersurface
 
-/-- The usual cross product on three-dimensional Euclidean space, as a bundled continuous
-bilinear map. -/
+/-- The cross product on `ℝ³`, bundled as a continuous bilinear map. -/
 noncomputable def euclideanCross : ℝ³ →L[ℝ] ℝ³ →L[ℝ] ℝ³ :=
   let e := WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)
   let f : ℝ³ →ₗ[ℝ] ℝ³ →ₗ[ℝ] ℝ³ :=
@@ -71,13 +68,13 @@ theorem euclideanCross_anticomm (a b : ℝ³) :
 theorem euclideanCross_self (a : ℝ³) : euclideanCross a a = 0 := by
   simp [euclideanCross_apply]
 
-/-- The cross product is orthogonal to its left input, with the inner-product arguments swapped. -/
+/-- The cross product is orthogonal to its left input. -/
 @[simp]
 theorem euclideanCross_inner_left (a b : ℝ³) : inner ℝ (euclideanCross a b) a = 0 := by
   simp [euclideanCross_apply, EuclideanSpace.inner_eq_star_dotProduct,
     dot_self_cross]
 
-/-- The cross product is orthogonal to its right input, with the inner-product arguments swapped. -/
+/-- The cross product is orthogonal to its right input. -/
 @[simp]
 theorem euclideanCross_inner_right (a b : ℝ³) : inner ℝ (euclideanCross a b) b = 0 := by
   simp [euclideanCross_apply, EuclideanSpace.inner_eq_star_dotProduct,
