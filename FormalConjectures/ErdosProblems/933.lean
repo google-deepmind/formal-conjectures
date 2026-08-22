@@ -81,8 +81,8 @@ theorem erdos_933.variants.lower_bound :
     rw [show 2 ^ m + 1 = 2 ^ m + 1 ^ m by simp,
       padicValNat.pow_add_pow (p := 3) (x := 2) (y := 1) (by norm_num)
         (by norm_num) (by norm_num) (by simpa [m] using (by norm_num : Odd 3).pow)]
-    simp [m, padicValNat.prime_pow]
-    omega
+    simp [m]
+    lia
   have hlog : (m : ℝ) * Real.log 2 < (3 : ℝ) ^ (r + 2) := by
     calc
       _ < (m : ℝ) * 3 := mul_lt_mul_of_pos_left (by linarith [Real.log_two_lt_d9]) (by positivity)
@@ -94,4 +94,3 @@ theorem erdos_933.variants.lower_bound :
   exact mul_lt_mul_of_pos_left hlog (by positivity)
 
 end Erdos933
-

@@ -54,7 +54,7 @@ lemma IsMulBasisOfOrder.isMulBasis (hA : A.IsMulBasisOfOrder n) : A.IsMulBasis :
 @[to_additive]
 lemma isMulBasisOfOrder_iff :
     A.IsMulBasisOfOrder n ↔ ∀ a, ∃ (f : Fin n → M) (_ : ∀ i, f i ∈ A), ∏ i, f i = a := by
-  have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
+  have := Set.mem_finsetProd (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsMulBasisOfOrder]
 
 /-- No set is a multiplicative basis of order `0`. -/
@@ -103,7 +103,7 @@ lemma IsMulBasis.isAsymptoticMulBasis (hA : IsMulBasis A) : A.IsAsymptoticMulBas
 lemma isAsymptoticMulBasisOfOrder_iff_prod :
     IsAsymptoticMulBasisOfOrder A n ↔ ∀ᶠ a in cofinite, ∃ (f : Fin n → M) (_ : ∀ i, f i ∈ A),
       ∏ i, f i = a := by
-  have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
+  have := Set.mem_finsetProd (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsAsymptoticMulBasisOfOrder]
 
 /-- A set `A : Set M` is an asymptotic multiplicative basis of order `2` if a cofinite set of
