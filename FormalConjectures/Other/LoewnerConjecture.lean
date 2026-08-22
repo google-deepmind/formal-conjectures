@@ -39,8 +39,7 @@ namespace LoewnerConjecture
 angle. Its zeros are exactly the points where the Hessian has a repeated eigenvalue. -/
 noncomputable def traceFreeHessian (f : ℂ → ℝ) (z : ℂ) : ℂ :=
   let H := iteratedFDeriv ℝ 2 f z
-  (H ![1, 1] - H ![Complex.I, Complex.I] : ℝ) +
-    (2 * H ![1, Complex.I] : ℝ) * Complex.I
+  H ![1, 1] - H ![Complex.I, Complex.I] + 2 * H ![1, Complex.I] * Complex.I
 
 /-- A complex-valued function `q` has an isolated zero at `z` with winding number `m`.
 

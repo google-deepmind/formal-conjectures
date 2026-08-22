@@ -42,8 +42,7 @@ namespace CaratheodoryConjecture
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
   ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (k + 1) F ∧
     Topology.IsEmbedding F ∧
-    (∀ p, Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) ∧
+    (∀ p, Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) ∧
     ∃ K : ConvexBody ℝ³,
       (interior (K : Set ℝ³)).Nonempty ∧ range F = frontier (K : Set ℝ³)
 
@@ -58,16 +57,12 @@ theorem IsConvexSphereOfClass.contMDiff_sphereNormal
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ F : sphere (0 : ℝ³) 1 → ℝ³, IsConvexSphereOfClass k F →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧
-      EuclideanHypersurface.IsUmbilic
-        (V := TangentSpace (𝓡 2) p₁) (E := ℝ³)
-        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₁ : TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³)
-        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₁ :
-          TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³) ∧
-      EuclideanHypersurface.IsUmbilic
-        (V := TangentSpace (𝓡 2) p₂) (E := ℝ³)
-        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₂ : TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
-        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₂ :
-          TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
+      EuclideanHypersurface.IsUmbilic (TangentSpace (𝓡 2) p₁) ℝ³
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₁)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₁) ∧
+      EuclideanHypersurface.IsUmbilic (TangentSpace (𝓡 2) p₂) ℝ³
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₂)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₂)
 
 /-- **The smooth Carathéodory conjecture.**
 

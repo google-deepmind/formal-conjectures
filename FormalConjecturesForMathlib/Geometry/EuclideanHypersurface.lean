@@ -45,7 +45,8 @@ noncomputable def secondFundamentalFormAt (dn dF : V →L[ℝ] E) :
   -(LinearMap.BilinForm.comp (innerₗ E) dn.toLinearMap dF.toLinearMap)
 
 /-- A point is umbilic when its second fundamental form is a scalar multiple of its first. -/
-def IsUmbilic (dF dn : V →L[ℝ] E) : Prop :=
+def IsUmbilic (V E : Type*) [TopologicalSpace V] [AddCommGroup V] [Module ℝ V]
+    [NormedAddCommGroup E] [InnerProductSpace ℝ E] (dF dn : V →L[ℝ] E) : Prop :=
   ∃ κ : ℝ, secondFundamentalFormAt dn dF = κ • firstFundamentalFormAt dF
 
 @[simp]
@@ -61,7 +62,7 @@ theorem secondFundamentalFormAt_apply (dn dF : V →L[ℝ] E) (v w : V) :
 /-- If `dn = c • dF`, the point is umbilic with scalar `-c` under our sign convention. -/
 theorem isUmbilic_of_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (c : ℝ) (h : dn = c • dF) :
-    IsUmbilic dF dn := by
+    IsUmbilic V E dF dn := by
   refine ⟨-c, ?_⟩
   ext v w
   change -inner ℝ (dn v) (dF w) = -c * inner ℝ (dF v) (dF w)
@@ -71,7 +72,7 @@ theorem isUmbilic_of_normal_deriv_eq_smul
 of `dF`. -/
 theorem isUmbilic_iff_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (htangent : dn.range ≤ dF.range) :
-    IsUmbilic dF dn ↔ ∃ c : ℝ, dn = c • dF := by
+    IsUmbilic V E dF dn ↔ ∃ c : ℝ, dn = c • dF := by
   constructor
   · rintro ⟨κ, hκ⟩
     refine ⟨-κ, ?_⟩

@@ -84,8 +84,8 @@ private noncomputable def sphereNormalRawInCoordinates
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
     sphere (0 : ℝ³) 1 → ℝ³ :=
   let b := PiLp.basisFun 2 ℝ (Fin 2)
-  let e0 : EuclideanSpace ℝ (Fin 2) := b 0
-  let e1 : EuclideanSpace ℝ (Fin 2) := b 1
+  let e0 := b 0
+  let e1 := b 1
   let dι := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id
     (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))
     (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
@@ -99,25 +99,21 @@ private theorem contMDiffAt_sphereNormalRawInCoordinates
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) n F p) (hmn : m + 1 ≤ n) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormalRawInCoordinates F p) p := by
   let b := PiLp.basisFun 2 ℝ (Fin 2)
-  let e0 : EuclideanSpace ℝ (Fin 2) := b 0
-  let e1 : EuclideanSpace ℝ (Fin 2) := b 1
+  let e0 := b 0
+  let e1 := b 1
   let dι := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id
     (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))
     (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
   let dF := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id F
     (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F) p
   have hdι : ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2) →L[ℝ] ℝ³) m dι p :=
-    (contMDiff_coe_sphere (n := 2) (m := (⊤ : WithTop ℕ∞)) p).mfderiv_const le_top
+    (contMDiff_coe_sphere (n := 2) (m := ⊤) p).mfderiv_const le_top
   have hdF : ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2) →L[ℝ] ℝ³) m dF p :=
     hF.mfderiv_const hmn
-  have hdι0 := hdι.clm_apply (contMDiffAt_const :
-    ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2)) m (fun _ ↦ e0) p)
-  have hdι1 := hdι.clm_apply (contMDiffAt_const :
-    ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2)) m (fun _ ↦ e1) p)
-  have hdF0 := hdF.clm_apply (contMDiffAt_const :
-    ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2)) m (fun _ ↦ e0) p)
-  have hdF1 := hdF.clm_apply (contMDiffAt_const :
-    ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2)) m (fun _ ↦ e1) p)
+  have hdι0 := hdι.clm_apply (contMDiffAt_const (c := e0))
+  have hdι1 := hdι.clm_apply (contMDiffAt_const (c := e1))
+  have hdF0 := hdF.clm_apply (contMDiffAt_const (c := e0))
+  have hdF1 := hdF.clm_apply (contMDiffAt_const (c := e1))
   have hcι := (euclideanCross.contMDiffAt.comp p hdι0).clm_apply hdι1
   have hcF := (euclideanCross.contMDiffAt.comp p hdF0).clm_apply hdF1
   simpa [sphereNormalRawInCoordinates, b, e0, e1, dι, dF] using
@@ -132,8 +128,7 @@ private theorem sphereNormalRawInCoordinates_eq_smul
         EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)).toLinearMap ^ 2 •
         sphereNormalRaw F q := by
   let b := PiLp.basisFun 2 ℝ (Fin 2)
-  let A : EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2) :=
-    tangentCoordChange (𝓡 2) p q q
+  let A := tangentCoordChange (𝓡 2) p q q
   let dι : TangentSpace (𝓡 2) q →L[ℝ] ℝ³ :=
     mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) q
   let dF : TangentSpace (𝓡 2) q →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F q
@@ -175,8 +170,7 @@ private theorem det_tangentCoordChange_ne_zero
 theorem contMDiffAt_sphereNormal_of_le
     {m n : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) n F p) (hmn : m + 1 ≤ n)
-    (himm : Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
+    (himm : Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) p := by
   have hp : p ∈ (extChartAt (𝓡 2) p).source := mem_extChartAt_source p
   have hlocal : sphereNormalRawInCoordinates F p p ≠ 0 := by
@@ -195,8 +189,7 @@ theorem contMDiffAt_sphereNormal_of_le
 theorem contMDiffAt_sphereNormal
     {m : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) (m + 1) F p)
-    (himm : Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
+    (himm : Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) p :=
   contMDiffAt_sphereNormal_of_le F p hF le_rfl himm
 
@@ -205,8 +198,7 @@ theorem contMDiffAt_sphereNormal
 theorem contMDiff_sphereNormal_of_le
     {m n : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³)
     (hF : ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) n F) (hmn : m + 1 ≤ n)
-    (himm : ∀ p, Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
+    (himm : ∀ p, Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) :
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) :=
   fun p ↦ contMDiffAt_sphereNormal_of_le F p (hF p) hmn (himm p)
 
@@ -214,8 +206,7 @@ theorem contMDiff_sphereNormal_of_le
 theorem contMDiff_sphereNormal
     {m : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³)
     (hF : ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (m + 1) F)
-    (himm : ∀ p, Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
+    (himm : ∀ p, Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) :
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) :=
   contMDiff_sphereNormal_of_le F hF le_rfl himm
 

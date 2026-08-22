@@ -59,32 +59,32 @@ private def negativeAxis2 : sphere (0 : ℝ³) 1 :=
     norm_num [mem_sphere_zero_iff_norm, EuclideanSpace.norm_eq, Fin.sum_univ_succ]⟩
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis0 =
+    sphereNormal (fun q ↦ (q : ℝ³)) positiveAxis0 =
       !₂[1, 0, 0] := by
   simp [positiveAxis0]
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis0 =
+    sphereNormal (fun q ↦ (q : ℝ³)) negativeAxis0 =
       !₂[-1, 0, 0] := by
   simp [negativeAxis0]
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis1 =
+    sphereNormal (fun q ↦ (q : ℝ³)) positiveAxis1 =
       !₂[0, 1, 0] := by
   simp [positiveAxis1]
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis1 =
+    sphereNormal (fun q ↦ (q : ℝ³)) negativeAxis1 =
       !₂[0, -1, 0] := by
   simp [negativeAxis1]
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) positiveAxis2 =
+    sphereNormal (fun q ↦ (q : ℝ³)) positiveAxis2 =
       !₂[0, 0, 1] := by
   simp [positiveAxis2]
 
 example :
-    sphereNormal (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) negativeAxis2 =
+    sphereNormal (fun q ↦ (q : ℝ³)) negativeAxis2 =
       !₂[0, 0, -1] := by
   simp [negativeAxis2]
 

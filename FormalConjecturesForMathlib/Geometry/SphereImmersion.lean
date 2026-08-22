@@ -214,8 +214,7 @@ theorem inner_sphereNormal_mfderiv
 
 private theorem sphereNormalRaw_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    sphereNormalRaw F p ≠ 0 ↔ Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³) := by
+    sphereNormalRaw F p ≠ 0 ↔ Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p) := by
   let b := sphereTangentBasis p
   let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
     mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
@@ -237,16 +236,14 @@ private theorem sphereNormalRaw_ne_zero_iff
 injective. -/
 theorem sphereNormal_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    sphereNormal F p ≠ 0 ↔ Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³) := by
+    sphereNormal F p ≠ 0 ↔ Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p) := by
   simpa [sphereNormal, NormedSpace.normalize_eq_zero_iff] using
     sphereNormalRaw_ne_zero_iff F p
 
 /-- At an immersion point, the canonical normal has unit length. -/
 theorem norm_sphereNormal_of_injective
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
-    (hF : Function.Injective
-      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
+    (hF : Function.Injective (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p)) :
     ‖sphereNormal F p‖ = 1 := by
   simpa [sphereNormal] using
     NormedSpace.norm_normalize ((sphereNormalRaw_ne_zero_iff F p).mpr hF)

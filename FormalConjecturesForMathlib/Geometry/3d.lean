@@ -45,7 +45,7 @@ namespace EuclideanHypersurface
 /-- The cross product on `ℝ³`, bundled as a continuous bilinear map. -/
 noncomputable def euclideanCross : ℝ³ →L[ℝ] ℝ³ →L[ℝ] ℝ³ :=
   let e := WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)
-  let f : ℝ³ →ₗ[ℝ] ℝ³ →ₗ[ℝ] ℝ³ :=
+  let f :=
     ((crossProduct.comp e.toLinearMap).compl₂ e.toLinearMap).compr₂ e.symm.toLinearMap
   LinearMap.toContinuousLinearMap (LinearMap.toContinuousLinearMap.toLinearMap.comp f)
 
@@ -112,7 +112,6 @@ theorem euclideanCross_ne_zero_iff_linearIndependent (a b : ℝ³) :
     funext i
     fin_cases i <;> simp
   exact hf ▸ e.toLinearMap.linearIndependent_iff_of_injOn e.injective.injOn
-    (v := ![a, b])
 
 /-- The cross product of two vectors orthogonal to a unit vector is parallel to that vector. -/
 theorem euclideanCross_eq_inner_smul_of_orthogonal
