@@ -18,7 +18,7 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
-public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import Mathlib.Data.Set.Card
 
 @[expose] public section
@@ -29,32 +29,12 @@ namespace SimpleGraph
 
 @[inherit_doc] scoped notation "χ(" G ")" => chromaticNumber G
 
-lemma le_chromaticNumber_iff_colorable : n ≤ G.chromaticNumber ↔ ∀ m, G.Colorable m → n ≤ m := by
-  simp [chromaticNumber]
-
-lemma le_chromaticNumber_iff_coloring :
-    n ≤ G.chromaticNumber ↔ ∀ m, G.Coloring (Fin m) → n ≤ m := by
-  simp [le_chromaticNumber_iff_colorable, Colorable]
-
 lemma lt_chromaticNumber_iff_not_colorable : n < G.chromaticNumber ↔ ¬ G.Colorable n := by
   rw [← chromaticNumber_le_iff_colorable, not_le]
 
 lemma le_chromaticNumber_iff_not_colorable (hn : n ≠ 0) :
     n ≤ G.chromaticNumber ↔ ¬ G.Colorable (n - 1) := by
   let n + 1 := n; simp [ENat.add_one_le_iff, lt_chromaticNumber_iff_not_colorable]
-
-lemma Coloring.injective_comp_of_pairwise_adj (C : G.Coloring α) (f : ι → V)
-    (hf : Pairwise fun i j ↦ G.Adj (f i) (f j)) : (C ∘ f).Injective :=
-  Function.injective_iff_pairwise_ne.2 fun _i _j hij ↦ C.valid <| hf hij
-
-lemma Colorable.card_le_of_pairwise_adj (hG : G.Colorable n) (f : ι → V)
-    (hf : Pairwise fun i j ↦ G.Adj (f i) (f j)) : Nat.card ι ≤ n := by
-  obtain ⟨C⟩ := hG
-  simpa using Nat.card_le_card_of_injective _ (C.injective_comp_of_pairwise_adj f hf)
-
-lemma le_chromaticNumber_of_pairwise_adj (hn : n ≤ Nat.card ι) (f : ι → V)
-    (hf : Pairwise fun i j ↦ G.Adj (f i) (f j)) : n ≤ G.chromaticNumber :=
-  le_chromaticNumber_iff_colorable.2 fun _m hm ↦ hn.trans <| hm.card_le_of_pairwise_adj f hf
 
 lemma card_div_indepNum_le_chromaticNumber : ⌈(Nat.card V / α(G) : ℚ≥0)⌉₊ ≤ G.chromaticNumber := by
   cases finite_or_infinite V
@@ -67,7 +47,8 @@ lemma card_div_indepNum_le_chromaticNumber : ⌈(Nat.card V / α(G) : ℚ≥0)�
   refine Finset.card_mul_le_card_mul (c · = ·)
     (by simp [Finset.bipartiteAbove, Finset.filter_nonempty_iff])
     fun b _ ↦ IsIndepSet.card_le_indepNum ?_
-  simpa [IsIndepSet, Set.Pairwise] using fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
+  simpa [IsIndepSet, Set.Pairwise, Coloring.colorClass] using
+    fun x hx y hy _ ↦ c.not_adj_of_mem_colorClass hx hy
 
 instance (f : ι → V) : Std.Symm fun i j ↦ G.Adj (f i) (f j) where symm _ _ := .symm
 
@@ -111,7 +92,10 @@ open SimpleGraph
 
 theorem colorable_iff_induce_eq_bot (G : SimpleGraph V) (n : ℕ) :
     G.Colorable n ↔ ∃ coloring : V → Fin n, ∀ i, G.induce {v | coloring v = i} = ⊥ := by
-  refine ⟨fun ⟨a, h⟩ ↦ ⟨a, by aesop⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩
+  refine ⟨fun ⟨a, h⟩ ↦ ⟨a, fun i ↦ ?_⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩
+  · rw [SimpleGraph.eq_bot_iff_forall_not_adj]
+    rintro ⟨u, huv⟩ ⟨v, rfl⟩ huv'
+    exact (h huv').ne huv
   specialize h (w a)
   contrapose h
   intro hG

@@ -124,7 +124,7 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
       have h0 : ∀ i ∈ s, id i ≠ 0 := fun i hi ↦ by
         have := hmem i hi; simp only [id]; omega
       rw [Nat.factorization_prod h0]
-      simp only [Finsupp.finset_sum_apply]
+      simp only [Finsupp.finsetSum_apply]
       rw [Finset.sum_congr rfl (g := fun _ ↦ 1) fun i hi ↦ ?_, Finset.sum_const, smul_eq_mul,
         mul_one]
       have h4 := hmem i hi
