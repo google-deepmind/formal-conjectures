@@ -100,6 +100,7 @@ public import FormalConjecturesForMathlib.Computability.Encoding
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
+public import FormalConjecturesForMathlib.Data.Bool.Basic
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
@@ -112,6 +113,7 @@ public import FormalConjecturesForMathlib.Data.Nat.PerfectPower
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Infinite
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
@@ -154,10 +156,12 @@ public import FormalConjecturesForMathlib.NumberTheory.Semiprime
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
+public import FormalConjecturesForMathlib.Order.Bounds.Basic
 public import FormalConjecturesForMathlib.Order.Filter.Cofinite
 public import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
+public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic

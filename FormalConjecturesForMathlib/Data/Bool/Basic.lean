@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.Bool.Basic
 
-attribute [simp] Nat.not_prime_zero Nat.not_prime_one
+@[simp] lemma decide_le_decide {p q : Prop} [Decidable p] [Decidable q] :
+    decide p ≤ decide q ↔ (p → q) := by by_cases p <;> by_cases q <;> simp [*]

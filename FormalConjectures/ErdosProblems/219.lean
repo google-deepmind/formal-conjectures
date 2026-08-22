@@ -49,7 +49,6 @@ theorem primeArithmeticProgression_3_5_7 : {3, 5, 7} ∈ primeArithmeticProgress
 @[category test, AMS 5 11]
 theorem not_primeArithmeticProgression_1_2 : ¬{1, 2} ∈ primeArithmeticProgressions := by
   simp [primeArithmeticProgressions]
-  norm_num
 
 @[category API, AMS 5 11]
 theorem empty_not_primeArithmeticProgression : ∅ ∉ primeArithmeticProgressions := by

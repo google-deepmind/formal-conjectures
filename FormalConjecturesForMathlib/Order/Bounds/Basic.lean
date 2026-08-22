@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Order.Bounds.Basic
 
-attribute [simp] Nat.not_prime_zero Nat.not_prime_one
+variable {α : Type*} [LE α] {a : α}
+
+@[to_dual (attr := simp)] lemma not_isLeast_empty : ¬ IsLeast ∅ a := by simp [IsLeast]

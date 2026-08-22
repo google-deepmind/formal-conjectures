@@ -60,8 +60,7 @@ theorem a_0 : a 0 = none := by rfl
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = some 1 := by
-  have h1 : IsLeast {k : ℕ | (collatzStep^[k]) 1 = 1} 0 :=
-    ⟨rfl, fun k _ => zero_le k⟩
+  have h1 : IsLeast {k : ℕ | (collatzStep^[k]) 1 = 1} 0 := ⟨rfl, by simp [lowerBounds]⟩
   have h2 : IsLeast {k : ℕ | (collatzStep^[k]) 2 = 1} 1 := by
     constructor
     · rfl

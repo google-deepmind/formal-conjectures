@@ -31,26 +31,16 @@ noncomputable def a (n : ℕ) : ℕ :=
   sInf {m : ℕ | 0 < m ∧ m.totient = n.factorial}
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by
-  dsimp [a]
-  exact (Nat.isLeast_find ⟨1, by decide⟩).csInf_eq
+theorem a_1 : a 1 = 1 := IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 3 := by
-  dsimp [a]
-  exact (Nat.isLeast_find ⟨3, by decide⟩).csInf_eq
+theorem a_2 : a 2 = 3 := IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 7 := by
-  dsimp [a]
-  change sInf {m | 0 < m ∧ m.totient = 6} = 7
-  exact (Nat.isLeast_find ⟨7, by decide⟩).csInf_eq
+theorem a_3 : a 3 = 7 := IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 35 := by
-  dsimp [a]
-  change sInf {m | 0 < m ∧ m.totient = 24} = 35
-  exact (Nat.isLeast_find ⟨35, by decide⟩).csInf_eq
+theorem a_4 : a 4 = 35 := IsLeast.csInf_eq <| by decide
 
 /-- Factorial primes: $n$ such that $n! + 1$ is prime (A002981). -/
 def isFactorialPrime (n : ℕ) : Prop :=

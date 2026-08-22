@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,10 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.Nat.Prime.Infinite
 
-attribute [simp] Nat.not_prime_zero Nat.not_prime_one
+public section
+
+lemma Nat.exists_prime_not_dvd {n : ℕ} (hn : n ≠ 0) : ∃ p, p.Prime ∧ ¬p ∣ n := by
+  let ⟨p, hnp, hp⟩ := (n + 1).exists_infinite_primes
+  exact ⟨p, hp, not_dvd_of_pos_of_lt (by lia) (by lia)⟩
