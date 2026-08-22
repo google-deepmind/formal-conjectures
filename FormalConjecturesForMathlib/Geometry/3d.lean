@@ -66,8 +66,9 @@ theorem euclideanCross_apply (a b : ℝ³) :
 @[simp]
 theorem euclideanCross_anticomm (a b : ℝ³) :
     -euclideanCross a b = euclideanCross b a := by
-  simpa only [euclideanCross_apply, map_neg] using
-    congrArg (WithLp.toLp 2) (cross_anticomm (WithLp.ofLp a) (WithLp.ofLp b))
+  rw [euclideanCross_apply, euclideanCross_apply]
+  change WithLp.toLp 2 (-crossProduct (WithLp.ofLp a) (WithLp.ofLp b)) = _
+  exact congrArg (WithLp.toLp 2) (cross_anticomm (WithLp.ofLp a) (WithLp.ofLp b))
 
 /-- A vector has zero cross product with itself. -/
 @[simp]
@@ -77,14 +78,14 @@ theorem euclideanCross_self (a : ℝ³) : euclideanCross a a = 0 := by
 /-- The cross product is orthogonal to its left input, with the inner-product arguments swapped. -/
 @[simp]
 theorem euclideanCross_inner_left (a b : ℝ³) : inner ℝ (euclideanCross a b) a = 0 := by
-  rw [euclideanCross_apply]
-  simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dot_self_cross]
+  simp [euclideanCross_apply, EuclideanSpace.inner_eq_star_dotProduct,
+    dot_self_cross]
 
 /-- The cross product is orthogonal to its right input, with the inner-product arguments swapped. -/
 @[simp]
 theorem euclideanCross_inner_right (a b : ℝ³) : inner ℝ (euclideanCross a b) b = 0 := by
-  rw [euclideanCross_apply]
-  simp only [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dot_cross_self]
+  simp [euclideanCross_apply, EuclideanSpace.inner_eq_star_dotProduct,
+    dot_cross_self]
 
 /-- The inner product of two cross products is the corresponding Gram-determinant expression. -/
 theorem inner_euclideanCross_euclideanCross (a b c d : ℝ³) :
@@ -114,12 +115,11 @@ theorem euclideanCross_ne_zero_iff_linearIndependent (a b : ℝ³) :
     rw [euclideanCross]
     exact e.symm.injective.ne_iff
   rw [hne, crossProduct_ne_zero_iff_linearIndependent]
-  have hLI := e.toLinearMap.linearIndependent_iff_of_injOn e.injective.injOn
-    (v := ![a, b])
   have hf : e.toLinearMap ∘ ![a, b] = ![e a, e b] := by
     funext i
     fin_cases i <;> simp
-  rwa [hf] at hLI
+  exact hf ▸ e.toLinearMap.linearIndependent_iff_of_injOn e.injective.injOn
+    (v := ![a, b])
 
 /-- The cross product of two vectors orthogonal to a unit vector is parallel to that vector. -/
 theorem euclideanCross_eq_inner_smul_of_orthogonal
@@ -128,12 +128,9 @@ theorem euclideanCross_eq_inner_smul_of_orthogonal
   let c := euclideanCross x y
   have hpc : euclideanCross p c = 0 := by
     dsimp only [c]
-    simp only [euclideanCross_cross, hy, hx, zero_smul, sub_zero]
-  have hpp : inner ℝ p p = 1 := by
-    simp [hp]
+    simp [euclideanCross_cross, hy, hx]
   have hsecond := euclideanCross_cross p p c
-  rw [hpc, map_zero, hpp, one_smul] at hsecond
-  have hc : c = inner ℝ p c • p := (sub_eq_zero.mp hsecond.symm).symm
-  simpa only [c, real_inner_comm] using hc
+  rw [hpc, map_zero, show inner ℝ p p = 1 by simp [hp], one_smul] at hsecond
+  simpa [c, real_inner_comm] using (sub_eq_zero.mp hsecond.symm).symm
 
 end EuclideanHypersurface

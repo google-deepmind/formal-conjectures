@@ -90,9 +90,8 @@ theorem isUmbilic_iff_normal_deriv_eq_smul
       rw [map_add, map_smul, ← hu]
     have hzero := horth (u + κ • v)
     rw [← hrange, real_inner_self_eq_norm_sq, sq_eq_zero_iff, norm_eq_zero] at hzero
-    simpa only [ContinuousLinearMap.smul_apply, neg_smul] using
+    simpa [ContinuousLinearMap.smul_apply] using
       eq_neg_of_add_eq_zero_left hzero
-  · rintro ⟨c, hc⟩
-    exact isUmbilic_of_normal_deriv_eq_smul dF dn c hc
+  · exact fun ⟨c, hc⟩ ↦ isUmbilic_of_normal_deriv_eq_smul dF dn c hc
 
 end EuclideanHypersurface
