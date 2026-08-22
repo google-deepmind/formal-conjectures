@@ -38,19 +38,19 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
-/-- A parametrized convex surface whose canonical normal is of class `C^k`.
+/-- A parametrized convex surface of class `C^(k + 1)`, whose canonical normal is of class
+`C^k`.
 
 The canonical normal is constructed from the derivative of `F` by a globally
 orientation-corrected cross product. Its orthogonality is built into the construction, while the
-injective differential makes it a unit vector. For finite `k`, requiring this normal to be `C^k`
-is stronger than requiring only `F` to be `C^k`. The range condition identifies the surface with
-the boundary of a compact convex body with nonempty interior. -/
+injective differential makes it a unit vector. Its `C^k` regularity follows from the `C^(k + 1)`
+regularity of `F`. The range condition identifies the surface with the boundary of a compact
+convex body with nonempty interior. -/
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
-  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
+  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (k + 1) F ∧
     Topology.IsEmbedding F ∧
     (∀ p, Function.Injective
       (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) ∧
-    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) ∧
     ∃ K : ConvexBody ℝ³,
       (interior (K : Set ℝ³)).Nonempty ∧ range F = frontier (K : Set ℝ³)
 
