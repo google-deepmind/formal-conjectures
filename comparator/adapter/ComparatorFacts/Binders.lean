@@ -290,8 +290,16 @@ partial def conclusionBinders (env : Environment) (text : String) : Except Strin
     c.isWhitespace || c == '(' || c == '{' || c == '[' || c == '⦃'
   if unicodeExists || asciiExists then
     return #[]
+  -- A top-level comma before the first arrow means the arrow sits inside the
+  -- body of a binder notation that is not a Pi (`∀ᶠ n in l, p n → q n`,
+  -- `∃! x, p x → q x`, `∀ᵐ x ∂μ, …`): the elaborated type is an application
+  -- there, and its telescope is empty.
+  let commaBeforeArrow : Bool := match findTopLevelToken .arrow text, findTopLevelToken .comma text with
+    | some (arrow, _), some (comma, _) => comma < arrow
+    | _, _ => false
   match findTopLevelToken .arrow text, findTopLevelToken .iff text with
   | some (arrow, width), none =>
+    if commaBeforeArrow then return #[]
     let rest := sliceChars text (arrow + width) text.length
     return #[{ name? := none, info := .default }] ++ (← conclusionBinders env rest)
   | _, _ => return #[]
@@ -410,7 +418,15 @@ def binderBoundarySelfTest (env : Environment) : IO UInt32 := do
       "∃ f : Nat → Nat, ∀ n, True → f n = f n", #[], 0),
     ("theorem t : True → (∀ n : Nat, 1 < n → True) := by simp",
       "True → (∀ n : Nat, 1 < n → True)",
-      #[mkLocal 0 `h₁ .default, mkLocal 1 `n .default, mkLocal 2 `h₂ .default], 0)
+      #[mkLocal 0 `h₁ .default, mkLocal 1 `n .default, mkLocal 2 `h₂ .default], 0),
+    -- Binder notations that elaborate to applications, not Pis: the arrows in
+    -- their bodies are not declaration parameters (erdos_100.variants.strong).
+    ("theorem t : ∀ᶠ n in Filter.atTop, 1 < n → True := by simp",
+      "∀ᶠ n in Filter.atTop, 1 < n → True", #[], 0),
+    ("theorem t : ∃! n : Nat, 1 < n → True := by simp",
+      "∃! n : Nat, 1 < n → True", #[], 0),
+    ("theorem t : True → ∀ᶠ n in Filter.atTop, 1 < n → True := by simp",
+      "True → ∀ᶠ n in Filter.atTop, 1 < n → True", #[mkLocal 0 `h .default], 0)
   ]
   for (source, resultType, elaborated, expected) in alignmentCases do
     let result := do
