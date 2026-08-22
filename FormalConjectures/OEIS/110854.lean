@@ -93,16 +93,91 @@ theorem a_4 : a 4 = 4 := by
   rw [nth_prime_nine, nth_prime_eight, nth_prime_seven, nth_prime_six]
   norm_num
 
+/-- Every prime other than the first one is odd. -/
+@[category API, AMS 11]
+theorem odd_nth_prime {k : ℕ} (hk : k ≠ 0) : Odd (Nat.nth Nat.Prime k) := by
+  have hprime : Nat.Prime (Nat.nth Nat.Prime k) :=
+    Nat.nth_mem_of_infinite Nat.infinite_setOf_prime k
+  refine hprime.odd_of_ne_two ?_
+  intro h
+  have h2 : Nat.nth Nat.Prime 0 < Nat.nth Nat.Prime k :=
+    (Nat.nth_lt_nth Nat.infinite_setOf_prime).2 (Nat.pos_of_ne_zero hk)
+  rw [Nat.nth_prime_zero_eq_two, h] at h2
+  exact lt_irrefl 2 h2
+
+/-- The defining formula for `a`, with the index arithmetic carried out, for `n ≥ 2`. -/
+@[category API, AMS 11]
+theorem a_add_two (m : ℕ) :
+    a (m + 2) = (Nat.nth Nat.Prime (2 * m + 5) : ℤ) - (Nat.nth Nat.Prime (2 * m + 4) : ℤ)
+      - (Nat.nth Nat.Prime (2 * m + 3) : ℤ) + (Nat.nth Nat.Prime (2 * m + 2) : ℤ) := by
+  have h : ¬ (m + 2 = 0) := by omega
+  have e1 : 2 * (m + 2) + 2 - 1 = 2 * m + 5 := by omega
+  have e2 : 2 * (m + 2) + 1 - 1 = 2 * m + 4 := by omega
+  have e3 : 2 * (m + 2) - 1 = 2 * m + 3 := by omega
+  have e4 : 2 * m + 3 - 1 = 2 * m + 2 := by omega
+  simp only [a, if_neg h, e1, e2, e3, e4]
+
+/--
+For `n ≥ 2` all four primes occurring in `a n` are odd, so `a n` is even.
+Together with `a 1 = 1` this gives `(a n).natAbs ∈ {1} ∪ 2ℕ` for every `n > 0`.
+-/
+@[category API, AMS 11]
+theorem even_a (m : ℕ) : Even (a (m + 2)) := by
+  obtain ⟨j1, hj1⟩ := odd_nth_prime (k := 2 * m + 5) (by omega)
+  obtain ⟨j2, hj2⟩ := odd_nth_prime (k := 2 * m + 4) (by omega)
+  obtain ⟨j3, hj3⟩ := odd_nth_prime (k := 2 * m + 3) (by omega)
+  obtain ⟨j4, hj4⟩ := odd_nth_prime (k := 2 * m + 2) (by omega)
+  refine ⟨(j1 : ℤ) - j2 - j3 + j4, ?_⟩
+  rw [a_add_two, hj1, hj2, hj3, hj4]
+  push_cast
+  ring
+
 /--
 Do the absolute values cover A004275?
-A004275 is the set of all differences between two prime numbers.
-The conjecture asks whether every possible difference between two prime numbers
-occurs as the absolute value of some term $a(n)$.
+
+The statement below is *not* that question. [A004275](https://oeis.org/A004275)
+is $1$ together with the nonnegative even numbers, whereas the hypothesis here
+asks for every $d$ that is an absolute difference of two primes. That hypothesis
+is strictly weaker, so the statement below is strictly stronger than the OEIS
+comment, and it is false.
+
+Counterexample $d = 3 = |5 - 2|$. Indeed $a(1) = 7 - 5 - 3 + 2 = 1$, and for
+$n \ge 2$ the four primes occurring in $a(n)$ are all odd, so $a(n)$ is even.
+Hence $|a(n)| \in \{1\} \cup 2\mathbb{N}$ for every $n > 0$, and $3$ is attained
+by no term. The same argument refutes every $d = p - 2$ with $p$ an odd prime
+greater than $3$, i.e. $d = 5, 9, 11, 15, 17, 21, \ldots$
+
+The OEIS question itself is untouched by this and is stated in
+`conjecture.variants.oeis_question`.
+-/
+@[category research solved, AMS 11]
+theorem conjecture : answer(False) ↔
+    ∀ d > 0, (∃ p1 p2 : ℕ, p1.Prime ∧ p2.Prime ∧ d = (p1 - p2 : ℤ).natAbs) →
+    ∃ n > 0, d = (a n).natAbs := by
+  constructor
+  · exact fun h => h.elim
+  · intro h
+    obtain ⟨n, hn, hd⟩ :=
+      h 3 (by norm_num) ⟨5, 2, by norm_num, by norm_num, by norm_num⟩
+    by_cases h1 : n = 1
+    · subst h1
+      rw [a_1] at hd
+      simp at hd
+    · obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+      have hEven : Even ((a (m + 2)).natAbs) := Int.natAbs_even.mpr (even_a m)
+      rw [← hd, Nat.even_iff] at hEven
+      omega
+
+/--
+Do the absolute values cover A004275?
+
+This is the question asked by the OEIS comment. [A004275](https://oeis.org/A004275)
+is $1$ together with the nonnegative even numbers, which is the set
+$\{d : d = 1 \lor d \text{ even}\}$. It remains open.
 -/
 @[category research open, AMS 11]
-theorem conjecture :
-  ∀ d > 0, (∃ p1 p2 : ℕ, p1.Prime ∧ p2.Prime ∧ d = (p1 - p2 : ℤ).natAbs) →
-  ∃ n > 0, d = (a n).natAbs := by
+theorem conjecture.variants.oeis_question : answer(sorry) ↔
+    ∀ d : ℕ, (d = 1 ∨ Even d) → ∃ n > 0, d = (a n).natAbs := by
   sorry
 
 end OeisA110854
