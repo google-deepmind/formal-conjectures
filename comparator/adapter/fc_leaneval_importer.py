@@ -367,12 +367,12 @@ def source_record(
     )
 
 
-def import_problem(problem, answer_type=None, module=None):
-    """Map one declaration to a marked-up module and a manifest.
+def locate_target(problem, module=None):
+    """Find the declaration and ask the elaborated environment about it.
 
-    Importing a closure out of a repository full of `sorry` is safe because
-    Comparator checks axioms. A solution closing the goal with a copied
-    statement reports `sorryAx`, which `permitted_axioms` does not allow.
+    Returns the problem file, the qualified FC declaration, the source path,
+    the FC module name, the module docstring, and the elaborator facts with
+    the problem file's explicit copy dependencies merged in.
     """
     problem_file = load_manifest(problem)
     declaration = problem_file.get("declaration", problem)
@@ -391,21 +391,18 @@ def import_problem(problem, answer_type=None, module=None):
     facts["generatedDependencies"] = list(
         dict.fromkeys(explicit_generated + facts.get("generatedDependencies", []))
     )
+    return problem_file, declaration, path, fc_module, module_doc, facts
 
-    source_lines = path.read_text(encoding="utf-8").split("\n")
-    original, lo = slice_range(source_lines, facts["range"])
-    statement = original
 
-    preamble, namespaces_at_target = file_scoped_preamble(source_lines, lo)
-    dependencies, copied = closure_region(
-        facts.get("dependencies", []),
-        facts.get("generatedDependencies", []),
-        declaration,
-        namespaces_at_target,
-        target_name=facts.get("name"),
-    )
+def restate(original, declaration, facts, answer_type=None):
+    """Turn the sliced declaration into the workspace statement.
 
-    statement = strip_decorations(statement)
+    Strips decorations, replaces the proof with `sorry`, flattens a dotted
+    name to its slug, hoists every `answer(sorry)` into a hole and unwraps
+    the answers a solved statement carries. Returns the statement, the name
+    it declares, the name it declared in the source, and the holes.
+    """
+    statement = strip_decorations(original)
     statement = replace_proof_with_sorry(statement)
     declared = None
     for line in statement.split("\n"):
@@ -431,7 +428,11 @@ def import_problem(problem, answer_type=None, module=None):
     # slot, so nothing above removed it and `answer(` would reach a workspace
     # that cannot parse it.
     statement = unwrap_answers(statement)
+    return statement, declared, original_declared, holes
 
+
+def explicit_arguments(facts, declared):
+    """The explicit binders the Solution adapter applies by name."""
     args = [b["name"] for b in facts["binders"] if b["explicit"]]
     bad = [a for a in args if "✝" in a or "._" in a]
     if bad:
@@ -439,7 +440,11 @@ def import_problem(problem, answer_type=None, module=None):
             f"{declared} has inaccessible explicit binders {bad}; the "
             "Solution adapter cannot apply them by name"
         )
+    return args
 
+
+def scope_region(namespaces_at_target, copied, preamble):
+    """The `open`s and file-scoped preamble the statement elaborates under."""
     # `open A`, then `open A.B`: opening the inner namespace does not open the
     # outer one, and a statement may name siblings from either. With nothing
     # copied there are no siblings to name and nothing declares the
@@ -453,13 +458,16 @@ def import_problem(problem, answer_type=None, module=None):
         if copied
         else []
     )
+    return "\n".join(opens + localise_notation(preamble))
 
-    mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
-    preamble = localise_notation(preamble)
-    scope_text = "\n".join(opens + preamble)
-    # Notation is text, not a constant: a statement or copied declaration
-    # spelled with an FC-defined token needs the defining command copied too,
-    # and the elaborated closure cannot say so.
+
+def place_notations(dependencies, scope_text, statement, copied):
+    """Copy the FC notation commands the text needs, on the right side of the closure.
+
+    Notation is text, not a constant: a statement or copied declaration
+    spelled with an FC-defined token needs the defining command copied too,
+    and the elaborated closure cannot say so.
+    """
     # Namespaces the module opens, at its scope and inside every copied
     # block: a scoped notation can only have been in force where one of
     # these opens it.
@@ -471,26 +479,56 @@ def import_problem(problem, answer_type=None, module=None):
     notations = notation_blocks(
         [dependencies, scope_text, statement], opened_for_notation
     )
-    if notations:
-        # A notation whose right-hand side names a copied declaration must
-        # come after the block declaring it; every other notation comes
-        # first, because copied declarations may use its token textually. A
-        # single notation needing both would need interleaving; none does,
-        # and `--verify` is what says so.
-        copied_last_components = {name.rsplit(".", 1)[-1] for name, _ in copied}
-        before, after = [], []
-        for block in notations:
-            rhs = block.split("=>", 1)[-1]
-            names = set(re.findall(r"[\w«»'.]+", rhs))
-            names |= {name.rsplit(".", 1)[-1] for name in names}
-            if names & copied_last_components:
-                after.append(block)
-            else:
-                before.append(block)
-        if before:
-            dependencies = "\n\n".join(before) + "\n\n" + dependencies
-        if after:
-            dependencies = dependencies + "\n\n" + "\n\n".join(after)
+    if not notations:
+        return dependencies
+    # A notation whose right-hand side names a copied declaration must
+    # come after the block declaring it; every other notation comes
+    # first, because copied declarations may use its token textually. A
+    # single notation needing both would need interleaving; none does,
+    # and `--verify` is what says so.
+    copied_last_components = {name.rsplit(".", 1)[-1] for name, _ in copied}
+    before, after = [], []
+    for block in notations:
+        rhs = block.split("=>", 1)[-1]
+        names = set(re.findall(r"[\w«»'.]+", rhs))
+        names |= {name.rsplit(".", 1)[-1] for name in names}
+        if names & copied_last_components:
+            after.append(block)
+        else:
+            before.append(block)
+    if before:
+        dependencies = "\n\n".join(before) + "\n\n" + dependencies
+    if after:
+        dependencies = dependencies + "\n\n" + "\n\n".join(after)
+    return dependencies
+
+
+def import_problem(problem, answer_type=None, module=None):
+    """Map one declaration to a marked-up module and a manifest.
+
+    Importing a closure out of a repository full of `sorry` is safe because
+    Comparator checks axioms. A solution closing the goal with a copied
+    statement reports `sorryAx`, which `permitted_axioms` does not allow.
+    """
+    problem_file, declaration, path, fc_module, module_doc, facts = locate_target(
+        problem, module
+    )
+    source_lines = path.read_text(encoding="utf-8").split("\n")
+    original, lo = slice_range(source_lines, facts["range"])
+    preamble, namespaces_at_target = file_scoped_preamble(source_lines, lo)
+    dependencies, copied = closure_region(
+        facts.get("dependencies", []),
+        facts.get("generatedDependencies", []),
+        declaration,
+        namespaces_at_target,
+        target_name=facts.get("name"),
+    )
+    statement, declared, original_declared, holes = restate(
+        original, declaration, facts, answer_type
+    )
+    args = explicit_arguments(facts, declared)
+    scope_text = scope_region(namespaces_at_target, copied, preamble)
+    dependencies = place_notations(dependencies, scope_text, statement, copied)
     marked_up = MarkedUpModule(
         dependencies=dependencies,
         scope=scope_text,
@@ -502,6 +540,7 @@ def import_problem(problem, answer_type=None, module=None):
     # workspace statement may carry the flattened `declared` instead, and
     # this is what ties the two together.
     qualified = ".".join(namespaces_at_target + [original_declared])
+    mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
     manifest = ProblemManifest(
         # The default id is the qualified name: two modules declaring
         # `conjecture` in different namespaces must not share a workspace.
