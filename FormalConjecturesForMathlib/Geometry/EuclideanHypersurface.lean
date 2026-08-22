@@ -22,9 +22,8 @@ public import Mathlib.LinearAlgebra.BilinearForm.Hom
 /-!
 # Extrinsic fundamental forms in Euclidean space
 
-This small API packages the first and second fundamental forms determined by the differential of
-an immersion and a chosen normal field. The sign in the second form is the convention
-`II(v, w) = -⟪dn(v), dF(w)⟫`; consequently `dn = c • dF` corresponds to `II = (-c) • I`.
+The second fundamental form uses `II(v, w) = -⟪dn(v), dF(w)⟫`, so `dn = c • dF` corresponds
+to `II = (-c) • I`.
 -/
 
 @[expose] public section
@@ -59,9 +58,7 @@ theorem secondFundamentalFormAt_apply (dn dF : V →L[ℝ] E) (v w : V) :
     secondFundamentalFormAt dn dF v w = -inner ℝ (dn v) (dF w) :=
   rfl
 
-/-- A scalar normal differential makes a point umbilic.
-
-The minus sign is forced by `secondFundamentalFormAt`'s shape-operator convention. -/
+/-- If `dn = c • dF`, the point is umbilic with scalar `-c` under our sign convention. -/
 theorem isUmbilic_of_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (c : ℝ) (h : dn = c • dF) :
     IsUmbilic dF dn := by
@@ -70,9 +67,8 @@ theorem isUmbilic_of_normal_deriv_eq_smul
   change -inner ℝ (dn v) (dF w) = -c * inner ℝ (dF v) (dF w)
   rw [h, ContinuousLinearMap.smul_apply, real_inner_smul_left, neg_mul]
 
-/-- Under a tangency hypothesis, umbilicity is equivalent to the normal differential being a
-scalar multiple of the immersion differential. The range hypothesis is exactly what rules out an
-undetected normal component of `dn`. -/
+/-- If `dn` is tangent to the immersion, umbilicity is equivalent to `dn` being a scalar multiple
+of `dF`. -/
 theorem isUmbilic_iff_normal_deriv_eq_smul
     (dF dn : V →L[ℝ] E) (htangent : dn.range ≤ dF.range) :
     IsUmbilic dF dn ↔ ∃ c : ℝ, dn = c • dF := by
@@ -90,9 +86,8 @@ theorem isUmbilic_iff_normal_deriv_eq_smul
       rw [map_add, map_smul, ← hu]
     have hzero := horth (u + κ • v)
     rw [← hrange, real_inner_self_eq_norm_sq, sq_eq_zero_iff, norm_eq_zero] at hzero
-    simpa only [ContinuousLinearMap.smul_apply, neg_smul] using
+    simpa [ContinuousLinearMap.smul_apply] using
       eq_neg_of_add_eq_zero_left hzero
-  · rintro ⟨c, hc⟩
-    exact isUmbilic_of_normal_deriv_eq_smul dF dn c hc
+  · exact fun ⟨c, hc⟩ ↦ isUmbilic_of_normal_deriv_eq_smul dF dn c hc
 
 end EuclideanHypersurface

@@ -14,24 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+import Mathlib.Analysis.Convex.Body
 import FormalConjectures.Other.LoewnerConjecture
+import FormalConjecturesUtil
 
 /-!
 # Carathéodory's conjecture
 
 Carathéodory's conjecture says that every sufficiently smooth closed convex surface in
-three-dimensional Euclidean space has at least two umbilic points. We state the now-disproved
-smooth version and the classical positive result for real-analytic surfaces. We also record that
-Loewner's local index conjecture implies Carathéodory's global conjecture. Levent Alpöge announced
-the smooth counterexample on 19 August 2026.
+three-dimensional Euclidean space has at least two umbilic points. We record smooth and
+real-analytic versions and the implication from Loewner's local index conjecture.
 
 *References:*
 - [M. Ghomi, *Open Problems in Geometry of Curves and Surfaces*, Problems 8.1 and
   8.2](https://ghomi.math.gatech.edu/Papers/op.pdf)
 - [C. J. Titus, *A proof of a conjecture of Loewner and of the conjecture of Carathéodory on
   umbilic points*](https://doi.org/10.1007/BF02392036)
-- [L. Alpöge, X post 2089971359921156203](https://x.com/__alpoge__/status/2089971359921156203)
 -/
 
 open Set Metric
@@ -39,43 +37,44 @@ open scoped ContDiff EuclideanGeometry Manifold
 
 namespace CaratheodoryConjecture
 
-/-- A parametrized convex surface whose canonical normal is of class `C^k`.
-
-The canonical normal is constructed from the derivative of `F` by a globally
-orientation-corrected cross product. Its orthogonality is built into the construction, while the
-injective differential makes it a unit vector. For finite `k`, requiring this normal to be `C^k`
-is stronger than requiring only `F` to be `C^k`. The range condition identifies the surface with
-the boundary of a compact convex body with nonempty interior. -/
+/-- A `C^(k + 1)` parametrized convex surface. Its canonical normal is `C^k` by
+`EuclideanHypersurface.contMDiff_sphereNormal`. -/
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
-  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
+  ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (k + 1) F ∧
     Topology.IsEmbedding F ∧
-    (∀ p, Function.Injective (EuclideanHypersurface.sphereAmbientMfderiv F p)) ∧
-    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) ∧
-    ∃ K : Set ℝ³,
-      Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
+    (∀ p, Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) ∧
+    ∃ K : ConvexBody ℝ³,
+      (interior (K : Set ℝ³)).Nonempty ∧ range F = frontier (K : Set ℝ³)
 
-/-- Carathéodory's conjecture for convex surfaces with a `C^k` canonical normal constructed
-from the derivative of the parametrization. -/
+/-- The canonical normal of an `IsConvexSphereOfClass k` surface is of class `C^k`. -/
+@[category test, AMS 52 53]
+theorem IsConvexSphereOfClass.contMDiff_sphereNormal
+    {k : WithTop ℕ∞} {F : sphere (0 : ℝ³) 1 → ℝ³} (hF : IsConvexSphereOfClass k F) :
+    ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) :=
+  EuclideanHypersurface.contMDiff_sphereNormal F hF.1 hF.2.2.1
+
+/-- Carathéodory's conjecture for `IsConvexSphereOfClass k` surfaces. -/
 def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ F : sphere (0 : ℝ³) 1 → ℝ³, IsConvexSphereOfClass k F →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧
       EuclideanHypersurface.IsUmbilic
-        (EuclideanHypersurface.sphereAmbientMfderiv F p₁)
-        (EuclideanHypersurface.sphereAmbientMfderiv
-          (EuclideanHypersurface.sphereNormal F) p₁) ∧
+        (V := TangentSpace (𝓡 2) p₁) (E := ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₁ : TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₁ :
+          TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³) ∧
       EuclideanHypersurface.IsUmbilic
-        (EuclideanHypersurface.sphereAmbientMfderiv F p₂)
-        (EuclideanHypersurface.sphereAmbientMfderiv
-          (EuclideanHypersurface.sphereNormal F) p₂)
+        (V := TangentSpace (𝓡 2) p₂) (E := ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₂ : TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₂ :
+          TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
 
 /-- **The smooth Carathéodory conjecture.**
 
 Every smoothly embedded two-sphere which bounds a convex body has at least two distinct
-umbilic points. Alpöge's smooth support function has exactly one umbilic, so the answer is
-false. -/
-@[category research solved, AMS 52 53,
-  formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/7aa855bb344450777d9b19fe1cf11f2f5f9fae09/FormalConjectures/Other/CaratheodoryLoewnerCounterexample.lean#L75"]
-theorem caratheodory_conjecture : answer(False) ↔ CaratheodoryConjectureOfClass ∞ := by
+umbilic points. -/
+@[category research open, AMS 52 53]
+theorem caratheodory_conjecture : answer(sorry) ↔ CaratheodoryConjectureOfClass ∞ := by
   sorry
 
 /-- **The real-analytic Carathéodory conjecture.**

@@ -24,24 +24,17 @@ public import FormalConjecturesForMathlib.Geometry.SphereImmersion
 /-!
 # Regularity of the canonical normal of a sphere immersion
 
-Although Mathlib's preferred sphere charts do not give a continuous global tangent frame, the
-canonical normal is regular. Locally, `inTangentCoordinates` gives a regular frame for the
-derivative. Changing from that frame to the pointwise model basis scales both cross products in the
-raw normal by the same determinant, so the raw normal scales by its positive square. Normalization
-therefore removes the coordinate dependence. In particular, a `C^(m + 1)` immersion has a `C^m`
-canonical normal.
+Although the sphere charts do not give a continuous global tangent frame, `sphereNormal` is
+regular. In local tangent coordinates, a frame change scales its raw normal by a positive square,
+which normalization removes. Thus a `C^(m + 1)` immersion has a `C^m` canonical normal.
 -/
 
 @[expose] public section
 
 open Metric
-open scoped EuclideanGeometry Manifold RealInnerProductSpace
+open scoped EuclideanGeometry EuclideanSpace Manifold RealInnerProductSpace
 
 namespace EuclideanHypersurface
-
-private noncomputable def sphereModelBasis (p : sphere (0 : ℝ³) 1) :
-    Module.Basis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2)) :=
-  sphereTangentBasis p
 
 private theorem euclideanCross_comp_basis
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
@@ -66,12 +59,13 @@ private theorem contMDiffAt_normalize
 private theorem inTangentCoordinates_sphere_eq_comp
     (G : sphere (0 : ℝ³) 1 → ℝ³) (p q : sphere (0 : ℝ³) 1)
     (hq : q ∈ (extChartAt (𝓡 2) p).source) :
-    inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id G (sphereAmbientMfderiv G) p q =
-      sphereAmbientMfderiv G q ∘L
+    inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id G
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) G) p q =
+      mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) G q ∘L
         (tangentCoordChange (𝓡 2) p q q :
           EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)) := by
-  rw [inTangentCoordinates_eq _ _ _ (by simpa [extChartAt_source] using hq) (by simp)]
-  simp only [tangentBundleCore_coordChange_model_space, ContinuousLinearMap.id_comp]
+  rw [inTangentCoordinates_eq _ _ _ (by simpa [extChartAt_source] using hq) (by simp),
+    tangentBundleCore_coordChange_model_space, ContinuousLinearMap.id_comp]
   rfl
 
 private theorem tangentCoordChange_injective
@@ -79,25 +73,24 @@ private theorem tangentCoordChange_injective
     Function.Injective (tangentCoordChange (𝓡 2) p q q :
       EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)) := by
   intro u v huv
-  have hq' : q ∈ (extChartAt (𝓡 2) q).source := mem_extChartAt_source q
   have hmem : q ∈ (extChartAt (𝓡 2) p).source ∩
       (extChartAt (𝓡 2) q).source ∩ (extChartAt (𝓡 2) p).source :=
-    ⟨⟨hq, hq'⟩, hq⟩
-  have hu := congrArg (tangentCoordChange (𝓡 2) q p q :
-    EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)) huv
-  simpa only [tangentCoordChange_comp hmem, tangentCoordChange_self hq] using hu
+    ⟨⟨hq, mem_extChartAt_source q⟩, hq⟩
+  simpa only [tangentCoordChange_comp hmem, tangentCoordChange_self hq] using
+    congrArg (tangentCoordChange (𝓡 2) q p q :
+      EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)) huv
 
 private noncomputable def sphereNormalRawInCoordinates
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
     sphere (0 : ℝ³) 1 → ℝ³ :=
-  let b := sphereModelBasis p
+  let b := PiLp.basisFun 2 ℝ (Fin 2)
   let e0 : EuclideanSpace ℝ (Fin 2) := b 0
   let e1 : EuclideanSpace ℝ (Fin 2) := b 1
   let dι := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id
     (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))
-    (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
   let dF := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id F
-    (sphereAmbientMfderiv F) p
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F) p
   fun q ↦ inner ℝ (euclideanCross (dι q e0) (dι q e1)) (q : ℝ³) •
     euclideanCross (dF q e0) (dF q e1)
 
@@ -105,15 +98,14 @@ private theorem contMDiffAt_sphereNormalRawInCoordinates
     {m n : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) n F p) (hmn : m + 1 ≤ n) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormalRawInCoordinates F p) p := by
-  letI : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num⟩
-  let b := sphereModelBasis p
+  let b := PiLp.basisFun 2 ℝ (Fin 2)
   let e0 : EuclideanSpace ℝ (Fin 2) := b 0
   let e1 : EuclideanSpace ℝ (Fin 2) := b 1
   let dι := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id
     (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))
-    (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³))) p
   let dF := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id F
-    (sphereAmbientMfderiv F) p
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F) p
   have hdι : ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2) →L[ℝ] ℝ³) m dι p :=
     (contMDiff_coe_sphere (n := 2) (m := (⊤ : WithTop ℕ∞)) p).mfderiv_const le_top
   have hdF : ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2) →L[ℝ] ℝ³) m dF p :=
@@ -128,13 +120,9 @@ private theorem contMDiffAt_sphereNormalRawInCoordinates
     ContMDiffAt (𝓡 2) 𝓘(ℝ, EuclideanSpace ℝ (Fin 2)) m (fun _ ↦ e1) p)
   have hcι := (euclideanCross.contMDiffAt.comp p hdι0).clm_apply hdι1
   have hcF := (euclideanCross.contMDiffAt.comp p hdF0).clm_apply hdF1
-  have hp : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m
-      (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p :=
-    contMDiff_coe_sphere p
-  have hs : ContMDiffAt (𝓡 2) 𝓘(ℝ) m
-      (fun q ↦ inner ℝ (euclideanCross (dι q e0) (dι q e1)) (q : ℝ³)) p :=
-    contDiff_inner.comp_contMDiffAt (hcι.prodMk_space hp)
-  simpa only [sphereNormalRawInCoordinates] using hs.smul hcF
+  simpa [sphereNormalRawInCoordinates, b, e0, e1, dι, dF] using
+    (contDiff_inner.comp_contMDiffAt
+      (hcι.prodMk_space (contMDiff_coe_sphere p))).smul hcF
 
 private theorem sphereNormalRawInCoordinates_eq_smul
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p q : sphere (0 : ℝ³) 1)
@@ -143,32 +131,34 @@ private theorem sphereNormalRawInCoordinates_eq_smul
       LinearMap.det (tangentCoordChange (𝓡 2) p q q :
         EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)).toLinearMap ^ 2 •
         sphereNormalRaw F q := by
-  let b := sphereModelBasis p
+  let b := PiLp.basisFun 2 ℝ (Fin 2)
   let A : EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2) :=
     tangentCoordChange (𝓡 2) p q q
-  let dι := sphereAmbientMfderiv (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) q
-  let dF := sphereAmbientMfderiv F q
+  let dι : TangentSpace (𝓡 2) q →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) q
+  let dF : TangentSpace (𝓡 2) q →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F q
   let dιc := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id
     (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³))
-    (sphereAmbientMfderiv (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³))) p q
-  let dFc := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id F (sphereAmbientMfderiv F) p q
-  have hι : dιc = dι.comp A := inTangentCoordinates_sphere_eq_comp
-    (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) p q hq
-  have hF : dFc = dF.comp A := inTangentCoordinates_sphere_eq_comp F p q hq
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³))) p q
+  let dFc := inTangentCoordinates (𝓡 2) 𝓘(ℝ, ℝ³) id F
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F) p q
+  rw [sphereNormalRaw]
+  rw [sphereTangentBasis_apply q 0, sphereTangentBasis_apply q 1]
   change inner ℝ (euclideanCross (dιc (b 0)) (dιc (b 1))) (q : ℝ³) •
       euclideanCross (dFc (b 0)) (dFc (b 1)) =
       LinearMap.det A.toLinearMap ^ 2 •
         (inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (q : ℝ³) •
           euclideanCross (dF (b 0)) (dF (b 1)))
-  simp only [hι, hF, ContinuousLinearMap.comp_apply]
-  have hιcross := euclideanCross_comp_basis b dι A
-  have hFcross := euclideanCross_comp_basis b dF A
+  rw [show dιc = dι.comp A from inTangentCoordinates_sphere_eq_comp
+      (fun r : sphere (0 : ℝ³) 1 ↦ (r : ℝ³)) p q hq,
+    show dFc = dF.comp A from inTangentCoordinates_sphere_eq_comp F p q hq]
   calc
     _ = inner ℝ (LinearMap.det A.toLinearMap • euclideanCross (dι (b 0)) (dι (b 1)))
           (q : ℝ³) •
         (LinearMap.det A.toLinearMap • euclideanCross (dF (b 0)) (dF (b 1))) :=
       congrArg₂ (fun (s : ℝ) (x : ℝ³) ↦ s • x)
-        (congrArg (fun x ↦ inner ℝ x (q : ℝ³)) hιcross) hFcross
+        (congrArg (fun x ↦ inner ℝ x (q : ℝ³)) (euclideanCross_comp_basis b dι A))
+        (euclideanCross_comp_basis b dF A)
     _ = _ := by
       rw [real_inner_smul_left]
       module
@@ -177,7 +167,7 @@ private theorem det_tangentCoordChange_ne_zero
     (p q : sphere (0 : ℝ³) 1) (hq : q ∈ (extChartAt (𝓡 2) p).source) :
     LinearMap.det (tangentCoordChange (𝓡 2) p q q :
       EuclideanSpace ℝ (Fin 2) →L[ℝ] EuclideanSpace ℝ (Fin 2)).toLinearMap ≠ 0 := by
-  simpa only [Ne, LinearMap.det_eq_zero_iff_ker_ne_bot, not_not] using
+  simpa [LinearMap.det_eq_zero_iff_ker_ne_bot] using
     LinearMap.ker_eq_bot_of_injective (tangentCoordChange_injective p q hq)
 
 /-- At an immersion point, a locally `C^n` map has a locally `C^m` canonical unit normal when
@@ -185,20 +175,17 @@ private theorem det_tangentCoordChange_ne_zero
 theorem contMDiffAt_sphereNormal_of_le
     {m n : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) n F p) (hmn : m + 1 ≤ n)
-    (himm : Function.Injective (sphereAmbientMfderiv F p)) :
+    (himm : Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) p := by
   have hp : p ∈ (extChartAt (𝓡 2) p).source := mem_extChartAt_source p
-  have hdet := det_tangentCoordChange_ne_zero p p hp
-  have hraw : sphereNormalRaw F p ≠ 0 := by
-    have hn : sphereNormal F p ≠ 0 := (sphereNormal_ne_zero_iff F p).2 himm
-    rw [sphereNormal] at hn
-    exact (not_congr (NormedSpace.normalize_eq_zero_iff _)).mp hn
   have hlocal : sphereNormalRawInCoordinates F p p ≠ 0 := by
     rw [sphereNormalRawInCoordinates_eq_smul F p p hp]
-    exact smul_ne_zero (pow_ne_zero 2 hdet) hraw
-  have hsmooth := contMDiffAt_normalize
-    (contMDiffAt_sphereNormalRawInCoordinates F p hF hmn) hlocal
-  apply hsmooth.congr_of_eventuallyEq
+    refine smul_ne_zero (pow_ne_zero 2 (det_tangentCoordChange_ne_zero p p hp)) ?_
+    simpa [sphereNormal, NormedSpace.normalize_eq_zero_iff] using
+      (sphereNormal_ne_zero_iff F p).2 himm
+  apply (contMDiffAt_normalize
+    (contMDiffAt_sphereNormalRawInCoordinates F p hF hmn) hlocal).congr_of_eventuallyEq
   filter_upwards [extChartAt_source_mem_nhds (I := 𝓡 2) p] with q hq
   rw [sphereNormal, sphereNormalRawInCoordinates_eq_smul F p q hq,
     NormedSpace.normalize_smul_of_pos
@@ -208,7 +195,8 @@ theorem contMDiffAt_sphereNormal_of_le
 theorem contMDiffAt_sphereNormal
     {m : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (hF : ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) (m + 1) F p)
-    (himm : Function.Injective (sphereAmbientMfderiv F p)) :
+    (himm : Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
     ContMDiffAt (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) p :=
   contMDiffAt_sphereNormal_of_le F p hF le_rfl himm
 
@@ -217,7 +205,8 @@ theorem contMDiffAt_sphereNormal
 theorem contMDiff_sphereNormal_of_le
     {m n : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³)
     (hF : ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) n F) (hmn : m + 1 ≤ n)
-    (himm : ∀ p, Function.Injective (sphereAmbientMfderiv F p)) :
+    (himm : ∀ p, Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) :=
   fun p ↦ contMDiffAt_sphereNormal_of_le F p (hF p) hmn (himm p)
 
@@ -225,7 +214,8 @@ theorem contMDiff_sphereNormal_of_le
 theorem contMDiff_sphereNormal
     {m : WithTop ℕ∞} (F : sphere (0 : ℝ³) 1 → ℝ³)
     (hF : ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) (m + 1) F)
-    (himm : ∀ p, Function.Injective (sphereAmbientMfderiv F p)) :
+    (himm : ∀ p, Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) m (sphereNormal F) :=
   contMDiff_sphereNormal_of_le F hF le_rfl himm
 
