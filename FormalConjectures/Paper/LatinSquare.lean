@@ -112,7 +112,7 @@ theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decid
 theorem z_even (n : ℕ) : z (2 * (n + 1)) = 0 := by
   set N := 2 * (n + 1) with hN_def
   have hNpos : 0 < N := by positivity
-  haveI : NeZero N := ⟨hNpos.ne'⟩
+  have : NeZero N := ⟨hNpos.ne'⟩
   rw [z, numTransversals, Fintype.card_eq_zero_iff]
   refine ⟨fun ⟨σ, hσ, himg⟩ => ?_⟩
   simp only [Matrix.of_apply] at himg

@@ -244,7 +244,7 @@ def ExistsAME (n d : ℕ) : Prop :=
 theorem not_existsAME_zero_dim {n : ℕ} (hn : 1 ≤ n) : ¬ ExistsAME n 0 := by
   rintro ⟨ψ, hψ⟩
   let i0 : Fin n := ⟨0, hn⟩
-  letI : IsEmpty (Config n 0) := ⟨fun f => Fin.elim0 (f i0)⟩
+  have : IsEmpty (Config n 0) := ⟨fun f => Fin.elim0 (f i0)⟩
   have hzero : ψ = 0 := by
     exact Subsingleton.elim _ _
   have : (0 : ℝ) = 1 := by

@@ -142,7 +142,7 @@ lemma largest_induced_forest_le_fifteen : graph.largestInducedForestSize ≤ 15 
   unfold largestInducedForestSize
   apply csSup_le
   · refine ⟨0, ∅, ?_, rfl⟩
-    letI : Subsingleton ↥(↑(∅ : Finset (Fin 17)) : Set (Fin 17)) :=
+    have : Subsingleton ↥(↑(∅ : Finset (Fin 17)) : Set (Fin 17)) :=
       ⟨fun a _ => False.elim (by simpa using a.property)⟩
     exact SimpleGraph.IsAcyclic.of_subsingleton
   · rintro n ⟨S, hS, rfl⟩
