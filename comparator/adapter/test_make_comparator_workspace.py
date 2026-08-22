@@ -78,7 +78,7 @@ class SeamFilesTest(unittest.TestCase):
         )
 
     def test_the_provenance_sidecar_is_the_manifest(self):
-        # The v1 wire format has no provenance fields, so the FC source
+        # The schema-version-1 wire format has no provenance fields, so the FC source
         # commit and declaration id §10 requires travel beside the request.
         _, files = seam_files([(A_MODULE, a_manifest())])
         payload = json.loads(files["fc-provenance-erdos_940.json"])

@@ -10,7 +10,7 @@ and scope fidelity work from
 deterministic Lean CLI with a frozen, versioned JSON contract, consumed at the
 exact revision `comparator/tools.toml` pins under `[generator]`. **The Formal
 Conjectures importer does not fork the generation logic.** It maps FC
-declarations and metadata to a v1 request, and records the FC source commit
+declarations and metadata to a schema-version-1 request, and records the FC source commit
 and declaration id for every problem.
 
 ## The seam
@@ -40,7 +40,7 @@ revision is normative). Per problem it carries:
 | `group` | for a frozen-set import, the set itself: the list is immutable while its members keep getting solved, so every member stays in the open-conjectures display and the category rides along as a tag. For a single import, the declaration's `@[category ...]` tag decides; a declaration that is not a problem is refused either way |
 | `leanToolchain`, `mathlib` | LeanEval's pins, from `[target]` in `tools.toml` — the consumer's, never this repository's |
 | `templates.workspaceTest` | `comparator/templates/WorkspaceTest.lean`, which stays FC-supplied: the contract requires the consumer to provide it |
-| `contextRoot` | a directory this side materialises: the module file the generator byte-checks against `moduleContent`, and a synthesised `.ilean` carrying the spans above, because v1 still resolves declaration spans from compiled metadata |
+| `contextRoot` | a directory this side materialises: the module file the generator byte-checks against `moduleContent`, and a synthesised `.ilean` carrying the spans above, because generator schema version 1 still resolves declaration spans from compiled metadata |
 
 The module carries no markers of any kind. `@[eval_problem]` does not exist
 outside lean-eval, so a module carrying it could not elaborate under
@@ -58,10 +58,10 @@ file, and every digest is checked before a byte lands on disk.
 ### Provenance rides beside the request, not in it
 
 lean-eval#536 requires each imported problem to record the FC source commit
-and declaration id. The v1 wire format has no field for either — its optional
+and declaration id. The schema-version-1 wire format has no field for either — its optional
 `source` is one free-text line — and lean-eval keeps that format frozen on
-purpose, so the sidecar is the v1 provenance boundary **by design**, not a
-stopgap (kim-em on #4951, 2026-08-21); a typed provenance object is a v2
+purpose, so the sidecar is the schema-version-1 provenance boundary **by design**, not a
+stopgap (kim-em on #4951, 2026-08-21); a typed provenance object is a future-contract-revision
 matter and does not gate the FC100 import. The manifest this repository
 builds (`ProblemManifest`: commit, path, blob, module, declaration, copied
 dependencies, the pins the hole types were read at) is written beside the
@@ -85,7 +85,7 @@ Conjectures corrects a misformalisation upstream.
 | `comparator/adapter/fc_source.py` | reads this repository's own Lean: where a declaration is, the file-scoped directives in force where it was written, the FC-defined notation it uses, its `answer(sorry)` slots and their elaborated types, and the pins the text was read at |
 | `comparator/adapter/fc_leaneval_importer.py` | assembles the marked-up module and the provenance record from those answers: resolves the declaration against an exact FC commit, copies the FC-local closure, hoists each slot, and records the provenance |
 | `comparator/adapter/ComparatorFacts/` and `comparator_facts.lean` | the Lean extractor (a small library — `Binders.lean` recovers declaration-header binder boundaries from source syntax, `Extract.lean` reads the elaborated environment — and a thin executable): source ranges, declaration-header binder boundaries, elaborated binder names/explicitness, answer-slot types, and the `@[category ...]` tag. The parsed source distinguishes header parameters from `∀` binders in the conclusion; every emitted binder fact still comes from the elaborated environment. |
-| `comparator/adapter/leaneval_interface.py` | the request builder and response checker — the FC side of the wire format, permanently, since the consumer owns hole resolution under the v1 contract |
+| `comparator/adapter/leaneval_interface.py` | the request builder and response checker — the FC side of the wire format, permanently, since the consumer owns hole resolution under the schema-version-1 contract |
 | `comparator/adapter/leaneval_generator_cli.py` | plumbing for the pinned binary |
 | `comparator/adapter/make_comparator_workspace.py` | the command, the emitted seam artifact, and the whole-set batch run |
 | `comparator/templates/WorkspaceTest.lean` | the workspace test template the contract requires the consumer to supply |
@@ -121,10 +121,11 @@ request; it keeps no state about what happened to one.
 
 ## What this side cannot settle alone
 
-1. **Provenance fields in the contract.** v1 has no home for the FC source
-   commit and declaration id that §10 requires by name, so they travel as a
-   sidecar. A v2 passthrough or provenance field would let a generated
-   workspace carry its own origin. Related:
+1. **Provenance fields in the contract.** Generator schema version 1 has no
+   home for the FC source commit and declaration id that §10 requires by
+   name, so they travel as a sidecar. A passthrough or provenance field in a
+   future generator contract revision would let a generated workspace carry
+   its own origin. Related:
    `mathlib-initiative/formalization.yaml` already standardises a source
    repository, revision, declaration and Comparator config —
    `Paul-Lez/hadamard-668-comparator` uses it to describe a wrapper around FC

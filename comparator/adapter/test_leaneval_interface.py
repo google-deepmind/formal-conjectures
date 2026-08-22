@@ -312,7 +312,7 @@ class ParseResponseTest(unittest.TestCase):
 
 
 class ProvenanceSidecarTest(unittest.TestCase):
-    """The sidecar is the v1 provenance boundary: strict, deterministic, digested."""
+    """The sidecar is the schema-version-1 provenance boundary: strict, deterministic, digested."""
 
     def test_digests_round_trip(self):
         bound = a_manifest().with_digests("a" * 64, {"Challenge.lean": "b" * 64, "A.lean": "c" * 64})

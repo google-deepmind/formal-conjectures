@@ -7,7 +7,7 @@ permitted axioms. This command produces that shape for one Formal Conjectures
 declaration, in the two steps `leanprover/lean-eval#536` separates:
 
     fc_leaneval_importer   FC declaration -> marked-up module + manifest
-    lean-eval-generator    v1 request -> workspace file map
+    lean-eval-generator    schema-version-1 request -> workspace file map
 
 The first half is Formal Conjectures'. The second is the pinned
 `leanprover/lean-eval-generator` binary — a deterministic Lean CLI with a
@@ -48,7 +48,7 @@ With `--known-failures`, the run fails unless the failures are exactly the
 recorded ones: an unexpected failure and a silently fixed one both count,
 because a gate that only ever passes proves nothing.
 
-`--emit-import` writes the exact bytes that cross the seam — the v1 request,
+`--emit-import` writes the exact bytes that cross the seam — the schema-version-1 request,
 with its context directory — and generates no workspace; running the pinned
 binary on that request from inside the emitted directory yields the same file
 map this command would have written.
@@ -111,9 +111,9 @@ def seam_files(pairs, group=None):
     """The request and context for `(marked_up, manifest)` pairs, as files.
 
     This is the artifact the FC importer contributes once lean-eval consumes
-    the shared generator: the request bytes, the context directory the v1
+    the shared generator: the request bytes, the context directory the schema-version-1
     contract still reads, and one provenance record per problem — the FC
-    source commit and declaration id §10 requires, which the v1 wire format
+    source commit and declaration id §10 requires, which the schema-version-1 wire format
     has no field for, so they travel beside it rather than through it.
     """
     problems = [
@@ -322,7 +322,7 @@ def main(argv):
         "--emit-import",
         default=None,
         metavar="DIR",
-        help="write only the v1 request and its context, the bytes this "
+        help="write only the schema-version-1 request and its context, the bytes this "
         "repository hands the pinned generator, and generate no workspace",
     )
     ap.add_argument(

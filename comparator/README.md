@@ -82,7 +82,7 @@ python3 comparator/adapter/make_comparator_workspace.py erdos_1038.parts.i \
 ```
 
 This writes the exact bytes that cross the seam — `request.json`, the
-`context/` directory the v1 contract reads, and the provenance sidecar — and
+`context/` directory the schema-version-1 contract reads, and the provenance sidecar — and
 generates no workspace. Running the pinned binary on that request from inside
 the emitted directory yields the same file map generation would have written,
 which is what makes the seam checkable rather than asserted.

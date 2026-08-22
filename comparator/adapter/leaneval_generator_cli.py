@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the pinned `lean-eval-generator` binary on a v1 request.
+"""Run the pinned `lean-eval-generator` binary on a schema-version-1 request.
 
 `leanprover/lean-eval#536` extracts lean-eval's generator core into
 `leanprover/lean-eval-generator`, a deterministic Lean CLI: one JSON request
@@ -12,7 +12,7 @@ The binary is found through `LEAN_EVAL_GENERATOR_BIN` or `PATH`. Building it
 is cheap — the package depends on nothing — so CI clones the pinned revision
 and runs `lake build`; `comparator/README.md` shows the same for a local run.
 
-The context root exists because the v1 contract still resolves two things
+The context root exists because the schema-version-1 contract still resolves two things
 from a benchmark checkout rather than from the request: the module source
 (which must byte-match the request's `moduleContent`) and each declaration's
 span from compiled `.ilean` metadata. This consumer is not a benchmark
