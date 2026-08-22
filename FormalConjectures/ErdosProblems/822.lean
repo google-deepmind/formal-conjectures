@@ -33,7 +33,7 @@ Does the set of integers of the form $n + \varphi(n)$ have positive (lower) dens
 -/
 @[category research solved, AMS 11]
 theorem erdos_822 :
-    answer(True) ↔ (Set.range fun n => n + Nat.totient n).HasPosDensity := by
+    answer(True) ↔ 0 < (Set.range fun n => n + Nat.totient n).lowerDensity := by
   -- TODO: Replace `sorry` with a formal proof using the results of
   -- Gabdullin–Iudelevich–Luca once an appropriate library interface is available.
   sorry
