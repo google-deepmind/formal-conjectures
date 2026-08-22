@@ -50,9 +50,15 @@ def Erdos40ForSet (G : Set (ℕ → ℝ)) : Prop := ∀ g ∈ G, Tendsto g atTop
 For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
+
+Asked here in decision form: is there any such $g$ at all? Establishing the
+implication for even one $g(N) → \infty$ already answers Erdős Problem 28
+positively, because a basis of order $2$ satisfies
+$\lvert A\cap \{1,\ldots,N\}\rvert \gg N^{1/2}$.
 -/
 @[category research open, AMS 11]
-theorem erdos_40 : Erdos40ForSet answer(sorry) := by
+theorem erdos_40 :
+    answer(sorry) ↔ ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
   sorry
 
 /--
