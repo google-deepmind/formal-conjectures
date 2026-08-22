@@ -138,11 +138,17 @@ naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
 Note: ℰ_H in 8.2(b) should be ℰ_{≤H}, see the statement of Theorem 7.3.3.
 When `r = 1`, the exponent is `20 / 24 = 5 / 6`, which agrees with the exponent in
 `card_heightLE_div_pow_five_div_six_tensto` and is consistent with
-`half_rank_zero_and_half_rank_one`. -/
+`half_rank_zero_and_half_rank_one`.
+The equality is asserted only for large `H`, matching the `o(1)` above: it cannot hold
+at small `H`, because `heightLE H` is empty for `H ≤ 3` (`naiveHeight E ≤ 3` forces
+`A = B = 0`, which both `Δ_ne_zero` and `reduced` exclude) and consists only of the two
+rank-zero curves `y² = x³ ± x` for `4 ≤ H ≤ 26`, while the right hand side is
+`Real.rpow` and hence strictly positive. -/
 @[category research open, AMS 11 14]
 theorem rank_height_count_asymptotic (r : ℕ) (h₁ : 1 ≤ r) (h₂ : r ≤ 20) :
     ∃ f : ℕ → ℝ, atTop.Tendsto f (𝓝 0) ∧
-      ∀ H : ℕ, 1 < H → {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
+      ∀ᶠ H : ℕ in atTop,
+        {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
   sorry
 
 /-- [PPVW2016] 8.2(c): the number of elliptic curves over ℚ with rank ≥ 21 and naïve height
