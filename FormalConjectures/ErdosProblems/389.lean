@@ -46,8 +46,7 @@ theorem erdos_389.variants.mehta_four :
       207 := by
   refine ⟨⟨by norm_num, by native_decide⟩, ?_⟩
   intro k ⟨_, hdvd⟩
-  by_contra hlt
-  push_neg at hlt
+  by_contra! hlt
   interval_cases k <;> revert hdvd <;> native_decide
 
 end Erdos389

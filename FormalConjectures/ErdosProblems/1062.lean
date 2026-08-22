@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Topology.Basic
 
 /-!
 # Erdős Problem 1062

@@ -52,7 +52,24 @@ solutions to $2^k\equiv -1\pmod{7}$, and hence this fails with $p=2$ and $q=7$.
 @[category textbook, AMS 11]
 theorem erdos_649.variants.no_solution_two_seven :
     ¬ ∃ n : ℕ, n.maxPrimeFac = 2 ∧ (n + 1).maxPrimeFac = 7 := by
-  sorry
+  rintro ⟨n, hn, hn'⟩
+  have h1n : 1 < n := by
+    have := (Nat.one_lt_maxPrimeFac_iff n).mp (by omega)
+    omega
+  -- Since `2` is the greatest prime factor of `n`, it is the only one, so `n` is a power of `2`.
+  obtain ⟨k, hpow⟩ : ∃ k, n = 2 ^ k :=
+    ⟨_, Nat.eq_prime_pow_of_unique_prime_dvd (by omega)
+      (fun {q} hq hqd ↦
+        le_antisymm (hn ▸ Nat.le_maxPrimeFac (by omega) hq hqd) hq.two_le)⟩
+  -- On the other hand `7` divides `n + 1`, i.e. `2 ^ k ≡ -1 (mod 7)`.
+  have h7 : 7 ∣ n + 1 := hn' ▸ Nat.maxPrimeFac_dvd
+  -- This is impossible: `2 ^ k` is congruent to `1`, `2` or `4` modulo `7`, never to `6`.
+  have hmod : 2 ^ k % 7 = 2 ^ (k % 3) % 7 := by
+    conv_lhs => rw [← Nat.div_add_mod k 3, pow_add, pow_mul]
+    rw [Nat.mul_mod, Nat.pow_mod]
+    norm_num
+  have hk3 : k % 3 < 3 := Nat.mod_lt _ (by norm_num)
+  interval_cases h : k % 3 <;> omega
 
 /--
 Even with such amendments, this problem is false in a strong sense: Alan Tong has provided the

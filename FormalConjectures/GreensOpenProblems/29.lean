@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Combinatorics.Additive.ApproximateSubgroup
 
 /-!
 # Ben Green's Open Problem 29

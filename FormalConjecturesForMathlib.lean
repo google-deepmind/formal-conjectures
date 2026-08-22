@@ -45,8 +45,11 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
+public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
+public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
@@ -62,6 +65,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cvetkovic
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
@@ -115,6 +119,7 @@ public import FormalConjecturesForMathlib.Data.Real.NearestInt
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
@@ -134,6 +139,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Amicable
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
 public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
+public import FormalConjecturesForMathlib.NumberTheory.DiophantineApproximation.ZNumber
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors
 public import FormalConjecturesForMathlib.NumberTheory.Harmonic
@@ -145,6 +151,7 @@ public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
+public import FormalConjecturesForMathlib.NumberTheory.Semiprime
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes

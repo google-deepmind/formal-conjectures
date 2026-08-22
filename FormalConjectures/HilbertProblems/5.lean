@@ -59,8 +59,8 @@ theorem admitsLieGroupStructure_of_lieGroup
 theorem locallyCompact_of_admitsLieGroupStructure
     (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
   obtain ⟨k, cs, _⟩ := h
-  haveI := cs
-  haveI := (𝓡 k).locallyCompactSpace
+  have := cs
+  have := (𝓡 k).locallyCompactSpace
   exact ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) G
 
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
