@@ -44,13 +44,6 @@ geometry." *Compositio Math.* **2**, pp. 463–470.
 namespace Combinatorics
 namespace Diagonal
 
-/-- **Central binomial bound (Mathlib wrapper).** `C(2n, n) ≤ 4 ^ n`.
-
-This specialises `Nat.choose_middle_le_pow : (2n+1).choose n ≤ 4^n` by observing that
-`(2n).choose n ≤ (2n+1).choose n` via the monotonicity lemma `Nat.choose_le_succ`. -/
-lemma central_binomial_le_four_pow (n : ℕ) : (2 * n).choose n ≤ 4 ^ n :=
-  (Nat.choose_le_succ (2 * n) n).trans (Nat.choose_middle_le_pow n)
-
 /-! ## Off-diagonal Ramsey via a subset-indexed predicate
 
 Rather than introduce an auxiliary edge-colouring structure, we phrase the off-diagonal
@@ -318,6 +311,6 @@ lemma _root_.Combinatorics.hypergraphRamsey_two_le_four_pow (k : ℕ) :
   have hle : Combinatorics.hypergraphRamsey 2 k ≤ Nat.choose (k + k) k := Nat.sInf_le hmem
   have h2kk : Nat.choose (k + k) k = Nat.choose (2 * k) k := by rw [two_mul]
   rw [h2kk] at hle
-  exact hle.trans (Diagonal.central_binomial_le_four_pow k)
+  exact hle.trans (Nat.centralBinom_le_four_pow k)
 
 end Combinatorics
