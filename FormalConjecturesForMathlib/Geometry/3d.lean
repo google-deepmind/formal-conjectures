@@ -42,10 +42,6 @@ Presumably this can be avoided by assuming `[NeZero n]`. -/
 noncomputable instance Module.orientedEuclideanSpaceFinThree : Module.Oriented ℝ ℝ³ (Fin 3) :=
   ⟨Basis.orientation <| PiLp.basisFun ..⟩
 
-/-- Three dimensional euclidean space is three-dimensional. -/
-instance fact_finrank_euclideanSpace_fin_three : Fact (Module.finrank ℝ ℝ³ = 3) :=
-  ⟨finrank_euclideanSpace_fin⟩
-
 namespace EuclideanHypersurface
 
 /-- The usual cross product on three-dimensional Euclidean space, as a bundled continuous

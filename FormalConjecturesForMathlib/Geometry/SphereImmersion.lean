@@ -18,6 +18,8 @@ module
 
 public import Mathlib.Analysis.Normed.Module.Normalize
 public import Mathlib.Geometry.Manifold.Instances.Sphere
+public import Mathlib.Geometry.Manifold.VectorBundle.LocalFrame
+public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 
 public import FormalConjecturesForMathlib.Geometry.«3d»
 
@@ -36,15 +38,9 @@ normal is independent of the chart orientation.
 @[expose] public section
 
 open Metric
-open scoped EuclideanGeometry Manifold RealInnerProductSpace
+open scoped EuclideanGeometry EuclideanSpace Manifold RealInnerProductSpace
 
 namespace EuclideanHypersurface
-
-/-- The manifold derivative of a map from the unit two-sphere, with ambient codomain. -/
-noncomputable def sphereAmbientMfderiv
-    (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
-  mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
 
 /-- The standard basis of Mathlib's fixed model copy of `ℝ²` for the tangent space at `p`.
 
@@ -52,22 +48,33 @@ This is a coordinate basis used to evaluate the manifold derivative, not a globa
 the sphere. -/
 noncomputable def sphereTangentBasis (p : sphere (0 : ℝ³) 1) :
     Module.Basis (Fin 2) ℝ (TangentSpace (𝓡 2) p) :=
-  PiLp.basisFun 2 ℝ (Fin 2)
+  (trivializationAt (EuclideanSpace ℝ (Fin 2)) (TangentSpace (𝓡 2)) p).basisAt
+    (PiLp.basisFun 2 ℝ (Fin 2)) (FiberBundle.mem_baseSet_trivializationAt' p)
 
-private theorem sphereAmbientMfderiv_inclusion_basis_apply
+/-- The basis induced by the tangent-bundle trivialization at its base point agrees with the
+standard model basis. -/
+theorem sphereTangentBasis_apply (p : sphere (0 : ℝ³) 1) (i : Fin 2) :
+    sphereTangentBasis p i = PiLp.basisFun 2 ℝ (Fin 2) i := by
+  change
+    (trivializationAt (EuclideanSpace ℝ (Fin 2)) (TangentSpace (𝓡 2)) p).symmL ℝ p
+        (PiLp.basisFun 2 ℝ (Fin 2) i) = _
+  rw [(tangentBundleCore (𝓡 2) _).trivializationAt_symmL
+    (FiberBundle.mem_baseSet_trivializationAt' p)]
+  exact (tangentBundleCore (𝓡 2) _).coordChange_self _ p
+    ((tangentBundleCore (𝓡 2) _).mem_baseSet_at p) _
+
+private theorem mfderiv_inclusion_sphereTangentBasis_apply
     (p : sphere (0 : ℝ³) 1) (i : Fin 2) :
-    letI : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
-    sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+    (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p :
+      TangentSpace (𝓡 2) p →L[ℝ] ℝ³)
         (sphereTangentBasis p i) =
       let U := (OrthonormalBasis.fromOrthogonalSpanSingleton (𝕜 := ℝ) 2
         (ne_zero_of_mem_unit_sphere (-p))).repr
       ((U.symm (PiLp.basisFun 2 ℝ (Fin 2) i) :
         (ℝ ∙ (-(p : ℝ³)))ᗮ) : ℝ³) := by
-  have : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
-  dsimp only
-  rw [sphereAmbientMfderiv,
-    ((contMDiff_coe_sphere p).mdifferentiableAt one_ne_zero).mfderiv]
+  rw [((contMDiff_coe_sphere p).mdifferentiableAt one_ne_zero).mfderiv]
   simp only [chartAt, fderivWithin_univ, mfld_simps]
+  rw [sphereTangentBasis_apply]
   let U := (OrthonormalBasis.fromOrthogonalSpanSingleton (𝕜 := ℝ) 2
     (ne_zero_of_mem_unit_sphere (-p))).repr
   change
@@ -91,17 +98,16 @@ private theorem sphereAmbientMfderiv_inclusion_basis_apply
 /-- The standard model basis maps to an orthonormal frame under the derivative of the sphere
 inclusion. -/
 @[simp]
-theorem inner_sphereAmbientMfderiv_inclusion_basis
+theorem inner_mfderiv_inclusion_sphereTangentBasis
     (p : sphere (0 : ℝ³) 1) (i j : Fin 2) :
     inner ℝ
-      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-        (sphereTangentBasis p i))
-      (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-        (sphereTangentBasis p j)) =
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³)
+        (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p (sphereTangentBasis p i))
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³)
+        (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p (sphereTangentBasis p j)) =
       if i = j then 1 else 0 := by
-  have : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
-  rw [sphereAmbientMfderiv_inclusion_basis_apply p i,
-    sphereAmbientMfderiv_inclusion_basis_apply p j]
+  rw [mfderiv_inclusion_sphereTangentBasis_apply p i,
+    mfderiv_inclusion_sphereTangentBasis_apply p j]
   let U := (OrthonormalBasis.fromOrthogonalSpanSingleton (𝕜 := ℝ) 2
     (ne_zero_of_mem_unit_sphere (-p))).repr
   change inner ℝ
@@ -112,18 +118,19 @@ theorem inner_sphereAmbientMfderiv_inclusion_basis
 
 /-- The derivative of the sphere inclusion maps the standard model basis to an orthonormal
 family. -/
-theorem orthonormal_sphereAmbientMfderiv_inclusion_basis (p : sphere (0 : ℝ³) 1) :
+theorem orthonormal_mfderiv_inclusion_sphereTangentBasis (p : sphere (0 : ℝ³) 1) :
     Orthonormal ℝ fun i : Fin 2 ↦
-      sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-        (sphereTangentBasis p i) :=
-  orthonormal_iff_ite.mpr (inner_sphereAmbientMfderiv_inclusion_basis p)
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³)
+        (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p (sphereTangentBasis p i)) :=
+  orthonormal_iff_ite.mpr (inner_mfderiv_inclusion_sphereTangentBasis p)
 
 /-- The oriented, unnormalized normal of a map from the unit two-sphere to three-space. -/
 noncomputable def sphereNormalRaw
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) : ℝ³ :=
   let b := sphereTangentBasis p
-  let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-  let dF := sphereAmbientMfderiv F p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dF : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
   inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) •
     euclideanCross (dF (b 0)) (dF (b 1))
 
@@ -139,10 +146,10 @@ noncomputable def sphereNormal
 /-- The cross product of the inclusion frame is its radial component. -/
 private theorem sphere_inclusion_cross_eq_smul (p : sphere (0 : ℝ³) 1) :
     let b := sphereTangentBasis p
-    let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+    let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+      mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
     euclideanCross (dι (b 0)) (dι (b 1)) =
       inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) • (p : ℝ³) := by
-  have : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
   dsimp only
   refine euclideanCross_eq_inner_smul_of_orthogonal _ _ _
     (norm_eq_of_mem_sphere p) ?_ ?_
@@ -154,13 +161,15 @@ private theorem sphere_inclusion_cross_eq_smul (p : sphere (0 : ℝ³) 1) :
 /-- The orientation factor contributed by the standard sphere inclusion has square one. -/
 private theorem sphere_inclusion_orientation_factor_sq (p : sphere (0 : ℝ³) 1) :
     let b := sphereTangentBasis p
-    let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+    let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+      mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
     inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) ^ 2 = 1 := by
   dsimp only
   let b := sphereTangentBasis p
-  let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
   have hON : Orthonormal ℝ fun i : Fin 2 ↦ dι (b i) :=
-    orthonormal_sphereAmbientMfderiv_inclusion_basis p
+    orthonormal_mfderiv_inclusion_sphereTangentBasis p
   let c := euclideanCross (dι (b 0)) (dι (b 1))
   let s := inner ℝ c (p : ℝ³)
   change s ^ 2 = 1
@@ -178,7 +187,8 @@ private theorem sphere_inclusion_orientation_factor_sq (p : sphere (0 : ℝ³) 1
 theorem sphereNormalRaw_inclusion (p : sphere (0 : ℝ³) 1) :
     sphereNormalRaw (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p = (p : ℝ³) := by
   let b := sphereTangentBasis p
-  let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
   let c := euclideanCross (dι (b 0)) (dι (b 1))
   let s := inner ℝ c (p : ℝ³)
   change s • c = (p : ℝ³)
@@ -188,31 +198,41 @@ theorem sphereNormalRaw_inclusion (p : sphere (0 : ℝ³) 1) :
 
 /-- The raw canonical normal is orthogonal to every image tangent vector. -/
 @[simp]
-theorem inner_sphereNormalRaw_sphereAmbientMfderiv
+theorem inner_sphereNormalRaw_mfderiv
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (v : TangentSpace (𝓡 2) p) :
-    inner ℝ (sphereNormalRaw F p) (sphereAmbientMfderiv F p v) = 0 := by
-  rw [sphereNormalRaw, real_inner_smul_left, ← (sphereTangentBasis p).sum_repr v, map_sum]
-  simp [Fin.sum_univ_two, map_smul, inner_add_right, real_inner_smul_right,
-    euclideanCross_inner_left, euclideanCross_inner_right, mul_zero, add_zero]
+    inner ℝ (sphereNormalRaw F p)
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v) = 0 := by
+  let b := sphereTangentBasis p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dF : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
+  change inner ℝ
+    (inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) •
+      euclideanCross (dF (b 0)) (dF (b 1))) (dF v) = 0
+  rw [real_inner_smul_left, ← b.sum_repr v, map_sum]
+  simp [Fin.sum_univ_two, map_smul, inner_add_right, real_inner_smul_right]
 
 /-- The canonical normal is orthogonal to every image tangent vector, even at a non-immersion. -/
 @[simp]
-theorem inner_sphereNormal_sphereAmbientMfderiv
+theorem inner_sphereNormal_mfderiv
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
     (v : TangentSpace (𝓡 2) p) :
-    inner ℝ (sphereNormal F p) (sphereAmbientMfderiv F p v) = 0 := by
+    inner ℝ (sphereNormal F p)
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v) = 0 := by
   rw [sphereNormal, NormedSpace.normalize, real_inner_smul_left,
-    inner_sphereNormalRaw_sphereAmbientMfderiv, mul_zero]
+    inner_sphereNormalRaw_mfderiv, mul_zero]
 
 /-- The raw canonical normal is nonzero exactly at the points where the manifold derivative is
 injective. -/
 private theorem sphereNormalRaw_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    sphereNormalRaw F p ≠ 0 ↔ Function.Injective (sphereAmbientMfderiv F p) := by
+    sphereNormalRaw F p ≠ 0 ↔ Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³) := by
   let b := sphereTangentBasis p
-  let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-  let dF := sphereAmbientMfderiv F p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dF : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
   have hfactor : inner ℝ (euclideanCross (dι (b 0)) (dι (b 1))) (p : ℝ³) ≠ 0 := by
     intro h
     simpa [b, dι, h] using sphere_inclusion_orientation_factor_sq p
@@ -230,14 +250,16 @@ private theorem sphereNormalRaw_ne_zero_iff
 injective. -/
 theorem sphereNormal_ne_zero_iff
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) :
-    sphereNormal F p ≠ 0 ↔ Function.Injective (sphereAmbientMfderiv F p) := by
+    sphereNormal F p ≠ 0 ↔ Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³) := by
   simpa [sphereNormal, NormedSpace.normalize_eq_zero_iff] using
     sphereNormalRaw_ne_zero_iff F p
 
 /-- At an immersion point, the canonical normal has unit length. -/
 theorem norm_sphereNormal_of_injective
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1)
-    (hF : Function.Injective (sphereAmbientMfderiv F p)) :
+    (hF : Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) :
     ‖sphereNormal F p‖ = 1 := by
   simpa [sphereNormal] using
     NormedSpace.norm_normalize ((sphereNormalRaw_ne_zero_iff F p).mpr hF)
@@ -254,17 +276,19 @@ theorem sphereNormal_eq_of_raw_eq_pos_smul
 sphere inclusion has the outward radial canonical normal. -/
 theorem sphereNormal_eq_radial_of_coercive
     (F : sphere (0 : ℝ³) 1 → ℝ³) (p : sphere (0 : ℝ³) 1) (c : ℝ) (hc : 0 < c)
-    (hnormal : ∀ v, inner ℝ (p : ℝ³) (sphereAmbientMfderiv F p v) = 0)
+    (hnormal : ∀ v, inner ℝ (p : ℝ³)
+      (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v) = 0)
     (hcoercive : ∀ v,
-      c * ‖sphereAmbientMfderiv
-          (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v‖ ^ 2 ≤
-        inner ℝ (sphereAmbientMfderiv F p v)
-          (sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v)) :
+      c * ‖(show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³)
+        (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v)‖ ^ 2 ≤
+        inner ℝ (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p v)
+          (show ℝ³ from mfderiv (𝓡 2) 𝓘(ℝ, ℝ³)
+            (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p v)) :
     sphereNormal F p = (p : ℝ³) := by
-  have : Fact (Module.finrank ℝ ℝ³ = 2 + 1) := ⟨by norm_num [finrank_euclideanSpace_fin]⟩
   let b := sphereTangentBasis p
-  let dι := sphereAmbientMfderiv (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
-  let dF := sphereAmbientMfderiv F p
+  let dι : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ :=
+    mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (fun q : sphere (0 : ℝ³) 1 ↦ (q : ℝ³)) p
+  let dF : TangentSpace (𝓡 2) p →L[ℝ] ℝ³ := mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p
   let u := dι (b 0)
   let v := dι (b 1)
   let x := dF (b 0)
@@ -274,10 +298,11 @@ theorem sphereNormal_eq_radial_of_coercive
   let P := inner ℝ x v
   let Q := inner ℝ y u
   have hON : Orthonormal ℝ fun i : Fin 2 ↦ dι (b i) :=
-    orthonormal_sphereAmbientMfderiv_inclusion_basis p
-  have hApos : 0 < A := hc.trans_le <| by
-    simpa [dF, dι, x, u, A, hON.norm_eq_one] using
-      hcoercive (b 0)
+    orthonormal_mfderiv_inclusion_sphereTangentBasis p
+  have hcoercive0 : c * ‖dι (b 0)‖ ^ 2 ≤ inner ℝ (dF (b 0)) (dι (b 0)) :=
+    hcoercive (b 0)
+  rw [hON.norm_eq_one 0, one_pow, mul_one] at hcoercive0
+  have hApos : 0 < A := hc.trans_le <| by simpa [A, x, u] using hcoercive0
   let s := P + Q
   let t := s • b 0 - (2 * A) • b 1
   have ht : t ≠ 0 := by

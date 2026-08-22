@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+import Mathlib.Analysis.Convex.Body
 import FormalConjectures.Other.LoewnerConjecture
+import FormalConjecturesUtil
 
 /-!
 # Carathéodory's conjecture
@@ -47,10 +48,11 @@ the boundary of a compact convex body with nonempty interior. -/
 def IsConvexSphereOfClass (k : WithTop ℕ∞) (F : sphere (0 : ℝ³) 1 → ℝ³) : Prop :=
   ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k F ∧
     Topology.IsEmbedding F ∧
-    (∀ p, Function.Injective (EuclideanHypersurface.sphereAmbientMfderiv F p)) ∧
+    (∀ p, Function.Injective
+      (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p : TangentSpace (𝓡 2) p →L[ℝ] ℝ³)) ∧
     ContMDiff (𝓡 2) 𝓘(ℝ, ℝ³) k (EuclideanHypersurface.sphereNormal F) ∧
-    ∃ K : Set ℝ³,
-      Convex ℝ K ∧ IsCompact K ∧ (interior K).Nonempty ∧ range F = frontier K
+    ∃ K : ConvexBody ℝ³,
+      (interior (K : Set ℝ³)).Nonempty ∧ range F = frontier (K : Set ℝ³)
 
 /-- Carathéodory's conjecture for convex surfaces with a `C^k` canonical normal constructed
 from the derivative of the parametrization. -/
@@ -58,13 +60,15 @@ def CaratheodoryConjectureOfClass (k : WithTop ℕ∞) : Prop :=
   ∀ F : sphere (0 : ℝ³) 1 → ℝ³, IsConvexSphereOfClass k F →
     ∃ p₁ p₂, p₁ ≠ p₂ ∧
       EuclideanHypersurface.IsUmbilic
-        (EuclideanHypersurface.sphereAmbientMfderiv F p₁)
-        (EuclideanHypersurface.sphereAmbientMfderiv
-          (EuclideanHypersurface.sphereNormal F) p₁) ∧
+        (V := TangentSpace (𝓡 2) p₁) (E := ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₁ : TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₁ :
+          TangentSpace (𝓡 2) p₁ →L[ℝ] ℝ³) ∧
       EuclideanHypersurface.IsUmbilic
-        (EuclideanHypersurface.sphereAmbientMfderiv F p₂)
-        (EuclideanHypersurface.sphereAmbientMfderiv
-          (EuclideanHypersurface.sphereNormal F) p₂)
+        (V := TangentSpace (𝓡 2) p₂) (E := ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) F p₂ : TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
+        (mfderiv (𝓡 2) 𝓘(ℝ, ℝ³) (EuclideanHypersurface.sphereNormal F) p₂ :
+          TangentSpace (𝓡 2) p₂ →L[ℝ] ℝ³)
 
 /-- **The smooth Carathéodory conjecture.**
 
