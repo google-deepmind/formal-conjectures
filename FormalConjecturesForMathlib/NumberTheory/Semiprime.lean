@@ -38,18 +38,6 @@ that is, $\Omega(n) = 2$.
 def IsSemiprime (n : ℕ) : Prop :=
   n > 1 ∧ n.primeFactorsList.length = 2
 
-instance (n : ℕ) : Decidable (n.IsSemiprime) := by
-  unfold IsSemiprime
-  infer_instance
-
-/--
-A natural number `n` is an *odd semiprime* if `n` is a semiprime and `n` is odd.
--/
-def IsOddSemiprime (n : ℕ) : Prop :=
-  n.IsSemiprime ∧ Odd n
-
-instance (n : ℕ) : Decidable (n.IsOddSemiprime) := by
-  unfold IsOddSemiprime
-  infer_instance
+instance (n : ℕ) : Decidable n.IsSemiprime := inferInstanceAs <| Decidable <| _ ∧ _
 
 end Nat
