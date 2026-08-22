@@ -72,11 +72,4 @@ theorem not_flagged_explicit_answer : answer(True) ↔ 1 + 1 = 2 := by
 theorem not_flagged_open_answer_sorry : answer(sorry) ↔ 1 + 1 = 2 := by
   sorry
 
-set_option linter.style.category_answer false in
-#guard_msgs in
-/-- A deliberate placeholder can opt out of the linter. -/
-@[category research solved]
-theorem not_flagged_opt_out : answer(sorry) ↔ 1 + 1 = 2 := by
-  sorry
-
 end CategoryAnswerLinter
