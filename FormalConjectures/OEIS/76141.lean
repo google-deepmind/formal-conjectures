@@ -70,7 +70,9 @@ theorem a_5 : a 5 = 0 := by
 
 /--
 Is $a(n) \le 1$ for all $n$?-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a076141-binary-word/blob/b4e179767fa3041c43e019b559ee77e6737317aa/lean/OeisA76141FC.lean#L1229-L1253"]
 theorem conjecture (n : ℕ) : a n ≤ 1 := by
   sorry
 
