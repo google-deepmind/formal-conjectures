@@ -55,9 +55,10 @@ def d : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * d (n + 2) - d n
 
-/-- $b(2n) = c(2n+1)$, $b(2n+1) = c(2n)$ -/
+/-- $b(2n) = -c(2n+1)$, $b(2n+1) = c(2n)$ -/
+-- Sign corrected (even branch): see https://github.com/google-deepmind/formal-conjectures/issues/5025
 def b (n : ℕ) : ℤ :=
-  if n % 2 = 0 then c (n + 1)
+  if n % 2 = 0 then -c (n + 1)
   else c (n - 1)
 
 /-- $e(2n) = d(2n)/2$, $e(2n+1) = - d(2n)/2$ -/
@@ -150,7 +151,8 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $c(n) + d(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L287"]
 theorem conjecture1 (n : ℕ) : c n + d n = b n := by
   sorry
 
@@ -159,7 +161,8 @@ theorem conjecture1 (n : ℕ) : c n + d n = b n := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $e(n) + f(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L306"]
 theorem conjecture2 (n : ℕ) : e n + f n = b n := by
   sorry
 
@@ -168,7 +171,8 @@ theorem conjecture2 (n : ℕ) : e n + f n = b n := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $g(n) + a(n) = b(n)$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L335"]
 theorem conjecture3 (n : ℕ) : g n + a n = b n := by
   sorry
 
