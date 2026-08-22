@@ -28,4 +28,4 @@ lean4export = "15f6055e299ad5b89345e533cc2192f4cc00f659"
 # and has to survive the seam round-trip test.
 [generator]
 repository = "https://github.com/leanprover/lean-eval-generator"
-rev = "a726789593eeac5c32ad82760061cd5bf6cae662"
+rev = "77373a539b31f8f304c852f288d7d8469cceebff"

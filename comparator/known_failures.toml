@@ -32,16 +32,3 @@ dependency copied faithfully from source. Retired by the repository's planned
 toolchain bump (to Lean 4.33; #4428 stages v4.32.0) — kim-em verified on
 2026-08-21 at LeanEval's target pins on a merge with #4428. Re-run the audit
 after the bump merges and remove this entry."""
-
-[[failure]]
-declaration = "Erdos125.erdos_125.variants.positive_unequal_density"
-workspace = "Erdos125_erdos_125_variants_positive_unequal_density"
-stage = "target"
-reason = """The statement's `local notation` uses set-builder syntax and needs
-`set_option quotPrecheck false`, which the source states file-scoped and the
-emitted module carries attached to the notation command. The generator's
-Challenge reconstruction re-extracts the notation line without its
-set_option, and `Challenge.lean` is generator-owned text this side cannot
-amend. Fixed upstream in leanprover/lean-eval-generator#1 (verified by kim-em at
-this PR's head); remove this entry when `[generator]` in tools.toml advances to a
-revision containing that fix."""
