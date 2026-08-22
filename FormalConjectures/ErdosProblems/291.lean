@@ -68,7 +68,7 @@ Is it true that $(a_n,L_n)>1$ occurs for infinitely many $n$?
 Steinerberger has observed that the answer to the second question is trivially yes: for example, any
 $n$ which begins with a $2$ in base $3$ has $3\mid (a_n,L_n)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Mnehmos/llm-driven-proof-search/blob/745090ac8644c90a4b9dd40171984af6b381af4e/lean-checker/LeanChecker/Erdos/Erdos291.lean"]
 theorem erdos_291.parts.ii :
     answer(True) ↔
       { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
