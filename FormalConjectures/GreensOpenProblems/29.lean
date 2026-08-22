@@ -36,9 +36,11 @@ namespace Green29
 
 /-- Suppose that $A$ is a $K$-approximate group (not necessarily abelian). Is there $S \subset A$,
 $|S| \gg K^{-O(1)} |A|$, with $S^8 \subset A^4$? -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-29-counterexample/blob/1cbf80c3d5a333b2b79c203c0d60129924c8c712/lean/Green29FC.lean#L280-L287"]
 theorem green_29 :
-    answer(sorry) ↔
+    answer(False) ↔
       ∃ C c : ℝ, 0 < C ∧ 0 < c ∧
         ∀ {G : Type*} [Group G] [DecidableEq G] (K : ℝ) (A : Finset G),
           1 ≤ K → IsApproximateSubgroup K (A : Set G) →
