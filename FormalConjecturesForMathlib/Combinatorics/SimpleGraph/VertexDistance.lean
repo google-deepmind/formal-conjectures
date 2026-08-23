@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Analysis.RCLike.Basic
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Metric
 public import Mathlib.Tactic.IntervalCases
 

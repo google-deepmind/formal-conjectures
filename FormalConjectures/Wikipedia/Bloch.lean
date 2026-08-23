@@ -69,7 +69,10 @@ lemma dis_add_radius_le_of_ball_subset_ball {X 𝕜 : Type*} [RCLike 𝕜] [Norm
   · let u := (‖x - y‖⁻¹ : 𝕜) • (x - y)
     have : ‖u‖ = 1 := by apply norm_smul_inv_norm; grind
     calc
-    _ = ‖x - y‖ + t := by simp [NormedAddCommGroup.dist_eq]
+    _ = ‖x - y‖ + t := by
+      simp [NormedAddCommGroup.dist_eq]
+      rw [← norm_neg (-x  + y)]
+      simp [add_comm, sub_eq_add_neg]
     _ = ‖x + (t : 𝕜) • u - y‖ := by
       simp [u, add_sub_right_comm, ← smul_assoc]
       nth_rw 2 [← one_smul 𝕜 (x - y)]

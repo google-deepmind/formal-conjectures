@@ -89,6 +89,7 @@ theorem not_isCritical_of_fintype_lt [Fintype V] (k : ℕ) (hk : Fintype.card V 
 
 open SimpleGraph
 
+set_option backward.isDefEq.respectTransparency false in
 theorem colorable_iff_induce_eq_bot (G : SimpleGraph V) (n : ℕ) :
     G.Colorable n ↔ ∃ coloring : V → Fin n, ∀ i, G.induce {v | coloring v = i} = ⊥ := by
   refine ⟨fun ⟨a, h⟩ ↦ ⟨a, by aesop⟩, fun ⟨w, h⟩ ↦ ⟨w, @fun a b h_adj ↦ ?_⟩⟩

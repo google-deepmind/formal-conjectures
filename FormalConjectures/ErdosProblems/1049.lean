@@ -246,9 +246,8 @@ theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
      ∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1) =
      ∑' n : ℕ+, (n : ℕ).divisors.card / ((t : ℝ) ^ (n : ℕ)) := by
   intro t
-  by_cases ht : 1 < |(t : ℝ)|
+  obtain ht | ht := lt_or_ge 1 |(t : ℝ)|
   · exact lambert_convergent (t : ℝ) ht
-  · push_neg at ht
-    exact lambert_divergent (t : ℝ) ht
+  · exact lambert_divergent (t : ℝ) ht
 
 end Erdos1049
