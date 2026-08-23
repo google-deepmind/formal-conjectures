@@ -69,7 +69,7 @@ theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full
 theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Prime)
     (h : n % p ^ (k + 1) = p) : ¬ (k + 1).Full n := by
   rw [Full]
-  push_neg
+  push Not
   use p
   simp [mem_primeFactors, hp, ne_eq, true_and]
   constructor

@@ -57,7 +57,7 @@ theorem squarefreePart_zero : squarefreePart 0 = 1 := by
 /-- If `n` is squarefree, then its squarefree part is itself. -/
 theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
     squarefreePart n = n := by
-  nth_rw 2 [← n.factorization_prod_pow_eq_self fun _ ↦ by simp_all]
+  nth_rw 2 [← n.prod_factorization_pow_eq_self fun _ ↦ by simp_all]
   simp only [squarefreePart, Finsupp.prod, support_factorization]
   exact Finset.prod_congr rfl fun p hp ↦ by
     rw [factorization_eq_one_of_squarefree hn (mem_primeFactors.1 hp).1 (mem_primeFactors.1 hp).2.1]
