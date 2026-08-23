@@ -246,13 +246,11 @@ theorem erdos_1128.variants.two_dimensional_false :
   -- Contrapositive: uncountable subsets of ω₁ are not bounded (i.e., cofinal in ω₁).
   have A₁_unbdd : ∀ γ : Omega1, ∃ a ∈ A₁, γ ≤ a := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hA_unc (Set.Countable.mono (fun a ha => hbdd a ha) (countable_Iio_omega1 γ))
   have B₁_unbdd : ∀ γ : Omega1, ∃ b ∈ B₁, γ ≤ b := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hB_unc (Set.Countable.mono (fun b hb => hbdd b hb) (countable_Iio_omega1 γ))
   -- A₁ and B₁ are both nonempty (since uncountable sets are nonempty).
   have hA_ne : A₁.Nonempty := by

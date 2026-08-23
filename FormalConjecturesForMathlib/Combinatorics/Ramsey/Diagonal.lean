@@ -207,7 +207,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
   have hvnR : v ∉ R := fun h => Finset.notMem_erase _ _ (Finset.mem_of_mem_filter _ h)
   have hvnB : v ∉ B := fun h => Finset.notMem_erase _ _ (Finset.mem_of_mem_filter _ h)
   -- Pigeonhole: either R.card ≥ Ns or B.card ≥ Nt.
-  by_cases hRcard : Ns ≤ R.card
+  obtain hRcard | hRcard := le_or_gt Ns R.card
   · -- Case 1: apply `hs` on R to get false K_s (extend by v) or true K_{t+1}.
     rcases hs c R hRcard with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
     · -- false K_s on R ⊆ V; extend by v (false-adjacent to all of R) to false K_{s+1}.
@@ -225,11 +225,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
     · -- true K_{t+1} on R ⊆ V.
       exact Or.inr ⟨S, hSsub.trans hRsubV, hScard, hSmono⟩
   · -- Case 2: R.card < Ns, so B.card ≥ Nt. Apply `ht` on B symmetrically.
-    push_neg at hRcard
-    have hBcard : Nt ≤ B.card := by
-      have hV_sub : Ns + Nt ≤ V.card := hV
-      omega
-    rcases ht c B hBcard with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
+    rcases ht c B (by lia) with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
     · -- false K_{s+1} on B ⊆ V.
       exact Or.inl ⟨S, hSsub.trans hBsubV, hScard, hSmono⟩
     · -- true K_t on B; extend by v (true-adjacent to all of B) to true K_{t+1}.

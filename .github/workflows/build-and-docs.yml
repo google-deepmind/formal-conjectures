@@ -119,10 +119,10 @@ jobs:
         uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
           restore-keys: |
-            oleans-${{ hashFiles('lake-manifest.json') }}-
-            oleans-
+            oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
+            oleans-${{ hashFiles('lean-toolchain') }}-
 
       - name: Get olean cache
         if: steps.mode.outputs.website_only != 'true'
@@ -208,7 +208,7 @@ jobs:
         uses: actions/cache/save@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Set up Python
         if: steps.mode.outputs.website_only != 'true'

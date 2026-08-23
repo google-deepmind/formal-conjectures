@@ -106,11 +106,10 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
     (h : IsIncreasing₂ s)
     (h_const : ∀ a ∈ s, ∀ j, a j = val) : s.length < 2 := by
   by_contra!
-  have h₀ : s[0] = fun _ => val := funext fun i => by simp [h_const s[0] (by simp)]
-  have h₁ : s[1] = fun _ => val := funext fun i => by simp [h_const s[1] (by simp)]
-  have := List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
-  simp [h₀, h₁] at this
-  exact not_lt₂_self _ this
+  obtain ⟨i, j, -, hi, -⟩ :=
+    List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
+  rw [h_const _ (List.getElem_mem _) i, h_const _ (List.getElem_mem _) i] at hi
+  exact lt_irrefl _ hi
 
 /--
 Let $F(n)$ be the maximal length of a $2$-increasing sequence of triples with each coordinate
