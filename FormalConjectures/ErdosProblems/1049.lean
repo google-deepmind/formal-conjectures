@@ -248,7 +248,6 @@ theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
   intro t
   obtain ht | ht := lt_or_ge 1 |(t : ℝ)|
   · exact lambert_convergent (t : ℝ) ht
-  · push Not at ht
-    exact lambert_divergent (t : ℝ) ht
+  · exact lambert_divergent (t : ℝ) ht
 
 end Erdos1049

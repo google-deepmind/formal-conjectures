@@ -225,7 +225,6 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
     · -- true K_{t+1} on R ⊆ V.
       exact Or.inr ⟨S, hSsub.trans hRsubV, hScard, hSmono⟩
   · -- Case 2: R.card < Ns, so B.card ≥ Nt. Apply `ht` on B symmetrically.
-    push Not at hRcard
     have hBcard : Nt ≤ B.card := by
       have hV_sub : Ns + Nt ≤ V.card := hV
       omega
