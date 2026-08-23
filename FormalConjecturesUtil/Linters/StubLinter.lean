@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public meta import Mathlib.Tactic.DeclarationNames
 public import Mathlib.Tactic.Linter.Header
 
 /-! # The Stub Linter
@@ -44,6 +45,46 @@ def hasSorry (stx : Syntax) : Bool :=
                    s.getId.eraseMacroScopes == `sorry || s.getId.eraseMacroScopes == `sorryAx))
   ) != none
 
+/-- The `declId` of a declaration, if it has one: an `instance` may be anonymous. -/
+def declId? (decl : Syntax) : Option Syntax :=
+  decl.getArgs.findSome? fun arg =>
+    if arg.isOfKind ``Lean.Parser.Command.declId then some arg
+    -- `instance` wraps its `declId` in an `optional`, hence in a null node.
+    else if arg.isOfKind nullKind then arg.getArgs.find? (·.isOfKind ``Lean.Parser.Command.declId)
+    else none
+
+/-- The names introduced by the declaration command `stx`, whose declaration node is `decl`.
+That is the single name given by its `declId`, resolved the way `CategoryLinter` resolves it, or,
+for an anonymous `instance`, the auto-generated names recorded at or after the position of `stx`. -/
+def declNames (stx decl : Syntax) : CommandElabM (Array Name) := do
+  let some declId := declId? decl
+    | let some pos := stx.getPos? | return #[]
+      return (← Mathlib.Linter.getNamesFrom pos).map (·.getId)
+  let modifiers ← elabModifiers ⟨stx[0]⟩
+  let (shortName, _) := Lean.Elab.expandDeclIdCore declId
+  let currNamespace ← getCurrNamespace
+  let env ← getEnv
+  let declName :=
+    if (`_root_).isPrefixOf shortName then shortName.replacePrefix `_root_ .anonymous
+    else currNamespace ++ shortName
+  return #[if modifiers.isPrivate then mkPrivateName env declName else declName]
+
+/-- Whether every declaration in `declNames` is `Prop`-valued, and there is at least one.
+
+A `Prop`-valued declaration whose proof is `sorry` is a statement waiting to be proved, exactly
+like a `theorem`, rather than a placeholder definition. This is what lets a `Prop`-valued
+`instance`, such as `instance mordell_weil : Module.Finite ℤ E.Point := by sorry`, state a
+conjecture. -/
+def isPropValued (declNames : Array Name) : CommandElabM Bool := do
+  let declNames := declNames.filter (!·.isInternal)
+  if declNames.isEmpty then return false
+  let env ← getEnv
+  liftTermElabM <| declNames.allM fun declName => do
+    -- `findAsync?` rather than `find?` so that this also sees a declaration of the file being
+    -- elaborated; `toConstantVal` only needs the signature, which is available right away.
+    let some info := env.findAsync? declName | return false
+    isProp info.toConstantVal.type
+
 /-- Checks a declaration command for stubs, placeholder definitions, and axioms. -/
 def checkDecl (stx : Syntax) : CommandElabM Unit := do
   if stx.getKind == ``Lean.Parser.Command.declaration then
@@ -59,7 +100,7 @@ def checkDecl (stx : Syntax) : CommandElabM Unit := do
             kind == ``Lean.Parser.Command.abbrev ||
             kind == ``Lean.Parser.Command.instance ||
             kind == ``Lean.Parser.Command.structure then
-      if hasSorry decl then
+      if hasSorry decl && !(← isPropValued (← declNames stx decl)) then
         logLintIf linter.style.stubs stx
           "Placeholder definitions (e.g., `def foo : Type := sorry`) are not allowed."
 
