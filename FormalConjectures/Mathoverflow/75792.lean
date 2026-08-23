@@ -107,26 +107,22 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
 
 /-- warning: instance `Mathoverflow75792.Reachable.decide._unary` must be marked with `@[reducible]`
 or `@[implicit_reducible]` -/
--- TODO: I can't turn this warning off!
 #guard_msgs in
-instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
+instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) :=
+  match m, n with
   | 0, n => isFalse (not_reachable_zero_fst n)
   | 1, 0 => isFalse (not_reachable_zero_snd 1)
   | 1, n+1 => isTrue (Reachable.one.le (by omega))
   | m+2, n => by
-      let d : ∀ {m₁} (h : m₁ < m + 2) {n}, Decidable (Reachable m₁ n) :=
-        fun h ↦ Reachable.decAux f _ _ (by lia)
       refine @decidable_of_iff' _ _ (reachable_iff_of_two_le (m+2) n (by lia)) ?_
       refine Nat.decidableExistsLT' (I := fun m₁ hm₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun m₂ hm₂ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₁ hn₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₂ hn₂ ↦ ?_)
       refine instDecidableAnd (dq := ?_)
-      refine instDecidableAnd (dp := d hm₁) (dq := ?_)
-      exact instDecidableAnd (dp := d hm₂)
-  termination_by structural f => f
-
-instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) := Reachable.decAux m m n le_rfl
+      refine instDecidableAnd (dp := Reachable.decide m₁ _) (dq := ?_)
+      exact instDecidableAnd (dp := Reachable.decide m₂ _)
+  termination_by (m, n)
 
 /--
 The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity):
