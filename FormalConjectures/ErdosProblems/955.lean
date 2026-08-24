@@ -128,7 +128,7 @@ $\lvert A\cap [1,x]\rvert\leq x^{1/2+o(1)}$ then $s^{-1}(A)$ has density $0$.
 theorem erdos_955.variants.pollack_pomerance_thompson_bound :
     ∀ (A : Set ℕ) (ε : ℕ → ℝ),
       Tendsto ε atTop (𝓝 0) →
-      (∀ᶠ n : ℕ in atTop, (count A n : ℝ) ≤ (n : ℝ) ^ ((1 / 2 : ℝ) + ε n)) →
+      (∀ᶠ n : ℕ in atTop, (count (· ∈ A) n : ℝ) ≤ (n : ℝ) ^ ((1 / 2 : ℝ) + ε n)) →
       { x | s x ∈ A }.HasDensity 0 := by
   sorry
 

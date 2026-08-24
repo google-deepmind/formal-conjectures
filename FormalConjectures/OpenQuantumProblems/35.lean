@@ -244,7 +244,7 @@ def ExistsAME (n d : ℕ) : Prop :=
 theorem not_existsAME_zero_dim {n : ℕ} (hn : 1 ≤ n) : ¬ ExistsAME n 0 := by
   rintro ⟨ψ, hψ⟩
   let i0 : Fin n := ⟨0, hn⟩
-  letI : IsEmpty (Config n 0) := ⟨fun f => Fin.elim0 (f i0)⟩
+  have : IsEmpty (Config n 0) := ⟨fun f => Fin.elim0 (f i0)⟩
   have hzero : ψ = 0 := by
     exact Subsingleton.elim _ _
   have : (0 : ℝ) = 1 := by
@@ -812,9 +812,9 @@ Answer: `AME(11, 4)` exists. The graph state defined by the circulant matrix Gam
     absolutely maximally entangled state of $11$ ququarts.
    This result has been found by Moritz Firsching and Goran Žužić using an
 experimental pipeline
-    
-    
- Before, it was already known that there is a quantum code for `[11,0]]_5`, which corresponds to an `AME(11,4)` state (which is another approach to a solution). 
+
+
+ Before, it was already known that there is a quantum code for `[11,0]]_5`, which corresponds to an `AME(11,4)` state (which is another approach to a solution).
       -/
 @[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/91bed229b434b68d66f5fd35cdcfee19a79985e8/FormalConjectures/OpenQuantumProblems/35.lean#L1861"]

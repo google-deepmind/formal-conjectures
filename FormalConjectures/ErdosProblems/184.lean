@@ -77,6 +77,7 @@ theorem erdos_184.variants.n_log_n :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 The graph $K_{3,n-3}$ shows that at least $(1+c)n$ many cycles and edges are required, for some
 constant $c>0$.
