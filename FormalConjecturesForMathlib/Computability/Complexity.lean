@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
-public import Mathlib.Computability.TMComputable
+public import Mathlib.Computability.TuringMachine.Computable
 
 /-!
 # Complexity Classes
@@ -50,10 +50,11 @@ abbrev ComplexityClass := Set DecisionProblem
 
 /--
 `IsPolyTimeWithEncoding ea eb f` asserts that `f` is computable in polynomial time
-when its input and output are encoded via the given `FinEncoding`s `ea` and `eb`.
+when its input and output are encoded via the given `Encoding`s `ea` and `eb`.
 -/
-def IsPolyTimeWithEncoding {α β : Type} (ea : FinEncoding α) (eb : FinEncoding β) (f : α → β) :=
-  Nonempty (TM2ComputableInPolyTime ea eb f)
+def IsPolyTimeWithEncoding {α β Γα Γβ : Type} (ea : Encoding α Γα) (eb : Encoding β Γβ)
+    (f : α → β) :=
+  Nonempty (TM2ComputableInPolyTime ea.encode eb.encode f)
 
 /--
 A function is polynomial-time computable when it is `IsPolyTimeWithEncoding`
@@ -61,7 +62,7 @@ for the canonical `Bool`-alphabet encodings of its domain and codomain
 as given by the `BitstringEncoding` typeclass.
 -/
 def IsPolyTime {α β : Type} [BitstringEncoding α] [BitstringEncoding β] (f : α → β) : Prop :=
-  IsPolyTimeWithEncoding (BitstringEncoding.toFinEncoding α) (BitstringEncoding.toFinEncoding β) f
+  IsPolyTimeWithEncoding (BitstringEncoding.toEncoding α) (BitstringEncoding.toEncoding β) f
 
 /- ## Class definitions -/
 

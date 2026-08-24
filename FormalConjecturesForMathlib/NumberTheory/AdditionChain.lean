@@ -15,8 +15,8 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Lattice
 public import Mathlib.Data.List.Sort
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
@@ -33,21 +33,6 @@ length over all chains ending at $n$.
 confinement here is that an addition step at most doubles, so `r` steps cannot reach past
 `2 ^ r` (`getLast_le_two_pow`), giving `lt_additionChainLength_of_two_pow_lt`.
 -/
-
-namespace List
-
-/-- In a strictly increasing list, the last entry is the largest. -/
-theorem le_getLast_of_pairwise_lt {c : List ℕ} (h : c.Pairwise (· < ·)) {x : ℕ} (hx : x ∈ c)
-    (hne : c ≠ []) : x ≤ c.getLast hne := by
-  induction c using List.reverseRecOn with
-  | nil => simp at hne
-  | append_singleton ys y ih =>
-    rw [List.getLast_append_singleton]
-    rcases List.mem_append.mp hx with hy | hy
-    · exact le_of_lt ((List.pairwise_append.mp h).2.2 _ hy _ (by simp))
-    · simp only [List.mem_singleton] at hy; omega
-
-end List
 
 /-- An *addition chain* is a strictly increasing sequence
 $1 = a_0 < a_1 < \cdots < a_r$ in which every entry after the first is the sum of two
@@ -152,8 +137,9 @@ theorem IsAdditionChain.getLast_le_two_pow {c : List ℕ} (h : IsAdditionChain c
         rcases List.mem_append.mp hb with h' | h'
         · exact h'
         · exact absurd (List.mem_singleton.mp h') (by rintro rfl; omega)
-      have hla := List.le_getLast_of_pairwise_lt (List.pairwise_append.mp hsorted).1 hays hys
-      have hlb := List.le_getLast_of_pairwise_lt (List.pairwise_append.mp hsorted).1 hbys hys
+      have hsub := (List.pairwise_append.mp hsorted).1.imp le_of_lt
+      have hla := hsub.rel_getLast hays
+      have hlb := hsub.rel_getLast hbys
       have hih := ih hchain hys
       have hlen : (ys ++ [y]).length - 1 = ys.length := by simp
       rw [hlen]
@@ -180,7 +166,7 @@ theorem le_two_pow_additionChainLength {n : ℕ} (hne : (additionChainSteps n).N
 theorem lt_additionChainLength_of_two_pow_lt {n r : ℕ} (hne : (additionChainSteps n).Nonempty)
     (h : 2 ^ r < n) : r < additionChainLength n := by
   by_contra hcon
-  push_neg at hcon
+  push Not at hcon
   have h1 := le_two_pow_additionChainLength hne
   have h2 : (2 : ℕ) ^ additionChainLength n ≤ 2 ^ r := Nat.pow_le_pow_right (by omega) hcon
   omega

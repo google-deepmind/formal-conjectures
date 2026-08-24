@@ -30,8 +30,6 @@ section BitstringEncodings
 This section provides a type`class`-inferrable version of
 Mathlib's `Computability.Encoding`, specialized to the alphabet `Bool`.
 
-(Note that Mathlib#37928 redefined `Computability.Encoding`, see PR for details.)
-
 Making it a `class` makes it easier to quickly ask if a function is computable in polynomial time,
 without having to explicitly pass around the encoding (See `IsPolyTime`).
 
@@ -49,7 +47,7 @@ formalizations of questions of polynomial-time computability will capture the in
 
 /-- A canonical encoding of a type as bitstrings (`List Bool`).
 
-This is a class version of Mathlib v4.32's `Computability.Encoding`, specialized to the
+This is a class version of Mathlib's `Computability.Encoding`, specialized to the
 alphabet `Bool`. -/
 class BitstringEncoding (α : Type*) where
   /-- The encoding function. -/
@@ -69,14 +67,12 @@ theorem encode_injective [BitstringEncoding α] :
     Function.Injective (encode : α → List Bool) := fun _ _ h =>
   Option.some_injective _ (by rw [← decode_encode, ← decode_encode, h])
 
-/-- The bundled `Computability.FinEncoding` corresponding to a `BitstringEncoding`
-(over the finite alphabet `Bool`). -/
-def toFinEncoding (α : Type*) [BitstringEncoding α] : Computability.FinEncoding α where
-  Γ := Bool
+/-- The bundled `Computability.Encoding` (over the finite alphabet `Bool`) corresponding to a
+`BitstringEncoding`. -/
+def toEncoding (α : Type*) [BitstringEncoding α] : Computability.Encoding α Bool where
   encode := encode
   decode := decode
   decode_encode := decode_encode
-  ΓFin := inferInstance
 
 /-- Transport a `BitstringEncoding` along an injection `f` with partial inverse `g`. -/
 @[reducible]

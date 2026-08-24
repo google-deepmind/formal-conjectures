@@ -105,21 +105,22 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
       · refine (Nat.lt_mul_iff_one_lt_left ?_).2 ?_ <;> omega
       all_goals omega
 
-instance Reachable.decide : ∀ m n, Decidable (Reachable m n)
+set_option warn.classDefReducibility false in
+instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) :=
+  match m, n with
   | 0, n => isFalse (not_reachable_zero_fst n)
   | 1, 0 => isFalse (not_reachable_zero_snd 1)
   | 1, n+1 => isTrue (Reachable.one.le (by omega))
   | m+2, n => by
-      let d : ∀ {m₁} (h : m₁ < m + 2) {n}, Decidable (Reachable m₁ n) :=
-        fun h ↦ Reachable.decide _ _
-      refine @decidable_of_iff' _ _ (reachable_iff_of_two_le (m+2) n (by omega)) ?_
+      refine @decidable_of_iff' _ _ (reachable_iff_of_two_le (m+2) n (by lia)) ?_
       refine Nat.decidableExistsLT' (I := fun m₁ hm₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun m₂ hm₂ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₁ hn₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₂ hn₂ ↦ ?_)
       refine instDecidableAnd (dq := ?_)
-      refine instDecidableAnd (dp := d hm₁) (dq := ?_)
-      exact instDecidableAnd (dp := d hm₂)
+      refine instDecidableAnd (dp := Reachable.decide m₁ _) (dq := ?_)
+      exact instDecidableAnd (dp := Reachable.decide m₂ _)
+  termination_by (m, n)
 
 /--
 The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity):

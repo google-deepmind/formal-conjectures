@@ -38,7 +38,7 @@ open ComplexityTheory
 /-- Sanity check: the identity function is polynomial-time computable. -/
 @[category test, AMS 68]
 theorem isPolyTime_id {α : Type} [BitstringEncoding α] : IsPolyTime (id : α → α) :=
-  ⟨Turing.idComputableInPolyTime (BitstringEncoding.toFinEncoding α)⟩
+  ⟨Turing.idComputableInPolyTime (BitstringEncoding.toEncoding α).encode⟩
 
 /--
 Is natural/integer factorization computable in polynomial time?
