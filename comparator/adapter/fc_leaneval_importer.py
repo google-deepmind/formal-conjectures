@@ -551,6 +551,13 @@ def import_problem(problem, answer_type=None, module=None):
     # this is what ties the two together.
     qualified = ".".join(namespaces_at_target + [original_declared])
     mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
+    source_url = docstring_reference(module_doc)
+    if not source_url:
+        print(
+            f"{declaration}: the module docstring has no *Reference:* link; "
+            "the provenance sidecar will carry no source_url",
+            file=sys.stderr,
+        )
     manifest = ProblemManifest(
         # The default id is the qualified name: two modules declaring
         # `conjecture` in different namespaces must not share a workspace.
@@ -569,7 +576,7 @@ def import_problem(problem, answer_type=None, module=None):
             original,
             mathlib_rev,
         ),
-        source_url=docstring_reference(module_doc),
+        source_url=source_url,
         category=facts.get("category") or "",
     )
     return marked_up, manifest

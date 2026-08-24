@@ -122,16 +122,16 @@ def file_scoped_preamble(lines, start_line):
 def docstring_reference(module_doc):
     """The source citation Formal Conjectures already writes in the module.
 
-    Module docstrings carry a `*Reference:*` line naming where the problem
-    comes from, sometimes with several links under it. The first is the
-    problem's own; later ones are commentary and proof notes.
+    Module docstrings carry a `*Reference:*` or `*References:*` line naming
+    where the problem comes from, sometimes with several links under it. The
+    first is the problem's own; later ones are commentary and proof notes.
     """
     if not module_doc:
         return ""
-    after = module_doc.split("*Reference:*", 1)
-    if len(after) != 2:
+    marker = re.search(r"\*References?:\*", module_doc)
+    if not marker:
         return ""
-    link = re.search(r"\]\((https?://[^)\s]+)\)", after[1])
+    link = re.search(r"\]\((https?://[^)\s]+)\)", module_doc[marker.end() :])
     return link.group(1) if link else ""
 
 def module_name(rel_path):
