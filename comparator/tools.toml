@@ -5,8 +5,10 @@
 [tools]
 comparator = "71b52ec29e06d4b7d882726553b1ceb99a2499e0"
 landrun = "5ed4a3db3a4ad930d577215c6b9abaa19df7f99f"
-# lean4export: the tag matching this repository's lean-toolchain, v4.27.0 today.
-lean4export = "v4.27.0"
+# lean4export: no upstream tag exists for this repository's v4.33.1 yet;
+# build the v4.33.0 tag under this repository's toolchain (patch releases
+# share the export format).
+lean4export = "v4.33.0"
 
 # Where a generated workspace is built and checked. These are LeanEval's pins,
 # not this repository's: a workspace is vendored into lean-eval and built

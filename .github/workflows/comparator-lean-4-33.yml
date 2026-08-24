@@ -10,7 +10,7 @@ name: Generated workspace at LeanEval pins
 #
 # The two toolchains in this job are the point, not an accident. The importer
 # reads the declaration's source range, binders and `answer(sorry)` slot types
-# from an environment elaborated at this repository's Lean 4.27; the workspace
+# from an environment elaborated at this repository's Lean 4.33.1; the workspace
 # is built and checked at LeanEval's Lean 4.33. If those two disagree about a
 # statement or a slot type, this job is where it shows.
 
@@ -74,7 +74,7 @@ jobs:
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator
 
-      # `--verify` elaborates the marked-up module here, at 4.27. It is not a
+      # `--verify` elaborates the marked-up module here, at 4.33.1. It is not a
       # substitute for the 4.33 build below; it is what keeps an FC-side
       # copying defect from being reported as a LeanEval build failure.
       - name: Import and generate two workspaces
@@ -88,7 +88,7 @@ jobs:
             python3 comparator/adapter/make_comparator_workspace.py "$d" \
               --out .comparator --verify
           done
-          # One plain theorem and one `answer(sorry)` slot typed at 4.27.
+          # One plain theorem and one `answer(sorry)` slot typed at 4.33.1.
           grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" \
             .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9/Challenge.lean
           # Generated for LeanEval, not for here.

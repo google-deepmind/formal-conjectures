@@ -8,27 +8,3 @@
 #   stage        "source" (import or --verify at FC pins) or
 #                "target" (compile at LeanEval pins)
 #   reason       what fails and why it is not fixed here
-
-[[failure]]
-declaration = "Erdos1092.f_asymptotic_general"
-workspace = "Erdos1092_f_asymptotic_general"
-stage = "target"
-reason = """The copied `f` definition synthesizes `Fintype ↑H.verts` and
-`Fintype ↑H.coe.edgeSet` at this repository's Mathlib but not at LeanEval's
-(observed at target pin 6f1ef4e5): instance drift between the two revisions,
-not a copying defect. Formal Conjectures' planned toolchain bump (to Lean 4.33;
-#4428 stages v4.32.0) adapts the source and retires the gap — kim-em verified on
-2026-08-21 that the generated Challenge compiles at LeanEval's target pins on a
-merge with #4428. Re-run the audit after the bump merges and remove this entry."""
-
-[[failure]]
-declaration = "EllipticCurveRank.RatEllipticCurve.twentyone_le_rank_height_count_asymptotic"
-workspace = "EllipticCurveRank_RatEllipticCurve_twentyone_le_rank_height_count_asymptotic"
-stage = "target"
-reason = """The copied `toWeierstrass⟮ℚ⟯` Mordell-Weil notation elaborates at
-this repository's Mathlib but not at LeanEval's (observed at target pin
-6f1ef4e5): the notation's shape changed between the two revisions, in a
-dependency copied faithfully from source. Retired by the repository's planned
-toolchain bump (to Lean 4.33; #4428 stages v4.32.0) — kim-em verified on
-2026-08-21 at LeanEval's target pins on a merge with #4428. Re-run the audit
-after the bump merges and remove this entry."""

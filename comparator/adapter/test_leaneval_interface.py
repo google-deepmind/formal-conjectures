@@ -49,7 +49,7 @@ def a_source(**overrides):
         "declaration": "erdos_940",
         "copied_dependencies": ("Foo.bar",),
         "original_declaration": "theorem erdos_940 : True := by\n  sorry",
-        "lean_toolchain": "leanprover/lean4:v4.27.0",
+        "lean_toolchain": "leanprover/lean4:v4.33.1",
         "mathlib_revision": "c" * 40,
     }
     fields.update(overrides)
@@ -108,7 +108,7 @@ class ManifestTest(unittest.TestCase):
         # The consumer supplies its own pins, but it cannot know where these
         # hole types were read unless the manifest says so.
         payload = a_manifest().to_json_object()
-        self.assertEqual(payload["source"]["lean_toolchain"], "leanprover/lean4:v4.27.0")
+        self.assertEqual(payload["source"]["lean_toolchain"], "leanprover/lean4:v4.33.1")
 
     def test_the_manifest_survives_a_round_trip(self):
         manifest = a_manifest()
