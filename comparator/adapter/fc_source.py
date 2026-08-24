@@ -444,13 +444,17 @@ def fc_notation_commands():
                     text.append(lines[follow])
                     follow += 1
                 command = "\n".join(text)
-                # Every string-literal token is a candidate. The gates that
-                # decide whether a command is actually copied — the token must
-                # appear in the module text, and a scoped notation's namespace
-                # must be among the opens — do the filtering; an ASCII-token
-                # notation such as `J(` in the shared library is otherwise
-                # invisible here and its consumers fail to elaborate.
-                tokens = re.findall(r'"([^"]+)"', command)
+                # A command's distinctive tokens decide whether a module
+                # uses it: `J(` or `α(` says something, the closing `")"`
+                # matches every text. So delimiter-only literals are dropped,
+                # while ASCII tokens with letters stay candidates — the old
+                # non-ASCII rule hid `J(`, `L(` and `e` from the shared
+                # library and their consumers failed to elaborate.
+                tokens = [
+                    token
+                    for token in re.findall(r'"([^"]+)"', command)
+                    if any(c.isalnum() or ord(c) > 127 for c in token)
+                ]
                 if not tokens:
                     continue
                 bracket = re.match(r"^(?:@\[[^\]]*\]\s*)?scoped\[([\w.«»]+)\]", line)
