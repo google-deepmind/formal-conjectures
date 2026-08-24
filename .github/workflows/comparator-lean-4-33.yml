@@ -165,12 +165,17 @@ jobs:
               "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop :=\n"
               "  ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])"
           )
-          text = text.replace(
+          # Each replacement must actually fire: a generated shape change
+          # that made either a no-op would let this verdict pass vacuously.
+          filled = text.replace(
               "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop := sorry",
               answer,
           )
-          text = text.replace(":= by\n  sorry", ":=\n  Iff.rfl")
-          submission.write_text(text, encoding="utf-8")
+          assert filled != text, "the answer hole was not where this step expects"
+          text = filled
+          filled = text.replace(":= by\n  sorry", ":=\n  Iff.rfl")
+          assert filled != text, "the proof hole was not where this step expects"
+          submission.write_text(filled, encoding="utf-8")
           PY
           (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9 && lake build && lake test)
           echo "Comparator accepted a gamed definition hole; hole values need a human."

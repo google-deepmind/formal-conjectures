@@ -23,8 +23,10 @@ name: FC100 whole-set audit
 # gate that only ever passes proves nothing.
 #
 # Two full Mathlib builds make this far too heavy for every pull request, so
-# it runs on demand and weekly; the per-PR jobs cover representative
-# declarations for each defect class instead.
+# it runs on demand, weekly, and on pull requests that change what it
+# measures — the adapter, pins, ledger, templates or tooling. Ordinary
+# statement edits rely on the per-PR jobs' representative declarations and
+# the weekly run as backstop.
 
 concurrency:
   group: fc100-audit-${{ github.ref }}
@@ -36,13 +38,26 @@ on:
     # Weekly, early Monday UTC.
     - cron: '17 4 * * 1'
   # Dispatch and schedule only reach a workflow on the default branch, so a
-  # pull request introducing or reconfiguring the audit could never show its
-  # run. Trigger on the audit's own configuration instead: these paths change
-  # when the audit changes, and the artifact is the review evidence.
+  # pull request that changes what the audit measures could never show its
+  # run. Trigger on everything the audit's outcome depends on: the adapter,
+  # the templates and problem overrides, the pins, the ledger, the composite
+  # actions that build its tools, and the toolchain the modules elaborate
+  # under. Ordinary statement edits stay out — the weekly run is their
+  # backstop, and a whole-set run per problem PR would be two Mathlib builds
+  # of noise.
   pull_request:
     paths:
-      - '.github/workflows/fc100-audit.yml'
+      - 'comparator/adapter/**'
+      - 'comparator/templates/**'
+      - 'comparator/problems/**'
+      - 'comparator/tools.toml'
       - 'comparator/known_failures.toml'
+      - '.github/actions/build-lean-eval-generator/**'
+      - '.github/actions/prepare-extractor/**'
+      - '.github/workflows/fc100-audit.yml'
+      - 'FormalConjectures/Subsets/FC100OpenSet1.lean'
+      - 'lean-toolchain'
+      - 'lake-manifest.json'
 
 permissions:
   contents: read
@@ -110,12 +125,46 @@ jobs:
             --report fc100-target-report.json \
             --known-failures comparator/known_failures.toml
 
-      - name: Upload the audit report
+      # The artifact is the review evidence, so it carries what produced the
+      # result, not just the result: the exact request bytes, every
+      # workspace with its provenance sidecar, both reports, and a manifest
+      # digesting each file so the bundle can vouch for itself.
+      - name: Digest the audit bundle
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+
+          manifest = {}
+          for pattern in ("fc100-report.json", "fc100-target-report.json"):
+              path = pathlib.Path(pattern)
+              if path.is_file():
+                  manifest[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+          root = pathlib.Path(".fc100")
+          if root.is_dir():
+              for path in sorted(root.rglob("*")):
+                  if path.is_file():
+                      manifest[str(path)] = hashlib.sha256(
+                          path.read_bytes()
+                      ).hexdigest()
+          pathlib.Path("bundle-manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          print(f"{len(manifest)} files digested")
+          PY
+
+      - name: Upload the audit bundle
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: fc100-audit-report
+          name: fc100-audit-bundle
           path: |
             fc100-report.json
             fc100-target-report.json
+            bundle-manifest.json
+            .fc100/
           if-no-files-found: warn
+          include-hidden-files: true

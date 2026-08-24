@@ -192,8 +192,13 @@ def seam_files(pairs, group=None):
     return request, files
 
 
-def generate_workspaces(pairs, out_dir, group=None):
-    """Generate one workspace per pair under `out_dir`, via the pinned binary."""
+def generate_workspaces(pairs, out_dir, group=None, emit_request=None):
+    """Generate one workspace per pair under `out_dir`, via the pinned binary.
+
+    With `emit_request`, the exact request bytes piped to the binary are also
+    written to that path — a set audit's artifact should carry the request
+    that produced it, not just the reports about it.
+    """
     request, problems = _seam(pairs, group=group)
     # One serialisation, used everywhere: the string piped to the binary is
     # the string `--emit-import` writes and the sidecar digests. The request
@@ -213,6 +218,10 @@ def generate_workspaces(pairs, out_dir, group=None):
         )
     finally:
         shutil.rmtree(staging, ignore_errors=True)
+    if emit_request is not None:
+        emit_request = pathlib.Path(emit_request)
+        emit_request.parent.mkdir(parents=True, exist_ok=True)
+        emit_request.write_text(request_text, encoding="utf-8")
     module_content = {p["id"]: p["moduleContent"] for p in request["problems"]}
     producer = importer.producer_record()
     # Every refusal — digest, identity, sidecar, target-already-exists —
@@ -317,7 +326,12 @@ def import_set(set_name, out_dir, verify=False, known_failures=None):
     # solved members marked by their category tag, so every member goes to
     # the open-conjectures group (google-deepmind/formal-conjectures#5075).
     written = (
-        generate_workspaces(pairs, out_dir, group="open-conjectures")
+        generate_workspaces(
+            pairs,
+            out_dir,
+            group="open-conjectures",
+            emit_request=pathlib.Path(out_dir) / "request.json",
+        )
         if pairs
         else []
     )
