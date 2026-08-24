@@ -151,7 +151,7 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $c(n) + d(n) = b(n)$.
 
-**Proof outline** (kernel-checked development at the `formal_proof` permalink below):
+**Proof outline**:
 strong two-step induction on the paired recurrences. The even/odd cases are coupled
 through closed identities between consecutive terms of the relevant pair of sequences
 (here $c, d$), and the induction step is discharged by `rfl`-level unfolding of the definitions
@@ -167,7 +167,7 @@ theorem conjecture1 (n : ℕ) : c n + d n = b n := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $e(n) + f(n) = b(n)$.
 
-**Proof outline** (kernel-checked development at the `formal_proof` permalink below):
+**Proof outline**:
 strong two-step induction on the paired recurrences. The even/odd cases are coupled
 through closed identities between consecutive terms of the relevant pair of sequences
 (here $e, f$), and the induction step is discharged by `rfl`-level unfolding of the definitions
@@ -183,7 +183,7 @@ theorem conjecture2 (n : ℕ) : e n + f n = b n := by
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $g(n) + a(n) = b(n)$.
 
-**Proof outline** (kernel-checked development at the `formal_proof` permalink below):
+**Proof outline**:
 strong two-step induction on the paired recurrences. The even/odd cases are coupled
 through closed identities between consecutive terms of the relevant pair of sequences
 (here $g, a$), and the induction step is discharged by `rfl`-level unfolding of the definitions
