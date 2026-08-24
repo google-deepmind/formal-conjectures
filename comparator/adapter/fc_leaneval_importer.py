@@ -25,6 +25,7 @@ explicit source-only proof dependency when Lean's opaque-value erasure makes
 that dependency unrecoverable from the compiled environment.
 """
 
+import dataclasses
 import pathlib
 import re
 import subprocess
@@ -126,15 +127,15 @@ def explicit_copy_dependencies(problem_file):
             raise SystemExit(f"copy dependency module does not exist: {relative}")
         module = module_name(relative)
         facts = elaborator_facts(module, entry["declaration"])
-        records.extend(facts.get("dependencies", []))
+        records.extend(facts.dependencies)
         records.append(
             {
-                "name": facts["name"],
+                "name": facts.name,
                 "module": module,
-                "range": facts["range"],
+                "range": facts.range,
             }
         )
-        generated.extend(facts.get("generatedDependencies", []))
+        generated.extend(facts.generated_dependencies)
     return records, generated
 
 
@@ -386,22 +387,21 @@ def locate_target(problem, module=None):
     the FC module name, the module docstring, and the elaborator facts with
     the problem file's explicit copy dependencies merged in.
     """
-    problem_file = load_manifest(problem)
-    declaration = problem_file.get("declaration", problem)
-    # An argument given on the command line is explicit, so it wins over the
-    # problem file; the file is the durable record of the same choice.
-    module = module or problem_file.get("module")
-    path, _imports, module_doc, _body = find_declaration(declaration, module)
+    problem_file, declaration, located = _resolve(problem, module)
+    path, _imports, module_doc, _body = located
     fc_module = module_name(path.relative_to(ROOT))
     facts = elaborator_facts(fc_module, declaration)
-    if facts["range"] is None:
+    if facts.range is None:
         raise SystemExit(f"{declaration}: no source range recorded")
     explicit_dependencies, explicit_generated = explicit_copy_dependencies(problem_file)
-    facts["dependencies"] = merge_dependency_records(
-        explicit_dependencies, facts.get("dependencies", [])
-    )
-    facts["generatedDependencies"] = list(
-        dict.fromkeys(explicit_generated + facts.get("generatedDependencies", []))
+    facts = dataclasses.replace(
+        facts,
+        dependencies=tuple(
+            merge_dependency_records(explicit_dependencies, list(facts.dependencies))
+        ),
+        generated_dependencies=tuple(
+            dict.fromkeys(explicit_generated + list(facts.generated_dependencies))
+        ),
     )
     return problem_file, declaration, path, fc_module, module_doc, facts
 
@@ -434,7 +434,7 @@ def restate(original, declaration, facts, answer_type=None):
         # still meaningful, and the provenance sidecar records the FC name.
         declared, statement = flatten_declared_name(declared, statement)
     statement, holes = hoist_answers(
-        statement, declared, facts.get("answerTypes", []), answer_type
+        statement, declared, list(facts.answer_types), answer_type
     )
     # A `research solved` statement carries its answer rather than a `sorry`
     # slot, so nothing above removed it and `answer(` would reach a workspace
@@ -445,7 +445,7 @@ def restate(original, declaration, facts, answer_type=None):
 
 def explicit_arguments(facts, declared):
     """The explicit binders the Solution adapter applies by name."""
-    args = [b["name"] for b in facts["binders"] if b["explicit"]]
+    args = [b["name"] for b in facts.binders if b["explicit"]]
     bad = [a for a in args if "✝" in a or "._" in a]
     if bad:
         raise SystemExit(
@@ -515,12 +515,20 @@ def place_notations(dependencies, scope_text, statement, copied):
     return dependencies
 
 
-def statement_pair(problem, module=None):
-    """The `(module, declaration)` pair `import_problem` will ask the elaborator about."""
+def _resolve(problem, module=None):
+    """The problem file, declaration and source location one import works on."""
     problem_file = load_manifest(problem)
     declaration = problem_file.get("declaration", problem)
+    # An argument given on the command line is explicit, so it wins over the
+    # problem file; the file is the durable record of the same choice.
     module = module or problem_file.get("module")
-    path, _imports, _module_doc, _body = find_declaration(declaration, module)
+    located = find_declaration(declaration, module)
+    return problem_file, declaration, located
+
+
+def statement_pair(problem, module=None):
+    """The `(module, declaration)` pair `import_problem` will ask the elaborator about."""
+    _, declaration, (path, _imports, _doc, _body) = _resolve(problem, module)
     return module_name(path.relative_to(ROOT)), declaration
 
 
@@ -535,14 +543,14 @@ def import_problem(problem, answer_type=None, module=None):
         problem, module
     )
     source_lines = path.read_text(encoding="utf-8").split("\n")
-    original, lo = slice_range(source_lines, facts["range"])
+    original, lo = slice_range(source_lines, facts.range)
     preamble, namespaces_at_target = file_scoped_preamble(source_lines, lo)
     dependencies, copied = closure_region(
-        facts.get("dependencies", []),
-        facts.get("generatedDependencies", []),
+        list(facts.dependencies),
+        list(facts.generated_dependencies),
         declaration,
         namespaces_at_target,
-        target_name=facts.get("name"),
+        target_name=facts.name,
     )
     statement, declared, original_declared, holes = restate(
         original, declaration, facts, answer_type
@@ -583,12 +591,12 @@ def import_problem(problem, answer_type=None, module=None):
             fc_module,
             path.relative_to(ROOT),
             fc_rev,
-            [dep["name"] for dep in facts.get("dependencies", [])],
+            [dep["name"] for dep in facts.dependencies],
             original,
             mathlib_rev,
         ),
         source_url=source_url,
-        category=facts.get("category") or "",
+        category=facts.category or "",
     )
     return marked_up, manifest
 

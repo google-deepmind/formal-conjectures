@@ -96,7 +96,11 @@ python3 comparator/adapter/make_comparator_workspace.py --set FC100OpenSet1 \
 ```
 
 One request carries every declaration that imports; failures are recorded per
-declaration in the report instead of aborting the run. With
+declaration in the report instead of aborting the run. The set is prefetched
+through `comparator_facts --batch`, so the Mathlib environment is imported
+once for the whole run rather than once per declaration; a declaration the
+batch cannot answer falls back to its own single run and fails with that
+run's message. With
 `--known-failures`, the run fails unless the failures are exactly the recorded
 ones — an unexpected failure and a silently fixed one both count.
 

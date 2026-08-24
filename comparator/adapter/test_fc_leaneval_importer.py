@@ -352,18 +352,25 @@ class MathlibOnlyClosureTest(unittest.TestCase):
         self.assertEqual(copied, [("Foo.bar", "def Foo.bar := 1")])
 
     def test_an_explicit_source_only_dependency_carries_its_closure(self):
-        facts = {
-            "name": "Foo.opaqueLemma",
-            "range": {"startLine": 2, "endLine": 2, "endColumn": None},
-            "dependencies": [
-                {
-                    "name": "Foo.Predicate",
-                    "module": "FormalConjectures.Example",
-                    "range": {"startLine": 1, "endLine": 1, "endColumn": None},
-                }
-            ],
-            "generatedDependencies": ["Foo.opaqueLemma._proof_1"],
-        }
+        facts = fc_source.FactsRecord.from_payload(
+            {
+                "declaration": "Foo.opaqueLemma",
+                "name": "Foo.opaqueLemma",
+                "category": None,
+                "range": {"startLine": 2, "endLine": 2, "endColumn": None},
+                "binders": [],
+                "answerTypes": [],
+                "dependencies": [
+                    {
+                        "name": "Foo.Predicate",
+                        "module": "FormalConjectures.Example",
+                        "range": {"startLine": 1, "endLine": 1, "endColumn": None},
+                    }
+                ],
+                "generatedDependencies": ["Foo.opaqueLemma._proof_1"],
+            },
+            "Foo.opaqueLemma",
+        )
         with tempfile.TemporaryDirectory() as tmp, _root_at(tmp):
             module = pathlib.Path(tmp) / "FormalConjectures" / "Example.lean"
             module.parent.mkdir(parents=True)

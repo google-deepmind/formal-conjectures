@@ -10,6 +10,7 @@ a manifest is; `fc_leaneval_importer.py` assembles those from these answers.
 """
 
 
+import dataclasses
 import functools
 import json
 import pathlib
@@ -43,6 +44,73 @@ KEEP_LOOSE = re.compile(
     r"|notation|postfix|prefix|infixl|infixr|infix|macro|syntax|macro_rules)\b"
     r"|^noncomputable section\b"
 )
+
+@dataclasses.dataclass(frozen=True)
+class FactsRecord:
+    """One declaration's elaborator facts, held to the payload the extractor emits.
+
+    The fourth JSON boundary in the adapter, made as strict as the other
+    three: the provenance sidecar, the problem files and the failure ledger
+    all refuse keys nothing reads, and the extractor payload now does too, so
+    a drift between `comparator_facts` and this side fails at the seam
+    instead of surfacing as a missing default somewhere downstream.
+    """
+
+    declaration: str
+    name: str
+    category: str
+    range: dict
+    binders: tuple
+    answer_types: tuple
+    dependencies: tuple
+    generated_dependencies: tuple
+
+    PAYLOAD_KEYS = frozenset(
+        {
+            "declaration",
+            "name",
+            "category",
+            "range",
+            "binders",
+            "answerTypes",
+            "dependencies",
+            "generatedDependencies",
+        }
+    )
+    BINDER_KEYS = frozenset({"name", "explicit"})
+    DEPENDENCY_KEYS = frozenset({"name", "module", "range"})
+
+    @classmethod
+    def from_payload(cls, payload, declaration):
+        unknown = sorted(set(payload) - cls.PAYLOAD_KEYS)
+        missing = sorted(cls.PAYLOAD_KEYS - set(payload))
+        if unknown or missing:
+            raise SystemExit(
+                f"comparator_facts {declaration}: payload keys do not match the "
+                f"wire format (unknown: {unknown or 'none'}, "
+                f"missing: {missing or 'none'})"
+            )
+        for binder in payload["binders"]:
+            if set(binder) != cls.BINDER_KEYS:
+                raise SystemExit(
+                    f"comparator_facts {declaration}: malformed binder {binder}"
+                )
+        for dep in payload["dependencies"]:
+            if set(dep) != cls.DEPENDENCY_KEYS:
+                raise SystemExit(
+                    f"comparator_facts {declaration}: malformed dependency {dep}"
+                )
+        return cls(
+            declaration=payload["declaration"],
+            name=payload["name"],
+            category=payload["category"],
+            range=payload["range"],
+            binders=tuple(payload["binders"]),
+            answer_types=tuple(payload["answerTypes"]),
+            dependencies=tuple(payload["dependencies"]),
+            generated_dependencies=tuple(payload["generatedDependencies"]),
+        )
+
 
 _FACTS_CACHE = {}
 
@@ -90,7 +158,7 @@ def elaborator_facts(module, declaration):
     """
     cached = _FACTS_CACHE.get((module, declaration))
     if cached is not None:
-        return json.loads(json.dumps(cached))
+        return FactsRecord.from_payload(cached, declaration)
     proc = subprocess.run(
         ["lake", "exe", "comparator_facts", module, declaration],
         capture_output=True,
@@ -105,7 +173,7 @@ def elaborator_facts(module, declaration):
     out = proc.stdout
     if "{" not in out:
         raise SystemExit(f"comparator_facts {declaration}: no JSON in output")
-    return json.loads(out[out.index("{") :])
+    return FactsRecord.from_payload(json.loads(out[out.index("{") :]), declaration)
 
 def file_scoped_preamble(lines, start_line):
     """Directives in force at `start_line`, and the namespace stack there.
