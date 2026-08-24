@@ -187,9 +187,6 @@ class SlugTest(unittest.TestCase):
         )
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class DeclarationSpanTest(unittest.TestCase):
     """Spans are computed from the rendered text, exactly."""
@@ -293,23 +290,62 @@ class BuildRequestTest(unittest.TestCase):
 
 
 class ParseResponseTest(unittest.TestCase):
-    def _response(self, content="hello"):
+    def _response(self, content="hello", **entry_overrides):
         import hashlib
         import json
 
-        return json.dumps(
-            {
-                "schemaVersion": 1,
-                "files": [
-                    {
-                        "problemId": "p",
-                        "path": "a.txt",
-                        "sha256": hashlib.sha256(content.encode()).hexdigest(),
-                        "content": "hello",
-                    }
-                ],
-            }
-        )
+        entry = {
+            "problemId": "p",
+            "path": "a.txt",
+            "sha256": hashlib.sha256(content.encode()).hexdigest(),
+            "content": "hello",
+        }
+        entry.update(entry_overrides)
+        return json.dumps({"schemaVersion": 1, "files": [entry]})
+
+    def test_a_traversal_path_is_refused(self):
+        for path in ("../outside.txt", "a/../../b.txt", "/etc/x", "a//b.txt",
+                     "./a.txt", "a\\b.txt", "C:whatever"):
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(SystemExit, "response path"):
+                    parse_response(self._response(path=path))
+
+    def test_the_sidecar_name_is_refused(self):
+        # A response naming fc-provenance.json would silently lose to the
+        # sidecar written after it — and its recorded digest would then
+        # describe bytes no longer on disk.
+        with self.assertRaisesRegex(SystemExit, "provenance sidecar"):
+            parse_response(self._response(path="fc-provenance.json"))
+
+    def test_unknown_response_keys_are_refused(self):
+        import json
+
+        payload = json.loads(self._response())
+        payload["extra"] = True
+        with self.assertRaisesRegex(SystemExit, "unknown keys"):
+            parse_response(json.dumps(payload))
+
+    def test_unknown_entry_keys_are_refused(self):
+        with self.assertRaisesRegex(SystemExit, "unknown keys"):
+            parse_response(self._response(mode="0755"))
+
+    def test_a_missing_entry_field_is_a_refusal_not_a_crash(self):
+        import json
+
+        payload = json.loads(self._response())
+        del payload["files"][0]["sha256"]
+        with self.assertRaisesRegex(SystemExit, "has no sha256"):
+            parse_response(json.dumps(payload))
+
+    def test_non_json_is_a_refusal_not_a_crash(self):
+        with self.assertRaisesRegex(SystemExit, "not JSON"):
+            parse_response("lake build output\n{")
+
+    def test_the_returned_workspaces_must_be_the_requested_ones(self):
+        with self.assertRaisesRegex(SystemExit, "returned no files for q"):
+            parse_response(self._response(), expected_ids=["p", "q"])
+        with self.assertRaisesRegex(SystemExit, "nothing requested"):
+            parse_response(self._response(), expected_ids=[])
 
     def test_a_good_response_yields_the_file_map(self):
         self.assertEqual(parse_response(self._response()), {"p": {"a.txt": "hello"}})
@@ -444,3 +480,6 @@ class ProducerRecordTest(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "unknown keys"):
             ProblemManifest.from_json_object(payload)
 
+
+if __name__ == "__main__":
+    unittest.main()

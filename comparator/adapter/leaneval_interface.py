@@ -687,31 +687,96 @@ def build_request(problems, target, workspace_test, context_root):
     }
 
 
-def parse_response(text):
-    """The generator's file maps, with every digest checked.
+def safe_workspace_path(path):
+    """A response path fit to join under a directory, or a refusal.
+
+    The pinned generator is still an external process across a versioned
+    boundary; a future defect there must fail closed here, not write outside
+    the staging tree. Strictly relative POSIX, every component a real name:
+    no absolute paths, no drive letters, no backslashes, no NUL, no empty or
+    `.`/`..` components — which also makes the supplied spelling its own
+    normal form, so two spellings of one file cannot slip past the duplicate
+    check.
+    """
+    if not path or "\x00" in path or "\\" in path:
+        raise SystemExit(f"response path {path!r} is not a plain relative path")
+    if path.startswith("/") or re.match(r"^[A-Za-z]:", path):
+        raise SystemExit(f"response path {path!r} is not relative")
+    if any(part in ("", ".", "..") for part in path.split("/")):
+        raise SystemExit(f"response path {path!r} has an empty or dot component")
+    return path
+
+
+# The provenance sidecar's name inside a workspace. It is this side's file:
+# a generator response naming it would silently lose to the sidecar written
+# after it, so the response parser refuses it outright.
+PROVENANCE_STEM = "fc-provenance"
+PROVENANCE_FILE = f"{PROVENANCE_STEM}.json"
+
+
+def parse_response(text, expected_ids=None):
+    """The generator's file maps, with every byte and identity checked.
 
     Returns `{problem_id: {path: content}}`. A digest mismatch means the
     bytes were damaged in transit or the pinned generator is not the one
     this code was written against; either way the workspace cannot be
-    trusted, so refuse.
+    trusted, so refuse. The same goes for shape: unknown fields, missing
+    fields, unsafe paths and — when `expected_ids` is given — any mismatch
+    between the workspaces requested and the workspaces returned. An extra
+    workspace dropped on the floor is as wrong as a missing one.
     """
-    payload = json.loads(text)
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as error:
+        raise SystemExit(f"generator response is not JSON: {error}") from None
+    if not isinstance(payload, dict):
+        raise SystemExit("generator response is not a JSON object")
+    unknown = sorted(set(payload) - {"schemaVersion", "files"})
+    if unknown:
+        raise SystemExit(f"generator response has unknown keys: {', '.join(unknown)}")
     version = payload.get("schemaVersion")
     if version != CONTRACT_VERSION:
         raise SystemExit(
             f"generator response schema version {version!r} is not {CONTRACT_VERSION}"
         )
+    if "files" not in payload:
+        raise SystemExit("generator response has no files")
     workspaces = {}
     for entry in payload["files"]:
+        unknown = sorted(set(entry) - {"problemId", "path", "sha256", "content"})
+        if unknown:
+            raise SystemExit(
+                f"a response entry has unknown keys: {', '.join(unknown)}"
+            )
+        missing = sorted({"problemId", "path", "sha256", "content"} - set(entry))
+        if missing:
+            raise SystemExit(f"a response entry has no {', '.join(missing)}")
+        path = safe_workspace_path(entry["path"])
+        if path == PROVENANCE_FILE:
+            raise SystemExit(
+                f"{entry['problemId']}: the response names {PROVENANCE_FILE}, "
+                "which is this side's provenance sidecar"
+            )
         if sha256_text(entry["content"]) != entry["sha256"]:
             raise SystemExit(
-                f"{entry['problemId']}/{entry['path']}: content does not match "
-                "its digest"
+                f"{entry['problemId']}/{path}: content does not match its digest"
             )
         files = workspaces.setdefault(entry["problemId"], {})
-        if entry["path"] in files:
+        if path in files:
+            raise SystemExit(f"{entry['problemId']}/{path}: appears twice in response")
+        files[path] = entry["content"]
+    if expected_ids is not None:
+        expected = set(expected_ids)
+        returned = set(workspaces)
+        missing = sorted(expected - returned)
+        extra = sorted(returned - expected)
+        if missing:
             raise SystemExit(
-                f"{entry['problemId']}/{entry['path']}: appears twice in response"
+                f"the generator returned no files for {', '.join(missing)}"
             )
-        files[entry["path"]] = entry["content"]
+        if extra:
+            raise SystemExit(
+                "the generator returned workspaces nothing requested: "
+                f"{', '.join(extra)}"
+            )
     return workspaces

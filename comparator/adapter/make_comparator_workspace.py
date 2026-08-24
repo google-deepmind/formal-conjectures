@@ -69,12 +69,17 @@ from known_failures import load_known_failures
 import fc_leaneval_importer as importer
 import fc_source
 import leaneval_generator_cli as generator_cli
-from leaneval_interface import build_problem, build_request, dump_json, sha256_text, slug
+from leaneval_interface import (
+    PROVENANCE_FILE,
+    PROVENANCE_STEM,
+    build_problem,
+    build_request,
+    dump_json,
+    sha256_text,
+    slug,
+)
 
 ROOT = importer.ROOT
-
-PROVENANCE_STEM = "fc-provenance"
-PROVENANCE_FILE = f"{PROVENANCE_STEM}.json"
 
 # The request's context directory, relative to the request file, so an
 # emitted seam artifact is self-contained and reproducible from any path.
@@ -82,9 +87,18 @@ CONTEXT_DIR = "context"
 
 
 def _write_files(directory, files):
-    """Materialise a `{relative path: content}` mapping under `directory`."""
+    """Materialise a `{relative path: content}` mapping under `directory`.
+
+    Every destination must land inside `directory`: the mapping may contain
+    paths from a response, and `parse_response` already refuses unsafe ones,
+    but the writer is the last line and checks for itself.
+    """
+    directory = pathlib.Path(directory)
+    base = directory.resolve()
     for relative, content in files.items():
         destination = directory / relative
+        if not destination.resolve().is_relative_to(base):
+            raise SystemExit(f"{relative}: escapes the output directory")
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(content, encoding="utf-8")
 
@@ -170,16 +184,21 @@ def generate_workspaces(pairs, out_dir, group=None):
         # and the provenance sidecars belong to the written workspaces, so
         # neither is staged here.
         _write_files(staging / CONTEXT_DIR, generator_cli.context_files(problems))
-        workspaces = generator_cli.generate(request_text, cwd=staging)
+        workspaces = generator_cli.generate(
+            request_text,
+            cwd=staging,
+            expected_ids=[p["id"] for p in request["problems"]],
+        )
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     module_content = {p["id"]: p["moduleContent"] for p in request["problems"]}
     producer = importer.producer_record()
-    written = []
+    # Every refusal — digest, identity, sidecar, target-already-exists —
+    # happens before the first workspace lands, so a refused batch writes
+    # nothing rather than a prefix of itself.
+    outputs = []
     for _, manifest in pairs:
         problem_id = slug(manifest.id)
-        if problem_id not in workspaces:
-            raise SystemExit(f"the generator returned no files for {problem_id}")
         workspace = dict(workspaces[problem_id])
         # The provenance sidecar rides in the workspace directory, not in the
         # generator's file map: the generator neither knows nor checks it. It
@@ -191,8 +210,11 @@ def generate_workspaces(pairs, out_dir, group=None):
             request_sha256=sha256_text(request_text),
         ).with_producer(producer)
         workspace[PROVENANCE_FILE] = bound.to_json()
-        written.append(write_tree(pathlib.Path(out_dir) / problem_id, workspace))
-    return written
+        outputs.append((pathlib.Path(out_dir) / problem_id, workspace))
+    for target, _ in outputs:
+        if target.exists():
+            raise SystemExit(f"refusing to overwrite existing workspace: {target}")
+    return [write_tree(target, files) for target, files in outputs]
 
 
 def subset_declarations(set_name):

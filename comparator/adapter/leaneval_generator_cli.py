@@ -71,14 +71,15 @@ def context_files(problems):
     return files
 
 
-def generate(request_text, cwd=None):
+def generate(request_text, cwd=None, expected_ids=None):
     """The generator's verified file maps for one request.
 
     Takes the request as its exact serialised bytes, not a dict: the string
     piped to the binary is the same string `--emit-import` writes and the
     sidecar digests, so "the exact bytes crossing the seam" is a fact rather
     than a paraphrase. The request's `contextRoot` stays the relative
-    `context`, resolved against `cwd`. Returns `{problem_id: {path: content}}`.
+    `context`, resolved against `cwd`. With `expected_ids`, the response must
+    cover exactly those workspaces. Returns `{problem_id: {path: content}}`.
     """
     proc = subprocess.run(
         [binary()],
@@ -91,4 +92,4 @@ def generate(request_text, cwd=None):
         raise SystemExit(
             f"lean-eval-generator failed:\n{proc.stderr.strip() or proc.stdout.strip()}"
         )
-    return parse_response(proc.stdout)
+    return parse_response(proc.stdout, expected_ids=expected_ids)
