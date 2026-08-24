@@ -68,8 +68,15 @@ where
     -- `findAnswerExprs` is the repository's own detection: it reads the
     -- annotation the `answer` elaborator leaves, rather than guessing from
     -- `sorryAx` applications.
-    let answerTypes ← forallTelescope info.type fun _ body => do
-      let found := Google.findAnswerExprs body
+    let answerTypes ← forallTelescope info.type fun xs body => do
+      -- The slots live anywhere in the statement: a hypothesis binder
+      -- `(h : c = answer(sorry))` carries one just as the conclusion can.
+      -- Binder types come from the telescope's local declarations, so the
+      -- expressions are closed in the local context and inferType works.
+      let mut found := #[]
+      for x in xs do
+        found := found ++ Google.findAnswerExprs (← x.fvarId!.getDecl).type
+      found := found ++ Google.findAnswerExprs body
       found.mapM fun a => do pure (toString (← ppExpr (← inferType a)))
     let sourceResult ← declarationSource modName ranges
     let declarationText ← match sourceResult with

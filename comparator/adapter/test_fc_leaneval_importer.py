@@ -159,11 +159,26 @@ class StatementTest(unittest.TestCase):
         self.assertNotIn("trivial", out)
         self.assertTrue(out.rstrip().endswith("sorry"))
 
-    def test_term_proof_with_a_structure_literal_is_refused(self):
-        # The statement's own `:=` cannot be told from the proof's, and
-        # cutting at the wrong one truncates the statement.
+    def test_structure_literal_assign_is_statement_text(self):
+        # `{ a := 1 }` lives inside brackets; only the top-level `:=` starts
+        # the proof, so the statement survives intact.
+        out = replace_proof_with_sorry("theorem t : F { a := 1 } := ⟨rfl⟩")
+        self.assertIn("F { a := 1 }", out)
+        self.assertNotIn("⟨rfl⟩", out)
+        self.assertTrue(out.rstrip().endswith("sorry"))
+
+    def test_autoparam_default_is_statement_text(self):
+        # An autoParam binder carries `:= by` inside its parentheses; the
+        # proof is the top-level one.
+        out = replace_proof_with_sorry(
+            "theorem t (h : Fact (1 < 2) := by norm_num) : True := by trivial"
+        )
+        self.assertIn(":= by norm_num", out)
+        self.assertNotIn("trivial", out)
+
+    def test_two_top_level_assigns_are_refused(self):
         with self.assertRaises(SystemExit):
-            replace_proof_with_sorry("theorem t : F { a := 1 } := ⟨rfl⟩")
+            replace_proof_with_sorry("def t : Nat := f := g")
 
     def test_a_line_comment_between_docstring_and_attribute_is_stripped(self):
         # Erdos 918 writes a `--` formalisation note there. One anchored pass

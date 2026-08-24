@@ -39,6 +39,7 @@ KEEP_LOOSE = re.compile(
     # stack and a compilation mode for everything inside it.
     r"^(?:(?:local|scoped)\s+)?"
     r"(open|variable|universe|section|namespace|end|attribute|set_option"
+    r"|omit|include"
     r"|notation|postfix|prefix|infixl|infixr|infix|macro|syntax|macro_rules)\b"
     r"|^noncomputable section\b"
 )
@@ -108,7 +109,17 @@ def file_scoped_preamble(lines, start_line):
                     index += 1
                     text.append(lines[index])
                 preamble.append(("\n".join(text), list(stack)))
-        depth += len(re.findall(r"/-", line)) - len(re.findall(r"-/", line))
+        code = line
+        if depth == 0:
+            # A `/-` inside a string or after `--` is not a comment opener;
+            # inside an open block comment the raw line is what counts.
+            code = re.sub(r'"(?:[^"\\]|\\.)*"', '""', code)
+            # `--` opens a line comment unless it is the tail of the
+            # doc-comment opener `/--`.
+            m = re.search(r"(?<!/)--", code)
+            if m:
+                code = code[: m.start()]
+        depth += len(re.findall(r"/-", code)) - len(re.findall(r"-/", code))
         depth = max(depth, 0)
         index += 1
     scope = list(stack)
@@ -307,8 +318,9 @@ def strip_fc_attributes(block_text):
         return f"@[{', '.join(kept)}]" if kept else ""
 
     text = re.sub(r"@\[([^\]]*)\]", replace, block_text)
-    # An attribute line that emptied out leaves a blank line behind.
-    return re.sub(r"^[ \t]*\n", "", text, flags=re.MULTILINE)
+    # An attribute line that emptied out leaves a blank line behind; other
+    # blank lines are content — a multi-line string may contain one.
+    return re.sub(r"^[ \t]*\n", "", text, count=1) if text != block_text else text
 
 def split_module(module):
     """The components of a dotted module name, respecting guillemet quoting.
@@ -507,25 +519,51 @@ def flatten_declared_name(declared, statement):
     raise SystemExit(f"{declared}: cannot find the declaring occurrence to rename")
 
 def replace_proof_with_sorry(text):
-    """Cut the proof body after `:=`, keeping the statement.
+    """Cut the proof body after the top-level `:=`, keeping the statement.
 
-    A tactic proof is found by `:= by`, which a statement cannot contain,
-    `by` being a keyword. A term proof leaves only a bare `:=` to cut at, and
-    a statement can contain one of those: a structure literal `{ a := b }`
-    inside the statement would be cut in half. With more than one candidate
-    the importer refuses, as everywhere else it cannot decide.
+    Only a `:=` at bracket depth zero can start the proof: an autoParam
+    binder default `(h : Fact P := by norm_num)` and a structure literal
+    `{ a := b }` both live inside brackets and are statement text. A tactic
+    proof is the first top-level `:= by`; a term proof leaves a bare
+    top-level `:=`, and with more than one of those the importer refuses,
+    as everywhere else it cannot decide.
     """
-    m = re.search(r":=\s*by\b", text)
-    if m:
-        return text[: m.start()].rstrip() + " := by\n  sorry"
-    if text.count(":=") > 1:
+    openers = "([{⟨"
+    closers = ")]}⟩"
+    depth = 0
+    assigns = []
+    i = 0
+    while i < len(text):
+        i, _ = _next_code(text, i)
+        if i >= len(text):
+            break
+        char = text[i]
+        if char in openers:
+            depth += 1
+        elif char in closers:
+            depth = max(depth - 1, 0)
+        elif depth == 0 and text.startswith(":=", i):
+            j = i + 2
+            while j < len(text) and text[j].isspace():
+                j += 1
+            tactic = text.startswith("by", j) and (
+                j + 2 >= len(text)
+                or not (text[j + 2].isalnum() or text[j + 2] in "_'")
+            )
+            if tactic:
+                return text[: i].rstrip() + " := by\n  sorry"
+            assigns.append(i)
+            i = j
+            continue
+        i += 1
+    if len(assigns) > 1:
         raise SystemExit(
-            "the declaration has a term-mode proof and more than one `:=`, so "
-            "the start of the proof cannot be read off the text"
+            "the declaration has a term-mode proof and more than one "
+            "top-level `:=`, so the start of the proof cannot be read off "
+            "the text"
         )
-    m = re.search(r":=", text)
-    if m:
-        return text[: m.start()].rstrip() + " := by\n  sorry"
+    if assigns:
+        return text[: assigns[0]].rstrip() + " := by\n  sorry"
     return text.rstrip() + " := by\n  sorry"
 
 def _next_code(text, i):
@@ -708,7 +746,12 @@ def hoist_answers(statement, basename, slot_types, override=None):
         # carries no annotation for is a `Prop` slot by the elaborator's own
         # rule, not by guesswork, and no postpone build is needed.
         missing = len(remaining) - len(remaining_env)
-        if missing == len(remaining):
+        if not remaining:
+            # Every slot stated its own type. An environment entry that
+            # survived is one of those same slots spelled the way the
+            # elaborator prints types, not an extra slot to place.
+            pass
+        elif missing == len(remaining):
             for i in remaining:
                 types[i] = "Prop"
         elif missing == 0 and remaining and len(set(remaining_env)) == 1:
