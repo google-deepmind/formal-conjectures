@@ -144,7 +144,7 @@ absorbed by the witness constant.
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L651"]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
-    ∃ D : ℤ, ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
+    ∃ D : ℤ, 0 < D ∧ ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
 
 /--
