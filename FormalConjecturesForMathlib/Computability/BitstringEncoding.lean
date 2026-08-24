@@ -18,12 +18,6 @@ module
 public import Mathlib.Computability.Encoding
 public import Mathlib.Algebra.Field.Rat
 
-public section
-
-open Computability
-
-section BitstringEncodings
-
 /-!
 # Bitstring encodings
 
@@ -44,6 +38,12 @@ which of several essentially equivalent encodings of a type is being used,
 we can at least be sure that for functions between types with `BitstringEncoding` instances,
 formalizations of questions of polynomial-time computability will capture the intended meaning.
 -/
+
+@[expose] public section
+
+open Computability
+
+section BitstringEncodings
 
 /-- A canonical encoding of a type as bitstrings (`List Bool`).
 
@@ -132,7 +132,7 @@ theorem length_delimit (l : List Bool) : (delimit l).length = 2 * l.length + 1 :
 
 This is the auxiliary, fuel-carrying implementation of `undelimitBlocks`; since every block
 is nonempty, `input.length` is always enough fuel. -/
-private def undelimitBlocksAux : ℕ → List Bool → Option (List (List Bool))
+def undelimitBlocksAux : ℕ → List Bool → Option (List (List Bool))
   | _, [] => some []
   | 0, _ :: _ => none
   | fuel + 1, input => do
