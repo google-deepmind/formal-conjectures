@@ -217,7 +217,7 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
   rw [elkiesKlagsbrun29, Δ, b₂, b₄, b₆, b₈]; norm_num
 
 @[category test, AMS 11 14]
-instance : elkiesKlagsbrun29.IsElliptic where
+instance elkiesKlagsbrun29IsElliptic : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
 /-- The rank of the Elkies-Klagsbrun curve is at least 29. -/
@@ -248,7 +248,7 @@ theorem Δ_elkies28 : elkies28.Δ =
   rw [elkies28, Δ, b₂, b₄, b₆, b₈]; norm_num
 
 @[category test, AMS 11 14]
-instance : elkies28.IsElliptic where
+instance elkies28IsElliptic : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
 /-- The rank of the Elkies curve is at least 28. -/

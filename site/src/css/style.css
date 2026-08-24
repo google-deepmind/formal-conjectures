@@ -732,6 +732,9 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: normal;
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .theorem-detail__section { margin-bottom: 1.75rem; }
@@ -743,6 +746,16 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
   margin-bottom: 0.4rem;
+}
+
+.detail-context {
+  display: inline;
+  margin-left: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  text-transform: none;
 }
 
 .detail-value {
@@ -763,6 +776,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .theorem-detail__nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -1227,6 +1241,7 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   margin-top: 0.5rem;
   line-height: 1.6;
   font-size: 0.95rem;
+  overflow-wrap: anywhere;
 }
 
 .verso-doc-content h2 {
