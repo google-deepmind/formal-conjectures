@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 274
 
 *References:*
-[erdosproblems.com/274](https://www.erdosproblems.com/274)
-[Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [erdosproblems.com/274](https://www.erdosproblems.com/274)
+* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+* [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+* [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+* [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 open scoped Pointwise Cardinal
@@ -30,33 +34,47 @@ namespace Erdos274
 
 -- TODO(callesonne): add already proved results from the wiki page
 
+/-- An exact covering of a group `G` is a finite collection of subgroups `{H_1, ..., H_k}` and
+representative `{g_1, ..., g_k}` such that the cosets `g_iH_i` are pairwise disjoint and their
+union covers `G`.
+
+Note that this differs from `Partition (α := Subgroup G)` because the covering condition there
+invokes `Subgroup.sup` which is subgroup generation and thus stronger than union. This definition
+is easier to use in this context than the alternative `Partition (α := Set G)`, which lacks
+subgroup definitions such as `Subgroup.index`. -/
+structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] where
+  parts : ι → Subgroup G
+  reps : ι → G
+  nonempty (i : ι) : (parts i : Set G).Nonempty
+  disjoint : (Set.univ (α := ι)).PairwiseDisjoint fun (i : ι) ↦ reps i • (parts i : Set G)
+  covers : ⋃ i, reps i • (parts i : Set G) = Set.univ
+
 /--
-If `G` is an abelian group then can there exist an exact covering of `G` by more than one cosets of
-different sizes? (i.e. each element is contained in exactly one of the cosets.)
+If $G$ is a group, can there exist an exact covering of $G$ by more than one coset
+of different sizes? (i.e. each element is contained in exactly one of the cosets.)
+
+The conjectured answer is no: in every such exact covering, two of the subgroups have
+the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 :
-    (∀ (G : Type*), [CommGroup G] →
-    ∃ (P : Partition (⊤ : Subgroup G)), 1 < P.parts.ncard ∧
-      (∀ A ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-      P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
+theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
+    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
+    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
+    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
   sorry
 
 /--
-In [Er97c] Erdős asks this for finite (not necessarily abelian) groups.
-
-[Er97c] Erdős, Paul, Some of my favorite problems and results.
-The mathematics of Paul Erd\H{o}s, I (1997), 47-67.
+If `G` is a finite abelian group then there cannot exist an exact covering of `G` by more
+than one cosets of different sizes? (i.e. each element is contained in exactly one
+of the cosets.)
 -/
-@[category research open, AMS 20]
-theorem erdos_274.variants.nonabelian :
-    (∀ (G : Type*), [Group G] → [Fintype G] →
-    ∃ (P : Partition (⊤ : Subgroup G)),
-      1 < P.parts.ncard ∧
-      (∀ A ∈ P.parts, ∃ᵉ (s : G) (H : Subgroup G), s • (H : Set G) = A) ∧
-      P.parts.Pairwise fun A B ↦ #A ≠ #B) ↔ answer(sorry) := by
+@[category research solved, AMS 20,
+  formal_proof using lean4 at "https://github.com/Jostamon/erdos274-hs-abelian/blob/2ab8a2e39e7dd7836adf577b52555f069244466f/Erdos274/Main.lean"]
+theorem erdos_274.variants.abelian {G : Type*} [Fintype G] [CommGroup G]
+    (hG : 1 < Fintype.card G) {ι : Type*} [Fintype ι] (P : Group.ExactCovering G ι)
+    (hι : 1 < Fintype.card ι) :
+    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
   sorry
-
 
 /--
 Let $G$ be a group, and let $A = \{a_1G_1, \dots, a_kG_k\}$ be a finite system of left cosets of
@@ -66,10 +84,9 @@ Herzog and Schönheim conjectured that if $A$ forms a partition of $G$ with $k >
 indices $[G:G_1], \dots, [G:G_k]$ cannot be distinct.
 -/
 @[category research open, AMS 20]
-theorem herzog_schonheim (G : Type*) [Group G] : ∀ (P : Partition (⊤ : Subgroup G)),
-    1 < P.parts.ncard →
-    (∀ B ∈ P.parts, ∃ (s : G) (H : Subgroup G), s • (H : Set G) = B) →
-    ∃ᵉ (A ∈ P.parts) (B ∈ P.parts), A ≠ B ∧ A.index = B.index := by
+theorem herzog_schonheim {G : Type*} [Group G] (hG : 1 < ENat.card G) {ι : Type*} [Fintype ι]
+    (hι : 1 < Fintype.card ι) (P : Group.ExactCovering G ι) :
+    ∃ i j, i ≠ j ∧ (P.parts i).index = (P.parts j).index := by
   sorry
 
 end Erdos274

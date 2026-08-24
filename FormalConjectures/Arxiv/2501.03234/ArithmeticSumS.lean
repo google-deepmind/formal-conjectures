@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# Conjectures 1.1, 4.1, 4.2, 4.3 and 4.4
+# An Arithmetic Sum Associated with the Classical Theta Function
 
 *Reference:* [arxiv/2501.03234](https://arxiv.org/abs/2501.03234)
-**Theorems and Conjectures on an Arithmetic Sum Associated with the Classical Theta Function θ3**
+**An Arithmetic Sum Associated with the Classical Theta Function**
 by *Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alexandru Zaharescu*
 -/
 
@@ -43,7 +43,7 @@ $$S(k) := \sum_{h=1}^{k-1}S'(h, k)$$
 def S (k : ℕ) : ℤ := ∑ h ∈ Finset.Ico 1 k, S' h k
 
 /--
-Note that in Table 1 in  https://arxiv.org/abs/2501.03234v1, there seems to be an error:
+Note that in Table 1 in https://arxiv.org/abs/2501.03234v1, there seems to be an error:
 11 appears twice. The first 10 values of $S$.
 -/
 @[category test, AMS 11]

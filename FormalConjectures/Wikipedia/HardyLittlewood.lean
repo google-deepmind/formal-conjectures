@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # First Hardy–Littlewood conjecture
@@ -24,14 +24,14 @@ import FormalConjectures.Util.ProblemImports
 
 open Filter
 
-open scoped Nat.Prime Classical
+open scoped Nat.Prime
 
-/-! ## First Hardy-Littlewood Conjecture -/
+/-  ## First Hardy-Littlewood Conjecture -/
 
 namespace HardyLittlewood
 
 /--
-A prime constellation is a tuple $(p, p + m_1, ..., p + m_k)$ such that the $m_i$ are
+A prime constellation is a tuple $(p, p + m_1, \dots, p + m_k)$ such that the $m_i$ are
 all positive even integers and every entry is a prime number.
 -/
 def IsPrimeConstellation {k : ℕ} (m : Fin k.succ → ℕ) (p : ℕ) : Prop :=
@@ -45,16 +45,17 @@ def IsAdmissiblePrimeConstellation {k : ℕ} (m : Fin k.succ → ℕ) (p : ℕ) 
   IsPrimeConstellation m p ∧ ∀ (q : ℕ), q.Prime → ¬(fun i => (p + 2 * m i : ZMod q)).Surjective
 
 /--
-The number of distinct residue classes amongst a tuple $(m_0, ..., m_k)$ for a prime $q$.
+The number of distinct residue classes amongst a tuple $(m_0, \dots, m_k)$ for a prime $q$.
 -/
 noncomputable def Nat.numResidues (q : ℕ) {k : ℕ} (m : Fin k.succ → ℕ) : ℕ :=
   Set.range (fun i => (m i : ZMod q)) |>.ncard
 
 /--
-For a given tuple $(m_1, ..., m_k)$, this counts number of admissible
-prime constellations $(p, p + m_1, ..., p + m_k)$ where $p \leq n$.
+For a given tuple $(m_1, \dots, m_k)$, this counts number of admissible
+prime constellations $(p, p + m_1, \dots, p + m_k)$ where $p \leq n$.
 -/
 noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
@@ -65,17 +66,17 @@ def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop 
     π_P =O[atTop] fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
 
 /--
-Let $P = (m_1, ..., m_k)$ be a tuple of positive even integers. Let
-$\pi_P(n)$ denote the number of primes $p\leq n$ such that $(p, p + m_1, ..., p + m_k)$
-forms an admissible prime constellation. Let $w(q; m_1, ..., m_k)$ denote the
-number of distinct residues of $0, m_1, ..., m_k$ modulo $q$, and let
+Let $P = (m_1, \dots, m_k)$ be a tuple of positive even integers. Let
+$\pi_P(n)$ denote the number of primes $p\leq n$ such that $(p, p + m_1, \dots, p + m_k)$
+forms an admissible prime constellation. Let $w(q; m_1, \dots, m_k)$ denote the
+number of distinct residues of $0, m_1, \dots, m_k$ modulo $q$, and let
 $$
   C_P = 2 ^ k\prod_{\substack{q\ \text{prime} \\ q\geq 3}}
-    \frac{1 - \frac{w(q; m_1, ..., m_k)}{q}}{\left(1 - \frac{1}{q}\right)^{k+1}}.
+    \frac{1 - \frac{w(q; m_1, \dots, m_k)}{q}}{\left(1 - \frac{1}{q}\right)^{k+1}}.
 $$
 Then
 $$
-  \pi_P(n)\tilde C_P\int_2^n\frac{dt}{\log^{k+1}t}.
+  \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t}.
 $$
 -/
 @[category research open, AMS 11]
@@ -83,9 +84,8 @@ theorem first_hardy_littlewood_conjecture {k : ℕ} (m : Fin k.succ → ℕ) :
     FirstHardyLittlewoodConjectureFor m := by
   sorry
 
---Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
-/-! ## Second Hardy-Littlewood Conjecture -/
-
+-- Wikipedia URL: https://en.wikipedia.org/wiki/Second_Hardy%E2%80%93Littlewood_conjecture
+/-  ## Second Hardy-Littlewood Conjecture -/
 def SecondHardyLittlewoodConjectureFor (x y : ℕ) : Prop :=
   π (x + y) ≤ π x + π y
 

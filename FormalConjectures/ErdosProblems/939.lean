@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 939
@@ -39,7 +39,7 @@ def Erdos939Sums (r : ℕ) :=
 If $r≥4$ then can the sum of $r-2$ coprime $r$-powerful numbers ever be itself $r$-powerful?
 -/
 @[category research open, AMS 11]
-theorem erdos_939 : (∀ r ≥ 4, (Erdos939Sums r).Nonempty) ↔ answer(sorry) := by
+theorem erdos_939 : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Nonempty := by
   sorry
 
 /--
@@ -47,7 +47,7 @@ If $r≥4$ are there infinitely many sums of $r-2$ coprime $r$-powerful numbers
 that are themselves $r$-powerful?
 -/
 @[category research open, AMS 11]
-theorem erdos_939.variants.infinite : (∀ r ≥ 4, (Erdos939Sums r).Infinite) ↔ answer(sorry) := by
+theorem erdos_939.variants.infinite : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Infinite := by
   sorry
 
 /--
@@ -55,9 +55,9 @@ Are there infinitely many triples of coprime $3$-powerful numbers $a, b, c$ such
 -/
 @[category research open, AMS 11]
 theorem erdos_939.variants.triples :
-    {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
+    answer(sorry) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
       (3).Full a ∧ (3).Full b ∧ (3).Full c ∧
-      a + b = c}.Infinite ↔ answer(sorry) := by
+      a + b = c}.Infinite := by
   sorry
 
 /--
@@ -79,12 +79,12 @@ theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) :
   · norm_num [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 
-/-- Cambie has also found solutions when $r=7$.-/
+/-- Cambie has also found solutions when $r=7$. -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.seven : (Erdos939Sums 7).Nonempty := by
   sorry
 
-/-- Cambie has also found solutions when $r=8$.-/
+/-- Cambie has also found solutions when $r=8$. -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.eight : (Erdos939Sums 8).Nonempty := by
   sorry
@@ -100,7 +100,7 @@ $$27^5+84^5+110^5+133^5=144^5$$.
 @[category research solved, AMS 11]
 theorem erdos_939.variants.euler : ¬ (∀ k ≥ 4, ∀ S : Finset ℕ, S.card = k - 1 →
     ¬ (∃ q, ∑ s ∈ S, s ^ k = q ^k)) := by
-  push_neg
+  push Not
   use 5
   norm_num
   use {27, 84, 110, 133}

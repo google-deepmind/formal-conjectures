@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Nat
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1056
 
 *Reference:* [erdosproblems.com/1056](https://www.erdosproblems.com/1056)
 -/
-
+open Nat
 namespace Erdos1056
 
 /--
@@ -39,18 +37,17 @@ Let $k ≥ 2$. Does there exist a prime $p$ and consecutive intervals $I_0,\dots
 such that $\prod\limits_{n{\in}I_i}n \equiv 1 \mod n$ for all $1 \le i \le k$?
 -/
 @[category research open, AMS 11]
-theorem erdos_1056 :
-    (∀ k ≥ 2, ∃ (p : ℕ) (_ : p.Prime) (boundaries : Fin (k + 1) → ℕ) (_ : StrictMono boundaries),
-    AllModProdEqualsOne p boundaries)
-  ↔ answer(sorry) := by
+theorem erdos_1056 : answer(sorry) ↔
+    ∀ k ≥ 2, ∃ (p : ℕ) (_ : p.Prime) (boundaries : Fin (k + 1) → ℕ) (_ : StrictMono boundaries),
+    AllModProdEqualsOne p boundaries := by
   sorry
 
 /--
 This is problem A15 in Guy's collection [Gu04], where he reports that in a letter in 1979
 Erdős observed that $3 * 4 \equiv 5 * 6 * 7 \equiv 1 \mod 11$.
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_1056_k2 :
+@[category textbook, AMS 11]
+theorem erdos_1056.variants.k2 :
     AllModProdEqualsOne 11 ![3, 5, 8] := by
   unfold AllModProdEqualsOne
   decide
@@ -59,21 +56,21 @@ theorem erdos_1056_k2 :
 Makowski [Ma83] found, for $k=3$:
 $2 * 3 * 4 * 5 \equiv 6 * 7 * 8 * 9 * 10 * 11 \equiv 12 * 13 * 14 * 15 \equiv 1 \mod 17$.
 -/
-@[category undergraduate, AMS 11]
-theorem erdos_1056_k3 :
+@[category textbook, AMS 11]
+theorem erdos_1056.variants.k3 :
     AllModProdEqualsOne 17 ![2, 6, 12, 16] := by
   unfold AllModProdEqualsOne
   decide
 
 /--
 Noll and Simmons asked, more generally, whether there are solutions to
-$q_1! \equiv \dots \equiv q_k! \mod p$ for arbitrarily large $k$ (with $q_1 < \dots <q_k$).
+$q_1! \equiv \dots \equiv q_k! \mod p$ for arbitrarily large $k$ (with $q_1 < \dots < q_k$).
 -/
 @[category research open, AMS 11]
-theorem noll_simmons :
-    (∀ᶠ k in Filter.atTop,
-    ∃ (p : ℕ) (_ : p.Prime) (Q : Fin k → ℕ) (_ : StrictMono Q),
-    ∀ i j : Fin k, (Q i)! ≡ (Q j)! [MOD p]) ↔ answer(sorry) := by
+theorem erdos_1056.variants.noll_simmons :
+    answer(sorry) ↔ ∀ᶠ k in Filter.atTop,
+    ∃ (p : ℕ) (_ : p.Prime) (Q : Fin k → ℕ) (_ : StrictMono Q) (_ : ∀ i, Q i < p),
+    ∀ i j : Fin k, (Q i)! ≡ (Q j)! [MOD p] := by
   sorry
 
 end Erdos1056

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 499
@@ -34,11 +34,10 @@ This is true, and was proved by Marcus and Minc [MaMi62]
 
 [MaMi62] Marcus, Marvin and Minc, Henryk, Some results on doubly stochastic matrices. Proc. Amer. Math. Soc. (1962), 571-579.
 -/
-@[category research solved, AMS 15]
+@[category research solved, AMS 15, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos499.lean"]
 lemma erdos_499 :
-    (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
-      n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) ↔
-    answer(True) := by
+    answer(True) ↔ (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+      n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) := by
   sorry
 
 /--
@@ -68,9 +67,8 @@ Proved by Marcus and Ree [MaRe59].
 -/
 @[category research solved, AMS 15]
 lemma erdos_499.variants.one_le :
-    (∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
-      (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i)) ↔
-    answer(True) := by
+    answer(True) ↔ ∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+      (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i) := by
   sorry
 
 end Erdos499

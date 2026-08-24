@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Gauss circle problem
@@ -26,7 +26,7 @@ open Filter
 
 open scoped EuclideanGeometry Real Topology
 
-/-! # Gauss Circle Problem
+/-  # Gauss Circle Problem
 
 Consider a circle in $\mathbb{R}^2$ with center at the origin and radius $r\geq 0$.
 Gauss's circle problem asks how many points there are inside this circle of the form
@@ -78,7 +78,7 @@ theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
 /--
 It is conjectured that the correct bound is
 $$
-  |E(r)| = O\left(r^{1/2 + o(1)})\right)
+  |E(r)| = O\left(r^{1/2 + o(1)}\right)
 $$
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67

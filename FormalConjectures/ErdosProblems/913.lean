@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 913
@@ -34,9 +34,8 @@ $$
 is the factorisation into distinct primes then all exponents $k_i$ are distinct?
 -/
 @[category research open, AMS 11]
-theorem erdos_913 :
-    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite ↔
-    answer(sorry) := by
+theorem erdos_913 : answer(sorry) ↔
+    { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite := by
   sorry
 
 /--
@@ -61,8 +60,8 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rintro a ha b hb h
     rw [tsub_left_inj (hS a ha.1).le (hS b hb.1).le] at h
     simpa using h
-  refine ((h.diff (Set.finite_singleton 2)).image (this.mono Set.diff_subset)).mono ?_
-  simp only [Set.image_subset_iff, Set.preimage_setOf_eq, S]
+  refine ((h.sdiff (Set.finite_singleton 2)).image (this.mono Set.sdiff_subset)).mono ?_
+  simp only [Set.image_subset_iff, Set.preimage_ofPred_eq, S]
   rintro p ⟨⟨hp, hp'⟩, hp''⟩
   simp only [Set.mem_singleton_iff] at hp''
   have fac : (f p * (f p + 1)).factorization =
@@ -73,9 +72,9 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
       Nat.factorization_mul (by positivity) (by positivity), hp'.factorization,
       hp.factorization_pow, (show 8 = 2 ^ 3 from rfl), Nat.prime_two.factorization_pow,
       add_comm (Finsupp.single 2 3)]
-  have aux₂ : (fun₀ | 2 => 3).support = {2} := by simp [Finsupp.support_eq_singleton]
+  have aux₂ : (fun₀ | 2 => 3).support = {2} := by simp
   have aux₁ : ((fun₀ | p => 2) + fun₀ | 2 => 3).support = {p, 2} := by
-    rw [Finsupp.support_single_add (by simp [aux₂, hp'']) (by simp), Finset.cons_eq_insert, aux₂]
+    rw [Finsupp.support_single_add (by simp [hp'']) (by simp), Finset.cons_eq_insert, aux₂]
   have aux₃ : p + 1 < 8 * p ^ 2 := by
     replace hp := hp.two_le
     zify at hp ⊢
@@ -89,7 +88,7 @@ theorem erdos_913.variants.conditional (h : { p | p.Prime ∧ (8 * p ^ 2 - 1).Pr
     rw [← Nat.support_factorization, fac, Finsupp.support_single_add _ (by simp),
       Finset.cons_eq_insert, aux₁]
     simp [*]
-  simp only [Set.mem_setOf_eq]
+  simp only [Set.mem_ofPred_eq]
   rw [fac, pf]
   simp only [Finsupp.coe_add, Finset.coe_insert, Finset.coe_singleton]
   rw [Set.injOn_insert (by simp [*]), Set.injOn_insert (by simp [hp''])]

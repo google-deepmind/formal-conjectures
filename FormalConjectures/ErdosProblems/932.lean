@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 932
@@ -35,7 +35,7 @@ theorem erdos_932 :
   sorry
 
 /--
-Erdős could show that the density of $r$ such that at least one such $n$ exist is $0$.
+Erdős could show that the density of $r$ such that at least one such $n$ exists is $0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_932.variants.one_le :

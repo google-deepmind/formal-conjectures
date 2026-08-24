@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 64
@@ -30,9 +30,9 @@ contain a cycle of length $2^k$ for some $k \geq 2$?
 -/
 @[category research open, AMS 5]
 theorem erdos_64 :
-    (∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
+    answer(sorry) ↔ ∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
         G.minDegree ≥ 3 → ∃ (k : ℕ) (v : V) (c : G.Walk v v),
-            k ≥ 2 ∧ c.IsCycle ∧ c.length = 2^k) ↔ answer(sorry) := by
+            k ≥ 2 ∧ c.IsCycle ∧ c.length = 2^k := by
   sorry
 
 -- TODO(firsching): add more context

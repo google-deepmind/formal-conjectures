@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 329: Maximum Density of Sidon Sets
 
-*Reference:* [erdosproblems.com/329](https://www.erdosproblems.com/329)
+*References:*
+- [erdosproblems.com/329](https://www.erdosproblems.com/329)
+- [AlMi25] B. Alexeev and D. G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof. [arXiv:2510.19804](https://arxiv.org/abs/2510.19804) (2025).
+- [Ha47] Hall, Jr., Marshall, Cyclic projective planes. Duke Math. J. (1947), 1079--1090.
 -/
 
 open Function Set Filter
@@ -39,7 +42,7 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
 
 /--
 **Erdős Problem 329.**
-Let `A ⊆ ℕ` be a Sidon set.  How large can
+Let `A ⊆ ℕ` be a Sidon set. How large can
 `lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
 be?
 -/
@@ -53,7 +56,7 @@ Erdős proved that upper density `1 / 2` can be attained; in particular,
 there exists a Sidon set whose upper density is *at least* `1 / 2`.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_329.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
+theorem erdos_329.variants.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
   sorry
 
 /--
@@ -64,7 +67,7 @@ Krückeberg ([Kr61]) exhibited an infinite Sidon set `A` with
 [Kr61] Krückeberg, Fritz, $B\sb{2}$-Folgen und verwandte Zahlenfolgen. J. Reine Angew. Math. (1961), 53-60.
 -/
 @[category research solved, AMS 5 11]
-theorem kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
+theorem erdos_329.variants.kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
     sidonUpperDensity A = 1 / Real.sqrt 2 := by
   sorry
 
@@ -74,37 +77,32 @@ Erdős and Turán [ErTu41] proved the upper bound of 1.
 [ErTu41] Erdős, P. and Turán, P., On a problem of Sidon in additive number theory, and on some related problems. J. London Math. Soc. (1941), 212-215.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
-  sorry
-
-/--
-If any finite Sidon set can be embedded in a perfect difference set,
-then the maximum density would be 1.
--/
-@[category research open, AMS 5 11]
-theorem erdos_329.of_sub_perfectDifferenceSet :
-    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
-      ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) →
-    sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1 := by
+theorem erdos_329.variants.turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
   sorry
 
 /--
 The converse: if the maximum density is 1, then any finite Sidon set
-can be embedded in a perfect difference set.
+can be embedded in a perfect difference set modulo $n > 0$.
+
+Since the consequent is false (due to the counterexamples in [Ha47] and [AlMi25]),
+this implication is logically equivalent to the statement that the maximum upper
+density of Sidon sets is NOT 1.
+Because the maximum upper density problem is still open, the truth value of this
+implication is also an open research problem.
 -/
 @[category research open, AMS 5 11]
-theorem erdos_329.converse_implication :
+theorem erdos_329.variants.converse_implication :
     (sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} = 1) →
-    (∀ (A : Finset ℕ), IsSidon A → ∃ (D : Set ℕ) (n : ℕ),
+    (∀ (A : Finset ℕ), IsSidon (A : Set ℕ) → ∃ (D : Set ℕ) (n : ℕ) (_ : n > 0),
       ↑A ⊆ D ∧ IsPerfectDifferenceSet D n) := by
   sorry
 
-/-! ## Related results and examples -/
+/-  ## Related results and examples -/
 
 /--
 It is possible to construct a Sidon set with positive density.
 -/
-@[category undergraduate, AMS 5 11]
+@[category textbook, AMS 5 11]
 theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
 

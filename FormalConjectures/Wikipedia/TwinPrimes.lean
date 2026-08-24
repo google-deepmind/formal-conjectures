@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Twin prime conjecture
@@ -32,7 +32,7 @@ Are there infinitely many primes p such that p + 2 is prime?
 -/
 @[category research open, AMS 11]
 theorem twin_primes :
-    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite ↔ answer(sorry) := by
+    answer(sorry) ↔ {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
   sorry
 
 end TwinPrimes

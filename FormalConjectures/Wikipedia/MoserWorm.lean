@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Moser's Worm
@@ -23,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open EuclideanGeometry MeasureTheory
+
+namespace MoserWorm
 
 /--
 The set of worms is the set of curves of length (at most) 1.
@@ -33,19 +35,34 @@ def Worms : Set (Set ℝ²) :=
 
 /--
 The set of covers is the set of (measurable) sets
-that cover every worm by translation and rotation (i.e. through an isometry).
+that cover every worm by translation and rotation.
 -/
 def WormCovers : Set (Set ℝ²) :=
-    {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X}
+    {X | MeasurableSet X ∧ ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²),
+      e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X}
 
 /--
 A disc of radius 1 / 2 is a worm cover.
 
 This follows by translating the center of the disc to the midpoint of the worm.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
-  sorry
+  refine ⟨measurableSet_closedBall, ?_⟩
+  rintro w ⟨f, hf, rfl⟩
+  refine ⟨LinearIsometryEquiv.refl ℝ _, f ⟨1/2, by constructor <;> norm_num⟩,
+    LinearEquiv.det_refl .., ?_⟩
+  rintro _ ⟨t, rfl⟩
+  refine ⟨f t - f ⟨1/2, by constructor <;> norm_num⟩, ?_, by simp⟩
+  simp only [Metric.mem_closedBall, dist_zero_right]
+  have h := hf.dist_le_mul t ⟨1/2, by constructor <;> norm_num⟩
+  simp only [NNReal.coe_one, one_mul] at h
+  rw [dist_eq_norm] at h
+  refine h.trans ?_
+  obtain ⟨t, ht1, ht2⟩ := t
+  simp only [Subtype.dist_eq, Real.dist_eq]
+  rw [abs_le]
+  constructor <;> linarith
 
 /--
 **Moser's Worm Problem**
@@ -98,7 +115,7 @@ Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
     ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
-      ∀ w ∈ Worms, ∃ iso, Isometry iso ∧ w ⊆ iso '' X := by
+      ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X := by
   sorry
 
 /--
@@ -114,3 +131,5 @@ International Journal of Computational Geometry & Applications,
 theorem convex_mosers_worm_problem_lower_bound :
     0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
   sorry
+
+end MoserWorm

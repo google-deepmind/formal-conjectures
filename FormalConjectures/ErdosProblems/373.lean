@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 373
@@ -31,7 +31,7 @@ Let `S` be the set of non-trivial solutions to the equation `n! = a₁! ··· a
 such that `a₁ ≥ ... ≥ aₖ` and `n-1 > a₁`.
 -/
 abbrev S : Set (ℕ × List ℕ) :=
-  {(n, l) | n ! = (l.map Nat.factorial).prod ∧ l.Sorted (· ≥ ·)
+  {(n, l) | n ! = (l.map Nat.factorial).prod ∧ l.Pairwise (· ≥ ·)
     ∧ l.headI < (n - 1 : ℕ) ∧ ∀ a ∈ l, 1 < a }
 
 /--

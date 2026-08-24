@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 304
@@ -41,7 +41,7 @@ lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
     unitFractionExpressible a b = {0} := by
   simp only [Set.eq_singleton_iff_unique_mem, zero_mem_unitFractionExpressible_iff, *]
   have : (a / b : ℚ) = 0 := by simpa
-  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, forall_exists_index, and_imp,
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_ofPred_eq, forall_exists_index, and_imp,
     true_and, this]
   rintro _ s rfl hs h
   rw [eq_comm, Finset.sum_eq_zero_iff_of_nonneg (fun i hi ↦ by positivity)] at h
@@ -66,7 +66,7 @@ lemma zero_notMem_unitFractionExpressible {a b : ℕ} :
 @[category API, AMS 11]
 lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
-  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, Finset.card_eq_one] at h
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_ofPred_eq, Finset.card_eq_one] at h
   obtain ⟨_, ⟨m, rfl⟩, h₁, h₂⟩ := h
   simp only [Finset.mem_singleton, forall_eq, Finset.sum_singleton] at h₁ h₂
   use m
@@ -84,7 +84,7 @@ lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
   exact mod_cast hm.symm
 
 /-- Let $$N(a, b)$$, denoted here by `smallestCollection a b` be the minimal k such that there
-exist integers $1 < n_1 < n_2 < ... < n_k$ with
+exist integers $1 < n_1 < n_2 < \dots < n_k$ with
 $$\frac{a}{b} = \sum_{i=1}^k \frac{1}{n_i}$$ -/
 noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
 
@@ -163,16 +163,15 @@ In 1985 Vose [Vo85] proved the upper bound $$N(b) \ll \sqrt{\log b}$$.
 @[category research solved, AMS 11]
 theorem erdos_304.variants.upper_1985 :
     (fun b => (smallestCollectionTo b : ℝ)) =O[atTop]
-      (fun b => Real.sqrt (Real.log b)) :=
+      (fun b => Real.sqrt (Real.log b)) := by
   sorry
 
 /--
 Is it true that $$N(b) \ll \log \log b$$?
 -/
 @[category research open, AMS 11]
-theorem upper_bound :
-    (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop]
-      (fun b : ℕ => Real.log (Real.log b)) ↔ answer(sorry) := by
+theorem upper_bound : answer(sorry) ↔
+    (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 
 end Erdos304

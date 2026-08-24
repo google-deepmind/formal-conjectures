@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 383
@@ -33,9 +33,8 @@ $$
 is $p$?
 -/
 @[category research open, AMS 11]
-theorem erdos_383 :
-    (∀ k, {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite) ↔
-    answer(sorry) := by
+theorem erdos_383 : answer(sorry) ↔
+    ∀ k, {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite := by
   sorry
 
 end Erdos383

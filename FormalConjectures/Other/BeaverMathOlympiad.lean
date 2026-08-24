@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Beaver Math Olympiad (BMO)
@@ -38,7 +38,7 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
-namespace BusyBeaverMathOlympiad
+namespace BeaverMathOlympiad
 
 /--
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch))
@@ -59,18 +59,19 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `↔ answer(sorry)`.
+using `answer(sorry) ↔`.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
 @[category research open, AMS 5 11 68]
-theorem busy_beaver_math_olympiad_problem_1 (a : ℕ → ℕ) (b : ℕ → ℕ)
+theorem beaver_math_olympiad_problem_1 :
+    answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
     (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
     (b_ini : b 0 = 2)
-    (b_rec : ∀ n, b (n + 1) = if b n ≤ a n then 4 * b n + 2 else b n - a n):
-    (∃ i, a i = b i) ↔ answer(sorry) := by
+    (b_rec : ∀ n, b (n + 1) = if b n ≤ a n then 4 * b n + 2 else b n - a n),
+    ∃ i, a i = b i := by
   sorry
 
 /--
@@ -189,7 +190,7 @@ Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
 
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `↔ answer(sorry)`.
+using `answer(sorry) ↔`.
 
 The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor mxdys
 on August 7th 2024.
@@ -198,12 +199,43 @@ The correspondence between the machine's halting problem and the below reformula
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
 @[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_5
-    (a b f : ℕ → ℕ) (hf : f = fun x ↦ 10 * 2 ^ x - 1)
+theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
+    ∀ (a b f : ℕ → ℕ), ∀ᵉ (hf : f = fun x ↦ 10 * 2 ^ x - 1)
     (a_ini : a 0 = 0) (b_ini : b 0 = 5)
     (a_rec : ∀ n, a (n + 1) = if f (a n) ≤ b n then a n + 1 else a n)
-    (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5) :
-    (∃ i, b i = (f (a i)) - 1) ↔ answer(sorry) := by
+    (b_rec : ∀ n, b (n+1) = if f (a n) ≤ b n then b n - f (a n) else 3 * b n + a n + 5),
+    ∃ i, b i = f (a i) - 1 := by
   sorry
 
-end BusyBeaverMathOlympiad
+/--
+[BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch))
+
+Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (10, 12)$ and
+
+$$(a_{n+1}, b_{n+1}) = \begin{cases}
+(a_n - \lfloor b_n/2 \rfloor - 3, 3 \lfloor (b_n+1)/2 \rfloor + 6) & \text{if } a_n > \lfloor b_n/2 \rfloor \\
+(3 a_n + 5, b_n - 2 a_n) & \text{if } a_n \le \lfloor b_n/2 \rfloor
+\end{cases}$$
+
+for all positive integers $n$.  Does there exist a positive integer $i$ such that
+$a_i = \lfloor b_i/2 \rfloor + 1$?
+
+[BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch)) is equivalent to asking whether the 6-state Turing machine
+[`1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA`](https://wiki.bbchallenge.org/wiki/1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA) halts or not.
+
+There is presently no consensus on whether the machine halts or not, hence the problem is formulated
+using `answer(sorry) ↔`.
+-/
+@[category research open, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
+    ∀ᵉ (a : ℕ → ℤ) (b : ℕ → ℤ)
+    (a_ini : a 0 = 10)
+    (a_rec : ∀ n, a (n + 1) =
+      if b n / 2 < a n then a n - b n / 2 - 3 else 3 * a n + 5)
+    (b_ini : b 0 = 12)
+    (b_rec : ∀ n, b (n + 1) =
+      if b n / 2 < a n then 3 * ((b n + 1) / 2) + 6 else b n - 2 * a n),
+    ∃ i, a i = b i / 2 + 1 := by
+  sorry
+
+end BeaverMathOlympiad

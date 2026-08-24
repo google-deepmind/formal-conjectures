@@ -14,29 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open Real MeasureTheory Measure Module
+import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 34145
 
-Can the unit square be covered by (1/k)-by-(1/(k+1)) rectangles (across 1 ≤ k natural)?
+Can the unit square be covered by $1/k$-by-$1/(k+1)$ rectangles (across $1 \le k$ natural)?
 
-I am deliberately not requiring that the rotations can only be 0ᵒ, 90ᵒ, 180ᵒ, or 270ᵒ.
+I am deliberately not requiring that the rotations can only be $0^\circ, 90^\circ, 180^\circ, \text{ or } 270^\circ$.
 
-Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to `1 / (n + 1)` and
-`1 / (n + 2)`, so that the first rectangle is `1/1` by `1/2`, the second is `1/2` by `1/3`, etc.
+Because of indexing, since `n : ℕ` starts at 0, we change the side lengths to $1 / (n + 1)$ and
+$1 / (n + 2)$, so that the first rectangle is $1/1$ by $1/2$, the second is $1/2$ by $1/3$, etc.
 
 *Reference:* [mathoverflow/34145](https://mathoverflow.net/q/34145)
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
 -/
-
+open Real MeasureTheory Measure Module
 namespace Mathoverflow34145
 
 /-- A rectangle is specified by its width, height, starting point, and rotation.
 The rectangle is assumed to start in the lower left corner. For example, the unit square
-`{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }` is specified as `⟨1, 1, (0, 0), 0⟩`  -/
+$\{ (x, y) \mid 0 \le x \le 1, 0 \le y \le 1 \}$ is specified as `⟨1, 1, (0, 0), 0⟩`  -/
 structure Rectangle : Type where
   width : ℝ
   height : ℝ
@@ -104,7 +102,7 @@ lemma lbMeasure_scale (x y : ℝ) (s : Set (ℝ × ℝ)) :
 lemma lbMeasure_unitSquare : lbMeasure unitSquare = 1 := by
   convert (Basis.addHaar_eq_iff (Basis.finTwoProd ℝ) _).1 rfl
   ext p
-  simp only [unitSquare, Set.mem_setOf_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
+  simp only [unitSquare, Set.mem_ofPred_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
     Set.mem_Icc, Fin.sum_univ_two, Fin.isValue, Basis.finTwoProd_zero, Prod.smul_mk, smul_eq_mul,
     mul_one, mul_zero, Basis.finTwoProd_one, Prod.mk_add_mk, add_zero, zero_add, Pi.le_def]
   exact ⟨fun h ↦ ⟨![p.1, p.2], by simp [Fin.forall_fin_succ, h]⟩,
@@ -122,7 +120,7 @@ lemma tsum_area_eq_one : ∑' (n : ℕ), ((1 / (n + 1)) * (1 / (n + 2)) : ℝ) =
   have (n : ℕ) : ∑ i ∈ Finset.range n, (1 / (i + 1) * (1 / (i + 2)) : ℝ) = 1 - 1 / (n + 1) := by
     induction n with
     | zero => simp
-    | succ n ih => rw [Finset.sum_range_succ, ih]; field_simp; ring
+    | succ n ih => rw [Finset.sum_range_succ, ih]; field_simp; push_cast; ring
   refine HasSum.tsum_eq ((hasSum_iff_tendsto_nat_of_nonneg (fun i ↦ ?_) _).2 ?_)
   · positivity
   · simp_rw [this]
@@ -142,14 +140,14 @@ def Configuration.IsPacking (c : Configuration) : Prop :=
 /-- Can a unit square be covered by rectangles of width `1 / (n + 1)` and height `1 / (n + 2)`? -/
 @[category research open, AMS 51]
 theorem rectangles_cover_unit_square :
-    (∃ c : Configuration, ∀ p ∈ unitSquare, ∃ n, p ∈ (c.rect n).toSet) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ c : Configuration, ∀ p ∈ unitSquare, ∃ n, p ∈ (c.rect n).toSet := by
   sorry
 
 /-- Equivalently, can a unit square be packed with rectangles of width `1 / (n + 1)` and height
 `1 / (n + 2)`? -/
 @[category research open, AMS 51]
 theorem rectangles_pack_unit_square :
-    (∃ c : Configuration, (∀ n, (c.rect n).toSet ⊆ unitSquare) ∧ c.IsPacking) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ c : Configuration, (∀ n, (c.rect n).toSet ⊆ unitSquare) ∧ c.IsPacking := by
   sorry
 
 /-- It is known that packing the rectangles into a square of side length `133/132` is possible.

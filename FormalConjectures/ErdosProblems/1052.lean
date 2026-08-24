@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1052
@@ -24,12 +24,12 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1052
 
-/-- A proper unitary divisor of $n$ is $d \mid n$
-such that $(d, n/d) = 1$ other than $n$. -/
+/-- A proper unitary divisor of $n$ is a divisor $d$ of $n$
+such that $d$ is coprime to $n/d$, and $d < n$. -/
 def properUnitaryDivisors (n : ℕ) : Finset ℕ :=
   {d ∈ Finset.Ico 1 n | d ∣ n ∧ d.Coprime (n / d)}
 
-/-- A number $n >0$ is a unitary perfect number if it is the sum of its proper unitary divisors. -/
+/-- A number $n > 0$ is a unitary perfect number if it is the sum of its proper unitary divisors. -/
 def IsUnitaryPerfect (n : ℕ) : Prop :=
   ∑ i ∈ properUnitaryDivisors n, i = n ∧ 0 < n
 
@@ -37,11 +37,15 @@ def IsUnitaryPerfect (n : ℕ) : Prop :=
 Are there only finitely many unitary perfect numbers? -/
 @[category research open, AMS 11]
 theorem erdos_1052 :
-    Set.Finite IsUnitaryPerfect ↔ answer(sorry) := by
+    answer(sorry) ↔ {n | IsUnitaryPerfect n}.Finite := by
   sorry
 
-/-- All unitary perfect numbers are even. -/
-@[category research solved, AMS 11]
+/--
+All unitary perfect numbers are even.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/b70a2ddf5e55f743aac9d4f4a907786b39bc9807/FormalConjectures/ErdosProblems/1052.lean#L46"]
 theorem even_of_isUnitaryPerfect (n : ℕ) (hn : IsUnitaryPerfect n) : Even n := by
   sorry
 
@@ -62,10 +66,12 @@ theorem isUnitaryPerfect_90 : IsUnitaryPerfect 90 := by
 
 @[category test, AMS 11]
 theorem isUnitaryPerfect_87360 : IsUnitaryPerfect 87360 := by
+  -- TODO: Find a quicker proof. This one is too slow.
+  stop
   norm_num [IsUnitaryPerfect, properUnitaryDivisors]
   decide +kernel
 
-@[category test, AMS 11]
+@[category test, AMS 11, formal_proof using formal_conjectures at "https://github.com/Sanexxxx777/formal-conjectures/blob/be8aed15e8888a08bbe723170698e26c046412a4/FormalConjectures/ErdosProblems/1052.lean#L346"]
 theorem isUnitaryPerfect_146361946186458562560000 : IsUnitaryPerfect 146361946186458562560000 := by
   sorry
 

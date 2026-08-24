@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 398
@@ -33,7 +33,7 @@ namespace Erdos398
 Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
 -/
 @[category research open, AMS 11]
-theorem erdos_398 : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} ↔ answer(sorry) := by
+theorem erdos_398 : answer(sorry) ↔ {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} := by
   sorry
 
 end Erdos398

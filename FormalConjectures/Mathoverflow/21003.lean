@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 21003
@@ -28,6 +26,9 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
 
+open scoped Polynomial
+
+
 namespace Mathoverflow21003
 
 /--
@@ -36,7 +37,7 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 -/
 @[category research open, AMS 12]
 theorem mathoverflow_21003 :
-    (∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∃ f : MvPolynomial (Fin 2) ℚ, Function.Bijective fun x ↦ f.eval x := by
   sorry
 
 end Mathoverflow21003

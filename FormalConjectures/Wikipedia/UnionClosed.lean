@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Union-closed sets conjecture
@@ -127,19 +127,19 @@ theorem union_closed.variants.singleton_mem
   use i
   set B : Finset (Finset n) := {x ∈ A | i ∉ x}
   set C : Finset (Finset n) := {x ∈ A | i ∈ x}
-  have h₁ : Set.InjOn (insert i) B.toSet := by
-    simp only [Set.InjOn, coe_filter, Set.mem_setOf_eq, and_imp, B]
+  have h₁ : (B : Set <| Finset n).InjOn (insert i) := by
+    simp only [Set.InjOn, coe_filter, Set.mem_ofPred_eq, and_imp, B]
     rintro x - hx y - hy hxy
     have := congr(($hxy).erase i)
     rwa [erase_insert hx, erase_insert hy] at this
-  have h₂ : Set.MapsTo (insert i) B.toSet C.toSet := by
-    simp only [Set.MapsTo, coe_filter, Set.mem_setOf_eq, mem_insert, true_or, and_true,
+  have h₂ : (B : Set <| Finset n).MapsTo (insert i) C := by
+    simp only [Set.MapsTo, coe_filter, Set.mem_ofPred_eq, mem_insert, true_or, and_true,
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
     exact h_union_closed _ hi _ hx
   have h₃ : #B ≤ #C := Finset.card_le_card_of_injOn _ h₂ h₁
-  have h₄ : #C + #B = #A := by rw [filter_card_add_filter_neg_card_eq_card]
+  have h₄ : #C + #B = #A := by rw [card_filter_add_card_filter_not]
   have : #A ≤ 2 * #C := by omega
   cancel_denoms
   norm_cast
@@ -186,7 +186,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     · simp
     intro a ha b hb h
     simp only [coe_powerset, coe_erase, coe_univ, Set.mem_preimage, Set.mem_powerset_iff,
-      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
+      Set.subset_sdiff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
     have := congr(($h).erase i)
     rwa [erase_insert ha, erase_insert hb] at this
   simp only [card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
@@ -199,13 +199,13 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   simp at this
 
 /--
-If the UC conjecture is tight for some family `A` then `#A = 2 ^ k` for some `k`.
+If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/
 @[category research open, AMS 5]
 theorem union_closed.variants.cardinality_even_of_union_closed_tight
-    [Nonempty n] (hA : A ≠ {∅}) (hA : IsUnionClosed A)
+    [Nonempty n] (hA : A ≠ {∅} ∧ A ≠ ∅) (hA : IsUnionClosed A)
     (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
     ∃ k, #A = 2 ^ k := by
   sorry

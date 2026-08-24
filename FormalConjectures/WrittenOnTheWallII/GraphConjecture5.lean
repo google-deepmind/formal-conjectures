@@ -14,16 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
+
+/-!
+# Written on the Wall II - Conjecture 5
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
 
 namespace WrittenOnTheWallII.GraphConjecture5
 
 open SimpleGraph
 
-variable {V : Type*} [Fintype V] [DecidableEq V]
+variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 
-open Classical
 
+open scoped Classical in
 /--
 WOWII [Conjecture 5](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 319
@@ -28,7 +28,7 @@ open scoped Topology Finset Real
 
 namespace Erdos319
 
-/-- What is the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -37,7 +37,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$.-/
+for all non-empty $A'\subsetneq A$. -/
 @[category research open, AMS 5]
 theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
@@ -52,7 +52,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
 -- the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
 -- will therefore exist to the asymptotic formalisations. A true solution to
 -- the asymptotic variants should have a degree of optimality or non-triviality to it.
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -71,7 +71,7 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -80,7 +80,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = O(g(N)). -/
+for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = O(g(N))$. -/
 @[category research open, AMS 5]
 theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
@@ -90,7 +90,7 @@ theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     c =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
-/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that there is a function
+/-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
   \sum_{n\in A} \frac{\delta n}{n} = 0
@@ -99,7 +99,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = o(g(N)). -/
+for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = o(g(N))$. -/
 @[category research open, AMS 5]
 theorem erdos_319.variants.isLittleO (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest

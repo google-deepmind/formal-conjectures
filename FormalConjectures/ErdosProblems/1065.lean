@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1065
@@ -25,26 +25,25 @@ import FormalConjectures.Util.ProblemImports
 namespace Erdos1065
 
 /--
-Are there infinitely many primes $p$ such that $p$ = $2^k * q + 1$
+Are there infinitely many primes $p$ such that $p = 2^k * q + 1$
 for some prime $q$ and $k ≥ 0$?
 
-This is mentioned as B46 
+This is mentioned as B46
 in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
 by *Richard K. Guy*
  -/
 @[category research open, AMS 11]
-theorem erdos_1065a :
-    Set.Infinite {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1}
-    ↔ answer(sorry) := by
+theorem erdos_1065.parts.i :
+    answer(sorry) ↔ Set.Infinite {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1} := by
   sorry
 
 /--
-Are there infinitely many primes $p$ such that $p$ = $2^k 3^l q + 1$
+Are there infinitely many primes $p$ such that $p = 2^k 3^l q + 1$
 for some prime $q$ and $k ≥ 0$, $l ≥ 0$?
 -/
 @[category research open, AMS 11]
-theorem erdos_1065b : Set.Infinite {p | ∃ q k l, p.Prime ∧ q.Prime ∧ p = 2^k * 3^l * q + 1}
-    ↔ answer(sorry) := by
+theorem erdos_1065.parts.ii : answer(sorry) ↔
+    Set.Infinite {p | ∃ q k l, p.Prime ∧ q.Prime ∧ p = 2^k * 3^l * q + 1} := by
   sorry
 
 end Erdos1065
