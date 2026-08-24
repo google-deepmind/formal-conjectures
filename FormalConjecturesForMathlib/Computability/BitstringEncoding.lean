@@ -18,7 +18,7 @@ module
 public import Mathlib.Computability.Encoding
 public import Mathlib.Algebra.Field.Rat
 
-@[expose] public section
+public section
 
 open Computability
 
@@ -148,7 +148,6 @@ private def undelimitBlocksAux : ℕ → List Bool → Option (List (List Bool))
 
 Since every block is nonempty, `input.length` bounds the number of blocks, so it always
 suffices as fuel for `undelimitBlocksAux`. -/
-@[no_expose]
 def undelimitBlocks (input : List Bool) : Option (List (List Bool)) :=
   undelimitBlocksAux input.length input
 
