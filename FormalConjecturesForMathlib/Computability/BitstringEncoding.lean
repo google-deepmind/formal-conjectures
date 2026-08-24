@@ -135,10 +135,10 @@ is nonempty, `input.length` is always enough fuel. -/
 def undelimitBlocksAux : ℕ → List Bool → Option (List (List Bool))
   | _, [] => some []
   | 0, _ :: _ => none
-  | fuel + 1, input => do
-    let (block, rest) ← undelimit input
-    let blocks ← undelimitBlocksAux fuel rest
-    return block :: blocks
+  | fuel + 1, input =>
+    -- `p.1` is the parsed block and `p.2` the remaining input; using projections rather than a
+    -- pattern-matching lambda keeps the body free of matchers.
+    (undelimit input).bind fun p => (undelimitBlocksAux fuel p.2).map (p.1 :: ·)
 
 /-- Parse a sequence of self-delimiting blocks off the front of the input.
 
@@ -156,19 +156,13 @@ theorem length_le_length_flatten_delimit (l : List (List Bool)) :
       length_delimit]
     omega
 
-private theorem undelimitBlocksAux_flatten_delimit (l : List (List Bool)) :
-    ∀ fuel, l.length ≤ fuel → undelimitBlocksAux fuel ((l.map delimit).flatten) = some l := by
-  induction l with
-  | nil => intro fuel _; cases fuel <;> rfl
+private theorem undelimitBlocksAux_flatten_delimit (l : List (List Bool)) (fuel : ℕ)
+    (hfuel : l.length ≤ fuel) : undelimitBlocksAux fuel ((l.map delimit).flatten) = some l := by
+  induction l generalizing fuel with
+  | nil => cases fuel <;> rfl
   | cons b t ih =>
-    intro fuel hfuel
     rw [List.length_cons] at hfuel
-    obtain ⟨fuel, rfl⟩ : ∃ f, fuel = f + 1 := ⟨fuel - 1, by omega⟩
-    obtain ⟨hd, tl, hcons⟩ : ∃ hd tl, delimit b ++ (t.map delimit).flatten = hd :: tl := by
-      cases b <;> exact ⟨_, _, rfl⟩
-    simp only [List.map_cons, List.flatten_cons, hcons, undelimitBlocksAux]
-    rw [← hcons, undelimit_delimit]
-    simp [ih fuel (by omega)]
+    cases fuel <;> cases b <;> grind [delimit, undelimitBlocksAux, undelimit_delimit]
 
 theorem undelimitBlocks_flatten_delimit (l : List (List Bool)) :
     undelimitBlocks ((l.map delimit).flatten) = some l :=
