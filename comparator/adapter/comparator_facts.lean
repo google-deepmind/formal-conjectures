@@ -50,16 +50,21 @@ unsafe def main (args : List String) : IO UInt32 := do
   | ["--self-test"] =>
     runWithImports #[`Mathlib] do binderBoundarySelfTest (← getEnv)
   | ["--batch"] =>
-    -- One `module declaration` pair per stdin line, one environment for all
-    -- of them: the Mathlib import dominates a run, and `resolveIn` filters
-    -- by module, so a shared environment answers each pair exactly as a
-    -- per-module import does. One JSON object per line, in input order.
+    -- One `{"module": M, "declaration": D}` object per stdin line, one
+    -- environment for all of them: the Mathlib import dominates a run, and
+    -- `resolveIn` filters by module, so a shared environment answers each
+    -- pair exactly as a per-module import does. JSON lines rather than
+    -- space-delimited fields, because a guillemet name may contain anything.
+    -- One JSON object per line out, in input order.
     let stdin ← IO.getStdin
     let lines := (← stdin.readToEnd).splitOn "\n" |>.filter (· ≠ "")
     let pairs ← lines.mapM fun line => do
-      match line.splitOn " " with
-      | [modName, declName] => pure (modName, declName)
-      | _ => throw <| IO.userError s!"malformed batch line: {line}"
+      match Json.parse line with
+      | .error msg => throw <| IO.userError s!"malformed batch line: {line} ({msg})"
+      | .ok json =>
+        match json.getObjValAs? String "module", json.getObjValAs? String "declaration" with
+        | .ok modName, .ok declName => pure (modName, declName)
+        | _, _ => throw <| IO.userError s!"malformed batch line: {line}"
     let modules := pairs.foldl (init := #[]) fun acc (m, _) =>
       if acc.contains m.toName then acc else acc.push m.toName
     -- The heartbeat budget is shared by the whole action, so it scales with

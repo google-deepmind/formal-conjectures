@@ -221,6 +221,23 @@ class KnownFailuresTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self._load('[[failure]]\ndeclaration = "A.b"\nstage = "source"\n')
 
+    def test_an_unknown_key_is_refused(self):
+        # A typo'd key would otherwise ride along invisibly.
+        with self.assertRaisesRegex(SystemExit, "unknown keys: workspce"):
+            self._load(
+                '[[failure]]\ndeclaration = "A.b"\nstage = "source"\n'
+                'reason = "x"\nworkspce = "A_b"\n'
+            )
+
+    def test_a_duplicate_declaration_is_refused(self):
+        # Last-one-wins would shadow an entry and quietly defeat the exact
+        # match the gates promise.
+        with self.assertRaisesRegex(SystemExit, "recorded twice"):
+            self._load(
+                '[[failure]]\ndeclaration = "A.b"\nstage = "source"\nreason = "x"\n'
+                '[[failure]]\ndeclaration = "A.b"\nstage = "source"\nreason = "y"\n'
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

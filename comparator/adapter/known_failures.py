@@ -22,8 +22,17 @@ the other to read the format.
 
 import tomllib
 
+KNOWN_KEYS = frozenset({"declaration", "stage", "reason", "workspace"})
+
+
 def load_known_failures(path):
-    """The recorded failures, `{declaration: {stage, reason}}`."""
+    """The recorded failures, `{declaration: {stage, reason}}`.
+
+    Strict like every other boundary here: a key nothing reads is refused
+    rather than carried, and a declaration recorded twice is refused rather
+    than last-one-wins — a shadowed entry would quietly defeat the exact
+    match the gates promise.
+    """
     with open(path, "rb") as handle:
         data = tomllib.load(handle)
     failures = {}
@@ -31,6 +40,12 @@ def load_known_failures(path):
         for field in ("declaration", "stage", "reason"):
             if field not in entry:
                 raise SystemExit(f"{path}: a failure entry has no `{field}`")
+        unknown = sorted(set(entry) - KNOWN_KEYS)
+        if unknown:
+            raise SystemExit(
+                f"{path}: {entry['declaration']} has unknown keys: "
+                f"{', '.join(unknown)}"
+            )
         if entry["stage"] not in ("source", "target"):
             raise SystemExit(
                 f"{path}: {entry['declaration']} has stage {entry['stage']!r}; "
@@ -40,6 +55,10 @@ def load_known_failures(path):
             raise SystemExit(
                 f"{path}: {entry['declaration']} is a target failure without a "
                 "`workspace`; the target gate matches by workspace id"
+            )
+        if entry["declaration"] in failures:
+            raise SystemExit(
+                f"{path}: {entry['declaration']} is recorded twice"
             )
         failures[entry["declaration"]] = entry
     return failures

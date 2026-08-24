@@ -149,23 +149,42 @@ def prefetch_elaborator_facts(pairs):
     wanted = [pair for pair in dict.fromkeys(pairs) if pair not in _FACTS_CACHE]
     if not wanted:
         return
-    proc = subprocess.run(
-        ["lake", "exe", "comparator_facts", "--batch"],
-        input="".join(f"{module} {declaration}\n" for module, declaration in wanted),
-        capture_output=True,
-        text=True,
-        cwd=ROOT,
-    )
-    if proc.returncode != 0:
+    try:
+        proc = subprocess.run(
+            ["lake", "exe", "comparator_facts", "--batch"],
+            input="".join(
+                json.dumps({"module": module, "declaration": declaration}) + "\n"
+                for module, declaration in wanted
+            ),
+            capture_output=True,
+            text=True,
+            cwd=ROOT,
+            # Generous: a cold run imports Mathlib and may build the
+            # extractor first. A hang should end the run, not the day.
+            timeout=1800 + 30 * len(wanted),
+        )
+    except subprocess.TimeoutExpired:
         # The batch is an optimisation; the per-declaration path is the
         # arbiter of what fails and how it is reported.
         return
+    if proc.returncode != 0:
+        return
+    requested = set(wanted)
     for line in proc.stdout.splitlines():
         if not line.startswith("{"):
+            # `lake` progress lines share stdout with the payload; anything
+            # non-JSON is theirs. Error entries are also left uncached, so
+            # the single re-run reproduces the exact message.
             continue
         entry = json.loads(line)
+        key = (entry["module"], entry["declaration"])
+        if key not in requested:
+            raise SystemExit(
+                f"comparator_facts --batch answered for {key[1]} in {key[0]}, "
+                "which nothing asked about"
+            )
         if "facts" in entry:
-            _FACTS_CACHE[(entry["module"], entry["declaration"])] = entry["facts"]
+            _FACTS_CACHE[key] = entry["facts"]
 
 
 def elaborator_facts(module, declaration):
@@ -181,12 +200,18 @@ def elaborator_facts(module, declaration):
     cached = _FACTS_CACHE.get((module, declaration))
     if cached is not None:
         return FactsRecord.from_payload(cached, declaration)
-    proc = subprocess.run(
-        ["lake", "exe", "comparator_facts", module, declaration],
-        capture_output=True,
-        text=True,
-        cwd=ROOT,
-    )
+    try:
+        proc = subprocess.run(
+            ["lake", "exe", "comparator_facts", module, declaration],
+            capture_output=True,
+            text=True,
+            cwd=ROOT,
+            timeout=1800,
+        )
+    except subprocess.TimeoutExpired:
+        raise SystemExit(
+            f"comparator_facts {declaration}: no answer within 30 minutes"
+        ) from None
     if proc.returncode != 0:
         raise SystemExit(
             f"comparator_facts {declaration}: "
