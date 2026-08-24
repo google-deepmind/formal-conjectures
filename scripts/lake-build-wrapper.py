@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # Copyright 2026 The Formal Conjectures Authors.
+# Copyright 2024 The Mathlib Community.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +15,9 @@
 # limitations under the License.
 
 """
-Adapted from leanprover-community/mathlib4 (scripts/lake-build-wrapper.py):
-https://github.com/leanprover-community/mathlib4/blob/master/scripts/lake-build-wrapper.py
+Adapted from leanprover-community/mathlib4 (scripts/lake-build-wrapper.py),
+commit 5642d94db334927de1b22a4a67ddd27dccd4c8a1:
+https://github.com/leanprover-community/mathlib4/blob/5642d94db334927de1b22a4a67ddd27dccd4c8a1/scripts/lake-build-wrapper.py
 Licensed under Apache 2.0.
 
 Usage: lake-build-wrapper.py <output_file.json> <command> [args...]
