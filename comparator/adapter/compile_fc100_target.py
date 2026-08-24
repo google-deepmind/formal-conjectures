@@ -29,7 +29,8 @@ import subprocess
 import sys
 import tomllib
 
-from leaneval_interface import dump_json
+from leaneval_interface import lean_errors, dump_json
+from make_comparator_workspace import load_known_failures
 
 
 def arrange_project(workspaces_dir, project_dir):
@@ -123,11 +124,7 @@ def build(project_dir, modules):
             capture_output=True,
             text=True,
         )
-        errors = [
-            line
-            for line in (completed.stdout + completed.stderr).splitlines()
-            if "error:" in line
-        ]
+        errors = lean_errors(completed.stdout + completed.stderr)
         ok = completed.returncode == 0 and not errors
         results.append(
             {
@@ -168,14 +165,16 @@ def main(argv):
     print(f"{report['ok']}/{report['total']} Challenges compile at target pins")
 
     if args.known_failures:
-        with open(args.known_failures, "rb") as handle:
-            recorded = tomllib.load(handle)
         # Known failures are recorded by declaration; workspaces are named by
         # the slugged id, which the `workspace` field of each entry supplies.
+        # The loader is the source gate's: one validator, one reading of the
+        # ledger, and a target entry without a `workspace` is refused there
+        # rather than silently dropped here.
+        recorded = load_known_failures(args.known_failures)
         expected = {
             entry["workspace"]
-            for entry in recorded.get("failure", [])
-            if entry.get("stage") == "target" and "workspace" in entry
+            for entry in recorded.values()
+            if entry["stage"] == "target"
         }
         unexpected = sorted(failed - expected)
         fixed = sorted(expected - failed)

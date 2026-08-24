@@ -4,4 +4,3 @@
 id = "margulis_conjecture_1_1"
 declaration = "conjecture_1_1"
 module = "FormalConjectures/Arxiv/2504.17644/Margulis.lean"
-source = "https://arxiv.org/abs/2504.17644"

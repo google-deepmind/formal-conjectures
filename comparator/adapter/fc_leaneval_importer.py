@@ -37,6 +37,7 @@ from leaneval_interface import (
     ProblemManifest,
     SourceRecord,
     TargetRecord,
+    lean_errors,
 )
 from fc_source import (
     DECL_START,
@@ -83,6 +84,9 @@ def target_pins():
     read and where they will be used a readable fact rather than an assumption.
     """
     target = _tools_file()["target"]
+    for key in ("lean_toolchain", "mathlib_revision"):
+        if not target.get(key):
+            raise SystemExit(f"comparator/tools.toml [target] has an empty `{key}`")
     return TargetRecord(
         lean_toolchain=target["lean_toolchain"],
         mathlib_revision=target["mathlib_revision"],
@@ -186,6 +190,12 @@ def load_manifest(problem_id):
         )
     if "declaration" not in data:
         raise SystemExit(f"{path} has no `declaration` field")
+    unknown = sorted(set(data) - {"id", "declaration", "module", "copy_dependencies"})
+    if unknown:
+        raise SystemExit(
+            f"{path} has keys nothing reads: {', '.join(unknown)}; a field no "
+            "code consumes is a record nobody can check"
+        )
     return data
 
 
@@ -604,7 +614,7 @@ def elaborate(marked_up):
     # those warnings are the importer working. Linter warnings such as
     # `unused variable` come from the copied source and say nothing about
     # whether the copy is faithful.
-    errors = [line for line in output.splitlines() if "error:" in line]
+    errors = lean_errors(output)
     if proc.returncode != 0 or errors:
         raise SystemExit(
             "the marked-up module does not elaborate:\n"

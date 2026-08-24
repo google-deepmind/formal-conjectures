@@ -206,6 +206,11 @@ def load_known_failures(path):
                 f"{path}: {entry['declaration']} has stage {entry['stage']!r}; "
                 "expected source or target"
             )
+        if entry["stage"] == "target" and "workspace" not in entry:
+            raise SystemExit(
+                f"{path}: {entry['declaration']} is a target failure without a "
+                "`workspace`; the target gate matches by workspace id"
+            )
         failures[entry["declaration"]] = entry
     return failures
 
@@ -303,8 +308,8 @@ def main(argv):
     ap.add_argument(
         "--answer-type",
         default=None,
-        help="type of a non-Prop answer(sorry) slot; "
-        "the problem file's `answer_type` is used when absent",
+        help="type of a non-Prop answer(sorry) slot, for the rare "
+        "statement whose slots the elaborated environment cannot type apart",
     )
     ap.add_argument(
         "--module",

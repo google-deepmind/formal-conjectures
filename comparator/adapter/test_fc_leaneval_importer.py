@@ -210,8 +210,15 @@ class ProblemFileTest(unittest.TestCase):
         self.assertEqual(load_manifest("no_such_problem"), {})
 
     def test_fields_are_read(self):
+        self.write("p.toml", 'id = "p"\ndeclaration = "d"\nmodule = "m.lean"\n')
+        self.assertEqual(load_manifest("p")["module"], "m.lean")
+
+    def test_unknown_keys_are_refused(self):
+        # A field no code consumes is a record nobody can check: it reads as
+        # configuration while silently doing nothing.
         self.write("p.toml", 'id = "p"\ndeclaration = "d"\nanswer_type = "ENNReal"\n')
-        self.assertEqual(load_manifest("p")["answer_type"], "ENNReal")
+        with self.assertRaisesRegex(SystemExit, "keys nothing reads"):
+            load_manifest("p")
 
     def test_id_must_match_the_filename(self):
         # The filename is what the importer looks up, so a disagreeing `id`
