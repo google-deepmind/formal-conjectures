@@ -35,6 +35,7 @@ from make_comparator_workspace import (
     seam_files,
     write_tree,
 )
+from leaneval_interface import dump_json
 from test_leaneval_interface import A_MODULE, a_manifest
 
 
@@ -165,13 +166,12 @@ class PinnedGeneratorTest(unittest.TestCase):
                 path = root / relative
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(content, encoding="utf-8")
-            cwd = os.getcwd()
-            try:
-                os.chdir(root)
-                first = generator_cli.generate(request)
-                second = generator_cli.generate(request)
-            finally:
-                os.chdir(cwd)
+            # The emitted request IS what generation runs: the same bytes,
+            # resolved from inside the emitted directory.
+            request_text = (root / "request.json").read_text(encoding="utf-8")
+            self.assertEqual(request_text, dump_json(request))
+            first = generator_cli.generate(request_text, cwd=root)
+            second = generator_cli.generate(request_text, cwd=root)
             self.assertEqual(first, second)
             self.assertEqual(sorted(first), ["erdos_940"])
 

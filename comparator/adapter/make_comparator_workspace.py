@@ -139,15 +139,18 @@ def seam_files(pairs, group=None):
     has no field for, so they travel beside it rather than through it.
     """
     request, problems = _seam(pairs, group=group)
+    request_text = dump_json(request)
     producer = importer.producer_record()
-    files = {"request.json": dump_json(request)}
+    files = {"request.json": request_text}
     for path, content in generator_cli.context_files(problems).items():
         files[f"{CONTEXT_DIR}/{path}"] = content
     for (problem, _), (_, manifest) in zip(problems, pairs):
         # Before generation the record binds the module bytes only; the
         # workspace's copy adds the generated files.
         bound = manifest.with_digests(
-            sha256_text(problem["moduleContent"]), {}
+            sha256_text(problem["moduleContent"]),
+            {},
+            request_sha256=sha256_text(request_text),
         ).with_producer(producer)
         files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = bound.to_json()
     return request, files
@@ -156,14 +159,18 @@ def seam_files(pairs, group=None):
 def generate_workspaces(pairs, out_dir, group=None):
     """Generate one workspace per pair under `out_dir`, via the pinned binary."""
     request, problems = _seam(pairs, group=group)
+    # One serialisation, used everywhere: the string piped to the binary is
+    # the string `--emit-import` writes and the sidecar digests. The request
+    # keeps its relative `contextRoot`; the binary runs with the staging
+    # directory as its working directory, which is where that root resolves.
+    request_text = dump_json(request)
     staging = pathlib.Path(tempfile.mkdtemp(prefix=".fc-seam."))
     try:
         # Only the context crosses to the binary; the request goes on stdin
         # and the provenance sidecars belong to the written workspaces, so
         # neither is staged here.
         _write_files(staging / CONTEXT_DIR, generator_cli.context_files(problems))
-        request["contextRoot"] = str(staging / CONTEXT_DIR)
-        workspaces = generator_cli.generate(request)
+        workspaces = generator_cli.generate(request_text, cwd=staging)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     module_content = {p["id"]: p["moduleContent"] for p in request["problems"]}
@@ -176,10 +183,12 @@ def generate_workspaces(pairs, out_dir, group=None):
         workspace = dict(workspaces[problem_id])
         # The provenance sidecar rides in the workspace directory, not in the
         # generator's file map: the generator neither knows nor checks it. It
-        # binds the exact module bytes sent and every file received.
+        # binds the exact request and module bytes sent and every file
+        # received.
         bound = manifest.with_digests(
             sha256_text(module_content[problem_id]),
             {path: sha256_text(content) for path, content in workspace.items()},
+            request_sha256=sha256_text(request_text),
         ).with_producer(producer)
         workspace[PROVENANCE_FILE] = bound.to_json()
         written.append(write_tree(pathlib.Path(out_dir) / problem_id, workspace))

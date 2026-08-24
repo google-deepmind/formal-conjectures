@@ -290,16 +290,20 @@ class ProblemManifest:
     # serialisation is key-sorted.
     module_sha256: str = ""
     file_sha256: tuple = ()
+    # The exact request bytes that crossed the seam, as their digest: with
+    # it, "the emitted request is what generation ran" is checkable.
+    request_sha256: str = ""
     # What produced the artifact — importer commit, pinned generator, target
     # pins — bound at generation time like the digests, absent before it.
     producer: ProducerRecord = None
 
-    def with_digests(self, module_sha256, files):
-        """The same manifest, bound to the module bytes and generated files."""
+    def with_digests(self, module_sha256, files, request_sha256=""):
+        """The same manifest, bound to the request, module bytes and files."""
         return dataclasses.replace(
             self,
             module_sha256=module_sha256,
             file_sha256=tuple(sorted((path, digest) for path, digest in files.items())),
+            request_sha256=request_sha256,
         )
 
     def with_producer(self, producer):
@@ -341,6 +345,8 @@ class ProblemManifest:
                 "module": self.module_sha256,
                 "files": dict(self.file_sha256),
             }
+            if self.request_sha256:
+                payload["digests"]["request"] = self.request_sha256
         if self.producer is not None:
             payload["producer"] = self.producer.to_json_object()
         return payload
@@ -377,7 +383,7 @@ class ProblemManifest:
         if unknown:
             raise SystemExit(f"provenance source has unknown keys: {', '.join(unknown)}")
         digests = dict(payload.get("digests", {}))
-        unknown = sorted(set(digests) - {"module", "files"})
+        unknown = sorted(set(digests) - {"module", "files", "request"})
         if unknown:
             raise SystemExit(f"provenance digests have unknown keys: {', '.join(unknown)}")
         return cls(
@@ -392,6 +398,7 @@ class ProblemManifest:
             category=payload.get("category", ""),
             module_sha256=digests.get("module", ""),
             file_sha256=tuple(sorted(dict(digests.get("files", {})).items())),
+            request_sha256=digests.get("request", ""),
             producer=(
                 ProducerRecord.from_json_object(payload["producer"])
                 if "producer" in payload

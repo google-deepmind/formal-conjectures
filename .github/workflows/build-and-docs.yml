@@ -253,12 +253,11 @@ jobs:
           assert len(manifest.source.commit) == 40, manifest.source.commit
           assert manifest.source.declaration, "no FC declaration id"
 
-          request = json.loads(
-              (handed_over / "request.json").read_text(encoding="utf-8")
-          )
+          # The emitted request is fed back as its exact bytes — no reparse,
+          # no reserialise — which is the claim the seam test exists to check.
+          request_text = (handed_over / "request.json").read_text(encoding="utf-8")
           workspace = pathlib.Path(".comparator/Erdos1038_erdos_1038_parts_i").resolve()
-          os.chdir(handed_over)
-          regenerated = generator_cli.generate(request)
+          regenerated = generator_cli.generate(request_text, cwd=handed_over)
           files = regenerated["Erdos1038_erdos_1038_parts_i"]
           for name, content in files.items():
               expected = (workspace / name).read_text(encoding="utf-8")

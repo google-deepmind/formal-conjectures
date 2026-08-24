@@ -345,9 +345,14 @@ class ProvenanceSidecarTest(unittest.TestCase):
 
     def test_unknown_digest_keys_are_refused(self):
         payload = a_manifest().with_digests("a" * 64, {}).to_json_object()
-        payload["digests"]["request"] = "d" * 64
+        payload["digests"]["blake3"] = "d" * 64
         with self.assertRaises(SystemExit):
             ProblemManifest.from_json_object(payload)
+
+    def test_the_request_digest_survives_a_round_trip(self):
+        bound = a_manifest().with_digests("a" * 64, {}, request_sha256="d" * 64)
+        loaded = ProblemManifest.from_json(bound.to_json())
+        self.assertEqual(loaded.request_sha256, "d" * 64)
 
 
 class ProblemGroupTest(unittest.TestCase):

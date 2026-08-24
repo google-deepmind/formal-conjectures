@@ -71,16 +71,21 @@ def context_files(problems):
     return files
 
 
-def generate(request):
+def generate(request_text, cwd=None):
     """The generator's verified file maps for one request.
 
-    Returns `{problem_id: {path: content}}`.
+    Takes the request as its exact serialised bytes, not a dict: the string
+    piped to the binary is the same string `--emit-import` writes and the
+    sidecar digests, so "the exact bytes crossing the seam" is a fact rather
+    than a paraphrase. The request's `contextRoot` stays the relative
+    `context`, resolved against `cwd`. Returns `{problem_id: {path: content}}`.
     """
     proc = subprocess.run(
         [binary()],
-        input=json.dumps(request),
+        input=request_text,
         capture_output=True,
         text=True,
+        cwd=cwd,
     )
     if proc.returncode != 0:
         raise SystemExit(
