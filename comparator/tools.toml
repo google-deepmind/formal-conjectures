@@ -1,25 +1,15 @@
 # The pinned external tools, one machine-readable source of truth. "At or
-# after" prose is not a lock; CI, local setup and documentation read this.
-
-# What a local run of the importer uses, under this repository's toolchain.
-[tools]
-comparator = "71b52ec29e06d4b7d882726553b1ceb99a2499e0"
-landrun = "5ed4a3db3a4ad930d577215c6b9abaa19df7f99f"
-# lean4export: no upstream tag exists for this repository's v4.33.1 yet;
-# build the v4.33.0 tag under this repository's toolchain (patch releases
-# share the export format).
-lean4export = "v4.33.0"
+# after" prose is not a lock — and neither is a key nothing reads: every key
+# in this file has a consumer in the adapter or in CI, and a key that loses
+# its last consumer is deleted rather than kept for confidence.
 
 # Where a generated workspace is built and checked. These are LeanEval's pins,
 # not this repository's: a workspace is vendored into lean-eval and built
-# there, so it has to be buildable where it is going. The generator writes
-# `lean_toolchain` and `mathlib_revision` into every workspace, and every
-# manifest records the pair beside Formal Conjectures' own, which is what makes
-# the gap between the two readable rather than assumed.
+# there, so it has to be buildable where it is going. The resolved component
+# pins below are authoritative; there is deliberately no lean-eval commit
+# here, because nothing could check the two statements against each other.
 [target]
-repository = "leanprover/lean-eval"
 comparator_repository = "https://github.com/leanprover/comparator"
-commit = "7699436464052268e6c04b41554bfbc2c6908ec5"
 lean_toolchain = "leanprover/lean4:v4.33.0"
 mathlib_revision = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
 mathlib_git = "https://github.com/leanprover-community/mathlib4.git"

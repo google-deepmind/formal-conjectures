@@ -150,13 +150,16 @@ python3 comparator/adapter/make_comparator_workspace.py --validate
 
 ## Tool pins
 
-`tools.toml` is the one machine-readable source. `[tools]` are the revisions a
-local run uses under this repository's toolchain. `[target]` are LeanEval's:
-the Lean toolchain and Mathlib revision every generated workspace is pinned to,
-and the Comparator and `lean4export` commits that check it. `[generator]` is
-the extracted generator revision every request is written against; bumping it
-is a contract change and has to survive the seam round-trip test. Generation
-itself does not run Comparator.
+`tools.toml` is the one machine-readable source, and every key in it has a
+consumer in the adapter or in CI — a pin nothing reads is confidence without
+control, and gets deleted. `[target]` are LeanEval's pins: the Lean toolchain
+and Mathlib revision every generated workspace is pinned to, and the
+Comparator and `lean4export` commits that check it. `[generator]` is the
+extracted generator revision every request is written against; bumping it is
+a contract change and has to survive the seam round-trip test. Generation
+itself does not run Comparator. For a local Comparator run under this
+repository's own toolchain, build `lean4export` from its `v4.33.0` tag —
+upstream has no v4.33.1 tag yet, and patch releases share the export format.
 
 ## Conformance before a public import
 

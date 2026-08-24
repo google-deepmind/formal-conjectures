@@ -91,7 +91,7 @@ Conjectures corrects a misformalisation upstream.
 | `comparator/adapter/known_failures.py` | the known-failures ledger's format and loader, shared by the set run and the target-stage compile |
 | `comparator/templates/WorkspaceTest.lean` | the workspace test template the contract requires the consumer to supply |
 | `comparator/problems/*.toml` | the rare source-boundary facts the compiled environment cannot recover: which module when two declare the same name, and an explicit copied proof dependency when opaque theorem-value erasure removes it from the compiled dependency graph |
-| `comparator/tools.toml` | the pins, in one machine-readable place: this repository's under `[tools]`, LeanEval's under `[target]`, the generator revision under `[generator]` |
+| `comparator/tools.toml` | the pins, in one machine-readable place: LeanEval's under `[target]`, the generator revision under `[generator]`; every key has a consumer in the adapter or CI |
 
 The tests beside each file pin real defects: the importer suite covers
 extraction, the interface suite covers the wire shapes, and the command suite
