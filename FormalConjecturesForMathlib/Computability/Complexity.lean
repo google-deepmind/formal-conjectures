@@ -64,6 +64,10 @@ as given by the `BitstringEncoding` typeclass.
 def IsPolyTime {α β : Type} [BitstringEncoding α] [BitstringEncoding β] (f : α → β) : Prop :=
   IsPolyTimeWithEncoding (BitstringEncoding.toEncoding (α := α)) (BitstringEncoding.toEncoding (α := β)) f
 
+/-- The identity function is polynomial-time computable. -/
+theorem isPolyTime_id {α : Type} [BitstringEncoding α] : IsPolyTime (id : α → α) :=
+  ⟨Turing.idComputableInPolyTime BitstringEncoding.bitEncode⟩
+
 /- ## Class definitions -/
 
 /--
