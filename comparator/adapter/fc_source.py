@@ -488,10 +488,11 @@ def fc_notation_commands():
     `local` notations are file-scoped at their origin and cannot be in force
     in a problem file, so they are not candidates.
 
-    Returns `[(tokens, command, namespaces)]`, where `tokens` are the
-    command's string literals that contain a non-ASCII character — the
-    distinctive ones worth matching on — and `namespaces` is the stack a
-    plain `scoped` command needs restated around it.
+    Returns `[(tokens, command, scope, shared, path)]`, where `tokens` are
+    the command's distinctive string literals, `scope` is the namespace a
+    `scoped` command needs restated around it, and `path` is the defining
+    file relative to ROOT — a copied command's text is a read source input,
+    so the snapshot check needs to know where it came from.
     """
     global _NOTATION_CACHE
     if _NOTATION_CACHE is not None:
@@ -539,7 +540,9 @@ def fc_notation_commands():
                 # problem files do not import each other, and the problem
                 # file's own notations travel with the preamble.
                 shared = src.name != "FormalConjectures"
-                commands.append((tokens, command, scope, shared))
+                commands.append(
+                    (tokens, command, scope, shared, path.relative_to(ROOT))
+                )
     _NOTATION_CACHE = commands
     return commands
 
@@ -580,10 +583,13 @@ def notation_blocks(module_texts, opened):
     imports was never in force either, but the corpus keeps global notation
     in the problem file itself, which the preamble already carries, so
     unscoped commands from other files are not candidates at all.
+
+    Returns `[(block, path)]`: each copyable block with the file it was read
+    from, so the caller can hold that file to the source pin.
     """
     combined = "\n".join(module_texts)
     blocks, seen = [], set()
-    for tokens, command, scope, shared in fc_notation_commands():
+    for tokens, command, scope, shared, path in fc_notation_commands():
         if scope:
             if scope not in opened:
                 continue
@@ -602,7 +608,7 @@ def notation_blocks(module_texts, opened):
             command = f"namespace {scope}\n{command}\nend {scope}"
         elif not scope:
             command = "local " + command
-        blocks.append(command)
+        blocks.append((command, path))
     return blocks
 
 def flatten_declared_name(declared, statement):
@@ -910,26 +916,75 @@ def _base_pins():
     return mathlib_rev, merge_base.stdout.strip()
 
 
-def pins(source_path=None):
+def pins(source_paths=None):
     """Revisions the workspace's own build can actually fetch.
 
     The FC pin must be reachable from the upstream repository the lakefile
     names, so it is the merge-base with `origin/main`, not HEAD: a local
     branch commit would generate a workspace whose build fails at fetch time.
-    The importer stops if the selected source differs from that revision.
-    Otherwise it could combine a working-tree statement with an older imported
-    context.
+    The importer stops if any file it read differs from that revision —
+    `source_paths` is every file whose text reached the workspace, not just
+    the statement's own — so the record names one revision and the copied
+    text all comes from it. A path the revision does not track fails too:
+    `git diff` is silent about untracked files, so tracking is checked first.
     """
     mathlib_rev, fc_rev = _base_pins()
-    if source_path is not None:
+    if source_paths is not None:
+        if isinstance(source_paths, (str, pathlib.Path)):
+            source_paths = [source_paths]
+        paths = sorted({str(path) for path in source_paths})
+        tracked = subprocess.run(
+            ["git", "-C", str(ROOT), "ls-tree", "-r", "--name-only", fc_rev, "--"]
+            + paths,
+            capture_output=True,
+            text=True,
+        )
+        if tracked.returncode != 0:
+            raise SystemExit(f"cannot list {fc_rev[:12]}: {tracked.stderr.strip()}")
+        missing = sorted(set(paths) - set(tracked.stdout.split("\n")))
+        if missing:
+            raise SystemExit(
+                f"{', '.join(missing)}: not tracked at pinned revision "
+                f"{fc_rev[:12]}; land the source on upstream main before "
+                "generating"
+            )
         comparison = subprocess.run(
-            ["git", "-C", str(ROOT), "diff", "--quiet", fc_rev, "--", str(source_path)]
+            ["git", "-C", str(ROOT), "diff", "--quiet", fc_rev, "--"] + paths
         )
         if comparison.returncode not in (0, 1):
-            raise SystemExit(f"cannot compare {source_path} with {fc_rev[:12]}")
+            raise SystemExit(f"cannot compare {', '.join(paths)} with {fc_rev[:12]}")
         if comparison.returncode == 1:
+            changed = subprocess.run(
+                ["git", "-C", str(ROOT), "diff", "--name-only", fc_rev, "--"] + paths,
+                capture_output=True,
+                text=True,
+            )
             raise SystemExit(
-                f"{source_path} differs from pinned revision {fc_rev[:12]}; "
-                "land the source on upstream main before generating"
+                f"{changed.stdout.strip() or ', '.join(paths)} differs from "
+                f"pinned revision {fc_rev[:12]}; land the source on upstream "
+                "main before generating"
             )
     return mathlib_rev, fc_rev
+
+
+def importer_state():
+    """The commit this importer ran as, and whether its own files were edited.
+
+    The generated record separates two questions the source pin cannot answer:
+    which adapter produced the artifact (HEAD, not the merge-base — the
+    adapter itself is allowed to be branch work), and whether that adapter was
+    running with uncommitted edits under `comparator/`.
+    """
+    head = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+    )
+    if head.returncode != 0 or not head.stdout.strip():
+        raise SystemExit("cannot resolve the importer's own commit")
+    status = subprocess.run(
+        ["git", "-C", str(ROOT), "status", "--porcelain", "--", "comparator"],
+        capture_output=True,
+        text=True,
+    )
+    return head.stdout.strip(), bool(status.stdout.strip())

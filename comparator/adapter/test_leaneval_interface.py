@@ -28,6 +28,7 @@ from leaneval_interface import (
     DefinitionHole,
     MarkedUpModule,
     ProblemManifest,
+    ProducerRecord,
     SourceRecord,
     TargetRecord,
     _utf16_column,
@@ -49,8 +50,17 @@ def a_source(**overrides):
         "blob_sha": "b" * 40,
         "module": "FormalConjectures.Example",
         "declaration": "erdos_940",
-        "copied_dependencies": ("Foo.bar",),
-        "original_declaration": "theorem erdos_940 : True := by\n  sorry",
+        "copied_dependencies": (
+            {
+                "declaration": "Foo.bar",
+                "module": "FormalConjectures.Example",
+                "path": "FormalConjectures/Example.lean",
+                "range": {"startLine": 3, "startColumn": 0, "endLine": 4, "endColumn": 11},
+                "content_sha256": "d" * 64,
+            },
+        ),
+        "original_range": {"startLine": 20, "startColumn": 0, "endLine": 22, "endColumn": 7},
+        "original_sha256": "e" * 64,
         "lean_toolchain": "leanprover/lean4:v4.33.1",
         "mathlib_revision": "c" * 40,
     }
@@ -387,3 +397,45 @@ class StatementPrefixSpanTest(unittest.TestCase):
         *_, statement_entry = module_declarations(module, manifest)
         self.assertTrue(statement_entry[1].startswith("theorem t"))
         self.assertNotIn("Classical in", statement_entry[1])
+
+def a_producer(**overrides):
+    fields = {
+        "importer_commit": "9" * 40,
+        "importer_dirty": False,
+        "generator_repository": "https://github.com/leanprover/lean-eval-generator",
+        "generator_rev": "7" * 40,
+        "contract_version": 1,
+        "target_lean_toolchain": "leanprover/lean4:v4.33.0",
+        "target_mathlib_revision": "6" * 40,
+        "target_comparator": "c" * 40,
+        "target_lean4export": "1" * 40,
+    }
+    fields.update(overrides)
+    return ProducerRecord(**fields)
+
+
+class ProducerRecordTest(unittest.TestCase):
+    """The sidecar names what produced the artifact, and only that."""
+
+    def test_the_producer_survives_a_round_trip(self):
+        bound = a_manifest().with_producer(a_producer(importer_dirty=True))
+        loaded = ProblemManifest.from_json(bound.to_json())
+        self.assertEqual(loaded.producer, bound.producer)
+        self.assertTrue(loaded.producer.importer_dirty)
+
+    def test_a_manifest_without_a_producer_stays_without_one(self):
+        loaded = ProblemManifest.from_json(a_manifest().to_json())
+        self.assertIsNone(loaded.producer)
+
+    def test_unknown_producer_keys_are_refused(self):
+        payload = a_manifest().with_producer(a_producer()).to_json_object()
+        payload["producer"]["generator"]["binary_path"] = "/tmp/gen"
+        with self.assertRaisesRegex(SystemExit, "unknown keys"):
+            ProblemManifest.from_json_object(payload)
+
+    def test_unknown_copied_dependency_keys_are_refused(self):
+        payload = a_manifest().to_json_object()
+        payload["source"]["copied_dependencies"][0]["blob"] = "f" * 40
+        with self.assertRaisesRegex(SystemExit, "unknown keys"):
+            ProblemManifest.from_json_object(payload)
+

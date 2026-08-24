@@ -132,6 +132,13 @@ class SourceRecord:
     hole types in the manifest were read from an environment elaborated at
     them, so a reader comparing them with `TargetRecord` can see whether the
     types were read where they will be used.
+
+    `copied_dependencies` holds one record per emitted slice — declaration,
+    module, path, source range and a digest of the copied text — and the
+    statement itself travels as `original_range` plus `original_sha256`
+    rather than as text: with every recorded path held to `commit`, range and
+    digest identify the bytes exactly, and the record never carries the
+    source's proof body into a workspace.
     """
 
     repository: str
@@ -141,9 +148,89 @@ class SourceRecord:
     module: str
     declaration: str
     copied_dependencies: tuple
-    original_declaration: str
+    original_range: dict
+    original_sha256: str
     lean_toolchain: str
     mathlib_revision: str
+
+
+@dataclasses.dataclass(frozen=True)
+class ProducerRecord:
+    """What produced one generated workspace, as it was at generation time.
+
+    Immutable output deserves a record of its producers: the importer commit
+    (and whether `comparator/` carried uncommitted edits), the pinned
+    generator with its contract version, and the target pins the workspace
+    was generated for. These describe this artifact; the consumer's live
+    regime stays the consumer's, and `TargetRecord` remains the request-side
+    statement of it.
+    """
+
+    importer_commit: str
+    importer_dirty: bool
+    generator_repository: str
+    generator_rev: str
+    contract_version: int
+    target_lean_toolchain: str
+    target_mathlib_revision: str
+    target_comparator: str
+    target_lean4export: str
+
+    def to_json_object(self):
+        return {
+            "importer": {
+                "commit": self.importer_commit,
+                "dirty": self.importer_dirty,
+            },
+            "generator": {
+                "repository": self.generator_repository,
+                "rev": self.generator_rev,
+                "contract_version": self.contract_version,
+            },
+            "target": {
+                "lean_toolchain": self.target_lean_toolchain,
+                "mathlib_revision": self.target_mathlib_revision,
+                "comparator": self.target_comparator,
+                "lean4export": self.target_lean4export,
+            },
+        }
+
+    @classmethod
+    def from_json_object(cls, payload):
+        sections = {
+            "importer": {"commit", "dirty"},
+            "generator": {"repository", "rev", "contract_version"},
+            "target": {
+                "lean_toolchain",
+                "mathlib_revision",
+                "comparator",
+                "lean4export",
+            },
+        }
+        unknown = sorted(set(payload) - set(sections))
+        if unknown:
+            raise SystemExit(f"producer record has unknown keys: {', '.join(unknown)}")
+        for section, keys in sections.items():
+            entries = payload.get(section, {})
+            unknown = sorted(set(entries) - keys)
+            if unknown:
+                raise SystemExit(
+                    f"producer {section} has unknown keys: {', '.join(unknown)}"
+                )
+        importer = payload.get("importer", {})
+        generator = payload.get("generator", {})
+        target = payload.get("target", {})
+        return cls(
+            importer_commit=importer.get("commit", ""),
+            importer_dirty=bool(importer.get("dirty", False)),
+            generator_repository=generator.get("repository", ""),
+            generator_rev=generator.get("rev", ""),
+            contract_version=generator.get("contract_version", 0),
+            target_lean_toolchain=target.get("lean_toolchain", ""),
+            target_mathlib_revision=target.get("mathlib_revision", ""),
+            target_comparator=target.get("comparator", ""),
+            target_lean4export=target.get("lean4export", ""),
+        )
 
 
 @dataclasses.dataclass(frozen=True)
@@ -203,6 +290,9 @@ class ProblemManifest:
     # serialisation is key-sorted.
     module_sha256: str = ""
     file_sha256: tuple = ()
+    # What produced the artifact — importer commit, pinned generator, target
+    # pins — bound at generation time like the digests, absent before it.
+    producer: ProducerRecord = None
 
     def with_digests(self, module_sha256, files):
         """The same manifest, bound to the module bytes and generated files."""
@@ -211,6 +301,10 @@ class ProblemManifest:
             module_sha256=module_sha256,
             file_sha256=tuple(sorted((path, digest) for path, digest in files.items())),
         )
+
+    def with_producer(self, producer):
+        """The same manifest, naming what produced the artifact."""
+        return dataclasses.replace(self, producer=producer)
 
     def __post_init__(self):
         for field in ("id", "theorem", "qualified_theorem"):
@@ -247,13 +341,15 @@ class ProblemManifest:
                 "module": self.module_sha256,
                 "files": dict(self.file_sha256),
             }
+        if self.producer is not None:
+            payload["producer"] = self.producer.to_json_object()
         return payload
 
     KNOWN_KEYS = frozenset(
         {
             "schema_version", "id", "theorem", "qualified_theorem", "category",
             "apply_arguments", "holes", "permitted_axioms", "source",
-            "source_url", "digests",
+            "source_url", "digests", "producer",
         }
     )
 
@@ -270,6 +366,13 @@ class ProblemManifest:
             raise SystemExit(f"provenance record has unknown keys: {', '.join(unknown)}")
         source = dict(payload["source"])
         source["copied_dependencies"] = tuple(source["copied_dependencies"])
+        copied_keys = {"declaration", "module", "path", "range", "content_sha256"}
+        for entry in source["copied_dependencies"]:
+            unknown = sorted(set(entry) - copied_keys)
+            if unknown:
+                raise SystemExit(
+                    f"a copied dependency has unknown keys: {', '.join(unknown)}"
+                )
         unknown = sorted(set(source) - {f.name for f in dataclasses.fields(SourceRecord)})
         if unknown:
             raise SystemExit(f"provenance source has unknown keys: {', '.join(unknown)}")
@@ -289,6 +392,11 @@ class ProblemManifest:
             category=payload.get("category", ""),
             module_sha256=digests.get("module", ""),
             file_sha256=tuple(sorted(dict(digests.get("files", {})).items())),
+            producer=(
+                ProducerRecord.from_json_object(payload["producer"])
+                if "producer" in payload
+                else None
+            ),
         )
 
     def to_json(self):

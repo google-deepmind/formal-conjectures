@@ -34,11 +34,14 @@ import tempfile
 import tomllib
 
 from leaneval_interface import (
+    CONTRACT_VERSION,
     MarkedUpModule,
     ProblemManifest,
+    ProducerRecord,
     SourceRecord,
     TargetRecord,
     lean_errors,
+    sha256_text,
 )
 from fc_source import (
     DECL_START,
@@ -48,6 +51,7 @@ from fc_source import (
     find_declaration,
     flatten_declared_name,
     hoist_answers,
+    importer_state,
     localise_notation,
     module_name,
     module_source_path,
@@ -91,6 +95,36 @@ def target_pins():
     return TargetRecord(
         lean_toolchain=target["lean_toolchain"],
         mathlib_revision=target["mathlib_revision"],
+    )
+
+
+def producer_record():
+    """What produced a generated artifact: this adapter, that generator, those pins.
+
+    A workspace is immutable once written, so its record names the producers
+    as they were at generation time — the importer's own commit and whether
+    its files carried uncommitted edits, the pinned generator and its
+    contract version, and the target pins the workspace was generated for.
+    These are facts about this artifact, not assertions about what any
+    consumer uses forever.
+    """
+    tools = _tools_file()
+    generator = tools.get("generator", {})
+    target = tools.get("target", {})
+    for table, key in (("generator", "repository"), ("generator", "rev")):
+        if not tools.get(table, {}).get(key):
+            raise SystemExit(f"comparator/tools.toml [{table}] has an empty `{key}`")
+    commit, dirty = importer_state()
+    return ProducerRecord(
+        importer_commit=commit,
+        importer_dirty=dirty,
+        generator_repository=generator["repository"],
+        generator_rev=generator["rev"],
+        contract_version=CONTRACT_VERSION,
+        target_lean_toolchain=target.get("lean_toolchain", ""),
+        target_mathlib_revision=target.get("mathlib_revision", ""),
+        target_comparator=target.get("comparator", ""),
+        target_lean4export=target.get("lean4export", ""),
     )
 
 
@@ -270,7 +304,7 @@ def closure_region(
     subsumed = [dep["name"] for dep in dependencies if covered_by_another(dep)]
     dependencies = [dep for dep in dependencies if dep["name"] not in subsumed]
 
-    blocks, provenance = [], []
+    blocks, provenance, records = [], [], []
     # `open X` on a namespace nothing has declared yet is an error, and a
     # copied preamble may open a namespace whose declaring block comes later
     # in the copy, or never: with the problem's module no longer imported,
@@ -337,6 +371,15 @@ def closure_region(
         chunk.append("end")
         blocks.append("\n".join(chunk))
         provenance.append((dep["name"], body))
+        records.append(
+            {
+                "declaration": dep["name"],
+                "module": dep["module"],
+                "path": str(path.relative_to(ROOT)),
+                "range": dep["range"],
+                "content_sha256": sha256_text(body),
+            }
+        )
 
     listing = "\n".join(f"* `{name}`" for name, _ in provenance)
     return (
@@ -346,11 +389,18 @@ def closure_region(
         "come before the declarations that use them:\n\n"
         f"{listing}\n"
         "-/\n\n" + "\n\n".join(blocks) + "\n"
-    ), provenance
+    ), provenance, records
 
 
 def source_record(
-    declaration, module, source_path, fc_rev, dependencies, original, mathlib_rev
+    declaration,
+    module,
+    source_path,
+    fc_rev,
+    copied_records,
+    original,
+    original_range,
+    mathlib_rev,
 ):
     """Where the copied statement and its dependencies came from.
 
@@ -359,6 +409,14 @@ def source_record(
     generator sees a Lean module, not a repository. They are also what makes
     the importer's regeneration duty possible — when Formal Conjectures fixes
     a misformalisation upstream, this record says which problem to redo.
+
+    Each copied dependency is recorded as the slice that was actually
+    emitted — declaration, module, path, range and a digest of the copied
+    text — and the statement itself as its range and digest. The original
+    text is not carried: `pins` holds every recorded path to `commit`, so
+    range plus digest identify the bytes exactly, and a trusted-statement
+    record has no business shipping the source's proof body into a benchmark
+    workspace.
     """
     blob = subprocess.run(
         ["git", "-C", str(ROOT), "rev-parse", f"{fc_rev}:{source_path}"],
@@ -373,8 +431,9 @@ def source_record(
         blob_sha=blob.stdout.strip() or "",
         module=module,
         declaration=declaration,
-        copied_dependencies=tuple(dependencies),
-        original_declaration=original,
+        copied_dependencies=tuple(copied_records),
+        original_range=dict(original_range),
+        original_sha256=sha256_text(original),
         lean_toolchain=(ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
         mathlib_revision=mathlib_rev,
     )
@@ -492,7 +551,7 @@ def place_notations(dependencies, scope_text, statement, copied):
         [dependencies, scope_text, statement], opened_for_notation
     )
     if not notations:
-        return dependencies
+        return dependencies, []
     # A notation whose right-hand side names a copied declaration must
     # come after the block declaring it; every other notation comes
     # first, because copied declarations may use its token textually. A
@@ -500,7 +559,7 @@ def place_notations(dependencies, scope_text, statement, copied):
     # and `--verify` is what says so.
     copied_last_components = {name.rsplit(".", 1)[-1] for name, _ in copied}
     before, after = [], []
-    for block in notations:
+    for block, _path in notations:
         rhs = block.split("=>", 1)[-1]
         names = set(re.findall(r"[\w«»'.]+", rhs))
         names |= {name.rsplit(".", 1)[-1] for name in names}
@@ -512,7 +571,7 @@ def place_notations(dependencies, scope_text, statement, copied):
         dependencies = "\n\n".join(before) + "\n\n" + dependencies
     if after:
         dependencies = dependencies + "\n\n" + "\n\n".join(after)
-    return dependencies
+    return dependencies, [path for _, path in notations]
 
 
 def _resolve(problem, module=None):
@@ -545,7 +604,7 @@ def import_problem(problem, answer_type=None, module=None):
     source_lines = path.read_text(encoding="utf-8").split("\n")
     original, lo = slice_range(source_lines, facts.range)
     preamble, namespaces_at_target = file_scoped_preamble(source_lines, lo)
-    dependencies, copied = closure_region(
+    dependencies, copied, copied_records = closure_region(
         list(facts.dependencies),
         list(facts.generated_dependencies),
         declaration,
@@ -557,7 +616,9 @@ def import_problem(problem, answer_type=None, module=None):
     )
     args = explicit_arguments(facts, declared)
     scope_text = scope_region(namespaces_at_target, copied, preamble)
-    dependencies = place_notations(dependencies, scope_text, statement, copied)
+    dependencies, notation_paths = place_notations(
+        dependencies, scope_text, statement, copied
+    )
     marked_up = MarkedUpModule(
         dependencies=dependencies,
         scope=scope_text,
@@ -569,7 +630,15 @@ def import_problem(problem, answer_type=None, module=None):
     # workspace statement may carry the flattened `declared` instead, and
     # this is what ties the two together.
     qualified = ".".join(namespaces_at_target + [original_declared])
-    mathlib_rev, fc_rev = pins(path.relative_to(ROOT))
+    # Every file whose text reached the workspace is held to the one source
+    # revision: the statement's own file, each copied dependency's, each
+    # copied notation command's, and the pin files the record quotes.
+    read_paths = (
+        [path.relative_to(ROOT), "lean-toolchain", "lake-manifest.json"]
+        + [record["path"] for record in copied_records]
+        + list(notation_paths)
+    )
+    mathlib_rev, fc_rev = pins(read_paths)
     source_url = docstring_reference(module_doc)
     if not source_url:
         print(
@@ -591,8 +660,9 @@ def import_problem(problem, answer_type=None, module=None):
             fc_module,
             path.relative_to(ROOT),
             fc_rev,
-            [dep["name"] for dep in facts.dependencies],
+            copied_records,
             original,
+            facts.range,
             mathlib_rev,
         ),
         source_url=source_url,

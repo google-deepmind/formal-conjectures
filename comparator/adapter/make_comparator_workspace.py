@@ -139,13 +139,16 @@ def seam_files(pairs, group=None):
     has no field for, so they travel beside it rather than through it.
     """
     request, problems = _seam(pairs, group=group)
+    producer = importer.producer_record()
     files = {"request.json": dump_json(request)}
     for path, content in generator_cli.context_files(problems).items():
         files[f"{CONTEXT_DIR}/{path}"] = content
     for (problem, _), (_, manifest) in zip(problems, pairs):
         # Before generation the record binds the module bytes only; the
         # workspace's copy adds the generated files.
-        bound = manifest.with_digests(sha256_text(problem["moduleContent"]), {})
+        bound = manifest.with_digests(
+            sha256_text(problem["moduleContent"]), {}
+        ).with_producer(producer)
         files[f"{PROVENANCE_STEM}-{problem['id']}.json"] = bound.to_json()
     return request, files
 
@@ -164,6 +167,7 @@ def generate_workspaces(pairs, out_dir, group=None):
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     module_content = {p["id"]: p["moduleContent"] for p in request["problems"]}
+    producer = importer.producer_record()
     written = []
     for _, manifest in pairs:
         problem_id = slug(manifest.id)
@@ -176,7 +180,7 @@ def generate_workspaces(pairs, out_dir, group=None):
         bound = manifest.with_digests(
             sha256_text(module_content[problem_id]),
             {path: sha256_text(content) for path, content in workspace.items()},
-        )
+        ).with_producer(producer)
         workspace[PROVENANCE_FILE] = bound.to_json()
         written.append(write_tree(pathlib.Path(out_dir) / problem_id, workspace))
     return written

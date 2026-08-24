@@ -18,6 +18,7 @@ Every case pins a failure a real import produced, or a rule whose violation
 would copy source that elaborates but poses the wrong problem.
 """
 
+import pathlib
 import unittest
 from unittest import mock
 
@@ -390,12 +391,13 @@ class NotationBlocksTest(unittest.TestCase):
 
     def test_a_scoped_notation_needs_its_namespace_opened(self):
         commands = [
-            (["ℝ²"], 'scoped[EuclideanGeometry] notation "ℝ²" => E', "EuclideanGeometry", True),
+            (["ℝ²"], 'scoped[EuclideanGeometry] notation "ℝ²" => E', "EuclideanGeometry", True, pathlib.Path("FormalConjecturesForMathlib/Geometry.lean")),
         ]
         with self._with_commands(commands):
             self.assertEqual(
                 fc_source.notation_blocks(["def f : ℝ² := sorry"], {"EuclideanGeometry"}),
-                ['scoped[EuclideanGeometry] notation "ℝ²" => E'],
+                [('scoped[EuclideanGeometry] notation "ℝ²" => E',
+                  pathlib.Path("FormalConjecturesForMathlib/Geometry.lean"))],
             )
             # Green9's `⊆` false positive: same token, namespace never opened.
             self.assertEqual(
@@ -405,22 +407,26 @@ class NotationBlocksTest(unittest.TestCase):
     def test_a_shared_global_notation_is_copied_as_local(self):
         # Global would be declared in ChallengeDeps and re-extracted into
         # the importing file too; `local` keeps each copy to its own file.
-        commands = [(["≪"], 'notation g " ≪ " f => IsBigO g f', None, True)]
+        commands = [(["≪"], 'notation g " ≪ " f => IsBigO g f', None, True,
+                     pathlib.Path("FormalConjecturesForMathlib/Order.lean"))]
         with self._with_commands(commands):
             self.assertEqual(
                 fc_source.notation_blocks(["theorem t : a ≪ b := sorry"], set()),
-                ['local notation g " ≪ " f => IsBigO g f'],
+                [('local notation g " ≪ " f => IsBigO g f',
+                  pathlib.Path("FormalConjecturesForMathlib/Order.lean"))],
             )
 
     def test_a_problem_module_global_notation_is_never_copied(self):
-        commands = [(["≪"], 'notation g " ≪ " f => X g f', None, False)]
+        commands = [(["≪"], 'notation g " ≪ " f => X g f', None, False,
+                     pathlib.Path("FormalConjectures/Wikipedia/X.lean"))]
         with self._with_commands(commands):
             self.assertEqual(
                 fc_source.notation_blocks(["theorem t : a ≪ b := sorry"], set()), []
             )
 
     def test_an_unused_token_is_not_copied(self):
-        commands = [(["ℝ²"], 'notation "ℝ²" => E', None, True)]
+        commands = [(["ℝ²"], 'notation "ℝ²" => E', None, True,
+                     pathlib.Path("FormalConjecturesForMathlib/Geometry.lean"))]
         with self._with_commands(commands):
             self.assertEqual(fc_source.notation_blocks(["theorem t : True"], set()), [])
 

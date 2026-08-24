@@ -77,29 +77,66 @@ class ProblemFileTest(unittest.TestCase):
 
 
 class PinTest(unittest.TestCase):
-    def test_changed_source_is_refused(self):
-        saved_root = importer.ROOT
+    """Every path the importer read is held to the one source revision."""
+
+    @contextlib.contextmanager
+    def _pins_repo(self, git_results):
+        saved_root = fc_source.ROOT
+        fc_source._base_pins.cache_clear()
         with tempfile.TemporaryDirectory() as tmp:
             root = pathlib.Path(tmp)
-            importer.ROOT = root
+            fc_source.ROOT = root
             (root / "lake-manifest.json").write_text(
-                json.dumps(
-                    {
-                        "packages": [{"name": "mathlib", "rev": "b" * 40}],
-                    }
-                ),
+                json.dumps({"packages": [{"name": "mathlib", "rev": "b" * 40}]}),
                 encoding="utf-8",
             )
-            results = [
-                subprocess.CompletedProcess([], 0, stdout="a" * 40 + "\n"),
-                subprocess.CompletedProcess([], 1),
-            ]
             try:
-                with mock.patch.object(importer.subprocess, "run", side_effect=results):
-                    with self.assertRaisesRegex(SystemExit, "differs from pinned"):
-                        pins(pathlib.Path("FormalConjectures/Example.lean"))
+                with mock.patch.object(
+                    fc_source.subprocess, "run", side_effect=git_results
+                ):
+                    yield
             finally:
-                importer.ROOT = saved_root
+                fc_source.ROOT = saved_root
+                fc_source._base_pins.cache_clear()
+
+    def test_changed_source_is_refused(self):
+        path = "FormalConjectures/Example.lean"
+        results = [
+            subprocess.CompletedProcess([], 0, stdout="a" * 40 + "\n"),
+            subprocess.CompletedProcess([], 0, stdout=path + "\n"),
+            subprocess.CompletedProcess([], 1),
+            subprocess.CompletedProcess([], 0, stdout=path + "\n"),
+        ]
+        with self._pins_repo(results):
+            with self.assertRaisesRegex(SystemExit, "differs from pinned"):
+                pins(pathlib.Path(path))
+
+    def test_a_path_the_revision_does_not_track_is_refused(self):
+        # `git diff` is silent about untracked files, so a dependency read
+        # from a file the pinned revision has never seen must fail on the
+        # tracking check, not pass by omission.
+        results = [
+            subprocess.CompletedProcess([], 0, stdout="a" * 40 + "\n"),
+            subprocess.CompletedProcess([], 0, stdout="\n"),
+        ]
+        with self._pins_repo(results):
+            with self.assertRaisesRegex(SystemExit, "not tracked at pinned"):
+                pins(pathlib.Path("FormalConjectures/New.lean"))
+
+    def test_a_dirty_dependency_fails_even_with_a_clean_target(self):
+        # The reviewer's mixed state: target at the pin, dependency edited in
+        # the working tree. One diff over every read path refuses it.
+        target = "FormalConjectures/Target.lean"
+        dep = "FormalConjectures/Dep.lean"
+        results = [
+            subprocess.CompletedProcess([], 0, stdout="a" * 40 + "\n"),
+            subprocess.CompletedProcess([], 0, stdout=f"{dep}\n{target}\n"),
+            subprocess.CompletedProcess([], 1),
+            subprocess.CompletedProcess([], 0, stdout=dep + "\n"),
+        ]
+        with self._pins_repo(results):
+            with self.assertRaisesRegex(SystemExit, "Dep.lean differs from pinned"):
+                pins([pathlib.Path(target), pathlib.Path(dep)])
 
 
 @contextlib.contextmanager
@@ -174,10 +211,19 @@ class MathlibOnlyClosureTest(unittest.TestCase):
             source = pathlib.Path(tmp) / "Example.lean"
             source.write_text("def Foo.bar := 1\n", encoding="utf-8")
             resolve.return_value = source
-            out, copied = closure_region(deps, ["Foo.bar._proof_1"], "t")
+            out, copied, records = closure_region(deps, ["Foo.bar._proof_1"], "t")
         self.assertIn("def Foo.bar := 1", out)
         self.assertIn("noncomputable section", out)
         self.assertEqual(copied, [("Foo.bar", "def Foo.bar := 1")])
+        # The sidecar's record of the same copy: the emitted slice, located
+        # and digested, so the provenance chain reaches each dependency.
+        self.assertEqual(len(records), 1)
+        record = records[0]
+        self.assertEqual(record["declaration"], "Foo.bar")
+        self.assertEqual(record["module"], "FormalConjectures.Example")
+        self.assertEqual(record["path"], "Example.lean")
+        self.assertEqual(record["range"]["startLine"], 1)
+        self.assertEqual(len(record["content_sha256"]), 64)
 
     def test_an_explicit_source_only_dependency_carries_its_closure(self):
         facts = fc_source.FactsRecord.from_payload(
@@ -277,7 +323,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
                 encoding="utf-8",
             )
             resolve.return_value = source
-            out, _copied = closure_region(deps, [], "t")
+            out, _copied, _records = closure_region(deps, [], "t")
         self.assertIn("Foo.EdgeN`", out)
         self.assertNotIn("Foo.EdgeN.mk`", out)
         self.assertIn("Foo.aux`", out)
@@ -287,7 +333,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
         # The statement reopens the namespace stack its target sat in. With
         # the problem's module no longer imported, `open Grimm` is an error
         # unless something declares that namespace.
-        out, _copied = closure_region([], [], "grimm_conjecture", ["Grimm"])
+        out, _copied, _records = closure_region([], [], "grimm_conjecture", ["Grimm"])
         self.assertIn("namespace Grimm\nend Grimm", out)
 
     def test_namespaces_exist_before_any_copied_block_opens_them(self):
@@ -306,7 +352,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
             source = pathlib.Path(tmp) / "Example.lean"
             source.write_text("def Grimm.helper := 1\n", encoding="utf-8")
             resolve.return_value = source
-            out, _copied = closure_region(deps, [], "t", ["Grimm"])
+            out, _copied, _records = closure_region(deps, [], "t", ["Grimm"])
         # The empty block that makes the namespace exist comes before any
         # copied block: a copied preamble may `open` it before anything
         # declares it. Redundant creation is harmless.
@@ -318,7 +364,7 @@ class MathlibOnlyClosureTest(unittest.TestCase):
         # `import Mathlib` belongs to the module as a whole, and the generator
         # is what decides which emitted file carries it. A region that
         # restated it would put an import in the middle of a Lean file.
-        out, _copied = closure_region([], [], "t")
+        out, _copied, _records = closure_region([], [], "t")
         self.assertNotIn("import", out)
 
 
