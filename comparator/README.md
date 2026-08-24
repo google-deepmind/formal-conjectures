@@ -57,9 +57,11 @@ Use `--out` to choose the parent directory. Generation refuses to overwrite an
 existing workspace: it writes into a temporary directory and renames the
 complete workspace into place.
 
-The importer stops when the selected source differs from the pinned upstream
-revision. This prevents a workspace from combining a working-tree statement
-with an older imported context.
+The importer stops when any file it read differs from the pinned upstream
+revision — the statement's own file, every copied dependency's, every copied
+notation command's, and the pin files the record quotes. One workspace, one
+source revision: a pinned statement cannot be combined with working-tree
+copied text, and an untracked file cannot slip in unrecorded.
 
 `--verify` elaborates the marked-up module before anything is written, so an
 FC-side copying defect fails here rather than in LeanEval CI. It runs at this
@@ -83,7 +85,10 @@ python3 comparator/adapter/make_comparator_workspace.py erdos_1038.parts.i \
 
 This writes the exact bytes that cross the seam — `request.json`, the
 `context/` directory the schema-version-1 contract reads, and the provenance sidecar — and
-generates no workspace. Running the pinned binary on that request from inside
+generates no workspace. "Exact" is literal: generation pipes the same
+serialisation to the binary that this writes to disk, the sidecar records its
+SHA-256 under `digests.request`, and the seam test feeds the emitted file
+back byte-for-byte. Running the pinned binary on that request from inside
 the emitted directory yields the same file map generation would have written,
 which is what makes the seam checkable rather than asserted.
 
@@ -178,7 +183,7 @@ and `comparator-lean-4-33.yml` builds two of them at LeanEval's pins and runs
 Comparator on them. They validate extraction and adapter behaviour, not
 mathematical correctness or maintainer acceptance.
 
-The first public open-conjectures import also needs a corrected source set.
-`FC100OpenSet1` currently verifies itself as 92 `research open` entries and 8
-`research solved` entries, so it must not be imported wholesale as one hundred
-open conjectures.
+`FC100OpenSet1` is a frozen list whose members keep getting solved — designed
+lifecycle, not an anomaly (formal-conjectures#5075). The whole set imports
+into the open-conjectures group, with each member's current category riding
+along as a tag; the audit report states the split as it stands on each run.

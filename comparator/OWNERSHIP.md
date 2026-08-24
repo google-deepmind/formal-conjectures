@@ -37,7 +37,7 @@ revision is normative). Per problem it carries:
 | `moduleContent` | the rendered marked-up module: the statement's copied FC-local closure, the scope directives in force where it was written, one `noncomputable def <name> : <type> := sorry` per `answer(sorry)` slot, and the statement with its proof replaced by `sorry` — in that order, requiring Mathlib and nothing else |
 | `resolvedHoles` | a source span, kind, and explicit parameters for each hole, computed from the rendered text — exactly, because this side rendered it |
 | `holes`, `id`, `moduleName` | the qualified declaration name, slugged; two modules declaring `conjecture` in different namespaces must not share a workspace |
-| `group` | for a frozen-set import, the set itself: the list is immutable while its members keep getting solved, so every member stays in the open-conjectures display and the category rides along as a tag. For a single import, the declaration's `@[category ...]` tag decides; a declaration that is not a problem is refused either way |
+| `group`, `status`, `visible`, `statementRevision`, `submitter`, `tags` | LeanEval catalog policy, not source facts: they arrive as an explicit `ImportPolicy` the command constructs, with the draft-intake values stated in `make_comparator_workspace.import_policy`. For a frozen-set import the policy's group is the set itself — the list is immutable while its members keep getting solved, so every member stays in the open-conjectures display and the category rides along as a tag; for a single import the declaration's `@[category ...]` tag decides. A declaration that is not a problem is refused either way |
 | `leanToolchain`, `mathlib` | LeanEval's pins, from `[target]` in `tools.toml` — the consumer's, never this repository's |
 | `templates.workspaceTest` | `comparator/templates/WorkspaceTest.lean`, which stays FC-supplied: the contract requires the consumer to provide it |
 | `contextRoot` | a directory this side materialises: the module file the generator byte-checks against `moduleContent`, and a synthesised `.ilean` carrying the spans above, because generator schema version 1 still resolves declaration spans from compiled metadata |
@@ -45,6 +45,16 @@ revision is normative). Per problem it carries:
 The module carries no markers of any kind. `@[eval_problem]` does not exist
 outside lean-eval, so a module carrying it could not elaborate under
 `--verify`; the ranges in the request already say where the holes are.
+
+The module's `import Mathlib` header is faithful, not convenient. Every
+problem file under `FormalConjectures/` imports exactly
+`FormalConjecturesUtil`, which `public import`s all of Mathlib, so each
+statement already elaborates under the full library; no file in the corpus
+carries a narrow or third-party import the header could widen away. What the
+header drops — the FC-local layer — travels as the copied closure, and
+`--verify` elaborates under exactly the header that ships. The remaining
+source-versus-target gap is the Mathlib revision, which the sidecar records
+on both sides and the cross-pin CI job builds.
 
 The module is one file rather than four strings because the importer can then
 elaborate exactly what it is about to hand over: `--verify` runs the module

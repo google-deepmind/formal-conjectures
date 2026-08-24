@@ -64,6 +64,15 @@ from fc_source import DefinitionHole, slug
 
 REGIONS = ("dependencies", "scope", "holes", "statement")
 
+# Faithful for this corpus, not a convenience: every problem file under
+# FormalConjectures/ imports exactly `FormalConjecturesUtil`, which
+# `public import`s all of Mathlib, so each statement already elaborates
+# under the full library and no file carries a narrow or third-party
+# import this header could widen away. The FC-local layer — the one part
+# of the source environment this header drops — travels as the copied
+# closure, and `--verify` elaborates under exactly this header. The
+# remaining source-versus-target gap is the Mathlib revision, which the
+# sidecar records on both sides and the cross-pin CI job builds.
 MODULE_PREAMBLE = "import Mathlib\n"
 
 MANIFEST_SCHEMA_VERSION = 1
