@@ -62,7 +62,7 @@ for the canonical `Bool`-alphabet encodings of its domain and codomain
 as given by the `BitstringEncoding` typeclass.
 -/
 def IsPolyTime {α β : Type} [BitstringEncoding α] [BitstringEncoding β] (f : α → β) : Prop :=
-  IsPolyTimeWithEncoding (BitstringEncoding.toEncoding α) (BitstringEncoding.toEncoding β) f
+  IsPolyTimeWithEncoding (BitstringEncoding.toEncoding (α := α)) (BitstringEncoding.toEncoding (α := β)) f
 
 /- ## Class definitions -/
 

@@ -49,37 +49,33 @@ formalizations of questions of polynomial-time computability will capture the in
 
 This is a class version of Mathlib's `Computability.Encoding`, specialized to the
 alphabet `Bool`. -/
-class BitstringEncoding (α : Type*) where
-  /-- The encoding function. -/
-  encode : α → List Bool
-  /-- The decoding function; `none` on bitstrings that encode nothing. -/
-  decode : List Bool → Option α
-  /-- Decoding is a left inverse of encoding. -/
-  decode_encode : ∀ x, decode (encode x) = some x
-
-attribute [simp] BitstringEncoding.decode_encode
+class BitstringEncoding α extends Computability.Encoding α Bool
 
 namespace BitstringEncoding
 
 variable {α β : Type*}
 
-theorem encode_injective [BitstringEncoding α] :
-    Function.Injective (encode : α → List Bool) := fun _ _ h =>
-  Option.some_injective _ (by rw [← decode_encode, ← decode_encode, h])
+/-- The encoding function of the canonical `BitstringEncoding` of `α`. -/
+def bitEncode [BitstringEncoding α] (a : α) : List Bool := toEncoding.encode a
 
-/-- The bundled `Computability.Encoding` (over the finite alphabet `Bool`) corresponding to a
-`BitstringEncoding`. -/
-def toEncoding (α : Type*) [BitstringEncoding α] : Computability.Encoding α Bool where
-  encode := encode
-  decode := decode
-  decode_encode := decode_encode
+/-- The decoding function of the canonical `BitstringEncoding` of `α`. -/
+def bitDecode [BitstringEncoding α] (l : List Bool) : Option α := toEncoding.decode l
+
+/-- Decoding is a left inverse of encoding. -/
+@[simp]
+theorem bitDecode_bitEncode [BitstringEncoding α] (a : α) : bitDecode (bitEncode a) = some a :=
+  toEncoding.decode_encode a
+
+theorem bitEncode_injective [BitstringEncoding α] :
+    Function.Injective (bitEncode : α → List Bool) :=
+  (toEncoding (α := α)).encode_injective
 
 /-- Transport a `BitstringEncoding` along an injection `f` with partial inverse `g`. -/
 @[reducible]
 def ofLeftInverse [BitstringEncoding β] (f : α → β) (g : β → Option α)
     (h : ∀ x, g (f x) = some x) : BitstringEncoding α where
-  encode a := encode (f a)
-  decode l := (decode l).bind g
+  encode a := bitEncode (f a)
+  decode l := (bitDecode l).bind g
   decode_encode a := by simp [h]
 
 /- ## Ground instances -/
@@ -179,8 +175,8 @@ theorem undelimitBlocks_flatten_delimit (l : List (List Bool)) :
   undelimitBlocksAux_flatten_delimit l _ (length_le_length_flatten_delimit l)
 
 @[simp]
-theorem mapM_decode_map_encode [BitstringEncoding α] (l : List α) :
-    (l.map encode).mapM decode = some l := by
+theorem mapM_bitDecode_map_bitEncode [BitstringEncoding α] (l : List α) :
+    (l.map bitEncode).mapM bitDecode = some l := by
   induction l with
   | nil => rfl
   | cons a t ih => simp [ih]
@@ -190,30 +186,30 @@ theorem mapM_decode_map_encode [BitstringEncoding α] (l : List α) :
 /-- A pair is encoded as a self-delimiting block for the first component followed by the
 encoding of the second. -/
 instance [BitstringEncoding α] [BitstringEncoding β] : BitstringEncoding (α × β) where
-  encode p := delimit (encode p.1) ++ encode p.2
+  encode p := delimit (bitEncode p.1) ++ bitEncode p.2
   decode input :=
     match undelimit input with
     | none => none
     | some (block, rest) =>
-      match decode block, decode rest with
+      match bitDecode block, bitDecode rest with
       | some a, some b => some (a, b)
       | _, _ => none
   decode_encode p := by simp
 
 /-- A list is encoded as the concatenation of self-delimiting blocks for its elements. -/
 instance [BitstringEncoding α] : BitstringEncoding (List α) where
-  encode l := ((l.map encode).map delimit).flatten
-  decode input := (undelimitBlocks input).bind (·.mapM decode)
+  encode l := ((l.map bitEncode).map delimit).flatten
+  decode input := (undelimitBlocks input).bind (·.mapM bitDecode)
   decode_encode l := by
-    rw [undelimitBlocks_flatten_delimit (l.map encode)]
-    exact mapM_decode_map_encode l
+    rw [undelimitBlocks_flatten_delimit (l.map bitEncode)]
+    exact mapM_bitDecode_map_bitEncode l
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
 defining predicate. -/
 instance {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
     BitstringEncoding (Subtype p) where
-  encode x := encode x.val
-  decode input := (decode input).bind fun a => if h : p a then some ⟨a, h⟩ else none
+  encode x := bitEncode x.val
+  decode input := (bitDecode input).bind fun a => if h : p a then some ⟨a, h⟩ else none
   decode_encode x := by simp [x.property]
 
 /-- `ℕ+` is encoded as the subtype `{n : ℕ // 0 < n}` it is defined to be. -/
