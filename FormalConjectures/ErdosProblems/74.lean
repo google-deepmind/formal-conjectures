@@ -40,6 +40,7 @@ bipartite by deleting `k` edges.
 def SimpleGraph.edgeDistancesToBipartite {G : SimpleGraph V} (A : G.Subgraph) : Set ℕ :=
   { (E.ncard) | (E : Set (Sym2 V)) (_ : E ⊆ A.edgeSet) (_ : IsBipartite (A.deleteEdges E).coe)}
 
+set_option backward.isDefEq.respectTransparency false in
 /--
 The set of edge distances to a bipartite graph is always non-empty because deleting all edges
 from a graph makes it bipartite.
@@ -66,6 +67,7 @@ def SimpleGraph.subgraphEdgeDistsToBipartite (G : SimpleGraph V) (n : ℕ) : Set
   { (SimpleGraph.minEdgeDistToBipartite A) |
     (A : Subgraph G) (_ : A.verts.ncard = n) (_ : A.verts.Finite) }
 
+set_option backward.isDefEq.respectTransparency false in
 /--
 The set of minimum edge distances to bipartite for subgraphs of size `n` is bounded above.
 A graph on `n` vertices has at most `n choose 2` edges, and deleting all of them
@@ -75,7 +77,7 @@ makes the graph bipartite, providing a straightforward upper bound.
 theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n : ℕ) :
     BddAbove (SimpleGraph.subgraphEdgeDistsToBipartite G n) := by
   use n.choose 2
-  simp only [upperBounds, Set.mem_setOf_eq, SimpleGraph.subgraphEdgeDistsToBipartite,
+  simp only [upperBounds, Set.mem_ofPred_eq, SimpleGraph.subgraphEdgeDistsToBipartite,
     SimpleGraph.minEdgeDistToBipartite, SimpleGraph.edgeDistancesToBipartite]
   intro m h
   replace ⟨A, ⟨hn, h_fin, h⟩⟩ := h
@@ -91,7 +93,7 @@ theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n
     · rw [Set.ncard_eq_toFinset_card _ h_fin, Set.Finite.card_toFinset]
   refine le_trans ?_ this
   apply Nat.sInf_le
-  simp only [Subgraph.deleteEdges_verts, exists_prop, Set.mem_setOf_eq]
+  simp only [Subgraph.deleteEdges_verts, exists_prop, Set.mem_ofPred_eq]
   use A.edgeSet
   refine ⟨by rfl, ?_, rfl⟩
   use fun _ => 0

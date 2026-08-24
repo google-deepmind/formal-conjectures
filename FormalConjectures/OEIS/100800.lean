@@ -55,45 +55,29 @@ noncomputable def a (n : ℕ) : ℕ :=
       Nat.iterate f (k₀ + 1) n)
     (fun _ => 0)
 
+/-- If `n` already divides `f n`, the search stops immediately and `a n = f n`.  -/
+@[category API, AMS 11]
+lemma a_of_dvd {n : ℕ} (h : n ∣ f n) : a n = f n := by
+  have hex : ∃ k, n ∣ f^[k + 1] n := ⟨0, by simpa using h⟩
+  have hfind : Nat.find hex = 0 := (Nat.find_eq_zero hex).2 (by simpa using h)
+  rw [a, dif_pos hex, hfind]
+  simp
+
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 2 := by
-  delta a
-  norm_num[f,bot_unique ∘Nat.find_min' _,id]
-  norm_num[sumDigits]
+theorem a_1 : a 1 = 2 := by rw [a_of_dvd (by norm_num)]; norm_num [f, sumDigits]
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 4 := by
-  rw [←eq_comm, a]
-  delta f
-  norm_num[sumDigits,Exists.intro 1,Nat.find_eq_iff]
-  rw[Nat.find_eq_iff _|>.2,Function.iterate_zero_apply]
-  decide
+theorem a_2 : a 2 = 4 := by rw [a_of_dvd (by norm_num [f, sumDigits])]; norm_num [f, sumDigits]
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 6 := by
-  norm_num[a]
-  delta f
-  norm_num[sumDigits,Exists.intro 0,Function.comp,Nat.find_eq_iff]
-  exact (congr_arg₂ _ ↑(bot_unique ↑(Nat.find_min' _ (by(norm_num)))) rfl )
+theorem a_3 : a 3 = 6 := by rw [a_of_dvd (by norm_num [f, sumDigits])]; norm_num [f, sumDigits]
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 8 := by
-  (inhabit ℝ)
-  norm_num[a]
-  delta f
-  norm_num[sumDigits,Exists.intro 0]
-  exact (congr_arg₂ _
-    (bot_unique (Nat.find_min' _ (by norm_num [Function.iterate_succ_apply _ _]))) rfl)
+theorem a_4 : a 4 = 8 := by rw [a_of_dvd (by norm_num [f, sumDigits])]; norm_num [f, sumDigits]
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 10 := by
-  (inhabit ℝ)
-  norm_num[a]
-  delta f
-  norm_num[sumDigits,Exists.intro 0]
-  exact (congr_arg₂ _
-    (bot_unique (Nat.find_min' _ (by norm_num [Function.iterate_succ_apply _ _]))) rfl)
+theorem a_5 : a 5 = 10 := by rw [a_of_dvd (by norm_num [f, sumDigits])]; norm_num [f, sumDigits]
 
 /-- A100800 Conjecture: No term is zero. -/
 @[category research open, AMS 11]

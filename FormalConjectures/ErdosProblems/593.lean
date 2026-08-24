@@ -164,11 +164,7 @@ theorem erdos_593.variants.uncountable_vertices_if_large_chromatic
     obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hge
     exact ⟨u, hu, v, hv, fun heq => huv (hφ heq)⟩
   -- So χ(H) ≤ #ℕ = ℵ₀.
-  have hle : H.chromaticCardinal ≤ ℵ₀ := by
-    apply csInf_le
-    · -- The set {κ | ∃ C, #C = κ ∧ ∃ f, proper} is bounded below by 0.
-      exact ⟨0, fun _ ⟨_, _, _, _⟩ => Cardinal.zero_le _⟩
-    · exact ⟨ℕ, Cardinal.mk_nat, φ, hprop⟩
+  have hle : H.chromaticCardinal ≤ ℵ₀ := csInf_le' ⟨ℕ, Cardinal.mk_nat, φ, hprop⟩
   exact absurd (lt_of_lt_of_le hχ hle) (lt_irrefl _)
 
 /--
@@ -180,19 +176,14 @@ particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
     H.edges.Nonempty := by
-  by_contra hempty
-  push_neg at hempty
+  by_contra! hempty
   -- H has no edges (hempty : H.edges = ∅), so any coloring is proper.
   have hprop : H.IsProperColoring (fun _ : V => (0 : Fin 1)) := by
     intro e he
     rw [hempty] at he
     exact (Set.mem_empty_iff_false e).mp he |>.elim
   -- Hence χ(H) ≤ 1 < ℵ₀.
-  have hle : H.chromaticCardinal ≤ 1 := by
-    apply csInf_le
-    · exact ⟨0, fun _ ⟨_, _, _, _⟩ => Cardinal.zero_le _⟩
-    · refine ⟨Fin 1, ?_, fun _ => 0, hprop⟩
-      simp
+  have hle : H.chromaticCardinal ≤ 1 := csInf_le' ⟨Fin 1, by simp, fun _ => 0, hprop⟩
   have h1le : (1 : Cardinal) ≤ ℵ₀ := le_of_lt Cardinal.one_lt_aleph0
   exact absurd (lt_of_lt_of_le hχ (hle.trans h1le)) (lt_irrefl _)
 
