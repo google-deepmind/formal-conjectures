@@ -38,7 +38,7 @@ abbrev wowii103Counterexample : SimpleGraph (Fin 11) :=
 /-- The counterexample is connected. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_connected : wowii103Counterexample.Connected := by
-  decide +native
+  decide
 
 /-- The counterexample has independence number nine. -/
 @[category test, AMS 5]

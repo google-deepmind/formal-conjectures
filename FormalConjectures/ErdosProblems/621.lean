@@ -33,6 +33,7 @@ open SimpleGraph
 
 namespace Erdos621
 
+open scoped Classical in
 /--
 Let $G$ be a graph on $n$ vertices, $\alpha_1(G)$ be the maximum number of edges that contain
 at most one edge from every triangle, and $\tau_1(G)$ be the minimum number of edges that

@@ -119,16 +119,32 @@ jobs:
         uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
           restore-keys: |
-            oleans-${{ hashFiles('lake-manifest.json') }}-
-            oleans-
+            oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
+            oleans-${{ hashFiles('lean-toolchain') }}-
 
       - name: Get olean cache
         if: steps.mode.outputs.website_only != 'true'
         run: |
           lake exe cache unpack
           lake exe cache get
+
+      - name: Restore local lake build
+        if: steps.mode.outputs.website_only != 'true'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/build
+          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
+
+      - name: Save local lake build
+        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/build
+          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
 
       - name: Generate FormalConjecturesForMathlib.lean
         if: steps.mode.outputs.website_only != 'true'
@@ -160,7 +176,6 @@ jobs:
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1
-          lake update formal_conjectures
           # Some modules crash verso-literate (e.g. metaprogramming-heavy util files),
           # so we make this best-effort: render whatever succeeds.
           # TODO(firsching): examine exactly what fails and fix or report as bug to verso
@@ -192,8 +207,8 @@ jobs:
         if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
         uses: actions/cache/save@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
-          path: ~/.cache
-          key: oleans-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          path: ~/.cache/mathlib
+          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
 
       - name: Set up Python
         if: steps.mode.outputs.website_only != 'true'
@@ -225,7 +240,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,moduleDocstrings \
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified \
             > site/data/conjectures.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
@@ -267,10 +282,8 @@ jobs:
               subjects: (c.subjects || []).map(s =>
                 typeof s === 'object' ? s.code : s
               ),
-              formalProofKind: c.formalProofKind || null,
-              formalProofLink: c.formalProofLink || null,
+              formalProofs: c.formalProofs || [],
               hasSorryFreeProof: false,
-              proofConditions: c.proofConditions || [],
             }));
             fs.writeFileSync(
               'site/data/conjectures.json',

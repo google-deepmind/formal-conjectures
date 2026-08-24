@@ -84,7 +84,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
   have ha₂ : a + 2 • d ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨2, by norm_num, by simp⟩)
   have := hA _ ha _ ha₁ _ ha₂ _ ha₁ (by simp; omega)
   simp at this
-  simp [hY, this.1, setOf_and] at hY_card
+  simp [hY, this.1, ofPred_and] at hY_card
   linarith [ncard_singleton _ ▸ ncard_inter_le_ncard_right {a | ∃ x, x < 3} {a}]
 
 theorem IsSidon.subset {A B : Set α} (hB : IsSidon B) (hAB : A ⊆ B) : IsSidon A :=

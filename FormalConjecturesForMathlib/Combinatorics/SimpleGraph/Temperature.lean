@@ -31,7 +31,7 @@ noncomputable def temp_v (G : SimpleGraph α) [DecidableRel G.Adj] (v : α) : �
   if n = deg then 0 else (deg : ℝ) / ((n : ℝ) - (deg : ℝ))
 
 /-- Maximum of `temp_v` over all vertices. -/
-noncomputable def MaxTemp (G : SimpleGraph α) [DecidableRel G.Adj] [Fintype α] [Nonempty α] : ℝ :=
+noncomputable def MaxTemp (G : SimpleGraph α) [DecidableRel G.Adj] [Nonempty α] : ℝ :=
   let temps := Finset.univ.image (temp_v G)
   temps.max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
 
