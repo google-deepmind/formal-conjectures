@@ -10,6 +10,7 @@ a manifest is; `fc_leaneval_importer.py` assembles those from these answers.
 """
 
 
+import functools
 import json
 import pathlib
 import re
@@ -147,17 +148,35 @@ def module_name(rel_path):
     ]
     return ".".join(parts)
 
-def _declaring_files(name):
-    """The files whose text declares `name` as a theorem or lemma."""
-    pattern = re.compile(
-        rf"(?:theorem|lemma)\s+(?:[\w.«»]*\.)?{re.escape(name)}[\s:]"
-    )
-    hits = []
+@functools.lru_cache(maxsize=1)
+def _declared_names():
+    """Every `theorem`/`lemma` name token in the tree, one pass, cached.
+
+    `{path: [name, ...]}` in sorted path order. A batch import looks up
+    hundreds of declarations; one scan of the tree replaces a full rglob and
+    re-read per lookup.
+    """
+    token = re.compile(r"(?:theorem|lemma)\s+([\w.«»]+)[\s:]")
+    index = {}
     for src in SOURCE_DIRS:
         for path in sorted(src.rglob("*.lean")):
-            if pattern.search(path.read_text(encoding="utf-8")):
-                hits.append(path)
-    return hits
+            index[path] = token.findall(path.read_text(encoding="utf-8"))
+    return index
+
+
+def _declaring_files(name):
+    """The files whose text declares `name` as a theorem or lemma.
+
+    A declared token matches when it equals `name` or ends in `.name` —
+    the same reading as the old per-file regex, whose optional prefix was
+    `[\w.«»]*\.` over the identical character class.
+    """
+    dotted = "." + name
+    return [
+        path
+        for path, names in _declared_names().items()
+        if any(t == name or t.endswith(dotted) for t in names)
+    ]
 
 def _declares_namespaces(text, components):
     """True if the file opens namespaces spelling out `components` in order.
@@ -375,11 +394,13 @@ def fc_notation_commands():
                     text.append(lines[follow])
                     follow += 1
                 command = "\n".join(text)
-                tokens = [
-                    token
-                    for token in re.findall(r'"([^"]+)"', command)
-                    if any(ord(c) > 127 for c in token)
-                ]
+                # Every string-literal token is a candidate. The gates that
+                # decide whether a command is actually copied — the token must
+                # appear in the module text, and a scoped notation's namespace
+                # must be among the opens — do the filtering; an ASCII-token
+                # notation such as `J(` in the shared library is otherwise
+                # invisible here and its consumers fail to elaborate.
+                tokens = re.findall(r'"([^"]+)"', command)
                 if not tokens:
                     continue
                 bracket = re.match(r"^(?:@\[[^\]]*\]\s*)?scoped\[([\w.«»]+)\]", line)
@@ -507,15 +528,14 @@ def replace_proof_with_sorry(text):
         return text[: m.start()].rstrip() + " := by\n  sorry"
     return text.rstrip() + " := by\n  sorry"
 
-def answer_spans(text):
-    """Return the source spans of syntactic `answer(...)` calls.
+def _next_code(text, i):
+    """The first index at or after `i` holding code, skipping comments and strings.
 
-    This small lexer skips strings and nested line/block comments and balances
-    parentheses, so an answer term may itself contain parentheses. It is not a
-    Lean parser; malformed or unterminated syntax is refused.
+    Whenever the scan is at code, the lexical state is empty by construction,
+    so no state threads between calls. Returns `(index, unterminated)`, with
+    `index == len(text)` at the end and `unterminated` reporting a comment or
+    string still open there.
     """
-    spans = []
-    i = 0
     block_depth = 0
     in_string = False
     escaped = False
@@ -552,6 +572,27 @@ def answer_spans(text):
             in_string = True
             i += 1
             continue
+        return i, False
+    return i, bool(block_depth or in_string)
+
+
+def answer_spans(text):
+    """Return the source spans of syntactic `answer(...)` calls.
+
+    This small lexer skips strings and nested line/block comments and balances
+    parentheses, so an answer term may itself contain parentheses. It is not a
+    Lean parser; malformed or unterminated syntax is refused.
+    """
+    spans = []
+    i = 0
+    while i < len(text):
+        i, unterminated = _next_code(text, i)
+        if i >= len(text):
+            if unterminated:
+                raise SystemExit(
+                    "unterminated comment or string while reading answers"
+                )
+            break
         if text.startswith("answer", i) and (
             i == 0 or not (text[i - 1].isalnum() or text[i - 1] in "_.'")
         ):
@@ -561,54 +602,23 @@ def answer_spans(text):
             if j < len(text) and text[j] == "(":
                 depth = 1
                 k = j + 1
-                nested_string = False
-                nested_escaped = False
-                nested_comment = 0
                 while k < len(text) and depth:
-                    nested_pair = text[k : k + 2]
-                    if nested_comment:
-                        if nested_pair == "/-":
-                            nested_comment += 1
-                            k += 2
-                        elif nested_pair == "-/":
-                            nested_comment -= 1
-                            k += 2
-                        else:
-                            k += 1
-                        continue
-                    if nested_string:
-                        if nested_escaped:
-                            nested_escaped = False
-                        elif text[k] == "\\":
-                            nested_escaped = True
-                        elif text[k] == '"':
-                            nested_string = False
-                        k += 1
-                        continue
-                    if nested_pair == "/-":
-                        nested_comment = 1
-                        k += 2
-                    elif nested_pair == "--":
-                        newline = text.find("\n", k + 2)
-                        k = len(text) if newline < 0 else newline + 1
-                    elif text[k] == '"':
-                        nested_string = True
-                        k += 1
-                    else:
-                        if text[k] == "(":
-                            depth += 1
-                        elif text[k] == ")":
-                            depth -= 1
-                        k += 1
+                    k, _ = _next_code(text, k)
+                    if k >= len(text):
+                        break
+                    if text[k] == "(":
+                        depth += 1
+                    elif text[k] == ")":
+                        depth -= 1
+                    k += 1
                 if depth:
                     raise SystemExit("unterminated answer(...) term")
                 spans.append((i, k, text[j + 1 : k - 1]))
                 i = k
                 continue
         i += 1
-    if block_depth or in_string:
-        raise SystemExit("unterminated comment or string while reading answers")
     return spans
+
 
 def unwrap_answers(statement):
     """Replace any surviving `answer(t)` with `(t)`.
@@ -727,15 +737,13 @@ def hoist_answers(statement, basename, slot_types, override=None):
         statement = statement[:start] + name + statement[end:]
     return statement, holes
 
-def pins(source_path=None):
-    """Revisions the workspace's own build can actually fetch.
+@functools.lru_cache(maxsize=1)
+def _base_pins():
+    """The Mathlib revision and the FC merge-base, invariant for one run.
 
-    The FC pin must be reachable from the upstream repository the lakefile
-    names, so it is the merge-base with `origin/main`, not HEAD: a local
-    branch commit would generate a workspace whose build fails at fetch time.
-    The importer stops if the selected source differs from that revision.
-    Otherwise it could combine a working-tree statement with an older imported
-    context.
+    Only the per-path dirty check in `pins` varies between calls, so the
+    subprocess and manifest parse run once per batch rather than once per
+    declaration.
     """
     manifest = json.loads((ROOT / "lake-manifest.json").read_text())
     mathlib_rev = next(p["rev"] for p in manifest["packages"] if p["name"] == "mathlib")
@@ -746,7 +754,20 @@ def pins(source_path=None):
     )
     if merge_base.returncode != 0 or not merge_base.stdout.strip():
         raise SystemExit("cannot resolve the Formal Conjectures source revision")
-    fc_rev = merge_base.stdout.strip()
+    return mathlib_rev, merge_base.stdout.strip()
+
+
+def pins(source_path=None):
+    """Revisions the workspace's own build can actually fetch.
+
+    The FC pin must be reachable from the upstream repository the lakefile
+    names, so it is the merge-base with `origin/main`, not HEAD: a local
+    branch commit would generate a workspace whose build fails at fetch time.
+    The importer stops if the selected source differs from that revision.
+    Otherwise it could combine a working-tree statement with an older imported
+    context.
+    """
+    mathlib_rev, fc_rev = _base_pins()
     if source_path is not None:
         comparison = subprocess.run(
             ["git", "-C", str(ROOT), "diff", "--quiet", fc_rev, "--", str(source_path)]

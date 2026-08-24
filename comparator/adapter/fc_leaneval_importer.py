@@ -278,14 +278,19 @@ def closure_region(
     # harmless. This covers the statement's own namespace stack and every
     # namespace a copied preamble opens.
     created = []
+    # One read and preamble parse per dependency; the namespace pre-creation
+    # and the copied blocks below both consume the same tuple, so the two
+    # can never disagree about what a dependency's preamble says.
+    sliced = []
     for dep in dependencies:
         if dep["range"] is None:
+            sliced.append(None)
             continue
         dep_path = module_source_path(dep["module"])
         dep_lines = dep_path.read_text(encoding="utf-8").split("\n")
-        dep_preamble, dep_namespaces = file_scoped_preamble(
-            dep_lines, slice_range(dep_lines, dep["range"])[1]
-        )
+        dep_text, dep_start = slice_range(dep_lines, dep["range"])
+        dep_preamble, dep_namespaces = file_scoped_preamble(dep_lines, dep_start)
+        sliced.append((dep_path, dep_text, dep_preamble, dep_namespaces))
         for entry in dep_preamble:
             words = entry.split("\n")[0].split()
             if not words or words[0] != "open":
@@ -310,13 +315,10 @@ def closure_region(
             continue
         seen_namespaces.add(namespace)
         blocks.append(f"namespace {namespace}\nend {namespace}")
-    for dep in dependencies:
-        if dep["range"] is None:
+    for dep, cut in zip(dependencies, sliced):
+        if cut is None:
             raise SystemExit(f"{declaration}: {dep['name']} has no source range")
-        path = module_source_path(dep["module"])
-        lines = path.read_text(encoding="utf-8").split("\n")
-        text, start = slice_range(lines, dep["range"])
-        preamble, namespaces = file_scoped_preamble(lines, start)
+        path, text, preamble, namespaces = cut
         body = strip_fc_attributes(text).strip("\n")
         if not body:
             raise SystemExit(f"{declaration}: {dep['name']} sliced to nothing")

@@ -80,6 +80,14 @@ PROVENANCE_FILE = f"{PROVENANCE_STEM}.json"
 CONTEXT_DIR = "context"
 
 
+def _write_files(directory, files):
+    """Materialise a `{relative path: content}` mapping under `directory`."""
+    for relative, content in files.items():
+        destination = directory / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(content, encoding="utf-8")
+
+
 def write_tree(target, files):
     """Write a complete directory without overwriting or leaving a partial one.
 
@@ -96,10 +104,7 @@ def write_tree(target, files):
         tempfile.mkdtemp(prefix=f".{target.name}.", dir=target.parent)
     )
     try:
-        for relative, content in files.items():
-            destination = staging / relative
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_text(content, encoding="utf-8")
+        _write_files(staging, files)
         staging.rename(target)
     except BaseException:
         shutil.rmtree(staging, ignore_errors=True)
@@ -107,15 +112,8 @@ def write_tree(target, files):
     return target
 
 
-def seam_files(pairs, group=None):
-    """The request and context for `(marked_up, manifest)` pairs, as files.
-
-    This is the artifact the FC importer contributes once lean-eval consumes
-    the shared generator: the request bytes, the context directory the schema-version-1
-    contract still reads, and one provenance record per problem — the FC
-    source commit and declaration id §10 requires, which the schema-version-1 wire format
-    has no field for, so they travel beside it rather than through it.
-    """
+def _seam(pairs, group=None):
+    """The request and its `build_problem` outputs for `(marked_up, manifest)` pairs."""
     problems = [
         build_problem(marked_up, manifest, group=group)
         for marked_up, manifest in pairs
@@ -127,6 +125,19 @@ def seam_files(pairs, group=None):
     request = build_request(
         [problem for problem, _ in problems], target, template, CONTEXT_DIR
     )
+    return request, problems
+
+
+def seam_files(pairs, group=None):
+    """The request and context for `(marked_up, manifest)` pairs, as files.
+
+    This is the artifact the FC importer contributes once lean-eval consumes
+    the shared generator: the request bytes, the context directory the schema-version-1
+    contract still reads, and one provenance record per problem — the FC
+    source commit and declaration id §10 requires, which the schema-version-1 wire format
+    has no field for, so they travel beside it rather than through it.
+    """
+    request, problems = _seam(pairs, group=group)
     files = {"request.json": dump_json(request)}
     for path, content in generator_cli.context_files(problems).items():
         files[f"{CONTEXT_DIR}/{path}"] = content
@@ -140,17 +151,13 @@ def seam_files(pairs, group=None):
 
 def generate_workspaces(pairs, out_dir, group=None):
     """Generate one workspace per pair under `out_dir`, via the pinned binary."""
-    request, files = seam_files(pairs, group=group)
+    request, problems = _seam(pairs, group=group)
     staging = pathlib.Path(tempfile.mkdtemp(prefix=".fc-seam."))
     try:
         # Only the context crosses to the binary; the request goes on stdin
-        # and the provenance sidecars are for the written workspaces.
-        for relative, content in files.items():
-            if not relative.startswith(f"{CONTEXT_DIR}/"):
-                continue
-            destination = staging / relative
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_text(content, encoding="utf-8")
+        # and the provenance sidecars belong to the written workspaces, so
+        # neither is staged here.
+        _write_files(staging / CONTEXT_DIR, generator_cli.context_files(problems))
         request["contextRoot"] = str(staging / CONTEXT_DIR)
         workspaces = generator_cli.generate(request)
     finally:
