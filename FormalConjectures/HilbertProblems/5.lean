@@ -29,6 +29,8 @@ connected finite-dimensional topological manifold.
 - [Wikipedia](https://en.wikipedia.org/wiki/Hilbert%E2%80%93Smith_conjecture)
 - [Tao's blog](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/)
 - [Pardon 2013, arXiv:1112.2324](https://arxiv.org/abs/1112.2324)
+- [van den Dries–Goldbring, *Hilbert's Fifth Problem*]
+  (https://ems.press/journals/lem/articles/13621)
 - [arXiv:math/0103145](https://arxiv.org/abs/math/0103145)
 -/
 
@@ -36,32 +38,50 @@ namespace Hilbert5
 
 open scoped Manifold ContDiff EuclideanGeometry
 
+universe u
+
 variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
   [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
 
-/-- A topological group `G` admits a Lie group structure if there exists a finite-dimensional
-smooth manifold structure on `G` making it a real Lie group. -/
-def AdmitsLieGroupStructure (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
-  ∃ (k : ℕ) (cs : ChartedSpace (EuclideanSpace ℝ (Fin k)) G),
-    letI := cs
-    LieGroup (𝓡 k) ⊤ G
+/-- A continuous group isomorphism from `G` to an `n`-dimensional real-analytic Lie group. -/
+structure LieGroupPresentation (G : Type u) [TopologicalSpace G] [Group G] (n : ℕ) where
+  carrier : Type u
+  [topologicalSpace : TopologicalSpace carrier]
+  [group : Group carrier]
+  [t2Space : T2Space carrier]
+  [secondCountableTopology : SecondCountableTopology carrier]
+  [chartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin n)) carrier]
+  [isManifold : IsManifold (𝓡 n) ω carrier]
+  [lieGroup : LieGroup (𝓡 n) ω carrier]
+  equiv : G ≃ₜ* carrier
 
-/-- Every Lie group trivially admits a Lie group structure. -/
+/-- A topological group admits a Lie group structure if it has a `LieGroupPresentation` in some
+finite dimension. -/
+def AdmitsLieGroupStructure (G : Type u) [Group G] [TopologicalSpace G] : Prop :=
+  ∃ n, Nonempty (LieGroupPresentation G n)
+
+/-- Every finite-dimensional real-analytic Lie group admits a Lie group structure. -/
 @[category API, AMS 22]
 theorem admitsLieGroupStructure_of_lieGroup
-    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [LieGroup (𝓡 n) ⊤ G] :
+    [T2Space G] [SecondCountableTopology G]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) G]
+    [LieGroup (𝓡 n) ω G] :
     AdmitsLieGroupStructure G :=
-  ⟨n, inferInstance, inferInstance⟩
+  ⟨n, ⟨{ carrier := G, equiv := ContinuousMulEquiv.refl G }⟩⟩
 
 /-- A group admitting a Lie group structure is locally compact. -/
 @[category API, AMS 22]
 theorem locallyCompact_of_admitsLieGroupStructure
     (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
-  obtain ⟨k, cs, _⟩ := h
-  have := cs
+  obtain ⟨k, ⟨p⟩⟩ := h
+  let := p.topologicalSpace
+  let := p.group
+  let := p.chartedSpace
   have := (𝓡 k).locallyCompactSpace
-  exact ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) G
+  have : LocallyCompactSpace p.carrier :=
+    ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) p.carrier
+  exact p.equiv.toHomeomorph.locallyCompactSpace_iff.mpr inferInstance
 
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
@@ -104,13 +124,17 @@ theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
     False := by
   sorry
 
-/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every locally Euclidean
-topological group is a Lie group. -/
+/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff,
+second-countable topological group modeled on a finite-dimensional Euclidean space is continuously
+isomorphic to a real-analytic Lie group.
+
+The input `ChartedSpace` supplies only a topological atlas. The compatible analytic atlas and
+analytic group operations belong to the output `LieGroupPresentation`. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
-    [IsTopologicalGroup G]
+    [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
-    LieGroup (𝓡 n) ⊤ G := by
+    Nonempty (LieGroupPresentation G n) := by
   sorry
 
 end Hilbert5
