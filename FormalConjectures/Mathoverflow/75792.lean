@@ -105,22 +105,30 @@ theorem reachable_iff_of_two_le (m n : ℕ) (hm : 2 ≤ m) :
       · refine (Nat.lt_mul_iff_one_lt_left ?_).2 ?_ <;> omega
       all_goals omega
 
-set_option warn.classDefReducibility false in
-instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) :=
-  match m, n with
-  | 0, n => isFalse (not_reachable_zero_fst n)
-  | 1, 0 => isFalse (not_reachable_zero_snd 1)
-  | 1, n+1 => isTrue (Reachable.one.le (by omega))
-  | m+2, n => by
+/-- Auxiliary decision procedure for `Reachable`, taking a fuel argument `f` bounding `m`.
+
+`reachable_iff_of_two_le` reduces `Reachable m n` for `2 ≤ m` to statements `Reachable m' n'` with
+`m' < m`, so one unit of fuel per unit of `m` always suffices. Recursing on the fuel rather than on
+`m` makes this structural, so `Reachable.decide` below avoids well-founded recursion. -/
+def Reachable.decAux : ∀ (f m n : ℕ), m ≤ f → Decidable (Reachable m n)
+  |     _,     0,     n,  _ => isFalse (not_reachable_zero_fst n)
+  |     _,     1,     0,  _ => isFalse (not_reachable_zero_snd 1)
+  |     _,     1, _ + 1,  _ => isTrue (Reachable.one.le (by lia))
+  |     0, _ + 2,     _, hf => absurd hf (by lia)
+  | f + 1, m + 2,     n, hf => by
+      let d : ∀ {m₁} (h : m₁ < m + 2) {n}, Decidable (Reachable m₁ n) :=
+        fun h ↦ Reachable.decAux f _ _ (by lia)
       refine @decidable_of_iff' _ _ (reachable_iff_of_two_le (m+2) n (by lia)) ?_
       refine Nat.decidableExistsLT' (I := fun m₁ hm₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun m₂ hm₂ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₁ hn₁ ↦ ?_)
       refine Nat.decidableExistsLT' (I := fun n₂ hn₂ ↦ ?_)
       refine instDecidableAnd (dq := ?_)
-      refine instDecidableAnd (dp := Reachable.decide m₁ _) (dq := ?_)
-      exact instDecidableAnd (dp := Reachable.decide m₂ _)
-  termination_by (m, n)
+      refine instDecidableAnd (dp := d hm₁) (dq := ?_)
+      exact instDecidableAnd (dp := d hm₂)
+  termination_by structural f => f
+
+instance Reachable.decide (m n : ℕ) : Decidable (Reachable m n) := Reachable.decAux m m n le_rfl
 
 /--
 The [(Mahler-Popken) complexity of `n`](https://en.wikipedia.org/wiki/Integer_complexity):

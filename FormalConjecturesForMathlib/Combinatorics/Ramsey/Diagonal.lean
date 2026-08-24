@@ -224,10 +224,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
     · -- true K_{t+1} on R ⊆ V.
       exact Or.inr ⟨S, hSsub.trans hRsubV, hScard, hSmono⟩
   · -- Case 2: R.card < Ns, so B.card ≥ Nt. Apply `ht` on B symmetrically.
-    have hBcard : Nt ≤ B.card := by
-      have hV_sub : Ns + Nt ≤ V.card := hV
-      omega
-    rcases ht c B hBcard with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
+    rcases ht c B (by lia) with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
     · -- false K_{s+1} on B ⊆ V.
       exact Or.inl ⟨S, hSsub.trans hBsubV, hScard, hSmono⟩
     · -- true K_t on B; extend by v (true-adjacent to all of B) to true K_{t+1}.
