@@ -206,7 +206,8 @@ instance [BitstringEncoding α] : BitstringEncoding (List α) where
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
 defining predicate. -/
-instance {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
+@[instance_reducible]
+def ofSubtype {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
     BitstringEncoding (Subtype p) where
   encode x := bitEncode x.val
   decode input := (bitDecode input).bind fun a => if h : p a then some ⟨a, h⟩ else none
@@ -214,7 +215,7 @@ instance {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
 
 /-- `ℕ+` is encoded as the subtype `{n : ℕ // 0 < n}` it is defined to be. -/
 instance : BitstringEncoding ℕ+ :=
-  inferInstanceAs (BitstringEncoding {n : ℕ // 0 < n})
+  ofSubtype (p := fun n : ℕ => 0 < n)
 
 /-- `ℤ` is encoded via the pair `(n.toNat, (-n).toNat)` (one component is always `0`). -/
 instance : BitstringEncoding ℤ :=
