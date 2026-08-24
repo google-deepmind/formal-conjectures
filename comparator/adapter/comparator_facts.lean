@@ -20,10 +20,6 @@ import FormalConjecturesUtil.Attributes.Basic
 import ComparatorFacts.Binders
 import ComparatorFacts.Extract
 
-import Lean
-import FormalConjecturesUtil.Answer
-import FormalConjecturesUtil.Attributes.Basic
-
 /-!
 The executable over `ComparatorFacts/`: the elaborator-side facts `comparator/adapter/fc_leaneval_importer.py` would otherwise
 get by reading Lean with regular expressions.

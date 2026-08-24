@@ -67,6 +67,17 @@ MODULE_PREAMBLE = "import Mathlib\n"
 MANIFEST_SCHEMA_VERSION = 1
 
 
+def lean_errors(output):
+    """The error lines of a Lean build's output.
+
+    Only errors fail a check: `sorry` warnings are the importer working, and
+    linter warnings come from copied source. The predicate lives here because
+    the source-side elaboration gate and the target-side compile gate must
+    agree on what a failing build is.
+    """
+    return [line for line in output.splitlines() if "error:" in line]
+
+
 def sha256_text(text):
     """The digest the generator response uses: SHA-256 of the UTF-8 bytes."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -213,8 +224,6 @@ class ProblemManifest:
         if not self.source.declaration:
             raise SystemExit(f"manifest {self.id} records no FC declaration id")
 
-    def hole_names(self):
-        return [hole.name for hole in self.holes]
 
     def to_json_object(self):
         payload = {

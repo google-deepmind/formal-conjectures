@@ -668,8 +668,7 @@ def hoist_answers(statement, basename, slot_types, override=None):
     position, and that reading wins. For the rest, the types come from the
     elaborated environment, where the `answer` elaborator ran with the
     expected type in hand; the old surface-syntax guess (an `↔` beside the
-    slot means `Prop`) and the FC problem file's hand-kept `answer_type`
-    both survive only as overrides. Unascribed slots of differing types are
+    slot means `Prop`) survives only as the `--answer-type` override. Unascribed slots of differing types are
     refused: the environment reports the types as a set, and matching them
     to positions would be a guess.
     """
@@ -705,8 +704,6 @@ def hoist_answers(statement, basename, slot_types, override=None):
         elif missing == 0 and remaining and len(set(remaining_env)) == 1:
             for i in remaining:
                 types[i] = remaining_env[0]
-        elif missing == 0 and not remaining:
-            pass
         elif missing == 0:
             raise SystemExit(
                 f"{basename} has {len(remaining)} answer slots of differing "
