@@ -18,7 +18,7 @@ import FormalConjecturesUtil
 /-!
 # Polynomial-time computability of factoring
 
-This file formalizes the open problem of whether integer factorization can be computed in
+This file formalizes the open problem of whether natural number / integer factorization can be computed in
 polynomial time on a deterministic classical Turing machine.
 
 More precisely, it formalizes the following statement:
@@ -41,10 +41,11 @@ theorem isPolyTime_id {α : Type} [BitstringEncoding α] : IsPolyTime (id : α �
   ⟨Turing.idComputableInPolyTime (BitstringEncoding.toEncoding α).encode⟩
 
 /--
-Is natural/integer factorization computable in polynomial time?
+**The integer factorization problem**: Can the prime factorization of a positive integer
+be computed in polynomial time?
 
-`Nat.primeFactorsList` maps a natural number to its sorted list of prime factors, so this
-asks whether there is a polynomial-time algorithm producing the full factorization.
+We state the problem by asking if `Nat.primeFactorsList` is polynomial-time computable
+(assuming typical encodings of ℕ and List ℕ into bitstrings).
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Integer_factorization) -/
 @[category research open, AMS 68]
