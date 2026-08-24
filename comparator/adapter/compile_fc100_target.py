@@ -30,7 +30,7 @@ import sys
 import tomllib
 
 from leaneval_interface import lean_errors, dump_json
-from make_comparator_workspace import load_known_failures
+from known_failures import load_known_failures
 
 
 def arrange_project(workspaces_dir, project_dir):

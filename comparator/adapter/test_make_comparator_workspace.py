@@ -195,7 +195,7 @@ class SubsetTest(unittest.TestCase):
 
 class KnownFailuresTest(unittest.TestCase):
     def _load(self, text):
-        from make_comparator_workspace import load_known_failures
+        from known_failures import load_known_failures
 
         with tempfile.NamedTemporaryFile("w", suffix=".toml", delete=False) as f:
             f.write(text)

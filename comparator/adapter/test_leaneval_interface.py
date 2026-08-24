@@ -22,6 +22,7 @@ when Formal Conjectures corrects the statement upstream.
 """
 
 import unittest
+from unittest import mock
 
 from leaneval_interface import (
     DefinitionHole,
@@ -35,6 +36,7 @@ from leaneval_interface import (
     declaration_spans,
     module_declarations,
     parse_response,
+    problem_group,
     slug,
 )
 
@@ -336,3 +338,52 @@ class ProvenanceSidecarTest(unittest.TestCase):
         payload["digests"]["request"] = "d" * 64
         with self.assertRaises(SystemExit):
             ProblemManifest.from_json_object(payload)
+
+
+class ProblemGroupTest(unittest.TestCase):
+    """Categories map to lean-eval groups; non-problems are refused."""
+
+    def _manifest(self, category):
+        manifest = mock.Mock()
+        manifest.category = category
+        manifest.id = "some_problem"
+        return manifest
+
+    def test_open_research_is_an_open_conjecture(self):
+        self.assertEqual(
+            problem_group(self._manifest("research open")),
+            "open-conjectures",
+        )
+
+    def test_settled_statements_are_evaluation_material(self):
+        for category in ("research solved", "textbook", "test"):
+            with self.subTest(category=category):
+                self.assertEqual(
+                    problem_group(self._manifest(category)),
+                    "formalization-evaluation",
+                )
+
+    def test_api_and_untagged_declarations_are_refused(self):
+        for category in ("API", ""):
+            with self.subTest(category=category):
+                with self.assertRaises(SystemExit):
+                    problem_group(self._manifest(category))
+
+
+class StatementPrefixSpanTest(unittest.TestCase):
+    def test_the_span_starts_at_the_declaration_keyword(self):
+        from leaneval_interface import module_declarations
+
+        module = MarkedUpModule(
+            dependencies="def Foo.bar := 1",
+            scope="",
+            holes="",
+            statement="open scoped Classical in\ntheorem t : True := by\n  sorry",
+            dependency_declarations=(("Foo.bar", "def Foo.bar := 1"),),
+        )
+        manifest = a_manifest(
+            theorem="t", qualified_theorem="t", holes=(), apply_arguments=()
+        )
+        *_, statement_entry = module_declarations(module, manifest)
+        self.assertTrue(statement_entry[1].startswith("theorem t"))
+        self.assertNotIn("Classical in", statement_entry[1])

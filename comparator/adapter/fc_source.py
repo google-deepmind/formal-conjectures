@@ -282,7 +282,7 @@ def _declared_names():
 
 
 def _declaring_files(name):
-    """The files whose text declares `name` as a theorem or lemma.
+    r"""The files whose text declares `name` as a theorem or lemma.
 
     A declared token matches when it equals `name` or ends in `.name` —
     the same reading as the old per-file regex, whose optional prefix was

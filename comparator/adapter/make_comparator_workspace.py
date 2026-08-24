@@ -64,8 +64,8 @@ import re
 import shutil
 import sys
 import tempfile
-import tomllib
 
+from known_failures import load_known_failures
 import fc_leaneval_importer as importer
 import fc_source
 import leaneval_generator_cli as generator_cli
@@ -200,27 +200,6 @@ def subset_declarations(set_name):
     return names
 
 
-def load_known_failures(path):
-    """The recorded failures, `{declaration: {stage, reason}}`."""
-    with open(path, "rb") as handle:
-        data = tomllib.load(handle)
-    failures = {}
-    for entry in data.get("failure", []):
-        for field in ("declaration", "stage", "reason"):
-            if field not in entry:
-                raise SystemExit(f"{path}: a failure entry has no `{field}`")
-        if entry["stage"] not in ("source", "target"):
-            raise SystemExit(
-                f"{path}: {entry['declaration']} has stage {entry['stage']!r}; "
-                "expected source or target"
-            )
-        if entry["stage"] == "target" and "workspace" not in entry:
-            raise SystemExit(
-                f"{path}: {entry['declaration']} is a target failure without a "
-                "`workspace`; the target gate matches by workspace id"
-            )
-        failures[entry["declaration"]] = entry
-    return failures
 
 
 def import_set(set_name, out_dir, verify=False, known_failures=None):
