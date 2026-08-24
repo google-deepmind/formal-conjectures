@@ -16,8 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
-public import Mathlib.Data.Nat.Choose.Sum
-public import Mathlib.Order.Lattice.Nat
+public import Mathlib.Data.Nat.Choose.Central
 
 /-!
 # Erdős–Szekeres 1935 upper bound for the diagonal Ramsey number
