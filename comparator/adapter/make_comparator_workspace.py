@@ -59,6 +59,7 @@ generator binary, and the build belongs to the comparator run.
 """
 
 import argparse
+import json
 import pathlib
 import re
 import shutil
@@ -70,6 +71,7 @@ import fc_leaneval_importer as importer
 import fc_source
 import leaneval_generator_cli as generator_cli
 from leaneval_interface import (
+    ImportPolicy,
     PROVENANCE_FILE,
     PROVENANCE_STEM,
     build_problem,
@@ -127,10 +129,30 @@ def write_tree(target, files):
     return target
 
 
+def import_policy(group=None):
+    """The intake policy this command submits under, stated in one place.
+
+    Destination group, lifecycle status, visibility, statement revision and
+    submitter are LeanEval's decisions; the schema-version-1 request requires
+    them inline, so the command instantiates the draft-intake values
+    explicitly rather than leaving them as wire-module constants. A real
+    LeanEval intake would build this from the catalog's own state.
+    """
+    return ImportPolicy(
+        group=group or "",
+        status="draft",
+        visible=True,
+        statement_revision=1,
+        submitter="formal-conjectures-importer",
+        tags=("formal-conjectures",),
+    )
+
+
 def _seam(pairs, group=None):
     """The request and its `build_problem` outputs for `(marked_up, manifest)` pairs."""
+    policy = import_policy(group)
     problems = [
-        build_problem(marked_up, manifest, group=group)
+        build_problem(marked_up, manifest, policy)
         for marked_up, manifest in pairs
     ]
     target = importer.target_pins()
@@ -204,6 +226,17 @@ def generate_workspaces(pairs, out_dir, group=None):
         # generator's file map: the generator neither knows nor checks it. It
         # binds the exact request and module bytes sent and every file
         # received.
+        # The sidecar's `permitted_axioms` is an assertion about the
+        # generated Comparator config; check it against the config actually
+        # produced, so the recorded policy cannot drift from the enforced one.
+        config = json.loads(workspace.get("config.json", "{}"))
+        generated_axioms = tuple(config.get("permitted_axioms", ()))
+        if sorted(generated_axioms) != sorted(manifest.permitted_axioms):
+            raise SystemExit(
+                f"{problem_id}: the generated config permits axioms "
+                f"{sorted(generated_axioms)}, but the manifest records "
+                f"{sorted(manifest.permitted_axioms)}"
+            )
         bound = manifest.with_digests(
             sha256_text(module_content[problem_id]),
             {path: sha256_text(content) for path, content in workspace.items()},

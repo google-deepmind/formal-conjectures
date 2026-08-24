@@ -17,9 +17,31 @@ import pathlib
 import re
 import subprocess
 
-from leaneval_interface import (
-    DefinitionHole,
-)
+
+def slug(name):
+    """A Lake package name and directory name for a problem id.
+
+    A Lake package name is an identifier, so the dots in a qualified
+    declaration cannot go into one verbatim.
+    """
+    return re.sub(r"[^0-9A-Za-z_]", "_", name)
+
+
+@dataclasses.dataclass(frozen=True)
+class DefinitionHole:
+    """One `answer(sorry)` slot, hoisted into a definition the solver fills.
+
+    `name` is the unqualified definition name as it appears in the module's
+    `holes` region; `type` is the type the elaborated environment reported for
+    the slot, which surface syntax does not carry.
+    """
+
+    name: str
+    type: str
+
+    def declaration(self):
+        return f"noncomputable def {self.name} : {self.type} := sorry"
+
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 
@@ -619,8 +641,6 @@ def flatten_declared_name(declared, statement):
     rewrite is refused rather than guessed if the name cannot be found where
     the declaration keyword put it.
     """
-    from leaneval_interface import slug
-
     flattened = slug(declared)
     lines = statement.split("\n")
     for index, line in enumerate(lines):

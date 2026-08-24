@@ -26,6 +26,7 @@ from unittest import mock
 
 from leaneval_interface import (
     DefinitionHole,
+    ImportPolicy,
     MarkedUpModule,
     ProblemManifest,
     ProducerRecord,
@@ -75,6 +76,19 @@ def a_target(**overrides):
     }
     fields.update(overrides)
     return TargetRecord(**fields)
+
+
+def a_policy(**overrides):
+    fields = {
+        "group": "",
+        "status": "draft",
+        "visible": True,
+        "statement_revision": 1,
+        "submitter": "formal-conjectures-importer",
+        "tags": ("formal-conjectures",),
+    }
+    fields.update(overrides)
+    return ImportPolicy(**fields)
 
 
 def a_manifest(**overrides):
@@ -226,7 +240,7 @@ class DeclarationSpanTest(unittest.TestCase):
 
 class BuildProblemTest(unittest.TestCase):
     def test_the_problem_satisfies_the_contract_shape(self):
-        problem, ilean = build_problem(A_MODULE, a_manifest())
+        problem, ilean = build_problem(A_MODULE, a_manifest(), a_policy())
         self.assertEqual(problem["id"], "erdos_940")
         self.assertEqual(problem["group"], "open-conjectures")
         self.assertEqual(problem["moduleName"], "erdos_940")
@@ -243,17 +257,17 @@ class BuildProblemTest(unittest.TestCase):
         )
 
     def test_the_theorem_hole_carries_the_copied_dependencies(self):
-        problem, _ = build_problem(A_MODULE, a_manifest())
+        problem, _ = build_problem(A_MODULE, a_manifest(), a_policy())
         theorem = problem["resolvedHoles"][-1]
         self.assertEqual(theorem["sameModuleDependencies"], ["Foo.bar"])
         self.assertEqual(problem["resolvedHoles"][0]["sameModuleDependencies"], [])
 
     def test_a_non_problem_category_is_refused(self):
         with self.assertRaises(SystemExit):
-            build_problem(A_MODULE, a_manifest(category="API"))
+            build_problem(A_MODULE, a_manifest(category="API"), a_policy())
 
     def test_the_category_rides_along_as_a_tag(self):
-        problem, _ = build_problem(A_MODULE, a_manifest(category="research solved"))
+        problem, _ = build_problem(A_MODULE, a_manifest(category="research solved"), a_policy())
         self.assertIn("research-solved", problem["tags"])
 
     def test_a_set_override_keeps_a_solved_member_in_its_set(self):
@@ -263,20 +277,20 @@ class BuildProblemTest(unittest.TestCase):
         problem, _ = build_problem(
             A_MODULE,
             a_manifest(category="research solved"),
-            group="open-conjectures",
+            a_policy(group="open-conjectures"),
         )
         self.assertEqual(problem["group"], "open-conjectures")
 
     def test_a_set_override_does_not_admit_a_non_problem(self):
         with self.assertRaises(SystemExit):
             build_problem(
-                A_MODULE, a_manifest(category="API"), group="open-conjectures"
+                A_MODULE, a_manifest(category="API"), a_policy(group="open-conjectures")
             )
 
 
 class BuildRequestTest(unittest.TestCase):
     def test_the_request_carries_the_targets_pins(self):
-        problem, _ = build_problem(A_MODULE, a_manifest())
+        problem, _ = build_problem(A_MODULE, a_manifest(), a_policy())
         request = build_request([problem], a_target(), "-- test", "context")
         self.assertEqual(request["schemaVersion"], 1)
         self.assertEqual(request["leanToolchain"], "leanprover/lean4:v4.33.0")
@@ -284,7 +298,7 @@ class BuildRequestTest(unittest.TestCase):
         self.assertEqual(request["templates"]["workspaceTest"], "-- test")
 
     def test_duplicate_ids_are_refused(self):
-        problem, _ = build_problem(A_MODULE, a_manifest())
+        problem, _ = build_problem(A_MODULE, a_manifest(), a_policy())
         with self.assertRaisesRegex(SystemExit, "duplicate workspace id"):
             build_request([problem, problem], a_target(), "", "context")
 

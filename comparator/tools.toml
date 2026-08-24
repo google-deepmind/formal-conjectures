@@ -22,6 +22,7 @@ comparator_repository = "https://github.com/leanprover/comparator"
 commit = "7699436464052268e6c04b41554bfbc2c6908ec5"
 lean_toolchain = "leanprover/lean4:v4.33.0"
 mathlib_revision = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+mathlib_git = "https://github.com/leanprover-community/mathlib4.git"
 comparator = "c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809"
 lean4export = "15f6055e299ad5b89345e533cc2192f4cc00f659"
 

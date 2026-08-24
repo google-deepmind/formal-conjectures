@@ -60,6 +60,8 @@ import hashlib
 import json
 import re
 
+from fc_source import DefinitionHole, slug
+
 REGIONS = ("dependencies", "scope", "holes", "statement")
 
 MODULE_PREAMBLE = "import Mathlib\n"
@@ -90,31 +92,6 @@ def dump_json(obj, sort_keys=False):
 # The generator's frozen wire format; `schemas/request-v1.schema.json` and
 # `response-v1.schema.json` in the pinned revision are normative.
 CONTRACT_VERSION = 1
-
-
-def slug(name):
-    """A Lake package name and directory name for a problem id.
-
-    A Lake package name is an identifier, so the dots in a qualified
-    declaration cannot go into one verbatim.
-    """
-    return re.sub(r"[^0-9A-Za-z_]", "_", name)
-
-
-@dataclasses.dataclass(frozen=True)
-class DefinitionHole:
-    """One `answer(sorry)` slot, hoisted into a definition the solver fills.
-
-    `name` is the unqualified definition name as it appears in the module's
-    `holes` region; `type` is the type the elaborated environment reported for
-    the slot, which surface syntax does not carry.
-    """
-
-    name: str
-    type: str
-
-    def declaration(self):
-        return f"noncomputable def {self.name} : {self.type} := sorry"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -252,6 +229,26 @@ class TargetRecord:
 
     lean_toolchain: str
     mathlib_revision: str
+    mathlib_git: str = "https://github.com/leanprover-community/mathlib4.git"
+
+
+@dataclasses.dataclass(frozen=True)
+class ImportPolicy:
+    """LeanEval-side catalog policy, stated explicitly per import run.
+
+    Group, lifecycle status, visibility, statement revision, submitter and
+    tags are the consumer's decisions, not source facts; the schema-version-1
+    request happens to require them inline, so the command constructs a
+    policy and hands it in rather than this module hard-coding one. An empty
+    `group` means "derive from the category" via `CATEGORY_GROUPS`.
+    """
+
+    group: str
+    status: str
+    visible: bool
+    statement_revision: int
+    submitter: str
+    tags: tuple
 
 
 @dataclasses.dataclass(frozen=True)
@@ -475,11 +472,6 @@ def problem_group(manifest):
     return group
 
 
-MATHLIB_GIT = "https://github.com/leanprover-community/mathlib4.git"
-
-SUBMITTER = "formal-conjectures-importer"
-
-
 def module_declarations(marked_up, manifest):
     """Every declaration in the rendered module, in order.
 
@@ -587,7 +579,7 @@ def declaration_spans(module_text, declarations):
     return spans
 
 
-def build_problem(marked_up, manifest, module_name=None, group=None):
+def build_problem(marked_up, manifest, policy, module_name=None):
     """One problem entry of the schema-version-1 request, and its `.ilean` declaration map.
 
     The module name is a single identifier on purpose: the generator resolves
@@ -595,11 +587,11 @@ def build_problem(marked_up, manifest, module_name=None, group=None):
     a dotted or quoted name would trip the same decoder defect this
     repository fixed on its own side.
 
-    `group` overrides the category-derived group for members of a frozen
-    set: the set decides the display tab, because the list is immutable
-    while its members keep getting solved, and the category rides along as
-    a tag. The category is still validated either way — a declaration that
-    is not a problem has no business in any group.
+    `policy` is the LeanEval-side intake policy: a frozen set's explicit
+    `group` overrides the category-derived one, because the list is
+    immutable while its members keep getting solved, and the category rides
+    along as a tag. The category is still validated either way — a
+    declaration that is not a problem has no business in any group.
 
     Returns `(problem, ilean_decls)`. The `.ilean` payload exists because the
     generator reads helper-declaration spans from compiled metadata it
@@ -643,14 +635,14 @@ def build_problem(marked_up, manifest, module_name=None, group=None):
     problem = {
         "id": slug(manifest.id),
         "title": manifest.qualified_theorem,
-        "group": group or category_group,
-        "status": "draft",
-        "visible": True,
-        "statementRevision": 1,
-        "tags": ["formal-conjectures", manifest.category.replace(" ", "-")],
+        "group": policy.group or category_group,
+        "status": policy.status,
+        "visible": policy.visible,
+        "statementRevision": policy.statement_revision,
+        "tags": list(policy.tags) + [manifest.category.replace(" ", "-")],
         "moduleName": module_name,
         "holes": [entry["declarationName"] for entry in resolved],
-        "submitter": SUBMITTER,
+        "submitter": policy.submitter,
         "notes": None,
         "source": manifest.source_url or None,
         "informalSolution": None,
@@ -679,7 +671,7 @@ def build_request(problems, target, workspace_test, context_root):
         "leanToolchain": target.lean_toolchain,
         "mathlib": {
             "name": "mathlib",
-            "git": MATHLIB_GIT,
+            "git": target.mathlib_git,
             "rev": target.mathlib_revision,
         },
         "templates": {"workspaceTest": workspace_test},

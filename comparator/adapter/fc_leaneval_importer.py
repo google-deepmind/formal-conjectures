@@ -89,12 +89,13 @@ def target_pins():
     read and where they will be used a readable fact rather than an assumption.
     """
     target = _tools_file()["target"]
-    for key in ("lean_toolchain", "mathlib_revision"):
+    for key in ("lean_toolchain", "mathlib_revision", "mathlib_git"):
         if not target.get(key):
             raise SystemExit(f"comparator/tools.toml [target] has an empty `{key}`")
     return TargetRecord(
         lean_toolchain=target["lean_toolchain"],
         mathlib_revision=target["mathlib_revision"],
+        mathlib_git=target["mathlib_git"],
     )
 
 
