@@ -62,7 +62,7 @@ theorem erdos_1192.f_r_singleton_self (n : ℕ) : f_r {n} 1 n = 1 := by
   dsimp [f_r]
   have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({n} : Set ℕ)) ∧ ∑ i, v i = n } = { fun _ ↦ n } := by
     ext v
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨h1, _⟩
       ext i
@@ -78,7 +78,7 @@ theorem erdos_1192.f_r_no_rep : f_r {0} 1 1 = 0 := by
   dsimp [f_r]
   have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({0} : Set ℕ)) ∧ ∑ i, v i = 1 } = ∅ := by
     ext v
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
     rintro ⟨h1, h2⟩
     have h3 : v = fun _ ↦ 0 := by ext i; exact h1 i
     rw [h3] at h2
@@ -110,7 +110,7 @@ theorem erdos_1192.variants.renyi :
       ((fun (x : ℕ) ↦ ∑ n ∈ range (x + 1), (f_r A r n : ℝ) ^ 2) =O[atTop]
         (fun (x : ℕ) ↦ (x : ℝ))) ∧
       ((fun (x : ℕ) ↦ (x : ℝ) ^ (1 / (r : ℝ))) =O[atTop]
-        (fun (x : ℕ) ↦ (count A x : ℝ))) := by
+        (fun (x : ℕ) ↦ (count (· ∈ A) x : ℝ))) := by
   sorry
 
 /--

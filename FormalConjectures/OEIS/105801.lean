@@ -60,7 +60,9 @@ theorem a_5 : a 5 = 8 := by decide
 Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$
 have the same residue $\bmod 3^k$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a105801-lean/blob/68642a80db062bee7061437b60d31c3e7d626595/lean/OeisA105801FC.lean#L323-L351"]
 theorem conjecture :
     ∀ k : ℕ, 0 < k → ∃ m : ℕ, ∀ n : ℕ, m < n → a n ≡ a (m + 1) [MOD (3^k)] := by
   sorry

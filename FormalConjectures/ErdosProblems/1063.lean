@@ -41,14 +41,19 @@ noncomputable def n (k : ℕ) : ℕ :=
     ∀ i < k, i ≠ i0 → (m - i) ∣ m.choose k}
 
 /--
-Estimate $n_k$ by finding a better upper bound.
--/
+Estimate $n_k$ by finding a better upper bound than Cambie's
+$n_k \leq k \cdot \operatorname{lcm}(1, \dotsc, k-1)$.
+
+The comparator takes its least common multiple in `ℕ` and casts the result. Writing the
+ascription as `((… ).lcm (fun n : ℕ => n) : ℝ)` instead puts it on the `Finset.lcm`
+application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where `lcm` of
+non-zero elements is `1` and the whole comparator collapses to `k`. -/
 @[category research open, AMS 11]
 theorem erdos_1063.better_upper :
     let upper_bound : ℕ → ℝ := answer(sorry)
     (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
     upper_bound =o[atTop] fun k =>
-      (k : ℝ) * ((Finset.Icc 1 (k - 1)).lcm (fun n : ℕ => n) : ℝ) := by
+      (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
   sorry
 
 /--
@@ -85,8 +90,7 @@ theorem erdos_1063.variants.small_values :
     · apply le_csInf ⟨9, by decide⟩
       rintro b hb
       have hb8 : 8 ≤ b := by have := hb.1; omega
-      by_contra h
-      push_neg at h
+      by_contra! h
       interval_cases b
       · exact absurd hb (by decide)
   · -- n 5 = 12 : the candidates below 12 are m = 10, 11, both of which fail
@@ -95,8 +99,7 @@ theorem erdos_1063.variants.small_values :
     · apply le_csInf ⟨12, by decide⟩
       rintro b hb
       have hb10 : 10 ≤ b := by have := hb.1; omega
-      by_contra h
-      push_neg at h
+      by_contra! h
       interval_cases b
       · exact absurd hb (by decide)
       · exact absurd hb (by decide)

@@ -39,7 +39,7 @@ namespace WeaklyFirstCountable
 universe u
 
 /-- A topological space $X$ is called *weakly first countable* if there exists a function
-$N : X → ℕ → Set X, such that:
+$N : X → ℕ → Set X$, such that:
 
 * For all $x : X, n : ℕ$ we have $x ∈ V x n$
 * For all $x : X, n : ℕ$: $V x (n + 1) ⊆ V x n$
