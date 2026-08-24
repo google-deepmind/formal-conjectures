@@ -71,7 +71,7 @@ theorem bitEncode_injective [BitstringEncoding α] :
   (toEncoding (α := α)).encode_injective
 
 /-- Transport a `BitstringEncoding` along an injection `f` with partial inverse `g`. -/
-@[reducible]
+@[instance_reducible]
 def ofLeftInverse [BitstringEncoding β] (f : α → β) (g : β → Option α)
     (h : ∀ x, g (f x) = some x) : BitstringEncoding α where
   encode a := bitEncode (f a)
