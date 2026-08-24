@@ -44,6 +44,40 @@ KEEP_LOOSE = re.compile(
     r"|^noncomputable section\b"
 )
 
+_FACTS_CACHE = {}
+
+
+def prefetch_elaborator_facts(pairs):
+    """Fill the facts cache from one batched extractor run.
+
+    `pairs` are `(module, declaration)` tuples. The Mathlib import dominates
+    a `comparator_facts` launch, so a batch pays it once for the whole set.
+    A pair the batch reports an error for is left out of the cache: the
+    caller's own `elaborator_facts` call re-runs it singly and fails with
+    exactly the message a single run always produced.
+    """
+    wanted = [pair for pair in dict.fromkeys(pairs) if pair not in _FACTS_CACHE]
+    if not wanted:
+        return
+    proc = subprocess.run(
+        ["lake", "exe", "comparator_facts", "--batch"],
+        input="".join(f"{module} {declaration}\n" for module, declaration in wanted),
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+    )
+    if proc.returncode != 0:
+        # The batch is an optimisation; the per-declaration path is the
+        # arbiter of what fails and how it is reported.
+        return
+    for line in proc.stdout.splitlines():
+        if not line.startswith("{"):
+            continue
+        entry = json.loads(line)
+        if "facts" in entry:
+            _FACTS_CACHE[(entry["module"], entry["declaration"])] = entry["facts"]
+
+
 def elaborator_facts(module, declaration):
     """What the elaborated environment knows about a declaration.
 
@@ -51,8 +85,12 @@ def elaborator_facts(module, declaration):
     declaration's source range, its binders with real explicitness, and the
     inferred type of each `answer(sorry)` slot. Every one of these used to be
     reconstructed from text, and each reconstruction had failure modes the
-    elaborator does not.
+    elaborator does not. A batch import fills `_FACTS_CACHE` first, so a set
+    run pays the Mathlib import once.
     """
+    cached = _FACTS_CACHE.get((module, declaration))
+    if cached is not None:
+        return json.loads(json.dumps(cached))
     proc = subprocess.run(
         ["lake", "exe", "comparator_facts", module, declaration],
         capture_output=True,

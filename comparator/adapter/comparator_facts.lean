@@ -49,20 +49,51 @@ unsafe def main (args : List String) : IO UInt32 := do
   match args with
   | ["--self-test"] =>
     runWithImports #[`Mathlib] do binderBoundarySelfTest (← getEnv)
+  | ["--batch"] =>
+    -- One `module declaration` pair per stdin line, one environment for all
+    -- of them: the Mathlib import dominates a run, and `resolveIn` filters
+    -- by module, so a shared environment answers each pair exactly as a
+    -- per-module import does. One JSON object per line, in input order.
+    let stdin ← IO.getStdin
+    let lines := (← stdin.readToEnd).splitOn "\n" |>.filter (· ≠ "")
+    let pairs ← lines.mapM fun line => do
+      match line.splitOn " " with
+      | [modName, declName] => pure (modName, declName)
+      | _ => throw <| IO.userError s!"malformed batch line: {line}"
+    let modules := pairs.foldl (init := #[]) fun acc (m, _) =>
+      if acc.contains m.toName then acc else acc.push m.toName
+    -- The heartbeat budget is shared by the whole action, so it scales with
+    -- the batch; each pair keeps the single-run allowance.
+    runWithImports modules (heartbeats := pairs.length * 400000000) do
+      let env ← getEnv
+      for (modName, declName) in pairs do
+        let tagged (rest : List (String × Json)) := Json.mkObj <|
+          [("module", Json.str modName), ("declaration", Json.str declName)] ++ rest
+        match resolveIn env modName.toName declName with
+        | .error msg => IO.println (tagged [("error", Json.str msg)]).compress
+        | .ok n =>
+          try
+            let payload ← factsPayload env modName.toName n declName
+            IO.println (tagged [("facts", payload)]).compress
+          catch e =>
+            IO.println (tagged [("error", Json.str (← e.toMessageData.toString))]).compress
+      return 0
   | [modName, declName] =>
     runWithImports #[modName.toName] do
       let env ← getEnv
       match resolveIn env modName.toName declName with
       | .error msg => IO.eprintln msg; return 1
-      | .ok n => emit env modName.toName n declName
+      | .ok n =>
+        IO.println (← factsPayload env modName.toName n declName).pretty
+        return 0
   | _ =>
-    IO.eprintln "usage: comparator_facts <Module> <declaration> | --self-test"
+    IO.eprintln "usage: comparator_facts <Module> <declaration> | --batch | --self-test"
     return 1
 where
-  emit (env : Environment) (modName name : Name) (decl : String) : MetaM UInt32 := do
-    let some info := env.find? name | IO.eprintln "vanished"; return 1
+  factsPayload (env : Environment) (modName name : Name) (decl : String) : MetaM Json := do
+    let some info := env.find? name | throwError "{name} vanished from the environment"
     let some ranges ← findDeclarationRanges? name
-      | IO.eprintln s!"{name} has no source range"; return 1
+      | throwError "{name} has no source range"
     -- The statement's sorries are `answer(sorry)` slots; a proof's sorry is
     -- not in the *type*, so everything found here is a slot.
     -- `findAnswerExprs` is the repository's own detection: it reads the
@@ -146,8 +177,7 @@ where
       ("answerTypes", toJson answerTypes.toList),
       ("dependencies", toJson deps.toList),
       ("generatedDependencies", toJson generated.toList)]
-    IO.println payload.pretty
-    return 0
+    return payload
   rangeToJson (ranges : Option DeclarationRanges) : Json :=
     match ranges with
     | some r => Json.mkObj [

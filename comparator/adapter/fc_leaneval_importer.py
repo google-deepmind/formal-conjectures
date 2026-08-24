@@ -515,6 +515,15 @@ def place_notations(dependencies, scope_text, statement, copied):
     return dependencies
 
 
+def statement_pair(problem, module=None):
+    """The `(module, declaration)` pair `import_problem` will ask the elaborator about."""
+    problem_file = load_manifest(problem)
+    declaration = problem_file.get("declaration", problem)
+    module = module or problem_file.get("module")
+    path, _imports, _module_doc, _body = find_declaration(declaration, module)
+    return module_name(path.relative_to(ROOT)), declaration
+
+
 def import_problem(problem, answer_type=None, module=None):
     """Map one declaration to a marked-up module and a manifest.
 

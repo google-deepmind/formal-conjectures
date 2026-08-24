@@ -74,7 +74,7 @@ partial def fcOrder (env : Environment) (n : Name)
       (seen, acc.push n)
 
 unsafe def runWithImports {α : Type} (moduleNames : Array Name)
-    (actionToRun : MetaM α) : IO α := do
+    (actionToRun : MetaM α) (heartbeats : Nat := 400000000) : IO α := do
   initSearchPath (← getBuildDir)
   let imports := moduleNames.map fun n => { module := n }
   Lean.enableInitializersExecution
@@ -82,8 +82,10 @@ unsafe def runWithImports {α : Type} (moduleNames : Array Name)
   -- Twice the default budget, in the context's raw units, which are a
   -- thousand times the `maxHeartbeats` option's: 800000 here meant "800" and
   -- killed the first query. Finite, so a pathological statement errors and is
-  -- caught rather than grinding forever, which maxHeartbeats := 0 did.
-  let ctx := { fileName := "", fileMap := default, maxHeartbeats := 400000000 }
+  -- caught rather than grinding forever, which maxHeartbeats := 0 did. A
+  -- batch caller scales the budget by its pair count, since one context
+  -- meters the whole action.
+  let ctx := { fileName := "", fileMap := default, maxHeartbeats := heartbeats }
   let (result, _) ← Core.CoreM.toIO (actionToRun.run' {} {}) ctx { env := env }
   return result
 

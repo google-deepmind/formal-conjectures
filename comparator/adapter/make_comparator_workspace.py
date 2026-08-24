@@ -67,6 +67,7 @@ import tempfile
 import tomllib
 
 import fc_leaneval_importer as importer
+import fc_source
 import leaneval_generator_cli as generator_cli
 from leaneval_interface import build_problem, build_request, dump_json, sha256_text, slug
 
@@ -231,6 +232,16 @@ def import_set(set_name, out_dir, verify=False, known_failures=None):
     lean-eval#536 gates the FC import on this audit being reproducible.
     """
     declarations = subset_declarations(set_name)
+    # One batched extractor run pays the Mathlib import once for the whole
+    # set. A declaration whose module cannot even be located is skipped here
+    # and fails in its own import below, exactly as it always did.
+    statement_pairs = []
+    for declaration in declarations:
+        try:
+            statement_pairs.append(importer.statement_pair(declaration))
+        except SystemExit:
+            continue
+    fc_source.prefetch_elaborator_facts(statement_pairs)
     pairs, results = [], []
     for declaration in declarations:
         try:
