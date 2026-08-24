@@ -22,14 +22,12 @@ concurrency:
 
 on:
   pull_request:
+    # Not the imported statement's source file: `pins()` refuses to generate
+    # from a file that differs from the merge-base with upstream main, so a
+    # pull request editing it could never pass this job; the whole-set audit
+    # covers statement drift once the edit lands.
     paths:
-      - 'comparator/adapter/fc_leaneval_importer.py'
-      - 'comparator/adapter/leaneval_generator_cli.py'
-      - 'comparator/adapter/leaneval_interface.py'
-      - 'comparator/adapter/make_comparator_workspace.py'
-      - 'comparator/adapter/comparator_facts.lean'
       - 'comparator/**'
-      - 'FormalConjectures/Wikipedia/SumOfThreeCubes.lean'
       - '.github/workflows/comparator-lean-4-33.yml'
   workflow_dispatch:
 
@@ -60,7 +58,12 @@ jobs:
 
           with open("comparator/tools.toml", "rb") as handle:
               target = tomllib.load(handle)["target"]
-          for key in ("comparator", "lean4export", "lean_toolchain"):
+          for key in (
+              "comparator",
+              "comparator_repository",
+              "lean4export",
+              "lean_toolchain",
+          ):
               print(f"{key}={target[key]}")
           PY
 
@@ -105,10 +108,16 @@ jobs:
       - name: Build the pinned Lean 4.33 verifier stack
         env:
           COMPARATOR_REV: ${{ steps.target.outputs.comparator }}
+          COMPARATOR_REPOSITORY: ${{ steps.target.outputs.comparator_repository }}
+          LEAN4EXPORT_REV: ${{ steps.target.outputs.lean4export }}
         run: |
-          git clone https://github.com/leanprover/comparator.git "$RUNNER_TEMP/comparator"
+          git clone "$COMPARATOR_REPOSITORY" "$RUNNER_TEMP/comparator"
           git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
           (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
+          # The lean4export this stack bundles must be the one tools.toml
+          # declares, or a green run certifies a different exporter.
+          BUNDLED="$(git -C "$RUNNER_TEMP/comparator/.lake/packages/lean4export" rev-parse HEAD)"
+          test "$BUNDLED" = "$LEAN4EXPORT_REV"
 
       # Three Comparator verdicts, each of which has to come out the stated way.
       # A run that only ever accepts proves nothing about the gate.
