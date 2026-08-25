@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 This file formalizes the "Square-root sum problem"
 which asks if one can decide in polynomial time on a Turing machine
 whether the sum of the square roots of a list of naturals
-is below a cutoff (or alternatively, below another such sum).
+is at most a cutoff (or alternatively, at most another such sum).
 
 This problem is relevant to questions in computational geometry
 (for example, in determining which of two polygonal paths in Euclidean space is longer).
