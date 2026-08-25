@@ -58,9 +58,9 @@ theorem isPolyTime_squareRootSum :
 /--
 **The square-root sum problem (two sum version)**
 
-A decision problem that asks, of two lists of natural numbers, whether the sum of the
-square roots of the elements of the first list is at most the corresponding sum for the
-second list.
+A decision problem that asks, of two lists of natural numbers,
+whether the sum of the square roots of the elements of the first list
+is at most the corresponding sum for the second list.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
 noncomputable def squareRootSumTwoSided (l₁ l₂ : List ℕ) : Bool :=
