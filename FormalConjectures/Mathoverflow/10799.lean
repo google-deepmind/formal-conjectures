@@ -69,7 +69,7 @@ such that
 (2) Exactly one set among $S$ and $T$ belongs to $F$.
 -/
 def boundaryCount (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) : ℕ :=
-  (Finset.univ.filter fun i : Fin n ↦ Xor' (S ∈ F) (symmDiff S {i} ∈ F)).card
+  (Finset.univ.filter fun i : Fin n ↦ Xor (S ∈ F) (symmDiff S {i} ∈ F)).card
 
 /--
 Test lemma showing that `boundaryCount` is equivalent to counting subsets $T$
@@ -78,7 +78,7 @@ that differ from $S$ in exactly one element and exactly one of $S, T$ belongs to
 @[category test, AMS 5]
 theorem boundaryCount_equiv (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) :
     boundaryCount n F S = (Finset.univ.filter fun T : Finset (Fin n) ↦
-      (symmDiff S T).card = 1 ∧ Xor' (S ∈ F) (T ∈ F)).card := by
+      (symmDiff S T).card = 1 ∧ Xor (S ∈ F) (T ∈ F)).card := by
   unfold boundaryCount
   have h_cancel : ∀ (A : Finset (Fin n)), symmDiff S (symmDiff S A) = A := by
     intro A
@@ -164,12 +164,21 @@ theorem mathoverflow_10799 : answer(False) ↔
   sorry
 
 /--
-Conjecture 7 from Kahn–Kalai 2006: the same statement as the original
-conjecture, but with the additional assumption that $t$ is the critical probability for $F$,
+Conjecture 7 from Kahn–Kalai 2006: a fixed-`1000` variant of the original
+conjecture, with the additional assumption that $t$ is the critical probability for $F$,
 namely $\mu_t(F) = 1/2$.
+
+This variant is false by a counterexample due to Sahar Diskin and Uri Kreitner;
+see the [MathOverflow discussion](https://mathoverflow.net/questions/10799/optimal-monotone-families-for-the-discrete-isoperimetric-inequality)
+and the [counterexample note](https://gilkalai.wordpress.com/wp-content/uploads/2026/06/dual_tribes_more_readable.pdf).
+Their construction was adapted to this exact Formal Conjectures statement and
+[formalized in Lean](https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample)
+by Kenta Kitamura (KitaKen1).
 -/
-@[category research open, AMS 5 60]
-theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(sorry) ↔
+@[category research solved, AMS 5 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample/blob/5446d2f/lean/MO10799CounterexampleFC.lean#L2597-L2604"]
+theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
     ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
@@ -233,7 +242,7 @@ theorem μFamily_univ (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_empty (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n ∅ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the empty family. -/
 @[category test, AMS 5]
@@ -245,7 +254,7 @@ theorem edgeBoundary_empty (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_univ (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n Finset.univ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the full family. -/
 @[category test, AMS 5]

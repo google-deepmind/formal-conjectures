@@ -61,7 +61,7 @@ theorem erdos_342.test.a1 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 1 = 2 :=
 theorem erdos_342.test.a2 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 2 = 3 := by
   intro a ⟨ha0, ha1, ha⟩
   obtain ⟨_, ⟨⟨i, j⟩, ⟨hij, hj, hsum⟩, _⟩, _⟩ := ha 2 (by omega)
-  interval_cases j <;> simp_all only [lt_one_iff, not_lt_zero']
+  interval_cases j <;> simp_all only [lt_one_iff, not_lt_zero]
 
 /-- $a(3) = 4$: among sums $> 3$ with a unique representation from $\{1,2,3\}$,
 the smallest is $4 = 1 + 3$. The candidate $5 = 2 + 3$ is ruled out by minimality since

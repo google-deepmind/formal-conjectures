@@ -67,8 +67,10 @@ Note: The OEIS comment suggests $n-1$ which means this applies at least for $n \
 as we assume $\operatorname{A105033}(\mathbb{N})$ is defined on $\mathbb{N}$.
 We include the case $n=1$ which relies on $A105033(0)$, which is 0.
 -/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - OeisA105033.a (n - 1) := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a102371/blob/d80fba9/lean/OeisA102371FC.lean#L490-L497"]
+theorem conjecture : answer(True) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - OeisA105033.a (n - 1) := by
   sorry
 
 end OeisA102371

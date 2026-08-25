@@ -177,7 +177,11 @@ function processEntry(entry) {
   // Pick only the fields the website actually uses. Avoids leaking large
   // unused fields (statement, docstring) into the client-side JSON.
   // Docstrings come from versoFragments instead.
-  const hasFormalProof = !!entry.formalProofKind;
+  // A declaration can carry several `formal_proof` annotations. `hasFormalProof` stays a
+  // boolean about the conjecture, so the landing-page and stats counts keep counting
+  // conjectures rather than proofs.
+  const formalProofs = entry.formalProofs || [];
+  const hasFormalProof = formalProofs.length > 0;
   return {
     theorem: entry.theorem,
     module: entry.module,
@@ -193,9 +197,7 @@ function processEntry(entry) {
     categoryCss: catMeta.css,
     subjects,
     hasFormalProof,
-    formalProofKind: entry.formalProofKind || null,
-    formalProofLink: entry.formalProofLink || null,
-    proofConditions: entry.proofConditions || [],
+    formalProofs,
   };
 }
 

@@ -27,10 +27,11 @@ The domain $\Omega$ has the **Pompeiu property** if the only continuous function
 $f : \mathbb{R}^{N+1} \to \mathbb{R}$ with $\int_{\sigma(\Omega)} f = 0$ for every rigid motion
 $\sigma$ is $f \equiv 0$.
 
-The **Pompeiu problem** (Pompeiu's conjecture) asserts that, among bounded simply connected
+The **Pompeiu problem** (Pompeiu's conjecture) asserted that, among bounded simply connected
 domains with Lipschitz boundary, the Euclidean ball is the *only* domain that **fails** to have
-the Pompeiu property. (That a ball fails is classical — radial functions built from Bessel
-functions have vanishing integral over every congruent ball; the open direction is the converse.)
+the Pompeiu property. That a ball fails is classical: radial functions built from Bessel
+functions have vanishing integral over every congruent ball. The converse is false. Two
+independent proofs of this negative conclusion are referenced below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Pompeiu_problem)
@@ -40,6 +41,10 @@ functions have vanishing integral over every congruent ball; the open direction 
   for a ball of radius `R` the witness is `f(x) = sin(a x₁)` with `J_{n/2}(a R) = 0`.)
 - Zalcman, L., *A bibliographic survey of the Pompeiu problem*, in Approximation by
   Solutions of Partial Differential Equations, NATO ASI Ser. 365 (1992), 185–194.
+- [CLD26] [Cao-Labora, G. and de Dios Pont, J., *Schiffer*](https://github.com/jaumededios/Schiffer),
+  a Lean 4 formalization of a non-disk planar counterexample.
+- [CS26] Colbrook, M. J. and Stepaniants, G., *A computer-assisted counterexample to the planar
+  Pompeiu and Schiffer conjectures*, [arXiv:2608.01579](https://arxiv.org/abs/2608.01579) (2026).
 -/
 
 open MeasureTheory Metric Topology
@@ -85,14 +90,17 @@ structure IsAdmissibleDomain (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))) : Pro
   lipschitzBoundary  : HasLipschitzBoundary Ω
 
 /--
-**Pompeiu's conjecture.** A bounded, simply connected domain in $\mathbb{R}^{N+1}$ with Lipschitz
-boundary fails to have the Pompeiu property if and only if it is a Euclidean ball. Equivalently,
-the ball is the unique such domain without the Pompeiu property.
+**Pompeiu's conjecture is false.** There is a bounded, simply connected Lipschitz domain in
+$\mathbb{R}^2$ which fails to have the Pompeiu property but is not a Euclidean ball. This conclusion
+has two independent proofs: the Lean-formalized construction of Cao-Labora and de Dios Pont
+[CLD26], and the computer-assisted construction of Colbrook and Stepaniants [CS26].
 -/
-@[category research open, AMS 42]
-theorem pompeiu_conjecture (Ω : Set (EuclideanSpace ℝ (Fin (N + 1))))
-    (hΩ : IsAdmissibleDomain Ω) :
-    ¬ HasPompeiuProperty Ω ↔ IsBall Ω := by
+@[category research solved, AMS 42,
+  formal_proof using lean4 at
+    "https://github.com/jaumededios/Schiffer/blob/2938e277969c329caf154e48a3d8823f3635c7f1/Schiffer/FormalConjecturesSolution.lean#L446-L469"]
+theorem pompeiu_conjecture :
+    ¬ ∀ (N : ℕ) (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))),
+      IsAdmissibleDomain Ω → (¬ HasPompeiuProperty Ω ↔ IsBall Ω) := by
   sorry
 
 /--
@@ -108,13 +116,15 @@ theorem ball_not_hasPompeiuProperty (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))
   sorry
 
 /--
-The hard direction, the open part of the Pompeiu problem: any admissible domain lacking the
-Pompeiu property must be a ball.
+The hard direction of the Pompeiu problem is false: some admissible planar domain lacks the
+Pompeiu property without being a ball. Two independent proofs are given in [CLD26] and [CS26].
 -/
-@[category research open, AMS 42]
-theorem not_hasPompeiuProperty_imp_ball (Ω : Set (EuclideanSpace ℝ (Fin (N + 1))))
-    (hΩ : IsAdmissibleDomain Ω) (h : ¬ HasPompeiuProperty Ω) :
-    IsBall Ω := by
+@[category research solved, AMS 42,
+  formal_proof using lean4 at
+    "https://github.com/jaumededios/Schiffer/blob/2938e277969c329caf154e48a3d8823f3635c7f1/Schiffer/FormalConjecturesSolution.lean#L446-L469"]
+theorem not_hasPompeiuProperty_imp_ball :
+    ¬ ∀ (N : ℕ) (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))),
+      IsAdmissibleDomain Ω → ¬ HasPompeiuProperty Ω → IsBall Ω := by
   sorry
 
 /-- Sanity check: the zero function always integrates to `0` over every rigid-motion image, so the

@@ -23,13 +23,14 @@ relaxedAutoImplicit = false
 # our own linters which we don't want to force upon downstream packages
 weak.linter.style.copyright.formalConjectures = true
 weak.linter.style.namespace = true
+weak.linter.style.stubs = true
 # Don't open Classical globally
 weak.linter.style.openClassical = true
 
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.27.0"
+rev = "v4.33.1"
 
 # We make this a separate library so that we can apply different lean options.
 [[lean_lib]]
@@ -58,6 +59,7 @@ weak.linter.style.category_attribute = true
 weak.linter.style.conditional_formal_proof = true
 weak.linter.style.moduleDocstring = true
 weak.linter.style.latex_docstring = true
+weak.linter.style.imports = true
 
 [[lean_lib]]
 name = "FormalConjecturesAnswerPostpone"
@@ -71,6 +73,7 @@ weak.linter.style.category_attribute = true
 weak.linter.style.conditional_formal_proof = true
 weak.linter.style.moduleDocstring = true
 weak.linter.style.latex_docstring = true
+weak.linter.style.imports = true
 weak.google.answer = "postpone"
 
 

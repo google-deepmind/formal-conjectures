@@ -67,17 +67,23 @@ theorem a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
 Conjectures: a(2^n)=a(2^(n+1)+1)=A033638(n).
 This formalizes the equality a(2^n) = a(2^(n+1)+1).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a112970-formal-conjectures/blob/71ae72f443bd9bee7d958f0a19d9f9ec5ab82af5/lean/OeisA112970FC.lean#L43-L46"]
 theorem conjecture1 (n : ℕ) : a (2^n) = a (2^(n + 1) + 1) := by
   sorry
 
 /-- Conjectures: a(2^n-1)=a(3*2^n-1)=1. This formalizes the equality part a(2^n-1) = a(3*2^n-1). -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a112970-formal-conjectures/blob/71ae72f443bd9bee7d958f0a19d9f9ec5ab82af5/lean/OeisA112970FC.lean#L56-L64"]
 theorem conjecture2 (n : ℕ) : a (2^n - 1) = a (3 * 2^n - 1) := by
   sorry
 
 /-- Conjectures: a(2^n-1)=a(3*2^n-1)=1. This formalizes the value part a(2^n-1)=1. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a112970-formal-conjectures/blob/71ae72f443bd9bee7d958f0a19d9f9ec5ab82af5/lean/OeisA112970FC.lean#L48-L54"]
 theorem conjecture3 (n : ℕ) : a (2^n - 1) = 1 := by
   sorry
 

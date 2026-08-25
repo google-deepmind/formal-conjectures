@@ -50,7 +50,7 @@ We can always view a Kac polynomial as a random variable on `ℕ`.
 -/
 instance : FunLike (KacCoefficients S Ω μ) ℕ (Ω → k) where
   coe P := P.toFun
-  coe_injective' := by intro P Q h ; aesop
+  coe_injective P Q h := by aesop
 
 namespace KacCoefficients
 
