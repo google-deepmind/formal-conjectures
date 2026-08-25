@@ -15,26 +15,13 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.LinearAlgebra.Matrix.Permanent
 
 /-!
 # Dittert conjecture
 
-Let `Kₙ` be the set of nonnegative real `n × n` matrices whose entries sum to `n`.
-For `A ∈ Kₙ`, define
-
-`φ(A) = (∏ i, rowSum A i) + (∏ j, columnSum A j) - permanent A`.
-
-The Dittert conjecture states that the matrix `Jₙ`, all of whose entries are `1 / n`,
-is the unique maximizer of `φ` on `Kₙ`.
-
-The conjecture is known for `n = 2`, `n = 3`, and `n = 4`.
-
-*References:*
+*Reference:*
 - [D. K. U. and K. Somasundaram, *Lih Wang and Dittert Conjectures on Permanents*]
   (https://arxiv.org/abs/2312.00464)
-- [Formal Conjectures issue #2267]
-  (https://github.com/google-deepmind/formal-conjectures/issues/2267)
 -/
 
 open scoped BigOperators
@@ -47,15 +34,15 @@ namespace Arxiv.«2312.00464»
 def entrySum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : ℝ :=
   ∑ i, ∑ j, A i j
 
-/-- Membership in `Kₙ`: all entries are nonnegative and their total sum is `n`. -/
+/-- Membership in $K_n$: all entries are nonnegative and their total sum is $n$. -/
 def MemKn {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Prop :=
   (∀ i j, 0 ≤ A i j) ∧ entrySum A = n
 
-/-- The sum of the entries in row `i`. -/
+/-- The sum of the entries in row $i$. -/
 def rowSum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (i : Fin n) : ℝ :=
   ∑ j, A i j
 
-/-- The sum of the entries in column `j`. -/
+/-- The sum of the entries in column $j$. -/
 def columnSum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (j : Fin n) : ℝ :=
   ∑ i, A i j
 
@@ -63,11 +50,11 @@ def columnSum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (j : Fin n) : ℝ :=
 def phi {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : ℝ :=
   (∏ i, rowSum A i) + (∏ j, columnSum A j) - A.permanent
 
-/-- The `n × n` matrix all of whose entries are `1 / n`. -/
+/-- The $n \times n$ matrix all of whose entries are $1 / n$. -/
 def J (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
   fun _ _ ↦ 1 / n
 
-/-- The one-dimensional uniform matrix satisfies the defining constraints of `K₁`. -/
+/-- The one-dimensional uniform matrix satisfies the defining constraints of $K_1$. -/
 @[category test, AMS 15]
 theorem J_one_memKn : MemKn (J 1) := by
   simp [MemKn, entrySum, J]
@@ -84,8 +71,8 @@ theorem phi_J_one : phi (J 1) = 1 := by
   simp [phi, rowSum, columnSum, J, Matrix.permanent]
 
 /--
-**Dittert conjecture.** For every positive `n`, `Jₙ` belongs to `Kₙ` and is the unique
-maximizer of `φ` on `Kₙ`.
+**Dittert conjecture.** For every positive $n$, $J_n$ belongs to $K_n$ and is the unique
+maximizer of $\varphi$ on $K_n$. The conjecture is known for $n = 2$, $n = 3$, and $n = 4$.
 -/
 @[category research open, AMS 5 15]
 theorem dittert_conjecture (n : ℕ) (hn : 1 ≤ n) :
