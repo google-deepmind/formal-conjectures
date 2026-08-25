@@ -57,8 +57,10 @@ open Classical in
 /-- $f_c(n)$, the largest book size forced on every admissible graph, which is the least book
 number among them.
 
-`sInf` of the empty set is `0`, so `f c n = 0` also when no graph on `n` vertices has $cn^2$
-edges at all. That is the honest reading: nothing is forced when nothing qualifies. -/
+`sInf` of the empty set is `0`, so `f c n = 0` when no graph on `n` vertices has $cn^2$ edges
+at all. A simple graph has at most $n(n-1)/2$ edges, so that happens for every `n` once
+$c \geq 1/2$. The statements below therefore restrict `c` to the feasible range; without that
+they are false at, say, `c = 2` for reasons unrelated to the question. -/
 noncomputable def f (c : ℝ) (n : ℕ) : ℕ :=
   sInf {m | ∃ G : SimpleGraph (Fin n), Admissible c G ∧ bookNumber G = m}
 
@@ -67,19 +69,24 @@ Let $c>0$ and let $f_c(n)$ be the maximal $m$ such that every graph $G$ with $n$
 at least $cn^2$ edges, where each edge is contained in at least one triangle, must contain a
 book of size $m$, that is, an edge shared by at least $m$ different triangles. Estimate
 $f_c(n)$. In particular, is it true that $f_c(n)>n^\epsilon$ for some $\epsilon>0$?
+
+The bound $c < 1/2$ is what makes the hypothesis satisfiable: a simple graph on $n$ vertices
+has at most $n(n-1)/2$ edges, so no graph has $cn^2$ of them once $c \geq 1/2$.
 -/
 @[category research open, AMS 5]
 theorem erdos_80 :
-    answer(sorry) ↔ ∀ c : ℝ, 0 < c → ∃ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
-      (n : ℝ) ^ ε < f c n := by
+    answer(sorry) ↔ ∀ c : ℝ, 0 < c → c < 1 / 2 →
+      ∃ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ ε < f c n := by
   sorry
 
 /--
 The weaker question from the same problem: is $f_c(n) \gg \log n$?
+
+Same feasibility bound on `c` as above.
 -/
 @[category research open, AMS 5]
 theorem erdos_80.variants.log :
-    answer(sorry) ↔ ∀ c : ℝ, 0 < c →
+    answer(sorry) ↔ ∀ c : ℝ, 0 < c → c < 1 / 2 →
       (fun n : ℕ ↦ (f c n : ℝ)) ≫ (fun n : ℕ ↦ Real.log n) := by
   sorry
 

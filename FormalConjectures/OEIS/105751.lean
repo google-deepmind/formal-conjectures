@@ -74,7 +74,9 @@ theorem prime_divides_some_term (p : ℕ) (hp : p.Prime) :
 Moll's conjecture 5.5 extends to this sequence and takes the form:
 (i) the $2$-adic valuation $\nu_2(a(n)) \sim n/4$ as n -> oo.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/KitaKen1/oeis-a105751-two-adic/blob/a9692d90078c4dff1478acaaa70be2fba06a3ef9/lean/OeisA105751TwoAdicFC.lean#L980-L985"]
 theorem conjecture :
     Tendsto (fun n ↦ (4 : ℚ) * (padicValInt 2 (a n) : ℚ) / (n : ℚ)) atTop (nhds 1) := by
   sorry

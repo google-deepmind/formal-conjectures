@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Conjectures associated with A110854

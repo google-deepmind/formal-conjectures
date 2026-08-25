@@ -87,8 +87,13 @@ noncomputable def s (n : ℕ) : Real :=
 /--
 Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$.
 The constants $\alpha$ and $\beta$ are as defined in the formula section.
+
+Solved by OpenAI Codex, prompted by Adam Haig. A complete Lean 4 proof is
+linked by the `formal_proof` attribute below.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/HaigAd/formal-conjectures/blob/327b99914ce787ab41c67ba645626982e15b0124/FormalConjectures/OEIS/105565.lean#L595"]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
     betaConst - 2 < s n - alphaConst * (n : Real) ∧
       s n - alphaConst * (n : Real) < betaConst - 1 := by

@@ -15,12 +15,8 @@ limitations under the License.
 -/
 module
 
-
-public import Mathlib.Data.Nat.Choose.Sum
-public import Mathlib.Data.Nat.Lattice
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
-
-@[expose] public section
+public import Mathlib.Data.Nat.Choose.Central
 
 /-!
 # Erdős–Szekeres 1935 upper bound for the diagonal Ramsey number
@@ -41,15 +37,10 @@ is introduced.
 geometry." *Compositio Math.* **2**, pp. 463–470.
 -/
 
+@[expose] public section
+
 namespace Combinatorics
 namespace Diagonal
-
-/-- **Central binomial bound (Mathlib wrapper).** `C(2n, n) ≤ 4 ^ n`.
-
-This specialises `Nat.choose_middle_le_pow : (2n+1).choose n ≤ 4^n` by observing that
-`(2n).choose n ≤ (2n+1).choose n` via the monotonicity lemma `Nat.choose_le_succ`. -/
-lemma central_binomial_le_four_pow (n : ℕ) : (2 * n).choose n ≤ 4 ^ n :=
-  (Nat.choose_le_succ (2 * n) n).trans (Nat.choose_middle_le_pow n)
 
 /-! ## Off-diagonal Ramsey via a subset-indexed predicate
 
@@ -207,7 +198,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
   have hvnR : v ∉ R := fun h => Finset.notMem_erase _ _ (Finset.mem_of_mem_filter _ h)
   have hvnB : v ∉ B := fun h => Finset.notMem_erase _ _ (Finset.mem_of_mem_filter _ h)
   -- Pigeonhole: either R.card ≥ Ns or B.card ≥ Nt.
-  by_cases hRcard : Ns ≤ R.card
+  obtain hRcard | hRcard := le_or_gt Ns R.card
   · -- Case 1: apply `hs` on R to get false K_s (extend by v) or true K_{t+1}.
     rcases hs c R hRcard with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
     · -- false K_s on R ⊆ V; extend by v (false-adjacent to all of R) to false K_{s+1}.
@@ -225,11 +216,7 @@ lemma HasRamseyProperty.step {Ns Nt s t : ℕ}
     · -- true K_{t+1} on R ⊆ V.
       exact Or.inr ⟨S, hSsub.trans hRsubV, hScard, hSmono⟩
   · -- Case 2: R.card < Ns, so B.card ≥ Nt. Apply `ht` on B symmetrically.
-    push_neg at hRcard
-    have hBcard : Nt ≤ B.card := by
-      have hV_sub : Ns + Nt ≤ V.card := hV
-      omega
-    rcases ht c B hBcard with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
+    rcases ht c B (by lia) with ⟨S, hSsub, hScard, hSmono⟩ | ⟨S, hSsub, hScard, hSmono⟩
     · -- false K_{s+1} on B ⊆ V.
       exact Or.inl ⟨S, hSsub.trans hBsubV, hScard, hSmono⟩
     · -- true K_t on B; extend by v (true-adjacent to all of B) to true K_{t+1}.
@@ -318,6 +305,6 @@ lemma _root_.Combinatorics.hypergraphRamsey_two_le_four_pow (k : ℕ) :
   have hle : Combinatorics.hypergraphRamsey 2 k ≤ Nat.choose (k + k) k := Nat.sInf_le hmem
   have h2kk : Nat.choose (k + k) k = Nat.choose (2 * k) k := by rw [two_mul]
   rw [h2kk] at hle
-  exact hle.trans (Diagonal.central_binomial_le_four_pow k)
+  exact hle.trans (Nat.centralBinom_le_four_pow k)
 
 end Combinatorics
