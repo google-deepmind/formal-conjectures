@@ -39,12 +39,12 @@ open ComplexityTheory Real
 /--
 **The square-root sum problem (single sum version)**
 
-A decision problem that asks, of a list of natural numbers,
-whether the sum of the square roots of the elements of the list is larger than a threshhold.
+A decision problem that asks, of a list of natural numbers and a threshold,
+whether the sum of the square roots of the elements of the list is at most that threshold.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
-def squareRootSum (l : List ℕ) (t : ℕ) := (l.map fun n => √(n : ℝ)).sum ≤ t
-
+noncomputable def squareRootSum (l : List ℕ) (t : ℕ) : Bool :=
+  decide ((l.map fun n => √(n : ℝ)).sum ≤ t)
 
 /--
 **Is the square-root sum problem polynomial time (single sum version)?**
@@ -52,28 +52,28 @@ def squareRootSum (l : List ℕ) (t : ℕ) := (l.map fun n => √(n : ℝ)).sum 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
 @[category research open, AMS 68]
 theorem isPolyTime_squareRootSum :
-    answer(sorry) ↔ IsPolyTime (fun (⟨x, y⟩ : List ℕ × ℕ) => squareRootSum x y) := by
+    answer(sorry) ↔ IsPolyTime (fun (⟨l, t⟩ : List ℕ × ℕ) => squareRootSum l t) := by
   sorry
 
 /--
 **The square-root sum problem (two sum version)**
 
-A decision problem that asks, of a list of natural numbers,
-whether the sum of the square roots of the elements of the list is larger than a threshhold.
+A decision problem that asks, of two lists of natural numbers, whether the sum of the
+square roots of the elements of the first list is at most the corresponding sum for the
+second list.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
-def squareRootSumTwoSided (l₁ l₂ : List ℕ) :=
-  (l₁.map fun n => √(n : ℝ)).sum ≤ (l₂.map fun n => √(n : ℝ)).sum
-
+noncomputable def squareRootSumTwoSided (l₁ l₂ : List ℕ) : Bool :=
+  decide ((l₁.map fun n => √(n : ℝ)).sum ≤ (l₂.map fun n => √(n : ℝ)).sum)
 
 /--
-**Is the square-root sum problem polynomial time (single sum version)?**
+**Is the square-root sum problem polynomial time (two sum version)?**
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
 @[category research open, AMS 68]
-theorem isPolyTime_squareRootSum :
-    answer(sorry) ↔ IsPolyTime (fun ⟨x, y⟩ => squareRootSum x y) := by
+theorem isPolyTime_squareRootSumTwoSided :
+    answer(sorry) ↔
+      IsPolyTime (fun (⟨l₁, l₂⟩ : List ℕ × List ℕ) => squareRootSumTwoSided l₁ l₂) := by
   sorry
-
 
 end PolyTime
