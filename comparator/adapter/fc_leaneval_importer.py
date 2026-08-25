@@ -632,10 +632,15 @@ def import_problem(problem, answer_type=None, module=None):
     # this is what ties the two together.
     qualified = ".".join(namespaces_at_target + [original_declared])
     # Every file whose text reached the workspace is held to the one source
-    # revision: the statement's own file, each copied dependency's, each
-    # copied notation command's, and the pin files the record quotes.
+    # revision: the statement's own file, each copied dependency's, and each
+    # copied notation command's. The toolchain and manifest are deliberately
+    # not among them. They are the environment the facts were read in, which
+    # the record states as an observation rather than as a claim about the
+    # pinned commit, and holding them to the merge base would make a
+    # toolchain bump — the change that most needs this check to run — the one
+    # change that cannot pass it.
     read_paths = (
-        [path.relative_to(ROOT), "lean-toolchain", "lake-manifest.json"]
+        [path.relative_to(ROOT)]
         + [record["path"] for record in copied_records]
         + list(notation_paths)
     )

@@ -20,6 +20,7 @@ the wrong problem. The build itself is the comparator's job, not these tests'.
 """
 
 import contextlib
+import inspect
 import json
 import pathlib
 import subprocess
@@ -122,6 +123,17 @@ class PinTest(unittest.TestCase):
         with self._pins_repo(results):
             with self.assertRaisesRegex(SystemExit, "not tracked at pinned"):
                 pins(pathlib.Path("FormalConjectures/New.lean"))
+
+    def test_the_toolchain_is_not_held_to_the_pin(self):
+        # A toolchain bump edits `lean-toolchain` and `lake-manifest.json`.
+        # Those describe the environment the facts were read in, which the
+        # record states as an observation. Holding them to the merge base
+        # would make a bump the one change that cannot pass this check.
+        import fc_leaneval_importer as importer_module
+
+        source = inspect.getsource(importer_module.import_problem)
+        self.assertNotIn("lean-toolchain", source)
+        self.assertNotIn("lake-manifest.json", source)
 
     def test_a_dirty_dependency_fails_even_with_a_clean_target(self):
         # The reviewer's mixed state: target at the pin, dependency edited in
