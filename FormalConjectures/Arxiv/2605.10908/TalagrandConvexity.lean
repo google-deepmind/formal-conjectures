@@ -15,19 +15,15 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Analysis.LocallyConvex.Basic
-import Mathlib.Probability.Distributions.Gaussian.Real
 
 /-!
 # Talagrand's Convexity Problem
 
-This file formalizes Talagrand's problem on creating convexity from a
-dimension-independent number of Minkowski sums. The problem was solved
-affirmatively in 2026.
-
 *References:*
 * [Talagrand] Michel Talagrand, "Create convexity in 3 (or 100?) steps only!"
   https://michel.talagrand.net/prizes/convexity.pdf
+* [Talagrand, *My favorite problems*, Section 2, Problem 2.1, p. 2]
+  (https://michel.talagrand.net/Korea15.pdf)
 * [HST2026] Dongming Merrick Hua, Antoine Song, and Stefan Tudose,
   "On Talagrand's Convexity Conjecture." https://arxiv.org/abs/2605.10908
 -/
@@ -46,12 +42,13 @@ def minkowskiNSum {E : Type*} [AddMonoid E] : ℕ → Set E → Set E
   | 0, _ => {0}
   | q + 1, A => minkowskiNSum q A + A
 
-/-- Talagrand's convexity problem, solved affirmatively by Hua, Song, and Tudose in 2026:
-there is a dimension-independent positive number of Minkowski sums such that every compact
-balanced set of standard Gaussian measure at least `1 / 2` has a compact convex subset of
-the resulting sum with standard Gaussian measure at least `1 / 2`. -/
+/-- [Talagrand's convexity problem](https://michel.talagrand.net/prizes/convexity.pdf),
+solved affirmatively by Hua, Song, and Tudose in 2026: there is a dimension-independent
+positive number of Minkowski sums such that every compact balanced set of standard Gaussian
+measure at least $\frac{1}{2}$ has a compact convex subset of the resulting sum with standard
+Gaussian measure at least $\frac{1}{2}$. -/
 @[category research solved, AMS 28 46 52]
-theorem talagrandConvexityProblem :
+theorem talagrand_convexity_problem :
     ∃ q : ℕ, 0 < q ∧ ∀ (n : ℕ), 0 < n → ∀ A : Set (Fin n → ℝ),
       IsCompact A → Balanced ℝ A →
         (1 / 2 : ℝ≥0∞) ≤ standardGaussianMeasure n A →
