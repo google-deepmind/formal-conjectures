@@ -122,9 +122,8 @@ jobs:
         uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          key: oleans-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
           restore-keys: |
-            oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             oleans-${{ hashFiles('lean-toolchain') }}-
 
       - name: Get olean cache
@@ -142,25 +141,10 @@ jobs:
           restore-keys: |
             lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
 
-      - name: Save local lake build
-        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .lake/build
-          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
-
       - name: Generate FormalConjecturesForMathlib.lean
         if: steps.mode.outputs.website_only != 'true'
         run: |
           ./scripts/mk_all_formathlib.sh
-
-      - name: Generate All.lean
-        if: steps.mode.outputs.website_only != 'true'
-        run: |
-          rm -f FormalConjectures/All.lean
-          lake exe mk_all --lib FormalConjectures || true
-          mv FormalConjectures.lean FormalConjectures/All.lean
-          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
 
       - name: Begin Lean problem matcher
         if: steps.mode.outputs.website_only != 'true'
@@ -179,7 +163,6 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           python3 scripts/lake-build-wrapper.py /tmp/build_summary_problems.json lake --wfail build
-          rm -f FormalConjectures/All.lean
 
       - name: End Lean problem matcher
         if: always() && steps.mode.outputs.website_only != 'true'
@@ -200,6 +183,13 @@ jobs:
         run: |
           python3 site/fix_literate_html.py _literate_html
 
+      - name: Save local lake build
+        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/build
+          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
+
       # Only a push writes to the shared cache. An entry saved from anywhere
       # else is scoped to a ref nothing later restores from, while it takes
       # 0.37 GB of a 10 GB repository budget that is currently full, evicting
@@ -219,7 +209,7 @@ jobs:
         uses: actions/cache/save@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
-          key: oleans-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('**/*.lean') }}
+          key: oleans-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
 
       - name: Set up Python
         if: steps.mode.outputs.website_only != 'true'
