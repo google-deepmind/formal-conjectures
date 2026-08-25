@@ -182,11 +182,12 @@ Observation: "a(A002997(n)) >= 3, at least for 1 <= n <= 10000."
 - _Omar E. Pol_, Oct 21 2025
 
 That is, $a(k) \ge 3$ for every Carmichael number $k$.
-A002997 is the sequence of Carmichael numbers.
+A002997 is the sequence of Carmichael numbers: the composite numbers $k$ such that
+$b^{k-1} \equiv 1 \pmod k$ for every $b$ coprime to $k$. This is `IsCarmichael`,
+which also forces $k$ to be composite.
 -/
 @[category research open, AMS 11]
-theorem observation_carmichael (k : ℕ)
-    (hk : ¬ k.Prime ∧ 1 < k ∧ ∀ a : ZMod k, a ≠ 0 → a ^ (k - 1) = 1) :
+theorem observation_carmichael (k : ℕ) (hk : IsCarmichael k) :
     3 ≤ a k := by
   sorry
 

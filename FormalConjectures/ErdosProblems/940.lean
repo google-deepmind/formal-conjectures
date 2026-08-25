@@ -19,7 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 940
 
-*Reference:* [erdosproblems.com/940](https://www.erdosproblems.com/940)
+*References:*
+- [erdosproblems.com/940](https://www.erdosproblems.com/940)
+- [BaBr94] Baker, R. C. and Brüdern, J., _On sums of two squarefull numbers_. Math. Proc.
+  Cambridge Philos. Soc. (1994), 1-5.
+- [He88] Heath-Brown, D. R., _Ternary quadratic forms and sums of three square-full numbers_.
+  (1988), 137-163.
 -/
 
 open Filter
@@ -38,6 +43,8 @@ theorem erdos_940 :
 
 /--
 The set of integers which are the sum of at most two $2$-powerful numbers has density $0$.
+
+Erdős called this 'easy'. Baker and Brüdern [BaBr94] gave the first proof in the literature.
 -/
 @[category research solved, AMS 11]
 theorem erdos_940.variants.two :
@@ -47,6 +54,10 @@ theorem erdos_940.variants.two :
 
 /--
 Is it true that the set of integers which are the sum of at most three cubes has density $0$?
+
+The cubes are those of non-negative integers, which is what `Multiset ℕ` gives. This choice
+decides the question: over `ℤ` a sum of three cubes is conjectured to represent every integer
+that is not $\pm 4 \bmod 9$, which is density $7/9$.
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.three_cubes :
@@ -56,19 +67,21 @@ theorem erdos_940.variants.three_cubes :
 
 
 /--
-It is not known if all large integers are the sum of at most $r$-many $r$-powerful numbers.
+Let $r \ge 3$. It is not known if all large integers are the sum of at most $r$-many
+$r$-powerful numbers.
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.large_integers :
     answer(sorry) ↔
-    ∀ r ≥ 2, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
+    ∀ r ≥ 3, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
   sorry
 
 /--
 Heath-Brown [He88] has proved that all large numbers are the sum of at most three
 $2$-powerful numbers.
 
-[He88] Heath-Brown, D. R., Ternary quadratic forms and sums of three square-full numbers. (1988), 137--163.
+This is the case $r = 2$ of `Erdos1107.erdos_1107`, which asks the same question with $r + 1$
+summands, and it is stated there as `Erdos1107.erdos_1107.variants.two`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_940.variants.three_powerful :

@@ -61,7 +61,9 @@ theorem a_4 : a 4 = -26581 := by rfl
 Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=9$, which is A113255.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a113249-family-square-terms-lean/blob/9b999db08344184285e8050c2722c845fd5f5309/lean/OeisA113249FamilyFC.lean#L126-L134"]
 theorem conjecture : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by
   sorry
 

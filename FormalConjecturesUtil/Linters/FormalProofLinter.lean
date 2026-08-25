@@ -41,35 +41,80 @@ register_option linter.style.conditional_formal_proof : Bool := {
   descr := "enable the `conditional formal_proof` style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace FormalProofLinter
 
 /-- Whether `declName` has a proof term with no `sorry` in it, waiting on the
 declaration to finish elaborating. -/
 def isProved (declName : Name) : CommandElabM Bool := do
   let some info := (← getEnv).findAsync? declName | return false
-  return info.toConstantInfo.value?.any (!·.hasSorry)
+  return info.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry)
+
+/-- Return every formal-proof tag attached to `declName`.
+
+A declaration may have more than one proof. Linter policy must therefore be
+computed over the complete list rather than the legacy singular accessor. -/
+def getFormalProofTagsFor
+    (declName : Name) : CommandElabM (Array ProblemAttributes.FormalProofTag) := do
+  let tags ← liftTermElabM ProblemAttributes.getFormalProofTags
+  return tags.filter (·.declName == declName)
 
 /-- Warns when a hypothesis assumed by a `conditional formal_proof` has since been
 proved, so the proof may no longer be conditional on it. -/
-def checkAssumptionsStillOpen (declId : Syntax) : CommandElabM Unit := do
-  let declName := (← getCurrNamespace) ++ declId[0].getId
+def checkAssumptionsStillOpen (mods : TSyntax ``Lean.Parser.Command.declModifiers) (declId : Syntax) : CommandElabM Unit := do
+  let modifiers ← elabModifiers mods
+  let (shortName, _) := Lean.Elab.expandDeclIdCore declId
+  let declName ←
+    if (`_root_).isPrefixOf shortName then
+      pure <| shortName.replacePrefix `_root_ .anonymous
+    else
+      pure <| (← getCurrNamespace) ++ shortName
+  let env ← getEnv
+  let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
   unless ← hasConst declName do return
-  for condName in ← liftTermElabM (ProblemAttributes.getProofConditions declName) do
-    if ← isProved condName then
-      logLintIf linter.style.conditional_formal_proof declId
-        m!"The assumed hypothesis `{condName}` has a sorry-free proof, so the \
-           formal proof may no longer need to be marked `conditional`."
+  let mut seen : Std.HashSet Name := {}
+  for tag in ← getFormalProofTagsFor declName do
+    for condName in tag.conditions do
+      unless seen.contains condName do
+        seen := seen.insert condName
+        if ← isProved condName then
+          logLintIf linter.style.conditional_formal_proof declId
+            m!"The assumed hypothesis `{condName}` has a sorry-free proof, so the \
+               formal proof may no longer need to be marked `conditional`."
 
-/-- Checks the assumptions named by a `conditional formal_proof`. -/
+/-- Warns when a statement with a `formal_proof` annotation has a proof that is not exactly `sorry` or `by sorry`,
+unless it is conditional. The main branch is a statement repository, so proofs should live in
+their own repository or branch. -/
+def checkProofIsSorryIfFormalProof (mods : TSyntax ``Lean.Parser.Command.declModifiers) (declId : Syntax) (val : TSyntax ``Lean.Parser.Command.declVal) : CommandElabM Unit := do
+  let modifiers ← elabModifiers mods
+  let (shortName, _) := Lean.Elab.expandDeclIdCore declId
+  let declName ←
+    if (`_root_).isPrefixOf shortName then
+      pure <| shortName.replacePrefix `_root_ .anonymous
+    else
+      pure <| (← getCurrNamespace) ++ shortName
+  let env ← getEnv
+  let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
+  unless ← hasConst declName do return
+
+  let tags ← getFormalProofTagsFor declName
+  if tags.any (·.conditions.isEmpty) then
+    let isSorry := match val with
+      | `(Lean.Parser.Command.declVal| := by sorry) => true
+      | `(Lean.Parser.Command.declVal| := sorry) => true
+      | _ => false
+    if !isSorry then
+      logLintIf linter.style.conditional_formal_proof declId
+        m!"A statement with a `formal_proof` annotation must be proved exactly `by sorry` \
+           in this repository (unless it has conditionals). Proofs should live in their own repository or branch."
+
+/-- Checks the assumptions named by a `conditional formal_proof` and ensures `formal_proof` statements are `sorry`. -/
 def formalProofLinter : Linter where
   run := withSetOptionIn fun stx => do
     match stx with
-      | `(command| $_:declModifiers theorem $declId $_:bracketedBinder* : $_ := $_)
-      | `(command| $_:declModifiers lemma $declId $_:bracketedBinder* : $_ := $_) =>
-        checkAssumptionsStillOpen declId
+      | `(command| $mods:declModifiers theorem $declId $_:bracketedBinder* : $_ $val:declVal)
+      | `(command| $mods:declModifiers lemma $declId $_:bracketedBinder* : $_ $val:declVal) =>
+        checkAssumptionsStillOpen mods declId
+        checkProofIsSorryIfFormalProof mods declId val
       | _ => return
 
 initialize do

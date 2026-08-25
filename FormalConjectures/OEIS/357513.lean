@@ -79,7 +79,7 @@ theorem a357513_supercongruence (p : ℕ) (hp : p.Prime) (h_ge3 : p ≥ 3) (h_ne
   sorry
 
 /--
-Let m be a nonnegative integer and set $u(n) = $$the numerator of
+Let m be a nonnegative integer and set $u(n)$ = the numerator of
 $$\sum{k=1}^{n} \frac{1}{k^{2m+1}} \binom{n}{k}^2 \binom{n+k}{k}^2$$
 (seems like a typo in the OEIS entry: the sum starts with $k=0$ there. In order
 to avoid a division by zero, we replace start the sum at $k=1$.)

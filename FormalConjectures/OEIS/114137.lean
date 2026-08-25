@@ -33,17 +33,17 @@ $$a(n) = \min \{s \mid s > 2^n \text{ and } s \text{ is an odd semiprime}\} - 2^
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let m := 2^n
-  let s : Set ℕ := { s | s > m ∧ IsOddSemiprime s }
+  let s : Set ℕ := { s | s > m ∧ s.IsSemiprime ∧ Odd s }
   sInf s - m
 
 @[category API, AMS 11]
 lemma a_eq_of (n val : ℕ)
-  (h_mem : IsOddSemiprime val)
+  (h_mem : val.IsSemiprime ∧ Odd val)
   (h_gt : 2^n < val)
-  (h_min : ∀ x, 2^n < x → x < val → ¬ IsOddSemiprime x) :
+  (h_min : ∀ x, 2^n < x → x < val → ¬ (x.IsSemiprime ∧ Odd x)) :
   a n = val - 2^n := by
-  change sInf { s | s > 2^n ∧ IsOddSemiprime s } - 2^n = val - 2^n
-  have h_S : sInf { s | s > 2^n ∧ IsOddSemiprime s } = val := by
+  change sInf { s | s > 2^n ∧ s.IsSemiprime ∧ Odd s } - 2^n = val - 2^n
+  have h_S : sInf { s | s > 2^n ∧ s.IsSemiprime ∧ Odd s } = val := by
     apply IsLeast.csInf_eq
     constructor
     · exact ⟨h_gt, h_mem⟩

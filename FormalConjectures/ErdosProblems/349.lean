@@ -110,7 +110,7 @@ subtract the largest power $2^m \le k$, recurse on the remainder. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
-theorem exists_finset_sum_two_pow (k : ℕ) :
+theorem exists_finsetSum_two_pow (k : ℕ) :
     ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
   sorry
 

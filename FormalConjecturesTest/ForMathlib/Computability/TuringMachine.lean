@@ -29,15 +29,22 @@ namespace BusyBeasverTest
 
 open Turing BusyBeaver Machine
 
+-- `deriving Fintype` is broken upstream as of v4.33: the generated proof rewrites with a
+-- `Finset` membership lemma but instance search supplies `SetLike.instMembership`, so the
+-- rewrite fails. Give the instances directly instead.
 inductive Γ where
   | A
   | B
-deriving Inhabited, Fintype
+deriving Inhabited, DecidableEq
+
+instance : Fintype Γ := ⟨{Γ.A, Γ.B}, fun x => by cases x <;> simp⟩
 
 inductive Λ where
   | S
   | T
-deriving Inhabited, Fintype
+deriving Inhabited, DecidableEq
+
+instance : Fintype Λ := ⟨{Λ.S, Λ.T}, fun x => by cases x <;> simp⟩
 
 def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
   none
