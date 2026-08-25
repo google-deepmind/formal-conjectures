@@ -39,9 +39,22 @@ def moduleOf (env : Environment) (n : Name) : String :=
   | some idx => (env.header.moduleNames[idx.toNat]?.getD Name.anonymous).toString
   | none => ""
 
-/-- Declared by this repository, as opposed to arriving with `import Mathlib`. -/
+/-- Declared by this repository, as opposed to arriving with `import Mathlib`.
+
+A constant with a module index the environment cannot name answers `true`
+here rather than `false`. Both answers are wrong in that case, but they fail
+in opposite directions: `false` means "arrives with Mathlib, copy nothing",
+which drops it from `ChallengeDeps` and is caught only by elaborating the
+result, while `true` means "copy it", and a constant with no source range is
+reported as a generated dependency, which the importer refuses unless a
+copied ancestor explains it. Fail towards the check that exists. -/
 def isFCLocal (env : Environment) (n : Name) : Bool :=
-  (moduleOf env n).startsWith "FormalConjectures"
+  match env.getModuleIdxFor? n with
+  | some idx =>
+    match env.header.moduleNames[idx.toNat]? with
+    | some name => name.toString.startsWith "FormalConjectures"
+    | none => true
+  | none => false
 
 /-- The FC-local constants a declaration needs, dependencies before dependents.
 
@@ -55,7 +68,11 @@ partial def fcOrder (env : Environment) (n : Name)
   if seen.contains n then (seen, acc) else
     let seen := seen.insert n
     match env.find? n with
-    | none => (seen, acc)
+    -- Reached as a used constant but absent from the environment. Keeping it
+    -- costs a generated-dependency entry the importer will question; dropping
+    -- it costs a `ChallengeDeps` that is short by one declaration and says
+    -- nothing about it.
+    | none => (seen, acc.push n)
     | some info =>
       let fromValue := match info.value? with
         | some v => v.getUsedConstants
@@ -73,8 +90,12 @@ partial def fcOrder (env : Environment) (n : Name)
       let (seen, acc) := children.foldl (fun p c => fcOrder env c p.1 p.2) (seen, acc)
       (seen, acc.push n)
 
+/-- One declaration's heartbeat budget, in the context's raw units. A batch
+caller multiplies this by its pair count rather than restating it. -/
+def heartbeatsPerDeclaration : Nat := 400000000
+
 unsafe def runWithImports {α : Type} (moduleNames : Array Name)
-    (actionToRun : MetaM α) (heartbeats : Nat := 400000000) : IO α := do
+    (actionToRun : MetaM α) (heartbeats : Nat := heartbeatsPerDeclaration) : IO α := do
   initSearchPath (← getBuildDir)
   let imports := moduleNames.map fun n => { module := n }
   Lean.enableInitializersExecution

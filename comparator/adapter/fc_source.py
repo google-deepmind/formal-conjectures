@@ -18,6 +18,12 @@ import re
 import subprocess
 import sys
 
+from limits import (
+    BATCH_TIMEOUT_PER_PAIR_SECONDS,
+    GIT_TIMEOUT_SECONDS,
+    LEAN_TIMEOUT_SECONDS,
+)
+
 
 def slug(name):
     """A Lake package name and directory name for a problem id.
@@ -46,6 +52,18 @@ class DefinitionHole:
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 
+# The trees this repository's own Lean lives in. `Extract.lean`'s `isFCLocal`
+# tests the same set with a `FormalConjectures` module-name prefix, so a
+# declaration Lean calls FC-local is one of these, and everything here that
+# asks "is this ours" asks it the same way.
+FC_SOURCE_TREES = (
+    "FormalConjectures",
+    "FormalConjecturesForMathlib",
+    "FormalConjecturesUtil",
+)
+
+# Problem statements live in the first tree; the other two are the support
+# layer that statements are written against.
 SOURCE_DIRS = [ROOT / "FormalConjectures"]
 
 DECL_START = re.compile(
@@ -160,9 +178,8 @@ def prefetch_elaborator_facts(pairs):
             capture_output=True,
             text=True,
             cwd=ROOT,
-            # Generous: a cold run imports Mathlib and may build the
-            # extractor first. A hang should end the run, not the day.
-            timeout=1800 + 30 * len(wanted),
+            timeout=LEAN_TIMEOUT_SECONDS
+            + BATCH_TIMEOUT_PER_PAIR_SECONDS * len(wanted),
         )
     except subprocess.TimeoutExpired:
         # The batch is an optimisation; the per-declaration path is the
@@ -221,11 +238,12 @@ def elaborator_facts(module, declaration):
             capture_output=True,
             text=True,
             cwd=ROOT,
-            timeout=1800,
+            timeout=LEAN_TIMEOUT_SECONDS,
         )
     except subprocess.TimeoutExpired:
         raise SystemExit(
-            f"comparator_facts {declaration}: no answer within 30 minutes"
+            f"comparator_facts {declaration}: no answer within "
+            f"{LEAN_TIMEOUT_SECONDS // 60} minutes"
         ) from None
     if proc.returncode != 0:
         raise SystemExit(
@@ -521,7 +539,12 @@ def slice_range(lines, source_range):
     range covers in some toolchains, so it is pulled in when present.
     """
     lo, hi = source_range["startLine"], source_range["endLine"]
-    end_column = source_range.get("endColumn")
+    # Every other field of the payload is held to the wire format; the range
+    # object is read positionally here, so it says so when it is malformed
+    # rather than slicing to the end of the line.
+    if "endColumn" not in source_range:
+        raise SystemExit(f"source range has no endColumn: {source_range}")
+    end_column = source_range["endColumn"]
     while (
         lo > 1
         and lines[lo - 2].rstrip().endswith(" in")
@@ -560,8 +583,11 @@ def fc_notation_commands():
     if _NOTATION_CACHE is not None:
         return _NOTATION_CACHE
     commands = []
-    roots = [ROOT / "FormalConjecturesForMathlib", ROOT / "FormalConjecturesUtil"]
-    for src in roots + SOURCE_DIRS:
+    # Support trees first, then the problems tree. The order decides the
+    # order copied notation appears in a generated module, so it is fixed
+    # rather than incidental.
+    support = [tree for tree in FC_SOURCE_TREES if tree != SOURCE_DIRS[0].name]
+    for src in [ROOT / tree for tree in support] + SOURCE_DIRS:
         for path in sorted(src.rglob("*.lean")):
             lines = path.read_text(encoding="utf-8").split("\n")
             for index, line in enumerate(lines):
@@ -601,7 +627,7 @@ def fc_notation_commands():
                 # which imports both; one in a problem module is not, since
                 # problem files do not import each other, and the problem
                 # file's own notations travel with the preamble.
-                shared = src.name != "FormalConjectures"
+                shared = src.name != SOURCE_DIRS[0].name
                 commands.append(
                     (tokens, command, scope, shared, path.relative_to(ROOT))
                 )
@@ -970,6 +996,7 @@ def _base_pins():
         ["git", "-C", str(ROOT), "merge-base", "HEAD", "origin/main"],
         capture_output=True,
         text=True,
+        timeout=GIT_TIMEOUT_SECONDS,
     )
     if merge_base.returncode != 0 or not merge_base.stdout.strip():
         raise SystemExit("cannot resolve the Formal Conjectures source revision")
@@ -998,6 +1025,7 @@ def pins(source_paths=None):
             + paths,
             capture_output=True,
             text=True,
+            timeout=GIT_TIMEOUT_SECONDS,
         )
         if tracked.returncode != 0:
             raise SystemExit(f"cannot list {fc_rev[:12]}: {tracked.stderr.strip()}")
@@ -1009,7 +1037,8 @@ def pins(source_paths=None):
                 "generating"
             )
         comparison = subprocess.run(
-            ["git", "-C", str(ROOT), "diff", "--quiet", fc_rev, "--"] + paths
+            ["git", "-C", str(ROOT), "diff", "--quiet", fc_rev, "--"] + paths,
+            timeout=GIT_TIMEOUT_SECONDS,
         )
         if comparison.returncode not in (0, 1):
             raise SystemExit(f"cannot compare {', '.join(paths)} with {fc_rev[:12]}")
@@ -1018,6 +1047,7 @@ def pins(source_paths=None):
                 ["git", "-C", str(ROOT), "diff", "--name-only", fc_rev, "--"] + paths,
                 capture_output=True,
                 text=True,
+                timeout=GIT_TIMEOUT_SECONDS,
             )
             raise SystemExit(
                 f"{changed.stdout.strip() or ', '.join(paths)} differs from "
@@ -1039,6 +1069,7 @@ def importer_state():
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
         capture_output=True,
         text=True,
+        timeout=GIT_TIMEOUT_SECONDS,
     )
     if head.returncode != 0 or not head.stdout.strip():
         raise SystemExit("cannot resolve the importer's own commit")
@@ -1046,6 +1077,7 @@ def importer_state():
         ["git", "-C", str(ROOT), "status", "--porcelain", "--", "comparator"],
         capture_output=True,
         text=True,
+        timeout=GIT_TIMEOUT_SECONDS,
     )
     # Empty output means a clean tree, and a failed command also produces
     # empty output. Reporting the reassuring answer for both would make the

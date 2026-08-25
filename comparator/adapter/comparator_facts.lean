@@ -69,7 +69,8 @@ unsafe def main (args : List String) : IO UInt32 := do
       if acc.contains m.toName then acc else acc.push m.toName
     -- The heartbeat budget is shared by the whole action, so it scales with
     -- the batch; each pair keeps the single-run allowance.
-    runWithImports modules (heartbeats := pairs.length * 400000000) do
+    runWithImports modules
+      (heartbeats := pairs.length * heartbeatsPerDeclaration) do
       let env ← getEnv
       for (modName, declName) in pairs do
         let tagged (rest : List (String × Json)) := Json.mkObj <|

@@ -203,19 +203,29 @@ class ProducerRecord:
                 raise SystemExit(
                     f"producer {section} has unknown keys: {', '.join(unknown)}"
                 )
-        importer = payload.get("importer", {})
-        generator = payload.get("generator", {})
-        target = payload.get("target", {})
+        missing = sorted(
+            f"{section}.{key}"
+            for section, keys in sections.items()
+            for key in keys
+            if key not in payload.get(section, {})
+        )
+        if missing:
+            raise SystemExit(
+                f"producer record has no {', '.join(missing)}"
+            )
+        importer = payload["importer"]
+        generator = payload["generator"]
+        target = payload["target"]
         return cls(
-            importer_commit=importer.get("commit", ""),
-            importer_dirty=bool(importer.get("dirty", False)),
-            generator_repository=generator.get("repository", ""),
-            generator_rev=generator.get("rev", ""),
-            contract_version=generator.get("contract_version", 0),
-            target_lean_toolchain=target.get("lean_toolchain", ""),
-            target_mathlib_revision=target.get("mathlib_revision", ""),
-            target_comparator=target.get("comparator", ""),
-            target_lean4export=target.get("lean4export", ""),
+            importer_commit=importer["commit"],
+            importer_dirty=bool(importer["dirty"]),
+            generator_repository=generator["repository"],
+            generator_rev=generator["rev"],
+            contract_version=generator["contract_version"],
+            target_lean_toolchain=target["lean_toolchain"],
+            target_mathlib_revision=target["mathlib_revision"],
+            target_comparator=target["comparator"],
+            target_lean4export=target["lean4export"],
         )
 
 
@@ -588,7 +598,7 @@ def declaration_spans(module_text, declarations):
     return spans
 
 
-def build_problem(marked_up, manifest, policy, module_name=None):
+def build_problem(marked_up, manifest, policy):
     """One problem entry of the schema-version-1 request, and its `.ilean` declaration map.
 
     The module name is a single identifier on purpose: the generator resolves
@@ -608,7 +618,7 @@ def build_problem(marked_up, manifest, policy, module_name=None):
     metadata from the spans it computed, which it can do exactly because it
     rendered the module.
     """
-    module_name = module_name or slug(manifest.id)
+    module_name = slug(manifest.id)
     text = marked_up.render()
     spans = declaration_spans(text, module_declarations(marked_up, manifest))
     resolved, ilean = [], {}

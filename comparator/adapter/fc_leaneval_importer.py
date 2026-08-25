@@ -33,6 +33,7 @@ import sys
 import tempfile
 import tomllib
 
+from limits import GIT_TIMEOUT_SECONDS, LEAN_TIMEOUT_SECONDS
 from leaneval_interface import (
     CONTRACT_VERSION,
     MarkedUpModule,
@@ -45,6 +46,7 @@ from leaneval_interface import (
 )
 from fc_source import (
     DECL_START,
+    FC_SOURCE_TREES,
     docstring_reference,
     elaborator_facts,
     file_scoped_preamble,
@@ -151,8 +153,7 @@ def explicit_copy_dependencies(problem_file):
             relative.is_absolute()
             or ".." in relative.parts
             or not relative.parts
-            or relative.parts[0]
-            not in {"FormalConjectures", "FormalConjecturesForMathlib"}
+            or relative.parts[0] not in FC_SOURCE_TREES
         ):
             raise SystemExit(
                 f"copy dependency module must stay under a source tree: {relative}"
@@ -424,6 +425,7 @@ def source_record(
         capture_output=True,
         text=True,
         check=False,
+        timeout=GIT_TIMEOUT_SECONDS,
     )
     # An empty digest beside a real commit reads as "recorded", so a failure
     # here has to be one. `pins` already proved the path is tracked at this
@@ -594,9 +596,9 @@ def _resolve(problem, module=None):
     return problem_file, declaration, located
 
 
-def statement_pair(problem, module=None):
+def statement_pair(problem):
     """The `(module, declaration)` pair `import_problem` will ask the elaborator about."""
-    _, declaration, (path, _imports, _doc, _body) = _resolve(problem, module)
+    _, declaration, (path, _imports, _doc, _body) = _resolve(problem)
     return module_name(path.relative_to(ROOT)), declaration
 
 
@@ -715,6 +717,7 @@ def elaborate(marked_up):
             text=True,
             cwd=ROOT,
             check=False,
+            timeout=LEAN_TIMEOUT_SECONDS,
         )
     finally:
         pathlib.Path(combined).unlink(missing_ok=True)

@@ -66,7 +66,7 @@ import shutil
 import sys
 import tempfile
 
-from known_failures import load_known_failures
+from known_failures import gate, load_known_failures
 import fc_leaneval_importer as importer
 import fc_source
 import leaneval_generator_cli as generator_cli
@@ -349,30 +349,14 @@ def import_set(set_name, out_dir, verify=False, known_failures=None):
         "declarations": results,
     }
     if known_failures is not None:
-        expected = {
-            name
-            for name, entry in known_failures.items()
-            if entry["stage"] == "source"
-        }
         actual = {
             entry["declaration"]
             for entry in results
             if entry["status"] == "source-failed"
         }
-        unexpected = sorted(actual - expected)
-        fixed = sorted(expected - actual)
-        if unexpected or fixed:
-            for name in unexpected:
-                print(f"unexpected source failure: {name}", file=sys.stderr)
-            for name in fixed:
-                print(
-                    f"{name} is recorded as a known source failure but "
-                    "imported; remove it from the record",
-                    file=sys.stderr,
-                )
-            report["known_failures_match"] = False
-        else:
-            report["known_failures_match"] = True
+        report["known_failures_match"] = gate(
+            known_failures, actual, "source", "declaration"
+        )
     return report
 
 
@@ -448,7 +432,12 @@ def main(argv):
         if args.report:
             pathlib.Path(args.report).write_text(text, encoding="utf-8")
         print(text, end="")
-        if known is not None and not report.get("known_failures_match", True):
+        if known is None:
+            print(
+                "no --known-failures: this run reports failures but gates nothing",
+                file=sys.stderr,
+            )
+        if known is not None and not report["known_failures_match"]:
             return 1
         return 0
     if not args.declaration:

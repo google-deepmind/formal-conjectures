@@ -12,14 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""The known-failures ledger: `comparator/known_failures.toml` and its loader.
+"""The known-failures ledger: `comparator/known_failures.toml`, its loader and its gate.
 
-Both gates read the ledger — the source-side set run and the target-side
+Both stages read the ledger — the source-side set run and the target-side
 compile — and each matches it exactly: an unexpected failure and a silently
-fixed one both fail. The loader lives here so neither command has to import
-the other to read the format.
+fixed one both fail. Format, loader and comparison live here so the two
+stages cannot drift into disagreeing about what the ledger means, and so
+neither command has to import the other to read it.
 """
 
+import sys
 import tomllib
 
 KNOWN_KEYS = frozenset({"declaration", "stage", "reason", "workspace"})
@@ -62,3 +64,30 @@ def load_known_failures(path):
             )
         failures[entry["declaration"]] = entry
     return failures
+
+
+def expected_failures(recorded, stage, key):
+    """The names the ledger expects to fail at `stage`, read from `key`."""
+    return {entry[key] for entry in recorded.values() if entry["stage"] == stage}
+
+
+def gate(recorded, actual, stage, key):
+    """Whether the observed failures are exactly the recorded ones.
+
+    Both directions fail. An unexpected failure is the obvious one; a
+    recorded failure that no longer happens is the one a gate without this
+    check would never mention, and a ledger nobody prunes stops describing
+    the run it guards.
+    """
+    expected = expected_failures(recorded, stage, key)
+    unexpected = sorted(set(actual) - expected)
+    fixed = sorted(expected - set(actual))
+    for name in unexpected:
+        print(f"unexpected {stage} failure: {name}", file=sys.stderr)
+    for name in fixed:
+        print(
+            f"{name} is recorded as a known {stage} failure but did not fail; "
+            "remove it from the record",
+            file=sys.stderr,
+        )
+    return not (unexpected or fixed)

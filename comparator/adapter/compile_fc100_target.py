@@ -30,7 +30,8 @@ import sys
 import tomllib
 
 from leaneval_interface import lean_errors, dump_json
-from known_failures import load_known_failures
+from limits import LEAN_TIMEOUT_SECONDS
+from known_failures import gate, load_known_failures
 
 
 def arrange_project(workspaces_dir, project_dir):
@@ -113,7 +114,12 @@ def build(project_dir, modules):
     """Build each Challenge target, attributing failures per workspace."""
     project_dir = pathlib.Path(project_dir)
     for command in (["lake", "update"], ["lake", "exe", "cache", "get"]):
-        completed = subprocess.run(command, cwd=project_dir)
+        # These two fetch over the network, so they get the same bound as a
+        # build rather than none: a stalled fetch would otherwise sit until
+        # the job's own timeout.
+        completed = subprocess.run(
+            command, cwd=project_dir, timeout=LEAN_TIMEOUT_SECONDS
+        )
         if completed.returncode != 0:
             raise SystemExit(f"{' '.join(command)} failed in {project_dir}")
     results = []
@@ -123,6 +129,7 @@ def build(project_dir, modules):
             cwd=project_dir,
             capture_output=True,
             text=True,
+            timeout=LEAN_TIMEOUT_SECONDS,
         )
         errors = lean_errors(completed.stdout + completed.stderr)
         ok = completed.returncode == 0 and not errors
@@ -130,7 +137,20 @@ def build(project_dir, modules):
             {
                 "workspace": workspace_id,
                 "status": "ok" if ok else "target-failed",
-                **({} if ok else {"reason": "\n".join(errors[:10]) or "build failed"}),
+                # A failure with no `error:` line is lake dying, not Lean
+                # rejecting: keep its output rather than recording the word
+                # "build failed", which the report cannot act on.
+                **(
+                    {}
+                    if ok
+                    else {
+                        "reason": "\n".join(errors[:10])
+                        or "\n".join(
+                            (completed.stdout + completed.stderr).splitlines()[-20:]
+                        )
+                        or f"lake exited {completed.returncode} with no output"
+                    }
+                ),
             }
         )
         print(f"{workspace_id}: {'ok' if ok else 'FAILED'}", flush=True)
@@ -171,22 +191,7 @@ def main(argv):
         # ledger, and a target entry without a `workspace` is refused there
         # rather than silently dropped here.
         recorded = load_known_failures(args.known_failures)
-        expected = {
-            entry["workspace"]
-            for entry in recorded.values()
-            if entry["stage"] == "target"
-        }
-        unexpected = sorted(failed - expected)
-        fixed = sorted(expected - failed)
-        for name in unexpected:
-            print(f"unexpected target failure: {name}", file=sys.stderr)
-        for name in fixed:
-            print(
-                f"{name} is recorded as a known target failure but compiled; "
-                "remove it from the record",
-                file=sys.stderr,
-            )
-        if unexpected or fixed:
+        if not gate(recorded, failed, "target", "workspace"):
             return 1
     return 0
 

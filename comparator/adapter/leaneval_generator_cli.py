@@ -28,6 +28,7 @@ import pathlib
 import shutil
 import subprocess
 
+from limits import LEAN_TIMEOUT_SECONDS
 from leaneval_interface import parse_response
 
 BINARY_ENV = "LEAN_EVAL_GENERATOR_BIN"
@@ -90,13 +91,12 @@ def generate(request_text, cwd=None, expected_ids=None):
             cwd=cwd,
             # The generator is deterministic and does no I/O beyond the
             # context root, so a run that has not answered by now is stuck.
-            # This is the only call in the adapter that crosses into an
-            # external binary; the extractor's two are bounded the same way.
-            timeout=1800,
+            timeout=LEAN_TIMEOUT_SECONDS,
         )
     except subprocess.TimeoutExpired:
         raise SystemExit(
-            "lean-eval-generator did not answer within 30 minutes"
+            "lean-eval-generator did not answer within "
+            f"{LEAN_TIMEOUT_SECONDS // 60} minutes"
         ) from None
     if proc.returncode != 0:
         raise SystemExit(
