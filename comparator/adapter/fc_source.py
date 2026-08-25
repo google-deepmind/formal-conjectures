@@ -16,6 +16,7 @@ import json
 import pathlib
 import re
 import subprocess
+import sys
 
 
 def slug(name):
@@ -165,9 +166,23 @@ def prefetch_elaborator_facts(pairs):
         )
     except subprocess.TimeoutExpired:
         # The batch is an optimisation; the per-declaration path is the
-        # arbiter of what fails and how it is reported.
+        # arbiter of what fails and how it is reported. It is still worth
+        # saying so: a collapsed batch re-runs the whole set one declaration
+        # at a time, which is otherwise visible only as a job that takes
+        # hours instead of minutes.
+        print(
+            f"comparator_facts --batch: no answer for {len(wanted)} pairs "
+            "within the timeout; falling back to one run per declaration",
+            file=sys.stderr,
+        )
         return
     if proc.returncode != 0:
+        print(
+            f"comparator_facts --batch failed for {len(wanted)} pairs; "
+            "falling back to one run per declaration: "
+            f"{proc.stderr.strip().splitlines()[-1] if proc.stderr.strip() else 'no output'}",
+            file=sys.stderr,
+        )
         return
     requested = set(wanted)
     for line in proc.stdout.splitlines():
@@ -1032,4 +1047,12 @@ def importer_state():
         capture_output=True,
         text=True,
     )
+    # Empty output means a clean tree, and a failed command also produces
+    # empty output. Reporting the reassuring answer for both would make the
+    # field worth less than not recording it.
+    if status.returncode != 0:
+        raise SystemExit(
+            f"cannot tell whether the importer is dirty: "
+            f"{status.stderr.strip() or 'git status failed'}"
+        )
     return head.stdout.strip(), bool(status.stdout.strip())

@@ -177,10 +177,10 @@ The adapter should cover these boundary cases before importing a frozen set:
 - trusted helper dependencies requiring `ChallengeDeps` or multiple trusted
   files.
 
-The two CI jobs exercise those distinctions: `build-and-docs.yml` generates
-five declarations covering each case and checks the importer-to-generator seam,
-and `comparator-lean-4-33.yml` builds two of them at LeanEval's pins and runs
-Comparator on them. They validate extraction and adapter behaviour, not
+`comparator-lean-4-33.yml` exercises those distinctions: it generates eight
+declarations covering each case, checks the importer-to-generator seam by
+regenerating from the emitted request, and builds two of them at LeanEval's
+pins to run Comparator on. It validates extraction and adapter behaviour, not
 mathematical correctness or maintainer acceptance.
 
 `FC100OpenSet1` is a frozen list whose members keep getting solved — designed

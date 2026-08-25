@@ -81,13 +81,23 @@ def generate(request_text, cwd=None, expected_ids=None):
     `context`, resolved against `cwd`. With `expected_ids`, the response must
     cover exactly those workspaces. Returns `{problem_id: {path: content}}`.
     """
-    proc = subprocess.run(
-        [binary()],
-        input=request_text,
-        capture_output=True,
-        text=True,
-        cwd=cwd,
-    )
+    try:
+        proc = subprocess.run(
+            [binary()],
+            input=request_text,
+            capture_output=True,
+            text=True,
+            cwd=cwd,
+            # The generator is deterministic and does no I/O beyond the
+            # context root, so a run that has not answered by now is stuck.
+            # This is the only call in the adapter that crosses into an
+            # external binary; the extractor's two are bounded the same way.
+            timeout=1800,
+        )
+    except subprocess.TimeoutExpired:
+        raise SystemExit(
+            "lean-eval-generator did not answer within 30 minutes"
+        ) from None
     if proc.returncode != 0:
         raise SystemExit(
             f"lean-eval-generator failed:\n{proc.stderr.strip() or proc.stdout.strip()}"

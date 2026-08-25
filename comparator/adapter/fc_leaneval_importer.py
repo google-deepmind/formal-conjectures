@@ -425,11 +425,19 @@ def source_record(
         text=True,
         check=False,
     )
+    # An empty digest beside a real commit reads as "recorded", so a failure
+    # here has to be one. `pins` already proved the path is tracked at this
+    # revision, which is why this is a refusal and not a fallback.
+    if blob.returncode != 0 or not blob.stdout.strip():
+        raise SystemExit(
+            f"cannot resolve {source_path} at {fc_rev[:12]}: "
+            f"{blob.stderr.strip() or 'no object returned'}"
+        )
     return SourceRecord(
         repository=SOURCE_REPOSITORY,
         commit=fc_rev,
         path=str(source_path),
-        blob_sha=blob.stdout.strip() or "",
+        blob_sha=blob.stdout.strip(),
         module=module,
         declaration=declaration,
         copied_dependencies=tuple(copied_records),

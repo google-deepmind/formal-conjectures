@@ -495,5 +495,29 @@ class ProducerRecordTest(unittest.TestCase):
             ProblemManifest.from_json_object(payload)
 
 
+class SeamDirectionTest(unittest.TestCase):
+    """The arrow points one way, and this is the assertion OWNERSHIP.md cites."""
+
+    def test_the_cli_plumbing_does_not_import_the_importer(self):
+        # `leaneval_generator_cli` runs the pinned binary and nothing else. If
+        # it grew an importer import, the seam would still work and the
+        # ownership split would quietly stop being true.
+        import ast
+        import pathlib
+
+        source = (
+            pathlib.Path(__file__).with_name("leaneval_generator_cli.py")
+        ).read_text(encoding="utf-8")
+        imported = set()
+        for node in ast.walk(ast.parse(source)):
+            if isinstance(node, ast.Import):
+                imported.update(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported.add(node.module)
+        self.assertNotIn("fc_leaneval_importer", imported)
+        self.assertNotIn("fc_source", imported)
+        self.assertIn("leaneval_interface", imported)
+
+
 if __name__ == "__main__":
     unittest.main()
