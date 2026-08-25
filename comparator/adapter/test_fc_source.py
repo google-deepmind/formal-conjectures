@@ -252,7 +252,7 @@ class ModuleNameCodecTest(unittest.TestCase):
     def test_every_real_module_round_trips(self):
         # The property that keeps the codec from drifting again: for every
         # file the importer can name, decoding the name reaches the file.
-        for src in fc_source.SOURCE_DIRS:
+        for src in fc_source.source_dirs(fc_source.ROOT):
             for path in src.rglob("*.lean"):
                 rel = path.relative_to(fc_source.ROOT)
                 with self.subTest(module=str(rel)):

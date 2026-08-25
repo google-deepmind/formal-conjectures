@@ -64,7 +64,17 @@ FC_SOURCE_TREES = (
 
 # Problem statements live in the first tree; the other two are the support
 # layer that statements are written against.
-SOURCE_DIRS = [ROOT / "FormalConjectures"]
+PROBLEM_TREE = FC_SOURCE_TREES[0]
+
+
+def source_dirs(root):
+    """The trees problem statements live in, under `root`.
+
+    A function rather than a constant because every cache below is keyed on
+    the root it read, and a module-level list derived from `ROOT` at import
+    would not follow a root that moved.
+    """
+    return [root / PROBLEM_TREE]
 
 DECL_START = re.compile(
     # `local notation` and `scoped notation` carry the modifier before the
@@ -345,8 +355,8 @@ def module_name(rel_path):
     ]
     return ".".join(parts)
 
-@functools.lru_cache(maxsize=1)
-def _declared_names():
+@functools.lru_cache(maxsize=4)
+def _declared_names(root):
     """Every `theorem`/`lemma` name token in the tree, one pass, cached.
 
     `{path: [name, ...]}` in sorted path order. A batch import looks up
@@ -355,13 +365,13 @@ def _declared_names():
     """
     token = re.compile(r"(?:theorem|lemma)\s+([\w.«»]+)[\s:]")
     index = {}
-    for src in SOURCE_DIRS:
+    for src in source_dirs(root):
         for path in sorted(src.rglob("*.lean")):
             index[path] = token.findall(path.read_text(encoding="utf-8"))
     return index
 
 
-def _declaring_files(name):
+def _declaring_files(root, name):
     r"""The files whose text declares `name` as a theorem or lemma.
 
     A declared token matches when it equals `name` or ends in `.name` —
@@ -371,7 +381,7 @@ def _declaring_files(name):
     dotted = "." + name
     return [
         path
-        for path, names in _declared_names().items()
+        for path, names in _declared_names(root).items()
         if any(t == name or t.endswith(dotted) for t in names)
     ]
 
@@ -405,7 +415,7 @@ def find_declaration(basename, module=None):
         if not named.exists():
             raise SystemExit(f"manifest names {module}, which does not exist")
         return _read_source(named)
-    hits = _declaring_files(basename)
+    hits = _declaring_files(ROOT, basename)
     if not hits and "." in basename:
         # A fully qualified request such as `OeisA303656.conjecture` names a
         # declaration whose file spells only `conjecture`, the prefix coming
@@ -419,7 +429,7 @@ def find_declaration(basename, module=None):
             prefix, suffix = parts[:cut], ".".join(parts[cut:])
             hits = [
                 path
-                for path in _declaring_files(suffix)
+                for path in _declaring_files(ROOT, suffix)
                 if _declares_namespaces(path.read_text(encoding="utf-8"), prefix)
             ]
             if hits:
@@ -561,9 +571,8 @@ NOTATION_COMMAND = re.compile(
     r"(?:notation[0-9]*|postfix|prefix|infixl|infixr|infix)[:\s]"
 )
 
-_NOTATION_CACHE = None
-
-def fc_notation_commands():
+@functools.lru_cache(maxsize=4)
+def fc_notation_commands(root):
     """Every exportable notation command an FC module defines, with its token.
 
     A notation is not a constant, so the elaborated closure never reports it:
@@ -579,15 +588,12 @@ def fc_notation_commands():
     file relative to ROOT — a copied command's text is a read source input,
     so the snapshot check needs to know where it came from.
     """
-    global _NOTATION_CACHE
-    if _NOTATION_CACHE is not None:
-        return _NOTATION_CACHE
     commands = []
     # Support trees first, then the problems tree. The order decides the
     # order copied notation appears in a generated module, so it is fixed
     # rather than incidental.
-    support = [tree for tree in FC_SOURCE_TREES if tree != SOURCE_DIRS[0].name]
-    for src in [ROOT / tree for tree in support] + SOURCE_DIRS:
+    support = [tree for tree in FC_SOURCE_TREES if tree != PROBLEM_TREE]
+    for src in [root / tree for tree in support] + source_dirs(root):
         for path in sorted(src.rglob("*.lean")):
             lines = path.read_text(encoding="utf-8").split("\n")
             for index, line in enumerate(lines):
@@ -627,12 +633,11 @@ def fc_notation_commands():
                 # which imports both; one in a problem module is not, since
                 # problem files do not import each other, and the problem
                 # file's own notations travel with the preamble.
-                shared = src.name != SOURCE_DIRS[0].name
+                shared = src.name != PROBLEM_TREE
                 commands.append(
-                    (tokens, command, scope, shared, path.relative_to(ROOT))
+                    (tokens, command, scope, shared, path.relative_to(root))
                 )
-    _NOTATION_CACHE = commands
-    return commands
+    return tuple(commands)
 
 NOTATION_FAMILY = re.compile(r"^(?:notation[0-9]*|postfix|prefix|infixl|infixr|infix)[:\s]")
 
@@ -677,7 +682,7 @@ def notation_blocks(module_texts, opened):
     """
     combined = "\n".join(module_texts)
     blocks, seen = [], set()
-    for tokens, command, scope, shared, path in fc_notation_commands():
+    for tokens, command, scope, shared, path in fc_notation_commands(ROOT):
         if scope:
             if scope not in opened:
                 continue
@@ -982,8 +987,8 @@ def hoist_answers(statement, basename, slot_types, override=None):
         statement = statement[:start] + name + statement[end:]
     return statement, holes
 
-@functools.lru_cache(maxsize=1)
-def _base_pins():
+@functools.lru_cache(maxsize=4)
+def _base_pins(root):
     """The Mathlib revision and the FC merge-base, invariant for one run.
 
     Only the per-path dirty check in `pins` varies between calls, so the
@@ -1015,7 +1020,7 @@ def pins(source_paths=None):
     text all comes from it. A path the revision does not track fails too:
     `git diff` is silent about untracked files, so tracking is checked first.
     """
-    mathlib_rev, fc_rev = _base_pins()
+    mathlib_rev, fc_rev = _base_pins(ROOT)
     if source_paths is not None:
         if isinstance(source_paths, (str, pathlib.Path)):
             source_paths = [source_paths]

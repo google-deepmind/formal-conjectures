@@ -44,6 +44,7 @@ from leaneval_interface import (
     lean_errors,
     sha256_text,
 )
+import fc_source
 from fc_source import (
     DECL_START,
     FC_SOURCE_TREES,
@@ -60,14 +61,20 @@ from fc_source import (
     notation_blocks,
     pins,
     replace_proof_with_sorry,
-    ROOT,
     slice_range,
     strip_decorations,
     strip_fc_attributes,
     unwrap_answers,
 )
-COMPARATOR_DIR = ROOT / "comparator"
-MANIFEST_DIR = COMPARATOR_DIR / "problems"
+# Derived on each read, like every other path here, so that a root which
+# moves takes them with it rather than leaving a snapshot from import time.
+def comparator_dir():
+    return fc_source.ROOT / "comparator"
+
+
+def manifest_dir():
+    """Where the per-problem source-boundary files live."""
+    return comparator_dir() / "problems"
 
 SOURCE_REPOSITORY = "https://github.com/google-deepmind/formal-conjectures"
 
@@ -77,7 +84,7 @@ PERMITTED_AXIOMS = ("propext", "Quot.sound", "Classical.choice")
 def _tools_file():
     """comparator/tools.toml is the one machine-readable source of pins, and
     this module refuses to restate it."""
-    with (COMPARATOR_DIR / "tools.toml").open("rb") as handle:
+    with (comparator_dir() / "tools.toml").open("rb") as handle:
         return tomllib.load(handle)
 
 
@@ -158,7 +165,7 @@ def explicit_copy_dependencies(problem_file):
             raise SystemExit(
                 f"copy dependency module must stay under a source tree: {relative}"
             )
-        path = ROOT / relative
+        path = fc_source.ROOT / relative
         if not path.is_file() or relative.suffix != ".lean":
             raise SystemExit(f"copy dependency module does not exist: {relative}")
         module = module_name(relative)
@@ -215,7 +222,7 @@ def load_manifest(problem_id):
     ambiguous answer-slot type is a `--answer-type` argument: it is rare, and
     a field no problem uses is a format nobody can check.
     """
-    path = MANIFEST_DIR / f"{problem_id}.toml"
+    path = manifest_dir() / f"{problem_id}.toml"
     if not path.exists():
         return {}
     with path.open("rb") as handle:
@@ -237,7 +244,7 @@ def load_manifest(problem_id):
 
 
 def manifest_ids():
-    return sorted(p.stem for p in MANIFEST_DIR.glob("*.toml"))
+    return sorted(p.stem for p in manifest_dir().glob("*.toml"))
 
 
 def closure_region(
@@ -361,7 +368,7 @@ def closure_region(
             raise SystemExit(f"{declaration}: {dep['name']} sliced to nothing")
         namespace = ".".join(namespaces)
         chunk = [
-            f"-- {dep['name']}, from {path.relative_to(ROOT)}",
+            f"-- {dep['name']}, from {path.relative_to(fc_source.ROOT)}",
             "noncomputable section",
         ]
         chunk += preamble
@@ -377,7 +384,7 @@ def closure_region(
             {
                 "declaration": dep["name"],
                 "module": dep["module"],
-                "path": str(path.relative_to(ROOT)),
+                "path": str(path.relative_to(fc_source.ROOT)),
                 "range": dep["range"],
                 "content_sha256": sha256_text(body),
             }
@@ -421,7 +428,7 @@ def source_record(
     workspace.
     """
     blob = subprocess.run(
-        ["git", "-C", str(ROOT), "rev-parse", f"{fc_rev}:{source_path}"],
+        ["git", "-C", str(fc_source.ROOT), "rev-parse", f"{fc_rev}:{source_path}"],
         capture_output=True,
         text=True,
         check=False,
@@ -445,7 +452,7 @@ def source_record(
         copied_dependencies=tuple(copied_records),
         original_range=dict(original_range),
         original_sha256=sha256_text(original),
-        lean_toolchain=(ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
+        lean_toolchain=(fc_source.ROOT / "lean-toolchain").read_text(encoding="utf-8").strip(),
         mathlib_revision=mathlib_rev,
     )
 
@@ -459,7 +466,7 @@ def locate_target(problem, module=None):
     """
     problem_file, declaration, located = _resolve(problem, module)
     path, _imports, module_doc, _body = located
-    fc_module = module_name(path.relative_to(ROOT))
+    fc_module = module_name(path.relative_to(fc_source.ROOT))
     facts = elaborator_facts(fc_module, declaration)
     if facts.range is None:
         raise SystemExit(f"{declaration}: no source range recorded")
@@ -599,7 +606,7 @@ def _resolve(problem, module=None):
 def statement_pair(problem):
     """The `(module, declaration)` pair `import_problem` will ask the elaborator about."""
     _, declaration, (path, _imports, _doc, _body) = _resolve(problem)
-    return module_name(path.relative_to(ROOT)), declaration
+    return module_name(path.relative_to(fc_source.ROOT)), declaration
 
 
 def import_problem(problem, answer_type=None, module=None):
@@ -650,7 +657,7 @@ def import_problem(problem, answer_type=None, module=None):
     # toolchain bump — the change that most needs this check to run — the one
     # change that cannot pass it.
     read_paths = (
-        [path.relative_to(ROOT)]
+        [path.relative_to(fc_source.ROOT)]
         + [record["path"] for record in copied_records]
         + list(notation_paths)
     )
@@ -674,7 +681,7 @@ def import_problem(problem, answer_type=None, module=None):
         source=source_record(
             qualified,
             fc_module,
-            path.relative_to(ROOT),
+            path.relative_to(fc_source.ROOT),
             fc_rev,
             copied_records,
             original,
@@ -715,7 +722,7 @@ def elaborate(marked_up):
             ["lake", "env", "lean", combined],
             capture_output=True,
             text=True,
-            cwd=ROOT,
+            cwd=fc_source.ROOT,
             check=False,
             timeout=LEAN_TIMEOUT_SECONDS,
         )
@@ -748,12 +755,12 @@ def validate():
             problem_file = load_manifest(problem_id)
             declaration = problem_file["declaration"]
             path, _i, _d, _b = find_declaration(declaration, problem_file.get("module"))
-            elaborator_facts(module_name(path.relative_to(ROOT)), declaration)
+            elaborator_facts(module_name(path.relative_to(fc_source.ROOT)), declaration)
         except SystemExit as exc:
             print(f"{problem_id}: {exc}", file=sys.stderr)
             bad += 1
             continue
-        print(f"{problem_id}: {declaration} in {path.relative_to(ROOT)}")
+        print(f"{problem_id}: {declaration} in {path.relative_to(fc_source.ROOT)}")
     if bad:
         print(f"{bad} problem file(s) do not resolve", file=sys.stderr)
     return 1 if bad else 0

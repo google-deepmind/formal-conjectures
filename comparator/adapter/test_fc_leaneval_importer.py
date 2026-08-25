@@ -38,16 +38,19 @@ class ProblemFileTest(unittest.TestCase):
     """An FC problem file supplies what the Lean source cannot."""
 
     def setUp(self):
+        # addCleanup rather than tearDown: a setUp that raises after the
+        # first line would otherwise leave the root pointing at a directory
+        # this test is about to delete.
         self._dir = tempfile.TemporaryDirectory()
-        self._saved = importer.MANIFEST_DIR
-        importer.MANIFEST_DIR = pathlib.Path(self._dir.name)
-
-    def tearDown(self):
-        importer.MANIFEST_DIR = self._saved
-        self._dir.cleanup()
+        self.addCleanup(self._dir.cleanup)
+        root = pathlib.Path(self._dir.name)
+        (root / "comparator" / "problems").mkdir(parents=True)
+        saved = fc_source.ROOT
+        self.addCleanup(setattr, fc_source, "ROOT", saved)
+        fc_source.ROOT = root
 
     def write(self, name, body):
-        (importer.MANIFEST_DIR / name).write_text(body)
+        (importer.manifest_dir() / name).write_text(body)
 
     def test_absent_problem_file_is_not_an_error(self):
         # Most statements need none, and the importer works without one.
@@ -82,23 +85,19 @@ class PinTest(unittest.TestCase):
 
     @contextlib.contextmanager
     def _pins_repo(self, git_results):
-        saved_root = fc_source.ROOT
-        fc_source._base_pins.cache_clear()
         with tempfile.TemporaryDirectory() as tmp:
             root = pathlib.Path(tmp)
-            fc_source.ROOT = root
             (root / "lake-manifest.json").write_text(
                 json.dumps({"packages": [{"name": "mathlib", "rev": "b" * 40}]}),
                 encoding="utf-8",
             )
-            try:
+            # No cache_clear: `_base_pins` is keyed on the root it read, so a
+            # fixture root and the real one cannot share an entry.
+            with _root_at(root):
                 with mock.patch.object(
                     fc_source.subprocess, "run", side_effect=git_results
                 ):
                     yield
-            finally:
-                fc_source.ROOT = saved_root
-                fc_source._base_pins.cache_clear()
 
     def test_changed_source_is_refused(self):
         path = "FormalConjectures/Example.lean"
@@ -153,17 +152,18 @@ class PinTest(unittest.TestCase):
 
 @contextlib.contextmanager
 def _root_at(directory):
-    """Point the module's ROOT at a fixture tree.
+    """Point the adapter's root at a fixture tree.
 
-    `closure_region` records each copied declaration's path relative to ROOT,
-    so a fixture written outside it cannot be described.
+    Every module reads `fc_source.ROOT` rather than a copy of it, and every
+    cache is keyed on the root it read, so this is the one place a test has
+    to move and there is nothing to invalidate afterwards.
     """
-    saved = importer.ROOT
-    importer.ROOT = pathlib.Path(directory)
+    saved = fc_source.ROOT
+    fc_source.ROOT = pathlib.Path(directory)
     try:
-        yield
+        yield fc_source.ROOT
     finally:
-        importer.ROOT = saved
+        fc_source.ROOT = saved
 
 
 class MathlibOnlyClosureTest(unittest.TestCase):

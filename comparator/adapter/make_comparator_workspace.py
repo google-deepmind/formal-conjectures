@@ -81,7 +81,6 @@ from leaneval_interface import (
     slug,
 )
 
-ROOT = importer.ROOT
 
 # The request's context directory, relative to the request file, so an
 # emitted seam artifact is self-contained and reproducible from any path.
@@ -157,7 +156,7 @@ def _seam(pairs, group=None):
     ]
     target = importer.target_pins()
     template = (
-        importer.COMPARATOR_DIR / "templates" / "WorkspaceTest.lean"
+        importer.comparator_dir() / "templates" / "WorkspaceTest.lean"
     ).read_text(encoding="utf-8")
     request = build_request(
         [problem for problem, _ in problems], target, template, CONTEXT_DIR
@@ -266,7 +265,7 @@ def subset_declarations(set_name):
     `decl_name%` elaborator is what guarantees each name resolves, so the
     text layer can read the list without re-proving that.
     """
-    path = ROOT / "FormalConjectures" / "Subsets" / f"{set_name}.lean"
+    path = fc_source.ROOT / "FormalConjectures" / "Subsets" / f"{set_name}.lean"
     if not path.is_file():
         raise SystemExit(f"no subset module at {path}")
     names = re.findall(
@@ -367,7 +366,7 @@ def main(argv):
         nargs="?",
         help="a problem id, or a declaration name such as erdos_940",
     )
-    ap.add_argument("--out", default=str(ROOT / ".comparator"))
+    ap.add_argument("--out", default=str(fc_source.ROOT / ".comparator"))
     ap.add_argument(
         "--answer-type",
         default=None,
