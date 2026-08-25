@@ -186,7 +186,10 @@ def claudeAlpogeHowell31 : Affine ℚ where
   a₄ := -1284727764113567728281797636015784768866707681415849262157224232063
   a₆ := 560368321454261339256859338901915312332769858684945406858043869199456710681989058863306170127006181
 
-/-- See https://elliptic-rank.icarm.cloud/curve/302. -/
+/-- See https://elliptic-rank.icarm.cloud/curve/302.
+User profile: https://elliptic-rank.icarm.cloud/user/18
+        and   https://elliptic-rank.icarm.cloud/user/53
+-/
 @[category test, AMS 11 14]
 theorem Δ_claudeAlpogeHowell31 : claudeAlpogeHowell31.Δ =
     2 ^ 15 * 3 ^ 4 * 5 ^ 4 * 7 ^ 6 * 11 ^ 4 * 13 ^ 5 * 19 ^ 2 * 23 ^ 2 * 29 ^ 3 * 37 ^ 2 * 41 ^ 2 *
@@ -213,6 +216,7 @@ theorem rank_claudeAlpogeHowell31 : finrank ℤ claudeAlpogeHowell31.Point = 31 
   sorry
 
 /-- The elliptic curve over ℚ of rank at least 30 found by user `ranksunbounded` in 2026.
+User profile: https://elliptic-rank.icarm.cloud/user/18
 It has rank exactly 30 assuming the generalized Riemann hypothesis and Birch and Swinnerton-Dyer
 conjecture. -/
 def ranksunbounded30 : Affine ℚ where
