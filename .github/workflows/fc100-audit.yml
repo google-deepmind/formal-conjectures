@@ -133,25 +133,30 @@ jobs:
         if: always()
         run: |
           python3 - <<'PY'
-          import hashlib
-          import json
           import pathlib
+          import sys
+
+          sys.path.insert(0, "comparator/adapter")
+          from leaneval_interface import dump_json, sha256_text
+
+          # The same digest and the same serialisation the sidecars use, so a
+          # reader can compare a manifest entry with the digest recorded
+          # inside the artifact it names.
+          def digest(path):
+              return sha256_text(path.read_text(encoding="utf-8"))
 
           manifest = {}
-          for pattern in ("fc100-report.json", "fc100-target-report.json"):
-              path = pathlib.Path(pattern)
+          for name in ("fc100-report.json", "fc100-target-report.json"):
+              path = pathlib.Path(name)
               if path.is_file():
-                  manifest[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+                  manifest[str(path)] = digest(path)
           root = pathlib.Path(".fc100")
           if root.is_dir():
               for path in sorted(root.rglob("*")):
                   if path.is_file():
-                      manifest[str(path)] = hashlib.sha256(
-                          path.read_bytes()
-                      ).hexdigest()
+                      manifest[str(path)] = digest(path)
           pathlib.Path("bundle-manifest.json").write_text(
-              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
-              encoding="utf-8",
+              dump_json(manifest, sort_keys=True), encoding="utf-8"
           )
           print(f"{len(manifest)} files digested")
           PY

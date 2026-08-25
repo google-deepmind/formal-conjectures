@@ -1,3 +1,17 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 name: Generated workspace at LeanEval pins
 
 # Everything that crosses the adapter's boundaries, in one job:
@@ -107,22 +121,32 @@ jobs:
       # a separate Linux job.
       - name: Comparator generation smoke test
         run: |
-          for d in exists_hadamard_zero erdos_940.variants.large_integers \
-                   erdos_1038.parts.i erdos_100.variants.strong \
-                   KotherConjecture.variants.le_KotherRadical \
-                   OeisA303656.conjecture OeisA308734.conjecture \
-                   curling_number_conjecture; do
-            python3 comparator/adapter/make_comparator_workspace.py "$d" --out .comparator
-          done
-          grep -q "large_integers_answer : Prop" .comparator/Erdos940_erdos_940_variants_large_integers/Challenge.lean
-          grep -q "i_answer : ENNReal" .comparator/Erdos1038_erdos_1038_parts_i/Challenge.lean
-          grep -q "Submission.erdos_100_variants_strong$" .comparator/Erdos100_erdos_100_variants_strong/Solution.lean
-          grep -q "le_KotherRadical hI" .comparator/Koethe_KotherConjecture_variants_le_KotherRadical/Solution.lean
+          # The command prints the directory it wrote. Asking it removes the
+          # only other place that would have to know how a qualified name
+          # becomes a workspace id, and a change to that rule then fails in
+          # the code that owns it rather than in twenty lines of YAML.
+          ws() {
+            python3 comparator/adapter/make_comparator_workspace.py "$1" --out .comparator
+          }
+          hadamard=$(ws exists_hadamard_zero)
+          large_integers=$(ws erdos_940.variants.large_integers)
+          parts_i=$(ws erdos_1038.parts.i)
+          strong=$(ws erdos_100.variants.strong)
+          koethe=$(ws KotherConjecture.variants.le_KotherRadical)
+          oeis_a=$(ws OeisA303656.conjecture)
+          oeis_b=$(ws OeisA308734.conjecture)
+          curling=$(ws curling_number_conjecture)
+          echo "PARTS_I=$parts_i" >> "$GITHUB_ENV"
+          test -d "$hadamard"
+          grep -q "large_integers_answer : Prop" "$large_integers/Challenge.lean"
+          grep -q "i_answer : ENNReal" "$parts_i/Challenge.lean"
+          grep -q "Submission.erdos_100_variants_strong$" "$strong/Solution.lean"
+          grep -q "le_KotherRadical hI" "$koethe/Solution.lean"
           # Two modules declare `conjecture`; qualified default ids keep the
           # workspaces apart, and a guillemet module path decodes correctly.
-          test -d .comparator/OeisA303656_conjecture
-          test -d .comparator/OeisA308734_conjecture
-          test -d .comparator/Arxiv__0912_2382__curling_number_conjecture
+          test "$oeis_a" != "$oeis_b"
+          test -d "$oeis_a" && test -d "$oeis_b"
+          case "$curling" in *0912_2382*) ;; *) echo "guillemet module lost its digits: $curling"; exit 1 ;; esac
 
       # The importer-to-generator seam, on a real declaration.
       # `--emit-import` writes the exact bytes that cross it — the v1
@@ -131,11 +155,14 @@ jobs:
       # workspace exactly; if it does not, the emitted artifact is not the
       # whole interface. See comparator/OWNERSHIP.md.
       - name: Importer to generator seam
+        env:
+          WORKSPACE: ${{ env.PARTS_I }}
         run: |
-          python3 comparator/adapter/make_comparator_workspace.py erdos_1038.parts.i \
-            --emit-import .comparator-import
+          HANDED_OVER=$(python3 comparator/adapter/make_comparator_workspace.py \
+            erdos_1038.parts.i --emit-import .comparator-import)
+          export HANDED_OVER
           python3 - <<'PY'
-          import json
+          import glob
           import os
           import pathlib
           import sys
@@ -144,12 +171,14 @@ jobs:
           import leaneval_generator_cli as generator_cli
           from leaneval_interface import ProblemManifest
 
-          handed_over = pathlib.Path(
-              ".comparator-import/Erdos1038_erdos_1038_parts_i"
-          ).resolve()
+          handed_over = pathlib.Path(os.environ["HANDED_OVER"]).resolve()
+          workspace = pathlib.Path(os.environ["WORKSPACE"]).resolve()
+          problem_id = handed_over.name
+
+          # One sidecar, named by the command, found rather than spelled.
+          (sidecar,) = glob.glob(str(handed_over / "fc-provenance-*.json"))
           manifest = ProblemManifest.from_json(
-              (handed_over / "fc-provenance-Erdos1038_erdos_1038_parts_i.json")
-              .read_text(encoding="utf-8")
+              pathlib.Path(sidecar).read_text(encoding="utf-8")
           )
           assert len(manifest.source.commit) == 40, manifest.source.commit
           assert manifest.source.declaration, "no FC declaration id"
@@ -157,9 +186,10 @@ jobs:
           # The emitted request is fed back as its exact bytes — no reparse,
           # no reserialise — which is the claim the seam test exists to check.
           request_text = (handed_over / "request.json").read_text(encoding="utf-8")
-          workspace = pathlib.Path(".comparator/Erdos1038_erdos_1038_parts_i").resolve()
-          regenerated = generator_cli.generate(request_text, cwd=handed_over)
-          files = regenerated["Erdos1038_erdos_1038_parts_i"]
+          regenerated = generator_cli.generate(
+              request_text, cwd=handed_over, expected_ids=[problem_id]
+          )
+          files = regenerated[problem_id]
           for name, content in files.items():
               expected = (workspace / name).read_text(encoding="utf-8")
               assert content == expected, name
@@ -176,21 +206,22 @@ jobs:
         env:
           TARGET_TOOLCHAIN: ${{ steps.target.outputs.lean_toolchain }}
         run: |
-          for d in isSumOfThreeCubes_2 isSumOfThreeCubes_iff_mod_9; do
-            python3 comparator/adapter/make_comparator_workspace.py "$d" \
+          gen() {
+            python3 comparator/adapter/make_comparator_workspace.py "$1" \
               --out .comparator --verify
-          done
+          }
+          PLAIN=$(gen isSumOfThreeCubes_2)
+          HOLED=$(gen isSumOfThreeCubes_iff_mod_9)
+          echo "PLAIN=$PLAIN" >> "$GITHUB_ENV"
+          echo "HOLED=$HOLED" >> "$GITHUB_ENV"
           # One plain theorem and one `answer(sorry)` slot typed at 4.33.1.
-          grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" \
-            .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9/Challenge.lean
+          grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" "$HOLED/Challenge.lean"
           # Generated for LeanEval, not for here.
-          grep -q "$TARGET_TOOLCHAIN" \
-            .comparator/SumOfThreeCubes_isSumOfThreeCubes_2/lean-toolchain
+          grep -q "$TARGET_TOOLCHAIN" "$PLAIN/lean-toolchain"
 
       - name: Build both workspaces at Lean 4.33
         run: |
-          for ws in .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 \
-                    .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9; do
+          for ws in "$PLAIN" "$HOLED"; do
             (cd "$ws" && lake update && lake exe cache get && lake build)
           done
 
@@ -220,7 +251,7 @@ jobs:
           #    adds `sorryAx`, which `permitted_axioms` does not allow. A
           #    generated workspace that passed before anyone proved anything
           #    would be worthless.
-          if (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 && lake test); then
+          if (cd "$PLAIN" && lake test); then
             echo "::error::Comparator accepted an unproved generated workspace"
             exit 1
           fi
@@ -228,15 +259,16 @@ jobs:
           # 2. The same workspace with the statement actually proved. The
           #    witness is the one this repository's own source gives.
           python3 - <<'PY'
+          import os
           import pathlib
 
-          submission = pathlib.Path(".comparator/SumOfThreeCubes_isSumOfThreeCubes_2/Submission.lean")
+          submission = pathlib.Path(os.environ["PLAIN"]) / "Submission.lean"
           text = submission.read_text(encoding="utf-8")
           filled = text.replace(":= by\n  sorry", ":= by\n  exact ⟨1, 1, 0, by norm_num⟩")
           assert filled != text, "nothing to fill in the generated submission"
           submission.write_text(filled, encoding="utf-8")
           PY
-          (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_2 && lake build && lake test)
+          (cd "$PLAIN" && lake build && lake test)
 
           # 3. The `answer(sorry)` workspace, with the hole filled by the
           #    proposition on the other side of the iff and the bridge closed
@@ -245,9 +277,10 @@ jobs:
           #    stand in for a human reading the answer. The generated README
           #    tells the solver so; this asserts it.
           python3 - <<'PY'
+          import os
           import pathlib
 
-          root = pathlib.Path(".comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9")
+          root = pathlib.Path(os.environ["HOLED"])
           submission = root / "Submission.lean"
           text = submission.read_text(encoding="utf-8")
           answer = (
@@ -266,5 +299,5 @@ jobs:
           assert filled != text, "the proof hole was not where this step expects"
           submission.write_text(filled, encoding="utf-8")
           PY
-          (cd .comparator/SumOfThreeCubes_isSumOfThreeCubes_iff_mod_9 && lake build && lake test)
+          (cd "$HOLED" && lake build && lake test)
           echo "Comparator accepted a gamed definition hole; hole values need a human."
