@@ -35,7 +35,11 @@ open scoped Pointwise
 namespace Green29
 
 /-- Suppose that $A$ is a $K$-approximate group (not necessarily abelian). Is there $S \subset A$,
-$|S| \gg K^{-O(1)} |A|$, with $S^8 \subset A^4$? -/
+$|S| \gg K^{-O(1)} |A|$, with $S^8 \subset A^4$?
+
+The answer is negative. A counterexample is given, for arbitrarily large finite groups `H`, by
+`A = ({-1} × H) ∪ ({1} × H) ∪ {(0, 1)}` in `Multiplicative ℤ × H`.
+-/
 @[category research solved, AMS 20,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/green-29-counterexample/blob/1cbf80c3d5a333b2b79c203c0d60129924c8c712/lean/Green29FC.lean#L280-L287"]
