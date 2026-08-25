@@ -24,12 +24,9 @@ on `n` generators is Andrews-Curtis equivalent to the standard free basis.
 
 References:
 
-* [Wikipedia, Andrews-Curtis conjecture][wikipedia]
+* [Wikipedia, Andrews-Curtis conjecture](https://en.wikipedia.org/wiki/Andrews%E2%80%93Curtis_conjecture)
 * [A. D. Myasnikov, A. G. Myasnikov and V. Shpilrain,
-  *On the Andrews-Curtis equivalence*][myasnikov2003]
-
-[wikipedia]: https://en.wikipedia.org/wiki/Andrews%E2%80%93Curtis_conjecture
-[myasnikov2003]: https://arxiv.org/abs/math/0302080
+  *On the Andrews-Curtis equivalence*](https://arxiv.org/abs/math/0302080)
 -/
 
 namespace AndrewsCurtis
