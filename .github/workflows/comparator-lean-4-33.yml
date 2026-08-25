@@ -1,12 +1,24 @@
 name: Generated workspace at LeanEval pins
 
-# End to end: import a declaration from this repository's source, generate a
-# workspace, build it at LeanEval's Lean 4.33 and Mathlib, and run Comparator
-# on it. Nothing here is checked in. A workspace that lives in the tree is a
-# copy of generator output that drifts from the generator and says nothing
-# about the importer, because a human wrote it; this job says the importer, the
+# Everything that crosses the adapter's boundaries, in one job:
+#
+#   1. the elaborator to the importer, over a smoke set that covers each
+#      defect class the whole-set audit found;
+#   2. the importer to the generator, by feeding the emitted request bytes
+#      back through the pinned binary and comparing the file map;
+#   3. the generated workspace to Comparator, built at LeanEval's pins.
+#
+# Nothing here is checked in. A workspace that lives in the tree is a copy of
+# generator output that drifts from the generator and says nothing about the
+# importer, because a human wrote it; this job says the importer, the
 # generator and Comparator work together, which is what
 # `leanprover/lean-eval#536` needs before FC opens problem pull requests.
+#
+# These checks live here rather than beside the corpus build because they are
+# about the adapter, not the corpus. A pull request that only edits a
+# statement should not pay for them, and could not pass them: `pins()` refuses
+# a source file that differs from the merge base, which is exactly what such a
+# pull request changes.
 #
 # The two toolchains in this job are the point, not an accident. The importer
 # reads the declaration's source range, binders and `answer(sorry)` slot types
@@ -67,15 +79,92 @@ jobs:
               print(f"{key}={target[key]}")
           PY
 
-      # At this repository's toolchain: the declaration's facts come from an
-      # elaborated environment, so the module it lives in has to be built.
-      - name: Prepare the extractor and the source module
+      # At this repository's toolchain. The facts the importer reads come
+      # from an elaborated environment, not from the text, so every module a
+      # step below imports from has to be built first.
+      - name: Prepare the extractor and the source modules
         uses: ./.github/actions/prepare-extractor
         with:
-          modules: FormalConjectures.Wikipedia.SumOfThreeCubes
+          modules: >-
+            FormalConjectures.Wikipedia.SumOfThreeCubes
+            FormalConjectures.Wikipedia.Hadamard
+            FormalConjectures.Wikipedia.Koethe
+            FormalConjectures.ErdosProblems.«100»
+            FormalConjectures.ErdosProblems.«940»
+            FormalConjectures.ErdosProblems.«1038»
+            FormalConjectures.OEIS.«303656»
+            FormalConjectures.OEIS.«308734»
+            FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture
 
       - name: Build the pinned lean-eval-generator
         uses: ./.github/actions/build-lean-eval-generator
+
+      # The elaborator-to-importer boundary, exercised on the oleans the
+      # build above produced: one plain theorem, a Prop answer slot, a
+      # non-Prop answer slot, a forall-conclusion (whose binder must not be
+      # applied), explicit parameters (which must be), and the qualified-id
+      # collision pair. The comparator run itself needs landrun and stays in
+      # a separate Linux job.
+      - name: Comparator generation smoke test
+        run: |
+          for d in exists_hadamard_zero erdos_940.variants.large_integers \
+                   erdos_1038.parts.i erdos_100.variants.strong \
+                   KotherConjecture.variants.le_KotherRadical \
+                   OeisA303656.conjecture OeisA308734.conjecture \
+                   curling_number_conjecture; do
+            python3 comparator/adapter/make_comparator_workspace.py "$d" --out .comparator
+          done
+          grep -q "large_integers_answer : Prop" .comparator/Erdos940_erdos_940_variants_large_integers/Challenge.lean
+          grep -q "i_answer : ENNReal" .comparator/Erdos1038_erdos_1038_parts_i/Challenge.lean
+          grep -q "Submission.erdos_100_variants_strong$" .comparator/Erdos100_erdos_100_variants_strong/Solution.lean
+          grep -q "le_KotherRadical hI" .comparator/Koethe_KotherConjecture_variants_le_KotherRadical/Solution.lean
+          # Two modules declare `conjecture`; qualified default ids keep the
+          # workspaces apart, and a guillemet module path decodes correctly.
+          test -d .comparator/OeisA303656_conjecture
+          test -d .comparator/OeisA308734_conjecture
+          test -d .comparator/Arxiv__0912_2382__curling_number_conjecture
+
+      # The importer-to-generator seam, on a real declaration.
+      # `--emit-import` writes the exact bytes that cross it — the v1
+      # request and its context directory — and running the pinned binary on
+      # those bytes from inside the emitted directory has to reproduce the
+      # workspace exactly; if it does not, the emitted artifact is not the
+      # whole interface. See comparator/OWNERSHIP.md.
+      - name: Importer to generator seam
+        run: |
+          python3 comparator/adapter/make_comparator_workspace.py erdos_1038.parts.i \
+            --emit-import .comparator-import
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import sys
+
+          sys.path.insert(0, "comparator/adapter")
+          import leaneval_generator_cli as generator_cli
+          from leaneval_interface import ProblemManifest
+
+          handed_over = pathlib.Path(
+              ".comparator-import/Erdos1038_erdos_1038_parts_i"
+          ).resolve()
+          manifest = ProblemManifest.from_json(
+              (handed_over / "fc-provenance-Erdos1038_erdos_1038_parts_i.json")
+              .read_text(encoding="utf-8")
+          )
+          assert len(manifest.source.commit) == 40, manifest.source.commit
+          assert manifest.source.declaration, "no FC declaration id"
+
+          # The emitted request is fed back as its exact bytes — no reparse,
+          # no reserialise — which is the claim the seam test exists to check.
+          request_text = (handed_over / "request.json").read_text(encoding="utf-8")
+          workspace = pathlib.Path(".comparator/Erdos1038_erdos_1038_parts_i").resolve()
+          regenerated = generator_cli.generate(request_text, cwd=handed_over)
+          files = regenerated["Erdos1038_erdos_1038_parts_i"]
+          for name, content in files.items():
+              expected = (workspace / name).read_text(encoding="utf-8")
+              assert content == expected, name
+          print(f"{len(files)} files reproduced from the emitted request")
+          PY
 
       # `--verify` elaborates the marked-up module here, at 4.33.1. It is not a
       # substitute for the 4.33 build below; it is what keeps an FC-side
