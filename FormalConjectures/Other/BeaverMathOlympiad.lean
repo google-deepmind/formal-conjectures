@@ -136,8 +136,14 @@ some positive integer $k$?
 
 The machine was found and informally proven not to halt by [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
+
+This was formalized in Lean by Trevor Morris using Claude (Anthropic).  The proof runs through
+the halved even-indexed subsequence `T m = a (2 * m) / 2`, whose self-similarity forces the
+`2`-adic valuation of `T m` to equal that of `m + 1`; a power of four then demands
+`m + 1 ≥ 2 ^ (2 * k - 1)`, which the sequence's growth rate contradicts.
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at "https://github.com/gotrevor/collatz-cryptid/blob/init/lean/Collatz/BMO/Problem3.lean"]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -165,8 +171,14 @@ is equivalent to the non-termination of 2-state 5-symbol Turing machine
 
 The machine was informally proven not to halt [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
+
+This was formalized in Lean by Trevor Morris using Claude (Anthropic), following the closed
+form given on the wiki.  Clearing the denominator gives a subtraction-free invariant that is
+linear in `2 ^ n` and periodic with period `4` (because `2 ^ n` cycles modulo `5`); the
+invariant pins the residue of each term modulo `3`, and `1` never occurs.
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at "https://github.com/gotrevor/collatz-cryptid/blob/init/lean/Collatz/BMO/Problem4.lean"]
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
