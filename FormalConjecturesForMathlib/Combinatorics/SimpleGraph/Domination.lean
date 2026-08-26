@@ -145,7 +145,7 @@ theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
   unfold SimpleGraph.dominationNumber SimpleGraph.computable_dom_num
   apply le_antisymm
   · apply csInf_le ⟨0, fun _ _ => Nat.zero_le _⟩
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     obtain ⟨D, hD_mem, hD_card⟩ := Finset.exists_mem_eq_inf' _ Finset.card
     exact ⟨D, hD_card ▸ ⟨(Finset.mem_filter.mp hD_mem).2, rfl⟩⟩
   · apply le_csInf

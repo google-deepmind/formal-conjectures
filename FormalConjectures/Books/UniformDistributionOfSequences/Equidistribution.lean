@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Equidistributed Sequences
 
@@ -45,7 +45,8 @@ def IsAccumulationPoint (x : ℝ) (s : ℕ → ℝ) : Prop :=
 If a point `x` is an accumulation point of a sequence `s_0, s_1, ...` then
 there is a subsequence of `s` that tends to `x`
 -/
-def isAccumulationPoint_iff_exists_subsequence_tendsto
+@[category textbook, AMS 11 54]
+theorem isAccumulationPoint_exists_subsequence_tendsto
     (x : ℝ) (s : ℕ → ℝ) (hx : IsAccumulationPoint x s) :
     ∃ (u : ℕ → ℕ), StrictMono u ∧ Filter.atTop.Tendsto (s ∘ u) (𝓝 x) := by
   sorry

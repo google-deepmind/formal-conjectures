@@ -38,6 +38,8 @@ async function init() {
   }
 
   document.title = `${theorem.displayTheorem} — Formal Conjectures`;
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
@@ -487,6 +489,31 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
+  // A statement can carry several `formal_proof` annotations, each with its own
+  // assumptions, so list them one by one. `conditions` names declarations stated with
+  // sorry proofs in the same file.
+  const formalProofs = theorem.formalProofs || [];
+  const isConditional = formalProofs.some(p => (p.conditions || []).length);
+  const formalProofHTML = (proof) => {
+    const label = FC.FORMAL_PROOF_LABELS[proof.kind] || proof.kind;
+    const where = proof.link
+      ? `<a href="${FC.escapeHTML(proof.link)}" target="_blank" rel="noopener">${FC.escapeHTML(label)}</a>`
+      : FC.escapeHTML(label);
+    const conditions = proof.conditions || [];
+    const assumes = conditions.length
+      ? ` assuming ${conditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')},
+          stated in this file`
+      : '';
+    return `<li>${where}${assumes}</li>`;
+  };
+  const formalProofsSection = formalProofs.length ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Formal proofs</div>
+      <div class="detail-value"><ul>
+        ${formalProofs.map(formalProofHTML).join('\n')}
+      </ul></div>
+    </div>` : '';
+
   const contributorsSection = contributors.length ? `
     <div class="theorem-detail__section">
       <div class="detail-label">File contributors</div>
@@ -505,6 +532,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     <header class="theorem-detail__header">
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
+      ${isConditional ? `<span class="badge cat-conditional" style="font-size:.9rem;padding:.3rem .9rem"
+        title="A formal proof depends on an unproven assumption">Conditional</span>` : ''}
     </header>
 
     ${moduleDocSection}
@@ -512,6 +541,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     ${docSection}
 
     ${codeSection}
+
+    ${formalProofsSection}
 
     ${contributorsSection}
 
@@ -541,6 +572,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
       </a>
+      <a href="${_base}/about/#comments" class="btn btn-outline">About comments and votes</a>
     </nav>
   `;
 
