@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 470
@@ -38,19 +38,26 @@ def AbundancyIndex (n : ℕ) : ℚ := (∑ d ∈ n.divisors, d) / n
 Are there any odd weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part1 : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
+theorem erdos_470.parts.i : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 /--
 Are there infinitely many primitive weird numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_470.part2 : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
+theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
   sorry
 
 /--
 Benkoski and Erdős [BeEr74](https://mathscinet.ams.org/mathscinet/relay-station?mr=347726) proved
 that the set of weird numbers has positive density.
+
+`HasPosDensity` is the right reading here, rather than the positive *lower* density that Erdős'
+"positive density" usually abbreviates. Their Theorem 5 is stated as "the density of weird
+numbers is positive", and they first establish that the density exists at all: "It is clear that
+the weird numbers have a density since both the abundant numbers and the pseudoperfect numbers
+have a density. (A weird number is abundant and not pseudoperfect.)" The work in the paper goes
+into showing that density is not `0`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity := by
@@ -59,9 +66,30 @@ theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity
 /--
 The smallest weird number is 70.
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_470.variants.smallest_weird_eq_70 : (∀ n < 70, ¬n.Weird) ∧ (70).Weird := by
-  sorry
+  refine ⟨?_, Nat.weird_seventy⟩
+  rintro n hn ⟨ha, hnp⟩
+  unfold Nat.Abundant at ha
+  apply hnp
+  -- For non-abundant `n`, `ha` is contradictory; for each abundant `n < 70`, exhibit an explicit
+  -- subset of its proper divisors summing to `n` (so `n` is pseudoperfect, hence not weird).
+  interval_cases n <;>
+    first
+    | exact absurd ha (by decide)
+    | exact ⟨by decide, ({2, 4, 6} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({3, 6, 9} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({1, 4, 5, 10} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({4, 8, 12} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({5, 10, 15} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({6, 12, 18} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({2, 8, 10, 20} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({7, 14, 21} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({8, 16, 24} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({9, 18, 27} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({2, 4, 8, 14, 28} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({10, 20, 30} : Finset ℕ), by decide, by decide⟩
+    | exact ⟨by decide, ({11, 22, 33} : Finset ℕ), by decide, by decide⟩
 
 /--
 Melfi [Me15](https://mathscinet.ams.org/mathscinet/relay-station?mr=3276337) has proved that there
@@ -71,7 +99,7 @@ well-known conjectures concerning prime gaps.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
-    ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
+    (∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10) →
       Set.Infinite PrimitiveWeird := by
   sorry
 
@@ -94,7 +122,8 @@ theorem erdos_470.variants.odd_weird_prime_div :
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/40216cfee225ec5c9f122a48703e671a9f47db90/Erdos/P470.lean#L88"]
 theorem erdos_470.variants.abundancy_index :
     (∀ n : ℕ, n.Weird → ¬Odd n) → ∀ n, n.Weird → AbundancyIndex n < 4 := by
   sorry

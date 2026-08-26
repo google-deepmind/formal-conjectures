@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Snake in the box
@@ -41,8 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = P.support.toFinset.toSet ∧
-  P.length = k
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G' = P.toSubgraph ∧ P.length = k
 
 /--
 The length of the longest induced path (or 'snake') in a graph `G`.
@@ -62,39 +61,39 @@ since there only is one induced path and it is of length zero.
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
-  convert csSup_singleton 0
+  convert! csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
-  · rw [h]
-    use (⊤ : Subgraph _), by simp, ∅, ∅
-    simp
+    simp_all [Walk.Nil.length_eq_zero]
+  · rintro rfl
+    use ⊤, by simp, ∅, ∅, .nil
+    simp [Subgraph.ext_iff, funext_iff]
 
 open List
 
-/-
+/--
 The maximum length for the snake-in-the-box problem is known for dimensions zero through eight;
 it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
   sorry
 
-/-
+/--
 For dimension $9$, the length of the longest snake in the box is not known.
 This is currently the smallest dimension where this question is open.
---/
+-/
 @[category research open, AMS 5]
 theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
   sorry
 
-/-
+/--
 The best length found so far for dimension nine is 190.
---/
+-/
 @[category research solved, AMS 5]
 theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
   sorry

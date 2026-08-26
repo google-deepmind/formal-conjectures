@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 
 /-!
@@ -35,9 +35,9 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Filter Real
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos946
-open scoped ArithmeticFunction
 
 /--
 There are infinitely many $n$ such that $τ(n) = τ(n+1)$. Proved in [He84].

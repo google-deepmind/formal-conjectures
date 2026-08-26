@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Balanced prime conjecture
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Balanced_prime)
-- [OEIS A006562](https://oeis.org/A006562)
+- [OEIS A6562](https://oeis.org/A6562)
 -/
 
 namespace BalancedPrimes

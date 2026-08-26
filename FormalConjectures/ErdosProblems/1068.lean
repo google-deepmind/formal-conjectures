@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1068
@@ -32,7 +32,7 @@ infinitely connected?
 -/
 @[category research open, AMS 5]
 theorem erdos_1068 : answer(sorry) ↔
-    ∀ (V : Type) (G : SimpleGraph V), G.chromaticNumber = aleph 1 →
+    ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_  1 →
       ∃ s : Set V, s.Countable ∧ InfinitelyConnected (G.induce s) := by
   sorry
 

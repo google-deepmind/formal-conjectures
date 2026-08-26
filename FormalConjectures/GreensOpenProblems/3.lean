@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 3
@@ -30,12 +30,8 @@ namespace Green3
 @[category research open, AMS 11]
 theorem green_3 :
     answer(sorry) ↔ ∀ A : Set ℝ,
-      IsOpen A →
-      A ⊆ Icc 0 1 →
-      volume A > 1/3 →
-      ∃ x y z, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧ x * y = z := by
-sorry
+      IsOpen A → A ⊆ Icc 0 1 → volume A > 1/3 →
+        ∃ x y z, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧ x * y = z := by
+  sorry
 
 end Green3
-
-

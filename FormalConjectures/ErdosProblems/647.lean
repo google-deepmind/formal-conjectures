@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 647
@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos647
 
-open Filter ArithmeticFunction
+open Filter ArithmeticFunction.sigma
 
 /-- Let $\tau(n)$ count the number of divisors of $n$. Is there some $n > 24$ such that
 $$

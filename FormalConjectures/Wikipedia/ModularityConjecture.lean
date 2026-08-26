@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Modularity conjecture
@@ -30,22 +30,22 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*](https://doi.org/10.1007/978-0-387-27226-9)
 
 -/
 
 namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
-open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture UpperHalfPlane
+open scoped Real ModularForm CongruenceSubgroup
 
 /-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
 noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
-  (qExpansion N f).coeff ℂ n
+  (qExpansion N f).coeff n
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
-/-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
+/-- We need to reduce a rational modulo `p`, in practice we won't be dividing by zero since the
 conductor of the elliptic curve saves us. -/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
@@ -64,9 +64,9 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
   apply Subtype.fintype _
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
-infinty on this affine curve we only have `p` -/
-noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
-  p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
+infinity on this affine curve we only have `p`. The trace is integer-valued and can be negative. -/
+noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℤ :=
+  (p : ℤ) - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
 /-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
  Proposition 5.8.5 of [diamondshurman2005]. -/
@@ -82,6 +82,10 @@ def modularityConjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : Prop :=
   ∃ (N : ℕ+) (f : CuspForm (Gamma0 N) 2), IsNormalisedEigenform f ∧
     ∀ (p : ℕ), p.Prime → (N : ZMod p) ≠ 0 → a_[p]f = E.ap p
 
+/--
+The Modularity Theorem (formerly Shimura-Taniyama-Weil conjecture): every elliptic curve
+over $\mathbb{Q}$ is modular.
+-/
 @[category research solved, AMS 11]
 theorem modularity_conjecture (E : WeierstrassCurve ℚ) [E.IsElliptic] : modularityConjecture E := by
   sorry
