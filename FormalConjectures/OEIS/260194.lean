@@ -70,8 +70,7 @@ theorem a_8 : a 8 = 10 := by rfl
 theorem a_9 : a 9 = 12 := by rfl
 
 /--
-[OEIS A260194](https://oeis.org/A260194) asks:
-"Does every positive integer occur as a difference in this sequence?"
+Does every positive integer occur as a difference in this sequence?
 -/
 @[category research open, AMS 11]
 theorem conjecture :
