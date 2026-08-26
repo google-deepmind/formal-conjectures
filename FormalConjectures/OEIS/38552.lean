@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
-
-open Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A038552
@@ -34,6 +32,8 @@ The conjectures state that:
   class-number one." Michigan Mathematical Journal 14.1 (1967): 1-27.
 - [oeis.org/A038552](https://oeis.org/A038552)
 -/
+
+open Polynomial
 
 namespace OeisA38552
 
@@ -86,7 +86,7 @@ theorem squarefree_163 : Squarefree (163 : ℕ) :=
 @[category API, AMS 11]
 theorem hasClassNumber_163_1 : HasClassNumber 163 1 := by
   have h := starkHeegner_classNumberOne
-  simp only [Set.ext_iff, Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff] at h
+  simp only [Set.ext_iff, Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff] at h
   exact ((h 163).mpr (by decide)).2
 
 /-- $163$ is the largest squarefree $k$ with class number $1$. -/
@@ -95,11 +95,11 @@ theorem isA038552_1_163 : IsA038552 1 163 := by
   refine ⟨⟨squarefree_163, hasClassNumber_163_1⟩, ?_⟩
   intro m ⟨hm_sq, hm_class⟩ (hle : 163 ≤ m)
   have hm_in : m ∈ ({1, 2, 3, 7, 11, 19, 43, 67, 163} : Set ℕ) :=
-    starkHeegner_classNumberOne ▸ Set.mem_setOf.mpr ⟨hm_sq, hm_class⟩
+    starkHeegner_classNumberOne ▸ Set.mem_ofPred.mpr ⟨hm_sq, hm_class⟩
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff, id] at hm_in ⊢
   omega
 
-/-!
+/-
 The values for other class numbers in A038552 come from the papers
 * Duncan A. Buell, Small class numbers and extreme values of L-functions of quadratic fields,
 Math. Comp., 31 (1977), 786-796.
