@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # The $S_3$-conjecture (conjugacy classes of distinct sizes)
@@ -142,7 +142,7 @@ Knörr–Lempken–Thielcke (1995).
 -/
 @[category research solved, AMS 20]
 theorem conjClassSizes_iff_sym_three_solvable
-    (G : Type) [Group G] [Fintype G] [IsSolvable G] [Nontrivial G]
+    (G : Type) [Group G] [Fintype G] [Group.IsSolvable G] [Nontrivial G]
     (h : HasDistinctConjClassSizes (G := G)) :
     Nonempty (G ≃* Equiv.Perm (Fin 3)) := by
   sorry

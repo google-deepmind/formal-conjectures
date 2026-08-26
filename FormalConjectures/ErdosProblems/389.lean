@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 389
@@ -46,8 +46,7 @@ theorem erdos_389.variants.mehta_four :
       207 := by
   refine ⟨⟨by norm_num, by native_decide⟩, ?_⟩
   intro k ⟨_, hdvd⟩
-  by_contra hlt
-  push_neg at hlt
+  by_contra! hlt
   interval_cases k <;> revert hdvd <;> native_decide
 
 end Erdos389
