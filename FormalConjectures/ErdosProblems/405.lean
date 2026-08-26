@@ -50,7 +50,7 @@ theorem erdos_405 :
 Erdős and Graham [ErGr80] ask this allowing $p=2$, but this is presumably an oversight, since clearly
 there are infinitely many solutions when $p=2$.
 
-Observe that this creates 1! + a = 2^k. For all k, fix a = 2^k - 1.
+Observe that this creates $1! + a = 2^k$. For all $k$, fix $a = 2^k - 1$.
 -/
 @[category textbook, AMS 11]
 theorem erdos_405.variants.nonodd_p :
