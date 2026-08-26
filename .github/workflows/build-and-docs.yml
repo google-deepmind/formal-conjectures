@@ -146,6 +146,16 @@ jobs:
         run: |
           ./scripts/mk_all_formathlib.sh
 
+      # Generating All.lean aggregates all problem files into a single module to detect
+      # clashing declaration names across problem modules during compilation.
+      - name: Generate All.lean
+        if: steps.mode.outputs.website_only != 'true'
+        run: |
+          rm -f FormalConjectures/All.lean
+          lake exe mk_all --lib FormalConjectures || true
+          mv FormalConjectures.lean FormalConjectures/All.lean
+          echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
+
       - name: Begin Lean problem matcher
         if: steps.mode.outputs.website_only != 'true'
         uses: leanprover-community/gh-problem-matcher-wrap@65a654fcdf7b64ff7633bc7a558f7b46d59a27bf # master
@@ -163,6 +173,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: |
           python3 scripts/lake-build-wrapper.py /tmp/build_summary_problems.json lake --wfail build
+          rm -f FormalConjectures/All.lean
 
       - name: End Lean problem matcher
         if: always() && steps.mode.outputs.website_only != 'true'
