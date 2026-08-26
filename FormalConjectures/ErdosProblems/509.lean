@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 509
@@ -98,7 +98,7 @@ theorem erdos_509.variants.Cartan_bound : answer(True) ↔ ∀ (f : ℂ[X]), f.M
   sorry
 
 /--
-Let $f(z) ∈ $ℂ[z]$ be a monic non-constant polynomial. Can the set
+Let $f(z) ∈ ℂ[z]$ be a monic non-constant polynomial. Can the set
 $\{z ∈ ℂ : |f(z)| ≤ 1\}$
 be covered by a set of closed discs the sum of whose radii is $≤ 2.59$?
 Solution: True. This is due to Pommerenke.
