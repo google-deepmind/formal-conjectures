@@ -45,8 +45,7 @@ theorem t_eq_of {n k v : ℕ} (hv : 0 < v)
     (hlt : ∀ m ∈ range v, 0 < m → ¬ (n ∣ ∏ i ∈ range k, (m + i))) :
     t k n = v := by
   refine le_antisymm (Nat.sInf_le ⟨hv, hdvd⟩) ?_
-  by_contra hc
-  push_neg at hc
+  by_contra! hc
   have hne : { m : ℕ | 0 < m ∧ n ∣ ∏ i ∈ range k, (m + i) }.Nonempty := ⟨v, hv, hdvd⟩
   obtain ⟨hpos, hd⟩ := Nat.sInf_mem hne
   exact hlt _ (mem_range.mpr hc) hpos hd
@@ -108,7 +107,7 @@ Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \fr
 -/
 @[category research solved, AMS 11]
 theorem erdos_394.variants.lower_bound :
-    (fun x ↦ x ^ 2 / Real.log x) ≫
+    (fun x ↦ x ^ 2 / Real.log x) ≪
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
   sorry
 

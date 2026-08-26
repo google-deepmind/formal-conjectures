@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 Any integer $n > 1$ can be written as $(2^a \cdot 3^b)^2 + (2^c \cdot 5^d)^2 + x^2 + y^2$
 where $a, b, c, d, x, y$ are nonnegative integers.
 
-Zhi-Wei Sun has offered a $2,500 prize for the first proof.
+Zhi-Wei Sun has offered a \$2,500 prize for the first proof.
 
 *References:*
 - [A308734](https://oeis.org/A308734)

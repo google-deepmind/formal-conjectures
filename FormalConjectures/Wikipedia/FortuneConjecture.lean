@@ -19,8 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Fortune's Conjecture
 
-A *Fortunate number* is the smallest integer $m > 1$ such that $p_n\# + m$ is prime,
-where $p_n\#$ denotes the primorial of the $n$-th prime — equivalently, the product
+A *Fortunate number* is the smallest integer $m > 1$ such that $p_n\\# + m$ is prime,
+where $p_n\\#$ denotes the primorial of the $n$-th prime — equivalently, the product
 of the first $n$ primes.
 
 **Fortune's Conjecture** asserts that every Fortunate number is prime — equivalently,
@@ -51,7 +51,7 @@ lemma exists_one_lt_prime_add (N : ℕ) : ∃ m, 1 < m ∧ Nat.Prime (N + m) := 
   rw [hsum]; exact hp_prime
 
 /-- The $n$-th *Fortunate number* (0-indexed): the smallest integer $m > 1$ such
-that $p_{n+1}\# + m$ is prime.
+that $p_{n+1}\\# + m$ is prime.
 
 `Nat.nth Nat.Prime n` is the $(n+1)$-st prime (0-indexed), and `primorial p` is the
 product of all primes $\le p$; when $p$ is the $(n+1)$-st prime this equals the
@@ -138,4 +138,3 @@ theorem fortune_conjecture :
   sorry
 
 end FortuneConjecture
-

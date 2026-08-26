@@ -23,6 +23,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/865](https://www.erdosproblems.com/865)
 - [CES75] Choi, S. L. G. and Erdős, P. and Szemerédi, E., Some additive and multiplicative problems
   in number theory. Acta Arith. (1975), 37--50.
+- [Ci26] R. Cipollini, [A sharp $5/8$ bound for an Erdős–Sós pairwise-sums problem](https://arxiv.org/html/2606.29361)
+  (2026).
 -/
 
 open Finset Filter
@@ -37,12 +39,16 @@ size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a
 A problem of Erdős and Sós (also earlier considered by Choi, Erdős, and Szemerédi [CES75], but Erdős
 had forgotten this).
 
+This problem was solved in the affirmative by Cipollini and GPT Pro [Ci26].
+
 This is true. The linked proof gives it in the contrapositive and with the constant cleared:
 every triple-free $A\subseteq\{1,\ldots,N\}$ satisfies $8\lvert A\rvert\leq 5N+C$ for a fixed
 $C$, for every $N$ rather than only for large $N$. It also shows the threshold is sharp, by
 exhibiting triple-free sets of size $(5N+16)/8$ for every $N$ divisible by $8$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/865/Erdos865.lean"]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/865/Erdos865.lean",
+  formal_proof using lean4 at "https://github.com/mrricky22/erdos-865-lean/blob/f861539107a7adeaa97462ce7c7171127696b63a/RequestProject/Main.lean#L45"]
 theorem erdos_865 :
     ∃ C > 0, ∀ᶠ (N : ℕ) in atTop,
       ∀ A ⊆ Icc 1 N, A.card ≥ (5 / 8 : ℝ) * N + C →

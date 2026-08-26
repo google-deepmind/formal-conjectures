@@ -44,8 +44,8 @@ noncomputable def distanceMatrix (X : Type*) [Fintype X] [MetricSpace X] : Matri
 /-- The weighting $\vec{w}(t) = Z(t)^{-1}\mathbf{1}$ at scale `t`.
 
 `Matrix.inv` is `0` on singular matrices, so this is only the intended vector where `Z t` is
-invertible. That is enough here: `Z 0` is the all-ones matrix and `Z` is continuous, so `Z t`
-is invertible for all small enough `t > 0`, which is where the limit below is taken. -/
+invertible. The analytic function `t ↦ det (Z t)` tends to `1` as `t → ∞`, so its zeros are
+isolated. Hence `Z t` is invertible for all small enough `t > 0`, as required below. -/
 noncomputable def weighting (X : Type*) [Fintype X] [DecidableEq X] [MetricSpace X] (t : ℝ) :
     X → ℝ :=
   (similarityMatrix X t)⁻¹ *ᵥ 1
@@ -91,10 +91,48 @@ if and only if its distance matrix has finite concentration.
 since `∑ i, g i` is `0` rather than `1`, while `X → ℝ` is a subsingleton so the weighting
 converges trivially. The equivalence would be false there for reasons that have nothing to do
 with the question.
+
+The answer is false as proved by Kenta Kitamura assisted by ChatGPT 5.6 sol.
+
+The proof proceeds by constructing an explicit counterexample: a finite metric space
+on 10 points that has finite concentration but does not admit a microscopic weighting.
+The metric space is defined by the following $10 \times 10$ distance matrix $A$:
+$$
+\begin{pmatrix}
+0 & 116 & 236 & 231 & 260 & 124 & 64 & 290 & 266 & 64 \\
+116 & 0 & 312 & 268 & 296 & 112 & 64 & 280 & 296 & 64 \\
+236 & 312 & 0 & 68 & 40 & 236 & 288 & 68 & 36 & 288 \\
+231 & 268 & 68 & 0 & 34 & 237 & 288 & 72 & 40 & 288 \\
+260 & 296 & 40 & 34 & 0 & 264 & 320 & 40 & 68 & 320 \\
+124 & 112 & 236 & 237 & 264 & 0 & 64 & 280 & 264 & 64 \\
+64 & 64 & 288 & 288 & 320 & 64 & 0 & 312 & 320 & 120 \\
+290 & 280 & 68 & 72 & 40 & 280 & 312 & 0 & 40 & 312 \\
+266 & 296 & 36 & 40 & 68 & 264 & 320 & 40 & 0 & 320 \\
+64 & 64 & 288 & 288 & 320 & 64 & 120 & 312 & 320 & 0
+\end{pmatrix}
+$$
+
+The space has finite concentration, demonstrated by the explicit gauging $g$:
+$$
+g = \frac{1}{24842973905} \begin{pmatrix} 3672468740 \\ 6389133731 \\ 9124217512 \\ 5612262448 \\ -6875621136 \\ 2754831248 \\ 0 \\ 10758780188 \\ -6593098826 \\ 0 \end{pmatrix}
+$$
+which gives $A g = \frac{4111107017312}{24842973905} \mathbf{1}$.
+
+To prove that it does not admit a microscopic weighting, we provide a vector $v \in \ker A$:
+$$
+v = \begin{pmatrix} -2 \\ -1 \\ 3 \\ 4 \\ -4 \\ -2 \\ 2 \\ 2 \\ -4 \\ 2 \end{pmatrix}
+$$
+along with a row-space certificate $q$ for the entrywise square matrix $B = A^{\circ 2}$ satisfying $q A = v^\top B$:
+$$
+q = \frac{1}{128472094291} (43681853675722, -53873248293642, -66890627544007, -81187181670120, 24308499983196, 40819375894674, 0, 54690260644468, 35226831040652, 0)
+$$
+This certificate shows that the obstruction $v^\top B$ annihilates $\ker A$, making it impossible to construct a convergent weighting.
 -/
-@[category research open, AMS 15 51]
+@[category research solved, AMS 15 51,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/microscopic-weighting-counterexample/blob/eff8979/lean/MicroscopicWeightingCounterexampleFC.lean#L886-L894"]
 theorem microscopic_weighting_iff_finite_concentration :
-    answer(sorry) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
+    answer(False) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
       HasMicroscopicWeighting X ↔ HasFiniteConcentration (distanceMatrix X) := by
   sorry
 

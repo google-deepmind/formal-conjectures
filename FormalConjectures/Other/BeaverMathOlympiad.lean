@@ -61,7 +61,7 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
 using `answer(sorry) ↔`.
 
-The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor Jason Yuen on
+The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
 @[category research open, AMS 5 11 68]
@@ -88,7 +88,7 @@ see doi:[10.1017/S0017089508004655](https://doi.org/10.1017/S0017089508004655) (
 It is equivalent to non-termination of the [`1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA`](https://wiki.bbchallenge.org/wiki/Antihydra) 6-state Turing machine (from all-0 tape). Note that the conjecture
 that the machine does not halt is based on [a probabilistic argument](https://wiki.bbchallenge.org/wiki/Antihydra#Trajectory).
 
-This machine and its mathematical reformulations were found by [bbchallenge.org](bbchallenge.org)
+This machine and its mathematical reformulations were found by [bbchallenge.org](https://bbchallenge.org)
 contributors mxdys and Rachel Hunter on June 28th 2024.
 -/
 @[category research open, AMS 5 11 68]
@@ -116,7 +116,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
   sorry
 
 /--
-[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)]
+[BMO#3](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch))
 
 Let $v_2(n)$ be the largest integer $k$ such that $2^k$ divides $n$.
 Let $(a_n)_{n \ge 0}$ be a sequence such that
@@ -129,9 +129,9 @@ a_{n-1}+2^{v_2(a_{n-1})+2}-1 & \text{if } n \ge 1
 for all non-negative integers $n$. Is there an integer $n$ such that $a_n=4^k$ for
 some positive integer $k$?
 
-[BMO#3][https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)] is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
+[BMO#3](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)) is equivalent to the non-termination of 2-state 5-symbol Turing machine [`1RB0RB3LA4LA2RA_2LB3RA---3RA4RB`](https://wiki.bbchallenge.org/wiki/1RB0RB3LA4LA2RA_2LB3RA---3RA4RB) (from all-0 tape).
 
-The machine was found and informally proven not to halt by [bbchallenge.org](bbchallenge.org)
+The machine was found and informally proven not to halt by [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
 @[category research solved, AMS 5 11 68]
@@ -160,7 +160,7 @@ becomes $1\text{ (mod 3)}$. If Bonnie sticks to her plan, will she ever finish?
 is equivalent to the non-termination of 2-state 5-symbol Turing machine
 [`1RB3RB---1LB0LA_2LA4RA3LA4RB1LB`](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) (from all-0 tape).
 
-The machine was informally proven not to halt [bbchallenge.org](bbchallenge.org)
+The machine was informally proven not to halt [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
 @[category research solved, AMS 5 11 68]
@@ -192,7 +192,7 @@ Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
 using `answer(sorry) ↔`.
 
-The machine was discovered by [bbchallenge.org](bbchallenge.org) contributor mxdys
+The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor mxdys
 on August 7th 2024.
 
 The correspondence between the machine's halting problem and the below reformulation has been proven
