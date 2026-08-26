@@ -55,7 +55,7 @@ open Matrix
 
 /--
 The matrix for the specific case $a=5, b=2$.
-$$M = \begin{pmatrix} 1 & 5 \\ 1 & 2 \end{pmatrix}$$
+$$M = \begin{pmatrix} 1 & 5 \cr 1 & 2 \end{pmatrix}$$
 -/
 def m : Matrix (Fin 2) (Fin 2) ℕ :=
   fun i j => match i, j with
