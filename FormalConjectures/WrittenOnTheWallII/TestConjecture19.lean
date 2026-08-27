@@ -15,8 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture19
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 19: verification for `K₃`
@@ -43,7 +42,7 @@ lemma K3_b : b K3 = 2 := by
       use ∅
       simp
       dsimp [SimpleGraph.IsBipartite]
-      apply SimpleGraph.colorable_of_isEmpty
+      apply SimpleGraph.Colorable.of_isEmpty
     · rintro n ⟨s, hs⟩
       by_contra h_gt
       simp at h_gt
@@ -163,13 +162,14 @@ lemma K3_indepNeighbors (v : Fin 3) : indepNeighbors K3 v = 1 := by
   unfold indepNeighbors
   have h_induced : K3.induce (K3.neighborSet v) = completeGraph (K3.neighborSet v) := by
     ext a b
-    simp [K3, completeGraph]
+    show (a : Fin 3) ≠ b ↔ a ≠ b
+    exact Subtype.val_injective.ne_iff
   dsimp [indepNeighborsCard]
   rw [h_induced]
-  haveI : Nonempty (K3.neighborSet v) := by
+  have : Nonempty (K3.neighborSet v) := by
     use v + 1
     simp [K3, completeGraph, SimpleGraph.neighborSet, SimpleGraph.top_adj]
-  haveI : Fintype (K3.neighborSet v) := Set.Finite.fintype (Set.toFinite _)
+  have : Fintype (K3.neighborSet v) := Set.Finite.fintype (Set.toFinite _)
   rw [indepNum_completeGraph]
   norm_cast
 
