@@ -102,9 +102,9 @@ example (h : GCH) : CH := h.toCH
 /-- `ω_ 1 + 2 < ω_ 2` (since `ω_ 2` is principal under addition). -/
 @[category test, AMS 5]
 example : ω_ 1 + 2 < ω_ 2 := by
-  apply principal_add_omega
+  apply isPrincipal_add_omega
   · exact Ordinal.omega_lt_omega.mpr one_lt_two
-  · calc (2 : Ordinal) < ω := by exact_mod_cast Ordinal.nat_lt_omega0 2
+  · calc (2 : Ordinal) < ω := by exact_mod_cast Ordinal.natCast_lt_omega0 2
       _ ≤ ω_ 2 := omega0_le_omega 2
 
 /-- The ordinal `ω_ 1 ^ (ω + 2)` from Part 3 is positive. -/
