@@ -81,7 +81,7 @@ Conventions:
 @[category research open, AMS 5]
 theorem caccetta_haggkvist (n r : ℕ) (hn : 1 ≤ n) (hr : 1 ≤ r) (V : Type) [Fintype V]
     (hV : Fintype.card V = n) (G : Digraph V) [DecidableRel G.Adj]
-    (hirr : Irreflexive G.Adj)
+    (hirr : Std.Irrefl G.Adj)
     (hdeg : ∀ v, n ≤ r * outDegree G v) :
     ∃ k : ℕ, 1 ≤ k ∧ k ≤ r ∧ HasDirectedCycleOfLength G k := by
   sorry
@@ -100,7 +100,7 @@ and Shen [Sh98] under $\operatorname{outdeg}(v) \ge (3 - \sqrt{7})\, n \approx 0
 @[category research open, AMS 5]
 theorem caccetta_haggkvist_triangle (n : ℕ) (hn : 1 ≤ n) (V : Type) [Fintype V]
     (hV : Fintype.card V = n) (G : Digraph V) [DecidableRel G.Adj]
-    (hirr : Irreflexive G.Adj)
+    (hirr : Std.Irrefl G.Adj)
     (hdeg : ∀ v, n ≤ 3 * outDegree G v) :
     ∃ k : ℕ, 1 ≤ k ∧ k ≤ 3 ∧ HasDirectedCycleOfLength G k := by
   sorry
