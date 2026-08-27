@@ -62,7 +62,7 @@ theorem GCH.toCH (h : GCH) : CH := by
   unfold GCH at h
   unfold CH
   have h0 := h 0
-  simpa [Cardinal.aleph_zero, Ordinal.succ_zero, two_power_aleph0] using h0
+  simpa [Cardinal.aleph_zero, zero_add, two_power_aleph0] using h0
 
 /-- The **beth-aleph characterisation of GCH**: `GCH` holds if and only if
 $\beth_o = \aleph_o$ for every ordinal `o`. The forward direction is a transfinite
@@ -74,7 +74,7 @@ theorem GCH_iff_beth_eq_aleph : GCH ↔ ∀ o : Ordinal.{0}, ℶ_ o = ℵ_ o := 
   · intro h o
     induction o using Ordinal.limitRecOn with
     | zero => rw [beth_zero, aleph_zero]
-    | succ o ih => rw [beth_succ, ih, h o]
+    | add_one o ih => rw [beth_add_one, ih, h o, Order.succ_eq_add_one]
     | limit o ho ih =>
       rw [beth_limit ho, aleph_limit ho]
       exact iSup_congr fun i => ih i i.2
