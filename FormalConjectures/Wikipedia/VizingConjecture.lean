@@ -82,49 +82,6 @@ theorem vizing_conjecture.variants.suen_tarr
       2 * (G □ H).dominationNumber := by
   sorry
 
-/-- The set `Finset.univ` is a dominating set of any graph, so the set of sizes of dominating
-sets is nonempty and `dominationNumber` is attained by some dominating set. -/
-@[category API, AMS 5]
-lemma exists_isNDominatingSet_dominationNumber {α : Type*} [Fintype α] [DecidableEq α]
-    (G : SimpleGraph α) :
-    ∃ D : Finset α, G.IsNDominatingSet G.dominationNumber D := by
-  have hne : {n | ∃ D : Finset α, G.IsNDominatingSet n D}.Nonempty :=
-    ⟨_, Finset.univ, ⟨fun v => Or.inl (Finset.mem_univ v), rfl⟩⟩
-  exact Nat.sInf_mem hne
-
-/-- If `D` is a dominating set of `G` with `n` elements then `γ(G) ≤ n`. -/
-@[category API, AMS 5]
-lemma dominationNumber_le_of_isDominating {α : Type*} [Fintype α] [DecidableEq α]
-    (G : SimpleGraph α) (D : Finset α) (hD : G.IsDominating D) :
-    G.dominationNumber ≤ D.card :=
-  Nat.sInf_le ⟨D, hD, rfl⟩
-
-/--
-**Projection bound: `γ(G) ≤ γ(G □ H)` whenever `H` has a vertex.**
-
-Projecting a dominating set of `G □ H` onto the first coordinate yields a dominating set of
-`G` of no larger size: a vertex `(v, b)` is dominated by some `(w, c)` with either `v = w`
-(so `v` lies in the projection) or `G.Adj v w` (so `v` is dominated by `w` in the projection).
--/
-@[category API, AMS 5]
-theorem dominationNumber_le_dominationNumber_boxProd
-    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β] [Nonempty β]
-    (G : SimpleGraph α) (H : SimpleGraph β) :
-    G.dominationNumber ≤ (G □ H).dominationNumber := by
-  obtain ⟨D, hD, hcard⟩ := exists_isNDominatingSet_dominationNumber (G □ H)
-  refine le_trans (dominationNumber_le_of_isDominating G (D.image Prod.fst) ?_) ?_
-  · intro v
-    obtain ⟨b⟩ := ‹Nonempty β›
-    rcases hD (v, b) with h | ⟨⟨w, c⟩, hw, hadj⟩
-    · exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp h)))
-    · rw [boxProd_adj] at hadj
-      rcases hadj with ⟨hvw, -⟩ | ⟨-, hvw⟩
-      · exact Or.inr ⟨w, Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)),
-          hvw⟩
-      · obtain rfl : v = w := hvw
-        exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)))
-  · exact hcard ▸ Finset.card_image_le
-
 /--
 **Vizing's conjecture when `γ(H) = 1`.**
 
