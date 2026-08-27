@@ -246,12 +246,12 @@ lemma bezierBernstein_one (n : ℕ) (α : ℝ) (f : ℝ → ℝ)
   have htail (k : ℕ) : (bernsteinTail n k).eval 1 = if k ≤ n then 1 else 0 := by
     simp only [bernsteinTail, Polynomial.eval_finsetSum, bernsteinPolynomial.eval_at_1]
     by_cases hk : k ≤ n
-    · rw [if_pos hk, Finset.sum_eq_single n]
+    · rw [ite_eq_left hk, Finset.sum_eq_single n]
       · simp
       · intro j hj hjn
         simp [hjn]
       · simp [hk]
-    · rw [if_neg hk]
+    · rw [ite_eq_right hk]
       apply Finset.sum_eq_zero
       intro j hj
       simp only [Finset.mem_Icc] at hj

@@ -42,7 +42,7 @@ theorem induce_isBipartite_iff_exists_coloring (G : SimpleGraph α) (s : Finset 
   · rintro ⟨c⟩
     refine ⟨fun v => if hv : v ∈ s then c ⟨v, hv⟩ else 0, ?_⟩
     intro u hu v hv huv
-    simp only [dif_pos hu, dif_pos hv]
+    simp only [dite_eq_left hu, dite_eq_left hv]
     exact c.valid huv
   · rintro ⟨c, hc⟩
     exact ⟨Coloring.mk (fun v => c v) fun {u v} huv => hc u u.prop v v.prop huv⟩

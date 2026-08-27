@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Order.Bounds.Basic
 
+public section
+
 variable {α : Type*} [LE α] {a : α}
 
 @[to_dual (attr := simp)] lemma not_isLeast_empty : ¬ IsLeast ∅ a := by simp [IsLeast]
