@@ -23,10 +23,12 @@ in complexity theory, including
 
 - the P vs NP problem
 - the NP vs coNP problem
+- the P vs BPP problem
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
+- [Wikipedia, BPP](https://en.wikipedia.org/wiki/BPP_(complexity))
 -/
 
 namespace ComplexityTheory
@@ -46,6 +48,27 @@ The conjecture that the complexity classes NP and coNP are not equal.
 -/
 @[category research open, AMS 68]
 theorem NP_ne_coNP : NP ≠ coNP := by sorry
+
+/--
+**P = BPP**:
+
+The conjecture that randomness does not add power to polynomial-time computation, i.e.
+the complexity classes P and BPP are equal. This is widely believed to be true, since it
+follows from plausible circuit lower bounds (Impagliazzo–Wigderson, 1997).
+-/
+@[category research open, AMS 68]
+theorem P_eq_BPP : P = BPP := by sorry
+
+/--
+The theorem that P is a subset of BPP.
+
+This can be proven by observing that a poly-time decider for a language in P
+can simply ignore its random bits, and is then correct with probability `1`.
+-/
+@[category textbook, AMS 68]
+theorem P_subset_BPP :
+    P ⊆ BPP := by
+  sorry
 
 /--
 The theorem that the set of complements of languages in P is itself P.
