@@ -75,7 +75,7 @@ theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠
         ← sum_subset hxp (fun _ _ _ ↦ CharP.cast_eq_zero_iff _ p _ |>.2 <|
         hp.dvd_factorial.2 <| by aesop), ← cast_sum, CharP.cast_eq_zero_iff _ p] at this
       exact h p (hp.two_le.lt_of_ne (by omega)) hp <| mod_eq_zero_of_dvd this
-    rw [List.prod_eq_pow_card _ 2 this]
+    rw [List.prod_eq_pow_length _ 2 this]
     intro h
     have : 4 ∣ n :=
       h ▸ pow_dvd_pow 2 ((Nat.pow_lt_pow_iff_right (n := 1) one_lt_two).1 (by linarith))

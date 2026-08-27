@@ -92,7 +92,7 @@ theorem conjecture_1_4 :
       ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
         ∀ μ : ProbabilityMeasure 𝕋,
           MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
-          Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
+          Tendsto (fun n : ℕ => μ.map (Tn (q ^ n))) atTop
             (𝓝 UnitAddCircle.ProbabilityMeasure) := by
   sorry
 
