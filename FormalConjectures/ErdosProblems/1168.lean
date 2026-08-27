@@ -70,13 +70,12 @@ Erdős–Hajnal–Rado [EHR65] proof. Direct from the Jech-style formulation of 
 theorem GCH_implies_power_aleph_omega (hGCH : GCH) :
     (2 : Cardinal.{0}) ^ ℵ_ ω = ℵ_ (ω + 1) := by
   have h := hGCH ω
-  rwa [show Order.succ (ω : Ordinal.{0}) = ω + 1 from (add_one_eq_succ ω)] at h
+  rwa [show Order.succ (ω : Ordinal.{0}) = ω + 1 from (Order.succ_eq_add_one ω)] at h
 
 /-- `ℵ_{ω+1} = Order.succ (ℵ_ω)`: a structural fact used in partition calculus. -/
 @[category test, AMS 5]
 theorem aleph_omega_succ_is_successor : ℵ_ (ω + 1) = Order.succ (ℵ_ ω) := by
-  conv_lhs => rw [show (ω : Ordinal) + 1 = Order.succ ω from (add_one_eq_succ ω).symm]
-  exact aleph_succ ω
+  exact (succ_aleph ω).symm
 
 /--
 **Monotonicity**: if `CardinalCountableColorRamsey κ` holds and `μ ≤ κ`, then
