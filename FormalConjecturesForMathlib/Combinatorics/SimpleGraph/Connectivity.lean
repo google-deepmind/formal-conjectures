@@ -19,7 +19,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 

@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Finite
-public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 @[expose] public section
 

@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Paths
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
@@ -37,7 +37,7 @@ distinct (i.e., the list of colors along the path has no duplicates). -/
 def IsRainbowConnected (G : SimpleGraph α) {k : ℕ} (c : Sym2 α → Fin k) : Prop :=
   ∀ u v : α, u ≠ v →
     ∃ p : G.Walk u v, p.IsPath ∧
-      List.Nodup (p.darts.map (fun d => c (Sym2.mk d.toProd)))
+      List.Nodup (p.darts.map (fun d => c d.edge))
 
 /-- The **rainbow connection number** `rc(G)`: the minimum number of colors in a
 rainbow-connected edge-coloring.  The value `sInf ∅ = 0` in Lean's `sInf`

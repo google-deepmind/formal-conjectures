@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Combinatorics.SimpleGraph.Paths
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 

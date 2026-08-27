@@ -36,10 +36,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 it coincides with `G` on connected components (any walk of length ≤ 1 is an edge). -/
 noncomputable def graphPower (G : SimpleGraph α) (k : ℕ) : SimpleGraph α where
   Adj u v := u ≠ v ∧ G.dist u v ≤ k
-  symm u v h := by
-    obtain ⟨hne, hdist⟩ := h
-    exact ⟨hne.symm, dist_comm (G := G) ▸ hdist⟩
-  loopless v h := h.1 rfl
+  symm := ⟨fun _ _ h => ⟨h.1.symm, dist_comm (G := G) ▸ h.2⟩⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
 
 /-- The radius of the k-th power of `G`, i.e., the minimum eccentricity of
 `graphPower G k`. -/

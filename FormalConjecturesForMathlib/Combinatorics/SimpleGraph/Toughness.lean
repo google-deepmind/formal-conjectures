@@ -16,7 +16,8 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Data.Fintype.Powerset
