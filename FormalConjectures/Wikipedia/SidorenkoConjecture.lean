@@ -999,7 +999,7 @@ theorem sidorenko_conjecture.variants.non_bipartite_necessary :
       simp only [Fintype.card_fin] at hle
       omega
     have hcount : homCount (completeGraph (Fin 3)) (completeGraph (Fin 2)) = 0 := by
-      haveI := hempty
+      have := hempty
       simp [homCount]
     unfold homDensity
     rw [hcount]
