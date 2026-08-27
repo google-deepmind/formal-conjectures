@@ -149,8 +149,8 @@ theorem ordinalMultiColorRamsey_one_iff_ordinalCardinalRamsey
     -- Turn the coloring into the graph of `0`-colored pairs and its complement.
     let red : SimpleGraph α.ToType :=
       { Adj := fun x y => x ≠ y ∧ col s(x, y) = 0
-        symm := fun x y hxy => ⟨hxy.1.symm, by rw [Sym2.eq_swap]; exact hxy.2⟩
-        loopless := fun x hx => hx.1 rfl }
+        symm := ⟨fun _ _ hxy => ⟨hxy.1.symm, by rw [Sym2.eq_swap]; exact hxy.2⟩⟩
+        loopless := ⟨fun _ hx => hx.1 rfl⟩ }
     obtain ⟨A, hclique, htype⟩ | ⟨A, hclique, hcard⟩ := h red redᶜ isCompl_compl
     · exact Or.inl ⟨A, fun x hx y hy hne => (hclique hx hy hne).2, htype⟩
     · refine Or.inr ⟨0, A, fun x hx y hy hne => ?_, hcard⟩
