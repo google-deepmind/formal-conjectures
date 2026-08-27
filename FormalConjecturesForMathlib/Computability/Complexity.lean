@@ -98,15 +98,15 @@ def coNP : ComplexityClass :=
   { L | Lᶜ ∈ NP }
 
 /--
-The class BPP (bounded-error probabilistic polynomial time) is the set of decision problems
-such that there exists a polynomial `p` over ℕ and a poly-time Turing machine `R`
+The class BPP is the set of decision problems
+such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
 where for all `x`, a uniformly random string `r` of length `p (|x|)` satisfies
 `R (x, r) = L x` with probability at least `2/3`.
 
 Here the probability is the fraction (as a rational number) of the `2 ^ p (|x|)` random
 strings `r : Fin (p (|x|)) → Bool` that make `R` answer correctly.
 
-See Definition 7.2 in Arora-Barak (2009).
+See Definition 7.4 in Arora-Barak (2009).
 -/
 def BPP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
