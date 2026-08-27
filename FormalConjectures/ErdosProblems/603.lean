@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Combinatorics.Hypergraph.PropertyB
 
 /-!
 # Erdős Problem 603
