@@ -19,18 +19,6 @@ import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 85
 
-**Verbatim statement (WOWII #85, status O):**
-> If G is a simple connected graph, then tree(G) ≥ CEIL[sqrt(1 + 2*minimum of dist_even(v))]
-
-**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj85
-
-This conjecture is **false**: Kuber Mehta found the counterexample `G = C₅[K₄]`
-(the 5-cycle with each vertex replaced by a `K₄`, consecutive cliques completely
-joined), for which `tree(G) = 4` while the conjectured lower bound is
-`⌈√(1 + 2·9)⌉ = 5`. The same graph also refutes WOWII Conjecture 63. We
-therefore record the statement as disproved, using the `answer(False) ↔ ...`
-pattern of Conjectures 23/24/25.
-
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
