@@ -68,4 +68,4 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
 
-end WrittenOnTheWallII.GraphConjecture23
+end WrittenOnTheWallII.GraphConjecture25
