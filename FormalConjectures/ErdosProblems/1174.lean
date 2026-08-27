@@ -86,8 +86,9 @@ plain ZFC (cf. the prose remark on Larson's MA result in Erdős Problem 601).
 for part (i). -/
 @[category test, AMS 5]
 theorem top_not_cliqueFree_four : ¬ (⊤ : SimpleGraph ℕ).CliqueFree 4 :=
-  SimpleGraph.not_cliqueFree_of_top_embedding
-    ⟨Fin.valEmbedding, by simp [Fin.val_injective.ne_iff]⟩
+  SimpleGraph.IsContained.not_cliqueFree
+    ⟨SimpleGraph.Embedding.toCopy (⟨Fin.valEmbedding, by simp [Fin.val_injective.ne_iff]⟩ :
+      SimpleGraph.completeGraph (Fin 4) ↪g (⊤ : SimpleGraph ℕ))⟩
 
 /-- The empty graph on $\mathbb{N}$ is trivially $K_4$-free but fails the colouring
 property of part (i): it has no triangles at all, so the $K_4$-free condition alone
