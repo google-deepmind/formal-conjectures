@@ -98,11 +98,11 @@ theorem erdos_346.variants.f_add_two (m : ℕ) (hm : 1 ≤ m) :
   by_cases he : Even m
   · have he1 : ¬ Even (m + 1) := by simp [Nat.even_add_one, he]
     have he2 : Even (m + 2) := by simp [Nat.even_add, he]
-    simp only [f, if_pos he, if_neg he1, if_pos he2]
+    simp only [f, ite_eq_left he, ite_eq_right he1, ite_eq_left he2]
     omega
   · have he1 : Even (m + 1) := by simp [Nat.even_add_one, he]
     have he2 : ¬ Even (m + 2) := by simp [Nat.even_add, he]
-    simp only [f, if_neg he, if_pos he1, if_neg he2]
+    simp only [f, ite_eq_right he, ite_eq_left he1, ite_eq_right he2]
     omega
 
 /-- `f 0 + ⋯ + f (m - 1) = f (m + 1) - [m even]` for `m ≥ 1`; this is [Gr64d, Eq. (1)]. -/
@@ -138,9 +138,9 @@ theorem erdos_346.variants.f_strictMono : StrictMono fun k => f (4 + k) := by
         omega
       have h3 : 3 ≤ Nat.fib (3 + k) :=
         le_trans (by decide : 3 ≤ Nat.fib 4) (Nat.fib_mono h4)
-      simp only [f, if_pos he]
+      simp only [f, ite_eq_left he]
       omega
-    · simp only [f, if_neg he]
+    · simp only [f, ite_eq_right he]
       omega
   rw [show 4 + (k + 1) = 3 + k + 2 by omega, show 4 + k = 3 + k + 1 by omega]
   split_ifs at h <;> omega
