@@ -106,7 +106,7 @@ theorem ordinalGraphRamsey_bot :
   intro red blue _
   right
   have : Nonempty ((ω_ 1) ^ (2 : ℕ)).ToType := by
-    rw [Ordinal.toType_nonempty_iff_ne_zero]
+    rw [Ordinal.nonempty_toType_iff]
     exact pow_ne_zero 2 (omega_pos 1).ne'
   obtain ⟨x⟩ := this
   exact ⟨fun _ => x, fun a b _ => Subsingleton.elim a b, fun a b h => by simp at h⟩
