@@ -140,18 +140,15 @@ private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
 
 /-- The `n`-element subsets of `{1, …, 2n}`. -/
 private def parts (n : ℕ) : Finset (Finset ℤ) :=
-  (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
+  (Finset.Icc (1 : ℤ) (2 * n)).powersetCard n
 
 @[category API, AMS 5 11]
 private lemma mem_parts {n : ℕ} {A : Finset ℤ} :
     A ∈ parts n ↔ A ⊆ Finset.Icc (1 : ℤ) (2 * n) ∧ A.card = n := by
-  simp [parts, Finset.mem_filter, Finset.mem_powerset]
+  simp [parts]
 
 @[category API, AMS 5 11]
-private lemma parts_nonempty (n : ℕ) : (parts n).Nonempty := by
-  refine ⟨Finset.Icc (1 : ℤ) n, mem_parts.mpr ⟨?_, ?_⟩⟩
-  · exact Finset.Icc_subset_Icc le_rfl (by omega)
-  · rw [Int.card_Icc]; omega
+private lemma parts_nonempty (n : ℕ) : (parts n).Nonempty := by simp [parts]; lia
 
 /-- `M n` as the minimum of a `Finset` of naturals, which is what makes it evaluable. -/
 @[category API, AMS 5 11]

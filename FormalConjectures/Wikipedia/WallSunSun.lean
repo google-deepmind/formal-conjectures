@@ -29,13 +29,14 @@ variable {d : ℤ} [Fact <| Squarefree d] [Fact <| d ≠ 1]
 
 /-- The discriminant of `ℚ[√d]` for `d ≥ 2` squarefree congruent to 1 mod 4 is `d`. -/
 @[category textbook, AMS 11, simp]
-lemma discr_rat_of_modEq_one (hd₄ : d ≡ 1 [ZMOD 4]) : discr (QuadraticAlgebra ℚ d 0) = d := by
+lemma discr_rat_of_modEq_one (hd₄ : d ≡ 1 [ZMOD 4]) :
+    NumberField.discr (QuadraticAlgebra ℚ d 0) = d := by
   sorry
 
 /-- The discriminant of `ℚ[√d]` for `d ≥ 2` squarefree not congruent to 1 mod 4 is `4 * d`. -/
 @[category textbook, AMS 11, simp]
 lemma discr_rat_of_not_modEq_one (hd₄ : ¬ d ≡ 1 [ZMOD 4]) :
-    discr (QuadraticAlgebra ℚ d 0) = 4 * d := by
+    NumberField.discr (QuadraticAlgebra ℚ d 0) = 4 * d := by
   sorry
 
 end QuadraticAlgebra

@@ -109,7 +109,7 @@ theorem house_girth : HouseGraph.girth = 3 := by
     · simp
     · decide
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
-  simpa using girth_le_length hcyc
+  simpa using hcyc.girth_le_length
 
 open scoped Classical in
 @[category test, AMS 5]
@@ -213,7 +213,7 @@ theorem K4_girth : K4.girth = 3 := by
     · simp
     · decide
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
-  simpa using girth_le_length hcyc
+  simpa using hcyc.girth_le_length
 
 open scoped Classical in
 @[category test, AMS 5]
