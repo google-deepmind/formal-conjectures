@@ -41,7 +41,7 @@ theorem a_1 : a 1 = some 1 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (1 ^ 3 + m ^ 3 + 1).Prime} 1 :=
     ⟨⟨le_rfl, by decide⟩, fun m hm => hm.1⟩
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (1 ^ 3 + m ^ 3 + 1).Prime := ⟨1, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+  rw [a, ite_eq_left h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
@@ -56,7 +56,7 @@ theorem a_2 : a 2 = some 2 := by
       revert hprime
       decide⟩
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (2 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+  rw [a, ite_eq_left h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
@@ -64,7 +64,7 @@ theorem a_3 : a 3 = some 1 := by
   have h : IsLeast {m : ℕ | 1 ≤ m ∧ (3 ^ 3 + m ^ 3 + 1).Prime} 1 :=
     ⟨⟨le_rfl, by decide⟩, fun m hm => hm.1⟩
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (3 ^ 3 + m ^ 3 + 1).Prime := ⟨1, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+  rw [a, ite_eq_left h_ex, h.csInf_eq]
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
@@ -79,7 +79,7 @@ theorem a_4 : a 4 = some 2 := by
       revert hprime
       decide⟩
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (4 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+  rw [a, ite_eq_left h_ex, h.csInf_eq]
 
 /--
 Conjecture 1: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k$

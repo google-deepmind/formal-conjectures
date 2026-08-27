@@ -157,7 +157,7 @@ theorem Reachable.complexity_eq {m n : ℕ} (h : Reachable m n)
 @[category test, AMS 11]
 theorem Reachable.complexity {n : ℕ} (hn : 0 < n) : Reachable n (complexity n) := by
   unfold Mathoverflow75792.complexity
-  rw [dif_neg (ne_of_gt hn)]
+  rw [dite_eq_right (ne_of_gt hn)]
   exact Nat.find_spec _
 
 @[category test, AMS 11]

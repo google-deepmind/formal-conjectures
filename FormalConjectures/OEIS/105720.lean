@@ -71,30 +71,30 @@ macro "eval_a" : tactic => `(tactic| (
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 0 := by
-  rw [a, if_pos rfl]
+  rw [a, ite_eq_left rfl]
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 5 := by
-  rw [a, if_neg (by decide)]
+  rw [a, ite_eq_right (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 15 := by
-  rw [a, if_neg (by decide)]
+  rw [a, ite_eq_right (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 36 := by
-  rw [a, if_neg (by decide)]
+  rw [a, ite_eq_right (by decide)]
   eval_a
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 67 := by
-  rw [a, if_neg (by decide)]
+  rw [a, ite_eq_right (by decide)]
   eval_a
 
 /--

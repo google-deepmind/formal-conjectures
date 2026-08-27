@@ -53,7 +53,7 @@ theorem a_1 : a 1 = 0 := by rfl
 theorem a_2 : a 2 = 1 := by
   unfold a
   have h2 : ¬ 2 ≤ 1 := by decide
-  rw [if_neg h2]
+  rw [ite_eq_right h2]
   have h_icc : Finset.Icc 2 2 = {2} := by decide
   rw [h_icc, Finset.sum_singleton]
   unfold primeGap
@@ -68,7 +68,7 @@ theorem a_2 : a 2 = 1 := by
 theorem a_3 : a 3 = 1 := by
   unfold a
   have h3 : ¬ 3 ≤ 1 := by decide
-  rw [if_neg h3]
+  rw [ite_eq_right h3]
   have h_icc : Finset.Icc 2 3 = {2, 3} := by decide
   rw [h_icc, Finset.sum_pair (by decide)]
   unfold primeGap

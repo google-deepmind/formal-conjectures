@@ -66,11 +66,11 @@ theorem erdos_346.variants.f_isLacunary : IsLacunary f := by
   unfold f
   by_cases heven : Even k
   · have hodd : ¬ Even (k + 1) := by simp [Nat.even_add_one, heven]
-    rw [if_pos heven, if_neg hodd]
+    rw [ite_eq_left heven, ite_eq_right hodd]
     push_cast [Nat.cast_sub hpos]
     linarith
   · have hodd_plus : Even (k + 1) := by simp [Nat.even_add_one, heven]
-    rw [if_neg heven, if_pos hodd_plus]
+    rw [ite_eq_right heven, ite_eq_left hodd_plus]
     push_cast [Nat.cast_sub hpos1]
     linarith
 

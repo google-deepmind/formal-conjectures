@@ -60,9 +60,9 @@ open Classical in
 @[category API, AMS 11]
 lemma a_eq_self (n : ℕ) (hn : n > 0) (h_rev : n ∣ reverseNat n) : a n = n := by
   unfold a
-  rw [if_neg (by omega)]
+  rw [ite_eq_right (by omega)]
   have h_ex : ∃ k, k > 0 ∧ n ∣ reverseNat (k * n) := ⟨1, ⟨by omega, by rw [one_mul]; exact h_rev⟩⟩
-  rw [dif_pos h_ex]
+  rw [dite_eq_left h_ex]
   change Nat.find h_ex * n = n
   have hf : Nat.find h_ex = 1 := by
     rw [Nat.find_eq_iff]

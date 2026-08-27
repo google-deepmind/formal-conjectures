@@ -133,7 +133,7 @@ theorem lam_litt.variants.integrality_implies_omega_integrality
     simp [hpN, sq, p.2.ne_zero]
   · intro p j hj
     by_cases hpmem : (p : ℕ) ∈ N.primeFactors
-    · simp only [hpmem, if_true] at hj; omega
+    · simp only [hpmem, ite_true] at hj; omega
     · exact den_coprime_of_mem_adjoinInvNat p.2 hpmem (hN j)
 
 /--

@@ -113,12 +113,12 @@ private lemma f_one : f 1 = 1 := by
 /-- At a prime `p` every divisor is `1` or `p`, so the interior sum is empty. -/
 @[category API, AMS 11]
 private lemma f_prime {p : ℕ} (hp : p.Prime) : f p = a046644 p / 2 := by
-  rw [f_eq, if_neg hp.ne_zero, if_neg hp.ne_one,
+  rw [f_eq, ite_eq_right hp.ne_zero, ite_eq_right hp.ne_one,
     Finset.sum_eq_zero (fun x hx => ?_)]
   · ring
   · rcases hp.eq_one_or_self_of_dvd x (Nat.mem_divisors.mp hx).1 with rfl | rfl
-    · exact dif_neg (by omega)
-    · exact dif_neg (by omega)
+    · exact dite_eq_right (by omega)
+    · exact dite_eq_right (by omega)
 
 @[category API, AMS 11]
 private lemma f_two : f 2 = 1 := by
@@ -139,10 +139,10 @@ private lemma f_four : f 4 = 7 / 2 := by
   norm_num only
   rw [show (Nat.divisors 4) = {1, 2, 4} from rfl,
     Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton,
-    dif_neg (by omega), dif_pos (by omega), dif_neg (by omega),
+    dite_eq_right (by omega), dite_eq_left (by omega), dite_eq_right (by omega),
     show a046644 4 = 8 from ?_]
   · rw [f_two]; norm_num
-  · rw [a046644, if_neg (by norm_num), show (4 : ℕ) = 2 ^ 2 by norm_num,
+  · rw [a046644, ite_eq_right (by norm_num), show (4 : ℕ) = 2 ^ 2 by norm_num,
       Nat.Prime.factorization_pow Nat.prime_two]
     norm_num [Finsupp.prod_single_index, a005187, Finset.sum_range_succ]
 

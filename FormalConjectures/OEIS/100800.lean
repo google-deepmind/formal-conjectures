@@ -60,7 +60,7 @@ noncomputable def a (n : ℕ) : ℕ :=
 lemma a_of_dvd {n : ℕ} (h : n ∣ f n) : a n = f n := by
   have hex : ∃ k, n ∣ f^[k + 1] n := ⟨0, by simpa using h⟩
   have hfind : Nat.find hex = 0 := (Nat.find_eq_zero hex).2 (by simpa using h)
-  rw [a, dif_pos hex, hfind]
+  rw [a, dite_eq_left hex, hfind]
   simp
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/

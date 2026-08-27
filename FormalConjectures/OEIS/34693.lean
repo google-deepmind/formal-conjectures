@@ -72,7 +72,7 @@ theorem exists_k_best_possible : ∃ n > (0 : ℕ), ∀ (k : ℕ),
   refine ⟨19, by norm_num, ?_⟩
   have hy : Real.nthRoot 100 ((19 : ℕ) : ℝ) = (19 : ℝ) ^ (((100 : ℕ) : ℝ))⁻¹ := by
     simp only [Real.nthRoot]
-    rw [if_pos (by decide : Even 100)]
+    rw [ite_eq_left (by decide : Even 100)]
     norm_num
   have h100 : (Real.nthRoot 100 ((19 : ℕ) : ℝ)) ^ (100 : ℕ) = 19 := by
     rw [hy]; exact Real.rpow_inv_natCast_pow (by norm_num) (by norm_num)

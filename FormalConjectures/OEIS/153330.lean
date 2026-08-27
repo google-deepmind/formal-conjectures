@@ -67,11 +67,11 @@ theorem a_1 : a 1 = some 1 := by
     · intro k hk; by_contra! h; interval_cases k; revert hk; decide
   have hs1 : collatzSteps 1 = some 0 := by
     have h : ∃ k, (collatzStep^[k]) 1 = 1 := ⟨0, h1.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h1.csInf_eq]
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h1.csInf_eq]
   have hs2 : collatzSteps 2 = some 1 := by
     have h : ∃ k, (collatzStep^[k]) 2 = 1 := ⟨1, h2.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h2.csInf_eq]
-  rw [a, if_neg (by omega), hs2, hs1]; rfl
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h2.csInf_eq]
+  rw [a, ite_eq_right (by omega), hs2, hs1]; rfl
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
@@ -86,11 +86,11 @@ theorem a_2 : a 2 = some 6 := by
     · intro k hk; by_contra! h; interval_cases k <;> revert hk <;> decide
   have hs2 : collatzSteps 2 = some 1 := by
     have h : ∃ k, (collatzStep^[k]) 2 = 1 := ⟨1, h2.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h2.csInf_eq]
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h2.csInf_eq]
   have hs3 : collatzSteps 3 = some 7 := by
     have h : ∃ k, (collatzStep^[k]) 3 = 1 := ⟨7, h3.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h3.csInf_eq]
-  rw [a, if_neg (by omega), hs3, hs2]; rfl
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h3.csInf_eq]
+  rw [a, ite_eq_right (by omega), hs3, hs2]; rfl
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
@@ -105,11 +105,11 @@ theorem a_3 : a 3 = some (-5) := by
     · intro k hk; by_contra! h; interval_cases k <;> revert hk <;> decide
   have hs3 : collatzSteps 3 = some 7 := by
     have h : ∃ k, (collatzStep^[k]) 3 = 1 := ⟨7, h3.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h3.csInf_eq]
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h3.csInf_eq]
   have hs4 : collatzSteps 4 = some 2 := by
     have h : ∃ k, (collatzStep^[k]) 4 = 1 := ⟨2, h4.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h4.csInf_eq]
-  rw [a, if_neg (by omega), hs4, hs3]; rfl
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h4.csInf_eq]
+  rw [a, ite_eq_right (by omega), hs4, hs3]; rfl
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
@@ -124,11 +124,11 @@ theorem a_4 : a 4 = some 3 := by
     · intro k hk; by_contra! h; interval_cases k <;> revert hk <;> decide
   have hs4 : collatzSteps 4 = some 2 := by
     have h : ∃ k, (collatzStep^[k]) 4 = 1 := ⟨2, h4.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h4.csInf_eq]
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h4.csInf_eq]
   have hs5 : collatzSteps 5 = some 5 := by
     have h : ∃ k, (collatzStep^[k]) 5 = 1 := ⟨5, h5.1⟩
-    rw [collatzSteps, if_neg (by omega), if_pos h, h5.csInf_eq]
-  rw [a, if_neg (by omega), hs5, hs4]; rfl
+    rw [collatzSteps, ite_eq_right (by omega), ite_eq_left h, h5.csInf_eq]
+  rw [a, ite_eq_right (by omega), hs5, hs4]; rfl
 
 /-- The set of positive indices $n$ for which $a(n) = v$. -/
 def indices (v : ℤ) : Set ℕ :=

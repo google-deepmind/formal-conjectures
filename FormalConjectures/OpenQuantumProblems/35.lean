@@ -517,11 +517,11 @@ lemma diagonalState_combineFirst_one {n d : ℕ} (hn : 1 ≤ n)
           (combineFirst (n := n) (d := d) 1 hn x (constantCompletion (n := n) (d := d) x)) := by
       exact (isConstantConfig_combineFirst_one_iff hn x
         (constantCompletion (n := n) (d := d) x)).2 rfl
-    rw [diagonalState_apply, if_pos hconst, if_pos rfl]
+    rw [diagonalState_apply, ite_eq_left hconst, ite_eq_left rfl]
   · have h' : ¬ IsConstantConfig (combineFirst (n := n) (d := d) 1 hn x z) := by
       intro hx
       exact h ((isConstantConfig_combineFirst_one_iff hn x z).1 hx)
-    rw [diagonalState_apply, if_neg h', if_neg h]
+    rw [diagonalState_apply, ite_eq_right h', ite_eq_right h]
 
 /- ## Generic completion criterion -/
 

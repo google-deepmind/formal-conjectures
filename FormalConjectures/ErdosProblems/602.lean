@@ -132,13 +132,13 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
   -- f (a_fn i) = 0: ¬ ∃ j, a_fn i = b_fn j.
   have hfa : f (a_fn i) = 0 := by
     simp only [f]
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨j, hj⟩
     exact key i j hj
   -- f (b_fn i) = 1: witnessed by i itself.
   have hfb : f (b_fn i) = 1 := by
     simp only [f]
-    rw [if_pos ⟨i, rfl⟩]
+    rw [ite_eq_left ⟨i, rfl⟩]
   -- hMono says f is constant on A i, but f (a_fn i) = 0 ≠ 1 = f (b_fn i).
   have hne := hMono (a_fn i) (ha_mem i) (b_fn i) (hb_mem i)
   rw [hfa, hfb] at hne

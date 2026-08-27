@@ -58,7 +58,7 @@ theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=2$, i.e. we get the junk value $0$. -/
 @[category textbook, AMS 11]
 theorem f_undefined_at_2 : f 2 = 0 := by
-  rw [f, dif_neg]
+  rw [f, dite_eq_right]
   rintro ⟨m, k, hk, hsum⟩
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
@@ -77,7 +77,7 @@ theorem f_undefined_at_2 : f 2 = 0 := by
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
 @[category textbook, AMS 11]
 theorem f_undefined_at_3 : f 5 = 0 := by
-  rw [f, dif_neg]
+  rw [f, dite_eq_right]
   rintro ⟨m, k, hk, hsum⟩
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
