@@ -87,7 +87,7 @@ For any simple graph `G` with `|E| ≥ 4 |V|`:
 
 We state the inequality in terms of `Fintype.card` and `G.edgeFinset.card`. -/
 @[category research solved, AMS 5]
-theorem crossing_lemma [DecidableEq α] (G : SimpleGraph α) [DecidableRel G.Adj]
+theorem crossing_lemma (G : SimpleGraph α) [DecidableRel G.Adj]
     (h : 4 * Fintype.card α ≤ G.edgeFinset.card) :
     (G.edgeFinset.card : ℝ) ^ 3 / (64 * (Fintype.card α : ℝ) ^ 2) ≤
       crossingNumber G := by
