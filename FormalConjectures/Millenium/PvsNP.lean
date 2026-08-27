@@ -28,7 +28,6 @@ in complexity theory, including
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
-- [Wikipedia, BPP](https://en.wikipedia.org/wiki/BPP_(complexity))
 -/
 
 namespace ComplexityTheory
@@ -52,23 +51,10 @@ theorem NP_ne_coNP : NP ≠ coNP := by sorry
 /--
 **P = BPP**:
 
-The conjecture that randomness does not add power to polynomial-time computation, i.e.
-the complexity classes P and BPP are equal. This is widely believed to be true, since it
-follows from plausible circuit lower bounds (Impagliazzo–Wigderson, 1997).
+The conjecture that the complexity classes P and BPP are equal.
 -/
 @[category research open, AMS 68]
 theorem P_eq_BPP : P = BPP := by sorry
-
-/--
-The theorem that P is a subset of BPP.
-
-This can be proven by observing that a poly-time decider for a language in P
-can simply ignore its random bits, and is then correct with probability `1`.
--/
-@[category textbook, AMS 68]
-theorem P_subset_BPP :
-    P ⊆ BPP := by
-  sorry
 
 /--
 The theorem that the set of complements of languages in P is itself P.
@@ -103,5 +89,18 @@ theorem P_subset_coNP :
   simp only [Set.ofPred_subset_ofPred]
   intros L hL
   exact P_subset_NP hL
+
+/--
+The theorem that P is a subset of BPP.
+
+This can be proven by observing that for any language in P,
+we can construct a randomized decider that ignores the random bits
+and simply runs the poly-time decider for the language.
+-/
+@[category textbook, AMS 68]
+theorem P_subset_BPP :
+    P ⊆ BPP := by
+  sorry
+
 
 end ComplexityTheory
