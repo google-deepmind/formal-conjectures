@@ -103,16 +103,16 @@ such that there exists a polynomial `p` over ℕ and a poly-time Turing machine 
 where for all `x`, a uniformly random string `r` of length `p (|x|)` satisfies
 `R (x, r) = L x` with probability at least `2/3`.
 
-Here the probability is expressed by counting: at least `2/3` of the `2 ^ p (|x|)` random
-strings `r : Fin (p (|x|)) → Bool` must make `R` answer correctly.
+Here the probability is the fraction (as a rational number) of the `2 ^ p (|x|)` random
+strings `r : Fin (p (|x|)) → Bool` that make `R` answer correctly.
 
 See Definition 7.2 in Arora-Barak (2009).
 -/
 def BPP : ComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
       IsPolyTime R ∧
-      ∀ x, 2 * 2 ^ p.eval x.length ≤
-        3 * (Finset.univ.filter fun r : Fin (p.eval x.length) → Bool =>
-          R (x, List.ofFn r) = L x).card }
+      ∀ x, (2 : ℚ) / 3 ≤
+        ((Finset.univ.filter fun r : Fin (p.eval x.length) → Bool =>
+          R (x, List.ofFn r) = L x).card : ℚ) / 2 ^ p.eval x.length }
 
 end ComplexityTheory
