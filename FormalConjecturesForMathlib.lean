@@ -103,7 +103,6 @@ public import FormalConjecturesForMathlib.Data.Bool.Basic
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
-public import FormalConjecturesForMathlib.Data.Int.Order.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Full
 public import FormalConjecturesForMathlib.Data.Nat.Init
@@ -119,7 +118,6 @@ public import FormalConjecturesForMathlib.Data.Real.NearestInt
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
-public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
@@ -163,7 +161,6 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
-public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
