@@ -122,7 +122,7 @@ theorem erdos_603.variants.disjoint : answer(True) ↔
     obtain ⟨a, ha⟩ := (hInfinite i).nonempty
     have hA2 : (A i \ {a}).Nonempty := by
       apply Set.Infinite.nonempty
-      exact (hInfinite i).diff (Set.finite_singleton a)
+      exact (hInfinite i).sdiff (Set.finite_singleton a)
     obtain ⟨b, hbA, hba⟩ := hA2
     simp only [Set.mem_singleton_iff] at hba
     exact ⟨a, b, ha, hbA, fun h => hba h.symm⟩
@@ -185,7 +185,7 @@ theorem erdos_603.variants.unique_index {α : Type*} (I : Type*) [Unique I]
   -- A default is infinite: pick two distinct elements.
   obtain ⟨a, ha⟩ := (hInfinite default).nonempty
   have hA2 : (A default \ {a}).Nonempty :=
-    Set.Infinite.nonempty ((hInfinite default).diff (Set.finite_singleton a))
+    Set.Infinite.nonempty ((hInfinite default).sdiff (Set.finite_singleton a))
   obtain ⟨b, hbA, hba⟩ := hA2
   simp only [Set.mem_singleton_iff] at hba
   -- Colour b with 1, everything else with 0.
@@ -236,13 +236,13 @@ theorem erdos_603.variants.two_sets : answer(True) ↔
     -- Pick a, b ∈ A 0 (distinct).
     obtain ⟨a, ha0⟩ := (hInfinite 0).nonempty
     have hA0' : (A 0 \ {a}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 0).diff (Set.finite_singleton a))
+      Set.Infinite.nonempty ((hInfinite 0).sdiff (Set.finite_singleton a))
     obtain ⟨b, hbA0, hba⟩ := hA0'
     simp only [Set.mem_singleton_iff] at hba
     -- Pick c, d ∈ A 1 (distinct).
     obtain ⟨c, hc1⟩ := (hInfinite 1).nonempty
     have hA1' : (A 1 \ {c}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 1).diff (Set.finite_singleton c))
+      Set.Infinite.nonempty ((hInfinite 1).sdiff (Set.finite_singleton c))
     obtain ⟨d, hd1, hdc⟩ := hA1'
     simp only [Set.mem_singleton_iff] at hdc
     -- Disjointness: no element belongs to both A 0 and A 1.
@@ -282,7 +282,7 @@ theorem erdos_603.variants.two_sets : answer(True) ↔
       have hxI : x ∈ A 0 ∩ A 1 := by rw [hx_eq]; exact Set.mem_singleton x
       -- A 1 is infinite, so pick y ∈ A 1 with y ≠ x.
       have hA1' : (A 1 \ {x}).Nonempty :=
-        Set.Infinite.nonempty ((hInfinite 1).diff (Set.finite_singleton x))
+        Set.Infinite.nonempty ((hInfinite 1).sdiff (Set.finite_singleton x))
       obtain ⟨y, hy1, hyx⟩ := hA1'
       simp only [Set.mem_singleton_iff] at hyx
       -- y ∉ A 0: if y ∈ A 0 then y ∈ A 0 ∩ A 1 = {x}, so y = x, contradiction.
@@ -293,7 +293,7 @@ theorem erdos_603.variants.two_sets : answer(True) ↔
         exact hyx (Set.mem_singleton_iff.mp this)
       -- A 0 is infinite, so pick z ∈ A 0 with z ≠ x.
       have hA0' : (A 0 \ {x}).Nonempty :=
-        Set.Infinite.nonempty ((hInfinite 0).diff (Set.finite_singleton x))
+        Set.Infinite.nonempty ((hInfinite 0).sdiff (Set.finite_singleton x))
       obtain ⟨z, hz0, hzx⟩ := hA0'
       simp only [Set.mem_singleton_iff] at hzx
       -- Colour: y → 1, z → 2, everything else → 0.
@@ -344,18 +344,18 @@ theorem erdos_603.variants.two_sets : answer(True) ↔
 private lemma evens_infinite603 : Set.Infinite {n : ℕ | Even n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma odds_infinite603 : Set.Infinite {n : ℕ | Odd n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n + 1)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma evens_inter_odds_empty603 : {n : ℕ | Even n} ∩ {n : ℕ | Odd n} = ∅ := by
   ext x
-  simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro ⟨k, hk⟩ ⟨m, hm⟩; omega
 
 /-- The empty family vacuously has chromatic Property B,
@@ -403,9 +403,9 @@ example : HasChromaticPropertyB ℕ (Fin 2) (![{n : ℕ | Even n}, {n | Odd n}] 
     have h0 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : ℕ) else 0) 0 = 0 := by decide
     have h2 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : ℕ) else 0) 2 = 1 := by decide
     have hmem0 : (0 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨0, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨0, by ring⟩
     have hmem2 : (2 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨1, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨1, by ring⟩
     have := hMono 0 hmem0 2 hmem2
     rw [h0, h2] at this; exact absurd this (by decide)
   · -- A 1 = odds: f(1) = 1, f(3) = 0.
@@ -424,7 +424,7 @@ This shows the hypothesis `Set.ncard (A i ∩ A j) ≠ 2` is faithfully encoded.
 example : Set.ncard ({n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ n = 2}) = 2 := by
   have heq : {n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ n = 2} = {0, 2} := by
     ext x
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
     constructor
     · rintro ⟨⟨k, hk⟩, rfl | rfl⟩ <;> simp
     · rintro (rfl | rfl)
