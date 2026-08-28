@@ -43,10 +43,6 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 def IsCubic (G : SimpleGraph V) [DecidableRel G.Adj] : Prop :=
   ∀ v, G.degree v = 3
 
-/-- A graph is **bridgeless** if none of its edges is a bridge. -/
-def IsBridgeless (G : SimpleGraph V) : Prop :=
-  ∀ e, ¬ G.IsBridge e
-
 open Classical in
 /-- A family of `k` perfect matchings of `G` **covers every edge exactly `m` times** if each
 member is a perfect matching and every edge of `G` lies in exactly `m` of them. -/
@@ -63,7 +59,7 @@ of them.
 @[category research open, AMS 5]
 theorem berge_fulkerson_conjecture : answer(sorry) ↔
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
-      IsCubic G → IsBridgeless G →
+      IsCubic G → G.IsBridgeless →
       ∃ M : Fin 6 → G.Subgraph, IsPerfectMatchingCover G 6 2 M := by
   sorry
 
@@ -78,7 +74,7 @@ Mazzuoccolo [Ma11] proved this to be equivalent to the Berge–Fulkerson conject
 @[category research open, AMS 5]
 theorem berge_fulkerson_conjecture.variants.berge : answer(sorry) ↔
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
-      IsCubic G → IsBridgeless G →
+      IsCubic G → G.IsBridgeless →
       ∃ M : Fin 5 → G.Subgraph, (∀ i, (M i).IsPerfectMatching) ∧
         ∀ e ∈ G.edgeSet, ∃ i, e ∈ (M i).edgeSet := by
   sorry
@@ -94,7 +90,7 @@ This would follow from the Berge–Fulkerson conjecture.
 @[category research open, AMS 5]
 theorem berge_fulkerson_conjecture.variants.fan_raspaud : answer(sorry) ↔
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
-      IsCubic G → IsBridgeless G →
+      IsCubic G → G.IsBridgeless →
       ∃ M : Fin 3 → G.Subgraph, (∀ i, (M i).IsPerfectMatching) ∧
         ∀ e, ¬ (e ∈ (M 0).edgeSet ∧ e ∈ (M 1).edgeSet ∧ e ∈ (M 2).edgeSet) := by
   sorry
@@ -110,7 +106,7 @@ above.
 @[category research solved, AMS 5]
 theorem berge_fulkerson_conjecture.variants.petersen
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
-    (hcubic : IsCubic G) (hbridgeless : IsBridgeless G) :
+    (hcubic : IsCubic G) (hbridgeless : G.IsBridgeless) :
     ∃ M : G.Subgraph, M.IsPerfectMatching := by
   sorry
 
