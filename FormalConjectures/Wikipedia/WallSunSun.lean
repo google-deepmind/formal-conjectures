@@ -81,14 +81,6 @@ lemma isQuadraticExtension_iff_exists_quadraticAlgebra :
   mp _ := exists_quadraticAlgebra_of_isQuadraticExtension _
   mpr := by rintro ⟨d, hd₁, hd, ⟨e⟩⟩; sorry
 
-/-- Fundamental discriminants are those integers `D` that appear as discriminants of quadratic
-fields.
-
-`D` is a fundamental discriminant if it is either of the form `4m` for `m` congruent to `2` or `3`
-mod `4` squarefree, or if it congruent to `1` mod `4` and squarefree. -/
-def IsFundamentalDiscr (D : ℤ) : Prop :=
-  4 ∣ D ∧ ¬ D / 4 ≡ 1 [ZMOD 4] ∧ Squarefree (D / 4) ∨ D ≠ 1 ∧ D ≡ 1 [ZMOD 4] ∧ Squarefree D
-
 /-- An integer `D` is a fundamental discriminant iff it is the discriminant of the explicit
 quadratic field `QuadraticAlgebra ℚ d 0` for some squarefree `d : ℤ` not equal to 1. -/
 @[category textbook, AMS 11]

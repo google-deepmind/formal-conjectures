@@ -33,7 +33,7 @@ The conjectures state that:
 - [oeis.org/A038552](https://oeis.org/A038552)
 -/
 
-open Polynomial
+open NumberField Polynomial
 
 namespace OeisA38552
 
@@ -48,13 +48,6 @@ This defines the $n$-th term of A038552. -/
 def IsA038552 (n k : ℕ) : Prop :=
   MaximalFor (fun m => Squarefree m ∧ HasClassNumber m n) id k
 
-/-- An integer $d < 0$ is a negative fundamental discriminant if either:
-- $d \equiv 1 \pmod 4$ and $d$ is squarefree, or
-- $d = 4m$ where $m \equiv 2$ or $3 \pmod 4$ and $m$ is squarefree. -/
-def IsNegFundamentalDiscriminant (d : ℤ) : Prop :=
-  d < 0 ∧ ((d % 4 = 1 ∧ Squarefree d) ∨
-           (∃ m : ℤ, d = 4 * m ∧ (m % 4 = 2 ∨ m % 4 = 3) ∧ Squarefree m))
-
 /-- The class number of the quadratic field with discriminant $d$. -/
 noncomputable def classNumberOfDiscriminant (d : ℤ) : ℕ :=
   haveI := Classical.dec (Irreducible (X ^ 2 - C (d : ℚ)))
@@ -66,9 +59,9 @@ noncomputable def classNumberOfDiscriminant (d : ℤ) : ℕ :=
 /-- $|d|$ is the largest absolute value among negative fundamental discriminants
 with class number $n$. -/
 def IsLargestNegFundDiscForClassNumber {n : ℕ} (absD : ℕ) : Prop :=
-  IsNegFundamentalDiscriminant (-(absD : ℤ)) ∧
+  IsFundamentalDiscr (-(absD : ℤ)) ∧
   classNumberOfDiscriminant (-(absD : ℤ)) = n ∧
-  ∀ d : ℤ, IsNegFundamentalDiscriminant d → classNumberOfDiscriminant d = n → d.natAbs ≤ absD
+  ∀ d < (0 : ℤ), IsFundamentalDiscr d → classNumberOfDiscriminant d = n → d.natAbs ≤ absD
 
 /-- The Stark-Heegner theorem [Sta67] implies that the squarefree $k > 0$ such that
 $\mathbb{Q}(\sqrt{-k})$ has class number $1$ are exactly $\{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. -/
