@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.Wikipedia.JacobianConjecture
 import FormalConjecturesUtil
 
 /-!
@@ -78,14 +79,11 @@ def PoissonConjectureFor (n : ℕ) : Prop :=
 
 variable (K) in
 /-- The Jacobian Conjecture in dimension `m`: every polynomial endomorphism of $K^m$ with
-unit Jacobian determinant has a polynomial inverse. This is the per-dimension form of the
-statement in `FormalConjectures.Wikipedia.JacobianConjecture`, which quantifies over all
-finite variable types at once. -/
+unit Jacobian determinant has a polynomial inverse. This is the per-dimension form of
+`JacobianConjecture.JacobianConjectureProp`, which quantifies over arbitrary finite
+variable types. -/
 def JacobianConjectureFor (m : ℕ) : Prop :=
-  ∀ F : RegularFunction K (Fin m) (Fin m), IsUnit F.Jacobian.det →
-    ∃ G : RegularFunction K (Fin m) (Fin m),
-      G.comp F = RegularFunction.id K (Fin m) ∧
-      F.comp G = RegularFunction.id K (Fin m)
+  JacobianConjecture.JacobianConjectureProp K (Fin m)
 
 /--
 The **Poisson Conjecture** ([AvdE07], the characteristic zero case): for every `n`, every
