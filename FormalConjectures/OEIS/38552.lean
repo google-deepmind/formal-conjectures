@@ -58,10 +58,9 @@ noncomputable def classNumberOfDiscriminant (d : ℤ) : ℕ :=
 
 /-- $|d|$ is the largest absolute value among negative fundamental discriminants
 with class number $n$. -/
-def IsLargestNegFundDiscForClassNumber {n : ℕ} (absD : ℕ) : Prop :=
-  IsFundamentalDiscr (-(absD : ℤ)) ∧
-  classNumberOfDiscriminant (-(absD : ℤ)) = n ∧
-  ∀ d < (0 : ℤ), IsFundamentalDiscr d → classNumberOfDiscriminant d = n → d.natAbs ≤ absD
+def IsLargestNegFundDiscrForClassNumber {n : ℕ} (absD : ℕ) : Prop :=
+  IsGreatest {m : ℕ | IsFundamentalDiscr (-(m : ℤ)) ∧ classNumberOfDiscriminant (-(m : ℤ)) = n}
+    absD
 
 /-- The Stark-Heegner theorem [Sta67] implies that the squarefree $k > 0$ such that
 $\mathbb{Q}(\sqrt{-k})$ has class number $1$ are exactly $\{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. -/
@@ -109,7 +108,7 @@ theorem mod_24_of_isA038552 {n k : ℕ} (h : IsA038552 n k) : k % 24 = 19 := by
 for each class number. -/
 @[category research open, AMS 11]
 theorem isA038552_eq_largestNegFundDisc {n k : ℕ} (h : IsA038552 n k) :
-  IsLargestNegFundDiscForClassNumber (n := n) k := by
+  IsLargestNegFundDiscrForClassNumber (n := n) k := by
   sorry
 
 /-- For even class number $n$, if $k$ is the largest odd squarefree number with
