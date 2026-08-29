@@ -44,6 +44,11 @@ def petersenGraph : SimpleGraph PetersenVertex where
 instance : DecidableRel petersenGraph.Adj := fun s t =>
   inferInstanceAs (Decidable (Disjoint s.1 t.1))
 
+/-- A canonical vertex `{0, 1}` of the Petersen graph. -/
+def petersenVertex01 : PetersenVertex := ⟨{0, 1}, by decide⟩
+
+instance : Nonempty PetersenVertex := ⟨petersenVertex01⟩
+
 /-- The Petersen graph has `10` vertices. -/
 theorem card_petersenVertex : Fintype.card PetersenVertex = 10 := by decide
 
