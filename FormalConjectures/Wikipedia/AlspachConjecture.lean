@@ -121,4 +121,43 @@ theorem alspach_conjecture.variants.one (m : Multiset ℕ) (hm : ∀ x ∈ m, 3 
   refine ⟨0, isCycleDecomposition_zero ?_, Multiset.map_zero _⟩
   decide
 
+/-- The triangle `0 → 1 → 2 → 0` as a cycle of `K₃`. -/
+def triangle : Cycle (completeGraph (Fin 3)) where
+  base := 0
+  walk := Walk.cons (by decide : (completeGraph (Fin 3)).Adj 0 1)
+    (Walk.cons (by decide : (completeGraph (Fin 3)).Adj 1 2)
+      (Walk.cons (by decide : (completeGraph (Fin 3)).Adj 2 0) Walk.nil))
+  isCycle := by
+    rw [Walk.isCycle_def, Walk.isTrail_def]
+    exact ⟨by decide, by simp, by decide⟩
+
+/--
+**The case $n = 3$.**
+
+$K_3$ has three edges, so the only admissible multiset of lengths is $\{3\}$, realised by the
+triangle itself.
+-/
+@[category research solved, AMS 5]
+theorem alspach_conjecture.variants.three (m : Multiset ℕ) (hm : ∀ x ∈ m, 3 ≤ x ∧ x ≤ 3)
+    (hsum : m.sum = Nat.choose 3 2) :
+    ∃ C : Multiset (Cycle (completeGraph (Fin 3))),
+      IsCycleDecomposition (completeGraph (Fin 3)) C ∧ lengths C = m := by
+  -- Every element of `m` is `3`, and the sum is `3`, so `m = {3}`.
+  have hm3 : m = Multiset.replicate m.card 3 := by
+    rw [Multiset.eq_replicate]; exact ⟨rfl, fun x hx => le_antisymm (hm x hx).2 (hm x hx).1⟩
+  have hcard : m.card = 1 := by
+    have := hsum; rw [hm3, Multiset.sum_replicate, smul_eq_mul] at this; simp at this; omega
+  rw [hm3, hcard, Multiset.replicate_one]
+  refine ⟨{triangle}, fun e he => ?_, by simp [lengths, triangle]; decide⟩
+  rw [Multiset.filter_singleton]
+  split_ifs with h
+  · rfl
+  · exfalso
+    apply h
+    have he' : e ∈ (completeGraph (Fin 3)).edgeSet := mem_edgeFinset.mp he
+    induction e using Sym2.ind with
+    | h a b =>
+      rw [mem_edgeSet, completeGraph_eq_top, top_adj] at he'
+      fin_cases a <;> fin_cases b <;> first | exact absurd rfl he' | decide
+
 end AlspachConjecture
