@@ -93,6 +93,41 @@ theorem overfull_conjecture.variants.one_factorization :
       2 * ((Fintype.card V + 3) / 4) - 1 ≤ d → G.chromaticIndex = d := by
   sorry
 
+
+/-- The vertices of a non-diagonal `e : Sym2 V` form a `2`-element finset. -/
+@[category API, AMS 5]
+lemma card_filter_mem_sym2 {e : Sym2 V} (he : ¬ e.IsDiag) :
+    (Finset.univ.filter fun v => v ∈ e).card = 2 := by
+  induction e using Sym2.ind with
+  | h x y =>
+    rw [Sym2.mk_isDiag_iff] at he
+    rw [show (Finset.univ.filter fun v => v ∈ s(x, y)) = {x, y} by ext v; simp [Sym2.mem_iff]]
+    exact Finset.card_pair he
+
+/-- A colour class of a proper edge colouring consists of pairwise disjoint edges, hence has at
+most `⌊n / 2⌋` edges. -/
+@[category API, AMS 5]
+lemma card_colour_class_le (G : SimpleGraph V) [DecidableRel G.Adj] {α : Type*} [DecidableEq α]
+    {c : Sym2 V → α} (hc : G.IsProperEdgeColoring c) (a : α) :
+    (G.edgeFinset.filter fun e => c e = a).card ≤ Fintype.card V / 2 := by
+  set S := G.edgeFinset.filter fun e => c e = a with hS
+  have hmem : ∀ e ∈ S, e ∈ G.edgeSet := fun e he => mem_edgeFinset.mp (Finset.mem_filter.mp he).1
+  have h2 : ∀ e ∈ S, (Finset.univ.filter fun v => v ∈ e).card = 2 :=
+    fun e he => card_filter_mem_sym2 (G.not_isDiag_of_mem_edgeSet (hmem e he))
+  have hdisj : (S : Set (Sym2 V)).PairwiseDisjoint fun e => Finset.univ.filter fun v => v ∈ e := by
+    intro e he f hf hef
+    simp only [Function.onFun]
+    rw [Finset.disjoint_left]
+    intro v hv hv'
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hv hv'
+    exact hc e (hmem e he) f (hmem f hf) hef ⟨v, hv, hv'⟩
+      ((Finset.mem_filter.mp he).2.trans (Finset.mem_filter.mp hf).2.symm)
+  have hsum : 2 * S.card = (S.biUnion fun e => Finset.univ.filter fun v => v ∈ e).card := by
+    rw [Finset.card_biUnion hdisj, Finset.sum_congr rfl h2, Finset.sum_const, smul_eq_mul, mul_comm]
+  have hle : (S.biUnion fun e => Finset.univ.filter fun v => v ∈ e).card ≤ Fintype.card V :=
+    Finset.card_le_univ _
+  omega
+
 /--
 **An overfull graph is class 2.**
 
@@ -103,6 +138,23 @@ $\lfloor n/2 \rfloor$ edges. This is the easy direction of the conjecture (with 
 theorem overfull_conjecture.variants.class_two_of_isOverfull
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (h : IsOverfull G) : G.maxDegree < G.chromaticIndex := by
-  sorry
+  by_contra hle
+  push Not at hle
+  -- The chromatic index is attained by some proper edge colouring.
+  have hne : {n | G.EdgeColorable n}.Nonempty := ⟨_, G.edgeColorable_card_edgeFinset_succ⟩
+  obtain ⟨c, hc⟩ : G.EdgeColorable G.chromaticIndex := Nat.sInf_mem hne
+  -- Count the edges fibrewise over the colours.
+  have hcount : G.edgeFinset.card =
+      ∑ a : Fin G.chromaticIndex, (G.edgeFinset.filter fun e => c e = a).card :=
+    Finset.card_eq_sum_card_fiberwise fun _ _ => Finset.mem_univ _
+  have hbound : G.edgeFinset.card ≤ G.chromaticIndex * (Fintype.card V / 2) := by
+    rw [hcount]
+    calc ∑ a : Fin G.chromaticIndex, (G.edgeFinset.filter fun e => c e = a).card
+        ≤ ∑ _a : Fin G.chromaticIndex, Fintype.card V / 2 :=
+          Finset.sum_le_sum fun a _ => card_colour_class_le G hc a
+      _ = G.chromaticIndex * (Fintype.card V / 2) := by simp
+  unfold IsOverfull at h
+  have := Nat.mul_le_mul_right (Fintype.card V / 2) hle
+  omega
 
 end OverfullConjecture
