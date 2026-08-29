@@ -148,4 +148,41 @@ theorem hadwiger_conjecture.variants.le_one
     · exact (isMinorModel_singleton G).connected v
     · exact absurd (Subsingleton.elim i j) hij.ne
 
+/--
+**The case $k = 2$.**
+
+A graph with chromatic number at least $2$ has an edge, and the two endpoints of an edge form
+a $K_2$-model.
+-/
+@[category research solved, AMS 5]
+theorem hadwiger_conjecture.variants.two
+    {V : Type} [Fintype V] (G : SimpleGraph V)
+    (h : (2 : ℕ∞) ≤ G.chromaticNumber) : (completeGraph (Fin 2)).IsMinor G := by
+  -- `χ(G) ≥ 2` forces an edge: otherwise `G = ⊥` is `1`-colourable.
+  obtain ⟨u, v, huv⟩ : ∃ u v, G.Adj u v := by
+    by_contra hno
+    push Not at hno
+    have hbot : G = ⊥ := by
+      ext a b
+      simp [hno a b]
+    have h1 : G.chromaticNumber ≤ 1 := by
+      subst hbot
+      exact_mod_cast Colorable.chromaticNumber_le ⟨⟨fun _ => 0, fun h => by simp at h⟩⟩
+    exact absurd (h.trans h1) (by decide)
+  refine ⟨fun i => if i = 0 then {u} else {v}, ?_, ?_, ?_, ?_⟩
+  · intro i
+    split <;> exact Set.singleton_nonempty _
+  · intro i
+    by_cases hi : i = 0
+    · rw [if_pos hi]; exact (isMinorModel_singleton G).connected u
+    · rw [if_neg hi]; exact (isMinorModel_singleton G).connected v
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> simp at hij ⊢
+    · exact G.ne_of_adj huv
+    · exact (G.ne_of_adj huv).symm
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> simp at hij ⊢
+    · exact huv
+    · exact huv.symm
+
 end HadwigerConjecture
