@@ -59,7 +59,7 @@ noncomputable def classNumberOfDiscriminant (d : ℤ) : ℕ :=
 /-- $|d|$ is the largest absolute value among negative fundamental discriminants
 with class number $n$. -/
 def IsLargestNegFundDiscrForClassNumber {n : ℕ} (absD : ℕ) : Prop :=
-  IsGreatest {m : ℕ | IsFundamentalDiscr (-(m : ℤ)) ∧ classNumberOfDiscriminant (-(m : ℤ)) = n}
+  IsGreatest {m : ℕ | IsFundamentalDiscr (-m : ℤ) ∧ classNumberOfDiscriminant (-m : ℤ) = n}
     absD
 
 /-- The Stark-Heegner theorem [Sta67] implies that the squarefree $k > 0$ such that
