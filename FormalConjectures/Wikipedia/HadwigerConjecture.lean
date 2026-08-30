@@ -50,7 +50,7 @@ Every finite graph $G$ with chromatic number $\chi(G) \ge k$ has the complete gr
 minor. Equivalently, $\chi(G) \le h(G)$ where $h(G)$ is the Hadwiger number.
 -/
 @[category research open, AMS 5]
-theorem hadwiger_conjecture : answer(sorry) ↔
+theorem hadwiger_conjecture :
     ∀ {V : Type} [Fintype V] (G : SimpleGraph V) (k : ℕ),
       (k : ℕ∞) ≤ G.chromaticNumber → (completeGraph (Fin k)).IsMinor G := by
   sorry
@@ -77,7 +77,8 @@ by Appel and Haken (1976) and Robertson, Sanders, Seymour and Thomas (1997).
 
 *Reference:* [Wa37].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using other_system at
+"https://github.com/rocq-community/fourcolor"]
 theorem hadwiger_conjecture.variants.five
     {V : Type} [Fintype V] (G : SimpleGraph V)
     (h : (5 : ℕ∞) ≤ G.chromaticNumber) : (completeGraph (Fin 5)).IsMinor G := by
@@ -95,14 +96,13 @@ theorem hadwiger_conjecture.variants.six
   sorry
 
 /--
-**The linear Hadwiger conjecture (open).**
+**The linear Hadwiger conjecture.**
 
-There is a constant $C$ such that every graph with no $K_k$ minor is $Ck$-colourable. The best
-known bound is $O(k \log \log k)$ (Delcourt–Postle [DP21]), improving Kostochka's and
-Thomason's $O(k \sqrt{\log k})$ [Ko84].
+There is a constant $C$ such that every graph with no $K_k$ minor is $Ck$-colourable
+(see [DP21], [Ko84]).
 -/
 @[category research open, AMS 5]
-theorem hadwiger_conjecture.variants.linear : answer(sorry) ↔
+theorem hadwiger_conjecture.variants.linear :
     ∃ C : ℕ, ∀ {V : Type} [Fintype V] (G : SimpleGraph V) (k : ℕ),
       ¬ (completeGraph (Fin k)).IsMinor G → G.chromaticNumber ≤ C * k := by
   sorry
@@ -128,7 +128,7 @@ theorem hadwiger_conjecture.variants.kostochka_thomason :
 `K_0` is a minor of every graph (empty family of branch sets), and `K_1` is a minor of every
 graph with a vertex, which is guaranteed by $\chi(G) \ge 1$.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem hadwiger_conjecture.variants.le_one
     {V : Type} [Fintype V] (G : SimpleGraph V) (k : ℕ) (hk : k ≤ 1)
     (h : (k : ℕ∞) ≤ G.chromaticNumber) : (completeGraph (Fin k)).IsMinor G := by
@@ -154,7 +154,7 @@ theorem hadwiger_conjecture.variants.le_one
 A graph with chromatic number at least $2$ has an edge, and the two endpoints of an edge form
 a $K_2$-model.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem hadwiger_conjecture.variants.two
     {V : Type} [Fintype V] (G : SimpleGraph V)
     (h : (2 : ℕ∞) ≤ G.chromaticNumber) : (completeGraph (Fin 2)).IsMinor G := by
