@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Busy Beaver
@@ -37,10 +37,10 @@ structure Candidate (n : ℕ) where
   Γ : Type
   Λ : Type
   Γ_fintype : Fintype Γ
-  Γ_card : Fintype.card Γ = n
+  Γ_card : Fintype.card Γ = 2
   Γ_inhabited : Inhabited Γ
   Λ_fintype : Fintype Λ
-  Λ_card : Fintype.card Λ = 2
+  Λ_card : Fintype.card Λ = n
   Λ_inhabited : Inhabited Λ
   M : Machine Γ Λ
   M_isHalting : M.IsHalting
@@ -62,26 +62,31 @@ To compute `BB n`, we need only consider machines with states and symbols indexe
 -/
 @[category API, AMS 3]
 theorem sanity_check (n : ℕ) [NeZero n] :
-    BB n = sSup {N | ∃ (M : Machine (Fin n) (Fin 2)) (_ : M.IsHalting),
+    BB n = sSup {N | ∃ (M : Machine (Fin 2) (Fin n)) (_ : M.IsHalting),
       M.haltingNumber = N} := by
   sorry
 
+/-- The value of the Busy Beaver function for 1 state is 1. -/
 @[category test, AMS 3]
 theorem BB_1 : BB 1 = 1 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 2 states is 6. -/
+@[category textbook, AMS 3]
 theorem BB_2 : BB 2 = 6 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 3 states is 21. -/
+@[category textbook, AMS 3]
 theorem BB_3 : BB 3 = 21 := by
   sorry
 
-@[category undergraduate, AMS 3]
+/-- The value of the Busy Beaver function for 4 states is 107. -/
+@[category textbook, AMS 3]
 theorem BB_4 : BB 4 = 107 := by
   sorry
 
+/-- The value of the Busy Beaver function for 5 states is 47176870. -/
 @[category research solved, AMS 3]
 theorem BB_5 : BB 5 = 47176870 := by
   sorry

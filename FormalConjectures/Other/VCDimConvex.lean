@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²
@@ -29,7 +29,9 @@ and conjectures that every convex set in ℝⁿ⁺¹ has finite VCₙ dimension.
 
 open scoped EuclideanGeometry Pointwise
 
-/-! ### What's known in the literature -/
+namespace VCDimConvex
+
+/-  ### What's known in the literature -/
 
 /-- Every convex set in $\mathbb R^2$ has VC dimension at most 3. -/
 @[category research solved, AMS 5 52]
@@ -41,24 +43,34 @@ lemma hasAddVCDimAtMost_three_of_convex_r2 {C : Set ℝ²} (hC : Convex ℝ C) :
 lemma exists_infinite_convex_r3_shatters :
     ∃ A C : Set ℝ³, A.Infinite ∧ Convex ℝ C ∧ Shatters {t +ᵥ C | t : ℝ³} A := sorry
 
-/-! ### What's not in the literature -/
+/-  ### What's not in the literature -/
 
 /-- There exists a set of infinite $\mathrm{VC}_n$ dimension in $\mathbb R^{n + 2}$. -/
 @[category research solved, AMS 5 52]
 lemma exists_convex_rn_add_two_vc_n_forall_not_hasAddVCNDimAtMost (n : ℕ) :
     ∃ C : Set (Fin (n + 2) → ℝ), Convex ℝ C ∧ ∀ d, ¬ HasAddVCNDimAtMost C n d := sorry
 
-/-! ### Conjectures -/
+/-  ### Conjectures -/
 
-/-- Every convex set in $\mathbb R^3$ has $\mathrm{VC}_2$ dimension at most 1. -/
+/-- Not every convex set in $\mathbb R^3$ has
+$\mathrm{VC}_2$ dimension at most 1. -/
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/vcdim-convex-counterexample/blob/ad7ffff1514843c886633f5408c6456dfb2e2a49/formal-conjectures-v4.27.0/VCDimConvexCounterexample.lean"]
+lemma hasAddVCNDimAtMost_two_one_of_convex_r3 :
+    ¬ ∀ {C : Set ℝ³} (hC : Convex ℝ C),
+      HasAddVCNDimAtMost C 2 1 := sorry
+
+/-- Every convex set in $\mathbb R^3$ has
+$\mathrm{VC}_2$ dimension at most 2. -/
 @[category research open, AMS 5 52]
-lemma hasAddVCNDimAtMost_two_one_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
-    HasAddVCNDimAtMost C 2 1 := sorry
+lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
+    HasAddVCNDimAtMost C 2 2 := sorry
 
-/-- For every $n$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
+/-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most $d$. -/
 @[category research open, AMS 5 52]
-lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) :
+lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
 /-- If $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has $\mathrm{VC}_n$ dimension at most 1.
@@ -66,3 +78,5 @@ lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) :
 @[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_n_one_of_convex_rn_add_one {n : ℕ} (hn : 2 ≤ n) {C : Set (Fin (n + 1) → ℝ)}
     (hC : Convex ℝ C) : HasAddVCNDimAtMost C n 1 := sorry
+
+end VCDimConvex

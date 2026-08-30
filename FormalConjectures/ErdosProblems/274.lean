@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 274
 
 *References:*
-[erdosproblems.com/274](https://www.erdosproblems.com/274)
-[Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [erdosproblems.com/274](https://www.erdosproblems.com/274)
+* [Wikipedia](https://en.wikipedia.org/wiki/Herzog%E2%80%93Sch%C3%B6nheim_conjecture)
+* [arXiv:1803.08301](https://arxiv.org/abs/1803.08301)
+* [arXiv:1803.03569](https://arxiv.org/abs/1803.03569)
+* [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
+* [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
 open scoped Pointwise Cardinal
@@ -36,7 +40,7 @@ union covers `G`.
 
 Note that this differs from `Partition (α := Subgroup G)` because the covering condition there
 invokes `Subgroup.sup` which is subgroup generation and thus stronger than union. This definition
-is easier to use in this contect than the alternative `Partition (α := Set G)`, which lacks
+is easier to use in this context than the alternative `Partition (α := Set G)`, which lacks
 subgroup definitions such as `Subgroup.index`. -/
 structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] where
   parts : ι → Subgroup G
@@ -46,13 +50,17 @@ structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] wh
   covers : ⋃ i, reps i • (parts i : Set G) = Set.univ
 
 /--
-Does there exist a group `G` with an exact covering by more than one cosets of
-different sizes? (i.e. each element is contained in exactly one of the cosets.)
+If $G$ is a group, can there exist an exact covering of $G$ by more than one coset
+of different sizes? (i.e. each element is contained in exactly one of the cosets.)
+
+The conjectured answer is no: in every such exact covering, two of the subgroups have
+the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (h : Group G) (hG : 1 < ENat.card G)
-    (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
-      1 < Fintype.card ι ∧ (Set.range P.parts).Pairwise fun A B ↦ #A ≠ #B := by
+theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
+    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
+    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
+    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
   sorry
 
 /--
@@ -60,7 +68,8 @@ If `G` is a finite abelian group then there cannot exist an exact covering of `G
 than one cosets of different sizes? (i.e. each element is contained in exactly one
 of the cosets.)
 -/
-@[category research solved, AMS 20]
+@[category research solved, AMS 20,
+  formal_proof using lean4 at "https://github.com/Jostamon/erdos274-hs-abelian/blob/2ab8a2e39e7dd7836adf577b52555f069244466f/Erdos274/Main.lean"]
 theorem erdos_274.variants.abelian {G : Type*} [Fintype G] [CommGroup G]
     (hG : 1 < Fintype.card G) {ι : Type*} [Fintype ι] (P : Group.ExactCovering G ι)
     (hι : 1 < Fintype.card ι) :

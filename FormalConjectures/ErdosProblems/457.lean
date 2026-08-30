@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 457
@@ -30,9 +30,11 @@ many $n$ where all primes $p \le (2 + \epsilon) \log n$ divide
 $$
   \prod_{1 \le i \le \log n} (n + i)?
 $$
+
+This was formalized in Lean by Baretto and van Doorn using Aristotle.
 -/
-@[category research open, AMS 11]
-theorem erdos_457 : answer(sorry) ↔ ∃ ε > (0 : ℝ),
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem457.lean"]
+theorem erdos_457 : answer(True) ↔ ∃ ε > (0 : ℝ),
     { (n : ℕ) | ∀ (p : ℕ), p ≤ (2 + ε) * Real.log n → p.Prime →
       p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite := by
   sorry
@@ -40,7 +42,7 @@ theorem erdos_457 : answer(sorry) ↔ ∃ ε > (0 : ℝ),
 /-- Let $q(n, k)$ denote the least prime which does not divide
 $\prod_{1 \le i \le k}(n + i)$. -/
 noncomputable abbrev q (n : ℕ) (k : ℝ) : ℕ :=
-    Nat.find (Nat.exists_prime_not_dvd (∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
+    Nat.find (Nat.exists_prime_not_dvd (n := ∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
       (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
 
 /--

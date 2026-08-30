@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Dedekind Numbers
@@ -51,7 +51,7 @@ namespace DedekindNumber
 open Finset
 
 instance piFinBoolDecidableLE {n : ℕ} :
-DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
+    DecidableRel (fun (a b : Fin n → Bool) => a ≤ b) :=
   fun a b => show Decidable (a ≤ b) from by
     rw [Pi.le_def]
     exact Fintype.decidableForallFintype
@@ -101,7 +101,7 @@ theorem M'_two : M' 2 = 6 := by native_decide
 @[category test, AMS 6]
 theorem M'_three : M' 3 = 20 := by native_decide
 
-/-! ## Equivalence of M and M'
+/-  ## Equivalence of M and M'
 -/
 
 /-- The indicator function of a finset: `χ s i = true ↔ i ∈ s`. -/
@@ -121,7 +121,7 @@ def toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) : Finset (Finset (Fin n)
 def fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (v : Fin n → Bool) : Bool :=
   decide (∃ s ∈ A, ∀ i ∈ s, v i = true)
 
-/-! ### Helper lemmas about χ and supp -/
+/-  ### Helper lemmas about χ and supp -/
 
 @[category API, AMS 5]
 lemma χ_supp {n : ℕ} (v : Fin n → Bool) : χ (supp v) = v := by
@@ -134,12 +134,7 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  constructor
-  · intro h i hi
-    contrapose! h
-    exact fun H => by have := H i; simp_all +decide [ χ ]
-  · intro h i; simp [χ];
-    by_cases hi : i ∈ s <;> simp_all +decide [ Finset.subset_iff ]
+  simp [χ, Pi.le_def, Finset.subset_iff]
 
 @[category API, AMS 6]
 lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔ v i = true := by
@@ -165,7 +160,8 @@ lemma fromSperner_monotone {n : ℕ} (A : Finset (Finset (Fin n))) (_ : IsSperne
       exact decide_eq_true
         ( ⟨ s, hsA, fun i hi => by simpa using Finset.mem_filter.mp ( hs_w hi ) |>.2 ⟩ )
 
-@[category graduate, AMS 5 6]
+/-- Every true set of a monotone Boolean function contains a minimal true set. -/
+@[category textbook, AMS 5 6]
 lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : Monotone f)
     {s : Finset (Fin n)} (hs : f (χ s) = true) :
     ∃ t, t ⊆ s ∧ f (χ t) = true ∧ ∀ u, u ⊆ t → f (χ u) = true → t ⊆ u := by
@@ -180,7 +176,8 @@ lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : 
         not_lt_of_ge ( ht₂ u ⟨ hu.trans ht₁.1, hu' ⟩ )
         ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.2 ⟨ hu, by aesop ⟩ )
 
-@[category graduate, AMS 5 6]
+/-- Converting a monotone function to a Sperner family and back yields the same function. -/
+@[category textbook, AMS 5 6]
 lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Monotone f) :
     fromSperner (toSperner f) = f := by
   funext v
@@ -198,7 +195,8 @@ lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Mono
     refine' hf _ hs.1
     intro i; by_cases hi : i ∈ s <;> simp_all +decide [ χ ]
 
-@[category graduate, AMS 5 6]
+/-- Converting a Sperner family to a monotone function and back yields the same family. -/
+@[category textbook, AMS 5 6]
 lemma toSperner_fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (hA : IsSperner A) :
     toSperner (fromSperner A) = A := by
   ext s; simp [toSperner, fromSperner]
@@ -228,11 +226,42 @@ theorem M_eq_M' : M  = M' := by
   ext n
   exact Fintype.card_congr (equivMonotoneSperner n)
 
+/-- A closed formula for the Dedekind numbers as found by Kisielewicz (1998):
+$$
+  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+    1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
+$$,
+where $b_i^k$ is the $i$-th bit of $k$. -/
+def kisielewiczFormula (n : ℕ) : ℕ :=
+  ∑ k ∈ Finset.range (2 ^ (2 ^ n)), ∏ j ∈ Finset.Icc 1 (2 ^ n), ∏ i ∈ Finset.range j,
+    (1 - (k.testBit i).toNat * (k.testBit j).toNat * ∏ m ∈ Finset.range (i.log2 + 1),
+      (1 - (i.testBit m).toNat + (i.testBit m).toNat * (j.testBit m).toNat))
+
+@[category test, AMS 5 6] theorem kisielewiczFormula_zero : kisielewiczFormula 0 = 2:= by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_one : kisielewiczFormula 1 = 3 := by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_two : kisielewiczFormula 2 = 6 := by decide
+@[category test, AMS 5 6] theorem kisielewiczFormula_three : kisielewiczFormula 3 = 20 := by
+  native_decide
+-- `native_decide` crashes for n = 4
+
+/-- Kisielewicz (1988) proved the following arithmetic formula for the Dedekind numbers:
+$$
+  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+    1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
+$$
+where $b_i^k$ is the $i$-th bit of $k$. However, this formula is not computationally
+efficient for large $n$.
+-/
+@[category research solved, AMS 5 6]
+theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
+  sorry
+
 /--
-  No closed form for the Dedekind numbers are currently unknown.
+  No closed-form expression that allows efficient computation of Dedekind numbers is
+  currently known.
 -/
 @[category research open, AMS 5 6]
-theorem DedekindNumbers : M = answer(sorry) := by
+theorem M_eq : M = answer(sorry) := by
   sorry
 
 /--

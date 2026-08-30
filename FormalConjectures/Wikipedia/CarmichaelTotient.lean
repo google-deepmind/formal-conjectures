@@ -14,13 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-universe u v
-
-open Nat
-
-namespace CarmichaelTotient
+import FormalConjecturesUtil
 
 /-!
 # Carmichael's totient function conjecture
@@ -33,6 +27,12 @@ $φ(n) = φ(m)$ where $φ$ is the Euler totient function.
 - [F1998] Kevin Ford. The distribution of totients. https://arxiv.org/abs/1104.3264
 -/
 
+universe u v
+
+open Nat
+
+namespace CarmichaelTotient
+
 /-- Natural number $n$ for which there exists a $m ≠ n$ with $φ(m) = φ(n)$ -/
 def CarmichaelTotientFor (n : ℕ) : Prop := ∃ m : ℕ, m ≠ n ∧ φ m = φ n
 
@@ -44,7 +44,7 @@ theorem carchimichealTotientFor_zero : ¬ CarmichaelTotientFor 0 := by
 -- TODO: Version of this ↓ lemma to mathlib?
 
 /-- For every odd number $n$, $φ(2n) = φ(n)$ -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem carmichealTotientFor_odd {n : ℕ} (hn : Odd n) : CarmichaelTotientFor n := by
   use 2 * n
   refine ⟨(Nat.ne_of_lt (lt_two_mul_self (Odd.pos hn))).symm, ?_⟩

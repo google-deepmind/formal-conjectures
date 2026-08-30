@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1054
@@ -24,89 +24,15 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Erdos1054
 
-open Classical Filter Asymptotics
+open Filter Asymptotics
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest
 divisors of $m$ for some $k\geq 1$. -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   if h : ∃ᵉ (m) (k ≥ 1), n = ∑ i < k, Nat.nth (· ∈ m.divisors) i then
     Nat.find h
   else 0
-
-@[category API, AMS 11]
-private lemma nth_divisor_zero_eq_one {m : ℕ} (hm : m ≠ 0) :
-    Nat.nth (· ∈ m.divisors) 0 = 1 := by
-  rw [Nat.nth_zero]
-  apply le_antisymm
-  · exact Nat.sInf_le (Nat.one_mem_divisors.2 hm)
-  · exact Nat.succ_le_of_lt (Nat.pos_of_mem_divisors (Nat.sInf_mem ⟨1, Nat.one_mem_divisors.2 hm⟩))
-
-@[category API, AMS 11]
-private lemma nth_divisor_one_eq_minFac {m : ℕ} (hm : m ≠ 0) (hm1 : m ≠ 1) :
-    Nat.nth (· ∈ m.divisors) 1 = m.minFac := by
-  let s : Set ℕ := {x | x ∈ m.divisors ∧ ∀ k < 1, Nat.nth (· ∈ m.divisors) k < x}
-  have hmem : m.minFac ∈ s := by
-    constructor
-    · simpa [Nat.mem_divisors, hm] using And.intro (Nat.minFac_dvd m) hm
-    · intro k hk
-      have hk0 : k = 0 := by omega
-      subst hk0
-      rw [nth_divisor_zero_eq_one hm]
-      exact (Nat.minFac_prime hm1).one_lt
-  have hEq : Nat.nth (· ∈ m.divisors) 1 = sInf s := by
-    simpa [s] using (Nat.nth_eq_sInf (fun x => x ∈ m.divisors) 1)
-  apply le_antisymm
-  · rw [hEq]
-    exact Nat.sInf_le hmem
-  · rw [hEq]
-    have hsinf_mem : sInf s ∈ s := Nat.sInf_mem ⟨m.minFac, hmem⟩
-    have hdiv : sInf s ∣ m := (Nat.mem_divisors.mp hsinf_mem.1).1
-    have hgt0 : Nat.nth (· ∈ m.divisors) 0 < sInf s := by
-      exact hsinf_mem.2 0 (by omega)
-    rw [nth_divisor_zero_eq_one hm] at hgt0
-    have hge2 : 2 ≤ sInf s := by omega
-    exact Nat.minFac_le_of_dvd hge2 hdiv
-
-@[category API, AMS 11]
-private lemma sum_range_eq_head {g : ℕ → ℕ} {k : ℕ} (hk : 1 ≤ k)
-    (hz : ∀ i, g (i + 1) = 0) :
-    Finset.sum (Finset.range k) g = g 0 := by
-  rcases k with _ | k
-  · omega
-  · rw [Finset.sum_range_succ']
-    simp [hz]
-
-@[category API, AMS 11]
-private lemma sum_range_eq_first_two {g : ℕ → ℕ} {k : ℕ} (hk : 2 ≤ k)
-    (hz : ∀ i, g (i + 2) = 0) :
-    Finset.sum (Finset.range k) g = g 0 + g 1 := by
-  rcases k with _ | k
-  · omega
-  rcases k with _ | k
-  · omega
-  rw [Finset.sum_range_succ', Finset.sum_range_succ']
-  simp [hz, add_comm, add_left_comm]
-
-@[category API, AMS 11]
-private lemma nth_divisor_two_eq_zero_or_ge_three {m : ℕ} (hm : m ≠ 0) :
-    Nat.nth (· ∈ m.divisors) 2 = 0 ∨ 3 ≤ Nat.nth (· ∈ m.divisors) 2 := by
-  by_cases h2 : Nat.nth (· ∈ m.divisors) 2 = 0
-  · exact Or.inl h2
-  · right
-    have hfinite : Set.Finite {x | x ∈ m.divisors} := m.divisors.finite_toSet
-    have hcard : 2 < hfinite.toFinset.card := Nat.lt_card_toFinset_of_nth_ne_zero h2 hfinite
-    have hzero : ¬ (0 ∈ m.divisors) := by simp [Nat.mem_divisors, hm]
-    have h1nz : Nat.nth (· ∈ m.divisors) 1 ≠ 0 :=
-      Nat.nth_ne_zero_anti hzero (by omega) h2
-    have hm1 : m ≠ 1 := by
-      intro hm1
-      subst hm1
-      simp [Nat.nth_eq_zero] at h1nz
-    have h12 : Nat.nth (· ∈ m.divisors) 1 < Nat.nth (· ∈ m.divisors) 2 :=
-      Nat.nth_lt_nth_of_lt_card hfinite (by omega) hcard
-    rw [nth_divisor_one_eq_minFac hm hm1] at h12
-    have hmf2 : 2 ≤ m.minFac := (Nat.minFac_prime hm1).two_le
-    omega
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?-/
@@ -130,136 +56,97 @@ theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=2$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_2 : f 2 = 0 := by
-  unfold f
-  rw [dif_neg]
-  intro h
-  rcases h with ⟨m, k, hk, hsum⟩
+  rw [f, dif_neg]
+  rintro ⟨m, k, hk, hsum⟩
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
-  · let g : ℕ → ℕ := fun i => Nat.nth (· ∈ m.divisors) i
-    have hIio : Finset.Iio k = Finset.range k := by
-      ext i
-      simp
-    have h0 : g 0 = 1 := nth_divisor_zero_eq_one hm
-    have hsum' : 2 = Finset.sum (Finset.range k) g := by
-      simpa [g, hIio] using hsum
-    rcases k with _ | k
-    · omega
-    rcases k with _ | k
-    · rw [show Finset.sum (Finset.range 1) g = g 0 by simp] at hsum'
-      rw [h0] at hsum'
-      norm_num at hsum'
-    · by_cases h1z : g 1 = 0
-      · have hzero : ¬ (0 ∈ m.divisors) := by simp [Nat.mem_divisors, hm]
-        have hz : ∀ i, g (i + 1) = 0 := by
-          intro i
-          exact Nat.nth_eq_zero_mono hzero (Nat.succ_le_succ (Nat.zero_le i)) h1z
-        have hsum1 : Finset.sum (Finset.range (k + 2)) g = 1 := by
-          rw [sum_range_eq_head (by omega) hz, h0]
-        rw [hsum1] at hsum'
-        norm_num at hsum'
-      · have hm1 : m ≠ 1 := by
-          intro hm1
-          subst hm1
-          simp [g, Nat.nth_eq_zero] at h1z
-        have h1 : g 1 = m.minFac := by
-          simpa [g] using nth_divisor_one_eq_minFac hm hm1
-        have hle0 : Finset.sum ({0, 1} : Finset ℕ) g ≤ Finset.sum (Finset.range (k + 2)) g := by
-          refine Finset.sum_le_sum_of_subset_of_nonneg ?_ ?_
-          · intro i hi
-            simp at hi ⊢
-            omega
-          · intro i hi hik
-            exact Nat.zero_le _
-        have hle : 1 + m.minFac ≤ Finset.sum (Finset.range (k + 2)) g := by
-          rw [show Finset.sum ({0, 1} : Finset ℕ) g = g 0 + g 1 by simp] at hle0
-          rw [h0, h1] at hle0
-          exact hle0
-        rw [← hsum'] at hle
-        have hmf2 : 2 ≤ m.minFac := (Nat.minFac_prime hm1).two_le
-        omega
+  · -- For `m ≠ 0` the smallest divisor is `1` and every later term is `≥ 2`, so the sum of the
+    -- `k` smallest divisors is `1` or `≥ 3`, never `2`.
+    have hk0 : (0 : ℕ) ∈ Finset.Iio k := Finset.mem_Iio.mpr (by omega)
+    rw [← Finset.add_sum_erase _ _ hk0, Nat.nth_divisors_zero hm] at hsum
+    obtain ⟨i, hi_mem, hi_ne⟩ :=
+      Finset.exists_ne_zero_of_sum_ne_zero (s := (Finset.Iio k).erase 0)
+        (f := Nat.nth (· ∈ m.divisors)) (by omega)
+    have h2 := Nat.two_le_nth_divisors hm (Finset.ne_of_mem_erase hi_mem) hi_ne
+    have := h2.trans (Finset.single_le_sum (fun j _ => Nat.zero_le _) hi_mem)
+    omega
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Show that $f$ is undefined at $n=5$, i.e. we get the junk value $0$. -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem f_undefined_at_3 : f 5 = 0 := by
-  unfold f
-  rw [dif_neg]
-  intro h
-  rcases h with ⟨m, k, hk, hsum⟩
+  rw [f, dif_neg]
+  rintro ⟨m, k, hk, hsum⟩
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
-  · let g : ℕ → ℕ := fun i => Nat.nth (· ∈ m.divisors) i
-    have hIio : Finset.Iio k = Finset.range k := by
-      ext i
-      simp
-    have h0 : g 0 = 1 := nth_divisor_zero_eq_one hm
-    have hsum' : 5 = Finset.sum (Finset.range k) g := by
-      simpa [g, hIio] using hsum
-    rcases k with _ | k
-    · omega
-    rcases k with _ | k
-    · rw [show Finset.sum (Finset.range 1) g = g 0 by simp] at hsum'
-      rw [h0] at hsum'
-      norm_num at hsum'
-    · by_cases h1z : g 1 = 0
-      · have hzero : ¬ (0 ∈ m.divisors) := by simp [Nat.mem_divisors, hm]
-        have hz : ∀ i, g (i + 1) = 0 := by
-          intro i
-          exact Nat.nth_eq_zero_mono hzero (Nat.succ_le_succ (Nat.zero_le i)) h1z
-        have hsum1 : Finset.sum (Finset.range (k + 2)) g = 1 := by
-          rw [sum_range_eq_head (by omega) hz, h0]
-        rw [hsum1] at hsum'
-        norm_num at hsum'
-      · have hm1 : m ≠ 1 := by
-          intro hm1
-          subst hm1
-          simp [g, Nat.nth_eq_zero] at h1z
-        have h1 : g 1 = m.minFac := by
-          simpa [g] using nth_divisor_one_eq_minFac hm hm1
-        rcases k with _ | k
-        · have hsumRange2 : Finset.sum (Finset.range 2) g = g 0 + g 1 := by
-            rw [Finset.sum_range_succ, Finset.sum_range_succ]
-            simp [g]
-          rw [hsumRange2, h0, h1] at hsum'
-          have hnot4 : m.minFac ≠ 4 := by
-            intro h4
-            have hp : Nat.Prime m.minFac := Nat.minFac_prime hm1
-            norm_num [h4] at hp
-          omega
-        · by_cases h2z : g 2 = 0
-          · have hzero : ¬ (0 ∈ m.divisors) := by simp [Nat.mem_divisors, hm]
-            have hz : ∀ i, g (i + 2) = 0 := by
-              intro i
-              exact Nat.nth_eq_zero_mono hzero (by omega) h2z
-            have hsum2 : Finset.sum (Finset.range (k + 3)) g = 1 + m.minFac := by
-              rw [sum_range_eq_first_two (by omega) hz, h0, h1]
-            rw [hsum2] at hsum'
-            have hnot4 : m.minFac ≠ 4 := by
-              intro h4
-              have hp : Nat.Prime m.minFac := Nat.minFac_prime hm1
-              norm_num [h4] at hp
+  · set p : ℕ → Prop := fun x => x ∈ m.divisors with hpdef
+    have hfin : (Set.ofPred p).Finite := Set.finite_mem_finset m.divisors
+    have hg0 : Nat.nth p 0 = 1 := Nat.nth_divisors_zero hm
+    -- The `j`-th smallest divisor is at least `j + 1` (for `j` below the number of divisors).
+    have hlb : ∀ j, j < hfin.toFinset.card → j + 1 ≤ Nat.nth p j := by
+      intro j
+      induction j with
+      | zero => intro _; omega
+      | succ n ih =>
+        intro hj
+        have h1 := Nat.nth_lt_nth_of_lt_card hfin (show n < n + 1 by omega)
+          (show n + 1 < hfin.toFinset.card by omega)
+        have h2 := ih (by omega)
+        omega
+    -- The second smallest divisor of `m` is never `4`: if `4 ∣ m` then `2 ∣ m`, so `2` would be
+    -- the second smallest divisor.
+    have refute4 : Nat.nth p 1 ≠ 4 := by
+      intro h
+      have hne : Nat.nth p 1 ≠ 0 := by rw [h]; norm_num
+      have hcard1 : 1 < hfin.toFinset.card := by
+        by_contra! hcon
+        exact hne (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
+      have hmem : p (Nat.nth p 1) := Nat.nth_mem_of_lt_card hfin hcard1
+      rw [h] at hmem
+      have h4 : (4 : ℕ) ∣ m := (Nat.mem_divisors.mp hmem).1
+      have h2d : (2 : ℕ) ∣ m := dvd_trans (by norm_num) h4
+      have h2mem : p 2 := by simp [hpdef, Nat.mem_divisors, h2d, hm]
+      have hcount : Nat.count p 2 = 1 := by
+        simp [hpdef, Nat.count_succ, Nat.count_zero, Nat.mem_divisors, hm]
+      have hnc := Nat.nth_count (p := p) h2mem
+      rw [hcount, h] at hnc
+      norm_num at hnc
+    rcases lt_or_ge k 3 with hk3 | hk3
+    · -- `k = 1` or `k = 2`.
+      interval_cases k
+      · rw [Nat.Iio_eq_range, Finset.sum_range_one, hg0] at hsum
+        omega
+      · rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_one, hg0] at hsum
+        exact refute4 (by omega)
+    · -- `k ≥ 3`.
+      rcases eq_or_ne (Nat.nth p 2) 0 with hg2 | hg2
+      · -- At most two divisors are involved, so the sum equals `1 + Nat.nth p 1`.
+        have hz : ∀ i, 2 ≤ i → Nat.nth p i = 0 := by
+          rcases Nat.nth_eq_zero.mp hg2 with ⟨hp0', _⟩ | ⟨hf, hcle⟩
+          · exact absurd hp0' (by simp [hpdef, Nat.mem_divisors])
+          · intro i hi
+            refine Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, ?_⟩)
+            have heq : hf.toFinset.card = hfin.toFinset.card := by congr 1
             omega
-          · have h2ge : 3 ≤ g 2 := by
-              rcases nth_divisor_two_eq_zero_or_ge_three hm with h2' | h2'
-              · exact False.elim (h2z h2')
-              · simpa [g] using h2'
-            have hle0 : Finset.sum ({0, 1, 2} : Finset ℕ) g ≤ Finset.sum (Finset.range (k + 3)) g := by
-              refine Finset.sum_le_sum_of_subset_of_nonneg ?_ ?_
-              · intro i hi
-                simp at hi ⊢
-                omega
-              · intro i hi hik
-                exact Nat.zero_le _
-            have hle : 1 + m.minFac + g 2 ≤ Finset.sum (Finset.range (k + 3)) g := by
-              have hs : Finset.sum ({0, 1, 2} : Finset ℕ) g = g 0 + g 1 + g 2 := by
-                simp [add_assoc]
-              rw [hs, h0, h1] at hle0
-              exact hle0
-            rw [← hsum'] at hle
-            have hmf2 : 2 ≤ m.minFac := (Nat.minFac_prime hm1).two_le
-            omega
+        rw [← Finset.sum_subset (s₁ := Finset.Iio 2) (s₂ := Finset.Iio k)] at hsum
+        · rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_one, hg0] at hsum
+          exact refute4 (by omega)
+        · intro x hx; simp only [Finset.mem_Iio] at *; omega
+        · intro x hx hx2; simp only [Finset.mem_Iio] at *; exact hz x (by omega)
+      · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
+        have hc3 : 2 < hfin.toFinset.card := by
+          by_contra! hcon
+          exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
+        have hg1 := hlb 1 (by omega)
+        have hg2' := hlb 2 (by omega)
+        have hsub : ∑ i ∈ Finset.Iio 3, Nat.nth p i ≤ ∑ i ∈ Finset.Iio k, Nat.nth p i := by
+          apply Finset.sum_le_sum_of_subset_of_nonneg
+          · intro x hx; simp only [Finset.mem_Iio] at *; omega
+          · intros; positivity
+        rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
+          Finset.sum_range_one, hg0] at hsub
+        lia
 
 end Erdos1054
