@@ -26,7 +26,7 @@ Editor: Jan Vahrenhold.
 
 Rinat Ben-Avraham, Matthias Henze, Rafel Jaume, Balázs Keszegh, Orit E. Raz, Micha Sharir, Igor Tubis.
 Partial-Matching RMS Distance Under Translation: Combinatorics and Algorithms. Algorithmica 80, 2400–2421 (2018).
-`https://doi.org/10.1007/s00453-017-0326-0
+`https://doi.org/10.1007/s00453-017-0326-0`
 
 -/
 namespace LeastSquaresPointMatching
