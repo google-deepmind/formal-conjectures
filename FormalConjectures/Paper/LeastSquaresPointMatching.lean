@@ -34,7 +34,7 @@ namespace LeastSquaresPointMatching
 variable {m n : ℕ}
 
 /-- The sum of squared distances between corresponding points under a mapping $\pi$. -/
-def SumOfSquaredDistances (A : Fin m → ℝ × ℝ) (B : Fin n → ℝ × ℝ) (π : Fin m ↪ Fin n) : ℝ :=
+def SumOfSquaredDistances (A : Fin m → ℝ²) (B : Fin n → ℝ²) (π : Fin m ↪ Fin n) : ℝ :=
   ∑ i, dist (A i) (B (π i)) ^ 2
 
 /--
