@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tests for which sync issues `check_erdos_status.py` decides to close."""
+"""Tests for `check_erdos_status.py`: status scanning and issue syncing."""
 
+import os
+import tempfile
 import unittest
+from unittest import mock
 
-from check_erdos_status import issues_to_close
+import check_erdos_status
+from check_erdos_status import issues_to_close, scan_lean_files
 
 
 def issue(number, problem, repo="solved", site="formally solved"):
@@ -58,6 +62,69 @@ class IssuesToCloseTest(unittest.TestCase):
         issues = [issue(1, "71"), issue(2, "209"), issue(3, "353")]
         self.assertEqual(
             issues_to_close(issues, still_open={"209"}, known={"71", "209"}), [1])
+
+
+class ScanLeanFilesTest(unittest.TestCase):
+    """scan_lean_files must see multi-line annotations and scope a formal_proof
+    attribute to the theorem whose own annotation carries it."""
+
+    def scan(self, files):
+        with tempfile.TemporaryDirectory() as tmp:
+            for name, content in files.items():
+                with open(os.path.join(tmp, name), "w", encoding="utf-8") as f:
+                    f.write(content)
+            with mock.patch.object(check_erdos_status, "ERDOS_DIR", tmp):
+                return scan_lean_files()
+
+    def test_multiline_annotation_is_seen(self):
+        # The category attribute spans several lines, with formal_proof listed
+        # underneath. The old regex stopped at the first `]`, so it never saw
+        # the theorem at all and the problem was dropped from the scan.
+        content = (
+            "import Mathlib\n\n"
+            "example : True := by trivial\n\n"
+            "@[category research solved, AMS 28 30,\n"
+            "formal_proof using lean4 at \"...\",\n"
+            "formal_proof using formal_conjectures at \"...\"]\n"
+            "theorem erdos_848 : True := by trivial\n"
+        )
+        self.assertEqual(self.scan({"848.lean": content}), {"848": "formally solved"})
+
+    def test_variant_formal_proof_does_not_upgrade_main(self):
+        # The variant is formally proved but the main theorem is not. A proof
+        # of one variant does not formally solve the whole problem, so the
+        # problem must stay 'solved', not become 'formally solved'.
+        content = (
+            "import Mathlib\n\n"
+            "@[category research solved]\n"
+            "theorem erdos_848 : True := by trivial\n\n"
+            "@[category research solved,\n"
+            "formal_proof using lean4 at \"...\"]\n"
+            "theorem erdos_848.variants.asymptotic : True := by trivial\n"
+        )
+        self.assertEqual(self.scan({"848.lean": content}), {"848": "solved"})
+
+    def test_multiline_open_annotation_stays_open(self):
+        # A multi-line attribute on an open problem must not be skipped.
+        content = (
+            "import Mathlib\n\n"
+            "@[category research open, AMS 02 10]\n"
+            "theorem erdos_1041 : True := by trivial\n"
+        )
+        self.assertEqual(self.scan({"1041.lean": content}), {"1041": "open"})
+
+    def test_proof_elsewhere_in_file_does_not_upgrade(self):
+        # A formal_proof attribute elsewhere in the file (here on an unrelated
+        # helper theorem) must not leak into an unsolved problem.
+        content = (
+            "import Mathlib\n\n"
+            "@[category research solved]\n"
+            "theorem erdos_180 : True := by trivial\n\n"
+            "@[category research solved,\n"
+            "formal_proof using other_system at \"...\"]\n"
+            "theorem helper_lemma : True := by trivial\n"
+        )
+        self.assertEqual(self.scan({"180.lean": content}), {"180": "solved"})
 
 
 if __name__ == "__main__":
