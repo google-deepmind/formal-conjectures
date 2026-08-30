@@ -89,7 +89,7 @@ theorem isA038552_1_163 : IsA038552 1 163 := by
   have hm_in : m ∈ ({1, 2, 3, 7, 11, 19, 43, 67, 163} : Set ℕ) :=
     starkHeegner_classNumberOne ▸ Set.mem_ofPred.mpr ⟨hm_sq, hm_class⟩
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff, id] at hm_in ⊢
-  omega
+  lia
 
 /-
 The values for other class numbers in A038552 come from the papers
