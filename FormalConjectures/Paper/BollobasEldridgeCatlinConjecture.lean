@@ -20,7 +20,6 @@ import FormalConjecturesUtil
 # The Bollobás–Eldridge–Catlin conjecture on graph packing (1978)
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Graph_packing)
 * [BE78] Bollobás, B. and Eldridge, S. E. (1978). "Packings of graphs and applications to
   computational complexity." *J. Combin. Theory Ser. B* 25, pp. 105--124.
 * [Ca74] Catlin, P. A. (1974). "Subgraphs of graphs, I." *Discrete Math.* 10, pp. 225--233.
@@ -50,7 +49,7 @@ If $G_1$ and $G_2$ are graphs on the same $n$ vertices with maximum degrees $\De
 $\Delta_2$ satisfying $(\Delta_1 + 1)(\Delta_2 + 1) \le n + 1$, then $G_1$ and $G_2$ pack.
 -/
 @[category research open, AMS 5]
-theorem bollobas_eldridge_catlin_conjecture : answer(sorry) ↔
+theorem bollobas_eldridge_catlin_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G₁ G₂ : SimpleGraph V)
       [DecidableRel G₁.Adj] [DecidableRel G₂.Adj],
       (G₁.maxDegree + 1) * (G₂.maxDegree + 1) ≤ Fintype.card V + 1 → Packs G₁ G₂ := by
@@ -71,18 +70,33 @@ theorem bollobas_eldridge_catlin_conjecture.variants.sauer_spencer
   sorry
 
 /--
-**Maximum degree two (Aigner–Brandt 1993) and three (Csaba–Shokoufandeh–Szemerédi 2003).**
+**Maximum degree two (Aigner–Brandt 1993).**
 
-The conjecture holds whenever one of the graphs has maximum degree at most $3$ (for
-$\Delta_1 = 3$ only for sufficiently large $n$ in [CSS03]).
+The conjecture holds whenever one of the graphs has maximum degree at most $2$.
 
-*References:* [AF93], [CSS03].
+*Reference:* [AF93].
 -/
 @[category research solved, AMS 5]
 theorem bollobas_eldridge_catlin_conjecture.variants.maxDegree_le_two
     {V : Type} [Fintype V] [DecidableEq V] (G₁ G₂ : SimpleGraph V)
     [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] (hΔ : G₁.maxDegree ≤ 2)
     (h : (G₁.maxDegree + 1) * (G₂.maxDegree + 1) ≤ Fintype.card V + 1) : Packs G₁ G₂ := by
+  sorry
+
+
+/--
+**Maximum degree three, for large $n$ (Csaba–Shokoufandeh–Szemerédi 2003).**
+
+There is an $n_0$ such that the conjecture holds for all graphs on $n \ge n_0$ vertices when
+one of them has maximum degree at most $3$.
+
+*Reference:* [CSS03].
+-/
+@[category research solved, AMS 5]
+theorem bollobas_eldridge_catlin_conjecture.variants.maxDegree_three_large_n :
+    ∃ n₀ : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V] (G₁ G₂ : SimpleGraph V)
+      [DecidableRel G₁.Adj] [DecidableRel G₂.Adj], n₀ ≤ Fintype.card V → G₁.maxDegree ≤ 3 →
+      (G₁.maxDegree + 1) * (G₂.maxDegree + 1) ≤ Fintype.card V + 1 → Packs G₁ G₂ := by
   sorry
 
 /-- Packing is symmetric. -/
