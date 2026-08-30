@@ -57,7 +57,7 @@ Every bridgeless cubic graph has six perfect matchings such that every edge lies
 of them.
 -/
 @[category research open, AMS 5]
-theorem berge_fulkerson_conjecture : answer(sorry) ↔
+theorem berge_fulkerson_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       IsCubic G → G.IsBridgeless →
       ∃ M : Fin 6 → G.Subgraph, IsPerfectMatchingCover G 6 2 M := by
@@ -72,7 +72,7 @@ Mazzuoccolo [Ma11] proved this to be equivalent to the Berge–Fulkerson conject
 *Reference:* [Ma11].
 -/
 @[category research open, AMS 5]
-theorem berge_fulkerson_conjecture.variants.berge : answer(sorry) ↔
+theorem berge_fulkerson_conjecture.variants.berge :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       IsCubic G → G.IsBridgeless →
       ∃ M : Fin 5 → G.Subgraph, (∀ i, (M i).IsPerfectMatching) ∧
@@ -88,7 +88,7 @@ This would follow from the Berge–Fulkerson conjecture.
 *Reference:* [FR94].
 -/
 @[category research open, AMS 5]
-theorem berge_fulkerson_conjecture.variants.fan_raspaud : answer(sorry) ↔
+theorem berge_fulkerson_conjecture.variants.fan_raspaud :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       IsCubic G → G.IsBridgeless →
       ∃ M : Fin 3 → G.Subgraph, (∀ i, (M i).IsPerfectMatching) ∧
