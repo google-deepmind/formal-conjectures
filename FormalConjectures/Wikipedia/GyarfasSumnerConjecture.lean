@@ -51,7 +51,7 @@ isomorphic to $T$) is $\chi$-bounded: there is a function $f$ such that every $T
 $G$ satisfies $\chi(G) \le f(\omega(G))$.
 -/
 @[category research open, AMS 5]
-theorem gyarfas_sumner_conjecture : answer(sorry) ↔
+theorem gyarfas_sumner_conjecture :
     ∀ {W : Type} [Fintype W] [DecidableEq W] (T : SimpleGraph W) [DecidableRel T.Adj],
       T.IsTree → ∃ f : ℕ → ℕ, IsChiBoundedBy T f := by
   sorry
@@ -91,7 +91,7 @@ If $T$ is a single vertex then every nonempty graph contains an induced copy of 
 only $T$-free graph is the empty graph, whose chromatic number is $0$; hence
 $f = 0$ works.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem gyarfas_sumner_conjecture.variants.singleton :
     IsChiBoundedBy (⊥ : SimpleGraph (Fin 1)) (fun _ => 0) := by
   intro V _ _ G _ hT
