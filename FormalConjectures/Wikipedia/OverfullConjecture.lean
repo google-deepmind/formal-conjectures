@@ -57,7 +57,7 @@ If $\Delta(G) > n/3$ then $G$ is class $1$ (its chromatic index equals $\Delta(G
 only if $G$ contains no overfull subgraph with the same maximum degree.
 -/
 @[category research open, AMS 5]
-theorem overfull_conjecture : answer(sorry) ↔
+theorem overfull_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       Fintype.card V < 3 * G.maxDegree →
       (G.chromaticIndex = G.maxDegree ↔ ¬ HasOverfullSubgraph G) := by
