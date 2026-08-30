@@ -60,7 +60,7 @@ Every finite oriented graph with at least one vertex has a vertex $v$ whose seco
 out-neighbourhood is at least as large as its first: $|N^{++}(v)| \ge |N^{+}(v)|$.
 -/
 @[category research open, AMS 5]
-theorem seymour_second_neighborhood_conjecture : answer(sorry) ↔
+theorem seymour_second_neighborhood_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (D : Digraph V) [DecidableRel D.Adj],
       IsOriented D → ∃ v, (outNeighbors D v).card ≤ (secondOutNeighbors D v).card := by
   sorry
@@ -115,7 +115,7 @@ If some vertex has no out-neighbours (a *sink*) then the inequality holds at tha
 trivially. In particular the conjecture holds for every oriented graph with a sink, e.g. every
 acyclic oriented graph.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem seymour_second_neighborhood_conjecture.variants.sink
     {V : Type} [Fintype V] [DecidableEq V] (D : Digraph V) [DecidableRel D.Adj]
     (v : V) (hv : ∀ w, ¬ D.Adj v w) :
