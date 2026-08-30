@@ -85,7 +85,8 @@ $T_6(n) = (1/27 + o(1)) n^3$. The unit-triangle upper bound follows as a
 corollary, since unit equilateral triangles are a subset of equilateral
 triangles of any positive side length: $T_\mathrm{unit} \leq T_\mathrm{anysize}$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos755.lean#L1344"]
 theorem erdos_755 :
     answer(True) ↔ ∃ o : ℕ → ℝ,
       o =o[atTop] (fun _ : ℕ => (1 : ℝ)) ∧
