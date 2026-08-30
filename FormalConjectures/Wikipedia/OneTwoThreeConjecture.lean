@@ -58,7 +58,7 @@ Every finite simple graph with no isolated edge admits an edge weighting with we
 $\{1, 2, 3\}$ such that adjacent vertices have different weighted degrees.
 -/
 @[category research solved, AMS 5]
-theorem one_two_three_conjecture : answer(True) ↔
+theorem one_two_three_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       NoIsolatedEdge G →
       ∃ w : Sym2 V → ℕ, (∀ e ∈ G.edgeFinset, 1 ≤ w e ∧ w e ≤ 3) ∧
