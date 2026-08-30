@@ -50,7 +50,7 @@ a constant $c > 0$ such that the number of perfect matchings is at least $2^{cn}
 [EKKKN11] prove this with $2^{n/3656}$.
 -/
 @[category research solved, AMS 5]
-theorem lovasz_plummer_conjecture : answer(True) ↔
+theorem lovasz_plummer_conjecture :
     ∃ c : ℝ, 0 < c ∧ ∀ {V : Type} [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, G.degree v = 3) → G.IsBridgeless →
@@ -84,7 +84,7 @@ raised by Smith's theorem for cubic graphs, of which regular Hamiltonian graphs 
 Hamiltonian cycle: Thomassen [Th98] proved it for all $r$-regular graphs with $r \ge 300$.
 -/
 @[category research open, AMS 5]
-theorem sheehan_conjecture : answer(sorry) ↔
+theorem sheehan_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, G.degree v = 4) →
       ∀ (v : V) (c : G.Walk v v), IsHamiltonianCycle G c →
