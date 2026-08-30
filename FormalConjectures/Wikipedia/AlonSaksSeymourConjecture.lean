@@ -120,7 +120,7 @@ omit [Fintype V] [DecidableEq V] in
 
 The empty graph has `bp = 0` and chromatic number at most `1`, so `χ ≤ bp + 1`.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem alon_saks_seymour_conjecture.variants.bot :
     (⊥ : SimpleGraph V).chromaticNumber ≤ bicliquePartitionNumber (⊥ : SimpleGraph V) + 1 := by
   rw [bicliquePartitionNumber_bot, Nat.cast_zero, zero_add]
