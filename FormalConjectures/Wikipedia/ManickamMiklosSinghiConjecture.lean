@@ -49,7 +49,7 @@ $\sum_{i \in S} x_i \ge 0$. (The bound is attained by $x = (n-1, -1, \dots, -1)$
 condition $n \ge 4k$ cannot be weakened to $n \ge 3k + 1$ in general.)
 -/
 @[category research open, AMS 5]
-theorem manickam_miklos_singhi_conjecture : answer(sorry) ↔
+theorem manickam_miklos_singhi_conjecture :
     ∀ (n k : ℕ), 1 ≤ k → 4 * k ≤ n → ∀ x : Fin n → ℝ, ∑ i, x i = 0 →
       (n - 1).choose (k - 1) ≤ nonnegSubsetCount n k x := by
   sorry
@@ -84,7 +84,7 @@ theorem manickam_miklos_singhi_conjecture.variants.quadratic (n k : ℕ) (hk : 1
 With $k = 1$ the claim is that some $x_i$ is nonnegative, which is immediate since the $x_i$
 sum to $0$ (and $n \ge 4 > 0$, so there is at least one $x_i$).
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem manickam_miklos_singhi_conjecture.variants.one (n : ℕ) (hn : 4 ≤ n) (x : Fin n → ℝ)
     (hx : ∑ i, x i = 0) :
     (n - 1).choose 0 ≤ nonnegSubsetCount n 1 x := by
