@@ -53,7 +53,7 @@ def HasHamiltonianPath [DecidableEq V] (G : SimpleGraph V) : Prop :=
 Every finite connected vertex-transitive graph has a Hamiltonian path.
 -/
 @[category research open, AMS 5]
-theorem lovasz_conjecture : answer(sorry) ↔
+theorem lovasz_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.Connected → IsVertexTransitive G → HasHamiltonianPath G := by
   sorry
@@ -106,7 +106,7 @@ lemma isVertexTransitive_bot [DecidableEq V] : IsVertexTransitive (⊥ : SimpleG
 
 A connected graph on a single vertex trivially has a Hamiltonian path (the trivial walk).
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem lovasz_conjecture.variants.subsingleton [DecidableEq V] [Subsingleton V] [Nonempty V]
     (G : SimpleGraph V) : HasHamiltonianPath G :=
   ⟨Classical.arbitrary V, Classical.arbitrary V, Walk.nil,
