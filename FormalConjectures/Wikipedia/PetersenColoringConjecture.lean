@@ -56,7 +56,7 @@ some vertex of the Petersen graph. Jaeger showed that this conjecture implies bo
 Berge–Fulkerson conjecture and the cycle double cover conjecture.
 -/
 @[category research open, AMS 5]
-theorem petersen_coloring_conjecture : answer(sorry) ↔
+theorem petersen_coloring_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, G.degree v = 3) → G.IsBridgeless →
       ∃ φ : Sym2 V → Sym2 PetersenVertex, IsPetersenColoring G φ := by
@@ -88,7 +88,7 @@ theorem petersen_coloring_conjecture.variants.normal_five_edge_coloring
 
 Taking `φ = id`, every vertex `v` of `P` witnesses its own incidence set.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem petersen_coloring_conjecture.variants.petersenGraph :
     IsPetersenColoring petersenGraph id := fun v =>
   ⟨v, Finset.image_id, Set.injOn_id _⟩
