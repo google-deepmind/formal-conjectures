@@ -44,11 +44,29 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
   sSup {r | ∃ s, r = s.card ∧ AllowedSet k N s}
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
-points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
+points lie on a line is bounded by $\leq (k - 1) * N$. -/
 @[category textbook, AMS 5 52]
-theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
+theorem allowedSetSize_le {k : ℕ} {N : ℕ} :
     AllowedSetSize k N ≤ (k - 1) * N := by
-  sorry
+  refine csSup_le' ?_
+  rintro r ⟨s, rfl, hs⟩
+  -- Every column of the grid meets an allowed set in at most $k - 1$ points, since $k$ points
+  -- sharing a first coordinate lie on a common vertical line.
+  have key : ∀ x ∈ Finset.range N, (s.filter fun i => i.1 = x).card ≤ k - 1 := by
+    intro x _
+    by_contra hc
+    obtain ⟨t, hts, htc⟩ := Finset.exists_subset_card_eq (n := k)
+      (s := s.filter fun i => i.1 = x) (by omega)
+    refine hs.not_collinear (hts.trans (Finset.filter_subset _ _)) htc ?_
+    rw [collinear_iff_exists_forall_eq_smul_vadd]
+    refine ⟨((x : ℝ), 0), (0, 1), ?_⟩
+    rintro p ⟨i, hi, rfl⟩
+    exact ⟨i.2, by simp [(Finset.mem_filter.mp (hts hi)).2]⟩
+  calc s.card
+      = ∑ x ∈ Finset.range N, (s.filter fun i => i.1 = x).card :=
+        Finset.card_eq_sum_card_fiberwise fun i hi => Finset.mem_range.mpr (hs.is_bounded i hi).1
+    _ ≤ ∑ _x ∈ Finset.range N, (k - 1) := Finset.sum_le_sum key
+    _ = (k - 1) * N := by simp [mul_comm]
 
 /-- The proposition that the allowed-set size for $k$ and $N$ is $(k - 1) * N$. -/
 def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=

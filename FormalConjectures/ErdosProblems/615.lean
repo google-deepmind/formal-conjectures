@@ -45,6 +45,7 @@ open Filter SimpleGraph
 
 namespace Erdos615
 
+open scoped Classical in
 /--
 Does there exist some constant $c > 0$ such that for all sufficiently large $n$, if $G$ is a
 graph with $n$ vertices and at least $(1/8 - c)n^2$ edges then $G$ must contain either a $K_4$
@@ -59,6 +60,7 @@ theorem erdos_615 : answer(False) ↔
         ¬ G.CliqueFree 4 ∨ (n : ℝ) / Real.log n ≤ G.indepNum := by
   sorry
 
+open scoped Classical in
 /--
 The result of Fox, Loh, and Zhao [FLZ15] disproving the problem: if $f(n) \geq 0$ satisfies
 $f(n) = o(\sqrt{\log n/\log\log n})$, then for every $\epsilon > 0$ and all sufficiently
@@ -78,6 +80,7 @@ theorem erdos_615.variants.fox_loh_zhao (f : ℕ → ℝ) (hf : ∀ n, 0 ≤ f n
         (1 / 8 - ε) * n ^ 2 ≤ G.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 The complementary result of Sudakov [Su03]: if $f(n)/\sqrt{\log n} \to \infty$ then
 $\mathrm{rt}(n; 4, ne^{-f(n)}) = o(n^2)$; that is, for every $\epsilon > 0$ and all
