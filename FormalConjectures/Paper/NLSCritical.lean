@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+import FormalConjectures.Util.ProblemImports
 
 /-!
 # Energy-critical NLS in three dimensions.
@@ -33,7 +33,7 @@ The main theorem is:
   Annals of Mathematics 167 (2008) proves the a priori estimate, and thereby, global well-posedness.
 -/
 
-open Set ContDiff EuclideanGeometry Laplacian
+open Set ContDiff EuclideanGeometry Laplacian MeasureTheory
 
 namespace NLSCritical
 
@@ -45,6 +45,8 @@ structure LocalSchwartzSolution (l : ℝ) where
   u : ℝ → ℝ^3 → ℂ
   smooth : ContDiffOn ℝ ∞ (Function.uncurry u) (Icc (-l) l ×ˢ univ)
   schwartz : ∀ t ∈ Icc (-l) l, ∃ f : (SchwartzMap (ℝ^3) ℂ), u t = f
+  L10_loc : IntegrableOn (fun t ↦ (∫ x, ‖u t x‖^10)) (Icc (-l) l)
+  C0H1 : ∃ v : C(ℝ, ℝ^3 →₂[volume] ℝ^3 →L[ℝ] ℂ), ∀ t ∈ Icc (-l) l, ∀ᵐ x, fderiv ℝ (u t ·) x = v t x
   solution : ∀ t ∈ Icc (-l) l, ∀ x, Complex.I * (deriv (u · x) t) + Δ (u t) x = ‖u t x‖^4 * (u t x)
 
 /--
