@@ -160,7 +160,7 @@ lemma connectionProbability_self {W : Type*} [Fintype W] (H : SimpleGraph W) (p 
 When `u = v` the right-hand side is the probability that `(u, 0)` is connected to itself, which
 is `1`, so the inequality is just `connectionProbability_le_one`.
 -/
-@[category research solved, AMS 5 60]
+@[category test, AMS 5 60]
 theorem bunkbed_conjecture.variants.diagonal {V : Type} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (T : Finset V) (p : ℝ)
     (hp₀ : 0 ≤ p) (hp₁ : p ≤ 1) (u : V) :
