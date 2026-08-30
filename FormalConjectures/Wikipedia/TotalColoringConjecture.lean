@@ -44,7 +44,7 @@ Every finite simple graph $G$ has a total colouring with at most $\Delta(G) + 2$
 $\chi''(G) \le \Delta(G) + 2$, where $\Delta(G)$ is the maximum degree.
 -/
 @[category research open, AMS 5]
-theorem total_coloring_conjecture : answer(sorry) ↔
+theorem total_coloring_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.totalChromaticNumber ≤ G.maxDegree + 2 := by
   sorry
