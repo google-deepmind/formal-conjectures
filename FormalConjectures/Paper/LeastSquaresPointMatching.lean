@@ -93,7 +93,7 @@ theorem least_squares_point_matching_under_rotations_is_polynomially_bounded (d 
   ∃ c : ℕ, ∀ n : ℕ, ∀ A B : Fin n → ℝ × ℝ,
   {π : Fin n ↪ Fin n | ∃ R : Rotation_2,
     let B' := fun i => applyRotation_2 R (B i)
-    (∀ π' : Fin n ↪ Fin n, π' ≠ π → SumOfSquaredDistances A B' π' < SumOfSquaredDistances A B' π)}.ncard
+    (∀ π' : Fin n ↪ Fin n, π' ≠ π → SumOfSquaredDistances A B' π' > SumOfSquaredDistances A B' π)}.ncard
     ≤ c * n ^ d + 1 -- added +1 to account for the n=0 case
     := by
   sorry
