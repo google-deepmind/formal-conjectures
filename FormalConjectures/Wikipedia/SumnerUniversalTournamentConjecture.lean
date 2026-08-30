@@ -50,7 +50,7 @@ Every tournament on $2n - 2$ vertices contains every oriented tree on $n \ge 2$ 
 subgraph.
 -/
 @[category research open, AMS 5]
-theorem sumner_conjecture : answer(sorry) ↔
+theorem sumner_conjecture :
     ∀ (n : ℕ), 2 ≤ n →
       ∀ {W : Type} [Fintype W] [DecidableEq W] (D : Digraph W) [DecidableRel D.Adj],
         Fintype.card W = n → IsOrientedTree D →
