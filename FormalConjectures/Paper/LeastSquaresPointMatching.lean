@@ -56,7 +56,7 @@ If the conjecture is true, it implies a polynomial-time algorithm for least-squa
 -/
 @[category research open, AMS 52]
 theorem least_squares_partial_point_matching_under_translations_is_polynomially_bounded (d1 d2 : ℕ) :
-  ∃ c : ℕ, ∀ m n : ℕ, (m < n) → ∀ A : Fin m → ℝ × ℝ, ∀ B : Fin n → ℝ × ℝ,
+  ∃ c : ℕ, ∀ m n : ℕ, (m ≤ n) → ∀ A : Fin m → ℝ × ℝ, ∀ B : Fin n → ℝ × ℝ,
   {π : Fin m ↪ Fin n |
     ∃ T : ℝ × ℝ, -- translation
     let B' := fun i => B i + T
