@@ -51,7 +51,7 @@ Every finite bridgeless graph has a family of cycles such that every edge lies o
 of them.
 -/
 @[category research open, AMS 5]
-theorem cycle_double_cover_conjecture : answer(sorry) ↔
+theorem cycle_double_cover_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.IsBridgeless → ∃ C : Multiset (Cycle G), IsCycleDoubleCover G C := by
   sorry
@@ -92,7 +92,7 @@ theorem cycle_double_cover_conjecture.variants.girth_le_eleven
 
 A graph with no edges is bridgeless and has the empty cycle double cover.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem cycle_double_cover_conjecture.variants.edgeless
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (h : G.edgeFinset = ∅) : ∃ C : Multiset (Cycle G), IsCycleDoubleCover G C :=
