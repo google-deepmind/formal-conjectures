@@ -66,7 +66,7 @@ index at most $n$. The statement is known for all sufficiently large $n$ [KKKMO2
 holds for *every* $n$ remains open.
 -/
 @[category research open, AMS 5]
-theorem erdos_faber_lovasz_conjecture : answer(sorry) ↔
+theorem erdos_faber_lovasz_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (n : ℕ) (S : Fin n → Finset V),
       IsEFLFamily n S → (unionGraph S).Colorable n := by
   sorry
@@ -121,7 +121,7 @@ lemma cliqueOn_adj {S : Finset V} {u v : V} :
 With `n = 1` the family consists of a single vertex, so the union graph has no edges and is
 `1`-colourable.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem erdos_faber_lovasz_conjecture.variants.one
     {V : Type} [Fintype V] [DecidableEq V] (S : Fin 1 → Finset V) (hS : IsEFLFamily 1 S) :
     (unionGraph S).Colorable 1 := by
