@@ -26,11 +26,14 @@ ERDOS_DIR = os.path.join(
     "ErdosProblems",
 )
 
-# Matches the category annotation line immediately before any erdos theorem.
-# Captures the category and the problem number.
+# Matches the category annotation immediately before any erdos theorem.
+# Captures the annotation, the category, and the problem number.
+# The annotation may span several lines (a `formal_proof` attribute is often
+# listed underneath the category), so its body is matched with `[^\]]*`, which
+# crosses newlines but stops at the closing bracket.
 # Note: 'formally solved' is no longer a valid category value.
 CATEGORY_THEN_THEOREM = re.compile(
-    r"@\[category research (open|solved).*\]\s*\n"
+    r"(@\[category research (open|solved)[^\]]*\])\s*\n"
     r"theorem erdos_(\d+)([\w.]*)\s",
     re.MULTILINE,
 )
@@ -102,8 +105,8 @@ def scan_lean_files():
     non-variant theorems. The problem is 'open' if any part is open,
     'formally solved' if all parts are formally solved, and 'solved' otherwise.
 
-    A problem is 'formally solved' if its category is 'solved' and it has a
-    @[formal_proof ...] attribute.
+    A problem is 'formally solved' if its category is 'solved' and the
+    theorem's own annotation carries a @[formal_proof ...] attribute.
     """
     result = {}
     for fname in os.listdir(ERDOS_DIR):
@@ -113,23 +116,22 @@ def scan_lean_files():
         if not file_number.isdigit():
             continue
         filepath = os.path.join(ERDOS_DIR, fname)
-        with open(filepath) as f:
+        with open(filepath, encoding="utf-8") as f:
             content = f.read()
-
-        # Check if file has any formal_proof attribute
-        has_formal_proof = bool(FORMAL_PROOF_ATTR.search(content))
 
         # Collect all non-variant theorem categories for this problem number
         main_categories = []
         has_exact_main = False
         exact_main_cat = None
         for m in CATEGORY_THEN_THEOREM.finditer(content):
-            if m.group(2) != file_number:
+            if m.group(3) != file_number:
                 continue
-            suffix = m.group(3)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
-            cat = lean_category(m.group(1))
-            # Upgrade to 'formally solved' if formal_proof attribute is present
-            if cat == "solved" and has_formal_proof:
+            suffix = m.group(4)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
+            cat = lean_category(m.group(2))
+            # Upgrade to 'formally solved' only if this theorem's own annotation
+            # carries a formal_proof attribute. A proof of one variant does not
+            # formally solve the whole problem.
+            if cat == "solved" and FORMAL_PROOF_ATTR.search(m.group(1)):
                 cat = "formally solved"
             if suffix == "" or suffix == ":":
                 # Exact match: `erdos_{N}` with no suffix
