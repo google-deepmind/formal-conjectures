@@ -29,6 +29,9 @@ import FormalConjecturesUtil
 - [Gr90] Granville, Andrew, *A note on sums of primes*. Canad. Math. Bull. (1990), 452--454.
 - [TaZi23] Tao, Terence and Ziegler, Tamar, *Infinite partial sumsets in the primes*. J. Anal. Math.
   (2023), 375--389.
+
+Note: following Ostmann's definition of asymptotic additive decomposability (quoted in [ElHa15]),
+`A` and `B` are required to be sets of positive integers.
 -/
 
 open scoped Pointwise
@@ -40,7 +43,7 @@ Are there two infinite sets $A$ and $B$ such that $A+B$ agrees with the set of p
 -/
 @[category research open, AMS 11]
 theorem erdos_431 : answer(sorry) ↔
-    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧
+    ∃ A B : Set ℕ, 0 ∉ A ∧ 0 ∉ B ∧ A.Infinite ∧ B.Infinite ∧
       (symmDiff (A + B) {p : ℕ | p.Prime}).Finite := by
   sorry
 
