@@ -39,10 +39,14 @@ Let $f(n;r,k)$ be the maximal number of edges in an $r$-uniform hypergraph which
 
 For all $r\geq 3$, $$f(n;r,k)=\max\left(\binom{rk-1}{r}, \binom{n}{r}-\binom{n-k+1}{r}\right).$$
 
-Note: the displayed formula is stated on the standard Erdős matching conjecture range
-`k ≥ 1` and `n ≥ r*k - 1`; with fully unrestricted `n` the equality is trivially false
-(e.g. `r = 3`, `k = 2`, `n = 4`), and for `n < r*k - 1` the source remarks the problem
-is trivial (the complete `r`-uniform hypergraph has no `k`-matching).
+Note: the source states the formula with no range on `n` or `k`, but some restriction
+is needed: e.g. for `r = 3`, `k = 2`, `n = 4` no two disjoint triples fit in `4`
+vertices, so the left-hand side is `4.choose 3 = 4` while the right-hand side is
+`5.choose 3 = 10`. We require `k ≥ 1` and `n ≥ r*k - 1`: this is the smallest `n`
+accommodating the construction counted by the first term (all `r`-subsets of a fixed
+`(r*k - 1)`-set), and at `n = r*k - 1` the equality holds trivially, since the complete
+`r`-uniform hypergraph has no `k`-matching. The source's commentary likewise calls the
+case `n < k*r` trivial.
 -/
 @[category research open, AMS 5]
 theorem erdos_1020 :
