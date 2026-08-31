@@ -37,14 +37,6 @@ def IsPathSubgraph {V : Type*} {G : SimpleGraph V} (H : G.Subgraph) : Prop :=
   ∃ (u v : V) (p : G.Walk u v), p.IsPath ∧ H = p.toSubgraph
 
 /--
-`D` is a partition of `G` into edge-disjoint subgraphs: the edge sets of the members of `D`
-are pairwise disjoint and their union is the edge set of `G`.
--/
-def IsDecomposition {V : Type*} (G : SimpleGraph V) (D : Finset G.Subgraph) : Prop :=
-  Set.PairwiseDisjoint (D : Set G.Subgraph) (fun H ↦ H.edgeSet) ∧
-  (⋃ H ∈ D, H.edgeSet) = G.edgeSet
-
-/--
 Every connected graph on $n$ vertices can be partitioned into at most $\lceil n/2\rceil$
 edge-disjoint paths.
 

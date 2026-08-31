@@ -42,11 +42,6 @@ def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
   open scoped Classical in
   (H.Connected ∧ H.IsRegularOfDegree 2) ∨ H.edgeFinset.card = 1
 
-/-- D is a decomposition of G into subgraphs. -/
-def IsDecomposition {V : Type*} (G : SimpleGraph V) (D : Finset G.Subgraph) : Prop :=
-  Set.PairwiseDisjoint (D : Set G.Subgraph) (fun H ↦ H.edgeSet) ∧
-  (⋃ H ∈ D, H.edgeSet) = G.edgeSet
-
 open scoped Classical in
 /--
 Any graph on $n$ vertices can be decomposed into $O(n)$ many edge-disjoint cycles and edges.
