@@ -75,7 +75,7 @@ theorem least_squares_partial_point_matching_under_translations_is_polynomially_
 /--
 There is a variation of the problem, where the sets $A$ and $B$ have equal size $n$, but
 we allow $B$ to be rotated to a set $B'$.
-In the complete-matching case, the optimum permutation between $A$ and $B'$
+In this complete-matching case, the optimum permutation between $A$ and $B'$
 is unaffected by translation of one of the sets, as well as positive scaling of $A$
 or of $B'$.
 Therefore, it is sufficient to consider only rotations around the origin in the conjecture.
@@ -86,11 +86,11 @@ If the conjecture is true, it implies a polynomial-time algorithm for least-squa
 -/
 @[category research open, AMS 52]
 theorem least_squares_point_matching_under_rotations_is_polynomially_bounded :
-  ∃ d : ℕ, ∃ c : ℕ, ∀ n : ℕ, ∀ A B : Fin n → EuclideanPlane,
+  ∃ bound : Polynomial ℕ, ∀ n : ℕ, ∀ A B : Fin n → EuclideanPlane,
   {π : Fin n ↪ Fin n | ∃ θ : Real.Angle,
     let B' := fun i => EuclideanGeometry.o.rotation θ (B i)
     (∀ π' : Fin n ↪ Fin n, π' ≠ π → SumOfSquaredDistances A B' π' > SumOfSquaredDistances A B' π)}.ncard
-    ≤ c * n ^ d + 1 -- added +1 to account for the n=0 case
+    ≤ Polynomial.eval n bound
     := by
   sorry
 
