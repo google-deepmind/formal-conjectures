@@ -51,6 +51,9 @@ jobs:
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
+      - name: Run website post-processing tests
+        run: python3 -m unittest discover -s site -p 'test_*.py' -v
+
   build:
     runs-on: ubuntu-latest
     name: Build project

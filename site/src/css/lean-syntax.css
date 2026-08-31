@@ -1,0 +1,82 @@
+/*
+ * Syntax colours for Lean rendered by Verso/SubVerso.
+ *
+ * Verso supplies semantic classes such as `keyword`, `const`, and `var`.
+ * Newer SubVerso versions also supply lexical classes for comments, literals,
+ * punctuation, and delimiters.  Keep the theme in a separate stylesheet so it
+ * can be shared by the complete /src/ pages and theorem-page code excerpts.
+ *
+ * The green, brown, orange, and cream palette is adapted from the Hex manual:
+ * https://github.com/kim-em/hex-dev/blob/main/HexManual/Theme.lean
+ */
+
+:root {
+  --lean-syntax-background: #fef8f0;
+  --lean-syntax-text: #3a3a3a;
+  --lean-syntax-keyword: #2d6a4f;
+  --lean-syntax-declaration: #5a4a3a;
+  --lean-syntax-variable: #3a3a3a;
+  --lean-syntax-type: #c05630;
+  --lean-syntax-string: #c05630;
+  --lean-syntax-number: #c05630;
+  --lean-syntax-comment: #40916c;
+  --lean-syntax-punctuation: #8a7a5a;
+
+  /* Override Verso's deliberately monochrome default semantic theme. */
+  --verso-code-color: var(--lean-syntax-text);
+  --verso-code-keyword-color: var(--lean-syntax-keyword);
+  --verso-code-keyword-weight: 600;
+  --verso-code-const-color: var(--lean-syntax-declaration);
+  --verso-code-var-color: var(--lean-syntax-variable);
+  --verso-code-var-style: normal;
+}
+
+.code-content code.hl.lean.block,
+.verso-code-container code.hl.lean.block {
+  background: var(--lean-syntax-background);
+}
+
+/* Lexical tokens emitted by current SubVerso. */
+.hl.lean .comment,
+.hl.lean .doc-comment {
+  color: var(--lean-syntax-comment);
+  font-style: italic;
+}
+
+.hl.lean .literal.string,
+.hl.lean .char {
+  color: var(--lean-syntax-string);
+}
+
+.hl.lean .literal.number,
+.hl.lean .number {
+  color: var(--lean-syntax-number);
+}
+
+.hl.lean .sort,
+.hl.lean .option,
+.hl.lean .module-name,
+.hl.lean .level-var,
+.hl.lean .level-const,
+.hl.lean .level-op {
+  color: var(--lean-syntax-type);
+}
+
+.hl.lean .built-in,
+.hl.lean .wildcard {
+  color: var(--lean-syntax-keyword);
+}
+
+.hl.lean .punctuation,
+.hl.lean .delim {
+  color: var(--lean-syntax-punctuation);
+}
+
+/* Verso renders declaration doc comments as prose, outside the code spans. */
+.code-content .verso-text::before,
+.code-content .verso-text::after,
+.code-content .md-text::before,
+.code-content .md-text::after {
+  color: var(--lean-syntax-comment);
+  font-style: italic;
+}
