@@ -19,7 +19,18 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 478
 
-*Reference:* [erdosproblems.com/478](https://www.erdosproblems.com/478)
+*References:*
+- [erdosproblems.com/478](https://www.erdosproblems.com/478)
+- [AnTa16] V. Andrejić and M. Tatarevic, *On distinct residues of factorials*. arXiv:1603.04086
+  (2016).
+- [GSSV24] Grebennikov, Alexandr and Sagdeev, Arsenii and Semchankau, Aliaksei and Vasilevskii,
+  Aliaksei, *On the sequence {$n! \bmod p$}*. Rev. Mat. Iberoam. (2024), 637--648.
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
+- [KlMu17] Klurman, Oleksiy and Munsch, Marc, *Distribution of factorials modulo {$p$}*. J. Théor.
+  Nombres Bordeaux (2017), 169--177.
+- [RoSc60] Rokowska, B. and Schinzel, A., *Sur un problème de {M}. {E}rdős*. Elem. Math. (1960),
+  84--85.
+- [Tr13] T. Trudgian, *There are no socialist primes less than $10^9$*. arXiv:1310.6403 (2013).
 -/
 
 namespace Erdos478

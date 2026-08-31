@@ -19,7 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 86
 
-*Reference:* [erdosproblems.com/86](https://www.erdosproblems.com/86)
+*References:*
+- [erdosproblems.com/86](https://www.erdosproblems.com/86)
+- [BHLL14] Balogh, József and Hu, Ping and Lidický, Bernard and Liu, Hong, *Upper bounds on the size
+  of 4- and 6-cycle-free subgraphs of the hypercube*. European J. Combin. (2014), 75-85.
+- [BHN95] Brass, Peter and Harborth, Heiko and Nienborg, Hauke, *On the maximum number of edges in a
+  {$C_4$}-free subgraph of {$Q_n$}*. J. Graph Theory (1995), 17--23.
+- [Ba12b] R. Baber, *Turán densities of hypercubes*. arXiv:1201.3587 (2012).
+- [Er91] Erdős, P., *Problems and results in combinatorial analysis and combinatorial number
+  theory*. Graph theory, combinatorics, and applications, Vol. 1 (Kalamazoo, MI, 1988) (1991),
+  397-406.
 -/
 
 open Filter SimpleGraph

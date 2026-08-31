@@ -19,7 +19,15 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 322
 
-*Reference:* [erdosproblems.com/322](https://www.erdosproblems.com/322)
+*References:*
+- [erdosproblems.com/322](https://www.erdosproblems.com/322)
+- [Er36] Erdős, Paul, *On the Representation of an Integer as the Sum of k k-th Powers*. J. London
+  Math. Soc. (1936), 133-136.
+- [Er65b] Erdős, Paul, *Some recent advances and current problems in number theory*. Lectures on
+  Modern Mathematics, Vol. III (1965), 196-244.
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
+- [Ma36] Mahler, Kurt, *Note on Hypothesis K of Hardy and Littlewood*. J. London Math. Soc. (1936),
+  136-138.
 -/
 
 namespace Erdos322

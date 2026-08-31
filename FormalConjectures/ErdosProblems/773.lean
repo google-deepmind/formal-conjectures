@@ -19,7 +19,14 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 773
 
-*Reference:* [erdosproblems.com/773](https://www.erdosproblems.com/773)
+*References:*
+- [erdosproblems.com/773](https://www.erdosproblems.com/773)
+- [AlEr85] Alon, Noga and Erdős, P., *An application of graph theory to additive number theory*.
+  European J. Combin. (1985), 201-203.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [LeTh95] Lefmann, Hanno and Thiele, Torsten, *Point sets with distinct distances*. Combinatorica
+  (1995), 379--408.
 -/
 
 namespace Erdos773

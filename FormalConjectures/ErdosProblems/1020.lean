@@ -19,7 +19,30 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 1020
 
-*Reference:* [erdosproblems.com/1020](https://www.erdosproblems.com/1020)
+*References:*
+- [erdosproblems.com/1020](https://www.erdosproblems.com/1020)
+- [BDE76] Bollobás, B. and Daykin, D. E. and Erdős, P., *Sets of independent edges of a hypergraph*.
+  Quart. J. Math. Oxford Ser. (2) (1976), 25--32.
+- [Er65d] Erdős, P., *A problem on independent {$r$}-tuples*. Ann. Univ. Sci. Budapest. Eötvös Sect.
+  Math. (1965), 93--95.
+- [ErGa59] Erdős, P. and Gallai, T., *On maximal paths and circuits of graphs*. Acta Math. Acad.
+  Sci. Hungar. (1959), 337-356 (unbound insert).
+- [FLM12] Frankl, Peter and Łuczak, Tomasz and Mieczkowska, Katarzyna, *On matchings in
+  hypergraphs*. Electron. J. Combin. (2012), Paper 42, 5.
+- [FRR12] Frankl, Peter and Rödl, Vojtech and Ruciński, Andrzej, *On the maximum number of edges in
+  a triple system not containing a disjoint family of a given size*. Combin. Probab. Comput. (2012),
+  141--148.
+- [Fr17] Frankl, Peter, *Proof of the {E}rdős matching conjecture in a new range*. Israel J. Math.
+  (2017), 421--430.
+- [Fr87] Frankl, Peter, *The shifting technique in extremal set theory*. (1987), 81--110.
+- [HLS12] Huang, Hao and Loh, Po-Shen and Sudakov, Benny, *The size of a hypergraph and its matching
+  number*. Combin. Probab. Comput. (2012), 442--450.
+- [Kl68] Kleitman, Daniel J., *Maximal number of subsets of a finite set no {$k$} of which are
+  pairwise disjoint*. J. Combinatorial Theory (1968), 157--163.
+- [KoKu23] Kolupaev, Dmitriy and Kupavskii, Andrey, *Erdős matching conjecture for almost perfect
+  matchings*. Discrete Math. (2023), Paper No. 113304, 9.
+- [LuMi14] Łuczak, Tomasz and Mieczkowska, Katarzyna, *On {E}rdős' extremal problem on matchings in
+  hypergraphs*. J. Combin. Theory Ser. A (2014), 178--194.
 -/
 
 namespace Erdos1020

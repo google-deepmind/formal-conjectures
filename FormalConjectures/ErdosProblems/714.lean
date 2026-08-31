@@ -21,6 +21,12 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/714](https://www.erdosproblems.com/714)
+- [Br66] Brown, W. G., *On graphs that do not contain a Thomsen graph*. Canad. Math. Bull. (1966),
+  281-285.
+- [ERS66] Erdős, P. and Rényi, A. and Sós, V. T., *On a problem of graph theory*. Studia Sci. Math.
+  Hungar. (1966), 215--235.
+- [KST54] Kövari, T. and Sós, V. T. and Turán, P., *On a problem of K. Zarankiewicz*. Colloq. Math.
+  (1954), 50-57.
 -/
 
 open Filter SimpleGraph

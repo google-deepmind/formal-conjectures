@@ -19,7 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 1159
 
-*Reference:* [erdosproblems.com/1159](https://www.erdosproblems.com/1159)
+*References:*
+- [erdosproblems.com/1159](https://www.erdosproblems.com/1159)
+- [ESS83] Erdős, P. and Silverman, R. and Stein, A., *Intersection properties of families containing
+  sets of nearly the same size*. Ars Combin. (1983), 247--259.
+- [Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*.
+  Combinatorica (1981), 25-42.
 -/
 
 open Configuration

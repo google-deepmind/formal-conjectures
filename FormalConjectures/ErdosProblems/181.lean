@@ -19,7 +19,11 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 181
 
-*Reference:* [erdosproblems.com/181](https://www.erdosproblems.com/181)
+*References:*
+- [erdosproblems.com/181](https://www.erdosproblems.com/181)
+- [Er93] Erdős, Paul, *Some of my favorite solved and unsolved problems in graph theory*.
+  Quaestiones Math. (1993), 333-350.
+- [Ti22] Tikhomirov, K., *A remark on the Ramsey number of the hypercube*. arXiv:2208.14568 (2022).
 -/
 
 namespace Erdos181

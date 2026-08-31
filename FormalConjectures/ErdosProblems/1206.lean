@@ -19,7 +19,14 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 1206
 
-*Reference:* [erdosproblems.com/1206](https://www.erdosproblems.com/1206)
+*References:*
+- [erdosproblems.com/1206](https://www.erdosproblems.com/1206)
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [GGK26] M. Garaev, F. Garayev, and S. Konyagin, *On Sidon sets with squares, cubes, and quartics
+  in short intervals*. arXiv:2602.08807 (2026).
+- [GaKo24] Gabdullin, M. R. and Konyagin, S. V., *Trigonometric polynomials with frequencies in the
+  set of cubes*. Math. Notes (2024), 336--340.
 -/
 
 namespace Erdos1206

@@ -19,7 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 431
 
-*Reference:* [erdosproblems.com/431](https://www.erdosproblems.com/431)
+*References:*
+- [erdosproblems.com/431](https://www.erdosproblems.com/431)
+- [El01] Elsholtz, Christian, *The inverse Goldbach problem*. Mathematika (2001), 151-158.
+- [ElHa15] Elsholtz, Christian and Harper, Adam J., *Additive decompositions of sets with restricted
+  prime factors*. Trans. Amer. Math. Soc. (2015), 7403-7427.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [Gr90] Granville, Andrew, *A note on sums of primes*. Canad. Math. Bull. (1990), 452--454.
+- [TaZi23] Tao, Terence and Ziegler, Tamar, *Infinite partial sumsets in the primes*. J. Anal. Math.
+  (2023), 375--389.
 -/
 
 open scoped Pointwise

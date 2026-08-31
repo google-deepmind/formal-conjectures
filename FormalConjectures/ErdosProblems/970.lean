@@ -19,7 +19,11 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 970
 
-*Reference:* [erdosproblems.com/970](https://www.erdosproblems.com/970)
+*References:*
+- [erdosproblems.com/970](https://www.erdosproblems.com/970)
+- [FGKMT18] Ford, Kevin and Green, Ben and Konyagin, Sergei and Maynard, James and Tao, Terence,
+  *Long gaps between primes*. J. Amer. Math. Soc. (2018), 65-105.
+- [Iw78] Iwaniec, Henryk, *On the problem of {J}acobsthal*. Demonstratio Math. (1978), 225--231.
 -/
 
 namespace Erdos970

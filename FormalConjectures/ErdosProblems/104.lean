@@ -19,7 +19,17 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 104
 
-*Reference:* [erdosproblems.com/104](https://www.erdosproblems.com/104)
+*References:*
+- [erdosproblems.com/104](https://www.erdosproblems.com/104)
+- [El84] Elekes, G., *{$n$} points in the plane can determine $n^{3/2}$ unit circles*. Combinatorica
+  (1984), 131.
+- [Er75h] Erdős, P., *Some problems on elementary geometry*. Austral. Math. Soc. Gaz. (1975), 2-3.
+- [Er81d] Erdős, P., *Some applications of graph theory and combinatorial methods to number theory
+  and geometry*. Algebraic methods in graph theory, Vol. I, II (Szeged, 1978) (1981), 137-148.
+- [Er92e] Erdős, Pál, *Some Unsolved problems in Geometry, Number Theory and Combinatorics*. Eureka
+  (1992), 44-48.
+- [HaMe86] Harborth, Heiko and Mengersen, Ingrid, *Point sets with many unit circles*. Discrete
+  Math. (1986), 193--197.
 -/
 
 open Filter

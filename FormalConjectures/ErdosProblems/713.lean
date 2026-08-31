@@ -21,6 +21,14 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/713](https://www.erdosproblems.com/713)
+- [Er67d] Erdős, P., *Some recent results on extremal problems in graph theory. {R}esults*. (1967),
+  117--123 (English); pp. 124--130 (French).
+- [ErSi70] Erdős, P. and Simonovits, M., *Some extremal problems in graph theory*. Combinatorial
+  theory and its applications, I-III (Proc. Colloq., Balatonfüred, 1969) (1970), 377-390.
+- [FrFu87] Frankl, P. and Füredi, Z., *Exact solution of some Turán-type problems*. J. Combin.
+  Theory Ser. A (1987), 226--262.
+- [FuGe21] Füredi, Zoltán and Gerbner, Dániel, *Hypergraphs without exponents*. J. Combin. Theory
+  Ser. A (2021), Paper No. 105517, 9.
 -/
 
 open Filter SimpleGraph

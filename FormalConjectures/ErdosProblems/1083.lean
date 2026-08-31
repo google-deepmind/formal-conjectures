@@ -19,7 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 1083
 
-*Reference:* [erdosproblems.com/1083](https://www.erdosproblems.com/1083)
+*References:*
+- [erdosproblems.com/1083](https://www.erdosproblems.com/1083)
+- [APST04] Aronov, Boris and Pach, János and Sharir, Micha and Tardos, Gábor, *Distinct distances in
+  three and higher dimensions*. Combin. Probab. Comput. (2004), 283--293.
+- [CEGSW90] Clarkson, Kenneth L. and Edelsbrunner, Herbert and Guibas, Leonidas J. and Sharir, Micha
+  and Welzl, Emo, *Combinatorial complexity bounds for arrangements of curves and spheres*. Discrete
+  Comput. Geom. (1990), 99--160.
+- [Er46b] Erdős, P., *On sets of distances of {$n$} points*. Amer. Math. Monthly (1946), 248--250.
+- [SoVu08] Solymosi, József and Vu, Van H., *Near optimal bounds for the {E}rdős distinct distances
+  problem in high dimensions*. Combinatorica (2008), 113--125.
 -/
 
 open Filter

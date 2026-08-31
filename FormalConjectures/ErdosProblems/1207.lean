@@ -19,7 +19,14 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 1207
 
-*Reference:* [erdosproblems.com/1207](https://www.erdosproblems.com/1207)
+*References:*
+- [erdosproblems.com/1207](https://www.erdosproblems.com/1207)
+- [BMP05] Brass, Peter and Moser, William and Pach, János, *Research problems in discrete geometry*.
+  (2005), xii+499.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [PaTa02] Pach, János and Tardos, Gábor, *Isosceles triangles determined by a planar point set*.
+  Graphs Combin. (2002), 769--779.
 -/
 
 open Filter
