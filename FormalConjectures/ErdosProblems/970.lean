@@ -42,9 +42,8 @@ noncomputable def jacobsthalFunction (k : ℕ) : ℕ :=
 Let $h(k)$ be Jacobsthal's function, defined to as the minimal $m$ such that, if $n$ has at most $k$ prime factors, then in any set of $m$ consecutive integers there exists an integer coprime to $n$. Determine the order of magnitude of $h(k)$. In particular, is it true that $$h(k) \ll k^2?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_970 :
-    (∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2) ↔
-      answer(sorry) := by
+theorem erdos_970 : answer(sorry) ↔
+    ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 := by
   sorry
 
 end Erdos970

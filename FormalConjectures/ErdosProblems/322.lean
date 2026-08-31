@@ -34,9 +34,9 @@ def representationCount (k n : ℕ) : ℕ :=
 Let $k\geq 3$ and $A\subset \mathbb{N}$ be the set of $k$th powers. What is the order of growth of $1_A^{(k)}(n)$, i.e. the number of representations of $n$ as the sum of $k$ many $k$th powers? Does there exist some $c>0$ and infinitely many $n$ such that $$1_A^{(k)}(n) >n^c?$$
 -/
 @[category research open, AMS 11]
-theorem erdos_322 :
-    (∀ k : ℕ, 3 ≤ k → ∃ c > (0 : ℝ),
-      {n : ℕ | (n : ℝ) ^ c < representationCount k n}.Infinite) ↔ answer(sorry) := by
+theorem erdos_322 : answer(sorry) ↔
+    ∀ k : ℕ, 3 ≤ k → ∃ c > (0 : ℝ),
+      {n : ℕ | (n : ℝ) ^ c < representationCount k n}.Infinite := by
   sorry
 
 end Erdos322

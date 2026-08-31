@@ -43,9 +43,8 @@ noncomputable def P (d n : ℕ) : ℕ :=
 Let $P_d(n)$ be such that in any set of $n$ points in $\mathbb{R}^d$ there exist at least $P_d(n)$ many points which do not contain an isosceles triangle. Estimate $P_d(n)$ - in particular, is it true that $$P_2(n)<n^{1-c}$$ for some constant $c>0$?
 -/
 @[category research open, AMS 52]
-theorem erdos_1207 :
-    (∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (P 2 n : ℝ) < (n : ℝ) ^ (1 - c)) ↔
-      answer(sorry) := by
+theorem erdos_1207 : answer(sorry) ↔
+    ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (P 2 n : ℝ) < (n : ℝ) ^ (1 - c) := by
   sorry
 
 end Erdos1207
