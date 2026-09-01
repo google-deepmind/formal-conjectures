@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 275
@@ -35,8 +35,10 @@ necessarily distinct) covers $2^r$ consecutive integers then it covers all integ
 
 This is best possible as the system $2^{i-1}\pmod{2^i}$ shows. This was proved independently by
 Selfridge and Crittenden and Vanden Eynden [CrVE70].
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos275.lean"]
 theorem erdos_275 (r : ℕ) (a : Fin r → ℤ) (n : Fin r → ℕ)
     (H : ∃ k : ℤ, ∀ x ∈ Ico k (k + 2 ^ r), ∃ i, x ≡ a i [ZMOD n i]) (x : ℤ) :
     ∃ i, x ≡ a i [ZMOD n i] := by

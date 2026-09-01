@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.Millenium.GeneralizedRiemannHypothesis
+import FormalConjecturesUtil
+import FormalConjectures.Millenium.RiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots

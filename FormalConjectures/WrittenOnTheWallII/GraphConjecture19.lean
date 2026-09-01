@@ -14,9 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
-open Classical
+/-!
+# Written on the Wall II - Conjecture 19
+
+*Reference:*
+[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
+
 
 namespace WrittenOnTheWallII.GraphConjecture19
 
@@ -34,8 +41,8 @@ eccentricity and `l(G)` is the independence number of neighbourhoods.
 -/
 @[category research open, AMS 5]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
-    FLOOR ((∑ v ∈ Finset.univ, ecc G v) / (Fintype.card α : ℝ) + sSup (Set.range (indepNeighbors G)))
-      ≤ b G := by
+    ⌊(∑ v ∈ Finset.univ, ((G.eccent v).toNat : ℝ)) / (Fintype.card α : ℝ) +
+      sSup (Set.range (indepNeighbors G))⌋ ≤ b G := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture19

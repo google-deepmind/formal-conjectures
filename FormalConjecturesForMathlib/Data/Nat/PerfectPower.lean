@@ -13,7 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
+
+public meta import Mathlib.Algebra.GCDMonoid.Finset
+public meta import Mathlib.Algebra.GCDMonoid.Nat
+public meta import Mathlib.Data.Nat.Factorization.Defs
+
 import Mathlib.Tactic
+
+@[expose] public section
 
 namespace Nat
 
@@ -106,7 +114,7 @@ theorem isPerfectPower_iff_factorization_gcd (n : ℕ) :
         simp only [f, ← pow_mul]
       rw [h_eq]
       have hn_ne_zero : n ≠ 0 := Nat.ne_of_gt (Nat.lt_of_succ_lt hn)
-      conv_rhs => rw [← Nat.factorization_prod_pow_eq_self hn_ne_zero]
+      conv_rhs => rw [← Nat.prod_factorization_pow_eq_self hn_ne_zero]
       congr 1
       ext p
       by_cases hp : p ∈ n.primeFactors
@@ -122,10 +130,11 @@ instance IsPerfectPower.decide : ∀ n, Decidable (IsPerfectPower n) := fun n =>
   decidable_of_iff (n > 1 ∧ n.primeFactors.gcd n.factorization > 1)
     (isPerfectPower_iff_factorization_gcd n).symm
 
-example : IsPerfectPower 4 := by native_decide
-example : IsPerfectPower 27 := by native_decide
-example : ¬IsPerfectPower 0 := by native_decide
-example : ¬IsPerfectPower 1 := by native_decide
-example : ¬IsPerfectPower 2 := by native_decide
+example : IsPerfectPower 4 := by decide +native
+example : IsPerfectPower 27 := by decide +native
+example : ¬IsPerfectPower 0 := by decide
+example : ¬IsPerfectPower 1 := by decide
+example : ¬IsPerfectPower 2 := by decide +native
+
 
 end Nat

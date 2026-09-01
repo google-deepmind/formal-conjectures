@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 567
@@ -38,10 +38,7 @@ open scoped Finset
 
 /-- $Q_3$ is the 3-dimensional hypercube graph (8 vertices, 12 edges).
 Vertices are 3-bit vectors. Two vertices are adjacent iff they differ in exactly one bit. -/
-def Q3 : SimpleGraph (Fin 3 → Bool) where
-  Adj u v := #{i | u i ≠ v i} = 1
-  symm _ _ := by simp [eq_comm]
-  loopless _ := by simp
+abbrev Q3 : SimpleGraph (Fin 3 → Bool) := hypercube 3
 
 /-- $K_{3,3}$ is the complete bipartite graph with partition sizes 3, 3 (6 vertices, 9 edges). -/
 def K33 : SimpleGraph (Fin 3 ⊕ Fin 3) := completeBipartiteGraph (Fin 3) (Fin 3)
@@ -56,8 +53,8 @@ def H5 : SimpleGraph (Fin 5) :=
 
 Is $Q_3$ (the 3-dimensional hypercube) Ramsey size linear?
 -/
-@[category research open, AMS 05]
-theorem erdos_567_Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
+@[category research open, AMS 5]
+theorem erdos_567.parts.i : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
   sorry
 
 /--
@@ -65,8 +62,8 @@ theorem erdos_567_Q3 : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
 
 Is $K_{3,3}$ Ramsey size linear?
 -/
-@[category research open, AMS 05]
-theorem erdos_567_K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
+@[category research open, AMS 5]
+theorem erdos_567.parts.ii : answer(sorry) ↔ IsRamseySizeLinear K33 := by
   sorry
 
 /--
@@ -74,8 +71,8 @@ theorem erdos_567_K33 : answer(sorry) ↔ IsRamseySizeLinear K33 := by
 
 Is $H_5$ ($C_5$ with two vertex-disjoint chords) Ramsey size linear?
 -/
-@[category research open, AMS 05]
-theorem erdos_567_H5 : answer(sorry) ↔ IsRamseySizeLinear H5 := by
+@[category research open, AMS 5]
+theorem erdos_567.parts.iii : answer(sorry) ↔ IsRamseySizeLinear H5 := by
   sorry
 
 end Erdos567

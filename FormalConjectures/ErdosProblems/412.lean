@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 412
@@ -24,7 +24,7 @@ import FormalConjectures.Util.ProblemImports
 Reviewed by @b-mehta on 2025-05-27
 -/
 
-open ArithmeticFunction
+open ArithmeticFunction.sigma
 
 namespace Erdos412
 

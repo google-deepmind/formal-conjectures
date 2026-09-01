@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+import FormalConjecturesUtil
 import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
@@ -28,6 +29,10 @@ open scoped Nat.Prime
 
 namespace Erdos855
 
+/--
+Erdős Problem 855 (Segal's conjecture): $\pi(x + y) \le \pi(x) + \pi(y)$
+for sufficiently large $x, y$.
+-/
 @[category research open, AMS 11]
 theorem erdos_855 : answer(sorry) ↔
     ∀ᶠ x in atTop, ∀ᶠ y in atTop, π (x + y) ≤ π x + π y := by

@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 689
-*Reference:* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+*References:*
+* [erdosproblems.com/689](https://www.erdosproblems.com/689)
+* [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
 -/
 
 namespace Erdos689

@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-open Finset SimpleGraph
-open scoped Nat
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 835
@@ -25,6 +23,8 @@ open scoped Nat
  - [erdosproblems.com/835](https://www.erdosproblems.com/835)
  - [MT25](https://github.com/QuanyuTang/erdos-problem-835/blob/main/On_Problem_835.pdf)
 -/
+open Finset SimpleGraph
+open scoped Nat
 namespace Erdos835
 
 variable {n k : ℕ}
@@ -48,7 +48,6 @@ colours appear among the $k$-sized subsets of $A$?
 theorem erdos_835 : (∃ k > 2, Property k) ↔ answer(sorry) := by
   sorry
 
-
 @[category test, AMS 5]
 theorem property_iff_chromaticNumber (k : ℕ) (hk : 0 < k) :
     (J(2 * k, k).chromaticNumber = k + 1) ↔
@@ -61,7 +60,7 @@ This is equivalent to asking whether there exists $k > 2$ such that the chromati
 Johnson graph $J(2k, k)$ is $k+1$.
 -/
 @[category research open, AMS 5]
-theorem erdos_835.variant.johnson : (∃ l,
+theorem erdos_835.variants.johnson : (∃ l,
     -- making sure k > 2
     letI k := l + 3
     J(2 * k, k).chromaticNumber = k + 1) ↔ answer(sorry) := by
@@ -84,7 +83,6 @@ The chromatic number of $J(18, 9)$ is at least $11$.
 @[category research solved, AMS 5]
 theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
-
 
 /-- Johnson's upper bound on the maximum size `A(n, d, w)` of a `n`-dimensional binary code of
 distance `d` and weight `w` is as follows:

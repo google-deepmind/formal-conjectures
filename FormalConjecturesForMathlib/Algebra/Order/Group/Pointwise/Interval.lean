@@ -13,9 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Order.Group.Pointwise.Interval
+
+public import Mathlib.Data.Nat.Cast.Order.Ring
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Algebra.Order.Group.Pointwise.Interval
 import Mathlib.Tactic
+
+@[expose] public section
 
 theorem Nat.image_mul_two_Iio_even {n : ℕ} (h : Even n) :
     (2 * ·) '' Set.Iio (n / 2) = { n | Even n } ∩ Set.Iio n := by

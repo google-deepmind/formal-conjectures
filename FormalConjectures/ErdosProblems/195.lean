@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 195
@@ -42,7 +42,7 @@ theorem erdos_195 :
 Geneson [Ge19] proved that k ≤ 5.
 -/
 @[category research solved, AMS 5]
-theorem erdos_195.variant.leq_5_bound :
+theorem erdos_195.variants.leq_5_bound :
     5 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
@@ -50,7 +50,7 @@ theorem erdos_195.variant.leq_5_bound :
 Adenwalla [Ad22] proved that k ≤ 4.
 -/
 @[category research solved, AMS 5]
-theorem erdos_195.variant.leq_4_bound :
+theorem erdos_195.variants.leq_4_bound :
     4 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 

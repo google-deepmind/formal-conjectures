@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1063
@@ -23,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
  * [erdosproblems.com/1063](https://www.erdosproblems.com/1063)
  * [ErSe83] Erdos, P. and Selfridge, J. L., Problem 6447. Amer. Math. Monthly (1983), 710.
  * [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
- * [Mo85] Monier (1985). No reference found.
+ * [Mo85] Monier, Jean-Marie, _Problems and Solutions: Solutions of Advanced Problems: 6447_.
+   Amer. Math. Monthly **92** (1985), 435-436.
 -/
 
 open Filter Real
@@ -40,6 +41,22 @@ noncomputable def n (k : ℕ) : ℕ :=
     ∀ i < k, i ≠ i0 → (m - i) ∣ m.choose k}
 
 /--
+Estimate $n_k$ by finding a better upper bound than Cambie's
+$n_k \leq k \cdot \operatorname{lcm}(1, \dotsc, k-1)$.
+
+The comparator takes its least common multiple in `ℕ` and casts the result. Writing the
+ascription as `((… ).lcm (fun n : ℕ => n) : ℝ)` instead puts it on the `Finset.lcm`
+application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where `lcm` of
+non-zero elements is `1` and the whole comparator collapses to `k`. -/
+@[category research open, AMS 11]
+theorem erdos_1063.better_upper :
+    let upper_bound : ℕ → ℝ := answer(sorry)
+    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
+    upper_bound =o[atTop] fun k =>
+      (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
+  sorry
+
+/--
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
 $n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
 -/
@@ -52,18 +69,58 @@ theorem erdos_1063.variants.exists_exception {n k : ℕ} (hk : 2 ≤ k) (h : 2 *
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.small_values :
     n 2 = 4 ∧ n 3 = 6 ∧ n 4 = 9 ∧ n 5 = 12 := by
-  sorry
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · -- n 2 = 4 : every element of the set is ≥ 2 * 2 = 4, and 4 itself lies in the set
+    apply le_antisymm
+    · exact Nat.sInf_le (by decide)
+    · apply le_csInf ⟨4, by decide⟩
+      rintro b hb
+      have : 2 * 2 ≤ b := hb.1
+      omega
+  · -- n 3 = 6
+    apply le_antisymm
+    · exact Nat.sInf_le (by decide)
+    · apply le_csInf ⟨6, by decide⟩
+      rintro b hb
+      have : 2 * 3 ≤ b := hb.1
+      omega
+  · -- n 4 = 9 : the only candidate below 9 is m = 8, where both 8 and 6 fail to divide C(8,4) = 70
+    apply le_antisymm
+    · exact Nat.sInf_le (by decide)
+    · apply le_csInf ⟨9, by decide⟩
+      rintro b hb
+      have hb8 : 8 ≤ b := by have := hb.1; omega
+      by_contra! h
+      interval_cases b
+      · exact absurd hb (by decide)
+  · -- n 5 = 12 : the candidates below 12 are m = 10, 11, both of which fail
+    apply le_antisymm
+    · exact Nat.sInf_le (by decide)
+    · apply le_csInf ⟨12, by decide⟩
+      rintro b hb
+      have hb10 : 10 ≤ b := by have := hb.1; omega
+      by_contra! h
+      interval_cases b
+      · exact absurd hb (by decide)
+      · exact absurd hb (by decide)
 
-/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]).
-TODO: Find reference
--/
+/-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]), since $\binom{k!}{k}$ is divisible
+by $k! - i$ for $1 \le i < k$.
+
+The hypothesis `3 ≤ k` is necessary. At $k = 2$ the bound is false: $n_2 = 4$ and $2! = 2$. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
   sorry
 
 /-- [Cambie observed](https://www.erdosproblems.com/1063) the improved bound
-$n_k \le k \cdot \operatorname{lcm}(1, \dotsc, k - 1)$. -/
+$n_k \le k \cdot \operatorname{lcm}(1, \dotsc, k - 1)$.
+
+The hypothesis `3 ≤ k` is necessary here too. At $k = 2$ the right hand side is
+$2 \cdot \operatorname{lcm}(1) = 2$, while $n_2 = 4$.
+
+The source writes the bound as $k[2, 3, \dotsc, k-1]$. That agrees with the range used here,
+because including $1$ does not change a least common multiple. -/
 @[category research solved, AMS 11]
 theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
@@ -74,17 +131,6 @@ theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
 theorem erdos_1063.variants.exp_upper_bound :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ k, (n k : ℝ) ≤ exp ((1 + f k) * k) := by
-  sorry
-
-/--
-Estimate $n_k$ by finding a better upper bound.
--/
-@[category research open, AMS 11]
-theorem erdos_1063.better_upper :
-    let upper_bound : ℕ → ℝ := answer(sorry)
-    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
-    upper_bound =o[atTop] fun k =>
-      (k : ℝ) * ((Finset.Icc 1 (k - 1)).lcm (fun n : ℕ => n) : ℝ) := by
   sorry
 
 end Erdos1063

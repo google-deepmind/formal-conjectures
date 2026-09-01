@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 891
@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open Nat Filter Finset
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.omega
 
 namespace Erdos891
 

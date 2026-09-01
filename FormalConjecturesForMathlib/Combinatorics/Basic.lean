@@ -13,10 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Combinatorics.AP.Basic
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Order.CompletePartialOrder
+public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Order.CompletePartialOrder
+
+@[expose] public section
 
 open Function Set
 open scoped Pointwise
@@ -24,10 +27,36 @@ open scoped Pointwise
 variable {α : Type*} [AddCommMonoid α]
 
 /--
+A set $S$ is said to be product-free if the product set $S \cdot S$ is disjoint from $S$,
+i.e. if the equation $x \cdot y = z$ has no solution with $x, y, z \in S$.
+-/
+@[to_additive IsSumFree /--
 A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
 if the equation $a + b = c$ has no solution with $a, b, c \in A$.
+-/]
+def IsProductFree {M : Type*} [Mul M] (S : Set M) : Prop := Disjoint (S * S) S
+
+@[to_additive isSumFree_iff]
+theorem isProductFree_iff {M : Type*} [Mul M] {S : Set M} :
+    IsProductFree S ↔ ∀ x ∈ S, ∀ y ∈ S, x * y ∉ S := by
+  simp [IsProductFree, Set.disjoint_left, Set.mem_mul]
+  aesop
+
+/--
+`allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
+unordered pair of elements from `A`.
 -/
-def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
+def allUniqueSums (A : Set α) : Set α :=
+  { n | ∃ p : α × α, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧
+      ∀ a₁ ∈ A, ∀ a₂ ∈ A, a₁ + a₂ = n → (a₁ = p.1 ∧ a₂ = p.2) ∨ (a₁ = p.2 ∧ a₂ = p.1) }
+
+/--
+A set `A` has no unique representation in its sumset `A + A` if for every pair of elements
+`a₁, a₂ ∈ A`, there exist another pair of elements `b₁, b₂ ∈ A` such that `a₁ + a₂ = b₁ + b₂`
+and `{a₁, a₂} ≠ {b₁, b₂}`.
+-/
+def HasNoUniqueRepresentation {α : Type*} [AddCommMonoid α] (A : Finset α) : Prop :=
+  allUniqueSums (A : Set α) = ∅
 
 /-- A set $A$ of natural numbers is said to have bounded gaps if there exists an integer $p$ such
 that $A ∩ [n, n + 1, ..., n + p]$ is nonempty for all $n$. -/
@@ -35,12 +64,8 @@ def IsSyndetic (A : Set ℕ) : Prop := ∃ p, ∀ n, (A ∩ .Icc n (n + p)).None
 
 /-- A Sidon set is a set, such that such that all pairwise sums of elements are distinct apart from
 coincidences forced by the commutativity of addition. -/
-def IsSidon {S : Type*} [Membership α S] (A : S) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+def IsSidon (A : Set α) : Prop := ∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
   i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)
-
-@[simp, push_cast]
-theorem coe {S : Type*} [SetLike S α] {A : S} : IsSidon (A : Set α) ↔ IsSidon A := by
-  simp [IsSidon]
 
 namespace Set
 
@@ -49,7 +74,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
     (A ∩ Y).ncard ≤ 2 := by
   simp [IsAPOfLength, IsAPOfLengthWith] at hY
   obtain ⟨hc, ⟨a, d, hY⟩⟩ := hY
-  have hY_card : Y.ncard = 3 := by simp [ncard, encard, hc]
+  have hY_card : Y.ncard = 3 := by simp [ncard, hc]
   by_contra! h
   have hss : Y ⊆ A ∩ Y := by
     have hY_fin : Finite Y := finite_of_ncard_ne_zero (by linarith)
@@ -59,7 +84,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
   have ha₂ : a + 2 • d ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨2, by norm_num, by simp⟩)
   have := hA _ ha _ ha₁ _ ha₂ _ ha₁ (by simp; omega)
   simp at this
-  simp [hY, this.1, setOf_and] at hY_card
+  simp [hY, this.1, ofPred_and] at hY_card
   linarith [ncard_singleton _ ▸ ncard_inter_le_ncard_right {a | ∃ x, x < 3} {a}]
 
 theorem IsSidon.subset {A B : Set α} (hB : IsSidon B) (hAB : A ⊆ B) : IsSidon A :=
@@ -128,26 +153,18 @@ end Set
 
 namespace Finset
 
--- TODO: remove once https://github.com/leanprover-community/mathlib4/pull/28241 is merged
-@[simp, push_cast]
-theorem isSidon_toSet {A : Finset α} : IsSidon A.toSet ↔ IsSidon A := by
-  simp [IsSidon]
+instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := by
+  refine decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
+    i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
+  rfl
 
-instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon A) :=
-  decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A), _) <| by rfl
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
-  (A.powerset.filter IsSidon).sup Finset.card
-
-theorem IsSidon.insert {A : Finset α} {m : α} [DecidableEq α] [IsRightCancelAdd α]
-    [IsLeftCancelAdd α] (hA : IsSidon A) :
-    IsSidon (A ∪ {m}) ↔ (m ∈ A ∨ ∀ᵉ (a ∈ A) (b ∈ A), m + m ≠ a + b ∧ ∀ c ∈ A, m + a ≠ b + c) := by
-  rw [← isSidon_toSet, coe_union, coe_singleton, (isSidon_toSet.2 hA).insert]
-  simp
+  (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).sup Finset.card
 
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
-theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) {s : ℕ}
+theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
     IsSidon (A ∪ {s}) := by
   have h₁ {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A) :
@@ -155,16 +172,16 @@ theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A
   have : s ∉ A := by
     exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
       linarith [A.le_max' _ ha]
-  exact (Finset.IsSidon.insert hA).2 <| by simpa [this] using fun a ha b hb ↦
+  exact (IsSidon.insert hA).2 <| by simpa [this] using fun a ha b hb ↦
     ⟨by linarith [A.le_max' _ ha, A.le_max' _ hb], fun c hc ↦ by linarith [h₁ hc hb ha]⟩
 
-theorem IsSidon.exists_insert {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) :
+theorem IsSidon.exists_insert {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) :
     ∃ m ∉ A, IsSidon (A ∪ {m}) := by
   refine ⟨2 * A.max' h + 1, ?_, insert_ge_max' h hA le_rfl⟩
   exact mt (A.le_max' _) <| not_le.2 <| Finset.max'_lt_iff _ ‹_› |>.2 fun a ha ↦ by
     linarith [A.le_max' _ ha]
 
-theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon A) (s : ℕ) :
+theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) (s : ℕ) :
     ∃ m ≥ s, m ∉ A ∧ IsSidon (A ∪ {m}) := by
   refine ⟨if s ≥ 2 * A.max' h + 1 then s else 2 * A.max' h + 1, ?_, ?_, ?_⟩
   · split_ifs <;> linarith
@@ -174,5 +191,41 @@ theorem IsSidon.exists_insert_ge {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon
   · split_ifs with hs
     · exact insert_ge_max' h hA hs
     · exact insert_ge_max' h hA le_rfl
+
+/-- Given a finite Sidon set `A` and a lower bound `m`, `go` finds the smallest number `m' ≥ m`
+such that `A ∪ {m'}` is Sidon. If `A` is empty then this returns the value `m`. Note that
+the lower bound is required to avoid `0` being a contender in some cases. -/
+def greedySidon.go (A : Finset ℕ) (hA : IsSidon (A : Set ℕ)) (m : ℕ) :
+    {m' : ℕ // m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ)} :=
+  if h : A.Nonempty then
+    have : ∃ m', m' ≥ m ∧ m' ∉ A ∧ IsSidon (↑(A ∪ {m'}) : Set ℕ) := by
+      simpa [and_assoc] using Finset.IsSidon.exists_insert_ge h hA m
+    ⟨Nat.find this, Nat.find_spec this⟩
+  else ⟨m, by simp_all [IsSidon]⟩
+
+/-- Main search loop for generating the greedy Sidon sequence. The return value for step `n` is the
+finite set of numbers generated so far, a proof that it is Sidon, and the greatest element of
+the finite set at that point. This is initialised at `{1}`, then `greedySidon.go` is
+called iteratively using the lower bound `max + 1` to find the next smallest Sidon preserving
+number. -/
+def greedySidon.aux (n : ℕ) : ({A : Finset ℕ // IsSidon (A : Set ℕ)} × ℕ) :=
+  match n with
+  | 0 => (⟨{1}, by simp [IsSidon]⟩, 1)
+  | k + 1 =>
+    let (A, s) := greedySidon.aux k
+    let s := if h : A.1.Nonempty then A.1.max' h + 1 else s
+    let s' := greedySidon.go A.1 A.2 s
+    (⟨A.1 ∪ {s'.1}, s'.2.2.2⟩, s'.1)
+
+/-- `greedySidon` is the sequence obtained by the initial set $\{1\}$ and iteratively obtaining
+the next smallest integer that preserves the Sidon property of the set. This gives the
+sequence `1, 2, 4, 8, 13, 21, 31, ...`. -/
+def greedySidon (n : ℕ) : ℕ := greedySidon.aux n |>.2
+
+/-- The greedy Sidon set in `{1, …, N}`: starting from `∅`, iterate through `1, …, N` and
+include `x` if and only if `A ∪ {x}` remains Sidon.
+Alternatively, this is precisely the set of elements in the greedy Sidon sequence that are `≤ N`. -/
+def greedySidonBelow (N : ℕ) : Finset ℕ :=
+  (greedySidon.aux N).1.1.filter (· ≤ N)
 
 end Finset

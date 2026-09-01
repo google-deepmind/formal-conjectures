@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import FormalConjecturesForMathlib.Data.Finset.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import FormalConjecturesForMathlib.Data.Finset.Card
+
+@[expose] public section
 
 open Finset
 
@@ -28,8 +32,8 @@ Two vertices are adjacent if their intersection has size $k - 1$.
 @[simps -isSimp]
 def johnson (n k : ℕ) : SimpleGraph {s : Finset (Fin n) // #s = k} where
   Adj s t := #(s.val ∩ t.val) + 1 = k
-  symm s t h := by simpa [inter_comm]
-  loopless := by simp +contextual [Irreflexive]
+  symm.symm s t h := by simpa [inter_comm]
+  loopless.irrefl := by simp +contextual
 
 scoped notation "J(" n ", " k ")" => johnson n k
 
