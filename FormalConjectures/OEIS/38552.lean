@@ -24,8 +24,21 @@ $\mathbb{Q}(\sqrt{-k})$ has class number $n$.
 The conjectures state that:
 1. All terms are congruent to $19 \pmod{24}$.
 2. This is also the largest absolute value of negative fundamental discriminant $d$ for
-   class number $n$. For even $n$, if $k$ is the largest odd number with $h(-k) = n$ and
-   $k'$ is the largest even number with $h(-k') = n$, then $k > k'$.
+   class number $n$.
+3. For even $n$, if $k$ is the largest odd number with $h(-k) = n$ and $k'$ is the largest
+   even number with $h(-k') = n$, then $k > k'$. The $n$-th term is the larger of $k$ and
+   $k'$, so this says that the $n$-th term is odd. Conjecture 1 implies it.
+
+The squarefree condition in the definition is needed for the maximum to exist, since
+$\mathbb{Q}(\sqrt{-k}) = \mathbb{Q}(\sqrt{-4k})$.
+
+Conjecture 2 is not a restatement of the definition. Both maxima range over the same imaginary
+quadratic fields, but they maximize different integers attached to those fields. A038552 uses
+the squarefree radicand $k$, whereas the discriminant of $\mathbb{Q}(\sqrt{-k})$ is $-k$ for
+$k \equiv 3 \pmod 4$ and $-4k$ otherwise. The map $k \mapsto |d|$ is not monotone: it sends $2$
+to $8$ and $3$ to $3$. So conjecture 2 says that the largest term $k$ satisfies
+$k \equiv 3 \pmod 4$, and that $4k' \le k$ for every $k' \equiv 1, 2 \pmod 4$ with class
+number $n$.
 
 *References:*
 - [Sta67] Stark, Harold M. "A complete determination of the complex quadratic fields of
@@ -69,11 +82,6 @@ theorem starkHeegner_classNumberOne :
     {k : ℕ | Squarefree k ∧ HasClassNumber k 1} = {1, 2, 3, 7, 11, 19, 43, 67, 163} := by
   sorry
 
-/-- $163$ is squarefree. -/
-@[category test, AMS 11]
-theorem squarefree_163 : Squarefree (163 : ℕ) :=
-  (Nat.prime_iff.mp (by norm_num : Nat.Prime 163)).squarefree
-
 /-- $\mathbb{Q}(\sqrt{-163})$ has class number $1$. -/
 @[category API, AMS 11]
 theorem hasClassNumber_163_1 : HasClassNumber 163 1 := by
@@ -84,7 +92,7 @@ theorem hasClassNumber_163_1 : HasClassNumber 163 1 := by
 /-- $163$ is the largest squarefree $k$ with class number $1$. -/
 @[category test, AMS 11]
 theorem isA038552_1_163 : IsA038552 1 163 := by
-  refine ⟨⟨squarefree_163, hasClassNumber_163_1⟩, ?_⟩
+  refine ⟨⟨(by norm_num : Nat.Prime 163).squarefree, hasClassNumber_163_1⟩, ?_⟩
   intro m ⟨hm_sq, hm_class⟩ (hle : 163 ≤ m)
   have hm_in : m ∈ ({1, 2, 3, 7, 11, 19, 43, 67, 163} : Set ℕ) :=
     starkHeegner_classNumberOne ▸ Set.mem_ofPred.mpr ⟨hm_sq, hm_class⟩
@@ -111,17 +119,10 @@ theorem isA038552_eq_largestNegFundDisc {n k : ℕ} (h : IsA038552 n k) :
     IsLargestNegFundDiscrForClassNumber (n := n) k := by
   sorry
 
-/-- For even class number $n$, if $k$ is the largest odd squarefree number with
-$h(-k) = n$ and $k'$ is the largest even squarefree number with $h(-k') = n$,
-then $k > k'$. -/
+/-- For even class number $n$, the $n$-th term of A038552 is odd. The source states this as:
+the largest odd squarefree $k$ with $h(-k) = n$ is greater than the largest even one. -/
 @[category research open, AMS 11]
-theorem odd_gt_even_for_even_classNumber {n : ℕ} (hn : Even n) (k k' : ℕ)
-    (hk_odd : Odd k) (hk'_even : Even k')
-    (hk_sq : Squarefree k) (hk'_sq : Squarefree k')
-    (hk_class : HasClassNumber k n) (hk'_class : HasClassNumber k' n)
-    (hk_largest : ∀ m, Odd m → Squarefree m → HasClassNumber m n → m ≤ k)
-    (hk'_largest : ∀ m, Even m → Squarefree m → HasClassNumber m n → m ≤ k') :
-    k > k' := by
+theorem odd_of_isA038552 {n k : ℕ} (hn : Even n) (h : IsA038552 n k) : Odd k := by
   sorry
 
 end OeisA38552
