@@ -78,6 +78,8 @@ import FormalConjecturesForMathlib.Order.Filter.Cofinite
 import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
 import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
+import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
+import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
 import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
