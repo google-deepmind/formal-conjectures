@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Invariant Subspace Problem
@@ -22,6 +22,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem),
 [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
+
+namespace InvariantSubspaceProblem
 
 variable {H : Type*} [NormedAddCommGroup H]
 
@@ -66,7 +68,7 @@ lemma TopologicalSpace.nontrivial_of_not_separableSpace {H : Type*} [Topological
 Every bounded linear operator `T : H → H` on a non-separable Hilbert space `H` has a
 non-trivial closed `T`-invariant subspace. Such an invariant space is given by considering the
 closure of the linear span of the orbit of any single non-zero vector. -/
-@[category research solved, AMS 47, formal_proof using formal_conjectures at ""]
+@[category research solved, AMS 47]
 theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [CompleteSpace H]
     (h : ¬TopologicalSpace.SeparableSpace H) (T : H →L[ℂ] H) :
     Nonempty (ClosedInvariantSubspace T) := by
@@ -83,7 +85,8 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
   · --W is separable (orbit countable → span separable → closure separable) but H isn't
     have hsep : TopologicalSpace.IsSeparable (W : Set H) :=
       ((Set.countable_range _).isSeparable).span.closure
-    grind [Submodule.top_coe, TopologicalSpace.isSeparable_univ_iff]
+    contrapose h
+    simpa [h, TopologicalSpace.isSeparable_univ_iff] using hsep
   · -- T maps orbit into orbit, hence span into span, hence closure into closure
     calc Submodule.map T.toLinearMap (Submodule.span ℂ S).topologicalClosure
         ≤ (Submodule.map T.toLinearMap (Submodule.span ℂ S)).topologicalClosure :=
@@ -97,7 +100,7 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
 
 /--
 Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
-non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
+non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can tafrake any
 non-trivial subspace . If not, one can take any nontrivial spectral subspace of `T`. -/
 @[category research solved, AMS 47]
 theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -115,3 +118,5 @@ theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
   sorry
+
+end InvariantSubspaceProblem

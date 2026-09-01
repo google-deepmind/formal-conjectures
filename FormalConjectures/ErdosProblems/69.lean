@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 69
@@ -33,7 +33,7 @@ $$
 $$
 irrational? (Here $\omega(n)$ counts the number of distinct prime divisors of $n$.)
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_69 : Irrational <| ∑' n, ω (n + 2) / 2 ^ (n + 2) := by
   sorry
 

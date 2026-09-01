@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-noncomputable section
+import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 13: Mutually unbiased bases
@@ -120,7 +118,7 @@ The dimension-six case is not known to be solved. At present, the best-known gen
 
 This is why the theorem `mutuallyUnbiasedBases_dim6` is marked as an open research statement.
 -/
-
+noncomputable section
 namespace OpenQuantumProblem13
 
 /- ## Preliminaries -/
@@ -142,8 +140,7 @@ def IsUnbiased {d : ℕ} (U V : UMat d) : Prop :=
 lemma IsUnbiased.symm {d : ℕ} {U V : UMat d} (hUV : IsUnbiased U V) :
     IsUnbiased V U := by
   intro i j
-  have hstar : relativeUnitary V U = star (relativeUnitary U V) := by
-    simp [relativeUnitary, Matrix.star_mul]
+  have hstar : relativeUnitary V U = star (relativeUnitary U V) := by simp [relativeUnitary]
   calc
     ‖relativeUnitary V U i j‖ ^ (2 : ℕ)
         = ‖star (relativeUnitary U V) i j‖ ^ (2 : ℕ) := by simp [hstar]
@@ -404,6 +401,7 @@ lemma re_mul_conj (z w : ℂ) :
     Complex.re (z * star w) = Complex.re z * Complex.re w + Complex.im z * Complex.im w := by
   simp [Complex.mul_re]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The Bloch inner product is determined by the $(0,0)$ entry of the relative unitary. -/
 @[category API, AMS 5 15 81 94]
 lemma bloch_inner_eq_two_normSq_sub_one (U V : UMat 2) :
