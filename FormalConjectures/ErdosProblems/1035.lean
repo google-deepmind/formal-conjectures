@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,79 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1035
 
-*Reference:* [erdosproblems.com/1035](https://www.erdosproblems.com/1035)
+*References:*
+- [erdosproblems.com/1035](https://www.erdosproblems.com/1035)
+- [Er93] Erdős, Paul, *Some of my favorite solved and unsolved problems in graph theory*.
+  Quaestiones Math. (1993), 333-350.
 -/
 
 namespace Erdos1035
 
 /--
-The hypercube graph on a type `n` has vertices `n → Bool` with edges between vertices
-that differ in exactly one coordinate. For the $n$-dimensional hypercube $Q_n$, use `Fin n`.
--/
-def hypercube (n : Type*) : SimpleGraph (n → Bool) where
-  Adj v w := ∃! i, v i ≠ w i
-  symm := by
-    intros v w h
-    obtain ⟨i, hi, hu⟩ := h
-    exact ⟨i, Ne.symm hi, fun j hj => hu j (Ne.symm hj)⟩
-  loopless v h := by
-    obtain ⟨i, hi, _⟩ := h
-    exact hi rfl
-
-/--
-A graph $G$ contains (or embeds) a graph $H$ if there exists an injective graph homomorphism
-from $H$ to $G$.
--/
-def Contains {α β : Type*} (G : SimpleGraph α) (H : SimpleGraph β) : Prop :=
-  ∃ f : H →g G, Function.Injective f
-
-/--
 Is there a constant $c > 0$ such that every graph on $2^n$ vertices with minimum degree
 $> (1-c) \cdot 2^n$ contains the $n$-dimensional hypercube $Q_n$?
 
+This is Erdős's question [Er93, p. 345].
+
 See also [576] for the extremal number of edges that guarantee a $Q_n$.
 -/
-@[category research open, AMS 05]
-theorem erdos_1035 :
-    (∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
-      [DecidableRel G.Adj],
-      (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
-  sorry
-
-/--
-Erdős [Er93] asks: if the main conjecture is false, determine or estimate the smallest $m > 2^n$
-such that every graph on $m$ vertices with minimum degree $> (1-c) \cdot 2^n$ contains a $Q_n$.
-
-[Er93] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1993),
-467-478.
--/
-@[category research open, AMS 05]
-theorem erdos_1035.variant_m (c : ℝ) (hc : c > 0) :
-    (∀ n : ℕ, ∃ m > 2^n, ∀ (G : SimpleGraph (Fin m))
-      [DecidableRel G.Adj],
-      (∀ v, (G.degree v : ℝ) > (1 - c) * 2^n) →
-      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
-  sorry
-
-/--
-Erdős [Er93] asks: for which threshold values $u_n$ is it true that every graph on $2^n$ vertices
-with minimum degree $> 2^n - u_n$ contains a $Q_n$.
-
-[Er93] Erdős, P., _Some of my favourite unsolved problems_. A tribute to Paul Erdős (1993),
-467-478.
--/
-@[category research open, AMS 05]
-theorem erdos_1035.variant_u :
-    (∃ u : ℕ → ℕ, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2^n)))
-      [DecidableRel G.Adj],
-      (∀ v, G.degree v > 2^n - u n) →
-      Contains G (hypercube (Fin n))) ↔ answer(sorry) := by
+@[category research open, AMS 5]
+theorem erdos_1035 : answer(sorry) ↔
+    ∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2 ^ n))) [DecidableRel G.Adj],
+      (∀ v, (G.degree v : ℝ) > (1 - c) * 2 ^ n) →
+        (SimpleGraph.hypercube n).IsContained G := by
   sorry
 
 end Erdos1035
