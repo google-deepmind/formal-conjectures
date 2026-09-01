@@ -108,7 +108,7 @@ theorem mod_24_of_isA038552 {n k : ℕ} (h : IsA038552 n k) : k % 24 = 19 := by
 for each class number. -/
 @[category research open, AMS 11]
 theorem isA038552_eq_largestNegFundDisc {n k : ℕ} (h : IsA038552 n k) :
-  IsLargestNegFundDiscrForClassNumber (n := n) k := by
+    IsLargestNegFundDiscrForClassNumber (n := n) k := by
   sorry
 
 /-- For even class number $n$, if $k$ is the largest odd squarefree number with
