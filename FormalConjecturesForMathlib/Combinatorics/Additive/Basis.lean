@@ -13,11 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Order.Filter.Cofinite
-import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
-import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
-import Mathlib.Algebra.Group.Pointwise.Set.Finite
-import Mathlib.Algebra.Order.Monoid.Canonical.Defs
+module
+
+public import FormalConjecturesForMathlib.Order.Filter.Cofinite
+public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
+public import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
+public import Mathlib.Algebra.Group.Pointwise.Set.Finite
+public import Mathlib.Algebra.Order.Monoid.Canonical.Defs
+
+@[expose] public section
+
+/-! # Bases
+
+References:
+- [Er56](Erdős, P., Problems and results in additive number theory.
+  Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
+
+-/
 
 open Filter
 open scoped Pointwise
@@ -42,7 +54,7 @@ lemma IsMulBasisOfOrder.isMulBasis (hA : A.IsMulBasisOfOrder n) : A.IsMulBasis :
 @[to_additive]
 lemma isMulBasisOfOrder_iff :
     A.IsMulBasisOfOrder n ↔ ∀ a, ∃ (f : Fin n → M) (_ : ∀ i, f i ∈ A), ∏ i, f i = a := by
-  have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
+  have := Set.mem_finsetProd (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsMulBasisOfOrder]
 
 /-- No set is a multiplicative basis of order `0`. -/
@@ -91,7 +103,7 @@ lemma IsMulBasis.isAsymptoticMulBasis (hA : IsMulBasis A) : A.IsAsymptoticMulBas
 lemma isAsymptoticMulBasisOfOrder_iff_prod :
     IsAsymptoticMulBasisOfOrder A n ↔ ∀ᶠ a in cofinite, ∃ (f : Fin n → M) (_ : ∀ i, f i ∈ A),
       ∏ i, f i = a := by
-  have := Set.mem_finset_prod (t := .univ) (f := fun _ : Fin n ↦ A)
+  have := Set.mem_finsetProd (t := .univ) (f := fun _ : Fin n ↦ A)
   simp_all [IsAsymptoticMulBasisOfOrder]
 
 /-- A set `A : Set M` is an asymptotic multiplicative basis of order `2` if a cofinite set of
@@ -121,7 +133,8 @@ protected lemma IsAsymptoticMulBasisOfOrder.ne_zero [Infinite M]
 protected lemma IsAsymptoticMulBasisOfOrder.nonempty [Infinite M]
     (hA : A.IsAsymptoticMulBasisOfOrder n) : A.Nonempty := by
   by_contra!
-  simp [this, IsAsymptoticMulBasisOfOrder, hA.ne_zero, finite_univ_iff, Infinite.not_finite] at hA
+  simp [this, IsAsymptoticMulBasisOfOrder, hA.ne_zero, finite_univ_iff,
+    _root_.Infinite.not_finite] at hA
 
 /-- `A : Set M` is an asymptotic basis of order one iff it is cofinite. -/
 @[to_additive (attr := simp)
@@ -144,11 +157,11 @@ lemma IsAsymptoticMulBasisOfOrder.mono [CanonicallyOrderedMul M] [IsCancelMul M]
     constructor
     · rintro ⟨y, hy, rfl⟩
       simpa
-    · simp only [mem_diff, mem_compl_iff, mem_smul_set, smul_eq_mul, not_exists, not_and, mem_Iio,
+    · simp only [mem_sdiff, mem_compl_iff, mem_smul_set, smul_eq_mul, not_exists, not_and, mem_Iio,
         not_lt, le_iff_exists_mul, and_imp, forall_exists_index]
       rintro hx y rfl
       exact ⟨y, fun hy ↦ hx _ hy rfl, rfl⟩
-  simp only [m.add_comm, pow_add, setOf_mem_eq, this, diff_union_self, subset_def, mem_compl_iff,
+  simp only [m.add_comm, pow_add, ofPred_mem_eq, this, sdiff_union_self, subset_def, mem_compl_iff,
     mem_union, mem_Iio]
   rintro b hb
   contrapose! hb
@@ -184,5 +197,18 @@ lemma isAsymptoticMulBasisOfOrder_iff_prod_atTop :
     IsAsymptoticMulBasisOfOrder A n ↔
       ∀ᶠ a in atTop, ∃ f : Fin n → M, (∀ i, f i ∈ A) ∧ ∏ i, f i = a := by
   simp [isAsymptoticMulBasisOfOrder_iff_prod, cofinite_eq_atTop]
+
+-- Note: the terminology _weak basis_ is non-standard. This notion is used in [Er56] p135.
+
+/-- A set `A : Set M` is a weak multiplicative basis of order `n` if any element `a : M`
+can be expressed as a product of at most `n` elements lying in `A`. -/
+@[to_additive
+/-- A set `A : Set M` is a weak additive basis of order `n` if for any element
+`a : M`, it can be expressed as a sum of at most `n` elements lying in `A`. -/]
+def IsWeakMulBasisOfOrder (A : Set M) (n : ℕ) : Prop := ∀ a, ∃ m ≤ n, a ∈ A ^ m
+
+/-- A weak multiplicative basis of some order. -/
+@[to_additive /-- A weak additive basis of some order. -/]
+def IsWeakMulBasis (A : Set M) : Prop := ∃ n, A.IsWeakMulBasisOfOrder n
 
 end Set

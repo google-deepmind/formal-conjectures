@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conway's 99-graph problem
@@ -24,19 +24,21 @@ import FormalConjectures.Util.ProblemImports
 
 namespace Conway99Graph
 
---TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
+-- TODO(firsching): Consider using SimpleGraph.IsSRGWith to formulate the conjecture.
 
 open SimpleGraph
 
 variable {V : Type} {G : SimpleGraph V}
 
-@[category undergraduate, AMS 5]
+/-- A finset of vertices in a complete graph is always a clique. -/
+@[category textbook, AMS 5]
 lemma completeGraphIsClique (s : Finset V) : (⊤ : SimpleGraph V).IsClique s :=
   Pairwise.set_pairwise (fun _ _ a ↦ a) _
 
 variable [Fintype V]
 
-@[category undergraduate, AMS 5]
+/-- The only clique of size `n` in a complete graph on `n` vertices is the entire set of vertices. -/
+@[category textbook, AMS 5]
 lemma completeGraph_cliqueSet :
     (⊤ : SimpleGraph V).cliqueSet (Fintype.card V) = {Set.univ.toFinset} := by
   simp only [cliqueSet, isNClique_iff ⊤, completeGraphIsClique, true_and,
@@ -90,14 +92,11 @@ The box product of two triangles is an example with 9 vertices satisfying the co
 and it is also isomorphic to it and to the Paley graph and the graph of the
 3-3 duoprism)
 -/
-def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
+abbrev Conway9 := completeGraph (Fin 3) □ completeGraph (Fin 3)
 
 @[category test, AMS 5]
 theorem conway9_nonEdgesAreDiagonals : NonEdgesAreDiagonals Conway9 := by
   simp only [NonEdgesAreDiagonals]
-  have : ∀ i, Fintype ↑(Conway9.neighborSet i) := by
-    intro i
-    exact Fintype.ofFinite ↑(Conway9.neighborSet i)
   have : ∀ i j, ((Conway9.neighborFinset i) ∩ Conway9.neighborFinset j).card =
     (Conway9.neighborSet i ∩ Conway9.neighborSet j).ncard := by
     simp only [neighborFinset]

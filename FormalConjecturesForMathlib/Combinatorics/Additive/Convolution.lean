@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Algebra.Group.Indicator
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import Mathlib.RingTheory.PowerSeries.Basic
+
+@[expose] public section
 
 /-!
 # Convolution of Functions on ℕ
@@ -37,7 +41,7 @@ This file defines the sum (`∗`) convolution of functions `ℕ → R`.
 
 namespace AdditiveCombinatorics
 
-open Finset Classical Set
+open Finset Set
 
 variable {R : Type*} [Semiring R]
 
@@ -51,7 +55,7 @@ infixl:70 " ∗ " => sumConv
 function with itself: $1_A\ast 1_A(n)$. -/
 noncomputable def sumRep (A : Set ℕ) : ℕ → ℕ := (𝟙_A ∗ 𝟙_A)
 
-
+open scoped Classical in
 @[simp]
 lemma sumRep_def (A : Set ℕ) (n : ℕ) :
     sumRep A n = ((antidiagonal n).filter (fun (p : ℕ × ℕ) ↦ p.1 ∈ A ∧ p.2 ∈ A)).card := by
@@ -62,7 +66,7 @@ lemma sumRep_def (A : Set ℕ) (n : ℕ) :
 open PowerSeries
 
 theorem sumRep_eq_powerSeries_coeff (A : Set ℕ) (n : ℕ) : (sumRep A n : ℕ) =
-    ((PowerSeries.mk (𝟙_A)) * (PowerSeries.mk (𝟙_A)) : PowerSeries ℕ).coeff ℕ n := by
+    ((PowerSeries.mk (𝟙_A)) * (PowerSeries.mk (𝟙_A)) : PowerSeries ℕ).coeff n := by
   simp [sumRep, sumConv, indicatorOne, indicator, PowerSeries.coeff_mul, PowerSeries.coeff_mk]
 
 end AdditiveCombinatorics

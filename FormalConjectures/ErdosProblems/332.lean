@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 332
@@ -51,6 +51,6 @@ If the condition is a solution to the problem is up to human judgement.
 theorem erdos_332 (A : Set ℕ) : (answer(sorry) : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
   sorry
 
---TODO(firsching): formalize additional statements
+-- TODO(firsching): formalize additional statements
 
 end Erdos332

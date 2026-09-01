@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 import FormalConjectures.Wikipedia.LegendreConjecture
 
 /-!
@@ -36,32 +36,32 @@ namespace Erdos375
 /-- This is a proposition saying that for any `n ≥ 1` and any `k`, if `n + 1, ..., n + k` are all
 composite, then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`.
 -/
-def Erdos375 : Prop := ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
+def Erdos375Prop : Prop := ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1
 
-/-- Is `Erdos375` true? -/
+/-- Is `Erdos375Prop` true? -/
 @[category research open, AMS 11]
-theorem erdos_375 : answer(sorry) ↔ Erdos375 := by
+theorem erdos_375 : answer(sorry) ↔ Erdos375Prop := by
   sorry
 
-/-- If `Erdos375` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
+/-- If `Erdos375Prop` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
 for some `c > 0`. -/
 @[category research solved, AMS 11]
-theorem erdos_375.bounded_gap : Erdos375 →
+theorem erdos_375.variants.bounded_gap : Erdos375Prop →
     ∃ c > 0, ∀ᶠ n in atTop, (n + 1).nth Nat.Prime - n.nth Nat.Prime
     < (n.nth Nat.Prime : ℝ) ^ (1 / (2 : ℝ) - c) := by
   sorry
 
-/-- In particular, if `Erdos375` is true, then Legendre's conjecture is asymptotically true. -/
+/-- In particular, if `Erdos375Prop` is true, then Legendre's conjecture is asymptotically true. -/
 @[category research solved, AMS 11]
-theorem erdos_375.legendre : Erdos375 →
+theorem erdos_375.variants.legendre : Erdos375Prop →
     (∀ᶠ n in atTop, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p) :=
-  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.bounded_gap hp)
+  fun hp => LegendreConjecture.bounded_gap_legendre (erdos_375.variants.bounded_gap hp)
 
 /-- It is easy to see that for any `n ≥ 1` and `k ≤ 2`, if `n + 1, ..., n + k` are all composite,
 then there are distinct primes `p₁, ... pₖ` such that `pᵢ ∣ n + i` for all `1 ≤ i ≤ k`. -/
 @[category research solved, AMS 11]
-theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
+theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   intro n hn k hk
   interval_cases k <;> intro h
@@ -73,7 +73,7 @@ theorem erdos_375.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n + i + 1).
     by_contra! hr
     wlog hq : x < y
     · exact this n hn k hk h p hp y x hxy.symm hr.symm (by grind)
-    · have hy : y = x + 1 := by grind
+    · have hy : y = x + 1 := by fin_cases x <;> fin_cases y <;> simp_all
       have := hy ▸ Nat.dvd_sub (hp y).2 (hxy ▸ (hp x).2)
       have := (hp 1).1
       simp_all [Nat.not_prime_one]
@@ -85,7 +85,7 @@ in [RST75]. There is no need to only consider sufficiently large `n` because one
 `c` small enough so that `k < c * (log n / (log (log n))) ^ 3` implies that `k = 0` until `n` is
 large. -/
 @[category research solved, AMS 11]
-theorem erdos_375.log : ∃ c > 0, ∀ n k : ℕ,
+theorem erdos_375.variants.log : ∃ c > 0, ∀ n k : ℕ,
     k < c * (Real.log n / (Real.log (Real.log n))) ^ 3 → (∀ i < k, ¬ (n + i + 1).Prime) →
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1 := by
   sorry

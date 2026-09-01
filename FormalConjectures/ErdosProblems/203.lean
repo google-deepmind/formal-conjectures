@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 203
@@ -32,6 +32,6 @@ for any $k, \ell \ge 0$?
 theorem erdos_203 : answer(sorry) ↔ ∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime := by
   sorry
 
---TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime
+-- TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime
 
 end Erdos203

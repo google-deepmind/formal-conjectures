@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Bivariate
-import Mathlib.RingTheory.Algebraic.Pi
+
+public import Mathlib.Algebra.Polynomial.Bivariate
+public import Mathlib.RingTheory.Algebraic.Pi
+
+@[expose] public noncomputable section
 
 /-!
 # Algebra over the Ring of Polynomials
@@ -26,16 +30,21 @@ variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 
 namespace Polynomial
 
-@[simp] theorem eval₂_id {p : Polynomial R} {x : R} : eval₂ (RingHom.id _) x p = p.eval x := rfl
-
 instance instAlgebraPi : Algebra R[X] (S → S) :=
-  (Pi.ringHom fun x ↦ (Polynomial.aeval x).toRingHom).toAlgebra
+  (RingHom.pi fun s ↦ (Polynomial.aeval s).toRingHom).toAlgebra
 
-variable {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+@[simp]
+lemma algebraMap_algebraPi (p : R[X]) (s : S) : algebraMap R[X] (S → S) p s = aeval s p := rfl
 
-/-- #TODO:  Generalize the following lemma to `CommSemiring`. -/
 @[simp] lemma aeval_polynomial_pi (p : R[X][X]) (f : S → S) (x : S) :
     p.aeval f x = aevalAeval x (f x) p := by
-  simp [instAlgebraPi, aeval, eval₂, sum]
+  induction p using Polynomial.induction_on' with
+  | add => simp [*]
+  | monomial n q =>
+  simp only [aeval_monomial, Pi.mul_apply, Pi.pow_apply, aevalAevalEquiv_apply_apply,
+    algebraMap_def, coe_mapRingHom, eval_mul, eval_map_algebraMap, eval_pow, eval_C]
+  induction q using Polynomial.induction_on' with
+  | add => simp [add_mul, *]
+  | monomial n p => simp
 
 end Polynomial

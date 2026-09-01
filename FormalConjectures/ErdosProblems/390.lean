@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 390
@@ -38,13 +38,15 @@ noncomputable def f (n : ℕ) : ℕ := sInf {m : ℕ | ∃ k, ∃ f : ℕ → �
 
 /-- `f n - 2 * n = θ (n / log n)`. This is proved in [EGS82]. -/
 @[category research solved, AMS 11]
-theorem erdos_390_theta : (fun n => f n - 2 * n : ℕ → ℝ) =Θ[atTop] (fun n => n / log (n : ℝ)) := by
+theorem erdos_390.variants.theta :
+    (fun n => f n - 2 * n : ℕ → ℝ) =Θ[atTop] (fun n => n / log (n : ℝ)) := by
   sorry
 
 /-- Does there exists a constant `c` such that `f n - 2 * n ~ c * (n / log n)`? -/
 @[category research open, AMS 11]
-theorem erdos_390_equivalent : answer(sorry) ↔ ∃ c,
-    (fun n => f n - 2 * n : ℕ → ℝ) ~[atTop] (fun n => c * n / log (n : ℝ)) := by
+theorem erdos_390 :
+    answer(sorry) ↔ ∃ c,
+      (fun n => f n - 2 * n : ℕ → ℝ) ~[atTop] (fun n => c * n / log (n : ℝ)) := by
   sorry
 
 end Erdos390

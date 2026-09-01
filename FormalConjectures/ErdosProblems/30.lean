@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 30
 
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 -/
+
+namespace Erdos30
 
 /--
 Let $h(N)$ be the maximum size of a Sidon set in $\{1, \dots, N\}$.
@@ -31,7 +33,7 @@ noncomputable abbrev h (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 
 open Filter
 
 /--
-Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varespilon}(N^\varespilon)
+Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varepsilon}(N^\varepsilon)$
 -/
 @[category research open, AMS 11]
 theorem erdos_30 : answer(sorry) ↔
@@ -39,3 +41,4 @@ theorem erdos_30 : answer(sorry) ↔
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
+end Erdos30

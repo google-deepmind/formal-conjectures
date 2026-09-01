@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Catalan's conjecture and related Diophantine equations
@@ -48,7 +48,7 @@ theorem pillais_conjecture (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) 
 
 end Catalan
 
-/-! ## Lebesgue-Nagell equation -/
+/-  ## Lebesgue-Nagell equation -/
 
 namespace LebesgueNagell
 

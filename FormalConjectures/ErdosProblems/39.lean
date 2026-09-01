@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 39
@@ -37,6 +37,6 @@ theorem erdos_39 : answer(sorry) ↔ ∃ (A : Set ℕ), A.Infinite ∧ IsSidon A
     (· ^ (1 / 2 - ε) : ℕ → ℝ) =O[atTop] fun N => (((Set.Icc 1 N) ∩ A).ncard : ℝ) := by
   sorry
 
---TODO(firsching): add the various known bounds as variants.
+-- TODO(firsching): add the various known bounds as variants.
 
 end Erdos39

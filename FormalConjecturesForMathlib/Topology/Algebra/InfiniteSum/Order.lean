@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Topology.Algebra.InfiniteSum.Order
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+
+@[expose] public section
 
 variable {ι α : Type*} [PartialOrder α] [CommGroup α] [IsOrderedMonoid α] [UniformSpace α]
   [IsUniformGroup α] [CompleteSpace α] [OrderClosedTopology α]

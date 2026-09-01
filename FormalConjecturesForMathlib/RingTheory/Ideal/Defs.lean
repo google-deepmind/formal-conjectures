@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Module.Opposite
-import Mathlib.Algebra.Module.Submodule.Defs
+public import Mathlib.Algebra.Module.Opposite
+public import Mathlib.Algebra.Module.Submodule.Defs
 
 /-!
 # Right ideals
 
 This file defines right ideals over a semiring.
 -/
+
+@[expose] public section
 
 universe u
 

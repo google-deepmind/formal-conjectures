@@ -13,7 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
+module
+
+public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
+public meta import Mathlib.Data.List.Defs
+
+public meta section
 
 /-! # Turing Machine Parser
 
@@ -94,7 +99,7 @@ private def Nat.toStateSyntax (n : Nat) (stateName : Name) : TermElabM Term := d
 /-- `String.toStmtSyntax s stateName` parses a component of a Turing machine string representation
 and outputs the syntax of the corresponding `(state, statement) : State × Stmt` pair. -/
 private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat) : TermElabM Term := do
-  let [c_symbol, c_dir, c_state] := s.data |
+  let [c_symbol, c_dir, c_state] := s.toList |
     throwError m!"Invalid transition encoding: {s} should be 3 characters long."
   if c_symbol = '-' ∧ c_dir = '-' ∧ c_state = '-' then
     `(none)
@@ -107,9 +112,9 @@ private def String.toStmtSyntax (s : String) (stateName : Name) (numStates : Nat
 
 end Util
 
-private def String.nextn (s : String) (p : Pos) : Nat → Pos
+private def String.nextn (s : String) (p : Pos.Raw) : Nat → Pos.Raw
   | 0 => p
-  | n + 1 => s.next (s.nextn p n)
+  | n + 1 => Pos.Raw.next s (s.nextn p n)
 
 /--
 Take as input a list of strings and return an array of `matchAltExpr` syntaxes
@@ -130,7 +135,7 @@ def mkMachineMatchAltExpr (L : List String) (stateName : Name) (numSymbols numSt
     Array.range numSymbols |>.mapM fun symbolIdx ↦ do
       let pos1 := s.nextn ⟨0⟩ (3 * symbolIdx)
       let pos2 := s.nextn ⟨0⟩ (3 * (symbolIdx + 1))
-      let s_first : Term ← (s.extract pos1 pos2).toStmtSyntax stateName numStates
+      let s_first : Term ← (String.Pos.Raw.extract s pos1 pos2).toStmtSyntax stateName numStates
       `(matchAltExpr| | $(← i.toStateSyntax stateName), ($(quote symbolIdx)) => $s_first)
 
   return moves.flatten
@@ -144,22 +149,28 @@ section Main
 
 /-- `mkStateType n` adds to the environment an inductive type with `n` states
 names `State{n}` with constructors the symbols `A, B, ...`, together with the instance
-`Inhabited (State{n})`. -/
+`Inhabited (State{n})`.
+
+Both declarations have to be `public`. `liftCommandElabM` runs them in a fresh scope that does
+not carry the surrounding module's visibility, so without it they are declared private and end
+up named `_private.<module>.0.State{n}`. The lookup below then fails with `Unknown constant
+State{n}`, and the type would in any case be private while appearing in the type of the term
+this elaborator returns. -/
 def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
   /-
   We may want to have some smarter check done here, e.g. throw an error if the type of the
   constant isn't defeq to the one we want? (note that the instance command we elaborate below already
-  implicitely performs a very weak check). -/
+  implicitly performs a very weak check). -/
   unless ← hasConst stateName do
     let indName : Ident := Lean.mkIdent <| stateName
     -- First construct the inductive type
     let typeConstructors ← (Array.range n).mapM fun i ↦
       `(Command.ctor| | $(Lean.mkIdent <|
         .mkSimple s!"{Alphabet[i]!}"):ident : $(indName))
-    let stx ← `(command| inductive $(indName) $typeConstructors:ctor*)
+    let stx ← `(command| public inductive $(indName) $typeConstructors:ctor*)
     liftCommandElabM <| elabCommand stx
   -- Create the `inhabited` instance as follows in order to have access to it e.g. in proofs
-  let inhabitedStx ← `(command | instance : Inhabited $(Lean.mkIdent stateName) :=
+  let inhabitedStx ← `(command | public instance : Inhabited $(Lean.mkIdent stateName) :=
     ⟨$(Lean.mkIdent <| (.str stateName "A"))⟩)
   liftCommandElabM <| elabCommand inhabitedStx
 

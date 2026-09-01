@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 826
@@ -22,7 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/826](https://www.erdosproblems.com/826)
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos826
 

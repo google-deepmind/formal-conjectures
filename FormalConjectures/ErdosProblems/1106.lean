@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1106
@@ -34,7 +34,8 @@ Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct p
 $∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
 -/
 @[category research open, AMS 11]
-theorem erdos_1106 : Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
+theorem erdos_1106.parts.i :
+    answer(sorry) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
   sorry
 
 /--
@@ -42,7 +43,8 @@ Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct p
 $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1106_k2 : ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
+theorem erdos_1106.parts.ii :
+    answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
   sorry
 
 end Erdos1106

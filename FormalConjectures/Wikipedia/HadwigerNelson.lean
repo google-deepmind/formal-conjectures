@@ -14,10 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjecturesUtil
 import FormalConjectures.ErdosProblems.«508»
 
 /-!
-# The Hadwiger–Nelson problem
+# The Hadwiger-Nelson Problem
+
+The Hadwiger-Nelson problem asks for the minimum number of colors required to
+color the plane such that no two points at unit distance from each other have
+the same color.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«508»`.
 -/
