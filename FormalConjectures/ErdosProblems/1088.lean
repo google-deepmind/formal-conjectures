@@ -50,6 +50,11 @@ pairwise distances distinct.
 -/
 noncomputable def f (d n : ℕ) : ℕ := sInf (cardSet d n)
 
+/-- `f d n` is the least cardinality with the required distinct-distance property. -/
+@[category API, AMS 51]
+theorem f_isLeast (d n : ℕ) : IsLeast (cardSet d n) (f d n) := by
+  sorry
+
 /--
 Let $f_d(n)$ be the minimal $m$ such that any set of $m$ points in $\mathbb{R}^d$ contains a set of
 $n$ points for which any two determined distances are distinct. Erdős Problem 1088 asks to
@@ -59,16 +64,13 @@ f_d(n) = 2^{o(d)}
 $$
 as $d \to \infty$?
 
-The first conjunct ensures that `f`, which is defined using `sInf`, is the intended minimum rather
-than the default value for an empty set. The little-$o$ condition is stated after taking the
-base-$2$ logarithm.
+The little-$o$ condition is stated after taking the base-$2$ logarithm.
 -/
 @[category research open, AMS 51]
 theorem erdos_1088 :
     answer(sorry) ↔
       ∀ n ≥ 3,
-        (∀ d, IsLeast (cardSet d n) (f d n)) ∧
-          (fun d : ℕ ↦ Real.logb 2 (f d n : ℝ)) =o[atTop] (fun d : ℕ ↦ (d : ℝ)) := by
+        (fun d : ℕ ↦ Real.logb 2 (f d n : ℝ)) =o[atTop] (fun d : ℕ ↦ (d : ℝ)) := by
   sorry
 
 end Erdos1088
