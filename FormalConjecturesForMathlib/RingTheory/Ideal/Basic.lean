@@ -40,8 +40,7 @@ theorem ext {I J : RightIdeal R} (h : ∀ x, x ∈ I ↔ x ∈ J) : I = J :=
 
 /-- A right ideal is closed under multiplication on the right. -/
 theorem mul_mem_right (I : RightIdeal R) {a : R} (b : R) (ha : a ∈ I) : a * b ∈ I := by
-  change (MulOpposite.op b) • a ∈ I
-  exact I.smul_mem _ ha
+  exact I.smul_mem (MulOpposite.op b) ha
 
 end Semiring
 
@@ -56,8 +55,7 @@ def toIdeal (I : RightIdeal R) : Ideal R where
   add_mem' := I.add_mem
   smul_mem' := by
     intro r x hx
-    change r * x ∈ I
-    rw [mul_comm]
+    rw [smul_eq_mul, mul_comm]
     exact I.mul_mem_right r hx
 
 @[simp]
@@ -71,8 +69,7 @@ def _root_.Ideal.toRightIdeal (I : Ideal R) : RightIdeal R where
   add_mem' := I.add_mem
   smul_mem' := by
     intro r x hx
-    change x * r.unop ∈ I
-    rw [mul_comm]
+    rw [MulOpposite.smul_eq_mul_unop, mul_comm]
     exact I.mul_mem_left r.unop hx
 
 @[simp]
