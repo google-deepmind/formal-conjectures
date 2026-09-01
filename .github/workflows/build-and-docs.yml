@@ -66,10 +66,12 @@ jobs:
 
       # Two independent halves of this job, each with its own switch.
       #
-      # `website_only` skips the slow Lean compilation and takes the data from
-      # the live site instead. Triggers:
+      # `website_only` skips the full Lean validation and takes the website
+      # data from the live site instead. Triggers:
       #   - Branches ending in -webtest
       #   - Manual workflow_dispatch with website_only=true
+      # Webtest branches still render the literate source pages so changes to
+      # their HTML and CSS can be previewed. A manual website-only run does not.
       #
       # `site` builds the website and the literate source pages. Rendering the
       # literate pages alone takes longer than the Lean build, and a pull
@@ -88,9 +90,16 @@ jobs:
           if [[ "$WEBSITE_ONLY" == "true" ]] || \
              [[ "$REF_NAME" == *-webtest ]]; then
             echo "website_only=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::Website-only build: skipping Lean compilation, downloading data from live site."
+            echo "::notice::Website-only build: skipping full Lean validation, downloading data from live site."
           else
             echo "website_only=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [[ "$WEBSITE_ONLY" == "true" ]] && \
+             [[ "$REF_NAME" != *-webtest ]]; then
+            echo "source_pages=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "source_pages=true" >> "$GITHUB_OUTPUT"
           fi
 
           site=true
@@ -110,7 +119,7 @@ jobs:
           echo "site=$site" >> "$GITHUB_OUTPUT"
 
       - name: Install elan
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.source_pages == 'true'
         run: |
           set -o pipefail
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
@@ -118,7 +127,7 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Restore ~/.cache/mathlib
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.source_pages == 'true'
         uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.cache/mathlib
@@ -128,7 +137,7 @@ jobs:
             oleans-
 
       - name: Get olean cache
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.mode.outputs.source_pages == 'true'
         run: |
           lake exe cache unpack
           lake exe cache get
@@ -159,7 +168,7 @@ jobs:
           rm -f FormalConjectures/All.lean
 
       - name: Build literate source pages
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        if: steps.mode.outputs.source_pages == 'true' && steps.mode.outputs.site == 'true'
         run: |
           cd docbuild
           export MATHLIB_NO_CACHE_ON_UPDATE=1
@@ -173,7 +182,7 @@ jobs:
           lake exe verso-html .lake/build/literate ../_literate_html || true
 
       - name: Post-process literate HTML
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        if: steps.mode.outputs.source_pages == 'true' && steps.mode.outputs.site == 'true'
         run: |
           python3 site/fix_literate_html.py _literate_html
 
@@ -303,7 +312,8 @@ jobs:
           mkdir -p _deploy
           # Website goes at root
           cp -r site/site/* _deploy/
-          # Literate source pages go under /src (may not exist in website-only mode)
+          # Literate source pages go under /src. Manual website-only runs omit
+          # them, while -webtest branches render them for previewing.
           if [[ -d _literate_html ]] && [[ -n "$(ls -A _literate_html 2>/dev/null)" ]]; then
             cp -r _literate_html _deploy/src
           fi
