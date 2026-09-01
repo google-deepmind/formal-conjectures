@@ -79,8 +79,8 @@
 
 /*
  * verso-literate renders module and declaration docstrings as Markdown prose
- * rather than `.doc-comment` tokens.  Colour the prose container as well as
- * its synthetic `/-!`, `/--`, and `-/` delimiters.
+ * rather than `.doc-comment` tokens.  Colour the prose container, and omit
+ * the synthetic `/-!`, `/--`, and `-/` delimiters around that rendered prose.
  */
 .code-content .verso-text,
 .code-content .md-text {
@@ -92,6 +92,5 @@
 .code-content .verso-text::after,
 .code-content .md-text::before,
 .code-content .md-text::after {
-  color: inherit;
-  font-style: inherit;
+  content: none;
 }
