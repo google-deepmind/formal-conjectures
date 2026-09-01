@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1088
@@ -31,7 +31,7 @@ variable {d : ℕ}
 
 /-- A finite set of points has all pairwise distances distinct. -/
 def PairwiseDistancesDistinct (A : Finset (ℝ^d)) : Prop :=
-  (A.offDiag.image (fun p : (ℝ^d) × (ℝ^d) => dist p.1 p.2)).card = Nat.choose A.card 2
+  distinctDistances A = Nat.choose A.card 2
 
 /-- The finite set `S` contains an `n`-point subset with all pairwise distances distinct. -/
 def HasSubsetWithDistinctDistances (n : ℕ) (S : Finset (ℝ^d)) : Prop :=
