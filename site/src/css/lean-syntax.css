@@ -37,10 +37,15 @@
 }
 
 /* Lexical tokens emitted by current SubVerso. */
-.hl.lean .comment,
-.hl.lean .doc-comment {
+.hl.lean .comment {
   color: var(--lean-syntax-comment);
   font-style: italic;
+}
+
+/* Match Hex's upright green treatment for tokenized doc comments. */
+.hl.lean .doc-comment {
+  color: var(--lean-syntax-comment) !important;
+  font-style: normal;
 }
 
 .hl.lean .literal.string,
@@ -72,11 +77,21 @@
   color: var(--lean-syntax-punctuation);
 }
 
-/* Verso renders declaration doc comments as prose, outside the code spans. */
+/*
+ * verso-literate renders module and declaration docstrings as Markdown prose
+ * rather than `.doc-comment` tokens.  Colour the prose container as well as
+ * its synthetic `/-!`, `/--`, and `-/` delimiters.
+ */
+.code-content .verso-text,
+.code-content .md-text {
+  color: var(--lean-syntax-comment);
+  font-style: normal;
+}
+
 .code-content .verso-text::before,
 .code-content .verso-text::after,
 .code-content .md-text::before,
 .code-content .md-text::after {
-  color: var(--lean-syntax-comment);
-  font-style: italic;
+  color: inherit;
+  font-style: inherit;
 }
