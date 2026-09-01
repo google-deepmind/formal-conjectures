@@ -22,6 +22,7 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1088](https://www.erdosproblems.com/1088)
 -/
 
+open Filter
 open scoped EuclideanGeometry
 
 namespace Erdos1088
@@ -29,19 +30,19 @@ namespace Erdos1088
 variable {d : ℕ}
 
 /-- A finite set of points has all pairwise distances distinct. -/
-def pairwiseDistancesDistinct (A : Finset (ℝ^d)) : Prop :=
+def PairwiseDistancesDistinct (A : Finset (ℝ^d)) : Prop :=
   (A.offDiag.image (fun p : (ℝ^d) × (ℝ^d) => dist p.1 p.2)).card = Nat.choose A.card 2
 
 /-- The finite set `S` contains an `n`-point subset with all pairwise distances distinct. -/
-def hasSubsetWithDistinctDistances (n : ℕ) (S : Finset (ℝ^d)) : Prop :=
-  ∃ A : Finset (ℝ^d), A ⊆ S ∧ A.card = n ∧ pairwiseDistancesDistinct A
+def HasSubsetWithDistinctDistances (n : ℕ) (S : Finset (ℝ^d)) : Prop :=
+  ∃ A : Finset (ℝ^d), A ⊆ S ∧ A.card = n ∧ PairwiseDistancesDistinct A
 
 /--
 The set of cardinalities `m` such that every `m`-point subset of `ℝ^d` contains an `n`-point
 subset with all pairwise distances distinct.
 -/
 def cardSet (d n : ℕ) : Set ℕ :=
-  { m | ∀ S : Finset (ℝ^d), S.card = m → hasSubsetWithDistinctDistances n S }
+  { m | n ≤ m ∧ ∀ S : Finset (ℝ^d), S.card = m → HasSubsetWithDistinctDistances n S }
 
 /--
 The least `m` such that every `m`-point subset of `ℝ^d` contains an `n`-point subset with all
@@ -50,27 +51,24 @@ pairwise distances distinct.
 noncomputable def f (d n : ℕ) : ℕ := sInf (cardSet d n)
 
 /--
-Erdős Problem 1088 asks whether, for every dimension $d \ge 1$ and every $n \ge 1$, there is an
-$m$ such that every set of $m$ points in $\mathbb{R}^d$ contains an $n$-point subset whose pairwise
-distances are all distinct.
--/
-@[category research open, AMS 51]
-theorem erdos_1088_general :
-    answer(sorry) ↔
-      ∀ d ≥ 1, ∀ n ≥ 1, ∃ m, ∀ S : Finset (ℝ^d),
-        S.card = m → hasSubsetWithDistinctDistances n S := by
-  sorry
+Let $f_d(n)$ be the minimal $m$ such that any set of $m$ points in $\mathbb{R}^d$ contains a set of
+$n$ points for which any two determined distances are distinct. Erdős Problem 1088 asks to
+estimate $f_d(n)$. In particular, is it true that, for every fixed $n \geq 3$,
+$$
+f_d(n) = 2^{o(d)}
+$$
+as $d \to \infty$?
 
-/--
-Erdős Problem 1088 also asks whether, for every $d \ge 3$, the least such `m` grows exponentially
-in $n$: equivalently, whether there are constants $0 < c_1 \le c_2$ such that
-$2^{c_1 n} \le f(d,n) \le 2^{c_2 n}$ for all $n \ge 1$.
+The first conjunct ensures that `f`, which is defined using `sInf`, is the intended minimum rather
+than the default value for an empty set. The little-$o$ condition is stated after taking the
+base-$2$ logarithm.
 -/
 @[category research open, AMS 51]
-theorem erdos_1088_exponential :
+theorem erdos_1088 :
     answer(sorry) ↔
-      ∀ d ≥ 3, ∃ c₁ c₂ : ℕ, 0 < c₁ ∧ c₁ ≤ c₂ ∧
-        ∀ n ≥ 1, 2 ^ (c₁ * n) ≤ f d n ∧ f d n ≤ 2 ^ (c₂ * n) := by
+      ∀ n ≥ 3,
+        (∀ d, IsLeast (cardSet d n) (f d n)) ∧
+          (fun d : ℕ ↦ Real.logb 2 (f d n : ℝ)) =o[atTop] (fun d : ℕ ↦ (d : ℝ)) := by
   sorry
 
 end Erdos1088
