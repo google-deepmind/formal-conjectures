@@ -39,8 +39,8 @@ theorem ext {I J : RightIdeal R} (h : ∀ x, x ∈ I ↔ x ∈ J) : I = J :=
   Submodule.ext h
 
 /-- A right ideal is closed under multiplication on the right. -/
-theorem mul_mem_right (I : RightIdeal R) {a : R} (b : R) (ha : a ∈ I) : a * b ∈ I := by
-  exact I.smul_mem (MulOpposite.op b) ha
+theorem mul_mem_right (I : RightIdeal R) {a : R} (b : R) (ha : a ∈ I) : a * b ∈ I :=
+  I.smul_mem (MulOpposite.op b) ha
 
 end Semiring
 

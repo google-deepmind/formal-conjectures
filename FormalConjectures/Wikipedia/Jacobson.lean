@@ -39,7 +39,7 @@ namespace Jacobson
 /-- The Jacobson conjecture for a ring $R$: the infimum of the powers of the Jacobson radical
 $J$ is the zero ideal. -/
 def JacobsonConjectureFor (R : Type u) [Ring R] : Prop :=
-  (⨅ n : ℕ, (jacobson R) ^ n) = 0
+  ⨅ n : ℕ, jacobson R ^ n = 0
 
 /-- The Jacobson conjecture (in its modern form):
 In a (noncommutative) ring which is left and right Noetherian,
