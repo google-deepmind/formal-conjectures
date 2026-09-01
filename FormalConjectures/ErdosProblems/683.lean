@@ -47,8 +47,8 @@ $\binom{n}{k} = \binom{n}{n-k}$).
 -/
 @[category research open, AMS 11]
 theorem erdos_683 : answer(sorry) ↔
-    (∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 →
-      P n k > min (n - k + 1 : ℝ) (k ^ (1 + c))) := by
+    ∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 →
+      (P n k : ℝ) ≥ k ^ (1 + c) := by
   sorry
 
 /--
