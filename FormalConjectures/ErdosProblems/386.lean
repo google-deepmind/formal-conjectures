@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 386
@@ -41,7 +41,7 @@ For all $2 \le k \le n - 2$,
 can $\binom{n}{k}$ be the product of consecutive primes infinitely often?
 -/
 @[category research open, AMS 11]
-theorem erdos_386.variants_forall :
+theorem erdos_386.variants.forall :
     answer(sorry) ↔ ∀ k ≥ 2, ∃ᶠ n in .atTop,
       k ≤ n - 2 ∧ ∃ p q : ℕ, n.choose k = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
@@ -50,7 +50,7 @@ theorem erdos_386.variants_forall :
 Can $\binom{n}{2}$ be the product of consecutive primes infinitely often?
 -/
 @[category research open, AMS 11]
-theorem erdos_386.variants_two :
+theorem erdos_386.variants.two :
     answer(sorry) ↔ ∃ᶠ n in .atTop,
       2 ≤ n - 2 ∧ ∃ p q : ℕ, n.choose 2 = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry

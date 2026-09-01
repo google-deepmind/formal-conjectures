@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Gauss circle problem
@@ -26,7 +26,7 @@ open Filter
 
 open scoped EuclideanGeometry Real Topology
 
-/-! # Gauss Circle Problem
+/-  # Gauss Circle Problem
 
 Consider a circle in $\mathbb{R}^2$ with center at the origin and radius $r\geq 0$.
 Gauss's circle problem asks how many points there are inside this circle of the form

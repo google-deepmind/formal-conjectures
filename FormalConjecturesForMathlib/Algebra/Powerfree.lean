@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Squarefree.Basic
+
+public import Mathlib.Algebra.Squarefree.Basic
+
+@[expose] public section
 
 variable {M M₀ : Type*} {r m : M} {k : ℕ}
 
@@ -60,7 +64,7 @@ theorem Irreducible.powerfree (h : Irreducible m) (hk : 2 ≤ k) :
   induction k with
   | zero => grind
   | succ n ih =>
-  rw [← npow_eq_pow, Monoid.npow_succ, mul_assoc] at hz
+  rw [pow_succ, mul_assoc] at hz
   rcases h.isUnit_or_isUnit hz with (hu | hu)
   · exact (isUnit_pow_iff (by linarith)).1 hu
   · apply isUnit_of_mul_isUnit_left hu
@@ -73,5 +77,5 @@ theorem not_powerfree_zero [MonoidWithZero M₀] [Nontrivial M₀] (k : ℕ) :
   rw [Powerfree, not_forall]
   exact ⟨0, by simp⟩
 
-theorem Prime.powerfree [CancelCommMonoidWithZero M₀] {m : M₀} (h : Prime m) (hk : 2 ≤ k) :
-    Powerfree k m := h.irreducible.powerfree hk
+theorem Prime.powerfree [CommMonoidWithZero M₀] [IsCancelMulZero M₀] {m : M₀} (h : Prime m)
+    (hk : 2 ≤ k) : Powerfree k m := h.irreducible.powerfree hk

@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-! # Woodall Primes
 
 References:
 * [Wikipedia/Woodall Number](https://en.wikipedia.org/wiki/Woodall_number#Woodall_primes)
-* [OEIS/A002234](https://oeis.org/A002234)
+* [A2234](https://oeis.org/A2234)
 
 -/
 

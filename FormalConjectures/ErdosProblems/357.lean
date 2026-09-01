@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 357
@@ -27,7 +27,7 @@ namespace Erdos357
 open Filter Asymptotics
 
 def HasDistinctSums {ι α : Type*} [Preorder ι] [AddCommMonoid α] (a : ι → α) : Prop :=
-  {J : Finset ι | J.OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
+  {J : Finset ι | (J : Set ι).OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
@@ -105,8 +105,7 @@ theorem erdos_357.variants.weisenberg : ∃ o : ℕ → ℝ, o =o[atTop] (1 : �
 Then $A$ has lower density 0. -/
 @[category research solved, AMS 11]
 theorem erdos_357.variants.infinite_set_lower_density (A : ℕ → ℕ) (hA : StrictMono A)
-    (hA : ∀ I J : Finset ℕ, I.OrdConnected → J.OrdConnected → HasDistinctSums A) :
-    (Set.range A).lowerDensity = 0 := by
+    (hA : HasDistinctSums A) : (Set.range A).lowerDensity = 0 := by
   sorry
 
 /--  Suppose $A$ is an infinite set such that all finite sums of consecutive terms of $A$ are distinct.

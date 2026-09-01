@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
-import Mathlib.Computability.TuringMachine
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Nat.PartENat
+public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
+public import Mathlib.Computability.TuringMachine.StackTuringMachine
+public import Mathlib.Data.ENat.Lattice
+
+@[expose] public section
 
 
 /-! # Turing Machines, Busy Beaver version.
@@ -37,7 +39,7 @@ these objects.
 namespace Turing
 
 open Mathlib
-open Relation
+open Relation StateTransition
 
 open Nat
 
@@ -62,7 +64,7 @@ deriving Inhabited
   a new state `q' : Option Λ` and a `Stmt` describing what to do: a
   command to write a symbol and move left or right. Notice that there
   are two ways of halting at a given `(state, head)` pair: either
-  the machine halts immediatly (i.e. the function returns `none`),
+  the machine halts immediately (i.e. the function returns `none`),
   or the machine moves to the "halting state", i.e. `none : Option Λ`
   and performs one last action.
 
@@ -115,7 +117,7 @@ def init (l : List Γ) : Cfg Γ Λ := ⟨some default, Tape.mk₁ l⟩
 /-- Evaluate a Turing machine on initial input to a final state,
   if it terminates. -/
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
-  (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
+  (StateTransition.eval (step M) (init l)).map fun c ↦ c.tape.right₀
 
 def multiStep (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) : Option (Cfg Γ Λ) :=
     (Option.bind · (step M))^[n] config
@@ -193,7 +195,7 @@ lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n
 lemma not_isHalting_iff_forall_isSome_multiStep :
     ¬ IsHalting M ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
   simp_rw [isHalting_iff_exists_haltsAt, HaltsAfter, Option.isSome_iff_ne_none]
-  push_neg
+  push Not
   rfl
 
 lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a, b)) :
@@ -210,19 +212,18 @@ lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a
     obtain ⟨e, f, hef⟩ := H c (Tape.move d.dir (Tape.write d.symbol b)).head
     simp [multiStep_succ, multiStep_succ, hab, step, hcd, hef]
 
-noncomputable def haltingNumber : PartENat :=
-  --The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
-  --If no such `n` exists then this is equal to `⊤`.
-  sInf {(n : PartENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
+noncomputable def haltingNumber : ENat :=
+  -- The smallest `n` such that `M` halts after `n` steps when starting from an empty tape.
+  -- If no such `n` exists then this is equal to `⊤`.
+  sInf {(n : ENat) |  (n : ℕ) (_ : HaltsAfter M (init []) n) }
 
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
   refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
-  induction m using PartENat.casesOn
+  cases m
   · exact le_top
-  · refine ⟨fun h ↦ h, fun _ ↦ ?_⟩
-    by_contra! hc
+  · by_contra! hc
     simp_all [multiStep_eq_none_mono ‹_› (show k + 1 ≤ n by aesop)]
 
 end Machine

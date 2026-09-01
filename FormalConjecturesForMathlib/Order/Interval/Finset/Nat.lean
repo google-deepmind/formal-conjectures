@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Data.Set.Card
+
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 @[simp]
 theorem Nat.ncard_Iio (b : ℕ) : (Set.Iio b).ncard = b := by

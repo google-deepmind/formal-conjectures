@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 825
@@ -22,17 +22,22 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/825](https://www.erdosproblems.com/825)
 -/
 
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 namespace Erdos825
 
 /--
 Is there an absolute constant $C > 0$ such that every integer $n$ with
 $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$?
+
+This has been solved in the affirmative by Larsen - in fact, for any $\epsilon>0$ there exists $L$
+such that if $n$ has only prime divisors $>L$ and $\sigma(n)>(2+\epsilon)n$ then $n$ is the distinct
+sum of proper divisors of $n$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos825.lean#L5893"]
 theorem erdos_825 :
-    answer(sorry) ↔ ∃ (C : ℝ) (_ : C > 0),
+    answer(True) ↔ ∃ (C : ℝ) (_ : C > 0),
       ∀ (n) (_ : σ 1 n > C * n),
         ∃ s ⊆ n.properDivisors, n = s.sum id := by
   sorry
