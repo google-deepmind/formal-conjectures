@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjecturesUtil
 
-open Ring
-
 /-!
 # Jacobson Conjecture
 
@@ -31,6 +29,8 @@ open Ring
   J. London Math. Soc. Series 2, 15 (1): 41–47
   https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/jlms/s2-15.1.41
 -/
+
+open Ring
 
 universe u
 
@@ -51,7 +51,7 @@ theorem jacobson_conjecture :
   sorry
 
 /-- For commutative rings this is the case as a consequence of Krull's intersection theorem. -/
-@[category graduate, AMS 13 16]
+@[category textbook, AMS 13 16]
 theorem jacobson_conjecture_of_comm_ring (R : Type u) [CommRing R] [IsNoetherianRing R] :
     JacobsonConjectureFor R := by
   sorry
