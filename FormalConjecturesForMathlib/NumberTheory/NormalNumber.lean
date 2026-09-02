@@ -15,10 +15,9 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Topology.MetricSpace.Pseudo.Defs
 
-@[expose] public section
 /-!
 # Normal numbers
 
@@ -42,6 +41,8 @@ classical constants such as $\pi$, $e$, or $\sqrt{2}$ are normal in any base.
 * `IsNormalInBase`: a real number is normal in base `b`.
 * `IsAbsolutelyNormal`: a real number is normal in every base `b ≥ 2`.
 -/
+
+@[expose] public section
 
 open Real Filter
 
