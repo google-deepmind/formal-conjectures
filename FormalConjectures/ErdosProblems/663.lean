@@ -14,58 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 663
 
-*Reference:* [erdosproblems.com/663](https://www.erdosproblems.com/663)
-
-Let `q(n,k)` denote the least prime which does not divide
-`∏_{1 ≤ i ≤ k} (n + i)`.  The problem asks whether, for fixed `k` and
-sufficiently large `n`, one has `q(n,k) < (1 + o(1)) log n`.
+*References:*
+- [erdosproblems.com/663](https://www.erdosproblems.com/663)
+- [BEGL96] Burr, S. A., Erdős, P., Graham, R. L., and Li, W. W.-C.,
+  *Complete sequences of sets of integer powers*. Acta Arith. (1996), 133–138.
+- [Er97e] Erdős, Paul, *Some of my favourite unsolved problems*.
+  Math. Japon. (1997), 527–537.
 -/
-
-noncomputable section
 
 namespace Erdos663
 
-open Classical Filter Asymptotics
+open Filter Asymptotics
 open scoped BigOperators
 
-/-- The product `(n + 1) * ... * (n + k)`. -/
-def intervalProduct (n k : ℕ) : ℕ :=
-  (Finset.Icc 1 k).prod fun i => n + i
-
-/-- `q` is the least prime not dividing `(n + 1) * ... * (n + k)`. -/
-def IsLeastPrimeNotDividingIntervalProduct (n k q : ℕ) : Prop :=
-  Nat.Prime q ∧
-    ¬ q ∣ intervalProduct n k ∧
-      ∀ p : ℕ, Nat.Prime p → ¬ p ∣ intervalProduct n k → q ≤ p
-
-/--
-The assertion `q(n,k) < (1 + o(1)) log n`, with the `o(1)` term represented by
-an explicit error function depending on `k`.
--/
-def Erdos663Conjecture : Prop :=
-  ∀ k : ℕ,
-    1 ≤ k →
-      ∃ error : ℕ → ℝ,
-        error =o[atTop] (fun _ : ℕ => (1 : ℝ)) ∧
-          ∀ᶠ n in atTop,
-            ∃ q : ℕ,
-              IsLeastPrimeNotDividingIntervalProduct n k q ∧
-                (q : ℝ) < (1 + error n) * Real.log (n : ℝ)
-
-/--
-For fixed `k`, is the least prime not dividing `(n + 1) * ... * (n + k)` less
-than `(1 + o(1)) log n`?
--/
+/-- Let $k \geq 2$, and let $q(n,k)$ denote the least prime which does not divide
+$\prod_{1 \leq i \leq k}(n+i)$. Is it true that, if $k$ is fixed and $n$ is sufficiently
+large, then $q(n,k) < (1+o(1))\log n$? -/
 @[category research open, AMS 11]
-theorem erdos_663 : answer(sorry) ↔ Erdos663Conjecture := by
+theorem erdos_663 : answer(sorry) ↔ ∀ k ≥ 2, ∃ error : ℕ → ℝ,
+    error =o[atTop] (fun _ ↦ (1 : ℝ)) ∧ ∀ᶠ n in atTop,
+      let P : ℕ := ∏ i ∈ Finset.Icc 1 k, (n + i)
+      ∃ q : ℕ, q.Prime ∧ ¬ q ∣ P ∧ (∀ p : ℕ, p.Prime → ¬ p ∣ P → q ≤ p) ∧
+        (q : ℝ) < (1 + error n) * Real.log n := by
   sorry
 
+-- TODO: Formalize the easy bound $q(n,k) < (1+o(1))k\log n$ recorded in the source.
+
 end Erdos663
-
-end
-
