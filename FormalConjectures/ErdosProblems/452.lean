@@ -14,57 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 452
 
 *Reference:* [erdosproblems.com/452](https://www.erdosproblems.com/452)
-
-Let `ω(n)` count the number of distinct prime factors of `n`.  What is the
-size of the largest interval `I ⊆ [x, 2x]` such that
-`ω(n) > log log n` for all `n ∈ I`?
 -/
-
-noncomputable section
 
 namespace Erdos452
 
-open Classical
+open scoped ArithmeticFunction.omega
 
-/-- The number of distinct prime factors of `n`. -/
-def omega (n : ℕ) : ℕ :=
-  ((Finset.Icc 2 n).filter fun p => Nat.Prime p ∧ p ∣ n).card
+/-- The greatest length of an interval in $[x,2x]$ on which
+$\omega(n) > \log\log n$ everywhere. -/
+noncomputable def largeOmegaIntervalLength (x : ℕ) : ℕ := by
+  classical
+  exact Nat.findGreatest
+    (fun len ↦ ∃ start, x ≤ start ∧ start + len ≤ 2 * x + 1 ∧
+      ∀ n ∈ Finset.Ico start (start + len),
+        Real.log (Real.log (n : ℝ)) < (ω n : ℝ))
+    (x + 1)
 
-/-- A consecutive interval of length `len`, beginning at `start`, lies in `[x,2x]`. -/
-def IntervalContainedInDyadicSegment (x start len : ℕ) : Prop :=
-  x ≤ start ∧ start + len ≤ 2 * x + 1
-
-/-- Every integer in the interval has `ω(n) > log log n`. -/
-def IntervalHasLargeOmega (start len : ℕ) : Prop :=
-  ∀ n : ℕ,
-    n ∈ Finset.Icc start (start + len - 1) →
-      Real.log (Real.log (n : ℝ)) < (omega n : ℝ)
-
-/-- `L` is the largest possible length of such an interval inside `[x,2x]`. -/
-def IsLargestLargeOmegaIntervalLength (x L : ℕ) : Prop :=
-  IsGreatest
-    {len : ℕ |
-      ∃ start : ℕ,
-        IntervalContainedInDyadicSegment x start len ∧
-          IntervalHasLargeOmega start len}
-    L
-
-/-- A function giving the extremal interval length for every `x`. -/
-def LargeOmegaIntervalLengthFunction (L : ℕ → ℕ) : Prop :=
-  ∀ x : ℕ, IsLargestLargeOmegaIntervalLength x (L x)
-
-/-- Determine the largest length of an interval in `[x,2x]` with `ω(n) > log log n`. -/
+/-- Determine the largest length of an interval in $[x,2x]$ on which
+$\omega(n) > \log\log n$ everywhere. -/
 @[category research open, AMS 11]
-theorem erdos_452 :
-    {L : ℕ → ℕ | LargeOmegaIntervalLengthFunction L} = answer(sorry) := by
+theorem erdos_452 : largeOmegaIntervalLength = answer(sorry) := by
   sorry
 
 end Erdos452
-
-end
