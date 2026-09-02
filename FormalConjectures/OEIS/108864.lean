@@ -33,8 +33,8 @@ namespace OeisA108864
 open Nat Finset Int
 
 /--
-The perfect deficiency of `n` (A109883): the remainder after greedily subtracting
-from `n` its divisors in increasing order, skipping any divisor larger than the
+The perfect deficiency of $n$ (A109883): the remainder after greedily subtracting
+from $n$ its divisors in increasing order, skipping any divisor larger than the
 current remainder.
 -/
 def perfectDeficiency (n : ℕ) : ℕ :=
@@ -53,7 +53,7 @@ instance : DecidablePred A := by
 
 /--
 The primary defining sequence `a`.
-`a n` is the `n`-th number (0-indexed) such that its perfect deficiency is $\le 10$.
+$a(n)$ is the $n$-th number (0-indexed) such that its perfect deficiency is $\le 10$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   n.nth A
@@ -95,8 +95,8 @@ theorem a_4 : a 4 = 5 := by
   rwa [hcnt] at this
 
 /--
-Is 1155 the last odd number in this sequence?
-(1155 is the 59th term starting from 1, corresponding to `a 58 = 1155`).
+Is $1155$ the last odd number in this sequence?
+($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
 -/
 @[category research open, AMS 11]
 theorem conjecture :
