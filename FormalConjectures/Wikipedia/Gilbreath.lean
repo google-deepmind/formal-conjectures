@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Gilbreath's conjecture
@@ -26,7 +26,7 @@ namespace Gilbreath
 
 /--
 **Gilbreath's nth difference**, $d^n$
-Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
+Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|$
 -/
 noncomputable def d : ℕ → (ℕ → ℕ)
   | 0 => fun n ↦ n.nth Nat.Prime
