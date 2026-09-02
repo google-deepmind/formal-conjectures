@@ -14,41 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 478
 
-*Reference:* [erdosproblems.com/478](https://www.erdosproblems.com/478)
-
-For a prime `p`, let `A_p = {k! mod p : 1 ≤ k < p}`.  Is it true that
-`|A_p| ∼ (1 - 1/e) p`?
+*References:*
+- [erdosproblems.com/478](https://www.erdosproblems.com/478)
+- [ErGr80] Erdős, P. and Graham, R. L.,
+  *Old and new problems and results in combinatorial number theory*.
+  Monographies de L'Enseignement Mathématique (1980).
 -/
-
-noncomputable section
 
 namespace Erdos478
 
-open Classical Filter
+open Filter
 
-/-- The residue set `{k! mod p : 1 ≤ k < p}`. -/
-def factorialResidues (p : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 (p - 1)).image fun k => Nat.factorial k % p
-
-/-- The conjectured asymptotic size of the factorial residue set modulo primes. -/
-def Erdos478Conjecture : Prop :=
-  ∀ ε : ℝ,
-    0 < ε →
-      ∀ᶠ p in atTop,
-        Nat.Prime p →
-          |((factorialResidues p).card : ℝ) / (p : ℝ) -
-              (1 - (Real.exp 1)⁻¹)| < ε
-
-/-- Is `|{k! mod p : 1 ≤ k < p}| ∼ (1 - 1/e) p` along the primes? -/
+/-- Let $p$ be prime and $A_p=\{k!\pmod p:1\leq k<p\}$. Is it true that
+$\lvert A_p\rvert\sim(1-1/e)p$? -/
 @[category research open, AMS 11]
-theorem erdos_478 : answer(sorry) ↔ Erdos478Conjecture := by
+theorem erdos_478 : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ p : ℕ in atTop, p.Prime →
+    abs (((((Finset.Icc 1 (p - 1)).image fun k ↦ k.factorial % p).card : ℝ) / (p : ℝ)) -
+      (1 - (Real.exp 1)⁻¹)) < ε := by
   sorry
 
-end Erdos478
+/- TODO: Formalize the source's known $\sqrt p$ lower bounds, Wilson-theorem upper bound, average
+results, and the infinitude/congruence/computational questions concerning socialist primes. -/
 
-end
+end Erdos478
