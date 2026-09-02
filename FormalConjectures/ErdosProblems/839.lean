@@ -15,29 +15,22 @@ limitations under the License.
 -/
 
 import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 839
 
-*Reference:* [erdosproblems.com/839](https://www.erdosproblems.com/839)
+*References:*
+- [erdosproblems.com/839](https://www.erdosproblems.com/839)
+- [Er78f] Erdős, P., *Problems in number theory and combinatorics*, Proc. Sixth Manitoba Conf. on
+  Numerical Math. (1978), 35-58.
+- [Er92c] Erdős, P., *Some of my favourite unsolved problems*, J. Combin. Theory Ser. A (1992).
 
-Given a strictly increasing sequence of positive integers where no term equals the sum of
-consecutive earlier terms, is it true that $\limsup a_n / n = \infty$? A stronger form asks
-whether $(1/\log x) \sum_{a_n < x} 1/a_n \to 0$.
-
-A problem of Erdős [Er78f][Er92c].
-
-[Er78f] Erdős, P., *Problems in number theory and combinatorics*, Proc. Sixth Manitoba Conf. on
-Numerical Math. (1978), 35-58.
-
-[Er92c] Erdős, P., *Some of my favourite unsolved problems*, J. Combin. Theory Ser. A (1992).
-
-[Fr93] Freud, R., *Adding numbers — on a problem of P. Erdős*, James Cook Mathematical Notes
-(1993), 6199–6202.
+See also [Erdős Problem 359](https://www.erdosproblems.com/359) and
+[Erdős Problem 867](https://www.erdosproblems.com/867).
 -/
 
 open Filter Real Finset
+open scoped ENNReal
 
 namespace Erdos839
 
@@ -56,9 +49,9 @@ such that no $a_i$ is the sum of consecutive $a_j$ for $j < i$.
 Is it true that $\limsup a_n / n = \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_839 : answer(sorry) ↔
+theorem erdos_839.parts.i : answer(sorry) ↔
     ∀ (a : ℕ → ℕ), (∀ n, 1 ≤ a n) → StrictMono a → SumOfConsecutiveFree a →
-    ∀ M : ℝ, ∃ᶠ n in atTop, M < (a n : ℝ) / (n : ℝ) := by
+    atTop.limsup (fun n : ℕ => (a n : ℝ≥0∞) / n) = ⊤ := by
   sorry
 
 /--
@@ -67,11 +60,17 @@ Erdős Problem 839 (Part 2, stronger) [Er78f][Er92c]:
 Let $1 \leq a_1 < a_2 < \cdots$ be a strictly increasing sequence of positive integers
 such that no $a_i$ is the sum of consecutive $a_j$ for $j < i$.
 Is it true that $\lim_{x \to \infty} \frac{1}{\log x} \sum_{a_n < x} \frac{1}{a_n} = 0$?
+
+This is equivalent to asking whether the range $\{a_1,a_2,\ldots\}$ has logarithmic density zero
+(see `Set.HasLogDensity`).
 -/
 @[category research open, AMS 11]
-theorem erdos_839.variants.stronger : answer(sorry) ↔
+theorem erdos_839.parts.ii : answer(sorry) ↔
     ∀ (a : ℕ → ℕ), (∀ n, 1 ≤ a n) → StrictMono a → SumOfConsecutiveFree a →
     Set.HasLogDensity (Set.range a) 0 := by
   sorry
+
+-- TODO: Formalize the additional material on the possible lower limit, reciprocal-sum growth,
+-- upper-density constructions, and the links with Erdős Problems 359 and 867.
 
 end Erdos839
