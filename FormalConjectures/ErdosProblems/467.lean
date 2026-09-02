@@ -14,30 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 467
 
 *Reference:* [erdosproblems.com/467](https://www.erdosproblems.com/467)
-
-For all sufficiently large `x`, can one choose residue classes `a_p` for all
-primes `p ≤ x` and split the primes up to `x` into two nonempty parts `A` and
-`B` so that every `n < x` lies in some selected class from `A` and also in
-some selected class from `B`?
 -/
-
-noncomputable section
 
 namespace Erdos467
 
-open Classical Filter
+open Filter
 
-/-- The finite set of primes at most `x`. -/
+/-- The finite set of primes at most $x$. -/
 def primesUpTo (x : ℕ) : Finset ℕ :=
   (Finset.Icc 2 x).filter Nat.Prime
 
-/-- `A` and `B` form a disjoint nonempty decomposition of the primes up to `x`. -/
+/-- The sets $A$ and $B$ form a disjoint nonempty decomposition of the primes up to $x$. -/
 def PrimePartitionUpTo (x : ℕ) (A B : Finset ℕ) : Prop :=
   A.Nonempty ∧
     B.Nonempty ∧
@@ -45,8 +38,7 @@ def PrimePartitionUpTo (x : ℕ) (A B : Finset ℕ) : Prop :=
         A ∩ B = ∅
 
 /--
-The selected congruence classes cover every `n < x` from both sides of the
-partition.
+The selected congruence classes cover every $n<x$ from both sides of the partition.
 -/
 def CongruenceCover (x : ℕ) (residue : ℕ → ℕ) (A B : Finset ℕ) : Prop :=
   ∀ n : ℕ,
@@ -54,21 +46,18 @@ def CongruenceCover (x : ℕ) (residue : ℕ → ℕ) (A B : Finset ℕ) : Prop 
       (∃ p : ℕ, p ∈ A ∧ n % p = residue p % p) ∧
         ∃ q : ℕ, q ∈ B ∧ n % q = residue q % q
 
-/-- The interpreted statement of Erdős problem 467. -/
-def Erdos467Conjecture : Prop :=
-  ∀ᶠ x in atTop,
-    ∃ residue : ℕ → ℕ,
-      ∃ A B : Finset ℕ,
-        PrimePartitionUpTo x A B ∧ CongruenceCover x residue A B
-
 /--
-Can the primes up to every sufficiently large `x` be split into two nonempty
-families of residue classes so that each `n < x` is covered by both families?
+For every sufficiently large $x$, choose a congruence class $a_p\pmod p$ for each prime $p\leq x$.
+Can the primes be decomposed into two nonempty sets $A$ and $B$ such that every $n<x$ lies in a
+chosen class from $A$ and in a chosen class from $B$?
+
+This follows the interpretation on the Erdős Problems website, which notes that the original
+source omits some crucial quantifiers.
 -/
 @[category research open, AMS 11]
-theorem erdos_467 : answer(sorry) ↔ Erdos467Conjecture := by
+theorem erdos_467 : answer(sorry) ↔
+    ∀ᶠ x in atTop, ∃ residue : ℕ → ℕ, ∃ A B : Finset ℕ,
+      PrimePartitionUpTo x A B ∧ CongruenceCover x residue A B := by
   sorry
 
 end Erdos467
-
-end
