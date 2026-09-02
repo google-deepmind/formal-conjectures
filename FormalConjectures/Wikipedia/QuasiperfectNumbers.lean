@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Quasiperfect Numbers
 
-*Reference:* 
+*Reference:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
 -/
 
@@ -29,8 +29,8 @@ open Nat
 
 open scoped ArithmeticFunction.sigma
 
-/-- 
-A number is quasiperfect if the sum of its divisors is equal to $2n + 1$. 
+/--
+A number is quasiperfect if the sum of its divisors is equal to $2n + 1$.
 -/
 def Quasiperfect (n : ℕ) : Prop :=
   σ 1 n = 2 * n + 1

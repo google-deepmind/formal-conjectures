@@ -16,18 +16,21 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Paths
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
+
+/-- `G.cycleLengths` is the set of lengths of the cycles in `G`. -/
+def cycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
+  {m | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = m}
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- `circumference G` is the length of the longest cycle in `G`.
     It is `0` when `G` is acyclic. -/
 noncomputable def circumference (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  sSup { n : ℕ | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = n }
+  sSup G.cycleLengths
 
 end SimpleGraph

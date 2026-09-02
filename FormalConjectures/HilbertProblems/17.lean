@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Hilbert's 17th problem
@@ -31,8 +31,6 @@ $f = g_1^2 + g_2^2 + \cdots + g_m^2$. Resolved affirmatively by Artin in 1927.
 open Real MvPolynomial
 
 namespace Hilbert17
-
-abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
 
 /--
 Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of
@@ -102,7 +100,8 @@ theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
   rcases eq_or_ne f 0 with (rfl | hf_zero); · exact ⟨0, 0, by simp⟩
   have hfd := f.totalDegree_eq_zero_iff_eq_C.1 <| by simpa using hf.totalDegree hf_zero
   use 1, fun _ ↦ C √(f.coeff 0)
-  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by
+    simpa [constantCoeff] using hf₀ 0]
   simpa using hfd
 
 /--
