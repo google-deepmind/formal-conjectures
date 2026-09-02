@@ -14,55 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 691
 
 *Reference:* [erdosproblems.com/691](https://www.erdosproblems.com/691)
-
-Given `A ⊆ ℕ`, let `M_A = {n ≥ 1 : a ∣ n` for some `a ∈ A}` be the set of
-multiples of `A`.  Find a necessary and sufficient condition on `A` for `M_A`
-to have density `1`.
 -/
-
-noncomputable section
 
 namespace Erdos691
 
-open Classical Filter
-open scoped Topology
+/-- The set $M_A = \{n \geq 1 : a \mid n \text{ for some } a \in A\}$ of positive multiples
+of elements of $A$. -/
+def multiples (A : Set ℕ) : Set ℕ := {n | 1 ≤ n ∧ ∃ a ∈ A, a ∣ n}
 
-/-- The set of positive multiples of a set `A` of natural numbers. -/
-def MultiplesOfSet (A : Set ℕ) (n : ℕ) : Prop :=
-  1 ≤ n ∧ ∃ a : ℕ, a ∈ A ∧ a ∣ n
-
-/-- Natural density of a predicate on the positive integers. -/
-def HasNaturalDensity (P : ℕ → Prop) (d : ℝ) : Prop :=
-  Tendsto
-    (fun N : ℕ => by
-      classical
-      exact (((Finset.Icc 1 N).filter fun n => P n).card : ℝ) / (N : ℝ))
-    atTop
-    (𝓝 d)
-
-/-- The property that `A` is a Behrend sequence, i.e. its multiples have density `1`. -/
-def MultiplesHaveDensityOne (A : Set ℕ) : Prop :=
-  HasNaturalDensity (MultiplesOfSet A) 1
-
-/-- A proposed necessary and sufficient condition for `M_A` to have density `1`. -/
-def CharacterizesDensityOneMultiples (C : Set ℕ → Prop) : Prop :=
-  ∀ A : Set ℕ, C A ↔ MultiplesHaveDensityOne A
-
-/--
-Determine a necessary and sufficient condition on `A` for the set of multiples
-of `A` to have natural density `1`.
--/
+/-- Given $A \subseteq \mathbb{N}$, let
+$M_A = \{n \geq 1 : a \mid n \text{ for some } a \in A\}$. Find a necessary and sufficient
+condition on $A$ for $M_A$ to have density $1$. -/
 @[category research open, AMS 11]
 theorem erdos_691 :
-    {C : Set ℕ → Prop | CharacterizesDensityOneMultiples C} = answer(sorry) := by
+    (answer(sorry) : Set ℕ → Prop) = fun A ↦ (multiples A).HasDensity 1 := by
   sorry
 
 end Erdos691
-
-end
