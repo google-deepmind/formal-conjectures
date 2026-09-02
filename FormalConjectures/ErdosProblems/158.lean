@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 158
@@ -86,7 +86,7 @@ theorem erdos_158.variants.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : I
   · filter_upwards [hc] with n hn
     grw [hn]
   · refine .const_mul_atTop hc_pos ?_
-    simpa using (tendsto_rpow_atTop (by linarith : 0 < 1 / (2 : ℝ))).comp
+    simpa [Function.comp_def] using (tendsto_rpow_atTop (by linarith : 0 < 1 / (2 : ℝ))).comp
       (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
 
 end Erdos158
