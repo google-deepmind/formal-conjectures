@@ -95,9 +95,9 @@ theorem a_4 : a 4 = 4 := by
 
 /--
 Do the absolute values cover A004275?
-A004275 is 1 together with the nonnegative even numbers.
-The conjecture asks whether every member of A004275 occurs as the absolute value
-of some term $a(n)$.
+A004275 is $1$ together with the nonnegative even numbers.
+The conjecture asks whether every member of A004275 occurs as $|a(n)|$ for some
+term of the sequence.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
