@@ -7,6 +7,7 @@ Fixes:
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
 4. Installs the Formal Conjectures Lean syntax-highlighting theme
+5. Installs the source-page layout script
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
@@ -21,10 +22,19 @@ HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
 HIGHLIGHT_STYLESHEET_SOURCE = os.path.join(
     SCRIPT_DIR, 'src', 'css', HIGHLIGHT_STYLESHEET
 )
+SOURCE_PAGE_SCRIPT = 'source-page.js'
+SOURCE_PAGE_SCRIPT_SOURCE = os.path.join(
+    SCRIPT_DIR, 'src', 'js', SOURCE_PAGE_SCRIPT
+)
 
 HIGHLIGHT_HEAD = f'''
     <!-- Formal Conjectures Lean syntax-highlighting theme -->
     <link rel="stylesheet" href="{HIGHLIGHT_STYLESHEET}">
+'''
+
+SOURCE_PAGE_HEAD = f'''
+    <!-- Formal Conjectures source-page layout -->
+    <script defer src="{SOURCE_PAGE_SCRIPT}"></script>
 '''
 
 KATEX_HEAD = '''
@@ -61,6 +71,8 @@ def fix_html_file(path):
     head_additions = ''
     if HIGHLIGHT_STYLESHEET not in html:
         head_additions += HIGHLIGHT_HEAD
+    if SOURCE_PAGE_SCRIPT not in html:
+        head_additions += SOURCE_PAGE_HEAD
     if 'katex' not in html.lower():
         head_additions += KATEX_HEAD
 
@@ -86,6 +98,13 @@ def install_highlight_stylesheet(literate_dir):
     destination = os.path.join(literate_dir, HIGHLIGHT_STYLESHEET)
     shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE, destination)
     print(f'  Installed syntax theme: {HIGHLIGHT_STYLESHEET}')
+
+
+def install_source_page_script(literate_dir):
+    """Copy the source-page layout script into the Verso output root."""
+    destination = os.path.join(literate_dir, SOURCE_PAGE_SCRIPT)
+    shutil.copyfile(SOURCE_PAGE_SCRIPT_SOURCE, destination)
+    print(f'  Installed source-page layout: {SOURCE_PAGE_SCRIPT}')
 
 
 def create_stubs(literate_dir):
@@ -130,6 +149,7 @@ def main():
         return
 
     install_highlight_stylesheet(literate_dir)
+    install_source_page_script(literate_dir)
 
     # Create stubs for missing JS files
     create_stubs(literate_dir)

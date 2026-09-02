@@ -22,6 +22,7 @@ class FixHtmlFileTest(unittest.TestCase):
             with open(page, encoding='utf-8') as f:
                 html = f.read()
             self.assertEqual(html.count('href="lean-syntax.css"'), 1)
+            self.assertEqual(html.count('src="source-page.js"'), 1)
             self.assertEqual(html.count('katex.min.css'), 1)
             self.assertEqual(html.count('renderMathInElement(document.body'), 1)
 
@@ -39,6 +40,7 @@ class FixHtmlFileTest(unittest.TestCase):
             with open(page, encoding='utf-8') as f:
                 html = f.read()
             self.assertEqual(html.count('href="lean-syntax.css"'), 1)
+            self.assertEqual(html.count('src="source-page.js"'), 1)
             self.assertEqual(html.count('katex.min.css'), 1)
             self.assertEqual(html.count('renderMathInElement(document.body'), 1)
 
@@ -55,6 +57,20 @@ class InstallStylesheetTest(unittest.TestCase):
             with open(installed, encoding='utf-8') as f:
                 installed_css = f.read()
             self.assertEqual(installed_css, source_css)
+
+
+class InstallSourcePageScriptTest(unittest.TestCase):
+
+    def test_installs_the_layout_script_at_the_literate_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fix.install_source_page_script(directory)
+            installed = os.path.join(directory, fix.SOURCE_PAGE_SCRIPT)
+
+            with open(fix.SOURCE_PAGE_SCRIPT_SOURCE, encoding='utf-8') as f:
+                source_js = f.read()
+            with open(installed, encoding='utf-8') as f:
+                installed_js = f.read()
+            self.assertEqual(installed_js, source_js)
 
 
 if __name__ == '__main__':

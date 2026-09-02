@@ -77,20 +77,151 @@
   color: var(--lean-syntax-punctuation);
 }
 
-/*
- * verso-literate renders module and declaration docstrings as Markdown prose
- * rather than `.doc-comment` tokens.  Colour the prose container, and omit
- * the synthetic `/-!`, `/--`, and `-/` delimiters around that rendered prose.
- */
-.code-content .verso-text,
-.code-content .md-text {
-  color: var(--lean-syntax-comment);
-  font-style: normal;
-}
-
+/* Omit the synthetic `/-!`, `/--`, and `-/` around rendered Markdown. */
 .code-content .verso-text::before,
 .code-content .verso-text::after,
 .code-content .md-text::before,
 .code-content .md-text::after {
-  content: none;
+  content: none !important;
+}
+
+/*
+ * Module docstrings introduce the page; they are prose rather than a comment
+ * belonging to a declaration. Keep them visually separate from the code and
+ * use the site's normal text face and colours.
+ */
+.code-content .fc-module-doc {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 0 2rem;
+  padding: 0 0 1.25rem;
+  border: 0;
+  border-bottom: 2px solid #e8f0e8;
+  color: var(--lean-syntax-text);
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-style: normal;
+}
+
+.code-content .fc-module-doc h1,
+.code-content .fc-module-doc h2,
+.code-content .fc-module-doc h3 {
+  color: var(--lean-syntax-keyword);
+}
+
+.code-content .fc-module-doc > :first-child {
+  margin-top: 0;
+}
+
+.code-content .fc-module-doc > :last-child {
+  margin-bottom: 0;
+}
+
+/* Hide file scaffolding while leaving declaration blocks and their anchors. */
+.code-content .fc-source-boilerplate {
+  display: none !important;
+}
+
+/*
+ * Hex renders a declaration signature and its docstring as one `namedocs`
+ * box. Literate source pages arrive in the opposite order, so source-page.js
+ * groups and reorders them before these styles are applied.
+ */
+.code-content .fc-declaration-doc {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem 0 0;
+  overflow: visible;
+  border: 1px solid #98b2c0;
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+.code-content .fc-declaration-doc--def {
+  border-left-color: #40916c;
+  background: #f6faf7;
+}
+
+.code-content .fc-declaration-doc--theorem {
+  border-left-color: #e76f51;
+  background: #fef7f2;
+}
+
+.code-content .fc-declaration-doc--structure {
+  border-left-color: #74b49b;
+  background: #f7faf6;
+}
+
+.code-content .fc-declaration-doc--class {
+  border-left-color: #b08cc0;
+  background: #faf8fc;
+}
+
+.code-content .fc-declaration-label {
+  display: inline-block;
+  margin: 0 0 0 -1px;
+  padding: 0 0.5rem 0.125rem;
+  border: 1px solid #2d6a4f;
+  border-radius: 0.25rem;
+  background: #2d6a4f;
+  color: #fff;
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 0.8125rem;
+  line-height: normal;
+}
+
+.code-content .fc-declaration-doc--theorem > .fc-declaration-label {
+  border-color: #c05630;
+  background: #c05630;
+}
+
+.code-content .fc-declaration-doc--structure > .fc-declaration-label {
+  border-color: #74b49b;
+  background: #74b49b;
+}
+
+.code-content .fc-declaration-doc--class > .fc-declaration-label {
+  border-color: #8a6a9a;
+  background: #8a6a9a;
+}
+
+.code-content .fc-declaration-code {
+  display: block;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 0.75rem 1rem;
+  padding: 0 1rem 0 0;
+  overflow-x: auto;
+}
+
+.code-content code.hl.lean.block.fc-declaration-code {
+  background: transparent;
+}
+
+.code-content .fc-declaration-text {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 1rem 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--lean-syntax-text);
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-style: normal;
+}
+
+.code-content .fc-declaration-text > :first-child {
+  margin-top: 0;
+}
+
+.code-content .fc-declaration-text > :last-child {
+  margin-bottom: 0;
 }
