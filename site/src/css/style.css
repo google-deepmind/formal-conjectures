@@ -1258,6 +1258,14 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   text-decoration: underline;
 }
 
+/* Wide display math (e.g. large matrices) scrolls instead of overflowing the page. */
+.verso-doc-content .katex-display,
+.problem-doc-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
 .verso-code-container {
   margin-top: 0.5rem;
   border: 1px solid var(--color-border);
