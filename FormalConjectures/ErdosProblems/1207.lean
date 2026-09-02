@@ -43,8 +43,7 @@ isosceles-free subset of size at least $m$.
 -/
 noncomputable def P (d n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ S : Finset (EuclideanSpace ℝ (Fin d)), S.card = n ∧
-    m = sSup {k : ℕ | ∃ A : Finset (EuclideanSpace ℝ (Fin d)),
-      A ⊆ S ∧ IsIsoscelesFree (A : Set (EuclideanSpace ℝ (Fin d))) ∧ A.card = k}}
+    m = sSup {k : ℕ | ∃ A ⊆ S, IsIsoscelesFree (A : Set (EuclideanSpace ℝ (Fin d))) ∧ A.card = k}}
 
 /--
 Let $P_d(n)$ be such that in any set of $n$ points in $\mathbb{R}^d$ there exist at least $P_d(n)$ many points which do not contain an isosceles triangle. Estimate $P_d(n)$ - in particular, is it true that $$P_2(n)<n^{1-c}$$ for some constant $c>0$?
