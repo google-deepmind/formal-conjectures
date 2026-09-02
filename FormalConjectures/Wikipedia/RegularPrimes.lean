@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Infinite Regular Primes
@@ -59,7 +59,7 @@ lemma small_regular_primes :
 theorem not_isRegularPrime_37_second : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
-/-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the
+/-- An equivalent definition of a regular prime `p` is that it does not divide the numerator of the
 first `p-3` Bernoulli numbers. Not in Mathlib. -/
 @[category textbook, AMS 11]
 theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
