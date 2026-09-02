@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import Mathlib.InformationTheory.Hamming
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 40
@@ -117,7 +116,29 @@ theorem green_40.variants.arbitrary_subsets_sanity_f_tilde_two : f_tilde 2 = 1 :
 /-- We evidently have $\tilde{f}(r) \le f(r)$ [Gr24]. -/
 @[category research solved, AMS 5 94]
 theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
-  sorry
+  refine Filter.liminf_le_liminf (Filter.Eventually.of_forall fun n => ?_)
+  refine le_iInf₂ fun V hV => ?_
+  have hfin : (V : Set (𝔽₂ n)).Finite := Set.toFinite _
+  have hcov : IsCoveringFinset n r hfin.toFinset := by
+    unfold IsCoveringFinset
+    ext x
+    simp only [Finset.mem_univ, iff_true]
+    have hx : x ∈ (V : Set (𝔽₂ n)) + hammingBall n r := hV ▸ Set.mem_univ x
+    obtain ⟨a, ha, b, hb, hab⟩ := hx
+    exact Finset.mem_add.mpr
+      ⟨a, hfin.mem_toFinset.mpr ha, b, by simpa [hammingBallFinset, hammingBall] using hb, hab⟩
+  have hcard : (hfin.toFinset.card : ℝ≥0∞) = (Nat.card V : ℝ≥0∞) := by
+    have h : Nat.card V = hfin.toFinset.card := by
+      rw [show Nat.card V = Nat.card (V : Set (𝔽₂ n)) from rfl, Nat.card_coe_set_eq,
+        Set.ncard_eq_toFinset_card _ hfin]
+    exact_mod_cast congrArg Nat.cast h.symm
+  calc minDensityFinset n r
+      ≤ (hfin.toFinset.card : ℝ≥0∞) * (Nat.card (hammingBall n r) : ℝ≥0∞) /
+          (2 ^ n : ℝ≥0∞) :=
+        iInf₂_le hfin.toFinset hcov
+    _ = (Nat.card V : ℝ≥0∞) * (Nat.card (hammingBall n r) : ℝ≥0∞) /
+          (2 ^ n : ℝ≥0∞) := by
+        rw [hcard]
 
 -- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 -- Variant for all n
@@ -126,9 +147,13 @@ theorem green_40.f_tilde_le_f (r : ℕ) : f_tilde r ≤ f r := by
 noncomputable def f_all (r : ℕ) : ℝ≥0∞ :=
   limsup (fun n ↦ minDensity n r) atTop
 
-/-- Does $f_{\text{all}}(r) \to \infty$? [Gr24] -/
+/-- Does $f_{\text{all}}(r) \to \infty$? [Gr24]
+
+The target filter is `𝓝 ⊤`, as in `green_40` and `green_40.variants.arbitrary_subsets`. On
+`ℝ≥0∞`, `atTop` is the principal ultrafilter at `⊤`, so `Tendsto f_all atTop atTop` would say
+that `f_all r = ⊤` for all large `r` rather than that `f_all r → ∞`. -/
 @[category research open, AMS 5 94]
-theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop atTop := by
+theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop (𝓝 ⊤) := by
   sorry
 
 end Green40
