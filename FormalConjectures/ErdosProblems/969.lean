@@ -14,51 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 969
 
-*Reference:* [erdosproblems.com/969](https://www.erdosproblems.com/969)
-
-Let `Q(x)` count the squarefree integers in `[1, x]`.  Determine the order of
-magnitude of the error term in
-`Q(x) = (6 / π^2) x + E(x)`.
+*Reference:* [Erdős Problem 969](https://www.erdosproblems.com/969)
 -/
-
-noncomputable section
 
 namespace Erdos969
 
-open Classical Asymptotics
-
-/-- A natural number is squarefree if no square of a prime divides it. -/
-def SquarefreeNat (n : ℕ) : Prop :=
-  ∀ p : ℕ, Nat.Prime p → ¬ p ^ 2 ∣ n
+open Filter Asymptotics
 
 /-- The squarefree counting function `Q(x)`. -/
-def squarefreeCountingFunction (x : ℕ) : ℕ := by
-  classical
-  exact ((Finset.Icc 1 x).filter SquarefreeNat).card
+def squarefreeCounting (x : ℕ) : ℕ :=
+  ((Finset.Icc 1 x).filter Squarefree).card
 
 /-- The error term in `Q(x) = (6 / π^2) x + E(x)`. -/
-def squarefreeCountingError (x : ℕ) : ℝ :=
-  (squarefreeCountingFunction x : ℝ) -
-    (6 / Real.pi ^ 2) * (x : ℝ)
+noncomputable def squarefreeCountingError (x : ℕ) : ℝ :=
+  (squarefreeCounting x : ℝ) - 6 / Real.pi ^ 2 * x
 
-/-- A candidate order of magnitude for the squarefree-counting error term. -/
-def SquarefreeErrorOrderCandidate (g : ℕ → ℝ) : Prop :=
-  squarefreeCountingError =O[Filter.atTop] g ∧
-    g =O[Filter.atTop] squarefreeCountingError
-
-/--
-Determine the order of magnitude of the squarefree-counting error term.
--/
+/-- Let $Q(x)$ count the squarefree integers in $[1,x]$, and define $E(x)$ by
+$$Q(x)=\frac{6}{\pi^2}x+E(x).$$
+Determine the order of magnitude of $E(x)$. The two estimates below explicitly say that the
+answer is both an asymptotic upper and lower bound for $|E(x)|$. -/
 @[category research open, AMS 11]
 theorem erdos_969 :
-    {g : ℕ → ℝ | SquarefreeErrorOrderCandidate g} = answer(sorry) := by
+    let g := (answer(sorry) : ℕ → ℝ)
+    (fun x => |squarefreeCountingError x|) =O[atTop] g ∧
+      g =O[atTop] (fun x => |squarefreeCountingError x|) := by
+  sorry
+
+/-- The prime number theorem implies $E(x)=o(\sqrt{x})$. -/
+@[category research solved, AMS 11]
+theorem erdos_969.variants.prime_number_theorem :
+    (fun x => |squarefreeCountingError x|) =o[atTop] (fun x : ℕ => (x : ℝ).sqrt) := by
+  sorry
+
+/-- Evelyn and Linfoot proved $E(x)=\Omega(x^{1/4})$. -/
+@[category research solved, AMS 11]
+theorem erdos_969.variants.evelyn_linfoot :
+    ¬(fun x => |squarefreeCountingError x|) =o[atTop]
+      (fun x : ℕ => (x : ℝ) ^ (1 / 4 : ℝ)) := by
   sorry
 
 end Erdos969
-
-end
