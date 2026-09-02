@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1053
@@ -33,6 +33,8 @@ namespace Erdos1053
 Must $k=o(\log\log n)$?
 
 A question of Erdős, as reported in problem B2 of Guy's collection [Gu04].
+The little-$o$ relation is taken as $n \to \infty$ within the positive integers for which
+$\sigma(n) = kn$ for some $k$; on this set, $\sigma(n)/n$ is precisely that multiplier $k$.
 -/
 @[category research open, AMS 11]
 theorem erdos_1053 :

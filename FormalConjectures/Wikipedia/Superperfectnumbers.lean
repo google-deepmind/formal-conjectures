@@ -31,6 +31,12 @@ open ArithmeticFunction.sigma
 
 namespace Superperfect
 
+/-- The perfect number $6$ is $(1,2)$-perfect. -/
+@[category test, AMS 11]
+theorem six_is_one_two_perfect : Nat.IsPerfectFor 6 1 2 := by
+  unfold Nat.IsPerfectFor
+  decide
+
 /-- There does not exist a $(2,5)$-perfect number -/
 @[category research open, AMS 11]
 theorem twoFivePerfect : ¬ ∃ n, Nat.IsPerfectFor n 2 5 := by
