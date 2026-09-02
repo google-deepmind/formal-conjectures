@@ -83,6 +83,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInduc
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LovaszTheta
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
