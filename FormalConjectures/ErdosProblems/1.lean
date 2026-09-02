@@ -147,7 +147,6 @@ theorem erdos_1.variants.least_N_3 :
       rw [(Finset.subset_iff_eq_of_card_le (Nat.le_of_eq (by rw [hcard3]; decide))).mp h]
       decide
 
-set_option maxRecDepth 4000 in
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with five
 elements is $13$. A witness is `{3, 6, 11, 12, 13}` (one of two such 5-subsets of `[1, 13]`,
