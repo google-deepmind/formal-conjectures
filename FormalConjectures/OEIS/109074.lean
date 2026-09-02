@@ -84,7 +84,8 @@ theorem b_3 : b 3 = 26 := by native_decide
 theorem b_4 : b 4 = 646 := by native_decide
 
 /--
-It is conjectured that binomial(6*n-2,2*n)/(2 * binomial(4*n-1,2*n)) = A005156(n+1)/A005156(n),
+It is conjectured that
+$\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right) = A005156(n+1)/A005156(n)$,
 where the OEIS comment reads A005156 as 1-based; with the 0-indexed `b` this is
 `frac (n + 1) = b (n + 1) / b n`.
 -/
