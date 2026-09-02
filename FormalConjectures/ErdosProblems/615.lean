@@ -53,7 +53,8 @@ or an independent set on at least $n/\log n$ vertices?
 
 The answer is no, as shown by Fox, Loh, and Zhao [FLZ15].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos615.lean#L492"]
 theorem erdos_615 : answer(False) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ (n : ℕ) in atTop,
       ∀ G : SimpleGraph (Fin n), (1 / 8 - c) * n ^ 2 ≤ G.edgeFinset.card →
