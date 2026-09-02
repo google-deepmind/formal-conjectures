@@ -19,7 +19,14 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 175
 
-*Reference:* [erdosproblems.com/175](https://www.erdosproblems.com/175)
+*References:*
+- [erdosproblems.com/175](https://www.erdosproblems.com/175)
+- [Sa85] A. Sárközy, *On divisors of binomial coefficients, I*, J. Number Theory 20
+  (1985), 70–80.
+- [GrRa96] A. Granville and O. Ramaré, *Explicit bounds on exponential sums and the scarcity
+  of squarefree binomial coefficients*, Mathematika 43 (1996), 73–107.
+- [Ve95] G. Velammal, *Is the binomial coefficient $\binom{2n}{n}$ square free?*,
+  Hardy-Ramanujan Journal 18 (1995), 23–45.
 
 Sárközy proved the assertion for all sufficiently large `n`; Granville--Ramaré and Velammal
 independently proved the full range `n ≥ 5`.
@@ -35,6 +42,6 @@ theorem erdos_175 (n : ℕ) (hn : 5 ≤ n) :
     ¬ Squarefree ((2 * n).choose n) := by
   sorry
 
-TODO: add the problems from the additional material
+-- TODO: Formalise the related questions and results listed in the additional material.
 
 end Erdos175
