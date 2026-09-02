@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A56777
+# Divisibility of $2^n + 1$ by $n$
 
 A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
@@ -24,17 +24,18 @@ $\sigma(n+12) = \sigma(n) + 12$.
 The conjectures state identities connecting A56777 and prime quadruples (A7530), as
 well as congruences satisfied by the members of A56777.
 
-*References:* [A56777](https://oeis.org/A56777)
+*References:*
+- [A56777](https://oeis.org/A56777)
 -/
+
+namespace OeisA56777
 
 open Nat
 open scoped ArithmeticFunction.sigma
 
-namespace OeisA56777
-
 /-- A composite number $n$ is in the sequence A56777 if it satisfies both
 $\varphi(n+12) = \varphi(n) + 12$ and $\sigma(n+12) = \sigma(n) + 12$. -/
-def a (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ¬n.Prime ∧ 1 < n ∧ totient (n + 12) = totient n + 12 ∧ σ 1 (n + 12) = σ 1 n + 12
 
 /-- A number $n$ comes from a prime quadruple $(p, p+2, p+6, p+8)$ if
@@ -44,7 +45,7 @@ def ComesFromPrimeQuadruple (n : ℕ) : Prop :=
 
 /-- $65$ is in the sequence A56777. -/
 @[category test, AMS 11]
-theorem a_65 : a 65 := by
+theorem a_65 : A 65 := by
   refine ⟨?_, by norm_num, ?_, ?_⟩
   · simp only [show (65 : ℕ) = 5 * 13 by norm_num]
     exact not_prime_mul (by norm_num) (by norm_num)
@@ -53,22 +54,70 @@ theorem a_65 : a 65 := by
 
 /-- $209$ is in the sequence A56777. -/
 @[category test, AMS 11]
-theorem a_209 : a 209 := by
-  set_option maxRecDepth 1000 in
-  refine ⟨?_, by norm_num, ?_, ?_⟩
-  · simp only [show (209 : ℕ) = 11 * 19 by norm_num]
-    exact not_prime_mul (by norm_num) (by norm_num)
-  · decide
+theorem a_209 : A 209 := by
+  unfold A
+  simp only [one_lt_ofNat, reduceAdd, true_and]
+  refine ⟨?_, ?_, ?_⟩
+  · norm_num
+  · have eq1 : 221 = 13 * 17 := by norm_num
+    have eq2 : 209 = 11 * 19 := by norm_num
+    rw [eq1, eq2, totient_mul (by norm_num), totient_mul (by norm_num),
+      totient_prime (by norm_num), totient_prime (by norm_num), totient_prime (by norm_num),
+      totient_prime (by norm_num)]
   · decide
 
 /-- Numbers coming from prime quadruples are in the sequence A56777. -/
 @[category textbook, AMS 11]
-theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : a n := by
-  sorry
+theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) : A n := by
+  obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
+  -- n + 12 = p * (p+8) + 12 = (p+2) * (p+6)
+  have hsum : p * (p + 8) + 12 = (p + 2) * (p + 6) := by ring
+  -- coprimality facts between the four primes
+  have hne_p_p8 : p ≠ p + 8 := by omega
+  have hne_p2_p6 : p + 2 ≠ p + 6 := by omega
+  have hcop1 : Nat.Coprime p (p + 8) := (Nat.coprime_primes hp hp8).mpr hne_p_p8
+  have hcop2 : Nat.Coprime (p + 2) (p + 6) := (Nat.coprime_primes hp2 hp6).mpr hne_p2_p6
+  refine ⟨?_, ?_, ?_, ?_⟩
+  -- ¬ Prime (p * (p+8))
+  · exact Nat.not_prime_mul hp.one_lt.ne' (by have := hp8.one_lt; omega)
+  -- 1 < p * (p+8)
+  · have h1 : 2 ≤ p := hp.two_le
+    have h2 : 10 ≤ p + 8 := by omega
+    nlinarith
+  -- totient: φ((p+2)(p+6)) = φ(p(p+8)) + 12
+  · rw [hsum, Nat.totient_mul hcop2, Nat.totient_mul hcop1,
+        Nat.totient_prime hp, Nat.totient_prime hp2,
+        Nat.totient_prime hp6, Nat.totient_prime hp8]
+    zify [show 1 ≤ p from hp.one_lt.le, show 1 ≤ p + 2 by omega,
+          show 1 ≤ p + 6 by omega, show 1 ≤ p + 8 by omega]
+    ring
+  -- sigma: σ₁((p+2)(p+6)) = σ₁(p(p+8)) + 12
+  · rw [hsum, ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime hcop2,
+        ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime hcop1]
+    have e1 : ArithmeticFunction.sigma 1 p = p + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p) (i := 1) hp
+      simpa using this
+    have e2 : ArithmeticFunction.sigma 1 (p + 2) = (p + 2) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 2) (i := 1) hp2
+      simpa using this
+    have e6 : ArithmeticFunction.sigma 1 (p + 6) = (p + 6) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 6) (i := 1) hp6
+      simpa using this
+    have e8 : ArithmeticFunction.sigma 1 (p + 8) = (p + 8) + 1 := by
+      have := ArithmeticFunction.sigma_one_apply_prime_pow (p := p + 8) (i := 1) hp8
+      simpa using this
+    rw [e1, e2, e6, e8]
+    ring
+
+/-- $11009$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_11009 : A 11009 := by
+  apply a_of_comesFromPrimeQuadruple
+  exact ⟨101, by decide, by decide, by decide, by decide, by rfl⟩
 
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
-theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : a n) : ComesFromPrimeQuadruple n := by
+theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : A n) : ComesFromPrimeQuadruple n := by
   sorry
 
 /-- Numbers coming from prime quadruples satisfy $n \equiv 65 \pmod{72}$. -/
@@ -77,7 +126,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra! hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
@@ -111,7 +160,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra hlt; push Not at hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
