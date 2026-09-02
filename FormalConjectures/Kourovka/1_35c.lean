@@ -14,20 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-namespace Kourovka.«1.35c»
+import FormalConjecturesUtil
 
 /-!
-# Simple pro-orderable groups (Kourovka Notebook 1.35(c))
+# Conjecture 1.35(c)
 
-*Reference:* Kourovka Notebook Problem 1.35(c) (Mal'cev–Fuchs), asking whether a
-simple pro-orderable group exists.
-/ We quantify over all bi-invariant partial orders, working directly with
-arbitrary relations and an explicit bi-invariance condition.
+by A. I. Mal'cev and L. Fuchs
+
+*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v46)
 -/
 
-variable {G : Type*}
+namespace Kourovka.«1.35c»
 
 /-- A relation on a group is bi-invariant if it is preserved by both left and
 right multiplication. -/
@@ -42,16 +39,15 @@ bi-invariant linear order.
 def ProOrderable (G : Type*) [Group G] : Prop :=
   ∀ r : G → G → Prop,
     IsPartialOrder G r →
-    IsBiInvariant (G := G) r →
+    IsBiInvariant G r →
     ∃ s : G → G → Prop,
       IsLinearOrder G s ∧ IsBiInvariant G s ∧ ∀ x y, r x y → s x y
 
 /--
-Kourovka Notebook Problem 1.35(c): does there exist a simple pro-orderable
-(group with a bi-invariant order extending every bi-invariant partial order)?
+Do there exist simple pro-orderable groups?
 -/
-@[category research open, AMS 16]
-theorem kourovka_simple_proOrderable_group :
+@[category research open, AMS 20]
+theorem kourovka_1_35c : answer(sorry) ↔
     ∃ (G : Type) (_ : Group G), IsSimpleGroup G ∧ ProOrderable G := by
   sorry
 
