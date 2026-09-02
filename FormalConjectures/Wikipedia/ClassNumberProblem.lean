@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Class number problem for real quadratic fields
@@ -26,7 +26,7 @@ namespace ClassNumberProblem
 
 def IsClassNumberOne (d : ℤ) : Prop :=
   ∃ (h₂ : Irreducible (X ^ 2 - C (d : ℚ))),
-  haveI := Fact.mk h₂
+  have := Fact.mk h₂
   NumberField.classNumber (AdjoinRoot (X ^ 2 - C (d : ℚ))) = 1
 
 /--

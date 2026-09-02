@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 952
@@ -32,7 +32,7 @@ Is there an infinite sequence of distinct Gaussian primes $x_1,x_2,\ldots$
 such that $\lvert x_{n+1}-x_n\rvert \ll 1$?
 -/
 @[category research open, AMS 11]
-theorem erdos_952 :
+theorem erdos_952 : answer(sorry) ↔
   ∃ (x : ℕ → GaussianInt) (C : ℤ),
     Function.Injective x ∧
       ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
