@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,40 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Voronovskaja-type Formula for the Bezier Variant of the Bernstein Operators
 
 The Bézier-type Bernstein operators $B_{n,\alpha}$ for $\alpha > 0$ are defined for
 $f : [0,1] \to \mathbb{R}$ by
-\[
+$$
 (B_{n,\alpha} f)(x)
   = \sum_{k=0}^n f\!\left(\frac{k}{n}\right)
     \left( J_{n,k}(x)^{\alpha} - J_{n,k+1}(x)^{\alpha} \right),
-\]
+$$
 where
-\[
+$$
 J_{n,k}(x) = \sum_{j=k}^n p_{n,j}(x),
 \qquad
 p_{n,j}(x) = \binom{n}{j} x^j(1-x)^{n-j},
-\]
+$$
 and $J_{n,n+1}(x) = 0$.
 
 In the classical case $\alpha = 1$, these operators reduce to the usual Bernstein operators.
 For $f$ which are $C^2$ on $[0,1]$, one has the classical Voronovskaja
 asymptotic formula
-\[
+$$
 \lim_{n \to \infty} n\bigl( B_{n,1} f(x) - f(x) \bigr)
     = \tfrac{1}{2} x(1-x) f''(x).
-\]
+$$
 
 ## Known Results
 * For $\alpha = 1$, the asymptotics are completely understood.
 * Numerical experiments indicate that for $\alpha \neq 1$ the quantity
-    \[
+    $$
         \sqrt{n}\,\bigl( B_{n,\alpha} f(x) - f(x) \bigr)
-    \]
+    $$
     may converge to a non-zero limit.
 
 ## The Problem
@@ -55,10 +55,10 @@ Determine the asymptotic behaviour of the Bézier-type Bernstein operators for $
 $\alpha \neq 1$:
 \textbf{Existence of the limit:}
     Prove (or disprove) the existence of the limit
-    \[
+    $$
         \lim_{n \to \infty}
         \sqrt{n}\,\bigl( B_{n,\alpha} f(x) - f(x) \bigr),
-    \]
+    $$
     at least for sufficiently smooth functions $f$.
     \textbf{Explicit form of the limit:}
     If the limit exists, determine an explicit expression for it in terms of $f$, $x$, and $\alpha$.
@@ -79,7 +79,7 @@ noncomputable def bernsteinTail (n k : ℕ) : Polynomial ℝ :=
 
 /--
 Bézier–type Bernstein operator:
-\[
+$$
 (B_{n,\alpha} f)(x)
 = \sum_{k=0}^{n}
 f\!\left(\frac{k}{n}\right)
@@ -87,7 +87,7 @@ f\!\left(\frac{k}{n}\right)
 J_{n,k}(x)^{\alpha}
 - J_{n,k+1}(x)^{\alpha}
 \right)
-\]
+$$
 -/
 noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (n + 1),
@@ -97,11 +97,11 @@ noncomputable def bezierBernstein (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : �
 Classical Voronovskaja theorem (α = 1).
 
 For functions $f$ that are $C^2$ on $[0,1]$, the limit:
-\[
+$$
 n\bigl( B_n f(x) - f(x) \bigr)
 \;\longrightarrow\;
 \frac{1}{2}\, x(1 - x)\, f''(x)
-\]
+$$
 -/
 @[category research solved, AMS 26 40 47]
 theorem voronovskaja_theorem.bernstein_operators

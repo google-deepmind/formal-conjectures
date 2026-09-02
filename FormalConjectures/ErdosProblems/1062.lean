@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import Mathlib.Topology.Basic
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1062
@@ -33,10 +32,10 @@ other elements of `A`. -/
 def ForkFree (A : Set ℕ) : Prop :=
   ∀ a ∈ A, ({b | b ∈ A \ {a} ∧ a ∣ b} : Set ℕ).Subsingleton
 
-open scoped Classical in
 /-- The extremal function from Erdős problem 1062: the largest size of a fork-free subset of
 `{1,...,n}`. -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.findGreatest (fun k => ∃ A ⊆ Set.Icc 1 n, ForkFree A ∧ A.ncard = k) n
 
 -- TODO: Add erdos_1062.parts.i: How large can $f(n)$ be?
@@ -64,11 +63,11 @@ theorem erdos_1062.variants.lower_bound (n : ℕ) : ⌈(2 * n / 3 : ℝ)⌉₊ �
     _ ≤ f n := Nat.le_findGreatest (by omega)
       ⟨A, by simp only [Finset.coe_Icc, A]; gcongr; omega, ?_, by
         simp [A, -Finset.coe_Icc]⟩
-  simp only [ForkFree, Finset.coe_Icc, Set.mem_Icc, Set.mem_diff, Set.mem_singleton_iff, and_assoc,
+  simp only [ForkFree, Finset.coe_Icc, Set.mem_Icc, Set.mem_sdiff, Set.mem_singleton_iff, and_assoc,
     and_imp, A]
   rintro a ha -
   refine Set.subsingleton_of_forall_eq (a * 2) ?_
-  simp only [Set.mem_setOf_eq, and_imp]
+  simp only [Set.mem_ofPred_eq, and_imp]
   rintro _ _ hk _ ⟨k, rfl⟩
   match k with
   | 0 | 1 | 2 => simp_all
