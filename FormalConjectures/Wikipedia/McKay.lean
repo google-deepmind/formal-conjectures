@@ -21,9 +21,9 @@ import FormalConjecturesUtil
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/McKay_conjecture)
-- [CaSp25] Cabanes, Marc and Späth, Britta, [The McKay conjecture on character
-  degrees](https://annals.math.princeton.edu/articles/22056). Ann. of Math. (2) 202 (2025),
-  no. 1, 1--99.
+- [CaSp26] Cabanes, Marc and Späth, Britta, [The McKay conjecture on character
+  degrees](https://annals.math.princeton.edu/2026/203-3/p05). Ann. of Math. (2) 203 (2026),
+  no. 3, 933--1032.
 - [CaSp24] Cabanes, Marc and Späth, Britta, [The McKay conjecture on character
   degrees](https://arxiv.org/abs/2410.20392). arXiv:2410.20392 (2024).
 -/
@@ -70,7 +70,7 @@ end IrrPPrime
 $p$-subgroup of $G$. Then the number of irreducible complex characters of $G$ whose degree is
 not divisible by $p$ equals the corresponding number for the normalizer $N_G(P)$.
 
-Cabanes and Späth proved the conjecture in [CaSp25]. -/
+Cabanes and Späth proved the conjecture in [CaSp26]. -/
 @[category research solved, AMS 20]
 theorem mckay_conjecture
     (p : ℕ) [Fact (Nat.Prime p)]
