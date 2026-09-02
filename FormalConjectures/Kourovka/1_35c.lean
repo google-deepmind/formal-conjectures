@@ -44,7 +44,7 @@ def ProOrderable (G : Type*) [Group G] : Prop :=
     IsPartialOrder G r →
     IsBiInvariant (G := G) r →
     ∃ s : G → G → Prop,
-      IsLinearOrder G s ∧ IsBiInvariant (G := G) s ∧ ∀ x y, r x y → s x y
+      IsLinearOrder G s ∧ IsBiInvariant G s ∧ ∀ x y, r x y → s x y
 
 /--
 Kourovka Notebook Problem 1.35(c): does there exist a simple pro-orderable
@@ -52,7 +52,7 @@ Kourovka Notebook Problem 1.35(c): does there exist a simple pro-orderable
 -/
 @[category research open, AMS 16]
 theorem kourovka_simple_proOrderable_group :
-    ∃ (G : Type*) (_ : Group G), IsSimpleGroup G ∧ ProOrderable G := by
+    ∃ (G : Type) (_ : Group G), IsSimpleGroup G ∧ ProOrderable G := by
   sorry
 
 end Kourovka.«1.35c»
