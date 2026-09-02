@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 23
@@ -22,12 +22,15 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 * [erdosproblems.com/23](https://www.erdosproblems.com/23)
 * [OEIS A389646](https://oeis.org/A389646)
+* [Balogh-Clemen-Lidicky, Max Cuts in Triangle-free Graphs](https://arxiv.org/abs/2103.14179)
+* [McKay, Extremal graphs for bipartization of triangle-free graphs](https://users.cecs.anu.edu.au/~bdm/data/graphs.html)
 -/
 
-open SimpleGraph BigOperators Classical
+open SimpleGraph BigOperators
 
 namespace Erdos23
 
+open scoped Classical in
 /--
 Every triangle-free graph on $5$ vertices can be made bipartite by removing at most $1$ edge.
 This is the $n = 1$ case of Erdős Problem 23.
@@ -38,6 +41,7 @@ theorem erdos_23.variants.n1 :
         H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1 := by
   sorry
 
+open scoped Classical in
 /--
 There exists a triangle-free graph on $5$ vertices such that at least $1$ edge must be removed
 to make it bipartite. This shows the bound in `erdos_23_n1` is tight.
@@ -46,6 +50,33 @@ to make it bipartite. This shows the bound in `erdos_23_n1` is tight.
 theorem erdos_23.variants.n1_tight :
     ∃ (G : SimpleGraph (Fin 5)), G.CliqueFree 3 ∧ ∀ (H : SimpleGraph (Fin 5)),
         H ≤ G → H.IsBipartite → 1 ≤ (G.edgeFinset \ H.edgeFinset).card := by
+  sorry
+
+open scoped Classical in
+/--
+Every triangle-free graph on $25$ vertices can be made bipartite by removing at most $25$
+edges.
+
+This is the $n = 5$ case of Erdős Problem 23.  It follows from the high-density range of
+Balogh-Clemen-Lidicky together with McKay's complete catalogue of the 23-vertex extremal
+graphs for bipartization of triangle-free graphs.
+-/
+@[category research solved, AMS 5]
+theorem erdos_23.variants.n5 :
+    ∀ (G : SimpleGraph (Fin 25)), G.CliqueFree 3 → ∃ (H : SimpleGraph (Fin 25)),
+        H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 25 := by
+  sorry
+
+open scoped Classical in
+/--
+There exists a triangle-free graph on $25$ vertices such that at least $25$ edges must be
+removed to make it bipartite.  The balanced blow-up of $C_5$ with five parts of size $5$
+witnesses this.
+-/
+@[category research solved, AMS 5]
+theorem erdos_23.variants.n5_tight :
+    ∃ (G : SimpleGraph (Fin 25)), G.CliqueFree 3 ∧ ∀ (H : SimpleGraph (Fin 25)),
+        H ≤ G → H.IsBipartite → 25 ≤ (G.edgeFinset \ H.edgeFinset).card := by
   sorry
 
 /--
@@ -57,6 +88,7 @@ are adjacent iff $j = i + 1$ or $i = j + 1$ in $\mathbb{Z}/5\mathbb{Z}$.
 def blowupC5 (n : ℕ) : SimpleGraph (ZMod 5 × Fin n) :=
   SimpleGraph.fromRel fun (i, _) (j, _) => i + 1 = j ∨ j + 1 = i
 
+open scoped Classical in
 /--
 The blow-up of $C_5$ shows that the bound $n^2$ in Erdős Problem 23 is tight:
 any bipartite subgraph must omit at least $n^2$ edges.
@@ -67,6 +99,7 @@ theorem blowupC5_tight (n : ℕ) (_hn : 0 < n) (H : SimpleGraph (ZMod 5 × Fin n
     n ^ 2 ≤ ((blowupC5 n).edgeFinset \ H.edgeFinset).card := by
   sorry
 
+open scoped Classical in
 /--
 Can every triangle-free graph on $5n$ vertices be made bipartite by deleting at most $n^2$ edges?
 -/
