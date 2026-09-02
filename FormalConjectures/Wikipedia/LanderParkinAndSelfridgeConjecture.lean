@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Lander, Parkin, and Selfridge Conjecture
@@ -36,6 +36,7 @@ then $k \leq n + m$. -/
 @[category research open, AMS 11]
 theorem lander_parkin_selfridge :
     ∀ (k n m : ℕ) (x : Fin n → ℕ) (y : Fin m → ℕ),
+      0 < n → 0 < m →
       (∀ i, 0 < x i) → (∀ j, 0 < y j) →
       (∀ i j, x i ≠ y j) →
       ∑ i, x i ^ k = ∑ j, y j ^ k →
