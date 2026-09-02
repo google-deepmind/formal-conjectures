@@ -47,6 +47,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumse
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.PropertyB
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
