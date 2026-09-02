@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 26
@@ -33,11 +33,6 @@ open scoped Pointwise
 
 namespace Green26
 
-/-- The vector space $\mathbb{F}_p^n$. -/
-abbrev 𝔽 (p n : ℕ) [Fact p.Prime] := Fin n → ZMod p
-
-/-- The vector space $\mathbb{F}_3^n$. -/
-abbrev 𝔽₃ (n : ℕ) := 𝔽 3 n
 
 /-- The standard cube in $\mathbb{F}_p^n$ is the set of points with coordinates in $\{0, 1\}$. -/
 def StandardCube {p : ℕ} [Fact p.Prime] (n : ℕ) : Set (𝔽 p n) :=
