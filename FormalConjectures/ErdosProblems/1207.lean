@@ -38,8 +38,8 @@ def IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
   A.Triplewise fun x y z => ¬ IsIsosceles x y z
 
 /--
-`P d n` is the largest number such that every set of `n` points in Euclidean `d`-space has an
-isosceles-free subset of at least that size.
+`P d n` is the largest number $m$ such that every set of $n$ points in $\mathbb{R}^d$ has an
+isosceles-free subset of size at least $m$.
 -/
 noncomputable def P (d n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ S : Finset (EuclideanSpace ℝ (Fin d)), S.card = n ∧
