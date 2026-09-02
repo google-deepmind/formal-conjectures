@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 19
@@ -29,7 +29,7 @@ import FormalConjectures.Util.ProblemImports
   Dynamical Systems 31.3 (2011): 771-792.
 -/
 
-open Finset Real Classical
+open Finset Real
 
 namespace Green19
 
@@ -47,12 +47,11 @@ From [FSS20]: given $A \subseteq G \times G$ and $d \in G$, let
 $$S_d(A) = \lbrace (x, y) \in G \times G : (x, y), (x + d, y), (x, y + d) \in A \rbrace$$
 -/
 noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
+  open scoped Classical in
   univ.filter (fun p => IsCorner A p.1 p.2 d)
 
 end GroupDefs
 
-/-- The group $G = \mathbb{F}_2^n = (Z/2Z)^n$. -/
-abbrev 𝔽₂ (n : ℕ) := Fin n → ZMod 2
 
 /--
 True if the given exponent satisfies Green's conditions [Gr26].
