@@ -148,7 +148,6 @@ theorem erdos_1.variants.least_N_3 :
       decide
 
 set_option maxRecDepth 4000 in
-set_option maxHeartbeats 4000000 in
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with five
 elements is $13$. A witness is `{3, 6, 11, 12, 13}` (one of two such 5-subsets of `[1, 13]`,
@@ -176,12 +175,12 @@ theorem erdos_1.variants.least_N_5 :
     intro n hn
     obtain ⟨A, ⟨hA_subset, hA_inj⟩, hA_card⟩ := hn
     by_contra h_lt
-    push_neg at h_lt
+    push Not at h_lt
     -- Per-n exhaustive check: no 5-element subset of [1, n] is sum-distinct, for any n ≤ 12.
-    -- This is a finite computation (≤ C(12, 5) = 792 candidates), closed by `decide +kernel`.
+    -- This is a finite computation (≤ C(12, 5) = 792 candidates), closed by native evaluation.
     have h_no : ∀ B ∈ (Finset.Icc 1 n).powerset, B.card = 5 →
         ¬ (fun (⟨S, _⟩ : B.powerset) => S.sum id).Injective := by
-      interval_cases n <;> decide +kernel
+      interval_cases n <;> decide +native
     exact h_no A (Finset.mem_powerset.mpr hA_subset) hA_card hA_inj
 
 /--
