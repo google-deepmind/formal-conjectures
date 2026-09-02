@@ -43,8 +43,12 @@ async function init() {
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
   const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   const contributors = data.contributors?.[theorem.githubPath] || [];
+  const gitCommitInfo = {
+    commitSha: data.commitSha || 'main',
+    shortCommit: data.shortCommit || (data.commitSha ? data.commitSha.slice(0, 8) : 'main'),
+  };
 
-  renderDetail(theorem, siblings, verso, contributors);
+  renderDetail(theorem, siblings, verso, contributors, gitCommitInfo);
 }
 
 // ─── Verso asset and script loading ────────────────────────────────
@@ -403,7 +407,42 @@ function contributorChipHTML(contributor) {
   return `<span class="contributor-chip contributor-chip--static" title="${FC.escapeHTML(title)}">${content}</span>`;
 }
 
-function renderDetail(theorem, siblings, verso, contributors) {
+function generateBibTeX(theorem, contributors, gitCommitInfo) {
+  const shortSha = gitCommitInfo?.shortCommit || 'main';
+  const fullSha = gitCommitInfo?.commitSha || 'main';
+
+  // Find original author (who added the file from git history)
+  const origAuthor = contributors.find(c => c.originalAuthor);
+  const authorName = origAuthor?.name;
+  const authorField = authorName
+    ? `${authorName} and {The Formal Conjectures Authors}`
+    : `{The Formal Conjectures Authors}`;
+
+  const currentYear = new Date().getFullYear();
+  const rawName = theorem.theorem;
+  // Clean key for BibTeX (strip guillemets and disallowed characters)
+  const cleanKey = rawName.replace(/[«»]/g, '').replace(/[^a-zA-Z0-9._-]/g, '_');
+  const citeKey = `fc:${shortSha}:${cleanKey}`;
+
+  // LaTeX-escaped full Lean name: escape guillemets and underscores
+  const latexLeanName = rawName
+    .replace(/«/g, '{\\guillemotleft}')
+    .replace(/»/g, '{\\guillemotright}')
+    .replace(/_/g, '\\_');
+
+  const githubUrl = `https://github.com/google-deepmind/formal-conjectures/blob/${fullSha}/${theorem.githubPath}`;
+  const webUrl = `https://google-deepmind.github.io/formal-conjectures/theorem/?name=${encodeURIComponent(rawName)}`;
+
+  return `@misc{${citeKey},
+  author       = {${authorField}},
+  title        = {{Formal Conjectures}: \\texttt{${latexLeanName}}},
+  year         = {${currentYear}},
+  howpublished = {\\url{${githubUrl}}},
+  note         = {Lean 4 declaration \\texttt{${latexLeanName}}, commit \\texttt{${shortSha}}. Web viewer: \\url{${webUrl}}}
+}`;
+}
+
+function renderDetail(theorem, siblings, verso, contributors, gitCommitInfo) {
   const catMeta = FC.getCategoryMeta(theorem.category);
 
   // Subject pills
@@ -522,6 +561,34 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
+  const bibtexText = generateBibTeX(theorem, contributors, gitCommitInfo);
+  const cleanKey = theorem.theorem.replace(/[«»]/g, '').replace(/[^a-zA-Z0-9._-]/g, '_');
+  const citeKey = `fc:${gitCommitInfo?.shortCommit || 'main'}:${cleanKey}`;
+
+  const citationSection = `
+    <details class="citation-details" id="citation">
+      <summary class="citation-summary">
+        <span class="citation-summary__left">
+          <span class="citation-summary__icon" aria-hidden="true">▶</span>
+          <span>Cite this conjecture</span>
+        </span>
+        <span class="citation-summary__tag">BibTeX / LaTeX</span>
+      </summary>
+      <div class="citation-content">
+        <div class="citation-content__header">
+          <span class="citation-content__title">BibTeX entry</span>
+          <button type="button" class="btn btn-outline btn-sm" id="copy-bibtex-btn" title="Copy BibTeX entry">
+            Copy BibTeX
+          </button>
+        </div>
+        <pre class="bibtex-box"><code id="bibtex-code">${FC.escapeHTML(bibtexText)}</code></pre>
+        <div class="citation-hint">
+          <span>LaTeX citation key: <code>\\cite{${FC.escapeHTML(citeKey)}}</code></span>
+          <span class="citation-hint__sub">References the immutable Git commit SHA and Lean declaration.</span>
+        </div>
+      </div>
+    </details>`;
+
   detailEl.innerHTML = `
     <div class="theorem-detail__breadcrumb">
       <a href="${_base}/browse/">&larr; Browse</a>
@@ -546,6 +613,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${contributorsSection}
 
+    ${citationSection}
+
     <div class="theorem-detail__section">
       <div class="detail-label">Source collection</div>
       <div class="detail-value">${collectionHTML}</div>
@@ -568,6 +637,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     <nav class="theorem-detail__nav" aria-label="Page actions">
       <a href="${_base}/browse/" class="btn btn-outline">&larr; Back to browse</a>
+      <a href="#citation" class="btn btn-outline" id="cite-nav-btn">Cite / BibTeX</a>
       ${versoSourceUrl ? `<a href="${versoSourceUrl}" class="btn btn-outline">View annotated source</a>` : ''}
       <a href="${FC.escapeHTML(theorem.githubUrl)}" class="btn btn-outline" target="_blank" rel="noopener">
         View on GitHub ↗
@@ -575,6 +645,41 @@ function renderDetail(theorem, siblings, verso, contributors) {
       <a href="${_base}/about/#comments" class="btn btn-outline">About comments and votes</a>
     </nav>
   `;
+
+  // Wire BibTeX copy button
+  const copyBtn = document.getElementById('copy-bibtex-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(bibtexText);
+      } catch (_) {
+        const textarea = document.createElement('textarea');
+        textarea.value = bibtexText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      copyBtn.textContent = 'Copied! ✓';
+      copyBtn.classList.add('btn-copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy BibTeX';
+        copyBtn.classList.remove('btn-copied');
+      }, 2000);
+    });
+  }
+
+  // Wire Cite navigation button to open details
+  const citeNavBtn = document.getElementById('cite-nav-btn');
+  const citationEl = document.getElementById('citation');
+  if (citeNavBtn && citationEl) {
+    citeNavBtn.addEventListener('click', () => {
+      citationEl.open = true;
+    });
+  }
+  if (location.hash === '#citation' && citationEl) {
+    citationEl.open = true;
+  }
 
   // Render LaTeX in docstrings and wire statement dropdowns
   FC.setupStatementToggles(detailEl);

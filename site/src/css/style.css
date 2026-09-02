@@ -774,6 +774,147 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   word-break: break-all;
 }
 
+/* BibTeX citation collapsible section */
+.citation-details {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.citation-details[open] {
+  border-color: var(--color-border);
+}
+
+.citation-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 0.95rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background 0.15s;
+  list-style: none;
+}
+
+.citation-summary::-webkit-details-marker {
+  display: none;
+}
+
+.citation-summary:hover {
+  background: var(--color-bg-alt);
+}
+
+.citation-summary__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.citation-summary__icon {
+  display: inline-block;
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+  color: var(--color-text-muted);
+}
+
+.citation-details[open] .citation-summary__icon {
+  transform: rotate(90deg);
+}
+
+.citation-summary__tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.1rem 0.45rem;
+}
+
+.citation-content {
+  padding: 0.75rem 0.95rem 0.95rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.citation-content__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.citation-content__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.bibtex-box {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  overflow-x: auto;
+  margin-top: 0.25rem;
+  margin-bottom: 0.35rem;
+  white-space: pre;
+}
+
+.citation-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.citation-hint code {
+  font-family: var(--font-mono);
+  background: var(--color-bg);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+}
+
+.citation-hint__sub {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+}
+
+.btn-sm {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background: white;
+  transition: all 0.15s;
+}
+
+.btn-copied {
+  border-color: var(--cat-solved) !important;
+  color: var(--cat-solved) !important;
+}
+
 .theorem-detail__nav {
   display: flex;
   flex-wrap: wrap;

@@ -99,24 +99,48 @@ Tags are immutable: fixes to misformalizations are never patched into an existin
 benchmark version but instead go into `v{N+1}`.
 
 ## Citing formal-conjectures
-If your work has used formal-conjectures, please consider citing it via
-```
+
+If your work uses formal-conjectures, please consider citing the repository:
+
+```bibtex
 @misc{FormalConjectures,
-  author       = {{The Formal Conjectures Authors}}
+  author       = {{The Formal Conjectures Authors}},
   title        = {{T}he {F}ormal {C}onjectures {R}epository},
   year         = {2025},
   url          = {https://github.com/google-deepmind/formal-conjectures},
 }
+```
 
+and the paper describing the benchmark:
+
+```bibtex
 @article{FormalConjecturesPaper,
-  authors = {Firsching, Moritz and Lezeau, Paul and Mercuri, Salvatore
+  author  = {Firsching, Moritz and Lezeau, Paul and Mercuri, Salvatore
     and Horv{\'a}th, Mikl{\'o}s Z and Dillies, Ya{\"e}l and S{\"o}nne, Calle and Wieser, Eric and
     Zhang, Fred and Hubert, Thomas and Ag{\"u}era y Arcas, Blaise and Kohli, Pushmeet},
-  title = {{F}ormal {C}onjectures: {A}n {O}pen and {E}volving {B}enchmark for {V}erified {D}iscovery in {M}athematics},
-  year = {2026},
-  url = {https://arxiv.org/abs/2605.13171v1},
+  title   = {{F}ormal {C}onjectures: {A}n {O}pen and {E}volving {B}enchmark for {V}erified {D}iscovery in {M}athematics},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2605.13171v1},
 }
 ```
+
+### Citing an individual conjecture
+
+If you would like to cite a specific formalised conjecture (for example in a proof, paper, or benchmark evaluation), we suggest referencing the fully qualified Lean declaration name together with the repository commit hash and permalink. You may cite `{The Formal Conjectures Authors}` or optionally include the contributor who added the formalisation as `[Author who contributed the formalisation] and {The Formal Conjectures Authors}`.
+
+For example, to cite the Twin Prime Conjecture (`TwinPrimes.twin_primes`):
+
+```bibtex
+@misc{fc:<short-hash>:TwinPrimes.twin_primes,
+  author       = {[Author who contributed the conjecture] and {The Formal Conjectures Authors}},
+  title        = {{Formal Conjectures}: \texttt{TwinPrimes.twin\_primes}},
+  year         = {2026},
+  howpublished = {\url{https://github.com/google-deepmind/formal-conjectures/blob/<commit-hash>/FormalConjectures/Wikipedia/TwinPrimes.lean}},
+  note         = {Lean 4 declaration \texttt{TwinPrimes.twin\_primes}, commit \texttt{<short-hash>}. Web viewer: \url{https://google-deepmind.github.io/formal-conjectures/theorem/?name=TwinPrimes.twin_primes}}
+}
+```
+
+*(Tip: Each conjecture detail page on the [Formal Conjectures website](https://google-deepmind.github.io/formal-conjectures/) includes an **Export BibTeX** button with the commit hash and contributor pre-filled.)*
 
 ## Licensing
 

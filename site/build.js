@@ -636,12 +636,35 @@ function subjectStatusTableHTML(subjectByCategory) {
   return `<table class="stats-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
 }
 
+function getGitCommitInfo() {
+  let sha = process.env.GITHUB_SHA || '';
+  if (!sha) {
+    const repoRoot = getGitRoot();
+    if (repoRoot) {
+      try {
+        sha = execFileSync('git', ['-C', repoRoot, 'rev-parse', 'HEAD'], {
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'ignore'],
+        }).trim();
+      } catch (_) {
+        sha = '';
+      }
+    }
+  }
+  const commitSha = sha || 'main';
+  const shortCommit = commitSha !== 'main' ? commitSha.slice(0, 8) : 'main';
+  return { commitSha, shortCommit };
+}
+
 // ---------------------------------------------------------------------------
 // Main build
 // ---------------------------------------------------------------------------
 
 async function main() {
   console.log('Building Formal Conjectures website...');
+
+  const { commitSha, shortCommit } = getGitCommitInfo();
+  console.log(`  Git commit: ${shortCommit} (${commitSha})`);
 
   // Read raw data
   let rawData = [];
@@ -686,7 +709,16 @@ async function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
+    JSON.stringify({
+      commitSha,
+      shortCommit,
+      conjectures,
+      stats,
+      advancedStats,
+      amsSubjects: AMS_SUBJECTS,
+      versoFragments,
+      contributors,
+    }),
   );
   const whitePlotPath = path.join('data', 'file_counts_white.html');
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
