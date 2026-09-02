@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 830
@@ -23,10 +23,11 @@ import FormalConjectures.Util.ProblemImports
 -/
 
 open scoped ArithmeticFunction.sigma
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos830
 
+open scoped Classical in
 /--
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
 -/
