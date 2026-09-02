@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 39
@@ -104,6 +104,12 @@ theorem green_39.variant_101 : answer(sorry) ↔
 
 /--
 Similar questions are interesting with $\sqrt{p}$ replaced by $p^\theta$ for any $\theta \le 1/2$. [Gr24]
+
+NOTE: using $C p^\theta$ translates as stated makes the conjecture trivially false by the pigeonhole
+principle. Indeed for a set of size $p^\theta$, we cover at most $C p^{2\theta}$ elements, which is
+strictly less than $p$ for $\theta < 1/2$. We interpret the question as asking whether
+$O(p^{1-\theta})$ translates suffice. This generalizes the main conjecture where
+$\sqrt{p} = p^{1-1/2}$.
 -/
 @[category research open, AMS 5 60]
 theorem green_39.variant_theta : answer(sorry) ↔
@@ -111,7 +117,7 @@ theorem green_39.variant_theta : answer(sorry) ↔
     ∃ C > 1, Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
         let k := ⌊(p : ℝ) ^ θ⌋₊
-        let c := ⌊C * (p : ℝ) ^ θ⌋₊
+        let c := ⌊C * (p : ℝ) ^ (1 - θ)⌋₊
         (proportionCoverable p k c : ℝ))
       atTop (𝓝 1) := by
   sorry
