@@ -123,18 +123,19 @@ theorem _02062_le_density_rank_zero : 0.2062 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
-/-- The quadratic twist `E^d` of `E : y² = x³ + Ax + B` by an integer `d`, given by the Weierstrass
-equation $y^2 = x^3 + d^2Ax + d^3B$. For `d ≠ 0` this is the twist of `E` corresponding to the
-quadratic field $\mathbb{Q}(\sqrt d)$. See Section 1 of [Smith2025]. -/
+/-- The quadratic twist $E^d$ of $E : y^2 = x^3 + Ax + B$ by an integer $d$, given by the
+Weierstrass equation $y^2 = x^3 + d^2Ax + d^3B$. For $d \neq 0$ this is the twist of $E$
+corresponding to the quadratic field $\mathbb{Q}(\sqrt{d})$. See Section 1 of [Smith2025]. -/
 def quadraticTwist (E : RatEllipticCurve) (d : ℤ) : Affine ℚ :=
   { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := d ^ 2 * E.A, a₆ := d ^ 3 * E.B }
 
-/-- The twist of `E` by `d = 1` is `E` itself. -/
+/-- The twist of $E$ by $d = 1$ is $E$ itself. -/
 @[category API, AMS 11 14]
 theorem quadraticTwist_one (E : RatEllipticCurve) : E.quadraticTwist 1 = E.toWeierstrass := by
   simp [quadraticTwist, toWeierstrass]
 
-/-- The quadratic twist of an elliptic curve over ℚ by a nonzero `d` is again an elliptic curve. -/
+/-- The quadratic twist of an elliptic curve over $\mathbb{Q}$ by a nonzero $d$ is again an
+elliptic curve. -/
 @[category API, AMS 11 14]
 theorem isElliptic_quadraticTwist (E : RatEllipticCurve) {d : ℤ} (hd : d ≠ 0) :
     (E.quadraticTwist d).IsElliptic where
@@ -143,8 +144,8 @@ theorem isElliptic_quadraticTwist (E : RatEllipticCurve) {d : ℤ} (hd : d ≠ 0
     simp only [quadraticTwist, toWeierstrass, Δ, b₂, b₄, b₆]
     ring
 
-/-- The naïve height of the Weierstrass model `E^d` is `|d| ^ 6` times the naïve height of `E`.
-Ordering the twists of `E` by `|d|` is therefore the same as ordering them by naïve height. -/
+/-- The naïve height of the Weierstrass model $E^d$ is $|d|^6$ times the naïve height of $E$.
+Ordering the twists of $E$ by $|d|$ is therefore the same as ordering them by naïve height. -/
 @[category API, AMS 11 14]
 theorem naiveHeight_quadraticTwist (E : RatEllipticCurve) (d : ℤ) :
     max (4 * (d ^ 2 * E.A).natAbs ^ 3) (27 * (d ^ 3 * E.B).natAbs ^ 2)
@@ -152,32 +153,32 @@ theorem naiveHeight_quadraticTwist (E : RatEllipticCurve) (d : ℤ) :
   simp only [naiveHeight, ← Nat.mul_max_mul_left, Int.natAbs_mul, Int.natAbs_pow, mul_pow]
   ring_nf
 
-/-- The rank of the quadratic twist `E^d` of an elliptic curve `E` over ℚ. -/
+/-- The rank of the quadratic twist $E^d$ of an elliptic curve $E$ over $\mathbb{Q}$. -/
 noncomputable abbrev twistRank (E : RatEllipticCurve) (d : ℤ) : ℕ :=
   finrank ℤ (E.quadraticTwist d).Point
 
-/-- The set of nonzero integers `d` with `|d| ≤ H`, which index the quadratic twists `E^d`
-ordered by `|d|`. By `naiveHeight_quadraticTwist` this is the same as ordering them by height. -/
+/-- The set of nonzero integers $d$ with $|d| \leq H$, which index the quadratic twists $E^d$
+ordered by $|d|$. By `naiveHeight_quadraticTwist` this is the same as ordering them by height. -/
 def twistIndexLE (H : ℕ) : Set ℤ := {d : ℤ | d ≠ 0 ∧ |d| ≤ (H : ℤ)}
 
-/-- There are `2 * H` nonzero integers `d` with `|d| ≤ H`. This is the normalisation used in
+/-- There are $2H$ nonzero integers $d$ with $|d| \leq H$. This is the normalisation used in
 [Smith2025]. -/
 @[category API, AMS 11 14]
 theorem ncard_twistIndexLE (H : ℕ) : (twistIndexLE H).ncard = 2 * H := by
   have : twistIndexLE H = ↑((Finset.Icc (-(H : ℤ)) H).erase 0) :=
     Set.ext fun d ↦ by simp [twistIndexLE, abs_le, and_comm]
   rw [this, Set.ncard_coe_finset, Finset.card_erase_of_mem (by simp), Int.card_Icc]
-  omega
+  lia
 
 /-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
-introduction of [Smith2025]: when the quadratic twists `E^d` of an elliptic curve `E` over ℚ are
-ordered by `|d|`, 50% of them have rank 0 and 50% have rank 1. See
-`goldfeld_conjecture.variants.two_le` for the remaining case `2 ≤ r`.
+introduction of [Smith2025]: when the quadratic twists $E^d$ of an elliptic curve $E$ over
+$\mathbb{Q}$ are ordered by $|d|$, 50% of them have rank $0$ and 50% have rank $1$. See
+`goldfeld_conjecture.variants.two_le` for the remaining case $2 \leq r$.
 
-Goldfeld states the conjecture for the analytic rank of `E^d`, which the Birch and
+Goldfeld states the conjecture for the analytic rank of $E^d$, which the Birch and
 Swinnerton-Dyer conjecture predicts is equal to the Mordell–Weil rank used here. Corollary 1.2
 of [Smith2025] proves that the Birch and Swinnerton-Dyer conjecture for the quadratic twist
-family of `E` implies Goldfeld's conjecture for `E`. -/
+family of $E$ implies Goldfeld's conjecture for $E$. -/
 @[category research open, AMS 11 14]
 theorem goldfeld_conjecture (E : RatEllipticCurve) (r : ℕ) (hr : r = 0 ∨ r = 1) :
     atTop.Tendsto
@@ -186,8 +187,8 @@ theorem goldfeld_conjecture (E : RatEllipticCurve) (r : ℕ) (hr : r = 0 ∨ r =
   sorry
 
 /-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
-introduction of [Smith2025], in the case `2 ≤ r`: a density 0 of the quadratic twists `E^d` of an
-elliptic curve `E` over ℚ have rank `r`. -/
+introduction of [Smith2025], in the case $2 \leq r$: a density $0$ of the quadratic twists $E^d$
+of an elliptic curve $E$ over $\mathbb{Q}$ have rank $r$. -/
 @[category research open, AMS 11 14]
 theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr : 2 ≤ r) :
     atTop.Tendsto
@@ -195,9 +196,9 @@ theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr
       (𝓝 0) := by
   sorry
 
-/-- Goldfeld's conjecture with `d` restricted to squarefree integers, which is how it is usually
-stated informally: 50% of the quadratic twists of `E` have rank 0 and 50% have rank 1. Every
-quadratic twist of `E` is isomorphic to `E^d` for a unique squarefree `d`, so the squarefree `d`
+/-- Goldfeld's conjecture with $d$ restricted to squarefree integers, which is how it is usually
+stated informally: 50% of the quadratic twists of $E$ have rank $0$ and 50% have rank $1$. Every
+quadratic twist of $E$ is isomorphic to $E^d$ for a unique squarefree $d$, so the squarefree $d$
 enumerate the distinct twists without repetition. -/
 @[category research open, AMS 11 14]
 theorem goldfeld_conjecture.variants.squarefree (E : RatEllipticCurve) (r : ℕ)
