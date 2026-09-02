@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Steiner Systems
@@ -81,7 +81,7 @@ by Keevash showing that such systems must exist for sufficiently large $n$.
 *Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems)
 -/
 @[category research open, AMS 5]
-def large_steiner_systems : LargeSteinerSystemWitness := by
+theorem large_steiner_systems : Nonempty LargeSteinerSystemWitness := by
   sorry
 
 /--

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -25,7 +25,13 @@ import FormalConjectures.Util.ProblemImports
     https://ems.press/journals/jems/articles/16228
 - [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
    elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
+- [Goldfeld1979] Dorian Goldfeld. Conjectures on elliptic curves over quadratic fields,
+   Number Theory Carbondale 1979, Lecture Notes in Math. 751, 108-118,
+   https://doi.org/10.1007/BFb0062705
+- [Smith2025] Alexander Smith. The Birch and Swinnerton-Dyer conjecture implies Goldfeld's
+   conjecture, https://arxiv.org/abs/2503.17619
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
+- [ICARM](https://elliptic-rank.icarm.cloud/curve/273)
 -/
 
 namespace EllipticCurveRank
@@ -42,25 +48,25 @@ structure RatEllipticCurve : Type where
   reduced (p : ℕ) : p.Prime → ¬ ((p ^ 4 : ℤ) ∣ A ∧ (p ^ 6 : ℤ) ∣ B)
   Δ_ne_zero : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0
 
-open scoped WeierstrassCurve.Affine
 open Module (finrank)
+open WeierstrassCurve
 
 /-- The rank of an elliptic curve over a number field is always finite by the Mordell–Weil theorem.
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank. -/
 @[category research solved, AMS 11 14]
-instance {K} [Field K] [NumberField K] [DecidableEq K] (E : WeierstrassCurve K) [E.IsElliptic] :
-    Module.Finite ℤ E⟮K⟯ := by
+theorem mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
+    Module.Finite ℤ E.Point := by
   sorry
 
 namespace RatEllipticCurve
 
 /-- Convert the structure `RatEllipticCurve` to a Weierstrass curve. -/
-def toWeierstrass (E : RatEllipticCurve) : WeierstrassCurve ℚ :=
+def toWeierstrass (E : RatEllipticCurve) : Affine ℚ :=
   { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := E.A, a₆ := E.B }
 
 /-- The rank of an elliptic curve over ℚ. -/
-noncomputable abbrev rank (E : RatEllipticCurve) : ℕ := finrank ℤ E.toWeierstrass⟮ℚ⟯
+noncomputable abbrev rank (E : RatEllipticCurve) : ℕ := finrank ℤ E.toWeierstrass.Point
 
 open WeierstrassCurve in
 instance (E : RatEllipticCurve) : E.toWeierstrass.IsElliptic where
@@ -117,6 +123,92 @@ theorem _02062_le_density_rank_zero : 0.2062 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
+/-- The quadratic twist $E^d$ of $E : y^2 = x^3 + Ax + B$ by an integer $d$, given by the
+Weierstrass equation $y^2 = x^3 + d^2Ax + d^3B$. For $d \neq 0$ this is the twist of $E$
+corresponding to the quadratic field $\mathbb{Q}(\sqrt{d})$. See Section 1 of [Smith2025]. -/
+def quadraticTwist (E : RatEllipticCurve) (d : ℤ) : Affine ℚ :=
+  { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := d ^ 2 * E.A, a₆ := d ^ 3 * E.B }
+
+/-- The twist of $E$ by $d = 1$ is $E$ itself. -/
+@[category API, AMS 11 14]
+theorem quadraticTwist_one (E : RatEllipticCurve) : E.quadraticTwist 1 = E.toWeierstrass := by
+  simp [quadraticTwist, toWeierstrass]
+
+/-- The quadratic twist of an elliptic curve over $\mathbb{Q}$ by a nonzero $d$ is again an
+elliptic curve. -/
+@[category API, AMS 11 14]
+theorem isElliptic_quadraticTwist (E : RatEllipticCurve) {d : ℤ} (hd : d ≠ 0) :
+    (E.quadraticTwist d).IsElliptic where
+  isUnit := isUnit_iff_ne_zero.mpr <| by
+    convert mul_ne_zero (pow_ne_zero 6 (Int.cast_ne_zero.mpr hd)) E.toWeierstrass.isUnit_Δ.ne_zero
+    simp only [quadraticTwist, toWeierstrass, Δ, b₂, b₄, b₆]
+    ring
+
+/-- The naïve height of the Weierstrass model $E^d$ is $|d|^6$ times the naïve height of $E$.
+Ordering the twists of $E$ by $|d|$ is therefore the same as ordering them by naïve height. -/
+@[category API, AMS 11 14]
+theorem naiveHeight_quadraticTwist (E : RatEllipticCurve) (d : ℤ) :
+    max (4 * (d ^ 2 * E.A).natAbs ^ 3) (27 * (d ^ 3 * E.B).natAbs ^ 2)
+      = d.natAbs ^ 6 * E.naiveHeight := by
+  simp only [naiveHeight, ← Nat.mul_max_mul_left, Int.natAbs_mul, Int.natAbs_pow, mul_pow]
+  ring_nf
+
+/-- The rank of the quadratic twist $E^d$ of an elliptic curve $E$ over $\mathbb{Q}$. -/
+noncomputable abbrev twistRank (E : RatEllipticCurve) (d : ℤ) : ℕ :=
+  finrank ℤ (E.quadraticTwist d).Point
+
+/-- The set of nonzero integers $d$ with $|d| \leq H$, which index the quadratic twists $E^d$
+ordered by $|d|$. By `naiveHeight_quadraticTwist` this is the same as ordering them by height. -/
+def twistIndexLE (H : ℕ) : Set ℤ := {d : ℤ | d ≠ 0 ∧ |d| ≤ (H : ℤ)}
+
+/-- There are $2H$ nonzero integers $d$ with $|d| \leq H$. This is the normalisation used in
+[Smith2025]. -/
+@[category API, AMS 11 14]
+theorem ncard_twistIndexLE (H : ℕ) : (twistIndexLE H).ncard = 2 * H := by
+  have : twistIndexLE H = ↑((Finset.Icc (-(H : ℤ)) H).erase 0) :=
+    Set.ext fun d ↦ by simp [twistIndexLE, abs_le, and_comm]
+  rw [this, Set.ncard_coe_finset, Finset.card_erase_of_mem (by simp), Int.card_Icc]
+  lia
+
+/-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
+introduction of [Smith2025]: when the quadratic twists $E^d$ of an elliptic curve $E$ over
+$\mathbb{Q}$ are ordered by $|d|$, 50% of them have rank $0$ and 50% have rank $1$. See
+`goldfeld_conjecture.variants.two_le` for the remaining case $2 \leq r$.
+
+Goldfeld states the conjecture for the analytic rank of $E^d$, which the Birch and
+Swinnerton-Dyer conjecture predicts is equal to the Mordell–Weil rank used here. Corollary 1.2
+of [Smith2025] proves that the Birch and Swinnerton-Dyer conjecture for the quadratic twist
+family of $E$ implies Goldfeld's conjecture for $E$. -/
+@[category research open, AMS 11 14]
+theorem goldfeld_conjecture (E : RatEllipticCurve) (r : ℕ) (hr : r = 0 ∨ r = 1) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | E.twistRank d = r}.ncard / (twistIndexLE H).ncard : ℝ))
+      (𝓝 (1 / 2)) := by
+  sorry
+
+/-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
+introduction of [Smith2025], in the case $2 \leq r$: a density $0$ of the quadratic twists $E^d$
+of an elliptic curve $E$ over $\mathbb{Q}$ have rank $r$. -/
+@[category research open, AMS 11 14]
+theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr : 2 ≤ r) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | E.twistRank d = r}.ncard / (twistIndexLE H).ncard : ℝ))
+      (𝓝 0) := by
+  sorry
+
+/-- Goldfeld's conjecture with $d$ restricted to squarefree integers, which is how it is usually
+stated informally: 50% of the quadratic twists of $E$ have rank $0$ and 50% have rank $1$. Every
+quadratic twist of $E$ is isomorphic to $E^d$ for a unique squarefree $d$, so the squarefree $d$
+enumerate the distinct twists without repetition. -/
+@[category research open, AMS 11 14]
+theorem goldfeld_conjecture.variants.squarefree (E : RatEllipticCurve) (r : ℕ)
+    (hr : r = 0 ∨ r = 1) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | Squarefree d ∧ E.twistRank d = r}.ncard /
+        {d ∈ twistIndexLE H | Squarefree d}.ncard : ℝ))
+      (𝓝 (1 / 2)) := by
+  sorry
+
 /-- From [PPVW2016], Section 3.1: "from the mid-1960s to the present,
 it seems that most experts conjectured unboundedness." -/
 @[category research open, AMS 11 14]
@@ -152,17 +244,104 @@ theorem twentyone_le_rank_height_count_asymptotic :
       ∀ H : ℕ, 1 < H → {E ∈ heightLE H | 21 ≤ E.rank}.ncard ≤ (H : ℝ) ^ f H := by
   sorry
 
+/-- Is there an elliptic curve over ℚ of rank at least 31?
+
+The answer is yes: such a curve was found by Claude, Levent Alpöge and Ava Howell in 2026.
+See https://elliptic-rank.icarm.cloud/curve/302 and `WeierstrassCurve.claudeAlpogeHowell31`
+below. -/
+@[category research solved, AMS 11 14]
+theorem exists_rank_ge_thirtyone : ∃ E : RatEllipticCurve, 31 ≤ E.rank := by
+  sorry
+
+/-- Is there an elliptic curve over ℚ of rank at least 32?
+The largest known rank of an elliptic curve over ℚ as of 2026 is at least 31 (and exactly
+31 assuming the generalized Riemann hypothesis and Birch and Swinnerton-Dyer conjecture).
+See https://elliptic-rank.icarm.cloud/curve/302. -/
+@[category research open, AMS 11 14]
+theorem exists_rank_ge_thirtytwo : ∃ E : RatEllipticCurve, 32 ≤ E.rank := by
+  sorry
+
 end RatEllipticCurve
 
 namespace WeierstrassCurve
 
-open _root_.WeierstrassCurve
-
 /-  See https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve#Largest_known_ranks -/
+
+/-- The elliptic curve over ℚ of rank at least 31 found by Claude, Levent Alpöge and
+Ava Howell in 2026. It has rank exactly 31 assuming the generalized Riemann hypothesis and
+Birch and Swinnerton-Dyer conjecture. -/
+def claudeAlpogeHowell31 : Affine ℚ where
+  a₁ := 1
+  a₂ := 1
+  a₃ := 1
+  a₄ := -1284727764113567728281797636015784768866707681415849262157224232063
+  a₆ := 560368321454261339256859338901915312332769858684945406858043869199456710681989058863306170127006181
+
+/-- See https://elliptic-rank.icarm.cloud/curve/302.
+User profile: https://elliptic-rank.icarm.cloud/user/18
+        and   https://elliptic-rank.icarm.cloud/user/53
+-/
+@[category test, AMS 11 14]
+theorem Δ_claudeAlpogeHowell31 : claudeAlpogeHowell31.Δ =
+    2 ^ 15 * 3 ^ 4 * 5 ^ 4 * 7 ^ 6 * 11 ^ 4 * 13 ^ 5 * 19 ^ 2 * 23 ^ 2 * 29 ^ 3 * 37 ^ 2 * 41 ^ 2 *
+    73 ^ 2 * 131 ^ 2 * 167 ^ 2 * 7547 * 632881 * 966509 * 18145679437533309132469 *
+    767028866604834801397681553 *
+    30580600452196904409276223329355584892025407195996968868775951126238056443210297 := by
+  rw [claudeAlpogeHowell31, Δ, b₂, b₄, b₆, b₈]; norm_num
+
+@[category test, AMS 11 14]
+instance : claudeAlpogeHowell31.IsElliptic where
+  isUnit := by rw [Δ_claudeAlpogeHowell31]; norm_num
+
+/-- The rank of the Claude–Alpöge–Howell curve is at least 31. -/
+@[category research solved, AMS 11 14]
+theorem thirtyone_le_rank_claudeAlpogeHowell31 : 31 ≤ finrank ℤ claudeAlpogeHowell31.Point := by
+  sorry
+
+/-- The rank of the Claude–Alpöge–Howell curve is exactly 31.
+It has rank exactly 31 assuming the generalized Riemann hypothesis and the
+Birch and Swinnerton-Dyer conjecture.
+-/
+@[category research open, AMS 11 14]
+theorem rank_claudeAlpogeHowell31 : finrank ℤ claudeAlpogeHowell31.Point = 31 := by
+  sorry
+
+/-- The elliptic curve over ℚ of rank at least 30 found by user `ranksunbounded` in 2026.
+User profile: https://elliptic-rank.icarm.cloud/user/18
+It has rank exactly 30 assuming the generalized Riemann hypothesis and Birch and Swinnerton-Dyer
+conjecture. -/
+def ranksunbounded30 : Affine ℚ where
+  a₁ := 1
+  a₂ := 0
+  a₃ := 0
+  a₄ := -201769035260418549083594900060734240952308696994802735114305555
+  a₆ := 1151107939141058565733479426024323225135665982951300586808823640527729578307228357301072889377
+
+/-- See https://elliptic-rank.icarm.cloud/curve/273. -/
+@[category test, AMS 11 14]
+theorem Δ_ranksunbounded30 : ranksunbounded30.Δ =
+    -2 ^ 16 * 3 ^ 12 * 5 ^ 8 * 7 ^ 5 * 13 ^ 5 * 31 ^ 2 * 41 ^ 2 * 47 ^ 4 * 53 ^ 3 * 67 ^ 3 * 379 ^ 2 *
+    4349 * 25721454817 *
+    97018222656318846556561979214040553412450110580812087282349817173780902099339117104673990259247421230916714670243202937 := by
+  rw [ranksunbounded30, Δ, b₂, b₄, b₆, b₈]; norm_num
+
+@[category test, AMS 11 14]
+instance : ranksunbounded30.IsElliptic where
+  isUnit := by rw [Δ_ranksunbounded30]; norm_num
+
+/-- The rank of the ranksunbounded curve is at least 30. -/
+@[category research solved, AMS 11 14]
+theorem thirty_le_rank_ranksunbounded30 : 30 ≤ finrank ℤ ranksunbounded30.Point := by
+  sorry
+
+/-- The rank of the ranksunbounded curve is exactly 30. -/
+@[category research open, AMS 11 14]
+theorem rank_ranksunbounded30 : finrank ℤ ranksunbounded30.Point = 30 := by
+  sorry
 
 /-- The elliptic curve over ℚ of rank at least 29 found by Elkies and Klagsbrun in 2024.
 It has rank exactly 29 assuming the generalized Riemann hypothesis. -/
-def elkiesKlagsbrun29 : WeierstrassCurve ℚ where
+def elkiesKlagsbrun29 : Affine ℚ where
   a₁ := 1
   a₂ := 0
   a₃ := 0
@@ -179,22 +358,22 @@ theorem Δ_elkiesKlagsbrun29 : elkiesKlagsbrun29.Δ =
   rw [elkiesKlagsbrun29, Δ, b₂, b₄, b₆, b₈]; norm_num
 
 @[category test, AMS 11 14]
-instance : elkiesKlagsbrun29.IsElliptic where
+instance elkiesKlagsbrun29IsElliptic : elkiesKlagsbrun29.IsElliptic where
   isUnit := by rw [Δ_elkiesKlagsbrun29]; norm_num
 
 /-- The rank of the Elkies-Klagsbrun curve is at least 29. -/
 @[category research solved, AMS 11 14]
-theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ := by
+theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29.Point := by
   sorry
 
 /-- The rank of the Elkies-Klagsbrun curve is exactly 29. -/
 @[category research open, AMS 11 14]
-theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29⟮ℚ⟯ = 29 := by
+theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29.Point = 29 := by
   sorry
 
 /-- The elliptic curve over ℚ of rank at least 28 found by Elkies in 2006.
 It has rank exactly 28 assuming the generalized Riemann hypothesis. -/
-def elkies28 : WeierstrassCurve ℚ where
+def elkies28 : Affine ℚ where
   a₁ := 1
   a₂ := -1
   a₃ := 1
@@ -210,18 +389,20 @@ theorem Δ_elkies28 : elkies28.Δ =
   rw [elkies28, Δ, b₂, b₄, b₆, b₈]; norm_num
 
 @[category test, AMS 11 14]
-instance : elkies28.IsElliptic where
+instance elkies28IsElliptic : elkies28.IsElliptic where
   isUnit := by rw [Δ_elkies28]; norm_num
 
 /-- The rank of the Elkies curve is at least 28. -/
 @[category research solved, AMS 11 14]
-theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28⟮ℚ⟯ := by
+theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28.Point := by
   sorry
 
 /-- The rank of the Elkies curve is exactly 28. -/
 @[category research open, AMS 11 14]
-theorem rank_elkies28 : finrank ℤ elkies28⟮ℚ⟯ = 28 := by
+theorem rank_elkies28 : finrank ℤ elkies28.Point = 28 := by
   sorry
+
+
 
 -- TODO: compute the rank of some rank 0 / 1 curve.
 

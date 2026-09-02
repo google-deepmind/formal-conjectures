@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 217
@@ -33,7 +33,7 @@ Per the WOWII definitions popup linked from this conjecture:
 
 namespace WrittenOnTheWallII.GraphConjecture217
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -52,7 +52,9 @@ then $G$ has a Hamiltonian path. Here $L_s(G)$ is the maximum number of
 leaves over all spanning trees and $\chi_{\mathrm{residue}=2}(G)$ is the indicator
 of $\mathrm{residue}(G) = 2$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/wowii-graph-conjecture-217-lean/blob/6a2fb82fcd17aa15ec734736740794bb8bd194c0/lean/GraphConjecture217Audit.lean"]
 theorem conjecture217 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hL : Ls G ≤ 4 * (residueEqTwoIndicator G : ℝ) + 2) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by

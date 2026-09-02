@@ -177,7 +177,11 @@ function processEntry(entry) {
   // Pick only the fields the website actually uses. Avoids leaking large
   // unused fields (statement, docstring) into the client-side JSON.
   // Docstrings come from versoFragments instead.
-  const hasFormalProof = !!entry.formalProofKind;
+  // A declaration can carry several `formal_proof` annotations. `hasFormalProof` stays a
+  // boolean about the conjecture, so the landing-page and stats counts keep counting
+  // conjectures rather than proofs.
+  const formalProofs = entry.formalProofs || [];
+  const hasFormalProof = formalProofs.length > 0;
   return {
     theorem: entry.theorem,
     module: entry.module,
@@ -193,8 +197,7 @@ function processEntry(entry) {
     categoryCss: catMeta.css,
     subjects,
     hasFormalProof,
-    formalProofKind: entry.formalProofKind || null,
-    formalProofLink: entry.formalProofLink || null,
+    formalProofs,
   };
 }
 
@@ -685,6 +688,10 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  const whitePlotPath = path.join('data', 'file_counts_white.html');
+  const darkPlotPath = path.join('data', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
+  if (fs.existsSync(darkPlotPath)) fs.copyFileSync(darkPlotPath, 'site/data/file_counts_dark.html');
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
@@ -715,8 +722,6 @@ async function main() {
 
   // ---- Stats page ----
   let growthPlot = '';
-  const whitePlotPath = path.join('..', 'docbuild', 'out', 'file_counts_white.html');
-  const darkPlotPath = path.join('..', 'docbuild', 'out', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
     const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
     const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');

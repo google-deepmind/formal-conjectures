@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Open questions regarding the existence of Euler bricks
@@ -91,7 +91,7 @@ def CuboidOne : Prop := ∀ ⦃a b : ℤ⦄, gcd a b = 1 → 0 < a → 0 < b →
 /--
 The first Cuboid conjecture
 
-The DeepMind prover agent has found a formal disproof of this statement.
+The DeepMind prover agent has found a formal proof of this statement.
 
 An (independent) informal solution can be found here:
 *Reference:* [arxiv/2510.11768](https://arxiv.org/abs/2510.11768) **Irreducibility of the Cuboid Polynomial P_{a,u}(t) via a Rank-Zero Elliptic Curve** by *Valery Asiryan*
