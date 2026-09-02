@@ -69,19 +69,19 @@ def b (n : ℕ) : ℕ :=
     (2 ^ n * ∏ k ∈ Finset.Icc 1 n, ((4 * k - 1)! * (4 * k - 2)!))
 
 @[category test, AMS 11]
-theorem b_0 : b 0 = 1 := by native_decide
+theorem b_0 : b 0 = 1 := by decide
 
 @[category test, AMS 11]
-theorem b_1 : b 1 = 1 := by native_decide
+theorem b_1 : b 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem b_2 : b 2 = 3 := by native_decide
+theorem b_2 : b 2 = 3 := by decide
 
 @[category test, AMS 11]
-theorem b_3 : b 3 = 26 := by native_decide
+theorem b_3 : b 3 = 26 := by decide
 
 @[category test, AMS 11]
-theorem b_4 : b 4 = 646 := by native_decide
+theorem b_4 : b 4 = 646 := by decide
 
 /--
 It is conjectured that
