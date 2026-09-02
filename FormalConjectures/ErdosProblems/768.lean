@@ -14,70 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 768
 
-*Reference:* [erdosproblems.com/768](https://www.erdosproblems.com/768)
-
-Let `A ⊂ ℕ` be the set of `n` such that for every prime `p ∣ n` there exists
-some divisor `d ∣ n`, `d > 1`, with `d ≡ 1 (mod p)`.  The question asks whether
-`|A ∩ [1, N]| / N` has the form
-`exp (-(c + o(1)) * sqrt (log N) * log log N)` for some `c > 0`.
+*References:*
+- [erdosproblems.com/768](https://www.erdosproblems.com/768)
+- [Er74b] Erdős, P., *Remarks on some problems in number theory*.
+  Math. Balkanica (1974), 197–202.
 -/
-
-noncomputable section
 
 namespace Erdos768
 
-open Classical Filter Asymptotics
+open Filter Asymptotics
 
-/--
-The defining property of the set `A`: for every prime divisor `p` of `n`,
-there is a nontrivial divisor `d` of `n` with `d ≡ 1 (mod p)`.
--/
+/-- The defining property of $A$: for every prime $p \mid n$, there is some $d \mid n$ with
+$d>1$ and $d \equiv 1 \pmod p$. -/
 def HasErdos768Property (n : ℕ) : Prop :=
-  ∀ p : ℕ,
-    Nat.Prime p →
-      p ∣ n →
-        ∃ d : ℕ, d ∣ n ∧ 1 < d ∧ d % p = 1
+  ∀ p, p.Prime → p ∣ n → ∃ d, d ∣ n ∧ 1 < d ∧ d % p = 1
 
-/-- The counting function `|A ∩ [1, N]|`. -/
-def erdos768Count (N : ℕ) : ℕ := by
+/-- The counting function $\lvert A \cap [1,N]\rvert$. -/
+noncomputable def erdos768Count (N : ℕ) : ℕ := by
   classical
   exact ((Finset.Icc 1 N).filter HasErdos768Property).card
 
-/-- The normalized density `|A ∩ [1, N]| / N`. -/
-def erdos768Density (N : ℕ) : ℝ :=
+/-- The normalized density $\lvert A \cap [1,N]\rvert/N$. -/
+noncomputable def erdos768Density (N : ℕ) : ℝ :=
   (erdos768Count N : ℝ) / (N : ℝ)
 
-/-- The scale `sqrt(log N) * log log N` appearing in the conjecture. -/
-def erdos768Scale (N : ℕ) : ℝ :=
+/-- The scale $\sqrt{\log N}\log\log N$ appearing in the conjecture. -/
+noncomputable def erdos768Scale (N : ℕ) : ℝ :=
   Real.sqrt (Real.log (N : ℝ)) * Real.log (Real.log (N : ℝ))
 
-/--
-The asserted asymptotic
-`|A ∩ [1, N]| / N = exp (-(c + o(1)) sqrt(log N) log log N)`.
--/
-def Erdos768AsymptoticConjecture : Prop :=
-  ∃ c : ℝ,
-    0 < c ∧
-      ∃ error : ℕ → ℝ,
-        error =o[atTop] (fun _ : ℕ => (1 : ℝ)) ∧
-          ∀ᶠ N in atTop,
-            erdos768Density N =
-              Real.exp (-(c + error N) * erdos768Scale N)
-
-/--
-Is there a constant `c > 0` such that
-`|A ∩ [1, N]| / N = exp (-(c + o(1)) sqrt(log N) log log N)`?
--/
+/-- Let $A \subset \mathbb{N}$ be the set of $n$ such that for every prime $p \mid n$ there is
+some $d \mid n$ with $d>1$ and $d \equiv 1 \pmod p$. Is there a constant $c>0$ such that,
+for all large $N$,
+$$\frac{\lvert A\cap[1,N]\rvert}{N}=
+\exp\big(-(c+o(1))\sqrt{\log N}\log\log N\big)?$$ -/
 @[category research open, AMS 11]
-theorem erdos_768 : answer(sorry) ↔ Erdos768AsymptoticConjecture := by
+theorem erdos_768 : answer(sorry) ↔ ∃ c > 0, ∃ error : ℕ → ℝ,
+    error =o[atTop] (fun _ ↦ (1 : ℝ)) ∧ ∀ᶠ N in atTop,
+      erdos768Density N = Real.exp (-(c + error N) * erdos768Scale N) := by
   sorry
 
 end Erdos768
-
-end
-
