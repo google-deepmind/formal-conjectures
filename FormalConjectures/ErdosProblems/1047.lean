@@ -56,8 +56,11 @@ The answer is no, as shown by Pommerenke [Po61], who showed that, if $k$ is suff
 and $f(z)=z^k(z-a)$ where $a$ is sufficiently close to $(1+\frac{1}{k})k^{\frac{1}{k+1}}$, then
 $\{ z: \lvert f(z)\rvert\leq 1\}$ has two components, and the component which contains $0$ is
 not convex.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 30 52]
+@[category research solved, AMS 30 52, formal_proof using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1047.lean"]
 theorem erdos_1047 : answer(False) ↔
     ∀ (f : ℂ[X]) (m : ℕ) (c : ℝ), f.Monic → (f.rootSet ℂ).ncard = m → 0 < c →
       (componentsIn (sublevelSet f c)).ncard = m →

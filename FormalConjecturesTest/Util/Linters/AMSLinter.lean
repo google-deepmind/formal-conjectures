@@ -15,9 +15,12 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Linters.AMSLinter
+public meta import FormalConjecturesUtil.Linters.AMSLinter
 
 @[expose] public section
+
+-- Off by default; on here because this file is what tests it.
+set_option linter.style.ams_attribute true
 
 namespace AMSLinter
 

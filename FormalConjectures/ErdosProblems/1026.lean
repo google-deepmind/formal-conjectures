@@ -83,14 +83,7 @@ and is also implicit in work of Wagner [Wa17]. A proof was given and formalised 
 $c=1$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1026 : IsGreatest admissibleConstants answer(sorry) := by
-  sorry
-
-/--
-In particular, this shows that $c=1$.
--/
-@[category research solved, AMS 5]
-theorem erdos_1026.variants.eq_one : IsGreatest admissibleConstants 1 := by
+theorem erdos_1026 : IsGreatest admissibleConstants 1 := by
   sorry
 
 /--

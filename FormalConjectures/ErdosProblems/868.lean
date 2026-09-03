@@ -74,7 +74,9 @@ theorem erdos_868.variants.fixed_ε :
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/868.lean#L132"]
 theorem erdos_868.variants.Hartter_Nathanson (o : ℕ) (ho : 1 < o) : ∃ (A : Set ℕ),
     A.IsAsymptoticAddBasisOfOrder o ∧ ∀ B ⊆ A, B.IsAsymptoticAddBasisOfOrder o →
     ∃ b ∈ B, (B \ {b}).IsAsymptoticAddBasisOfOrder o := by

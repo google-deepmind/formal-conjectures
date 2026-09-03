@@ -20,9 +20,9 @@ import FormalConjecturesUtil
 # Komlós conjecture
 
 The Komlós conjecture in discrepancy theory: there is a universal constant $K$ such
-that for all $n, m$ and all vectors $v_1, \dots, v_n \in \mathbb{R}^m$ with
-$\|v_i\|_2 \le 1$, there exist signs $\varepsilon_i \in \{-1, +1\}$ such that
-$$\left\|\sum_{i=1}^n \varepsilon_i v_i\right\|_\infty \le K.$$
+that for all $n, m$ and all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with
+$\|v\_i\|\_2 \le 1$, there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
+$$\left\|\sum\_{i=1}^n \varepsilon\_i v\_i\right\|\_\infty \le K.$$
 
 The best known bound is due to Banaszczyk, who proved that one can always achieve
 $O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set systems
@@ -43,10 +43,10 @@ namespace KomlosConjecture
 **The Komlós conjecture**
 
 There exists a universal constant $K > 0$ such that for all $n, m \in \mathbb{N}$ and
-all vectors $v_1, \dots, v_n \in \mathbb{R}^m$ with $\|v_i\|_2 \le 1$ (encoded here as
-$\sum_j v_{ij}^2 \le 1$), there exist signs $\varepsilon_i \in \{-1, +1\}$ such that
-$\left\|\sum_i \varepsilon_i v_i\right\|_\infty \le K$, i.e.
-$\left|\sum_i \varepsilon_i v_{ij}\right| \le K$ for every coordinate $j$.
+all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$ (encoded here as
+$\sum\_j v\_{ij}^2 \le 1$), there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
+$\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le K$, i.e.
+$\left|\sum\_i \varepsilon\_i v\_{ij}\right| \le K$ for every coordinate $j$.
 -/
 @[category research open, AMS 5]
 theorem komlos_conjecture :
@@ -60,9 +60,9 @@ theorem komlos_conjecture :
 **Banaszczyk's theorem**
 
 There exists a constant $C > 0$ such that for all $n, m \in \mathbb{N}$ and all vectors
-$v_1, \dots, v_n \in \mathbb{R}^m$ with $\|v_i\|_2 \le 1$, there exist signs
-$\varepsilon_i \in \{-1, +1\}$ such that
-$\left\|\sum_i \varepsilon_i v_i\right\|_\infty \le C \sqrt{\log(n + 2)}$.
+$v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$, there exist signs
+$\varepsilon\_i \in \{-1, +1\}$ such that
+$\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le C \sqrt{\log(n + 2)}$.
 This is the best known bound towards the Komlós conjecture. (The shift $n + 2$ inside
 the logarithm is a harmless normalization keeping it positive for $n \in \{0, 1\}$.)
 
