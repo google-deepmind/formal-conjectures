@@ -192,18 +192,18 @@ theorem isSidon_coe_iff (A : Finset ℕ) :
     · by_cases h₂ : j₁ ≤ j₂
       · have := hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum
         exact Or.inl ⟨this.1, this.2⟩
-      · push_neg at h₂
+      · push Not at h₂
         have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
         have hsum' : i₁ + i₂ = j₂ + j₁ := by omega
         have := hS i₁ hi₁ i₂ hi₂ j₂ hj₂ j₁ hj₁ h₁ h₂' hsum'
         exact Or.inr ⟨this.1, this.2⟩
-    · push_neg at h₁
+    · push Not at h₁
       have h₁' : i₂ ≤ i₁ := Nat.le_of_lt h₁
       by_cases h₂ : j₁ ≤ j₂
       · have hsum' : i₂ + i₁ = j₁ + j₂ := by omega
         have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁' h₂ hsum'
         exact Or.inr ⟨this.2, this.1⟩
-      · push_neg at h₂
+      · push Not at h₂
         have h₂' : j₂ ≤ j₁ := Nat.le_of_lt h₂
         have hsum' : i₂ + i₁ = j₂ + j₁ := by omega
         have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁' h₂' hsum'
@@ -220,14 +220,14 @@ theorem sidon_diff_injective {A : Finset ℕ} (hS : IsSidon ((A : Set ℕ)))
   · by_cases h2 : b₁ ≤ a₂
     · have h_sidon := hS b₂ hb₂ a₁ ha₁ b₁ hb₁ a₂ ha₂ h1 h2 (by omega)
       exact ⟨h_sidon.right, h_sidon.left.symm⟩
-    · push_neg at h2
+    · push Not at h2
       have h_sidon := hS b₂ hb₂ a₁ ha₁ a₂ ha₂ b₁ hb₁ h1 (Nat.le_of_lt h2) (by omega)
       exact absurd h_sidon.right.symm (Nat.ne_of_lt hlt₁)
-  · push_neg at h1
+  · push Not at h1
     by_cases h2 : b₁ ≤ a₂
     · have h_sidon := hS a₁ ha₁ b₂ hb₂ b₁ hb₁ a₂ ha₂ (Nat.le_of_lt h1) h2 (by omega)
       exact absurd h_sidon.left.symm (Nat.ne_of_lt hlt₁)
-    · push_neg at h2
+    · push Not at h2
       have h_sidon := hS a₁ ha₁ b₂ hb₂ a₂ ha₂ b₁ hb₁ (Nat.le_of_lt h1)
         (Nat.le_of_lt h2) (by omega)
       exact ⟨h_sidon.left, h_sidon.right.symm⟩
