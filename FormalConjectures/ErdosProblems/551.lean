@@ -26,47 +26,26 @@ open SimpleGraph
 
 namespace Erdos551
 
-/-- The Ramsey number $R(C_k, K_n)$: the least $N$ such that every `SimpleGraph (Fin N)` (the "red"
-graph of a two-colouring of $K_N$) either contains `cycleGraph k` as a subgraph (a red $C_k$) or has
-an independent set of size `n` (a blue $K_n$). -/
-noncomputable def ramseyCycleClique (k n : ℕ) : ℕ :=
-  sInf {N : ℕ | ∀ G : SimpleGraph (Fin N),
-    (cycleGraph k).IsContained G ∨ ∃ s : Finset (Fin N), G.IsNIndepSet n s}
-
 /--
 Prove that $$R(C_k,K_n)=(k-1)(n-1)+1$$ for $k\geq n\geq 3$ (except when $n=k=3$).
+
+Here $R(C_k, K_n)$ is `ramseyNumber (cycleGraph k) (completeGraph (Fin n))`: the least $N$ such that
+every `SimpleGraph (Fin N)` (the "red" graph of a two-colouring of $K_N$) contains a red $C_k$ or a
+blue $K_n$ (a copy of `completeGraph (Fin n)` in its complement).
 -/
 @[category research open, AMS 5]
 theorem erdos_551 (k n : ℕ) (hn : 3 ≤ n) (hkn : n ≤ k) (hne : (k, n) ≠ (3, 3)) :
-    ramseyCycleClique k n = (k - 1) * (n - 1) + 1 := by
+    ramseyNumber (cycleGraph k) (completeGraph (Fin n)) = (k - 1) * (n - 1) + 1 := by
   sorry
 
-/-- Sanity check: the defining set of `ramseyCycleClique` is upward closed. If some `N` forces a red
-`C_k` or a blue `K_n`, then so does any larger `N'`: pull the red graph on `Fin N'` back along the
-inclusion `Fin N ↪ Fin N'` (an induced subgraph on the first `N` vertices), apply the hypothesis for
-`N`, and transport the red `C_k` or blue independent set back up along that embedding. This
-validates that `ramseyCycleClique` is the infimum of a genuine "threshold" set. -/
+/-- Sanity check: the defining set of $R(C_k, K_n)$ is upward closed, specialising the general
+`SimpleGraph.ramseyNumber_setOf_upward_closed`. -/
 @[category test, AMS 5]
 theorem ramseyCycleClique_setOf_upward_closed (k n : ℕ) :
-    ∀ N ∈ {N : ℕ | ∀ G : SimpleGraph (Fin N),
-        (cycleGraph k).IsContained G ∨ ∃ s : Finset (Fin N), G.IsNIndepSet n s},
-      ∀ N', N ≤ N' → N' ∈ {N : ℕ | ∀ G : SimpleGraph (Fin N),
-        (cycleGraph k).IsContained G ∨ ∃ s : Finset (Fin N), G.IsNIndepSet n s} := by
-  intro N hN N' hNN' G'
-  set f : Fin N ↪ Fin N' := Fin.castLEEmb hNN' with hf
-  set G : SimpleGraph (Fin N) := SimpleGraph.comap f G' with hG
-  have emb : G ↪g G' := SimpleGraph.Embedding.comap f G'
-  rcases hN G with hcyc | ⟨s, hs⟩
-  · exact Or.inl (hcyc.trans ⟨emb.toCopy⟩)
-  · refine Or.inr ⟨s.map f, ?_, ?_⟩
-    · rw [Finset.coe_map]
-      intro x hx y hy hxy
-      simp only [Set.mem_image, Finset.mem_coe] at hx hy
-      obtain ⟨a, ha, rfl⟩ := hx
-      obtain ⟨b, hb, rfl⟩ := hy
-      have hab : a ≠ b := fun h => hxy (by rw [h])
-      have := hs.isIndepSet ha hb hab
-      rwa [hG, comap_adj] at this
-    · rw [Finset.card_map]; exact hs.card_eq
+    ∀ N ∈ {N : ℕ | ∀ F : SimpleGraph (Fin N),
+        cycleGraph k ⊑ F ∨ completeGraph (Fin n) ⊑ Fᶜ},
+      ∀ N', N ≤ N' → N' ∈ {N : ℕ | ∀ F : SimpleGraph (Fin N),
+        cycleGraph k ⊑ F ∨ completeGraph (Fin n) ⊑ Fᶜ} :=
+  ramseyNumber_setOf_upward_closed (cycleGraph k) (completeGraph (Fin n))
 
 end Erdos551
