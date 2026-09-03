@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 470
@@ -51,6 +51,13 @@ theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
 /--
 Benkoski and Erdős [BeEr74](https://mathscinet.ams.org/mathscinet/relay-station?mr=347726) proved
 that the set of weird numbers has positive density.
+
+`HasPosDensity` is the right reading here, rather than the positive *lower* density that Erdős'
+"positive density" usually abbreviates. Their Theorem 5 is stated as "the density of weird
+numbers is positive", and they first establish that the density exists at all: "It is clear that
+the weird numbers have a density since both the abundant numbers and the pseudoperfect numbers
+have a density. (A weird number is abundant and not pseudoperfect.)" The work in the paper goes
+into showing that density is not `0`.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.weird_pos_density : {n : ℕ | n.Weird}.HasPosDensity := by
@@ -92,7 +99,7 @@ well-known conjectures concerning prime gaps.
 -/
 @[category research solved, AMS 11]
 theorem erdos_470.variants.prime_gap_imp_inf_prim_weird :
-    ∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10 →
+    (∀ᶠ n in Filter.atTop, primeGap n < √ (n.nth Nat.Prime) / 10) →
       Set.Infinite PrimitiveWeird := by
   sorry
 
@@ -115,7 +122,8 @@ theorem erdos_470.variants.odd_weird_prime_div :
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/40216cfee225ec5c9f122a48703e671a9f47db90/Erdos/P470.lean#L88"]
 theorem erdos_470.variants.abundancy_index :
     (∀ n : ℕ, n.Weird → ¬Odd n) → ∀ n, n.Weird → AbundancyIndex n < 4 := by
   sorry

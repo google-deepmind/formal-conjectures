@@ -21,7 +21,7 @@ public import Mathlib.Data.Real.Basic
 @[expose] public section
 
 namespace SimpleGraph
-open Classical Finset
+open Finset
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -48,6 +48,14 @@ noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
 noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
+/-- Abbreviation for the average independence number of the neighborhoods.
+-/
+noncomputable abbrev l (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
+/-- The same quantity under a different name, used in some conjectures.
+-/
+noncomputable abbrev l_avg (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
 /-- Computable independence number via powerset enumeration. -/
 def computable_indep_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.powerset.filter (fun s : Finset α =>
@@ -71,9 +79,24 @@ theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     intro s hs
     apply le_csSup
     · exact ⟨Fintype.card α, fun n ⟨s, hs⟩ => hs.card_eq ▸ s.card_le_univ⟩
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       exact ⟨s, ⟨fun x hx y hy hne =>
         (Finset.mem_filter.mp hs).2 x (Finset.mem_coe.mp hx) y (Finset.mem_coe.mp hy) hne,
         rfl⟩⟩
+
+/-- Maximum local independence number over all vertices.
+    For each vertex, we compute the independence number of the subgraph
+    induced by its neighbors, and take the maximum over all vertices. -/
+noncomputable def maxLocalIndependence (G : SimpleGraph α) : ℕ :=
+  let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
+  (locals.max).getD 0
+
+/-- Minimum local independence number over all vertices.
+    For each vertex, we compute the independence number of the subgraph
+    induced by its neighbors, and take the minimum over all vertices. -/
+noncomputable def minLocalIndependence (G : SimpleGraph α) : ℕ :=
+  let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
+  (locals.min).getD 0
+
 
 end SimpleGraph
