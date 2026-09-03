@@ -412,5 +412,4 @@ matches $\sqrt N$ to leading order). -/
 theorem erdos_30.variants.singer_exceeds_sqrt (q : ℕ) (_hq : 0 < q) :
     (q + 1) * (q + 1) > q * q + q := by nlinarith
 
--- TODO(firsching): add the various known bounds as variants.
 end Erdos30
