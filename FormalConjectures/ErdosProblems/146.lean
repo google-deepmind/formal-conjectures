@@ -52,6 +52,7 @@ $$\mathrm{ex}(n;H) \ll n^{2-1/r}.$$
 The answer is no. OpenAI [OpenAI26] give a connected bipartite `2`-degenerate `H` and constants
 `c, ε > 0` with $\mathrm{ex}(n;H)\geq cn^{3/2+\epsilon}$ for all large `n`, which exceeds the
 conjectured $n^{2-1/2}=n^{3/2}$. See `erdos_146.variants.two_degenerate_counterexample`.
+In fact every $r \geq 2$ fails, not only $r = 2$; see `erdos_146.variants.counterexample`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_146 : answer(False) ↔
@@ -78,7 +79,8 @@ theorem erdos_146.variants.two_degenerate_counterexample :
 
 /-- A single bipartite $r$-degenerate graph whose extremal number is eventually at least
 $c\,n^{2-1/r+\varepsilon}$, for some $c, \varepsilon > 0$, refutes the conjectured bound: the
-polynomial gain $n^\varepsilon$ outgrows any constant. -/
+polynomial gain $n^\varepsilon$ outgrows any constant. The statement negated here is the
+right-hand side of `erdos_146`. -/
 @[category API, AMS 5]
 theorem not_bigO_of_lower_bound {q r : ℕ} {H : SimpleGraph (Fin q)} {c ε : ℝ}
     (hr : 0 < r) (hbip : H.IsBipartite) (hdeg : IsDegenerate r H) (hc : 0 < c) (hε : 0 < ε)
@@ -114,11 +116,13 @@ $$\mathrm{ex}(n;H_r) \geq c\,n^{2-\frac{1}{r}+\frac{1}{28r^2}}$$
 for all sufficiently large $n$. The exponent exceeds $2-1/r$ by a polynomial margin (see
 `not_bigO_of_lower_bound`).
 
-Due to [FGLO26], which strengthens the solution of [OpenAI26, Ch. 10] to every $r$ by leaving free
-the Gibbs weight [OpenAI26] fixed numerically, and which imports the [OpenAI26] Lean development.
+Due to [FGLO26]. The construction of [OpenAI26, Ch. 10] fixes a Gibbs weight numerically in order
+to settle $r = 2$; leaving that weight free yields a counterexample at every $r$. At $r = 2$ this
+recovers `erdos_146.variants.two_degenerate_counterexample` with the explicit gain
+$\varepsilon = \frac{1}{112}$. The Lean development of [FGLO26] imports that of [OpenAI26].
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/87510f34a7ffc521f7dd6d9b3978ba0b560a92d3/Theorem2.lean"]
+  "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/6b03c462e13ff1517de6eaea02417d68c5f34b49/proofs/Theorem12.lean"]
 theorem erdos_146.variants.counterexample (r : ℕ) (hr : 2 ≤ r) :
     ∃ (q : ℕ) (H : SimpleGraph (Fin q)),
       H.Connected ∧ H.IsBipartite ∧ IsDegenerate r H ∧ ¬ IsDegenerate (r - 1) H ∧
@@ -133,12 +137,12 @@ At $r=3$ the exponent of `erdos_146.variants.counterexample` improves from
 $\frac{5}{3}+\frac{1}{252}$ to $\frac{5}{3}+\frac{1}{160}$: there is a connected bipartite
 graph $H$ of degeneracy exactly $3$ and a constant $c>0$ with
 $$\mathrm{ex}(n;H) \geq c\,n^{\frac{5}{3}+\frac{1}{160}}$$
-for all sufficiently large $n$. Due to [FGLO26]; as with
-`erdos_146.variants.counterexample`, this strengthens the solution of [OpenAI26, Ch. 10] and builds
-on its Lean development.
+for all sufficiently large $n$. Due to [FGLO26]: the same construction, with the window width
+certified sharply at $r = 3$ in place of the bound uniform in $r$ that gives
+`erdos_146.variants.counterexample`.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/87510f34a7ffc521f7dd6d9b3978ba0b560a92d3/Theorem1.lean"]
+  "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/6b03c462e13ff1517de6eaea02417d68c5f34b49/proofs/Theorem12r3.lean"]
 theorem erdos_146.variants.counterexample_three :
     ∃ (q : ℕ) (H : SimpleGraph (Fin q)),
       H.Connected ∧ H.IsBipartite ∧ IsDegenerate 3 H ∧ ¬ IsDegenerate 2 H ∧
