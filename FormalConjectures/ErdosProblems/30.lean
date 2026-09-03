@@ -88,11 +88,7 @@ For a Sidon set A of size k, the multiset of sums {a+b : a,b ∈ A, a ≤ b}
 has all k(k+1)/2 values distinct. They lie in {2,...,2N}, giving the
 Erdős–Turán bound k(k+1)/2 ≤ 2N+1. -/
 
-/-- The set of distinct pairwise sums $a+b$ with $a \le b$ from $A$. -/
-def distinctSums (A : Finset ℕ) : Finset ℕ :=
-  ((A ×ˢ A).filter (fun p => p.1 ≤ p.2)).image (fun p => p.1 + p.2)
-
-/-- For a Sidon set, $|\text{distinctSums}(A)| = |A|(|A|+1)/2$.
+/-- For a Sidon set, $|(A + A)| = |A|(|A|+1)/2$.
 
 **Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
 number theory, and on some related problems.* J. London Math. Soc. **16**,
@@ -100,8 +96,20 @@ number theory, and on some related problems.* J. London Math. Soc. **16**,
 @[category textbook, AMS 11]
 theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ)
     (hS : IsSidon ((A : Set ℕ))) :
-    (distinctSums A).card = A.card * (A.card + 1) / 2 := by
+    (A + A).card = A.card * (A.card + 1) / 2 := by
   rw [Finset.isSidon_coe_iff] at hS
+  -- $A + A$ is the unordered pairwise-sum set (addition commutes)
+  have hAA : A + A =
+      ((A ×ˢ A).filter (fun p => p.1 ≤ p.2)).image (fun p => p.1 + p.2) := by
+    ext x
+    simp only [Finset.mem_add, Finset.mem_image, Finset.mem_filter, Finset.mem_product]
+    constructor
+    · rintro ⟨a, ha, b, hb, rfl⟩
+      rcases le_total a b with hab | hba
+      · exact ⟨(a, b), ⟨⟨ha, hb⟩, hab⟩, rfl⟩
+      · exact ⟨(b, a), ⟨⟨hb, ha⟩, hba⟩, add_comm a b⟩
+    · rintro ⟨⟨a, b⟩, ⟨⟨ha, hb⟩, _⟩, rfl⟩
+      exact ⟨a, ha, b, hb, rfl⟩
   -- the sum map is injective on the weakly-increasing pairs, so it suffices to count them
   have h_inj : Set.InjOn (fun p : ℕ × ℕ => p.1 + p.2)
       ↑((A ×ˢ A).filter (fun p => p.1 ≤ p.2)) := by
@@ -109,7 +117,7 @@ theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ)
     simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product] at h₁ h₂
     have := hS a₁ h₁.1.1 b₁ h₁.1.2 a₂ h₂.1.1 b₂ h₂.1.2 h₁.2 h₂.2 heq
     exact Prod.ext this.1 this.2
-  rw [distinctSums, Finset.card_image_of_injOn h_inj]
+  rw [hAA, Finset.card_image_of_injOn h_inj]
   -- the weak triangle splits into the strict upper triangle and the diagonal
   have h_split : (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 ≤ p.2) =
       (A ×ˢ A).filter (fun p : ℕ × ℕ => p.1 < p.2) ∪
@@ -146,10 +154,9 @@ number theory, and on some related problems.* J. London Math. Soc. **16**,
 @[category textbook, AMS 11]
 theorem erdos_30.variants.distinct_sums_in_range (A : Finset ℕ) (N : ℕ)
     (hA : A ⊆ Finset.range (N + 1)) :
-    distinctSums A ⊆ Finset.range (2 * N + 1) := by
+    A + A ⊆ Finset.range (2 * N + 1) := by
   intro s hs
-  simp only [distinctSums, Finset.mem_image, Finset.mem_filter, Finset.mem_product] at hs
-  obtain ⟨⟨a, b⟩, ⟨⟨ha, hb⟩, _⟩, rfl⟩ := hs
+  obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp hs
   have haN : a ≤ N := by
     have := Finset.mem_range.mp (hA ha); omega
   have hbN : b ≤ N := by
