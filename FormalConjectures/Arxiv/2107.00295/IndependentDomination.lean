@@ -22,6 +22,20 @@ import FormalConjecturesUtil
 *Reference:* [arxiv/2107.00295](https://arxiv.org/abs/2107.00295)
 **On independent domination of regular graphs**
 by *Eun-Kyung Cho, Ilkyoo Choi, Boram Park*
+
+The conjecture was subsequently proved by Cho, Kim, Kim and Oum, as
+Corollary 1.3 of:
+
+*Reference:* [arxiv/2202.09594](https://arxiv.org/abs/2202.09594)
+**Independent domination of graphs with bounded maximum degree**
+by *Eun-Kyung Cho, Jinha Kim, Minki Kim, Sang-il Oum*,
+J. Combin. Theory Ser. B 158 (2023), 341-352.
+
+Corollary 1.3 states that every graph $G$ with maximum degree at most $\Delta$
+and no isolated vertices has an independent dominating set of size at most
+$\left(1 - \frac{\Delta}{\lfloor (\Delta+2)^2/4 \rfloor}\right)\lvert V(G)\rvert$.
+Expanding the floor for even and odd $\Delta$ gives exactly the two
+statements below.
 -/
 namespace Arxiv.«2107.00295»
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -30,8 +44,11 @@ variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableR
 **Conjecture 1.6 (Even case).**
 For a nonempty isolate-free graph $G$ on $n$ vertices,
 if $D$ is even, then $(D + 2)^2 \cdot i(G) \leq (D^2 + 4) \cdot n$.
+
+Proved by Cho, Kim, Kim and Oum ([arxiv/2202.09594](https://arxiv.org/abs/2202.09594),
+Corollary 1.3).
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem independentDominationEven (hIso : 0 < G.minDegree) (hEven : Even G.maxDegree) :
     let D := G.maxDegree
     let i := G.indepDominationNumber
@@ -43,8 +60,11 @@ theorem independentDominationEven (hIso : 0 < G.minDegree) (hEven : Even G.maxDe
 **Conjecture 1.6 (Odd case).**
 For a nonempty isolate-free graph $G$ on $n$ vertices,
 if $D$ is odd, then $(D + 1)(D + 3) \cdot i(G) \leq (D^2 + 3) \cdot n$.
+
+Proved by Cho, Kim, Kim and Oum ([arxiv/2202.09594](https://arxiv.org/abs/2202.09594),
+Corollary 1.3).
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem independentDominationOdd (hIso : 0 < G.minDegree) (hOdd : Odd G.maxDegree) :
     let D := G.maxDegree
     let i := G.indepDominationNumber
