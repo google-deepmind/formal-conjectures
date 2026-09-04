@@ -39,7 +39,8 @@ display names available in git history.
 data/
   conjectures.json        # JSON produced by lake exe extract_names (created by CI)
 src/
-  css/style.css           # Stylesheet (CSS custom properties throughout)
+  css/style.css           # Main website stylesheet
+  css/lean-syntax.css     # Shared Lean theme for source pages and code excerpts
   js/
     main.js               # Shared utilities loaded on every page
     browse.js             # Filter/search/paginate logic for /browse/

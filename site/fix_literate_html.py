@@ -6,13 +6,36 @@ Fixes:
 1. Adds KaTeX for LaTeX rendering in docstrings
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
+4. Installs the Formal Conjectures Lean syntax-highlighting theme
+5. Installs the source-page layout script
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
 
 import os
-import re
+import shutil
 import sys
+
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
+HIGHLIGHT_STYLESHEET_SOURCE = os.path.join(
+    SCRIPT_DIR, 'src', 'css', HIGHLIGHT_STYLESHEET
+)
+SOURCE_PAGE_SCRIPT = 'source-page.js'
+SOURCE_PAGE_SCRIPT_SOURCE = os.path.join(
+    SCRIPT_DIR, 'src', 'js', SOURCE_PAGE_SCRIPT
+)
+
+HIGHLIGHT_HEAD = f'''
+    <!-- Formal Conjectures Lean syntax-highlighting theme -->
+    <link rel="stylesheet" href="{HIGHLIGHT_STYLESHEET}">
+'''
+
+SOURCE_PAGE_HEAD = f'''
+    <!-- Formal Conjectures source-page layout -->
+    <script defer src="{SOURCE_PAGE_SCRIPT}"></script>
+'''
 
 KATEX_HEAD = '''
     <!-- KaTeX for LaTeX in docstrings -->
@@ -39,30 +62,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 def fix_html_file(path):
-    """Inject KaTeX into a Verso HTML file."""
+    """Inject KaTeX and the Lean syntax theme into a Verso HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
     modified = False
 
-    # Skip if KaTeX already present
-    if 'katex' in html.lower():
-        return False
+    head_additions = ''
+    if HIGHLIGHT_STYLESHEET not in html:
+        head_additions += HIGHLIGHT_HEAD
+    if SOURCE_PAGE_SCRIPT not in html:
+        head_additions += SOURCE_PAGE_HEAD
+    if 'katex' not in html.lower():
+        head_additions += KATEX_HEAD
 
-    # Add KaTeX CSS+JS before </head>
-    if '</head>' in html:
-        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+    # Add styles and scripts before </head>. Pages contain a <base> element,
+    # so the relative theme URL resolves to the root of the literate output.
+    if head_additions and '</head>' in html:
+        html = html.replace('</head>', head_additions + '  </head>', 1)
         modified = True
 
     # Add auto-render script before </body>
-    if '</body>' in html:
-        html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
+    if 'renderMathInElement(document.body' not in html and '</body>' in html:
+        html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>', 1)
         modified = True
 
     if modified:
         with open(path, 'w', encoding='utf-8') as f:
             f.write(html)
     return modified
+
+
+def install_highlight_stylesheet(literate_dir):
+    """Copy the self-hosted Lean syntax theme into the Verso output root."""
+    destination = os.path.join(literate_dir, HIGHLIGHT_STYLESHEET)
+    shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE, destination)
+    print(f'  Installed syntax theme: {HIGHLIGHT_STYLESHEET}')
+
+
+def install_source_page_script(literate_dir):
+    """Copy the source-page layout script into the Verso output root."""
+    destination = os.path.join(literate_dir, SOURCE_PAGE_SCRIPT)
+    shutil.copyfile(SOURCE_PAGE_SCRIPT_SOURCE, destination)
+    print(f'  Installed source-page layout: {SOURCE_PAGE_SCRIPT}')
 
 
 def create_stubs(literate_dir):
@@ -143,6 +185,9 @@ def main():
         print(f'  Warning: {literate_dir} not found, skipping.', file=sys.stderr)
         return
 
+    install_highlight_stylesheet(literate_dir)
+    install_source_page_script(literate_dir)
+
     # Create stubs for missing JS files
     create_stubs(literate_dir)
 
@@ -158,7 +203,7 @@ def main():
                 if fix_html_file(path):
                     count += 1
 
-    print(f'  Injected KaTeX into {count} Verso HTML files.')
+    print(f'  Post-processed {count} Verso HTML files.')
 
 
 if __name__ == '__main__':

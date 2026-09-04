@@ -62,18 +62,32 @@ function loadScript(src) {
 }
 
 /**
- * Load Verso CSS + JS for code rendering and interactive hovers.
+ * Load Verso CSS + JS for code rendering, syntax colours, and interactive hovers.
  * Returns a Promise that resolves once popper.js + tippy.js are loaded.
  */
 function loadVersoAssets() {
-  if (document.getElementById('verso-code-css')) return Promise.resolve();
+  const versoCodeLoaded = document.getElementById('verso-code-css');
 
   // Load Verso's code.css for syntax highlighting
-  const codeLink = document.createElement('link');
-  codeLink.id = 'verso-code-css';
-  codeLink.rel = 'stylesheet';
-  codeLink.href = `${_base}/src/code.css`;
-  document.head.appendChild(codeLink);
+  if (!versoCodeLoaded) {
+    const codeLink = document.createElement('link');
+    codeLink.id = 'verso-code-css';
+    codeLink.rel = 'stylesheet';
+    codeLink.href = `${_base}/src/code.css`;
+    document.head.appendChild(codeLink);
+  }
+
+  // The generated /src/ pages load this after code.css. Load the same theme
+  // here so theorem-page excerpts use exactly the same token colours.
+  if (!document.getElementById('lean-syntax-css')) {
+    const syntaxLink = document.createElement('link');
+    syntaxLink.id = 'lean-syntax-css';
+    syntaxLink.rel = 'stylesheet';
+    syntaxLink.href = `${_base}/src/lean-syntax.css`;
+    document.head.appendChild(syntaxLink);
+  }
+
+  if (versoCodeLoaded) return Promise.resolve();
 
   // Load tippy border CSS for hover tooltips
   const tippyLink = document.createElement('link');

@@ -1,0 +1,227 @@
+/*
+ * Syntax colours for Lean rendered by Verso/SubVerso.
+ *
+ * Verso supplies semantic classes such as `keyword`, `const`, and `var`.
+ * Newer SubVerso versions also supply lexical classes for comments, literals,
+ * punctuation, and delimiters.  Keep the theme in a separate stylesheet so it
+ * can be shared by the complete /src/ pages and theorem-page code excerpts.
+ *
+ * The green, brown, orange, and cream palette is adapted from the Hex manual:
+ * https://github.com/kim-em/hex-dev/blob/main/HexManual/Theme.lean
+ */
+
+:root {
+  --lean-syntax-background: #fef8f0;
+  --lean-syntax-text: #3a3a3a;
+  --lean-syntax-keyword: #2d6a4f;
+  --lean-syntax-declaration: #5a4a3a;
+  --lean-syntax-variable: #3a3a3a;
+  --lean-syntax-type: #c05630;
+  --lean-syntax-string: #c05630;
+  --lean-syntax-number: #c05630;
+  --lean-syntax-comment: #40916c;
+  --lean-syntax-punctuation: #8a7a5a;
+
+  /* Override Verso's deliberately monochrome default semantic theme. */
+  --verso-code-color: var(--lean-syntax-text);
+  --verso-code-keyword-color: var(--lean-syntax-keyword);
+  --verso-code-keyword-weight: 600;
+  --verso-code-const-color: var(--lean-syntax-declaration);
+  --verso-code-var-color: var(--lean-syntax-variable);
+  --verso-code-var-style: normal;
+}
+
+.code-content code.hl.lean.block,
+.verso-code-container code.hl.lean.block {
+  background: var(--lean-syntax-background);
+}
+
+/* Lexical tokens emitted by current SubVerso. */
+.hl.lean .comment {
+  color: var(--lean-syntax-comment);
+  font-style: italic;
+}
+
+/* Match Hex's upright green treatment for tokenized doc comments. */
+.hl.lean .doc-comment {
+  color: var(--lean-syntax-comment) !important;
+  font-style: normal;
+}
+
+.hl.lean .literal.string,
+.hl.lean .char {
+  color: var(--lean-syntax-string);
+}
+
+.hl.lean .literal.number,
+.hl.lean .number {
+  color: var(--lean-syntax-number);
+}
+
+.hl.lean .sort,
+.hl.lean .option,
+.hl.lean .module-name,
+.hl.lean .level-var,
+.hl.lean .level-const,
+.hl.lean .level-op {
+  color: var(--lean-syntax-type);
+}
+
+.hl.lean .built-in,
+.hl.lean .wildcard {
+  color: var(--lean-syntax-keyword);
+}
+
+.hl.lean .punctuation,
+.hl.lean .delim {
+  color: var(--lean-syntax-punctuation);
+}
+
+/* Omit the synthetic `/-!`, `/--`, and `-/` around rendered Markdown. */
+.code-content .verso-text::before,
+.code-content .verso-text::after,
+.code-content .md-text::before,
+.code-content .md-text::after {
+  content: none !important;
+}
+
+/*
+ * Module docstrings introduce the page; they are prose rather than a comment
+ * belonging to a declaration. Keep them visually separate from the code and
+ * use the site's normal text face and colours.
+ */
+.code-content .fc-module-doc {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 0 2rem;
+  padding: 0 0 1.25rem;
+  border: 0;
+  border-bottom: 2px solid #e8f0e8;
+  color: var(--lean-syntax-text);
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-style: normal;
+}
+
+.code-content .fc-module-doc h1,
+.code-content .fc-module-doc h2,
+.code-content .fc-module-doc h3 {
+  color: var(--lean-syntax-keyword);
+}
+
+.code-content .fc-module-doc > :first-child {
+  margin-top: 0;
+}
+
+.code-content .fc-module-doc > :last-child {
+  margin-bottom: 0;
+}
+
+/* Hide file scaffolding while leaving declaration blocks and their anchors. */
+.code-content .fc-source-boilerplate {
+  display: none !important;
+}
+
+/*
+ * Hex renders a declaration signature and its docstring as one `namedocs`
+ * box. Literate source pages arrive in the opposite order, so source-page.js
+ * groups and reorders them before these styles are applied.
+ */
+.code-content .fc-declaration-doc {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem 0 0;
+  overflow: visible;
+  border: 1px solid #98b2c0;
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+.code-content .fc-declaration-doc--def {
+  border-left-color: #40916c;
+  background: #f6faf7;
+}
+
+.code-content .fc-declaration-doc--theorem {
+  border-left-color: #e76f51;
+  background: #fef7f2;
+}
+
+.code-content .fc-declaration-doc--structure {
+  border-left-color: #74b49b;
+  background: #f7faf6;
+}
+
+.code-content .fc-declaration-doc--class {
+  border-left-color: #b08cc0;
+  background: #faf8fc;
+}
+
+.code-content .fc-declaration-label {
+  display: inline-block;
+  margin: 0 0 0 -1px;
+  padding: 0 0.5rem 0.125rem;
+  border: 1px solid #2d6a4f;
+  border-radius: 0.25rem;
+  background: #2d6a4f;
+  color: #fff;
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 0.8125rem;
+  line-height: normal;
+}
+
+.code-content .fc-declaration-doc--theorem > .fc-declaration-label {
+  border-color: #c05630;
+  background: #c05630;
+}
+
+.code-content .fc-declaration-doc--structure > .fc-declaration-label {
+  border-color: #74b49b;
+  background: #74b49b;
+}
+
+.code-content .fc-declaration-doc--class > .fc-declaration-label {
+  border-color: #8a6a9a;
+  background: #8a6a9a;
+}
+
+.code-content .fc-declaration-code {
+  display: block;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 0.75rem 1rem;
+  padding: 0 1rem 0 0;
+  overflow-x: auto;
+}
+
+.code-content code.hl.lean.block.fc-declaration-code {
+  background: transparent;
+}
+
+.code-content .fc-declaration-text {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 1rem 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--lean-syntax-text);
+  font-family: "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-style: normal;
+}
+
+.code-content .fc-declaration-text > :first-child {
+  margin-top: 0;
+}
+
+.code-content .fc-declaration-text > :last-child {
+  margin-bottom: 0;
+}
