@@ -62,10 +62,11 @@ noncomputable def countRefactorable (x : ℝ) : ℕ :=
     0
 
 /--
-Simon Colton conjectures that the number of refactorables less than x is at least x/(2 log(x)).
+Simon Colton conjectures that the number of refactorable numbers less than $x$ is at least
+$\frac{x}{2\log x}$. This is an asymptotic claim, so we state it for sufficiently large $x$.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∀ (x : ℝ), x > 1 →
+theorem conjecture : ∃ x₀ : ℝ, ∀ x ≥ x₀,
     (countRefactorable x : ℝ) ≥ x / (2 * Real.log x) := by
   sorry
 
