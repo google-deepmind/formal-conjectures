@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Data.Nat.Lattice
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 
 @[expose] public section
@@ -64,5 +66,34 @@ property and the countable Ramsey escape property. -/
 def IsErdosHajnalExceptional {U₁ U₂ : Type*}
     (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂) : Prop :=
   HasFiniteRamseyProperty G₁ G₂ ∧ HasCountableRamseyEscape G₁ G₂
+
+/-- The **Ramsey number** of a pair of graphs $(G, H)$: the least `N` such that every
+`SimpleGraph (Fin N)` — the "red" graph of a two-colouring of $K_N$ — either contains a copy of
+`G` (a red `G`) or contains a copy of `H` in its complement (a blue `H`). -/
+noncomputable def ramseyNumber {α β : Type*} [Fintype α] [Fintype β]
+    (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
+  sInf {N : ℕ | ∀ F : SimpleGraph (Fin N), G ⊑ F ∨ H ⊑ Fᶜ}
+
+/-- The defining set of `ramseyNumber` is **upward closed**: if every red graph on `Fin N`
+contains a red `G` or a blue `H`, then so does every red graph on any larger `Fin N'`. Restrict a
+red graph `F'` on `Fin N'` to its first `N` vertices via `Fin.castLEEmb` (giving the induced
+subgraph `F'.comap f ↪g F'`), apply the hypothesis for `N`, and transport the resulting red copy of
+`G` — or the blue copy of `H`, using `(F'.comap f)ᶜ = F'ᶜ.comap f` — back up along that embedding. -/
+theorem ramseyNumber_setOf_upward_closed {α β : Type*}
+    (G : SimpleGraph α) (H : SimpleGraph β) :
+    ∀ N ∈ {N : ℕ | ∀ F : SimpleGraph (Fin N), G ⊑ F ∨ H ⊑ Fᶜ},
+      ∀ N', N ≤ N' → N' ∈ {N : ℕ | ∀ F : SimpleGraph (Fin N), G ⊑ F ∨ H ⊑ Fᶜ} := by
+  intro N hN N' hNN' F'
+  set f : Fin N ↪ Fin N' := Fin.castLEEmb hNN' with hf
+  -- The induced subgraph on the first `N` vertices embeds into `F'`.
+  have embF : (F'.comap f) ↪g F' := SimpleGraph.Embedding.comap f F'
+  -- Complement commutes with `comap` along an injection, so the complement embeds too.
+  have hcc : (F'.comap f)ᶜ = F'ᶜ.comap f := by
+    ext a b
+    simp only [compl_adj, comap_adj, f.injective.ne_iff]
+  rcases hN (F'.comap f) with hG | hH
+  · exact Or.inl (hG.trans ⟨embF.toCopy⟩)
+  · rw [hcc] at hH
+    exact Or.inr (hH.trans ⟨(SimpleGraph.Embedding.comap f F'ᶜ).toCopy⟩)
 
 end SimpleGraph
