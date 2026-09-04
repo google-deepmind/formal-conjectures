@@ -102,4 +102,49 @@ noncomputable def degreeL2Norm (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :
 def countDegreeK (G : SimpleGraph α) [DecidableRel G.Adj] (k : ℕ) : ℕ :=
   (Finset.univ.filter (fun v => G.degree v = k)).card
 
+/-- The maximum over all degrees `d` of `countDegreeK G d`.
+This is the frequency of the most-common degree value (mode frequency). -/
+def maxDegreeCount (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (Finset.range (Fintype.card α + 1)).sup (countDegreeK G)
+
+/-- The smallest degree value achieving the mode frequency.
+This is defined via `sInf` on the (nonempty when the graph has vertices) set of
+modal degrees.  When the graph has no vertices this set may be empty; the
+`sInf ℕ` convention then yields 0. -/
+noncomputable def modeDegreeMin (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  sInf {d | countDegreeK G d = maxDegreeCount G}
+
+/-- The largest degree value achieving the mode frequency.
+Defined as the supremum of the set of modal degree values (those `d` for which
+`countDegreeK G d = maxDegreeCount G`).  When the graph has no vertices the set
+may be empty; by convention `sSup ℕ ∅ = 0`. -/
+noncomputable def modeDegreeMax (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  sSup {d | countDegreeK G d = maxDegreeCount G}
+
+/-- The number of vertices whose degree equals `modeDegreeMin G` **and** is even.
+When `modeDegreeMin G` is odd, every vertex counted by `modeDegreeMin G` has an
+odd degree, so `evenModeMinCount G = 0`. -/
+noncomputable def evenModeMinCount (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (Finset.univ.filter (fun v => G.degree v = modeDegreeMin G ∧ Even (G.degree v))).card
+
+/-- The **median degree** of `G`.
+
+We form the list of degrees of all vertices, sort it in non-decreasing order, and
+return the element at position `Fintype.card α / 2`.  When the graph has no
+vertices the degree list is empty; we return 0 in that case. -/
+noncomputable def medianDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  if Fintype.card α = 0 then 0
+  else
+    let degList : List ℕ := Finset.univ.toList.map (fun v => G.degree v)
+    let sorted : List ℕ := degList.mergeSort (· ≤ ·)
+    sorted.getD (Fintype.card α / 2) 0
+
+/-- The **minimum edge degree** of `G` is the minimum over all edges `uv` of
+`min(deg(u), deg(v))`.  Returns 0 if `G` has no edges. -/
+noncomputable def minEdgeDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  if h : G.edgeFinset.Nonempty then
+    G.edgeFinset.inf' h (fun e =>
+      e.lift ⟨fun u v => min (G.degree u) (G.degree v), fun u v => by simp [min_comm]⟩)
+  else 0
+
 end SimpleGraph
