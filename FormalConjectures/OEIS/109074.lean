@@ -61,19 +61,37 @@ theorem a_3 : a 3 = 26 := by native_decide
 theorem a_4 : a 4 = 323 := by native_decide
 
 /--
-A005156: The sequence of values $\frac{1}{2n+1} \binom{3n}{n}$.
+A005156 (offset 0): the number of vertically symmetric alternating sign matrices of order
+$2n+1$, given by $a(n) = \frac{1}{2^n} \prod_{k=1}^{n} \frac{(6k-2)!\,(2k-1)!}{(4k-1)!\,(4k-2)!}$.
 -/
 def b (n : ℕ) : ℕ :=
-  let num : ℕ := (3 * n).choose n
-  let den : ℕ := 2 * n + 1
-  num / den
+  (∏ k ∈ Finset.Icc 1 n, ((6 * k - 2)! * (2 * k - 1)!)) /
+    (2 ^ n * ∏ k ∈ Finset.Icc 1 n, ((4 * k - 1)! * (4 * k - 2)!))
+
+@[category test, AMS 11]
+theorem b_0 : b 0 = 1 := by decide
+
+@[category test, AMS 11]
+theorem b_1 : b 1 = 1 := by decide
+
+@[category test, AMS 11]
+theorem b_2 : b 2 = 3 := by decide
+
+@[category test, AMS 11]
+theorem b_3 : b 3 = 26 := by decide
+
+@[category test, AMS 11]
+theorem b_4 : b 4 = 646 := by decide
 
 /--
-It is conjectured that binomial(6*n-2,2*n)/(2 * binomial(4*n-1,2*n)) = A005156(n+1)/A005156(n).
+It is conjectured that
+$\binom{6n-2}{2n} / \left(2 \binom{4n-1}{2n}\right) = A005156(n+1)/A005156(n)$,
+where the OEIS comment reads A005156 as 1-based; with the 0-indexed `b` this is
+`frac (n + 1) = b (n + 1) / b n`.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (h_pos : n ≥ 1) :
-    frac n = (b (n + 1) : ℚ) / (b n : ℚ) := by
+theorem conjecture (n : ℕ) :
+    frac (n + 1) = (b (n + 1) : ℚ) / (b n : ℚ) := by
   sorry
 
 end OeisA109074
