@@ -1,0 +1,474 @@
+{
+  "skill_name": "review",
+  "active_toolchain": "leanprover/lean4:v4.27.0",
+  "active_eval_policy": "Routine evaluations run only cases whose pinned commit declares the active toolchain. Cases requiring an older toolchain remain archival evidence and are excluded from score, cost, and regression comparisons.",
+  "iteration_13": {
+    "status": "complete_with_one_calibration_case_excluded",
+    "purpose": "First clean-context, like-for-like skill-versus-baseline run on the current Lean 4.27 benchmark.",
+    "scored_cases": [
+      1,
+      3
+    ],
+    "calibration_only_cases": [
+      5
+    ],
+    "arms": [
+      "with_skill",
+      "without_skill"
+    ],
+    "record": [
+      "pinned commit and toolchain preflight",
+      "raw outputs",
+      "objective assertion grades",
+      "wall time and token/cost telemetry",
+      "aggregate and non-discriminating-case decision"
+    ],
+    "isolation": "Each arm receives the same pinned source tree and user-style prompt. Only the with_skill arm receives the skill path; neither receives this answer key.",
+    "result": {
+      "with_skill": "16/17 scored assertions",
+      "without_skill": "10/17 scored assertions",
+      "gap": "+0.3529",
+      "wall_time": "536 s with skill versus 183 s baseline",
+      "token_or_cost_telemetry": "unavailable from the local subagent runtime; no estimate recorded",
+      "calibration_decision": "Erdos 274 is excluded pending a checked concrete-cover witness; do not lower its assertion to make the score look better."
+    }
+  },
+  "iteration_14": {
+    "status": "complete_single_case_speed_calibration",
+    "purpose": "Measure the compact default path after moving full provenance, remote status, and broad repository checks to escalation-only.",
+    "case": 1,
+    "arms": [
+      "with_skill",
+      "without_skill"
+    ],
+    "isolation": "Fresh reviewers received the same pinned Lean 4.27 checkout and user-style request; only the skill arm received SKILL.md, and neither received the answer key.",
+    "result": {
+      "with_skill": "correct source-bound boundary finding; focused Lean build passed in 7.382 s",
+      "without_skill": "correct boundary finding; focused Lean build passed in 9 s",
+      "speed_interpretation": "On this warm, direct case the compact skill is not slower than baseline. This is a one-case speed calibration, not an aggregate quality or cost claim.",
+      "token_or_cost_telemetry": "unavailable from the local subagent runtime; no estimate recorded"
+    },
+    "next_measurement": "Run the same paired protocol on at least one independent Lean 4.27 case before treating the fast path as generally validated."
+  },
+  "iteration_15": {
+    "status": "complete_three_arm_run_on_a_separate_case_suite",
+    "purpose": "Measure this skill against no skill, and against the pre-compaction version, on a case suite built differently from the `evals` list below.",
+    "suite": "Eight cases, each current `main` with one merged fix reverted, so the case builds on the active toolchain and the fix diff is the maintainers' own adjudication. This is NOT the `evals` list below; no case is shared with it. One case is current `main` unreverted, as a false-positive control.",
+    "arms": [
+      "no_skill",
+      "pre_compaction_skill",
+      "this_skill"
+    ],
+    "isolation": "Fresh reviewer context per run, same prompt, same git-free tree. Only the skill arms receive a SKILL.md path. No arm receives an answer key, and the reverted trees carry no history that would reveal the fix.",
+    "measures": {
+      "pass_rate": "The report names the reverted defect and gives the right verdict. Graded by regex, not judgement.",
+      "findings_filed": "How many items the report files. Each seeded case holds exactly one defect, so on a case that passes every further item is noise, and on the false-positive control every item is. This is the precision measure the pass rate cannot see."
+    },
+    "result": {
+      "no_skill": "pass rate 0.875, 4.00 findings per file, 76,678 tokens, 211 s",
+      "pre_compaction_skill": "pass rate 1.000, 2.25 findings per file, 116,645 tokens, 521 s",
+      "this_skill": "pass rate 1.000, 1.12 findings per file, 73,049 tokens, 211 s",
+      "reading": "This skill beats an unaided review on every measured axis at the same wall clock. The false-positive control returned CLEAN with zero findings, the only clean verdict in the run; both other arms filed nits on it."
+    },
+    "what_this_does_not_settle": "Every content assertion passes in both the no-skill and skill arms, so the pass rate still measures recall on defects a careful reader finds unaided. The advantage shown here is precision and cost. No case in this suite requires an escalation path, which is the gap the next suite should close.",
+    "method_note": "Findings filed was added after a batch review of five real pull requests filed fourteen findings of which five were worth acting on, while the pass rate scored 1.000. A suite in which every case has a planted defect rewards recall and charges nothing for a finding that should not have been filed. Report both numbers.",
+    "provenance_warning": "The pre-compaction arm was run from a scratch worktree 62 commits behind this branch, which is how the discrepancy was found. Check a worktree against the pull request head before quoting any number measured in it."
+  },
+  "report_contract": {
+    "required_summary_fields": [
+      "FC review heading",
+      "verdict",
+      "checks",
+      "one-sentence scope and next action"
+    ],
+    "required_finding_fields": [
+      "exact path and line",
+      "witness",
+      "what the witness shows and does not show",
+      "smallest proposed change"
+    ],
+    "inline_suggestion_rule": "Require a high-confidence exact-line replacement that type-checks or is documentation-only. Do not require or reward a suggestion for an unresolved source reading.",
+    "publication_boundary": "The review is advisory: it must not approve, request changes, merge, label, or mutate a contributor branch."
+  },
+  "notes": "Each case reviews a file in this repository, not a fixture, so a case is only valid at a commit where the defect is still present. Runs must review a worktree built from `pinned_commit`, never the working tree. Reviewing the working tree is what retired the 940 case when its fix merged, and 940 was the strongest case in the set.\n\nSelection rule: keep a case only if it separates the arms. Measured in iteration 4, the one iteration where all six cases ran with and without the skill:\n  940            9/9 vs 5/9   +0.444\n  ClaudesCycles  8/8 vs 6/8   +0.250\n  1063           7/7 vs 6/7   +0.143   (dropped after iteration 8; see below)\n  PR 4660        8/8 vs 7/8   +0.125\n  918            6/6 vs 6/6    0.000\n  Green 72       6/6 vs 6/6    0.000\n918 and Green 72 were dropped after that run. Neither measured anything across four iterations. Mean gap over the retained four is 0.240, against 0.160 over the original six.\n\nWhy those two scored zero is the rule for choosing replacements. A stray `∀ (ω : Ordinal)` binder and a reversed conclusion are both visible by reading the file against its own docstring, and the control reads carefully too. The cases that separate the arms need something outside the file: 940 needs erdosproblems.com, which returns 403 to the control, and ClaudesCycles needs a kernel-checked witness rather than an argument. Before adding a case, ask whether a careful reader with no network and no Lean could reach the answer. If yes it is documentation, not a test.\n\nAn expected output is only as good as its check. Four have been overturned by runs: case 3 in iteration 1, case 2 in iteration 3, Green 72 in iteration 4, case 2 again in iteration 7. Every one of those was a key I reasoned out rather than checked. The two cases that have never been overturned are the two whose keys are backed by a Lean proof. Prefer keys a machine settles.\n\nSecond rule on keys: prefer a defect whose fix is already merged. A merged fix means the maintainers adjudicated the finding, so the key is theirs and not mine. Better still if someone else found it. Of the original four cases only 940 had a merged fix, and 940 is the only key never overturned and the strongest discriminator at +0.222. The other three were pinned to open or abandoned pull requests, and all three keys had to be revised. Pinning made this rule free, because a merged fix no longer erases its own case.\n\nCase 2 was Erdős 939 through iteration 2, retired for the same reason as 918 and Green 72: the control scored 6 of 6 twice, and the finding is a worked example in references/defect-classes.md, so the runs measured recall rather than procedure. Keep eval targets and the worked examples in that reference disjoint.\n\nCase 4 comes from the unresolved leads in #4896, which are triage notes rather than confirmed defects, and whose author warns they may contain transcription errors. Its expected output is my adjudication of someone else's hypothesis, so a run that produces a witness against it is evidence the case is wrong, not the run.\n\nIteration 8 re-ran the control against these four cases at their pins. It scored 0.882, against the 0.8396 carried since iteration 4 over a six-case set that no longer exists. The control is stronger than that stale figure implied: it built Lean on case 2 and swept it 8/8, and case 1 rose from 5/9 to 7/9. Case 2 no longer separates the arms at all.\n\nNo gap can be computed yet. Every `with_skill` number on record was measured against the working tree, not against a worktree at the pin, so it is not on the same footing as this control. The skill arm has to be re-run at the pins before any delta from this set means anything. Per-case control results are in the `iteration_8` field of each case.\n\nIteration 8 dropped Erdős 1063. Measured on the same footing both arms scored 8/8, so the gap is 0.000, and the skill arm spent 1.28x the tokens and 2.3x the wall clock to reach it. The control built Lean, machine-checked the comparator collapse and returned the right verdict unaided. Erdős 14 replaces it, pinned before merged #1382.\n\nIteration 8 is the first like-for-like delta in the exercise: control 0.882, skill 0.969, gap +0.087 over the four cases as run, or +0.116 over the three retained. It cost 142,835 tokens against 89,410 and 1755s against 440s, so 1.6x tokens and 4.0x wall clock. The whole gap sits in two assertions in two cases, source fidelity on 940 and the positive control on ClaudesCycles. Two of the four cases returned 0.000. Every delta quoted before this one compared arms reading different file states and should not be used.\n\nSix cases from iteration 9. Erdős 274 (merged #4164) and Erdős 92 (merged #1525) were added, both found by other people, both on the source-fidelity axis where the control measurably fails. Erdős 128 (merged #4501) was considered and rejected: its class is quantifier scope visible on a read, which is what scored 0.000 on 918. Four of the six now have a merged fix and three were found by someone other than me. Case 4 is the exception on purpose, and its adjudication field says so.\n\nIteration 9, the finding that matters. Every case carrying an assertion that requires the reviewer to *check* something discriminates: 940 at +0.222 on assertion 9, ClaudesCycles at +0.125 on assertion 7. Every case whose assertions only require reaching the right conclusion scores 0.000: 1063, 265, and now Erdős 92, where both arms took 7/7 while only the skill arm proved f 2 = 1, the falsity of the right-hand side and two negative controls in Lean. The set was measuring whether a reviewer reaches the answer, which the control does well, rather than whether it verifies the answer, which is what the skill claims. A verification assertion has been added to cases 4, 5 and 6.\n\nThese additions are retrofitted after seeing the reports, which is a bias. They must not be graded against reports that already exist. Any case carrying an `assertions_added_iteration_9` field needs both arms re-run before its gap is quoted again. The iteration 8 case 4 result is the retrospective check on the idea: the control there could not build and gave only a pen-and-paper construction, while the skill arm proved exploit_reduction sorry-free, so the assertion would have separated them.\n\nIteration 9 results. The class 4 sweep works: case 4 went 7/8 to 8/8 and the self-answer is now proved by rfl rather than missed. Erdős 274 discriminates at +0.167, on source fidelity, and the control failed it the same way it failed 940, by hitting the 403 and substituting a reconstruction that contradicts the page. Erdős 92 does not discriminate as keyed, 7/7 both arms, which is what prompted the verification assertion added to cases 4, 5 and 6.\n\nIteration 10. Both arms re-run on the four cases with the verification assertions in place, each arm in its own worktree. Control 0.877, skill 1.000, gap +0.123, at 1.57x tokens and 3.83x wall clock. The skill arm scored 1.000 on every case, so nothing in the current set separates further.\n\nThe verification assertions are validated. Erdős 92 went from 0.000 on the seven-assertion key to +0.125 with no change in either arm's behaviour: the iteration 9 skill run had already proved f 2 = 1 in Lean and the key could not see it. Every control failure across all four cases is a verification failure.\n\nTwo cases now have paired runs, and they disagree. Erdős 274 gave +0.167 in iteration 9 separating on source fidelity, and +0.143 in iteration 10 separating on verification, because the iteration 9 control hit the 403 and the iteration 10 control did not. Single paired runs cannot distinguish a real gap from run-to-run variance. Repeats are the outstanding work.\n\nErdős 14 does not discriminate and both arms verified it. The rule is narrower than iteration 9 stated: a verification assertion separates the arms when verifying means constructing something, not when it means printing something.\n\nIteration 11, repeats. Every control reached n=3 and every skill arm n>=2, nineteen runs in all. Per-case gap against the control mean: 940 +0.148, 14 +0.000, ClaudesCycles +0.125, 265 +0.222, 274 +0.238, 92 +0.125. Mean over the six cases +0.143, against the +0.123 reported from iteration 10's single sweep. The average survived; three of the six components did not.\n\nThe skill arm scored 1.000 in all thirteen paired runs, across six cases. That is a hard ceiling, not a near one, so every gap here measures the control and the mean is a floor.\n\nThe finding worth keeping: a case measures reliably only when the control's failure is a fixed habit. 265, 92 and 14 reproduce exactly three times each regardless of effort, and the 265 control scored 7/9 whether or not it built Lean. 940, 274 and ClaudesCycles drift, because passing there depends on the run choosing to do work it is always capable of. ClaudesCycles drifted to ceiling and should be retired unless its assertions are made harder.\n\nThe rep 3 skill runs were not bought. Thirteen consecutive 1.000s make their information value near zero, and one pair was already dead since the ClaudesCycles control reached ceiling.",
+  "evals": [
+    {
+      "id": 1,
+      "active": true,
+      "toolchain": "leanprover/lean4:v4.27.0",
+      "prompt": "can you take a look at FormalConjectures/ErdosProblems/940.lean before I send it? something about the large_integers variant feels off but I can't put my finger on it",
+      "expected_output": "NEEDS REVISION. The finding is that erdos_940.variants.large_integers quantifies over r >= 2, and at r = 2 it asserts that almost every integer is a sum of at most two 2-powerful numbers, so that set is cofinite. erdos_940.variants.two is in the same file, is categorised research solved, and states that the same set has density 0. The witness is that both cannot hold. The suggested change is to start the range at r = 3.",
+      "files": [
+        "FormalConjectures/ErdosProblems/940.lean"
+      ],
+      "pinned_commit": "3f08b849788e5e73d52069c616469ea995aac7d7",
+      "fixed_by": "https://github.com/google-deepmind/formal-conjectures/pull/4933",
+      "adjudication": "merged as #4933, but found by me. Maintainers accepted the fix, so the finding is adjudicated even though it is mine. The only original case with a merged fix, and the only key never overturned.",
+      "assertions": [
+        "The report names erdos_940.variants.large_integers as the declaration at fault",
+        "The report states that the source restricts the problem to r >= 3",
+        "The report identifies r = 2 as the instance where the statement fails",
+        "The report cites erdos_940.variants.two, in the same file, as the statement that contradicts it",
+        "The report gives a witness for the contradiction rather than asserting it",
+        "The report says what the witness does not show, namely that r >= 3 is unaffected",
+        "The suggested change is to quantify over r >= 3",
+        "The verdict is NEEDS REVISION",
+        "The witness is checked in Lean or by computation, and not only argued"
+      ],
+      "iteration_1": {
+        "with_skill": 1.0,
+        "without_skill": 0.625,
+        "discriminates": true,
+        "detail": "The only case that separated the arms. All three failures had one cause: the baseline hit the 403 from erdosproblems.com, reconstructed intent from 1107.lean, and proposed changing the summand count to r + 1, which converts a 940 question into 1107's problem. The with_skill result is not attributable, because SKILL.md step 5 carried this finding as its worked example until that example was replaced. Rerun in iteration 2.",
+        "last_assertion_added_because": "The original assertion about giving a witness passed in both arms on very different evidence, an axiom-clean Lean proof and a sieve against a paragraph of reasoning."
+      },
+      "retired_id": 1,
+      "discrimination": {
+        "measured_in": "iteration_4",
+        "with_skill": "9/9",
+        "without_skill": "5/9",
+        "gap": 0.444
+      },
+      "iteration_8": {
+        "without_skill": 0.7778,
+        "raw": "7/9",
+        "with_skill": 1.0,
+        "note": "Up from 5/9 in iteration 4. Both failures are on the skill's two claimed contributions. It stated the source poses the problem generally with k=2 known; /latex/940 opens 'Let $r\\geq 3$.', so it reached the right fix by matching erdos_940 line 35 rather than by reading the source. And it declined to build, so the contradiction against variants.two is argued, not checked.",
+        "with_skill_raw": "9/9",
+        "gap": 0.222,
+        "with_skill_note": "Gained both assertions the control failed, which are the skill's two claims. It quoted 'Let $r\\geq 3$.' from /latex/940, and checked the contradiction three ways: a sorry-free Lean helper, a sieve to 1e7, and Blomer-Granville's asymptotic agreeing with the sieve."
+      },
+      "repeats": {
+        "control": [
+          0.778,
+          0.889,
+          0.889
+        ],
+        "control_mean": 0.852,
+        "control_range": 0.111,
+        "skill": [
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.148,
+        "note": "Control drifts. The iteration 8 run is the outlier, failing source fidelity and verification; both later runs pass those and fail the scope-limit assertion instead."
+      }
+    },
+    {
+      "id": 2,
+      "active": false,
+      "archived_reason": "requires leanprover/lean4:v4.22.0; retained for historical evidence only",
+      "toolchain": "leanprover/lean4:v4.22.0",
+      "prompt": "can you check FormalConjectures/ErdosProblems/14.lean? the two statements are hard to read and I want to know they say what the problem actually asks",
+      "expected_output": "NEEDS REVISION, on erdos_14b. It reads `∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot ↔ answer(sorry)`. The body of an existential extends as far right as it can, so the binder scopes over the iff and the statement means `∃ A, (IsLittleO ... ↔ answer(sorry))`. The source asks whether such an A exists, which is `(∃ A, IsLittleO ...) ↔ answer(sorry)`, with the slot outside the binder. erdos_14a is not a defect: it is wrapped in redundant parentheses and reads badly, but its bracketing is correct, and reporting it as broken is the failure mode this case tests.",
+      "files": [
+        "FormalConjectures/ErdosProblems/14.lean"
+      ],
+      "pinned_commit": "4f97b303db6737278199a6d7ae34e2857083f4bb",
+      "fixed_by": "https://github.com/google-deepmind/formal-conjectures/pull/1382",
+      "adjudication": "merged. Found by YaelDillies, not by me, and accepted by the maintainers, so the answer key is not my reasoning. The fix survived later refactoring: on main the declaration is erdos_14.parts.ii and still reads answer(sorry) <-> exists A, ... with the slot outside the binder.",
+      "replaces": "Erdos 1063, dropped after iteration 8 measured both arms at 8/8 on it.",
+      "notes": "Chosen against two rules the earlier cases failed. The fix is merged, so the ground truth is the maintainers' rather than mine; of the original four cases only 940 had that, and 940 is the only key never overturned. And the defect's consequence lands where controls demonstrably fail: the bracketing leaves an answer slot on a research open statement that no longer records the source's question, and self-answer detection is the one assertion no control run has ever passed. Discrimination is unmeasured until this case runs. Assertion 6 deliberately stops at what the merged diff settles and does not claim the statement is trivially satisfiable, which I have not checked.",
+      "assertions": [
+        "The report identifies erdos_14b as the declaration at fault",
+        "The report states that the existential binder scopes over the iff, so the statement reads exists A, (IsLittleO ... iff answer(sorry)) rather than (exists A, IsLittleO ...) iff answer(sorry)",
+        "The report says the intended reading puts the answer slot outside the existential, and ties that to what the source asks",
+        "The report checks the elaboration rather than asserting the precedence from memory, for instance by elaborating both readings or printing the parsed statement",
+        "The report does not report erdos_14a as a defect, or says explicitly that its bracketing is correct despite the redundant parentheses",
+        "The report says what the mis-bracketing costs, that the answer slot no longer records the question the source asks",
+        "The verdict is NEEDS REVISION, on erdos_14b rather than on erdos_14a"
+      ],
+      "iteration_10": {
+        "without_skill": 1.0,
+        "with_skill": 1.0,
+        "gap": 0.0,
+        "note": "Does not discriminate. Both arms 7/7, both verified. Its verification is cheap: printing an elaborated statement is one command and the control reaches for it unprompted."
+      },
+      "repeats": {
+        "control": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "control_mean": 1.0,
+        "control_range": 0.0,
+        "skill": [
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.0,
+        "note": "Stable zero. Control at ceiling three times. Verification here costs one command, and all three controls found a different route to it: build and print, core-Lean rfl, pp.parens."
+      }
+    },
+    {
+      "id": 3,
+      "active": true,
+      "toolchain": "leanprover/lean4:v4.27.0",
+      "prompt": "I'm reviewing the PR that adds Paper/ClaudesCycles.lean. Does the Lean match Knuth's problem?",
+      "expected_output": "NEEDS REVISION. The Lean predicate is faithful, and the report should say so and say how it was checked. The finding is that cube_hamiltonian_arc_decomposition_even is categorised research open, and the module docstring says the even case remains open, while the cited paper retracts that. Knuth's Claude's Cycles is dated 28 February 2026, revised 14 April 2026; page 5 says the even case is open and page 6 opens 'Breaking news: The problem for even values of m is no longer in doubt!'. A run that returns CLEAN has read the problem statement and stopped, and fails this case.",
+      "files": [
+        "FormalConjectures/Paper/ClaudesCycles.lean"
+      ],
+      "pinned_commit": "230782e37bbf5aa0cab03874e876626beacac009",
+      "fixed_by": "https://github.com/google-deepmind/formal-conjectures/pull/4935",
+      "adjudication": "open as #4935, found by me. Not adjudicated. The status finding is strongly evidenced by the cited paper's own revision, so the risk sits in the two added assertions rather than in the main finding.",
+      "notes": "Written as a false-positive control, on the assumption that the file was clean. The first run found the defect below, which was then verified against the PDF. The case now tests whether a reviewer reads a revised source to the end.",
+      "assertions": [
+        "The report says that the Lean predicate matches Knuth's problem, and says how that was checked",
+        "The report identifies cube_hamiltonian_arc_decomposition_even as the declaration at fault",
+        "The report gives the revision date of the cited paper, 14 April 2026",
+        "The report quotes or paraphrases the passage announcing that the even case is settled",
+        "The report says that the module docstring is wrong as well as the category",
+        "The verdict is NEEDS REVISION",
+        "The report runs the source's own even-case construction against the Lean predicate as a positive control, at a concrete even m in the statement's range, rather than reporting only what the source claims",
+        "The report resolves the formal_proof link to a named file and declaration, and does not accept a bare repository root"
+      ],
+      "iteration_1": {
+        "with_skill": 1.0,
+        "without_skill": 1.0,
+        "discriminates": false,
+        "detail": "The baseline found the defect unaided, dated the revision and quoted the passage. The first six assertions measure nothing. The two added above are the ones that separated the arms in iteration 1, where only the with_skill run verified the source's even-case programs at m = 4 to 16 and caught the under-specified formal_proof link."
+      },
+      "retired_id": 3,
+      "discrimination": {
+        "measured_in": "iteration_4",
+        "with_skill": "8/8",
+        "without_skill": "6/8",
+        "gap": 0.25
+      },
+      "iteration_8": {
+        "without_skill": 0.875,
+        "raw": "7/8",
+        "with_skill": 1.0,
+        "note": "Up from 6/8. The gain is the formal_proof assertion: it resolved the proof to Basic.lean and flagged that the repository-root link lands on the repository's only sorry, which is the error I made in #4935 and reverted. Its one failure is the unrun positive control.",
+        "with_skill_raw": "8/8",
+        "gap": 0.125,
+        "with_skill_note": "Gained the positive control, the one assertion no control run has passed on this case. Proved HasHamiltonianArcDecomposition 3 from Knuth's C program and 4 from his even_solution.py tables, both sorry-free, plus an exhaustive negative control at m = 2."
+      },
+      "repeats": {
+        "control": [
+          0.75,
+          0.875,
+          1.0
+        ],
+        "control_mean": 0.875,
+        "control_range": 0.25,
+        "skill": [
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.125,
+        "note": "Control climbed monotonically to ceiling, range 0.250, larger than any gap this case produced. The rep 3 control ran Knuth's own C rule against the predicate, which is what the positive-control assertion asks for. This case is close to dead. Hardened after the rep 3 control passed the old assertion by running Knuth's C rule, which is the odd-case construction, while the finding is about the even case. The assertion now names the even case. This was written after reading that report, so it must not be graded against any existing report: both arms need re-running before this case's gap is quoted again."
+      },
+      "assertions_hardened_iteration_11": [
+        "The report runs the source's own even-case construction against the Lean predicate as a positive control, at a concrete even m in the statement's range, rather than reporting only what the source claims"
+      ]
+    },
+    {
+      "id": 4,
+      "active": false,
+      "archived_reason": "requires leanprover/lean4:v4.22.0 and lacks maintainer adjudication",
+      "toolchain": "leanprover/lean4:v4.22.0",
+      "prompt": "can you review PR #4660 before I approve it? someone said the tsum has no Summable hypothesis and I want to know if that actually matters",
+      "expected_output": "NEEDS REVISION, and blocking. IsRationalPairSequence requires `exists q : Q, tsum n, 1/(a n) = q`. In Mathlib tsum of a family that is not Summable is 0, and 0 is rational, so the condition reads 'sums to a rational OR diverges'. The consequence is worse than a loose definition: erdos_265 itself becomes provable. Its growth condition GrowthExceedsOne is exists-frequently, `exists-freq n, c^(2^n) <= a n`, which does not force summability, so a sequence can spike doubly exponentially at sparse indices and still have a divergent reciprocal sum. Both tsums are then 0, IsRationalPairSequence holds vacuously, and the existential the statement asks about is witnessed, collapsing answer(sorry) to True. A witness must satisfy the growth condition as well: a n = n + 2 satisfies IsRationalPairSequence but not GrowthExceedsOne, so it is not sufficient on its own. The fix is HasSum, which bundles convergence and is already the form used in 266.lean for the same circle of problems, plus a negative regression test that the current definition would fail. There is a second, independent defect: erdos_265.variants.sup_rate is `sSup AchievableRates = answer(sorry)`, so the slot can be filled with the term it is meant to determine and the statement closes by rfl. That is the mirror of the Erdos 195 self-answer entry in rubrics/statement-soundness.md, and no linter catches it.",
+      "files": [
+        "FormalConjectures/ErdosProblems/265.lean"
+      ],
+      "pinned_commit": "04418fa73a34fa8e5b063276ca577e00bb6fb0f8",
+      "reviews_pull_request": 4660,
+      "lead": "https://github.com/google-deepmind/formal-conjectures/issues/4896",
+      "notes": "The only case that reviews a pull request diff rather than a file, so it is the only one that exercises the skill's first scoping branch. Also restores class 2 coverage, lost when the 939 case was retired. The file does not exist on main; the pin is the pull request head. My first expected output gave a n = n + 2 as the witness, which satisfies IsRationalPairSequence but not GrowthExceedsOne, so it does not collapse erdos_265. The control run built a correct witness and I verified my error. Corrected. Assertion 8 was added after iteration 4: the with_skill run found the sup_rate self-answer, which the control missed and which I had not known about.",
+      "assertions": [
+        "The report confirms that the missing Summable hypothesis matters, rather than treating it as a style point",
+        "The report gives the reason, that tsum of a non-summable family is 0 in Mathlib and 0 is rational",
+        "The report explains that GrowthExceedsOne is an exists-frequently condition and so does not force summability",
+        "The report gives a witness that satisfies both IsRationalPairSequence and GrowthExceedsOne, not merely the former",
+        "The report states the consequence, that erdos_265 becomes provable and its answer collapses to True",
+        "The report proposes HasSum or Summable, and does not merely note the hazard",
+        "The verdict is NEEDS REVISION",
+        "The report identifies erdos_265.variants.sup_rate as a self-answer, where the slot can be filled with sSup AchievableRates so the statement closes by rfl",
+        "The witness that erdos_265's right-hand side is satisfiable is checked in Lean and reported sorry-free, with any pen-and-paper half named as such rather than presented as proved"
+      ],
+      "retired_id": 6,
+      "discrimination": {
+        "measured_in": "iteration_4",
+        "with_skill": "8/8",
+        "without_skill": "7/8",
+        "gap": 0.125
+      },
+      "iteration_8": {
+        "without_skill": 0.875,
+        "raw": "7/8",
+        "with_skill": 0.875,
+        "note": "Unchanged at 7/8, failing the same assertion. It reaches sup_rate but argues it duplicates erdos_265 and should be dropped, never naming the self-answer, so it would have deleted the defect without seeing it. This run was handed the pull request already checked out where iteration 4 made it fetch, and the score did not move.",
+        "with_skill_raw": "7/8",
+        "gap": 0.0,
+        "with_skill_note": "No gain. Both arms 7/8 failing the same assertion. The skill arm visited sup_rate, wrote a table row for it and marked it clean, so the class 4 material did not fire while the run was deep in a class 2 audit. The iteration 4 with_skill run did find it, so this is a regression on that assertion."
+      },
+      "adjudication": "none. Pull request #4660 was abandoned, so no maintainer ever ruled on this. Assertion 8, the sup_rate self-answer, is my own finding and is the only assertion in the set with no external adjudication. Treat a run that argues against it as evidence about the key. Kept despite scoring 0.000 in iteration 8 because it is the regression test for the class 4 sweep added to SKILL.md after that iteration: if the sweep works, the skill arm finds sup_rate and the control does not.",
+      "iteration_9": {
+        "with_skill": 1.0,
+        "with_skill_raw": "8/8",
+        "note": "Fix verification. The class 4 sweep recovered assertion 8, which both arms failed in iteration 8 and which the pre-fix skill arm failed having visited sup_rate and marked it clean. Proved by rfl this time. Control not re-run, so the +0.125 against the iteration 8 control is cross-iteration."
+      },
+      "iteration_10": {
+        "without_skill": 0.7778,
+        "with_skill": 1.0,
+        "gap": 0.222,
+        "note": "Largest gap in the set. Separates on two assertions, the class 4 self-answer and the new verification assertion."
+      },
+      "repeats": {
+        "control": [
+          0.778,
+          0.778,
+          0.778
+        ],
+        "control_mean": 0.778,
+        "control_range": 0.0,
+        "skill": [
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.222,
+        "note": "Most reliable case in the set. Control 7/9 three times failing the same two assertions, whether or not it built Lean. Skill 9/9 twice."
+      }
+    },
+    {
+      "id": 5,
+      "active": false,
+      "archived_reason": "calibration-only until the concrete mixed-size cover assertion is backed by a checked Lean or computation artifact",
+      "toolchain": "leanprover/lean4:v4.27.0",
+      "prompt": "ErdosProblems/274.lean, does the Lean say what the problem asks? the coset condition looks odd to me",
+      "expected_output": "NEEDS REVISION. erdos_274's right-hand side ends `∃ i j, i ≠ j ∧ #(P.parts i) ≠ #(P.parts j)`, which says only that some two parts differ in size. The source asks for an exact covering \"by more than one cosets of different sizes\", meaning the sizes are pairwise distinct. A covering with part sizes 2, 2, 4 satisfies the Lean and is not what the source describes, so the Lean is strictly weaker than the question. The merged fix states it universally, `∀ G ... → ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j)`, recording the conjectured answer that in every such covering two of the subgroups share a cardinality.",
+      "files": [
+        "FormalConjectures/ErdosProblems/274.lean"
+      ],
+      "pinned_commit": "9a09683b286506fd98309e3469fe52e4ad5d6cf1",
+      "fixed_by": "https://github.com/google-deepmind/formal-conjectures/pull/4164",
+      "adjudication": "merged. Found by AlperTheKing, not by me. The key is anchored to the merged diff and to the source text at /latex/274, not to a satisfiability claim I have not checked.",
+      "notes": "Source-fidelity axis, which is where the control demonstrably fails: on 940 in iteration 8 it reached the right fix by matching a sibling declaration and then misreported what the source restricts. Unrun, so discrimination is unmeasured.",
+      "assertions": [
+        "The report identifies erdos_274 as the declaration at fault",
+        "The report states that exists i j with different cardinalities says only that some two parts differ, not that the sizes are pairwise distinct",
+        "The report gives a concrete shape the Lean admits that the source does not describe, for instance part sizes 2, 2, 4",
+        "The report quotes or paraphrases the source's own wording, an exact covering by more than one cosets of different sizes",
+        "The report says which way the mismatch goes, that the Lean is weaker than the question rather than stronger",
+        "The verdict is NEEDS REVISION",
+        "The covering that satisfies the Lean but not the source is constructed and checked, in Lean or by exhaustive computation, rather than asserted by hand"
+      ],
+      "iteration_9": {
+        "without_skill": 0.8333,
+        "without_skill_raw": "5/6",
+        "with_skill": 1.0,
+        "with_skill_raw": "6/6",
+        "gap": 0.167,
+        "note": "Discriminates on source fidelity. The control hit the 403, said so, and reported the problem as being about distinct indices; the page says different sizes and /latex/274 returns 200 to a named user agent. The skill arm quoted it and built a machine-checked ZMod 4 witness."
+      },
+      "iteration_10": {
+        "without_skill": 0.8571,
+        "with_skill": 1.0,
+        "gap": 0.143,
+        "note": "Separates on the new verification assertion. In iteration 9 the same case gave +0.167 separating on source fidelity instead, because that control hit the 403 and this one did not."
+      },
+      "repeats": {
+        "control": [
+          0.857,
+          0.714,
+          0.714
+        ],
+        "control_mean": 0.7617,
+        "control_range": 0.143,
+        "skill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.2383,
+        "note": "Source-fidelity assertion failed in three of four controls ever run, by two different routes: once via a 403, twice by never attempting the source."
+      }
+    },
+    {
+      "id": 6,
+      "active": false,
+      "archived_reason": "requires leanprover/lean4:v4.22.0; retained for historical evidence only",
+      "toolchain": "leanprover/lean4:v4.22.0",
+      "prompt": "can you check erdos_92.variants.strong in ErdosProblems/92.lean against the problem? I want to know the bound is stated right",
+      "expected_output": "NEEDS REVISION. `erdos_92.variants.strong` reads `∃ c > 0, ∀ n, (f n : ℝ) ≤ n ^ (c / (n : ℝ).log.log)`. The source asks `f(n) < n^{O(1/\\log\\log n)}`, which is asymptotic; the Lean asserts it at every n. That is not a harmless strengthening. `Real.log (Real.log n)` is 0 at n = 1 and negative for 2 ≤ n ≤ 15, so the exponent is junk or negative there and the right-hand side drops below 1. At n = 2 the file's own f gives f 2 = 1, since each of two points sees the other at a single distance, so the conjunct asserts 1 ≤ 2 ^ (negative), which is false for every c > 0. The universal form is therefore unsatisfiable and forces the answer slot to False for a reason the source never raises. The fix is `∀ᶠ n in atTop`.",
+      "files": [
+        "FormalConjectures/ErdosProblems/92.lean"
+      ],
+      "pinned_commit": "196c53952f4e54942fd783a0da6535ea11947a8a",
+      "fixed_by": "https://github.com/google-deepmind/formal-conjectures/pull/1525",
+      "adjudication": "merged. Found by mo271, a maintainer, not by me. The graded assertions are anchored to the merged diff and the source's big-O wording. The n = 2 falsity is stated in the expected output but assertion 5 asks only that the report identify small n as where the universal form breaks, since I have not machine-checked f 2.",
+      "notes": "Source-fidelity plus a degenerate-value check, and the smallest defect in the set at one token. Included partly to test whether a thin defect still separates the arms. Unrun.",
+      "assertions": [
+        "The report identifies erdos_92.variants.strong as the declaration at fault",
+        "The report states that the source's bound is asymptotic, quoting the big-O or o(1) form, while the Lean quantifies over every n",
+        "The report identifies that Real.log (Real.log n) is zero or negative for small n, so the exponent is junk or negative there",
+        "The report says the consequence is not a strengthening but a break, that the universal form cannot be satisfied and so decides the answer slot",
+        "The report names a specific small n where the conjunct fails, or shows the range where log log n is not positive",
+        "The suggested change is to quantify eventually at atTop rather than over every n",
+        "The verdict is NEEDS REVISION",
+        "The value of f at the failing n is derived from the file's own definitions and checked in Lean or by computation, not only argued"
+      ],
+      "iteration_9": {
+        "without_skill": 1.0,
+        "without_skill_raw": "7/7",
+        "with_skill": 1.0,
+        "with_skill_raw": "7/7",
+        "gap": 0.0,
+        "note": "Does not discriminate as keyed. Both arms 7/7, though only the skill arm proved f 2 = 1, the falsity of the right-hand side and two negative controls in Lean. The key had no verification assertion; one was added afterwards and needs both arms re-run."
+      },
+      "iteration_10": {
+        "without_skill": 0.875,
+        "with_skill": 1.0,
+        "gap": 0.125,
+        "note": "Separates on the new verification assertion alone. On the seven-assertion key in iteration 9 this case was 0.000 with both arms at 7/7."
+      },
+      "repeats": {
+        "control": [
+          0.875,
+          0.875,
+          0.875
+        ],
+        "control_mean": 0.875,
+        "control_range": 0.0,
+        "skill": [
+          1.0,
+          1.0
+        ],
+        "skill_mean": 1.0,
+        "gap_vs_control_mean": 0.125,
+        "note": "Control 0.875 three times at 16, 17 and 17 tool uses. All three derive f 2 = 1 correctly from the file's own definitions and none checks it."
+      }
+    }
+  ],
+  "harness_note": "Give every arm its own worktree. In iteration 9 the two arms of a case shared one, and the Erdős 92 control reported it abandoned `lake exe cache get` because another process held the elan toolchain lock. A run that cannot build cannot verify, which is the axis being measured, so sharing a worktree corrupts the comparison. Run the arms in separate batches too, so a full Mathlib cache does not land in every worktree at once.\n\nBuild each case's worktree from its `pinned_commit` and point the run at that, not at the working tree, which holds whatever the branch happens to hold:\n\n    git worktree add --detach <dest> <pinned_commit>\n\nCase 4 reviews a pull request head that is on no branch, so fetch the pull ref first:\n\n    git fetch origin refs/pull/4660/head\n\nRemove each worktree with `git worktree remove <dest>` when the run finishes. Re-read the pin from this file each time rather than keeping a copy; the pins move when a case is repointed.\n\nGrading bias. Every grading before iteration 9 was done knowing the arm, usually right after forming a view about that arm, which is a bias I cannot rule out of the numbers already recorded. Full blinding is not achievable in the current harness, because results arrive labelled and I cannot unsee which arm produced them. What is achievable, and is the rule from iteration 9 on: grade each report against the assertions before reading the other arm's report for the same case, so the grading is at least not a direct A/B comparison. Record in each grading.json whether that held. A harness that writes reports to disk unlabelled and grades them in a separate pass would do better, and is the honest fix.\n\nPrompt the runs with the contents of SKILL.md, or tell them to read that one file and nothing else in the directory. Pointing a run at the skill's path invites it to list the directory, and one iteration 4 run found this file that way and read the expected outputs before opening the Lean. A real client injects SKILL.md through the skill system and never exposes evals/, so that leak is an artefact of the harness rather than of the skill. SKILL.md also says not to open this directory, which is defence in depth rather than the fix.",
+  "iteration_16": {
+    "status": "rubric_refactor_regression_loop",
+    "purpose": "The skill was restructured toward TauCetiProject/TauCetiReview shape: the monolithic defect-classes reference became four rubric files (rubrics/_common, source-fidelity, statement-soundness, metadata-hygiene), findings now carry an angle tag, and SKILL.md's compare step routes through the three angles. This iteration measures whether the restructure held the 1.000 skill-arm ceiling from iterations 10-11.",
+    "arms": [
+      "this_skill_post_refactor"
+    ],
+    "isolation": "worktrees at each case's pinned_commit; the skill copied in without evals/",
+    "result": {
+      "case_1_940": {
+        "r1_refactor_only": "8/9 - assertion 9 missed: witness argued from variants.two, not machine-checked",
+        "r2_checked_witness_rule": "8/9 - the arm disclosed the unchecked step explicitly and filed anyway",
+        "r3_mandatory_escalation": "9/9 - scratch Witness940.lean, sorry-free helper, #print axioms chain, transcription check"
+      },
+      "case_3_claudescycles": {
+        "r1_refactor_only": "6/8 - assertions 7 (no positive control) and 8 (root link accepted after private resolution) missed",
+        "r2_link_rule": "7/8 - assertion 8 fixed exactly as the sharpened metadata rubric directs; 7 still missed",
+        "r3_positive_control_rule": "8/8 - even_solution.py downloaded and independently re-verified against each clause of HasHamiltonianArcDecomposition for m = 4, 6, 8, 10; root link resolved to Solution.lean and its declaration while still filed as the #4895 class; comparator.json correctly read as configuration, not a result"
+      }
+    },
+    "finding": "The restructure initially regressed exactly the verification behaviours the iteration 9-11 assertion hardening exists to detect: the softened fast-path wording ('this checklist suffices') licensed stopping where ceiling runs had escalated. Three rules restored it, each moving only its targeted assertion: witnesses checked not argued (_common.md and step 5); escalation mandatory for any verdict-setting finding (SKILL.md); a source construction run as a positive control whenever faithfulness or a status flip rests on it (SKILL.md and source-fidelity.md). The root-link rule in metadata-hygiene flipped its assertion from miss to textbook hit in one step. Grading is single-run per ruleset (n=1); the iteration 11 repeat discipline still applies before quoting any of this as a gap.",
+    "next_measurement": "Paired repeats at n>=3 per arm on the full active set once the ruleset settles, and a control arm re-run, per the iteration 11 protocol. The rubric split also readies the skill for per-angle independent judging (the TauCetiReview runner shape); measuring one-agent-three-angles against three-judges is the interesting next experiment."
+  }
+}
