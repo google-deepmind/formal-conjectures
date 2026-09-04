@@ -66,10 +66,10 @@ dividing $n$.
 
 Erdős–Szekeres [ErSz78] note that $f(n) = n/P(n)$ when $n$ is a product of two primes
 (`erdos_700.variants.prime_mul`), with $n = 30$ a further example. The characterisation itself is
-open; we state it as the (unknown) predicate that is equivalent to being such an `n`. -/
+open; we state it as the (unknown) set of all such composite `n`. -/
 @[category research open, AMS 11]
-theorem erdos_700.parts.i (n : ℕ) (hn : ¬ n.Prime) (hn1 : 1 < n) :
-    f n = n / P n ↔ answer(sorry) := by
+theorem erdos_700.parts.i :
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
   sorry
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
