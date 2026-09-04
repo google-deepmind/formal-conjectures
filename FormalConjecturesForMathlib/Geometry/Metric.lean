@@ -65,3 +65,10 @@ theorem unitDistNum_le_choose_two (s : Finset X) : unitDistNum s ≤ (#s).choose
     obtain ⟨-, rfl⟩ : _ ∧ x = y := Finset.mem_diag.mp hxy
     simp at hpd
   · exact h
+
+/-- A set `A` in a metric space has *pairwise distinct distances* if any two pairs of distinct
+points of `A` realising the same distance are equal as unordered pairs: whenever
+`x, y, z, w ∈ A` with `x ≠ y`, `z ≠ w` and `dist x y = dist z w`, then `{x, y} = {z, w}`. -/
+def PairwiseDistinctDistances (A : Set X) : Prop :=
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
+    x ≠ y → z ≠ w → dist x y = dist z w → (x = z ∧ y = w) ∨ (x = w ∧ y = z)
