@@ -1,0 +1,6 @@
+# `conjecture_1_1` is declared by two files. Without `module` the generator
+# refuses rather than picking one, so each needs its own manifest and its own
+# `id`; the id is what names the workspace directory.
+id = "margulis_conjecture_1_1"
+declaration = "conjecture_1_1"
+module = "FormalConjectures/Arxiv/2504.17644/Margulis.lean"
