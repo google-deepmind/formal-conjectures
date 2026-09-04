@@ -692,6 +692,10 @@ async function main() {
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
   if (fs.existsSync(darkPlotPath)) fs.copyFileSync(darkPlotPath, 'site/data/file_counts_dark.html');
+  const whiteStatusPlotPath = path.join('data', 'status_counts_white.html');
+  const darkStatusPlotPath = path.join('data', 'status_counts_dark.html');
+  if (fs.existsSync(whiteStatusPlotPath)) fs.copyFileSync(whiteStatusPlotPath, 'site/data/status_counts_white.html');
+  if (fs.existsSync(darkStatusPlotPath)) fs.copyFileSync(darkStatusPlotPath, 'site/data/status_counts_dark.html');
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
@@ -721,34 +725,32 @@ async function main() {
   copyStaticTemplate('about.html', 'site/about/index.html');
 
   // ---- Stats page ----
-  let growthPlot = '';
-  if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
-    const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
-    const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');
-    growthPlot = `
-      <style>
-        .theme-dark { display: none; }
-        @media (prefers-color-scheme: dark) {
-          .theme-light { display: none; }
-          .theme-dark { display: block; }
-        }
-      </style>
-      <div class="theme-light">${graphHtmlLight}</div>
-      <div class="theme-dark">${graphHtmlDark}</div>
-    `;
-    console.log('  Loaded repository growth plots.');
-  } else {
-    console.log('  Repository growth plots not found (skipping growth plot).');
-  }
+  const growthPlot = themedPlot(whitePlotPath, darkPlotPath, 'repository growth');
+  const statusPlot = themedPlot(whiteStatusPlotPath, darkStatusPlotPath, 'statement status');
 
   const statsHtml = readTemplate('stats.html');
   writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
     totalCount:           stats.total,
     growthPlot:           growthPlot,
+    statusPlot:           statusPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
 
   console.log('Done. Output in site/');
+}
+
+// Plotly bakes the background into each plot, so both themes are generated and
+// the stats page hides whichever one does not match.
+function themedPlot(lightPath, darkPath, label) {
+  if (!fs.existsSync(lightPath) || !fs.existsSync(darkPath)) {
+    console.log(`  ${label} plots not found (skipping plot).`);
+    return '';
+  }
+  console.log(`  Loaded ${label} plots.`);
+  return `
+      <div class="theme-light">${fs.readFileSync(lightPath, 'utf8')}</div>
+      <div class="theme-dark">${fs.readFileSync(darkPath, 'utf8')}</div>
+    `;
 }
 
 function copyStaticTemplate(templateName, dest) {

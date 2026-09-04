@@ -8,6 +8,13 @@
   <link rel="preload" href="/assets/fonts/LibertinusSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
+  <style>
+    .theme-dark { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .theme-light { display: none; }
+      .theme-dark { display: block; }
+    }
+  </style>
 </head>
 <body>
 
@@ -41,6 +48,18 @@
         The number of Lean files in Formal Conjectures over time.
       </p>
       {{growthPlot}}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">Statements by status</h2>
+      <p class="section__lede">
+        How many statements are open, how many are solved, and how many carry
+        a link to a formal proof, over time. Formal proofs have only been
+        recorded since January 2026.
+      </p>
+      {{statusPlot}}
     </div>
   </section>
 
