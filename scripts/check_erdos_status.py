@@ -5,6 +5,9 @@ Downloads the latest problems.yaml from teorth/erdosproblems and compares
 each problem's status against the @[category research open/solved] annotation
 on the main theorem in the corresponding .lean file.
 
+The upstream side is read from the `informal_status` and `formal_status` fields, not from the
+`status` string that joins them.
+
 Usage:
   python check_erdos_status.py               # Print mismatches as JSON
   python check_erdos_status.py --create-issues  # Also create GitHub issues
@@ -42,6 +45,11 @@ FORMAL_PROOF_ATTR = re.compile(
     re.MULTILINE,
 )
 
+# `informal_status.state` is the mathematical status, and these two sets are the whole of its
+# vocabulary. `formal_status.state` separately says whether a machine-checked proof exists.
+# Upstream also publishes the two joined into `status.state` ("proved (Lean)"), but that is a
+# product of two vocabularies and gains a value whenever either side does, so read the fields
+# rather than enumerating their combinations.
 OPEN_STATES = {"open", "falsifiable", "verifiable"}
 SOLVED_STATES = {
     "solved",
@@ -52,11 +60,7 @@ SOLVED_STATES = {
     "independent",
     "decidable",
 }
-FORMALLY_SOLVED_STATES = {
-    "solved (Lean)",
-    "proved (Lean)",
-    "disproved (Lean)",
-}
+UNFORMALIZED_STATE = "unformalized"
 
 
 def fetch_yaml():
@@ -68,18 +72,40 @@ def fetch_yaml():
         return yaml.safe_load(resp.read())
 
 
-def yaml_status_to_category(state):
-    """Map a YAML status.state value to 'open', 'solved', 'formally solved', or None.
+def problem_status(problem):
+    """The (informal, formal) status states of a YAML problem.
 
-    Returns None for unrecognized states.
+    Each default claims the least. An absent formal state means no formalisation is recorded,
+    which degrades a settled problem to 'solved' rather than inventing a proof. An absent
+    informal state is not a status at all, so it falls into the warn-and-skip path below
+    instead of asserting that the problem is open.
     """
-    if state in OPEN_STATES:
+    informal = (problem.get("informal_status") or {}).get("state")
+    formal = (problem.get("formal_status") or {}).get("state", UNFORMALIZED_STATE)
+    return informal, formal
+
+
+def yaml_status_to_category(informal_state, formal_state):
+    """Map a problem's YAML status states to 'open', 'solved', 'formally solved', or None.
+
+    A problem is 'formally solved' when it is settled and upstream records a formalisation.
+    An open problem stays open even when a Lean statement of it exists, which is how
+    `scan_lean_files` reads this repository: it upgrades a problem to 'formally solved' only
+    when the category is already 'solved'.
+
+    Returns None for an informal state this script does not know, which means "we cannot read
+    this problem", not "this problem agrees with us".
+    """
+    if informal_state in OPEN_STATES:
         return "open"
-    if state in FORMALLY_SOLVED_STATES:
-        return "formally solved"
-    if state in SOLVED_STATES:
+    if informal_state in SOLVED_STATES:
+        if formal_state != UNFORMALIZED_STATE:
+            return "formally solved"
         return "solved"
-    print(f"WARNING: unrecognized YAML status state: {state!r}", file=sys.stderr)
+    print(
+        f"WARNING: unrecognized YAML informal status state: {informal_state!r}",
+        file=sys.stderr,
+    )
     return None  # unrecognized — skip comparison
 
 
@@ -162,7 +188,7 @@ def classifiable():
     return {
         str(p["number"])
         for p in fetch_yaml()
-        if yaml_status_to_category(p.get("status", {}).get("state", "open")) is not None
+        if yaml_status_to_category(*problem_status(p)) is not None
     }
 
 
@@ -171,8 +197,7 @@ def find_mismatches():
     yaml_statuses = {}
     for p in problems:
         num = str(p["number"])
-        state = p.get("status", {}).get("state", "open")
-        cat = yaml_status_to_category(state)
+        cat = yaml_status_to_category(*problem_status(p))
         if cat is not None:
             yaml_statuses[num] = cat
 
