@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjectures.Wikipedia.BorsukConjecture
 
 /-!
 # Erdős Problem 505
@@ -26,7 +27,8 @@ the union of at most $n + 1$ sets of diameter strictly less than 1?
 
 Erdős [Er44] suspected this is false for sufficiently large $n$. Confirmed
 by Kahn–Kalai [KK93], who disproved the conjecture for $n \geq 2015$.
-The current best is $n \geq 64$ (Jenrich–Brouwer, 2014).
+The current best is $n \geq 63$ (Grinsztajn, 2026); the smallest refereed
+counterexample is $n = 64$ (Jenrich–Brouwer, 2014).
 
 The conjecture is true for $n \leq 3$ (Eggleston [Eg55] for $n = 3$).
 
@@ -40,54 +42,38 @@ The conjecture is true for $n \leq 3$ (Eggleston [Eg55] for $n = 3$).
 - [KK93] Kahn, J., Kalai, G. (1993). *A counterexample to Borsuk's conjecture*.
   Bull. Amer. Math. Soc. 29, 60–62.
 
+This file points to the canonical formalization in
+`FormalConjectures.Wikipedia.BorsukConjecture`.
+
 ### AI disclosure
 
 Lean 4 code in this file was drafted with assistance from Claude (Anthropic).
 The mathematical content and references are the author's own work.
 -/
 
-open Metric Set
+open Borsuk
 
 namespace Erdos505
 
-@[category test, AMS 52]
-theorem erdos_505.test_dim_one
-    (S : Set (EuclideanSpace ℝ (Fin 1)))
-    (hS : Bornology.IsBounded S) (hd : 0 < diam S) :
-    ∃ (F : Fin 2 → Set (EuclideanSpace ℝ (Fin 1))),
-      S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
-  sorry
-
 /-- **Erdős Problem 505** (disproved). Borsuk's conjecture is false for
 sufficiently large $n$: there exists a dimension $n$ and a bounded set
-$S \subseteq \mathbb{R}^n$ with positive diameter such that $S$ cannot be
-covered by $n + 1$ subsets each of diameter strictly less than $\operatorname{diam}(S)$.
+$S \subseteq \mathbb{R}^n$ with at least two points that cannot be
+covered by $n + 1$ subsets each of strictly smaller diameter.
 
 Erdős [Er44] suspected this. Disproved by Kahn–Kalai [KK93] for
-$n \geq 2015$. Currently known to be false for $n \geq 64$.
+$n \geq 2015$. Currently known to be false for $n \geq 63$.
 A formal proof was formalised by Boris Alexeev using Aristotle. -/
 @[category research solved, AMS 52,
   formal_proof using lean4 at
     "https://github.com/plby/lean-proofs/blob/96cd54930d844e3655e6bb89b96b65516397dae9/src/v4.24.0/ErdosProblems/Erdos505.lean#L1153"]
-theorem erdos_505 : ∃ (n : ℕ),
-    ∃ (S : Set (EuclideanSpace ℝ (Fin n))),
-      Bornology.IsBounded S ∧ 0 < diam S ∧
-        ∀ (F : Fin (n + 1) → Set (EuclideanSpace ℝ (Fin n))),
-          S ⊆ ⋃ i, F i →
-          ∃ i, diam S ≤ diam (F i) := by
+theorem erdos_505 : type_of% borsuk_conjecture.not_forall := by
   sorry
 
-/-- **Borsuk's conjecture, small dimensions** (open / true for $n \leq 3$).
-Every bounded set $S \subseteq \mathbb{R}^n$ with $n \leq 3$ can be
-covered by $n + 1$ subsets each of strictly smaller diameter.
-
-Trivial for $n \leq 2$; proved for $n = 3$ by Eggleston [Eg55]. -/
+/-- **Borsuk's conjecture, small dimensions**: `Borsuk.BorsukConjecture n` holds for
+$n \leq 3$. Elementary for $n \leq 1$, proved by Borsuk [Bo33] for $n = 2$ and by
+Eggleston [Eg55] for $n = 3$. -/
 @[category research solved, AMS 52]
-theorem erdos_505.small_dim (n : ℕ) (hn : n ≤ 3)
-    (S : Set (EuclideanSpace ℝ (Fin n)))
-    (hS : Bornology.IsBounded S) (hd : 0 < diam S) :
-    ∃ (F : Fin (n + 1) → Set (EuclideanSpace ℝ (Fin n))),
-      S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
+theorem erdos_505.small_dim (n : ℕ) (hn : n ≤ 3) : BorsukConjecture n := by
   sorry
 
 end Erdos505
