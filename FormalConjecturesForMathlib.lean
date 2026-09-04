@@ -60,6 +60,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.AnnihilationNumber
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.ChromaticIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
