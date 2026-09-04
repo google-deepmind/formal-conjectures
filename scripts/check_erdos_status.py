@@ -48,18 +48,28 @@ FORMAL_PROOF_ATTR = re.compile(
 # `informal_status.state` is the mathematical status, and these two sets are the whole of its
 # vocabulary. `formal_status.state` separately says whether a machine-checked proof exists.
 # Upstream also publishes the two joined into `status.state` ("proved (Lean)"), but that is a
-# product of two vocabularies and gains a value whenever either side does, so read the fields
-# rather than enumerating their combinations.
-OPEN_STATES = {"open", "falsifiable", "verifiable"}
-SOLVED_STATES = {
-    "solved",
-    "proved",
-    "disproved",
+# product of two vocabularies and gains a value whenever either side does, so the code reads
+# the two fields instead of their combinations.
+#
+# The split below follows the definitions in the upstream CONTRIBUTING.md. Three of these
+# states name a problem that is still open: "decidable" is "both falsifiable and verifiable,
+# but not yet solved", and "not provable" and "not disprovable" are each "open in general",
+# with a model of set theory that settles the problem one way. "independent" is a resolution,
+# so it counts as solved.
+OPEN_STATES = {
+    "open",
+    "falsifiable",
+    "verifiable",
+    "decidable",
     "not provable",
     "not disprovable",
-    "independent",
-    "decidable",
 }
+SOLVED_STATES = {"solved", "proved", "disproved", "independent"}
+
+# Upstream states this value explicitly and never leaves it blank, and every other value
+# names a proof assistant. CONTRIBUTING.md reserves the right to add assistants, and 6
+# problems already carry an undocumented "formalized", so the code tests this one value
+# rather than a list that would skip a problem whenever upstream adds a name.
 UNFORMALIZED_STATE = "unformalized"
 
 
@@ -75,13 +85,13 @@ def fetch_yaml():
 def problem_status(problem):
     """The (informal, formal) status states of a YAML problem.
 
-    Each default claims the least. An absent formal state means no formalisation is recorded,
-    which degrades a settled problem to 'solved' rather than inventing a proof. An absent
-    informal state is not a status at all, so it falls into the warn-and-skip path below
-    instead of asserting that the problem is open.
+    Each default claims the least. An absent, null or empty formal state records no
+    formalisation, so a settled problem degrades to 'solved' and the code does not invent
+    a proof. An absent informal state is not a status at all, so it falls into the
+    warn-and-skip path below and does not assert that the problem is open.
     """
     informal = (problem.get("informal_status") or {}).get("state")
-    formal = (problem.get("formal_status") or {}).get("state", UNFORMALIZED_STATE)
+    formal = (problem.get("formal_status") or {}).get("state") or UNFORMALIZED_STATE
     return informal, formal
 
 

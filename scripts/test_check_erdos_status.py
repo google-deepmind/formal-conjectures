@@ -30,9 +30,14 @@ def issue(number, problem, repo="solved", site="formally solved"):
 
 
 def category(problem):
-    """The category the script reads a YAML problem as, with warnings swallowed."""
-    with contextlib.redirect_stderr(io.StringIO()):
-        return yaml_status_to_category(*problem_status(problem))
+    """The category the script reads a YAML problem as, with any warning discarded."""
+    return category_and_warning(problem)[0]
+
+
+def category_and_warning(problem):
+    """The category the script reads a YAML problem as, and what it wrote to stderr."""
+    with contextlib.redirect_stderr(io.StringIO()) as warning:
+        return yaml_status_to_category(*problem_status(problem)), warning.getvalue()
 
 
 class ProblemStatusTest(unittest.TestCase):
@@ -43,15 +48,32 @@ class ProblemStatusTest(unittest.TestCase):
                       "formal_status": {"state": "Lean"}}), "formally solved")
 
     def test_a_missing_formal_status_claims_no_formalisation(self):
-        # Guessing a formalisation would attach the `formalisation exists elsewhere`
-        # label to an issue with nothing behind it.
+        # A guessed formalisation attaches the `formalisation exists elsewhere` label
+        # to an issue with nothing behind it.
         self.assertEqual(category({"informal_status": {"state": "proved"}}), "solved")
 
-    def test_a_missing_informal_status_is_unreadable(self):
-        # Not "open". Defaulting an absent field to a real status is a positive claim:
-        # if upstream ever renames this field, every problem reads as open. That
-        # reports 205 false mismatches and makes every open problem's issue closable.
-        self.assertIsNone(category({"formal_status": {"state": "Lean"}}))
+    def test_a_null_formal_status_block_claims_no_formalisation(self):
+        # PyYAML turns `formal_status:` with no body into None, so the `or {}` guard
+        # carries this case. Without it the script dies on an AttributeError.
+        self.assertEqual(
+            category({"informal_status": {"state": "proved"}, "formal_status": None}),
+            "solved")
+
+    def test_a_null_formal_state_claims_no_formalisation(self):
+        # `state:` with no value is a present key, so a `.get` default never fires for
+        # it. Read as a formalisation, it labels an issue with a proof that is not there.
+        self.assertEqual(
+            category({"informal_status": {"state": "proved"},
+                      "formal_status": {"state": None}}), "solved")
+
+    def test_a_missing_informal_status_warns_and_is_unreadable(self):
+        # Not "open". A real status for an absent field is a positive claim: if upstream
+        # ever renames this field, every problem reads as open. That reports 205 false
+        # mismatches and makes every open problem's issue closable. The warning is the
+        # only signal a human gets, so assert that half of warn-and-skip too.
+        cat, warning = category_and_warning({"formal_status": {"state": "Lean"}})
+        self.assertIsNone(cat)
+        self.assertIn("unrecognized YAML informal status state", warning)
 
     def test_a_null_status_block_is_unreadable(self):
         # PyYAML turns `informal_status:` with no body into None, not into {}.
@@ -70,8 +92,8 @@ class YamlStatusToCategoryTest(unittest.TestCase):
         self.assertEqual(yaml_status_to_category("proved", "Lean"), "formally solved")
 
     def test_any_formal_state_other_than_unformalized_counts(self):
-        # Upstream writes both 'Lean' and 'formalized'. Matching only the 'Lean'
-        # spelling is what silently skipped Erdős 1, 74 and 126.
+        # Upstream writes both 'Lean' and 'formalized', and CONTRIBUTING.md documents
+        # only 'Lean'. A match on that spelling alone skipped Erdős 1, 74 and 126.
         self.assertEqual(
             yaml_status_to_category("disproved", "formalized"), "formally solved")
 
@@ -88,13 +110,26 @@ class YamlStatusToCategoryTest(unittest.TestCase):
              for s in ("falsifiable", "verifiable")],
             ["open", "open"])
 
-    def test_the_less_obvious_solved_states_are_solved(self):
-        # Spelled out rather than looped over `SOLVED_STATES`, so that dropping one
-        # from the set fails here instead of being tracked silently.
+    def test_decidable_is_open(self):
+        # Upstream defines it as "both falsifiable and verifiable, but not yet solved".
+        # Both of those are open above, so their conjunction cannot be solved. Read as
+        # solved, it kept false sync issues open for Erdős 506 and 742.
+        self.assertEqual(yaml_status_to_category("decidable", "unformalized"), "open")
+
+    def test_the_set_theoretic_undecided_states_are_open(self):
+        # Upstream defines both as "open in general", with a model of set theory that
+        # settles the problem one way. Read as solved, they mismatch every repository
+        # file that correctly says open, as they did for Erdős 1176.
         self.assertEqual(
             [yaml_status_to_category(s, "unformalized")
-             for s in ("not provable", "not disprovable", "independent", "decidable")],
-            ["solved", "solved", "solved", "solved"])
+             for s in ("not provable", "not disprovable")],
+            ["open", "open"])
+
+    def test_independence_is_a_resolution(self):
+        # The one set-theoretic state that settles a problem, so it stays solved.
+        # Erdős 1119 is `research solved` in this repository and agrees.
+        self.assertEqual(
+            yaml_status_to_category("independent", "unformalized"), "solved")
 
     def test_it_reads_the_informal_state_first(self):
         # Both arguments are strings, so swapping them at a call site type-checks.
