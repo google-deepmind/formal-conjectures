@@ -51,6 +51,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
+public import FormalConjecturesForMathlib.Combinatorics.OrientedMatroid.Chirotope
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
