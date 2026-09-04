@@ -36,8 +36,12 @@ For a simple connected graph `G`, if `b(G) ≤ 2 + ecc_avg(G)`, then `G` has a H
 Here `b(G)` is the number of vertices in a largest induced bipartite subgraph, and
 `ecc_avg(G)` is the average eccentricity of `G`.
 A Hamiltonian path is a walk visiting every vertex exactly once.
+
+Solved in [Luke Kabbash, *A Hamiltonian-Path Criterion from Bipartite Number and
+Average Eccentricity*](https://github.com/lukekabbash/wowii-198a-lean/blob/49f080bbaee83821e9e9744eef14c5acaae2a101/paper/main.pdf).
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/lukekabbash/wowii-198a-lean/blob/49f080bbaee83821e9e9744eef14c5acaae2a101/lean/src/ConditionalMain.lean#L52-L57"]
 theorem conjecture198a (G : SimpleGraph α) (h : G.Connected)
     (hb : b G ≤ 2 + averageEccentricity G) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
