@@ -37,6 +37,34 @@ theorem erdos_257 : answer(sorry) ↔ ∀ (A : Set ℕ), A.Infinite →
   sorry
 
 /--
+Let $b \ge 2$ be an integer and let $A \subseteq \mathbb{N}$ be an infinite set with
+$\sum_{a \in A} \frac{1}{a} < \infty$. Then
+$$
+\sum_{a \in A} \frac{1}{b^a - 1}
+$$
+is irrational.
+
+[Er68] proves this on p. 222 for pairwise coprime $A$, at every integer base $b \ge 2$.
+The next sentence of that paper states that pairwise coprimality can be removed by a more
+complicated argument, which is not printed there. The linked proof establishes the
+coprimality-free statement.
+
+Consequently, any infinite $A$ for which $\sum_{a \in A} \frac{1}{2^a - 1}$ is rational has
+$\sum_{a \in A} \frac{1}{a} = \infty$. This does not decide `erdos_257`.
+
+As in `erdos_257`, the term at $a = 0$ contributes $0$ under Lean's division convention.
+
+[Er68] Erdős, P., _On the irrationality of certain series_. Math. Student 36 (1968), 222-226.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/c94b23bb94fd29186bece8aea70de195f81fd8ab/adapters/FormalConjecturesVariants.lean#L663-L673"]
+theorem erdos_257.variants.summable_reciprocal_support
+    (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite)
+    (hsum : Summable fun a : A => (1 : ℝ) / (a : ℕ)) :
+    Irrational (∑' n : A, (1 : ℝ) / ((b : ℝ) ^ (n : ℕ) - 1)) := by
+  sorry
+
+/--
 Show that
 $$
 \sum_{n} \frac{1}{2^n - 1} = \sum_{n} \frac{d(n)}{2^n},
