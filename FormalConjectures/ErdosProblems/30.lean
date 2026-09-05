@@ -21,9 +21,9 @@ import FormalConjecturesUtil
 
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 
-This file supplements the Erdős–Turán Sidon-set problem with the classical bounds that
-frame it (elementary counting, Erdős–Turán, Lindström, Balogh–Füredi–Roy, Singer), stated
-as variants. Each variant's docstring carries its own reference. -/
+This file records elementary Sidon-set bounds, concrete witnesses, and conditional
+consequences of explicitly stated numerical and existence hypotheses. The original
+Erdős problem remains open. Each variant's docstring carries its own reference. -/
 
 namespace Erdos30
 
@@ -34,6 +34,7 @@ noncomputable abbrev h (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 
 
 
 open Filter
+open scoped Pointwise
 
 /--
 Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varepsilon}(N^\varepsilon)$
@@ -45,7 +46,7 @@ theorem erdos_30 : answer(sorry) ↔
 
 /- ## Variant 1: Elementary upper bound k(k-1) ≤ 2N
 
-For a Sidon set A ⊆ {0,...,N}, the |A|(|A|-1) ordered pairs (a,b) with a ≠ b
+For a Sidon set A ⊆ {0,...,N}, the |A|(|A|-1)/2 pairs (a,b) with b < a
 yield distinct positive differences in {1,...,N}, giving |A|(|A|-1)/2 ≤ N. -/
 
 /-- **Elementary upper bound.** For a Sidon set $A \subseteq \{0,\dots,N\}$,
@@ -107,7 +108,7 @@ theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ)
     · rintro ⟨a, ha, b, hb, rfl⟩
       rcases le_total a b with hab | hba
       · exact ⟨(a, b), ⟨⟨ha, hb⟩, hab⟩, rfl⟩
-      · exact ⟨(b, a), ⟨⟨hb, ha⟩, hba⟩, add_comm a b⟩
+      · exact ⟨(b, a), ⟨⟨hb, ha⟩, hba⟩, add_comm b a⟩
     · rintro ⟨⟨a, b⟩, ⟨⟨ha, hb⟩, _⟩, rfl⟩
       exact ⟨a, ha, b, hb, rfl⟩
   -- the sum map is injective on the weakly-increasing pairs, so it suffices to count them
@@ -176,15 +177,11 @@ theorem erdos_30.variants.erdos_turan (A : Finset ℕ) (N : ℕ)
   rw [← erdos_30.variants.distinct_sums_card A hS]
   simpa using Finset.card_le_card (erdos_30.variants.distinct_sums_in_range A N hA)
 
-/- ## Variant 3: Balogh–Füredi–Roy 2023 upper bound
+/- ## Variant 3: Conditional numerical bound
 
-The current best upper bound is h(N) ≤ √N + 0.998·N^{1/4} + 1 for N ≥ 10^12
-(Balogh–Füredi–Roy 2023, Amer. Math. Monthly 130(5), arXiv:2103.15850). The
-proof combines Erdős–Turán counting (Variant 2) with Lindström's residue-class
-inequality (archived externally) via Cauchy–Schwarz.
-
-We record the numerical core of the BFR theorem as a named `Prop`-valued
-hypothesis and derive the headline |A| bound from it. -/
+Balogh–Füredi–Roy prove an upper bound with coefficient 0.998 for sufficiently
+large intervals. The rounded inequality below is a separate, explicit hypothesis;
+no proof or paper-derived threshold for that hypothesis is supplied here. -/
 
 /-- Cauchy–Schwarz variance decomposition (BFR Lemma 4.1, real-valued form).
 
@@ -209,45 +206,29 @@ theorem erdos_30.variants.bfr_cauchy_schwarz {v : ℕ} (y : Fin v → ℝ) (d : 
       ↑X.card * d ^ 2 - 2 * d * (d_X * ↑X.card) + ∑ x ∈ X, (y x) ^ 2 := by ring
   rw [h_rhs, hd_X]
 
-/-- **Named hypothesis (BFR core, 2023; numerical specialisation).**
-Specialised numerical form of the Balogh–Füredi–Roy bound, captured as a
-`Prop`-valued definition so consumers must thread it explicitly rather than
-inheriting it from an `axiom`. The statement: for every Sidon set
-$A \subseteq \{0,\dots,N\}$ with $N \ge 10^{12}$,
-$1000 \cdot (|A| - 1) \le 1000 \cdot \lfloor\sqrt N\rfloor +
-998 \cdot \lfloor\sqrt[4] N\rfloor$.
+/-- An explicit rounded numerical hypothesis for the conditional variant below.
 
-**Note on scope.** Balogh–Füredi–Roy (2023) prove their headline bound
-$|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ for *sufficiently large* $N$ without
-giving an explicit threshold in the paper. The hypothesis recorded here is
-a formal numerical specialisation in $\mathbb{N}$-arithmetic — extracted
-from the paper's coefficient analysis — using $N \ge 10^{12}$ as a
-conservative threshold under which the `Nat.sqrt` rounding losses are
-absorbed by the slack between the paper's coefficient $63/64 \approx 0.984$
-and the Monthly form $0.998$. This is not a literal restatement of any
-single inequality in the paper.
+For every Sidon set $A \subseteq \{0,\dots,N\}$ with $N \ge 10^{12}$, assume
+$1000(|A|-1) \le 1000\lfloor\sqrt N\rfloor+
+998\lfloor\sqrt[4]N\rfloor$.
 
-The full proof requires the combination of:
-- Section 2: Erdős–Turán discrepancy with slack term $C$ (interval decomposition,
-  representation function distribution analysis).
-- Section 3: set-systems / residue-class bound $k^2 m \le (2N + m - 1)(m + k - 1)$.
-- Section 4: Cauchy–Schwarz combination yielding coefficient $63/64$.
+This definition does not assert the hypothesis. Balogh–Füredi–Roy's theorem
+motivates the coefficient 0.998, but does not supply the threshold $10^{12}$
+or this rounded inequality.
 
-**Reference:** Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the
-size of Sidon sets.* Amer. Math. Monthly **130**(5), 437–445. arXiv:2103.15850. -/
+**Reference for the asymptotic result:** Balogh, J., Füredi, Z., Roy, S. (2023).
+*An upper bound on the size of Sidon sets.* Amer. Math. Monthly **130**(5),
+437–445, Theorem 1.1. [arXiv:2103.15850](https://arxiv.org/abs/2103.15850). -/
 def BFRCoreBound : Prop :=
   ∀ (A : Finset ℕ) (N : ℕ), IsSidon ((A : Set ℕ)) →
     A ⊆ Finset.range (N + 1) → N ≥ 10^12 →
     1000 * (A.card - 1) ≤ 1000 * Nat.sqrt N + 998 * Nat.sqrt (Nat.sqrt N)
 
-/-- **Balogh–Füredi–Roy 2023 upper bound.** Conditional on the named
-`BFRCoreBound` hypothesis: for a Sidon set $A \subseteq \{0,\dots,N\}$ with
-$N \ge 10^{12}$, $|A| \le \sqrt N + 0.998\,N^{1/4} + 1$ (integer form).
+/-- A conditional arithmetic consequence of `BFRCoreBound`.
 
-**Reference:** Balogh, J., Füredi, Z., Roy, S. (2023). *An upper bound on the
-size of Sidon sets.* Amer. Math. Monthly **130**(5), 437–445, Theorem 1 (the
-headline bound, p. 437). arXiv:2103.15850. -/
-@[category research solved, AMS 11]
+The rounded premise is assumed explicitly; this theorem does not prove the
+Balogh–Füredi–Roy asymptotic bound or an explicit threshold for it. -/
+@[category textbook, AMS 11]
 theorem erdos_30.variants.bfr (h_bfr : BFRCoreBound)
     (A : Finset ℕ) (N : ℕ) (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) (hN : N ≥ 10^12) :
@@ -255,27 +236,21 @@ theorem erdos_30.variants.bfr (h_bfr : BFRCoreBound)
   have h := h_bfr A N hS hA hN
   omega
 
-/- ## Variant 4: Lindström 1969 weak corollary (proved)
+/- ## Variant 4: Elementary square-root corollary
 
-Lindström (1969) proved the sharper classical form $h(N) \le \sqrt N + N^{1/4} + 1$.
-That sharper bound requires the full sorted-enumeration + telescoping argument
-(≈1000 lines of Lean); the machine-checked proof of the sharper form lives in
-the external archive (github.com/MendozaLab/erdos-experiments/tree/main/Erdos30,
-DOI 10.5281/zenodo.19444428).
+Lindström (1969) proved the sharper classical bound
+$h(N) < \sqrt N + N^{1/4} + 1$. The following weaker bound follows directly
+from counting positive differences. -/
 
-The weaker $|A| \le \lfloor\sqrt{2N}\rfloor + 1$ form is an immediate corollary
-of the elementary $|A|(|A|-1) \le 2N$ bound proved above, and is recorded here
-historically as Lindström's weak form. -/
+/-- For a Sidon set $A \subseteq \{0,\dots,N\}$ with $|A| \ge 2$,
+$|A| \le \lfloor\sqrt{2N}\rfloor + 1$.
 
-/-- **Lindström weak form (corollary).** For a Sidon set $A \subseteq \{0,\dots,N\}$
-with $N \ge 1$ and $|A| \ge 2$, $|A| \le \lfloor\sqrt{2N}\rfloor + 1$.
+This follows from `erdos_30.variants.elementary_difference_count` via
+$(|A|-1)^2 \le |A|(|A|-1)$ and `Nat.le_sqrt`.
 
-This follows from the elementary `erdos_30.variants.elementary_difference_count`
-bound $|A|(|A|-1) \le 2N$ via $(|A|-1)^2 \le |A|(|A|-1)$ and `Nat.le_sqrt`.
-
-**Reference:** Lindström, B. (1969). *An inequality for B₂-sequences.*
-J. Combin. Theory **6**, 211–212 (whole paper, two pages). -/
-@[category research solved, AMS 11]
+For the sharper classical bound, see Lindström, B. (1969).
+*An inequality for B₂-sequences.* J. Combin. Theory **6**, 211–212. -/
+@[category textbook, AMS 11]
 theorem erdos_30.variants.lindstrom_weak (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ)))
     (hA : A ⊆ Finset.range (N + 1)) (hk : 1 < A.card) :
@@ -288,7 +263,7 @@ theorem erdos_30.variants.lindstrom_weak (A : Finset ℕ) (N : ℕ)
   have h_sqrt_le : A.card - 1 ≤ Nat.sqrt (2 * N) := Nat.le_sqrt.mpr h_sq
   omega
 
-/- ## Variant 5: Singer 1938 lower bound
+/- ## Variant 5: Singer 1938 Sidon witnesses
 
 For every prime $q$, projective geometry over $\mathrm{GF}(q)$ yields a Sidon
 set of size $q+1$ in $\{0,\dots,q^2+q\}$ (Singer 1938). The points of any line
@@ -296,7 +271,7 @@ in $\mathrm{PG}(2,q)$, indexed by a Singer cycle, form a perfect difference
 set in $\mathbb{Z}_{q^2+q+1}$, and perfect difference sets are Sidon.
 
 We record concrete witnesses for $q \in \{2,3,5,7,11,13\}$ verified by
-`native_decide` (each is fully decidable, axiom-free), and record the prime
+`native_decide` on closed decidable propositions, and record the prime
 case of the general construction as a named `Prop`-valued hypothesis with full
 reference.
 
@@ -369,17 +344,14 @@ it explicitly rather than inheriting it from an `axiom`.
 
 Singer's original theorem covers every prime *power* $q$. The hypothesis
 recorded here is the conservative restriction to the prime case (which
-suffices for the lower-bound consequence below; the prime-power case extends
-in the same form). The full proof uses projective geometry: the points of a
-line in $\mathrm{PG}(2,q)$, indexed by powers of a Singer cycle of order
+suffices for the conditional witness consequence below; the prime-power
+case has the same statement form). The full proof uses projective geometry: the
+points of a line in $\mathrm{PG}(2,q)$, indexed by powers of a Singer cycle of order
 $q^2+q+1$, form a perfect difference set in $\mathbb{Z}_{q^2+q+1}$. Perfect
 difference sets are Sidon sets via the difference-injectivity property.
 
-The general formalization requires `GaloisField` machinery (cyclic structure
-of $\mathrm{GF}(q^3)^\times$), trace/norm maps from $\mathrm{GF}(q^3)$ to
-$\mathrm{GF}(q)$, and a Singer-cycle construction not currently in Mathlib.
-Concrete cases $q \in \{2,3,5,7,11,13\}$ above are fully decidable via
-`native_decide`.
+The general construction is assumed here. The concrete cases
+$q \in \{2,3,5,7,11,13\}$ above are checked using `native_decide`.
 
 **Reference:** Singer, J. (1938). *A theorem in finite projective geometry
 and some applications to number theory.* Trans. Amer. Math. Soc. **43**(3),
@@ -388,13 +360,15 @@ def SingerSidonExists : Prop :=
   ∀ (q : ℕ), Nat.Prime q →
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧ ∀ a ∈ A, a ≤ q * q + q
 
-/-- **Singer lower bound.** Conditional on the named `SingerSidonExists`
-hypothesis: for prime $q$, $h(q^2+q) \ge q+1$ via Singer's construction.
+/-- **Conditional Singer witness in $\{0,\dots,q^2+q\}$.**
+Assuming `SingerSidonExists`, for prime $q$ the conclusion supplies a Sidon
+set of size $q+1$ in `Finset.range (q*q+q+1)`. This theorem does not conclude
+a bound for `h`, whose defining interval is `Finset.Icc 1 N`.
 
 **Reference:** Singer, J. (1938). *A theorem in finite projective geometry
 and some applications to number theory.* Trans. Amer. Math. Soc. **43**(3),
 377–385 (Theorem 1, p. 380). -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_30.variants.singer (h_singer : SingerSidonExists)
     (q : ℕ) (hq : Nat.Prime q) :
     ∃ A : Finset ℕ, IsSidon ((A : Set ℕ)) ∧ A.card = q + 1 ∧
@@ -403,12 +377,10 @@ theorem erdos_30.variants.singer (h_singer : SingerSidonExists)
   exact ⟨A, hSidon, hCard,
     fun a ha => Finset.mem_range.mpr (by linarith [hRange a ha])⟩
 
-/-- The Singer bound exceeds $\sqrt N$: $(q+1)^2 > q^2+q$.
-
-**Reference:** Singer (1938), Trans. Amer. Math. Soc. **43**(3), p. 380
-(comparison of $q+1$ against $\sqrt{q^2+q}$, i.e. the Sidon-lower-bound
-matches $\sqrt N$ to leading order). -/
-@[category research solved, AMS 11]
+/-- Arithmetic comparison for the Singer parameters: $(q+1)^2 > q^2+q$.
+This elementary inequality alone does not assert the existence of a Sidon
+set or give a lower bound for `h`. -/
+@[category textbook, AMS 11]
 theorem erdos_30.variants.singer_exceeds_sqrt (q : ℕ) (_hq : 0 < q) :
     (q + 1) * (q + 1) > q * q + q := by nlinarith
 
