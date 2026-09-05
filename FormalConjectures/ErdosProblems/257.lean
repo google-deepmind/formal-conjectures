@@ -65,6 +65,54 @@ theorem erdos_257.variants.summable_reciprocal_support
   sorry
 
 /--
+Is there an infinite set $A \subseteq \mathbb{N}$ with
+$$
+\sum_{n \in A} \frac{1}{2^n - 1} = \frac{1}{2}?
+$$
+
+A positive answer refutes the universal statement in `erdos_257`. The restriction to
+infinite $A$ costs nothing, because no finite set has this value
+(`erdos_257.variants.half_not_finite_support`), so the question is equivalent to asking
+whether $\tfrac12$ lies in the set of all subseries values.
+
+The linked corpus reduces a positive answer to a single inequality holding for infinitely
+many rows of an explicit greedy remainder sequence, and records that the inequality holds
+at about half of the rows checked. That record is numerical evidence and proves nothing
+about the question. See
+[`half_mem_of_remainderReachesHalfPointCofinally`](https://github.com/wcook04/plectis-erdos/blob/fd53947f32d9146629be163521d3d5c7cb87a1a8/ErdosProblems/Bit/R2.lean#L306)
+for the reduction and
+[`frontier.json`](https://github.com/wcook04/plectis-erdos/blob/fd53947f32d9146629be163521d3d5c7cb87a1a8/docs/semantic/frontier.json)
+for the record. The question remains open.
+
+As in `erdos_257`, the term at $n = 0$ contributes $0$ under Lean's division convention.
+-/
+@[category research open, AMS 11]
+theorem erdos_257.variants.half_infinite_support :
+    answer(sorry) ↔ ∃ A : Set ℕ, A.Infinite ∧
+      ∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1) = 1 / 2 := by
+  sorry
+
+/--
+No finite set $A \subseteq \mathbb{N}$ satisfies
+$$
+\sum_{n \in A} \frac{1}{2^n - 1} = \frac{1}{2}.
+$$
+
+Every finite subsum has odd reduced denominator, since each $2^n - 1$ with $n \ge 1$ is
+odd, while $\tfrac12$ has denominator $2$. The term at $n = 0$ contributes $0$ under
+Lean's division convention.
+
+This is the finite half of `erdos_257.variants.half_infinite_support`: any set with
+value $\tfrac12$ is infinite.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/e0b476742edd0937b0f50da566803b669f197b72/adapters/FormalConjecturesVariants.lean#L377-L396"]
+theorem erdos_257.variants.half_not_finite_support
+    (A : Set ℕ) (hA : A.Finite) :
+    ∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1) ≠ 1 / 2 := by
+  sorry
+
+/--
 Show that
 $$
 \sum_{n} \frac{1}{2^n - 1} = \sum_{n} \frac{d(n)}{2^n},
