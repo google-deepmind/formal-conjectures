@@ -77,12 +77,13 @@ theorem erdos_307.variants.coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Fins
 A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution with `Q` nonempty uses at
 least 59 primes in total, and `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and, by
 symmetry, the same for `∏ Q`); so no solution lies below a prime-product of `2.09·10⁵⁶`. The full
-`sorry`-free proof is in the linked repository (`Closed.lean` at tag `v1.0.0`): the left conjunct is
-`card_ge_59`, the right is `erdos307_barrier_closed`. The only non-logical input is a `native_decide`
-evaluation of the first 59 primes; the axioms are `propext, Classical.choice, Quot.sound` together
-with that `native_decide`.
+`sorry`-free proof is in the linked repository (`Closed.lean`): the left conjunct is `card_ge_59`,
+the right is `erdos307_barrier_closed`. Both depend on `propext, Classical.choice, Quot.sound` and
+nothing further: the evaluation of the first 59 primes is kernel-checked by `decide`, so no
+`native_decide` enters this statement.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ElVec1o/erdos307/blob/v1.0.0/lean/Erdos307/Closed.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at
+"https://github.com/ElVec1o/erdos307/blob/76d242b024102f32d8411c714be4ad140a8b7c4b/lean/Erdos307/Closed.lean#L121"]
 theorem erdos_307.barrier {P Q : Finset ℕ}
     (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime) (hQne : Q.Nonempty)
     (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :

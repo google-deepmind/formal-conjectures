@@ -96,6 +96,43 @@ def create_stubs(literate_dir):
             print('  Fixed domain-mappers.js (removed export statements)')
 
 
+def fix_code_css(literate_dir):
+    """Fix layout and scrolling issues in code.css."""
+    css_path = os.path.join(literate_dir, 'code.css')
+    if not os.path.exists(css_path):
+        return
+
+    with open(css_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    modified = False
+    if '.content-wrapper' not in content:
+        content += '''
+/* Content wrapper: flex row for code content + page ToC */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.main-area {
+    min-height: 0;
+}
+
+.code-content {
+    min-height: 0;
+}
+'''
+        modified = True
+
+    if modified:
+        with open(css_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print('  Fixed code.css (added .content-wrapper layout rules)')
+
+
 def main():
     if len(sys.argv) < 2:
         print('Usage: python3 fix_literate_html.py <literate-html-dir>', file=sys.stderr)
@@ -108,6 +145,9 @@ def main():
 
     # Create stubs for missing JS files
     create_stubs(literate_dir)
+
+    # Fix code.css layout rules
+    fix_code_css(literate_dir)
 
     # Fix all HTML files
     count = 0

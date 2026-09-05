@@ -199,8 +199,16 @@ function theoremURL(theoremName) {
   return `${base}/theorem/?name=${encodeURIComponent(theoremName)}`;
 }
 
+// Human-readable labels for formal proof kinds
+const FORMAL_PROOF_LABELS = {
+  'formal_conjectures': 'Formal Conjectures',
+  'lean4':              'Lean 4 (external)',
+  'other_system':       'Other system',
+};
+
 // Expose helpers as globals for the other scripts
 window.FC = {
+  FORMAL_PROOF_LABELS,
   loadData,
   getCategoryMeta,
   makeBadge,

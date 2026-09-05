@@ -39,7 +39,8 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.
 In [Ko16] Péter Komjáth constructed a counterexample.
 The same result was proven independently in [SWCol] by Sokoup and Weiss.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, AMS 3 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos965.lean#L42"]
 theorem erdos_965 :
     answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
       ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A), a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
