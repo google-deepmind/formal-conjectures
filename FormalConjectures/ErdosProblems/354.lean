@@ -44,8 +44,10 @@ theorem erdos_354.parts.i : answer(sorry) ↔ ∀ᵉ (α > 0) (β > 0), Irration
 /-- Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is
 $$\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
 \{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}$$ complete? -/
-@[category research open, AMS 11]
-theorem erdos_354.parts.ii : answer(sorry) ↔ ∃ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-354-part-ii/blob/5536b1874d734cfaac522a379722b8cd828dd343/lean/Erdos354PartIIFC.lean#L362-L380"]
+theorem erdos_354.parts.ii : answer(True) ↔ ∃ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) (β > 0), Irrational (α / β) →
     IsAddCompleteNatSeq' (FloorMultiples.interleave α β γ) := by
   sorry
 
