@@ -25,6 +25,8 @@ References:
   theory. Monographies de L'Enseignement Mathematique (1980).
 - [GeRa79] Gerver, Joseph L. and Ramsey, L. Thomas, "On certain sequences of lattice points."
   Pacific J. Math. (1979), 357-363.
+- [CaKa26] Cambie, Stijn and Kalviainen, Erik, "An infinite small-step Z³-walk with no
+  collinear triple." [arXiv:2609.01766](https://arxiv.org/abs/2609.01766).
 -/
 
 open Set
@@ -43,10 +45,14 @@ def HasCollinearTriple (R) {V : Type*} [DivisionRing R] [AddCommGroup V] [Module
 Let $S \subseteq \mathbb{Z}^3$ be a finite set and let $A = \lbrace a_1, a_2, \ldots \rbrace$ be
 an infinite $S$-walk, so that $a_{i+1} - a_i \in S$ for all $i$. Must $A$ contain three collinear
 points?
+
+Cambie and Kalviainen [CaKa26] answered this question in the negative by constructing an infinite
+walk in $\mathbb{Z}^3$ with a finite set of steps and no three collinear points.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/ekalvi/erdos-193/blob/fca4e1bd2b423c000a6bef18cf2f3bc0f4bd363e/formal/Hilbert193/Hilbert193/Continuity.lean#L64-L72"]
 theorem erdos_193 :
-    answer(sorry) ↔ ∀ S : Set (Fin 3 → ℤ), S.Finite →
+    answer(False) ↔ ∀ S : Set (Fin 3 → ℤ), S.Finite →
       /- The statement's $A = \lbrace a_1, a_2, \ldots \rbrace$ is an infinite set.
 
       If the sequence only takes finitely many values, one value has to repeat infinitely many
