@@ -31,8 +31,10 @@ $$B=\{ n \geq 1 : a\mid n\textrm{ for some }a\in A\}.$$
 Is it true that, for every $m>n\geq \max(A)$,
 $$\frac{\lvert B\cap [1,m]\rvert }{m}< 2\frac{\lvert B\cap [1,n]\rvert}{n}?$$
 -/
-@[category research open, AMS 5 11]
-theorem erdos_488 : answer(sorry) ↔ ∀ (A : Finset ℕ), A.Nonempty →
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://gist.github.com/declangessel/d8e15e5ff1b6c7e99e3d86d7c66f1d08/034be67a5c958e55505bb357f9e4ef3015788465#file-erdos488-lean"]
+theorem erdos_488 : answer(False) ↔ ∀ (A : Finset ℕ), A.Nonempty →
     -- These are needed for the reasons outlined here: https://github.com/google-deepmind/formal-conjectures/pull/256
     0 ∉ A → 1 ∉ A →
     letI B := {n ≥ 1 | ∃ a ∈ A, a ∣ n}
