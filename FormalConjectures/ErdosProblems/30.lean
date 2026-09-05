@@ -86,7 +86,7 @@ theorem erdos_30.variants.elementary_difference_count (A : Finset ℕ) (N : ℕ)
 /- ## Variant 2: Distinct pairwise sums (Erdős–Turán counting)
 
 For a Sidon set A of size k, the multiset of sums {a+b : a,b ∈ A, a ≤ b}
-has all k(k+1)/2 values distinct. They lie in {2,...,2N}, giving the
+has all k(k+1)/2 values distinct. They lie in {0,...,2N}, giving the
 Erdős–Turán bound k(k+1)/2 ≤ 2N+1. -/
 
 /-- For a Sidon set, $|(A + A)| = |A|(|A|+1)/2$.
@@ -170,7 +170,7 @@ $|A|(|A|+1)/2 \le 2N+1$.
 **Reference:** Erdős, P., Turán, P. (1941). *On a problem of Sidon in additive
 number theory, and on some related problems.* J. London Math. Soc. **16**,
 212–215 (Theorem on p. 213). -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_30.variants.erdos_turan (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ))) (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card + 1) / 2 ≤ 2 * N + 1 := by
