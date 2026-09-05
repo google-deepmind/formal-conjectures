@@ -150,7 +150,7 @@ theorem erdos_304.variants.upper_1950 :
 In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/thepriceisright/erdos-agent/blob/69da0052af237ffc3380207b46b18bdb83fcc2fe/docs/evidence/erdos304-lower1950-formalization.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/thepriceisright/publications/blob/8f055eb3fd1485477c92cbfbdfa4b3c56f192610/erdos/304/Lower1950.lean"]
 theorem erdos_304.variants.lower_1950 :
     (fun b : ℕ => Real.log (Real.log b)) =O[atTop]
       (fun b => (smallestCollectionTo b : ℝ)) := by
