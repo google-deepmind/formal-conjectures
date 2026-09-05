@@ -38,11 +38,17 @@ Let $P(n, k)$ be the largest prime factor of $\binom{n}{k}$.
 def P (n k : ℕ) : ℕ := (n.choose k).primeFactors.sup id
 
 /--
-There exists $c > 0$ such that $P(n, k) > \min\{n-k+1, k^{1 + c}\}$ for all $0 < k < n$.}
+Let $P(n, k)$ be the largest prime factor of $\binom{n}{k}$.
+There exists $c > 0$ such that $P(n, k) \ge k^{1 + c}$ for all $0 < k \le n/2$.
+
+Erdős originally stated this for $1 \le k \le n$ with a $\min(n-k+1, k^{1+c})$ bound [Er79d],
+but as discussed on [erdosproblems.com](https://www.erdosproblems.com/forum/discuss/683),
+the $\min$ term was introduced only to handle $k > n/2$; the problem is naturally stated
+for $k \le n/2$ (cf. [#961](https://www.erdosproblems.com/961)).
 -/
 @[category research open, AMS 11]
 theorem erdos_683 : answer(sorry) ↔
-    (∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k < n → P n k > min (n - k + 1 : ℝ) (k ^ (1 + c))) := by
+    ∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 → (P n k : ℝ) ≥ k ^ (1 + c) := by
   sorry
 
 /--

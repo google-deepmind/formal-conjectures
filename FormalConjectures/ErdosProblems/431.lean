@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,20 +17,21 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Erdős Problem 479
+# Erdős Problem 431
 
-*Reference:* [erdosproblems.com/479](https://www.erdosproblems.com/479)
+*Reference:* [erdosproblems.com/431](https://www.erdosproblems.com/431)
 -/
 
-namespace Erdos479
+namespace Erdos431
 
-/--
-Is it true that, for every integer $k\neq 1$, there are infinitely many $n$ such that
-$2^n\equiv k\pmod{n}$?
--/
+open scoped Pointwise
+
+/-- Are there two infinite sets $A$ and $B$ such that $A+B$ agrees with the primes up to finitely
+many exceptions? -/
 @[category research open, AMS 11]
-theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k : ℤ) (k ≠ 1),
-    { n : ℕ | (2 : ℤ) ^ n ≡ k [ZMOD (n : ℤ)] }.Infinite := by
+theorem erdos_431 : answer(sorry) ↔
+    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧
+      (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime} := by
   sorry
 
-end Erdos479
+end Erdos431

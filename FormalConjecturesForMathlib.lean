@@ -168,6 +168,10 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
+public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
+public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
+public import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph

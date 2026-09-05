@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,24 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
+public import Mathlib.RingTheory.Noetherian.Defs
 
 /-!
-# Erdős Problem 479
+# Right Noetherian rings
 
-*Reference:* [erdosproblems.com/479](https://www.erdosproblems.com/479)
+This file defines right Noetherian semirings.
 -/
 
-namespace Erdos479
+@[expose] public section
 
-/--
-Is it true that, for every integer $k\neq 1$, there are infinitely many $n$ such that
-$2^n\equiv k\pmod{n}$?
--/
-@[category research open, AMS 11]
-theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k : ℤ) (k ≠ 1),
-    { n : ℕ | (2 : ℤ) ^ n ≡ k [ZMOD (n : ℤ)] }.Infinite := by
-  sorry
+universe u
 
-end Erdos479
+/-- A semiring is right Noetherian if it is Noetherian as a right module over itself. -/
+abbrev IsRightNoetherianRing (R : Type u) [Semiring R] : Prop :=
+  IsNoetherian Rᵐᵒᵖ R

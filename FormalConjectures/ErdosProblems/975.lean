@@ -72,6 +72,9 @@ theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg 
     (fun x ↦ x * log x) =O[atTop] Erdos975Sum f := by
   sorry
 
+-- The constant is only known in terms of Hurwitz class numbers, which are not yet formalized
+-- (see the `TODO` below), so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 When $f$ is an irreducible quadratic polynomial, the question is answered first by Hooley [Ho63].
 More compact expression of the constant in terms of Hurwitz class numbers (when $a = 1$)

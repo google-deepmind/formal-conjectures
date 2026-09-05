@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,20 +17,26 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Erdős Problem 479
+# Erdős Problem 462
 
-*Reference:* [erdosproblems.com/479](https://www.erdosproblems.com/479)
+*Reference:* [erdosproblems.com/462](https://www.erdosproblems.com/462)
 -/
 
-namespace Erdos479
+namespace Erdos462
+
+open Filter
+open scoped BigOperators
 
 /--
-Is it true that, for every integer $k\neq 1$, there are infinitely many $n$ such that
-$2^n\equiv k\pmod{n}$?
+Let $p(n)$ denote the least prime factor of $n$. Is there a constant $C>0$ such that
+$$\sum_{x\leq n\leq x+C\sqrt{x}(\log x)^2}\frac{p(n)}{n}\gg 1$$
+for all sufficiently large $x$?
 -/
 @[category research open, AMS 11]
-theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k : ℤ) (k ≠ 1),
-    { n : ℕ | (2 : ℤ) ^ n ≡ k [ZMOD (n : ℤ)] }.Infinite := by
+theorem erdos_462 : answer(sorry) ↔
+    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ᶠ x : ℕ in atTop,
+      c ≤ ∑ n ∈ Finset.Icc x
+        ⌊(x : ℝ) + C * Real.sqrt x * (Real.log x) ^ 2⌋₊, (n.minFac : ℝ) / n := by
   sorry
 
-end Erdos479
+end Erdos462
