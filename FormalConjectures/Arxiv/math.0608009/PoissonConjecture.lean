@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
+import FormalConjectures.Wikipedia.JacobianConjecture
 import FormalConjecturesUtil
 
 /-!
@@ -54,7 +55,7 @@ so that the canonical bracket reads $\{X_i, X_{i+n}\} = 1$; see
 
 namespace Arxiv.«math.0608009»
 
-open MvPolynomial
+open MvPolynomial JacobianConjecture
 
 variable {K : Type*} [Field K] [CharZero K]
 
@@ -75,17 +76,6 @@ algebra endomorphism preserving the Poisson bracket is again such. -/
 def PoissonConjectureFor (n : ℕ) : Prop :=
   ∀ φ : MvPolynomial (Fin n ⊕ Fin n) K →ₐ[K] MvPolynomial (Fin n ⊕ Fin n) K,
     IsPoissonEndomorphism φ → Function.Bijective φ
-
-variable (K) in
-/-- The Jacobian Conjecture in dimension `m`: every polynomial endomorphism of $K^m$ with
-unit Jacobian determinant has a polynomial inverse. This is the per-dimension form of the
-statement in `FormalConjectures.Wikipedia.JacobianConjecture`, which quantifies over all
-finite variable types at once. -/
-def JacobianConjectureFor (m : ℕ) : Prop :=
-  ∀ F : RegularFunction K (Fin m) (Fin m), IsUnit F.Jacobian.det →
-    ∃ G : RegularFunction K (Fin m) (Fin m),
-      G.comp F = RegularFunction.id K (Fin m) ∧
-      F.comp G = RegularFunction.id K (Fin m)
 
 /--
 The **Poisson Conjecture** ([AvdE07], the characteristic zero case): for every `n`, every
@@ -146,7 +136,7 @@ The Jacobian conjecture in dimension $2n$ implies the Poisson conjecture in dime
 -/
 @[category research solved, AMS 14 17]
 theorem poisson_conjecture.variants.jacobian_implication (n : ℕ)
-    (h : JacobianConjectureFor K (2 * n)) : PoissonConjectureFor K n := by
+    (h : JacobianConjectureProp K (Fin (2 * n))) : PoissonConjectureFor K n := by
   sorry
 
 section Tests

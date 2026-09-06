@@ -46,10 +46,11 @@ pairs of distinct points at distance `d` apart. -/
 noncomputable def distanceMultiplicity (points : Finset X) (d : ℝ) : ℕ :=
   #(points.offDiag.filter fun (pair : X × X) => dist pair.1 pair.2 = d) / 2
 
+open Classical in
 /-- Given a finite set of points in a metric space, we define the number of distinct distances
 between a given point and all other points. -/
 noncomputable def distinctDistancesFrom (points : Finset X) (pt : X) : ℕ :=
-  #(points.image fun x => dist x pt)
+  #((points.erase pt).image fun x => dist x pt)
 
 open Classical in
 /-- The number of unit-distance pairs of a finite set of `n` points is at most $\binom{n}{2}$,
