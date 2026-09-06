@@ -32,7 +32,7 @@ open Erdos786
 
 -- TODO : add variants that allow repetition.
 -- According to the updated website, Erdos likely intended repetitions to be allowed here
--- however, the analogous questions without repetition are also open.
+-- Part (i) without repetition has an external formal refutation; part (ii) remains open.
 /--
 `Nat.IsMulCardSet A` means that `A` is a set of natural numbers that
 satisfies the property that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$
@@ -47,8 +47,10 @@ Let $\epsilon > 0$. Is there some set $A\subset\mathbb{N}$ of density $> 1 - \ep
 such that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
-@[category research open, AMS 11]
-theorem erdos_786.parts.i : answer(sorry) ↔ ∀ ε > 0, ε ≤ 1 →
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/WoshuaJolk/jig-verifier/blob/f8b1f084d62fcfa81ae9c26000cd04da51a865a4/Submissions/Erdos786DistinctDensityRefuted/BadPrimes.lean"]
+theorem erdos_786.parts.i : answer(False) ↔ ∀ ε > 0, ε ≤ 1 →
     ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet := by
   sorry
 
