@@ -40,6 +40,7 @@ def IsAdmissible (n : ℕ) (S : Finset ℕ) : Prop :=
     ∀ a ∈ S, ∀ b ∈ S, a ≠ b → Nat.Coprime a b
 
 /-- The maximum weight of an admissible subset of `{1, ..., n}`. -/
+open scoped Classical in
 noncomputable def G (n : ℕ) : ℕ :=
   ((Finset.Icc 1 n).powerset.filter (IsAdmissible n)).sup setWeight
 
