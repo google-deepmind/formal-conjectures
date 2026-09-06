@@ -74,7 +74,7 @@ $$\textrm{ord}(d(n), p) = \sum_{k=1}^n k\,\textrm{ord}(\lfloor n/k \rfloor, p) =
 Combining the two gives:
 $$\textrm{ord}(a(n), p) = \sum_{r \geq 1} \sum_{k=1}^n \left(\left\lfloor \frac{n}{p^r} \right\rfloor \textrm{mod } k\right).$$
 
-Defining $b(m) = m \textrm{mod } k$, we obtain $\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$.
+Defining $b(m) = \sum_{k=1}^m m \textrm{ mod } k$, we obtain $\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$.
 
 As $b(m) \geq 0$, $\textrm{ord}(a(n), p)$ is non-negative for any $p$, so $a(n)$ is an integer.
 -/
@@ -92,7 +92,8 @@ Conjecture (2): If $p$ is a prime, then $p \mid a(n)$ if and only if $p \le n/3$
 Proof summary:
 
 We use the formula shown above:
-$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where
+$b(m) = \sum_{k=1}^m m \textrm{ mod } k$.
 
 If $p ∣ a(n)$ then $b(\lfloor n/p^r \rfloor) ≥ 1$ for some $r ≥ 1$. Since b(m) = 0$ for $m \leq 2$,
 we must have $n / p^r \geq 3$. If the inequality holds for $r \geq 1$, it must be true for $r = 1$.
@@ -112,7 +113,8 @@ $\mathrm{ord}_p(a(np)) = \mathrm{ord}_p(a(np + k))$.
 Proof summary:
 
 This follows from the formula shown above:
-$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where
+$b(m) = \sum_{k=1}^m m \textrm{ mod } k$.
 
 Since $k < p$, we have $\lfloor (np + k)/p^r \rfloor = \lfloor np/p^r \rfloor$ for every $r \geq 1$,
 proving the claim.
@@ -131,7 +133,8 @@ $\mathrm{ord}_p(a(np)) = \sum_{i \ge 0} b(\lfloor n/p^i \rfloor)$.
 Proof summary:
 
 This follows directly from the formula shown at the beginning:
-$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where
+$b(m) = \sum_{k=1}^m m \textrm{ mod } k$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
