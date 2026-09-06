@@ -60,7 +60,23 @@ theorem a_4 : a 4 = 1 := by decide +native
 /--
 Conjecture (1): $a(n)$ is always an integer (the denominator divides the numerator).
 
-Answer: true, see linked proof.
+Proof summary:
+
+Let $c(n) = \prod_{j=1}^n \prod_{k=1}^n (j,k)$ be the numerator.
+Observe that
+$$\textrm{ord}(c(n), p) = \left\lfloor \frac{n}{p} \right\rfloor^2 + \left\lfloor \frac{n}{p^2} \right\rfloor^2 + ...$$
+proven similar to Legendre's formula for $\textrm{ord}(n!, p)$.
+
+Next let $d(n) = \prod_{k=1}^n (\lfloor n/k \rfloor!)^k$ be the denominator.
+Observe that
+$$\textrm{ord}(d(n), p) = \sum_{k=1}^n k\,\textrm{ord}(\lfloor n/k \rfloor, p) = \sum_{k=1}^n \sum_{r \geq 1} k \left\lfloor \frac{\lfloor n/p^r \rfloor}{k} \right\rfloor.$$
+
+Combining the two gives:
+$$\textrm{ord}(a(n), p) = \sum_{r \geq 1} \sum_{k=1}^n \left(\left\lfloor \frac{n}{p^r} \right\rfloor \textrm{mod } k\right).$$
+
+Defining $b(m) = m \textrm{mod } k$, we obtain $\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$.
+
+As $b(m) \geq 0$, $\textrm{ord}(a(n), p)$ is non-negative for any $p$, so $a(n)$ is an integer.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -73,7 +89,14 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
 /--
 Conjecture (2): If $p$ is a prime, then $p \mid a(n)$ if and only if $p \le n/3$.
 
-Answer: true, see linked proof.
+Proof summary:
+
+We use the formula shown above:
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
+
+If $p ∣ a(n)$ then $b(\lfloor n/p^r \rfloor) ≥ 1$ for some $r ≥ 1$. Since b(m) = 0$ for $m \leq 2$,
+we must have $n / p^r \geq 3$. If the inequality holds for $r \geq 1$, it must be true for $r = 1$.
+Hence $n \geq 3p$, proving the conjecture.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -86,7 +109,13 @@ theorem conjecture2 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
 Conjecture (3): For each positive integer $n$, prime $p$, and $0 \le k < p$,
 $\mathrm{ord}_p(a(np)) = \mathrm{ord}_p(a(np + k))$.
 
-Answer: true, see linked proof.
+Proof summary:
+
+This follows from the formula shown above:
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
+
+Since $k < p$, we have $\lfloor (np + k)/p^r \rfloor = \lfloor np/p^r \rfloor$ for every $r \geq 1$,
+proving the claim.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -99,7 +128,10 @@ theorem conjecture3 (n p k : ℕ) (hn : 0 < n) (hp : p.Prime) (hk : k < p) :
 Conjecture (4): Let $b(n) = \mathrm{A004125}(n) = \sum_{k=1}^n (n \bmod k)$. Then
 $\mathrm{ord}_p(a(np)) = \sum_{i \ge 0} b(\lfloor n/p^i \rfloor)$.
 
-Answer: true, see linked proof.
+Proof summary:
+
+This follows directly from the formula shown at the beginning:
+$\textrm{ord}(a(n), p) = \sum_{r \geq 1} b(\lfloor n/p^r \rfloor)$ where $b(m) = m \textrm{mod } k$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
