@@ -119,11 +119,9 @@ theorem root_367_le_shannonCapacityC7 : (367 : ℝ) ^ (5 : ℝ)⁻¹ ≤ shannon
   apply le_trans ?_ (indepNum_strongPow_le_shannonCapacity (cycleGraph 7) (n := 5) (by norm_num))
   simp only [Nat.cast_ofNat]
   gcongr
-  convert Nat.cast_le.mpr threesixseven_le_indepNum_pow_five
+  have (a b : ℕ) : a ≤ b ↔ (a : ℝ) ≤ b := by exact Iff.symm Nat.cast_le
+  convert (Nat.cast_le (α := ℝ)).mpr threesixseven_le_indepNum_pow_five
   · rfl
   · rfl
-  · infer_instance
-  · infer_instance
-  · infer_instance
 
 end SimpleGraph
