@@ -142,6 +142,7 @@ public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.AlmostPrime
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
 public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
