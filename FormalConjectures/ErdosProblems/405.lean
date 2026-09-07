@@ -78,11 +78,13 @@ theorem erdos_405.variants.nonodd_p :
     omega
 
 /--
-Yu and Liu [YuLi96] showed that the only solutions to (p-1)! + a^(p-1) = p^k
+Yu and Liu [YuLi96] showed that the only solutions to $(p-1)! + a^(p-1) = p^k$
 for an odd prime p are:
-2! + 1^2 = 3
-2! + 5^2 = 3^3
+$$
+2! + 1^2 = 3\\
+2! + 5^2 = 3^3\\
 4! + 1^4 = 5^2
+$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_405.variants.yu_liu :
