@@ -26,25 +26,26 @@ in terms of the rank of the matrix multiplication tensor.
 
 *References:*
 * [CKSU05] H. Cohn, R. Kleinberg, B. Szegedy, and C. Umans,
-  [*Group-theoretic Algorithms for Matrix Multiplication*](https://arxiv.org/abs/math/0511460),
-  Introduction and Section 1.1.
+  [*Group-theoretic Algorithms for Matrix Multiplication*](https://doi.org/10.1109/SFCS.2005.39),
+  FOCS 2005, 379–388, Introduction and Section 1.1.
+  [Preprint](https://arxiv.org/abs/math/0511460).
 * [CHILO18] L. Chiantini, J. D. Hauenstein, C. Ikenmeyer, J. M. Landsberg, and G. Ottaviani,
-  [*Polynomials and the exponent of matrix multiplication*](https://arxiv.org/abs/1706.05074),
-  Section 1.
+  [*Polynomials and the exponent of matrix multiplication*](https://doi.org/10.1112/blms.12147),
+  Bull. London Math. Soc. 50 (2018), 369–389, equation (1.1) and the following paragraph.
+  [Preprint](https://arxiv.org/abs/1706.05074).
 -/
 
 namespace MatrixMultiplicationExponent
 
-/-- The coefficient of $A_{01}B_{10}C_{00}$ is $1$. -/
+/-- All $64$ coefficients at $n = 2$ match the cyclic index conditions in
+$\operatorname{tr}(ABC) = \sum_{i,j,k} A_{ij} B_{jk} C_{ki}$. -/
 @[category test, AMS 15]
-theorem matrixMulTensor_two_coefficient_one :
-    Holor.matrixMulTensor ℤ 2 ⟨[1, 2, 0], by decide⟩ = 1 := by
-  decide
-
-/-- The coefficient of $A_{01}B_{10}C_{01}$ is $0$. -/
-@[category test, AMS 15]
-theorem matrixMulTensor_two_coefficient_zero :
-    Holor.matrixMulTensor ℤ 2 ⟨[1, 2, 1], by decide⟩ = 0 := by
+theorem matrixMulTensor_two_coefficients :
+    ∀ a b c : Fin 4,
+      Holor.matrixMulTensor ℤ 2
+        ⟨[a.val, b.val, c.val], .cons a.isLt (.cons b.isLt (.cons c.isLt .nil))⟩ =
+        if a.val % 2 = b.val / 2 ∧ b.val % 2 = c.val / 2 ∧ c.val % 2 = a.val / 2
+        then 1 else 0 := by
   decide
 
 /-- The matrix multiplication exponent over $\mathbb{C}$ is $2$: for every

@@ -20,12 +20,14 @@ public import Mathlib.Data.Holor
 /-!
 # The matrix multiplication tensor
 
-The coefficient tensor of the trilinear form $(A,B,C) \mapsto \operatorname{tr}(ABC)$
-has three modes, each indexing the entries of an $n \times n$ matrix.
+The matrix multiplication tensor has three modes, each indexing the entries of an
+$n \times n$ matrix. Over a commutative ring, its trilinear form is
+$(A,B,C) \mapsto \operatorname{tr}(ABC)$.
 
 *Reference:* L. Chiantini, J. D. Hauenstein, C. Ikenmeyer, J. M. Landsberg, and G. Ottaviani,
-[*Polynomials and the exponent of matrix multiplication*](https://arxiv.org/abs/1706.05074),
-Section 1.
+[*Polynomials and the exponent of matrix multiplication*](https://doi.org/10.1112/blms.12147),
+Bull. London Math. Soc. 50 (2018), 369–389, equation (1.1).
+An accessible [preprint](https://arxiv.org/abs/1706.05074) is also available.
 -/
 
 @[expose] public section
@@ -55,7 +57,7 @@ variable (R)
 
 /-- The matrix multiplication tensor $\sum_{i,j,k} e_{ij} \otimes e_{jk} \otimes e_{ki}$.
 Each matrix coordinate $(i,j)$ is encoded by $i n + j$ in a mode of size $n^2$.
-Its trilinear form is $(A,B,C) \mapsto \operatorname{tr}(ABC)$. -/
+Over a commutative ring, its trilinear form is $(A,B,C) \mapsto \operatorname{tr}(ABC)$. -/
 def matrixMulTensor (n : ℕ) : Holor R [n * n, n * n, n * n] :=
   ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, ∑ k ∈ Finset.range n,
     unitVec (n * n) (i * n + j) ⊗
