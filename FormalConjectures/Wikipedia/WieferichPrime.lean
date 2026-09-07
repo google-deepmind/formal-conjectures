@@ -23,10 +23,15 @@ A Wieferich prime is a prime $p$ with $2^{p-1} \equiv 1 \pmod{p^2}$. The only kn
 $1093$ and $3511$. It is conjectured that there are infinitely many Wieferich primes; a heuristic
 argument suggests that the number of Wieferich primes up to $x$ grows like $\log \log x$.
 
+More generally, a prime $p$ is a Wieferich prime to base $a$ if $a^{p-1} \equiv 1 \pmod{p^2}$.
+Wikipedia's list of unsolved problems also asks whether there are infinitely many Wieferich primes
+to every base $a > 0$, and whether there is any Wieferich prime to base $47$.
+
 *References:*
 * [Wikipedia, List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics)
 * [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
 * [OEIS A001220](https://oeis.org/A001220)
+* P. Ribenboim, *Die Welt der Primzahlen*, 2nd ed., Springer (2006), pp. 242–243.
 -/
 
 namespace WieferichPrime
@@ -35,6 +40,25 @@ namespace WieferichPrime
 @[category research open, AMS 11]
 theorem infinite_isWieferichPrime : {p : ℕ | IsWieferichPrime p}.Infinite := by
   sorry
+
+/--
+For any given integer $a > 0$, are there infinitely many primes $p$ such that
+$a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qualifies.
+-/
+@[category research open, AMS 11]
+theorem infinite_isWieferichPrimeBase :
+    answer(sorry) ↔ ∀ a : ℕ, 0 < a → {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
+  sorry
+
+/-- Are there any Wieferich primes to base $47$? None is currently known. -/
+@[category research open, AMS 11]
+theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPrimeBase 47 p := by
+  sorry
+
+/-- Every prime is a Wieferich prime to base $1$. -/
+@[category test, AMS 11]
+theorem isWieferichPrimeBase_one_iff (p : ℕ) : IsWieferichPrimeBase 1 p ↔ p.Prime := by
+  simp [isWieferichPrimeBase_iff, Nat.ModEq.refl]
 
 /-- The prime $1093$ is a Wieferich prime: $2^{1092} \equiv 1 \pmod{1093^2}$. -/
 @[category test, AMS 11]
