@@ -189,7 +189,8 @@ tower construction.
 A "completely split" rational prime $q$ in $F$ is one for which $(q)$ is the product of exactly
 $[F:\mathbb{Q}]$ distinct maximal ideals.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/n-yamaguchi-0729/SawinTotallyRealTowers/blob/1c848b887a72b27d5f791186c40c49f8559f94de/Lean4/SawinTotallyRealTowers/SawinTotallyRealTower.lean#L31"]
 theorem sawin_totally_real_tower :
     ∃ (rdBound : ℝ) (Q : Set ℕ), Q.Infinite ∧ (∀ q ∈ Q, q.Prime ∧ q % 4 = 1) ∧
       ∀ N : ℕ, ∃ (F : Type) (_ : Field F) (_ : CharZero F) (_ : NumberField F)
