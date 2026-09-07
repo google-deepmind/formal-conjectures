@@ -204,12 +204,6 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
-/--
-The minimum number of distinct distances guaranteed for any set of $n$ points.
--/
-noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
-  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
-
 /-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
 where the points are ordered such that
 $$R(x_1)\leq \cdots \leq R(x_n).$$
