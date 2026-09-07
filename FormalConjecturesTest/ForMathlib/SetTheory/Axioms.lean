@@ -241,13 +241,13 @@ def MartinsAxiomFor (k : Cardinal.{v}) : Prop :=
 theorem MartinsAxiomFor.anti {k c : Cardinal.{v}} (h : k ≤ c) (hc : MartinsAxiomFor c) :
     MartinsAxiomFor k := by
   unfold MartinsAxiomFor at hc ⊢
-  intro X t s nx t2 cx ccc hs sc
-  exact lt_of_le_of_lt h <| hc X t s nx t2 cx ccc hs sc
+  intro X t nx t2 cx ccc s hs sc
+  exact lt_of_le_of_lt h <| hc X s hs sc
 
 theorem not_martinsAxiomFor_continuum_bot : ¬ MartinsAxiomFor.{0} 𝔠 := by
   simp only [MartinsAxiomFor, not_forall, not_lt]
-  refine ⟨unitInterval, inferInstance, {{i} | i : unitInterval}, inferInstance, inferInstance,
-    inferInstance, inferInstance, ?_, ?_, ?_⟩
+  refine ⟨unitInterval, inferInstance , inferInstance, inferInstance, inferInstance,
+    inferInstance, {{i} | i : unitInterval}, ?_, ?_, ?_⟩
   · intro a ⟨i, hi⟩
     simp [← hi, IsNowhereDense]
   · ext
@@ -266,7 +266,7 @@ theorem not_martinsAxiomFor_continuum_bot : ¬ MartinsAxiomFor.{0} 𝔠 := by
 
 theorem martinsAxiomFor_le_aleph0 {c : Cardinal.{v}} (hc : c ≤ ℵ₀) : MartinsAxiomFor c := by
   apply MartinsAxiomFor.anti hc
-  intro X t s ne t2 cx _ hs sc
+  intro X t ne t2 cx _ s hs sc
   by_contra! hsc
   apply not_isMeagre_of_isOpen (X := X) isOpen_univ Set.univ_nonempty
   apply isMeagre_iff_countable_union_isNowhereDense.mpr
