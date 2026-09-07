@@ -44,23 +44,21 @@ theorem exists_isWieferichPrime_and_isMirimanoffPrime :
     answer(sorry) ↔ ∃ p : ℕ, IsWieferichPrime p ∧ IsMirimanoffPrime p := by
   sorry
 
-/-- The prime $11$ is a Mirimanoff prime: $3^{10} \equiv 1 \pmod{11^2}$. -/
-@[category test, AMS 11]
-theorem isMirimanoffPrime_11 : IsMirimanoffPrime 11 := by
-  decide
-
 /-- The prime $11$ is a Mirimanoff prime but not a Wieferich prime. -/
 @[category test, AMS 11]
 theorem isMirimanoffPrime_and_not_isWieferichPrime_11 :
     IsMirimanoffPrime 11 ∧ ¬ IsWieferichPrime 11 := by
   decide
 
-/-- The primes $2$ and $3$ satisfy neither congruence, so no hypothesis excluding them is needed
-in the statement of the problem. -/
+/-- Neither $2$ nor $3$ is a Mirimanoff prime, so no hypothesis excluding them is needed in the
+statement of the problem. -/
 @[category test, AMS 11]
-theorem not_isWieferichPrime_and_not_isMirimanoffPrime_two_three :
-    ¬ IsWieferichPrime 2 ∧ ¬ IsMirimanoffPrime 2 ∧
-      ¬ IsWieferichPrime 3 ∧ ¬ IsMirimanoffPrime 3 := by
+theorem not_isMirimanoffPrime_two_three : ¬ IsMirimanoffPrime 2 ∧ ¬ IsMirimanoffPrime 3 := by
+  decide
+
+/-- The prime $3$ is not a Wieferich prime. For $2$, see `WieferichPrime.not_isWieferichPrime_two`. -/
+@[category test, AMS 11]
+theorem not_isWieferichPrime_three : ¬ IsWieferichPrime 3 := by
   decide
 
 end WieferichMirimanoffPrime
