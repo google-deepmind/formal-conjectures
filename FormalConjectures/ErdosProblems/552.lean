@@ -1,0 +1,52 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 552
+
+*References:*
+- [erdosproblems.com/552](https://www.erdosproblems.com/552)
+- [BEHRS80] Burr, S. A., Erdős, P., Harary, F., Rousseau, C. C. and Schelp, R. H., Ramsey-minimal
+  graphs for star-forests. Bull. London Math. Soc. (1980), 384-386.
+-/
+
+namespace Erdos552
+
+/--
+Determine the Ramsey number
+$$R(C_4, S_n),$$
+where $S_n=K_{1,n}$ is the star on $n+1$ vertices.
+-/
+@[category research open, AMS 5]
+theorem erdos_552 :
+    ∀ (n : ℕ),
+      SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4) (completeBipartiteGraph (Fin 1) (Fin n)) =
+        answer(sorry) := by
+  sorry
+
+/--
+In particular, is it true that, for any $c > 0$, there are infinitely many $n$ such that
+$$R(C_4, S_n) \leq n + \sqrt{n} - c?$$
+-/
+@[category research open, AMS 5]
+theorem erdos_552.parts.upper_bound : answer(sorry) ↔
+    ∀ (c : ℝ), 0 < c →
+      Set.Infinite {n : ℕ | (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4) (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
+  sorry
+
+end Erdos552
