@@ -57,7 +57,8 @@ theorem setOf_isWieferichPrime_eq :
 /--
 For any given integer $a > 0$, are there infinitely many primes $p$ such that
 $a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qualifies
-(`isWieferichPrimeBase_one_iff`).
+(`isWieferichPrimeBase_one_iff`). So is the case $a = 0$ under our definition
+(`isWieferichPrimeBase_zero_iff`), which is why the source's restriction to $a > 0$ is dropped.
 -/
 @[category research open, AMS 11]
 theorem infinite_isWieferichPrimeBase :
