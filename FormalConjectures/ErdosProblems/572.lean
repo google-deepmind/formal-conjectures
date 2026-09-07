@@ -37,7 +37,6 @@ namespace Erdos572
 Show that for $k\geq 3$
 $$\mathrm{ex}(n;C_{2k})\gg n^{1+\frac{1}{k}}.$$
 
-Erdős [Er64c] and Bondy and Simonovits [BoSi74] proved the upper bound $O(k n^{1+1/k})$.
 This problem is #46 in Extremal Graph Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]

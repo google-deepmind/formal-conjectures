@@ -57,21 +57,11 @@ noncomputable def f (n : ℕ) : ℕ :=
 
 /--
 Let $f(n)$ be the minimal $m$ such that if the edges of $K_{2^n+1}$ are coloured with $n$ colours
-then there must be a monochromatic odd cycle of length at most $m$.
-
-Estimate $f(n)$. In particular, is $f(n) \leq 2^{cn}$ for some $c < 1$?
+then there must be a monochromatic odd cycle of length at most $m$. Estimate $f(n)$.
 -/
 @[category research open, AMS 5]
 theorem erdos_609 : answer(sorry) ↔
     ∃ c : ℝ, c < 1 ∧ ∀ᶠ (n : ℕ) in atTop, (f n : ℝ) ≤ (2 : ℝ) ^ (c * n) := by
-  sorry
-
-/--
-Chung [Ch97] asked whether $f(n)\to \infty$ as $n\to \infty$.
-Day and Johnson [DaJo17] proved this is true.
--/
-@[category research solved, AMS 5]
-theorem erdos_609.chung : answer(True) ↔ Tendsto f atTop atTop := by
   sorry
 
 -- TODO: Add variants of the problem.
