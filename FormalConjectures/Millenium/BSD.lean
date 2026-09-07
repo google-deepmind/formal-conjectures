@@ -41,33 +41,27 @@ import FormalConjecturesUtil
 
 namespace BirchSwinnertonDyer
 
+open scoped Topology
+
 variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
 
 def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Differentiable ℂ L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+  Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
 
-/-- The $L$-function of `E` is unique: two entire functions agreeing with
-`WeierstrassCurve.LSeries` on $\operatorname{Re}(s) > 3/2$ agree everywhere. -/
 @[category API, AMS 11 14]
-theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L') :
-    L = L' := by
-  refine AnalyticOnNhd.eq_of_eventuallyEq (Complex.analyticOnNhd_univ_iff_differentiable.2 hL.1)
-    (Complex.analyticOnNhd_univ_iff_differentiable.2 hL'.1) (z₀ := 2) ?_
-  have hopen : IsOpen {s : ℂ | 3 / 2 < s.re} := isOpen_lt continuous_const Complex.continuous_re
-  filter_upwards [hopen.mem_nhds (by norm_num)] with s hs
-  rw [hL.2 s hs, hL'.2 s hs]
+theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L')
+    (x : ℂ) : L =ᶠ[𝓝[≠] x] L' := by
+  have h2 : meromorphicOrderAt (L - L') 2 = ⊤ := meromorphicOrderAt_eq_top_iff.2 <|
+    Filter.Eventually.mono (nhdsWithin_le_nhds <| (Complex.isOpen_re_gt (3 / 2)).mem_nhds
+      (by norm_num)) fun s hs => sub_eq_zero.2 ((hL.2 s hs).trans (hL'.2 s hs).symm)
+  have key : meromorphicOrderAt (L - L') x = ⊤ := not_not.1 fun hx =>
+    (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
+  exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs => sub_eq_zero.1 hs
 
-/-- Every special value $L(E, s)$ is well defined, in particular the central value $L(E, 1)$
-and the order of vanishing $\operatorname{ord}_{s = 1} L(E, s)$ appearing in the conjecture. -/
-@[category API, AMS 11 14]
-theorem IsLFunction.apply_eq {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L')
-    (s : ℂ) : L s = L' s :=
-  congrFun (hL.unique hL') s
-
-/-- **Hasse--Weil conjecture** for elliptic curves over $\mathbb{Q}$, a consequence of the modularity
-theorem: the $L$-function of an elliptic curve over $\mathbb{Q}$ extends to an entire function.
-Over a general number field this is open. -/
-@[category research solved, AMS 11 14]
+/-- **Hasse--Weil conjecture** for elliptic curves over $\mathbb{Q}$, a consequence of the
+modularity theorem: the $L$-function of an elliptic curve over $\mathbb{Q}$ extends to the whole
+plane. Over a general number field this is open. -/
+@[category research open, AMS 11 14]
 theorem exists_isLFunction (E : WeierstrassCurve ℚ) [E.IsElliptic] : ∃ L, IsLFunction E L := by
   sorry
 
