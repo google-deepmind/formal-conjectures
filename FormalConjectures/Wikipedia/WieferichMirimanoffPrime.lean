@@ -1,0 +1,66 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjecturesUtil
+
+/-!
+# Can a prime $p$ satisfy $2^{p-1} \equiv 1 \pmod{p^2}$ and $3^{p-1} \equiv 1 \pmod{p^2}$?
+
+A prime $p$ with $2^{p-1} \equiv 1 \pmod{p^2}$ is a Wieferich prime (the only known examples
+are $1093$ and $3511$). A prime $p$ with $3^{p-1} \equiv 1 \pmod{p^2}$ is a Mirimanoff prime
+(the only known examples are $11$ and $1006003$). It is an open question whether a prime can
+satisfy both congruences simultaneously. Lenstra gave a heuristic argument against this.
+
+*References:*
+* [Wikipedia, List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics)
+* [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
+* J. B. Dobson, [On Lerch's formula for the Fermat quotient](https://arxiv.org/abs/1103.3907v6)
+* [OEIS A001220](https://oeis.org/A001220) (Wieferich primes)
+* [OEIS A014127](https://oeis.org/A014127) (Mirimanoff primes)
+-/
+
+namespace WieferichMirimanoffPrime
+
+/--
+Can a prime $p$ satisfy $2^{p-1} \equiv 1 \pmod{p^2}$ and $3^{p-1} \equiv 1 \pmod{p^2}$
+simultaneously? That is, does there exist a prime $p$ that is both a Wieferich prime and a
+Mirimanoff prime?
+-/
+@[category research open, AMS 11]
+theorem exists_isWieferichPrime_and_isMirimanoffPrime :
+    answer(sorry) ↔ ∃ p : ℕ, IsWieferichPrime p ∧ IsMirimanoffPrime p := by
+  sorry
+
+/-- The prime $11$ is a Mirimanoff prime: $3^{10} \equiv 1 \pmod{11^2}$. -/
+@[category test, AMS 11]
+theorem isMirimanoffPrime_11 : IsMirimanoffPrime 11 := by
+  decide
+
+/-- The prime $11$ is a Mirimanoff prime but not a Wieferich prime. -/
+@[category test, AMS 11]
+theorem isMirimanoffPrime_and_not_isWieferichPrime_11 :
+    IsMirimanoffPrime 11 ∧ ¬ IsWieferichPrime 11 := by
+  decide
+
+/-- The primes $2$ and $3$ satisfy neither congruence, so no hypothesis excluding them is needed
+in the statement of the problem. -/
+@[category test, AMS 11]
+theorem not_isWieferichPrime_and_not_isMirimanoffPrime_two_three :
+    ¬ IsWieferichPrime 2 ∧ ¬ IsMirimanoffPrime 2 ∧
+      ¬ IsWieferichPrime 3 ∧ ¬ IsMirimanoffPrime 3 := by
+  decide
+
+end WieferichMirimanoffPrime
