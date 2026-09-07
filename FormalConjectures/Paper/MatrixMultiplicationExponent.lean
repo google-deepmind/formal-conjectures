@@ -58,8 +58,8 @@ theorem matrixMulTensor_rectangular_coefficients :
 /-- The matrix multiplication exponent is at most $3$. -/
 @[category test, AMS 15 68]
 theorem matrix_multiplication_exponent_le_three :
-    ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ C * (n : ℝ) ^ (3 + ε) := by
+    ∀ n : ℕ, 1 ≤ n →
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ 3 := by
   intro ε hε
   refine ⟨1, zero_lt_one, fun n hn ↦ ?_⟩
   calc
