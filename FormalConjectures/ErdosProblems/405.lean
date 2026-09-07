@@ -66,7 +66,7 @@ theorem erdos_405.variants.nonodd_p :
     exact h.2.1
   · -- 2. Prove all generated tuples belong to the set
     intro k
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     -- Split into proving p is prime and the equation holds
     refine ⟨Nat.prime_two, ?_⟩
     -- Since p = 2, 2 - 1 = 1, so the equation simplifies definitionally
