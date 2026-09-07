@@ -57,7 +57,9 @@ theorem erdos_494.variants.k_eq_2_card_not_pow_two :
 Selfridge and Straus [SeSt58] gave counterexamples to the conjecture
 when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L533"]
 theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
@@ -95,7 +97,9 @@ theorem erdos_494.variants.card_divisible_by_prime_gt_k :
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L592"]
 theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
@@ -104,7 +108,9 @@ theorem erdos_494.variants.k_eq_card :
 Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to be a set of
 the total sum 0 and considering $-A$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L916"]
 theorem erdos_494.variants.card_eq_2k :
     ∀ k > 2, ¬Erdos494Unique k (2 * k) := by
   sorry
@@ -127,7 +133,9 @@ noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
 /-- A counterexample to the product version of the conjecture (by Steinerberger). -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L951"]
 theorem erdos_494.variants.product :
     ∃ (A B : Finset ℂ), A.card = B.card ∧ prodMultiset A 3 = prodMultiset B 3 ∧
       A ≠ B := by

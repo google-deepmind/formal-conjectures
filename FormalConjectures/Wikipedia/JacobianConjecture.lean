@@ -24,55 +24,9 @@ import FormalConjecturesUtil
 
 namespace JacobianConjecture
 
-section Prelims
-
-variable {k : Type*} [CommRing k]
-variable {σ τ ι : Type*}
-
-variable (k σ τ) in
-
-/-- The type of regular functions from $k^σ$ to $k^τ$. -/
-abbrev RegularFunction := τ → MvPolynomial σ k
-
-namespace RegularFunction
-
-/-- The Jacobian of a vector valued polynomial function, viewed as a polynomial. -/
-noncomputable def Jacobian (F : RegularFunction k σ τ) :
-    Matrix σ τ (MvPolynomial σ k) :=
-  Matrix.of fun i j => MvPolynomial.pderiv i (F j)
-
-/-- The composition of two vector valued polynomial functions. -/
-noncomputable def comp
-    (F : RegularFunction k σ τ) (G : RegularFunction k τ ι) :
-    RegularFunction k σ ι :=
-  fun (i : ι) ↦ MvPolynomial.bind₁ F (G i)
-
-variable (k σ) in
-noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
-
-/-- The evaluation of a regular function `f` over `k` at some point `a`
-with coordinates in some algebra over `k`-/
-noncomputable def aeval {σ τ : Type*} {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
-    (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
-  fun a t ↦ MvPolynomial.aeval a (F t)
-
-/--`aeval` is compatible with composition of regular functions. -/
-@[category API, AMS 14]
-lemma comp_aeval
-    {σ τ ι : Type*}
-    (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)
-    (a : σ → k) : (F.comp G).aeval a = G.aeval (F.aeval a) := by
-  ext i
-  rw [aeval, comp, MvPolynomial.aeval_bind₁, ←aeval]
-  rfl
-
-end RegularFunction
-
-end Prelims
-
 section Conjecture
 
-open RegularFunction MvPolynomial
+open MvPolynomial RegularFunction
 
 variable (k : Type*)
 
@@ -167,7 +121,7 @@ end Conjecture
 
 section Tests
 
-open RegularFunction
+open MvPolynomial RegularFunction
 
 variable {k σ : Type} [Fintype σ] [DecidableEq σ] [Field k]
 

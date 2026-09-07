@@ -32,7 +32,7 @@ namespace Arxiv.«2607.05349»
 
 variable {X : Type*} [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X]
 
-/-- The similarity matrix $Z(t)_{ij} = e^{-t\,d(x_i, x_j)}$ of a finite metric space. -/
+/-- The similarity matrix $Z(t)_{ij} = e^{-t \cdot d(x_i, x_j)}$ of a finite metric space. -/
 noncomputable def similarityMatrix (X : Type*) [Fintype X] [MetricSpace X] (t : ℝ) :
     Matrix X X ℝ :=
   Matrix.of fun i j => Real.exp (-t * dist i j)
@@ -83,6 +83,9 @@ well defined in the first place. -/
 def HasFiniteConcentration (M : Matrix X X ℝ) : Prop :=
   ∃ g c, IsGauging M g c
 
+-- In the docstring below, matrix rows are separated by `\cr` rather than `\\`: the website's
+-- markdown processing strips one backslash from `\\` before KaTeX runs, which destroys the
+-- row breaks.
 /--
 **Conjecture 3.3 (Roff-Willerton, 2026).** A finite metric space admits a microscopic weighting
 if and only if its distance matrix has finite concentration.
@@ -99,32 +102,37 @@ on 10 points that has finite concentration but does not admit a microscopic weig
 The metric space is defined by the following $10 \times 10$ distance matrix $A$:
 $$
 \begin{pmatrix}
-0 & 116 & 236 & 231 & 260 & 124 & 64 & 290 & 266 & 64 \\
-116 & 0 & 312 & 268 & 296 & 112 & 64 & 280 & 296 & 64 \\
-236 & 312 & 0 & 68 & 40 & 236 & 288 & 68 & 36 & 288 \\
-231 & 268 & 68 & 0 & 34 & 237 & 288 & 72 & 40 & 288 \\
-260 & 296 & 40 & 34 & 0 & 264 & 320 & 40 & 68 & 320 \\
-124 & 112 & 236 & 237 & 264 & 0 & 64 & 280 & 264 & 64 \\
-64 & 64 & 288 & 288 & 320 & 64 & 0 & 312 & 320 & 120 \\
-290 & 280 & 68 & 72 & 40 & 280 & 312 & 0 & 40 & 312 \\
-266 & 296 & 36 & 40 & 68 & 264 & 320 & 40 & 0 & 320 \\
+0 & 116 & 236 & 231 & 260 & 124 & 64 & 290 & 266 & 64 \cr
+116 & 0 & 312 & 268 & 296 & 112 & 64 & 280 & 296 & 64 \cr
+236 & 312 & 0 & 68 & 40 & 236 & 288 & 68 & 36 & 288 \cr
+231 & 268 & 68 & 0 & 34 & 237 & 288 & 72 & 40 & 288 \cr
+260 & 296 & 40 & 34 & 0 & 264 & 320 & 40 & 68 & 320 \cr
+124 & 112 & 236 & 237 & 264 & 0 & 64 & 280 & 264 & 64 \cr
+64 & 64 & 288 & 288 & 320 & 64 & 0 & 312 & 320 & 120 \cr
+290 & 280 & 68 & 72 & 40 & 280 & 312 & 0 & 40 & 312 \cr
+266 & 296 & 36 & 40 & 68 & 264 & 320 & 40 & 0 & 320 \cr
 64 & 64 & 288 & 288 & 320 & 64 & 120 & 312 & 320 & 0
 \end{pmatrix}
 $$
 
 The space has finite concentration, demonstrated by the explicit gauging $g$:
 $$
-g = \frac{1}{24842973905} \begin{pmatrix} 3672468740 \\ 6389133731 \\ 9124217512 \\ 5612262448 \\ -6875621136 \\ 2754831248 \\ 0 \\ 10758780188 \\ -6593098826 \\ 0 \end{pmatrix}
+g = \frac{1}{24842973905} \begin{pmatrix} 3672468740 \cr 6389133731 \cr 9124217512 \cr
+5612262448 \cr -6875621136 \cr 2754831248 \cr 0 \cr 10758780188 \cr -6593098826 \cr 0
+\end{pmatrix}
 $$
 which gives $A g = \frac{4111107017312}{24842973905} \mathbf{1}$.
 
 To prove that it does not admit a microscopic weighting, we provide a vector $v \in \ker A$:
 $$
-v = \begin{pmatrix} -2 \\ -1 \\ 3 \\ 4 \\ -4 \\ -2 \\ 2 \\ 2 \\ -4 \\ 2 \end{pmatrix}
+v = \begin{pmatrix} -2 \cr -1 \cr 3 \cr 4 \cr -4 \cr -2 \cr 2 \cr 2 \cr -4 \cr 2 \end{pmatrix}
 $$
 along with a row-space certificate $q$ for the entrywise square matrix $B = A^{\circ 2}$ satisfying $q A = v^\top B$:
 $$
-q = \frac{1}{128472094291} (43681853675722, -53873248293642, -66890627544007, -81187181670120, 24308499983196, 40819375894674, 0, 54690260644468, 35226831040652, 0)
+q^\top = \frac{1}{128472094291} \begin{pmatrix} 43681853675722 \cr -53873248293642 \cr
+-66890627544007 \cr -81187181670120 \cr 24308499983196 \cr 40819375894674 \cr 0 \cr
+54690260644468 \cr 35226831040652 \cr 0
+\end{pmatrix}
 $$
 This certificate shows that the obstruction $v^\top B$ annihilates $\ker A$, making it impossible to construct a convergent weighting.
 -/
