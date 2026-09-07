@@ -58,7 +58,7 @@ theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPri
 /-- Every prime is a Wieferich prime to base $1$. -/
 @[category test, AMS 11]
 theorem isWieferichPrimeBase_one_iff (p : ℕ) : IsWieferichPrimeBase 1 p ↔ p.Prime := by
-  simp [isWieferichPrimeBase_iff, Nat.ModEq.refl]
+  simp [isWieferichPrimeBase_iff]
 
 /-- The prime $1093$ is a Wieferich prime: $2^{1092} \equiv 1 \pmod{1093^2}$. -/
 @[category test, AMS 11]

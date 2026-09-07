@@ -23,8 +23,8 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-!
 # Wieferich primes
 
-A prime $p$ is a *Wieferich prime to base $a$* if $a^{p-1} \equiv 1 \pmod{p^2}$, i.e. if the
-congruence of Fermat's little theorem holds modulo $p^2$ rather than just modulo $p$.
+A prime $p$ is a *Wieferich prime to base $a$* if $p^2$ divides $a^{p-1} - 1$, i.e. if the
+congruence $a^{p-1} \equiv 1 \pmod{p}$ of Fermat's little theorem holds modulo $p^2$.
 A *Wieferich prime* is a Wieferich prime to base $2$. The only known Wieferich primes are $1093$
 and $3511$.
 
@@ -35,15 +35,39 @@ and $3511$.
 
 /--
 **Wieferich prime to base `a`**
-A prime $p$ is a Wieferich prime to base $a$ if $a^{p-1} \equiv 1 \pmod{p^2}$.
+A prime $p$ is a Wieferich prime to base $a$ if $p^2 \mid a^{p-1} - 1$, i.e. if
+$a^{p-1} \equiv 1 \pmod{p^2}$.
+
+The subtraction is truncated, so, as with `Nat.ProbablePrime`, every prime is a Wieferich prime to
+base $0$. For `a ≠ 0` the definition agrees with the congruence, see
+`isWieferichPrimeBase_iff_pow_modEq`.
 -/
 @[mk_iff]
 structure IsWieferichPrimeBase (a p : ℕ) : Prop where
   prime : p.Prime
-  pow_modEq : a ^ (p - 1) ≡ 1 [MOD p ^ 2]
+  sq_dvd_pow_sub_one : p ^ 2 ∣ a ^ (p - 1) - 1
 
 instance (a p : ℕ) : Decidable (IsWieferichPrimeBase a p) :=
   decidable_of_iff _ (isWieferichPrimeBase_iff a p).symm
+
+namespace IsWieferichPrimeBase
+
+variable {a p : ℕ}
+
+theorem of_pow_modEq (hp : p.Prime) (h : a ^ (p - 1) ≡ 1 [MOD p ^ 2]) :
+    IsWieferichPrimeBase a p :=
+  ⟨hp, h.symm.dvd'⟩
+
+theorem pow_modEq (h : IsWieferichPrimeBase a p) (ha : a ≠ 0) : a ^ (p - 1) ≡ 1 [MOD p ^ 2] :=
+  ((Nat.modEq_iff_dvd' (Nat.one_le_pow _ _ (Nat.pos_of_ne_zero ha))).2 h.sq_dvd_pow_sub_one).symm
+
+end IsWieferichPrimeBase
+
+/-- For a nonzero base `a`, being a Wieferich prime to base `a` is the congruence
+`a ^ (p - 1) ≡ 1 [MOD p ^ 2]`. This fails for `a = 0`, where `0 ^ (p - 1) - 1 = 0`. -/
+theorem isWieferichPrimeBase_iff_pow_modEq {a p : ℕ} (ha : a ≠ 0) :
+    IsWieferichPrimeBase a p ↔ p.Prime ∧ a ^ (p - 1) ≡ 1 [MOD p ^ 2] :=
+  ⟨fun h => ⟨h.prime, h.pow_modEq ha⟩, fun h => .of_pow_modEq h.1 h.2⟩
 
 /--
 **Wieferich prime**
