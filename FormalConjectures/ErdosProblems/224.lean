@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 224
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   bez\"{u}glich konvexer K\"{o}rper von P. Erd\H{o}s und von V. L. Klee*.
   Math. Z. (1962), 95-99.
 -/
+
+@[expose] public section
 
 namespace Erdos224
 

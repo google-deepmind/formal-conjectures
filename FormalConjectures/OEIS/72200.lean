@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Smallest factorial containing exactly $n$ 6's
@@ -24,6 +26,8 @@ contains exactly $n$ occurrences of the digit '6', or $0$ if no such $k$ exists.
 
 *References:*
 - [A072200](https://oeis.org/A072200)-/
+
+public meta section
 
 namespace OeisA72200
 

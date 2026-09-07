@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Agrawal's conjecture
@@ -31,6 +32,8 @@ $(X-1)^n \equiv X^n-1 \pmod{n, X^r-1}$ holds, then $n$ is either prime or $n^2 \
 - [AIM Math](https://aimath.org/WWN/primesinp/articles/html/50a/)
 - [Paper](https://eprint.iacr.org/2009/008.pdf)
 -/
+
+@[expose] public section
 
 open Polynomial
 

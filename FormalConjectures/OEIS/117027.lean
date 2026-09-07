@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinants of 2 X 2 matrices of non-overlapping blocks of 4 consecutive primes
@@ -24,6 +25,8 @@ $a(n) = p_{4n-3}p_{4n} - p_{4n-2}p_{4n-1}$ where $p_k$ is the k-th prime number 
 *References:*
 - [A117027](https://oeis.org/A117027)
 -/
+
+@[expose] public section
 
 namespace OeisA117027
 

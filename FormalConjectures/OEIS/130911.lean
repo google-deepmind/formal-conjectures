@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Odious primes minus evil primes among first $n$ primes
@@ -24,6 +26,8 @@ minus the number with even binary weight (evil primes).
 
 *References:*
 - [A130911](https://oeis.org/A130911)-/
+
+public section
 
 namespace OeisA130911
 
@@ -47,7 +51,7 @@ theorem a_1 : a 1 = 1 := by
   rw [h, Finset.sum_singleton]
   have h0 : Nat.nth Nat.Prime 0 = 2 := Nat.nth_prime_zero_eq_two
   rw [h0]
-  decide +native
+  decide
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
@@ -58,7 +62,7 @@ theorem a_2 : a 2 = 0 := by
   have h0 : Nat.nth Nat.Prime 0 = 2 := Nat.nth_prime_zero_eq_two
   have h1 : Nat.nth Nat.Prime 1 = 3 := Nat.nth_prime_one_eq_three
   rw [h0, h1]
-  decide +native
+  decide
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
@@ -71,7 +75,7 @@ theorem a_3 : a 3 = -1 := by
   have h2 : Nat.nth Nat.Prime 2 = 5 := Nat.nth_prime_two_eq_five
   rw [Finset.sum_insert (by decide), Finset.sum_pair (by decide)]
   rw [h0, h1, h2]
-  decide +native
+  decide
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
@@ -86,7 +90,7 @@ theorem a_4 : a 4 = 0 := by
   rw [Finset.sum_insert (by decide), Finset.sum_insert (by decide),
     Finset.sum_pair (by decide)]
   rw [h0, h1, h2, h3]
-  decide +native
+  decide
 
 /--
 Shevelev conjectures that $a(n) \ge 0$ for $n > 3$.-/

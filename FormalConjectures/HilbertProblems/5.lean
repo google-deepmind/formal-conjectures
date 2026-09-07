@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's Fifth Problem and the Hilbert–Smith Conjecture
@@ -62,6 +63,8 @@ so it would be dropped silently from a statement that mentions only `X`.
 - [van den Dries–Goldbring 2015] L. van den Dries, I. Goldbring, *Hilbert's 5th problem*,
   Enseign. Math. 61 (2015), 3–43. https://doi.org/10.4171/LEM/61-1/2-2
 -/
+
+@[expose] public section
 
 namespace Hilbert5
 

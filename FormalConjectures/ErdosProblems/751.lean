@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 751
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [BoVi98] Bondy, J. A. and Vince, A., Cycles in a graph whose lengths differ by one or two.
   J. Graph Theory (1998), 11--15.
 -/
+
+@[expose] public section
 
 namespace Erdos751
 

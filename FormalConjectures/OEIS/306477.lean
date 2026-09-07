@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The 2-4-6-8 Conjecture
@@ -30,6 +31,8 @@ The conjecture has been verified for all $n$ up to $1.2 \times 10^{12}$ by Yaako
 - [A306477](https://oeis.org/A306477)
 - [mathoverflow/323541](https://mathoverflow.net/questions/323541): Z.-W. Sun, "Positive integers written as C(w,2) + C(x,4) + C(y,6) + C(z,8) with w,x,y,z in {2,3,...},", Feb. 19, 2019.
 -/
+
+@[expose] public section
 
 namespace OeisA306477
 

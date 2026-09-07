@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«470»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«470»
 
 /-!
 # Existence of Odd Weird Numbers
@@ -24,3 +25,5 @@ import FormalConjectures.ErdosProblems.«470»
 - [Wikipedia] (https://en.wikipedia.org/wiki/Weird_number)
 - [A006037] (https://oeis.org/A006037)
 -/
+
+@[expose] public section

@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Smallest $r$ such that (concatenation of $n$, $r$ times) $\cdot 10 + 1$ is prime
@@ -26,6 +28,8 @@ $n \cdot \sum_{i=0}^{r-1} (10^d)^i$, where $d$ is the number of digits of $n$.
 
 *References:*
 - [A086766](https://oeis.org/A086766)-/
+
+public meta section
 
 namespace OeisA86766
 

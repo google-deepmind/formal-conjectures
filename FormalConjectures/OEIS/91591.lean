@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of pairs of twin primes between $n^2$ and $(n+1)^2$
@@ -26,6 +27,8 @@ That is, $n^2 < p$ and $p + 2 < (n+1)^2$.
 
 *References:*
 - [A091591](https://oeis.org/A091591)-/
+
+@[expose] public section
 
 namespace OeisA91591
 

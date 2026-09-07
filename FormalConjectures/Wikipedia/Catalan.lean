@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Catalan's conjecture and related Diophantine equations
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Wikipedia - Catalan's conjecture](https://en.wikipedia.org/wiki/Catalan%27s_conjecture)
 - [arXiv:2507.12397](https://arxiv.org/abs/2507.12397) (Lebesgue-Nagell equation)
 -/
+
+@[expose] public section
 
 namespace Catalan
 

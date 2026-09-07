@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Pompeiu problem
@@ -46,6 +47,8 @@ independent proofs of this negative conclusion are referenced below.
 - [CS26] Colbrook, M. J. and Stepaniants, G., *A computer-assisted counterexample to the planar
   Pompeiu and Schiffer conjectures*, [arXiv:2608.01579](https://arxiv.org/abs/2608.01579) (2026).
 -/
+
+@[expose] public section
 
 open MeasureTheory Metric Topology
 

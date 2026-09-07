@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of $(1 - x)/(1 - 2 x + 3 x^2)$
@@ -25,6 +26,8 @@ with initial values $a(0)=1$ and $a(1)=1$.
 
 *References:*
 - [A087455](https://oeis.org/A087455)-/
+
+@[expose] public section
 
 namespace OeisA87455
 

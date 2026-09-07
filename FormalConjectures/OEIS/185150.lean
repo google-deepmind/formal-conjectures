@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Number of odd primes between $n^2$ and $(n+1)^2$ with $(n/p) = 1$
@@ -26,6 +28,8 @@ $\left(\frac{n}{p}\right) = 1$.
 - [A185150](https://oeis.org/A185150)
 - Z.-W. Sun, "Conjectures involving primes and quadratic forms", arXiv preprint
   [arXiv:1211.1588](https://arxiv.org/abs/1211.1588) [math.NT], 2012.-/
+
+public meta section
 
 namespace OeisA185150
 

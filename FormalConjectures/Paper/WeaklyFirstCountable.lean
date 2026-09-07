@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about Weakly First Countable spaces
@@ -30,6 +31,8 @@ around those.
   Doklady Akademii Nauk. Vol. 229. No. 6. Russian Academy of Sciences, 1976.
   https://www.mathnet.ru/links/016f74007f9f96fa3aadae05cbd98457/dan40570.pdf (in Russian)
 -/
+
+@[expose] public section
 
 open TopologicalSpace Topology Filter
 open scoped Cardinal

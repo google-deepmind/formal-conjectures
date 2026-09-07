@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hall's conjecture
@@ -26,6 +27,8 @@ $|y^2 - x^3| > C \sqrt{|x|}$.
 - [Wikipedia](https://en.wikipedia.org/wiki/Hall%27s_conjecture)
 - L. Danilov, *The Diophantine equation $x^3 - y^2 = k$ and Hall's conjecture*, Mathematical notes of the Academy of Sciences of the USSR 32 (1982): 617-618
 -/
+
+@[expose] public section
 
 open Real
 

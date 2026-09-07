@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 987
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
 - [Li69] Lindström, B., An inequality for $B_2$-sequences. J. Combinatorial Theory (1969), 211-212.
 -/
+
+@[expose] public section
 
 open Filter Finset Asymptotics
 open scoped ExponentialSum

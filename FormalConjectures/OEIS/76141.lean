@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Number of times $n$ occurs as a binary sub-pattern of $n^2$
@@ -24,6 +26,8 @@ sublist (infix) in the binary expansion of $n^2$.
 
 *References:*
 - [A076141](https://oeis.org/A076141)-/
+
+public meta section
 
 namespace OeisA76141
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
@@ -26,6 +27,8 @@ where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(1)=1, a(2)=2, b(1)=1, b(2)=0
 - [A382590](https://oeis.org/A382590)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA382590
 

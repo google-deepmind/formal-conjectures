@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Difference between first odd semiprime $> 2^n$ and $2^n$
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 *References:*
 - [A114137](https://oeis.org/A114137)
 -/
+
+public meta section
 
 namespace OeisA114137
 open Nat

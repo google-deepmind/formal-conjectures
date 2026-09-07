@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bounded Burnside problem
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ly96] I. G. Lysënok. "Infinite Burnside groups of even exponent."
   _Izv. Ross. Akad. Nauk Ser. Mat._ 60 (1996), 3-224.
 -/
+
+@[expose] public section
 
 namespace BoundedBurnsideProblem
 

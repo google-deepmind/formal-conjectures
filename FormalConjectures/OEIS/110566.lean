@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # $a(n) = \operatorname{lcm}\{1,2,\dots,n\}/\operatorname{denom}(H(n))$
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 *References:*
 - [A110566](https://oeis.org/A110566)
 -/
+
+public meta section
 
 namespace OeisA110566
 

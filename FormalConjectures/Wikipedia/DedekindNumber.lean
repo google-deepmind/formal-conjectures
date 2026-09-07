@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dedekind Numbers
@@ -45,6 +46,8 @@ In particular, the value of $M(10)$ is currently unknown.
 - [Oeis/A372](https://oeis.org/A000372)
 
 -/
+
+@[expose] public section
 
 namespace DedekindNumber
 
@@ -134,7 +137,7 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  simp [χ, Pi.le_def, Finset.subset_iff]
+  simp [χ, Pi.le_def, Finset.subset_iff, Bool.le_iff_imp]
 
 @[category API, AMS 6]
 lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔ v i = true := by

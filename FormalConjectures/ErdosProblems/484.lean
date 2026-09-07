@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 484
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [ESS89] Erdős, P., Sárközy, A., and Sós, V. T., *On a conjecture of Roth and some related
   problems. I*. (1989), 47-59.
 -/
+
+@[expose] public section
 
 namespace Erdos484
 

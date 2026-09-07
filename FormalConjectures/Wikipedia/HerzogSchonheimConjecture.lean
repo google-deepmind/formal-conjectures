@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«274»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«274»
 
 /-!
 # Herzog–Schönheim conjecture
@@ -29,3 +30,5 @@ This file points to the canonical formalization in `FormalConjectures.ErdosProbl
 - [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
 - [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
+
+@[expose] public section

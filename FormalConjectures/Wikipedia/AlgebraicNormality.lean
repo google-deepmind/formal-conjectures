@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Normality of Irrational Algebraic Numbers
@@ -29,6 +30,8 @@ separately: normality in one base and normality in every base are not equivalent
   expansions." Experimental Mathematics 10.2 (2001): 175-190.
   https://projecteuclid.org/journals/experimental-mathematics/volume-10/issue-2/On-the-random-character-of-fundamental-constant-expansions/em/999188630.full
 -/
+
+@[expose] public section
 
 open NormalNumber
 

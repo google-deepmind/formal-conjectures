@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Invariant Subspace Problem
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Invariant_subspace_problem),
 [Chalendar-Partington](https://arxiv.org/abs/2507.21834)
 -/
+
+@[expose] public section
 
 namespace InvariantSubspaceProblem
 

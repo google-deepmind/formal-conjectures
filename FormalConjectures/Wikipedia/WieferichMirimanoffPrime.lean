@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Can a prime $p$ satisfy $2^{p-1} \equiv 1 \pmod{p^2}$ and $3^{p-1} \equiv 1 \pmod{p^2}$?
@@ -33,6 +34,8 @@ satisfy both congruences simultaneously. Lenstra gave a heuristic argument again
 * [OEIS A001220](https://oeis.org/A001220) (Wieferich primes)
 * [OEIS A014127](https://oeis.org/A014127) (Mirimanoff primes)
 -/
+
+@[expose] public section
 
 namespace WieferichMirimanoffPrime
 

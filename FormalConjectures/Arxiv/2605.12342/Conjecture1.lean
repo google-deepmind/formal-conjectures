@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fernandes' conjecture on the 2-generation of even direct product permutation groups
@@ -39,6 +40,8 @@ $\mathrm{rank}(\Gamma_{4 \oplus 3}) = 3$, and $\mathrm{rank}(\Gamma_{4 \oplus 4}
 $(m, n) \notin \{(2,2), (3,3), (4,3), (4,4)\}$, the group $\Gamma_{m \oplus n}$ has
 rank $2$ (i.e., is $2$-generated).
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2605.12342»
 

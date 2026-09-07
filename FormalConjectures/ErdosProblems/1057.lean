@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1057
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   without large prime factors. arXiv:2211.09641 (2022).
 - [Po89] Pomerance, Carl, Two methods in elementary analytic number theory. (1989), 135--161.
 -/
+
+@[expose] public section
 
 open Nat Real Filter Set
 open scoped Topology Asymptotics

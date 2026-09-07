@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Determinant of matrix with entries indicating primality of $i^2 + j^2$
@@ -24,6 +26,8 @@ $M(i,j) = 1$ if $i^2 + j^2$ is prime, and $0$ otherwise, where $1 \le i, j \le n
 
 *References:*
 - [A071524](https://oeis.org/A071524)-/
+
+public meta section
 
 namespace OeisA71524
 

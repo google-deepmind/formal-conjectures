@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 14
@@ -36,6 +37,8 @@ import FormalConjecturesUtil
 - [LiSh10] Li, Yusheng, and Jinlong Shu. "A lower bound for off-diagonal van der Waerden numbers."
   Advances in Applied Mathematics 44.3 (2010): 243-247.
 -/
+
+@[expose] public section
 
 open Filter Set Topology
 

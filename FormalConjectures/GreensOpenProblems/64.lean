@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 64
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 Do there exist infinitely many primes $p$ for which $p - 2$ has an odd number of prime factors,
 counted with multiplicity?
 -/
+
+@[expose] public section
 
 open ArithmeticFunction
 

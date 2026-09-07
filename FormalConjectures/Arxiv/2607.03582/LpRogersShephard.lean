@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Planar $L_p$-Rogers-Shephard, the equality case
@@ -27,6 +28,8 @@ Corollary 29 bounds $|K \oplus_p -K|$ against $|K|$ for planar convex bodies wit
 symmetry containing the origin, and notes that parallelograms with a vertex at the origin
 attain it. Conjecture 5 asks whether they are the only bodies that do.
 -/
+
+@[expose] public section
 
 open MeasureTheory Real
 

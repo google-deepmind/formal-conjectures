@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Infinitude of Pell number primes
@@ -28,6 +29,8 @@ $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A129](https://oeis.org/A129)
 
 The conjecture says that there are infinitely many prime Pell numbers.
 -/
+
+@[expose] public section
 
 namespace PellNumbers
 

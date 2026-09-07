@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Claude's Cycles
@@ -52,6 +53,8 @@ explicit solutions in [Kn26], whose header gives even `m ≥ 4`.
 - [KM26] K. Morrison, a Lean formalisation of the odd case,
   <https://github.com/kim-em/KnuthClaudeLean>
 -/
+
+@[expose] public section
 
 namespace ClaudesCycles
 

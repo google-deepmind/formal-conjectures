@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Factor bounds for Fermat numbers
@@ -25,6 +27,8 @@ $n$-th Fermat number exceeds $2^{2^n - k}$.
 - [A358684](https://oeis.org/A358684)
 - [SA22](https://doi.org/10.26493/2590-9770.1473.ec5) Lorenzo Sauras-Altuzarra, *Some properties of the factors of Fermat numbers*, Art Discrete Appl. Math. (2022).
 -/
+
+@[expose] public section
 
 
 namespace OeisA358684
@@ -109,19 +113,22 @@ theorem a_2 : a 2 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by
-  norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
+  unfold a Nat.fermatNumber
+  decide +native
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by
-  norm_num [a, fermatNumber, Nat.log2_eq_log_two]
+  unfold a Nat.fermatNumber
+  decide +native
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 23 := by
-  norm_num [a, fermatNumber,Nat.log2_eq_log_two]
+  unfold a Nat.fermatNumber
+  decide +native
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = 46 := by
-  decide +native
+  sorry
 
 @[category test, AMS 11]
 theorem a_7 : a 7 = 73 := by

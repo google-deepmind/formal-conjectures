@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Erdős Problem 287
@@ -73,7 +75,7 @@ theorem erdos_287.test.best_possible :
   · norm_num [Fin.sum_univ_three, max_gap, show (![2, 3, 6] : Fin 3 → ℕ) 0 = 2 from rfl,
       show (![2, 3, 6] : Fin 3 → ℕ) 1 = 3 from rfl,
       show (![2, 3, 6] : Fin 3 → ℕ) 2 = 6 from rfl]
-  · native_decide
+  · decide
 
 /--
 For all large $N$, there exists a prime $p \in [N, 2N]$ such that $\frac{p+1}{2}$ is also prime.

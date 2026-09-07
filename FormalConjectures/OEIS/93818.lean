@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # $\gcd(\mathrm{numerator}(H_n), n!)$
@@ -24,6 +26,8 @@ the $n$-th harmonic number $H_n = \sum_{i=1}^n \frac{1}{i}$.
 
 *References:*
 - [A093818](https://oeis.org/A093818)-/
+
+public meta section
 
 namespace OeisA93818
 

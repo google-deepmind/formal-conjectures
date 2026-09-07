@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Decimal encoding of the prime factorization of $n$
@@ -25,6 +27,8 @@ then its decimal encoding is $p_1 e_1 \dots p_r e_r$.
 *References:*
 - [A067599](https://oeis.org/A067599)
 -/
+
+public meta section
 
 namespace OeisA67599
 

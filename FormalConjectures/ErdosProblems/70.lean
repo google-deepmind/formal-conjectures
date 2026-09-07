@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 70
@@ -25,6 +26,8 @@ The 3-uniform (triple) partition relation $\mathfrak{c} \to (\beta, n)^3_2$
 on the ordinal of the real numbers — the triple analogue of `OrdinalCardinalRamsey`
 used in Problems 590–592.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 open scoped Cardinal

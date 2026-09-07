@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Millenium.RiemannHypothesis
+public import FormalConjecturesUtil
+public import FormalConjectures.Millenium.RiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots
@@ -45,6 +46,8 @@ Note that Artin's conjecture has been proved subject to the Generalized Riemann 
 - [LMS14](https://arxiv.org/pdf/1112.4816) Lenstra, H.W. et al. "Character sums for primitive root densities" _arXiv:1112.4816_ [math.NT] (2014).
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/
+
+@[expose] public section
 
 open GRH
 open scoped Topology Nat

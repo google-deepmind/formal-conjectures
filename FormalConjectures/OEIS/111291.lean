@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
 
 /-!
 # Number of refactorable numbers (A033950) $\le 10^n$
@@ -30,6 +32,8 @@ A number $k$ is refactorable if its number of divisors, $\tau(k)$, divides $k$.
 - [Sp85] Spiro, C., *How often is the number of divisors of n a divisor of n?*
   J. Number Theory 21 (1985), 81--100.
 -/
+
+@[expose] public section
 
 namespace OeisA111291
 

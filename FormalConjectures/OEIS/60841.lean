@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Numerator of $1/\det(M)$ for $M[i,j] = 1/\operatorname{lcm}(i,j)$
@@ -24,6 +26,8 @@ $M[i,j] = 1/\operatorname{lcm}(i,j)$.
 
 *References:*
 - [A060841](https://oeis.org/A060841)-/
+
+public meta section
 
 namespace OeisA60841
 

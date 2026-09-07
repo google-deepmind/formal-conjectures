@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Partitions of $n$ into distinct non-squarefree parts for $n > 23$
@@ -27,6 +29,8 @@ $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 - [A256012](https://oeis.org/A256012)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+public meta section
 
 namespace OeisA256012
 

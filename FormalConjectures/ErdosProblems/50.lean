@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 50
@@ -26,6 +27,8 @@ Resenhas (1995), 165-186.
 * [Sch38] Schoenberg, I. J. "On asymptotic distributions of arithmetical functions."
 Transactions of the American Mathematical Society 39.2 (1936): 315-330.
 -/
+
+@[expose] public section
 
 open Filter Set MeasureTheory Topology
 open scoped Nat Topology

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 44
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er80] Erdős, Paul. "A survey of problems in combinatorial number theory."
   Annals of Discrete Mathematics 6 (1980): 89-115.
 -/
+
+@[expose] public section
 
 namespace Green44
 

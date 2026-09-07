@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numbers $n$ such that the perfect deficiency of $n$ is $\le 10$.
@@ -27,6 +28,8 @@ current remainder.
 - [A108864](https://oeis.org/A108864)
 - [A109883](https://oeis.org/A109883)
 -/
+
+@[expose] public section
 
 namespace OeisA108864
 

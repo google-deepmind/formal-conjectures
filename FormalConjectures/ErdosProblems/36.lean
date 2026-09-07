@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 36
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/36](https://www.erdosproblems.com/36)
  - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
+
+@[expose] public section
 open scoped Topology
 open Filter
 namespace Erdos36
@@ -131,7 +134,7 @@ private lemma M_eq_image (n : ℕ) :
 
 /-- A computable stand-in for `MaxOverlap`. `Overlap` is already computable; the only obstacle
 is the `iSup`, and `maxOverlap_eq_sup` says it agrees with this `Finset.sup`. -/
-private def maxOverlapC (A B : Finset ℤ) : ℕ :=
+private noncomputable def maxOverlapC (A B : Finset ℤ) : ℕ :=
   ((A ×ˢ B).image fun p => p.1 - p.2).sup (Overlap A B)
 
 @[category API, AMS 5 11]
@@ -139,7 +142,7 @@ private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
     MaxOverlap A B = maxOverlapC A B := maxOverlap_eq_sup A B
 
 /-- The `n`-element subsets of `{1, …, 2n}`. -/
-private def parts (n : ℕ) : Finset (Finset ℤ) :=
+private noncomputable def parts (n : ℕ) : Finset (Finset ℤ) :=
   (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
 
 @[category API, AMS 5 11]

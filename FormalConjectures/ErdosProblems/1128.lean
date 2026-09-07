@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1128
 
 *Reference:* [erdosproblems.com/1128](https://www.erdosproblems.com/1128)
 -/
+
+@[expose] public section
 
 open Cardinal Set Ordinal Order
 
@@ -39,7 +42,7 @@ These establish key countability and boundedness properties of ω₁.
 -/
 
 /-- The set of countable ordinals, expressed using Mathlib's `ω_ 1`. -/
-private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
+abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 
 /-- The set of ordinals strictly below any $\gamma < \omega_1$ is countable. -/
 @[category API, AMS 5]

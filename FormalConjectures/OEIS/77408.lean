@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Trajectory of 103 under the Reverse and Add! operation in base 3
@@ -25,6 +27,8 @@ $a(0) = 103$, and $a(n+1) = a(n) + \text{rev}_3(a(n))$.
 
 *References:*
 - [A077408](https://oeis.org/A077408)-/
+
+public meta section
 
 namespace OeisA77408
 

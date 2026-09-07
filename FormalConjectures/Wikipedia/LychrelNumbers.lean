@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Lychrel numbers in base 10
@@ -33,6 +35,8 @@ The smallest widely studied open case is `196`.
 * [OEIS A023108](https://oeis.org/A023108)
 * [OEIS A023109](https://oeis.org/A023109)
 -/
+
+public section
 
 namespace LychrelNumbers
 
@@ -98,23 +102,23 @@ theorem eventually_palindrome_base10 :
 /-- Sanity check: digit reversal of `120` is `21`. -/
 @[category test, AMS 11]
 theorem rev10_120 : rev10 120 = 21 := by
-  native_decide
+  decide
 
 /-- Sanity check: `121` is a base-10 palindrome. -/
 @[category test, AMS 11]
 theorem palindrome_121 : IsPalindrome10 121 := by
   dsimp [IsPalindrome10]
-  native_decide
+  decide
 
 /-- Sanity check: `56 → 121` in one Lychrel step. -/
 @[category test, AMS 11]
 theorem lychrelIter_56_one : lychrelStep^[1] 56 = 121 := by
-  native_decide
+  decide
 
 /-- Sanity check: the Lychrel iteration at `56` reaches a palindrome. -/
 @[category test, AMS 11]
 theorem eventually_palindrome_56 : ∃ k : ℕ, IsPalindrome10 (lychrelStep^[k] 56) := by
   refine ⟨1, ?_⟩
   dsimp [IsPalindrome10]
-  native_decide
+  decide
 end LychrelNumbers

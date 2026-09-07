@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 517
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [Bi28] Biernacki, Miécislas, Sur les équations algébriques contenant des paramétres arbitraires.
     (1928), 145.
 -/
+
+@[expose] public section
 
 open Set Filter Topology
 

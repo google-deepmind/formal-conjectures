@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of squares $\bmod n$
@@ -25,6 +26,8 @@ This is the cardinality of the set $\{k^2 \bmod n \mid k \in \{0, 1, \dots, n-1\
 *References:*
 - [A000224](https://oeis.org/A000224)
 -/
+
+@[expose] public section
 
 namespace OeisA224
 

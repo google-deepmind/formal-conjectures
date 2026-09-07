@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Sum of $a(k)/k!$ over divisors equals harmonic number
@@ -26,6 +28,8 @@ where $H_d = \sum_{j=1}^d \frac{1}{j}$ is the $d$-th harmonic number.
 
 *References:*
 - [A067857](https://oeis.org/A067857)-/
+
+public meta section
 
 namespace OeisA67857
 

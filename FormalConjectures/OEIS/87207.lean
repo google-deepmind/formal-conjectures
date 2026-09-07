@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Binary representation of primes that divide a number, in decimal
@@ -25,6 +27,8 @@ where $\pi(p) = \mathrm{primeCounting}(p)$ gives the 1-based index of the prime 
 
 *References:*
 - [A087207](https://oeis.org/A087207)-/
+
+public meta section
 
 namespace OeisA87207
 

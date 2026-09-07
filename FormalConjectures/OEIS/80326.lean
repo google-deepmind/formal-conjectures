@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Denominator of $\sum_{k=1}^n k^{\mu(k)}$
@@ -24,6 +26,8 @@ Möbius function.
 
 *References:*
 - [A080326](https://oeis.org/A080326)-/
+
+public meta section
 
 namespace OeisA80326
 

@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Eighth root of the generating function of an Apéry-like sequence
@@ -31,6 +33,8 @@ The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A005259](https://oeis.org/A005259)
 -/
+
+public meta section
 
 namespace OeisA228143
 

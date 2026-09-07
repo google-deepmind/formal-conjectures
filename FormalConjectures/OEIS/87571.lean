@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Smallest prime formed by concatenation $n, n-1, \dots, n-k$
@@ -24,6 +26,8 @@ $n, n-1, n-2, \dots, n-k$ for some $k < n$, or $0$ if no such prime exists.
 
 *References:*
 - [A087571](https://oeis.org/A087571)-/
+
+public meta section
 
 namespace OeisA87571
 

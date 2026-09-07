@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 302
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   theory. Monographies de L'Enseignement Mathematique (1980).
 - [va25](https://github.com/Woett/Mathematical-shorts/blob/main/Two-colouring%20and%20density%20lead%20to%20solutions%20to%20an%20equation%20in%20unit%20fractions.pdf)
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped Topology

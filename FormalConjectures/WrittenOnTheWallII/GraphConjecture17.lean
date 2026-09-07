@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 17
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 
 namespace WrittenOnTheWallII.GraphConjecture17
@@ -50,6 +53,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
 /-- The independence number `α(K₂)` equals 1 (each independent set contains at most one vertex). -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 2)).edgeFinset.card = 1 := by decide +native
+example : (⊤ : SimpleGraph (Fin 2)).edgeFinset.card = 1 := by decide
 
 end WrittenOnTheWallII.GraphConjecture17

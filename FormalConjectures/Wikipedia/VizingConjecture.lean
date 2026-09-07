@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Vizing's conjecture (1968)
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   and Rall, D. F. (2012). "Vizing's conjecture: a survey and recent results."
   *J. Graph Theory* 69, pp. 46--76.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

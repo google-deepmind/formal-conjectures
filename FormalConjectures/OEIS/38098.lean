@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Number of primes $< n^3$
@@ -23,6 +25,8 @@ Number of primes strictly less than $n^3$.
 
 *References:*
 - [A038098](https://oeis.org/A038098)-/
+
+public meta section
 
 namespace OeisA38098
 

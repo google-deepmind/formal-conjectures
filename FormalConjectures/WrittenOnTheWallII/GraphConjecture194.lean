@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 194
@@ -31,6 +32,8 @@ vertex neighbourhoods is `54`, so their average is `3`. Thus it satisfies the co
 hypothesis with equality. However, its three leaves would all have to be endpoints of a Hamiltonian
 path, which is impossible.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture194
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 426
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   J. Combinatorial Theory Ser. B (1975), 184-185.
 - [BrCh24] Bradač, D. and Christoph, M., *Unique subgraphs are rare*. arXiv:2410.16233 (2024).
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

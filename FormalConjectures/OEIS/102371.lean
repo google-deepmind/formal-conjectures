@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.OEIS.«105033»
+public import FormalConjecturesUtil
+public import FormalConjectures.OEIS.«105033»
 
 /-!
 # Conjectures associated with A102371
@@ -27,6 +28,8 @@ The conjecture asks if $a(n) = 2^n - 1 - \operatorname{A105033}(n-1)$ for $n \ge
 *References:*
 - [A102371](https://oeis.org/A102371)
 -/
+
+@[expose] public section
 
 namespace OeisA102371
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 67
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/67](https://www.erdosproblems.com/66)
 - [Ta16] Tao, Terence, The Erdős discrepancy problem. Discrete Anal. (2016), Paper No. 1, 29.
 -/
+
+@[expose] public section
 open Filter
 
 namespace Erdos67

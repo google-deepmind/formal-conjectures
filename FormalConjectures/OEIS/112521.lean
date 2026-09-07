@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sequence related to NOR bracketings
@@ -24,6 +25,8 @@ $$a(n) = \sum_{j=0}^{n-1} (-1)^j \binom{2j}{j} \binom{2n-j-2}{n-j-1}$$
 *References:*
 - [A112521](https://oeis.org/A112521)
 -/
+
+@[expose] public section
 
 namespace OeisA112521
 

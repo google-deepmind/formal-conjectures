@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Wikipedia.JacobianConjecture
-import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.JacobianConjecture
+public import FormalConjecturesUtil
 
 /-!
 # The Poisson Conjecture
@@ -52,6 +53,8 @@ Indexing note: we index the $2n$ variables of $P_n(K)$ by `Fin n ⊕ Fin n`, wit
 so that the canonical bracket reads $\{X_i, X_{i+n}\} = 1$; see
 `MvPolynomial.poissonBracket`.
 -/
+
+@[expose] public section
 
 namespace Arxiv.«math.0608009»
 

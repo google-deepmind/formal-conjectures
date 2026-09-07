@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 258
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ch26] P. Chojecki and GPT-5.4 Pro, [Erdős problem 258](https://www.ulam.ai/research/erdos258.pdf) (2026)
 - [St26] ster-oc, [Lean formalisation of Erdős problem 258](https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/ster-oc/2b7adcf9d753cf6e29d782f7374cc57e/raw/689a8483895cbe147634dfbf2d7b1db93a3b5b5f/Erdos258.lean) (2026)
 -/
+
+@[expose] public section
 
 namespace Erdos258
 
