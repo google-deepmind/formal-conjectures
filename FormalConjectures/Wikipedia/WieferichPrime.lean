@@ -43,7 +43,8 @@ theorem infinite_isWieferichPrime : {p : ℕ | IsWieferichPrime p}.Infinite := b
 
 /--
 For any given integer $a > 0$, are there infinitely many primes $p$ such that
-$a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qualifies.
+$a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qualifies
+(`isWieferichPrimeBase_one_iff`).
 -/
 @[category research open, AMS 11]
 theorem infinite_isWieferichPrimeBase :
@@ -54,11 +55,6 @@ theorem infinite_isWieferichPrimeBase :
 @[category research open, AMS 11]
 theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPrimeBase 47 p := by
   sorry
-
-/-- Every prime is a Wieferich prime to base $1$. -/
-@[category test, AMS 11]
-theorem isWieferichPrimeBase_one_iff (p : ℕ) : IsWieferichPrimeBase 1 p ↔ p.Prime := by
-  simp [isWieferichPrimeBase_iff]
 
 /-- The prime $1093$ is a Wieferich prime: $2^{1092} \equiv 1 \pmod{1093^2}$. -/
 @[category test, AMS 11]
