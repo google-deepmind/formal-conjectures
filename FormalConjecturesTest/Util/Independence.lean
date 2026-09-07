@@ -25,8 +25,6 @@ public import FormalConjecturesTest.ForMathlib.SetTheory.Axioms
 
 universe u
 
-namespace PiBase.Formal
-
 /--
 A small set of axioms that are independent of ZFC (and Lean's slightly stronger type theory).
 This list is critical. Some of them are redudant, but worth including for clarity.
@@ -98,5 +96,3 @@ prove under the standard axioms in Lean (or be able to prove its negation)
 Similarly, for any `Q : Prop`, `¬ Independent Q` will likely never be unconditionally be provable.
 
 -/
-
-end PiBase.Formal
