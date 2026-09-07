@@ -72,9 +72,10 @@ accommodating the construction counted by the first term (all `r`-subsets of a f
 case `n < k*r` trivial.
 -/
 @[category research open, AMS 5]
-theorem erdos_1020 :
-    ∀ (r : ℕ), 3 ≤ r → ∀ n k : ℕ, 0 < k → r * k - 1 ≤ n →
-      f n r k = max ((r * k - 1).choose r) (n.choose r - (n - k + 1).choose r) := by
+theorem erdos_1020 (r : ℕ) (hr : 3 ≤ r) (n k : ℕ) (hk : 0 < k)
+    (hrk : r * k - 1 ≤ n) :
+    f n r k = max ((r * k - 1).choose r)
+      (n.choose r - (n - k + 1).choose r) := by
   sorry
 
 end Erdos1020
