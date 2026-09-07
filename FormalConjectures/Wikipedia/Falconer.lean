@@ -15,15 +15,24 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Topology.MetricSpace.HausdorffDimension
+public import FormalConjecturesUtil
 
 /-!
 # Falconer's conjecture on Hausdorff Dimension on compact subsets of ℝᵈ
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Falconer%27s_conjecture)
 -/
-open MeasureTheory
+open MeasureTheory Set
 
-/- Falconer's conjecture. -/
-lemma Falconer (d : ℕ) (E : Set <| EuclideanSpace ℝ (Fin d)) (hc : IsCompact E)
-    (hd : d < 2 * dimH E ) : 0 < volume (Set.image2 dist E E) := sorry
+open scoped ENNReal EuclideanGeometry
+
+
+/-- Falconer's conjecture. -/
+@[category research open, AMS 28 42]
+lemma Falconer_2d (E : Set <| ℝ^2) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
+    0 < volume (image2 dist E E) := sorry
+
+/-- Falconer's conjecture. -/
+@[category research open, AMS 28 42]
+lemma Falconer (d : ℕ) (E : Set <| ℝ^d) (hc : IsCompact E) (hd : d < 2 * dimH E ) :
+    0 < volume (image2 dist E E) := sorry
