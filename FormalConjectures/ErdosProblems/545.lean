@@ -30,7 +30,7 @@ namespace Erdos545
 /--
 The graph formed by connecting a new vertex (`none`) to $t$ of the vertices of $K_n$ (`Fin n`).
 -/
-def bookGraphKn (n t : ℕ) : SimpleGraph (Option (Fin n)) where
+def knPlusTEdges (n t : ℕ) : SimpleGraph (Option (Fin n)) where
   Adj u v := match u, v with
     | some x, some y => x ≠ y
     | none, some y => y.val < t
@@ -54,7 +54,8 @@ theorem erdos_545 : answer(sorry) ↔
       ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
         (∀ v, 0 < G.degree v) →
         G.edgeSet.ncard = n.choose 2 + t →
-        SimpleGraph.diagonalGraphRamsey G ≤ SimpleGraph.diagonalGraphRamsey (bookGraphKn n t) := by
+        SimpleGraph.diagonalGraphRamsey G ≤
+          SimpleGraph.diagonalGraphRamsey (knPlusTEdges n t) := by
   sorry
 
 -- TODO: Add variants of the problem if they exist on the website.
