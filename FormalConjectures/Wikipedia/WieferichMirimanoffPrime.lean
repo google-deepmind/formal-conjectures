@@ -50,6 +50,12 @@ theorem isMirimanoffPrime_and_not_isWieferichPrime_11 :
     IsMirimanoffPrime 11 ∧ ¬ IsWieferichPrime 11 := by
   decide
 
+/-- The prime $1006003$ is a Mirimanoff prime but not a Wieferich prime. -/
+@[category test, AMS 11]
+theorem isMirimanoffPrime_and_not_isWieferichPrime_1006003 :
+    IsMirimanoffPrime 1006003 ∧ ¬ IsWieferichPrime 1006003 :=
+  ⟨⟨by norm_num, by decide +kernel⟩, fun h => absurd h.sq_dvd_pow_sub_one (by decide +kernel)⟩
+
 /-- Neither $2$ nor $3$ is a Mirimanoff prime, so no hypothesis excluding them is needed in the
 statement of the problem. -/
 @[category test, AMS 11]
