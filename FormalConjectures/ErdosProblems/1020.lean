@@ -53,8 +53,7 @@ noncomputable def f (n r k : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ H : Hypergraph (Fin n),
     H.vertexSet = Set.univ ∧
     (∀ e ∈ H.edgeSet, e.ncard = r) ∧
-    (¬ ∃ M : Set (Set (Fin n)), M ⊆ H.edgeSet ∧ M.ncard = k ∧
-      M.PairwiseDisjoint id) ∧
+    (¬ ∃ M ⊆ H.edgeSet, M.ncard = k ∧ M.PairwiseDisjoint id) ∧
     H.edgeSet.ncard = m}
 
 /--
