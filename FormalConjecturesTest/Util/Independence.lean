@@ -27,7 +27,7 @@ universe u
 
 /--
 A small set of axioms that are independent of ZFC (and Lean's slightly stronger type theory).
-This list is critical. Some of them are redudant, but worth including for clarity.
+This list is critical. Some of them are redundant, but worth including for clarity.
 
 Any change/expansion to it needs to come with a discussion and in particular a reason for
 expanding it.
