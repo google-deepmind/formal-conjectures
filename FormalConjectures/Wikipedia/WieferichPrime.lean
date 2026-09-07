@@ -61,7 +61,7 @@ $a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qu
 -/
 @[category research open, AMS 11]
 theorem infinite_isWieferichPrimeBase :
-    answer(sorry) ↔ ∀ a : ℕ, 0 < a → {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
+    answer(sorry) ↔ ∀ a : ℕ, {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
   sorry
 
 /-- Are there any Wieferich primes to base $47$? None is currently known. -/
