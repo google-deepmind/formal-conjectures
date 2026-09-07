@@ -26,11 +26,14 @@ public import Mathlib.Data.Nat.Prime.Defs
 A prime $p$ is a *Wieferich prime to base $a$* if $p^2$ divides $a^{p-1} - 1$, i.e. if the
 congruence $a^{p-1} \equiv 1 \pmod{p}$ of Fermat's little theorem holds modulo $p^2$.
 A *Wieferich prime* is a Wieferich prime to base $2$. The only known Wieferich primes are $1093$
-and $3511$.
+and $3511$. A *Mirimanoff prime* is a Wieferich prime to base $3$. The only known Mirimanoff primes
+are $11$ and $1006003$.
 
 *References:*
 - [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
-- [OEIS A001220](https://oeis.org/A001220)
+- [OEIS A001220](https://oeis.org/A001220) (Wieferich primes)
+- [OEIS A014127](https://oeis.org/A014127) (Mirimanoff primes)
+- D. Mirimanoff, *Sur le dernier théorème de Fermat*, C. R. Acad. Sci. Paris 150 (1910), 204–206.
 -/
 
 /--
@@ -89,3 +92,11 @@ A Wieferich prime is a prime $p$ with $2^{p-1} \equiv 1 \pmod{p^2}$, i.e. a Wief
 base $2$.
 -/
 abbrev IsWieferichPrime (p : ℕ) : Prop := IsWieferichPrimeBase 2 p
+
+/--
+**Mirimanoff prime**
+A Mirimanoff prime is a prime $p$ with $3^{p-1} \equiv 1 \pmod{p^2}$, i.e. a Wieferich prime to
+base $3$. The name comes from Mirimanoff's 1910 result that a failure of the first case of
+Fermat's Last Theorem for the exponent $p$ forces this congruence.
+-/
+abbrev IsMirimanoffPrime (p : ℕ) : Prop := IsWieferichPrimeBase 3 p
