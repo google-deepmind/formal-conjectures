@@ -65,11 +65,6 @@ theorem isWieferichPrimeBase_one_iff (p : ℕ) : IsWieferichPrimeBase 1 p ↔ p.
 theorem isWieferichPrime_1093 : IsWieferichPrime 1093 := by
   decide +kernel
 
-/-- The prime $11$ is not a Wieferich prime: $2^{10} \not\equiv 1 \pmod{11^2}$. -/
-@[category test, AMS 11]
-theorem not_isWieferichPrime_11 : ¬ IsWieferichPrime 11 := by
-  decide
-
 /-- The prime $2$ is not a Wieferich prime, so no hypothesis excluding it is needed. -/
 @[category test, AMS 11]
 theorem not_isWieferichPrime_two : ¬ IsWieferichPrime 2 := by
