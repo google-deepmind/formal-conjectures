@@ -52,7 +52,7 @@ found no other below $9.7 \times 10^{14}$.
 -/
 @[category research open, AMS 11]
 theorem setOf_isMirimanoffPrime_eq :
-    answer(sorry) ↔ {p : ℕ | IsMirimanoffPrime p} = {11, 1006003} := by
+    answer(sorry) ↔ ∀ p, IsMirimanoffPrime p ↔ p = 11 ∨ p = 1006003 := by
   sorry
 
 /-- The prime $11$ is a Mirimanoff prime but not a Wieferich prime. -/
