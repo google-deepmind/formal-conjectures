@@ -58,16 +58,17 @@ theorem finrank_adjoin_triple_le (A B C : Matrix (Fin n) (Fin n) K) (hAB : Commu
   sorry
 
 /--
-The analogue of Gerstenhaber's theorem fails for four pairwise commuting matrices: there are
-$n$ and four pairwise commuting $n \times n$ matrices over $\mathbb{Q}$ generating a unital
-algebra of dimension greater than $n$.
+The analogue of Gerstenhaber's theorem fails for four pairwise commuting matrices: over any
+field there are four pairwise commuting $4 \times 4$ matrices generating a unital algebra of
+dimension greater than $4$. The standard example is $e_{13}, e_{14}, e_{23}, e_{24}$, whose
+pairwise products all vanish, so the algebra they generate has dimension $5$.
 -/
 @[category research solved, AMS 15 16]
-theorem exists_finrank_adjoin_quadruple_gt :
-    ∃ (n : ℕ) (A B C D : Matrix (Fin n) (Fin n) ℚ),
-      (∀ M ∈ ({A, B, C, D} : Set (Matrix (Fin n) (Fin n) ℚ)),
-        ∀ N ∈ ({A, B, C, D} : Set (Matrix (Fin n) (Fin n) ℚ)), Commute M N) ∧
-      n < Module.finrank ℚ (Algebra.adjoin ℚ {A, B, C, D}) := by
+theorem exists_finrank_adjoin_quadruple_gt (K : Type*) [Field K] :
+    ∃ A B C D : Matrix (Fin 4) (Fin 4) K,
+      (∀ M ∈ ({A, B, C, D} : Set (Matrix (Fin 4) (Fin 4) K)),
+        ∀ N ∈ ({A, B, C, D} : Set (Matrix (Fin 4) (Fin 4) K)), Commute M N) ∧
+      4 < Module.finrank K (Algebra.adjoin K {A, B, C, D}) := by
   sorry
 
 end Gerstenhaber
