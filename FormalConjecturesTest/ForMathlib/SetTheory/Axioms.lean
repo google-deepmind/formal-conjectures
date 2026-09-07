@@ -234,8 +234,8 @@ end Topology
 /-- Martin's axiom for a cardinal.
 See https://en.wikipedia.org/wiki/Martin%27s_axiom. We choose a topological definition. -/
 def MartinsAxiomFor (k : Cardinal.{v}) : Prop :=
-  ∀ᵉ (X : Type v) (_ : TopologicalSpace X) (s : Set (Set X)),
-    Nonempty X → T2Space X → CompactSpace X → CountableChainCondition X →
+  ∀ (X : Type v) [TopologicalSpace X]
+    [Nonempty X] [T2Space X] [CompactSpace X] [CountableChainCondition X] (s : Set (Set X)),
       (∀ a ∈ s, IsNowhereDense a) → Set.sUnion s = Set.univ → k < #s
 
 theorem MartinsAxiomFor.anti {k c : Cardinal.{v}} (h : k ≤ c) (hc : MartinsAxiomFor c) :
