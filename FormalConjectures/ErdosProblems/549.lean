@@ -46,4 +46,6 @@ theorem erdos_549 : answer(False) ↔
       SimpleGraph.diagonalGraphRamsey T = 4 * k - 1 := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos549

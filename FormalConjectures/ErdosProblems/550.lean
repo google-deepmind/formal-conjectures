@@ -46,7 +46,11 @@ theorem erdos_550 :
       ∀ᶠ n : ℕ in atTop,
         ∀ (T : SimpleGraph (Fin n)), T.IsTree →
           SimpleGraph.graphRamsey T (completeMultipartiteGraph m) ≤
-            (k - 1) * (SimpleGraph.graphRamsey T (completeBipartiteGraph (Fin (m ⟨0, by omega⟩)) (Fin (m ⟨1, by omega⟩))) - 1) + m ⟨0, by omega⟩ := by
+            (k - 1) * (SimpleGraph.graphRamsey T
+              (completeBipartiteGraph (Fin (m ⟨0, by omega⟩)) (Fin (m ⟨1, by omega⟩))) - 1) +
+                m ⟨0, by omega⟩ := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos550

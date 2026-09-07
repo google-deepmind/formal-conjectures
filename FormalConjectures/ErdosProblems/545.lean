@@ -21,7 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/545](https://www.erdosproblems.com/545)
-- [Er75c] Erdős, P., Problems and results on finite and infinite graphs. Recent advances in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1974) (1975), 183-192.
+- [Er75c] Erdős, P., Problems and results on finite and infinite graphs. Recent advances in graph
+  theory (Proc. Second Czechoslovak Sympos., Prague, 1974) (1975), 183-192.
 -/
 
 namespace Erdos545
@@ -42,7 +43,8 @@ def bookGraphKn (n t : ℕ) : SimpleGraph (Option (Fin n)) where
 
 /--
 Let $G$ be a graph with $m$ edges and no isolated vertices. Is the Ramsey number $R(G)$ maximised
-when $G$ is 'as complete as possible'? That is, if $m=\binom{n}{2}+t$ edges with $0\leq t < n$ then is
+when $G$ is 'as complete as possible'? That is, if $m=\binom{n}{2}+t$ edges with $0\leq t < n$
+then is
 $$R(G)\leq R(H),$$
 where $H$ is the graph formed by connecting a new vertex to $t$ of the vertices of $K_n$?
 -/
@@ -54,5 +56,7 @@ theorem erdos_545 : answer(sorry) ↔
         G.edgeSet.ncard = n.choose 2 + t →
         SimpleGraph.diagonalGraphRamsey G ≤ SimpleGraph.diagonalGraphRamsey (bookGraphKn n t) := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos545

@@ -21,18 +21,23 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/63](https://www.erdosproblems.com/63)
-- [dBEr51] de Bruijn, N. G. and Erdős, P., *A colour problem for infinite graphs and a problem in the theory of relations*. Indag. Math. (1951), 369--373.
-- [ErHa66] Erdős, P. and Hajnal, A., *On chromatic number of graphs and set-systems*. Acta Math. Acad. Sci. Hungar. (1966), 61-99.
-- [LiMo20] Liu, Hong and Montgomery, Richard, *A solution to Erdős and Hajnal's odd cycle problem*. arXiv:2010.15802 (2020).
+- [dBEr51] de Bruijn, N. G. and Erdős, P., *A colour problem for infinite graphs and a problem
+  in the theory of relations*. Indag. Math. (1951), 369--373.
+- [ErHa66] Erdős, P. and Hajnal, A., *On chromatic number of graphs and set-systems*.
+  Acta Math. Acad. Sci. Hungar. (1966), 61-99.
+- [LiMo20] Liu, Hong and Montgomery, Richard, *A solution to Erdős and Hajnal's odd cycle problem*.
+  arXiv:2010.15802 (2020).
 - [Re24] Reiher, C., *Graphs of large girth*. arXiv:2403.13571 (2024).
 -/
 
 namespace Erdos63
 
 /--
-Does every graph with infinite chromatic number contain a cycle of length ^n$ for infinitely many 0
+Does every graph with infinite chromatic number contain a cycle of length $2^n$ for infinitely
+many $n$?
 
-Conjectured by Mihók and Erdős. Solved affirmatively following the work of Liu and Montgomery [LiMo20].
+Conjectured by Mihók and Erdős. Solved affirmatively following the work of Liu and Montgomery
+[LiMo20].
 -/
 @[category research solved, AMS 5]
 theorem erdos_63 :
@@ -40,5 +45,7 @@ theorem erdos_63 :
       ∀ {V : Type*} (G : SimpleGraph V), G.chromaticNumber = ⊤ →
         ∀ N : ℕ, ∃ n ≥ N, 2 ^ n ∈ G.cycleLengths := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos63

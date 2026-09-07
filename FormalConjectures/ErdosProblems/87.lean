@@ -38,7 +38,8 @@ for every graph $G$ with chromatic number $\chi(G)=k$?
 theorem erdos_87 : answer(sorry) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
-        (SimpleGraph.diagonalGraphRamsey G : ℝ) > (1 - ε) ^ k * (SimpleGraph.diagonalRamsey k : ℝ) := by
+        (SimpleGraph.diagonalGraphRamsey G : ℝ) >
+          (1 - ε) ^ k * (SimpleGraph.diagonalRamsey k : ℝ) := by
   sorry
 
 /--
@@ -52,5 +53,7 @@ theorem erdos_87.parts.stronger : answer(sorry) ↔
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
         (SimpleGraph.diagonalGraphRamsey G : ℝ) > c * (SimpleGraph.diagonalRamsey k : ℝ) := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos87

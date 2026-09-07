@@ -63,4 +63,6 @@ theorem erdos_65 : answer(sorry) ↔
           (∑ᶠ a ∈ K.cycleLengths, (1 : ℝ) / a) ≤ (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos65

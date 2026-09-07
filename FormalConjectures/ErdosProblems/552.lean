@@ -35,7 +35,8 @@ where $S_n=K_{1,n}$ is the star on $n+1$ vertices.
 @[category research open, AMS 5]
 theorem erdos_552 :
     ∀ (n : ℕ),
-      SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4) (completeBipartiteGraph (Fin 1) (Fin n)) =
+      SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
+        (completeBipartiteGraph (Fin 1) (Fin n)) =
         answer(sorry) := by
   sorry
 
@@ -46,7 +47,11 @@ $$R(C_4, S_n) \leq n + \sqrt{n} - c?$$
 @[category research open, AMS 5]
 theorem erdos_552.parts.upper_bound : answer(sorry) ↔
     ∀ (c : ℝ), 0 < c →
-      Set.Infinite {n : ℕ | (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4) (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
+      Set.Infinite {n : ℕ |
+        (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
+          (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos552

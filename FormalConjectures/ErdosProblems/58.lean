@@ -21,7 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/58](https://www.erdosproblems.com/58)
-- [GaHuMa21] Gao, Jun and Huo, Qingyi and Ma, Jie, *A strengthening on odd cycles in graphs of given chromatic number*. SIAM J. Discrete Math. (2021), 2317-2327.
+- [GaHuMa21] Gao, Jun and Huo, Qingyi and Ma, Jie, *A strengthening on odd cycles in graphs of given
+  chromatic number*. SIAM J. Discrete Math. (2021), 2317-2327.
 - [Gy92] Gyárfás, A., *Graphs with k odd cycle lengths*. Discrete Math. (1992), 41-48.
 -/
 
@@ -38,7 +39,10 @@ theorem erdos_58 :
     ∀ {V : Type*} (G : SimpleGraph V) (k : ℕ),
       G.oddCycleLengths.ncard ≤ k →
         G.chromaticNumber ≤ (2 * k + 2 : ℕ∞) ∧
-        (G.chromaticNumber = (2 * k + 2 : ℕ∞) ↔ (SimpleGraph.completeGraph (Fin (2 * k + 2))).IsContained G) := by
+        (G.chromaticNumber = (2 * k + 2 : ℕ∞) ↔
+          (SimpleGraph.completeGraph (Fin (2 * k + 2))).IsContained G) := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos58

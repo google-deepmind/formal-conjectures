@@ -39,4 +39,6 @@ theorem erdos_547 :
       T.IsTree → SimpleGraph.diagonalGraphRamsey T ≤ 2 * n - 2 := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos547

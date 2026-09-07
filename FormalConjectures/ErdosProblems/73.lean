@@ -43,4 +43,6 @@ theorem erdos_73 : answer(True) ↔
           (G.induce (D : Set V)ᶜ).Colorable 2 := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos73

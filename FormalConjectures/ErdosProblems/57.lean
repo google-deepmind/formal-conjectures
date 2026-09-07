@@ -21,8 +21,10 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/57](https://www.erdosproblems.com/57)
-- [ErHa66] Erdős, P. and Hajnal, A., *On chromatic number of graphs and set-systems*. Acta Math. Acad. Sci. Hungar. (1966), 61-99.
-- [LiMo20] Liu, Hong and Montgomery, Richard, *A solution to Erdős and Hajnal's odd cycle problem*. arXiv:2010.15802 (2020).
+- [ErHa66] Erdős, P. and Hajnal, A., *On chromatic number of graphs and set-systems*.
+  Acta Math. Acad. Sci. Hungar. (1966), 61-99.
+- [LiMo20] Liu, Hong and Montgomery, Richard, *A solution to Erdős and Hajnal's odd cycle problem*.
+  arXiv:2010.15802 (2020).
 -/
 
 namespace Erdos57
@@ -38,5 +40,7 @@ theorem erdos_57 :
     ∀ {V : Type*} (G : SimpleGraph V), G.chromaticNumber = ⊤ →
       ¬ Summable (fun (a : G.oddCycleLengths) ↦ 1 / (a : ℝ)) := by
   sorry
+
+-- TODO: Add variants of the problem if they exist on the website.
 
 end Erdos57

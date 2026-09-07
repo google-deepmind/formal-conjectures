@@ -50,4 +50,6 @@ theorem erdos_77.parts.limit_exists :
       Filter.atTop (𝓝 L) := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos77

@@ -42,4 +42,6 @@ theorem erdos_546 : answer(True) ↔
       (SimpleGraph.diagonalGraphRamsey G : ℝ) ≤ 2 ^ (C * Real.sqrt m) := by
   sorry
 
+-- TODO: Add variants of the problem if they exist on the website.
+
 end Erdos546
