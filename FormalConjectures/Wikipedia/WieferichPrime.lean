@@ -61,6 +61,11 @@ theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPri
 theorem isWieferichPrime_1093 : IsWieferichPrime 1093 := by
   decide +kernel
 
+/-- The prime $3511$ is a Wieferich prime: $2^{3510} \equiv 1 \pmod{3511^2}$. -/
+@[category test, AMS 11]
+theorem isWieferichPrime_3511 : IsWieferichPrime 3511 :=
+  ⟨by norm_num, by decide +kernel⟩
+
 /-- The prime $2$ is not a Wieferich prime, so no hypothesis excluding it is needed. -/
 @[category test, AMS 11]
 theorem not_isWieferichPrime_two : ¬ IsWieferichPrime 2 := by
