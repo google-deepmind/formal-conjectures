@@ -42,10 +42,20 @@ $\operatorname{tr}(ABC) = \sum_{i,j,k} A_{ij} B_{jk} C_{ki}$. -/
 @[category test, AMS 15]
 theorem matrixMulTensor_two_coefficients :
     ∀ a b c : Fin 4,
-      Holor.matrixMulTensor ℤ 2
+      Holor.matrixMulTensor ℤ 2 2 2
         ⟨[a.val, b.val, c.val], .cons a.isLt (.cons b.isLt (.cons c.isLt .nil))⟩ =
         if a.val % 2 = b.val / 2 ∧ b.val % 2 = c.val / 2 ∧ c.val % 2 = a.val / 2
         then 1 else 0 := by
+  decide
+
+/-- All $36$ coefficients for a $2 \times 3$ matrix, a $3 \times 1$ matrix,
+and a $1 \times 2$ matrix match the cyclic index conditions in $\operatorname{tr}(ABC)$. -/
+@[category test, AMS 15]
+theorem matrixMulTensor_rectangular_coefficients :
+    ∀ (a : Fin 6) (b : Fin 3) (c : Fin 2),
+      Holor.matrixMulTensor ℤ 2 3 1
+        ⟨[a.val, b.val, c.val], .cons a.isLt (.cons b.isLt (.cons c.isLt .nil))⟩ =
+        if a.val % 3 = b.val ∧ c.val = a.val / 3 then 1 else 0 := by
   decide
 
 /-- The matrix multiplication exponent over $\mathbb{C}$ is $2$: for every
@@ -55,7 +65,7 @@ $\varepsilon$. See [CKSU05] and the tensor-rank characterization in [CHILO18]. -
 @[category research open, AMS 15 68]
 theorem matrix_multiplication_exponent_two :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ n : ℕ, 1 ≤ n →
-      (Holor.cprank (Holor.matrixMulTensor ℂ n) : ℝ) ≤ C * (n : ℝ) ^ (2 + ε) := by
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ C * (n : ℝ) ^ (2 + ε) := by
   sorry
 
 end MatrixMultiplicationExponent
