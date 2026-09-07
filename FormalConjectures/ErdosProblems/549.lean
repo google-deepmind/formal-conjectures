@@ -23,8 +23,7 @@ import FormalConjecturesUtil
 - [erdosproblems.com/549](https://www.erdosproblems.com/549)
 - [Bu74] Burr, S. A., Generalized Ramsey theory for graphs—a survey. Graphs and combinatorics
   (Proc. Capital Conf., George Washington Univ., Washington, D.C., 1973) (1974), 52-75.
-- [GHK79] Grossman, J. W., Harary, F. and Klawe, M., Generalized Ramsey theory for graphs. X.
-  Double stars. Discrete Math. (1979), 273-283.
+- [NSZ16] S. Norin and Y. R. Sun and Y. Zhao, Asymptotics of Ramsey numbers of double stars.
 -/
 
 namespace Erdos549
@@ -34,8 +33,11 @@ If $T$ is a tree which is a bipartite graph with $k$ vertices in one class and $
 in the other class then
 $$R(T)=4k-1.$$
 
-This conjecture was disproved by Grossman, Harary, and Klawe [GHK79], who showed that for double
-stars $S_{t_1, t_2}$ with $t_1 \ge 3t_2 - 2$, $R(T) = 2t_1$.
+This is false: Norin, Sun, and Zhao [NSZ16] have proved that if $T$ is the union of two stars on $k$
+and $2k$ vertices, with an edge joining the centre of the two stars, then $R(T)\geq (4.2-o(1))k$,
+and conjectured that $R(T)=(4.2+o(1))k$.
+
+This problem is #15 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research solved, AMS 5]
 theorem erdos_549 : answer(False) ↔
@@ -46,6 +48,6 @@ theorem erdos_549 : answer(False) ↔
       SimpleGraph.diagonalGraphRamsey T = 4 * k - 1 := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos549

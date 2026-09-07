@@ -39,6 +39,8 @@ def completeMultipartiteGraph {k : ℕ} (m : Fin k → ℕ) :
 Let $m_1\leq\cdots\leq m_k$ and $n$ be sufficiently large. If $T$ is a tree on $n$ vertices
 and $G$ is the complete multipartite graph with vertex class sizes $m_1,\ldots,m_k$ then prove that
 $$R(T,G)\leq (\chi(G)-1)(R(T,K_{m_1,m_2})-1)+m_1.$$
+
+This problem is #16 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_550 :
@@ -51,6 +53,6 @@ theorem erdos_550 :
                 m ⟨0, by omega⟩ := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos550

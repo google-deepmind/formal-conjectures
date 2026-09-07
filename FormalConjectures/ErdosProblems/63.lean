@@ -46,6 +46,6 @@ theorem erdos_63 :
         ∀ N : ℕ, ∃ n ≥ N, 2 ^ n ∈ G.cycleLengths := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos63

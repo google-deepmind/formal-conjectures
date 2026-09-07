@@ -47,6 +47,10 @@ when $G$ is 'as complete as possible'? That is, if $m=\binom{n}{2}+t$ edges with
 then is
 $$R(G)\leq R(H),$$
 where $H$ is the graph formed by connecting a new vertex to $t$ of the vertices of $K_n$?
+
+A question of Erdős and Graham.
+
+This problem is #10 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_545 : answer(sorry) ↔
@@ -58,6 +62,6 @@ theorem erdos_545 : answer(sorry) ↔
           SimpleGraph.diagonalGraphRamsey (knPlusTEdges n t) := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos545

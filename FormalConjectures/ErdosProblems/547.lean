@@ -32,6 +32,8 @@ namespace Erdos547
 /--
 If $T$ is a tree on $n$ vertices then
 $$R(T) \leq 2n-2.$$
+
+This problem is #14 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_547 :
@@ -39,6 +41,6 @@ theorem erdos_547 :
       T.IsTree → SimpleGraph.diagonalGraphRamsey T ≤ 2 * n - 2 := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos547

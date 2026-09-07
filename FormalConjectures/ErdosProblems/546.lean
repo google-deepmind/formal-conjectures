@@ -33,6 +33,8 @@ Let $G$ be a graph with no isolated vertices and $m$ edges. Is it true that
 $$R(G) \leq 2^{O(m^{1/2})}?$$
 
 This is true, and was proved by Sudakov [Su11].
+
+This problem is #11 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research solved, AMS 5]
 theorem erdos_546 : answer(True) ↔
@@ -42,6 +44,6 @@ theorem erdos_546 : answer(True) ↔
       (SimpleGraph.diagonalGraphRamsey G : ℝ) ≤ 2 ^ (C * Real.sqrt m) := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos546

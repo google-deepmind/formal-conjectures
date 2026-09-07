@@ -21,8 +21,9 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/552](https://www.erdosproblems.com/552)
-- [BEHRS80] Burr, S. A., Erdős, P., Harary, F., Rousseau, C. C. and Schelp, R. H., Ramsey-minimal
-  graphs for star-forests. Bull. London Math. Soc. (1980), 384-386.
+- [BEFRS89] Burr, S. and Erdős, P. and Faudree, R. J. and Rousseau, C. C. and Schelp, R. H., Some
+  complete bipartite graph-tree Ramsey numbers. Graph theory in memory of G. A. Dirac (Sandbjerg,
+  1985) (1989), 79-89.
 -/
 
 namespace Erdos552
@@ -31,9 +32,13 @@ namespace Erdos552
 Determine the Ramsey number
 $$R(C_4, S_n),$$
 where $S_n=K_{1,n}$ is the star on $n+1$ vertices.
+
+A problem of Burr, Erdős, Faudree, Rousseau, and Schelp [BEFRS89].
+
+This problem is #19 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
-theorem erdos_552 :
+theorem erdos_552.parts.i :
     ∀ (n : ℕ),
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
         (completeBipartiteGraph (Fin 1) (Fin n)) =
@@ -45,13 +50,13 @@ In particular, is it true that, for any $c > 0$, there are infinitely many $n$ s
 $$R(C_4, S_n) \leq n + \sqrt{n} - c?$$
 -/
 @[category research open, AMS 5]
-theorem erdos_552.parts.upper_bound : answer(sorry) ↔
+theorem erdos_552.parts.ii : answer(sorry) ↔
     ∀ (c : ℝ), 0 < c →
       Set.Infinite {n : ℕ |
         (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
           (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos552

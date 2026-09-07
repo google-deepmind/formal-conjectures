@@ -31,7 +31,7 @@ Let $k\ge 0$. Let $G$ be a graph such that every subgraph $H$ contains an indepe
 $\ge (n-k)/2$, where $n$ is the number of vertices of $H$. Must $G$ be the union of a bipartite
 graph and $O_k(1)$ many vertices?
 
-This was proved by Reed [Re99].
+Proved by Reed [Re99].
 -/
 @[category research solved, AMS 5]
 theorem erdos_73 : answer(True) ↔
@@ -43,6 +43,6 @@ theorem erdos_73 : answer(True) ↔
           (G.induce (D : Set V)ᶜ).Colorable 2 := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos73

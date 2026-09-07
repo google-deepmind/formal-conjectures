@@ -41,6 +41,6 @@ theorem erdos_57 :
       ¬ Summable (fun (a : G.oddCycleLengths) ↦ 1 / (a : ℝ)) := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos57

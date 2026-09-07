@@ -21,8 +21,6 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/65](https://www.erdosproblems.com/65)
-- [ErHa66] Erdős, P. and Hajnal, A., On chromatic number of graphs and set-systems. Acta Math. Acad.
-  Sci. Hungar. (1966), 61-99.
 - [GKS84] Gyárfás, A., Komlós, J. and Szemerédi, E., On the cycle lengths of graphs. J. Graph Theory
   (1984), 441-445.
 - [LiMo20] Liu, C. and Montgomery, R., A solution to Erdős and Hajnal's odd cycle problem.
@@ -36,10 +34,11 @@ Let $G$ be a graph with $n$ vertices and $kn$ edges, and $a_1<a_2<\cdots$ be the
 cycles in $G$. Is it true that
 $$\sum\frac{1}{a_i}\gg \log k?$$
 
-Gyárfás, Komlós, and Szemerédi [GKS84] proved that $\sum \frac{1}{a_i} \gg \log k$.
+Gyárfás, Komlós, and Szemerédi [GKS84] have proved that this sum is at least $\log k$, so that only
+the second question remains.
 -/
 @[category research solved, AMS 5]
-theorem erdos_65.parts.gks : answer(True) ↔
+theorem erdos_65.parts.i : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ (k : ℕ) (hk : 2 ≤ k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         Fintype.card V = n →
@@ -49,9 +48,11 @@ theorem erdos_65.parts.gks : answer(True) ↔
 
 /--
 Is the sum $\sum\frac{1}{a_i}$ minimised when $G$ is a complete bipartite graph?
+
+This problem is #65 in Extremal Graph Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
-theorem erdos_65 : answer(sorry) ↔
+theorem erdos_65.parts.ii : answer(sorry) ↔
     ∀ (k : ℕ) (hk : 2 ≤ k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         Fintype.card V = n →
@@ -63,6 +64,6 @@ theorem erdos_65 : answer(sorry) ↔
           (∑ᶠ a ∈ K.cycleLengths, (1 : ℝ) / a) ≤ (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) := by
   sorry
 
--- TODO: Add variants of the problem if they exist on the website.
+-- TODO: Add variants of the problem.
 
 end Erdos65
