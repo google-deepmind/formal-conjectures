@@ -50,12 +50,12 @@ namespace Erdos1020
 /-- The maximum number of edges in an `r`-uniform hypergraph on `n` vertices containing no
 matching of size `k` (i.e. no `k` pairwise vertex-disjoint edges). -/
 noncomputable def f (n r k : ℕ) : ℕ :=
-  open scoped Classical in
-  let candidates :=
-    (((Finset.univ : Finset (Fin n)).powersetCard r).powerset).filter fun H ↦
-      ¬ ∃ M : Finset (Finset (Fin n)),
-          M ⊆ H ∧ M.card = k ∧ (M : Set (Finset (Fin n))).PairwiseDisjoint id
-  candidates.sup Finset.card
+  sSup {m : ℕ | ∃ H : Hypergraph (Fin n),
+    H.vertexSet = Set.univ ∧
+    (∀ e ∈ H.edgeSet, e.ncard = r) ∧
+    (¬ ∃ M : Set (Set (Fin n)), M ⊆ H.edgeSet ∧ M.ncard = k ∧
+      M.PairwiseDisjoint id) ∧
+    H.edgeSet.ncard = m}
 
 /--
 Let $f(n;r,k)$ be the maximal number of edges in an $r$-uniform hypergraph which contains no set of $k$ many independent edges.
