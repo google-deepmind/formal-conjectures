@@ -23,7 +23,7 @@ Put each problem in `FormalConjectures/<Source>/`. Keep closely related variants
 file. Put reusable mathematics in `FormalConjecturesForMathlib/`. That directory must not
 contain `sorry`.
 
-Problem files normally import only `FormalConjectures.Util.ProblemImports`.
+Problem files normally import only `FormalConjecturesUtil`.
 `FormalConjecturesForMathlib/` files import only the required Mathlib modules.
 
 ## State the source faithfully

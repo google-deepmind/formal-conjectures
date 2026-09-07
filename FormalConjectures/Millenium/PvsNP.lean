@@ -26,61 +26,10 @@ in complexity theory, including
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
-- Arora, Sanjeev, and Boaz Barak. Computational complexity: a modern approach.
-  Cambridge University Press, 2009.
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
 -/
 
-open Computability Turing
-
 namespace ComplexityTheory
-
-/--
-The type of decision problems.
-
-We define these as functions from lists of booleans to booleans,
-implicitly assuming the usual encodings.
--/
-abbrev DecisionProblem := List Bool → Bool
-
-/--
-The type of complexity classes. We define these as sets of decision problems.
--/
-abbrev ComplexityClass := Set DecisionProblem
-
-/--
-A simple definition to abstract the notion of a poly-time Turing machine into a predicate.
--/
-def IsComputableInPolyTime {α β Γα Γβ : Type} (ea : Encoding α Γα) (eb : Encoding β Γβ)
-    (f : α → β) :=
-  Nonempty (TM2ComputableInPolyTime ea.encode eb.encode f)
-
-/--
-The class P is the set of decision problems
-decidable in polynomial time by a deterministic Turing machine.
--/
-def P : ComplexityClass :=
-  { L | IsComputableInPolyTime encodingListBool encodingBoolBool L }
-
-/--
-The class NP is the set of decision problems
-such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
-where for all `x`, `L x = true` iff there exists a `w` of length at most `p (|x|)`
-such that the Turing machine accepts the pair `(x,w)`.
-
-See Definition 2.1 in Arora-Barak (2009).
--/
-def NP : ComplexityClass :=
-  { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
-      IsComputableInPolyTime encodingListBoolProdListBool encodingBoolBool R ∧
-      ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
-
-/--
-The class coNP is the set of decision problems
-whose complements are in NP.
--/
-def coNP : ComplexityClass :=
-  { L | Lᶜ ∈ NP }
 
 /--
 **P ≠ NP**:

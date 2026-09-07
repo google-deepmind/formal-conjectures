@@ -29,6 +29,9 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+-- TODO: this statement is tagged `solved` but does not record the answer; determine it and
+-- replace `answer(sorry)` with `answer(True)` or `answer(False)`.
+set_option linter.style.category_answer false in
 /--
 WOWII [Conjecture 34](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
