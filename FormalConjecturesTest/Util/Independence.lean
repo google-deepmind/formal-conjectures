@@ -27,7 +27,9 @@ universe u
 
 /--
 A small set of axioms that are independent of ZFC (and Lean's slightly stronger type theory).
-This list is critical. Some of them are redundant, but worth including for clarity.
+This list is should be treated carefully, as any misformalisatio breaks the independet
+predicate defined in this file.
+Some of them are redundant, but worth including for clarity.
 
 Any change/expansion to it needs to come with a discussion and in particular a reason for
 expanding it.
@@ -64,10 +66,13 @@ Note: More precisely, the implication can be proved under some set theory axiom 
 independent and so does its negation.
 
 A proper, exhaustive and `Prop`-valued notion of independence is likely
-not possible to define in Lean. -/
-def Independent (P : Prop) : Prop :=
-  (∃ A ∈ IndependenceSet.{u}, A ↔ P) ∨
-  (∃ Q ∈ IndependencePairs.{u}, Q.1 → P ∧ P → Q.2)
+not possible to define in Lean.
+
+Note we also require a universe parameter (i.e. "independent in universe `v`"),
+since GCH might hold in some universes, but not in others. -/
+def Independent.{v} (P : Prop) : Prop :=
+  (∃ A ∈ IndependenceSet.{v}, A ↔ P) ∨
+  (∃ Q ∈ IndependencePairs.{v}, Q.1 → P ∧ P → Q.2)
 
 theorem independent_of_mem_independenceSet {P : Prop} (hP : P ∈ IndependenceSet.{u}) :
     Independent.{u} P := by
@@ -79,7 +84,7 @@ theorem ContinuumHypothesis.independent : Independent.{u} ContinuumHypothesis :=
   apply independent_of_mem_independenceSet
   simp [IndependenceSet]
 
-theorem NotContinuumHypothesis.independent : Independent.{u} ContinuumHypothesis := by
+theorem NotContinuumHypothesis.independent : Independent.{u} NotContinuumHypothesis := by
   apply independent_of_mem_independenceSet
   simp [IndependenceSet]
 
