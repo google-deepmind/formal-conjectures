@@ -69,21 +69,21 @@ def strongPow (G : SimpleGraph α) : (n : ℕ) → SimpleGraph (Fin n → α)
 
 /-- The Shannon capacity $\Theta(G) = \sup_n \sqrt[n]{\alpha(G^{\boxtimes n})}$ of a graph. -/
 noncomputable def shannonCapacity (G : SimpleGraph α) : ℝ :=
-  sSup {Real.nthRoot n α(G.strongPow n) | n : ℕ}
+  sSup {(↑α(G.strongPow n) : ℝ) ^ (↑n : ℝ)⁻¹ | n > 0}
 
--- easy, but needs more API for `Real.nthRoot`
+-- easy, but needs more API for `SimpleGraph.indepNum`
 @[category API, AMS 5 94]
 lemma bddAbove_shannonCapacity [Finite α] (G : SimpleGraph α) :
-    BddAbove {Real.nthRoot n α(G.strongPow n) | n : ℕ} := by
+    BddAbove {(↑α(G.strongPow n) : ℝ) ^ (↑n : ℝ)⁻¹ | n > 0} := by
   sorry
 
 @[category API, AMS 5 94]
-theorem indepNum_strongPow_le_shannonCapacity [Finite α] (G : SimpleGraph α) (n : ℕ) :
-    Real.nthRoot n ↑α(G.strongPow n) ≤ shannonCapacity G := by
+theorem indepNum_strongPow_le_shannonCapacity [Finite α] (G : SimpleGraph α) {n : ℕ} (hn : 0 < n):
+    (↑α(G.strongPow n) : ℝ) ^ (↑n : ℝ)⁻¹ ≤ shannonCapacity G := by
   apply le_csSup (bddAbove_shannonCapacity G)
-  simp
+  grind
 
--- easy, but needs more API for `Real.nthRoot`
+-- easy, but needs more API for `SimpleGraph.indepNum`
 @[category API, AMS 5 94]
 theorem indepNum_le_shannonCapacity [Finite α] (G : SimpleGraph α) :
     ↑α(G) ≤ shannonCapacity G := by
@@ -115,7 +115,15 @@ theorem threesixseven_le_indepNum_pow_five : 367 ≤ indepNum (strongPow (cycleG
 
 /-- A lower bound for the shannon capacity of $C_7$ given by [PoSc19]. -/
 @[category research solved, AMS 5 94]
-theorem root_367_le_shannonCapacityC7 : Real.nthRoot 5 367 ≤ shannonCapacity (cycleGraph 7) := by
-  sorry
+theorem root_367_le_shannonCapacityC7 : (367 : ℝ) ^ (5 : ℝ)⁻¹ ≤ shannonCapacity (cycleGraph 7) := by
+  apply le_trans ?_ (indepNum_strongPow_le_shannonCapacity (cycleGraph 7) (n := 5) (by norm_num))
+  simp only [Nat.cast_ofNat]
+  gcongr
+  convert Nat.cast_le.mpr threesixseven_le_indepNum_pow_five
+  · rfl
+  · rfl
+  · infer_instance
+  · infer_instance
+  · infer_instance
 
 end SimpleGraph
