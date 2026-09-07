@@ -72,7 +72,7 @@ Again, extra axiom assumptions should only be added when it is truly necessary.
 
 @[expose] public section
 
-universe v
+universe v w
 
 open Cardinal Topology TopologicalSpace Set Function
 
@@ -160,7 +160,7 @@ Note this unfortunately is universe dependent, which is unavoidable. -/
 class GeneralizedContinuumHypothesis.{u} where
   succ_cardinal_eq_pow {o : Ordinal.{u}} : ℵ₀ ≤ ℵ_ o → ℵ_ (o + 1) = 2 ^ (ℵ_ o)
 
-instance [h : GeneralizedContinuumHypothesis.{v}] : GeneralizedContinuumHypothesis.{v} where
+instance [h : GeneralizedContinuumHypothesis.{max v w}] : GeneralizedContinuumHypothesis.{w} where
   succ_cardinal_eq_pow {o} oh := by
     apply Cardinal.lift_injective.{v}
     simp [-Cardinal.lift_id, -Ordinal.lift_id,
