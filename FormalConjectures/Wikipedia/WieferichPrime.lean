@@ -25,13 +25,15 @@ argument suggests that the number of Wieferich primes up to $x$ grows like $\log
 
 More generally, a prime $p$ is a Wieferich prime to base $a$ if $a^{p-1} \equiv 1 \pmod{p^2}$.
 Wikipedia's list of unsolved problems also asks whether there are infinitely many Wieferich primes
-to every base $a > 0$, and whether there is any Wieferich prime to base $47$.
+to every base $a > 0$, and whether there is any Wieferich prime to base $47$. It is also not known
+whether there is any Wieferich prime besides $1093$ and $3511$.
 
 *References:*
 * [Wikipedia, List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics)
 * [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
 * [OEIS A001220](https://oeis.org/A001220)
 * P. Ribenboim, *Die Welt der Primzahlen*, 2nd ed., Springer (2006), pp. 242–243.
+* [PrimeGrid, Wieferich and Wall–Sun–Sun Prime Search](https://www.primegrid.com/stats_ww.php)
 -/
 
 namespace WieferichPrime
@@ -39,6 +41,17 @@ namespace WieferichPrime
 /-- There are infinitely many Wieferich primes. -/
 @[category research open, AMS 11]
 theorem infinite_isWieferichPrime : {p : ℕ | IsWieferichPrime p}.Infinite := by
+  sorry
+
+/--
+Are $1093$ and $3511$ the only Wieferich primes? They are the only known ones: PrimeGrid's search,
+completed in 2022, shows that any other Wieferich prime exceeds $2^{64}$. On the other hand, the
+heuristic count of $\log \log x$ Wieferich primes up to $x$ predicts that there are infinitely
+many, see `infinite_isWieferichPrime`.
+-/
+@[category research open, AMS 11]
+theorem setOf_isWieferichPrime_eq :
+    answer(sorry) ↔ {p : ℕ | IsWieferichPrime p} = {1093, 3511} := by
   sorry
 
 /--

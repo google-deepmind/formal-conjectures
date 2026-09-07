@@ -28,6 +28,8 @@ satisfy both congruences simultaneously. Lenstra gave a heuristic argument again
 * [Wikipedia, List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics)
 * [Wikipedia, Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
 * J. B. Dobson, [On Lerch's formula for the Fermat quotient](https://arxiv.org/abs/1103.3907v6)
+* F. G. Dorais and D. Klyve, [A Wieferich prime search up to $6.7 \times 10^{15}$](https://cs.uwaterloo.ca/journals/JIS/VOL14/Klyve/klyve3.html),
+  J. Integer Seq. 14 (2011), Article 11.9.2.
 * [OEIS A001220](https://oeis.org/A001220) (Wieferich primes)
 * [OEIS A014127](https://oeis.org/A014127) (Mirimanoff primes)
 -/
@@ -42,6 +44,15 @@ Mirimanoff prime?
 @[category research open, AMS 11]
 theorem exists_isWieferichPrime_and_isMirimanoffPrime :
     answer(sorry) ↔ ∃ p : ℕ, IsWieferichPrime p ∧ IsMirimanoffPrime p := by
+  sorry
+
+/--
+Are $11$ and $1006003$ the only Mirimanoff primes? They are the only known ones: Dorais and Klyve
+found no other below $9.7 \times 10^{14}$.
+-/
+@[category research open, AMS 11]
+theorem setOf_isMirimanoffPrime_eq :
+    answer(sorry) ↔ {p : ℕ | IsMirimanoffPrime p} = {11, 1006003} := by
   sorry
 
 /-- The prime $11$ is a Mirimanoff prime but not a Wieferich prime. -/
