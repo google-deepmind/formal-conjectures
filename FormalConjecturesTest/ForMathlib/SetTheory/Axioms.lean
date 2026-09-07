@@ -120,6 +120,7 @@ end basic_constructors
 
 section negation
 
+/-- A typeclass for the negation of the continuum hypothesis. -/
 @[mk_iff NotContinuumHypothesis.iff_aleph_one_lt_continuum']
 class NotContinuumHypothesis : Prop where
   /-- See `of_continuum_eq_aleph_one'` for the universe-generic version. -/
@@ -176,6 +177,8 @@ section MartinAxiom
 
 section Topology
 
+/-- A topological space satisfying the countable chain condition:
+Every collection of pariwise disjoint, nonempty open sets is countable. -/
 class CountableChainCondition (X : Type*) [TopologicalSpace X] : Prop where
   countable_chain_condition : ∀ ⦃S : Set (Set X)⦄,
     S.PairwiseDisjoint id → (∀ s ∈ S, IsOpen s) → S.Countable
@@ -228,14 +231,14 @@ instance instCountableChainConditionOfSeparableSpace {X : Type v}
 
 end Topology
 
-/-
-Martin's axiom for a cardinal. See https://en.wikipedia.org/wiki/Martin%27s_axiom. We choose a topological definition. -/
+/-- Martin's axiom for a cardinal.
+See https://en.wikipedia.org/wiki/Martin%27s_axiom. We choose a topological definition. -/
 def MartinsAxiomFor (k : Cardinal.{v}) : Prop :=
   ∀ᵉ (X : Type v) (_ : TopologicalSpace X) (s : Set (Set X)),
     Nonempty X → T2Space X → CompactSpace X → CountableChainCondition X →
       (∀ a ∈ s, IsNowhereDense a) → Set.sUnion s = Set.univ → k < #s
 
-theorem martinsAxiomFor_of_le {k c : Cardinal.{v}} (h : k ≤ c) (hc : MartinsAxiomFor c) :
+theorem MartinsAxiomFor.anti {k c : Cardinal.{v}} (h : k ≤ c) (hc : MartinsAxiomFor c) :
     MartinsAxiomFor k := by
   unfold MartinsAxiomFor at hc ⊢
   intro X t s nx t2 cx ccc hs sc
@@ -259,17 +262,17 @@ theorem not_martinsAxiomFor_continuum_bot : ¬ MartinsAxiomFor.{0} 𝔠 := by
       · intro _
         simp
       · exact fun ⟨_, i, _⟩ ↦ ⟨i, by simp_all⟩
-    · -- TODO: mathlib PR: https://github.com/leanprover-community/mathlib4/pull/42585, replace when it lands
-      rw [unitInterval, mk_Icc_real zero_lt_one]
+    · rw [unitInterval, mk_Icc_real zero_lt_one]
 
 theorem martinsAxiomFor_le_aleph0 {c : Cardinal.{v}} (hc : c ≤ ℵ₀) : MartinsAxiomFor c := by
-  apply martinsAxiomFor_of_le hc
+  apply MartinsAxiomFor.anti hc
   intro X t s ne t2 cx _ hs sc
   by_contra! hsc
   apply not_isMeagre_of_isOpen (X := X) isOpen_univ Set.univ_nonempty
   apply isMeagre_iff_countable_union_isNowhereDense.mpr
   exact ⟨s, hs, le_aleph0_iff_set_countable.mp hsc, sc.ge⟩
 
+/-- A typeclass for Martin's axiom (for 𝔠). -/
 @[mk_iff]
 class MartinsAxiom : Prop where
   /-- TODO: add universe independent version, similar as we have for CH -/
