@@ -45,4 +45,28 @@ theorem TotalRankConjecture [IsNoetherianRing R] :
     2 ^ c ≤ ∑ i ∈ Finset.range (c + 1), (Module.rank R (P.complex.X i)) := by
   sorry
 
+class IsCompleteIntersectionLocalRing (R : Type u) [CommRing R] extends
+    IsLocalRing R, IsNoetherianRing R where
+  is_quotient : ∃ (S : Type u) (_ : CommRing S) (_ : IsRegularLocalRing S)
+    (f : S →+* (AdicCompletion (IsLocalRing.maximalIdeal R) R)) (rs : List S),
+      Function.Surjective f ∧ RingHom.ker f = Ideal.ofList rs ∧ IsRegular S rs
+
+class IsLocallyCompleteIntersectionRing (R : Type u) [CommRing R] extends IsNoetherianRing R where
+  localization_ci : ∀ (p : Ideal R) (_ : p.IsPrime),
+    IsCompleteIntersectionLocalRing (Localization.AtPrime p)
+
+/-- The solved case of `TotalRankConjecture`, assuming the ring is lci. -/
+@[category research solved, AMS 13]
+theorem TotalRankConjecture_of_ci [IsLocallyCompleteIntersectionRing R]
+    (h_torsion : ∀ m : M, m + m = 0 → m = 0) :
+    2 ^ c ≤ ∑ i ∈ Finset.range (c + 1), (Module.rank R (P.complex.X i)) := by
+  sorry
+
+/-- The solved case of `TotalRankConjecture`, assuming `ℤ⧸pℤ` subring for odd prime. -/
+@[category research solved, AMS 13]
+theorem TotalRankConjecture_of_subring (p : ℕ) (h : p.Prime) (ne2 : p ≠ 2)
+    (f : ℤ ⧸ Ideal.span {(p : ℤ)} →+* R) :
+    2 ^ c ≤ ∑ i ∈ Finset.range (c + 1), (Module.rank R (P.complex.X i)) := by
+  sorry
+
 end Arxiv.«1702.02560»
