@@ -51,7 +51,7 @@ Are $11$ and $1006003$ the only Mirimanoff primes? They are the only known ones:
 found no other below $9.7 \times 10^{14}$.
 -/
 @[category research open, AMS 11]
-theorem setOf_isMirimanoffPrime_eq :
+theorem isMirimanoffPrime_iff :
     answer(sorry) ↔ ∀ p, IsMirimanoffPrime p ↔ p = 11 ∨ p = 1006003 := by
   sorry
 

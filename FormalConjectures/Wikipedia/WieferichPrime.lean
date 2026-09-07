@@ -50,8 +50,8 @@ heuristic count of $\log \log x$ Wieferich primes up to $x$ predicts that there 
 many, see `infinite_isWieferichPrime`.
 -/
 @[category research open, AMS 11]
-theorem setOf_isWieferichPrime_eq :
-    answer(sorry) ↔ {p : ℕ | IsWieferichPrime p} = {1093, 3511} := by
+theorem isWieferichPrime_iff :
+    answer(sorry) ↔ ∀ p, IsWieferichPrime p ↔ p = 1093 ∨ p = 3511 := by
   sorry
 
 /--
