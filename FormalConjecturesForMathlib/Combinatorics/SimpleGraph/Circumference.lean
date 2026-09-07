@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Order.Lattice.Nat
 
@@ -25,6 +26,14 @@ namespace SimpleGraph
 /-- `G.cycleLengths` is the set of lengths of the cycles in `G`. -/
 def cycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
   {m | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = m}
+
+/-- `G.oddCycleLengths` is the set of lengths of odd cycles in `G`. -/
+def oddCycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
+  {m ∈ G.cycleLengths | Odd m}
+
+/-- `G.evenCycleLengths` is the set of lengths of even cycles in `G`. -/
+def evenCycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
+  {m ∈ G.cycleLengths | Even m}
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
