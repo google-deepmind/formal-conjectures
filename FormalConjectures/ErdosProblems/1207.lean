@@ -34,17 +34,13 @@ open scoped EuclideanGeometry
 
 namespace Erdos1207
 
-/-- A set is isosceles-free if no three distinct points in it form an isosceles triangle. -/
-def IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
-  A.Triplewise fun x y z => ¬ IsIsosceles x y z
-
 /--
 `P d n` is the largest number $m$ such that every set of $n$ points in $\mathbb{R}^d$ has an
 isosceles-free subset of size at least $m$.
 -/
 noncomputable def P (d n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ S : Finset (ℝ^d), S.card = n ∧
-    m = sSup {k : ℕ | ∃ A ⊆ S, IsIsoscelesFree (A : Set (ℝ^d)) ∧ A.card = k}}
+    m = sSup {k : ℕ | ∃ A ⊆ S, (A : Set (ℝ^d)).IsIsoscelesFree ∧ A.card = k}}
 
 /--
 Let $P_d(n)$ be such that in any set of $n$ points in $\mathbb{R}^d$ there exist at least $P_d(n)$ many points which do not contain an isosceles triangle. Estimate $P_d(n)$ - in particular, is it true that $$P_2(n)<n^{1-c}$$ for some constant $c>0$?

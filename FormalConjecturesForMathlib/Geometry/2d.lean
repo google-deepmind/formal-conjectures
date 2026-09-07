@@ -242,3 +242,11 @@ def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
 
 nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
   Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)
+
+/-- A set is isosceles-free if no three distinct points in it form an isosceles triangle. -/
+def Set.IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
+  A.Triplewise fun x y z ↦ ¬ _root_.IsIsosceles x y z
+
+theorem Set.IsIsoscelesFree.mono {α : Type*} [Dist α] {s t : Set α} (h : t ⊆ s)
+    (hs : s.IsIsoscelesFree) : t.IsIsoscelesFree :=
+  Set.Triplewise.mono h hs
