@@ -22,15 +22,27 @@ import FormalConjecturesUtil
 
 -/
 
+namespace Arxiv.«1702.02560»
+
 universe u
 
-open CategoryTheory
+open CategoryTheory RingTheory.Sequence
+
+variable (R : Type u) [CommRing R] [ConnectedSpace (PrimeSpectrum R)]
+    (M : ModuleCat.{u} R) [Module.Finite R M] [Nontrivial M]
+    (P : ProjectiveResolution M) (fin : ∃ n, ∀ i > n, Limits.IsZero (P.complex.X i))
+    (c : ℕ) (ceq : c = Ideal.height (Module.annihilator R M))
 
 /-- The `Buchsbaum-Eisenbud-Horrocks Conjecture` about lower bound of Betti number. -/
 @[category research open, AMS 13]
-theorem BuchsbaumEisenbudHorrocksConjecture (R : Type u) [CommRing R]
-    [ConnectedSpace (PrimeSpectrum R)] (M : ModuleCat.{u} R) [Module.Finite R M] [Nontrivial M]
-    (P : ProjectiveResolution M) (fin : ∃ n, ∀ i > n, Limits.IsZero (P.complex.X i))
-    (c : ℕ) (ceq : c = Ideal.height (Module.annihilator R M)) :
+theorem BuchsbaumEisenbudHorrocksConjecture [IsNoetherianRing R] :
     ∀ i, c.choose i ≤ Module.rank R (P.complex.X i) := by
   sorry
+
+/-- The direct corollary of `Buchsbaum-Eisenbud-Horrocks Conjecture`, by taking sum. -/
+@[category research open, AMS 13]
+theorem TotalRankConjecture [IsNoetherianRing R] :
+    2 ^ c ≤ ∑ i ∈ Finset.range (c + 1), (Module.rank R (P.complex.X i)) := by
+  sorry
+
+end Arxiv.«1702.02560»
