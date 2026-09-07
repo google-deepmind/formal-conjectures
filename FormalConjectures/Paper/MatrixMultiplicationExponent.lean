@@ -55,6 +55,20 @@ theorem matrixMulTensor_rectangular_coefficients :
         if a.val % 3 = b.val ∧ c.val = a.val / 3 then 1 else 0 := by
   decide
 
+/-- The matrix multiplication exponent is at most $3$. -/
+@[category test, AMS 15 68]
+theorem matrix_multiplication_exponent_le_three :
+    ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ n : ℕ, 1 ≤ n →
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ C * (n : ℝ) ^ (3 + ε) := by
+  intro ε hε
+  refine ⟨1, zero_lt_one, fun n hn ↦ ?_⟩
+  calc
+    ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (3 : ℕ) := by
+      exact_mod_cast (by simpa [pow_succ] using Holor.cprank_matrixMulTensor_le ℂ n n n)
+    _ ≤ 1 * (n : ℝ) ^ (3 + ε) := by
+      simpa using Real.rpow_le_rpow_of_exponent_le (y := 3)
+        (show (1 : ℝ) ≤ n by exact_mod_cast hn) (le_add_of_nonneg_right hε.le)
+
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
 @[category research open, AMS 15 68]
