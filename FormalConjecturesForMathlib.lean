@@ -19,6 +19,7 @@ public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import FormalConjecturesForMathlib.Algebra.Homology.DerivedCategory.Ext.GradedAlgebra
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
@@ -173,6 +174,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
