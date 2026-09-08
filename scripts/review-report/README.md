@@ -9,6 +9,32 @@ for the older `formal-conjectures.pr-audit.v1` evidence prototype. That prototyp
 validation and independent-review claims are not implemented here. Its records may be retained
 as evidence files, but this tool does not validate their internal schema or import their authority.
 
+## Organization and storage
+
+| Content | Location in FC |
+| --- | --- |
+| Review instructions, rubrics and references | `.agents/skills/formal-conjectures-review/` |
+| Frozen evaluation fixtures and selected pilot results | `.agents/skills/formal-conjectures-review/evals/` |
+| Report and evaluation tools, with offline tests | `scripts/review_report.py`, `scripts/review_eval.py`, `scripts/test_review_*.py` |
+| Usage and contracts | `scripts/review-report/README.md`, `scripts/review-eval/README.md` |
+
+Generated PR reviews are runtime artifacts. Keep them outside the FC source checkout,
+for example in a sibling `fc-review-artifacts/pr-4899/<head-sha>/<run-id>/` directory.
+This is an operator-chosen convention, not a directory created automatically by the tool.
+Every command requires an explicit output path; an existing output directory is rejected.
+Use a new run directory for each review or freshness observation and retain earlier results.
+
+An assembled `result/` directory contains `report.json`, `observation.json`, `summary.md`,
+the request and review records, and copied procedure, source and check evidence. Preserve
+the whole directory so the evidence links remain usable. The tool neither uploads nor
+backs up these files; `/tmp` examples below are disposable demonstrations, not archives.
+Archive a complete evaluation run separately when retaining prompts, grades and usage too.
+
+The committed `evals/results/` files are selected evaluation records and examples, not a
+live archive of contributor reviews. A future publishing workflow must define storage,
+retention and a PR-facing summary linked to the complete bundle. No GitHub App, artifact
+upload or review-publication workflow is included here.
+
 ## Prepare a review
 
 Use a checkout of the exact PR head and a trusted copy of the
