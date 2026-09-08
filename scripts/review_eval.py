@@ -11,7 +11,7 @@
 
 """Frozen, paired evidence-packet evaluations. See scripts/review-eval/README.md.
 
-The report assembler is supplied explicitly from #5341; it is not vendored here.
+The bundled report assembler is supplied explicitly and pinned by content hash.
 Reviewers receive packet bytes only. Gold labels and arm identities are withheld.
 No model calls occur in CI or without the explicit `run` or `judge` command.
 """

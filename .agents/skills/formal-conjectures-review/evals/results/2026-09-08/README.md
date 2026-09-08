@@ -49,7 +49,8 @@ local run archive. Dollar cost and human review time are unavailable, not zero.
 Earlier attempts remain separate: the installed CLI rejected Astra before inference; a 5.5
 batch was interrupted when the user selected Sol; an initial Sol output used the packet file
 name instead of the repository path and was rejected. The harness now supplies a native output
-schema with the permitted repository paths and validates the result through #5341. No rejected
+schema with the permitted repository paths and validates the result through the report assembler
+(originally #5341, now included with the skill). No rejected
 output was repaired or counted as a success.
 
 Before routine publication: have a maintainer assess the anonymized reports, settle the

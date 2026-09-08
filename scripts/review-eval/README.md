@@ -2,7 +2,7 @@
 
 This is a small, paired **evidence-packet pilot**, not an autonomous review bot or a
 claim of independently established review quality. It tests interpretation of supplied
-evidence and generation of reports through the assembler in FC #5341.
+evidence and generation of reports through the bundled [report assembler](../review-report/README.md).
 
 The current suite is `.agents/skills/formal-conjectures-review/evals/evals.json`.
 It contains ten scenarios clustered on two real FC declarations at main
@@ -54,18 +54,19 @@ another model family and a maintainer reading anonymized reports are useful foll
 
 The commands make no GitHub writes. `freeze` and `summarize` make no model calls.
 `run` and `judge` use the authenticated Codex CLI and consume account usage. No model runs
-are scheduled in CI. The assembler path must be a trusted checkout of #5341 or its successor;
-this PR does not copy that implementation or require it for ordinary script tests.
+are scheduled in CI. Run these commands from a trusted tooling checkout. The assembler is
+included at `scripts/review_report.py`; its path remains explicit so a review can use trusted
+tooling separately from the contributor's checkout. Its exact bytes are pinned at freeze time.
 
 ```sh
 python3 scripts/review_eval.py freeze \
   --suite .agents/skills/formal-conjectures-review/evals/evals.json \
   --skill .agents/skills/formal-conjectures-review \
-  --assembler /path/to/report-checkout/scripts/review_report.py \
+  --assembler scripts/review_report.py \
   --repeats 1 --out /tmp/fc-review-eval-run
 
 python3 scripts/review_eval.py run --root /tmp/fc-review-eval-run \
-  --assembler /path/to/report-checkout/scripts/review_report.py --model MODEL_ID
+  --assembler scripts/review_report.py --model MODEL_ID
 python3 scripts/review_eval.py judge --root /tmp/fc-review-eval-run --model JUDGE_MODEL_ID
 python3 scripts/review_eval.py summarize --root /tmp/fc-review-eval-run
 python3 scripts/review_eval.py human-packet --root /tmp/fc-review-eval-run \

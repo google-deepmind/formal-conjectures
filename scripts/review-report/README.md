@@ -11,7 +11,9 @@ as evidence files, but this tool does not validate their internal schema or impo
 
 ## Prepare a review
 
-Use a checkout of the exact PR head and a trusted copy of the review skill, such as #4899.
+Use a checkout of the exact PR head and a trusted copy of the
+[review skill](../../.agents/skills/formal-conjectures-review/SKILL.md).
+Run this tool from a trusted tooling checkout, which may differ from the PR checkout.
 Put the cited source excerpts and their URLs/retrieval notes in a dedicated source directory.
 An empty directory is allowed when the source is unavailable; source review must then remain
 incomplete. The tool records the committed head, actual merge base, changed paths, procedure
@@ -130,6 +132,9 @@ invalid input or an I/O/Git failure. Neither exit code approves a PR. Strict rea
 the versioned JSON fields, never scrape `summary.md` or treat CLI success as a review pass.
 
 ## Evaluation and next integration
+
+The bundled [evaluation harness](../review-eval/README.md) runs paired skill/baseline
+reviews through this assembler and retains their inputs, outputs and separate assessments.
 
 Compare review variants only on matching head, merge base, source snapshots, tool access and
 context policy. A fresh run and a rereview with prior findings are different evaluation inputs.
