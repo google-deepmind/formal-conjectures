@@ -36,6 +36,8 @@ open CategoryTheory Abelian Limits
 
 universe u v w
 
+/-
+Let `R`be an artinian ring, `A` an algebra of finite type and `M`a finitely generated module over `A`-/
 variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] {M : ModuleCat.{v} A} [Module.Finite A M.carrier]
 
 
@@ -43,7 +45,7 @@ namespace NakayamaConjectures
 
 /--
 The Strong Nakayama Conjecture:
-Let A be a finite module over an aritinain ring. For any finitely generated A-module M with Ext^i(M,A) = 0 for any integer i ≥ 0 it follows that M = 0.
+If  Ext^i(M,A) = 0 for any integer `i ≥ 0` then M = 0.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
 theorem SNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) : IsZero M := by
@@ -51,7 +53,9 @@ theorem SNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) : IsZero M := by
 
 /--
 The Generalized Nakayama Conjecture:
-Let A be a finite-dimensional algebra. For any finitely generated A-module M with Ext^i(M,A) = 0 for any integer i \geq 0 it follows that M is not simple.
+If Ext^i(M,A) = 0 for any integer `i ≥ 0` then M is not simple.
+
+Note that `Simple` here is in Finitely generated Modules but it is equivalent to being simple in Modules.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
 theorem GNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) :
@@ -60,7 +64,9 @@ theorem GNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) :
 
 /--
 Auslander-Reiten-Conjecture - an equivalent formulation of GNC:
-Let A be a finite-dimensional algebra. For any finitely generated A-module M with Ext^i(M,M) = Ext^i(M,A) = 0 for any integer i \geq 0 it follows that M is projective.
+If Ext^i(M,M) = Ext^i(M,A) = 0 for any integer `i ≥ 0` then `M` is projective.
+
+Note that `Projective` here is in Finitely generated Modules but it is equivalent to being projective in Modules.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
 theorem ARC (_ : ∀ i > 0 ,
@@ -71,7 +77,16 @@ theorem ARC (_ : ∀ i > 0 ,
 
 /--
 First Tachikawa Conjecture:
-Let A be a finite-dimensional algebra. If Ext^p(A^*,A) = 0 for any integer p > 0, then A is self-injective.
+
+If for any `p ≥ 0` and `I` a finiyely generated module over `A` Ext^p(I,A)=0 thent `A`is self injective (injective as a left module over itself).
+
+Note that there is an equivalent formulation :If Ext^p(A^*,A) = 0 for any integer `p > 0`, then A is self-injective.
+
+But A^* is defined as `A →ₗ[R] R` equiped with a structure of A module.
+- An instance is given by `LinearMap.instModuleDomMulActOfSMulCommClass`but in order to have a good universe, we need to have `R`and `A` leaving in the same universe.
+- In adition it's a module over `Aᵈᵐᵃ`wich is not `A`if `A`is not commutative.
+- Finaly in order to get the right definition it may be necessary to replace `R` by some kind of injective enveloppe of `R` not yet availabla.
+
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
 theorem TC1 (_ : ∀ p > 0, ∀ (I : FGModuleCat A), (Injective I) →
@@ -82,7 +97,7 @@ theorem TC1 (_ : ∀ p > 0, ∀ (I : FGModuleCat A), (Injective I) →
 
 /--
 Second Tachikawa Conjecture:
-Let A be a finite-dimensional, self-injective algebra. For any A-module M with Ext^p(M,M) = 0 for any integer p > 0, it follows that M is projective.
+Let A be a finite-dimensional, self-injective algebra. For any A-module M with Ext^p(M,M) = 0 for any integer `p > 0`, it follows that M is projective.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
 theorem TC2 (_ : Injective (ModuleCat.of A A)) (_ : ∀ p > 0,
@@ -90,11 +105,9 @@ theorem TC2 (_ : Injective (ModuleCat.of A A)) (_ : ∀ p > 0,
         Projective (ModuleCat.of A M ) := by
   sorry
 
-
 /-
 Nakayama Conjecture:
 Let A be a finite-dimensional algebra.
 -/
-
 
 end NakayamaConjectures
