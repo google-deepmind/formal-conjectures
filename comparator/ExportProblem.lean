@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 import Lean
 import FormalConjecturesUtil.Answer
 import FormalConjecturesUtil.Attributes.Basic
@@ -42,8 +43,8 @@ private def printOptions (opts : Options) : Options :=
 
 /-- Reparse and elaborate the printed type, refusing a change in meaning. -/
 private def renderType (type : Expr) : Term.TermElabM String := do
-  withTheReader Core.Context (fun ctx => { ctx with currNamespace := .anonymous, openDecls := [] }) do
-   withOptions printOptions do
+  withOptions printOptions <|
+   withTheReader Core.Context (fun ctx => { ctx with currNamespace := .anonymous, openDecls := [] }) do
     let text := (← ppExpr type).pretty
     let stx ← ofExcept <| Parser.runParserCategory (← getEnv) `term text
     let parsed ← Term.elabType stx

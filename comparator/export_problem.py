@@ -143,6 +143,9 @@ def export(source, declaration, out, generator, source_ref="origin/main",
         provenance = {"schemaVersion": 1, "source": {"repository": source_repository,
                       "commit": revision, "path": relative.as_posix(), "module": module,
                       "declaration": declaration, "sha256": digest(source_text)},
+                      "exporterCommit": run(["git", "rev-parse", "HEAD"]).strip(),
+                      "exporterFiles": {name: digest((ROOT / "comparator" / name).read_text())
+                                        for name in ("ExportProblem.lean", "export_problem.py", "WorkspaceTest.lean")},
                       "generatorCommit": generator_revision, "requestSha256": digest(request_text),
                       "files": {path: digest(content) for path, content in files.items()}}
         workspace = staging / "workspace"

@@ -1,0 +1,59 @@
+name: Package-backed export prototype
+
+on:
+  pull_request:
+    paths:
+      - 'comparator/**'
+      - 'FormalConjecturesTest/PackageExport.lean'
+      - 'lakefile.toml'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
+      - '.github/workflows/package-export.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          use-github-cache: true
+
+      - name: Build exporter and fixtures
+        run: lake --wfail build export_problem FormalConjecturesTest.PackageExport
+
+      - name: Build generator proposal and pinned functional verifier
+        env:
+          GENERATOR_REV: 3d688f5e205086d539be6a867f07ed7818812189
+          COMPARATOR_REV: c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809
+        run: |
+          git clone https://github.com/williamjblair/lean-eval-generator "$RUNNER_TEMP/generator"
+          git -C "$RUNNER_TEMP/generator" checkout "$GENERATOR_REV"
+          (cd "$RUNNER_TEMP/generator" && lake --wfail build)
+          git clone https://github.com/leanprover/comparator "$RUNNER_TEMP/comparator"
+          git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
+          cp lean-toolchain "$RUNNER_TEMP/comparator/lean-toolchain"
+          (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
+
+      # The shim is only for these authored fixtures, not adversarial submissions.
+      # This job checks proof semantics and does not qualify sandbox or nanoda policy.
+      - name: Check generated adapters and Comparator verdicts
+        env:
+          LEAN_EVAL_GENERATOR_CHECKOUT: ${{ runner.temp }}/generator
+          COMPARATOR_BIN: ${{ runner.temp }}/comparator/.lake/build/bin/comparator
+          COMPARATOR_LEAN4EXPORT: ${{ runner.temp }}/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export
+          COMPARATOR_LANDRUN: ${{ runner.temp }}/comparator/scripts/fake-landrun.sh
+        run: python3 -m unittest discover -s comparator -p test_export.py -v
