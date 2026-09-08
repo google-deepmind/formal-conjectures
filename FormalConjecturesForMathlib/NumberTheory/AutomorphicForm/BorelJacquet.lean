@@ -60,8 +60,8 @@ Buzzard asks instead for a finite-dimensional representation `σ` of `K` such th
 as a representation of `K`, a finite direct sum of Jordan-Hölder factors of `σ`. The two agree:
 the span is always a `K`-subrepresentation, so if it is finite-dimensional one may take `σ` to
 be the span itself, and conversely a sum of finitely many Jordan-Hölder factors is
-finite-dimensional. Buzzard also asks `σ` to be semisimple, which for the intended compact
-`K = O n ℝ` is automatic.
+finite-dimensional. Buzzard also asks `σ` to be semisimple, which is automatic for
+`K = O n ℝ`, a finite-dimensional representation of a compact group being semisimple.
 
 Conditions (b1) and (b2) together are the `K`-finiteness of Getz-Hahn's Definition 6.5, for
 `K = K_∞ K^∞` with `K^∞ < G(𝔸_f)` compact open: for a function that is locally constant in the
@@ -102,6 +102,8 @@ stronger form needs the adelic norm on `GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ`, whi
 * `Matrix.GeneralLinearGroup.diagonalEmbedding` and `Matrix.GeneralLinearGroup.ratDiagonal`:
   the diagonal embedding of `G(ℚ) = GL n ℚ` into `G(𝔸_f) × G(ℝ)` and its range, the subgroup
   `Γ` appearing in condition (a).
+* `Matrix.GeneralLinearGroup.orthogonalSubgroup`: `O n ℝ` inside `GL n ℝ`, the maximal compact
+  subgroup `K` of the pair `(G, K)`, appearing in condition (b2).
 * `Matrix.GeneralLinearGroup.IsAutomorphicForm`: smoothness together with (a), (b1), (b2), (c)
   and (d).
 
@@ -134,6 +136,16 @@ annihilate every slice.
 The subgroup `Γ` of condition (a) is `Matrix.GeneralLinearGroup.ratDiagonal n`, the range of
 the diagonal embedding `GL n ℚ →* GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ` induced by the inclusions of `ℚ`
 into the finite adeles and into `ℝ`.
+
+The `K` of the pair `(G, K)` is `Matrix.GeneralLinearGroup.orthogonalSubgroup n`, the matrices
+whose transpose is their inverse. Two facts about it are asserted in its docstring but not
+formalised here: that it is compact, and that it is maximal among the compact subgroups of
+`GL n ℝ` — the latter being a theorem (Cartan-Iwasawa-Malcev), which also says that every
+maximal compact subgroup is conjugate to this one, so nothing is lost by fixing it. What is
+proved is the boundedness half of compactness,
+`abs_coe_le_one_of_mem_orthogonalSubgroup`; closedness and the passage to the subspace topology
+of `GL n ℝ` are not, the latter running into the same scoped-instance problem as above, since
+Mathlib's order instances on `Matrix n n ℝ` are scoped too.
 
 Smoothness in the archimedean variable is stated as the existence of a `C^∞` extension to the
 open set of invertible matrices, rather than through a manifold structure on `GL n ℝ`: the
@@ -747,7 +759,49 @@ variable (n) in
 noncomputable def ratDiagonal : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ) :=
   (diagonalEmbedding n).range
 
-variable [Nonempty n] (K : Subgroup (GL n ℝ))
+/-- The orthogonal group `O n ℝ` as a subgroup of `GL n ℝ`: the matrices whose transpose is
+their inverse. This is the maximal compact subgroup of `GL n ℝ` — up to conjugacy the only one,
+by the Cartan-Iwasawa-Malcev theorem — and it is the `K` of the pair `(G, K)` in the definition
+of an automorphic form for `GL n`. -/
+def orthogonalSubgroup (n : Type*) [Fintype n] [DecidableEq n] : Subgroup (GL n ℝ) where
+  carrier := {y | (y : Matrix n n ℝ)ᵀ = (↑y⁻¹ : Matrix n n ℝ)}
+  one_mem' := by simp
+  mul_mem' {a b} ha hb := by
+    simp only [Set.mem_ofPred_eq] at ha hb ⊢
+    rw [Units.val_mul, Matrix.transpose_mul, ha, hb]
+    simp
+  inv_mem' {a} ha := by
+    simp only [Set.mem_ofPred_eq] at ha ⊢
+    rw [inv_inv, ← ha, Matrix.transpose_transpose]
+
+@[simp]
+lemma mem_orthogonalSubgroup {y : GL n ℝ} :
+    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ)ᵀ = (↑y⁻¹ : Matrix n n ℝ) := Iff.rfl
+
+lemma mem_orthogonalSubgroup_iff_mul_transpose {y : GL n ℝ} :
+    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ) * (y : Matrix n n ℝ)ᵀ = 1 := by
+  rw [mem_orthogonalSubgroup]
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · rw [h]; exact y.mul_inv
+  · rw [← Matrix.inv_eq_right_inv h, Matrix.GeneralLinearGroup.coe_inv]
+
+/-- The entries of an orthogonal matrix are bounded by `1`: each row is a unit vector. This is
+the boundedness half of the compactness of `orthogonalSubgroup n`; see the implementation notes
+on what is and is not formalised about that. -/
+lemma abs_coe_le_one_of_mem_orthogonalSubgroup {y : GL n ℝ} (hy : y ∈ orthogonalSubgroup n)
+    (i j : n) : |(y : Matrix n n ℝ) i j| ≤ 1 := by
+  set M := (y : Matrix n n ℝ) with hM
+  have h : M * Mᵀ = 1 := mem_orthogonalSubgroup_iff_mul_transpose.mp hy
+  have hd : ∑ k, M i k * M i k = 1 := by
+    have := congrArg (fun A => A i i) h
+    simpa [Matrix.mul_apply, Matrix.one_apply] using this
+  have hle : M i j * M i j ≤ ∑ k, M i k * M i k :=
+    Finset.single_le_sum (f := fun k => M i k * M i k) (fun k _ => mul_self_nonneg _)
+      (Finset.mem_univ j)
+  rw [hd] at hle
+  nlinarith [abs_nonneg (M i j), sq_abs (M i j)]
+
+variable [Nonempty n]
 
 /-- Smoothness of a function on `G(𝔸) = G(𝔸_f) × G(ℝ)`, with `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, ℚ]`:
 continuous, locally constant in the finite variable, and `C^∞` in the archimedean variable. -/
@@ -757,10 +811,12 @@ structure IsSmoothAdelic (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : Prop
   smoothOnGL : ∀ x : GL n 𝔸ᶠ[ℤ, ℚ], IsSmoothOnGL fun y : GL n ℝ => f (x, y)
 
 
-/-- An automorphic form for `(G, K)` in the sense of Borel-Jacquet, with `G(𝔸)` written as
-`G(𝔸_f) × G(ℝ) = GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ` and `ratDiagonal n` the rational points embedded
-diagonally. Condition (c) is with respect to the action of the centre of the universal
-enveloping algebra by left invariant differential operators, `centerAction`. -/
+/-- An automorphic form for `(G, K)` in the sense of Borel-Jacquet, with
+`G = GL n / ℚ` and `K = O n ℝ`: `G(𝔸)` is written as
+`G(𝔸_f) × G(ℝ) = GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ`, condition (a) is invariance under `ratDiagonal n`,
+the rational points embedded diagonally, condition (b2) is finiteness under the maximal compact
+`orthogonalSubgroup n`, and condition (c) is with respect to the action of the centre of the
+universal enveloping algebra by left invariant differential operators, `centerAction`. -/
 structure IsAutomorphicForm (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : Prop where
   /-- `f` is smooth. -/
   smooth : IsSmoothAdelic f
@@ -771,7 +827,7 @@ structure IsAutomorphicForm (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : P
     IsCompact (U : Set (GL n 𝔸ᶠ[ℤ, ℚ])) ∧
     ∀ u ∈ U, ∀ x : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ, f (x.1 * u, x.2) = f x
   /-- (b2) `f` is `K`-finite. -/
-  kFinite : IsKFinite ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod K) ℂ f
+  kFinite : IsKFinite ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) ℂ f
   /-- (c) `f` is annihilated by an ideal of finite codimension of the centre of the universal
   enveloping algebra, acting in the archimedean variable. One ideal annihilates every
   finite-adelic slice at once. -/
