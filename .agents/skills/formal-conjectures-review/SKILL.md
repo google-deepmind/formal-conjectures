@@ -165,6 +165,17 @@ structured findings through its documented interface when available; do not inve
 schema or recover tool verdicts by parsing prose. The skill produces advisory findings; the
 workflow owns execution, report storage and freshness checks.
 
+Record the selected skill revision and the content hashes of its instructions, rubrics and
+references with the report. A result from an older procedure is historical evidence until
+the workflow establishes that the relevant review inputs are unchanged.
+
+When a contributor contests a finding, inspect the reply and current code. Treat the prior
+finding as evidence to audit, not a verdict to defend. State whether it is retained, corrected
+or withdrawn, and why. Keep the earlier evidence reference so the correction is traceable.
+Before returning, reconcile findings across the three angles. Do not give mutually exclusive
+fixes or duplicate the same defect under several angles. If competing interpretations cannot
+be resolved, report one material question for human review.
+
 The review is advisory. Do not approve, request changes, merge, label, or mutate a contributor
 branch. A maintainer decides.
 
