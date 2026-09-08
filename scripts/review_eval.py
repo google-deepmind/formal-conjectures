@@ -11,7 +11,6 @@
 
 """Tool-using review evaluations. See scripts/review-eval/README.md."""
 import argparse
-import hashlib
 import importlib.metadata
 import json
 import os
@@ -31,18 +30,12 @@ import review_report as rr
 
 HERE = Path(__file__).resolve().parent
 VERSION = "fc.review-eval.v2"
+REVIEW_TOOLS = ("review_eval.py", "review_report.py", "review-eval/workspace_server.py")
 
 
-def encode(value):
-    return (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n").encode()
-
-
-def sha(raw):
-    return hashlib.sha256(raw).hexdigest()
-
-
-def read(path):
-    return rr.read_json(Path(path))
+encode = rr.encode
+sha = rr.digest
+read = rr.read_json
 
 
 def write(path, value):
@@ -51,11 +44,9 @@ def write(path, value):
 
 
 def asset(root, name):
-    path = Path(root).resolve()
-    for part in Path(rr.relative(name)).parts:
-        path /= part
-        rr.require(not path.is_symlink(), "symlink asset")
-    return path.read_bytes()
+    # Resolve the caller's root once (macOS /tmp is an ancestor symlink), then
+    # apply the same path and symlink checks as production report evidence.
+    return rr.read_artifact(Path(root).resolve(), name)
 
 
 def load_suite(path):
@@ -114,7 +105,7 @@ def freeze(suite_path, skill, output, image, cases, repeats, timeout, max_calls)
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     write(output / "suite.json", suite)
-    for relative in ("review_eval.py", "review_report.py", "review-eval/workspace_server.py"):
+    for relative in REVIEW_TOOLS:
         target = output / "tooling" / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(HERE / relative, target)
@@ -140,10 +131,7 @@ def freeze(suite_path, skill, output, image, cases, repeats, timeout, max_calls)
             "timeout": timeout,
             "max_calls": max_calls,
             "frozen_files": files(output),
-            "tooling": {
-                p.name: sha(p.read_bytes())
-                for p in [Path(__file__), HERE / "review_report.py", HERE / "review-eval/workspace_server.py"]
-            },
+            "tooling": {p.name: sha(p.read_bytes()) for p in (HERE / name for name in REVIEW_TOOLS)},
         },
     )
 
@@ -151,7 +139,7 @@ def freeze(suite_path, skill, output, image, cases, repeats, timeout, max_calls)
 def verify(root, *, check_tooling=True):
     m = read(root / "manifest.json")
     if check_tooling:
-        for p in [Path(__file__), HERE / "review_report.py", HERE / "review-eval/workspace_server.py"]:
+        for p in (HERE / name for name in REVIEW_TOOLS):
             rr.require(sha(p.read_bytes()) == m["tooling"][p.name], "tooling changed since freeze")
     for name, digest in m["frozen_files"].items():
         rr.require(sha(asset(root, name)) == digest, "frozen inputs changed")
@@ -162,60 +150,52 @@ def docker(*args, **kwargs):
     return subprocess.run(["docker", *args], check=True, capture_output=True, **kwargs)
 
 
+def schema_object(**fields):
+    return {"type": "object", "properties": fields, "required": list(fields), "additionalProperties": False}
+
+
+def schema_array(item, **limits):
+    return {"type": "array", "items": item, **limits}
+
+
+def schema_enum(*values):
+    return {"type": "string", "enum": list(values)}
+
+
+STRING = {"type": "string"}
+BOOLEAN = {"type": "boolean"}
+
+
 def review_schema(request, max_calls=30, context=()):
-    string = {"type": "string"}
-
-    def obj(props):
-        return {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
-
-    def arr(item):
-        return {"type": "array", "items": item}
-
-    def enum(values):
-        return {"type": "string", "enum": values}
-
-    evidence_paths = [item["path"] for item in request.get("sources", [])]
-    evidence_paths += [f"evidence/tool-{n:03d}.json" for n in range(1, max_calls + 1)]
-    evidence_paths += list(context)
-    evidence = {"type": "array", "items": enum(evidence_paths), "minItems": 1}
-
-    return obj(
-        {
-            "request_id": enum([request["id"]]),
-            "reviewer": string,
-            "context_policy": enum(["fresh", "rereview"]),
-            "prior_reviews": arr(string),
-            "coverage": obj(
-                {
-                    k: enum(["complete", "incomplete"])
-                    for k in ("source-fidelity", "statement-soundness", "metadata-hygiene")
-                }
-            ),
-            "findings": arr(
-                obj(
-                    {
-                        "angle": enum(["source-fidelity", "statement-soundness", "metadata-hygiene"]),
-                        "file": enum(request["scope"]),
-                        "line": {"type": "integer", "minimum": 0},
-                        "severity": enum(["semantic", "nit"]),
-                        "message": string,
-                        "suggestion": string,
-                        "evidence": evidence,
-                    }
-                )
-            ),
-            "questions": arr(string),
-            "reconciliations": arr(
-                obj(
-                    {
-                        "prior_evidence": string,
-                        "status": enum(["retained", "corrected", "withdrawn"]),
-                        "reason": string,
-                        "evidence": evidence,
-                    }
-                )
-            ),
-        }
+    paths = [item["path"] for item in request.get("sources", [])]
+    paths += [f"evidence/tool-{n:03d}.json" for n in range(1, max_calls + 1)]
+    evidence = schema_array(schema_enum(*paths, *context), minItems=1)
+    return schema_object(
+        request_id=schema_enum(request["id"]),
+        reviewer=STRING,
+        context_policy=schema_enum("fresh", "rereview"),
+        prior_reviews=schema_array(STRING),
+        coverage=schema_object(**{angle: schema_enum("complete", "incomplete") for angle in rr.ANGLES}),
+        findings=schema_array(
+            schema_object(
+                angle=schema_enum(*rr.ANGLES),
+                file=schema_enum(*request["scope"]),
+                line={"type": "integer", "minimum": 0},
+                severity=schema_enum("semantic", "nit"),
+                message=STRING,
+                suggestion=STRING,
+                evidence=evidence,
+            )
+        ),
+        questions=schema_array(STRING),
+        reconciliations=schema_array(
+            schema_object(
+                prior_evidence=STRING,
+                status=schema_enum("retained", "corrected", "withdrawn"),
+                reason=STRING,
+                evidence=evidence,
+            )
+        ),
     )
 
 
@@ -224,8 +204,8 @@ def prompt(case, request, arm, model):
     text = (
         case["prompt"] + "\n\nThe workspace is an isolated evaluation checkout at /workspace. "
         "The original file is read-only. Use the workspace tools; scratch files go in /output. "
-        "Read AGENTS.md and the ordinary contribution guidance. Source snapshots are available "
-        "on demand in /sources; networking is disabled equally for both conditions. "
+        "Read AGENTS.md and the ordinary contribution guidance. Available source snapshots are "
+        "in /sources; networking is disabled equally for both conditions. "
         "Do not publish a review. Your final answer must follow the supplied JSON schema. "
         "Evidence references are sources/<filename> or evidence/tool-NNN.json returned by tools. "
         "Each evidence entry must be an exact path, without commentary; explain its relevance in message or reason. "
@@ -281,59 +261,45 @@ def invoke_model(prompt_text, destination, model, timeout, schema=None, server_a
         "read-only",
         "--model",
         model,
-        "-c",
-        'model_reasoning_effort="high"',
-        "-c",
-        "features.shell_tool=false",
-        "-c",
-        "features.unified_exec=false",
-        "-c",
-        "features.multi_agent=false",
-        "-c",
-        "features.apps=false",
-        "-c",
-        "features.plugins=false",
-        "-c",
-        "features.remote_plugin=false",
-        "-c",
-        "features.browser_use=false",
-        "-c",
-        "features.in_app_browser=false",
-        "-c",
-        "features.skill_search=false",
-        "-c",
-        'web_search="disabled"',
         "--json",
         "-o",
         str(destination / "answer.json"),
     ]
-    # --ignore-user-config alone still discovers installed skills. Disable their catalogs
-    # for this invocation, without editing the user's configuration or credentials.
-    installed = set()
-    for folder in (
-        Path.home() / ".codex/skills",
-        Path.home() / ".agents/skills",
-        Path.home() / ".codex/plugins/cache",
+    settings = {"model_reasoning_effort": '"high"', "web_search": '"disabled"'}
+    for feature in (
+        "shell_tool",
+        "unified_exec",
+        "multi_agent",
+        "apps",
+        "plugins",
+        "remote_plugin",
+        "browser_use",
+        "in_app_browser",
+        "skill_search",
     ):
-        installed.update(str(p.parent) for p in folder.rglob("SKILL.md"))
+        settings["features." + feature] = "false"
+    # --ignore-user-config alone still discovers host skill catalogs.
+    installed = {
+        str(p.parent)
+        for folder in (".codex/skills", ".agents/skills", ".codex/plugins/cache")
+        for p in (Path.home() / folder).rglob("SKILL.md")
+    }
     overrides = ",".join("{path=" + json.dumps(p) + ",enabled=false}" for p in sorted(installed))
-    args += ["-c", "skills.config=[" + overrides + "]"]
+    settings["skills.config"] = "[" + overrides + "]"
     if schema:
         write(destination / "schema.json", schema)
         args += ["--output-schema", str(destination / "schema.json")]
     if server_args:
-        args += [
-            "-c",
-            f"mcp_servers.review_workspace.command={json.dumps(sys.executable)}",
-            "-c",
-            f"mcp_servers.review_workspace.args={json.dumps(server_args)}",
-            "-c",
-            'mcp_servers.review_workspace.default_tools_approval_mode="approve"',
-            "-c",
-            "mcp_servers.review_workspace.required=true",
-            "-c",
-            "mcp_servers.review_workspace.tool_timeout_sec=75",
-        ]
+        server = {
+            "command": json.dumps(sys.executable),
+            "args": json.dumps(server_args),
+            "default_tools_approval_mode": '"approve"',
+            "required": "true",
+            "tool_timeout_sec": "75",
+        }
+        settings.update({"mcp_servers.review_workspace." + key: value for key, value in server.items()})
+    for key, value in settings.items():
+        args += ["-c", f"{key}={value}"]
     args += ["-"]
     start = time.monotonic()
     with tempfile.TemporaryDirectory(prefix="fc-review-engine-") as temp:
@@ -396,100 +362,149 @@ def invoke_model(prompt_text, destination, model, timeout, schema=None, server_a
     return record
 
 
+def snapshot(repo, path, candidate):
+    """Create the same read-only Git history for both arms; upstream provenance stays separate."""
+    target = repo / path
+    target.parent.mkdir(parents=True)
+    target.write_bytes(candidate)
+    env = os.environ | {
+        "GIT_AUTHOR_DATE": "2000-01-01T00:00:00Z",
+        "GIT_COMMITTER_DATE": "2000-01-01T00:00:00Z",
+    }
+
+    def git(*args):
+        command = [
+            "git",
+            "-c",
+            "core.hooksPath=/dev/null",
+            "-c",
+            "commit.gpgSign=false",
+            "-C",
+            str(repo),
+            *args,
+        ]
+        return subprocess.check_output(command, env=env, stderr=subprocess.DEVNULL).decode().strip()
+
+    git("init", "-q")
+    for key, value in (
+        ("user.name", "Evaluation"),
+        ("user.email", "eval@localhost"),
+        ("status.showUntrackedFiles", "no"),
+    ):
+        git("config", key, value)
+    git("commit", "-q", "--allow-empty", "-m", "Base")
+    base = git("rev-parse", "HEAD")
+    git("branch", "origin/main")
+    git("add", ".")
+    git("commit", "-q", "-m", "Review snapshot")
+    head = git("rev-parse", "HEAD")
+    for entry in [repo / ".git", *(repo / ".git").rglob("*")]:
+        entry.chmod(0o755 if entry.is_dir() else 0o644)
+    return head, base
+
+
+def build_checks(evidence, module):
+    # Parse the native receipts once. Generic command output never becomes a build verdict.
+    receipts = {name: rr.parse(raw) for name, raw in evidence.items() if name.startswith("evidence/tool-")}
+    builds = {name: receipt for name, receipt in receipts.items() if receipt["kind"] == "build"}
+    if not builds:
+        return []
+    latest = next(reversed(builds.values()))
+    failed_to_run = latest["timed_out"] or latest["exit_code"] in (None, 124, 125, 126, 127, 137)
+    status = "error" if failed_to_run else "pass" if latest["exit_code"] == 0 else "fail"
+    return [
+        {
+            "kind": "build",
+            "status": status,
+            "producer": "isolated workspace build tool",
+            "policy": "lake --wfail build " + module,
+            "detail": "Original read-only candidate; tool receipt retained.",
+            "evidence": list(builds),
+        }
+    ]
+
+
+def assemble_run(out, case, request, context, model):
+    review = read(out / "model/answer.json")
+    rr.require(
+        review["reviewer"] == model
+        and review["context_policy"] == case["context_policy"]
+        and review["prior_reviews"] == list(context),
+        "changed review identity",
+    )
+    evidence = rr.collect(out / "evidence", "evidence") | context
+    checks = {
+        "request_id": request["id"],
+        "artifacts": rr.descriptors(evidence),
+        "checks": build_checks(evidence, case["module"]),
+    }
+    rr.write_directory(out / "check-inputs", evidence | {"checks.json": encode(checks)})
+    rr.write_directory(
+        out / "report",
+        rr.assemble(out / "request", out / "request", out / "model/answer.json", out / "check-inputs"),
+    )
+
+
 def run_one(root, manifest, job, model):
-    case = next(c for c in read(root / "suite.json")["cases"] if c["id"] == job["case"])
     out = root / "runs" / job["id"]
     if out.exists():
-        # Never overwrite or silently retry a failed/interrupted attempt.
-        return
+        return  # Never overwrite or silently retry an existing attempt.
     out.mkdir(parents=True)
-    (out / "evidence").mkdir()
-    sources = {
-        "sources/" + name: asset(root / "private-assets", path) for name, path in case["sources"].items()
-    }
-    context = {name: asset(root / "private-assets", path) for name, path in case.get("context", {}).items()}
-    procedure = review_procedure(root / "skill", job["arm"])
-    candidate = asset(root / "private-assets", case["candidate"])
-    # Isolated Git snapshots preserve provenance separately from the historical source commit.
-    with tempfile.TemporaryDirectory(prefix="fc-review-snapshot-") as temp:
-        repo = Path(temp)
-        target = repo / case["path"]
-        target.parent.mkdir(parents=True)
-        target.write_bytes(candidate)
-
-        def git(*args):
-            env = os.environ | {
-                "GIT_AUTHOR_DATE": "2000-01-01T00:00:00Z",
-                "GIT_COMMITTER_DATE": "2000-01-01T00:00:00Z",
-            }
-            return (
-                subprocess.check_output(["git", "-C", str(repo), *args], env=env, stderr=subprocess.DEVNULL)
-                .decode()
-                .strip()
-            )
-
-        git("init", "-q")
-        git("config", "user.name", "Evaluation")
-        git("config", "user.email", "eval@localhost")
-        git("commit", "-q", "--allow-empty", "-m", "Base")
-        base = git("rev-parse", "HEAD")
-        git("branch", "origin/main")
-        git("add", ".")
-        git("commit", "-q", "-m", "Review snapshot")
-        head = git("rev-parse", "HEAD")
-        request = {
-            "schema_version": rr.REQUEST_VERSION,
-            "repository": "evaluation-snapshot/formal-conjectures",
-            "head_commit": head,
-            "merge_base": base,
-            "scope": [case["path"]],
-            "procedure": rr.descriptors(procedure),
-            "sources": rr.descriptors(sources),
-            "required_checks": ["build"],
+    container, record = "fc-review-" + job["id"], {"status": "environment_error"}
+    try:
+        case = next(c for c in read(root / "suite.json")["cases"] if c["id"] == job["case"])
+        sources = {
+            "sources/" + name: asset(root / "private-assets", path) for name, path in case["sources"].items()
         }
-        request["id"] = rr.request_id(request)
-        rr.write_directory(out / "request", procedure | sources | {"request.json": rr.encode(request)})
-        rr.write_directory(out / "inputs", sources | context | {"candidate.lean": candidate})
-        (out / "output").mkdir()
-        container = "fc-review-" + job["id"]
-        # Only allowlisted public bytes enter the container; no suite, labels, fix commits or host credentials.
-        mounts = [
-            "--mount",
-            f"type=bind,src={out / 'inputs/candidate.lean'},dst=/workspace/{case['path']},readonly",
-            "--mount",
-            f"type=bind,src={out / 'output'},dst=/output",
-        ]
-        if sources:
-            mounts += ["--mount", f"type=bind,src={out / 'inputs/sources'},dst=/sources,readonly"]
-        if job["arm"] == "skill":
-            mounts += ["--mount", f"type=bind,src={root / 'skill'},dst=/skill,readonly"]
-        record = {"status": "environment_error"}
-        try:
+        context = {
+            name: asset(root / "private-assets", path) for name, path in case.get("context", {}).items()
+        }
+        procedure = review_procedure(root / "skill", job["arm"])
+        candidate = asset(root / "private-assets", case["candidate"])
+        with tempfile.TemporaryDirectory(prefix="fc-review-snapshot-") as temp:
+            repo = Path(temp)
+            head, base = snapshot(repo, case["path"], candidate)
+            request = {
+                "schema_version": rr.REQUEST_VERSION,
+                "repository": "evaluation-snapshot/formal-conjectures",
+                "head_commit": head,
+                "merge_base": base,
+                "scope": [case["path"]],
+                "procedure": rr.descriptors(procedure),
+                "sources": rr.descriptors(sources),
+                "required_checks": ["build"],
+            }
+            request["id"] = rr.request_id(request)
+            rr.write_directory(out / "request", procedure | sources | {"request.json": encode(request)})
+            rr.write_directory(out / "inputs", sources | context | {"candidate.lean": candidate})
+            (out / "output").mkdir()
+            (out / "evidence").mkdir()
+            # Mount only public inputs. The suite, labels, fix commits and credentials stay on the host.
+            mounts = {
+                out / "inputs/candidate.lean": f"/workspace/{case['path']},readonly",
+                out / "output": "/output",
+            }
+            if sources:
+                mounts[out / "inputs/sources"] = "/sources,readonly"
+            if job["arm"] == "skill":
+                mounts[root / "skill"] = "/skill,readonly"
+            mount_args = [f"--mount=type=bind,src={source},dst={target}" for source, target in mounts.items()]
             docker(
                 "run",
                 "-d",
                 "--name",
                 container,
-                "--network",
-                "none",
-                "--cap-drop",
-                "ALL",
-                "--security-opt",
-                "no-new-privileges",
-                "--pids-limit",
-                "256",
-                "--memory",
-                "6g",
-                "--cpus",
-                "2",
-                *mounts,
+                "--network=none",
+                "--cap-drop=ALL",
+                "--security-opt=no-new-privileges",
+                "--pids-limit=256",
+                "--memory=6g",
+                "--cpus=2",
+                *mount_args,
                 manifest["image"],
             )
-            for p in [repo / ".git", *(repo / ".git").rglob("*")]:
-                p.chmod(0o777 if p.is_dir() else 0o666)
             docker("cp", str(repo / ".git"), container + ":/workspace/.git")
             docker("exec", container, "git", "config", "--global", "--add", "safe.directory", "/workspace")
-            docker("exec", container, "git", "config", "status.showUntrackedFiles", "no")
             for name in context:
                 docker("cp", str(out / "inputs" / name), container + ":/output/" + Path(name).name)
             server_args = [
@@ -512,68 +527,13 @@ def run_one(root, manifest, job, model):
                 server_args,
             )
             if record["status"] == "completed":
-                review = read(out / "model/answer.json")
-                rr.require(
-                    review["reviewer"] == model
-                    and review["context_policy"] == case["context_policy"]
-                    and review["prior_reviews"] == list(context),
-                    "changed review identity",
-                )
-                evidence = {
-                    p.relative_to(out).as_posix(): p.read_bytes() for p in (out / "evidence").glob("*.json")
-                } | context
-                builds = [
-                    read(p) for p in sorted((out / "evidence").glob("*.json")) if read(p)["kind"] == "build"
-                ]
-                checks = []
-                if builds:
-                    b = builds[-1]
-                    status = (
-                        "error"
-                        if b["timed_out"] or b["exit_code"] in (None, 124, 125, 126, 127, 137)
-                        else "pass" if b["exit_code"] == 0 else "fail"
-                    )
-                    refs = [
-                        name
-                        for name, data in evidence.items()
-                        if name.startswith("evidence/tool-") and json.loads(data)["kind"] == "build"
-                    ]
-                    checks = [
-                        {
-                            "kind": "build",
-                            "status": status,
-                            "producer": "isolated workspace build tool",
-                            "policy": "lake --wfail build " + case["module"],
-                            "detail": "Original read-only candidate; tool receipt retained.",
-                            "evidence": refs,
-                        }
-                    ]
-                rr.write_directory(
-                    out / "check-inputs",
-                    evidence
-                    | {
-                        "checks.json": rr.encode(
-                            {
-                                "request_id": request["id"],
-                                "artifacts": rr.descriptors(evidence),
-                                "checks": checks,
-                            }
-                        )
-                    },
-                )
-                rr.write_directory(
-                    out / "report",
-                    rr.assemble(
-                        out / "request", out / "request", out / "model/answer.json", out / "check-inputs"
-                    ),
-                )
+                assemble_run(out, case, request, context, model)
                 record["report_status"] = "assembled"
-        except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
-            record["error"] = str(error)
-            record.setdefault("report_status", "invalid")
-        finally:
-            subprocess.run(["docker", "rm", "-f", container], capture_output=True, check=False)
-            write(out / "result.json", record)
+    except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
+        record.update(error=str(error), report_status="invalid")
+    finally:
+        subprocess.run(["docker", "rm", "-f", container], capture_output=True, check=False)
+        write(out / "result.json", record)
     print(job["id"], record["status"], record.get("report_status", "not_run"), flush=True)
 
 
@@ -604,96 +564,82 @@ Finding indices are zero-based: assess each index from 0 through N-1 exactly onc
 
 
 def assessment_schema(count):
-    def obj(fields):
-        return {
-            "type": "object",
-            "properties": fields,
-            "required": list(fields),
-            "additionalProperties": False,
-        }
-
-    def enum(*values):
-        return {"type": "string", "enum": list(values)}
-
-    return obj(
-        {
-            "gold_status": enum("confirmed", "disputed", "insufficient"),
-            "detected_defects": {"type": "array", "items": {"type": "string"}},
-            "findings": {
-                "type": "array",
-                "minItems": count,
-                "maxItems": count,
-                "items": obj(
-                    {
-                        "index": {"type": "integer", "minimum": 0, "maximum": max(0, count - 1)},
-                        "status": enum("supported", "unsupported", "unresolved"),
-                        "actionable": {"type": "boolean"},
-                        "repair": enum("valid", "invalid", "not_checked", "not_proposed"),
-                        "duplicate": {"type": "boolean"},
-                        "evidence": {"type": "string"},
-                    }
-                ),
-            },
-            "uncertainty": enum("appropriate", "inappropriate", "not_applicable"),
-            "comments": {"type": "string"},
-        }
+    return schema_object(
+        gold_status=schema_enum("confirmed", "disputed", "insufficient"),
+        detected_defects=schema_array(STRING),
+        findings=schema_array(
+            schema_object(
+                index={"type": "integer", "minimum": 0, "maximum": max(0, count - 1)},
+                status=schema_enum("supported", "unsupported", "unresolved"),
+                actionable=BOOLEAN,
+                repair=schema_enum("valid", "invalid", "not_checked", "not_proposed"),
+                duplicate=BOOLEAN,
+                evidence=STRING,
+            ),
+            minItems=count,
+            maxItems=count,
+        ),
+        uncertainty=schema_enum("appropriate", "inappropriate", "not_applicable"),
+        comments=STRING,
     )
 
 
 def validate_assessment(assessment, case, count):
-    rr.require(
-        set(assessment) == {"gold_status", "detected_defects", "findings", "uncertainty", "comments"},
-        "invalid assessment fields",
-    )
+    rr.obj(assessment, "gold_status detected_defects findings uncertainty comments", "assessment")
     rr.require(assessment["gold_status"] in ("confirmed", "disputed", "insufficient"), "invalid gold status")
-    ids = {d["id"] for d in case["gold"]["defects"]}
     found = assessment["detected_defects"]
+    rr.array(found, "detected defects")
+    rr.require(all(type(item) is str for item in found), "invalid defect id")
     rr.require(
-        isinstance(found, list) and len(set(found)) == len(found) and set(found) <= ids,
+        len(set(found)) == len(found) and set(found) <= {d["id"] for d in case["gold"]["defects"]},
         "invalid defect match",
     )
     findings = assessment["findings"]
-    rr.require(
-        len(findings) == count and sorted(f["index"] for f in findings) == list(range(count)),
-        "missing finding assessment",
-    )
-    for f in findings:
+    rr.array(findings, "findings")
+    for finding in findings:
+        rr.obj(finding, "index status actionable repair duplicate evidence", "finding assessment")
         rr.require(
-            set(f) == {"index", "status", "actionable", "repair", "duplicate", "evidence"},
-            "invalid finding fields",
-        )
-        rr.require(
-            type(f["index"]) is int and type(f["actionable"]) is bool and type(f["duplicate"]) is bool,
+            type(finding["index"]) is int
+            and type(finding["actionable"]) is bool
+            and type(finding["duplicate"]) is bool,
             "invalid finding types",
         )
         rr.require(
-            f["status"] in ("supported", "unsupported", "unresolved")
-            and f["repair"] in ("valid", "invalid", "not_checked", "not_proposed")
-            and bool(f["evidence"].strip()),
-            "unsupported assessment",
+            finding["status"] in ("supported", "unsupported", "unresolved")
+            and finding["repair"] in ("valid", "invalid", "not_checked", "not_proposed"),
+            "invalid finding judgement",
         )
+        rr.text(finding["evidence"], "assessment evidence")
+    rr.require(sorted(f["index"] for f in findings) == list(range(count)), "missing finding assessment")
     rr.require(
-        assessment["uncertainty"] in ("appropriate", "inappropriate", "not_applicable")
-        and isinstance(assessment["comments"], str),
-        "invalid uncertainty",
+        assessment["uncertainty"] in ("appropriate", "inappropriate", "not_applicable"), "invalid uncertainty"
     )
+    rr.require(isinstance(assessment["comments"], str), "invalid comments")
+
+
+def case_packet(assets, case):
+    """Public case contents only; shared by model assessment and blind human adjudication."""
+    return {
+        "prompt": case["prompt"],
+        "candidate": asset(assets, case["candidate"]).decode(),
+        "sources": {name: asset(assets, path).decode() for name, path in case["sources"].items()},
+        "prior_context": {
+            name: asset(assets, path).decode() for name, path in case.get("context", {}).items()
+        },
+    }
 
 
 def assessment_packet(root, job):
     case = next(c for c in read(root / "suite.json")["cases"] if c["id"] == job["case"])
     out = root / "runs" / job["id"]
     review = read(out / "model/answer.json")
-    anonymous = {k: v for k, v in review.items() if k not in ("reviewer", "request_id")}
-    transcript = [read(p) for p in sorted((out / "evidence").glob("*.json"))]
     # Procedural reads may reveal treatment: label blinding is not perfect blinding.
-    return case, {
-        "prompt": case["prompt"],
-        "review": anonymous,
+    packet = case_packet(root / "private-assets", case) | {
+        "review": {k: v for k, v in review.items() if k not in ("reviewer", "request_id")},
         "reference": case["gold"],
-        "candidate": asset(root / "private-assets", case["candidate"]).decode(),
-        "sources": {k: asset(root / "private-assets", v).decode() for k, v in case["sources"].items()},
-        "tool_transcript": transcript,
+        "tool_transcript": [read(p) for p in sorted((out / "evidence").glob("*.json"))],
     }
+    return case, packet
 
 
 def assess(root, model, output=None):
@@ -823,15 +769,7 @@ def key_packet(suite_path, output):
     output.mkdir(parents=True, exist_ok=False)
     forms = []
     for case in suite["cases"]:
-        packet = {
-            "prompt": case["prompt"],
-            "candidate": asset(suite_path.parent, case["candidate"]).decode(),
-            "sources": {k: asset(suite_path.parent, v).decode() for k, v in case["sources"].items()},
-            "prior_context": {
-                k: asset(suite_path.parent, v).decode() for k, v in case.get("context", {}).items()
-            },
-        }
-        write(output / (case["id"] + ".json"), packet)
+        write(output / (case["id"] + ".json"), case_packet(suite_path.parent, case))
         forms.append(
             {"id": case["id"], "reviewer": None, "defects": None, "evidence": None, "comments": None}
         )

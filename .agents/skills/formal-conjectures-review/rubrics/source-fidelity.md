@@ -41,3 +41,9 @@ run, report the gap rather than claiming the construction has been verified.
 Whether the hypotheses are satisfiable, junk values, and boundary behaviour belong to
 statement-soundness. Category tags, statuses, and `formal_proof` links belong to
 metadata-hygiene.
+
+## Review background
+
+Further discussions: [FABLE_REVIEW.md](https://github.com/ryantuck/erdos-ai/blob/master/FABLE_REVIEW.md),
+[ryantuck/formal-conjectures#1](https://github.com/ryantuck/formal-conjectures/pull/1),
+and FC #4876 and #4896. These are review background, not sources for the mathematical statements.

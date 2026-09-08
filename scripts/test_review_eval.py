@@ -116,6 +116,7 @@ class EvalTest(unittest.TestCase):
             ("findings", []),
             ("detected_defects", ["invented"]),
             ("detected_defects", ["domain", "domain"]),
+            ("detected_defects", [{}]),
         ]:
             a = self.assessment()
             a[field] = value
@@ -268,6 +269,44 @@ class EvalTest(unittest.TestCase):
         self.assertFalse(ev.allowed_call(call))
         call["tool"] = "read_mcp_resource"
         self.assertFalse(ev.allowed_call(call))
+
+    def test_snapshot_identity_is_deterministic_and_git_metadata_is_not_world_writable(self):
+        identities = []
+        for name in ("skill", "baseline"):
+            repo = self.root / name
+            repo.mkdir()
+            identities.append(ev.snapshot(repo, "FormalConjectures/Example.lean", b"-- test snapshot\n"))
+            self.assertFalse((repo / ".git/config").stat().st_mode & 0o022)
+        self.assertEqual(*identities)
+
+    def test_build_status_uses_receipts_instead_of_shell_claims(self):
+        evidence = {
+            "evidence/tool-001.json": ev.encode(
+                {
+                    "kind": "command",
+                    "exit_code": 0,
+                    "stdout": "Build completed successfully",
+                    "timed_out": False,
+                }
+            )
+        }
+        self.assertEqual(ev.build_checks(evidence, "Example"), [])
+        for code, expected in ((0, "pass"), (1, "fail"), (124, "error"), (None, "error")):
+            evidence["evidence/tool-002.json"] = ev.encode(
+                {"kind": "build", "exit_code": code, "timed_out": False}
+            )
+            check = ev.build_checks(evidence, "Example")[0]
+            self.assertEqual(check["status"], expected)
+            self.assertEqual(check["evidence"], ["evidence/tool-002.json"])
+
+    def test_missing_inputs_leave_a_failure_record_before_model_startup(self):
+        manifest = self.run_root()
+        with patch("review_eval.invoke_model") as model, patch("review_eval.subprocess.run"):
+            ev.run_one(self.root, manifest, manifest["jobs"][0], "gpt-5.6-sol")
+        model.assert_not_called()
+        result = ev.read(self.root / "runs/a/result.json")
+        self.assertEqual(result["status"], "environment_error")
+        self.assertEqual(result["report_status"], "invalid")
 
 
 if __name__ == "__main__":
