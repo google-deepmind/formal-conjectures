@@ -12,7 +12,6 @@ Usage: python3 fix_literate_html.py <literate-html-dir>
 """
 
 import os
-import re
 import shutil
 import sys
 
@@ -50,11 +49,7 @@ def fix_html_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # Remove the previous browser highlighter from cached source pages.
-    original = html
-    html = re.sub(r'<link\b[^>]*href="(?:https://cdn\.jsdelivr\.net/npm/highlight\.js@11\.12\.0/styles/atom-one-light\.min\.css|lean-highlight\.css)"[^>]*>', '', html)
-    html = re.sub(r'<script\b[^>]*src="lean-highlight\.js"[^>]*>\s*</script>', '', html)
-    modified = html != original
+    modified = False
 
     # Add these independently: cached pages may already contain KaTeX.
     if f'href="{HIGHLIGHT_STYLESHEET}"' not in html and '</head>' in html:
@@ -75,13 +70,9 @@ def fix_html_file(path):
 
 
 def install_highlight_stylesheet(literate_dir):
-    """Install the shared theme and remove obsolete generated assets."""
+    """Install the shared Verso theme."""
     shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE,
                     os.path.join(literate_dir, HIGHLIGHT_STYLESHEET))
-    for filename in ('lean-highlight.js', 'lean-highlight.css'):
-        obsolete = os.path.join(literate_dir, filename)
-        if os.path.isfile(obsolete):
-            os.remove(obsolete)
 
 
 def create_stubs(literate_dir):
