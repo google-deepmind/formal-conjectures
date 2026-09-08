@@ -27,11 +27,25 @@ We use its tensor-rank formulation.
 * [CKSU05] H. Cohn et al.,
   [*Group-theoretic Algorithms for Matrix Multiplication*](https://doi.org/10.1109/SFCS.2005.39),
   FOCS 2005, 379–388, Introduction and Section 1.1.
-  [Preprint](https://arxiv.org/abs/math/0511460).
+  [Preprint](https://arxiv.org/abs/math/0511460). Used for
+  `matrix_multiplication_exponent_two`.
 * [CHILO18] L. Chiantini et al.,
   [*Polynomials and the exponent of matrix multiplication*](https://doi.org/10.1112/blms.12147),
   Bull. London Math. Soc. 50 (2018), 369–389, equation (1.1) and the following paragraph.
-  [Preprint](https://arxiv.org/abs/1706.05074).
+  [Preprint](https://arxiv.org/abs/1706.05074). Used for
+  `matrix_multiplication_exponent_two`.
+* [Strassen69] V. Strassen,
+  [*Gaussian elimination is not optimal*](https://doi.org/10.1007/BF01343649),
+  Numerische Mathematik 13 (1969), 354–356. Used for
+  `matrix_multiplication_exponent_strassen`.
+* [CW90] D. Coppersmith and S. Winograd,
+  [*Matrix multiplication via arithmetic progressions*](https://doi.org/10.1016/0747-7171(90)90013-N),
+  Journal of Symbolic Computation 9 (1990), 251–280. Used for
+  `matrix_multiplication_exponent_coppersmith_winograd`.
+* [AE26] H. Alman, V. Vassilevska Williams et al.,
+  [*Improving the matrix multiplication exponent with modern optimization and
+  AlphaEvolve*](https://arxiv.org/abs/2608.16884), 2026. Used for
+  `matrix_multiplication_exponent_alphaevolve`.
 -/
 
 namespace MatrixMultiplicationExponent
@@ -65,9 +79,6 @@ theorem matrix_multiplication_exponent_le_three :
   intro n _
   exact_mod_cast (by simpa [pow_succ] using Holor.cprank_matrixMulTensor_le ℂ n n n)
 
-
--- `strassen`: V. Strassen, "Gaussian elimination is not optimal", Numerische Mathematik 13 (1969), 354–356.
-
 /-- First non-trivial bound, found by V. Strassen (1969). -/
 @[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_strassen :
@@ -75,8 +86,6 @@ theorem matrix_multiplication_exponent_strassen :
       ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (Real.logb 2 7) := by
   sorry
 
---: https://www.cs.umd.edu/~gasarch/TOPICS/ramsey/matrixmult.pdf
--- `coppersmith-winograd`: D. Coppersmith, S. Winograd, "Matrix multiplication via arithmetic progressions", STOC 1987; journal version in J. Symbolic Computation 9 (1990), 251–280.
 /-- Coppersmith–Winograd (1987) -/
 @[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_coppersmith_winograd :
@@ -84,16 +93,12 @@ theorem matrix_multiplication_exponent_coppersmith_winograd :
       ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.376 : ℝ) := by
   sorry
 
---- `alpha eveolve (current best)`: "Improving the matrix multiplication exponent with modern optimization and AlphaEvolve", arXiv:2608.16884 (August 2026), Alman, Vassilevska Williams et al.
---https://arxiv.org/pdf/2608.16884
 /-- The current best bound, found by AlphaEvolve (2026). -/
 @[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_alphaevolve :
     ∀ n : ℕ, 1 ≤ n →
       ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.371177 : ℝ) := by
   sorry
-
-
 
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
