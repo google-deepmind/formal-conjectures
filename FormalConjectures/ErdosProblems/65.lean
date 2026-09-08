@@ -34,13 +34,14 @@ Let $G$ be a graph with $n$ vertices and $kn$ edges, and $a_1<a_2<\cdots$ be the
 cycles in $G$. Is it true that
 $$\sum\frac{1}{a_i}\gg \log k?$$
 
-Gyárfás, Komlós, and Szemerédi [GKS84] have proved that this sum is at least $\log k$, so that only
+Gyárfás, Komlós, and Szemerédi [GKS84] have proved that this sum is $\gg \log k$, so that only
 the second question remains.
 -/
 @[category research solved, AMS 5]
 theorem erdos_65.parts.i : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ (k : ℕ) (hk : 2 ≤ k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
+        0 < n →
         Fintype.card V = n →
         G.edgeSet.ncard = k * n →
         (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) ≥ c * Real.log k := by
@@ -55,6 +56,7 @@ This problem is #65 in Extremal Graph Theory in the graphs problem collection.
 theorem erdos_65.parts.ii : answer(sorry) ↔
     ∀ (k : ℕ) (hk : 2 ≤ k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
+        0 < n →
         Fintype.card V = n →
         G.edgeSet.ncard = k * n →
         ∀ (A B : Type) [Fintype A] [Fintype B] (K : SimpleGraph (A ⊕ B)),

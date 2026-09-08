@@ -35,10 +35,10 @@ A graph $G$ is Ramsey size linear if $R(G,H) \ll m$ for all graphs $H$ with $m$ 
 no isolated vertices.
 -/
 def RamseySizeLinear {V : Type*} [Fintype V] (G : SimpleGraph V) : Prop :=
-  ∃ C > (0 : ℝ), ∀ (m : ℕ) (W : Type) [Fintype W] (H : SimpleGraph W),
-    (∀ v, 0 < H.degree v) →
-    H.edgeSet.ncard = m →
-    (SimpleGraph.graphRamsey G H : ℝ) ≤ C * m
+  ∀ (n : ℕ → ℕ) (H : ∀ m, SimpleGraph (Fin (n m))),
+    (∀ m, (H m).edgeSet.ncard = m) →
+    (∀ m v, 0 < (H m).degree v) →
+    (fun m ↦ (SimpleGraph.graphRamsey G (H m) : ℝ)) ≪ (fun m ↦ (m : ℝ))
 
 open scoped Classical in
 /--

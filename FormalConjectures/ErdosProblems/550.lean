@@ -28,13 +28,6 @@ open Filter
 
 namespace Erdos550
 
-/-- Complete multipartite graph with part sizes given by `m : Fin k → ℕ`. -/
-def completeMultipartiteGraph {k : ℕ} (m : Fin k → ℕ) :
-    SimpleGraph ((i : Fin k) × Fin (m i)) where
-  Adj u v := u.1 ≠ v.1
-  symm.symm _ _ := ne_comm.mp
-  loopless.irrefl _ := by simp
-
 /--
 Let $m_1\leq\cdots\leq m_k$ and $n$ be sufficiently large. If $T$ is a tree on $n$ vertices
 and $G$ is the complete multipartite graph with vertex class sizes $m_1,\ldots,m_k$ then prove that
@@ -44,10 +37,12 @@ This problem is #16 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_550 :
-    ∀ (k : ℕ) (hk : 2 ≤ k) (m : Fin k → ℕ) (hm : Monotone m),
+    ∀ (k : ℕ) (hk : 2 ≤ k) (m : Fin k → ℕ) (hm : Monotone m)
+      (hm_pos : ∀ i, 0 < m i),
       ∀ᶠ n : ℕ in atTop,
         ∀ (T : SimpleGraph (Fin n)), T.IsTree →
-          SimpleGraph.graphRamsey T (completeMultipartiteGraph m) ≤
+          SimpleGraph.graphRamsey T
+            (SimpleGraph.completeMultipartiteGraph (fun i ↦ Fin (m i))) ≤
             (k - 1) * (SimpleGraph.graphRamsey T
               (completeBipartiteGraph (Fin (m ⟨0, by omega⟩)) (Fin (m ⟨1, by omega⟩))) - 1) +
                 m ⟨0, by omega⟩ := by

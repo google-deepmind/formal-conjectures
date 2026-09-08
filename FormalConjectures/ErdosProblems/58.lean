@@ -38,6 +38,7 @@ Conjectured by Bollobás and Erdős. Proved by Gyárfás [Gy92].
 @[category research solved, AMS 5]
 theorem erdos_58 :
     ∀ {V : Type*} (G : SimpleGraph V) (k : ℕ),
+      G.oddCycleLengths.Finite →
       G.oddCycleLengths.ncard ≤ k →
         G.chromaticNumber ≤ (2 * k + 2 : ℕ∞) ∧
         (G.chromaticNumber = (2 * k + 2 : ℕ∞) ↔
