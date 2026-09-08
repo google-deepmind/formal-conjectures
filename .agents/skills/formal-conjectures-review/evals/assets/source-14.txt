@@ -1,0 +1,5 @@
+Primary source: https://www.erdosproblems.com/latex/14
+Retrieved: 2026-09-08. Verbatim statement excerpt.
+
+Let $A\subseteq \mathbb{N}$. Let $B\subseteq \mathbb{N}$ be the set of integers which are representable in exactly one way as the sum of two elements from $A$.
+Is it true that for all $\epsilon>0$ and large $N$\[\lvert \{1,\ldots,N\}\backslash B\rvert \gg_\epsilon N^{1/2-\epsilon}?\]Is it possible that\[\lvert \{1,\ldots,N\}\backslash B\rvert =o(N^{1/2})?\]

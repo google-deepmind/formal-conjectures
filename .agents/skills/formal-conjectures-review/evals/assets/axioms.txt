@@ -1,0 +1,1 @@
+'Erdos940.erdos_940.variants.large_integers' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
