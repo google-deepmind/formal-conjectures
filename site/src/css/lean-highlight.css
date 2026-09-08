@@ -1,0 +1,93 @@
+/* Shared highlighting for theorem details and full annotated source pages. */
+:where(.verso-code-container, .code-content) code.hl.lean.block {
+  display: block;
+  font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  font-style: normal;
+  font-weight: normal;
+  color: #383a42;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+}
+:where(.verso-code-container, .code-content) .hl.lean .token,
+:where(.verso-code-container, .code-content) .lean-highlight {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+}
+:where(.verso-code-container, .code-content) .hljs-comment,
+:where(.verso-code-container, .code-content) .hljs-doctag,
+:where(.verso-code-container, .code-content) .hl.lean .comment {
+  color: #626875;
+}
+:where(.verso-code-container, .code-content) .hljs-sorry {
+  color: #a626a4;
+}
+/* One continuous source surface, with prose docstrings between declarations. */
+.code-content {
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  min-width: 0;
+  overflow-x: auto;
+  background: #fafafa;
+}
+.code-content code.hl.lean.block {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow-x: visible;
+}
+.code-content .hl.lean .comment {
+  white-space: pre-wrap;
+}
+.code-content .hl.lean .tactic-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.code-content :is(.md-text, .verso-text) {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #334155;
+  white-space: normal;
+  max-width: 72ch;
+  margin: 1.5rem 0 0.5rem;
+}
+.code-content :is(.md-text, .verso-text) > * {
+  font-family: inherit;
+}
+.code-content :is(.md-text, .verso-text) :is(ul, ol) {
+  padding-left: 1.5rem;
+}
+.code-content :is(.md-text, .verso-text) code {
+  font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+/* Set documentation apart without turning declarations back into cards. */
+.code-content :is(.md-text, .verso-text):not(.mod-doc) {
+  border-left: 3px solid #c4cedd !important;
+  padding: 0.15rem 0 0.15rem 1rem;
+  margin: 1.75rem 0 0.75rem;
+  color: #526075;
+  line-height: 1.75;
+}
+.code-content :is(.md-text, .verso-text):not(.mod-doc) p {
+  margin: 0 0 0.65rem;
+  color: inherit;
+  line-height: inherit;
+}
+.code-content :is(.md-text, .verso-text):not(.mod-doc) > :last-child {
+  margin-bottom: 0;
+}
+.code-content :is(.md-text, .verso-text):not(.mod-doc) code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #364152;
+}

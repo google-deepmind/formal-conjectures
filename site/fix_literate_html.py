@@ -12,7 +12,14 @@ Usage: python3 fix_literate_html.py <literate-html-dir>
 
 import os
 import re
+import shutil
 import sys
+
+HIGHLIGHT_HEAD = '''
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.12.0/styles/atom-one-light.min.css">
+    <link rel="stylesheet" href="lean-highlight.css">
+    <script defer src="lean-highlight.js"></script>
+'''
 
 KATEX_HEAD = '''
     <!-- KaTeX for LaTeX in docstrings -->
@@ -45,18 +52,16 @@ def fix_html_file(path):
 
     modified = False
 
-    # Skip if KaTeX already present
-    if 'katex' in html.lower():
-        return False
-
-    # Add KaTeX CSS+JS before </head>
-    if '</head>' in html:
-        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+    # Add these independently: cached pages may already contain KaTeX.
+    if 'src="lean-highlight.js"' not in html and '</head>' in html:
+        html = html.replace('</head>', HIGHLIGHT_HEAD + '  </head>')
         modified = True
 
-    # Add auto-render script before </body>
-    if '</body>' in html:
-        html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
+    # Add KaTeX CSS+JS before </head>
+    if 'katex' not in html.lower() and '</head>' in html:
+        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+        if '</body>' in html:
+            html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
         modified = True
 
     if modified:
@@ -149,6 +154,12 @@ def main():
     # Fix code.css layout rules
     fix_code_css(literate_dir)
 
+    # Verso's <base> points to this root even on deeply nested source pages.
+    asset_dir = os.path.join(os.path.dirname(__file__), 'src')
+    for folder, filename in [('js', 'lean-highlight.js'), ('css', 'lean-highlight.css')]:
+        shutil.copyfile(os.path.join(asset_dir, folder, filename),
+                        os.path.join(literate_dir, filename))
+
     # Fix all HTML files
     count = 0
     for dirpath, _, filenames in os.walk(literate_dir):
@@ -158,7 +169,7 @@ def main():
                 if fix_html_file(path):
                     count += 1
 
-    print(f'  Injected KaTeX into {count} Verso HTML files.')
+    print(f'  Updated rendering assets in {count} Verso HTML files.')
 
 
 if __name__ == '__main__':

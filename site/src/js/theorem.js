@@ -13,6 +13,7 @@
 const detailEl = document.getElementById('theorem-detail');
 const _base = document.documentElement.dataset.base || '';
 
+
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const name   = params.get('name');
@@ -102,18 +103,6 @@ function loadVersoAssets() {
     }
     /* Inter-text spacing */
     .hl.lean .inter-text { white-space: pre; }
-    /* Make the code container match Verso's clean look */
-    .verso-code-container {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      padding: 0;
-    }
-    .verso-code-container code.hl.lean.block {
-      font-size: 16px;
-      display: block;
-      padding: 1.25rem;
-    }
     /* Tooltip spacing: separator between type signature and docstring */
     .hover-info .sep {
       display: block;
@@ -587,6 +576,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
       if (!container) return;
       if (result && result.codeHtml) {
         container.innerHTML = result.codeHtml;
+        FCLean.highlight(container);
         // Rewrite relative links in code block: Verso uses paths like
         // "FormalConjectures/..." which resolve against /theorem/ page.
         // Fix them to point to /src/ Verso pages instead.
