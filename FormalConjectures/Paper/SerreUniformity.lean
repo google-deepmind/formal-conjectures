@@ -68,4 +68,18 @@ theorem serre_uniformity :
         ∀ p : ℕ, p.Prime → C < p → HasFullTorsionAction E p := by
   sorry
 
+/--
+**Serre's uniformity conjecture over $\mathbb{Q}$, explicit form**: the bound $C = 37$
+works, i.e. every non-CM elliptic curve over $\mathbb{Q}$ has surjective mod-$p$ Galois
+representation for every prime $p > 37$. From the introduction of [Lem17]: "This conjecture
+remains open today, but, over the last forty years, there has been a lot of progress towards
+a proof for $K = \mathbb{Q}$ — it is believed that, in this case, $p_K = 37$."
+-/
+@[category research open, AMS 11 14]
+theorem serre_uniformity.variants.bound_37 :
+    answer(sorry) ↔
+      ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
+        ∀ p : ℕ, p.Prime → 37 < p → HasFullTorsionAction E p := by
+  sorry
+
 end SerreUniformity
