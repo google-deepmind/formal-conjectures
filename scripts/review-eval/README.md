@@ -110,7 +110,10 @@ Benchmark inputs and reference keys remain tracked. Publication is a separate wo
 
 A separate model call receives the anonymous review, source dossier and execution transcript.
 It matches reference defects, assesses every finding for support/actionability, and marks
-repairs valid, invalid, untested or absent. Alternative valid findings and repairs are allowed.
+repairs valid, invalid, untested or absent. It separately grades whether the assembled verdict
+and severity are justified, and whether a rereview correctly handles its prior finding.
+Missing-source disclosure alone does not justify escalating an unresolved claim. Alternative
+valid findings and repairs are allowed.
 Tool traces can reveal the procedure, so this is label blinding, not guaranteed arm blinding.
 
 `summary.json` reports raw per-condition counts and per-run assessments. Disputed or insufficient
@@ -122,7 +125,8 @@ remain provisional, including when a different model family is used as assessor.
 To revise the assessor without rerunning reviews, use `assess --out <new-directory>`, then
 `summarize --assessments <that-directory>`. Each assessment set retains its tooling and binds
 to the original frozen review manifest. Earlier grades and invalid attempts remain intact.
-Token totals include reported usage only; `usage_unavailable_runs` exposes missing accounting,
+Older assessment sets without calibration fields remain readable and are counted as ungraded
+for those dimensions. Token totals include reported usage only; `usage_unavailable_runs` exposes missing accounting,
 including timeouts. Invalid reports and missing assessments remain outside quality denominators.
 
 Have a mathematician assess the anonymous packets, record missed defects, false alarms and

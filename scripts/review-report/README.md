@@ -57,9 +57,25 @@ Add `--require proof` when a proof claim needs verification. Build is always req
 The repository locator is supplied by the operator; the tool does not authenticate GitHub
 or establish that the local Git commits belong to that remote.
 
-The output contains `request.json`, copied `procedure/` and `sources/` files, and a
-`review-template.json`. Give the reviewer these inputs and the corresponding source checkout.
+New requests use `fc.review-pilot.request.v2`; older v1 requests remain readable.
+The output contains `request.json`, copied `procedure/` and `sources/`, `context/` source
+snapshots, and `review-template.json`. It records the base tip separately from the merge base.
+The snapshots preserve tracked head and merge-base source bytes, including toolchain and
+package manifests. They exclude Git credentials, history and untracked edits. Dependency
+packages and installed tools are not bundled; this is not a self-contained rebuild image.
+Give the reviewer the scoped inputs and the corresponding source checkout.
 Store the completed template separately as `review.json`; do not edit the pinned request.
+
+Restore source bytes in a new directory without executing them:
+
+```sh
+python3 scripts/review_report.py restore --request /tmp/review-inputs --out /tmp/restored-head
+```
+
+Use `--revision base` for the merge-base snapshot. Restoration checks all recorded digests
+and rejects links, unsafe paths, duplicate members and oversized snapshots. It restores
+file contents, not Git history or executable permissions. The default snapshot limit is
+128 MiB; exceeding it fails preparation explicitly. No archive repository is required.
 
 ## Review input contract
 

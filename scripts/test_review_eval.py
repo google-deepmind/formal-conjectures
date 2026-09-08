@@ -132,6 +132,26 @@ class EvalTest(unittest.TestCase):
         self.assertEqual((findings["minItems"], findings["maxItems"]), (3, 3))
         self.assertEqual(findings["items"]["properties"]["index"]["maximum"], 2)
 
+    def test_reconciliation_schema_permits_only_retained_prior_paths(self):
+        schema = ev.review_schema({"id": "id", "scope": ["Example.lean"]}, context=["evidence/prior.txt"])
+        reference = schema["properties"]["reconciliations"]["items"]["properties"]["prior_evidence"]
+        self.assertEqual(reference, {"type": "string", "enum": ["evidence/prior.txt"]})
+        fresh = ev.review_schema({"id": "id", "scope": ["Example.lean"]})
+        self.assertEqual(fresh["properties"]["reconciliations"]["maxItems"], 0)
+
+    def test_calibration_is_separate_from_source_disclosure(self):
+        a = self.assessment() | {
+            "uncertainty": "appropriate",
+            "verdict_calibration": "inappropriate",
+            "verdict_evidence": "An unresolved source reading was escalated to a semantic defect.",
+            "rereview_handling": "not_applicable",
+            "rereview_evidence": "Fresh review.",
+        }
+        ev.validate_assessment(a, self.suite["cases"][0], 1)
+        del a["verdict_evidence"]
+        with self.assertRaises(ValueError):
+            ev.validate_assessment(a, self.suite["cases"][0], 1)
+
     def test_assessment_set_cannot_be_applied_to_different_review_inputs(self):
         self.run_root()
         ev.write(self.root / "grades/config.json", {"review_manifest_sha256": "0" * 64})
@@ -198,7 +218,7 @@ class EvalTest(unittest.TestCase):
     def test_baseline_procedure_is_an_explicit_control_receipt(self):
         procedure = ev.review_procedure(self.root / "absent-skill", "baseline")
         request = {
-            "schema_version": ev.rr.REQUEST_VERSION,
+            "schema_version": ev.rr.LEGACY_REQUEST_VERSION,
             "repository": "test/repo",
             "head_commit": "a" * 40,
             "merge_base": "b" * 40,

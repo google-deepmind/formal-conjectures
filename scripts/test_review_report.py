@@ -36,7 +36,7 @@ class ReportTest(unittest.TestCase):
         self.inputs = {"procedure/SKILL.md": b"review procedure\n",
                        "sources/paper.txt": b"Source: for every positive n.\n"}
         self.request = {
-            "schema_version": rr.REQUEST_VERSION, "repository": "owner/repo",
+            "schema_version": rr.LEGACY_REQUEST_VERSION, "repository": "owner/repo",
             "head_commit": "a" * 40, "merge_base": "b" * 40,
             "scope": ["FormalConjectures/Example.lean"],
             "procedure": rr.descriptors({k: v for k, v in self.inputs.items() if k.startswith("procedure/")}),
@@ -279,6 +279,33 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(request['required_checks'], ['build', 'proof'])
         self.assertNotIn('procedure/evals/key.json', files)
         self.assertEqual((repo / 'untracked.txt').read_text(), 'caller edit\n')
+        saved = self.root / 'saved'
+        rr.write_directory(saved, files)
+        import shutil
+        shutil.rmtree(repo)
+        rr.restore(saved, self.root / 'restored')
+        rr.restore(saved, self.root / 'restored-base', 'base')
+        self.assertEqual((self.root / 'restored/Example.lean').read_text(), 'PR\n')
+        self.assertEqual((self.root / 'restored-base/Example.lean').read_text(), 'base\n')
+        self.assertFalse((self.root / 'restored/untracked.txt').exists())
+        (saved / 'context/head.tar').write_bytes(b'tampered')
+        with self.assertRaisesRegex(rr.InputError, 'digest mismatch'):
+            rr.restore(saved, self.root / 'tampered')
+
+    def test_snapshot_rejects_links_traversal_and_duplicate_members(self):
+        import io
+        import tarfile
+        for name, kind, repeat in [('link', tarfile.SYMTYPE, 1),
+                                   ('../outside', tarfile.REGTYPE, 1),
+                                   ('same', tarfile.REGTYPE, 2)]:
+            buffer = io.BytesIO()
+            with tarfile.open(fileobj=buffer, mode='w') as archive:
+                for _ in range(repeat):
+                    entry = tarfile.TarInfo(name)
+                    entry.type = kind
+                    archive.addfile(entry, io.BytesIO())
+            with self.assertRaises(rr.InputError):
+                rr.snapshot_files(buffer.getvalue())
 
 
 if __name__ == '__main__':

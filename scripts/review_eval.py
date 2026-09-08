@@ -190,11 +190,12 @@ def review_schema(request, max_calls=30, context=()):
         questions=schema_array(STRING),
         reconciliations=schema_array(
             schema_object(
-                prior_evidence=STRING,
+                prior_evidence=schema_enum(*context) if context else STRING,
                 status=schema_enum("retained", "corrected", "withdrawn"),
                 reason=STRING,
                 evidence=evidence,
-            )
+            ),
+            **({} if context else {"maxItems": 0}),
         ),
     )
 
@@ -464,18 +465,33 @@ def run_one(root, manifest, job, model):
         with tempfile.TemporaryDirectory(prefix="fc-review-snapshot-") as temp:
             repo = Path(temp)
             head, base = snapshot(repo, case["path"], candidate)
+            snapshot_context = {
+                "context/candidate.lean": candidate,
+                "context/environment.json": encode(
+                    {
+                        "image": manifest["image"],
+                        "environment_commit": read(root / "suite.json")["environment_commit"],
+                        "tooling": manifest["tooling"],
+                        "limitation": "Replay requires the pinned evaluation image; source is retained.",
+                    }
+                ),
+            }
             request = {
                 "schema_version": rr.REQUEST_VERSION,
                 "repository": "evaluation-snapshot/formal-conjectures",
                 "head_commit": head,
                 "merge_base": base,
+                "base_tip": base,
+                "context": rr.descriptors(snapshot_context),
                 "scope": [case["path"]],
                 "procedure": rr.descriptors(procedure),
                 "sources": rr.descriptors(sources),
                 "required_checks": ["build"],
             }
             request["id"] = rr.request_id(request)
-            rr.write_directory(out / "request", procedure | sources | {"request.json": encode(request)})
+            rr.write_directory(
+                out / "request", procedure | sources | snapshot_context | {"request.json": encode(request)}
+            )
             rr.write_directory(out / "inputs", sources | context | {"candidate.lean": candidate})
             (out / "output").mkdir()
             (out / "evidence").mkdir()
@@ -560,6 +576,11 @@ boolean, repair valid/invalid/not_checked/not_proposed, duplicate boolean, evide
 uncertainty appropriate/inappropriate/not_applicable, and comments (string). Distinguish a source
 mismatch from a checked mathematical counterexample. An untested repair is not validated.
 Finding indices are zero-based: assess each index from 0 through N-1 exactly once.
+Also judge verdict_calibration and rereview_handling (appropriate/inappropriate/not_applicable)
+with separate evidence strings. An unresolved semantic finding that forces NEEDS REVISION
+is not appropriate merely because missing source coverage is disclosed. Judge severity as
+well as whether an observation is true. A rereview must justify retaining, correcting or
+withdrawing the prior claim; do not infer success from an empty findings list.
 """
 
 
@@ -580,12 +601,31 @@ def assessment_schema(count):
             maxItems=count,
         ),
         uncertainty=schema_enum("appropriate", "inappropriate", "not_applicable"),
+        verdict_calibration=schema_enum("appropriate", "inappropriate", "not_applicable"),
+        verdict_evidence=STRING,
+        rereview_handling=schema_enum("appropriate", "inappropriate", "not_applicable"),
+        rereview_evidence=STRING,
         comments=STRING,
     )
 
 
 def validate_assessment(assessment, case, count):
-    rr.obj(assessment, "gold_status detected_defects findings uncertainty comments", "assessment")
+    # Old assessment sets remain readable; new calls always request calibrated verdicts.
+    extra = " verdict_calibration verdict_evidence rereview_handling rereview_evidence"
+    calibrated = "verdict_calibration" in assessment
+    rr.obj(
+        assessment,
+        "gold_status detected_defects findings uncertainty comments" + (extra if calibrated else ""),
+        "assessment",
+    )
+    if calibrated:
+        for field in ("verdict_calibration", "rereview_handling"):
+            rr.require(
+                assessment[field] in ("appropriate", "inappropriate", "not_applicable"),
+                "invalid calibration judgement",
+            )
+        for field in ("verdict_evidence", "rereview_evidence"):
+            rr.text(assessment[field], field)
     rr.require(assessment["gold_status"] in ("confirmed", "disputed", "insufficient"), "invalid gold status")
     found = assessment["detected_defects"]
     rr.array(found, "detected defects")
@@ -637,6 +677,9 @@ def assessment_packet(root, job):
     packet = case_packet(root / "private-assets", case) | {
         "review": {k: v for k, v in review.items() if k not in ("reviewer", "request_id")},
         "reference": case["gold"],
+        "report_outcome": {
+            k: read(out / "report/report.json")[k] for k in ("semantic_verdict", "completeness", "gaps")
+        },
         "tool_transcript": [read(p) for p in sorted((out / "evidence").glob("*.json"))],
     }
     return case, packet
@@ -718,6 +761,12 @@ def summarize(root, assessments=None):
             "valid_repairs": 0,
             "invalid_repairs": 0,
             "appropriate_uncertainty": 0,
+            "verdict_calibration": {
+                k: 0 for k in ("appropriate", "inappropriate", "not_applicable", "ungraded")
+            },
+            "rereview_handling": {
+                k: 0 for k in ("appropriate", "inappropriate", "not_applicable", "ungraded")
+            },
             "wall_seconds": 0,
             "output_tokens": 0,
             "usage_unavailable_runs": 0,
@@ -742,6 +791,8 @@ def summarize(root, assessments=None):
                     a, case, len(read(root / "runs" / j["id"] / "model/answer.json")["findings"])
                 )
                 totals["assessed"] += 1
+                for field in ("verdict_calibration", "rereview_handling"):
+                    totals[field][a.get(field, "ungraded")] += 1
                 totals["unresolved_keys"] += a["gold_status"] != "confirmed"
                 if a["gold_status"] == "confirmed":
                     totals["reference_defects"] += len(case["gold"]["defects"])

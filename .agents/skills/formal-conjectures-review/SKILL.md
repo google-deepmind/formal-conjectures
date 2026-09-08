@@ -41,6 +41,13 @@ The soundness rubric includes known definition traps. Do not load every referenc
 
 ## Evidence and stopping rules
 
+- Finish once the scoped source comparison, relevant definitions, metadata and focused build
+  are checked. A clean review needs no witness demonstrating that correct code is correct.
+  Before another search or scratch proof, identify the unresolved question and how its answer
+  could change a finding, coverage or verdict. Stop if neither would change.
+- For a focused rereview, inspect the disputed claim, reply, source and affected code. Reuse
+  retained checks only when their inputs still match; state the limited scope. Do not restart
+  unrelated review angles or prove an equivalent formulation after the dispute is resolved.
 - Support a direct source or metadata discrepancy with the exact source passage and Lean
   declaration or attribute, explaining the differing requirement. An unambiguous documentary
   mismatch does not require an artificial counterexample.
@@ -54,6 +61,8 @@ The soundness rubric includes known definition traps. Do not load every referenc
 - Keep ambiguous interpretations and claims lacking required evidence as Questions. Missing
   evidence is not a semantic defect. Downgrading a discrepancy also needs evidence: cite the
   convention or source reading that permits it.
+  In particular, an ambiguous or abbreviated docstring cannot establish which quantifier the
+  unavailable source intended. Such uncertainty cannot justify NEEDS REVISION by itself.
 - Rubric examples marked **confirmed** are historical checks; **leads** are unconfirmed prompts
   for investigation. Do not treat a lead as a finding, expect a fixed defect in the current tree,
   or duplicate a finding already addressed on the PR.

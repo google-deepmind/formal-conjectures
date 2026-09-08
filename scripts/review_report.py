@@ -23,17 +23,21 @@ producer's claims. See scripts/review-report/README.md for the input contracts.
 import argparse
 import hashlib
 import html
+import io
 import json
 from pathlib import Path, PurePosixPath
 import re
 import subprocess
 import sys
+import tarfile
 from urllib.parse import quote
 
 ANGLES = ("source-fidelity", "statement-soundness", "metadata-hygiene")
 KINDS = ("build", "proof")
-REQUEST_VERSION = "fc.review-pilot.request.v1"
+LEGACY_REQUEST_VERSION = "fc.review-pilot.request.v1"
+REQUEST_VERSION = "fc.review-pilot.request.v2"
 REPORT_VERSION = "fc.review-pilot.report.v1"
+MAX_SNAPSHOT_BYTES = 128 * 1024 * 1024
 
 
 class InputError(ValueError):
@@ -147,11 +151,15 @@ def request_id(request):
 
 
 def validate_request(request):
-    obj(request, "schema_version repository head_commit merge_base scope procedure sources required_checks id",
+    require(type(request) is dict, "request must be an object")
+    version = request.get("schema_version")
+    require(version in (REQUEST_VERSION, LEGACY_REQUEST_VERSION), "unsupported request version")
+    extended = version == REQUEST_VERSION
+    obj(request, "schema_version repository head_commit merge_base scope procedure sources required_checks id" +
+        (" base_tip context" if extended else ""),
         "request")
-    require(request["schema_version"] == REQUEST_VERSION, "unsupported request version")
     text(request["repository"], "repository")
-    for key in ("head_commit", "merge_base"):
+    for key in ("head_commit", "merge_base", *(["base_tip"] if extended else [])):
         require(type(request[key]) is str and re.fullmatch(r"[0-9a-f]{40}", request[key]),
                 f"invalid {key}")
     array(request["scope"], "scope")
@@ -159,10 +167,12 @@ def validate_request(request):
     for path in request["scope"]:
         relative(path)
     require(len(request["scope"]) == len(set(request["scope"])), "duplicate scope path")
-    for field in ("procedure", "sources"):
+    for field in ("procedure", "sources", *(["context"] if extended else [])):
         validate_descriptors(request[field], field)
         require(all(d["path"].startswith(field + "/") for d in request[field]),
                 f"{field}: wrong artifact prefix")
+    if extended:
+        require(bool(request["context"]), "snapshot context must be retained")
     require(any(d["path"] == "procedure/SKILL.md" for d in request["procedure"]),
             "procedure must contain SKILL.md")
     array(request["required_checks"], "required_checks")
@@ -181,13 +191,23 @@ def git(checkout, *args):
 
 def prepare(checkout, repository, base, skill, sources, checks):
     head = git(checkout, "rev-parse", "HEAD").decode().strip()
-    merge_base = git(checkout, "merge-base", "--", base, head).decode().strip()
+    base_tip = git(checkout, "rev-parse", "--verify", base + "^{commit}").decode().strip()
+    merge_base = git(checkout, "merge-base", "--", base_tip, head).decode().strip()
     scope = git(checkout, "diff", "--no-ext-diff", "--no-renames", "--name-only", "-z",
                 merge_base, head, "--").decode().rstrip("\0").split("\0")
     procedure = collect(skill, "procedure", exclude_evals=True)
     source_files = collect(sources, "sources")
+    context = {f"context/{name}.tar": git(checkout, "archive", "--format=tar", revision)
+               for name, revision in (("head", head), ("base", merge_base))}
+    for raw in context.values():
+        snapshot_files(raw)  # Validate before preserving an unsupported snapshot.
+    context["context/environment.json"] = encode({
+        "head": head, "base_tip": base_tip, "merge_base": merge_base,
+        "contents": "Tracked source snapshots; toolchain and package manifests are inside.",
+        "replay_limit": "Dependency packages and installed tools are not bundled."})
     request = {"schema_version": REQUEST_VERSION, "repository": repository,
-               "head_commit": head, "merge_base": merge_base, "scope": sorted(scope),
+               "head_commit": head, "base_tip": base_tip, "merge_base": merge_base,
+               "scope": sorted(scope), "context": descriptors(context),
                "procedure": descriptors(procedure), "sources": descriptors(source_files),
                "required_checks": sorted({"build", *checks})}
     request["id"] = request_id(request)
@@ -196,7 +216,7 @@ def prepare(checkout, repository, base, skill, sources, checks):
                 "context_policy": "fresh", "prior_reviews": [],
                 "reconciliations": [], "coverage": {angle: "incomplete" for angle in ANGLES},
                 "findings": [], "questions": ["Review has not run."]}
-    files = procedure | source_files | {"request.json": encode(request),
+    files = procedure | source_files | context | {"request.json": encode(request),
                                        "review-template.json": encode(template)}
     return files
 
@@ -205,11 +225,39 @@ def load_request(folder):
     request = read_json(Path(folder) / "request.json")
     validate_request(request)
     files = {}
-    for item in request["procedure"] + request["sources"]:
+    for item in request["procedure"] + request["sources"] + request.get("context", []):
         raw = read_artifact(folder, item["path"])
         require(digest(raw) == item["sha256"], f"digest mismatch: {item['path']}")
         files[item["path"]] = raw
     return request, files
+
+
+def snapshot_files(raw):
+    """Read bounded regular files; never extract links or execute archive contents."""
+    require(len(raw) <= MAX_SNAPSHOT_BYTES, "snapshot exceeds size limit")
+    files, total = {}, 0
+    try:
+        with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
+            for member in archive:
+                if member.isdir():
+                    relative(member.name.rstrip("/"))
+                    continue
+                relative(member.name)
+                require(member.isfile() and not member.issparse(), "unsupported snapshot member")
+                require(member.name not in files, "duplicate snapshot member")
+                total += member.size
+                require(total <= MAX_SNAPSHOT_BYTES and len(files) < 100000, "snapshot exceeds limits")
+                files[member.name] = archive.extractfile(member).read()
+    except tarfile.TarError as error:
+        raise InputError(str(error)) from error
+    return files
+
+
+def restore(request_dir, output, revision="head"):
+    _, files = load_request(request_dir)
+    name = f"context/{revision}.tar"
+    require(name in files, "request has no restorable source snapshot")
+    write_directory(output, snapshot_files(files[name]))
 
 
 def references(items, available, label):
@@ -398,11 +446,18 @@ def main(argv=None):
     build = sub.add_parser("assemble")
     for name in ("request", "current", "review", "evidence", "out"):
         build.add_argument(f"--{name}", type=Path, required=True)
+    unpack = sub.add_parser("restore", help="Restore source bytes without executing them")
+    unpack.add_argument("--request", type=Path, required=True)
+    unpack.add_argument("--out", type=Path, required=True)
+    unpack.add_argument("--revision", choices=("head", "base"), default="head")
     args = parser.parse_args(argv)
     try:
         if args.command == "prepare":
             files = prepare(args.checkout, args.repository, args.base, args.skill, args.sources,
                             args.require or ["build"])
+        elif args.command == "restore":
+            restore(args.request, args.out, args.revision)
+            return 0
         else:
             files = assemble(args.request, args.current, args.review, args.evidence)
         write_directory(args.out, files)
