@@ -1,0 +1,32 @@
+{
+  "candidate_sha256": "7ba8098b4acbe0a8ba401153923ff5b5ee5733f2a102eb82667349027ba563a7",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "-DwarningAsError=true",
+    "-Dpp.unicode.fun=true",
+    "-DautoImplicit=false",
+    "-DrelaxedAutoImplicit=false",
+    "-Dweak.linter.style.copyright.formalConjectures=true",
+    "-Dweak.linter.style.namespace=true",
+    "-Dweak.linter.style.stubs=true",
+    "-Dweak.linter.style.openClassical=true",
+    "-Dwarn.sorry=false",
+    "-Dweak.linter.style.ams_attribute=true",
+    "-Dweak.linter.style.category_attribute=true",
+    "-Dweak.linter.style.category_answer=true",
+    "-Dweak.linter.style.conditional_formal_proof=true",
+    "-Dweak.linter.style.moduleDocstring=true",
+    "-Dweak.linter.style.latex_docstring=true",
+    "-Dweak.linter.style.imports=true",
+    "/var/folders/6j/tgb081b50n99wmbtnv2pqkx00000gn/T/fc-review-control-1a24ya_y/Candidate.lean"
+  ],
+  "environment_commit": "862c5951f41b6e4d329d463de42fcdf19a717ecf",
+  "exit_code": 0,
+  "lake_manifest_sha256": "c8ffc0d59f492007162fe54c68396e4b9f2f305fcf69210a7fbaf0b18fcd8cd9",
+  "stderr": "",
+  "stdout": "'ReviewControl.no_prime_pair_at_two' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "wall_seconds": 5.469
+}

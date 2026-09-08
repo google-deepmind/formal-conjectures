@@ -1,0 +1,32 @@
+{
+  "candidate_sha256": "c4c38000035129540248df1eefbad202a45b2822ac41c3521542545993094a1a",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "-DwarningAsError=true",
+    "-Dpp.unicode.fun=true",
+    "-DautoImplicit=false",
+    "-DrelaxedAutoImplicit=false",
+    "-Dweak.linter.style.copyright.formalConjectures=true",
+    "-Dweak.linter.style.namespace=true",
+    "-Dweak.linter.style.stubs=true",
+    "-Dweak.linter.style.openClassical=true",
+    "-Dwarn.sorry=false",
+    "-Dweak.linter.style.ams_attribute=true",
+    "-Dweak.linter.style.category_attribute=true",
+    "-Dweak.linter.style.category_answer=true",
+    "-Dweak.linter.style.conditional_formal_proof=true",
+    "-Dweak.linter.style.moduleDocstring=true",
+    "-Dweak.linter.style.latex_docstring=true",
+    "-Dweak.linter.style.imports=true",
+    "/var/folders/6j/tgb081b50n99wmbtnv2pqkx00000gn/T/fc-review-control-f0jnp8be/Candidate.lean"
+  ],
+  "environment_commit": "862c5951f41b6e4d329d463de42fcdf19a717ecf",
+  "exit_code": 0,
+  "lake_manifest_sha256": "c8ffc0d59f492007162fe54c68396e4b9f2f305fcf69210a7fbaf0b18fcd8cd9",
+  "stderr": "",
+  "stdout": "",
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "wall_seconds": 33.446
+}

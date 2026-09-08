@@ -63,11 +63,13 @@ class EvalTest(unittest.TestCase):
                 ev.asset(self.root, name)
 
     def test_all_shipped_assets_are_frozen(self):
-        path = Path(__file__).resolve().parents[1] / ".agents/skills/formal-conjectures-review/evals/evals.json"
-        suite = ev.load_suite(path)
-        for case in suite["cases"]:
-            ids = [c["id"] for c in case["gold"]["criteria"]]
-            self.assertEqual(len(ids), len(set(ids)))
+        root = Path(__file__).resolve().parents[1] / ".agents/skills/formal-conjectures-review/evals"
+        for path in root.glob("*.json"):
+            with self.subTest(suite=path.name):
+                suite = ev.load_suite(path)
+                for case in suite["cases"]:
+                    ids = [c["id"] for c in case["gold"]["criteria"]]
+                    self.assertEqual(len(ids), len(set(ids)))
 
     def grade(self):
         return {"criteria": [{"id": "c1", "met": True, "reason": "Matches the primary source."}],

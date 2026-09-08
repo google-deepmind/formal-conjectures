@@ -1,0 +1,4 @@
+Source: https://en.wikipedia.org/w/index.php?oldid=1368965316&title=Goldbach%27s_conjecture
+Retrieved 2026-09-08. The source identifies this as an open conjecture. Verbatim excerpt:
+
+every even natural number greater than 2 is the sum of two prime numbers.

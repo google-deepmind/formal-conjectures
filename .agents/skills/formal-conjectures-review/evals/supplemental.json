@@ -1,0 +1,105 @@
+{
+  "assets": {
+    "supplemental-assets/boundary.lean": "da5fe8a3d8aa28fc5a145410cd3abcdc6edf8d515ba2a5c423481f14409adfc4",
+    "supplemental-assets/boundary.lean.json": "f2035fc1bec455c3579ad910f744c0356c840dcfe1f45e59785e20ef869274b9",
+    "supplemental-assets/clean.lean": "c4c38000035129540248df1eefbad202a45b2822ac41c3521542545993094a1a",
+    "supplemental-assets/clean.lean.json": "f167402f81ff3aba51f8734b23431e9b5b009588e51451dee4a38654e7b2cb48",
+    "supplemental-assets/source.txt": "f3461c067a0b824bdc5111ee9a4195f5165b9b6eee855897458345377956e3a2",
+    "supplemental-assets/witness.lean": "7ba8098b4acbe0a8ba401153923ff5b5ee5733f2a102eb82667349027ba563a7",
+    "supplemental-assets/witness.lean.json": "72d06d24852a2e4492441fa2fcf5dec761a350949f91df56cdc43665f5b93b03"
+  },
+  "cases": [
+    {
+      "checks": [
+        {
+          "detail": "The candidate elaborates; its sorry declaration is not a proof. The separate witness checks only the n = 2 boundary.",
+          "evidence": [
+            "evidence/build.json"
+          ],
+          "kind": "build",
+          "policy": "FC Lean options with warningAsError and an existing pinned import cache",
+          "producer": "local Lean 4.33.1 invocation",
+          "status": "pass"
+        }
+      ],
+      "context_policy": "fresh",
+      "files": {
+        "evidence/build.json": "supplemental-assets/clean.lean.json",
+        "evidence/candidate.lean": "supplemental-assets/clean.lean",
+        "evidence/witness.json": "supplemental-assets/witness.lean.json",
+        "evidence/witness.lean": "supplemental-assets/witness.lean",
+        "sources/primary.txt": "supplemental-assets/source.txt"
+      },
+      "gold": {
+        "criteria": [
+          {
+            "id": "c1",
+            "requirement": "No semantic defect in GoldbachConjecture.goldbach: the stated natural domain, strict lower bound, parity and prime decomposition match the retained source. A CLEAN scoped semantic review is expected."
+          },
+          {
+            "id": "c2",
+            "requirement": "Do not report that a sorry placeholder proves or disproves the conjecture. Any claimed extra defect must be supported and within the named declaration scope."
+          }
+        ],
+        "status": "provisional author criteria fixed before supplemental model calls"
+      },
+      "id": "C1",
+      "path": "FormalConjectures/Wikipedia/GoldbachConjecture.lean",
+      "prior_reviews": [],
+      "required_checks": [
+        "build"
+      ],
+      "task": "Review the mathematical statement GoldbachConjecture.goldbach and its category against the supplied source. Module citation anchors and the separate ternaryGoldbach declaration are outside this scoped review. The complete file is retained for context."
+    },
+    {
+      "checks": [
+        {
+          "detail": "The candidate elaborates; its sorry declaration is not a proof. The separate witness checks only the n = 2 boundary.",
+          "evidence": [
+            "evidence/build.json"
+          ],
+          "kind": "build",
+          "policy": "FC Lean options with warningAsError and an existing pinned import cache",
+          "producer": "local Lean 4.33.1 invocation",
+          "status": "pass"
+        }
+      ],
+      "context_policy": "fresh",
+      "files": {
+        "evidence/build.json": "supplemental-assets/boundary.lean.json",
+        "evidence/candidate.lean": "supplemental-assets/boundary.lean",
+        "evidence/witness.json": "supplemental-assets/witness.lean.json",
+        "evidence/witness.lean": "supplemental-assets/witness.lean",
+        "sources/primary.txt": "supplemental-assets/source.txt"
+      },
+      "gold": {
+        "criteria": [
+          {
+            "id": "c1",
+            "requirement": "Report the inclusion of n = 2, which the retained source excludes; return NEEDS REVISION and restore the strict lower bound."
+          },
+          {
+            "id": "c2",
+            "requirement": "Use the retained checked witness if claiming mathematical falsity at n = 2. Do not claim it settles the conjecture for n > 2."
+          }
+        ],
+        "status": "provisional author criteria fixed before supplemental model calls"
+      },
+      "id": "C2",
+      "path": "FormalConjectures/Wikipedia/GoldbachConjecture.lean",
+      "prior_reviews": [],
+      "required_checks": [
+        "build"
+      ],
+      "task": "Review the mathematical statement GoldbachConjecture.goldbach and its category against the supplied source. Module citation anchors and the separate ternaryGoldbach declaration are outside this scoped review. The complete file is retained for context."
+    }
+  ],
+  "design": "Added after disputed clean labels in the original pilot; not a replacement or a preplanned independent benchmark. Goldbach is absent from the selected procedure examples. Both cases and both arms are retained. Do not pool scores with the original batch as a preregistered accuracy estimate.",
+  "origin": {
+    "commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+    "repository": "google-deepmind/formal-conjectures",
+    "toolchain": "leanprover/lean4:v4.33.1"
+  },
+  "schema_version": "fc.review-eval.suite.v1",
+  "status": "separate supplemental controls, frozen before their model calls"
+}

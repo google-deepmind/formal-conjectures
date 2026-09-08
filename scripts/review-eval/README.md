@@ -12,6 +12,13 @@ stale proof status, and contested or contradictory prior findings. Conversation 
 status records are explicitly simulated; Lean compilation and axiom inspection records
 are actual local executions. A successful statement build is not a proof.
 
+The Erdős 940 boundary example is also referenced by #4933 in the procedure. These are
+regression/calibration scenarios, not held-out evidence of mathematical generalization.
+`evals/supplemental.json` adds a separate Goldbach clean/boundary pair, with an actual
+Lean proof that two primes cannot sum to 2. It was selected after the initial pilot
+challenged the original clean labels, then frozen before its own model calls. Keep its
+results separate; it does not replace the original cases or repair their scores.
+
 The original eval file is preserved byte-for-byte under `evals/historical/`.
 Its scores, selection rules and toolchain policy are historical. Do not use them as current
 validation or follow their recommendation to retain only cases that separate the arms.
@@ -68,6 +75,8 @@ python3 scripts/review_eval.py human-packet --root /tmp/fc-review-eval-run \
 The first run is one observation per scenario and arm, not an accuracy estimate. Use paired
 repeats on a frozen suite before claiming a reliable skill/baseline difference. Broaden the
 mathematical domains before generalizing beyond these two declarations.
+Use `--suite .agents/skills/formal-conjectures-review/evals/supplemental.json` and a new
+output directory to run the supplemental controls with the same protocol.
 
 Runs retain the packet, procedure files, input hashes, original model output, CLI events,
 usage when available, wall time, validated JSON/Markdown reports, and individual grading
