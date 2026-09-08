@@ -64,7 +64,7 @@ theorem GNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) :
 
 /--
 Auslander-Reiten-Conjecture - an equivalent formulation of GNC:
-If Ext^i(M,M) = Ext^i(M,A) = 0 for any integer `i ≥ 0` then `M` is projective.
+If Ext^i(M,M) = Ext^i(M,A) = 0 for any integer `i > 0` then `M` is projective.
 
 Note that `Projective` here is in Finitely generated Modules but it is equivalent to being projective in Modules.
 -/
@@ -78,7 +78,7 @@ theorem ARC (_ : ∀ i > 0 ,
 /--
 First Tachikawa Conjecture:
 
-If for any `p ≥ 0` and `I` a finiyely generated module over `A` Ext^p(I,A)=0 thent `A`is self injective (injective as a left module over itself).
+If for any `p > 0` and `I` a finiyely generated module over `A` Ext^p(I,A)=0 thent `A`is self injective (injective as a left module over itself).
 
 Note that there is an equivalent formulation :If Ext^p(A^*,A) = 0 for any integer `p > 0`, then A is self-injective.
 
