@@ -53,7 +53,7 @@ theorem maxCosetDim_empty (K V : Type*) [DivisionRing K] [AddCommGroup V] [Modul
   dsimp [maxCosetDim]
   have h : {Module.finrank K S.direction | (S : AffineSubspace K V) (_h : (S : Set V) ⊆ ∅)} = {0} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.subset_empty_iff, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.subset_empty_iff, Set.mem_singleton_iff]
     constructor
     · rintro ⟨S, hS, rfl⟩
       have hbot : S = ⊥ := SetLike.ext'_iff.mpr (by simp [hS])
@@ -116,7 +116,7 @@ theorem maxCosetDim_singleton (K V : Type*) [DivisionRing K] [AddCommGroup V] [M
   dsimp [maxCosetDim]
   have h : {Module.finrank K S.direction | (S : AffineSubspace K V) (_h : (S : Set V) ⊆ {v})} = {0} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨S, hS, rfl⟩
       obtain rfl | h_nonempty := eq_bot_or_bot_lt S

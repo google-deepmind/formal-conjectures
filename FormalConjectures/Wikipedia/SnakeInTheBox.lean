@@ -61,23 +61,16 @@ since there only is one induced path and it is of length zero.
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
-  convert csSup_singleton 0
+  convert! csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSubgraph, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_,
-    fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
-  · rw [h]
-    let P : (fromRel fun a b : Finset (Fin 0) => (a ∆ b).card = 1).Walk ∅ ∅ := .nil
-    refine ⟨P.toSubgraph, ?_, ∅, ∅, P, ?_⟩
-    · intro v hv w hw hadj
-      simp [P] at hv hw
-      subst v
-      subst w
-      exact hadj.ne rfl
-    · simp [P]
+    simp_all [Walk.Nil.length_eq_zero]
+  · rintro rfl
+    use ⊤, by simp, ∅, ∅, .nil
+    simp [Subgraph.ext_iff, funext_iff]
 
 open List
 

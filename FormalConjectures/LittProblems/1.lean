@@ -58,12 +58,12 @@ The variable indexed by `0 : Fin (n + 1)` corresponds to $z$, and the variable i
 `i.succ` corresponds to $y_i = f^{(i)}(z)$.
 -/
 def IsSolutionOfAlgebraicODE (n : ℕ) (f : PowerSeries ℚ) (g : MvRatFunc (Fin (n + 1)) ℚ) : Prop :=
-  let pt : Fin (n + 1) → PowerSeries ℚ := Fin.cases X (fun i : Fin n ↦ derivativeFun^[i.val] f)
+  let pt : Fin (n + 1) → PowerSeries ℚ := Fin.cases X (fun i : Fin n ↦ (derivative ℚ)^[i.val] f)
   ∃ p q : MvPolynomial (Fin (n + 1)) ℚ,
     q ≠ 0 ∧
     g = (algebraMap _ _ p) / (algebraMap _ _ q) ∧
     IsDefined (Fin (n + 1)) ℚ g (PowerSeries.constantCoeff ∘ pt) ∧
-    derivativeFun^[n] f * MvPolynomial.aeval pt q = MvPolynomial.aeval pt p
+    (derivative ℚ)^[n] f * MvPolynomial.aeval pt q = MvPolynomial.aeval pt p
 
 def ℤAdjoinInvNat (N : ℕ) : Subalgebra ℤ ℚ := Algebra.adjoin ℤ {(1 / N : ℚ)}
 

@@ -9,5 +9,5 @@ path = "../"
 
 [[require]]
 name = "verso"
-git = "https://github.com/leanprover/verso.git"
-rev = "v4.27.0"
+git = "https://github.com/mo271/verso.git"
+rev = "5207ca14f0c419f2268aae29c76ce23b2d4dc340"

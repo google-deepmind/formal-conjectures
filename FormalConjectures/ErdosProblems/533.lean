@@ -37,6 +37,7 @@ open Filter SimpleGraph
 
 namespace Erdos533
 
+open scoped Classical in
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
 $K_5$ and at least $\delta n^2$ edges, must $G$ contain a set of $\gg_\delta n$ vertices
@@ -65,6 +66,7 @@ theorem erdos_533 : answer(False) ↔
             G.CliqueFreeOn (S : Set (Fin n)) 3 := by
   sorry
 
+open scoped Classical in
 /--
 The upper bound $\delta_3(5) \leq 1/12$ of Erdős, Hajnal, Simonovits, Sós, and Szemerédi
 [EHSSS94]: for every $\epsilon > 0$ there is a $\delta > 0$ such that for all sufficiently
@@ -80,6 +82,7 @@ theorem erdos_533.variants.ehsss_upper (ε : ℝ) (hε : 0 < ε) :
           (G.edgeFinset.card : ℝ) ≤ (1 / 12 + ε) * n ^ 2 := by
   sorry
 
+open scoped Classical in
 /--
 The matching lower bound $\delta_3(5) \geq 1/12$, from the construction of Liu, Reiher,
 Sharifzadeh, and Staden [LRSS21] (improving the earlier $\delta_3(5) > 0$ of Balogh and Lenz
@@ -97,6 +100,7 @@ theorem erdos_533.variants.lrss_lower (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ
         (1 / 12 - ε) * (n : ℝ) ^ 2 ≤ G.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 The contrasting positive result $\delta_3(4) = 0$ of Erdős, Hajnal, Simonovits, Sós, and
 Szemerédi [EHSSS94]: the $K_4$ analogue of `erdos_533` is **true**. For every $\delta > 0$
@@ -113,6 +117,7 @@ theorem erdos_533.variants.delta_four_eq_zero :
             G.CliqueFreeOn (S : Set (Fin n)) 3 := by
   sorry
 
+open scoped Classical in
 /--
 The observation $\delta_3(7) \geq 1/4$ of Erdős, Hajnal, Simonovits, Sós, and Szemerédi
 [EHSSS94], via a construction of Erdős and Rogers [ErRo62]: for every $\epsilon, \delta > 0$

@@ -45,7 +45,7 @@ theorem erdos_1201 :
     answer(sorry) ↔
       ∀ ε > 0, ∀ η > 0, ∃ k : ℕ,
         atTop.liminf (fun x : ℕ ↦
-          (((count (Erdos1201Set ε k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
+          (((count (· ∈ Erdos1201Set ε k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
   sorry
 
 open scoped Classical in
@@ -56,7 +56,7 @@ Erdős wrote he could prove this for $\epsilon=1/2$.
 theorem erdos_1201.variants.epsilon_half :
     ∀ η > 0, ∃ k : ℕ,
       atTop.liminf (fun x : ℕ ↦
-        (((count (Erdos1201Set (1 / 2 : ℝ) k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
+        (((count (· ∈ Erdos1201Set (1 / 2 : ℝ) k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
   sorry
 
 end Erdos1201

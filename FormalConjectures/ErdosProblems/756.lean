@@ -36,15 +36,9 @@ open scoped EuclideanGeometry Asymptotics
 
 namespace Erdos756
 
-/-- The number of unordered pairs of distinct points of `A` which are at distance exactly `d`.
-The division by two accounts for `Finset.offDiag` listing each unordered pair twice. -/
-noncomputable def distanceMultiplicity (A : Finset ℝ²) (d : ℝ) : ℕ :=
-  (A.offDiag.filter fun pair : ℝ² × ℝ² => dist pair.1 pair.2 = d).card / 2
-
 /-- The distances determined by `A` which occur for at least `k` many pairs of points of `A`. -/
 noncomputable def richDistances (A : Finset ℝ²) (k : ℕ) : Finset ℝ :=
-  (A.offDiag.image fun pair : ℝ² × ℝ² => dist pair.1 pair.2).filter
-    fun d => k ≤ distanceMultiplicity A d
+  (distanceSet A).filter fun d => k ≤ distanceMultiplicity A d
 
 /-- The largest number of distinct distances that a set of `n` points in $\mathbb{R}^2$ can
 determine, each of which occurs for more than `n` many pairs of points of the set. -/

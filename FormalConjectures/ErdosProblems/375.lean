@@ -73,7 +73,7 @@ theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n 
     by_contra! hr
     wlog hq : x < y
     · exact this n hn k hk h p hp y x hxy.symm hr.symm (by grind)
-    · have hy : y = x + 1 := by grind
+    · have hy : y = x + 1 := by fin_cases x <;> fin_cases y <;> simp_all
       have := hy ▸ Nat.dvd_sub (hp y).2 (hxy ▸ (hp x).2)
       have := (hp 1).1
       simp_all [Nat.not_prime_one]

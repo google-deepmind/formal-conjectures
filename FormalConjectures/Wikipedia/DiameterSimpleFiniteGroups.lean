@@ -102,7 +102,7 @@ theorem groupDiam_alternating_three : groupDiam (alternatingGroup (Fin 3)) = 1 :
   unfold groupDiam
   have h_eq : { d | ∃ S : Set ↥(alternatingGroup (Fin 3)),
       Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d } = {1} := by
-    ext d; simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]; constructor
+    ext d; simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]; constructor
     · rintro ⟨S, hS, rfl⟩; rw [key S hS, SimpleGraph.diam_top]
     · rintro rfl
       exact ⟨Set.univ, Subgroup.closure_univ, by rw [key _ Subgroup.closure_univ,
@@ -136,7 +136,7 @@ theorem groupDiam_perm_two : groupDiam (Equiv.Perm (Fin 2)) = 1 := by
   unfold groupDiam
   have h_eq : { d | ∃ S : Set (Equiv.Perm (Fin 2)),
       Subgroup.closure S = ⊤ ∧ (cayleyGraph S).diam = d } = {1} := by
-    ext d; simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]; constructor
+    ext d; simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]; constructor
     · rintro ⟨S, hS, rfl⟩; rw [key S hS, SimpleGraph.diam_top]
     · rintro rfl
       exact ⟨Set.univ, Subgroup.closure_univ, by rw [key _ Subgroup.closure_univ,

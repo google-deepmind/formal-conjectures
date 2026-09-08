@@ -36,10 +36,10 @@ Asked by Erdős and Gyárfás, who proved that this is the case when $G$ has max
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
 theorem erdos_134 : answer(True) ↔
     ∀ (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ),
-    ∃ N : ℕ, ∀ n ≥ N, ∀ G : SimpleGraph (Fin n),
+    ∃ N : ℕ, ∀ n ≥ N, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
       G.CliqueFree 3 →
       (∀ v : Fin n, (G.degree v : ℝ) < Real.rpow (n : ℝ) ((1 : ℝ) / 2 - ε)) →
-      ∃ H : SimpleGraph (Fin n),
+      ∃ (H : SimpleGraph (Fin n)) (_ : DecidableRel H.Adj),
         G ≤ H ∧
         H.CliqueFree 3 ∧
         (∀ x y : Fin n, x ≠ y → H.Adj x y ∨ ∃ z, H.Adj x z ∧ H.Adj z y) ∧
