@@ -1,7 +1,8 @@
 # Review evaluation
 
 Measure whether the skill improves mathematical review. Valid JSON is a tooling check,
-not an accuracy score. This suite follows the [Agent Skills evaluation guide](https://agentskills.io/skill-creation/evaluating-skills),
+not an accuracy score. This suite follows the [Agent Skills quickstart](https://agentskills.io/skill-creation/quickstart),
+[evaluation guide](https://agentskills.io/skill-creation/evaluating-skills),
 [best practices](https://agentskills.io/skill-creation/best-practices),
 [description testing](https://agentskills.io/skill-creation/optimizing-descriptions) and
 [specification](https://agentskills.io/specification).
@@ -160,6 +161,12 @@ Run validation after freezing the description; do not use its failures for tunin
 calling it held out. Report per-query loading rates and failed invocations, separately from
 review scores. This controlled selector tests description routing, not native desktop skill
 discovery. A native-client trigger check remains a distinct integration test.
+
+For that integration check, open this checkout in the target client and confirm the skill is
+discovered (for example, `/skills` in VS Code Copilot). Ask for a semantic review, then inspect
+the trace for an actual skill-file read and review-tool execution. Try a nearby non-review task
+as a negative control. Record the client, model and observed actions; intended activation in
+the final answer is not evidence that the skill loaded.
 
 ## Historical records
 
