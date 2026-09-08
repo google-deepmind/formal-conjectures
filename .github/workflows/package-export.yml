@@ -45,7 +45,7 @@ jobs:
 
       - name: Build pinned generator and unmodified verifier tools
         env:
-          GENERATOR_REV: 166d574bb9eee2765149200f959222f2c6b4cdbc
+          GENERATOR_REV: e611b55d7097b9de973cbe0cef0f0cfad66dbe92
           COMPARATOR_REV: 2312244ac716564a61cc0bf4e107d9abf1757a61
           LANDRUN_REV: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
           NANODA_REV: 05055695879dfebb6628a67da88ceca6cd6b0421

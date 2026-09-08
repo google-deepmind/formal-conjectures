@@ -116,7 +116,10 @@ def export(source, declaration, out, generator, source_ref="origin/main",
                       "exporterCommit": run(["git", "rev-parse", "HEAD"]).strip(),
                       "exporterFiles": {name: digest((ROOT / "comparator" / name).read_text())
                                         for name in ("ExportProblem.lean", "export_problem.py", "WorkspaceTest.lean")},
-                      "generatorCommit": generator_revision, "requestSha256": digest(request_text),
+                      "generatorCommit": generator_revision,
+                      "generatorExecutableSha256": hashlib.sha256(
+                          (generator / ".lake/build/bin/lean-eval-generator").read_bytes()).hexdigest(),
+                      "requestSha256": digest(request_text),
                       "files": {path: digest(content) for path, content in files.items()}}
         workspace = staging / "workspace"
         for path, content in files.items():

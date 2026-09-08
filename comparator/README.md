@@ -39,7 +39,8 @@ Lean re-elaborates them under the same universe parameters and checks equality.
 Structured results use a dedicated JSON file, so source diagnostics cannot corrupt
 the transport. Python passes these signatures and package pins to the generator, validates its
 file map and digests, then compiles the actual generated Challenge with Lean.
-It records source, exporter, generator, request and output provenance.
+It records source, exporter, generator revision and executable digest, request and output provenance.
+The generator uses OpenSSL for file digests; GNU utilities are not required.
 
 `config.json` enables nanoda as well as Lean's kernel. `lake test` invokes the
 configured Comparator. Use the Linux sandbox setup in the CI workflow: real
