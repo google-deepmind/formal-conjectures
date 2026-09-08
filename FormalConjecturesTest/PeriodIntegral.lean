@@ -58,8 +58,8 @@ $g_2 = c_4 / 12$ and $g_3 = c_6 / 216$
 (`WeierstrassCurve.leastRealPeriodIntegral_eq_integral_depressed`). These are the invariants of the
 period lattice `WeierstrassCurve.periodPair` of `FormalConjecturesTest.RealPeriod`, whose least
 positive real element is the lattice-theoretic `WeierstrassCurve.leastRealPeriod`, with real period
-`WeierstrassCurve.realPeriod`. That the two versions agree is the uniformisation theorem, which is
-not proved here.
+`WeierstrassCurve.realPeriod`. That the two versions agree is proved in
+`FormalConjecturesTest.RealPeriodIntegral`.
 
 When $\Delta > 0$ the bounded component of $E(\mathbb{R})$ contributes the same amount as the
 identity component (the second equality in DLMF 23.6.34), so the real period is also
