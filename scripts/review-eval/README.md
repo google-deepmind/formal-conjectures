@@ -121,6 +121,19 @@ minutes spent, and adjudicate the reference key before qualification. Human form
 no human score or time is inferred. Inspect evidence and transcripts alongside aggregate counts.
 Mechanical checks never substitute for source fidelity or mathematical correctness.
 
+To adjudicate all 24 reference cases before running qualification, export their candidates and
+sources without the provisional labels or later fix provenance:
+
+```sh
+python scripts/review_eval.py key-packet \
+  --suite .agents/skills/formal-conjectures-review/evals/benchmark.json \
+  --out ../review-eval/key-adjudication
+```
+
+The mathematician fills `adjudication.json`. Reconcile disagreements with the catalog, then
+record the named reviewer and supporting evidence in each key. This step is manual; neither
+packet export nor a model assessment promotes a key to `human_adjudicated`.
+
 ## Description routing
 
 `evals/triggers.json` has 20 realistic queries: ten positives and ten nearby negatives, split

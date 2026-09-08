@@ -80,6 +80,17 @@ class EvalTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing adjudication"):
             ev.load_suite(self.root / "suite.json")
 
+    def test_key_adjudication_packets_do_not_reveal_provisional_labels(self):
+        ev.key_packet(self.suite_path, self.root / "keys")
+        packet = ev.read(self.root / "keys/R01.json")
+        self.assertEqual(set(packet), {"prompt", "candidate", "sources", "prior_context"})
+        self.assertNotIn(
+            self.suite["cases"][0]["gold"]["defects"][0]["description"], ev.encode(packet).decode()
+        )
+        forms = ev.read(self.root / "keys/adjudication.json")
+        self.assertEqual(len(forms), len(self.suite["cases"]))
+        self.assertTrue(all(f["reviewer"] is None and f["defects"] is None for f in forms))
+
     def assessment(self):
         return {
             "gold_status": "confirmed",

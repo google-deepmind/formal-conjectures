@@ -779,6 +779,27 @@ def summarize(root):
     return result
 
 
+def key_packet(suite_path, output):
+    suite = load_suite(suite_path)
+    output.mkdir(parents=True, exist_ok=False)
+    forms = []
+    for case in suite["cases"]:
+        packet = {
+            "prompt": case["prompt"],
+            "candidate": asset(suite_path.parent, case["candidate"]).decode(),
+            "sources": {k: asset(suite_path.parent, v).decode() for k, v in case["sources"].items()},
+            "prior_context": {
+                k: asset(suite_path.parent, v).decode() for k, v in case.get("context", {}).items()
+            },
+        }
+        write(output / (case["id"] + ".json"), packet)
+        forms.append(
+            {"id": case["id"], "reviewer": None, "defects": None, "evidence": None, "comments": None}
+        )
+    write(output / "adjudication.json", forms)
+    write(output / "manifest.json", {"suite_sha256": sha(suite_path.read_bytes()), "files": files(output)})
+
+
 def human_packet(root, output):
     m = verify(root)
     output.mkdir(parents=True, exist_ok=False)
@@ -816,6 +837,9 @@ def main():
     f.add_argument("--repeats", type=int, default=1)
     f.add_argument("--timeout", type=int, default=420)
     f.add_argument("--max-calls", type=int, default=30)
+    p = subs.add_parser("key-packet")
+    p.add_argument("--suite", type=Path, required=True)
+    p.add_argument("--out", type=Path, required=True)
     for name in ("run", "assess", "summarize", "human-packet"):
         p = subs.add_parser(name)
         p.add_argument("--root", type=Path, required=True)
@@ -828,6 +852,8 @@ def main():
     a = parser.parse_args()
     if a.command == "freeze":
         freeze(a.suite, a.skill, a.out, a.image, a.cases, a.repeats, a.timeout, a.max_calls)
+    elif a.command == "key-packet":
+        key_packet(a.suite.resolve(), a.out.resolve())
     elif a.command == "run":
         run(a.root.resolve(), a.model, a.workers)
     elif a.command == "assess":
