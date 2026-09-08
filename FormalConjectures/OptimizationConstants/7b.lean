@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import FormalConjectures.OptimizationConstants.«7a»
+import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization Constant 7b / The Irrationality Measure of $\Gamma(1/4)$
