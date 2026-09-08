@@ -16,6 +16,7 @@ limitations under the License.
 module  -- shake: keep-all --deprecated_module: ignore
 
 public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
+public import FormalConjecturesForMathlib.Algebra.GradedMonoid
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
@@ -174,6 +175,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs

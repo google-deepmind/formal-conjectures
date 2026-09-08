@@ -18,6 +18,7 @@ module
 public import Mathlib.Algebra.DirectSum.Algebra
 public import Mathlib.Algebra.Homology.DerivedCategory.Ext.Linear
 public import Mathlib.Algebra.Module.GradedModule
+public import FormalConjecturesForMathlib.Algebra.GradedMonoid
 
 @[expose] public noncomputable section
 
@@ -38,6 +39,9 @@ that `⨁ n, Ext X Y n` is a module over `⨁ n, Ext X X n`.
   `fun n ↦ Ext X X n` when `C` is `R`-linear.
 * `CategoryTheory.Abelian.Ext.instGmodule`: the graded module structure on `fun n ↦ Ext X Y n`
   over `fun n ↦ Ext X X n`.
+
+The proofs of the graded axioms compare elements of `GradedMonoid` in different degrees; they use
+`GradedMonoid.mk_eq_mk` and `Ext.comp_heq` to reduce these to equalities in a single degree.
 -/
 
 universe w t v u
@@ -118,11 +122,6 @@ instance instGmodule : DirectSum.Gmodule (fun n ↦ Ext X X n) (fun n ↦ Ext X 
   zero_smul β := zero_comp _ _ β _ rfl
 
 variable (R : Type t) [CommRing R] [Linear R C]
-
-/-- Equality of two elements of `GradedMonoid A` written with `GradedMonoid.mk`. -/
-lemma _root_.GradedMonoid.mk_eq_mk {ι : Type*} {A : ι → Type*} {i j : ι} {a : A i} {b : A j}
-    (h : i = j) (h' : HEq a b) : GradedMonoid.mk i a = GradedMonoid.mk j b :=
-  Sigma.ext h h'
 
 instance instGAlgebra : DirectSum.GAlgebra R (fun n ↦ Ext X X n) where
   toFun :=
