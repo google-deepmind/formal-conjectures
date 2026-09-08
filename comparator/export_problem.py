@@ -7,6 +7,7 @@ import json
 from pathlib import Path, PurePosixPath
 import subprocess
 import tempfile
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REPOSITORY = "https://github.com/google-deepmind/formal-conjectures.git"
@@ -31,14 +32,19 @@ def module_name(path):
     return ".".join(f"«{part}»" for part in parts)
 
 
-def source_pin():
-    revision = run(["git", "rev-parse", "HEAD"]).strip()
+def source_pin(reference):
+    revision = run(["git", "rev-parse", reference]).strip()
     paths = ["FormalConjectures", "FormalConjecturesForMathlib", "FormalConjecturesUtil",
              "FormalConjecturesUtil.lean", "FormalConjecturesForMathlib.lean",
-             "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
-    run(["git", "diff", "--exit-code", "HEAD", "--", *paths])
+             "lean-toolchain", "lake-manifest.json"]
+    run(["git", "diff", "--exit-code", revision, "--", *paths])
     if run(["git", "ls-files", "--others", "--exclude-standard", "--", *paths]).strip():
         raise ValueError("Untracked source cannot be part of a pinned export")
+    pinned = tomllib.loads(run(["git", "show", f"{revision}:lakefile.toml"]))
+    observed = tomllib.loads((ROOT / "lakefile.toml").read_text())
+    for key in ("name", "require", "leanOptions", "lean_lib"):
+        if pinned.get(key) != observed.get(key):
+            raise ValueError(f"Lake configuration {key} differs from the source snapshot")
     return revision
 
 
@@ -83,10 +89,11 @@ def response_files(response, problem_id):
     return files
 
 
-def export(source, declaration, out, generator):
+def export(source, declaration, out, generator, source_ref="origin/main",
+           source_repository=SOURCE_REPOSITORY):
     source = source.resolve()
     relative = source.relative_to(ROOT)
-    revision = source_pin()
+    revision = source_pin(source_ref)
     source_text = run(["git", "show", f"{revision}:{relative.as_posix()}"])
     if source_text != source.read_text():
         raise ValueError("Source differs from its pinned commit")
@@ -120,18 +127,20 @@ def export(source, declaration, out, generator):
         run(["lake", "env", "lean", "-i", str(metadata), str(rendered)])
         request = {"schemaVersion": 2, "contextRoot": "context", "leanToolchain": toolchain,
                    "mathlib": {"name": "mathlib", "git": mathlib["url"], "rev": mathlib["rev"]},
-                   "dependencies": [{"name": "formal_conjectures", "git": SOURCE_REPOSITORY,
+                   "dependencies": [{"name": "formal_conjectures", "git": source_repository,
                                      "rev": revision}],
                    "templates": {"workspaceTest": (ROOT / "comparator/WorkspaceTest.lean").read_text()},
                    "problems": [{"id": problem_id, "title": declaration,
-                                 "group": "open-conjectures", "status": "draft", "visible": False,
-                                 "statementRevision": 1, "tags": [], "submitter": "Formal Conjectures",
+                                 "group": ("open-conjectures" if exported["category"] == "research open"
+                                           else "formalization-evaluation"), "status": "draft", "visible": False,
+                                 "statementRevision": 1, "tags": [exported["category"]] if exported["category"] else [],
+                                 "submitter": "Formal Conjectures",
                                  "moduleName": "FCExportedProblem", "moduleContent": text,
                                  "holes": [h["declarationName"] for h in holes], "resolvedHoles": holes}]}
         request_text = json.dumps(request, indent=2) + "\n"
         files = response_files(json.loads(run([str(generator / ".lake/build/bin/lean-eval-generator")],
                                               cwd=staging, input=request_text)), problem_id)
-        provenance = {"schemaVersion": 1, "source": {"repository": SOURCE_REPOSITORY,
+        provenance = {"schemaVersion": 1, "source": {"repository": source_repository,
                       "commit": revision, "path": relative.as_posix(), "module": module,
                       "declaration": declaration, "sha256": digest(source_text)},
                       "generatorCommit": generator_revision, "requestSha256": digest(request_text),
@@ -154,9 +163,12 @@ def main():
     parser.add_argument("declaration")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--generator", type=Path, required=True, help="Clean generator v2 Git checkout")
+    parser.add_argument("--source-ref", default="origin/main", help="Exact source snapshot (default: origin/main)")
+    parser.add_argument("--source-repository", default=SOURCE_REPOSITORY)
     args = parser.parse_args()
     try:
-        print(export(args.source, args.declaration, args.out, args.generator))
+        print(export(args.source, args.declaration, args.out, args.generator,
+                     args.source_ref, args.source_repository))
     except (RuntimeError, ValueError, subprocess.TimeoutExpired) as error:
         parser.exit(1, f"{error}\n")
 

@@ -95,9 +95,17 @@ private def exportType (name : Name) : Term.TermElabM Json := do
   declarations := declarations.push <| Json.mkObj [
     ("name", toJson "fc_problem"), ("kind", toJson "theorem"),
     ("type", toJson (← renderType type)), ("levels", toJson info.levelParams)]
+  let category := (ProblemAttributes.categoryExt.getState (← getEnv)).toList.find?
+    (·.declName == name)
+  let category := category.map fun tag => match tag.category with
+    | .research .open => "research open"
+    | .research .solved => "research solved"
+    | .textbook => "textbook"
+    | .test => "test"
+    | .API => "API"
   return Json.mkObj [
     ("schemaVersion", toJson (1 : Nat)), ("declaration", toJson name.toString),
-    ("declarations", toJson declarations)]
+    ("category", toJson category), ("declarations", toJson declarations)]
 
 private partial def elaborateThrough (target : Name) : Frontend.FrontendM Unit := do
   let done ← Frontend.processCommand
@@ -124,6 +132,8 @@ unsafe def main (args : List String) : IO UInt32 := do
       |>.set `maxHeartbeats (800000 : Nat)
     let (env, messages) ← processHeader header opts messages context
       (mainModule := moduleName.toName)
+    if env.contains declaration.toName then
+      throw <| IO.userError "The target is imported rather than declared in the source module"
     let initial : Frontend.State := {
       commandState := Command.mkState env messages opts, parserState, cmdPos := parserState.pos }
     let (_, state) ← (elaborateThrough declaration.toName).run { inputCtx := context } |>.run initial
