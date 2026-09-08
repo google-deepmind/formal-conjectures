@@ -65,6 +65,19 @@ theorem matrix_multiplication_exponent_le_three :
   intro n _
   exact_mod_cast (by simpa [pow_succ] using Holor.cprank_matrixMulTensor_le ℂ n n n)
 
+
+-- `strassen`: V. Strassen, "Gaussian elimination is not optimal", Numerische Mathematik 13 (1969), 354–356.
+
+/-- The matrix multiplication exponent is at most $3$. -/
+@[category test, AMS 15 68]
+theorem matrix_multiplication_exponent_strassen :
+    ∀ n : ℕ, 1 ≤ n →
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (Real.logb 2 7) := by
+  sorry
+
+-- `coppersmith-winograd`: D. Coppersmith, S. Winograd, "Matrix multiplication via arithmetic progressions", STOC 1987; journal version in J. Symbolic Computation 9 (1990), 251–280.
+--- `alpha eveolve (current best)`: "Improving the matrix multiplication exponent with modern optimization and AlphaEvolve", arXiv:2608.16884 (August 2026), Alman, Vassilevska Williams et al.
+
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
 @[category research open, AMS 15 68]
