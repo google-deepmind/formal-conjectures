@@ -68,15 +68,32 @@ theorem matrix_multiplication_exponent_le_three :
 
 -- `strassen`: V. Strassen, "Gaussian elimination is not optimal", Numerische Mathematik 13 (1969), 354–356.
 
-/-- The matrix multiplication exponent is at most $3$. -/
-@[category test, AMS 15 68]
+/-- First non-trivial bound, found by V. Strassen (1969). -/
+@[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_strassen :
     ∀ n : ℕ, 1 ≤ n →
       ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (Real.logb 2 7) := by
   sorry
 
+--: https://www.cs.umd.edu/~gasarch/TOPICS/ramsey/matrixmult.pdf
 -- `coppersmith-winograd`: D. Coppersmith, S. Winograd, "Matrix multiplication via arithmetic progressions", STOC 1987; journal version in J. Symbolic Computation 9 (1990), 251–280.
+/-- Coppersmith–Winograd (1987) -/
+@[category research solved, AMS 51]
+theorem matrix_multiplication_exponent_coppersmith_winograd :
+    ∀ n : ℕ, 1 ≤ n →
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.376 : ℝ) := by
+  sorry
+
 --- `alpha eveolve (current best)`: "Improving the matrix multiplication exponent with modern optimization and AlphaEvolve", arXiv:2608.16884 (August 2026), Alman, Vassilevska Williams et al.
+--https://arxiv.org/pdf/2608.16884
+/-- The current best bound, found by AlphaEvolve (2026). -/
+@[category research solved, AMS 51]
+theorem matrix_multiplication_exponent_alphaevolve :
+    ∀ n : ℕ, 1 ≤ n →
+      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.371177 : ℝ) := by
+  sorry
+
+
 
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
