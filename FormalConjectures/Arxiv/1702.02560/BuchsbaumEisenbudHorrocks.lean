@@ -31,7 +31,7 @@ open CategoryTheory RingTheory.Sequence
 variable (R : Type u) [CommRing R] [ConnectedSpace (PrimeSpectrum R)]
     (M : ModuleCat.{u} R) [Module.Finite R M] [Nontrivial M]
     (P : ProjectiveResolution M) (fin : ∃ n, ∀ i > n, Limits.IsZero (P.complex.X i))
-    (c : ℕ) (ceq : c = Ideal.height (Module.annihilator R M))
+    (c : ℕ) (ceq : c = Ideal.height (Module.annihilator R M)) [∀ i, Module.Finite R (P.complex.X i)]
 
 /-- The `Buchsbaum-Eisenbud-Horrocks Conjecture` about lower bound of Betti number. -/
 @[category research open, AMS 13]
