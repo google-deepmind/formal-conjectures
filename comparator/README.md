@@ -1,14 +1,14 @@
 # Package-backed proof workspaces
 
-This prototype exports an FC statement to a LeanEval generator v2 workspace.
-The workspace imports a pinned FC package. It does not copy FC definitions,
-notation, or source scopes. It is an alternative to the Mathlib-only importer
-in [#4951](https://github.com/google-deepmind/formal-conjectures/pull/4951).
+Export an FC statement with Lean, then pass closed declaration signatures to
+[lean-eval-generator#7](https://github.com/leanprover/lean-eval-generator/pull/7).
+Its structured v2 renderer imports a pinned FC package. Neither side copies FC
+helper definitions or reconstructs source scopes. Python does not parse Lean.
+The generator receives no source ranges, context directory or `.ilean` files.
 
 ## Generate a workspace
 
-Build the generator proposal in
-[lean-eval-generator#7](https://github.com/leanprover/lean-eval-generator/pull/7), then run:
+Fetch upstream main, then run:
 
 ```sh
 python3 comparator/export_problem.py FormalConjectures/ErdosProblems/940.lean \
@@ -16,65 +16,61 @@ python3 comparator/export_problem.py FormalConjectures/ErdosProblems/940.lean \
   --out /tmp/erdos-940
 ```
 
-The output contains `request.json`, the real Lean metadata under `context/`,
-`export.json`, and `workspace/`. The request can be replayed from that output
-directory using the same generator. Solvers edit `workspace/Submission.lean`
-and files under `workspace/Submission/`.
+The output contains `request.json`, `export.json` and `workspace/`. Solvers edit
+`workspace/Submission.lean` and files under `workspace/Submission/`. The generator
+request is self-contained and can be replayed without the FC checkout.
 
-The source snapshot defaults to the local `origin/main` ref. Fetch before
-exporting to use current upstream main. Source files, the toolchain, the
-resolved dependency manifest, and the relevant Lake settings must match that
-snapshot. The exporter executable may be on a separate development branch.
-For a fork or local test, pass both `--source-ref` and `--source-repository`.
-The repository must contain the selected commit before another machine can
-fetch the workspace dependencies. Existing output is never overwritten.
+The source defaults to the local `origin/main` ref. Source files, toolchain,
+resolved dependencies and relevant Lake settings must match that snapshot.
+For another snapshot, pass `--source-ref` and `--source-repository`. The selected
+commit must be available from that repository. Existing output is not overwritten.
 
-## How the export works
+## Extraction and checking
 
-`ExportProblem.lean` uses Lean's frontend to elaborate the source through the
-selected declaration with `google.answer = postpone`. This preserves answer
-annotations that the normal proposition-answer default would erase. It then:
+The exporter uses Lean's frontend with `google.answer = postpone` to preserve
+answer annotations. It replaces unfinished answers with typed definition holes,
+abstracting local parameters used by their types. Substituting the original
+answers must recover the original statement by definitional equality.
 
-1. Replaces unfinished answer annotations with typed definition holes, abstracting
-   any local parameters needed by their types.
-2. Checks that substituting the original answers recovers the source type.
-3. Prints closed, explicit signatures and re-elaborates them with no namespace
-   or open declarations, checking definitional equality.
+Signatures include explicit arguments, proof terms and universe parameters.
+Lean re-elaborates them under the same universe parameters and checks equality.
+Python passes these signatures and package pins to the generator, validates its
+file map and digests, then compiles the actual generated Challenge with Lean.
+It records source, exporter, generator, request and output provenance.
 
-The Python command adds the source package import, compiles the exported module
-to produce real `.ilean` metadata, and calls the shared generator. The provenance
-sidecar records the source commit and file digest, exporter commit and code digests,
-generator commit, exact request digest, and generated file digests. The generator checkout is built before use;
-an arbitrary binary supplied through `PATH` is not used.
+`config.json` enables nanoda as well as Lean's kernel. `lake test` invokes the
+configured Comparator. Use the Linux sandbox setup in the CI workflow: real
+Landrun, an unprivileged process, and systemd's AF_UNIX restriction required by
+Comparator. There is no fallback to an unsandboxed verifier.
 
-## Checks and limits
+The verifier's exporter must read FC's `.olean` format. Build it as a normal
+pinned Lake dependency with `lake -d comparator/verifier build lean4export/lean4export`.
+This tool project declares FC's Lean version and leaves upstream files untouched.
+Comparator itself builds with its own declared toolchain.
+
+## Validation
 
 ```sh
 lake --wfail build export_problem FormalConjecturesTest.PackageExport
-LEAN_EVAL_GENERATOR_CHECKOUT=/path/to/lean-eval-generator \
-  python3 -m unittest discover -s comparator -p test_export.py
+lake --wfail test
+LEAN_EVAL_GENERATOR_CHECKOUT=/path/to/generator \
+  python3 -m unittest discover -s comparator -p test_export.py -v
+python3 comparator/check_coverage.py --generator /path/to/generator --out /tmp/fc100
 ```
 
-The tests cover plain theorems, problem-local definitions, proposition and numeric
-answers, parameter-dependent answers, multiple answers, and universe parameters.
-They generate real metadata and build filled Solution adapters. They use explicit
-local package manifests to reuse the checked-out source and existing build cache;
-this is not a test of remote package availability.
+The seven fixtures cover local definitions, proposition and numeric answers,
+dependent and multiple answers, and universes. Tests resolve real Git package
+pins in a fresh workspace without modifying Lake's dependency manifest. Set
+`FC_SOURCE_REPOSITORY` to test a remote fork; the default is the local Git repo.
+With the verifier environment used in CI, tests also exercise both kernels and
+reject unfinished proofs, imported sorried theorems, changed statements and an
+attempted write outside the sandbox. Submissions are first built by Comparator.
 
-Set `COMPARATOR_BIN` and install the compatible exporter and sandbox to also run
-Comparator verdict checks. These reject an unfinished proof, reject a proof that
-uses the imported sorried theorem, accept filled proofs, and reject a changed
-statement. Comparator's macOS development shim is suitable only for these trusted
-fixtures; it supplies no sandbox security. `WorkspaceTest.lean` runs the configured
-Comparator; it does not claim to implement LeanEval's production nanoda policy.
+The FC100 check evaluates the subset list in Lean, exports every member, compiles
+each generated Challenge, and records every failure in `report.json`. It checks
+export coverage, not proofs of those problems. Unsupported signatures are errors.
 
-This is a bounded prototype, not an FC100 qualification or a LeanEval catalog
-import. Source re-elaboration may expose unsupported files, and private or generated
-constants may fail to elaborate through package imports. Failures remain errors.
-Expanded signatures prioritize explicit meaning over the original surface notation.
-Plain-statement disproofs and assessment of an answer's mathematical usefulness
-are outside this tool's scope.
-
-The generated package uses the source snapshot's Lean and Mathlib. It does not
-attempt to build a current FC statement at a different LeanEval toolchain.
-Adopting these workspaces in LeanEval requires an explicit compatible snapshot.
+Lean frontend APIs remain version-sensitive; the toolchain pin and these checks
+make that dependency explicit. This is an alternative to #4951, not a LeanEval
+catalog import. LeanEval adoption requires a compatible environment and policy.
+Definition-hole answers still require assessment of their mathematical meaning.

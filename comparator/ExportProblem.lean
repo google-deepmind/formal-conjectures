@@ -39,11 +39,13 @@ structure Hole where
 private def printOptions (opts : Options) : Options :=
   opts.setBool `pp.fullNames true |>.setBool `pp.notation false
     |>.setBool `pp.explicit true |>.setBool `pp.universes true
-    |>.setBool `pp.funBinderTypes true |>.set `pp.width (100 : Nat)
+    |>.setBool `pp.proofs true |>.setBool `pp.deepTerms true
+    |>.setBool `pp.fieldNotation false |>.setBool `pp.funBinderTypes true |>.set `pp.width (100 : Nat)
 
 /-- Reparse and elaborate the printed type, refusing a change in meaning. -/
 private def renderType (type : Expr) : Term.TermElabM String := do
-  withOptions printOptions <|
+  Term.withLevelNames (collectLevelParams {} type).params.toList <|
+   withOptions printOptions <|
    withTheReader Core.Context (fun ctx => { ctx with currNamespace := .anonymous, openDecls := [] }) do
     let text := (← ppExpr type).pretty
     let stx ← ofExcept <| Parser.runParserCategory (← getEnv) `term text
@@ -51,7 +53,7 @@ private def renderType (type : Expr) : Term.TermElabM String := do
     Term.synthesizeSyntheticMVarsNoPostponing
     let parsed ← instantiateMVars parsed
     if parsed.hasExprMVar || !(← isDefEq type parsed) then
-      throwError "Exported type failed its elaboration round trip"
+      throwError "Exported type failed its elaboration round trip:\n{text}"
     return text
 
 private def exportType (name : Name) : Term.TermElabM Json := do
@@ -121,10 +123,21 @@ private partial def elaborateThrough (target : Name) : Frontend.FrontendM Unit :
 
 unsafe def main (args : List String) : IO UInt32 := do
   try
-    let [path, moduleName, declaration] := args
-      | throw <| IO.userError "usage: export_problem SOURCE MODULE DECLARATION"
     initSearchPath (← findSysroot)
     enableInitializersExecution
+    if let ["--list-set", moduleName, declaration] := args then
+      let env ← importModules #[{ module := moduleName.toName }] {} (loadExts := true)
+      let names ← IO.ofExcept <| env.evalConst (List Name) {} declaration.toName false
+      let entries ← names.toArray.mapM fun name => do
+        let some index := env.getModuleIdxFor? name
+          | throw <| IO.userError s!"No source module for {name}"
+        let module := env.allImportedModuleNames[index.toNat]!
+        return Json.mkObj [("declaration", toJson name.toString), ("module", toJson module.toString),
+          ("path", toJson (String.intercalate "/" (module.components.map fun n => n.getString!) ++ ".lean"))]
+      IO.println (toJson entries).pretty
+      return 0
+    let [path, moduleName, declaration] := args
+      | throw <| IO.userError "usage: export_problem SOURCE MODULE DECLARATION"
     let input ← IO.FS.readFile path
     let context := Parser.mkInputContext input path
     let (header, parserState, messages) ← Parser.parseHeader context

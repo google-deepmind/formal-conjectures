@@ -48,26 +48,6 @@ def source_pin(reference):
     return revision
 
 
-def render_module(module, exported):
-    text = f"import {module}\n\n"
-    levels = list(dict.fromkeys(level for d in exported["declarations"] for level in d["levels"]))
-    if levels:
-        text += "universe " + " ".join(levels) + "\n\n"
-    holes = []
-    for declaration in exported["declarations"]:
-        start_line = text.count("\n") + 1
-        kind = declaration["kind"]
-        command = "noncomputable def" if kind == "def" else "theorem"
-        block = f"{command} {declaration['name']} : {declaration['type']} := by\n  sorry"
-        holes.append({"declarationName": declaration["name"], "module": "FCExportedProblem",
-                      "startLine": start_line, "startColumn": 0,
-                      "endLine": start_line + block.count("\n"), "endColumn": 7,
-                      "kind": kind, "explicitParameters": [],
-                      "sameModuleDependencies": [], "holeDependentDependencies": []})
-        text += block + "\n\n"
-    return text, holes
-
-
 def response_files(response, problem_id):
     if set(response) != {"schemaVersion", "files"} or response["schemaVersion"] != 2:
         raise ValueError("Unexpected generator response")
@@ -90,7 +70,7 @@ def response_files(response, problem_id):
 
 
 def export(source, declaration, out, generator, source_ref="origin/main",
-           source_repository=SOURCE_REPOSITORY):
+           source_repository=SOURCE_REPOSITORY, *, build=True):
     source = source.resolve()
     relative = source.relative_to(ROOT)
     revision = source_pin(source_ref)
@@ -102,11 +82,11 @@ def export(source, declaration, out, generator, source_ref="origin/main",
     generator_revision = run(["git", "rev-parse", "HEAD"], cwd=generator).strip()
     run(["git", "diff", "--exit-code", "HEAD"], cwd=generator)
     # Build the checkout we record rather than trusting an arbitrary binary on PATH.
-    run(["lake", "--wfail", "build"], cwd=generator)
-    run(["lake", "--wfail", "build", "export_problem", module])
+    if build:
+        run(["lake", "--wfail", "build"], cwd=generator)
+        run(["lake", "--wfail", "build", "export_problem", module])
     exported = json.loads(run(["lake", "env", ".lake/build/bin/export_problem",
                                str(relative), module, declaration]))
-    text, holes = render_module(module, exported)
     manifest = json.loads((ROOT / "lake-manifest.json").read_text())
     mathlib = next(p for p in manifest["packages"] if p["name"] == "mathlib")
     toolchain = (ROOT / "lean-toolchain").read_text()
@@ -117,26 +97,13 @@ def export(source, declaration, out, generator, source_ref="origin/main",
     out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".fc-export-", dir=out.parent) as temporary:
         staging = Path(temporary)
-        context = staging / "context"
-        context.mkdir()
-        rendered = context / "FCExportedProblem.lean"
-        rendered.write_text(text)
-        metadata = context / ".lake/build/lib/lean/FCExportedProblem.ilean"
-        metadata.parent.mkdir(parents=True)
-        # Real Lean-generated metadata; no emulation of the .ilean format.
-        run(["lake", "env", "lean", "-i", str(metadata), str(rendered)])
-        request = {"schemaVersion": 2, "contextRoot": "context", "leanToolchain": toolchain,
-                   "mathlib": {"name": "mathlib", "git": mathlib["url"], "rev": mathlib["rev"]},
-                   "dependencies": [{"name": "formal_conjectures", "git": source_repository,
-                                     "rev": revision}],
+        request = {"schemaVersion": 2, "enableNanoda": True, "leanToolchain": toolchain,
+                   "dependencies": [
+                       {"name": "mathlib", "git": mathlib["url"], "rev": mathlib["rev"]},
+                       {"name": "formal_conjectures", "git": source_repository, "rev": revision}],
                    "templates": {"workspaceTest": (ROOT / "comparator/WorkspaceTest.lean").read_text()},
-                   "problems": [{"id": problem_id, "title": declaration,
-                                 "group": ("open-conjectures" if exported["category"] == "research open"
-                                           else "formalization-evaluation"), "status": "draft", "visible": False,
-                                 "statementRevision": 1, "tags": [exported["category"]] if exported["category"] else [],
-                                 "submitter": "Formal Conjectures",
-                                 "moduleName": "FCExportedProblem", "moduleContent": text,
-                                 "holes": [h["declarationName"] for h in holes], "resolvedHoles": holes}]}
+                   "problems": [{"id": problem_id, "title": declaration, "imports": [module],
+                                 "declarations": exported["declarations"]}]}
         request_text = json.dumps(request, indent=2) + "\n"
         files = response_files(json.loads(run([str(generator / ".lake/build/bin/lean-eval-generator")],
                                               cwd=staging, input=request_text)), problem_id)
@@ -153,6 +120,9 @@ def export(source, declaration, out, generator, source_ref="origin/main",
             destination = workspace / path
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(content)
+        # Check the generator's actual Challenge under the source environment.
+        # No compiler metadata is fabricated or supplied to the generator.
+        run(["lake", "env", "lean", str(workspace / "Challenge.lean")])
         (workspace / "fc-provenance.json").write_text(json.dumps(provenance, indent=2) + "\n")
         (staging / "request.json").write_text(request_text)
         (staging / "export.json").write_text(json.dumps(exported, indent=2) + "\n")
