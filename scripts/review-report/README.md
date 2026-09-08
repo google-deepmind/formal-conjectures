@@ -45,6 +45,14 @@ The template has exactly these fields:
 - `findings`: objects with exactly `angle`, `file`, `line`, `severity`, `message`, `suggestion`, `evidence`.
 - `questions`: unresolved material questions as strings. Optional non-material notes do not belong here.
 
+The template also includes `reconciliations`, an optional additive v1 field for rereviews.
+Each entry has exactly `prior_evidence`, `status` (`retained`, `corrected` or `withdrawn`),
+`reason`, and nonempty supporting `evidence` paths. The prior reference must occur in
+`prior_reviews`; use a separate retained record per prior finding. Each prior reference can
+be reconciled once. A withdrawn finding is preserved in the report without becoming a current
+finding or unresolved question. An unresolved dispute belongs in `questions`. Producers that
+omit this field remain valid; the assembler does not infer a disposition for them.
+
 A finding's angle is one of the three coverage keys. Its file must be in the recorded diff;
 line is a nonnegative integer (`0` means file-wide). For deletions, cite the old file's line.
 The tool validates scope membership but does not validate line numbers against source bytes.

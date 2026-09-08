@@ -194,7 +194,7 @@ def prepare(checkout, repository, base, skill, sources, checks):
     validate_request(request)
     template = {"request_id": request["id"], "reviewer": "REPLACE with reviewer/model identity",
                 "context_policy": "fresh", "prior_reviews": [],
-                "coverage": {angle: "incomplete" for angle in ANGLES},
+                "reconciliations": [], "coverage": {angle: "incomplete" for angle in ANGLES},
                 "findings": [], "questions": ["Review has not run."]}
     files = procedure | source_files | {"request.json": encode(request),
                                        "review-template.json": encode(template)}
@@ -220,7 +220,11 @@ def references(items, available, label):
 
 
 def validate_review(review, request, available):
-    obj(review, "request_id reviewer context_policy prior_reviews coverage findings questions", "review")
+    fields = "request_id reviewer context_policy prior_reviews coverage findings questions"
+    # Optional additive field: earlier v1 producers remain valid.
+    if type(review) is dict and "reconciliations" in review:
+        fields += " reconciliations"
+    obj(review, fields, "review")
     require(review["request_id"] == request["id"], "review belongs to another request")
     text(review["reviewer"], "reviewer")
     require(review["context_policy"] in ("fresh", "rereview"), "unknown context policy")
@@ -229,6 +233,22 @@ def validate_review(review, request, available):
         require(not review["prior_reviews"], "fresh review cannot carry prior reviews")
     else:
         references(review["prior_reviews"], available, "prior review evidence")
+    reconciliations = review.get("reconciliations", [])
+    array(reconciliations, "reconciliations")
+    require(not reconciliations or review["context_policy"] == "rereview",
+            "reconciliation requires rereview context")
+    seen = set()
+    for item in reconciliations:
+        obj(item, "prior_evidence status reason evidence", "reconciliation")
+        prior = item["prior_evidence"]
+        require(type(prior) is str and prior in review["prior_reviews"],
+                "reconciliation must reference retained prior review")
+        require(prior not in seen, "duplicate reconciliation")
+        seen.add(prior)
+        require(item["status"] in ("retained", "corrected", "withdrawn"),
+                "invalid reconciliation status")
+        text(item["reason"], "reconciliation reason")
+        references(item["evidence"], available, "reconciliation evidence")
     obj(review["coverage"], " ".join(ANGLES), "coverage")
     require(all(v in ("complete", "incomplete") for v in review["coverage"].values()),
             "invalid coverage state")
@@ -299,6 +319,11 @@ def render(report, observation):
         lines += ["", f"- **{finding['severity']} / {finding['angle']}** — "
                   f"{escape(finding['file'])}:{finding['line']}: {escape(finding['message'])}",
                   f"  Suggestion: {escape(finding['suggestion'])}"]
+    if review.get("reconciliations"):
+        lines += ["", "Prior findings:", ""]
+        for item in review["reconciliations"]:
+            lines.append(f"- **{item['status']}** — {escape(item['prior_evidence'])}: "
+                         f"{escape(item['reason'])}")
     gaps = list(report["gaps"])
     if observation["freshness"] == "STALE":
         gaps.insert(0, "Review inputs changed; the verdict below applies only to the reviewed request.")

@@ -109,6 +109,38 @@ class ReportTest(unittest.TestCase):
         self.review["questions"] = ["Which version of the source is intended?"]
         self.assertEqual(self.report()["semantic_verdict"], "INCOMPLETE")
 
+    def reconciliation(self):
+        self.review.update(context_policy="rereview", prior_reviews=["evidence/build.json"])
+        return {"prior_evidence": "evidence/build.json", "status": "withdrawn",
+                "reason": "The prior claim was contradicted by the retained source.",
+                "evidence": ["sources/paper.txt"]}
+
+    def test_withdrawn_finding_is_traceable_without_becoming_a_current_finding(self):
+        self.review["reconciliations"] = [self.reconciliation()]
+        files = self.run_report()
+        report = rr.parse(files["report.json"])
+        self.assertEqual(report["semantic_verdict"], "CLEAN")
+        self.assertEqual(report["review"]["findings"], [])
+        self.assertIn("**withdrawn**", files["summary.md"].decode())
+
+    def test_reconciliation_needs_prior_context_and_support(self):
+        item = self.reconciliation()
+        for field, value in (("prior_evidence", "sources/paper.txt"),
+                             ("status", "unresolved"), ("evidence", []), ("reason", "")):
+            with self.subTest(field=field):
+                self.review["reconciliations"] = [{**item, field: value}]
+                with self.assertRaises(rr.InputError):
+                    self.run_report()
+        self.review["reconciliations"] = [item, item]
+        with self.assertRaises(rr.InputError):
+            self.run_report()
+
+    def test_fresh_review_cannot_reconcile_an_unretained_prior_claim(self):
+        self.review["reconciliations"] = [self.reconciliation()]
+        self.review.update(context_policy="fresh", prior_reviews=[])
+        with self.assertRaises(rr.InputError):
+            self.run_report()
+
     def test_changed_head_procedure_or_source_makes_only_observation_stale(self):
         original = self.run_report()
         for field in ("head_commit", "procedure", "sources", "merge_base", "required_checks"):
