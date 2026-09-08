@@ -1398,3 +1398,40 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
 .stats-table td a:hover {
   text-decoration: underline;
 }
+
+/* ============================================================
+   Modules page
+   ============================================================ */
+.module-library__lede {
+  color: var(--color-text-muted);
+  margin: -1rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+.module-group { margin-bottom: 2rem; }
+.module-group:last-child { margin-bottom: 0; }
+
+.module-group__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.module-group__title a { color: inherit; }
+
+.module-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.3rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.module-list li {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.module-list a { color: var(--color-link); }
