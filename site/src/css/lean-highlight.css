@@ -91,3 +91,24 @@
   background: transparent;
   color: #364152;
 }
+
+/* Module titles should read as section headings within the source document. */
+.code-content :is(.md-text, .verso-text).mod-doc {
+  margin: 1.5rem 0;
+  padding-bottom: 1rem;
+}
+.code-content :is(.md-text, .verso-text).mod-doc :is(h1, h2) {
+  font-family: system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #334155;
+  margin: 0 0 0.35rem;
+}
+.code-content :is(.md-text, .verso-text).mod-doc p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+}
