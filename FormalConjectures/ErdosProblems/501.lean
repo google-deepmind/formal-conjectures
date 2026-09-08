@@ -51,8 +51,10 @@ The problem concerns outer measure `< 1` on ℝ. For a set `s : Set ℝ` we use
 of `s` (defined for all sets, whether measurable or not). The condition `< 1` is
 stated in `ℝ≥0∞` (extended non-negative reals). -/
 
-/- ## Main open problem -/
+/- ## Main problem -/
 
+-- The first question is independent of ZFC, so the headline answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 For every $x \in \mathbb{R}$ let $A_x \subset \mathbb{R}$ be a bounded set with outer measure
 $< 1$. Must there exist an infinite independent set, that is, some infinite $X \subseteq
@@ -63,8 +65,8 @@ of size $3$?
 
 Known results: Erdős–Hajnal [ErHa60] proved the existence of arbitrarily large finite
 independent sets. Hechler [He72] showed the answer is **no** assuming the continuum
-hypothesis. -/
-@[category research open, AMS 5 28]
+hypothesis. Glazer proved that the first question is independent of ZFC. -/
+@[category research solved, AMS 5 28]
 theorem erdos_501 : answer(sorry) ↔
     ∀ (A : ℝ → Set ℝ),
       (∀ x, Bornology.IsBounded (A x)) →
