@@ -16,7 +16,7 @@ limitations under the License.
 
 import FormalConjecturesTest.RealPeriod.Existence
 import FormalConjecturesTest.RealPeriod.Conjugation
-import FormalConjecturesUtil
+import FormalConjecturesTest.RealComponents
 
 /-!
 # The real period of an elliptic curve
@@ -29,14 +29,16 @@ $\Lambda$ are the periods of that differential. This is why $\Lambda$ is called 
 lattice of $E$.
 
 If $E$ is defined over $\mathbb{R}$ then $\Lambda$ is stable under complex conjugation, and
-$\Lambda \cap \mathbb{R} = \mathbb{Z} \Omega$ for a unique $\Omega > 0$. This $\Omega$ is the
-*real period* of $E$, the length of the identity component of $E(\mathbb{R})$. The period in the
-Birch and Swinnerton-Dyer conjecture is $\Omega$ or $2\Omega$, according as the discriminant is
-negative or positive. That factor is not treated here.
+$\Lambda \cap \mathbb{R} = \mathbb{Z} \Omega_0$ for a unique $\Omega_0 > 0$, the least positive
+real period, which is the length of the identity component of $E(\mathbb{R})$. The *real period*
+of $E$, the one in the Birch and Swinnerton-Dyer conjecture, is $\Omega_0$ or $2\Omega_0$
+according as the discriminant is negative or positive: $\Omega_0$ times the number of connected
+components of $E(\mathbb{R})$, `WeierstrassCurve.nrRealComponents`.
 
 This file defines the period lattice of a Weierstrass curve over $\mathbb{C}$,
-`WeierstrassCurve.periodPair`, and the real period of an elliptic curve over $\mathbb{R}$,
-`WeierstrassCurve.realPeriod`. They rest on three classical facts:
+`WeierstrassCurve.periodPair`, the least positive real period of an elliptic curve over
+$\mathbb{R}$, `WeierstrassCurve.leastRealPeriod`, and the real period `WeierstrassCurve.realPeriod`.
+They rest on three classical facts:
 
 * `PeriodPair.exists_g₂_g₃`: a lattice with any prescribed nondegenerate invariants exists.
   Proved in `FormalConjecturesTest.RealPeriod.Existence`, from surjectivity of the modular
@@ -44,15 +46,18 @@ This file defines the period lattice of a Weierstrass curve over $\mathbb{C}$,
 * `PeriodPair.isReal_iff_exists_real`: a lattice is real if and only if its invariants are.
   Proved in `FormalConjecturesTest.RealPeriod.Conjugation`, from the uniqueness of the lattice
   with given invariants.
-* `PeriodPair.exists_isLeast_pos_real`: a real lattice has a least positive real element.
+* `PeriodPair.exists_isLeast_pos_real`: a real lattice has a least positive real element,
+  packaged as `PeriodPair.leastRealPeriod` with specification `isLeast_leastRealPeriod`.
   Proved below.
 
 The uniformisation isomorphism is what identifies $\Lambda$ with the periods of the invariant
 differential, but the definitions do not depend on it, and it is not included.
 
 *References:*
-- [Wikipedia (Weierstrass elliptic function)](https://en.wikipedia.org/wiki/Weierstrass_elliptic_function)
-- [Wikipedia (Birch and Swinnerton-Dyer conjecture)](https://en.wikipedia.org/wiki/Birch_and_Swinnerton-Dyer_conjecture)
+- Wikipedia, *Weierstrass elliptic function*,
+    https://en.wikipedia.org/wiki/Weierstrass_elliptic_function
+- Wikipedia, *Birch and Swinnerton-Dyer conjecture*,
+    https://en.wikipedia.org/wiki/Birch_and_Swinnerton-Dyer_conjecture
 - [Sil2009] Joseph H. Silverman. The Arithmetic of Elliptic Curves, 2nd edition, Chapter VI,
     https://link.springer.com/book/10.1007/978-0-387-09494-6
 - [Cre1997] John E. Cremona. Algorithms for Modular Elliptic Curves, 2nd edition, Section 3.7,
@@ -118,8 +123,23 @@ theorem exists_isLeast_pos_real (L : PeriodPair) (hL : L.IsReal) :
   exact Cardinal.not_countable_real hcount
 
 /-- The least positive real element of a real lattice. -/
-def realPeriod (L : PeriodPair) (hL : L.IsReal) : ℝ :=
+def leastRealPeriod (L : PeriodPair) (hL : L.IsReal) : ℝ :=
   (L.exists_isLeast_pos_real hL).choose
+
+lemma isLeast_leastRealPeriod (L : PeriodPair) (hL : L.IsReal) :
+    IsLeast {x : ℝ | (x : ℂ) ∈ L.lattice ∧ 0 < x} (L.leastRealPeriod hL) :=
+  (L.exists_isLeast_pos_real hL).choose_spec
+
+lemma leastRealPeriod_pos (L : PeriodPair) (hL : L.IsReal) : 0 < L.leastRealPeriod hL :=
+  (L.isLeast_leastRealPeriod hL).1.2
+
+lemma coe_leastRealPeriod_mem_lattice (L : PeriodPair) (hL : L.IsReal) :
+    (L.leastRealPeriod hL : ℂ) ∈ L.lattice :=
+  (L.isLeast_leastRealPeriod hL).1.1
+
+lemma leastRealPeriod_le (L : PeriodPair) (hL : L.IsReal) {x : ℝ} (hx : (x : ℂ) ∈ L.lattice)
+    (h0 : 0 < x) : L.leastRealPeriod hL ≤ x :=
+  (L.isLeast_leastRealPeriod hL).2 ⟨hx, h0⟩
 
 end PeriodPair
 
@@ -150,10 +170,30 @@ theorem periodPair_map_isReal (W : WeierstrassCurve ℝ) [W.IsElliptic] :
   exact ⟨⟨W.c₄ / 12, h₂.trans (by rw [map_c₄, Complex.ofRealHom_eq_coe]; push_cast; ring)⟩,
     ⟨W.c₆ / 216, h₃.trans (by rw [map_c₆, Complex.ofRealHom_eq_coe]; push_cast; ring)⟩⟩
 
-/-- **The real period** of an elliptic curve over $\mathbb{R}$: the least positive real element
-of its period lattice. -/
+/-- The least positive real period of an elliptic curve over $\mathbb{R}$: the least positive real
+element of its period lattice, the length of the identity component of $E(\mathbb{R})$. -/
+def leastRealPeriod (W : WeierstrassCurve ℝ) [W.IsElliptic] : ℝ :=
+  (W.map Complex.ofRealHom).periodPair.leastRealPeriod W.periodPair_map_isReal
+
+lemma leastRealPeriod_pos (W : WeierstrassCurve ℝ) [W.IsElliptic] : 0 < W.leastRealPeriod :=
+  PeriodPair.leastRealPeriod_pos _ _
+
+/-- **The real period** of an elliptic curve over $\mathbb{R}$: the least positive real period
+multiplied by the number of connected components of $E(\mathbb{R})$. This is the real period of the
+Birch and Swinnerton-Dyer conjecture. -/
 def realPeriod (W : WeierstrassCurve ℝ) [W.IsElliptic] : ℝ :=
-  (W.map Complex.ofRealHom).periodPair.realPeriod W.periodPair_map_isReal
+  (W.nrRealComponents : ℝ) * W.leastRealPeriod
+
+lemma realPeriod_pos (W : WeierstrassCurve ℝ) [W.IsElliptic] : 0 < W.realPeriod :=
+  mul_pos (Nat.cast_pos.mpr W.nrRealComponents_pos) W.leastRealPeriod_pos
+
+lemma realPeriod_of_pos (W : WeierstrassCurve ℝ) [W.IsElliptic] (h : 0 < W.Δ) :
+    W.realPeriod = 2 * W.leastRealPeriod := by
+  simp [realPeriod, W.nrRealComponents_of_pos h]
+
+lemma realPeriod_of_neg (W : WeierstrassCurve ℝ) [W.IsElliptic] (h : W.Δ < 0) :
+    W.realPeriod = W.leastRealPeriod := by
+  simp [realPeriod, W.nrRealComponents_of_neg h]
 
 end WeierstrassCurve
 
