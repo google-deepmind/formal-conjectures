@@ -118,6 +118,12 @@ unsupported/unresolved findings, clean-case false alarms, duplicates, repair val
 time and tokens. There is no blended “all assertions passed” accuracy number. Model grades
 remain provisional, including when a different model family is used as assessor.
 
+To revise the assessor without rerunning reviews, use `assess --out <new-directory>`, then
+`summarize --assessments <that-directory>`. Each assessment set retains its tooling and binds
+to the original frozen review manifest. Earlier grades and invalid attempts remain intact.
+Token totals include reported usage only; `usage_unavailable_runs` exposes missing accounting,
+including timeouts. Invalid reports and missing assessments remain outside quality denominators.
+
 Have a mathematician assess the anonymous packets, record missed defects, false alarms and
 minutes spent, and adjudicate the reference key before qualification. Human forms start blank;
 no human score or time is inferred. Inspect evidence and transcripts alongside aggregate counts.

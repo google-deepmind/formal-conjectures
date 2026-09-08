@@ -30,8 +30,8 @@ the whole directory so the evidence links remain usable. The tool neither upload
 backs up these files; `/tmp` examples below are disposable demonstrations, not archives.
 Archive a complete evaluation run separately when retaining prompts, grades and usage too.
 
-The committed `evals/results/` files are selected evaluation records and examples, not a
-live archive of contributor reviews. A future publishing workflow must define storage,
+Generated review and evaluation results are excluded from the source tree. A future
+publishing workflow must define storage,
 retention and a PR-facing summary linked to the complete bundle. No GitHub App, artifact
 upload or review-publication workflow is included here.
 

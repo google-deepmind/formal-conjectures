@@ -148,10 +148,11 @@ def freeze(suite_path, skill, output, image, cases, repeats, timeout, max_calls)
     )
 
 
-def verify(root):
+def verify(root, *, check_tooling=True):
     m = read(root / "manifest.json")
-    for p in [Path(__file__), HERE / "review_report.py", HERE / "review-eval/workspace_server.py"]:
-        rr.require(sha(p.read_bytes()) == m["tooling"][p.name], "tooling changed since freeze")
+    if check_tooling:
+        for p in [Path(__file__), HERE / "review_report.py", HERE / "review-eval/workspace_server.py"]:
+            rr.require(sha(p.read_bytes()) == m["tooling"][p.name], "tooling changed since freeze")
     for name, digest in m["frozen_files"].items():
         rr.require(sha(asset(root, name)) == digest, "frozen inputs changed")
     return m
@@ -598,10 +599,11 @@ ids), findings (one per actual finding: index, status supported/unsupported/unre
 boolean, repair valid/invalid/not_checked/not_proposed, duplicate boolean, evidence string),
 uncertainty appropriate/inappropriate/not_applicable, and comments (string). Distinguish a source
 mismatch from a checked mathematical counterexample. An untested repair is not validated.
+Finding indices are zero-based: assess each index from 0 through N-1 exactly once.
 """
 
 
-def assessment_schema():
+def assessment_schema(count):
     def obj(fields):
         return {
             "type": "object",
@@ -619,9 +621,11 @@ def assessment_schema():
             "detected_defects": {"type": "array", "items": {"type": "string"}},
             "findings": {
                 "type": "array",
+                "minItems": count,
+                "maxItems": count,
                 "items": obj(
                     {
-                        "index": {"type": "integer", "minimum": 0},
+                        "index": {"type": "integer", "minimum": 0, "maximum": max(0, count - 1)},
                         "status": enum("supported", "unsupported", "unresolved"),
                         "actionable": {"type": "boolean"},
                         "repair": enum("valid", "invalid", "not_checked", "not_proposed"),
@@ -692,15 +696,37 @@ def assessment_packet(root, job):
     }
 
 
-def assess(root, model):
-    manifest = verify(root)
+def assess(root, model, output=None):
+    manifest = verify(root, check_tooling=False)
+    output = output or root / "assessments"
+    config = {
+        "review_manifest_sha256": sha((root / "manifest.json").read_bytes()),
+        "assessor_sha256": sha(Path(__file__).read_bytes()),
+        "model": model,
+    }
+    if output.exists():
+        rr.require(
+            (output / "config.json").exists() and read(output / "config.json") == config,
+            "assessment protocol changed; choose a fresh --out directory",
+        )
+    else:
+        output.mkdir(parents=True)
+        write(output / "config.json", config)
+        for name in ("review_eval.py", "review_report.py"):
+            shutil.copyfile(HERE / name, output / name)
     for job in manifest["jobs"]:
         result = root / "runs" / job["id"] / "result.json"
-        dest = root / "assessments" / job["id"]
+        dest = output / job["id"]
         if dest.exists() or not result.exists() or read(result).get("report_status") != "assembled":
             continue
         case, packet = assessment_packet(root, job)
-        record = invoke_model(ASSESS + encode(packet).decode(), dest, model, 240, assessment_schema())
+        record = invoke_model(
+            ASSESS + encode(packet).decode(),
+            dest,
+            model,
+            240,
+            assessment_schema(len(packet["review"]["findings"])),
+        )
         if record["status"] == "completed":
             try:
                 assessment = read(dest / "answer.json")
@@ -711,8 +737,16 @@ def assess(root, model):
         print("assessed", job["id"], record["status"], flush=True)
 
 
-def summarize(root):
-    manifest, suite = verify(root), read(root / "suite.json")
+def summarize(root, assessments=None):
+    manifest, suite = verify(root, check_tooling=False), read(root / "suite.json")
+    summary_output = assessments / "summary.json" if assessments is not None else root / "summary.json"
+    if assessments is not None:
+        rr.require(
+            read(assessments / "config.json")["review_manifest_sha256"]
+            == sha((root / "manifest.json").read_bytes()),
+            "assessment belongs to another review iteration",
+        )
+    assessments = assessments or root / "assessments"
     cases = {c["id"]: c for c in suite["cases"]}
     result = {
         "qualification": "Development observations; model assessments are not human accuracy labels.",
@@ -740,6 +774,7 @@ def summarize(root):
             "appropriate_uncertainty": 0,
             "wall_seconds": 0,
             "output_tokens": 0,
+            "usage_unavailable_runs": 0,
         }
         for j in [j for j in manifest["jobs"] if j["arm"] == arm]:
             totals["scheduled"] += 1
@@ -748,8 +783,12 @@ def summarize(root):
             totals["assembled"] += r.get("report_status") == "assembled"
             totals["wall_seconds"] += r.get("wall_seconds", 0)
             totals["output_tokens"] += sum(u.get("output_tokens", 0) for u in r.get("usage", []))
+            totals["usage_unavailable_runs"] += r["status"] not in (
+                "not_run",
+                "environment_error",
+            ) and not r.get("usage")
             row = j | {"status": r["status"], "report_status": r.get("report_status", "not_run")}
-            a = root / "assessments" / j["id"] / "assessment.json"
+            a = assessments / j["id"] / "assessment.json"
             if a.exists():
                 a = read(a)
                 case = cases[j["case"]]
@@ -775,7 +814,7 @@ def summarize(root):
                 row["assessment"] = a
             result["runs"].append(row)
         result["arms"][arm] = totals
-    write(root / "summary.json", result)
+    write(summary_output, result)
     return result
 
 
@@ -801,7 +840,7 @@ def key_packet(suite_path, output):
 
 
 def human_packet(root, output):
-    m = verify(root)
+    m = verify(root, check_tooling=False)
     output.mkdir(parents=True, exist_ok=False)
     forms = []
     for job in m["jobs"]:
@@ -849,6 +888,10 @@ def main():
             p.add_argument("--workers", type=int, default=1)
         if name == "human-packet":
             p.add_argument("--out", type=Path, required=True)
+        if name == "assess":
+            p.add_argument("--out", type=Path)
+        if name == "summarize":
+            p.add_argument("--assessments", type=Path)
     a = parser.parse_args()
     if a.command == "freeze":
         freeze(a.suite, a.skill, a.out, a.image, a.cases, a.repeats, a.timeout, a.max_calls)
@@ -857,11 +900,15 @@ def main():
     elif a.command == "run":
         run(a.root.resolve(), a.model, a.workers)
     elif a.command == "assess":
-        assess(a.root.resolve(), a.model)
+        assess(a.root.resolve(), a.model, a.out.resolve() if a.out else None)
     elif a.command == "human-packet":
         human_packet(a.root.resolve(), a.out)
     else:
-        print(json.dumps(summarize(a.root.resolve()), indent=2))
+        print(
+            json.dumps(
+                summarize(a.root.resolve(), a.assessments.resolve() if a.assessments else None), indent=2
+            )
+        )
 
 
 if __name__ == "__main__":

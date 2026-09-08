@@ -126,6 +126,17 @@ class EvalTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             ev.validate_assessment(a, c, 1)
 
+    def test_native_grading_schema_bounds_finding_indices_and_count(self):
+        findings = ev.assessment_schema(3)["properties"]["findings"]
+        self.assertEqual((findings["minItems"], findings["maxItems"]), (3, 3))
+        self.assertEqual(findings["items"]["properties"]["index"]["maximum"], 2)
+
+    def test_assessment_set_cannot_be_applied_to_different_review_inputs(self):
+        self.run_root()
+        ev.write(self.root / "grades/config.json", {"review_manifest_sha256": "0" * 64})
+        with self.assertRaisesRegex(ValueError, "another review iteration"):
+            ev.summarize(self.root, self.root / "grades")
+
     def run_root(self):
         ev.write(self.root / "suite.json", self.suite)
         manifest = {
