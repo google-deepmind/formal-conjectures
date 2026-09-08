@@ -24,6 +24,8 @@ theorems intentionally contain `sorry` so they cannot supply accepted proofs.
 
 namespace PackageExportFixture
 
+universe u
+
 def twice (n : Nat) : Nat := n + n
 
 @[category test, AMS 11]
