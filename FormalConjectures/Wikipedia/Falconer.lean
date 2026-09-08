@@ -20,8 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Falconer's distance set conjecture
 
-If `E ⊆ ℝᵈ` is compact with `dimH E > d / 2`, then the distance set
-`{dist x y | x, y ∈ E}` has positive Lebesgue measure.
+If $E \subseteq \mathbb{R}^d$ is compact with $\dim_H E > \frac{d}{2}$, then the distance set
+$$\{ |x - y| \mid x, y \in E \}$$
+has positive Lebesgue measure.
 
 ## References
 
@@ -33,9 +34,9 @@ open MeasureTheory Set
 
 open scoped ENNReal EuclideanGeometry
 
-/-- Falconer's distance set conjecture, `d = 2` case. -/
+/-- Falconer's distance set conjecture, $d = 2$ case. -/
 @[category research open, AMS 28 42]
-lemma falconer_conjecture_two (E : Set <| ℝ^2) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
+lemma falconer_conjecture_two (E : Set <| ℝ²) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
     0 < volume (image2 dist E E) := sorry
 
 /-- Falconer's distance set conjecture. -/
