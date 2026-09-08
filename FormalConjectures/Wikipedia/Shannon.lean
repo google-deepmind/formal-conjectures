@@ -40,36 +40,9 @@ $\vartheta(C_7) = \frac{7\cos(\pi/7)}{1 + \cos(\pi/7)}$, which is an upper bound
 
 universe u
 
-variable {α β : Type u}
+variable {α : Type u}
 
 namespace SimpleGraph
-
-/-- Tensor product of simple graphs. `(a₁, b₁)` is adjacent to `(a₂, b₂)` if `a₁` is adjacent to
-`a₂` and `b₁` is adjacent to `b₂`.
-
-Replace once https://github.com/leanprover-community/mathlib4/pull/43170 lands.-/
-def tensorProd (G : SimpleGraph α) (H : SimpleGraph β) : SimpleGraph (α × β) where
-  Adj x y := G.Adj x.1 y.1 ∧ H.Adj x.2 y.2
-  symm.symm x y h := by rwa [adj_comm G, adj_comm H]
-
-/-- Strong product of simple graphs. It relates `(a₁, b₁)` and `(a₂, b₂)` if `a₁` and `a₂` are
-equal or adjacent in `G`, and `b₁` and `b₂` are equal or adjacent in `H` (and `(a₁, b₁)` and
-`(a₂, b₂)` are distinct).
-
-Replace once https://github.com/leanprover-community/mathlib4/pull/43170 lands.-/
-def strongProd (G : SimpleGraph α) (H : SimpleGraph β) : SimpleGraph (α × β) :=
-  boxProd G H ⊔ tensorProd G H
-
-infixl:70 " ⊠ " => strongProd
-
-/-- The power of a simple graph w. r. t. the strong product. -/
-def strongPow (G : SimpleGraph α) : (n : ℕ) → SimpleGraph (Fin n → α)
-  | 0 => completeGraph _
-  | n + 1 => (Fin.succFunEquiv α n).symm.simpleGraph <| (strongPow G n) ⊠ G
-
-/-- The Shannon capacity $\Theta(G) = \sup_n \sqrt[n]{\alpha(G^{\boxtimes n})}$ of a graph. -/
-noncomputable def shannonCapacity (G : SimpleGraph α) : ℝ :=
-  sSup {(↑α(G.strongPow n) : ℝ) ^ (↑n : ℝ)⁻¹ | n > 0}
 
 -- easy, but needs more API for `SimpleGraph.indepNum`
 @[category API, AMS 5 94]
