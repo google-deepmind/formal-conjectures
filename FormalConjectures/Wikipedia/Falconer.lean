@@ -33,11 +33,6 @@ open MeasureTheory Set
 
 open scoped ENNReal EuclideanGeometry
 
-/-- Falconer's distance set conjecture, `d = 2` case. -/
-@[category research open, AMS 28 42]
-lemma falconer_conjecture_two (E : Set <| ℝ^2) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
-    0 < volume (image2 dist E E) := sorry
-
 /-- Falconer's distance set conjecture. -/
 @[category research open, AMS 28 42]
 lemma falconer_conjecture (d : ℕ) (E : Set <| ℝ^d) (hc : IsCompact E) (hd : d < 2 * dimH E ) :
