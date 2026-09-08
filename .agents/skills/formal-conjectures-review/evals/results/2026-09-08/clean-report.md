@@ -20,10 +20,10 @@ This report does not decide acceptance or establish source fidelity or proof cor
 
 Evidence:
 
-- [evidence/build\.json](../../supplemental-assets/clean.lean.json) (`f167402f81ff3aba51f8734b23431e9b5b009588e51451dee4a38654e7b2cb48`)
-- [evidence/candidate\.lean](../../supplemental-assets/clean.lean) (`c4c38000035129540248df1eefbad202a45b2822ac41c3521542545993094a1a`)
-- [evidence/witness\.json](../../supplemental-assets/witness.lean.json) (`72d06d24852a2e4492441fa2fcf5dec761a350949f91df56cdc43665f5b93b03`)
-- [evidence/witness\.lean](../../supplemental-assets/witness.lean) (`7ba8098b4acbe0a8ba401153923ff5b5ee5733f2a102eb82667349027ba563a7`)
+- [evidence/build\.json](../../historical/packet-v1/supplemental-assets/clean.lean.json) (`f167402f81ff3aba51f8734b23431e9b5b009588e51451dee4a38654e7b2cb48`)
+- [evidence/candidate\.lean](../../historical/packet-v1/supplemental-assets/clean.lean) (`c4c38000035129540248df1eefbad202a45b2822ac41c3521542545993094a1a`)
+- [evidence/witness\.json](../../historical/packet-v1/supplemental-assets/witness.lean.json) (`72d06d24852a2e4492441fa2fcf5dec761a350949f91df56cdc43665f5b93b03`)
+- [evidence/witness\.lean](../../historical/packet-v1/supplemental-assets/witness.lean) (`7ba8098b4acbe0a8ba401153923ff5b5ee5733f2a102eb82667349027ba563a7`)
 - [procedure/SKILL\.md](../../../SKILL.md) (`12fa9a162e81432b5a800c255eda6f5082839878ae1c623cbe0811d03ae0cc2e`)
 - [procedure/references/checking\-in\-lean\.md](../../../references/checking-in-lean.md) (`2b313bbf1cf6c7c6dc640dc97915abfa5ec30b9c4eb045b86cd957aa340ded42`)
 - [procedure/references/definition\-traps\.md](../../../references/definition-traps.md) (`ac32f3baa23b199fd88373adafb54abba8f654d004a9f8dfaadbcb9279b55694`)
@@ -32,4 +32,4 @@ Evidence:
 - [procedure/rubrics/metadata\-hygiene\.md](../../../rubrics/metadata-hygiene.md) (`6e9eeaf0b84688d05869221e7a6b0109aa86b426b744a752dc2a24e851a41a23`)
 - [procedure/rubrics/source\-fidelity\.md](../../../rubrics/source-fidelity.md) (`a0f2ef034ab57e8249dc5bc1457fa90cbe7743dc9c363edf0faecca5b406b678`)
 - [procedure/rubrics/statement\-soundness\.md](../../../rubrics/statement-soundness.md) (`72f1ffa197350d035bf4da9954c9f15f6ce4eacbef184318960d20eda83e79f9`)
-- [sources/primary\.txt](../../supplemental-assets/source.txt) (`f3461c067a0b824bdc5111ee9a4195f5165b9b6eee855897458345377956e3a2`)
+- [sources/primary\.txt](../../historical/packet-v1/supplemental-assets/source.txt) (`f3461c067a0b824bdc5111ee9a4195f5165b9b6eee855897458345377956e3a2`)

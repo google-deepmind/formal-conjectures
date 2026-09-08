@@ -1,6 +1,6 @@
 ---
 name: formal-conjectures-review
-description: Use when reviewing a Formal Conjectures pull request, checking whether a Lean statement says what its cited source says, or before submitting a formalisation. Use it for suspected misformalisation, boundary cases, vacuity, answer() polarity, or formal_proof claims. Produce a concise, advisory GitHub-ready review with high-confidence inline suggestions.
+description: Use this skill for semantic review of Formal Conjectures statements against their cited mathematical sources, including suspected misformalisation and contested review findings. Check meaning and the support for proof or status claims. Do not use it solely for Lean build errors, proof search, formatting, or operating the review-report tooling.
 license: Apache-2.0
 ---
 

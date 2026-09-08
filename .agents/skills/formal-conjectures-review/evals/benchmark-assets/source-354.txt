@@ -1,0 +1,37 @@
+Source: https://www.erdosproblems.com/latex/354
+Retrieved: 2026-09-08
+Original response SHA256: 5528521a68e0d286f7f3a7888533b88a7f1772e6de9baf8a7809d7d18b3dfa4c
+Extraction: complete problem box, no FC reviews.
+
+Let $\alpha,\beta\in \mathbb{R}_{>0}$ such that $\alpha/\beta$ is irrational. Is the multiset\[\{ \lfloor \alpha\rfloor,\lfloor 2\alpha\rfloor,\lfloor 4\alpha\rfloor,\ldots\}\cup \{ \lfloor \beta\rfloor,\lfloor 2\beta\rfloor,\lfloor 4\beta\rfloor,\ldots\}\]complete? That is, can all sufficiently large natural numbers $n$ be written as\[n=\sum_{s\in S}\lfloor 2^s\alpha\rfloor+\sum_{t\in T}\lfloor 2^t\beta\rfloor\]for some finite $S,T\subset \mathbb{N}$?
+What if $2$ is replaced by some $\gamma\in(1,2)$?
+This question was first mentioned by Graham \cite{Gr71}.
+Hegyv\'{a}ri \cite{He89} proved that this holds if $\alpha=m/2^n$ is a dyadic rational and $\beta$ is not. He later \cite{He91} proved that, for any fixed $\alpha>0$, the set of $\beta$ for which this holds either has measure $0$ or infinite measure. In \cite{He94} he proved that the set of $(\alpha,\beta)$ for which the corresponding set of sums does not contain an infinite arithmetic progression has cardinality continuum.
+Hegyv\'{a}ri \cite{He89} proved that the sequence is not complete if $\alpha\geq 2$ and $\beta =2^k\alpha$ for some $k\geq 0$. Jiang and Ma \cite{JiMa24} and Fang and He \cite{FaHe25} prove that the sequence is not complete if $1<\alpha<2$ and $\beta=2^k\alpha$ for some sufficiently large $k$.
+It is likely (and Hegyv\'{a}ri conjectures) that the assumption $\alpha/\beta$ irrational can be weakened to $\alpha/\beta \neq 2^k$ and either $\alpha$ or $\beta$ not a dyadic rational.
+In the comments van Doorn proves the sequence is complete if $\alpha < 2<\beta<3$, and also proves that if either $\alpha$ or $\beta$ is not a dyadic rational then the corresponding sequence with ceiling functions replacing the floor functions is complete.
+References
+[FaHe25] Fang, J.-H. and He, J.-Y.,
+On a problem of {E}rd\H{o}s and {G}raham
+. Acta Math. Hungar. (2025), 532--542.
+  
+  [Gr71] Graham, R. L.,
+On sums of integers taken from a fixed sequence
+.  (1971), 22--40.
+  
+  [He89] Hegyv\'{a}ri, N.,
+Some remarks on a problem of {E}rd\H{o}s and {G}raham
+. Acta Math. Hungar. (1989), 149--154.
+  
+  [He91] Hegyv\'{a}ri, N.,
+On complete sequences
+. Ann. Univ. Sci. Budapest. E\"otv\"os Sect. Math. (1991), 7--10.
+  
+  [He94] Hegyv\'{a}ri, Norbert,
+On sumset of certain sets
+. Publ. Math. Debrecen (1994), 115--122.
+  
+  [JiMa24] Jiang, Xing-Wang and Ma, Wu-Xia,
+A conjecture of {H}egyv\'{a}ri
+. Int. J. Number Theory (2024), 915--933.
+Back to the problem

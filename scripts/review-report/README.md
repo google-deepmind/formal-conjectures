@@ -171,8 +171,9 @@ The design adapts Tau Ceti's [case-file approach](https://github.com/TauCetiProj
 and [separation of operational state from archived runs](https://github.com/TauCetiProject/TauCetiData#design).
 It handles procedure freshness explicitly, the missing behavior tracked in
 [TauCetiReview #95](https://github.com/TauCetiProject/TauCetiReview/issues/95).
-No upstream implementation is vendored. Isolated evidence execution, authenticated producer
-adapters, model invocation, persistent PR state and publication remain follow-ups under FC #4394.
+No upstream implementation is vendored. The evaluation harness provides local model invocation
+and isolated Lean workspaces for frozen cases. Production evidence collection, authenticated
+producer adapters, persistent PR state and publication remain follow-ups under FC #4394.
 
 Run the offline checks with:
 

@@ -1,4 +1,6 @@
-# Sol review pilot — 8 September 2026
+# Historical packet-only Sol pilot — 8 September 2026
+
+This run predates the tool-using benchmark overhaul. It is retained for provenance, not used as current review-quality evidence.
 
 All 24 reviews in the final structured-output batches passed the report assembler. Reassembling the retained inputs
 reproduced all 24 JSON reports, freshness observations and Markdown summaries byte-for-byte.

@@ -1,110 +1,149 @@
 # Review evaluation
 
-This is a small, paired **evidence-packet pilot**, not an autonomous review bot or a
-claim of independently established review quality. It tests interpretation of supplied
-evidence and generation of reports through the bundled [report assembler](../review-report/README.md).
+Measure whether the skill improves mathematical review. Valid JSON is a tooling check,
+not an accuracy score. This suite follows the [Agent Skills evaluation guide](https://agentskills.io/skill-creation/evaluating-skills),
+[best practices](https://agentskills.io/skill-creation/best-practices),
+[description testing](https://agentskills.io/skill-creation/optimizing-descriptions) and
+[specification](https://agentskills.io/specification).
 
-The current suite is `.agents/skills/formal-conjectures-review/evals/evals.json`.
-It contains ten scenarios clustered on two real FC declarations at main
-`d33e35a5f45386a173b31159ae6598b1968bc463`, using Lean 4.33.1. It includes candidate
-clean controls, seeded source mismatches, unavailable evidence, a disproven proof claim,
-stale proof status, and contested or contradictory prior findings. Conversation and stale
-status records are explicitly simulated; Lean compilation and axiom inspection records
-are actual local executions. A successful statement build is not a proof.
+## Three separate questions
 
-The Erdős 940 boundary example is also referenced by #4933 in the procedure. These are
-regression/calibration scenarios, not held-out evidence of mathematical generalization.
-`evals/supplemental.json` adds a separate Goldbach clean/boundary pair, with an actual
-Lean proof that two primes cannot sum to 2. It was selected after the initial pilot
-challenged the original clean labels, then frozen before its own model calls. Keep its
-results separate; it does not replace the original cases or repair their scores.
+| Track | What it measures |
+| --- | --- |
+| Offline tests | Report shape, evidence integrity, scope and freshness; no model calls |
+| Tool-using review | Supported defects, missed defects, false alarms, repairs and appropriate uncertainty |
+| Description routing | Whether a relevant task causes the skill to be loaded; not review correctness |
 
-The original eval file is preserved byte-for-byte under `evals/historical/`.
-Its scores, selection rules and toolchain policy are historical. Do not use them as current
-validation or follow their recommendation to retain only cases that separate the arms.
+## Cases and reference judgements
 
-## Protocol
+The skill's `evals/benchmark.json` contains 24 cases across 12 problem families:
 
-1. Freeze the suite, source bytes, candidate files, procedure, assembler and harness before
-   running either arm. All scenarios stay in the denominator, including failed model calls,
-   malformed reports, ties and disputed gold. Do not edit a frozen run to improve scores.
-2. Give both arms identical packets, model, reasoning effort, output contract and tool access.
-   Inject the procedure only into the skill arm. Never supply expected answers or prior
-   evaluation outputs. Rereview context is supplied only in designated rereview scenarios.
-3. Run fresh Codex processes in empty directories. Disable shell tools, web and subagents;
-   ignore user configuration. Retain raw events and reject unexpected tool use. This harness
-   is not a general isolation service for untrusted code. Installed global skill metadata
-   may still be included by the CLI; record its version and compare arms in the same host.
-4. Supply a native structured-output schema that constrains finding paths to the repository
-   scope and evidence references to the retained packet. Then validate each model's exact
-   JSON through the supplied report assembler. Do not extract
-   verdicts or findings with regex, repair malformed outputs, or count CLI success as a pass.
-5. Grade reports in a separate, fresh model invocation with randomized opaque run IDs.
-   Withhold arm labels, reviewer identity, selected procedure, telemetry and other reports.
-   Style can still reveal the arm; this is label blinding, not guaranteed perfect blinding.
-6. Judge each finding for support, usefulness and duplication, and check for contradictory
-   fixes. Extra findings are not automatically false positives. If evidence challenges the
-   provisional gold key, record the dispute without changing the frozen score.
+- Eight actual FC corrections, each with its historical file and corrected counterpart (16 cases).
+- Four additional candidate clean controls in algebra, combinatorics and number theory.
+- Two source-unavailable workflow cases and two authored rereview scenarios.
 
-Gold criteria are author-written and provisional. A model judge is a separate assessment,
-not independent human validation. Use the same model for both reviewer arms. A judge from
-another model family and a maintainer reading anonymized reports are useful follow-ups.
+Historical corrections cover domains, repeated summands, an unused parameter, a geometric
+construction, Fourier coefficients/tails, difference cardinality and OEIS definitions/indexing.
+Each case retains exact source-file provenance and source-document hashes. Historical files
+are replayed in the pinned current environment; this is not a claim that their original
+checkouts used that toolchain. Rereview conversations are explicitly authored scenarios.
 
-## Run locally
+**All reference keys are provisional.** A merged correction supports a defect label but does
+not prove that the corrected file is otherwise clean. The initial development cases are R01
+(integer domain), R17 (modern Jacobson statement) and R22 (source unavailable).
+Keep before/after and workflow variants in the same family and split. Qualification cases
+cannot run until their keys have a named human reviewer and supporting evidence. Do not mark
+an author/model judgement as human adjudication. Public historical cases may be known from
+model training; “qualification” means withheld from this iteration, not guaranteed novel.
 
-The commands make no GitHub writes. `freeze` and `summarize` make no model calls.
-`run` and `judge` use the authenticated Codex CLI and consume account usage. No model runs
-are scheduled in CI. Run these commands from a trusted tooling checkout. The assembler is
-included at `scripts/review_report.py`; its path remains explicit so a review can use trusted
-tooling separately from the contributor's checkout. Its exact bytes are pinned at freeze time.
+Keep easy clean controls and ties. Do not select cases because the skill wins. Inspect three
+initial development cases, improve the protocol using their transcripts, then expand. If a
+case changes, freeze a new iteration and retain the earlier inputs/results. Do not tune the
+skill using qualification outcomes and continue calling those cases held out.
+
+## Reviewer environment
+
+`review_eval.py` runs fresh Codex processes with only an explicitly configured workspace MCP
+server. The server uses the official Python MCP SDK; it does not implement its own protocol.
+The model can read/search sources and definitions, write scratch witnesses, and invoke Lean.
+It cannot see suite keys, subsequent corrections, other runs or caller credentials.
+
+Each run gets a separate Docker container with networking disabled, a non-root user,
+resource limits and dropped capabilities. Only the original candidate, source documents,
+optional prior context and an output directory are mounted. Only the skill arm receives
+`SKILL.md` and its supporting files; those files are read on demand, never concatenated into
+the initial prompt. The baseline receives the same ordinary FC contribution guidance and
+JSON interface, without the skill's review strategy. The report records an explicit baseline
+procedure receipt; that receipt is not supplied to the baseline model. Installed host skills are disabled for
+the invocation, plugin discovery is disabled and client state is isolated. The operator's global
+configuration is not edited. Built-in resource discovery is accepted only when its catalog is empty.
+
+The image retains Lean/Mathlib and FC shared definitions, but removes FC problem sources,
+problem build artifacts, FC history and its skills. Each candidate has a deterministic local
+Git snapshot, explicitly distinct from its upstream source commit. `build()` runs the focused
+`lake --wfail build`; its exit status is a build result. Arbitrary shell/witness output remains
+raw evidence and is never parsed into a proof verdict. The original candidate is read-only.
+
+This is an **offline tool-using benchmark**: source documents are available on demand, but
+live web discovery and external proof execution are not measured. Model authentication stays
+on the host. Only the isolated workspace tools are approved for unattended evaluation.
+The Docker image and MCP server are trusted tooling, not contributor-supplied code.
+
+## Run
+
+Requires Docker, the Codex CLI and Python 3.11+. Install optional runtime dependencies into a
+virtual environment with `pip install -r scripts/review-eval/requirements.txt`. Ordinary CI
+script tests do not require Docker, the SDK, credentials or model usage.
 
 ```sh
-python3 scripts/review_eval.py freeze \
-  --suite .agents/skills/formal-conjectures-review/evals/evals.json \
+docker build -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
+
+python scripts/review_eval.py freeze \
+  --suite .agents/skills/formal-conjectures-review/evals/benchmark.json \
   --skill .agents/skills/formal-conjectures-review \
-  --assembler scripts/review_report.py \
-  --repeats 1 --out /tmp/fc-review-eval-run
+  --image fc-review-eval:lean4.33.1 --cases R01 R17 R22 \
+  --repeats 1 --timeout 420 --max-calls 30 --out ../review-eval/iteration-1
 
-python3 scripts/review_eval.py run --root /tmp/fc-review-eval-run \
-  --assembler scripts/review_report.py --model MODEL_ID
-python3 scripts/review_eval.py judge --root /tmp/fc-review-eval-run --model JUDGE_MODEL_ID
-python3 scripts/review_eval.py summarize --root /tmp/fc-review-eval-run
-python3 scripts/review_eval.py human-packet --root /tmp/fc-review-eval-run \
-  --out /tmp/fc-review-human-packet
+python ../review-eval/iteration-1/tooling/review_eval.py run \
+  --root ../review-eval/iteration-1 --model gpt-5.6-sol --workers 2
+python ../review-eval/iteration-1/tooling/review_eval.py assess \
+  --root ../review-eval/iteration-1 --model gpt-5.6-sol
+python ../review-eval/iteration-1/tooling/review_eval.py summarize --root ../review-eval/iteration-1
+python ../review-eval/iteration-1/tooling/review_eval.py human-packet \
+  --root ../review-eval/iteration-1 --out ../review-eval/iteration-1-human
 ```
 
-The first run is one observation per scenario and arm, not an accuracy estimate. Use paired
-repeats on a frozen suite before claiming a reliable skill/baseline difference. Broaden the
-mathematical domains before generalizing beyond these two declarations.
-Use `--suite .agents/skills/formal-conjectures-review/evals/supplemental.json` and a new
-output directory to run the supplemental controls with the same protocol.
+`freeze` records the image identity, suite, selected cases, budgets, procedure and exact tooling.
+Use the copied tooling to resume/reproduce a frozen run after editing the repository. Existing
+attempts are never overwritten or silently retried. Failed and unstarted jobs remain visible.
+For repeated comparisons, use the same model/settings and three runs per case and condition.
+Repetitions do not increase the number of independent mathematical problems.
 
-Runs retain the packet, procedure files, input hashes, original model output, CLI events,
-usage when available, wall time, validated JSON/Markdown reports, and individual grading
-rationales. Dollar cost is `null` when the provider does not report it. The harness never
-estimates a dollar cost from tokens. Freeze a new directory for an intentional repeat;
-resuming skips completed attempts, including failures, rather than retrying selected cases.
+Each run retains the prompt, raw response, model events, tool commands/results, scratch outputs,
+usage, wall time and assembled JSON/Markdown bundle. Preserve the entire iteration outside the
+source checkout; do not commit authentication state. Publication is a separate workflow.
 
-`summary.json` exposes per-arm counts and every case result. Missing/invalid judgements are
-ungraded, never automatically successful. Do not call “all criteria met” mathematical accuracy.
-The initial local artifact directory is not a durable public archive.
+## Assessment
 
-## Human assessment and remaining scope
+A separate model call receives the anonymous review, source dossier and execution transcript.
+It matches reference defects, assesses every finding for support/actionability, and marks
+repairs valid, invalid, untested or absent. Alternative valid findings and repairs are allowed.
+Tool traces can reveal the procedure, so this is label blinding, not guaranteed arm blinding.
 
-Before routine publication, a maintainer should inspect anonymized reports with the source
-and evidence, record which findings they would act on, missed defects, corrections to the
-gold key, and minutes spent assessing/repairing each report. Keep those labels separate from
-model grades. No human time or acceptance is inferred from successful report generation.
-The `human-packet` command exports anonymous packets and a label form with decisions and
-minutes left unset. It withholds model grades and arm labels. Sending it to a maintainer
-is a separate action; the harness does not contact anyone.
+`summary.json` reports raw per-condition counts and per-run assessments. Disputed or insufficient
+keys are counted separately; they are not reviewer failures. It reports defect detection,
+unsupported/unresolved findings, clean-case false alarms, duplicates, repair validity, uncertainty,
+time and tokens. There is no blended “all assertions passed” accuracy number. Model grades
+remain provisional, including when a different model family is used as assessor.
 
-This pilot does not measure source retrieval, construction of new Lean witnesses, execution
-sandboxing, Comparator integration, GitHub publication or report persistence. Test those in
-the later tool-using integration pilot; supplied evidence cannot validate tool-use behaviour.
+Have a mathematician assess the anonymous packets, record missed defects, false alarms and
+minutes spent, and adjudicate the reference key before qualification. Human forms start blank;
+no human score or time is inferred. Inspect evidence and transcripts alongside aggregate counts.
+Mechanical checks never substitute for source fidelity or mathematical correctness.
 
-Offline integrity checks run with the existing script CI:
+## Description routing
+
+`evals/triggers.json` has 20 realistic queries: ten positives and ten nearby negatives, split
+12 development / 8 validation with both classes represented. The separate command tests a
+controlled catalog containing the description and observes an actual MCP `load_skill` call:
 
 ```sh
-python3 -m unittest discover -s scripts -p 'test_review_eval.py' -v
+python scripts/review-eval/trigger_eval.py run \
+  --queries .agents/skills/formal-conjectures-review/evals/triggers.json \
+  --skill .agents/skills/formal-conjectures-review/SKILL.md \
+  --split development --repeats 3 --out ../review-eval/description-1
 ```
+
+The runner retains exact tooling copies, query bytes, the skill and raw invocations.
+Run validation after freezing the description; do not use its failures for tuning and keep
+calling it held out. Report per-query loading rates and failed invocations, separately from
+review scores. This controlled selector tests description routing, not native desktop skill
+discovery. A native-client trigger check remains a distinct integration test.
+
+## Historical records
+
+The superseded packet-only cases are under `evals/historical/packet-v1/`; the still older
+calibration file remains `evals/historical/evals.json`. Selected original Sol outputs remain
+under `evals/results/2026-09-08/` with their limitations. Their 24 valid reports establish
+format/replay behavior only. They are not pooled with this benchmark. Exact old tooling is
+retained in the local run archive and Git history; do not run old manifests with the v2 CLI.
