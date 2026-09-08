@@ -36,6 +36,8 @@ We use its tensor-rank formulation.
 
 namespace MatrixMultiplicationExponent
 
+open Filter
+
 /-- All coefficients match $\operatorname{tr}(ABC)$ for $l = m = n = 2$. -/
 @[category test, AMS 15]
 theorem matrixMulTensor_two_coefficients :
@@ -67,8 +69,9 @@ theorem matrix_multiplication_exponent_le_three :
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
 @[category research open, AMS 15 68]
 theorem matrix_multiplication_exponent_two :
-    ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ C * (n : ℝ) ^ (2 + ε) := by
+    ∀ ε > (0 : ℝ),
+      (fun n : ℕ ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+        (fun n ↦ (n : ℝ) ^ (2 + ε)) := by
   sorry
 
 end MatrixMultiplicationExponent
