@@ -66,7 +66,7 @@ theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLF
 
 /-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem. -/
 @[category research solved, AMS 11 14]
-theorem exists_isLFunction.variants.rat (E : WeierstrassCurve ℚ) [E.IsElliptic] :
+theorem exists_isLFunction_rat (E : WeierstrassCurve ℚ) [E.IsElliptic] :
     ∃ L, IsLFunction E L := by
   sorry
 
