@@ -30,10 +30,11 @@ here; a reversed conclusion reads well in both directions. This angle may block.
 
 ## The positive control
 
-Declaring the Lean faithful is a claim like any other, and it carries the same witness duty:
-when the source provides a construction, instantiate it against the Lean predicate at a
-concrete value (`../references/checking-in-lean.md`). A predicate that rejects the source's
-own example is unfaithful in a way no amount of side-by-side reading detects.
+When a faithfulness or status claim relies on a source construction, instantiate it against
+the Lean predicate at a concrete value (`../references/checking-in-lean.md`). A predicate
+that rejects the source's own example can expose a mismatch. A passing control checks that
+example only; it does not establish faithfulness for all inputs. If a required control cannot
+run, report the gap rather than claiming the construction has been verified.
 
 ## Not yours
 

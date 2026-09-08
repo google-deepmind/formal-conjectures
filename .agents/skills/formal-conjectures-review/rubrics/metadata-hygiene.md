@@ -22,11 +22,11 @@ declaration records no answer. Raise it as a question, not a finding, unless the
 review introduces it — it is a known backlog (#4965 tracks the class), and count the
 class in the tree you are reviewing before you say how common it is.
 
-**What a `formal_proof` link shows.** Comparator answers this mechanically where a result
-exists — read it and move on. A `comparator.json` in a linked repository is a
-configuration file, not a comparator result; check what the workflow actually runs.
-Comparator accepts the statement as given, so it replaces none of the other angles.
-For the ~330 older links, three things go wrong (all confirmed):
+**What a `formal_proof` link shows.** Read any existing verification evidence first. Follow
+[`../references/verifying-proofs.md`](../references/verifying-proofs.md) to check its statement,
+proof and bridge revisions, verifier policy and outcome. A `comparator.json` is configuration,
+not a result. A pass applies only to the recorded inputs and permitted axioms; it does not
+settle source fidelity or whether an answer is meaningful. Legacy links have these known traps:
 
 - *The proof assumes something unproved.* A `sorry`-free file can take an unproved result
   as a hypothesis; `#print axioms` does not show it. Erdős 427, 750 and 1141 each linked
@@ -44,16 +44,19 @@ For the ~330 older links, three things go wrong (all confirmed):
 Examine the declaration, not the file: a `sorry` on some other statement in the same
 file is normal.
 
-**Read the automatic checks first, and accept them:**
+**Read automatic checks for the reviewed revision first:**
 
 | Question | Where the answer is |
 | --- | --- |
-| Does it build? Is it `sorry`-free? | `lake build`, and `hasSorryFreeProof` in the extract |
+| Does it build? | Focused `lake --wfail build` or matching CI evidence |
+| Does the in-repository declaration have a `sorry`-free proof? | `hasSorryFreeProof` in the extract; this does not verify an external link or establish its full axiom policy |
 | Does each statement have `category` and `AMS`? | `extract_names` |
 | Is a `research open` statement proved? | the category linter |
 | Does the repo agree with erdosproblems.com? | `scripts/check_erdos_status.py` |
 
-If a check fails, report it and stop.
+Record failed, unavailable or stale checks separately. Do not turn a tool error into a
+semantic finding, or unavailable evidence into a pass. A blocked required check makes the
+review INCOMPLETE unless an established defect already requires revision.
 
 ## Not yours
 

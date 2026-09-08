@@ -5,26 +5,37 @@ look for. This says how to check it, and it is mostly a list of traps that have 
 
 ## Reviewing a pull request diff
 
-If a pull request is named, review its diff. Nothing else in this file assumes that, so get the
-work into the tree first, and put it back afterwards:
+Review the complete PR head in an isolated worktree. Record the repository, head and base
+commits from GitHub, and confirm that `origin` is that repository before fetching. Substitute
+the PR number for `N` below. Keep the caller's checkout and local edits untouched:
 
 ```bash
-gh pr view N --json files --jq '.files[].path'      # which files, and are they new
-git fetch origin pull/N/head:pr-N
-git show pr-N:<path> > <path>                       # materialise, once per file
-# ... review, build, write witnesses ...
-git checkout -- <path>   # restore a file the PR MODIFIES
-rm <path>                # remove a file the PR ADDS
-git branch -D pr-N
+gh pr view N --json headRefOid,baseRefOid,files
+git fetch origin refs/pull/N/head
+review_head=$(git rev-parse FETCH_HEAD)
+review_parent=$(mktemp -d)
+review_tree="$review_parent/checkout"
+git worktree add --detach "$review_tree" "$review_head"
+git -C "$review_tree" rev-parse HEAD
 ```
 
-Use the right restore. `rm` on a file the pull request modifies deletes tracked content and
-leaves the tree broken. Record what `git status` showed before you start, or you cannot tell
-your own leftovers from someone else's.
+Check that the fetched head equals the head recorded from GitHub. If it changed, refresh the
+PR diff and metadata before reviewing. Keep these paths and commits available across tool calls.
+Read all changed files and relevant definitions from this worktree. Build there using the
+command tool's explicit working-directory setting. Do not transplant individual files into
+another revision or use `git checkout --` to discard local changes.
 
-`git status` will show the file as untracked while you work. Do not stage it. Report final-file
-line numbers rather than patch offsets. If the named pull request does not exist, say so and
-review the file instead.
+Keep scratch witnesses and evidence outside the worktree. After saving the report and checking
+for any work worth preserving, remove only this review worktree, without force:
+
+```bash
+git worktree remove "$review_tree"
+rmdir "$review_parent"
+```
+
+If removal refuses because the worktree has changes, preserve or inspect them; do not force it.
+Report final-file line numbers rather than patch offsets. If the PR cannot be resolved, report
+that scope as INCOMPLETE rather than silently reviewing a different revision.
 
 ## The scratch file
 
@@ -34,12 +45,9 @@ Write it outside the tree and import the module under review.
 lake env lean /absolute/path/to/scratch/Witness.lean
 ```
 
-**Never `cd`, for any reason.** Not into the scratch directory to run `python3` or `sed`, not as
-the first half of a compound command. The working directory persists into your *next* call, so a
-`cd` for unrelated work poisons a later `lake` invocation, which then reports `no default
-toolchain configured` and reads as a broken install rather than a wrong directory. Four reviews
-have tripped this, every one of them after reading a warning phrased as being about `lake`. It is
-not about `lake`. Pass absolute paths and stay in the repository root.
+Set the command's working directory explicitly to the reviewed worktree for every Lean or Lake
+call. Use absolute paths for scratch files. Do not rely on a shell's directory persisting across
+tool calls; an incorrect directory can select the wrong project or toolchain.
 
 Two warnings are expected and are not failures. `linter.style.moduleDocstring` fires once for the
 file. A file with more than one `/-! ... -/` section trips a second, differently worded variant
@@ -59,8 +67,9 @@ theorem application : False := helper (TheSorriedDeclaration ...)
                                         -- [propext, sorryAx, Classical.choice, Quot.sound]
 ```
 
-Then you can say: the only `sorryAx` is the cited declaration's, not mine. That is the claim that
-makes the witness mean something, and it is worth restructuring a proof to be able to make it.
+The helper's clean closure establishes the mathematical argument without assuming the target.
+The application is a diagnostic use of the admitted target, not a sorry-free contradiction.
+`#print axioms` lists dependencies; `sorryAx` alone does not identify which admission supplied it.
 
 ## Refute by proving the negation
 
@@ -74,8 +83,9 @@ Close it by elaborating the declaration against your transcription:
 example : <the statement you wrote out> := fun x => TheDeclaration x
 ```
 
-If that type-checks, your transcription is the real thing. Without it, a `sorry`-free refutation
-is still only a transcription you might have got wrong.
+If that type-checks, it establishes type compatibility for this application. Explicitly account
+for every binder and implicit argument before claiming the complete types match. Without a
+connection to the target, a `sorry`-free refutation is only about your transcription.
 
 That form does not work on `answer(sorry) ↔ RHS`, which is the commonest shape here: the header
 hole resolves before the body, so `example : _ ↔ <RHS> := TheDeclaration` fails. Go through the
@@ -85,7 +95,10 @@ implication instead:
 example (h : <RHS>) : True := have := TheDeclaration.mpr h; trivial
 ```
 
-If that elaborates, your `<RHS>` is the declaration's.
+This checks that `<RHS>` can be passed to that implication. It does not recover the original
+answer hole or prove exact correspondence of the complete declaration. For that, use an
+available FC exporter that preserves answer annotations and checks the extracted type in Lean.
+If exact correspondence cannot be established, report the limitation instead of claiming it.
 
 ## What actually reduces
 
@@ -128,8 +141,9 @@ Two gaps that have each cost a review most of its time:
 
 A control that does not terminate is not evidence.
 
-If the paper ships code, fetch and run the paper's own program rather than reimplementing the
-construction. A search you write yourself may not terminate on the smallest interesting case,
+If the paper ships code, inspect and run its program in an isolated execution environment, then
+check the output against the Lean predicate. Keep external code away from the trusted verifier
+workspace. A search you write yourself may not terminate on the smallest interesting case,
 and this is not hypothetical: an annealing search for one even case ran hundreds of thousands of
 iterations and found nothing, while the paper's own program produced it immediately.
 

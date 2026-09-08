@@ -13,19 +13,25 @@ mechanical, and it is being automated. These angles are about the other question
 checker settles it, because every checker takes the statement as given. Thus the automated
 side gets better, and this side becomes more important.
 
-## Findings carry witnesses
+## Findings carry evidence
 
-Each finding must carry a **witness**: a concrete case where the Lean and the source
-disagree, so a reader can check the finding without redoing the review.
+Each finding must carry evidence a reader can check without redoing the review:
+
+- For a direct source or metadata discrepancy, cite the exact source passage and Lean
+  declaration or attribute, and explain the differing requirement. If the source is
+  ambiguous, ask a question instead.
+- For a counterexample, contradiction or computation, provide a checked **witness**.
+  Documentary evidence alone does not establish the mathematical inference.
 
 - "This looks too strong" is not a finding.
 - "At `c = 2` and `n = 100` the hypothesis needs 20000 edges, and a simple graph has at
   most 4950" is a finding.
 
-A witness that decides a verdict is **checked, not only argued**: run it in Lean or by
-computation (`../references/checking-in-lean.md`) before filing the finding. An argument
-grounded in a statement the file already proves still needs the connecting step machine-checked
-when that step is what makes the finding blocking.
+A mathematical witness is **checked, not only argued**: run it in Lean or by computation
+(`../references/checking-in-lean.md`) before filing the finding. An argument grounded in
+a statement the file already proves still needs the connecting step machine-checked
+when that step supports the finding. State whether the check ran in Lean or externally.
+A direct, unambiguous source mismatch does not require an artificial contradiction proof.
 
 The witness requirement covers the argument, not only the claim: counts, ratios, and "the
 only file in the tree that does this" are load-bearing when used to argue a finding
@@ -40,14 +46,21 @@ open — the pull request is named where there is one.
 
 ## Verdict semantics
 
-- **CLEAN**: no findings from any angle.
-- **ACCEPT WITH NITS**: findings that do not change the meaning of any statement.
 - **NEEDS REVISION**: at least one finding changes a meaning, makes a statement vacuous,
   or shows a `formal_proof` claims more than the linked proof gives.
+- **INCOMPLETE**: no established defect requiring revision, but a required check is blocked
+  or a material semantic question needs human review.
+- **ACCEPT WITH NITS**: required checks complete, no material questions, and only findings
+  that do not change the meaning of any statement.
+- **CLEAN**: required checks complete, no findings and no material questions.
+
+Apply these in order. A confirmed defect still requires revision when another check is
+blocked; report both the defect and the coverage gap. An inaccessible source, failed build
+or missing proof verification is not a clean review and is not itself proof of a semantic defect.
 
 The verdict is advice about the statement, not a decision about the merge and not a
-judgement about the contributor. If you cannot give a witness, write the item as a
-question, not a finding — #4896 is the model: it marks its contents as leads.
+judgement about the contributor. If the evidence required for a claim is missing, write
+it as a question, not a finding — #4896 is the model: it marks its contents as leads.
 
 ## Out of scope for every angle
 
