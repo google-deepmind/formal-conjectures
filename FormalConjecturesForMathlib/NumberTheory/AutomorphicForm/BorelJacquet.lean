@@ -37,134 +37,88 @@ public import Mathlib.Topology.LocallyConstant.Basic
 /-!
 # Automorphic forms in the sense of Borel-Jacquet
 
-Borel and Jacquet's definition (Corvallis) of an automorphic form for `(G, K)`, in the form
-Buzzard states it for `G = GL₂ / ℚ` and `K = O₂(ℝ)`: a smooth `f : G(𝔸) → ℂ` such that
+Borel and Jacquet's definition (Corvallis) of an automorphic form, formalised for
+`G = GL n / ℚ` with maximal compact subgroup `K = O n ℝ`, in the shape Buzzard states it for
+`GL₂`. Writing `G(𝔸) = G(𝔸_f) × G(ℝ)`, where `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, ℚ]` is the points of
+`GL n` in the finite adeles of `ℚ`, an automorphic form is a smooth `f : G(𝔸) → ℂ` such that
 
-* (a) `f (γ x) = f x` for all `γ ∈ G(ℚ)`;
+* (a) `f (γ x) = f x` for all `γ ∈ G(ℚ)`, embedded diagonally;
 * (b1) `f (x u) = f x` for all `u` in some compact open subgroup of `G(𝔸_f)`;
-* (b2) the `ℂ`-span of the right translates `x ↦ f (x k)`, for `k ∈ K`, is finite-dimensional;
+* (b2) the `ℂ`-span of the right translates `x ↦ f (x k)`, for `k ∈ K`, is
+  finite-dimensional;
 * (c) `f` is annihilated by an ideal of finite codimension of the centre of the universal
-  enveloping algebra of the complexified Lie algebra of `G(ℝ)`;
-* (d) for each `x ∈ G(𝔸_f)`, the function `y ↦ f (x y)` on `G(ℝ)` is slowly increasing.
+  enveloping algebra of the complexified Lie algebra of `G(ℝ)`, acting by left invariant
+  differential operators;
+* (d) for each `x ∈ G(𝔸_f)`, the function `y ↦ f (x, y)` on `G(ℝ)` is slowly increasing.
 
-The further condition (e) cutting out cusp forms, that the constant term along every unipotent
-radical vanishes, is not formalised here: it needs Haar integration over `N(ℚ) \ N(𝔸)`.
-
-Following Buzzard, `G(𝔸)` is treated as `G(𝔸_f) × G(ℝ)`, which is also how smoothness is
-stated: locally constant in the finite variable, `C^∞` in the archimedean one. Here `G(𝔸_f)`
-is `GL n 𝔸ᶠ[ℤ, ℚ]`, the points of `GL n` in the finite adeles
-`𝔸ᶠ[ℤ, ℚ] = IsDedekindDomain.FiniteAdeleRing ℤ ℚ` of `ℚ`.
-
-Condition (b2) is stated here as finite-dimensionality of the span of the right `K`-translates.
-Buzzard asks instead for a finite-dimensional representation `σ` of `K` such that that span is,
-as a representation of `K`, a finite direct sum of Jordan-Hölder factors of `σ`. The two agree:
-the span is always a `K`-subrepresentation, so if it is finite-dimensional one may take `σ` to
-be the span itself, and conversely a sum of finitely many Jordan-Hölder factors is
-finite-dimensional. Buzzard also asks `σ` to be semisimple, which is automatic for
-`K = O n ℝ`, a finite-dimensional representation of a compact group being semisimple.
-
-Conditions (b1) and (b2) together are the `K`-finiteness of Getz-Hahn's Definition 6.5, for
-`K = K_∞ K^∞` with `K^∞ < G(𝔸_f)` compact open: for a function that is locally constant in the
-finite variable, finite-dimensionality of the span of the `K^∞`-translates is invariance under
-some compact open subgroup.
-
-Condition (d) is Buzzard's: slow increase of `y ↦ f (x y)` on `G(ℝ)` for each fixed
-`x ∈ G(𝔸_f)`, the constants being allowed to depend on `x`. The condition usually taken as part
-of the definition (Getz-Hahn Definition 6.4) is stronger on its face: a single pair of constants
-`c, r > 0` with `‖f g‖ ≤ c * ‖g‖ ^ r` for every `g ∈ G(𝔸)`, where the norm
-`‖g‖ = ∏ v, sup i j, max (|g i j|_v) (|g⁻¹ i j|_v)` runs over all places. That form implies (d),
-because the finite part of the norm is at least `1`; the converse, for functions satisfying (a)
-to (c), is a consequence of reduction theory rather than of the definitions. Stating the
-stronger form needs the adelic norm on `GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ`, which is not built here.
+Smooth means continuous, locally constant in the finite variable and `C^∞` in the archimedean
+one. The further condition (e) cutting out cusp forms, that the constant term along every
+unipotent radical vanishes, is not formalised here: it needs Haar integration over
+`N(ℚ) \ N(𝔸)`.
 
 ## Main declarations
 
-* `Matrix.GeneralLinearGroup.entrySup` and `Matrix.GeneralLinearGroup.gnorm`: the norms
-  `|(a b; c d)| = max {|a|, |b|, |c|, |d|}` on matrices and `‖y‖ = max (|y|, |y⁻¹|)` on
-  `GL n ℝ` used to define slow increase.
-* `Matrix.GeneralLinearGroup.IsSlowlyIncreasing`: condition (d), moderate growth.
-* `Matrix.GeneralLinearGroup.IsSmoothOnGL` and `Matrix.GeneralLinearGroup.IsSmoothAdelic`:
-  smoothness.
-* `Matrix.GeneralLinearGroup.universalEnveloping` and
-  `Matrix.GeneralLinearGroup.centerUniversalEnveloping`: the centre of the universal enveloping
-  algebra of `𝔤𝔩 n ℂ`, the algebra appearing in condition (c).
-* `Matrix.GeneralLinearGroup.expGL` and `Matrix.GeneralLinearGroup.lieDerivFun`: the
-  one-parameter subgroup `t ↦ exp (t • X)` and the left invariant derivative
-  `(X • φ) y = d/dt φ (y * exp (t • X)) |_{t = 0}` along it.
-* `Matrix.GeneralLinearGroup.smoothGL`, `Matrix.GeneralLinearGroup.lieDeriv` and
-  `Matrix.GeneralLinearGroup.lieDerivC`: the `C^∞` functions on `GL n ℝ` and the action on them
-  of `𝔤𝔩 n ℝ` and of its complexification `𝔤𝔩 n ℂ`.
-* `Matrix.GeneralLinearGroup.envelopingAction` and
-  `Matrix.GeneralLinearGroup.centerAction`: the resulting action of `U(𝔤𝔩 n ℂ)`, and of its
-  centre, which is the action condition (c) is about.
-* `AutomorphicForm.IsKFinite`: condition (b2).
-* `AutomorphicForm.IsZFinite`: condition (c), annihilation by an ideal of finite codimension.
-* `Matrix.GeneralLinearGroup.diagonalEmbedding` and `Matrix.GeneralLinearGroup.ratDiagonal`:
-  the diagonal embedding of `G(ℚ) = GL n ℚ` into `G(𝔸_f) × G(ℝ)` and its range, the subgroup
-  `Γ` appearing in condition (a).
-* `Matrix.GeneralLinearGroup.orthogonalSubgroup`: `O n ℝ` inside `GL n ℝ`, the maximal compact
-  subgroup `K` of the pair `(G, K)`, appearing in condition (b2).
-* `Matrix.GeneralLinearGroup.IsAutomorphicForm`: smoothness together with (a), (b1), (b2), (c)
-  and (d).
+All in the namespace `Matrix.GeneralLinearGroup` unless qualified otherwise, listed in the
+order the file builds them:
+
+* `AutomorphicForm.LieDerivAux.fderiv_rightDeriv_apply` and `…_sub_comm`: the product rule and
+  bracket identity for the operator `F ↦ fun M => fderiv ℝ F M (M * X)` over an abstract
+  normed algebra — the analytic core of condition (c).
+* `gnorm` and `IsSlowlyIncreasing`: the norm `‖y‖ = max (|y|, |y⁻¹|)` on `GL n ℝ` and
+  condition (d), slow increase.
+* `IsSmoothOnGL` and `smoothGL`: the `C^∞` functions on `GL n ℝ`, as a predicate and as a
+  `ℂ`-submodule.
+* `lieDeriv`, `lieDerivC`, `envelopingAction`, `centerAction`: the actions on `smoothGL n` of
+  `𝔤𝔩 n ℝ`, of its complexification, of `universalEnveloping n = U(𝔤𝔩 n ℂ)`, and of its
+  centre `centerUniversalEnveloping n` — the action of condition (c).
+* `AutomorphicForm.IsKFinite` and `AutomorphicForm.IsZFinite`: the finiteness conditions (b2)
+  and (c), for an abstract group and module respectively.
+* `ratDiagonal` and `orthogonalSubgroup`: the diagonal copy of `GL n ℚ` in `G(𝔸_f) × G(ℝ)`
+  (condition (a)) and the orthogonal group `K = O n ℝ` (condition (b2)).
+* `IsSmoothAdelic` and `IsAutomorphicForm`: smoothness on `G(𝔸)`, and the definition itself.
+
+## Relation to the literature
+
+Buzzard states (b2) through a finite-dimensional representation `σ` of `K`; for compact `K`
+that formulation is equivalent to the one used here, since the span of the translates is a
+continuous, hence semisimple, finite-dimensional representation of `K`. Conditions (b1) and
+(b2) together are the `K`-finiteness of Getz-Hahn's Definition 6.5 for `K = K_∞ K^∞` with
+`K^∞ ≤ G(𝔸_f)` compact open.
+
+Condition (d) follows Buzzard in letting the constants depend on the finite variable.
+Getz-Hahn's Definition 6.4 instead imposes one global bound `|f g| ≤ c * H g ^ r` for their
+adelic height `H`; for `GL n` that height factors as `H (x, y) = H_f x * gnorm y`, so the
+global bound implies (d). Only these implications are asserted; no equivalence with
+Getz-Hahn's full definition is claimed.
 
 ## Implementation notes
 
-The algebra in condition (c) is Mathlib's: the complexified Lie algebra of `GL n ℝ` is
-`𝔤𝔩 n ℂ = Matrix n n ℂ`, which is a `LieAlgebra ℂ` under the commutator bracket via
-`LieAlgebra.ofAssociativeAlgebra`, and the centre is
-`Subalgebra.center ℂ (UniversalEnvelopingAlgebra ℂ (Matrix n n ℂ))`.
+Smoothness on `GL n ℝ` is phrased as the existence of a `C^∞` extension to the open set of
+invertible matrices (`IsSmoothOnGL`), rather than through a manifold structure: the normed
+ring instances on `Matrix n n ℝ` that would give `GL n ℝ` a chart are scoped, and conflict
+with the product topology that `GL n ℝ` already carries.
 
-The action of that centre is constructed, not assumed. `𝔤𝔩 n ℝ` acts on the `C^∞` functions on
-`GL n ℝ` by left invariant differential operators, defined by differentiating along the
-one-parameter subgroup: `(X • φ) y = d/dt φ (y * exp (t • X)) |_{t = 0}`. Equivalently, since
-`GL n ℝ` is open in `Matrix n n ℝ` and left translation is the restriction of a linear map,
-`(X • φ) y = fderiv ℝ F y (y * X)` for any `C^∞` extension `F` of `φ`, which is independent of
-the extension because `{M | IsUnit M}` is open; `lieDerivFun_eq_fderiv` is that bridge, and
-every algebraic property is proved through it. The bracket identity comes out of the product
-rule, the second-order terms cancelling by symmetry of the second derivative. Complexifying
-gives `𝔤𝔩 n ℂ` acting, `UniversalEnvelopingAlgebra.lift` extends the action to `U(𝔤𝔩 n ℂ)`, and
-restricting to the centre gives `centerAction` and the module structure that condition (c) uses.
+The action of condition (c) is constructed, not assumed. `X ∈ 𝔤𝔩 n ℝ` acts by differentiating
+along the one-parameter subgroup, `(X • φ) y = d/dt φ (y * exp (t • X)) |_{t = 0}`; this
+equals `fderiv ℝ F y (y * X)` for any `C^∞` extension `F` of `φ` (`lieDerivFun_eq_fderiv`),
+through which every algebraic property is proved. The bracket identity is the product rule
+plus symmetry of the second derivative; complexifying and applying
+`UniversalEnvelopingAlgebra.lift` gives `centerAction`. The action lives on `smoothGL n`, not
+on all of `G(𝔸) → ℂ` — a differential operator has nothing to act on at a non-differentiable
+function — so condition (c) asks for one ideal annihilating every slice `y ↦ f (x, y)` at
+once, the finite variable being a spectator.
 
-Note where the action lives: on `smoothGL n`, the `C^∞` functions on `GL n ℝ`, and hence on
-`GL n 𝔸ᶠ[ℤ, ℚ] → smoothGL n` for a function of both variables, which is how condition (c) is
-stated. It cannot live on all of `G(𝔸_f) × GL n ℝ → ℂ`, since a differential operator has
-nothing to act on at a function that is not differentiable, and it does not preserve the
-continuity and local constancy in the finite variable that `IsSmoothAdelic` also asks for. The
-finite variable is a spectator throughout, and a single ideal of the centre is required to
-annihilate every slice.
+The product rule is proved over an abstract finite-dimensional normed `ℝ`-algebra and
+instantiated at `Matrix n n ℝ`. That is forced: Mathlib's norms on `Matrix n n ℝ` are scoped
+instances while its topology is global, so instance search cannot assemble
+`SeminormedAddCommGroup (Matrix n n ℝ →L[ℝ] ℂ)` for the written-out type even though the
+instance term typechecks, and the second-derivative lemmas behind the product rule need that
+instance as an argument. Instantiating an abstract lemma supplies its instance arguments
+instead of searching for them.
 
-The subgroup `Γ` of condition (a) is `Matrix.GeneralLinearGroup.ratDiagonal n`, the range of
-the diagonal embedding `GL n ℚ →* GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ` induced by the inclusions of `ℚ`
-into the finite adeles and into `ℝ`.
-
-The `K` of the pair `(G, K)` is `Matrix.GeneralLinearGroup.orthogonalSubgroup n`, the matrices
-whose transpose is their inverse. Two facts about it are asserted in its docstring but not
-formalised here: that it is compact, and that it is maximal among the compact subgroups of
-`GL n ℝ` — the latter being a theorem (Cartan-Iwasawa-Malcev), which also says that every
-maximal compact subgroup is conjugate to this one, so nothing is lost by fixing it. What is
-proved is the boundedness half of compactness,
-`abs_coe_le_one_of_mem_orthogonalSubgroup`; closedness and the passage to the subspace topology
-of `GL n ℝ` are not, the latter running into the same scoped-instance problem as above, since
-Mathlib's order instances on `Matrix n n ℝ` are scoped too.
-
-Smoothness in the archimedean variable is stated as the existence of a `C^∞` extension to the
-open set of invertible matrices, rather than through a manifold structure on `GL n ℝ`: the
-normed ring instances on `Matrix n n ℝ` that would give `GL n ℝ` a chart are scoped, and
-conflict with the product topology that `GL n ℝ` already carries.
-
-That choice has a cost which matters for building the action, and which is worth recording.
-Mathlib's norms on `Matrix n n ℝ` are scoped instances, while its topology is a global one, so
-for a type *written out* as `Matrix n n ℝ →L[ℝ] ℂ` the elaborator builds the arrow from the
-global topology and instance search then fails to find `SeminormedAddCommGroup` for it, even
-though the instance term `ContinuousLinearMap.toSeminormedAddCommGroup` typechecks at that type.
-First derivatives are unaffected, since there the space of operators is only ever *produced* by
-unification. Second derivatives are not: `HasFDerivAt.prodMk` and `HasFDerivAt.comp`, which the
-product rule for `M ↦ fderiv ℝ F M (M * X)` goes through, need that instance for the space of
-operators as an argument, and they fail. A plain Pi type does not have the problem: instance
-search succeeds for `(n × n → ℝ) →L[ℝ] ℂ` and for `EuclideanSpace ℝ (n × n) →L[ℝ] ℂ`. So the
-analysis is therefore stated over an abstract finite-dimensional normed `ℝ`-algebra, where the
-instances are section variables, and instantiated at `Matrix n n ℝ` — instantiating a lemma
-supplies its instance arguments instead of searching for them.
+Compactness of `orthogonalSubgroup n` and its maximality (Cartan-Iwasawa-Malcev, which also
+makes it unique up to conjugacy) are asserted in its docstring but not formalised; of
+compactness, the boundedness half is proved (`abs_coe_le_one_of_mem_orthogonalSubgroup`).
 
 *References:*
  - A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
@@ -174,28 +128,23 @@ supplies its instance arguments instead of searching for them.
    §1
  - [J. R. Getz and H. Hahn, *An Introduction to Automorphic Representations*, GTM 300
    (2024)](https://sites.duke.edu/jgetz/files/2022/04/Graduate_Text.pdf), §6.2 and §6.3;
-   in the numbering of that text, Definition 6.1 (moderate growth), Definition 6.2
-   (`Z(𝔤)`-finiteness), Definition 6.4 (moderate growth, adelic) and Definition 6.5 (automorphic
-   form, adelic)
+   in the numbering of that text, Definitions 6.1 (moderate growth), 6.2 (`Z(𝔤)`-finiteness),
+   6.4 (adelic moderate growth) and 6.5 (adelic automorphic form)
 -/
 
 open scoped ContDiff
 
 /-!
-### Left invariant derivatives on a finite-dimensional normed algebra
+### The product rule, over an abstract normed algebra
 
-The action of `𝔤` in condition (c) is by left invariant differential operators. For a group
-of units inside an algebra `A` the left invariant vector field with value `X` at `1` has
-value `M * X` at `M`, because left translation is the restriction of a linear map, so the
-first-order operator is `F ↦ fun M => fderiv ℝ F M (M * X)` and no manifold structure is
-needed. This section proves the product rule for it and the resulting bracket identity.
-
-Both are stated for an abstract `A` rather than for `Matrix n n ℝ`. That is forced: see the
-implementation notes above for the instance obstruction, which the abstract form sidesteps
-because instantiating a lemma *supplies* instance arguments instead of searching for them.
+In a group of units, left translation is the restriction of a linear map, so the left
+invariant vector field with value `X` at `1` has value `M * X` at `M`, and the first-order
+operator is `F ↦ fun M => fderiv ℝ F M (M * X)` — no manifold structure needed. This section
+proves its product rule and bracket identity over an abstract algebra `A`; see the
+implementation notes for why `A` cannot simply be `Matrix n n ℝ`.
 -/
 
-section LieDerivAux
+namespace AutomorphicForm.LieDerivAux
 
 variable {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
   [FiniteDimensional ℝ A]
@@ -235,11 +184,13 @@ lemma fderiv_rightDeriv_sub_comm {F : A → ℂ} {y : A} (hF : ContDiffAt ℝ �
     show y * (X * Y - Y * X) = y * X * Y - y * Y * X by noncomm_ring, map_sub]
   linear_combination hsymm
 
-end LieDerivAux
+end AutomorphicForm.LieDerivAux
 
 namespace Matrix.GeneralLinearGroup
 
 variable {n : Type*} [Fintype n] [Nonempty n]
+
+/-! ### Slow increase: condition (d) -/
 
 /-- The sup norm on the entries of a matrix: for `n = 2` this is
 `|(a b; c d)| = max {|a|, |b|, |c|, |d|}`. -/
@@ -286,12 +237,14 @@ lemma IsSlowlyIncreasing.of_bounded {φ : GL n ℝ → ℂ} {C : ℝ} (h : ∀ y
 lemma isSlowlyIncreasing_const (c : ℂ) : IsSlowlyIncreasing (fun _ : GL n ℝ => c) :=
   IsSlowlyIncreasing.of_bounded fun _ => le_rfl
 
-lemma IsSlowlyIncreasing.const_smul {φ : GL n ℝ → ℂ} (hφ : IsSlowlyIncreasing φ) (c : ℂ) :
+lemma IsSlowlyIncreasing.const_mul {φ : GL n ℝ → ℂ} (hφ : IsSlowlyIncreasing φ) (c : ℂ) :
     IsSlowlyIncreasing fun y => c * φ y := by
   obtain ⟨C, r, hC⟩ := hφ
   refine ⟨‖c‖ * C, r, fun y => ?_⟩
   rw [norm_mul, mul_assoc]
   exact mul_le_mul_of_nonneg_left (hC y) (norm_nonneg c)
+
+/-! ### Smooth functions on `GL n ℝ` -/
 
 section Smooth
 
@@ -360,12 +313,20 @@ lemma fderiv_extendGL_eq {φ : GL n ℝ → ℂ} {F : Matrix n n ℝ → ℂ} (h
   obtain ⟨u, rfl⟩ := hM
   rw [extendGL_coe hφ, hF]
 
+/-!
+#### Left invariant derivatives
+
+`(X • φ) y = d/dt φ (y * exp (t • X)) |_{t = 0}`, proved equal to the directional derivative
+`fderiv ℝ F y (y * X)` of any smooth extension `F` (`lieDerivFun_eq_fderiv`), which is the
+form all its properties are established in.
+-/
+
 /-- The exponential of a matrix, as an element of `GL n ℝ`: `exp X` is invertible with
 inverse `exp (-X)`. -/
 noncomputable def expGL (X : Matrix n n ℝ) : GL n ℝ := (NormedSpace.isUnit_exp X).unit
 
 @[simp]
-lemma expGL_coe (X : Matrix n n ℝ) : (expGL X : Matrix n n ℝ) = NormedSpace.exp X :=
+lemma coe_expGL (X : Matrix n n ℝ) : (expGL X : Matrix n n ℝ) = NormedSpace.exp X :=
   (NormedSpace.isUnit_exp X).unit_spec
 
 @[simp]
@@ -453,15 +414,15 @@ lemma lieDerivFun_const_smul {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (c 
   simp [lieDerivFun_eq_fderiv hφ]
 
 @[simp]
-lemma lieDerivFun_zeroX (φ : GL n ℝ → ℂ) : lieDerivFun 0 φ = 0 := by
+lemma lieDerivFun_zero_left (φ : GL n ℝ → ℂ) : lieDerivFun 0 φ = 0 := by
   funext y; simp [lieDerivFun]
 
-lemma lieDerivFun_addX {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (X X' : Matrix n n ℝ) :
+lemma lieDerivFun_add_left {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (X X' : Matrix n n ℝ) :
     lieDerivFun (X + X') φ = lieDerivFun X φ + lieDerivFun X' φ := by
   funext y
   simp [lieDerivFun_eq_fderiv hφ, mul_add]
 
-lemma lieDerivFun_smulX {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (r : ℝ) (X : Matrix n n ℝ) :
+lemma lieDerivFun_smul_left {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (r : ℝ) (X : Matrix n n ℝ) :
     lieDerivFun (r • X) φ = r • lieDerivFun X φ := by
   funext y
   simp [lieDerivFun_eq_fderiv hφ]
@@ -474,7 +435,7 @@ noncomputable def lieDeriv (X : Matrix n n ℝ) : smoothGL n →ₗ[ℂ] smoothG
   map_smul' c φ := Subtype.ext (by simpa using lieDerivFun_const_smul φ.2 c X)
 
 @[simp]
-lemma lieDeriv_coe (X : Matrix n n ℝ) (φ : smoothGL n) :
+lemma coe_lieDeriv (X : Matrix n n ℝ) (φ : smoothGL n) :
     (lieDeriv X φ : GL n ℝ → ℂ) = lieDerivFun X (φ : GL n ℝ → ℂ) := rfl
 
 /-- The commutator of two left invariant derivatives is the left invariant derivative along the
@@ -493,7 +454,8 @@ lemma lieDerivFun_bracket {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (X Y :
   rw [Pi.sub_apply, lieDerivFun_eq_fderiv hφ (X * Y - Y * X) y,
     lieDerivFun_eq_fderiv (hφ.lieDerivFun Y) X y, lieDerivFun_eq_fderiv (hφ.lieDerivFun X) Y y,
     hX, hY]
-  exact (fderiv_rightDeriv_sub_comm (contDiffAt_extendGL hφ y) X Y).symm
+  exact (AutomorphicForm.LieDerivAux.fderiv_rightDeriv_sub_comm
+    (contDiffAt_extendGL hφ y) X Y).symm
 
 lemma lieDeriv_bracket (X Y : Matrix n n ℝ) :
     lieDeriv (X * Y - Y * X) = lieDeriv X * lieDeriv Y - lieDeriv Y * lieDeriv X := by
@@ -505,11 +467,11 @@ lemma lieDeriv_zero : lieDeriv (0 : Matrix n n ℝ) = 0 :=
   LinearMap.ext fun φ => Subtype.ext (by simp)
 
 lemma lieDeriv_add (X X' : Matrix n n ℝ) : lieDeriv (X + X') = lieDeriv X + lieDeriv X' :=
-  LinearMap.ext fun φ => Subtype.ext (by simpa using lieDerivFun_addX φ.2 X X')
+  LinearMap.ext fun φ => Subtype.ext (by simpa using lieDerivFun_add_left φ.2 X X')
 
 lemma lieDeriv_real_smul (r : ℝ) (X : Matrix n n ℝ) :
     lieDeriv (r • X) = (r : ℂ) • lieDeriv X :=
-  LinearMap.ext fun φ => Subtype.ext (by simpa using lieDerivFun_smulX φ.2 r X)
+  LinearMap.ext fun φ => Subtype.ext (by simpa using lieDerivFun_smul_left φ.2 r X)
 
 lemma lieDeriv_neg (X : Matrix n n ℝ) : lieDeriv (-X) = -lieDeriv X := by
   rw [show -X = (-1 : ℝ) • X by simp, lieDeriv_real_smul]
@@ -628,6 +590,8 @@ lemma lieDerivC_bracket (Z W : Matrix n n ℂ) :
 
 end Smooth
 
+/-! ### The enveloping algebra, its centre, and their action: condition (c) -/
+
 -- `Matrix n n ℂ` is a Lie ring under the commutator; Mathlib keeps this instance local, since
 -- it competes with the bracket of a Lie algebra given abstractly.
 attribute [local instance 100] LieRing.ofAssociativeRing
@@ -688,6 +652,8 @@ end Matrix.GeneralLinearGroup
 
 namespace AutomorphicForm
 
+/-! ### The finiteness conditions (b2) and (c), abstractly -/
+
 section KFinite
 
 variable {G : Type*} [Group G] (K : Subgroup G) (k : Type*) [Field k] (f : G → k)
@@ -746,6 +712,8 @@ open scoped IsDedekindDomain.FiniteAdeleRing
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
+/-! ### The subgroups `Γ = G(ℚ)` and `K = O n ℝ`: conditions (a) and (b2) -/
+
 variable (n) in
 /-- The diagonal embedding of the rational points `G(ℚ) = GL n ℚ` into
 `G(𝔸_f) × G(ℝ) = GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ`, through the inclusions of `ℚ` into the finite
@@ -803,13 +771,14 @@ lemma abs_coe_le_one_of_mem_orthogonalSubgroup {y : GL n ℝ} (hy : y ∈ orthog
 
 variable [Nonempty n]
 
+/-! ### The definition -/
+
 /-- Smoothness of a function on `G(𝔸) = G(𝔸_f) × G(ℝ)`, with `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, ℚ]`:
 continuous, locally constant in the finite variable, and `C^∞` in the archimedean variable. -/
 structure IsSmoothAdelic (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : Prop where
   continuous : Continuous f
   locallyConstant : ∀ y : GL n ℝ, IsLocallyConstant fun x : GL n 𝔸ᶠ[ℤ, ℚ] => f (x, y)
   smoothOnGL : ∀ x : GL n 𝔸ᶠ[ℤ, ℚ], IsSmoothOnGL fun y : GL n ℝ => f (x, y)
-
 
 /-- An automorphic form for `(G, K)` in the sense of Borel-Jacquet, with
 `G = GL n / ℚ` and `K = O n ℝ`: `G(𝔸)` is written as
