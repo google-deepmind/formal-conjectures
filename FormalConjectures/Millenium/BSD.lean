@@ -37,7 +37,106 @@ import FormalConjecturesUtil
   [PDF](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
+- [Silverman2009] Joseph H. Silverman. *The Arithmetic of Elliptic Curves*. 2nd ed., Graduate Texts
+  in Mathematics 106, Springer (2009), [doi](https://doi.org/10.1007/978-0-387-09494-6)
 -/
+
+namespace WeierstrassCurve
+
+section GlobalMinimal
+
+/-- A Weierstrass equation over $\mathbb{Q}$ is *globally minimal* if its coefficients lie in
+$\mathbb{Z}$ and $|\Delta|$ is least among all Weierstrass equations with coefficients in
+$\mathbb{Z}$ that are isomorphic to it over $\mathbb{Q}$.
+
+For an elliptic curve this is equivalent to the definition in [Silverman2009], Section VIII.8: an
+equation with coefficients in $\mathbb{Z}$ that is minimal at every prime. See
+`WeierstrassCurve.isGlobalMinimal_iff_forall_isMinimal`. -/
+@[mk_iff]
+class IsGlobalMinimal (W : WeierstrassCurve ℚ) : Prop extends W.IsIntegral ℤ where
+  abs_Δ_le : ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → |W.Δ| ≤ |(C • W).Δ|
+
+/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to one with coefficients in
+$\mathbb{Z}$. -/
+@[category API, AMS 11 14]
+theorem exists_isIntegral_int (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ := by
+  obtain ⟨b, hb⟩ := IsLocalization.exist_integer_multiples_of_finset (nonZeroDivisors ℤ)
+    {W.a₁, W.a₂, W.a₃, W.a₄, W.a₆}
+  have hb0 : ((b : ℤ) : ℚ) ≠ 0 := by exact_mod_cast nonZeroDivisors.coe_ne_zero b
+  have key : ∀ (n : ℕ) (a : ℚ), IsLocalization.IsInteger ℤ ((b : ℤ) • a) →
+      ∃ r : ℤ, algebraMap ℤ ℚ r = ((b : ℤ) : ℚ) ^ (n + 1) * a := fun n a ⟨r, hr⟩ ↦
+    ⟨(b : ℤ) ^ n * r, by push_cast at hr ⊢; linear_combination ((b : ℤ) : ℚ) ^ n * hr⟩
+  refine ⟨⟨(Units.mk0 _ hb0)⁻¹, 0, 0, 0⟩, isIntegral_of_exists_lift ℤ ?_ ?_ ?_ ?_ ?_⟩
+  · simpa [variableChange_a₁] using key 0 _ (hb _ (by simp))
+  · simpa [variableChange_a₂] using key 1 _ (hb _ (by simp))
+  · simpa [variableChange_a₃] using key 2 _ (hb _ (by simp))
+  · simpa [variableChange_a₄] using key 3 _ (hb _ (by simp))
+  · simpa [variableChange_a₆] using key 5 _ (hb _ (by simp))
+
+/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to a globally minimal one. -/
+@[category API, AMS 11 14]
+theorem exists_isGlobalMinimal (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, IsGlobalMinimal (C • W) := by
+  classical
+  have key : ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → ∃ n : ℕ, |(C • W).Δ| = n :=
+    fun C _ ↦ let ⟨r, hr⟩ := Δ_integral_of_isIntegral ℤ (C • W)
+      ⟨r.natAbs, by simp [← hr, Nat.cast_natAbs]⟩
+  obtain ⟨C₀, hC₀⟩ := W.exists_isIntegral_int
+  have h : ∃ n : ℕ, ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ ∧ |(C • W).Δ| = n :=
+    (key C₀ hC₀).imp fun n hn ↦ ⟨C₀, hC₀, hn⟩
+  obtain ⟨C, hC, hn⟩ := Nat.find_spec h
+  refine ⟨C, { toIsIntegral := hC, abs_Δ_le := fun C' hC' ↦ ?_ }⟩
+  obtain ⟨n', hn'⟩ := key (C' * C) (by rwa [mul_smul])
+  rw [← mul_smul, hn, hn', Nat.cast_le]
+  exact Nat.find_min' h ⟨C' * C, by rwa [mul_smul], hn'⟩
+
+/-- A globally minimal Weierstrass equation isomorphic to `W`, chosen using
+`WeierstrassCurve.exists_isGlobalMinimal`. This is the global analogue of
+`WeierstrassCurve.minimal`. -/
+noncomputable def globalMinimal (W : WeierstrassCurve ℚ) : WeierstrassCurve ℚ :=
+  W.exists_isGlobalMinimal.choose • W
+
+instance (W : WeierstrassCurve ℚ) : W.globalMinimal.IsGlobalMinimal :=
+  W.exists_isGlobalMinimal.choose_spec
+
+instance (W : WeierstrassCurve ℚ) [W.IsElliptic] : W.globalMinimal.IsElliptic :=
+  inferInstanceAs (W.exists_isGlobalMinimal.choose • W).IsElliptic
+
+@[category API, AMS 11 14]
+theorem exists_smul_eq_globalMinimal (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, C • W = W.globalMinimal :=
+  ⟨_, rfl⟩
+
+@[category API, AMS 11 14]
+theorem abs_Δ_eq_of_isGlobalMinimal (W : WeierstrassCurve ℚ) (C : VariableChange ℚ)
+    [W.IsGlobalMinimal] [(C • W).IsGlobalMinimal] : |(C • W).Δ| = |W.Δ| := by
+  have h := IsGlobalMinimal.abs_Δ_le (W := C • W) C⁻¹ (by rw [inv_smul_smul]; infer_instance)
+  exact le_antisymm (by rwa [inv_smul_smul] at h) (IsGlobalMinimal.abs_Δ_le C inferInstance)
+
+/-- Two globally minimal Weierstrass equations for the same elliptic curve over $\mathbb{Q}$ differ
+by a change of variables with $u = \pm 1$. Compare [Silverman2009], Proposition VII.1.3(b). -/
+@[category API, AMS 11 14]
+theorem abs_u_eq_one_of_isGlobalMinimal (W : WeierstrassCurve ℚ) [W.IsElliptic]
+    (C : VariableChange ℚ) [W.IsGlobalMinimal] [(C • W).IsGlobalMinimal] :
+    |(C.u : ℚ)| = 1 := by
+  have h := abs_Δ_eq_of_isGlobalMinimal W C
+  rw [variableChange_Δ, abs_mul, mul_eq_right₀ (abs_ne_zero.2 W.isUnit_Δ.ne_zero)] at h
+  simpa [abs_pow, pow_eq_one_iff_of_nonneg] using h
+
+open IsDedekindDomain in
+/-- An elliptic curve over $\mathbb{Q}$ is globally minimal if and only if its coefficients lie in
+$\mathbb{Z}$ and it is minimal at every prime. This is [Silverman2009], Corollary VIII.8.3, together
+with Proposition VII.1.3; it uses that $\mathbb{Z}$ is a principal ideal domain. -/
+@[category textbook, AMS 11 14]
+theorem isGlobalMinimal_iff_forall_isMinimal (W : WeierstrassCurve ℚ) [W.IsElliptic] :
+    W.IsGlobalMinimal ↔ W.IsIntegral ℤ ∧ ∀ v : HeightOneSpectrum ℤ,
+      (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ) := by
+  sorry
+
+end GlobalMinimal
+
+end WeierstrassCurve
 
 namespace BirchSwinnertonDyer
 
