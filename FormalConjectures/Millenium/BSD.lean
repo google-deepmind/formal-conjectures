@@ -58,11 +58,16 @@ theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : Is
     (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
   exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs => sub_eq_zero.1 hs
 
-/-- **Hasse--Weil conjecture** for elliptic curves over $\mathbb{Q}$, a consequence of the
-modularity theorem: the $L$-function of an elliptic curve over $\mathbb{Q}$ extends to the whole
-plane. Over a general number field this is open. -/
+/-- **Hasse--Weil conjecture**: the $L$-function of an elliptic curve over a number field extends
+to the whole plane. -/
 @[category research open, AMS 11 14]
-theorem exists_isLFunction (E : WeierstrassCurve ℚ) [E.IsElliptic] : ∃ L, IsLFunction E L := by
+theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLFunction E L := by
+  sorry
+
+/-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem. -/
+@[category research solved, AMS 11 14]
+theorem exists_isLFunction.variants.rat (E : WeierstrassCurve ℚ) [E.IsElliptic] :
+    ∃ L, IsLFunction E L := by
   sorry
 
 end BirchSwinnertonDyer
