@@ -65,6 +65,8 @@ $\overline{\mathbb{Q}}$.
 
 namespace SatoTateConjecture
 
+open Real
+
 /-- The thirteen rational CM $j$-invariants, corresponding respectively to the
 imaginary quadratic orders of discriminants
 $-3,-4,-7,-8,-11,-12,-16,-19,-27,-28,-43,-67,-163$. -/
@@ -86,35 +88,69 @@ reduction, this is the normalized Frobenius trace and lies in $[-1,1]$. -/
 noncomputable def normalisedAp
     (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℝ :=
   (ModularityConjecture.WeierstrassCurve.ap E p : ℝ) /
-    (2 * Real.sqrt (p : ℝ))
+    (2 * √p)
 
 /-- The cumulative distribution function of the Sato–Tate measure. For
 $t \in [-1,1]$, it is given by
 $$
-F(t) = \frac{t\sqrt{1-t^2}+\arcsin t}{\pi}+\frac12.
+F(t) = \frac{t\sqrt{1-t^2}+\arcsin t}{\pi}+\frac{1}{2}.
 $$
 Mathlib's definitions of `Real.sqrt` and `Real.arcsin` make this expression
 equal to $0$ for $t \le -1$ and $1$ for $t \ge 1$. -/
 noncomputable def satoTateCDF (t : ℝ) : ℝ :=
-  (t * Real.sqrt (1 - t ^ 2) + Real.arcsin t) / Real.pi + 1 / 2
+  (t * √(1 - t ^ 2) + arcsin t) / π + 1 / 2
 
 /-- For $a \le b$, the mass assigned to $[a,b]$ by the Sato–Tate distribution.
 This is a real-valued interval mass, not a `MeasureTheory.Measure` object. -/
 noncomputable def satoTateMeasure (a b : ℝ) : ℝ :=
   satoTateCDF b - satoTateCDF a
 
+/-- For $a \le b$, the mass assigned to $[a,b]$ by the Sato–Tate distribution, written in its
+usual integral form
+$$
+\frac{2}{\pi}\int_a^b \sqrt{1-x^2}\,dx.
+$$ -/
+noncomputable def satoTateIntegral (a b : ℝ) : ℝ :=
+  2 / π * ∫ x in a..b, √(1 - x ^ 2)
+
+/-- Sanity check: for $-1 \le a \le b \le 1$, the closed-form interval mass `satoTateMeasure`
+agrees with the integral form `satoTateIntegral`. -/
+@[category test, AMS 11 14]
+theorem satoTateMeasure_eq_satoTateIntegral
+    (a b : ℝ) (ha : -1 ≤ a) (hab : a ≤ b) (hb : b ≤ 1) :
+    satoTateMeasure a b = satoTateIntegral a b := by
+  have hderiv : ∀ x ∈ Set.Ioo a b, HasDerivAt satoTateCDF (2 / π * √(1 - x ^ 2)) x := by
+    intro x hx
+    have hx1 : -1 < x := ha.trans_lt hx.1
+    have hx2 : x < 1 := hx.2.trans_le hb
+    have hpos : (0 : ℝ) < 1 - x ^ 2 := by nlinarith
+    have hsq : HasDerivAt (fun t : ℝ ↦ 1 - t ^ 2) (-(2 * x)) x := by
+      simpa using (hasDerivAt_pow 2 x).const_sub 1
+    have heq : 1 * √(1 - x ^ 2) + x * (-(2 * x) / (2 * √(1 - x ^ 2))) + 1 / √(1 - x ^ 2) =
+        2 * √(1 - x ^ 2) := by
+      grind
+    have h2 : (2 : ℝ) / π * √(1 - x ^ 2) = (2 * √(1 - x ^ 2)) / π := by ring
+    rw [h2, ← heq]
+    exact ((((hasDerivAt_id x).mul (hsq.sqrt hpos.ne')).add <|
+      hasDerivAt_arcsin hx1.ne' hx2.ne).div_const π).add_const (1 / 2)
+  have hint : IntervalIntegrable (fun x : ℝ ↦ 2 / π * √(1 - x ^ 2))
+      MeasureTheory.volume a b := by
+    apply Continuous.intervalIntegrable
+    fun_prop
+  have key := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hab (by
+    fun_prop [satoTateCDF]) hderiv hint
+  grind [satoTateMeasure, satoTateIntegral, ← intervalIntegral.integral_const_mul]
+
 /-- The number of primes $p < N$ for which the normalized coefficient belongs
 to $[a,b]$. -/
 noncomputable def primeCountInInterval
-    (E : WeierstrassCurve ℚ) [E.IsElliptic] (a b : ℝ) (N : ℕ) : ℕ := by
-  classical
-  exact
-    ((Nat.primesBelow N).filter
+    (E : WeierstrassCurve ℚ) [E.IsElliptic] (a b : ℝ) (N : ℕ) : ℕ :=
+  ((Nat.primesBelow N).filter
       (fun p : ℕ ↦ a ≤ normalisedAp E p ∧ normalisedAp E p ≤ b)).card
 
-/-- **The Sato–Tate conjecture** (now a theorem): for a non-CM elliptic curve
-$E$ over $\mathbb{Q}$ and $-1 \le a \le b \le 1$, the proportion of primes
-$p < N$ whose normalized coefficient belongs to $[a,b]$ tends to
+/-- **The Sato–Tate conjecture**: for a non-CM elliptic curve $E$ over $\mathbb{Q}$ and
+$-1 \le a \le b \le 1$, the proportion of primes $p < N$ whose normalized coefficient
+belongs to $[a,b]$ tends to
 $$
 \frac{2}{\pi}\int_a^b \sqrt{1-x^2}\,dx
 $$
