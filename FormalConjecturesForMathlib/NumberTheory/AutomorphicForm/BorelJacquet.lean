@@ -27,9 +27,14 @@ public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Mathlib.NumberTheory.Padics.ProperSpace
 public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 public import Mathlib.RingTheory.Ideal.Quotient.Operations
 public import Mathlib.Topology.Algebra.Group.Matrix
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Instances.Matrix
 public import Mathlib.Topology.LocallyConstant.Basic
 
 @[expose] public section
@@ -75,7 +80,14 @@ order the file builds them:
   and (c), for an abstract group and module respectively.
 * `ratDiagonal` and `orthogonalSubgroup`: the diagonal copy of `GL n ℚ` in `G(𝔸_f) × G(ℝ)`
   (condition (a)) and the orthogonal group `K = O n ℝ` (condition (b2)).
+* `integralAdeles` and `integralSubgroup`: the integral adeles `Ẑ` and the compact open
+  subgroup `GL n Ẑ` of `G(𝔸_f)` witnessing condition (b1).
 * `IsSmoothAdelic` and `IsAutomorphicForm`: smoothness on `G(𝔸)`, and the definition itself.
+* `isAutomorphicForm_one`: the constant function `1` is an automorphic form — a sanity check
+  exercising every condition; condition (c) holds through `constantsCharacter`, the character
+  by which the centre acts on constants.
+* `automorphicForms` and `rightTranslation`: the automorphic forms as a `ℂ`-submodule of the
+  functions on `G(𝔸)`, with the right translation representation of `G(𝔸_f)` on it.
 
 ## Relation to the literature
 
@@ -224,6 +236,42 @@ lemma gnorm_nonneg (y : GL n ℝ) : 0 ≤ gnorm y :=
 lemma gnorm_inv (y : GL n ℝ) : gnorm y⁻¹ = gnorm y := by
   rw [gnorm, gnorm, inv_inv, max_comm]
 
+/-- `gnorm` is uniformly bounded below: since `y * y⁻¹ = 1`, the entries of `y` and `y⁻¹`
+cannot all be small. This makes the exponent in a slow-increase bound enlargeable, hence
+`IsSlowlyIncreasing` closed under addition. -/
+lemma inv_card_le_gnorm (y : GL n ℝ) : (Fintype.card n : ℝ)⁻¹ ≤ gnorm y := by
+  obtain ⟨i⟩ := ‹Nonempty n›
+  have hcard : (1 : ℝ) ≤ Fintype.card n := by exact_mod_cast Fintype.card_pos
+  have hbound : (1 : ℝ) ≤ Fintype.card n * (gnorm y * gnorm y) := by
+    have hy : ∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i = 1 := by
+      have h : ((y : Matrix n n ℝ) * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ)) i i = 1 := by
+        rw [← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_apply_eq]
+      simpa [Matrix.mul_apply] using h
+    calc (1 : ℝ)
+        = |∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i| := by
+          rw [hy, abs_one]
+      _ ≤ ∑ k, |(y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i| :=
+          Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _k : n, gnorm y * gnorm y := Finset.sum_le_sum fun k _ => by
+          rw [abs_mul]
+          exact mul_le_mul ((le_entrySup _ i k).trans (le_max_left _ _))
+            ((le_entrySup _ k i).trans (le_max_right _ _)) (abs_nonneg _) (gnorm_nonneg _)
+      _ = Fintype.card n * (gnorm y * gnorm y) := by
+          rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  by_contra hcon
+  replace hcon : gnorm y < (Fintype.card n : ℝ)⁻¹ := not_le.mp hcon
+  have hc0 : (0 : ℝ) < Fintype.card n := zero_lt_one.trans_le hcard
+  have h1 : Fintype.card n * (gnorm y * gnorm y)
+      ≤ Fintype.card n * ((Fintype.card n : ℝ)⁻¹ * gnorm y) :=
+    mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hcon.le (gnorm_nonneg y)) hc0.le
+  have h2 : (Fintype.card n : ℝ) * ((Fintype.card n : ℝ)⁻¹ * gnorm y) = gnorm y := by
+    field_simp
+  have h3 : (Fintype.card n : ℝ)⁻¹ ≤ 1 := inv_le_one_of_one_le₀ hcard
+  linarith [hbound.trans (h1.trans_eq h2)]
+
+lemma gnorm_pos (y : GL n ℝ) : 0 < gnorm y :=
+  ((inv_pos.mpr (by exact_mod_cast Fintype.card_pos)).trans_le (inv_card_le_gnorm y))
+
 /-- A function `φ : GL n ℝ → ℂ` is *slowly increasing*, or of *moderate growth*, if
 `‖φ y‖ ≤ C * ‖y‖ ^ r` for some `C` and `r`. This is condition (d) in the definition of an
 automorphic form. -/
@@ -243,6 +291,43 @@ lemma IsSlowlyIncreasing.const_mul {φ : GL n ℝ → ℂ} (hφ : IsSlowlyIncrea
   refine ⟨‖c‖ * C, r, fun y => ?_⟩
   rw [norm_mul, mul_assoc]
   exact mul_le_mul_of_nonneg_left (hC y) (norm_nonneg c)
+
+/-- A slow-increase bound with exponent `r` gives one with any exponent `r' ≥ r`: `gnorm` is
+bounded below by `(Fintype.card n)⁻¹ > 0`, so the ratio `gnorm y ^ (r - r')` is bounded. -/
+lemma exists_forall_norm_le_rpow_of_le {φ : GL n ℝ → ℂ} {C r : ℝ}
+    (h : ∀ y, ‖φ y‖ ≤ C * gnorm y ^ r) {r' : ℝ} (hr : r ≤ r') :
+    ∃ C', ∀ y, ‖φ y‖ ≤ C' * gnorm y ^ r' := by
+  set c₀ : ℝ := (Fintype.card n : ℝ)⁻¹ with hc₀
+  have hc₀0 : 0 < c₀ := inv_pos.mpr (by exact_mod_cast Fintype.card_pos)
+  have hC0 : 0 ≤ C := by
+    have h0 := (norm_nonneg (φ 1)).trans (h 1)
+    exact (mul_nonneg_iff_of_pos_right (Real.rpow_pos_of_pos (gnorm_pos _) r)).mp h0
+  refine ⟨C * (c₀ ^ (r' - r))⁻¹, fun y => ?_⟩
+  have hkey : gnorm y ^ r ≤ (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by
+    have hgpos := gnorm_pos y
+    have hle : c₀ ^ (r' - r) ≤ gnorm y ^ (r' - r) :=
+      Real.rpow_le_rpow hc₀0.le (inv_card_le_gnorm y) (sub_nonneg.mpr hr)
+    have hsplit : gnorm y ^ r' = gnorm y ^ (r' - r) * gnorm y ^ r := by
+      rw [← Real.rpow_add hgpos, sub_add_cancel]
+    have hone : (1 : ℝ) ≤ (c₀ ^ (r' - r))⁻¹ * gnorm y ^ (r' - r) := by
+      rw [← div_eq_inv_mul, le_div_iff₀ (Real.rpow_pos_of_pos hc₀0 _), one_mul]
+      exact hle
+    rw [hsplit, ← mul_assoc]
+    exact le_mul_of_one_le_left (Real.rpow_nonneg hgpos.le r) hone
+  calc ‖φ y‖ ≤ C * gnorm y ^ r := h y
+    _ ≤ C * ((c₀ ^ (r' - r))⁻¹ * gnorm y ^ r') := mul_le_mul_of_nonneg_left hkey hC0
+    _ = C * (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by ring
+
+protected lemma IsSlowlyIncreasing.add {φ ψ : GL n ℝ → ℂ} (hφ : IsSlowlyIncreasing φ)
+    (hψ : IsSlowlyIncreasing ψ) : IsSlowlyIncreasing (φ + ψ) := by
+  obtain ⟨C₁, r₁, h₁⟩ := hφ
+  obtain ⟨C₂, r₂, h₂⟩ := hψ
+  obtain ⟨C₁', h₁'⟩ := exists_forall_norm_le_rpow_of_le h₁ (le_max_left r₁ r₂)
+  obtain ⟨C₂', h₂'⟩ := exists_forall_norm_le_rpow_of_le h₂ (le_max_right r₁ r₂)
+  refine ⟨C₁' + C₂', max r₁ r₂, fun y => ?_⟩
+  calc ‖(φ + ψ) y‖ ≤ ‖φ y‖ + ‖ψ y‖ := norm_add_le _ _
+    _ ≤ C₁' * gnorm y ^ max r₁ r₂ + C₂' * gnorm y ^ max r₁ r₂ := add_le_add (h₁' y) (h₂' y)
+    _ = (C₁' + C₂') * gnorm y ^ max r₁ r₂ := (add_mul _ _ _).symm
 
 /-! ### Smooth functions on `GL n ℝ` -/
 
@@ -648,6 +733,100 @@ omit [Nonempty n] in
 lemma centerAction_smul (z : ↥(centerUniversalEnveloping n)) (φ : smoothGL n) :
     z • φ = centerAction z φ := rfl
 
+omit [Nonempty n] in
+instance : SMulCommClass ↥(centerUniversalEnveloping n) ℂ (smoothGL n) where
+  smul_comm z c φ := by rw [centerAction_smul, centerAction_smul, map_smul]
+
+omit [Nonempty n] in
+instance : IsScalarTower ℂ ↥(centerUniversalEnveloping n) (smoothGL n) where
+  smul_assoc c z φ := by
+    rw [centerAction_smul, centerAction_smul, map_smul, LinearMap.smul_apply]
+
+/-!
+#### Constant functions are `Z(𝔤)`-finite
+
+Left invariant derivatives kill constants, so the enveloping algebra maps the line of constant
+functions to itself, through the character `constantsCharacter`; its kernel is an ideal of
+finite codimension annihilating the constants.
+-/
+
+omit [Nonempty n] in
+lemma lieDerivFun_const (X : Matrix n n ℝ) (c : ℂ) :
+    lieDerivFun X (fun _ : GL n ℝ => c) = 0 := by
+  funext y
+  simp [lieDerivFun]
+
+variable (n) in
+omit [Nonempty n] in
+/-- The constant function `1` as an element of `smoothGL n`; the constant functions are the
+line it spans. -/
+def oneSmoothGL : smoothGL n := ⟨fun _ => 1, isSmoothOnGL_const 1⟩
+
+omit [Nonempty n] in
+/-- An element of the line of constant functions is determined by its value at `1`. -/
+lemma eq_smul_oneSmoothGL_of_mem_span {φ : smoothGL n} (hφ : φ ∈ (ℂ ∙ oneSmoothGL n)) :
+    φ = (φ : GL n ℝ → ℂ) 1 • oneSmoothGL n := by
+  obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hφ
+  congr 1
+  simp [oneSmoothGL]
+
+omit [Nonempty n] in
+/-- Left invariant differential operators map the constant functions to constant functions:
+the generators `lieDerivC X` kill them. -/
+lemma envelopingAction_mem_span_oneSmoothGL (u : universalEnveloping n) :
+    ∀ φ ∈ (ℂ ∙ oneSmoothGL n), envelopingAction u φ ∈ (ℂ ∙ oneSmoothGL n) := by
+  have hsurj : Function.Surjective (UniversalEnvelopingAlgebra.mkAlgHom ℂ (Matrix n n ℂ)) :=
+    RingCon.mkₐ_surjective _
+  obtain ⟨t, rfl⟩ := hsurj u
+  induction t using TensorAlgebra.induction with
+  | algebraMap c =>
+    intro φ hφ
+    rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply]
+    exact Submodule.smul_mem _ c hφ
+  | ι X =>
+    intro φ hφ
+    have hlie : ∀ Y : Matrix n n ℝ, lieDeriv Y (oneSmoothGL n) = 0 := fun Y =>
+      Subtype.ext (by simpa [oneSmoothGL] using lieDerivFun_const Y 1)
+    have hone : lieDerivC X (oneSmoothGL n) = 0 := by
+      simp [lieDerivC, hlie]
+    rw [show envelopingAction ((UniversalEnvelopingAlgebra.mkAlgHom ℂ (Matrix n n ℂ))
+      ((TensorAlgebra.ι ℂ) X)) = lieDerivC X from UniversalEnvelopingAlgebra.lift_ι_apply' ℂ _ X]
+    obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hφ
+    rw [map_smul, hone, smul_zero]
+    exact Submodule.zero_mem _
+  | mul a b ha hb =>
+    intro φ hφ
+    rw [map_mul, map_mul, Module.End.mul_apply]
+    exact ha _ (hb _ hφ)
+  | add a b ha hb =>
+    intro φ hφ
+    rw [map_add, map_add, LinearMap.add_apply]
+    exact Submodule.add_mem _ (ha _ hφ) (hb _ hφ)
+
+omit [Nonempty n] in
+lemma smul_oneSmoothGL_mem_span (z : ↥(centerUniversalEnveloping n)) :
+    z • oneSmoothGL n ∈ (ℂ ∙ oneSmoothGL n) := by
+  rw [centerAction_smul]
+  exact envelopingAction_mem_span_oneSmoothGL (z : universalEnveloping n) _
+    (Submodule.mem_span_singleton_self _)
+
+variable (n) in
+/-- The character by which the centre of the enveloping algebra acts on the constant
+functions: `z • 1 = constantsCharacter n z • 1`. Its kernel is an ideal of finite codimension
+annihilating the constants, which gives condition (c) for constant automorphic forms. -/
+noncomputable def constantsCharacter : ↥(centerUniversalEnveloping n) →ₐ[ℂ] ℂ where
+  toFun z := ((z • oneSmoothGL n : smoothGL n) : GL n ℝ → ℂ) 1
+  map_one' := by rw [one_smul]; simp [oneSmoothGL]
+  map_mul' z w := by
+    rw [mul_smul, eq_smul_oneSmoothGL_of_mem_span (smul_oneSmoothGL_mem_span w),
+      smul_comm z, Submodule.coe_smul, Pi.smul_apply]
+    simp [oneSmoothGL, mul_comm]
+  map_zero' := by rw [zero_smul]; simp
+  map_add' z w := by rw [add_smul]; simp
+  commutes' c := by
+    rw [algebraMap_smul, Submodule.coe_smul, Pi.smul_apply]
+    simp [oneSmoothGL]
+
 end Matrix.GeneralLinearGroup
 
 namespace AutomorphicForm
@@ -683,6 +862,29 @@ lemma isKFinite_of_rightInvariant (h : ∀ (x : G) (u : K), f (x * (u : G)) = f 
 lemma isKFinite_of_finite [Finite K] : IsKFinite K k f :=
   FiniteDimensional.span_of_finite k (Set.finite_range _)
 
+/-- `K`-finiteness is closed under addition: the translate span of `f + g` sits inside the sum
+of the translate spans. -/
+protected lemma IsKFinite.add {f g : G → k} (hf : IsKFinite K k f) (hg : IsKFinite K k g) :
+    IsKFinite K k (f + g) := by
+  have hle : rightTranslateSpan K k (f + g)
+      ≤ rightTranslateSpan K k f ⊔ rightTranslateSpan K k g := by
+    rw [rightTranslateSpan, Submodule.span_le]
+    rintro _ ⟨u, rfl⟩
+    exact add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨u, rfl⟩))
+      (Submodule.mem_sup_right (Submodule.subset_span ⟨u, rfl⟩))
+  have : FiniteDimensional k (rightTranslateSpan K k f) := hf
+  have : FiniteDimensional k (rightTranslateSpan K k g) := hg
+  exact Submodule.finiteDimensional_of_le hle
+
+protected lemma IsKFinite.const_smul {f : G → k} (hf : IsKFinite K k f) (c : k) :
+    IsKFinite K k (c • f) := by
+  have hle : rightTranslateSpan K k (c • f) ≤ rightTranslateSpan K k f := by
+    rw [rightTranslateSpan, Submodule.span_le]
+    rintro _ ⟨u, rfl⟩
+    exact Submodule.smul_mem _ c (Submodule.subset_span ⟨u, rfl⟩)
+  have : FiniteDimensional k (rightTranslateSpan K k f) := hf
+  exact Submodule.finiteDimensional_of_le hle
+
 end KFinite
 
 section ZFinite
@@ -700,6 +902,58 @@ This is Getz-Hahn's Definition 6.2, in the form they state for a vector of an ar
 def IsZFinite (m : M) : Prop :=
   ∃ I : Ideal Z, FiniteDimensional k (Z ⧸ I) ∧ ∀ z ∈ I, z • m = 0
 
+variable {k Z}
+
+lemma isZFinite_zero : IsZFinite k Z (0 : M) := by
+  refine ⟨⊤, ?_, fun z _ => smul_zero z⟩
+  have : Subsingleton (Z ⧸ (⊤ : Ideal Z)) := Submodule.Quotient.subsingleton_iff.mpr rfl
+  infer_instance
+
+/-- `Z`-finiteness is closed under addition: the intersection of the two annihilating ideals
+works, since `Z ⧸ (I ⊓ J)` embeds in `(Z ⧸ I) × (Z ⧸ J)`. -/
+protected lemma IsZFinite.add {m₁ m₂ : M} (h₁ : IsZFinite k Z m₁) (h₂ : IsZFinite k Z m₂) :
+    IsZFinite k Z (m₁ + m₂) := by
+  obtain ⟨I, hI, hIann⟩ := h₁
+  obtain ⟨J, hJ, hJann⟩ := h₂
+  refine ⟨I ⊓ J, ?_, fun z hz => by rw [smul_add, hIann z hz.1, hJann z hz.2, add_zero]⟩
+  have := hI; have := hJ
+  have hker : I ⊓ J ≤ LinearMap.ker (LinearMap.prod I.mkQ J.mkQ) := by
+    rw [LinearMap.ker_prod, Submodule.ker_mkQ, Submodule.ker_mkQ]
+  refine FiniteDimensional.of_injective
+    (LinearMap.restrictScalars k ((I ⊓ J).liftQ (LinearMap.prod I.mkQ J.mkQ) hker)) ?_
+  rw [LinearMap.coe_restrictScalars, ← LinearMap.ker_eq_bot]
+  exact Submodule.ker_liftQ_eq_bot _ _ _
+    (le_of_eq (by rw [LinearMap.ker_prod, Submodule.ker_mkQ, Submodule.ker_mkQ]))
+
+/-- `Z`-finiteness is preserved by scalar multiplication: the same ideal works. -/
+protected lemma IsZFinite.const_smul [Module k M] [IsScalarTower k Z M] {m : M}
+    (h : IsZFinite k Z m) (c : k) : IsZFinite k Z (c • m) := by
+  obtain ⟨I, hI, hann⟩ := h
+  refine ⟨I, hI, fun z hz => ?_⟩
+  rw [← algebraMap_smul Z c m, smul_smul, mul_comm, ← smul_smul, hann z hz, smul_zero]
+
+/-- An element on which `Z` acts through a `k`-algebra character is `Z`-finite: the kernel of
+the character is an ideal of finite codimension annihilating it. -/
+lemma IsZFinite.of_forall_smul_eq_algHom_smul [Module k M] (χ : Z →ₐ[k] k) {m : M}
+    (h : ∀ z, z • m = χ z • m) : IsZFinite k Z m := by
+  refine ⟨RingHom.ker χ, ?_, fun z hz => by rw [h z, RingHom.mem_ker.mp hz, zero_smul]⟩
+  exact FiniteDimensional.of_injective (Ideal.kerLiftAlg χ).toLinearMap
+    (Ideal.kerLiftAlg_injective χ)
+
+/-- A constant family with `Z`-finite value is `Z`-finite, with the same ideal. -/
+protected lemma IsZFinite.pi_const {ι : Type*} {m₀ : M} (h : IsZFinite k Z m₀) :
+    IsZFinite k Z (fun _ : ι => m₀) := by
+  obtain ⟨I, hI, hann⟩ := h
+  refine ⟨I, hI, fun z hz => funext fun _ => ?_⟩
+  simpa using hann z hz
+
+/-- Precomposition preserves `Z`-finiteness of a family, with the same ideal. -/
+protected lemma IsZFinite.comp {ι' ι : Type*} {m : ι → M} (h : IsZFinite k Z m) (σ : ι' → ι) :
+    IsZFinite k Z (m ∘ σ) := by
+  obtain ⟨I, hI, hann⟩ := h
+  refine ⟨I, hI, fun z hz => funext fun x => ?_⟩
+  simpa using congrFun (hann z hz) (σ x)
+
 end ZFinite
 
 end AutomorphicForm
@@ -711,6 +965,22 @@ open AutomorphicForm
 open scoped IsDedekindDomain.FiniteAdeleRing
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- The constant function `1` is `Z(𝔤)`-finite: the kernel of `constantsCharacter` is an ideal
+of finite codimension annihilating it. -/
+lemma isZFinite_oneSmoothGL :
+    IsZFinite ℂ ↥(centerUniversalEnveloping n) (oneSmoothGL n) :=
+  IsZFinite.of_forall_smul_eq_algHom_smul (constantsCharacter n) fun z =>
+    eq_smul_oneSmoothGL_of_mem_span (smul_oneSmoothGL_mem_span z)
+
+/-- Every constant function is `Z(𝔤)`-finite. -/
+lemma isZFinite_const_smoothGL (c : ℂ) :
+    IsZFinite ℂ ↥(centerUniversalEnveloping n)
+      (⟨fun _ => c, isSmoothOnGL_const c⟩ : smoothGL n) := by
+  have h : (⟨fun _ => c, isSmoothOnGL_const c⟩ : smoothGL n) = c • oneSmoothGL n :=
+    Subtype.ext (by funext y; simp [oneSmoothGL])
+  rw [h]
+  exact isZFinite_oneSmoothGL.const_smul c
 
 /-! ### The subgroups `Γ = G(ℚ)` and `K = O n ℝ`: conditions (a) and (b2) -/
 
@@ -769,6 +1039,117 @@ lemma abs_coe_le_one_of_mem_orthogonalSubgroup {y : GL n ℝ} (hy : y ∈ orthog
   rw [hd] at hle
   nlinarith [abs_nonneg (M i j), sq_abs (M i j)]
 
+section IntegralSubgroup
+
+open IsDedekindDomain RestrictedProduct
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The `v`-adic integers of `ℚ` are compact: they are homeomorphic to `ℤ_[p]` for the
+corresponding prime `p`. -/
+instance (v : HeightOneSpectrum ℤ) : CompactSpace (v.adicCompletionIntegers ℚ) := by
+  have : Fact (Rat.HeightOneSpectrum.primesEquiv v : ℕ).Prime :=
+    ⟨(Rat.HeightOneSpectrum.primesEquiv v).2⟩
+  let _ : Algebra ℤ ↥(v.adicCompletionIntegers ℚ) := Ring.toIntAlgebra _
+  exact (Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv
+    v).toHomeomorph.symm.compactSpace
+
+instance : T2Space 𝔸ᶠ[ℤ, ℚ] :=
+  inferInstanceAs (T2Space (Πʳ v : HeightOneSpectrum ℤ,
+    [v.adicCompletion ℚ, v.adicCompletionIntegers ℚ]))
+
+/-- The integral adeles `Ẑ = ∏ᵥ ℤᵥ` as a subring of the finite adeles of `ℚ`: the adeles that
+are integral at every place. -/
+def integralAdeles : Subring 𝔸ᶠ[ℤ, ℚ] where
+  carrier := {x | ∀ v, x v ∈ v.adicCompletionIntegers ℚ}
+  one_mem' _v := one_mem _
+  mul_mem' hx hy v := mul_mem (hx v) (hy v)
+  zero_mem' _v := zero_mem _
+  add_mem' hx hy v := add_mem (hx v) (hy v)
+  neg_mem' hx v := neg_mem (hx v)
+
+lemma isOpen_integralAdeles : IsOpen (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) :=
+  RestrictedProduct.isOpen_forall_mem fun _ => Valued.isOpen_valuationSubring _
+
+lemma isCompact_integralAdeles : IsCompact (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) := by
+  have h : (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ])
+      = Set.range (structureMap (fun v : HeightOneSpectrum ℤ => v.adicCompletion ℚ)
+          (fun v => v.adicCompletionIntegers ℚ) Filter.cofinite) := by
+    rw [range_structureMap]
+    rfl
+  rw [h, ← Set.image_univ]
+  exact (CompactSpace.isCompact_univ
+    (X := Π v : HeightOneSpectrum ℤ, v.adicCompletionIntegers ℚ)).image
+    isEmbedding_structureMap.continuous
+
+variable (n) in
+/-- `GL n Ẑ` inside `GL n 𝔸ᶠ[ℤ, ℚ]`: the matrices whose entries, and whose inverse's entries,
+are integral adeles. It is a compact open subgroup of `G(𝔸_f)`
+(`isOpen_integralSubgroup`, `isCompact_integralSubgroup`), as condition (b1) requires. -/
+def integralSubgroup : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ]) where
+  carrier := {g | (∀ i j, (g : Matrix n n 𝔸ᶠ[ℤ, ℚ]) i j ∈ integralAdeles) ∧
+      ∀ i j, (↑g⁻¹ : Matrix n n 𝔸ᶠ[ℤ, ℚ]) i j ∈ integralAdeles}
+  one_mem' := by
+    have h1 : ∀ i j : n, (1 : Matrix n n 𝔸ᶠ[ℤ, ℚ]) i j ∈ integralAdeles := fun i j => by
+      rcases eq_or_ne i j with rfl | h
+      · rw [Matrix.one_apply_eq]; exact one_mem _
+      · rw [Matrix.one_apply_ne h]; exact zero_mem _
+    exact ⟨fun i j => by simpa using h1 i j, fun i j => by simpa using h1 i j⟩
+  mul_mem' {a b} ha hb := by
+    refine ⟨fun i j => ?_, fun i j => ?_⟩
+    · rw [Units.val_mul, Matrix.mul_apply]
+      exact Subring.sum_mem _ fun k _ => mul_mem (ha.1 i k) (hb.1 k j)
+    · have hrev : ((a * b)⁻¹ : GL n 𝔸ᶠ[ℤ, ℚ]) = b⁻¹ * a⁻¹ := _root_.mul_inv_rev a b
+      rw [hrev, Units.val_mul, Matrix.mul_apply]
+      exact Subring.sum_mem _ fun k _ => mul_mem (hb.2 i k) (ha.2 k j)
+  inv_mem' {a} ha := ⟨ha.2, by rw [inv_inv]; exact ha.1⟩
+
+lemma isOpen_integralSubgroup : IsOpen ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
+  have hW : IsOpen {M : Matrix n n 𝔸ᶠ[ℤ, ℚ] | ∀ i j, M i j ∈ integralAdeles} := by
+    have h : {M : Matrix n n 𝔸ᶠ[ℤ, ℚ] | ∀ i j, M i j ∈ integralAdeles}
+        = ⋂ i, ⋂ j, (fun M : Matrix n n 𝔸ᶠ[ℤ, ℚ] => M i j) ⁻¹' integralAdeles := by
+      ext M; simp
+    rw [h]
+    exact isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j =>
+      isOpen_integralAdeles.preimage (continuous_id.matrix_elem i j)
+  exact (hW.preimage Units.continuous_val).inter (hW.preimage Units.continuous_coe_inv)
+
+lemma isCompact_integralSubgroup : IsCompact ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
+  set W : Set (Matrix n n 𝔸ᶠ[ℤ, ℚ]) := {M | ∀ i j, M i j ∈ integralAdeles} with hWdef
+  have hWc : IsCompact W := by
+    have := isCompact_iff_compactSpace.mp isCompact_integralAdeles
+    have hrange : Set.range (fun f : n → n → (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) =>
+        Matrix.of fun i j => (f i j : 𝔸ᶠ[ℤ, ℚ])) = W := by
+      ext M
+      constructor
+      · rintro ⟨f, rfl⟩ i j
+        exact (f i j).2
+      · intro hM
+        exact ⟨fun i j => ⟨M i j, hM i j⟩, rfl⟩
+    rw [← hrange]
+    refine isCompact_range (continuous_matrix fun i j => ?_)
+    simp only [Matrix.of_apply]
+    exact ((_root_.continuous_apply j).comp (_root_.continuous_apply i)).subtype_val
+  rw [Units.isEmbedding_embedProduct.isCompact_iff]
+  have himg : Units.embedProduct _ '' (integralSubgroup n)
+      = (fun p : Matrix n n 𝔸ᶠ[ℤ, ℚ] × Matrix n n 𝔸ᶠ[ℤ, ℚ] => (p.1, MulOpposite.op p.2)) ''
+        ((W ×ˢ W) ∩ {p | p.1 * p.2 = 1} ∩ {p | p.2 * p.1 = 1}) := by
+    ext p
+    constructor
+    · rintro ⟨g, hg, rfl⟩
+      refine ⟨((g : Matrix n n 𝔸ᶠ[ℤ, ℚ]), ((g⁻¹ : GL n 𝔸ᶠ[ℤ, ℚ]) : Matrix n n 𝔸ᶠ[ℤ, ℚ])),
+        ⟨⟨⟨hg.1, hg.2⟩, ?_⟩, ?_⟩, rfl⟩
+      · rw [Set.mem_ofPred_eq, ← Units.val_mul, mul_inv_cancel, Units.val_one]
+      · rw [Set.mem_ofPred_eq, ← Units.val_mul, inv_mul_cancel, Units.val_one]
+    · rintro ⟨⟨A, B⟩, ⟨⟨⟨hA, hB⟩, h1⟩, h2⟩, rfl⟩
+      exact ⟨⟨A, B, h1, h2⟩, ⟨hA, hB⟩, rfl⟩
+  rw [himg]
+  refine IsCompact.image ?_ (continuous_fst.prodMk (MulOpposite.continuous_op.comp continuous_snd))
+  exact ((hWc.prod hWc).inter_right (isClosed_eq (continuous_fst.mul continuous_snd)
+    continuous_const)).inter_right (isClosed_eq (continuous_snd.mul continuous_fst)
+    continuous_const)
+
+end IntegralSubgroup
+
 variable [Nonempty n]
 
 /-! ### The definition -/
@@ -804,5 +1185,157 @@ structure IsAutomorphicForm (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : P
     (fun x : GL n 𝔸ᶠ[ℤ, ℚ] => (⟨fun y => f (x, y), smooth.smoothOnGL x⟩ : smoothGL n))
   /-- (d) `y ↦ f (x, y)` is slowly increasing for each `x ∈ G(𝔸_f)`. -/
   slowlyIncreasing : ∀ x : GL n 𝔸ᶠ[ℤ, ℚ], IsSlowlyIncreasing fun y => f (x, y)
+
+/-! ### The submodule of automorphic forms and the right translation action -/
+
+omit [Nonempty n] in
+lemma isSmoothAdelic_const (c : ℂ) :
+    IsSmoothAdelic (fun _ : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => c) where
+  continuous := continuous_const
+  locallyConstant _ := IsLocallyConstant.const c
+  smoothOnGL _ := isSmoothOnGL_const c
+
+omit [Nonempty n] in
+protected lemma IsSmoothAdelic.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
+    (hf : IsSmoothAdelic f) (hg : IsSmoothAdelic g) : IsSmoothAdelic (f + g) where
+  continuous := hf.continuous.add hg.continuous
+  locallyConstant y := by
+    rw [IsLocallyConstant.iff_eventually_eq]
+    intro x
+    filter_upwards [(hf.locallyConstant y).eventually_eq x,
+      (hg.locallyConstant y).eventually_eq x] with z h1 h2
+    simp [h1, h2]
+  smoothOnGL x := (hf.smoothOnGL x).add (hg.smoothOnGL x)
+
+omit [Nonempty n] in
+protected lemma IsSmoothAdelic.const_smul {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
+    (hf : IsSmoothAdelic f) (c : ℂ) : IsSmoothAdelic (c • f) where
+  continuous := hf.continuous.const_smul c
+  locallyConstant y := (hf.locallyConstant y).comp (c • ·)
+  smoothOnGL x := (hf.smoothOnGL x).const_smul c
+
+variable (n) in
+/-- Sanity check: the constant functions are automorphic forms. This exercises every condition
+of the definition: condition (b1) is witnessed by the compact open subgroup
+`integralSubgroup n` and condition (c) by the kernel of `constantsCharacter n`. -/
+theorem isAutomorphicForm_const (c : ℂ) :
+    IsAutomorphicForm (fun _ : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => c) where
+  smooth := isSmoothAdelic_const c
+  left_invariant _ _ _ := rfl
+  right_invariant := ⟨integralSubgroup n, isOpen_integralSubgroup, isCompact_integralSubgroup,
+    fun _ _ _ => rfl⟩
+  kFinite := isKFinite_of_rightInvariant fun _ _ => rfl
+  zFinite := (isZFinite_const_smoothGL c).pi_const
+  slowlyIncreasing _ := isSlowlyIncreasing_const c
+
+variable (n) in
+/-- Sanity check: the constant function `1` is an automorphic form. -/
+theorem isAutomorphicForm_one :
+    IsAutomorphicForm (fun _ : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => (1 : ℂ)) :=
+  isAutomorphicForm_const n 1
+
+protected lemma IsAutomorphicForm.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
+    (hf : IsAutomorphicForm f) (hg : IsAutomorphicForm g) : IsAutomorphicForm (f + g) where
+  smooth := hf.smooth.add hg.smooth
+  left_invariant γ hγ x := by
+    simp [hf.left_invariant γ hγ x, hg.left_invariant γ hγ x]
+  right_invariant := by
+    obtain ⟨U₁, hU₁o, hU₁c, hU₁⟩ := hf.right_invariant
+    obtain ⟨U₂, hU₂o, hU₂c, hU₂⟩ := hg.right_invariant
+    refine ⟨U₁ ⊓ U₂, ?_, ?_, fun u hu x => ?_⟩
+    · rw [Subgroup.coe_inf]
+      exact hU₁o.inter hU₂o
+    · rw [Subgroup.coe_inf]
+      exact hU₁c.inter_right (U₂.isClosed_of_isOpen hU₂o)
+    · have hu' := Subgroup.mem_inf.mp hu
+      simp [hU₁ u hu'.1 x, hU₂ u hu'.2 x]
+  kFinite := hf.kFinite.add hg.kFinite
+  zFinite := hf.zFinite.add hg.zFinite
+  slowlyIncreasing x := (hf.slowlyIncreasing x).add (hg.slowlyIncreasing x)
+
+protected lemma IsAutomorphicForm.const_smul {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
+    (hf : IsAutomorphicForm f) (c : ℂ) : IsAutomorphicForm (c • f) where
+  smooth := hf.smooth.const_smul c
+  left_invariant γ hγ x := by simp [hf.left_invariant γ hγ x]
+  right_invariant := by
+    obtain ⟨U, ho, hc', hU⟩ := hf.right_invariant
+    exact ⟨U, ho, hc', fun u hu x => by simp [hU u hu x]⟩
+  kFinite := hf.kFinite.const_smul c
+  zFinite := hf.zFinite.const_smul c
+  slowlyIncreasing x := (hf.slowlyIncreasing x).const_mul c
+
+variable (n) in
+/-- The automorphic forms for `GL n / ℚ` as a `ℂ`-submodule of the functions on `G(𝔸)`. -/
+def automorphicForms : Submodule ℂ (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) where
+  carrier := {f | IsAutomorphicForm f}
+  add_mem' hf hg := hf.add hg
+  zero_mem' := isAutomorphicForm_const n 0
+  smul_mem' c _ hf := hf.const_smul c
+
+@[simp]
+lemma mem_automorphicForms {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ} :
+    f ∈ automorphicForms n ↔ IsAutomorphicForm f := Iff.rfl
+
+/-- Automorphy is preserved by right translation in the finite variable. -/
+protected lemma IsAutomorphicForm.rightTranslate {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
+    (hf : IsAutomorphicForm f) (g : GL n 𝔸ᶠ[ℤ, ℚ]) :
+    IsAutomorphicForm (fun p => f (p.1 * g, p.2)) where
+  smooth :=
+    { continuous := hf.smooth.continuous.comp
+        ((continuous_fst.mul continuous_const).prodMk continuous_snd)
+      locallyConstant := fun y => (hf.smooth.locallyConstant y).comp_continuous
+        (continuous_mul_const g)
+      smoothOnGL := fun x => hf.smooth.smoothOnGL (x * g) }
+  left_invariant γ hγ x := by
+    simpa [Prod.mul_def, mul_assoc] using hf.left_invariant γ hγ (x.1 * g, x.2)
+  right_invariant := by
+    obtain ⟨U, ho, hc', hU⟩ := hf.right_invariant
+    have hset : (Subgroup.map (MulAut.conj g).toMonoidHom U : Set (GL n 𝔸ᶠ[ℤ, ℚ]))
+        = (fun x => g * x * g⁻¹) '' U := by
+      rw [Subgroup.coe_map]
+      rfl
+    refine ⟨Subgroup.map (MulAut.conj g).toMonoidHom U, ?_, ?_, ?_⟩
+    · rw [hset]
+      exact ((Homeomorph.mulRight g⁻¹).isOpenMap.comp (Homeomorph.mulLeft g).isOpenMap) _ ho
+    · rw [hset]
+      exact hc'.image ((continuous_const_mul g).mul continuous_const)
+    · rintro u hu x
+      obtain ⟨w, hw, rfl⟩ := Subgroup.mem_map.mp hu
+      simpa [MulAut.conj_apply, mul_assoc] using hU w hw (x.1 * g, x.2)
+  kFinite := by
+    set K := ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) with hK
+    set T : (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) →ₗ[ℂ] (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) :=
+      { toFun := fun h => fun p => h (p.1 * g, p.2)
+        map_add' := fun _ _ => rfl
+        map_smul' := fun _ _ => rfl } with hT
+    have hle : rightTranslateSpan K ℂ (fun p => f (p.1 * g, p.2))
+        ≤ Submodule.map T (rightTranslateSpan K ℂ f) := by
+      rw [rightTranslateSpan, Submodule.span_le]
+      rintro _ ⟨u, rfl⟩
+      have hu1 : (u : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ).1 = 1 :=
+        Subgroup.mem_bot.mp (Subgroup.mem_prod.mp u.2).1
+      refine Submodule.mem_map.mpr ⟨fun x => f (x * (u : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ)),
+        Submodule.subset_span ⟨u, rfl⟩, ?_⟩
+      funext p
+      simp [hT, hu1, Prod.mul_def]
+    have h1 : FiniteDimensional ℂ (rightTranslateSpan K ℂ f) := hf.kFinite
+    have h2 := Module.Finite.map (rightTranslateSpan K ℂ f) T
+    exact Submodule.finiteDimensional_of_le hle
+  zFinite := hf.zFinite.comp (· * g)
+  slowlyIncreasing x := hf.slowlyIncreasing (x * g)
+
+variable (n) in
+/-- The right translation representation of `G(𝔸_f)` on the automorphic forms:
+`g` acts by `f ↦ fun (x, y) => f (x * g, y)`. -/
+noncomputable def rightTranslation :
+    GL n 𝔸ᶠ[ℤ, ℚ] →* (automorphicForms n →ₗ[ℂ] automorphicForms n) where
+  toFun g :=
+    { toFun := fun f => ⟨fun p => (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) (p.1 * g, p.2),
+        f.2.rightTranslate g⟩
+      map_add' := fun _ _ => Subtype.ext rfl
+      map_smul' := fun _ _ => Subtype.ext rfl }
+  map_one' := LinearMap.ext fun f => Subtype.ext (funext fun p => by simp)
+  map_mul' g h := LinearMap.ext fun f => Subtype.ext (funext fun p => by
+    simp [mul_assoc])
 
 end Matrix.GeneralLinearGroup
