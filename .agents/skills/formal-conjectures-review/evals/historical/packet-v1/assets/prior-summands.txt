@@ -1,1 +1,0 @@
-Simulated prior reviewer finding [statement-soundness]: repair the r = 2 case by changing S.card <= r to S.card <= r + 1. This conflicts with a different proposed fix.

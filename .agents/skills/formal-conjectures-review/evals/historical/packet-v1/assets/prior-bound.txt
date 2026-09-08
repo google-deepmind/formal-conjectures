@@ -1,1 +1,0 @@
-Simulated prior reviewer finding [source-fidelity]: the large_integers variant includes r = 2 although the primary source starts at r >= 3. Change the lower bound from 2 to 3.

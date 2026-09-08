@@ -1,1 +1,0 @@
-SIMULATED STALE STATUS, not an actual verifier receipt: an earlier reviewer wrote "Comparator pass" for a different proof revision and different statement digest. No current proof or bridge or machine-readable result is available. This record cannot verify the present statement.

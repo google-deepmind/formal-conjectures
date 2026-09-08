@@ -101,7 +101,9 @@ Repetitions do not increase the number of independent mathematical problems.
 
 Each run retains the prompt, raw response, model events, tool commands/results, scratch outputs,
 usage, wall time and assembled JSON/Markdown bundle. Preserve the entire iteration outside the
-source checkout; do not commit authentication state. Publication is a separate workflow.
+source checkout; do not commit authentication state. For temporary output inside the checkout,
+use the ignored `review-artifacts/` directory. Generated `evals/results/` is also ignored.
+Benchmark inputs and reference keys remain tracked. Publication is a separate workflow.
 
 ## Assessment
 
@@ -155,8 +157,8 @@ discovery. A native-client trigger check remains a distinct integration test.
 
 ## Historical records
 
-The superseded packet-only cases are under `evals/historical/packet-v1/`; the still older
-calibration file remains `evals/historical/evals.json`. Selected original Sol outputs remain
-under `evals/results/2026-09-08/` with their limitations. Their 24 valid reports establish
-format/replay behavior only. They are not pooled with this benchmark. Exact old tooling is
-retained in the local run archive and Git history; do not run old manifests with the v2 CLI.
+The superseded packet-only cases, selected outputs and their exact tooling remain in
+[Git history](https://github.com/williamjblair/formal-conjectures/tree/ba5930b643b2ab1f85036ec2c3c6ff5a82f75aeb/.agents/skills/formal-conjectures-review/evals)
+and the operator's run archive. They are excluded from the current source tree. Their 24 valid
+reports establish format/replay behavior only and are not pooled with this benchmark.
+Do not run old manifests with the v2 CLI.

@@ -14,7 +14,7 @@ as evidence files, but this tool does not validate their internal schema or impo
 | Content | Location in FC |
 | --- | --- |
 | Review instructions, rubrics and references | `.agents/skills/formal-conjectures-review/` |
-| Frozen evaluation fixtures and selected pilot results | `.agents/skills/formal-conjectures-review/evals/` |
+| Frozen evaluation fixtures and reference keys | `.agents/skills/formal-conjectures-review/evals/` |
 | Report and evaluation tools, with offline tests | `scripts/review_report.py`, `scripts/review_eval.py`, `scripts/test_review_*.py` |
 | Usage and contracts | `scripts/review-report/README.md`, `scripts/review-eval/README.md` |
 
