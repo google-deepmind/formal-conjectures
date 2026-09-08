@@ -6,6 +6,7 @@ Fixes:
 1. Adds KaTeX for LaTeX rendering in docstrings
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
+4. Installs the shared Verso syntax theme
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
@@ -15,11 +16,10 @@ import re
 import shutil
 import sys
 
-HIGHLIGHT_HEAD = '''
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.12.0/styles/atom-one-light.min.css">
-    <link rel="stylesheet" href="lean-highlight.css">
-    <script defer src="lean-highlight.js"></script>
-'''
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
+HIGHLIGHT_STYLESHEET_SOURCE = os.path.join(SCRIPT_DIR, 'src', 'css', HIGHLIGHT_STYLESHEET)
+HIGHLIGHT_HEAD = f'<link rel="stylesheet" href="{HIGHLIGHT_STYLESHEET}">\n'
 
 KATEX_HEAD = '''
     <!-- KaTeX for LaTeX in docstrings -->
@@ -46,14 +46,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 def fix_html_file(path):
-    """Inject KaTeX into a Verso HTML file."""
+    """Install the syntax theme and KaTeX in a Verso HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    modified = False
+    # Remove the previous browser highlighter from cached source pages.
+    original = html
+    html = re.sub(r'<link\b[^>]*href="(?:https://cdn\.jsdelivr\.net/npm/highlight\.js@11\.12\.0/styles/atom-one-light\.min\.css|lean-highlight\.css)"[^>]*>', '', html)
+    html = re.sub(r'<script\b[^>]*src="lean-highlight\.js"[^>]*>\s*</script>', '', html)
+    modified = html != original
 
     # Add these independently: cached pages may already contain KaTeX.
-    if 'src="lean-highlight.js"' not in html and '</head>' in html:
+    if f'href="{HIGHLIGHT_STYLESHEET}"' not in html and '</head>' in html:
         html = html.replace('</head>', HIGHLIGHT_HEAD + '  </head>')
         modified = True
 
@@ -68,6 +72,16 @@ def fix_html_file(path):
         with open(path, 'w', encoding='utf-8') as f:
             f.write(html)
     return modified
+
+
+def install_highlight_stylesheet(literate_dir):
+    """Install the shared theme and remove obsolete generated assets."""
+    shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE,
+                    os.path.join(literate_dir, HIGHLIGHT_STYLESHEET))
+    for filename in ('lean-highlight.js', 'lean-highlight.css'):
+        obsolete = os.path.join(literate_dir, filename)
+        if os.path.isfile(obsolete):
+            os.remove(obsolete)
 
 
 def create_stubs(literate_dir):
@@ -155,10 +169,7 @@ def main():
     fix_code_css(literate_dir)
 
     # Verso's <base> points to this root even on deeply nested source pages.
-    asset_dir = os.path.join(os.path.dirname(__file__), 'src')
-    for folder, filename in [('js', 'lean-highlight.js'), ('css', 'lean-highlight.css')]:
-        shutil.copyfile(os.path.join(asset_dir, folder, filename),
-                        os.path.join(literate_dir, filename))
+    install_highlight_stylesheet(literate_dir)
 
     # Fix all HTML files
     count = 0

@@ -1280,7 +1280,7 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   overflow-wrap: normal;
   tab-size: 2;
   font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
-  color: #383a42;
+  color: var(--verso-code-color, #000);
   padding: 1.25rem 1.5rem;
   font-size: 0.875rem;
   line-height: 1.8;

@@ -76,6 +76,12 @@ function loadVersoAssets() {
   codeLink.href = `${_base}/src/code.css`;
   document.head.appendChild(codeLink);
 
+  // Load the shared token theme after Verso's stylesheet.
+  const syntaxLink = document.createElement('link');
+  syntaxLink.rel = 'stylesheet';
+  syntaxLink.href = `${_base}/assets/css/lean-syntax.css`;
+  document.head.appendChild(syntaxLink);
+
   // Load tippy border CSS for hover tooltips
   const tippyLink = document.createElement('link');
   tippyLink.rel = 'stylesheet';
@@ -576,7 +582,6 @@ function renderDetail(theorem, siblings, verso, contributors) {
       if (!container) return;
       if (result && result.codeHtml) {
         container.innerHTML = result.codeHtml;
-        FCLean.highlight(container);
         // Rewrite relative links in code block: Verso uses paths like
         // "FormalConjectures/..." which resolve against /theorem/ page.
         // Fix them to point to /src/ Verso pages instead.

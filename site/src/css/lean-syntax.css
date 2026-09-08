@@ -1,3 +1,67 @@
+/* VS Code Light+ colors mapped to Verso's existing token classes:
+ * https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/light_plus.json
+ */
+:root {
+  --verso-code-keyword-color: #0000ff;
+  --verso-code-const-color: #795e26;
+  --verso-code-var-color: #001080;
+  --verso-code-var-style: normal;
+  --verso-code-keyword-weight: normal;
+  --verso-code-color: #000000;
+}
+
+/* Verso embeds these mappings inline in full source pages. Theorem excerpts
+ * load code.css without that inline stylesheet, so share the mappings here.
+ */
+.hl.lean .keyword {
+  color: var(--verso-code-keyword-color);
+}
+
+.hl.lean .const {
+  color: var(--verso-code-const-color);
+}
+
+.hl.lean .var {
+  color: var(--verso-code-var-color);
+}
+
+.hl.lean .inter-text {
+  color: var(--verso-code-color);
+}
+
+.hl.lean .token.typed {
+  color: #267f99;
+}
+
+.hl.lean .keyword {
+  font-weight: var(--verso-code-keyword-weight);
+}
+
+.hl.lean .var {
+  font-style: var(--verso-code-var-style);
+}
+
+.hl.lean .comment,
+.hl.lean .doc-comment {
+  color: #008000;
+}
+
+.hl.lean .literal.string,
+.hl.lean .char {
+  color: #a31515;
+}
+
+.hl.lean .literal.number,
+.hl.lean .number {
+  color: #098658;
+}
+
+.hl.lean .sort,
+.hl.lean .level-var,
+.hl.lean .level-const {
+  color: #267f99;
+}
+
 /* Shared highlighting for theorem details and full annotated source pages. */
 :where(.verso-code-container, .code-content) code.hl.lean.block {
   display: block;
@@ -6,24 +70,10 @@
   line-height: 1.8;
   font-style: normal;
   font-weight: normal;
-  color: #383a42;
+  color: var(--verso-code-color);
   white-space: pre;
   overflow-x: auto;
   tab-size: 2;
-}
-:where(.verso-code-container, .code-content) .hl.lean .token,
-:where(.verso-code-container, .code-content) .lean-highlight {
-  font-family: inherit;
-  font-style: normal;
-  font-weight: normal;
-}
-:where(.verso-code-container, .code-content) .hljs-comment,
-:where(.verso-code-container, .code-content) .hljs-doctag,
-:where(.verso-code-container, .code-content) .hl.lean .comment {
-  color: #626875;
-}
-:where(.verso-code-container, .code-content) .hljs-sorry {
-  color: #a626a4;
 }
 /* One continuous source surface, with prose docstrings between declarations. */
 .code-content {
