@@ -17,6 +17,17 @@ class ExportTests(unittest.TestCase):
             response_files({"schemaVersion": 2, "files": [
                 {"problemId": "fixture", "path": "../escape", "content": "", "sha256": ""}]}, "fixture")
 
+    def test_source_output_cannot_corrupt_json(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "OutputFixture.lean"
+            result = Path(directory) / "result.json"
+            source.write_text('import FormalConjecturesTest.PackageExport\n'
+                              '#eval IO.println "source diagnostic"\n'
+                              'theorem output_fixture : True := by trivial\n')
+            self.run_checked(["lake", "env", ".lake/build/bin/export_problem", str(source),
+                              "OutputFixture", "output_fixture", "--output", str(result)], ROOT)
+            self.assertEqual(json.loads(result.read_text())["declaration"], "output_fixture")
+
     @unittest.skipUnless(os.environ.get("COMPARATOR_BIN"), "Comparator required")
     def test_sandbox_denies_external_write(self):
         landrun = os.environ["COMPARATOR_LANDRUN"]
@@ -37,8 +48,12 @@ class ExportTests(unittest.TestCase):
     def test_exports(self):
         generator = Path(os.environ["LEAN_EVAL_GENERATOR_CHECKOUT"])
         comparator = os.environ.get("COMPARATOR_BIN")
+        revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         cases = {
             "plain": ([], "decide"),
+            "privateDefinition": ([], "decide"),
+            "implicitUniverse": ([], "intro α x; rfl"),
+            "proofInType": ([], "rfl"),
             "localDefinition": ([], "intro n; rfl"),
             "proposition": (["True"], "constructor <;> intro h <;> trivial"),
             "numerical": (["4"], "rfl"),
@@ -54,7 +69,7 @@ class ExportTests(unittest.TestCase):
                     artifact = Path(temporary) / name
                     workspace = export(ROOT / "FormalConjecturesTest/PackageExport.lean",
                                        f"PackageExportFixture.{name}", artifact, generator,
-                                       "HEAD", os.environ.get("FC_SOURCE_REPOSITORY", str(ROOT)))
+                                       revision, os.environ.get("FC_SOURCE_REPOSITORY", str(ROOT)))
                     exported = json.loads((artifact / "export.json").read_text())
                     self.assertEqual(len(exported["declarations"]), len(answers) + 1)
                     self.assertFalse((workspace / "ChallengeDeps.lean").exists())

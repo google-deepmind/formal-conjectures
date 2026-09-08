@@ -21,9 +21,11 @@ def main():
     revision = source_pin('origin/main')
     run(['lake', '--wfail', 'build', 'export_problem', args.module])
     run(['lake', '--wfail', 'build'], cwd=args.generator)
-    targets = json.loads(run(['lake', 'env', '.lake/build/bin/export_problem',
-                              '--list-set', args.module, args.declaration]))
     args.out.mkdir(parents=True)
+    targets_path = args.out / "targets.json"
+    run(["lake", "env", ".lake/build/bin/export_problem", "--list-set", args.module,
+         args.declaration, "--output", str(targets_path)])
+    targets = json.loads(targets_path.read_text())
 
     def check(item):
         try:

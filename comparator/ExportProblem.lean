@@ -37,7 +37,7 @@ structure Hole where
   levels : List Name
 
 private def printOptions (opts : Options) : Options :=
-  opts.setBool `pp.fullNames true |>.setBool `pp.notation false
+  opts.setBool `pp.privateNames true |>.setBool `pp.fullNames true |>.setBool `pp.notation false
     |>.setBool `pp.explicit true |>.setBool `pp.universes true
     |>.setBool `pp.proofs true |>.setBool `pp.deepTerms true
     |>.setBool `pp.fieldNotation false |>.setBool `pp.funBinderTypes true |>.set `pp.width (100 : Nat)
@@ -48,7 +48,8 @@ private def renderType (type : Expr) : Term.TermElabM String := do
    withOptions printOptions <|
    withTheReader Core.Context (fun ctx => { ctx with currNamespace := .anonymous, openDecls := [] }) do
     let text := (← ppExpr type).pretty
-    let stx ← ofExcept <| Parser.runParserCategory (← getEnv) `term text
+    let stx ← ofExcept <| (Parser.runParserCategory (← getEnv) `term text).mapError
+      (fun error => s!"{error}\nExported signature:\n{text}")
     let parsed ← Term.elabType stx
     Term.synthesizeSyntheticMVarsNoPostponing
     let parsed ← instantiateMVars parsed
@@ -56,11 +57,22 @@ private def renderType (type : Expr) : Term.TermElabM String := do
       throwError "Exported type failed its elaboration round trip:\n{text}"
     return text
 
+/-- Private names may contain numeric components that cannot be written in Lean
+source. Unfold their definitions using the environment, then check equality. -/
+private def exposePrivate (type : Expr) : MetaM Expr :=
+  Meta.transform type (pre := fun e => do
+    let .const name levels := e | return .continue
+    unless isPrivateName name do return .continue
+    let info ← getConstInfo name
+    let some value := info.value? | throwError "Cannot export private constant {name}"
+    return .visit (value.instantiateLevelParams info.levelParams levels))
+
 private def exportType (name : Name) : Term.TermElabM Json := do
   let info ← getConstInfo name
   unless info matches .thmInfo _ do
     throwError "The target must be a theorem"
-  let (type, holes) ← (Meta.transform info.type (pre := fun e => do
+  let sourceType ← exposePrivate info.type
+  let (type, holes) ← (Meta.transform sourceType (pre := fun e => do
     let .mdata annotation inner := e | return .continue
     unless annotation.contains `answer do return .continue
     unless inner.hasSorry do return .visit inner
@@ -121,8 +133,16 @@ private partial def elaborateThrough (target : Name) : Frontend.FrontendM Unit :
   if done then throw <| IO.userError s!"Declaration {target} was not found"
   elaborateThrough target
 
+private def emitJson (value : Json) (output : Option String) : IO Unit :=
+  match output with
+  | some path => IO.FS.writeFile path (value.pretty ++ "\n")
+  | none => IO.println value.pretty
+
 unsafe def main (args : List String) : IO UInt32 := do
   try
+    let (args, output) := match args with
+      | [a, b, c, "--output", path] => ([a, b, c], some path)
+      | _ => (args, none)
     initSearchPath (← findSysroot)
     enableInitializersExecution
     if let ["--list-set", moduleName, declaration] := args then
@@ -134,7 +154,7 @@ unsafe def main (args : List String) : IO UInt32 := do
         let module := env.allImportedModuleNames[index.toNat]!
         return Json.mkObj [("declaration", toJson name.toString), ("module", toJson module.toString),
           ("path", toJson (String.intercalate "/" (module.components.map fun n => n.getString!) ++ ".lean"))]
-      IO.println (toJson entries).pretty
+      emitJson (toJson entries) output
       return 0
     let [path, moduleName, declaration] := args
       | throw <| IO.userError "usage: export_problem SOURCE MODULE DECLARATION"
@@ -153,7 +173,7 @@ unsafe def main (args : List String) : IO UInt32 := do
     let (_, state) ← (elaborateThrough declaration.toName).run { inputCtx := context } |>.run initial
     let (result, _) ← (Frontend.runCommandElabM <| Command.liftTermElabM <|
       exportType declaration.toName).run { inputCtx := context } |>.run state
-    IO.println result.pretty
+    emitJson result output
     return 0
   catch error =>
     IO.eprintln s!"export_problem: {error}"

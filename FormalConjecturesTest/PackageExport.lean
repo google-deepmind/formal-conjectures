@@ -49,4 +49,15 @@ theorem twoAnswers : (answer(sorry) : Nat) + (answer(sorry) : Nat) = 4 := by sor
 @[category test, AMS 1]
 theorem polymorphic {α : Type u} (x : α) : x = x := by sorry
 
+private def hidden (n : Nat) : Nat := n + 1
+
+@[category test, AMS 11]
+theorem privateDefinition : hidden 0 = 1 := by sorry
+
+@[category test, AMS 03]
+theorem implicitUniverse {α : Type*} (x : α) : x = x := by sorry
+
+@[category test, AMS 11]
+theorem proofInType : (⟨0, by decide⟩ : Fin 1).val = 0 := by sorry
+
 end PackageExportFixture

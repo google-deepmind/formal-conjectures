@@ -32,9 +32,12 @@ answer annotations. It replaces unfinished answers with typed definition holes,
 abstracting local parameters used by their types. Substituting the original
 answers must recover the original statement by definitional equality.
 
+Private constants without writable Lean names are unfolded from their elaborated
+definitions; equality with the original statement is still checked.
 Signatures include explicit arguments, proof terms and universe parameters.
 Lean re-elaborates them under the same universe parameters and checks equality.
-Python passes these signatures and package pins to the generator, validates its
+Structured results use a dedicated JSON file, so source diagnostics cannot corrupt
+the transport. Python passes these signatures and package pins to the generator, validates its
 file map and digests, then compiles the actual generated Challenge with Lean.
 It records source, exporter, generator, request and output provenance.
 
@@ -58,8 +61,8 @@ LEAN_EVAL_GENERATOR_CHECKOUT=/path/to/generator \
 python3 comparator/check_coverage.py --generator /path/to/generator --out /tmp/fc100
 ```
 
-The seven fixtures cover local definitions, proposition and numeric answers,
-dependent and multiple answers, and universes. Tests resolve real Git package
+The ten fixtures cover local and private definitions, proposition and numeric answers,
+dependent and multiple answers, explicit and implicit universes, and proof terms in types. Tests resolve real Git package
 pins in a fresh workspace without modifying Lake's dependency manifest. Set
 `FC_SOURCE_REPOSITORY` to test a remote fork; the default is the local Git repo.
 With the verifier environment used in CI, tests also exercise both kernels and

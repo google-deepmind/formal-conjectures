@@ -85,8 +85,11 @@ def export(source, declaration, out, generator, source_ref="origin/main",
     if build:
         run(["lake", "--wfail", "build"], cwd=generator)
         run(["lake", "--wfail", "build", "export_problem", module])
-    exported = json.loads(run(["lake", "env", ".lake/build/bin/export_problem",
-                               str(relative), module, declaration]))
+    with tempfile.TemporaryDirectory(prefix="fc-declaration-") as directory:
+        result = Path(directory) / "declaration.json"
+        run(["lake", "env", ".lake/build/bin/export_problem", str(relative), module, declaration,
+             "--output", str(result)])
+        exported = json.loads(result.read_text())
     manifest = json.loads((ROOT / "lake-manifest.json").read_text())
     mathlib = next(p for p in manifest["packages"] if p["name"] == "mathlib")
     toolchain = (ROOT / "lean-toolchain").read_text()
