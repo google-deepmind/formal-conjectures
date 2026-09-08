@@ -23,54 +23,48 @@ Let $K$ be a number field with $r_1$ real and $r_2$ pairs of complex embeddings,
 prime. For each prime $\mathfrak{p}$ of $K$ above $p$, let $U_{1, \mathfrak{p}}$ be the group of
 principal units of the completion $K_\mathfrak{p}$, that is, the units congruent to $1$ modulo the
 maximal ideal, and set $U_1 = \prod_{\mathfrak{p} \mid p} U_{1, \mathfrak{p}}$. Let $E_1$ be the
-group of global units $\varepsilon \in \mathcal{O}_K^\times$ whose diagonal image lies in $U_1$,
-i.e. with $\varepsilon \equiv 1 \pmod{\mathfrak{p}}$ for every $\mathfrak{p} \mid p$. The group
-$E_1$ has finite index in $\mathcal{O}_K^\times$, so it has rank $r = r_1 + r_2 - 1$ by
+group of global units $\varepsilon \in \mathcal{O}_K^\times$ whose diagonal image lies in $U_1$.
+The group $E_1$ has finite index in $\mathcal{O}_K^\times$, so it has rank $r = r_1 + r_2 - 1$ by
 Dirichlet's unit theorem.
 
 **Leopoldt's conjecture** states that the $\mathbb{Z}_p$-rank of the closure $\overline{E_1}$ of
 $E_1$ in $U_1$ is also $r_1 + r_2 - 1$. Equivalently, the *Leopoldt defect*
 $\delta(K, p) = (r_1 + r_2 - 1) - \operatorname{rank}_{\mathbb{Z}_p} \overline{E_1}$ vanishes.
 
-## The formalisation
+## The statements in this file
 
-The statement `leopoldt_conjecture` below is an equivalent form of the conjecture which needs
-neither a $\mathbb{Z}_p$-module structure on $U_1$ nor a $p$-adic logarithm.
+This file collects every formulation of the conjecture, together with only the mathematics needed
+to *state* them. That they agree is proved in `LeopoldtConjecture/`, one equivalence per file,
+with `LeopoldtConjecture.All` chaining them together. The supporting mathematics is in
+`FormalConjecturesForMathlib.Leopoldt`.
 
-Fix units $\varepsilon_1, \dots, \varepsilon_r \in E_1$ that generate a subgroup of finite index
-in $\mathcal{O}_K^\times$ (`IsMaxRank`). Each $U_{1, \mathfrak{p}}$ is a pro-$p$ group, so a
-principal unit $u$ has a $p$-adic power $u^a = \lim_n u^{c_n}$ for $a \in \mathbb{Z}_p$ and
-integers $c_n \to a$. This gives a continuous $\mathbb{Z}_p$-linear map
-$$\varphi_\varepsilon : \mathbb{Z}_p^r \to U_1, \qquad a \mapsto \prod_i \varepsilon_i^{a_i},$$
-whose image is the closure of $\langle \varepsilon_1, \dots, \varepsilon_r \rangle$, a subgroup
-of finite index in $\overline{E_1}$. Rank is insensitive to finite index, so
-$$\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1}
-  = r - \operatorname{rank}_{\mathbb{Z}_p} \ker \varphi_\varepsilon,
-\qquad \text{i.e.} \qquad
-\delta(K, p) = \operatorname{rank}_{\mathbb{Z}_p} \ker \varphi_\varepsilon.$$
-The kernel is a submodule of the free module $\mathbb{Z}_p^r$, so its rank is zero if and only
-if it is zero. Hence Leopoldt's conjecture says exactly that $\varphi_\varepsilon$ is injective:
-the only $a \in \mathbb{Z}_p^r$ with $\prod_i \varepsilon_i^{a_i} = 1$ in every $K_\mathfrak{p}$
-with $\mathfrak{p} \mid p$ is $a = 0$. The dictionary between the two formulations is:
+* `leopoldt_conjecture`: the only $p$-adic relation among units of maximal rank in $E_1$ is
+  the trivial one.
+* `leopoldt_conjecture.variants.abelian`: the same for abelian $K/\mathbb{Q}$; a theorem of Ax
+  and Brumer.
+* `LeopoldtConjecture`: the elementary form, in which congruences modulo
+  $p^M \mathcal{O}_K$ force divisibility of the exponents.
+* `leopoldt_conjecture.variants.padicRegulator`: the matrix of $p$-adic logarithms of a
+  fundamental system has full rank.
+* `leopoldt_conjecture.variants.padicRegulator_ne_zero`: $R_p(K) \neq 0$ for totally real $K$.
+* `leopoldt_conjecture.variants.zpRank`: Wikipedia's form,
+  $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1} = r_1 + r_2 - 1$.
 
-- $r_1 + r_2 - 1$ is `rank K`;
-- membership in $E_1$ is `IsPrincipalUnitAbove K p`;
-- the generators $\varepsilon_1, \dots, \varepsilon_r$ are `ε : Fin (rank K) → (𝓞 K)ˣ`, with
-  `IsMaxRank ε` and `∀ i, IsPrincipalUnitAbove K p (ε i)`;
-- the exponent vector $a \in \mathbb{Z}_p^r$ is `a : Fin (rank K) → ℤ_[p]`;
-- the relation $\prod_i \varepsilon_i^{a_i} = 1$ in $U_1$ is `IsPadicRelation K p ε a`, which
-  spells out each $\mathbb{Z}_p$-power as a limit of integer powers using `PadicInt.appr`;
-- $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1} = r_1 + r_2 - 1$ is the conclusion `a = 0`
-  for every such relation.
+## The dictionary
 
-Quantifying over all families $\varepsilon$ loses nothing. The rank of $\overline{E_1}$ does not
-depend on the family, so injectivity of $\varphi_\varepsilon$ for one family implies it for all.
-Such a family always exists (`exists_isMaxRank_isPrincipalUnitAbove`).
-
-Taking $p$-adic logarithms turns $\prod_i \varepsilon_i^{a_i} = 1$ into
-$\sum_i a_i \log_p \varepsilon_i = 0$, so the statement also says that the $p$-adic logarithms
-of the $\varepsilon_i$ are $\mathbb{Z}_p$-linearly independent, the $p$-adic analogue of the
-hypothesis `IsMaxRank ε` that their real logarithms are $\mathbb{R}$-linearly independent.
+* $r_1 + r_2 - 1$ is `rank K`;
+* membership in $E_1$ is `IsPrincipalUnitAbove K p`, and $E_1$ itself is `E₁ K p`;
+* a prime $\mathfrak{p} \mid p$ is `v : PrimesAbove K p`, and $K_\mathfrak{p}$ is
+  `v.1.adicCompletion K`;
+* $U_{1, \mathfrak{p}}$ is `oneUnits (v.1.adicCompletion K)`, whose $\mathbb{Z}_p$-module
+  structure $u^a = \lim_n u^{a_n}$ is `OneUnits.instModule`;
+* $U_1$ is `U₁ K p`, the diagonal embedding $E_1 \to U_1$ is `diag K p`, and the closure
+  $\overline{E_1}$ is `closureE₁ K p`;
+* the exponent vector $a \in \mathbb{Z}_p^r$ is `a : Fin (rank K) → ℤ_[p]`, and the relation
+  $\prod_i \varepsilon_i^{a_i} = 1$ in $U_1$ is `IsPadicRelation K p ε a`, which spells out each
+  $\mathbb{Z}_p$-power as a limit of integer powers using `PadicInt.appr`;
+* the matrix $(\log_p \sigma(\varepsilon_i))$ is `logMatrix K p`, and Washington's regulator
+  $R_p(K)$ is `padicRegulator K p σ₀ e`.
 
 *References:*
 - [Wikipedia, *Leopoldt's conjecture*](https://en.wikipedia.org/wiki/Leopoldt%27s_conjecture):
@@ -92,20 +86,25 @@ hypothesis `IsMaxRank ε` that their real logarithms are $\mathbb{R}$-linearly i
 - J. Neukirch, A. Schmidt, K. Wingberg, *Cohomology of Number Fields*, 2nd ed., Springer 2008,
   Theorem 10.3.6: for odd $p$, the conjecture is equivalent to injectivity of
   $\mathcal{O}_K^\times \otimes \mathbb{Z}_p \to \prod_{\mathfrak{p} \mid p}
-  \hat{\mathcal{O}}_\mathfrak{p}^\times$. The statement below needs no parity hypothesis: it maps
-  into the *principal* units and quantifies over a torsion-free family.
+  \hat{\mathcal{O}}_\mathfrak{p}^\times$. The statements below need no parity hypothesis: they map
+  into the *principal* units and quantify over a torsion-free family.
+- L. C. Washington, *Introduction to Cyclotomic Fields*, 2nd ed., Springer 1997, Chapter 5, §5.5
+  (*The $p$-adic regulator*): the definition of $R_p(K)$ as a determinant of $p$-adic logarithms
+  of units and the statement "Leopoldt's conjecture: $R_p(K) \neq 0$".
 - J. Ax, *On the units of an algebraic number field*, Illinois J. Math. **9** (1965), 584-589, and
   A. Brumer, *On the units of algebraic number fields*, Mathematika **14** (1967), 121-124: the
   conjecture holds for abelian extensions of $\mathbb{Q}$.
 -/
 
-open Filter IsDedekindDomain NumberField NumberField.Units
+open Filter IsDedekindDomain NumberField NumberField.Units Topology
 
-open scoped NumberField
+open scoped NumberField Valued
 
 namespace Leopoldt
 
 variable (K : Type*) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime]
+
+/- ## The `p`-adic-relation form -/
 
 /--
 `IsPrincipalUnitAbove K p u` says that the unit $u \in \mathcal{O}_K^\times$ is congruent to $1$
@@ -185,6 +184,16 @@ theorem leopoldt_conjecture.variants.abelian [IsAbelianGalois ℚ K]
     a = 0 := by
   sorry
 
+/-
+## Auxiliary lemmas
+
+The remaining results relate `leopoldt_conjecture` to the elementary formulation
+`LeopoldtConjecture` below. The lemmas in this section are the ingredients of that equivalence:
+congruences of units modulo powers of $p$, the passage between such congruences and convergence
+in the completions $K_\mathfrak{p}$ with $\mathfrak{p} \mid p$, and the passage between a family
+of units of maximal rank and the fundamental system `fundSystem K`.
+-/
+
 /--
 The hypotheses of `leopoldt_conjecture` can be satisfied: there is always a family of
 $r_1 + r_2 - 1$ units of maximal rank which are principal units above $p$. Indeed, if $N$ is the
@@ -194,6 +203,264 @@ fundamental system of units will do.
 @[category API, AMS 11]
 theorem exists_isMaxRank_isPrincipalUnitAbove :
     ∃ ε : Fin (rank K) → (𝓞 K)ˣ, IsMaxRank ε ∧ ∀ i, IsPrincipalUnitAbove K p (ε i) := by
+  obtain ⟨Q, hQ0, hQ⟩ := exists_pow_sub_one_dvd (K := K) (p := p)
+  exact ⟨fun i ↦ fundSystem K i ^ Q, isMaxRank_pow (isMaxRank_fundSystem K) hQ0,
+    fun i v hv ↦ Ideal.mem_of_dvd _ (hQ _) hv⟩
+
+/- ## The elementary form -/
+
+/-- An elementary form of **Leopoldt's conjecture**
+
+Let `K` be a number field and let `p` be a prime number.
+
+Let `r` be the rank of the unit group of `K`, and let
+Let `e i` (`i : Fin r`) be a system of fundamental units of `K`.
+
+The conjecture: for all naturals `N` there is a natural `M` such that,
+whenever `n : Fin r → ℤ` satisfies `∏ i, e i ^ n i = 1` mod  `p ^ M 𝓞 K`,
+then all the `n i` are divisible by `p ^ N`.
+
+This says that the topology on the unit group `(𝓞 K)ˣ` (modulo torsion) induced from
+`∏_{v ∣ p} (𝓞_v)ˣ` is the `p`-adic topology, which is equivalent to injectivity of
+`𝓞 Kˣ ⊗ ℤ_p → ∏_{v ∣ p} 𝓞_vˣ`, i.e. to the usual form of Leopoldt's conjecture. -/
+def LeopoldtConjecture (K : Type*) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime] : Prop :=
+  ∀ N : ℕ, ∃ M : ℕ, ∀ n : Fin (Units.rank K) → ℤ,
+    (p : 𝓞 K) ^ M ∣ (↑(∏ i, Units.fundSystem K i ^ n i) : 𝓞 K) - 1 →
+      ∀ i, (p : ℤ) ^ N ∣ n i
+
+/- ## The `p`-adic-regulator form -/
+
+/--
+The matrix $(\log_p \sigma(\varepsilon_i))_{i, \sigma}$ of Iwasawa logarithms of a fundamental
+system of units $\varepsilon_1, \dots, \varepsilon_r$ of $K$, over all embeddings
+$\sigma : K \to \mathbb{C}_p$. Its rows are indexed by `Fin (rank K)` and its columns by
+`K →+* ℂ_[p]`; the entries are the classical $p$-adic logarithms by `logMatrix_apply_eq_div`.
+-/
+noncomputable def logMatrix : Matrix (Fin (rank K)) (K →+* ℂ_[p]) ℂ_[p] :=
+  fun i σ ↦ PadicExpLog.iwasawaLog p (σ (fundSystem K i : K))
+
+/--
+The entries of `logMatrix` are the classical $p$-adic logarithms: for any $Q \geq 1$ with
+$\|\sigma(\varepsilon_i)^Q - 1\| < 1$ (`hasPrincipalUnitPow_map` provides one),
+$\log_p \sigma(\varepsilon_i) = \log_p(\sigma(\varepsilon_i)^Q) / Q$.
+-/
+@[category API, AMS 11]
+theorem logMatrix_apply_eq_div (i : Fin (rank K)) (σ : K →+* ℂ_[p]) {Q : ℕ} (hQ : 0 < Q)
+    (h : ‖σ (fundSystem K i : K) ^ Q - 1‖ < 1) :
+    logMatrix K p i σ = PadicExpLog.padicLog (σ (fundSystem K i : K) ^ Q) / Q :=
+  PadicExpLog.iwasawaLog_of_hasPrincipalUnitPow PadicExpLog.PadicComplex.norm_natCast_p_lt_one hQ h
+
+/--
+**Leopoldt's conjecture, $p$-adic regulator form.** Let $\varepsilon_1, \dots, \varepsilon_r$,
+$r = r_1 + r_2 - 1$, be a fundamental system of units of $K$ and let $\sigma_1, \dots, \sigma_n$,
+$n = [K : \mathbb{Q}]$, be the embeddings of $K$ into $\mathbb{C}_p$. Then the $r \times n$
+matrix $(\log_p \sigma_j(\varepsilon_i))$ of $p$-adic logarithms has rank $r$.
+
+Equivalently, some $r \times r$ minor of this matrix, a *$p$-adic regulator* $R_p(K)$, is
+nonzero. For totally real $K$ one has $n = r + 1$ and each row sums to
+$\log_p N_{K/\mathbb{Q}}(\varepsilon_i) = \log_p(\pm 1) = 0$ (`sum_logMatrix`), so all these
+minors agree up to sign (`padicRegulator_eq_or_eq_neg`) and the statement is Leopoldt's original
+$R_p(K) \neq 0$, see `padicRegulator` and `leopoldt_conjecture.variants.padicRegulator_ne_zero`
+([Wikipedia](https://en.wikipedia.org/wiki/Leopoldt%27s_conjecture): "Leopoldt's conjecture
+... states that the $p$-adic regulator of a number field does not vanish"; Washington, §5.5).
+For general $K$ the rank formulation avoids choosing a minor. The entries of the matrix are the
+classical $p$-adic logarithms of the units by `logMatrix_apply_eq_div`, and the rank is at most
+$r$ since the matrix has $r$ rows. This statement is equivalent to the other two forms of the
+conjecture in this file: see `leopoldtConjecture_iff_rank` and `forall_isPadicRelation_iff_rank`.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.padicRegulator : (logMatrix K p).rank = rank K := by
+  sorry
+
+/--
+For totally real $K$ the embeddings $K \to \mathbb{C}_p$ other than a given one $\sigma_0$ are
+$[K : \mathbb{Q}] - 1 = r_1 - 1 = r$ in number.
+-/
+@[category API, AMS 11]
+theorem card_ne_eq_rank [IsTotallyReal K] (σ₀ : K →+* ℂ_[p]) :
+    Nat.card {σ : K →+* ℂ_[p] // σ ≠ σ₀} = rank K := by
+  classical
+  rw [Nat.card_eq_fintype_card, Fintype.card_subtype, Finset.filter_ne',
+    Finset.card_erase_of_mem (Finset.mem_univ _), Finset.card_univ, Embeddings.card K ℂ_[p],
+    IsTotallyReal.finrank, rank, InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces,
+    IsTotallyReal.nrComplexPlaces_eq_zero, add_zero]
+
+/-- For totally real `K`, the embeddings `K → ℂ_p` other than `σ₀` can be indexed by
+`Fin (rank K)`. -/
+@[category API, AMS 11]
+theorem nonempty_equiv_fin_rank [IsTotallyReal K] (σ₀ : K →+* ℂ_[p]) :
+    Nonempty (Fin (rank K) ≃ {σ : K →+* ℂ_[p] // σ ≠ σ₀}) := by
+  classical
+  exact ⟨(Fintype.equivFinOfCardEq
+    (by rw [← Nat.card_eq_fintype_card, card_ne_eq_rank K p σ₀])).symm⟩
+
+/--
+The **$p$-adic regulator** of a totally real number field $K$ (Washington, §5.5). Let
+$\varepsilon_1, \dots, \varepsilon_r$ be the fundamental system of units `fundSystem K` and let
+$\sigma_0$ be one of the $r + 1 = [K : \mathbb{Q}]$ embeddings $K \to \mathbb{C}_p$. Then
+$$R_p(K) = \det\big(\log_p \sigma(\varepsilon_i)\big)_{i,\, \sigma \neq \sigma_0},$$
+where the columns $\sigma \neq \sigma_0$ are indexed by `Fin (rank K)` through `e`. Up to sign
+the value depends neither on $\sigma_0$ nor on `e` (`padicRegulator_eq_or_eq_neg`), because the
+rows of `logMatrix K p` sum to zero (`sum_logMatrix`). The definition makes sense for any `K`,
+but an equivalence `e` exists only when `K` is totally real (`nonempty_equiv_fin_rank`).
+-/
+noncomputable def padicRegulator (σ₀ : K →+* ℂ_[p])
+    (e : Fin (rank K) ≃ {σ : K →+* ℂ_[p] // σ ≠ σ₀}) : ℂ_[p] :=
+  ((logMatrix K p).submatrix id fun j ↦ (e j : K →+* ℂ_[p])).det
+
+/--
+**Leopoldt's conjecture for totally real fields, regulator form** [Washington, §5.5]: the
+$p$-adic regulator $R_p(K)$ of a totally real number field $K$ does not vanish.
+
+By `padicRegulator_eq_or_eq_neg` the statement does not depend on the choice of the omitted
+embedding $\sigma_0$ or of the ordering `e`, and by `padicRegulator_ne_zero_iff` it is
+`leopoldt_conjecture.variants.padicRegulator` specialised to totally real `K`; by
+`leopoldtConjecture_iff_padicRegulator_ne_zero` it is also equivalent to the elementary form
+`LeopoldtConjecture`.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.padicRegulator_ne_zero [IsTotallyReal K]
+    (σ₀ : K →+* ℂ_[p]) (e : Fin (rank K) ≃ {σ : K →+* ℂ_[p] // σ ≠ σ₀}) :
+    Leopoldt.padicRegulator K p σ₀ e ≠ 0 := by
+  sorry
+
+/- ## The $\mathbb{Z}_p$-rank form -/
+
+section completion
+
+variable {K}
+
+/-- The completion $K_\mathfrak{p}$ has characteristic zero. -/
+instance (v : HeightOneSpectrum (𝓞 K)) : CharZero (v.adicCompletion K) :=
+  charZero_of_injective_algebraMap (algebraMap K _).injective
+
+end completion
+
+/-- The primes $\mathfrak{p}$ of $\mathcal{O}_K$ above $p$. -/
+abbrev PrimesAbove : Type _ := {v : HeightOneSpectrum (𝓞 K) // (p : 𝓞 K) ∈ v.asIdeal}
+
+omit [Fact p.Prime] in
+/-- `‖p‖ < 1` in $K_\mathfrak{p}$ for $\mathfrak{p} \mid p$. -/
+@[category API, AMS 11]
+theorem norm_natCast_lt_one (v : PrimesAbove K p) : ‖((p : ℕ) : v.1.adicCompletion K)‖ < 1 := by
+  have h : ((p : ℕ) : v.1.adicCompletion K)
+      = algebraMap (𝓞 K) (v.1.adicCompletion K) (p : 𝓞 K) := by
+    push_cast
+    ring
+  rw [h]
+  show ‖FinitePlace.embedding v.1 (algebraMap (𝓞 K) K (p : 𝓞 K))‖ < 1
+  exact (FinitePlace.norm_lt_one_iff_mem K v.1 (p : 𝓞 K)).2 v.2
+
+instance (v : PrimesAbove K p) : Fact (‖((p : ℕ) : v.1.adicCompletion K)‖ < 1) :=
+  ⟨norm_natCast_lt_one K p v⟩
+
+/-- $U_1 = \prod_{\mathfrak{p} \mid p} U_{1, \mathfrak{p}}$, written additively, as a
+$\mathbb{Z}_p$-module. -/
+abbrev U₁ : Type _ := ∀ v : PrimesAbove K p, Additive (oneUnits (v.1.adicCompletion K))
+
+/-- $E_1$: the global units $\varepsilon \equiv 1 \pmod{\mathfrak{p}}$ for all
+$\mathfrak{p} \mid p$, i.e. those whose diagonal image lies in $U_1$
+([Wikipedia]: "the set of global units $\varepsilon$ that map to $U_1$ via the diagonal
+embedding"). -/
+def E₁ : Subgroup (𝓞 K)ˣ where
+  carrier := {u | IsPrincipalUnitAbove K p u}
+  mul_mem' {a b} ha hb v hv := by
+    have h : ((a * b : (𝓞 K)ˣ) : 𝓞 K) - 1
+        = (a : 𝓞 K) * ((b : 𝓞 K) - 1) + ((a : 𝓞 K) - 1) := by
+      push_cast
+      ring
+    rw [h]
+    exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ (hb v hv)) (ha v hv)
+  one_mem' v hv := by simp
+  inv_mem' {a} ha v hv := by
+    have hinv : ((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * (a : 𝓞 K) = 1 := by
+      rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
+    have h : ((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) - 1
+        = -((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * ((a : 𝓞 K) - 1) := by
+      linear_combination hinv
+    rw [h]
+    exact Ideal.mul_mem_left _ _ (ha v hv)
+
+omit [NumberField K] [Fact p.Prime] in
+@[category API, AMS 11]
+theorem mem_E₁_iff {u : (𝓞 K)ˣ} : u ∈ E₁ K p ↔ IsPrincipalUnitAbove K p u := Iff.rfl
+
+omit [Fact p.Prime] in
+/-- A unit of $E_1$ is a principal unit in every $K_\mathfrak{p}$, $\mathfrak{p} \mid p$. -/
+@[category API, AMS 11]
+theorem norm_algebraMap_sub_one_lt {u : (𝓞 K)ˣ} (hu : IsPrincipalUnitAbove K p u)
+    (v : PrimesAbove K p) : ‖algebraMap (𝓞 K) (v.1.adicCompletion K) u - 1‖ < 1 := by
+  rw [← map_one (algebraMap (𝓞 K) (v.1.adicCompletion K)), ← map_sub]
+  show ‖FinitePlace.embedding v.1 (algebraMap (𝓞 K) K ((u : 𝓞 K) - 1))‖ < 1
+  exact (FinitePlace.norm_lt_one_iff_mem K v.1 _).2 (hu v.1 v.2)
+
+/-- The diagonal embedding $E_1 \to U_1$, $\varepsilon \mapsto (\varepsilon)_{\mathfrak{p} \mid p}$
+([Wikipedia]: "$E_1$ embedded diagonally in $U_1$"). -/
+noncomputable def diag : Additive (E₁ K p) →+ U₁ K p where
+  toFun u v := Additive.ofMul
+    ⟨Units.map (algebraMap (𝓞 K) (v.1.adicCompletion K)).toMonoidHom (u.toMul : (𝓞 K)ˣ),
+      OneUnits.mem_oneUnits_iff.2 (norm_algebraMap_sub_one_lt K p u.toMul.2 v)⟩
+  map_zero' := by
+    funext v
+    refine OneUnits.ext_of_coe ?_
+    simp
+  map_add' u w := by
+    funext v
+    refine OneUnits.ext_of_coe ?_
+    show ((Units.map (algebraMap (𝓞 K) (v.1.adicCompletion K)).toMonoidHom
+        (((u.toMul * w.toMul : E₁ K p)) : (𝓞 K)ˣ) : (v.1.adicCompletion K)ˣ)
+          : v.1.adicCompletion K) = _
+    rw [Subgroup.coe_mul, map_mul]
+    rfl
+
+omit [Fact p.Prime] in
+@[category API, AMS 11]
+theorem coe_diag_apply (u : Additive (E₁ K p)) (v : PrimesAbove K p) :
+    (((diag K p u v).toMul : (v.1.adicCompletion K)ˣ) : v.1.adicCompletion K) =
+      algebraMap (𝓞 K) (v.1.adicCompletion K) ((u.toMul : (𝓞 K)ˣ) : 𝓞 K) := rfl
+
+/-- `a • x = lim (a.appr n) • x` in $U_1$. -/
+@[category API, AMS 11]
+theorem tendsto_appr_nsmul (a : ℤ_[p]) (x : U₁ K p) :
+    Tendsto (fun n ↦ a.appr n • x) atTop (𝓝 (a • x)) :=
+  tendsto_pi_nhds.2 fun v ↦ OneUnits.tendsto_appr_nsmul a (x v)
+
+/-- Integer `p`-adic powers are ordinary powers, componentwise in $U_1$. -/
+@[category API, AMS 11]
+theorem U₁.natCast_smul (n : ℕ) (x : U₁ K p) : (n : ℤ_[p]) • x = n • x :=
+  funext fun v ↦ OneUnits.natCast_smul n (x v)
+
+@[category API, AMS 11]
+theorem U₁.intCast_smul (n : ℤ) (x : U₁ K p) : (n : ℤ_[p]) • x = n • x :=
+  funext fun v ↦ OneUnits.intCast_smul n (x v)
+
+/-- The closure $\overline{E_1}$ of the diagonal image of $E_1$ in $U_1$, as a
+$\mathbb{Z}_p$-submodule of $U_1$ ([Wikipedia]: "the closure of $E_1$ embedded diagonally in
+$U_1$"; [Nelson, §3]: "the topological closure of $\Delta(X)$ in
+$\prod_{\mathfrak{p} \mid p} \mathcal{O}^*_{\mathfrak{p}, 1}$"). A closed subgroup of $U_1$ is
+automatically a $\mathbb{Z}_p$-submodule. -/
+noncomputable def closureE₁ : Submodule ℤ_[p] (U₁ K p) where
+  toAddSubmonoid := (diag K p).range.topologicalClosure.toAddSubmonoid
+  smul_mem' a x hx :=
+    AddSubgroup.smul_mem_of_isClosed (AddSubgroup.isClosed_topologicalClosure _) hx
+      (tendsto_appr_nsmul K p a x)
+
+@[category API, AMS 11]
+theorem coe_closureE₁ : (closureE₁ K p : Set (U₁ K p)) = closure (Set.range (diag K p)) := by
+  show ((diag K p).range.topologicalClosure : Set (U₁ K p)) = _
+  rw [AddSubgroup.topologicalClosure_coe, AddMonoidHom.coe_range]
+
+/--
+**Leopoldt's conjecture, $\mathbb{Z}_p$-rank form.** Let $K$ be a number field and $p$ a prime.
+The $\mathbb{Z}_p$-rank of the closure $\overline{E_1}$ of $E_1$ embedded diagonally in
+$U_1 = \prod_{\mathfrak{p} \mid p} U_{1, \mathfrak{p}}$ is $r_1 + r_2 - 1$.
+
+This is the statement of [Wikipedia] verbatim. It is equivalent to `leopoldt_conjecture` by
+`Leopoldt.zpRank_iff`. The rank is finite, at most $r_1 + r_2 - 1$ (`rank_closureE₁_eq`), so
+`Module.finrank` is the honest rank here.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.zpRank : Module.finrank ℤ_[p] (closureE₁ K p) = rank K := by
   sorry
 
 end Leopoldt
