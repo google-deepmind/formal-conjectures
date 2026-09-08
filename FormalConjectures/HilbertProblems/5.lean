@@ -36,9 +36,10 @@ connected finite-dimensional topological manifold.
 
 ## Implementation notes
 
-`AdmitsLieGroupStructure G` says that `G` is continuously isomorphic to a finite-dimensional
-real-analytic Lie group, packaged as a `LieGroupPresentation`. Lie groups are Hausdorff but not
-assumed second countable: every discrete group is a `0`-dimensional Lie group
+`AdmitsLieGroupStructure G`, defined in
+`FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation`, says that `G` is
+continuously isomorphic to a finite-dimensional real-analytic Lie group. Lie groups are Hausdorff
+but not assumed second countable: every discrete group is a `0`-dimensional Lie group
 (`admitsLieGroupStructure_of_discreteTopology`). This matters for the Hilbert–Smith conjecture,
 since uncountable discrete groups act continuously and faithfully on connected manifolds, for
 instance `ℝ` with the discrete topology acting on `ℝ` by translations.
@@ -62,59 +63,20 @@ namespace Hilbert5
 
 open scoped Manifold ContDiff Bundle
 
-universe u
-
 variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
   [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
 
-/-- A continuous group isomorphism from `G` to an `n`-dimensional real-analytic Lie group.
-The Lie group is not assumed to be second countable, see the module docstring. -/
-structure LieGroupPresentation (G : Type u) [TopologicalSpace G] [Group G] (n : ℕ) where
-  carrier : Type u
-  [topologicalSpace : TopologicalSpace carrier]
-  [group : Group carrier]
-  [t2Space : T2Space carrier]
-  [chartedSpace : ChartedSpace (EuclideanSpace ℝ (Fin n)) carrier]
-  [isManifold : IsManifold (𝓡 n) ω carrier]
-  [lieGroup : LieGroup (𝓡 n) ω carrier]
-  equiv : G ≃ₜ* carrier
-
-/-- A topological group admits a Lie group structure if it has a `LieGroupPresentation` in some
-finite dimension. -/
-def AdmitsLieGroupStructure (G : Type u) [Group G] [TopologicalSpace G] : Prop :=
-  ∃ n, Nonempty (LieGroupPresentation G n)
-
-/-- Every finite-dimensional real-analytic Lie group admits a Lie group structure. -/
-@[category API, AMS 22]
-theorem admitsLieGroupStructure_of_lieGroup
-    [T2Space G] [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] [LieGroup (𝓡 n) ω G] :
-    AdmitsLieGroupStructure G :=
-  ⟨n, ⟨{ carrier := G, equiv := ContinuousMulEquiv.refl G }⟩⟩
-
-/-- Every discrete group is a `0`-dimensional Lie group. -/
+/-- The circle group admits a Lie group structure. -/
 @[category test, AMS 22]
-theorem admitsLieGroupStructure_of_discreteTopology [DiscreteTopology G] :
-    AdmitsLieGroupStructure G := by
-  let := ChartedSpace.ofDiscreteTopology (M := G) (H := EuclideanSpace ℝ (Fin 0))
-  have := IsManifold.of_discreteTopology (𝕜 := ℝ) (M := G) (E := EuclideanSpace ℝ (Fin 0)) ω
-  have : LieGroup (𝓡 0) ω G :=
-    { contMDiff_mul := contMDiff_of_discreteTopology
-      contMDiff_inv := contMDiff_of_discreteTopology }
-  exact admitsLieGroupStructure_of_lieGroup (n := 0)
+theorem admitsLieGroupStructure_circle : AdmitsLieGroupStructure Circle :=
+  admitsLieGroupStructure_of_lieGroup (n := 1)
 
-/-- A group admitting a Lie group structure is locally compact. -/
-@[category API, AMS 22]
-theorem locallyCompact_of_admitsLieGroupStructure
-    (h : AdmitsLieGroupStructure G) : LocallyCompactSpace G := by
-  obtain ⟨k, ⟨p⟩⟩ := h
-  let := p.topologicalSpace
-  let := p.group
-  let := p.chartedSpace
-  have := (𝓡 k).locallyCompactSpace
-  have : LocallyCompactSpace p.carrier :=
-    ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin k)) p.carrier
-  exact p.equiv.toHomeomorph.locallyCompactSpace_iff.mpr inferInstance
+/-- The discrete group `ℤ` admits a Lie group structure. -/
+@[category test, AMS 22]
+theorem admitsLieGroupStructure_multiplicative_int :
+    AdmitsLieGroupStructure (Multiplicative ℤ) :=
+  admitsLieGroupStructure_of_discreteTopology
 
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
