@@ -257,3 +257,15 @@ or `ai`), `name`, `method`, `scope` (strings), `independence` (`independent`,
 (entries with `path` and `sha256`, relative to that directory). Evidence bytes and request
 identity are checked. Attribution and independence remain self-reported, not quality scores
 or proof of independent review. The review request/report schemas are unchanged.
+
+Published evidence is read through its immutable archive revision, manifest, and artifact
+hashes before displaying outcomes. `show` distinguishes not configured, no matching records,
+unavailable transport, and invalid evidence. `--offline` revalidates a retained archive cache;
+a failed refresh never silently substitutes another source. Validation establishes integrity
+and input bindings, not producer authenticity or mathematical correctness.
+
+Site and board builds use `python -m conjectures.projections --repository OWNER/REPO
+--branch DATA_BRANCH --out evidence.json` (one command). Optional `--work work.json` joins
+an `fc.work-context.v1` snapshot by repository and PR number, then compares exact head/base
+revisions. Queue waiting times and classification remain owned by queueboard. No fuzzy
+matching or automatic duplicate closure is performed.

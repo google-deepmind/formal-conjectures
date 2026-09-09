@@ -25,6 +25,8 @@ def export(root,directory):
             raise Failure('invalid_bundle','Review bundle does not reconstruct from retained evidence',3)
         for name in ('report.json','review.json','request.json'):
             selected[name]=rebuilt[name]
+        attribution=directory/'evidence/operator/reviewer-attributions.json'
+        if attribution.is_file():selected['reviewer-attributions.json']=rr.read_artifact(directory,'evidence/operator/reviewer-attributions.json')
         selected['sources.json']=rr.encode([{'path':s['path'],'sha256':s['sha256'],'availability':'retained_locally'}
                                           for s in rr.parse(rebuilt['request.json'])['sources']])
         references=[]
