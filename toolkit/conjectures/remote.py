@@ -10,6 +10,7 @@ from pathlib import Path
 from . import exporter, report as rr
 from .core import Failure, command, git, now, save
 from .proof import PINS
+from .verifier_result import typed_result
 
 FIELDS = {'run_id','candidate_repository','candidate_commit','candidate_path','source_repository',
           'source_commit','source_path','declaration'}
@@ -43,14 +44,6 @@ def load_submission(checkout,revision,subdir):
     if 'Submission.lean' not in result:raise Failure('missing_submission','Submission.lean is required',1)
     if any(not name.endswith('.lean') for name in result):raise Failure('disallowed_submission','Only Lean submission files are permitted',1)
     return result
-
-def typed_result(raw,code):
-    value=rr.parse(raw)
-    if value.get('schemaVersion')!=1 or value.get('outcome') not in ('pass','rejected','error'):
-        raise Failure('invalid_verifier_result','Comparator did not produce a recognized typed result',3)
-    if value['outcome']=='pass' and (code!=0 or value.get('stage')!='complete' or value.get('reason')!='verified'):
-        raise Failure('inconsistent_verifier_result','Comparator success is inconsistent with process completion',3)
-    return value
 
 def invoke_comparator(arguments, workspace, output):
     """Only a typed result can establish rejection; failed invocation text cannot."""
