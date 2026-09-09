@@ -12,7 +12,7 @@ from conjectures.catalog_data import complete, encode, manifest
 
 def prepare(source, repository, data, out):
     def git(*args):return subprocess.check_output(['git','-C',str(source),*args],text=True).strip()
-    scope=['FormalConjectures','FormalConjecturesUtil','FormalConjecturesForMathlib',
+    scope=['FormalConjectures','FormalConjecturesUtil','FormalConjecturesForMathlib','FormalConjecturesForMathlib.lean',
            'scripts/extract_names.lean','lakefile.toml','lean-toolchain','lake-manifest.json']
     if git('status','--porcelain','--',*scope):
         raise ValueError('Catalog source or extraction inputs have uncommitted changes')
