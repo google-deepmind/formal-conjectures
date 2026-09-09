@@ -53,9 +53,9 @@ on $\operatorname{Re} s > 3/2$ agree everywhere, by the identity theorem. -/
 @[category API, AMS 11 14]
 theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L') :
     L = L' :=
-  AnalyticOnNhd.eq_of_eventuallyEq (fun z _ => hL.1.analyticAt z) (fun z _ => hL'.1.analyticAt z)
+  AnalyticOnNhd.eq_of_eventuallyEq (fun z _ ↦ hL.1.analyticAt z) (fun z _ ↦ hL'.1.analyticAt z)
     (z₀ := 2) <| Filter.Eventually.mono ((Complex.isOpen_re_gt (3 / 2)).mem_nhds (by norm_num))
-      fun s hs => (hL.2 s hs).trans (hL'.2 s hs).symm
+      fun s hs ↦ (hL.2 s hs).trans (hL'.2 s hs).symm
 
 /-- **Hasse--Weil conjecture**: the $L$-function of an elliptic curve over a number field extends
 to the whole plane. -/
@@ -85,7 +85,7 @@ Mordell--Weil theorem, which Mathlib does not have and which this repository sta
 in `EllipticCurveRank.mordell_weil`, so it appears here as a hypothesis. -/
 def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
   ∀ (E : WeierstrassCurve K) [E.IsElliptic] [AddGroup.FG E.toAffine.Point] (L : ℂ → ℂ),
-    IsLFunction E L → meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
+    IsLFunction E L → analyticOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
 
 /-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
