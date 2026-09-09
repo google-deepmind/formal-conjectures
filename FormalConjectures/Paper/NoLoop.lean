@@ -66,7 +66,9 @@ variable [Algebra R A] [Module.Finite R A] (S : ModuleCat.{v} A) [Simple S]
 abbrev ext1_neq_zero := ¬ Subsingleton (Ext S S 1)
 
 variable (A) in
-abbrev infiniteGlobaldimStatement := ∀ n:ℕ , ∃ M : ModuleCat.{v} A, Module.Finite A M ∧ projectiveDimension M > n
+abbrev infinite_global_dim_statement := ∀ n:ℕ , ∃ M : ModuleCat.{v} A, projectiveDimension M > n
+
+abbrev no_loop_statement := ext1_neq_zero S  →  infinite_global_dim_statement A
 
 include R in
 /--
@@ -79,10 +81,10 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem no_loop : ext1_neq_zero S  →  infiniteGlobaldimStatement A := by
+theorem no_loop : no_loop_statement S := by
   sorry
 
-abbrev strong_no_loop_statement := projectiveDimension S = ⊤
+abbrev strong_no_loop_statement := ext1_neq_zero S  → projectiveDimension S = ⊤
 
 include R in
 /--
@@ -95,16 +97,19 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem strong_no_loop : ext1_neq_zero S  →  strong_no_loop_statement S := by
+theorem strong_no_loop : strong_no_loop_statement S := by
   sorry
 
 /--
-A special case of the conjecture see remark above the file-/
+The *Strong No Loop Conjecture* was solved for finite-dimensional algebras over algebraically closed fields
+by K. Igusa, S. Liu and C. Paquette in
+[A proof of the strong no loop conjecture](https://arxiv.org/abs/1103.5361)
+-/
 @[category research solved, AMS 16 18]
-theorem strong_no_loop_algebraicly_closed {R : Type u} [Field R] [Algebra R A] [Module.Finite R A] [IsAlgClosed R]: ext1_neq_zero S  →  strong_no_loop_statement S := by
+theorem strong_no_loop_alg_closed {k : Type u} [Field k] [IsAlgClosed k] [Algebra k A] [Module.Finite k A] : strong_no_loop_statement S := by
   sorry
 
-abbrev extreme_no_loop_statement := ∀ i, ∃ n > i,¬ Subsingleton (Ext S S n)
+abbrev extreme_no_loop_statement := ext1_neq_zero S → ∀ i, ∃ n > i,¬ Subsingleton (Ext S S n)
 
 include R in
 /--
@@ -118,14 +123,14 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem extreme_no_loop : ext1_neq_zero S  →  extreme_no_loop_statement S:= by
+theorem extreme_no_loop : extreme_no_loop_statement S:= by
   sorry
 
 /--
 The Extreme No Loop Conjecture implies the Strong No Loop Conjecture.
 -/
 @[category test, AMS 16 18]
-lemma extreme_imply_strong: (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → extreme_no_loop_statement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → strong_no_loop_statement S ) := by
+lemma extreme_imply_strong: (∀ S: ModuleCat A, Module.Finite A S → Simple S → extreme_no_loop_statement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → strong_no_loop_statement S ) := by
   intro h S fS sS neZS
   by_contra!
   rcases (projectiveDimension_ne_top_iff _ ).1 this with ⟨m,hm⟩
@@ -136,8 +141,16 @@ lemma extreme_imply_strong: (∀ S: ModuleCat A, Module.Finite A S → Simple S 
 The Strong No Loop Conjecture implies the No Loop Conjecture.
 -/
 @[category test, AMS 16 18]
-lemma strong_imply_normal: (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → strong_no_loop_statement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → infiniteGlobaldimStatement A) := fun  h S fS sS neZS n => ⟨S,⟨fS,by
-  rw [ h S fS sS neZS]
-  apply WithBot.LT.coe_lt_coe <| ENat.natCast_lt_top n⟩⟩
+lemma strong_imply_normal: (∀ S: ModuleCat A, Simple S → strong_no_loop_statement S ) → (∀ S: ModuleCat A, Simple S → no_loop_statement S) := fun  h S sS neZS n => ⟨S,by
+  rw [ h S sS neZS]
+  exact WithBot.LT.coe_lt_coe <| ENat.natCast_lt_top n⟩
+
+/--
+Use strong_imply_normal and the special case of the strong no loop conjecture to prove a special case of the no loop conjecture
+-/
+@[category test, AMS 16 18]
+lemma no_loop_alg_closed {k : Type u} [Field k] [IsAlgClosed k] [Algebra k A] [Module.Finite k A] :  no_loop_statement S := strong_imply_normal
+  (fun S _ => strong_no_loop_alg_closed (k := k) S) S (by infer_instance)
+
 
 end NoLoopConjectures
