@@ -50,7 +50,7 @@ See Problem 595 for the specific case $(G_1, G_2) = (K_4, K_3)$.
 theorem erdos_596 :
     ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       IsErdosHajnalExceptional G₁ G₂ ↔
-      (answer(sorry) : ∀ {U₁ U₂ : Type}, SimpleGraph U₁ → SimpleGraph U₂ → Prop) G₁ G₂ := by
+      (answer(sorry) : ∀ V₁ V₂ : Type, SimpleGraph V₁ → SimpleGraph V₂ → Prop) U₁ U₂ G₁ G₂ := by
   sorry
 
 /-- Erdős–Hajnal exceptional pairs exist — recorded as a known direction of `erdos_596`. -/

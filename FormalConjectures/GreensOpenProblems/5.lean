@@ -75,7 +75,7 @@ $\mathrm{SL}_2(\mathbb{F}_p)$.
 -/
 @[category research open, AMS 5 20]
 theorem green_5.variants.sl_two (p : ℕ) [Fact p.Prime] :
-    let S : Finset (SL₂ p) := answer(sorry)
+    let S : Finset (SL₂ p) := (answer(sorry) : (q : ℕ) → Finset (SL₂ q)) p
     MaximalFor (IsProductFree (M := SL₂ p)) Set.ncard (S : Set (SL₂ p)) := by
   sorry
 

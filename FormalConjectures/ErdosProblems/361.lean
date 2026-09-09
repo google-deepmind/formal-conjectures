@@ -65,7 +65,7 @@ Does this depend on $n$ in an irregular way?
 -/
 @[category research open, AMS 11]
 theorem erdos_361 (c : ℝ) (hc : 0 < c) :
-    subsetSumAvoidanceNumber c = answer(sorry) := by
+    subsetSumAvoidanceNumber c = (answer(sorry) : ℝ → ℕ → ℕ) c := by
   sorry
 
 /--
