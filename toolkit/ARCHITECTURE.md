@@ -41,9 +41,9 @@ Use preparation and completion under `review`, with optional isolated scratch
 execution through `review exec`. Interface:
 
 ```sh
-conjectures review prepare --pr 4899 --json
+conjectures review prepare --pr 4941 --json
 conjectures review prepare --changed --json
-conjectures review finish RUN --report review.json --json
+conjectures review finish RUN --json
 conjectures run show RUN
 conjectures evidence publish RUN
 ```
@@ -120,3 +120,7 @@ Do not build a general provider-dispatch layer before a concrete hosted need.
 - [OpenCode skills](https://opencode.ai/docs/skills/)
 - [Hermes skills](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/)
 - [Agent Skills standard](https://agentskills.io/home)
+
+The 0.2 CLI provides human output by default and separates command status from the
+retained mathematical outcome. See README.md for exit codes and setup. Proof and
+publication remain experimental until the release acceptance journeys pass.
