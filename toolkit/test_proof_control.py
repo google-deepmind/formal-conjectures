@@ -8,6 +8,19 @@ from conjectures import core, proof, cli, remote, exporter
 from test_toolkit import ToolkitFixture
 
 class ProofControlTests(ToolkitFixture):
+    def test_installed_exporter_is_trusted_and_does_not_change_package_pins(self):
+        self.repository()
+        lakefile=self.root/'lakefile.toml'
+        lakefile.write_text('name = "fixture"\n')
+        original=lakefile.read_text()
+        exporter.install_native(self.root)
+        self.assertTrue((self.root/'comparator/ExportProblem.lean').is_file())
+        self.assertTrue(lakefile.read_text().startswith(original))
+        first=lakefile.read_bytes();exporter.install_native(self.root)
+        self.assertEqual(first,lakefile.read_bytes())
+        lakefile.write_text(lakefile.read_text().replace('root = "ExportProblem"','root = "CandidateCode"'))
+        with self.assertRaisesRegex(ValueError,'incompatible'):exporter.install_native(self.root)
+
     def test_missing_remote_artifact_retains_infrastructure_error(self):
         directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo'},remote_run_id=123)
         with patch.object(proof,'gh',return_value=b'{"status":"completed","conclusion":"failure","url":"https://example.com/run"}'),patch.object(proof,'github',return_value={'artifacts':[]}):
@@ -45,7 +58,10 @@ class ProofControlTests(ToolkitFixture):
         from pathlib import Path
         from types import SimpleNamespace
         from conjectures import catalog
-        self.repository();revision=self.git('rev-parse','HEAD').decode().strip()
+        self.repository()
+        (self.root/'lakefile.toml').write_text('name = "fixture"\n')
+        self.git('add','lakefile.toml');self.git('commit','-m','Pin fixture package')
+        revision=self.git('rev-parse','HEAD').decode().strip()
         (self.root/'FormalConjectures/A.lean').write_text('uncommitted user edit')
         args=SimpleNamespace(target='original',repository='fixture/local',source_ref=revision,catalog=None,out=self.root/'proof')
         real_command=core.command;real_git=core.git

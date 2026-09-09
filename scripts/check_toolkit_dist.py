@@ -16,6 +16,9 @@ def check(wheel):
         assert 'conjectures/resources/review.Dockerfile' in names
         assert 'conjectures/resources/verification-workflow.yml' in names
         assert not any('/evals/' in name or 'review_model_' in name for name in names)
+        if 'conjectures/proof.py' in names:
+            for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
+                assert 'conjectures/resources/exporter/'+name in names
     with tempfile.TemporaryDirectory(prefix='fc-install-') as temp:
         root=Path(temp);env={k:v for k,v in os.environ.items() if k not in ('PYTHONPATH','OPENAI_API_KEY','ANTHROPIC_API_KEY','GH_TOKEN','GITHUB_TOKEN','CONJECTURES_GH')}
         env.update(XDG_CONFIG_HOME=str(root/'config'),XDG_CACHE_HOME=str(root/'cache'),GH_CONFIG_DIR=str(root/'gh'))

@@ -3,3 +3,4 @@ include toolkit/README.md toolkit/RELEASE.md
 recursive-include .agents/skills/formal-conjectures-review *.md
 prune .agents/skills/formal-conjectures-review/evals
 recursive-include toolkit/conjectures/resources *.Dockerfile *.yml
+include comparator/ExportProblem.lean comparator/WorkspaceTest.lean comparator/export_problem.py

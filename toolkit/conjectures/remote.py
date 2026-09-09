@@ -66,8 +66,7 @@ def execute(request,output,toolkit,source,candidate,generator):
             raise Failure('candidate_binding_mismatch','Candidate checkout does not match request',3)
         submissions=load_submission(candidate,request['candidate_commit'],request['candidate_path'])
         # Use the controller's native exporter and template. Candidate repositories supply neither.
-        for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
-            shutil.copy2(toolkit/'comparator'/name,source/'comparator'/name)
+        exporter.install_native(source)
         exporter.ROOT=source
         workspace=exporter.export(source/request['source_path'],request['declaration'],output/'generated',
                                   generator,request['source_commit'],request['source_repository'])

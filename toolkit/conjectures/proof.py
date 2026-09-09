@@ -83,6 +83,7 @@ def initialize(root,args,cfg):
             command(['git','clone','--no-checkout','--shared',root,source])
             git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
             git(source,'checkout','--detach',revision)
+            exporter.install_native(source)
             print('Acquiring pinned source dependencies and the Mathlib cache…',file=sys.stderr)
             command(['lake','exe','cache','get'],cwd=source,timeout=1200)
             previous=exporter.ROOT

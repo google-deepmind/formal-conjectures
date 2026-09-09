@@ -13,6 +13,27 @@ ROOT = Path.cwd()
 SOURCE_REPOSITORY = "https://github.com/google-deepmind/formal-conjectures.git"
 
 
+def install_native(source):
+    """Install trusted exporter resources in an isolated source checkout."""
+    import shutil
+    resources = Path(__file__).parent/'resources/exporter'
+    if not resources.is_dir():
+        resources = Path(__file__).resolve().parents[2]/'comparator'
+    destination = source/'comparator'
+    destination.mkdir(exist_ok=True)
+    for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
+        shutil.copy2(resources/name,destination/name)
+    lakefile = source/'lakefile.toml'
+    config = tomllib.loads(lakefile.read_text())
+    expected = {'name':'export_problem','srcDir':'comparator','root':'ExportProblem','supportInterpreter':True}
+    existing = [entry for entry in config.get('lean_exe',[]) if entry.get('name')=='export_problem']
+    if existing and existing != [expected]:
+        raise ValueError('Source defines an incompatible export_problem target')
+    if not existing:
+        with lakefile.open('a') as stream:
+            stream.write('\n[[lean_exe]]\nname = "export_problem"\nsrcDir = "comparator"\nroot = "ExportProblem"\nsupportInterpreter = true\n')
+
+
 def run(args, cwd=None, **kwargs):
     cwd = ROOT if cwd is None else cwd
     result = subprocess.run(args, cwd=cwd, text=True, capture_output=True, timeout=600, **kwargs)

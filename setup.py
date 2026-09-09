@@ -12,4 +12,10 @@ class Build(build_py):
         shutil.copytree(source, dest, ignore=shutil.ignore_patterns('evals'), dirs_exist_ok=True)
         for name in ('README.md','RELEASE.md'):
             shutil.copy2(Path('toolkit')/name, dest.parent/name)
+        native = Path('comparator')
+        if (native/'ExportProblem.lean').is_file():
+            target = dest.parent/'exporter'
+            target.mkdir(exist_ok=True)
+            for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
+                shutil.copy2(native/name,target/name)
 setup(cmdclass={'build_py': Build})
