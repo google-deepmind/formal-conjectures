@@ -45,52 +45,20 @@ namespace WeierstrassCurve
 
 section GlobalMinimal
 
-open IsDedekindDomain in
-/-- A Weierstrass equation over $\mathbb{Q}$ is *globally minimal* if its coefficients lie in
-$\mathbb{Z}$ and it is minimal at every prime. See [Silverman2009], Section VIII.8. -/
-@[mk_iff]
-class IsGlobalMinimal (W : WeierstrassCurve ℚ) : Prop extends W.IsIntegral ℤ where
-  isMinimal : ∀ v : HeightOneSpectrum ℤ,
-    (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ)
+/-- Over a number field of class number one, every Weierstrass equation has a globally minimal
+model. See [Silverman2009], Corollary VIII.8.3. For zero discriminant, integrality suffices. -/
+@[category textbook, AMS 11 14]
+theorem exists_isGlobalMinimal {K : Type*} [Field K] [NumberField K] (W : WeierstrassCurve K)
+    (hK : NumberField.classNumber K = 1) :
+    ∃ C : VariableChange K, (C • W).IsGlobalMinimal := by
+  sorry
 
-attribute [instance] IsGlobalMinimal.isMinimal
-
-/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to one with coefficients in
-$\mathbb{Z}$. -/
+/-- Every Weierstrass equation over $\mathbb{Q}$ has a globally minimal model, since
+$\mathbb{Q}$ has class number one. -/
 @[category API, AMS 11 14]
-theorem exists_isIntegral_int (W : WeierstrassCurve ℚ) :
-    ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ := by
-  obtain ⟨b, hb⟩ := IsLocalization.exist_integer_multiples_of_finset (nonZeroDivisors ℤ)
-    {W.a₁, W.a₂, W.a₃, W.a₄, W.a₆}
-  have hb0 : ((b : ℤ) : ℚ) ≠ 0 := by exact_mod_cast nonZeroDivisors.coe_ne_zero b
-  have key : ∀ (n : ℕ) (a : ℚ), IsLocalization.IsInteger ℤ ((b : ℤ) • a) →
-      ∃ r : ℤ, algebraMap ℤ ℚ r = ((b : ℤ) : ℚ) ^ (n + 1) * a := fun n a ⟨r, hr⟩ ↦
-    ⟨(b : ℤ) ^ n * r, by push_cast at hr ⊢; linear_combination ((b : ℤ) : ℚ) ^ n * hr⟩
-  refine ⟨⟨(Units.mk0 _ hb0)⁻¹, 0, 0, 0⟩, isIntegral_of_exists_lift ℤ ?_ ?_ ?_ ?_ ?_⟩
-  · simpa [variableChange_a₁] using key 0 _ (hb _ (by simp))
-  · simpa [variableChange_a₂] using key 1 _ (hb _ (by simp))
-  · simpa [variableChange_a₃] using key 2 _ (hb _ (by simp))
-  · simpa [variableChange_a₄] using key 3 _ (hb _ (by simp))
-  · simpa [variableChange_a₆] using key 5 _ (hb _ (by simp))
-
-/-- Every Weierstrass equation over $\mathbb{Q}$ has an integral model with least absolute
-discriminant among its integral changes of variables. -/
-@[category API, AMS 11 14]
-theorem exists_isIntegral_minimal_abs_Δ (W : WeierstrassCurve ℚ) :
-    ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ ∧
-      ∀ C' : VariableChange ℚ, (C' • W).IsIntegral ℤ → |(C • W).Δ| ≤ |(C' • W).Δ| := by
-  classical
-  have key : ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → ∃ n : ℕ, |(C • W).Δ| = n :=
-    fun C _ ↦ let ⟨r, hr⟩ := Δ_integral_of_isIntegral ℤ (C • W)
-      ⟨r.natAbs, by simp [← hr, Nat.cast_natAbs]⟩
-  obtain ⟨C₀, hC₀⟩ := W.exists_isIntegral_int
-  have h : ∃ n : ℕ, ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ ∧ |(C • W).Δ| = n :=
-    (key C₀ hC₀).imp fun n hn ↦ ⟨C₀, hC₀, hn⟩
-  obtain ⟨C, hC, hn⟩ := Nat.find_spec h
-  refine ⟨C, hC, fun C' hC' ↦ ?_⟩
-  obtain ⟨n', hn'⟩ := key C' hC'
-  rw [hn, hn', Nat.cast_le]
-  exact Nat.find_min' h ⟨C', hC', hn'⟩
+theorem exists_isGlobalMinimal_rat (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, (C • W).IsGlobalMinimal :=
+  exists_isGlobalMinimal W Rat.classNumber_eq
 
 /-- Global minimality over $\mathbb{Q}$ is equivalent to minimising $|\Delta|$ among integral
 changes of variables. See [Silverman2009], Corollary VIII.8.3 and Proposition VII.1.3.
@@ -106,25 +74,17 @@ theorem IsGlobalMinimal.abs_Δ_le {W : WeierstrassCurve ℚ} [W.IsGlobalMinimal]
     (C : VariableChange ℚ) (hC : (C • W).IsIntegral ℤ) : |W.Δ| ≤ |(C • W).Δ| :=
   ((isGlobalMinimal_iff_abs_Δ_le W).1 inferInstance).2 C hC
 
-/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to a globally minimal one. -/
-@[category API, AMS 11 14]
-theorem exists_isGlobalMinimal (W : WeierstrassCurve ℚ) :
-    ∃ C : VariableChange ℚ, IsGlobalMinimal (C • W) := by
-  obtain ⟨C, hC, hmin⟩ := W.exists_isIntegral_minimal_abs_Δ
-  refine ⟨C, (isGlobalMinimal_iff_abs_Δ_le (C • W)).2 ⟨hC, fun C' hC' ↦ ?_⟩⟩
-  simpa [mul_smul] using hmin (C' * C) (by simpa [mul_smul] using hC')
-
 /-- A globally minimal Weierstrass equation isomorphic to `W`, chosen using
-`WeierstrassCurve.exists_isGlobalMinimal`. This is the global analogue of
+`WeierstrassCurve.exists_isGlobalMinimal_rat`. This is the global analogue of
 `WeierstrassCurve.minimal`. -/
 noncomputable def globalMinimal (W : WeierstrassCurve ℚ) : WeierstrassCurve ℚ :=
-  W.exists_isGlobalMinimal.choose • W
+  W.exists_isGlobalMinimal_rat.choose • W
 
 instance (W : WeierstrassCurve ℚ) : W.globalMinimal.IsGlobalMinimal :=
-  W.exists_isGlobalMinimal.choose_spec
+  W.exists_isGlobalMinimal_rat.choose_spec
 
 instance (W : WeierstrassCurve ℚ) [W.IsElliptic] : W.globalMinimal.IsElliptic :=
-  inferInstanceAs (W.exists_isGlobalMinimal.choose • W).IsElliptic
+  inferInstanceAs (W.exists_isGlobalMinimal_rat.choose • W).IsElliptic
 
 @[category API, AMS 11 14]
 theorem exists_smul_eq_globalMinimal (W : WeierstrassCurve ℚ) :
@@ -146,14 +106,6 @@ theorem abs_u_eq_one_of_isGlobalMinimal (W : WeierstrassCurve ℚ) [W.IsElliptic
   have h := abs_Δ_eq_of_isGlobalMinimal W C
   rw [variableChange_Δ, abs_mul, mul_eq_right₀ (abs_ne_zero.2 W.isUnit_Δ.ne_zero)] at h
   simpa [abs_pow, pow_eq_one_iff_of_nonneg] using h
-
-open IsDedekindDomain in
-/-- A globally minimal equation is integral and minimal at every prime. -/
-@[category API, AMS 11 14]
-theorem isGlobalMinimal_iff_forall_isMinimal (W : WeierstrassCurve ℚ) :
-    W.IsGlobalMinimal ↔ W.IsIntegral ℤ ∧ ∀ v : HeightOneSpectrum ℤ,
-      (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ) :=
-  isGlobalMinimal_iff W
 
 end GlobalMinimal
 
