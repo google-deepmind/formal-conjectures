@@ -95,5 +95,10 @@ def next_action(record):
     if record['kind'] == 'verify' and record['status'] in ('queued','in_progress','running','cancellation_requested'):
         return 'Retrieve verification: conjectures run wait '+identity
     if record.get('current_applicability') == 'historical':return 'Inputs changed. Prepare a new review; retain this result as history.'
+    if record.get('verification_summary') and record.get('outcome') in ('fail','error','incomplete'):
+        return 'Inspect verifier logs: conjectures run logs '+identity+'\nResolve the reported cause before starting a new verification.'
+    if record.get('review_summary') and record.get('outcome') in ('fail','error','incomplete'):
+        target=record.get('target') or {}
+        return 'Address the findings and missing coverage, then prepare a new review: conjectures review '+('--pr '+str(target['pr']) if target.get('pr') else '--changed')
     if record.get('outcome') in ('fail','error','incomplete'):return 'Inspect findings and coverage: conjectures run show '+identity
     return record.get('next_action') or 'Inspect retained evidence: conjectures run show '+identity
