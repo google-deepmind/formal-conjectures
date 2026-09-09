@@ -16,8 +16,6 @@ limitations under the License.
 
 import FormalConjecturesUtil
 
-open CategoryTheory Abelian Limits
-
 /-!
 # Strong Nakayama Conjecture
 *Reference:* [R.R. Colby and K.R. Fuller, A note on the Nakayama conjectures, Tsukuba J. Math. \textbf{14} (1990), no.~2, 343--352.](https://doi.org/10.21099/tkbjm/1496161457)
@@ -34,23 +32,30 @@ open CategoryTheory Abelian Limits
 *Reference:* [T. Nakayama, On algebras with complete homology. Abh. Math. Sem. Univ. Hamburg 22 (1958), 300–307.](https://doi.org/10.1007/BF02941960)
 -/
 
+open CategoryTheory Abelian Limits
+
 universe u v w
-
-/-
-Let `R`be an artinian ring, `A` an algebra of finite type and `M`a finitely generated module over `A`-/
-variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] {M : ModuleCat.{v} A} [Module.Finite A M.carrier]
-
 
 namespace NakayamaConjectures
 
+/-
+Let `R`be an artinian ring, `A` an algebra of finite type and `M`a finitely generated module over `A`-/
+variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] (M : ModuleCat.{v} A) [Module.Finite A M.carrier]
+
+abbrev SNCstatement := (∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) → IsZero M
+
+include R in
 /--
 The Strong Nakayama Conjecture:
 If  Ext^i(M,A) = 0 for any integer `i ≥ 0` then M = 0.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem SNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) : IsZero M := by
+theorem SNC : SNCstatement M := by
   sorry
 
+abbrev GNCstatement := ( ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) → ¬ Simple M
+
+include R in
 /--
 The Generalized Nakayama Conjecture:
 If Ext^i(M,A) = 0 for any integer `i ≥ 0` then M is not simple.
@@ -58,10 +63,20 @@ If Ext^i(M,A) = 0 for any integer `i ≥ 0` then M is not simple.
 Note that `Simple` here is in Finitely generated Modules but it is equivalent to being simple in Modules.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem GNC (_ : ∀ i : ℕ, Subsingleton (Ext M (.of A A) i)) :
-    ¬ Simple M := by
+theorem GNC : GNCstatement M := by
   sorry
 
+include R
+/--
+Reference: TODO
+-/
+@[category research solved, AMS 16 18]
+lemma SGNCImplGNC : (∀ M : ModuleCat A, Module.Finite A M → SNCstatement M) → (∀ M : ModuleCat A, Module.Finite A M → GNCstatement M) := by
+  sorry
+
+abbrev ARCstatement := ( ∀ i > 0 , Subsingleton (Ext M (.of A A) i) ∧ Subsingleton (Ext M M i)) → Projective M
+
+include R in
 /--
 Auslander-Reiten-Conjecture - an equivalent formulation of GNC:
 If Ext^i(M,M) = Ext^i(M,A) = 0 for any integer `i > 0` then `M` is projective.
@@ -69,12 +84,24 @@ If Ext^i(M,M) = Ext^i(M,A) = 0 for any integer `i > 0` then `M` is projective.
 Note that `Projective` here is in Finitely generated Modules but it is equivalent to being projective in Modules.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem ARC (_ : ∀ i > 0 ,
-        Subsingleton (Ext M (.of A A) i) ∧
-        Subsingleton (Ext M M i)) :
-        Projective M := by
+theorem ARC : ARCstatement M := by
   sorry
 
+include R
+/--
+Reference: TODO
+-/
+@[category research solved, AMS 16 18]
+lemma GNCEquivARC : (∀ M : ModuleCat A, Module.Finite A M → GNCstatement M) ↔ (∀ M : ModuleCat A, Module.Finite A M → ARCstatement M) := by
+  sorry
+
+variable (A) in
+abbrev TC1statement := ( ∀ p > 0, ∀ (I : FGModuleCat A),
+  (Injective I) →
+  Subsingleton (Ext ((.of A I.carrier)) (ModuleCat.of A A) p) → CategoryTheory.Injective (ModuleCat.of A A))
+  → Injective (ModuleCat.of A A)
+
+include R in
 /--
 First Tachikawa Conjecture:
 
@@ -82,32 +109,116 @@ If for any `p > 0` and `I` a finiyely generated module over `A` Ext^p(I,A)=0 the
 
 Note that there is an equivalent formulation :If Ext^p(A^*,A) = 0 for any integer `p > 0`, then A is self-injective.
 
-But A^* is defined as `A →ₗ[R] R` equiped with a structure of A module.
-- An instance is given by `LinearMap.instModuleDomMulActOfSMulCommClass`but in order to have a good universe, we need to have `R`and `A` leaving in the same universe.
-- In adition it's a module over `Aᵈᵐᵃ`wich is not `A`if `A`is not commutative.
-- Finaly in order to get the right definition it may be necessary to replace `R` by some kind of injective enveloppe of `R` not yet availabla.
+But A^* is defined as `A →ₗ[R] R` equiped with a structure of A module.The instance of module is given by :
 
+instance : Module A (A →ₗ[R] R) := by
+  let m := LinearMap.instModuleDomMulActOfSMulCommClass (S := Aᵐᵒᵖ) (R := R) (σ₁₂ := RingHom.id R) (M' := R) (M:= A)
+  have : A ≃+* (Aᵐᵒᵖ)ᵈᵐᵃ := RingEquiv.opOp _
+  apply Module.compHom _ (this.toRingHom)
+
+If `R`is not a fild, in  order to get the right definition it may be necessary to replace `R` by some kind of injective enveloppe of `R` not yet available in mathlib. We state this version of the conjecture.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem TC1 (_ : ∀ p > 0, ∀ (I : FGModuleCat A), (Injective I) →
-        Subsingleton (Ext ((.of A I.carrier)) (ModuleCat.of A A) p) →
-        CategoryTheory.Injective (ModuleCat.of A A)) :
-        Injective (ModuleCat.of A A) := by
-    sorry
+theorem TC1 : TC1statement A := by
+  sorry
 
+abbrev TC2statement := (Injective (ModuleCat.of A A) → ∀ p > 0,
+  Subsingleton (Ext M M p)) → Projective (ModuleCat.of A M )
+
+include R in
 /--
 Second Tachikawa Conjecture:
 Let A be a finite-dimensional, self-injective algebra. For any A-module M with Ext^p(M,M) = 0 for any integer `p > 0`, it follows that M is projective.
 -/
 @[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem TC2 (_ : Injective (ModuleCat.of A A)) (_ : ∀ p > 0,
-        Subsingleton (Ext M M p)) :
-        Projective (ModuleCat.of A M ) := by
+theorem TC2 : TC2statement M := by
   sorry
 
-/-
+variable (A) in
+abbrev NCstatement := (∃ I : InjectiveResolution (ModuleCat.of A A ), ∀ n, Projective <| I.cocomplex.X n) → Injective (ModuleCat.of A A )
+
+include R in
+/--
 Nakayama Conjecture:
-Let A be a finite-dimensional algebra.
+As in the First Tachikawa Conjecture there is an aquivalent formulation with the dual:
+
+for every finitely genretaed module `M` over `A` if for all ì > 0 Extî(M ⊕ A^*, M ⊕ A) = 0 then `M` is projective.
+
+We state the following version : if `A`has a projective-injective resolution then `A`is self injective.
 -/
+@[category research open, AMS 16 18]
+theorem NC : NCstatement A := by
+  sorry
 
 end NakayamaConjectures
+
+namespace NakayamaConjecturesOverFields
+
+variable {R : Type u} {A : Type v} [Field R] [Ring A] [Algebra R A] [Module.Finite R A] (M : ModuleCat.{v} A) [Module.Finite A M.carrier]
+
+variable (R A) in
+abbrev dual := (A →ₗ[R] R)
+
+instance : Module A (dual R A) := by
+  have : A ≃+* (Aᵐᵒᵖ)ᵈᵐᵃ := RingEquiv.opOp _
+  apply Module.compHom _ (this.toRingHom)
+
+/--
+Gorenstein Symmetry Conjecture
+-/
+@[category research open, AMS 16 18]
+theorem GSC : injectiveDimension (ModuleCat.of A A) < ⊤ → projectiveDimension (ModuleCat.of A (dual R A)) < ⊤ := by
+  sorry
+
+/- in order to take Ext groups of dual R A with some other `ModuleCat.{v}` we need to have `R` and `A` leaving on the same universe-/
+variable {R A: Type u} [Field R] [Ring A] [Algebra R A] [Module.Finite R A] (M : ModuleCat A) [Module.Finite A M.carrier]
+
+variable (R) in
+abbrev SNCdualStatement := IsZero M ∨ ∃ i, ¬ Subsingleton (Ext (.of A (dual R A )) M i)
+
+/--
+SNC expressed with the dual
+-/
+@[category research open, AMS 16 18]
+theorem SNCdual : SNCdualStatement R M := by
+  sorry
+
+/--
+In this situation, SNCdual and SNC are equivalent,
+ref: TODO
+-/
+@[category research solved, AMS 16 18]
+lemma SNCEquiv : NakayamaConjectures.SNCstatement M ↔ SNCdualStatement R M := by sorry
+
+variable (R) in
+abbrev NCdualStatement := (∀ i > 0,
+  Subsingleton (Ext M M i) ∧
+  Subsingleton (Ext M (.of A A) i) ∧
+  Subsingleton (Ext (.of A (dual R A)) M i) ∧
+  Subsingleton (Ext ((.of A (dual R A))) (ModuleCat.of A A) i)) → Projective M
+
+/--
+NC expressed with the dual
+-/
+@[category research open, AMS 16 18]
+theorem NCdual : NCdualStatement R M := by
+  sorry
+
+/--
+In this situation, NCdual and NC are equivalent,
+ref: TODO
+-/
+@[category research solved, AMS 16 18]
+lemma NCEquiv : NakayamaConjectures.NCstatement A ↔ NCdualStatement R M := by sorry
+
+/--
+In this situation, NCdual is equivalent to the conjunction of the two Tachikawa's conjectures
+ref: TODO
+-/
+@[category research solved, AMS 16 18]
+lemma NCEquivTC1andTC2 :
+    NakayamaConjectures.TC1statement A ∧ (∀ M : ModuleCat A, NakayamaConjectures.TC2statement M) ↔ NCdualStatement R M := by
+  sorry
+
+
+end NakayamaConjecturesOverFields
