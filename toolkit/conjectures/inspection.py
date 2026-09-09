@@ -83,7 +83,7 @@ def show(root, directory, record, *, refresh=True):
         result = record['result'];comparator = result.get('comparator') or {}
         value['verification_summary'] = {k:result.get(k) for k in ('outcome','reason','detail','pins','producer')}
         value['verification_summary'].update(stage=comparator.get('stage'),
-            policy_reason=comparator.get('reason'), policy_outcome=comparator.get('outcome','not_evaluated'))
+            policy_reason=comparator.get('reason'), policy_outcome=comparator.get('outcome') if comparator.get('outcome') in ('pass','rejected') else 'not_evaluated')
         value['evidence_paths'] = ['remote/verification.json']
     value['next_action'] = next_action(value)
     return value
