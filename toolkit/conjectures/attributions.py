@@ -21,5 +21,7 @@ def validate(value, request_id, read):
         rr.validate_descriptors(reviewer['evidence'],'reviewer evidence')
         rr.require(bool(reviewer['evidence']),'Reviewer evidence is empty')
         for item in reviewer['evidence']:
-            rr.require(rr.digest(read(item['path']))==item['sha256'],'Reviewer evidence digest mismatch')
+            try:raw=read(item['path'])
+            except (KeyError,OSError) as error:raise rr.InputError('Reviewer evidence unavailable: '+item['path']) from error
+            rr.require(rr.digest(raw)==item['sha256'],'Reviewer evidence digest mismatch')
     return value
