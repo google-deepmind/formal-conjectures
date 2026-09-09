@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module  -- shake: keep-all --deprecated_module: ignore
 
+public import FormalConjecturesForMathlib.Algebra.CubicDiscriminant
 public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
@@ -27,6 +28,8 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.PeriodIntegral
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
@@ -34,6 +37,7 @@ public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
+public import FormalConjecturesForMathlib.Analysis.Polynomial.Basic
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
