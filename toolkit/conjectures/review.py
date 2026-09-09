@@ -163,6 +163,7 @@ def handoff(directory, configuration, record):
     save(directory/'review.json', template)
     record.update(status='awaiting_review', outcome='incomplete', reason='awaiting_review',
         request_id=request['id'], target=ticket, build_status=status,
+        source_coverage=ticket.get('source_collection',{}).get('coverage','incomplete'),
         build_receipt_sha256=rr.digest((directory/'controller/build.json').read_bytes()),
         reviewer_metadata={'attribution':'operator_reported', 'model':None, 'usage':None,
                            'context':'Existing session; no claim of blinded or isolated model execution.'},
