@@ -17,64 +17,129 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-TODO
+
+# No Loop Conjectures
+
+*References:*
+
+Let $A$ be an Artin algebra over a commutative Artinian ring $R$.
+The No Loop Conjectures are a family of statements relating $\operatorname{Ext}^1_A(S,S)$ for simple $A$-modules $S$ to homological properties of $S$ and $A$.
+
+The *Extreme No Loop Conjecture* was formulated by S. Liu and J.-P. Morin in
+[The strong no loop conjecture for special biserial algebras,
+Proc. Amer. Math. Soc. 132 (2004), 3513-3523](https://doi.org/10.1090/S0002-9939-04-07512-4).
+It was also called Extension Conjecture later on.
+
+The *Strong No Loop Conjecture* was solved for finite-dimensional algebras over algebraically closed fields
+by K. Igusa, S. Liu and C. Paquette in
+[A proof of the strong no loop conjecture](https://arxiv.org/abs/1103.5361),
+published as
+[Adv. Math. 228 (2011), 2731-2742](https://doi.org/10.1016/j.aim.2011.06.042).
+
+The *No Loop Conjecture* was solved assuming the same setup as above by K. Igusa
+[Notes on the no loop conjecture, J. Pure Appl. Algebra 69 (1990), 161-176](https://doi.org/10.1016/0022-4049%2890%2990040-O).
+In this setup,  the No Loop Conjecture follows also from earlier work of H. Lenzing
+[Nilpotente Elemente in Ringen von endlicher globaler Dimension, Math. Z. 108 (1969), 313-324](https://doi.org/10.1007/BF01112536).
+
+The three conjectures form successive strengthenings:
+[
+\text{Extreme No Loop}
+\Longrightarrow
+\text{Strong No Loop}
+\Longrightarrow
+\text{No Loop}.
+]
+
+Remark:
+We formulate the No Loop Conjectures in the form that non-vanishing of $Ext^1(S,S)$ for a simple $A$-module $S$
+leads to certain homological conditions.
+If $A$ is isomorphic to a bound quiver algebra $kQ/I$,
+the vanishing of $\operatorname{Ext}^1_A(S,S)$ for all simple $A$-modules $S$ corresponds
+to the absence of loops in the quiver.
+In particular, the contrapositives of our formulations justify the 'No Loops'-terminology
+assuming the quiver description of $A$.
 -/
 
 open CategoryTheory Abelian Limits
 
 universe u v w
 
-namespace NoLoopsConjectures
+namespace NoLoopConjectures
 
 /-
-Let `R`be an artinian ring, `A` an algebra of finite type and `S`a finitely generated simple module over `A` so that Ext^1(S,A) ≠ 0-/
-variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] (S : ModuleCat.{v} A) [Module.Finite A S] [Simple S]
+Let `R` be a commutative Artinian ring, `A` a module-finite `R`-algebra and `S` a simple module over `A` so that `Ext^1(S,S) ≠ 0` -/
+variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A]
+variable [Algebra R A] [Module.Finite R A] (S : ModuleCat.{v} A) [Simple S]
 
-abbrev Ext1NeZ := ¬ Subsingleton (Ext S (.of A A) 1)
+abbrev ext1_neq_zero := ¬ Subsingleton (Ext S S 1)
 
 variable (A) in
-abbrev noLoopStatement := ∀ n:ℕ , ∃ M : ModuleCat.{v} A, Module.Finite A M ∧ projectiveDimension M > n
+abbrev infiniteGlobaldimStatement := ∀ n:ℕ , ∃ M : ModuleCat.{v} A, Module.Finite A M ∧ projectiveDimension M > n
 
+include R in
 /--
-In this situation the global dimension (defined as the supremum of proectives dimensions of finitely generated modules over `A`) of `A`is infinite.
+The *No Loop Conjecture*:
+For any simple $A$-module $S$
+$$
+\operatorname{Ext}^1_A(S,S) \neq 0
+\quad \Longrightarrow  \quad
+\operatorname{gldim} A = \infty
+$$
 -/
-@[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem noLoop : noLoopStatement A := by
+@[category research open, AMS 16 18]
+theorem no_loop : ext1_neq_zero S  →  infiniteGlobaldimStatement A := by
   sorry
 
-abbrev strongNoLoopStatement := projectiveDimension S = ⊤
+abbrev strong_no_loop_statement := projectiveDimension S = ⊤
 
+include R in
 /--
-In this situation the projective dimension of `S`is infinte.
+The *Strong No Loop Conjecture*:
+For any simple $A$-module $S$
+$$
+\operatorname{Ext}^1_A(S,S) \neq 0
+\quad \Longrightarrow  \quad
+\operatorname{prdim} S = \infty
+$$
 -/
-@[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem strongNoLoop : strongNoLoopStatement S := by
+@[category research open, AMS 16 18]
+theorem strong_no_oop : ext1_neq_zero S  →  strong_no_loop_statement S := by
   sorry
 
-abbrev veryStrongNoLoopStatement := ∀ i, ∃ n >i,¬ Subsingleton (Ext S (.of A A) n)
+abbrev extreme_no_loop_statement := ∀ i, ∃ n > i,¬ Subsingleton (Ext S S n)
 
+include R in
 /--
-In this situation there are an infinte number of integer `i` such that Ext^i(S,A) are vanishing.
+The *Extreme No Loop Conjecture*:
+For any simple $A$-module $S$
+$$
+\operatorname{Ext}^1_A(S,S) \neq   0
+\quad \Longrightarrow  \quad
+\operatorname{Ext}^i_A(S,S) \neq 0
+\text{ for infinitely many }i > 0
+$$
 -/
-@[category research open, AMS 16 18] /- Associative rings and algebras + Category theory; homological algebra -/
-theorem veryStrongNoLoop : veryStrongNoLoopStatement S:= by
+@[category research open, AMS 16 18]
+theorem extreme_no_loop : ext1_neq_zero S  →  extreme_no_loop_statement S:= by
   sorry
 
+/--
+The Extreme No Loop Conjecture implies the Strong No Loop Conjecture.
+-/
 @[category test, AMS 16 18]
-lemma vStrongImplyStrong: (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → veryStrongNoLoopStatement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → strongNoLoopStatement S ) := by
+lemma extreme_imply_strong: (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → extreme_no_loop_statement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → strong_no_loop_statement S ) := by
   intro h S fS sS neZS
-  apply ENat.WithBot.eq_top_iff_forall_ge.mpr
-  intro m
-  apply le_sInf
-  rintro b hb
   by_contra!
+  rcases (projectiveDimension_ne_top_iff _ ).1 this with ⟨m,hm⟩
   rcases h S fS sS neZS m with ⟨n,hn⟩
-  exact  hn.2 <| HasProjectiveDimensionLT.subsingleton
-    (hX := (hb _ this)) _ _ _ (le_of_lt hn.1 ) _
+  exact hn.2 <| (HasProjectiveDimensionLT.subsingleton (hX := hm) _ ) _ (Nat.succ_le_of_lt hn.1) _
 
+/--
+The Strong No Loop Conjecture implies the No Loop Conjecture.
+-/
 @[category test, AMS 16 18]
-lemma StrongImplyNormal: (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → strongNoLoopStatement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → noLoopStatement A) := fun  h S fS sS neZS n => ⟨S,⟨fS,by
+lemma strong_imply_normal: (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → strong_no_loop_statement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → ext1_neq_zero S → infiniteGlobaldimStatement A) := fun  h S fS sS neZS n => ⟨S,⟨fS,by
   rw [ h S fS sS neZS]
   apply WithBot.LT.coe_lt_coe <| ENat.natCast_lt_top n⟩⟩
 
-end NoLoopsConjectures
+end NoLoopConjectures
