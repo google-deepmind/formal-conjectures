@@ -32,16 +32,21 @@ def logs(directory, record, artifact=None):
     return {'outcome':'pass','run':record,'logs':result}
 
 
-def check_local(root, paths, cfg):
+def check_targets(root, paths):
     from .execution import build_targets
     shared=[p for p in paths if p.startswith(('FormalConjecturesUtil','FormalConjecturesForMathlib','FormalConjectures/Util/','FormalConjectures/Subsets/')) or p in ('lakefile.toml','lake-manifest.json','lean-toolchain')]
     if shared:
         raise Failure('unsupported_check_scope','Shared/configuration changes: '+', '.join(shared[:8])+'. Use lake --wfail build FormalConjecturesForMathlib and lake --wfail test; dependency changes need the full hosted build.',4)
     lean=[p for p in paths if p.endswith('.lean')]
-    if not lean:return {'outcome':'pass','reason':'no_changed_modules','message':'No changed Lean modules to build.'}
     # Build is independent of the five-module semantic-review limit.
     targets=[]
     for path in lean:targets.extend(build_targets([path],root))
+    return targets
+
+
+def check_local(root, paths, cfg):
+    targets=check_targets(root,paths)
+    if not targets:return {'outcome':'pass','reason':'no_changed_modules','message':'No changed Lean modules to build.'}
     directory,record=start_run(root,'check',targets=targets)
     import sys
     print('Building '+', '.join(targets)+'…',file=sys.stderr)
