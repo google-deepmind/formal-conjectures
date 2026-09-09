@@ -39,7 +39,7 @@ def snapshot(root, base):
         commit = git(root, 'commit-tree', tree, '-p', head, input=b'Local contribution snapshot\n', env=env).decode().strip()
         return commit, True
 
-def prepare(root, directory, *, base='origin/main', pr=None, repository=None, supplied=None, collect_sources=True):
+def prepare(root, directory, *, base='origin/main', pr=None, repository=None, supplied=None, collect_sources=True, semantic_review=True):
     checkout = directory/'checkout'
     base_ref = base
     workspace_head = None if pr else git(root, 'rev-parse', 'HEAD').decode().strip()
@@ -64,7 +64,12 @@ def prepare(root, directory, *, base='origin/main', pr=None, repository=None, su
         merge = git(checkout, 'merge-base', base, head).decode().strip()
         scope = git(checkout, 'diff', '--name-only', '--no-renames', '-z', merge, head).decode().rstrip('\0').split('\0')
         if not scope or scope == ['']: raise Failure('empty_scope', 'No changed files against the selected base')
-        try: ex.build_targets(scope, checkout)
+        try:
+            if semantic_review:ex.build_targets(scope, checkout)
+            else:
+                from .inspection import check_targets
+                if not check_targets(checkout,scope):
+                    return {'repository':repository,'pr':pr,'head':head,'base':base,'no_changed_modules':True}
         except rr.InputError as error: raise Failure('unsupported_scope', str(error), 4) from error
         (directory/'sources').mkdir(exist_ok=True)
         collection = sources.collect(directory/'sources', [(checkout/p).read_bytes() for p in scope], supplied) if collect_sources else {'coverage':'incomplete','mode':'not_requested','records':[]}
@@ -114,14 +119,17 @@ def build_status(receipt):
     return 'pass' if code == 0 else ('error' if code is None or code in (124,125,126,127,137) or code < 0 else 'fail')
 
 
-def build(directory, configuration):
+def build(directory, configuration, *, semantic_review=True):
     """Produce a controller-owned receipt in a fresh container without model access."""
     request, _, _ = load(directory)
     image = configuration.get('image')
     with tempfile.TemporaryDirectory(prefix='fc-build-', dir=directory) as temp:
         snapshot_dir = Path(temp)/'snapshot'
         restore(directory, snapshot_dir)
-        targets = ex.build_targets(request['scope'], snapshot_dir)
+        if semantic_review:targets = ex.build_targets(request['scope'], snapshot_dir)
+        else:
+            from .inspection import check_targets
+            targets=check_targets(snapshot_dir,request['scope'])
         receipt = {'command': ['lake','--wfail','build',*targets], 'exit_code': None}
         try:
             check_environment(image, snapshot_dir)

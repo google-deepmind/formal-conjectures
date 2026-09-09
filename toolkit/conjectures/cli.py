@@ -112,8 +112,10 @@ def dispatch(args):
             from . import review
             directory,record=start_run(root,'check')
             try:
-                ticket=review.prepare(root,directory,pr=args.pr,repository=args.repository,collect_sources=False)
-                outcome,receipt=review.build(directory,cfg)
+                ticket=review.prepare(root,directory,pr=args.pr,repository=args.repository,collect_sources=False,semantic_review=False)
+                if ticket.get('no_changed_modules'):
+                    return finish(directory,record,'pass',target=ticket,reason='no_changed_modules',message='No changed Lean modules to build.')
+                outcome,receipt=review.build(directory,cfg,semantic_review=False)
                 return finish(directory,record,'incomplete' if outcome=='not_run' else outcome,target=ticket,receipt=receipt)
             except BaseException as error:
                 finish(directory,record,'error',reason=getattr(error,'reason','execution_error'),detail=str(error));raise
