@@ -258,16 +258,8 @@ lemma inv_card_le_gnorm (y : GL n ℝ) : (Fintype.card n : ℝ)⁻¹ ≤ gnorm y
             ((le_entrySup _ k i).trans (le_max_right _ _)) (abs_nonneg _) (gnorm_nonneg _)
       _ = Fintype.card n * (gnorm y * gnorm y) := by
           rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
-  by_contra hcon
-  replace hcon : gnorm y < (Fintype.card n : ℝ)⁻¹ := not_le.mp hcon
-  have hc0 : (0 : ℝ) < Fintype.card n := zero_lt_one.trans_le hcard
-  have h1 : Fintype.card n * (gnorm y * gnorm y)
-      ≤ Fintype.card n * ((Fintype.card n : ℝ)⁻¹ * gnorm y) :=
-    mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hcon.le (gnorm_nonneg y)) hc0.le
-  have h2 : (Fintype.card n : ℝ) * ((Fintype.card n : ℝ)⁻¹ * gnorm y) = gnorm y := by
-    field_simp
-  have h3 : (Fintype.card n : ℝ)⁻¹ ≤ 1 := inv_le_one_of_one_le₀ hcard
-  linarith [hbound.trans (h1.trans_eq h2)]
+  rw [inv_le_iff_one_le_mul₀ (zero_lt_one.trans_le hcard)]
+  nlinarith [gnorm_nonneg y]
 
 lemma gnorm_pos (y : GL n ℝ) : 0 < gnorm y :=
   ((inv_pos.mpr (by exact_mod_cast Fintype.card_pos)).trans_le (inv_card_le_gnorm y))
@@ -304,16 +296,12 @@ lemma exists_forall_norm_le_rpow_of_le {φ : GL n ℝ → ℂ} {C r : ℝ}
     exact (mul_nonneg_iff_of_pos_right (Real.rpow_pos_of_pos (gnorm_pos _) r)).mp h0
   refine ⟨C * (c₀ ^ (r' - r))⁻¹, fun y => ?_⟩
   have hkey : gnorm y ^ r ≤ (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by
-    have hgpos := gnorm_pos y
-    have hle : c₀ ^ (r' - r) ≤ gnorm y ^ (r' - r) :=
-      Real.rpow_le_rpow hc₀0.le (inv_card_le_gnorm y) (sub_nonneg.mpr hr)
-    have hsplit : gnorm y ^ r' = gnorm y ^ (r' - r) * gnorm y ^ r := by
-      rw [← Real.rpow_add hgpos, sub_add_cancel]
-    have hone : (1 : ℝ) ≤ (c₀ ^ (r' - r))⁻¹ * gnorm y ^ (r' - r) := by
-      rw [← div_eq_inv_mul, le_div_iff₀ (Real.rpow_pos_of_pos hc₀0 _), one_mul]
-      exact hle
-    rw [hsplit, ← mul_assoc]
-    exact le_mul_of_one_le_left (Real.rpow_nonneg hgpos.le r) hone
+    rw [← div_eq_inv_mul, le_div_iff₀ (Real.rpow_pos_of_pos hc₀0 _)]
+    calc gnorm y ^ r * c₀ ^ (r' - r)
+        ≤ gnorm y ^ r * gnorm y ^ (r' - r) :=
+          mul_le_mul_of_nonneg_left (Real.rpow_le_rpow hc₀0.le (inv_card_le_gnorm y)
+            (sub_nonneg.mpr hr)) (Real.rpow_nonneg (gnorm_pos y).le r)
+      _ = gnorm y ^ r' := by rw [mul_comm, ← Real.rpow_add (gnorm_pos y), sub_add_cancel]
   calc ‖φ y‖ ≤ C * gnorm y ^ r := h y
     _ ≤ C * ((c₀ ^ (r' - r))⁻¹ * gnorm y ^ r') := mul_le_mul_of_nonneg_left hkey hC0
     _ = C * (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by ring
@@ -575,51 +563,50 @@ real and imaginary parts turn complex matrix multiplication into the expected pa
 products, the bracket identity over `ℝ` gives the bracket identity over `ℂ`.
 -/
 
-omit [Fintype n] [DecidableEq n] in
+section
+omit [Fintype n] [DecidableEq n]
+
 lemma map_re_add (Z W : Matrix n n ℂ) :
-    (Z + W).map Complex.re = Z.map Complex.re + W.map Complex.re := by
-  ext i j; simp
+    (Z + W).map Complex.re = Z.map Complex.re + W.map Complex.re :=
+  Matrix.map_add _ Complex.add_re Z W
 
-omit [Fintype n] [DecidableEq n] in
 lemma map_im_add (Z W : Matrix n n ℂ) :
-    (Z + W).map Complex.im = Z.map Complex.im + W.map Complex.im := by
-  ext i j; simp
+    (Z + W).map Complex.im = Z.map Complex.im + W.map Complex.im :=
+  Matrix.map_add _ Complex.add_im Z W
 
-omit [Fintype n] [DecidableEq n] in
+lemma map_re_sub (Z W : Matrix n n ℂ) :
+    (Z - W).map Complex.re = Z.map Complex.re - W.map Complex.re :=
+  Matrix.map_sub _ Complex.sub_re Z W
+
+lemma map_im_sub (Z W : Matrix n n ℂ) :
+    (Z - W).map Complex.im = Z.map Complex.im - W.map Complex.im :=
+  Matrix.map_sub _ Complex.sub_im Z W
+
 lemma map_re_smul (c : ℂ) (Z : Matrix n n ℂ) :
     (c • Z).map Complex.re = c.re • Z.map Complex.re - c.im • Z.map Complex.im := by
   ext i j; simp [Complex.mul_re]
 
-omit [Fintype n] [DecidableEq n] in
 lemma map_im_smul (c : ℂ) (Z : Matrix n n ℂ) :
     (c • Z).map Complex.im = c.re • Z.map Complex.im + c.im • Z.map Complex.re := by
   ext i j; simp [Complex.mul_im]
 
-omit [DecidableEq n] in
+end
+
+section
+omit [DecidableEq n]
+
 lemma map_re_mul (Z W : Matrix n n ℂ) :
     (Z * W).map Complex.re
       = Z.map Complex.re * W.map Complex.re - Z.map Complex.im * W.map Complex.im := by
   ext i j
   simp [Matrix.mul_apply, Complex.mul_re, Finset.sum_sub_distrib]
 
-omit [DecidableEq n] in
 lemma map_im_mul (Z W : Matrix n n ℂ) :
     (Z * W).map Complex.im
       = Z.map Complex.re * W.map Complex.im + Z.map Complex.im * W.map Complex.re := by
   ext i j
   simp [Matrix.mul_apply, Complex.mul_im, Finset.sum_add_distrib]
 
-omit [Fintype n] [DecidableEq n] in
-lemma map_re_sub (Z W : Matrix n n ℂ) :
-    (Z - W).map Complex.re = Z.map Complex.re - W.map Complex.re := by
-  ext i j; simp
-
-omit [Fintype n] [DecidableEq n] in
-lemma map_im_sub (Z W : Matrix n n ℂ) :
-    (Z - W).map Complex.im = Z.map Complex.im - W.map Complex.im := by
-  ext i j; simp
-
-omit [DecidableEq n] in
 /-- The real part of a complex commutator, arranged as a difference of two real commutators. -/
 lemma map_re_bracket (Z W : Matrix n n ℂ) :
     (Z * W - W * Z).map Complex.re
@@ -628,7 +615,6 @@ lemma map_re_bracket (Z W : Matrix n n ℂ) :
   rw [map_re_sub, map_re_mul, map_re_mul]
   abel
 
-omit [DecidableEq n] in
 /-- The imaginary part of a complex commutator, arranged as a sum of two real commutators. -/
 lemma map_im_bracket (Z W : Matrix n n ℂ) :
     (Z * W - W * Z).map Complex.im
@@ -636,6 +622,8 @@ lemma map_im_bracket (Z W : Matrix n n ℂ) :
         + (Z.map Complex.im * W.map Complex.re - W.map Complex.re * Z.map Complex.im) := by
   rw [map_im_sub, map_im_mul, map_im_mul]
   abel
+
+end
 
 /-- The action of the complexified Lie algebra `𝔤𝔩 n ℂ` of `GL n ℝ` on the `C^∞` functions:
 `X + i Y` acts as `lieDeriv X + i • lieDeriv Y`. -/
@@ -917,13 +905,12 @@ protected lemma IsZFinite.add {m₁ m₂ : M} (h₁ : IsZFinite k Z m₁) (h₂ 
   obtain ⟨J, hJ, hJann⟩ := h₂
   refine ⟨I ⊓ J, ?_, fun z hz => by rw [smul_add, hIann z hz.1, hJann z hz.2, add_zero]⟩
   have := hI; have := hJ
-  have hker : I ⊓ J ≤ LinearMap.ker (LinearMap.prod I.mkQ J.mkQ) := by
+  have hker : LinearMap.ker (LinearMap.prod I.mkQ J.mkQ) = I ⊓ J := by
     rw [LinearMap.ker_prod, Submodule.ker_mkQ, Submodule.ker_mkQ]
   refine FiniteDimensional.of_injective
-    (LinearMap.restrictScalars k ((I ⊓ J).liftQ (LinearMap.prod I.mkQ J.mkQ) hker)) ?_
+    (LinearMap.restrictScalars k ((I ⊓ J).liftQ (LinearMap.prod I.mkQ J.mkQ) hker.ge)) ?_
   rw [LinearMap.coe_restrictScalars, ← LinearMap.ker_eq_bot]
-  exact Submodule.ker_liftQ_eq_bot _ _ _
-    (le_of_eq (by rw [LinearMap.ker_prod, Submodule.ker_mkQ, Submodule.ker_mkQ]))
+  exact Submodule.ker_liftQ_eq_bot _ _ _ hker.le
 
 /-- `Z`-finiteness is preserved by scalar multiplication: the same ideal works. -/
 protected lemma IsZFinite.const_smul [Module k M] [IsScalarTower k Z M] {m : M}
@@ -1029,15 +1016,11 @@ on what is and is not formalised about that. -/
 lemma abs_coe_le_one_of_mem_orthogonalSubgroup {y : GL n ℝ} (hy : y ∈ orthogonalSubgroup n)
     (i j : n) : |(y : Matrix n n ℝ) i j| ≤ 1 := by
   set M := (y : Matrix n n ℝ) with hM
-  have h : M * Mᵀ = 1 := mem_orthogonalSubgroup_iff_mul_transpose.mp hy
   have hd : ∑ k, M i k * M i k = 1 := by
-    have := congrArg (fun A => A i i) h
-    simpa [Matrix.mul_apply, Matrix.one_apply] using this
-  have hle : M i j * M i j ≤ ∑ k, M i k * M i k :=
-    Finset.single_le_sum (f := fun k => M i k * M i k) (fun k _ => mul_self_nonneg _)
-      (Finset.mem_univ j)
-  rw [hd] at hle
-  nlinarith [abs_nonneg (M i j), sq_abs (M i j)]
+    simpa [Matrix.mul_apply, Matrix.one_apply] using congrArg (fun A => A i i)
+      (mem_orthogonalSubgroup_iff_mul_transpose.mp hy)
+  exact abs_le_one_iff_mul_self_le_one.mpr (hd ▸ Finset.single_le_sum
+    (f := fun k => M i k * M i k) (fun k _ => mul_self_nonneg _) (Finset.mem_univ j))
 
 section IntegralSubgroup
 
@@ -1116,19 +1099,11 @@ lemma isOpen_integralSubgroup : IsOpen ((integralSubgroup n) : Set (GL n 𝔸ᶠ
 lemma isCompact_integralSubgroup : IsCompact ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
   set W : Set (Matrix n n 𝔸ᶠ[ℤ, ℚ]) := {M | ∀ i j, M i j ∈ integralAdeles} with hWdef
   have hWc : IsCompact W := by
-    have := isCompact_iff_compactSpace.mp isCompact_integralAdeles
-    have hrange : Set.range (fun f : n → n → (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) =>
-        Matrix.of fun i j => (f i j : 𝔸ᶠ[ℤ, ℚ])) = W := by
+    have hW : W = Set.univ.pi fun _ : n => Set.univ.pi fun _ : n =>
+        (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) := by
       ext M
-      constructor
-      · rintro ⟨f, rfl⟩ i j
-        exact (f i j).2
-      · intro hM
-        exact ⟨fun i j => ⟨M i j, hM i j⟩, rfl⟩
-    rw [← hrange]
-    refine isCompact_range (continuous_matrix fun i j => ?_)
-    simp only [Matrix.of_apply]
-    exact ((_root_.continuous_apply j).comp (_root_.continuous_apply i)).subtype_val
+      exact ⟨fun h i _ j _ => h i j, fun h i j => h i (Set.mem_univ i) j (Set.mem_univ j)⟩
+    exact hW ▸ isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_integralAdeles
   rw [Units.isEmbedding_embedProduct.isCompact_iff]
   have himg : Units.embedProduct _ '' (integralSubgroup n)
       = (fun p : Matrix n n 𝔸ᶠ[ℤ, ℚ] × Matrix n n 𝔸ᶠ[ℤ, ℚ] => (p.1, MulOpposite.op p.2)) ''
@@ -1199,12 +1174,7 @@ omit [Nonempty n] in
 protected lemma IsSmoothAdelic.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
     (hf : IsSmoothAdelic f) (hg : IsSmoothAdelic g) : IsSmoothAdelic (f + g) where
   continuous := hf.continuous.add hg.continuous
-  locallyConstant y := by
-    rw [IsLocallyConstant.iff_eventually_eq]
-    intro x
-    filter_upwards [(hf.locallyConstant y).eventually_eq x,
-      (hg.locallyConstant y).eventually_eq x] with z h1 h2
-    simp [h1, h2]
+  locallyConstant y := (hf.locallyConstant y).add (hg.locallyConstant y)
   smoothOnGL x := (hf.smoothOnGL x).add (hg.smoothOnGL x)
 
 omit [Nonempty n] in
@@ -1242,13 +1212,11 @@ protected lemma IsAutomorphicForm.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ 
   right_invariant := by
     obtain ⟨U₁, hU₁o, hU₁c, hU₁⟩ := hf.right_invariant
     obtain ⟨U₂, hU₂o, hU₂c, hU₂⟩ := hg.right_invariant
-    refine ⟨U₁ ⊓ U₂, ?_, ?_, fun u hu x => ?_⟩
-    · rw [Subgroup.coe_inf]
-      exact hU₁o.inter hU₂o
-    · rw [Subgroup.coe_inf]
-      exact hU₁c.inter_right (U₂.isClosed_of_isOpen hU₂o)
-    · have hu' := Subgroup.mem_inf.mp hu
-      simp [hU₁ u hu'.1 x, hU₂ u hu'.2 x]
+    refine ⟨U₁ ⊓ U₂, by rw [Subgroup.coe_inf]; exact hU₁o.inter hU₂o,
+      by rw [Subgroup.coe_inf]; exact hU₁c.inter_right (U₂.isClosed_of_isOpen hU₂o),
+      fun u hu x => ?_⟩
+    have hu' := Subgroup.mem_inf.mp hu
+    simp [hU₁ u hu'.1 x, hU₂ u hu'.2 x]
   kFinite := hf.kFinite.add hg.kFinite
   zFinite := hf.zFinite.add hg.zFinite
   slowlyIncreasing x := (hf.slowlyIncreasing x).add (hg.slowlyIncreasing x)
@@ -1304,10 +1272,8 @@ protected lemma IsAutomorphicForm.rightTranslate {f : GL n 𝔸ᶠ[ℤ, ℚ] × 
       simpa [MulAut.conj_apply, mul_assoc] using hU w hw (x.1 * g, x.2)
   kFinite := by
     set K := ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) with hK
-    set T : (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) →ₗ[ℂ] (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) :=
-      { toFun := fun h => fun p => h (p.1 * g, p.2)
-        map_add' := fun _ _ => rfl
-        map_smul' := fun _ _ => rfl } with hT
+    set T := LinearMap.funLeft ℂ ℂ
+      (fun p : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => (p.1 * g, p.2)) with hT
     have hle : rightTranslateSpan K ℂ (fun p => f (p.1 * g, p.2))
         ≤ Submodule.map T (rightTranslateSpan K ℂ f) := by
       rw [rightTranslateSpan, Submodule.span_le]
