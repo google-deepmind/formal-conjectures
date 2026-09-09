@@ -72,7 +72,7 @@ class ProofControlTests(ToolkitFixture):
         self.git('add','lakefile.toml');self.git('commit','-m','Pin fixture package')
         revision=self.git('rev-parse','HEAD').decode().strip()
         (self.root/'FormalConjectures/A.lean').write_text('uncommitted user edit')
-        args=SimpleNamespace(target='original',repository='fixture/local',source_ref=revision,catalog=None,out=self.root/'proof')
+        args=SimpleNamespace(target='original',repository=None,source_ref=None,catalog=None,out=self.root/'proof')
         real_command=core.command;real_git=core.git
         def command(argv,**kwargs):
             if argv[:1]==['lake']:return b''
@@ -88,7 +88,7 @@ class ProofControlTests(ToolkitFixture):
             core.save(target/'fc-provenance.json',{'source':{'repository':repo,'commit':rev,'declaration':declaration}})
             (target/'Submission.lean').write_text('theorem example : True := by trivial')
             return target
-        with patch.object(proof,'public_repository',return_value='fixture/local'),patch.object(proof,'github',return_value={'sha':revision}),patch.object(proof,'checkout_tool',return_value=self.root),patch.object(catalog,'load',return_value={'problems':[{'theorem':'original','module':'FormalConjectures.A','githubPath':'FormalConjectures/A.lean'}]}),patch.object(proof,'command',side_effect=command),patch.object(proof,'git',side_effect=git),patch.object(exporter,'export',side_effect=export):
+        with patch.object(proof,'public_repository',return_value='fixture/local'),patch.object(proof,'github',return_value={'sha':revision}),patch.object(proof,'checkout_tool',return_value=self.root),patch.object(catalog,'load',return_value={'provenance':{'source':{'repository':'fixture/local','commit':revision}},'problems':[{'theorem':'original','module':'FormalConjectures.A','githubPath':'FormalConjectures/A.lean'}]}),patch.object(proof,'command',side_effect=command),patch.object(proof,'git',side_effect=git),patch.object(exporter,'export',side_effect=export):
             result=proof.initialize(self.root,args,{})
         self.assertEqual(result['workspace'],str(args.out.resolve()))
         self.assertTrue((args.out/'Submission.lean').is_file())

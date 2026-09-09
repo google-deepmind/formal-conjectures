@@ -54,9 +54,15 @@ def checkout_tool(root, tool):
 def initialize(root,args,cfg):
     from .catalog import load,select
     from . import exporter
-    problem=select(load(root,args.catalog),args.target)
-    repository=public_repository(args.repository or git(root,'remote','get-url','origin').decode().strip())
-    revision=git(root,'rev-parse',args.source_ref).decode().strip()
+    catalog=load(root,args.catalog);problem=select(catalog,args.target)
+    source=catalog.get('provenance',{}).get('source',{})
+    repository_name=args.repository or source.get('repository')
+    ref=args.source_ref or source.get('commit')
+    if not repository_name or not ref:
+        raise Failure('source_revision_required','An unversioned local catalog requires explicit --repository OWNER/REPO and --source-ref COMMIT.',2)
+    repository=public_repository(repository_name)
+    # A published catalog commit need not already exist in the local clone.
+    revision=ref if re.fullmatch(r'[0-9a-f]{40}',ref) else git(root,'rev-parse',ref).decode().strip()
     # Verify remote reachability before creating any workspace, without pushing anything.
     if github(f'repos/{repository}/commits/{revision}').get('sha')!=revision:
         raise Failure('unpublished_source','Source commit is not retrievable from its recorded repository',4)
