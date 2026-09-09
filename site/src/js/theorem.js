@@ -51,7 +51,7 @@ async function init() {
     await loadScript(`${_base}/assets/js/evidence.js`);
     const response = await fetch(`${_base}/data/evidence.json`);
     if (!response.ok) throw new Error('Evidence unavailable');
-    evidenceEl.innerHTML = FCEvidence.render(theorem, await response.json(), FC.escapeHTML);
+    evidenceEl.innerHTML = FCEvidence.render(theorem, {...await response.json(), catalog_source:data.catalogProvenance?.source}, FC.escapeHTML);
   } catch {
     evidenceEl.textContent = 'Published evidence is unavailable. Inspect local runs with conjectures status.';
   }

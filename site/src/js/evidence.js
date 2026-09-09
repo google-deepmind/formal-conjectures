@@ -8,16 +8,32 @@ const FCEvidence = (() => {
     catch { return null; }
   }
   function records(theorem, data) {
-    return (data.runs || []).filter(run => run.kind === 'verify'
-      ? run.target?.declaration === theorem.theorem && run.target?.module === theorem.module
-      : (run.scope || []).includes(theorem.githubPath));
+    function repository(value) {
+      const match = /^(?:https:\/\/github.com\/)?([\w.-]+\/[\w.-]+?)(?:\.git)?$/.exec(value || '');
+      return match ? match[1].toLowerCase() : null;
+    }
+    function moduleName(value) {
+      const parts=[]; let word='', quoted=false;
+      for (const char of value || '') {
+        if (char === '«') quoted=true;
+        else if (char === '»') quoted=false;
+        else if (char === '.' && !quoted) {parts.push(word); word='';}
+        else word+=char;
+      }
+      parts.push(word);
+      return quoted || parts.some(p => !p) ? null : JSON.stringify(parts);
+    }
+    return (data.runs || []).filter(run => (!data.catalog_source?.repository || repository(run.target?.repository) === repository(data.catalog_source.repository)) && (run.kind === 'verify'
+      ? run.target?.declaration === theorem.theorem && moduleName(run.target?.module) === moduleName(theorem.module)
+      : (run.scope || []).includes(theorem.githubPath)));
   }
   function render(theorem, data, escape) {
     if (data.status === 'unavailable') return '<p>Published evidence is unavailable. Try again later or inspect local runs with <code>conjectures status</code>.</p>';
     const entries = records(theorem, data);
     const list = entries.length ? '<ul>' + entries.map(run => {
       const revision = run.kind === 'verify' ? run.target.commit : run.target.head;
-      const applicability = !data.source_revision ? 'Applicability unconfirmed' : revision === data.source_revision ? 'Current revision' : 'Historical revision';
+      const source = data.catalog_source;
+      const applicability = !source?.commit || !source?.repository ? 'Applicability unconfirmed' : revision === source.commit ? 'Current revision' : 'Historical revision';
       const link = safeURL(run.url);
       const label = run.kind === 'verify' ? 'Proof verification' : 'Contribution review';
       return `<li><strong>${escape(label)}: ${escape(labels[run.outcome] || 'Unknown result')}</strong>.
