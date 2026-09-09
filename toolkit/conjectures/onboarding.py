@@ -144,5 +144,6 @@ def setup(root,args):
         if not isinstance(old,dict):raise Failure('invalid_configuration','Configuration must be a JSON object.')
         save(destination,{**old,**update})
         save(destination.parent/('setup-'+args.operation+'.json'),receipt)
-    return {'outcome':'pass','configuration_path':str(destination),'next_action':'conjectures doctor --for '+args.operation,
+    return {'outcome':'pass','configuration_path':str(destination),'receipt':receipt,
+            'image':receipt.get('image'),'next_action':'conjectures doctor --for '+args.operation,
             'experimental':'Proof and publication require end-to-end qualification.' if args.operation!='review' else None}
