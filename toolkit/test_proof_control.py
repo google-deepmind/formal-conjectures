@@ -1,0 +1,64 @@
+"""Remote waiting and controller failure receipts."""
+import contextlib
+import io
+import json
+import unittest
+from unittest.mock import patch
+from conjectures import core, proof, cli, remote, exporter
+from test_toolkit import ToolkitFixture
+
+class ProofControlTests(ToolkitFixture):
+    def invoke(self,*args):
+        out=io.StringIO();err=io.StringIO()
+        with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):code=cli.main(list(args))
+        return code,out.getvalue(),err.getvalue()
+
+    def test_wait_visibility_delay_then_result(self):
+        directory,record=core.start_run(self.root,'verify');core.save(directory/'run.json',record)
+        complete={**record,'status':'completed','outcome':'fail'}
+        with patch.object(proof,'control',side_effect=[core.Failure('run_not_visible','wait',4),complete]),patch.object(proof.time,'sleep'):
+            self.assertEqual(proof.wait(directory,record,30)['outcome'],'fail')
+        with patch.object(proof,'control',return_value={**record,'status':'queued'}),patch.object(proof.time,'monotonic',side_effect=[0,1]):
+            self.assertEqual(proof.wait(directory,record,1)['reason'],'wait_timeout')
+
+    def test_interrupted_wait_never_cancels_remote(self):
+        with patch.object(cli,'dispatch',side_effect=KeyboardInterrupt):
+            code,out,err=self.invoke('run','wait','latest','--json')
+        self.assertEqual(code,5);self.assertIn('remote work continues',json.loads(out)['message']);self.assertEqual(err,'')
+
+
+    def test_init_uses_exact_checkout_and_requested_output_directory(self):
+        from pathlib import Path
+        from types import SimpleNamespace
+        from conjectures import catalog
+        self.repository();revision=self.git('rev-parse','HEAD').decode().strip()
+        (self.root/'FormalConjectures/A.lean').write_text('uncommitted user edit')
+        args=SimpleNamespace(target='original',repository='fixture/local',source_ref=revision,catalog=None,out=self.root/'proof')
+        real_command=core.command;real_git=core.git
+        def command(argv,**kwargs):
+            if argv[:1]==['lake']:return b''
+            return real_command(argv,**kwargs)
+        def git(root,*argv):
+            if argv[:1]==('fetch',):return b''
+            return real_git(root,*argv)
+        def export(source,declaration,out,generator,rev,repo):
+            self.assertEqual(source,source.resolve())
+            self.assertIn('original',source.read_text())
+            self.assertNotIn('uncommitted',source.read_text())
+            target=out/'workspace';target.mkdir(parents=True)
+            core.save(target/'fc-provenance.json',{'source':{'repository':repo,'commit':rev,'declaration':declaration}})
+            (target/'Submission.lean').write_text('theorem example : True := by trivial')
+            return target
+        with patch.object(proof,'public_repository',return_value='fixture/local'),patch.object(proof,'github',return_value={'sha':revision}),patch.object(proof,'checkout_tool',return_value=self.root),patch.object(catalog,'load',return_value={'problems':[{'theorem':'original','module':'FormalConjectures.A','githubPath':'FormalConjectures/A.lean'}]}),patch.object(proof,'command',side_effect=command),patch.object(proof,'git',side_effect=git),patch.object(exporter,'export',side_effect=export):
+            result=proof.initialize(self.root,args,{})
+        self.assertEqual(result['workspace'],str(args.out.resolve()))
+        self.assertTrue((args.out/'Submission.lean').is_file())
+        self.assertEqual((self.root/'FormalConjectures/A.lean').read_text(),'uncommitted user edit')
+        self.assertEqual(self.git('rev-parse','HEAD').decode().strip(),revision)
+
+    def test_qualification_error_has_a_retained_typed_record(self):
+        self.repository()
+        request={'run_id':'20260909T000000Z-aaaaaaaaaaaa','candidate_repository':'fixture/local','candidate_commit':'a'*40,'candidate_path':'.','source_repository':'https://github.com/fixture/local.git','source_commit':'a'*40,'source_path':'FormalConjectures/A.lean','declaration':'original'}
+        with patch.object(remote,'qualify',side_effect=core.Failure('unqualified_executor','No AF_UNIX restriction',3)):
+            value=remote.execute(request,self.root/'output',self.root,self.root,self.root,self.root)
+        self.assertEqual(value['outcome'],'error');self.assertTrue((self.root/'output/verification.json').is_file())

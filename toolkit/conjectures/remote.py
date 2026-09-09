@@ -36,7 +36,8 @@ def qualify():
 
 def load_submission(checkout,revision,subdir):
     prefix='' if subdir=='.' else subdir+'/'
-    files=rr.snapshot_files(git(checkout,'archive','--format=tar',revision))
+    try:files=rr.snapshot_files(git(checkout,'archive','--format=tar',revision))
+    except ValueError as error:raise Failure('disallowed_submission',str(error),1) from error
     result={name[len(prefix):]:raw for name,raw in files.items() if name.startswith(prefix) and
         (name[len(prefix):]=='Submission.lean' or name[len(prefix):].startswith('Submission/'))}
     if 'Submission.lean' not in result:raise Failure('missing_submission','Submission.lean is required',1)
@@ -52,12 +53,13 @@ def typed_result(raw,code):
     return value
 
 def execute(request,output,toolkit,source,candidate,generator):
-    validate_request(request);qualify()
+    validate_request(request)
     output.mkdir(parents=True,exist_ok=True)
     record={'schema_version':'fc.proof-verification.v1','request':request,'producer':'github_actions',
             'started_at':now(),'outcome':'error','pins':PINS,
             'toolkit_commit':git(toolkit,'rev-parse','HEAD').decode().strip()}
     try:
+        qualify()
         if git(source,'rev-parse','HEAD').decode().strip()!=request['source_commit']:
             raise Failure('source_binding_mismatch','Source checkout does not match request',3)
         if git(candidate,'rev-parse','HEAD').decode().strip()!=request['candidate_commit']:
@@ -88,7 +90,8 @@ def execute(request,output,toolkit,source,candidate,generator):
         record.update(outcome={'pass':'pass','rejected':'fail','error':'error'}[value['outcome']],
                       comparator=value,exit_code=proc.returncode)
     except (Failure,ValueError,OSError,subprocess.SubprocessError,RuntimeError) as error:
-        record.update(outcome='error',reason=getattr(error,'reason','execution_error'),detail=str(error))
+        record.update(outcome='fail' if isinstance(error,Failure) and error.code==1 else 'error',
+                      reason=getattr(error,'reason','execution_error'),detail=str(error))
     finally:
         record['finished_at']=now();save(output/'verification.json',record)
     return record

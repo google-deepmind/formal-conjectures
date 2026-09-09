@@ -4,9 +4,11 @@ import re
 import shutil
 import subprocess
 import time
+import sys
+import tempfile
 from pathlib import Path
 from . import report as rr
-from .core import Failure, command, finish, gh, git, github, now, save, start_run
+from .core import Failure, command, finish, gh, git, github, now, save, start_run, run_lock
 
 PINS = {
  'generator': ('williamjblair/lean-eval-generator','e611b55d7097b9de973cbe0cef0f0cfad66dbe92'),
@@ -59,10 +61,25 @@ def initialize(root,args,cfg):
     directory,record=start_run(root,'init',target={'repository':repository,'commit':revision,
         'module':problem['module'],'declaration':problem['theorem'],'path':path})
     try:
-        exporter.ROOT=root
         out=args.out.resolve()
-        result=exporter.export(root/path,problem['theorem'],out,generator,revision,
-                                f'https://github.com/{repository}.git')
+        if out.exists():raise Failure('output_exists','Choose a new directory for --out; existing files are preserved.')
+        print('Generating the exact source workspace at '+revision+'…',file=sys.stderr)
+        # Export from an isolated exact checkout, never require switching or cleaning the operator's branch.
+        with tempfile.TemporaryDirectory(prefix='fc-export-source-') as temp:
+            source=Path(temp).resolve()/'source'
+            command(['git','clone','--no-checkout','--shared',root,source])
+            git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
+            git(source,'checkout','--detach',revision)
+            print('Acquiring pinned source dependencies and the Mathlib cache…',file=sys.stderr)
+            command(['lake','exe','cache','get'],cwd=source,timeout=1200)
+            previous=exporter.ROOT
+            try:
+                exporter.ROOT=source
+                result=exporter.export(source/path,problem['theorem'],directory/'export',generator,revision,
+                                      f'https://github.com/{repository}.git')
+            finally:exporter.ROOT=previous
+        shutil.copytree(result,out)
+        result=out
         provenance=rr.read_json(result/'fc-provenance.json')
         save(directory/'trusted-target.json',provenance)
         save(root/'.conjectures/targets'/f"{rr.digest(str(result).encode())}.json",
@@ -102,6 +119,7 @@ def verify(root,candidate,cfg):
     args=['workflow','run','comparator-lean-4-33.yml','--repo',executor_repo,'--ref',ref]
     for k,v in inputs.items():args += ['-f',f'{k}={v}']
     try:
+        print('Dispatching verification to '+executor_repo+'…',file=sys.stderr)
         gh(*args)
         record.update(status='queued',outcome='incomplete',next_action='Use conjectures run wait '+record['id'])
         save(directory/'run.json',record);return record
@@ -128,8 +146,15 @@ def control(directory,record,operation):
         save(directory/'run.json',record);return record
     destination=directory/'remote'
     if not destination.exists():
-        gh('run','download',identity,'--repo',repo,'--name','verification-'+record['id'],'--dir',str(destination))
+        if result['conclusion']=='cancelled':
+            return finish(directory,record,'cancelled',reason='remote_cancelled',url=result['url'])
+        with tempfile.TemporaryDirectory(prefix='remote-download-',dir=directory) as temp:
+            staging=Path(temp)/'artifacts'
+            gh('run','download',identity,'--repo',repo,'--name','verification-'+record['id'],'--dir',str(staging))
+            staging.rename(destination)
     result_path=destination/'verification.json'
+    if result['conclusion']=='cancelled' and not result_path.is_file():
+        return finish(directory,record,'cancelled',reason='remote_cancelled',url=result['url'])
     if not result_path.is_file():
         return finish(directory,record,'error',reason='missing_result',workflow_conclusion=result['conclusion'])
     value=rr.read_json(result_path)
@@ -141,3 +166,27 @@ def control(directory,record,operation):
     if outcome not in ('pass','fail','error'):raise Failure('invalid_result','Unknown verification outcome',3)
     if result['conclusion']!='success' and outcome=='pass':raise Failure('incomplete_executor','Failed workflow cannot establish success',3)
     return finish(directory,record,outcome,result=value,url=result['url'],producer='github_actions')
+
+
+def wait(directory,record,timeout):
+    deadline=time.monotonic()+timeout
+    previous=None
+    while True:
+        try:
+            with run_lock(directory):
+                record=rr.read_json(directory/'run.json')
+                if record['status']=='completed':return record
+                record=control(directory,record,'wait')
+        except Failure as error:
+            if error.reason not in ('run_not_visible','run_busy'):raise
+            state=error.reason
+        else:
+            state=record['status']
+            if state=='completed':return record
+        if state!=previous:
+            print('Verification: '+state+'…',file=sys.stderr);previous=state
+        remaining=deadline-time.monotonic()
+        if remaining<=0:
+            return {**record,'command_status':'incomplete','reason':'wait_timeout',
+                    'next_action':'Remote work continues. Run conjectures run wait '+record['id']}
+        time.sleep(min(5,remaining))

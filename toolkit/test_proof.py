@@ -22,5 +22,5 @@ class ProofTests(ToolkitFixture):
     def test_remote_rejects_submission_symlinks(self):
         self.repository();(self.root/'Submission.lean').symlink_to('/etc/passwd')
         self.git('add','.');self.git('commit','-qm','candidate')
-        with self.assertRaises(ValueError):remote.load_submission(self.root,self.git('rev-parse','HEAD').decode().strip(),'.')
+        with self.assertRaises(core.Failure):remote.load_submission(self.root,self.git('rev-parse','HEAD').decode().strip(),'.')
 
