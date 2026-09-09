@@ -39,7 +39,9 @@ namespace WieferichMirimanoffPrime
 /--
 Can a prime $p$ satisfy $2^{p-1} \equiv 1 \pmod{p^2}$ and $3^{p-1} \equiv 1 \pmod{p^2}$
 simultaneously? That is, does there exist a prime $p$ that is both a Wieferich prime and a
-Mirimanoff prime?
+Mirimanoff prime? Wikipedia's list of unsolved problems poses this question, citing
+J. B. Dobson, [On Lerch's formula for the Fermat quotient](https://arxiv.org/abs/1103.3907v6).
+Lenstra gave a heuristic argument against the existence of such a prime (see Dobson, Section 9).
 -/
 @[category research open, AMS 11]
 theorem exists_isWieferichPrime_and_isMirimanoffPrime :
