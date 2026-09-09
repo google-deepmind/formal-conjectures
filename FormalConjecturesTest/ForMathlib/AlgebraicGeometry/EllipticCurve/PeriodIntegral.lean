@@ -83,6 +83,21 @@ the contour. Three of the curves below are mildly so — `57.a1`, whose cubic $4
 comes within $0.55$ of a double root at $x \approx 1.22$, is the worst — and that, rather than the
 singularities, is what fixes the node spacing at $1/256$.
 
+## Cross-validation
+
+Agreeing with the LMFDB is evidence about the definition, not about the quadrature, so the
+quadrature was checked separately against a closed form. Applying $\int_0^\infty \frac{ds}
+{\sqrt{(s^2+a^2)(s^2+b^2)}} = \frac{\pi}{2\,\mathrm{AGM}(a, b)}$ to the substitution above
+gives $2\int_{e_1}^\infty \frac{dx}{\sqrt{\Psi_2^2(x)}} = \pi / \mathrm{AGM}(\sqrt{e_1 -
+e_3}, \sqrt{e_1 - e_2})$ when the roots are real, and one Gauss descent turns the
+complex-conjugate pair into the real arguments $\sqrt{p + 2n}/2$ and $\sqrt{n}$, where
+$p = 3e_1 + b_2/4$ and $n = \sqrt{\Psi_2^{2\prime}(e_1)}/2$. On $4000$ random integral curves
+the two routes agreed to machine precision. Where they did not, refining the node spacing moved
+the quadrature onto the arithmetic-geometric mean rather than away from it, which is both what
+identifies the near-degenerate curves above as a defect of the quadrature and how the spacing
+was chosen. The same sweep found no curve where $\Delta > 0$ disagreed with $\Psi_2^2$ having
+three real roots, which `LMFDBCurve.discSignAgrees` re-checks for each curve below.
+
 ## What comes out
 
 `realPeriodIntegral` for each of the twenty curves, beside the LMFDB's `real_period` and the
@@ -193,8 +208,10 @@ def newton (C : LMFDBCurve) : Nat → Float → Float
 /-- `WeierstrassCurve.e₁`, the largest real root of $4x^3 + b_2x^2 + 2b_4x + b_6$. Depressing the
 cubic to $y^3 + Ay + B$ by $x = y - b_2/12$, the largest root is $2\sqrt{-A/3}\cos(\frac13\arccos
 c)$ with $c = \frac{3B}{2A}\sqrt{-3/A}$ when $A < 0$ and $|c| \leq 1$, which is the case of three
-real roots; the remaining cases are the hyperbolic analogues. Newton removes the rounding error
-of the closed form. -/
+real roots; the remaining cases are the hyperbolic analogues. The trigonometric form is used in
+preference to Cardano's because Cardano's needs cube roots of complex numbers in precisely that
+first case, and loses accuracy doing so. Newton removes the rounding error of the closed
+form. -/
 def e₁ : Float :=
   let p := C.b₂ / 4
   let q := C.b₄ / 2
@@ -247,7 +264,12 @@ def expSinh (f : Float → Float) : Float :=
 
 /-- The coefficients $c, d$ of the quadratic cofactor: $4x^3 + b_2x^2 + 2b_4x + b_6 =
 (x - e_1)(4x^2 + cx + d)$, by synthetic division. This is
-`WeierstrassCurve.exists_Ψ₂Sq_eq_X_sub_C_mul` made explicit. -/
+`WeierstrassCurve.exists_Ψ₂Sq_eq_X_sub_C_mul` made explicit, and $e_2, e_3$ are read off it as
+$(-c \pm \sqrt{c^2 - 16d})/8$ rather than from the closed form for the cubic. Deflating is what
+makes the factorisation hold to machine precision for the same $e_1$ that the substitutions in
+`leastRealPeriodIntegral` and `ovalIntegral` are built on; solving for the three roots
+independently would leave those identities only approximately true, and the substitutions would
+lose the exact cancellation they rely on. -/
 def cofactor : Float × Float :=
   let c := C.b₂ + 4 * C.e₁
   (c, 2 * C.b₄ + c * C.e₁)
