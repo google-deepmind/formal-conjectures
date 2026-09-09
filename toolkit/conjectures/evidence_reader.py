@@ -66,6 +66,11 @@ def validate_index(index, read, origin=None):
             summary=rr.parse(files['verification.json']);request=summary.get('request') or {}
             rr.require(summary.get('schema_version')=='fc.proof-verification.v1' and request.get('run_id')==identity,'Verification run mismatch')
             rr.require(summary.get('outcome')==record['outcome'],'Verification outcome mismatch')
+            if summary['outcome'] in ('pass','fail') and summary.get('comparator'):
+                from .remote import typed_result
+                typed=typed_result(rr.encode(summary['comparator']),summary.get('exit_code'))
+                rr.require({'pass':'pass','rejected':'fail','error':'error'}[typed['outcome']]==summary['outcome'],'Inconsistent proof policy outcome')
+            if summary['outcome']=='pass':rr.require(bool(summary.get('comparator')),'Proof pass lacks typed result')
             rr.require(request.get('source_commit')==target.get('commit') and request.get('declaration')==target.get('declaration') and repository_name(request.get('source_repository'))==repository_name(target.get('repository')),'Verification target mismatch')
         else:raise ValueError('Unsupported evidence kind')
         # URLs in an index are not trusted. Derive links from the verified archive locator.
