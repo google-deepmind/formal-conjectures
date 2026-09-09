@@ -58,7 +58,7 @@ def render(value, args):
         if value.get('id'): lines.append('Run: '+value['id'])
         if value.get('status'): lines.append('Status: '+value['status'])
         if value.get('outcome'): lines.append('Outcome: '+str(value['outcome']))
-        for key in ('reason','message','build_status','current_applicability','report','workspace','url','public_export','configuration_path'):
+        for key in ('reason','message','build_status','current_applicability','report','workspace','url','public_export','configuration_path','image'):
             if value.get(key) is not None: lines.append(key.replace('_',' ').capitalize()+': '+str(value[key]))
         target = value.get('target') or {}
         if target: lines.append('Target: '+' '.join(str(target[k]) for k in ('repository','pr','declaration','head','commit') if target.get(k)))
