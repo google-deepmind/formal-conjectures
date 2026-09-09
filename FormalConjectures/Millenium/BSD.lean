@@ -45,16 +45,15 @@ namespace WeierstrassCurve
 
 section GlobalMinimal
 
+open IsDedekindDomain in
 /-- A Weierstrass equation over $\mathbb{Q}$ is *globally minimal* if its coefficients lie in
-$\mathbb{Z}$ and $|\Delta|$ is least among all Weierstrass equations with coefficients in
-$\mathbb{Z}$ that are isomorphic to it over $\mathbb{Q}$.
-
-For an elliptic curve this is equivalent to the definition in [Silverman2009], Section VIII.8: an
-equation with coefficients in $\mathbb{Z}$ that is minimal at every prime. See
-`WeierstrassCurve.isGlobalMinimal_iff_forall_isMinimal`. -/
+$\mathbb{Z}$ and it is minimal at every prime. See [Silverman2009], Section VIII.8. -/
 @[mk_iff]
 class IsGlobalMinimal (W : WeierstrassCurve ℚ) : Prop extends W.IsIntegral ℤ where
-  abs_Δ_le : ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → |W.Δ| ≤ |(C • W).Δ|
+  isMinimal : ∀ v : HeightOneSpectrum ℤ,
+    (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ)
+
+attribute [instance] IsGlobalMinimal.isMinimal
 
 /-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to one with coefficients in
 $\mathbb{Z}$. -/
@@ -74,10 +73,12 @@ theorem exists_isIntegral_int (W : WeierstrassCurve ℚ) :
   · simpa [variableChange_a₄] using key 3 _ (hb _ (by simp))
   · simpa [variableChange_a₆] using key 5 _ (hb _ (by simp))
 
-/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to a globally minimal one. -/
+/-- Every Weierstrass equation over $\mathbb{Q}$ has an integral model with least absolute
+discriminant among its integral changes of variables. -/
 @[category API, AMS 11 14]
-theorem exists_isGlobalMinimal (W : WeierstrassCurve ℚ) :
-    ∃ C : VariableChange ℚ, IsGlobalMinimal (C • W) := by
+theorem exists_isIntegral_minimal_abs_Δ (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ ∧
+      ∀ C' : VariableChange ℚ, (C' • W).IsIntegral ℤ → |(C • W).Δ| ≤ |(C' • W).Δ| := by
   classical
   have key : ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → ∃ n : ℕ, |(C • W).Δ| = n :=
     fun C _ ↦ let ⟨r, hr⟩ := Δ_integral_of_isIntegral ℤ (C • W)
@@ -86,10 +87,32 @@ theorem exists_isGlobalMinimal (W : WeierstrassCurve ℚ) :
   have h : ∃ n : ℕ, ∃ C : VariableChange ℚ, (C • W).IsIntegral ℤ ∧ |(C • W).Δ| = n :=
     (key C₀ hC₀).imp fun n hn ↦ ⟨C₀, hC₀, hn⟩
   obtain ⟨C, hC, hn⟩ := Nat.find_spec h
-  refine ⟨C, { toIsIntegral := hC, abs_Δ_le := fun C' hC' ↦ ?_ }⟩
-  obtain ⟨n', hn'⟩ := key (C' * C) (by rwa [mul_smul])
-  rw [← mul_smul, hn, hn', Nat.cast_le]
-  exact Nat.find_min' h ⟨C' * C, by rwa [mul_smul], hn'⟩
+  refine ⟨C, hC, fun C' hC' ↦ ?_⟩
+  obtain ⟨n', hn'⟩ := key C' hC'
+  rw [hn, hn', Nat.cast_le]
+  exact Nat.find_min' h ⟨C', hC', hn'⟩
+
+/-- Global minimality over $\mathbb{Q}$ is equivalent to minimising $|\Delta|$ among integral
+changes of variables. See [Silverman2009], Corollary VIII.8.3 and Proposition VII.1.3.
+When $\Delta = 0$, every integral model is minimal. -/
+@[category textbook, AMS 11 14]
+theorem isGlobalMinimal_iff_abs_Δ_le (W : WeierstrassCurve ℚ) :
+    W.IsGlobalMinimal ↔ W.IsIntegral ℤ ∧
+      ∀ C : VariableChange ℚ, (C • W).IsIntegral ℤ → |W.Δ| ≤ |(C • W).Δ| := by
+  sorry
+
+@[category API, AMS 11 14]
+theorem IsGlobalMinimal.abs_Δ_le {W : WeierstrassCurve ℚ} [W.IsGlobalMinimal]
+    (C : VariableChange ℚ) (hC : (C • W).IsIntegral ℤ) : |W.Δ| ≤ |(C • W).Δ| :=
+  ((isGlobalMinimal_iff_abs_Δ_le W).1 inferInstance).2 C hC
+
+/-- Every Weierstrass equation over $\mathbb{Q}$ is isomorphic to a globally minimal one. -/
+@[category API, AMS 11 14]
+theorem exists_isGlobalMinimal (W : WeierstrassCurve ℚ) :
+    ∃ C : VariableChange ℚ, IsGlobalMinimal (C • W) := by
+  obtain ⟨C, hC, hmin⟩ := W.exists_isIntegral_minimal_abs_Δ
+  refine ⟨C, (isGlobalMinimal_iff_abs_Δ_le (C • W)).2 ⟨hC, fun C' hC' ↦ ?_⟩⟩
+  simpa [mul_smul] using hmin (C' * C) (by simpa [mul_smul] using hC')
 
 /-- A globally minimal Weierstrass equation isomorphic to `W`, chosen using
 `WeierstrassCurve.exists_isGlobalMinimal`. This is the global analogue of
@@ -125,14 +148,12 @@ theorem abs_u_eq_one_of_isGlobalMinimal (W : WeierstrassCurve ℚ) [W.IsElliptic
   simpa [abs_pow, pow_eq_one_iff_of_nonneg] using h
 
 open IsDedekindDomain in
-/-- An elliptic curve over $\mathbb{Q}$ is globally minimal if and only if its coefficients lie in
-$\mathbb{Z}$ and it is minimal at every prime. This is [Silverman2009], Corollary VIII.8.3, together
-with Proposition VII.1.3; it uses that $\mathbb{Z}$ is a principal ideal domain. -/
-@[category textbook, AMS 11 14]
-theorem isGlobalMinimal_iff_forall_isMinimal (W : WeierstrassCurve ℚ) [W.IsElliptic] :
+/-- A globally minimal equation is integral and minimal at every prime. -/
+@[category API, AMS 11 14]
+theorem isGlobalMinimal_iff_forall_isMinimal (W : WeierstrassCurve ℚ) :
     W.IsGlobalMinimal ↔ W.IsIntegral ℤ ∧ ∀ v : HeightOneSpectrum ℤ,
-      (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ) := by
-  sorry
+      (W.baseChange (v.adicCompletion ℚ)).IsMinimal (v.adicCompletionIntegers ℚ) :=
+  isGlobalMinimal_iff W
 
 end GlobalMinimal
 
