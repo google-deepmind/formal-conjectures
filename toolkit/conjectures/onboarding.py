@@ -103,7 +103,11 @@ def review_image(source_ref, image=None):
         directory=Path(temp);(directory/'Dockerfile').write_bytes(recipe)
         argv=['docker','build','--platform','linux/amd64','--iidfile',str(directory/'image.id')]
         for key,val in [('BASE_IMAGE',base),('FC_REV',commit),('LEAN_VERSION',version),('LEAN_SHA256',asset['digest'].split(':')[1])]:argv+=['--build-arg',key+'='+val]
-        subprocess.run([*argv,str(directory)],stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=3600)
+        try:
+            subprocess.run([*argv,str(directory)],stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=3600)
+        except subprocess.CalledProcessError as error:
+            raise Failure('image_build_failed',
+                'Docker image build failed; see the build output above. Check Docker Desktop disk space and network access before retrying setup review. Existing configuration was preserved; no Docker data was deleted.',3) from error
         image=(directory/'image.id').read_text().strip();container_args(image,Path.cwd())
     return image,{'method':'trusted_recipe','source_repository':UPSTREAM,'source_commit':commit,'base_image':base,
                   'lean_archive_digest':asset['digest'],'recipe_sha256':rr.digest(recipe),'image':image,
@@ -124,6 +128,8 @@ def setup(root,args):
             remote=contents(args.repository,'.github/workflows/comparator-lean-4-33.yml',args.ref)
             expected=(RESOURCES/'verification-workflow.yml').read_bytes()
             if remote!=expected:raise Failure('executor_policy_mismatch','Executor workflow differs from this toolkit’s trusted policy.',4)
+            from .proof import executor_ref
+            executor_ref(args.repository,args.ref)
             update={'executor':{'kind':'github','repository':args.repository,'ref':args.ref}}
         else:
             command(['git','check-ref-format','refs/heads/'+args.branch])

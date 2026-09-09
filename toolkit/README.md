@@ -132,8 +132,10 @@ conjectures run cancel RUN
 Select the exact declaration from `show`. Initialization uses an isolated checkout
 of its retrievable source commit and leaves your checkout unchanged. Develop the
 proof externally, then explicitly commit and push the public workspace before verify.
-The configured executor must already exist and match the bundled workflow policy;
-setup does not deploy or dispatch it. Policy matching is not proof qualification.
+The configured executor must already exist, have a tag pointing to its exact commit,
+and match the bundled workflow policy;
+setup does not create tags, deploy, or dispatch it. GitHub dispatch uses the tag;
+the returned run must still match the configured commit exactly. Policy matching is not proof qualification.
 The current workflow is restricted to the qualification fork. There is no automatic
 publication of local/private work or fallback to an unqualified executor.
 
