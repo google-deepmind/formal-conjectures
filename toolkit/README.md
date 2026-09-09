@@ -52,6 +52,37 @@ release's wheel URL. To uninstall, run `uv tool uninstall formal-conjectures-too
 PyPI publication is deferred until maintainer acceptance; do not assume the package
 is available there. Release artifacts and SHA256SUMS identify each build.
 
+## Catalog and provenance
+
+Default browsing requires the full native catalog published by FC #5375. Until
+that PR merges and its full site build deploys, `find` and `show` report
+`catalog_not_published` with exit code 4. They do not use the older website
+projection, a fork mirror, or a local checkout as an implicit substitute.
+
+After deployment, the CLI verifies the catalog against its published descriptor
+and caches it in the user cache for 24 hours. The same cache works inside and
+outside a checkout. `--refresh` checks immediately; `--offline` makes no network
+requests. If an automatic refresh fails, a retained valid snapshot is labelled
+stale. Old statement-free caches are ignored.
+
+```sh
+conjectures show Erdos/92 --refresh
+conjectures find 'arithmetic progression' --offline
+conjectures show Erdos/92 --json
+```
+
+`show` prints Lean-derived statements, sources, conditions, variants, the catalog
+revision, and commit-pinned source links. Published data does not include local
+uncommitted edits. `--catalog FILE` explicitly selects a native extract for local
+qualification. Missing provenance stays unknown; missing statement text returns
+exit code 4. `init` defaults to the published catalog's exact repository/commit.
+An unversioned local catalog requires explicit `--repository` and `--source-ref`.
+
+Evidence applicability uses the catalog repository and revision, not the current
+checkout's branch. Results for changed revisions remain historical; variants do
+not inherit each other's proof results. Recorded evidence and maintainer acceptance
+are separate.
+
 ## Review a contribution
 
 Run inside your FC checkout, or pass `--repo /path/to/formal-conjectures`.

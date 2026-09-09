@@ -4,7 +4,7 @@ import json
 def metadata_rows(data):
     if not isinstance(data,dict) or data.get('schemaVersion')!=2:
         raise ValueError('Expected native schemaVersion 2')
-    rows=data.get('problems',data.get('conjectures'))
+    rows=data.get('problems')
     if not isinstance(rows,list):raise ValueError('Metadata rows must be a list')
     for index,row in enumerate(rows):
         if not isinstance(row,dict):raise ValueError(f'Row {index} must be an object')
