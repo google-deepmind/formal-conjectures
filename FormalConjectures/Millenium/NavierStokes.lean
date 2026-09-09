@@ -27,6 +27,7 @@ the millennium problem specifically concerns the case n = 3.
 ## References
 - [Wikipedia](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_existence_and_smoothness)
 - [Clay Mathematics Institute](https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf)
+- [OpenAI, *Finite Time Blowup for Navier–Stokes*](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
 
 ## Main Theorems (Clay Millennium Problem for n = 3)
 
@@ -36,6 +37,9 @@ The Clay Millennium Problem asks for a proof of one of the following four statem
 - `navier_stokes_existence_and_smoothness_periodic`: (B) Global existence on ℝ³/ℤ³
 - `navier_stokes_breakdown_R3`: (C) Existence of breakdown scenario on ℝ³
 - `navier_stokes_breakdown_periodic`: (D) Existence of breakdown scenario on ℝ³/ℤ³
+
+In 2026, OpenAI proved alternatives (C) and (D) by constructing solutions that
+develop finite-time singularities under smooth forcing.
 
 ## Variable conventions
 
@@ -262,31 +266,42 @@ structure NavierStokesExistenceAndSmoothnessPeriodic
   /-- The pressure is 1-periodic in space for all times $t \ge 0$ (Clay errata). -/
   isOnePeriodic_pressure : ∀ t ≥ 0, IsOnePeriodic (p · t)
 
-
-/-- (A) Existence and smoothness of Navier–Stokes solutions on ℝ³. -/
+/-- (A) Existence and smoothness of (unforced) Navier–Stokes solutions on ℝ³. -/
 @[category research open, AMS 35]
 theorem navier_stokes_existence_and_smoothness_R3 (nu : ℝ) (hnu : nu > 0)
     (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionDecay u₀) :
     ∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ (f := 0) v p := by
   sorry
 
-/-- (B) Existence and smoothness of Navier–Stokes solutions in ℝ³/ℤ³. -/
+/-- (B) Existence and smoothness of (unforced) Navier–Stokes solutions in ℝ³/ℤ³. -/
 @[category research open, AMS 35]
 theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0)
     (u₀ : ℝ³ → ℝ³) (hu₀ : InitialVelocityConditionPeriodic u₀) :
     ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu u₀ (f := 0) v p := by
   sorry
 
-/-- (C) Breakdown of Navier–Stokes solutions on ℝ³. -/
-@[category research open, AMS 35]
+/--
+(C) Breakdown of (forced) Navier–Stokes solutions on ℝ³.
+
+This was proven by an internal model of OpenAI in 2026.
+-/
+@[category research solved, AMS 35,
+  formal_proof using lean4 at
+    "https://github.com/openai/NavierStokesAndEuler/commit/8937a8f4cbc7abaab5e9e97d1cc7f5d2319d9538"]
 theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
     ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
     InitialVelocityConditionDecay u₀ ∧ ForceConditionDecay f ∧
     ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ f v p) := by
   sorry
 
-/-- (D) Breakdown of Navier–Stokes Solutions on ℝ³/ℤ³. -/
-@[category research open, AMS 35]
+/--
+(D) Breakdown of (forced) Navier–Stokes solutions on ℝ³/ℤ³.
+
+This was proven by an internal model of OpenAI in 2026.
+-/
+@[category research solved, AMS 35,
+  formal_proof using lean4 at
+    "https://github.com/openai/NavierStokesAndEuler/commit/8937a8f4cbc7abaab5e9e97d1cc7f5d2319d9538"]
 theorem navier_stokes_breakdown_periodic (nu : ℝ) (hnu : nu > 0) :
     ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),
     InitialVelocityConditionPeriodic u₀ ∧ ForceConditionPeriodic f ∧
