@@ -43,6 +43,8 @@ namespace BirchSwinnertonDyer
 
 open scoped Topology
 
+section NumberField
+
 variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
 
 def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
@@ -64,10 +66,34 @@ to the whole plane. -/
 theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLFunction E L := by
   sorry
 
+/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)): for an elliptic
+curve over a number field $K$, a meromorphic continuation of its $L$-series has order
+$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$. -/
+@[category research open, AMS 11 14]
+theorem birch_and_swinnerton_dyer_conjecture [DecidableEq K] [E.IsElliptic] (L : ℂ → ℂ)
+    (hL : IsLFunction E L) :
+    meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
+  sorry
+
+end NumberField
+
+section Rat
+
+variable (E : WeierstrassCurve ℚ) [E.IsElliptic]
+
 /-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem. -/
 @[category research solved, AMS 11 14]
-theorem exists_isLFunction_rat (E : WeierstrassCurve ℚ) [E.IsElliptic] :
-    ∃ L, IsLFunction E L := by
+theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
   sorry
+
+/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
+Problem: the $L$-series has a meromorphic continuation whose order at $s = 1$ is
+$\operatorname{rank}_{\mathbb{Z}} E(\mathbb{Q})$. -/
+@[category research open, AMS 11 14]
+theorem birch_and_swinnerton_dyer_conjecture.variants.rat :
+    ∃ L, IsLFunction E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
+  sorry
+
+end Rat
 
 end BirchSwinnertonDyer
