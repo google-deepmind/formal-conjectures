@@ -10,5 +10,6 @@ class Build(build_py):
         source = Path('.agents/skills/formal-conjectures-review')
         dest = Path(self.build_lib)/'conjectures/resources/review'
         shutil.copytree(source, dest, ignore=shutil.ignore_patterns('evals'), dirs_exist_ok=True)
-        shutil.copy2('toolkit/README.md', dest.parent/'README.md')
+        for name in ('README.md','RELEASE.md'):
+            shutil.copy2(Path('toolkit')/name, dest.parent/name)
 setup(cmdclass={'build_py': Build})

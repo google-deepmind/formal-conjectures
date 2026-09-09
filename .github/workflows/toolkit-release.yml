@@ -1,0 +1,58 @@
+name: Toolkit package qualification
+on:
+  pull_request:
+    paths: ['toolkit/**', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'scripts/check_toolkit_dist.py', '.agents/skills/formal-conjectures-review/**', '.github/workflows/toolkit-release.yml']
+  push:
+    tags: ['toolkit-v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.11'
+      - run: python -m pip install uv==0.7.4 PyYAML==6.0.3
+      - name: Test command and evidence contracts
+        run: |
+          PYTHONPATH=toolkit python -m unittest discover -s toolkit -p 'test_*.py'
+          PYTHONPATH=toolkit python -m unittest discover -s scripts -p 'test_review*.py'
+      - name: Build wheel from the source distribution
+        run: uv build
+      - name: Test isolated installation
+        run: python scripts/check_toolkit_dist.py dist/*.whl
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: toolkit-${{ matrix.os }}
+          path: dist/*
+  release:
+    if: github.repository == 'williamjblair/formal-conjectures' && startsWith(github.ref, 'refs/tags/toolkit-v')
+    needs: package
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: toolkit-ubuntu-24.04
+          path: dist
+      - name: Publish fork release candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_REPO: ${{ github.repository }}
+        run: |
+          python scripts/toolkit_release_notes.py "$RELEASE_TAG" "$RELEASE_REPO" > notes.md
+          (cd dist && sha256sum *.whl *.tar.gz > SHA256SUMS)
+          gh release create "$RELEASE_TAG" dist/* --verify-tag --prerelease --title "FC toolkit $RELEASE_TAG" --notes-file notes.md

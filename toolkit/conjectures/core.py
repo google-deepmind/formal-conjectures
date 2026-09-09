@@ -30,8 +30,22 @@ def command(args, cwd=None, timeout=120, **kwargs):
 def git(root, *args, **kwargs):
     return command(['git', '-C', root, *args], **kwargs)
 
-def workspace():
-    return Path(command(['git', 'rev-parse', '--show-toplevel']).decode().strip()).resolve()
+def workspace(path=None, required=True):
+    try:
+        root = Path(command(['git', '-C', str(path or Path.cwd()), 'rev-parse', '--show-toplevel']).decode().strip()).resolve()
+        if (root/'FormalConjectures').is_dir():
+            return root
+    except Failure:
+        pass
+    if required or path is not None:
+        raise Failure('workspace_required', 'Run inside an FC checkout, or use conjectures --repo /path/to/formal-conjectures COMMAND.', 4)
+    return None
+
+def user_cache():
+    return Path(os.environ.get('XDG_CACHE_HOME', str(Path.home()/'.cache')))/'conjectures'
+
+def config_path(root=None):
+    return root/'.conjectures/config.json' if root else Path(os.environ.get('XDG_CONFIG_HOME', str(Path.home()/'.config')))/'conjectures/config.json'
 
 def gh(*args):
     # Use native gh. An operator can select an authenticated wrapper explicitly.
@@ -43,7 +57,7 @@ def github(path):
 def config(root):
     result = {'executor': None, 'evidence': None, 'image': None,
               'limits': {'build_seconds': 180, 'scratch_seconds': 60, 'scratch_calls': 20}}
-    for p in [Path.home()/'.config/conjectures/config.json', root/'.conjectures/config.json']:
+    for p in [config_path(), *([config_path(root)] if root else [])]:
         if p.exists():
             value = rr.read_json(p)
             if not isinstance(value, dict): raise Failure('invalid_configuration', 'Configuration must be an object')
@@ -60,6 +74,12 @@ def config(root):
             if set(limits) - set(result['limits']): raise Failure('invalid_configuration', 'Unknown execution limit')
             result['limits'].update(limits)
             result.update(value)
+    if result['image'] is not None and not isinstance(result['image'],str):
+        raise Failure('invalid_configuration','image must be a digest string or null.')
+    for name, fields in [('executor', ('kind','repository','ref')), ('evidence', ('repository','branch'))]:
+        value=result[name]
+        if value is not None and (not isinstance(value,dict) or any(not isinstance(value.get(k),str) or not value[k] for k in fields)):
+            raise Failure('invalid_configuration', name+' must include '+', '.join(fields)+' as nonempty strings.')
     for key, ceiling in (('build_seconds',1800), ('scratch_seconds',300), ('scratch_calls',100)):
         if type(result['limits'][key]) is not int or not 0 < result['limits'][key] <= ceiling:
             raise Failure('invalid_configuration', f'{key} must be an integer from 1 to {ceiling}')
@@ -98,9 +118,21 @@ def finish(directory, record, outcome, **details):
     save(directory/'run.json', record)
     return record
 
-def run_dir(root, identity):
-    if not re.fullmatch(r'[0-9]{8}T[0-9]{6}Z-[a-f0-9]{12}', identity):
-        raise Failure('invalid_run', 'Use a run ID from conjectures run list')
+def run_dir(root, identity, readonly=False):
+    records = runs(root)
+    if identity == 'latest':
+        if not readonly:
+            raise Failure('explicit_run_required', 'Use an explicit run ID for this operation; inspect conjectures run list.')
+        if not records:
+            raise Failure('unknown_run', 'No runs yet. Start with conjectures review --pr NUMBER.')
+        identity = records[0]['id']
+    elif not re.fullmatch(r'[0-9]{8}T[0-9]{6}Z-[a-f0-9]{12}', identity):
+        if not re.fullmatch(r'[0-9a-fTZ-]+', identity):
+            raise Failure('invalid_run', 'Use a run ID or unique prefix from conjectures run list.')
+        found = [r['id'] for r in records if r['id'].startswith(identity)]
+        if len(found) != 1:
+            raise Failure('ambiguous_run' if found else 'unknown_run', 'Choose an explicit run ID: '+', '.join(found[:10]) if found else identity)
+        identity = found[0]
     path = root/'.conjectures/runs'/identity
     if path.is_symlink() or not (path/'run.json').is_file():
         raise Failure('unknown_run', identity)
