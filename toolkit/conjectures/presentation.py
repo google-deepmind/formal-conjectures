@@ -23,6 +23,7 @@ def render(value, args):
                   [[name, info['status']] for name, info in value['capabilities'].items()])]
         for name, info in value['capabilities'].items():
             for gap in info.get('gaps', []): lines.append(f'{name}: {gap}')
+            if info.get('note'):lines.append(info['note'])
         lines.append('Your existing agent conducts semantic review; no AI login is required.')
     elif 'problems' in value:
         problems = value['problems']

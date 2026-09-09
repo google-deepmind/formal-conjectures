@@ -48,7 +48,16 @@ def doctor(root,cfg,capability=None):
     if not cfg.get('executor'):verify.append('Run conjectures setup verify --repository OWNER/REPO --ref COMMIT.')
     if not cfg.get('evidence'):evidence.append('Run conjectures setup evidence --repository OWNER/REPO --branch BRANCH.')
     if not tools['lake'] or not tools['lean']:verify.append('Install the checkout’s Lean toolchain with elan before initializing a proof workspace.')
-    caps={'browse':{'status':'ready','gaps':[]},'review':{'status':'needs setup' if review else 'ready','gaps':review},
+    from .catalog import load
+    try:
+        data=load(root,offline=capability!='browse')
+        source=data['provenance']['source']
+        browse={'status':'ready','gaps':[],'note':f"Catalog: {source['repository']} @ {source['commit'][:12]} ({data['catalog_origin']['state']})."}
+    except Failure as error:
+        browse={'status':'unavailable' if capability=='browse' else 'not checked',
+                'gaps':[str(error)] if capability=='browse' else [],
+                'note':'Check publication and connectivity with conjectures doctor --for browse.'}
+    caps={'browse':browse,'review':{'status':'needs setup' if review else 'ready','gaps':review},
           'verify':{'status':'needs setup' if verify else 'experimental','gaps':verify},
           'evidence':{'status':'needs setup' if evidence else 'experimental','gaps':evidence}}
     selected=caps[capability] if capability else caps['browse']
