@@ -100,7 +100,7 @@ containers. Keep the output directory with the validation evidence.
 conjectures setup review --json > review-environment.json
 review_image=$(python3 -c 'import json; print(json.load(open("review-environment.json"))["receipt"]["image"])')
 docker tag "$review_image" fc-review-production:qualification
-docker build --build-arg REVIEW_IMAGE=fc-review-production:qualification \
+docker build --platform linux/amd64 --build-arg REVIEW_IMAGE=fc-review-production:qualification \
   -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
 
 python scripts/review_eval.py freeze \
