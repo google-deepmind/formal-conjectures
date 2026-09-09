@@ -37,6 +37,14 @@ The Erdős–Hajnal "exceptional pair" trio of predicates:
 
 These were introduced for Erdős Problem 596 but are reusable for Problem 595 and other
 Ramsey-type questions; we factor them out per mo271's review.
+
+It also defines the two-colour graph Ramsey number `graphRamsey G H` and the notion of a
+**Ramsey size linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
+
+## References
+
+* Erdős, Faudree, Rousseau and Schelp, *Ramsey size linear graphs*,
+  Combin. Probab. Comput. 2 (1993), 389–399.
 -/
 
 namespace SimpleGraph
@@ -93,8 +101,12 @@ noncomputable def diagonalRamsey (k : ℕ) : ℕ :=
   classicalRamsey k k
 
 /--
-A graph $G$ is Ramsey size linear if $R(G,H) \ll_G |E(H)|$ for every finite graph $H$
-without isolated vertices. The constant is uniform over $H$.
+A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
+for all graphs `H` with `m` edges and no isolated vertices, the Ramsey number satisfies
+`R(G, H) ≤ c · m`.
+
+Note that this is about the (vertex) Ramsey number `graphRamsey G H`, not the size Ramsey
+number `sizeRamsey G H`.
 -/
 def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
   ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
