@@ -1,4 +1,5 @@
+include LICENSE pyproject.toml setup.py
+include toolkit/README.md toolkit/RELEASE.md
 recursive-include .agents/skills/formal-conjectures-review *.md
-include toolkit/README.md
-
 prune .agents/skills/formal-conjectures-review/evals
+recursive-include toolkit/conjectures/resources *.Dockerfile *.yml

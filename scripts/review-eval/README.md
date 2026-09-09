@@ -83,7 +83,9 @@ Requires Docker, the Codex CLI and Python 3.11+. Install optional runtime depend
 virtual environment with `pip install -r scripts/review-eval/requirements.txt`. Ordinary CI
 script tests do not require Docker, the SDK, credentials or model usage.
 
-After building the image, run the Docker/Lean regression without model calls:
+Build the production environment through `conjectures setup review`. The qualification
+image below only adapts its layout; it does not fetch different Lean dependencies.
+Then run the Docker/Lean regression without model calls:
 
 ```sh
 python3 scripts/review-eval/check_build_isolation.py \
@@ -95,7 +97,10 @@ replaced with an empty successful target, and that a valid candidate builds in t
 containers. Keep the output directory with the validation evidence.
 
 ```sh
-docker build -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
+conjectures setup review --json > review-environment.json
+review_image=$(python3 -c 'import json; print(json.load(open("review-environment.json"))["receipt"]["image"])')
+docker build --build-arg "REVIEW_IMAGE=$review_image" \
+  -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
 
 python scripts/review_eval.py freeze \
   --suite .agents/skills/formal-conjectures-review/evals/benchmark.json \

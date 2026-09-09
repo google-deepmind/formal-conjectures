@@ -1,133 +1,198 @@
 # Formal Conjectures toolkit
 
-This dependency PR delivers review, catalog, and check commands. Proof workspace
-commands and evidence publication follow in separate PRs; invoking an unavailable
-operation returns `unavailable_command`. The guide describes their shared interface.
+This focused branch implements review, catalog, and checks. Proof and evidence
+commands arrive in their dependent PRs; release-wheel examples install the combined
+fork release candidate. Unavailable operations report `unavailable_command`.
 
-Use `conjectures` from your existing agent session or directly in a terminal.
-The toolkit needs no AI credentials or model configuration. Your agent reads the
-FC review skill and conducts the semantic review. The CLI prepares exact inputs,
-runs isolated checks, validates reports, and manages proof workspaces and evidence.
+`conjectures` browses FC problems, prepares contribution reviews for your existing
+agent, and retains reports and proof evidence. It needs no AI login or model
+configuration. Your agent conducts semantic review; the CLI handles deterministic
+operations. Version 0.2.0rc1 is a **fork release candidate**. Proof verification and
+public evidence are experimental pending the full acceptance journeys.
 
-Install an exact revision:
+## Try or install
 
-```sh
-uv tool install git+https://github.com/williamjblair/formal-conjectures.git@COMMIT
-conjectures doctor --json
-```
-
-Replace `COMMIT` with the full tested revision. Run commands inside your FC checkout.
-Configuration lives in `~/.config/conjectures/config.json` or `.conjectures/config.json`:
-
-```json
-{"image":"sha256:PINNED_IMAGE_ID","executor":null,"evidence":null,"limits":{"build_seconds":180,"scratch_seconds":60,"scratch_calls":20}}
-```
-
-The image uses `scripts/review-report/Dockerfile` and must contain the target's exact
-Lean toolchain, Lake configuration, dependency manifest, and trusted cache. Docker
-runs candidate code without host credentials or networking. An unavailable image
-leaves an explicit build gap; the CLI can still prepare sources for semantic review.
-Lean and Lake own dependency pins. Use existing `gh` authentication when needed for
-PR access, proof workflow dispatch, or publication. `CONJECTURES_GH` can select an
-existing authenticated `gh` wrapper. Old `backend` and `model` fields are ignored
-with a migration notice; remove them from toolkit configuration.
-
-## Review in an existing session
-
-Ask your agent to review a PR or local changes using the FC review skill. The same
-canonical skill lives in `.agents/skills/formal-conjectures-review/` and is bundled
-with the installed toolkit. Codex and OpenCode discover the repository skill.
-Claude Code uses the small repository entry point in `.claude/skills/`, which links
-to that canonical procedure. Hermes can install the canonical folder with its own
-skill manager. You can also ask any agent to read `SKILL.md` explicitly. No global
-agent configuration is changed by installing the Python package.
-
-The skill uses these commands:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first.
+Try without permanently installing the toolkit:
 
 ```sh
-conjectures review prepare --pr 4899 --json
-conjectures review prepare --changed --base origin/main --json
+uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc1/formal_conjectures_toolkit-0.2.0rc1-py3-none-any.whl conjectures doctor
 ```
 
-Preparation returns `status: awaiting_review`, reason `awaiting_review`, and exit
-code 4. This means the inputs are ready and semantic review is still required.
-It returns paths to the frozen request, readable snapshot, sources, procedure,
-report template, and independent build receipt. New or modified problem modules
-are supported, up to five per run. Broader changes have an explicit unsupported
-scope result. Preparation preserves your branch, index, and working files.
-
-Read the returned procedure and fill a copy of `review-template.json`. Describe the
-actual session identity; use `model unknown` if unavailable. `context_policy: fresh`
-means no prior review records informed the review; it does not assert an isolated
-or blinded session. For a rereview, retain the earlier reviews and replies as
-supporting evidence. Never read the skill's evaluation keys during semantic review.
-
-When a witness is needed, run a bounded scratch check:
+Install for regular use:
 
 ```sh
-conjectures review exec --json --files /path/to/witnesses RUN -- lake env lean scratch/Witness.lean
+uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc1/formal_conjectures_toolkit-0.2.0rc1-py3-none-any.whl
+conjectures find erdos/730
+conjectures show erdos/730
 ```
 
-Options precede `RUN`. Witness files appear under `/tmp/work/scratch/` in a fresh
-container restored from the frozen request. Each command starts fresh; it cannot
-change the independent build. Its output gives an evidence path for findings.
-Copy additional witnesses into `--files` for subsequent commands. These operation
-limits constrain CLI execution, not your agent's overall conversation.
+These browsing commands and `doctor` work without a checkout, Lean, Docker, or
+GitHub login. An unavailable statement or evidence feed is shown explicitly.
+Supported systems are macOS and Linux, including WSL. Native Windows is not supported.
 
-Complete the review:
+For local development, run `uv tool install --editable .` inside this repository.
+If `conjectures` is not found, run `uv tool update-shell` and restart your shell.
+To upgrade a URL-pinned installation, use `uv tool install --force` with the next
+release's wheel URL. To uninstall, run `uv tool uninstall formal-conjectures-toolkit`.
+PyPI publication is deferred until maintainer acceptance; do not assume the package
+is available there. Release artifacts and SHA256SUMS identify each build.
+
+## Review a contribution
+
+Run inside your FC checkout, or pass `--repo /path/to/formal-conjectures`.
+Ask your existing agent:
+
+> Use the formal-conjectures-review skill and CLI to review PR 4941. Keep the report local.
+
+The CLI never starts a second agent. The canonical skill lives in
+`.agents/skills/formal-conjectures-review/` and is bundled with the package. A small
+Claude Code entry point links to it. Other agents can read that SKILL.md directly;
+installation does not change their global configuration.
+
+Prepare your build environment once:
 
 ```sh
-conjectures review finish RUN --report /path/to/review.json --json
-conjectures run show RUN --json
+conjectures doctor --for review
+conjectures setup review
 ```
 
-For documentary evidence, prior reviews, or outputs produced using your agent's
-own tools, add `--evidence DIR`; reference these as `evidence/operator/<filename>`.
-These files are operator evidence. Supplying `checks.json` cannot replace the
-controller's build check. Invalid reports leave the run pending so you can fix
-and resubmit them. Completed reports are immutable; start a new run for a rereview.
-
-Use `conjectures review prepare --input /path/to/retained-run` to reuse frozen
-inputs in a new run with a new independent build. This also accepts downloaded
-Actions preparation artifacts. It never reuses a hosted receipt as local proof.
-
-## Inspect and publish
-
-Runs and raw artifacts stay in the gitignored `.conjectures/` directory. Use
-`status`, `run list`, `run show`, and `run logs` to inspect them. `run cancel RUN`
-cancels a pending local review. A local review has no background model to wait for;
-`run wait` returns its current state. Remote proof runs use their configured executor.
+Setup requires running Docker and GitHub access through your existing `gh` login.
+It builds an isolated Linux image from an upstream-main revision and the bundled
+trusted recipe, then saves its digest. Downloads/builds can take several minutes.
+It does not build the environment from PR code or need an evaluation cache.
+`setup review --image sha256:...` selects an existing qualified local image instead.
+Each review checks exact toolchain, Lake configuration, and dependency-manifest
+compatibility. If upstream pins change, run setup again. Host credentials and network
+access are absent during candidate execution.
 
 ```sh
+conjectures review --pr 4941
+# Equivalent: conjectures review prepare --pr 4941
+conjectures review --changed --base origin/main
+```
+
+Semantic review supports one to five new or modified problem modules. Infrastructure,
+shared utilities, deleted files, and broader changes need ordinary review. In
+particular, the toolkit integration branch itself is not a suitable `--changed` demo.
+Preparation preserves your branch, index, and files. It returns an exact run ID,
+source coverage, build result, procedure, readable snapshot, and writable `review.json`.
+
+Read the returned procedure and inputs, then have your agent fill that run's draft.
+Record actual human/agent identity; say `model unknown` when it is unavailable.
+The review remains `awaiting_review` until completion:
+
+```sh
+conjectures review finish RUN
+conjectures run show RUN
+```
+
+Replace RUN with the returned ID. `--report FILE` selects another review JSON;
+`--evidence DIR` retains extra documents under `evidence/operator/`. Invalid reports
+remain correctable. Completed reports are immutable; prepare a new run for a rereview.
+`review prepare --input DIR` replays retained inputs with a new independent build.
+
+For a bounded witness, use:
+
+```sh
+conjectures review exec RUN --files ./witnesses -- lake env lean scratch/Witness.lean
+```
+
+Options can appear before or after RUN, before `--`. Witness command arguments after
+`--` are passed unchanged. Each invocation starts from a fresh frozen snapshot.
+Scratch success cannot replace the independent build receipt.
+
+## Inspect work
+
+```sh
+conjectures status
+conjectures run list --limit 10 --status awaiting_review
+conjectures run show latest
+conjectures run logs latest
+conjectures run logs RUN --artifact controller/build.json
+conjectures check --changed
+```
+
+Read-only commands accept `latest` or a unique ID prefix. Mutating commands require
+an explicit ID or unique prefix. `run logs` displays retained output. `check` reports
+an empty changed scope as a successful no-op and explains unsupported shared changes.
+It does not equate building with proof verification.
+
+## Proof workspaces (experimental)
+
+```sh
+conjectures show erdos/730
+conjectures init EXACT_DECLARATION --out ../proof
+conjectures setup verify --repository OWNER/REPO --ref FULL_COMMIT
+conjectures verify ../proof
+conjectures run wait RUN --timeout 600
+conjectures run cancel RUN
+```
+
+Select the exact declaration from `show`. Initialization uses an isolated checkout
+of its retrievable source commit and leaves your checkout unchanged. Develop the
+proof externally, then explicitly commit and push the public workspace before verify.
+The configured executor must already exist, have a tag pointing to its exact commit,
+and match the bundled workflow policy;
+setup does not create tags, deploy, or dispatch it. GitHub dispatch uses the tag;
+the returned run must still match the configured commit exactly. Policy matching is not proof qualification.
+The current workflow is restricted to the qualification fork. There is no automatic
+publication of local/private work or fallback to an unqualified executor.
+
+Waiting polls until a result or timeout. Ctrl-C stops waiting and leaves remote work
+running; use `run cancel` explicitly. Cancellation requested and confirmed are distinct.
+Verification records distinguish rejection from execution errors using typed results.
+
+## Inspect and publish evidence (experimental)
+
+```sh
+conjectures setup evidence --repository OWNER/REPO --branch DATA_BRANCH
 conjectures evidence publish RUN --dry-run
 conjectures evidence publish RUN
 conjectures evidence publish RUN --post
 ```
 
-Inspect the public export before publishing. `--post` explicitly archives first,
-then posts one advisory PR summary only if the head/base and request order still
-apply. `review finish --post` uses this same operation. If publication fails, the
-completed review remains available; retry `evidence publish RUN --post`. Publication
-requires the configured existing evidence branch and a public committed PR target.
-Raw snapshots, complete source documents, invocation logs, and private artifacts
-are omitted. A historical review remains evidence about its original inputs.
+Setup selects an existing public data branch; it creates no branch and publishes
+nothing. Dry-run creates a local public export and lists its files, omissions, and
+destination. Inspect the files before publishing. Raw snapshots, complete source
+documents, invocation logs, and private artifacts stay local. Reports remain attributed
+to their producer; they do not confer maintainer acceptance.
 
-Exit codes are 0 for a passing result, 1 for a failed check or supported semantic
-finding, 2 for invalid input, 3 for an execution error, 4 for incomplete work, and 5
-for cancellation. `--json` emits structured reasons; progress goes to stderr.
+`--post` archives first and rechecks PR head/base and request ordering before posting
+one advisory summary. `review finish --post` uses that same path. If publication fails,
+the review remains available; retry publication separately. Historical records retain
+their original applicability.
 
-## Proof workspaces and automation
+## Configuration, scripts, and help
 
-Use `find QUERY` and `show TARGET` to locate the declaration, `init TARGET --out DIR`
-to generate its pinned workspace, and `verify DIR` for configured Linux verification.
-A shortcut may have several variants; initialization requires an exact declaration.
-The proof workflow and its pins are separate from agent choice or semantic review.
-Compilation alone does not verify assumptions. Maintainers decide acceptance.
+Setup writes `.conjectures/config.json`; add `--global` for user configuration under
+`$XDG_CONFIG_HOME/conjectures/` (default `~/.config/conjectures/`). Workspace values
+override user values. Other settings and resource limits are preserved. Use your
+existing `gh` authentication. `CONJECTURES_GH` may name an executable wrapper, not a
+shell command string. Obsolete backend/model settings are ignored with a notice.
 
-Default CI performs deterministic checks without model access. The opt-in Actions
-pilot only prepares inputs and isolated build evidence. Model adapters remain in
-`scripts/review_model_*.py` for explicitly configured hosted use or controlled
-evaluations; they are excluded from the installable runtime. The evaluation extra
-`.[eval]` supplies MCP only for those experiments. No model calls are made by
-`conjectures`, and no seven-minute session limit or uniform token accounting is
-claimed for an external agent.
+Human-readable output is the default. Use `--json` for agents/scripts; output stays
+on stdout and progress stays on stderr. JSON retains the recorded outcome and adds
+`command_status` and `exit_code`. Plain output contains no terminal escapes.
+
+| Exit | Meaning |
+| --- | --- |
+| 0 | Operation succeeded: read, prepared complete inputs, queued work, or publication |
+| 1 | Failed build, supported review finding, or rejected verification |
+| 2 | Invalid input or arguments |
+| 3 | Infrastructure/execution error |
+| 4 | Required configuration, coverage, or result unavailable |
+| 5 | Cancellation or interruption |
+
+Unlike 0.1, successful preparation exits 0 while retaining `awaiting_review` and an
+incomplete semantic outcome. Missing sources/builds still exit 4; build failures exit
+1. Reading a failed historical run exits 0. Waiting returns the final verification
+outcome. Consumers must distinguish command success from the recorded review outcome.
+
+Use `conjectures help review prepare` or any command's `--help` for examples.
+Generate shell completion with `conjectures completion bash`, `zsh`, or `fish`; source
+the output using your shell's normal completion configuration. No shell files are
+changed automatically.
+
+The [release checklist](RELEASE.md) records qualification limits. Upstream roadmap:
+[FC #4394](https://github.com/google-deepmind/formal-conjectures/issues/4394).
