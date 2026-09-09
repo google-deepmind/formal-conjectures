@@ -1,9 +1,13 @@
-# Toolkit 0.2.0rc1 qualification
+# Toolkit 0.2.0rc2 qualification
 
 This is a fork release candidate. It is not a complete release or an upstream
 acceptance claim. The reproducible tests run under the Toolkit package qualification
 workflow on Linux and macOS. Release assets are built from the tagged source
 archive and include checksums.
+
+RC2 adds persistent cancellation-request status, exact workspace handoff commands,
+and the installation/qualification documentation corrections. The configured
+Linux executor remains independently pinned; a client update does not change it.
 
 ## Exercised locally
 
