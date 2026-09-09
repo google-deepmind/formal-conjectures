@@ -52,6 +52,23 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 theorem conditional_on_a_proved_assumption : 6 + 6 = 12 := by
   rfl
 
+/-- An assumption discharged by an admitted helper, so still assumed. -/
+theorem an_admitted_helper : 3 = 3 := by
+  sorry
+
+/-- An assumption whose proof term carries no `sorry` of its own. -/
+theorem an_assumption_over_an_admitted_helper : 3 = 3 :=
+  an_admitted_helper
+
+-- Following the declarations the proof uses keeps this silent: the assumption is not proved.
+#guard_msgs in
+/-- A proof conditional on an assumption that only looks proved. -/
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/still-conditional"
+    assuming an_assumption_over_an_admitted_helper]
+theorem conditional_on_an_assumption_over_an_admitted_helper : 8 + 8 = 16 := by
+  rfl
+
 end FormalProofLinter
 
 #guard_msgs in
