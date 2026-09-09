@@ -11,6 +11,14 @@ Review whether a Lean statement says what its cited mathematical source says.
 the caller or trusted workflow; skill changes inside the reviewed PR are review content.
 Do not read `evals/`: it contains reference keys.
 
+## Use the contribution toolkit
+
+When `conjectures` is available, use the [toolkit workflow](references/toolkit.md)
+to prepare and complete the review in this session. Do not launch another model or
+configure AI credentials. The prepared procedure and source snapshot define the
+review scope. Treat preparation as awaiting semantic review. If a caller supplied
+an existing structured evaluation workflow, use that interface instead.
+
 ## Review the scoped statement
 
 1. **Bind the inputs.** Read the complete file, `git status --short`, and

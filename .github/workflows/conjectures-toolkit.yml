@@ -1,0 +1,21 @@
+name: Contribution toolkit checks
+on:
+  pull_request:
+    paths: ['toolkit/**', '.agents/skills/formal-conjectures-review/**', '.claude/skills/formal-conjectures-review/**', '.github/workflows/advisory-review.yml', 'scripts/review*', 'scripts/test_review*', 'comparator/export_problem.py', 'pyproject.toml', 'setup.py', 'MANIFEST.in', '.github/workflows/conjectures-toolkit.yml']
+  push:
+    branches: ['codex/fc-toolkit-integration']
+permissions:
+  contents: read
+jobs:
+  deterministic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - run: python3 -m pip install '.[test]'
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+      - run: python3 -m unittest discover -s toolkit -p 'test_*.py' -v
+      - if: hashFiles('site/tests/evidence.test.cjs') != ''
+        run: node --test site/tests/evidence.test.cjs
+      - run: conjectures --help

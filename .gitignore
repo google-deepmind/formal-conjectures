@@ -23,3 +23,11 @@ __pycache__/
 # Generated review bundles and model-evaluation runs; benchmark inputs stay tracked.
 /review-artifacts/
 /.agents/skills/formal-conjectures-review/evals/results/
+
+# Local contribution runs and operator configuration
+.conjectures/
+
+# Python package build output
+*.egg-info/
+build/
+dist/

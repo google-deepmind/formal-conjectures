@@ -177,11 +177,7 @@ class EvalTest(unittest.TestCase):
             "frozen_files": ev.files(self.root),
             "tooling": {
                 p.name: ev.sha(p.read_bytes())
-                for p in [
-                    Path(ev.__file__),
-                    ev.HERE / "review_report.py",
-                    ev.HERE / "review-eval/workspace_server.py",
-                ]
+                for p in (ev.HERE / name for name in ev.REVIEW_TOOLS)
             },
         }
         ev.write(self.root / "manifest.json", manifest)

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "formal-conjectures-toolkit"
+version = "0.1.0"
+description = "Review contributions and verify exact Formal Conjectures targets"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+conjectures = "conjectures.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["toolkit"]
+
+[project.optional-dependencies]
+test = ["PyYAML==6.0.3"]
+eval = ["mcp==1.30.0"]
