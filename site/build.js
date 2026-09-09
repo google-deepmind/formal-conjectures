@@ -808,6 +808,10 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  const evidencePath = 'data/evidence.json';
+  fs.writeFileSync('site/data/evidence.json', fs.existsSync(evidencePath)
+    ? fs.readFileSync(evidencePath)
+    : JSON.stringify({status: 'unavailable', runs: [], pull_requests: []}));
   // Retain the native extract for CLI, status, and link consumers. The existing
   // browser projection and its field meanings remain unchanged.
   fs.copyFileSync('data/conjectures.json', 'site/data/catalog.json');
