@@ -1,11 +1,13 @@
 [build-system]
-requires = ["setuptools>=69"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "formal-conjectures-toolkit"
-version = "0.1.0"
+version = "0.2.0rc1"
 description = "Review contributions and verify exact Formal Conjectures targets"
+readme = "toolkit/README.md"
+license = "Apache-2.0"
 requires-python = ">=3.11"
 dependencies = []
 
@@ -18,3 +20,10 @@ where = ["toolkit"]
 [project.optional-dependencies]
 test = ["PyYAML==6.0.3"]
 eval = ["mcp==1.30.0"]
+
+[tool.setuptools.package-data]
+conjectures = ["resources/*", "resources/review/*.md", "resources/review/references/*.md", "resources/review/rubrics/*.md"]
+
+[project.urls]
+Documentation = "https://github.com/williamjblair/formal-conjectures/blob/codex/fc-toolkit-integration/toolkit/README.md"
+Issues = "https://github.com/google-deepmind/formal-conjectures/issues/5376"
