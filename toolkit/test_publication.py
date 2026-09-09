@@ -3,6 +3,9 @@ import subprocess
 from pathlib import Path
 from unittest.mock import patch
 import unittest
+import shutil
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from conjectures import core, evidence, report as rr, review
 import test_review_lifecycle as lifecycle
 
@@ -55,6 +58,28 @@ class PublicationTests(unittest.TestCase):
         self.assertFalse((self.directory/'publication.json').exists())
         self.assertEqual(rr.read_json(self.directory/'run.json')['status'],'completed')
         self.publish()  # Retry checks immutable bytes and completes.
+
+    def test_concurrent_archives_preserve_both_runs_after_explicit_retry(self):
+        other=self.root/'second-run';shutil.copytree(self.directory,other)
+        record=rr.read_json(other/'run.json');record['id']='20260909T000000Z-222222222222'
+        core.save(other/'run.json',record)
+        barrier=threading.Barrier(2);original=evidence.git
+        def git(root,*args):
+            if args and args[0]=='push':barrier.wait(timeout=10)
+            return original(root,*args)
+        def publish(directory):
+            try:return evidence.publish(self.root,directory,self.cfg)
+            except core.Failure as error:return error
+        with patch.object(evidence,'github',side_effect=self.github),patch.object(evidence,'command',side_effect=self.command),patch.object(evidence,'git',side_effect=git),patch.dict('os.environ',{'GIT_AUTHOR_NAME':'Fixture','GIT_AUTHOR_EMAIL':'fixture@example.invalid','GIT_COMMITTER_NAME':'Fixture','GIT_COMMITTER_EMAIL':'fixture@example.invalid'}):
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results=list(pool.map(publish,[self.directory,other]))
+        self.assertEqual(sum(isinstance(r,core.Failure) for r in results),1)
+        failed=[self.directory,other][next(i for i,r in enumerate(results) if isinstance(r,core.Failure))]
+        self.assertFalse((failed/'publication.json').exists())
+        with patch.object(evidence,'github',side_effect=self.github),patch.object(evidence,'command',side_effect=self.command),patch.dict('os.environ',{'GIT_AUTHOR_NAME':'Fixture','GIT_AUTHOR_EMAIL':'fixture@example.invalid','GIT_COMMITTER_NAME':'Fixture','GIT_COMMITTER_EMAIL':'fixture@example.invalid'}):
+            evidence.publish(self.root,failed,self.cfg)
+        index=rr.parse(core.git(self.remote,'show','evidence:toolkit-index.json'))
+        self.assertEqual({r['id'] for r in index['runs']},{rr.read_json(self.directory/'run.json')['id'],record['id']})
 
     def test_stale_target_never_posts(self):
         with patch.object(evidence,'github',return_value={'state':'open','head':{'sha':'changed'},'base':{'sha':self.ticket['base']}}),patch.object(evidence,'gh') as post:
