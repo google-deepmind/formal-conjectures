@@ -67,7 +67,7 @@ def validate_index(index, read, origin=None):
             rr.require(summary.get('schema_version')=='fc.proof-verification.v1' and request.get('run_id')==identity,'Verification run mismatch')
             rr.require(summary.get('outcome')==record['outcome'],'Verification outcome mismatch')
             if summary['outcome'] in ('pass','fail') and summary.get('comparator'):
-                from .remote import typed_result
+                from .verifier_result import typed_result
                 typed=typed_result(rr.encode(summary['comparator']),summary.get('exit_code'))
                 rr.require({'pass':'pass','rejected':'fail','error':'error'}[typed['outcome']]==summary['outcome'],'Inconsistent proof policy outcome')
             if summary['outcome']=='pass':rr.require(bool(summary.get('comparator')),'Proof pass lacks typed result')
@@ -115,7 +115,9 @@ def load(root=None, destination=None, *, offline=False):
         rr.require(isinstance(repo,str) and re.fullmatch(r'[\w.-]+/[\w.-]+',repo) and isinstance(branch,str) and branch,'Invalid evidence destination')
         if offline:
             if not cache.is_file():return unavailable('unavailable','No retained evidence. Refresh online before using --offline.')
-            envelope=rr.read_json(cache);read=bounded(lambda p:envelope['files'][p].encode())
+            envelope=rr.read_json(cache)
+            rr.require(envelope['origin'].get('repository')==repo and re.fullmatch('[0-9a-f]{40}',envelope['origin'].get('commit','')),'Cached evidence origin mismatch')
+            read=bounded(lambda p:envelope['files'][p].encode())
             result=validate_index(rr.parse(read('toolkit-index.json')),read,envelope['origin'])
             return {**result,'cache_state':'offline','retrieved_at':envelope['retrieved_at']}
         revision=github(f'repos/{repo}/commits/{quote(branch,safe="")}')['sha']
