@@ -191,3 +191,8 @@ The GitHub Actions workflow in `.github/workflows/build-and-docs.yml` triggers o
 **Deployment** happens on pushes to `main`, and on `*-webtest` branches when on a fork.
 
 For GitHub Pages setup (including the environment rule needed for `*-webtest` branches), see [One-time fork setup](#one-time-fork-setup) above.
+
+The site also publishes `data/catalog.json`, preserving the native schema-2 extract
+for command-line consumers. The browser's `data/conjectures.json` projection is unchanged.
+Full CI extraction retains statements, docstrings, proof references, and answer kinds.
+A website-only rebuild from older live data cannot reconstruct omitted fields.

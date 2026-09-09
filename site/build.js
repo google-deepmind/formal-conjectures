@@ -808,6 +808,9 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  // Retain the native extract for CLI, status, and link consumers. The existing
+  // browser projection and its field meanings remain unchanged.
+  fs.copyFileSync('data/conjectures.json', 'site/data/catalog.json');
   const whitePlotPath = path.join('data', 'file_counts_white.html');
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
