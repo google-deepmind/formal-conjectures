@@ -807,7 +807,9 @@ async function main() {
   const evidencePath = 'data/evidence.json';
   fs.writeFileSync('site/data/evidence.json', fs.existsSync(evidencePath)
     ? fs.readFileSync(evidencePath)
-    : JSON.stringify({status: 'unavailable', runs: [], pull_requests: []}));
+    : JSON.stringify({status: 'not_configured', runs: [], pull_requests: []}));
+  fs.writeFileSync('site/data/work.json', fs.existsSync('data/work.json')
+    ? fs.readFileSync('data/work.json') : JSON.stringify({status:'not_configured',pull_requests:[]}));
   // Retain the native extract for CLI, status, and link consumers. The existing
   // browser projection and its field meanings remain unchanged.
   fs.copyFileSync('data/conjectures.json', 'site/data/catalog.json');

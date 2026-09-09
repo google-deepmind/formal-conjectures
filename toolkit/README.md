@@ -269,3 +269,10 @@ Site and board builds use `python -m conjectures.projections --repository OWNER/
 an `fc.work-context.v1` snapshot by repository and PR number, then compares exact head/base
 revisions. Queue waiting times and classification remain owned by queueboard. No fuzzy
 matching or automatic duplicate closure is performed.
+
+
+`show` also reads the FC site's published work snapshot and lists open PRs that touch the
+same module, with its observation time. This is related work, not a declaration-equivalence
+claim. `--offline` uses only retained data. Site maintainers may enable these projections
+with `FC_EVIDENCE_REPOSITORY`, `FC_EVIDENCE_BRANCH`, and `FC_WORK_CONTEXT_URL`; absent
+configuration is displayed explicitly. This implementation does not enable upstream feeds.

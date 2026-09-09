@@ -28,9 +28,11 @@ const FCEvidence = (() => {
       : (run.scope || []).includes(theorem.githubPath)));
   }
   function render(theorem, data, escape) {
-    if (data.status === 'unavailable') return '<p>Published evidence is unavailable. Try again later or inspect local runs with <code>conjectures status</code>.</p>';
-    const entries = records(theorem, data);
-    const list = entries.length ? '<ul>' + entries.map(run => {
+    const invalid = (data.runs || []).some(run => run.validation !== 'validated_bundle');
+    const unavailable = ['unavailable','invalid','not_configured'].includes(data.status);
+    const entries = invalid || unavailable ? [] : records(theorem, data);
+    const list = invalid ? '<p>Published evidence is invalid: outcomes were not validated.</p>' : unavailable
+      ? '<p>Published evidence: '+escape(data.status.replaceAll('_',' '))+'. '+escape(data.message || '')+'</p>' : entries.length ? '<ul>' + entries.map(run => {
       const revision = run.kind === 'verify' ? run.target.commit : run.target.head;
       const source = data.catalog_source;
       const applicability = !source?.commit || !source?.repository ? 'Applicability unconfirmed' : revision === source.commit ? 'Current revision' : 'Historical revision';

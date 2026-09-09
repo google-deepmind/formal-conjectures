@@ -306,6 +306,15 @@ jobs:
           curl -sfL "$LIVE_URL/data/file_counts_white.html" -o site/data/file_counts_white.html || true
           curl -sfL "$LIVE_URL/data/file_counts_dark.html" -o site/data/file_counts_dark.html || true
 
+      - name: Read validated contribution evidence
+        if: steps.mode.outputs.site == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FC_EVIDENCE_REPOSITORY: ${{ vars.FC_EVIDENCE_REPOSITORY }}
+          FC_EVIDENCE_BRANCH: ${{ vars.FC_EVIDENCE_BRANCH }}
+          FC_WORK_CONTEXT_URL: ${{ vars.FC_WORK_CONTEXT_URL }}
+        run: python3 scripts/contribution_context.py
+
       - name: Build website
         if: steps.mode.outputs.site == 'true'
         run: |

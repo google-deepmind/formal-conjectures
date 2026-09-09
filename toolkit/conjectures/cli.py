@@ -39,6 +39,10 @@ def dispatch(args):
         if args.command=='show':
             from .catalog import attach_evidence
             found=attach_evidence(found,root,cfg,source,offline=args.offline)
+            from . import work
+            context=work.load(offline=args.offline) if source else {'status':'unconfirmed','pull_requests':[]}
+            found=[{**p,'related_work':work.related(p,context,source),'work_availability':context['status'],
+                    'work_observed_at':context.get('observed_at')} for p in found]
         missing=args.command=='show' and any(not p.get('statement') for p in found)
         return {'outcome':'incomplete' if missing else 'pass','problems':found,'total':total,
                 'reason':'statement_unavailable' if missing else 'catalog_loaded',

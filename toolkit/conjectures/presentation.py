@@ -55,6 +55,9 @@ def render(value, args):
                             'unavailable':'retrieval unavailable','invalid':'invalid evidence; no outcome accepted'}
                     lines.append('Published evidence: '+labels.get(state,state)+'.')
                     if p.get('evidence_message'):lines.append(p['evidence_message'])
+                if p.get('work_availability'):
+                    lines.append('Related work: '+p['work_availability']+((' (observed '+p['work_observed_at']+')') if p.get('work_observed_at') else ''))
+                    for pr in p.get('related_work',[]):lines.append(f"  #{pr['number']}: {pr['title']} (touches this module) {pr['url']}")
                 lines.append('')
         lines += ['Coverage: '+g for g in value.get('coverage_gaps', [])]
     elif 'logs' in value:
