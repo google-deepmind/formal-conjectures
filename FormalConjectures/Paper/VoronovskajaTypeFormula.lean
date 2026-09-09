@@ -125,12 +125,12 @@ private lemma bernsteinPolynomial_eval_nonneg {n k : ℕ} {x : ℝ} (hx : x ∈ 
 lemma bernsteinTail_eval_eq_binomial_tail (n k : ℕ) (x : ℝ) :
     (bernsteinTail n k).eval x =
       ∑ j ∈ Finset.Icc k n, (n.choose j : ℝ) * x ^ j * (1 - x) ^ (n - j) := by
-  simp [bernsteinTail, Polynomial.eval_finset_sum, bernsteinPolynomial]
+  simp [bernsteinTail, Polynomial.eval_finsetSum, bernsteinPolynomial]
 
 @[category API, AMS 26 40 47]
 private lemma bernsteinTail_eval_nonneg {n k : ℕ} {x : ℝ} (hx : x ∈ I) :
     0 ≤ (bernsteinTail n k).eval x := by
-  rw [bernsteinTail, Polynomial.eval_finset_sum]
+  rw [bernsteinTail, Polynomial.eval_finsetSum]
   exact Finset.sum_nonneg fun j hj ↦ bernsteinPolynomial_eval_nonneg hx
 
 /-- Bernstein tails decrease as their lower index increases. -/
@@ -230,7 +230,7 @@ lemma eventually_scaled_bezierBernstein_id (α x : ℝ) (hα : α ≠ 0) :
 lemma bezierBernstein_zero (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (hα : α ≠ 0) :
     bezierBernstein n α f 0 = f 0 := by
   have htail (k : ℕ) : (bernsteinTail n k).eval 0 = if k = 0 then 1 else 0 := by
-    simp [bernsteinTail, Polynomial.eval_finset_sum, bernsteinPolynomial.eval_at_0]
+    simp [bernsteinTail, Polynomial.eval_finsetSum, bernsteinPolynomial.eval_at_0]
   rw [bezierBernstein]
   simp [htail, hα]
 
@@ -239,7 +239,7 @@ lemma bezierBernstein_zero (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (hα : α ≠ 
 lemma bezierBernstein_one (n : ℕ) (α : ℝ) (f : ℝ → ℝ)
     (hn : n ≠ 0) (hα : α ≠ 0) : bezierBernstein n α f 1 = f 1 := by
   have htail (k : ℕ) : (bernsteinTail n k).eval 1 = if k ≤ n then 1 else 0 := by
-    simp only [bernsteinTail, Polynomial.eval_finset_sum, bernsteinPolynomial.eval_at_1]
+    simp only [bernsteinTail, Polynomial.eval_finsetSum, bernsteinPolynomial.eval_at_1]
     by_cases hk : k ≤ n
     · rw [if_pos hk, Finset.sum_eq_single n]
       · simp
