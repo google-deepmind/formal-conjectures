@@ -240,3 +240,32 @@ changed automatically.
 
 The [release checklist](RELEASE.md) records qualification limits. Upstream roadmap:
 [FC #4394](https://github.com/google-deepmind/formal-conjectures/issues/4394).
+
+
+## Read a retained case
+
+`conjectures run show RUN` displays findings, check outcomes, coverage gaps, and evidence
+paths. A fresh applicability observation names changed head/base revisions and its time;
+it does not rewrite the original report. `status` lists outstanding work and next commands.
+Verification errors leave the policy outcome unevaluated.
+
+To retain additional reviewer context, pass a directory to `review finish --evidence`.
+Its optional `reviewer-attributions.json` has `schema_version: fc.reviewer-attribution.v1`,
+the existing `request_id`, and a `reviewers` array. Each reviewer records `kind` (`human`
+or `ai`), `name`, `method`, `scope` (strings), `independence` (`independent`,
+`shared_dependencies`, or `not_assessed`), `shared_dependencies` (strings), and `evidence`
+(entries with `path` and `sha256`, relative to that directory). Evidence bytes and request
+identity are checked. Attribution and independence remain self-reported, not quality scores
+or proof of independent review. The review request/report schemas are unchanged.
+
+Published evidence is read through its immutable archive revision, manifest, and artifact
+hashes before displaying outcomes. `show` distinguishes not configured, no matching records,
+unavailable transport, and invalid evidence. `--offline` revalidates a retained archive cache;
+a failed refresh never silently substitutes another source. Validation establishes integrity
+and input bindings, not producer authenticity or mathematical correctness.
+
+Site and board builds use `python -m conjectures.projections --repository OWNER/REPO
+--branch DATA_BRANCH --out evidence.json` (one command). Optional `--work work.json` joins
+an `fc.work-context.v1` snapshot by repository and PR number, then compares exact head/base
+revisions. Queue waiting times and classification remain owned by queueboard. No fuzzy
+matching or automatic duplicate closure is performed.

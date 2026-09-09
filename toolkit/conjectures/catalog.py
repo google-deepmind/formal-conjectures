@@ -102,22 +102,10 @@ def select(catalog, query):
 
 
 def attach_evidence(problems, root, cfg, source=None, *, offline=False):
-    import importlib.util
-    if importlib.util.find_spec("conjectures.projections") is None:
-        return [{**p,"evidence":[]} for p in problems]
+    from .evidence_reader import load as load_evidence
     from .projections import evidence_for
-    from urllib.parse import quote
-    index=None
-    path=root/'.conjectures/evidence-index.json' if root else None
-    if path and path.is_file():index=rr.read_json(path)
-    elif cfg.get('evidence') and not offline:
-        destination=cfg['evidence'];repo=destination.get('repository','');branch=destination.get('branch','')
-        if re.fullmatch(r'[\w.-]+/[\w.-]+',repo) and branch:
-            try:
-                url=f'https://raw.githubusercontent.com/{repo}/{quote(branch,safe="")}/toolkit-index.json'
-                with urllib.request.urlopen(url,timeout=10) as response:raw=response.read(8*1024*1024+1)
-                if len(raw)<=8*1024*1024:index=rr.parse(raw)
-            except (OSError,ValueError):pass
-    if not isinstance(index,dict) or index.get('schema_version')!='fc.evidence-index.v1':index={'runs':[]}
+    index=load_evidence(root,cfg.get('evidence'),offline=offline)
     source=source or {}
-    return [{**p,'evidence':evidence_for(p,index,source.get('commit'),source.get('repository'))} for p in problems]
+    return [{**p,'evidence':evidence_for(p,index,source.get('commit'),source.get('repository')),
+             'evidence_availability':index['status'], 'evidence_message':index.get('message'),
+             'evidence_observed_at':index.get('observed_at')} for p in problems]
