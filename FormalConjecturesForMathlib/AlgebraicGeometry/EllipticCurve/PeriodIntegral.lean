@@ -15,12 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Algebra.CubicDiscriminant
-public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-public import FormalConjecturesForMathlib.Analysis.Polynomial.Basic
-public import Mathlib.Algebra.Polynomial.Splits
-public import Mathlib.Analysis.Polynomial.Order
-public import Mathlib.Analysis.Real.Sqrt
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Real
 public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 public import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 public import Mathlib.MeasureTheory.Function.JacobianOneDim
@@ -34,8 +29,8 @@ public import Mathlib.MeasureTheory.Function.LocallyIntegrable
 Let $E$ be an elliptic curve over $\mathbb{R}$ with Weierstrass equation
 $y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6$ and invariant differential
 $\omega = \frac{dx}{2y + a_1 x + a_3}$. Completing the square,
-$(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *two-torsion cubic*
-`WeierstrassCurve.twoTorsionPolynomial`. The real locus $E(\mathbb{R})$ consists of the point at
+$(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *2-division polynomial*
+`WeierstrassCurve.Ψ₂Sq`. The real locus $E(\mathbb{R})$ consists of the point at
 infinity and the real points with $F(x) \geq 0$; over $F(x) > 0$ it has the two branches
 $2y + a_1 x + a_3 = \pm\sqrt{F(x)}$, on each of which $|\omega| = \frac{dx}{\sqrt{F(x)}}$. Hence
 the **real period** of the Birch and Swinnerton-Dyer conjecture is
@@ -46,19 +41,20 @@ This file defines
 * `WeierstrassCurve.realPeriodIntegrand`, the density $x \mapsto 1 / \sqrt{F(x)}$, with the junk
   value $0$ where $F \leq 0$;
 * `WeierstrassCurve.realPeriodIntegral`, the real period $2 \int_{\mathbb{R}} dx / \sqrt{F(x)}$;
-* `WeierstrassCurve.e₁`, the largest real root of the two-torsion cubic;
 * `WeierstrassCurve.leastRealPeriodIntegral`, the integral $2 \int_{e_1}^\infty dx / \sqrt{F(x)}$
   over the identity component $E(\mathbb{R})^0 = \{x \geq e_1\} \cup \{O\}$, the least positive
-  real period of the period lattice;
+  real period of the period lattice, where $e_1$ is the largest real root `WeierstrassCurve.e₁`
+  of $F$;
 
 and proves that for an elliptic curve the integrand is integrable
 (`WeierstrassCurve.integrable_realPeriodIntegrand`) and that
 $$\Omega_E = c_\infty \cdot 2 \int_{e_1}^\infty \frac{dx}{\sqrt{F(x)}},$$
 where $c_\infty$ is $2$ if $\Delta > 0$ (`WeierstrassCurve.realPeriodIntegral_of_pos`) and $1$
 if $\Delta < 0$ (`WeierstrassCurve.realPeriodIntegral_of_neg`), so that the real period is
-positive (`WeierstrassCurve.realPeriodIntegral_pos`). When $\Delta < 0$ the cubic has the single
-real root $e_1$ (`WeierstrassCurve.eq_e₁_of_isRoot_of_neg`) and the integrand vanishes on
-$(-\infty, e_1]$. When $\Delta > 0$ it has three real roots
+positive (`WeierstrassCurve.realPeriodIntegral_pos`). The real roots of $F$ are described in
+`FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Real`: when
+$\Delta < 0$ it has the single real root $e_1$ (`WeierstrassCurve.eq_e₁_of_isRoot_of_neg`) and
+the integrand vanishes on $(-\infty, e_1]$; when $\Delta > 0$ it has three real roots
 $e_3 < e_2 < e_1$ (`WeierstrassCurve.exists_three_roots_of_pos`) and the bounded component
 $\{e_3 \leq x \leq e_2\}$ contributes as much as the identity component, the second equality in
 DLMF 23.6.34: translation by the two-torsion point $(e_2, 0)$ maps $E(\mathbb{R})^0$ onto the
@@ -92,144 +88,35 @@ namespace WeierstrassCurve
 
 variable (W : WeierstrassCurve ℝ)
 
-/- ## The largest real root -/
-
-/-- The largest real root $e_1$ of the two-torsion cubic $4x^3 + b_2 x^2 + 2 b_4 x + b_6$. -/
-def e₁ : ℝ := sSup {x : ℝ | W.twoTorsionPolynomial.toPoly.IsRoot x}
-
-lemma finite_setOf_isRoot_twoTorsionPolynomial :
-    {x : ℝ | W.twoTorsionPolynomial.toPoly.IsRoot x}.Finite :=
-  finite_setOfPred_isRoot W.toPoly_twoTorsionPolynomial_ne_zero
-
-lemma isRoot_e₁ : W.twoTorsionPolynomial.toPoly.IsRoot W.e₁ :=
-  Set.Nonempty.csSup_mem
-    (exists_isRoot_of_odd_natDegree (by rw [W.natDegree_toPoly_twoTorsionPolynomial]; decide))
-    W.finite_setOf_isRoot_twoTorsionPolynomial
-
-lemma le_e₁_of_isRoot {x : ℝ} (hx : W.twoTorsionPolynomial.toPoly.IsRoot x) : x ≤ W.e₁ :=
-  le_csSup W.finite_setOf_isRoot_twoTorsionPolynomial.bddAbove hx
-
-lemma e₁_eq_of_isRoot {e : ℝ} (he : W.twoTorsionPolynomial.toPoly.IsRoot e)
-    (h : ∀ x, e < x → ¬ W.twoTorsionPolynomial.toPoly.IsRoot x) : W.e₁ = e :=
-  le_antisymm (not_lt.mp fun hlt ↦ h _ hlt W.isRoot_e₁) (W.le_e₁_of_isRoot he)
-
-lemma eval_toPoly_twoTorsionPolynomial_pos {x : ℝ} (hx : W.e₁ < x) :
-    0 < W.twoTorsionPolynomial.toPoly.eval x :=
-  zero_lt_eval_of_roots_lt_of_leadingCoeff_nonneg
-    (fun r hr ↦ (W.le_e₁_of_isRoot hr).trans_lt hx)
-    (by rw [W.leadingCoeff_toPoly_twoTorsionPolynomial]; norm_num)
-
-lemma eval_toPoly_twoTorsionPolynomial_nonpos {x : ℝ}
-    (hx : ∀ r, W.twoTorsionPolynomial.toPoly.IsRoot r → x ≤ r) :
-    W.twoTorsionPolynomial.toPoly.eval x ≤ 0 := by
-  simpa [W.natDegree_toPoly_twoTorsionPolynomial, pow_succ] using
-    zero_le_negOnePow_mul_eval_of_le_roots_of_leadingCoeff_nonneg hx
-      (by rw [W.leadingCoeff_toPoly_twoTorsionPolynomial]; norm_num)
-
-lemma rootMultiplicity_e₁ [W.IsElliptic] :
-    rootMultiplicity W.e₁ W.twoTorsionPolynomial.toPoly = 1 :=
-  le_antisymm (Cubic.rootMultiplicity_le_one_of_discr_ne_zero four_ne_zero
-      (W.twoTorsionPolynomial_discr_ne_zero_of_isElliptic (isUnit_iff_ne_zero.mpr two_ne_zero)) _)
-    ((rootMultiplicity_pos W.toPoly_twoTorsionPolynomial_ne_zero).mpr W.isRoot_e₁)
-
-lemma exists_toPoly_twoTorsionPolynomial_eq_X_sub_C_mul [W.IsElliptic] : ∃ Q : ℝ[X],
-    W.twoTorsionPolynomial.toPoly = (X - C W.e₁) * Q ∧ ∀ x, W.e₁ ≤ x → 0 < Q.eval x := by
-  obtain ⟨Q, hQ, hdvd⟩ := exists_eq_pow_rootMultiplicity_mul_and_not_dvd
-    W.twoTorsionPolynomial.toPoly W.toPoly_twoTorsionPolynomial_ne_zero W.e₁
-  rw [W.rootMultiplicity_e₁, pow_one] at hQ
-  refine ⟨Q, hQ, fun x hx ↦ zero_lt_eval_of_roots_lt_of_leadingCoeff_nonneg (fun r hr ↦ ?_) ?_⟩
-  · exact ((W.le_e₁_of_isRoot (by rw [IsRoot, hQ, eval_mul, hr.eq_zero, mul_zero])).lt_of_ne
-      fun h ↦ hdvd (dvd_iff_isRoot.mpr (h ▸ hr))).trans_le hx
-  · rw [← leadingCoeff_monic_mul (monic_X_sub_C W.e₁), ← hQ,
-      W.leadingCoeff_toPoly_twoTorsionPolynomial]
-    norm_num
-
-lemma eq_e₁_of_isRoot_of_neg (h : W.Δ < 0) {x : ℝ}
-    (hx : W.twoTorsionPolynomial.toPoly.IsRoot x) : x = W.e₁ := by
-  have : W.IsElliptic := ⟨isUnit_iff_ne_zero.mpr h.ne⟩
-  by_contra hne
-  obtain ⟨Q, hQ, -⟩ := W.exists_toPoly_twoTorsionPolynomial_eq_X_sub_C_mul
-  obtain ⟨S, hS⟩ := dvd_iff_isRoot.mpr (show Q.IsRoot x by simpa [hQ, sub_eq_zero, hne] using hx)
-  have : S.natDegree = 1 := by
-    grind [natDegree_mul, natDegree_X_sub_C, natDegree_toPoly_twoTorsionPolynomial, mul_eq_zero]
-  have : (W.twoTorsionPolynomial.toPoly.map (RingHom.id ℝ)).Splits := by
-    simpa [Polynomial.map_id, hQ, hS] using (Splits.X_sub_C _).mul ((Splits.X_sub_C _).mul
-      (Splits.of_natDegree_le_one_of_invertible this.le
-        (invertibleOfNonzero (leadingCoeff_ne_zero.mpr (by grind)))))
-  linarith [W.twoTorsionPolynomial_discr, Cubic.discr_nonneg_of_splits four_ne_zero this]
-
-/- ## The three real roots when Δ > 0 -/
-
-lemma toPoly_twoTorsionPolynomial_eq_X_sub_C_e₁_mul : W.twoTorsionPolynomial.toPoly = (X - C W.e₁) *
-      (C 4 * X ^ 2 + C (W.b₂ + 4 * W.e₁) * X + C (2 * W.b₄ + W.b₂ * W.e₁ + 4 * W.e₁ ^ 2)) := by
-  refine Polynomial.funext fun x ↦ ?_
-  simp only [eval_toPoly_twoTorsionPolynomial, eval_mul, eval_sub, eval_add, eval_X, eval_C,
-    eval_pow]
-  grind [(W.eval_toPoly_twoTorsionPolynomial W.e₁).symm.trans W.isRoot_e₁]
-
-lemma sixteen_mul_Δ_eq_sq_mul : 16 * W.Δ =
-    (4 * W.e₁ ^ 2 + (W.b₂ + 4 * W.e₁) * W.e₁ + (2 * W.b₄ + W.b₂ * W.e₁ + 4 * W.e₁ ^ 2)) ^ 2 *
-      ((W.b₂ + 4 * W.e₁) ^ 2 - 16 * (2 * W.b₄ + W.b₂ * W.e₁ + 4 * W.e₁ ^ 2)) := by
-  have := (W.eval_toPoly_twoTorsionPolynomial W.e₁).symm.trans W.isRoot_e₁
-  have : W.b₆ = -(4 * W.e₁ ^ 3 + W.b₂ * W.e₁ ^ 2 + 2 * W.b₄ * W.e₁) := by linarith
-  rw [← W.twoTorsionPolynomial_discr, twoTorsionPolynomial, Cubic.discr, this]
-  ring
-
-lemma exists_three_roots_of_pos (h : 0 < W.Δ) : ∃ e₂ e₃ : ℝ, e₃ < e₂ ∧ e₂ < W.e₁ ∧
-    W.twoTorsionPolynomial.toPoly = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃))) := by
-  have hid := W.sixteen_mul_Δ_eq_sq_mul
-  set q₁ := W.b₂ + 4 * W.e₁ with hq₁
-  set q₀ := 2 * W.b₄ + W.b₂ * W.e₁ + 4 * W.e₁ ^ 2 with hq₀
-  set s := √(q₁ ^ 2 - 16 * q₀)
-  have hdisc : 0 < q₁ ^ 2 - 16 * q₀ := by
-    by_contra! hle
-    grind [mul_nonpos_of_nonneg_of_nonpos (sq_nonneg (4 * W.e₁ ^ 2 + q₁ * W.e₁ + q₀)) hle]
-  have hQ : C 4 * X ^ 2 + C q₁ * X + C q₀ =
-      C 4 * ((X - C ((-q₁ + s) / 8)) * (X - C ((-q₁ - s) / 8))) := by
-    refine Polynomial.funext fun x ↦ ?_
-    simp only [eval_mul, eval_sub, eval_add, eval_X, eval_C, eval_pow]
-    grind
-  refine ⟨(-q₁ + s) / 8, (-q₁ - s) / 8, by linarith [Real.sqrt_pos.mpr hdisc], ?_, ?_⟩
-  · have : 4 * W.e₁ ^ 2 + q₁ * W.e₁ + q₀ ≠ 0 := fun _ ↦ by grind
-    exact (W.le_e₁_of_isRoot
-      (by simp [IsRoot, W.toPoly_twoTorsionPolynomial_eq_X_sub_C_e₁_mul]; grind)).lt_of_ne
-      fun heq ↦ this (by grind [congrArg (eval W.e₁) hQ])
-  · grind [W.toPoly_twoTorsionPolynomial_eq_X_sub_C_e₁_mul]
-
 variable {e₂ e₃ : ℝ}
-
-lemma eval_toPoly_twoTorsionPolynomial_of_factor
-    (hF : W.twoTorsionPolynomial.toPoly = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃))))
-    (x : ℝ) : W.twoTorsionPolynomial.toPoly.eval x = 4 * (x - W.e₁) * (x - e₂) * (x - e₃) := by
-  grind [eval_mul, eval_sub, eval_X, eval_C]
 
 /- ## The integrand -/
 
 /-- The density $|\omega| / dx = 1 / \sqrt{4x^3 + b_2 x^2 + 2 b_4 x + b_6}$ of the invariant
 differential on either branch of the real locus, as a function on $\mathbb{R}$, with the junk value
 $0$ where the cubic is not positive. -/
-def realPeriodIntegrand (x : ℝ) : ℝ := (√(W.twoTorsionPolynomial.toPoly.eval x))⁻¹
+def realPeriodIntegrand (x : ℝ) : ℝ := (√(W.Ψ₂Sq.eval x))⁻¹
 
 lemma realPeriodIntegrand_nonneg (x : ℝ) : 0 ≤ W.realPeriodIntegrand x :=
   inv_nonneg.mpr (Real.sqrt_nonneg _)
 
 lemma realPeriodIntegrand_pos {x : ℝ} (hx : W.e₁ < x) : 0 < W.realPeriodIntegrand x :=
-  inv_pos.mpr (Real.sqrt_pos.mpr (W.eval_toPoly_twoTorsionPolynomial_pos hx))
+  inv_pos.mpr (Real.sqrt_pos.mpr (W.eval_Ψ₂Sq_pos hx))
 
-lemma realPeriodIntegrand_eq_zero {x : ℝ} (hx : W.twoTorsionPolynomial.toPoly.eval x ≤ 0) :
+lemma realPeriodIntegrand_eq_zero {x : ℝ} (hx : W.Ψ₂Sq.eval x ≤ 0) :
     W.realPeriodIntegrand x = 0 := by
   rw [realPeriodIntegrand, Real.sqrt_eq_zero_of_nonpos hx, inv_zero]
 
 lemma realPeriodIntegrand_eq_zero_of_le_e₁ (h : W.Δ < 0) {x : ℝ} (hx : x ≤ W.e₁) :
     W.realPeriodIntegrand x = 0 :=
-  W.realPeriodIntegrand_eq_zero <| W.eval_toPoly_twoTorsionPolynomial_nonpos fun _ hr ↦
+  W.realPeriodIntegrand_eq_zero <| W.eval_Ψ₂Sq_nonpos fun _ hr ↦
     W.eq_e₁_of_isRoot_of_neg h hr ▸ hx
 
 lemma realPeriodIntegrand_eq_zero_of_factor (h₃₂ : e₃ < e₂) (h₂₁ : e₂ < W.e₁)
-    (hF : W.twoTorsionPolynomial.toPoly = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃))))
+    (hF : W.Ψ₂Sq = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃))))
     {x : ℝ} (hx : x ≤ W.e₁) (hx' : x ∉ Ioo e₃ e₂) : W.realPeriodIntegrand x = 0 := by
   apply W.realPeriodIntegrand_eq_zero
-  rw [W.eval_toPoly_twoTorsionPolynomial_of_factor hF]
+  rw [W.eval_Ψ₂Sq_of_factor hF]
   rcases not_and_or.mp hx' with h | h <;> rw [not_lt] at h
   · nlinarith [mul_nonneg (mul_nonneg (show 0 ≤ W.e₁ - x by linarith)
       (show 0 ≤ e₂ - x by linarith)) (show 0 ≤ e₃ - x by linarith)]
@@ -237,22 +124,12 @@ lemma realPeriodIntegrand_eq_zero_of_factor (h₃₂ : e₃ < e₂) (h₂₁ : e
       (show 0 ≤ x - e₂ by linarith)) (show 0 ≤ x - e₃ by linarith)]
 
 lemma measurable_realPeriodIntegrand : Measurable W.realPeriodIntegrand :=
-  (Real.continuous_sqrt.comp W.twoTorsionPolynomial.toPoly.continuous).measurable.inv
+  (Real.continuous_sqrt.comp W.Ψ₂Sq.continuous).measurable.inv
 
 /- ## Integrability on the identity component -/
 
-lemma eventually_pow_three_le_eval_toPoly_twoTorsionPolynomial :
-    ∀ᶠ x in atTop, x ^ 3 ≤ W.twoTorsionPolynomial.toPoly.eval x := by
-  have h := W.twoTorsionPolynomial.toPoly.isEquivalent_atTop_lead.isLittleO.def
-    (by norm_num : (0 : ℝ) < 1 / 2)
-  simp only [W.natDegree_toPoly_twoTorsionPolynomial,
-    W.leadingCoeff_toPoly_twoTorsionPolynomial, Pi.sub_apply, Real.norm_eq_abs] at h
-  filter_upwards [h, eventually_ge_atTop (0 : ℝ)] with x hx hx0
-  rw [abs_of_nonneg (by positivity : (0 : ℝ) ≤ 4 * x ^ 3)] at hx
-  linarith [(abs_le.mp hx).1, pow_nonneg hx0 3]
-
 lemma integrableOn_realPeriodIntegrand_Ioi {c : ℝ} (hc : 0 < c)
-    (h : ∀ x, c ≤ x → x ^ 3 ≤ W.twoTorsionPolynomial.toPoly.eval x) :
+    (h : ∀ x, c ≤ x → x ^ 3 ≤ W.Ψ₂Sq.eval x) :
     IntegrableOn W.realPeriodIntegrand (Ioi c) := by
   refine (integrableOn_Ioi_rpow_of_lt (by norm_num : (-3 / 2 : ℝ) < -1) hc).mono'
     W.measurable_realPeriodIntegrand.aestronglyMeasurable ?_
@@ -266,7 +143,7 @@ lemma integrableOn_realPeriodIntegrand_Ioi {c : ℝ} (hc : 0 < c)
 
 lemma integrableOn_realPeriodIntegrand_Ioc [W.IsElliptic] {c : ℝ} (hc : W.e₁ ≤ c) :
     IntegrableOn W.realPeriodIntegrand (Ioc W.e₁ c) := by
-  obtain ⟨Q, hQ, hQpos⟩ := W.exists_toPoly_twoTorsionPolynomial_eq_X_sub_C_mul
+  obtain ⟨Q, hQ, hQpos⟩ := W.exists_Ψ₂Sq_eq_X_sub_C_mul
   have hr : IntegrableOn (fun x : ℝ ↦ (x - W.e₁) ^ (-(1 / 2) : ℝ)) (Icc W.e₁ c) := by
     refine (intervalIntegrable_iff_integrableOn_Icc_of_le hc).mp ?_
     simpa only [zero_add, sub_add_cancel] using
@@ -281,7 +158,7 @@ lemma integrableOn_realPeriodIntegrand_Ioc [W.IsElliptic] {c : ℝ} (hc : W.e₁
 
 lemma integrableOn_realPeriodIntegrand [W.IsElliptic] :
     IntegrableOn W.realPeriodIntegrand (Ioi W.e₁) := by
-  obtain ⟨_, hR₀⟩ := eventually_atTop.mp W.eventually_pow_three_le_eval_toPoly_twoTorsionPolynomial
+  obtain ⟨_, hR₀⟩ := eventually_atTop.mp W.eventually_pow_three_le_eval_Ψ₂Sq
   rw [← Ioc_union_Ioi_eq_Ioi (le_max_of_le_right (le_max_left _ _))]
   exact (W.integrableOn_realPeriodIntegrand_Ioc (le_max_of_le_right (le_max_left _ _))).union
     (W.integrableOn_realPeriodIntegrand_Ioi (zero_lt_one.trans_le (le_max_of_le_right
@@ -357,22 +234,22 @@ end ovalMap
 /- ## The bounded component -/
 
 lemma setIntegral_realPeriodIntegrand_Ioo (h₃₂ : e₃ < e₂) (h₂₁ : e₂ < W.e₁)
-    (hF : W.twoTorsionPolynomial.toPoly = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃)))) :
+    (hF : W.Ψ₂Sq = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃)))) :
     ∫ x in Ioo e₃ e₂, W.realPeriodIntegrand x = ∫ x in Ioi W.e₁, W.realPeriodIntegrand x := by
   rw [← image_ovalMap_Ioi h₃₂ h₂₁, integral_image_eq_integral_abs_deriv_smul measurableSet_Ioi
     (fun x hx ↦ (hasDerivAt_ovalMap (h₂₁.trans hx).ne').hasDerivWithinAt) (injOn_ovalMap h₃₂ h₂₁)]
   refine setIntegral_congr_fun measurableSet_Ioi fun x hx ↦ ?_
-  simpa [smul_eq_mul, realPeriodIntegrand, W.eval_toPoly_twoTorsionPolynomial_of_factor hF] using
+  simpa [smul_eq_mul, realPeriodIntegrand, W.eval_Ψ₂Sq_of_factor hF] using
     abs_mul_inv_sqrt_ovalMap h₃₂ h₂₁ hx
 
 lemma integrableOn_realPeriodIntegrand_Ioo [W.IsElliptic] (h₃₂ : e₃ < e₂) (h₂₁ : e₂ < W.e₁)
-    (hF : W.twoTorsionPolynomial.toPoly = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃)))) :
+    (hF : W.Ψ₂Sq = C 4 * ((X - C W.e₁) * ((X - C e₂) * (X - C e₃)))) :
     IntegrableOn W.realPeriodIntegrand (Ioo e₃ e₂) := by
   rw [← image_ovalMap_Ioi h₃₂ h₂₁, integrableOn_image_iff_integrableOn_abs_deriv_smul
     measurableSet_Ioi (fun x hx ↦ (hasDerivAt_ovalMap (h₂₁.trans hx).ne').hasDerivWithinAt)
     (injOn_ovalMap h₃₂ h₂₁)]
   refine W.integrableOn_realPeriodIntegrand.congr_fun (fun x hx ↦ ?_) measurableSet_Ioi
-  simpa [smul_eq_mul, realPeriodIntegrand, W.eval_toPoly_twoTorsionPolynomial_of_factor hF] using
+  simpa [smul_eq_mul, realPeriodIntegrand, W.eval_Ψ₂Sq_of_factor hF] using
     (abs_mul_inv_sqrt_ovalMap h₃₂ h₂₁ hx).symm
 
 /- ## Integrability on the whole line -/
