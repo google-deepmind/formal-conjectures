@@ -106,6 +106,7 @@ public import FormalConjecturesForMathlib.Computability.Complexity
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.DecisionProblems
 public import FormalConjecturesForMathlib.Computability.MatrixGraph.Basic
+public import FormalConjecturesForMathlib.Computability.MatrixGraphProblems
 public import FormalConjecturesForMathlib.Computability.PromiseProblems
 public import FormalConjecturesForMathlib.Computability.SearchProblems
 public import FormalConjecturesForMathlib.Computability.TimeClasses
