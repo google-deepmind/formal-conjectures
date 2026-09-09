@@ -40,39 +40,7 @@ fi
 echo "==> Downloading data from live site ($LIVE_URL) ..."
 mkdir -p data
 
-curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/fc_live_conjectures.json
-
-# Use Python for JSON conversion (always available)
-python3 -c "
-import json, sys
-
-with open('/tmp/fc_live_conjectures.json') as f:
-    data = json.load(f)
-
-# Convert processed conjectures back to raw extract_names format
-problems = []
-for c in data.get('conjectures', []):
-    subjects = c.get('subjects', [])
-    problems.append({
-        'theorem': c['theorem'],
-        'module': c['module'],
-        'category': c['category'],
-        'subjects': [s['code'] if isinstance(s, dict) else s for s in subjects],
-        'formalProofKind': c.get('formalProofKind'),
-        'formalProofLink': c.get('formalProofLink'),
-        'hasSorryFreeProof': False,
-    })
-
-with open('data/conjectures.json', 'w') as f:
-    json.dump({'problems': problems}, f)
-
-# Extract Verso fragments if present
-if 'versoFragments' in data:
-    with open('data/verso-fragments.json', 'w') as f:
-        json.dump(data['versoFragments'], f)
-
-print(f'   {len(problems)} conjectures converted.')
-"
+python3 ../scripts/download_catalog.py --out data
 
 echo "==> Building website ..."
 node build.js
