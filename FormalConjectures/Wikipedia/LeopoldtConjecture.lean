@@ -49,6 +49,9 @@ with `LeopoldtConjecture.All` chaining them together. The supporting mathematics
 * `leopoldt_conjecture.variants.padicRegulator_ne_zero`: $R_p(K) \neq 0$ for totally real $K$.
 * `leopoldt_conjecture.variants.zpRank`: Wikipedia's form,
   $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1} = r_1 + r_2 - 1$.
+* `Mihailescu.LeopoldtConjecture`: Mihăilescu's form, in which the *Leopoldt defect*
+  $\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) - \mathbb{Z}_p\text{-rk}(\overline{E})$
+  vanishes, $\overline{E}$ being the closure of the global units in the *semilocal* units.
 
 ## The dictionary
 
@@ -65,6 +68,25 @@ with `LeopoldtConjecture.All` chaining them together. The supporting mathematics
   $\mathbb{Z}_p$-power as a limit of integer powers using `PadicInt.appr`;
 * the matrix $(\log_p \sigma(\varepsilon_i))$ is `logMatrix K p`, and Washington's regulator
   $R_p(K)$ is `padicRegulator K p σ₀ e`.
+
+Mihăilescu's form uses none of these, so it carries its own dictionary. [Mihăilescu, §1.1] writes
+$E = E(K) = \mathcal{O}(K)^\times$ for the units of $K$ and
+$P = \{\wp \subset \mathcal{O}(K) : (p) \subset \wp\}$ for the set of primes above $p$; puts
+$K_p = \prod_{\wp \in P} K_\wp = K \otimes_\mathbb{Q} \mathbb{Q}_p$, with diagonal embedding
+$\iota : K \to K_p$ and $U \subset K_p^\times$ "the group of units, thus the product of local
+units at the same completions"; and defines the $p$-adic closure of the global units and the
+*Leopoldt defect* as
+$$\overline{E} = \overline{\iota(E)} = \bigcap_{n > 0} \iota(E) \cdot U^{p^n}, \qquad
+\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) - \mathbb{Z}_p\text{-rk}(\overline{E}).$$
+Note that this works inside the full semilocal unit group $U$, not the principal units $U_1$.
+
+* $P$ is `Mihailescu.PrimesOver p K` and $U$ is `Mihailescu.SemilocalUnits p K`;
+* $\iota$ is `Mihailescu.diagonalUnits p K` and $\overline{E}$ is `Mihailescu.unitClosure p K`,
+  the intersection written exactly as in the source;
+* $\mathbb{Z}_p\text{-rk}$ is `Mihailescu.zpRankBelow`, which measures the rank from below by
+  continuous injections of $\mathbb{Z}_p^n$ rather than with `Module.finrank`;
+* $\mathcal{D}_L(K)$ is `Mihailescu.defect p K`, and $\mathcal{D}_L(K) = 0$ is
+  `Mihailescu.LeopoldtConjecture p K`.
 
 *References:*
 - [Wikipedia, *Leopoldt's conjecture*](https://en.wikipedia.org/wiki/Leopoldt%27s_conjecture):
@@ -464,3 +486,81 @@ theorem leopoldt_conjecture.variants.zpRank : Module.finrank ℤ_[p] (closureE�
   sorry
 
 end Leopoldt
+
+/- ## Mihăilescu's form -/
+
+namespace Leopoldt.Mihailescu
+
+variable (p : ℕ) [Fact p.Prime] (K : Type*) [Field K] [NumberField K]
+
+/-- The set `P = {℘ ⊂ 𝓞(K) : (p) ⊂ ℘}` of primes of `𝓞 K` above `p`. -/
+abbrev PrimesOver := {v : HeightOneSpectrum (𝓞 K) // (p : 𝓞 K) ∈ v.asIdeal}
+
+instance : Finite (PrimesOver p K) := by
+  have hpne : (p : 𝓞 K) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out (p := p.Prime)).ne_zero
+  have hp0 : Ideal.span {(p : 𝓞 K)} ≠ 0 := by
+    simpa [Ideal.span_singleton_eq_bot] using hpne
+  apply Set.Finite.to_subtype
+  refine (Ideal.finite_factors (R := 𝓞 K) hp0).subset ?_
+  intro v hv
+  exact Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv)
+
+/-- `U`: the group of semilocal units at `p`, that is the product `∏_{℘ | p} 𝓞_℘^×` of the
+local units at the primes above `p`. -/
+abbrev SemilocalUnits := ∀ v : PrimesOver p K, (v.1.adicCompletionIntegers K)ˣ
+
+/-- `ι : E(K) → U`, the diagonal embedding of the global units into the semilocal units. -/
+noncomputable def diagonalUnits : (𝓞 K)ˣ →* SemilocalUnits p K :=
+  MonoidHom.pi fun v => Units.map (algebraMap (𝓞 K) (v.1.adicCompletionIntegers K)).toMonoidHom
+
+/-- `Ē = ⋂_{n > 0} ι(E) · U^{p^n}`, the `p`-adic closure of the image of the global units
+inside the semilocal units, exactly as the intersection is written in the source. -/
+noncomputable def unitClosure : Subgroup (SemilocalUnits p K) :=
+  ⨅ n : ℕ, ((diagonalUnits p K).range ⊔ (powMonoidHom (p ^ (n + 1))).range)
+
+/-- The free `ℤ_p`-rank of a subgroup `H` of a commutative topological group, computed as the
+largest `n ≤ bound` for which `ℤ_p^n` admits a continuous injective homomorphism into `H`.
+
+For a closed subgroup of the semilocal units this is the usual free `ℤ_p`-rank: such a subgroup
+is isomorphic to `Δ × ℤ_p^d` with `Δ` finite, and continuous injections from `ℤ_p^n` exist
+exactly for `n ≤ d`.  Continuity is essential — as abstract groups `ℤ_p^n` embeds into `ℤ_p`
+for every `n`; and since `ℤ_p^n` is compact and the target Hausdorff, a continuous injection is
+automatically a closed embedding.
+
+The `bound` is carried only so that the supremum is visibly taken over a bounded set and never
+falls back on the junk value of `sSup` on an unbounded set of naturals.  Any `bound` at least as
+large as the true rank yields the true rank. -/
+noncomputable def zpRankBelow {G : Type*} [CommGroup G] [TopologicalSpace G]
+    (bound : ℕ) (H : Subgroup G) : ℕ :=
+  sSup {n : ℕ | n ≤ bound ∧ ∃ f : Multiplicative (Fin n → ℤ_[p]) →* G,
+    Function.Injective f ∧ Continuous f ∧ ∀ x, f x ∈ H}
+
+/-- The **Leopoldt defect** `𝒟_L(K) = ℤ-rk(E) - ℤ_p-rk(Ē)` of `K` at `p`.
+
+`ℤ-rk(E) = r₁ + r₂ - 1` is Dirichlet's unit rank, which Mathlib provides as
+`NumberField.Units.rank`.  The `ℤ_p`-rank of `Ē` is bounded by that of the whole semilocal unit
+group `U`, which is `[K : ℚ]`, so taking `[K : ℚ]` as the bound never constrains it. -/
+noncomputable def defect : ℕ :=
+  Units.rank K - zpRankBelow p (Module.finrank ℚ K) (unitClosure p K)
+
+/-- `defect` unfolded. Stated here so that downstream files can rewrite with it without
+re-elaborating the instance arguments of `zpRankBelow`. -/
+@[category API, AMS 11]
+theorem defect_eq_sub :
+    defect p K = Units.rank K - zpRankBelow p (Module.finrank ℚ K) (unitClosure p K) := rfl
+
+/--
+**Leopoldt's conjecture, Mihăilescu's form.** Let $K$ be a number field and $p$ a prime. The
+Leopoldt defect $\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) -
+\mathbb{Z}_p\text{-rk}(\overline{E})$ of [Mihăilescu, §1.1] vanishes.
+
+It is equivalent to the $\mathbb{Z}_p$-rank form by
+`Leopoldt.Mihailescu.leopoldtConjecture_iff_finrank`, and so to every other formulation above.
+-/
+def LeopoldtConjecture : Prop := defect p K = 0
+
+/-- `LeopoldtConjecture` unfolded. -/
+@[category API, AMS 11]
+theorem leopoldtConjecture_iff_defect : LeopoldtConjecture p K ↔ defect p K = 0 := Iff.rfl
+
+end Leopoldt.Mihailescu

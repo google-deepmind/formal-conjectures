@@ -39,6 +39,8 @@ pro-`p` group: `u ^ (p ^ k) → 1`. Hence a principal unit `x` has `p`-adic powe
 * `OneUnits.zpPow_add`, `OneUnits.zpPow_mul`, `OneUnits.mul_zpPow`: the exponent rules.
 * `OneUnits.norm_zpPow_sub_zpPow_le`, `OneUnits.continuous_zpPow`: `x ^ a` is `1`-Lipschitz in
   `x` and continuous in `a`.
+* `OneUnits.norm_pow_pow_sub_one_le`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power map
+  contracts towards `1` by the factor `max c ‖n‖` at each step, uniformly in `u`.
 * `OneUnits.natCast_smul`, `OneUnits.intCast_smul`: integer `p`-adic powers are ordinary powers.
 * `OneUnits.tendsto_appr_nsmul`: `a • u = lim (a.appr n) • u` on the module side.
 * `AddSubgroup.smul_mem_of_isClosed`: closed subgroups are `ℤ_[p]`-submodules.
@@ -107,6 +109,46 @@ theorem norm_pow_sub_pow_le {x y : K} (hx : ‖x‖ ≤ 1) (hy : ‖y‖ ≤ 1) 
 /-- `norm_pow_sub_pow_le` at `y = 1`. -/
 theorem norm_pow_sub_one_le {x : K} (hx : ‖x‖ ≤ 1) (n : ℕ) : ‖x ^ n - 1‖ ≤ ‖x - 1‖ := by
   simpa using norm_pow_sub_pow_le hx (norm_one (α := K)).le n
+
+/-- A sharper form of `norm_pow_sub_one_le`: `u ^ n - 1 = (u - 1) (u ^ (n - 1) + ⋯ + 1)`, and the
+second factor is `n` plus a sum of terms `u ^ j - 1` of norm at most `‖u - 1‖`. -/
+theorem norm_pow_sub_one_le_mul_max (n : ℕ) {u : K} (hu : ‖u - 1‖ ≤ 1) :
+    ‖u ^ n - 1‖ ≤ ‖u - 1‖ * max ‖u - 1‖ ‖(n : K)‖ := by
+  have hu1 : ‖u‖ ≤ 1 := by
+    rw [← sub_add_cancel u 1]
+    exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu (by simp))
+  have hgeom : (∑ i ∈ Finset.range n, u ^ i) * (u - 1) = u ^ n - 1 := by
+    simpa using (Commute.one_right u).geom_sum₂_mul n
+  have hsum : (∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : K) = ∑ i ∈ Finset.range n, u ^ i := by
+    rw [Finset.sum_sub_distrib]
+    simp
+  calc ‖u ^ n - 1‖ = ‖(∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : K)‖ * ‖u - 1‖ := by
+        rw [← norm_mul, hsum, hgeom]
+    _ ≤ max ‖u - 1‖ ‖(n : K)‖ * ‖u - 1‖ := by
+        refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
+        refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max ?_ le_rfl)
+        exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
+          fun i _ ↦ norm_pow_sub_one_le hu1 i
+    _ = ‖u - 1‖ * max ‖u - 1‖ ‖(n : K)‖ := mul_comm _ _
+
+/-- Iterating `norm_pow_sub_one_le_mul_max`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power
+map contracts towards `1` by the factor `max c ‖n‖` at each step. -/
+theorem norm_pow_pow_sub_one_le (n k : ℕ) {c : ℝ} (hc : c ≤ 1) {u : K} (hu : ‖u - 1‖ ≤ c) :
+    ‖u ^ n ^ k - 1‖ ≤ max c ‖(n : K)‖ ^ k * c := by
+  have hc0 : 0 ≤ c := (norm_nonneg _).trans hu
+  have hlam : max c ‖(n : K)‖ ≤ 1 := max_le hc (IsUltrametricDist.norm_natCast_le_one K n)
+  induction k with
+  | zero => simpa using hu
+  | succ k ih =>
+    have hle : max c ‖(n : K)‖ ^ k * c ≤ c :=
+      mul_le_of_le_one_left hc0 (pow_le_one₀ (le_max_of_le_left hc0) hlam)
+    calc ‖u ^ n ^ (k + 1) - 1‖ = ‖(u ^ n ^ k) ^ n - 1‖ := by rw [pow_succ, pow_mul]
+      _ ≤ ‖u ^ n ^ k - 1‖ * max ‖u ^ n ^ k - 1‖ ‖(n : K)‖ :=
+          norm_pow_sub_one_le_mul_max n (ih.trans (hle.trans hc))
+      _ ≤ max c ‖(n : K)‖ ^ k * c * max c ‖(n : K)‖ :=
+          mul_le_mul ih (max_le_max (ih.trans hle) le_rfl)
+            (le_max_of_le_left (norm_nonneg _)) (by positivity)
+      _ = max c ‖(n : K)‖ ^ (k + 1) * c := by ring
 
 /-- Integer powers of a `1`-unit stay in the closed ball of radius `‖x - 1‖` around `1`. The
 negative exponents use `‖x⁻¹ - 1‖ = ‖x - 1‖` [Con, p. 27]. -/

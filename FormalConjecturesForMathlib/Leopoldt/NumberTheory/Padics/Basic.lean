@@ -19,9 +19,9 @@ public import Mathlib
 /-!
 # `p`-adic integers: vanishing and approximation
 
-Two small facts about `ℤ_[p]` used by the Leopoldt development: an element in every power of the
-maximal ideal is zero, and the integer approximants `PadicInt.appr` converge to their element,
-measured in `ℂ_[p]`.
+Three small facts about `ℤ_[p]` used by the Leopoldt development: an element in every power of
+the maximal ideal is zero; the integer approximants `PadicInt.appr` converge to their element,
+measured in `ℂ_[p]`; and the approximation `a = a.appr n + pⁿ c` is exact.
 
 Staging area: kept in the `Leopoldt` namespace. Narrow the imports and pick final namespaces
 before upstreaming.
@@ -30,6 +30,13 @@ before upstreaming.
 @[expose] public section
 
 open Filter
+
+/-- `a = a.appr n + pⁿ c` for some `c ∈ ℤ_p`: the `n`-th integer approximation of `a` is exact
+modulo `pⁿ` (`PadicInt.appr_spec`). -/
+theorem PadicInt.exists_eq_appr_add_pow_mul {p : ℕ} [Fact p.Prime] (a : ℤ_[p]) (n : ℕ) :
+    ∃ c : ℤ_[p], a = a.appr n + (p : ℤ_[p]) ^ n * c := by
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.1 (PadicInt.appr_spec n a)
+  exact ⟨c, by linear_combination hc⟩
 
 namespace Leopoldt
 

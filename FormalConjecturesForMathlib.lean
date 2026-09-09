@@ -142,6 +142,8 @@ public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.Basic
 public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.ExpLog
 public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.OneUnits
 public import FormalConjecturesForMathlib.Leopoldt.RingTheory.DedekindDomain.AdicCompletion
+public import FormalConjecturesForMathlib.Leopoldt.RingTheory.DedekindDomain.LocalUnits
+public import FormalConjecturesForMathlib.Leopoldt.RingTheory.DedekindDomain.ResidueField
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup

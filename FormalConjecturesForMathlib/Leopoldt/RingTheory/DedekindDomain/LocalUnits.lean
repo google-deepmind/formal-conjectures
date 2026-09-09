@@ -16,8 +16,9 @@ limitations under the License.
 module
 
 public import Mathlib
+public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.Basic
 public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.OneUnits
-public import FormalConjecturesTest.LeopoldtCMProof.ResidueField
+public import FormalConjecturesForMathlib.Leopoldt.RingTheory.DedekindDomain.ResidueField
 
 /-!
 # Local units at a prime of a number field
@@ -45,12 +46,11 @@ and proves the facts about them that the comparison of Mihăilescu's `p`-adic cl
 * `exists_forall_pow_pow_mem_nhds_one`: when `‖n‖ < 1`, the `nᵏ`-th powers of *all* principal
   units eventually lie in any given neighbourhood of `1` — the convergence is uniform in the
   unit, which pointwise pro-`p` convergence does not give. This rests on the contraction
-  estimate `‖u ^ n - 1‖ ≤ ‖u - 1‖ · max ‖u - 1‖ ‖n‖` (`norm_pow_sub_one_le_mul_max`) and on
-  the norm of `K_v` being discrete (`exists_lt_one_forall_norm_le`).
-* `PadicInt.exists_eq_appr_add_pow_mul`: the decomposition `a = a.appr n + pⁿ c` of a `p`-adic
-  integer, used to split a `p`-adic power into an integer power and a `pⁿ`-th power.
+  estimate `OneUnits.norm_pow_pow_sub_one_le`, which holds in any ultrametric normed field, and
+  on the norm of `K_v` being discrete (`exists_lt_one_forall_norm_le`).
 
-The contraction estimates hold in any ultrametric normed field and need no completeness.
+Staging area: kept in the `Leopoldt` namespace. Narrow the imports and pick final namespaces
+before upstreaming.
 -/
 
 @[expose] public section
@@ -59,60 +59,7 @@ open Filter IsDedekindDomain NumberField Topology
 
 open scoped NumberField Valued WithZero
 
-/-- `a = a.appr n + pⁿ c` for some `c ∈ ℤ_p`: the `n`-th integer approximation of `a` is exact
-modulo `pⁿ` (`PadicInt.appr_spec`). -/
-theorem PadicInt.exists_eq_appr_add_pow_mul {p : ℕ} [Fact p.Prime] (a : ℤ_[p]) (n : ℕ) :
-    ∃ c : ℤ_[p], a = a.appr n + (p : ℤ_[p]) ^ n * c := by
-  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.1 (PadicInt.appr_spec n a)
-  exact ⟨c, by linear_combination hc⟩
-
 namespace Leopoldt
-
-section Contraction
-
-variable {L : Type*} [NontriviallyNormedField L] [IsUltrametricDist L]
-
-/-- `u ^ n - 1 = (u - 1) (u ^ (n - 1) + ⋯ + 1)`, and the second factor is `n` plus a sum of terms
-`u ^ j - 1` of norm at most `‖u - 1‖`. -/
-theorem norm_pow_sub_one_le_mul_max (n : ℕ) {u : L} (hu : ‖u - 1‖ ≤ 1) :
-    ‖u ^ n - 1‖ ≤ ‖u - 1‖ * max ‖u - 1‖ ‖(n : L)‖ := by
-  have hu1 : ‖u‖ ≤ 1 := by
-    rw [← sub_add_cancel u 1]
-    exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu (by simp))
-  have hgeom : (∑ i ∈ Finset.range n, u ^ i) * (u - 1) = u ^ n - 1 := by
-    simpa using (Commute.one_right u).geom_sum₂_mul n
-  have hsum : (∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : L) = ∑ i ∈ Finset.range n, u ^ i := by
-    rw [Finset.sum_sub_distrib]
-    simp
-  calc ‖u ^ n - 1‖ = ‖(∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : L)‖ * ‖u - 1‖ := by
-        rw [← norm_mul, hsum, hgeom]
-    _ ≤ max ‖u - 1‖ ‖(n : L)‖ * ‖u - 1‖ := by
-        refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
-        refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max ?_ le_rfl)
-        exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
-          fun i _ ↦ OneUnits.norm_pow_sub_one_le hu1 i
-    _ = ‖u - 1‖ * max ‖u - 1‖ ‖(n : L)‖ := mul_comm _ _
-
-/-- Iterating `norm_pow_sub_one_le_mul_max`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power
-map contracts towards `1` by the factor `max c ‖n‖` at each step. -/
-theorem norm_pow_pow_sub_one_le (n k : ℕ) {c : ℝ} (hc : c ≤ 1) {u : L} (hu : ‖u - 1‖ ≤ c) :
-    ‖u ^ n ^ k - 1‖ ≤ max c ‖(n : L)‖ ^ k * c := by
-  have hc0 : 0 ≤ c := (norm_nonneg _).trans hu
-  have hlam : max c ‖(n : L)‖ ≤ 1 := max_le hc (IsUltrametricDist.norm_natCast_le_one L n)
-  induction k with
-  | zero => simpa using hu
-  | succ k ih =>
-    have hle : max c ‖(n : L)‖ ^ k * c ≤ c :=
-      mul_le_of_le_one_left hc0 (pow_le_one₀ (le_max_of_le_left hc0) hlam)
-    calc ‖u ^ n ^ (k + 1) - 1‖ = ‖(u ^ n ^ k) ^ n - 1‖ := by rw [pow_succ, pow_mul]
-      _ ≤ ‖u ^ n ^ k - 1‖ * max ‖u ^ n ^ k - 1‖ ‖(n : L)‖ :=
-          norm_pow_sub_one_le_mul_max n (ih.trans (hle.trans hc))
-      _ ≤ max c ‖(n : L)‖ ^ k * c * max c ‖(n : L)‖ :=
-          mul_le_mul ih (max_le_max (ih.trans hle) le_rfl)
-            (le_max_of_le_left (norm_nonneg _)) (by positivity)
-      _ = max c ‖(n : L)‖ ^ (k + 1) * c := by ring
-
-end Contraction
 
 section AdicCompletion
 
@@ -150,7 +97,7 @@ theorem exists_forall_norm_pow_pow_sub_one_lt {n : ℕ} (hn : ‖(n : v.adicComp
       (max_lt hc1 hn)).mul_const c
   obtain ⟨k₀, hk₀⟩ := (hten.eventually (gt_mem_nhds hε)).exists_forall_of_atTop
   exact ⟨k₀, fun k hk x hx ↦
-    (norm_pow_pow_sub_one_le n k hc1.le (hc _ hx)).trans_lt (hk₀ k hk)⟩
+    (OneUnits.norm_pow_pow_sub_one_le n k hc1.le (hc _ hx)).trans_lt (hk₀ k hk)⟩
 
 /-- Topological form of `exists_forall_norm_pow_pow_sub_one_lt`: for every neighbourhood `s` of
 `1` in `K_v`, the `n ^ k`-th powers of *all* principal units eventually lie in `s`. -/
