@@ -6,14 +6,20 @@ Fixes:
 1. Adds KaTeX for LaTeX rendering in docstrings
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
-4. Adds a root index page that redirects to the website's module index
+4. Installs the shared Verso syntax theme
+5. Adds a root index page that redirects to the website's module index
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
 
 import os
-import re
+import shutil
 import sys
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
+HIGHLIGHT_STYLESHEET_SOURCE = os.path.join(SCRIPT_DIR, 'src', 'css', HIGHLIGHT_STYLESHEET)
+HIGHLIGHT_HEAD = f'<link rel="stylesheet" href="{HIGHLIGHT_STYLESHEET}">\n'
 
 KATEX_HEAD = '''
     <!-- KaTeX for LaTeX in docstrings -->
@@ -40,30 +46,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 def fix_html_file(path):
-    """Inject KaTeX into a Verso HTML file."""
+    """Install the syntax theme and KaTeX in a Verso HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
     modified = False
 
-    # Skip if KaTeX already present
-    if 'katex' in html.lower():
-        return False
-
-    # Add KaTeX CSS+JS before </head>
-    if '</head>' in html:
-        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+    # Add these independently: cached pages may already contain KaTeX.
+    if f'href="{HIGHLIGHT_STYLESHEET}"' not in html and '</head>' in html:
+        html = html.replace('</head>', HIGHLIGHT_HEAD + '  </head>')
         modified = True
 
-    # Add auto-render script before </body>
-    if '</body>' in html:
-        html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
+    # Add KaTeX CSS+JS before </head>
+    if 'katex' not in html.lower() and '</head>' in html:
+        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+        if '</body>' in html:
+            html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
         modified = True
 
     if modified:
         with open(path, 'w', encoding='utf-8') as f:
             f.write(html)
     return modified
+
+
+def install_highlight_stylesheet(literate_dir):
+    """Install the shared Verso theme."""
+    shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE,
+                    os.path.join(literate_dir, HIGHLIGHT_STYLESHEET))
 
 
 def create_stubs(literate_dir):
@@ -180,6 +190,9 @@ def main():
     # Fix code.css layout rules
     fix_code_css(literate_dir)
 
+    # Verso's <base> points to this root even on deeply nested source pages.
+    install_highlight_stylesheet(literate_dir)
+
     # Fix all HTML files
     count = 0
     for dirpath, _, filenames in os.walk(literate_dir):
@@ -189,7 +202,7 @@ def main():
                 if fix_html_file(path):
                     count += 1
 
-    print(f'  Injected KaTeX into {count} Verso HTML files.')
+    print(f'  Updated rendering assets in {count} Verso HTML files.')
 
     # Written last so that the redirect page is not treated as a module page.
     create_root_index(literate_dir)
