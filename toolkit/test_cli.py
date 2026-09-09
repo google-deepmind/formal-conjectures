@@ -14,6 +14,19 @@ from test_toolkit import ToolkitFixture
 
 
 class CLITests(ToolkitFixture):
+    def test_native_catalog_preferred_and_projection_fallback_only_on_404(self):
+        native={'schemaVersion':2,'problems':[]}
+        with patch.object(catalog,'user_cache',return_value=self.root/'native'),patch.object(catalog.urllib.request,'urlopen',return_value=io.BytesIO(json.dumps(native).encode())) as network:
+            self.assertEqual(catalog.load(None),native)
+            self.assertEqual(network.call_args.args[0],catalog.NATIVE_URL)
+        missing=catalog.urllib.error.HTTPError(catalog.NATIVE_URL,404,'missing',{},None)
+        with patch.object(catalog,'user_cache',return_value=self.root/'fallback'),patch.object(catalog.urllib.request,'urlopen',side_effect=[missing,io.BytesIO(b'{"conjectures":[]}')]):
+            self.assertEqual(catalog.load(None)['projection'],'website')
+        denied=catalog.urllib.error.HTTPError(catalog.NATIVE_URL,403,'denied',{},None)
+        with patch.object(catalog,'user_cache',return_value=self.root/'denied'),patch.object(catalog.urllib.request,'urlopen',side_effect=denied) as network:
+            with self.assertRaises(catalog.urllib.error.HTTPError):catalog.load(None)
+            self.assertEqual(network.call_count,1)
+
     def invoke(self,*args):
         out=io.StringIO();err=io.StringIO()
         with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):

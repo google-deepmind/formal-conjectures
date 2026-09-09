@@ -1,11 +1,13 @@
 """Consume the published native extraction without parsing Lean syntax."""
 import re
 import urllib.request
+import urllib.error
 from pathlib import Path
 from . import report as rr
 from .metadata import metadata_rows
 from .core import Failure, command, git, save, now, user_cache
 URL = 'https://google-deepmind.github.io/formal-conjectures/data/conjectures.json'
+NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/catalog.json'
 
 def load(root, path=None):
     cache = root/'.conjectures' if root else user_cache()
@@ -16,12 +18,20 @@ def load(root, path=None):
     else:
         if path:
             raise Failure('catalog_missing', 'Catalog file does not exist: '+str(path))
-        with urllib.request.urlopen(URL, timeout=30) as response:
+        url = NATIVE_URL
+        try:
+            response = urllib.request.urlopen(url, timeout=30)
+        except urllib.error.HTTPError as error:
+            if error.code != 404:
+                raise
+            url = URL
+            response = urllib.request.urlopen(url, timeout=30)
+        with response:
             raw = response.read(32*1024*1024+1)
         if len(raw)>32*1024*1024: raise Failure('invalid_catalog','Catalog too large')
         value = rr.parse(raw)
         save(cache/'catalog.json',value)
-        save(cache/'catalog-origin.json',{'url':URL,'retrieved_at':now(),'sha256':rr.digest(raw),
+        save(cache/'catalog-origin.json',{'url':url,'retrieved_at':now(),'sha256':rr.digest(raw),
              'applicability':'Published catalog; init resolves and checks the source commit separately.'})
     if 'conjectures' in value:
         # The live website projection omits statement text and proof-term observations.
