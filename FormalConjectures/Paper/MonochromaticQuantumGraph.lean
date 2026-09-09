@@ -70,6 +70,10 @@ coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
 
 * [Chandran2024] [Krenn–Gu conjecture for sparse graphs](https://arxiv.org/abs/2407.00303)
   by *N. Chandran, S. Gajjala, S. Illickan, M. Krenn*, MFCS 2024.
+
+* [Ki26] [A solver-free Lean 4 proof of the sharp bound $D \le N - 2$ for monochromatic quantum
+  graph equation systems over integral domains](https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/tree/6c5340384479dbb36129b2e0084449be2458cce2),
+  commit `6c534038`.
 -/
 
 open scoped Matrix
@@ -418,10 +422,13 @@ theorem eqSystem6_no_solution_d4 :
 
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+The sharp bound $D \le N - 2$ over an integral domain [Ki26] settles this: here $D = N - 1$. -/
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+"https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c5340384479dbb36129b2e0084449be2458cce2/lean/QuantumCR/FormalConjecturesWrappers.lean#L55-L62"]
 theorem eqSystem6_no_solution_d5 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℂ, EqSystemN 6 5 W := by
   sorry
 
@@ -515,10 +522,13 @@ theorem eqSystem10_no_solution_d8 :
   sorry
 
 /-- For $N = 10$ and $D = 9$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+The sharp bound $D \le N - 2$ over an integral domain [Ki26] settles this: here $D = N - 1$. -/
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+"https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c5340384479dbb36129b2e0084449be2458cce2/lean/QuantumCR/FormalConjecturesWrappers.lean#L73-L80"]
 theorem eqSystem10_no_solution_d9 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 9 ℂ, EqSystemN 10 9 W := by
   sorry
 
@@ -594,10 +604,13 @@ theorem eqSystem6_no_solution_d3_real :
   sorry
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+The sharp bound $D \le N - 2$ over an integral domain [Ki26] settles this: here $D = N - 1$. -/
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+"https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/blob/6c5340384479dbb36129b2e0084449be2458cce2/lean/QuantumCR/FormalConjecturesWrappers.lean#L64-L71"]
 theorem eqSystem6_no_solution_d5_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℝ, EqSystemN 6 5 W := by
   sorry
 
