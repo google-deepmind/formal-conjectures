@@ -17,6 +17,19 @@ PINS = {
  'nanoda': ('ammkrn/nanoda_lib','05055695879dfebb6628a67da88ceca6cd6b0421'),
 }
 
+def executor_ref(repository, revision):
+    """GitHub dispatch accepts named refs, not commit SHAs. Require a matching tag."""
+    raw=command(['git','ls-remote','--tags',f'https://github.com/{repository}.git']).decode()
+    refs=dict(line.split()[::-1] for line in raw.splitlines())
+    tags=[]
+    for ref,sha in refs.items():
+        if ref.endswith('^{}'):continue
+        if refs.get(ref+'^{}',sha)==revision:tags.append(ref.removeprefix('refs/tags/'))
+    if not tags:
+        raise Failure('executor_tag_required',
+            'GitHub requires a named ref. Tag the qualified executor commit and push the tag, then retry setup verify. No tag is created automatically.',4)
+    return sorted(tags,key=lambda name:(not name.startswith('toolkit-v'),name))[0]
+
 def public_repository(url):
     match = re.fullmatch(r'(?:https://github.com/|git@github.com:)?([\w.-]+/[\w.-]+?)(?:\.git)?',url)
     if not match: raise Failure('unsupported_repository','Use a public GitHub repository')
@@ -109,14 +122,15 @@ def verify(root,candidate,cfg):
         raise Failure('unpublished_workspace','Push the proof workspace explicitly before remote verification',4)
     executor_repo=public_repository(executor['repository']);ref=executor['ref']
     if not re.fullmatch('[0-9a-f]{40}',ref):raise Failure('unpinned_executor','Executor ref must be an exact qualified commit',4)
+    dispatch_ref=executor_ref(executor_repo,ref)
     directory,record=start_run(root,'verify',target=trusted['source'],candidate={'repository':repository,'commit':revision,'path':relative},
-                               executor={'repository':executor_repo,'commit':ref},producer_kind='hosted_verification')
+                               executor={'repository':executor_repo,'commit':ref,'dispatch_ref':dispatch_ref},producer_kind='hosted_verification')
     inputs={'run_id':record['id'],'candidate_repository':repository,'candidate_commit':revision,
       'candidate_path':relative,'source_repository':trusted['source']['repository'],
       'source_commit':trusted['source']['commit'],'source_path':trusted['source']['path'],
       'declaration':trusted['source']['declaration']}
     save(directory/'request.json',inputs)
-    args=['workflow','run','comparator-lean-4-33.yml','--repo',executor_repo,'--ref',ref]
+    args=['workflow','run','comparator-lean-4-33.yml','--repo',executor_repo,'--ref',dispatch_ref]
     for k,v in inputs.items():args += ['-f',f'{k}={v}']
     try:
         print('Dispatching verification to '+executor_repo+'…',file=sys.stderr)

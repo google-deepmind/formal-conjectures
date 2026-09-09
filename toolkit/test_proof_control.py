@@ -62,3 +62,13 @@ class ProofControlTests(ToolkitFixture):
         with patch.object(remote,'qualify',side_effect=core.Failure('unqualified_executor','No AF_UNIX restriction',3)):
             value=remote.execute(request,self.root/'output',self.root,self.root,self.root,self.root)
         self.assertEqual(value['outcome'],'error');self.assertTrue((self.root/'output/verification.json').is_file())
+
+    def test_dispatch_resolves_an_exact_lightweight_or_annotated_tag(self):
+        sha='a'*40
+        with patch.object(proof,'command',return_value=(sha+'\trefs/tags/toolkit-v0.2.0rc1\n').encode()):
+            self.assertEqual(proof.executor_ref('fixture/repo',sha),'toolkit-v0.2.0rc1')
+        with patch.object(proof,'command',return_value=('b'*40+'\trefs/tags/reviewed\n'+sha+'\trefs/tags/reviewed^{}\n').encode()):
+            self.assertEqual(proof.executor_ref('fixture/repo',sha),'reviewed')
+        with patch.object(proof,'command',return_value=b''):
+            with self.assertRaises(core.Failure) as error:proof.executor_ref('fixture/repo',sha)
+        self.assertEqual(error.exception.reason,'executor_tag_required')
