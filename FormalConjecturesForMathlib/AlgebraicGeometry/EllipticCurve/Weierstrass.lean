@@ -33,7 +33,6 @@ namespace WeierstrassCurve
 
 variable {R : Type*} [CommRing R] (W : WeierstrassCurve R)
 
-/-- The two-torsion cubic is $4x^3 + b_2 x^2 + 2 b_4 x + b_6$. -/
 lemma eval_toPoly_twoTorsionPolynomial (x : R) :
     W.twoTorsionPolynomial.toPoly.eval x = 4 * x ^ 3 + W.b₂ * x ^ 2 + 2 * W.b₄ * x + W.b₆ := by
   simp [twoTorsionPolynomial, Cubic.toPoly]

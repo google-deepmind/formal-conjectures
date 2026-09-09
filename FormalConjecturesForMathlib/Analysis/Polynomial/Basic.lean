@@ -39,8 +39,6 @@ section OrderedField
 variable {𝕜 : Type*} [NormedField 𝕜] [LinearOrder 𝕜] [IsStrictOrderedRing 𝕜] [OrderTopology 𝕜]
   {P : 𝕜[X]}
 
-/-- A polynomial of odd degree with nonnegative leading coefficient tends to $-\infty$ at
-$-\infty$: the counterpart at $-\infty$ of `Polynomial.tendsto_atTop_of_leadingCoeff_nonneg`. -/
 theorem tendsto_atBot_atBot_of_odd_natDegree (hP : Odd P.natDegree) (hnng : 0 ≤ P.leadingCoeff) :
     Tendsto (fun x ↦ eval x P) atBot atBot := by
   simpa [Function.comp_def] using ((P.comp (-X)).tendsto_atBot_of_leadingCoeff_nonpos
@@ -53,11 +51,8 @@ section Real
 
 variable {p : ℝ[X]}
 
-/-- A real polynomial of odd degree has a real root. Unlike the previous lemma this is stated over
-$\mathbb{R}$, not over an arbitrary ordered field: it needs the intermediate value theorem, and a
-conditionally complete ordered field is already isomorphic to $\mathbb{R}$. -/
 theorem exists_isRoot_of_odd_natDegree (hp : Odd p.natDegree) : ∃ x : ℝ, p.IsRoot x := by
-  wlog! hlc : 0 ≤ p.leadingCoeff generalizing p
+  wlog! hlc : 0 ≤ p.leadingCoeff
   · simpa using this (p := -p) (by simpa using hp) (by simpa using hlc.le)
   exact p.continuous.surjective (p.tendsto_atTop_of_leadingCoeff_nonneg
     (natDegree_pos_iff_degree_pos.1 hp.pos) hlc) (tendsto_atBot_atBot_of_odd_natDegree hp hlc) 0
