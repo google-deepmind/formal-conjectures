@@ -52,11 +52,20 @@ def typed_result(raw,code):
         raise Failure('inconsistent_verifier_result','Comparator success is inconsistent with process completion',3)
     return value
 
+def invoke_comparator(arguments, workspace, output):
+    """Only a typed result can establish rejection; failed invocation text cannot."""
+    result_path=output/'comparator-result.json'
+    with (output/'verifier.log').open('wb') as log:
+        proc=subprocess.run(arguments,cwd=workspace,stdout=log,stderr=subprocess.STDOUT,timeout=600)
+    if not result_path.is_file():raise Failure('missing_verifier_result','Comparator produced no typed result; policy not evaluated',3)
+    return typed_result(result_path.read_bytes(),proc.returncode),proc.returncode
+
+
 def execute(request,output,toolkit,source,candidate,generator):
     validate_request(request)
     output.mkdir(parents=True,exist_ok=True)
     record={'schema_version':'fc.proof-verification.v1','request':request,'producer':'github_actions',
-            'started_at':now(),'outcome':'error','pins':PINS,
+            'started_at':now(),'outcome':'error','policy_outcome':'not_evaluated','pins':PINS,
             'toolkit_commit':git(toolkit,'rev-parse','HEAD').decode().strip()}
     try:
         qualify()
@@ -82,12 +91,10 @@ def execute(request,output,toolkit,source,candidate,generator):
         record.update(submission_files=rr.descriptors(submissions),trusted_config_sha256=rr.digest((workspace/'config.json').read_bytes()),
                       tool_hashes={k:rr.digest(Path(os.environ[k]).read_bytes()) for k in
                       ('COMPARATOR_BIN','COMPARATOR_LANDRUN','COMPARATOR_LEAN4EXPORT','COMPARATOR_NANODA')})
-        with (output/'verifier.log').open('wb') as log:
-            proc=subprocess.run(args,cwd=workspace,stdout=log,stderr=subprocess.STDOUT,timeout=600)
-        if not result_path.is_file():raise Failure('missing_verifier_result','Comparator produced no typed result',3)
-        value=typed_result(result_path.read_bytes(),proc.returncode)
+        value,code=invoke_comparator(args,workspace,output)
         record.update(outcome={'pass':'pass','rejected':'fail','error':'error'}[value['outcome']],
-                      comparator=value,exit_code=proc.returncode)
+                      comparator=value,exit_code=code,
+                      policy_outcome=value['outcome'] if value['outcome']!='error' else 'not_evaluated')
     except (Failure,ValueError,OSError,subprocess.SubprocessError,RuntimeError) as error:
         record.update(outcome='fail' if isinstance(error,Failure) and error.code==1 else 'error',
                       reason=getattr(error,'reason','execution_error'),detail=str(error))
