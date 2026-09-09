@@ -40,8 +40,7 @@ tree satisfies `Ls(G) ≥ G.indepDominationNumber * MaxTemp(G)`, where `G.indepD
 domination number and `MaxTemp(G)` is `max_v deg(v)/(n(G) - deg(v))`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [Nontrivial α]
-    (h_conn : G.Connected) :
+theorem conjecture3 {G : SimpleGraph α} [DecidableRel G.Adj] [Nontrivial α] (h_conn : G.Connected) :
     G.indepDominationNumber * MaxTemp G ≤ Ls G := by
   sorry
 

@@ -13,6 +13,7 @@
 const detailEl = document.getElementById('theorem-detail');
 const _base = document.documentElement.dataset.base || '';
 
+
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const name   = params.get('name');
@@ -75,6 +76,12 @@ function loadVersoAssets() {
   codeLink.href = `${_base}/src/code.css`;
   document.head.appendChild(codeLink);
 
+  // Load the shared token theme after Verso's stylesheet.
+  const syntaxLink = document.createElement('link');
+  syntaxLink.rel = 'stylesheet';
+  syntaxLink.href = `${_base}/assets/css/lean-syntax.css`;
+  document.head.appendChild(syntaxLink);
+
   // Load tippy border CSS for hover tooltips
   const tippyLink = document.createElement('link');
   tippyLink.rel = 'stylesheet';
@@ -102,18 +109,6 @@ function loadVersoAssets() {
     }
     /* Inter-text spacing */
     .hl.lean .inter-text { white-space: pre; }
-    /* Make the code container match Verso's clean look */
-    .verso-code-container {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      padding: 0;
-    }
-    .verso-code-container code.hl.lean.block {
-      font-size: 16px;
-      display: block;
-      padding: 1.25rem;
-    }
     /* Tooltip spacing: separator between type signature and docstring */
     .hover-info .sep {
       display: block;
@@ -489,6 +484,31 @@ function renderDetail(theorem, siblings, verso, contributors) {
       </div>
     </div>` : '';
 
+  // A statement can carry several `formal_proof` annotations, each with its own
+  // assumptions, so list them one by one. `conditions` names declarations stated with
+  // sorry proofs in the same file.
+  const formalProofs = theorem.formalProofs || [];
+  const isConditional = formalProofs.some(p => (p.conditions || []).length);
+  const formalProofHTML = (proof) => {
+    const label = FC.FORMAL_PROOF_LABELS[proof.kind] || proof.kind;
+    const where = proof.link
+      ? `<a href="${FC.escapeHTML(proof.link)}" target="_blank" rel="noopener">${FC.escapeHTML(label)}</a>`
+      : FC.escapeHTML(label);
+    const conditions = proof.conditions || [];
+    const assumes = conditions.length
+      ? ` assuming ${conditions.map(c => `<code>${FC.escapeHTML(c)}</code>`).join(', ')},
+          stated in this file`
+      : '';
+    return `<li>${where}${assumes}</li>`;
+  };
+  const formalProofsSection = formalProofs.length ? `
+    <div class="theorem-detail__section">
+      <div class="detail-label">Formal proofs</div>
+      <div class="detail-value"><ul>
+        ${formalProofs.map(formalProofHTML).join('\n')}
+      </ul></div>
+    </div>` : '';
+
   const contributorsSection = contributors.length ? `
     <div class="theorem-detail__section">
       <div class="detail-label">File contributors</div>
@@ -507,6 +527,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     <header class="theorem-detail__header">
       <h1 class="theorem-detail__title">${FC.escapeHTML(theorem.displayTheorem)}</h1>
       <span class="badge ${catMeta.css}" style="font-size:.9rem;padding:.3rem .9rem">${FC.escapeHTML(catMeta.label)}</span>
+      ${isConditional ? `<span class="badge cat-conditional" style="font-size:.9rem;padding:.3rem .9rem"
+        title="A formal proof depends on an unproven assumption">Conditional</span>` : ''}
     </header>
 
     ${moduleDocSection}
@@ -514,6 +536,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
     ${docSection}
 
     ${codeSection}
+
+    ${formalProofsSection}
 
     ${contributorsSection}
 

@@ -28,7 +28,7 @@ have order at most $p^k$. Is it true that every abelian subgroup of $G$ has orde
 $p^{2k}$?
 -/
 @[category research open, AMS 20]
-theorem kourovka.«20.76» : answer(sorry) ↔
+theorem kourovka_20_76 : answer(sorry) ↔
     ∀ᵉ (p : ℕ) (hp : p.Prime) (G : Type) (_ : Group G) (hg : IsPGroup p G) (_ : Finite G) (k : ℕ)
     (h : ∀ H: Subgroup G, H.Normal ∧ IsMulCommutative H → Nat.card H ≤ p ^ k),
     (∀ H : Subgroup G, IsMulCommutative H → Nat.card H ≤ p ^ (2 * k)) := by

@@ -23,7 +23,6 @@ Published in Discrete Mathematics 92 (1991) 85–88.
 -/
 
 open BigOperators
-open Classical
 open scoped Finset
 
 namespace DegreeSequencesTriangleFree
@@ -41,6 +40,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- The number of vertices of `G` having degree `d`. -/
 noncomputable def degreeFreq (G : SimpleGraph α) (d : ℕ) : ℕ :=
+  open scoped Classical in
   #{v | G.degree v = d}
 
 end SimpleGraph
@@ -201,6 +201,7 @@ lemma lemma3 (n : ℕ) (hn : 0 < n) :
       G.IsBipartite ∧ G.minDegree = n + 1 ∧ degreeSequenceMultiplicity G = 3 := by
   sorry
 
+open scoped Classical in
 /-- **Lemma 4.** Let `G` be a triangle-free graph with `n` vertices and let `v` be a vertex of `G`.
 There exists a triangle-free graph `H` containing `G` as an induced subgraph such that:
 (i) the degree of `v` in `H` is one more than its degree in `G`;

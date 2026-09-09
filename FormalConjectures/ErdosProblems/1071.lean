@@ -55,7 +55,7 @@ This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
 @[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071b.lean"]
 theorem erdos_1071.parts.ii :
-    answer(sorry) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
+    answer(True) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       IsOpen R ∧ IsConnected R ∧ S.Countable ∧ S.Infinite ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ seg.1 ∈ R ∧ seg.2 ∈ R) ∧

@@ -49,7 +49,7 @@ theorem pellNumber_two : pellNumber 2 = 2 := rfl
 @[category test, AMS 11]
 theorem pellNumber_five : pellNumber 5 = 29 := rfl
 
-/-- Similar to Fibonacci numbers, there exist numerous identites around Pell numbers, i.e.
+/-- Similar to Fibonacci numbers, there exist numerous identities around Pell numbers, i.e.
 P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
 @[category textbook, AMS 11]
 theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :

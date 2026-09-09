@@ -15,21 +15,22 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Tactic.Linter.Term
-
-import Lean.Linter.Basic
+public meta import FormalConjecturesForMathlib.Tactic.Linter.Term
+public meta import Lean.Linter.Basic
+public meta import Lean.Meta.AppBuilder
+public meta import Lean.Elab.Command
 
 /-! # The Exists Implication Linter
 
 Many misformalisations stem from using a pattern of the form `∃ x, P x → Q` instead of
 `∃ x, P x ∧ Q` (e.g. when formalising something of the form "there is positive `x` such that ...").
 This is almost always incorrect (and trivial to prove) since it then suffices to pick an `x` that
-does not satisfy `P`. This linter flags occurences of this patter to the user and proposes a
+does not satisfy `P`. This linter flags occurrences of this pattern to the user and proposes a
 corrected syntax.
 
 -/
 
-public section
+public meta section
 
 open Lean Meta
 

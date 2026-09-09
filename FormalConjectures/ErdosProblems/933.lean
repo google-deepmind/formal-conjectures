@@ -81,17 +81,16 @@ theorem erdos_933.variants.lower_bound :
     rw [show 2 ^ m + 1 = 2 ^ m + 1 ^ m by simp,
       padicValNat.pow_add_pow (p := 3) (x := 2) (y := 1) (by norm_num)
         (by norm_num) (by norm_num) (by simpa [m] using (by norm_num : Odd 3).pow)]
-    simp [m, padicValNat.prime_pow]
-    omega
+    simp [m]
+    lia
   have hlog : (m : ℝ) * Real.log 2 < (3 : ℝ) ^ (r + 2) := by
     calc
       _ < (m : ℝ) * 3 := mul_lt_mul_of_pos_left (by linarith [Real.log_two_lt_d9]) (by positivity)
       _ = _ := by norm_num [m, pow_succ]
   change 2 ^ m ∈ {n | ((2 ^ k n * 3 ^ l n : ℕ) : ℝ) > (n : ℝ) * Real.log (n : ℝ)}
-  simp only [Set.mem_setOf_eq, hk, hl]
+  simp only [Set.mem_ofPred_eq, hk, hl]
   push_cast
   rw [Real.log_pow]
   exact mul_lt_mul_of_pos_left hlog (by positivity)
 
 end Erdos933
-

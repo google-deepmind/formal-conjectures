@@ -45,13 +45,7 @@ noncomputable def greedyUnitFractionRem (A : Set ℕ) (x : ℚ) : ℕ → ℚ
 
 @[category test, AMS 5]
 theorem greedyUnitFractionRem_zero (n : ℕ) : greedyUnitFractionRem .univ (1 / n) 0 = 0 := by
-  have : sInf { m | n ≤ m } = n := by
-    rw [Nat.sInf_def, @Nat.find_eq_iff]
-    · aesop
-    · rw [Set.nonempty_def]
-      use n
-      aesop
-  simp [greedyUnitFractionRem, this]
+  simp [greedyUnitFractionRem, Set.Ici_def]
 
 @[category test, AMS 5]
 theorem greedyUnitFractionRem_one (n : ℕ) : greedyUnitFractionRem .univ (1 / n) 1 = 0 := by
@@ -98,12 +92,7 @@ theorem erdos_282.variants.graham {x : ℚ} (hx : x ∈ Set.Ioo 0 1) {a d : ℕ}
 
 @[category test, AMS 5]
 theorem greedyUnitFractionRem_sq_one : greedyUnitFractionRem { n | IsSquare n } 1 0 = 0 := by
-  have : sInf {n : ℕ | IsSquare n ∧ 1 ≤ n} = 1 := by
-    rw [Nat.sInf_def, @Nat.find_eq_iff]
-    · aesop
-    · rw [Set.nonempty_def]
-      use 4
-      norm_num
+  have : sInf {n : ℕ | IsSquare n ∧ 1 ≤ n} = 1 := IsLeast.csInf_eq <| by decide
   aesop (add simp [greedyUnitFractionRem])
 
 /--

@@ -22,7 +22,6 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/295](https://www.erdosproblems.com/295)
 -/
 
-open Classical
 open scoped Real
 
 namespace Erdos295
@@ -40,7 +39,9 @@ lemma exists_k (N : ℕ) : ∃ (k : ℕ) (n : Fin k.succ → ℕ),
 Let $k(N)$ denote the smallest $k$ such that there exists
 $N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} = 1$.
 -/
-noncomputable abbrev k (N : ℕ) : ℕ := Nat.find (exists_k N)
+noncomputable abbrev k (N : ℕ) : ℕ :=
+  open scoped Classical in
+  Nat.find (exists_k N)
 
 
 /--

@@ -19,7 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 434
 
-*Reference:* [erdosproblems.com/434](https://www.erdosproblems.com/434)
+*References:*
+- [erdosproblems.com/434](https://www.erdosproblems.com/434)
+- [Ki02] Kiss, G., On the extremal Frobenius problem in a new aspect. Ann. Univ. Sci.
+  Budapest. Eötvös Sect. Math. (2002), 139–142.
 -/
 
 namespace Erdos434
@@ -46,22 +49,27 @@ Let $k \le n$. What choice of $A\subseteq\{1, \dots, n\}$ (with $\text{gcd}(A) =
 maximises the number of integers not representable as the sum of finitely
 many elements from $A$ (with repetitions allowed)?
 Is it $\{n, n - 1, \dots, n - k + 1\}$?
+
+The maximal choice is indeed $\{n, \dots, n - k + 1\}$, as proved by Kiss [Ki02].
+
+The Lean theorem assumes $2 \le k$. When $k = 1 < n$, the proposed singleton $\{n\}$ does not
+have gcd $1$; the gcd condition instead forces the unique admissible choice $A = \{1\}$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
-theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (h : k ≤ n) :
+theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 2 ≤ k) (h : k ≤ n) :
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)
         (_ : #S = k) (_ : S.gcd id = 1) }
-      (Nat.NcardUnrepresentable <| answer(sorry)) := by
+      (Nat.NcardUnrepresentable <| answer(Set.Icc (n - k + 1 : ℕ) n)) := by
   sorry
 
 /--
-Let $k \le n$. Out of all $A\subseteq\{1, \dots, n\}$ (with $\text{gcd}(A) = 1$) of size $|A| = k$,
-does $A = \{n, n - 1, \dots, n - k + 1\}$ maximise the number of integers
-not representable as the sum of finitely many elements from $A$ (with repetitions allowed)?
+For $2 \le k \le n$, the interval $A = \{n, n - 1, \dots, n - k + 1\}$ maximises the number
+of integers not representable as the sum of finitely many elements from $A$ (with repetitions
+allowed), as proved by Kiss [Ki02].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
-theorem erdos_434.parts.ii : answer(True) ↔ ∀ᵉ (n ≥ 1) (k ≥ 1), k ≤ n →
+theorem erdos_434.parts.ii : answer(True) ↔ ∀ᵉ (n ≥ 1) (k ≥ 2), k ≤ n →
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)
         (_ : #S = k) (_ : S.gcd id = 1)}

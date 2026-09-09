@@ -41,7 +41,7 @@ def ConjectureFor (n : ℕ) : Prop :=
   ∀ (M : Type) [TopologicalSpace M] [T2Space M] [ChartedSpace (ℝ^n) M], M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₜ 𝕊ⁿ)
 
 /--
-The Millenium Problem, solved by Grigori Perelman in 2003: the Poincaré Conjecture holds.
+The Millennium Problem, solved by Grigori Perelman in 2003: the Poincaré Conjecture holds.
 -/
 @[category research solved, AMS 54 57]
 theorem poincare_conjecture : ConjectureFor 3 := by
@@ -73,12 +73,12 @@ def SmoothConjectureFor (n : ℕ) : Prop :=
   ∀ (M : Type) [TopologicalSpace M] [ChartedSpace (ℝ^n) M] [IsManifold (𝓡 n) ∞ M],
     M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
 
-/-- A reformulation of the Millenium Problem in terms of smooth 3-folds. -/
+/-- A reformulation of the Millennium Problem in terms of smooth 3-folds. -/
 @[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.smooth_for_three : SmoothConjectureFor 3 := by
   sorry
 
-/-- The smooth formulation of the Millenium Problem implies the general case. This follows from
+/-- The smooth formulation of the Millennium Problem implies the general case. This follows from
 the fact that every topological 3-fold admits a smooth structure [mo296171]. -/
 @[category textbook, AMS 54 57]
 theorem poincare_conjecture.variants.smooth_implication (H : SmoothConjectureFor 3) :

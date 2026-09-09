@@ -34,7 +34,7 @@ open Set Real
 
 namespace Erdos318
 
-/-- A set `A : Set ℕ` is said to have propery `P₁` if for any nonconstant sequence
+/-- A set `A : Set ℕ` is said to have property `P₁` if for any nonconstant sequence
 `f : A → {-1, 1}`, one can always select a finite, nonempty subset `S ⊆ A \ {0}` such that
 `∑ n ∈ S, fₙ / n = 0`. This is defined in [Sa82b]. -/
 def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
@@ -69,7 +69,7 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
   -- below by `1 - (π ^ 2 / 6 - 1)`, which is positive. In the second case, the finite sum over `S`
   -- is negative.
   by_cases h1 : 1 ∈ S
-  · rw [Finset.sum_eq_add_sum_diff_singleton h1, Finset.sum_congr rfl
+  · rw [Finset.sum_eq_add_sum_sdiff_singleton 1 _ (by simp [h1]), Finset.sum_congr rfl
       (g := fun n : ℕ => (- 1 : ℝ) / n)]
     · simp only [↓reduceIte, Nat.cast_one, div_self one_ne_zero, ← ne_eq, div_eq_mul_one_div
         (- 1 : ℝ), ← Finset.mul_sum, neg_one_mul (∑ x ∈ S \ {1}, 1 / (x : ℝ)), ← sub_eq_add_neg]
@@ -83,7 +83,7 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
         gcongr
         have : 1 = 1 / ((1 : ℕ) : ℝ) := by norm_cast; grind
         nth_rewrite 3 [this]
-        rw [le_sub_iff_add_le, ← Finset.sum_eq_sum_diff_singleton_add h1]
+        rw [le_sub_iff_add_le, ← Finset.sum_eq_sum_sdiff_singleton_add h1]
         let S' := S.preimage (· ^ 2) (Function.Injective.injOn
           (Nat.pow_left_injective (by decide)))
         have hS' : S'.map ⟨(· ^ 2), Nat.pow_left_injective (by decide)⟩ = S := by
@@ -107,7 +107,13 @@ theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A 
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
-#TODO: prove this lemma by assuming `erdos_318.contain_single_even`. -/
+#TODO: prove this lemma by assuming `erdos_318.contain_single_even`.
+
+The density sits in an existential, so `HasPosDensity` is the *stronger* reading here and
+weakening it to positive lower density would claim less, which is the opposite of the usual
+situation for Erdős' "positive density". It also costs nothing: by
+`erdos_318.variants.contain_single_even` a witness only needs exactly one even element, and the
+odd numbers together with one even number have density `1 / 2` on the nose. -/
 @[category research solved, AMS 11]
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry

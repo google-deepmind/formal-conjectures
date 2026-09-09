@@ -50,7 +50,7 @@ def AgohGiugaCongr : Prop :=
 
 /--
 The **Agoh-Giuga Conjecture**, Giuga's formulation.
-An integer `p ≥ 2` is prime if and only if it satifies the congruence
+An integer `p ≥ 2` is prime if and only if it satisfies the congruence
 `∑_{i=1}^{p-1} i^{p-1} ≡ -1 [MOD p]`.
 -/
 def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
@@ -120,7 +120,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
-  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
+  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero]).not.mpr
     ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
@@ -249,7 +249,7 @@ theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
 Then for `X` larger than an absolute constant which can be made

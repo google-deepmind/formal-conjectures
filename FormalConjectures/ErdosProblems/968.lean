@@ -20,10 +20,10 @@ import FormalConjecturesUtil
 # Erdős Problem 968
 
 Let `uₙ = pₙ / n`, where `pₙ` is the `n`th prime. Does the set of `n` such that `uₙ < uₙ₊₁`
-have positive density?
+have positive lower density?
 
 Erdős and Prachar also proved that `∑_{pₙ < x} |uₙ₊₁ - uₙ| ≍ (log x)^2`, and that the set of `n`
-such that `uₙ > uₙ₊₁` has positive density. Erdős also asked whether there are infinitely many
+such that `uₙ > uₙ₊₁` has positive lower density. Erdős also asked whether there are infinitely many
 increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ > uₙ₊₁ > uₙ₊₂`.
 
 *Reference:* [erdosproblems.com/968](https://www.erdosproblems.com/968)
@@ -48,10 +48,10 @@ noncomputable def u (n : ℕ) : ℝ :=
   (n.nth Nat.Prime : ℝ) / (n + 1)
 
 /--
-Does the set `{n | u n < u (n+1)}` have positive natural density?
+Does the set `{n | u n < u (n+1)}` have positive lower density?
 -/
 @[category research open, AMS 11]
-theorem erdos_968 : answer(sorry) ↔ {n : ℕ | u n < u (n + 1)}.HasPosDensity := by
+theorem erdos_968 : answer(sorry) ↔ 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
   sorry
 
 /--
@@ -67,12 +67,12 @@ theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
   sorry
 
 /--
-Erdős and Prachar proved that the set `{n | u n > u (n+1)}` has positive natural density
+Erdős and Prachar proved that the set `{n | u n > u (n+1)}` has positive lower density
 (see [ErPr61]).
 -/
 @[category research solved, AMS 11]
-theorem erdos_968.variants.decreasingSteps_hasPosDensity :
-    {n : ℕ | u n > u (n + 1)}.HasPosDensity := by
+theorem erdos_968.variants.decreasing_steps_pos_lower_density :
+    0 < {n : ℕ | u n > u (n + 1)}.lowerDensity := by
   sorry
 
 /--

@@ -97,25 +97,84 @@ A317940: the numerator of `f n`.
 noncomputable def a (n : ℕ) : ℤ :=
   (f n).num
 
+/-- The defining recurrence of `f`, with the recursive calls folded back to `f`. -/
+@[category API, AMS 11]
+private lemma f_eq (n : ℕ) :
+    f n = if n = 0 then 0 else if n = 1 then 1 else
+      (a046644 n -
+        ∑ d ∈ n.divisors, if _h : 1 < d ∧ d < n then f d * f (n / d) else 0) / 2 := by
+  conv_lhs => rw [f, WellFounded.fix_eq]
+  rfl
+
+@[category API, AMS 11]
+private lemma f_one : f 1 = 1 := by
+  rw [f_eq]; norm_num
+
+/-- At a prime `p` every divisor is `1` or `p`, so the interior sum is empty. -/
+@[category API, AMS 11]
+private lemma f_prime {p : ℕ} (hp : p.Prime) : f p = a046644 p / 2 := by
+  rw [f_eq, if_neg hp.ne_zero, if_neg hp.ne_one,
+    Finset.sum_eq_zero (fun x hx => ?_)]
+  · ring
+  · rcases hp.eq_one_or_self_of_dvd x (Nat.mem_divisors.mp hx).1 with rfl | rfl
+    · exact dif_neg (by omega)
+    · exact dif_neg (by omega)
+
+@[category API, AMS 11]
+private lemma f_two : f 2 = 1 := by
+  rw [f_prime Nat.prime_two]; norm_num [a046644, a005187]
+
+@[category API, AMS 11]
+private lemma f_three : f 3 = 1 := by
+  rw [f_prime Nat.prime_three]; norm_num [a046644, a005187]
+
+@[category API, AMS 11]
+private lemma f_five : f 5 = 1 := by
+  rw [f_prime (by norm_num)]; norm_num [a046644, a005187]
+
+/-- `4 = 2 ^ 2` is the only case here with a nonempty interior sum, contributing `f 2 * f 2`. -/
+@[category API, AMS 11]
+private lemma f_four : f 4 = 7 / 2 := by
+  rw [f_eq 4]
+  norm_num only
+  rw [show (Nat.divisors 4) = {1, 2, 4} from rfl,
+    Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton,
+    dif_neg (by omega), dif_pos (by omega), dif_neg (by omega),
+    show a046644 4 = 8 from ?_]
+  · rw [f_two]; norm_num
+  · rw [a046644, if_neg (by norm_num), show (4 : ℕ) = 2 ^ 2 by norm_num,
+      Nat.Prime.factorization_pow Nat.prime_two]
+    norm_num [Finsupp.prod_single_index, a005187, Finset.sum_range_succ]
+
+/-- `f 1 = 1` is the base case of the recurrence, so `a 1 = 1`. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  sorry
+  rw [a, f_one]
+  rfl
 
+/-- `2` is prime, so the interior sum is empty and `f 2 = a046644 2 / 2 = 1`. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
-  sorry
+  rw [a, f_two]
+  rfl
 
+/-- `3` is prime, so the interior sum is empty and `f 3 = a046644 3 / 2 = 1`. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  sorry
+  rw [a, f_three]
+  rfl
 
+/-- `4` is the first index with a nonempty interior sum, giving `f 4 = 7 / 2`. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 7 := by
-  sorry
+  rw [a, f_four]
+  norm_num
 
+/-- `5` is prime, so the interior sum is empty and `f 5 = a046644 5 / 2 = 1`. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
-  sorry
+  rw [a, f_five]
+  rfl
 
 /--
 "No negative terms among the first 2^20 terms. Is the sequence nonnegative?"

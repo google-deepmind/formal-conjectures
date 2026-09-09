@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/12](https://www.erdosproblems.com/12)
 -/
 
-open Classical Filter Set
+open Filter Set
 
 namespace Erdos12
 

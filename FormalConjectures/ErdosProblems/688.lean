@@ -23,7 +23,7 @@ import FormalConjecturesUtil
 - [Er80] Erdős, Paul, _A survey of problems in combinatorial number theory_. Ann. Discrete Math. (1980), 89-115.
 -/
 
-open Classical Real Filter
+open Real Filter
 
 namespace Erdos688
 

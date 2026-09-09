@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Littlewood_conjecture)
-- [Bernard Mathan and Olivier Touli´e, *Problem`emes diophantiens simultan´es*][mathantoilie2004]
+- [Bernard de Mathan and Olivier Teulié, *Problèmes diophantiens simultanés*](https://doi.org/10.1007/s00605-003-0199-y)
 -/
 
 open Filter
@@ -47,10 +47,10 @@ theorem littlewood_conjecture (α β : ℝ) :
 /--
 For real number $\alpha$ and prime $p$,
 $$
-  \liminf_{n \to\infty} n |n|_{p}\||n\alpha\|| = 0
+  \liminf\_{n \to\infty} n |n|\_{p}\||n\alpha\|| = 0
 $$
 where $\||x\|| := \min(|x - \lfloor x \rfloor|, |x - \lceil x \rceil|)$ is the distance
-to the nearest integer, and $|x|_{p}$ is the $p$-adic norm.
+to the nearest integer, and $|x|\_{p}$ is the $p$-adic norm.
 -/
 @[category research open, AMS 11]
 theorem padic_littlewood_conjecture (α : ℝ) (p : ℕ) (hp : p.Prime) :

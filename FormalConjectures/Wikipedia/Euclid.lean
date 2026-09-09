@@ -30,7 +30,7 @@ The n-th Euclid number is the product of the first n prime numbers plus one.
 noncomputable def Euclid (n : ℕ) : ℕ := 1 + ∏ i ∈ Finset.range n, i.nth Nat.Prime
 
 /--
-It is not known whether there is an inifinite number of prime Euclid numbers.
+It is not known whether there is an infinite number of prime Euclid numbers.
 -/
 @[category research open, AMS 11]
 theorem infinite_prime_euclid_numbers : answer(sorry) ↔ {n | (Euclid n).Prime}.Infinite := by

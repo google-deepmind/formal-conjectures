@@ -28,6 +28,8 @@ and does not flag theorems without `answer(sorry)` or without early arguments.
 
 public section
 
+set_option warn.sorry false
+
 namespace AnswerLinter
 
 /--

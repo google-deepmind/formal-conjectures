@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 Any integer $n > 1$ can be written as $x + y$ with $x, y > 0$ such that both $x + ny$ and
 $x^2 + ny^2$ are prime.
 
-Zhi-Wei Sun has offered a $200 prize for the first proof.
+Zhi-Wei Sun has offered a \$200 prize for the first proof.
 
 *References:*
 - [A232174](https://oeis.org/A232174)

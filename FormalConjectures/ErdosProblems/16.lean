@@ -28,7 +28,7 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter Set
-open scoped Topology Classical
+open scoped Topology
 
 namespace Erdos16
 
@@ -42,7 +42,8 @@ def Erdos16Set : Set ℕ :=
 A set of natural numbers has density 0.
 -/
 def density_zero (S : Set ℕ) : Prop :=
-  Tendsto (fun x : ℕ ↦ (count S x : ℝ) / (x : ℝ)) atTop (𝓝 0)
+  open scoped Classical in
+  Tendsto (fun x : ℕ ↦ (count (· ∈ S) x : ℝ) / (x : ℝ)) atTop (𝓝 0)
 
 /--
 Is the set of odd integers not of the form $2^k+p$ the union of an infinite arithmetic progression
@@ -66,7 +67,8 @@ theorem erdos_16 :
 A set of natural numbers has positive lower density.
 -/
 def positive_lower_density (S : Set ℕ) : Prop :=
-  0 < atTop.liminf (fun n : ℕ ↦ ((count S n : ℝ) / (n : ℝ) : EReal))
+  open scoped Classical in
+  0 < atTop.liminf (fun n : ℕ ↦ ((count (· ∈ S) n : ℝ) / (n : ℝ) : EReal))
 
 /--
 Romanoff [Ro34] showed that the set of odd integers of this form has positive density.

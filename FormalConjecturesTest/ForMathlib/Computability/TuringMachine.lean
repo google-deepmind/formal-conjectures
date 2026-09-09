@@ -13,10 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
-import Mathlib.Tactic.DeriveFintype
-import Mathlib.Tactic.FinCases
+public meta import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
+public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
+public import Mathlib.Tactic.DeriveFintype
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 -- sanity checks for the definition of halting added in `ForMathlib`.
 -- These should be easy to prove
@@ -25,15 +29,22 @@ namespace BusyBeasverTest
 
 open Turing BusyBeaver Machine
 
+-- `deriving Fintype` is broken upstream as of v4.33: the generated proof rewrites with a
+-- `Finset` membership lemma but instance search supplies `SetLike.instMembership`, so the
+-- rewrite fails. Give the instances directly instead.
 inductive Γ where
   | A
   | B
-deriving Inhabited, Fintype
+deriving Inhabited, DecidableEq
+
+instance : Fintype Γ := ⟨{Γ.A, Γ.B}, fun x => by cases x <;> simp⟩
 
 inductive Λ where
   | S
   | T
-deriving Inhabited, Fintype
+deriving Inhabited, DecidableEq
+
+instance : Fintype Λ := ⟨{Λ.S, Λ.T}, fun x => by cases x <;> simp⟩
 
 def alwaysHaltingMachine : Machine Γ Λ := fun _ _ =>
   none

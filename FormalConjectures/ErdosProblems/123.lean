@@ -76,7 +76,7 @@ Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
 Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
 
-The prize of $250 is offered by Erdős in [Er97] and [Er97e] for a 'proof or disproof'.
+The prize of \$250 is offered by Erdős in [Er97] and [Er97e] for a 'proof or disproof'.
 
 The main problem was resolved in the affirmative by GPT 5.6 (prompted by Snyder).
 

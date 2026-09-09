@@ -22,7 +22,6 @@ public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 /--

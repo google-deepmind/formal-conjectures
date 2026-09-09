@@ -61,15 +61,16 @@ lemma erdos124.ne_zero : answer(sorry) ↔
   sorry
 
 /--
-All sufficiently large integers can be written as $a + b + c$ where $a$ has only the digits $0, 1$
-in base $3$, $b$ only the digits $0, 1$ in base $4$, $c$ only the digits $0, 1$ in base $7$.
+All sufficiently large integers can be written as $a + b + c$, where $a$, $b$, and $c$ are
+divisible by $3$, $4$, and $7$ respectively, and after division by that base have only the
+digits $0, 1$ in that base.
 
-Provee by Burr, Erdős, Graham, and Li [BEGL96]
+Proved by Burr, Erdős, Graham, and Li [BEGL96]
 -/
 @[category research solved, AMS 11]
-lemma erdos124.ne_zero_three_four_seven {k : ℕ} (hk : k ≠ 0) :
+lemma erdos124.ne_zero_three_four_seven :
     ∀ᶠ n in atTop,
-      n ∈ sumsOfDistinctPowers 3 k + sumsOfDistinctPowers 4 k + sumsOfDistinctPowers 7 k :=
+      n ∈ sumsOfDistinctPowers 3 1 + sumsOfDistinctPowers 4 1 + sumsOfDistinctPowers 7 1 :=
   sorry
 
 /--
@@ -80,7 +81,8 @@ $$\sum_{1 \le i \le r}\frac 1{d_i - 1} \ge 1.$$
 
 Reported by Burr, Erdős, Graham, and Li [BEGL96] as an observation of Pomerance
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/arex1337/formal-conjectures-proofs/blob/3b7d581c75fd00e482deabfb20675cf3ccfaf49f/Erdos124/Converse.lean"]
 lemma erdos124.converse {D : Finset ℕ} (hD₃ : ∀ d ∈ D, 3 ≤ d)
     (h : ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0) : 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ :=
   sorry

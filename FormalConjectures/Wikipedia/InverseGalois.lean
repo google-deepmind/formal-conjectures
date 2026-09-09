@@ -24,8 +24,10 @@ import FormalConjecturesUtil
 
 namespace InverseGalois
 
-structure GaloisRealization (K G : Type*) [Field K] [Group G] where
-  L : Type*
+structure GaloisRealization.{u, v} (K : Type u) (G : Type v) [Field K] [Group G] where
+  -- Every Galois extension of `K : Type u` injects into `AlgebraicClosure K : Type u`.
+  -- We therefore lose no generality assuming `L : Type u`.
+  L : Type u
   to_field : Field L
   to_algebra : Algebra K L
   to_isGalois : IsGalois K L

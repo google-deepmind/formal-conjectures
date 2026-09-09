@@ -17,6 +17,9 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.Order.Lattice.Nat
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 
 @[expose] public section
@@ -34,6 +37,14 @@ The Erdős–Hajnal "exceptional pair" trio of predicates:
 
 These were introduced for Erdős Problem 596 but are reusable for Problem 595 and other
 Ramsey-type questions; we factor them out per mo271's review.
+
+It also defines the two-colour graph Ramsey number `graphRamsey G H` and the notion of a
+**Ramsey size linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
+
+## References
+
+* Erdős, Faudree, Rousseau and Schelp, *Ramsey size linear graphs*,
+  Combin. Probab. Comput. 2 (1993), 389–399.
 -/
 
 namespace SimpleGraph
@@ -64,5 +75,30 @@ property and the countable Ramsey escape property. -/
 def IsErdosHajnalExceptional {U₁ U₂ : Type*}
     (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂) : Prop :=
   HasFiniteRamseyProperty G₁ G₂ ∧ HasCountableRamseyEscape G₁ G₂
+
+/--
+The two-color Ramsey number `graphRamsey G H` is the minimum number of vertices `n`
+such that every 2-coloring of the edges of the complete graph on `n` vertices contains
+a copy of `G` in the first color or a copy of `H` in the second color.
+
+A 2-coloring of the complete graph on `Fin n` is represented by a graph `C` (the edges of the
+first color) and its complement `Cᶜ` (the edges of the second color).
+-/
+noncomputable def graphRamsey {α β : Type*} [Fintype α] [Fintype β]
+    (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
+  sInf { n : ℕ | ∀ (C : SimpleGraph (Fin n)), G.IsContained C ∨ H.IsContained Cᶜ }
+
+/--
+A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
+for all graphs `H` with `m` edges and no isolated vertices, the Ramsey number satisfies
+`R(G, H) ≤ c · m`.
+
+Note that this is about the (vertex) Ramsey number `graphRamsey G H`, not the size Ramsey
+number `sizeRamsey G H`.
+-/
+def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
+  ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
+    (∀ v, 0 < H.degree v) →
+    (graphRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
 
 end SimpleGraph

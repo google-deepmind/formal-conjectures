@@ -61,8 +61,8 @@ theorem IsGraphRamsey.succ (n k l : ℕ) :
   have emb : H ↪g G := SimpleGraph.Embedding.comap (Fin.castSuccEmb : Fin n ↪ Fin (n + 1)) G
   have embc : (Hᶜ) ↪g (Gᶜ) := (SimpleGraph.Embedding.complEquiv (G := H) (H := G)).toFun emb
   rintro ⟨hG, hGc⟩
-  have hH : H.CliqueFree k := SimpleGraph.CliqueFree.comap (f := emb) (n := k) hG
-  have hHc : (Hᶜ).CliqueFree l := SimpleGraph.CliqueFree.comap (f := embc) (n := l) hGc
+  have hH : H.CliqueFree k := SimpleGraph.CliqueFree.comap emb.isContained hG
+  have hHc : (Hᶜ).CliqueFree l := SimpleGraph.CliqueFree.comap embc.isContained hGc
   exact (h H) ⟨hH, hHc⟩
 
 /-- Symmetry in the clique / independent set sizes. -/

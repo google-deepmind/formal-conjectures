@@ -80,7 +80,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = O(g(N)). -/
+for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = O(g(N))$. -/
 @[category research open, AMS 5]
 theorem erdos_319.variants.isBigO (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
@@ -99,7 +99,7 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = o(g(N)). -/
+for all non-empty $A'\subsetneq A$. Find the simplest $g(N)$ such that $c(N) = o(g(N))$. -/
 @[category research open, AMS 5]
 theorem erdos_319.variants.isLittleO (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest

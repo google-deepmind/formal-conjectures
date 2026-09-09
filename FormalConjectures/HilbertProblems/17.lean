@@ -100,7 +100,8 @@ theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
   rcases eq_or_ne f 0 with (rfl | hf_zero); · exact ⟨0, 0, by simp⟩
   have hfd := f.totalDegree_eq_zero_iff_eq_C.1 <| by simpa using hf.totalDegree hf_zero
   use 1, fun _ ↦ C √(f.coeff 0)
-  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by
+    simpa [constantCoeff] using hf₀ 0]
   simpa using hfd
 
 /--

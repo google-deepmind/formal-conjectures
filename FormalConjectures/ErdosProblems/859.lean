@@ -45,7 +45,7 @@ theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) 
 
 /-
 **Erdős Problem 859**
-The density `dₜ` of `DivisorSumSet (t : ℕ)` is assymptotically equivalent to ` c₁ / log (t) ^ c₂`
+The density `dₜ` of `DivisorSumSet (t : ℕ)` is asymptotically equivalent to ` c₁ / log (t) ^ c₂`
 for some positive constants `c₁` and `c₂`.
 -/
 /-- The density of the divisor sum set is asymptotically equivalent to $c_1 / \log(t)^{c_2}$. -/

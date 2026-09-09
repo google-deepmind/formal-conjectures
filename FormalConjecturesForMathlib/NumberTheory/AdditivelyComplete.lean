@@ -71,7 +71,7 @@ theorem IsAddStronglyCompleteNatSeq.isAddComplete {A : ℕ → M}
     (hA : IsAddStronglyCompleteNatSeq A) :
     IsAddComplete (Set.range A) := by simpa using hA 0
 
-open Classical in
+open scoped Classical in
 /-- If the range of a sequence `A` is strongly complete, then `A` is strongly complete. -/
 theorem IsAddStronglyCompleteNatSeq.of_isAddStronglyComplete {A : ℕ → M}
     (h : IsAddStronglyComplete (.range A)) : IsAddStronglyCompleteNatSeq A :=

@@ -27,12 +27,6 @@ const state = {
   sort:            'name',
 };
 
-// Human-readable labels for formal proof kinds
-const FORMAL_PROOF_LABELS = {
-  'formal_conjectures': 'Formal Conjectures',
-  'lean4':              'Lean 4 (external)',
-  'other_system':       'Other system',
-};
 
 // ---------------------------------------------------------------------------
 // DOM references
@@ -64,7 +58,7 @@ function readURL() {
   state.formalProofKinds.clear();
   if (params.get('formal_proof') === 'true') {
     // Landing page shortcut: select all proof kinds
-    for (const k of Object.keys(FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
+    for (const k of Object.keys(FC.FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
   } else {
     for (const v of params.getAll('formal_proof_kind')) state.formalProofKinds.add(v);
   }
@@ -88,17 +82,41 @@ function writeURL() {
 // ---------------------------------------------------------------------------
 // Filter / sort
 // ---------------------------------------------------------------------------
+// The statement text lives in the Verso fragments, as HTML. Strip the tags once per
+// theorem and keep the result, so typing does not re-parse every entry on every keystroke.
+const statementTextCache = new Map();
+
+function statementText(c) {
+  if (!statementTextCache.has(c.theorem)) {
+    const html = FC.problemDocHTML(c, versoFragments);
+    let text = '';
+    if (html) {
+      const el = document.createElement('div');
+      el.innerHTML = html;
+      text = (el.textContent || '').toLowerCase();
+    }
+    statementTextCache.set(c.theorem, text);
+  }
+  return statementTextCache.get(c.theorem);
+}
+
 function applyFilters() {
   const q = state.query.toLowerCase();
   filtered = allConjectures.filter(c => {
-    if (q && !c.displayTheorem.toLowerCase().includes(q)) return false;
+    // Match the statement as well as the name: someone looking for "distinct distances"
+    // knows the mathematics, not that we call it `Erdos307.erdos_307.variants.coprime`.
+    if (q && !c.displayTheorem.toLowerCase().includes(q) && !statementText(c).includes(q))
+      return false;
     if (state.categories.size  && !state.categories.has(c.category))   return false;
     if (state.collections.size && !state.collections.has(c.collection)) return false;
     if (state.subjects.size) {
       const cSubjects = new Set(c.subjects.map(s => s.name));
       if (![...state.subjects].some(s => cSubjects.has(s))) return false;
     }
-    if (state.formalProofKinds.size && !state.formalProofKinds.has(c.formalProofKind)) return false;
+    // A conjecture can have several formal proofs, of different kinds. Match if any of
+    // them has a selected kind.
+    if (state.formalProofKinds.size &&
+        !(c.formalProofs || []).some(p => state.formalProofKinds.has(p.kind))) return false;
     return true;
   });
 
@@ -297,6 +315,7 @@ async function init() {
 
   allConjectures = data.conjectures;
   versoFragments = data.versoFragments || { moduleDocs: {}, constLinks: {} };
+  statementTextCache.clear();
 
   // Handle OAuth callback and prefetch votes (disabled)
   // await FC.voting.handleOAuthCallback();
@@ -304,7 +323,8 @@ async function init() {
 
   // Collect unique values for filters
   const categories      = new Set(allConjectures.map(c => c.category));
-  const formalProofKinds = new Set(allConjectures.map(c => c.formalProofKind).filter(Boolean));
+  const formalProofKinds = new Set(
+    allConjectures.flatMap(c => (c.formalProofs || []).map(p => p.kind)));
   const collections     = new Set(allConjectures.map(c => c.collection));
   const subjects        = new Set(allConjectures.flatMap(c => c.subjects.map(s => s.name)));
 
@@ -320,7 +340,7 @@ async function init() {
 
   // Build filter UI
   buildCheckboxes(categoryFilters,    categories,      state.categories,      update);
-  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FORMAL_PROOF_LABELS);
+  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FC.FORMAL_PROOF_LABELS);
   buildCheckboxes(collectionFilters,  collections,     state.collections,     update);
   buildCheckboxes(subjectFilters,     subjects,        state.subjects,        update);
 
