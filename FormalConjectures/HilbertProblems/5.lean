@@ -127,15 +127,15 @@ theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
     ¬ FaithfulVAdd ℤ_[p] X := by
   sorry
 
-/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff,
-second-countable topological group modeled on a finite-dimensional Euclidean space is continuously
-isomorphic to a real-analytic Lie group.
+/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff topological
+group modeled on a finite-dimensional Euclidean space is continuously isomorphic to a real-analytic
+Lie group.
 
 The input `ChartedSpace` supplies only a topological atlas. The compatible analytic atlas and
 analytic group operations belong to the output `LieGroupPresentation`. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
-    [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G]
+    [IsTopologicalGroup G] [T2Space G]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
     Nonempty (LieGroupPresentation G n) := by
   sorry
