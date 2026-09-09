@@ -203,6 +203,20 @@ predate the fresh-container check and must not be promoted to that stronger clai
 their original transcripts, grades and failures; rerun mechanical checks separately when
 needed. These observations remain provisional and do not establish mathematical accuracy.
 
+The five-case comparison produced valid reports for 5/5 skill runs and 3/5 baseline runs.
+Its assessed results contain only one clean case and one usable reference defect per arm;
+the Jacobson reference remains disputed. The targeted follow-up informed skill development.
+Neither batch establishes a reliable false-alarm rate, defect-detection rate or general
+advantage. The packet's human forms remain unfilled; its runs do not evaluate later skill edits.
+
+Before making performance claims, adjudicate the existing reference keys, freeze the procedure
+and executor, and run matched comparisons on held-out problem families with clean controls.
+Repeat runs to expose variability and obtain human assessments of supported findings, missed
+defects, false alarms, appropriate uncertainty and reviewer effort. Report completion failures
+alongside quality denominators. Test delegation as a separate condition with the same overall
+budget; this harness does not establish its benefit. Existing-agent integration checks remain
+separate from the offline benchmark.
+
 The superseded packet-only cases, selected outputs and their exact tooling remain in
 [Git history](https://github.com/williamjblair/formal-conjectures/tree/ba5930b643b2ab1f85036ec2c3c6ff5a82f75aeb/.agents/skills/formal-conjectures-review/evals)
 and the operator's run archive. They are excluded from the current source tree. Their 24 valid

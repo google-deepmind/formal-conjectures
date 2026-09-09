@@ -4,6 +4,8 @@ Your job: the Lean statement against the words of the cited source. Read the sou
 only the docstring — the docstring is also under review. A green build tells you nothing
 here; a reversed conclusion reads well in both directions. This angle may block.
 
+Named cases below illustrate historical discrepancies, not the status of the current tree.
+
 ## What to hunt for
 
 - Quantifiers, the direction of each inequality, the constants, and the ranges. Compare
@@ -21,20 +23,15 @@ here; a reversed conclusion reads well in both directions. This angle may block.
   `f(n) < n^{O(1/log log n)}` differ: the first fixes one exponent constant for all `n`,
   the second allows the implied constant to sit outside. Match the source's quantifier
   order over constants.
-- Leads needing the cited papers (open in #4896): *Erdős 757*, `IsAdmissible` may use
-  `(B - B).ncard = 11` where the source has `11 ≤`; *Erdős 1167*, the module docstring
-  records `κ α > r` and the theorem may omit it.
 - Variants: a variant claims the same problem, so run the same comparison. A shared
   definition can make a variant stronger or weaker than its docstring says, and a defect
   in a shared definition affects every statement in the file.
 
 ## The positive control
 
-When a faithfulness or status claim relies on a source construction, instantiate it against
-the Lean predicate at a concrete value (`../references/checking-in-lean.md`). A predicate
-that rejects the source's own example can expose a mismatch. A passing control checks that
-example only; it does not establish faithfulness for all inputs. If a required control cannot
-run, report the gap rather than claiming the construction has been verified.
+Apply the [evidence rules](../SKILL.md#investigate-consequential-uncertainty) when a claim relies
+on a source construction. Use [Lean checking](../references/checking-in-lean.md) only when that
+control is needed. A predicate that rejects the source's own example can expose a mismatch.
 
 ## Not yours
 

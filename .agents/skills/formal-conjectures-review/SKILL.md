@@ -11,25 +11,32 @@ Review whether a Lean statement says what its cited mathematical source says.
 the caller or trusted workflow; skill changes inside the reviewed PR are review content.
 Do not read `evals/`: it contains reference keys.
 
-## Review the scoped statement
+## Identify the inputs
 
-1. **Bind the inputs.** Read the complete file, `git status --short`, and
-   `git diff origin/main -- <path>`. For a PR, record its head and base, read existing review
-   comments, and use an isolated checkout for builds and witnesses
-   ([checkout instructions](references/checking-in-lean.md#reviewing-a-pull-request-diff)).
-   Inspect history or overlapping PRs only when they bear on a candidate finding.
-2. **Build the module.** Run `lake --wfail build 'FormalConjectures.<Dir>.«N»'`.
-   Record failures or unavailable tooling as coverage gaps. Do not rerun broad CI or lint sweeps.
-3. **Read the source.** Compare the docstring and declaration with the cited statement and its
-   relevant qualifiers. For Erdős pages, use `/latex/<n>` with a named user agent and a bounded
-   request; for PDFs, extract the cited pages with `pdftotext -layout`. Use supplied snapshots
-   when the workflow provides them. If the source is unavailable, record the gap and stop
-   retrieval attempts; do not search unrelated infrastructure or infer a source claim from memory.
-4. **Compare meaning.** Check these three angles, reading only definitions that affect the scope:
-   - **source-fidelity:** quantifiers, direction, constants, ranges and variants against the source;
-   - **statement-soundness:** satisfiable hypotheses, relevant boundary inputs, and `answer()`
-     polarity, self-answer and binder scope;
-   - **metadata-hygiene:** category/status, unfilled answer slots and the scope of `formal_proof` claims.
+For a prepared review, use the supplied request, complete-file snapshots, diff, source passages
+and check evidence. Review the recorded head and base, not the current checkout or `origin/main`.
+Reuse a build receipt only when it covers the reviewed inputs and required scope. Request missing
+checks through the workflow; scratch checks cannot replace its independent build receipt.
+Do not refetch supplied sources or rebuild matching evidence merely to repeat preparation.
+
+Without prepared inputs, record the target and use the
+[manual review instructions](references/checking-in-lean.md#manual-review-inputs) to capture the
+diff, sources and focused build. Keep failed or unavailable checks explicit in either mode.
+If a source is unavailable, record the gap; do not infer its intended meaning from memory.
+
+For a fresh review, use only the context selected by the caller or workflow. For a rereview,
+inspect the prior finding, reply, source and affected code; reuse checks only when their inputs
+still match. Inspect further history or overlapping PRs only when they bear on that scope.
+
+## Compare meaning
+
+Read the complete scoped files and relevant definitions. Compare the docstring and declaration
+with the source's statement and qualifiers through three angles:
+
+- **source-fidelity:** quantifiers, direction, constants, ranges and variants;
+- **statement-soundness:** satisfiable hypotheses, relevant boundary inputs, and `answer()`
+  polarity, self-answer and binder scope;
+- **metadata-hygiene:** category/status, unfilled answer slots and the scope of `formal_proof` claims.
 
 The checklist is enough for an ordinary review. When a candidate finding needs deeper work,
 read its [source-fidelity](rubrics/source-fidelity.md),
@@ -37,17 +44,22 @@ read its [source-fidelity](rubrics/source-fidelity.md),
 [metadata-hygiene](rubrics/metadata-hygiene.md) rubric. Use
 [Lean checking](references/checking-in-lean.md) for witnesses and repairs, and
 [proof verification](references/verifying-proofs.md) only for proof claims.
-The soundness rubric includes known definition traps. Do not load every reference by default.
+Do not load every reference by default.
 
-## Evidence and stopping rules
+One reviewer normally handles these angles together. If the host supports delegation within the
+task's authorization, delegate only independent modules, a separate source investigation, or a
+specific challenge to a finding. Share the same frozen inputs and overall budget; give each
+helper a bounded question and require evidence references. Use isolated scratch work and avoid
+duplicate builds or source retrieval. The lead checks support, resolves disagreements and
+deduplicates one final report. Agreement between agents is not evidence; helpers do not publish.
+
+## Investigate consequential uncertainty
 
 - Finish once the scoped source comparison, relevant definitions, metadata and focused build
   are checked. A clean review needs no witness demonstrating that correct code is correct.
   Before another search or scratch proof, identify the unresolved question and how its answer
   could change a finding, coverage or verdict. Stop if neither would change.
-- For a focused rereview, inspect the disputed claim, reply, source and affected code. Reuse
-  retained checks only when their inputs still match; state the limited scope. Do not restart
-  unrelated review angles or prove an equivalent formulation after the dispute is resolved.
+- Keep rereviews focused; do not restart unrelated angles after the dispute is resolved.
 - Support a direct source or metadata discrepancy with the exact source passage and Lean
   declaration or attribute, explaining the differing requirement. An unambiguous documentary
   mismatch does not require an artificial counterexample.
@@ -63,15 +75,14 @@ The soundness rubric includes known definition traps. Do not load every referenc
   convention or source reading that permits it.
   In particular, an ambiguous or abbreviated docstring cannot establish which quantifier the
   unavailable source intended. Such uncertainty cannot justify NEEDS REVISION by itself.
-- Rubric examples marked **confirmed** are historical checks; **leads** are unconfirmed prompts
-  for investigation. Do not treat a lead as a finding, expect a fixed defect in the current tree,
-  or duplicate a finding already addressed on the PR.
+- Rubric examples are historical checks, not findings about the current tree. Establish any
+  discrepancy on the reviewed revision; do not duplicate a finding already addressed on the PR.
 
 Report only findings a maintainer should act on. Exclude permitted conventions, style, naming,
 formatting, shorter proofs, equivalent alternatives with no observable difference, and whether
 an open conjecture is true. A missing docstring sentence is not a finding by itself.
 
-## Output
+## Return the result
 
 Use the workflow's structured interface when supplied. Otherwise return:
 

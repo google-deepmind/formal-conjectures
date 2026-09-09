@@ -1,17 +1,34 @@
 # Checking a witness in Lean
 
-Read this when you are about to build a witness or a control. The rubrics under `../rubrics/` say what to
-look for. This says how to check it, and it is mostly a list of traps that have cost real time.
+Use this for manual review setup or a targeted witness. For a prepared review, use the workflow's
+execution interface and retained inputs instead of recreating its checkout, sources or build.
+
+## Manual review inputs
+
+Record the repository and exact target. For local changes, read `git status --short` and capture
+the intended diff, including staged edits and any included new files. Record the base explicitly;
+do not assume every review compares with `origin/main`. Preserve the branch, index and files.
+
+For a PR, use the isolated checkout below. Build the affected modules with
+`lake --wfail build 'FormalConjectures.<Dir>.«N»'`, or use matching CI evidence that records that
+scope and revision. Keep the command and outcome. Do not rerun broad CI or lint sweeps.
+A worktree separates Git state; it is not a sandbox. Use trusted execution tooling for candidate
+code, and do not let candidate configuration choose the recorded build command or dependencies.
+If that execution path is unavailable, report the build as not run.
+
+Retrieve the cited passages with bounded requests. For Erdős pages, use `/latex/<n>` with a
+named user agent; for PDFs, use `pdftotext -layout`. Keep the URL, retrieval time and passages
+used. If retrieval fails, record the gap and stop; do not crawl unrelated sources to fill it.
 
 ## Reviewing a pull request diff
 
 Review the complete PR head in an isolated worktree. Record the repository, head and base
-commits from GitHub, and confirm that `origin` is that repository before fetching. Substitute
-the PR number for `N` below. Keep the caller's checkout and local edits untouched:
+commits from GitHub, and select a remote for that repository before fetching. Substitute the
+PR number, repository and remote below. Keep the caller's checkout and local edits untouched:
 
 ```bash
-gh pr view N --json headRefOid,baseRefOid,files
-git fetch origin refs/pull/N/head
+gh pr view N --repo OWNER/REPO --json headRefOid,baseRefOid,files
+git fetch REMOTE refs/pull/N/head
 review_head=$(git rev-parse FETCH_HEAD)
 review_parent=$(mktemp -d)
 review_tree="$review_parent/checkout"
@@ -21,9 +38,10 @@ git -C "$review_tree" rev-parse HEAD
 
 Check that the fetched head equals the head recorded from GitHub. If it changed, refresh the
 PR diff and metadata before reviewing. Keep these paths and commits available across tool calls.
-Read all changed files and relevant definitions from this worktree. Build there using the
-command tool's explicit working-directory setting. Do not transplant individual files into
-another revision or use `git checkout --` to discard local changes.
+Fetch the recorded base commit if needed, then read `git diff BASE_COMMIT...HEAD_COMMIT` and
+the complete changed files from this worktree. Retain both tips and their merge base. If the
+recorded commits cannot be retrieved, report that gap rather than substitute another base.
+Do not transplant individual files into another revision or discard local changes.
 
 Keep scratch witnesses and evidence outside the worktree. After saving the report and checking
 for any work worth preserving, remove only this review worktree, without force:
@@ -39,19 +57,16 @@ that scope as INCOMPLETE rather than silently reviewing a different revision.
 
 ## The scratch file
 
-Write it outside the tree and import the module under review.
+Use the workflow's isolated scratch tools when supplied. Otherwise, keep the witness outside
+the source tree and import the module under review in the trusted execution environment:
 
 ```bash
 lake env lean /absolute/path/to/scratch/Witness.lean
 ```
 
-Set the command's working directory explicitly to the reviewed worktree for every Lean or Lake
-call. Use absolute paths for scratch files. Do not rely on a shell's directory persisting across
-tool calls; an incorrect directory can select the wrong project or toolchain.
-
-Two warnings are expected and are not failures. `linter.style.moduleDocstring` fires once for the
-file. A file with more than one `/-! ... -/` section trips a second, differently worded variant
-once per extra section.
+Set the working directory explicitly to the reviewed project and use absolute scratch paths.
+Keep witness results separate from the independent candidate build. Identify any scratch-only
+linter warnings; do not suppress warnings in the reviewed modules.
 
 ## Axioms, and where a `sorry` came from
 
@@ -102,50 +117,28 @@ If exact correspondence cannot be established, report the limitation instead of 
 
 ## What actually reduces
 
-`decide` fails more often than you expect, and the failure is usually a stuck instance rather
-than a real obstruction.
+Reduction and available lemmas depend on the recorded Lean and dependency versions. Search
+Mathlib and `FormalConjecturesForMathlib/` with `rg`, then confirm names and types with `#check`.
+Do not infer a mathematical obstruction from a missing instance or timeout.
 
-| | |
-|---|---|
-| `Nat.Full` | has a `Decidable` instance that does not reduce; it gets stuck on `List.decidableBAll` over `primeFactorsList`. Use `Full.zero_right`, `Full.one_right` and the `primeFactorsEq` dsimproc in `FormalConjecturesForMathlib/Data/Nat/Full.lean`, or `norm_num [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]` with `set_option maxRecDepth 4000`; the default 512 fails |
-| `Equiv.Perm.IsCycle` | no instance. `List.formPerm` on a nodup `List` builds the permutation, but `List.isCycle_formPerm` and `List.support_formPerm_of_nodup` do **not** reduce at realistic sizes: one review lost forty minutes to them timing out at 27 vertices, another got a witness out of them. Treat them as worth one attempt, not as the recipe. What worked at 27 and 125 vertices: give each cycle as an explicit literal `List`, check a hand-rolled walk predicate with a hand-rolled `Decidable`, test `∀ y, y ∈ L` rather than any `Finset` equality, and build the `Equiv.Perm` from the step map with an explicit inverse |
-| `Collinear ℝ` | no instance. Three integer points are collinear exactly when the integer cross product vanishes, so a control runs outside Lean and you say so |
-| `tsum` / `Filter.limsup` | junk-valued rather than undecidable: `∑' n, f n` is `0` when `f` is not `Summable`, and `limsup` over `ℝ` is `sInf ∅ = 0` on an unbounded sequence. Nothing fails. In a *bound* it weakens the statement. In the admissibility predicate of an `∃ a, Admissible a ∧ P a` it does the opposite and makes the existential easier to satisfy, which can turn a `research open` statement provable. Prefer `HasSum` when you propose a fix, and check the source's own example still satisfies it |
-| `Finset.univ` for a pi type | fine as a binder, `∀ v : Fin 3 → ZMod m, P v` enumerates; not fine as a *value* in an equality, because `Fintype.piFinset` does not reduce in the kernel. That distinction decides whether a combinatorial control finishes |
-| `Function.iterate` at a literal | pathological. Eight applications of a step map timed out on their own. Phrase a control as a list, not as iterate-`n`-times |
-| membership in a `Set` | `decide` cannot see through `x ∈ {m | P m}` and reports `failed to synthesize Decidable`. Peel with `Set.mem_setOf_eq` first. Since `sInf {m | ...}` is the canonical shape here, this is the trap you will hit most |
-| a repo-local `def ... : Prop` | instance search will not unfold it, and `∃!` does not resolve either. Both need a two-line `decidable_of_iff _ Iff.rfl` shim before `decide` fires |
-| `Nat.choose` | unfolds by Pascal recursion, so `decide` on `C(120, 5)` walks about `10^8` nodes and never returns. Rewrite with `Nat.choose_eq_descFactorial_div_factorial`, which evaluates in `k` multiplications |
-| `sInf ∅` emptiness | show the set is `∅` with `ext m; simp`, then `simpa [f] using congrArg sInf h`. Watch for `simp` closing the goal without using your hypothesis; the `unusedSimpArgs` linter is what catches that, and without it you ship a witness that proves nothing about the case you meant |
-
-Before you give up on Lean, look for the constructive encoding. A missing instance is not the end
-of the road.
-
-## Finding the lemma
-
-Names in `FormalConjecturesForMathlib` are hard to guess, and the namespace structure is not what
-it looks like. `Nat.hasDensity_zero_of_finite` sits inside `namespace Set`, but `end Set.HasDensity`
-closes `Set` first, so it is not `Set.Nat.*`. Grep the `namespace` and `end` lines of the file
-before guessing a full name.
-
-Two gaps that have each cost a review most of its time:
-
-- **`Set.HasDensity` has no complement and no cofinite lemma.** The natural witness, that a
-  cofinite set cannot have density `0`, needs `partialDensity S b + partialDensity Sᶜ b = 1`
-  proved from the definition. Budget for it, and consider upstreaming the result.
-- **An `sSup` bound does not instantiate for free.** A lemma bounding `sSup S` gives you nothing
-  about a particular member until you have `BddAbove S`, because an unbounded `sSup` over `ℕ` is
-  `0`. A statement about a degenerate definition can be weaker than it reads.
+- Prefer existing lemmas to large `decide` computations. For `Nat.Full`, search
+  `FormalConjecturesForMathlib/Data/Nat/Full.lean` for the boundary lemmas and simplification API.
+- Unfold a local predicate or set membership when it hides a decidable proposition. Confirm
+  the resulting predicate still matches the claim being checked.
+- For finite combinatorial controls, an explicit list or step map can avoid expensive
+  permutation, function-space or iteration reduction. Retain the connection to the Lean predicate.
+- For a large binomial coefficient, check whether `Nat.choose_eq_descFactorial_div_factorial`
+  avoids recursive expansion in the pinned version.
+- Check the boundedness and membership hypotheses of `sSup`/`sInf` lemmas before applying them
+  to a particular element. The [soundness rubric](../rubrics/statement-soundness.md#known-definition-traps)
+  covers total functions' values outside their intended domain.
 
 ## Controls that finish
 
 A control that does not terminate is not evidence.
 
-If the paper ships code, inspect and run its program in an isolated execution environment, then
-check the output against the Lean predicate. Keep external code away from the trusted verifier
-workspace. A search you write yourself may not terminate on the smallest interesting case,
-and this is not hypothetical: an annealing search for one even case ran hundreds of thousands of
-iterations and found nothing, while the paper's own program produced it immediately.
-
-For a density or coverage sieve, hold the sieve as one big integer and use shifts with
-`.bit_count()`. Indexing it bit by bit is quadratic and will time out around `10^7`.
+When a finding depends on a source construction and the paper supplies code, inspect it and
+use a bounded isolated run if authorized. Check its output against the Lean predicate and keep
+external code away from trusted build and verifier state. Label external computation as such;
+it is not a Lean proof. If the control cannot finish within the budget, retain the failure and
+report the unresolved claim instead of starting an open-ended search.
