@@ -63,7 +63,7 @@ def render(value, args):
         if not value['logs']: lines.append('No retained logs for this run yet.')
     elif 'runs' in value:
         records = value['runs']
-        if 'outstanding' in value:lines.append(f"{value['outstanding']} runs need attention; {len(records)} retained.")
+        if 'outstanding' in value:lines.append(f"Runs needing attention: {value['outstanding']}; retained: {len(records)}.")
         lines.append(table(['Run', 'Target', 'Status', 'Outcome', 'Coverage gaps'],
             [[r['id'], (r.get('target') or {}).get('declaration') or
               ('PR #'+str(r['target']['pr']) if (r.get('target') or {}).get('pr') else r['kind']),

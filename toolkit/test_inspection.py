@@ -44,3 +44,9 @@ class InspectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):attributions.validate(value,'request',lambda _:b'changed')
         bad=copy.deepcopy(value);bad['reviewers'][0]['shared_dependencies']=[]
         with self.assertRaises(ValueError):attributions.validate(bad,'request',lambda _:b'finding')
+
+    def test_inspected_failure_points_to_logs_instead_of_itself(self):
+        record={'id':'case','kind':'verify','status':'completed','outcome':'error',
+                'verification_summary':{'policy_outcome':'not_evaluated'}}
+        self.assertIn('run logs case',inspection.next_action(record))
+        self.assertNotIn('run show case',inspection.next_action(record))
