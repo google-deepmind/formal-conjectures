@@ -36,6 +36,10 @@ References:
 - Schaefer, *The Complexity of Satisfiability Problems*, STOC (1978), pp. 216–226,
   https://doi.org/10.1145/800133.804350, p. 217 and Theorem 7.1 / its comment on p. 225,
   gives two-colorable perfect-matching hardness, including the cubic restriction.
+- Demaine, Karntikoon, and Pitimanaaree, *2-Colorable Perfect Matching is NP-complete in
+  2-Connected 3-Regular Planar Graphs*, Theory of Computing Systems 69, article 22 (2025),
+  https://doi.org/10.1007/s00224-025-10221-2, Theorem 3, supplies the proof omitted by
+  Schaefer for the planar-cubic restriction and strengthens it to 2-connected graphs.
 
 No planarity or connectivity condition is imposed here. The stronger restricted results
 supply classical hardness background, not formalized reductions or an equivalence to
@@ -73,7 +77,8 @@ theorem cubicHamiltonian_not_polytime : ¬ HasPolyTimeDecider CubicHamiltonian :
   sorry
 
 /-- No polynomial-time decider for coloring a cubic simple graph with two colors so that
-each vertex has exactly one neighbor of its own color (Schaefer, p. 217 and Theorem 7.1). -/
+each vertex has exactly one neighbor of its own color (Schaefer, p. 217;
+Demaine–Karntikoon–Pitimanaaree, Theorem 3). -/
 @[category research open, AMS 5 68]
 theorem cubicTwoColorMatching_not_polytime : ¬ HasPolyTimeDecider CubicTwoColorMatching := by
   sorry

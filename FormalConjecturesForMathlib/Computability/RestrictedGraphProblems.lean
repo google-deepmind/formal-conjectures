@@ -34,6 +34,9 @@ References:
   (1976), pp. 704–705, https://doi.org/10.1137/0205049.
 - Schaefer, *The Complexity of Satisfiability Problems* (1978), p. 217 and Theorem 7.1,
   https://doi.org/10.1145/800133.804350.
+- Demaine, Karntikoon, and Pitimanaaree, *2-Colorable Perfect Matching is NP-complete in
+  2-Connected 3-Regular Planar Graphs* (2025), Theorem 3,
+  https://doi.org/10.1007/s00224-025-10221-2.
 
 The predicates below impose degree restrictions, not planarity or connectivity.
 Finite decidability is by exhaustive search, not an efficient algorithm.
