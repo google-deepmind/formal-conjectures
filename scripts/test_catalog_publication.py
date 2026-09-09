@@ -60,3 +60,7 @@ class PublicationTests(unittest.TestCase):
         with patch.object(download_catalog,'urlopen',return_value=BytesIO(b'{"catalog":"https://other.example/data"}')) as network:
             with self.assertRaises(ValueError):download_catalog.download('https://example.org/data/catalog-manifest.json',self.root/'preview')
         self.assertEqual(network.call_count,1)
+
+    def test_uncommitted_shared_imports_cannot_claim_a_source_commit(self):
+        (self.root/'FormalConjecturesForMathlib.lean').write_text('import Modified')
+        with self.assertRaises(ValueError):publish_catalog.prepare(self.root,'owner/fc',fixture(),self.root/'out')
