@@ -38,8 +38,8 @@ The Clay Millennium Problem asks for a proof of one of the following four statem
 - `navier_stokes_breakdown_R3`: (C) Existence of breakdown scenario on ℝ³
 - `navier_stokes_breakdown_periodic`: (D) Existence of breakdown scenario on ℝ³/ℤ³
 
-In 2026, OpenAI proved alternatives (C) and (D) by constructing solutions that
-develop finite-time singularities under smooth forcing.
+In September 2026, an internal OpenAI model proved alternatives (C) and (D) by constructing
+solutions that develop finite-time singularities under smooth forcing.
 
 ## Variable conventions
 
@@ -283,7 +283,7 @@ theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0
 /--
 (C) Breakdown of (forced) Navier–Stokes solutions on ℝ³.
 
-This was proven by an internal model of OpenAI in 2026.
+This was proven by an internal OpenAI model in September 2026.
 -/
 @[category research solved, AMS 35,
   formal_proof using lean4 at
@@ -297,7 +297,7 @@ theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
 /--
 (D) Breakdown of (forced) Navier–Stokes solutions on ℝ³/ℤ³.
 
-This was proven by an internal model of OpenAI in 2026.
+This was proven by an internal OpenAI model in September 2026.
 -/
 @[category research solved, AMS 35,
   formal_proof using lean4 at
