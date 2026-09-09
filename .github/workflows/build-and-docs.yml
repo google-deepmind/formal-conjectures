@@ -188,11 +188,17 @@ jobs:
           action: remove
           linters: lean
 
+      # Every library that the problem files build on gets a literate page, so
+      # that hovers and constant links from a problem resolve to the definition
+      # in `FormalConjecturesForMathlib` or `FormalConjecturesUtil` instead of
+      # dead-ending. The test library is left out: it documents nothing.
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           cd docbuild
-          lake build FormalConjectures:literate
+          lake build FormalConjectures:literate \
+            FormalConjecturesForMathlib:literate \
+            FormalConjecturesUtil:literate
           lake exe verso-html .lake/build/literate ../_literate_html
 
       - name: Post-process literate HTML

@@ -7,6 +7,7 @@ Fixes:
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
 4. Installs the shared Verso syntax theme
+5. Adds a root index page that redirects to the website's module index
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
@@ -106,6 +107,36 @@ def create_stubs(literate_dir):
             print('  Fixed domain-mappers.js (removed export statements)')
 
 
+# `verso-html` writes one page per module but no landing page, so the root of
+# the literate output is a 404. The website has a module index of its own, one
+# directory up from where this tree is deployed (`/src/` next to `/modules/`),
+# and this page sends the visitor there. The link is relative so that it works
+# under any base path.
+ROOT_REDIRECT_HTML = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=../modules/">
+  <link rel="canonical" href="../modules/">
+  <title>Redirecting to the module index</title>
+</head>
+<body>
+  <p>The annotated source pages are listed on the <a href="../modules/">module index</a>.</p>
+</body>
+</html>
+'''
+
+
+def create_root_index(literate_dir):
+    """Write a redirect page at the root unless Verso already produced one."""
+    path = os.path.join(literate_dir, 'index.html')
+    if os.path.exists(path):
+        return
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(ROOT_REDIRECT_HTML)
+    print('  Created root index.html (redirect to /modules/)')
+
+
 def fix_code_css(literate_dir):
     """Fix layout and scrolling issues in code.css."""
     css_path = os.path.join(literate_dir, 'code.css')
@@ -172,6 +203,9 @@ def main():
                     count += 1
 
     print(f'  Updated rendering assets in {count} Verso HTML files.')
+
+    # Written last so that the redirect page is not treated as a module page.
+    create_root_index(literate_dir)
 
 
 if __name__ == '__main__':

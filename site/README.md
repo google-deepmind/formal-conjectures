@@ -115,7 +115,7 @@ lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstA
 # Without this, theorem detail pages will lack formatted docstrings and source links.
 # Warning: the literate build step can take a long time (30+ minutes).
 cd docbuild
-lake build FormalConjectures:literate
+lake build FormalConjectures:literate FormalConjecturesForMathlib:literate FormalConjecturesUtil:literate
 lake exe verso-html .lake/build/literate ../_literate_html
 cd ..
 python3 site/fix_literate_html.py _literate_html
