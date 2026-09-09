@@ -1,0 +1,831 @@
+{
+  "schema_version": "fc.review-eval.v2",
+  "environment_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+  "qualification": "All case keys are provisional. Development runs may challenge them; qualification runs require named human adjudication. Public historic fixes are not guaranteed unknown to model training.",
+  "cases": [
+    {
+      "id": "R01",
+      "family": "479",
+      "split": "development",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/479.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab479\u00bb",
+      "candidate": "benchmark-assets/case-01.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/479.lean, focusing on Erdos479.erdos_479. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-479.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "12d8e90ebcb4fdd01979950ac7983003645c0a37",
+        "fix_pr": 5242,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5242"
+        ],
+        "defects": [
+          {
+            "id": "domain",
+            "description": "The source includes integer k other than 1, explicitly discussing k=-1. The old natural k>1 statement omits these cases. A source mismatch is enough; no disproof of the open conjecture is claimed."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R02",
+      "family": "479",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/479.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab479\u00bb",
+      "candidate": "benchmark-assets/case-02.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/479.lean, focusing on Erdos479.erdos_479. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-479.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "9e64bb9b3c01b6ac835a2a7042167ab72c4af11e",
+        "fix_pr": 5242,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5242"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R03",
+      "family": "41",
+      "split": "development",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/41.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab41\u00bb",
+      "candidate": "benchmark-assets/case-03.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/41.lean, focusing on Erdos41.erdos_41 and NtupleCondition. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-41.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "9e64bb9b3c01b6ac835a2a7042167ab72c4af11e",
+        "fix_pr": 5241,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5241"
+        ],
+        "defects": [
+          {
+            "id": "multiplicity",
+            "description": "Finite sets omit repeated summands; uniqueness is required for tuples with multiplicity, modulo permutation. A multiset or equivalent tuple formulation is acceptable."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R04",
+      "family": "41",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/41.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab41\u00bb",
+      "candidate": "benchmark-assets/case-04.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/41.lean, focusing on Erdos41.erdos_41 and NtupleCondition. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-41.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "1c2a184fabcd54426dd875a3bb50acacd7f67bcf",
+        "fix_pr": 5241,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5241"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R05",
+      "family": "354",
+      "split": "development",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/354.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab354\u00bb",
+      "candidate": "benchmark-assets/case-05.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/354.lean, focusing on Erdos354.erdos_354.parts.ii. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-354.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "32a9e4a2a124364493f7f0932661a5b3c2a2b1a1",
+        "fix_pr": 5243,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5243"
+        ],
+        "defects": [
+          {
+            "id": "parameter",
+            "description": "The existential gamma must control the progression ratio in part ii; the old body passes 2 and makes gamma irrelevant."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R06",
+      "family": "354",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/354.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab354\u00bb",
+      "candidate": "benchmark-assets/case-06.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/354.lean, focusing on Erdos354.erdos_354.parts.ii. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-354.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "12d8e90ebcb4fdd01979950ac7983003645c0a37",
+        "fix_pr": 5243,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5243"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R07",
+      "family": "97",
+      "split": "qualification",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/97.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab97\u00bb",
+      "candidate": "benchmark-assets/case-07.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/97.lean, focusing on Erdos97.erdos_97.variants.three_equidistant. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-97.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "2c817e975be7a95478b72a8429155ca568e1a3de",
+        "fix_pr": 5185,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5185"
+        ],
+        "defects": [
+          {
+            "id": "construction",
+            "description": "The displayed B2 coordinates have the wrong x sign and denominator. The claimed nine-point construction must be checked in exact arithmetic; 17747/10927 times sqrt(3) is the corrected x coordinate. Do not infer the open conjecture is false from this defective example."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R08",
+      "family": "97",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/97.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab97\u00bb",
+      "candidate": "benchmark-assets/case-08.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/97.lean, focusing on Erdos97.erdos_97.variants.three_equidistant. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-97.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "c7f31d5fd3d2ca3d69979f2d213eb9b58fe956ae",
+        "fix_pr": 5185,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5185"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R09",
+      "family": "996",
+      "split": "development",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/996.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab996\u00bb",
+      "candidate": "benchmark-assets/case-09.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/996.lean, focusing on Erdos996.erdos_996 and fourierPartial. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-996.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "edccffecbb1e0fb98bf5ad034ee24d297bb69c6f",
+        "fix_pr": 5246,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5246"
+        ],
+        "defects": [
+          {
+            "id": "coefficient",
+            "description": "Each summand must use its summation index i for fourierCoeff, not the truncation bound k."
+          },
+          {
+            "id": "tail",
+            "description": "The hypothesis bounds the norm of f minus its Fourier partial sum, not the norm of the partial sum itself."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R10",
+      "family": "996",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/996.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab996\u00bb",
+      "candidate": "benchmark-assets/case-10.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/996.lean, focusing on Erdos996.erdos_996 and fourierPartial. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-996.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "a9fb8e86c016e2e2758f39c82d053e4b88dbca31",
+        "fix_pr": 5246,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5246"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R11",
+      "family": "757",
+      "split": "development",
+      "kind": "defect",
+      "path": "FormalConjectures/ErdosProblems/757.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab757\u00bb",
+      "candidate": "benchmark-assets/case-11.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/757.lean, focusing on Erdos757.erdos_757 and IsAdmissible. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-757.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "f51298c90e34183ebf7ab8a9d6197ae9eb36a6ed",
+        "fix_pr": 5244,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5244"
+        ],
+        "defects": [
+          {
+            "id": "differences",
+            "description": "The source requires at least five differences for each four-element subset; compare the implemented cardinality bound. Accept any equivalent corrected condition."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R12",
+      "family": "757",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/ErdosProblems/757.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab757\u00bb",
+      "candidate": "benchmark-assets/case-12.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/757.lean, focusing on Erdos757.erdos_757 and IsAdmissible. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-757.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "32a9e4a2a124364493f7f0932661a5b3c2a2b1a1",
+        "fix_pr": 5244,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5244"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R13",
+      "family": "109074",
+      "split": "qualification",
+      "kind": "defect",
+      "path": "FormalConjectures/OEIS/109074.lean",
+      "module": "FormalConjectures.OEIS.\u00ab109074\u00bb",
+      "candidate": "benchmark-assets/case-13.lean",
+      "prompt": "Please review FormalConjectures/OEIS/109074.lean, focusing on OeisA109074.conjecture and its defining sequences. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-A109074.txt",
+        "document-2.txt": "benchmark-assets/source-A005156.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "84063d69421173d491cdae299fe766d3cd66c37c",
+        "fix_pr": 5231,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5231"
+        ],
+        "defects": [
+          {
+            "id": "sequence",
+            "description": "The ratio uses A005156, not the ternary Catalan sequence A001764."
+          },
+          {
+            "id": "index",
+            "description": "The ratio must respect the documented offset. Validate concrete values; allow equivalent indexing conventions with the correct domain."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R14",
+      "family": "109074",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/OEIS/109074.lean",
+      "module": "FormalConjectures.OEIS.\u00ab109074\u00bb",
+      "candidate": "benchmark-assets/case-14.lean",
+      "prompt": "Please review FormalConjectures/OEIS/109074.lean, focusing on OeisA109074.conjecture and its defining sequences. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-A109074.txt",
+        "document-2.txt": "benchmark-assets/source-A005156.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "8824fa7bd45ffac28ef74830eb2fef03a1c39500",
+        "fix_pr": 5231,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5231"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R15",
+      "family": "110854",
+      "split": "qualification",
+      "kind": "defect",
+      "path": "FormalConjectures/OEIS/110854.lean",
+      "module": "FormalConjectures.OEIS.\u00ab110854\u00bb",
+      "candidate": "benchmark-assets/case-15.lean",
+      "prompt": "Please review FormalConjectures/OEIS/110854.lean, focusing on OeisA110854.conjecture and its defining sequence. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-A110854.txt",
+        "document-2.txt": "benchmark-assets/source-A004275.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "27f7d5b62fb86f586a5432bf2de56f99dc9b0aa6",
+        "fix_pr": 5232,
+        "variant": "before",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5232"
+        ],
+        "defects": [
+          {
+            "id": "range",
+            "description": "The target sequence is A004275 (1 together with the nonnegative evens), not unrestricted differences of two primes."
+          }
+        ],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R16",
+      "family": "110854",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/OEIS/110854.lean",
+      "module": "FormalConjectures.OEIS.\u00ab110854\u00bb",
+      "candidate": "benchmark-assets/case-16.lean",
+      "prompt": "Please review FormalConjectures/OEIS/110854.lean, focusing on OeisA110854.conjecture and its defining sequence. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-A110854.txt",
+        "document-2.txt": "benchmark-assets/source-A004275.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "c1bc243e70d0a229aa5b1e07c6577718e30a70ab",
+        "fix_pr": 5232,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5232"
+        ],
+        "defects": [],
+        "notes": "Corrected counterpart is a candidate clean control, not automatically a human-validated clean statement. Check source scope and accept justified additional findings. Qualification remains blocked until adjudicated."
+      }
+    },
+    {
+      "id": "R17",
+      "family": "jacobson",
+      "split": "development",
+      "kind": "clean",
+      "path": "FormalConjectures/Wikipedia/Jacobson.lean",
+      "module": "FormalConjectures.Wikipedia.Jacobson",
+      "candidate": "benchmark-assets/case-17.lean",
+      "prompt": "Can you check Jacobson.jacobson_conjecture in FormalConjectures/Wikipedia/Jacobson.lean against its cited source? Please keep the review focused on that scope.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-jacobson.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+        "variant": "unchanged"
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://en.wikipedia.org/wiki/Jacobson%27s_conjecture"
+        ],
+        "defects": [],
+        "notes": "The modern two-sided Noetherian version is intended; do not demand commutativity or one-sided generality."
+      }
+    },
+    {
+      "id": "R18",
+      "family": "irrational",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/Wikipedia/Irrational.lean",
+      "module": "FormalConjectures.Wikipedia.Irrational",
+      "candidate": "benchmark-assets/case-18.lean",
+      "prompt": "Can you check Irrational.irrational_e_plus_pi in FormalConjectures/Wikipedia/Irrational.lean against its cited source? Please keep the review focused on that scope.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-irrational.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+        "variant": "unchanged"
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://en.wikipedia.org/wiki/Irrational_number"
+        ],
+        "defects": [],
+        "notes": "Review the open irrationality question, not whether a proof of irrationality is supplied."
+      }
+    },
+    {
+      "id": "R19",
+      "family": "ramsey",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/Wikipedia/RamseyNumbers.lean",
+      "module": "FormalConjectures.Wikipedia.RamseyNumbers",
+      "candidate": "benchmark-assets/case-19.lean",
+      "prompt": "Can you check IsGraphRamsey and graphRamseyNumber definitions in FormalConjectures/Wikipedia/RamseyNumbers.lean against its cited source? Please keep the review focused on that scope.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-ramsey.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+        "variant": "unchanged"
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://en.wikipedia.org/wiki/Ramsey_number"
+        ],
+        "defects": [],
+        "notes": "Check the clique/complement formulation and least-number definition. Current numeric bounds elsewhere in the file are outside this scope."
+      }
+    },
+    {
+      "id": "R20",
+      "family": "legendre",
+      "split": "qualification",
+      "kind": "clean",
+      "path": "FormalConjectures/Wikipedia/LegendreConjecture.lean",
+      "module": "FormalConjectures.Wikipedia.LegendreConjecture",
+      "candidate": "benchmark-assets/case-20.lean",
+      "prompt": "Can you check the main Legendre conjecture in FormalConjectures/Wikipedia/LegendreConjecture.lean against its cited source? Please keep the review focused on that scope.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-legendre.txt"
+      },
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+        "variant": "unchanged"
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://en.wikipedia.org/wiki/Legendre%27s_conjecture"
+        ],
+        "defects": [],
+        "notes": "Check the positive domain and strict interval; do not treat sorry as a defect in an open statement."
+      }
+    },
+    {
+      "id": "R21",
+      "family": "jacobson",
+      "split": "development",
+      "kind": "uncertainty",
+      "path": "FormalConjectures/Wikipedia/Jacobson.lean",
+      "module": "FormalConjectures.Wikipedia.Jacobson",
+      "candidate": "benchmark-assets/case-17.lean",
+      "prompt": "Can you check Jacobson.jacobson_conjecture in FormalConjectures/Wikipedia/Jacobson.lean against its cited source? Please keep the review focused on that scope.",
+      "sources": {},
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "d33e35a5f45386a173b31159ae6598b1968bc463",
+        "variant": "source unavailable workflow control"
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://en.wikipedia.org/wiki/Jacobson%27s_conjecture"
+        ],
+        "defects": [],
+        "notes": "Source snapshots are unavailable in this workflow test. Report the missing source check. Internally supported defects may still be reported; do not require silence or declare a confirmed defect false solely because the source is missing."
+      }
+    },
+    {
+      "id": "R22",
+      "family": "354",
+      "split": "development",
+      "kind": "uncertainty",
+      "path": "FormalConjectures/ErdosProblems/354.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab354\u00bb",
+      "candidate": "benchmark-assets/case-06.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/354.lean, focusing on Erdos354.erdos_354.parts.ii. Does the formalisation match the cited problem? Give me the findings I should act on.",
+      "sources": {},
+      "context_policy": "fresh",
+      "context": {},
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "12d8e90ebcb4fdd01979950ac7983003645c0a37",
+        "fix_pr": 5243,
+        "variant": "source unavailable workflow control",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5243"
+        ],
+        "defects": [],
+        "notes": "Source snapshots are unavailable in this workflow test. Report the missing source check. Internally supported defects may still be reported; do not require silence or declare a confirmed defect false solely because the source is missing."
+      }
+    },
+    {
+      "id": "R23",
+      "family": "479",
+      "split": "development",
+      "kind": "rereview",
+      "path": "FormalConjectures/ErdosProblems/479.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab479\u00bb",
+      "candidate": "benchmark-assets/case-02.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/479.lean, focusing on Erdos479.erdos_479. Does the formalisation match the cited problem? Give me the findings I should act on. Reconsider the prior review in /output/prior.txt and explain whether its finding still applies.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-479.txt"
+      },
+      "context_policy": "rereview",
+      "context": {
+        "evidence/prior.txt": "benchmark-assets/context-R23.txt"
+      },
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "9e64bb9b3c01b6ac835a2a7042167ab72c4af11e",
+        "fix_pr": 5242,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5242"
+        ],
+        "defects": [],
+        "notes": "Correct or withdraw the obsolete/incorrect prior claim with source and current-code support. Keep any newly justified finding separate. No prescribed wording."
+      }
+    },
+    {
+      "id": "R24",
+      "family": "41",
+      "split": "development",
+      "kind": "rereview",
+      "path": "FormalConjectures/ErdosProblems/41.lean",
+      "module": "FormalConjectures.ErdosProblems.\u00ab41\u00bb",
+      "candidate": "benchmark-assets/case-04.lean",
+      "prompt": "Please review FormalConjectures/ErdosProblems/41.lean, focusing on Erdos41.erdos_41 and NtupleCondition. Does the formalisation match the cited problem? Give me the findings I should act on. Reconsider the prior review in /output/prior.txt and explain whether its finding still applies.",
+      "sources": {
+        "document-1.txt": "benchmark-assets/source-41.txt"
+      },
+      "context_policy": "rereview",
+      "context": {
+        "evidence/prior.txt": "benchmark-assets/context-R24.txt"
+      },
+      "provenance": {
+        "repository": "google-deepmind/formal-conjectures",
+        "source_commit": "1c2a184fabcd54426dd875a3bb50acacd7f67bcf",
+        "fix_pr": 5241,
+        "variant": "after",
+        "environment_note": "Historical file replayed in pinned current environment; original commits are not exposed to the reviewer."
+      },
+      "gold": {
+        "status": "provisional",
+        "reviewer": null,
+        "evidence": [
+          "https://github.com/google-deepmind/formal-conjectures/pull/5241"
+        ],
+        "defects": [],
+        "notes": "Correct or withdraw the obsolete/incorrect prior claim with source and current-code support. Keep any newly justified finding separate. No prescribed wording."
+      }
+    }
+  ],
+  "assets": {
+    "benchmark-assets/case-01.lean": "5c034287066750c318dae057cf5cfc5021cd958d7a948f2cd78daf136c1ac98e",
+    "benchmark-assets/case-02.lean": "8105ee07351737d4b2b26dfd30b6e013e6495b0f0c221336de15cd3aaf96bca3",
+    "benchmark-assets/case-03.lean": "1dd0aa66fbc3dbf6593a620521012f47a4b25f4c35385f55109f91a0cde160ce",
+    "benchmark-assets/case-04.lean": "28f589f9a2cf81505615055b20762a37889a22560519092a84ae0d9999b006a2",
+    "benchmark-assets/case-05.lean": "f310b23e6255447b842e954e8c3b91b1d7392d08a2260688286897969f5d5c22",
+    "benchmark-assets/case-06.lean": "4d86f1ef94a95d1e392c41b792a299a3d2f6f2ac08d568a98b8da927b89bb200",
+    "benchmark-assets/case-07.lean": "43b60ab56bfb6b6ab17e3d4f03d2ed5abda30b2fe2245abaaa9a505aa9cd2e44",
+    "benchmark-assets/case-08.lean": "99594926ffd4a3ae6d4af01fccda7cd0bd7d2743270cf14d0d1bfd5b21db91af",
+    "benchmark-assets/case-09.lean": "ea029cfcfac48df7f19246007d8f1f59fa136f59d7e745aeb87472a92516a5df",
+    "benchmark-assets/case-10.lean": "7390916c46395732b0ac4d647c160065419905a6386a775f685f50935b393e1a",
+    "benchmark-assets/case-11.lean": "009430a233a92286632de7707d8c341850c93355023a5fabb1e74a5b5c9f99da",
+    "benchmark-assets/case-12.lean": "b83de60c3cc3125475cc1f24621d3d79afbc6a57bae55d835c6bd0b130561b3d",
+    "benchmark-assets/case-13.lean": "6d612ea64a1ad520690265d7fdedcd3e9d3b7750eb29757b8f4ccde6301601d5",
+    "benchmark-assets/case-14.lean": "cd5a2af1993d52ae29df9480d9304cbecae195e24d2ab51a45919806899cfd1e",
+    "benchmark-assets/case-15.lean": "70efea4ef789353a02d2c5be2367d4a64731eb223c30bd714b264e64a3447ba0",
+    "benchmark-assets/case-16.lean": "c4c898aebec14cbaf01112c37de03e8f2328f90cd11a6edd6ea5ad13f4522574",
+    "benchmark-assets/case-17.lean": "bfb2904c9949003a47a8c04fe8ec97c3f0feaf2df310cee53a723ccb60d1d462",
+    "benchmark-assets/case-18.lean": "fce98fcfbac5ce369f72547dfc188498fe393d2b8fddb514a6945a1fd3a33073",
+    "benchmark-assets/case-19.lean": "2f45e25055d5425273423de51436d4d01fe354572fb48289099a0a173f64bbd5",
+    "benchmark-assets/case-20.lean": "b6f9b26f20623420d6c276aa4087b867ee3c330a28b208fe07008ebc2fe8a9ce",
+    "benchmark-assets/context-R23.txt": "471fedad9f9904642b6003d4d7d78963d12d9351ee0d7cd0212c82336883b990",
+    "benchmark-assets/context-R24.txt": "4c70438af94dfac8a7792622b4a1ed616f80c0df7998e519d166d562ae905308",
+    "benchmark-assets/source-354.txt": "14ceecab89e0636fa0555076d5fbf9529d4d49d57139d76402b222719b194311",
+    "benchmark-assets/source-41.txt": "be8b948910748f3a82f3bed97a4e72a230635aedf0258fba67b3d0d68611e0da",
+    "benchmark-assets/source-479.txt": "534e5283f1cf846ef4b1ae4ad84af88945654d1c85e714554ae9ad5022ca5d63",
+    "benchmark-assets/source-757.txt": "a888648946b151382e9004a74a01f8c833ec26aa76f451f52b3c460af21377b7",
+    "benchmark-assets/source-97.txt": "7873ea532fa5a3b136191a369d753830c7d79ae5d1e5d9a9b2aa2aadc2ce7c30",
+    "benchmark-assets/source-996.txt": "647cf3f18c6f060f60dac77a4cc43259af6cc1f62583d3d16a34936f6be2a8d0",
+    "benchmark-assets/source-A004275.txt": "eb3783853b7f466d4e46d1058d047d30ca65d0584948fca924855c2bbe0d6acb",
+    "benchmark-assets/source-A005156.txt": "d6326f49406222f8b9fb43cdee808a45a0928ac231607460c0860531bdd5153c",
+    "benchmark-assets/source-A109074.txt": "9a51728d4232c578a71df4c3a0618ad61b5419ec8d00bdde72b0da98033e59fc",
+    "benchmark-assets/source-A110854.txt": "d339ba9b6fa07b3a1b380c4a275b5b0b6021b9b424e4eaefcdc8264e74980099",
+    "benchmark-assets/source-irrational.txt": "fe0cff916fee6df2a4e16ab251b975d81b538195fbdc853dc8f6bd0d11e79593",
+    "benchmark-assets/source-jacobson.txt": "0ad18dc15c9bad2baebfcb7c4c2f70c24832f5df1ab50510bf0c8ec8c342a6ef",
+    "benchmark-assets/source-legendre.txt": "40f056d7a8d81937ddb3801cb4b1e5fc294b03f6528083e8ec45029a4297c683",
+    "benchmark-assets/source-ramsey.txt": "39329d10e10905b8adc8aa4e89bd842c3058fae68ac8c938db987dd6b3e43eb7"
+  }
+}
