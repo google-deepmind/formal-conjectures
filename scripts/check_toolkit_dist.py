@@ -25,12 +25,13 @@ def check(wheel):
         subprocess.run(['uv','venv','--python',sys.executable,str(root/'venv')],check=True,env=env)
         python=root/'venv/bin/python';exe=root/'venv/bin/conjectures'
         subprocess.run(['uv','pip','install','--python',str(python),str(wheel)],check=True,env=env)
-        catalog=root/'catalog.json';catalog.write_text(json.dumps({'schemaVersion':2,'problems':[{'theorem':'Example.self','module':'FormalConjectures.Example','statement':'True'}]}))
+        catalog=root/'catalog.json';catalog.write_text(json.dumps({'schemaVersion':2,'problems':[{'theorem':'Example.self','module':'FormalConjectures.Example','statement':'∀ n : Nat, n = n'}]}))
         for args in [[],['--help'],['help','review','prepare'],['--version'],['doctor','--json'],['find','Example','--catalog',str(catalog),'--json'],['show','Example.self','--catalog',str(catalog)]]:
             result=subprocess.run([str(exe),*args],cwd=root,env=env,capture_output=True,text=True)
             assert result.returncode==0,(args,result.stdout,result.stderr)
             if '--json' in args:assert json.loads(result.stdout)['command_status']=='success'
             else:assert not result.stdout.startswith('{'),args
+            if args[:1]==['show']:assert '∀ n : Nat, n = n' in result.stdout,result.stdout
         subprocess.run([str(python),'-c','import importlib.util; assert importlib.util.find_spec("mcp") is None; from conjectures.review import skill_path; assert (skill_path()/"SKILL.md").is_file()'],cwd=root,env=env,check=True)
     print('Wheel installation, resources, outside-checkout commands, and no-model runtime passed.')
 
