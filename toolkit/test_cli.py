@@ -14,6 +14,16 @@ from test_toolkit import ToolkitFixture
 
 
 class CLITests(ToolkitFixture):
+    def test_pr_check_noop_does_not_require_review_coverage_or_build(self):
+        from conjectures import review
+        self.repository()
+        with patch.object(review,'prepare',return_value={'no_changed_modules':True}) as prepare,patch.object(review,'build') as build:
+            code,out,_=self.invoke('--repo',str(self.root),'check','--pr','1','--json')
+        self.assertEqual(code,0)
+        self.assertEqual(json.loads(out)['reason'],'no_changed_modules')
+        self.assertFalse(prepare.call_args.kwargs['semantic_review'])
+        build.assert_not_called()
+
     def test_native_catalog_preferred_and_projection_fallback_only_on_404(self):
         native={'schemaVersion':2,'problems':[]}
         with patch.object(catalog,'user_cache',return_value=self.root/'native'),patch.object(catalog.urllib.request,'urlopen',return_value=io.BytesIO(json.dumps(native).encode())) as network:
