@@ -764,12 +764,8 @@ async function main() {
   console.log('Building Formal Conjectures website...');
 
   // Read raw data
-  let rawData = [];
-  if (fs.existsSync('data/conjectures.json')) {
-    const parsed = JSON.parse(fs.readFileSync('data/conjectures.json', 'utf8'));
-    // extract_names outputs { problems: [...], moduleDocstrings: {...} }
-    rawData = parsed.problems || [];
-  }
+  const catalog = require('./catalog.cjs').readCatalog('data');
+  const rawData = catalog.problems;
 
   if (rawData.length === 0) {
     console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first.');
@@ -806,7 +802,7 @@ async function main() {
   ensureDir('site/data');
   fs.writeFileSync(
     'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
+    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors, catalogProvenance: catalog.provenance }),
   );
   const evidencePath = 'data/evidence.json';
   fs.writeFileSync('site/data/evidence.json', fs.existsSync(evidencePath)
@@ -815,6 +811,7 @@ async function main() {
   // Retain the native extract for CLI, status, and link consumers. The existing
   // browser projection and its field meanings remain unchanged.
   fs.copyFileSync('data/conjectures.json', 'site/data/catalog.json');
+  fs.copyFileSync('data/catalog-manifest.json', 'site/data/catalog-manifest.json');
   const whitePlotPath = path.join('data', 'file_counts_white.html');
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');

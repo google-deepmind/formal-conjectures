@@ -1,48 +1,86 @@
-"""Consume the published native extraction without parsing Lean syntax."""
+"""Download and cache the published Lean catalog without parsing Lean syntax."""
 import re
 import urllib.request
 import urllib.error
+from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urljoin
 from . import report as rr
+from . import catalog_data
 from .metadata import metadata_rows
-from .core import Failure, command, git, save, now, user_cache
-URL = 'https://google-deepmind.github.io/formal-conjectures/data/conjectures.json'
-NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/catalog.json'
+from .core import Failure, save, now, user_cache
 
-def load(root, path=None):
-    cache = root/'.conjectures' if root else user_cache()
-    candidates = [Path(path)] if path else [cache/'catalog.json', *([root/'site/data/catalog.json', root/'site/data/conjectures.json'] if root else [])]
-    for candidate in candidates:
-        if candidate.is_file():
-            value = rr.read_json(candidate); break
-    else:
-        if path:
-            raise Failure('catalog_missing', 'Catalog file does not exist: '+str(path))
-        url = NATIVE_URL
-        try:
-            response = urllib.request.urlopen(url, timeout=30)
-        except urllib.error.HTTPError as error:
-            if error.code != 404:
-                raise
-            url = URL
-            response = urllib.request.urlopen(url, timeout=30)
-        with response:
-            raw = response.read(32*1024*1024+1)
-        if len(raw)>32*1024*1024: raise Failure('invalid_catalog','Catalog too large')
-        value = rr.parse(raw)
-        save(cache/'catalog.json',value)
-        save(cache/'catalog-origin.json',{'url':url,'retrieved_at':now(),'sha256':rr.digest(raw),
-             'applicability':'Published catalog; init resolves and checks the source commit separately.'})
-    if 'conjectures' in value:
-        # The live website projection omits statement text and proof-term observations.
-        # Preserve that absence rather than manufacturing complete native metadata.
-        return {'schemaVersion': 2, 'projection': 'website', 'problems': [
-            {**p, 'subjects': [s['code'] if isinstance(s,dict) else s for s in p.get('subjects',[])]}
-            for p in value['conjectures']], 'coverage_gaps': ['Published website projection omits statement text; supply --catalog with the full native extract.']}
-    if value.get('schemaVersion') != 2 or not isinstance(value.get('problems'),list):
-        raise Failure('unsupported_catalog','Expected native extraction schemaVersion 2')
+NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/catalog.json'
+MANIFEST_URL = NATIVE_URL.replace('catalog.json','catalog-manifest.json')
+MAX_BYTES = 64*1024*1024
+MAX_AGE = 24*60*60
+
+
+def read_url(url, limit=MAX_BYTES):
+    with urllib.request.urlopen(url,timeout=15) as response:
+        raw=response.read(limit+1)
+    if len(raw)>limit:raise ValueError('Catalog response is too large')
+    return raw
+
+
+def normalize(value):
+    if not isinstance(value,dict) or not isinstance(value.get('problems'),list):
+        raise ValueError('Expected the native schema-2 problems catalog')
     metadata_rows(value)
     return value
+
+
+def result(data, origin, state):
+    data=normalize(data)
+    gaps=list(data.get('coverage_gaps',[]))
+    if any(not p.get('statement') for p in data['problems']):
+        gaps.append('This catalog omits statement text. Generate a complete native extract without excluding statements.')
+    if not data.get('provenance'):
+        gaps.append('The source revision is unavailable; this catalog cannot establish evidence applicability.')
+    if state=='stale':gaps.append('Catalog refresh failed; showing the retained snapshot. Retry with --refresh when online.')
+    if state in ('fresh','cached','offline','stale'):
+        origin={**origin,'includes_local_changes':False}
+    return {**data,'coverage_gaps':gaps,'catalog_origin':{**origin,'state':state}}
+
+
+def load(root, path=None, *, refresh=False, offline=False):
+    if path:
+        path=Path(path)
+        if not path.is_file():raise Failure('catalog_missing','Catalog file does not exist: '+str(path))
+        return result(rr.read_json(path),{'path':str(path)},'explicit')
+    cache=user_cache()/'catalog-cache.json'
+    retained=None
+    if cache.is_file():
+        try:
+            envelope=rr.read_json(cache)
+            data=catalog_data.verify(envelope['descriptor'],envelope['raw'].encode())
+            retained=(data,envelope['origin'])
+            age=(datetime.now(timezone.utc)-datetime.fromisoformat(envelope['origin']['retrieved_at'])).total_seconds()
+            if offline or not refresh and 0<=age<MAX_AGE:
+                return result(*retained,'offline' if offline else 'cached')
+        except (ValueError,KeyError,TypeError):pass
+    if offline:
+        if retained:return result(*retained,'offline')
+        raise Failure('catalog_unavailable','No cached catalog. Run conjectures find erdos/92 while online first.',4)
+    try:
+        descriptor=rr.parse(read_url(MANIFEST_URL,1024*1024))
+        # The descriptor can only select the sibling catalog, never an arbitrary URL.
+        if descriptor.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
+        raw=read_url(urljoin(MANIFEST_URL,'catalog.json'))
+        data=catalog_data.verify(descriptor,raw)
+        origin={'url':NATIVE_URL,'manifest_url':MANIFEST_URL,'retrieved_at':now(),'sha256':rr.digest(raw)}
+        save(cache,{'schema_version':'fc.catalog-cache.v1','descriptor':descriptor,'raw':raw.decode(),'origin':origin})
+        return result(data,origin,'fresh')
+    except urllib.error.HTTPError as error:
+        if error.code!=404:
+            if retained:return result(*retained,'stale')
+            raise Failure('catalog_unavailable',f'Catalog download failed (HTTP {error.code}). Retry with --refresh.',4) from error
+        if retained:return result(*retained,'stale')
+        raise Failure('catalog_not_published','The full catalog is not published yet. Browsing requires FC #5375 to merge and deploy. Use --catalog FILE only for an explicitly generated native extract.',4) from error
+    except (OSError,ValueError,TypeError) as error:
+        if retained:return result(*retained,'stale')
+        raise Failure('catalog_unavailable','Cannot obtain a validated catalog: '+str(error)+'. Retry with --refresh.',4) from error
+
 
 def matches(catalog, query):
     words = query.casefold().split()
@@ -63,7 +101,7 @@ def select(catalog, query):
     return found[0]
 
 
-def attach_evidence(problems, root, cfg):
+def attach_evidence(problems, root, cfg, source=None, *, offline=False):
     import importlib.util
     if importlib.util.find_spec("conjectures.projections") is None:
         return [{**p,"evidence":[]} for p in problems]
@@ -72,7 +110,7 @@ def attach_evidence(problems, root, cfg):
     index=None
     path=root/'.conjectures/evidence-index.json' if root else None
     if path and path.is_file():index=rr.read_json(path)
-    elif cfg.get('evidence'):
+    elif cfg.get('evidence') and not offline:
         destination=cfg['evidence'];repo=destination.get('repository','');branch=destination.get('branch','')
         if re.fullmatch(r'[\w.-]+/[\w.-]+',repo) and branch:
             try:
@@ -81,9 +119,5 @@ def attach_evidence(problems, root, cfg):
                 if len(raw)<=8*1024*1024:index=rr.parse(raw)
             except (OSError,ValueError):pass
     if not isinstance(index,dict) or index.get('schema_version')!='fc.evidence-index.v1':index={'runs':[]}
-    revision=None
-    if root:
-        try:
-            if not git(root,'status','--porcelain').strip():revision=git(root,'rev-parse','HEAD').decode().strip()
-        except Failure:pass
-    return [{**p,'evidence':evidence_for(p,index,revision)} for p in problems]
+    source=source or {}
+    return [{**p,'evidence':evidence_for(p,index,source.get('commit'),source.get('repository'))} for p in problems]

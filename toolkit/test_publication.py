@@ -10,6 +10,25 @@ from conjectures import core, evidence, report as rr, review
 import test_review_lifecycle as lifecycle
 
 
+class CatalogEvidenceTests(unittest.TestCase):
+    def test_exact_repository_revision_and_variant_joins(self):
+        from conjectures.projections import evidence_for
+        from test_catalog import native
+        problem={**native()['problems'][0],'githubPath':'FormalConjectures/ErdosProblems/92.lean'}
+        run={'kind':'verify','target':{'repository':'owner/fc','commit':'a'*40,
+             'module':problem['module'],'declaration':problem['theorem']},'created_at':'today'}
+        index={'runs':[run]}
+        self.assertEqual(evidence_for(problem,index,'a'*40,'owner/fc')[0]['applicability'],'current')
+        self.assertEqual(evidence_for(problem,index,'c'*40,'owner/fc')[0]['applicability'],'historical')
+        self.assertEqual(evidence_for(problem,index,'a'*40,'other/fc'),[])
+        self.assertEqual(evidence_for({**problem,'theorem':'weak'},index,'a'*40,'owner/fc'),[])
+        self.assertEqual(evidence_for(problem,index,'a'*40)[0]['applicability'],'unconfirmed')
+        run['target']['repository']='https://github.com/owner/fc.git'
+        run['target']['module']='«FormalConjectures».«ErdosProblems».«92»'
+        self.assertEqual(evidence_for(problem,index,'a'*40,'owner/fc')[0]['applicability'],'current')
+
+
+
 class PublicationTests(unittest.TestCase):
     def setUp(self):
         self.fixture=lifecycle.ReviewLifecycleTests('test_complete_external_report_without_model_credentials')

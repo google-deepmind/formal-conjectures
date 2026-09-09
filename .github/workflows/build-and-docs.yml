@@ -178,7 +178,7 @@ jobs:
       - name: Build problems
         if: steps.mode.outputs.website_only != 'true'
         run: |
-          python3 scripts/lake-build-wrapper.py /tmp/build_summary_problems.json lake --wfail build
+          python3 scripts/lake-build-wrapper.py /tmp/build_summary_problems.json lake --wfail build FormalConjecturesAnswerPostpone
           rm -f FormalConjectures/All.lean
 
       - name: End Lean problem matcher
@@ -269,6 +269,18 @@ jobs:
           mkdir -p site/data
           lake exe extract_names --exclude=fileFirstAdded,fileLastModified \
             > site/data/conjectures.json
+          python3 scripts/publish_catalog.py site/data/conjectures.json \
+            --repository "$GITHUB_REPOSITORY" --out site/data
+          cp site/data/catalog.json site/data/conjectures.json
+
+      - name: Retain the complete catalog for qualification
+        if: steps.mode.outputs.website_only != 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-catalog
+          path: |
+            site/data/catalog.json
+            site/data/catalog-manifest.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
       # and `test`/`API` statements without one, all decidable from the JSON just
@@ -283,49 +295,16 @@ jobs:
         run: |
           python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
 
-      # In website-only mode, download data from the live production site
-      # instead of building it from scratch. The live site serves the processed
-      # format ({ conjectures, versoFragments, ... }), so we convert it back to
-      # the raw extract_names format ({ problems }) that build.js expects.
+      # A preview reuses an exact published native snapshot, including its original
+      # revision. The smaller browser projection cannot reconstruct that data.
       - name: Download live site data
         if: steps.mode.outputs.website_only == 'true'
         run: |
           LIVE_URL="https://google-deepmind.github.io/formal-conjectures"
           mkdir -p site/data _literate_html
-          echo "Downloading conjectures data from $LIVE_URL ..."
-          curl -sfL "$LIVE_URL/data/conjectures.json" -o /tmp/live_conjectures.json
-          echo "Downloading growth plots from $LIVE_URL ..."
+          python3 scripts/download_catalog.py --out site/data
           curl -sfL "$LIVE_URL/data/file_counts_white.html" -o site/data/file_counts_white.html || true
           curl -sfL "$LIVE_URL/data/file_counts_dark.html" -o site/data/file_counts_dark.html || true
-          node -e "
-            const fs = require('fs');
-            const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
-
-            // Convert processed conjectures back to raw extract_names format
-            const problems = (data.conjectures || []).map(c => ({
-              theorem: c.theorem,
-              module: c.module,
-              category: c.category,
-              subjects: (c.subjects || []).map(s =>
-                typeof s === 'object' ? s.code : s
-              ),
-              formalProofs: c.formalProofs || [],
-              hasSorryFreeProof: false,
-            }));
-            fs.writeFileSync(
-              'site/data/conjectures.json',
-              JSON.stringify({ problems })
-            );
-
-            // Extract Verso fragments if present
-            if (data.versoFragments) {
-              fs.writeFileSync(
-                'site/data/verso-fragments.json',
-                JSON.stringify(data.versoFragments)
-              );
-            }
-            console.log('Converted ' + problems.length + ' conjectures to raw format.');
-          "
 
       - name: Build website
         if: steps.mode.outputs.site == 'true'
