@@ -87,11 +87,11 @@ theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
   sorry
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
-Problem: the $L$-series has a meromorphic continuation whose order at $s = 1$ is
-$\operatorname{rank}_{\mathbb{Z}} E(\mathbb{Q})$. -/
+Problem: a meromorphic continuation of the $L$-series of an elliptic curve over $\mathbb{Q}$ has
+order $\operatorname{rank}_{\mathbb{Z}} E(\mathbb{Q})$ at $s = 1$. -/
 @[category research open, AMS 11 14]
-theorem birch_and_swinnerton_dyer_conjecture.variants.rat :
-    ∃ L, IsLFunction E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
+theorem birch_and_swinnerton_dyer_conjecture_rat (L : ℂ → ℂ) (hL : IsLFunction E L) :
+    meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
   sorry
 
 end Rat
