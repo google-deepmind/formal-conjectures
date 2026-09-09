@@ -252,20 +252,34 @@ def scratch(directory, configuration, record, arguments, supplied=None):
             'evidence':'evidence/scratch/'+identity+'.json', **result}
 
 
-def applicability(root, ticket):
+def observe(root, ticket):
+    """A current observation never rewrites the retained review or its outcome."""
+    result = {'observed_at':now(), 'applicability':'unconfirmed', 'changes':[],
+              'scope':'Target head/base and local snapshot only; sources and procedure remain frozen.',
+              'expected':{k:ticket[k] for k in ('head','base','tree','workspace_head') if k in ticket}}
     try:
         if ticket.get('pr'):
             detail = github(f"repos/{ticket['repository']}/pulls/{ticket['pr']}")
-            current = detail['state']=='open' and detail['head']['sha']==ticket['head'] and detail['base']['sha']==ticket['base']
+            actual = {'head':detail['head']['sha'], 'base':detail['base']['sha'], 'state':detail['state']}
+            for key in ('head','base'):
+                if actual[key] != ticket[key]:result['changes'].append(key+'_changed')
+            if actual['state'] != 'open':result['changes'].append('pr_'+actual['state'])
         elif ticket.get('workspace_head') and ticket.get('tree'):
             head, _ = snapshot(root, ticket['base_ref'])
-            current = (git(root,'rev-parse','HEAD').decode().strip()==ticket['workspace_head'] and
-                git(root,'rev-parse',head+'^{tree}').decode().strip()==ticket['tree'] and
-                git(root,'rev-parse',ticket['base_ref']).decode().strip()==ticket['base'])
-        else: return 'unconfirmed'
-        return 'current' if current else 'historical'
-    except (Failure, OSError, subprocess.SubprocessError):
-        return 'unconfirmed'
+            actual = {'workspace_head':git(root,'rev-parse','HEAD').decode().strip(),
+                      'tree':git(root,'rev-parse',head+'^{tree}').decode().strip(),
+                      'base':git(root,'rev-parse',ticket['base_ref']).decode().strip()}
+            for key in actual:
+                if actual[key] != ticket[key]:result['changes'].append(key+'_changed')
+        else:
+            return {**result,'reason':'target_observation_unavailable'}
+        return {**result,'actual':actual,'applicability':'historical' if result['changes'] else 'current'}
+    except (Failure, OSError, subprocess.SubprocessError, KeyError, TypeError) as error:
+        return {**result,'reason':'freshness_unavailable','message':str(error)}
+
+
+def applicability(root, ticket):
+    return observe(root,ticket)['applicability']
 
 
 def complete(root, directory, record, report_path, supplied=None):
@@ -281,7 +295,12 @@ def complete(root, directory, record, report_path, supplied=None):
     # Let the contract validator reject malformed structures before enforcing source coverage.
     evidence = {'evidence/build.json':rr.encode(receipt)}
     if (directory/'scratch').exists(): evidence |= bounded_files(directory/'scratch', 'evidence/scratch')
-    if supplied: evidence |= bounded_files(supplied, 'evidence/operator')
+    if supplied:
+        evidence |= bounded_files(supplied, 'evidence/operator')
+        attribution=evidence.get('evidence/operator/reviewer-attributions.json')
+        if attribution:
+            from .attributions import validate
+            validate(rr.parse(attribution),request['id'],lambda path:evidence['evidence/operator/'+path])
     _, inputs = rr.load_request(directory/'input')
     rr.validate_review(result, request, inputs | evidence)
     if ticket['source_collection']['coverage'] == 'incomplete':

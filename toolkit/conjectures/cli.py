@@ -51,20 +51,16 @@ def dispatch(args):
         if args.command=='run':
             if args.status:records=[r for r in records if r['status']==args.status]
             records=records[:args.limit]
-        actions=[]
-        for r in records:
-            if r['status']=='awaiting_review':actions.append('Complete review draft: conjectures review finish '+r['id'])
-            elif r['status'] in ('queued','in_progress','cancellation_requested','running') and r['kind']=='verify':actions.append('Retrieve verification: conjectures run wait '+r['id'])
-            elif r.get('outcome') in ('fail','error','incomplete'):actions.append('Inspect coverage/result: conjectures run show '+r['id'])
-        return {'outcome':'pass','runs':records,'next_actions':actions,
+        from .inspection import next_action
+        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete')]
+        actions=[next_action(r) for r in outstanding]
+        return {'outcome':'pass','runs':records,'outstanding':len(outstanding),'next_actions':actions,
                 'next_action':None if records else 'Try conjectures review --pr 4941, or conjectures doctor --for review.'}
     if args.command=='run':
         directory=run_dir(root,args.run,readonly=args.operation!='cancel');record=rr.read_json(directory/'run.json')
         if args.operation=='show':
-            if record['kind']=='review' and record.get('target'):
-                from .review import applicability
-                return {**record,'current_applicability':applicability(root,record['target'])}
-            return record
+            from .inspection import show
+            return show(root,directory,record)
         if args.operation=='logs':
             from .inspection import logs
             return logs(directory,record,args.artifact)
