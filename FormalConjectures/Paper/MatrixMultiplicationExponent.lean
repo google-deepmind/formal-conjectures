@@ -103,9 +103,9 @@ theorem matrix_multiplication_exponent_alphaevolve :
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
 @[category research open, AMS 15 68]
-theorem matrix_multiplication_exponent_two {ε : ℝ} (hε : 0 < ε) :
+theorem matrix_multiplication_exponent_two {ε : ℝ} (hε : 2 < p) :
     (fun n : ℕ ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
-      (fun n : ℕ ↦ (n : ℝ) ^ (2 + ε)) := by
+      (fun n : ℕ ↦ (n : ℝ) ^ p) := by
   sorry
 
 end MatrixMultiplicationExponent
