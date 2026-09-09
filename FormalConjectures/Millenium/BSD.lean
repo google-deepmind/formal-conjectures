@@ -39,26 +39,23 @@ import FormalConjecturesUtil
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
 -/
 
-namespace BirchSwinnertonDyer
-
-open scoped Topology
+namespace BSD
 
 section NumberField
 
 variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
 
 def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+  Differentiable ℂ L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
 
+/-- An $L$-function is determined by the $L$-series it continues: two entire functions agreeing
+on $\operatorname{Re} s > 3/2$ agree everywhere, by the identity theorem. -/
 @[category API, AMS 11 14]
-theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L')
-    (x : ℂ) : L =ᶠ[𝓝[≠] x] L' := by
-  have h2 : meromorphicOrderAt (L - L') 2 = ⊤ := meromorphicOrderAt_eq_top_iff.2 <|
-    Filter.Eventually.mono (nhdsWithin_le_nhds <| (Complex.isOpen_re_gt (3 / 2)).mem_nhds
-      (by norm_num)) fun s hs => sub_eq_zero.2 ((hL.2 s hs).trans (hL'.2 s hs).symm)
-  have key : meromorphicOrderAt (L - L') x = ⊤ := not_not.1 fun hx =>
-    (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
-  exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs => sub_eq_zero.1 hs
+theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L') :
+    L = L' :=
+  AnalyticOnNhd.eq_of_eventuallyEq (fun z _ => hL.1.analyticAt z) (fun z _ => hL'.1.analyticAt z)
+    (z₀ := 2) <| Filter.Eventually.mono ((Complex.isOpen_re_gt (3 / 2)).mem_nhds (by norm_num))
+      fun s hs => (hL.2 s hs).trans (hL'.2 s hs).symm
 
 /-- **Hasse--Weil conjecture**: the $L$-function of an elliptic curve over a number field extends
 to the whole plane. -/
@@ -80,7 +77,7 @@ theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
 end Rat
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
-curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
+curve $E$ over $K$, the analytic continuation of its $L$-series has order
 $\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$.
 
 The rank is `AddCommGroup.freeRank`, which requires $E(K)$ to be finitely generated. That is the
@@ -102,4 +99,4 @@ Problem. -/
 theorem weak_birch_swinnerton_dyer_conjecture_rat : Weak ℚ := by
   sorry
 
-end BirchSwinnertonDyer
+end BSD
