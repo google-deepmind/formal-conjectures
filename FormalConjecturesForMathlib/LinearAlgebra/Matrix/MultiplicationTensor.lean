@@ -83,8 +83,7 @@ theorem cprank_matrixMulTensor_le (l m n : ℕ) :
   exact cprankMax_1 (.cons _ _ (.cons _ _ (cprankMax1_singleton _)))
 
 @[simp]
-theorem cprank_matrixMulTensor_zero : (matrixMulTensor R 0 0 0).cprank = 0 :=
-  Nat.eq_zero_of_le_zero (by simpa using cprank_matrixMulTensor_le R 0 0 0)
+theorem cprank_zero : (0 :  Holor R l).cprank = 0 :=
 
 variable {R}
 
