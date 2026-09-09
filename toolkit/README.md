@@ -6,22 +6,30 @@ arrives in its sibling PR; release-wheel examples install the combined fork cand
 `conjectures` browses FC problems, prepares contribution reviews for your existing
 agent, and retains reports and proof evidence. It needs no AI login or model
 configuration. Your agent conducts semantic review; the CLI handles deterministic
-operations. Version 0.2.0rc1 is a **fork release candidate**. Proof verification and
+operations. Version 0.2.0rc2 is a **fork release candidate**. Proof verification and
 public evidence are experimental pending the full acceptance journeys.
 
 ## Try or install
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first. On macOS
+with Homebrew, run `brew install uv`. The official macOS/Linux installer is:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Restart your shell after installation. `--python 3.11` selects the tested Python
+version; uv can download it when it is unavailable locally.
 Try without permanently installing the toolkit:
 
 ```sh
-uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc1/formal_conjectures_toolkit-0.2.0rc1-py3-none-any.whl conjectures doctor
+uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc2/formal_conjectures_toolkit-0.2.0rc2-py3-none-any.whl conjectures doctor
 ```
 
 Install for regular use:
 
 ```sh
-uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc1/formal_conjectures_toolkit-0.2.0rc1-py3-none-any.whl
+uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc2/formal_conjectures_toolkit-0.2.0rc2-py3-none-any.whl
 conjectures find erdos/730
 conjectures show erdos/730
 ```
@@ -29,6 +37,12 @@ conjectures show erdos/730
 These browsing commands and `doctor` work without a checkout, Lean, Docker, or
 GitHub login. An unavailable statement or evidence feed is shown explicitly.
 Supported systems are macOS and Linux, including WSL. Native Windows is not supported.
+
+To reproduce the qualified RC1 Git revision directly:
+
+```sh
+uv tool install --python 3.11 "git+https://github.com/williamjblair/formal-conjectures.git@9c8f6c25de7d73d8f285ece597ee6a727cd81fdd"
+```
 
 For local development, run `uv tool install --editable .` inside this repository.
 If `conjectures` is not found, run `uv tool update-shell` and restart your shell.
