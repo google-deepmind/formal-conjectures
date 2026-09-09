@@ -16,11 +16,11 @@ limitations under the License.
 
 import FormalConjecturesUtil
 
-open CategoryTheory Abelian Limits
-
 /-!
 TODO
 -/
+
+open CategoryTheory Abelian Limits
 
 universe u v w
 
@@ -73,11 +73,8 @@ lemma vStrongImplyStrong: (∀ S: ModuleCat A, Module.Finite A S → Simple S �
     (hX := (hb _ this)) _ _ _ (le_of_lt hn.1 ) _
 
 @[category test, AMS 16 18]
-lemma StrongImplyNormal: (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → strongNoLoopStatement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → noLoopStatement A) := by
-  intro h S fS sS neZS n
-  use S
-  refine ⟨fS,?_⟩
+lemma StrongImplyNormal: (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → strongNoLoopStatement S ) → (∀ S: ModuleCat A, Module.Finite A S → Simple S → Ext1NeZ S → noLoopStatement A) := fun  h S fS sS neZS n => ⟨S,⟨fS,by
   rw [ h S fS sS neZS]
-  apply WithBot.LT.coe_lt_coe <| ENat.natCast_lt_top n
+  apply WithBot.LT.coe_lt_coe <| ENat.natCast_lt_top n⟩⟩
 
 end NoLoopsConjectures
