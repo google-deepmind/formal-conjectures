@@ -12,6 +12,8 @@ site/site/
 # Generated or downloaded website data
 site/data/conjectures.json
 site/data/verso-fragments.json
+site/data/catalog.json
+site/data/catalog-manifest.json
 
 # Generated all-imports file
 FormalConjectures.lean
