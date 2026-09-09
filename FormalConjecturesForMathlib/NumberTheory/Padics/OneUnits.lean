@@ -14,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import FormalConjecturesForMathlib.Leopoldt.NumberTheory.Padics.ExpLog
+public import Mathlib.Analysis.Normed.Field.Ultra
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.Topology.Algebra.ConstMulAction
+public import Mathlib.Topology.Algebra.Constructions
 
 /-!
 # `p`-adic powers of principal units
 
-Let `K` be a complete ultrametric field of characteristic zero with `‖p‖ < 1`, for instance a
-finite extension of `ℚ_p`, the field `ℂ_[p]`, or the completion of a number field at a prime
-above `p`. The principal units, or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` form a
-pro-`p` group: `u ^ (p ^ k) → 1`. Hence a principal unit `x` has `p`-adic powers
+Let `K` be a complete ultrametric field with `‖p‖ < 1`, for instance a finite extension of `ℚ_p`,
+the field `ℂ_[p]`, or the completion of a number field at a prime above `p`. The principal units,
+or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` form a pro-`p` group: `u ^ (p ^ k) → 1`
+(`IsUltrametricDist.tendsto_pow_pow_sub_one`). Hence a principal unit `x` has `p`-adic powers
 `x ^ a = lim x ^ aₙ` for `a ∈ ℤ_p` and integers `aₙ → a`, and `Additive (oneUnits K)` is a
 `ℤ_[p]`-module. Mathlib has no such module structure.
 
@@ -35,13 +39,19 @@ pro-`p` group: `u ^ (p ^ k) → 1`. Hence a principal unit `x` has `p`-adic powe
 
 ## Main results
 
+* `IsUltrametricDist.norm_mul_sub_one_lt`, `IsUltrametricDist.norm_inv_sub_one`: the open unit
+  disc around `1` is a group.
+* `IsUltrametricDist.norm_pow_pow_sub_one_le`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power
+  map contracts towards `1` by the factor `max c ‖n‖` at each step, uniformly in `u`. Hence
+  `IsUltrametricDist.tendsto_pow_pow_sub_one`: `u ^ (n ^ k) → 1` for a `1`-unit `u` when
+  `‖n‖ < 1`.
 * `OneUnits.tendsto_zpow_of_tendsto`: `x ^ cₙ → x ^ a` for any integers `cₙ → a` in `ℤ_p`.
 * `OneUnits.zpPow_add`, `OneUnits.zpPow_mul`, `OneUnits.mul_zpPow`: the exponent rules.
 * `OneUnits.norm_zpPow_sub_zpPow_le`, `OneUnits.continuous_zpPow`: `x ^ a` is `1`-Lipschitz in
-  `x` and continuous in `a`.
-* `OneUnits.norm_pow_pow_sub_one_le`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power map
-  contracts towards `1` by the factor `max c ‖n‖` at each step, uniformly in `u`.
-* `OneUnits.natCast_smul`, `OneUnits.intCast_smul`: integer `p`-adic powers are ordinary powers.
+  `x` and continuous in `a`. Hence the scalar action is continuous in both arguments:
+  `OneUnits.continuous_smul_const` and the `ContinuousConstSMul ℤ_[p] (Additive (oneUnits K))`
+  instance, so `Additive (oneUnits K)` is a topological `ℤ_[p]`-module.
+* `OneUnits.natCast_smul`: natural `p`-adic powers are ordinary powers.
 * `OneUnits.tendsto_appr_nsmul`: `a • u = lim (a.appr n) • u` on the module side.
 * `AddSubgroup.smul_mem_of_isClosed`: closed subgroups are `ℤ_[p]`-submodules.
 
@@ -75,25 +85,41 @@ theorem PadicInt.tendsto_appr {p : ℕ} [hp : Fact p.Prime] (a : ℤ_[p]) :
   exact squeeze_zero (fun n ↦ norm_nonneg _) hb
     (tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) hp1)
 
-/-- The principal units, or `1`-units, of an ultrametric normed field: the units `u` with
-`‖u - 1‖ < 1`. [Con, p. 27]. -/
-def oneUnits (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K] : Subgroup Kˣ where
-  carrier := {u | ‖(u : K) - 1‖ < 1}
-  mul_mem' hu hv := PadicExpLog.norm_mul_sub_one_lt hu hv
-  one_mem' := by simp
-  inv_mem' {u} hu := by
-    show ‖((u⁻¹ : Kˣ) : K) - 1‖ < 1
-    rw [Units.val_inv_eq_inv_val, PadicExpLog.norm_inv_sub_one hu]
-    exact hu
-
-namespace OneUnits
-
-section Norm
+namespace IsUltrametricDist
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 
-@[simp]
-theorem mem_oneUnits_iff {u : Kˣ} : u ∈ oneUnits K ↔ ‖(u : K) - 1‖ < 1 := Iff.rfl
+/-- A `1`-unit has norm one: `‖1 + x‖ = 1` as soon as `‖x‖ < 1`. -/
+theorem norm_eq_one_of_norm_sub_one_lt_one {u : K} (hu : ‖u - 1‖ < 1) : ‖u‖ = 1 := by
+  have h : u = 1 + (u - 1) := by ring
+  rw [h, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [norm_one]; exact hu.ne'),
+    norm_one, max_eq_left hu.le]
+
+/-- `‖xy - 1‖ = ‖(x - 1)y + (y - 1)‖ ≤ max (‖x - 1‖ ‖y‖) ‖y - 1‖ < 1`. [Con, p. 27]. -/
+theorem norm_mul_sub_one_lt {u v : K} (hu : ‖u - 1‖ < 1) (hv : ‖v - 1‖ < 1) :
+    ‖u * v - 1‖ < 1 := by
+  have h : u * v - 1 = (u - 1) * v + (v - 1) := by ring
+  rw [h]
+  refine lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ?_ hv)
+  rw [norm_mul, norm_eq_one_of_norm_sub_one_lt_one hv, mul_one]
+  exact hu
+
+/-- `‖1/x - 1‖ = ‖(1 - x)/x‖ = ‖1 - x‖`. [Con, p. 27]. -/
+theorem norm_inv_sub_one {u : K} (hu : ‖u - 1‖ < 1) : ‖u⁻¹ - 1‖ = ‖u - 1‖ := by
+  have hu1 : ‖u‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hu
+  have hu0 : u ≠ 0 := by
+    rintro rfl
+    simp at hu1
+  have h : u⁻¹ - 1 = (1 - u) / u := by field_simp
+  rw [h, norm_div, hu1, div_one, norm_sub_rev]
+
+/-- Powers of a `1`-unit are `1`-units. -/
+theorem norm_pow_sub_one_lt {u : K} (hu : ‖u - 1‖ < 1) (n : ℕ) : ‖u ^ n - 1‖ < 1 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [pow_succ]
+    exact norm_mul_sub_one_lt ih hu
 
 /-- `x ^ n - y ^ n = (x - y) (x ^ (n - 1) + ⋯ + y ^ (n - 1))` and the strong triangle inequality.
 [Con, pp. 13–14]. -/
@@ -150,20 +176,30 @@ theorem norm_pow_pow_sub_one_le (n k : ℕ) {c : ℝ} (hc : c ≤ 1) {u : K} (hu
             (le_max_of_le_left (norm_nonneg _)) (by positivity)
       _ = max c ‖(n : K)‖ ^ (k + 1) * c := by ring
 
+/-- `u ^ (n ^ k) → 1` for a `1`-unit `u` when `‖n‖ < 1`: by `norm_pow_pow_sub_one_le` the
+distance to `1` is at most `max ‖u - 1‖ ‖n‖ ^ k * ‖u - 1‖`, and `max ‖u - 1‖ ‖n‖ < 1`. -/
+theorem tendsto_pow_pow_sub_one {n : ℕ} (hn : ‖(n : K)‖ < 1) {u : K} (hu : ‖u - 1‖ < 1) :
+    Tendsto (fun k : ℕ ↦ u ^ n ^ k - 1) atTop (𝓝 0) := by
+  have h0 : Tendsto (fun k : ℕ ↦ max ‖u - 1‖ ‖(n : K)‖ ^ k * ‖u - 1‖) atTop (𝓝 0) := by
+    rw [← zero_mul ‖u - 1‖]
+    exact (tendsto_pow_atTop_nhds_zero_of_lt_one (le_max_of_le_left (norm_nonneg _))
+      (max_lt hu hn)).mul_const _
+  exact squeeze_zero_norm (fun k ↦ norm_pow_pow_sub_one_le n k hu.le le_rfl) h0
+
 /-- Integer powers of a `1`-unit stay in the closed ball of radius `‖x - 1‖` around `1`. The
 negative exponents use `‖x⁻¹ - 1‖ = ‖x - 1‖` [Con, p. 27]. -/
 theorem norm_zpow_sub_one_le {x : K} (hx : ‖x - 1‖ < 1) (n : ℤ) : ‖x ^ n - 1‖ ≤ ‖x - 1‖ := by
-  have hx1 : ‖x‖ ≤ 1 := (PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx).le
+  have hx1 : ‖x‖ ≤ 1 := (norm_eq_one_of_norm_sub_one_lt_one hx).le
   rcases Int.eq_nat_or_neg n with ⟨m, rfl | rfl⟩
   · rw [zpow_natCast]
     exact norm_pow_sub_one_le hx1 m
   · rw [zpow_neg, zpow_natCast,
-      PadicExpLog.norm_inv_sub_one (PadicExpLog.norm_pow_sub_one_lt hx m)]
+      norm_inv_sub_one (norm_pow_sub_one_lt hx m)]
     exact norm_pow_sub_one_le hx1 m
 
 /-- Dividing by a `1`-unit is an isometry at `1`: `x / y - 1 = (x - y) / y` and `‖y‖ = 1`. -/
 theorem norm_div_sub_one {x y : K} (hy : ‖y - 1‖ < 1) : ‖x / y - 1‖ = ‖x - y‖ := by
-  have hy1 : ‖y‖ = 1 := PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hy
+  have hy1 : ‖y‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hy
   have hy0 : y ≠ 0 := norm_pos_iff.1 (hy1 ▸ one_pos)
   have h : x / y - 1 = (x - y) / y := by field_simp
   rw [h, norm_div, hy1, div_one]
@@ -179,7 +215,7 @@ theorem norm_sub_lt_one {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) 
 via `x ^ n - y ^ n = y ^ n ((x / y) ^ n - 1)`. -/
 theorem norm_zpow_sub_zpow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) (n : ℤ) :
     ‖x ^ n - y ^ n‖ ≤ ‖x - y‖ := by
-  have hy1 : ‖y‖ = 1 := PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hy
+  have hy1 : ‖y‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hy
   have hy0 : y ≠ 0 := norm_pos_iff.1 (hy1 ▸ one_pos)
   have hdiv : ‖x / y - 1‖ < 1 := by
     rw [norm_div_sub_one hy]
@@ -189,20 +225,40 @@ theorem norm_zpow_sub_zpow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖
   rw [he, norm_mul, norm_zpow, hy1, one_zpow, one_mul, ← norm_div_sub_one (x := x) hy]
   exact norm_zpow_sub_one_le hdiv n
 
-end Norm
+end IsUltrametricDist
+
+open IsUltrametricDist
+
+/-- The principal units, or `1`-units, of an ultrametric normed field: the units `u` with
+`‖u - 1‖ < 1`. [Con, p. 27]. -/
+def oneUnits (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K] : Subgroup Kˣ where
+  carrier := {u | ‖(u : K) - 1‖ < 1}
+  mul_mem' hu hv := norm_mul_sub_one_lt hu hv
+  one_mem' := by simp
+  inv_mem' {u} hu := by
+    show ‖((u⁻¹ : Kˣ) : K) - 1‖ < 1
+    rw [Units.val_inv_eq_inv_val, norm_inv_sub_one hu]
+    exact hu
+
+namespace OneUnits
+
+@[simp]
+theorem mem_oneUnits_iff {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] {u : Kˣ} :
+    u ∈ oneUnits K ↔ ‖(u : K) - 1‖ < 1 := Iff.rfl
 
 section ZpPow
 
 variable {p : ℕ} [Fact p.Prime] {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
-  [CompleteSpace K] [CharZero K] [Fact (‖((p : ℕ) : K)‖ < 1)]
+  [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)]
 
+omit [Fact p.Prime] [CompleteSpace K] in
 /-- The uniform estimate behind everything: `‖x ^ m - 1‖` is small once `p ^ k ∣ m`, since
-`x ^ (p ^ k) → 1` (`PadicExpLog.tendsto_pow_pow_sub_one`) and `‖y ^ j - 1‖ ≤ ‖y - 1‖`.
+`x ^ (p ^ k) → 1` (`tendsto_pow_pow_sub_one`) and `‖y ^ j - 1‖ ≤ ‖y - 1‖`.
 [Klo, Exercise 6.1 (d)]. -/
 theorem exists_forall_norm_zpow_sub_one_lt {x : K} (hx : ‖x - 1‖ < 1) {ε : ℝ} (hε : 0 < ε) :
     ∃ k : ℕ, ∀ m : ℤ, (p : ℤ) ^ k ∣ m → ‖x ^ m - 1‖ < ε := by
   have h3 : ‖((p : ℕ) : K)‖ < 1 := Fact.out
-  obtain ⟨k, hk⟩ := Metric.tendsto_atTop.1 (PadicExpLog.tendsto_pow_pow_sub_one h3 hx) ε hε
+  obtain ⟨k, hk⟩ := Metric.tendsto_atTop.1 (tendsto_pow_pow_sub_one h3 hx) ε hε
   refine ⟨k, fun m ⟨j, hj⟩ ↦ ?_⟩
   have hkk := hk k le_rfl
   rw [dist_zero_right] at hkk
@@ -210,29 +266,31 @@ theorem exists_forall_norm_zpow_sub_one_lt {x : K} (hx : ‖x - 1‖ < 1) {ε : 
     _ ≤ ‖x ^ ((p : ℤ) ^ k) - 1‖ := by
         refine norm_zpow_sub_one_le ?_ j
         rw [← Int.natCast_pow, zpow_natCast]
-        exact PadicExpLog.norm_pow_sub_one_lt hx _
+        exact norm_pow_sub_one_lt hx _
     _ < ε := by rwa [← Int.natCast_pow, zpow_natCast]
 
+omit [CompleteSpace K] in
 theorem tendsto_zpow_of_tendsto_zero {x : K} (hx : ‖x - 1‖ < 1) {c : ℕ → ℤ}
     (hc : Tendsto (fun n ↦ (c n : ℤ_[p])) atTop (𝓝 0)) :
     Tendsto (fun n ↦ x ^ c n) atTop (𝓝 1) := by
   refine Metric.tendsto_atTop.2 fun ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
   have hp0 : (0:ℝ) < (p : ℝ) := by exact_mod_cast (Fact.out : p.Prime).pos
-  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.1 hc _ (by positivity : (0:ℝ) < (p : ℝ) ^ (-k : ℤ))
+  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.1 hc _ (zpow_pos hp0 _)
   refine ⟨N, fun n hn ↦ ?_⟩
   have h1 := hN n hn
   rw [dist_zero_right] at h1
   rw [dist_eq_norm]
   exact hk _ (by exact_mod_cast (PadicInt.norm_int_le_pow_iff_dvd (p := p)).1 h1.le)
 
+omit [CompleteSpace K] in
 /-- The `p`-adic expansions of `a` agree to higher and higher precision, so the integer powers
 `x ^ (a.appr n)` form a Cauchy sequence [Klo, Exercise 6.1 (d)]: "show that the limit
 `lim g ^ λₙ` exists". -/
 theorem cauchySeq_pow_appr {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
     CauchySeq fun n ↦ x ^ a.appr n := by
   have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
+    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
   refine Metric.cauchySeq_iff.2 fun ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
   refine ⟨k, fun m hm n hn ↦ ?_⟩
@@ -248,7 +306,7 @@ theorem cauchySeq_pow_appr {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
       rw [mul_sub, mul_one, ← zpow_add₀ hx0]
       norm_num [zpow_natCast]
     rw [dist_eq_norm, he, norm_mul, norm_zpow,
-      PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx, one_zpow, one_mul]
+      norm_eq_one_of_norm_sub_one_lt_one hx, one_zpow, one_mul]
     exact hk _ hdvd
   rcases le_total m n with h | h
   · rw [dist_comm]; exact key m n hm h
@@ -273,7 +331,7 @@ theorem tendsto_zpow_of_tendsto {x : K} (hx : ‖x - 1‖ < 1) {c : ℕ → ℤ}
     (hc : Tendsto (fun n ↦ (c n : ℤ_[p])) atTop (𝓝 a)) :
     Tendsto (fun n ↦ x ^ c n) atTop (𝓝 (zpPow x a)) := by
   have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
+    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
   have h0 : Tendsto (fun n ↦ ((c n - (a.appr n : ℤ) : ℤ) : ℤ_[p])) atTop (𝓝 0) := by
     have h := hc.sub (PadicInt.tendsto_appr a)
     rw [sub_self] at h
@@ -313,7 +371,7 @@ theorem one_zpPow (a : ℤ_[p]) : zpPow (1 : K) a = 1 := by
 theorem zpPow_add {x : K} (hx : ‖x - 1‖ < 1) (a b : ℤ_[p]) :
     zpPow x (a + b) = zpPow x a * zpPow x b := by
   have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
+    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
   have hc : Tendsto (fun n ↦ (((a.appr n : ℤ) + (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop
       (𝓝 (a + b)) := by
     refine ((PadicInt.tendsto_appr a).add (PadicInt.tendsto_appr b)).congr fun n ↦ ?_
@@ -323,15 +381,11 @@ theorem zpPow_add {x : K} (hx : ‖x - 1‖ < 1) (a b : ℤ_[p]) :
     ((tendsto_pow_appr hx a).mul (tendsto_pow_appr hx b))
   rw [zpow_add₀ hx0, zpow_natCast, zpow_natCast]
 
-theorem zpPow_neg {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) : zpPow x (-a) = (zpPow x a)⁻¹ := by
-  refine eq_inv_of_mul_eq_one_left ?_
-  rw [← zpPow_add hx, neg_add_cancel, zpPow_zero hx]
-
 /-- `(g h) ^ λ = g ^ λ * h ^ λ` for commuting `g, h` [Klo, Exercise 6.1 (d)]: the "sufficient
 condition" of the exercise is automatic in a field. -/
 theorem mul_zpPow {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) (a : ℤ_[p]) :
     zpPow (x * y) a = zpPow x a * zpPow y a := by
-  refine tendsto_nhds_unique (tendsto_pow_appr (PadicExpLog.norm_mul_sub_one_lt hx hy) a) ?_
+  refine tendsto_nhds_unique (tendsto_pow_appr (norm_mul_sub_one_lt hx hy) a) ?_
   simpa only [mul_pow] using (tendsto_pow_appr hx a).mul (tendsto_pow_appr hy a)
 
 /-- `p`-adic powers stay in the closed ball of radius `‖x - 1‖` around `1`: the bound
@@ -340,7 +394,7 @@ theorem mul_zpPow {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) (a : �
 theorem norm_zpPow_sub_one_le {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
     ‖zpPow x a - 1‖ ≤ ‖x - 1‖ :=
   le_of_tendsto (((tendsto_pow_appr hx a).sub_const 1).norm) <| Eventually.of_forall fun _ ↦
-    norm_pow_sub_one_le (PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx).le _
+    norm_pow_sub_one_le (norm_eq_one_of_norm_sub_one_lt_one hx).le _
 
 theorem norm_zpPow_sub_one_lt {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
     ‖zpPow x a - 1‖ < 1 :=
@@ -348,7 +402,7 @@ theorem norm_zpPow_sub_one_lt {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
 
 @[simp]
 theorem norm_zpPow {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) : ‖zpPow x a‖ = 1 :=
-  PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one (norm_zpPow_sub_one_lt hx a)
+  norm_eq_one_of_norm_sub_one_lt_one (norm_zpPow_sub_one_lt hx a)
 
 theorem zpPow_ne_zero {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) : zpPow x a ≠ 0 :=
   norm_pos_iff.1 ((norm_zpPow hx a) ▸ one_pos)
@@ -358,8 +412,8 @@ theorem norm_zpPow_sub_zpPow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1�
     ‖zpPow x a - zpPow y a‖ ≤ ‖x - y‖ :=
   le_of_tendsto (((tendsto_pow_appr hx a).sub (tendsto_pow_appr hy a)).norm) <|
     Eventually.of_forall fun _ ↦
-      norm_pow_sub_pow_le (PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx).le
-        (PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hy).le _
+      norm_pow_sub_pow_le (norm_eq_one_of_norm_sub_one_lt_one hx).le
+        (norm_eq_one_of_norm_sub_one_lt_one hy).le _
 
 /-- `g ^ (λ μ) = (g ^ μ) ^ λ` [Klo, Exercise 6.1 (d)]. A double limit: the sequence
 `(x ^ b.appr n) ^ a.appr n` tends to `x ^ (a * b)` because the exponents multiply, and to
@@ -368,7 +422,7 @@ theorem norm_zpPow_sub_zpPow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1�
 theorem zpPow_mul {x : K} (hx : ‖x - 1‖ < 1) (a b : ℤ_[p]) :
     zpPow x (a * b) = zpPow (zpPow x b) a := by
   have hxb : ‖zpPow x b - 1‖ < 1 := norm_zpPow_sub_one_lt hx b
-  have hx1 : ‖x‖ ≤ 1 := (PadicExpLog.norm_eq_one_of_norm_sub_one_lt_one hx).le
+  have hx1 : ‖x‖ ≤ 1 := (norm_eq_one_of_norm_sub_one_lt_one hx).le
   have hb1 : ‖zpPow x b‖ ≤ 1 := (norm_zpPow hx b).le
   have hc : Tendsto (fun n ↦ (((a.appr n : ℤ) * (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop
       (𝓝 (a * b)) := by
@@ -400,7 +454,7 @@ theorem norm_zpPow_sub_one_le_of_dvd {x : K} (hx : ‖x - 1‖ < 1) {a : ℤ_[p]
   obtain ⟨d, rfl⟩ := h
   have hcast : ((p : ℤ_[p]) ^ k) = ((p ^ k : ℕ) : ℤ_[p]) := by push_cast; ring
   rw [mul_comm, zpPow_mul hx, hcast, zpPow_natCast hx]
-  exact norm_zpPow_sub_one_le (PadicExpLog.norm_pow_sub_one_lt hx _) d
+  exact norm_zpPow_sub_one_le (norm_pow_sub_one_lt hx _) d
 
 /-- `a ↦ x ^ a` is continuous on `ℤ_[p]`: if `‖a - b‖ ≤ p ^ (-k)` then `p ^ k ∣ a - b`, and
 `x ^ a - x ^ b = x ^ b (x ^ (a - b) - 1)` is small by `norm_zpPow_sub_one_le_of_dvd`. -/
@@ -408,7 +462,7 @@ theorem continuous_zpPow {x : K} (hx : ‖x - 1‖ < 1) : Continuous fun a : ℤ
   refine Metric.continuous_iff.2 fun b ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
   have hp0 : (0:ℝ) < (p : ℝ) := by exact_mod_cast (Fact.out : p.Prime).pos
-  refine ⟨(p : ℝ) ^ (-k : ℤ), by positivity, fun a ha ↦ ?_⟩
+  refine ⟨(p : ℝ) ^ (-k : ℤ), zpow_pos hp0 _, fun a ha ↦ ?_⟩
   rw [dist_eq_norm] at ha ⊢
   have hdvd : (p : ℤ_[p]) ^ k ∣ (a - b) :=
     Ideal.mem_span_singleton.1 ((PadicInt.norm_le_pow_iff_mem_span_pow (a - b) k).1 ha.le)
@@ -424,7 +478,7 @@ end ZpPow
 section Module
 
 variable {p : ℕ} [Fact p.Prime] {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
-  [CompleteSpace K] [CharZero K] [Fact (‖((p : ℕ) : K)‖ < 1)]
+  [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)]
 
 /-- The `p`-adic power of a principal unit, as a principal unit. -/
 noncomputable def zpPowUnit (u : oneUnits K) (a : ℤ_[p]) : oneUnits K :=
@@ -434,14 +488,11 @@ noncomputable def zpPowUnit (u : oneUnits K) (a : ℤ_[p]) : oneUnits K :=
 noncomputable instance instSMul : SMul ℤ_[p] (Additive (oneUnits K)) :=
   ⟨fun a u ↦ Additive.ofMul (zpPowUnit u.toMul a)⟩
 
-theorem toMul_smul (a : ℤ_[p]) (u : Additive (oneUnits K)) :
-    (a • u).toMul = zpPowUnit u.toMul a := rfl
-
 @[simp]
 theorem coe_smul (a : ℤ_[p]) (u : Additive (oneUnits K)) :
     (((a • u).toMul : Kˣ) : K) = zpPow ((u.toMul : Kˣ) : K) a := rfl
 
-omit [CompleteSpace K] [CharZero K] in
+omit [CompleteSpace K] in
 /-- Two elements of `Additive (oneUnits K)` are equal as soon as their values in `K` are. -/
 theorem ext_of_coe {u v : Additive (oneUnits K)}
     (h : ((u.toMul : Kˣ) : K) = ((v.toMul : Kˣ) : K)) : u = v :=
@@ -475,15 +526,7 @@ theorem natCast_smul (n : ℕ) (u : Additive (oneUnits K)) : (n : ℤ_[p]) • u
   push_cast
   ring
 
-theorem intCast_smul (n : ℤ) (u : Additive (oneUnits K)) : (n : ℤ_[p]) • u = n • u := by
-  refine ext_of_coe ?_
-  rw [coe_smul, zpPow_intCast (mem_oneUnits_iff.1 u.toMul.2), toMul_zsmul]
-  push_cast
-  ring
-
-instance : T2Space (Additive (oneUnits K)) := inferInstanceAs (T2Space (oneUnits K))
-
-omit [CompleteSpace K] [CharZero K] [Fact (‖((p : ℕ) : K)‖ < 1)] in
+omit [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)] in
 /-- The topology of `Additive (oneUnits K)` is induced from `K`: the subgroup carries the
 subtype topology of `Kˣ`, which embeds in `K` (`Units.isEmbedding_val₀`), and `Additive` shares
 the topology of the underlying type. -/
