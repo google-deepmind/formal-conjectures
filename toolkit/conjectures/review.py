@@ -152,6 +152,7 @@ def handoff(directory, configuration, record):
     template = rr.read_json(directory/'input/review-template.json')
     template['reviewer'] = 'REPLACE with human or agent identity; model unknown if unavailable'
     save(directory/'review-template.json', template)
+    save(directory/'review.json', template)
     record.update(status='awaiting_review', outcome='incomplete', reason='awaiting_review',
         request_id=request['id'], target=ticket, build_status=status,
         build_receipt_sha256=rr.digest((directory/'controller/build.json').read_bytes()),
@@ -159,9 +160,9 @@ def handoff(directory, configuration, record):
                            'context':'Existing session; no claim of blinded or isolated model execution.'},
         paths={name:str(directory/path) for name,path in {
             'request':'input/request.json', 'snapshot':'snapshot', 'sources':'input/sources',
-            'procedure':'input/procedure/SKILL.md', 'template':'review-template.json',
+            'procedure':'input/procedure/SKILL.md', 'template':'review-template.json', 'draft':'review.json',
             'build_receipt':'controller/build.json'}.items()},
-        next_action=f"Read the retained procedure and inputs, then run conjectures review finish {record['id']} --report FILE.")
+        next_action=f"Read the procedure and inputs, fill {directory/'review.json'}, then run conjectures review finish {record['id']}.")
     save(directory/'run.json', record)
     return record
 
@@ -298,7 +299,7 @@ def complete(root, directory, record, report_path, supplied=None):
         bundle['summary.md']=rr.render(report,observation).encode()
         rr.write_directory(staging/'bundle',bundle)
         for name in ('review.json','evidence','bundle'):
-            if (directory/name).exists(): raise Failure('existing_completion', 'Retain existing completion artifacts and start a new run', 3)
+            if name != 'review.json' and (directory/name).exists(): raise Failure('existing_completion', 'Retain existing completion artifacts and start a new run', 3)
         for name in ('review.json','evidence','bundle'): (staging/name).rename(directory/name)
     outcome = 'error' if status=='error' else ('fail' if status=='fail' or report['semantic_verdict']=='NEEDS REVISION'
         else ('incomplete' if report['gaps'] or state!='current' else 'pass'))
