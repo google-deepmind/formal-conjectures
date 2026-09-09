@@ -65,6 +65,13 @@ Git snapshot, explicitly distinct from its upstream source commit. `build()` run
 `lake --wfail build`; its exit status is a build result. Arbitrary shell/witness output remains
 raw evidence and is never parsed into a proof verdict. The original candidate is read-only.
 
+Scratch commands can change the disposable review environment, so their builds and witnesses
+remain exploratory evidence. The recorded `build()` check starts a fresh container from the
+pinned image, mounts only the original candidate read-only, and shares no scratch files,
+dependency caches or build outputs with the reviewer. Its receipt records the image ID,
+candidate path/digest and module; assembly checks those bindings against the request.
+Timed-out build containers are removed. Concurrent tool requests are serialized.
+
 This is an **offline tool-using benchmark**: source documents are available on demand, but
 live web discovery and external proof execution are not measured. Model authentication stays
 on the host. Only the isolated workspace tools are approved for unattended evaluation.
@@ -75,6 +82,17 @@ The Docker image and MCP server are trusted tooling, not contributor-supplied co
 Requires Docker, the Codex CLI and Python 3.11+. Install optional runtime dependencies into a
 virtual environment with `pip install -r scripts/review-eval/requirements.txt`. Ordinary CI
 script tests do not require Docker, the SDK, credentials or model usage.
+
+After building the image, run the Docker/Lean regression without model calls:
+
+```sh
+python3 scripts/review-eval/check_build_isolation.py \
+  --image fc-review-eval:lean4.33.1 --out ../review-eval/build-isolation
+```
+
+It verifies that a false candidate still fails after the scratch Lake configuration is
+replaced with an empty successful target, and that a valid candidate builds in two fresh
+containers. Keep the output directory with the validation evidence.
 
 ```sh
 docker build -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
@@ -173,6 +191,17 @@ as a negative control. Record the client, model and observed actions; intended a
 the final answer is not evidence that the skill loaded.
 
 ## Historical records
+
+The [public reviewer packet](https://github.com/williamjblair/formal-conjectures/tree/b5710e346fc9e17317bfa614216a1f6def9a3971)
+contains the original development and follow-up runs, failures, provisional grades, blank
+human-review forms, and the fresh-container regression. It lives on a separate evidence
+branch in the author's fork. The publication manifest records original and published hashes;
+operator filesystem paths are redacted. It is a review snapshot, not a production archive.
+
+Build receipts from the 8 September development runs used the reviewer workspace. They
+predate the fresh-container check and must not be promoted to that stronger claim. Retain
+their original transcripts, grades and failures; rerun mechanical checks separately when
+needed. These observations remain provisional and do not establish mathematical accuracy.
 
 The superseded packet-only cases, selected outputs and their exact tooling remain in
 [Git history](https://github.com/williamjblair/formal-conjectures/tree/ba5930b643b2ab1f85036ec2c3c6ff5a82f75aeb/.agents/skills/formal-conjectures-review/evals)

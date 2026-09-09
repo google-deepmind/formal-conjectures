@@ -9,8 +9,10 @@
 # limitations under the License.
 
 """Offline integrity checks; these do not measure mathematical review quality."""
+
 import copy
 import importlib.util
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,9 +20,16 @@ from unittest.mock import patch
 
 import review_eval as ev
 
-spec = importlib.util.spec_from_file_location("trigger_eval", ev.HERE / "review-eval/trigger_eval.py")
+spec = importlib.util.spec_from_file_location(
+    "trigger_eval", ev.HERE / "review-eval/trigger_eval.py"
+)
 trigger = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(trigger)
+spec = importlib.util.spec_from_file_location(
+    "workspace_server", ev.HERE / "review-eval/workspace_server.py"
+)
+workspace = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(workspace)
 
 
 class EvalTest(unittest.TestCase):
@@ -300,6 +309,13 @@ class EvalTest(unittest.TestCase):
         self.assertEqual(*identities)
 
     def test_build_status_uses_receipts_instead_of_shell_claims(self):
+        binding = {
+            "isolation": "fresh_container",
+            "image": "sha256:" + "a" * 64,
+            "candidate_path": "FormalConjectures/Example.lean",
+            "candidate_sha256": "b" * 64,
+            "module": "Example",
+        }
         evidence = {
             "evidence/tool-001.json": ev.encode(
                 {
@@ -310,14 +326,107 @@ class EvalTest(unittest.TestCase):
                 }
             )
         }
-        self.assertEqual(ev.build_checks(evidence, "Example"), [])
-        for code, expected in ((0, "pass"), (1, "fail"), (124, "error"), (None, "error")):
+        self.assertEqual(ev.build_checks(evidence, "Example", binding), [])
+        for code, expected in (
+            (0, "pass"),
+            (1, "fail"),
+            (124, "error"),
+            (None, "error"),
+        ):
             evidence["evidence/tool-002.json"] = ev.encode(
-                {"kind": "build", "exit_code": code, "timed_out": False}
+                {
+                    "kind": "build",
+                    "exit_code": code,
+                    "timed_out": False,
+                    "environment": binding,
+                    "command": [
+                        "timeout",
+                        "-k",
+                        "2",
+                        "60",
+                        "lake",
+                        "--wfail",
+                        "build",
+                        "Example",
+                    ],
+                }
             )
-            check = ev.build_checks(evidence, "Example")[0]
+            check = ev.build_checks(evidence, "Example", binding)[0]
             self.assertEqual(check["status"], expected)
             self.assertEqual(check["evidence"], ["evidence/tool-002.json"])
+
+        for field, value in (
+            ("environment", None),
+            ("environment", binding | {"image": "other"}),
+            ("environment", binding | {"candidate_sha256": "c" * 64}),
+            ("command", ["sh", "-c", "true"]),
+        ):
+            receipt = ev.rr.parse(evidence["evidence/tool-002.json"])
+            receipt[field] = value
+            with self.assertRaisesRegex(ValueError, "does not match request"):
+                ev.build_checks({"evidence/tool-002.json": ev.encode(receipt)}, "Example", binding)
+
+    def workspace_tools(self):
+        candidate = self.root / "candidate.lean"
+        candidate.write_text("example : True := True.intro\n")
+        (self.root / "evidence").mkdir()
+        return workspace.WorkspaceTools(
+            "scratch",
+            self.root,
+            "FormalConjectures.Example",
+            30,
+            "sha256:" + "a" * 64,
+            candidate,
+            "FormalConjectures/Example.lean",
+        )
+
+    def test_build_never_reuses_scratch_container_or_mounts(self):
+        tools = self.workspace_tools()
+        with patch.object(
+            workspace.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess([], 0, b"built", b""),
+        ) as run:
+            receipt = tools.build()
+        command = run.call_args_list[0].args[0]
+        self.assertEqual(command[:3], ["docker", "run", "--rm"])
+        self.assertIn("--network=none", command)
+        self.assertEqual(
+            [arg for arg in command if arg.startswith("--mount=")],
+            [
+                f"--mount=type=bind,src={tools.candidate},dst=/workspace/FormalConjectures/Example.lean,readonly"
+            ],
+        )
+        self.assertEqual(receipt["environment"], tools.binding)
+        self.assertEqual(run.call_args_list[-1].args[0], ["docker", "rm", "-f", "scratch-build"])
+
+    def test_build_timeout_removes_container_and_records_error(self):
+        tools = self.workspace_tools()
+        with patch.object(
+            workspace.subprocess,
+            "run",
+            side_effect=[
+                subprocess.TimeoutExpired("docker", 65),
+                subprocess.CompletedProcess([], 0),
+            ],
+        ) as run:
+            receipt = tools.build()
+        self.assertTrue(receipt["timed_out"])
+        self.assertEqual(run.call_args_list[-1].args[0], ["docker", "rm", "-f", "scratch-build"])
+        check = ev.build_checks(
+            {receipt["evidence"]: ev.encode(receipt)}, tools.module, tools.binding
+        )
+        self.assertEqual(check[0]["status"], "error")
+
+    def test_changed_candidate_is_rejected_before_build(self):
+        tools = self.workspace_tools()
+        tools.candidate.write_text("-- replaced\n")
+        with (
+            patch.object(workspace.subprocess, "run") as run,
+            self.assertRaisesRegex(ValueError, "Candidate changed"),
+        ):
+            tools.build()
+        run.assert_not_called()
 
     def test_missing_inputs_leave_a_failure_record_before_model_startup(self):
         manifest = self.run_root()

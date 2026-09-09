@@ -10,6 +10,7 @@
 # limitations under the License.
 
 """Tool-using review evaluations. See scripts/review-eval/README.md."""
+
 import argparse
 import importlib.metadata
 import json
@@ -296,9 +297,11 @@ def invoke_model(prompt_text, destination, model, timeout, schema=None, server_a
             "args": json.dumps(server_args),
             "default_tools_approval_mode": '"approve"',
             "required": "true",
-            "tool_timeout_sec": "75",
+            "tool_timeout_sec": "90",
         }
-        settings.update({"mcp_servers.review_workspace." + key: value for key, value in server.items()})
+        settings.update(
+            {"mcp_servers.review_workspace." + key: value for key, value in server.items()}
+        )
     for key, value in settings.items():
         args += ["-c", f"{key}={value}"]
     args += ["-"]
@@ -312,9 +315,14 @@ def invoke_model(prompt_text, destination, model, timeout, schema=None, server_a
         auth = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "auth.json"
         if auth.exists():
             (engine_directory / "auth.json").symlink_to(auth.resolve())
-        engine_env = {k: v for k, v in os.environ.items() if k not in ("CODEX_SESSION_ID", "CODEX_THREAD_ID")}
+        engine_env = {
+            k: v for k, v in os.environ.items() if k not in ("CODEX_SESSION_ID", "CODEX_THREAD_ID")
+        }
         engine_env["CODEX_HOME"] = str(engine_directory)
-        with (destination / "events.jsonl").open("w") as out, (destination / "stderr.txt").open("w") as err:
+        with (
+            (destination / "events.jsonl").open("w") as out,
+            (destination / "stderr.txt").open("w") as err,
+        ):
             proc = subprocess.Popen(
                 args,
                 cwd=temp,
@@ -404,14 +412,33 @@ def snapshot(repo, path, candidate):
     return head, base
 
 
-def build_checks(evidence, module):
+def build_checks(evidence, module, binding):
     # Parse the native receipts once. Generic command output never becomes a build verdict.
-    receipts = {name: rr.parse(raw) for name, raw in evidence.items() if name.startswith("evidence/tool-")}
+    receipts = {
+        name: rr.parse(raw) for name, raw in evidence.items() if name.startswith("evidence/tool-")
+    }
     builds = {name: receipt for name, receipt in receipts.items() if receipt["kind"] == "build"}
     if not builds:
         return []
+    for receipt in builds.values():
+        rr.require(
+            receipt.get("environment") == binding,
+            "build environment does not match request",
+        )
+        rr.require(
+            receipt.get("command")
+            == ["timeout", "-k", "2", "60", "lake", "--wfail", "build", module],
+            "build command does not match request",
+        )
     latest = next(reversed(builds.values()))
-    failed_to_run = latest["timed_out"] or latest["exit_code"] in (None, 124, 125, 126, 127, 137)
+    failed_to_run = latest["timed_out"] or latest["exit_code"] in (
+        None,
+        124,
+        125,
+        126,
+        127,
+        137,
+    )
     status = "error" if failed_to_run else "pass" if latest["exit_code"] == 0 else "fail"
     return [
         {
@@ -419,7 +446,7 @@ def build_checks(evidence, module):
             "status": status,
             "producer": "isolated workspace build tool",
             "policy": "lake --wfail build " + module,
-            "detail": "Original read-only candidate; tool receipt retained.",
+            "detail": "Original candidate built in a fresh pinned container; no reviewer scratch state.",
             "evidence": list(builds),
         }
     ]
@@ -434,15 +461,28 @@ def assemble_run(out, case, request, context, model):
         "changed review identity",
     )
     evidence = rr.collect(out / "evidence", "evidence") | context
+    environment = read(out / "request/context/environment.json")
+    binding = {
+        "isolation": "fresh_container",
+        "image": environment["image"],
+        "module": case["module"],
+        "candidate_path": case["path"],
+        "candidate_sha256": sha((out / "request/context/candidate.lean").read_bytes()),
+    }
     checks = {
         "request_id": request["id"],
         "artifacts": rr.descriptors(evidence),
-        "checks": build_checks(evidence, case["module"]),
+        "checks": build_checks(evidence, case["module"], binding),
     }
     rr.write_directory(out / "check-inputs", evidence | {"checks.json": encode(checks)})
     rr.write_directory(
         out / "report",
-        rr.assemble(out / "request", out / "request", out / "model/answer.json", out / "check-inputs"),
+        rr.assemble(
+            out / "request",
+            out / "request",
+            out / "model/answer.json",
+            out / "check-inputs",
+        ),
     )
 
 
@@ -455,10 +495,12 @@ def run_one(root, manifest, job, model):
     try:
         case = next(c for c in read(root / "suite.json")["cases"] if c["id"] == job["case"])
         sources = {
-            "sources/" + name: asset(root / "private-assets", path) for name, path in case["sources"].items()
+            "sources/" + name: asset(root / "private-assets", path)
+            for name, path in case["sources"].items()
         }
         context = {
-            name: asset(root / "private-assets", path) for name, path in case.get("context", {}).items()
+            name: asset(root / "private-assets", path)
+            for name, path in case.get("context", {}).items()
         }
         procedure = review_procedure(root / "skill", job["arm"])
         candidate = asset(root / "private-assets", case["candidate"])
@@ -490,7 +532,8 @@ def run_one(root, manifest, job, model):
             }
             request["id"] = rr.request_id(request)
             rr.write_directory(
-                out / "request", procedure | sources | snapshot_context | {"request.json": encode(request)}
+                out / "request",
+                procedure | sources | snapshot_context | {"request.json": encode(request)},
             )
             rr.write_directory(out / "inputs", sources | context | {"candidate.lean": candidate})
             (out / "output").mkdir()
@@ -504,7 +547,9 @@ def run_one(root, manifest, job, model):
                 mounts[out / "inputs/sources"] = "/sources,readonly"
             if job["arm"] == "skill":
                 mounts[root / "skill"] = "/skill,readonly"
-            mount_args = [f"--mount=type=bind,src={source},dst={target}" for source, target in mounts.items()]
+            mount_args = [
+                f"--mount=type=bind,src={source},dst={target}" for source, target in mounts.items()
+            ]
             docker(
                 "run",
                 "-d",
@@ -520,9 +565,22 @@ def run_one(root, manifest, job, model):
                 manifest["image"],
             )
             docker("cp", str(repo / ".git"), container + ":/workspace/.git")
-            docker("exec", container, "git", "config", "--global", "--add", "safe.directory", "/workspace")
+            docker(
+                "exec",
+                container,
+                "git",
+                "config",
+                "--global",
+                "--add",
+                "safe.directory",
+                "/workspace",
+            )
             for name in context:
-                docker("cp", str(out / "inputs" / name), container + ":/output/" + Path(name).name)
+                docker(
+                    "cp",
+                    str(out / "inputs" / name),
+                    container + ":/output/" + Path(name).name,
+                )
             server_args = [
                 str(HERE / "review-eval/workspace_server.py"),
                 "--container",
@@ -533,6 +591,12 @@ def run_one(root, manifest, job, model):
                 case["module"],
                 "--max-calls",
                 str(manifest["max_calls"]),
+                "--image",
+                manifest["image"],
+                "--candidate",
+                str(out / "inputs/candidate.lean"),
+                "--candidate-path",
+                case["path"],
             ]
             record = invoke_model(
                 prompt(case, request, job["arm"], model),
@@ -548,6 +612,11 @@ def run_one(root, manifest, job, model):
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         record.update(error=str(error), report_status="invalid")
     finally:
+        subprocess.run(
+            ["docker", "rm", "-f", container + "-build"],
+            capture_output=True,
+            check=False,
+        )
         subprocess.run(["docker", "rm", "-f", container], capture_output=True, check=False)
         write(out / "result.json", record)
     print(job["id"], record["status"], record.get("report_status", "not_run"), flush=True)
