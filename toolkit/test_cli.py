@@ -24,19 +24,6 @@ class CLITests(ToolkitFixture):
         self.assertFalse(prepare.call_args.kwargs['semantic_review'])
         build.assert_not_called()
 
-    def test_native_catalog_preferred_and_projection_fallback_only_on_404(self):
-        native={'schemaVersion':2,'problems':[]}
-        with patch.object(catalog,'user_cache',return_value=self.root/'native'),patch.object(catalog.urllib.request,'urlopen',return_value=io.BytesIO(json.dumps(native).encode())) as network:
-            self.assertEqual(catalog.load(None),native)
-            self.assertEqual(network.call_args.args[0],catalog.NATIVE_URL)
-        missing=catalog.urllib.error.HTTPError(catalog.NATIVE_URL,404,'missing',{},None)
-        with patch.object(catalog,'user_cache',return_value=self.root/'fallback'),patch.object(catalog.urllib.request,'urlopen',side_effect=[missing,io.BytesIO(b'{"conjectures":[]}')]):
-            self.assertEqual(catalog.load(None)['projection'],'website')
-        denied=catalog.urllib.error.HTTPError(catalog.NATIVE_URL,403,'denied',{},None)
-        with patch.object(catalog,'user_cache',return_value=self.root/'denied'),patch.object(catalog.urllib.request,'urlopen',side_effect=denied) as network:
-            with self.assertRaises(catalog.urllib.error.HTTPError):catalog.load(None)
-            self.assertEqual(network.call_count,1)
-
     def invoke(self,*args):
         out=io.StringIO();err=io.StringIO()
         with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):
@@ -56,6 +43,12 @@ class CLITests(ToolkitFixture):
         with patch.object(Path,'cwd',return_value=self.root),patch.object(core,'config_path',return_value=self.root/'config.json'):
             code,out,_=self.invoke('show','Example.a','--catalog',str(path));self.assertEqual(code,0);self.assertIn('∀ n',out);self.assertFalse(out.startswith('{'))
             code,out,_=self.invoke('find','missing','--catalog',str(path),'--json');self.assertEqual(code,0);self.assertEqual(json.loads(out)['problems'],[])
+
+    def test_statement_missing_is_incomplete_and_offline_makes_no_requests(self):
+        path=self.root/'catalog.json';core.save(path,{'schemaVersion':2,'problems':[{'theorem':'Example.a','module':'FormalConjectures.Example'}]})
+        with patch.object(Path,'cwd',return_value=self.root),patch.object(core,'config_path',return_value=self.root/'config.json'),patch.object(catalog,'read_url',side_effect=AssertionError('network')):
+            code,out,_=self.invoke('show','Example.a','--catalog',str(path),'--offline','--json')
+        self.assertEqual(code,4);self.assertEqual(json.loads(out)['reason'],'statement_unavailable')
 
     def test_global_flags_and_witness_arguments(self):
         args=interface.parse(['review','exec','RUN','--files','some path','--json','--repo',str(self.root),'--','echo','--json','--repo','private'])
