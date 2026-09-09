@@ -6,6 +6,7 @@ import subprocess
 import time
 import sys
 import tempfile
+import shlex
 from pathlib import Path
 from . import report as rr
 from .core import Failure, command, finish, gh, git, github, now, save, start_run, run_lock
@@ -98,7 +99,8 @@ def initialize(root,args,cfg):
         save(directory/'trusted-target.json',provenance)
         save(root/'.conjectures/targets'/f"{rr.digest(str(result).encode())}.json",
              {'workspace':str(result),'init_run':record['id'],'provenance':provenance})
-        return finish(directory,record,'pass',workspace=str(result),next_action='Develop Submission.lean, commit the workspace publicly, then run conjectures verify DIR.')
+        next_command=shlex.join(['conjectures','--repo',str(root),'verify',str(result)])
+        return finish(directory,record,'pass',workspace=str(result),next_action='Develop Submission.lean, commit and push the workspace publicly, then run '+next_command)
     except BaseException as error:
         finish(directory,record,'error',reason=getattr(error,'reason','export_error'),detail=str(error));raise
 
@@ -155,9 +157,11 @@ def control(directory,record,operation):
     result=rr.parse(gh('run','view',identity,'--repo',repo,'--json','status,conclusion,url'))
     if operation=='cancel' and result['status']!='completed':
         gh('run','cancel',identity,'--repo',repo)
-        record.update(status='cancellation_requested');save(directory/'run.json',record);return record
+        record.update(status='cancellation_requested',cancellation_requested_at=now())
+        save(directory/'run.json',record);return record
     if result['status']!='completed':
-        record.update(status=result['status'],outcome='incomplete',url=result['url'])
+        state='cancellation_requested' if record.get('cancellation_requested_at') else result['status']
+        record.update(status=state,remote_status=result['status'],outcome='incomplete',url=result['url'])
         save(directory/'run.json',record);return record
     destination=directory/'remote'
     if not destination.exists():

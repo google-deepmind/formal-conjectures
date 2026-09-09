@@ -8,6 +8,15 @@ from conjectures import core, proof, cli, remote, exporter
 from test_toolkit import ToolkitFixture
 
 class ProofControlTests(ToolkitFixture):
+    def test_wait_preserves_pending_cancellation(self):
+        directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo'},remote_run_id=123)
+        with patch.object(proof,'gh',side_effect=[b'{"status":"in_progress","conclusion":"","url":"https://example.com/run"}',b'',b'{"status":"in_progress","conclusion":"","url":"https://example.com/run"}']):
+            requested=proof.control(directory,record,'cancel')
+            self.assertIn('cancellation_requested_at',requested)
+            waiting=proof.control(directory,requested,'wait')
+        self.assertEqual(waiting['status'],'cancellation_requested')
+        self.assertEqual(waiting['remote_status'],'in_progress')
+
     def test_installed_exporter_is_trusted_and_does_not_change_package_pins(self):
         self.repository()
         lakefile=self.root/'lakefile.toml'
