@@ -151,10 +151,10 @@ def control(directory,record,operation):
         if len(found)!=1:raise Failure('run_not_visible','Remote run is not visible yet; retry run wait',4)
         record['remote_run_id']=found[0]['databaseId'];save(directory/'run.json',record)
     identity=str(record['remote_run_id'])
-    if operation=='cancel':
+    result=rr.parse(gh('run','view',identity,'--repo',repo,'--json','status,conclusion,url'))
+    if operation=='cancel' and result['status']!='completed':
         gh('run','cancel',identity,'--repo',repo)
         record.update(status='cancellation_requested');save(directory/'run.json',record);return record
-    result=rr.parse(gh('run','view',identity,'--repo',repo,'--json','status,conclusion,url'))
     if result['status']!='completed':
         record.update(status=result['status'],outcome='incomplete',url=result['url'])
         save(directory/'run.json',record);return record
@@ -162,6 +162,11 @@ def control(directory,record,operation):
     if not destination.exists():
         if result['conclusion']=='cancelled':
             return finish(directory,record,'cancelled',reason='remote_cancelled',url=result['url'])
+        artifacts=github(f'repos/{repo}/actions/runs/{identity}/artifacts?per_page=100')
+        if not any(a.get('name')=='verification-'+record['id'] and not a.get('expired')
+                   for a in artifacts.get('artifacts',[])):
+            return finish(directory,record,'error',reason='missing_result',
+                          workflow_conclusion=result['conclusion'],url=result['url'])
         with tempfile.TemporaryDirectory(prefix='remote-download-',dir=directory) as temp:
             staging=Path(temp)/'artifacts'
             gh('run','download',identity,'--repo',repo,'--name','verification-'+record['id'],'--dir',str(staging))

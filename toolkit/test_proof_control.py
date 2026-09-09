@@ -8,6 +8,20 @@ from conjectures import core, proof, cli, remote, exporter
 from test_toolkit import ToolkitFixture
 
 class ProofControlTests(ToolkitFixture):
+    def test_missing_remote_artifact_retains_infrastructure_error(self):
+        directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo'},remote_run_id=123)
+        with patch.object(proof,'gh',return_value=b'{"status":"completed","conclusion":"failure","url":"https://example.com/run"}'),patch.object(proof,'github',return_value={'artifacts':[]}):
+            result=proof.control(directory,record,'wait')
+        self.assertEqual(result['outcome'],'error')
+        self.assertEqual(result['reason'],'missing_result')
+        self.assertEqual(json.loads((directory/'run.json').read_text())['outcome'],'error')
+
+    def test_cancel_completed_cancellation_is_confirmed_without_second_request(self):
+        directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo'},remote_run_id=123)
+        with patch.object(proof,'gh',return_value=b'{"status":"completed","conclusion":"cancelled","url":"https://example.com/run"}') as gh:
+            self.assertEqual(proof.control(directory,record,'cancel')['outcome'],'cancelled')
+            self.assertEqual(gh.call_count,1)
+
     def invoke(self,*args):
         out=io.StringIO();err=io.StringIO()
         with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):code=cli.main(list(args))
