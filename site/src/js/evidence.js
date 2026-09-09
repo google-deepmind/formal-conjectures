@@ -7,11 +7,11 @@ const FCEvidence = (() => {
     try { const url = new URL(value); return url.protocol === 'https:' ? url.href : null; }
     catch { return null; }
   }
-  function records(theorem, data) {
     function repository(value) {
       const match = /^(?:https:\/\/github.com\/)?([\w.-]+\/[\w.-]+?)(?:\.git)?$/.exec(value || '');
       return match ? match[1].toLowerCase() : null;
     }
+  function records(theorem, data) {
     function moduleName(value) {
       const parts=[]; let word='', quoted=false;
       for (const char of value || '') {
@@ -40,14 +40,16 @@ const FCEvidence = (() => {
       const label = run.kind === 'verify' ? 'Proof verification' : 'Contribution review';
       return `<li><strong>${escape(label)}: ${escape(labels[run.outcome] || 'Unknown result')}</strong>.
         ${escape(applicability)} <code>${escape((revision || '').slice(0, 12))}</code>.
-        ${run.producer === 'github_actions' ? 'Hosted Linux result.' : 'Local operator report.'}
+        ${run.producer === 'github_actions' ? 'Producer reports GitHub Actions execution.' : 'Local operator report.'}
         ${link ? `<a href="${escape(link)}" target="_blank" rel="noopener">Inspect evidence</a>` : 'Evidence link unavailable.'}</li>`;
     }).join('') + '</ul>' : '<p>No published contribution evidence is linked to this statement yet.</p>';
-    const prs = (data.pull_requests || []).filter(pr => (pr.files || []).includes(theorem.githubPath));
+    const work = data.work_context;
+    const sameRepository = work && data.catalog_source?.repository && repository(work.repository) === repository(data.catalog_source.repository);
+    const prs = sameRepository ? (data.pull_requests || []).filter(pr => (pr.files || []).includes(theorem.githubPath)) : [];
     const queue = prs.length ? '<p>Related open work:</p><ul>' + prs.map(pr => {
       const link = safeURL(pr.url);
       return link ? `<li><a href="${escape(link)}" target="_blank" rel="noopener">#${escape(String(pr.number))}: ${escape(pr.title)}</a></li>` : '';
-    }).join('') + '</ul>' : '<p>No related open PRs in this published queue snapshot.</p>';
+    }).join('') + '</ul>' : sameRepository ? '<p>No related open PRs in this published queue snapshot.</p>' : '<p>Related work is unavailable for this catalog repository.</p>';
     const command = `conjectures show '${theorem.theorem.replaceAll("'", "'\\''")}'`;
     return list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue +
       `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`;

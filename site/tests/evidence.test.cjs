@@ -38,3 +38,11 @@ test('unchecked outcomes are not displayed as evidence', () => {
   assert.match(evidence.render(theorem,{status:'invalid',runs:[]},escape),/invalid/);
   assert.match(evidence.render(theorem,{status:'not_configured',runs:[]},escape),/not configured/);
 });
+
+test('related work requires the same repository and reports missing context', () => {
+  const data = {runs:[], catalog_source:{repository:'owner/fc'}, work_context:{repository:'other/fc'},
+    pull_requests:[{number:42,title:'Related work',files:[theorem.githubPath],url:'https://github.com/owner/fc/pull/42'}]};
+  assert.doesNotMatch(evidence.render(theorem,data,escape),/#42/);
+  data.work_context.repository='owner/fc';
+  assert.match(evidence.render(theorem,data,escape),/#42/);
+});
