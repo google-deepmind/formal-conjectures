@@ -134,9 +134,13 @@ def answerElab : TermElab := fun stx expectedType? => do
       addDecl (.defnDecl answerAuxiliaryDecl) true
       return mkAnswerAnnotation (.const answerName <| levelParamNames.map Level.param)
     | .alwaysTrue =>
-      -- If the answer is a `sorry` of type `Prop` then default to `True` in this setting
+      -- If the answer is a `sorry` of type `Prop` then default to `True` in this setting.
+      -- The annotation is kept, as it is for a non-`Prop` `answer(sorry)` just below: without
+      -- it the elaborated statement carries no record that it has an answer at all, and
+      -- `findAnswerExprs` reports none, so `extract_names` cannot tell a `Prop`-valued answer
+      -- from an omitted one unless it is run against `FormalConjecturesAnswerPostpone`.
       if expectedType? == some (Expr.sort .zero) && a == (← `(term| sorry)) then
-        return .const `True []
+        return mkAnswerAnnotation (.const `True [])
       else if a == (← `(term| sorry)) then
         -- For `answer(sorry)` with a non-Prop expected type, construct a canonical
         -- `sorryAx` call directly. This avoids embedding the current module name
