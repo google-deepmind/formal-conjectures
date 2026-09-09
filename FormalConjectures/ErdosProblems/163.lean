@@ -28,16 +28,6 @@ import FormalConjecturesUtil
 
 namespace Erdos163
 
-open scoped Classical in
-/-- The neighbours of `v` lying inside `s`. -/
-noncomputable def neighborsWithin {V : Type*} (H : SimpleGraph V) (s : Finset V) (v : V) :
-    Finset V := s.filter (H.Adj v)
-
-/-- `H` is `d`-degenerate when every nonempty vertex set contains a vertex with at most `d`
-neighbours inside it (equivalently, every induced subgraph has a vertex of degree at most `d`). -/
-def IsDegenerate {V : Type*} (d : ℕ) (H : SimpleGraph V) : Prop :=
-  ∀ s : Finset V, s.Nonempty → ∃ v ∈ s, (neighborsWithin H s v).card ≤ d
-
 /--
 The Burr-Erdős conjecture: For any $d\geq 1$ if $H$ is a graph such that every subgraph
 contains a vertex of degree at most $d$ then
@@ -50,8 +40,8 @@ This problem is #9 in Ramsey Theory in the graphs problem collection.
 @[category research solved, AMS 5]
 theorem erdos_163 : answer(True) ↔
     ∀ (d : ℕ), 1 ≤ d →
-      ∃ C > (0 : ℝ), ∀ (V : Type) [Fintype V] (H : SimpleGraph V) [DecidableRel H.Adj],
-        IsDegenerate d H →
+      ∃ C > (0 : ℝ), ∀ (V : Type) [Fintype V] (H : SimpleGraph V),
+        H.IsDegenerate d →
         (SimpleGraph.diagonalGraphRamsey H : ℝ) ≤ C * Fintype.card V := by
   sorry
 

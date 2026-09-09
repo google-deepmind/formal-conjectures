@@ -26,10 +26,10 @@ import FormalConjecturesUtil
 - [Ch97] Chung, F., Open problems of Paul Erdős in graph theory. J. Graph Theory (1997), 3-36.
 - [DaJo17] Day, A. N. and Johnson, J. R., Multicolour Ramsey numbers of odd cycles.
   J. Combin. Theory Ser. B (2017), 56-63.
-- [GiHu24] Girão, A. and Hunter, Z., Multicolour Ramsey numbers of odd cycles.
-  arXiv:2404.05441 (2024).
-- [JaYi25] Janzer, O. and Yip, C. H., Multicolour Ramsey numbers of odd cycles.
-  arXiv:2501.05432 (2025).
+- [GiHu24] Girão, A. and Hunter, Z., Monochromatic odd cycles in edge-coloured complete graphs.
+  arXiv:2412.07708 (2024).
+- [JaYi25] Janzer, O. and Yip, F., Short monochromatic odd cycles.
+  arXiv:2506.14910 (2025).
 -/
 
 open Filter

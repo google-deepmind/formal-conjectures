@@ -30,15 +30,17 @@ open Filter
 namespace Erdos87
 
 /--
-Let $\epsilon > 0$. Is it true that, if $k$ is sufficiently large, then
+Let $0 < \epsilon < 1$. Is it true that, if $k$ is sufficiently large, then
 $$R(G) > (1-\epsilon)^k R(k)$$
 for every graph $G$ with chromatic number $\chi(G)=k$?
+
+The restriction $\epsilon < 1$ excludes negative bases in $(1-\epsilon)^k$.
 
 This problem is #12 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_87.parts.i : answer(sorry) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
+    ∀ ε > (0 : ℝ), ε < 1 → ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
         (SimpleGraph.diagonalGraphRamsey G : ℝ) >
           (1 - ε) ^ k * (SimpleGraph.diagonalRamsey k : ℝ) := by

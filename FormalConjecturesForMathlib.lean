@@ -69,6 +69,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cvetkovic
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Decomposition
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degeneracy
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination

@@ -21,17 +21,17 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/65](https://www.erdosproblems.com/65)
-- [GKS84] Gyárfás, A., Komlós, J. and Szemerédi, E., On the cycle lengths of graphs. J. Graph Theory
-  (1984), 441-445.
-- [LiMo20] Liu, C. and Montgomery, R., A solution to Erdős and Hajnal's odd cycle problem.
-  arXiv:2010.15844 (2020).
+- [GKS84] Gyárfás, A., Komlós, J. and Szemerédi, E., On the distribution of cycle lengths in graphs.
+  J. Graph Theory (1984), 441-462.
+- [LiMo20] Liu, H. and Montgomery, R., A solution to Erdős and Hajnal's odd cycle problem.
+  arXiv:2010.15802 (2020).
 -/
 
 namespace Erdos65
 
 /--
 Let $G$ be a graph with $n$ vertices and $kn$ edges, and $a_1<a_2<\cdots$ be the lengths of
-cycles in $G$. Is it true that
+cycles in $G$. Assume $n>0$ and $k>0$. Is it true that
 $$\sum\frac{1}{a_i}\gg \log k?$$
 
 Gyárfás, Komlós, and Szemerédi [GKS84] have proved that this sum is $\gg \log k$, so that only
@@ -39,11 +39,11 @@ the second question remains.
 -/
 @[category research solved, AMS 5]
 theorem erdos_65.parts.i : answer(True) ↔
-    ∃ c > (0 : ℝ), ∀ (k : ℕ) (hk : 2 ≤ k),
+    ∃ c > (0 : ℝ), ∀ (k : ℝ) (hk : 0 < k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         0 < n →
         Fintype.card V = n →
-        G.edgeSet.ncard = k * n →
+        (G.edgeSet.ncard : ℝ) = k * n →
         (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) ≥ c * Real.log k := by
   sorry
 
@@ -54,16 +54,16 @@ This problem is #65 in Extremal Graph Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_65.parts.ii : answer(sorry) ↔
-    ∀ (k : ℕ) (hk : 2 ≤ k),
+    ∀ (k : ℝ) (hk : 0 < k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         0 < n →
         Fintype.card V = n →
-        G.edgeSet.ncard = k * n →
-        ∀ (A B : Type) [Fintype A] [Fintype B] (K : SimpleGraph (A ⊕ B)),
-          K = completeBipartiteGraph A B →
+        (G.edgeSet.ncard : ℝ) = k * n →
+        ∀ (A B : Type) [Fintype A] [Fintype B],
           Fintype.card (A ⊕ B) = n →
-          K.edgeSet.ncard = k * n →
-          (∑ᶠ a ∈ K.cycleLengths, (1 : ℝ) / a) ≤ (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) := by
+          ((completeBipartiteGraph A B).edgeSet.ncard : ℝ) = k * n →
+          (∑ᶠ a ∈ (completeBipartiteGraph A B).cycleLengths, (1 : ℝ) / a) ≤
+            (∑ᶠ a ∈ G.cycleLengths, (1 : ℝ) / a) := by
   sorry
 
 -- TODO: Add variants of the problem.

@@ -23,9 +23,11 @@ import FormalConjecturesUtil
 - [erdosproblems.com/547](https://www.erdosproblems.com/547)
 - [Bu74] Burr, S. A., Generalized Ramsey theory for graphs—a survey. Graphs and combinatorics
   (Proc. Capital Conf., George Washington Univ., Washington, D.C., 1973) (1974), 52-75.
-- [Zh11] Zhao, Y., The Ramsey number of trees with large maximum degree. Random Structures
-  Algorithms (2011), 324-340.
+- [Zh11] Zhao, Y., Proof of the $(n/2-n/2-n/2)$ conjecture for large $n$.
+  Electron. J. Combin. (2011), Paper 27, 61.
 -/
+
+open Filter
 
 namespace Erdos547
 
@@ -41,6 +43,14 @@ theorem erdos_547 :
       T.IsTree → SimpleGraph.diagonalGraphRamsey T ≤ 2 * n - 2 := by
   sorry
 
--- TODO: Add variants of the problem.
+/--
+For sufficiently large $n$, every tree $T$ on $n$ vertices satisfies $R(T)\leq 2n-2$.
+Proved by Zhao [Zh11].
+-/
+@[category research solved, AMS 5]
+theorem erdos_547.variants.sufficiently_large :
+    ∀ᶠ n : ℕ in atTop, ∀ T : SimpleGraph (Fin n),
+      T.IsTree → SimpleGraph.diagonalGraphRamsey T ≤ 2 * n - 2 := by
+  sorry
 
 end Erdos547

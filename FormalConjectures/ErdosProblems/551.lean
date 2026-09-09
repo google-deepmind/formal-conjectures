@@ -25,9 +25,11 @@ import FormalConjecturesUtil
   Ser. B (1973), 46-54.
 - [Ni05] Nikiforov, V., The cycle-complete graph Ramsey numbers. Combin. Probab. Comput. (2005),
   349-370.
-- [KLS21] Keevash, P., Long, J. and Skokan, N., The cycle-complete graph Ramsey numbers. Int. Math.
-  Res. Not. IMRN (2021), 9326-9351.
+- [KLS21] Keevash, P., Long, E. and Skokan, J., Cycle-complete Ramsey numbers.
+  Int. Math. Res. Not. IMRN (2021), 277-302.
 -/
+
+open Filter
 
 namespace Erdos551
 
@@ -39,13 +41,25 @@ for $k\geq n\geq 3$ (except when $n=k=3$).
 Asked by Erdős, Faudree, Rousseau, and Schelp.
 This problem is #18 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
+@[category research open, AMS 5]
 theorem erdos_551 :
     ∀ (k n : ℕ), 3 ≤ n → n ≤ k → ¬(n = 3 ∧ k = 3) →
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph k)
         (SimpleGraph.completeGraph (Fin n)) = (k - 1) * (n - 1) + 1 := by
   sorry
 
--- TODO: Add variants of the problem.
+/--
+For sufficiently large $n$ and every $k\geq n$, $R(C_k,K_n)=(k-1)(n-1)+1$.
+
+Keevash, Long, and Skokan [KLS21] have proved this identity when
+$k\geq C\frac{\log n}{\log\log n}$ for some constant $C$, thus establishing the conjecture
+for sufficiently large $n$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_551.variants.sufficiently_large :
+    ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, n ≤ k →
+      SimpleGraph.graphRamsey (SimpleGraph.cycleGraph k)
+        (SimpleGraph.completeGraph (Fin n)) = (k - 1) * (n - 1) + 1 := by
+  sorry
 
 end Erdos551

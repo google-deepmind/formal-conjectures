@@ -21,9 +21,13 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/545](https://www.erdosproblems.com/545)
-- [Er75c] Erdős, P., Problems and results on finite and infinite graphs. Recent advances in graph
-  theory (Proc. Second Czechoslovak Sympos., Prague, 1974) (1975), 183-192.
+- [ErGr75] Erdős, P. and Graham, R. L., On partition theorems for finite graphs.
+  Infinite and finite sets (1975), 515-527.
+- [Er84b] Erdős, P., On some problems in graph theory, combinatorial analysis and combinatorial
+  number theory. Graph theory and combinatorics (Cambridge, 1983) (1984), 1-17.
 -/
+
+open Filter
 
 namespace Erdos545
 
@@ -42,22 +46,24 @@ def knPlusTEdges (n t : ℕ) : SimpleGraph (Option (Fin n)) where
     cases u <;> simp
 
 /--
-Let $G$ be a graph with $m$ edges and no isolated vertices. Is the Ramsey number $R(G)$ maximised
-when $G$ is 'as complete as possible'? That is, if $m=\binom{n}{2}+t$ edges with $0\leq t < n$
+Let $m$ be sufficiently large and let $G$ be a graph with $m$ edges and no isolated vertices.
+Is the Ramsey number $R(G)$ maximised when $G$ is 'as complete as possible'?
+That is, if $m=\binom{n}{2}+t$ edges with $0\leq t < n$
 then is
 $$R(G)\leq R(H),$$
 where $H$ is the graph formed by connecting a new vertex to $t$ of the vertices of $K_n$?
 
-A question of Erdős and Graham.
+A question of Erdős and Graham. The restriction to sufficiently large $m$ excludes the
+small counterexamples recorded on the source page.
 
 This problem is #10 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_545 : answer(sorry) ↔
-    ∀ (n t : ℕ), t < n →
-      ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
+    ∀ᶠ m : ℕ in atTop, ∀ (n t : ℕ), t < n → m = n.choose 2 + t →
+      ∀ (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
         (∀ v, 0 < G.degree v) →
-        G.edgeSet.ncard = n.choose 2 + t →
+        G.edgeSet.ncard = m →
         SimpleGraph.diagonalGraphRamsey G ≤
           SimpleGraph.diagonalGraphRamsey (knPlusTEdges n t) := by
   sorry

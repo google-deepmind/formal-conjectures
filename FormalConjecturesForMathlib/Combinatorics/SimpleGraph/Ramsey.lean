@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
 public import Mathlib.Order.Lattice.Nat
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 
@@ -89,5 +91,14 @@ noncomputable def classicalRamsey (k l : ℕ) : ℕ :=
 /-- The diagonal classical Ramsey number `R(k) = R(K_k, K_k)`. -/
 noncomputable def diagonalRamsey (k : ℕ) : ℕ :=
   classicalRamsey k k
+
+/--
+A graph $G$ is Ramsey size linear if $R(G,H) \ll_G |E(H)|$ for every finite graph $H$
+without isolated vertices. The constant is uniform over $H$.
+-/
+def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
+  ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
+    (∀ v, 0 < H.degree v) →
+    (graphRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
 
 end SimpleGraph

@@ -24,21 +24,10 @@ import FormalConjecturesUtil
 - [EFRS93] Erdős, P., Faudree, R. J., Rousseau, C. C. and Schelp, R. H., Ramsey size linear graphs.
   Combin. Probab. Comput. (1993), 389-399.
 - [Wi24] Wigderson, Y., Infinitely many minimally non-Ramsey size linear graphs.
-  arXiv:2403.02353 (2024).
+  arXiv:2409.05931 (2024).
 -/
 
 namespace Erdos79
-
-open scoped Classical in
-/--
-A graph $G$ is Ramsey size linear if $R(G,H) \ll m$ for all graphs $H$ with $m$ edges and
-no isolated vertices.
--/
-def RamseySizeLinear {V : Type*} [Fintype V] (G : SimpleGraph V) : Prop :=
-  ∀ (n : ℕ → ℕ) (H : ∀ m, SimpleGraph (Fin (n m))),
-    (∀ m, (H m).edgeSet.ncard = m) →
-    (∀ m v, 0 < (H m).degree v) →
-    (fun m ↦ (SimpleGraph.graphRamsey G (H m) : ℝ)) ≪ (fun m ↦ (m : ℝ))
 
 open scoped Classical in
 /--
@@ -54,8 +43,8 @@ Wigderson [Wi24] proved that there are infinitely many such graphs.
 @[category research solved, AMS 5]
 theorem erdos_79 : answer(True) ↔
     ∀ (N : ℕ), ∃ (n : ℕ) (_ : N ≤ n) (G : SimpleGraph (Fin n)),
-      ¬ RamseySizeLinear G ∧
-      ∀ (H : SimpleGraph (Fin n)), H < G → RamseySizeLinear H := by
+      ¬ G.IsRamseySizeLinear ∧
+      ∀ H : G.Subgraph, H < ⊤ → H.coe.IsRamseySizeLinear := by
   sorry
 
 -- TODO: Add variants of the problem.

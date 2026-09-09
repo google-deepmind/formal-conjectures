@@ -34,7 +34,7 @@ $$R(G,H)\ll m?$$
 
 In other words, is $G$ Ramsey size linear?
 
-This problem is #17 in Ramsey Theory in the graphs problem collection.
+This problem is #33 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, AMS 5]
 theorem erdos_568 : answer(sorry) ↔
@@ -43,10 +43,7 @@ theorem erdos_568 : answer(sorry) ↔
         T.IsTree → (SimpleGraph.graphRamsey G T : ℝ) ≤ c₁ * n) →
       (∃ c₂ > (0 : ℝ), ∀ (n : ℕ),
         (SimpleGraph.graphRamsey G (SimpleGraph.completeGraph (Fin n)) : ℝ) ≤ c₂ * (n : ℝ) ^ 2) →
-      ∃ c > (0 : ℝ), ∀ (m : ℕ) (W : Type) [Fintype W] (H : SimpleGraph W) [DecidableRel H.Adj],
-        (∀ v, 0 < H.degree v) →
-        H.edgeSet.ncard = m →
-        (SimpleGraph.graphRamsey G H : ℝ) ≤ c * m := by
+      G.IsRamseySizeLinear := by
   sorry
 
 end Erdos568

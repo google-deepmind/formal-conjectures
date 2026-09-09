@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/800](https://www.erdosproblems.com/800)
-- [Al94] Alon, N., Subgraphs of large degree. Random Structures Algorithms (1994), 247-258.
+- [Al94] Alon, N., Subdivided graphs have linear Ramsey numbers. J. Graph Theory (1994), 343-347.
 -/
 
 namespace Erdos800

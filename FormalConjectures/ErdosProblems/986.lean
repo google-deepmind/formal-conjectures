@@ -23,6 +23,7 @@ import FormalConjecturesUtil
 - [erdosproblems.com/986](https://www.erdosproblems.com/986)
 - [ChGr98] Chung, F. and Graham, R., *Erdős on Graphs: His Legacy of Unsolved Problems*.
   A K Peters, Ltd. (1998).
+- [Br26] Bradač, D., Off-diagonal Ramsey numbers. arXiv:2605.28793 (2026).
 - [Sp77] Spencer, J., Asymptotic lower bounds for Ramsey functions. Discrete Math. (1977), 69-76.
 - [MaVe23] Mattheus, S. and Verstraëte, J., The asymptotics of $r(4,t)$. Ann. of Math. (2024),
   941-965.
@@ -38,8 +39,10 @@ $$R(s,k) \gg \frac{k^{s-1}}{(\log k)^c}$$
 for some constant $c=c(s)>0$.
 
 According to Chung and Graham [ChGr98] this was first conjectured by Erdős in 1947.
+
+Proved by Bradač [Br26], with $c=2s-4$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_986 :
     ∀ (s : ℕ) (hs : 3 ≤ s),
       ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧

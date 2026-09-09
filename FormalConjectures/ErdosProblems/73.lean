@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/73](https://www.erdosproblems.com/73)
-- [Re99] Reed, B., A strengthening of Brooks' theorem. J. Combin. Theory Ser. B (1999), 167-173.
+- [Re99] Reed, B., Mangoes and Blueberries. Combinatorica (1999), 267-296.
 -/
 
 namespace Erdos73

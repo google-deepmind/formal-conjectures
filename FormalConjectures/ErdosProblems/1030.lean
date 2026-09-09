@@ -21,8 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/1030](https://www.erdosproblems.com/1030)
-- [BEFS89] Burr, S. and Erdős, P. and Faudree, R. J. and Schelp, R. H., Some complete bipartite
-  graph-tree Ramsey numbers. Graph theory in memory of G. A. Dirac (Sandbjerg, 1985) (1989), 79-89.
+- [BEFS89] Burr, S. and Erdős, P. and Faudree, R. J. and Schelp, R. H., On the difference between
+  consecutive Ramsey numbers. Utilitas Math. (1989), 115-118.
 -/
 
 open Filter

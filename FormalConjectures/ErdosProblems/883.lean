@@ -21,10 +21,13 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/883](https://www.erdosproblems.com/883)
-- [ErSa97] Erdős, P. and Sárközy, A., On the number of prime factors of integers.
-  Acta Sci. Math. (Szeged) (1997).
-- [Sa99] Sárközy, A., On the coprime graph. Discrete Math. (1999).
+- [ErSa97] Erdős, P. and Sárközy, G. N., On cycles in the coprime graph of integers.
+  Electron. J. Combin. (1997), Research Paper 8.
+- [Sa99] Sárközy, G. N., Complete tripartite subgraphs in the coprime graph of integers.
+  Discrete Math. (1999), 227-238.
 -/
+
+open Filter
 
 namespace Erdos883
 
@@ -45,7 +48,7 @@ then $G(A)$ contains all odd cycles of length $\leq n/3 + 1$?
 A problem of Erdős and Sárközy [ErSa97].
 -/
 @[category research open, AMS 5 11]
-theorem erdos_883 : answer(sorry) ↔
+theorem erdos_883.parts.i : answer(sorry) ↔
     ∀ (n : ℕ) (A : Finset ℕ),
       A ⊆ Finset.Icc 1 n →
       n / 2 + n / 3 - n / 6 < A.card →
@@ -53,6 +56,22 @@ theorem erdos_883 : answer(sorry) ↔
         l ∈ (coprimeGraph.induce (A : Set ℕ)).oddCycleLengths := by
   sorry
 
--- TODO: Add variants of the problem.
+open scoped Classical in
+/--
+Is it true that, for every $\ell\geq 1$, if $n$ is sufficiently large and
+$$|A| > \lfloor n/2\rfloor + \lfloor n/3\rfloor - \lfloor n/6\rfloor$$
+then $G(A)$ must contain a complete $(1,\ell,\ell)$ tripartite graph on $2\ell+1$ vertices?
+
+The second question was solved by Sárközy [Sa99], who proved this with
+$\ell \gg \log n/\log\log n$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_883.parts.ii : answer(True) ↔
+    ∀ l : ℕ, 1 ≤ l → ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℕ,
+      A ⊆ Finset.Icc 1 n →
+      n / 2 + n / 3 - n / 6 < A.card →
+      (SimpleGraph.completeMultipartiteGraph (fun i : Fin 3 ↦ Fin (![1, l, l] i))).IsContained
+        (coprimeGraph.induce (A : Set ℕ)) := by
+  sorry
 
 end Erdos883

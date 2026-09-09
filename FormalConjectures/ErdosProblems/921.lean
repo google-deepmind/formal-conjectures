@@ -23,9 +23,9 @@ import FormalConjecturesUtil
 - [erdosproblems.com/921](https://www.erdosproblems.com/921)
 - [Er69b] Erdős, P., Problems and results in chromatic graph theory. Proof Techniques in Graph
   Theory (Proc. Second Ann Arbor Graph Theory Conf., Ann Arbor, Mich., 1968) (1969), 27-35.
-- [Ga63] Gallai, T., Kritische Graphen II. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1963), 373-395.
-- [KST84] Kierstead, H. A., Szemerédi, E. and Trotter, W. T., On the size of odd cycles in
-  graphs with large chromatic number. Colloq. Math. Soc. János Bolyai (1984).
+- [Ga63] Gallai, T., Kritische Graphen. I. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1963), 165-192.
+- [KST84] Kierstead, H. A., Szemerédi, E. and Trotter, W. T., On coloring graphs with locally
+  small chromatic number. Combinatorica (1984), 183-185.
 -/
 
 open Filter
