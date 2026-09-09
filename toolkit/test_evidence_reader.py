@@ -52,3 +52,16 @@ class EvidenceReaderTests(unittest.TestCase):
             self.assertEqual(reader.load(None,destination,offline=True)['status'],'available')
             saved=rr.read_json(cache);saved['files'][self.entry['path']+'/report.json']='{}';core.save(cache,saved)
             self.assertEqual(reader.load(None,destination,offline=True)['status'],'invalid')
+
+    def test_rehashed_but_contradictory_pass_is_rejected(self):
+        prefix=self.entry['path']
+        report=rr.parse(self.files[prefix+'/report.json'])
+        report['semantic_verdict']='NEEDS REVISION'
+        self.files[prefix+'/report.json']=rr.encode(report)
+        manifest=rr.parse(self.files[prefix+'/manifest.json'])
+        for item in manifest['artifacts']:
+            item['sha256']=rr.digest(self.files[prefix+'/'+item['path']])
+        self.files[prefix+'/manifest.json']=rr.encode(manifest)
+        self.entry['manifest_sha256']=rr.digest(self.files[prefix+'/manifest.json'])
+        with self.assertRaisesRegex(ValueError,'contradicts'):
+            reader.validate_index(self.index,self.files.__getitem__,self.origin)

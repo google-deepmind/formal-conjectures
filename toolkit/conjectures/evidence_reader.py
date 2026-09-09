@@ -54,6 +54,8 @@ def validate_index(index, read, origin=None):
             rr.require(entry.get('scope')==request.get('scope'),'Review scope mismatch')
             if request.get('base_tip'):rr.require(target.get('base')==request['base_tip'],'Review base mismatch')
             rr.require(report.get('semantic_verdict') in ('CLEAN','ACCEPT WITH NITS','NEEDS REVISION','INCOMPLETE'),'Unknown semantic verdict')
+            if record['outcome']=='pass':
+                rr.require(report['semantic_verdict'] in ('CLEAN','ACCEPT WITH NITS') and report['completeness']=='complete' and not report['gaps'] and all(c['status']=='pass' for c in report['checks']),'Passing run contradicts retained review')
             summary={k:report[k] for k in ('semantic_verdict','completeness','checks','gaps')}
             summary.update({k:review.get(k,[]) for k in ('findings','questions','coverage','reconciliations','reviewer')})
             if 'reviewer-attributions.json' in files:
@@ -68,7 +70,8 @@ def validate_index(index, read, origin=None):
             rr.require(summary.get('outcome')==record['outcome'],'Verification outcome mismatch')
             if summary['outcome'] in ('pass','fail') and summary.get('comparator'):
                 from .verifier_result import typed_result
-                typed=typed_result(rr.encode(summary['comparator']),summary.get('exit_code'))
+                try:typed=typed_result(rr.encode(summary['comparator']),summary.get('exit_code'))
+                except Failure as error:raise rr.InputError(str(error)) from error
                 rr.require({'pass':'pass','rejected':'fail','error':'error'}[typed['outcome']]==summary['outcome'],'Inconsistent proof policy outcome')
             if summary['outcome']=='pass':rr.require(bool(summary.get('comparator')),'Proof pass lacks typed result')
             rr.require(request.get('source_commit')==target.get('commit') and request.get('declaration')==target.get('declaration') and repository_name(request.get('source_repository'))==repository_name(target.get('repository')),'Verification target mismatch')
