@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Euler_brick)
 - [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
-- [Sh12] Shapirov, Ruslan. Perfect cuboids and irreducible polynomials. https://arxiv.org/abs/1108.5348
+- [Sh12] Sharipov, Ruslan. Perfect cuboids and irreducible polynomials. https://arxiv.org/abs/1108.5348
 -/
 
 namespace EulerBrick
