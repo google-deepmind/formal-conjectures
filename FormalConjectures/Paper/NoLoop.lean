@@ -23,18 +23,17 @@ import FormalConjecturesUtil
 *References:*
 
 Let $A$ be an Artin algebra over a commutative Artinian ring $R$.
-The No Loop Conjectures are a family of statements relating $\operatorname{Ext}^1_A(S,S)$ for simple $A$-modules $S$ to homological properties of $S$ and $A$.
+The No Loop Conjectures are a family of statements relating $\operatorname{Ext}^1_A(S,S)$
+for simple $A$-modules $S$ to homological properties of $S$ and $A$.
 
-The *Extreme No Loop Conjecture* was formulated by S. Liu and J.-P. Morin in
-[The strong no loop conjecture for special biserial algebras,
+The *Extreme No Loop Conjecture* was formulated by S. Liu and J.-P. Morin in [The strong no loop conjecture for special biserial algebras,
 Proc. Amer. Math. Soc. 132 (2004), 3513-3523](https://doi.org/10.1090/S0002-9939-04-07512-4).
 It was also called Extension Conjecture later on.
 
 The *Strong No Loop Conjecture* was solved for finite-dimensional algebras over algebraically closed fields
 by K. Igusa, S. Liu and C. Paquette in
 [A proof of the strong no loop conjecture](https://arxiv.org/abs/1103.5361),
-published as
-[Adv. Math. 228 (2011), 2731-2742](https://doi.org/10.1016/j.aim.2011.06.042).
+published as [Adv. Math. 228 (2011), 2731-2742](https://doi.org/10.1016/j.aim.2011.06.042).
 
 The *No Loop Conjecture* was solved assuming the same setup as above by K. Igusa
 [Notes on the no loop conjecture, J. Pure Appl. Algebra 69 (1990), 161-176](https://doi.org/10.1016/0022-4049%2890%2990040-O).
@@ -42,22 +41,15 @@ In this setup,  the No Loop Conjecture follows also from earlier work of H. Lenz
 [Nilpotente Elemente in Ringen von endlicher globaler Dimension, Math. Z. 108 (1969), 313-324](https://doi.org/10.1007/BF01112536).
 
 The three conjectures form successive strengthenings:
-[
-\text{Extreme No Loop}
-\Longrightarrow
-\text{Strong No Loop}
-\Longrightarrow
-\text{No Loop}.
-]
+$$
+\text{Extreme No Loop} \Longrightarrow \text{Strong No Loop}
+\Longrightarrow \text{No Loop}.
+$$
 
 Remark:
-We formulate the No Loop Conjectures in the form that non-vanishing of $Ext^1(S,S)$ for a simple $A$-module $S$
-leads to certain homological conditions.
-If $A$ is isomorphic to a bound quiver algebra $kQ/I$,
-the vanishing of $\operatorname{Ext}^1_A(S,S)$ for all simple $A$-modules $S$ corresponds
-to the absence of loops in the quiver.
-In particular, the contrapositives of our formulations justify the 'No Loops'-terminology
-assuming the quiver description of $A$.
+We formulate the No Loop Conjectures in the form that non-vanishing of $\operatorname{Ext}^1(S,S)$ for a simple $A$-module $S$ leads to certain homological conditions.
+If $A$ is isomorphic to a bound quiver algebra $kQ/I$, the vanishing of $\operatorname{Ext}^1_A(S,S)$ for all simple $A$-modules $S$ corresponds to the absence of loops in the quiver.
+In particular, the contrapositives of our formulations justify the 'No Loops'-terminology assuming the quiver description of $A$.
 -/
 
 open CategoryTheory Abelian Limits
@@ -103,7 +95,13 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem strong_no_oop : ext1_neq_zero S  →  strong_no_loop_statement S := by
+theorem strong_no_loop : ext1_neq_zero S  →  strong_no_loop_statement S := by
+  sorry
+
+/--
+A special case of the conjecture see remark above the file-/
+@[category research solved, AMS 16 18]
+theorem strong_no_loop_algebraicly_closed {R : Type u} [Field R] [Algebra R A] [Module.Finite R A] [IsAlgClosed R]: ext1_neq_zero S  →  strong_no_loop_statement S := by
   sorry
 
 abbrev extreme_no_loop_statement := ∀ i, ∃ n > i,¬ Subsingleton (Ext S S n)
