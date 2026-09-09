@@ -65,7 +65,10 @@ def export(root,directory):
 
 def publish(root,directory,cfg,dry_run=False):
     files,record=export(root,directory)
-    if dry_run:return {'outcome':'pass','public_export':str(directory/'public'),'artifacts':rr.descriptors(files)}
+    if dry_run:return {'outcome':'pass','public_export':str(directory/'public'),'artifacts':rr.descriptors(files),
+                       'destination':cfg.get('evidence') or 'Not configured; use conjectures setup evidence.',
+                       'omitted':'Raw snapshots, complete source documents, invocation logs, and private artifacts.',
+                       'experimental':'Inspect this export before publication; release qualification is pending.'}
     destination=cfg.get('evidence')
     if not isinstance(destination,dict):raise Failure('missing_evidence_destination','Configure the existing evidence branch',4)
     repo,branch=destination['repository'],destination['branch']
@@ -131,7 +134,7 @@ def post(directory,publication):
     if len(existing)>1:raise Failure('comment_conflict','Multiple advisory comments need reconciliation',4)
     if existing:
         order=re.search(r'<!-- fc-review-order: (\S+) (\S+) -->',existing[0]['body'])
-        if order and order.group(1)>record['created_at']:raise Failure('older_request','A newer request already has an advisory summary',4)
+        if order and (order.group(1),order.group(2))>(record['created_at'],record['id']):raise Failure('older_request','A newer request already has an advisory summary',4)
     if not current():raise Failure('stale_target','PR changed before posting; archive remains available',4)
     endpoint=f'repos/{repo}/issues/comments/{existing[0]["id"]}' if existing else f'repos/{repo}/issues/{number}/comments'
     with tempfile.NamedTemporaryFile(mode='w',suffix='.json') as f:

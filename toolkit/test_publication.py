@@ -1,0 +1,73 @@
+"""Publication against disposable git archives; no live comments or uploads."""
+import subprocess
+from pathlib import Path
+from unittest.mock import patch
+import unittest
+from conjectures import core, evidence, report as rr, review
+import test_review_lifecycle as lifecycle
+
+
+class PublicationTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture=lifecycle.ReviewLifecycleTests('test_complete_external_report_without_model_credentials')
+        self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        f=self.fixture;self.root=f.root;self.directory=f.directory
+        with patch.object(review,'applicability',return_value='current'):f.complete()
+        ticket=rr.read_json(f.directory/'ticket.json');ticket.update(local_snapshot=False,pr=42)
+        core.save(f.directory/'ticket.json',ticket)
+        self.ticket=ticket
+        archive=self.root/'archive';subprocess.run(['git','init','-q',str(archive)],check=True)
+        for key,value in [('user.name','Fixture'),('user.email','fixture@example.invalid')]:core.git(archive,'config',key,value)
+        (archive/'README.md').write_text('Disposable evidence archive')
+        core.git(archive,'add','.');core.git(archive,'commit','-qm','Archive root');core.git(archive,'branch','-M','evidence')
+        self.remote=self.root/'remote.git';subprocess.run(['git','clone','-q','--bare',str(archive),str(self.remote)],check=True)
+        self.cfg={'evidence':{'repository':'fixture/archive','branch':'evidence'}}
+        self.real_command=core.command
+
+    def command(self,args,**kwargs):
+        args=list(args)
+        if args[:2]==['git','clone']:
+            args=[str(self.remote) if x=='https://github.com/fixture/archive.git' else x for x in args]
+        return self.real_command(args,**kwargs)
+
+    def github(self,path):
+        if '/commits/' in path:return {'sha':path.rsplit('/',1)[1]}
+        return {'private':False}
+
+    def publish(self):
+        with patch.object(evidence,'github',side_effect=self.github),patch.object(evidence,'command',side_effect=self.command),patch.dict('os.environ',{'GIT_AUTHOR_NAME':'Fixture','GIT_AUTHOR_EMAIL':'fixture@example.invalid','GIT_COMMITTER_NAME':'Fixture','GIT_COMMITTER_EMAIL':'fixture@example.invalid'}):
+            return evidence.publish(self.root,self.directory,self.cfg)
+
+    def test_archive_is_idempotent_and_export_omits_raw_material(self):
+        first=self.publish();second=self.publish();self.assertEqual(first,second)
+        manifest=rr.read_json(self.directory/'public/manifest.json')
+        paths=[a['path'] for a in manifest['artifacts']]
+        self.assertNotIn('snapshot',paths);self.assertNotIn('build.log',paths)
+        self.assertTrue((self.directory/'public/redactions.json').is_file())
+        original=rr.read_json(self.directory/'run.json');self.assertEqual(original['outcome'],'pass')
+
+    def test_failed_upload_is_not_advertised(self):
+        original=evidence.git
+        def git(root,*args):
+            if args and args[0]=='push':raise core.Failure('execution_error','simulated rejected push',3)
+            return original(root,*args)
+        with patch.object(evidence,'git',side_effect=git),self.assertRaises(core.Failure):self.publish()
+        self.assertFalse((self.directory/'publication.json').exists())
+        self.assertEqual(rr.read_json(self.directory/'run.json')['status'],'completed')
+        self.publish()  # Retry checks immutable bytes and completes.
+
+    def test_stale_target_never_posts(self):
+        with patch.object(evidence,'github',return_value={'state':'open','head':{'sha':'changed'},'base':{'sha':self.ticket['base']}}),patch.object(evidence,'gh') as post:
+            with self.assertRaises(core.Failure) as error:evidence.post(self.directory,{'url':'https://example.invalid/archive'})
+        self.assertEqual(error.exception.reason,'stale_target');post.assert_not_called()
+
+    def test_older_request_cannot_replace_newer_comment(self):
+        def api(path):
+            if '/pulls/' in path:return {'state':'open','head':{'sha':self.ticket['head']},'base':{'sha':self.ticket['base']}}
+            if path=='user':return {'login':'fixture'}
+            return [{'id':1,'user':{'login':'fixture'},'body':evidence.MARKER+'\n<!-- fc-review-order: 2999-01-01T00:00:00Z newer -->'}]
+        with patch.object(evidence,'github',side_effect=api),patch.object(evidence,'gh') as post:
+            with self.assertRaises(core.Failure) as error:evidence.post(self.directory,{'url':'https://example.invalid/archive'})
+        self.assertEqual(error.exception.reason,'older_request');post.assert_not_called()
+
+if __name__=='__main__':unittest.main()
