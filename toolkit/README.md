@@ -12,7 +12,15 @@ public evidence are experimental pending the full acceptance journeys.
 
 ## Try or install
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first. On macOS
+with Homebrew, run `brew install uv`. The official macOS/Linux installer is:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Restart your shell after installation. `--python 3.11` selects the tested Python
+version; uv can download it when it is unavailable locally.
 Try without permanently installing the toolkit:
 
 ```sh
@@ -30,6 +38,12 @@ conjectures show erdos/730
 These browsing commands and `doctor` work without a checkout, Lean, Docker, or
 GitHub login. An unavailable statement or evidence feed is shown explicitly.
 Supported systems are macOS and Linux, including WSL. Native Windows is not supported.
+
+To reproduce the released Git revision directly:
+
+```sh
+uv tool install --python 3.11 "git+https://github.com/williamjblair/formal-conjectures.git@9c8f6c25de7d73d8f285ece597ee6a727cd81fdd"
+```
 
 For local development, run `uv tool install --editable .` inside this repository.
 If `conjectures` is not found, run `uv tool update-shell` and restart your shell.
