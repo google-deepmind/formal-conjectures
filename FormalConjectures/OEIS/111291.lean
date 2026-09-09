@@ -66,7 +66,7 @@ Simon Colton conjectures that the number of refactorable numbers less than $x$ i
 $\frac{x}{2\log x}$. This is an asymptotic claim, so we state it for sufficiently large $x$.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∃ x₀ : ℝ, ∀ x ≥ x₀,
+theorem conjecture : ∀ᶠ x in Filter.atTop,
     (countRefactorable x : ℝ) ≥ x / (2 * Real.log x) := by
   sorry
 
