@@ -66,15 +66,6 @@ to the whole plane. -/
 theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLFunction E L := by
   sorry
 
-/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)): for an elliptic
-curve over a number field $K$, a meromorphic continuation of its $L$-series has order
-$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$. -/
-@[category research open, AMS 11 14]
-theorem birch_and_swinnerton_dyer_conjecture [DecidableEq K] [E.IsElliptic] (L : ℂ → ℂ)
-    (hL : IsLFunction E L) :
-    meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
-  sorry
-
 end NumberField
 
 section Rat
@@ -86,14 +77,29 @@ variable (E : WeierstrassCurve ℚ) [E.IsElliptic]
 theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
   sorry
 
-/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
-Problem: a meromorphic continuation of the $L$-series of an elliptic curve over $\mathbb{Q}$ has
-order $\operatorname{rank}_{\mathbb{Z}} E(\mathbb{Q})$ at $s = 1$. -/
+end Rat
+
+/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
+curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
+$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$.
+
+The rank is `AddCommGroup.freeRank`, which requires $E(K)$ to be finitely generated. That is the
+Mordell--Weil theorem, which Mathlib does not have and which this repository states as a `sorry`
+in `EllipticCurveRank.mordell_weil`, so it appears here as a hypothesis. -/
+def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
+  ∀ (E : WeierstrassCurve K) [E.IsElliptic] [AddGroup.FG E.toAffine.Point] (L : ℂ → ℂ),
+    IsLFunction E L → meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
+
+/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
-theorem birch_and_swinnerton_dyer_conjecture_rat (L : ℂ → ℂ) (hL : IsLFunction E L) :
-    meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point := by
+theorem weak_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
+    [DecidableEq K] : Weak K := by
   sorry
 
-end Rat
+/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
+Problem. -/
+@[category research open, AMS 11 14]
+theorem weak_birch_swinnerton_dyer_conjecture_rat : Weak ℚ := by
+  sorry
 
 end BirchSwinnertonDyer
