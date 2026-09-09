@@ -26,6 +26,9 @@ def render(value, args):
         lines.append('Your existing agent conducts semantic review; no AI login is required.')
     elif 'problems' in value:
         problems = value['problems']
+        source=(value.get('catalog_provenance') or {}).get('source')
+        origin=value.get('catalog_origin') or {}
+        if source:lines.append(f"Catalog: {source['repository']} @ {source['commit'][:12]} ({origin.get('state','published')})")
         if not problems: lines.append('No matching problems. Try a collection or declaration name.')
         elif args.command == 'find':
             lines.append(table(['Declaration', 'Collection', 'Status'], [
@@ -37,6 +40,7 @@ def render(value, args):
                 lines += [p['theorem'], p.get('module', ''), 'Status: '+str(p.get('category','unknown')),
                           p.get('statement') or 'Statement text unavailable in this catalog.']
                 if p.get('docstring'): lines.append(p['docstring'])
+                if p.get('source_url'):lines.append('Source revision: '+p['source_url'])
                 source = value.get('moduleDocstrings', {}).get(p.get('module'))
                 if source: lines += ['Sources:', source]
                 for proof in p.get('formalProofs', []):

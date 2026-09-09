@@ -41,6 +41,9 @@ def parser():
         q=command(name,'Search the catalog' if name=='find' else 'Read a statement, its variants, sources, and evidence',f'conjectures {name} erdos/730')
         q.add_argument('target',help='Search text, exact declaration, or erdos/NUMBER')
         q.add_argument('--catalog',type=Path,help='Read a native FC metadata JSON file')
+        freshness=q.add_mutually_exclusive_group()
+        freshness.add_argument('--refresh',action='store_true',help='Refresh the published catalog now (otherwise cached for 24 hours)')
+        freshness.add_argument('--offline',action='store_true',help='Use the retained catalog without network requests')
         if name=='find':q.add_argument('--limit',type=positive,default=20,help='Maximum results (default: 20)')
     def scope(q, replay=False):
         g=q.add_mutually_exclusive_group(required=True)
@@ -63,7 +66,7 @@ def parser():
     s.add_argument('run');s.add_argument('--files',type=Path,help='Directory containing witness files; copied to scratch/')
     q=command('init','Generate a workspace for one exact declaration (experimental)','conjectures init DECLARATION --out ../proof')
     q.add_argument('target');q.add_argument('--out',required=True,type=Path,help='New workspace directory')
-    q.add_argument('--source-ref',default='origin/main',help='Retrievable source revision (default: origin/main)')
+    q.add_argument('--source-ref',help='Retrievable source revision (default: catalog commit; required for unversioned local catalogs)')
     q.add_argument('--repository',help='Source GitHub OWNER/REPO');q.add_argument('--catalog',type=Path,help='Native metadata JSON')
     q=command('verify','Dispatch public committed proof work to Linux (experimental)','conjectures verify ../proof');q.add_argument('directory',type=Path)
     command('status','Show work, coverage, outcomes, and next actions','conjectures status')

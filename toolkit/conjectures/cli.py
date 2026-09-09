@@ -28,14 +28,21 @@ def dispatch(args):
         return setup(root,args)
     if args.command in ('find','show'):
         from .catalog import load,matches
-        data=load(root,args.catalog);found=matches(data,args.target)
+        data=load(root,args.catalog,refresh=args.refresh,offline=args.offline);found=matches(data,args.target)
+        source=data.get('provenance',{}).get('source')
+        if source:
+            from .catalog_data import module_path,source_url
+            found=[{**p,'githubPath':module_path(p['module']),'source_url':source_url(source,p['module'])} for p in found]
         if args.command=='show' and not found:raise Failure('unknown_target','No matching target. Try conjectures find QUERY.')
         total=len(found)
         if args.command=='find':found=found[:args.limit]
         if args.command=='show':
             from .catalog import attach_evidence
-            found=attach_evidence(found,root,cfg)
-        return {'outcome':'pass','problems':found,'total':total,
+            found=attach_evidence(found,root,cfg,source,offline=args.offline)
+        missing=args.command=='show' and any(not p.get('statement') for p in found)
+        return {'outcome':'incomplete' if missing else 'pass','problems':found,'total':total,
+                'reason':'statement_unavailable' if missing else 'catalog_loaded',
+                'catalog_provenance':data.get('provenance'), 'catalog_origin':data.get('catalog_origin'),
                 'moduleDocstrings':{p['module']:data.get('moduleDocstrings',{}).get(p['module']) for p in found},
                 'coverage_gaps':data.get('coverage_gaps',[]),
                 'catalog_note':'Published metadata is descriptive; acceptance and exact-target verification are separate.'}
@@ -142,6 +149,7 @@ def dispatch(args):
 def operation_code(args, result):
     if result.get('command_status'):
         return {'success':0,'failure':1,'error':3,'incomplete':4,'cancelled':5}[result['command_status']]
+    if args.command=='show' and result.get('outcome')=='incomplete':return 4
     if args.command in ('find','show','status','completion','setup') or (args.command=='run' and args.operation in ('list','show','logs')):
         return 0
     if args.command=='review' and args.operation=='prepare':

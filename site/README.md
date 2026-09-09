@@ -21,11 +21,27 @@ formal-conjectures repo (Lean 4)
                  └─ site/         ← deployed to GitHub Pages
 ```
 
-1. **Data extraction.** The formal-conjectures CI runs `lake exe extract_names` (defined in `scripts/extract_names.lean`). This imports all compiled Lean modules, reads the `@[category]` and `@[AMS]` attributes, and writes a JSON array to stdout. Each entry contains the theorem's fully-qualified name, module, category, AMS subject codes, pretty-printed statement, and docstring.
+1. **Extraction.** CI builds `FormalConjecturesAnswerPostpone` and runs the native
+   `extract_names` executable. Answer holes, statements, categories, proof conditions,
+   variants, and source documentation come from the same Lean metadata.
+2. **Publication.** `scripts/publish_catalog.py` validates the complete extract and
+   records its source repository/commit, extractor revision, Lean toolchain, and
+   dependency digest. It writes `catalog.json` and `catalog-manifest.json`.
+3. **Rendering.** `build-and-docs.yml` runs `node build.js` and deploys both files
+   beside the website. The existing browser projection remains available at
+   `data/conjectures.json`; its existing field meanings are unchanged.
 
-2. **Data creation.** The formal-conjectures CI adds the resulting JSON to `data/conjectures.json` in this repository.
+The descriptor uses `fc.catalog.v1`; the native data retains `schemaVersion: 2`.
+Its SHA-256 digest identifies the exact downloaded bytes. Source links use the
+recorded commit. A successful extraction does not certify a proof or change a
+maintainer's status decision. Anonymous examples remain excluded from the named
+catalog; no declaration identities are invented for them.
 
-3. **Site build.** A push to `data/conjectures.json` triggers this repo's GitHub Actions workflow (`.github/workflows/deploy.yml`), which runs `node build.js` and deploys the output to GitHub Pages.
+Preview builds download the full native catalog and preserve its original
+provenance. They fail when it is unavailable or incomplete. They do not reconstruct
+statements from the browser projection or claim the preview branch as the source.
+The first production deployment of #5375 must therefore use the full build mode;
+previews and default CLI browsing become available after that deployment.
 
 During the site build, `build.js` also reads the repository's git history to
 attach file-level contributor metadata to each theorem page. If `GITHUB_TOKEN`
@@ -81,8 +97,8 @@ post-processor again after changing the theme to refresh source previews.
 
 ## Building locally
 
-The quickest way to develop the website locally is using `dev.sh`, which downloads
-the conjectures data from the live production site (no Lean build needed):
+After the native catalog is deployed, `dev.sh` downloads the complete catalog
+from the production site (no Lean build needed):
 
 **Requirements:** Node.js 18+ and Python 3.
 
@@ -107,9 +123,11 @@ If you need the site to reflect local Lean changes (new conjectures, etc.):
 ```bash
 # In the formal-conjectures repo root
 lake exe cache get   # download prebuilt Mathlib oleans (first time only)
-lake build
+lake --wfail build FormalConjecturesAnswerPostpone
 mkdir -p site/data
-lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified > site/data/conjectures.json
+lake exe extract_names --exclude=fileFirstAdded,fileLastModified > site/data/conjectures.json
+python3 scripts/publish_catalog.py site/data/conjectures.json --repository google-deepmind/formal-conjectures --out site/data
+cp site/data/catalog.json site/data/conjectures.json
 
 # (Optional) Generate Verso literate fragments for rendered docstrings.
 # Without this, theorem detail pages will lack formatted docstrings and source links.
@@ -195,4 +213,4 @@ For GitHub Pages setup (including the environment rule needed for `*-webtest` br
 The site also publishes `data/catalog.json`, preserving the native schema-2 extract
 for command-line consumers. The browser's `data/conjectures.json` projection is unchanged.
 Full CI extraction retains statements, docstrings, proof references, and answer kinds.
-A website-only rebuild from older live data cannot reconstruct omitted fields.
+Website-only builds require the full catalog and matching descriptor.
