@@ -35,7 +35,8 @@ class CLITests(ToolkitFixture):
         with patch.object(Path,'cwd',return_value=self.root),patch.object(onboarding,'probe',return_value=False),patch.object(core,'config_path',return_value=self.root/'config.json'):
             self.assertEqual(self.invoke()[0],0)
             code,out,_=self.invoke('--version','--json');self.assertEqual(code,0);self.assertIn('version',json.loads(out))
-            code,out,_=self.invoke('doctor','--json');self.assertEqual(code,0);self.assertEqual(json.loads(out)['capabilities']['browse']['status'],'ready')
+            with patch.object(catalog,'user_cache',return_value=self.root/'cache'):
+                code,out,_=self.invoke('doctor','--json');self.assertEqual(code,0);self.assertEqual(json.loads(out)['capabilities']['browse']['status'],'not checked')
             self.assertEqual(self.invoke('doctor','--for','verify','--json')[0],4)
 
     def test_browse_catalog_outside_checkout_and_readable_output(self):
