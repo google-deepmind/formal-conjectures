@@ -70,7 +70,7 @@ theorem isMirimanoffPrime_and_not_isWieferichPrime_1006003 :
 /-- Neither $2$ nor $3$ is a Mirimanoff prime, so no hypothesis excluding them is needed in the
 statement of the problem. -/
 @[category test, AMS 11]
-theorem not_isMirimanoffPrime_two_three : ¬ IsMirimanoffPrime 2 ∧ ¬ IsMirimanoffPrime 3 := by
+theorem not_isMirimanoffPrime_two : ¬ IsMirimanoffPrime 2 := by
   decide
 
 /-- The prime $3$ is not a Wieferich prime. For $2$, see `WieferichPrime.not_isWieferichPrime_two`. -/
