@@ -59,3 +59,41 @@ def check_local(root, paths, cfg):
     except BaseException as error:
         finish(directory,record,'cancelled' if isinstance(error,KeyboardInterrupt) else 'error',reason='interrupted' if isinstance(error,KeyboardInterrupt) else 'build_execution_error')
         raise
+
+
+def show(root, directory, record, *, refresh=True):
+    """Read the case evidence; freshness is a separate, explicitly timed observation."""
+    value = dict(record)
+    if record['kind'] == 'review':
+        path = directory/'bundle/report.json'
+        if path.is_file():
+            report = rr.read_json(path)
+            rr.require(report.get('schema_version') == rr.REPORT_VERSION, 'Unsupported review report')
+            value['review_summary'] = {k:report[k] for k in ('semantic_verdict','completeness','checks','gaps')}
+            value['review_summary'].update({k:report['review'].get(k,[]) for k in
+                                            ('findings','questions','reconciliations','coverage','reviewer')})
+            value['evidence_paths'] = ['bundle/report.json','bundle/observation.json','bundle/summary.md']
+        attribution=directory/'evidence/operator/reviewer-attributions.json'
+        if attribution.is_file():value['reviewer_attributions']=rr.read_json(attribution)
+        if refresh and record.get('target'):
+            from .review import observe
+            value['current_observation'] = observe(root,record['target'])
+            value['current_applicability'] = value['current_observation']['applicability']
+    if record['kind'] == 'verify' and record.get('result'):
+        result = record['result'];comparator = result.get('comparator') or {}
+        value['verification_summary'] = {k:result.get(k) for k in ('outcome','reason','detail','pins','producer')}
+        value['verification_summary'].update(stage=comparator.get('stage'),
+            policy_reason=comparator.get('reason'), policy_outcome=comparator.get('outcome','not_evaluated'))
+        value['evidence_paths'] = ['remote/verification.json']
+    value['next_action'] = next_action(value)
+    return value
+
+
+def next_action(record):
+    identity = record['id']
+    if record['status'] == 'awaiting_review':return 'Complete review draft: conjectures review finish '+identity
+    if record['kind'] == 'verify' and record['status'] in ('queued','in_progress','running','cancellation_requested'):
+        return 'Retrieve verification: conjectures run wait '+identity
+    if record.get('current_applicability') == 'historical':return 'Inputs changed. Prepare a new review; retain this result as history.'
+    if record.get('outcome') in ('fail','error','incomplete'):return 'Inspect findings and coverage: conjectures run show '+identity
+    return record.get('next_action') or 'Inspect retained evidence: conjectures run show '+identity

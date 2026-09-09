@@ -49,7 +49,12 @@ def render(value, args):
                     if proof.get('conditions'): lines.append('Conditions: '+', '.join(proof['conditions']))
                 for evidence in p.get('evidence', []):
                     lines.append(f"Evidence: {evidence.get('outcome')} ({evidence.get('applicability')}) {evidence.get('url','')}")
-                if not p.get('evidence'): lines.append('Published evidence: unavailable or not configured.')
+                if not p.get('evidence'):
+                    state=p.get('evidence_availability','not_configured')
+                    labels={'not_configured':'not configured','available':'no matching records','no_records':'no published records',
+                            'unavailable':'retrieval unavailable','invalid':'invalid evidence; no outcome accepted'}
+                    lines.append('Published evidence: '+labels.get(state,state)+'.')
+                    if p.get('evidence_message'):lines.append(p['evidence_message'])
                 lines.append('')
         lines += ['Coverage: '+g for g in value.get('coverage_gaps', [])]
     elif 'logs' in value:
@@ -58,7 +63,12 @@ def render(value, args):
         if not value['logs']: lines.append('No retained logs for this run yet.')
     elif 'runs' in value:
         records = value['runs']
-        lines.append(table(['Run', 'Kind', 'Status', 'Outcome'], [[r['id'], r['kind'], r['status'], r.get('outcome') or 'pending'] for r in records]) if records else 'No runs in this checkout yet.')
+        if 'outstanding' in value:lines.append(f"{value['outstanding']} runs need attention; {len(records)} retained.")
+        lines.append(table(['Run', 'Target', 'Status', 'Outcome', 'Coverage gaps'],
+            [[r['id'], (r.get('target') or {}).get('declaration') or
+              ('PR #'+str(r['target']['pr']) if (r.get('target') or {}).get('pr') else r['kind']),
+              r['status'],r.get('outcome') or 'pending',str(len(r.get('gaps',[])))] for r in records])
+            if records else 'No runs in this checkout yet.')
     else:
         if value.get('id'): lines.append('Run: '+value['id'])
         if value.get('status'): lines.append('Status: '+value['status'])
@@ -72,6 +82,33 @@ def render(value, args):
         if value.get('artifacts'): lines += ['Export files:']+[a['path'] for a in value['artifacts']]
         if value.get('destination'): lines.append('Destination: '+str(value['destination']))
         if value.get('omitted'): lines.append('Omitted: '+value['omitted'])
+    summary=value.get('review_summary')
+    if summary:
+        lines += ['Semantic verdict: '+summary['semantic_verdict'], 'Coverage: '+str(summary['coverage'])]
+        lines += ['Check: '+c['kind']+' — '+c['status'] for c in summary['checks']]
+        lines += ['Finding: '+f['file']+':'+str(f['line'])+' — '+f['message'] for f in summary['findings']]
+        lines += ['Question: '+q for q in summary['questions']]
+        lines += ['Gap: '+str(g) for g in summary['gaps']]
+        lines += ['Prior finding: '+r['status']+' — '+r['reason'] for r in summary['reconciliations']]
+        lines.append('Reviewer: '+str(summary['reviewer']))
+    for reviewer in (value.get('reviewer_attributions') or {}).get('reviewers',[]):
+        lines.append('Attributed reviewer: '+reviewer['name']+' ('+reviewer['kind']+'); '+reviewer['independence']+' (self-reported)')
+        if reviewer['shared_dependencies']:lines.append('Shared context: '+', '.join(reviewer['shared_dependencies']))
+    verification=value.get('verification_summary')
+    if verification:
+        lines.append('Verification policy: '+str(verification['policy_outcome']))
+        for key in ('stage','policy_reason','reason','detail'):
+            if verification.get(key):lines.append(key.replace('_',' ').capitalize()+': '+str(verification[key]))
+    observation=value.get('current_observation')
+    if observation:
+        lines.append('Applicability checked: '+observation['observed_at'])
+        for key,expected in observation['expected'].items():
+            actual=observation.get('actual',{}).get(key)
+            if actual is not None and actual != expected:lines.append(f'{key}: reviewed {expected}; current {actual}')
+        lines += ['Changed: '+change for change in observation['changes']]
+        if observation.get('reason'):lines.append('Freshness: '+observation['reason'])
+        lines.append(observation['scope'])
+    if value.get('evidence_paths'):lines.append('Evidence: '+', '.join(value['evidence_paths']))
     if value.get('experimental'): lines.append('Experimental: '+str(value['experimental']))
     if value.get('next_action'): lines += ['', 'Next: '+value['next_action']]
     for action in value.get('next_actions', []): lines.append('Next: '+action)

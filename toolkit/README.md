@@ -241,3 +241,20 @@ changed automatically.
 
 The [release checklist](RELEASE.md) records qualification limits. Upstream roadmap:
 [FC #4394](https://github.com/google-deepmind/formal-conjectures/issues/4394).
+
+
+## Read a retained case
+
+`conjectures run show RUN` displays findings, check outcomes, coverage gaps, and evidence
+paths. A fresh applicability observation names changed head/base revisions and its time;
+it does not rewrite the original report. `status` lists outstanding work and next commands.
+Verification errors leave the policy outcome unevaluated.
+
+To retain additional reviewer context, pass a directory to `review finish --evidence`.
+Its optional `reviewer-attributions.json` has `schema_version: fc.reviewer-attribution.v1`,
+the existing `request_id`, and a `reviewers` array. Each reviewer records `kind` (`human`
+or `ai`), `name`, `method`, `scope` (strings), `independence` (`independent`,
+`shared_dependencies`, or `not_assessed`), `shared_dependencies` (strings), and `evidence`
+(entries with `path` and `sha256`, relative to that directory). Evidence bytes and request
+identity are checked. Attribution and independence remain self-reported, not quality scores
+or proof of independent review. The review request/report schemas are unchanged.
