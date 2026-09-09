@@ -7,6 +7,7 @@ on the main theorem in the corresponding .lean file.
 
 Usage:
   python check_erdos_status.py               # Print mismatches as JSON
+  python check_erdos_status.py --problem 80  # Only that problem
   python check_erdos_status.py --create-issues  # Also create GitHub issues
 """
 
@@ -16,33 +17,19 @@ import re
 import subprocess
 import sys
 import urllib.request
+import pathlib
+from problem_metadata import metadata_rows, unconditional_proof
 
 YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
 )
-ERDOS_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "FormalConjectures",
-    "ErdosProblems",
+CONJECTURES_URL = (
+    "https://google-deepmind.github.io/formal-conjectures/data/catalog.json"
 )
 
-# Matches the category annotation line immediately before any erdos theorem.
-# Captures the category and the problem number.
-# Note: 'formally solved' is no longer a valid category value.
-CATEGORY_THEN_THEOREM = re.compile(
-    r"@\[category research (open|solved).*\]\s*\n"
-    r"theorem erdos_(\d+)([\w.]*)\s",
-    re.MULTILINE,
-)
-
-# Matches the formal_proof attribute (may appear on the same line as category or separate).
-# Captures the proof kind.
-FORMAL_PROOF_ATTR = re.compile(
-    r"formal_proof using (formal_conjectures|lean4|other_system) at",
-    re.MULTILINE,
-)
-
-OPEN_STATES = {"open", "falsifiable", "verifiable"}
+# `open (Lean)` is the open counterpart of `solved (Lean)`: the problem is open and a Lean
+# statement of it exists. Without it those problems are skipped rather than compared.
+OPEN_STATES = {"open", "falsifiable", "verifiable", "open (Lean)"}
 SOLVED_STATES = {
     "solved",
     "proved",
@@ -95,61 +82,100 @@ def is_variant(suffix):
     return ".variants." in suffix
 
 
-def scan_lean_files():
-    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'.
+ERDOS_MODULE_RE = re.compile(r"^FormalConjectures\.ErdosProblems\.«?(\d+)»?$")
 
-    For multi-part problems (no single `erdos_{N}` theorem), collects all
-    non-variant theorems. The problem is 'open' if any part is open,
-    'formally solved' if all parts are formally solved, and 'solved' otherwise.
 
-    A problem is 'formally solved' if its category is 'solved' and it has a
-    @[formal_proof ...] attribute.
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+
+def local_conjectures(problem):
+    """Extract the metadata for one problem from this checkout.
+
+    `--problem N` is the review question: does the branch under review agree
+    with erdosproblems.com? The published extract answers a different
+    question, about whatever `main` was deployed last, and a reviewer
+    consulting it can be told yesterday's answer. So the single-problem path
+    elaborates the local file, the way the site build does, and never
+    silently consults the deployed site. `FC_CONJECTURES` still overrides,
+    for a pre-built extract.
     """
+    path = ROOT / "FormalConjectures" / "ErdosProblems" / f"{problem}.lean"
+    if not path.exists():
+        sys.exit(f"no local file for Erdős problem {problem}: {path}")
+    proc = subprocess.run(
+        ["lake", "exe", "extract_names", str(path)],
+        capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode != 0:
+        sys.exit(f"extract_names failed on {path}:\n{proc.stderr.strip()[:500]}")
+    out = proc.stdout
+    return json.loads(out[out.index("{"):])
+
+
+def fetch_conjectures():
+    """The repository's own extract of every problem it states.
+
+    `extract_names.lean` builds this from the Lean environment and the site publishes it, so
+    it carries declaration-level categories and proof annotations. Reading it
+    beats re-deriving a subset here with regexes, which missed 23 Erdős problems whose main
+    theorem is not spelled `erdos_<n>` and every problem whose attribute wraps a line.
+
+    Set FC_CONJECTURES to a local path to use a freshly built one instead.
+    """
+    local = os.environ.get("FC_CONJECTURES")
+    if local:
+        with open(local) as f:
+            return json.load(f)
+    with urllib.request.urlopen(CONJECTURES_URL) as resp:
+        return json.load(resp)
+
+
+def problem_statuses(data=None):
+    """Map problem number (str) -> 'open', 'solved', or 'formally solved'.
+
+    A problem is open if any of its main statements is, formally solved if they are all
+    solved and at least one carries an unconditional `formal_proof`, and solved otherwise.
+    Variants and `test`/`API`/`textbook` statements do not count towards the status.
+    """
+    data = fetch_conjectures() if data is None else data
+    rows = metadata_rows(data)
+    by_problem, has_variants, linked = {}, set(), set()
+    for row in rows:
+        match = ERDOS_MODULE_RE.match(row.get("module", ""))
+        if not match:
+            continue
+        num = match.group(1)
+        if row.get("category") not in ("research open", "research solved"):
+            continue
+        if is_variant(row.get("theorem", "")):
+            has_variants.add(num)
+            continue
+        by_problem.setdefault(num, []).append(row)
+        # Only a proof of a *main* statement counts. A `formal_proof` on
+        # `erdos_123.variants.foo` proves the variant, and upgrading the
+        # problem for it reports something nobody established. The
+        # file-anywhere rule this replaces predates declaration-level data.
+        #
+        # Conditions belong to each proof annotation. A conditional reference
+        # does not count as an unconditional proof of the primary statement.
+        if unconditional_proof(row):
+            linked.add(num)
+
     result = {}
-    for fname in os.listdir(ERDOS_DIR):
-        if not fname.endswith(".lean"):
-            continue
-        file_number = fname.removesuffix(".lean")
-        if not file_number.isdigit():
-            continue
-        filepath = os.path.join(ERDOS_DIR, fname)
-        with open(filepath) as f:
-            content = f.read()
-
-        # Check if file has any formal_proof attribute
-        has_formal_proof = bool(FORMAL_PROOF_ATTR.search(content))
-
-        # Collect all non-variant theorem categories for this problem number
-        main_categories = []
-        has_exact_main = False
-        exact_main_cat = None
-        for m in CATEGORY_THEN_THEOREM.finditer(content):
-            if m.group(2) != file_number:
-                continue
-            suffix = m.group(3)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
-            cat = lean_category(m.group(1))
-            # Upgrade to 'formally solved' if formal_proof attribute is present
-            if cat == "solved" and has_formal_proof:
-                cat = "formally solved"
-            if suffix == "" or suffix == ":":
-                # Exact match: `erdos_{N}` with no suffix
-                has_exact_main = True
-                exact_main_cat = cat
-            elif not is_variant(suffix):
-                main_categories.append(cat)
-
-        if has_exact_main:
-            # Single main theorem exists — use its category directly
-            result[file_number] = exact_main_cat
-        elif main_categories:
-            # Multi-part problem: open if any part is open
-            if "open" in main_categories:
-                result[file_number] = "open"
-            elif all(c == "formally solved" for c in main_categories):
-                result[file_number] = "formally solved"
-            else:
-                result[file_number] = "solved"
-
+    for num, parts in by_problem.items():
+        if any(p["category"] == "research open" for p in parts):
+            result[num] = "open"
+        elif num in linked:
+            result[num] = "formally solved"
+        else:
+            result[num] = "solved"
+    # A file whose research statements are all variants has no main
+    # statement, and pretending the variants define its status guessed
+    # wrong on 1104. Report the state itself: the mismatch checker turns it
+    # into "FC representation incomplete", which is what is actually true.
+    # Erdős 92 was found through exactly this hole, so it must not be
+    # silent.
+    for num in has_variants - set(result):
+        result[num] = "no primary statement"
     return result
 
 
@@ -166,7 +192,7 @@ def classifiable():
     }
 
 
-def find_mismatches():
+def find_mismatches(data=None):
     problems = fetch_yaml()
     yaml_statuses = {}
     for p in problems:
@@ -176,7 +202,7 @@ def find_mismatches():
         if cat is not None:
             yaml_statuses[num] = cat
 
-    lean_statuses = scan_lean_files()
+    lean_statuses = problem_statuses(data)
 
     mismatches = []
     for num, lean_cat in sorted(lean_statuses.items(), key=lambda x: int(x[0])):
@@ -311,8 +337,37 @@ def close_resolved_issues(mismatches):
         ])
 
 
+def problem_argument(argv):
+    """The value of `--problem N`, or None.
+
+    A reviewer working on one problem should not have to read a repository-wide list and
+    decide for themselves that their number is absent.
+    """
+    if "--problem" not in argv:
+        return None
+    index = argv.index("--problem")
+    if index + 1 >= len(argv):
+        sys.exit("--problem needs a problem number, for example --problem 80")
+    return argv[index + 1]
+
+
 def main():
-    mismatches = find_mismatches()
+    wanted = problem_argument(sys.argv)
+    data = None
+    if wanted is not None and not os.environ.get("FC_CONJECTURES"):
+        data = local_conjectures(wanted)
+    mismatches = find_mismatches(data)
+
+    if wanted is not None:
+        mismatches = [m for m in mismatches if m["number"] == wanted]
+        json.dump(mismatches, sys.stdout, indent=2)
+        print()
+        # An empty list is the pass, and saying so beats printing `[]` at a reader.
+        if not mismatches:
+            print(f"Erdős problem {wanted}: the repository and erdosproblems.com agree.",
+                  file=sys.stderr)
+        return 1 if mismatches else 0
+
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
