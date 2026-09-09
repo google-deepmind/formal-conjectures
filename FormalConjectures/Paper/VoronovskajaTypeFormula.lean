@@ -311,8 +311,6 @@ The source asks for sufficiently smooth functions. This concrete version uses
 domain is the compact interval $[0,1]$, this also explains why no separate
 boundedness assumption is included here. The variants below record the unknown
 smoothness threshold more explicitly.
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators
@@ -328,8 +326,6 @@ Conjecture: the limit for sufficiently smooth functions is
 $$
 μ_α\sqrt{x(1-x)}\,f'(x).
 $$
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.proposed_formula
@@ -342,8 +338,6 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.proposed_formul
 
 /--
 The proposed asymptotic formula holds unconditionally at the two endpoints of the unit interval.
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category API, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.boundary
@@ -368,8 +362,6 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.boundary
 Variant of the Bézier-Bernstein Voronovskaja problem which treats "sufficiently smooth" as an
 eventual condition in the smoothness order $m$: for all sufficiently large finite $m$, every
 $C^m$ function on $[0,1]$ should have the asserted asymptotic formula.
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth
@@ -385,8 +377,6 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
 Existence-only version of the eventual-smoothness variant. This separates the first part of the
 source problem, proving that the scaled sequence has some limit, from the stronger task of finding
 an explicit expression for that limit.
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth.limit_exists
@@ -402,8 +392,6 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
 Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
 left as an answer. Replacing `(answer(sorry) : ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete value lets one
 state the conjecture for a chosen regularity threshold.
-
-*Reference:* [Abel's source problem](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf).
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
