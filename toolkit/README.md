@@ -1,8 +1,7 @@
 # Formal Conjectures toolkit
 
-This dependency PR delivers review, catalog, and check commands. Proof workspace
-commands and evidence publication follow in separate PRs; invoking an unavailable
-operation returns `unavailable_command`. The guide describes their shared interface.
+This dependency PR adds proof workspace commands to the review CLI. Evidence
+publication follows in a separate PR. Remote proof qualification remains incomplete.
 
 Use `conjectures` from your existing agent session or directly in a terminal.
 The toolkit needs no AI credentials or model configuration. Your agent reads the
