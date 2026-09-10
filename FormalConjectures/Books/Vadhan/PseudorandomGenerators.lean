@@ -18,28 +18,25 @@ import FormalConjecturesUtil
 /-!
 # Logarithmic-seed pseudorandom generators
 
-Vadhan, *Pseudorandomness*, §7.1.1–§7.1.2, pp. 214–219:
-https://people.seas.harvard.edu/~salil/pseudorandomness/pseudorandomness-published-Dec12.pdf.
-
-Definitions 7.3, 7.4 and 7.7 fix stretching, security and uniform computation.
-The target is regime (3) on p. 218: seed length $O(\log m)$ and error $1/8$
-against circuits of size $m$. Size counts AND/OR gates, with free NOT gates and
-inputs, as specified on p. 214. No depth, fan-out, or uniformity restriction
-is placed on distinguishers.
-
-The generator and its seed-length function must both be uniformly computable
-in time polynomial in the output length. This is equivalent to mild explicitness
-in the logarithmic-seed regime. The asymptotic requirements hold for all sufficiently
-large output lengths, avoiding impossible stretching at zero and small lengths.
-The implication to $\mathrm{BPP}=\mathrm{P}$ is background, not a formal theorem here.
+*References:*
+* Vadhan, *Pseudorandomness*, §7.1.1–§7.1.2, pp. 214–219,
+  Definitions 7.1, 7.3, 7.4, 7.7 and regime (3),
+  https://people.seas.harvard.edu/~salil/pseudorandomness/pseudorandomness-published-Dec12.pdf.
 -/
 
 namespace VadhanPseudorandomness
 
-/-- Do uniform polynomial-time $(m,1/8)$ generators with seed length $O(\log m)$
-exist for general Boolean circuits? -/
+/-- **Logarithmic-seed generators** (Vadhan, §7.1.2, regime (3), p. 218) exist
+against general Boolean circuits. One uniform polynomial-time generator and
+seed-length algorithm, given output length $m$ in unary, produce $m$ output bits.
+For some $c$ and all sufficiently large $m\ge2$, the seed length is at most
+$c\log_2m$ and less than $m$, and every circuit with at most $m$ AND/OR gates has
+distinguishing advantage at most $1/8$. NOT gates are free; depth and fan-out are
+unrestricted. Polynomial time is in output length, not seed length. The finite
+exceptional prefix avoids impossible small-length stretch. Such generators imply
+$BPP=P$. -/
 @[category research open, AMS 3 68]
-theorem logarithmic_seed_prg : answer(sorry) ↔ ComplexityTheory.LogSeedPRGExists := by
+theorem logarithmic_seed_prg : ComplexityTheory.LogSeedPRGExists := by
   sorry
 
 end VadhanPseudorandomness

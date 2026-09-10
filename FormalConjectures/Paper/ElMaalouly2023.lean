@@ -18,23 +18,21 @@ import FormalConjecturesUtil
 /-!
 # Exact matching in general graphs
 
-El Maalouly, *Exact Matching: Algorithms and Related Problems*, STACS 2023,
-§1, pp. 29:1–29:3: https://doi.org/10.4230/LIPIcs.STACS.2023.29.
-
-The input is a finite undirected graph, a red/blue coloring of its edges,
-and an integer $k$. The question asks for a perfect matching with exactly
-$k$ red edges. Both adjacency and red-edge matrices are explicit; malformed
-matrices are rejected, and $k$ is binary. There is no bipartiteness, planarity,
-density or bounded-independence-number restriction.
-
-This is the two-color problem, not exact matching with arbitrary binary
-edge weights. Its randomized polynomial-time algorithm is literature
-background, not a theorem proved in this file.
+*References:*
+* El Maalouly, *Exact Matching: Algorithms and Related Problems*, STACS 2023,
+  §1, pp. 29:1–29:3, https://doi.org/10.4230/LIPIcs.STACS.2023.29.
 -/
 
 namespace ElMaalouly2023
 
-/-- Does general-graph Exact Matching admit a deterministic polynomial-time decider? -/
+/-- **Exact Matching** (El Maalouly, §1, task box p. 29:1): is there a deterministic
+polynomial bit-time decider for a perfect matching with exactly $k$ red edges?
+Input: a loopless undirected graph and its red-edge subset as explicit symmetric
+Boolean matrices, and a signed binary integer $k$; other edges are blue. Malformed
+matrices and negative targets are rejected. The empty graph accepts exactly $k=0$.
+No bipartiteness, planarity or density restriction is imposed. This remains a
+two-sided derandomization question for a problem in $RP$, so $P=RP$ would imply
+a positive answer; it is not arbitrary binary-weight Exact Matching. -/
 @[category research open, AMS 5 68]
 theorem exactMatching_polytime : answer(sorry) ↔
     ComplexityTheory.HasPolyTimeDecider Computability.MatrixGraph.ExactMatching := by
