@@ -1,4 +1,5 @@
 """Local Linux transport for the same trusted controller used by Actions.
+from .ui import stage, log_location
 
 Configuration is operator supplied. Candidate files never select tools or policy.
 """
@@ -114,7 +115,7 @@ def verify_local(root,candidate,trusted,executor):
         args += [sys.executable,'-m','conjectures.remote','--producer','local_operator','--request',str(directory/'request.json'),
                  '--out',str(output),'--toolkit',executor['toolkit'],'--source',str(source),
                  '--candidate',str(snapshot),'--generator',str(Path(executor['tools'])/'generator')]
-        print('Verifying frozen local submission on Linux…',file=sys.stderr)
+        stage('Verifying frozen local submission on Linux');log_location(directory/'executor.log')
         try:
             with (directory/'executor.log').open('wb') as log:
                 process=subprocess.run(args,stdout=log,stderr=subprocess.STDOUT,timeout=3660)

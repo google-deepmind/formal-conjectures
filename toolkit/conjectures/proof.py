@@ -1,4 +1,5 @@
 """Pinned workspace generation and qualified GitHub verification dispatch."""
+from .ui import stage, log_location
 import json
 import re
 import shutil
@@ -54,7 +55,7 @@ def checkout_tool(root, tool):
 def initialize(root,args,cfg):
     from .catalog import load,select
     from . import exporter
-    catalog=load(root,args.catalog);problem=select(catalog,args.target)
+    catalog=load(root,args.catalog,url=getattr(args,'catalog_url',None));problem=select(catalog,args.target)
     standalone=root is None
     if standalone:root=user_cache()/'operator'
     source=catalog.get('provenance',{}).get('source',{})
@@ -85,7 +86,7 @@ def initialize(root,args,cfg):
     try:
         out=args.out.resolve()
         if out.exists():raise Failure('output_exists','Choose a new directory for --out; existing files are preserved.')
-        print('Generating the exact source workspace at '+revision+'…',file=sys.stderr)
+        stage('Generating the exact source workspace at '+revision);log_location(directory)
         result=generate(root if not standalone else None,{**problem,'githubPath':path},repository,revision,directory/'export',generator)
         shutil.copytree(result,out)
         result=out
@@ -114,11 +115,12 @@ def generate(root,problem,repository,revision,artifact,generator=None):
         git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
         git(source,'checkout','--detach',revision)
         exporter.install_native(source)
-        print('Acquiring pinned source dependencies and the Mathlib cache…',file=sys.stderr)
+        stage('Acquiring pinned source dependencies and the Mathlib cache')
         command(['lake','exe','cache','get'],cwd=source,timeout=1200)
         previous=exporter.ROOT
         try:
             exporter.ROOT=source
+            stage('Exporting the exact declaration and generating its workspace')
             return exporter.export(source/problem['githubPath'],problem['theorem'],artifact,generator,
                                    revision,f'https://github.com/{repository}.git')
         finally:exporter.ROOT=previous
@@ -160,7 +162,7 @@ def verify(root,candidate,cfg):
     args=['workflow','run','comparator-lean-4-33.yml','--repo',executor_repo,'--ref',dispatch_ref]
     for k,v in inputs.items():args += ['-f',f'{k}={v}']
     try:
-        print('Dispatching verification to '+executor_repo+'…',file=sys.stderr)
+        stage('Dispatching verification to '+executor_repo+'…')
         gh(*args)
         record.update(status='queued',outcome='incomplete',next_action='Use conjectures run wait '+record['id'])
         save(directory/'run.json',record);return record
@@ -256,7 +258,7 @@ def wait(directory,record,timeout):
             state=record['status']
             if state=='completed':return record
         if state!=previous:
-            print('Verification: '+state+'…',file=sys.stderr);previous=state
+            stage('Verification: '+state+'…');previous=state
         remaining=deadline-time.monotonic()
         if remaining<=0:
             return {**record,'command_status':'incomplete','reason':'wait_timeout',

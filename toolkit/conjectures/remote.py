@@ -10,6 +10,7 @@ from pathlib import Path
 from . import exporter, report as rr
 from .core import Failure, command, git, now, save
 from .proof import PINS
+from .ui import stage, log_location
 from .verifier_result import typed_result
 
 FIELDS = {'run_id','candidate_repository','candidate_commit','candidate_path','source_repository',
@@ -62,6 +63,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
             'toolkit_commit':git(toolkit,'rev-parse','HEAD').decode().strip()}
     workspace=None;prepared=False
     try:
+        stage("Checking Linux executor and exact target bindings")
         qualify()
         if git(source,'rev-parse','HEAD').decode().strip()!=request['source_commit']:
             raise Failure('source_binding_mismatch','Source checkout does not match request',3)
@@ -73,9 +75,11 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         prepared=True
         # A fresh source checkout has no Mathlib artifacts. Populate only its pinned
         # dependencies before the native export, as standalone initialization does.
+        stage('Acquiring pinned source dependencies');log_location(output/'source-dependencies.log')
         with (output/'source-dependencies.log').open('wb') as log:
             subprocess.run(['lake','exe','cache','get'],cwd=source,stdout=log,
                            stderr=subprocess.STDOUT,check=True,timeout=1200)
+        stage('Exporting the trusted declaration')
         exporter.ROOT=source
         workspace=exporter.export(source/request['source_path'],request['declaration'],output/'generated',
                                   generator,request['source_commit'],request['source_repository'])
@@ -83,6 +87,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         record['semantic_assessment_required']=bool(config.get('definition_names'))
         if config.get('enable_nanoda') is not True:raise Failure('kernel_policy','Both kernels are required',3)
         # Resolve only trusted generated dependencies before importing any candidate source.
+        stage('Preparing isolated workspace dependencies')
         command(['lake','update'],cwd=workspace,timeout=600)
         command(['lake','exe','cache','get'],cwd=workspace,timeout=1200)
         for name,raw in submissions.items():
@@ -92,6 +97,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         record.update(submission_files=rr.descriptors(submissions),trusted_config_sha256=rr.digest((workspace/'config.json').read_bytes()),
                       tool_hashes={k:rr.digest(Path(os.environ[k]).read_bytes()) for k in
                       ('COMPARATOR_BIN','COMPARATOR_LANDRUN','COMPARATOR_LEAN4EXPORT','COMPARATOR_NANODA')})
+        stage('Checking submission policy and both kernels');log_location(output/'verifier.log')
         value,code=invoke_comparator(args,workspace,output)
         record.update(outcome={'pass':'pass','rejected':'fail','error':'error'}[value['outcome']],
                       comparator=value,exit_code=code,

@@ -1,8 +1,9 @@
 """Build the pinned proof tools for an operator-owned Linux executor."""
+from .ui import stage, log_location
 import subprocess
 import sys
 from pathlib import Path
-from .core import Failure, command, git
+from .core import Failure, command, git, logged_command
 from .proof import PINS
 
 
@@ -17,9 +18,9 @@ def build(toolkit,tools):
             git(path,'checkout','--detach',revision)
         if git(path,'rev-parse','HEAD').decode().strip()!=revision or git(path,'status','--porcelain','--untracked-files=no').strip():
             raise Failure('tool_pin_mismatch',f'{path} differs from its required revision. Existing files were preserved.',4)
-        print('Building pinned '+name+'…',file=sys.stderr)
+        stage('Building pinned '+name+'…')
         args=['go','build','-o','landrun','./cmd/landrun'] if name=='landrun' else ['cargo','build','--release'] if name=='nanoda' else ['lake','--wfail','build']
-        subprocess.run(args,cwd=path,stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=1800)
-    print('Building the toolchain-compatible Lean exporter…',file=sys.stderr)
-    subprocess.run(['lake','-d',str(toolkit/'comparator/verifier'),'build','lean4export/lean4export'],
-                   stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=1800)
+        logged_command(args,tools/(name+'-build.log'),cwd=path,timeout=1800)
+    stage('Building the toolchain-compatible Lean exporter…')
+    logged_command(['lake','-d',str(toolkit/'comparator/verifier'),'build','lean4export/lean4export'],
+                   tools/'lean4export-build.log',timeout=1800)
