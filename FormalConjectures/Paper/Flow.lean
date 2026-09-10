@@ -32,7 +32,8 @@ universe u v
 
 variable {α : Type u} {β : Type v} [DecidableEq α]
 
-/-- Does every graph without bridges admit an everywhere nonzero `5`-flow? -/
+/-- **Tutte's 5-flow conjecture**:
+Does every graph without bridges admit an everywhere nonzero `5`-flow? -/
 @[category research open, AMS 5]
 theorem tutte5Flow : answer(sorry) ↔
     ∀ (α β : Type) [DecidableEq α] (G : Graph α β) [Fintype E(G)], (∀ e : β, ¬ G.IsBridge e) →
