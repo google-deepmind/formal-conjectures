@@ -155,7 +155,7 @@ For finite-dimensional algebras over algebraically closed fields,
 the verified Strong No Loop Conjecture establishes the No Loop Conjecture.
 -/
 @[category test, AMS 16 18]
-lemma no_loop_conjecture_alg_closed
+lemma no_loop_conjecture.variant.alg_closed
     {k : Type u} [Field k] [IsAlgClosed k] [Algebra k A] [Module.Finite k A] :
     type_of% (no_loop_conjecture (R := R) (A := A)) := no_loop_of_strong_no_loop
     (fun S _ hE => strong_no_loop_conjecture.variants.alg_closed (k := k) S hE )
