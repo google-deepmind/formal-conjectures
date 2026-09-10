@@ -1,0 +1,110 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+
+import FormalConjecturesUtil
+
+/-!
+# Bugeaud Collection of Conjectures and Open Questions: Automatic Expansions in Two Bases
+
+Problem 10.32 asks whether some irrational real number has automatic expansions in two
+multiplicatively independent bases. The answer is no. Adamczewski and Faverjon [AF20] proved
+it with the multivariate Mahler method, in a form that is stronger than the question asked:
+the base-$b$ digit sequence may be $k$-automatic for an arbitrary $k \ge 2$, not only for
+$k = b$.
+
+[AF20] is a preprint. It is not published as of 2026; the 2024 addendum
+[arXiv:2407.18578](https://arxiv.org/abs/2407.18578) strengthens its Theorem 1.1 (i) and
+corrects nothing.
+
+The definitions used here are in `FormalConjecturesForMathlib`:
+`Nat.MultiplicativelyIndependent`, `AutomaticSequence.IsAutomatic`,
+`AutomaticSequence.IsAutomaticInBase` and `AutomaticSequence.IsBroadlyAutomaticInBase`.
+
+*References:*
+  - [AF20](https://arxiv.org/abs/2012.08283) Adamczewski, Boris, and Colin Faverjon.
+    "Mahler's method in several variables and finite automata." arXiv:2012.08283 (2020).
+    Appendix A, Conjectures A.2 and A.3, both proved there from Part (i) of Theorem 1.1.
+  - [AS03] Allouche, Jean-Paul, and Jeffrey Shallit. "Automatic Sequences: Theory,
+    Applications, Generalizations." Cambridge University Press, 2003. Chapter 13,
+    Open Problems 7, p. 403, is the problem that Problem 10.32 modifies.
+  - [Bug12] Bugeaud, Yann. "Distribution modulo one and Diophantine approximation."
+    Vol. 193. Cambridge University Press, 2012. Chapter 10.
+  - [Cob69] Cobham, Alan. "On the base-dependence of sets of numbers recognizable by finite
+    automata." Mathematical Systems Theory 3 (1969): 186-192.
+  - [LvdP82] Loxton, John H., and Alfred J. van der Poorten. "Arithmetic properties of the
+    solutions of a class of functional equations." Journal für die reine und angewandte
+    Mathematik 330 (1982): 159-172. Its transcendence method was the first attack on the
+    problem; Nishioka later reported a gap in its main proof.
+-/
+
+namespace Bugeaud32
+
+open AutomaticSequence
+
+/--
+**Adamczewski–Faverjon** [AF20, Conjecture A.3], proved there from Part (i) of Theorem 1.1.
+Let $b_1, \dots, b_r$ be pairwise multiplicatively independent integers, each at least $2$,
+and for every $i$ let $\xi_i$ be automatic in base $b_i$. Then $\xi_1, \dots, \xi_r$ are
+algebraically independent over $\overline{\mathbb{Q}}$, unless one of them is rational.
+
+Two formalisation choices. Automaticity is the broad notion that the proof of Conjecture A.3
+uses: the base-$b_i$ digits of $\xi_i$ are $k$-automatic for some $k$. Algebraic independence
+over $\overline{\mathbb{Q}}$ is stated as algebraic independence over $\mathbb{Q}$; the two
+agree because $\overline{\mathbb{Q}}$ is algebraic over $\mathbb{Q}$.
+-/
+@[category research solved, AMS 11 68]
+theorem adamczewski_faverjon {r : ℕ} (b : Fin r → ℕ) (hb : ∀ i, 2 ≤ b i)
+    (hind : Pairwise fun i j => Nat.MultiplicativelyIndependent (b i) (b j))
+    (ξ : Fin r → ℝ) (hauto : ∀ i, IsBroadlyAutomaticInBase (b i) (ξ i))
+    (hirr : ∀ i, Irrational (ξ i)) :
+    AlgebraicIndependent ℚ ξ := by
+  sorry
+
+/--
+Problem 10.32, strong form. No irrational real number is automatic in two multiplicatively
+independent bases, in the broad sense that its digit sequence in each of the two bases is
+`k`-automatic for some `k`. This is [AF20, Conjecture A.2], with the broad notion of
+automaticity that its proof provides.
+-/
+@[category research solved, AMS 11 68]
+theorem problem_10_32.variants.strong (ξ : ℝ) (hξ : Irrational ξ) (b₁ b₂ : ℕ)
+    (hb₁ : 2 ≤ b₁) (hb₂ : 2 ≤ b₂) (hind : Nat.MultiplicativelyIndependent b₁ b₂)
+    (h₁ : IsBroadlyAutomaticInBase b₁ ξ) (h₂ : IsBroadlyAutomaticInBase b₂ ξ) : False := by
+  -- Apply Conjecture A.3 with `r = 2` and `ξ₁ = ξ₂ = ξ`.
+  have key : AlgebraicIndependent ℚ ![ξ, ξ] := by
+    refine adamczewski_faverjon ![b₁, b₂] (fun i => ?_) (fun i j hij => ?_) ![ξ, ξ]
+      (fun i => ?_) (fun i => ?_)
+    · fin_cases i <;> assumption
+    · fin_cases i <;> fin_cases j <;> simp_all [hind.symm]
+    · fin_cases i <;> assumption
+    · fin_cases i <;> assumption
+  -- Equal numbers are never algebraically independent.
+  exact absurd (key.injective (show ![ξ, ξ] 0 = ![ξ, ξ] 1 by simp)) (by decide)
+
+/--
+Problem 10.32. Is there an irrational real number whose expansions in two multiplicatively
+independent bases can both be generated by a finite automaton? The answer is no, by [AF20].
+-/
+@[category research solved, AMS 11 68]
+theorem problem_10_32 : answer(False) ↔
+    ∃ ξ : ℝ, Irrational ξ ∧ ∃ b₁ b₂ : ℕ, 2 ≤ b₁ ∧ 2 ≤ b₂ ∧
+      Nat.MultiplicativelyIndependent b₁ b₂ ∧
+      IsAutomaticInBase b₁ ξ ∧ IsAutomaticInBase b₂ ξ := by
+  refine iff_of_false not_false ?_
+  rintro ⟨ξ, hξ, b₁, b₂, hb₁, hb₂, hind, h₁, h₂⟩
+  exact problem_10_32.variants.strong ξ hξ b₁ b₂ hb₁ hb₂ hind (h₁.broad hb₁) (h₂.broad hb₂)
+
+end Bugeaud32
