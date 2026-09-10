@@ -44,6 +44,11 @@ private theorem cprankMax1_singleton {d : ℕ} (x : Holor R [d]) : CPRankMax1 x 
   rw [← h]
   exact .cons x _ (.nil _)
 
+@[simp]
+theorem cprank_zero {ds : List ℕ} : (0 : Holor R ds).cprank = 0 := by
+  classical
+  exact Nat.le_zero.mp (Nat.find_min' _ CPRankMax.zero)
+
 variable (R)
 
 /-- The tensor $\sum_{i,j,k} e_{ij} \otimes e_{jk} \otimes e_{ki}$ for
@@ -81,10 +86,6 @@ theorem cprank_matrixMulTensor_le (l m n : ℕ) :
   · simp [Nat.mul_assoc]
   intro p _
   exact cprankMax_1 (.cons _ _ (.cons _ _ (cprankMax1_singleton _)))
-
-@[simp]
-theorem cprank_matrixMulTensor_zero : (matrixMulTensor R 0 0 0).cprank = 0 :=
-  Nat.eq_zero_of_le_zero (by simpa using cprank_matrixMulTensor_le R 0 0 0)
 
 variable {R}
 
