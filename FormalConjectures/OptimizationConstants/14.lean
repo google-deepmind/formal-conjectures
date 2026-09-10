@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Tao's Optimization Constant 14 / Smallest $n$ for Which $BB(n)$ Is Undecidable
+# Tao's Optimization Constant 14 / Smallest $n$ for which the value of $BB(n)$ is undecidable
 
 *References:*
 - [Tao's Optimization Constant 14](https://teorth.github.io/optimizationproblems/constants/14a.html)
