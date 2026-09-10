@@ -18,23 +18,24 @@ import FormalConjecturesUtil
 /-!
 # Promise graph homomorphism hardness
 
-Reference: Joshua Brakensiek and Venkatesan Guruswami, *Promise Constraint
-Satisfaction: Algebraic Structure and a Symmetric Boolean Dichotomy*,
-arXiv:1704.01937v2, §1, Conjecture 1.2, pp.3–4:
-https://arxiv.org/abs/1704.01937v2.
-
-The fixed targets are finite, undirected, loopless and non-bipartite, with a
-homomorphism from the strict target to the relaxed target. Inputs may be
-directed, as in the source's promise digraph homomorphism definition.
-This is the decision problem; no output homomorphism is requested.
+*References:*
+* Brakensiek and Guruswami, *Promise Constraint Satisfaction: Algebraic Structure
+  and a Symmetric Boolean Dichotomy*, arXiv:1704.01937v2, §1,
+  Conjecture 1.2, pp. 3–4, https://arxiv.org/abs/1704.01937v2.
 -/
 
 namespace Arxiv.«1704.01937»
 
 open ComplexityTheory Computability.MatrixGraph Computability.PromiseGraph
 
-/-- For every such pair $G,H$, it is NP-hard to distinguish $X\to G$ from
-$X\not\to H$. Neither the target graphs nor their sizes are part of the input. -/
+/-- **Promise graph homomorphism** (Conjecture 1.2): for every fixed pair of finite
+loopless undirected nonbipartite graphs $G,H$ with $G\to H$, distinguishing $X\to G$
+from $X\not\to H$ is NP-hard under deterministic polynomial-time many-one reductions.
+The input $X$ is an explicit binary adjacency matrix of a directed graph, possibly
+with loops; homomorphisms must preserve every edge. Ragged matrices are outside
+the promises. Target graphs and their sizes are fixed before the reduction, not
+part of its input. This is decision, not finding a homomorphism. Under $P\ne NP$,
+the claimed hardness excludes polynomial-time separation. -/
 @[category research open, AMS 5 68]
 theorem promise_graph_homomorphism :
     ∀ g h : Code, ValidGraph g → ValidGraph h →

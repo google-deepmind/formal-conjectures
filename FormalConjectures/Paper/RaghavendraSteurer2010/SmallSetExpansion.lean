@@ -18,23 +18,25 @@ import FormalConjecturesUtil
 /-!
 # Small-Set Expansion Conjecture
 
-Reference: Prasad Raghavendra and David Steurer, *Graph Expansion and the
-Unique Games Conjecture*, STOC 2010, Problem 1 and Conjecture 1.3, pp.2–3:
-https://www.dsteurer.org/paper/expansion.pdf.
-
-We use the paper's regular unweighted convention and sets of exactly delta
-times the vertex count. Delta is positive, rational and at most one half;
-inputs must admit that exact size. The cofinal range $0<\eta<1/2$ keeps the
-two expansion promises disjoint.
+*References:*
+* Raghavendra and Steurer, *Graph Expansion and the Unique Games Conjecture*,
+  STOC 2010, Problem 1 and Conjecture 1.3, pp. 2–3,
+  https://www.dsteurer.org/paper/expansion.pdf.
 -/
 
 namespace RaghavendraSteurer2010
 
 open ComplexityTheory Computability.SmallSetExpansion
 
-/-- For arbitrarily small positive $\eta$, some fixed positive set density
-makes it NP-hard to distinguish a set with expansion at most $\eta$ from
-expansion at least $1-\eta$ for every set of that exact size. -/
+/-- **Small-Set Expansion** (Problem 1 and Conjecture 1.3): for every rational
+$0<\eta<1/2$, some fixed rational $0<\delta\le1/2$ makes the following distinction
+NP-hard under deterministic polynomial-time many-one reductions. Input: an explicit
+loopless, simple, unweighted regular graph with $n$ vertices and its positive degree
+$d$, all binary encoded. Yes: some set of exactly $\delta n$ vertices has expansion
+at most $\eta$. No: all sets of that size have expansion at least $1-\eta$, where
+expansion is crossing edges divided by $d|S|$. Inputs with unattainable positive
+size $\delta n$ are excluded from both promises. Under $P\ne NP$, this hardness
+would exclude polynomial-time separation. -/
 @[category research open, AMS 5 68]
 theorem small_set_expansion :
     ∀ η : ℚ, 0 < η → η < 1 / 2 →
