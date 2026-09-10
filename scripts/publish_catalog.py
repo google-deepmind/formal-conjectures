@@ -2,12 +2,12 @@
 """Prepare a complete, reproducible static catalog; this script does not upload."""
 import argparse
 import hashlib
-import json
 from pathlib import Path
 import subprocess
+import shutil
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'toolkit'))
-from conjectures.catalog_data import complete, encode, manifest
+from conjectures.catalog_data import complete, encode, manifest, parse
 
 
 def prepare(source, repository, data, out):
@@ -24,8 +24,9 @@ def prepare(source, repository, data, out):
         'scope':'FormalConjectures','answer_mode':'postpone'}}
     complete(data)
     raw=encode(data);out.mkdir(parents=True,exist_ok=True)
-    (out/'catalog.json').write_bytes(raw)
+    (out/'conjectures.json').write_bytes(raw)
     (out/'catalog-manifest.json').write_bytes(encode(manifest(data,raw)))
+    shutil.copytree(Path(__file__).resolve().parents[1]/'toolkit/conjectures/resources/schemas',out/'schemas',dirs_exist_ok=True)
     return data
 
 
@@ -34,5 +35,5 @@ if __name__=='__main__':
     parser.add_argument('input',type=Path);parser.add_argument('--repository',required=True)
     parser.add_argument('--source',type=Path,default=Path.cwd());parser.add_argument('--out',type=Path,required=True)
     args=parser.parse_args()
-    data=prepare(args.source,args.repository,json.loads(args.input.read_text()),args.out)
+    data=prepare(args.source,args.repository,parse(args.input.read_bytes()),args.out)
     print(f"Prepared {len(data['problems'])} statements at {data['provenance']['source']['commit']}")

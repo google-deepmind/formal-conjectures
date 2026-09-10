@@ -7,10 +7,14 @@ Produces a compact JSON with:
 - moduleDocs: module path -> rendered module docstring HTML
 - constLinks: Lean const name -> { url, anchor, docHtml }
 
-Usage: python3 extract_verso_fragments.py <literate-html-dir> <output-json>
+Usage: python3 extract_verso_fragments.py <literate-html-dir> <output-json> --catalog-dir <catalog-dir>
 """
 
+import argparse
+import hashlib
 import json
+from pathlib import Path
+import subprocess
 import os
 import re
 import sys
@@ -31,7 +35,7 @@ def walk_html_files(root):
                 yield os.path.join(dirpath, f)
 
 
-def extract_from_html(html_path, base_dir):
+def extract_from_html(html_path, base_dir, hover_docs=None):
     """Extract module doc and const links from a Verso HTML file."""
     with open(html_path, encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'lxml')
@@ -99,25 +103,42 @@ def extract_from_html(html_path, base_dir):
         }
         if doc_html:
             entry['docHtml'] = doc_html
+        if code_block:
+            entry['codeHtml'] = str(code_block)
+            hover_ids = {node['data-verso-hover'] for node in code_block.select('[data-verso-hover]')}
+            entry['hoverDocs'] = {key: hover_docs[key] for key in sorted(hover_ids) if key in (hover_docs or {})}
         const_map[lean_name] = entry
 
     return module_path, module_name, module_doc, const_map
 
 
 def main():
-    if len(sys.argv) < 3:
-        print('Usage: python3 extract_verso_fragments.py <literate-html-dir> <output-json>',
-              file=sys.stderr)
-        sys.exit(1)
-
-    input_dir, output_json = sys.argv[1], sys.argv[2]
-
-    if not os.path.isdir(input_dir):
-        print(f'  Warning: {input_dir} not found, writing empty fragments.', file=sys.stderr)
-        os.makedirs(os.path.dirname(output_json), exist_ok=True)
-        with open(output_json, 'w') as f:
-            json.dump({'modules': [], 'moduleDocs': {}, 'constLinks': {}}, f)
-        return
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('input_dir', type=Path)
+    parser.add_argument('output_json', type=Path)
+    parser.add_argument('--catalog-dir', type=Path, required=True,
+                        help='Complete catalog generated from this same build')
+    args = parser.parse_args()
+    input_dir, output_json = args.input_dir, args.output_json
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'toolkit'))
+    from conjectures.catalog_data import verify, parse
+    raw = (args.catalog_dir / 'conjectures.json').read_bytes()
+    descriptor = parse((args.catalog_dir / 'catalog-manifest.json').read_bytes())
+    catalog = verify(descriptor, raw)
+    root = Path(__file__).resolve().parents[1]
+    revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+    if revision != catalog['provenance']['source']['commit']:
+        parser.error('Verso must be built from the catalog source revision')
+    if subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain', '--',
+                                'FormalConjectures', 'FormalConjecturesUtil',
+                                'FormalConjecturesForMathlib', 'docbuild',
+                                'lean-toolchain', 'lake-manifest.json'], text=True).strip():
+        parser.error('Verso source and dependency inputs must be committed')
+    if not input_dir.is_dir():
+        parser.error('Literate HTML is missing; run the Verso build first')
+    targets = {entry['theorem'] for entry in catalog['problems']}
+    hover_path = input_dir / '-verso-docs.json'
+    hover_docs = json.loads(hover_path.read_text()) if hover_path.exists() else {}
 
     html_files = list(walk_html_files(input_dir))
     print(f'  Scanning {len(html_files)} Verso HTML files...')
@@ -127,16 +148,19 @@ def main():
     const_links = {}
 
     for html_file in html_files:
-        module_path, module_name, module_doc, const_map = extract_from_html(html_file, input_dir)
+        module_path, module_name, module_doc, const_map = extract_from_html(html_file, input_dir, hover_docs)
         if module_name:
             modules.append({'name': module_name, 'url': module_path})
         if module_doc:
             module_docs[module_path] = module_doc
-        const_links.update(const_map)
+        const_links.update({name: value for name, value in const_map.items() if name in targets})
 
     modules.sort(key=lambda m: m['name'])
 
+    if not modules:
+        parser.error('No rendered modules found; run the Verso build first')
     output = {
+        'catalog_sha256': hashlib.sha256(raw).hexdigest(),
         'modules': modules,
         'moduleDocs': module_docs,
         'constLinks': const_links,

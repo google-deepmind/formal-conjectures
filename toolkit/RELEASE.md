@@ -52,7 +52,7 @@ canonical delivery and acceptance tracker is FC #4394, with #5376 and #5377.
 ## Catalog delivery dependency
 
 Default `find`/`show` browsing requires #5375 to merge and its full site build to
-publish `data/catalog.json` and `data/catalog-manifest.json`. There is no pilot
+publish `data/conjectures.json` and `data/catalog-manifest.json`. There is no pilot
 mirror or legacy projection fallback. Prior RC browsing checks established name
 lookup only; they did not establish statement availability. The release gate now
 requires actual statement text, source revision, and matching descriptor digest.

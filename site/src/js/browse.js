@@ -82,21 +82,11 @@ function writeURL() {
 // ---------------------------------------------------------------------------
 // Filter / sort
 // ---------------------------------------------------------------------------
-// The statement text lives in the Verso fragments, as HTML. Strip the tags once per
-// theorem and keep the result, so typing does not re-parse every entry on every keystroke.
+// Search native statement text directly. No corpus-wide HTML parsing.
 const statementTextCache = new Map();
-
 function statementText(c) {
-  if (!statementTextCache.has(c.theorem)) {
-    const html = FC.problemDocHTML(c, versoFragments);
-    let text = '';
-    if (html) {
-      const el = document.createElement('div');
-      el.innerHTML = html;
-      text = (el.textContent || '').toLowerCase();
-    }
-    statementTextCache.set(c.theorem, text);
-  }
+  if (!statementTextCache.has(c.theorem)) statementTextCache.set(c.theorem,
+    `${c.statement || ''} ${c.docstring || ''}`.toLowerCase());
   return statementTextCache.get(c.theorem);
 }
 
