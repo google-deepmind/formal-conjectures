@@ -86,22 +86,7 @@ def initialize(root,args,cfg):
         out=args.out.resolve()
         if out.exists():raise Failure('output_exists','Choose a new directory for --out; existing files are preserved.')
         print('Generating the exact source workspace at '+revision+'…',file=sys.stderr)
-        # Export from an isolated exact checkout, never require switching or cleaning the operator's branch.
-        with tempfile.TemporaryDirectory(prefix='fc-export-source-') as temp:
-            source=Path(temp).resolve()/'source'
-            if standalone:command(['git','init',source])
-            else:command(['git','clone','--no-checkout','--shared',root,source])
-            git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
-            git(source,'checkout','--detach',revision)
-            exporter.install_native(source)
-            print('Acquiring pinned source dependencies and the Mathlib cache…',file=sys.stderr)
-            command(['lake','exe','cache','get'],cwd=source,timeout=1200)
-            previous=exporter.ROOT
-            try:
-                exporter.ROOT=source
-                result=exporter.export(source/path,problem['theorem'],directory/'export',generator,revision,
-                                      f'https://github.com/{repository}.git')
-            finally:exporter.ROOT=previous
+        result=generate(root if not standalone else None,{**problem,'githubPath':path},repository,revision,directory/'export',generator)
         shutil.copytree(result,out)
         result=out
         provenance=rr.read_json(result/'fc-provenance.json')
@@ -117,6 +102,27 @@ def initialize(root,args,cfg):
         return record
     except BaseException as error:
         finish(directory,record,'error',reason=getattr(error,'reason','export_error'),detail=str(error));raise
+
+def generate(root,problem,repository,revision,artifact,generator=None):
+    """Shared deterministic export for contributor workspaces and evaluation tasks."""
+    from . import exporter
+    generator=generator or checkout_tool(root or user_cache()/'operator','generator')
+    with tempfile.TemporaryDirectory(prefix='fc-export-source-') as temp:
+        source=Path(temp).resolve()/'source'
+        if root is None:command(['git','init',source])
+        else:command(['git','clone','--no-checkout','--shared',root,source])
+        git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
+        git(source,'checkout','--detach',revision)
+        exporter.install_native(source)
+        print('Acquiring pinned source dependencies and the Mathlib cache…',file=sys.stderr)
+        command(['lake','exe','cache','get'],cwd=source,timeout=1200)
+        previous=exporter.ROOT
+        try:
+            exporter.ROOT=source
+            return exporter.export(source/problem['githubPath'],problem['theorem'],artifact,generator,
+                                   revision,f'https://github.com/{repository}.git')
+        finally:exporter.ROOT=previous
+
 
 def verify(root,candidate,cfg):
     candidate=candidate.resolve()

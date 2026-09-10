@@ -13,7 +13,7 @@ from .core import Failure, command, finish, git, save, start_run
 from .proof import PINS
 
 
-def profile(toolkit, tools):
+def profile(toolkit, tools, check_systemd=True):
     if sys.platform != 'linux' or os.getuid() == 0:
         raise Failure('unqualified_executor','Use an unprivileged Linux account with systemd and Landrun.',4)
     toolkit=toolkit.resolve();tools=tools.resolve()
@@ -33,8 +33,9 @@ def profile(toolkit, tools):
     for name,path in binaries.items():
         if not path.is_file():raise Failure('missing_tool',f'Build the pinned tool before setup: {path}',4)
     probe='import socket\ntry:\n socket.socket(socket.AF_UNIX)\nexcept OSError:\n pass\nelse:\n raise SystemExit("AF_UNIX restriction missing")\n'
-    command(['systemd-run','--user','--wait','--pipe','--collect','--property=RestrictAddressFamilies=~AF_UNIX',
-             sys.executable,'-c',probe],timeout=30)
+    if check_systemd:
+        command(['systemd-run','--user','--wait','--pipe','--collect','--property=RestrictAddressFamilies=~AF_UNIX',
+                 sys.executable,'-c',probe],timeout=30)
     return {'kind':'linux','toolkit':str(toolkit),'ref':revision,'tools':str(tools),
             'binaries':{name:{'path':str(path),'sha256':rr.digest(path.read_bytes())} for name,path in binaries.items()},
             'qualification':'operator_configured; exact pins and sandbox prerequisites checked; release qualification remains separate'}
@@ -85,15 +86,21 @@ def verify_local(root,candidate,trusted,executor):
         git(source,'fetch','--depth','1',request['source_repository'],request['source_commit'])
         git(source,'checkout','--detach',request['source_commit'])
         output=directory/'remote'
-        args=['systemd-run','--user','--wait','--pipe','--collect','--property=RestrictAddressFamilies=~AF_UNIX',
+        unit='fc-verify-'+record['id']
+        args=['systemd-run','--user','--wait','--pipe','--collect','--unit='+unit,
+              '--property=RuntimeMaxSec=3600','--property=RestrictAddressFamilies=~AF_UNIX',
               '--setenv=PATH='+os.environ['PATH'],'--setenv=PYTHONPATH='+str(Path(executor['toolkit'])/'toolkit')]
         args += ['--setenv='+name+'='+value['path'] for name,value in executor['binaries'].items()]
         args += [sys.executable,'-m','conjectures.remote','--producer','local_operator','--request',str(directory/'request.json'),
                  '--out',str(output),'--toolkit',executor['toolkit'],'--source',str(source),
                  '--candidate',str(snapshot),'--generator',str(Path(executor['tools'])/'generator')]
         print('Verifying frozen local submission on Linux…',file=sys.stderr)
-        with (directory/'executor.log').open('wb') as log:
-            process=subprocess.run(args,stdout=log,stderr=subprocess.STDOUT,timeout=3600)
+        try:
+            with (directory/'executor.log').open('wb') as log:
+                process=subprocess.run(args,stdout=log,stderr=subprocess.STDOUT,timeout=3660)
+        except (KeyboardInterrupt,subprocess.TimeoutExpired):
+            command(['systemctl','--user','stop',unit],timeout=30)
+            raise
         path=output/'verification.json'
         if not path.is_file():raise Failure('missing_result','Linux executor produced no result; inspect executor.log.',3)
         result=rr.read_json(path)

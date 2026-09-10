@@ -135,10 +135,13 @@ def setup(root,args):
         if args.repository or args.ref or not args.toolkit or not args.tools:
             raise Failure('invalid_arguments','Use --local --toolkit PATH --tools PATH without --repository/--ref.')
         from .linux_executor import profile
+        if args.build_tools:
+            from .tool_acquisition import build
+            build(args.toolkit,args.tools)
         update={'executor':profile(args.toolkit,args.tools)}
         receipt={'method':'local_linux','qualification':update['executor']['qualification']}
     else:
-        if args.operation=='verify' and (not args.repository or not args.ref or getattr(args,'toolkit',None) or getattr(args,'tools',None)):
+        if args.operation=='verify' and (not args.repository or not args.ref or getattr(args,'toolkit',None) or getattr(args,'tools',None) or getattr(args,'build_tools',False)):
             raise Failure('invalid_arguments','Use --repository OWNER/REPO --ref COMMIT, or --local --toolkit PATH --tools PATH.')
         public_repo(args.repository)
         if args.operation=='verify':

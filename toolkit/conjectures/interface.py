@@ -102,6 +102,7 @@ def parser():
                 s.add_argument('--local',action='store_true',help='Configure this unprivileged Linux host instead of GitHub (experimental)')
                 s.add_argument('--toolkit',type=Path,help='Clean trusted toolkit checkout used by the Linux controller')
                 s.add_argument('--tools',type=Path,help='Directory containing the pinned generator, comparator, landrun and nanoda checkouts, already built')
+                s.add_argument('--build-tools',action='store_true',help='Explicitly acquire and build the pinned Linux tools before configuring them')
     q=command('completion','Print shell completion for installation','conjectures completion zsh');q.add_argument('shell',choices=['bash','zsh','fish'])
     return p
 

@@ -1,0 +1,56 @@
+name: Toolkit agent proof qualification
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/fc-agent-qualification']
+permissions:
+  contents: read
+jobs:
+  proof:
+    if: github.repository == 'williamjblair/formal-conjectures'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          use-github-cache: true
+      - name: Acquire pinned tools
+        env:
+          PYTHONPATH: toolkit
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          from conjectures.tool_acquisition import build
+          build(Path.cwd(),Path(os.environ['RUNNER_TEMP'])/'tools')
+          PY
+      - name: Enable unprivileged systemd execution
+        run: |
+          sudo loginctl enable-linger "$(id -un)"
+          sudo systemctl start "user@$(id -u).service"
+          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
+          echo "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus" >> "$GITHUB_ENV"
+      - name: Qualify exact client and executor
+        env:
+          PYTHONPATH: toolkit
+          GH_TOKEN: ${{ github.token }}
+        run: python3 toolkit/qualify_agent_proof.py --toolkit "$GITHUB_WORKSPACE" --tools "$RUNNER_TEMP/tools" --out "$RUNNER_TEMP/agent-qualification"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: agent-proof-qualification
+          path: |
+            ${{ runner.temp }}/agent-qualification/qualification.json
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/run.json
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/executor.log
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/verification.json
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/comparator-result.json
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/verifier.log

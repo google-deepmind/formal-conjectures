@@ -73,6 +73,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         workspace=exporter.export(source/request['source_path'],request['declaration'],output/'generated',
                                   generator,request['source_commit'],request['source_repository'])
         config=rr.read_json(workspace/'config.json')
+        record['semantic_assessment_required']=bool(config.get('definition_names'))
         if config.get('enable_nanoda') is not True:raise Failure('kernel_policy','Both kernels are required',3)
         # Resolve only trusted generated dependencies before importing any candidate source.
         command(['lake','update'],cwd=workspace,timeout=600)
