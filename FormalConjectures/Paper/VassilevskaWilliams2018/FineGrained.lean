@@ -18,48 +18,62 @@ import FormalConjecturesUtil
 /-!
 # Randomized fine-grained complexity hypotheses
 
-Reference: Virginia Vassilevska Williams, *On some fine-grained questions in
-algorithms and complexity*, ICM 2018:
-https://people.csail.mit.edu/virgi/eccentri.pdf.
-
-We state Hypotheses 1, 2, 4 (k=2) and 8 (k=3). Algorithms use the source's
-randomized word-RAM model with logarithmic word size, made explicit by a finite
-instruction list and an operational interpreter. Error probability is at most 1/3.
-Rational exponents express the positive constant savings in the hypotheses.
-
-For the three-distinct-elements convention in 3SUM, see Dudek, Gawrychowski
-and Starikovskaya, *All non-trivial variants of 3-LDT are equivalent*,
-arXiv:2001.01289v1, §1, pp.2–3:
-https://arxiv.org/pdf/2001.01289v1.
+*References:*
+* Vassilevska Williams, *On some fine-grained questions in algorithms and
+  complexity*, ICM 2018, Hypotheses 1, 2, 4 and 8,
+  https://people.csail.mit.edu/virgi/eccentri.pdf.
+* Dudek, Gawrychowski and Starikovskaya, *All non-trivial variants of 3-LDT
+  are equivalent*, arXiv:2001.01289v1, §1, pp. 2–3,
+  https://arxiv.org/pdf/2001.01289v1.
 -/
 
 namespace VassilevskaWilliams2018
 
 open FineGrained WordRAM
 
-/-- Randomized SETH: for every rational rate below one, some fixed clause width
-admits no algorithm with that exponential rate, even allowing a polynomial
-factor in the encoded formula length. -/
+/-- **Randomized SETH** (Vassilevska Williams, Hypothesis 1), in the logarithmic-
+input-width word-RAM model: for every rational $a/b<1$ with $b>0$, some fixed
+clause width $k\ge3$ excludes SAT time $C(L+1)^d2^{\lfloor an/b\rfloor}$ for all
+fixed $C,d$. The binary formula has length $L$ and $n$ distinct occurring variables;
+clauses have at most $k$ literals, retaining empty clauses and repeated occurrences.
+One program must halt within the bound on every coin tape and succeed with
+probability at least $2/3$ on each input. Word width $O(\log(L+2))$ permits only
+polynomially many addressable memory cells. -/
 @[category research open, AMS 68]
 theorem randomized_SETH :
     ∀ a b : ℕ, 0 < b → a < b → ∃ k : ℕ, 3 ≤ k ∧ ¬ HasSatTime k a b := by sorry
 
-/-- Integer 3SUM on n distinct integers in $[-n^4,n^4]$ has no randomized
-truly subquadratic algorithm. -/
+/-- **Integer 3SUM** (Hypothesis 2) has no bounded-error randomized word-RAM
+algorithm of time $O(n^{a/b})$ for any $b>0$ and $a/b<2$. Input: a duplicate-free
+binary list of $n$ integers in $[-n^4,n^4]$. Property: three distinct entries sum
+to zero, following Dudek et al., v1. Inputs with fewer than three entries are no-
+instances. Word width is logarithmic in encoded input length; the time bound holds
+on every coin tape, with correctness probability at least $2/3$ on every valid
+input. This is a fine-grained bound for a problem already in $P$. -/
 @[category research open, AMS 68]
 theorem integer_threeSum :
     ∀ a b : ℕ, 0 < b → a < 2 * b →
       ¬ HasPowerTimeDecider ValidThreeSum threeSum List.length (fun _ => 1) a b := by sorry
 
-/-- Orthogonal Vectors has no randomized truly subquadratic algorithm in the
-number of vectors, even allowing a polynomial factor in dimension. -/
+/-- **Orthogonal Vectors** (Hypothesis 4, $k=2$) has no bounded-error randomized
+word-RAM algorithm of time $n^{a/b}poly(d)$ for any $b>0$ and $a/b<2$. Input:
+two explicitly encoded, duplicate-free sets of $n$ Boolean vectors, each of the
+stated dimension $d$. Property: some cross-pair has integer dot product zero,
+not merely even parity. All dimensions are included; an empty set yields no pair.
+The model has logarithmic-input word width and every-tape time bounds with success
+at least $2/3$ on each valid input. This is a fine-grained lower bound within $P$. -/
 @[category research open, AMS 68]
 theorem orthogonal_vectors :
     ∀ a b : ℕ, 0 < b → a < 2 * b → ¬ HasOVTime a b := by sorry
 
-/-- Exact Triangle: detecting a weight-zero triangle in an n-vertex graph with
-edge weights in $[-n^{300},n^{300}]$ has no randomized truly subcubic algorithm.
-This is Hypothesis 8 for k=3, with the source's exponent 100k. -/
+/-- **Exact Triangle** (Hypothesis 8, $k=3$) has no bounded-error randomized
+word-RAM algorithm of time $O(n^{a/b})$ for any $b>0$ and $a/b<3$. Input: a square,
+symmetric, loopless matrix of edge-presence flags and binary integer weights in
+$[-n^{300},n^{300}]$, including stored unused cells. Property: three distinct
+vertices have all three edges present with weight sum exactly zero. Fewer than
+three vertices cannot form a triangle. Word width is logarithmic in encoded length;
+every coin tape obeys the time bound and each valid input has success at least
+$2/3$. This is an exact-sum, not negative-sum, fine-grained problem in $P$. -/
 @[category research open, AMS 5 68]
 theorem exact_triangle :
     ∀ a b : ℕ, 0 < b → a < 3 * b →
