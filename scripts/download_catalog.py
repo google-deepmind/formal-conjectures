@@ -19,9 +19,16 @@ def download(url, out):
     if metadata.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
     raw=read(urljoin(url,'conjectures.json'),64*1024*1024)
     verify(metadata,raw)
+    # The problem catalog cannot enumerate utility-library source pages.
+    # Reuse Verso's complete index from the same published snapshot.
+    index=read(urljoin(url,f"rendered/{metadata['sha256']}/modules.json"),4*1024*1024)
+    modules=parse(index)
+    if not isinstance(modules,dict) or modules.get('schema_version')!='fc.website-modules.v1' or modules.get('catalog_sha256')!=metadata['sha256'] or not isinstance(modules.get('modules'),list) or not modules['modules']:
+        raise ValueError('Missing module index or module index belongs to another catalog')
     out.mkdir(parents=True,exist_ok=True)
     (out/'conjectures.json').write_bytes(raw)
     (out/'catalog-manifest.json').write_bytes(descriptor)
+    (out/'verso-modules.json').write_bytes(index)
 
 
 if __name__=='__main__':
