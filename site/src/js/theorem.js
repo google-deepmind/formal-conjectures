@@ -60,6 +60,15 @@ async function init() {
     document.getElementById('theorem-detail').prepend(notice);
   }
 
+  const evidenceEl = document.getElementById('contribution-evidence');
+  try {
+    await loadScript(`${_base}/assets/js/evidence.js`);
+    const response = await fetch(`${_base}/data/evidence.json`);
+    if (!response.ok) throw new Error('Evidence unavailable');
+    evidenceEl.innerHTML = FCEvidence.render(theorem, {...await response.json(), catalog_source:data.catalogProvenance?.source}, FC.escapeHTML);
+  } catch {
+    evidenceEl.textContent = 'Published evidence is unavailable. Inspect local runs with conjectures status.';
+  }
 }
 
 // ─── Verso asset and script loading ────────────────────────────────
@@ -513,6 +522,11 @@ function renderDetail(theorem, siblings, verso, contributors) {
     ${codeSection}
 
     ${formalProofsSection}
+
+    <section class="theorem-detail__section" aria-labelledby="contribution-evidence-heading">
+      <h2 id="contribution-evidence-heading" class="detail-label">Contribution evidence and open work</h2>
+      <div id="contribution-evidence" aria-live="polite">Loading published evidence…</div>
+    </section>
 
     ${contributorsSection}
 

@@ -602,6 +602,13 @@ async function main() {
   if (fs.existsSync('src/fonts')) copyDir('src/fonts', 'site/assets/fonts');
 
   writeRendering('site/data', descriptor.sha256, conjectures, rendering, contributors);
+  const evidencePath = 'data/evidence.json';
+  fs.writeFileSync('site/data/evidence.json', fs.existsSync(evidencePath)
+    ? fs.readFileSync(evidencePath)
+    : JSON.stringify({status: 'not_configured', runs: [], pull_requests: []}));
+  fs.writeFileSync('site/data/work.json', fs.existsSync('data/work.json')
+    ? fs.readFileSync('data/work.json') : JSON.stringify({status:'not_configured',pull_requests:[]}));
+
   // One native catalog is shared by browser, CLI, status and link consumers.
   fs.writeFileSync('site/data/conjectures.json', snapshot.catalogBytes);
   fs.writeFileSync('site/data/catalog-manifest.json', snapshot.descriptorBytes);

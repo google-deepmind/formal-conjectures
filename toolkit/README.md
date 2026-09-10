@@ -318,3 +318,10 @@ The same CLI can prepare an authorized PR review in GitHub Actions. See the
 [workflow guide](../scripts/review-report/WORKFLOW.md). It remains disabled until
 maintainers configure a trusted image and explicitly enable it. Existing agents
 complete the retained draft; the workflow has no model or publication job.
+
+
+`show` also reads the FC site's published work snapshot and lists open PRs that touch the
+same module, with its observation time. This is related work, not a declaration-equivalence
+claim. `--offline` uses only retained data. Site maintainers may enable these projections
+with `FC_EVIDENCE_REPOSITORY`, `FC_EVIDENCE_BRANCH`, and `FC_WORK_CONTEXT_URL`; absent
+configuration is displayed explicitly. This implementation does not enable upstream feeds.

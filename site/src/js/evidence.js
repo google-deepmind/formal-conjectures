@@ -1,0 +1,64 @@
+/* Contribution evidence is advisory and bound to exact revisions. */
+'use strict';
+const FCEvidence = (() => {
+  const labels = {pass:'Passed', fail:'Rejected or needs revision', error:'Execution error',
+    incomplete:'Incomplete', cancelled:'Cancelled'};
+  function safeURL(value) {
+    try { const url = new URL(value); return url.protocol === 'https:' ? url.href : null; }
+    catch { return null; }
+  }
+    function repository(value) {
+      const match = /^(?:https:\/\/github.com\/)?([\w.-]+\/[\w.-]+?)(?:\.git)?$/.exec(value || '');
+      return match ? match[1].toLowerCase() : null;
+    }
+  function records(theorem, data) {
+    function moduleName(value) {
+      const parts=[]; let word='', quoted=false;
+      for (const char of value || '') {
+        if (char === '«') quoted=true;
+        else if (char === '»') quoted=false;
+        else if (char === '.' && !quoted) {parts.push(word); word='';}
+        else word+=char;
+      }
+      parts.push(word);
+      return quoted || parts.some(p => !p) ? null : JSON.stringify(parts);
+    }
+    return (data.runs || []).filter(run => (!data.catalog_source?.repository || repository(run.target?.repository) === repository(data.catalog_source.repository)) && (run.kind === 'verify'
+      ? run.target?.declaration === theorem.theorem && moduleName(run.target?.module) === moduleName(theorem.module)
+      : (run.scope || []).includes(theorem.githubPath)));
+  }
+  function render(theorem, data, escape) {
+    const invalid = (data.runs || []).some(run => run.validation !== 'validated_bundle');
+    const unavailable = ['unavailable','invalid','not_configured'].includes(data.status);
+    const entries = invalid || unavailable ? [] : records(theorem, data);
+    const list = invalid ? '<p>Published evidence is invalid: outcomes were not validated.</p>' : unavailable
+      ? '<p>Published evidence: '+escape(data.status.replaceAll('_',' '))+'. '+escape(data.message || '')+'</p>' : entries.length ? '<ul>' + entries.map(run => {
+      const revision = run.kind === 'verify' ? run.target.commit : run.target.head;
+      const source = data.catalog_source;
+      const applicability = !source?.commit || !source?.repository ? 'Applicability unconfirmed' : revision === source.commit ? 'Current revision' : 'Historical revision';
+      const link = safeURL(run.url);
+      const label = run.kind === 'verify' ? 'Proof verification' : 'Contribution review';
+      return `<li><strong>${escape(label)}: ${escape(labels[run.outcome] || 'Unknown result')}</strong>.
+        ${escape(applicability)} <code>${escape((revision || '').slice(0, 12))}</code>.
+        ${run.producer === 'github_actions' ? 'Producer reports GitHub Actions execution.' : 'Local operator report.'}
+        ${link ? `<a href="${escape(link)}" target="_blank" rel="noopener">Inspect evidence</a>` : 'Evidence link unavailable.'}</li>`;
+    }).join('') + '</ul>' : '<p>No published contribution evidence is linked to this statement yet.</p>';
+    const work = data.work_context;
+    const sameRepository = work && data.catalog_source?.repository && repository(work.repository) === repository(data.catalog_source.repository);
+    const prs = sameRepository ? (data.pull_requests || []).filter(pr => (pr.files || []).includes(theorem.githubPath)) : [];
+    const queue = prs.length ? '<p>Related open work:</p><ul>' + prs.map(pr => {
+      const link = safeURL(pr.url);
+      return link ? `<li><a href="${escape(link)}" target="_blank" rel="noopener">#${escape(String(pr.number))}: ${escape(pr.title)}</a></li>` : '';
+    }).join('') + '</ul>' : sameRepository ? '<p>No related open PRs in this published queue snapshot.</p>' : '<p>Related work is unavailable for this catalog repository.</p>';
+    const command = `conjectures show '${theorem.theorem.replaceAll("'", "'\\''")}'`;
+    const source = data.catalog_source;
+    const provenance = source?.repository && source?.commit
+      ? `<p>Catalog source: ${escape(source.repository)} at <code>${escape(source.commit)}</code>.</p>`
+      : '<p>Catalog source revision is unavailable.</p>';
+    const observation = sameRepository && work.observed_at ? `<p>Queue observed: ${escape(work.observed_at)}.</p>` : '';
+    return provenance + list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue + observation +
+      `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`;
+  }
+  return {render, records, safeURL};
+})();
+if (typeof module !== 'undefined') module.exports = FCEvidence;
