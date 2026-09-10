@@ -16,34 +16,34 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Quadratic number-theoretic lower-bound formulations
+# Bounded quadratic congruences and binary quadratic Diophantine equations
 
-Garey and Johnson, *Computers and Intractability* (1979), AN1 (p. 249) and
-AN8 (p. 250), classify these positive-integer decision problems as NP-complete:
-https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf.
-
-Both entries cite Manders and Adleman, *NP-Complete decision problems for binary
-quadratics*, Journal of Computer and System Sciences 16(2) (1978), 168–184:
-https://doi.org/10.1016/0022-0000(78)90044-2.
-
-The formulations follow the book's positive witnesses and AN1's strict root bound.
-All input integers have binary encodings. These are conjectured lower bounds,
-not formal proofs of NP-completeness or equivalence to P versus NP.
+*References:*
+- Garey and Johnson, *Computers and Intractability* (1979), AN1 (p. 249) and AN8 (p. 250).
+  https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
+- Manders and Adleman, *NP-Complete decision problems for binary quadratics*,
+  Journal of Computer and System Sciences 16(2) (1978), 168–184.
+  https://doi.org/10.1016/0022-0000(78)90044-2
 -/
 
 namespace GareyJohnson1979
 
 open ComplexityTheory NumberTheoryProblems
 
-/-- No deterministic polynomial-time decider for a positive root $x<c$ of
-$x^2 \equiv a \pmod b$, given positive binary-encoded $a,b,c$ (AN1). -/
+/-- **QUADRATIC CONGRUENCES** (AN1, p. 249). Input: positive binary integers $a,b,c$.
+Property: there is a positive integer $x<c$ with $x^2\equiv a\pmod b$.
+The strict input bound is essential; this is not unbounded quadratic residuosity.
+This problem is NP-complete, so the nonexistence of a deterministic polynomial-time
+decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 11 68]
 theorem boundedQuadraticCongruence_not_polytime :
     ¬ HasPolyTimeDecider BoundedQuadraticCongruence := by
   sorry
 
-/-- No deterministic polynomial-time decider for positive solutions $x,y$ of
-$a x^2 + b y = c$, given positive binary-encoded $a,b,c$ (AN8). -/
+/-- **QUADRATIC DIOPHANTINE EQUATIONS** (AN8, p. 250). Input: positive binary integers
+$a,b,c$. Property: positive integers $x,y$ satisfy $a x^2+b y=c$. Neither witness may
+be zero. This problem is NP-complete, so the nonexistence of a deterministic polynomial-time
+decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 11 68]
 theorem binaryQuadraticDiophantine_not_polytime :
     ¬ HasPolyTimeDecider BinaryQuadraticDiophantine := by

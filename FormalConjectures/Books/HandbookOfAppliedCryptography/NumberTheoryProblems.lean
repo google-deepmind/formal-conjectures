@@ -16,48 +16,57 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Classical number-theoretic hardness conjectures
+# Polynomial-time questions for quadratic residuosity, RSA and discrete logarithms
 
-Menezes, van Oorschot, and Vanstone, *Handbook of Applied Cryptography* (1996),
-Chapter 3, Definitions 3.28 (RSA, p. 98), 3.31 (quadratic residuosity, p. 99),
-and 3.51 (prime-field discrete logarithms, p. 103):
-https://cacr.uwaterloo.ca/hac/about/chap3.pdf.
-
-These worst-case conjectures use the existing deterministic classical TM2 model.
-The RSA and discrete-logarithm algorithms must return witnesses, not merely decide
-whether witnesses exist. Their output existence and uniqueness are proved in the
-supporting module. Correctness is required only on the stated promise; the running-time
-bound holds on all inputs. No average-case security assertion, randomized hardness,
-NP-completeness claim, or reduction to factoring is included.
-
-The classical qualification matters: Shor's quantum algorithms are outside this model.
-https://arxiv.org/abs/quant-ph/9508027v2.
+*References:*
+- Menezes, van Oorschot, and Vanstone, *Handbook of Applied Cryptography* (1996),
+  Chapter 3, Definitions 3.28 (p. 98), 3.31 (p. 99), and 3.51 (p. 103).
+  https://cacr.uwaterloo.ca/hac/about/chap3.pdf
+- Shor, *Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms
+  on a Quantum Computer*, arXiv:quant-ph/9508027v2.
+  https://arxiv.org/abs/quant-ph/9508027v2
 -/
 
 namespace HandbookOfAppliedCryptography
 
 open ComplexityTheory NumberTheoryProblems
 
-/-- No deterministic polynomial-time decider for quadratic residuosity when the modulus
-is odd and composite and the input residue has Jacobi symbol one (Definition 3.31). -/
-@[category research open, AMS 11 68]
-theorem quadraticResiduosity_not_polytime :
-    ¬ HasPolyTimePromiseDecider ResiduosityPromise IsQuadraticResidue := by
+/-- **QUADRATIC RESIDUOSITY** (Definition 3.31, p. 99). Input: a binary modulus $n$
+and signed integer representative $a$, promised that $n$ is odd and composite and
+the Jacobi symbol $(a/n)$ is one. Does a deterministic classical polynomial-time algorithm
+decide whether $a$ is a square modulo $n$? Correctness is required on the promise;
+the time bound applies to every input. This is a two-sided computability question, like
+factoring in `PolyTime.isPolyTime_primeFactorsList`. A negative answer would imply
+$P\ne NP$; the converse is not known. It is not an average-case security statement. -/
+@[category research open, AMS 11 68 94]
+theorem quadraticResiduosity_polytime :
+    answer(sorry) ↔ HasPolyTimePromiseDecider ResiduosityPromise IsQuadraticResidue := by
   sorry
 
-/-- No deterministic polynomial-time solver returning a canonical RSA root for every
-valid public input $(n,e,c)$, without receiving the factors of $n$ (Definition 3.28). -/
-@[category research open, AMS 11 68]
-theorem rsaInversion_not_polytime :
-    ¬ HasPolyTimeSolver RSAPromise RSAOutput := by
+/-- **RSA INVERSION** (Definition 3.28, p. 98). Input: binary integers $(n,e,c)$,
+promised that $n=pq$ for distinct odd primes, $e>0$, and
+$\gcd(e,(p-1)(q-1))=1$. The factors are not supplied; $c$ may be any signed representative.
+Does a deterministic classical polynomial-time algorithm return $0\le m<n$ with
+$m^e\equiv c\pmod n$ on every promised input, with its time bound holding on all inputs?
+This is a two-sided search-computability question, not an existence decision or average-case
+security claim. A negative answer would imply $P\ne NP$; the converse is not known.
+See also the factoring question `PolyTime.isPolyTime_primeFactorsList`. -/
+@[category research open, AMS 11 68 94]
+theorem rsaInversion_polytime :
+    answer(sorry) ↔ HasPolyTimeSolver RSAPromise RSAOutput := by
   sorry
 
-/-- No deterministic polynomial-time solver returning $0 \le x \le p-2$ with
-$g^x \equiv b \pmod p$ for every prime-field generator $g$ and nonzero target $b$
-(Definition 3.51). -/
-@[category research open, AMS 11 68]
-theorem discreteLogarithm_not_polytime :
-    ¬ HasPolyTimeSolver DiscreteLogarithmPromise DiscreteLogarithmOutput := by
+/-- **PRIME-FIELD DISCRETE LOGARITHM** (Definition 3.51, p. 103). Input: binary integers
+$(p,g,b)$, promised that $p$ is prime, $0<g,b<p$, and $g$ generates the nonzero residues
+modulo $p$. Does a deterministic classical polynomial-time algorithm return
+$0\le x<p-1$ with $g^x\equiv b\pmod p$ on every promised input, with its time bound
+holding on all inputs? This is a two-sided search-computability question, not an existence
+decision or average-case security claim. A negative answer would imply $P\ne NP$;
+the converse is not known. See also `PolyTime.isPolyTime_primeFactorsList`; quantum
+algorithms use a different computational model. -/
+@[category research open, AMS 11 68 94]
+theorem discreteLogarithm_polytime :
+    answer(sorry) ↔ HasPolyTimeSolver DiscreteLogarithmPromise DiscreteLogarithmOutput := by
   sorry
 
 end HandbookOfAppliedCryptography
