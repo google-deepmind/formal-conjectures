@@ -105,7 +105,7 @@ const SOURCE_COLLECTIONS = {
   Other:               { name: 'Other',                    url: null },
 };
 
-const GITHUB_BASE = 'https://github.com/google-deepmind/formal-conjectures/blob/main';
+let GITHUB_BASE;
 const GITHUB_API_BASE = 'https://api.github.com/repos/google-deepmind/formal-conjectures';
 
 // ---------------------------------------------------------------------------
@@ -765,6 +765,7 @@ async function main() {
 
   // Read raw data
   const catalog = require('./catalog.cjs').readCatalog('data');
+  GITHUB_BASE = `https://github.com/${catalog.provenance.source.repository}/blob/${catalog.provenance.source.commit}`;
   const rawData = catalog.problems;
 
   if (rawData.length === 0) {
