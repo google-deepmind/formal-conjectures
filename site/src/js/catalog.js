@@ -185,6 +185,55 @@ function processEntry(entry, source) {
 
 
 /** JSON objects have no meaningful member order. */
+/** Validate the complete publication profile before deriving display fields.
+ * Keep in step with catalog-v2.schema.json; shared malformed fixtures test both readers.
+ * Partial native extracts are a separate contract and are not published catalogs.
+ */
+function validateCatalog(data) {
+  const object = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const text = v => typeof v === 'string' && v.trim().length > 0;
+  const strings = (v, check = item => typeof item === 'string' && item.length > 0) => Array.isArray(v) && v.every(check);
+  const require = (ok, field) => { if (!ok) throw new Error(`Invalid or missing catalog ${field}`); };
+  require(object(data) && data.schemaVersion === 2, 'schemaVersion');
+  require(Array.isArray(data.problems) && data.problems.length > 0, 'problems');
+  require(object(data.moduleDocstrings) && Object.values(data.moduleDocstrings).every(v => typeof v === 'string'), 'moduleDocstrings');
+  const identities = new Set();
+  for (const row of data.problems) {
+    require(object(row), 'problem');
+    for (const field of ['theorem', 'module', 'statement']) require(text(row[field]), field);
+    require(/^FormalConjectures\./.test(row.module) && !/[\/\\]/.test(row.module), 'module');
+    const identity = JSON.stringify([row.module, row.theorem]);
+    require(!identities.has(identity), 'unique declaration identity'); identities.add(identity);
+    require(['research open','research solved','textbook','test','API'].includes(row.category), 'category');
+    require(strings(row.subjects, v => typeof v === 'string' && /^[0-9]{1,2}$/.test(v)), 'subjects');
+    require(row.docstring === null || typeof row.docstring === 'string', 'docstring');
+    require(strings(row.answerKinds, v => ['Prop','non-Prop'].includes(v)), 'answerKinds');
+    require(typeof row.hasSorryFreeProof === 'boolean', 'hasSorryFreeProof');
+    require(Object.hasOwn(data.moduleDocstrings, row.module), 'module sources');
+    if (Object.hasOwn(row, 'subsets')) require(strings(row.subsets), 'subsets');
+    for (const field of ['fileFirstAdded','fileLastModified']) {
+      if (Object.hasOwn(row, field)) require(row[field] === null || typeof row[field] === 'string', field);
+    }
+    require(!['formalProofKind','formalProofLink','proofConditions'].some(k => Object.hasOwn(row,k)), 'native proof fields');
+    if (Object.hasOwn(row, 'formalProofs')) {
+      require(Array.isArray(row.formalProofs), 'formalProofs');
+      for (const proof of row.formalProofs) {
+        require(object(proof) && ['formal_conjectures','lean4','other_system'].includes(proof.kind) &&
+          typeof proof.link === 'string' && strings(proof.conditions), 'formalProofs');
+      }
+    }
+  }
+  const p = data.provenance;
+  const revision = v => object(v) && typeof v.repository === 'string' && /^[\w.-]+\/[\w.-]+$/.test(v.repository) &&
+    typeof v.commit === 'string' && /^[0-9a-f]{40}$/.test(v.commit);
+  require(object(p) && revision(p.source), 'source revision');
+  require(revision(p.extractor) && p.extractor.repository === p.source.repository &&
+    p.extractor.path === 'scripts/extract_names.lean', 'extractor revision');
+  require(text(p.lean_toolchain) && typeof p.dependencies_sha256 === 'string' && /^[0-9a-f]{64}$/.test(p.dependencies_sha256), 'toolchain provenance');
+  require(p.scope === 'FormalConjectures' && p.answer_mode === 'postpone', 'extraction scope');
+  return data;
+}
+
 function sameJSON(left, right) {
   if (left === right) return true;
   if (!left || !right || typeof left !== 'object' || typeof right !== 'object' ||
@@ -203,6 +252,6 @@ function resolveTheorem(entries, name) {
   return matches[0];
 }
 
-return {sameJSON, resolveTheorem, AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry};
+return {validateCatalog, sameJSON, resolveTheorem, AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry};
 })();
 if (typeof module !== 'undefined') module.exports = FCCatalog;

@@ -50,10 +50,17 @@ class PublicationTests(unittest.TestCase):
         from io import BytesIO
         out=self.root/'out';publish_catalog.prepare(self.root,'owner/fc',fixture(),out)
         raw=(out/'conjectures.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
-        with patch.object(download_catalog,'urlopen',side_effect=[BytesIO(descriptor),BytesIO(raw)]):
+        index=catalog_data.encode({'schema_version':'fc.website-modules.v1','catalog_sha256':json.loads(descriptor)['sha256'],
+            'modules':[{'name':'FormalConjecturesUtil.Example','url':'/FormalConjecturesUtil/Example/'}]})
+        with patch.object(download_catalog,'urlopen',side_effect=[BytesIO(descriptor),BytesIO(raw),BytesIO(index)]):
             download_catalog.download('https://example.org/data/catalog-manifest.json',self.root/'preview')
         self.assertEqual((self.root/'preview/conjectures.json').read_bytes(),raw)
         self.assertEqual((self.root/'preview/catalog-manifest.json').read_bytes(),descriptor)
+        self.assertEqual((self.root/'preview/verso-modules.json').read_bytes(),index)
+        with patch.object(download_catalog,'urlopen',side_effect=[BytesIO(descriptor),BytesIO(raw),BytesIO(index.replace(json.loads(descriptor)['sha256'].encode(),b'c'*64))]):
+            with self.assertRaisesRegex(ValueError,'another catalog'):
+                download_catalog.download('https://example.org/data/catalog-manifest.json',self.root/'invalid-preview')
+        self.assertFalse((self.root/'invalid-preview').exists())
 
     def test_descriptor_cannot_redirect_to_another_origin(self):
         from io import BytesIO

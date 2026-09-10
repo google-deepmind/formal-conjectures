@@ -16,6 +16,8 @@ Paths are relative to the deployed site's base URL.
 | `data/schemas/catalog-v2.schema.json` | Full publication profile | Validators and client authors |
 | `data/schemas/catalog-manifest-v1.schema.json` | Descriptor contract | Validators and client authors |
 | `data/rendered/<catalog-sha256>/<module-file>.json` | One module's Verso documentation, code, referenced hovers, and contributors | Problem pages |
+| `data/rendered/<catalog-sha256>/modules.json` | Complete Verso source-page navigation, including utility libraries | Full and preview builds |
+| `data/schemas/website-modules-v1.schema.json` | Source-page index contract | Website tooling |
 | `data/schemas/website-rendering-v1.schema.json` | Rendering contract | Website tooling |
 | `data/evidence.json` | Validated contribution evidence and availability | Website |
 | `data/work.json` | Observed PR context and availability | Website |
@@ -36,7 +38,7 @@ already represents FC's data, without a resource-envelope migration.
 
 1. Fetch the manifest.
 2. Fetch `conjectures.json` and check the raw byte length and SHA-256 before using it.
-3. Check schema version, problem count, and matching provenance.
+3. Validate the complete publication profile, problem count, and matching provenance.
 4. For rich rendering, request the module under that catalog digest and check its
    `catalog_sha256` and exact `module` fields.
 
@@ -88,7 +90,9 @@ labels without publishing another semantic catalog.
 
 A full build publishes catalog, rendering, schemas, and pages together. A
 website-only build reads the existing published snapshot and uses its rendering
-origin explicitly. It cannot bootstrap the first catalog deployment.
+origin explicitly. It downloads the full Verso module index under the same catalog
+digest; it never reconstructs an incomplete index from problem declarations. A
+missing or mismatched index stops the preview build. It cannot bootstrap the first catalog deployment.
 
 Evidence archives own review and verification results. The board owns observed
 queue context. They join to the catalog by exact target references; neither can
