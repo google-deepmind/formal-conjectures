@@ -97,6 +97,8 @@ def render(value, args):
     verification=value.get('verification_summary')
     if verification:
         lines.append('Verification policy: '+str(verification['policy_outcome']))
+        if verification.get('semantic_assessment_required'):
+            lines.append('Semantic assessment: required for submitted definitions; not established by kernel verification.')
         for key in ('stage','policy_reason','reason','detail'):
             if verification.get(key):lines.append(key.replace('_',' ').capitalize()+': '+str(verification[key]))
     observation=value.get('current_observation')

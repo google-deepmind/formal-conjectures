@@ -48,3 +48,14 @@ class AgentProofTests(unittest.TestCase):
         self.assertIn('.conjectures/',(self.candidate/'.gitignore').read_text())
         args=interface.parse(['setup','verify','--local','--global','--toolkit','/opt/fc','--tools','/opt/tools','--json'])
         self.assertTrue(args.local);self.assertTrue(args.global_config)
+
+    def test_formal_pass_keeps_semantic_assessment_visible(self):
+        from conjectures import inspection, presentation
+        record={'id':'fixture','kind':'verify','status':'completed','outcome':'pass',
+                'result':{'outcome':'pass','semantic_assessment_required':True,
+                          'comparator':{'outcome':'pass','stage':'complete'}}}
+        value=inspection.show(self.candidate,self.candidate,record,refresh=False)
+        self.assertEqual(value['outcome'],'pass')
+        self.assertTrue(value['verification_summary']['semantic_assessment_required'])
+        self.assertIn('semantic assessment',value['next_action'])
+        self.assertIn('Semantic assessment: required',presentation.render(value,interface.parse(['run','show','fixture'])))
