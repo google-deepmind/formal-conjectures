@@ -23,7 +23,7 @@ import FormalConjecturesUtil
 -/
 
 variable (K : Type*) [Field K]
-variable (G : Type*) [Group G] (hG : IsMulTorsionFree G)
+variable (G : Type*) [Group G] (hG : ∀ g : G, IsOfFinOrder g → g = 1)
 include hG
 
 namespace Kaplansky
@@ -74,11 +74,11 @@ abbrev PromislowGroup : Type :=
   PresentedGroup {b⁻¹ * a * a * b * a * a, a⁻¹ * b * b * a * b * b}
 
 /--
-The Promislow group is torsion-free.
+The Promislow group is torsion-free: its only element of finite order is `1`.
 -/
 @[category API, AMS 20]
 lemma promislow_group_is_torsionfree :
-    IsMulTorsionFree PromislowGroup := by
+    ∀ g : PromislowGroup, IsOfFinOrder g → g = 1 := by
   sorry
 
 /--
@@ -107,7 +107,7 @@ At least there is a counterexample for any prime and zero characteristic:
 -/
 @[category research solved, AMS 16 20]
 theorem counter_unit_conjecture :
-    ∃ (G : Type) (_ : Group G) (_ : IsMulTorsionFree G),
+    ∃ (G : Type) (_ : Group G) (_ : ∀ g : G, IsOfFinOrder g → g = 1),
     ∀ (p : ℕ) (_ : p = 0 ∨ p.Prime),
     ∃ (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
   ⟨PromislowGroup, _, promislow_group_is_torsionfree, fun p hp ↦
@@ -119,7 +119,7 @@ There is a counterexample to **Unit Conjecture** in any characteristic.
 -/
 @[category research solved, AMS 16 20]
 theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
-    ∃ (G : Type) (_ : Group G) (_ : IsMulTorsionFree G)
+    ∃ (G : Type) (_ : Group G) (_ : ∀ g : G, IsOfFinOrder g → g = 1)
       (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
   have ⟨G, _, _, hG⟩ := counter_unit_conjecture
   ⟨G, _, ‹_›, hG p hp⟩
