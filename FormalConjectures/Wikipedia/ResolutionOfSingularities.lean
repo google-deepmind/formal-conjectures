@@ -20,8 +20,11 @@ import FormalConjecturesUtil
 
 A variety $X$ over a field $k$ admits a resolution of singularities if there is a smooth
 $k$-variety $Y$ and a proper birational morphism $Y \to X$. Hironaka proved that every variety
-over a field of characteristic zero admits one. In positive characteristic this is known only in
-dimension at most three, and is open in general.
+over a field of characteristic zero admits one. In positive characteristic this is known over a
+perfect field in dimension at most three, and is open from dimension four on. Perfectness of $k$
+cannot be dropped from the statement in this form: over an imperfect field it fails already in
+dimension zero, for the reason recorded in the docstring of `resolution_of_singularities` below.
+Over an arbitrary field one asks instead that $Y$ be regular.
 
 *References:*
 * [Wikipedia](https://en.wikipedia.org/wiki/Resolution_of_singularities)
