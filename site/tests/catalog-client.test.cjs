@@ -71,3 +71,32 @@ test('quoted names keep exact identity and conditional proof metadata',()=>{
   assert.equal(catalog.resolveTheorem([one,exact],'A.B.C'),exact);
   assert.deepEqual(one.formalProofs,fixture().problems[0].formalProofs);
 });
+
+test('browse cards and sibling links navigate by exact quoted names',()=>{
+  const {fc}=client();
+  fc.setupStatementToggles=()=>{};fc.renderLatex=()=>{};
+  const source=fixture().provenance.source;
+  const rows=['«A.B».C','A.«B.C»'].map(theorem=>catalog.processEntry({...fixture().problems[0],theorem},source));
+  function page(script) {
+    const elements=new Map();
+    const element=id=>{
+      if(!elements.has(id)) elements.set(id,{innerHTML:'',setAttribute:()=>{}});
+      return elements.get(id);
+    };
+    const context={FC:fc,FCCatalog:catalog,document:{documentElement:{dataset:{base:'/fc'}},
+      getElementById:element,createElement:()=>({setAttribute:()=>{}})},window:{},URLSearchParams};
+    // Render the real page functions without its asynchronous bootstrap.
+    vm.runInNewContext(fs.readFileSync(require.resolve('../src/js/'+script),'utf8').replace(/\ninit\(\);\s*$/,''),context);
+    return {context,element};
+  }
+  const browse=page('browse.js');
+  for(const row of rows) {
+    const html=browse.context.renderCard(row,0).innerHTML;
+    const href=html.match(/<a href="([^"]+)"/)[1];
+    assert.equal(new URL(href,'https://example.org').searchParams.get('name'),row.theorem);
+  }
+  const theorem=page('theorem.js');
+  theorem.context.renderDetail(rows[0],rows,{moduleDocs:{},constLinks:{}},[]);
+  const href=theorem.element('theorem-detail').innerHTML.match(/class="sibling-item__name" href="([^"]+)"/)[1];
+  assert.equal(new URL(href,'https://example.org').searchParams.get('name'),rows[1].theorem);
+});
