@@ -74,7 +74,7 @@ def parser():
     q.add_argument('target');q.add_argument('--out',required=True,type=Path,help='New workspace directory')
     q.add_argument('--source-ref',help='Retrievable source revision (default: catalog commit; required for unversioned local catalogs)')
     q.add_argument('--repository',help='Source GitHub OWNER/REPO');q.add_argument('--catalog',type=Path,help='Native metadata JSON')
-    q=command('verify','Dispatch public committed proof work to Linux (experimental)','conjectures verify ../proof');q.add_argument('directory',type=Path)
+    q=command('verify','Verify a proof workspace with the configured Linux executor (experimental)','conjectures verify ../proof');q.add_argument('directory',type=Path)
     command('status','Show work, coverage, outcomes, and next actions','conjectures status')
     q=command('run','Inspect saved work or control remote verification','conjectures run show latest');r=q.add_subparsers(dest='operation',required=True)
     for op in ('list','show','logs','wait','cancel'):

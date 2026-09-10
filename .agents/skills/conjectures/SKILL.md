@@ -18,7 +18,7 @@ command can leave semantic work pending. No model login or second agent is neede
   Edit only `Submission.lean` and Lean files under `Submission/`. Use Lean feedback
   while working; run `verify DIR` for a fresh check of the exact target. Do not
   change the statement, permitted axioms, dependencies, or verifier configuration.
-- For evaluations, export a frozen suite with `eval export SUITE --format harbor`.
+- For evaluations, export a frozen suite with `eval export SUITE --format harbor --out DIR`.
   The external harness owns attempts, model access, and budgets. Preserve failed,
   interrupted, and errored attempts. Do not inspect reference solutions or keys.
 
