@@ -16,69 +16,75 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Five bounded-degree formulations of P versus NP
+# Bounded-degree coloring, vertex cover, Hamiltonicity and matching
 
-These conjecture the nonexistence of deterministic polynomial-time deciders for five
-restricted graph problems. Graphs are explicit Boolean adjacency matrices. Cubic means
-every vertex has degree exactly three, not merely at most three.
-
-References:
+*References:*
 - Garey, Johnson, and Stockmeyer, *Some simplified NP-complete graph problems*,
   Theoretical Computer Science 1 (1976), pp. 237–267,
-  https://doi.org/10.1016/0304-3975(76)90059-1.
-  Theorem 2.3 (pp. 251–252) gives degree-four 3-colorability hardness, even for planar
-  graphs; Theorem 2.6 (pp. 260–262) gives vertex-cover hardness with maximum degree three.
+  https://doi.org/10.1016/0304-3975(76)90059-1,
+  Theorem 2.3 (pp. 251–252), Theorem 2.6 (pp. 260–262), and appendix (p. 267).
 - Holyer, *The NP-Completeness of Edge-Coloring*, SIAM Journal on Computing 10 (1981),
-  pp. 718–720, https://doi.org/10.1137/0210055, §4, gives cubic edge-coloring hardness.
+  pp. 718–720, https://doi.org/10.1137/0210055, §4.
 - Garey, Johnson, and Tarjan, *The Planar Hamiltonian Circuit Problem is NP-Complete*,
   SIAM Journal on Computing 5 (1976), pp. 704–714, https://doi.org/10.1137/0205049,
-  pp. 704–705, establishes hardness even for planar, triply-connected cubic graphs.
+  pp. 704–705.
 - Schaefer, *The Complexity of Satisfiability Problems*, STOC (1978), pp. 216–226,
-  https://doi.org/10.1145/800133.804350, p. 217 and Theorem 7.1 / its comment on p. 225,
-  gives two-colorable perfect-matching hardness, including the cubic restriction.
+  https://doi.org/10.1145/800133.804350, p. 217 and Theorem 7.1 / its comment on p. 225.
 - Demaine, Karntikoon, and Pitimanaaree, *2-Colorable Perfect Matching is NP-complete in
   2-Connected 3-Regular Planar Graphs*, Theory of Computing Systems 69, article 22 (2025),
-  https://doi.org/10.1007/s00224-025-10221-2, Theorem 3, supplies the proof omitted by
-  Schaefer for the planar-cubic restriction and strengthens it to 2-connected graphs.
-
-No planarity or connectivity condition is imposed here. The stronger restricted results
-supply classical hardness background, not formalized reductions or an equivalence to
-$P \ne NP$.
+  https://doi.org/10.1007/s00224-025-10221-2, Theorem 3.
 -/
 
 namespace BoundedDegreeComplexity
 
 open ComplexityTheory Computability.MatrixGraph
 
-/-- No polynomial-time decider for proper vertex 3-colorability among simple graphs of
-maximum degree at most four (Garey–Johnson–Stockmeyer, Theorem 2.3). -/
+/-- **DEGREE-FOUR 3-COLORABILITY** (Garey–Johnson–Stockmeyer, Theorem 2.3).
+Input: a square, symmetric, loopless Boolean adjacency matrix of maximum degree at most four.
+Property: the vertices admit a proper coloring with three colors. No planarity restriction is
+imposed; the empty graph accepts. This problem is NP-complete, so the nonexistence of a
+deterministic polynomial-time decider for its binary encoding is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem degreeFourThreeColorable_not_polytime :
     ¬ HasPolyTimeDecider DegreeFourThreeColorable := by
   sorry
 
-/-- No polynomial-time decider for a vertex cover of size at most a positive input bound
-in a simple graph of maximum degree at most three (Garey–Johnson–Stockmeyer, Theorem 2.6). -/
+/-- **SUBCUBIC VERTEX COVER** (Garey–Johnson–Stockmeyer, Theorem 2.6 and appendix p. 267).
+Input: a square, symmetric, loopless Boolean adjacency matrix of maximum degree at most three
+and a positive binary integer $k$. Property: at most $k$ vertices meet every edge. The degree
+bound is not an exact regularity requirement. This problem is NP-complete, so the nonexistence
+of a deterministic polynomial-time decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem subcubicVertexCover_not_polytime : ¬ HasPolyTimeDecider SubcubicVertexCover := by
   sorry
 
-/-- No polynomial-time decider for proper edge 3-colorability among cubic simple graphs
-(Holyer, §4). -/
+/-- **CUBIC EDGE 3-COLORABILITY** (Holyer, §4). Input: a square, symmetric, loopless
+Boolean adjacency matrix with every vertex of degree exactly three. Property: the unordered
+edges can be colored with three colors so that incident edges have different colors.
+No planarity restriction is imposed; the empty graph accepts by vacuous regularity.
+This problem is NP-complete, so the nonexistence of a deterministic polynomial-time decider
+for its binary encoding is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem cubicEdgeThreeColorable_not_polytime :
     ¬ HasPolyTimeDecider CubicEdgeThreeColorable := by
   sorry
 
-/-- No polynomial-time decider for Hamiltonian cycles among cubic simple graphs
-(Garey–Johnson–Tarjan, pp. 704–705). -/
+/-- **CUBIC HAMILTONIAN CIRCUIT** (Garey–Johnson–Tarjan, pp. 704–705).
+Input: a square, symmetric, loopless Boolean adjacency matrix with every vertex of degree
+exactly three. Property: a cycle of length at least three visits every vertex exactly once.
+No planarity or connectivity restriction is imposed. This problem is NP-complete, so the
+nonexistence of a deterministic polynomial-time decider for its binary encoding is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem cubicHamiltonian_not_polytime : ¬ HasPolyTimeDecider CubicHamiltonian := by
   sorry
 
-/-- No polynomial-time decider for coloring a cubic simple graph with two colors so that
-each vertex has exactly one neighbor of its own color (Schaefer, p. 217;
-Demaine–Karntikoon–Pitimanaaree, Theorem 3). -/
+/-- **CUBIC TWO-COLORABLE PERFECT MATCHING** (Schaefer, p. 217;
+Demaine–Karntikoon–Pitimanaaree, Theorem 3). Input: a square, symmetric, loopless Boolean
+adjacency matrix with every vertex of degree exactly three. Property: one two-coloring gives
+each vertex exactly one neighbor of its own color. No planarity or connectivity restriction
+is imposed; the empty graph accepts. This problem is NP-complete, so the nonexistence of a
+deterministic polynomial-time decider for its binary encoding is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem cubicTwoColorMatching_not_polytime : ¬ HasPolyTimeDecider CubicTwoColorMatching := by
   sorry
