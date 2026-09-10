@@ -11,49 +11,57 @@ Website for the [Formal Conjectures](https://github.com/google-deepmind/formal-c
 
 ## Architecture
 
-The site is a static website generated from a JSON metadata file produced by the formal-conjectures repository. The overall data flow is:
+The existing Lake build produces one native catalog and Verso's rendered source
+pages. The website and CLI read the same catalog. See [the data contract](API.md)
+for endpoints, schemas, snapshot verification, and provenance.
 
+```mermaid
+flowchart LR
+  S["Lean sources + Lake pins"] --> L["Lake build"]
+  L --> E["Shared native metadata / extract_names"]
+  L --> V["Verso literate pages"]
+  E --> C["catalog.json + manifest"]
+  C --> CLI["CLI / status / link checks"]
+  C --> W["Website"]
+  V --> R["Per-module rich rendering"]
+  C --> R
+  R --> W
 ```
-formal-conjectures repo (Lean 4)
-  └─ lake exe extract_names
-       └─ data/conjectures.json   ← added here by formal-conjectures CI
-            └─ node build.js
-                 └─ site/         ← deployed to GitHub Pages
-```
 
-1. **Extraction.** CI builds `FormalConjecturesAnswerPostpone` and runs the native
-   `extract_names` executable. Answer holes, statements, categories, proof conditions,
-   variants, and source documentation come from the same Lean metadata.
-2. **Publication.** `scripts/publish_catalog.py` validates the complete extract and
-   records its source repository/commit, extractor revision, Lean toolchain, and
-   dependency digest. It writes `catalog.json` and `catalog-manifest.json`.
-3. **Rendering.** `build-and-docs.yml` runs `node build.js` and deploys both files
-   beside the website. The existing browser projection remains available at
-   `data/conjectures.json`; its existing field meanings are unchanged.
+CI builds `FormalConjecturesAnswerPostpone`, runs `extract_names`, and validates
+its complete output with `scripts/publish_catalog.py`. This preserves the native
+schema-2 fields and records the exact source and extractor revisions, toolchain,
+and dependency digest. `extract_names` arguments, ordering, and field meanings
+are unchanged. Anonymous examples remain excluded; no identities are invented.
 
-The descriptor uses `fc.catalog.v1`; the native data retains `schemaVersion: 2`.
-Its SHA-256 digest identifies the exact downloaded bytes. Source links use the
-recorded commit. A successful extraction does not certify a proof or change a
-maintainer's status decision. Anonymous examples remain excluded from the named
-catalog; no declaration identities are invented for them.
+`node build.js` copies the canonical catalog without rewriting its bytes. A shared
+JavaScript adapter supplies display labels in memory and during static rendering.
+There is no second published `data/conjectures.json` projection.
 
-Preview builds download the full native catalog and preserve its original
-provenance. They fail when it is unavailable or incomplete. They do not reconstruct
-statements from the browser projection or claim the preview branch as the source.
-The first production deployment of #5375 must therefore use the full build mode;
-previews and default CLI browsing become available after that deployment.
+Verso supplies formatted docstrings, highlighted code, and hovers. The fragment
+step retains only catalog declarations and their referenced hover records. The
+build writes these into per-module rendering files, bound to the catalog digest.
+Opening a problem loads its module, without downloading corpus-wide rendering or
+hover data. The full annotated source pages remain under `/src/`.
 
-During the site build, `build.js` also reads the repository's git history to
-attach file-level contributor metadata to each theorem page. If `GITHUB_TOKEN`
-or `GH_TOKEN` is available, the build enriches matching contributors with their
-GitHub username, profile URL, and avatar URL; otherwise it falls back to the
-display names available in git history.
+File-level contributors come from git history at the catalog source revision.
+GitHub profile enrichment is optional. Website-only previews reuse the published
+catalog and its matching rendered modules; they do not recompute contributor
+history or relabel the data as belonging to the preview branch.
+
+Catalog integrity errors stop the build or browsing operation. Missing rich
+rendering is shown explicitly; the native statement remains readable. Missing
+optional evidence or queue feeds are also visible and do not change catalog facts.
+The first deployment must run the full build. Preview downloads and default CLI
+browsing require that deployment; no older projection substitutes for it.
 
 ## Repository layout
 
 ```
 data/
-  conjectures.json        # JSON produced by lake exe extract_names (created by CI)
+  catalog.json            # Complete native catalog with exact provenance
+  catalog-manifest.json   # Byte digest, count, and schema reference
+  verso-fragments.json    # Build intermediate; never published
 src/
   css/style.css           # Stylesheet (CSS custom properties throughout)
   js/
@@ -84,7 +92,7 @@ The `site/` output directory is generated by the build script and is not committ
 | `/contribute/`                    | Contribution guide                                     |
 | `/about/`                         | About the project                                      |
 
-Individual theorem pages are rendered client-side from `data/conjectures.json` — no separate HTML file is generated per theorem.
+Individual theorem pages are rendered client-side from `data/catalog.json` — no separate HTML file is generated per theorem.
 
 Lean code uses Verso's existing tokens and hover information. The shared theme,
 `src/css/lean-syntax.css`, maps VS Code Light+ colors to Verso's CSS variables
@@ -118,26 +126,25 @@ and refresh the browser.
 
 ### Building with fresh data from a local Lean build
 
-If you need the site to reflect local Lean changes (new conjectures, etc.):
+For a full local build, commit the source and dependency changes first. Use your
+own repository below when building fork changes:
 
 ```bash
 # In the formal-conjectures repo root
 lake exe cache get   # download prebuilt Mathlib oleans (first time only)
 lake --wfail build FormalConjecturesAnswerPostpone
 mkdir -p site/data
-lake exe extract_names --exclude=fileFirstAdded,fileLastModified > site/data/conjectures.json
-python3 scripts/publish_catalog.py site/data/conjectures.json --repository google-deepmind/formal-conjectures --out site/data
-cp site/data/catalog.json site/data/conjectures.json
+lake exe extract_names --exclude=fileFirstAdded,fileLastModified > /tmp/fc-native-extract.json
+python3 scripts/publish_catalog.py /tmp/fc-native-extract.json --repository google-deepmind/formal-conjectures --out site/data
 
-# (Optional) Generate Verso literate fragments for rendered docstrings.
-# Without this, theorem detail pages will lack formatted docstrings and source links.
+# Generate Verso literate fragments from the same committed source.
 # Warning: the literate build step can take a long time (30+ minutes).
 cd docbuild
 lake build FormalConjectures:literate FormalConjecturesForMathlib:literate FormalConjecturesUtil:literate
 lake exe verso-html .lake/build/literate ../_literate_html
 cd ..
 python3 site/fix_literate_html.py _literate_html
-python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json --catalog-dir site/data
 
 # Build the site
 cd site
@@ -209,8 +216,3 @@ The GitHub Actions workflow in `.github/workflows/build-and-docs.yml` triggers o
 **Deployment** happens on pushes to `main`, and on `*-webtest` branches when on a fork.
 
 For GitHub Pages setup (including the environment rule needed for `*-webtest` branches), see [One-time fork setup](#one-time-fork-setup) above.
-
-The site also publishes `data/catalog.json`, preserving the native schema-2 extract
-for command-line consumers. The browser's `data/conjectures.json` projection is unchanged.
-Full CI extraction retains statements, docstrings, proof references, and answer kinds.
-Website-only builds require the full catalog and matching descriptor.
