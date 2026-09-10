@@ -128,11 +128,21 @@ class ExportTests(unittest.TestCase):
             self.assertEqual(package["url"], dependency["git"])
 
     def check_comparator(self, workspace, accepted, diagnostic=None):
-        result = subprocess.run(["lake", "test"], cwd=workspace, text=True,
-                                capture_output=True, timeout=600)
-        self.assertEqual(result.returncode == 0, accepted, result.stdout + result.stderr)
-        if diagnostic:
-            self.assertIn(diagnostic, result.stdout + result.stderr)
+        with tempfile.TemporaryDirectory() as temporary:
+            output=Path(temporary)/'result.json'
+            result = subprocess.run(['lake','env',os.environ['COMPARATOR_BIN'],'config.json','--result-json',str(output)],
+                                    cwd=workspace,text=True,capture_output=True,timeout=600)
+            self.assertTrue(output.is_file(), 'Comparator did not retain a typed result: '+result.stderr)
+            value=json.loads(output.read_text())
+            if os.environ.get('COMPARATOR_RESULTS_DIR'):
+                import uuid
+                retained=Path(os.environ['COMPARATOR_RESULTS_DIR']);retained.mkdir(parents=True,exist_ok=True)
+                (retained/(uuid.uuid4().hex+'.json')).write_text(json.dumps({'expected':'pass' if accepted else 'rejected','result':value,'exit_code':result.returncode}))
+            self.assertEqual(value['schemaVersion'],1)
+            self.assertEqual(value['outcome'],'pass' if accepted else 'rejected',value)
+            if accepted:
+                self.assertEqual(result.returncode,0);self.assertEqual(value['stage'],'complete')
+            if diagnostic:self.assertEqual(value['reason'],'disallowed_axiom',value)
 
 
 if __name__ == "__main__":
