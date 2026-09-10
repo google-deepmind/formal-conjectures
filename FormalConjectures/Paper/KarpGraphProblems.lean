@@ -27,14 +27,14 @@ import FormalConjecturesUtil
 
 namespace Karp1972
 
-open ComplexityTheory Computability.MatrixGraph
+open ComplexityTheory Computability
 
 /-- **CLIQUE** ([Ka72], item 3, p. 94). No deterministic polynomial-time algorithm decides
 whether a finite simple graph, given by a square symmetric loopless Boolean adjacency matrix,
 contains $k$ mutually adjacent vertices, where the positive integer $k$ is given in binary.
 CLIQUE is NP-complete, so this conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
-theorem clique_not_polytime : ¬ HasPolyTimeDecider Clique := by
+theorem clique_not_polytime : ¬ HasPolyTimeDecider MatrixGraph.Clique := by
   sorry
 
 /-- **NODE COVER** ([Ka72], item 5, p. 94). No deterministic polynomial-time algorithm decides
@@ -42,7 +42,7 @@ whether a finite simple graph, given by its Boolean adjacency matrix, has a vert
 at most $k$ meeting every edge, where the positive bound $k$ is given in binary.
 Vertex cover is NP-complete, so this conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
-theorem vertexCover_not_polytime : ¬ HasPolyTimeDecider VertexCover := by
+theorem vertexCover_not_polytime : ¬ HasPolyTimeDecider MatrixGraph.VertexCover := by
   sorry
 
 /-- **CHROMATIC NUMBER** ([Ka72], item 12, p. 95). No deterministic polynomial-time algorithm
@@ -50,7 +50,7 @@ decides whether a finite simple graph, given by its Boolean adjacency matrix, ha
 vertex coloring with at most $k$ colors. The positive binary bound $k$ is part of the input.
 This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
-theorem colorable_not_polytime : ¬ HasPolyTimeDecider Colorable := by
+theorem colorable_not_polytime : ¬ HasPolyTimeDecider MatrixGraph.Colorable := by
   sorry
 
 /-- **DIRECTED HAMILTON CIRCUIT** ([Ka72], item 9, p. 94). No deterministic polynomial-time
@@ -58,7 +58,7 @@ algorithm decides whether a finite loopless digraph, given by its Boolean adjace
 has a directed cycle visiting every vertex exactly once. Cycles have at least two vertices.
 This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
-theorem directedHamiltonian_not_polytime : ¬ HasPolyTimeDecider DirectedHamiltonian := by
+theorem directedHamiltonian_not_polytime : ¬ HasPolyTimeDecider MatrixGraph.DirectedHamiltonian := by
   sorry
 
 /-- **UNDIRECTED HAMILTON CIRCUIT** ([Ka72], item 10, p. 94). No deterministic polynomial-time
@@ -66,7 +66,7 @@ algorithm decides whether a finite simple graph, given by its Boolean adjacency 
 a cycle visiting every vertex exactly once. Cycles have at least three vertices.
 This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
-theorem undirectedHamiltonian_not_polytime : ¬ HasPolyTimeDecider UndirectedHamiltonian := by
+theorem undirectedHamiltonian_not_polytime : ¬ HasPolyTimeDecider MatrixGraph.UndirectedHamiltonian := by
   sorry
 
 end Karp1972

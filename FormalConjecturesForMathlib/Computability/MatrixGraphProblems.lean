@@ -15,12 +15,12 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Computability.BitstringEncoding
+public import FormalConjecturesForMathlib.Computability.MatrixGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import Mathlib.Combinatorics.SimpleGraph.VertexCover
-public import Mathlib.Combinatorics.Digraph.Basic
 public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-!
 # Finite matrix inputs for graph decision problems
@@ -38,80 +38,6 @@ Problems* (1972), §4, https://doi.org/10.1007/978-1-4684-2001-2_9.
 @[expose] public section
 
 namespace Computability.MatrixGraph
-
-open BitstringEncoding
-
-/-- Row-major finite adjacency data, encoded by the existing nested-list bitstring instance. -/
-abbrev Code := List (List Bool)
-
-/-- Missing entries default to false; well-formedness is checked separately in each problem. -/
-def entry (a : Code) (i j : Fin a.length) : Bool :=
-  ((a[i.val]?.getD [])[j.val]?).getD false
-
-def Square (a : Code) : Prop := ∀ row ∈ a, row.length = a.length
-
-/-- Each Boolean in a list occupies a three-bit self-delimiting block. -/
-theorem encoded_row_length (row : List Bool) : (bitEncode row).length = 3 * row.length := by
-  induction row with
-  | nil => rfl
-  | cons b row ih =>
-    change (delimit (bitEncode b) ++ bitEncode row).length = 3 * (row.length + 1)
-    rw [List.length_append, length_delimit, ih]
-    change 2 * 1 + 1 + 3 * row.length = _
-    omega
-
-theorem encoded_matrix_length (a : Code) (n : ℕ) (h : ∀ row ∈ a, row.length = n) :
-    (bitEncode a).length = a.length * (6 * n + 1) := by
-  induction a with
-  | nil => change 0 = 0 * (6 * n + 1); simp
-  | cons row a ih =>
-    change (delimit (bitEncode row) ++ bitEncode a).length = (a.length + 1) * (6 * n + 1)
-    rw [List.length_append, length_delimit, encoded_row_length,
-      ih (fun r hr ↦ h r (by simp [hr])), h row (by simp), Nat.add_mul, one_mul]
-    omega
-
-/-- A square input explicitly occupies a quadratic number of bits in its vertex count. -/
-theorem encoded_square_length (a : Code) (h : Square a) :
-    (bitEncode a).length = a.length * (6 * a.length + 1) :=
-  encoded_matrix_length a a.length h
-
-def ValidDigraph (a : Code) : Prop :=
-  Square a ∧ ∀ i : Fin a.length, entry a i i = false
-
-def ValidGraph (a : Code) : Prop :=
-  ValidDigraph a ∧ ∀ i j : Fin a.length, entry a i j = entry a j i
-
-instance (a : Code) : Decidable (ValidDigraph a) := by
-  unfold ValidDigraph Square
-  infer_instance
-
-instance (a : Code) : Decidable (ValidGraph a) := by
-  unfold ValidGraph
-  infer_instance
-
-/-- The directed adjacency relation, retaining orientation. -/
-def toDigraph (a : Code) : Digraph (Fin a.length) :=
-  Digraph.mk' (entry a)
-
-/-- For a valid symmetric input, this is exactly its encoded simple graph. -/
-def toGraph (a : Code) : SimpleGraph (Fin a.length) :=
-  SimpleGraph.fromRel (fun i j ↦ entry a i j = true)
-
-instance (a : Code) : DecidableRel (toGraph a).Adj := by
-  unfold toGraph SimpleGraph.fromRel
-  infer_instance
-
-theorem toGraph_adj {a : Code} (h : ValidGraph a) (i j : Fin a.length) :
-    (toGraph a).Adj i j ↔ entry a i j = true := by
-  change (i ≠ j ∧ (entry a i j = true ∨ entry a j i = true)) ↔ _
-  rw [h.2 j i, or_self]
-  constructor
-  · exact And.right
-  · intro he
-    refine ⟨?_, he⟩
-    rintro rfl
-    rw [h.1.2 i] at he
-    cases he
 
 /-- A clique with exactly the requested positive number of vertices. -/
 def Clique (input : Code × ℕ) : Prop :=
@@ -138,14 +64,10 @@ theorem colorable_iff (a : Code) (k : ℕ) :
   · rintro ⟨ha, hk, ⟨color⟩⟩
     exact ⟨ha, hk, color, fun _ _ h ↦ color.valid h⟩
 
-/-- Cyclic successor on a finite nonempty index type; an argument itself witnesses nonemptiness. -/
-def next {n : ℕ} (i : Fin n) : Fin n :=
-  ⟨(i.val + 1) % n, Nat.mod_lt _ (Nat.zero_lt_of_lt i.isLt)⟩
-
 /-- A cyclic ordering containing every vertex exactly once, following directed edges. -/
 def HasSpanningCycle (a : Code) : Prop :=
   ∃ order : Equiv.Perm (Fin a.length),
-    ∀ i, (toDigraph a).Adj (order i) (order (next i))
+    ∀ i, (toDigraph a).Adj (order i) (order (finRotate a.length i))
 
 /-- Directed Hamiltonian cycles may have two vertices but not zero or one. -/
 def DirectedHamiltonian (a : Code) : Prop :=
@@ -169,7 +91,7 @@ instance (input : Code × ℕ) : Decidable (Colorable input) := by
 
 instance (a : Code) : Decidable (HasSpanningCycle a) := by
   change Decidable (∃ order : Equiv.Perm (Fin a.length),
-    ∀ i, entry a (order i) (order (next i)) = true)
+    ∀ i, entry a (order i) (order (finRotate a.length i)) = true)
   infer_instance
 
 instance (a : Code) : Decidable (DirectedHamiltonian a) := by
