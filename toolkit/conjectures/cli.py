@@ -18,6 +18,9 @@ from .ui import stage, log_location
 
 
 def dispatch(args):
+    if args.command=='skill':
+        from . import skills
+        return skills.install(args.name,args.dir) if args.operation=='install' else {'outcome':'pass','paths':{'skill':str(skills.path(args.name)/'SKILL.md')}}
     if args.command=='completion':
         from .interface import completion
         return {'text': completion(args.shell)}

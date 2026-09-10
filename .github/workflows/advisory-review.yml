@@ -1,0 +1,37 @@
+name: Advisory review preparation
+on:
+  issue_comment:
+    types: [created]
+permissions: {}
+concurrency:
+  group: advisory-review-${{ github.event.issue.number }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    # Model generation and automatic publication are deliberately absent.
+    if: >-
+      vars.FC_REVIEW_ENABLED == 'true' && github.event.issue.pull_request &&
+      github.event.comment.body == '/review'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: python3 -m pip install .
+      - name: Prepare exact inputs and independent checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEW_IMAGE: ${{ vars.FC_REVIEW_IMAGE }}
+        run: python3 scripts/review_workflow.py prepare --root "$RUNNER_TEMP/review"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: review-input-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/review/.conjectures/runs/
+          if-no-files-found: warn
+          retention-days: 30

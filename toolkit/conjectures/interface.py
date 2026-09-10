@@ -74,6 +74,12 @@ def parser():
         if name in ('find','show','init','export','doctor'):
             common.add_argument('--catalog-url',default=argparse.SUPPRESS,help='Explicit HTTPS /conjectures.json endpoint')
         return q
+    q=command('skill','Locate or explicitly install bundled agent guidance','conjectures skill install --dir .agents/skills')
+    r=q.add_subparsers(dest='operation',required=True)
+    for op in ('path','install'):
+        s=command(op,'Print bundled guidance location' if op=='path' else 'Copy guidance into an explicit skills directory',parent=r)
+        s.add_argument('--name',choices=['conjectures','formal-conjectures-review'],default='conjectures')
+        if op=='install':s.add_argument('--dir',type=Path,required=True,help='Parent skill discovery directory, e.g. .agents/skills or .claude/skills')
     q=command('doctor','Check readiness without changing configuration','conjectures doctor --for review')
     q.add_argument('--for',dest='capability',choices=['browse','review','verify','evidence'],help='Return readiness for this capability')
     for name in ('find','show'):
@@ -107,7 +113,7 @@ def parser():
     q.add_argument('target');q.add_argument('--out',required=True,type=Path,help='New workspace directory')
     q.add_argument('--source-ref',help='Retrievable source revision (default: catalog commit; required for unversioned local catalogs)')
     q.add_argument('--repository',help='Source GitHub OWNER/REPO');q.add_argument('--catalog',type=Path,help='Native metadata JSON')
-    q=command('verify','Dispatch public committed proof work to Linux (experimental)','conjectures verify ../proof');q.add_argument('directory',type=Path)
+    q=command('verify','Verify a proof workspace with the configured Linux executor (experimental)','conjectures verify ../proof');q.add_argument('directory',type=Path)
     command('status','Show work, coverage, outcomes, and next actions','conjectures status')
     q=command('run','Inspect saved work or control remote verification','conjectures run show latest');r=q.add_subparsers(dest='operation',required=True)
     for op in ('list','show','logs','wait','cancel'):
