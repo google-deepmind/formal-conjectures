@@ -40,9 +40,10 @@ All in the namespace `Matrix.GeneralLinearGroup`:
   `Γ = G(ℚ) = GL n ℚ` in `G(𝔸_f) × G(ℝ)`, the subgroup of condition (a).
 * `orthogonalSubgroup`: the orthogonal group `K = O n ℝ` inside `GL n ℝ`, the maximal compact
   subgroup of condition (b2).
-* `integralAdeles` and `integralSubgroup`: the integral adeles `Ẑ` and the compact open
-  subgroup `GL n Ẑ` of `G(𝔸_f)` (`isOpen_integralSubgroup`, `isCompact_integralSubgroup`),
-  which witnesses condition (b1) for constant automorphic forms.
+* `integralAdeles` and `integralAdelicSubgroup`: the integral adeles `Ẑ` and the compact open
+  subgroup `GL n Ẑ` of `G(𝔸_f)` (`isOpen_integralAdelicSubgroup`,
+  `isCompact_integralAdelicSubgroup`), which witnesses condition (b1) for constant automorphic
+  forms.
 
 ## Implementation notes
 
@@ -157,8 +158,9 @@ lemma isCompact_integralAdeles : IsCompact (integralAdeles : Set 𝔸ᶠ[ℤ, �
 variable (n) in
 /-- `GL n Ẑ` inside `GL n 𝔸ᶠ[ℤ, ℚ]`: the matrices whose entries, and whose inverse's entries,
 are integral adeles. It is a compact open subgroup of `G(𝔸_f)`
-(`isOpen_integralSubgroup`, `isCompact_integralSubgroup`), as condition (b1) requires. -/
-def integralSubgroup : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ]) where
+(`isOpen_integralAdelicSubgroup`, `isCompact_integralAdelicSubgroup`), as condition (b1)
+requires. -/
+def integralAdelicSubgroup : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ]) where
   carrier := {g | (∀ i j, (g : Matrix n n 𝔸ᶠ[ℤ, ℚ]) i j ∈ integralAdeles) ∧
       ∀ i j, (↑g⁻¹ : Matrix n n 𝔸ᶠ[ℤ, ℚ]) i j ∈ integralAdeles}
   one_mem' := by
@@ -176,7 +178,8 @@ def integralSubgroup : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ]) where
       exact Subring.sum_mem _ fun k _ => mul_mem (hb.2 i k) (ha.2 k j)
   inv_mem' {a} ha := ⟨ha.2, by rw [inv_inv]; exact ha.1⟩
 
-lemma isOpen_integralSubgroup : IsOpen ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
+lemma isOpen_integralAdelicSubgroup :
+    IsOpen ((integralAdelicSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
   have hW : IsOpen {M : Matrix n n 𝔸ᶠ[ℤ, ℚ] | ∀ i j, M i j ∈ integralAdeles} := by
     have h : {M : Matrix n n 𝔸ᶠ[ℤ, ℚ] | ∀ i j, M i j ∈ integralAdeles}
         = ⋂ i, ⋂ j, (fun M : Matrix n n 𝔸ᶠ[ℤ, ℚ] => M i j) ⁻¹' integralAdeles := by
@@ -186,13 +189,14 @@ lemma isOpen_integralSubgroup : IsOpen ((integralSubgroup n) : Set (GL n 𝔸ᶠ
       isOpen_integralAdeles.preimage (continuous_id.matrix_elem i j)
   exact (hW.preimage Units.continuous_val).inter (hW.preimage Units.continuous_coe_inv)
 
-lemma isCompact_integralSubgroup : IsCompact ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
+lemma isCompact_integralAdelicSubgroup :
+    IsCompact ((integralAdelicSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
   set W : Set (Matrix n n 𝔸ᶠ[ℤ, ℚ]) := {M | ∀ i j, M i j ∈ integralAdeles} with hWdef
   have hWc : IsCompact W :=
     (Set.ext fun M => ⟨fun h i _ j _ => h i j, fun h i j => h i trivial j trivial⟩ :
       W = Set.univ.pi fun _ : n => Set.univ.pi fun _ => (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ])) ▸
       isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_integralAdeles
-  have himg : Units.embedProduct _ '' (integralSubgroup n)
+  have himg : Units.embedProduct _ '' (integralAdelicSubgroup n)
       = (fun p : Matrix n n 𝔸ᶠ[ℤ, ℚ] × Matrix n n 𝔸ᶠ[ℤ, ℚ] => (p.1, MulOpposite.op p.2)) ''
         ((W ×ˢ W) ∩ {p | p.1 * p.2 = 1} ∩ {p | p.2 * p.1 = 1}) := by
     ext p
