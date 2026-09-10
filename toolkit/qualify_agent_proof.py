@@ -6,6 +6,7 @@ No model is invoked. All positive and negative results are retained.
 import argparse
 import json
 import os
+import time
 from pathlib import Path
 from types import SimpleNamespace
 from conjectures import core, proof, linux_executor, unix_restriction
@@ -28,11 +29,19 @@ def main():
     for label,body,expected in [('unfinished',original,'fail'),
                                 ('imported_assumption',original.replace('sorry','exact PackageExportFixture.plain'),'fail'),
                                 ('valid',original.replace('sorry','decide'),'pass')]:
+        started=time.monotonic()
+        print('Starting qualification case: '+label,flush=True)
         submission.write_text(body)
         value=proof.verify(candidate,candidate,{'executor':executor})
-        results.append({'case':label,'expected':expected,'actual':value['outcome'],'run_id':value['id']})
+        comparator=value.get('result',{}).get('comparator') or {}
+        results.append({'case':label,'expected':expected,'actual':value['outcome'],'run_id':value['id'],
+                        'seconds':round(time.monotonic()-started,1),'policy_reason':comparator.get('reason'),
+                        'policy_stage':comparator.get('stage')})
         core.save(out/'qualification.json',{'client_commit':revision,'executor':executor,'cases':results})
+        print(json.dumps(results[-1]),flush=True)
         assert value['outcome']==expected,value
+        if label in ('unfinished','imported_assumption'):
+            assert comparator.get('reason')=='disallowed_axiom' and comparator.get('stage')=='axiom_policy',value
     broken={**executor,'ref':'0'*40}
     value=proof.verify(candidate,candidate,{'executor':broken})
     assert value['outcome']=='error' and value['policy_outcome']=='not_evaluated',value
