@@ -79,5 +79,3 @@ def zeroKNetwork (G : Graph α β) (k : ℕ) : Network G ℤ where
   up _ := (k : ℤ) - 1
 
 end Graph
-
-#min_imports
