@@ -37,6 +37,8 @@ a zero-duration operation occupies no resource but still obeys precedence constr
 This agrees with the nonpreemptive processing model of Gonzalez and Sahni,
 *Open Shop Scheduling to Minimize Finish Time* (1976), pp. 665–666.
 https://doi.org/10.1145/321978.321985
+It differs from the literal machine-order clauses of Garey–Johnson SS14/SS15/SS18:
+a zero-duration operation may start strictly inside another operation's busy interval.
 
 The finite witness bounds below are equivalent to unrestricted natural-number start times.
 Exhaustive decidability is not a polynomial-time algorithm claim.
@@ -48,7 +50,9 @@ namespace Computability.SchedulingProblems
 
 open Finset
 
-/-- Two half-open processing intervals do not overlap. Zero-duration operations are empty. -/
+/-- Two half-open processing intervals do not overlap. Zero-duration operations are empty,
+even when their start lies inside another operation's busy interval. This is the processing-
+interval convention, not Garey–Johnson's literal machine-order clause for zero-length tasks. -/
 def Separated (s p t q : ℕ) : Prop :=
   p = 0 ∨ q = 0 ∨ s + p ≤ t ∨ t + q ≤ s
 
