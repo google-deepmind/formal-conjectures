@@ -7,7 +7,7 @@ fork release candidate. Unavailable operations report `unavailable_command`.
 `conjectures` browses FC problems, prepares contribution reviews for your existing
 agent, and retains reports and proof evidence. It needs no AI login or model
 configuration. Your agent conducts semantic review; the CLI handles deterministic
-operations. Version 0.2.0rc2 is a **fork release candidate**. Proof verification and
+operations. Version 0.2.0rc3 is a **fork release candidate**. Proof verification and
 public evidence are experimental pending the full acceptance journeys.
 
 ## Try or install
@@ -24,13 +24,13 @@ version; uv can download it when it is unavailable locally.
 Try without permanently installing the toolkit:
 
 ```sh
-uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc2/formal_conjectures_toolkit-0.2.0rc2-py3-none-any.whl conjectures doctor
+uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl conjectures doctor
 ```
 
 Install for regular use:
 
 ```sh
-uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc2/formal_conjectures_toolkit-0.2.0rc2-py3-none-any.whl
+uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl
 conjectures find erdos/730
 conjectures show erdos/730
 ```
