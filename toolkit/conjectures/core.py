@@ -41,6 +41,10 @@ def workspace(path=None, required=True, allow_proof=False):
             return root
     except Failure:
         pass
+    except FileNotFoundError:
+        if required or path is not None:
+            raise Failure('missing_tool','Install Git for checkout operations. Browsing and doctor work without Git.',4)
+        return None
     if required or path is not None:
         raise Failure('workspace_required', 'Run inside an FC checkout, or use conjectures --repo /path/to/formal-conjectures COMMAND.', 4)
     return None

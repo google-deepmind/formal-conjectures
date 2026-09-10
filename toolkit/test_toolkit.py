@@ -21,6 +21,12 @@ class ToolkitFixture(unittest.TestCase):
         self.git('add','.');self.git('commit','-qm','base')
 
 class ToolkitTests(ToolkitFixture):
+    def test_optional_workspace_does_not_require_git(self):
+        with patch.object(core,'command',side_effect=FileNotFoundError('git')):
+            self.assertIsNone(core.workspace(required=False))
+            with self.assertRaises(core.Failure) as caught:core.workspace(required=True)
+        self.assertEqual(caught.exception.reason,'missing_tool')
+
     def test_snapshot_preserves_branch_index_and_worktree(self):
         self.repository();head=self.git('rev-parse','HEAD');before=self.git('ls-files','--stage')
         (self.root/'FormalConjectures/A.lean').write_text('changed\n')
