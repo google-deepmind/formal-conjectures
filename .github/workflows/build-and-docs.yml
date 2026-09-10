@@ -51,7 +51,9 @@ jobs:
           python-version: '3.12.9'
 
       - name: Run script tests
-        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+        run: |
+          python3 -m pip install jsonschema==4.25.1 beautifulsoup4==4.14.3 lxml==6.1.1
+          python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
       - name: Run website post-processing tests
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
@@ -102,7 +104,10 @@ jobs:
             # base and this diff is exactly what the pull request changes. If
             # that fails for any reason, fall back to building the site.
             touched=$(git diff --name-only HEAD^1 HEAD -- \
-              site docbuild .github/workflows/build-and-docs.yml 2>/dev/null || echo unknown)
+              site docbuild scripts/publish_catalog.py scripts/download_catalog.py \
+              toolkit/conjectures/catalog_data.py toolkit/conjectures/resources/schemas \
+              FormalConjecturesUtil/Metadata.lean scripts/extract_names.lean \
+              .github/workflows/build-and-docs.yml 2>/dev/null || echo unknown)
             if [[ -z "$touched" ]]; then
               site=false
               echo "::notice::Pull request leaves the site untouched: validating Lean only."
@@ -249,7 +254,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
           python -m pip install --upgrade pip
-          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
+          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4==4.14.3 lxml==6.1.1
 
       - name: Run plotting script
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
@@ -268,10 +273,9 @@ jobs:
         run: |
           mkdir -p site/data
           lake exe extract_names --exclude=fileFirstAdded,fileLastModified \
-            > site/data/conjectures.json
-          python3 scripts/publish_catalog.py site/data/conjectures.json \
+            > "$RUNNER_TEMP/native-extract.json"
+          python3 scripts/publish_catalog.py "$RUNNER_TEMP/native-extract.json" \
             --repository "$GITHUB_REPOSITORY" --out site/data
-          cp site/data/catalog.json site/data/conjectures.json
 
       - name: Retain the complete catalog for qualification
         if: steps.mode.outputs.website_only != 'true'
@@ -288,12 +292,12 @@ jobs:
       # in the run summary without blocking.
       - name: Check category warnings
         if: steps.mode.outputs.website_only != 'true'
-        run: python3 scripts/check_category_warnings.py site/data/conjectures.json
+        run: python3 scripts/check_category_warnings.py site/data/catalog.json
 
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
-          python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+          python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json --catalog-dir site/data
 
       # A preview reuses an exact published native snapshot, including its original
       # revision. The smaller browser projection cannot reconstruct that data.
@@ -315,6 +319,10 @@ jobs:
           FC_WORK_CONTEXT_URL: ${{ vars.FC_WORK_CONTEXT_URL }}
         run: python3 scripts/contribution_context.py
 
+      - name: Test website readers
+        if: steps.mode.outputs.site == 'true'
+        run: node --test site/tests/*.test.cjs
+
       - name: Build website
         if: steps.mode.outputs.site == 'true'
         run: |
@@ -322,6 +330,7 @@ jobs:
           node build.js
         env:
           BASE_PATH: /formal-conjectures
+          FC_RENDER_BASE: ${{ steps.mode.outputs.website_only == 'true' && 'https://google-deepmind.github.io/formal-conjectures' || '' }}
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Assemble deploy artifact

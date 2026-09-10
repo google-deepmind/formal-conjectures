@@ -63,7 +63,7 @@ def load(root, path=None, *, refresh=False, offline=False):
         if retained:return result(*retained,'offline')
         raise Failure('catalog_unavailable','No cached catalog. Run conjectures find erdos/92 while online first.',4)
     try:
-        descriptor=rr.parse(read_url(MANIFEST_URL,1024*1024))
+        descriptor=catalog_data.parse(read_url(MANIFEST_URL,1024*1024))
         # The descriptor can only select the sibling catalog, never an arbitrary URL.
         if descriptor.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
         raw=read_url(urljoin(MANIFEST_URL,'catalog.json'))
