@@ -4,6 +4,9 @@ import copy
 import hashlib
 import json
 import os
+import re
+import subprocess
+import textwrap
 from pathlib import Path
 import tempfile
 import unittest
@@ -164,6 +167,100 @@ class ReuseTest(unittest.TestCase):
         self.assertEqual(receipt["tar_sha256"], hashlib.sha256(self.api.tar).hexdigest())
         self.assertEqual(receipt["run_attempt"], 2)
         self.assertEqual(receipt["inputs"]["runner_image_version"], "20260907.1")
+
+
+class WorkflowReuseTest(unittest.TestCase):
+    """Run the real mode script and check the workflow's build-step conditions.
+
+    This covers successful-job selection, not a simulation of the Actions runner.
+    actionlint and live qualification cover the rest of the workflow contract.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        default = Path(__file__).resolve().parents[1] / ".github/workflows/build-and-docs.yml"
+        cls.workflow = Path(os.environ.get("FC_BUILD_WORKFLOW", default)).read_text()
+        build = cls.workflow.split("  build:\n", 1)[1].split("  # Deployment job", 1)[0]
+        cls.steps = dict(re.findall(
+            r"^      - name: ([^\n]+)\n(.*?)(?=^      - name: |\Z)", build, re.M | re.S))
+
+    def mode(self, reused, website_only="", event="push", ref="main"):
+        step = self.steps["Detect build mode"]
+        match = re.search(r"        run: \|\n((?:          .*\n|\n)+)", step)
+        self.assertIsNotNone(match)
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "output"
+            env = {**os.environ, "GITHUB_OUTPUT": str(output), "REUSED_SITE": reused,
+                   "WEBSITE_ONLY": website_only, "EVENT_NAME": event, "REF_NAME": ref}
+            subprocess.run(["bash", "-eu", "-c", textwrap.dedent(match[1])],
+                           env=env, cwd=directory, capture_output=True, check=True)
+            return dict(line.split("=", 1) for line in output.read_text().splitlines())
+
+    def enabled(self, name, mode, reused, event="push"):
+        condition = re.search(r"^        if: (.+)$", self.steps[name], re.M)
+        if condition is None:
+            return True
+        values = {"steps.mode.outputs.website_only": mode["website_only"],
+                  "steps.mode.outputs.site": mode["site"],
+                  "steps.reuse.outputs.reused": reused, "github.event_name": event}
+        expression = condition[1]
+        for key, value in values.items():
+            expression = expression.replace(key, "'" + value + "'")
+        # All tested conditions use the shared ==, !=, && subset of Actions/bash.
+        self.assertNotRegex(expression, r"steps\.|github\.|always\(|failure\(")
+        result = subprocess.run(["bash", "-c", "[[ " + expression + " ]]"], capture_output=True)
+        self.assertIn(result.returncode, (0, 1), result.stderr)
+        return result.returncode == 0
+
+    def test_reuse_preserves_lean_and_cache_but_skips_site(self):
+        mode = self.mode("true")
+        self.assertEqual(mode, {"website_only": "false", "site": "false"})
+        required = ["Install elan", "Get olean cache", "Build ForMathlib, utilities, and test",
+                    "Build problems", "Pack olean cache", "Save ~/.cache/mathlib",
+                    "Generate conjectures data for website", "Check category warnings",
+                    "Upload reused deploy artifact"]
+        required += [name for name in ("Restore local lake build", "Save local lake build",
+                                      "Restore Lean build", "Save Lean build") if name in self.steps]
+        self.assertTrue(any(name.startswith("Save ") and "build" in name for name in required))
+        for name in required:
+            with self.subTest(step=name):
+                self.assertTrue(self.enabled(name, mode, "true"))
+        skipped = ["Build literate source pages", "Post-process literate HTML",
+                   "Install Python dependencies", "Run plotting script", "Set up Node.js",
+                   "Extract Verso fragments for website", "Build website",
+                   "Assemble deploy artifact", "Upload deploy artifact", "Download live site data"]
+        skipped += [name for name in ("Initialize documentation workspace", "Restore documentation tools",
+                                     "Restore literate data", "Save documentation tools", "Save literate data")
+                    if name in self.steps]
+        for name in skipped:
+            with self.subTest(step=name):
+                self.assertFalse(self.enabled(name, mode, "true"))
+
+    def test_missing_or_failed_lookup_builds_site(self):
+        for reused in ("false", ""):
+            mode = self.mode(reused)
+            self.assertEqual(mode, {"website_only": "false", "site": "true"})
+            for name in ("Build problems", "Build literate source pages", "Build website", "Upload deploy artifact"):
+                self.assertTrue(self.enabled(name, mode, reused))
+            self.assertFalse(self.enabled("Upload reused deploy artifact", mode, reused))
+
+    def test_manual_and_website_preview_modes(self):
+        self.assertEqual(self.mode("", event="workflow_dispatch"),
+                         {"website_only": "false", "site": "true"})
+        for options in ({"website_only": "true", "event": "workflow_dispatch"}, {"ref": "example-webtest"}):
+            mode = self.mode("", **options)
+            self.assertEqual(mode, {"website_only": "true", "site": "true"})
+            self.assertFalse(self.enabled("Build problems", mode, ""))
+            self.assertTrue(self.enabled("Download live site data", mode, ""))
+
+    def test_deployment_keeps_current_validation_dependency(self):
+        deploy = self.workflow.split("  deploy:\n", 1)[1]
+        self.assertIn("needs: [build, scripts]", deploy)
+        self.assertNotIn("always()", deploy)
+        for name in ("Build ForMathlib, utilities, and test", "Build problems", "Check category warnings",
+                     "Upload reused deploy artifact"):
+            self.assertNotIn("continue-on-error:", self.steps[name])
+            self.assertNotIn("always()", self.steps[name])
 
 
 if __name__ == "__main__":

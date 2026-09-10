@@ -2,7 +2,8 @@
 """Retain and reuse the Pages artifact from an exact-commit merge-queue build.
 
 Only this workflow's successful merge_group runs can supply artifacts. A cache
-miss (including API or integrity failures) leaves the ordinary build enabled.
+miss (including API or integrity failures) leaves the website build enabled.
+Lean validation and cache refresh run whether or not the website is reused.
 """
 
 import argparse
@@ -171,9 +172,10 @@ def main():
             run_id = reuse(api, expected, current, args.directory)
         except (KeyError, TypeError, ValueError, OSError, zipfile.BadZipFile,
                 subprocess.SubprocessError):
-            print("Merge-queue artifact lookup unavailable; running the normal build.")
-    message = (f"Reusing validated merge-queue run {run_id} for {expected['sha']}."
-               if run_id else "No matching validated merge-queue artifact; running the normal build.")
+            print("Merge-queue artifact lookup unavailable; building the website normally.")
+    message = (f"Reusing the website from validated merge-queue run {run_id} for {expected['sha']}. "
+               "Lean validation and cache refresh remain enabled."
+               if run_id else "No matching validated merge-queue artifact; building the website normally.")
     print(message)
     with open(os.environ["GITHUB_OUTPUT"], "a") as output:
         output.write(f"reused={'true' if run_id else 'false'}\n")
