@@ -16,8 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Computability.MatrixGraphProblems
-public import Mathlib.Combinatorics.SimpleGraph.Acyclic
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Acyclic
 
 /-!
 # Finite inputs for feedback sets and network design
@@ -36,17 +35,6 @@ All decidability instances are finite exhaustive searches, with no efficiency cl
 -/
 
 @[expose] public section
-
-namespace SimpleGraph
-
-/-- Finite tree recognition using connectivity and the exact edge count. -/
-instance decidableIsTree {V : Type*} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] : Decidable G.IsTree :=
-  decidable_of_iff (G.Connected ∧ G.edgeFinset.card + 1 = Fintype.card V) (by
-    rw [isTree_iff_connected_and_card, Nat.card_eq_fintype_card,
-      Nat.card_eq_fintype_card, edgeFinset_card])
-
-end SimpleGraph
 
 namespace Computability.NetworkProblems
 
