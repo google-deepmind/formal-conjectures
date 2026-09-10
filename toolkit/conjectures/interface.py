@@ -35,6 +35,12 @@ def parser():
                             formatter_class=argparse.RawDescriptionHelpFormatter)
         q.add_argument('--json',action='store_true',default=argparse.SUPPRESS,help='Structured output')
         return q
+    q=command('skill','Locate or explicitly install bundled agent guidance','conjectures skill install --dir .agents/skills')
+    r=q.add_subparsers(dest='operation',required=True)
+    for op in ('path','install'):
+        s=command(op,'Print bundled guidance location' if op=='path' else 'Copy guidance into an explicit skills directory',parent=r)
+        s.add_argument('--name',choices=['conjectures','formal-conjectures-review'],default='conjectures')
+        if op=='install':s.add_argument('--dir',type=Path,required=True,help='Parent skill discovery directory, e.g. .agents/skills or .claude/skills')
     q=command('doctor','Check readiness without changing configuration','conjectures doctor --for review')
     q.add_argument('--for',dest='capability',choices=['browse','review','verify','evidence'],help='Return readiness for this capability')
     for name in ('find','show'):
