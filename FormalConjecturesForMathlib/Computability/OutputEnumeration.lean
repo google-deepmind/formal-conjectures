@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Computability.Complexity
-public import Mathlib.Data.Finset.Sort
 
 /-!
 # Output-polynomial enumeration with an actual machine clock
@@ -26,27 +25,25 @@ It is a total-time bound, not a delay or incremental-time guarantee. Output
 lists contain each mathematical answer exactly once, preventing padding by
 repeated answers. Finite-set outputs have sorted canonical encodings.
 
-Reference: Mary, *Enumeration of minimal transversals of hypergraphs of bounded
+References: Eiter–Gottlob, *Identifying the Minimal Transversals of a Hypergraph
+and Related Problems* (1995), §1, p. 1279, https://doi.org/10.1137/S0097539793250299;
+Mary, *Enumeration of minimal transversals of hypergraphs of bounded
 VC-dimension*, §1, https://arxiv.org/html/2407.00694v3.
 -/
 
 @[expose] public section
-
-namespace BitstringEncoding
-
-instance {α : Type} [LinearOrder α] [BitstringEncoding α] : BitstringEncoding (Finset α) :=
-  ofLeftInverse (fun s => s.sort (· ≤ ·)) (fun l => some l.toFinset) (by
-    intro s
-    simp)
-
-end BitstringEncoding
 
 namespace ComplexityTheory
 
 variable {α β : Type} [BitstringEncoding α] [BitstringEncoding β]
 
 /-- A single deterministic TM2 halts with the complete output within a global
-polynomial in the sum of encoded input and output lengths. -/
+polynomial in the sum of encoded input and output lengths.
+
+Ordinary `IsPolyTime` implies this total-time condition. Conversely, an
+output-polynomial algorithm is polynomial time in the input when its encoded
+output length has a polynomial bound in the encoded input length. Without that
+output-size bound, this condition permits superpolynomially long outputs. -/
 def IsOutputPolyTime (f : α → β) : Prop :=
   ∃ m : Turing.TM2ComputableAux Bool Bool, ∃ p : Polynomial ℕ, ∀ x,
     Nonempty (Turing.TM2OutputsInTime m.tm
