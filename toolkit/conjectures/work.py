@@ -8,13 +8,15 @@ from .catalog_data import repository_name
 URL='https://google-deepmind.github.io/formal-conjectures/data/work.json'
 
 
-def load(*, offline=False):
-    cache=user_cache()/'work.json'
+def load(*, offline=False, url=None):
+    from urllib.parse import urljoin
+    endpoint=urljoin(url,'work.json') if url else URL
+    cache=user_cache()/('work.json' if endpoint==URL else 'work-'+rr.digest(endpoint.encode())+'.json')
     try:
         if offline:
             if not cache.is_file():return {'status':'unavailable','pull_requests':[],'message':'No retained work snapshot.'}
             value=rr.read_json(cache)
-        else:value=rr.parse(read_url(URL,8*1024*1024))
+        else:value=rr.parse(read_url(endpoint,8*1024*1024))
         if value.get('status')=='not_configured':return value
         value=work_context(value)
         if not offline:save(cache,value)
