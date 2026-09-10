@@ -16,67 +16,75 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Five graph-partition formulations of P versus NP
+# Graph partitions, balanced bicliques and size-constrained cuts
 
-Each statement conjectures that an encoded finite decision problem has no uniform
-deterministic polynomial-time decider, using the existing TM2 model and binary encodings.
-
-Primary reference: Garey and Johnson, *Computers and Intractability* (Freeman, 1979),
-GT11 (p. 192), GT15 (p. 193), GT24 (p. 196), ND14 (p. 209), ND17 (p. 210).
-Triangle partition follows the positive-size convention of Theorem 3.7 (pp. 68–69).
-https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
-
-Original hardness background:
+*References:*
+- Garey and Johnson, *Computers and Intractability* (Freeman, 1979),
+  GT11 (p. 192), GT15 (p. 193), GT24 (p. 196), ND14 (p. 209), ND17 (p. 210),
+  and Theorem 3.7 (pp. 68–69).
+  https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
 - Karp, *Reducibility among Combinatorial Problems* (1972), item 13 (p. 95),
   and the clique-cover reduction (p. 99).
   https://doi.org/10.1007/978-1-4684-2001-2_9
 - Hyafil and Rivest, *Graph Partitioning and Constructing Optimal Decision Trees are
-  Polynomial Complete Problems*, IRIA report 33 (1973), pp. 2–5. The weighted
-  generalization is discussed on p. 3.
+  Polynomial Complete Problems*, IRIA report 33 (1973), pp. 2–5.
   https://people.csail.mit.edu/rivest/pubs/HR73.pdf
 - Garey, Johnson, and Stockmeyer, *Some simplified NP-complete graph problems*,
-  TCS 1 (1976), Theorem 1.3 (pp. 242–243): equal-size terminal-separating cuts,
-  the unit-weight special case of ND17.
+  TCS 1 (1976), Theorem 1.3 (pp. 242–243).
   https://doi.org/10.1016/0304-3975(76)90059-1
-
-GT24 requires a bipartite input and equal biclique side sizes, not just a bound on their
-total size. ND14 permits any number of parts. ND17 bounds both sides of a terminal cut;
-it is not ordinary minimum cut without size constraints.
-
-These are lower-bound conjectures. No NP-completeness reduction or equivalence to
-$P \ne NP$ is formally proved here.
 -/
 
 namespace GareyJohnson1979
 
 open ComplexityTheory Computability.GraphPartitionProblems
 
-/-- No polynomial-time decider for GT15: partitioning a graph into at most a positive
-input number of cliques, with that bound at most the vertex count. -/
+/-- **PARTITION INTO CLIQUES** (GT15, p. 193). Input: a square, symmetric, loopless
+Boolean adjacency matrix of $G=(V,E)$ and a binary integer $0<k\le |V|$.
+Property: $V$ can be partitioned into at most $k$ nonempty cliques. Every vertex belongs
+to exactly one part. This problem is NP-complete, so the nonexistence of a deterministic
+polynomial-time decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem cliquePartition_not_polytime : ¬ HasPolyTimeDecider CliquePartition := by
   sorry
 
-/-- No polynomial-time decider for GT11: partitioning a nonempty graph of order $3q$
-into $q$ vertex-disjoint triangles covering every vertex. -/
+/-- **PARTITION INTO TRIANGLES** (GT11, p. 192; Theorem 3.7, pp. 68–69).
+Input: a square, symmetric, loopless Boolean adjacency matrix with $3q$ vertices for
+a positive integer $q$. Property: $q$ vertex-disjoint triangles cover every vertex.
+The empty graph rejects, following Theorem 3.7. This problem is NP-complete, so the
+nonexistence of a deterministic polynomial-time decider for its binary encoding is
+equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem trianglePartition_not_polytime : ¬ HasPolyTimeDecider TrianglePartition := by
   sorry
 
-/-- No polynomial-time decider for GT24: finding a balanced complete bipartite subgraph
-with a positive input number of vertices on each side, in a bipartite input graph. -/
+/-- **BALANCED COMPLETE BIPARTITE SUBGRAPH** (GT24, p. 196). Input: a square, symmetric,
+loopless Boolean adjacency matrix of a bipartite graph $G=(V,E)$ and a binary integer
+$0<k\le |V|$. Property: two disjoint sets of exactly $k$ vertices each have every cross
+edge present. Equal side sizes are required, not merely a total-size bound. This problem
+is NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 5 68]
 theorem balancedBiclique_not_polytime : ¬ HasPolyTimeDecider BalancedBiclique := by
   sorry
 
-/-- No polynomial-time decider for ND14: partitioning a positively weighted graph
-subject to a positive vertex-weight capacity per part and a positive crossing-edge budget. -/
+/-- **GRAPH PARTITIONING** (ND14, p. 209). Input: a square, symmetric, loopless Boolean
+adjacency matrix, positive binary integer vertex and edge weights, a positive capacity $K$
+and a positive budget $J$. Property: a partition of all vertices has vertex-weight sum
+at most $K$ in each part and total crossing-edge weight at most $J$, counting each edge
+once. The number of parts is unrestricted, and parts need not be connected. This problem
+is NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 5 68 90]
 theorem weightedPartition_not_polytime : ¬ HasPolyTimeDecider WeightedPartition := by
   sorry
 
-/-- No polynomial-time decider for ND17: a terminal-separating cut with both side sizes
-bounded by a positive input bound, positive edge weights, and a positive cost budget. -/
+/-- **MINIMUM CUT INTO BOUNDED SETS** (ND17, p. 210). Input: a square, symmetric,
+loopless Boolean adjacency matrix of $G=(V,E)$, positive binary integer edge weights,
+terminal indices $s,t\in V$, a binary bound $0<B\le |V|$ and a positive binary budget $K$.
+Property: a partition $V=V_1\sqcup V_2$ has $s\in V_1$, $t\in V_2$, both side sizes
+at most $B$, and total crossing-edge weight at most $K$, counting each edge once.
+Coincident terminals cannot be separated. This problem is NP-complete, so the nonexistence
+of a deterministic polynomial-time decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 68 90]
 theorem boundedCut_not_polytime : ¬ HasPolyTimeDecider BoundedCut := by
   sorry
