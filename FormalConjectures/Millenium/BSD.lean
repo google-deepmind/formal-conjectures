@@ -50,11 +50,21 @@ variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
 /-- `L` is an $L$-function of `E`: it is meromorphic on $\mathbb{C}$ and agrees with the
 $L$-series of `E` on $\operatorname{Re} s > 3/2$, where that series converges.
 
-The $L$-function is expected to be holomorphic, but meromorphy is all that is needed to state the
-Birch and Swinnerton-Dyer conjecture. [Gross2011] states the conjecture under this hypothesis, and
-we take that form as authoritative. -/
+The $L$-function is expected to be holomorphic, and `IsHolomorphicLFunction` is that stronger
+notion, but meromorphy is all that is needed to state the Birch and Swinnerton-Dyer conjecture.
+[Gross2011] states the conjecture under this hypothesis, and we take that form as authoritative. -/
 def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
   Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+
+/-- `L` is a holomorphic $L$-function of `E`: it is entire and agrees with the $L$-series of `E`
+on $\operatorname{Re} s > 3/2$. This is the continuation Hasse and Weil conjectured. -/
+def IsHolomorphicLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
+  Differentiable ℂ L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+
+@[category API, AMS 11 14]
+theorem IsHolomorphicLFunction.isLFunction {L : ℂ → ℂ} (hL : IsHolomorphicLFunction E L) :
+    IsLFunction E L :=
+  ⟨fun z ↦ (hL.1.analyticAt z).meromorphicAt, hL.2⟩
 
 /-- An $L$-function is determined by the $L$-series it continues: two of them agree on a
 punctured neighbourhood of every point. They need not agree at a pole. -/
@@ -68,10 +78,18 @@ theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : Is
     (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
   exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs ↦ sub_eq_zero.1 hs
 
-/-- **Hasse--Weil conjecture**: the $L$-function of an elliptic curve over a number field extends
-to the whole plane. -/
+/-- **Weak Hasse--Weil conjecture**: the $L$-series of an elliptic curve over a number field has a
+meromorphic continuation to the whole plane. This is weaker than what Hasse and Weil conjectured,
+and is the form the Birch and Swinnerton-Dyer conjecture is stated under. -/
 @[category research open, AMS 11 14]
 theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLFunction E L := by
+  sorry
+
+/-- **Hasse--Weil conjecture**: the $L$-series of an elliptic curve over a number field has a
+holomorphic continuation to the whole plane. -/
+@[category research open, AMS 11 14]
+theorem exists_isHolomorphicLFunction (E : WeierstrassCurve K) [E.IsElliptic] :
+    ∃ L, IsHolomorphicLFunction E L := by
   sorry
 
 end NumberField
@@ -80,9 +98,10 @@ section Rat
 
 variable (E : WeierstrassCurve ℚ) [E.IsElliptic]
 
-/-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem. -/
+/-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem: the
+$L$-series of an elliptic curve over $\mathbb{Q}$ has a holomorphic continuation. -/
 @[category research solved, AMS 11 14]
-theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
+theorem exists_isHolomorphicLFunction_rat : ∃ L, IsHolomorphicLFunction E L := by
   sorry
 
 end Rat
