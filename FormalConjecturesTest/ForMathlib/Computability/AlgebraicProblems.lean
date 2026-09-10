@@ -15,7 +15,9 @@ limitations under the License.
 -/
 import FormalConjecturesForMathlib.Computability.AlgebraicProblems
 import FormalConjecturesForMathlib.Computability.DecisionProblems
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Ring
 
 /-!
 # Boundary and semantic tests for algebraic problems
