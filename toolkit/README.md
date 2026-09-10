@@ -21,29 +21,25 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Restart your shell after installation. `--python 3.11` selects the tested Python
 version; uv can download it when it is unavailable locally.
-Try without permanently installing the toolkit:
+The latest development CLI is on the fork integration branch. Try it without a
+persistent installation:
 
 ```sh
-uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl conjectures doctor
+uvx --python 3.11 --from 'git+https://github.com/williamjblair/formal-conjectures.git@codex/fc-toolkit-integration' conjectures doctor
 ```
 
-Install for regular use:
+Install the development version:
 
 ```sh
-uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl
-conjectures find erdos/730
-conjectures show erdos/730
+uv tool install --python 3.11 'git+https://github.com/williamjblair/formal-conjectures.git@codex/fc-toolkit-integration'
 ```
 
-These browsing commands and `doctor` work without a checkout, Lean, Docker, or
-GitHub login. An unavailable statement or evidence feed is shown explicitly.
+This branch changes over time. The installed version identifies itself as 0.2.0rc3,
+but RC3 release assets have not been published. RC2 is the latest published wheel
+and lacks the newer agent/evaluation and terminal improvements. Use the integration
+checkout to test those improvements; do not use an unpublished RC3 wheel URL.
+
 Supported systems are macOS and Linux, including WSL. Native Windows is not supported.
-
-To reproduce the qualified RC1 Git revision directly:
-
-```sh
-uv tool install --python 3.11 "git+https://github.com/williamjblair/formal-conjectures.git@9c8f6c25de7d73d8f285ece597ee6a727cd81fdd"
-```
 
 For local development, run `uv tool install --editable .` inside this repository.
 If `conjectures` is not found, run `uv tool update-shell` and restart your shell.
@@ -54,10 +50,30 @@ is available there. Release artifacts and SHA256SUMS identify each build.
 
 ## Catalog and provenance
 
-Default browsing requires the full native catalog published by FC #5375. Until
+Default browsing uses the upstream FC site and requires the full native catalog published by FC #5375. Until
 that PR merges and its full site build deploys, `find` and `show` report
 `catalog_not_published` with exit code 4. They do not use the older website
-projection, a fork mirror, or a local checkout as an implicit substitute.
+projection, a fork, or a local checkout as an implicit substitute.
+
+To browse a deployed fork explicitly, select its catalog once for this checkout:
+
+```sh
+conjectures setup catalog --url https://williamjblair.github.io/formal-conjectures/data/conjectures.json
+conjectures show Erdos/92
+```
+
+Add `--global` to save the selection for browsing outside a checkout. Workspace
+configuration takes precedence. For one command, pass `--catalog-url URL` to
+`find`, `show`, `init`, `eval export`, or `doctor`. The URL must use HTTPS and end
+in `/conjectures.json`; its sibling `catalog-manifest.json` must validate. Setup
+requires a fresh valid response and preserves configuration on failure. A local
+`--catalog FILE` overrides configured defaults; it cannot be combined with an
+explicit `--catalog-url`.
+
+Each endpoint has its own validated cache and related-work feed. The displayed
+repository/revision comes from the catalog's provenance, not the checkout. A
+transport failure may expose an explicitly labelled stale snapshot of the same
+source. Invalid catalog bytes or manifests fail closed, even if an older cache exists.
 
 After deployment, the CLI verifies the catalog against its published descriptor
 and caches it in the user cache for 24 hours. The same cache works inside and
@@ -216,9 +232,21 @@ override user values. Other settings and resource limits are preserved. Use your
 existing `gh` authentication. `CONJECTURES_GH` may name an executable wrapper, not a
 shell command string. Obsolete backend/model settings are ignored with a notice.
 
-Human-readable output is the default. Use `--json` for agents/scripts; output stays
+Human-readable output is the default. Interactive terminals use width-aware tables,
+Lean syntax highlighting and restrained color. `show` prints shared module sources
+once and keeps variants distinct. Long operations show their current stage and
+elapsed time; completed stages do not imply a mathematical pass. Redirected progress
+is append-only on stderr. Retained logs and typed results remain authoritative.
+
+- `--quiet` / `-q` suppresses progress while preserving requested results and errors.
+- `--verbose` / `-v` shows diagnostic commands and extra result details.
+- `--color auto|always|never` selects terminal color; `NO_COLOR` disables it.
+- `--pager` pages long human output only with an interactive terminal and input.
+- Output options work anywhere before `--`; witness arguments after it are unchanged.
+
+Use `--json` for agents/scripts; output stays
 on stdout and progress stays on stderr. JSON retains the recorded outcome and adds
-`command_status` and `exit_code`. Plain output contains no terminal escapes.
+`command_status` and `exit_code`. Default redirected output contains no terminal escapes. JSON is never styled or paged.
 
 | Exit | Meaning |
 | --- | --- |

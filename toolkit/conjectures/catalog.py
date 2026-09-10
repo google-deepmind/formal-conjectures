@@ -4,7 +4,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit, urlunsplit
 from . import report as rr
 from . import catalog_data
 from .metadata import metadata_rows
@@ -43,16 +43,40 @@ def result(data, origin, state):
     return {**data,'coverage_gaps':gaps,'catalog_origin':{**origin,'state':state}}
 
 
-def load(root, path=None, *, refresh=False, offline=False):
+def catalog_url(value):
+    if not isinstance(value,str):raise Failure('invalid_catalog_url','Catalog URL must be an HTTPS URL ending in /conjectures.json.')
+    try:
+        parts=urlsplit(value)
+        if (parts.scheme!='https' or not parts.hostname or parts.username is not None or parts.password is not None
+                or parts.query or parts.fragment or not parts.path.endswith('/conjectures.json')
+                or any(ord(c)<33 for c in value)):
+            raise ValueError()
+        parts.port  # Validate malformed port syntax before any request.
+    except ValueError:
+        raise Failure('invalid_catalog_url','Use an HTTPS URL ending in /conjectures.json, without credentials, query or fragment.')
+    return urlunsplit((parts.scheme,parts.netloc.lower(),parts.path,'',''))
+
+
+def cache_path(url):
+    # Retain the already validated upstream cache; fork snapshots never share it.
+    return user_cache()/('catalog-cache.json' if url==NATIVE_URL else 'catalog-'+rr.digest(url.encode())+'.json')
+
+
+def load(root, path=None, *, refresh=False, offline=False, url=None):
     if path:
+        if url:raise Failure('invalid_arguments','Choose --catalog FILE or --catalog-url URL, not both.')
         path=Path(path)
         if not path.is_file():raise Failure('catalog_missing','Catalog file does not exist: '+str(path))
         return result(rr.read_json(path),{'path':str(path)},'explicit')
-    cache=user_cache()/'catalog-cache.json'
+    from .core import config
+    url=catalog_url(url or config(root).get('catalog_url') or NATIVE_URL)
+    manifest_url=urljoin(url,'catalog-manifest.json')
+    cache=cache_path(url)
     retained=None
     if cache.is_file():
         try:
             envelope=rr.read_json(cache)
+            if envelope['origin'].get('url')!=url or envelope['origin'].get('manifest_url')!=manifest_url:raise ValueError('Cached catalog source differs')
             data=catalog_data.verify(envelope['descriptor'],envelope['raw'].encode())
             retained=(data,envelope['origin'])
             age=(datetime.now(timezone.utc)-datetime.fromisoformat(envelope['origin']['retrieved_at'])).total_seconds()
@@ -61,14 +85,16 @@ def load(root, path=None, *, refresh=False, offline=False):
         except (ValueError,KeyError,TypeError):pass
     if offline:
         if retained:return result(*retained,'offline')
-        raise Failure('catalog_unavailable','No cached catalog. Run conjectures find erdos/92 while online first.',4)
+        raise Failure('catalog_unavailable','No cached catalog for '+url+'. Retry without --offline.',4)
     try:
-        descriptor=catalog_data.parse(read_url(MANIFEST_URL,1024*1024))
+        from .ui import stage
+        stage('Downloading and validating catalog from '+url)
+        descriptor=catalog_data.parse(read_url(manifest_url,1024*1024))
         # The descriptor can only select the sibling catalog, never an arbitrary URL.
         if descriptor.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
-        raw=read_url(urljoin(MANIFEST_URL,'conjectures.json'))
+        raw=read_url(url)
         data=catalog_data.verify(descriptor,raw)
-        origin={'url':NATIVE_URL,'manifest_url':MANIFEST_URL,'retrieved_at':now(),'sha256':rr.digest(raw)}
+        origin={'url':url,'manifest_url':manifest_url,'retrieved_at':now(),'sha256':rr.digest(raw)}
         save(cache,{'schema_version':'fc.catalog-cache.v1','descriptor':descriptor,'raw':raw.decode(),'origin':origin})
         return result(data,origin,'fresh')
     except urllib.error.HTTPError as error:
@@ -76,8 +102,10 @@ def load(root, path=None, *, refresh=False, offline=False):
             if retained:return result(*retained,'stale')
             raise Failure('catalog_unavailable',f'Catalog download failed (HTTP {error.code}). Retry with --refresh.',4) from error
         if retained:return result(*retained,'stale')
-        raise Failure('catalog_not_published','The full catalog is not published yet. Browsing requires FC #5375 to merge and deploy. Use --catalog FILE only for an explicitly generated native extract.',4) from error
-    except (OSError,ValueError,TypeError) as error:
+        raise Failure('catalog_not_published','No published catalog at '+url+'. '+('Upstream browsing requires FC #5375 to merge and deploy. ' if url==NATIVE_URL else 'Check that this site deployed its catalog and sibling catalog-manifest.json. ')+'Select a deployed fork explicitly with --catalog-url URL, or use --catalog FILE for a native extract.',4) from error
+    except (ValueError,TypeError,KeyError) as error:
+        raise Failure('catalog_invalid','Catalog validation failed for '+url+': '+str(error)+'. No outcome accepted; check the published manifest and catalog.',4) from error
+    except OSError as error:
         if retained:return result(*retained,'stale')
         raise Failure('catalog_unavailable','Cannot obtain a validated catalog: '+str(error)+'. Retry with --refresh.',4) from error
 

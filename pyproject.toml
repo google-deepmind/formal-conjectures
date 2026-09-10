@@ -9,7 +9,7 @@ description = "Review contributions and verify exact Formal Conjectures targets"
 readme = "toolkit/README.md"
 license = "Apache-2.0"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["rich>=14.1,<15"]
 
 [project.scripts]
 conjectures = "conjectures.cli:main"
