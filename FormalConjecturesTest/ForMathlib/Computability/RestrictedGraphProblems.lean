@@ -158,7 +158,7 @@ def completeFourLabels : (toGraph completeFour).EdgeLabeling (Fin 3) :=
     (by intros; simp only [Nat.add_comm])
 
 theorem completeFour_edgeColorable : CubicEdgeThreeColorable completeFour :=
-  ⟨by decide, completeFourLabels, by decide⟩
+  ⟨by decide, ⟨completeFourLabels.toLineGraphColoring (by decide)⟩⟩
 example : ¬ CubicEdgeThreeColorable fourWithIsolate := by decide
 example : ¬ CubicEdgeThreeColorable [[true]] := by decide
 example : ¬ CubicEdgeThreeColorable [[false, true], [false, false]] := by decide
@@ -166,19 +166,25 @@ example : ¬ CubicEdgeThreeColorable [[false, true], [false, false]] := by decid
 /-- A fixed constant labeling fails properness on incident edges. -/
 def constantLabels : (toGraph completeFour).EdgeLabeling (Fin 3) := fun _ ↦ 0
 
-example : ¬ constantLabels.IsProper := by decide
+example : ¬ ∀ e f, (toGraph completeFour).lineGraph.Adj e f →
+    constantLabels e ≠ constantLabels f := by
+  intro h
+  let v0 : Fin completeFour.length := ⟨0, by decide⟩
+  let v1 : Fin completeFour.length := ⟨1, by decide⟩
+  let v2 : Fin completeFour.length := ⟨2, by decide⟩
+  exact h ⟨s(v0, v1), by decide⟩ ⟨s(v0, v2), by decide⟩ (by decide) rfl
 theorem triangle_not_edgeTwoColorable :
-    ¬ ∃ c : (toGraph triangle).EdgeLabeling (Fin 2), c.IsProper := by
-  rintro ⟨c, hc⟩
-  have h := c.isProper_iff.mp hc
+    ¬ (toGraph triangle).lineGraph.Colorable 2 := by
+  rintro ⟨c⟩
   let v0 : Fin triangle.length := ⟨0, by decide⟩
   let v1 : Fin triangle.length := ⟨1, by decide⟩
   let v2 : Fin triangle.length := ⟨2, by decide⟩
-  have h0 := h v0 v1 v2 (by decide) (by decide) (by decide)
-  have h1 := h v1 v0 v2 (by decide) (by decide) (by decide)
-  have h2 := h v2 v0 v1 (by decide) (by decide) (by decide)
-  rw [c.get_comm v0 v1] at h1
-  rw [c.get_comm v0 v2, c.get_comm v1 v2] at h2
+  let e01 : (toGraph triangle).edgeSet := ⟨s(v0, v1), by decide⟩
+  let e02 : (toGraph triangle).edgeSet := ⟨s(v0, v2), by decide⟩
+  let e12 : (toGraph triangle).edgeSet := ⟨s(v1, v2), by decide⟩
+  have h0 : c e01 ≠ c e02 := c.valid (by decide)
+  have h1 : c e01 ≠ c e12 := c.valid (by decide)
+  have h2 : c e02 ≠ c e12 := c.valid (by decide)
   omega
 
 /-- Three distinct labels on the three edges of a triangle. -/
@@ -187,8 +193,8 @@ def triangleLabels : (toGraph triangle).EdgeLabeling (Fin 3) :=
     (by intros; simp only [Nat.add_comm])
 
 theorem triangle_edgeThreeColorable :
-    ∃ c : (toGraph triangle).EdgeLabeling (Fin 3), c.IsProper :=
-  ⟨triangleLabels, by decide⟩
+    (toGraph triangle).lineGraph.Colorable 3 :=
+  ⟨triangleLabels.toLineGraphColoring (by decide)⟩
 example (c : (toGraph completeFour).EdgeLabeling (Fin 3)) :
     c.get ⟨0, by decide⟩ ⟨1, by decide⟩ (by decide) =
       c.get ⟨1, by decide⟩ ⟨0, by decide⟩ (by decide) :=

@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Computability.MatrixGraphProblems
-public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LineGraph
 public import Mathlib.Combinatorics.SimpleGraph.Matching
 
 /-!
@@ -43,34 +43,6 @@ Finite decidability is by exhaustive search, not an efficient algorithm.
 -/
 
 @[expose] public section
-
-namespace SimpleGraph.EdgeLabeling
-
-variable {V K : Type*} {G : SimpleGraph V}
-
-/-- Incident edges have distinct labels. Edges are unordered in Mathlib's EdgeLabeling. -/
-def IsProper (c : G.EdgeLabeling K) : Prop :=
-  ∀ v, Function.Injective (fun w : G.neighborSet v ↦ c.get v w.1 w.2)
-
-instance [Fintype V] [DecidableEq V] [DecidableRel G.Adj] [DecidableEq K]
-    (c : G.EdgeLabeling K) :
-    Decidable c.IsProper := by
-  unfold IsProper Function.Injective
-  infer_instance
-
-/-- Properness is exactly inequality of labels on distinct edges at each vertex. -/
-theorem isProper_iff (c : G.EdgeLabeling K) :
-    c.IsProper ↔ ∀ v w z (hw : G.Adj v w) (hz : G.Adj v z), w ≠ z →
-      c.get v w hw ≠ c.get v z hz := by
-  constructor
-  · intro h v w z hw hz hne he
-    exact hne (congrArg Subtype.val (h v (a₁ := ⟨w, hw⟩) (a₂ := ⟨z, hz⟩) he))
-  · intro h v w z he
-    apply Subtype.ext
-    by_contra hne
-    exact h v w.1 z.1 w.2 z.2 hne he
-
-end SimpleGraph.EdgeLabeling
 
 namespace Computability.MatrixGraph
 
@@ -105,9 +77,9 @@ def DegreeFourThreeColorable (a : Code) : Prop :=
 def SubcubicVertexCover (input : Code × ℕ) : Prop :=
   DegreeAtMost input.1 3 ∧ VertexCover input
 
-/-- A cubic graph whose edges admit a proper coloring with three colors. -/
+/-- A cubic graph with a three-colorable line graph: incident edges receive distinct colors. -/
 def CubicEdgeThreeColorable (a : Code) : Prop :=
-  CubicGraph a ∧ ∃ c : (toGraph a).EdgeLabeling (Fin 3), c.IsProper
+  CubicGraph a ∧ (toGraph a).lineGraph.Colorable 3
 
 /-- A cubic graph with a spanning cycle of length at least three. -/
 def CubicHamiltonian (a : Code) : Prop :=
