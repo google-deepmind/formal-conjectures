@@ -48,12 +48,15 @@ theorem Invariant_subspace_problem [InnerProductSpace ℂ H] [TopologicalSpace.S
   sorry
 
 /--
-Every (bounded) linear operator `T : H → H` on a finite-dimensional linear space `H` of dimension
+Every (bounded) linear operator `T : H → H` on a finite-dimensional normed space `H` of dimension
 at least 2 has a non-trivial (closed) `T`-invariant subspace. This can be solved using the Jordan
 normal form, which is
-[not yet in mathlib](https://leanprover-community.github.io/undergrad_todo.html). -/
+[not yet in mathlib](https://leanprover-community.github.io/undergrad_todo.html).
+
+`H` is a complex normed space: with a bare `Module ℂ H` unrelated to the norm, finite-dimensional
+subspaces need not be closed, and the statement fails already in complex dimension `2`. -/
 @[category research solved, AMS 47]
-theorem Invariant_subspace_problem_finite_dimensional [Module ℂ H] (h : FiniteDimensional ℂ H)
+theorem Invariant_subspace_problem_finite_dimensional [NormedSpace ℂ H] (h : FiniteDimensional ℂ H)
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) : Nonempty (ClosedInvariantSubspace T) := by
   sorry
 
