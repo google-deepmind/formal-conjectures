@@ -124,6 +124,22 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
   sorry
 
 /--
+The same folklore result with the growth hypothesis stated as an eventual lower bound
+$a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
+`erdos_263.variants.super_doubly_exponential`, this form also covers sequences such as
+$a_n = 2^{(n+1)!}$, for which the ratio $a_{n+1} / a_n^{2+\varepsilon}$ tends to $+\infty$ and the
+real `liminf` defaults to $0$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_263.variants.super_doubly_exponential_eventual (a : ℕ → ℕ)
+    (ha : ∀ n : ℕ, a n > 0)
+    (ha' : StrictMono a)
+    (ha'' : ∃ ε c : ℝ, 0 < ε ∧ 0 < c ∧
+      ∀ᶠ n in atTop, c * (a n : ℝ) ^ (2 + ε) ≤ (a (n + 1) : ℝ)) :
+    IsIrrationalitySequence a := by
+  sorry
+
+/--
 Koizumi [Ko25] showed that $a_n = \lfloor \alpha^{2^n} \rfloor$ is an irrationality sequence
 for all but countably many $\alpha > 1$, in the nondecreasing sense `IsWeakIrrationalitySequence`.
 The strictly increasing predicate would fail on the whole interval $1 < \alpha < 4/3$, where
