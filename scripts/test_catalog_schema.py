@@ -1,4 +1,5 @@
 """The public JSON Schemas describe actual publication bytes, not another model."""
+import copy
 import json
 from pathlib import Path
 import unittest
@@ -33,3 +34,26 @@ class CatalogSchemaTests(unittest.TestCase):
         value={'schema_version':'fc.website-rendering.v1','catalog_sha256':'a'*64,
                'module':'FormalConjectures.Example','moduleDocs':{},'constLinks':{},'contributors':[]}
         Draft202012Validator(schema).validate(value)
+
+    def test_runtime_readers_reject_malformed_publication_fields(self):
+        fixtures=SCHEMAS.parents[3]/'site/tests/fixtures'
+        data=json.loads((fixtures/'catalog.json').read_bytes())
+        validator=Draft202012Validator(json.loads((SCHEMAS/'catalog-v2.schema.json').read_bytes()))
+        validator.validate(data);catalog_data.complete(data)
+        for change in json.loads((fixtures/'catalog-invalid.json').read_bytes()):
+            with self.subTest(change=change):
+                bad=copy.deepcopy(data);parent=bad
+                for key in change['path'][:-1]:parent=parent[key]
+                key=change['path'][-1]
+                if change.get('remove'):del parent[key]
+                else:parent[key]=change['value']
+                self.assertTrue(list(validator.iter_errors(bad)))
+                raw=catalog_data.encode(bad)
+                descriptor=catalog_data.manifest(data,raw)
+                with self.assertRaises(ValueError):catalog_data.verify(descriptor,raw)
+
+    def test_module_index_schema(self):
+        schema=json.loads((SCHEMAS/'website-modules-v1.schema.json').read_bytes())
+        Draft202012Validator.check_schema(schema)
+        Draft202012Validator(schema).validate({'schema_version':'fc.website-modules.v1','catalog_sha256':'a'*64,
+            'modules':[{'name':'FormalConjecturesUtil.Example','url':'/FormalConjecturesUtil/Example/'}]})

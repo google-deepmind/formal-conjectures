@@ -5,15 +5,9 @@ const vm = require('node:vm');
 const crypto = require('node:crypto');
 const catalog = require('../src/js/catalog.js');
 
-function fixture() {
-  return {schemaVersion:2,problems:[{theorem:'Example.test',module:'FormalConjectures.Example',
-    category:'research solved',subjects:['11'],statement:'True',docstring:'A statement.',
-    formalProofs:[{kind:'lean4',link:'https://example.org/proof',conditions:['Example.assumption']}],
-    answerKinds:['proposition'],hasSorryFreeProof:false}],moduleDocstrings:{'FormalConjectures.Example':'Source'},
-    provenance:{source:{repository:'owner/fc',commit:'a'.repeat(40)}}};
-}
-function client({corrupt=false, wrongModule=false}={}) {
-  const data = fixture();
+function fixture() { return structuredClone(require('./fixtures/catalog.json')); }
+function client({corrupt=false, wrongModule=false, mutate=()=>{}}={}) {
+  const data = fixture(); mutate(data);
   const raw = Buffer.from(JSON.stringify(data));
   const digest = crypto.createHash('sha256').update(raw).digest('hex');
   const descriptor = {schema_version:'fc.catalog.v1',catalog:'conjectures.json',sha256:digest,
@@ -99,4 +93,15 @@ test('browse cards and sibling links navigate by exact quoted names',()=>{
   theorem.context.renderDetail(rows[0],rows,{moduleDocs:{},constLinks:{}},[]);
   const href=theorem.element('theorem-detail').innerHTML.match(/class="sibling-item__name" href="([^"]+)"/)[1];
   assert.equal(new URL(href,'https://example.org').searchParams.get('name'),rows[1].theorem);
+});
+
+test('browser rejects malformed native fields before assembling cards', async()=>{
+  for (const change of require('./fixtures/catalog-invalid.json')) {
+    const mutate = data => {
+      const parent = change.path.slice(0,-1).reduce((v,k)=>v[k],data);
+      const key = change.path.at(-1);
+      if (change.remove) delete parent[key]; else parent[key] = change.value;
+    };
+    await assert.rejects(client({mutate}).fc.loadData(), /Invalid or missing catalog/, JSON.stringify(change));
+  }
 });
