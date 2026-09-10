@@ -16,83 +16,88 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Five string and automata polynomial-time lower-bound formulations
+# Common strings, DFA intersection and DFA inference
 
-Primary reference: Garey and Johnson, *Computers and Intractability* (Freeman, 1979),
-SR8–SR10 (p. 228), AL6 (p. 266), and AL8 (p. 267).
-https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
-
-Research background:
+*References:*
+- Garey and Johnson, *Computers and Intractability* (Freeman, 1979),
+  SR8–SR10 (p. 228), AL6 (p. 266), and AL8 (p. 267).
+  https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
 - Maier, *The Complexity of Some Problems on Subsequences and Supersequences*,
-  JACM 25(2) (1978), 322–336: §1 and Theorems 1 and 4 give the general-alphabet
-  LCS and SCS decision problems and their NP-completeness.
+  JACM 25(2) (1978), 322–336, §1 and Theorems 1 and 4.
   https://doi.org/10.1145/322063.322075
 - Gallant, Maier, and Storer, *On Finding Minimal Length Superstrings*,
-  JCSS 20(1) (1980), 50–58, studies substring containment and its complexity.
-  SR9 cites the earlier Maier–Storer 1977 report.
+  JCSS 20(1) (1980), 50–58.
   https://doi.org/10.1016/0022-0000(80)90004-5
 - Kozen, *Lower Bounds for Natural Proof Systems*, FOCS 1977, 254–266:
-  Definition 3.2.2 and Lemma 3.2.3, pp. 261–262, establish PSPACE-completeness
-  of intersection nonemptiness for an input-sized family of DFAs.
+  Definition 3.2.2 and Lemma 3.2.3, pp. 261–262.
   https://www.cs.cornell.edu/kozen/Papers/LowerBounds.pdf
 - Gold, *Complexity of Automaton Identification from Given Data*,
   Information and Control 37(3) (1978), 302–320.
-  AL8 cites a 1974 unpublished manuscript with the same title (bibliography p. 301).
-  Its Mealy-machine model must not be conflated with accepting-state DFAs.
   https://doi.org/10.1016/S0019-9958(78)90562-4
 - Lingg, de Oliveira Oliveira, and Wolf, *Learning from Positive and Negative
-  Examples: New Proof for Binary Alphabets*, IPL 183 (2024), 106427:
-  Definition 1 and Theorem 2 give the accepting-state DFA problem and its hardness;
-  §4 explains the distinction from Gold's model. The preprint is arXiv:2206.10025v1.
+  Examples: New Proof for Binary Alphabets*, IPL 183 (2024), 106427,
+  Definition 1, Theorem 2, and §4; preprint arXiv:2206.10025v1.
   https://doi.org/10.1016/j.ipl.2023.106427
   https://arxiv.org/abs/2206.10025v1
 - Chalermsook, Laekhanukit, and Nanongkai, *Pre-Reduction Graph Products:
   Hardnesses of Properly Learning DFAs and Approximating EDP on DAGs* (2014),
-  §1.2.1 and §§3.1–3.2, connect minimum consistent DFAs to learning and approximation.
+  §1.2.1 and §§3.1–3.2.
   https://eprints.cs.univie.ac.at/4105/1/main_focs2014_dfa.pdf
-
-All five statements use binary-encoded finite inputs and the existing TM2 model.
-The string collection and automaton family sizes are part of the input.
-Subsequences allow arbitrary deletions; substrings must be contiguous.
-Inference asks for a K-state DFA, allowing unreachable states and requiring
-agreement only on the supplied positive and negative samples.
-
-The four NP-complete problems motivate P-versus-NP formulations. DFA intersection
-is PSPACE-complete: its conjectured lower bound must not be described as an
-equivalence to $P \ne NP$. No completeness reductions or complexity-class
-equivalences are formally proved here.
 -/
 
 namespace GareyJohnson1979
 
 open ComplexityTheory Computability.StringProblems Computability.AutomataProblems
 
-/-- No polynomial-time decider for SR8: a common supersequence of length at most
-a positive input threshold, over an input finite alphabet. -/
+/-- **SHORTEST COMMON SUPERSEQUENCE** (SR8, p. 228; Maier, Theorem 4).
+Input: a finite alphabet size, an arbitrary-length list of words using in-range symbol
+indices, and a positive length bound $K$, all binary encoded. Property: some word of length
+at most $K$ contains every input word as a subsequence, allowing arbitrary deletions.
+This problem is NP-complete, so the nonexistence of a deterministic polynomial-time decider
+is equivalent to $P \ne NP$. -/
 @[category research open, AMS 68]
 theorem commonSupersequence_not_polytime : ¬ HasPolyTimeDecider CommonSupersequence := by
   sorry
 
-/-- No polynomial-time decider for SR9: a string of length at most a positive
-input threshold containing every input string as a contiguous substring. -/
+/-- **SHORTEST COMMON SUPERSTRING** (SR9, p. 228). Input: a finite alphabet size,
+an arbitrary-length list of words using in-range symbol indices, and a positive length
+bound $K$, all binary encoded. Property: some word of length at most $K$ contains every
+input word as a contiguous substring; overlapping occurrences are allowed. This problem
+is NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 68]
 theorem commonSuperstring_not_polytime : ¬ HasPolyTimeDecider CommonSuperstring := by
   sorry
 
-/-- No polynomial-time decider for SR10: a subsequence common to all input strings
-whose length is at least a positive input threshold. -/
+/-- **LONGEST COMMON SUBSEQUENCE** (SR10, p. 228; Maier, Theorem 1).
+Input: a finite alphabet size, an arbitrary-length list of words using in-range symbol
+indices, and a positive threshold $K$, all binary encoded. Property: a word of length
+at least $K$ is a subsequence of every input word. The represented length-$K$ witness is
+equivalent by truncation. This problem is NP-complete, so the nonexistence of a deterministic
+polynomial-time decider is equivalent to $P \ne NP$. -/
 @[category research open, AMS 68]
 theorem commonSubsequence_not_polytime : ¬ HasPolyTimeDecider CommonSubsequence := by
   sorry
 
-/-- No polynomial-time decider for AL6: nonemptiness of the intersection of the
-languages accepted by an input-sized family of DFAs over a common finite alphabet. -/
+/-- **FINITE STATE AUTOMATA INTERSECTION** (AL6, p. 266; Kozen, Lemma 3.2.3).
+Input: a common finite alphabet size and an input-sized list of total DFA transition
+tables, initial states and accepting flags, all binary encoded. Property: one word is
+accepted by every DFA. No polynomial word-length bound is imposed; an empty family accepts.
+This problem is PSPACE-complete, so the nonexistence of a deterministic polynomial-time
+decider is equivalent to $P\ne\mathrm{PSPACE}$. It follows from $P\ne NP$; the converse
+implication is not known. -/
 @[category research open, AMS 68]
 theorem dfaIntersection_not_polytime : ¬ HasPolyTimeDecider DFAIntersection := by
   sorry
 
-/-- No polynomial-time decider for AL8: existence of a K-state DFA accepting all
-positive samples and rejecting all negative samples, for positive input K. -/
+/-- **MINIMUM INFERRED FINITE STATE AUTOMATON** (AL8, p. 267;
+Lingg–de Oliveira Oliveira–Wolf, Definition 1 and Theorem 2). Input: a finite alphabet size,
+lists of positive and negative sample words with in-range symbol indices, and a positive
+state bound $K$, all binary encoded. Property: a total $K$-state DFA accepts all positive
+samples and rejects all negative samples. Unreachable states are permitted, making exactly
+$K$ equivalent to at most $K$; other words are unconstrained. This accepting-state problem
+is NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 68]
 theorem inferredDFA_not_polytime : ¬ HasPolyTimeDecider InferredDFA := by
   sorry
