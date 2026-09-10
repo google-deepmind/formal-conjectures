@@ -13,6 +13,9 @@ def check(wheel):
     with zipfile.ZipFile(wheel) as archive:
         names=archive.namelist()
         assert 'conjectures/resources/review/SKILL.md' in names
+        assert 'conjectures/resources/agent-skill/SKILL.md' in names
+        if 'conjectures/evaluation.py' in names:
+            assert 'conjectures/resources/schemas/proof-suite-v1.schema.json' in names
         assert 'conjectures/resources/review.Dockerfile' in names
         for schema in ('catalog-v2', 'catalog-manifest-v1', 'website-rendering-v1'):
             assert f'conjectures/resources/schemas/{schema}.schema.json' in names
@@ -30,7 +33,7 @@ def check(wheel):
         python=root/'venv/bin/python';exe=root/'venv/bin/conjectures'
         subprocess.run(['uv','pip','install','--python',str(python),str(wheel)],check=True,env=env)
         catalog=root/'catalog.json';catalog.write_text(json.dumps({'schemaVersion':2,'problems':[{'theorem':'Example.self','module':'FormalConjectures.Example','statement':'∀ n : Nat, n = n'}]}))
-        for args in [[],['--help'],['help','review','prepare'],['--version'],['doctor','--json'],['find','Example','--catalog',str(catalog),'--json'],['show','Example.self','--catalog',str(catalog)]]:
+        for args in [[],['--help'],['help','review','prepare'],['--version'],['doctor','--json'],['skill','path','--json'],['skill','install','--dir',str(root/'agent skills'),'--json'],['find','Example','--catalog',str(catalog),'--json'],['show','Example.self','--catalog',str(catalog)]]:
             result=subprocess.run([str(exe),*args],cwd=root,env=env,capture_output=True,text=True)
             assert result.returncode==0,(args,result.stdout,result.stderr)
             if '--json' in args:assert json.loads(result.stdout)['command_status']=='success'
