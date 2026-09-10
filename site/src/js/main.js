@@ -69,12 +69,8 @@ async function loadData() {
     const bytes = await response.arrayBuffer();
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2, '0')).join('');
     if (bytes.byteLength !== descriptor.bytes || digest !== descriptor.sha256) throw new Error('Catalog changed during download. Reload to obtain one consistent snapshot.');
-    const catalog = JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes));
-    if (catalog.schemaVersion !== 2 || !Array.isArray(catalog.problems) ||
-        catalog.problems.length !== descriptor.problem_count ||
-        catalog.problems.some(entry => typeof entry.statement !== 'string' || !entry.statement.trim()) ||
-        !/^[\w.-]+\/[\w.-]+$/.test(catalog.provenance?.source?.repository || '') ||
-        !/^[a-f0-9]{40}$/.test(catalog.provenance?.source?.commit || '') ||
+    const catalog = FCCatalog.validateCatalog(JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes)));
+    if (catalog.problems.length !== descriptor.problem_count ||
         !FCCatalog.sameJSON(catalog.provenance, descriptor.provenance)) throw new Error('Catalog provenance mismatch');
     return {conjectures:catalog.problems.map(entry => FCCatalog.processEntry(entry, catalog.provenance.source)),
       catalogProvenance:catalog.provenance, catalogDigest:descriptor.sha256,
