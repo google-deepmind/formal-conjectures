@@ -19,7 +19,6 @@ public import FormalConjecturesForMathlib.Computability.SearchProblems
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Mathlib.Tactic
 
 /-!
 # Number-theoretic decision and search problems

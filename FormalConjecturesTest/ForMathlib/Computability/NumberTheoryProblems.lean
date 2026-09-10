@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 import FormalConjecturesForMathlib.Computability.NumberTheoryProblems
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.Prime
 
 /-!
 # Number-theoretic boundary and semantic tests
