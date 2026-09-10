@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const {readCatalog, validateModuleIndex} = require('../catalog.cjs');
+const {readSnapshot, validateModuleIndex} = require('../catalog.cjs');
 function fixture() { return structuredClone(require('./fixtures/catalog.json')); }
 
 test('site preserves the native snapshot and rejects partial or corrupted data', () => {
@@ -17,11 +17,11 @@ test('site preserves the native snapshot and rejects partial or corrupted data',
         bytes:Buffer.byteLength(raw),sha256:crypto.createHash('sha256').update(raw).digest('hex'),problem_count:1,provenance:data.provenance}));
     }
     const data = fixture();
-    write(data);assert.deepEqual(readCatalog(directory),data);
+    write(data);assert.deepEqual(readSnapshot(directory).catalog,data);
     fs.appendFileSync(path.join(directory,'conjectures.json'),' ');
-    assert.throws(() => readCatalog(directory),/publication descriptor/);
+    assert.throws(() => readSnapshot(directory),/publication descriptor/);
     delete data.problems[0].statement;write(data);
-    assert.throws(() => readCatalog(directory),/catalog statement/);
+    assert.throws(() => readSnapshot(directory),/catalog statement/);
   } finally { fs.rmSync(directory,{recursive:true,force:true}); }
 });
 
@@ -93,7 +93,7 @@ test('Node rejects all malformed publication fields before site assembly',()=>{
       fs.writeFileSync(path.join(directory,'conjectures.json'),raw);
       fs.writeFileSync(path.join(directory,'catalog-manifest.json'),JSON.stringify({schema_version:'fc.catalog.v1',catalog:'conjectures.json',
         bytes:Buffer.byteLength(raw),sha256:crypto.createHash('sha256').update(raw).digest('hex'),problem_count:1,provenance:data.provenance}));
-      assert.throws(()=>readCatalog(directory),/Invalid or missing catalog/,JSON.stringify(change));
+      assert.throws(()=>readSnapshot(directory),/Invalid or missing catalog/,JSON.stringify(change));
     }
   } finally {fs.rmSync(directory,{recursive:true,force:true});}
 });
