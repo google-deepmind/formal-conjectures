@@ -101,13 +101,12 @@ spectator.
 *References:*
  - A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
    forms, representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33 (1979), §4
- - [K. Buzzard, *Automorphic forms for GL2 over
-   Q*](https://www.ma.imperial.ac.uk/~buzzard/maths/research/notes/automorphic_forms_for_gl2_over_Q.pdf),
-   §1
- - [J. R. Getz and H. Hahn, *An Introduction to Automorphic Representations*, GTM 300
-   (2024)](https://sites.duke.edu/jgetz/files/2022/04/Graduate_Text.pdf), §6.2 and §6.3;
-   in the numbering of that text, Definitions 6.1 (moderate growth), 6.2 (`Z(𝔤)`-finiteness),
-   6.4 (adelic moderate growth) and 6.5 (adelic automorphic form)
+ - K. Buzzard, *Automorphic forms for GL2 over Q*, §1.
+   https://www.ma.imperial.ac.uk/~buzzard/maths/research/notes/automorphic_forms_for_gl2_over_Q.pdf
+ - J. R. Getz and H. Hahn, *An Introduction to Automorphic Representations*, GTM 300 (2024),
+   §6.2 and §6.3; in the numbering of that text, Definitions 6.1 (moderate growth),
+   6.2 (`Z(𝔤)`-finiteness), 6.4 (adelic moderate growth) and 6.5 (adelic automorphic form).
+   https://sites.duke.edu/jgetz/files/2022/04/Graduate_Text.pdf
 -/
 
 namespace AutomorphicForm
@@ -133,11 +132,9 @@ variable {K k f}
 
 /-- A function invariant under right translation by `K` is `K`-finite. -/
 lemma isKFinite_of_rightInvariant (h : ∀ (x : G) (u : K), f (x * (u : G)) = f x) :
-    IsKFinite K k f := by
-  have hsub : (Set.range fun u : K => fun x => f (x * (u : G))) ⊆ {f} := by
-    rintro _ ⟨u, rfl⟩
-    exact funext fun x => h x u
-  exact FiniteDimensional.span_of_finite k ((Set.finite_singleton f).subset hsub)
+    IsKFinite K k f :=
+  FiniteDimensional.span_of_finite k <| (Set.finite_singleton f).subset <|
+    Set.range_subset_iff.mpr fun u => funext fun x => h x u
 
 /-- If `K` is finite then every function is `K`-finite. -/
 lemma isKFinite_of_finite [Finite K] : IsKFinite K k f :=
@@ -146,25 +143,20 @@ lemma isKFinite_of_finite [Finite K] : IsKFinite K k f :=
 /-- `K`-finiteness is closed under addition: the translate span of `f + g` sits inside the sum
 of the translate spans. -/
 protected lemma IsKFinite.add {f g : G → k} (hf : IsKFinite K k f) (hg : IsKFinite K k g) :
-    IsKFinite K k (f + g) := by
-  have hle : rightTranslateSpan K k (f + g)
-      ≤ rightTranslateSpan K k f ⊔ rightTranslateSpan K k g := by
-    rw [rightTranslateSpan, Submodule.span_le]
-    rintro _ ⟨u, rfl⟩
-    exact add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨u, rfl⟩))
-      (Submodule.mem_sup_right (Submodule.subset_span ⟨u, rfl⟩))
-  have : FiniteDimensional k (rightTranslateSpan K k f) := hf
-  have : FiniteDimensional k (rightTranslateSpan K k g) := hg
-  exact Submodule.finiteDimensional_of_le hle
+    IsKFinite K k (f + g) :=
+  haveI : FiniteDimensional k (rightTranslateSpan K k f) := hf
+  haveI : FiniteDimensional k (rightTranslateSpan K k g) := hg
+  Submodule.finiteDimensional_of_le
+    (S₂ := rightTranslateSpan K k f ⊔ rightTranslateSpan K k g) <|
+    Submodule.span_le.mpr <| Set.range_subset_iff.mpr fun u =>
+      add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨u, rfl⟩))
+        (Submodule.mem_sup_right (Submodule.subset_span ⟨u, rfl⟩))
 
 protected lemma IsKFinite.const_smul {f : G → k} (hf : IsKFinite K k f) (c : k) :
-    IsKFinite K k (c • f) := by
-  have hle : rightTranslateSpan K k (c • f) ≤ rightTranslateSpan K k f := by
-    rw [rightTranslateSpan, Submodule.span_le]
-    rintro _ ⟨u, rfl⟩
-    exact Submodule.smul_mem _ c (Submodule.subset_span ⟨u, rfl⟩)
-  have : FiniteDimensional k (rightTranslateSpan K k f) := hf
-  exact Submodule.finiteDimensional_of_le hle
+    IsKFinite K k (c • f) :=
+  haveI : FiniteDimensional k (rightTranslateSpan K k f) := hf
+  Submodule.finiteDimensional_of_le (S₂ := rightTranslateSpan K k f) <| Submodule.span_le.mpr <|
+    Set.range_subset_iff.mpr fun u => Submodule.smul_mem _ c (Submodule.subset_span ⟨u, rfl⟩)
 
 end KFinite
 
@@ -185,54 +177,40 @@ def IsZFinite (m : M) : Prop :=
 
 variable {k Z}
 
-lemma isZFinite_zero : IsZFinite k Z (0 : M) := by
-  refine ⟨⊤, ?_, fun z _ => smul_zero z⟩
-  have : Subsingleton (Z ⧸ (⊤ : Ideal Z)) := Submodule.Quotient.subsingleton_iff.mpr rfl
-  infer_instance
+lemma isZFinite_zero : IsZFinite k Z (0 : M) := ⟨⊤, inferInstance, fun z _ => smul_zero z⟩
 
 /-- `Z`-finiteness is closed under addition: the intersection of the two annihilating ideals
 works, since `Z ⧸ (I ⊓ J)` embeds in `(Z ⧸ I) × (Z ⧸ J)`. -/
 protected lemma IsZFinite.add {m₁ m₂ : M} (h₁ : IsZFinite k Z m₁) (h₂ : IsZFinite k Z m₂) :
     IsZFinite k Z (m₁ + m₂) := by
-  obtain ⟨I, hI, hIann⟩ := h₁
-  obtain ⟨J, hJ, hJann⟩ := h₂
-  refine ⟨I ⊓ J, ?_, fun z hz => by rw [smul_add, hIann z hz.1, hJann z hz.2, add_zero]⟩
-  have := hI; have := hJ
-  have hker : LinearMap.ker (LinearMap.prod I.mkQ J.mkQ) = I ⊓ J := by
-    rw [LinearMap.ker_prod, Submodule.ker_mkQ, Submodule.ker_mkQ]
-  refine FiniteDimensional.of_injective
-    (LinearMap.restrictScalars k ((I ⊓ J).liftQ (LinearMap.prod I.mkQ J.mkQ) hker.ge)) ?_
-  rw [LinearMap.coe_restrictScalars, ← LinearMap.ker_eq_bot]
-  exact Submodule.ker_liftQ_eq_bot _ _ _ hker.le
+  obtain ⟨I, hI, hIann⟩ := h₁; obtain ⟨J, hJ, hJann⟩ := h₂
+  have hker : LinearMap.ker (I.mkQ.prod J.mkQ) = I ⊓ J := by simp [LinearMap.ker_prod]
+  refine ⟨I ⊓ J, FiniteDimensional.of_injective (((I ⊓ J).liftQ (I.mkQ.prod J.mkQ)
+    hker.ge).restrictScalars k) ?_, fun z hz => by simp [smul_add, hIann z hz.1, hJann z hz.2]⟩
+  simpa [← LinearMap.ker_eq_bot] using Submodule.ker_liftQ_eq_bot _ _ _ hker.le
 
 /-- `Z`-finiteness is preserved by scalar multiplication: the same ideal works. -/
 protected lemma IsZFinite.const_smul [Module k M] [IsScalarTower k Z M] {m : M}
-    (h : IsZFinite k Z m) (c : k) : IsZFinite k Z (c • m) := by
-  obtain ⟨I, hI, hann⟩ := h
-  refine ⟨I, hI, fun z hz => ?_⟩
-  rw [← algebraMap_smul Z c m, smul_smul, mul_comm, ← smul_smul, hann z hz, smul_zero]
+    (h : IsZFinite k Z m) (c : k) : IsZFinite k Z (c • m) :=
+  h.imp fun _ => And.imp_right fun hann z hz => by
+    rw [← algebraMap_smul Z c m, smul_smul, mul_comm, ← smul_smul, hann z hz, smul_zero]
 
 /-- An element on which `Z` acts through a `k`-algebra character is `Z`-finite: the kernel of
 the character is an ideal of finite codimension annihilating it. -/
 lemma IsZFinite.of_forall_smul_eq_algHom_smul [Module k M] (χ : Z →ₐ[k] k) {m : M}
-    (h : ∀ z, z • m = χ z • m) : IsZFinite k Z m := by
-  refine ⟨RingHom.ker χ, ?_, fun z hz => by rw [h z, RingHom.mem_ker.mp hz, zero_smul]⟩
-  exact FiniteDimensional.of_injective (Ideal.kerLiftAlg χ).toLinearMap
-    (Ideal.kerLiftAlg_injective χ)
+    (h : ∀ z, z • m = χ z • m) : IsZFinite k Z m :=
+  ⟨RingHom.ker χ, FiniteDimensional.of_injective (Ideal.kerLiftAlg χ).toLinearMap
+    (Ideal.kerLiftAlg_injective χ), fun z hz => by rw [h z, RingHom.mem_ker.mp hz, zero_smul]⟩
 
 /-- A constant family with `Z`-finite value is `Z`-finite, with the same ideal. -/
 protected lemma IsZFinite.pi_const {ι : Type*} {m₀ : M} (h : IsZFinite k Z m₀) :
-    IsZFinite k Z (fun _ : ι => m₀) := by
-  obtain ⟨I, hI, hann⟩ := h
-  refine ⟨I, hI, fun z hz => funext fun _ => ?_⟩
-  simpa using hann z hz
+    IsZFinite k Z (fun _ : ι => m₀) :=
+  h.imp fun _ => And.imp_right fun hann z hz => funext fun _ => hann z hz
 
 /-- Precomposition preserves `Z`-finiteness of a family, with the same ideal. -/
 protected lemma IsZFinite.comp {ι' ι : Type*} {m : ι → M} (h : IsZFinite k Z m) (σ : ι' → ι) :
-    IsZFinite k Z (m ∘ σ) := by
-  obtain ⟨I, hI, hann⟩ := h
-  refine ⟨I, hI, fun z hz => funext fun x => ?_⟩
-  simpa using congrFun (hann z hz) (σ x)
+    IsZFinite k Z (m ∘ σ) :=
+  h.imp fun _ => And.imp_right fun hann z hz => funext fun x => congrFun (hann z hz) (σ x)
 
 end ZFinite
 
@@ -255,9 +233,7 @@ noncomputable def entrySup (M : Matrix n n ℝ) : ℝ :=
     Finset.univ.sup' Finset.univ_nonempty fun j => |M i j|
 
 lemma le_entrySup (M : Matrix n n ℝ) (i j : n) : |M i j| ≤ entrySup M :=
-  le_trans (Finset.le_sup' (fun j => |M i j|) (Finset.mem_univ j))
-    (Finset.le_sup' (fun i => Finset.univ.sup' Finset.univ_nonempty fun j => |M i j|)
-      (Finset.mem_univ i))
+  Finset.le_sup'_of_le _ (Finset.mem_univ i) (Finset.le_sup' (|M i ·|) (Finset.mem_univ j))
 
 lemma entrySup_nonneg (M : Matrix n n ℝ) : 0 ≤ entrySup M :=
   le_trans (abs_nonneg _) (le_entrySup M (Classical.arbitrary n) (Classical.arbitrary n))
@@ -286,24 +262,17 @@ cannot all be small. This makes the exponent in a slow-increase bound enlargeabl
 lemma inv_card_le_gnorm (y : GL n ℝ) : (Fintype.card n : ℝ)⁻¹ ≤ gnorm y := by
   obtain ⟨i⟩ := ‹Nonempty n›
   have hcard : (1 : ℝ) ≤ Fintype.card n := by exact_mod_cast Fintype.card_pos
+  have hy : ∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i = 1 := by
+    simpa [Matrix.mul_apply, Matrix.one_apply_eq] using congrFun (congrFun y.mul_inv i) i
+  have hk : ∀ k, |(y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i|
+      ≤ gnorm y * gnorm y := fun k => by
+    rw [abs_mul]; exact mul_le_mul ((le_entrySup _ i k).trans (le_max_left _ _))
+      ((le_entrySup _ k i).trans (le_max_right _ _)) (abs_nonneg _) (gnorm_nonneg _)
   have hbound : (1 : ℝ) ≤ Fintype.card n * (gnorm y * gnorm y) := by
-    have hy : ∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i = 1 := by
-      have h : ((y : Matrix n n ℝ) * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ)) i i = 1 := by
-        rw [← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_apply_eq]
-      simpa [Matrix.mul_apply] using h
-    calc (1 : ℝ)
-        = |∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i| := by
-          rw [hy, abs_one]
-      _ ≤ ∑ k, |(y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i| :=
-          Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ∑ _k : n, gnorm y * gnorm y := Finset.sum_le_sum fun k _ => by
-          rw [abs_mul]
-          exact mul_le_mul ((le_entrySup _ i k).trans (le_max_left _ _))
-            ((le_entrySup _ k i).trans (le_max_right _ _)) (abs_nonneg _) (gnorm_nonneg _)
-      _ = Fintype.card n * (gnorm y * gnorm y) := by
-          rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
-  rw [inv_le_iff_one_le_mul₀ (zero_lt_one.trans_le hcard)]
-  nlinarith [gnorm_nonneg y]
+    rw [← abs_one, ← hy]; refine (Finset.abs_sum_le_sum_abs _ _).trans ((Finset.sum_le_sum
+      fun k _ => hk k).trans (le_of_eq ?_))
+    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  rw [inv_le_iff_one_le_mul₀ (zero_lt_one.trans_le hcard)]; nlinarith [gnorm_nonneg y]
 
 lemma gnorm_pos (y : GL n ℝ) : 0 < gnorm y :=
   ((inv_pos.mpr (by exact_mod_cast Fintype.card_pos)).trans_le (inv_card_le_gnorm y))
@@ -333,33 +302,26 @@ bounded below by `(Fintype.card n)⁻¹ > 0`, so the ratio `gnorm y ^ (r - r')` 
 lemma exists_forall_norm_le_rpow_of_le {φ : GL n ℝ → ℂ} {C r : ℝ}
     (h : ∀ y, ‖φ y‖ ≤ C * gnorm y ^ r) {r' : ℝ} (hr : r ≤ r') :
     ∃ C', ∀ y, ‖φ y‖ ≤ C' * gnorm y ^ r' := by
-  set c₀ : ℝ := (Fintype.card n : ℝ)⁻¹ with hc₀
-  have hc₀0 : 0 < c₀ := inv_pos.mpr (by exact_mod_cast Fintype.card_pos)
-  have hC0 : 0 ≤ C := by
-    have h0 := (norm_nonneg (φ 1)).trans (h 1)
-    exact (mul_nonneg_iff_of_pos_right (Real.rpow_pos_of_pos (gnorm_pos _) r)).mp h0
-  refine ⟨C * (c₀ ^ (r' - r))⁻¹, fun y => ?_⟩
-  have hkey : gnorm y ^ r ≤ (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by
-    rw [← div_eq_inv_mul, le_div_iff₀ (Real.rpow_pos_of_pos hc₀0 _)]
-    calc gnorm y ^ r * c₀ ^ (r' - r)
-        ≤ gnorm y ^ r * gnorm y ^ (r' - r) :=
-          mul_le_mul_of_nonneg_left (Real.rpow_le_rpow hc₀0.le (inv_card_le_gnorm y)
-            (sub_nonneg.mpr hr)) (Real.rpow_nonneg (gnorm_pos y).le r)
-      _ = gnorm y ^ r' := by rw [mul_comm, ← Real.rpow_add (gnorm_pos y), sub_add_cancel]
+  have hC0 : 0 ≤ C := (mul_nonneg_iff_of_pos_right (Real.rpow_pos_of_pos (gnorm_pos _) r)).mp
+    ((norm_nonneg (φ 1)).trans (h 1))
+  have hg : ∀ y : GL n ℝ, gnorm y ^ (r - r') ≤ (Fintype.card n : ℝ)⁻¹ ^ (r - r') := fun y =>
+    Real.rpow_le_rpow_of_nonpos (inv_pos.mpr (by exact_mod_cast Fintype.card_pos))
+      (inv_card_le_gnorm y) (sub_nonpos.mpr hr)
+  refine ⟨C * (Fintype.card n : ℝ)⁻¹ ^ (r - r'), fun y => ?_⟩
   calc ‖φ y‖ ≤ C * gnorm y ^ r := h y
-    _ ≤ C * ((c₀ ^ (r' - r))⁻¹ * gnorm y ^ r') := mul_le_mul_of_nonneg_left hkey hC0
-    _ = C * (c₀ ^ (r' - r))⁻¹ * gnorm y ^ r' := by ring
+    _ = C * (gnorm y ^ (r - r') * gnorm y ^ r') := by
+        rw [← Real.rpow_add (gnorm_pos y), sub_add_cancel]
+    _ ≤ C * ((Fintype.card n : ℝ)⁻¹ ^ (r - r') * gnorm y ^ r') := mul_le_mul_of_nonneg_left
+        (mul_le_mul_of_nonneg_right (hg y) (Real.rpow_nonneg (gnorm_pos y).le _)) hC0
+    _ = C * (Fintype.card n : ℝ)⁻¹ ^ (r - r') * gnorm y ^ r' := (mul_assoc _ _ _).symm
 
 protected lemma IsSlowlyIncreasing.add {φ ψ : GL n ℝ → ℂ} (hφ : IsSlowlyIncreasing φ)
     (hψ : IsSlowlyIncreasing ψ) : IsSlowlyIncreasing (φ + ψ) := by
-  obtain ⟨C₁, r₁, h₁⟩ := hφ
-  obtain ⟨C₂, r₂, h₂⟩ := hψ
+  obtain ⟨C₁, r₁, h₁⟩ := hφ; obtain ⟨C₂, r₂, h₂⟩ := hψ
   obtain ⟨C₁', h₁'⟩ := exists_forall_norm_le_rpow_of_le h₁ (le_max_left r₁ r₂)
   obtain ⟨C₂', h₂'⟩ := exists_forall_norm_le_rpow_of_le h₂ (le_max_right r₁ r₂)
-  refine ⟨C₁' + C₂', max r₁ r₂, fun y => ?_⟩
-  calc ‖(φ + ψ) y‖ ≤ ‖φ y‖ + ‖ψ y‖ := norm_add_le _ _
-    _ ≤ C₁' * gnorm y ^ max r₁ r₂ + C₂' * gnorm y ^ max r₁ r₂ := add_le_add (h₁' y) (h₂' y)
-    _ = (C₁' + C₂') * gnorm y ^ max r₁ r₂ := (add_mul _ _ _).symm
+  exact ⟨C₁' + C₂', max r₁ r₂, fun y => ((norm_add_le _ _).trans
+    (add_le_add (h₁' y) (h₂' y))).trans_eq (add_mul _ _ _).symm⟩
 
 /-! ### Constant functions are `Z(𝔤)`-finite -/
 
@@ -375,11 +337,9 @@ omit [Nonempty n] in
 /-- Every constant function is `Z(𝔤)`-finite. -/
 lemma isZFinite_const_smoothGL (c : ℂ) :
     IsZFinite ℂ ↥(centerUniversalEnveloping n)
-      (⟨fun _ => c, isSmoothOnGL_const c⟩ : smoothGL n) := by
-  have h : (⟨fun _ => c, isSmoothOnGL_const c⟩ : smoothGL n) = c • oneSmoothGL n :=
-    Subtype.ext (by funext y; simp [oneSmoothGL])
-  rw [h]
-  exact isZFinite_oneSmoothGL.const_smul c
+      (⟨fun _ => c, isSmoothOnGL_const c⟩ : smoothGL n) :=
+  (Subtype.ext (funext fun _ => mul_one c) :
+    c • oneSmoothGL n = ⟨fun _ => c, _⟩) ▸ isZFinite_oneSmoothGL.const_smul c
 
 /-! ### The definition -/
 
