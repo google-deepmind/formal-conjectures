@@ -21,11 +21,31 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 def command(args, cwd=None, timeout=120, **kwargs):
+    from .ui import diagnostic
+    import shlex
+    diagnostic(shlex.join([str(x) for x in args]))
     proc = subprocess.run([str(x) for x in args], cwd=cwd, timeout=timeout,
                           capture_output=True, **kwargs)
     if proc.returncode:
         raise Failure('execution_error', proc.stderr.decode(errors='replace')[-6000:], 3)
     return proc.stdout
+
+
+def logged_command(args, path, *, cwd=None, timeout=1800):
+    """Retain download/build diagnostics; terminal output is presentation-owned."""
+    from .ui import log_location, diagnostic
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    log_location(path)
+    try:
+        with path.open('ab') as log:
+            subprocess.run([str(x) for x in args],cwd=cwd,stdout=log,stderr=subprocess.STDOUT,
+                           check=True,timeout=timeout)
+    finally:
+        # Verbose output stays bounded even when a dependency build emits megabytes.
+        with path.open('rb') as log:
+            log.seek(0,2);size=log.tell();log.seek(max(0,size-6000))
+            diagnostic(log.read().decode(errors='replace'))
+
 
 def git(root, *args, **kwargs):
     return command(['git', '-C', root, *args], **kwargs)
@@ -63,7 +83,7 @@ def github(path):
     return rr.parse(gh('api', path))
 
 def config(root):
-    result = {'executor': None, 'evidence': None, 'image': None,
+    result = {'catalog_url': None, 'executor': None, 'evidence': None, 'image': None,
               'limits': {'build_seconds': 180, 'scratch_seconds': 60, 'scratch_calls': 20}}
     for p in [config_path(), *([config_path(root)] if root else [])]:
         if p.exists():
@@ -82,6 +102,9 @@ def config(root):
             if set(limits) - set(result['limits']): raise Failure('invalid_configuration', 'Unknown execution limit')
             result['limits'].update(limits)
             result.update(value)
+    if result['catalog_url'] is not None:
+        from .catalog import catalog_url
+        result['catalog_url']=catalog_url(result['catalog_url'])
     if result['image'] is not None and not isinstance(result['image'],str):
         raise Failure('invalid_configuration','image must be a digest string or null.')
     executor_fields=('kind','toolkit','ref','tools') if isinstance(result['executor'],dict) and result['executor'].get('kind')=='linux' else ('kind','repository','ref')

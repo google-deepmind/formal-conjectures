@@ -8,7 +8,34 @@ from . import __version__
 DOCS = 'https://github.com/williamjblair/formal-conjectures/blob/codex/fc-toolkit-integration/toolkit/README.md'
 
 
+GROUPS = {
+    'Browse': ('find', 'show'),
+    'Review': ('check', 'review'),
+    'Prove and evaluate': ('init', 'verify', 'eval'),
+    'Inspect and publish': ('status', 'run', 'evidence'),
+    'Configure': ('doctor', 'setup', 'skill', 'completion'),
+}
+
+
 class ArgumentParser(argparse.ArgumentParser):
+    def format_help(self):
+        if self.prog != 'conjectures':return super().format_help()
+        # Keep argparse as the command/option authority; group its own help entries.
+        action=next(a for a in self._actions if isinstance(a,argparse._SubParsersAction))
+        descriptions={a.dest:a.help for a in action._choices_actions}
+        lines=['Usage: conjectures [OPTIONS] COMMAND', '', self.description, '',
+               'Start: conjectures doctor', 'Review: conjectures review --pr 4941', '']
+        for group,names in GROUPS.items():
+            lines.append(group)
+            lines.extend(f'  {name:12} {descriptions[name]}' for name in names if name in descriptions)
+            lines.append('')
+        formatter=self._get_formatter()
+        formatter.start_section('Options')
+        formatter.add_arguments([a for a in self._actions if a is not action])
+        formatter.end_section()
+        lines += [formatter.format_help().strip(), '', 'Help: conjectures help COMMAND', 'Guide: '+DOCS]
+        return '\n'.join(lines)+'\n'
+
     def error(self, message):
         if '--json' in sys.argv:
             print(json.dumps({'command_status':'failure','outcome':'error','reason':'invalid_arguments','message':message,'exit_code':2}))
@@ -29,11 +56,23 @@ def parser():
     p.add_argument('--version', action='version', version=__version__)
     p.add_argument('--json', action='store_true', help='Return structured output for agents and scripts')
     p.add_argument('--repo', type=Path, help='FC checkout to use (default: current checkout)')
+    p.add_argument('--catalog-url', help='HTTPS URL ending in /conjectures.json; overrides configured catalog for this command')
+    p.add_argument('--color', choices=['auto','always','never'], default='auto', help='Color mode (default: auto; respects NO_COLOR)')
+    p.add_argument('--quiet','-q',action='store_true',help='Suppress progress; preserve results and errors')
+    p.add_argument('--verbose','-v',action='store_true',help='Show diagnostic commands and additional result details')
+    p.add_argument('--pager',action='store_true',help='Page long human output in an interactive terminal')
     sub = p.add_subparsers(dest='command', required=True)
     def command(name, help, example=None, parent=sub):
         q=parent.add_parser(name,help=help,description=help,epilog=('Example: '+example+'\n' if example else '')+'Guide: '+DOCS,
                             formatter_class=argparse.RawDescriptionHelpFormatter)
         q.add_argument('--json',action='store_true',default=argparse.SUPPRESS,help='Structured output')
+        common=q.add_argument_group('Output and source options (also accepted before the command)')
+        common.add_argument('--quiet','-q',action='store_true',default=argparse.SUPPRESS,help='Suppress progress; preserve results and errors')
+        common.add_argument('--verbose','-v',action='store_true',default=argparse.SUPPRESS,help='Show diagnostic commands and additional details')
+        common.add_argument('--color',choices=['auto','always','never'],default=argparse.SUPPRESS,help='Color mode; respects NO_COLOR')
+        common.add_argument('--pager',action='store_true',default=argparse.SUPPRESS,help='Page human output in an interactive terminal')
+        if name in ('find','show','init','export','doctor'):
+            common.add_argument('--catalog-url',default=argparse.SUPPRESS,help='Explicit HTTPS /conjectures.json endpoint')
         return q
     q=command('skill','Locate or explicitly install bundled agent guidance','conjectures skill install --dir .agents/skills')
     r=q.add_subparsers(dest='operation',required=True)
@@ -89,10 +128,12 @@ def parser():
     s.add_argument('run');s.add_argument('--post',action='store_true',help='Post a fresh advisory PR summary after archiving')
     s.add_argument('--dry-run',action='store_true',help='Inspect the local public export without publishing')
     q=command('setup','Configure one capability explicitly','conjectures setup review');r=q.add_subparsers(dest='operation',required=True)
-    for op in ('review','verify','evidence'):
-        s=command(op,{'review':'Build or select a pinned review image','verify':'Configure an existing qualified Linux executor','evidence':'Configure an existing public evidence branch'}[op],parent=r)
+    for op in ('review','verify','evidence','catalog'):
+        s=command(op,{'review':'Build or select a pinned review image','verify':'Configure an existing qualified Linux executor','evidence':'Configure an existing public evidence branch','catalog':'Validate and select a published catalog'}[op],parent=r)
         s.add_argument('--global',dest='global_config',action='store_true',help='Save in user configuration instead of this checkout')
-        if op=='review':
+        if op=='catalog':
+            s.add_argument('--url',required=True,help='HTTPS catalog URL ending in /conjectures.json; validates its sibling manifest')
+        elif op=='review':
             s.add_argument('--image',help='Existing image pinned by SHA-256 digest')
             s.add_argument('--source-ref',default='main',help='Reviewed upstream main revision used to build the image')
         else:
@@ -121,11 +162,11 @@ def parse(argv):
     globals=[];rest=[];i=0
     while i<len(argv):
         token=argv[i]
-        if token=='--json':globals.append(token)
-        elif token=='--repo':
+        if token in ('--json','--quiet','-q','--verbose','-v','--pager'):globals.append(token)
+        elif token in ('--repo','--catalog-url','--color'):
             globals.append(token)
             if i+1<len(argv):i+=1;globals.append(argv[i])
-        elif token.startswith('--repo='):globals.append(token)
+        elif any(token.startswith(flag+'=') for flag in ('--repo','--catalog-url','--color')):globals.append(token)
         else:rest.append(token)
         i+=1
     p=parser()
@@ -133,7 +174,7 @@ def parse(argv):
     if rest[:1]==['review'] and len(rest)>1 and rest[1] not in ('prepare','finish','exec','--help','-h'):
         rest.insert(1,'prepare')
     if not rest:p.print_help();return None
-    if rest in (['review'],['run'],['setup'],['evidence']):subparser(p,rest[0]).print_help();return None
+    if rest in (['review'],['run'],['setup'],['evidence'],['skill'],['eval']):subparser(p,rest[0]).print_help();return None
     if rest==['--version'] and '--json' in globals:
         print(json.dumps({'version':__version__,'command_status':'success','exit_code':0}));return None
     args=p.parse_args(globals+rest)
@@ -150,6 +191,7 @@ def complete(words):
         child=subparser(p,token)
         if child:p=child
     options=[o for a in p._actions for o in a.option_strings]
+    options += [o for a in parser()._actions for o in a.option_strings if o not in options]
     choices=[name for a in p._actions if isinstance(a,argparse._SubParsersAction) for name in a.choices]
     return '\n'.join(x for x in choices+options if x.startswith(prefix))
 

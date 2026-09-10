@@ -14,6 +14,7 @@ from .interface import parser, parse
 EXIT = {'pass':0, 'fail':1, 'incomplete':4, 'error':3, 'cancelled':5}
 
 from .onboarding import doctor
+from .ui import stage, log_location
 
 
 def dispatch(args):
@@ -28,13 +29,15 @@ def dispatch(args):
                    allow_proof=args.command in ('doctor','verify','status','run','setup','evidence'))
     if args.command=='verify' and root is None:root=args.directory.resolve()
     cfg=config(root)
-    if args.command=='doctor':return doctor(root,cfg,args.capability)
+    if args.command=='doctor':
+        stage('Checking tools and capability configuration')
+        return doctor(root,cfg,args.capability,getattr(args,'catalog_url',None))
     if args.command=='setup':
         from .onboarding import setup
         return setup(root,args)
     if args.command in ('find','show'):
         from .catalog import load,matches
-        data=load(root,args.catalog,refresh=args.refresh,offline=args.offline);found=matches(data,args.target)
+        data=load(root,args.catalog,refresh=args.refresh,offline=args.offline,url=getattr(args,'catalog_url',None));found=matches(data,args.target)
         source=data.get('provenance',{}).get('source')
         if source:
             from .catalog_data import module_path,source_url
@@ -104,11 +107,11 @@ def dispatch(args):
                 return result
         directory,record=start_run(root,'review')
         try:
-            print('Preparing exact review inputs…',file=sys.stderr)
+            stage('Preparing exact review inputs');log_location(directory)
             ticket=review.replay(args.input.resolve(),directory) if args.input else review.prepare(
                 root,directory,base=args.base,pr=args.pr,repository=args.repository,supplied=args.sources)
             record.update(target=ticket);save(directory/'run.json',record)
-            print('Building independently; your existing session will conduct the semantic review…',file=sys.stderr)
+            stage('Building independently; semantic review remains pending')
             return review.handoff(directory,cfg,record)
         except BaseException as error:
             finish(directory,record,'cancelled' if isinstance(error,KeyboardInterrupt) else 'error',
@@ -136,6 +139,7 @@ def dispatch(args):
         if importlib.util.find_spec('conjectures.proof') is None:
             raise Failure('unavailable_command','Proof workspace support is not included in this revision',4)
         from . import proof
+        stage('Resolving the exact proof target' if args.command=='init' else 'Resolving the trusted proof workspace')
         return proof.initialize(root,args,cfg) if args.command=='init' else proof.verify(root,args.directory,cfg)
     if args.command=='evidence':
         if importlib.util.find_spec('conjectures.evidence') is None:
@@ -177,15 +181,16 @@ def main(argv=None):
     finally:sys.argv=original
     if args is None:return 0
     try:
-        result=dispatch(args)
+        from .ui import session
+        with session(args):result=dispatch(args)
         if result is None:return 0
         code=operation_code(args,result)
         result={**result,'command_status':{0:'success',1:'failure',2:'failure',3:'error',4:'incomplete',5:'cancelled'}[code],'exit_code':code}
         if args.json:print(json.dumps(result,ensure_ascii=False,indent=2))
         elif 'text' in result:print(result['text'])
         else:
-            from .presentation import render
-            print(render(result,args))
+            from .ui import output
+            output(result,args)
         return code
     except (Failure,rr.InputError,OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
         code=getattr(error,'code',3 if isinstance(error,(OSError,subprocess.SubprocessError,RuntimeError)) else 2)
@@ -193,8 +198,8 @@ def main(argv=None):
                'reason':getattr(error,'reason','execution_error' if code==3 else 'invalid_input'),'message':str(error)}
         if args.json:print(json.dumps(value))
         else:
-            from .presentation import clean
-            print(clean(value['reason']+': '+value['message']),file=sys.stderr)
+            from .ui import error as display_error
+            display_error(value,args)
         return code
     except KeyboardInterrupt:
         value={'command_status':'cancelled','outcome':'cancelled','reason':'interrupted','exit_code':5,
