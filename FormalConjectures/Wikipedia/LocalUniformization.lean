@@ -27,7 +27,14 @@ regular, where $\mathfrak{p} = \mathfrak{m}_\mathcal{O} \cap A$ is the centre.
 This is the local form of resolution of singularities, one valuation at a time. Zariski
 introduced it and proved it in characteristic zero, and deduced resolution of singularities in
 dimension at most three from it. In positive characteristic it is known in dimension at most
-three and is open from dimension four on.
+three, and open from dimension four on. A place is *Abhyankar* when the rational rank of its
+value group and the transcendence degree of its residue field over $k$ add up to the
+transcendence degree of $F \mid k$; an Abhyankar place whose residue field is separable over $k$
+is uniformized in any dimension [KK2005].
+
+The form asked here is the weak one: some affine model of $F \mid k$ works. The proofs give the
+strong form, where the model may moreover be required to contain a prescribed finite subset of
+$\mathcal{O}$, and that is the form that patches into a resolution of singularities.
 
 The conclusion here asks that the centre be a regular point, not a smooth one. Over a perfect
 field the two agree; over an imperfect field regularity is the right condition, since already
@@ -37,25 +44,34 @@ For a field extension, `Algebra.EssFiniteType k F` says that $F$ is finitely gen
 field over $k$, and `Algebra.trdeg k F` is the transcendence degree, the dimension of a model.
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Local_uniformization_theorem)
-* [Zar1940] O. Zariski, [Local uniformization on algebraic
+- [Wikipedia](https://en.wikipedia.org/wiki/Local_uniformization)
+- [Zar1940] O. Zariski, [Local uniformization on algebraic
   varieties](https://doi.org/10.2307/1968864), Ann. of Math. 41 (1940), 852--896.
-* [Abh1956] S. Abhyankar, [Local uniformization on algebraic surfaces over ground fields of
+- [Abh1956] S. Abhyankar, [Local uniformization on algebraic surfaces over ground fields of
   characteristic $p \neq 0$](https://doi.org/10.2307/1970014), Ann. of Math. 63 (1956), 491--526.
-* [Abh1966] S. Abhyankar, Resolution of singularities of embedded algebraic surfaces, Monographs
-  in Pure and Applied Mathematics 24, Academic Press, 1966; three-dimensional birational
-  resolution over a ground field of characteristic $p > 5$.
-* [Cut2009] S. D. Cutkosky, [Resolution of singularities for 3-folds in positive
-  characteristic](https://doi.org/10.1353/ajm.0.0036), Amer. J. Math. 131 (2009), 59--127.
-* [CP2019] V. Cossart and O. Piltant, [Resolution of singularities of arithmetical
+- [Abh1966] S. Abhyankar, Resolution of singularities of embedded algebraic surfaces, Monographs
+  in Pure and Applied Mathematics 24, Academic Press, 1966; birational resolution of threefolds
+  over an algebraically closed field of characteristic $p > 5$.
+- [Cut2009] S. D. Cutkosky, [Resolution of singularities for 3-folds in positive
+  characteristic](https://doi.org/10.1353/ajm.0.0036), Amer. J. Math. 131 (2009), 59--127; a
+  simplification of [Abh1966], also over an algebraically closed field.
+- [CP2008] V. Cossart and O. Piltant, [Resolution of singularities of threefolds in positive
+  characteristic I](https://doi.org/10.1016/j.jalgebra.2008.03.032), J. Algebra 320 (2008),
+  1051--1082.
+- [CP2009] V. Cossart and O. Piltant, [Resolution of singularities of threefolds in positive
+  characteristic II](https://doi.org/10.1016/j.jalgebra.2008.11.030), J. Algebra 321 (2009),
+  1836--1976; quasi-projective threefolds over a field $k$ with $[k : k^p] < \infty$, in every
+  positive characteristic.
+- [CP2019] V. Cossart and O. Piltant, [Resolution of singularities of arithmetical
   threefolds](https://doi.org/10.1016/j.jalgebra.2019.02.017), J. Algebra 529 (2019), 268--535.
-* [KK2005] H. Knaf and F.-V. Kuhlmann, [Abhyankar places admit local uniformization in any
+- [KK2005] H. Knaf and F.-V. Kuhlmann, [Abhyankar places admit local uniformization in any
   characteristic](https://doi.org/10.1016/j.ansens.2005.09.001), Ann. Sci. École Norm. Sup. 38
-  (2005), 833--846.
-* [KK2009] H. Knaf and F.-V. Kuhlmann, [Every place admits local uniformization in a finite
+  (2005), 833--846; the hypotheses are that the place is Abhyankar and that its residue field is
+  separable over the ground field.
+- [KK2009] H. Knaf and F.-V. Kuhlmann, [Every place admits local uniformization in a finite
   extension of the function field](https://doi.org/10.1016/j.aim.2008.12.009), Adv. Math. 221
   (2009), 428--453.
-* [Tem2013] M. Temkin, [Inseparable local
+- [Tem2013] M. Temkin, [Inseparable local
   uniformization](https://doi.org/10.1016/j.jalgebra.2012.09.023), J. Algebra 373 (2013), 65--119.
 -/
 
@@ -87,9 +103,9 @@ theorem mem_centerOn_iff (𝒪 : ValuationSubring F) (A : Subalgebra k F)
 
 /--
 A valuation subring `𝒪` of `F` *admits local uniformization over* `k` if some affine model of
-`F` over `k` inside `𝒪` is regular at the centre of `𝒪`: there is a finitely generated `k`-subalgebra
-`A` of `F` with `A ⊆ 𝒪` and fraction field `F` whose localisation at the centre of `𝒪` is a
-regular local ring.
+`F` over `k` inside `𝒪` is regular at the centre of `𝒪`: there is a finitely generated
+`k`-subalgebra `A` of `F` with `A ⊆ 𝒪` and fraction field `F` whose localisation at the centre
+of `𝒪` is a regular local ring.
 -/
 def HasLocalUniformization (𝒪 : ValuationSubring F) (k : Type*) [Field k] [Algebra k F] : Prop :=
   ∃ (A : Subalgebra k F) (hA : ∀ a : A, (a : F) ∈ 𝒪),
@@ -161,12 +177,14 @@ theorem local_uniformization_of_charZero (k F : Type*) [Field k] [Field F] [Alge
 
 /--
 Local uniformization holds in transcendence degree at most three over any field. In
-characteristic zero this is [Zar1940]. In positive characteristic, surfaces are [Abh1956],
-threefolds in characteristic $p > 5$ are [Abh1966], simplified in [Cut2009], and the remaining
-characteristics $2, 3, 5$ are due to Cossart and Piltant. It follows in the generality stated
-here from [CP2019], Theorem 1.1, which resolves the singularities of every reduced separated
-Noetherian quasi-excellent scheme of dimension at most three in any characteristic: the centre
-of $\mathcal{O}$ on a resolution of a proper model of $F \mid k$ is a regular point.
+characteristic zero this is [Zar1940]. In positive characteristic, surfaces are [Abh1956];
+threefolds over an algebraically closed field of characteristic $p > 5$ are [Abh1966],
+simplified in [Cut2009]; and the remaining characteristics $2, 3, 5$ are [CP2008] and [CP2009],
+for quasi-projective threefolds over a field $k$ with $[k : k^p] < \infty$. It follows in the
+generality stated here from [CP2019], Theorem 1.1, which resolves the singularities of every
+reduced separated Noetherian quasi-excellent scheme of dimension at most three in any
+characteristic: the centre of $\mathcal{O}$ on a resolution of a proper model of $F \mid k$ is a
+regular point.
 -/
 @[category research solved, AMS 12 13 14]
 theorem local_uniformization_of_trdeg_le_three (k F : Type*) [Field k] [Field F] [Algebra k F]
