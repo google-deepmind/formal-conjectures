@@ -80,24 +80,24 @@ theorem matrix_multiplication_exponent_le_three :
   exact_mod_cast (by simpa [pow_succ] using Holor.cprank_matrixMulTensor_le ℂ n n n)
 
 /-- First non-trivial bound, found by V. Strassen (1969). -/
-@[category research solved, AMS 51]
+@[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_strassen :
-    ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (Real.logb 2 7) := by
+    (fun n : ℕ ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+      (fun n : ℕ ↦ (n : ℝ) ^ (Real.logb 2 7)) := by
   sorry
 
 /-- Coppersmith–Winograd (1987) -/
 @[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_coppersmith_winograd :
-    ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.376 : ℝ) := by
+    (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+      fun n ↦ (n : ℝ) ^ (2.376 : ℝ) := by
   sorry
 
 /-- The current best bound, found by AlphaEvolve (2026). -/
 @[category research solved, AMS 51]
 theorem matrix_multiplication_exponent_alphaevolve :
-    ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ (2.371177 : ℝ) := by
+    (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+      fun n ↦ (n : ℝ) ^ (2.371177 : ℝ) := by
   sorry
 
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
