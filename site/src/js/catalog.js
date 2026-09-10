@@ -184,7 +184,6 @@ function processEntry(entry, source) {
 }
 
 
-/** JSON objects have no meaningful member order. */
 /** Validate the complete publication profile before deriving display fields.
  * Keep in step with catalog-v2.schema.json; shared malformed fixtures test both readers.
  * Partial native extracts are a separate contract and are not published catalogs.
@@ -234,6 +233,29 @@ function validateCatalog(data) {
   return data;
 }
 
+/** Check the descriptor before using its digest in a download URL. */
+function validateDescriptor(descriptor) {
+  if (!descriptor || descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'conjectures.json' ||
+      typeof descriptor.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(descriptor.sha256)) {
+    throw new Error('Invalid catalog descriptor');
+  }
+  return descriptor;
+}
+
+/** Browser and Node share decoding and validation; each uses its native SHA-256 API. */
+function decodeSnapshot(bytes, descriptor, digest) {
+  validateDescriptor(descriptor);
+  if (bytes.byteLength !== descriptor.bytes || digest !== descriptor.sha256) {
+    throw new Error('Catalog bytes differ from the publication descriptor. Download one consistent snapshot.');
+  }
+  const catalog = validateCatalog(JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes)));
+  if (catalog.problems.length !== descriptor.problem_count || !sameJSON(catalog.provenance, descriptor.provenance)) {
+    throw new Error('Catalog provenance or count differs from its publication descriptor.');
+  }
+  return catalog;
+}
+
+/** JSON objects have no meaningful member order. */
 function sameJSON(left, right) {
   if (left === right) return true;
   if (!left || !right || typeof left !== 'object' || typeof right !== 'object' ||
@@ -252,6 +274,6 @@ function resolveTheorem(entries, name) {
   return matches[0];
 }
 
-return {validateCatalog, sameJSON, resolveTheorem, AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry};
+return {validateDescriptor, decodeSnapshot, sameJSON, resolveTheorem, AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry};
 })();
 if (typeof module !== 'undefined') module.exports = FCCatalog;
