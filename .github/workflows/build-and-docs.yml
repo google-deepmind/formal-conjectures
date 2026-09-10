@@ -169,6 +169,12 @@ jobs:
           action: add
           linters: lean
 
+      # Check a small PR's edited problems before compiling unrelated modules.
+      # The full build below still checks every library and cross-module clashes.
+      - name: Build changed problem files first
+        if: github.event_name == 'pull_request' && steps.mode.outputs.website_only != 'true'
+        run: python3 scripts/build_changed_problems.py --summary /tmp/build_summary_changed.json
+
       - name: Build ForMathlib, utilities, and test
         if: steps.mode.outputs.website_only != 'true'
         run: |
