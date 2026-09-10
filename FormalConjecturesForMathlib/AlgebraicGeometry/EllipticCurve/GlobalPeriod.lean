@@ -34,15 +34,18 @@ $(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *2-division
 * Over $\mathbb{R}$ (a curve `W : WeierstrassCurve ℝ`), the real locus $E(\mathbb{R})$ lies over
   $\{F \geq 0\}$ with two branches $2y + a_1 x + a_3 = \pm\sqrt{F(x)}$, so the real period is
   $\Omega_{\mathbb{R}} = \int_{E(\mathbb{R})} |\omega| = 2 \int_{\mathbb{R}} dx / \sqrt{F(x)}$
-  (`WeierstrassCurve.realPeriodIntegral`).
+  (`WeierstrassCurve.realPeriod`).
 * Over $\mathbb{C}$ (a curve `W : WeierstrassCurve ℂ`), the $x$-coordinate is a double cover
   $E(\mathbb{C}) \to \mathbb{P}^1(\mathbb{C})$ and $|\omega \wedge \bar\omega| = 4\, dA(x) / |F(x)|$
   on each sheet, so the complex period is
   $\Omega_{\mathbb{C}} = \int_{E(\mathbb{C})} |\omega \wedge \bar\omega|
-  = 4 \int_{\mathbb{C}} dA(x) / |F(x)|$ (`WeierstrassCurve.complexPeriodIntegral`).
+  = 4 \int_{\mathbb{C}} dA(x) / |F(x)|$ (`WeierstrassCurve.complexPeriod`).
 
 *References:*
 - [LMFDB](https://beta.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
+- [Sil09] Silverman, J. H., *The Arithmetic of Elliptic Curves*, 2nd ed., Graduate Texts in
+  Mathematics 106, Springer, 2009. Chapter III §1 (Weierstrass equations, the invariant
+  differential) and Chapter VI (elliptic curves over $\mathbb{C}$).
 -/
 
 namespace WeierstrassCurve
