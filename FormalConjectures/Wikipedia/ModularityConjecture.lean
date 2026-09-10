@@ -39,9 +39,11 @@ namespace ModularityConjecture
 open Complex CongruenceSubgroup ModularFormClass ModularityConjecture UpperHalfPlane
 open scoped Real ModularForm CongruenceSubgroup
 
-/-- The `n`-th Fourier coefficient of a modular form (around the cusp at infinity). -/
+/-- The `n`-th Fourier coefficient of a modular form (around the cusp at infinity), with respect to
+`q = exp (2 π i τ)`. The first argument of `qExpansion` is the period at infinity, which is `1` for
+`Γ₀(N)`, not the level `N`. -/
 noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
-  (qExpansion N f).coeff n
+  (qExpansion 1 f).coeff n
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
