@@ -24,7 +24,7 @@ import FormalConjecturesUtil
   problems*](https://doi.org/10.1145/321264.321270). J. ACM **12** (1965), 196–212.
 - [B1983] Brady, A. H., [*The determination of Radó's noncomputable function $\Sigma(k)$ for
   four-state Turing machines*](https://docs.bbchallenge.org/papers/Brady1983.pdf).
-  Math. Comp. **40** (1983), 647–665.
+  Math. Comp. 40 (1983), 647–665.
 - [BB2025] Blanchard, J. et al., *Determination of the fifth Busy Beaver value* (2025).
   [arXiv:2509.12337](https://arxiv.org/abs/2509.12337)
 - [YS2016] Yedidia, A. and Aaronson, S., *A relatively small Turing machine whose behavior is
