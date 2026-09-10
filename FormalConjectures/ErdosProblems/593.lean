@@ -47,8 +47,8 @@ analogous result (obligatory ⇔ bipartite).
 -/
 @[category research open, AMS 5]
 theorem erdos_593 : answer(sorry) ↔
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      IsObligatory F ↔ F.IsTwoColorable := by
+    ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+      F.IsObligatory (by decide) ↔ F.IsTwoColorable := by
   sorry
 
 /--
@@ -61,8 +61,8 @@ hypergraph with large chromatic number that contains no copy of `F`.
 -/
 @[category research open, AMS 5]
 theorem erdos_593.variants.obligatory_implies_two_colorable : answer(sorry) ↔
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      IsObligatory F → F.IsTwoColorable := by
+    ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+      F.IsObligatory (by decide) → F.IsTwoColorable := by
   sorry
 
 /--
@@ -78,24 +78,24 @@ Together with `erdos_593.variants.obligatory_implies_two_colorable`, this implie
 -/
 @[category research open, AMS 5]
 theorem erdos_593.variants.two_colorable_implies_obligatory : answer(sorry) ↔
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      F.IsTwoColorable → IsObligatory F := by
+    ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+      F.IsTwoColorable → F.IsObligatory (by decide) := by
   sorry
 
 /--
 **Conjunction of the two open implications gives the conjectured characterization**: if both
 `obligatory_implies_two_colorable` and `two_colorable_implies_obligatory` hold, then the
-characterization conjectured in `erdos_593` (`IsObligatory F ↔ F.IsTwoColorable`) follows by
+characterization conjectured in `erdos_593` (`IsObligatory ↔ IsTwoColorable`) follows by
 elementary `Iff` manipulation.
 -/
 @[category test, AMS 5]
 theorem erdos_593.variants.implications_combine
-    (h₁ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-            IsObligatory F → F.IsTwoColorable)
-    (h₂ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-            F.IsTwoColorable → IsObligatory F) :
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      IsObligatory F ↔ F.IsTwoColorable := by
+    (h₁ : ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+            F.IsObligatory (by decide) → F.IsTwoColorable)
+    (h₂ : ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+            F.IsTwoColorable → F.IsObligatory (by decide)) :
+    ∀ (W : Type) [Fintype W] (F : UniformHypergraph W 3),
+      F.IsObligatory (by decide) ↔ F.IsTwoColorable := by
   intro W _ F
   exact ⟨h₁ W F, h₂ W F⟩
 
@@ -148,23 +148,14 @@ contradicting $\chi(H) > \aleph_0$.
 -/
 @[category textbook, AMS 5]
 theorem erdos_593.variants.uncountable_vertices_if_large_chromatic
-    {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
+    {V : Type} (H : UniformHypergraph V 3) (hχ : ℵ₀ < H.chromaticCardinal (by decide)) :
     ¬ Countable V := by
   intro hcount
   -- Since V is countable, there is an injection φ : V → ℕ.
   obtain ⟨φ, hφ⟩ := Countable.exists_injective_nat V
-  -- The injection φ is a proper coloring using ℕ as the color type:
-  -- each edge has card 3, so we can extract two distinct vertices with distinct images.
-  have hprop : H.IsProperColoring φ := by
-    intro e he
-    -- Extract 3 distinct elements from e using H.uniform.
-    have hcard : e.card = 3 := H.uniform e he
-    -- Since e.card = 3 ≥ 2, there exist two distinct elements u ≠ v in e.
-    have hge : 1 < e.card := by omega
-    obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hge
-    exact ⟨u, hu, v, hv, fun heq => huv (hφ heq)⟩
-  -- So χ(H) ≤ #ℕ = ℵ₀.
-  have hle : H.chromaticCardinal ≤ ℵ₀ := csInf_le' ⟨ℕ, Cardinal.mk_nat, φ, hprop⟩
+  have hprop := H.isProperColoring_of_injective (by decide) hφ
+  have hle : H.chromaticCardinal (by decide) ≤ ℵ₀ := by
+    simpa using H.chromaticCardinal_le (by decide) hprop
   exact absurd (lt_of_lt_of_le hχ hle) (lt_irrefl _)
 
 /--
@@ -174,7 +165,7 @@ particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 -/
 @[category textbook, AMS 5]
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
-    {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
+    {V : Type} (H : UniformHypergraph V 3) (hχ : ℵ₀ < H.chromaticCardinal (by decide)) :
     H.edges.Nonempty := by
   by_contra! hempty
   -- H has no edges (hempty : H.edges = ∅), so any coloring is proper.
@@ -183,7 +174,8 @@ theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     rw [hempty] at he
     exact (Set.mem_empty_iff_false e).mp he |>.elim
   -- Hence χ(H) ≤ 1 < ℵ₀.
-  have hle : H.chromaticCardinal ≤ 1 := csInf_le' ⟨Fin 1, by simp, fun _ => 0, hprop⟩
+  have hle : H.chromaticCardinal (by decide) ≤ 1 := by
+    simpa using H.chromaticCardinal_le (by decide) hprop
   have h1le : (1 : Cardinal) ≤ ℵ₀ := le_of_lt Cardinal.one_lt_aleph0
   exact absurd (lt_of_lt_of_le hχ (hle.trans h1le)) (lt_irrefl _)
 
@@ -198,9 +190,9 @@ in `H` via some injection `φ₂`. Since `F₁` appears in `F₂` via `φ₁`, t
 @[category textbook, AMS 5]
 theorem erdos_593.variants.obligatory_monotone
     {W₁ W₂ : Type} [Fintype W₁] [Fintype W₂] [DecidableEq W₂]
-    {F₁ : ThreeUniformHypergraph W₁} {F₂ : ThreeUniformHypergraph W₂}
-    (h12 : F₁.Appears F₂) (hObl : IsObligatory F₂) :
-    IsObligatory F₁ := by
+    {F₁ : UniformHypergraph W₁ 3} {F₂ : UniformHypergraph W₂ 3}
+    (h12 : F₁.Appears F₂) (hObl : F₂.IsObligatory (by decide)) :
+    F₁.IsObligatory (by decide) := by
   intro V _hV H hχ
   obtain ⟨φ₂, hφ₂_inj, hφ₂_edge⟩ := hObl V H hχ
   obtain ⟨φ₁, hφ₁_inj, hφ₁_edge⟩ := h12
@@ -219,7 +211,8 @@ This degenerate case confirms the definition is well-formed.
 -/
 @[category textbook, AMS 5]
 theorem erdos_593.variants.empty_hypergraph_obligatory :
-    IsObligatory (W := PEmpty) ⟨∅, fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩ := by
+    UniformHypergraph.IsObligatory (W := PEmpty) (k := 3)
+      ⟨∅, fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩ (by decide) := by
   intro V _hV H _hχ
   exact ⟨IsEmpty.elim inferInstance, Function.injective_of_subsingleton _,
     fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩
