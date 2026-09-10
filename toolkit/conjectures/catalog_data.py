@@ -7,6 +7,13 @@ from .metadata import metadata_rows
 
 MANIFEST_SCHEMA = 'fc.catalog.v1'
 
+# Shared Lean inputs for catalog publication and Verso snapshot checks.
+SOURCE_INPUTS = (
+    'FormalConjectures', 'FormalConjecturesUtil', 'FormalConjecturesForMathlib',
+    'FormalConjecturesUtil.lean', 'FormalConjecturesForMathlib.lean',
+    'lakefile.toml', 'lean-toolchain', 'lake-manifest.json',
+)
+
 
 def repository_name(value):
     """Compare equivalent GitHub repository locators, retaining no branch identity."""
