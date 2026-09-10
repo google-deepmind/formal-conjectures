@@ -61,17 +61,12 @@ async function loadData() {
     const base = document.documentElement.dataset.base || '';
     const manifestResponse = await fetch(`${base}/data/catalog-manifest.json`);
     if (!manifestResponse.ok) throw new Error(`Catalog descriptor unavailable: ${manifestResponse.status}`);
-    const descriptor = await manifestResponse.json();
-    if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'conjectures.json' ||
-        !/^[a-f0-9]{64}$/.test(descriptor.sha256)) throw new Error('Invalid catalog descriptor');
+    const descriptor = FCCatalog.validateDescriptor(await manifestResponse.json());
     const response = await fetch(`${base}/data/conjectures.json?sha256=${descriptor.sha256}`);
     if (!response.ok) throw new Error(`Catalog unavailable: ${response.status}`);
     const bytes = await response.arrayBuffer();
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2, '0')).join('');
-    if (bytes.byteLength !== descriptor.bytes || digest !== descriptor.sha256) throw new Error('Catalog changed during download. Reload to obtain one consistent snapshot.');
-    const catalog = FCCatalog.validateCatalog(JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes)));
-    if (catalog.problems.length !== descriptor.problem_count ||
-        !FCCatalog.sameJSON(catalog.provenance, descriptor.provenance)) throw new Error('Catalog provenance mismatch');
+    const catalog = FCCatalog.decodeSnapshot(bytes, descriptor, digest);
     return {conjectures:catalog.problems.map(entry => FCCatalog.processEntry(entry, catalog.provenance.source)),
       catalogProvenance:catalog.provenance, catalogDigest:descriptor.sha256,
       moduleDocstrings:catalog.moduleDocstrings};

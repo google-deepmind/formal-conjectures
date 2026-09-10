@@ -47,7 +47,7 @@ test('browse coalesces catalog reads without fetching rendering; show loads only
 });
 
 test('changed catalog bytes and mismatched module rendering are rejected',async()=>{
-  await assert.rejects(client({corrupt:true}).fc.loadData(),/changed during download/);
+  await assert.rejects(client({corrupt:true}).fc.loadData(),/publication descriptor/);
   const {fc,urls}=client({wrongModule:true});
   await assert.rejects(fc.loadModule('FormalConjectures.Example'),/another catalog/);
   await assert.rejects(fc.loadModule('FormalConjectures.Example'),/another catalog/);

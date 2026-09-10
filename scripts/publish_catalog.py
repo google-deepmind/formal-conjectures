@@ -7,7 +7,7 @@ import subprocess
 import shutil
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'toolkit'))
-from conjectures.catalog_data import SOURCE_INPUTS, complete, encode, manifest, parse
+from conjectures.catalog_data import SOURCE_INPUTS, encode, manifest, parse
 
 
 def prepare(source, repository, data, out):
@@ -21,10 +21,11 @@ def prepare(source, repository, data, out):
         'lean_toolchain':(source/'lean-toolchain').read_text().strip(),
         'dependencies_sha256':hashlib.sha256((source/'lake-manifest.json').read_bytes()).hexdigest(),
         'scope':'FormalConjectures','answer_mode':'postpone'}}
-    complete(data)
-    raw=encode(data);out.mkdir(parents=True,exist_ok=True)
+    raw=encode(data)
+    descriptor=manifest(data,raw)  # Validate before writing any publication files.
+    out.mkdir(parents=True,exist_ok=True)
     (out/'conjectures.json').write_bytes(raw)
-    (out/'catalog-manifest.json').write_bytes(encode(manifest(data,raw)))
+    (out/'catalog-manifest.json').write_bytes(encode(descriptor))
     shutil.copytree(Path(__file__).resolve().parents[1]/'toolkit/conjectures/resources/schemas',out/'schemas',dirs_exist_ok=True)
     return data
 

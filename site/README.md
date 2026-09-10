@@ -36,6 +36,10 @@ are unchanged. Anonymous examples remain excluded; no identities are invented.
 
 `node build.js` copies the canonical catalog without rewriting its bytes. A shared
 JavaScript adapter supplies display labels in memory and during static rendering.
+Node and browser readers share snapshot decoding and validation. The site build
+retains the validated bytes for publication. Its file I/O and rendering publication
+live in `catalog.cjs`; `build.js` assembles the pages.
+
 The existing `data/conjectures.json` filename now holds the full native data; no
 second semantic projection is published.
 
