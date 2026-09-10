@@ -106,19 +106,19 @@ def OneSidedError (p : Polynomial ℕ) (A : List Bool × List Bool → Bool)
     (L x = false → ∀ r, r.length = p.eval x.length → A (x, r) = false)
 
 /-- Bounded-error probabilistic polynomial time with an actual TM2 verifier. -/
-def BPP : ComplexityClass :=
+def BPP : Set DecisionProblem :=
   {L | ∃ p A, IsPolyTime A ∧ BoundedError p A L}
 
 /-- One-sided-error randomized polynomial time with an actual TM2 verifier. -/
-def RP : ComplexityClass :=
+def RP : Set DecisionProblem :=
   {L | ∃ p A, IsPolyTime A ∧ OneSidedError p A L}
 
 /-- Complements of RP languages. -/
-def coRP : ComplexityClass :=
+def coRP : Set DecisionProblem :=
   {L | (fun x => !(L x)) ∈ RP}
 
 /-- Zero-error polynomial time, using Vadhan's RP ∩ coRP characterization. -/
-def ZPP : ComplexityClass := RP ∩ coRP
+def ZPP : Set DecisionProblem := RP ∩ coRP
 
 @[simp]
 theorem mem_zpp (L : DecisionProblem) :
