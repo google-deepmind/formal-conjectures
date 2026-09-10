@@ -55,6 +55,15 @@ theorem isGlobalMinimal_iff_forall_isMinimal (W : WeierstrassCurve K) :
       (W.baseChange (v.adicCompletion K)).IsMinimal (v.adicCompletionIntegers K) :=
   isGlobalMinimal_iff W
 
+/-- The exponent of `v` in the minimal discriminant ideal of `W`: the normalized additive
+valuation of the discriminant of a minimal model over the `v`-adic integers.
+The discriminant is nonzero because `W` is elliptic, so its valuation is finite. -/
+noncomputable def localMinimalDiscriminantExponent (W : WeierstrassCurve K) [W.IsElliptic]
+    (v : HeightOneSpectrum (𝓞 K)) : ℕ :=
+  (IsDiscreteValuationRing.addVal (v.adicCompletionIntegers K)
+    (((W.baseChange (v.adicCompletion K)).minimal (v.adicCompletionIntegers K)).integralModel
+      (v.adicCompletionIntegers K)).Δ).toNat
+
 end NumberField
 
 section Rat
