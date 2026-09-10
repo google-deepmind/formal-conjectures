@@ -29,6 +29,10 @@ on:
         description: 'Skip Lean build and use live site data (for website development)'
         type: boolean
         default: false
+      deploy_preview:
+        description: 'Deploy this revision to fork Pages after a successful build (forks only)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -347,12 +351,13 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' ||
       (github.repository != 'google-deepmind/formal-conjectures' &&
-       endsWith(github.ref_name, '-webtest'))
+       (endsWith(github.ref_name, '-webtest') ||
+        (github.event_name == 'workflow_dispatch' && inputs.deploy_preview)))
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, scripts]
     # Only the deployment job needs write access to Pages and the OIDC token.
     permissions:
       contents: read
