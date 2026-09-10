@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
-public import Mathlib.Analysis.Normed.Field.Ultra
+public import FormalConjecturesForMathlib.Analysis.Normed.Algebra.Logarithm
+public import FormalConjecturesForMathlib.NumberTheory.Padics.OneUnits
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
 public import Mathlib.NumberTheory.Padics.Complex
 public import Mathlib.NumberTheory.Padics.ProperSpace
@@ -22,17 +23,20 @@ public import Mathlib.NumberTheory.Padics.ProperSpace
 /-!
 # The Iwasawa `p`-adic logarithm
 
-The `p`-adic logarithm `log u = -∑ₙ (1 - u)^(n+1) / (n+1)`, converging on the open disc
-`‖u - 1‖ < 1` of an abstract complete ultrametric field `K` of characteristic zero, and Iwasawa's
-extension of it to those `x` some positive power of which is a `1`-unit times a power of `p` —
-which in `K = ℂ_[p]` is every nonzero element.
+Iwasawa's extension of the `p`-adic logarithm to those `x` in a complete ultrametric field `K` of
+characteristic zero some positive power of which is a `1`-unit times a power of `p` — which in
+`K = ℂ_[p]` is every nonzero element. It is built on `NormedSpace.log`, the series
+`log u = ∑ₙ ((-1) ^ (n + 1) / n) • (u - 1) ^ n` vendored from
+[mathlib#43670](https://github.com/leanprover-community/mathlib4/pull/43670) as
+`FormalConjecturesForMathlib.Analysis.Normed.Algebra.Logarithm`, through the normalisation
+`log_p x = log (x ^ N / p ^ m) / N`. That pull request lists this extension, the "analytic
+continuation of `log` in the ultrametric case" with `log p = 0`, as future work.
 
 ## Main definitions
 
-* `padicLog`: the logarithm series, converging on the whole open disc `‖u - 1‖ < 1`.
 * `HasIwasawaLog p x`: some power `x ^ N` (`N ≥ 1`) is a `1`-unit times a power of `p`.
-* `iwasawaLog p`: the Iwasawa logarithm, the extension of `padicLog` to `HasIwasawaLog p`
-  characterised by being a homomorphism with `log p = 0`.
+* `iwasawaLog p`: the Iwasawa logarithm `NormedSpace.log (x ^ N / p ^ m) / N` on
+  `HasIwasawaLog p`, characterised by being a homomorphism with `log p = 0`.
 
 ## Main results
 
@@ -42,16 +46,14 @@ which in `K = ℂ_[p]` is every nonzero element.
 
 This file carries only what `FormalConjectures.Paper.GrossKuzmin` uses: `iwasawaLog` is the
 `log_p` of Gross's regulator map, and `hasIwasawaLog_iff` is what shows that no junk value of
-`iwasawaLog` is involved there. The analytic theory is deliberately omitted — that `padicLog`
-converges and turns products into sums, that `iwasawaLog` is well defined independently of the
-choice of `N` and `m` below and is a homomorphism with `log p = 0`, and the `p`-adic exponential
-and its inverse relationship with the logarithm for odd `p`. Those are stated in the references
-and would be the content of a full Mathlib development.
+`iwasawaLog` is involved there. The analytic theory is deliberately omitted, as it is in
+mathlib#43670: that `NormedSpace.log` converges on `‖u - 1‖ < 1` and turns products into sums
+there, and hence that `iwasawaLog` is independent of the choice of `N` and `m` below and is a
+homomorphism with `log p = 0`. The ultrametric estimates on `1`-units are those of
+`FormalConjecturesForMathlib.NumberTheory.Padics.OneUnits`.
 
 ## References
 
-* [Con] K. Conrad, *Infinite series in p-adic fields*, §8 (the logarithm).
-* [Kob84] N. Koblitz, *p-adic Numbers, p-adic Analysis, and Zeta-Functions*, Ch. IV.
 * [Wiki] Wikipedia, *p-adic exponential function* (the Iwasawa logarithm).
 -/
 
@@ -61,49 +63,6 @@ namespace PadicIwasawaLog
 
 variable {p : ℕ} [hp : Fact p.Prime] {K : Type*} [NontriviallyNormedField K]
   [IsUltrametricDist K] [CompleteSpace K] [CharZero K]
-
-section Log
-
-omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- The ultrametric logarithm `log u = -∑ₙ (1 - u)^(n+1) / (n+1)`, converging for
-`‖u - 1‖ < 1`; junk value otherwise.  [Kob84, Ch. IV §1]. -/
-noncomputable def padicLog (u : K) : K :=
-  -∑' n : ℕ, (1 - u) ^ (n + 1) / (n + 1)
-
-omit [CompleteSpace K] [CharZero K] in
-/-- A `1`-unit has norm one: `‖1 + x‖ = 1` as soon as `‖x‖ < 1`. -/
-theorem norm_eq_one_of_norm_sub_one_lt_one {u : K} (hu : ‖u - 1‖ < 1) : ‖u‖ = 1 := by
-  have h : u = 1 + (u - 1) := by ring
-  rw [h, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [norm_one]; exact hu.ne'),
-    norm_one, max_eq_left hu.le]
-
-end Log
-
-/-! ### The unit disc is closed under multiplication and powers -/
-
-section OneUnits
-
-omit [CompleteSpace K] [CharZero K] in
-/-- The `1`-units are closed under multiplication:
-`‖uv - 1‖ = ‖(u - 1)v + (v - 1)‖ ≤ max (‖u - 1‖ * ‖v‖) ‖v - 1‖ < 1`. [Con, p. 27]. -/
-theorem norm_mul_sub_one_lt {u v : K} (hu : ‖u - 1‖ < 1) (hv : ‖v - 1‖ < 1) :
-    ‖u * v - 1‖ < 1 := by
-  have h : u * v - 1 = (u - 1) * v + (v - 1) := by ring
-  rw [h]
-  refine lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ?_ hv)
-  rw [norm_mul, norm_eq_one_of_norm_sub_one_lt_one hv, mul_one]
-  exact hu
-
-omit [CompleteSpace K] [CharZero K] in
-/-- The `1`-units are closed under powers, by induction from `norm_mul_sub_one_lt`. -/
-theorem norm_pow_sub_one_lt {u : K} (hu : ‖u - 1‖ < 1) (n : ℕ) : ‖u ^ n - 1‖ < 1 := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [pow_succ]
-    exact norm_mul_sub_one_lt ih hu
-
-end OneUnits
 
 /-! ### The Iwasawa logarithm: its domain, and its definition -/
 
@@ -129,16 +88,16 @@ def HasIwasawaLog (x : K) : Prop :=
 
 omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
 variable (p) in
-/-- The **Iwasawa logarithm**: the unique extension of `padicLog` from the `1`-units to
+/-- The **Iwasawa logarithm**: the unique extension of `NormedSpace.log` from the `1`-units to
 `HasIwasawaLog p` (all of `ℂ_p^×` when `K = ℂ_p`) which is a homomorphism and has `log p = 0`
-[Wiki]. Concretely `iwasawaLog p x = padicLog (x ^ N / p ^ m) / N` for `N ≥ 1`, `m` with
+[Wiki]. Concretely `iwasawaLog p x = NormedSpace.log (x ^ N / p ^ m) / N` for `N ≥ 1`, `m` with
 `‖x ^ N / p ^ m - 1‖ < 1`; the value is independent of that choice, though this file does not
 prove it, and to fix a value here `N` is taken least and `m` by choice. Junk value `0` outside
 the domain. -/
 noncomputable def iwasawaLog (x : K) : K := by
   classical
   exact if h : ∃ N : ℕ, 0 < N ∧ ∃ m : ℤ, ‖x ^ N / ((p : ℕ) : K) ^ m - 1‖ < 1 then
-    padicLog (x ^ Nat.find h / ((p : ℕ) : K) ^ Classical.choose (Nat.find_spec h).2) /
+    NormedSpace.log (x ^ Nat.find h / ((p : ℕ) : K) ^ Classical.choose (Nat.find_spec h).2) /
       (Nat.find h : K)
   else 0
 
@@ -170,7 +129,8 @@ theorem HasIwasawaLog.mul {x y : K} (hx : HasIwasawaLog p x) (hy : HasIwasawaLog
     rw [div_pow, div_pow, ← zpow_natCast (((p : ℕ) : K) ^ m), ← zpow_natCast (((p : ℕ) : K) ^ m'),
       ← zpow_mul, ← zpow_mul, div_mul_div_comm, ← zpow_add₀ h3ne, mul_pow, pow_mul, pow_mul']
   rw [e]
-  exact norm_mul_sub_one_lt (norm_pow_sub_one_lt h N') (norm_pow_sub_one_lt h' N)
+  exact IsUltrametricDist.norm_mul_sub_one_lt (IsUltrametricDist.norm_pow_sub_one_lt h N')
+    (IsUltrametricDist.norm_pow_sub_one_lt h' N)
 
 omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
 /-- `HasIwasawaLog` is transported along norm-preserving ring homomorphisms

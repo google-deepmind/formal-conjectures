@@ -75,16 +75,26 @@ way and neither changing the content.
 
 The remaining objects match the sources directly:
 
-* $S_p$ is `PrimesAbove K p` and $|S_p|$ is `Nat.card (PrimesAbove K p)`, which is at least `1`
-  (`zero_lt_card_primesAbove`) so that `|S_p| - 1` is an honest subtraction;
+* $S_p$ is `NumberField.PrimesAbove K p`, from
+  `FormalConjecturesForMathlib.NumberTheory.NumberField.PrimesAbove`, and $|S_p|$ is
+  `Nat.card (PrimesAbove K p)`, which is at least `1` (`zero_lt_card_primesAbove`) so that
+  `|S_p| - 1` is an honest subtraction;
 * $E'$ is `pUnits K p`, Mathlib's `Set.unit` for the set $S_p$, which is
   $\mathcal{O}_K[1/p]^\times$ by `Set.unitEquivUnitsInteger`;
 * $\log_p$ is `PadicIwasawaLog.iwasawaLog`, Iwasawa's extension of the logarithm with
-  $\log_p p = 0$. This convention is forced here: $\sigma(x)$ is a $p$-unit, not a unit, so it
-  has nonzero valuation and the naive series does not converge at it. The Iwasawa logarithm is
-  defined on all of $\mathbb{C}_p^\times$ (`PadicIwasawaLog.PadicComplex.hasIwasawaLog_iff`), and
-  every $\sigma(x)$ summed over in `logNorm` is nonzero (`hasIwasawaLog_embedding`), so no junk
-  value is involved;
+  $\log_p p = 0$, from `FormalConjecturesForMathlib.NumberTheory.Padics.IwasawaLog`. It is built
+  on `NormedSpace.log`, the logarithm series vendored from
+  [mathlib#43670](https://github.com/leanprover-community/mathlib4/pull/43670) as
+  `FormalConjecturesForMathlib.Analysis.Normed.Algebra.Logarithm`, by
+  $\log_p x = \log(x^N / p^m) / N$ for any $N \geq 1$ and $m$ putting $x^N / p^m$ in the disc
+  of convergence. The extension cannot be avoided: $\sigma(x)$ is a $p$-unit, not a unit, so it
+  has nonzero valuation and the series does not converge at it. Nor can the inputs be restricted
+  to principal units, as `leopoldt_conjecture.variants.padicRegulator` does for units: a $p$-unit
+  that is a principal unit at every prime above $p$ is a unit, and for $K = \mathbb{Q}(i)$ and
+  $p = 5$ the only such unit is $1$, so the span would be $0$ instead of having dimension
+  $|S_p| - 1 = 1$. The Iwasawa logarithm is defined on all of $\mathbb{C}_p^\times$
+  (`PadicIwasawaLog.PadicComplex.hasIwasawaLog_iff`), and every $\sigma(x)$ summed over in
+  `logNorm` is nonzero (`hasIwasawaLog_embedding`), so no junk value is involved;
 * $\rho$ is `grossRegulator` and the span of its image is `regulatorSpan`.
 
 *References:*
@@ -117,9 +127,6 @@ namespace GrossKuzmin
 variable (K : Type*) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime]
 
 /- ## The primes above `p` -/
-
-/-- $S_p$ as a type: the primes $\mathfrak{p}$ of $\mathcal{O}_K$ with $\mathfrak{p} \mid p$. -/
-abbrev PrimesAbove : Type _ := {v : HeightOneSpectrum (𝓞 K) // (p : 𝓞 K) ∈ v.asIdeal}
 
 /-- $S_p$ as a set of primes, the shape `Set.unit` wants for the $p$-units. -/
 abbrev primesAboveSet : Set (HeightOneSpectrum (𝓞 K)) := {v | (p : 𝓞 K) ∈ v.asIdeal}

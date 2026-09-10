@@ -34,6 +34,7 @@ public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
+public import FormalConjecturesForMathlib.Analysis.Normed.Algebra.Logarithm
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
@@ -152,8 +153,10 @@ public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDiscriminant
+public import FormalConjecturesForMathlib.NumberTheory.NumberField.PrimesAbove
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
 public import FormalConjecturesForMathlib.NumberTheory.Padics.IwasawaLog
+public import FormalConjecturesForMathlib.NumberTheory.Padics.OneUnits
 public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
