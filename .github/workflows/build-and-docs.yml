@@ -33,6 +33,12 @@ on:
 permissions:
   contents: read
 
+# Replace older checks for the same PR, including PRs from forks. Every other
+# event gets its own group so pending merge-queue and main runs are preserved.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # The category check is a policy gate, so it has tests of its own. They need
   # no Lean build, so they run alongside it rather than after it.
