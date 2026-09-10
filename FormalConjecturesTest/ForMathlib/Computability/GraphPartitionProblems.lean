@@ -13,10 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Computability.DecisionProblems
-import FormalConjecturesForMathlib.Computability.GraphPartitionProblems
+module
+
+public import FormalConjecturesForMathlib.Computability.DecisionProblems
+public meta import FormalConjecturesForMathlib.Computability.GraphPartitionProblems
+public import FormalConjecturesForMathlib.Computability.GraphPartitionProblems
 
 /-! # Boundary and semantic tests for graph partition problems -/
+
+@[expose] public section
 
 namespace Computability.GraphPartitionProblems.Test
 
