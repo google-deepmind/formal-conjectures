@@ -52,7 +52,7 @@ class PublicationTests(unittest.TestCase):
         raw=(out/'catalog.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
         with patch.object(download_catalog,'urlopen',side_effect=[BytesIO(descriptor),BytesIO(raw)]):
             download_catalog.download('https://example.org/data/catalog-manifest.json',self.root/'preview')
-        self.assertEqual((self.root/'preview/conjectures.json').read_bytes(),raw)
+        self.assertEqual((self.root/'preview/catalog.json').read_bytes(),raw)
         self.assertEqual((self.root/'preview/catalog-manifest.json').read_bytes(),descriptor)
 
     def test_descriptor_cannot_redirect_to_another_origin(self):

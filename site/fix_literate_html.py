@@ -8,13 +8,17 @@ Fixes:
 3. Fixes domain-mappers.js module syntax
 4. Installs the shared Verso syntax theme
 5. Adds a root index page that redirects to the website's module index
+6. Links parent breadcrumbs to the filtered module index
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
 
 import os
+import re
 import shutil
 import sys
+from html import escape, unescape
+from urllib.parse import quote, unquote
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
@@ -45,12 +49,33 @@ document.addEventListener("DOMContentLoaded", function() {
 '''
 
 
+def fix_breadcrumbs(html):
+    """Point Verso's parent-folder links to the website's module index."""
+    def fix_list(match):
+        def fix_link(link):
+            href = unescape(link.group(1))
+            if not href.endswith('/') or href.startswith(('../', '/', '#')) or ':' in href:
+                return link.group(0)
+            # The trailing dot keeps similarly named libraries out of the results.
+            prefix = unquote(href).replace('/', '.')
+            target = '../modules/?q=' + quote(prefix, safe='')
+            return f'href="{escape(target, quote=True)}"'
+
+        return re.sub(r'href="([^"]*)"', fix_link, match.group(0))
+
+    # Limit rewriting to navigation; source-code and sidebar links stay intact.
+    return re.sub(r'<ol\b[^>]*class="breadcrumbs"[^>]*>.*?</ol>',
+                  fix_list, html, flags=re.DOTALL)
+
+
 def fix_html_file(path):
     """Install the syntax theme and KaTeX in a Verso HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    modified = False
+    fixed_html = fix_breadcrumbs(html)
+    modified = fixed_html != html
+    html = fixed_html
 
     # Add these independently: cached pages may already contain KaTeX.
     if f'href="{HIGHLIGHT_STYLESHEET}"' not in html and '</head>' in html:

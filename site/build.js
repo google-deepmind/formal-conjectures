@@ -2,7 +2,7 @@
 /**
  * Build script for the Formal Conjectures website.
  *
- * Reads data/conjectures.json (produced by `lake exe extract_names` in the
+ * Reads data/catalog.json (produced by `lake exe extract_names` in the
  * formal-conjectures repo), processes it, and generates a static site under
  * site/.
  *
@@ -17,189 +17,8 @@ const { execFileSync } = require('child_process');
 // Set via BASE_PATH env var. Must NOT have a trailing slash.
 const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/$/, '');
 
-// ---------------------------------------------------------------------------
-// AMS MSC2020 subject classification map (code → description)
-// ---------------------------------------------------------------------------
-const AMS_SUBJECTS = {
-  0:  'General and overarching topics',
-  1:  'History and biography',
-  3:  'Mathematical logic and foundations',
-  5:  'Combinatorics',
-  6:  'Order, lattices, ordered algebraic structures',
-  8:  'General algebraic systems',
-  11: 'Number theory',
-  12: 'Field theory and polynomials',
-  13: 'Commutative algebra',
-  14: 'Algebraic geometry',
-  15: 'Linear and multilinear algebra; matrix theory',
-  16: 'Associative rings and algebras',
-  17: 'Nonassociative rings and algebras',
-  18: 'Category theory; homological algebra',
-  19: 'K-theory',
-  20: 'Group theory and generalizations',
-  22: 'Topological groups, Lie groups',
-  26: 'Real functions',
-  28: 'Measure and integration',
-  30: 'Functions of a complex variable',
-  31: 'Potential theory',
-  32: 'Several complex variables and analytic spaces',
-  33: 'Special functions',
-  34: 'Ordinary differential equations',
-  35: 'Partial differential equations',
-  37: 'Dynamical systems and ergodic theory',
-  39: 'Difference and functional equations',
-  40: 'Sequences, series, summability',
-  41: 'Approximations and expansions',
-  42: 'Harmonic analysis on Euclidean spaces',
-  43: 'Abstract harmonic analysis',
-  44: 'Integral transforms, operational calculus',
-  45: 'Integral equations',
-  46: 'Functional analysis',
-  47: 'Operator theory',
-  49: 'Calculus of variations and optimal control; optimization',
-  51: 'Geometry',
-  52: 'Convex and discrete geometry',
-  53: 'Differential geometry',
-  54: 'General topology',
-  55: 'Algebraic topology',
-  57: 'Manifolds and cell complexes',
-  58: 'Global analysis, analysis on manifolds',
-  60: 'Probability theory and stochastic processes',
-  62: 'Statistics',
-  65: 'Numerical analysis',
-  68: 'Computer science',
-  70: 'Mechanics of particles and systems',
-  74: 'Mechanics of deformable solids',
-  76: 'Fluid mechanics',
-  78: 'Optics, electromagnetic theory',
-  80: 'Classical thermodynamics, heat transfer',
-  81: 'Quantum theory',
-  82: 'Statistical mechanics, structure of matter',
-  83: 'Relativity and gravitational theory',
-  85: 'Astronomy and astrophysics',
-  86: 'Geophysics',
-  90: 'Operations research, mathematical programming',
-  91: 'Game theory, economics, social and behavioral sciences',
-  92: 'Biology and other natural sciences',
-  93: 'Systems theory; control',
-  94: 'Information and communication, circuits',
-  97: 'Mathematics education',
-};
-
-// ---------------------------------------------------------------------------
-// Source collection metadata (module segment → display info)
-// ---------------------------------------------------------------------------
-const SOURCE_COLLECTIONS = {
-  ErdosProblems:       { name: 'Erdős Problems',           url: 'https://www.erdosproblems.com' },
-  Wikipedia:           { name: 'Wikipedia',                url: 'https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics' },
-  GreensOpenProblems:  { name: "Green's Open Problems",    url: 'https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf' },
-  HilbertProblems:     { name: 'Hilbert Problems',         url: 'https://en.wikipedia.org/wiki/Hilbert%27s_problems' },
-  Millenium:           { name: 'Millennium Prize Problems', url: 'https://www.claymath.org/millennium-problems/' },
-  Mathoverflow:        { name: 'MathOverflow',             url: 'https://mathoverflow.net' },
-  OEIS:                { name: 'OEIS',                     url: 'https://oeis.org' },
-  Arxiv:               { name: 'arXiv',                    url: 'https://arxiv.org/archive/math' },
-  Paper:               { name: 'Papers',                   url: null },
-  Books:               { name: 'Books',                    url: null },
-  WrittenOnTheWallII:  { name: 'Written on the Wall II',   url: null },
-  Kourovka:            { name: 'Kourovka Notebook',        url: 'https://arxiv.org/pdf/1401.0300' },
-  Other:               { name: 'Other',                    url: null },
-};
-
-let GITHUB_BASE;
-const GITHUB_API_BASE = 'https://api.github.com/repos/google-deepmind/formal-conjectures';
-
-// ---------------------------------------------------------------------------
-// Data processing helpers
-// ---------------------------------------------------------------------------
-
-/** Convert a module name to a GitHub file URL. */
-function moduleToGitHubPath(module) {
-  // Replace periods with slashes outside guillemets
-  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
-    match[0] === '«' ? match : '/'
-  );
-  // and then strip Lean «guillemets» used to quote numeric/special segments
-  const clean = withSlashes.replace(/[«»]/g, '');
-  return `${clean}.lean`;
-}
-function moduleToGitHubURL(module) {
-  return `${GITHUB_BASE}/${moduleToGitHubPath(module)}`;
-}
-
-/** Convert a module name to a Verso literate source page URL. */
-function moduleToSourceURL(module) {
-  // Use the same approach as moduleToGitHubPath: replace dots with slashes,
-  // but preserve dots that are inside guillemets.
-  const withSlashes = module.replace(/«[^»]*»|\./g, (match) =>
-    match[0] === '«' ? match : '/'
-  );
-  // Add guillemets «» around path segments starting with a digit,
-  // matching verso-html's output directory naming convention.
-  const segments = withSlashes.split('/');
-  const withGuillemets = segments.map(s =>
-    // If already has guillemets, keep as-is; if starts with digit, wrap
-    s.startsWith('«') ? s : /^\d/.test(s) ? `«${s}»` : s
-  );
-  return `/src/${withGuillemets.join('/')}/`;
-}
-
-/** Extract the source collection from a module name. */
-function getCollection(module) {
-  const parts = module.split('.');
-  const key = parts[1]; // segment after 'FormalConjectures'
-  return SOURCE_COLLECTIONS[key] || { name: key || 'Unknown', url: null };
-}
-
-/** Category metadata: label and CSS class for styling. */
-const CATEGORY_META = {
-  'research open':    { label: 'Open',          css: 'cat-open' },
-  'research solved':  { label: 'Solved',        css: 'cat-solved' },
-  'textbook':         { label: 'Textbook',      css: 'cat-textbook' },
-  'test':             { label: 'Test',          css: 'cat-test' },
-  'API':              { label: 'API',           css: 'cat-api' },
-};
-
-function getCategoryMeta(category) {
-  return CATEGORY_META[category] || { label: category, css: 'cat-unknown' };
-}
-
-/** Enrich a raw theorem entry with derived fields. */
-function processEntry(entry) {
-  // Keep guillemets in theorem/module for exact lookups (avoids collisions
-  // between e.g. «A.B».C and A.«B.C» which are distinct Lean names).
-  // Provide display* variants with guillemets stripped for HTML rendering.
-  const collection = getCollection(entry.module);
-  const catMeta = getCategoryMeta(entry.category);
-  const subjects = entry.subjects.map(code => ({
-    code,
-    name: AMS_SUBJECTS[parseInt(code, 10)] || `AMS ${code}`,
-  }));
-  // Pick only the fields the website actually uses. Avoids leaking large
-  // unused fields (statement, docstring) into the client-side JSON.
-  // Docstrings come from versoFragments instead.
-  // A declaration can carry several `formal_proof` annotations. `hasFormalProof` stays a
-  // boolean about the conjecture, so the landing-page and stats counts keep counting
-  // conjectures rather than proofs.
-  const formalProofs = entry.formalProofs || [];
-  const hasFormalProof = formalProofs.length > 0;
-  return {
-    theorem: entry.theorem,
-    module: entry.module,
-    category: entry.category,
-    displayTheorem: entry.theorem.replace(/[«»]/g, ''),
-    displayModule: entry.module.replace(/[«»]/g, ''),
-    githubPath: moduleToGitHubPath(entry.module),
-    githubUrl: moduleToGitHubURL(entry.module),
-    sourceUrl: moduleToSourceURL(entry.module),
-    collection: collection.name,
-    collectionUrl: collection.url,
-    categoryLabel: catMeta.label,
-    categoryCss: catMeta.css,
-    subjects,
-    hasFormalProof,
-    formalProofs,
-  };
-}
+const {AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry} = require('./src/js/catalog.js');
+let GITHUB_API_BASE;
 
 /** Compute site-wide statistics from processed entries. */
 function computeStats(conjectures) {
@@ -325,12 +144,13 @@ function dateOnly(isoDate) {
   return isoDate ? isoDate.slice(0, 10) : null;
 }
 
-function getContributorHistory(repoRoot, githubPath) {
+function getContributorHistory(repoRoot, githubPath, revision) {
   let output = '';
   try {
     output = execFileSync('git', [
       '-C', repoRoot,
       'log',
+      revision,
       '--follow',
       '--no-merges',
       '--format=%H%x1f%aN%x1f%aE%x1f%ae%x1f%aI',
@@ -523,7 +343,7 @@ function applyContributorProfile(contributor, identity) {
   };
 }
 
-async function buildContributorMetadata(conjectures) {
+async function buildContributorMetadata(conjectures, revision) {
   const repoRoot = getGitRoot();
   if (!repoRoot) {
     console.log('  No git repository found; skipping contributor metadata.');
@@ -535,7 +355,7 @@ async function buildContributorMetadata(conjectures) {
   const contributorsByIdentity = new Map();
 
   for (const githubPath of paths) {
-    const contributors = getContributorHistory(repoRoot, githubPath);
+    const contributors = getContributorHistory(repoRoot, githubPath, revision);
     if (contributors.length === 0) continue;
 
     contributorsByPath[githubPath] = contributors;
@@ -765,27 +585,32 @@ async function main() {
 
   // Read raw data
   const catalog = require('./catalog.cjs').readCatalog('data');
-  GITHUB_BASE = `https://github.com/${catalog.provenance.source.repository}/blob/${catalog.provenance.source.commit}`;
+  GITHUB_API_BASE = `https://api.github.com/repos/${catalog.provenance.source.repository}`;
   const rawData = catalog.problems;
 
   if (rawData.length === 0) {
-    console.error('Error: no conjectures loaded. Run `lake exe extract_names > site/data/conjectures.json` first.');
+    console.error('Error: no conjectures loaded. Generate a complete catalog as described in site/README.md.');
     process.exit(1);
   }
 
-  const conjectures = rawData.map(processEntry);
+  const conjectures = rawData.map(entry => processEntry(entry, catalog.provenance.source));
   const stats = computeStats(conjectures);
   const advancedStats = computeAdvancedStats(conjectures);
-  const contributors = await buildContributorMetadata(conjectures);
+
+  const descriptor = JSON.parse(fs.readFileSync('data/catalog-manifest.json'));
 
   // Load Verso literate fragments (module docstrings + const links)
   let versoFragments = { moduleDocs: {}, constLinks: {} };
-  if (fs.existsSync('data/verso-fragments.json')) {
+  if (!process.env.FC_RENDER_BASE && fs.existsSync('data/verso-fragments.json')) {
     versoFragments = JSON.parse(fs.readFileSync('data/verso-fragments.json', 'utf8'));
+    if (versoFragments.catalog_sha256 !== descriptor.sha256) throw new Error('Verso fragments belong to another catalog. Rebuild them from the same source revision.');
     console.log(`  Loaded ${Object.keys(versoFragments.moduleDocs).length} module docstrings, ${Object.keys(versoFragments.constLinks).length} constant links from Verso.`);
-  } else {
-    console.log('  No Verso fragments found (run extract_verso_fragments.py first).');
+  } else if (!process.env.FC_RENDER_BASE) {
+    throw new Error('Verso fragments are missing. Run the full build in site/README.md, or use site/dev.sh for a published snapshot.');
   }
+
+  const contributors = process.env.FC_RENDER_BASE ? {}
+    : await buildContributorMetadata(conjectures, catalog.provenance.source.commit);
 
   console.log(`  Loaded ${conjectures.length} conjectures.`);
 
@@ -799,16 +624,32 @@ async function main() {
   if (fs.existsSync('src/img')) copyDir('src/img', 'site/assets/img');
   if (fs.existsSync('src/fonts')) copyDir('src/fonts', 'site/assets/fonts');
 
-  // Write processed data (for client-side pages)
+  // The browser reads the same canonical catalog as the CLI. Verso output is a
+  // per-module rendering sidecar, bound to that catalog's bytes, never metadata input.
   ensureDir('site/data');
-  fs.writeFileSync(
-    'site/data/conjectures.json',
-    JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors, catalogProvenance: catalog.provenance }),
-  );
-  // Retain the native extract for CLI, status, and link consumers. The existing
-  // browser projection and its field meanings remain unchanged.
-  fs.copyFileSync('data/conjectures.json', 'site/data/catalog.json');
+  const groups = new Map();
+  for (const entry of conjectures) {
+    if (!groups.has(entry.module)) groups.set(entry.module, []);
+    groups.get(entry.module).push(entry);
+  }
+  for (const [module, entries] of (process.env.FC_RENDER_BASE ? [] : groups)) {
+    const first = entries[0];
+    const moduleKey = first.sourceUrl.replace(/^\/src/, '');
+    const constLinks = {};
+    for (const entry of entries) {
+      if (versoFragments.constLinks[entry.theorem]) constLinks[entry.theorem] = versoFragments.constLinks[entry.theorem];
+    }
+    const filename = `site/data/rendered/${descriptor.sha256}/${moduleToGitHubPath(module).replace(/\.lean$/, '.json')}`;
+    ensureDir(path.dirname(filename));
+    fs.writeFileSync(filename, JSON.stringify({schema_version:'fc.website-rendering.v1',
+      catalog_sha256:descriptor.sha256, module,
+      moduleDocs: {[moduleKey]:versoFragments.moduleDocs[moduleKey] || ''}, constLinks,
+      contributors:contributors[first.githubPath] || []}));
+  }
+  // One native catalog is shared by browser, CLI, status and link consumers.
+  fs.copyFileSync('data/catalog.json', 'site/data/catalog.json');
   fs.copyFileSync('data/catalog-manifest.json', 'site/data/catalog-manifest.json');
+  copyDir('../toolkit/conjectures/resources/schemas', 'site/data/schemas');
   const whitePlotPath = path.join('data', 'file_counts_white.html');
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
   if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
@@ -892,6 +733,9 @@ function copyStaticTemplate(templateName, dest) {
  * Also sets the data-base attribute on the <html> tag for JavaScript use.
  */
 function applyBasePath(html) {
+  const renderingBase = process.env.FC_RENDER_BASE || BASE_PATH;
+  if (process.env.FC_RENDER_BASE && !/^https:\/\/[A-Za-z0-9.-]+(?:\/[A-Za-z0-9._/-]*)?$/.test(renderingBase)) throw new Error('Invalid rendering origin');
+  html = html.replace('data-base=""', `data-base="" data-render-base="${renderingBase}"`);
   if (!BASE_PATH) return html;
   // Set data-base on <html> for client-side JS (main.js uses this for fetch paths)
   html = html.replace('data-base=""', `data-base="${BASE_PATH}"`);

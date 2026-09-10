@@ -2,9 +2,10 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const path = require('node:path');
+const {sameJSON} = require('./src/js/catalog.js');
 
 function readCatalog(directory) {
-  const raw = fs.readFileSync(path.join(directory, 'conjectures.json'));
+  const raw = fs.readFileSync(path.join(directory, 'catalog.json'));
   const descriptor = JSON.parse(fs.readFileSync(path.join(directory, 'catalog-manifest.json')));
   if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'catalog.json' ||
       descriptor.bytes !== raw.length || descriptor.sha256 !== crypto.createHash('sha256').update(raw).digest('hex')) {
@@ -16,7 +17,7 @@ function readCatalog(directory) {
       !/^[\w.-]+\/[\w.-]+$/.test(source?.repository || '') || !/^[a-f0-9]{40}$/.test(source?.commit || '') ||
       data.problems.some(p => typeof p.statement !== 'string' || !p.statement.trim()) ||
       descriptor.problem_count !== data.problems.length ||
-      JSON.stringify(data.provenance) !== JSON.stringify(descriptor.provenance)) {
+      !sameJSON(data.provenance, descriptor.provenance)) {
     throw new Error('A site build requires complete statements and matching catalog provenance.');
   }
   return data;

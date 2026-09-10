@@ -43,7 +43,7 @@ mkdir -p data
 python3 ../scripts/download_catalog.py --out data
 
 echo "==> Building website ..."
-node build.js
+FC_RENDER_BASE="$LIVE_URL" node build.js
 
 echo "==> Done. Output in site/"
 
