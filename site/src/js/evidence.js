@@ -51,7 +51,11 @@ const FCEvidence = (() => {
       return link ? `<li><a href="${escape(link)}" target="_blank" rel="noopener">#${escape(String(pr.number))}: ${escape(pr.title)}</a></li>` : '';
     }).join('') + '</ul>' : sameRepository ? '<p>No related open PRs in this published queue snapshot.</p>' : '<p>Related work is unavailable for this catalog repository.</p>';
     const command = `conjectures show '${theorem.theorem.replaceAll("'", "'\\''")}'`;
-    return list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue +
+    const source = data.catalog_source;
+    const provenance = source?.repository && source?.commit
+      ? `<p>Catalog source: ${escape(source.repository)} at <code>${escape(source.commit)}</code>.</p>`
+      : '<p>Catalog source revision is unavailable.</p>';
+    return provenance + list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue +
       `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`;
   }
   return {render, records, safeURL};
