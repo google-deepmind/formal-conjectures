@@ -15,7 +15,18 @@ def repository_name(value):
 
 
 def encode(value):
-    return (json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'))+'\n').encode()
+    return (json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':'))+'\n').encode()
+
+
+def parse(raw):
+    def unique(pairs):
+        value={}
+        for key,item in pairs:
+            if key in value:raise ValueError('Duplicate JSON member: '+key)
+            value[key]=item
+        return value
+    def invalid(value):raise ValueError('Non-finite JSON number: '+value)
+    return json.loads(raw,object_pairs_hook=unique,parse_constant=invalid)
 
 
 def module_path(module):
@@ -65,7 +76,8 @@ def complete(data):
 
 def manifest(data, raw):
     complete(data)
-    return {'schema_version':MANIFEST_SCHEMA,'catalog':'catalog.json',
+    return {'schema_version':MANIFEST_SCHEMA,'catalog':'conjectures.json',
+            'schema':'schemas/catalog-v2.schema.json',
             'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),
             'problem_count':len(data['problems']),'provenance':data['provenance']}
 
@@ -73,10 +85,10 @@ def manifest(data, raw):
 def verify(descriptor, raw):
     if not isinstance(descriptor,dict) or descriptor.get('schema_version')!=MANIFEST_SCHEMA:
         raise ValueError('Unsupported catalog descriptor')
-    if descriptor.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
+    if descriptor.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
     if len(raw)!=descriptor.get('bytes') or hashlib.sha256(raw).hexdigest()!=descriptor.get('sha256'):
         raise ValueError('Catalog digest or size differs from its descriptor')
-    data=complete(json.loads(raw))
+    data=complete(parse(raw))
     if data['provenance']!=descriptor.get('provenance') or len(data['problems'])!=descriptor.get('problem_count'):
         raise ValueError('Catalog provenance or count differs from its descriptor')
     return data

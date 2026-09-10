@@ -84,7 +84,8 @@ jobs:
 
       - name: Export the complete FC100 subset
         run: |
-          python3 comparator/check_coverage.py --generator "$RUNNER_TEMP/generator" --out "$RUNNER_TEMP/fc100"
+          python3 comparator/check_coverage.py --generator "$RUNNER_TEMP/generator" --out "$RUNNER_TEMP/fc100" \
+            --source-ref "$(git rev-parse HEAD)" --source-repository "https://github.com/$GITHUB_REPOSITORY"
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

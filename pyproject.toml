@@ -18,11 +18,11 @@ conjectures = "conjectures.cli:main"
 where = ["toolkit"]
 
 [project.optional-dependencies]
-test = ["PyYAML==6.0.3"]
+test = ["PyYAML==6.0.3", "jsonschema==4.25.1"]
 eval = ["mcp==1.30.0"]
 
 [tool.setuptools.package-data]
-conjectures = ["resources/*", "resources/review/*.md", "resources/review/references/*.md", "resources/review/rubrics/*.md"]
+conjectures = ["resources/*", "resources/schemas/*.json", "resources/review/*.md", "resources/review/references/*.md", "resources/review/rubrics/*.md"]
 
 [project.urls]
 Documentation = "https://github.com/williamjblair/formal-conjectures/blob/codex/fc-toolkit-integration/toolkit/README.md"

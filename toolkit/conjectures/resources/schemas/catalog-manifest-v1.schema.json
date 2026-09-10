@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://google-deepmind.github.io/formal-conjectures/data/schemas/catalog-manifest-v1.schema.json",
+  "title": "FC catalog publication descriptor",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "catalog",
+    "sha256",
+    "bytes",
+    "problem_count",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fc.catalog.v1"
+    },
+    "catalog": {
+      "const": "conjectures.json"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "bytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "problem_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source",
+        "extractor",
+        "lean_toolchain",
+        "dependencies_sha256",
+        "scope",
+        "answer_mode"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "required": [
+            "repository",
+            "commit"
+          ],
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[\\w.-]+/[\\w.-]+$"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          }
+        },
+        "extractor": {
+          "type": "object",
+          "required": [
+            "repository",
+            "commit",
+            "path"
+          ],
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[\\w.-]+/[\\w.-]+$"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "path": {
+              "const": "scripts/extract_names.lean"
+            }
+          }
+        },
+        "lean_toolchain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scope": {
+          "const": "FormalConjectures"
+        },
+        "answer_mode": {
+          "const": "postpone"
+        }
+      }
+    },
+    "schema": {
+      "const": "schemas/catalog-v2.schema.json"
+    }
+  }
+}

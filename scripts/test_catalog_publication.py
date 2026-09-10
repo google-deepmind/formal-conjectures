@@ -33,9 +33,9 @@ class PublicationTests(unittest.TestCase):
     def test_repeat_publication_has_identical_bytes_and_retains_variants(self):
         out=self.root/'out'
         data=publish_catalog.prepare(self.root,'owner/fc',fixture(),out)
-        raw=(out/'catalog.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
+        raw=(out/'conjectures.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
         publish_catalog.prepare(self.root,'owner/fc',fixture(),out)
-        self.assertEqual(raw,(out/'catalog.json').read_bytes());self.assertEqual(descriptor,(out/'catalog-manifest.json').read_bytes())
+        self.assertEqual(raw,(out/'conjectures.json').read_bytes());self.assertEqual(descriptor,(out/'catalog-manifest.json').read_bytes())
         self.assertEqual(catalog_data.verify(json.loads(descriptor),raw),data)
         self.assertEqual(data['problems'],fixture()['problems'])
         self.assertEqual(data['provenance']['source']['commit'],self.git('rev-parse','HEAD'))
@@ -49,7 +49,7 @@ class PublicationTests(unittest.TestCase):
     def test_preview_keeps_original_bytes_and_provenance(self):
         from io import BytesIO
         out=self.root/'out';publish_catalog.prepare(self.root,'owner/fc',fixture(),out)
-        raw=(out/'catalog.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
+        raw=(out/'conjectures.json').read_bytes();descriptor=(out/'catalog-manifest.json').read_bytes()
         with patch.object(download_catalog,'urlopen',side_effect=[BytesIO(descriptor),BytesIO(raw)]):
             download_catalog.download('https://example.org/data/catalog-manifest.json',self.root/'preview')
         self.assertEqual((self.root/'preview/conjectures.json').read_bytes(),raw)
