@@ -63,7 +63,7 @@ class AgentProofTests(unittest.TestCase):
         self.assertTrue(args.local);self.assertTrue(args.global_config)
 
     def test_formal_pass_keeps_semantic_assessment_visible(self):
-        from conjectures import inspection, presentation
+        from conjectures import inspection, presentation, cli
         record={'id':'fixture','kind':'verify','status':'completed','outcome':'pass',
                 'result':{'outcome':'pass','semantic_assessment_required':True,
                           'comparator':{'outcome':'pass','stage':'complete'}}}
@@ -72,3 +72,7 @@ class AgentProofTests(unittest.TestCase):
         self.assertTrue(value['verification_summary']['semantic_assessment_required'])
         self.assertIn('semantic assessment',value['next_action'])
         self.assertIn('Semantic assessment: required',presentation.render(value,interface.parse(['run','show','fixture'])))
+        with patch.object(cli,'workspace',return_value=self.candidate),patch.object(cli,'config',return_value={}),patch.object(cli,'runs',return_value=[record]):
+            status=cli.dispatch(interface.parse(['status']))
+        self.assertEqual(status['outstanding'],1)
+        self.assertIn('semantic assessment',status['next_actions'][0])

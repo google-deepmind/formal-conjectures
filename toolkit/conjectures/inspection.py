@@ -95,7 +95,7 @@ def next_action(record):
     if record['kind'] == 'verify' and record['status'] in ('queued','in_progress','running','cancellation_requested'):
         return 'Retrieve verification: conjectures run wait '+identity
     if record.get('current_applicability') == 'historical':return 'Inputs changed. Prepare a new review; retain this result as history.'
-    if record.get('outcome') == 'pass' and record.get('verification_summary',{}).get('semantic_assessment_required'):
+    if record.get('outcome') == 'pass' and (record.get('verification_summary') or record.get('result') or {}).get('semantic_assessment_required'):
         return 'Arrange semantic assessment of the submitted definitions against the source. Kernel verification alone does not establish their intended meaning.'
     if record.get('verification_summary') and record.get('outcome') in ('fail','error','incomplete'):
         return 'Inspect verifier logs: conjectures run logs '+identity+'\nResolve the reported cause before starting a new verification.'

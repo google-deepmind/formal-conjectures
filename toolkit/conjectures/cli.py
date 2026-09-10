@@ -58,7 +58,7 @@ def dispatch(args):
             if args.status:records=[r for r in records if r['status']==args.status]
             records=records[:args.limit]
         from .inspection import next_action
-        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete')]
+        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete') or (r.get('outcome')=='pass' and r.get('result',{}).get('semantic_assessment_required'))]
         actions=[next_action(r) for r in outstanding]
         return {'outcome':'pass','runs':records,'outstanding':len(outstanding),'next_actions':actions,
                 'next_action':None if records else 'Try conjectures review --pr 4941, or conjectures doctor --for review.'}
