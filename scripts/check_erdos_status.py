@@ -24,7 +24,7 @@ YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
 )
 CONJECTURES_URL = (
-    "https://google-deepmind.github.io/formal-conjectures/data/catalog.json"
+    "https://google-deepmind.github.io/formal-conjectures/data/conjectures.json"
 )
 
 # `open (Lean)` is the open counterpart of `solved (Lean)`: the problem is open and a Lean

@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import urllib.request
 from problem_metadata import proof_links
-URL = "https://google-deepmind.github.io/formal-conjectures/data/catalog.json"
+URL = "https://google-deepmind.github.io/formal-conjectures/data/conjectures.json"
 
 def unique_links(links):
     return list(dict.fromkeys(link for link in links if link))
