@@ -68,10 +68,14 @@ The Generalized Poincaré Conjecture holds in dimension 4.
 theorem poincare_conjecture.variants.dimension_four : ConjectureFor 4 := by
   sorry
 
-/-- The predicate that the smooth Poincaré conjecture holds in dimension $n$. -/
+/-- The predicate that the smooth Poincaré conjecture holds in dimension $n$, i.e. that any
+smooth $n$-dimensional manifold that is homotopy equivalent to the sphere is in fact diffeomorphic
+to the sphere. As in `ConjectureFor`, the manifold must be Hausdorff: `ChartedSpace` and
+`IsManifold` do not imply this, and in every positive dimension there is a non-Hausdorff smooth
+manifold that is homotopy equivalent to the sphere. -/
 def SmoothConjectureFor (n : ℕ) : Prop :=
-  ∀ (M : Type) [TopologicalSpace M] [ChartedSpace (ℝ^n) M] [IsManifold (𝓡 n) ∞ M],
-    M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
+  ∀ (M : Type) [TopologicalSpace M] [T2Space M] [ChartedSpace (ℝ^n) M]
+    [IsManifold (𝓡 n) ∞ M], M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
 
 /-- A reformulation of the Millennium Problem in terms of smooth 3-folds. -/
 @[category textbook, AMS 54 57]
