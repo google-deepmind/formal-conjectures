@@ -188,30 +188,24 @@ lemma isOpen_integralSubgroup : IsOpen ((integralSubgroup n) : Set (GL n 𝔸ᶠ
 
 lemma isCompact_integralSubgroup : IsCompact ((integralSubgroup n) : Set (GL n 𝔸ᶠ[ℤ, ℚ])) := by
   set W : Set (Matrix n n 𝔸ᶠ[ℤ, ℚ]) := {M | ∀ i j, M i j ∈ integralAdeles} with hWdef
-  have hWc : IsCompact W := by
-    have hW : W = Set.univ.pi fun _ : n => Set.univ.pi fun _ : n =>
-        (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ]) := by
-      ext M
-      exact ⟨fun h i _ j _ => h i j, fun h i j => h i (Set.mem_univ i) j (Set.mem_univ j)⟩
-    exact hW ▸ isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_integralAdeles
-  rw [Units.isEmbedding_embedProduct.isCompact_iff]
+  have hWc : IsCompact W :=
+    (Set.ext fun M => ⟨fun h i _ j _ => h i j, fun h i j => h i trivial j trivial⟩ :
+      W = Set.univ.pi fun _ : n => Set.univ.pi fun _ => (integralAdeles : Set 𝔸ᶠ[ℤ, ℚ])) ▸
+      isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_integralAdeles
   have himg : Units.embedProduct _ '' (integralSubgroup n)
       = (fun p : Matrix n n 𝔸ᶠ[ℤ, ℚ] × Matrix n n 𝔸ᶠ[ℤ, ℚ] => (p.1, MulOpposite.op p.2)) ''
         ((W ×ˢ W) ∩ {p | p.1 * p.2 = 1} ∩ {p | p.2 * p.1 = 1}) := by
     ext p
     constructor
     · rintro ⟨g, hg, rfl⟩
-      refine ⟨((g : Matrix n n 𝔸ᶠ[ℤ, ℚ]), ((g⁻¹ : GL n 𝔸ᶠ[ℤ, ℚ]) : Matrix n n 𝔸ᶠ[ℤ, ℚ])),
-        ⟨⟨⟨hg.1, hg.2⟩, ?_⟩, ?_⟩, rfl⟩
-      · rw [Set.mem_ofPred_eq, ← Units.val_mul, mul_inv_cancel, Units.val_one]
-      · rw [Set.mem_ofPred_eq, ← Units.val_mul, inv_mul_cancel, Units.val_one]
+      exact ⟨(↑g, ↑g⁻¹), ⟨⟨⟨hg.1, hg.2⟩, g.mul_inv⟩, g.inv_mul⟩, rfl⟩
     · rintro ⟨⟨A, B⟩, ⟨⟨⟨hA, hB⟩, h1⟩, h2⟩, rfl⟩
       exact ⟨⟨A, B, h1, h2⟩, ⟨hA, hB⟩, rfl⟩
-  rw [himg]
-  refine IsCompact.image ?_ (continuous_fst.prodMk (MulOpposite.continuous_op.comp continuous_snd))
-  exact ((hWc.prod hWc).inter_right (isClosed_eq (continuous_fst.mul continuous_snd)
+  rw [Units.isEmbedding_embedProduct.isCompact_iff, himg]
+  exact (((hWc.prod hWc).inter_right (isClosed_eq (continuous_fst.mul continuous_snd)
     continuous_const)).inter_right (isClosed_eq (continuous_snd.mul continuous_fst)
-    continuous_const)
+      continuous_const)).image
+    (continuous_fst.prodMk (MulOpposite.continuous_op.comp continuous_snd))
 
 end IntegralSubgroup
 
