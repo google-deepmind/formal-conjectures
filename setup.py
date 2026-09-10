@@ -10,6 +10,7 @@ class Build(build_py):
         source = Path('.agents/skills/formal-conjectures-review')
         dest = Path(self.build_lib)/'conjectures/resources/review'
         shutil.copytree(source, dest, ignore=shutil.ignore_patterns('evals'), dirs_exist_ok=True)
+        shutil.copytree(Path('.agents/skills/conjectures'), dest.parent/'agent-skill', dirs_exist_ok=True)
         for name in ('README.md','RELEASE.md'):
             shutil.copy2(Path('toolkit')/name, dest.parent/name)
         native = Path('comparator')
