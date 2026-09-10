@@ -55,7 +55,8 @@ const FCEvidence = (() => {
     const provenance = source?.repository && source?.commit
       ? `<p>Catalog source: ${escape(source.repository)} at <code>${escape(source.commit)}</code>.</p>`
       : '<p>Catalog source revision is unavailable.</p>';
-    return provenance + list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue +
+    const observation = sameRepository && work.observed_at ? `<p>Queue observed: ${escape(work.observed_at)}.</p>` : '';
+    return provenance + list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue + observation +
       `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`;
   }
   return {render, records, safeURL};
