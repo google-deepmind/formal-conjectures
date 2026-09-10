@@ -23,15 +23,20 @@ public import Mathlib.Data.Fintype.Perm
 /-!
 # Encoded numerical and weighted decision problems
 
-These predicates implement Karp's 0–1 integer programming, knapsack (subset-sum equality),
-partition, job sequencing, and weighted max-cut problems. See *Reducibility among
-Combinatorial Problems* (1972), Main Theorem items 2, 18–21, pp. 94, 95, 97,
+These predicates implement Karp's job sequencing and signed-integer generalizations
+of his 0–1 integer programming, knapsack (subset-sum equality), partition and
+weighted max-cut problems. See *Reducibility among Combinatorial Problems* (1972),
+Main Theorem items 2, 18–21 and Appendix I, pp. 94, 95, 97, 103,
 https://doi.org/10.1007/978-1-4684-2001-2_9.
 
 Lists preserve multiplicity and explicitly represent every variable, job, and vertex.
 Integer data use the existing binary encoding. Matrices for integer programming are
 column-major; cut matrices are symmetric with zero diagonal, and zero denotes a missing
 or zero-weight edge. Malformed structured inputs are rejected.
+
+Karp's Appendix I uses positive integers for subset sum, partition and edge weights,
+and nonnegative components for the right-hand-side vector. Here these inputs may
+also be signed. Job parameters retain the source's positivity requirements.
 
 Decidability uses finite exhaustive enumeration. No polynomial-time algorithm is claimed.
 -/
@@ -51,7 +56,7 @@ def selectedSum (values : List ℤ) (chosen : Finset (Fin values.length)) : ℤ 
 theorem selectedSum_empty (values : List ℤ) : selectedSum values ∅ = 0 := by
   simp [selectedSum]
 
-/-- Karp's KNAPSACK: a 0–1 subset-sum equality over signed integers. -/
+/-- Signed-integer generalization of Karp's positive-input KNAPSACK (subset-sum equality). -/
 def SubsetSum (input : List ℤ × ℤ) : Prop :=
   ∃ chosen : Finset (Fin input.1.length), selectedSum input.1 chosen = input.2
 
@@ -59,7 +64,8 @@ instance (input : List ℤ × ℤ) : Decidable (SubsetSum input) := by
   unfold SubsetSum
   infer_instance
 
-/-- Partition the indices of an integer list into two parts of equal sum. -/
+/-- Partition the indices into equal-sum parts, allowing signed entries beyond Karp's
+positive-input convention. -/
 def Partition (values : List ℤ) : Prop :=
   ∃ chosen : Finset (Fin values.length),
     selectedSum values chosen = selectedSum values chosenᶜ
@@ -83,7 +89,8 @@ theorem partition_iff (values : List ℤ) :
   · exact ⟨chosen, by have := selectedSum_add_compl values chosen; omega⟩
 
 /-- Explicit columns of an integer matrix, paired with its right-hand side.
-The outer list represents all variables, including when there are no equations. -/
+The outer list represents all variables, including when there are no equations.
+The right-hand side may be signed, extending Karp's nonnegative-vector convention. -/
 abbrev IntegerProgramInput := List (List ℤ) × List ℤ
 
 /-- Every column has one entry for every right-hand-side component. -/
@@ -178,7 +185,8 @@ theorem cutWeight_compl {matrix : WeightMatrix} (h : ValidWeightMatrix matrix)
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ h.2.2 j i
 
-/-- There is a cut of weight at least the positive threshold. Negative edge weights are allowed. -/
+/-- There is a cut of weight at least the positive threshold. Negative edge weights are
+allowed, extending Karp's positive-edge-weight convention. -/
 def WeightedMaxCut (input : WeightMatrix × ℕ) : Prop :=
   ValidWeightMatrix input.1 ∧ 0 < input.2 ∧
     ∃ side : Finset (Fin input.1.length), (input.2 : ℤ) ≤ cutWeight input.1 side
