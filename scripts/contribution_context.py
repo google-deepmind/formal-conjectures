@@ -14,11 +14,14 @@ from conjectures.projections import contribution_context, work_context
 def main():
     repo=os.environ.get('FC_EVIDENCE_REPOSITORY');branch=os.environ.get('FC_EVIDENCE_BRANCH')
     if bool(repo)!=bool(branch):raise ValueError('Configure both evidence repository and branch')
-    work=None;url=os.environ.get('FC_WORK_CONTEXT_URL')
+    work=None;work_status={'status':'not_configured','pull_requests':[]};url=os.environ.get('FC_WORK_CONTEXT_URL')
     if url:
-        if not url.startswith('https://'):raise ValueError('Work context must use HTTPS')
-        work=work_context(rr.parse(read_url(url,8*1024*1024)))
-    save(Path('site/data/work.json'),work or {'status':'not_configured','pull_requests':[]})
+        try:
+            if not url.startswith('https://'):raise ValueError('Work context must use HTTPS')
+            work=work_context(rr.parse(read_url(url,8*1024*1024)))
+        except (OSError,ValueError,KeyError,TypeError) as error:
+            work_status={'status':'unavailable' if isinstance(error,OSError) else 'invalid','pull_requests':[],'message':str(error)}
+    save(Path('site/data/work.json'),work or work_status)
     index=load(destination={'repository':repo,'branch':branch} if repo else None)
     save(Path('site/data/evidence.json'),contribution_context(index,work))
 
