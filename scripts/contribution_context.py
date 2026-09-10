@@ -13,7 +13,6 @@ from conjectures.projections import contribution_context, work_context
 
 def main():
     repo=os.environ.get('FC_EVIDENCE_REPOSITORY');branch=os.environ.get('FC_EVIDENCE_BRANCH')
-    if bool(repo)!=bool(branch):raise ValueError('Configure both evidence repository and branch')
     work=None;work_status={'status':'not_configured','pull_requests':[]};url=os.environ.get('FC_WORK_CONTEXT_URL')
     if url:
         try:
@@ -22,7 +21,8 @@ def main():
         except (OSError,ValueError,KeyError,TypeError) as error:
             work_status={'status':'unavailable' if isinstance(error,OSError) else 'invalid','pull_requests':[],'message':str(error)}
     save(Path('site/data/work.json'),work or work_status)
-    index=load(destination={'repository':repo,'branch':branch} if repo else None)
+    index=({'status':'invalid','runs':[],'message':'Configure both evidence repository and branch'}
+           if bool(repo)!=bool(branch) else load(destination={'repository':repo,'branch':branch} if repo else None))
     save(Path('site/data/evidence.json'),contribution_context(index,work))
 
 

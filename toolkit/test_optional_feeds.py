@@ -14,3 +14,12 @@ class OptionalFeedTests(unittest.TestCase):
             module.main()
         self.assertEqual(saved['site/data/work.json']['status'],'unavailable')
         self.assertEqual(saved['site/data/evidence.json']['runs'],[])
+
+    def test_partial_evidence_configuration_is_visible_without_blocking_build(self):
+        path=Path(__file__).resolve().parents[1]/'scripts/contribution_context.py'
+        spec=importlib.util.spec_from_file_location('context_build',path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        saved={}
+        with patch.dict(os.environ,{'FC_EVIDENCE_REPOSITORY':'owner/repo'},clear=True),patch.object(module,'save',side_effect=lambda p,v:saved.update({str(p):v})):
+            module.main()
+        self.assertEqual(saved['site/data/evidence.json']['status'],'invalid')
+        self.assertEqual(saved['site/data/work.json']['status'],'not_configured')
