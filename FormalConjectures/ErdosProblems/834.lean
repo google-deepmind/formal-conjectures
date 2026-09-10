@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/834](https://www.erdosproblems.com/834)
 - [Li25] R. Li, On an Erdős-Lovász problem: $3$-critical $3$-graphs of minimum degree $7$.
-arXiv:2512.24850 (2025).
+  arXiv:2512.24850 (2025).
 -/
 
 namespace Erdos834

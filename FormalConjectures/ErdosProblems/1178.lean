@@ -22,19 +22,19 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1178](https://www.erdosproblems.com/1178)
 - [BES73] Brown, W. G. and Erdős, P. and S\'os, V. T., Some extremal problems on {$r$}-graphs.
-(1973), 53--63.
+  (1973), 53--63.
 - [CGLS23] Conlon, David and Gishboliner, Lior and Levanzov, Yevgeny and Shapira, Asaf, A new bound
-for the {B}rown-{E}rd\H os-S\'os problem. J. Combin. Theory Ser. B (2023), 1--35.
+  for the {B}rown-{E}rd\H os-S\'os problem. J. Combin. Theory Ser. B (2023), 1--35.
 - [EFR86] Erdős, P. and Frankl, P. and Rödl, V., The asymptotic number of graphs not containing a
-fixed subgraph and a problem for hypergraphs having no exponent. Graphs Combin. (1986), 113-121.
+  fixed subgraph and a problem for hypergraphs having no exponent. Graphs Combin. (1986), 113-121.
 - [Er75b] Erdős, Paul, Problems and results in combinatorial number theory. Journ\'{e}es
-Arithm\'{e}tiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295-310.
+  Arithm\'{e}tiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295-310.
 - [RuSz78] Ruzsa, I. Z. and Szemer\'{e}di, E., Triple systems with no six points carrying three
-triangles. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
+  triangles. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 - [SaSe05] Sárk\"ozy, Gábor N. and Selkow, Stanley, An extension of the {R}uzsa-Szemer\'edi theorem
-. Combinatorica (2005), 77--84.
+  . Combinatorica (2005), 77--84.
 - [SoSo17] Solymosi, David and Solymosi, Jozsef, Small cores in 3-uniform hypergraphs. J. Combin.
-Theory Ser. B (2017), 897--910.
+  Theory Ser. B (2017), 897--910.
 -/
 
 namespace Erdos1178

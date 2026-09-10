@@ -22,9 +22,9 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/643](https://www.erdosproblems.com/643)
 - [Fu84] F\"uredi, Z., Hypergraphs in which all disjoint pairs have distinct unions. Combinatorica
-(1984), 161--168.
+  (1984), 161--168.
 - [PiVe09] Pikhurko, Oleg and Verstra\"{e}te, Jacques, The maximum size of hypergraphs without
-generalized 4-cycles. J. Combin. Theory Ser. A (2009), 637--649.
+  generalized 4-cycles. J. Combin. Theory Ser. A (2009), 637--649.
 -/
 
 namespace Erdos643

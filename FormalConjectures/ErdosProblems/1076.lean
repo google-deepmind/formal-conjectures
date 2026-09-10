@@ -22,12 +22,12 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1076](https://www.erdosproblems.com/1076)
 - [BES73] Brown, W. G. and Erdős, P. and S\'os, V. T., Some extremal problems on {$r$}-graphs.
-(1973), 53--63.
+  (1973), 53--63.
 - [BoWa19] Bohman, Tom and Warnke, Lutz, Large girth approximate Steiner triple systems. J. Lond.
-Math. Soc. (2) (2019), 895--913.
+  Math. Soc. (2) (2019), 895--913.
 - [Er74c] Erdős, Paul, Extremal problems on graphs and hypergraphs. (1974), 75-84.
 - [GKLO20] Glock, Stefan and K\"uhn, Daniela and Lo, Allan and Osthus, Deryk, On a conjecture of
-{E}rdős on locally sparse Steiner triple systems. Combinatorica (2020), 363--403.
+  {E}rdős on locally sparse Steiner triple systems. Combinatorica (2020), 363--403.
 -/
 
 namespace Erdos1076

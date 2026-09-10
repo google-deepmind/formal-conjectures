@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/207](https://www.erdosproblems.com/207)
 - [KSSS22b] Kwan, M. and Sah, A. and Sawhney, M. and Simkin, M., High-girth Steiner triple systems.
-arXiv:2201.04554 (2022).
+  arXiv:2201.04554 (2022).
 -/
 
 namespace Erdos207

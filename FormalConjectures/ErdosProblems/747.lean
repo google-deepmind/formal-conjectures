@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/747](https://www.erdosproblems.com/747)
 - [JKV08] Johansson, Anders and Kahn, Jeff and Vu, Van, Factors in random graphs. Random Structures
-Algorithms (2008), 1-28.
+  Algorithms (2008), 1-28.
 - [Ka23] Kahn, Jeff, Asymptotics for Shamir's problem. Adv. Math. (2023), Paper No. 109019, 39.
 -/
 

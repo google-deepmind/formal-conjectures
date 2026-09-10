@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1024](https://www.erdosproblems.com/1024)
 - [PhRo86] Phelps, K. T. and R\"odl, V., Steiner triple systems with minimum independence number. Ars
-Combin. (1986), 167--172.
+  Combin. (1986), 167--172.
 -/
 
 namespace Erdos1024

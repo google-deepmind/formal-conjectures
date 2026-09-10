@@ -22,9 +22,9 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/716](https://www.erdosproblems.com/716)
 - [BES73] Brown, W. G. and Erdős, P. and S\'os, V. T., Some extremal problems on {$r$}-graphs.
-(1973), 53--63.
+  (1973), 53--63.
 - [RuSz78] Ruzsa, I. Z. and Szemer\'{e}di, E., Triple systems with no six points carrying three
-triangles. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
+  triangles. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
 namespace Erdos716

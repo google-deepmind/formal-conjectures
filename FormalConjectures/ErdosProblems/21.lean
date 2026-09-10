@@ -22,15 +22,15 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/21](https://www.erdosproblems.com/21)
 - [BaWa21] J. Barát and I. M. Wanless, Intersecting and 2-intersecting hypergraphs with maximal
-covering number: the Erdős-Lovász theme revisited. J. Combin. Des. (2021), 260-286.
+  covering number: the Erdős-Lovász theme revisited. J. Combin. Des. (2021), 260-286.
 - [ErLo75] Erdős, P. and Lovász, L., Problems and results on {$3$}-chromatic hypergraphs and some
-related questions. (1975), 609--627.
+  related questions. (1975), 609--627.
 - [Ka92b] Kahn, Jeff, On a problem of Erdős and Lovász: random lines in a projective plane.
-Combinatorica (1992), 417-423.
+  Combinatorica (1992), 417-423.
 - [Ka94] Kahn, Jeff, On a problem of Erdős and Lovász. II. {$n(r)=O(r)$}. J. Amer. Math. Soc.
-(1994), 125-143.
+  (1994), 125-143.
 - [Tr14] A. Tripathi, A result on intersecting families with maximum transversal size.
-arXiv:1409.4610 (2014).
+  arXiv:1409.4610 (2014).
 -/
 
 namespace Erdos21

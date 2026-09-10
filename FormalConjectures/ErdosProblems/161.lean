@@ -22,9 +22,9 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/161](https://www.erdosproblems.com/161)
 - [CFS11] Conlon, David and Fox, Jacob and Sudakov, Benny, Large almost monochromatic subsets in
-hypergraphs. Israel J. Math. (2011), 423--432.
+  hypergraphs. Israel J. Math. (2011), 423--432.
 - [Er90b] Erdős, Paul, Problems and results on graphs and hypergraphs: similarities and differences
-. Mathematics of Ramsey theory (1990), 12-28.
+  . Mathematics of Ramsey theory (1990), 12-28.
 -/
 
 namespace Erdos161

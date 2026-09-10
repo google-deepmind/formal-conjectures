@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/644](https://www.erdosproblems.com/644)
 - [EFKT92] Erdős, P. and Fon-Der-Flaass, D. and Kostochka, A. V. and Tuza, Zs., Small transversals in
-uniform hypergraphs. Siberian Adv. Math. (1992), 82-88.
+  uniform hypergraphs. Siberian Adv. Math. (1992), 82-88.
 -/
 
 namespace Erdos644

@@ -22,11 +22,11 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/665](https://www.erdosproblems.com/665)
 - [Er97f] Erdős, Paul, Some unsolved problems. Combinatorics, geometry and probability (Cambridge,
-1993) (1997), 1-10.
+  1993) (1997), 1-10.
 - [ErLa82] Erdős, P. and Larson, J., On pairwise balanced block designs with the sizes of blocks as
-uniform as possible. Annals of Discrete Mathematics (1982), 129-134.
+  uniform as possible. Annals of Discrete Mathematics (1982), 129-134.
 - [ShSi85] S. S. Shrikhande and N. M. Singhi, On a problem of Erdős and Larson. Combinatorica
-(1985), 351-358.
+  (1985), 351-358.
 -/
 
 namespace Erdos665

@@ -22,17 +22,17 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/901](https://www.erdosproblems.com/901)
 - [Be77] Beck, J., On a combinatorial problem of {P}. {E}rdős and {L}. {L}ovász. Discrete Math.
-(1977), 127--131.
+  (1977), 127--131.
 - [Be78] Beck, J., On {$3$}-chromatic hypergraphs. Discrete Math. (1978), 127--137.
 - [Er63b] Erdős, P., On a combinatorial problem. Nordisk Mat. Tidskr. (1963), 5--10, 40.
 - [Er64e] Erdős, P., On a combinatorial problem. {II}. Acta Math. Acad. Sci. Hungar. (1964),
-445--447.
+  445--447.
 - [ErLo75] Erdős, P. and Lovász, L., Problems and results on {$3$}-chromatic hypergraphs and some
-related questions. (1975), 609--627.
+  related questions. (1975), 609--627.
 - [Pl09] Pluhár, András, Greedy colorings of uniform hypergraphs. Random Structures Algorithms
-(2009), 216--221.
+  (2009), 216--221.
 - [RaSr00] Radhakrishnan, Jaikumar and Srinivasan, Aravind, Improved bounds and algorithms for
-hypergraph {$2$}-coloring. Random Structures Algorithms (2000), 4--32.
+  hypergraph {$2$}-coloring. Random Structures Algorithms (2000), 4--32.
 -/
 
 namespace Erdos901

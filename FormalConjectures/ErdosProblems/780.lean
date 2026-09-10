@@ -22,9 +22,9 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/780](https://www.erdosproblems.com/780)
 - [AFL86] Alon, N. and Frankl, P. and Lovász, L., The chromatic number of Kneser hypergraphs. Trans.
-Amer. Math. Soc. (1986), 359-370.
+  Amer. Math. Soc. (1986), 359-370.
 - [Lo78] Lovász, L., Kneser's conjecture, chromatic number, and homotopy. J. Combin. Theory Ser. A
-(1978), 319-324.
+  (1978), 319-324.
 -/
 
 namespace Erdos780

@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/712](https://www.erdosproblems.com/712)
 - [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved.
-Combinatorica (1981), 25-42.
+  Combinatorica (1981), 25-42.
 -/
 
 namespace Erdos712

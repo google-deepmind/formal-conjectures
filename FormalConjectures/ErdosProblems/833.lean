@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/833](https://www.erdosproblems.com/833)
 - [ErLo75] Erdős, P. and Lovász, L., Problems and results on {$3$}-chromatic hypergraphs and some
-related questions. (1975), 609--627.
+  related questions. (1975), 609--627.
 -/
 
 namespace Erdos833

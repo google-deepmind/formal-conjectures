@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1075](https://www.erdosproblems.com/1075)
 - [Er64f] Erdős, P., On extremal problems of graphs and generalized graphs. Israel J. Math. (1964),
-183--190.
+  183--190.
 -/
 
 namespace Erdos1075

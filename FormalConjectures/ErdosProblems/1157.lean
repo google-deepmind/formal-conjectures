@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1157](https://www.erdosproblems.com/1157)
 - [BES73] Brown, W. G. and Erdős, P. and S\'os, V. T., Some extremal problems on {$r$}-graphs.
-(1973), 53--63.
+  (1973), 53--63.
 -/
 
 namespace Erdos1157

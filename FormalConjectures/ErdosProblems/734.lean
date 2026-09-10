@@ -22,9 +22,9 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/734](https://www.erdosproblems.com/734)
 - [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved.
-Combinatorica (1981), 25-42.
+  Combinatorica (1981), 25-42.
 - [dBEr48] de Bruijn, N. G. and Erdős, P., On a combinatorial problem. Nederl. Akad. Wetensch.,
-Proc. (1948), 1277--1279 = Indagationes Math. 10, 421--423.
+  Proc. (1948), 1277--1279 = Indagationes Math. 10, 421--423.
 -/
 
 namespace Erdos734

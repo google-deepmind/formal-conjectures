@@ -22,10 +22,10 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/722](https://www.erdosproblems.com/722)
 - [Ha61] Hanani, Haim, The existence and construction of balanced incomplete block designs. Ann.
-Math. Statist. (1961), 361-386.
+  Math. Statist. (1961), 361-386.
 - [Ke14] P. Keevash, The existence of designs. arXiv:1401.3665 (2014).
 - [Wi72] Wilson, Richard M., An existence theory for pairwise balanced designs. {II}. The structure
-of {PBD}-closed sets and the existence conjectures. J. Combinatorial Theory Ser. A (1972), 246-273.
+  of {PBD}-closed sets and the existence conjectures. J. Combinatorial Theory Ser. A (1972), 246-273.
 -/
 
 namespace Erdos722

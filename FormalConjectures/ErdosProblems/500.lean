@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/500](https://www.erdosproblems.com/500)
 - [Ra10] Razborov, Alexander A., On 3-hypergraphs with forbidden 4-vertex configurations. SIAM J.
-Discrete Math. (2010), 946-963.
+  Discrete Math. (2010), 946-963.
 -/
 
 namespace Erdos500

@@ -22,10 +22,10 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/832](https://www.erdosproblems.com/832)
 - [AkSh16] Akolzin, Ilia and Shabanov, Dmitry, Colorings of hypergraphs with large number of colors.
-Discrete Math. (2016), 3020--3031.
+  Discrete Math. (2016), 3020--3031.
 - [Al85] Alon, Noga, Hypergraphs with high chromatic number. Graphs Combin. (1985), 387--389.
 - [ChPe20] Cherkashin, Danila and Petrov, Fedor, Regular behavior of the maximal hypergraph
-chromatic number. SIAM J. Discrete Math. (2020), 1326--1333.
+  chromatic number. SIAM J. Discrete Math. (2020), 1326--1333.
 -/
 
 namespace Erdos832

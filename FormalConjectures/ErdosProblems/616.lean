@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/616](https://www.erdosproblems.com/616)
 - [EHT91] Erdős, Paul and Hajnal, András and Tuza, Zsolt, Local constraints ensuring small
-representing sets. J. Combin. Theory Ser. A (1991), 78-84.
+  representing sets. J. Combin. Theory Ser. A (1991), 78-84.
 -/
 
 namespace Erdos616
