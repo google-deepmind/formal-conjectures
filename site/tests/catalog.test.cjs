@@ -52,6 +52,7 @@ test('full site publishes one unchanged catalog and bound module rendering', () 
     assert.equal(fs.readFileSync(path.join(site,'site/data/conjectures.json'),'utf8'),raw);
     assert.equal(fs.existsSync(path.join(site,'site/data/catalog.json')),false);
     assert.equal(fs.existsSync(path.join(site,'site/data/verso-fragments.json')),false);
+    assert.match(fs.readFileSync(path.join(site,'site/modules/index.html'),'utf8'),/href="\/fc\/src\/FormalConjectures\/Example\/"/);
     const rendered = JSON.parse(fs.readFileSync(path.join(site,`site/data/rendered/${digest}/FormalConjectures/Example.json`)));
     assert.equal(rendered.catalog_sha256,digest);
     assert.equal(rendered.constLinks['Example.test'].hoverDocs.used,'True');
@@ -63,5 +64,13 @@ test('full site publishes one unchanged catalog and bound module rendering', () 
     const preview=build();assert.equal(preview.status,0,preview.stderr);
     assert.equal(fs.existsSync(path.join(site,'site/data/rendered')),false);
     assert.match(fs.readFileSync(path.join(site,'site/theorem/index.html'),'utf8'),/data-render-base="https:\/\/example.org\/fc"/);
+    for (const base of ['/fc', '']) {
+      env.BASE_PATH=base;
+      assert.equal(build().status,0);
+      const modules=fs.readFileSync(path.join(site,'site/modules/index.html'),'utf8');
+      assert.match(modules,/href="https:\/\/example.org\/fc\/src\/FormalConjectures\/Example\/"/);
+      assert.ok(!modules.includes(`href="${base}/src/`));
+      assert.ok(modules.includes(`href="${base}/browse/"`));
+    }
   } finally { fs.rmSync(directory,{recursive:true,force:true}); }
 });
