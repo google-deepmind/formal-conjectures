@@ -40,7 +40,7 @@ We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b
 infinitely many amicable pairs?
 -/
 @[category research open, AMS 11]
-theorem erdos_830.parts.i : answer(sorry) ↔ {(a, b) | IsAmicable a b ∧ a ≠ b}.Infinite := by
+theorem erdos_830.parts.i : answer(sorry) ↔ {(a, b) | IsAmicable a b}.Infinite := by
   sorry
 
 /-- **Erdos Problem 830, Part 2**
