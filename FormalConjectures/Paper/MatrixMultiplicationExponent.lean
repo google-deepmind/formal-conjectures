@@ -21,7 +21,8 @@ import FormalConjecturesUtil
 
 The conjecture $\omega = 2$ asserts that matrix multiplication over $\mathbb{C}$ takes
 $O(n^{2+\varepsilon})$ arithmetic operations for every $\varepsilon > 0$.
-We use its tensor-rank formulation.
+We use its tensor-rank formulation: the tensor rank of the matrix multiplication tensor
+$\langle n, n, n\rangle$ (`Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)`) is $O(n^{2+\varepsilon})$.
 
 *References:*
 * [CKSU05] H. Cohn et al.,
@@ -42,7 +43,7 @@ We use its tensor-rank formulation.
   [*Matrix multiplication via arithmetic progressions*](https://doi.org/10.1016/0747-7171(90)90013-N),
   Journal of Symbolic Computation 9 (1990), 251–280. Used for
   `matrix_multiplication_exponent_coppersmith_winograd`.
-* [AE26] H. Alman, V. Vassilevska Williams et al.,
+* [AE26] E. Dupont et al.,
   [*Improving the matrix multiplication exponent with modern optimization and
   AlphaEvolve*](https://arxiv.org/abs/2608.16884), 2026. Used for
   `matrix_multiplication_exponent_alphaevolve`.
@@ -50,61 +51,52 @@ We use its tensor-rank formulation.
 
 namespace MatrixMultiplicationExponent
 
-open Filter
+open Filter PiTensorProduct
 
-/-- All coefficients match $\operatorname{tr}(ABC)$ for $l = m = n = 2$. -/
+/-- Pairing the matrix multiplication tensor with matrices $A, B, C$ gives
+$\operatorname{tr}(ABC)$. -/
 @[category test, AMS 15]
-theorem matrixMulTensor_two_coefficients :
-    ∀ a b c : Fin 4,
-      Holor.matrixMulTensor ℤ 2 2 2
-        ⟨[a.val, b.val, c.val], .cons a.isLt (.cons b.isLt (.cons c.isLt .nil))⟩ =
-        if a.val % 2 = b.val / 2 ∧ b.val % 2 = c.val / 2 ∧ c.val % 2 = a.val / 2
-        then 1 else 0 := by
-  decide
-
-/-- All coefficients match $\operatorname{tr}(ABC)$ for $(l,m,n) = (2,3,1)$. -/
-@[category test, AMS 15]
-theorem matrixMulTensor_rectangular_coefficients :
-    ∀ (a : Fin 6) (b : Fin 3) (c : Fin 2),
-      Holor.matrixMulTensor ℤ 2 3 1
-        ⟨[a.val, b.val, c.val], .cons a.isLt (.cons b.isLt (.cons c.isLt .nil))⟩ =
-        if a.val % 3 = b.val ∧ c.val = a.val / 3 then 1 else 0 := by
-  decide
+theorem lift_mulTensorPairing_mulTensor (n : ℕ) (A B C : Matrix (Fin n) (Fin n) ℂ) :
+    lift (Matrix.mulTensorPairing A B C) (Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)) =
+      (A * B * C).trace :=
+  Matrix.lift_mulTensorPairing_mulTensor A B C
 
 /-- The matrix multiplication exponent is at most $3$. -/
 @[category test, AMS 15 68]
 theorem matrix_multiplication_exponent_le_three :
     ∀ n : ℕ, 1 ≤ n →
-      ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ) ≤ (n : ℝ) ^ 3 := by
+      ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ) ≤ (n : ℝ) ^ 3 := by
   intro n _
-  exact_mod_cast (by simpa [pow_succ] using Holor.cprank_matrixMulTensor_le ℂ n n n)
+  exact_mod_cast
+    (by simpa [pow_succ] using Matrix.tensorRank_mulTensor_le ℂ (Fin n) (Fin n) (Fin n))
 
 /-- First non-trivial bound, found by V. Strassen (1969). -/
 @[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_strassen :
-    (fun n : ℕ ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+    (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
       (fun n : ℕ ↦ (n : ℝ) ^ (Real.logb 2 7)) := by
   sorry
 
-/-- Coppersmith–Winograd (1987) -/
+/-- The Coppersmith–Winograd bound $\omega < 2.376$ (1990). -/
 @[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_coppersmith_winograd :
-    (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
-      fun n ↦ (n : ℝ) ^ (2.376 : ℝ) := by
+    (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
+      (fun n : ℕ ↦ (n : ℝ) ^ (2.376 : ℝ)) := by
   sorry
 
-/-- The current best bound, found by AlphaEvolve (2026). -/
+/-- The current best bound $\omega < 2.371177$, obtained by Dupont et al. (2026) using
+AlphaEvolve. -/
 @[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_alphaevolve :
-    (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
-      fun n ↦ (n : ℝ) ^ (2.371177 : ℝ) := by
+    (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
+      (fun n : ℕ ↦ (n : ℝ) ^ (2.371177 : ℝ)) := by
   sorry
 
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
 for every $\varepsilon > 0$. See [CKSU05] and [CHILO18]. -/
 @[category research open, AMS 15 68]
 theorem matrix_multiplication_exponent_two {ω : ℝ} (hω : 2 < ω) :
-    (fun n : ℕ ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
+    (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
       (fun n : ℕ ↦ (n : ℝ) ^ ω) := by
   sorry
 
