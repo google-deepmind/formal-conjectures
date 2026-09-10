@@ -71,7 +71,7 @@ The remaining ingredients of the definition are developed in the `BorelJacquet` 
   `centerUniversalEnveloping`, their action (`envelopingAction`, `centerAction`) — the action
   of condition (c) — and the character `constantsCharacter`.
 * `BorelJacquet.Subgroups`: the subgroups `ratDiagonal` (condition (a)), `orthogonalSubgroup`
-  (condition (b2)) and `integralSubgroup` (the compact open subgroup witnessing condition
+  (condition (b2)) and `integralAdelicSubgroup` (the compact open subgroup witnessing condition
   (b1)).
 
 ## Relation to the literature
@@ -401,13 +401,13 @@ protected lemma IsSmoothAdelic.const_smul {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n �
 variable (n) in
 /-- Sanity check: the constant functions are automorphic forms. This exercises every condition
 of the definition: condition (b1) is witnessed by the compact open subgroup
-`integralSubgroup n` and condition (c) by the kernel of `constantsCharacter n`. -/
+`integralAdelicSubgroup n` and condition (c) by the kernel of `constantsCharacter n`. -/
 theorem isAutomorphicForm_const (c : ℂ) :
     IsAutomorphicForm (fun _ : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => c) where
   smooth := isSmoothAdelic_const c
   left_invariant _ _ _ := rfl
-  right_invariant := ⟨integralSubgroup n, isOpen_integralSubgroup, isCompact_integralSubgroup,
-    fun _ _ _ => rfl⟩
+  right_invariant := ⟨integralAdelicSubgroup n, isOpen_integralAdelicSubgroup,
+    isCompact_integralAdelicSubgroup, fun _ _ _ => rfl⟩
   kFinite := isKFinite_of_rightInvariant fun _ _ => rfl
   zFinite := (isZFinite_const_smoothGL c).pi_const
   slowlyIncreasing _ := isSlowlyIncreasing_const c
