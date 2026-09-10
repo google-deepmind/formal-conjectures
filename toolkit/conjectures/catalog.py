@@ -10,8 +10,8 @@ from . import catalog_data
 from .metadata import metadata_rows
 from .core import Failure, save, now, user_cache
 
-NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/catalog.json'
-MANIFEST_URL = NATIVE_URL.replace('catalog.json','catalog-manifest.json')
+NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/conjectures.json'
+MANIFEST_URL = NATIVE_URL.replace('conjectures.json','catalog-manifest.json')
 MAX_BYTES = 64*1024*1024
 MAX_AGE = 24*60*60
 
@@ -65,8 +65,8 @@ def load(root, path=None, *, refresh=False, offline=False):
     try:
         descriptor=catalog_data.parse(read_url(MANIFEST_URL,1024*1024))
         # The descriptor can only select the sibling catalog, never an arbitrary URL.
-        if descriptor.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
-        raw=read_url(urljoin(MANIFEST_URL,'catalog.json'))
+        if descriptor.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
+        raw=read_url(urljoin(MANIFEST_URL,'conjectures.json'))
         data=catalog_data.verify(descriptor,raw)
         origin={'url':NATIVE_URL,'manifest_url':MANIFEST_URL,'retrieved_at':now(),'sha256':rr.digest(raw)}
         save(cache,{'schema_version':'fc.catalog-cache.v1','descriptor':descriptor,'raw':raw.decode(),'origin':origin})
