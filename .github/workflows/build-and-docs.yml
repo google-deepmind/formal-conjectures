@@ -67,6 +67,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Select PR validation scope
+        id: scope
+        run: python3 scripts/build_changed_problems.py plan --out "$RUNNER_TEMP/problem-scope.json"
+
       # Two independent halves of this job, each with its own switch.
       #
       # `website_only` skips the slow Lean compilation and takes the data from
@@ -84,6 +88,7 @@ jobs:
       - name: Detect build mode
         id: mode
         env:
+          TARGETED_PROBLEMS: ${{ steps.scope.outputs.targeted }}
           WEBSITE_ONLY: ${{ inputs.website_only }}
           REF_NAME: ${{ github.ref_name }}
           EVENT_NAME: ${{ github.event_name }}
@@ -97,7 +102,9 @@ jobs:
           fi
 
           site=true
-          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+          if [[ "${TARGETED_PROBLEMS:-false}" == "true" ]]; then
+            site=false
+          elif [[ "$EVENT_NAME" == "pull_request" ]]; then
             # A pull request is checked out as a merge commit, so HEAD^1 is the
             # base and this diff is exactly what the pull request changes. If
             # that fails for any reason, fall back to building the site.
@@ -155,7 +162,7 @@ jobs:
       # Generating All.lean aggregates all problem files into a single module to detect
       # clashing declaration names across problem modules during compilation.
       - name: Generate All.lean
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.scope.outputs.targeted != 'true' && steps.mode.outputs.website_only != 'true'
         run: |
           rm -f FormalConjectures/All.lean
           lake exe mk_all --lib FormalConjectures || true
@@ -169,20 +176,20 @@ jobs:
           action: add
           linters: lean
 
-      # Check a small PR's edited problems before compiling unrelated modules.
-      # The full build below still checks every library and cross-module clashes.
-      - name: Build changed problem files first
-        if: github.event_name == 'pull_request' && steps.mode.outputs.website_only != 'true'
-        run: python3 scripts/build_changed_problems.py --summary /tmp/build_summary_changed.json
+      # A targeted PR checks its files and metadata only. The merge queue still
+      # validates importers, aggregate imports, and every library/test target.
+      - name: Validate changed problem files
+        if: steps.scope.outputs.targeted == 'true' && steps.mode.outputs.website_only != 'true'
+        run: python3 scripts/build_changed_problems.py check --plan "$RUNNER_TEMP/problem-scope.json" --out "$RUNNER_TEMP/changed-problems"
 
       - name: Build ForMathlib, utilities, and test
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.scope.outputs.targeted != 'true' && steps.mode.outputs.website_only != 'true'
         run: |
           python3 scripts/lake-build-wrapper.py /tmp/build_summary_formathlib.json lake --wfail build FormalConjecturesForMathlib FormalConjecturesUtil
           lake --wfail test
 
       - name: Build problems
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.scope.outputs.targeted != 'true' && steps.mode.outputs.website_only != 'true'
         run: |
           python3 scripts/lake-build-wrapper.py /tmp/build_summary_problems.json lake --wfail build
           rm -f FormalConjectures/All.lean
@@ -270,7 +277,7 @@ jobs:
           node-version: '18'
 
       - name: Generate conjectures data for website
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.scope.outputs.targeted != 'true' && steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
           lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified \
@@ -281,7 +288,7 @@ jobs:
       # written. The first is a contradiction and fails; the other two are counted
       # in the run summary without blocking.
       - name: Check category warnings
-        if: steps.mode.outputs.website_only != 'true'
+        if: steps.scope.outputs.targeted != 'true' && steps.mode.outputs.website_only != 'true'
         run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
       - name: Extract Verso fragments for website
