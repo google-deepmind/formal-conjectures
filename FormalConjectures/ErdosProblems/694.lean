@@ -42,14 +42,19 @@ $$
 A Lean formalisation of the reduction exists, conditional on Mertens' product theorem and
 Linnik's theorem; see the
 [formal proof](https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P694/Proof.lean).
+
+The extrema are only required on nonempty fibres of the totient (values such as $3$ have no
+preimage), and the identity is asked for sufficiently large $x$: at $x = 1$ the maximum is
+$f_\max(1) / f_\min(1) = 2$ while $\log \log 1 = 0$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_694 : ∀ᵉ (fmax : ℕ → ℕ) (fmin : ℕ → ℕ),
-      (∀ n, IsGreatest (Nat.totient ⁻¹' {n}) (fmax n)) →
-      (∀ n, IsLeast (Nat.totient ⁻¹' {n}) (fmin n)) →
+      (∀ n, (∃ m, Nat.totient m = n) → IsGreatest (Nat.totient ⁻¹' {n}) (fmax n)) →
+      (∀ n, (∃ m, Nat.totient m = n) → IsLeast (Nat.totient ⁻¹' {n}) (fmin n)) →
       ∃ o : ℕ → ℝ, Tendsto o atTop (𝓝 0) ∧
-        ∀ x : ℕ, sSup { (fmax n : ℝ) / fmin n | (n : ℕ) (_ : n ≤ x) (_ : ∃ m, Nat.totient m = n) } =
-          (exp eulerMascheroniConstant + o x) * log (log (x : ℝ)) := by
+        ∀ᶠ x : ℕ in atTop,
+          sSup { (fmax n : ℝ) / fmin n | (n : ℕ) (_ : n ≤ x) (_ : ∃ m, Nat.totient m = n) } =
+            (exp eulerMascheroniConstant + o x) * log (log (x : ℝ)) := by
   sorry
 
 /--
