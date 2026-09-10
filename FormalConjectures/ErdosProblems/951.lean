@@ -36,8 +36,8 @@ at least one apart. -/
 def Erdos951Prop (a : ℕ → ℝ) : Prop :=
   ∀ (k ℓ : ℕ →₀ ℕ), k ≠ ℓ → |beurlingInteger a k - beurlingInteger a ℓ| ≥ 1
 
-/-- If `a` has property `Erdos951Prop` and `1 < a 0`, then `a` is a set of Beurling
-prime numbers. -/
+/-- If a strictly increasing sequence `a : ℕ → ℝ` has property `Erdos951Prop`
+and `1 < a 0`, then `a` is a sequence of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951Prop a) :
