@@ -45,10 +45,13 @@ field ([KoymansPagano2024], [ABHS2025]), and decidable over $\mathbb{R}$ (by Tar
 quantifier elimination for real closed fields), over $\mathbb{C}$, and over the $p$-adic fields
 $\mathbb{Q}_p$ (Ax–Kochen and Ershov).
 
-Polynomials are encoded here as finite lists of monomials, each monomial being an integer
-coefficient together with a list of exponents; see `Hilbert10.MonomialList`. Restricting to
-integer coefficients is no loss of generality, because clearing denominators turns an equation
-with rational coefficients into an equivalent one with integer coefficients.
+The instances of the problem are the elements of `MvPolynomial ℕ ℤ`, the integer
+polynomials in the variables $X_0, X_1, X_2, \dots$. This type is `Primcodable`, so it makes
+sense to ask whether a predicate on it is decidable by an algorithm: it is `Denumerable` by
+`MvPolynomial.instDenumerable`, and `Primcodable.ofDenumerable` turns that into a
+`Primcodable` structure. Restricting to integer coefficients is no loss of generality, because
+clearing denominators turns an equation with rational coefficients into an equivalent one with
+integer coefficients.
 
 The negative answer over $\mathbb{Z}$ has been formalised in other proof assistants: in Coq by
 [Larchey-Wendling and Forster](https://arxiv.org/abs/2003.04604), and in Isabelle by Bayer,
@@ -84,52 +87,13 @@ namespace Hilbert10
 open MvPolynomial
 
 /--
-A finite encoding of a polynomial with integer coefficients in the variables
-$X_0, X_1, X_2, \dots$: the list `[(c₀, e₀), (c₁, e₁), …]` encodes the polynomial
-$\sum_j c_j \prod_i X_i^{(e_j)_i}$, where the exponent $(e_j)_i$ of $X_i$ is `eⱼ.getD i 0`, so
-that an exponent list of length at most $i$ leaves $X_i$ out of that monomial.
+The equation `f = 0` has a solution in the commutative ring `K`.
 
-This is the type of inputs to Hilbert's 10th problem: since it is `Primcodable`, it makes
-sense to ask whether a predicate on it is decidable by an algorithm.
+Only finitely many variables occur in `f`, so quantifying over all assignments `ℕ → K` is the
+same as quantifying over the finitely many relevant coordinates.
 -/
-abbrev MonomialList : Type := List (ℤ × List ℕ)
-
-/-- The polynomial encoded by a `MonomialList`. -/
-noncomputable def toMvPolynomial (p : MonomialList) : MvPolynomial ℕ ℤ :=
-  (p.map fun m => C m.1 * ∏ i ∈ Finset.range m.2.length, X i ^ m.2.getD i 0).sum
-
-/--
-The equation `p = 0` has a solution in the commutative ring `K`.
-
-Only finitely many variables occur in `toMvPolynomial p`, so quantifying over all assignments
-`ℕ → K` is the same as quantifying over the finitely many relevant coordinates.
--/
-def HasSolution (K : Type*) [CommRing K] (p : MonomialList) : Prop :=
-  ∃ x : ℕ → K, aeval x (toMvPolynomial p) = 0
-
-/-- Every polynomial with integer coefficients in the variables $X_0, X_1, \dots$ arises from
-a `MonomialList`, so the encoding really does present all instances of Hilbert's 10th
-problem. -/
-@[category API, AMS 3 11]
-theorem toMvPolynomial_surjective : Function.Surjective toMvPolynomial := by
-  intro f
-  refine ⟨f.support.toList.map fun d =>
-    (coeff d f, (List.range (d.support.sup id + 1)).map d), ?_⟩
-  rw [toMvPolynomial, List.map_map, Finset.sum_map_toList]
-  conv_rhs => rw [f.as_sum]
-  refine Finset.sum_congr rfl fun d _ => ?_
-  have hsub : d.support ⊆ Finset.range (d.support.sup id + 1) := fun i hi =>
-    Finset.mem_range.2 <| Nat.lt_succ_of_le <| Finset.le_sup (f := id) hi
-  have : ∀ i ∈ Finset.range (d.support.sup id + 1),
-      X (R := ℤ) i ^ ((List.range (d.support.sup id + 1)).map d).getD i 0 = X i ^ d i := by
-    intro i hi
-    rw [List.getD_eq_getElem?_getD, List.getElem?_map,
-      List.getElem?_range (Finset.mem_range.1 hi)]
-    rfl
-  simp only [Function.comp_apply, List.length_map, List.length_range]
-  rw [Finset.prod_congr rfl this, ← Finset.prod_subset hsub
-    fun i _ hi => by simp [Finsupp.notMem_support_iff.1 hi], prod_X_pow_eq_monomial,
-    ← smul_eq_C_mul, smul_monomial, smul_eq_mul, mul_one]
+def HasSolution (K : Type*) [CommRing K] (f : MvPolynomial ℕ ℤ) : Prop :=
+  ∃ x : ℕ → K, aeval x f = 0
 
 /--
 **Hilbert's 10th problem** (over $\mathbb{Z}$) has a negative answer: by the
@@ -173,60 +137,35 @@ theorem computablePred_hasSolution_real : ComputablePred (HasSolution ℝ) := by
 
 section Tests
 
-/-- The list `[(2, [1]), (-1, [])]` encodes the polynomial $2X_0 - 1$. -/
+/-- The zero polynomial gives the equation $0 = 0$, which is solvable. -/
 @[category test, AMS 3 11]
-theorem toMvPolynomial_two_X_sub_one :
-    toMvPolynomial [(2, [1]), (-1, [])] = 2 * X 0 - 1 := by
-  simp [toMvPolynomial]
-  ring
-
-/-- The list `[(1, [2]), (-2, [])]` encodes the polynomial $X_0^2 - 2$. -/
-@[category test, AMS 3 11]
-theorem toMvPolynomial_X_sq_sub_two :
-    toMvPolynomial [(1, [2]), (-2, [])] = X 0 ^ 2 - 2 := by
-  simp [toMvPolynomial]
-  ring
-
-/-- The list `[(1, [2]), (1, [0, 2]), (1, [])]` encodes the polynomial $X_0^2 + X_1^2 + 1$; a
-trailing exponent list such as `[0, 2]` picks out the variable $X_1$. -/
-@[category test, AMS 3 11]
-theorem toMvPolynomial_sq_add_sq_add_one :
-    toMvPolynomial [(1, [2]), (1, [0, 2]), (1, [])] = X 0 ^ 2 + X 1 ^ 2 + 1 := by
-  simp [toMvPolynomial, Finset.prod_range_succ]
-  ring
-
-/-- The empty list encodes the zero polynomial, and the equation $0 = 0$ is solvable. -/
-@[category test, AMS 3 11]
-theorem hasSolution_nil (K : Type*) [CommRing K] : HasSolution K [] :=
-  ⟨0, by simp [toMvPolynomial]⟩
+theorem hasSolution_zero (K : Type*) [CommRing K] : HasSolution K 0 :=
+  ⟨0, by simp⟩
 
 /-- The constant polynomial `1` has no solution. -/
 @[category test, AMS 3 11]
-theorem not_hasSolution_one : ¬ HasSolution ℚ [(1, [])] := by
+theorem not_hasSolution_one : ¬ HasSolution ℚ 1 := by
   rintro ⟨x, hx⟩
-  simp [toMvPolynomial] at hx
+  simp at hx
 
 /-- The equation $2X_0 - 1 = 0$ has the rational solution $X_0 = 1/2$. -/
 @[category test, AMS 3 11]
-theorem hasSolution_rat_two_X_sub_one : HasSolution ℚ [(2, [1]), (-1, [])] := by
+theorem hasSolution_rat_two_X_sub_one : HasSolution ℚ (2 * X 0 - 1) := by
   refine ⟨fun _ => 1 / 2, ?_⟩
-  rw [toMvPolynomial_two_X_sub_one]
   simp
 
 /-- The equation $2X_0 - 1 = 0$ has no integer solution: the rational and the integral problems
 really are different. -/
 @[category test, AMS 3 11]
-theorem not_hasSolution_int_two_X_sub_one : ¬ HasSolution ℤ [(2, [1]), (-1, [])] := by
+theorem not_hasSolution_int_two_X_sub_one : ¬ HasSolution ℤ (2 * X 0 - 1) := by
   rintro ⟨x, hx⟩
-  rw [toMvPolynomial_two_X_sub_one] at hx
   simp at hx
   omega
 
 /-- The equation $X_0^2 - 2 = 0$ has no rational solution. -/
 @[category test, AMS 3 11]
-theorem not_hasSolution_rat_X_sq_sub_two : ¬ HasSolution ℚ [(1, [2]), (-2, [])] := by
+theorem not_hasSolution_rat_X_sq_sub_two : ¬ HasSolution ℚ (X 0 ^ 2 - 2) := by
   rintro ⟨x, hx⟩
-  rw [toMvPolynomial_X_sq_sub_two] at hx
   simp at hx
   have h : ((x 0 : ℝ)) ^ 2 = 2 := by exact_mod_cast (by linarith : x 0 ^ 2 = (2 : ℚ))
   refine irrational_sqrt_two ⟨|x 0|, ?_⟩
@@ -235,17 +174,15 @@ theorem not_hasSolution_rat_X_sq_sub_two : ¬ HasSolution ℚ [(1, [2]), (-2, []
 /-- The equation $X_0^2 - 2 = 0$ does have a real solution: the rational and the real problems
 really are different. -/
 @[category test, AMS 3 12]
-theorem hasSolution_real_X_sq_sub_two : HasSolution ℝ [(1, [2]), (-2, [])] := by
+theorem hasSolution_real_X_sq_sub_two : HasSolution ℝ (X 0 ^ 2 - 2) := by
   refine ⟨fun _ => √2, ?_⟩
-  rw [toMvPolynomial_X_sq_sub_two]
   simp
 
 /-- The equation $X_0^2 + X_1^2 + 1 = 0$ has no rational solution. -/
 @[category test, AMS 3 11]
 theorem not_hasSolution_rat_sq_add_sq_add_one :
-    ¬ HasSolution ℚ [(1, [2]), (1, [0, 2]), (1, [])] := by
+    ¬ HasSolution ℚ (X 0 ^ 2 + X 1 ^ 2 + 1) := by
   rintro ⟨x, hx⟩
-  rw [toMvPolynomial_sq_add_sq_add_one] at hx
   simp at hx
   nlinarith [sq_nonneg (x 0), sq_nonneg (x 1)]
 
