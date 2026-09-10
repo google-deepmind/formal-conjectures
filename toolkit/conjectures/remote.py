@@ -54,10 +54,10 @@ def invoke_comparator(arguments, workspace, output):
     return typed_result(result_path.read_bytes(),proc.returncode),proc.returncode
 
 
-def execute(request,output,toolkit,source,candidate,generator):
+def execute(request,output,toolkit,source,candidate,generator,producer='github_actions'):
     validate_request(request)
     output.mkdir(parents=True,exist_ok=True)
-    record={'schema_version':'fc.proof-verification.v1','request':request,'producer':'github_actions',
+    record={'schema_version':'fc.proof-verification.v1','request':request,'producer':producer,
             'started_at':now(),'outcome':'error','policy_outcome':'not_evaluated','pins':PINS,
             'toolkit_commit':git(toolkit,'rev-parse','HEAD').decode().strip()}
     try:
@@ -98,8 +98,9 @@ def execute(request,output,toolkit,source,candidate,generator):
 def main():
     import argparse
     p=argparse.ArgumentParser();p.add_argument('--request',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--producer',choices=['github_actions','local_operator'],default='github_actions')
     for name in ('toolkit','source','candidate','generator'):p.add_argument('--'+name,type=Path,required=True)
     args=p.parse_args();result=execute(rr.read_json(args.request),args.out.resolve(),args.toolkit.resolve(),
-        args.source.resolve(),args.candidate.resolve(),args.generator.resolve())
+        args.source.resolve(),args.candidate.resolve(),args.generator.resolve(),args.producer)
     return 0 if result['outcome'] in ('pass','fail') else 3
 if __name__=='__main__':raise SystemExit(main())

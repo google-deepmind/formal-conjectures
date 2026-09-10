@@ -105,7 +105,7 @@ class ProofControlTests(ToolkitFixture):
             self.assertIn('original',source.read_text())
             self.assertNotIn('uncommitted',source.read_text())
             target=out/'workspace';target.mkdir(parents=True)
-            core.save(target/'fc-provenance.json',{'source':{'repository':repo,'commit':rev,'declaration':declaration}})
+            core.save(target/'fc-provenance.json',{'source':{'repository':repo,'commit':rev,'declaration':declaration,'module':'FormalConjectures.A','path':'FormalConjectures/A.lean'}})
             (target/'Submission.lean').write_text('theorem example : True := by trivial')
             return target
         with patch.object(proof,'public_repository',return_value='fixture/local'),patch.object(proof,'github',return_value={'sha':revision}),patch.object(proof,'checkout_tool',return_value=self.root),patch.object(catalog,'load',return_value={'provenance':{'source':{'repository':'fixture/local','commit':revision}},'problems':[{'theorem':'original','module':'FormalConjectures.A','githubPath':'FormalConjectures/A.lean'}]}),patch.object(proof,'command',side_effect=command),patch.object(proof,'git',side_effect=git),patch.object(exporter,'export',side_effect=export):

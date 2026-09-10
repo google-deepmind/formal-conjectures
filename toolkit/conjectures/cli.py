@@ -23,8 +23,11 @@ def dispatch(args):
     if args.command=='completion':
         from .interface import completion
         return {'text': completion(args.shell)}
-    optional = args.command in ('doctor','find','show') or (args.command=='setup' and args.global_config)
-    root=workspace(getattr(args,'repo',None),required=not optional);cfg=config(root)
+    optional = args.command in ('doctor','find','show','init','verify') or (args.command=='setup' and args.global_config)
+    root=workspace(getattr(args,'repo',None),required=not optional,
+                   allow_proof=args.command in ('doctor','verify','status','run','setup','evidence'))
+    if args.command=='verify' and root is None:root=args.directory.resolve()
+    cfg=config(root)
     if args.command=='doctor':return doctor(root,cfg,args.capability)
     if args.command=='setup':
         from .onboarding import setup

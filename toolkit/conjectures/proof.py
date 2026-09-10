@@ -9,7 +9,7 @@ import tempfile
 import shlex
 from pathlib import Path
 from . import report as rr
-from .core import Failure, command, finish, gh, git, github, now, save, start_run, run_lock
+from .core import Failure, command, finish, gh, git, github, now, save, start_run, run_lock, user_cache
 
 PINS = {
  'generator': ('williamjblair/lean-eval-generator','e611b55d7097b9de973cbe0cef0f0cfad66dbe92'),
@@ -55,6 +55,8 @@ def initialize(root,args,cfg):
     from .catalog import load,select
     from . import exporter
     catalog=load(root,args.catalog);problem=select(catalog,args.target)
+    standalone=root is None
+    if standalone:root=user_cache()/'operator'
     source=catalog.get('provenance',{}).get('source',{})
     repository_name=args.repository or source.get('repository')
     ref=args.source_ref or source.get('commit')
@@ -62,7 +64,7 @@ def initialize(root,args,cfg):
         raise Failure('source_revision_required','An unversioned local catalog requires explicit --repository OWNER/REPO and --source-ref COMMIT.',2)
     repository=public_repository(repository_name)
     # A published catalog commit need not already exist in the local clone.
-    revision=ref if re.fullmatch(r'[0-9a-f]{40}',ref) else git(root,'rev-parse',ref).decode().strip()
+    revision=ref if re.fullmatch(r'[0-9a-f]{40}',ref) else github(f'repos/{repository}/commits/{ref}').get('sha')
     # Verify remote reachability before creating any workspace, without pushing anything.
     if github(f'repos/{repository}/commits/{revision}').get('sha')!=revision:
         raise Failure('unpublished_source','Source commit is not retrievable from its recorded repository',4)
@@ -87,7 +89,8 @@ def initialize(root,args,cfg):
         # Export from an isolated exact checkout, never require switching or cleaning the operator's branch.
         with tempfile.TemporaryDirectory(prefix='fc-export-source-') as temp:
             source=Path(temp).resolve()/'source'
-            command(['git','clone','--no-checkout','--shared',root,source])
+            if standalone:command(['git','init',source])
+            else:command(['git','clone','--no-checkout','--shared',root,source])
             git(source,'fetch','--depth','1',f'https://github.com/{repository}.git',revision)
             git(source,'checkout','--detach',revision)
             exporter.install_native(source)
@@ -105,20 +108,29 @@ def initialize(root,args,cfg):
         save(directory/'trusted-target.json',provenance)
         save(root/'.conjectures/targets'/f"{rr.digest(str(result).encode())}.json",
              {'workspace':str(result),'init_run':record['id'],'provenance':provenance})
-        next_command=shlex.join(['conjectures','--repo',str(root),'verify',str(result)])
-        return finish(directory,record,'pass',workspace=str(result),next_action='Develop Submission.lean, commit and push the workspace publicly, then run '+next_command)
+        save(user_cache()/'targets'/f"{rr.digest(str(result).encode())}.json",provenance)
+        write_handoff(result,provenance)
+        next_command=shlex.join(['conjectures','verify',str(result)])
+        record=finish(directory,record,'pass',workspace=str(result),paths={'instructions':str(result/'AGENTS.md')},
+                      next_action='Develop Submission.lean, then '+next_command+'. GitHub verification requires an explicit public commit; a configured Linux executor accepts local files.')
+        if standalone:save(result/'.conjectures/runs'/record['id']/'run.json',record)
+        return record
     except BaseException as error:
         finish(directory,record,'error',reason=getattr(error,'reason','export_error'),detail=str(error));raise
 
 def verify(root,candidate,cfg):
     candidate=candidate.resolve()
     trusted_path=root/'.conjectures/targets'/f'{rr.digest(str(candidate).encode())}.json'
-    if not trusted_path.is_file():
-        raise Failure('untrusted_target','Generate this workspace with conjectures init before verification',4)
-    trusted=rr.read_json(trusted_path)['provenance']
+    portable=user_cache()/'targets'/f'{rr.digest(str(candidate).encode())}.json'
+    if portable.is_file():trusted=rr.read_json(portable)
+    elif trusted_path.is_file():trusted=rr.read_json(trusted_path)['provenance']
+    else:raise Failure('untrusted_target','Generate this workspace with conjectures init before verification. A copied workspace needs a new init at its destination.',4)
     if rr.read_json(candidate/'fc-provenance.json')!=trusted:
         raise Failure('changed_target','Workspace provenance differs from the retained trusted target',1)
     executor=cfg.get('executor')
+    if isinstance(executor,dict) and executor.get('kind')=='linux':
+        from .linux_executor import verify_local
+        return verify_local(root,candidate,trusted,executor)
     if not isinstance(executor,dict) or executor.get('kind')!='github':
         raise Failure('executor_unavailable','Configure a qualified GitHub Linux executor',4)
     repository=public_repository(git(candidate,'remote','get-url','origin').decode().strip())
@@ -148,6 +160,27 @@ def verify(root,candidate,cfg):
         save(directory/'run.json',record);return record
     except BaseException as error:
         finish(directory,record,'error',reason='dispatch_error',detail=str(error));raise
+
+
+def write_handoff(workspace,provenance):
+    source=provenance['source']
+    (workspace/'AGENTS.md').write_text(
+        '# Proof submission\n\n'
+        f"Target: `{source['declaration']}` in `{source['module']}`.\n"
+        f"Source: {source['repository']} at `{source['commit']}`.\n\n"
+        'Read Challenge.lean and Submission.lean. Edit only Submission.lean and .lean files\n'
+        'under Submission/. Preserve the target, dependency pins, and verification policy.\n'
+        'Use `lake build` for development feedback in this scratch workspace. Compilation\n'
+        'alone is not verification. The verifier regenerates trusted files in a fresh workspace.\n\n'
+        'Run `conjectures verify . --json`, then follow the returned next action.\n'
+        'A configured Linux executor accepts local submissions. GitHub execution requires\n'
+        'an explicitly committed and pushed public workspace; do not publish automatically.\n'
+        'Inspect results with `conjectures run show RUN` and `conjectures run logs RUN`.\n\n'
+        'Report errors separately from rejection. Definition-hole answers need additional\n'
+        'semantic assessment. A passing proof does not establish source fidelity or maintainer acceptance.\n')
+    ignore=workspace/'.gitignore'
+    existing=ignore.read_text() if ignore.exists() else ''
+    ignore.write_text(existing+'\n.conjectures/\n.lake/\n')
 
 def control(directory,record,operation):
     if record['kind']!='verify':

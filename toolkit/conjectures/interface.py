@@ -96,8 +96,12 @@ def parser():
             s.add_argument('--image',help='Existing image pinned by SHA-256 digest')
             s.add_argument('--source-ref',default='main',help='Reviewed upstream main revision used to build the image')
         else:
-            s.add_argument('--repository',required=True,help='Existing GitHub OWNER/REPO')
-            s.add_argument('--ref' if op=='verify' else '--branch',required=True,help='Qualified exact executor commit' if op=='verify' else 'Existing data-only branch')
+            s.add_argument('--repository',required=op=='evidence',help='Existing GitHub OWNER/REPO')
+            s.add_argument('--ref' if op=='verify' else '--branch',required=op=='evidence',help='Qualified exact executor commit' if op=='verify' else 'Existing data-only branch')
+            if op=='verify':
+                s.add_argument('--local',action='store_true',help='Configure this unprivileged Linux host instead of GitHub (experimental)')
+                s.add_argument('--toolkit',type=Path,help='Clean trusted toolkit checkout used by the Linux controller')
+                s.add_argument('--tools',type=Path,help='Directory containing the pinned generator, comparator, landrun and nanoda checkouts, already built')
     q=command('completion','Print shell completion for installation','conjectures completion zsh');q.add_argument('shell',choices=['bash','zsh','fish'])
     return p
 
