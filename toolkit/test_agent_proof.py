@@ -19,6 +19,12 @@ class AgentProofTests(unittest.TestCase):
         self.assertEqual(core.workspace(self.candidate,allow_proof=True),self.candidate)
         with self.assertRaises(core.Failure):core.workspace(self.candidate)
 
+    def test_verify_checks_directory_before_target_or_executor(self):
+        for candidate in (self.root/'missing',self.candidate/'fc-provenance.json'):
+            with self.subTest(candidate=candidate):
+                with self.assertRaises(core.Failure) as caught:proof.verify(self.root,candidate,{})
+                self.assertEqual((caught.exception.reason,caught.exception.code),('directory_missing',2))
+
     def test_portable_target_binding_is_outside_submission(self):
         cache=self.root/'cache'
         core.save(cache/'targets'/f'{proof.rr.digest(str(self.candidate).encode())}.json',self.target)

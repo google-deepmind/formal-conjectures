@@ -128,6 +128,8 @@ def generate(root,problem,repository,revision,artifact,generator=None):
 
 def verify(root,candidate,cfg):
     candidate=candidate.resolve()
+    if not candidate.is_dir():
+        raise Failure('directory_missing',f'Select an existing proof workspace directory: {candidate}')
     trusted_path=root/'.conjectures/targets'/f'{rr.digest(str(candidate).encode())}.json'
     portable=user_cache()/'targets'/f'{rr.digest(str(candidate).encode())}.json'
     if portable.is_file():trusted=rr.read_json(portable)
