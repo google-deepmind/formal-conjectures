@@ -25,9 +25,9 @@ public import Mathlib.Algebra.Lie.UniversalEnveloping
 # The enveloping algebra of `𝔤𝔩 n ℂ`, its centre, and their action
 
 The universal enveloping algebra `U(𝔤𝔩 n ℂ)` of the complexified Lie algebra of `GL n ℝ` and
-the action of its centre on the `C^∞` functions on `GL n ℝ` by left invariant differential
-operators. This is the action that condition (c) in the Borel-Jacquet definition of an
-automorphic form refers to; see
+the action of its centre on the complex-valued `C^∞` functions on `GL n ℝ` by left invariant
+differential operators. This is the action that condition (c) in the Borel-Jacquet definition
+of an automorphic form refers to; see
 `FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition.
 
 ## Main declarations
@@ -51,23 +51,17 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 -- it competes with the bracket of a Lie algebra given abstractly.
 attribute [local instance 100] LieRing.ofAssociativeRing
 
-/-- The commutator bracket making `𝔤𝔩 n ℂ = Matrix n n ℂ` a Lie ring, available as
-`open scoped Matrix.GeneralLinearGroup`. It agrees with the bracket used by
-`Matrix.GeneralLinearGroup.universalEnveloping` below. -/
-scoped instance instLieRingMatrixComplex : LieRing (Matrix n n ℂ) :=
-  LieRing.ofAssociativeRing
-
 /-- The universal enveloping algebra `U(𝔤𝔩 n ℂ)` of the complexified Lie algebra of `GL n ℝ`.
 The complexification of `𝔤𝔩 n ℝ` is `𝔤𝔩 n ℂ = Matrix n n ℂ` with its commutator bracket.
 
 This abbreviation records the choice of `LieRing.ofAssociativeRing` as the bracket, so that
 downstream files can name the algebra without re-enabling that local instance. -/
-noncomputable abbrev universalEnveloping (n : Type*) [Fintype n] [DecidableEq n] : Type _ :=
+abbrev universalEnveloping (n : Type*) [Fintype n] [DecidableEq n] : Type _ :=
   UniversalEnvelopingAlgebra ℂ (Matrix n n ℂ)
 
 /-- The centre of the universal enveloping algebra of the complexified Lie algebra of `GL n ℝ`.
 This is the algebra acting in condition (c) in the definition of an automorphic form. -/
-noncomputable abbrev centerUniversalEnveloping (n : Type*) [Fintype n] [DecidableEq n] :
+abbrev centerUniversalEnveloping (n : Type*) [Fintype n] [DecidableEq n] :
     Subalgebra ℂ (universalEnveloping n) :=
   Subalgebra.center ℂ (universalEnveloping n)
 
