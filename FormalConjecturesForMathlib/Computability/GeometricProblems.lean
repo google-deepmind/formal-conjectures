@@ -149,7 +149,8 @@ def RectilinearSteinerTree (input : List IntegerPoint × ℕ) : Prop :=
     ∃ s : Finset IntegerPoint, (∀ p ∈ input.1, p ∈ s) ∧
       ∃ G : SimpleGraph s, G.IsTree ∧ rectilinearTreeLength G ≤ input.2
 
-/-- A genuine affine line ax + by = c; the zero normal is excluded. -/
+/-- A genuine affine line ax + by = c; the zero normal is excluded.
+Coefficient form describes incidence directly without choosing a base point or direction. -/
 structure Line where
   a : ℝ
   b : ℝ
