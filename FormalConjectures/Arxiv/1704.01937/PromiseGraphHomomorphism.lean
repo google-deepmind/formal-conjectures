@@ -39,7 +39,7 @@ the claimed hardness excludes polynomial-time separation. -/
 @[category research open, AMS 5 68]
 theorem promise_graph_homomorphism :
     ∀ g h : Code, ValidGraph g → ValidGraph h →
-      Nonbipartite g → Nonbipartite h → Hom g h →
+      Nonbipartite g → Hom g h →
         PromiseNPHard (Yes g) (No h) := by sorry
 
 end Arxiv.«1704.01937»

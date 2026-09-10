@@ -120,6 +120,9 @@ open PromiseGraph
 example : MatrixGraph.ValidGraph k3 := by decide +kernel
 example : Nonbipartite k3 := by decide +kernel
 example : ¬ Nonbipartite k2 := by decide +kernel
+
+example {g h : MatrixGraph.Code} (hgh : Hom g h) (hg : Nonbipartite g) :
+    Nonbipartite h := hgh.nonbipartite hg
 example : Hom k3 k4 := by decide +kernel
 example : ¬ Hom k3 k2 := by decide +kernel
 example : Yes k3 k3 := ⟨by simp [MatrixGraph.Square, k3], Hom.refl _⟩

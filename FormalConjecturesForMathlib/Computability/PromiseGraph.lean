@@ -65,6 +65,13 @@ instance (g : Code) : Decidable (Nonbipartite g) := by
   unfold Nonbipartite
   infer_instance
 
+/-- A homomorphic image of a nonbipartite graph cannot be two-colored. -/
+theorem Hom.nonbipartite {g h : Code} (hgh : Hom g h) (hg : Nonbipartite g) :
+    Nonbipartite h := by
+  rintro ⟨color, hc⟩
+  obtain ⟨f, hf⟩ := hgh
+  exact hg ⟨color ∘ f, fun i j he => hc _ _ (hf i j he)⟩
+
 theorem nonbipartite_iff {g : Code} (hg : ValidGraph g) :
     Nonbipartite g ↔ ¬ (toGraph g).Colorable 2 := by
   unfold Nonbipartite

@@ -27,7 +27,10 @@ range over the distinct variable names actually represented in the input. The
 yes region is perfect satisfiability; the no region bounds the satisfied-clause
 fraction for every assignment. Empty formulas are excluded from both regions.
 
-Reference: Allender–Farach-Colton–Tsai, *Syntactic Separation of Subset
+Original sources: Manurangsi–Raghavendra, arXiv:1607.02986, §2.6, Conjecture 2,
+https://arxiv.org/abs/1607.02986; Dinur, ECCC TR16-128, §2.2, Hypothesis 2.5,
+https://eccc.weizmann.ac.il/report/2016/128/.
+Variable-count formulation: Allender–Farach-Colton–Tsai, *Syntactic Separation of Subset
 Satisfiability Problems*, APPROX/RANDOM 2019, Conjecture 1, p.16:2:
 https://doi.org/10.4230/LIPIcs.APPROX-RANDOM.2019.16.
 We use a deterministic finite TM2 machine, a reciprocal positive exponential
