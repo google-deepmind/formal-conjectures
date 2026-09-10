@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Computability.Encoding
 public import Mathlib.Algebra.Field.Rat
+public import Mathlib.Data.Finset.Sort
 
 /-!
 # Bitstring encodings
@@ -197,6 +198,12 @@ instance [BitstringEncoding α] : BitstringEncoding (List α) where
   decode_encode l := by
     rw [undelimitBlocks_flatten_delimit (l.map bitEncode)]
     exact mapM_bitDecode_map_bitEncode l
+
+/-- A finite set is encoded as the canonically sorted list of its elements. -/
+instance {α : Type} [LinearOrder α] [BitstringEncoding α] : BitstringEncoding (Finset α) :=
+  ofLeftInverse (fun s => s.sort (· ≤ ·)) (fun l => some l.toFinset) (by
+    intro s
+    simp)
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
 defining predicate. -/
