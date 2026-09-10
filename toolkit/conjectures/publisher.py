@@ -78,8 +78,9 @@ def control(directory, operation):
     remote=rr.parse(gh('run','view',identity,'--repo',repo,'--json','status,conclusion,url'))
     value['url']=remote['url']
     if operation=='cancel' and remote['status']!='completed':
-        gh('run','cancel',identity,'--repo',repo);value['status']='cancellation_requested'
-    elif remote['status']!='completed':value['status']=remote['status']
+        gh('run','cancel',identity,'--repo',repo);value.update(status='cancellation_requested',cancellation_requested_at=now())
+    elif remote['status']!='completed':
+        value.update(status='cancellation_requested' if value.get('cancellation_requested_at') else remote['status'],remote_status=remote['status'])
     else:
         output=directory/'publisher-artifacts'/value['request']['request_id'];output.mkdir(parents=True,exist_ok=True)
         try:

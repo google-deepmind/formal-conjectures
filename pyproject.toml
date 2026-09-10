@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "formal-conjectures-toolkit"
-version = "0.2.0rc2"
+version = "0.2.0rc3"
 description = "Review contributions and verify exact Formal Conjectures targets"
 readme = "toolkit/README.md"
 license = "Apache-2.0"

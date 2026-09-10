@@ -64,3 +64,12 @@ class PublisherTests(unittest.TestCase):
         self.assertIn(b'cancel-in-progress: false',workflow)
         self.assertIn(b'pull-requests: write',workflow)
         self.assertNotIn(b'pull_request.head',workflow)
+
+    def test_wait_preserves_cancellation_request_until_confirmation(self):
+        core.save(self.root/'publisher.json',{'request':self.request,'publisher':{'repository':'owner/fc','ref':'a'*40},'status':'queued','remote_run_id':1})
+        pending=rr.encode({'status':'in_progress','conclusion':'','url':'https://example.com/run'})
+        with patch.object(p,'gh',side_effect=[pending,b'',pending]):
+            self.assertEqual(p.control(self.root,'cancel')['status'],'cancellation_requested')
+            value=p.control(self.root,'wait')
+            self.assertEqual(value['status'],'cancellation_requested')
+            self.assertEqual(value['remote_status'],'in_progress')
