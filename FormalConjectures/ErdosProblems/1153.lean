@@ -65,9 +65,6 @@ $$
 
 This was resolved by Tao [Ta26b], who proved the stronger lower bound
 $\max_{x\in[a,b]}\lambda(x)\geq \frac{2}{\pi}\log n-O(1)$.
-
-The formal statement expresses the displayed $o(1)$ by an epsilon/eventual quantifier. The
-threshold is uniform over every family of `n` distinct nodes.
 -/
 @[category research solved, AMS 41,
   formal_proof using lean4 at
