@@ -19,11 +19,13 @@ import FormalConjecturesUtil
 /-!
 # Numbers $n$ such that the perfect deficiency of $n$ is $\le 10$.
 
-We formally define the property satisfied by elements of the sequence,
-using the sum of divisors function $\sigma_1(n)$.
+The perfect deficiency of $n$ (A109883) is the remainder after greedily subtracting
+from $n$ its divisors in increasing order, skipping any divisor larger than the
+current remainder.
 
 *References:*
 - [A108864](https://oeis.org/A108864)
+- [A109883](https://oeis.org/A109883)
 -/
 
 namespace OeisA108864
@@ -31,13 +33,19 @@ namespace OeisA108864
 open Nat Finset Int
 
 /--
+The perfect deficiency of $n$ (A109883): the remainder after greedily subtracting
+from $n$ its divisors in increasing order, skipping any divisor larger than the
+current remainder.
+-/
+def perfectDeficiency (n : ℕ) : ℕ :=
+  (List.range (n + 1)).foldl (fun m d => if d ∣ n ∧ d ≤ m then m - d else m) n
+
+/--
 The condition for a number $n$ to be in the sequence.
-It satisfies $0 < n$ and its perfect deficiency is $\le 10$, using the sum of divisors
-function $\sigma_1(n)$.
+It satisfies $0 < n$ and its perfect deficiency is $\le 10$.
 -/
 def A (n : ℕ) : Prop :=
-  let sigmaOneN : ℕ := (Nat.divisors n).sum id
-  0 < n ∧ ((sigmaOneN : ℤ) - 2 * (n : ℤ)).natAbs ≤ 10
+  0 < n ∧ perfectDeficiency n ≤ 10
 
 instance : DecidablePred A := by
   unfold A
@@ -45,7 +53,7 @@ instance : DecidablePred A := by
 
 /--
 The primary defining sequence `a`.
-`a n` is the `n`-th number (0-indexed) such that its perfect deficiency is $\le 10$.
+$a(n)$ is the $n$-th number (0-indexed) such that its perfect deficiency is $\le 10$.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   n.nth A
@@ -87,8 +95,8 @@ theorem a_4 : a 4 = 5 := by
   rwa [hcnt] at this
 
 /--
-Is 1155 the last odd number in this sequence?
-(1155 is the 59th term starting from 1, corresponding to `a 58 = 1155`).
+Is $1155$ the last odd number in this sequence?
+($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
 -/
 @[category research open, AMS 11]
 theorem conjecture :

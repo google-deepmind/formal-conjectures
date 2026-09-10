@@ -53,6 +53,9 @@ jobs:
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
+      - name: Run website post-processing tests
+        run: python3 -m unittest discover -s site -p 'test_*.py' -v
+
   build:
     runs-on: ubuntu-latest
     name: Build project
@@ -132,17 +135,15 @@ jobs:
           lake exe cache unpack
           lake exe cache get
 
-      - name: Restore local lake build
+      - name: Restore Lean build
         if: steps.mode.outputs.website_only != 'true'
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             .lake/build
-            docbuild/.lake/build
-            _literate_html
-          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
+          key: lean-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-${{ github.sha }}
           restore-keys: |
-            lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-
+            lean-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-
 
       - name: Generate FormalConjecturesForMathlib.lean
         if: steps.mode.outputs.website_only != 'true'
@@ -185,10 +186,48 @@ jobs:
           action: remove
           linters: lean
 
+      # Documentation can rebuild problem modules with different traces in
+      # .lake/build. Save the Lean cache before entering that build context.
+      - name: Save Lean build
+        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .lake/build
+          key: lean-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-${{ github.sha }}
+
       # Every library that the problem files build on gets a literate page, so
       # that hovers and constant links from a problem resolve to the definition
       # in `FormalConjecturesForMathlib` or `FormalConjecturesUtil` instead of
       # dead-ending. The test library is left out: it documents nothing.
+      # Fetch pinned dependency sources before restoring their build files.
+      - name: Initialize documentation workspace
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        working-directory: docbuild
+        run: lake env lean --version
+
+      - name: Restore documentation tools
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .lake/packages/verso/.lake/build
+            .lake/packages/subverso/.lake/build
+            .lake/packages/MD4Lean/.lake/build
+            .lake/packages/illuminate/.lake/build
+            .lake/packages/plausible/.lake/build
+          key: doc-tools-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}
+
+      - name: Restore literate data
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            docbuild/.lake/build
+          key: literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
+          restore-keys: |
+            literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-
+
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
@@ -203,15 +242,25 @@ jobs:
         run: |
           python3 site/fix_literate_html.py _literate_html
 
-      - name: Save local lake build
-        if: steps.mode.outputs.website_only != 'true' && github.event_name == 'push'
+      - name: Save documentation tools
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true' && github.event_name == 'push'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
-            .lake/build
+            .lake/packages/verso/.lake/build
+            .lake/packages/subverso/.lake/build
+            .lake/packages/MD4Lean/.lake/build
+            .lake/packages/illuminate/.lake/build
+            .lake/packages/plausible/.lake/build
+          key: doc-tools-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}
+
+      - name: Save literate data
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true' && github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
             docbuild/.lake/build
-            _literate_html
-          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
+          key: literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
 
       # Only a push writes to the shared cache. An entry saved from anywhere
       # else is scoped to a ref nothing later restores from, while it takes

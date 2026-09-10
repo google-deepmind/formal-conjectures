@@ -23,6 +23,10 @@ Put each problem in `FormalConjectures/<Source>/`. Keep closely related variants
 file. Put reusable mathematics in `FormalConjecturesForMathlib/`. That directory must not
 contain `sorry`.
 
+`FormalConjecturesTest/` tests only the repository tooling in `FormalConjecturesUtil/`. Do not
+add tests for `FormalConjecturesForMathlib/` there. Put lemmas and sanity checks for a shared
+definition in the `FormalConjecturesForMathlib/` file that defines it.
+
 Problem files normally import only `FormalConjecturesUtil`.
 `FormalConjecturesForMathlib/` files import only the required Mathlib modules.
 
