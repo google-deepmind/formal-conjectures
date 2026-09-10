@@ -59,10 +59,13 @@ def satTime (a b degree : ℕ) (f : Formula) : ℕ :=
   ((BitstringEncoding.bitEncode f).length + 1) ^ degree *
     2 ^ (a * variableCount f / b)
 
-/-- A uniform bounded-error word-RAM solver at a specified exponential rate. -/
+/-- A uniform bounded-error word-RAM solver at a specified exponential rate.
+For encoded length L and time budget T, word width is O(log(max L T + 2)),
+so the address space is not restricted to polynomial size in L. The program,
+polynomial degree, word-size coefficient and time multiplier are fixed globally. -/
 def HasSatTime (k a b : ℕ) : Prop :=
   0 < b ∧ ∃ degree : ℕ,
-    WordRAM.HasFastDecider (WidthAtMost k) sat (satTime a b degree)
+    WordRAM.HasTimeBudgetDecider (WidthAtMost k) sat (satTime a b degree)
 
 @[simp]
 theorem sat_eq_true (f : Formula) :

@@ -28,14 +28,15 @@ namespace LiuChen2024
 
 open FineGrained
 
-/-- **Randomized ETH** (Liu–Chen, Conjecture 5), in the logarithmic-input-width
+/-- **Randomized ETH** (Liu–Chen, Conjecture 5), in the time-budget-width
 word-RAM model: some integer $b>0$ excludes a bounded-error 3-SAT solver with time
 $C(L+1)^d2^{\lfloor n/b\rfloor}$ for any fixed $C,d$. Input is a binary-encoded
 signed CNF formula of length $L$, every clause has at most three literals, and $n$
 is the number of distinct variables occurring. Repeated literals and empty clauses
 are retained. One fixed program must halt within the bound on every random tape
 and be correct with probability at least $2/3$ on each input. Word width is
-$O(\log(L+2))$, hence addressable memory is polynomial in $L$. -/
+$O(\log(\max(L,T)+2))$ for the full time budget $T$, permitting exponentially
+many addressable cells when $T$ is exponential in $n$. -/
 @[category research open, AMS 68]
 theorem randomized_ETH :
     ∃ b : ℕ, 0 < b ∧ ¬ HasSatTime 3 1 b := by sorry

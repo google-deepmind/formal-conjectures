@@ -31,14 +31,15 @@ namespace VassilevskaWilliams2018
 
 open FineGrained WordRAM
 
-/-- **Randomized SETH** (Vassilevska Williams, Hypothesis 1), in the logarithmic-
-input-width word-RAM model: for every rational $a/b<1$ with $b>0$, some fixed
+/-- **Randomized SETH** (Vassilevska Williams, Hypothesis 1), in the time-budget-
+width word-RAM model: for every rational $a/b<1$ with $b>0$, some fixed
 clause width $k\ge3$ excludes SAT time $C(L+1)^d2^{\lfloor an/b\rfloor}$ for all
 fixed $C,d$. The binary formula has length $L$ and $n$ distinct occurring variables;
 clauses have at most $k$ literals, retaining empty clauses and repeated occurrences.
 One program must halt within the bound on every coin tape and succeed with
-probability at least $2/3$ on each input. Word width $O(\log(L+2))$ permits only
-polynomially many addressable memory cells. -/
+probability at least $2/3$ on each input. Word width is
+$O(\log(\max(L,T)+2))$, where $T$ is the full time budget, rather than the
+survey's input-logarithmic convention; it permits exponential address space. -/
 @[category research open, AMS 68]
 theorem randomized_SETH :
     ∀ a b : ℕ, 0 < b → a < b → ∃ k : ℕ, 3 ≤ k ∧ ¬ HasSatTime k a b := by sorry

@@ -29,8 +29,8 @@ changes only through store instructions. The read-only input is an explicit
 bitstring with random access. A coin instruction consumes one fresh random bit.
 Arithmetic, comparisons, word bit operations, loads and stores each cost one step.
 
-Reference for the model: MIT 6.006, Spring 2020, Recitation 1, p.4:
-https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/c6d8f06c6f11e3342633dec85498f551_MIT6_006S20_r01.pdf.
+Reference for the word-RAM model: Torben Hagerup, *Sorting and searching on the
+word RAM*, STACS 1998, pp. 366–398, https://doi.org/10.1007/BFb0028575.
 Fine-grained word-size convention: Vassilevska Williams, *On some fine-grained
 questions in algorithms and complexity*, §2.1:
 https://people.csail.mit.edu/virgi/eccentri.pdf.
@@ -310,6 +310,31 @@ def HasFastDecider {α : Type} [BitstringEncoding α]
     (valid : α → Prop) (answer : α → Bool) (time : α → ℕ) : Prop :=
   ∃ (p : Program) (c C : ℕ), 1 ≤ c ∧ 1 ≤ C ∧ ∀ x, valid x →
     BoundedError p (logarithmicWidth c (BitstringEncoding.bitEncode x).length)
+      (BitstringEncoding.bitEncode x) (C * time x) (answer x)
+
+/-- Word width logarithmic in the larger of input length and instruction budget.
+Unlike input-logarithmic width, it permits addresses beyond polynomial input space
+when the time budget is exponential. The coefficient is global, not per input. -/
+def timeBudgetWidth (c inputSize time : ℕ) : ℕ :=
+  logarithmicWidth c (max inputSize time)
+
+/-- With coefficient one, the address space contains every position up to the budget. -/
+theorem time_fits (inputSize time : ℕ) :
+    time < 2 ^ timeBudgetWidth 1 inputSize time :=
+  (le_max_right inputSize time).trans_lt (input_fits (max inputSize time))
+
+/-- The input length still fits even when the instruction budget is smaller. -/
+theorem input_fits_timeBudget (inputSize time : ℕ) :
+    inputSize < 2 ^ timeBudgetWidth 1 inputSize time :=
+  (le_max_left inputSize time).trans_lt (input_fits (max inputSize time))
+
+/-- One fixed bounded-error program with words logarithmic in input length and
+the full time budget. The positive width and time coefficients are chosen before
+all inputs. Every random tape must halt within the same budget. -/
+def HasTimeBudgetDecider {α : Type} [BitstringEncoding α]
+    (valid : α → Prop) (answer : α → Bool) (time : α → ℕ) : Prop :=
+  ∃ (p : Program) (c C : ℕ), 1 ≤ c ∧ 1 ≤ C ∧ ∀ x, valid x →
+    BoundedError p (timeBudgetWidth c (BitstringEncoding.bitEncode x).length (C * time x))
       (BitstringEncoding.bitEncode x) (C * time x) (answer x)
 
 /-- A rational power time bound, without real rounding: t^b ≤ C (n+1)^a f(x).

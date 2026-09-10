@@ -56,6 +56,15 @@ example : logarithmicWidth 1 6 = 4 := rfl
 example : logarithmicWidth 3 6 = 12 := rfl
 example (n : ℕ) : n < 2 ^ logarithmicWidth 1 n := input_fits n
 
+example : timeBudgetWidth 1 0 0 = 2 := rfl
+example : timeBudgetWidth 1 6 2 = logarithmicWidth 1 6 := rfl
+example : timeBudgetWidth 1 6 1024 = 11 := by decide
+example : timeBudgetWidth 2 6 1024 = 22 := by decide
+example (L T : ℕ) : T < 2 ^ timeBudgetWidth 1 L T := time_fits L T
+example (L T : ℕ) : L < 2 ^ timeBudgetWidth 1 L T := input_fits_timeBudget L T
+example : word (logarithmicWidth 1 6) 1024 = 0 := by decide
+example : word (timeBudgetWidth 1 6 1024) 1024 = 1024 := by decide
+
 example : execute [] 4 [] [] 0 = none := rfl
 example : execute [] 4 [] [] 1 = some false := rfl
 example : execute [.halt 0] 4 [] [] 1 = some false := rfl
@@ -68,6 +77,15 @@ def memoryProgram : Program :=
 
 example : execute memoryProgram 4 [] [] 6 = some true := rfl
 example : execute memoryProgram 5 [] [] 6 = some false := rfl
+
+/-- Address 1024 aliases zero with input-logarithmic words, but not with budget words. -/
+def budgetAddressProgram : Program :=
+  [.literal 0 1024, .literal 1 1, .store 0 1, .literal 0 0, .load 2 0, .halt 2]
+
+example : execute budgetAddressProgram (logarithmicWidth 1 6) [] [] 6 =
+    some true := by decide
+example : execute budgetAddressProgram (timeBudgetWidth 1 6 1024) [] [] 6 =
+    some false := by decide
 
 /-- Jumping over a false answer reaches the true answer. -/
 def branchProgram : Program :=
@@ -124,6 +142,15 @@ theorem constant_false_fast :
   intro v
   simp [execute, run, step, word]
 
+/-- Time-budget word widths still admit an actual uniform constant-output program. -/
+theorem constant_false_timeBudget :
+    HasTimeBudgetDecider (fun _ : Bool => True) (fun _ => false) (fun _ => 1) := by
+  refine ⟨[.halt 0], 1, 1, by decide, by decide, ?_⟩
+  intro x _
+  apply boundedError_of_certain
+  intro v
+  simp [execute, run, step, word]
+
 /-- The rational-power interface also admits constant time at exponent zero. -/
 theorem constant_false_power :
     HasPowerTimeDecider (fun _ : Bool => True) (fun _ => false)
@@ -151,6 +178,11 @@ example : satTime 1 2 0 [[(7, true)], [(42, true)]] = 2 := by decide
 example : satTime 1 3 0 [[(7, true)], [(42, true)]] = 1 := by decide
 example : satTime 0 3 0 [[(7, true)], [(42, true)]] = 1 := by decide
 example : ¬ HasSatTime 3 1 0 := by simp [HasSatTime]
+
+/-- SAT uses the time-budget interface; the degree remains outside the input quantifier. -/
+example (k a b : ℕ) : HasSatTime k a b ↔
+    0 < b ∧ ∃ degree : ℕ,
+      HasTimeBudgetDecider (WidthAtMost k) sat (satTime a b degree) := Iff.rfl
 
 example : ValidOV (0, ([[]], [[]])) := by decide
 example : orthogonalVectors (0, ([[]], [[]])) = true := by decide
