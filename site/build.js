@@ -736,6 +736,9 @@ function applyBasePath(html) {
   const renderingBase = process.env.FC_RENDER_BASE || BASE_PATH;
   if (process.env.FC_RENDER_BASE && !/^https:\/\/[A-Za-z0-9.-]+(?:\/[A-Za-z0-9._/-]*)?$/.test(renderingBase)) throw new Error('Invalid rendering origin');
   html = html.replace('data-base=""', `data-base="" data-render-base="${renderingBase}"`);
+  // Annotated source belongs to the rendering origin in website-only previews.
+  // Rewrite before the local base path so root-hosted previews work too.
+  if (process.env.FC_RENDER_BASE) html = html.replace(/(href|src)="\/src(?=[/"?#])/g, `$1="${renderingBase}/src`);
   if (!BASE_PATH) return html;
   // Set data-base on <html> for client-side JS (main.js uses this for fetch paths)
   html = html.replace('data-base=""', `data-base="${BASE_PATH}"`);
