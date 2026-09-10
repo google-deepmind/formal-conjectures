@@ -41,10 +41,13 @@ $\delta(K, p) = (r_1 + r_2 - 1) - \operatorname{rank}_{\mathbb{Z}_p} \overline{E
 * `leopoldt_conjecture.variants.padicRelation`: the only $p$-adic relation among units of maximal
   rank in $E_1$ is the trivial one;
 * `leopoldt_conjecture.variants.elementary`: congruences modulo $p^M \mathcal{O}_K$ force
-  divisibility of the exponents.
+  divisibility of the exponents;
+* `leopoldt_conjecture.variants.mihailescu`: Mihăilescu's form, in which the *Leopoldt defect*
+  $\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) - \mathbb{Z}_p\text{-rk}(\overline{E})$ vanishes,
+  $\overline{E}$ being the closure of the global units in the *semilocal* units.
 
-The last two are low-level: they are stated using nothing beyond mathlib, at the cost of not
-being Wikipedia's formulation verbatim.
+The `padicRelation` and `elementary` forms are low-level: they are stated using nothing beyond
+mathlib, at the cost of not being Wikipedia's formulation verbatim.
 
 ## The dictionary
 
@@ -69,6 +72,24 @@ being Wikipedia's formulation verbatim.
   $\mathcal{O}_K^\times$ is `NumberField.Units.IsMaxRank ε`, and the fundamental system of the
   elementary form is `NumberField.Units.fundSystem K`.
 
+Mihăilescu's form uses none of these, so it carries its own dictionary. [Mihăilescu, §1.1] writes
+$E = E(K) = \mathcal{O}(K)^\times$ for the units of $K$ and
+$P = \{\wp \subset \mathcal{O}(K) : (p) \subset \wp\}$ for the set of primes above $p$; puts
+$K_p = \prod_{\wp \in P} K_\wp = K \otimes_\mathbb{Q} \mathbb{Q}_p$, with diagonal embedding
+$\iota : K \to K_p$ and $U \subset K_p^\times$ "the group of units, thus the product of local
+units at the same completions"; and defines the $p$-adic closure of the global units and the
+*Leopoldt defect* as
+$$\overline{E} = \overline{\iota(E)} = \bigcap_{n > 0} \iota(E) \cdot U^{p^n}, \qquad
+\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) - \mathbb{Z}_p\text{-rk}(\overline{E}).$$
+Note that this works inside the full semilocal unit group $U$, not the principal units $U_1$.
+
+* $P$ is `NumberField.PrimesAbove K p`, and $U$ is `Mihailescu.SemilocalUnits K p`;
+* $\iota$ is `Mihailescu.diagonalUnits K p`, and $\overline{E}$ is `Mihailescu.unitClosure K p`,
+  the intersection written exactly as in the source;
+* $\mathbb{Z}_p\text{-rk}$ is `Mihailescu.zpRankBelow`, which measures the rank from below by
+  continuous injections of $\mathbb{Z}_p^n$ rather than with `Module.finrank`;
+* $\mathcal{D}_L(K)$ is `Mihailescu.defect K p`.
+
 *References:*
 - [Wikipedia, *Leopoldt's conjecture*](https://en.wikipedia.org/wiki/Leopoldt%27s_conjecture):
   "Leopoldt's conjecture states that the $\mathbb{Z}_p$-module rank of the closure of $E_1$
@@ -78,6 +99,11 @@ being Wikipedia's formulation verbatim.
   with $X = \Delta^{-1}(\prod_{\mathfrak{p} \mid p} \mathcal{O}^*_{\mathfrak{p}, 1})$ and the
   closure of $\Delta(X)$), and Lemma 4.2 (the reading of $\mathbb{Z}_p$-powers as limits of
   integer powers used here).
+- P. Mihăilescu, *Leopoldt's Conjecture for CM fields*,
+  [arXiv:1105.4544](https://arxiv.org/abs/1105.4544), §1: the closure is
+  $\bar{E} = \bigcap_{n > 0} \iota(E) \cdot U^{p^n}$ and the *Leopoldt defect* is
+  $\mathcal{D}_l(K) = \operatorname{rank}_{\mathbb{Z}} E - \operatorname{rank}_{\mathbb{Z}_p}
+  \bar{E}$.
 - G. Gras et al., *Applications of representation theory and of explicit units to Leopoldt's
   conjecture*, [arXiv:2301.05700](https://arxiv.org/abs/2301.05700), §1: Leopoldt's conjecture
   holds iff $\lambda_{K, p} : \mathbb{Z}_p \otimes_{\mathbb{Z}} \mathcal{O}_K^\times \to
@@ -295,5 +321,75 @@ theorem leopoldt_conjecture.variants.elementary (N : ℕ) :
   sorry
 
 end LowLevel
+
+section Mihailescu_Defect
+
+/-
+## Mihăilescu's form
+
+The vanishing of the Leopoldt defect
+$\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) - \mathbb{Z}_p\text{-rk}(\overline{E})$ of
+[Mihăilescu, §1.1]. Unlike the formulations above this one works inside the full semilocal unit
+group $U = \prod_{\mathfrak{p} \mid p} \mathcal{O}_\mathfrak{p}^\times$ rather than the
+principal units $U_1$; the module docstring carries its dictionary.
+-/
+
+namespace Mihailescu
+
+/-- `U`: the group of semilocal units at `p`, that is the product `∏_{℘ | p} 𝓞_℘^×` of the
+local units at the primes above `p`. -/
+abbrev SemilocalUnits := ∀ v : PrimesAbove K p, (v.1.adicCompletionIntegers K)ˣ
+
+/-- `ι : E(K) → U`, the diagonal embedding of the global units into the semilocal units. -/
+noncomputable def diagonalUnits : (𝓞 K)ˣ →* SemilocalUnits K p :=
+  MonoidHom.pi fun v ↦ Units.map (algebraMap (𝓞 K) (v.1.adicCompletionIntegers K)).toMonoidHom
+
+/-- `Ē = ⋂_{n > 0} ι(E) · U^{p^n}`, the `p`-adic closure of the image of the global units
+inside the semilocal units, exactly as the intersection is written in the source. -/
+noncomputable def unitClosure : Subgroup (SemilocalUnits K p) :=
+  ⨅ n : ℕ, ((diagonalUnits K p).range ⊔ (powMonoidHom (p ^ (n + 1))).range)
+
+/-- The free `ℤ_p`-rank of a subgroup `H` of a commutative topological group, computed as the
+largest `n ≤ bound` for which `ℤ_p^n` admits a continuous injective homomorphism into `H`.
+
+For a closed subgroup of the semilocal units this is the usual free `ℤ_p`-rank: such a subgroup
+is isomorphic to `Δ × ℤ_p^d` with `Δ` finite, and continuous injections from `ℤ_p^n` exist
+exactly for `n ≤ d`. Continuity is essential — as abstract groups `ℤ_p^n` embeds into `ℤ_p`
+for every `n`; and since `ℤ_p^n` is compact and the target Hausdorff, a continuous injection is
+automatically a closed embedding.
+
+The `bound` is carried only so that the supremum is visibly taken over a bounded set and never
+falls back on the junk value of `sSup` on an unbounded set of naturals. Any `bound` at least as
+large as the true rank yields the true rank. -/
+noncomputable def zpRankBelow {G : Type*} [CommGroup G] [TopologicalSpace G]
+    (bound : ℕ) (H : Subgroup G) : ℕ :=
+  sSup {n : ℕ | n ≤ bound ∧ ∃ f : Multiplicative (Fin n → ℤ_[p]) →* G,
+    Function.Injective f ∧ Continuous f ∧ ∀ x, f x ∈ H}
+
+/-- The **Leopoldt defect** `𝒟_L(K) = ℤ-rk(E) - ℤ_p-rk(Ē)` of `K` at `p`.
+
+`ℤ-rk(E) = r₁ + r₂ - 1` is Dirichlet's unit rank, which mathlib provides as
+`NumberField.Units.rank`. The `ℤ_p`-rank of `Ē` is bounded by that of the whole semilocal unit
+group `U`, which is `[K : ℚ]`, so taking `[K : ℚ]` as the bound never constrains it. -/
+noncomputable def defect : ℕ :=
+  rank K - zpRankBelow p (Module.finrank ℚ K) (unitClosure K p)
+
+end Mihailescu
+
+/--
+**Leopoldt's conjecture, Mihăilescu's form.** Let $K$ be a number field and $p$ a prime. The
+Leopoldt defect $\mathcal{D}_L(K) = \mathbb{Z}\text{-rk}(E) -
+\mathbb{Z}_p\text{-rk}(\overline{E})$ of [Mihăilescu, §1.1] vanishes, $\overline{E}$ being the
+closure of the global units in the semilocal units $U$.
+
+Since $\overline{E}$ has $\mathbb{Z}_p$-rank at most $\mathbb{Z}\text{-rk}(E) = r_1 + r_2 - 1$,
+this says that the two ranks agree, which is `leopoldt_conjecture` read inside $U$ instead of
+$U_1$; the two are equivalent because $U_1$ has finite index in $U$.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.mihailescu : Mihailescu.defect K p = 0 := by
+  sorry
+
+end Mihailescu_Defect
 
 end Leopoldt
