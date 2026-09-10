@@ -107,8 +107,9 @@ For the 2-uniform (graph) case, a graph of chromatic cardinal $> \aleph_0$ must 
 finite bipartite graphs. Specifically, for every finite bipartite graph `F` and every graph
 `G` with chromatic cardinal $> \aleph_0$, there is a graph embedding from `F` into `G`.
 
-This uses `Nonempty (F ↪g G)` (graph embedding), aligned with the injective vertex map
-used in the hypergraph `Appears` definition.
+This uses `F ⊑ G` (`SimpleGraph.IsContained`, an injective graph homomorphism), aligned with
+the injective edge-preserving map used in the hypergraph `Appears` definition. A graph embedding
+`F ↪g G` would require an induced copy, which the theorem does not provide.
 -/
 @[category research solved, AMS 5]
 theorem erdos_593.variants.graph_case_bipartite_obligatory :
@@ -116,7 +117,7 @@ theorem erdos_593.variants.graph_case_bipartite_obligatory :
     ∀ (V : Type*) (G : SimpleGraph V),
       ℵ₀ < G.chromaticCardinal →
       ∀ (W : Type*) [Fintype W] (F : SimpleGraph W), F.IsBipartite →
-        Nonempty (F ↪g G) := by
+        F ⊑ G := by
   simp only [true_iff]
   -- This is the Erdős–Galvin–Hajnal theorem [EGH75].
   sorry
