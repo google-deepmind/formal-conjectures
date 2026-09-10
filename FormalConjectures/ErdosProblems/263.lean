@@ -47,6 +47,16 @@ def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
       atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
       Irrational (∑' n, 1 / (b n : ℝ)))
 
+/-- The nondecreasing version of `IsIrrationalitySequence`, as used by Koizumi [Ko25]: the sequence
+is positive and nondecreasing, and every positive sequence asymptotic to it has irrational
+reciprocal sum. -/
+def IsWeakIrrationalitySequence (a : ℕ → ℕ) : Prop :=
+  (∀ n : ℕ, a n > 0) ∧
+    Monotone a ∧
+    (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
+      atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
+      Irrational (∑' n, 1 / (b n : ℝ)))
+
 /--
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
 -/
@@ -115,14 +125,17 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
 
 /--
 Koizumi [Ko25] showed that $a_n = \lfloor \alpha^{2^n} \rfloor$ is an irrationality sequence
-for all but countably many $\alpha > 1$.
+for all but countably many $\alpha > 1$, in the nondecreasing sense `IsWeakIrrationalitySequence`.
+The strictly increasing predicate would fail on the whole interval $1 < \alpha < 4/3$, where
+$a_0 = a_1 = 1$.
 
 [Ko25] Koizumi, J., Irrationality of the reciprocal sum of doubly exponential sequences,
        arXiv:2504.05933 (2025).
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.doubly_exponential_all_but_countable :
-    ∀ᶠ (α : ℝ) in .cocountable, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
+    ∀ᶠ (α : ℝ) in .cocountable, α > 1 →
+      IsWeakIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
   sorry
 
 end Erdos263
