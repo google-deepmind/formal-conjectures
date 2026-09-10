@@ -43,7 +43,7 @@ polynomial-time algorithm decides whether selected positions of a binary-encoded
 sum to a supplied integer target. Equal entries at different positions are separate choices.
 Unlike Karp's positive-integer inputs, entries and target may be zero or negative.
 This extension is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
-@[category research open, AMS 11 68]
+@[category research open, AMS 68 90]
 theorem subsetSum_not_polytime : ¬ HasPolyTimeDecider SubsetSum := by
   sorry
 
@@ -52,7 +52,7 @@ algorithm decides whether the positions of a binary-encoded integer list can be 
 two parts of equal sum. Multiplicity is retained and either part may be empty.
 Unlike Karp's positive-integer lists, zero and negative entries are allowed.
 This extension is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
-@[category research open, AMS 11 68]
+@[category research open, AMS 68 90]
 theorem partition_not_polytime : ¬ HasPolyTimeDecider Partition := by
   sorry
 

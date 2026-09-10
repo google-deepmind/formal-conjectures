@@ -45,8 +45,6 @@ Decidability uses finite exhaustive enumeration. No polynomial-time algorithm is
 
 namespace Computability.NumericalProblems
 
-open scoped BigOperators
-
 /-- Sum of selected entries of an integer list; equal values at different indices remain
 separate choices. -/
 def selectedSum (values : List ℤ) (chosen : Finset (Fin values.length)) : ℤ :=
@@ -90,6 +88,8 @@ theorem partition_iff (values : List ℤ) :
 
 /-- Explicit columns of an integer matrix, paired with its right-hand side.
 The outer list represents all variables, including when there are no equations.
+Column-major storage preserves that variable count without adding a separate
+dimension field; equations are accessed across the columns.
 The right-hand side may be signed, extending Karp's nonnegative-vector convention. -/
 abbrev IntegerProgramInput := List (List ℤ) × List ℤ
 
