@@ -1,4 +1,5 @@
 """Capability diagnostics and explicit setup of existing execution destinations."""
+from .ui import stage, log_location
 import base64
 import re
 import shutil
@@ -8,7 +9,7 @@ import tempfile
 from pathlib import Path
 from urllib.parse import quote
 from . import report as rr
-from .core import Failure, command, config, config_path, github, save, run_lock
+from .core import Failure, command, config, config_path, github, save, run_lock, logged_command, user_cache
 
 UPSTREAM='google-deepmind/formal-conjectures'
 RESOURCES=Path(__file__).parent/'resources'
@@ -19,7 +20,7 @@ def probe(argv):
     except (Failure,OSError,subprocess.SubprocessError):return False
 
 
-def doctor(root,cfg,capability=None):
+def doctor(root,cfg,capability=None, catalog_url=None):
     from .review import skill_path
     import os
     tools={name:shutil.which(name) for name in ('git','gh','uv','lake','lean','docker','pdftotext')}
@@ -50,7 +51,7 @@ def doctor(root,cfg,capability=None):
     if not tools['lake'] or not tools['lean']:verify.append('Install the checkout’s Lean toolchain with elan before initializing a proof workspace.')
     from .catalog import load
     try:
-        data=load(root,offline=capability!='browse')
+        data=load(root,offline=capability!='browse',url=catalog_url)
         source=data['provenance']['source']
         browse={'status':'ready','gaps':[],'note':f"Catalog: {source['repository']} @ {source['commit'][:12]} ({data['catalog_origin']['state']})."}
     except Failure as error:
@@ -104,8 +105,10 @@ def review_image(source_ref, image=None):
     asset=next((a for a in release['assets'] if a['name']==f'lean-{version[1:]}-linux.tar.zst'),None)
     if not asset or not re.fullmatch(r'sha256:[0-9a-f]{64}',asset.get('digest') or ''):
         raise Failure('missing_tool_digest','Lean release has no verifiable archive digest; select an existing qualified image with --image.',4)
-    print('Downloading base image and building trusted Lean dependencies (this can take several minutes)…',file=sys.stderr)
-    subprocess.run(['docker','pull','--platform','linux/amd64','ubuntu:24.04'],stdout=sys.stderr,stderr=sys.stderr,check=True)
+    stage('Downloading base image and building trusted Lean dependencies (this can take several minutes)…')
+    import uuid
+    build_log=user_cache()/'setup'/('review-'+uuid.uuid4().hex+'.log')
+    logged_command(['docker','pull','--platform','linux/amd64','ubuntu:24.04'],build_log,timeout=1200)
     base=rr.parse(command(['docker','image','inspect','ubuntu:24.04']))[0]['RepoDigests'][0]
     recipe=(RESOURCES/'review.Dockerfile').read_bytes()
     with tempfile.TemporaryDirectory(prefix='fc-review-image-') as temp:
@@ -113,10 +116,10 @@ def review_image(source_ref, image=None):
         argv=['docker','build','--platform','linux/amd64','--iidfile',str(directory/'image.id')]
         for key,val in [('BASE_IMAGE',base),('FC_REV',commit),('LEAN_VERSION',version),('LEAN_SHA256',asset['digest'].split(':')[1])]:argv+=['--build-arg',key+'='+val]
         try:
-            subprocess.run([*argv,str(directory)],stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=3600)
+            logged_command([*argv,str(directory)],build_log,timeout=3600)
         except subprocess.CalledProcessError as error:
             raise Failure('image_build_failed',
-                'Docker image build failed; see the build output above. Check Docker Desktop disk space and network access before retrying setup review. Existing configuration was preserved; no Docker data was deleted.',3) from error
+                'Docker image build failed. Inspect '+str(build_log)+'. Check Docker disk space and network access, then retry setup review. Existing configuration was preserved.',3) from error
         image=(directory/'image.id').read_text().strip();container_args(image,Path.cwd())
     return image,{'method':'trusted_recipe','source_repository':UPSTREAM,'source_commit':commit,'base_image':base,
                   'lean_archive_digest':asset['digest'],'recipe_sha256':rr.digest(recipe),'image':image,
@@ -125,7 +128,14 @@ def review_image(source_ref, image=None):
 
 def setup(root,args):
     destination=config_path(None if args.global_config else root)
-    if args.operation=='review':
+    if args.operation=='catalog':
+        from .catalog import load, catalog_url
+        url=catalog_url(args.url)
+        data=load(root,refresh=True,url=url)
+        if data['catalog_origin']['state']!='fresh':raise Failure('catalog_unavailable','Setup requires a freshly validated catalog; configuration was preserved.',4)
+        update={'catalog_url':url}
+        receipt={'catalog_origin':data['catalog_origin'],'provenance':data['provenance']}
+    elif args.operation=='review':
         image,receipt=review_image(args.source_ref,args.image);update={'image':image}
     else:
         public_repo(args.repository)
@@ -162,5 +172,5 @@ def setup(root,args):
         save(destination,{**old,**update})
         save(destination.parent/('setup-'+args.operation+'.json'),receipt)
     return {'outcome':'pass','configuration_path':str(destination),'receipt':receipt,
-            'image':receipt.get('image'),'next_action':'conjectures doctor --for '+args.operation,
-            'experimental':'Proof and publication require end-to-end qualification.' if args.operation!='review' else None}
+            'image':receipt.get('image'),'next_action':'conjectures doctor --for '+('browse' if args.operation=='catalog' else args.operation),
+            'experimental':'Proof and publication require end-to-end qualification.' if args.operation in ('verify','evidence') else None}

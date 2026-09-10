@@ -1,4 +1,5 @@
 """Local checks and bounded log inspection, separate from semantic review scope."""
+from .ui import stage, log_location
 import subprocess
 from pathlib import Path
 from . import report as rr
@@ -49,7 +50,7 @@ def check_local(root, paths, cfg):
     if not targets:return {'outcome':'pass','reason':'no_changed_modules','message':'No changed Lean modules to build.'}
     directory,record=start_run(root,'check',targets=targets)
     import sys
-    print('Building '+', '.join(targets)+'…',file=sys.stderr)
+    stage('Building '+', '.join(targets));log_location(directory/'build.log')
     try:
         with (directory/'build.log').open('wb') as output:
             proc=subprocess.run(['lake','--wfail','build',*targets],cwd=root,stdout=output,stderr=subprocess.STDOUT,
