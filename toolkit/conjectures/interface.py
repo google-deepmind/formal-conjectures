@@ -80,7 +80,7 @@ def parser():
         if op=='wait':s.add_argument('--timeout',type=positive,default=600,help='Maximum wait in seconds (default: 600)')
     q=command('evidence','Inspect and explicitly publish evidence (experimental)','conjectures evidence publish RUN --dry-run');r=q.add_subparsers(dest='operation',required=True)
     s=command('publish','Archive a validated public export','conjectures evidence publish RUN --dry-run',r)
-    s.add_argument('run');s.add_argument('--post',action='store_true',help='Post a fresh advisory PR summary after archiving')
+    s.add_argument('run');s.add_argument('--post',action='store_true',help='Archive, then queue the configured designated publisher')
     s.add_argument('--dry-run',action='store_true',help='Inspect the local public export without publishing')
     q=command('setup','Configure one capability explicitly','conjectures setup review');r=q.add_subparsers(dest='operation',required=True)
     for op in ('review','verify','evidence'):
@@ -92,6 +92,9 @@ def parser():
         else:
             s.add_argument('--repository',required=True,help='Existing GitHub OWNER/REPO')
             s.add_argument('--ref' if op=='verify' else '--branch',required=True,help='Qualified exact executor commit' if op=='verify' else 'Existing data-only branch')
+            if op=='evidence':
+                s.add_argument('--publisher-repository',help='PR-owning repository with the designated publisher installed')
+                s.add_argument('--publisher-ref',help='Qualified exact publisher commit, with a published tag')
     q=command('completion','Print shell completion for installation','conjectures completion zsh');q.add_argument('shell',choices=['bash','zsh','fish'])
     return p
 

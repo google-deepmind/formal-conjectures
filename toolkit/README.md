@@ -202,10 +202,24 @@ destination. Inspect the files before publishing. Raw snapshots, complete source
 documents, invocation logs, and private artifacts stay local. Reports remain attributed
 to their producer; they do not confer maintainer acceptance.
 
-`--post` archives first and rechecks PR head/base and request ordering before posting
-one advisory summary. `review finish --post` uses that same path. If publication fails,
-the review remains available; retry publication separately. Historical records retain
-their original applicability.
+`--post` archives first, then queues the designated publisher in the repository that
+owns the PR. Configure it explicitly with `setup evidence --publisher-repository
+OWNER/REPO --publisher-ref COMMIT` alongside the archive options above. The revision
+must have a tag and match the bundled workflow. Without a configured publisher,
+`--post` returns exit 4 and retains the archive.
+
+The owning repository must install `contribution-publisher.yml` and set
+`FC_PUBLISH_ENABLED=true`, `FC_EVIDENCE_REPOSITORY`, and `FC_EVIDENCE_BRANCH`.
+Maintainers control upstream installation. The workflow uses its own `GITHUB_TOKEN`,
+serializes requests per PR without cancelling an active publisher, and rechecks
+head/base and ordering before updating its own bot comment. Existing operator
+comments remain history. No local command writes comments directly.
+
+Use the returned `conjectures run wait` command to retrieve the workflow/comment
+receipt. Pending requests displaced by GitHub are reported as cancelled; retry them
+explicitly. `run logs` exposes the retained publisher log. `review finish --post`
+uses the same path. Publication never changes the retained mathematical outcome.
+Later PR changes make the report historical; comments always name reviewed revisions.
 
 ## Configuration, scripts, and help
 

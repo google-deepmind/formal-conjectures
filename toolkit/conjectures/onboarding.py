@@ -146,6 +146,14 @@ def setup(root,args):
             if args.branch==github(f'repos/{args.repository}')['default_branch']:
                 raise Failure('not_evidence_branch','Choose an existing data-only branch, not the default code branch.',4)
             update={'evidence':{'repository':args.repository,'branch':args.branch}}
+            publisher_repo=getattr(args,'publisher_repository',None);publisher_ref=getattr(args,'publisher_ref',None)
+            if bool(publisher_repo)!=bool(publisher_ref):raise Failure('publisher_configuration','Use both --publisher-repository and --publisher-ref.',2)
+            if publisher_repo:
+                from .publisher import validate_setup
+                update['evidence']['publisher']=validate_setup(publisher_repo,publisher_ref)
+            else:
+                previous=config(None if args.global_config else root)['evidence'] or {}
+                if previous.get('publisher'):update['evidence']['publisher']=previous['publisher']
         receipt={'validated':update,'qualification':'Configuration validation does not establish completed release qualification.'}
     destination.parent.mkdir(parents=True,exist_ok=True)
     with run_lock(destination.parent):

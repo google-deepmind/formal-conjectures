@@ -85,12 +85,15 @@ def show(root, directory, record, *, refresh=True):
         value['verification_summary'].update(stage=comparator.get('stage'),
             policy_reason=comparator.get('reason'), policy_outcome=comparator.get('outcome') if comparator.get('outcome') in ('pass','rejected') else 'not_evaluated')
         value['evidence_paths'] = ['remote/verification.json']
+    if (directory/'publisher.json').is_file():value['publisher']=rr.read_json(directory/'publisher.json')
     value['next_action'] = next_action(value)
     return value
 
 
 def next_action(record):
     identity = record['id']
+    if record.get('publisher',{}).get('status') in ('queued','in_progress','cancellation_requested','dispatching'):
+        return 'Retrieve publication: conjectures run wait '+identity
     if record['status'] == 'awaiting_review':return 'Complete review draft: conjectures review finish '+identity
     if record['kind'] == 'verify' and record['status'] in ('queued','in_progress','running','cancellation_requested'):
         return 'Retrieve verification: conjectures run wait '+identity

@@ -111,6 +111,9 @@ def render(value, args):
         lines += ['Changed: '+change for change in observation['changes']]
         if observation.get('reason'):lines.append('Freshness: '+observation['reason'])
         lines.append(observation['scope'])
+    if value.get('publisher'):
+        publisher=value['publisher'];lines.append('Advisory publication: '+publisher['status'])
+        if publisher.get('receipt',{}).get('comment_url'):lines.append('Comment: '+publisher['receipt']['comment_url'])
     if value.get('evidence_paths'):lines.append('Evidence: '+', '.join(value['evidence_paths']))
     if value.get('experimental'): lines.append('Experimental: '+str(value['experimental']))
     if value.get('next_action'): lines += ['', 'Next: '+value['next_action']]
