@@ -30,7 +30,7 @@ open CategoryTheory Limits Category Preadditive Pretriangulated
 
 /-- Does there exist a category that is pretriangulated but not triangulated? -/
 @[category research open, AMS 18]
-theorem mathoverflow_31809 : answer(sorry) ↔ (∀ (C : Type*) [Category C] [Preadditive C]
+theorem mathoverflow_31809 : answer(sorry) ↔ ¬ (∀ (C : Type*) [Category C] [Preadditive C]
     [HasZeroObject C] [HasShift C ℤ] [∀ (n : ℤ), (shiftFunctor C n).Additive]
     [Pretriangulated C], IsTriangulated C) := by
   sorry
