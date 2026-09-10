@@ -41,21 +41,32 @@ import FormalConjecturesUtil
 
 namespace BSD
 
+open scoped Topology
+
 section NumberField
 
 variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
 
-def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Differentiable ℂ L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+/-- `L` is an $L$-function of `E`: it is meromorphic on $\mathbb{C}$ and agrees with the
+$L$-series of `E` on $\operatorname{Re} s > 3/2$, where that series converges.
 
-/-- An $L$-function is determined by the $L$-series it continues: two entire functions agreeing
-on $\operatorname{Re} s > 3/2$ agree everywhere, by the identity theorem. -/
+The $L$-function is expected to be holomorphic, but meromorphy is all that is needed to state the
+Birch and Swinnerton-Dyer conjecture. [Gross2011] states the conjecture under this hypothesis, and
+we take that form as authoritative. -/
+def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
+  Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
+
+/-- An $L$-function is determined by the $L$-series it continues: two of them agree on a
+punctured neighbourhood of every point. They need not agree at a pole. -/
 @[category API, AMS 11 14]
-theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L') :
-    L = L' :=
-  AnalyticOnNhd.eq_of_eventuallyEq (fun z _ ↦ hL.1.analyticAt z) (fun z _ ↦ hL'.1.analyticAt z)
-    (z₀ := 2) <| Filter.Eventually.mono ((Complex.isOpen_re_gt (3 / 2)).mem_nhds (by norm_num))
-      fun s hs ↦ (hL.2 s hs).trans (hL'.2 s hs).symm
+theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L')
+    (x : ℂ) : L =ᶠ[𝓝[≠] x] L' := by
+  have h2 : meromorphicOrderAt (L - L') 2 = ⊤ := meromorphicOrderAt_eq_top_iff.2 <|
+    Filter.eventually_of_mem (nhdsWithin_le_nhds <| (Complex.isOpen_re_gt (3 / 2)).mem_nhds
+      (by norm_num)) fun s hs ↦ sub_eq_zero.2 ((hL.2 s hs).trans (hL'.2 s hs).symm)
+  have key : meromorphicOrderAt (L - L') x = ⊤ := not_not.1 fun hx ↦
+    (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
+  exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs ↦ sub_eq_zero.1 hs
 
 /-- **Hasse--Weil conjecture**: the $L$-function of an elliptic curve over a number field extends
 to the whole plane. -/
@@ -77,7 +88,7 @@ theorem exists_isLFunction_rat : ∃ L, IsLFunction E L := by
 end Rat
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
-curve $E$ over $K$, the analytic continuation of its $L$-series has order
+curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
 $\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$.
 
 The rank is `AddCommGroup.freeRank`, which requires $E(K)$ to be finitely generated. That is the
@@ -85,7 +96,7 @@ Mordell--Weil theorem, which Mathlib does not have and which this repository sta
 in `EllipticCurveRank.mordell_weil`, so it appears here as a hypothesis. -/
 def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
   ∀ (E : WeierstrassCurve K) [E.IsElliptic] [AddGroup.FG E.toAffine.Point] (L : ℂ → ℂ),
-    IsLFunction E L → analyticOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
+    IsLFunction E L → meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
 
 /-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
