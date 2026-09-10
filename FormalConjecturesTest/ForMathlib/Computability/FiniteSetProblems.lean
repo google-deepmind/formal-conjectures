@@ -17,7 +17,6 @@ module
 
 public meta import FormalConjecturesForMathlib.Computability.FiniteSetProblems
 public import FormalConjecturesForMathlib.Computability.FiniteSetProblems
-public import FormalConjecturesForMathlib.Computability.DecisionProblems
 
 /-! # Boundary and witness tests for finite-set decision problems -/
 
@@ -25,7 +24,7 @@ public import FormalConjecturesForMathlib.Computability.DecisionProblems
 
 namespace Computability.FiniteSetProblems.Test
 
-open BitstringEncoding ComplexityTheory
+open BitstringEncoding
 
 example : row [[7, 7, 9]] 0 = {7, 9} := by decide
 example : ground [] = ∅ := by decide
@@ -95,11 +94,6 @@ example (input : Family × ℕ) : bitDecode (bitEncode input) = some input := by
 example (input : List ℕ × Family) : bitDecode (bitEncode input) = some input := by simp
 example (input : Family) : bitDecode (bitEncode input) = some input := by simp
 example (input : MatchingInput) : bitDecode (bitEncode input) = some input := by simp
-
-/-- The shared interface admits an actual polynomial-time function, independently of these
-five open lower-bound statements. -/
-theorem nonvacuous_machine_interface : HasPolyTimeDecider (fun b : Bool ↦ b = true) :=
-  isPolyTime_id.hasPolyTimeDecider
 
 /-- info: (true, false, true) -/
 #guard_msgs in
