@@ -20,6 +20,7 @@ concurrency:
 
 jobs:
   export:
+    if: github.event_name == 'workflow_dispatch' || github.repository == 'google-deepmind/formal-conjectures'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -46,14 +47,14 @@ jobs:
       - name: Build pinned generator and unmodified verifier tools
         env:
           GENERATOR_REV: e611b55d7097b9de973cbe0cef0f0cfad66dbe92
-          COMPARATOR_REV: 2312244ac716564a61cc0bf4e107d9abf1757a61
+          COMPARATOR_REV: deec4b96fc443f9d5c4dbf3dcfb148a95be76f21
           LANDRUN_REV: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
           NANODA_REV: 05055695879dfebb6628a67da88ceca6cd6b0421
         run: |
           git clone https://github.com/williamjblair/lean-eval-generator "$RUNNER_TEMP/generator"
           git -C "$RUNNER_TEMP/generator" checkout "$GENERATOR_REV"
           (cd "$RUNNER_TEMP/generator" && lake --wfail build)
-          git clone https://github.com/leanprover/comparator "$RUNNER_TEMP/comparator"
+          git clone https://github.com/williamjblair/comparator "$RUNNER_TEMP/comparator"
           git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
           (cd "$RUNNER_TEMP/comparator" && lake build comparator)
           git clone https://github.com/Zouuup/landrun "$RUNNER_TEMP/landrun"
@@ -74,6 +75,7 @@ jobs:
             --setenv="PATH=$PATH" \
             --setenv="FC_SOURCE_REPOSITORY=$FC_SOURCE_REPOSITORY" \
             --setenv="LEAN_EVAL_GENERATOR_CHECKOUT=$RUNNER_TEMP/generator" \
+            --setenv="COMPARATOR_RESULTS_DIR=$RUNNER_TEMP/comparator-results" \
             --setenv="COMPARATOR_BIN=$RUNNER_TEMP/comparator/.lake/build/bin/comparator" \
             --setenv="COMPARATOR_LEAN4EXPORT=$GITHUB_WORKSPACE/comparator/verifier/.lake/packages/lean4export/.lake/build/bin/lean4export" \
             --setenv="COMPARATOR_LANDRUN=$RUNNER_TEMP/landrun/landrun" \
@@ -83,3 +85,12 @@ jobs:
       - name: Export the complete FC100 subset
         run: |
           python3 comparator/check_coverage.py --generator "$RUNNER_TEMP/generator" --out "$RUNNER_TEMP/fc100"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: export-qualification
+          path: |
+            ${{ runner.temp }}/comparator-results
+            ${{ runner.temp }}/fc100
+          if-no-files-found: warn
