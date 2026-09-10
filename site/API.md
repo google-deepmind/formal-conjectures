@@ -12,7 +12,7 @@ Paths are relative to the deployed site's base URL.
 | Path | Purpose | Consumer |
 |---|---|---|
 | `data/catalog-manifest.json` | Current snapshot's SHA-256, byte length, count, provenance, and schema link | All catalog readers |
-| `data/catalog.json` | Native schema-2 problems and module documentation | Website, CLI, checks |
+| `data/conjectures.json` | Native schema-2 problems and module documentation | Website, CLI, checks |
 | `data/schemas/catalog-v2.schema.json` | Full publication profile | Validators and client authors |
 | `data/schemas/catalog-manifest-v1.schema.json` | Descriptor contract | Validators and client authors |
 | `data/rendered/<catalog-sha256>/<module-file>.json` | One module's Verso documentation, code, referenced hovers, and contributors | Problem pages |
@@ -35,7 +35,7 @@ already represents FC's data, without a resource-envelope migration.
 ## One snapshot
 
 1. Fetch the manifest.
-2. Fetch `catalog.json` and check the raw byte length and SHA-256 before using it.
+2. Fetch `conjectures.json` and check the raw byte length and SHA-256 before using it.
 3. Check schema version, problem count, and matching provenance.
 4. For rich rendering, request the module under that catalog digest and check its
    `catalog_sha256` and exact `module` fields.

@@ -62,9 +62,9 @@ async function loadData() {
     const manifestResponse = await fetch(`${base}/data/catalog-manifest.json`);
     if (!manifestResponse.ok) throw new Error(`Catalog descriptor unavailable: ${manifestResponse.status}`);
     const descriptor = await manifestResponse.json();
-    if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'catalog.json' ||
+    if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'conjectures.json' ||
         !/^[a-f0-9]{64}$/.test(descriptor.sha256)) throw new Error('Invalid catalog descriptor');
-    const response = await fetch(`${base}/data/catalog.json?sha256=${descriptor.sha256}`);
+    const response = await fetch(`${base}/data/conjectures.json?sha256=${descriptor.sha256}`);
     if (!response.ok) throw new Error(`Catalog unavailable: ${response.status}`);
     const bytes = await response.arrayBuffer();
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2, '0')).join('');
