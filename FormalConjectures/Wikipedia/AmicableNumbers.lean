@@ -75,7 +75,8 @@ While many amicable pairs are known, it remains open whether there are infinitel
 [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
 @[category research open, AMS 11]
-theorem infinitely_many_amicable : type_of% Erdos830.erdos_830.parts.i := by
+theorem infinitely_many_amicable :
+    answer(sorry) ↔ {p : ℕ × ℕ | IsAmicable p.1 p.2 ∧ p.1 ≠ p.2}.Infinite := by
   sorry
 
 /--
