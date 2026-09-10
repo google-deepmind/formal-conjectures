@@ -67,8 +67,12 @@ theorem a_4 : a 4 = 17 := by
 Primes $p_k$ such that $p_k! \equiv 1 \pmod{p_{k+1}}$ with the exception of $p_{991} = 7841$ and
 other unknown primes $p_k$ for which $(p_k+1)(p_k+2)\cdots(p_{k+1}-2) \equiv 1 \pmod{p_{k+1}}$
 where $p_{k+1} - p_k > 2$.
+
+A formal proof is hosted at the `formal_proof` link: a Wilson-theorem argument with a
+fixed-divisor trial-division sieve and a verified length-7840 certificate.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/robzilla1738/formal-conjectures/blob/c7de1452e5b9b8165a30466637b83f7fedfb95fe/FormalConjectures/OEIS/1359.lean#L589"]
 theorem conjecture (k : ℕ) (hk : k > 1) :
     let Pk := Nat.nth Nat.Prime (k - 1)
     let Pk_succ := Nat.nth Nat.Prime k
