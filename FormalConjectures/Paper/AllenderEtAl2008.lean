@@ -18,24 +18,23 @@ import FormalConjecturesUtil
 /-!
 # Truth-table DNF minimization
 
-Allender–Hellerstein–McCabe–Pitassi–Saks, *Minimizing Disjunctive Normal Form
-Formulas and AC⁰ Circuits Given a Truth Table*, SIAM Journal on Computing 38(1)
-(2008), pp. 63–84, https://doi.org/10.1137/060664537.
-Author version, §2 pp. 3–4 and §3:
-https://cs.rutgers.edu/~allender/papers/mindnf.pdf.
-
-This is the full-truth-table decision problem Min-DNF, not the sparse positive
-sample representation, partial-table version, or formula-input version.
-Size is the number of terms, not literals. The threshold is a binary natural
-number. Empty disjunction and empty conjunction represent false and true.
-The paper proves NP-completeness; the conjecture below asks for the associated
-unconditional deterministic polynomial-time lower bound, not that known theorem.
+*References:*
+* Allender–Hellerstein–McCabe–Pitassi–Saks, *Minimizing Disjunctive Normal Form
+  Formulas and AC⁰ Circuits Given a Truth Table*, SIAM J. Comput. 38(1) (2008),
+  pp. 63–84, https://doi.org/10.1137/060664537;
+  author version, §2, pp. 3–4, and §3, https://cs.rutgers.edu/~allender/papers/mindnf.pdf.
 -/
 
 namespace AllenderEtAl2008
 
-/-- Full-truth-table Min-DNF has no deterministic polynomial-time decider. -/
-@[category research open, AMS 3 68]
+/-- **Min-DNF** (Allender et al., §§2–3) has no deterministic polynomial bit-time
+decider. Input: binary arity $n$, a full $2^n$-bit truth table and a binary natural
+bound $s$. Property: a DNF with at most $s$ terms computes that table. Size counts
+terms, not literals; the empty disjunction is false and an empty conjunction is
+true, including at $n=0$. Incorrect table lengths are rejected. Time is measured
+in the whole input length, not just $n$. This full-table problem is NP-complete,
+so the lower bound is classically equivalent to $P\ne NP$. -/
+@[category research open, AMS 68]
 theorem minimumDNF_not_polytime : ¬ ComplexityTheory.HasPolyTimeDecider TruthTableMinimization.MinimumDNF := by
   sorry
 

@@ -18,25 +18,25 @@ import FormalConjecturesUtil
 /-!
 # Minimum circuit size
 
-- Kabanets–Cai, *Circuit Minimization Problem*, STOC 2000, pp. 73–79.
-  The complete input definition appears on p. 1 of the ECCC version:
-  https://eccc.weizmann.ac.il/report/1999/045/.
-- Ilango, *SAT Reduces to the Minimum Circuit Size Problem with a Random Oracle*,
-  §2.2, fixes the De Morgan basis and the AND/OR gate-count convention:
-  https://eccc.weizmann.ac.il/report/2023/165/.
-
-The bound is binary; the table explicitly contains all $2^n$ output bits.
-The model has free NOT gates and no primitive constant gates. There are no
-oracle gates, depth bounds, fan-out bounds, or uniformity conditions on witnesses.
+*References:*
+* Kabanets–Cai, *Circuit Minimization Problem*, STOC 2000, pp. 73–79;
+  ECCC version, p. 1, https://eccc.weizmann.ac.il/report/1999/045/.
+* Ilango, *SAT Reduces to the Minimum Circuit Size Problem with a Random Oracle*,
+  §2.2, p. 16, https://eccc.weizmann.ac.il/report/2023/165/.
 -/
 
 namespace KabanetsCai2000
 
-/-- Does full-truth-table MCSP admit a deterministic polynomial-time decider?
-Time is measured in the encoded table-and-bound length, not merely in the
-number of variables. -/
-@[category research open, AMS 3 68]
-theorem minimumCircuit_polytime : answer(sorry) ↔
+/-- **Minimum circuit size** (Kabanets–Cai, p. 1; Ilango, §2.2) has no deterministic
+polynomial bit-time decider. Input: binary arity $n$, the full $2^n$-bit truth table,
+and a binary bound $s$. Property: a De Morgan circuit computes the table using at
+most $s$ AND/OR gates, with free NOT gates and unrestricted sharing. There are no
+primitive constants or oracle gates, so arity-zero instances are rejected; incorrect
+table lengths are also rejected. Time is measured in the entire input length.
+The problem is in $NP$, so this lower bound implies $P\ne NP$; the cited sources
+do not establish deterministic NP-hardness. -/
+@[category research open, AMS 68]
+theorem minimumCircuit_not_polytime : ¬
     ComplexityTheory.HasPolyTimeDecider TruthTableMinimization.MinimumCircuit := by
   sorry
 

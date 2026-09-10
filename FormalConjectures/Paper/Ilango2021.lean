@@ -18,24 +18,23 @@ import FormalConjecturesUtil
 /-!
 # Minimum De Morgan formula size
 
-Ilango, *The Minimum Formula Size Problem is (ETH) Hard*, FOCS 2021,
-pp. 437–446, https://doi.org/10.1109/FOCS52979.2021.00050.
-The author's full version defines formulas and their size in §2, pp. 6–7:
-https://rahulilango.com/papers/MFSP-hard.pdf.
-
-Witnesses are trees, not circuits with shared subexpressions. Internal gates are
-binary AND/OR; leaves are constants or signed variables. Size counts only
-nonconstant leaves. The full table and a binary natural-number bound are input.
-At bound zero, exactly constant functions are representable. The source proves
-conditional ETH-hardness; it does not settle this unconditional question.
+*References:*
+* Ilango, *The Minimum Formula Size Problem is (ETH) Hard*, FOCS 2021,
+  pp. 437–446, https://doi.org/10.1109/FOCS52979.2021.00050;
+  author version, Theorem 4 and §2, pp. 6–7, https://rahulilango.com/papers/MFSP-hard.pdf.
 -/
 
 namespace Ilango2021
 
-/-- Does the full-truth-table Minimum Formula Size Problem, with nonconstant
-leaf count, admit a deterministic polynomial-time decider? -/
-@[category research open, AMS 3 68]
-theorem minimumFormula_polytime : answer(sorry) ↔
+/-- **Minimum formula size** (Ilango, §2, pp. 6–7) has no deterministic polynomial
+bit-time decider. Input: binary arity $n$, a full $2^n$-bit truth table and a binary
+natural bound $s$. Property: a binary AND/OR tree with constant or signed-variable
+leaves computes that table using at most $s$ nonconstant leaves. Sharing is not
+allowed. Incorrect table lengths are rejected; $s=0$ represents exactly constant
+functions, including at $n=0$. Time is measured in the full encoded input length.
+Theorem 4 implies this lower bound under ETH, not a stated equivalence to $P\ne NP$. -/
+@[category research open, AMS 68]
+theorem minimumFormula_not_polytime : ¬
     ComplexityTheory.HasPolyTimeDecider TruthTableMinimization.MinimumFormula := by
   sorry
 

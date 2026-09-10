@@ -18,23 +18,24 @@ import FormalConjecturesUtil
 /-!
 # Partial minimum circuit size
 
-Hirahara, *NP-Hardness of Learning Programs and Partial MCSP*, FOCS 2022,
-pp. 968–979; ECCC full version, Definition 8.4 and Theorem 8.5, pp. 29–30:
-https://eccc.weizmann.ac.il/report/2022/119/.
-
-The input contains all $2^n$ entries in $\{0,1,*\}$ and a unary bound $1^s$.
-Only defined entries constrain the circuit. Binary AND/OR gates count toward
-size, while NOT gates are free, consistent with Appendix C's size convention.
-The cited NP-hardness uses randomized reductions; no deterministic
-NP-completeness claim or formal reduction is asserted here.
+*References:*
+* Hirahara, *NP-Hardness of Learning Programs and Partial MCSP*, FOCS 2022,
+  pp. 968–979; ECCC full version, Definition 8.4 and Theorem 8.5, pp. 29–30,
+  Appendix C, https://eccc.weizmann.ac.il/report/2022/119/.
 -/
 
 namespace Hirahara2022
 
-/-- Does partial MCSP with the unary threshold of Definition 8.4 admit a
-deterministic polynomial-time decider? -/
-@[category research open, AMS 3 68]
-theorem partialMinimumCircuit_polytime : answer(sorry) ↔
+/-- **Partial MCSP** (Hirahara, Definition 8.4) has no deterministic polynomial
+bit-time decider. Input: binary arity $n$, all $2^n$ entries in $\{0,1,*\}$, and a
+unary bound $1^s$. Property: a circuit with at most $s$ AND/OR gates agrees at every
+defined entry; NOT gates are free. Incorrect table lengths are rejected. There are
+no primitive constants, so $n=0$ has no witnesses. Unary and binary bounds are
+polynomially equivalent after capping at a full-table realization bound.
+Theorem 8.5 gives randomized-reduction hardness: $NP\not\subseteq BPP$ implies
+this lower bound; $P\ne NP$ alone is not the cited sufficient assumption. -/
+@[category research open, AMS 68]
+theorem partialMinimumCircuit_not_polytime : ¬
     ComplexityTheory.HasPolyTimeDecider TruthTableMinimization.PartialMinimumCircuit := by
   sorry
 
