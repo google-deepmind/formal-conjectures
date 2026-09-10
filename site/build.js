@@ -17,7 +17,8 @@ const { execFileSync } = require('child_process');
 // Set via BASE_PATH env var. Must NOT have a trailing slash.
 const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/$/, '');
 
-const {AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, moduleToGitHubPath, moduleToSourceURL, processEntry} = require('./src/js/catalog.js');
+const {AMS_SUBJECTS, SOURCE_COLLECTIONS, getCategoryMeta, processEntry} = require('./src/js/catalog.js');
+const {readSnapshot, readRendering, writeRendering} = require('./catalog.cjs');
 let GITHUB_API_BASE;
 
 /** Compute site-wide statistics from processed entries. */
@@ -576,40 +577,16 @@ async function main() {
   console.log('Building Formal Conjectures website...');
 
   // Read raw data
-  const catalog = require('./catalog.cjs').readCatalog('data');
+  const snapshot = readSnapshot('data');
+  const {catalog, descriptor} = snapshot;
   GITHUB_API_BASE = `https://api.github.com/repos/${catalog.provenance.source.repository}`;
-  const rawData = catalog.problems;
-
-  if (rawData.length === 0) {
-    console.error('Error: no conjectures loaded. Generate a complete catalog as described in site/README.md.');
-    process.exit(1);
-  }
-
-  const conjectures = rawData.map(entry => processEntry(entry, catalog.provenance.source));
+  const conjectures = catalog.problems.map(entry => processEntry(entry, catalog.provenance.source));
   const stats = computeStats(conjectures);
   const advancedStats = computeAdvancedStats(conjectures);
 
-  const descriptor = JSON.parse(fs.readFileSync('data/catalog-manifest.json'));
-
-  // Load Verso literate fragments (module docstrings + const links)
-  let versoFragments = { moduleDocs: {}, constLinks: {} };
-  if (!process.env.FC_RENDER_BASE && fs.existsSync('data/verso-fragments.json')) {
-    versoFragments = JSON.parse(fs.readFileSync('data/verso-fragments.json', 'utf8'));
-    if (versoFragments.catalog_sha256 !== descriptor.sha256) throw new Error('Verso fragments belong to another catalog. Rebuild them from the same source revision.');
-    console.log(`  Loaded ${Object.keys(versoFragments.moduleDocs).length} module docstrings, ${Object.keys(versoFragments.constLinks).length} constant links from Verso.`);
-  } else if (!process.env.FC_RENDER_BASE) {
-    throw new Error('Verso fragments are missing. Run the full build in site/README.md, or use site/dev.sh for a published snapshot.');
-  }
-
-  if (process.env.FC_RENDER_BASE && !fs.existsSync('data/verso-modules.json')) {
-    throw new Error('Verso module index is missing (data/verso-modules.json). Download the published snapshot with scripts/download_catalog.py.');
-  }
-  const moduleIndex = require('./catalog.cjs').validateModuleIndex(process.env.FC_RENDER_BASE
-    ? JSON.parse(fs.readFileSync('data/verso-modules.json', 'utf8'))
-    : {schema_version:'fc.website-modules.v1', catalog_sha256:descriptor.sha256, modules:versoFragments.modules},
-    descriptor.sha256);
-
-  const contributors = process.env.FC_RENDER_BASE ? {}
+  const preview = Boolean(process.env.FC_RENDER_BASE);
+  const rendering = readRendering('data', descriptor.sha256, preview);
+  const contributors = preview ? {}
     : await buildContributorMetadata(conjectures, catalog.provenance.source.commit);
 
   console.log(`  Loaded ${conjectures.length} conjectures.`);
@@ -624,41 +601,17 @@ async function main() {
   if (fs.existsSync('src/img')) copyDir('src/img', 'site/assets/img');
   if (fs.existsSync('src/fonts')) copyDir('src/fonts', 'site/assets/fonts');
 
-  // The browser reads the same canonical catalog as the CLI. Verso output is a
-  // per-module rendering sidecar, bound to that catalog's bytes, never metadata input.
-  ensureDir('site/data');
-  // Previews retain navigation, but continue loading rich rendering at its explicit origin.
-  const moduleIndexPath = `site/data/rendered/${descriptor.sha256}/modules.json`;
-  ensureDir(path.dirname(moduleIndexPath));
-  fs.writeFileSync(moduleIndexPath, JSON.stringify(moduleIndex));
-  const groups = new Map();
-  for (const entry of conjectures) {
-    if (!groups.has(entry.module)) groups.set(entry.module, []);
-    groups.get(entry.module).push(entry);
-  }
-  for (const [module, entries] of (process.env.FC_RENDER_BASE ? [] : groups)) {
-    const first = entries[0];
-    const moduleKey = first.sourceUrl.replace(/^\/src/, '');
-    const constLinks = {};
-    for (const entry of entries) {
-      if (versoFragments.constLinks[entry.theorem]) constLinks[entry.theorem] = versoFragments.constLinks[entry.theorem];
-    }
-    const filename = `site/data/rendered/${descriptor.sha256}/${moduleToGitHubPath(module).replace(/\.lean$/, '.json')}`;
-    ensureDir(path.dirname(filename));
-    fs.writeFileSync(filename, JSON.stringify({schema_version:'fc.website-rendering.v1',
-      catalog_sha256:descriptor.sha256, module,
-      moduleDocs: {[moduleKey]:versoFragments.moduleDocs[moduleKey] || ''}, constLinks,
-      contributors:contributors[first.githubPath] || []}));
-  }
+  writeRendering('site/data', descriptor.sha256, conjectures, rendering, contributors);
   const evidencePath = 'data/evidence.json';
   fs.writeFileSync('site/data/evidence.json', fs.existsSync(evidencePath)
     ? fs.readFileSync(evidencePath)
     : JSON.stringify({status: 'not_configured', runs: [], pull_requests: []}));
   fs.writeFileSync('site/data/work.json', fs.existsSync('data/work.json')
     ? fs.readFileSync('data/work.json') : JSON.stringify({status:'not_configured',pull_requests:[]}));
+
   // One native catalog is shared by browser, CLI, status and link consumers.
-  fs.copyFileSync('data/conjectures.json', 'site/data/conjectures.json');
-  fs.copyFileSync('data/catalog-manifest.json', 'site/data/catalog-manifest.json');
+  fs.writeFileSync('site/data/conjectures.json', snapshot.catalogBytes);
+  fs.writeFileSync('site/data/catalog-manifest.json', snapshot.descriptorBytes);
   copyDir('../toolkit/conjectures/resources/schemas', 'site/data/schemas');
   const whitePlotPath = path.join('data', 'file_counts_white.html');
   const darkPlotPath = path.join('data', 'file_counts_dark.html');
@@ -721,7 +674,7 @@ async function main() {
   })));
 
   // ---- Modules page ----
-  const modules = literateModules(moduleIndex);
+  const modules = literateModules(rendering.moduleIndex);
   writePage('site/modules/index.html', applyBasePath(fill(readTemplate('modules.html'), {
     moduleCount: modules.length,
     libraries:   modulesPageHTML(modules),
