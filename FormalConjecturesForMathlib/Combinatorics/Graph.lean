@@ -17,7 +17,6 @@ module
 
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 public import Mathlib.Combinatorics.Graph.Delete
-public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 # Flows on multigraphs
@@ -80,3 +79,5 @@ def zeroKNetwork (G : Graph α β) (k : ℕ) : Network G ℤ where
   up _ := (k : ℤ) - 1
 
 end Graph
+
+#min_imports
