@@ -95,6 +95,25 @@ theorem funMap_exp (x : Fin 1 → ℝ) :
 instance orderedExpFieldOrderedStructureReal : Language.orderedExpField.OrderedStructure ℝ :=
   ⟨fun _ => Iff.rfl⟩
 
+-- In the real exponential field, the symbol `exp` is interpreted as the exponential function.
+example (x : ℝ) :
+    Structure.funMap (L := Language.orderedExpField) (Sum.inr (Sum.inl expFunc.exp)) ![x] =
+      Real.exp x :=
+  rfl
+
+-- In the real exponential field, the symbol `+` is interpreted as addition.
+example (x y : ℝ) :
+    Structure.funMap (L := Language.orderedExpField) (Sum.inl Ring.addFunc) ![x, y] = x + y :=
+  rfl
+
+-- In the real exponential field, the symbol `≤` is interpreted as the order of `ℝ`.
+example (x y : ℝ) :
+    Structure.RelMap (L := Language.orderedExpField) leSymb ![x, y] ↔ x ≤ y :=
+  Iff.rfl
+
+-- The Gödel numbering of sentences of `Language.orderedExpField` is found by instance resolution.
+example : Encodable Language.orderedExpField.Sentence := inferInstance
+
 end Real
 
 end Language

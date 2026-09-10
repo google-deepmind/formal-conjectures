@@ -53,31 +53,10 @@ decidability.
 
 namespace TarskiExponentialFunctionProblem
 
-open FirstOrder FirstOrder.Language FirstOrder.Language.Structure
-
-/-- In the real exponential field, the symbol `exp` is interpreted as the exponential
-function. -/
-@[category test, AMS 3]
-theorem funMap_exp (x : ℝ) :
-    funMap (L := Language.orderedExpField) (Sum.inr (Sum.inl expFunc.exp)) ![x] = Real.exp x :=
-  rfl
-
-/-- In the real exponential field, the symbol `+` is interpreted as addition. -/
-@[category test, AMS 3]
-theorem funMap_add (x y : ℝ) :
-    funMap (L := Language.orderedExpField) (Sum.inl Ring.addFunc) ![x, y] = x + y :=
-  rfl
-
-/-- In the real exponential field, the symbol `≤` is interpreted as the order of `ℝ`. -/
-@[category test, AMS 3]
-theorem relMap_le (x y : ℝ) :
-    RelMap (L := Language.orderedExpField) leSymb ![x, y] ↔ x ≤ y :=
-  Iff.rfl
+open FirstOrder FirstOrder.Language
 
 /-- For the complete theory of the real exponential field, deciding consequences is the same
-as deciding membership, since the theory contains every sentence true in $\mathbb{R}_{\exp}$.
-This also checks that the Gödel numbering of sentences of `Language.orderedExpField` is found by
-instance resolution. -/
+as deciding membership, since the theory contains every sentence true in $\mathbb{R}_{\exp}$. -/
 @[category test, AMS 3]
 theorem isDecidable_iff_isRecursive :
     (Language.orderedExpField.completeTheory ℝ).IsDecidable ↔
