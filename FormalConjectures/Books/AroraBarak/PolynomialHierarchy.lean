@@ -18,21 +18,24 @@ import FormalConjecturesUtil
 /-!
 # Noncollapse of the polynomial hierarchy
 
-Reference: Arora–Barak, *Computational Complexity: A Modern Approach*, Chapter 5.
-The author draft dated 2007-01-08 states the conjecture in §5.2.1, p.5.3 (93),
-immediately after Definition 5.4:
-https://theory.cs.princeton.edu/complexity/book.pdf.
-
-Levels are defined by a fixed number of alternating polynomial-length quantifier
-blocks and an actual polynomial-time TM2 verifier. Level zero is P.
+*References:*
+* Arora–Barak, *Computational Complexity: A Modern Approach*, author draft
+  dated 2007-01-08, Definition 5.4 and §5.2.1, p. 5.3 (93),
+  https://theory.cs.princeton.edu/complexity/book.pdf.
 -/
 
 namespace AroraBarak
 
 open ComplexityTheory
 
-/-- Every existential level of the polynomial hierarchy is strictly contained in
-the next level. In particular, the hierarchy does not collapse at any finite level. -/
+/-- **Polynomial-hierarchy noncollapse** (Arora–Barak, §5.2.1): every existential
+level $\Sigma_k^P$ is strictly contained in $\Sigma_{k+1}^P$, for every finite
+$k\ge0$. Level zero is $P$. Positive levels use exactly $k$ alternating quantifier
+blocks, starting existentially, each of a fixed polynomial length in the bit-string
+input, followed by a polynomial-time TM2 verifier. Later choices may depend on
+earlier blocks. Level one uses exact-length certificates and is not definitionally
+the imported $NP$. Under the standard class identifications, noncollapse implies
+$P\ne NP$. -/
 @[category research open, AMS 3 68]
 theorem polynomialHierarchy_strict : ∀ k : ℕ, SigmaP k ⊂ SigmaP (k + 1) := by sorry
 

@@ -18,22 +18,24 @@ import FormalConjecturesUtil
 /-!
 # Nondeterministic polynomial advice and complements of NP
 
-Reference: Holger Dell and Dieter van Melkebeek, *Satisfiability Allows No
-Nontrivial Sparsification unless the Polynomial-Time Hierarchy Collapses*,
-JACM 61(4), Article 23 (2014), abstract, §1, and §2, p.23:8:
-https://doi.org/10.1145/2629620.
-Author copy: https://pages.cs.wisc.edu/~dieter/Papers/sparsification-jacm.pdf.
-
-The paper uses this noncontainment hypothesis for sparsification and
-kernelization lower bounds. Advice is polynomially bounded and depends only
-on input length; the underlying verifier belongs to the existing NP class.
+*References:*
+* Dell and van Melkebeek, *Satisfiability Allows No Nontrivial Sparsification
+  unless the Polynomial-Time Hierarchy Collapses*, JACM 61(4), Article 23 (2014),
+  abstract and §2, p. 23:8, https://doi.org/10.1145/2629620;
+  https://pages.cs.wisc.edu/~dieter/Papers/sparsification-jacm.pdf.
 -/
 
 namespace DellVanMelkebeek2014
 
 open ComplexityTheory
 
-/-- The class $\mathrm{coNP}$ is not contained in $\mathrm{NP}/\mathrm{poly}$. -/
+/-- **No nondeterministic polynomial advice for all of coNP** (Dell–van Melkebeek,
+abstract and §2): $coNP\not\subseteq NP/poly$. Some bit-string language in $coNP$
+cannot be decided by an $NP$ verifier given polynomial-length advice depending
+only on input length. A single verifier and advice sequence must work on every
+input; the advice may be uncomputable but cannot depend on the input's contents.
+The verifier receives the binary encoding of the input/advice pair. This
+noncontainment implies $NP\ne coNP$ and hence $P\ne NP$. -/
 @[category research open, AMS 68]
 theorem coNP_not_subset_NPpoly : ¬ coNP ⊆ NPpoly := by sorry
 
