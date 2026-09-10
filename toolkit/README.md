@@ -285,3 +285,10 @@ or `ai`), `name`, `method`, `scope` (strings), `independence` (`independent`,
 (entries with `path` and `sha256`, relative to that directory). Evidence bytes and request
 identity are checked. Attribution and independence remain self-reported, not quality scores
 or proof of independent review. The review request/report schemas are unchanged.
+
+## Opt-in Actions preparation
+
+The same CLI can prepare an authorized PR review in GitHub Actions. See the
+[workflow guide](../scripts/review-report/WORKFLOW.md). It remains disabled until
+maintainers configure a trusted image and explicitly enable it. Existing agents
+complete the retained draft; the workflow has no model or publication job.
