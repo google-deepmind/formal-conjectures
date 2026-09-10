@@ -84,12 +84,12 @@ example (x : CommonInput) : CommonSubsequence x ↔
       ∃ w : List (Fin x.1), x.2.2 ≤ w.length ∧ ∀ s ∈ x.2.1, (wordValues w).Sublist s :=
   commonSubsequence_iff x
 
-def allWords : Code := ([[0, 0]], 0, [true])
-def noWords : Code := ([[0, 0]], 0, [false])
-def endsZero : Code := ([[1, 0], [1, 0]], 0, [false, true])
-def endsOne : Code := ([[0, 1], [0, 1]], 0, [false, true])
-def oddLength : Code := ([[1], [0]], 0, [false, true])
-def lengthTwoModThree : Code := ([[1], [2], [0]], 0, [false, false, true])
+def allWords : DFACode := ([[0, 0]], 0, [true])
+def noWords : DFACode := ([[0, 0]], 0, [false])
+def endsZero : DFACode := ([[1, 0], [1, 0]], 0, [false, true])
+def endsOne : DFACode := ([[0, 1], [0, 1]], 0, [false, true])
+def oddLength : DFACode := ([[1], [0]], 0, [false, true])
+def lengthTwoModThree : DFACode := ([[1], [2], [0]], 0, [false, false, true])
 
 example : ValidCode 2 allWords := by decide
 example : ¬ ValidCode 1 allWords := by decide
@@ -155,16 +155,16 @@ example : InferredDFA (1, [[0]], [], 1) := by decide
 example : InferredDFA (0, [[]], [], 3) := by decide
 
 -- A sample-consistent DFA can accept unlisted strings and contain unreachable states.
-def paddedAccept : Witness 1 3 := (fun q _ ↦ q, 0, fun _ ↦ true)
+def paddedAccept : DFAWitness 1 3 := (fun q _ ↦ q, 0, fun _ ↦ true)
 example : Consistent (1, [[0]], [], 3) (by decide) paddedAccept.toDFA := by decide
 example : ([] : List (Fin 1)) ∈ paddedAccept.toDFA.accepts := by decide
 example (w : List (Fin 1)) : paddedAccept.toDFA.eval w = 0 := by
   induction w using List.reverseRecOn with
   | nil => rfl
-  | append_singleton a w ih => simpa [paddedAccept, Witness.toDFA] using ih
+  | append_singleton a w ih => simpa [paddedAccept, DFAWitness.toDFA] using ih
 
 example (m K : ℕ) (M : DFA (Fin m) (Fin K)) :
-    ∃ c : Witness m K, c.toDFA = M := Witness.toDFA_surjective m K M
+    ∃ c : DFAWitness m K, c.toDFA = M := DFAWitness.toDFA_surjective m K M
 example (x : InferenceInput) (h : ValidSamples x) :
     InferredDFA x ↔ 0 < x.2.2.2 ∧
       ∃ M : DFA (Fin x.1) (Fin x.2.2.2), Consistent x h M :=

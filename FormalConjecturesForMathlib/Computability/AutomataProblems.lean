@@ -38,24 +38,24 @@ namespace Computability.AutomataProblems
 open StringProblems
 
 /-- Transition rows, initial state, and one accepting flag per state. -/
-abbrev Code := List (List ℕ) × ℕ × List Bool
+abbrev DFACode := List (List ℕ) × ℕ × List Bool
 
 /-- A total transition table over the specified alphabet, with a valid initial state. -/
-def ValidCode (m : ℕ) (c : Code) : Prop :=
+def ValidCode (m : ℕ) (c : DFACode) : Prop :=
   c.2.1 < c.1.length ∧ c.2.2.length = c.1.length ∧
     ∀ q : Fin c.1.length, c.1[q].length = m ∧ ∀ r ∈ c.1[q], r < c.1.length
 
-instance (m : ℕ) (c : Code) : Decidable (ValidCode m c) :=
+instance (m : ℕ) (c : DFACode) : Decidable (ValidCode m c) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ ∀ _ : Fin c.1.length, _))
 
 /-- Validated tables have no missing transitions and require no default state. -/
-def toDFA (m : ℕ) (c : Code) (h : ValidCode m c) : DFA (Fin m) (Fin c.1.length) where
+def toDFA (m : ℕ) (c : DFACode) (h : ValidCode m c) : DFA (Fin m) (Fin c.1.length) where
   step q a := ⟨c.1[q][a.val]'(by rw [(h.2.2 q).1]; exact a.isLt),
     (h.2.2 q).2 _ (List.getElem_mem _)⟩
   start := ⟨c.2.1, h.1⟩
   accept := {q | c.2.2[q.val]'(by rw [h.2.1]; exact q.isLt) = true}
 
-instance (m : ℕ) (c : Code) (h : ValidCode m c) (w : List (Fin m)) :
+instance (m : ℕ) (c : DFACode) (h : ValidCode m c) (w : List (Fin m)) :
     Decidable (w ∈ (toDFA m c h).accepts) :=
   inferInstanceAs (Decidable (_ = true))
 
@@ -116,7 +116,7 @@ theorem boundedWord_accepts_iff {α σ : Type} [Fintype σ] (M : DFA α σ) :
     exact ⟨v, Nat.le_of_lt hlen, hv⟩
 
 /-- Common alphabet size and an arbitrary-length list of encoded automata. -/
-abbrev IntersectionInput := ℕ × List Code
+abbrev IntersectionInput := ℕ × List DFACode
 
 def AllValid (x : IntersectionInput) : Prop :=
   ∀ i : Fin x.2.length, ValidCode x.1 x.2[i]
@@ -150,25 +150,25 @@ theorem dfaIntersection_iff (x : IntersectionInput) (h : AllValid x) :
   exact boundedWord_accepts_iff _
 
 /-- Every K-state transition function, initial state, and accepting-state subset. -/
-abbrev Witness (m K : ℕ) := (Fin K → Fin m → Fin K) × Fin K × (Fin K → Bool)
+abbrev DFAWitness (m K : ℕ) := (Fin K → Fin m → Fin K) × Fin K × (Fin K → Bool)
 
-def Witness.toDFA {m K : ℕ} (c : Witness m K) : DFA (Fin m) (Fin K) where
+def DFAWitness.toDFA {m K : ℕ} (c : DFAWitness m K) : DFA (Fin m) (Fin K) where
   step := c.1
   start := c.2.1
   accept := {q | c.2.2 q = true}
 
-instance {m K : ℕ} (c : Witness m K) (w : List (Fin m)) :
+instance {m K : ℕ} (c : DFAWitness m K) (w : List (Fin m)) :
     Decidable (w ∈ c.toDFA.accepts) :=
   inferInstanceAs (Decidable (_ = true))
 
 /-- Finite Boolean accepting flags represent every actual DFA on the given state type. -/
-theorem Witness.toDFA_surjective (m K : ℕ) :
-    Function.Surjective (@Witness.toDFA m K) := by
+theorem DFAWitness.toDFA_surjective (m K : ℕ) :
+    Function.Surjective (@DFAWitness.toDFA m K) := by
   classical
   intro M
   refine ⟨(M.step, M.start, fun q ↦ decide (q ∈ M.accept)), ?_⟩
   cases M
-  simp only [Witness.toDFA, decide_eq_true_eq, Set.ofPred_mem_eq]
+  simp only [DFAWitness.toDFA, decide_eq_true_eq, Set.ofPred_mem_eq]
 
 /-- Alphabet size, positive samples, negative samples, and state count. -/
 abbrev InferenceInput := ℕ × List (List ℕ) × List (List ℕ) × ℕ
@@ -187,7 +187,7 @@ def Consistent (x : InferenceInput) (h : ValidSamples x)
   (∀ i : Fin x.2.2.1.length,
     typedWord x.2.2.1[i] (h.2 _ (List.getElem_mem _)) ∉ M.accepts)
 
-instance (x : InferenceInput) (h : ValidSamples x) (c : Witness x.1 x.2.2.2) :
+instance (x : InferenceInput) (h : ValidSamples x) (c : DFAWitness x.1 x.2.2.2) :
     Decidable (Consistent x h c.toDFA) :=
   inferInstanceAs (Decidable ((∀ _ : Fin x.2.1.length, _) ∧
     (∀ _ : Fin x.2.2.1.length, _)))
@@ -196,7 +196,7 @@ instance (x : InferenceInput) (h : ValidSamples x) (c : Witness x.1 x.2.2.2) :
 Unreachable states are permitted. Contradictory labels cannot be satisfied. -/
 def InferredDFA (x : InferenceInput) : Prop :=
   if h : ValidSamples x then
-    0 < x.2.2.2 ∧ ∃ c : Witness x.1 x.2.2.2, Consistent x h c.toDFA
+    0 < x.2.2.2 ∧ ∃ c : DFAWitness x.1 x.2.2.2, Consistent x h c.toDFA
   else False
 
 instance (x : InferenceInput) : Decidable (InferredDFA x) :=
@@ -210,7 +210,7 @@ theorem inferredDFA_iff (x : InferenceInput) (h : ValidSamples x) :
   · rintro ⟨hK, c, hc⟩
     exact ⟨hK, c.toDFA, hc⟩
   · rintro ⟨hK, M, hM⟩
-    obtain ⟨c, rfl⟩ := Witness.toDFA_surjective _ _ M
+    obtain ⟨c, rfl⟩ := DFAWitness.toDFA_surjective _ _ M
     exact ⟨hK, c, hM⟩
 
 end Computability.AutomataProblems
