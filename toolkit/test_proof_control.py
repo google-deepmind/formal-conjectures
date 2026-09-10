@@ -44,6 +44,26 @@ class ProofControlTests(ToolkitFixture):
             self.assertEqual(proof.control(directory,record,'cancel')['outcome'],'cancelled')
             self.assertEqual(gh.call_count,1)
 
+    def test_invalid_terminal_results_are_retained_as_errors(self):
+        for outcome,conclusion,reason in [('unknown','success','invalid_result'),('pass','failure','incomplete_executor')]:
+            directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo','commit':'a'*40},remote_run_id=123)
+            core.save(directory/'request.json',{'id':'fixture'})
+            core.save(directory/'remote/verification.json',{'request':{'id':'fixture'},'toolkit_commit':'a'*40,'outcome':outcome})
+            with patch.object(proof,'gh',return_value=json.dumps({'status':'completed','conclusion':conclusion,'url':'https://example.com/run'}).encode()):
+                value=proof.control(directory,record,'wait')
+            self.assertEqual(value['outcome'],'error');self.assertEqual(value['reason'],reason)
+            self.assertEqual(json.loads((directory/'run.json').read_text())['status'],'completed')
+
+    def test_real_process_crash_and_missing_result_are_not_rejections(self):
+        import sys
+        for label,program in [('crash','import os, signal; os.kill(os.getpid(), signal.SIGKILL)'),('missing','print("disallowed_axiom: deliberately misleading diagnostic")')]:
+            output=self.root/label;output.mkdir()
+            with self.assertRaises(core.Failure) as error:
+                remote.invoke_comparator([sys.executable,'-c',program],self.root,output)
+            self.assertEqual(error.exception.reason,'missing_verifier_result')
+            self.assertEqual(error.exception.code,3)
+            self.assertTrue((output/'verifier.log').exists())
+
     def invoke(self,*args):
         out=io.StringIO();err=io.StringIO()
         with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):code=cli.main(list(args))

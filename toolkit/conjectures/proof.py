@@ -194,8 +194,10 @@ def control(directory,record,operation):
     if value.get('toolkit_commit')!=record['executor']['commit']:
         return finish(directory,record,'error',reason='executor_binding_mismatch',detail='Result was produced by another toolkit revision')
     outcome=value.get('outcome')
-    if outcome not in ('pass','fail','error'):raise Failure('invalid_result','Unknown verification outcome',3)
-    if result['conclusion']!='success' and outcome=='pass':raise Failure('incomplete_executor','Failed workflow cannot establish success',3)
+    if outcome not in ('pass','fail','error'):
+        return finish(directory,record,'error',reason='invalid_result',detail='Unknown verification outcome')
+    if result['conclusion']!='success' and outcome=='pass':
+        return finish(directory,record,'error',reason='incomplete_executor',detail='Failed workflow cannot establish success')
     return finish(directory,record,outcome,result=value,url=result['url'],producer='github_actions')
 
 
