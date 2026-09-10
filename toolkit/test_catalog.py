@@ -15,7 +15,7 @@ def native():
         'subjects':['11'],'answerKinds':[],'hasSorryFreeProof':False}],
         'moduleDocstrings':{module:'Source https://example.org/92'},
         'provenance':{'source':{'repository':'owner/fc','commit':'a'*40},
-        'extractor':{'repository':'owner/fc','commit':'a'*40},
+        'extractor':{'repository':'owner/fc','commit':'a'*40,'path':'scripts/extract_names.lean'},
         'lean_toolchain':'leanprover/lean4:v4.33.1','dependencies_sha256':'b'*64,
         'scope':'FormalConjectures','answer_mode':'postpone'}}
 
