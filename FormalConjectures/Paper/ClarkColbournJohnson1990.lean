@@ -18,41 +18,36 @@ import FormalConjecturesUtil
 /-!
 # Independent and dominating sets in represented unit-disk graphs
 
-Clark, Colbourn, and Johnson, *Unit disk graphs*, Discrete Mathematics 86 (1990),
-165–177. The proximity model is defined in §1, pp. 165–167. Theorem 4.1 and
-the preceding complement observation, pp. 171–172, establish independent-set
-hardness; §5 and Theorem 5.1, pp. 172–173, establish domination hardness even
-for grid graphs.
-https://doi.org/10.1016/0012-365X(90)90358-O
-https://cs.du.edu/~snarayan/sada/research/docs/res/unitdisk.pdf
-
-Inputs provide rational centers, a positive rational proximity threshold,
-and a cardinality bound. The threshold is the disk diameter in the intersection
-model, not its radius. Distance equality counts as adjacency.
-The graph representation is given; no recognition problem is being asserted.
-Rational coordinates are essential: independent set is polynomial-time solvable
-for the integer-grid, threshold-one subclass discussed in the same paper.
-Domination selects centers from the input and includes self-coverage.
-
-The paper supplies NP-completeness results and geometric constructions.
-The statements below conjecture the absence of polynomial-time deciders in
-the existing binary TM2 model. No hardness reduction or equivalence to
-$P \ne NP$ is formally proved here.
+*References:*
+- Clark, Colbourn, and Johnson, *Unit disk graphs*, Discrete Mathematics 86 (1990),
+  165–177, §1 (pp. 165–167), Theorem 4.1 (pp. 171–172), and Theorem 5.1 (pp. 172–173).
+  https://doi.org/10.1016/0012-365X(90)90358-O
+  https://cs.du.edu/~snarayan/sada/research/docs/res/unitdisk.pdf
 -/
 
 namespace ClarkColbournJohnson1990
 
 open ComplexityTheory Computability.GeometricProblems
 
-/-- No deterministic polynomial-time decider for an independent set of at least
-an input number of vertices in a rationally represented unit-disk graph. -/
+/-- **UNIT-DISK INDEPENDENT SET** (Clark–Colbourn–Johnson, §4, Theorem 4.1).
+Input: distinct rational plane centers, a positive rational proximity threshold $d$ and
+a nonnegative integer $K$, all binary encoded. Property: at least $K$ input centers have
+pairwise Euclidean distances strictly greater than $d$. The represented graph uses
+distance at most $d$ for adjacency; $d$ is a disk diameter, not a radius. This problem is
+NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 5 52 68]
 theorem unitDiskIndependentSet_not_polytime :
     ¬ HasPolyTimeDecider UnitDiskIndependentSet := by
   sorry
 
-/-- No deterministic polynomial-time decider for a dominating set of at most
-an input number of vertices in a rationally represented unit-disk graph. -/
+/-- **UNIT-DISK DOMINATING SET** (Clark–Colbourn–Johnson, §5, Theorem 5.1).
+Input: distinct rational plane centers, a positive rational proximity threshold $d$ and
+a nonnegative integer $K$, all binary encoded. Property: at most $K$ input centers can be
+selected so that every input center is at Euclidean distance at most $d$ from a selected
+center. Selection is restricted to the input and includes self-coverage. This problem is
+NP-complete, so the nonexistence of a deterministic polynomial-time decider is equivalent
+to $P \ne NP$. -/
 @[category research open, AMS 5 52 68]
 theorem unitDiskDominatingSet_not_polytime :
     ¬ HasPolyTimeDecider UnitDiskDominatingSet := by

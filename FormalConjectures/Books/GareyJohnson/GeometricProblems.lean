@@ -16,44 +16,42 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Geometric polynomial-time lower-bound formulations
+# Exact Euclidean travelling salesman and rectilinear Steiner trees
 
-Garey and Johnson, *Computers and Intractability* (1979), ND13 (p. 209) and
-ND23 (p. 212), including their metric-variant comments.
-https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
-
-Garey and Johnson, *The Rectilinear Steiner Tree Problem is NP-Complete*,
-SIAM Journal on Applied Mathematics 32(4) (1977), 826–834, §§1–3, supplies
-the integer-input Steiner problem and its NP-completeness.
-https://doi.org/10.1137/0132071
-
-Garey, Graham, and Johnson, *Some NP-complete geometric problems*, STOC 1976,
-10–22, is ND23's reference for exact Euclidean TSP hardness.
-https://doi.org/10.1145/800113.803626
-
-The TSP statement uses exact Euclidean lengths, without rounding. ND23 distinguishes
-this NP-hard variant from discretized Euclidean TSP, which is NP-complete.
-No NP-membership assertion for the exact variant is made here.
-The Steiner statement uses unrestricted finite integer Steiner-point sets,
-actual Mathlib trees, and Manhattan edge weights counted once per undirected edge.
-These are geometric restrictions, not the arbitrary weighted-graph inputs of
-ND12 and ND22. The conjectured lower bounds use the existing binary TM2 model;
-no hardness reduction or complexity-class equivalence is formally proved here.
+*References:*
+- Garey and Johnson, *Computers and Intractability* (1979), ND13 (p. 209) and
+  ND23 (p. 212), including their metric-variant comments.
+  https://perso.limos.fr/~palafour/PAPERS/PDF/Garey-Johnson79.pdf
+- Garey and Johnson, *The Rectilinear Steiner Tree Problem is NP-Complete*,
+  SIAM Journal on Applied Mathematics 32(4) (1977), 826–834, §§1–3.
+  https://doi.org/10.1137/0132071
+- Garey, Graham, and Johnson, *Some NP-complete geometric problems*, STOC 1976, 10–22.
+  https://doi.org/10.1145/800113.803626
 -/
 
 namespace GareyJohnson1979
 
 open ComplexityTheory Computability.GeometricProblems
 
-/-- No deterministic polynomial-time decider for an exact Euclidean tour through
-integer-coordinate points of length at most a positive integer input budget. -/
+/-- **EXACT EUCLIDEAN TRAVELLING SALESMAN** (ND23, p. 212, non-discretized variant).
+Input: a duplicate-free list of integer-coordinate plane points and a positive integer
+budget $B$, all binary encoded. Property: a permutation tour through all points, including
+its return edge, has exact Euclidean length at most $B$. Distances are not rounded;
+empty and singleton tours cost zero. This problem is NP-hard but not known to be in NP.
+Thus $P\ne NP$ implies the nonexistence of a deterministic polynomial-time decider;
+the converse is not known. -/
 @[category research open, AMS 52 68]
 theorem euclideanTravelingSalesman_not_polytime :
     ¬ HasPolyTimeDecider EuclideanTravelingSalesman := by
   sorry
 
-/-- No deterministic polynomial-time decider for a rectilinear Steiner tree
-on integer-coordinate terminals of total length at most a positive input budget. -/
+/-- **RECTILINEAR STEINER TREE** (ND13, p. 209; Garey–Johnson 1977).
+Input: a duplicate-free list of integer-coordinate terminals and a positive integer budget
+$B$, all binary encoded. Property: a finite tree on integer-coordinate points contains all
+terminals and has total Manhattan edge length at most $B$, counting each undirected edge
+once. Additional Steiner points are unrestricted; empty terminals permit a singleton tree.
+This problem is NP-complete, so the nonexistence of a deterministic polynomial-time decider
+is equivalent to $P \ne NP$. -/
 @[category research open, AMS 5 52 68]
 theorem rectilinearSteinerTree_not_polytime :
     ¬ HasPolyTimeDecider RectilinearSteinerTree := by
