@@ -59,21 +59,16 @@ theorem a_4 : a 4 = 9 := by
 theorem a_5 : a 5 = 171 := by
   rfl
 
-/-- Are all terms integers? -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 3 ≤ n) : a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
-  sorry
-
 /--
 Counterexample at `n = 7`: `a 5 = 171` does not divide `2 ^ a 6 + 1`,
 so `a 7 = (2 ^ a 6 + 1) / a 5` is not an integer. In particular the
-divisibility claimed by `conjecture` fails at `n = 7`.
+divisibility claimed by the integrality question fails at `n = 7`.
 Proof: writing `c = a 6 = (2 ^ 171 + 1) / 9`, we have `c ≡ 3 [MOD 18]`,
 hence `2 ^ c ≡ 2 ^ 3 = 8 [MOD 19]`, so `2 ^ c + 1 ≡ 9 [MOD 19]`;
 since `19 ∣ 171`, `171` cannot divide `2 ^ c + 1`.
 -/
-@[category research solved, AMS 11]
-theorem conjecture_counterexample : ¬ (a 5 ∣ 2 ^ a 6 + 1) := by
+@[category API, AMS 11]
+theorem conjecture.counterexample : ¬ (a 5 ∣ 2 ^ a 6 + 1) := by
   have h5 : a 5 = 171 := a_5
   have h6 : a 6 = (2 ^ 171 + 1) / 9 := by
     have h : a 6 = (2 ^ a 5 + 1) / a 4 := rfl
@@ -96,5 +91,15 @@ theorem conjecture_counterexample : ¬ (a 5 ∣ 2 ^ a 6 + 1) := by
     Nat.modEq_zero_iff_dvd.mpr h19dvd
   have h9' : (2 ^ ((2 ^ 171 + 1) / 9) + 1) ≡ 9 [MOD 19] := h9
   exact absurd (hz.symm.trans h9') (by decide)
+
+/--
+Are all terms integers?
+
+This is false: `a 5 = 171` does not divide `2 ^ a 6 + 1`, so `a 7` is not an integer.
+See `conjecture.counterexample`.
+-/
+@[category research solved, AMS 11]
+theorem conjecture : answer(False) ↔ ∀ n : ℕ, 3 ≤ n → a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
+  sorry
 
 end OeisA78590
