@@ -15,7 +15,7 @@ def console(args, *, stderr=False):
     mode=getattr(args,'color','auto')
     color=mode!='never' and 'NO_COLOR' not in os.environ
     return Console(file=stream, force_terminal=True if mode=='always' and color else None,
-                   no_color=not color, color_system='auto' if color else None, highlight=False, markup=False)
+                   no_color=not color, color_system=('standard' if mode=='always' else 'auto') if color else None, highlight=False, markup=False)
 
 
 class Session:

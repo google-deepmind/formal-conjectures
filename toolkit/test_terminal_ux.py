@@ -105,6 +105,15 @@ class TerminalUXTests(ToolkitFixture):
         self.assertEqual(err.getvalue(),'')
         self.assertIn('build diagnostic',path.read_text())
 
+    def test_always_color_works_with_dumb_term_without_styling_json(self):
+        stream=io.StringIO()
+        with patch.dict(os.environ,{'TERM':'dumb'},clear=True),contextlib.redirect_stdout(stream):
+            ui.output({'next_action':'conjectures status'},interface.parse(['status','--color','always']))
+        self.assertIn('\x1b[',stream.getvalue())
+        with patch.object(cli,'dispatch',return_value={'outcome':'pass'}):
+            code,out,_=self.invoke('doctor','--json','--color','always')
+        self.assertEqual(code,0);self.assertNotIn('\x1b',out);json.loads(out)
+
     def test_never_color_disables_styles_on_a_terminal(self):
         class Terminal(io.StringIO):
             def isatty(self):return True
