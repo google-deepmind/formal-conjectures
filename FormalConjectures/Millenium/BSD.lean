@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [The Clay Institute](https://www.claymath.org/millennium/birch-and-swinnerton-dyer-conjecture/),
   official problem description by Andrew Wiles:
-  [PDF](https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf)
+  [claymath.org](https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf)
 - [BSD1965] B. J. Birch and H. P. F. Swinnerton-Dyer. "Notes on elliptic curves. II."
   Journal fur die reine und angewandte Mathematik 218 (1965), 79-108,
   [doi](https://doi.org/10.1515/crll.1965.218.79)
@@ -31,10 +31,10 @@ import FormalConjecturesUtil
   [numdam](https://www.numdam.org/item/SB_1964-1966__9__415_0/)
 - [Gross2011] Benedict H. Gross. "Lectures on the conjecture of Birch and Swinnerton-Dyer."
   Arithmetic of L-functions, IAS/Park City Math. Ser. 18, AMS (2011), 169-209,
-  [PDF](https://people.math.harvard.edu/~gross/preprints/lectures-pcmi.pdf)
+  [math.harvard.edu](https://people.math.harvard.edu/~gross/preprints/lectures-pcmi.pdf)
 - [Ang2025] David Kurniadi Angdinata. "L-functions of Dirichlet twists of elliptic curves:
   computations and congruences." PhD thesis, University College London (2025),
-  [PDF](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
+  [discovery.ucl.ac.uk](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
 -/
