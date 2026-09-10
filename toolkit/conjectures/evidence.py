@@ -110,35 +110,6 @@ def publish(root,directory,cfg,dry_run=False):
     save(directory/'publication.json',result)
     return result
 
-def post(directory,publication):
-    ticket=rr.read_json(directory/'ticket.json');record=rr.read_json(directory/'run.json')
-    repo,number=ticket['repository'],ticket['pr']
-    if not number:raise Failure('no_pr','A PR target is required for --post')
-    def current():
-        pr=github(f'repos/{repo}/pulls/{number}')
-        return pr['state']=='open' and pr['head']['sha']==ticket['head'] and pr['base']['sha']==ticket['base']
-    if not current():raise Failure('stale_target','Evidence is archived; PR head or base changed, so the summary was not posted',4)
-    report=rr.read_json(directory/'bundle/report.json')
-    body=f"{MARKER}\n**Advisory FC review — {rr.escape(report['semantic_verdict'])}**\n\n"
-    body+=f"Reviewed `{ticket['head']}` against `{ticket['base']}`. Coverage: {report['completeness']}. "
-    body+='Produced by a local operator. Maintainers decide acceptance.\n\n'
-    for finding in report['review']['findings'][:20]:
-        body+=f"- {rr.escape(finding['file'])}:{finding['line']} — {rr.escape(finding['message'][:1500])}\n"
-    body+=f"\n[Archived report and evidence provenance]({publication['url']}). Raw source documents and private artifacts are omitted.\n"
-    body+=f"\n<!-- fc-review-order: {record['created_at']} {record['id']} -->"
-    comments=[]
-    for page in range(1,101):
-        batch=github(f'repos/{repo}/issues/{number}/comments?per_page=100&page={page}');comments+=batch
-        if len(batch)<100:break
-    else:raise Failure('comment_limit','Comment pagination limit exceeded',3)
-    login=github('user')['login']
-    existing=[c for c in comments if c['user']['login']==login and c['body'].startswith(MARKER)]
-    if len(existing)>1:raise Failure('comment_conflict','Multiple advisory comments need reconciliation',4)
-    if existing:
-        order=re.search(r'<!-- fc-review-order: (\S+) (\S+) -->',existing[0]['body'])
-        if order and (order.group(1),order.group(2))>(record['created_at'],record['id']):raise Failure('older_request','A newer request already has an advisory summary',4)
-    if not current():raise Failure('stale_target','PR changed before posting; archive remains available',4)
-    endpoint=f'repos/{repo}/issues/comments/{existing[0]["id"]}' if existing else f'repos/{repo}/issues/{number}/comments'
-    with tempfile.NamedTemporaryFile(mode='w',suffix='.json') as f:
-        json.dump({'body':body},f);f.flush()
-        gh('api',endpoint,'--method','PATCH' if existing else 'POST','--input',f.name)
+def post(directory,publication,cfg=None):
+    from .publisher import dispatch
+    return dispatch(directory,publication,cfg or {})

@@ -48,11 +48,14 @@ def dispatch(args):
                 'catalog_note':'Published metadata is descriptive; acceptance and exact-target verification are separate.'}
     if args.command=='status' or (args.command=='run' and args.operation=='list'):
         records=runs(root)
+        for record in records:
+            path=root/'.conjectures/runs'/record['id']/'publisher.json'
+            if path.is_file():record['publisher']=rr.read_json(path)
         if args.command=='run':
             if args.status:records=[r for r in records if r['status']==args.status]
             records=records[:args.limit]
         from .inspection import next_action
-        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete')]
+        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete') or r.get('publisher',{}).get('status') in ('dispatching','queued','in_progress','error','cancellation_requested')]
         actions=[next_action(r) for r in outstanding]
         return {'outcome':'pass','runs':records,'outstanding':len(outstanding),'next_actions':actions,
                 'next_action':None if records else 'Try conjectures review --pr 4941, or conjectures doctor --for review.'}
@@ -64,6 +67,10 @@ def dispatch(args):
         if args.operation=='logs':
             from .inspection import logs
             return logs(directory,record,args.artifact)
+        if (directory/'publisher.json').is_file() and args.operation in ('wait','cancel'):
+            from . import publisher
+            if args.operation=='wait':return publisher.wait(directory,args.timeout)
+            with run_lock(directory):return publisher.control(directory,'cancel')
         if record['kind']=='review':
             if args.operation=='cancel':
                 with run_lock(directory):
@@ -93,8 +100,8 @@ def dispatch(args):
                     from .evidence import publish,post
                     # Publication errors never overwrite a retained semantic review outcome.
                     publication=publish(root,directory,cfg)
-                    post(directory,publication)
-                    result={**result,'publication':publication}
+                    posting=post(directory,publication,cfg)
+                    result={**result,'publication':publication,'publisher':posting,'command_status':posting['command_status'],'next_action':posting['next_action']}
                 return result
         directory,record=start_run(root,'review')
         try:
@@ -139,7 +146,9 @@ def dispatch(args):
         directory=run_dir(root,args.run)
         with run_lock(directory):
             result=publish(root,directory,cfg,args.dry_run)
-            if args.post: post(directory,result)
+            if args.post:
+                posting=post(directory,result,cfg)
+                result={**result,'publisher':posting,'command_status':posting['command_status'],'next_action':posting.get('next_action')}
             return result
 
 def operation_code(args, result):

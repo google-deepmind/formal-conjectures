@@ -100,18 +100,9 @@ class PublicationTests(unittest.TestCase):
         index=rr.parse(core.git(self.remote,'show','evidence:toolkit-index.json'))
         self.assertEqual({r['id'] for r in index['runs']},{rr.read_json(self.directory/'run.json')['id'],record['id']})
 
-    def test_stale_target_never_posts(self):
-        with patch.object(evidence,'github',return_value={'state':'open','head':{'sha':'changed'},'base':{'sha':self.ticket['base']}}),patch.object(evidence,'gh') as post:
+    def test_local_post_requires_a_configured_publisher(self):
+        with patch.object(evidence,'gh') as write:
             with self.assertRaises(core.Failure) as error:evidence.post(self.directory,{'url':'https://example.invalid/archive'})
-        self.assertEqual(error.exception.reason,'stale_target');post.assert_not_called()
-
-    def test_older_request_cannot_replace_newer_comment(self):
-        def api(path):
-            if '/pulls/' in path:return {'state':'open','head':{'sha':self.ticket['head']},'base':{'sha':self.ticket['base']}}
-            if path=='user':return {'login':'fixture'}
-            return [{'id':1,'user':{'login':'fixture'},'body':evidence.MARKER+'\n<!-- fc-review-order: 2999-01-01T00:00:00Z newer -->'}]
-        with patch.object(evidence,'github',side_effect=api),patch.object(evidence,'gh') as post:
-            with self.assertRaises(core.Failure) as error:evidence.post(self.directory,{'url':'https://example.invalid/archive'})
-        self.assertEqual(error.exception.reason,'older_request');post.assert_not_called()
+        self.assertEqual(error.exception.reason,'publisher_not_configured');write.assert_not_called()
 
 if __name__=='__main__':unittest.main()

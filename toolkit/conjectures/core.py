@@ -80,6 +80,9 @@ def config(root):
         value=result[name]
         if value is not None and (not isinstance(value,dict) or any(not isinstance(value.get(k),str) or not value[k] for k in fields)):
             raise Failure('invalid_configuration', name+' must include '+', '.join(fields)+' as nonempty strings.')
+    publisher=(result['evidence'] or {}).get('publisher')
+    if publisher is not None and (not isinstance(publisher,dict) or any(not isinstance(publisher.get(k),str) or not publisher[k] for k in ('repository','ref'))):
+        raise Failure('invalid_configuration','publisher requires repository and ref strings.')
     for key, ceiling in (('build_seconds',1800), ('scratch_seconds',300), ('scratch_calls',100)):
         if type(result['limits'][key]) is not int or not 0 < result['limits'][key] <= ceiling:
             raise Failure('invalid_configuration', f'{key} must be an integer from 1 to {ceiling}')
