@@ -24,7 +24,7 @@ def prepare(source, repository, data, out):
         'scope':'FormalConjectures','answer_mode':'postpone'}}
     complete(data)
     raw=encode(data);out.mkdir(parents=True,exist_ok=True)
-    (out/'catalog.json').write_bytes(raw)
+    (out/'conjectures.json').write_bytes(raw)
     (out/'catalog-manifest.json').write_bytes(encode(manifest(data,raw)))
     shutil.copytree(Path(__file__).resolve().parents[1]/'toolkit/conjectures/resources/schemas',out/'schemas',dirs_exist_ok=True)
     return data

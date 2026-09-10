@@ -122,7 +122,7 @@ def main():
     input_dir, output_json = args.input_dir, args.output_json
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'toolkit'))
     from conjectures.catalog_data import verify, parse
-    raw = (args.catalog_dir / 'catalog.json').read_bytes()
+    raw = (args.catalog_dir / 'conjectures.json').read_bytes()
     descriptor = parse((args.catalog_dir / 'catalog-manifest.json').read_bytes())
     catalog = verify(descriptor, raw)
     root = Path(__file__).resolve().parents[1]

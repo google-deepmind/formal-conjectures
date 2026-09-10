@@ -16,7 +16,7 @@
       "const": "fc.catalog.v1"
     },
     "catalog": {
-      "const": "catalog.json"
+      "const": "conjectures.json"
     },
     "sha256": {
       "type": "string",
