@@ -16,45 +16,55 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Five graph formulations of P versus NP
+# Karp's NP-complete graph problems
 
-These are the conjectured nonexistence of polynomial-time deciders for five classical
-NP-complete problems, using explicit adjacency matrices and binary integer parameters.
-Karp's completeness theorem and Theorem 3 explain their relation to $P \ne NP$.
-The completeness reductions themselves are not proved in this file.
-
-*Reference:* Richard M. Karp, *Reducibility among Combinatorial Problems*, in
-*Complexity of Computer Computations* (1972), pp. 85–103,
-https://doi.org/10.1007/978-1-4684-2001-2_9.
-See §4, Theorem 3 (p. 93), and Main Theorem items 3, 5, 9, 10, 12 (pp. 94–95).
+*References:*
+* [Ka72] Karp, R. M., *Reducibility among Combinatorial Problems*.
+  In *Complexity of Computer Computations*, Plenum (1972), pp. 85–103.
+  §4, Theorem 3 and Main Theorem items 3, 5, 9, 10, 12, pp. 93–95.
+  https://doi.org/10.1007/978-1-4684-2001-2_9.
 -/
 
 namespace Karp1972
 
 open ComplexityTheory Computability.MatrixGraph
 
-/-- No polynomial-time decider for CLIQUE (item 3, p. 94). -/
+/-- **CLIQUE** ([Ka72], item 3, p. 94). No deterministic polynomial-time algorithm decides
+whether a finite simple graph, given by a square symmetric loopless Boolean adjacency matrix,
+contains $k$ mutually adjacent vertices, where the positive integer $k$ is given in binary.
+CLIQUE is NP-complete, so this conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
 theorem clique_not_polytime : ¬ HasPolyTimeDecider Clique := by
   sorry
 
-/-- No polynomial-time decider for NODE COVER, now called vertex cover (item 5, p. 94). -/
+/-- **NODE COVER** ([Ka72], item 5, p. 94). No deterministic polynomial-time algorithm decides
+whether a finite simple graph, given by its Boolean adjacency matrix, has a vertex set of size
+at most $k$ meeting every edge, where the positive bound $k$ is given in binary.
+Vertex cover is NP-complete, so this conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
 theorem vertexCover_not_polytime : ¬ HasPolyTimeDecider VertexCover := by
   sorry
 
-/-- No polynomial-time decider for CHROMATIC NUMBER with the color bound in the input
-(item 12, p. 95). -/
+/-- **CHROMATIC NUMBER** ([Ka72], item 12, p. 95). No deterministic polynomial-time algorithm
+decides whether a finite simple graph, given by its Boolean adjacency matrix, has a proper
+vertex coloring with at most $k$ colors. The positive binary bound $k$ is part of the input.
+This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
 theorem colorable_not_polytime : ¬ HasPolyTimeDecider Colorable := by
   sorry
 
-/-- No polynomial-time decider for DIRECTED HAMILTON CIRCUIT (item 9, p. 94). -/
+/-- **DIRECTED HAMILTON CIRCUIT** ([Ka72], item 9, p. 94). No deterministic polynomial-time
+algorithm decides whether a finite loopless digraph, given by its Boolean adjacency matrix,
+has a directed cycle visiting every vertex exactly once. Cycles have at least two vertices.
+This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
 theorem directedHamiltonian_not_polytime : ¬ HasPolyTimeDecider DirectedHamiltonian := by
   sorry
 
-/-- No polynomial-time decider for UNDIRECTED HAMILTON CIRCUIT (item 10, p. 94). -/
+/-- **UNDIRECTED HAMILTON CIRCUIT** ([Ka72], item 10, p. 94). No deterministic polynomial-time
+algorithm decides whether a finite simple graph, given by its Boolean adjacency matrix, has
+a cycle visiting every vertex exactly once. Cycles have at least three vertices.
+This problem is NP-complete, so the conjecture is equivalent to $P \ne NP$ (`P_ne_NP`). -/
 @[category research open, AMS 5 68]
 theorem undirectedHamiltonian_not_polytime : ¬ HasPolyTimeDecider UndirectedHamiltonian := by
   sorry
