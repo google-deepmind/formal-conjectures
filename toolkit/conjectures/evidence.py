@@ -1,4 +1,5 @@
 """Explicit public exports and immutable evidence-branch publication."""
+from .ui import stage
 import json
 import re
 import tempfile
@@ -66,6 +67,7 @@ def export(root,directory):
     return files,record
 
 def publish(root,directory,cfg,dry_run=False):
+    stage('Validating and preparing the public evidence export')
     files,record=export(root,directory)
     if dry_run:return {'outcome':'pass','public_export':str(directory/'public'),'artifacts':rr.descriptors(files),
                        'destination':cfg.get('evidence') or 'Not configured; use conjectures setup evidence.',
@@ -80,6 +82,7 @@ def publish(root,directory,cfg,dry_run=False):
     prefix='runs/'+record['id']
     with tempfile.TemporaryDirectory(prefix='fc-evidence-') as temp:
         checkout=Path(temp)/'archive'
+        stage('Reading the evidence archive destination')
         command(['git','clone','--single-branch','--depth','1','--branch',branch,f'https://github.com/{repo}.git',checkout])
         target=checkout/prefix
         if target.exists():
@@ -100,6 +103,7 @@ def publish(root,directory,cfg,dry_run=False):
             git(checkout,'add','--',prefix,'toolkit-index.json')
             git(checkout,'commit','-m','Archive contribution evidence '+record['id'])
             # A concurrent push is rejected, never overwritten. Retrying rechecks immutable bytes.
+            stage('Uploading immutable evidence archive')
             git(checkout,'push','origin','HEAD:'+branch)
         revision=git(checkout,'rev-parse','HEAD').decode().strip()
     url=f'https://github.com/{repo}/tree/{revision}/{prefix}'
