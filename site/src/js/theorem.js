@@ -409,7 +409,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
               <span class="badge ${sCatMeta.css}">${FC.escapeHTML(sCatMeta.label)}</span>
               ${isCurrent
             ? `<span class="sibling-item__name">${FC.escapeHTML(s.displayTheorem)}</span>`
-            : `<a class="sibling-item__name" href="${FC.escapeHTML(FC.theoremURL(s.displayTheorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
+            : `<a class="sibling-item__name" href="${FC.escapeHTML(FC.theoremURL(s.theorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
               <button class="statement-toggle sibling-item__toggle" type="button" aria-expanded="false" aria-controls="${previewId}">
                 <span class="statement-toggle__text">Show statement</span>
                 <span class="statement-toggle__icon" aria-hidden="true"></span>
