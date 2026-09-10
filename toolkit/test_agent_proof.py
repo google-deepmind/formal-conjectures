@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -41,6 +42,18 @@ class AgentProofTests(unittest.TestCase):
             result=linux_executor.verify_local(self.candidate,self.candidate,self.target,{'kind':'linux'})
         self.assertEqual(result['outcome'],'error');self.assertEqual(result['policy_outcome'],'not_evaluated')
         self.assertEqual(core.runs(self.candidate)[0]['reason'],'tool_pin_mismatch')
+
+    def test_submission_read_rejects_a_concurrent_symlink_swap(self):
+        path=self.candidate/'Submission.lean';path.write_text('candidate')
+        outside=self.root/'private.lean';outside.write_text('outside submission')
+        original=os.open
+        def swapped(name,*args,**kwargs):
+            if name=='Submission.lean':
+                path.unlink();path.symlink_to(outside)
+            return original(name,*args,**kwargs)
+        with patch.object(linux_executor.os,'open',side_effect=swapped):
+            with self.assertRaises(core.Failure) as caught:linux_executor.submission_files(self.candidate)
+        self.assertEqual(caught.exception.reason,'disallowed_submission')
 
     def test_handoff_and_local_setup_arguments(self):
         proof.write_handoff(self.candidate,self.target)

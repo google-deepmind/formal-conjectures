@@ -5,6 +5,7 @@ Configuration is operator supplied. Candidate files never select tools or policy
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -47,20 +48,39 @@ def validate(value):
 
 
 def submission_files(candidate):
-    candidates=[candidate/'Submission.lean']
-    subtree=candidate/'Submission'
-    if subtree.is_symlink():raise Failure('disallowed_submission','Submission/ cannot be a symlink.',1)
-    if subtree.exists():candidates += list(subtree.rglob('*'))
-    files={}
-    for path in candidates:
-        if path.is_symlink():raise Failure('disallowed_submission','Submission symlinks are not allowed.',1)
-        if path.is_dir():continue
-        if not path.is_file() or path.suffix!='.lean':
-            raise Failure('disallowed_submission','Only regular Lean submission files are allowed.',1)
-        if path.stat().st_size>8*1024*1024:raise Failure('submission_too_large','Submission file exceeds 8 MiB.',1)
-        files[path.relative_to(candidate).as_posix()]=path.read_bytes()
-    if len(files)>200 or sum(map(len,files.values()))>32*1024*1024:
-        raise Failure('submission_too_large','Submission exceeds 200 files or 32 MiB.',1)
+    # Descriptor-relative opens prevent a concurrent symlink swap from importing
+    # files outside the selected submission. Reads and traversal are bounded.
+    files={};entries=0;total=0
+    def collect(parent,name,relative,depth=0):
+        nonlocal entries,total
+        entries+=1
+        if entries>1000 or depth>32:
+            raise Failure('submission_too_large','Submission directory exceeds traversal limits.',1)
+        try:fd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=parent)
+        except OSError as error:
+            raise Failure('disallowed_submission','Submission files must be readable and cannot be symlinks.',1) from error
+        try:
+            mode=os.fstat(fd).st_mode
+            if stat.S_ISDIR(mode) and relative!='Submission.lean':
+                with os.scandir(fd) as children:
+                    for child in children:collect(fd,child.name,relative+'/'+child.name,depth+1)
+                return
+            if not stat.S_ISREG(mode) or not relative.endswith('.lean'):
+                raise Failure('disallowed_submission','Only regular Lean submission files are allowed.',1)
+            with os.fdopen(os.dup(fd),'rb') as stream:raw=stream.read(8*1024*1024+1)
+            if len(raw)>8*1024*1024:
+                raise Failure('submission_too_large','Submission file exceeds 8 MiB.',1)
+            total+=len(raw);files[relative]=raw
+            if len(files)>200 or total>32*1024*1024:
+                raise Failure('submission_too_large','Submission exceeds 200 files or 32 MiB.',1)
+        finally:os.close(fd)
+    descriptor=os.open(candidate,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+    try:
+        collect(descriptor,'Submission.lean','Submission.lean')
+        try:os.stat('Submission',dir_fd=descriptor,follow_symlinks=False)
+        except FileNotFoundError:pass
+        else:collect(descriptor,'Submission','Submission')
+    finally:os.close(descriptor)
     return files
 
 
