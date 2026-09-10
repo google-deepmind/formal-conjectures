@@ -109,8 +109,9 @@ jobs:
             # that fails for any reason, fall back to building the site.
             touched=$(git diff --name-only HEAD^1 HEAD -- \
               site docbuild scripts/publish_catalog.py scripts/download_catalog.py \
-              toolkit/conjectures/catalog_data.py toolkit/conjectures/resources/schemas \
-              FormalConjecturesUtil/Metadata.lean scripts/extract_names.lean \
+              toolkit/conjectures/catalog_data.py toolkit/conjectures/metadata.py \
+              toolkit/conjectures/resources/schemas FormalConjecturesUtil FormalConjecturesUtil.lean \
+              scripts/extract_names.lean lakefile.toml lake-manifest.json lean-toolchain \
               .github/workflows/build-and-docs.yml 2>/dev/null || echo unknown)
             if [[ -z "$touched" ]]; then
               site=false

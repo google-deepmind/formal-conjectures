@@ -15,7 +15,6 @@ const PAGE_SIZE = 50;
 let allConjectures = [];
 let filtered       = [];
 let currentPage    = 1;
-let versoFragments = { moduleDocs: {}, constLinks: {} };
 
 // Active filter state (driven by URL ↔ UI)
 const state = {
@@ -143,7 +142,7 @@ function renderCard(c, index) {
     .map(s => `<span class="subject-pill">${FC.escapeHTML(s.name)}</span>`)
     .join('');
   const previewId = `problem-preview-${index}`;
-  const docHTML = FC.problemDocHTML(c, versoFragments) ||
+  const docHTML = FC.problemDocHTML(c) ||
     '<p class="problem-preview__empty">No informal statement available.</p>';
 
   const article = document.createElement('article');
@@ -153,7 +152,7 @@ function renderCard(c, index) {
     <div class="theorem-card__summary">
       <div class="theorem-card__body">
         <div class="theorem-card__name">
-          <a href="${FC.escapeHTML(FC.theoremURL(c.displayTheorem))}">
+          <a href="${FC.escapeHTML(FC.theoremURL(c.theorem))}">
             ${FC.escapeHTML(c.displayTheorem)}
           </a>
         </div>
@@ -304,7 +303,6 @@ async function init() {
   }
 
   allConjectures = data.conjectures;
-  versoFragments = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   statementTextCache.clear();
 
   // Handle OAuth callback and prefetch votes (disabled)
