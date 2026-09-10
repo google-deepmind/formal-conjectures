@@ -62,5 +62,19 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(network.call_count,1)
 
     def test_uncommitted_shared_imports_cannot_claim_a_source_commit(self):
-        (self.root/'FormalConjecturesForMathlib.lean').write_text('import Modified')
-        with self.assertRaises(ValueError):publish_catalog.prepare(self.root,'owner/fc',fixture(),self.root/'out')
+        for name in ('FormalConjecturesUtil.lean', 'FormalConjecturesForMathlib.lean'):
+            file=self.root/name
+            for state in ('untracked', 'modified', 'staged', 'deleted'):
+                with self.subTest(file=name,state=state):
+                    file.write_text('import Modified')
+                    if state!='untracked':
+                        self.git('add',name);self.git('commit','-m','Pin aggregate')
+                        if state=='deleted':file.unlink()
+                        else:file.write_text('import Changed')
+                        if state=='staged':self.git('add',name)
+                    with self.assertRaisesRegex(ValueError,'uncommitted changes'):
+                        publish_catalog.prepare(self.root,'owner/fc',fixture(),self.root/'out')
+                    self.assertFalse((self.root/'out').exists())
+                    if state=='untracked':file.unlink()
+                    else:self.git('reset','--hard','HEAD^')
+        publish_catalog.prepare(self.root,'owner/fc',fixture(),self.root/'out')

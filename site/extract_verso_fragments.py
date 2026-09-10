@@ -121,7 +121,7 @@ def main():
     args = parser.parse_args()
     input_dir, output_json = args.input_dir, args.output_json
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'toolkit'))
-    from conjectures.catalog_data import verify, parse
+    from conjectures.catalog_data import SOURCE_INPUTS, verify, parse
     raw = (args.catalog_dir / 'conjectures.json').read_bytes()
     descriptor = parse((args.catalog_dir / 'catalog-manifest.json').read_bytes())
     catalog = verify(descriptor, raw)
@@ -130,9 +130,7 @@ def main():
     if revision != catalog['provenance']['source']['commit']:
         parser.error('Verso must be built from the catalog source revision')
     if subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain', '--',
-                                'FormalConjectures', 'FormalConjecturesUtil',
-                                'FormalConjecturesForMathlib', 'docbuild',
-                                'lean-toolchain', 'lake-manifest.json'], text=True).strip():
+                                *SOURCE_INPUTS, 'docbuild'], text=True).strip():
         parser.error('Verso source and dependency inputs must be committed')
     if not input_dir.is_dir():
         parser.error('Literate HTML is missing; run the Verso build first')
