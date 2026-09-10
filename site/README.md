@@ -217,3 +217,15 @@ The GitHub Actions workflow in `.github/workflows/build-and-docs.yml` triggers o
 **Deployment** happens on pushes to `main`, and on `*-webtest` branches when on a fork.
 
 For GitHub Pages setup (including the environment rule needed for `*-webtest` branches), see [One-time fork setup](#one-time-fork-setup) above.
+
+### Full fork preview before the first catalog deployment
+
+A fork can run **Build Lean project and deploy docs** manually on a contribution
+branch with `website_only=false` and `deploy_preview=true`. Allow that exact branch
+in the fork's `github-pages` environment first. Both the build and script tests
+must pass before deployment. This replaces the fork's current Pages site; it does
+not deploy upstream or change the CLI's default catalog origin.
+
+Use the full mode when changing Lean extraction or when the production catalog is
+not deployed yet. Website-only mode is for presentation changes against an existing
+published snapshot.
