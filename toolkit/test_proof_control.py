@@ -135,6 +135,7 @@ class ProofControlTests(ToolkitFixture):
 
     def test_source_dependency_failure_never_reaches_export_or_submission(self):
         self.repository()
+        cache=self.root/'.lake';cache.mkdir();(cache/'rebuildable').write_text('dependency cache')
         request={'run_id':'20260909T000000Z-aaaaaaaaaaaa','candidate_repository':'fixture/local',
                  'candidate_commit':'a'*40,'candidate_path':'.','source_repository':'https://github.com/fixture/local.git',
                  'source_commit':'a'*40,'source_path':'FormalConjectures/A.lean','declaration':'original'}
@@ -150,4 +151,6 @@ class ProofControlTests(ToolkitFixture):
             value=remote.execute(request,self.root/'output',self.root,self.root,self.root,self.root)
         self.assertEqual(value['outcome'],'error');self.assertEqual(value['policy_outcome'],'not_evaluated')
         self.assertIn('dependency unavailable',(self.root/'output/source-dependencies.log').read_text())
+        self.assertFalse(cache.exists())
+        self.assertTrue((self.root/'FormalConjectures/A.lean').is_file())
         export.assert_not_called()

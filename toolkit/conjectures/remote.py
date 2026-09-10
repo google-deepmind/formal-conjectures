@@ -60,6 +60,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
     record={'schema_version':'fc.proof-verification.v1','request':request,'producer':producer,
             'started_at':now(),'outcome':'error','policy_outcome':'not_evaluated','pins':PINS,
             'toolkit_commit':git(toolkit,'rev-parse','HEAD').decode().strip()}
+    workspace=None;prepared=False
     try:
         qualify()
         if git(source,'rev-parse','HEAD').decode().strip()!=request['source_commit']:
@@ -69,6 +70,7 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         submissions=load_submission(candidate,request['candidate_commit'],request['candidate_path'])
         # Use the controller's native exporter and template. Candidate repositories supply neither.
         exporter.install_native(source)
+        prepared=True
         # A fresh source checkout has no Mathlib artifacts. Populate only its pinned
         # dependencies before the native export, as standalone initialization does.
         with (output/'source-dependencies.log').open('wb') as log:
@@ -98,6 +100,16 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         record.update(outcome='fail' if isinstance(error,Failure) and error.code==1 else 'error',
                       reason=getattr(error,'reason','execution_error'),detail=str(error))
     finally:
+        # Retain generated sources, policy and logs, not gigabytes of rebuildable
+        # dependency artifacts for every attempt. These are controller checkouts.
+        for checkout in (source if prepared else None,workspace):
+            if checkout is not None:
+                cache=checkout/'.lake'
+                try:
+                    if cache.is_symlink():cache.unlink()
+                    elif cache.exists():shutil.rmtree(cache)
+                except OSError as error:
+                    record.setdefault('cleanup_warnings',[]).append(str(error))
         record['finished_at']=now();save(output/'verification.json',record)
     return record
 
