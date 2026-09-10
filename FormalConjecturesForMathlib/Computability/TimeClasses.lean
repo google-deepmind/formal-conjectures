@@ -57,7 +57,7 @@ theorem IsPolyTime.isExpTime {α β : Type} [BitstringEncoding α] [BitstringEnc
   exact ⟨M.time, M.toTM2ComputableInTime, fun n => (Nat.lt_two_pow_self).le⟩
 
 /-- Deterministic exponential time on bitstrings. -/
-def EXP : ComplexityClass := {L | IsExpTime L}
+def EXP : Set DecisionProblem := {L | IsExpTime L}
 
 theorem P_subset_EXP : P ⊆ EXP :=
   fun _ h => IsPolyTime.isExpTime h
@@ -77,7 +77,7 @@ def HasExponentialVerifier (p q : Polynomial ℕ)
 /-- Nondeterministic exponential time, via bounded certificates and a verifier
 clocked exponentially in the original input length. Both polynomials and the
 verifier are fixed before the input is quantified. -/
-def NEXP : ComplexityClass :=
+def NEXP : Set DecisionProblem :=
   {L | ∃ (p q : Polynomial ℕ) (R : (List Bool × List Bool) → Bool),
     HasExponentialVerifier p q R ∧
     ∀ x, L x = true ↔

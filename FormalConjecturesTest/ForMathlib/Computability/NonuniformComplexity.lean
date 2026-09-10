@@ -173,7 +173,7 @@ example (A : DecisionProblem) (a : ℕ → List Bool) (hA : A ∈ NP)
     (ha : PolynomialAdvice a) : withAdvice A a ∈ NPpoly :=
   withAdvice_mem hA ha
 
-example {C D : ComplexityClass} (h : C ⊆ D) :
+example {C D : Set DecisionProblem} (h : C ⊆ D) :
     WithPolyAdvice C ⊆ WithPolyAdvice D := WithPolyAdvice.mono h
 
 #guard projection.eval ![false, true]

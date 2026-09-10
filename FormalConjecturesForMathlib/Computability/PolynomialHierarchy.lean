@@ -74,23 +74,23 @@ theorem AlternatingBlocks.mono {n k : ℕ} {b : Bool}
       exact ⟨v, ih hv (fun ws => hRS (List.ofFn v :: ws))⟩
 
 /-- Quantified polynomial-time languages with a prescribed prefix length. -/
-def QuantifiedPolyTime (b : Bool) (k : ℕ) : ComplexityClass :=
+def QuantifiedPolyTime (b : Bool) (k : ℕ) : Set DecisionProblem :=
   {L | ∃ (p : Polynomial ℕ) (R : (List Bool × List (List Bool)) → Bool),
     IsPolyTime R ∧ ∀ x, L x = true ↔
       AlternatingBlocks (p.eval x.length) b k (fun ws => R (x, ws) = true)}
 
 /-- The existential levels; level zero is P. -/
-def SigmaP : ℕ → ComplexityClass
+def SigmaP : ℕ → Set DecisionProblem
   | 0 => P
   | k + 1 => QuantifiedPolyTime true (k + 1)
 
 /-- The universal levels; level zero is P. -/
-def PiP : ℕ → ComplexityClass
+def PiP : ℕ → Set DecisionProblem
   | 0 => P
   | k + 1 => QuantifiedPolyTime false (k + 1)
 
 /-- The union of all finite existential levels. -/
-def PH : ComplexityClass := {L | ∃ k, L ∈ SigmaP k}
+def PH : Set DecisionProblem := {L | ∃ k, L ∈ SigmaP k}
 
 @[simp]
 theorem sigmaP_zero : SigmaP 0 = P := rfl

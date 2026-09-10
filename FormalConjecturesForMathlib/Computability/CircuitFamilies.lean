@@ -70,7 +70,7 @@ def HasCircuitSize (L : DecisionProblem) (s : ℕ → ℕ) : Prop :=
     ∀ v : Fin n → Bool, c.eval v = L (List.ofFn v)
 
 /-- Languages computed by nonuniform circuit families of polynomial size. -/
-def Ppoly : ComplexityClass :=
+def Ppoly : Set DecisionProblem :=
   {L | ∃ k : ℕ, 1 ≤ k ∧ HasCircuitSize L (fun n => n ^ k + k)}
 
 theorem HasCircuitSize.mono {L : DecisionProblem} {s t : ℕ → ℕ}

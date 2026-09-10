@@ -42,19 +42,19 @@ def withAdvice (A : DecisionProblem) (a : ℕ → List Bool) : DecisionProblem :
   fun x => A (BitstringEncoding.bitEncode (x, a x.length))
 
 /-- Apply the standard polynomial-advice operator to a language class. -/
-def WithPolyAdvice (C : ComplexityClass) : ComplexityClass :=
+def WithPolyAdvice (C : Set DecisionProblem) : Set DecisionProblem :=
   {L | ∃ (A : DecisionProblem) (a : ℕ → List Bool),
     A ∈ C ∧ PolynomialAdvice a ∧ L = withAdvice A a}
 
 /-- Nondeterministic polynomial time with polynomial-length advice. -/
-def NPpoly : ComplexityClass := WithPolyAdvice NP
+def NPpoly : Set DecisionProblem := WithPolyAdvice NP
 
-theorem withAdvice_mem {C : ComplexityClass} {A : DecisionProblem}
+theorem withAdvice_mem {C : Set DecisionProblem} {A : DecisionProblem}
     {a : ℕ → List Bool} (hA : A ∈ C) (ha : PolynomialAdvice a) :
     withAdvice A a ∈ WithPolyAdvice C :=
   ⟨A, a, hA, ha, rfl⟩
 
-theorem WithPolyAdvice.mono {C D : ComplexityClass} (h : C ⊆ D) :
+theorem WithPolyAdvice.mono {C D : Set DecisionProblem} (h : C ⊆ D) :
     WithPolyAdvice C ⊆ WithPolyAdvice D := by
   rintro L ⟨A, a, hA, ha, hL⟩
   exact ⟨A, a, h hA, ha, hL⟩
