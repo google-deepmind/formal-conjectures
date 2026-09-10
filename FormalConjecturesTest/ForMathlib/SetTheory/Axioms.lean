@@ -183,7 +183,7 @@ class CountableChainCondition (X : Type*) [TopologicalSpace X] : Prop where
   countable_chain_condition : ∀ ⦃S : Set (Set X)⦄,
     S.PairwiseDisjoint id → (∀ s ∈ S, IsOpen s) → S.Countable
 
-lemma Set.countable_of_setminus_singleton {α : Type*} {s : Set α} {a : α}
+lemma Set.countable_of_sdiff_singleton {α : Type*} {s : Set α} {a : α}
     (h : (s \ {a}).Countable) : s.Countable :=
   Countable.of_sdiff h <| countable_singleton a
 

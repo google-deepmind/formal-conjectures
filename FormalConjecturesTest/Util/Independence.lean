@@ -44,7 +44,7 @@ def IndependenceSet : Set Prop :=
     GeneralizedContinuumHypothesis.{u}, ¬ GeneralizedContinuumHypothesis.{u}, MartinsAxiom,
       ¬ MartinsAxiom, MartinsAxiom ∧ ¬ ContinuumHypothesis}
 
-/-- (Distinct) Members of `IndependenceSet` `(A, B)` satisfying `A → B` (mathematicallly). -/
+/-- (Distinct) Members of `IndependenceSet` `(A, B)` satisfying `A → B` (mathematically). -/
 def IndependencePairs : Set (Prop × Prop) :=
   { (GeneralizedContinuumHypothesis.{u}, ContinuumHypothesis),
     (GeneralizedContinuumHypothesis.{u}, MartinsAxiom),
