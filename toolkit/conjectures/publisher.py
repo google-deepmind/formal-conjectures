@@ -1,4 +1,5 @@
 """One trusted Actions publisher. Local clients only dispatch and read receipts."""
+from .ui import stage, log_location
 import json
 import os
 import re
@@ -60,6 +61,7 @@ def dispatch(directory, publication, cfg):
     args=['workflow','run',WORKFLOW,'--repo',publisher['repository'],'--ref',tag_for(publisher['repository'],publisher['ref'])]
     for key,item in request.items():args+=['-f',key+'='+item]
     # An uncertain dispatch is not automatically retried: it may already exist remotely.
+    stage('Requesting the designated advisory publisher')
     gh(*args)
     value.update(status='queued');save(previous,value)
     return {**value,'command_status':'success'}
@@ -111,7 +113,7 @@ def wait(directory, timeout):
             value={'status':error.reason,'command_status':'incomplete'}
         state=value['status']
         if state in ('posted','historical','superseded','cancelled','error'):return value
-        if state!=previous:print('Publication: '+state+'…',file=sys.stderr);previous=state
+        if state!=previous:stage('Publication: '+state+'…');previous=state
         if time.monotonic()>=deadline:return {**value,'reason':'wait_timeout','command_status':'incomplete'}
         time.sleep(min(5,max(0,deadline-time.monotonic())))
 
