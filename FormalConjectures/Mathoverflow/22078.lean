@@ -42,6 +42,9 @@ question is open.
 
 A group scheme is represented here by its coordinate Hopf algebra `A` over the base ring `R`.
 `A` is not assumed to be cocommutative, so the group scheme is not assumed to be commutative.
+Linearity is `HopfAlgebra.IsLinear`, which lives in
+`FormalConjecturesForMathlib/RingTheory/HopfAlgebra/Linear.lean` together with the multiplicative
+matrices that express a homomorphism into `GLₙ`, and with lemmas exercising both.
 
 *References:*
 - [mathoverflow/22078](https://mathoverflow.net/questions/22078) asked by
@@ -61,110 +64,9 @@ A group scheme is represented here by its coordinate Hopf algebra `A` over the b
 
 namespace Mathoverflow22078
 
-open Coalgebra TensorProduct
+open HopfAlgebra
 
 universe u v
-
-/-- A square matrix `a` over a Hopf algebra `A` is *multiplicative* when
-`Δ aᵢⱼ = ∑ₖ aᵢₖ ⊗ aₖⱼ` and `ε aᵢⱼ = δᵢⱼ`.
-
-Multiplicative `n × n` matrices over `A` are exactly the homomorphisms of group schemes
-`Spec A → GLₙ`: such a matrix is the image of the coordinates of `GLₙ` under the induced map of
-Hopf algebras. No invertibility hypothesis is needed: the determinant of a multiplicative matrix
-is group-like, hence a unit, by `IsMultiplicative.isGroupLikeElem_det` below. -/
-structure IsMultiplicative (R : Type u) [CommRing R] {A : Type v} [CommRing A] [HopfAlgebra R A]
-    {n : ℕ} (a : Matrix (Fin n) (Fin n) A) : Prop where
-  /-- The comultiplication of an entry is given by matrix multiplication. -/
-  comul_apply : ∀ i j, comul (R := R) (a i j) = ∑ k, a i k ⊗ₜ[R] a k j
-  /-- The counit of the matrix is the identity matrix. -/
-  counit_apply : ∀ i j, counit (R := R) (a i j) = (1 : Matrix (Fin n) (Fin n) R) i j
-
-/-- The affine group scheme `Spec A` over `R` is *linear* when it is a closed subgroup scheme of
-some `GLₙ`.
-
-By [BT84, 1.4.5] a homomorphism `Spec A → GLₙ` given by a multiplicative matrix `a` is a closed
-immersion exactly when the entries of `a` together with `(det a)⁻¹` generate `A` as an
-`R`-algebra. Asking instead that the entries alone generate `A` is equivalent: `(det a)⁻¹` is
-group-like, so appending it as an extra diagonal entry turns `a` into a multiplicative
-`(n + 1) × (n + 1)` matrix whose entries generate `A`. -/
-def IsLinear (R : Type u) [CommRing R] (A : Type v) [CommRing A] [HopfAlgebra R A] : Prop :=
-  ∃ (n : ℕ) (a : Matrix (Fin n) (Fin n) A), IsMultiplicative R a ∧
-    Algebra.adjoin R (Set.range fun ij : Fin n × Fin n ↦ a ij.1 ij.2) = ⊤
-
-/-- A `1 × 1` matrix is multiplicative exactly when its entry is group-like, that is, exactly
-when it is a character `Spec A → GL₁ = 𝔾ₘ`. -/
-@[category API, AMS 14 16]
-theorem isMultiplicative_fin_one_iff (R : Type u) [CommRing R] (A : Type v) [CommRing A]
-    [HopfAlgebra R A] (x : A) : IsMultiplicative R !![x] ↔ IsGroupLikeElem R x := by
-  constructor
-  · intro h
-    exact ⟨by simpa using h.counit_apply 0 0, by simpa using h.comul_apply 0 0⟩
-  · intro h
-    refine ⟨fun i j ↦ ?_, fun i j ↦ ?_⟩
-    · fin_cases i; fin_cases j; simpa using h.comul_eq_tmul_self
-    · fin_cases i; fin_cases j; simpa using h.counit_eq_one
-
-/-- The determinant of a multiplicative matrix is a group-like element. It is therefore a unit,
-by `IsGroupLikeElem.isUnit`, so a multiplicative matrix really does define a homomorphism of group
-schemes into `GLₙ` and not merely into the monoid scheme of `n × n` matrices. -/
-@[category API, AMS 14 16]
-theorem IsMultiplicative.isGroupLikeElem_det {R : Type u} [CommRing R] {A : Type v} [CommRing A]
-    [HopfAlgebra R A] {n : ℕ} {a : Matrix (Fin n) (Fin n) A} (h : IsMultiplicative R a) :
-    IsGroupLikeElem R a.det where
-  counit_eq_one := by
-    have h1 : (Bialgebra.counitAlgHom R A).mapMatrix a = 1 := by
-      ext i j
-      simpa using h.counit_apply i j
-    have h0 := AlgHom.map_det (Bialgebra.counitAlgHom R A) a
-    rw [h1, Matrix.det_one] at h0
-    simpa using h0
-  comul_eq_tmul_self := by
-    have h2 : (Bialgebra.comulAlgHom R A).mapMatrix a =
-        (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := A) (B := A)).mapMatrix a *
-          (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := A)).mapMatrix a := by
-      ext i j
-      rw [Matrix.mul_apply]
-      simpa using h.comul_apply i j
-    have h3 := AlgHom.map_det (Bialgebra.comulAlgHom R A) a
-    rw [h2, Matrix.det_mul, ← AlgHom.map_det, ← AlgHom.map_det] at h3
-    simpa using h3
-
-/-- The trivial group scheme `Spec R` is linear, via the empty matrix. -/
-@[category test, AMS 14 16]
-theorem isLinear_self (R : Type u) [CommRing R] : IsLinear R R := by
-  refine ⟨0, (0 : Matrix (Fin 0) (Fin 0) R), ⟨fun i ↦ i.elim0, fun i ↦ i.elim0⟩, ?_⟩
-  exact Subsingleton.elim _ _
-
-open LaurentPolynomial in
-/-- The multiplicative group `𝔾ₘ = Spec R[T, T⁻¹]` is linear: it is the diagonal torus
-`diag(T, T⁻¹)` of `GL₂`. The `1 × 1` matrix `(T)` is multiplicative too, but `T` generates only
-the polynomial subring `R[T]`, which is why a larger matrix is needed. -/
-@[category test, AMS 14 16]
-theorem isLinear_laurentPolynomial (R : Type u) [CommRing R] :
-    IsLinear R (LaurentPolynomial R) := by
-  refine ⟨2, !![T 1, 0; 0, T (-1)], ⟨fun i j ↦ ?_, fun i j ↦ ?_⟩, ?_⟩
-  · fin_cases i <;> fin_cases j <;> simp [Fin.sum_univ_two, LaurentPolynomial.comul_T]
-  · fin_cases i <;> fin_cases j <;> simp [LaurentPolynomial.counit_T]
-  · set S := Algebra.adjoin R (Set.range fun ij : Fin 2 × Fin 2 ↦
-      (!![T 1, 0; 0, T (-1)] : Matrix (Fin 2) (Fin 2) (LaurentPolynomial R)) ij.1 ij.2)
-    have h1 : (T 1 : LaurentPolynomial R) ∈ S := Algebra.subset_adjoin ⟨(0, 0), by simp⟩
-    have h2 : (T (-1) : LaurentPolynomial R) ∈ S := Algebra.subset_adjoin ⟨(1, 1), by simp⟩
-    have hT : ∀ n : ℤ, (T n : LaurentPolynomial R) ∈ S := by
-      intro n
-      rcases le_or_gt 0 n with h | h
-      · lift n to ℕ using h
-        have : (T (n : ℤ) : LaurentPolynomial R) = T 1 ^ n := by simp
-        rw [this]
-        exact pow_mem h1 n
-      · obtain ⟨m, rfl⟩ : ∃ m : ℕ, n = -(m : ℤ) := ⟨n.natAbs, by omega⟩
-        have : (T (-(m : ℤ)) : LaurentPolynomial R) = T (-1) ^ m := by rw [T_pow]; ring_nf
-        rw [this]
-        exact pow_mem h2 m
-    refine Algebra.eq_top_iff.2 fun p ↦ ?_
-    induction p using LaurentPolynomial.induction_on' with
-    | add p q hp hq => exact add_mem hp hq
-    | C_mul_T n a =>
-      exact mul_mem (by rw [C_eq_algebraMap]; exact Subalgebra.algebraMap_mem S a) (hT n)
 
 /--
 Conrad's question: is every smooth affine group scheme over the ring of dual numbers
