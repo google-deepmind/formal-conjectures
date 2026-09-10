@@ -166,9 +166,9 @@ particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 @[category textbook, AMS 5]
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     {V : Type} (H : UniformHypergraph V 3) (hχ : ℵ₀ < H.chromaticCardinal (by decide)) :
-    H.edges.Nonempty := by
+    H.edgeSet.Nonempty := by
   by_contra! hempty
-  -- H has no edges (hempty : H.edges = ∅), so any coloring is proper.
+  -- H has no edges (hempty : H.edgeSet = ∅), so any coloring is proper.
   have hprop : H.IsProperColoring (fun _ : V => (0 : Fin 1)) := by
     intro e he
     rw [hempty] at he
@@ -194,14 +194,7 @@ theorem erdos_593.variants.obligatory_monotone
     (h12 : F₁.Appears F₂) (hObl : F₂.IsObligatory (by decide)) :
     F₁.IsObligatory (by decide) := by
   intro V _hV H hχ
-  obtain ⟨φ₂, hφ₂_inj, hφ₂_edge⟩ := hObl V H hχ
-  obtain ⟨φ₁, hφ₁_inj, hφ₁_edge⟩ := h12
-  refine ⟨φ₂ ∘ φ₁, hφ₂_inj.comp hφ₁_inj, fun e he => ?_⟩
-  -- e.image (φ₂ ∘ φ₁) = (e.image φ₁).image φ₂ by Finset.image_image
-  have heq : e.image (φ₂ ∘ φ₁) = (e.image φ₁).image φ₂ := by
-    rw [Finset.image_image]
-  rw [heq]
-  exact hφ₂_edge _ (hφ₁_edge e he)
+  exact h12.trans (hObl V H hχ)
 
 /--
 **The empty hypergraph is trivially obligatory**: The 3-uniform hypergraph on `PEmpty` (no
@@ -212,9 +205,9 @@ This degenerate case confirms the definition is well-formed.
 @[category textbook, AMS 5]
 theorem erdos_593.variants.empty_hypergraph_obligatory :
     UniformHypergraph.IsObligatory (W := PEmpty) (k := 3)
-      ⟨∅, fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩ (by decide) := by
+      (UniformHypergraph.ofFinset ∅ (by simp [Finset.IsUniform])) (by decide) := by
   intro V _hV H _hχ
   exact ⟨IsEmpty.elim inferInstance, Function.injective_of_subsingleton _,
-    fun _ h => (Set.mem_empty_iff_false _).mp h |>.elim⟩
+    by simp [UniformHypergraph.ofFinset, Hypergraph.ofEdgeFamily, Hypergraph.image]⟩
 
 end Erdos593

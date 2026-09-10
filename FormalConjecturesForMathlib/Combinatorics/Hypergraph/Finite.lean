@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Combinatorics.Hypergraph.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Basic
 public import Mathlib.Combinatorics.SetFamily.Intersecting
 public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Data.Finset.Sort
@@ -53,16 +53,28 @@ def IsUniform (H : Finset (Finset V)) (r : ℕ) : Prop := ∀ e ∈ H, e.card = 
 
 /-- The hypergraph with edge family `H` and ground vertex set `S`. -/
 def toHypergraph (H : Finset (Finset V)) (S : Finset V) (h : ∀ e ∈ H, e ⊆ S) :
-    Hypergraph V where
-  vertexSet := S
-  edgeSet := {e | ∃ a ∈ H, (a : Set V) = e}
-  subset_vertexSet_of_mem_edgeSet' := by
-    rintro e ⟨a, ha, rfl⟩
-    exact h a ha
+    Hypergraph V :=
+  Hypergraph.ofEdgeFamily (H : Set (Finset V)) S h
+
+omit [DecidableEq V] in
+/-- Conversion preserves uniformity. -/
+@[simp]
+theorem isUniform_toHypergraph_iff (H : Finset (Finset V)) (S : Finset V)
+    (h : ∀ e ∈ H, e ⊆ S) (r : ℕ) :
+    (H.toHypergraph S h).IsUniform r ↔ H.IsUniform r := by
+  exact Hypergraph.isUniform_ofEdgeFamily_iff
 
 /-- A weak proper coloring has no monochromatic edge. -/
 def IsProperHypergraphColoring (H : Finset (Finset V)) {C : Type*} (c : V → C) : Prop :=
   ∀ e ∈ H, ∃ x ∈ e, ∃ y ∈ e, c x ≠ c y
+
+omit [DecidableEq V] in
+/-- Conversion preserves weak proper colorings. -/
+@[simp]
+theorem isProperColoring_toHypergraph_iff {C : Type*} (H : Finset (Finset V))
+    (S : Finset V) (h : ∀ e ∈ H, e ⊆ S) (f : V → C) :
+    (H.toHypergraph S h).IsProperColoring f ↔ H.IsProperHypergraphColoring f := by
+  exact Hypergraph.isProperColoring_ofEdgeFamily_iff
 
 /-- The edge family admits a weak proper coloring with `k` colors. -/
 def HypergraphColorable (H : Finset (Finset V)) (k : ℕ) : Prop :=

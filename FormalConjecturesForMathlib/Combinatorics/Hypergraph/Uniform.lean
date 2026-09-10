@@ -24,8 +24,9 @@ public import Mathlib.SetTheory.Cardinal.Ordinal
 /-!
 # Uniform hypergraphs
 
-A `UniformHypergraph V k` is a possibly infinite family of `k`-element finite sets.
-The vertex type includes isolated vertices. Finite edge families use `Finset.IsUniform`;
+A `UniformHypergraph V k` extends Mathlib's `Hypergraph V` with uniformity `k`
+and vertex set `Set.univ`. The vertex type includes isolated vertices.
+Finite edge families use `Finset.IsUniform`;
 `UniformHypergraph.ofFinset` converts them to this presentation.
 
 The API includes complete subgraphs, maximal clique sizes, weak colorings, embeddings,
@@ -37,12 +38,12 @@ open Cardinal Set
 
 universe u
 
-/-- A possibly infinite family of edges, each containing exactly `k` vertices. -/
-structure UniformHypergraph (V : Type*) (k : ℕ) where
-  /-- The set of finite hyperedges. -/
-  edges : Set (Finset V)
+/-- A uniform Mathlib hypergraph whose vertex set is the entire ambient type. -/
+structure UniformHypergraph (V : Type*) (k : ℕ) extends Hypergraph V where
+  /-- All elements of the vertex type are vertices, including isolated ones. -/
+  vertexSet_eq_univ : vertexSet = Set.univ
   /-- Every hyperedge has exactly `k` vertices. -/
-  uniform : ∀ e ∈ edges, e.card = k
+  uniform : toHypergraph.IsUniform k
 
 namespace UniformHypergraph
 
@@ -51,38 +52,39 @@ variable {k : ℕ}
 /-- A finite uniform edge family viewed as a uniform hypergraph. -/
 def ofFinset {V : Type*} (H : Finset (Finset V)) (hH : H.IsUniform k) :
     UniformHypergraph V k where
-  edges := (H : Set (Finset V))
-  uniform := hH
+  toHypergraph := Hypergraph.ofEdgeFamily (H : Set (Finset V)) Set.univ
+    (fun _ _ ↦ Set.subset_univ _)
+  vertexSet_eq_univ := rfl
+  uniform := Hypergraph.isUniform_ofEdgeFamily_iff.mpr hH
 
 @[simp]
-theorem mem_edges_ofFinset {V : Type*} {H : Finset (Finset V)} {hH : H.IsUniform k}
-    {e : Finset V} : e ∈ (ofFinset H hH).edges ↔ e ∈ H := Finset.mem_coe
+theorem mem_edgeSet_ofFinset {V : Type*} {H : Finset (Finset V)} {hH : H.IsUniform k}
+    {e : Finset V} : (e : Set V) ∈ (ofFinset H hH).edgeSet ↔ e ∈ H :=
+  Hypergraph.mem_edgeSet_ofEdgeFamily (h := fun _ _ ↦ Set.subset_univ _)
 
 /-- Every `k`-element subset of `S` is an edge. -/
 def IsCompleteSubgraph {V : Type*} (H : UniformHypergraph V k) (S : Finset V) : Prop :=
-  ∀ e : Finset V, e ⊆ S → e.card = k → e ∈ H.edges
+  ∀ e : Finset V, e ⊆ S → e.card = k → (e : Set V) ∈ H.edgeSet
 
 /-- The sizes of the finite maximal complete subgraphs. -/
 def cliqueSizes {V : Type*} (H : UniformHypergraph V k) : Set ℕ :=
   { n | ∃ S : Finset V, Maximal (IsCompleteSubgraph H) S ∧ S.card = n }
 
-/-- A weak proper coloring gives two vertices different colors in every edge. -/
-def IsProperColoring {V : Type*} (H : UniformHypergraph V k) {C : Type*}
+/-- Weak proper coloring of the underlying Mathlib hypergraph. -/
+abbrev IsProperColoring {V : Type*} (H : UniformHypergraph V k) {C : Type*}
     (f : V → C) : Prop :=
-  ∀ e ∈ H.edges, ∃ u ∈ e, ∃ v ∈ e, f u ≠ f v
+  H.toHypergraph.IsProperColoring f
 
 /-- An injective coloring is proper when every edge has at least two vertices. -/
 theorem isProperColoring_of_injective {V C : Type*} (H : UniformHypergraph V k)
-    (hk : 2 ≤ k) {f : V → C} (hf : Function.Injective f) : H.IsProperColoring f := by
-  intro e he
-  have hcard : 1 < e.card := by rw [H.uniform e he]; omega
-  obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hcard
-  exact ⟨u, hu, v, hv, fun h ↦ huv (hf h)⟩
+    (hk : 2 ≤ k) {f : V → C} (hf : Function.Injective f) : H.IsProperColoring f :=
+  H.uniform.isProperColoring_of_injective hk hf
 
 /-- The finite and possibly infinite presentations have the same proper colorings. -/
 theorem isProperColoring_ofFinset_iff {V C : Type*} (H : Finset (Finset V))
     (hH : H.IsUniform k) (f : V → C) :
-    (ofFinset H hH).IsProperColoring f ↔ H.IsProperHypergraphColoring f := Iff.rfl
+    (ofFinset H hH).IsProperColoring f ↔ H.IsProperHypergraphColoring f := by
+  exact Hypergraph.isProperColoring_ofEdgeFamily_iff (h := fun _ _ ↦ Set.subset_univ _)
 
 /-- The infimum of cardinalities of color types admitting a proper coloring.
 The uniformity bound guarantees a coloring exists, even for infinite vertex types. -/
@@ -101,9 +103,20 @@ theorem chromaticCardinal_le_mk {V : Type u} (H : UniformHypergraph V k) (hk : 2
   H.chromaticCardinal_le hk (H.isProperColoring_of_injective hk Function.injective_id)
 
 /-- An injective vertex map carrying every edge of `F` to an edge of `H`. -/
-def Appears {W V : Type*} [DecidableEq V] (F : UniformHypergraph W k)
+def Appears {W V : Type*} (F : UniformHypergraph W k)
     (H : UniformHypergraph V k) : Prop :=
-  ∃ φ : W → V, Function.Injective φ ∧ ∀ e ∈ F.edges, e.image φ ∈ H.edges
+  ∃ φ : W → V, Function.Injective φ ∧
+    (F.toHypergraph.image φ).edgeSet ⊆ H.edgeSet
+
+/-- Appearance is transitive under composition of injective vertex maps. -/
+theorem Appears.trans {U W V : Type*} {F : UniformHypergraph U k}
+    {G : UniformHypergraph W k} {H : UniformHypergraph V k}
+    (hFG : F.Appears G) (hGH : G.Appears H) : F.Appears H := by
+  obtain ⟨f, hf, hF⟩ := hFG
+  obtain ⟨g, hg, hG⟩ := hGH
+  refine ⟨g ∘ f, hg.comp hf, ?_⟩
+  rw [← Hypergraph.image_image]
+  exact (Set.image_mono hF).trans hG
 
 /-- A two-coloring with no monochromatic edge (Property B). -/
 def IsTwoColorable {V : Type*} (F : UniformHypergraph V k) : Prop :=
