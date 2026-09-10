@@ -18,24 +18,30 @@ import FormalConjecturesUtil
 /-!
 # Exact counting and polynomial time
 
-Valiant, *The Complexity of Computing the Permanent* (1979), §2 and Theorem1,
-pp.189–193, https://doi.org/10.1016/0304-3975(79)90044-6.
-
-Both questions concern deterministic bit-complexity and exact binary outputs,
-not approximation or nonuniform arithmetic circuits. The source establishes
-classical counting completeness; those reductions are not formalized here.
+*References:*
+* Valiant, *The Complexity of Computing the Permanent* (1979), §2,
+  Theorem 1 and Lemmas 3.1–3.3, pp. 189–193,
+  https://doi.org/10.1016/0304-3975(79)90044-6.
 -/
 
 namespace Valiant1979
 
-/-- Counting all satisfying assignments of a CNF formula is not computable in
-deterministic polynomial time. Variables range over the names occurring in the formula. -/
+/-- **Exact #SAT counting** (Valiant, §§2–3) is not computable in deterministic
+polynomial bit-time. Input: an explicit CNF formula with binary variable names;
+output: the exact binary number of satisfying assignments to precisely the names
+occurring in the formula. Repeated literals and clauses are allowed. Empty CNF
+has count one; an empty clause gives count zero. This counting lower bound follows
+from $P\ne NP$, since positivity of the count decides SAT; the converse is not asserted. -/
 @[category research open, AMS 3 68]
 theorem modelCount_not_polytime : ¬ ComplexityTheory.IsPolyTime ExactCounting.modelCount := by
   sorry
 
-/-- Computing the exact permanent of an explicit 0–1 matrix is not possible
-in deterministic polynomial time. Nonsquare row lists are assigned zero. -/
+/-- **Exact 0–1 permanent computation** (Valiant, Theorem 1) is not possible in
+deterministic polynomial bit-time. Input: an explicit Boolean row matrix; output:
+the permanent as an exact binary natural number. Ragged matrices return zero;
+the empty square matrix has permanent one. This is a #P-complete counting task,
+so $P\ne NP$ implies the lower bound, without an asserted converse. Neither
+approximation nor nonuniform arithmetic-circuit size is the target. -/
 @[category research open, AMS 15 68]
 theorem permanent_not_polytime : ¬ ComplexityTheory.IsPolyTime ExactCounting.permanent := by
   sorry

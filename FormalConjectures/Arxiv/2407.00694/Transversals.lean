@@ -18,19 +18,22 @@ import FormalConjecturesUtil
 /-!
 # Output-polynomial hypergraph-transversal enumeration
 
-Mary, *Enumeration of minimal transversals of hypergraphs of bounded
-VC-dimension*, §1, Trans-Enum, https://arxiv.org/html/2407.00694v3.
-
-The unrestricted problem remains distinct from the solved bounded-VC-dimension
-case. Output-polynomial means a bound on total time in input and output length,
-not polynomial delay or an incremental bound.
+*References:*
+* Mary, *Enumeration of minimal transversals of hypergraphs of bounded
+  VC-dimension*, §1, Trans-Enum, https://arxiv.org/html/2407.00694v3.
 -/
 
 namespace Mary2024
 
-/-- Can every inclusion-minimal transversal of an explicit finite hypergraph be
-enumerated without duplication in total time polynomial in the combined
-encoded input and output lengths? -/
+/-- **Unrestricted transversal enumeration** (Mary, §1, Trans-Enum): can one
+uniform deterministic algorithm enumerate every inclusion-minimal hitting set of
+an explicit finite hypergraph exactly once in time polynomial in combined input
+and complete output length? Edges are binary lists of natural-number vertex names;
+answers are canonically encoded finite sets of occurring vertices. Repeated names
+or redundant edges do not create extra answers. An empty edge yields no answers;
+the empty hypergraph has the empty set as its sole minimal transversal. This is
+a two-sided output-sensitive question, with no VC-dimension restriction and no
+polynomial-delay or incremental-time requirement. -/
 @[category research open, AMS 5 68]
 theorem output_poly_transversals : answer(sorry) ↔
     ComplexityTheory.HasOutputPolyEnumerator HypergraphEnumeration.MinimalTransversal := by

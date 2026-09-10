@@ -16,21 +16,26 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Polynomial-time Circuit-FLIP search
+# Circuit-FLIP has no polynomial-time solver
 
-Johnson, Papadimitriou and Yannakakis, *How Easy Is Local Search?* (1988),
-§3, Theorem1, pp.86–87, https://doi.org/10.1016/0022-0000(88)90046-3.
-The source proves FLIP PLS-complete. The question here is about finding any
-local optimum, not following the standard improvement algorithm to its endpoint.
+*References:*
+* Johnson, Papadimitriou and Yannakakis, *How Easy Is Local Search?* (1988),
+  §3, Theorem 1, pp. 86–87, https://doi.org/10.1016/0022-0000(88)90046-3.
 -/
 
 namespace JohnsonPapadimitriouYannakakis1988
 
-/-- Can a deterministic polynomial-time algorithm find a local minimum of the
-binary-valued output of any valid Boolean circuit, with one input-bit flips
-as the neighborhood? -/
+/-- **Circuit-FLIP** (Johnson–Papadimitriou–Yannakakis, §3) has no deterministic
+polynomial-time solver. Input: a valid explicit AND/OR/NOT circuit with unary
+input arity and binary references. Output: an input bit vector whose output cost
+is no greater than at any one-bit flip. Cost is twice the little-endian output
+value, following the source's one-based powers of two; ties are allowed. Every
+valid circuit is included, even with zero input or output bits. The solver must
+be total and polynomial-time, correct on valid circuits, and may return any local
+minimum rather than a prescribed improvement-path endpoint. This PLS lower bound
+implies $P\ne NP$; the converse is unknown. -/
 @[category research open, AMS 68 90]
-theorem circuitFlip_polytime : answer(sorry) ↔
+theorem circuitFlip_not_polytime : ¬
     ComplexityTheory.HasPolyTimeSolver EncodedBooleanCircuit.Valid TotalSearch.FlipSolution := by
   sorry
 

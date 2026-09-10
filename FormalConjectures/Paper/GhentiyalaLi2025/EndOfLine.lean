@@ -16,23 +16,26 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Polynomial-time End-of-Line search
+# End-of-Line has no polynomial-time solver
 
-Ghentiyala–Li, *Hierarchies within TFNP: building blocks and collapses*,
-ECCC TR25-123 revision1, Definition2.8, printed p.8:
-https://eccc.weizmann.ac.il/report/2025/123/revision/1/download.
-
-The source defines the canonical PPAD search problem. This asks for a uniform
-solver for its encoded circuit instances, not a traversal of the implicit graph.
+*References:*
+* Ghentiyala–Li, *Hierarchies within TFNP: building blocks and collapses*,
+  ECCC TR25-123 revision 1, Definition 2.8, printed p. 8,
+  https://eccc.weizmann.ac.il/report/2025/123/revision/1/download.
 -/
 
 namespace GhentiyalaLi2025
 
-/-- Does End-of-Line admit a deterministic polynomial-time solver? Both a broken
-successor-predecessor connection and a nonzero vertex with a broken
-predecessor-successor connection are allowed answers. -/
+/-- **End-of-Line** (Ghentiyala–Li, Definition 2.8) has no deterministic polynomial-
+time solver. Input: valid explicit Boolean circuits $S,P:\{0,1\}^n\to\{0,1\}^n$
+with $P(0)=0$ and $S(0)\ne0$, unary arity and binary gate references. Output:
+an $n$-bit $v$ with $P(S(v))\ne v$, or with $v\ne0$ and $S(P(v))\ne v$.
+Zero is excluded only in the second disjunct; $n=0$ cannot satisfy the promise.
+One total polynomial-time TM2 must return a valid answer on every promised input,
+not necessarily an endpoint reached from zero. This PPAD lower bound implies
+$P\ne NP$; the converse is unknown. -/
 @[category research open, AMS 3 68]
-theorem endOfLine_polytime : answer(sorry) ↔
+theorem endOfLine_not_polytime : ¬
     ComplexityTheory.HasPolyTimeSolver TotalSearch.EndOfLinePromise
       TotalSearch.EndOfLineSolution := by
   sorry
