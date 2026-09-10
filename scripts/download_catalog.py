@@ -16,11 +16,11 @@ def download(url, out):
         return raw
     descriptor=read(url,1024*1024)
     metadata=parse(descriptor)
-    if metadata.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
-    raw=read(urljoin(url,'catalog.json'),64*1024*1024)
+    if metadata.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
+    raw=read(urljoin(url,'conjectures.json'),64*1024*1024)
     verify(metadata,raw)
     out.mkdir(parents=True,exist_ok=True)
-    (out/'catalog.json').write_bytes(raw)
+    (out/'conjectures.json').write_bytes(raw)
     (out/'catalog-manifest.json').write_bytes(descriptor)
 
 

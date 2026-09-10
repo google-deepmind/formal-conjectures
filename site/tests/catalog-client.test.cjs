@@ -16,7 +16,7 @@ function client({corrupt=false, wrongModule=false}={}) {
   const data = fixture();
   const raw = Buffer.from(JSON.stringify(data));
   const digest = crypto.createHash('sha256').update(raw).digest('hex');
-  const descriptor = {schema_version:'fc.catalog.v1',catalog:'catalog.json',sha256:digest,
+  const descriptor = {schema_version:'fc.catalog.v1',catalog:'conjectures.json',sha256:digest,
     bytes:raw.length,problem_count:1,provenance:data.provenance};
   const urls = [];
   const context = {window:{location:{pathname:'/browse/'}},
@@ -26,7 +26,7 @@ function client({corrupt=false, wrongModule=false}={}) {
     fetch:async url => {
       urls.push(url);
       if (url.endsWith('catalog-manifest.json')) return {ok:true,json:async()=>descriptor};
-      if (url.includes('catalog.json?')) return {ok:true,arrayBuffer:async()=>{
+      if (url.includes('conjectures.json?')) return {ok:true,arrayBuffer:async()=>{
         const value = corrupt ? Buffer.concat([raw,Buffer.from(' ')]) : raw;
         return value.buffer.slice(value.byteOffset,value.byteOffset+value.byteLength);
       }};

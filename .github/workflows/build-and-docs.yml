@@ -283,7 +283,7 @@ jobs:
         with:
           name: native-catalog
           path: |
-            site/data/catalog.json
+            site/data/conjectures.json
             site/data/catalog-manifest.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
@@ -292,7 +292,7 @@ jobs:
       # in the run summary without blocking.
       - name: Check category warnings
         if: steps.mode.outputs.website_only != 'true'
-        run: python3 scripts/check_category_warnings.py site/data/catalog.json
+        run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'

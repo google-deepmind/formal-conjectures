@@ -2,7 +2,7 @@
 /**
  * Build script for the Formal Conjectures website.
  *
- * Reads data/catalog.json (produced by `lake exe extract_names` in the
+ * Reads data/conjectures.json (produced by `lake exe extract_names` in the
  * formal-conjectures repo), processes it, and generates a static site under
  * site/.
  *
@@ -647,7 +647,7 @@ async function main() {
       contributors:contributors[first.githubPath] || []}));
   }
   // One native catalog is shared by browser, CLI, status and link consumers.
-  fs.copyFileSync('data/catalog.json', 'site/data/catalog.json');
+  fs.copyFileSync('data/conjectures.json', 'site/data/conjectures.json');
   fs.copyFileSync('data/catalog-manifest.json', 'site/data/catalog-manifest.json');
   copyDir('../toolkit/conjectures/resources/schemas', 'site/data/schemas');
   const whitePlotPath = path.join('data', 'file_counts_white.html');
