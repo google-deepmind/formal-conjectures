@@ -424,13 +424,10 @@ protected lemma IsAutomorphicForm.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ 
   left_invariant γ hγ x := by
     simp [hf.left_invariant γ hγ x, hg.left_invariant γ hγ x]
   right_invariant := by
-    obtain ⟨U₁, hU₁o, hU₁c, hU₁⟩ := hf.right_invariant
-    obtain ⟨U₂, hU₂o, hU₂c, hU₂⟩ := hg.right_invariant
-    refine ⟨U₁ ⊓ U₂, by rw [Subgroup.coe_inf]; exact hU₁o.inter hU₂o,
-      by rw [Subgroup.coe_inf]; exact hU₁c.inter_right (U₂.isClosed_of_isOpen hU₂o),
-      fun u hu x => ?_⟩
-    have hu' := Subgroup.mem_inf.mp hu
-    simp [hU₁ u hu'.1 x, hU₂ u hu'.2 x]
+    obtain ⟨⟨U₁, o₁, c₁, h₁⟩, U₂, o₂, c₂, h₂⟩ := And.intro hf.right_invariant hg.right_invariant
+    exact ⟨U₁ ⊓ U₂, Subgroup.coe_inf U₁ U₂ ▸ o₁.inter o₂,
+      Subgroup.coe_inf U₁ U₂ ▸ c₁.inter_right (U₂.isClosed_of_isOpen o₂),
+      fun u hu x => by simp [h₁ u hu.1 x, h₂ u hu.2 x]⟩
   kFinite := hf.kFinite.add hg.kFinite
   zFinite := hf.zFinite.add hg.zFinite
   slowlyIncreasing x := (hf.slowlyIncreasing x).add (hg.slowlyIncreasing x)
@@ -471,36 +468,23 @@ protected lemma IsAutomorphicForm.rightTranslate {f : GL n 𝔸ᶠ[ℤ, ℚ] × 
   left_invariant γ hγ x := by
     simpa [Prod.mul_def, mul_assoc] using hf.left_invariant γ hγ (x.1 * g, x.2)
   right_invariant := by
-    obtain ⟨U, ho, hc', hU⟩ := hf.right_invariant
+    obtain ⟨U, ho, hc, hU⟩ := hf.right_invariant
     have hset : (Subgroup.map (MulAut.conj g).toMonoidHom U : Set (GL n 𝔸ᶠ[ℤ, ℚ]))
-        = (fun x => g * x * g⁻¹) '' U := by
-      rw [Subgroup.coe_map]
-      rfl
-    refine ⟨Subgroup.map (MulAut.conj g).toMonoidHom U, ?_, ?_, ?_⟩
-    · rw [hset]
-      exact ((Homeomorph.mulRight g⁻¹).isOpenMap.comp (Homeomorph.mulLeft g).isOpenMap) _ ho
-    · rw [hset]
-      exact hc'.image ((continuous_const_mul g).mul continuous_const)
-    · rintro u hu x
-      obtain ⟨w, hw, rfl⟩ := Subgroup.mem_map.mp hu
-      simpa [MulAut.conj_apply, mul_assoc] using hU w hw (x.1 * g, x.2)
+        = (fun x => g * x * g⁻¹) '' U := by rw [Subgroup.coe_map]; rfl
+    refine ⟨_, hset ▸ ((Homeomorph.mulRight g⁻¹).isOpenMap.comp
+      (Homeomorph.mulLeft g).isOpenMap) _ ho,
+      hset ▸ hc.image ((continuous_const_mul g).mul continuous_const), fun u hu x => ?_⟩
+    obtain ⟨w, hw, rfl⟩ := Subgroup.mem_map.mp hu
+    simpa [MulAut.conj_apply, mul_assoc] using hU w hw (x.1 * g, x.2)
   kFinite := by
-    set K := ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) with hK
-    set T := LinearMap.funLeft ℂ ℂ
-      (fun p : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => (p.1 * g, p.2)) with hT
-    have hle : rightTranslateSpan K ℂ (fun p => f (p.1 * g, p.2))
-        ≤ Submodule.map T (rightTranslateSpan K ℂ f) := by
-      rw [rightTranslateSpan, Submodule.span_le]
-      rintro _ ⟨u, rfl⟩
-      have hu1 : (u : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ).1 = 1 :=
-        Subgroup.mem_bot.mp (Subgroup.mem_prod.mp u.2).1
-      refine Submodule.mem_map.mpr ⟨fun x => f (x * (u : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ)),
-        Submodule.subset_span ⟨u, rfl⟩, ?_⟩
-      funext p
-      simp [hT, hu1, Prod.mul_def]
-    have h1 : FiniteDimensional ℂ (rightTranslateSpan K ℂ f) := hf.kFinite
-    have h2 := Module.Finite.map (rightTranslateSpan K ℂ f) T
-    exact Submodule.finiteDimensional_of_le hle
+    have : FiniteDimensional ℂ (rightTranslateSpan
+      ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) ℂ f) := hf.kFinite
+    refine Submodule.finiteDimensional_of_le (S₂ := Submodule.map
+      (LinearMap.funLeft ℂ ℂ fun p : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => (p.1 * g, p.2))
+      (rightTranslateSpan ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) ℂ f))
+      (Submodule.span_le.mpr <| Set.range_subset_iff.mpr fun u => Submodule.mem_map.mpr
+        ⟨_, Submodule.subset_span ⟨u, rfl⟩, funext fun p => by
+          simp [Subgroup.mem_bot.mp (Subgroup.mem_prod.mp u.2).1, Prod.mul_def]⟩)
   zFinite := hf.zFinite.comp (· * g)
   slowlyIncreasing x := hf.slowlyIncreasing (x * g)
 
