@@ -1727,7 +1727,11 @@ $BB(4) = 107$. -/
 theorem c14_ge_5 : 5 ≤ C14 := by sorry
 
 /-- The current best known lower bound, proved by Blanchard et al. in [BB2025] by explcitily computing
-$BB(5) = 47176870$. -/
+$BB(5) = 47176870$.
+
+Note $BB(5) = 47176870$ (as well as the values below) has been formally proven in Rocq as part of
+[BB2025], a formal proof of the declaration below would likely be much more difficult on a technical
+level than the proof in Rocq, which is based on dependent type theory. -/
 @[category research solved, AMS 3 68]
 theorem c14_lower_bound : 6 ≤ C14 := by sorry
 
