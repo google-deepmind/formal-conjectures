@@ -74,7 +74,7 @@ noncomputable def lieDerivHom : Matrix n n ℂ →ₗ⁅ℂ⁆ Module.End ℂ (s
   map_lie' {Z W} := by simpa [Ring.lie_def] using lieDerivC_bracket Z W
 
 /-- The action of the universal enveloping algebra `U(𝔤𝔩 n ℂ)` on the `C^∞` functions on
-`GL n ℝ`, obtained from `lieDerivHom` by the universal property. A monomial `X₁ ⋯ X_k` acts as
+`GL n ℝ`, obtained from `lieDerivHom` by the universal property. A monomial `X₁ ⋯ Xₖ` acts as
 the composite of the corresponding left invariant derivatives. -/
 noncomputable def envelopingAction :
     universalEnveloping n →ₐ[ℂ] Module.End ℂ (smoothGL n) :=
@@ -120,7 +120,6 @@ def oneSmoothGL : smoothGL n := ⟨fun _ => 1, isSmoothOnGL_const 1⟩
 lemma eq_smul_oneSmoothGL_of_mem_span {φ : smoothGL n} (hφ : φ ∈ (ℂ ∙ oneSmoothGL n)) :
     φ = (φ : GL n ℝ → ℂ) 1 • oneSmoothGL n := by
   obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hφ
-  congr 1
   simp [oneSmoothGL]
 
 /-- Left invariant differential operators map the constant functions to constant functions:
@@ -132,28 +131,19 @@ lemma envelopingAction_mem_span_oneSmoothGL (u : universalEnveloping n) :
   obtain ⟨t, rfl⟩ := hsurj u
   induction t using TensorAlgebra.induction with
   | algebraMap c =>
-    intro φ hφ
-    rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply]
-    exact Submodule.smul_mem _ c hφ
+    exact fun φ hφ => by simpa [Module.algebraMap_end_apply] using Submodule.smul_mem _ c hφ
   | ι X =>
     intro φ hφ
-    have hlie : ∀ Y : Matrix n n ℝ, lieDeriv Y (oneSmoothGL n) = 0 := fun Y =>
-      Subtype.ext (by simpa [oneSmoothGL] using lieDerivFun_const Y 1)
-    have hone : lieDerivC X (oneSmoothGL n) = 0 := by
-      simp [lieDerivC, hlie]
-    rw [show envelopingAction ((UniversalEnvelopingAlgebra.mkAlgHom ℂ (Matrix n n ℂ))
-      ((TensorAlgebra.ι ℂ) X)) = lieDerivC X from UniversalEnvelopingAlgebra.lift_ι_apply' ℂ _ X]
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hφ
-    rw [map_smul, hone, smul_zero]
-    exact Submodule.zero_mem _
+    have hone : lieDerivC X (oneSmoothGL n) = 0 := by
+      simp [lieDerivC, show ∀ Y, lieDeriv Y (oneSmoothGL n) = 0 from fun Y =>
+        Subtype.ext (by simpa [oneSmoothGL] using lieDerivFun_const Y 1)]
+    simp [envelopingAction, UniversalEnvelopingAlgebra.lift_ι_apply',
+      show lieDerivHom X = lieDerivC X from rfl, hone]
   | mul a b ha hb =>
-    intro φ hφ
-    rw [map_mul, map_mul, Module.End.mul_apply]
-    exact ha _ (hb _ hφ)
+    exact fun φ hφ => by simpa [Module.End.mul_apply] using ha _ (hb _ hφ)
   | add a b ha hb =>
-    intro φ hφ
-    rw [map_add, map_add, LinearMap.add_apply]
-    exact Submodule.add_mem _ (ha _ hφ) (hb _ hφ)
+    exact fun φ hφ => by simpa using Submodule.add_mem _ (ha _ hφ) (hb _ hφ)
 
 lemma smul_oneSmoothGL_mem_span (z : ↥(centerUniversalEnveloping n)) :
     z • oneSmoothGL n ∈ (ℂ ∙ oneSmoothGL n) := by
