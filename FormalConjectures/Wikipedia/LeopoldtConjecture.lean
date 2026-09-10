@@ -33,6 +33,19 @@ states that the $\mathbb{Z}_p$-rank of the closure $\overline{E_1}$ of $E_1$ in 
 $r_1 + r_2 - 1$. Equivalently, the *Leopoldt defect*
 $\delta(K, p) = (r_1 + r_2 - 1) - \operatorname{rank}_{\mathbb{Z}_p} \overline{E_1}$ vanishes.
 
+## The statements in this file
+
+* `leopoldt_conjecture`: Wikipedia's form, $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1} =
+  r_1 + r_2 - 1$, together with `leopoldt_conjecture.variants.abelian`, the theorem of Ax and
+  Brumer for abelian $K / \mathbb{Q}$;
+* `leopoldt_conjecture.variants.padicRelation`: the only $p$-adic relation among units of maximal
+  rank in $E_1$ is the trivial one;
+* `leopoldt_conjecture.variants.elementary`: congruences modulo $p^M \mathcal{O}_K$ force
+  divisibility of the exponents.
+
+The last two are low-level: they are stated using nothing beyond mathlib, at the cost of not
+being Wikipedia's formulation verbatim.
+
 ## The dictionary
 
 * $r_1 + r_2 - 1$ is `NumberField.Units.rank K`;
@@ -48,7 +61,13 @@ $\delta(K, p) = (r_1 + r_2 - 1) - \operatorname{rank}_{\mathbb{Z}_p} \overline{E
 * $E_1$ is `E₁ K p`, and membership in it is `IsPrincipalUnitAbove K p`;
 * the diagonal embedding $E_1 \to U_1$ is `diag K p`, and the closure $\overline{E_1}$ is
   `closureE₁ K p`, a `ℤ_[p]`-submodule of `U₁ K p`;
-* $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1}$ is `Module.rank ℤ_[p] (closureE₁ K p)`.
+* $\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1}$ is `Module.rank ℤ_[p] (closureE₁ K p)`;
+* the exponent vector $a \in \mathbb{Z}_p^r$ is `a : Fin (rank K) → ℤ_[p]`, and the relation
+  $\prod_i \varepsilon_i^{a_i} = 1$ in $U_1$ is `IsPadicRelation K p ε a`, which spells out each
+  $\mathbb{Z}_p$-power as a limit of integer powers using `PadicInt.appr`;
+* that $\varepsilon_1, \dots, \varepsilon_r$ generate a subgroup of finite index in
+  $\mathcal{O}_K^\times$ is `NumberField.Units.IsMaxRank ε`, and the fundamental system of the
+  elementary form is `NumberField.Units.fundSystem K`.
 
 *References:*
 - [Wikipedia, *Leopoldt's conjecture*](https://en.wikipedia.org/wiki/Leopoldt%27s_conjecture):
@@ -81,6 +100,12 @@ namespace Leopoldt
 
 variable (K : Type*) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime]
 
+/-
+## The group $E_1$
+
+Membership in $E_1$ is used by every formulation below, so it sits outside the sections.
+-/
+
 /--
 `IsPrincipalUnitAbove K p u` says that the unit $u \in \mathcal{O}_K^\times$ is congruent to $1$
 modulo every prime $\mathfrak{p}$ of $\mathcal{O}_K$ above $p$. Equivalently, the image of $u$ in
@@ -96,6 +121,15 @@ $\mathcal{O}_K^\times$.
 -/
 def IsPrincipalUnitAbove (u : (𝓞 K)ˣ) : Prop :=
   ∀ v : HeightOneSpectrum (𝓞 K), (p : 𝓞 K) ∈ v.asIdeal → (u : 𝓞 K) - 1 ∈ v.asIdeal
+
+section Wikipedia_ModuleRank
+
+/-
+## The $\mathbb{Z}_p$-module rank formulation
+
+Wikipedia's statement: the $\mathbb{Z}_p$-rank of the closure of $E_1$, embedded diagonally in
+$U_1$, is $r_1 + r_2 - 1$.
+-/
 
 /-- $U_1 = \prod_{\mathfrak{p} \mid p} U_{1, \mathfrak{p}}$, written additively, as a
 $\mathbb{Z}_p$-module. -/
@@ -183,5 +217,83 @@ logarithms, which Brumer then proved.
 theorem leopoldt_conjecture.variants.abelian [IsAbelianGalois ℚ K] :
     Module.rank ℤ_[p] (closureE₁ K p) = rank K := by
   sorry
+
+end Wikipedia_ModuleRank
+
+section LowLevel
+
+/-
+## The low-level formulations
+
+Two forms of the conjecture stated with nothing beyond mathlib: that the only $p$-adic relation
+among units of maximal rank in $E_1$ is the trivial one, and an elementary form in which
+congruences modulo $p^M \mathcal{O}_K$ force divisibility of the exponents. Both are equivalent
+to `leopoldt_conjecture` above.
+-/
+
+/--
+`IsPadicRelation K p ε a` says that $\prod_i \varepsilon_i^{a_i} = 1$ in $U_1$, i.e. in every
+completion $K_\mathfrak{p}$ with $\mathfrak{p} \mid p$. Here $\varepsilon_1, \dots, \varepsilon_r$
+are global units, $a = (a_1, \dots, a_r) \in \mathbb{Z}_p^r$ is a vector of $p$-adic exponents,
+and $\varepsilon_i^{a_i}$ is the $\mathbb{Z}_p$-power of a principal unit.
+
+The $\mathbb{Z}_p$-power is spelled out as the limit that defines it. The natural number
+`(a i).appr n` satisfies `(a i).appr n ≡ a i (mod p ^ n)` (`PadicInt.appr_spec`), so it tends to
+$a_i$ in $\mathbb{Z}_p$ as $n \to \infty$, and the condition is that
+$\prod_i \varepsilon_i^{(a_i).\mathrm{appr}\, n} \to 1$ in $K_\mathfrak{p}$. When every
+$\varepsilon_i$ satisfies `IsPrincipalUnitAbove K p`, it lies in the pro-$p$ group
+$U_{1, \mathfrak{p}}$, so this sequence converges to $\prod_i \varepsilon_i^{a_i}$ and the limit
+does not depend on the choice of integers approximating $a_i$. Without that hypothesis the
+sequence need not converge, e.g. for a root of unity of order prime to $p$.
+
+This is how [Nelson, Lemma 4.2] reads a $\mathbb{Z}_p$-relation: "there exists $a_{j,n} \in
+\mathbb{Z}$ such that $p$-adically $a_{j,n} \to a_j$ and $u_1^{a_{1,n}} \cdots u_t^{a_{t,n}} \to 1$
+in $M_\mathfrak{p}$".
+-/
+def IsPadicRelation (ε : Fin (rank K) → (𝓞 K)ˣ) (a : Fin (rank K) → ℤ_[p]) : Prop :=
+  ∀ v : HeightOneSpectrum (𝓞 K), (p : 𝓞 K) ∈ v.asIdeal →
+    Tendsto (fun n : ℕ ↦ ((∏ i, (ε i : K) ^ (a i).appr n : K) : v.adicCompletion K)) atTop (nhds 1)
+
+/--
+**Leopoldt's conjecture, $p$-adic-relation form.** Let $K$ be a number field and $p$ a prime. Let
+$\varepsilon_1, \dots, \varepsilon_r$, with $r = r_1 + r_2 - 1$, be units of $\mathcal{O}_K$ that
+generate a subgroup of finite index in $\mathcal{O}_K^\times$ and are principal units at every
+prime above $p$, i.e. lie in $E_1$. Then the only $a \in \mathbb{Z}_p^r$ with
+$\prod_i \varepsilon_i^{a_i} = 1$ in every completion $K_\mathfrak{p}$ with $\mathfrak{p} \mid p$
+is $a = 0$.
+
+In other words, the map $\varphi_\varepsilon : \mathbb{Z}_p^r \to U_1$,
+$a \mapsto \prod_i \varepsilon_i^{a_i}$, is injective. Its image has finite index in the closure
+$\overline{E_1}$ of $E_1$ in $U_1$, so
+$\operatorname{rank}_{\mathbb{Z}_p} \overline{E_1} = r - \operatorname{rank}_{\mathbb{Z}_p}
+\ker \varphi_\varepsilon$, and injectivity is equivalent to `leopoldt_conjecture`, i.e. to the
+vanishing of the Leopoldt defect.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.padicRelation (ε : Fin (rank K) → (𝓞 K)ˣ)
+    (hmax : IsMaxRank ε) (hone : ∀ i, IsPrincipalUnitAbove K p (ε i))
+    {a : Fin (rank K) → ℤ_[p]} (ha : IsPadicRelation K p ε a) : a = 0 := by
+  sorry
+
+/--
+**Leopoldt's conjecture, elementary form.** Let $K$ be a number field, $p$ a prime, $r$ the rank
+of the unit group of $K$, and $\varepsilon_1, \dots, \varepsilon_r$ the fundamental system
+`fundSystem K`. For every $N$ there is an $M$ such that any $n \in \mathbb{Z}^r$ with
+$\prod_i \varepsilon_i^{n_i} \equiv 1 \pmod{p^M \mathcal{O}_K}$ has all its $n_i$ divisible by
+$p^N$.
+
+This says that the topology induced on $\mathcal{O}_K^\times$ (modulo torsion) by
+$\prod_{\mathfrak{p} \mid p} \mathcal{O}_\mathfrak{p}^\times$ is the $p$-adic topology, which is
+equivalent to injectivity of $\mathcal{O}_K^\times \otimes \mathbb{Z}_p \to
+\prod_{\mathfrak{p} \mid p} \mathcal{O}_\mathfrak{p}^\times$, i.e. to `leopoldt_conjecture`.
+-/
+@[category research open, AMS 11]
+theorem leopoldt_conjecture.variants.elementary (N : ℕ) :
+    ∃ M : ℕ, ∀ n : Fin (rank K) → ℤ,
+      (p : 𝓞 K) ^ M ∣ ((∏ i, fundSystem K i ^ n i : (𝓞 K)ˣ) : 𝓞 K) - 1 →
+      ∀ i, (p : ℤ) ^ N ∣ n i := by
+  sorry
+
+end LowLevel
 
 end Leopoldt
