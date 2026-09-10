@@ -11,7 +11,9 @@ statement, its sources, related work, and evidence before deciding what to do ne
 
 ## Product Purpose
 
-Keep the FC catalog authoritative for statements. The contribution toolkit supplies
+Lean sources and Lake pins define statements. Publish one native catalog for the
+website, CLI, and repository checks; use Verso only for rendering from the same
+build. See [the static data contract](site/API.md). The contribution toolkit supplies
 advisory reviews and exact-target verification records. The website presents those
 records without deciding mathematical status or maintainer acceptance.
 
