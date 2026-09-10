@@ -7,13 +7,12 @@ import subprocess
 import shutil
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'toolkit'))
-from conjectures.catalog_data import complete, encode, manifest, parse
+from conjectures.catalog_data import SOURCE_INPUTS, complete, encode, manifest, parse
 
 
 def prepare(source, repository, data, out):
     def git(*args):return subprocess.check_output(['git','-C',str(source),*args],text=True).strip()
-    scope=['FormalConjectures','FormalConjecturesUtil','FormalConjecturesForMathlib','FormalConjecturesForMathlib.lean',
-           'scripts/extract_names.lean','lakefile.toml','lean-toolchain','lake-manifest.json']
+    scope=[*SOURCE_INPUTS, 'scripts/extract_names.lean']
     if git('status','--porcelain','--',*scope):
         raise ValueError('Catalog source or extraction inputs have uncommitted changes')
     revision=git('rev-parse','HEAD')
