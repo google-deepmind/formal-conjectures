@@ -5,9 +5,9 @@ const path = require('node:path');
 const {sameJSON} = require('./src/js/catalog.js');
 
 function readCatalog(directory) {
-  const raw = fs.readFileSync(path.join(directory, 'catalog.json'));
+  const raw = fs.readFileSync(path.join(directory, 'conjectures.json'));
   const descriptor = JSON.parse(fs.readFileSync(path.join(directory, 'catalog-manifest.json')));
-  if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'catalog.json' ||
+  if (descriptor.schema_version !== 'fc.catalog.v1' || descriptor.catalog !== 'conjectures.json' ||
       descriptor.bytes !== raw.length || descriptor.sha256 !== crypto.createHash('sha256').update(raw).digest('hex')) {
     throw new Error('Catalog does not match its publication descriptor. Generate or download the full native catalog.');
   }

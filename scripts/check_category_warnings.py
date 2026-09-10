@@ -4,7 +4,7 @@
 `scripts/extract_names.lean` notices three things: a `research open` problem
 with a sorry-free proof, and `test` or `API` statements without one. It writes
 them to stderr as prose, but every field it decides them from is already in
-`site/data/catalog.json`, so this script classifies the JSON directly
+`site/data/conjectures.json`, so this script classifies the JSON directly
 rather than parsing warning text.
 
 The three are not equally serious:
@@ -17,8 +17,8 @@ The three are not equally serious:
   run summary so they are visible without opening a log.
 
 Usage:
-  lake exe extract_names ... > site/data/catalog.json
-  python3 check_category_warnings.py site/data/catalog.json
+  lake exe extract_names ... > site/data/conjectures.json
+  python3 check_category_warnings.py site/data/conjectures.json
 """
 
 import argparse

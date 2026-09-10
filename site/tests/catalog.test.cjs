@@ -11,13 +11,13 @@ test('site preserves the native snapshot and rejects partial or corrupted data',
   try {
     function write(data) {
       const raw = JSON.stringify(data);
-      fs.writeFileSync(path.join(directory,'catalog.json'),raw);
-      fs.writeFileSync(path.join(directory,'catalog-manifest.json'),JSON.stringify({schema_version:'fc.catalog.v1',catalog:'catalog.json',
+      fs.writeFileSync(path.join(directory,'conjectures.json'),raw);
+      fs.writeFileSync(path.join(directory,'catalog-manifest.json'),JSON.stringify({schema_version:'fc.catalog.v1',catalog:'conjectures.json',
         bytes:Buffer.byteLength(raw),sha256:crypto.createHash('sha256').update(raw).digest('hex'),problem_count:1,provenance:data.provenance}));
     }
     const data = {schemaVersion:2,problems:[{statement:'∀ n : ℕ, n = n'}],provenance:{source:{repository:'owner/fc',commit:'a'.repeat(40)}}};
     write(data);assert.deepEqual(readCatalog(directory),data);
-    fs.appendFileSync(path.join(directory,'catalog.json'),' ');
+    fs.appendFileSync(path.join(directory,'conjectures.json'),' ');
     assert.throws(() => readCatalog(directory),/publication descriptor/);
     delete data.problems[0].statement;write(data);
     assert.throws(() => readCatalog(directory),/complete statements/);
@@ -37,8 +37,8 @@ test('full site publishes one unchanged catalog and bound module rendering', () 
       provenance:{source:{repository:'owner/fc',commit:'a'.repeat(40)}},moduleDocstrings:{'FormalConjectures.Example':'Source'}};
     const raw = JSON.stringify(data);
     const digest = crypto.createHash('sha256').update(raw).digest('hex');
-    fs.writeFileSync(path.join(site,'data/catalog.json'),raw);
-    fs.writeFileSync(path.join(site,'data/catalog-manifest.json'),JSON.stringify({schema_version:'fc.catalog.v1',catalog:'catalog.json',
+    fs.writeFileSync(path.join(site,'data/conjectures.json'),raw);
+    fs.writeFileSync(path.join(site,'data/catalog-manifest.json'),JSON.stringify({schema_version:'fc.catalog.v1',catalog:'conjectures.json',
       bytes:Buffer.byteLength(raw),sha256:digest,problem_count:1,provenance:data.provenance}));
     const fragments = {catalog_sha256:digest,modules:[],moduleDocs:{'/FormalConjectures/Example/':'Rendered source'},
       constLinks:{'Example.test':{url:'/FormalConjectures/Example/#test',anchor:'test',docHtml:'Rendered description',
@@ -49,8 +49,8 @@ test('full site publishes one unchanged catalog and bound module rendering', () 
     const build = () => spawnSync(process.execPath,['build.js'],{cwd:site,env,encoding:'utf8'});
     const result = build();
     assert.equal(result.status,0,result.stdout+result.stderr);
-    assert.equal(fs.readFileSync(path.join(site,'site/data/catalog.json'),'utf8'),raw);
-    assert.equal(fs.existsSync(path.join(site,'site/data/conjectures.json')),false);
+    assert.equal(fs.readFileSync(path.join(site,'site/data/conjectures.json'),'utf8'),raw);
+    assert.equal(fs.existsSync(path.join(site,'site/data/catalog.json')),false);
     assert.equal(fs.existsSync(path.join(site,'site/data/verso-fragments.json')),false);
     const rendered = JSON.parse(fs.readFileSync(path.join(site,`site/data/rendered/${digest}/FormalConjectures/Example.json`)));
     assert.equal(rendered.catalog_sha256,digest);

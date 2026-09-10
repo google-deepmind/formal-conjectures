@@ -76,7 +76,7 @@ def complete(data):
 
 def manifest(data, raw):
     complete(data)
-    return {'schema_version':MANIFEST_SCHEMA,'catalog':'catalog.json',
+    return {'schema_version':MANIFEST_SCHEMA,'catalog':'conjectures.json',
             'schema':'schemas/catalog-v2.schema.json',
             'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),
             'problem_count':len(data['problems']),'provenance':data['provenance']}
@@ -85,7 +85,7 @@ def manifest(data, raw):
 def verify(descriptor, raw):
     if not isinstance(descriptor,dict) or descriptor.get('schema_version')!=MANIFEST_SCHEMA:
         raise ValueError('Unsupported catalog descriptor')
-    if descriptor.get('catalog')!='catalog.json':raise ValueError('Unexpected catalog filename')
+    if descriptor.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
     if len(raw)!=descriptor.get('bytes') or hashlib.sha256(raw).hexdigest()!=descriptor.get('sha256'):
         raise ValueError('Catalog digest or size differs from its descriptor')
     data=complete(parse(raw))
