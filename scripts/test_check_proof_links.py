@@ -34,7 +34,7 @@ class ProofLinksTest(unittest.TestCase):
     def test_enumerates_every_nonempty_proof_link_once(self):
         path = self.write_extract({
             "schemaVersion": 2,
-            "conjectures": [
+            "problems": [
                 {"formalProofs": [
                     {"kind": "lean4", "link": "https://example.com/a",
                      "conditions": ["h"]},
@@ -53,7 +53,7 @@ class ProofLinksTest(unittest.TestCase):
             ["https://example.com/a", "https://example.com/b"])
 
     def test_rejects_legacy_extract_in_canonical_mode(self):
-        path = self.write_extract({"conjectures": []})
+        path = self.write_extract({"problems": []})
         with self.assertRaisesRegex(ValueError, "schemaVersion 2"):
             links_from_extract(path)
 
@@ -64,7 +64,7 @@ class ProofLinksTest(unittest.TestCase):
     def test_rejects_non_string_link(self):
         path = self.write_extract({
             "schemaVersion": 2,
-            "conjectures": [{"formalProofs": [{"kind":"lean4", "conditions":[], "link": None}]}],
+            "problems": [{"formalProofs": [{"kind":"lean4", "conditions":[], "link": None}]}],
         })
         with self.assertRaisesRegex(ValueError, "link must be a string"):
             links_from_extract(path)

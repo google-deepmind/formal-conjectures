@@ -93,7 +93,7 @@ def row(num, theorem, category="research open", formal=False, conditions=None):
 class ProblemStatusesTest(unittest.TestCase):
 
     def statuses(self, *rows):
-        return problem_statuses({"schemaVersion":2,"conjectures": list(rows)})
+        return problem_statuses({"schemaVersion":2,"problems": list(rows)})
 
     def test_open_statement_is_open(self):
         self.assertEqual(self.statuses(row("42", "Erdos42.erdos_42")), {"42": "open"})
@@ -185,14 +185,14 @@ class ProblemStatusesTest(unittest.TestCase):
             {"kind": "lean4", "link": "y", "conditions": []},
         ]
         self.assertEqual(
-            problem_statuses({"schemaVersion": 2, "conjectures": [r]}),
+            problem_statuses({"schemaVersion": 2, "problems": [r]}),
             {"42": "formally solved"})
 
     def test_schema_two_rejects_a_singular_proof_shape(self):
         r = row("42", "Erdos42.erdos_42", "research solved", formal=True)
         r["formalProofKind"] = "lean4"
         with self.assertRaisesRegex(ValueError, "Legacy proof fields"):
-            problem_statuses({"schemaVersion": 2, "conjectures": [r]})
+            problem_statuses({"schemaVersion": 2, "problems": [r]})
 
     def test_schema_two_rejects_malformed_conditions(self):
         r = row("42", "Erdos42.erdos_42", "research solved")
@@ -200,15 +200,15 @@ class ProblemStatusesTest(unittest.TestCase):
             {"kind": "lean4", "link": "x", "conditions": "not-a-list"}
         ]
         with self.assertRaisesRegex(ValueError, "conditions must be a list"):
-            problem_statuses({"schemaVersion": 2, "conjectures": [r]})
+            problem_statuses({"schemaVersion": 2, "problems": [r]})
 
     def test_unknown_schema_version_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "schemaVersion 2"):
-            metadata_rows({"schemaVersion": 3, "conjectures": []})
+            metadata_rows({"schemaVersion": 3, "problems": []})
 
     def test_current_reader_rejects_the_legacy_shape(self):
         with self.assertRaisesRegex(ValueError, "schemaVersion 2"):
-            metadata_rows({"schemaVersion":1, "conjectures":[]})
+            metadata_rows({"schemaVersion":1, "problems":[]})
 
     def test_an_in_repo_proof_counts_despite_its_empty_link(self):
         # A `formal_conjectures` proof lives in this repository and is written with an empty
@@ -220,7 +220,7 @@ class ProblemStatusesTest(unittest.TestCase):
             "category": "research solved",
             "formalProofs": [{"kind":"formal_conjectures", "link":"", "conditions":[]}],
         }
-        self.assertEqual(problem_statuses({"schemaVersion":2,"conjectures": [in_repo]}),
+        self.assertEqual(problem_statuses({"schemaVersion":2,"problems": [in_repo]}),
                          {"316": "formally solved"})
 
     def test_a_problem_with_no_research_statement_has_no_status(self):
@@ -229,7 +229,7 @@ class ProblemStatusesTest(unittest.TestCase):
     def test_other_collections_are_left_alone(self):
         other = {"module": "FormalConjectures.Wikipedia.Foo", "theorem": "Foo.bar",
                  "category": "research open", "hasFormalProof": False}
-        self.assertEqual(problem_statuses({"schemaVersion":2,"conjectures": [other]}), {})
+        self.assertEqual(problem_statuses({"schemaVersion":2,"problems": [other]}), {})
 
     def test_a_number_shared_with_another_collection_does_not_leak(self):
         # `Green36` and `Erdos36` both exist; only the module path distinguishes them.
@@ -237,7 +237,7 @@ class ProblemStatusesTest(unittest.TestCase):
                  "theorem": "Green36.green_36", "category": "research open",
                  "hasFormalProof": False}
         self.assertEqual(
-            problem_statuses({"schemaVersion":2,"conjectures": [green, row("36", "Erdos36.erdos_36",
+            problem_statuses({"schemaVersion":2,"problems": [green, row("36", "Erdos36.erdos_36",
                                                          "research solved")]}),
             {"36": "solved"})
 
