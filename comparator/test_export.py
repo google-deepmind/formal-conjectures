@@ -110,6 +110,13 @@ class ExportTests(unittest.TestCase):
                         submission.write_text("import FormalConjecturesTest.PackageExport\n"
                                               "namespace Submission\ntheorem fc_problem : True := by trivial\n"
                                               "end Submission\n")
+                        # The trusted wrapper retains the original type, so this
+                        # malformed submission fails to elaborate before policy evaluation.
+                        self.check_comparator(workspace, False, expected_error=True)
+                        # Separately exercise Comparator's type policy on a well-formed
+                        # but wrong target. Production never imports this candidate wrapper.
+                        (workspace / "Solution.lean").write_text(
+                            "import Submission\ntheorem fc_problem : True := Submission.fc_problem\n")
                         self.check_comparator(workspace, False)
                     print(f"PASS {name}: structured signatures, package imports, filled Solution", flush=True)
 
@@ -127,19 +134,25 @@ class ExportTests(unittest.TestCase):
             self.assertEqual(package["rev"], dependency["rev"])
             self.assertEqual(package["url"], dependency["git"])
 
-    def check_comparator(self, workspace, accepted, diagnostic=None):
+    def check_comparator(self, workspace, accepted, diagnostic=None, expected_error=False):
         with tempfile.TemporaryDirectory() as temporary:
             output=Path(temporary)/'result.json'
             result = subprocess.run(['lake','env',os.environ['COMPARATOR_BIN'],'config.json','--result-json',str(output)],
                                     cwd=workspace,text=True,capture_output=True,timeout=600)
             self.assertTrue(output.is_file(), 'Comparator did not retain a typed result: '+result.stderr)
             value=json.loads(output.read_text())
+            expected = 'error' if expected_error else 'pass' if accepted else 'rejected'
             if os.environ.get('COMPARATOR_RESULTS_DIR'):
                 import uuid
                 retained=Path(os.environ['COMPARATOR_RESULTS_DIR']);retained.mkdir(parents=True,exist_ok=True)
-                (retained/(uuid.uuid4().hex+'.json')).write_text(json.dumps({'expected':'pass' if accepted else 'rejected','result':value,'exit_code':result.returncode}))
+                identity=uuid.uuid4().hex
+                (retained/(identity+'.json')).write_text(json.dumps({'expected':expected,'result':value,'exit_code':result.returncode}))
+                (retained/(identity+'.log')).write_text(result.stdout+result.stderr)
             self.assertEqual(value['schemaVersion'],1)
-            self.assertEqual(value['outcome'],'pass' if accepted else 'rejected',value)
+            self.assertEqual(value['outcome'],expected,value)
+            if expected_error:
+                self.assertEqual(value['stage'],'solution_build')
+                self.assertEqual(value['reason'],'execution_error')
             if accepted:
                 self.assertEqual(result.returncode,0);self.assertEqual(value['stage'],'complete')
             if diagnostic:self.assertEqual(value['reason'],'disallowed_axiom',value)

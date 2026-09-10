@@ -15,6 +15,8 @@ def check(wheel):
         assert 'conjectures/resources/review/SKILL.md' in names
         assert 'conjectures/resources/review.Dockerfile' in names
         assert 'conjectures/resources/verification-workflow.yml' in names
+        if 'conjectures/publisher.py' in names:
+            assert 'conjectures/resources/publisher-workflow.yml' in names
         assert not any('/evals/' in name or 'review_model_' in name for name in names)
         if 'conjectures/proof.py' in names:
             for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
