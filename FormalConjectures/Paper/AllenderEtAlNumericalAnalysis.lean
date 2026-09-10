@@ -18,42 +18,47 @@ import FormalConjecturesUtil
 /-!
 # Arithmetic identity testing and exact numerical comparison
 
-Allender, Bürgisser, Kjeldgaard-Pedersen, and Miltersen,
+*References:*
+* Allender, Bürgisser, Kjeldgaard-Pedersen, and Miltersen,
 *On the Complexity of Numerical Analysis*, SIAM J. Comput. 38(5), 1987–2006 (2009),
 https://doi.org/10.1137/070697926.
 Author version: https://people.cs.rutgers.edu/~allender/papers/slp.pdf,
 §1.4 (root sums, p. 5) and §2 (ACIT and PosSLP, pp. 5–6).
 
-These are questions about deterministic polynomial bit-time on explicit binary
-inputs, using the existing TM2 model. Circuit values and root sums are exact.
-Neither a unit-cost real machine nor floating-point approximation is substituted.
-The definitions reject malformed circuits and allow only the constants 0 and 1.
-No degree bound is imposed on ACIT; PosSLP has no variables.
-
-The root-sum question uses nonnegative integer radicands, so all square roots
-are real, and keeps the source's signed integer threshold and non-strict ≥ comparison.
 -/
 
 namespace AllenderEtAlNumericalAnalysis
 
 open ComplexityTheory AlgebraicProblems
 
-/-- Does integer arithmetic circuit identity testing admit a deterministic polynomial-time
-algorithm (§2, ACIT)? -/
+/-- **Arithmetic circuit identity testing** (Allender et al., §2, pp. 5–6) has a
+deterministic polynomial bit-time decider. Input: an explicit division-free DAG over
+$0,1,+,-,\times$, with binary variable names and prior-gate indices; shared fan-out is
+allowed. Property: the output is the zero polynomial over $\mathbb{Z}$. Empty or malformed
+programs are rejected. Neither degree nor intermediate-value size is bounded.
+This is a derandomization conjecture for a problem in $coRP$. -/
 @[category research open, AMS 13 68]
 theorem arithmeticIdentity_polytime :
-    answer(sorry) ↔ HasPolyTimeDecider IsArithmeticIdentity := by
+    HasPolyTimeDecider IsArithmeticIdentity := by
   sorry
 
-/-- Does PosSLP admit a deterministic polynomial-time algorithm (§2)?
-The question is whether the integer represented by a closed SLP is strictly positive. -/
+/-- **PosSLP** (Allender et al., §2, pp. 5–6): is there a deterministic polynomial
+bit-time decider for strict positivity of the integer output of a division-free
+straight-line program over $0,1,+,-,\times$? Input is the explicit DAG with binary
+prior-gate indices, not its expanded integer value. Variables, other constants,
+empty programs and invalid references are rejected. This is a two-sided complexity
+question, not an assertion of NP-completeness. -/
 @[category research open, AMS 11 68]
 theorem positiveSLP_polytime :
     answer(sorry) ↔ HasPolyTimeDecider IsPositiveSLP := by
   sorry
 
-/-- Can one decide $\sum_i \sqrt{d_i} \ge k$ in deterministic polynomial time,
-for nonnegative integers $d_i$ and an integer $k$ (§1.4)? -/
+/-- **Sum of square roots** (Allender et al., §1.4, p. 5): can one decide
+$\sum_i \sqrt{d_i} \ge k$ in deterministic polynomial bit-time, given a binary list
+of nonnegative integers $d_i$ and a signed integer $k$? The square roots and comparison
+are exact; zero radicands, negative thresholds and the empty sum are permitted.
+This is a two-sided complexity question underlying exact Euclidean TSP verification;
+no gap promise, rounding or unit-cost real arithmetic is used. -/
 @[category research open, AMS 11 68]
 theorem sumSquareRoots_polytime :
     answer(sorry) ↔ HasPolyTimeDecider SumSquareRootsAtLeast := by

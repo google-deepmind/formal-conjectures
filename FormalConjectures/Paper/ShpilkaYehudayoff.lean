@@ -18,26 +18,26 @@ import FormalConjecturesUtil
 /-!
 # The permanent arithmetic-circuit lower-bound conjecture
 
-Shpilka and Yehudayoff, *Arithmetic circuits: A survey of recent results and open
+*References:*
+* Shpilka and Yehudayoff, *Arithmetic circuits: A survey of recent results and open
 questions*, Foundations and Trends in Theoretical Computer Science 5(3–4), 207–388,
 https://www.cs.tau.ac.il/~shpilka/publications/SY10.pdf,
 Definition 1.1, Definition 1.2, Valiant's hypothesis I, and Theorem 1.1
 (author-version pp. 2–5).
 
-This is the permanent-circuit formulation over ℚ. The source identifies it with
-Valiant's hypothesis using completeness of the permanent in characteristic not two.
-That completeness theorem and the VP/VNP equivalence are not formalized here.
-
-The circuit basis is +,× with arbitrary rational constants, and size is the number
-of edges. This is a nonuniform algebraic model: there is no computability condition
-on the circuit family and no bit-length charge for its constants.
 -/
 
 namespace ShpilkaYehudayoff
 
-/-- The permanent over ℚ has no polynomial-size family of arithmetic circuits
-(Valiant's hypothesis I and Theorem 1.1). -/
-@[category research open, AMS 15 68]
+/-- **Permanent circuit lower bound** (Shpilka–Yehudayoff, Definitions 1.1–1.2,
+Valiant's hypothesis I and Theorem 1.1, pp. 2–5). There are no constants $C,d$ such
+that for every $n$, the generic $n\times n$ permanent over $\mathbb{Q}$ is computed
+by a division-free $+,\times$ circuit with at most $C(n+1)^d$ edges. Arbitrary rational
+constants and shared fan-out are allowed; their bit lengths and intermediate degrees
+are unbounded. The family is nonuniform, and $n=0$ has permanent one. By permanent
+completeness this is $VP_{\mathbb{Q}}\ne VNP_{\mathbb{Q}}$, an algebraic analogue of
+$P\ne NP$, not an asserted equivalent of the Boolean conjecture. -/
+@[category research open, AMS 13 68]
 theorem permanent_not_polynomial_size :
     ¬ AlgebraicProblems.HasPolynomialSizePermanentCircuits := by
   sorry
