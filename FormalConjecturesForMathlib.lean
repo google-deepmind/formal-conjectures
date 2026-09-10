@@ -139,6 +139,7 @@ public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.ModelTheory.Decidability
 public import FormalConjecturesForMathlib.ModelTheory.Encoding
+public import FormalConjecturesForMathlib.ModelTheory.OMinimal
 public import FormalConjecturesForMathlib.ModelTheory.Real
 public import FormalConjecturesForMathlib.NumberTheory.AdditionChain
 public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement

@@ -16,7 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.ModelTheory.Encoding
+public import Mathlib.Analysis.Asymptotics.Defs
 public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.ModelTheory.Definability
 
 /-!
 # Expansions of the real field
@@ -26,10 +28,21 @@ defines the language `Language.exp` with a single unary function symbol `exp`, t
 `Language.orderedExpField` of ordered exponential fields, and the *real exponential field*
 `(ℝ, +, *, -, 0, 1, ≤, exp)` as a structure for that language.
 
+It also defines when a structure on `ℝ` is *exponentially bounded*: every definable function
+`f : ℝ → ℝ` satisfies `f = O(exp^[N])` at `+∞` for some compositional iterate `exp^[N]` of the
+exponential function.
+
+*References:*
+- L. van den Dries, C. Miller, *Geometric categories and o-minimal structures*,
+  Duke Math. J. 84 (1996), 497–540. See 5.5 and the remark following it.
+
 ## Main declarations
 
 - `FirstOrder.Language.exp`: the language with one unary function symbol `exp`.
 - `FirstOrder.Language.orderedExpField`: the language of ordered exponential fields.
+- `FirstOrder.Language.IsExponentiallyBounded`: exponentially bounded structures on `ℝ`.
+- `FirstOrder.Language.IsExponentiallyBounded.of_expansion`: exponential boundedness passes to
+  reducts.
 
 ## Implementation notes
 
@@ -95,6 +108,16 @@ theorem funMap_exp (x : Fin 1 → ℝ) :
 instance orderedExpFieldOrderedStructureReal : Language.orderedExpField.OrderedStructure ℝ :=
   ⟨fun _ => Iff.rfl⟩
 
+open Asymptotics Filter
+
+variable (L : Language) [L.Structure ℝ]
+
+/-- A structure on `ℝ` is *exponentially bounded* if every function `f : ℝ → ℝ` definable with
+parameters is `O(exp^[N])` at `+∞` for some compositional iterate `exp^[N]` of the exponential
+function. -/
+def IsExponentiallyBounded : Prop :=
+  ∀ f : ℝ → ℝ, (Set.univ : Set ℝ).Definable₂ L f.graph → ∃ N : ℕ, f =O[atTop] Real.exp^[N]
+
 -- In the real exponential field, the symbol `exp` is interpreted as the exponential function.
 example (x : ℝ) :
     Structure.funMap (L := Language.orderedExpField) (Sum.inr (Sum.inl expFunc.exp)) ![x] =
@@ -115,6 +138,13 @@ example (x y : ℝ) :
 example : Encodable Language.orderedExpField.Sentence := inferInstance
 
 end Real
+
+/-- Exponential boundedness passes to reducts: if `L'` expands `L` on `ℝ` and `L'` is
+exponentially bounded, then so is `L`. -/
+theorem IsExponentiallyBounded.of_expansion {L L' : Language} [L.Structure ℝ] [L'.Structure ℝ]
+    (φ : L →ᴸ L') [φ.IsExpansionOn ℝ] (h : L'.IsExponentiallyBounded) :
+    L.IsExponentiallyBounded :=
+  fun f hf => h f (Set.Definable.map_expansion hf φ)
 
 end Language
 
