@@ -15,6 +15,8 @@ def check(wheel):
         assert 'conjectures/resources/review/SKILL.md' in names
         assert 'conjectures/resources/review.Dockerfile' in names
         assert 'conjectures/resources/verification-workflow.yml' in names
+        if 'conjectures/publisher.py' in names:
+            assert 'conjectures/resources/publisher-workflow.yml' in names
         assert not any('/evals/' in name or 'review_model_' in name for name in names)
     with tempfile.TemporaryDirectory(prefix='fc-install-') as temp:
         root=Path(temp);env={k:v for k,v in os.environ.items() if k not in ('PYTHONPATH','OPENAI_API_KEY','ANTHROPIC_API_KEY','GH_TOKEN','GITHUB_TOKEN','CONJECTURES_GH')}
