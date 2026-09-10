@@ -52,7 +52,8 @@ or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` form a pro-`p` group: `
   `OneUnits.continuous_smul_const` and the `ContinuousConstSMul ℤ_[p] (Additive (oneUnits K))`
   instance, so `Additive (oneUnits K)` is a topological `ℤ_[p]`-module.
 * `OneUnits.natCast_smul`: natural `p`-adic powers are ordinary powers.
-* `OneUnits.tendsto_appr_nsmul`: `a • u = lim (a.appr n) • u` on the module side.
+* `OneUnits.tendsto_appr_nsmul`, `OneUnits.tendsto_appr_nsmul_pi`: `a • u = lim (a.appr n) • u`
+  on the module side, for one group of principal units and for a product of them.
 * `AddSubgroup.smul_mem_of_isClosed`: closed subgroups are `ℤ_[p]`-submodules.
 
 ## References
@@ -69,161 +70,106 @@ or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` form a pro-`p` group: `
 
 open Filter Topology
 
-/-- The integer approximations `a.appr n` of `a : ℤ_[p]` tend to `a`, since
-`‖a - a.appr n‖ ≤ p ^ (-n)` (`PadicInt.appr_spec`). -/
 theorem PadicInt.tendsto_appr {p : ℕ} [hp : Fact p.Prime] (a : ℤ_[p]) :
     Tendsto (fun n ↦ (a.appr n : ℤ_[p])) atTop (𝓝 a) := by
-  rw [tendsto_iff_norm_sub_tendsto_zero]
-  have hb : ∀ n : ℕ, ‖((a.appr n : ℤ_[p]) - a)‖ ≤ ((p : ℝ)⁻¹) ^ n := fun n ↦ by
-    rw [norm_sub_rev]
-    calc ‖a - (a.appr n : ℤ_[p])‖ ≤ (p : ℝ) ^ (-n : ℤ) :=
+  have : ∀ n : ℕ, ‖((a.appr n : ℤ_[p]) - a)‖ ≤ ((p : ℝ)⁻¹) ^ n := fun n ↦ by
+    calc _ ≤ (p : ℝ) ^ (-n : ℤ) := by simpa [norm_sub_rev] using
           (PadicInt.norm_le_pow_iff_mem_span_pow _ n).2 (PadicInt.appr_spec n a)
       _ = ((p : ℝ)⁻¹) ^ n := by rw [zpow_neg, zpow_natCast, inv_pow]
-  have hp1 : ((p : ℝ)⁻¹) < 1 := by
-    rw [inv_lt_one₀ (by exact_mod_cast hp.out.pos)]
-    exact_mod_cast hp.out.one_lt
-  exact squeeze_zero (fun n ↦ norm_nonneg _) hb
-    (tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) hp1)
+  simpa [tendsto_iff_norm_sub_tendsto_zero] using squeeze_zero (fun n ↦ norm_nonneg _) this
+    (tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity)
+    (inv_lt_one_of_one_lt₀ (by exact_mod_cast hp.out.one_lt)))
 
 namespace IsUltrametricDist
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 
-/-- A `1`-unit has norm one: `‖1 + x‖ = 1` as soon as `‖x‖ < 1`. -/
 theorem norm_eq_one_of_norm_sub_one_lt_one {u : K} (hu : ‖u - 1‖ < 1) : ‖u‖ = 1 := by
-  have h : u = 1 + (u - 1) := by ring
-  rw [h, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [norm_one]; exact hu.ne'),
-    norm_one, max_eq_left hu.le]
+  rw [← (add_sub_cancel 1 u), IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm
+    (by grind [norm_one]),norm_one, max_eq_left hu.le]
 
-/-- `‖xy - 1‖ = ‖(x - 1)y + (y - 1)‖ ≤ max (‖x - 1‖ ‖y‖) ‖y - 1‖ < 1`. [Con, p. 27]. -/
 theorem norm_mul_sub_one_lt {u v : K} (hu : ‖u - 1‖ < 1) (hv : ‖v - 1‖ < 1) :
     ‖u * v - 1‖ < 1 := by
-  have h : u * v - 1 = (u - 1) * v + (v - 1) := by ring
-  rw [h]
-  refine lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ?_ hv)
-  rw [norm_mul, norm_eq_one_of_norm_sub_one_lt_one hv, mul_one]
-  exact hu
+  simpa [show u * v - 1 = (u - 1) * v + (v - 1) by ring] using lt_of_le_of_lt
+    (IsUltrametricDist.norm_add_le_max _ _)
+    (max_lt (by simpa [norm_mul, norm_eq_one_of_norm_sub_one_lt_one hv, mul_one]) hv)
 
-/-- `‖1/x - 1‖ = ‖(1 - x)/x‖ = ‖1 - x‖`. [Con, p. 27]. -/
 theorem norm_inv_sub_one {u : K} (hu : ‖u - 1‖ < 1) : ‖u⁻¹ - 1‖ = ‖u - 1‖ := by
-  have hu1 : ‖u‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hu
-  have hu0 : u ≠ 0 := by
-    rintro rfl
-    simp at hu1
-  have h : u⁻¹ - 1 = (1 - u) / u := by field_simp
-  rw [h, norm_div, hu1, div_one, norm_sub_rev]
+  have : u ≠ 0 := by aesop
+  rw [show u⁻¹ - 1 = (1 - u) / u by grind, norm_div, norm_eq_one_of_norm_sub_one_lt_one hu,
+    div_one, norm_sub_rev]
 
-/-- Powers of a `1`-unit are `1`-units. -/
 theorem norm_pow_sub_one_lt {u : K} (hu : ‖u - 1‖ < 1) (n : ℕ) : ‖u ^ n - 1‖ < 1 := by
   induction n with
   | zero => simp
-  | succ n ih =>
-    rw [pow_succ]
-    exact norm_mul_sub_one_lt ih hu
+  | succ n ih => simpa [pow_succ] using norm_mul_sub_one_lt ih hu
 
-/-- `x ^ n - y ^ n = (x - y) (x ^ (n - 1) + ⋯ + y ^ (n - 1))` and the strong triangle inequality.
-[Con, pp. 13–14]. -/
 theorem norm_pow_sub_pow_le {x y : K} (hx : ‖x‖ ≤ 1) (hy : ‖y‖ ≤ 1) (n : ℕ) :
     ‖x ^ n - y ^ n‖ ≤ ‖x - y‖ := by
   rw [← (Commute.all x y).geom_sum₂_mul n, norm_mul]
-  refine mul_le_of_le_one_left (norm_nonneg _) ?_
-  refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ ↦ ?_
-  rw [norm_mul, norm_pow, norm_pow]
-  exact mul_le_one₀ (pow_le_one₀ (norm_nonneg _) hx) (by positivity)
+  refine mul_le_of_le_one_left (norm_nonneg _)
+    (IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ ↦ ?_)
+  simpa using mul_le_one₀ (pow_le_one₀ (norm_nonneg _) hx) (by positivity)
     (pow_le_one₀ (norm_nonneg _) hy)
 
-/-- `norm_pow_sub_pow_le` at `y = 1`. -/
 theorem norm_pow_sub_one_le {x : K} (hx : ‖x‖ ≤ 1) (n : ℕ) : ‖x ^ n - 1‖ ≤ ‖x - 1‖ := by
   simpa using norm_pow_sub_pow_le hx (norm_one (α := K)).le n
 
-/-- A sharper form of `norm_pow_sub_one_le`: `u ^ n - 1 = (u - 1) (u ^ (n - 1) + ⋯ + 1)`, and the
-second factor is `n` plus a sum of terms `u ^ j - 1` of norm at most `‖u - 1‖`. -/
 theorem norm_pow_sub_one_le_mul_max (n : ℕ) {u : K} (hu : ‖u - 1‖ ≤ 1) :
     ‖u ^ n - 1‖ ≤ ‖u - 1‖ * max ‖u - 1‖ ‖(n : K)‖ := by
-  have hu1 : ‖u‖ ≤ 1 := by
-    rw [← sub_add_cancel u 1]
-    exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu (by simp))
-  have hgeom : (∑ i ∈ Finset.range n, u ^ i) * (u - 1) = u ^ n - 1 := by
-    simpa using (Commute.one_right u).geom_sum₂_mul n
-  have hsum : (∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : K) = ∑ i ∈ Finset.range n, u ^ i := by
-    rw [Finset.sum_sub_distrib]
-    simp
-  calc ‖u ^ n - 1‖ = ‖(∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : K)‖ * ‖u - 1‖ := by
-        rw [← norm_mul, hsum, hgeom]
+  calc _ = ‖(∑ i ∈ Finset.range n, (u ^ i - 1)) + (n : K)‖ * ‖u - 1‖ := by
+        rw [← norm_mul, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
+          mul_one, sub_add_cancel, geom_sum_mul u n]
     _ ≤ max ‖u - 1‖ ‖(n : K)‖ * ‖u - 1‖ := by
-        refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
-        refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max ?_ le_rfl)
-        exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
-          fun i _ ↦ norm_pow_sub_one_le hu1 i
-    _ = ‖u - 1‖ * max ‖u - 1‖ ‖(n : K)‖ := mul_comm _ _
+        refine mul_le_mul_of_nonneg_right ((IsUltrametricDist.norm_add_le_max _ _).trans
+          (max_le_max ?_ le_rfl)) (norm_nonneg _)
+        refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
+          fun i _ ↦ norm_pow_sub_one_le ?_ i
+        rw [← sub_add_cancel u 1]
+        exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu (by simp))
+    _ = _ := mul_comm _ _
 
-/-- Iterating `norm_pow_sub_one_le_mul_max`: on the ball `‖u - 1‖ ≤ c ≤ 1` the `n ^ k`-th power
-map contracts towards `1` by the factor `max c ‖n‖` at each step. -/
 theorem norm_pow_pow_sub_one_le (n k : ℕ) {c : ℝ} (hc : c ≤ 1) {u : K} (hu : ‖u - 1‖ ≤ c) :
     ‖u ^ n ^ k - 1‖ ≤ max c ‖(n : K)‖ ^ k * c := by
-  have hc0 : 0 ≤ c := (norm_nonneg _).trans hu
-  have hlam : max c ‖(n : K)‖ ≤ 1 := max_le hc (IsUltrametricDist.norm_natCast_le_one K n)
   induction k with
   | zero => simpa using hu
   | succ k ih =>
-    have hle : max c ‖(n : K)‖ ^ k * c ≤ c :=
-      mul_le_of_le_one_left hc0 (pow_le_one₀ (le_max_of_le_left hc0) hlam)
-    calc ‖u ^ n ^ (k + 1) - 1‖ = ‖(u ^ n ^ k) ^ n - 1‖ := by rw [pow_succ, pow_mul]
-      _ ≤ ‖u ^ n ^ k - 1‖ * max ‖u ^ n ^ k - 1‖ ‖(n : K)‖ :=
-          norm_pow_sub_one_le_mul_max n (ih.trans (hle.trans hc))
-      _ ≤ max c ‖(n : K)‖ ^ k * c * max c ‖(n : K)‖ :=
-          mul_le_mul ih (max_le_max (ih.trans hle) le_rfl)
-            (le_max_of_le_left (norm_nonneg _)) (by positivity)
-      _ = max c ‖(n : K)‖ ^ (k + 1) * c := by ring
+    have h : max c ‖(n : K)‖ ^ k * c ≤ c :=
+      mul_le_of_le_one_left ((norm_nonneg _).trans hu) (pow_le_one₀ (le_max_of_le_left
+        ((norm_nonneg _).trans hu)) (max_le hc (IsUltrametricDist.norm_natCast_le_one K n)))
+    calc _ = _ := by rw [pow_succ, pow_mul]
+      _ ≤ _ := norm_pow_sub_one_le_mul_max n (ih.trans (h.trans hc))
+      _ ≤ _ := mul_le_mul ih (max_le_max (ih.trans h) le_rfl)
+        (le_max_of_le_left (norm_nonneg _)) (by positivity [(norm_nonneg _).trans hu])
+      _ = _ := by ring
 
-/-- `u ^ (n ^ k) → 1` for a `1`-unit `u` when `‖n‖ < 1`: by `norm_pow_pow_sub_one_le` the
-distance to `1` is at most `max ‖u - 1‖ ‖n‖ ^ k * ‖u - 1‖`, and `max ‖u - 1‖ ‖n‖ < 1`. -/
 theorem tendsto_pow_pow_sub_one {n : ℕ} (hn : ‖(n : K)‖ < 1) {u : K} (hu : ‖u - 1‖ < 1) :
     Tendsto (fun k : ℕ ↦ u ^ n ^ k - 1) atTop (𝓝 0) := by
-  have h0 : Tendsto (fun k : ℕ ↦ max ‖u - 1‖ ‖(n : K)‖ ^ k * ‖u - 1‖) atTop (𝓝 0) := by
-    rw [← zero_mul ‖u - 1‖]
-    exact (tendsto_pow_atTop_nhds_zero_of_lt_one (le_max_of_le_left (norm_nonneg _))
-      (max_lt hu hn)).mul_const _
-  exact squeeze_zero_norm (fun k ↦ norm_pow_pow_sub_one_le n k hu.le le_rfl) h0
+  refine squeeze_zero_norm (fun k ↦ norm_pow_pow_sub_one_le n k hu.le le_rfl) ?_
+  rw [← zero_mul ‖u - 1‖]
+  exact (tendsto_pow_atTop_nhds_zero_of_lt_one (le_max_of_le_left (norm_nonneg _))
+    (max_lt hu hn)).mul_const _
 
-/-- Integer powers of a `1`-unit stay in the closed ball of radius `‖x - 1‖` around `1`. The
-negative exponents use `‖x⁻¹ - 1‖ = ‖x - 1‖` [Con, p. 27]. -/
 theorem norm_zpow_sub_one_le {x : K} (hx : ‖x - 1‖ < 1) (n : ℤ) : ‖x ^ n - 1‖ ≤ ‖x - 1‖ := by
-  have hx1 : ‖x‖ ≤ 1 := (norm_eq_one_of_norm_sub_one_lt_one hx).le
   rcases Int.eq_nat_or_neg n with ⟨m, rfl | rfl⟩
-  · rw [zpow_natCast]
-    exact norm_pow_sub_one_le hx1 m
-  · rw [zpow_neg, zpow_natCast,
-      norm_inv_sub_one (norm_pow_sub_one_lt hx m)]
-    exact norm_pow_sub_one_le hx1 m
+  · simpa using norm_pow_sub_one_le (norm_eq_one_of_norm_sub_one_lt_one hx).le m
+  · simpa [norm_inv_sub_one (norm_pow_sub_one_lt hx m)] using
+    norm_pow_sub_one_le (norm_eq_one_of_norm_sub_one_lt_one hx).le m
 
-/-- Dividing by a `1`-unit is an isometry at `1`: `x / y - 1 = (x - y) / y` and `‖y‖ = 1`. -/
 theorem norm_div_sub_one {x y : K} (hy : ‖y - 1‖ < 1) : ‖x / y - 1‖ = ‖x - y‖ := by
-  have hy1 : ‖y‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hy
-  have hy0 : y ≠ 0 := norm_pos_iff.1 (hy1 ▸ one_pos)
-  have h : x / y - 1 = (x - y) / y := by field_simp
-  rw [h, norm_div, hy1, div_one]
+  rw [div_sub_one (by aesop), norm_div, norm_eq_one_of_norm_sub_one_lt_one hy, div_one]
 
-/-- Two `1`-units are at distance `< 1`, by the strong triangle inequality. -/
 theorem norm_sub_lt_one {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) : ‖x - y‖ < 1 :=
-  calc ‖x - y‖ = ‖(x - 1) + -(y - 1)‖ := by ring_nf
+  calc _ = ‖(x - 1) + - (y - 1)‖ := by ring_nf
     _ ≤ max ‖x - 1‖ ‖-(y - 1)‖ := IsUltrametricDist.norm_add_le_max _ _
-    _ = max ‖x - 1‖ ‖y - 1‖ := by rw [norm_neg]
-    _ < 1 := max_lt hx hy
+    _ < 1 := by simpa only [norm_neg] using max_lt hx hy
 
-/-- `x ↦ x ^ n` is `1`-Lipschitz on the `1`-units: reduce to `norm_zpow_sub_one_le` for `x / y`
-via `x ^ n - y ^ n = y ^ n ((x / y) ^ n - 1)`. -/
 theorem norm_zpow_sub_zpow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) (n : ℤ) :
     ‖x ^ n - y ^ n‖ ≤ ‖x - y‖ := by
-  have hy1 : ‖y‖ = 1 := norm_eq_one_of_norm_sub_one_lt_one hy
-  have hy0 : y ≠ 0 := norm_pos_iff.1 (hy1 ▸ one_pos)
-  have hdiv : ‖x / y - 1‖ < 1 := by
-    rw [norm_div_sub_one hy]
-    exact norm_sub_lt_one hx hy
-  have he : x ^ n - y ^ n = y ^ n * ((x / y) ^ n - 1) := by
-    rw [div_zpow, mul_sub, mul_one, mul_div_cancel₀ _ (zpow_ne_zero _ hy0)]
-  rw [he, norm_mul, norm_zpow, hy1, one_zpow, one_mul, ← norm_div_sub_one (x := x) hy]
-  exact norm_zpow_sub_one_le hdiv n
+  have : x ^ n - y ^ n = y ^ n * ((x / y) ^ n - 1) := by
+    rw [div_zpow, mul_sub, mul_one, mul_div_cancel₀ _ (zpow_ne_zero _ (by aesop))]
+  simpa [this, norm_eq_one_of_norm_sub_one_lt_one hy, ← norm_div_sub_one hy] using
+    norm_zpow_sub_one_le (by simpa [norm_div_sub_one hy] using norm_sub_lt_one hx hy) n
 
 end IsUltrametricDist
 
@@ -235,10 +181,7 @@ def oneUnits (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K] : Sub
   carrier := {u | ‖(u : K) - 1‖ < 1}
   mul_mem' hu hv := norm_mul_sub_one_lt hu hv
   one_mem' := by simp
-  inv_mem' {u} hu := by
-    show ‖((u⁻¹ : Kˣ) : K) - 1‖ < 1
-    rw [Units.val_inv_eq_inv_val, norm_inv_sub_one hu]
-    exact hu
+  inv_mem' {u} hu := by simpa [norm_inv_sub_one hu]
 
 namespace OneUnits
 
@@ -252,22 +195,18 @@ variable {p : ℕ} [Fact p.Prime] {K : Type*} [NontriviallyNormedField K] [IsUlt
   [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)]
 
 omit [Fact p.Prime] [CompleteSpace K] in
-/-- The uniform estimate behind everything: `‖x ^ m - 1‖` is small once `p ^ k ∣ m`, since
-`x ^ (p ^ k) → 1` (`tendsto_pow_pow_sub_one`) and `‖y ^ j - 1‖ ≤ ‖y - 1‖`.
-[Klo, Exercise 6.1 (d)]. -/
 theorem exists_forall_norm_zpow_sub_one_lt {x : K} (hx : ‖x - 1‖ < 1) {ε : ℝ} (hε : 0 < ε) :
     ∃ k : ℕ, ∀ m : ℤ, (p : ℤ) ^ k ∣ m → ‖x ^ m - 1‖ < ε := by
-  have h3 : ‖((p : ℕ) : K)‖ < 1 := Fact.out
-  obtain ⟨k, hk⟩ := Metric.tendsto_atTop.1 (tendsto_pow_pow_sub_one h3 hx) ε hε
+  obtain ⟨k, hk⟩ := Metric.tendsto_atTop.1 (tendsto_pow_pow_sub_one (n := p) Fact.out hx) ε hε
   refine ⟨k, fun m ⟨j, hj⟩ ↦ ?_⟩
-  have hkk := hk k le_rfl
-  rw [dist_zero_right] at hkk
   calc ‖x ^ m - 1‖ = ‖(x ^ ((p : ℤ) ^ k)) ^ j - 1‖ := by rw [← zpow_mul, ← hj]
     _ ≤ ‖x ^ ((p : ℤ) ^ k) - 1‖ := by
         refine norm_zpow_sub_one_le ?_ j
         rw [← Int.natCast_pow, zpow_natCast]
         exact norm_pow_sub_one_lt hx _
-    _ < ε := by rwa [← Int.natCast_pow, zpow_natCast]
+    _ < ε := by
+      rw [← Int.natCast_pow, zpow_natCast]
+      aesop
 
 omit [CompleteSpace K] in
 theorem tendsto_zpow_of_tendsto_zero {x : K} (hx : ‖x - 1‖ < 1) {c : ℕ → ℤ}
@@ -275,83 +214,48 @@ theorem tendsto_zpow_of_tendsto_zero {x : K} (hx : ‖x - 1‖ < 1) {c : ℕ →
     Tendsto (fun n ↦ x ^ c n) atTop (𝓝 1) := by
   refine Metric.tendsto_atTop.2 fun ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
-  have hp0 : (0:ℝ) < (p : ℝ) := by exact_mod_cast (Fact.out : p.Prime).pos
-  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.1 hc _ (zpow_pos hp0 _)
+  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.1 hc _ (zpow_pos (a := (p : ℝ))
+    (by exact_mod_cast (Fact.out : p.Prime).pos) (-k : ℤ))
   refine ⟨N, fun n hn ↦ ?_⟩
-  have h1 := hN n hn
-  rw [dist_zero_right] at h1
-  rw [dist_eq_norm]
-  exact hk _ (by exact_mod_cast (PadicInt.norm_int_le_pow_iff_dvd (p := p)).1 h1.le)
+  simpa [dist_eq_norm] using hk _ (mod_cast PadicInt.norm_int_le_pow_iff_dvd.1
+    (dist_zero_right (c n : ℤ_[p]) ▸ hN n hn).le)
+
 
 omit [CompleteSpace K] in
-/-- The `p`-adic expansions of `a` agree to higher and higher precision, so the integer powers
-`x ^ (a.appr n)` form a Cauchy sequence [Klo, Exercise 6.1 (d)]: "show that the limit
-`lim g ^ λₙ` exists". -/
 theorem cauchySeq_pow_appr {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
     CauchySeq fun n ↦ x ^ a.appr n := by
-  have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
-  refine Metric.cauchySeq_iff.2 fun ε hε ↦ ?_
+  refine Metric.cauchySeq_iff'.2 fun ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
-  refine ⟨k, fun m hm n hn ↦ ?_⟩
-  -- It suffices to treat `i ≤ j`, since `dist` is symmetric.
-  have key : ∀ i j : ℕ, k ≤ i → i ≤ j → dist (x ^ a.appr j) (x ^ a.appr i) < ε := by
-    intro i j hki hij
-    have hdvd : ((p : ℤ) ^ k) ∣ ((a.appr j : ℤ) - (a.appr i : ℤ)) := by
-      refine dvd_trans (pow_dvd_pow _ hki) ?_
-      rw [← Nat.cast_sub (PadicInt.appr_mono a hij)]
-      exact_mod_cast Int.natCast_dvd_natCast.2 (PadicInt.dvd_appr_sub_appr a i j hij)
-    have he : x ^ a.appr j - x ^ a.appr i
-        = x ^ (a.appr i : ℤ) * (x ^ ((a.appr j : ℤ) - (a.appr i : ℤ)) - 1) := by
-      rw [mul_sub, mul_one, ← zpow_add₀ hx0]
-      norm_num [zpow_natCast]
-    rw [dist_eq_norm, he, norm_mul, norm_zpow,
-      norm_eq_one_of_norm_sub_one_lt_one hx, one_zpow, one_mul]
-    exact hk _ hdvd
-  rcases le_total m n with h | h
-  · rw [dist_comm]; exact key m n hm h
-  · exact key n m hn h
+  refine ⟨k, fun n hn ↦ ?_⟩
+  obtain ⟨_, hd⟩ := Nat.exists_eq_add_of_le (PadicInt.appr_mono a hn)
+  rw [dist_eq_norm, hd, pow_add, ← mul_sub_one, norm_mul, norm_pow,
+    norm_eq_one_of_norm_sub_one_lt_one hx, one_pow, one_mul, ← zpow_natCast]
+  exact hk _ (by simpa [hd] using Int.natCast_dvd_natCast.2 (PadicInt.dvd_appr_sub_appr a k n hn))
 
 /-- The `p`-adic power `x ^ a = lim x ^ (a.appr n)` of `x : K` by `a : ℤ_[p]`. This is the limit
 of [Klo, Exercise 6.1 (d)] and [BG, p. 4], with `a.appr n` as the approximating integers. The
 value is junk unless the sequence converges, which it does when `‖x - 1‖ < 1`
 (`tendsto_pow_appr`). -/
-noncomputable def zpPow (x : K) (a : ℤ_[p]) : K :=
-  limUnder atTop fun n ↦ x ^ a.appr n
+noncomputable
+def zpPow (x : K) (a : ℤ_[p]) : K := limUnder atTop fun n ↦ x ^ a.appr n
 
 theorem tendsto_pow_appr {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) :
     Tendsto (fun n ↦ x ^ a.appr n) atTop (𝓝 (zpPow x a)) :=
   tendsto_nhds_limUnder (cauchySeq_tendsto_of_complete (cauchySeq_pow_appr hx a))
 
-/-- The limit does not depend on the approximating sequence [BG, p. 4]: "`x ^ λ = lim x ^ nᵢ`
-for some sequence of integers `nᵢ` converging to `λ` (this is independent of the choice of
-sequence)". Indeed `x ^ cₙ = x ^ (a.appr n) * x ^ (cₙ - a.appr n)` and the second factor tends
-to `1` by `tendsto_zpow_of_tendsto_zero`. -/
 theorem tendsto_zpow_of_tendsto {x : K} (hx : ‖x - 1‖ < 1) {c : ℕ → ℤ} {a : ℤ_[p]}
     (hc : Tendsto (fun n ↦ (c n : ℤ_[p])) atTop (𝓝 a)) :
     Tendsto (fun n ↦ x ^ c n) atTop (𝓝 (zpPow x a)) := by
-  have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
-  have h0 : Tendsto (fun n ↦ ((c n - (a.appr n : ℤ) : ℤ) : ℤ_[p])) atTop (𝓝 0) := by
-    have h := hc.sub (PadicInt.tendsto_appr a)
-    rw [sub_self] at h
-    refine h.congr fun n ↦ ?_
-    push_cast
-    ring
-  have h1 := (tendsto_pow_appr hx a).mul (tendsto_zpow_of_tendsto_zero hx h0)
-  rw [mul_one] at h1
-  refine h1.congr fun n ↦ ?_
-  rw [← zpow_natCast x (a.appr n), ← zpow_add₀ hx0]
-  congr 1
-  ring
+  simpa [← zpow_natCast, ← zpow_add₀ (a := x) (by aesop)] using (tendsto_pow_appr hx a).mul
+    (tendsto_zpow_of_tendsto_zero (c := fun n ↦ c n - a.appr n) hx
+      (by simpa using hc.sub (PadicInt.tendsto_appr a)))
 
 theorem zpPow_intCast {x : K} (hx : ‖x - 1‖ < 1) (n : ℤ) : zpPow x (n : ℤ_[p]) = x ^ n :=
   tendsto_nhds_unique (tendsto_zpow_of_tendsto (p := p) hx (c := fun _ ↦ n) tendsto_const_nhds)
     tendsto_const_nhds
 
 theorem zpPow_natCast {x : K} (hx : ‖x - 1‖ < 1) (n : ℕ) : zpPow x (n : ℤ_[p]) = x ^ n := by
-  have h : ((n : ℤ) : ℤ_[p]) = (n : ℤ_[p]) := by push_cast; ring
-  rw [← h, zpPow_intCast hx (n : ℤ), zpow_natCast]
+  rw [← Int.cast_natCast, zpPow_intCast hx (n : ℤ), zpow_natCast]
 
 @[simp]
 theorem zpPow_zero {x : K} (hx : ‖x - 1‖ < 1) : zpPow x (0 : ℤ_[p]) = 1 := by
@@ -362,24 +266,18 @@ theorem zpPow_one {x : K} (hx : ‖x - 1‖ < 1) : zpPow x (1 : ℤ_[p]) = x := 
   simpa using zpPow_intCast hx 1
 
 @[simp]
-theorem one_zpPow (a : ℤ_[p]) : zpPow (1 : K) a = 1 := by
-  refine tendsto_nhds_unique (tendsto_pow_appr (p := p) (by simp) a) ?_
-  simp
+theorem one_zpPow (a : ℤ_[p]) : zpPow (1 : K) a = 1 :=
+  tendsto_nhds_unique (tendsto_pow_appr (p := p) (by simp) a) (by simp)
 
 /-- `g ^ (λ + μ) = g ^ λ * g ^ μ` [Klo, Exercise 6.1 (d)]. Compute the limit along
 `a.appr n + b.appr n`, which also tends to `a + b`. -/
 theorem zpPow_add {x : K} (hx : ‖x - 1‖ < 1) (a b : ℤ_[p]) :
     zpPow x (a + b) = zpPow x a * zpPow x b := by
-  have hx0 : x ≠ 0 :=
-    norm_pos_iff.1 ((norm_eq_one_of_norm_sub_one_lt_one hx) ▸ one_pos)
-  have hc : Tendsto (fun n ↦ (((a.appr n : ℤ) + (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop
-      (𝓝 (a + b)) := by
-    refine ((PadicInt.tendsto_appr a).add (PadicInt.tendsto_appr b)).congr fun n ↦ ?_
-    push_cast
-    ring
-  refine tendsto_nhds_unique ((tendsto_zpow_of_tendsto hx hc).congr fun n ↦ ?_)
+  have : Tendsto (fun n ↦ (((a.appr n : ℤ) + (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop (𝓝 (a + b)) :=
+    ((PadicInt.tendsto_appr a).add (PadicInt.tendsto_appr b)).congr fun n ↦ by aesop
+  refine tendsto_nhds_unique ((tendsto_zpow_of_tendsto hx this).congr fun n ↦ ?_)
     ((tendsto_pow_appr hx a).mul (tendsto_pow_appr hx b))
-  rw [zpow_add₀ hx0, zpow_natCast, zpow_natCast]
+  rw [zpow_add₀ (by aesop), zpow_natCast, zpow_natCast]
 
 /-- `(g h) ^ λ = g ^ λ * h ^ λ` for commuting `g, h` [Klo, Exercise 6.1 (d)]: the "sufficient
 condition" of the exercise is automatic in a field. -/
@@ -411,67 +309,40 @@ theorem zpPow_ne_zero {x : K} (hx : ‖x - 1‖ < 1) (a : ℤ_[p]) : zpPow x a �
 theorem norm_zpPow_sub_zpPow_le {x y : K} (hx : ‖x - 1‖ < 1) (hy : ‖y - 1‖ < 1) (a : ℤ_[p]) :
     ‖zpPow x a - zpPow y a‖ ≤ ‖x - y‖ :=
   le_of_tendsto (((tendsto_pow_appr hx a).sub (tendsto_pow_appr hy a)).norm) <|
-    Eventually.of_forall fun _ ↦
-      norm_pow_sub_pow_le (norm_eq_one_of_norm_sub_one_lt_one hx).le
-        (norm_eq_one_of_norm_sub_one_lt_one hy).le _
+    Eventually.of_forall fun _ ↦ norm_pow_sub_pow_le (norm_eq_one_of_norm_sub_one_lt_one hx).le
+    (norm_eq_one_of_norm_sub_one_lt_one hy).le _
 
-/-- `g ^ (λ μ) = (g ^ μ) ^ λ` [Klo, Exercise 6.1 (d)]. A double limit: the sequence
-`(x ^ b.appr n) ^ a.appr n` tends to `x ^ (a * b)` because the exponents multiply, and to
-`(x ^ b) ^ a` because `x ^ b.appr n → x ^ b` and `y ↦ y ^ m` is `1`-Lipschitz on the unit ball
-(`norm_pow_sub_pow_le`), uniformly in `m`. -/
 theorem zpPow_mul {x : K} (hx : ‖x - 1‖ < 1) (a b : ℤ_[p]) :
     zpPow x (a * b) = zpPow (zpPow x b) a := by
-  have hxb : ‖zpPow x b - 1‖ < 1 := norm_zpPow_sub_one_lt hx b
-  have hx1 : ‖x‖ ≤ 1 := (norm_eq_one_of_norm_sub_one_lt_one hx).le
-  have hb1 : ‖zpPow x b‖ ≤ 1 := (norm_zpPow hx b).le
-  have hc : Tendsto (fun n ↦ (((a.appr n : ℤ) * (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop
-      (𝓝 (a * b)) := by
-    refine ((PadicInt.tendsto_appr a).mul (PadicInt.tendsto_appr b)).congr fun n ↦ ?_
-    push_cast
-    ring
-  have h1 : Tendsto (fun n ↦ (x ^ b.appr n) ^ a.appr n) atTop (𝓝 (zpPow x (a * b))) := by
-    refine (tendsto_zpow_of_tendsto hx hc).congr fun n ↦ ?_
+  have : Tendsto (fun n ↦ (((a.appr n : ℤ) * (b.appr n : ℤ) : ℤ) : ℤ_[p])) atTop (𝓝 (a * b)) :=
+    ((PadicInt.tendsto_appr a).mul (PadicInt.tendsto_appr b)).congr fun n ↦ (by aesop)
+  have : Tendsto (fun n ↦ (x ^ b.appr n) ^ a.appr n) atTop (𝓝 (zpPow x (a * b))) := by
+    refine (tendsto_zpow_of_tendsto hx this).congr fun n ↦ ?_
     rw [← pow_mul, ← zpow_natCast x (b.appr n * a.appr n)]
-    push_cast
-    rw [mul_comm]
-  have h2 : Tendsto (fun n ↦ (x ^ b.appr n) ^ a.appr n) atTop (𝓝 (zpPow (zpPow x b) a)) := by
-    refine (tendsto_pow_appr hxb a).congr_dist ?_
-    have hbound : ∀ n : ℕ, dist ((zpPow x b) ^ a.appr n) ((x ^ b.appr n) ^ a.appr n)
-        ≤ ‖zpPow x b - x ^ b.appr n‖ := fun n ↦ by
-      rw [dist_eq_norm]
-      exact norm_pow_sub_pow_le hb1
-        (by rw [norm_pow]; exact pow_le_one₀ (norm_nonneg _) hx1) _
-    refine squeeze_zero (fun _ ↦ dist_nonneg) hbound ?_
-    have h := tendsto_pow_appr hx b
-    rw [tendsto_iff_norm_sub_tendsto_zero] at h
-    simpa only [norm_sub_rev] using h
-  exact tendsto_nhds_unique h1 h2
+    grind
+  have h : Tendsto (fun n ↦ (x ^ b.appr n) ^ a.appr n) atTop (𝓝 (zpPow (zpPow x b) a)) :=
+    (tendsto_pow_appr (norm_zpPow_sub_one_lt hx b) a).congr_dist <|
+      squeeze_zero (fun _ ↦ dist_nonneg) (fun n ↦ (dist_eq_norm _ _).trans_le <|
+      norm_pow_sub_pow_le (norm_zpPow hx b).le (by simp [norm_eq_one_of_norm_sub_one_lt_one hx]) _)
+      (by simpa using ((tendsto_pow_appr hx b).const_sub (zpPow x b)).norm)
+  exact tendsto_nhds_unique this h
 
-/-- When `p ^ k ∣ a`, the power `x ^ a` is as close to `1` as `x ^ (p ^ k)` is: write
-`a = p ^ k * d` and use `zpPow_mul`. -/
 theorem norm_zpPow_sub_one_le_of_dvd {x : K} (hx : ‖x - 1‖ < 1) {a : ℤ_[p]} {k : ℕ}
     (h : (p : ℤ_[p]) ^ k ∣ a) : ‖zpPow x a - 1‖ ≤ ‖x ^ p ^ k - 1‖ := by
   obtain ⟨d, rfl⟩ := h
-  have hcast : ((p : ℤ_[p]) ^ k) = ((p ^ k : ℕ) : ℤ_[p]) := by push_cast; ring
-  rw [mul_comm, zpPow_mul hx, hcast, zpPow_natCast hx]
-  exact norm_zpPow_sub_one_le (norm_pow_sub_one_lt hx _) d
+  simpa [mul_comm, zpPow_mul hx, ← Nat.cast_pow, zpPow_natCast hx] using norm_zpPow_sub_one_le
+    (norm_pow_sub_one_lt hx _) d
 
-/-- `a ↦ x ^ a` is continuous on `ℤ_[p]`: if `‖a - b‖ ≤ p ^ (-k)` then `p ^ k ∣ a - b`, and
-`x ^ a - x ^ b = x ^ b (x ^ (a - b) - 1)` is small by `norm_zpPow_sub_one_le_of_dvd`. -/
 theorem continuous_zpPow {x : K} (hx : ‖x - 1‖ < 1) : Continuous fun a : ℤ_[p] ↦ zpPow x a := by
   refine Metric.continuous_iff.2 fun b ε hε ↦ ?_
   obtain ⟨k, hk⟩ := exists_forall_norm_zpow_sub_one_lt (p := p) hx hε
-  have hp0 : (0:ℝ) < (p : ℝ) := by exact_mod_cast (Fact.out : p.Prime).pos
-  refine ⟨(p : ℝ) ^ (-k : ℤ), zpow_pos hp0 _, fun a ha ↦ ?_⟩
+  refine ⟨(p : ℝ) ^ (-k : ℤ), zpow_pos (mod_cast (Fact.out : p.Prime).pos) _, fun a ha ↦ ?_⟩
   rw [dist_eq_norm] at ha ⊢
-  have hdvd : (p : ℤ_[p]) ^ k ∣ (a - b) :=
-    Ideal.mem_span_singleton.1 ((PadicInt.norm_le_pow_iff_mem_span_pow (a - b) k).1 ha.le)
-  have he : zpPow x a - zpPow x b = zpPow x b * (zpPow x (a - b) - 1) := by
-    rw [mul_sub, mul_one, ← zpPow_add hx, add_sub_cancel]
-  rw [he, norm_mul, norm_zpPow hx, one_mul]
-  refine lt_of_le_of_lt (norm_zpPow_sub_one_le_of_dvd hx hdvd) ?_
-  have h := hk ((p : ℤ) ^ k) dvd_rfl
-  rwa [← Int.natCast_pow, zpow_natCast] at h
+  rw [← norm_div_sub_one (norm_zpPow_sub_one_lt hx b), ← sub_add_cancel a b, zpPow_add hx,
+    mul_div_cancel_right₀ _ (zpPow_ne_zero hx b)]
+  refine (norm_zpPow_sub_one_le_of_dvd hx (Ideal.mem_span_singleton.1
+    ((PadicInt.norm_le_pow_iff_mem_span_pow (a - b) k).1 ha.le))).trans_lt ?_
+  simpa only [zpow_natCast] using hk ((p ^ k : ℕ) : ℤ) (by simp)
 
 end ZpPow
 
@@ -481,11 +352,13 @@ variable {p : ℕ} [Fact p.Prime] {K : Type*} [NontriviallyNormedField K] [IsUlt
   [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)]
 
 /-- The `p`-adic power of a principal unit, as a principal unit. -/
-noncomputable def zpPowUnit (u : oneUnits K) (a : ℤ_[p]) : oneUnits K :=
+noncomputable
+def zpPowUnit (u : oneUnits K) (a : ℤ_[p]) : oneUnits K :=
   ⟨Units.mk0 (zpPow ((u : Kˣ) : K) a) (zpPow_ne_zero (mem_oneUnits_iff.1 u.2) a),
     mem_oneUnits_iff.2 (norm_zpPow_sub_one_lt (mem_oneUnits_iff.1 u.2) a)⟩
 
-noncomputable instance instSMul : SMul ℤ_[p] (Additive (oneUnits K)) :=
+noncomputable
+instance instSMul : SMul ℤ_[p] (Additive (oneUnits K)) :=
   ⟨fun a u ↦ Additive.ofMul (zpPowUnit u.toMul a)⟩
 
 @[simp]
@@ -493,48 +366,38 @@ theorem coe_smul (a : ℤ_[p]) (u : Additive (oneUnits K)) :
     (((a • u).toMul : Kˣ) : K) = zpPow ((u.toMul : Kˣ) : K) a := rfl
 
 omit [CompleteSpace K] in
-/-- Two elements of `Additive (oneUnits K)` are equal as soon as their values in `K` are. -/
-theorem ext_of_coe {u v : Additive (oneUnits K)}
-    (h : ((u.toMul : Kˣ) : K) = ((v.toMul : Kˣ) : K)) : u = v :=
-  Additive.toMul.injective (Subtype.ext (Units.ext h))
+theorem ext_of_coe {u v : Additive (oneUnits K)} (h : ((u.toMul : Kˣ) : K) = ((v.toMul : Kˣ) : K)) :
+  u = v := Additive.toMul.injective (Subtype.ext (Units.ext h))
 
 /-- The `ℤ_[p]`-module structure `a • u = u ^ a` on the principal units. "Regard `G` as a
 finitely generated `ℤ_p`-module" [Klo, Exercise 6.1 (f)]; the six axioms are the exponent rules
 `zpPow_one`, `zpPow_mul`, `one_zpPow`, `mul_zpPow`, `zpPow_add`, `zpPow_zero` of
 [Klo, Exercise 6.1 (d)], read additively. -/
-noncomputable instance instModule : Module ℤ_[p] (Additive (oneUnits K)) where
+noncomputable
+instance instModule : Module ℤ_[p] (Additive (oneUnits K)) where
   one_smul u := ext_of_coe <| by
-    rw [coe_smul]; exact zpPow_one (mem_oneUnits_iff.1 u.toMul.2)
+    simpa [coe_smul] using zpPow_one (mem_oneUnits_iff.1 u.toMul.2)
   mul_smul a b u := ext_of_coe <| by
-    rw [coe_smul, coe_smul, coe_smul]; exact zpPow_mul (mem_oneUnits_iff.1 u.toMul.2) a b
-  smul_zero a := ext_of_coe <| by
-    rw [coe_smul]; exact one_zpPow a
+    simpa [coe_smul, coe_smul, coe_smul] using zpPow_mul (mem_oneUnits_iff.1 u.toMul.2) a b
+  smul_zero a := ext_of_coe <| by simp [coe_smul]
   smul_add a u v := ext_of_coe <| by
-    rw [coe_smul]
-    have hval : (((u + v).toMul : oneUnits K) : Kˣ) = ((u.toMul : Kˣ) * (v.toMul : Kˣ)) := rfl
-    rw [hval, Units.val_mul,
+    rw [coe_smul, toMul_add, Subgroup.coe_mul, Units.val_mul,
       mul_zpPow (mem_oneUnits_iff.1 u.toMul.2) (mem_oneUnits_iff.1 v.toMul.2) a]
     rfl
   add_smul a b u := ext_of_coe <| by
-    rw [coe_smul, zpPow_add (mem_oneUnits_iff.1 u.toMul.2) a b]; rfl
+    rw [coe_smul, zpPow_add (mem_oneUnits_iff.1 u.toMul.2) a b]
+    rfl
   zero_smul u := ext_of_coe <| by
-    rw [coe_smul]; exact zpPow_zero (mem_oneUnits_iff.1 u.toMul.2)
+    simpa [coe_smul] using zpPow_zero (mem_oneUnits_iff.1 u.toMul.2)
 
-theorem natCast_smul (n : ℕ) (u : Additive (oneUnits K)) : (n : ℤ_[p]) • u = n • u := by
-  refine ext_of_coe ?_
-  rw [coe_smul, zpPow_natCast (mem_oneUnits_iff.1 u.toMul.2), toMul_nsmul]
-  push_cast
-  ring
+theorem natCast_smul (n : ℕ) (u : Additive (oneUnits K)) : (n : ℤ_[p]) • u = n • u :=
+  ext_of_coe (by simp [zpPow_natCast (mem_oneUnits_iff.1 u.toMul.2)])
 
 omit [CompleteSpace K] [Fact (‖((p : ℕ) : K)‖ < 1)] in
-/-- The topology of `Additive (oneUnits K)` is induced from `K`: the subgroup carries the
-subtype topology of `Kˣ`, which embeds in `K` (`Units.isEmbedding_val₀`), and `Additive` shares
-the topology of the underlying type. -/
 theorem isInducing_coe :
     Topology.IsInducing (fun u : Additive (oneUnits K) ↦ ((u.toMul : Kˣ) : K)) :=
   Units.isEmbedding_val₀.isInducing.comp Topology.IsInducing.subtypeVal
 
-/-- `a • u = lim (a.appr n) • u`, the defining limit on the module side. -/
 theorem tendsto_appr_nsmul (a : ℤ_[p]) (u : Additive (oneUnits K)) :
     Tendsto (fun n ↦ a.appr n • u) atTop (𝓝 (a • u)) := by
   rw [isInducing_coe.tendsto_nhds_iff]
@@ -542,11 +405,17 @@ theorem tendsto_appr_nsmul (a : ℤ_[p]) (u : Additive (oneUnits K)) :
   refine (tendsto_pow_appr (p := p) hu a).congr fun n ↦ ?_
   rw [Function.comp_apply, ← natCast_smul (p := p) (a.appr n) u, coe_smul, zpPow_natCast hu]
 
+theorem tendsto_appr_nsmul_pi {ι : Type*} {F : ι → Type*}
+    [∀ i, NontriviallyNormedField (F i)] [∀ i, IsUltrametricDist (F i)]
+    [∀ i, CompleteSpace (F i)] [∀ i, Fact (‖((p : ℕ) : F i)‖ < 1)]
+    (a : ℤ_[p]) (x : ∀ i, Additive (oneUnits (F i))) :
+    Tendsto (fun n ↦ a.appr n • x) atTop (𝓝 (a • x)) :=
+  tendsto_pi_nhds.2 fun i ↦ tendsto_appr_nsmul a (x i)
+
 theorem continuous_smul_const (u : Additive (oneUnits K)) :
     Continuous fun a : ℤ_[p] ↦ a • u := by
-  rw [isInducing_coe.continuous_iff]
-  refine (continuous_zpPow (p := p) (mem_oneUnits_iff.1 u.toMul.2)).congr fun a ↦ ?_
-  rw [Function.comp_apply, coe_smul]
+  simpa [isInducing_coe.continuous_iff] using (continuous_zpPow
+    (mem_oneUnits_iff.1 u.toMul.2)).congr fun a ↦ by simp
 
 /-- `x ↦ x ^ a` is continuous on the open unit ball around `1`, being `1`-Lipschitz there
 (`norm_zpPow_sub_zpPow_le`). -/
@@ -558,10 +427,8 @@ theorem continuousOn_zpPow (a : ℤ_[p]) :
 
 instance : ContinuousConstSMul ℤ_[p] (Additive (oneUnits K)) where
   continuous_const_smul a := by
-    rw [isInducing_coe.continuous_iff]
-    refine ((continuousOn_zpPow (K := K) a).comp_continuous isInducing_coe.continuous
-      fun u ↦ mem_oneUnits_iff.1 u.toMul.2).congr fun u ↦ ?_
-    rw [Function.comp_apply, Function.comp_apply, coe_smul]
+    simpa [isInducing_coe.continuous_iff] using ((continuousOn_zpPow (K := K) a).comp_continuous
+      isInducing_coe.continuous fun u ↦ mem_oneUnits_iff.1 u.toMul.2).congr fun u ↦ (by simp)
 
 /-- A closed subgroup of a `ℤ_[p]`-module in which `a • x = lim (a.appr n) • x` is a
 `ℤ_[p]`-submodule. -/

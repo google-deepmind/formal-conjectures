@@ -36,11 +36,14 @@ $\delta(K, p) = (r_1 + r_2 - 1) - \operatorname{rank}_{\mathbb{Z}_p} \overline{E
 ## The dictionary
 
 * $r_1 + r_2 - 1$ is `NumberField.Units.rank K`;
-* a prime $\mathfrak{p} \mid p$ is `v : PrimesAbove K p`, and $K_\mathfrak{p}$ is
+* a prime $\mathfrak{p} \mid p$ is `v : NumberField.PrimesAbove K p`, and $K_\mathfrak{p}$ is
   `v.1.adicCompletion K`;
 * $U_{1, \mathfrak{p}}$ is `oneUnits (v.1.adicCompletion K)`, and its $\mathbb{Z}_p$-module
   structure $u^a = \lim_n u^{a_n}$ is `OneUnits.instModule`, from
-  `FormalConjecturesForMathlib.NumberTheory.Padics.OneUnits`;
+  `FormalConjecturesForMathlib.NumberTheory.Padics.OneUnits`; that $K_\mathfrak{p}$ has residue
+  characteristic $p$, and that a unit of $E_1$ lands in $U_{1, \mathfrak{p}}$, are
+  `IsDedekindDomain.HeightOneSpectrum.norm_natCast_lt_one` and `…norm_algebraMap_sub_one_lt`
+  from `FormalConjecturesForMathlib.NumberTheory.NumberField.PrimesAbove`;
 * $U_1$ is `U₁ K p`, written additively so that it is a `ℤ_[p]`-module;
 * $E_1$ is `E₁ K p`, and membership in it is `IsPrincipalUnitAbove K p`;
 * the diagonal embedding $E_1 \to U_1$ is `diag K p`, and the closure $\overline{E_1}$ is
@@ -94,24 +97,6 @@ $\mathcal{O}_K^\times$.
 def IsPrincipalUnitAbove (u : (𝓞 K)ˣ) : Prop :=
   ∀ v : HeightOneSpectrum (𝓞 K), (p : 𝓞 K) ∈ v.asIdeal → (u : 𝓞 K) - 1 ∈ v.asIdeal
 
-/-- The primes $\mathfrak{p}$ of $\mathcal{O}_K$ above $p$. -/
-abbrev PrimesAbove : Type _ := {v : HeightOneSpectrum (𝓞 K) // (p : 𝓞 K) ∈ v.asIdeal}
-
-omit [Fact p.Prime] in
-/-- `‖p‖ < 1` in $K_\mathfrak{p}$ for $\mathfrak{p} \mid p$. -/
-@[category API, AMS 11]
-theorem norm_natCast_lt_one (v : PrimesAbove K p) : ‖((p : ℕ) : v.1.adicCompletion K)‖ < 1 := by
-  have h : ((p : ℕ) : v.1.adicCompletion K)
-      = algebraMap (𝓞 K) (v.1.adicCompletion K) (p : 𝓞 K) := by
-    push_cast
-    ring
-  rw [h]
-  show ‖FinitePlace.embedding v.1 (algebraMap (𝓞 K) K (p : 𝓞 K))‖ < 1
-  exact (FinitePlace.norm_lt_one_iff_mem K v.1 (p : 𝓞 K)).2 v.2
-
-instance (v : PrimesAbove K p) : Fact (‖((p : ℕ) : v.1.adicCompletion K)‖ < 1) :=
-  ⟨norm_natCast_lt_one K p v⟩
-
 /-- $U_1 = \prod_{\mathfrak{p} \mid p} U_{1, \mathfrak{p}}$, written additively, as a
 $\mathbb{Z}_p$-module. -/
 abbrev U₁ : Type _ := ∀ v : PrimesAbove K p, Additive (oneUnits (v.1.adicCompletion K))
@@ -123,65 +108,37 @@ embedding"). -/
 def E₁ : Subgroup (𝓞 K)ˣ where
   carrier := {u | IsPrincipalUnitAbove K p u}
   mul_mem' {a b} ha hb v hv := by
-    have h : ((a * b : (𝓞 K)ˣ) : 𝓞 K) - 1
-        = (a : 𝓞 K) * ((b : 𝓞 K) - 1) + ((a : 𝓞 K) - 1) := by
-      push_cast
-      ring
-    rw [h]
-    exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ (hb v hv)) (ha v hv)
+    suffices ((a * b : (𝓞 K)ˣ) : 𝓞 K) - 1 = (a : 𝓞 K) * ((b : 𝓞 K) - 1) + ((a : 𝓞 K) - 1) by
+      simpa only [this] using Ideal.add_mem _ (Ideal.mul_mem_left _ _ (hb v hv)) (ha v hv)
+    simp; ring
   one_mem' v hv := by simp
   inv_mem' {a} ha v hv := by
-    have hinv : ((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * (a : 𝓞 K) = 1 := by
-      rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
-    have h : ((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) - 1
-        = -((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * ((a : 𝓞 K) - 1) := by
-      linear_combination hinv
-    rw [h]
-    exact Ideal.mul_mem_left _ _ (ha v hv)
+    suffices ((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) - 1 = -((a⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * ((a : 𝓞 K) - 1) by
+      simpa only [this] using Ideal.mul_mem_left _ _ (ha v hv)
+    grind [Units.inv_mul]
 
 omit [NumberField K] [Fact p.Prime] in
 @[category API, AMS 11]
 theorem mem_E₁_iff {u : (𝓞 K)ˣ} : u ∈ E₁ K p ↔ IsPrincipalUnitAbove K p u := Iff.rfl
-
-omit [Fact p.Prime] in
-/-- A unit of $E_1$ is a principal unit in every $K_\mathfrak{p}$, $\mathfrak{p} \mid p$. -/
-@[category API, AMS 11]
-theorem norm_algebraMap_sub_one_lt {u : (𝓞 K)ˣ} (hu : IsPrincipalUnitAbove K p u)
-    (v : PrimesAbove K p) : ‖algebraMap (𝓞 K) (v.1.adicCompletion K) u - 1‖ < 1 := by
-  rw [← map_one (algebraMap (𝓞 K) (v.1.adicCompletion K)), ← map_sub]
-  show ‖FinitePlace.embedding v.1 (algebraMap (𝓞 K) K ((u : 𝓞 K) - 1))‖ < 1
-  exact (FinitePlace.norm_lt_one_iff_mem K v.1 _).2 (hu v.1 v.2)
 
 /-- The diagonal embedding $E_1 \to U_1$, $\varepsilon \mapsto (\varepsilon)_{\mathfrak{p} \mid p}$
 ([Wikipedia]: "$E_1$ embedded diagonally in $U_1$"). -/
 noncomputable def diag : Additive (E₁ K p) →+ U₁ K p where
   toFun u v := Additive.ofMul
     ⟨Units.map (algebraMap (𝓞 K) (v.1.adicCompletion K)).toMonoidHom (u.toMul : (𝓞 K)ˣ),
-      OneUnits.mem_oneUnits_iff.2 (norm_algebraMap_sub_one_lt K p u.toMul.2 v)⟩
+      OneUnits.mem_oneUnits_iff.2 (v.1.norm_algebraMap_sub_one_lt (u.toMul.2 v.1 v.2))⟩
   map_zero' := by
     funext v
-    refine OneUnits.ext_of_coe ?_
-    simp
+    exact OneUnits.ext_of_coe (by simp)
   map_add' u w := by
     funext v
-    refine OneUnits.ext_of_coe ?_
-    show ((Units.map (algebraMap (𝓞 K) (v.1.adicCompletion K)).toMonoidHom
-        (((u.toMul * w.toMul : E₁ K p)) : (𝓞 K)ˣ) : (v.1.adicCompletion K)ˣ)
-          : v.1.adicCompletion K) = _
-    rw [Subgroup.coe_mul, map_mul]
-    rfl
+    exact OneUnits.ext_of_coe (by simp)
 
 omit [Fact p.Prime] in
 @[category API, AMS 11]
 theorem coe_diag_apply (u : Additive (E₁ K p)) (v : PrimesAbove K p) :
     (((diag K p u v).toMul : (v.1.adicCompletion K)ˣ) : v.1.adicCompletion K) =
       algebraMap (𝓞 K) (v.1.adicCompletion K) ((u.toMul : (𝓞 K)ˣ) : 𝓞 K) := rfl
-
-/-- `a • x = lim (a.appr n) • x` in $U_1$. -/
-@[category API, AMS 11]
-theorem tendsto_appr_nsmul (a : ℤ_[p]) (x : U₁ K p) :
-    Tendsto (fun n ↦ a.appr n • x) atTop (𝓝 (a • x)) :=
-  tendsto_pi_nhds.2 fun v ↦ OneUnits.tendsto_appr_nsmul a (x v)
 
 /-- The closure $\overline{E_1}$ of the diagonal image of $E_1$ in $U_1$, as a
 $\mathbb{Z}_p$-submodule of $U_1$ ([Wikipedia]: "the closure of $E_1$ embedded diagonally in
@@ -192,7 +149,7 @@ noncomputable def closureE₁ : Submodule ℤ_[p] (U₁ K p) where
   toAddSubmonoid := (diag K p).range.topologicalClosure.toAddSubmonoid
   smul_mem' a x hx :=
     AddSubgroup.smul_mem_of_isClosed (AddSubgroup.isClosed_topologicalClosure _) hx
-      (tendsto_appr_nsmul K p a x)
+      (OneUnits.tendsto_appr_nsmul_pi a x)
 
 @[category API, AMS 11]
 theorem coe_closureE₁ : (closureE₁ K p : Set (U₁ K p)) = closure (Set.range (diag K p)) := by
