@@ -15,7 +15,6 @@ const PAGE_SIZE = 50;
 let allConjectures = [];
 let filtered       = [];
 let currentPage    = 1;
-let versoFragments = { moduleDocs: {}, constLinks: {} };
 
 // Active filter state (driven by URL ↔ UI)
 const state = {
@@ -82,21 +81,11 @@ function writeURL() {
 // ---------------------------------------------------------------------------
 // Filter / sort
 // ---------------------------------------------------------------------------
-// The statement text lives in the Verso fragments, as HTML. Strip the tags once per
-// theorem and keep the result, so typing does not re-parse every entry on every keystroke.
+// Search native statement text directly. No corpus-wide HTML parsing.
 const statementTextCache = new Map();
-
 function statementText(c) {
-  if (!statementTextCache.has(c.theorem)) {
-    const html = FC.problemDocHTML(c, versoFragments);
-    let text = '';
-    if (html) {
-      const el = document.createElement('div');
-      el.innerHTML = html;
-      text = (el.textContent || '').toLowerCase();
-    }
-    statementTextCache.set(c.theorem, text);
-  }
+  if (!statementTextCache.has(c.theorem)) statementTextCache.set(c.theorem,
+    `${c.statement || ''} ${c.docstring || ''}`.toLowerCase());
   return statementTextCache.get(c.theorem);
 }
 
@@ -153,7 +142,7 @@ function renderCard(c, index) {
     .map(s => `<span class="subject-pill">${FC.escapeHTML(s.name)}</span>`)
     .join('');
   const previewId = `problem-preview-${index}`;
-  const docHTML = FC.problemDocHTML(c, versoFragments) ||
+  const docHTML = FC.problemDocHTML(c) ||
     '<p class="problem-preview__empty">No informal statement available.</p>';
 
   const article = document.createElement('article');
@@ -163,7 +152,7 @@ function renderCard(c, index) {
     <div class="theorem-card__summary">
       <div class="theorem-card__body">
         <div class="theorem-card__name">
-          <a href="${FC.escapeHTML(FC.theoremURL(c.displayTheorem))}">
+          <a href="${FC.escapeHTML(FC.theoremURL(c.theorem))}">
             ${FC.escapeHTML(c.displayTheorem)}
           </a>
         </div>
@@ -314,7 +303,6 @@ async function init() {
   }
 
   allConjectures = data.conjectures;
-  versoFragments = data.versoFragments || { moduleDocs: {}, constLinks: {} };
   statementTextCache.clear();
 
   // Handle OAuth callback and prefetch votes (disabled)

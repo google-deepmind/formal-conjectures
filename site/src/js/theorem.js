@@ -4,7 +4,7 @@
  * Renders the theorem detail view with:
  * - Module docstring (from Verso, with rendered LaTeX/HTML)
  * - Problem description (docstring from Verso, with rendered LaTeX)
- * - Syntax-highlighted Lean code (fetched from Verso, with full interactive hovers)
+ * - Syntax-highlighted Lean code (from the module rendering, with interactive hovers)
  * - Links to full annotated source and GitHub
  */
 
@@ -12,6 +12,7 @@
 
 const detailEl = document.getElementById('theorem-detail');
 const _base = document.documentElement.dataset.base || '';
+const _renderBase = document.documentElement.dataset.renderBase || _base;
 
 
 async function init() {
@@ -32,7 +33,9 @@ async function init() {
   }
 
   // Look up by exact name (with guillemets) or by display name (guillemets stripped)
-  const theorem = data.conjectures.find(c => c.theorem === name || c.displayTheorem === name);
+  let theorem;
+  try { theorem = FCCatalog.resolveTheorem(data.conjectures, name); }
+  catch (error) { renderError(FC.escapeHTML(error.message)); return; }
   if (!theorem) {
     renderError(`Theorem <code>${FC.escapeHTML(name)}</code> not found. It may have been renamed or removed.`);
     return;
@@ -42,10 +45,21 @@ async function init() {
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) ogTitle.content = theorem.theorem;
   const siblings = data.conjectures.filter(c => c.module === theorem.module);
-  const verso = data.versoFragments || { moduleDocs: {}, constLinks: {} };
-  const contributors = data.contributors?.[theorem.githubPath] || [];
-
+  let verso = {moduleDocs:{}, constLinks:{}};
+  let contributors = [];
+  let renderingError = null;
+  try {
+    const rendering = await FC.loadModule(theorem.module);
+    verso = rendering;
+    contributors = rendering.contributors;
+  } catch (error) { renderingError = error.message; }
   renderDetail(theorem, siblings, verso, contributors);
+  if (renderingError) {
+    const notice = document.createElement('p');
+    notice.textContent = renderingError + '. The statement below is from the verified catalog.';
+    document.getElementById('theorem-detail').prepend(notice);
+  }
+
 }
 
 // ─── Verso asset and script loading ────────────────────────────────
@@ -73,7 +87,7 @@ function loadVersoAssets() {
   const codeLink = document.createElement('link');
   codeLink.id = 'verso-code-css';
   codeLink.rel = 'stylesheet';
-  codeLink.href = `${_base}/src/code.css`;
+  codeLink.href = `${_renderBase}/src/code.css`;
   document.head.appendChild(codeLink);
 
   // Load the shared token theme after Verso's stylesheet.
@@ -85,7 +99,7 @@ function loadVersoAssets() {
   // Load tippy border CSS for hover tooltips
   const tippyLink = document.createElement('link');
   tippyLink.rel = 'stylesheet';
-  tippyLink.href = `${_base}/src/tippy-border.css`;
+  tippyLink.href = `${_renderBase}/src/tippy-border.css`;
   document.head.appendChild(tippyLink);
 
   // Inline CSS: override/supplement Verso's code.css
@@ -130,49 +144,8 @@ function loadVersoAssets() {
   document.head.appendChild(style);
 
   // Load popper.js then tippy.js from the Verso source directory
-  return loadScript(`${_base}/src/popper.js`)
-    .then(() => loadScript(`${_base}/src/tippy.js`));
-}
-
-// ─── Fetch code block + hover data ─────────────────────────────────
-
-/**
- * Fetch the highlighted code block for a theorem from its Verso page.
- * Also fetches the -verso-docs.json hover data for interactive tooltips.
- */
-async function fetchVersoCodeBlock(versoLink) {
-  try {
-    const pagePath = versoLink.url.split('#')[0]; // "/FormalConjectures/.../«17»/"
-    const pageUrl = `${_base}/src${pagePath}`;
-    // -verso-docs.json is at the literate root, shared across all pages
-    const docsUrl = `${_base}/src/-verso-docs.json`;
-
-    const [pageResp, docsResp] = await Promise.all([
-      fetch(pageUrl),
-      fetch(docsUrl).catch(() => null),
-    ]);
-    if (!pageResp.ok) return null;
-    const html = await pageResp.text();
-    const docsData = docsResp && docsResp.ok ? await docsResp.json() : null;
-
-    // Parse the HTML and find the code block containing our theorem's anchor
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const anchor = doc.getElementById(versoLink.anchor);
-    if (!anchor) return null;
-
-    // Walk up to find the enclosing <code class="hl lean block">
-    let el = anchor;
-    while (el && !(el.tagName === 'CODE' && el.classList.contains('hl'))) {
-      el = el.parentElement;
-    }
-    if (!el) return null;
-
-    return { codeHtml: el.outerHTML, docsData };
-  } catch (e) {
-    console.warn('Failed to fetch Verso code:', e);
-    return null;
-  }
+  return loadScript(`${_renderBase}/src/popper.js`)
+    .then(() => loadScript(`${_renderBase}/src/tippy.js`));
 }
 
 // ─── Verso hover initialization (replicates Verso inline script) ───
@@ -309,7 +282,7 @@ function initVersoHovers(container, docsData) {
             for (const a of info.querySelectorAll('a[href]')) {
               const href = a.getAttribute('href');
               if (href && href.startsWith('/') && !href.startsWith('/src/')) {
-                a.setAttribute('href', `${_base}/src${href}`);
+                a.setAttribute('href', `${_renderBase}/src${href}`);
               }
             }
             content.appendChild(info);
@@ -427,7 +400,7 @@ function renderDetail(theorem, siblings, verso, contributors) {
               <span class="badge ${sCatMeta.css}">${FC.escapeHTML(sCatMeta.label)}</span>
               ${isCurrent
             ? `<span class="sibling-item__name">${FC.escapeHTML(s.displayTheorem)}</span>`
-            : `<a class="sibling-item__name" href="${FC.escapeHTML(FC.theoremURL(s.displayTheorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
+            : `<a class="sibling-item__name" href="${FC.escapeHTML(FC.theoremURL(s.theorem))}">${FC.escapeHTML(s.displayTheorem)}</a>`}
               <button class="statement-toggle sibling-item__toggle" type="button" aria-expanded="false" aria-controls="${previewId}">
                 <span class="statement-toggle__text">Show statement</span>
                 <span class="statement-toggle__icon" aria-hidden="true"></span>
@@ -448,10 +421,8 @@ function renderDetail(theorem, siblings, verso, contributors) {
   const versoLink = FC.findVersoLink(theorem.theorem, verso.constLinks);
   const docHtml = FC.problemDocHTML(theorem, verso);
   const versoSourceUrl = versoLink
-    ? `${_base}/src${versoLink.url}`
-    : theorem.sourceUrl
-      ? `${_base}${theorem.sourceUrl}`
-      : null;
+    ? `${_renderBase}/src${versoLink.url}`
+    : null;
 
   // Module overview section (with module name in heading)
   const moduleDocSection = moduleDocHTML ? `
@@ -535,6 +506,10 @@ function renderDetail(theorem, siblings, verso, contributors) {
 
     ${docSection}
 
+    <section class="theorem-detail__section">
+      <h2 class="detail-label">Lean statement</h2>
+      <pre><code>${FC.escapeHTML(theorem.statement)}</code></pre>
+    </section>
     ${codeSection}
 
     ${formalProofsSection}
@@ -575,9 +550,10 @@ function renderDetail(theorem, siblings, verso, contributors) {
   FC.setupStatementToggles(detailEl);
   FC.renderLatex();
 
-  // Async: load Verso assets, fetch code block, and initialize hovers
+  // Load Verso assets and display the code and hovers retained in this snapshot.
   if (versoLink) {
-    loadVersoAssets().then(() => fetchVersoCodeBlock(versoLink)).then(result => {
+    loadVersoAssets().then(() => {
+      const result = versoLink;
       const container = document.getElementById('verso-code-container');
       if (!container) return;
       if (result && result.codeHtml) {
@@ -588,18 +564,21 @@ function renderDetail(theorem, siblings, verso, contributors) {
         for (const a of container.querySelectorAll('a[href]')) {
           const href = a.getAttribute('href');
           if (href && !href.startsWith('http') && !href.startsWith('/')) {
-            a.setAttribute('href', `${_base}/src/${href}`);
+            a.setAttribute('href', `${_renderBase}/src/${href}`);
           } else if (href && href.startsWith('/') && !href.startsWith('/src/') && !href.startsWith(_base)) {
-            a.setAttribute('href', `${_base}/src${href}`);
+            a.setAttribute('href', `${_renderBase}/src${href}`);
           }
         }
         // Initialize interactive hovers on the injected code
-        initVersoHovers(container, result.docsData);
+        initVersoHovers(container, result.hoverDocs);
       } else {
         container.innerHTML = `<div class="verso-code-fallback">
           <a href="${versoSourceUrl || '#'}">View in annotated source →</a>
         </div>`;
       }
+    }).catch(error => {
+      const container = document.getElementById('verso-code-container');
+      if (container) container.textContent = `Rich rendering unavailable: ${error.message}`;
     });
   }
 }

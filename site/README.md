@@ -11,33 +11,63 @@ Website for the [Formal Conjectures](https://github.com/google-deepmind/formal-c
 
 ## Architecture
 
-The site is a static website generated from a JSON metadata file produced by the formal-conjectures repository. The overall data flow is:
+The existing Lake build produces one native catalog and Verso's rendered source
+pages. The website and CLI read the same catalog. See [the data contract](API.md)
+for endpoints, schemas, snapshot verification, and provenance.
 
+```mermaid
+flowchart LR
+  S["Lean sources + Lake pins"] --> L["Lake build"]
+  L --> E["Shared native metadata / extract_names"]
+  L --> V["Verso literate pages"]
+  E --> C["conjectures.json + manifest"]
+  C --> CLI["CLI / status / link checks"]
+  C --> W["Website"]
+  V --> R["Per-module rich rendering"]
+  C --> R
+  R --> W
 ```
-formal-conjectures repo (Lean 4)
-  └─ lake exe extract_names
-       └─ data/conjectures.json   ← added here by formal-conjectures CI
-            └─ node build.js
-                 └─ site/         ← deployed to GitHub Pages
-```
 
-1. **Data extraction.** The formal-conjectures CI runs `lake exe extract_names` (defined in `scripts/extract_names.lean`). This imports all compiled Lean modules, reads the `@[category]` and `@[AMS]` attributes, and writes a JSON array to stdout. Each entry contains the theorem's fully-qualified name, module, category, AMS subject codes, pretty-printed statement, and docstring.
+CI builds `FormalConjecturesAnswerPostpone`, runs `extract_names`, and validates
+its complete output with `scripts/publish_catalog.py`. This preserves the native
+schema-2 fields and records the exact source and extractor revisions, toolchain,
+and dependency digest. `extract_names` arguments, ordering, and field meanings
+are unchanged. Anonymous examples remain excluded; no identities are invented.
 
-2. **Data creation.** The formal-conjectures CI adds the resulting JSON to `data/conjectures.json` in this repository.
+`node build.js` copies the canonical catalog without rewriting its bytes. A shared
+JavaScript adapter supplies display labels in memory and during static rendering.
+Node and browser readers share snapshot decoding and validation. The site build
+retains the validated bytes for publication. Its file I/O and rendering publication
+live in `catalog.cjs`; `build.js` assembles the pages.
 
-3. **Site build.** A push to `data/conjectures.json` triggers this repo's GitHub Actions workflow (`.github/workflows/deploy.yml`), which runs `node build.js` and deploys the output to GitHub Pages.
+The existing `data/conjectures.json` filename now holds the full native data; no
+second semantic projection is published.
 
-During the site build, `build.js` also reads the repository's git history to
-attach file-level contributor metadata to each theorem page. If `GITHUB_TOKEN`
-or `GH_TOKEN` is available, the build enriches matching contributors with their
-GitHub username, profile URL, and avatar URL; otherwise it falls back to the
-display names available in git history.
+Verso supplies formatted docstrings, highlighted code, and hovers. The fragment
+step retains only catalog declarations and their referenced hover records. The
+build writes these into per-module rendering files, bound to the catalog digest.
+Opening a problem loads its module, without downloading corpus-wide rendering or
+hover data. The full annotated source pages remain under `/src/`.
+
+File-level contributors come from git history at the catalog source revision.
+GitHub profile enrichment is optional. Website-only previews reuse the published
+catalog, full Verso module index, and matching rendered modules; they do not recompute contributor
+history or relabel the data as belonging to the preview branch.
+
+Catalog integrity errors stop the build or browsing operation. Missing rich
+rendering is shown explicitly; the native statement remains readable. Missing
+optional evidence or queue feeds are also visible and do not change catalog facts.
+The first deployment must run the full build. Preview downloads and default CLI
+browsing require that deployment; no older projection substitutes for it.
 
 ## Repository layout
 
 ```
 data/
-  conjectures.json        # JSON produced by lake exe extract_names (created by CI)
+  conjectures.json            # Complete native catalog with exact provenance
+  catalog-manifest.json   # Byte digest, count, and schema reference
+  verso-fragments.json    # Full-build intermediate; never published
+  verso-modules.json      # Downloaded snapshot navigation for previews
 src/
   css/style.css           # Stylesheet (CSS custom properties throughout)
   js/
@@ -81,8 +111,8 @@ post-processor again after changing the theme to refresh source previews.
 
 ## Building locally
 
-The quickest way to develop the website locally is using `dev.sh`, which downloads
-the conjectures data from the live production site (no Lean build needed):
+After the native catalog is deployed, `dev.sh` downloads the complete catalog
+from the production site (no Lean build needed):
 
 **Requirements:** Node.js 18+ and Python 3.
 
@@ -102,24 +132,25 @@ and refresh the browser.
 
 ### Building with fresh data from a local Lean build
 
-If you need the site to reflect local Lean changes (new conjectures, etc.):
+For a full local build, commit the source and dependency changes first. Use your
+own repository below when building fork changes:
 
 ```bash
 # In the formal-conjectures repo root
 lake exe cache get   # download prebuilt Mathlib oleans (first time only)
-lake build
+lake --wfail build FormalConjecturesAnswerPostpone
 mkdir -p site/data
-lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified > site/data/conjectures.json
+lake exe extract_names --exclude=fileFirstAdded,fileLastModified > /tmp/fc-native-extract.json
+python3 scripts/publish_catalog.py /tmp/fc-native-extract.json --repository google-deepmind/formal-conjectures --out site/data
 
-# (Optional) Generate Verso literate fragments for rendered docstrings.
-# Without this, theorem detail pages will lack formatted docstrings and source links.
-# Warning: the literate build step can take a long time (30+ minutes).
+# Generate Verso literate fragments from the same committed source.
+# This compiles and renders all literate source pages.
 cd docbuild
 lake build FormalConjectures:literate FormalConjecturesForMathlib:literate FormalConjecturesUtil:literate
 lake exe verso-html .lake/build/literate ../_literate_html
 cd ..
 python3 site/fix_literate_html.py _literate_html
-python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json
+python3 site/extract_verso_fragments.py _literate_html site/data/verso-fragments.json --catalog-dir site/data
 
 # Build the site
 cd site
@@ -192,7 +223,14 @@ The GitHub Actions workflow in `.github/workflows/build-and-docs.yml` triggers o
 
 For GitHub Pages setup (including the environment rule needed for `*-webtest` branches), see [One-time fork setup](#one-time-fork-setup) above.
 
-The site also publishes `data/catalog.json`, preserving the native schema-2 extract
-for command-line consumers. The browser's `data/conjectures.json` projection is unchanged.
-Full CI extraction retains statements, docstrings, proof references, and answer kinds.
-A website-only rebuild from older live data cannot reconstruct omitted fields.
+### Full fork preview before the first catalog deployment
+
+A fork can run **Build Lean project and deploy docs** manually on a contribution
+branch with `website_only=false` and `deploy_preview=true`. Allow that exact branch
+in the fork's `github-pages` environment first. Both the build and script tests
+must pass before deployment. This replaces the fork's current Pages site; it does
+not deploy upstream or change the CLI's default catalog origin.
+
+Use the full mode when changing Lean extraction or when the production catalog is
+not deployed yet. Website-only mode is for presentation changes against an existing
+published snapshot.

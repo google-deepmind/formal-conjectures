@@ -52,36 +52,54 @@
 // Data loading
 // ---------------------------------------------------------------------------
 let _dataCache = null;
+const _moduleCache = new Map();
 
-/**
- * Fetch and cache the processed conjectures dataset.
- * Returns a Promise that resolves to { conjectures, stats, amsSubjects }.
- */
+/** Read the canonical native catalog, checking its publication descriptor. */
 async function loadData() {
   if (_dataCache) return _dataCache;
-  // Resolve the data URL relative to the site root (handles both local and
-  // deployed environments where the page may be at different depths).
-  const base = document.documentElement.dataset.base || '';
-  const resp = await fetch(`${base}/data/conjectures.json`);
-  if (!resp.ok) throw new Error(`Failed to load data: ${resp.status}`);
-  _dataCache = await resp.json();
-  return _dataCache;
+  _dataCache = (async () => {
+    const base = document.documentElement.dataset.base || '';
+    const manifestResponse = await fetch(`${base}/data/catalog-manifest.json`);
+    if (!manifestResponse.ok) throw new Error(`Catalog descriptor unavailable: ${manifestResponse.status}`);
+    const descriptor = FCCatalog.validateDescriptor(await manifestResponse.json());
+    const response = await fetch(`${base}/data/conjectures.json?sha256=${descriptor.sha256}`);
+    if (!response.ok) throw new Error(`Catalog unavailable: ${response.status}`);
+    const bytes = await response.arrayBuffer();
+    const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2, '0')).join('');
+    const catalog = FCCatalog.decodeSnapshot(bytes, descriptor, digest);
+    return {conjectures:catalog.problems.map(entry => FCCatalog.processEntry(entry, catalog.provenance.source)),
+      catalogProvenance:catalog.provenance, catalogDigest:descriptor.sha256,
+      moduleDocstrings:catalog.moduleDocstrings};
+  })();
+  try { return await _dataCache; }
+  catch (error) { _dataCache = null; throw error; }
+}
+
+/** Load only this module's Verso rendering and contributor presentation. */
+async function loadModule(moduleName) {
+  const data = await loadData();
+  if (!data.conjectures.some(entry => entry.module === moduleName)) throw new Error('Unknown catalog module');
+  const key = data.catalogDigest + ':' + moduleName;
+  if (!_moduleCache.has(key)) _moduleCache.set(key, (async () => {
+    const base = document.documentElement.dataset.base || '';
+    const renderBase = document.documentElement.dataset.renderBase || base;
+    const relative = FCCatalog.moduleToGitHubPath(moduleName).replace(/\.lean$/, '.json').split('/').map(encodeURIComponent).join('/');
+    const response = await fetch(`${renderBase}/data/rendered/${data.catalogDigest}/${relative}`);
+    if (!response.ok) throw new Error(`Module rendering unavailable: ${response.status}`);
+    const value = await response.json();
+    if (value.schema_version !== 'fc.website-rendering.v1' || value.module !== moduleName ||
+        value.catalog_sha256 !== data.catalogDigest) throw new Error('Module rendering belongs to another catalog');
+    if (!value.moduleDocs || !value.constLinks || !Array.isArray(value.contributors)) throw new Error('Incomplete module rendering');
+    return value;
+  })());
+  try { return await _moduleCache.get(key); }
+  catch (error) { _moduleCache.delete(key); throw error; }
 }
 
 // ---------------------------------------------------------------------------
-// Badge / category helpers (duplicated from build.js for client-side use)
+// Badge / category presentation
 // ---------------------------------------------------------------------------
-const CATEGORY_META = {
-  'research open':    { label: 'Open',          css: 'cat-open' },
-  'research solved':  { label: 'Solved',        css: 'cat-solved' },
-  'textbook':         { label: 'Textbook',      css: 'cat-textbook' },
-  'test':             { label: 'Test',          css: 'cat-test' },
-  'API':              { label: 'API',           css: 'cat-api' },
-};
-
-function getCategoryMeta(category) {
-  return CATEGORY_META[category] || { label: category, css: 'cat-unknown' };
-}
+const getCategoryMeta = FCCatalog.getCategoryMeta;
 
 /**
  * Render a category badge element.
@@ -137,7 +155,7 @@ function findVersoLink(theoremName, constLinks = {}) {
 function problemDocHTML(conjecture, versoFragments = {}) {
   const versoLink = findVersoLink(conjecture?.theorem, versoFragments.constLinks || {});
   if (versoLink && versoLink.docHtml) return versoLink.docHtml;
-  return '';
+  return conjecture?.docstring ? '<div style="white-space:pre-wrap">' + escapeHTML(conjecture.docstring) + '</div>' : '';
 }
 
 /**
@@ -210,6 +228,7 @@ const FORMAL_PROOF_LABELS = {
 window.FC = {
   FORMAL_PROOF_LABELS,
   loadData,
+  loadModule,
   getCategoryMeta,
   makeBadge,
   makeSubjectPill,
