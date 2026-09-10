@@ -87,14 +87,14 @@ theorem matrix_multiplication_exponent_strassen :
   sorry
 
 /-- Coppersmith–Winograd (1987) -/
-@[category research solved, AMS 51]
+@[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_coppersmith_winograd :
     (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
       fun n ↦ (n : ℝ) ^ (2.376 : ℝ) := by
   sorry
 
 /-- The current best bound, found by AlphaEvolve (2026). -/
-@[category research solved, AMS 51]
+@[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_alphaevolve :
     (fun (n : ℕ) ↦ ((Holor.matrixMulTensor ℂ n n n).cprank : ℝ)) =O[atTop]
       fun n ↦ (n : ℝ) ^ (2.371177 : ℝ) := by
