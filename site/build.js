@@ -448,17 +448,9 @@ function moduleSegments(module) {
   return module.replace(/«[^»]*»|\./g, (m) => (m[0] === '«' ? m : '/')).split('/');
 }
 
-/**
- * The list of modules with a literate page. Verso's output is authoritative;
- * without it (no literate build), fall back to the modules the conjectures
- * live in, which covers `FormalConjectures` only.
- */
-function literateModules(versoFragments, conjectures) {
-  if (Array.isArray(versoFragments.modules) && versoFragments.modules.length > 0) {
-    return versoFragments.modules.map(m => ({ name: m.name, href: `/src${m.url}` }));
-  }
-  const names = [...new Set(conjectures.map(c => c.module))].sort();
-  return names.map(name => ({ name, href: moduleToSourceURL(name) }));
+/** Source-page navigation uses the full, validated Verso module index. */
+function literateModules(index) {
+  return index.modules.map(m => ({name: m.name, href: `/src${m.url}`}));
 }
 
 /**
@@ -609,6 +601,14 @@ async function main() {
     throw new Error('Verso fragments are missing. Run the full build in site/README.md, or use site/dev.sh for a published snapshot.');
   }
 
+  if (process.env.FC_RENDER_BASE && !fs.existsSync('data/verso-modules.json')) {
+    throw new Error('Verso module index is missing (data/verso-modules.json). Download the published snapshot with scripts/download_catalog.py.');
+  }
+  const moduleIndex = require('./catalog.cjs').validateModuleIndex(process.env.FC_RENDER_BASE
+    ? JSON.parse(fs.readFileSync('data/verso-modules.json', 'utf8'))
+    : {schema_version:'fc.website-modules.v1', catalog_sha256:descriptor.sha256, modules:versoFragments.modules},
+    descriptor.sha256);
+
   const contributors = process.env.FC_RENDER_BASE ? {}
     : await buildContributorMetadata(conjectures, catalog.provenance.source.commit);
 
@@ -627,6 +627,10 @@ async function main() {
   // The browser reads the same canonical catalog as the CLI. Verso output is a
   // per-module rendering sidecar, bound to that catalog's bytes, never metadata input.
   ensureDir('site/data');
+  // Previews retain navigation, but continue loading rich rendering at its explicit origin.
+  const moduleIndexPath = `site/data/rendered/${descriptor.sha256}/modules.json`;
+  ensureDir(path.dirname(moduleIndexPath));
+  fs.writeFileSync(moduleIndexPath, JSON.stringify(moduleIndex));
   const groups = new Map();
   for (const entry of conjectures) {
     if (!groups.has(entry.module)) groups.set(entry.module, []);
@@ -717,7 +721,7 @@ async function main() {
   })));
 
   // ---- Modules page ----
-  const modules = literateModules(versoFragments, conjectures);
+  const modules = literateModules(moduleIndex);
   writePage('site/modules/index.html', applyBasePath(fill(readTemplate('modules.html'), {
     moduleCount: modules.length,
     libraries:   modulesPageHTML(modules),

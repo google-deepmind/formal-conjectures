@@ -47,7 +47,7 @@ hover data. The full annotated source pages remain under `/src/`.
 
 File-level contributors come from git history at the catalog source revision.
 GitHub profile enrichment is optional. Website-only previews reuse the published
-catalog and its matching rendered modules; they do not recompute contributor
+catalog, full Verso module index, and matching rendered modules; they do not recompute contributor
 history or relabel the data as belonging to the preview branch.
 
 Catalog integrity errors stop the build or browsing operation. Missing rich
@@ -62,7 +62,8 @@ browsing require that deployment; no older projection substitutes for it.
 data/
   conjectures.json            # Complete native catalog with exact provenance
   catalog-manifest.json   # Byte digest, count, and schema reference
-  verso-fragments.json    # Build intermediate; never published
+  verso-fragments.json    # Full-build intermediate; never published
+  verso-modules.json      # Downloaded snapshot navigation for previews
 src/
   css/style.css           # Stylesheet (CSS custom properties throughout)
   js/
@@ -139,7 +140,7 @@ lake exe extract_names --exclude=fileFirstAdded,fileLastModified > /tmp/fc-nativ
 python3 scripts/publish_catalog.py /tmp/fc-native-extract.json --repository google-deepmind/formal-conjectures --out site/data
 
 # Generate Verso literate fragments from the same committed source.
-# Warning: the literate build step can take a long time (30+ minutes).
+# This compiles and renders all literate source pages.
 cd docbuild
 lake build FormalConjectures:literate FormalConjecturesForMathlib:literate FormalConjecturesUtil:literate
 lake exe verso-html .lake/build/literate ../_literate_html

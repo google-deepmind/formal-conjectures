@@ -52,7 +52,7 @@ def module_path(module):
 
 def complete(data):
     rows=metadata_rows(data)
-    if not rows or not isinstance(data.get('moduleDocstrings'),dict):
+    if not rows or not isinstance(data.get('moduleDocstrings'),dict) or not all(isinstance(v,str) for v in data['moduleDocstrings'].values()):
         raise ValueError('A full catalog requires problems and module docstrings')
     seen=set()
     for row in rows:
@@ -63,20 +63,37 @@ def complete(data):
         key=(row['module'],row['theorem'])
         if key in seen:raise ValueError('Duplicate declaration identity')
         seen.add(key)
-        if 'docstring' not in row or not isinstance(row.get('answerKinds'),list) or not isinstance(row.get('hasSorryFreeProof'),bool):
-            raise ValueError('Full catalog is missing native observations')
+        if row['category'] not in ('research open','research solved','textbook','test','API'):
+            raise ValueError('Invalid category')
+        if not isinstance(row.get('subjects'),list) or not all(isinstance(v,str) and re.fullmatch(r'[0-9]{1,2}',v) for v in row['subjects']):
+            raise ValueError('Invalid or missing subjects')
+        if 'docstring' not in row or (row['docstring'] is not None and not isinstance(row['docstring'],str)):
+            raise ValueError('Invalid or missing docstring')
+        if not isinstance(row.get('answerKinds'),list) or not all(v in ('Prop','non-Prop') for v in row['answerKinds']):
+            raise ValueError('Invalid or missing answerKinds')
+        if not isinstance(row.get('hasSorryFreeProof'),bool):
+            raise ValueError('Invalid or missing hasSorryFreeProof')
+        if 'subsets' in row and (not isinstance(row['subsets'],list) or not all(isinstance(v,str) and v for v in row['subsets'])):
+            raise ValueError('Invalid subsets')
+        for field in ('fileFirstAdded','fileLastModified'):
+            if row.get(field) is not None and not isinstance(row[field],str):
+                raise ValueError('Invalid '+field)
+        if any(not condition for proof in row.get('formalProofs',[]) for condition in proof['conditions']):
+            raise ValueError('Empty proof condition')
         if row['module'] not in data['moduleDocstrings']:
             raise ValueError('Full catalog is missing module sources: '+row['module'])
     provenance=data.get('provenance',{})
+    if not isinstance(provenance,dict):raise ValueError('Invalid catalog provenance')
     source=provenance.get('source',{})
-    if not re.fullmatch(r'[\w.-]+/[\w.-]+',source.get('repository','')) or not re.fullmatch(r'[0-9a-f]{40}',source.get('commit','')):
+    if not isinstance(source,dict):raise ValueError('Invalid source revision')
+    if not isinstance(source.get('repository'),str) or not re.fullmatch(r'[\w.-]+/[\w.-]+',source['repository'],re.ASCII) or not isinstance(source.get('commit'),str) or not re.fullmatch(r'[0-9a-f]{40}',source['commit']):
         raise ValueError('Catalog requires an exact GitHub source revision')
     if provenance.get('scope')!='FormalConjectures' or provenance.get('answer_mode')!='postpone':
         raise ValueError('Catalog must record full extraction with answer postponement')
-    if not provenance.get('lean_toolchain') or not re.fullmatch(r'[0-9a-f]{64}',provenance.get('dependencies_sha256','')):
+    if not isinstance(provenance.get('lean_toolchain'),str) or not provenance['lean_toolchain'] or not isinstance(provenance.get('dependencies_sha256'),str) or not re.fullmatch(r'[0-9a-f]{64}',provenance['dependencies_sha256']):
         raise ValueError('Catalog requires toolchain and dependency provenance')
     extractor=provenance.get('extractor',{})
-    if extractor.get('repository')!=source['repository'] or not re.fullmatch(r'[0-9a-f]{40}',extractor.get('commit','')):
+    if not isinstance(extractor,dict) or extractor.get('repository')!=source['repository'] or not isinstance(extractor.get('commit'),str) or not re.fullmatch(r'[0-9a-f]{40}',extractor['commit']) or extractor.get('path')!='scripts/extract_names.lean':
         raise ValueError('Catalog requires an exact extractor revision')
     return data
 
