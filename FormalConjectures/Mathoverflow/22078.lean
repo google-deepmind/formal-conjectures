@@ -19,8 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Mathoverflow 22078: is a smooth affine group scheme over the dual numbers linear?
 
-Every affine group scheme of finite type over a field `k` is a closed subgroup scheme of some
-`GLₙ`. Brian Conrad asked whether this stays true over the ring of dual numbers
+Every affine group scheme of finite type over a field $k$ is a closed subgroup scheme of some
+$\mathrm{GL}_n$. Brian Conrad asked whether this stays true over the ring of dual numbers
 $k[\epsilon] = k[x]/(x^2)$, or over any artinian local ring. The proof over a field produces a
 finite-dimensional subcomodule of the coordinate ring that generates it as an algebra, and uses
 that a finitely generated submodule of the coordinate ring is free. Over $k[\epsilon]$ a finitely
@@ -30,8 +30,9 @@ The answer is no in characteristic zero. Push out the Heisenberg central extensi
 $1 \to \mathbb{G}_a \to H \to \mathbb{G}_a^2 \to 1$ over $k[\epsilon]$ along the homomorphism
 $\mathbb{G}_a \to \mathbb{G}_m$, $x \mapsto 1 + \epsilon x$. This gives a smooth affine central
 extension $1 \to \mathbb{G}_m \to G \to \mathbb{G}_a^2 \to 1$ with no faithful representation on
-a finite free $k[\epsilon]$-module. Indeed, such a representation $M$ is the direct sum of the
-weight spaces $M_i$ of the central $\mathbb{G}_m$, and each $M_i$ is a subrepresentation. The
+a finite free $k[\epsilon]$-module, so with no closed immersion into any $\mathrm{GL}_n$. Indeed,
+such a representation $M$ is the direct sum of the weight spaces $M_i$ of the central
+$\mathbb{G}_m$; each $M_i$ is a direct summand of $M$, hence free, and a subrepresentation. The
 element $1 + \epsilon$ of $\mathbb{G}_m(k[\epsilon])$ is a commutator in $G(k[\epsilon])$, so it
 acts on $M_i$ with determinant $1$. It acts by the scalar $1 + i\epsilon$, so that determinant is
 $1 + i \operatorname{rank}(M_i)\epsilon$, forcing $i \operatorname{rank}(M_i) = 0$ in $k$. In
@@ -60,7 +61,7 @@ A group scheme is represented here by its coordinate Hopf algebra `A` over the b
 
 namespace Mathoverflow22078
 
-open Coalgebra LaurentPolynomial TensorProduct
+open Coalgebra TensorProduct
 
 universe u v
 
@@ -69,8 +70,8 @@ universe u v
 
 Multiplicative `n × n` matrices over `A` are exactly the homomorphisms of group schemes
 `Spec A → GLₙ`: such a matrix is the image of the coordinates of `GLₙ` under the induced map of
-Hopf algebras. The determinant of a multiplicative matrix is a group-like element, hence a unit,
-so no invertibility hypothesis is needed. -/
+Hopf algebras. No invertibility hypothesis is needed: the determinant of a multiplicative matrix
+is group-like, hence a unit, by `IsMultiplicative.isGroupLikeElem_det` below. -/
 structure IsMultiplicative (R : Type u) [CommRing R] {A : Type v} [CommRing A] [HopfAlgebra R A]
     {n : ℕ} (a : Matrix (Fin n) (Fin n) A) : Prop where
   /-- The comultiplication of an entry is given by matrix multiplication. -/
@@ -103,15 +104,41 @@ theorem isMultiplicative_fin_one_iff (R : Type u) [CommRing R] (A : Type v) [Com
     · fin_cases i; fin_cases j; simpa using h.comul_eq_tmul_self
     · fin_cases i; fin_cases j; simpa using h.counit_eq_one
 
+/-- The determinant of a multiplicative matrix is a group-like element. It is therefore a unit,
+by `IsGroupLikeElem.isUnit`, so a multiplicative matrix really does define a homomorphism of group
+schemes into `GLₙ` and not merely into the monoid scheme of `n × n` matrices. -/
+@[category API, AMS 14 16]
+theorem IsMultiplicative.isGroupLikeElem_det {R : Type u} [CommRing R] {A : Type v} [CommRing A]
+    [HopfAlgebra R A] {n : ℕ} {a : Matrix (Fin n) (Fin n) A} (h : IsMultiplicative R a) :
+    IsGroupLikeElem R a.det where
+  counit_eq_one := by
+    have h1 : (Bialgebra.counitAlgHom R A).mapMatrix a = 1 := by
+      ext i j
+      simpa using h.counit_apply i j
+    have h0 := AlgHom.map_det (Bialgebra.counitAlgHom R A) a
+    rw [h1, Matrix.det_one] at h0
+    simpa using h0
+  comul_eq_tmul_self := by
+    have h2 : (Bialgebra.comulAlgHom R A).mapMatrix a =
+        (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := A) (B := A)).mapMatrix a *
+          (Algebra.TensorProduct.includeRight (R := R) (A := A) (B := A)).mapMatrix a := by
+      ext i j
+      rw [Matrix.mul_apply]
+      simpa using h.comul_apply i j
+    have h3 := AlgHom.map_det (Bialgebra.comulAlgHom R A) a
+    rw [h2, Matrix.det_mul, ← AlgHom.map_det, ← AlgHom.map_det] at h3
+    simpa using h3
+
 /-- The trivial group scheme `Spec R` is linear, via the empty matrix. -/
 @[category test, AMS 14 16]
 theorem isLinear_self (R : Type u) [CommRing R] : IsLinear R R := by
   refine ⟨0, (0 : Matrix (Fin 0) (Fin 0) R), ⟨fun i ↦ i.elim0, fun i ↦ i.elim0⟩, ?_⟩
   exact Subsingleton.elim _ _
 
+open LaurentPolynomial in
 /-- The multiplicative group `𝔾ₘ = Spec R[T, T⁻¹]` is linear: it is the diagonal torus
-`diag(T, T⁻¹)` of `GL₂`. The `1 × 1` matrix `(T)` is multiplicative but its entry does not
-generate `R[T, T⁻¹]`, which is why a larger matrix is needed. -/
+`diag(T, T⁻¹)` of `GL₂`. The `1 × 1` matrix `(T)` is multiplicative too, but `T` generates only
+the polynomial subring `R[T]`, which is why a larger matrix is needed. -/
 @[category test, AMS 14 16]
 theorem isLinear_laurentPolynomial (R : Type u) [CommRing R] :
     IsLinear R (LaurentPolynomial R) := by
@@ -179,7 +206,7 @@ theorem isLinear_of_smooth_dualNumber.variants.charP : answer(sorry) ↔
 Over a field every affine group scheme of finite type is a closed subgroup scheme of some
 $\mathrm{GL}_n$. Smoothness is not needed.
 -/
-@[category research solved, AMS 14 16 20]
+@[category textbook, AMS 14 16 20]
 theorem isLinear_of_smooth_dualNumber.variants.field (k : Type u) [Field k] (A : Type v)
     [CommRing A] [HopfAlgebra k A] [Algebra.FiniteType k A] : IsLinear k A := by
   sorry
