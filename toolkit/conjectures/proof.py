@@ -187,11 +187,12 @@ def control(directory,record,operation):
         return finish(directory,record,'cancelled',reason='remote_cancelled',url=result['url'])
     if not result_path.is_file():
         return finish(directory,record,'error',reason='missing_result',workflow_conclusion=result['conclusion'])
-    value=rr.read_json(result_path)
+    try:value=rr.read_json(result_path)
+    except (ValueError,OSError) as error:return finish(directory,record,'error',reason='invalid_result',detail=str(error))
     if value.get('request')!=rr.read_json(directory/'request.json'):
-        raise Failure('result_binding_mismatch','Remote result does not match this exact request',3)
+        return finish(directory,record,'error',reason='result_binding_mismatch',detail='Remote result does not match this exact request')
     if value.get('toolkit_commit')!=record['executor']['commit']:
-        raise Failure('executor_binding_mismatch','Result was produced by another toolkit revision',3)
+        return finish(directory,record,'error',reason='executor_binding_mismatch',detail='Result was produced by another toolkit revision')
     outcome=value.get('outcome')
     if outcome not in ('pass','fail','error'):raise Failure('invalid_result','Unknown verification outcome',3)
     if result['conclusion']!='success' and outcome=='pass':raise Failure('incomplete_executor','Failed workflow cannot establish success',3)

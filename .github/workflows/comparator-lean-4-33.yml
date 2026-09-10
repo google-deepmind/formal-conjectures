@@ -90,6 +90,21 @@ jobs:
               --out "$RUNNER_TEMP/verification" --toolkit "$GITHUB_WORKSPACE" \
               --source "$RUNNER_TEMP/source" --candidate "$RUNNER_TEMP/candidate" \
               --generator "$RUNNER_TEMP/generator"
+      - name: Retain failures before verifier startup
+        if: always()
+        env:
+          REQUEST: ${{ toJSON(inputs) }}
+        run: |
+          python3 - <<'PYTHON'
+          import json, os, pathlib, datetime
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/'verification'/'verification.json'
+          if not path.exists():
+              path.parent.mkdir(parents=True,exist_ok=True)
+              path.write_text(json.dumps({'schema_version':'fc.proof-verification.v1',
+                  'request':json.loads(os.environ['REQUEST']),'producer':'github_actions',
+                  'toolkit_commit':os.environ['GITHUB_SHA'],'outcome':'error','policy_outcome':'not_evaluated',
+                  'reason':'executor_setup_failed','finished_at':datetime.datetime.now(datetime.timezone.utc).isoformat()}))
+          PYTHON
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
