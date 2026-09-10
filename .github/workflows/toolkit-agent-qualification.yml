@@ -54,3 +54,4 @@ jobs:
             ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/verification.json
             ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/comparator-result.json
             ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/verifier.log
+            ${{ runner.temp }}/agent-qualification/proof/.conjectures/runs/**/remote/source-dependencies.log

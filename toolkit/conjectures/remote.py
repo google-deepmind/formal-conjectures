@@ -69,6 +69,11 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         submissions=load_submission(candidate,request['candidate_commit'],request['candidate_path'])
         # Use the controller's native exporter and template. Candidate repositories supply neither.
         exporter.install_native(source)
+        # A fresh source checkout has no Mathlib artifacts. Populate only its pinned
+        # dependencies before the native export, as standalone initialization does.
+        with (output/'source-dependencies.log').open('wb') as log:
+            subprocess.run(['lake','exe','cache','get'],cwd=source,stdout=log,
+                           stderr=subprocess.STDOUT,check=True,timeout=1200)
         exporter.ROOT=source
         workspace=exporter.export(source/request['source_path'],request['declaration'],output/'generated',
                                   generator,request['source_commit'],request['source_repository'])

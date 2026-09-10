@@ -2,6 +2,7 @@
 import contextlib
 import io
 import json
+import subprocess
 import unittest
 from unittest.mock import patch
 from conjectures import core, proof, cli, remote, exporter
@@ -131,3 +132,22 @@ class ProofControlTests(ToolkitFixture):
         with patch.object(proof,'command',return_value=b''):
             with self.assertRaises(core.Failure) as error:proof.executor_ref('fixture/repo',sha)
         self.assertEqual(error.exception.reason,'executor_tag_required')
+
+    def test_source_dependency_failure_never_reaches_export_or_submission(self):
+        self.repository()
+        request={'run_id':'20260909T000000Z-aaaaaaaaaaaa','candidate_repository':'fixture/local',
+                 'candidate_commit':'a'*40,'candidate_path':'.','source_repository':'https://github.com/fixture/local.git',
+                 'source_commit':'a'*40,'source_path':'FormalConjectures/A.lean','declaration':'original'}
+        def unavailable(args,**kwargs):
+            self.assertEqual(args,['lake','exe','cache','get'])
+            self.assertEqual(kwargs['cwd'],self.root)
+            kwargs['stdout'].write(b'dependency unavailable\n')
+            raise subprocess.CalledProcessError(1,args)
+        with patch.object(remote,'qualify'),patch.object(remote,'git',return_value=('a'*40).encode()), \
+             patch.object(remote,'load_submission',return_value={'Submission.lean':b'candidate'}), \
+             patch.object(exporter,'install_native'),patch.object(exporter,'export') as export, \
+             patch.object(remote.subprocess,'run',side_effect=unavailable):
+            value=remote.execute(request,self.root/'output',self.root,self.root,self.root,self.root)
+        self.assertEqual(value['outcome'],'error');self.assertEqual(value['policy_outcome'],'not_evaluated')
+        self.assertIn('dependency unavailable',(self.root/'output/source-dependencies.log').read_text())
+        export.assert_not_called()
