@@ -16,32 +16,38 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Optimal propositional proof systems
+# Nonexistence of optimal propositional proof systems
 
-Jan Krajíček, *The Cook-Reckhow definition* (2019), Problem 2.3, pp.7–8.
-https://arxiv.org/abs/1909.03691
-
-Simulation controls proof length; p-simulation additionally requires a
-polynomial-time proof translator. The questions quantify over all Cook–Reckhow
-systems for tautologies in one fixed complete propositional language.
+*References:*
+* Krajíček, *The Cook-Reckhow definition* (2019), Definitions 1.1 and 2.1,
+  Problem 2.3 and its five scenarios, pp. 7–8, https://arxiv.org/abs/1909.03691.
 -/
 
 namespace Arxiv.«1909.03691»
 
 open PropositionalProof
 
-/-- Does an optimal propositional proof system exist?
-Krajíček, Problem 2.3, asks for a system simulating every other such system. -/
+/-- **No optimal proof system** (Krajíček, Problem 2.3): no Cook–Reckhow system
+simulates every other such system. Systems are total polynomial-time maps from
+binary proofs onto exactly the tautologies of the negation/implication language.
+Simulation requires one translator preserving conclusions and a polynomial bound
+on translated proof length; neither computability nor a time bound is required of
+the translator. Bounds may depend on the two systems, not individual proofs.
+This nonexistence conjecture implies $NP\ne coNP$. -/
 @[category research open, AMS 3 68]
-theorem optimal_proof_system :
-    answer(sorry) ↔ ∃ f : CookReckhow, f.Optimal := by
+theorem no_optimal_proof_system :
+    ¬ ∃ f : CookReckhow, f.Optimal := by
   sorry
 
-/-- Does a p-optimal propositional proof system exist?
-This is the polynomial-time translation version of Problem 2.3. -/
+/-- **No p-optimal proof system** (Krajíček, Problem 2.3): no Cook–Reckhow system
+p-simulates every other such system for the same tautologies. For each source
+system, p-simulation requires one deterministic polynomial-time translator on
+binary proofs, preserving the conclusion and obeying a global polynomial output-
+length bound. The target system is fixed before the source systems. This is the
+nonexistence conjecture, not the weaker claim about a particular fixed calculus. -/
 @[category research open, AMS 3 68]
-theorem poptimal_proof_system :
-    answer(sorry) ↔ ∃ f : CookReckhow, f.POptimal := by
+theorem no_poptimal_proof_system :
+    ¬ ∃ f : CookReckhow, f.POptimal := by
   sorry
 
 end Arxiv.«1909.03691»

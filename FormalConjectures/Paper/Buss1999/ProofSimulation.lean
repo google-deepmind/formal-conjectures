@@ -16,26 +16,28 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Does Frege simulate Extended Frege?
+# Frege does not simulate Extended Frege
 
-Samuel R. Buss, *Propositional Proof Complexity: An Introduction*,
-in Computational Logic (1999), pp.127–178.
-https://mathweb.ucsd.edu/~sbuss/ResearchWeb/marktoberdorf97/paper.pdf
-
-The first open problem at the end of §4, author PDF pp.12–13, asks whether
-Frege systems (p-)simulate Extended Frege. This statement selects simulation
-by proof size, without requiring a computable translator.
+*References:*
+* Buss, *Propositional Proof Complexity: An Introduction*, Computational Logic
+  (1999), pp. 127–178, first open problem at the end of §4, author pp. 12–13,
+  https://mathweb.ucsd.edu/~sbuss/ResearchWeb/marktoberdorf97/paper.pdf.
 -/
 
 namespace Buss1999
 
 open PropositionalProof
 
-/-- Is every Extended Frege proof replaceable by a Frege proof of the same
-formula with polynomial overhead in total proof size? -/
+/-- **Frege versus Extended Frege** (Buss, §4, open problem (1)): Frege does not
+simulate Extended Frege by proof size. There are no global $C,k$ such that every
+Extended Frege proof $\pi$ of every formula has a Frege proof of the same formula
+with at most $C(|\pi|+1)^k$ bits. Size counts the full encoded chronological proof
+list with binary variable names and repeated subformulas. Both use the complete
+six-scheme calculus; Extended Frege additionally allows fresh extension definitions.
+No computable translator is required by this simulation notion. -/
 @[category research open, AMS 3 68]
-theorem frege_simulates_extended_frege :
-    answer(sorry) ↔ ProofSimulates fregeProof extendedFregeProof := by
+theorem frege_does_not_simulate_extended_frege :
+    ¬ ProofSimulates fregeProof extendedFregeProof := by
   sorry
 
 end Buss1999
