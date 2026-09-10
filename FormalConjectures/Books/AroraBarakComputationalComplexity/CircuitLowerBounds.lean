@@ -19,16 +19,19 @@ import FormalConjecturesUtil
 # Uniform classes versus polynomial-size circuits
 
 *References:*
+* Arora–Barak, *Computational Complexity: A Modern Approach*, author draft
+  dated 2007-01-08, §§6.2–6.3, pp. 106–107, and §13.4.1, p. 245,
+  https://theory.cs.princeton.edu/complexity/book.pdf.
 * Ryan Williams, *Algorithms for Circuits and Circuits for Algorithms*, CCC 2014,
   §I, §III, Definitions 3.1–3.2 and §III.B,
   https://people.csail.mit.edu/rrw/ccc14-survey.pdf.
 -/
 
-namespace Williams2014
+namespace AroraBarak
 
 open ComplexityTheory
 
-/-- **NP circuit lower bound** (Williams, §III): some bit-string language in $NP$
+/-- **NP circuit lower bound** (Arora–Barak, §6.3): some bit-string language in $NP$
 has no polynomial-size Boolean circuit family. For every proposed global exponent
 $k\ge1$, one input length defeats all circuits with at most $n^k+k$ AND/OR gates.
 NOT gates and hardwired constants are free; arbitrary sharing is allowed. A circuit
@@ -37,7 +40,7 @@ need not be computable. Since $P\subseteq P/poly$, this conjecture implies $P\ne
 @[category research open, AMS 68]
 theorem NP_not_subset_Ppoly : ¬ NP ⊆ Ppoly := by sorry
 
-/-- **EXP circuit lower bound** (Williams, §I and §III): some bit-string language
+/-- **EXP circuit lower bound** (Arora–Barak, §6.2; Williams, §I): some bit-string language
 decidable in deterministic time $2^{poly(n)}$ has no polynomial-size nonuniform
 Boolean circuit family. For every global $k\ge1$, some length $n$ has no circuit
 of at most $n^k+k$ AND/OR gates correct on all its inputs. NOT and constants are
@@ -46,7 +49,7 @@ This compares exponential uniform time with polynomial nonuniform circuit size. 
 @[category research open, AMS 68]
 theorem EXP_not_subset_Ppoly : ¬ EXP ⊆ Ppoly := by sorry
 
-/-- **NEXP circuit lower bound** (Williams, §III.B): some bit-string language in
+/-- **NEXP circuit lower bound** (Arora–Barak, §13.4.1): some bit-string language in
 nondeterministic exponential time has no polynomial-size nonuniform Boolean circuit
 family. Membership uses one TM2 verifier, certificates of length at most
 $2^{p(n)}$, and time at most $2^{q(n)}$ on every eligible certificate, measured in
@@ -57,4 +60,4 @@ choice of a circuit per length. This is a nonuniform circuit lower bound. -/
 @[category research open, AMS 68]
 theorem NEXP_not_subset_Ppoly : ¬ NEXP ⊆ Ppoly := by sorry
 
-end Williams2014
+end AroraBarak
