@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjecturesUtil.CertifyCurve
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -32,6 +33,16 @@ import FormalConjecturesUtil
    conjecture, https://arxiv.org/abs/2503.17619
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 - [ICARM](https://elliptic-rank.icarm.cloud/curve/273)
+- [ECCompute] Bhavik Mehta, Certified lower bounds on the Mordell-Weil rank of elliptic curves
+    over ℚ, https://github.com/b-mehta/EllipticCurveRank
+
+The unconditional rank lower bounds below are certified by `ECCompute`: for each curve, the
+points listed in the accompanying data file (in the directory `EllipticCurveRank/`) are shown to
+be independent by a 2-descent character, so the Mordell–Weil group contains a finitely generated
+subgroup of the stated rank. Mathlib does not yet have the Mordell–Weil theorem (see
+`mordell_weil` below), and `finrank ℤ E.Point` is `0` for a module of infinite rank, so passing
+from this to `n ≤ finrank ℤ E.Point` requires `Module.Finite ℤ E.Point`; the
+`variants.of_finite` statements record this step.
 -/
 
 namespace EllipticCurveRank
@@ -304,6 +315,29 @@ instance : claudeAlpogeHowell31.IsElliptic where
 theorem thirtyone_le_rank_claudeAlpogeHowell31 : 31 ≤ finrank ℤ claudeAlpogeHowell31.Point := by
   sorry
 
+/-- The Mordell–Weil group of the Claude–Alpöge–Howell curve contains a finitely generated
+subgroup of rank at least 31: the 31 points in `EllipticCurveRank/claudeAlpogeHowell31.txt` are
+independent, as certified by [ECCompute] using the descent characters in
+`EllipticCurveRank/claudeAlpogeHowell31-labels.txt`. This is
+[curve 302](https://elliptic-rank.icarm.cloud/curve/302) of the ICARM leaderboard. -/
+@[category research solved, AMS 11 14]
+theorem exists_finite_submodule_thirtyone_le_finrank_claudeAlpogeHowell31 :
+    ∃ H : Submodule ℤ claudeAlpogeHowell31.Point, Module.Finite ℤ H ∧ 31 ≤ finrank ℤ H := by
+  show ECCompute.HasRankGE claudeAlpogeHowell31 31
+  unfold claudeAlpogeHowell31
+  certify_curve_here torsion 31
+    "EllipticCurveRank/claudeAlpogeHowell31.txt" "EllipticCurveRank/claudeAlpogeHowell31-labels.txt"
+
+/-- The rank of the Claude–Alpöge–Howell curve is at least 31, assuming that its Mordell–Weil
+group is finitely generated (the Mordell–Weil theorem `mordell_weil`, which is not yet in
+Mathlib). -/
+@[category research solved, AMS 11 14]
+theorem thirtyone_le_rank_claudeAlpogeHowell31.variants.of_finite
+    [Module.Finite ℤ claudeAlpogeHowell31.Point] :
+    31 ≤ finrank ℤ claudeAlpogeHowell31.Point := by
+  obtain ⟨H, _, hH⟩ := exists_finite_submodule_thirtyone_le_finrank_claudeAlpogeHowell31
+  exact hH.trans (Submodule.finrank_le H)
+
 /-- The rank of the Claude–Alpöge–Howell curve is exactly 31.
 It has rank exactly 31 assuming the generalized Riemann hypothesis and the
 Birch and Swinnerton-Dyer conjecture.
@@ -340,6 +374,28 @@ instance : ranksunbounded30.IsElliptic where
 theorem thirty_le_rank_ranksunbounded30 : 30 ≤ finrank ℤ ranksunbounded30.Point := by
   sorry
 
+/-- The Mordell–Weil group of the ranksunbounded curve contains a finitely generated subgroup of
+rank at least 30: the 30 points in `EllipticCurveRank/ranksunbounded30.txt` are independent, as
+certified by [ECCompute] using the descent characters in
+`EllipticCurveRank/ranksunbounded30-labels.txt`. This is
+[curve 273](https://elliptic-rank.icarm.cloud/curve/273) of the ICARM leaderboard. -/
+@[category research solved, AMS 11 14]
+theorem exists_finite_submodule_thirty_le_finrank_ranksunbounded30 :
+    ∃ H : Submodule ℤ ranksunbounded30.Point, Module.Finite ℤ H ∧ 30 ≤ finrank ℤ H := by
+  show ECCompute.HasRankGE ranksunbounded30 30
+  unfold ranksunbounded30
+  certify_curve_here torsion 23
+    "EllipticCurveRank/ranksunbounded30.txt" "EllipticCurveRank/ranksunbounded30-labels.txt"
+
+/-- The rank of the ranksunbounded curve is at least 30, assuming that its Mordell–Weil group is
+finitely generated (the Mordell–Weil theorem `mordell_weil`, which is not yet in Mathlib). -/
+@[category research solved, AMS 11 14]
+theorem thirty_le_rank_ranksunbounded30.variants.of_finite
+    [Module.Finite ℤ ranksunbounded30.Point] :
+    30 ≤ finrank ℤ ranksunbounded30.Point := by
+  obtain ⟨H, _, hH⟩ := exists_finite_submodule_thirty_le_finrank_ranksunbounded30
+  exact hH.trans (Submodule.finrank_le H)
+
 /-- The rank of the ranksunbounded curve is exactly 30. -/
 @[category research open, AMS 11 14]
 theorem rank_ranksunbounded30 : finrank ℤ ranksunbounded30.Point = 30 := by
@@ -372,6 +428,28 @@ instance elkiesKlagsbrun29IsElliptic : elkiesKlagsbrun29.IsElliptic where
 theorem twentynine_le_rank_elkiesKlagsbrun29 : 29 ≤ finrank ℤ elkiesKlagsbrun29.Point := by
   sorry
 
+/-- The Mordell–Weil group of the Elkies–Klagsbrun curve contains a finitely generated subgroup
+of rank at least 29: the 29 points in `EllipticCurveRank/elkiesKlagsbrun29.txt` are independent,
+as certified by [ECCompute] using the descent characters in
+`EllipticCurveRank/elkiesKlagsbrun29-labels.txt`. This is
+[curve 12](https://elliptic-rank.icarm.cloud/curve/12) of the ICARM leaderboard. -/
+@[category research solved, AMS 11 14]
+theorem exists_finite_submodule_twentynine_le_finrank_elkiesKlagsbrun29 :
+    ∃ H : Submodule ℤ elkiesKlagsbrun29.Point, Module.Finite ℤ H ∧ 29 ≤ finrank ℤ H := by
+  show ECCompute.HasRankGE elkiesKlagsbrun29 29
+  unfold elkiesKlagsbrun29
+  certify_curve_here torsion 67
+    "EllipticCurveRank/elkiesKlagsbrun29.txt" "EllipticCurveRank/elkiesKlagsbrun29-labels.txt"
+
+/-- The rank of the Elkies–Klagsbrun curve is at least 29, assuming that its Mordell–Weil group is
+finitely generated (the Mordell–Weil theorem `mordell_weil`, which is not yet in Mathlib). -/
+@[category research solved, AMS 11 14]
+theorem twentynine_le_rank_elkiesKlagsbrun29.variants.of_finite
+    [Module.Finite ℤ elkiesKlagsbrun29.Point] :
+    29 ≤ finrank ℤ elkiesKlagsbrun29.Point := by
+  obtain ⟨H, _, hH⟩ := exists_finite_submodule_twentynine_le_finrank_elkiesKlagsbrun29
+  exact hH.trans (Submodule.finrank_le H)
+
 /-- The rank of the Elkies-Klagsbrun curve is exactly 29. -/
 @[category research open, AMS 11 14]
 theorem rank_elkiesKlagsbrun29 : finrank ℤ elkiesKlagsbrun29.Point = 29 := by
@@ -402,6 +480,27 @@ instance elkies28IsElliptic : elkies28.IsElliptic where
 @[category research solved, AMS 11 14]
 theorem twentyeight_le_rank_elkies28 : 28 ≤ finrank ℤ elkies28.Point := by
   sorry
+
+/-- The Mordell–Weil group of the Elkies curve contains a finitely generated subgroup of rank at
+least 28: the 28 points in `EllipticCurveRank/elkies28.txt` are independent, as certified by
+[ECCompute] using the descent characters in `EllipticCurveRank/elkies28-labels.txt`. This is
+[curve 11](https://elliptic-rank.icarm.cloud/curve/11) of the ICARM leaderboard. -/
+@[category research solved, AMS 11 14]
+theorem exists_finite_submodule_twentyeight_le_finrank_elkies28 :
+    ∃ H : Submodule ℤ elkies28.Point, Module.Finite ℤ H ∧ 28 ≤ finrank ℤ H := by
+  show ECCompute.HasRankGE elkies28 28
+  unfold elkies28
+  certify_curve_here torsion 23
+    "EllipticCurveRank/elkies28.txt" "EllipticCurveRank/elkies28-labels.txt"
+
+/-- The rank of the Elkies curve is at least 28, assuming that its Mordell–Weil group is
+finitely generated (the Mordell–Weil theorem `mordell_weil`, which is not yet in Mathlib). -/
+@[category research solved, AMS 11 14]
+theorem twentyeight_le_rank_elkies28.variants.of_finite
+    [Module.Finite ℤ elkies28.Point] :
+    28 ≤ finrank ℤ elkies28.Point := by
+  obtain ⟨H, _, hH⟩ := exists_finite_submodule_twentyeight_le_finrank_elkies28
+  exact hH.trans (Submodule.finrank_le H)
 
 /-- The rank of the Elkies curve is exactly 28. -/
 @[category research open, AMS 11 14]
