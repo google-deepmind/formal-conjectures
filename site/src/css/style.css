@@ -1232,6 +1232,15 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   }
 }
 
+/* Keep exact revisions and copyable commands within the evidence section. */
+#contribution-evidence {
+  overflow-wrap: anywhere;
+}
+
+#contribution-evidence pre {
+  overflow-x: auto;
+}
+
 /* ---- Verso literate integration ---- */
 .verso-doc-content {
   background: var(--color-bg-alt);
