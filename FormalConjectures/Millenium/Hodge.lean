@@ -26,11 +26,11 @@ seven Millennium Prize Problems posed by the Clay Mathematics Institute.
 
 The background material used by this statement lives in `FormalConjecturesForMathlib`. In
 particular `Hdg^p(ℚ; X)` is the space of rational Hodge classes of codimension $p$, defined in
-`FormalConjecturesForMathlib.AlgebraicGeometry.HodgeFiltration`, and `algebraicCycleClassSpan X p`
-is the rational span of the constructed codimension-$p$ component classes, defined in
-`FormalConjecturesForMathlib.AlgebraicGeometry.Coniveau`. A variety is presented here as an
-object `X` of `Over (Spec ↧ℂ)`, so that $X$ itself is `X.left` and its structure morphism is
-`X.hom`.
+`FormalConjecturesForMathlib.Lemmas.AlgebraicGeometry.HodgeFiltration`, and
+`algebraicCycleClassSpan X p` is the rational span of the constructed codimension-$p$ component
+classes, defined in `FormalConjecturesForMathlib.Lemmas.AlgebraicGeometry.Coniveau`. A variety is
+presented here as an object `X` of `Over (Spec ↧ℂ)`, so that $X$ itself is `X.left` and its
+structure morphism is `X.hom`.
 
 ## TODO
 
