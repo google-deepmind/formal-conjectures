@@ -197,9 +197,14 @@ The goal of this part is to define a version of duality in artinian algebra that
 variable {C: Type u} [Category.{v} C] [Abelian C]
 variable {M E : C} (u : M ⟶ E)
 
+/--
+ `u`is an essential extension of `M` if for every subobject `s` of `E` that is non zero the pullback wuth `u`is also non zero.
+-/
 def IsEssentialExtension : Prop :=
   ∀ s : Subobject E, IsZero (Subobject.underlying.obj s) ∨ ¬ IsZero (pullback u ((MonoOver.forget E).obj (Subobject.representative.obj s)).hom)
 
+/--
+An injective hull is an essential extension that is also injective.-/
 def IsInjectiveHull : Prop := Injective E ∧ IsEssentialExtension u
 
 variable (M)
@@ -215,7 +220,11 @@ noncomputable def injectiveHullHom [HasInjectiveHull M] : M ⟶ (injectiveHull M
 lemma IsInjectiveHullInjectiveHull [HasInjectiveHull M] : IsInjectiveHull (injectiveHullHom M) :=
   (HasInjectiveHull.existsInjHull (M := M)).choose_spec.choose_spec
 
+/--
+ From wikipedia: https://en.wikipedia.org/wiki/Injective_hull
 
+ In an AB5 actegory with enough injectives (in particular categories of modules over a ring), every object has an injective hull
+-/
 @[category API, AMS 16 18]
 instance [HasFilteredColimits C] [AB5 C] [EnoughInjectives C] : HasInjectiveHull M := by
   sorry
