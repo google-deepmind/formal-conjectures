@@ -47,12 +47,9 @@ Writing `G(𝔸) = G(𝔸_f) × G(ℝ)`, where `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, �
 * (d) for each `x ∈ G(𝔸_f)`, the function `y ↦ f (x, y)` on `G(ℝ)` is slowly increasing.
 
 Smooth means continuous, locally constant in the finite variable and `C^∞` in the archimedean
-one. The further condition (e) cutting out cusp forms, that the constant term
-`∫_{N(ℚ) \ N(𝔸)} f (n x) dn` along every unipotent radical vanishes, is not formalised here.
-Nothing is missing from mathlib to state it: with `N(X)` the upper triangular matrices with
-`1`s on the diagonal and off-diagonal entries in `X`, the set `N(Ẑ × [0, 1))` is a fundamental
-domain for `N(ℚ)` in `N(𝔸)`, so the constant term can be written as a Haar integral over it.
-It is left out only to keep this file to the definition of an automorphic form.
+one. The further condition (e) cutting out cusp forms, that the constant term along every
+unipotent radical vanishes, is not formalised here: it needs Haar integration over
+`N(ℚ) \ N(𝔸)`.
 
 ## Main declarations
 
