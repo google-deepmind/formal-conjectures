@@ -54,9 +54,14 @@ theorem a_5 : a 5 = 9 := by decide
 
 /--
 Conjecture: $a(n) = O(n^3)$.
+
+The source defines $a(n)$ as the least $m$ with $2^n - m$ and $2^n + m$ prime, so it
+implicitly asserts that such an $m$ exists. Since `a n = 0` when no such $m$ exists, the
+existence of a prime pair is stated explicitly for all sufficiently large $n$.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
+    (∀ᶠ n : ℕ in Filter.atTop, ∃ m, (2 ^ n - m).Prime ∧ (2 ^ n + m).Prime) ∧
     (fun n : ℕ => (a n : ℝ)) =O[Filter.atTop] (fun n : ℕ => (n ^ 3 : ℝ)) := by
   sorry
 
