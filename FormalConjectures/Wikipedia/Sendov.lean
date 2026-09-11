@@ -19,7 +19,12 @@ import FormalConjecturesUtil
 /-!
 # Sendov's conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Sendov%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Sendov%27s_conjecture)
+- Lech Mazur, *A Computer-Assisted Proof of Sendov's Conjecture*,
+  [ProofAtlas, August 5, 2026](https://www.proofatlas.ai/papers/sendov-conjecture/SENDOV_CONJECTURE_PROOF_AUGUST_5_2026.pdf).
+- Terence Tao, [*A digestion of the proof of Sendov's conjecture*](https://terrytao.wordpress.com/2026/08/12/a-digestion-of-the-proof-of-sendovs-conjecture/).
+- [Tao's Lean formalization of the digested proof](https://github.com/teorth/sendov).
 
 Tags: Sendov Conjecture, Ilieff's Conjecture.
 
@@ -48,7 +53,9 @@ def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
 $$f(z)=(z-r_{1})\cdots (z-r_{n}),\qquad (n\geq 2)$$
 with all roots $r_1, ..., r_n$ inside the closed unit disk $|z| ≤ 1$, each of the $n$ roots is at a
 distance no more than $1$ from at least one critical point. -/
-@[category research open, AMS 12 30 52]
+@[category research solved, AMS 12 30 52,
+  formal_proof using lean4 at
+    "https://github.com/teorth/sendov/blob/1ddea92d89f951a0a7cbbffa6c267cf7e6640b1d/Sendov/Conjecture.lean#L156-L167"]
 theorem sendov_conjecture (n : ℕ) (hn : 2 ≤ n) : n.SatisfiesSendovConjecture := by
   sorry
 
