@@ -34,7 +34,7 @@ over algebraically closed fields by K. Igusa, S. Liu and C. Paquette in
 [A proof of the strong no loop conjecture](https://arxiv.org/abs/1103.5361),
 published as [Adv. Math. 228 (2011), 2731-2742](https://doi.org/10.1016/j.aim.2011.06.042).
 * The *No Loop Conjecture* was solved assuming the same setup as above by K. Igusa
-[Notes on the no loop conjecture,
+[Notes on the no loops conjecture,
 J. Pure Appl. Algebra 69 (1990), 161-176](https://doi.org/10.1016/0022-4049%2890%2990040-O).
 In this setup, the No Loop Conjecture follows also from earlier work of H. Lenzing
 [Nilpotente Elemente in Ringen von endlicher globaler Dimension,
@@ -72,8 +72,9 @@ Let `S` be a simple `A`-module. -/
 variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A]
 variable [Algebra R A] [Module.Finite R A] (S : ModuleCat.{v} A) [Simple S]
 
-abbrev HasFirstSelfExt := ¬ Subsingleton (Ext S S 1)
-
+/--
+The global dimension of a ring `A`is defined as the supremum of projective dimensions of modules over `A`
+-/
 variable (A) in
 abbrev HasInfiniteGlobalDimension := ∀ n : ℕ, ∃ M : ModuleCat.{v} A, projectiveDimension M > n
 
@@ -88,7 +89,7 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem no_loop_conjecture : HasFirstSelfExt S → HasInfiniteGlobalDimension A := by
+theorem no_loop_conjecture : Nontrivial (Ext S S 1) → HasInfiniteGlobalDimension A := by
   sorry
 
 include R in
@@ -102,7 +103,7 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem strong_no_loop_conjecture : HasFirstSelfExt S → projectiveDimension S = ⊤ := by
+theorem strong_no_loop_conjecture : Nontrivial (Ext S S 1) → projectiveDimension S = ⊤ := by
   sorry
 
 /--
@@ -126,7 +127,7 @@ $$
 $$
 -/
 @[category research open, AMS 16 18]
-theorem extreme_no_loop_conjecture : HasFirstSelfExt S → ∀ i, ∃ n > i, ¬ Subsingleton (Ext S S n) := by
+theorem extreme_no_loop_conjecture : Nontrivial (Ext S S 1) → ∀ i, ∃ n > i, ¬ Subsingleton (Ext S S n) := by
   sorry
 
 /--
@@ -155,7 +156,7 @@ For finite-dimensional algebras over algebraically closed fields,
 the verified Strong No Loop Conjecture establishes the No Loop Conjecture.
 -/
 @[category test, AMS 16 18]
-lemma no_loop_conjecture.variant.alg_closed
+lemma no_loop_conjecture.variants.alg_closed
     {k : Type u} [Field k] [IsAlgClosed k] [Algebra k A] [Module.Finite k A] :
     type_of% (no_loop_conjecture (R := R) (A := A)) := no_loop_of_strong_no_loop
     (fun S _ hE => strong_no_loop_conjecture.variants.alg_closed (k := k) S hE )
