@@ -72,10 +72,10 @@ Let `S` be a simple `A`-module. -/
 variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A]
 variable [Algebra R A] [Module.Finite R A] (S : ModuleCat.{v} A) [Simple S]
 
+variable (A) in
 /--
 The global dimension of a ring `A`is defined as the supremum of projective dimensions of modules over `A`
 -/
-variable (A) in
 abbrev HasInfiniteGlobalDimension := ∀ n : ℕ, ∃ M : ModuleCat.{v} A, projectiveDimension M > n
 
 include R in
