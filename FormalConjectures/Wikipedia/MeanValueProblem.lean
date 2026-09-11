@@ -32,7 +32,8 @@ The conjecture has been proven for:
 * `K = 4`
   [The fundamental theorem of algebra and complexity theory](https://www.ams.org/journals/bull/1981-04-01/S0273-0979-1981-14858-8/)
   by *Steve Smale*
-* `K = (d-1)/d` if $p$ has real roots or all the roots of $p$ have the same norm.
+* `K = (d-1)/d` at a point $z$ if the normalised polynomial $p(X + z) - p(z)$ has only real
+  roots, or if all its nonzero roots have the same norm.
   [Critical points and values of complex polynomials](https://doi.org/10.1016/0885-064X(89)90019-8)
   by *David Tischler*
 -/
@@ -61,27 +62,32 @@ lemma mean_value_problem_leq_4 (p : Polynomial ℂ) (hp : 2 ≤ p.degree) (z : �
   sorry
 
 /--
-The following tighter bound depending on the degree $d$ of the polynomial $p$,
-in the case of $p$ only having real roots has been shown by Tischler.
-$|p(z)-p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$
+The following tighter bound depending on the degree $d$ of the polynomial $p$ has been shown by
+Tischler. Let $z$ be a complex number such that the normalised polynomial $p(X + z) - p(z)$ has
+only real roots, i.e. every $x$ with $p(x) = p(z)$ satisfies
+$\operatorname{Im} x = \operatorname{Im} z$. Then there is a critical point $c$ of $p$ such that
+$|p(z)-p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$.
 -/
 
 @[category research solved, AMS 12]
-lemma mean_value_problem_of_real_roots (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
-    (h : ∀ x : ℂ, p.IsRoot x → x.im = 0) (z : ℂ) (K : ℝ) :
+lemma mean_value_problem_of_real_roots (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree) (z : ℂ)
+    (h : ∀ x : ℂ, p.eval x = p.eval z → x.im = z.im) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
       ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ := by
   sorry
 
 /--
-The following tighter bound depending on the degree $d$ of the polynomial $p$,
-in the case of $p$ all roots having the same norm has been shown by Tischler.
+The following tighter bound depending on the degree $d$ of the polynomial $p$ has been shown by
+Tischler. Let $z$ be a complex number such that all nonzero roots of the normalised polynomial
+$p(X + z) - p(z)$ have the same norm, i.e. all $x \ne z$ with $p(x) = p(z)$ have the same
+distance to $z$. Then there is a critical point $c$ of $p$ such that
 $|p(z) - p(c)|/|z-c| \le (d-1)/d \cdot |p'(z)|$.
 -/
 
 @[category research solved, AMS 12]
-lemma mean_value_problem_of_roots_same_norm (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree)
-    (h : ∀ x y : ℂ, p.IsRoot x ∧ p.IsRoot y → ‖x‖=‖y‖) (z : ℂ) (K : ℝ) :
+lemma mean_value_problem_of_roots_same_norm (p : Polynomial ℂ) (hp : 2 ≤ p.natDegree) (z : ℂ)
+    (h : ∀ x y : ℂ, p.eval x = p.eval z → p.eval y = p.eval z → x ≠ z → y ≠ z →
+      ‖x - z‖ = ‖y - z‖) (K : ℝ) :
     ∃ c : ℂ, p.derivative.eval c = 0 ∧
       ‖p.eval z - p.eval c‖ / ‖z - c‖ ≤ (p.natDegree - 1)/ p.natDegree * ‖p.derivative.eval z‖ := by
   sorry
