@@ -131,7 +131,7 @@ theorem c7a_upper_bound : C7a < 7.103205334138 := by
 
 /-- Can the current best upper bound be improved? -/
 @[category research open, AMS 11]
-theorem c7a_upper_bound_improved : answer(sorry) ↔ C7a < 7.103205334137 := by
+theorem c7a_upper_bound_improved : answer(sorry) ↔ C7a < 7.103205334136 := by
   sorry
 
 end Constant7a
