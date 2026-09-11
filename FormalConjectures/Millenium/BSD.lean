@@ -89,13 +89,13 @@ def StrongBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
 statement on its own is [Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer {K : Type*} [Field K] [NumberField K] [DecidableEq K]
+theorem weakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K]
     (E : Affine K) [E.IsElliptic] : WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1). -/
 @[category research open, AMS 11 14]
-theorem strong_birch_swinnerton_dyer {K : Type*} [Field K] [NumberField K]
+theorem strongBSD {K : Type*} [Field K] [NumberField K]
     [DecidableEq K] (E : Affine K) [E.IsElliptic] : StrongBSD E := by
   sorry
 
@@ -112,13 +112,13 @@ namespace Rat
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** over `ℚ`, a Clay Millennium Prize Problem. -/
 @[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer (E : Affine ℚ) [E.IsElliptic] :
+theorem weakBSD (E : Affine ℚ) [E.IsElliptic] :
     NumberField.WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** over `ℚ`. -/
 @[category research open, AMS 11 14]
-theorem strong_birch_swinnerton_dyer (E : Affine ℚ) [E.IsElliptic] :
+theorem strongBSD (E : Affine ℚ) [E.IsElliptic] :
     NumberField.StrongBSD E := by
   sorry
 
