@@ -66,6 +66,7 @@ way and neither changing the content.
   $\mathbb{Q}_p$-algebra, the same missing structure that makes
   $N_{K_\mathfrak{p}/\mathbb{Q}_p}$ unavailable. Until both are available, a reader should check
   `logNorm` against the displayed formula by hand.
+
 * **The rank is a $\mathbb{C}_p$-dimension.** The $\mathbb{Z}_p$-rank of the image of
   $\mathbb{Z}_p \otimes E'$ in $\mathbb{Q}_p^{S_p}$ is the $\mathbb{Q}_p$-dimension of the span of
   $\rho(E')$, and extending scalars to $\mathbb{C}_p$ does not change it. Taking the span inside
@@ -99,21 +100,23 @@ The remaining objects match the sources directly:
 
 *References:*
 - L. J. Federer, B. H. Gross, *Regulators and Iwasawa modules*, with an appendix by W. Sinnott,
-  Invent. Math. **62** (1981), 443-457: the conjecture in the $p$-unit regulator form used here,
-  and its equivalence with Kuz'min's class field theoretic form.
+  Invent. Math. **62** (1981), 443-457: for CM fields, the non-vanishing of the $p$-adic
+  regulator of the minus $p$-units, and its equivalence with the minus part of Kuz'min's form.
 - L. V. Kuz'min, *The Tate module of algebraic number fields*, Izv. Akad. Nauk SSSR Ser. Mat.
   **36** (1972), 267-327: the original class field theoretic statement, that the
   $\Gamma$-coinvariants of the Galois group of the maximal abelian pro-$p$ extension of
   $K_\infty$ unramified and totally split above $p$ are finite.
 - P. Mihăilescu, *The Gross-Kuz'min conjecture for CM fields*,
-  [arXiv:1107.1146](https://arxiv.org/abs/1107.1146), §1: the $p$-units are
-  $E'(K) = (\mathcal{O}(K)[1/p])^\times$ and the conjecture is the non-vanishing of the
-  $p$-adic regulator $R(E'(K))$; the same author's *Leopoldt's Conjecture for CM fields*,
-  [arXiv:1105.4544](https://arxiv.org/abs/1105.4544), is the source for
+  [arXiv:1107.1146v1](https://arxiv.org/abs/1107.1146v1), §1: the $p$-units are
+  $E'(K) = (\mathcal{O}(K)[1/p])^\times$ and, for CM fields, the conjecture is the
+  non-vanishing of the $p$-adic regulator $R(E'(K))$; the same author's *Leopoldt's Conjecture
+  for CM fields*, [arXiv:1105.4544](https://arxiv.org/abs/1105.4544), is the source for
   `FormalConjectures.Wikipedia.LeopoldtConjecture`.
 - J.-F. Jaulent, *Sur les normes cyclotomiques et les conjectures de Leopoldt et de
-  Gross-Kuz'min*, [arXiv:1509.02743](https://arxiv.org/abs/1509.02743): the two conjectures
-  side by side, and the reformulation through the logarithmic class group.
+  Gross-Kuz'min*, [arXiv:1509.02743](https://arxiv.org/abs/1509.02743): Scolie 6, whose exact
+  sequence on $p$-units shows that the rank of $\rho$ falls short of $|S_p| - 1$ by the
+  $\mathbb{Z}_p$-rank of the logarithmic class group, and Théorème 5, that this group is
+  isomorphic to the $\Gamma$-coinvariants of Kuz'min's module.
 - R. Greenberg, *On a certain l-adic representation*, Invent. Math. **21** (1973), 117-124: the
   conjecture for abelian $K/\mathbb{Q}$.
 -/
@@ -131,42 +134,24 @@ variable (K : Type*) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime]
 /-- $S_p$ as a set of primes, the shape `Set.unit` wants for the $p$-units. -/
 abbrev primesAboveSet : Set (HeightOneSpectrum (𝓞 K)) := {v | (p : 𝓞 K) ∈ v.asIdeal}
 
-instance : Finite (PrimesAbove K p) := by
-  have hpne : (p : 𝓞 K) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out (p := p.Prime)).ne_zero
-  have hp0 : Ideal.span {(p : 𝓞 K)} ≠ 0 := by
-    simpa [Ideal.span_singleton_eq_bot] using hpne
-  apply Set.Finite.to_subtype
-  refine (Ideal.finite_factors (R := 𝓞 K) hp0).subset fun v hv ↦ ?_
-  exact Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv)
+instance : Finite (PrimesAbove K p) :=
+  ((Ideal.finite_factors (I := Ideal.span {(p : 𝓞 K)}) (by simp [NeZero.ne p])).subset
+    fun _ ↦ Ideal.dvd_span_singleton.2).to_subtype
 
-/-- Some prime of $\mathcal{O}_K$ lies above `p`: `p` is a prime of `ℤ`, and the extension
-`ℤ → 𝓞 K` is integral, so going up provides a prime over it. -/
 @[category API, AMS 11]
 theorem nonempty_primesAbove : Nonempty (PrimesAbove K p) := by
-  have hpz : Prime (p : ℤ) := Nat.prime_iff_prime_int.1 (Fact.out : p.Prime)
-  have : (Ideal.span {(p : ℤ)}).IsPrime := (Ideal.span_singleton_prime hpz.ne_zero).2 hpz
-  obtain ⟨⟨Q, hQprime, hQover⟩⟩ :
-      Nonempty (Ideal.primesOver (Ideal.span {(p : ℤ)}) (𝓞 K)) := inferInstance
-  have hmem : (p : 𝓞 K) ∈ Q := by
-    have hspan : (p : ℤ) ∈ Ideal.span {(p : ℤ)} := Ideal.mem_span_singleton_self _
-    rw [hQover.over] at hspan
-    simpa using hspan
-  have hne : Q ≠ ⊥ := fun hQ ↦ by
-    rw [hQ, Ideal.mem_bot] at hmem
-    exact Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero hmem
-  exact ⟨⟨⟨Q, hQprime, hne⟩, hmem⟩⟩
-
-/-- $|S_p| \geq 1$, so that the `|S_p| - 1` of the conjecture is not a truncated subtraction. -/
-@[category API, AMS 11]
-theorem zero_lt_card_primesAbove : 0 < Nat.card (PrimesAbove K p) :=
-  Nat.card_pos_iff.2 ⟨nonempty_primesAbove K p, inferInstance⟩
+  obtain ⟨⟨Q, hQprime, hQover⟩⟩ : Nonempty (Ideal.primesOver (Ideal.span {(p : ℤ)}) (𝓞 K)) :=
+    inferInstance
+  exact ⟨⟨⟨Q, hQprime, Ideal.ne_bot_of_liesOver_of_ne_bot (p := Ideal.span {(p : ℤ)})
+    (by simp [NeZero.ne p]) Q⟩, by simpa [hQover.over] using Ideal.mem_span_singleton_self (p : ℤ)⟩⟩
 
 /- ## The `p`-units -/
 
 /-- $E' = \mathcal{O}_K[1/p]^\times$, the group of $p$-units of `K`: the elements of $K^\times$
 whose valuation is `1` at every prime away from $S_p$. This is the unit group of the ring
 $\mathcal{O}_K[1/p]$ of $S_p$-integers by `Set.unitEquivUnitsInteger`. -/
-noncomputable abbrev pUnits : Subgroup Kˣ := (primesAboveSet K p).unit K
+noncomputable
+abbrev pUnits : Subgroup Kˣ := (primesAboveSet K p).unit K
 
 /- ## Gross's regulator map -/
 
@@ -179,33 +164,24 @@ def Induces {K : Type*} [Field K] [NumberField K] {p : ℕ} [Fact p.Prime] (σ :
     (v : HeightOneSpectrum (𝓞 K)) : Prop :=
   ∀ y : 𝓞 K, y ∈ v.asIdeal ↔ ‖σ (y : K)‖ < 1
 
-/-- The prime induced by an embedding $K \to \mathbb{C}_p$ lies above `p`, since
-$\|p\|_p < 1$. -/
 @[category API, AMS 11]
 theorem mem_asIdeal_of_induces {K : Type*} [Field K] [NumberField K] {p : ℕ} [Fact p.Prime]
-    {σ : K →+* ℂ_[p]} {v : HeightOneSpectrum (𝓞 K)} (h : Induces σ v) :
-    (p : 𝓞 K) ∈ v.asIdeal := by
+    {σ : K →+* ℂ_[p]} {v : HeightOneSpectrum (𝓞 K)} (h : Induces σ v) : (p : 𝓞 K) ∈ v.asIdeal := by
   refine (h (p : 𝓞 K)).2 ?_
-  have hcast : σ ((p : 𝓞 K) : K) = ((p : ℕ) : ℂ_[p]) := by simp
-  rw [hcast]
-  exact PadicIwasawaLog.PadicComplex.norm_natCast_p_lt_one
+  simpa [map_natCast] using PadicIwasawaLog.PadicComplex.norm_natCast_p_lt_one
 
-/-- An embedding induces at most one prime: the induced prime is determined as the set
-$\{y : \|\sigma(y)\| < 1\}$. So the fibres of $\sigma \mapsto \mathfrak{p}$ are disjoint, and
-the sums `logNorm` over distinct primes involve disjoint sets of embeddings. -/
 @[category API, AMS 11]
 theorem Induces.unique {K : Type*} [Field K] [NumberField K] {p : ℕ} [Fact p.Prime]
     {σ : K →+* ℂ_[p]} {v w : HeightOneSpectrum (𝓞 K)} (hv : Induces σ v) (hw : Induces σ w) :
-    v = w :=
-  HeightOneSpectrum.ext (Ideal.ext fun y ↦ (hv y).trans (hw y).symm)
+    v = w := HeightOneSpectrum.ext (Ideal.ext fun y ↦ (hv y).trans (hw y).symm)
 
 open scoped Classical in
 /-- $\log_p N_{K_\mathfrak{p} / \mathbb{Q}_p}(x)$, computed as $\sum_\sigma \log_p \sigma(x)$
 over the embeddings $\sigma : K \to \mathbb{C}_p$ inducing $\mathfrak{p}$. See the module
 docstring for why the local norm is spelled out this way. -/
-noncomputable def logNorm (x : K) (v : HeightOneSpectrum (𝓞 K)) : ℂ_[p] :=
-  ∑ σ ∈ Finset.univ.filter fun σ : K →+* ℂ_[p] ↦ Induces σ v,
-    PadicIwasawaLog.iwasawaLog p (σ x)
+noncomputable
+def logNorm (x : K) (v : HeightOneSpectrum (𝓞 K)) : ℂ_[p] :=
+  ∑ σ ∈ Finset.univ.filter fun σ : K →+* ℂ_[p] ↦ Induces σ v, PadicIwasawaLog.iwasawaLog p (σ x)
 
 /-- Every summand of `logNorm` at a $p$-unit, hence every summand of `grossRegulator`, is a
 genuine Iwasawa logarithm rather than the junk value: a $p$-unit is a nonzero element of `K` and
@@ -221,19 +197,20 @@ theorem hasIwasawaLog_embedding (x : pUnits K p) (σ : K →+* ℂ_[p]) :
 /-- **Gross's regulator map** $\rho : E' \to \bigoplus_{\mathfrak{p} \in S_p} \mathbb{Q}_p$,
 $x \mapsto (\log_p N_{K_\mathfrak{p}/\mathbb{Q}_p}(x))_\mathfrak{p}$, with $\mathbb{C}_p$ in
 place of $\mathbb{Q}_p$. -/
-noncomputable def grossRegulator (x : pUnits K p) (v : PrimesAbove K p) : ℂ_[p] :=
+noncomputable
+def grossRegulator (x : pUnits K p) (v : PrimesAbove K p) : ℂ_[p] :=
   logNorm K p ((x : Kˣ) : K) v.1
 
 /-- The $\mathbb{C}_p$-span of the image of Gross's regulator map. Its dimension is the
 $\mathbb{Z}_p$-rank of the image of $\mathbb{Z}_p \otimes E'$ that the conjecture is about; see
 the module docstring for why the span is taken over $\mathbb{C}_p$ rather than $\mathbb{Q}_p$. -/
-noncomputable def regulatorSpan : Submodule ℂ_[p] (PrimesAbove K p → ℂ_[p]) :=
+noncomputable
+def regulatorSpan : Submodule ℂ_[p] (PrimesAbove K p → ℂ_[p]) :=
   Submodule.span ℂ_[p] (Set.range (grossRegulator K p))
 
 /- ## The conjecture -/
 
-/--
-**The Gross-Kuz'min conjecture.** Let $K$ be a number field, $p$ a prime, $S_p$ the set of
+/-- **The Gross-Kuz'min conjecture.** Let $K$ be a number field, $p$ a prime, $S_p$ the set of
 primes of $K$ above $p$ and $E' = \mathcal{O}_K[1/p]^\times$ the $p$-units. Then the image of
 Gross's regulator map
 $$\rho : E' \to \bigoplus_{\mathfrak{p} \in S_p} \mathbb{Q}_p, \qquad
@@ -242,23 +219,18 @@ spans a subspace of dimension $|S_p| - 1$.
 
 This is the maximum possible: the coordinates of $\rho(x)$ sum to
 $\log_p N_{K/\mathbb{Q}}(x) = 0$, so the image lies in the hyperplane $\sum_\mathfrak{p} = 0$.
-Equivalently the $p$-adic regulator $R(E'(K))$ of the $p$-units is nonzero
-[Mihăilescu, §1], and equivalently Kuz'min's Iwasawa module has finite $\Gamma$-coinvariants
-[Federer-Gross].
-
-The conjecture is trivially true when $p$ has a single prime above it in $K$, for instance when
-$p$ is inert or totally ramified: then $|S_p| - 1 = 0$.
--/
+Equivalently, the logarithmic class group of $K$ is finite, which is to say that Kuz'min's
+Iwasawa module has finite $\Gamma$-coinvariants [Jaulent, Scolie 6 and Théorème 5]. For a CM
+field the statement implies that Gross's $p$-adic regulator $R(E'(K))$ of the minus $p$-units
+is nonzero, and Federer and Gross show that this is equivalent to the minus part of Kuz'min's
+form [Mihăilescu, §1]. -/
 @[category research open, AMS 11]
 theorem gross_kuzmin_conjecture :
     Module.finrank ℂ_[p] (regulatorSpan K p) = Nat.card (PrimesAbove K p) - 1 := by
   sorry
 
-/--
-**Greenberg's theorem.** The Gross-Kuz'min conjecture holds when $K$ is an abelian extension of
-$\mathbb{Q}$. As for Leopoldt's conjecture in the abelian case, the input is the $p$-adic
-analogue of Baker's theorem on linear forms in logarithms, proved by Brumer.
--/
+/-- **Greenberg's theorem.** The Gross-Kuz'min conjecture holds when $K$ is an abelian extension of
+$\mathbb{Q}$. -/
 @[category research solved, AMS 11]
 theorem gross_kuzmin_conjecture.variants.abelian [IsAbelianGalois ℚ K] :
     Module.finrank ℂ_[p] (regulatorSpan K p) = Nat.card (PrimesAbove K p) - 1 := by
