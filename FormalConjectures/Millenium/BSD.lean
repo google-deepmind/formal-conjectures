@@ -67,9 +67,8 @@ so this implies `HasseWeil.exists_hasMeromorphicContinuation`. [Tate1966], Conje
 [Gross2011] needs one only near `s = 1`. By `HasseWeil.HasMeromorphicContinuation.unique` the order
 does not depend on which continuation is taken, so the two readings differ exactly by the
 Hasse--Weil conjecture. -/
-def WeakBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : Affine K) [E.IsElliptic], ∃ L : ℂ → ℂ,
-    HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
+def WeakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) : Prop :=
+  ∃ L : ℂ → ℂ, HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
 
 /-- The leading coefficient predicted by BSD over a number field, using the non-normalised regulator
 and dividing by the square root of the absolute field discriminant. -/
@@ -82,32 +81,30 @@ noncomputable def leadingCoefficient {K : Type*} [Field K] [NumberField K] [Deci
 curve `E` over `K`, a meromorphic continuation of its L-series has order `rk E(K)` at `s = 1`, the
 Tate--Shafarevich group is finite, and the leading coefficient of its L-series is
 `L⁽ʳ⁾(E, 1) / r! = Ω(E)·Reg(E)·|Sha(E)|·∏ᵥcᵥ / √|Δ(K)|·|E(K)ₜₒᵣₛ|²`. See [DD2010], Conjecture 2.1. -/
-def StrongBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : Affine K) [E.IsElliptic], ∃ L : ℂ → ℂ,
-    HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
-      Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
+def StrongBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
+    Prop := ∃ L : ℂ → ℂ,
+  HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
+    Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
 statement on its own is [Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
-    [DecidableEq K] : WeakBSD K := by
+theorem weak_birch_swinnerton_dyer {K : Type*} [Field K] [NumberField K] [DecidableEq K]
+    (E : Affine K) [E.IsElliptic] : WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1). -/
 @[category research open, AMS 11 14]
-theorem strong_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
-    [DecidableEq K] : StrongBSD K := by
+theorem strong_birch_swinnerton_dyer {K : Type*} [Field K] [NumberField K]
+    [DecidableEq K] (E : Affine K) [E.IsElliptic] : StrongBSD E := by
   sorry
 
 /-- Strong BSD implies weak BSD, since the meromorphic continuation witnessing the strong conjecture
 already has the predicted order at `s = 1`. -/
 @[category API, AMS 11 14]
-theorem StrongBSD.weakBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] (h : StrongBSD K) :
-    WeakBSD K := by
-  intro E _
-  obtain ⟨L, hL, hr, -⟩ := h E
-  exact ⟨L, hL, hr⟩
+theorem StrongBSD.weakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] {E : Affine K}
+    [E.IsElliptic] (h : StrongBSD E) : WeakBSD E :=
+  ⟨h.choose, h.choose_spec.left, h.choose_spec.right.left⟩
 
 end NumberField
 
@@ -115,12 +112,14 @@ namespace Rat
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** over `ℚ`, a Clay Millennium Prize Problem. -/
 @[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer_conjecture : NumberField.WeakBSD ℚ := by
+theorem weak_birch_swinnerton_dyer (E : Affine ℚ) [E.IsElliptic] :
+    NumberField.WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** over `ℚ`. -/
 @[category research open, AMS 11 14]
-theorem strong_birch_swinnerton_dyer_conjecture : NumberField.StrongBSD ℚ := by
+theorem strong_birch_swinnerton_dyer (E : Affine ℚ) [E.IsElliptic] :
+    NumberField.StrongBSD E := by
   sorry
 
 end Rat

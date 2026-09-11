@@ -46,14 +46,14 @@ $(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *2-division
   $\Omega_{\mathbb{C}} = \int_{E(\mathbb{C})} |\omega \wedge \bar\omega|
   = 4 \int_{\mathbb{C}} dA(x) / |F(x)|$ (`WeierstrassCurve.complexPeriod`).
 
-Over a number field $K$ these combine into two global invariants. The *archimedean period*
+Over a number field $K$ these combine into a single global invariant. The archimedean period
 $\Omega_\infty(E)$ is the product of the local periods over the infinite places, taking the real
-period at a real place and the complex period at a complex one
-(`WeierstrassCurve.archimedeanPeriod`). It depends on the chosen Weierstrass equation, and the
-*period* $\Omega(E) = \Omega_\infty(E)
-(|N_{K/\mathbb{Q}}(\Delta_E)| / N(\mathfrak{D}_{E/K}))^{1/12}$ corrects it by the minimal
-discriminant ideal (`WeierstrassCurve.period`). This is the factor that appears in the Birch and
-Swinnerton-Dyer conjecture, and it is defined even when $E$ has no globally minimal equation.
+period at a real place and the complex period at a complex one. It depends on the chosen
+Weierstrass equation, so the *period*
+$\Omega(E) = \Omega_\infty(E)(|N_{K/\mathbb{Q}}(\Delta_E)| / N(\mathfrak{D}_{E/K}))^{1/12}$
+corrects it by the minimal discriminant ideal (`WeierstrassCurve.period`). This is the factor that
+appears in the Birch and Swinnerton-Dyer conjecture, and it is defined even when $E$ has no
+globally minimal equation.
 
 *References:*
 - [LMFDB](https://beta.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
@@ -100,28 +100,14 @@ end Complex
 
 section NumberField
 
-open NumberField
-
-variable {K : Type*} [Field K] [NumberField K] (E : WeierstrassCurve K) [E.IsElliptic]
-
 open scoped Classical in
-/-- The product of the real and complex period integrals, with one factor per infinite place.
-These are the archimedean integrals for the equation's invariant differential in [DD2010],
-Conjecture 2.1. The real periods include all components, and the complex periods use
-`|ω ∧ ω̄|`, or twice the usual area measure. -/
-def archimedeanPeriod : ℝ :=
-  ∏ v : InfinitePlace K, if hv : v.IsReal then
-    (E.map (InfinitePlace.embedding_of_isReal hv)).realPeriod
-  else
-    (E.map v.embedding).complexPeriod
-
-/-- The period corrected by the minimal discriminant ideal:
-$\Omega(E)=\Omega_\infty(E)(|N_{K/\mathbb{Q}}(\Delta_E)|/N(\mathfrak{D}_{E/K}))^{1/12}$.
-This accounts for the local changes to minimal invariant differentials and applies even when
-there is no globally minimal equation. See [DD2010], §2.1. -/
-def period : ℝ :=
-  archimedeanPeriod E *
-    (|(Algebra.norm ℚ E.Δ : ℝ)| / (Ideal.absNorm E.minimalDiscriminantIdeal : ℝ)) ^ (1 / 12 : ℝ)
+/-- The *global period* of the real and complex period integrals at all infinite places, up to a
+normalisation factor in terms of minimal discriminants. See [DD2010], §2.1. -/
+def period {K : Type*} [Field K] [NumberField K] (E : WeierstrassCurve K) : ℝ :=
+  (|(Algebra.norm ℚ E.Δ : ℝ)| / E.minimalDiscriminantIdeal.absNorm) ^ (1 / 12 : ℝ) *
+    ∏ v : NumberField.InfinitePlace K,
+      if hv : v.IsReal then (E.map <| NumberField.InfinitePlace.embedding_of_isReal hv).realPeriod
+        else (E.map v.embedding).complexPeriod
 
 end NumberField
 
