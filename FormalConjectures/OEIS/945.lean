@@ -26,6 +26,14 @@ write $b(n)$ for the product of the first $n$ official terms.
 
 *References:*
 - [A000945](https://oeis.org/A000945)
+- [Mullin63] A. A. Mullin,
+  ["Research Problem 8 (ii)"](https://doi.org/10.1090/S0002-9904-1963-11017-4),
+  *Bull. Amer. Math. Soc.* **69** (1963), p. 737.
+- [Wagstaff93] S. S. Wagstaff, Jr.,
+  ["Computing Euclid's primes"](https://oeis.org/A000945/a000945_4.pdf),
+  *Bull. Institute Combin. Applications* **8** (1993), pp. 23-32.
+- [CrandallPomerance01] R. Crandall and C. Pomerance,
+  *Prime Numbers: A Computational Perspective*, Springer (2001), p. 6.
 - A. R. Booker, "A variant of the Euclid-Mullin sequence containing every prime,"
   [arXiv:1605.08929](https://arxiv.org/abs/1605.08929), *Journal of Integer Sequences* **19**
   (2016), Article 16.6.4.
@@ -68,14 +76,16 @@ theorem a_6 : a 6 = 53 := by norm_num [a, b]
 theorem a_7 : a 7 = 5 := by norm_num [a, b]
 
 /--
-"Does the sequence ... contain every prime? ... [It] was considered by Guy and Nowakowski and later by Shanks, [Wagstaff 1993] computed the sequence through the 43rd term. The computational problem inherent in continuing the sequence further is the enormous size of the numbers that must be factored. Already the number a(1)* ... *a(43) + 1 has 180 digits." - Crandall and Pomerance
+"Does the sequence ... contain every prime? ... [It] was considered by Guy and Nowakowski
+and later by Shanks, [Wagstaff93] computed the sequence through the 43rd term. The
+computational problem inherent in continuing the sequence further is the enormous size of the
+numbers that must be factored. Already the number $a(1) \cdots a(43) + 1$ has 180 digits."
+- [CrandallPomerance01]
 
-See  also A. A. Mullin,
-["Research Problem 8 (ii)"](https://doi.org/10.1090/S0002-9904-1963-11017-4),
-*Bull. Amer. Math. Soc.* **69** (1963), p. 737.
+See also [Mullin63].
 -/
 @[category research open, AMS 11]
-theorem conjecture :
+theorem every_prime_occurs :
     answer(sorry) ↔ ∀ p, p.Prime → ∃ n ≥ 1, a n = p := by
   sorry
 

@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 Number of ways to write $n = x+y$, for $x,y > 0$ such that $2^x + y$ is prime.
 
-Zhi-Wei Sun has offered a $1000 prize for the first proof.
+Zhi-Wei Sun has offered a \$1000 prize for the first proof.
 
 *References:*
 - [A231201](https://oeis.org/A231201)

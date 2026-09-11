@@ -118,13 +118,15 @@ ul, ol { list-style: none; }
 /* ============================================================
    Navigation
    ============================================================ */
-/* ---- WIP Banner ---- */
+/* ---- WIP Banner / Notice ---- */
 .wip-banner {
   background: #fef3c7;
   color: #92400e;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  margin: 1rem 0 1.25rem;
 }
 
 .wip-banner a {
@@ -730,6 +732,9 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: normal;
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .theorem-detail__section { margin-bottom: 1.75rem; }
@@ -741,6 +746,16 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
   margin-bottom: 0.4rem;
+}
+
+.detail-context {
+  display: inline;
+  margin-left: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  text-transform: none;
 }
 
 .detail-value {
@@ -761,6 +776,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 
 .theorem-detail__nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -1225,6 +1241,7 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   margin-top: 0.5rem;
   line-height: 1.6;
   font-size: 0.95rem;
+  overflow-wrap: anywhere;
 }
 
 .verso-doc-content h2 {
@@ -1241,19 +1258,32 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   text-decoration: underline;
 }
 
+/* Wide display math (e.g. large matrices) scrolls instead of overflowing the page. */
+.verso-doc-content .katex-display,
+.problem-doc-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
 .verso-code-container {
   margin-top: 0.5rem;
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
   overflow-x: auto;
-  background: var(--color-bg-alt);
+  background: #fafafa;
 }
 
 .verso-code-container code.hl {
   display: block;
-  padding: 1rem 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  white-space: pre;
+  overflow-wrap: normal;
+  tab-size: 2;
+  font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  color: var(--verso-code-color, #000);
+  padding: 1.25rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
 }
 
 .verso-code-loading {
@@ -1373,3 +1403,40 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
 .stats-table td a:hover {
   text-decoration: underline;
 }
+
+/* ============================================================
+   Modules page
+   ============================================================ */
+.module-library__lede {
+  color: var(--color-text-muted);
+  margin: -1rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+.module-group { margin-bottom: 2rem; }
+.module-group:last-child { margin-bottom: 0; }
+
+.module-group__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.module-group__title a { color: inherit; }
+
+.module-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.3rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.module-list li {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.module-list a { color: var(--color-link); }

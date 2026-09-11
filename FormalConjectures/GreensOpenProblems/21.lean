@@ -170,7 +170,7 @@ theorem minColours_eq_zero (a : Fin 0 → ℤ) : minColours a = 0 := by
   have : {r | ∃ col : ℕ → Fin r, ∀ x : Fin 0 → ℕ, (∀ i, 0 < x i) →
       (∀ i j, col (x i) = col (x j)) → ∑ i, a i * x i ≠ 0} = ∅ := by
     ext r
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_exists]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_exists]
     exact fun col h => h (fun i => i.elim0) (fun i => i.elim0) (fun i => i.elim0) (by simp)
   rw [minColours, this, Nat.sInf_empty]
 

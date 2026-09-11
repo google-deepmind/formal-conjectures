@@ -39,58 +39,70 @@ def Erdos40For (g : ℕ → ℝ) : Prop :=
     limsup (fun N ↦ (sumRep A N : ℕ∞)) atTop = ⊤
 
 /--
-Given a set of functions $\mathbb{N} → \mathbb{R})$, we assert that for all $g$ in that set,
-if $g(N) → \infty$ then
-$$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
-implies $\limsup 1_A\ast 1_A(n)=\infty$.
--/
-def Erdos40ForSet (G : Set (ℕ → ℝ)) : Prop := ∀ g ∈ G, Tendsto g atTop atTop → Erdos40For g
-
-/--
 For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
+
+Asked here in decision form: is there any such $g$ at all? Establishing the
+implication for even one $g(N) → \infty$ already answers Erdős Problem 28
+positively, because a basis of order $2$ satisfies
+$\lvert A\cap \{1,\ldots,N\}\rvert \gg N^{1/2}$.
 -/
 @[category research open, AMS 11]
-theorem erdos_40 : Erdos40ForSet answer(sorry) := by
+theorem erdos_40 :
+    answer(sorry) ↔ ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
   sorry
 
 /--
-If we don't pose additional conditions on the functions, then this is a stronger form of the
-Erdős-Turán conjecture, see Erdõs Problem 28,
-(since establishing this for any function $g(N) → \infty$ would imply a positive solution to Erdős
-Problem 28).
+Establishing the property in Erdős Problem 40 for any one function $g(N) → \infty$
+implies the Erdős-Turán conjecture, see Erdős Problem 28.
 -/
 @[category textbook, AMS 11]
-theorem erdos_40.variants.implies_erdos_28 (h_erdos_40 : Erdos40ForSet .univ) : type_of% Erdos28.erdos_28 := by
-  simp only [Erdos40ForSet, Erdos40For, sumRep, sumConv, indicatorOne, mem_univ, forall_const]
-    at h_erdos_40
+theorem erdos_40.variants.implies_erdos_28 (g : ℕ → ℝ) (hg : Tendsto g atTop atTop)
+    (h_erdos_40 : Erdos40For g) : type_of% Erdos28.erdos_28 := by
+  classical
   intro A hA
-  apply h_erdos_40
-  rotate_right
-  · exact fun N => (N : ℝ).sqrt
-  · rw [funext Real.sqrt_eq_rpow]
-    exact (tendsto_rpow_atTop (one_half_pos)).comp (tendsto_natCast_atTop_atTop)
-  · have ⟨n, hn⟩ := hA.exists_le
-    apply Asymptotics.IsBigO.of_bound 1
-    apply Filter.eventually_atTop.mpr
-    use n + 1
-    intro m hm
-    have : 0 < m := by omega
-    field_simp
-    simp only [one_mem, CStarRing.norm_of_mem_unitary, RCLike.norm_natCast, Nat.one_le_cast]
-    apply Nat.card_pos_iff.mpr
-    constructor
-    · by_contra h_empty
-      have : m ∈ (A + A)ᶜ := by
-        intro h
-        replace ⟨a, ha, b, hb, h⟩ := h
-        absurd h_empty
-        by_cases ha' : 1 ≤ a
-        · refine ⟨a, ha, ha', by bound⟩
-        · exact ⟨b, hb, by simp only at h; omega, by bound⟩
-      have := hn m this
+  apply h_erdos_40 A
+  obtain ⟨n, hn⟩ := hA.exists_le
+  apply Asymptotics.IsBigO.of_bound 4
+  filter_upwards [eventually_ge_atTop (2 * n + 2), hg.eventually_ge_atTop 1] with N hN hgN
+  let k := (A ∩ Icc 1 N).ncard
+  let B := insert 0 (A ∩ Icc 1 N)
+  have hB : B.Finite := ((finite_Icc 1 N).inter_of_right A).insert 0
+  have hmem : ∀ a ∈ A, a ≤ N → a ∈ B := by
+    intro a ha haN
+    by_cases ha0 : a = 0
+    · exact Or.inl ha0
+    · exact Or.inr ⟨ha, by omega, haN⟩
+  have hsub : Icc (n + 1) N ⊆ B + B := by
+    intro m ⟨hmlo, hmhi⟩
+    have hmA : m ∈ A + A := by
+      by_contra hmA
+      have := hn m hmA
       omega
-    · exact (Set.finite_Icc _ _).inter_of_right A
+    obtain ⟨a, ha, b, hb, hab⟩ := hmA
+    simp only at hab
+    exact ⟨a, hmem a ha (by omega), b, hmem b hb (by omega), hab⟩
+  have hcard : N - n ≤ (k + 1) ^ 2 := calc
+    N - n = (Icc (n + 1) N).ncard := by simp
+    _ ≤ (B + B).ncard := ncard_le_ncard hsub (hB.add hB)
+    _ ≤ B.ncard ^ 2 := by
+      simpa only [Nat.card_coe_set_eq, pow_two] using (Set.natCard_add_le (s := B) (t := B))
+    _ ≤ (k + 1) ^ 2 := by
+      gcongr
+      exact ncard_insert_le 0 (A ∩ Icc 1 N)
+  have hcard' : N ≤ n + (k + 1) ^ 2 := by omega
+  have hk : 1 ≤ k := by nlinarith
+  have hcardR : (N : ℝ) ≤ n + ((k : ℝ) + 1) ^ 2 := by exact_mod_cast hcard'
+  have hNR : 2 * (n : ℝ) + 2 ≤ (N : ℝ) := by exact_mod_cast hN
+  have hkR : 1 ≤ (k : ℝ) := by exact_mod_cast hk
+  have hsqrt : √(N : ℝ) ≤ 4 * (k : ℝ) := by
+    apply sqrt_le_iff.2
+    constructor
+    · positivity
+    · nlinarith [sq_nonneg ((k : ℝ) - 1)]
+  rw [Real.norm_of_nonneg (div_nonneg (sqrt_nonneg _) (le_trans zero_le_one hgN)),
+    Real.norm_natCast]
+  exact (div_le_self (sqrt_nonneg _) hgN).trans hsqrt
 
 end Erdos40

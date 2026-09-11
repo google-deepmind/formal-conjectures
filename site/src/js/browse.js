@@ -27,12 +27,6 @@ const state = {
   sort:            'name',
 };
 
-// Human-readable labels for formal proof kinds
-const FORMAL_PROOF_LABELS = {
-  'formal_conjectures': 'Formal Conjectures',
-  'lean4':              'Lean 4 (external)',
-  'other_system':       'Other system',
-};
 
 // ---------------------------------------------------------------------------
 // DOM references
@@ -64,7 +58,7 @@ function readURL() {
   state.formalProofKinds.clear();
   if (params.get('formal_proof') === 'true') {
     // Landing page shortcut: select all proof kinds
-    for (const k of Object.keys(FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
+    for (const k of Object.keys(FC.FORMAL_PROOF_LABELS)) state.formalProofKinds.add(k);
   } else {
     for (const v of params.getAll('formal_proof_kind')) state.formalProofKinds.add(v);
   }
@@ -119,7 +113,10 @@ function applyFilters() {
       const cSubjects = new Set(c.subjects.map(s => s.name));
       if (![...state.subjects].some(s => cSubjects.has(s))) return false;
     }
-    if (state.formalProofKinds.size && !state.formalProofKinds.has(c.formalProofKind)) return false;
+    // A conjecture can have several formal proofs, of different kinds. Match if any of
+    // them has a selected kind.
+    if (state.formalProofKinds.size &&
+        !(c.formalProofs || []).some(p => state.formalProofKinds.has(p.kind))) return false;
     return true;
   });
 
@@ -326,7 +323,8 @@ async function init() {
 
   // Collect unique values for filters
   const categories      = new Set(allConjectures.map(c => c.category));
-  const formalProofKinds = new Set(allConjectures.map(c => c.formalProofKind).filter(Boolean));
+  const formalProofKinds = new Set(
+    allConjectures.flatMap(c => (c.formalProofs || []).map(p => p.kind)));
   const collections     = new Set(allConjectures.map(c => c.collection));
   const subjects        = new Set(allConjectures.flatMap(c => c.subjects.map(s => s.name)));
 
@@ -342,7 +340,7 @@ async function init() {
 
   // Build filter UI
   buildCheckboxes(categoryFilters,    categories,      state.categories,      update);
-  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FORMAL_PROOF_LABELS);
+  buildCheckboxes(formalProofFilters, formalProofKinds, state.formalProofKinds, update, FC.FORMAL_PROOF_LABELS);
   buildCheckboxes(collectionFilters,  collections,     state.collections,     update);
   buildCheckboxes(subjectFilters,     subjects,        state.subjects,        update);
 

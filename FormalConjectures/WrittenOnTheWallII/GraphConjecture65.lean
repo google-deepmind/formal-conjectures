@@ -40,6 +40,12 @@ namespace WrittenOnTheWallII.GraphConjecture65
 
 open SimpleGraph Finset
 
+/- Synthesizing `∀ v, Fintype ↥(graph.neighborSet v)` on our 18-edges graph uses more than the
+default `synthInstance.maxSize` of 128 instances. That option bounds how many instances a solution
+may use, not how long the search may take. Raising it is free -- synthesis costs ~13ms either way
+about 1% of this file's elaboration time; the rest is `decide` and kernel type-checking. -/
+set_option synthInstance.maxSize 400
+
 namespace Counterexample
 
 /-- The counterexample: a path on vertices $0,\ldots,12$, with triangles attached at
@@ -54,30 +60,7 @@ abbrev graph : SimpleGraph (Fin 17) :=
 
 /-- The counterexample is connected. -/
 @[category API, AMS 5]
-lemma connected : graph.Connected := by
-  rw [connected_iff_exists_forall_reachable]
-  refine ⟨0, ?_⟩
-  have step (u v : Fin 17) (h : graph.Reachable 0 u) (huv : graph.Adj u v) :
-      graph.Reachable 0 v := h.trans huv.reachable
-  have h0 : graph.Reachable 0 0 := by simp
-  have h1 := step 0 1 h0 (by decide)
-  have h2 := step 1 2 h1 (by decide)
-  have h3 := step 2 3 h2 (by decide)
-  have h4 := step 3 4 h3 (by decide)
-  have h5 := step 4 5 h4 (by decide)
-  have h6 := step 5 6 h5 (by decide)
-  have h7 := step 6 7 h6 (by decide)
-  have h8 := step 7 8 h7 (by decide)
-  have h9 := step 8 9 h8 (by decide)
-  have h10 := step 9 10 h9 (by decide)
-  have h11 := step 10 11 h10 (by decide)
-  have h12 := step 11 12 h11 (by decide)
-  have h13 := step 1 13 h1 (by decide)
-  have h14 := step 1 14 h1 (by decide)
-  have h15 := step 11 15 h11 (by decide)
-  have h16 := step 11 16 h11 (by decide)
-  intro v
-  fin_cases v <;> assumption
+lemma connected : graph.Connected := by decide +kernel
 
 /-- The minimum-degree vertices of the counterexample are the two path endpoints. -/
 @[category API, AMS 5]
@@ -165,7 +148,7 @@ lemma largest_induced_forest_le_fifteen : graph.largestInducedForestSize ≤ 15 
   unfold largestInducedForestSize
   apply csSup_le
   · refine ⟨0, ∅, ?_, rfl⟩
-    letI : Subsingleton ↥(↑(∅ : Finset (Fin 17)) : Set (Fin 17)) :=
+    have : Subsingleton ↥(↑(∅ : Finset (Fin 17)) : Set (Fin 17)) :=
       ⟨fun a _ => False.elim (by simpa using a.property)⟩
     exact SimpleGraph.IsAcyclic.of_subsingleton
   · rintro n ⟨S, hS, rfl⟩

@@ -38,17 +38,6 @@ def erdos427 : Prop := ∀ (n d : ℕ),
     d ∣ ∑ i ∈ Finset.Ico n (n + k), i.nth Nat.Prime
 
 /--
-**Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
-$$
-  d \mid p_{n + 1} + \cdots + p_{n + k},
-$$
-where $p_r$ denotes the $r$th prime?
--/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"]
-theorem erdos_427 : answer(True) ↔ erdos427 := by
-  sorry
-
-/--
 The statement of Shiu's theorem:
 for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
 $p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
@@ -63,10 +52,30 @@ def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1
 **Shiu's theorem**: for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
 $p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
+This is stated ahead of `erdos_427` because the formal proof linked there assumes it, and the
+`assuming` clause must name a declaration that already exists.
+
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
 @[category research solved, AMS 11]
 theorem erdos_427.variants.shiu : ShiuTheorem := by
+  sorry
+
+
+/--
+**Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
+$$
+  d \mid p_{n + 1} + \cdots + p_{n + k},
+$$
+where $p_r$ denotes the $r$th prime?
+
+The linked proof is not complete on its own. It declares Shiu's theorem as an axiom and derives
+the result from it, so it is marked `conditional` and names `erdos_427.variants.shiu`.
+-/
+@[category research solved, AMS 11,
+  conditional formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"
+  assuming erdos_427.variants.shiu]
+theorem erdos_427 : answer(True) ↔ erdos427 := by
   sorry
 
 

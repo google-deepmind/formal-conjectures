@@ -21,8 +21,11 @@ import FormalConjecturesUtil
 
 Does the 6-sphere $S^6$ admit the structure of a complex manifold?
 
-*Reference:* [mathoverflow/1973](https://mathoverflow.net/questions/1973/)
-asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ramos)
+*References:*
+- [mathoverflow/1973](https://mathoverflow.net/questions/1973/),
+  asked by user [*Fetchinson0234*](https://mathoverflow.net/users/41312/victor-ramos).
+- [Al26] L. Alpöge, [*A compact complex threefold fibred by tori over the projective line, and the six-sphere*](https://alpo.ge/s6.pdf) (2026),
+  originally [shared on X](https://x.com/__alpoge__/status/2091639597193368014).
 -/
 open scoped Manifold
 namespace Mathoverflow1973
@@ -32,11 +35,15 @@ abbrev unitSphere (n : ℕ) : Set (EuclideanSpace ℝ (Fin (n + 1))) := Metric.s
 
 /--
 Does the 6-sphere admit a complex structure, i.e. an atlas of holomorphically compatible charts
-relating it to `EuclideanSpace ℂ (Fin 3)`?
+relating it to `EuclideanSpace ℂ (Fin 3)`? This is known as the Hopf Problem.
+
+The answer is yes, see [Al26].
+Formalisation of the proof by Boris Alexeev.
 -/
-@[category research open, AMS 32]
+@[category research solved, AMS 32,
+  formal_proof using lean4 at "https://github.com/plby/HopfProblem/blob/9ac8a456b526527837d7082ff775213ca8bc9809/Solution.lean"]
 theorem mathoverflow_1973 :
-    answer(sorry) ↔ ∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
+    answer(True) ↔ ∃ atlas : ChartedSpace (EuclideanSpace ℂ (Fin 3)) (unitSphere 6),
       IsManifold 𝓘(ℂ, EuclideanSpace ℂ (Fin 3)) 1 (unitSphere 6) := by
   sorry
 

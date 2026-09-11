@@ -34,6 +34,7 @@ size $2$. -/
 abbrev octahedron : SimpleGraph (Σ _ : Fin 3, Fin 2) :=
   completeMultipartiteGraph (fun _ : Fin 3 => Fin 2)
 
+open scoped Classical in
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
 $K_{2,2,2}$ (the octahedron) and at least $\delta n^2$ edges, must $G$ contain an independent
@@ -55,6 +56,7 @@ theorem erdos_579 : answer(sorry) ↔
           c * n ≤ (G.indepNum : ℝ) := by
   sorry
 
+open scoped Classical in
 /--
 The partial result of Erdős, Hajnal, Sós, and Szemerédi [EHSS83]: the statement of
 `erdos_579` holds whenever the edge-density coefficient exceeds $1/8$. That is, for every

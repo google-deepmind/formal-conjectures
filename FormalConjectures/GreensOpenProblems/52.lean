@@ -42,10 +42,20 @@ theorem green_52 :
 
 /--
 Could $2A$ even contain a coset of codimension $O(\log K)$?
+
+From [Green's 2025 update](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.52):
+
+> Update 2025. Kaave Hosseini and Ryan Alweiss have independently pointed out
+> that the second question is far too optimistic. To see this, let $A$ be a Hamming ball
+> of radius $n/2 - \sqrt{n}$. There is a set $S$ of size $O(n)$ such that
+> $A + S = \mathbb{F}_2^n$; a random choice of $S$ will work. However, every subspace
+> contained in $A - A$ has codimension $\gg \sqrt{n}$.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-52-log-counterexample/blob/16cb5d0/lean/Green52LogCounterexampleFC.lean#L661-L668"]
 theorem green_52_log :
-    answer(sorry) ↔ ∃ (C D : ℝ), ∀ (n K : ℕ) (A : Set (𝔽₂ n)) (S : Finset (𝔽₂ n)),
+    answer(False) ↔ ∃ (C D : ℝ), ∀ (n K : ℕ) (A : Set (𝔽₂ n)) (S : Finset (𝔽₂ n)),
       0 < K → S.card = K → A + (S : Set (𝔽₂ n)) = Set.univ →
       ∃ (V : AffineSubspace (ZMod 2) (𝔽₂ n)), (V : Set (𝔽₂ n)) ⊆ A + A ∧
         (n : ℝ) ≤ (Module.finrank (ZMod 2) V.direction : ℝ) + C * log (K : ℝ) + D := by

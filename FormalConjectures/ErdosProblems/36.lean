@@ -261,7 +261,7 @@ by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
 @[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
-    (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
+    (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
 /--
@@ -276,7 +276,7 @@ theorem minimum_overlap.variants.lower.scherk_1955 :
   sorry
 
 /--
-A lower bound of $\frac{4 - \sqrt{6}}{5}.
+A lower bound of $\frac{4 - \sqrt{6}}{5}$.
 See [On the intersection of a linear set with the translation of its complement](https://bibliotekanauki.pl/articles/969027)
 by *Stanisław Świerczkowski1*, Colloquium Mathematicum 5(2), p. 185-197, 1958
 

@@ -34,14 +34,9 @@ noncomputable def Ω (α : ℝ) : ℝ :=
   sInf {Filter.atTop.limsup (fun n ↦ Int.fract (θ * α ^ n))
     - Filter.atTop.liminf (fun n ↦ Int.fract (θ * α ^ n)) | (θ : ℝ) (_ : 0 < θ)}
 
-/-- A Z-number is a real number `x` such that the fractional parts of `x(3/2)^n` are less than
-`1/2` for all positive integers `n`. -/
-def IsZNumber (x : ℝ) : Prop :=
-  ∀ n > 0, Int.fract (x * (3 / 2 : ℝ) ^ n) < 1 / 2
-
-/-- The **Mahler Conjecture** states that there are no non-zero Z-numbers. -/
+/-- The **Mahler Conjecture** states that there are no Z-numbers. -/
 @[category research open, AMS 11]
-theorem mahler_conjecture (x : ℝ) (h : x ≠ 0) (hx : IsZNumber x) : False := by
+theorem mahler_conjecture (x : ℝ) (hx : IsZNumber x) : False := by
   sorry
 
 /-- If Mahler's conjecture is true, i.e. there are no Z-numbers, then `Ω(3/2)` exceeds `1/2`. -/

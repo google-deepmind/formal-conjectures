@@ -16,7 +16,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjectures associated with A56777
+# Divisibility of $2^n + 1$ by $n$
 
 A56777 lists composite numbers $n$ satisfying both $\varphi(n+12) = \varphi(n) + 12$ and
 $\sigma(n+12) = \sigma(n) + 12$.
@@ -24,7 +24,8 @@ $\sigma(n+12) = \sigma(n) + 12$.
 The conjectures state identities connecting A56777 and prime quadruples (A7530), as
 well as congruences satisfied by the members of A56777.
 
-*Reference:* [A56777](https://oeis.org/A56777)
+*References:*
+- [A56777](https://oeis.org/A56777)
 -/
 
 namespace OeisA56777
@@ -108,6 +109,12 @@ theorem a_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple n) :
     rw [e1, e2, e6, e8]
     ring
 
+/-- $11009$ is in the sequence A56777. -/
+@[category test, AMS 11]
+theorem a_11009 : A 11009 := by
+  apply a_of_comesFromPrimeQuadruple
+  exact ⟨101, by decide, by decide, by decide, by decide, by rfl⟩
+
 /-- All members of the sequence A56777 come from prime quadruples. -/
 @[category research open, AMS 11]
 theorem comesFromPrimeQuadruple_of_a {n : ℕ} (h : A n) : ComesFromPrimeQuadruple n := by
@@ -119,7 +126,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra! hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
@@ -153,7 +160,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra hlt; push Not at hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega

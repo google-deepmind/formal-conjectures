@@ -85,11 +85,11 @@ theorem isMovingSofa_unitSquare : ∃ m, IsMovingSofa unitSquare m := by
   refine ⟨fun _ => .refl ℝ ℝ², ?_, ?_, continuous_const, rfl, ?_, ?_, ?_⟩
   · unfold unitSquare parallelepiped
     refine ⟨⟨0, 0, by simp, by simp⟩, (convex_Icc _ _).isPreconnected.image _ ?_⟩
-    exact (continuous_finset_sum _ fun i _ =>
+    exact (continuous_finsetSum _ fun i _ =>
       (continuous_apply i).smul continuous_const).continuousOn
   · unfold unitSquare parallelepiped
     exact (isCompact_Icc.image
-      (continuous_finset_sum _ fun i _ =>
+      (continuous_finsetSum _ fun i _ =>
         (continuous_apply i).smul continuous_const)).isClosed
   · intro p hp
     have h0 := mem_Icc_of_mem_unitSquare hp 0

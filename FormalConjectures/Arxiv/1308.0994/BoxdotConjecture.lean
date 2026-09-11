@@ -155,11 +155,7 @@ structure NormalModalLogic : Type where
 
 def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
 
-
 scoped infixr:85 " ⊢ " => proves
-scoped notation L " ⊆ " L' =>
-  NormalModalLogic.thms L ⊆ NormalModalLogic.thms L'
-
 
 /--
 `KT` is the specific normal modal logic whose theorems are exactly those provable
@@ -176,11 +172,11 @@ def KT : NormalModalLogic := by
     exact KTExtendsK h
   case mp =>
     intro φ ψ h₁ h₂
-    simp [Set.mem_setOf_eq] at *
+    simp [Set.mem_ofPred_eq] at *
     exact KTProof.mp h₂ h₁
   case nec =>
     intro φ h
-    simp [Set.mem_setOf_eq] at *
+    simp [Set.mem_ofPred_eq] at *
     exact KTProof.nec h
 
 
@@ -191,7 +187,7 @@ by the boxdot translation is included in KT.
 @[category research solved, AMS 3, formal_proof using lean4 at "https://github.com/FormalizedFormalLogic/Foundation"]
 -- The formal proof was done by Mashu Noguchi et al.
 -- see linked repo for the full list of contributors
-theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L ⊆ KT := by
+theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L.thms ⊆ KT.thms := by
   sorry
 
 end Arxiv.«1308.0994»

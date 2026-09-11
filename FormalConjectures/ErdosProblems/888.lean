@@ -50,7 +50,8 @@ $a\leq b\leq c\leq d\in A$ are such that $abcd$ is a square then $ad=bc$?
 
 This was proved by GPT-5.5 Pro (prompted by Chojecki).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos888.lean#L47"]
 theorem erdos_888 :
     (fun n : ℕ ↦ (Nat.findGreatest (p n) n : ℝ)) =Θ[atTop]
       (fun n : ℕ ↦ (n : ℝ) * Real.log (Real.log n) / Real.log n) := by
