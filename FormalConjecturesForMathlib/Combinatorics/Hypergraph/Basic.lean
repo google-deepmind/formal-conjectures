@@ -37,6 +37,10 @@ def IsUniform {V : Type*} (H : Hypergraph V) (k : ℕ) : Prop :=
 def IsProperColoring {V C : Type*} (H : Hypergraph V) (f : V → C) : Prop :=
   ∀ e ∈ H.edgeSet, ∃ u ∈ e, ∃ v ∈ e, f u ≠ f v
 
+/-- A weak proper coloring using at most `n` colors. -/
+def IsNColorable {V : Type*} (H : Hypergraph V) (n : ℕ) : Prop :=
+  ∃ f : V → Fin n, H.IsProperColoring f
+
 /-- A family of finite edges on an explicit vertex set, retaining isolated vertices. -/
 def ofEdgeFamily {V : Type*} (F : Set (Finset V)) (S : Set V)
     (h : ∀ e ∈ F, (e : Set V) ⊆ S) : Hypergraph V where
@@ -70,15 +74,22 @@ theorem IsUniform.finite_edge {V : Type*} {H : Hypergraph V} {k : ℕ}
     (hH : H.IsUniform k) {e : Set V} (he : e ∈ H.edgeSet) : e.Finite :=
   Set.finite_of_encard_eq_coe (hH e he)
 
+/-- An injective coloring is proper when every edge has at least two vertices. -/
+theorem isProperColoring_of_injective {V C : Type*} {H : Hypergraph V}
+    (hH : ∀ e ∈ H.edgeSet, 2 ≤ e.encard) {f : V → C}
+    (hf : Function.Injective f) : H.IsProperColoring f := by
+  intro e he
+  obtain ⟨u, v, hu, hv, huv⟩ := Set.one_lt_encard_iff.mp
+    (lt_of_lt_of_le (by decide : (1 : ℕ∞) < 2) (hH e he))
+  exact ⟨u, hu, v, hv, fun h ↦ huv (hf h)⟩
+
 /-- An injective coloring is proper when uniformity is at least two. -/
 theorem IsUniform.isProperColoring_of_injective {V C : Type*} {H : Hypergraph V}
     {k : ℕ} (hH : H.IsUniform k) (hk : 2 ≤ k) {f : V → C}
     (hf : Function.Injective f) : H.IsProperColoring f := by
+  apply Hypergraph.isProperColoring_of_injective ?_ hf
   intro e he
-  have hcard : e.ncard = k := by
-    exact_mod_cast (hH.finite_edge he).cast_ncard_eq.trans (hH e he)
-  have htwo : 1 < e.ncard := by omega
-  obtain ⟨u, hu, v, hv, huv⟩ := (Set.one_lt_ncard (hH.finite_edge he)).mp htwo
-  exact ⟨u, hu, v, hv, fun h ↦ huv (hf h)⟩
+  rw [hH e he]
+  exact_mod_cast hk
 
 end Hypergraph

@@ -38,9 +38,9 @@ $F_G(\lambda)$ is non-empty.
 @[category research open, AMS 3 5]
 theorem erdos_1177.parts.i :
     ∀ (W : Type) [Fintype W] (G : UniformHypergraph W 3),
-    G.HasAvoidingChromaticCardinal (by decide) ℵ₁ →
+    G.HasAvoidingChromaticCardinal ℵ₁ →
       ∃ (V : Type) (_ : DecidableEq V) (X : UniformHypergraph V 3),
-        X.chromaticCardinal (by decide) = ℵ₁ ∧ ¬ G.Appears X ∧
+        X.chromaticCardinal = ℵ₁ ∧ ¬ G.Appears X ∧
           Cardinal.mk V ≤ (2 : Cardinal) ^ ((2 : Cardinal) ^ ℵ₀) := by
   sorry
 
@@ -52,9 +52,9 @@ $F_G(\aleph_1)\cap F_H(\aleph_1)$ is non-empty.
 theorem erdos_1177.parts.ii :
     ∀ (W U : Type) [Fintype W] [Fintype U]
     (G : UniformHypergraph W 3) (H : UniformHypergraph U 3),
-    G.HasAvoidingChromaticCardinal (by decide) ℵ₁ → H.HasAvoidingChromaticCardinal (by decide) ℵ₁ →
+    G.HasAvoidingChromaticCardinal ℵ₁ → H.HasAvoidingChromaticCardinal ℵ₁ →
       ∃ (V : Type) (_ : DecidableEq V) (X : UniformHypergraph V 3),
-        X.chromaticCardinal (by decide) = ℵ₁ ∧ ¬ G.Appears X ∧ ¬ H.Appears X := by
+        X.chromaticCardinal = ℵ₁ ∧ ¬ G.Appears X ∧ ¬ H.Appears X := by
   sorry
 
 /--
@@ -65,7 +65,7 @@ $F_G(\lambda)$ is non-empty.
 theorem erdos_1177.parts.iii :
     ∀ (W : Type) [Fintype W] (G : UniformHypergraph W 3)
     (κ μ : Cardinal), ℵ₀ < κ → ℵ₀ < μ →
-      G.HasAvoidingChromaticCardinal (by decide) κ → G.HasAvoidingChromaticCardinal (by decide) μ := by
+      G.HasAvoidingChromaticCardinal κ → G.HasAvoidingChromaticCardinal μ := by
   sorry
 
 end Erdos1177

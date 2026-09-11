@@ -25,8 +25,8 @@ public import Mathlib.Data.Fin.Basic
 # Property B
 
 A family of sets has *property B* when the ground set admits a 2-colouring under which no member
-of the family is monochromatic. For 3-uniform hypergraphs this is
-`UniformHypergraph.IsTwoColorable`.
+of the family is monochromatic. For uniform hypergraphs this is
+`UniformHypergraph.IsNColorable H 2`.
 -/
 
 namespace Finset

@@ -30,8 +30,8 @@ Finite edge families use `Finset.IsUniform`;
 `UniformHypergraph.ofFinset` converts them to this presentation.
 
 The API includes complete subgraphs, maximal clique sizes, weak colorings, embeddings,
-and chromatic cardinals. Chromatic cardinals require `2 ≤ k`, so an injective vertex
-coloring always exists. Empty and singleton edges admit no weak proper coloring.
+and chromatic cardinals. The chromatic cardinal is zero when no proper coloring exists.
+Empty and singleton edges admit no weak proper coloring.
 -/
 
 open Cardinal Set
@@ -63,12 +63,12 @@ theorem mem_edgeSet_ofFinset {V : Type*} {H : Finset (Finset V)} {hH : H.IsUnifo
   Hypergraph.mem_edgeSet_ofEdgeFamily (h := fun _ _ ↦ Set.subset_univ _)
 
 /-- Every `k`-element subset of `S` is an edge. -/
-def IsCompleteSubgraph {V : Type*} (H : UniformHypergraph V k) (S : Finset V) : Prop :=
+def IsCompleteOn {V : Type*} (H : UniformHypergraph V k) (S : Finset V) : Prop :=
   ∀ e : Finset V, e ⊆ S → e.card = k → (e : Set V) ∈ H.edgeSet
 
 /-- The sizes of the finite maximal complete subgraphs. -/
 def cliqueSizes {V : Type*} (H : UniformHypergraph V k) : Set ℕ :=
-  { n | ∃ S : Finset V, Maximal (IsCompleteSubgraph H) S ∧ S.card = n }
+  { n | ∃ S : Finset V, Maximal (IsCompleteOn H) S ∧ S.card = n }
 
 /-- Weak proper coloring of the underlying Mathlib hypergraph. -/
 abbrev IsProperColoring {V : Type*} (H : UniformHypergraph V k) {C : Type*}
@@ -87,20 +87,19 @@ theorem isProperColoring_ofFinset_iff {V C : Type*} (H : Finset (Finset V))
   exact Hypergraph.isProperColoring_ofEdgeFamily_iff (h := fun _ _ ↦ Set.subset_univ _)
 
 /-- The infimum of cardinalities of color types admitting a proper coloring.
-The uniformity bound guarantees a coloring exists, even for infinite vertex types. -/
-noncomputable def chromaticCardinal {V : Type u} (H : UniformHypergraph V k)
-    (_hk : 2 ≤ k) : Cardinal.{u} :=
+The value is zero when no proper coloring exists. -/
+noncomputable def chromaticCardinal {V : Type u} (H : UniformHypergraph V k) : Cardinal.{u} :=
   sInf {κ : Cardinal.{u} | ∃ (C : Type u), #C = κ ∧ ∃ f : V → C, H.IsProperColoring f}
 
 /-- A proper coloring bounds the chromatic cardinal by the number of colors. -/
-theorem chromaticCardinal_le {V C : Type u} (H : UniformHypergraph V k) (hk : 2 ≤ k)
-    {f : V → C} (hf : H.IsProperColoring f) : H.chromaticCardinal hk ≤ #C :=
+theorem chromaticCardinal_le {V C : Type u} (H : UniformHypergraph V k)
+    {f : V → C} (hf : H.IsProperColoring f) : H.chromaticCardinal ≤ #C :=
   csInf_le' ⟨C, rfl, f, hf⟩
 
 /-- The vertex type itself always supplies enough colors when `2 ≤ k`. -/
 theorem chromaticCardinal_le_mk {V : Type u} (H : UniformHypergraph V k) (hk : 2 ≤ k) :
-    H.chromaticCardinal hk ≤ #V :=
-  H.chromaticCardinal_le hk (H.isProperColoring_of_injective hk Function.injective_id)
+    H.chromaticCardinal ≤ #V :=
+  H.chromaticCardinal_le (H.isProperColoring_of_injective hk Function.injective_id)
 
 /-- An injective vertex map carrying every edge of `F` to an edge of `H`. -/
 def Appears {W V : Type*} (F : UniformHypergraph W k)
@@ -118,20 +117,20 @@ theorem Appears.trans {U W V : Type*} {F : UniformHypergraph U k}
   rw [← Hypergraph.image_image]
   exact (Set.image_mono hF).trans hG
 
-/-- A two-coloring with no monochromatic edge (Property B). -/
-def IsTwoColorable {V : Type*} (F : UniformHypergraph V k) : Prop :=
-  ∃ f : V → Fin 2, F.IsProperColoring f
+/-- A weak proper coloring using at most `n` colors. -/
+abbrev IsNColorable {V : Type*} (F : UniformHypergraph V k) (n : ℕ) : Prop :=
+  F.toHypergraph.IsNColorable n
 
 /-- Some hypergraph of the same uniformity and chromatic cardinal `κ` omits `F`. -/
 def HasAvoidingChromaticCardinal {W : Type u} (F : UniformHypergraph W k)
-    (hk : 2 ≤ k) (κ : Cardinal.{u}) : Prop :=
+    (κ : Cardinal.{u}) : Prop :=
   ∃ (V : Type u) (_ : DecidableEq V) (H : UniformHypergraph V k),
-    H.chromaticCardinal hk = κ ∧ ¬ F.Appears H
+    H.chromaticCardinal = κ ∧ ¬ F.Appears H
 
 /-- A finite uniform hypergraph is obligatory if it appears in every hypergraph of
 that uniformity whose chromatic cardinal exceeds `ℵ₀`. -/
-def IsObligatory {W : Type u} [Fintype W] (F : UniformHypergraph W k) (hk : 2 ≤ k) : Prop :=
+def IsObligatory {W : Type u} [Fintype W] (F : UniformHypergraph W k) : Prop :=
   ∀ (V : Type u) [DecidableEq V] (H : UniformHypergraph V k),
-    ℵ₀ < H.chromaticCardinal hk → F.Appears H
+    ℵ₀ < H.chromaticCardinal → F.Appears H
 
 end UniformHypergraph
