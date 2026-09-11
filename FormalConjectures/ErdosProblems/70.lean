@@ -19,11 +19,18 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 70
 
-*Reference:* [erdosproblems.com/70](https://www.erdosproblems.com/70)
+*References:*
+- [erdosproblems.com/70](https://www.erdosproblems.com/70)
+- [ErRa56] Erdős, P. and Rado, R., *A partition calculus in set theory*,
+  Bull. Amer. Math. Soc. **62** (1956), 427–489, Theorem 31.
+- [Er87] Erdős, P., *Some problems on finite and infinite graphs*,
+  Logic and combinatorics (Arcata, Calif., 1985), Contemp. Math. **65** (1987), 223–228.
 
-The 3-uniform (triple) partition relation $\mathfrak{c} \to (\beta, n)^3_2$
-on the ordinal of the real numbers — the triple analogue of `OrdinalCardinalRamsey`
-used in Problems 590–592.
+The 3-uniform (triple) partition relation $\mathfrak{c} \to (\beta, n)^3_2$, where
+$\mathfrak{c}$ denotes the order type of the real numbers with their usual order (written
+$\lambda$ in [ErRa56]). This is the triple analogue of `OrdinalCardinalRamsey` used in
+Problems 590–592; the file also contains the analogous relation for an ordinal in place
+of the real line.
 -/
 
 open Cardinal Ordinal
@@ -63,21 +70,47 @@ def OrdinalCardinalRamsey3 (α β : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=
     -- or there is a blue-monochromatic subset of cardinality c
     (∃ s : Set α.ToType, #s = c ∧ s.Triplewise (fun x y z ↦ ¬ isRed x y z))
 
+/--
+`RealCardinalRamsey3 β c` asserts the 3-uniform partition relation
+$\mathfrak{c} \to (\beta, c)^3_2$, where $\mathfrak{c}$ is the order type of the real
+numbers with their usual order.
+
+It states that for any 2-coloring of all 3-element subsets of $\mathbb{R}$,
+one of the following must hold:
+* There is a red-monochromatic subset of order type $\beta$: the range of an order embedding
+  `β.ToType ↪o ℝ` such that any three distinct elements of the range are colored red.
+* There is a blue-monochromatic subset of cardinality $c$: a set $s \subseteq \mathbb{R}$ with
+  $\#s = c$ such that every three distinct elements of $s$ are colored blue.
+
+The coloring is encoded as in `OrdinalCardinalRamsey3`: a predicate on ordered triples of
+distinct reals that is invariant under permutation of its three arguments.
+-/
+def RealCardinalRamsey3 (β : Ordinal.{0}) (c : Cardinal.{0}) : Prop :=
+  -- For any partition of 3-element subsets of `ℝ` into red and blue:
+  ∀ (isRed : ℝ → ℝ → ℝ → Prop),
+    -- The colouring is well-defined on *unordered* triples of distinct elements:
+    (∀ x y z, x ≠ y → y ≠ z → x ≠ z →
+      (isRed x y z ↔ isRed y x z) ∧ (isRed x y z ↔ isRed x z y)) →
+    -- either there is a red-monochromatic subset of order type β
+    (∃ e : β.ToType ↪o ℝ, (Set.range e).Triplewise isRed) ∨
+    -- or there is a blue-monochromatic subset of cardinality c
+    (∃ s : Set ℝ, #s = c ∧ s.Triplewise (fun x y z ↦ ¬ isRed x y z))
+
 /- ### The main open problem -/
 
 /--
-**Erdős Problem 70**: Let $\mathfrak{c}$ be the cardinality of the continuum,
+**Erdős Problem 70**: Let $\mathfrak{c}$ be the order type of the real numbers,
 let $\beta$ be a countable ordinal, and let $2 \le n < \omega$.
 Is it true that $\mathfrak{c} \to (\beta, n)^3_2$?
 
-Note: The cases $n \le 3$ are trivially true (see `omega_three`), so the
+Note: The cases $n \le 3$ are trivially true (compare `omega_three`), so the
 genuine content of the conjecture begins at $n = 4$.
 -/
 @[category research open, AMS 3]
 theorem erdos_70 :
     answer(sorry) ↔
     ∀ᵉ (β : Ordinal.{0}) (n : ℕ) (_ : β.card ≤ ℵ₀) (_ : 2 ≤ n),
-      OrdinalCardinalRamsey3 (𝔠).ord β n := by
+      RealCardinalRamsey3 β n := by
   sorry
 
 /- ### Variants -/
@@ -86,16 +119,18 @@ namespace erdos_70.variants
 
 /--
 **Erdős–Rado partial result**: $\mathfrak{c} \to (\omega + n, 4)^3_2$ for any
-$2 \le n < \omega$. Positive partial answer to Problem 70 with $\beta = \omega + n$
-and the blue side fixed at $4$.
+$2 \le n < \omega$, where $\mathfrak{c}$ is the order type of the real numbers.
+Positive partial answer to Problem 70 with $\beta = \omega + n$ and the blue side
+fixed at $4$ [ErRa56, Theorem 31].
 -/
 @[category research solved, AMS 3]
 theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
-    OrdinalCardinalRamsey3 (𝔠).ord (ω + n) 4 := by
+    RealCardinalRamsey3 (ω + n) 4 := by
   sorry
 
 /--
-**First open case beyond Erdős–Rado**: $\mathfrak{c} \to (\omega \cdot 2, 4)^3_2$.
+**First open case beyond Erdős–Rado**: $\mathfrak{c} \to (\omega \cdot 2, 4)^3_2$,
+where $\mathfrak{c}$ is the order type of the real numbers.
 
 Erdős and Rado proved $\mathfrak{c} \to (\omega + n, 4)^3_2$ for every finite $n \ge 2$
 (see `erdos_rado`), which covers all red ordinals below $\omega \cdot 2 = \omega + \omega$.
@@ -104,11 +139,12 @@ countable ordinal not covered by their theorem.
 -/
 @[category research open, AMS 3]
 theorem omega_times_two_four :
-    answer(sorry) ↔ OrdinalCardinalRamsey3 (𝔠).ord (ω * 2) 4 := by
+    answer(sorry) ↔ RealCardinalRamsey3 (ω * 2) 4 := by
   sorry
 
 /--
-**Trivial boundary case**: $\mathfrak{c} \to (\omega, 3)^3_2$.
+**Trivial boundary case**: $\mathfrak{c} \to (\omega, 3)^3_2$, stated for the initial
+ordinal $\mathfrak{c}.\mathrm{ord}$ of the cardinality of the continuum.
 
 This is trivially true because in a 3-uniform hypergraph, a \"blue clique of size 3\"
 consists of a single 3-element subset ($\binom{3}{3} = 1$), so the blue alternative
