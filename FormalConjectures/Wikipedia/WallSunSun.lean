@@ -138,15 +138,17 @@ theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite :=
 A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - 4b$, such
 that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
 kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^2-4b}{p}}\right)$.
-The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured that there are
-infinitely many Lucas–Wieferich primes of any given non-one fundamental discriminant.
+The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured that for every
+Lucas sequence $U(a,b)$ whose discriminant $D = a^2 - 4b$ is a non-one fundamental discriminant,
+there are infinitely many Lucas–Wieferich primes associated with $(a,b)$. Here the parameters
+$(a,b)$ are fixed and only the prime $p$ varies.
 
 TODO: Source this conjecture
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscr D)
-    (hD₁ : D ≠ 1) :
-    {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
+theorem infinite_isWallSunSunPrime_of_disc_eq {D a b : ℤ} (hD : IsFundamentalDiscr D)
+    (hD₁ : D ≠ 1) (hab : a ^ 2 - 4 * b = D) :
+    {p : ℕ | IsLucasWieferichPrime a b p}.Infinite := by
   sorry
 
 end WallSunSun
