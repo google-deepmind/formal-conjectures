@@ -117,14 +117,14 @@ theorem erdos_1047.variants.referee :
   sorry
 
 /--
-Goodman raises the question of the maximum number of non-convex components that are possible as
-a function of the degree of $f$.
+Goodman raises the question of the maximum number of non-convex components of
+$\{ z: \lvert f(z)\rvert < c\}$ that are possible as a function of the degree of $f$, where
+$f$ ranges over all monic polynomials of degree $n$ and $c$ over all positive constants.
 -/
 @[category research open, AMS 30 52]
 theorem erdos_1047.variants.max_non_convex_components (n : ℕ) :
     IsGreatest {k : ℕ | ∃ (f : ℂ[X]) (c : ℝ), f.Monic ∧ f.natDegree = n ∧ 0 < c ∧
-      (componentsIn (sublevelSet f c)).ncard = (f.rootSet ℂ).ncard ∧
-      {t ∈ componentsIn (sublevelSet f c) | ¬ Convex ℝ t}.ncard = k} answer(sorry) := by
+      {t ∈ componentsIn (strictSublevelSet f c) | ¬ Convex ℝ t}.ncard = k} answer(sorry) := by
   sorry
 
 end Erdos1047
