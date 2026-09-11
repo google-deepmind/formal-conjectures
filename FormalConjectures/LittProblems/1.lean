@@ -53,16 +53,19 @@ namespace LamLitt
 
 /--
 A power series $f$ is a solution of an algebraic ODE defined by the rational function
-$g \in \mathbb{Q}(z, y_0, \dots, y_{n-1})$ if $f^{(n)}(z) = g(z, f(z), f'(z), \dots, f^{(n-1)}(z))$.
+$g \in \mathbb{Q}(z, y_0, \dots, y_{n-1})$ if $f^{(n)}(z) = g(z, f(z), f'(z), \dots, f^{(n-1)}(z))$
+and $g(0, f(0), f'(0), \dots, f^{(n-1)}(0))$ is defined. Concretely, $g = p / q$ for polynomials
+$p, q$ with $q(0, f(0), \dots, f^{(n-1)}(0)) \neq 0$, so that $q(z, f(z), \dots, f^{(n-1)}(z))$
+is an invertible power series, and
+$f^{(n)}(z) \cdot q(z, f(z), \dots, f^{(n-1)}(z)) = p(z, f(z), \dots, f^{(n-1)}(z))$.
 The variable indexed by `0 : Fin (n + 1)` corresponds to $z$, and the variable indexed by
 `i.succ` corresponds to $y_i = f^{(i)}(z)$.
 -/
 def IsSolutionOfAlgebraicODE (n : ℕ) (f : PowerSeries ℚ) (g : MvRatFunc (Fin (n + 1)) ℚ) : Prop :=
   let pt : Fin (n + 1) → PowerSeries ℚ := Fin.cases X (fun i : Fin n ↦ (derivative ℚ)^[i.val] f)
   ∃ p q : MvPolynomial (Fin (n + 1)) ℚ,
-    q ≠ 0 ∧
     g = (algebraMap _ _ p) / (algebraMap _ _ q) ∧
-    IsDefined (Fin (n + 1)) ℚ g (PowerSeries.constantCoeff ∘ pt) ∧
+    q.eval (PowerSeries.constantCoeff ∘ pt) ≠ 0 ∧
     (derivative ℚ)^[n] f * MvPolynomial.aeval pt q = MvPolynomial.aeval pt p
 
 def ℤAdjoinInvNat (N : ℕ) : Subalgebra ℤ ℚ := Algebra.adjoin ℤ {(1 / N : ℚ)}
