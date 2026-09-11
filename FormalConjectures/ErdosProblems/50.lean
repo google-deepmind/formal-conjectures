@@ -41,12 +41,12 @@ def IsDistributionOfPhiRatio (f : ℝ → ℝ) : Prop :=
   ∀ c ∈ Icc (0 : ℝ) 1, {n : ℕ | (φ n : ℝ) < c * n}.HasDensity (f c)
 
 /--
-A monotone function $f : \mathbb{R} \to \mathbb{R}$ is purely singular (or singular continuous)
-if it is continuous and its derivative equals zero almost everywhere with respect to Lebesgue
-measure.
+A function $f : \mathbb{R} \to \mathbb{R}$ is purely singular (or singular continuous) on a set
+$s \subseteq \mathbb{R}$ if it is continuous on $s$ and its derivative within $s$ equals zero
+almost everywhere on $s$ with respect to Lebesgue measure.
 -/
-def IsPurelySingular (f : ℝ → ℝ) : Prop :=
-  Continuous f ∧ ∀ᵐ x ∂volume, deriv f x = 0
+def IsPurelySingularOn (f : ℝ → ℝ) (s : Set ℝ) : Prop :=
+  ContinuousOn f s ∧ ∀ᵐ x ∂(volume.restrict s), derivWithin f s x = 0
 
 /--
 Schoenberg [Sch38] proved that the asymptotic distribution function of $\varphi(n)/n$ exists.
@@ -59,11 +59,12 @@ theorem erdos_50_schoenberg : ∃ f : ℝ → ℝ, IsDistributionOfPhiRatio f :=
   sorry
 
 /--
-Erdős [Er95] proved that the distribution function of $\varphi(n)/n$ is purely singular: it is
-continuous, but its derivative is zero almost everywhere.
+Erdős [Er95] proved that the distribution function of $\varphi(n)/n$ is purely singular on
+$[0, 1]$: it is continuous there, but its derivative is zero almost everywhere on $[0, 1]$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_50_singular (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f) : IsPurelySingular f := by
+theorem erdos_50_singular (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f) :
+    IsPurelySingularOn f (Icc 0 1) := by
   sorry
 
 /--
