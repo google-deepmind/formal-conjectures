@@ -728,7 +728,7 @@ a.cat-stat:hover { text-decoration: none; opacity: 0.8; }
 }
 
 .theorem-detail__title {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: normal;
   flex: 1;
