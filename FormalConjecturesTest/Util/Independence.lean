@@ -88,7 +88,7 @@ Note we also require a universe parameter (i.e. "independent in universe `v`"),
 since GCH might hold in some universes, but not in others. -/
 def Independent.{v} (P : Prop) : Prop :=
   (∃ A ∈ IndependenceSet.{v}, A ↔ P) ∨
-  (∃ Q ∈ IndependencePairs.{v}, Q.1 → P ∧ P → Q.2)
+  (∃ Q ∈ IndependencePairs.{v}, (Q.1 → P) ∧ P → Q.2)
 
 theorem independent_of_mem_independenceSet {P : Prop} (hP : P ∈ IndependenceSet.{u}) :
     Independent.{u} P := by
