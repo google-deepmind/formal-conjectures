@@ -189,30 +189,65 @@ lemma tc1_and_tc2_iff_nc :
 
 end NakayamaConjectures
 
-/- ## The dual formulations over a field
+namespace Abelian
+/-
+The goal of this part is to define a version of duality in artinian algebra that does not require R to be a field.
+-/
 
-Over a base field `k` the duality of an Artin algebra is the ordinary linear dual
-`(-)^* = Hom_k(-, k)`, so the conjectures take their customary form. -/
+variable {C: Type u} [Category.{v} C] [Abelian C]
+variable {M E : C} (u : M ⟶ E)
 
-namespace NakayamaConjecturesOverFields
+def IsEssentialExtension : Prop :=
+  ∀ s : Subobject E, IsZero (Subobject.underlying.obj s) ∨ ¬ IsZero (pullback u ((MonoOver.forget E).obj (Subobject.representative.obj s)).hom)
 
-/- Let `k` be a field, `A` a finite dimensional `k`-algebra and `M` a finitely generated
-`A`-module. -/
-variable {k : Type u} {A : Type v} [Field k] [Ring A] [Algebra k A] [Module.Finite k A]
-  (M : ModuleCat.{v} A) [Module.Finite A M.carrier]
+def IsInjectiveHull : Prop := Injective E ∧ IsEssentialExtension u
 
-variable (k A) in
-/-- The dual $A^* = \operatorname{Hom}_k(A, k)$ of `A`. -/
-abbrev dual := A →ₗ[k] k
+variable (M)
+
+class HasInjectiveHull : Prop where
+  existsInjHull : ∃ E : C, ∃ u : M ⟶ E, IsInjectiveHull u
+
+noncomputable def injectiveHull [HasInjectiveHull M] : C := (HasInjectiveHull.existsInjHull (M := M)).choose
+
+noncomputable def injectiveHullHom [HasInjectiveHull M] : M ⟶ (injectiveHull M) := (HasInjectiveHull.existsInjHull (M := M)).choose_spec.choose
+
+@[category API, AMS 18]
+lemma IsInjectiveHullInjectiveHull [HasInjectiveHull M] : IsInjectiveHull (injectiveHullHom M) :=
+  (HasInjectiveHull.existsInjHull (M := M)).choose_spec.choose_spec
+
+
+@[category API, AMS 16 18]
+instance [HasFilteredColimits C] [AB5 C] [EnoughInjectives C] : HasInjectiveHull M := by
+  sorry
+
+end Abelian
+
+/- ## The dual formulations
+
+There are variants of some of the previous conjectures that make usage of the dual of an artinian algebra.
+
+Over a base field `k` the duality of an Artin algebra is the ordinary linear dual `(-)^* = Hom_k(-, k)`, (equiped with a structure of `A`module) so the conjectures take their customary form.
+
+in the general case, the dual of `A` is `Hom_k(-, E(R/ Jacobson(R))`) (equiped with a structure of `A`module) with `E`being the injective enveloppe, defined in the previous section.
+
+In order to keep `A`and `A^*`as `A`-modules in the same universe (wich is necessary to state the conjecture) we need (excpet for the definition of the dual ) to restrict to the case where `A`and `R`lives in the same universe. For that reason it remains uselfull to keep the previous version of the conjecture.
+
+-/
+
+namespace NakayamaConjecturesWithDuals
+
+variable {R : Type u} {A : Type v} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] (M : ModuleCat.{v} A) [Module.Finite A M.carrier]
+
+variable (R A) in
+abbrev dual := A →ₗ[R] (Abelian.injectiveHull (ModuleCat.of R (R ⧸ ((⊤:Ideal R).jacobson)))).carrier
 
 /-- `A^*` is a left `A`-module, obtained by transporting its right `A`-module structure along
 the isomorphism between `A` and the opposite of its opposite. -/
-instance : Module A (dual k A) := by
+noncomputable instance : Module A (dual R A) := by
   have : A ≃+* (Aᵐᵒᵖ)ᵈᵐᵃ := RingEquiv.opOp _
   apply Module.compHom _ (this.toRingHom)
 
-variable {k A : Type u} [Field k] [Ring A] [Algebra k A] [Module.Finite k A] (M : ModuleCat A)
-  [Module.Finite A M.carrier]
+variable {R A : Type u} [CommRing R] [IsArtinianRing R] [Ring A] [Algebra R A] [Module.Finite R A] (M : ModuleCat A) [Module.Finite A M.carrier]
 
 /--
 The Strong Nakayama Conjecture for finite-dimensional algebras in terms of the dual:
@@ -224,14 +259,14 @@ M = 0
 $$
 -/
 @[category research open, AMS 16 18]
-theorem snc_with_dual : IsZero M ∨ ∃ i, ¬ Subsingleton (Ext (.of A (dual k A)) M i) := by
+theorem snc_with_dual : IsZero M ∨ ∃ i, ¬ Subsingleton (Ext (.of A (dual R A)) M i) := by
   sorry
 
-/-- Over a field the two formulations of the Strong Nakayama Conjecture agree. -/
+/-- The two formulations of the Strong Nakayama Conjecture agree. -/
 @[category API, AMS 16 18]
 lemma snc_iff_snc_with_dual :
-    type_of% (NakayamaConjectures.snc (R := k) (A := A)) ↔
-      type_of% (snc_with_dual (k := k) (A := A)) := by
+    type_of% (NakayamaConjectures.snc (R := R) (A := A)) ↔
+      type_of% (snc_with_dual (R:= R) (A := A)) := by
   sorry
 
 /--
@@ -245,15 +280,15 @@ then $M$ is projective.
 theorem nc_with_dual : (∀ i > 0,
     Subsingleton (Ext M M i) ∧
     Subsingleton (Ext M (.of A A) i) ∧
-    Subsingleton (Ext (.of A (dual k A)) M i) ∧
-    Subsingleton (Ext (.of A (dual k A)) (ModuleCat.of A A) i)) → Projective M := by
+    Subsingleton (Ext (.of A (dual R A)) M i) ∧
+    Subsingleton (Ext (.of A (dual R A)) (ModuleCat.of A A) i)) → Projective M := by
   sorry
 
-/-- Over a field the two formulations of the Nakayama Conjecture agree. -/
+/-- The two formulations of the Nakayama Conjecture agree. -/
 @[category API, AMS 16 18]
 lemma nc_iff_nc_with_dual :
-    type_of% (NakayamaConjectures.nc (R := k) (A := A)) ↔
-      type_of% (nc_with_dual (k := k) (A := A)) := by
+    type_of% (NakayamaConjectures.nc (R := R) (A := A)) ↔
+      type_of% (nc_with_dual (R := R) (A := A)) := by
   sorry
 
-end NakayamaConjecturesOverFields
+end NakayamaConjecturesWithDuals
