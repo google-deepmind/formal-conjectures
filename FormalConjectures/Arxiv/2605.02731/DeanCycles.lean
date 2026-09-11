@@ -28,6 +28,8 @@ import FormalConjecturesUtil
   Discrete Math. (1993), 133--139.
 - [ChSa94] Chen, G. and Saito, A., Graphs with a cycle of length divisible by three.
   J. Combin. Theory Ser. B (1994), 277--292.
+- [LuMaZh26] Luo, Yufan and Ma, Jie and Zhao, Ziyuan, Dean's conjecture and cycles modulo k.
+  [arXiv:2601.13552](https://arxiv.org/abs/2601.13552) (2026).
 -/
 
 open SimpleGraph
@@ -77,7 +79,7 @@ theorem dean_conjecture.variants.four {V : Type} [Fintype V] [DecidableEq V]
   sorry
 
 /--
-The cases $k \geq 6$, proved by Liu, Ma and Zhao (2026). With [ChSa94] and [DeLeSa93] this
+The cases $k \geq 6$, proved by Luo, Ma and Zhao [LuMaZh26]. With [ChSa94] and [DeLeSa93] this
 leaves `dean_conjecture.variants.five` as the only open case.
 -/
 @[category research solved, AMS 5]
