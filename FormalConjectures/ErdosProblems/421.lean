@@ -19,7 +19,9 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 421
 
-*Reference:* [erdosproblems.com/421](https://www.erdosproblems.com/421)
+*References:*
+- [erdosproblems.com/421](https://www.erdosproblems.com/421)
+- [Pr26] Pratt, Kyle, [*Erdős Problem 421*](https://www.erdosproblems.com/static/421-Pratt.pdf).
 -/
 
 open Set
@@ -28,9 +30,12 @@ namespace Erdos421
 
 /--
 Is there a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
-$\prod_{u \le i \le v} d_i$ are distinct? -/
-@[category research open, AMS 11]
-theorem erdos_421 : answer(sorry) ↔
+$\prod_{u \le i \le v} d_i$ are distinct?
+
+The answer is yes; see Pratt's proof [Pr26].
+-/
+@[category research solved, AMS 11]
+theorem erdos_421 : answer(True) ↔
     ∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
     {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by
   sorry
