@@ -31,6 +31,8 @@ Mathlib's `IsMulTorsionFree G` asks instead that `a ↦ a ^ n` be injective for 
 strictly stronger: the Klein bottle group `⟨a, b | b⁻¹ab = a⁻¹⟩` is torsion-free, yet
 `(ab)² = b²` with `ab ≠ b`. Statements about torsion-free groups in the literature, such as
 Kaplansky's conjectures on group rings, use the weaker notion defined here.
+
+TODO(mo271): refactor after https://github.com/leanprover-community/mathlib4/pull/43727 lands
 -/
 
 variable {G : Type*}
