@@ -46,45 +46,48 @@ and 24 accompany the bounds for dimension 5.
 
 namespace Constant29
 
+open scoped EuclideanGeometry
+
 /-- Unit vectors representing mutually nonoverlapping spheres tangent to a central sphere.
 Note this translates to the usual formulation via spheres. -/
-def IsKissingConfiguration {n : ℕ} (A : Finset (EuclideanSpace ℝ (Fin n))) : Prop :=
-  (∀ x ∈ A, ‖x‖ = 1) ∧ ∀ x ∈ A, ∀ y ∈ A, x ≠ y → inner ℝ x y ≤ 1 / 2
+def IsKissingConfiguration {E : Type*} [NormedAddGroup E] (A : Finset E) : Prop :=
+  (∀ x ∈ A, ‖x‖ = 1) ∧ ∀ x ∈ A, ∀ y ∈ A, x ≠ y → 1 ≤ dist x y
 
 /-- A subset of a kissing configuration is a kissing configuration. -/
 @[category API, AMS 52]
-theorem IsKissingConfiguration.mono {n : ℕ} {A B : Finset (EuclideanSpace ℝ (Fin n))}
+theorem IsKissingConfiguration.mono {E : Type*} [NormedAddGroup E] {A B : Finset E}
     (hB : IsKissingConfiguration B) (hAB : A ⊆ B) : IsKissingConfiguration A :=
   ⟨fun x hx ↦ hB.1 x (hAB hx), fun x hx y hy hxy ↦ hB.2 x (hAB hx) y (hAB hy) hxy⟩
 
-/-- The kissing number in $n$ dimensions. -/
-noncomputable def KissingNumer (n : ℕ) :=
-  sSup (Finset.card '' {A | IsKissingConfiguration (n := n) A})
+/-- The kissing number of an arbitary normed ground.
+Usually these are considered for the euclidean space ℝⁿ. -/
+noncomputable def KissingNumber (E : Type*) [NormedAddGroup E] :=
+  sSup (Finset.card '' {A : Finset E | IsKissingConfiguration A})
 
 /-- The kissing number in three dimensions is $12$ [Mus2006, Section 2]. -/
 @[category research solved, AMS 52]
-theorem kissingNumer_three : KissingNumer 3 = 12 := by
+theorem kissingNumber_three : KissingNumber (ℝ^3) = 12 := by
   sorry
 
 /-- Musin's extension of Delsarte's method gives kissing number $24$ in dimension four
 [Mus2008, main theorem]. -/
 @[category research solved, AMS 52]
-theorem kissingNumer_four : KissingNumer 4 = 24 := by
+theorem kissingNumber_four : KissingNumber (ℝ^4) = 24 := by
   sorry
 
 /-- The $E_8$ roots attain the Delsarte bound of $240$ in dimension eight [OS1979]. -/
 @[category research solved, AMS 52]
-theorem kissingNumer_eight : KissingNumer 8 = 240 := by
+theorem kissingNumber_eight : KissingNumber (ℝ^8) = 240 := by
   sorry
 
 /-- The minimal vectors of the Leech lattice attain the Delsarte bound of $196560$
 in dimension twenty-four [OS1979]. -/
 @[category research solved, AMS 52]
-theorem kissingNumer_twentyFour : KissingNumer 24 = 196560 := by
+theorem kissingNumber_twentyFour : KissingNumber (ℝ^24) = 196560 := by
   sorry
 
 /-- **Tao's Optimization Constant 29 / Kissing number in dimension 5**. -/
-noncomputable def C29 : ℕ := KissingNumer 5
+noncomputable def C29 : ℕ := KissingNumber (ℝ^5)
 
 /-- A lower bound supplied by the ten vertices of a cross polytope [CR2024]. -/
 @[category textbook, AMS 52]
