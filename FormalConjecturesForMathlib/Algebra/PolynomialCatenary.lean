@@ -27,6 +27,26 @@ import Mathlib.RingTheory.KrullDimension.Polynomial
 # Dimension formulas for polynomial rings
 
 This file develops dimension results for prime quotients of polynomial rings over a field.
+
+## Provenance
+
+The `Triangular` namespace below (from `namespace Triangular` to `end Triangular`) reproduces,
+essentially character for character, the `equivT` section of Mathlib's
+`Mathlib/RingTheory/NoetherNormalization.lean`, added to Mathlib in
+[`mathlib4#18247`](https://github.com/leanprover-community/mathlib4/pull/18247), whose copyright
+header reads "Copyright (c) 2025 Sihan Su. All rights reserved. Released under Apache 2.0 license
+as described in the file LICENSE. Authors: Riccardo Brasca, Sihan Su, Wan Lin, Xiaoyang Su".
+Relative to that section the copy renames `section equivT` to `namespace Triangular`, drops
+`private`, rewrites or drops the docstrings, and renames two identifiers:
+`T_leadingcoeff_isUnit` to `T_leadingCoeff_isUnit`, and the local hypothesis `coeff` to
+`coeff_eq`.
+
+The copy exists only because those declarations are `private` upstream and hence cannot be
+imported; of them only `Triangular.T` and `Triangular.T_leadingCoeff_isUnit` are used below, in
+`MvPolynomial.height_add_ringKrullDim_quotient_eq_fin`. Mathlib pull request
+[`mathlib4#43700`](https://github.com/leanprover-community/mathlib4/pull/43700) makes those two
+declarations public; once it lands and the Mathlib dependency is bumped, this block should be
+deleted and the upstream declarations used instead.
 -/
 
 @[expose] public section
@@ -119,6 +139,7 @@ theorem Polynomial.height_eq_comap_height_add_one_of_monic_mem
   rw [show P.comap Polynomial.C = p from rfl, eq1, eq2]
   exact Polynomial.height_eq_height_add_one p' P'
 
+-- See the "Provenance" paragraph in the module docstring: this namespace is copied from Mathlib.
 namespace Triangular
 
 variable {k : Type*} [Field k] {n : ℕ} (f : MvPolynomial (Fin (n + 1)) k)
