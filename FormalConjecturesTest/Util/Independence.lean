@@ -56,10 +56,26 @@ def IndependencePairs : Set (Prop × Prop) :=
     (MartinsAxiom ∧ ¬ ContinuumHypothesis, NotContinuumHypothesis),
     (MartinsAxiom ∧ ¬ ContinuumHypothesis, ¬ GeneralizedContinuumHypothesis.{u}) }
 
-/- TODO: prove this (bottleneck is Martin's axiom)
+/-- The first component of each member of `IndependencePairs` implies the second one. -/
 theorem independencePairs_implies {P : Prop × Prop} (hP : P ∈ IndependencePairs) :
-    P.1 → P.2 := by sorry
--/
+      P.1 → P.2 := by
+    simp only [IndependencePairs, Set.mem_insert_iff, Set.mem_singleton_iff] at hP
+    obtain rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl := hP <;> dsimp <;> intro h
+    · infer_instance
+    · infer_instance
+    · infer_instance
+    · rw [NotContinuumHypothesis.iff_not_continuumHypothesis] at h
+      contrapose! h
+      infer_instance
+    · rw [NotContinuumHypothesis.iff_not_continuumHypothesis]
+      contrapose! h
+      infer_instance
+    · contrapose! h
+      infer_instance
+    · exact h.1
+    · exact NotContinuumHypothesis.iff_not_continuumHypothesis.mpr h.2
+    · contrapose! h
+      infer_instance
 
 /-- `P` is independent of ZFC and Lean's type theory.
 Note: More precisely, the implication can be proved under some set theory axiom known to be

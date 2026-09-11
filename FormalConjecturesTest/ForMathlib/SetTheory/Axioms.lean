@@ -187,20 +187,20 @@ lemma Set.countable_of_sdiff_singleton {α : Type*} {s : Set α} {a : α}
     (h : (s \ {a}).Countable) : s.Countable :=
   Countable.of_sdiff h <| countable_singleton a
 
-theorem countableChainCondition_iff_ex_nonempty_chain (X : Type*) [TopologicalSpace X] :
+theorem countableChainCondition_iff_empty_not_mem (X : Type*) [TopologicalSpace X] :
     CountableChainCondition X ↔ ∀ ⦃S : Set (Set X)⦄,
       S.PairwiseDisjoint id → (∀ s ∈ S, IsOpen s) → ∅ ∉ S → S.Countable := by
   refine ⟨fun h S Sd So _ ↦ h.countable_chain_condition Sd So, fun h ↦ ?_⟩
   refine { countable_chain_condition := fun S Sd So ↦ ?_ }
-  apply Set.countable_of_setminus_singleton (a := ∅)
-  apply h (PairwiseDisjoint.subset Sd sdiff_subset) fun _ h ↦ So _ h.1
-  simp
+  apply Set.countable_of_sdiff_singleton (a := ∅)
+  exact h (PairwiseDisjoint.subset Sd sdiff_subset) (fun _ h ↦ So _ h.1) (notMem_sdiff_of_mem rfl)
 
 --TODO: proof can probably be golfed a lot
-/-- Theorem T21: P26 (SeparableSpace) => P29 (CountableChainCondition) -/
+/-- A separable space satisfied the countable chain condition.
+For a readable proof, see https://topology.pi-base.org/theorems/T000021 -/
 instance instCountableChainConditionOfSeparableSpace {X : Type v}
     [TopologicalSpace X] [h : SeparableSpace X] : CountableChainCondition X := by
-  refine (countableChainCondition_iff_ex_nonempty_chain X).mpr (fun S Sd So Sn ↦ ?_)
+  refine (countableChainCondition_iff_empty_not_mem X).mpr (fun S Sd So Sn ↦ ?_)
   obtain ⟨r, rc, dr⟩ := h.exists_countable_dense
   by_contra h0
   have : ∃ i ∈ S, Disjoint i r := by
