@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Gamma.Deligne
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
