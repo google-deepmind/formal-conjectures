@@ -172,6 +172,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RingTheory.HopfAlgebra.Linear
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
