@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.DualNumber
 public import Mathlib.Algebra.RingQuot
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.LinearAlgebra.TensorAlgebra.Basic
@@ -41,10 +42,18 @@ This file defines:
   $K^M_n(F)/\ell$ is a sum of at most `m` symbols. Its least element, when it exists, is the
   *symbol length* of $K^M_n(F)/\ell$ [Krashen2024, §2.1.3.4].
 * `MilnorK.augmentation F ℓ`: the augmentation $K^M_*(F)/\ell \to \mathbb{Z}/\ell$, which
-  shows that `MilnorK F ℓ` is nontrivial for `ℓ ≠ 1` (`MilnorK.nontrivial`).
+  shows that `MilnorK F ℓ` is nontrivial for `ℓ ≠ 1` (`MilnorK.nontrivial`);
+* `MilnorK.toDualNumber F ℓ φ`: the map to the dual numbers $(\mathbb{Z}/\ell)[\varepsilon]$
+  attached to a homomorphism $\varphi \colon F^\times \to \mathbb{Z}/\ell$. It detects degree
+  one, so the Steinberg relations do not collapse $K^M_1(F)/\ell$ (`MilnorK.of_ne_zero`,
+  `MilnorK.grade_one_ne_bot`). It says nothing about the degrees `≥ 2`, where the symbol length
+  problem lives.
 
 In degree `0` the symbols are all equal to the empty product `1`, so $K^M_0(F)/\ell = \mathbb{Z}/\ell$
-has symbol length `ℓ - 1` for `ℓ ≥ 1` (`MilnorK.isLeast_symbolLengthBounds_zero`).
+has symbol length `ℓ - 1` for `ℓ ≥ 1` (`MilnorK.isLeast_symbolLengthBounds_zero`). In degree `1`
+every class is a single symbol, so the symbol length of $K^M_1(F)/\ell$ is at most `1`
+(`MilnorK.one_mem_symbolLengthBounds_one`), with equality as soon as the group is nonzero
+(`MilnorK.isLeast_symbolLengthBounds_one`).
 
 The defining ideal is homogeneous, so the degree-`n` part of the quotient is the image of the
 degree-`n` part of the tensor algebra, which is spanned by the symbols. No numeric symbol
@@ -103,6 +112,15 @@ theorem of_pow (a : Fˣ) (k : ℕ) : of ℓ (a ^ k) = k • of ℓ a := by
   induction k with
   | zero => simp
   | succ k ih => rw [pow_succ, of_mul, ih, succ_nsmul]
+
+/-- The class map `{·} : Fˣ → K^M_1(F)/ℓ` as an additive homomorphism. -/
+def ofHom : Additive Fˣ →+ MilnorK F ℓ where
+  toFun a := of ℓ a.toMul
+  map_zero' := by simp
+  map_add' a b := by simp [of_mul]
+
+@[simp]
+theorem ofHom_apply (a : Additive Fˣ) : ofHom ℓ a = of ℓ a.toMul := rfl
 
 /-- The Steinberg relation `{a}{b} = 0` when `a + b = 1`. -/
 theorem of_mul_of_eq_zero (a b : Fˣ) (h : (a : F) + (b : F) = 1) : of ℓ a * of ℓ b = 0 := by
@@ -178,7 +196,6 @@ theorem grade_eq_bot_of_forall_exists_pow_eq (h : ∀ a : Fˣ, ∃ b : Fˣ, b ^ 
   rw [SetLike.mem_coe, AddSubgroup.mem_bot, symbol_succ, ← hb, of_pow, nsmul_eq_mul,
     natCast_eq_zero, zero_mul, zero_mul]
 
-
 /-- The augmentation `K^M_*(F)/ℓ → ℤ/ℓ`, which sends every class `{a}` to `0`. -/
 def augmentation : MilnorK F ℓ →+* ZMod ℓ :=
   RingQuot.lift ⟨(TensorAlgebra.lift ℤ (0 : Additive Fˣ →ₗ[ℤ] ZMod ℓ)).toRingHom, by
@@ -243,5 +260,76 @@ theorem isLeast_symbolLengthBounds_zero (hℓ : 0 < ℓ) :
     IsLeast (symbolLengthBounds F ℓ 0) (ℓ - 1) :=
   ⟨sub_one_mem_symbolLengthBounds_zero F ℓ hℓ,
     fun _ hk ↦ sub_one_le_of_mem_symbolLengthBounds_zero F ℓ hℓ hk⟩
+
+/-! ### Degree one
+
+Degree one is completely understood: every class of `K^M_1(F)/ℓ` is a single symbol, and the
+dual-number map below shows that `K^M_1(F)/ℓ` is nonzero as soon as some homomorphism
+`Fˣ → ℤ/ℓ` is. So the symbol length question in degree `1` is not vacuous. Degrees `≥ 2` get no
+such certificate here: that `K^M_n(F)/ℓ ≠ 0` for `n ≥ 2` needs genuine input, such as a
+nontrivial division algebra for `n = 2`. -/
+
+/-- The map to the dual numbers `(ℤ/ℓ)[ε]` attached to a homomorphism `φ : Fˣ → ℤ/ℓ`: it sends
+`{a}` to `φ(a) ε` and kills every product of two classes of degree one, so in particular it
+kills the Steinberg relations. -/
+noncomputable def toDualNumber (φ : Additive Fˣ →+ ZMod ℓ) :
+    MilnorK F ℓ →+* DualNumber (ZMod ℓ) :=
+  RingQuot.lift ⟨(TensorAlgebra.lift ℤ
+      ((TrivSqZeroExt.inrHom (ZMod ℓ) (ZMod ℓ)).restrictScalars ℤ ∘ₗ
+        φ.toIntLinearMap)).toRingHom, by
+    intro x y h
+    cases h with
+    | steinberg a b _ => simp
+    | natCast =>
+        refine (TrivSqZeroExt.ext ?_ ?_).trans (map_zero _).symm <;>
+          simp [TrivSqZeroExt.fst_natCast, TrivSqZeroExt.snd_natCast]⟩
+
+@[simp]
+theorem toDualNumber_of (φ : Additive Fˣ →+ ZMod ℓ) (a : Fˣ) :
+    toDualNumber F ℓ φ (of ℓ a) = TrivSqZeroExt.inr (φ (Additive.ofMul a)) := by
+  simp [toDualNumber, of, RingQuot.lift_mkRingHom_apply]
+
+/-- Degree one does not collapse: if a homomorphism `φ : Fˣ → ℤ/ℓ` is nonzero on `a`, then the
+class `{a}` is nonzero in `K^M_1(F)/ℓ`. -/
+theorem of_ne_zero (φ : Additive Fˣ →+ ZMod ℓ) (a : Fˣ)
+    (hφ : φ (Additive.ofMul a) ≠ 0) : of ℓ a ≠ 0 :=
+  fun h ↦ hφ (by simpa using congrArg (fun x ↦ (toDualNumber F ℓ φ x).snd) h)
+
+/-- `K^M_1(F)/ℓ ≠ 0` whenever some homomorphism `φ : Fˣ → ℤ/ℓ` is nonzero. -/
+theorem grade_one_ne_bot (φ : Additive Fˣ →+ ZMod ℓ) (a : Fˣ)
+    (hφ : φ (Additive.ofMul a) ≠ 0) : grade F ℓ 1 ≠ ⊥ := by
+  intro h
+  refine of_ne_zero F ℓ φ a hφ ?_
+  have ha := symbol_mem_grade F ℓ (fun _ ↦ a : Fin 1 → Fˣ)
+  rw [h, AddSubgroup.mem_bot] at ha
+  simpa using ha
+
+/-- `K^M_1(F)/ℓ` is the image of `Fˣ`, since sums and negatives of degree-one symbols are again
+degree-one symbols. -/
+theorem grade_one : grade F ℓ 1 = (ofHom (F := F) ℓ).range := by
+  refine le_antisymm ?_ ?_
+  · rw [grade, AddSubgroup.closure_le]
+    rintro _ ⟨s, rfl⟩
+    exact ⟨Additive.ofMul (s 0), by simp⟩
+  · rintro _ ⟨a, rfl⟩
+    simpa using symbol_mem_grade F ℓ (fun _ ↦ a.toMul : Fin 1 → Fˣ)
+
+/-- Every class in `K^M_1(F)/ℓ` is a single symbol. -/
+theorem one_mem_symbolLengthBounds_one : 1 ∈ symbolLengthBounds F ℓ 1 := by
+  intro x hx
+  obtain ⟨a, rfl⟩ := (grade_one F ℓ).le hx
+  exact ⟨1, le_rfl, fun _ _ ↦ a.toMul, by simp⟩
+
+/-- `0` is not a bound for the symbol length in degree `1` when `K^M_1(F)/ℓ ≠ 0`. -/
+theorem zero_notMem_symbolLengthBounds_one (h : grade F ℓ 1 ≠ ⊥) :
+    0 ∉ symbolLengthBounds F ℓ 1 :=
+  fun hk ↦ h ((zero_mem_symbolLengthBounds_iff F ℓ).mp hk)
+
+/-- The symbol length of `K^M_1(F)/ℓ` is `1` as soon as the group is nonzero. Use
+`MilnorK.grade_one_ne_bot` to get the hypothesis from a homomorphism `Fˣ → ℤ/ℓ`. -/
+theorem isLeast_symbolLengthBounds_one (h : grade F ℓ 1 ≠ ⊥) :
+    IsLeast (symbolLengthBounds F ℓ 1) 1 :=
+  ⟨one_mem_symbolLengthBounds_one F ℓ, fun _ hk ↦ Nat.one_le_iff_ne_zero.mpr fun hk0 ↦
+    zero_notMem_symbolLengthBounds_one F ℓ h (hk0 ▸ hk)⟩
 
 end MilnorK

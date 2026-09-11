@@ -27,12 +27,21 @@ in $F$, the norm residue isomorphism theorem (the Bloch–Kato conjecture, [Voev
 $K^M_n(F)/\ell \cong H^n(F, \mu_\ell^{\otimes n})$, so this is also the symbol length of Galois
 cohomology.
 
-Krashen's **symbol length problem** [Krashen2024, Problem 2.1.3.12] asks, for a given field $F$
-and integers $n$ and $\ell$, for an $m$ such that the symbol length of every class in
-$K^M_n(F)/\ell$ is at most $m$, for example in terms of a dimension of the field. Krashen notes
-that, apart from Matzri's bound in degree $2$ and the case of $\ell$ a power of $2$, no bound is
-known for classes of degree at least $2$ over complex function fields in at least three
-variables, and that very little is known in degree $3$ and higher [Krashen2024, §2.1.3.4].
+The **symbol length problem** asks, for a given field $F$ and integers $n$ and $\ell$, for a $k$
+such that the symbol length of every class in $K^M_n(F)/\ell$ is at most $k$, for example in
+terms of a dimension of the field. That a class is a sum of *some* number of symbols is part of
+the presentation of $K^M_n(F)$ recalled above, so the content lies entirely in the bound. In
+degree $2$, over a field containing a primitive $\ell$-th root of unity, Merkurjev and Suslin's
+theorem [MerkurjevSuslin1983] that the norm residue map is an isomorphism identifies
+$K^M_2(F)/\ell$ with the $\ell$-torsion of the Brauer group and symbols with symbol algebras of
+degree $\ell$; that is the form in which the question is usually studied, namely how many symbol
+algebras are needed to represent a central simple algebra of exponent $\ell$. Becher and Hoffmann
+[BecherHoffmann2004] named the invariant $\lambda_p$ in that degree and asked it for exactly the
+fields considered below (their Question 4.6). The general form stated here is Problem 2.1.3.12 of
+Krashen's PCMI notes; Krashen notes there that over complex function fields in at least three
+variables no bound is known beyond Matzri's in degree $2$ and the case of $\ell$ a power of $2$,
+which comes from the theory of quadratic forms, and that very little is known in degree $3$ and
+higher [Krashen2024, §2.1.3.4].
 
 This file states the problem for the rational function fields $\mathbb{C}(x_1, \dots, x_m)$ and
 a prime $\ell = p$: determine the symbol length of $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$ as a
@@ -41,14 +50,26 @@ function of $m$, $n$ and $p$, where the symbol length is infinite if there is no
 What is known:
 * in degree $0$ every symbol is the empty product $1$, so $K^M_0(F)/p = \mathbb{Z}/p$ has symbol
   length $p - 1$ for every field $F$;
+* in degree $1$ every class of $K^M_1(F)/p = F^\times/(F^\times)^p$ is a single symbol, so the
+  symbol length is at most $1$;
 * $\mathbb{C}(x_1, \dots, x_m)$ has cohomological dimension $m$ [Serre1997, Ch. II, §4.2], so
   $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p = 0$ for $n > m$ and the symbol length is $0$;
 * $\mathbb{C}(x_1, \dots, x_m)$ is a $C_m$ field (Tsen–Lang, [Lang1952]), so by Matzri's theorem
   [Matzri2016, Theorem 8.2] every class in $K^M_2(\mathbb{C}(x_1, \dots, x_m))/p^t$ is a sum of
-  at most $t(p^{m-1} - 1)$ symbols when $m \ge 1$.
+  at most $t(p^{m-1} - 1)$ symbols when $m \ge 1$;
+* in degree $2$ a tensor product of $m - 1$ symbol algebras of degree $p$ over
+  $\mathbb{C}(x_1, \dots, x_m)$ can be a division algebra, so the symbol length is at least
+  $m - 1$ for $m \ge 1$ [BecherHoffmann2004, Proposition 4.5], by an argument going back to
+  Nakayama.
 
-Krashen expects a bound that does not depend on $\ell$ [Krashen2024, §2.1.3.4]. See also the
-survey [Krashen2016].
+In degree $2$, Becher and Hoffmann ask whether that lower bound is the answer, that is whether
+the symbol length is exactly $m - 1$ [BecherHoffmann2004, Question 4.6]. For $m = n = 2$, the
+smallest case not settled above, this asks whether every class of
+$K^M_2(\mathbb{C}(x_1, x_2))/p$ is a single symbol; they call it "a striking open question" and
+note that it holds for $p \le 3$ by a theorem of Artin [BecherHoffmann2004, Introduction]. Since
+$m - 1$ does not involve $p$, their question is an instance of the expectation recorded in
+[Krashen2024, §2.1.3.4] that a bound can be taken independent of $\ell$. See also the survey
+[Krashen2016].
 
 The definitions `MilnorK`, `MilnorK.symbol`, `MilnorK.grade` and `MilnorK.symbolLengthBounds`
 are in `FormalConjecturesForMathlib/FieldTheory/MilnorKTheory.lean`.
@@ -58,6 +79,13 @@ are in `FormalConjecturesForMathlib/FieldTheory/MilnorKTheory.lean`.
   *Field arithmetic and the complexity of algebraic objects*, PCMI Graduate Summer School on
   Motivic Homotopy Theory, 2024, draft of 24 July 2024,
   [pdf](https://www.ias.edu/sites/default/files/pcmi-2024-07-24%20krashen.pdf).
+- [BecherHoffmann2004] K. J. Becher and D. W. Hoffmann, *Symbol lengths in Milnor $K$-theory*,
+  Homology Homotopy Appl. 6 (2004), no. 1, 17–31,
+  [doi:10.4310/HHA.2004.v6.n1.a3](https://doi.org/10.4310/HHA.2004.v6.n1.a3).
+- [MerkurjevSuslin1983] A. S. Merkurjev and A. A. Suslin, *K-cohomology of Severi–Brauer
+  varieties and the norm residue homomorphism*, Izv. Akad. Nauk SSSR Ser. Mat. 46 (1982),
+  1011–1046; English translation Math. USSR-Izv. 21 (1983), no. 2, 307–340,
+  [doi:10.1070/IM1983v021n02ABEH001793](https://doi.org/10.1070/IM1983v021n02ABEH001793).
 - [Krashen2016] D. Krashen, *Period and index, symbol lengths, and generic splittings in Galois
   cohomology*, Bull. London Math. Soc. 48 (2016), 985–1000,
   [doi:10.1112/blms/bdw060](https://doi.org/10.1112/blms/bdw060).
@@ -103,8 +131,8 @@ theorem symbol_length_problem.variants.bounded :
   sorry
 
 /--
-Krashen's expectation [Krashen2024, §2.1.3.4] that the bound can be taken independent of the
-prime: is there, for every $m$ and every $n \ge 1$, a $k$ such that every class in
+The expectation recorded in [Krashen2024, §2.1.3.4] that the bound can be taken independent of
+the prime: is there, for every $m$ and every $n \ge 1$, a $k$ such that every class in
 $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$ is a sum of at most $k$ symbols for every prime $p$?
 Degree $0$ is excluded because $K^M_0(F)/p = \mathbb{Z}/p$ has symbol length $p - 1$
 (`symbol_length_problem.variants.degree_zero`), which is not bounded independently of $p$.
@@ -125,6 +153,16 @@ theorem symbol_length_problem.variants.degree_zero (m p : ℕ) (hp : p.Prime) :
   isLeast_symbolLengthBounds_zero _ p hp.pos
 
 /--
+The degree-$1$ case of `symbol_length_problem`: every class of
+$K^M_1(\mathbb{C}(x_1, \dots, x_m))/p = F^\times/(F^\times)^p$ is a single symbol, so the
+symbol length in degree $1$ is at most $1$.
+-/
+@[category textbook, AMS 12 19]
+theorem symbol_length_problem.variants.degree_one (m p : ℕ) :
+    1 ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p 1 :=
+  one_mem_symbolLengthBounds_one _ p
+
+/--
 **Matzri's theorem** [Matzri2016, Theorem 8.2] for $\mathbb{C}(x_1, \dots, x_m)$, which is a
 $C_m$ field by Tsen–Lang [Lang1952]: for $m \ge 1$, every class in
 $K^M_2(\mathbb{C}(x_1, \dots, x_m))/p^t$ is a sum of at most $t(p^{m-1} - 1)$ symbols.
@@ -133,6 +171,35 @@ $K^M_2(\mathbb{C}(x_1, \dots, x_m))/p^t$ is a sum of at most $t(p^{m-1} - 1)$ sy
 theorem symbol_length_problem.variants.degree_two (m : ℕ) (hm : 1 ≤ m) (p t : ℕ)
     (hp : p.Prime) :
     t * (p ^ (m - 1) - 1) ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) (p ^ t) 2 := by
+  sorry
+
+/--
+The matching lower bound in degree $2$ [BecherHoffmann2004, Proposition 4.5], by an argument going
+back to Nakayama: for distinct monic irreducibles $f_1, \dots, f_{m-1}$ in $\mathbb{C}[x_1]$ the
+tensor product of the symbol algebras $(f_i, x_{i+1})_p$ is a division algebra over
+$\mathbb{C}(x_1, \dots, x_m)$, so no $k < m - 1$ bounds the symbol length of
+$K^M_2(\mathbb{C}(x_1, \dots, x_m))/p$.
+-/
+@[category research solved, AMS 12 16 19]
+theorem symbol_length_problem.variants.degree_two_ge (m : ℕ) (hm : 1 ≤ m) (p : ℕ)
+    (hp : p.Prime) :
+    ∀ k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p 2, m - 1 ≤ k := by
+  sorry
+
+/--
+**Becher and Hoffmann's question** [BecherHoffmann2004, Question 4.6]: is the symbol length of
+$K^M_2(\mathbb{C}(x_1, \dots, x_m))/p$ exactly $m - 1$? Their Proposition 4.5 gives the lower
+bound (`symbol_length_problem.variants.degree_two_ge`), and Matzri's theorem the much weaker upper
+bound $p^{m-1} - 1$ (`symbol_length_problem.variants.degree_two`). For $m \le 1$ the group
+vanishes and the answer is $0$; for $m = 2$ the question is whether every class is a single
+symbol, which holds for $p \le 3$ by a theorem of Artin and is open for $p \ge 5$. Since $m - 1$
+does not involve $p$, an affirmative answer would settle
+`symbol_length_problem.variants.uniform` in degree $2$.
+-/
+@[category research open, AMS 12 16 19]
+theorem symbol_length_problem.variants.degree_two_isLeast :
+    answer(sorry) ↔ ∀ m p : ℕ, 1 ≤ m → p.Prime →
+      IsLeast (symbolLengthBounds (MvRatFunc (Fin m) ℂ) p 2) (m - 1) := by
   sorry
 
 /--
@@ -148,8 +215,8 @@ theorem symbol_length_problem.variants.zero_mem_of_lt (m n p : ℕ) (hmn : m < n
 /--
 $K^M_n(F)/\ell = 0$ for an algebraically closed field $F$ and $n, \ell \ge 1$, since every unit
 is an $\ell$-th power: every symbol $\{a_1, \dots, a_n\}$ with $a_1 = b^\ell$ equals
-$\ell \{b, a_2, \dots, a_n\} = 0$. This is the case $m = 0$ of
-`symbol_length_problem.variants.zero_mem_of_lt`, up to the isomorphism
+$\ell \{b, a_2, \dots, a_n\} = 0$. This generalizes the case $m = 0$ of
+`symbol_length_problem.variants.zero_mem_of_lt`, which concerns a prime $\ell$ and the field
 $\mathbb{C}(x_1, \dots, x_0) \cong \mathbb{C}$.
 -/
 @[category textbook, AMS 12 19]
