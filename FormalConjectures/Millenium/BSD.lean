@@ -20,7 +20,8 @@ import FormalConjectures.Wikipedia.HasseWeil
 /-!
 # The Birch and Swinnerton-Dyer (BSD) Conjecture
 
-*References:*
+## References
+
 - [The Clay Institute](https://www.claymath.org/millennium/birch-and-swinnerton-dyer-conjecture/),
   official problem description by Andrew Wiles:
   [claymath.org](https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf)
@@ -42,97 +43,86 @@ import FormalConjectures.Wikipedia.HasseWeil
   in Mathematics 106, Springer (2009), [doi](https://doi.org/10.1007/978-0-387-09494-6)
 - [DD2010] Tim Dokchitser and Vladimir Dokchitser. "On the Birch-Swinnerton-Dyer quotients
   modulo squares." Annals of Mathematics 172 (2010), 567-596, Conjecture 2.1,
-  [PDF](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
+  [annals](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
 -/
 
-namespace WeierstrassCurve
+namespace WeierstrassCurve.Affine
+
+open Projective HasseWeil NumberField
 
 /-- **Mordell--Weil theorem**: the rational points of an elliptic curve over a number field form
 a finitely generated group. See [Silverman2009], Theorem VIII.6.7. -/
 @[instance, category textbook, AMS 11 14]
-theorem Affine.Point.fg {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
+theorem Point.fg {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
     [E.IsElliptic] : AddGroup.FG E.Point := by
   sorry
 
-end WeierstrassCurve
+namespace NumberField
 
-namespace BSD
+/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field `K`: for every elliptic
+curve `E` over `K`, the L-series of `E` has a meromorphic continuation whose order at `s = 1` is
+`rk E(K)`. Following [DD2010], Conjecture 2.1 (1), the continuation is asserted rather than assumed,
+so this implies `HasseWeil.exists_hasMeromorphicContinuation`. [Tate1966], Conjecture (A) and
+[Gross2011], Conjecture 2.10 instead take a continuation as given and state only the order, and
+[Gross2011] needs one only near `s = 1`. By `HasseWeil.HasMeromorphicContinuation.unique` the order
+does not depend on which continuation is taken, so the two readings differ exactly by the
+Hasse--Weil conjecture. -/
+def WeakBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
+  ∀ (E : Affine K) [E.IsElliptic], ∃ L : ℂ → ℂ,
+    HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
 
-open HasseWeil
+/-- The leading coefficient predicted by BSD over a number field, using the non-normalised regulator
+and dividing by the square root of the absolute field discriminant. -/
+noncomputable def leadingCoefficient {K : Type*} [Field K] [NumberField K] [DecidableEq K]
+    (E : Affine K) [E.IsElliptic] : ℝ :=
+  E.period * Point.regulator E * Nat.card E.tateShafarevich * E.toProjective.tamagawaProduct /
+      (|(discr K : ℝ)|.sqrt * (Nat.card <| AddCommGroup.torsion E.Point) ^ 2 : ℝ)
 
-/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
-curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
-$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$. [Gross2011], Conjecture 2.10 states the
-conjecture assuming only a meromorphic continuation near $s = 1$, while
-`HasseWeil.HasMeromorphicContinuation` asks for one on all of $\mathbb{C}$.
+/-- The **strong Birch and Swinnerton-Dyer conjecture** over a number field `K`: for every elliptic
+curve `E` over `K`, a meromorphic continuation of its L-series has order `rk E(K)` at `s = 1`, the
+Tate--Shafarevich group is finite, and the leading coefficient of its L-series is
+`L⁽ʳ⁾(E, 1) / r! = Ω(E)·Reg(E)·|Sha(E)|·∏ᵥcᵥ / √|Δ(K)|·|E(K)ₜₒᵣₛ|²`. See [DD2010], Conjecture 2.1. -/
+def StrongBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
+  ∀ (E : Affine K) [E.IsElliptic], ∃ L : ℂ → ℂ,
+    HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
+      Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
 
-The rank is `Module.finrank ℤ E.toAffine.Point`. Finite generation follows from the
-Mordell--Weil theorem `WeierstrassCurve.Affine.Point.fg`. -/
-def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : WeierstrassCurve K) [E.IsElliptic] (L : ℂ → ℂ),
-    HasMeromorphicContinuation E L → meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point
-
-/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
+/-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
+statement on its own is [Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
 theorem weak_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
-    [DecidableEq K] : Weak K := by
+    [DecidableEq K] : WeakBSD K := by
   sorry
 
-/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
-Problem. -/
-@[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer_conjecture_rat : Weak ℚ := by
-  sorry
-
-section Strong
-
-variable {K : Type*} [Field K] [NumberField K] [DecidableEq K]
-
-/-- The leading coefficient predicted by BSD over a number field, using the non-normalised
-regulator and dividing by the square root of the absolute field discriminant. The period is
-`WeierstrassCurve.period`, whose full real periods include the real component factors, so the
-Tamagawa product uses only finite places. -/
-noncomputable def arithmeticLeadingCoefficient (E : WeierstrassCurve K) [E.IsElliptic] : ℝ :=
-  E.period * WeierstrassCurve.Affine.Point.regulator E.toAffine *
-    Nat.card E.toAffine.tateShafarevich * E.toProjective.tamagawaProduct /
-      (Real.sqrt |(NumberField.discr K : ℝ)| *
-        (Nat.card (AddCommGroup.torsion E.toAffine.Point) : ℝ) ^ 2)
-
-/-- The **strong Birch and Swinnerton-Dyer conjecture** over a number field $K$: the
-Tate--Shafarevich group is finite, and a meromorphic continuation of the $L$-series has order
-$r=\operatorname{rank}_{\mathbb{Z}} E(K)$ at $1$, with leading coefficient
-$\Omega(E)\operatorname{Reg}(E/K)|\Sha(E/K)|\prod_v c_v /
-(\sqrt{|\operatorname{disc}K|}\,|E(K)_{\mathrm{tors}}|^2)$.
-
-The leading coefficient is the coefficient of $(s-1)^r$, equivalently $L^{(r)}(E/K,1)/r!$.
-The product is over finite places and the period includes the minimal-discriminant correction.
-See [DD2010], Conjecture 2.1. -/
-def Strong (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : WeierstrassCurve K) [E.IsElliptic],
-    Finite E.toAffine.tateShafarevich ∧ ∃ L : ℂ → ℂ, HasMeromorphicContinuation E L ∧
-      meromorphicOrderAt L 1 = Module.finrank ℤ E.toAffine.Point ∧
-      meromorphicTrailingCoeffAt L 1 = (arithmeticLeadingCoefficient E : ℂ)
-
-/-- Strong BSD implies weak BSD, since two meromorphic continuations agree near $1$ and so have the
-same order there. -/
-@[category API, AMS 11 14]
-theorem Strong.weak (h : Strong K) : Weak K := by
-  intro E hE L hL
-  obtain ⟨_, L', hL', hr, _⟩ := h E
-  exact (meromorphicOrderAt_congr (hL.unique hL' 1)).trans hr
-
-/-- **Strong Birch and Swinnerton-Dyer conjecture** over a number field, including finiteness of the
-Tate--Shafarevich group and the leading-coefficient formula ([DD2010], Conjecture 2.1). -/
+/-- The **strong Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1). -/
 @[category research open, AMS 11 14]
 theorem strong_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
-    [DecidableEq K] : Strong K := by
+    [DecidableEq K] : StrongBSD K := by
   sorry
 
-/-- The **strong Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$. -/
+/-- Strong BSD implies weak BSD, since the meromorphic continuation witnessing the strong conjecture
+already has the predicted order at `s = 1`. -/
+@[category API, AMS 11 14]
+theorem StrongBSD.weakBSD (K : Type*) [Field K] [NumberField K] [DecidableEq K] (h : StrongBSD K) :
+    WeakBSD K := by
+  intro E _
+  obtain ⟨L, hL, hr, -⟩ := h E
+  exact ⟨L, hL, hr⟩
+
+end NumberField
+
+namespace Rat
+
+/-- The **weak Birch and Swinnerton-Dyer conjecture** over `ℚ`, a Clay Millennium Prize Problem. -/
 @[category research open, AMS 11 14]
-theorem strong_birch_swinnerton_dyer_conjecture_rat : Strong ℚ := by
+theorem weak_birch_swinnerton_dyer_conjecture : NumberField.WeakBSD ℚ := by
   sorry
 
-end Strong
+/-- The **strong Birch and Swinnerton-Dyer conjecture** over `ℚ`. -/
+@[category research open, AMS 11 14]
+theorem strong_birch_swinnerton_dyer_conjecture : NumberField.StrongBSD ℚ := by
+  sorry
 
-end BSD
+end Rat
+
+end WeierstrassCurve.Affine

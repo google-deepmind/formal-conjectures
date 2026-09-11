@@ -27,9 +27,10 @@ completed $L$-function). Only the continuation is stated here. Over $\mathbb{Q}$
 the modularity theorem.
 
 [Wikipedia] states the conjecture for the Hasse--Weil zeta function and asks only for a
-meromorphic continuation, which is equivalent to a meromorphic continuation of $L(E, s)$. This is
-also the hypothesis under which the Birch and Swinnerton-Dyer conjecture is stated ([Gross2011],
-Conjecture 2.10), so the weaker continuation is recorded here as well.
+meromorphic continuation, which is equivalent to a meromorphic continuation of $L(E, s)$. That
+weaker form is the one the Birch and Swinnerton-Dyer conjecture rests on, so it is recorded here as
+well. [Gross2011], Conjecture 2.10 takes it as a hypothesis; a statement of that conjecture which
+instead asserts the continuation implies `exists_hasMeromorphicContinuation` below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Hasse%E2%80%93Weil_zeta_function#Hasse%E2%80%93Weil_conjecture)
@@ -82,9 +83,9 @@ theorem HasMeromorphicContinuation.unique {L L' : ℂ → ℂ}
   exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs ↦ sub_eq_zero.1 hs
 
 /-- The $L$-series of an elliptic curve over a number field has a meromorphic continuation to
-$\mathbb{C}$. This is the **Hasse--Weil conjecture** in the form stated in [Wikipedia], a weak form
-of [Gross2011], Conjecture 2.7, and the hypothesis under which the Birch and Swinnerton-Dyer
-conjecture is stated ([Gross2011], Conjecture 2.10). -/
+$\mathbb{C}$. This is the **Hasse--Weil conjecture** in the form stated in [Wikipedia], and a weak
+form of [Gross2011], Conjecture 2.7. It is also what the Birch and Swinnerton-Dyer conjecture rests
+on, as the hypothesis of [Gross2011], Conjecture 2.10. -/
 @[category research open, AMS 11 14]
 theorem exists_hasMeromorphicContinuation (E : WeierstrassCurve K) [E.IsElliptic] :
     ∃ L, HasMeromorphicContinuation E L := by
