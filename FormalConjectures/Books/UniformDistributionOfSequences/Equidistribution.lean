@@ -27,6 +27,10 @@ are equidistributed modulo 1 or not.
   - [Uniform Distribution of Sequences](https://store.doverpublications.com/products/9780486149998)
 by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Wikipedia](https://en.wikipedia.org/wiki/Equidistributed_sequence)
+  - [Mat80] de Mathan, Bernard. "Numbers contravening a condition in density modulo 1."
+    Acta Mathematica Hungarica 36.3-4 (1980): 237-241.
+  - [Pol79] Pollington, Andrew Douglas. "On the density of sequence $\{n_ {k}\xi\} $."
+    Illinois Journal of Mathematics 23.4 (1979): 511-515.
 -/
 
 namespace Equidistribution
@@ -59,12 +63,16 @@ theorem isEquidistributedModuloOne_three_halves_pow :
     IsEquidistributedModuloOne (fun n => (3 / 2 : ℝ)^n) := by
   sorry
 
-/-- For any transcendental number `x`, the sequence `x * (3 / 2) ^ n` is
-equidistributed modulo 1. -/
-@[category research open, AMS 11]
-theorem isEquidistributedModuloOne_transcendental_three_halves_pow (x : ℝ)
-    (hx : Transcendental ℚ x) :
-    IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
+/-- It is not true that for every transcendental number `x` the sequence `x * (3 / 2) ^ n` is
+equidistributed modulo `1`. The sequence `(3 / 2) ^ n` is lacunary, so by the theorem of
+Pollington [Pol79] and de Mathan [Mat80] the set of real numbers `x` for which `x * (3 / 2) ^ n`
+is not even dense modulo `1` has Hausdorff dimension `1`. This set is uncountable, so it contains
+transcendental numbers. By Koksma's metric theorem (Kuipers–Niederreiter, Chapter 1, Section 4),
+the sequence `x * (3 / 2) ^ n` is equidistributed modulo `1` for almost all `x`. -/
+@[category research solved, AMS 11]
+theorem isEquidistributedModuloOne_transcendental_three_halves_pow :
+    ¬ ∀ x : ℝ, Transcendental ℚ x →
+      IsEquidistributedModuloOne (fun n ↦ x * (3 / 2 : ℝ) ^ n) := by
   sorry
 
 /--
