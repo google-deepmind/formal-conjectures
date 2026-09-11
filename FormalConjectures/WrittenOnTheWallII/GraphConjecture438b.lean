@@ -35,35 +35,6 @@ namespace WrittenOnTheWallII.GraphConjecture438b
 
 open SimpleGraph Finset
 
-variable {V : Type} [Fintype V] [DecidableEq V]
-
-/-- Edges of `G` whose two endpoints lie in `S`. -/
-def internalEdges (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) :
-    Finset (Sym2 V) :=
-  G.edgeFinset.filter fun e => e.toFinset ⊆ S
-
-/-- A vertex set is 2-independent when its induced graph has maximum degree
-at most one. -/
-def IsTwoIndependent (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) : Prop :=
-  ∀ v ∈ S, (S.filter fun w => G.Adj v w).card ≤ 1
-
-/-- Maximum cardinality of an independent subset contained in `B`. -/
-noncomputable def indepNumOn (G : SimpleGraph V) [DecidableRel G.Adj]
-    (B : Finset V) : ℕ :=
-  by
-    classical
-    exact (B.powerset.filter fun (A : Finset V) => G.IsIndepSet (A : Set V)).sup card
-
-/-- Maximum cardinality of a 2-independent vertex set. -/
-noncomputable def alphaTwo (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
-  by
-    classical
-    exact (Finset.univ.powerset.filter fun S => IsTwoIndependent G S).sup card
-
-/-- The source's low-degree layer `H₂`. -/
-def lowDegreeLayer (G : SimpleGraph V) [DecidableRel G.Adj] : Finset V :=
-  Finset.univ.filter fun v => G.degree v ≤ 2
-
 /--
 WOWII 438b states that every connected graph of order greater than three
 satisfies
