@@ -64,6 +64,10 @@ that are themselves $r$-powerful?
 The answer is no: for every $r \ge 6$ there are infinitely many such sums, see
 `erdos_939.variants.infinite_of_six_le`. (For $r = 4$ and $r = 5$ the question is open; for
 $r = 4$ no example is known at all, see `erdos_939`.)
+A construction in the site's comments, from GPT-5.5 Pro prompted by Price, gives infinitely
+many for every $r \ge 6$. This statement quantifies over every $r \ge 4$, so it stays open at
+$r = 4$ and $r = 5$. The category is unchanged because the construction is recorded in the
+comments and not in the literature.
 -/
 @[category research solved, AMS 11]
 theorem erdos_939.variants.finite : answer(False) ↔ ∀ r ≥ 4, (Erdos939Sums r).Finite := by

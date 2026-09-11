@@ -32,8 +32,8 @@ open scoped Classical in
 Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
 -/
 noncomputable abbrev A (x : ℝ) : ℝ :=
-  Finset.card <| (Finset.Icc 1 ⌊x⌋₊ ×ˢ Finset.Icc 1 ⌊x⌋₊).filter fun (a, b) ↦
-    a ≤ b ∧ IsAmicable a b
+  (1 / 2) * Finset.card <| (Finset.Icc 1 ⌊x⌋₊ ×ˢ Finset.Icc 1 ⌊x⌋₊).filter
+    fun (a, b) ↦ IsAmicable a b
 
 /-- **Erdos Problem 830, Part 1**
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$. Are there

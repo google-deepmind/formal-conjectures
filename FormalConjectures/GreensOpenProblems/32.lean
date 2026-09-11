@@ -116,10 +116,14 @@ theorem green_32.variants.szemeredi_regime :
 /--
 In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
 Bohr sets [Gr24].
+
+The lower bound $101 \le \omega(p)$ makes the set size $\lfloor \omega(p) \rfloor$ exceed $100$.
+With only $100 < \omega(p)$, a function with $100 < \omega(p) < 101$ asks for sets of size $100$
+with a gap of length $p - 1$ in some dilate, which is impossible.
 -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.dirichlet_regime :
-    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 100 < ω p ∧ ω p ≤ c * Real.log p) →
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 101 ≤ ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by
   sorry
 

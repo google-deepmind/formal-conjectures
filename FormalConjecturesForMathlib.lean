@@ -27,6 +27,7 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
@@ -69,6 +70,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cvetkovic
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CycleRank
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Decomposition
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degeneracy
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
@@ -129,6 +131,7 @@ public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
+public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
@@ -161,6 +164,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Primitive
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
+public import FormalConjecturesForMathlib.NumberTheory.WieferichPrime
 public import FormalConjecturesForMathlib.Order.Bounds.Basic
 public import FormalConjecturesForMathlib.Order.Filter.Cofinite
 public import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
