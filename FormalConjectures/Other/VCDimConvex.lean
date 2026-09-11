@@ -73,10 +73,19 @@ $\mathrm{VC}_n$ dimension at most $d$. -/
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
-/-- If $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has $\mathrm{VC}_n$ dimension at most 1.
--/
-@[category research open, AMS 5 52]
-lemma hasAddVCNDimAtMost_n_one_of_convex_rn_add_one {n : ℕ} (hn : 2 ≤ n) {C : Set (Fin (n + 1) → ℝ)}
-    (hC : Convex ℝ C) : HasAddVCNDimAtMost C n 1 := sorry
+/-- Is it true that, if $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has
+$\mathrm{VC}_n$ dimension at most 1?
+
+The answer is no: the counterexample to the $n = 2$ case recorded in
+`hasAddVCNDimAtMost_two_one_of_convex_r3` disproves the universal statement. -/
+@[category research solved, AMS 5 52]
+lemma hasAddVCNDimAtMost_n_one_of_convex_rn_add_one :
+    answer(False) ↔ ∀ {n : ℕ}, 2 ≤ n → ∀ {C : Set (EuclideanSpace ℝ (Fin (n + 1)))},
+      Convex ℝ C → HasAddVCNDimAtMost C n 1 := by
+  constructor
+  · simp
+  · intro h
+    exact hasAddVCNDimAtMost_two_one_of_convex_r3 fun {C} hC ↦
+      h (n := 2) (C := C) (by norm_num) hC
 
 end VCDimConvex
