@@ -39,12 +39,12 @@ namespace Constant7a
 open Real ENNReal Set NNReal
 
 /-- The irrationality exponent of a real number. -/
-noncomputable def irrationalityExponent : ℝ → ℝ≥0∞ :=
-  fun x ↦ sSup ((↑) '' {p : ℝ≥0 | LiouvilleWith p x})
+noncomputable def irrationalityExponent (x : ℝ) : ℝ≥0∞ :=
+  sSup ((↑) '' {p : ℝ≥0 | LiouvilleWith p x})
 
 /-- The irrationality exponent of a rational number is one. -/
-@[category textbook, AMS 11]
-theorem irrationalityExponent_of_rational (x : ℚ) : irrationalityExponent x = 1 := by
+@[category API, AMS 11]
+theorem irrationalityExponent_ratCast (x : ℚ) : irrationalityExponent x = 1 := by
   unfold irrationalityExponent
   apply le_antisymm
   · simp only [sSup_le_iff, mem_image, mem_ofPred_eq, forall_exists_index, and_imp,
@@ -80,7 +80,7 @@ theorem le_irrationalityExponent_iff (x : ℝ) (y : ℝ≥0∞) :
     · rwa [ENNReal.coe_toNNReal (by grind)]
 
 @[category API, AMS 11]
-theorem irrationalityExponent_top_iff (x : ℝ) : irrationalityExponent x  = ⊤ ↔ Liouville x := by
+theorem irrationalityExponent_eq_top_iff (x : ℝ) : irrationalityExponent x = ⊤ ↔ Liouville x := by
   simp_rw [← ENNReal.not_lt_top, not_lt, le_irrationalityExponent_iff, ← forall_liouvilleWith_iff,
     coe_lt_top, forall_const]
   exact ⟨fun h p ↦ (h p.toNNReal).mono <| le_coe_toNNReal p, fun h z ↦ h z⟩
@@ -131,7 +131,7 @@ theorem c7a_upper_bound : C7a < 7.103205334138 := by
 
 /-- Can the current best upper bound be improved? -/
 @[category research open, AMS 11]
-theorem c7a_upper_bound_improved : answer(sorry) ↔ C7a < 7.103205334136 := by
+theorem c7a_upper_bound_improved : answer(sorry) ↔ C7a < 7.103205334137 := by
   sorry
 
 end Constant7a

@@ -24,6 +24,8 @@ import FormalConjecturesUtil
 - [D1842] Dirichlet, L. G. P., *Verallgemeinerung eines Satzes aus der Lehre von den
   Kettenbrüchen nebst einigen Anwendungen auf die Theorie der Zahlen*. Sitzungsberichte der
   Preussischen Akademie der Wissenschaften (1842), 93–95.
+- [C1976] Chudnovsky, G. V., *Algebraic independence of constants connected with the exponential
+  and the elliptic functions*. Dokl. Akad. Nauk Ukrain. SSR Ser. A 1976, no. 8, 698–701.
 - [Bru2002] Bruiltet, S., [*D'une mesure d'approximation simultanée à une mesure
   d'irrationalité :
   le cas de $\Gamma(1/4)$ et $\Gamma(1/3)$*](https://doi.org/10.4064/aa104-3-3).
@@ -38,11 +40,16 @@ open ENNReal
 noncomputable def C7b : ℝ≥0∞ :=
   Constant7a.irrationalityExponent (Real.Gamma (1 / 4))
 
-/-- The first and current best known lower bound, given by Dirichlet's theorem [D1842]. It applies
-because $\Gamma(1/4)$ is irrational. -/
-@[category textbook, AMS 11 33]
-theorem c7b_lower_bound : 2 ≤ C7b := by
+/-- $\Gamma(1/4)$ is irrational, as proven in [C1976]. -/
+@[category research solved, AMS 11 33]
+theorem irrational_gamma_one_div_four : Irrational (Real.Gamma (1 / 4)) := by
   sorry
+
+/-- The first and current best known lower bound, given by Dirichlet's theorem [D1842]. It applies
+because $\Gamma(1/4)$ is irrational by Chudnovsky's theorem [C1976]. -/
+@[category research solved, AMS 11 33]
+theorem c7b_lower_bound : 2 ≤ C7b :=
+  Constant7a.two_le_irrationalityExponent irrational_gamma_one_div_four
 
 /-- Can the current best lower bound be improved? -/
 @[category research open, AMS 11 33]
