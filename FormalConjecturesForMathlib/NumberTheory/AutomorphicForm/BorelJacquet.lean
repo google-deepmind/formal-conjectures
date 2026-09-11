@@ -29,9 +29,12 @@ public import Mathlib.Topology.LocallyConstant.Basic
 /-!
 # Automorphic forms in the sense of Borel-Jacquet
 
-Borel and Jacquet's definition (Corvallis) of an automorphic form, formalised for
-`G = GL n / ℚ` with maximal compact subgroup `K = O n ℝ`, in the shape Buzzard states it for
-`GL₂`. Writing `G(𝔸) = G(𝔸_f) × G(ℝ)`, where `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, ℚ]` is the points of
+*Borel-Jacquet* means the definition of an automorphic form given by Armand Borel and Hervé
+Jacquet in their article in the Corvallis proceedings (the first reference below) — the
+standard adelic definition. It is formalised here for `G = GL n / ℚ` with maximal compact
+subgroup `K = O n ℝ`, in the shape Buzzard states it for `GL₂`.
+
+Writing `G(𝔸) = G(𝔸_f) × G(ℝ)`, where `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, ℚ]` is the points of
 `GL n` in the finite adeles of `ℚ`, an automorphic form is a smooth `f : G(𝔸) → ℂ` such that
 
 * (a) `f (γ x) = f x` for all `γ ∈ G(ℚ)`, embedded diagonally;
@@ -99,14 +102,15 @@ one ideal annihilating every slice `y ↦ f (x, y)` at once, the finite variable
 spectator.
 
 *References:*
- - A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
-   forms, representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33 (1979), §4
- - K. Buzzard, *Automorphic forms for GL2 over Q*, §1.
-   https://www.ma.imperial.ac.uk/~buzzard/maths/research/notes/automorphic_forms_for_gl2_over_Q.pdf
- - J. R. Getz and H. Hahn, *An Introduction to Automorphic Representations*, GTM 300 (2024),
-   §6.2 and §6.3; in the numbering of that text, Definitions 6.1 (moderate growth),
-   6.2 (`Z(𝔤)`-finiteness), 6.4 (adelic moderate growth) and 6.5 (adelic automorphic form).
-   https://sites.duke.edu/jgetz/files/2022/04/Graduate_Text.pdf
+- A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
+  Forms, Representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33, Part 1,
+  Amer. Math. Soc. (1979), 189–207; §4.
+- K. Buzzard, *Automorphic forms for GL2 over Q*, §1.
+  https://www.ma.imperial.ac.uk/~buzzard/maths/research/notes/automorphic_forms_for_gl2_over_Q.pdf
+- J. R. Getz and H. Hahn, *An Introduction to Automorphic Representations*, GTM 300, Springer
+  (2024), §6.2 and §6.3; in the numbering of that text, Definitions 6.1 (moderate growth),
+  6.2 (`Z(𝔤)`-finiteness), 6.4 (adelic moderate growth) and 6.5 (adelic automorphic form).
+  https://sites.duke.edu/jgetz/files/2022/04/Graduate_Text.pdf
 -/
 
 namespace AutomorphicForm

@@ -33,7 +33,8 @@ public import Mathlib.Topology.Instances.Matrix
 The `C^∞` functions on `GL n ℝ` and the action on them of `𝔤𝔩 n ℝ` and of its
 complexification `𝔤𝔩 n ℂ` by left invariant differential operators. This is the analytic
 machinery behind condition (c) in the Borel-Jacquet definition of an automorphic form; see
-`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition.
+`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition,
+and Borel and Jacquet's Corvallis article, the reference below, for its source.
 
 ## Main declarations
 
@@ -69,6 +70,11 @@ instances while its topology is global, so instance search cannot assemble
 instance term typechecks, and the second-derivative lemmas behind the product rule need that
 instance as an argument. Instantiating an abstract lemma supplies its instance arguments
 instead of searching for them.
+
+*References:*
+- A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
+  Forms, Representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33, Part 1,
+  Amer. Math. Soc. (1979), 189–207; §4.
 -/
 
 open scoped ContDiff

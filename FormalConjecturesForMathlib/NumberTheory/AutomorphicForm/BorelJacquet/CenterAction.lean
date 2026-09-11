@@ -28,7 +28,8 @@ The universal enveloping algebra `U(𝔤𝔩 n ℂ)` of the complexified Lie alg
 the action of its centre on the complex-valued `C^∞` functions on `GL n ℝ` by left invariant
 differential operators. This is the action that condition (c) in the Borel-Jacquet definition
 of an automorphic form refers to; see
-`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition.
+`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition,
+and Borel and Jacquet's Corvallis article, the reference below, for its source.
 
 ## Main declarations
 
@@ -41,6 +42,11 @@ All in the namespace `Matrix.GeneralLinearGroup`:
 * `constantsCharacter`: the character by which the centre acts on the line of constant
   functions; its kernel is an ideal of finite codimension annihilating the constants, which
   gives condition (c) for constant automorphic forms.
+
+*References:*
+- A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
+  Forms, Representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33, Part 1,
+  Amer. Math. Soc. (1979), 189–207; §4.
 -/
 
 namespace Matrix.GeneralLinearGroup

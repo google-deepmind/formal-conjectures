@@ -30,7 +30,8 @@ public import Mathlib.Topology.Instances.Matrix
 
 The subgroups of `G(𝔸) = G(𝔸_f) × G(ℝ)`, for `G = GL n / ℚ`, that the Borel-Jacquet
 definition of an automorphic form quantifies over; see
-`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition.
+`FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet` for that definition,
+and Borel and Jacquet's Corvallis article, the reference below, for its source.
 
 ## Main declarations
 
@@ -50,6 +51,11 @@ All in the namespace `Matrix.GeneralLinearGroup`:
 Compactness of `orthogonalSubgroup n` and its maximality (Cartan-Iwasawa-Malcev, which also
 makes it unique up to conjugacy) are asserted in its docstring but not formalised; of
 compactness, the boundedness half is proved (`abs_coe_le_one_of_mem_orthogonalSubgroup`).
+
+*References:*
+- A. Borel and H. Jacquet, *Automorphic forms and automorphic representations*, in Automorphic
+  Forms, Representations and L-functions (Corvallis), Proc. Sympos. Pure Math. 33, Part 1,
+  Amer. Math. Soc. (1979), 189–207; §4.
 -/
 
 namespace Matrix.GeneralLinearGroup
