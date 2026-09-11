@@ -53,24 +53,20 @@ theorem Finite.Equation255_not_implies_Equation677 :
   ⟨Fin 3, ⟨![![1, 2, 0], ![2, 0, 1], ![0, 1, 2]]⟩, Finite.intro (Fintype.equivFin _),
     fun x ↦ by fin_cases x <;> rfl, of_decide_eq_false rfl⟩
 
-/-- The negation of `Finite.Equation677_implies_Equation255`.
+/-- **Equational Theories, Problem 8.1.** Does Equation 677 imply Equation 255 in every finite
+magma? The project tentatively conjectures that the answer is no; a false answer is equivalent to
+the existence of a finite countermodel satisfying Equation 677 but not Equation 255.
 
-Probably this is true. It would be a stronger form of
-`Equation677_not_implies_Equation255`.
+This is deliberately a single `answer(sorry)` question rather than a pair of theorems. The
+existential countermodel and the universal implication are logical negations of each other, so
+declaring both as `theorem`s would assert a proposition and its negation simultaneously; the
+neutral form records the open problem without committing to either side.
 
-Discussion thread here:
+Discussion thread:
 https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/FINITE.3A.20677.20-.3E.20255 -/
 @[category research open, AMS 8]
-theorem Finite.Equation677_not_implies_Equation255 :
-    ∃ (G : Type) (_ : Magma G), Finite G ∧ Equation677 G ∧ ¬ Equation255 G := by
-  sorry
-
-/-- The negation of `Finite.Equation677_not_implies_Equation255`.
-
-Probably this is false. -/
-@[category research open, AMS 8]
-theorem Finite.Equation677_implies_Equation255 (G : Type) [Magma G] [Finite G]
-    (h : Equation677 G) : Equation255 G := by
+theorem Finite.Equation677_implies_Equation255 :
+    answer(sorry) ↔ ∀ (G : Type) (_ : Magma G), Finite G → Equation677 G → Equation255 G := by
   sorry
 
 end EquationalTheories_677_255
