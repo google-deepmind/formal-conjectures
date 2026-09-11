@@ -43,6 +43,13 @@ $(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *2-division
 
 *References:*
 - [LMFDB](https://beta.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
+- [Lor11] Lorenzini, D., *Torsion and Tamagawa numbers*, Ann. Inst. Fourier 61 (2011), no. 5,
+  1995–2037, [doi:10.5802/aif.2664](https://doi.org/10.5802/aif.2664). Remark 2.6 (the
+  Tamagawa number $c_\infty$ at the place at infinity).
+- [Mil11] Miller, R. L., *Proving the Birch and Swinnerton-Dyer conjecture for specific elliptic
+  curves of analytic rank zero and one*, LMS J. Comput. Math. 14 (2011), 327–350,
+  [arXiv:1010.2431](https://arxiv.org/abs/1010.2431). §1 (the real period and the Birch and
+  Swinnerton-Dyer formula).
 - [Sil09] Silverman, J. H., *The Arithmetic of Elliptic Curves*, 2nd ed., Graduate Texts in
   Mathematics 106, Springer, 2009. Chapter III §1 (Weierstrass equations, the invariant
   differential) and Chapter VI (elliptic curves over $\mathbb{C}$).
@@ -61,8 +68,14 @@ def realPeriodIntegrand (x : ℝ) : ℝ := (√(W.Ψ₂Sq.eval x))⁻¹
 
 /-- **The real period as an integral**: the integral of $|\omega|$ over the real locus
 $E(\mathbb{R})$, that is $2 \int_{\mathbb{R}} dx / \sqrt{F(x)}$ with the integrand taken to be
-$0$ where $F \leq 0$. This is the real period of the Birch and Swinnerton-Dyer conjecture, in the
-convention that absorbs the real Tamagawa number. -/
+$0$ where $F \leq 0$.
+
+This is the least positive real period times the number $c_\infty$ of connected components of
+$E(\mathbb{R})$, which is $1$ or $2$ [Mil11, §1]. This $c_\infty$ is the Tamagawa number at the
+place at infinity [Lor11, Remark 2.6]. When `W` is the base change of a global minimal model of
+an elliptic curve over $\mathbb{Q}$, `realPeriod W` is the period $\Omega(E)$ of the Birch and
+Swinnerton-Dyer formula in [Mil11, §1]. That formula has no separate factor $c_\infty$, which is
+the sense in which this period absorbs the Tamagawa number at infinity. -/
 def realPeriod : ℝ := 2 * ∫ x, W.realPeriodIntegrand x
 
 end Real
