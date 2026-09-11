@@ -1237,7 +1237,7 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   overflow-wrap: anywhere;
 }
 
-#contribution-evidence pre {
+.theorem-detail__section pre {
   overflow-x: auto;
 }
 
