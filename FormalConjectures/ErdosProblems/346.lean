@@ -95,11 +95,13 @@ theorem erdos_346.variants.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
   sorry
 
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
-satisfying the aforementioned properties. -/
+satisfying the aforementioned properties: there is a strictly increasing sequence `A` that is
+strongly complete and not complete whenever infinitely many terms are removed from it, but with
+$\liminf_n A(n+1)/A(n) = 1$ and $\limsup_n A(n+1)/A(n) = \infty$. -/
 @[category research solved, AMS 11]
-theorem erdos_346.variants.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
+theorem erdos_346.variants.example : ∃ A : ℕ → ℕ, StrictMono A ∧ IsAddStronglyCompleteNatSeq A ∧
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
-    liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
+    liminf (fun n => A (n + 1) / (A n : ℝ)) atTop = 1 ∧
     limsup (fun n => A (n + 1) / (A n : ENNReal)) atTop = ⊤ := by
   sorry
 
