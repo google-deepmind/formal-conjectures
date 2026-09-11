@@ -1232,6 +1232,10 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   }
 }
 
+.theorem-detail__section pre {
+  overflow-x: auto;
+}
+
 /* ---- Verso literate integration ---- */
 .verso-doc-content {
   background: var(--color-bg-alt);
