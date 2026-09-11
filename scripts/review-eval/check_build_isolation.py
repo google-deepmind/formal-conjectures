@@ -22,7 +22,7 @@ from pathlib import Path
 from workspace_server import WorkspaceTools
 
 
-def check(image, output):
+def check(image, output, timeout=60):
     image = subprocess.check_output(
         ["docker", "image", "inspect", image, "--format", "{{.Id}}"], text=True
     ).strip()
@@ -80,7 +80,7 @@ namespace ReviewIsolation
             capture_output=True,
             timeout=30,
         )
-        tools = WorkspaceTools(container, output, module, 30, image, candidate, path)
+        tools = WorkspaceTools(container, output, module, 30, image, candidate, path, timeout)
         results = {}
         results["invalid_candidate"] = tools.build()
         assert results["invalid_candidate"]["exit_code"] == 1
@@ -96,7 +96,7 @@ namespace ReviewIsolation
         # A separately pinned valid candidate still builds. Each call starts from the image.
         valid = output / "valid.lean"
         valid.write_bytes(good)
-        positive = WorkspaceTools(container, output, module, 30, image, valid, path)
+        positive = WorkspaceTools(container, output, module, 30, image, valid, path, timeout)
         positive.counter = tools.counter
         results["valid_candidate"] = positive.build()
         assert results["valid_candidate"]["exit_code"] == 0
@@ -131,5 +131,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--image", required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--timeout", type=int, default=60, help="Per-check seconds, up to 300; increase explicitly for emulated qualification")
     args = parser.parse_args()
-    check(args.image, args.out)
+    check(args.image, args.out, args.timeout)

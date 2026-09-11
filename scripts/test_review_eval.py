@@ -366,7 +366,7 @@ class EvalTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "does not match request"):
                 ev.build_checks({"evidence/tool-002.json": ev.encode(receipt)}, "Example", binding)
 
-    def workspace_tools(self):
+    def workspace_tools(self, timeout=60):
         candidate = self.root / "candidate.lean"
         candidate.write_text("example : True := True.intro\n")
         (self.root / "evidence").mkdir()
@@ -378,6 +378,7 @@ class EvalTest(unittest.TestCase):
             "sha256:" + "a" * 64,
             candidate,
             "FormalConjectures/Example.lean",
+            timeout=timeout,
         )
 
     def test_build_never_reuses_scratch_container_or_mounts(self):
@@ -427,6 +428,23 @@ class EvalTest(unittest.TestCase):
         ):
             tools.build()
         run.assert_not_called()
+
+    def test_container_timeout_is_retained_as_timeout(self):
+        tools = self.workspace_tools()
+        with patch.object(workspace.subprocess, "run",
+                          return_value=subprocess.CompletedProcess([], 124, b"", b"")):
+            receipt = tools.build()
+        self.assertTrue(receipt["timed_out"])
+        check = ev.build_checks({receipt["evidence"]: ev.encode(receipt)}, tools.module, tools.binding)
+        self.assertEqual(check[0]["status"], "error")
+
+    def test_qualification_timeout_keeps_host_and_container_bounds_aligned(self):
+        tools = self.workspace_tools(timeout=180)
+        with patch.object(workspace.subprocess, "run",
+                          return_value=subprocess.CompletedProcess([], 0, b"", b"")) as run:
+            receipt = tools.build()
+        self.assertEqual(receipt["command"][:4], ["timeout", "-k", "2", "180"])
+        self.assertEqual(run.call_args_list[0].kwargs["timeout"], 185)
 
     def test_missing_inputs_leave_a_failure_record_before_model_startup(self):
         manifest = self.run_root()

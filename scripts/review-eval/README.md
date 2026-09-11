@@ -92,7 +92,10 @@ python3 scripts/review-eval/check_build_isolation.py \
 
 It verifies that a false candidate still fails after the scratch Lake configuration is
 replaced with an empty successful target, and that a valid candidate builds in two fresh
-containers. Keep the output directory with the validation evidence.
+containers. Keep the output directory with the validation evidence. On an emulated
+host, pass `--timeout 180` explicitly if the default 60-second check expires. This
+changes only the qualification command; normal reviewer tools retain their
+60-second bound. A timeout is an execution error, not a rejected Lean statement.
 
 ```sh
 docker build -t fc-review-eval:lean4.33.1 -f scripts/review-eval/Dockerfile .
