@@ -63,13 +63,6 @@ structure Bvas (d : ℕ) where
   unaryRules : List (Fin d → ℤ)
   binaryRules : List (Fin d → ℤ)
 
-instance {d : ℕ} : Primcodable (Bvas d) :=
-  .ofEquiv (List (Fin d → ℤ) × List (Fin d → ℤ) × List (Fin d → ℤ))
-    { toFun := fun b => (b.axioms, b.unaryRules, b.binaryRules)
-      invFun := fun p => ⟨p.1, p.2.1, p.2.2⟩
-      left_inv := fun _ => rfl
-      right_inv := fun _ => rfl }
-
 /-- The reachable configurations of a branching vector addition system. -/
 inductive Bvas.Reachable {d : ℕ} (b : Bvas d) : (Fin d → ℤ) → Prop
   | base {v : Fin d → ℤ} (hmem : v ∈ b.axioms) (hcfg : 0 ≤ v) : b.Reachable v
@@ -79,18 +72,72 @@ inductive Bvas.Reachable {d : ℕ} (b : Bvas d) : (Fin d → ℤ) → Prop
       (hr : r ∈ b.binaryRules) (hcfg : 0 ≤ w) (hw : w = v₁ + v₂ + r) : b.Reachable w
 
 /--
+The vector in `ℤ^d` whose `i`-th coordinate is the `i`-th entry of the list `l`, or `0` if `l`
+has fewer than `i + 1` entries. Used to encode the inputs of the reachability problem.
+-/
+def vecOfList (d : ℕ) (l : List ℤ) : Fin d → ℤ := fun i => l.getD i 0
+
+@[category API, AMS 3 68]
+theorem vecOfList_ofFn {d : ℕ} (v : Fin d → ℤ) : vecOfList d (List.ofFn v) = v := by
+  funext i
+  simp [vecOfList, List.getD_eq_getElem?_getD]
+
+@[category API, AMS 3 68]
+theorem ofFn_vecOfList (d : ℕ) (l : List ℤ) :
+    List.ofFn (vecOfList d l) = (List.range d).map fun i => l.getD i 0 := by
+  rw [List.ofFn_eq_map, ← List.map_coe_finRange_eq_range, List.map_map]
+  rfl
+
+@[category API, AMS 3 68]
+theorem primrec_ofFn_vecOfList : Primrec₂ fun d l => List.ofFn (vecOfList d l) :=
+  (Primrec.list_map (Primrec.list_range.comp Primrec.fst)
+    ((Primrec.list_getD 0).comp₂ (Primrec.snd.comp₂ Primrec₂.left) Primrec₂.right)).of_eq
+      fun ⟨d, l⟩ => (ofFn_vecOfList d l).symm
+
+/--
+An input of the reachability problem, that is, a dimension `d`, a branching vector addition
+system of dimension `d` and a target vector in `ℤ^d`, is encoded by `d` together with the lists
+of entries of the axioms, of the rules and of the target.
+-/
+instance : Primcodable (Σ d : ℕ, Bvas d × (Fin d → ℤ)) :=
+  Primcodable.ofLeftInverse
+    (fun p => (p.1, p.2.1.axioms.map List.ofFn, p.2.1.unaryRules.map List.ofFn,
+      p.2.1.binaryRules.map List.ofFn, List.ofFn p.2.2))
+    (fun q => ⟨q.1, ⟨q.2.1.map (vecOfList q.1), q.2.2.1.map (vecOfList q.1),
+      q.2.2.2.1.map (vecOfList q.1)⟩, vecOfList q.1 q.2.2.2.2⟩)
+    (fun p => by simp [List.map_map, Function.comp_def, vecOfList_ofFn])
+    (by
+      have h : Primrec fun q : ℕ × List (List ℤ) × List (List ℤ) × List (List ℤ) × List ℤ =>
+          (q.1, q.2.1.map fun l => List.ofFn (vecOfList q.1 l),
+            q.2.2.1.map fun l => List.ofFn (vecOfList q.1 l),
+            q.2.2.2.1.map fun l => List.ofFn (vecOfList q.1 l),
+            List.ofFn (vecOfList q.1 q.2.2.2.2)) :=
+        Primrec.pair Primrec.fst <| Primrec.pair (Primrec.list_map (Primrec.fst.comp Primrec.snd)
+            (primrec_ofFn_vecOfList.comp₂ (Primrec.fst.comp₂ Primrec₂.left) Primrec₂.right)) <|
+          Primrec.pair (Primrec.list_map (Primrec.fst.comp <| Primrec.snd.comp Primrec.snd)
+            (primrec_ofFn_vecOfList.comp₂ (Primrec.fst.comp₂ Primrec₂.left) Primrec₂.right)) <|
+          Primrec.pair
+            (Primrec.list_map
+              (Primrec.fst.comp <| Primrec.snd.comp <| Primrec.snd.comp Primrec.snd)
+              (primrec_ofFn_vecOfList.comp₂ (Primrec.fst.comp₂ Primrec₂.left) Primrec₂.right))
+            (primrec_ofFn_vecOfList.comp Primrec.fst
+              (Primrec.snd.comp <| Primrec.snd.comp <| Primrec.snd.comp Primrec.snd))
+      exact h.of_eq fun q => by simp [List.map_map, Function.comp_def])
+
+/--
 The reachability problem for branching vector addition systems is decidable.
 
-That is, is the predicate taking a branching vector addition system `b` together
-with a target vector `t` and returning whether `t` is reachable in `b` is a
-computable predicate.
+That is, the predicate taking a dimension `d`, a branching vector addition system `b` of
+dimension `d` and a target vector `t ∈ ℤ^d`, and returning whether `t` is reachable in `b`, is
+a computable predicate. Note that the dimension is part of the input: a single algorithm must
+work for all dimensions.
 
 As of August 2026, the solution is quite recently announced and is not
 yet peer-reviewed.
 -/
 @[category research solved, AMS 3 68]
 theorem reachability_decidable :
-    ∀ {d : ℕ}, ComputablePred fun p : Bvas d × (Fin d → ℤ) => p.1.Reachable p.2 := by
+    ComputablePred fun p : Σ d : ℕ, Bvas d × (Fin d → ℤ) => p.2.1.Reachable p.2.2 := by
   sorry
 
 /-- Every axiom that is non-negative is reachable. -/
