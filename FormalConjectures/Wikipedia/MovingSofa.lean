@@ -115,8 +115,13 @@ The rigid motion that translates by $p$ and then rotates counterclockwise by $\a
 Note that [Ge92] used this definition while [Ro18] used rotation first and then translation.
 -/
 def rotateTranslate (α : Real.Angle) (p : ℝ²) : E(2) :=
-  (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
-    |>.trans (AffineIsometryEquiv.vaddConst ℝ p)
+  (AffineIsometryEquiv.vaddConst ℝ p).trans
+    (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
+
+/-- `rotateTranslate α p` sends $q$ to $R_\alpha(q + p)$: the translation is applied first. -/
+@[category test, AMS 49]
+theorem rotateTranslate_apply (α : Real.Angle) (p q : ℝ²) :
+    rotateTranslate α p q = EuclideanGeometry.o.rotation α (q + p) := rfl
 
 /--
 The sofa according to a rotation path $p : [0, \pi/2] \to \mathbb{R}^2$ as in [Ge92] is the
