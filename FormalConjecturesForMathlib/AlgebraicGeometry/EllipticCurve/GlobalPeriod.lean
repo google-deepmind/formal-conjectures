@@ -15,10 +15,15 @@ limitations under the License.
 -/
 module
 
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Mathlib.Analysis.SpecialFunctions.Sqrt
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Complex
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.RingTheory.Norm.Defs
 
 @[expose] public noncomputable section
 
@@ -41,11 +46,23 @@ $(2y + a_1 x + a_3)^2 = 4x^3 + b_2 x^2 + 2 b_4 x + b_6 =: F(x)$, the *2-division
   $\Omega_{\mathbb{C}} = \int_{E(\mathbb{C})} |\omega \wedge \bar\omega|
   = 4 \int_{\mathbb{C}} dA(x) / |F(x)|$ (`WeierstrassCurve.complexPeriod`).
 
+Over a number field $K$ these combine into a single global invariant. The archimedean period
+$\Omega_\infty(E)$ is the product of the local periods over the infinite places, taking the real
+period at a real place and the complex period at a complex one. It depends on the chosen
+Weierstrass equation, so the *period*
+$\Omega(E) = \Omega_\infty(E)(|N_{K/\mathbb{Q}}(\Delta_E)| / N(\mathfrak{D}_{E/K}))^{1/12}$
+corrects it by the minimal discriminant ideal (`WeierstrassCurve.period`). This is the factor that
+appears in the Birch and Swinnerton-Dyer conjecture, and it is defined even when $E$ has no
+globally minimal equation.
+
 *References:*
 - [LMFDB](https://beta.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
 - [Sil09] Silverman, J. H., *The Arithmetic of Elliptic Curves*, 2nd ed., Graduate Texts in
   Mathematics 106, Springer, 2009. Chapter III §1 (Weierstrass equations, the invariant
   differential) and Chapter VI (elliptic curves over $\mathbb{C}$).
+- [DD2010] Dokchitser, T. and Dokchitser, V., "On the Birch-Swinnerton-Dyer quotients modulo
+  squares", Annals of Mathematics 172 (2010), 567-596, §2.1 and Conjecture 2.1,
+  [PDF](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
 -/
 
 namespace WeierstrassCurve
@@ -80,5 +97,18 @@ def complexPeriodIntegrand (x : ℂ) : ℝ := ‖W.Ψ₂Sq.eval x‖⁻¹
 def complexPeriod : ℝ := 4 * ∫ x : ℂ, W.complexPeriodIntegrand x
 
 end Complex
+
+section NumberField
+
+open scoped Classical in
+/-- The *global period* of the real and complex period integrals at all infinite places, up to a
+normalisation factor in terms of minimal discriminants. See [DD2010], §2.1. -/
+def period {K : Type*} [Field K] [NumberField K] (E : WeierstrassCurve K) : ℝ :=
+  (|(Algebra.norm ℚ E.Δ : ℝ)| / E.minimalDiscriminantIdeal.absNorm) ^ (1 / 12 : ℝ) *
+    ∏ v : NumberField.InfinitePlace K,
+      if hv : v.IsReal then (E.map <| NumberField.InfinitePlace.embedding_of_isReal hv).realPeriod
+        else (E.map v.embedding).complexPeriod
+
+end NumberField
 
 end WeierstrassCurve

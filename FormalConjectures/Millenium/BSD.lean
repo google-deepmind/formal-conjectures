@@ -15,11 +15,13 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import FormalConjectures.Wikipedia.HasseWeil
 
 /-!
 # The Birch and Swinnerton-Dyer (BSD) Conjecture
 
-*References:*
+## References
+
 - [The Clay Institute](https://www.claymath.org/millennium/birch-and-swinnerton-dyer-conjecture/),
   official problem description by Andrew Wiles:
   [claymath.org](https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf)
@@ -37,96 +39,86 @@ import FormalConjecturesUtil
   [discovery.ucl.ac.uk](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
+- [Silverman2009] Joseph H. Silverman. *The Arithmetic of Elliptic Curves*. 2nd ed., Graduate Texts
+  in Mathematics 106, Springer (2009), [doi](https://doi.org/10.1007/978-0-387-09494-6)
+- [DD2010] Tim Dokchitser and Vladimir Dokchitser. "On the Birch-Swinnerton-Dyer quotients
+  modulo squares." Annals of Mathematics 172 (2010), 567-596, Conjecture 2.1,
+  [annals](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
 -/
 
-namespace BSD
+namespace WeierstrassCurve.Affine
 
-open scoped Topology
+open Projective HasseWeil NumberField
 
-section NumberField
-
-variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
-
-/-- `L` is an $L$-function of `E`: it is meromorphic on $\mathbb{C}$ and agrees with the
-$L$-series of `E` on $\operatorname{Re} s > 3/2$, where that series converges.
-
-The $L$-function is expected to be holomorphic, and `IsHolomorphicLFunction` is that stronger
-notion, but meromorphy is all that is needed to state the Birch and Swinnerton-Dyer conjecture.
-[Gross2011] states the conjecture under this hypothesis, and we take that form as authoritative. -/
-def IsLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
-
-/-- `L` is a holomorphic $L$-function of `E`: it is entire and agrees with the $L$-series of `E`
-on $\operatorname{Re} s > 3/2$. This is the continuation Hasse and Weil conjectured. -/
-def IsHolomorphicLFunction (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Differentiable ℂ L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
-
-@[category API, AMS 11 14]
-theorem IsHolomorphicLFunction.isLFunction {L : ℂ → ℂ} (hL : IsHolomorphicLFunction E L) :
-    IsLFunction E L :=
-  ⟨fun z ↦ (hL.1.analyticAt z).meromorphicAt, hL.2⟩
-
-/-- An $L$-function is determined by the $L$-series it continues: two of them agree on a
-punctured neighbourhood of every point. They need not agree at a pole. -/
-@[category API, AMS 11 14]
-theorem IsLFunction.unique {L L' : ℂ → ℂ} (hL : IsLFunction E L) (hL' : IsLFunction E L')
-    (x : ℂ) : L =ᶠ[𝓝[≠] x] L' := by
-  have h2 : meromorphicOrderAt (L - L') 2 = ⊤ := meromorphicOrderAt_eq_top_iff.2 <|
-    Filter.eventually_of_mem (nhdsWithin_le_nhds <| (Complex.isOpen_re_gt (3 / 2)).mem_nhds
-      (by norm_num)) fun s hs ↦ sub_eq_zero.2 ((hL.2 s hs).trans (hL'.2 s hs).symm)
-  have key : meromorphicOrderAt (L - L') x = ⊤ := not_not.1 fun hx ↦
-    (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
-  exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs ↦ sub_eq_zero.1 hs
-
-/-- **Weak Hasse--Weil conjecture**: the $L$-series of an elliptic curve over a number field has a
-meromorphic continuation to the whole plane. This is weaker than what Hasse and Weil conjectured,
-and is the form the Birch and Swinnerton-Dyer conjecture is stated under. -/
-@[category research open, AMS 11 14]
-theorem exists_isLFunction (E : WeierstrassCurve K) [E.IsElliptic] : ∃ L, IsLFunction E L := by
+/-- **Mordell--Weil theorem**: the rational points of an elliptic curve over a number field form
+a finitely generated group. See [Silverman2009], Theorem VIII.6.7. -/
+@[instance, category textbook, AMS 11 14]
+theorem Point.fg {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
+    [E.IsElliptic] : AddGroup.FG E.Point := by
   sorry
 
-/-- **Hasse--Weil conjecture**: the $L$-series of an elliptic curve over a number field has a
-holomorphic continuation to the whole plane. -/
+namespace NumberField
+
+variable {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
+
+/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field `K`: for every elliptic
+curve `E` over `K`, the L-series of `E` has a meromorphic continuation whose order at `s = 1` is
+`rk E(K)`. Following [DD2010], Conjecture 2.1 (1), the continuation is asserted rather than assumed,
+so this implies `HasseWeil.exists_hasMeromorphicContinuation`. [Tate1966], Conjecture (A) and
+[Gross2011], Conjecture 2.10 instead take a continuation as given and state only the order, and
+[Gross2011] needs one only near `s = 1`. By `HasseWeil.HasMeromorphicContinuation.unique` the order
+does not depend on which continuation is taken, so the two readings differ exactly by the
+Hasse--Weil conjecture. -/
+def WeakBSD : Prop :=
+  ∃ L : ℂ → ℂ, HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
+
+/-- The leading coefficient predicted by BSD over a number field, using the non-normalised regulator
+and dividing by the square root of the absolute field discriminant. -/
+noncomputable def leadingCoefficient [E.IsElliptic] : ℝ :=
+  E.period * Point.regulator E * Nat.card E.tateShafarevich * E.toProjective.tamagawaProduct /
+      (|(discr K : ℝ)|.sqrt * (Nat.card <| AddCommGroup.torsion E.Point) ^ 2 : ℝ)
+
+/-- The **strong Birch and Swinnerton-Dyer conjecture** over a number field `K`: for every elliptic
+curve `E` over `K`, a meromorphic continuation of its L-series has order `rk E(K)` at `s = 1`, the
+Tate--Shafarevich group is finite, and the leading coefficient of its L-series is
+`L⁽ʳ⁾(E, 1) / r! = Ω(E)·Reg(E)·|Sha(E)|·∏ᵥcᵥ / √|Δ(K)|·|E(K)ₜₒᵣₛ|²`. See [DD2010], Conjecture 2.1. -/
+def StrongBSD [E.IsElliptic] : Prop := ∃ L : ℂ → ℂ,
+  HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
+    Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
+
+/-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
+statement on its own is [Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
-theorem exists_isHolomorphicLFunction (E : WeierstrassCurve K) [E.IsElliptic] :
-    ∃ L, IsHolomorphicLFunction E L := by
+theorem weakBSD [E.IsElliptic] : WeakBSD E := by
   sorry
+
+/-- The **strong Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1). -/
+@[category research open, AMS 11 14]
+theorem strongBSD [E.IsElliptic] : StrongBSD E := by
+  sorry
+
+/-- Strong BSD implies weak BSD, since the meromorphic continuation witnessing the strong conjecture
+already has the predicted order at `s = 1`. -/
+@[category API, AMS 11 14]
+theorem StrongBSD.weakBSD [E.IsElliptic] (h : StrongBSD E) : WeakBSD E :=
+  ⟨h.choose, h.choose_spec.left, h.choose_spec.right.left⟩
 
 end NumberField
 
-section Rat
+namespace Rat
 
-variable (E : WeierstrassCurve ℚ) [E.IsElliptic]
+variable (E : Affine ℚ) [E.IsElliptic]
 
-/-- The **Hasse--Weil conjecture** over $\mathbb{Q}$, a consequence of the modularity theorem: the
-$L$-series of an elliptic curve over $\mathbb{Q}$ has a holomorphic continuation. -/
-@[category research solved, AMS 11 14]
-theorem exists_isHolomorphicLFunction_rat : ∃ L, IsHolomorphicLFunction E L := by
+/-- The **weak Birch and Swinnerton-Dyer conjecture** over `ℚ`, a Clay Millennium Prize Problem. -/
+@[category research open, AMS 11 14]
+theorem weakBSD : NumberField.WeakBSD E := by
+  sorry
+
+/-- The **strong Birch and Swinnerton-Dyer conjecture** over `ℚ`. -/
+@[category research open, AMS 11 14]
+theorem strongBSD : NumberField.StrongBSD E := by
   sorry
 
 end Rat
 
-/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
-curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
-$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$.
-
-The rank is `AddCommGroup.freeRank`, which requires $E(K)$ to be finitely generated. That is the
-Mordell--Weil theorem, which Mathlib does not have and which this repository states as a `sorry`
-in `EllipticCurveRank.mordell_weil`, so it appears here as a hypothesis. -/
-def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : WeierstrassCurve K) [E.IsElliptic] [AddGroup.FG E.toAffine.Point] (L : ℂ → ℂ),
-    IsLFunction E L → meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
-
-/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
-@[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
-    [DecidableEq K] : Weak K := by
-  sorry
-
-/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
-Problem. -/
-@[category research open, AMS 11 14]
-theorem weak_birch_swinnerton_dyer_conjecture_rat : Weak ℚ := by
-  sorry
-
-end BSD
+end WeierstrassCurve.Affine
