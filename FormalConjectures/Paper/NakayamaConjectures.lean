@@ -183,8 +183,8 @@ The Nakayama Conjecture is equivalent to the conjunction of the two Tachikawa Co
 -/
 @[category API, AMS 16 18]
 lemma tc1_and_tc2_iff_nc :
-    type_of% (tc1 (R := R) (A := A)) ∧ type_of% (tc2 (R := R) (A := A)) ↔
-      type_of% (nc (R := R) (A := A)) := by
+    (type_of% @tc1 ∧ type_of% @tc2) ↔
+      type_of% @nc := by
   sorry
 
 end NakayamaConjectures
