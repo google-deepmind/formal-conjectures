@@ -33,15 +33,16 @@ open Filter Topology
 namespace Erdos1000
 
 /--
-Given an infinite sequence of integers $A = \{n_1 < n_2 < \cdots\}$, `phiSeq n k` is
-$\phi_A(k)$: the number of $1\leq m\leq n_k$ such that
+Given an infinite sequence of positive integers $A = \{n_1 < n_2 < \cdots\}$, `phiSeq n k` is
+$\phi_A(k)$: the number of $1\leq m\leq n_k$ such that $\frac{m}{n_k}$ cannot be written as
+$\frac{b}{n_j}$ for any integer $b$ and any $1\leq j<k$; equivalently,
 $$
-\frac{n_k}{(m,n_k)}\neq n_j
+\frac{n_k}{(m,n_k)}\nmid n_j
 $$
 for all $1\leq j<k$.
 -/
 def phiSeq (n : ℕ → ℕ) (k : ℕ) : ℕ :=
-  ((Finset.Icc 1 (n k)).filter fun m => ∀ j < k, n k / Nat.gcd m (n k) ≠ n j).card
+  ((Finset.Icc 1 (n k)).filter fun m => ∀ j < k, ¬ (n k / Nat.gcd m (n k)) ∣ n j).card
 
 /--
 The average $\frac{1}{N}\sum_{k\leq N}\frac{\phi_A(k)}{n_k}$.
@@ -50,11 +51,11 @@ noncomputable def phiAvg (n : ℕ → ℕ) (N : ℕ) : ℝ :=
   (∑ k ∈ Finset.range N, (phiSeq n k : ℝ) / (n k : ℝ)) / (N : ℝ)
 
 /--
-Let $A=\{n_1<n_2<\cdots\}$ be an infinite sequence of integers, and let $\phi_A(k)$ count the
-number of $1\leq m\leq n_k$ such that the fraction $\frac{m}{n_k}$ does not have denominator $n_j$
-for $j<k$ when written in lowest form; equivalently,
+Let $A=\{n_1<n_2<\cdots\}$ be an infinite sequence of positive integers, and let $\phi_A(k)$
+count the number of $1\leq m\leq n_k$ such that the fraction $\frac{m}{n_k}$ cannot be written
+as $\frac{b}{n_j}$ for any integer $b$ and any $j<k$; equivalently,
 $$
-\frac{n_k}{(m,n_k)}\neq n_j
+\frac{n_k}{(m,n_k)}\nmid n_j
 $$
 for all $1\leq j<k$.
 
@@ -76,7 +77,8 @@ theorem erdos_1000 : answer(True) ↔
 It is trivial that $\phi_A(k)\geq \phi(n_k)$, where $\phi$ is the Euler totient function.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1000.variants.totient_le (n : ℕ → ℕ) (hn : StrictMono n) (k : ℕ) :
+theorem erdos_1000.variants.totient_le (n : ℕ → ℕ) (hn : StrictMono n) (hn0 : 0 < n 0)
+    (k : ℕ) :
     (n k).totient ≤ phiSeq n k := by
   sorry
 
