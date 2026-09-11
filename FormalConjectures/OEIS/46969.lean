@@ -128,15 +128,17 @@ theorem conjecture1 (n : ℕ) (hn : 2 < n) : (a (a005382 n) / 12).Prime := by
 Conjecture II: if $\frac{a(n)}{12}$ is prime, then $\frac{a(n-1)}{12} - (n-1)$,
 $\frac{a(n)}{12} - n$ and $\frac{a(n+2)}{12} - (n+2)$ are multiples of 6.
 - Lorenzo Sauras Altuzarra, Oct 13 2020
+
+This is false for $n = 236791$.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 2 ≤ n)
-    (h_div : 12 ∣ a n) (h_prime : Nat.Prime (a n / 12))
-    (h_div_prev : 12 ∣ a (n - 1)) (h_div_succ : 12 ∣ a (n + 2)) :
-    6 ∣ ((a (n - 1) / 12 : ℤ) - (n - 1 : ℤ)) ∧
-    6 ∣ ((a n / 12 : ℤ) - (n : ℤ)) ∧
-    6 ∣ ((a (n + 2) / 12 : ℤ) - (n + 2 : ℤ)) := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_a046969_conjecture_2/Submission/Spec.lean#L845"]
+theorem conjecture2 :
+    ¬ ∀ (n : ℕ), 2 ≤ n → 12 ∣ a n → Nat.Prime (a n / 12) →
+      12 ∣ a (n - 1) → 12 ∣ a (n + 2) →
+      6 ∣ ((a (n - 1) / 12 : ℤ) - (n - 1 : ℤ)) ∧
+      6 ∣ ((a n / 12 : ℤ) - (n : ℤ)) ∧
+      6 ∣ ((a (n + 2) / 12 : ℤ) - (n + 2 : ℤ)) := by
   sorry
 
 end OeisA46969
-
