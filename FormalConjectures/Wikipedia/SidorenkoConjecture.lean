@@ -183,12 +183,15 @@ theorem tournament_anti_sidorenko_single_even_degree_tree {V : Type*} [Fintype V
 open scoped Classical in
 /--
 **The $(2,3,4)$-spider tree.**
-A tree composed of three paths of lengths 2, 3, and 4 joined at a single central vertex.
+A tree composed of three paths of lengths 2, 3, and 4 joined at a single central vertex: the
+centre is the unique vertex of degree 3 (every other vertex has degree at most 2), so the tree
+has exactly three leaves, at distances 2, 3 and 4 from the centre.
 -/
 def IsSpider234 {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj] : Prop :=
   T.IsTree ∧ Fintype.card V = 10 ∧
   ∃ (center l₁ l₂ l₃ : V),
     T.degree center = 3 ∧
+    (∀ v, v ≠ center → T.degree v ≤ 2) ∧
     l₁ ≠ l₂ ∧ l₁ ≠ l₃ ∧ l₂ ≠ l₃ ∧
     T.degree l₁ = 1 ∧ T.degree l₂ = 1 ∧ T.degree l₃ = 1 ∧
     ({T.dist center l₁, T.dist center l₂, T.dist center l₃} : Multiset ℕ) = {2, 3, 4}
