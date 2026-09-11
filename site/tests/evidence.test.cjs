@@ -46,3 +46,11 @@ test('related work requires the same repository and reports missing context', ()
   data.work_context.repository='owner/fc';
   assert.match(evidence.render(theorem,data,escape),/#42/);
 });
+
+test('CLI handoff explicitly selects this page catalog and quotes shell arguments', () => {
+  const url = 'https://williamjblair.github.io/formal-conjectures/data/conjectures.json';
+  const html = evidence.render({...theorem,theorem:"Example.name'"},{runs:[],catalog_url:url},escape);
+  assert.ok(html.includes("--catalog-url '"+url+"'"));
+  assert.ok(html.includes("Example.name'\\''"));
+  assert.doesNotMatch(evidence.render(theorem,{runs:[],catalog_url:'javascript:bad'},escape),/conjectures show/);
+});

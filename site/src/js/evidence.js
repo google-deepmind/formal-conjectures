@@ -50,14 +50,19 @@ const FCEvidence = (() => {
       const link = safeURL(pr.url);
       return link ? `<li><a href="${escape(link)}" target="_blank" rel="noopener">#${escape(String(pr.number))}: ${escape(pr.title)}</a></li>` : '';
     }).join('') + '</ul>' : sameRepository ? '<p>No related open PRs in this published queue snapshot.</p>' : '<p>Related work is unavailable for this catalog repository.</p>';
-    const command = `conjectures show '${theorem.theorem.replaceAll("'", "'\\''")}'`;
+    const quote = value => "'" + value.replaceAll("'", "'\\''") + "'";
+    const catalogURL = safeURL(data.catalog_url);
+    const command = catalogURL
+      ? `conjectures show ${quote(theorem.theorem)} --catalog-url ${quote(catalogURL)}`
+      : null;
     const source = data.catalog_source;
     const provenance = source?.repository && source?.commit
       ? `<p>Catalog source: ${escape(source.repository)} at <code>${escape(source.commit)}</code>.</p>`
       : '<p>Catalog source revision is unavailable.</p>';
     const observation = sameRepository && work.observed_at ? `<p>Queue observed: ${escape(work.observed_at)}.</p>` : '';
     return provenance + list + '<p>These results do not change the problem’s mathematical status or indicate maintainer acceptance. A proof result does not transfer to a changed statement.</p>' + queue + observation +
-      `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`;
+      (command ? `<p>Continue locally:</p><pre><code>${escape(command)}\nconjectures status</code></pre>`
+        : '<p>CLI handoff requires a published HTTPS catalog.</p>');
   }
   return {render, records, safeURL};
 })();
