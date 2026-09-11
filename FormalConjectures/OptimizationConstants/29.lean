@@ -18,6 +18,9 @@ import FormalConjecturesUtil
 /-!
 # Tao's Optimization Constant 29 / Kissing number in dimension 5
 
+The kissing number is defined in arbitrary dimension. Exact values in dimensions 3, 4, 8,
+and 24 accompany the bounds for dimension 5.
+
 *References:*
 - [Tao's Optimization Constant 29](https://teorth.github.io/optimizationproblems/constants/29a.html)
 - [KZ1873] Korkine, A.; Zolotareff, G., *Sur les formes quadratiques*.
@@ -30,6 +33,15 @@ import FormalConjecturesUtil
   semidefinite programming*. [Paper](https://ir.cwi.nl/pub/12655/12655D.pdf) (2008).
 - [MV2009] Mittelmann, H. D.; Vallentin, F., *High-accuracy semidefinite programming
   bounds for kissing numbers*. [arXiv:0902.1105](https://arxiv.org/abs/0902.1105).
+- [Mus2006] Musin, O. R., *The kissing problem in three dimensions*.
+  Discrete Comput. Geom. 35 (2006), 375–384.
+  [arXiv:math/0410324](https://arxiv.org/abs/math/0410324).
+- [Mus2008] Musin, O. R., *The kissing number in four dimensions*.
+  Ann. of Math. 168 (2008), 1–32.
+  [Paper](https://annals.math.princeton.edu/wp-content/uploads/annals-v168-n1-p01.pdf).
+- [OS1979] Odlyzko, A. M.; Sloane, N. J. A., *New bounds on the number of unit spheres
+  that can touch a unit sphere in n dimensions*. J. Combin. Theory Ser. A 26 (1979), 210–214.
+  [Paper](https://neilsloane.com/doc/Me66.pdf).
 -/
 
 namespace Constant29
@@ -48,6 +60,28 @@ theorem IsKissingConfiguration.mono {n : ℕ} {A B : Finset (EuclideanSpace ℝ 
 /-- The kissing number in $n$ dimensions. -/
 noncomputable def KissingNumer (n : ℕ) :=
   sSup (Finset.card '' {A | IsKissingConfiguration (n := n) A})
+
+/-- The kissing number in three dimensions is $12$ [Mus2006, Section 2]. -/
+@[category research solved, AMS 52]
+theorem kissingNumer_three : KissingNumer 3 = 12 := by
+  sorry
+
+/-- Musin's extension of Delsarte's method gives kissing number $24$ in dimension four
+[Mus2008, main theorem]. -/
+@[category research solved, AMS 52]
+theorem kissingNumer_four : KissingNumer 4 = 24 := by
+  sorry
+
+/-- The $E_8$ roots attain the Delsarte bound of $240$ in dimension eight [OS1979]. -/
+@[category research solved, AMS 52]
+theorem kissingNumer_eight : KissingNumer 8 = 240 := by
+  sorry
+
+/-- The minimal vectors of the Leech lattice attain the Delsarte bound of $196560$
+in dimension twenty-four [OS1979]. -/
+@[category research solved, AMS 52]
+theorem kissingNumer_twentyFour : KissingNumer 24 = 196560 := by
+  sorry
 
 /-- **Tao's Optimization Constant 29 / Kissing number in dimension 5**. -/
 noncomputable def C29 : ℕ := KissingNumer 5
