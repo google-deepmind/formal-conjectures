@@ -33,16 +33,16 @@ algebraically closed field in the introduction of [Hap91].
 
 Auslander and Reiten [AR91] have shown that any algebra $A$ whose left and right finitistic
 dimensions are both finite satisfies the Gorenstein symmetry conjecture.
-In particular, the Little Finitistic Dimension Conjecture implies the Gorenstein Symmetry conjecture.
+Therefore, the Little Finitistic Dimension Conjecture implies the Gorenstein Symmetry conjecture.
 
 The conjecture is also known for classes of algebras for which the Little Finitistic Dimension
 Conjecture is not decided. An algebra satisfies the *Auslander condition* if in a minimal
 injective resolution $0 \to {}_A A \to I^0 \to I^1 \to \cdots$ one has
 $\operatorname{pd} I^j \leq j$ for every $j$. Auslander and Reiten [AR94] have shown that such an
-algebra satisfies the Gorenstein Symmetry Conjecture. Its two injective dimensions and its two
-finitistic dimensions are all equal [HQ10], so its finitistic dimension is finite exactly when
-the algebra is Gorenstein. Whether that always happens is an open conjecture of Auslander and
-Reiten [Hua24].
+algebra satisfies the Gorenstein Symmetry Conjecture. Broader conditions ensuring Gorenstein
+symmetry have been studied in [Hua24].
+
+
 
 *References:*
 
@@ -53,8 +53,6 @@ Reiten [Hua24].
 - [Hap91] D. Happel, [*On Gorenstein algebras*](https://doi.org/10.1007/978-3-0348-8658-1_16),
   in: Representation Theory of Finite Groups and Finite-Dimensional Algebras, Progress in
   Mathematics 95, Birkhäuser, Basel, 1991, 389-404
-- [HQ10] Z. Huang, H. Qin, [*Homological behavior of Auslander's k-Gorenstein rings*](https://arxiv.org/abs/math/0409161),
-  arXiv:math/0409161
 - [Hua24] Z. Huang, [*Auslander-type conditions and weakly Gorenstein algebras*](https://arxiv.org/abs/2408.05468),
   arXiv:2408.05468
 - [Zak69] A. Zaks, [*Injective dimension of semi-primary rings*](https://doi.org/10.1016/0021-8693%2869%2990007-6),
@@ -65,7 +63,7 @@ open CategoryTheory Abelian
 
 universe u v
 
-namespace GorensteinSymmetryConjecture
+namespace GorensteinSymmetry
 
 /- Let `R` be a commutative Artinian ring and `A` an `R`-algebra which is finitely generated as
 an `R`-module. -/
@@ -88,4 +86,4 @@ theorem op_smul_eq_mul (a x : A) :
     (MulOpposite.op a) • (x : (ModuleCat.of Aᵐᵒᵖ A : ModuleCat Aᵐᵒᵖ)) = x * a :=
   rfl
 
-end GorensteinSymmetryConjecture
+end GorensteinSymmetry
