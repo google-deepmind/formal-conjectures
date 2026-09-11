@@ -86,6 +86,16 @@ def t (φ : Formula) : Formula :=
 @[inherit_doc t]
 scoped prefix:95 "■" => t
 
+/--
+`Formula.subst σ φ` is the uniform substitution of `σ n` for each propositional variable
+`Atom n` in `φ`.
+-/
+def Formula.subst (σ : ℕ → Formula) : Formula → Formula
+  | Atom n => σ n
+  | ⊥ => ⊥
+  | α ~> β => subst σ α ~> subst σ β
+  | □α => □(subst σ α)
+
 
 /--
 `KProof Γ φ` is the usual Hilbert‐style proof relation for the minimal normal modal logic K,
@@ -134,11 +144,36 @@ If `KProof Γ φ`, then `KTProof Γ φ`. In other words, KT extends K.
 lemma KTExtendsK {Γ φ} (h : KProof Γ φ) : KTProof Γ φ :=
   lift_K h
 
+/-- Provability in K is closed under uniform substitution. -/
+@[category API, AMS 3]
+lemma KProof.subst {Γ φ} (σ : ℕ → Formula) (h : KProof Γ φ) :
+    KProof (Formula.subst σ '' Γ) (φ.subst σ) := by
+  induction h with
+  | ax h => exact ax ⟨_, h, rfl⟩
+  | ax1 => exact ax1
+  | ax2 => exact ax2
+  | ax3 => exact ax3
+  | mp _ _ ih₁ ih₂ => exact mp ih₁ ih₂
+  | nec _ ih => exact nec (by simpa using ih)
+  | distr => exact distr
+
+/-- Provability in KT is closed under uniform substitution. -/
+@[category API, AMS 3]
+lemma KTProof.subst {Γ φ} (σ : ℕ → Formula) (h : KTProof Γ φ) :
+    KTProof (Formula.subst σ '' Γ) (φ.subst σ) := by
+  induction h with
+  | lift_K h => exact lift_K (h.subst σ)
+  | axT => exact axT
+  | mp _ _ ih₁ ih₂ => exact mp ih₁ ih₂
+  | nec _ ih => exact nec (by simpa using ih)
+
 /--
 A “normal modal logic” L is any `Set Formula` such that:
   1. If `K ⊢ φ`, then `φ ∈ L`          (L extends K)
   2. If `φ ∈ L` and `(φ ~> ψ) ∈ L`, then `ψ ∈ L`  (Closed under MP)
   3. If `φ ∈ L`, then `□φ ∈ L`          (Closed under Necessitation)
+  4. If `φ ∈ L`, then `φ.subst σ ∈ L` for every substitution `σ`
+                                        (Closed under Uniform Substitution)
 -/
 structure NormalModalLogic : Type where
   /-- `thms` is the set of formulas proveable in the logic. -/
@@ -151,6 +186,9 @@ structure NormalModalLogic : Type where
   /-- `nec` means that if `φ ∈ thms`, then `□φ ∈ thms`. Equivalently, `thms` is closed under
   necessitation -/
   nec : ∀ {φ}, φ ∈ thms → □ φ ∈ thms
+  /-- `subst` means that if `φ ∈ thms`, then `φ.subst σ ∈ thms` for every substitution `σ`.
+  Equivalently, `thms` is closed under uniform substitution. -/
+  subst : ∀ {φ} (σ : ℕ → Formula), φ ∈ thms → φ.subst σ ∈ thms
 
 
 def proves (L : NormalModalLogic) (φ : Formula) := φ ∈ L.thms
@@ -178,6 +216,10 @@ def KT : NormalModalLogic := by
     intro φ h
     simp [Set.mem_ofPred_eq] at *
     exact KTProof.nec h
+  case subst =>
+    intro φ σ h
+    simp [Set.mem_ofPred_eq] at *
+    simpa using h.subst σ
 
 
 /--
