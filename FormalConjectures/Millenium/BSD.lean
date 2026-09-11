@@ -37,8 +37,6 @@ import FormalConjecturesUtil
   [PDF](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
-- [Silverman2009] Joseph H. Silverman. *The Arithmetic of Elliptic Curves*. 2nd ed., Graduate Texts
-  in Mathematics 106, Springer (2009), [doi](https://doi.org/10.1007/978-0-387-09494-6)
 -/
 
 namespace WeierstrassCurve
