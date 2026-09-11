@@ -199,14 +199,21 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   simp at this
 
 /--
-If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+The union-closed sets conjecture is tight for a union-closed family `A` if the largest number of
+sets in `A` containing a common element is exactly half of the sets in `A`, that is,
+$\max_i |\{X \in A : i \in X\}| = |A| / 2$.
+
+If the union-closed sets conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/
 @[category research open, AMS 5]
 theorem union_closed.variants.cardinality_even_of_union_closed_tight
-    [Nonempty n] (hA : A ≠ {∅} ∧ A ≠ ∅) (hA : IsUnionClosed A)
-    (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    [Nonempty n]
+    (h_ne_singleton_empty : A ≠ {∅})
+    (h_ne_empty : A ≠ ∅)
+    (h_union_closed : IsUnionClosed A)
+    (h_tight : IsGreatest (Set.range fun i : n => (#{x ∈ A | i ∈ x} : ℚ)) ((1 / 2 : ℚ) * #A)) :
     ∃ k, #A = 2 ^ k := by
   sorry
 
