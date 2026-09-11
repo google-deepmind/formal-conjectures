@@ -43,7 +43,7 @@ Here a power of $a$ means $a^n$ for some $n \in \mathbb{Z}$.
 -/
 @[category research solved, AMS 20]
 theorem kourovka.«8.8».parts.b : answer(sorry) ↔
-    ∃ (G : Type) (_ : Group G), Group.IsFinitelyPresented G ∧ ¬ IsCyclic G ∧
+    ∃ (G : Type) (_ : Group G), ¬ IsCyclic G ∧ Group.IsFinitelyPresented G
       ∃ a : G, ∀ g : G, ∃ n : ℤ, IsConj g (a ^ n) := by
   sorry
 
