@@ -169,7 +169,7 @@ def verify(root,candidate,cfg):
         record.update(status='queued',outcome='incomplete',next_action='Use conjectures run wait '+record['id'])
         save(directory/'run.json',record);return record
     except BaseException as error:
-        finish(directory,record,'error',reason='dispatch_error',detail=str(error));raise
+        finish(directory,record,'error',policy_outcome='not_evaluated',reason='dispatch_error',detail=str(error));raise
 
 
 def write_handoff(workspace,provenance):
@@ -219,7 +219,7 @@ def control(directory,record,operation):
         artifacts=github(f'repos/{repo}/actions/runs/{identity}/artifacts?per_page=100')
         if not any(a.get('name')=='verification-'+record['id'] and not a.get('expired')
                    for a in artifacts.get('artifacts',[])):
-            return finish(directory,record,'error',reason='missing_result',
+            return finish(directory,record,'error',policy_outcome='not_evaluated',reason='missing_result',
                           workflow_conclusion=result['conclusion'],url=result['url'])
         with tempfile.TemporaryDirectory(prefix='remote-download-',dir=directory) as temp:
             staging=Path(temp)/'artifacts'
@@ -229,18 +229,20 @@ def control(directory,record,operation):
     if result['conclusion']=='cancelled' and not result_path.is_file():
         return finish(directory,record,'cancelled',reason='remote_cancelled',url=result['url'])
     if not result_path.is_file():
-        return finish(directory,record,'error',reason='missing_result',workflow_conclusion=result['conclusion'])
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='missing_result',workflow_conclusion=result['conclusion'])
     try:value=rr.read_json(result_path)
-    except (ValueError,OSError) as error:return finish(directory,record,'error',reason='invalid_result',detail=str(error))
+    except (ValueError,OSError) as error:return finish(directory,record,'error',policy_outcome='not_evaluated',reason='invalid_result',detail=str(error))
+    if not isinstance(value,dict):
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='invalid_result',detail='Verification result must be an object')
     if value.get('request')!=rr.read_json(directory/'request.json'):
-        return finish(directory,record,'error',reason='result_binding_mismatch',detail='Remote result does not match this exact request')
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='result_binding_mismatch',detail='Remote result does not match this exact request')
     if value.get('toolkit_commit')!=record['executor']['commit']:
-        return finish(directory,record,'error',reason='executor_binding_mismatch',detail='Result was produced by another toolkit revision')
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='executor_binding_mismatch',detail='Result was produced by another toolkit revision')
     outcome=value.get('outcome')
     if outcome not in ('pass','fail','error'):
-        return finish(directory,record,'error',reason='invalid_result',detail='Unknown verification outcome')
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='invalid_result',detail='Unknown verification outcome')
     if result['conclusion']!='success' and outcome=='pass':
-        return finish(directory,record,'error',reason='incomplete_executor',detail='Failed workflow cannot establish success')
+        return finish(directory,record,'error',policy_outcome='not_evaluated',reason='incomplete_executor',detail='Failed workflow cannot establish success')
     return finish(directory,record,outcome,result=value,url=result['url'],producer='github_actions')
 
 

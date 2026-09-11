@@ -9,7 +9,7 @@ import os
 import time
 from pathlib import Path
 from types import SimpleNamespace
-from conjectures import core, proof, linux_executor, unix_restriction
+from conjectures import core, proof, linux_executor, remote
 
 
 def main():
@@ -46,6 +46,33 @@ def main():
     value=proof.verify(candidate,candidate,{'executor':broken})
     assert value['outcome']=='error' and value['policy_outcome']=='not_evaluated',value
     results.append({'case':'changed_executor','expected':'error','actual':value['outcome'],'run_id':value['id']})
+    # Target edits are rejected before any candidate execution.
+    provenance=candidate/'fc-provenance.json';original_provenance=provenance.read_bytes()
+    modified=json.loads(original_provenance);modified['source']['declaration']='Different.target'
+    core.save(provenance,modified)
+    try:
+        proof.verify(candidate,candidate,{'executor':executor})
+    except core.Failure as error:
+        assert (error.code,error.reason)==(1,'changed_target'),error
+        results.append({'case':'changed_target','expected':'fail','actual':'fail','reason':error.reason})
+    else:raise AssertionError('Changed target accepted')
+    finally:provenance.write_bytes(original_provenance)
+    # Real failed processes without a result must not turn diagnostic text into a verdict.
+    for label,program in [('verifier_crash','import os,signal; os.kill(os.getpid(),signal.SIGKILL)'),
+                          ('missing_result','print("disallowed_axiom is diagnostic text only")')]:
+        logs=out/label;logs.mkdir()
+        try:remote.invoke_comparator(['python3','-c',program],out,logs)
+        except core.Failure as error:
+            assert (error.code,error.reason)==(3,'missing_verifier_result'),error
+            results.append({'case':label,'expected':'error','actual':'error','reason':error.reason,
+                            'policy_outcome':'not_evaluated'})
+        else:raise AssertionError('Missing verifier result accepted')
+    # Exercise the actual submission traversal before invoking the verifier.
+    submission.unlink();submission.symlink_to('/etc/passwd')
+    value=proof.verify(candidate,candidate,{'executor':executor})
+    assert value['outcome']=='fail' and value['reason']=='disallowed_submission',value
+    results.append({'case':'submission_symlink','expected':'fail','actual':value['outcome'],'run_id':value['id']})
+    submission.unlink();submission.write_text(original.replace('sorry','decide'))
     core.save(out/'qualification.json',{'client_commit':revision,'executor':executor,'cases':results})
     # Separate process so this probe does not change the caller's systemd transport.
     core.command(['python3','-c','from conjectures.unix_restriction import restrict; restrict(); print("AF_UNIX filter passed")'])

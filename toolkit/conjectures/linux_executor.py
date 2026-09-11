@@ -1,5 +1,4 @@
 """Local Linux transport for the same trusted controller used by Actions.
-from .ui import stage, log_location
 
 Configuration is operator supplied. Candidate files never select tools or policy.
 """
@@ -13,6 +12,7 @@ from pathlib import Path
 from . import report as rr
 from .core import Failure, command, finish, git, save, start_run
 from .proof import PINS
+from .ui import stage, log_location
 
 
 def profile(toolkit, tools, check_systemd=True):

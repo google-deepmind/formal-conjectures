@@ -49,6 +49,19 @@ class AgentProofTests(unittest.TestCase):
         self.assertEqual(result['outcome'],'error');self.assertEqual(result['policy_outcome'],'not_evaluated')
         self.assertEqual(core.runs(self.candidate)[0]['reason'],'tool_pin_mismatch')
 
+    def test_local_execution_reaches_dispatch_and_retains_missing_result(self):
+        executor={'toolkit':str(self.root),'tools':str(self.root/'tools'),'ref':'a'*40,'binaries':{}}
+        with patch.object(linux_executor,'validate'), \
+             patch.object(linux_executor,'submission_files',return_value={'Submission.lean':b'example : True := by trivial'}), \
+             patch.object(linux_executor,'git',return_value=('b'*40).encode()), \
+             patch.object(linux_executor.subprocess,'run',return_value=__import__('types').SimpleNamespace(returncode=1)) as dispatch:
+            result=linux_executor.verify_local(self.candidate,self.candidate,self.target,executor)
+        dispatch.assert_called_once()
+        self.assertEqual(dispatch.call_args.args[0][0],'systemd-run')
+        self.assertEqual(result['reason'],'missing_result')
+        self.assertEqual(result['outcome'],'error')
+        self.assertEqual(result['policy_outcome'],'not_evaluated')
+
     def test_submission_read_rejects_a_concurrent_symlink_swap(self):
         path=self.candidate/'Submission.lean';path.write_text('candidate')
         outside=self.root/'private.lean';outside.write_text('outside submission')

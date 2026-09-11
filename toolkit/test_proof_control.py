@@ -37,6 +37,7 @@ class ProofControlTests(ToolkitFixture):
             result=proof.control(directory,record,'wait')
         self.assertEqual(result['outcome'],'error')
         self.assertEqual(result['reason'],'missing_result')
+        self.assertEqual(result['policy_outcome'],'not_evaluated')
         self.assertEqual(json.loads((directory/'run.json').read_text())['outcome'],'error')
 
     def test_cancel_completed_cancellation_is_confirmed_without_second_request(self):
@@ -53,7 +54,18 @@ class ProofControlTests(ToolkitFixture):
             with patch.object(proof,'gh',return_value=json.dumps({'status':'completed','conclusion':conclusion,'url':'https://example.com/run'}).encode()):
                 value=proof.control(directory,record,'wait')
             self.assertEqual(value['outcome'],'error');self.assertEqual(value['reason'],reason)
+            self.assertEqual(value['policy_outcome'],'not_evaluated')
             self.assertEqual(json.loads((directory/'run.json').read_text())['status'],'completed')
+
+    def test_nonobject_remote_result_retains_unevaluated_error(self):
+        for malformed in ([], None, 'pass'):
+            directory,record=core.start_run(self.root,'verify',executor={'repository':'fixture/repo'},remote_run_id=123)
+            core.save(directory/'remote/verification.json',malformed)
+            with patch.object(proof,'gh',return_value=b'{"status":"completed","conclusion":"success","url":"https://example.com/run"}'):
+                value=proof.control(directory,record,'wait')
+            self.assertEqual(value['reason'],'invalid_result')
+            self.assertEqual(value['policy_outcome'],'not_evaluated')
+            self.assertEqual(json.loads((directory/'run.json').read_text())['outcome'],'error')
 
     def test_real_process_crash_and_missing_result_are_not_rejections(self):
         import sys
