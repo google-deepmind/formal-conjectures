@@ -32,10 +32,13 @@ namespace Constant1a
 /-- **Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets**:
 The biggest real number satisfying a certain inequality about (auto)convolutions
 and $L^2$-norms of functions.
-This number is related to the maximal size of Sidon sets in additive combinatorics. -/
+This number is related to the maximal size of Sidon sets in additive combinatorics.
+
+The supremum is taken over $-1/2 \le t \le 1/2$, matching the source. This is the range where
+the autoconvolution of a function supported in $[-1/4, 1/4]$ can be nonzero. -/
 noncomputable def C1a : ℝ :=
   sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
-    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}}
+    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (- 1 / 2 : ℝ) (1 / 2)}}
 
 /-- The best known lower bound, proven by Matolcsi-Vinuesa in [M2010]-/
 @[category research solved, AMS 5 11 26]
