@@ -130,7 +130,7 @@ lemma self_mem_rightTranslateSpan : f ∈ rightTranslateSpan K k f :=
 
 /-- `f` is `K`-finite: the span of its right `K`-translates is finite-dimensional. This is
 condition (b2) in the definition of an automorphic form. -/
-def IsKFinite : Prop := FiniteDimensional k (rightTranslateSpan K k f)
+abbrev IsKFinite : Prop := FiniteDimensional k (rightTranslateSpan K k f)
 
 variable {K k f}
 
@@ -148,8 +148,6 @@ lemma isKFinite_of_finite [Finite K] : IsKFinite K k f :=
 of the translate spans. -/
 protected lemma IsKFinite.add {f g : G → k} (hf : IsKFinite K k f) (hg : IsKFinite K k g) :
     IsKFinite K k (f + g) :=
-  haveI : FiniteDimensional k (rightTranslateSpan K k f) := hf
-  haveI : FiniteDimensional k (rightTranslateSpan K k g) := hg
   Submodule.finiteDimensional_of_le
     (S₂ := rightTranslateSpan K k f ⊔ rightTranslateSpan K k g) <|
     Submodule.span_le.mpr <| Set.range_subset_iff.mpr fun u =>
@@ -158,7 +156,6 @@ protected lemma IsKFinite.add {f g : G → k} (hf : IsKFinite K k f) (hg : IsKFi
 
 protected lemma IsKFinite.const_smul {f : G → k} (hf : IsKFinite K k f) (c : k) :
     IsKFinite K k (c • f) :=
-  haveI : FiniteDimensional k (rightTranslateSpan K k f) := hf
   Submodule.finiteDimensional_of_le (S₂ := rightTranslateSpan K k f) <| Submodule.span_le.mpr <|
     Set.range_subset_iff.mpr fun u => Submodule.smul_mem _ c (Submodule.subset_span ⟨u, rfl⟩)
 
