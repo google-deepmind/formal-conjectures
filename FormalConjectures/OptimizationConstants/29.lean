@@ -36,18 +36,21 @@ namespace Constant29
 
 /-- Unit vectors representing mutually nonoverlapping spheres tangent to a central sphere.
 Note this translates to the usual formulation via spheres. -/
-def IsKissingConfiguration (A : Finset (EuclideanSpace ℝ (Fin 5))) : Prop :=
+def IsKissingConfiguration {n : ℕ} (A : Finset (EuclideanSpace ℝ (Fin n))) : Prop :=
   (∀ x ∈ A, ‖x‖ = 1) ∧ ∀ x ∈ A, ∀ y ∈ A, x ≠ y → inner ℝ x y ≤ 1 / 2
 
 /-- A subset of a kissing configuration is a kissing configuration. -/
 @[category API, AMS 52]
-theorem IsKissingConfiguration.mono {A B : Finset (EuclideanSpace ℝ (Fin 5))}
+theorem IsKissingConfiguration.mono {n : ℕ} {A B : Finset (EuclideanSpace ℝ (Fin n))}
     (hB : IsKissingConfiguration B) (hAB : A ⊆ B) : IsKissingConfiguration A :=
   ⟨fun x hx ↦ hB.1 x (hAB hx), fun x hx y hy hxy ↦ hB.2 x (hAB hx) y (hAB hy) hxy⟩
 
+/-- The kissing number in $n$ dimensions. -/
+noncomputable def KissingNumer (n : ℕ) :=
+  sSup (Finset.card '' {A | IsKissingConfiguration (n := n) A})
+
 /-- **Tao's Optimization Constant 29 / Kissing number in dimension 5**. -/
-noncomputable def C29 : ℕ :=
-  sSup (Finset.card '' {A | IsKissingConfiguration A})
+noncomputable def C29 : ℕ := KissingNumer 5
 
 /-- A lower bound supplied by the ten vertices of a cross polytope [CR2024]. -/
 @[category textbook, AMS 52]
