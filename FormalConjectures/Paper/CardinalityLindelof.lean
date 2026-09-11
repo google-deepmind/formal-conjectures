@@ -18,7 +18,7 @@ import FormalConjecturesUtil
 /-!
 # Conjecture about cardinality of Lindelöf spaces
 
-The conjecture asks for a Lindelöf space where all singletons are G_δ sets
+The conjecture asks for a Lindelöf Tychonoff space where all singletons are G_δ sets
 and which has cardinality > 𝔠.
 
 This is Problem 1 in https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
@@ -34,11 +34,15 @@ open Cardinal
 namespace CardinalityLindelof
 
 /--
-Is there a Lindelöf space with singletons as Gδ sets with cardinality greater than the continuum?
+Is there a Lindelöf Tychonoff space with singletons as Gδ sets with cardinality greater than
+the continuum?
+
+Note: the cited paper uses a blanket convention that all spaces are Tychonoff.
 -/
 @[category research open, AMS 54]
 theorem HasGδSingletons.lindelof_card :
-    ∃ (X : Type) (_ : TopologicalSpace X), HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
+    ∃ (X : Type) (_ : TopologicalSpace X),
+      T35Space X ∧ HasGδSingletons X ∧ LindelofSpace X ∧ 𝔠 < #X := by
   sorry
 
 -- TODO: under additional axioms (consistent with ZFC), such a space exists.
