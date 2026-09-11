@@ -36,8 +36,8 @@ at least one apart. -/
 def Erdos951Prop (a : ℕ → ℝ) : Prop :=
   ∀ (k ℓ : ℕ →₀ ℕ), k ≠ ℓ → |beurlingInteger a k - beurlingInteger a ℓ| ≥ 1
 
-/-- If `a` has property `Erdos951Prop` and `1 < a 0`, then `a` is a set of Beurling
-prime numbers. -/
+/-- If a strictly increasing sequence `a : ℕ → ℝ` has property `Erdos951Prop`
+and `1 < a 0`, then `a` is a sequence of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951Prop a) :
@@ -61,11 +61,13 @@ theorem erdos_951 : answer(sorry) ↔
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
-/-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
-is `x + o(log x)`, then `a` must be the sequence of primes. -/
+/-- Beurling conjectured that if `1 < a 0 < a 1 < ⋯` has property `Erdos951Prop` and the number
+of reals in $[1, x]$ of the form $\prod_i a_i^{k_i}$ is $x + o(\log x)$, then `a` must be the
+sequence of primes. Property `Erdos951Prop` makes distinct exponent vectors give distinct
+Beurling integers, so counting the set `BeurlingIntegers a` counts the generalised integers. -/
 @[category research solved, AMS 11]
 theorem erdos_951.variants.beurling :
-    ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
+    ∀ a : ℕ → ℝ, IsBeurlingPrimes a → Erdos951Prop a →
     ((fun x => (BeurlingIntegers a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
     a = Nat.cast ∘ Nat.nth Nat.Prime := by
   sorry

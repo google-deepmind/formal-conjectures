@@ -261,7 +261,7 @@ by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
 @[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
-    (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
+    (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
 /--
