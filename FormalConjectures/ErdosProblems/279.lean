@@ -27,9 +27,12 @@ namespace Erdos279
 Let $k\geq 3$. Is there a choice of congruence classes $a_p\pmod{p}$ for every prime $p$
 such that all sufficiently large integers can be written as $a_p+tp$ for some prime $p$
 and integer $t\geq k$?
+
+This was formally proved in Lean by Wanfang Chen.
 -/
-@[category research open, AMS 11]
-theorem erdos_279 :  answer(sorry) ↔ ∀ k : Nat, k ≥ 3 →
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/WanfangChen/Erdos/blob/585b714d5146fc12926dbff54bc0afd765452481/Erdos279/DeepMindBridge.lean"]
+theorem erdos_279 : answer(True) ↔ ∀ k : Nat, k ≥ 3 →
     ∃ a : Nat → Nat, ∃ N : Nat, (∀ p : Nat, p.Prime → a p < p) ∧
     ∀ n ≥ N, ∃ p : Nat, ∃ t ≥ k, p.Prime ∧ n = a p + t * p := by
   sorry
