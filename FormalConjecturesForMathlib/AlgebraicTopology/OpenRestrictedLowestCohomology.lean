@@ -36,18 +36,12 @@ namespace TopCat.Sheaf
 
 variable (X : TopCat.{u}) (U : Opens X)
 
-/-- The image of the top open of the subspace is literally its ambient open. -/
-theorem openRestrictionTopOpen_eq : U.isOpenEmbedding.functor.obj ⊤ = U := by
-  apply SetLike.coe_injective
-  change Subtype.val '' Set.univ = (U : Set X)
-  simp
-
 /-- Actual global sections of open restriction are ambient sections on the same open. -/
 def openRestrictionTopSectionsIso :
     U.isOpenEmbedding.sheafPullback AddCommGrpCat.{u} ⋙ supportEvaluation (TopCat.of U) ⊤ ≅
       supportEvaluation X U :=
   NatIso.ofComponents (fun F => F.obj.mapIso
-    (eqToIso (congrArg op (openRestrictionTopOpen_eq X U))))
+    (eqToIso (congrArg op (Opens.isOpenEmbedding_obj_top U))))
     (fun f => (f.hom.naturality _).symm)
 
 variable (K : CochainComplex (Sheaf AddCommGrpCat.{u} X) ℤ)

@@ -92,8 +92,7 @@ def standardComplexOrientationNeighborhood (d : ℕ) : TopologicalSpace.Opens (F
 lemma zero_mem_standardComplexOrientationNeighborhood (d : ℕ) :
     (0 : Fin d → ℂ) ∈ standardComplexOrientationNeighborhood d := by
   refine ⟨0, zero_mem_standardOrientationBall (d * 2), ?_⟩
-  ext j
-  apply Complex.ext <;> rfl
+  exact map_zero (Complex.piCoordCLE d).symm
 
 /-- The complex-coordinate neighborhood pair supporting the oriented simplex. -/
 abbrev standardComplexOrientationNeighborhoodPair (d : ℕ) : TopPair :=
@@ -118,12 +117,10 @@ lemma standardRealToComplexPair_translation (d : ℕ) (v : StandardRealModel (d 
         translationPointComplementPairMap (Fin d → ℂ) (standardRealToComplexMap d v) := by
   apply MorphismProperty.Arrow.Hom.ext
   · ext w
-    apply Subtype.ext
-    funext j
-    apply Complex.ext <;> rfl
+    refine Subtype.ext ?_
+    exact map_add (Complex.piCoordCLE d).symm _ _
   · ext w
-    funext j
-    apply Complex.ext <;> rfl
+    exact map_add (Complex.piCoordCLE d).symm _ _
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Throughout the complex-coordinate neighborhood the same relative class restricts to the

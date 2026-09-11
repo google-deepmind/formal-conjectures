@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.AlgebraicTopology.LocalFundamentalClass
+public import FormalConjecturesForMathlib.LinearAlgebra.ComplexOrientation
 public import Mathlib.Analysis.Complex.Basic
 
 /-!
@@ -33,65 +34,13 @@ open CategoryTheory
 
 namespace AlgebraicTopology.Singular
 
-/-- List the real and imaginary part of each complex coordinate consecutively. -/
-def complexCoordinatesToReal (p : ℕ) (z : Fin p → ℂ) : StandardRealModel (p * 2) := fun k =>
-  let jk := finProdFinEquiv.symm k
-  ![(z jk.1).re, (z jk.1).im] jk.2
+/-- The orientation-ordered homeomorphism from complex coordinate space to real coordinate space.
 
-/-- Reassemble consecutive pairs of real coordinates into complex coordinates. -/
-def realCoordinatesToComplex (p : ℕ) (x : StandardRealModel (p * 2)) (j : Fin p) : ℂ :=
-  ⟨x (finProdFinEquiv (j, 0)), x (finProdFinEquiv (j, 1))⟩
-
-/-- Complex coordinates followed by real-coordinate listing are continuous. -/
-lemma continuous_complexCoordinatesToReal (p : ℕ) : Continuous (complexCoordinatesToReal p) := by
-  apply continuous_pi
-  intro k
-  generalize h : finProdFinEquiv.symm k = jk
-  rcases jk with ⟨j, l⟩
-  fin_cases l
-  · simpa [complexCoordinatesToReal, h, Function.comp_def, Complex.reCLM_apply] using
-      Complex.reCLM.continuous.comp
-      (continuous_apply j : Continuous (fun z : Fin p → ℂ => z j))
-  · simpa [complexCoordinatesToReal, h, Function.comp_def, Complex.imCLM_apply] using
-      Complex.imCLM.continuous.comp
-      (continuous_apply j : Continuous (fun z : Fin p → ℂ => z j))
-
-/-- Reassembling real coordinate pairs into complex coordinates is continuous. -/
-lemma continuous_realCoordinatesToComplex (p : ℕ) : Continuous (realCoordinatesToComplex p) := by
-  apply continuous_pi
-  intro j
-  have hp : Continuous (fun x : StandardRealModel (p * 2) =>
-      (x (finProdFinEquiv (j, 0)), x (finProdFinEquiv (j, 1)))) :=
-    (continuous_apply (finProdFinEquiv (j, 0))).prodMk
-      (continuous_apply (finProdFinEquiv (j, 1)))
-  have he := Complex.equivRealProdCLM.symm.continuous.comp hp
-  convert he using 1
-  funext x
-  apply Complex.ext <;> simp [realCoordinatesToComplex, Complex.equivRealProdCLM_symm_apply]
-
-/-- Reassembling the listed coordinates recovers the original complex vector. -/
-lemma realCoordinatesToComplex_complexCoordinatesToReal (p : ℕ) (z : Fin p → ℂ) :
-    realCoordinatesToComplex p (complexCoordinatesToReal p z) = z := by
-  apply funext
-  intro j
-  apply Complex.ext <;> simp [realCoordinatesToComplex, complexCoordinatesToReal]
-
-/-- Listing the coordinates of a reassembled complex vector recovers the real vector. -/
-lemma complexCoordinatesToReal_realCoordinatesToComplex (p : ℕ)
-    (x : StandardRealModel (p * 2)) :
-    complexCoordinatesToReal p (realCoordinatesToComplex p x) = x := by
-  ext k
-  obtain ⟨⟨j, l⟩, rfl⟩ := finProdFinEquiv.surjective k
-  fin_cases l <;> simp [complexCoordinatesToReal, realCoordinatesToComplex]
-
-/-- The orientation-ordered homeomorphism from complex coordinate space to real coordinate space. -/
-def complexRealHomeomorph (p : ℕ) : (Fin p → ℂ) ≃ₜ StandardRealModel (p * 2) where
-  toFun := complexCoordinatesToReal p
-  invFun := realCoordinatesToComplex p
-  left_inv := realCoordinatesToComplex_complexCoordinatesToReal p
-  right_inv := complexCoordinatesToReal_realCoordinatesToComplex p
-  continuous_toFun := continuous_complexCoordinatesToReal p
-  continuous_invFun := continuous_realCoordinatesToComplex p
+This is the coordinate map of `Complex.piBasisOneI`, so it lists the real and imaginary part of
+each complex coordinate consecutively; continuity in both directions comes from
+`Basis.equivFunL`. -/
+def complexRealHomeomorph (p : ℕ) : (Fin p → ℂ) ≃ₜ StandardRealModel (p * 2) :=
+  (Complex.piCoordCLE p).toHomeomorph
 
 /-- Complex coordinate space paired with the complement of its origin. -/
 abbrev standardComplexPuncturedPair (p : ℕ) : TopPair :=
@@ -100,18 +49,8 @@ abbrev standardComplexPuncturedPair (p : ℕ) : TopPair :=
 /-- The inverse coordinate homeomorphism restricted to the punctured spaces. -/
 def puncturedRealToComplex (p : ℕ) :
     ({0}ᶜ : Set (StandardRealModel (p * 2))) → ({0}ᶜ : Set (Fin p → ℂ)) :=
-  fun x => ⟨complexRealHomeomorph p |>.symm x.1, by
-    intro hz
-    apply x.2
-    calc
-      x.1 = complexRealHomeomorph p (complexRealHomeomorph p |>.symm x.1) :=
-        (complexRealHomeomorph p).apply_symm_apply x.1 |>.symm
-      _ = complexRealHomeomorph p 0 := congrArg (complexRealHomeomorph p) hz
-      _ = 0 := by
-        funext k
-        change ![0, 0] (finProdFinEquiv.symm k).2 = 0
-        generalize (finProdFinEquiv.symm k).2 = l
-        fin_cases l <;> rfl⟩
+  fun x => ⟨(Complex.piCoordCLE p).symm x.1,
+    fun hz => x.2 ((Complex.piCoordCLE p).symm.map_eq_zero_iff.mp hz)⟩
 
 /-- The restricted inverse coordinate map is continuous. -/
 lemma continuous_puncturedRealToComplex (p : ℕ) : Continuous (puncturedRealToComplex p) :=
@@ -129,17 +68,8 @@ def standardRealToComplexPair (p : ℕ) :
 /-- The complex-to-real coordinate homeomorphism restricted to the punctured spaces. -/
 def puncturedComplexToReal (p : ℕ) :
     ({0}ᶜ : Set (Fin p → ℂ)) → ({0}ᶜ : Set (StandardRealModel (p * 2))) :=
-  fun z => ⟨complexRealHomeomorph p z.1, by
-    intro hz
-    apply z.2
-    calc
-      z.1 = (complexRealHomeomorph p).symm (complexRealHomeomorph p z.1) :=
-        (complexRealHomeomorph p).symm_apply_apply z.1 |>.symm
-      _ = (complexRealHomeomorph p).symm 0 :=
-        congrArg (complexRealHomeomorph p).symm hz
-      _ = 0 := by
-        funext j
-        apply Complex.ext <;> simp [complexRealHomeomorph, realCoordinatesToComplex]⟩
+  fun z => ⟨Complex.piCoordCLE p z.1,
+    fun hz => z.2 ((Complex.piCoordCLE p).map_eq_zero_iff.mp hz)⟩
 
 /-- The restricted complex-to-real coordinate map is continuous. -/
 lemma continuous_puncturedComplexToReal (p : ℕ) : Continuous (puncturedComplexToReal p) :=

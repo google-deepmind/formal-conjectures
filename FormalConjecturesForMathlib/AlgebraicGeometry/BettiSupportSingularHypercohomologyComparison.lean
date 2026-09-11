@@ -313,18 +313,8 @@ def hypercohomologyEquivGlobalSections
       (TopCat.Sheaf.globalSectionsComplexInt
         (TopCat.of (ComplexPoint X)) K).homology n := by
   let Y := TopCat.of (ComplexPoint X)
-  let hres := CochainComplex.Plus.modelCategoryQuillen.exists_quasiIso_injective K N
-  let I := Classical.choose hres
-  let hresI := Classical.choose_spec hres
-  let i := Classical.choose hresI
-  let hresi := Classical.choose_spec hresI
-  let hi : QuasiIso i := Classical.choose hresi
-  let hresiHi := Classical.choose_spec hresi
-  let hI : ∀ q : ℤ, Injective (I.X q) := Classical.choose hresiHi
-  let hIge : I.IsStrictlyGE N := Classical.choose_spec hresiHi
-  letI : QuasiIso i := hi
-  letI : ∀ q : ℤ, Injective (I.X q) := hI
-  letI : I.IsStrictlyGE N := hIge
+  choose I i _ _ _ using
+    CochainComplex.Plus.modelCategoryQuillen.exists_quasiIso_injective K N
   letI : I.IsKInjective := CochainComplex.isKInjective_of_injective I N
   have hIflasque : ∀ q, (I.X q).IsFlasque := fun _ ↦ inferInstance
   letI : QuasiIso
@@ -344,18 +334,8 @@ def hypercohomologyAddEquivGlobalSections
       (TopCat.Sheaf.globalSectionsComplexInt
         (TopCat.of (ComplexPoint X)) K).homology n := by
   let Y := TopCat.of (ComplexPoint X)
-  let hres := CochainComplex.Plus.modelCategoryQuillen.exists_quasiIso_injective K N
-  let I := Classical.choose hres
-  let hresI := Classical.choose_spec hres
-  let i := Classical.choose hresI
-  let hresi := Classical.choose_spec hresI
-  let hi : QuasiIso i := Classical.choose hresi
-  let hresiHi := Classical.choose_spec hresi
-  let hI : ∀ q : ℤ, Injective (I.X q) := Classical.choose hresiHi
-  let hIge : I.IsStrictlyGE N := Classical.choose_spec hresiHi
-  letI : QuasiIso i := hi
-  letI : ∀ q : ℤ, Injective (I.X q) := hI
-  letI : I.IsStrictlyGE N := hIge
+  choose I i _ _ _ using
+    CochainComplex.Plus.modelCategoryQuillen.exists_quasiIso_injective K N
   letI : I.IsKInjective := CochainComplex.isKInjective_of_injective I N
   have hIflasque : ∀ q, (I.X q).IsFlasque := fun _ ↦ inferInstance
   letI : QuasiIso

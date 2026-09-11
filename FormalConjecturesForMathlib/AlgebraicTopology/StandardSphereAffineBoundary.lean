@@ -54,8 +54,7 @@ def standardAffineBoundarySimplex (d k : ℕ)
     obtain ⟨j, hj⟩ := (SSet.mem_boundary_iff_notMem_range x.1).mp x.2
     exact standardAffineSimplex_ne_zero_of_coord_zero d _ j
       (stdSimplex_map_apply_eq_zero_of_notMem_range x.1 t j hj)⟩
-  continuous_toFun := Continuous.subtype_mk
-    ((continuous_standardAffineSimplex d).comp (stdSimplex.continuous_map x.1)) _
+  continuous_toFun := by fun_prop
 
 /-- The boundary of the universal affine `d`-simplex as a map of simplicial sets into the
 singular simplicial set of punctured `ℝ^d`. -/

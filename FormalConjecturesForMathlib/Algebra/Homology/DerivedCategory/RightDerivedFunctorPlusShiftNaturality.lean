@@ -52,8 +52,7 @@ lemma commShift_of_whiskerLeft (L : B ⥤ C) [L.EssSurj] [L.CommShift A]
       rw [← α.naturality_assoc] at h
       exact (cancel_epi (F.map ((L.commShiftIso a).hom.app X))).1 h
     change τ = τ'
-    apply NatTrans.ext
-    funext Y
+    ext Y : 2
     rw [← cancel_epi ((shiftFunctor C a ⋙ F).map (L.objObjPreimageIso Y).hom),
       τ.naturality, τ'.naturality, h]
 
@@ -62,8 +61,7 @@ lemma commShift_of_whiskerRight (L : C ⥤ D) [L.Faithful] [L.CommShift A]
     {F G : B ⥤ C} [F.CommShift A] [G.CommShift A] (α : F ⟶ G)
     [CommShift (Functor.whiskerRight α L) A] : CommShift α A where
   shift_comm a := by
-    apply NatTrans.ext
-    funext X
+    ext X : 2
     apply L.map_injective
     apply (cancel_mono ((L.commShiftIso a).hom.app (G.obj X))).1
     have h := shift_app_comm (Functor.whiskerRight α L) a X
@@ -142,8 +140,7 @@ theorem rightDerivedFunctorPlus_onInjectives :
         Functor.whiskerLeft (InjectiveObject.ι C).mapHomotopyCategoryPlus
           (Functor.whiskerRight α.mapHomotopyCategoryPlus DerivedCategory.Plus.Qh) ≫
         G.rightDerivedFunctorPlusOnInjectivesIso.inv := by
-  apply NatTrans.ext
-  funext K
+  ext K : 2
   apply (cancel_epi ((asIso F.rightDerivedFunctorPlusOnInjectivesUnit).app K).hom).1
   simp [Functor.rightDerivedFunctorPlusOnInjectivesIso,
     Functor.rightDerivedFunctorPlusOnInjectivesUnit,

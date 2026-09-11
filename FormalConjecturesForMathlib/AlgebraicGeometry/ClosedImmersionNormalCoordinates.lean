@@ -17,7 +17,7 @@ module
 
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ClosedImmersionAnalyticLeftInverse
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ClosedImmersionComplexPoint
-public import FormalConjecturesForMathlib.AlgebraicTopology.SplitDerivativeNormalChart
+public import FormalConjecturesForMathlib.Analysis.Calculus.SplitDerivativeNormalChart
 
 /-!
 # Constructed normal coordinates for smooth closed immersions

@@ -59,8 +59,7 @@ lemma normalizedDual_unique {z : M} (hz : z ≠ 0)
     (hzspan : Submodule.span R {z} = ⊤)
     (φ : Module.Dual R M) (hφ : φ z = 1) :
     φ = normalizedDual z hz := by
-  apply LinearMap.ext
-  intro y
+  ext y
   obtain ⟨a, rfl⟩ := (Submodule.span_singleton_eq_top_iff R z).mp hzspan y
   simp [hφ]
 
@@ -71,8 +70,7 @@ lemma span_normalizedDual_eq_top {z : M} (hz : z ≠ 0)
   rw [Submodule.span_singleton_eq_top_iff R]
   intro φ
   refine ⟨φ z, ?_⟩
-  apply LinearMap.ext
-  intro y
+  ext y
   obtain ⟨a, rfl⟩ := (Submodule.span_singleton_eq_top_iff R z).mp hzspan y
   simp
 

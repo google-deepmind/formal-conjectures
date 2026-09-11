@@ -90,10 +90,6 @@ theorem sectionCohomology_isZero_of_cofinal_lower_vanishing (N n : ℤ) [K.IsStr
   have hzero := ((supportEvaluation (TopCat.of U) ⊤).map_isZero (hL n le_rfl)).of_iso e
   change IsZero ((((supportEvaluation X (U.isOpenEmbedding.functor.obj ⊤)).mapHomologicalComplex
     (.up ℤ)).obj K).homology n) at hzero
-  have he : U.isOpenEmbedding.functor.obj ⊤ = U := by
-    apply SetLike.coe_injective
-    change Subtype.val '' Set.univ = (U : Set X)
-    simp
-  rwa [he] at hzero
+  rwa [Opens.isOpenEmbedding_obj_top] at hzero
 
 end TopCat.Sheaf

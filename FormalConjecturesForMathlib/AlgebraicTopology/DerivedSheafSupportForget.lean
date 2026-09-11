@@ -50,8 +50,7 @@ set_option backward.defeqAttrib.useBackward true in
 theorem closedSupportSectionsMap_inclusion {Z W : Closeds X} (h : Z ≤ W) :
     closedSupportSectionsMap X h ≫ closedSupportSectionsInclusion X W =
       closedSupportSectionsInclusion X Z := by
-  apply NatTrans.ext
-  funext F
+  ext F : 2
   change (supportEvaluation X ⊤).map _ ≫
       ((supportEvaluation X ⊤).map _ ≫ 𝟙 _) =
     (supportEvaluation X ⊤).map _ ≫ 𝟙 _

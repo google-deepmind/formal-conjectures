@@ -52,7 +52,7 @@ def complexPuncturedPairMapOf
     (TopCat.ofHom ⟨f, hf⟩)
     (TopCat.ofHom
       ⟨fun z ↦ ⟨f z.1, hf_ne z.1 z.2⟩,
-        Continuous.subtype_mk (hf.comp continuous_subtype_val) _⟩)
+        by fun_prop⟩)
     (by ext z; rfl)
 
 @[simp]
@@ -70,8 +70,7 @@ theorem relativeHomologyMap_eq_of_neighborhood_pairHomotopy
       (neighborhoodPointComplementPairMap U 0 ≫ F)
       (neighborhoodPointComplementPairMap U 0 ≫ G)) :
     relativeHomologyMap ℚ n F = relativeHomologyMap ℚ n G := by
-  apply LinearMap.ext
-  intro a
+  ext a
   obtain ⟨b, rfl⟩ := neighborhoodPointComplement_relativeHomologyMap_surjective
     U 0 hU h0U n a
   have h := H.relativeHomologyMap_apply_eq (R := ℚ) n b
@@ -306,15 +305,7 @@ def complexStraightLineNeighborhoodPairHomotopy
   fst :=
     { toFun := fun tx ↦
         A.mulVec tx.2.1 + (((tx.1 : ℝ) : ℂ) • (f tx.2.1 - A.mulVec tx.2.1))
-      continuous_toFun := by
-        have hAz : Continuous (fun tx : unitInterval × U ↦ A.mulVec tx.2.1) :=
-          A.mulVecLin.continuous_of_finiteDimensional.comp
-            (continuous_subtype_val.comp continuous_snd)
-        have hfz : Continuous (fun tx : unitInterval × U ↦ f tx.2.1) :=
-          hf.comp (continuous_subtype_val.comp continuous_snd)
-        have ht : Continuous (fun tx : unitInterval × U ↦ ((tx.1 : ℝ) : ℂ)) :=
-          Complex.continuous_ofReal.comp (continuous_subtype_val.comp continuous_fst)
-        exact hAz.add (ht.smul (hfz.sub hAz))
+      continuous_toFun := by fun_prop
       map_zero_left := fun z ↦ by
         change A.mulVec z.1 + (((0 : unitInterval) : ℝ) : ℂ) •
           (f z.1 - A.mulVec z.1) = A.mulVec z.1
@@ -328,20 +319,7 @@ def complexStraightLineNeighborhoodPairHomotopy
         ⟨A.mulVec tx.2.1.1 +
             (((tx.1 : ℝ) : ℂ) • (f tx.2.1.1 - A.mulVec tx.2.1.1)),
           hline tx.1 tx.2.1.1 tx.2.1.2 tx.2.2⟩
-      continuous_toFun := by
-        apply Continuous.subtype_mk
-        have hval : Continuous
-            (fun tx : unitInterval × {u : U | u.1 ≠ 0} ↦ tx.2.1.1) :=
-          continuous_subtype_val.comp (continuous_subtype_val.comp continuous_snd)
-        have hAz : Continuous
-            (fun tx : unitInterval × {u : U | u.1 ≠ 0} ↦ A.mulVec tx.2.1.1) :=
-          A.mulVecLin.continuous_of_finiteDimensional.comp hval
-        have hfz : Continuous
-            (fun tx : unitInterval × {u : U | u.1 ≠ 0} ↦ f tx.2.1.1) := hf.comp hval
-        have ht : Continuous
-            (fun tx : unitInterval × {u : U | u.1 ≠ 0} ↦ ((tx.1 : ℝ) : ℂ)) :=
-          Complex.continuous_ofReal.comp (continuous_subtype_val.comp continuous_fst)
-        exact hAz.add (ht.smul (hfz.sub hAz))
+      continuous_toFun := by fun_prop
       map_zero_left := fun z ↦ by
         apply Subtype.ext
         change A.mulVec z.1.1 + (((0 : unitInterval) : ℝ) : ℂ) •

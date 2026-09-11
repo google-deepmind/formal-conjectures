@@ -41,10 +41,7 @@ variable (X : TopCat.{0})
 are homeomorphic by regrouping subtype witnesses. -/
 def openIntersectionSupportComplementHomeomorph (S : Set X) (hS : IsClosed S) (V : Opens X) :
     ↥(V ⊓ (⟨Sᶜ, hS.isOpen_compl⟩ : Opens X)) ≃ₜ {v : V | v.1 ∉ S} where
-  toFun w := ⟨⟨w.1, w.2.1⟩, w.2.2⟩
-  invFun v := ⟨v.1.1, ⟨v.1.2, v.2⟩⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
+  toEquiv := (Equiv.subtypeSubtypeEquivSubtypeInter (· ∈ V) (· ∉ S)).symm
   continuous_toFun := (continuous_subtype_val.subtype_mk _).subtype_mk _
   continuous_invFun := (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _
 

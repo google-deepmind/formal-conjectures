@@ -53,7 +53,7 @@ abbrev RationalConstantSheafCohomologyWithSupport
 def rationalCohomologySupportedOn
     [IsIntegral X.left] [Smooth X.hom]
     [IsProjective X.hom] (Z : Set (ComplexPoint X)) (n : ℤ) :
-    Submodule ℚ (FieldCohomology ℚ X n) :=
+    Submodule ℚ (H^n(X; ℚ)) :=
   Submodule.span ℚ (Set.range (forgetSupport X Z n))
 
 /-- A class which generates the whole degree-`2p` image of cohomology supported on one
@@ -62,7 +62,7 @@ that the supported image is one-dimensional. Cohomological purity proves that su
 is precisely a nonzero rational multiple of the component's fundamental class. -/
 def IsRationalComponentCycleClass
     [IsIntegral X.left] [Smooth X.hom] [IsProjective X.hom]
-    (p : ℕ) (x : X.left) (α : FieldCohomology ℚ X (2 * (p : ℤ))) : Prop :=
+    (p : ℕ) (x : X.left) (α : H^(2 * (p : ℤ))(X; ℚ)) : Prop :=
   α ∈ rationalCohomologySupportedOn X
       (cycleComponentSupport X x) (2 * (p : ℤ)) ∧
     Submodule.span ℚ {α} =
@@ -74,13 +74,13 @@ of all generators removes the arbitrary choice of generator and its rational sca
 def rationalComponentCycleClassLine
     [IsIntegral X.left] [Smooth X.hom]
     [IsProjective X.hom] (p : ℕ) (x : X.left) :
-    Submodule ℚ (FieldCohomology ℚ X (2 * (p : ℤ))) :=
+    Submodule ℚ (H^(2 * (p : ℤ))(X; ℚ)) :=
   Submodule.span ℚ {α | IsRationalComponentCycleClass X p x α}
 
 /-- Any generator of the supported image computes the same intrinsic component line. -/
 lemma rationalComponentCycleClassLine_eq_span
     [IsIntegral X.left] [Smooth X.hom] [IsProjective X.hom] (p : ℕ) (x : X.left)
-    (α : FieldCohomology ℚ X (2 * (p : ℤ)))
+    (α : H^(2 * (p : ℤ))(X; ℚ))
     (hα : IsRationalComponentCycleClass X p x α) :
     rationalComponentCycleClassLine X p x = Submodule.span ℚ {α} :=
   le_antisymm (Submodule.span_le.mpr fun _ hβ ↦ hα.2.ge hβ.1)
@@ -119,7 +119,7 @@ integrality. This definition spans explicit class terms; it does not quantify ov
 generators and does not assume descent to the Chow group. -/
 def algebraicCycleClassSpan
     [IsIntegral X.left] [Smooth X.hom] [IsProjective X.hom] (p : ℕ) :
-    Submodule ℚ (FieldCohomology ℚ X (2 * (p : ℤ))) :=
+    Submodule ℚ (H^(2 * (p : ℤ))(X; ℚ)) :=
   ⨆ (x : X.left) (hx : coheight x = p),
     Submodule.span ℚ {cycleComponentSheafClass X x (d := dim X.left) hx}
 
@@ -165,7 +165,7 @@ irreducible algebraic subvarieties of codimension `p`. This is not the cycle-cla
 purity theorem identifying each relevant image with its fundamental-class line is supplied. -/
 def rationalConiveauSubspace
     [IsIntegral X.left] [Smooth X.hom] [IsProjective X.hom] (p : ℕ) :
-    Submodule ℚ (FieldCohomology ℚ X (2 * (p : ℤ))) :=
+    Submodule ℚ (H^(2 * (p : ℤ))(X; ℚ)) :=
   ⨆ (x : X.left) (_ : coheight x = p),
     rationalCohomologySupportedOn X (cycleComponentSupport X x) (2 * (p : ℤ))
 

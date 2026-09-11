@@ -24,7 +24,7 @@ public import FormalConjecturesForMathlib.AlgebraicTopology.DerivedSheafSupportF
 The map is the constructed complex-orientation duality followed by the actual
 derived support-forgetting map. We prove that forgetting Borel–Moore support first
 gives exactly the same result. All targets here use actual derived global sections;
-comparison with the repository's separate `FieldCohomology` presentation remains
+comparison with the repository's separate `H^n(X; ℚ)` presentation remains
 a further theorem. In particular, no cycle-component fundamental class is supplied
 or constructed by the transport map alone.
 -/

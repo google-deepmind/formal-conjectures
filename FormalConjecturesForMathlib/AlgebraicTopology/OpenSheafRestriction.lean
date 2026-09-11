@@ -90,8 +90,7 @@ def openSheafRestrictionCounit :
       congr 1 }⟩
   naturality F G f := by
     apply CategoryTheory.Sheaf.hom_ext_iff.mpr
-    apply NatTrans.ext
-    funext V
+    ext V : 2
     exact (f.hom.naturality _).symm
 
 set_option backward.defeqAttrib.useBackward true in
@@ -105,21 +104,17 @@ def openSheafRestrictionAdjunction :
     { unit := toOpenRestrictionPushforward X U
       counit := openSheafRestrictionCounit X U
       left_triangle := by
-        apply NatTrans.ext
-        funext F
+        ext F : 2
         apply CategoryTheory.Sheaf.hom_ext_iff.mpr
-        apply NatTrans.ext
-        funext V
+        ext V : 2
         change F.obj.map _ ≫ F.obj.map _ = 𝟙 _
         rw [← F.obj.map_comp]
         convert F.obj.map_id _ using 1
         congr 1
       right_triangle := by
-        apply NatTrans.ext
-        funext F
+        ext F : 2
         apply CategoryTheory.Sheaf.hom_ext_iff.mpr
-        apply NatTrans.ext
-        funext V
+        ext V : 2
         change F.obj.map _ ≫ F.obj.map _ = 𝟙 _
         rw [← F.obj.map_comp]
         convert F.obj.map_id _ using 1
@@ -165,8 +160,7 @@ lemma constantRestriction_pushforward_constantToOpen (A : AddCommGrpCat.{u}) :
       ((constantSheaf (Opens.grothendieckTopology X) AddCommGrpCat).obj A)).property
   rw [ObjectProperty.FullSubcategory.comp_hom, ← Category.assoc,
     toSheafify_constantRestriction]
-  apply NatTrans.ext
-  funext V
+  ext V : 2
   change (toSheafify (Opens.grothendieckTopology (TopCat.of U))
     ((Functor.const (Opens (TopCat.of U))ᵒᵖ).obj A)).app _ ≫
       (constantToOpenSheafRestriction X U A).hom.app _ = _
@@ -207,8 +201,7 @@ lemma constantToOpen_openSheafRestrictionToConstant (A : AddCommGrpCat.{u}) :
     toSheafify_constantToOpenSheafRestriction]
   dsimp only [openSheafRestrictionToConstant, Adjunction.homEquiv_symm_apply,
     openSheafRestrictionAdjunction, Adjunction.mkOfUnitCounit_counit]
-  apply NatTrans.ext
-  funext V
+  ext V : 2
   change _ ≫ (((U.isOpenEmbedding.sheafPullback AddCommGrpCat).map
     (constantRestriction U.inclusion' A)).hom.app V ≫
       ((openSheafRestrictionCounit X U).app _).hom.app V) = _

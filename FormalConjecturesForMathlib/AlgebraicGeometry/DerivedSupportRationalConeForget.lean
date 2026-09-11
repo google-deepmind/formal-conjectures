@@ -40,10 +40,10 @@ instance ambientRationalInjectiveComplex_isKInjective :
 /-- Ordinary rational cohomology computed by the actual ambient rational
 injective resolution. This has the ordinary augmentation normalization. -/
 def rationalCohomologyAddEquivAmbientInjectiveHomology (n : ℤ) :
-    FieldCohomology ℚ X n ≃+
+    H^n(X; ℚ) ≃+
       (TopCat.Sheaf.globalSectionsComplexInt (TopCat.of (ComplexPoint X))
         (ambientRationalInjectiveComplex X)).homology n := by
-  let e : FieldCohomology ℚ X n ≃+
+  let e : H^n(X; ℚ) ≃+
       Hypercohomology X (ambientRationalInjectiveComplex X) n :=
     { toEquiv := Localization.SmallShiftedHom.postcompEquiv
         (ambientRationalInjectiveAugmentation X)

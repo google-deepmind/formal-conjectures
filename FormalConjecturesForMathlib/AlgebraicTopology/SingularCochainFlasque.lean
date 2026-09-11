@@ -119,8 +119,7 @@ lemma singularCochainsEquivTopOpen_coboundary (n : ℕ) (φ : SingularCochains R
           (n + 1) n).hom.dualMap φ) =
       (singularCochainCoboundary R X n).app (.op ⊤)
         (singularCochainsEquivTopOpen R X n φ) := by
-  apply LinearMap.ext
-  intro c
+  ext c
   let C := (singularChainComplexFunctor (ModuleCat.{u} R)).obj (ModuleCat.of R R)
   let e := C.mapIso (Opens.inclusionTopIso X)
   change φ ((C.obj X).d (n + 1) n |>.hom ((e.hom.f (n + 1)).hom c)) =
