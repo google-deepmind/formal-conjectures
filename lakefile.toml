@@ -32,6 +32,11 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.33.1"
 
+[[require]]
+name = "TauCeti"
+git = "https://github.com/TauCetiProject/TauCeti"
+rev = "v4.33.0"
+
 # We make this a separate library so that we can apply different lean options.
 [[lean_lib]]
 name = "FormalConjecturesForMathlib"
