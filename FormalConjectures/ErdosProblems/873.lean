@@ -39,7 +39,7 @@ theorem erdos_873 : answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)),
     ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal := by
   sorry
 
-/-!
+/-
 ## Statements following the original question
 
 The paper states (2), (3), and then conjectures an all-X strengthening of (3).
