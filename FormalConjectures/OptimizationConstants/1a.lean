@@ -23,38 +23,50 @@ import FormalConjecturesUtil
 - [M2010] Matolcsi, Máté, and Carlos Vinuesa. "Improved bounds on the supremum of autoconvolutions."
   Journal of mathematical analysis and applications 372.2 (2010): 439-447. [arXiv:0907.1379](https://arxiv.org/abs/0907.1379)
 - [Y2026] Yuksekgonul, Mert et al., "Learning to Discover at Test Time," 2026, [arXiv:2601.16175](https://arxiv.org/abs/2601.16175)
+- [T2026] Together AI, "EinsteinArena-new-SOTA: State-of-the-art results on open math problems,"
+  2026, [GitHub](https://github.com/togethercomputer/EinsteinArena-new-SOTA)
+- [PBV2026] Piterbarg, Andrei, Jai Bajaj, and Derrick Vincent. "A multi-scale arcsine lower bound
+  for the Sidon autocorrelation constant $C_{1a}$," 2026,
+  [GitHub](https://github.com/AndreiPiterbarg/sidon-autocorrelation)
 -/
 
-open Set
+open MeasureTheory Set
 
 namespace Constant1a
 
 /-- **Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets**:
-The biggest real number satisfying a certain inequality about (auto)convolutions
-and $L^2$-norms of functions.
+The largest constant $C$ such that
+$$\max_{-1/2 \le t \le 1/2} \int_{\mathbb{R}} f(t - x) f(x)\,dx
+  \ge C \left(\int_{-1/4}^{1/4} f(x)\,dx\right)^2$$
+for all nonnegative $f \colon \mathbb{R} \to \mathbb{R}$.
+
+The inequality is only required for square-integrable $f$. This does not change the constant
+(see [M2010, §2]), and it guarantees that every autoconvolution integral exists and that the
+supremum over $t$ is finite.
 This number is related to the maximal size of Sidon sets in additive combinatorics. -/
 noncomputable def C1a : ℝ :=
-  sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f →  C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
-    ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (1 / 2 : ℝ) 1}}
+  sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f → MemLp f 2 →
+    C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
+      ≤ sSup {∫ x, f (t - x) * f x | t ∈ Icc (- 1 / 2 : ℝ) (1 / 2)}}
 
-/-- The best known lower bound, proven by Matolcsi-Vinuesa in [M2010]-/
+/-- A lower bound, proven by Matolcsi-Vinuesa in [M2010]. -/
 @[category research solved, AMS 5 11 26]
 theorem c1a_lower_bound : 1.2748 ≤ C1a := by
   sorry
 
-/-- The best known upper bound, proven by Yuksekgonul et al. in [Y2026] -/
+/-- An upper bound, proven by Yuksekgonul et al. in [Y2026]. -/
 @[category research solved, AMS 5 11 26]
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
-/-- How can the upper bound be improved? -/
+/-- How can the best known upper bound $1.502862$ of [T2026] be improved? -/
 @[category research open, AMS 5 11 26]
-theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5029 := by
+theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.502862 := by
   sorry
 
-/-- How can the lower bound be improved? -/
+/-- How can the best known lower bound $1.292$ of [PBV2026] be improved? -/
 @[category research open, AMS 5 11 26]
-theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.2748 C1a := by
+theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.292 C1a := by
   sorry
 
 /-- What is the exact value of the constant? -/
