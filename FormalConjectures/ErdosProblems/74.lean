@@ -119,9 +119,13 @@ noncomputable def SimpleGraph.maxSubgraphEdgeDistToBipartite
 Let $f(n)\to \infty$ possibly very slowly.
 Is there a graph of infinite chromatic number such that every finite subgraph on $n$
 vertices can be made bipartite by deleting at most $f(n)$ edges?
+
+The answer is no. A machine-checked disproof constructs a function $f(n) \to \infty$ for which
+every graph satisfying this local deletion bound has finite chromatic number.
 -/
-@[category research open, AMS 5]
-theorem erdos_74 : answer(sorry) ↔ ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/tadamcz/erdos74/blob/e127ee587c7c91267eecdb3569443d2b0ad64b52/Erdos74/Resolutions/Erdos74_118usd_22h.lean#L2511"]
+theorem erdos_74 : answer(False) ↔ ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
     (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n) := by
   sorry
