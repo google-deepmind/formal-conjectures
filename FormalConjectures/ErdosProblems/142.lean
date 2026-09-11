@@ -22,8 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/142](https://www.erdosproblems.com/142)
 -/
 
-open Filter
-
+open Asymptotics Filter
 
 namespace Erdos142
 
@@ -32,9 +31,10 @@ noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 /--
 Prove an asymptotic formula for $r_k(N)$, the largest possible size of a subset
 of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
+That is, find $f_k$ with $r_k(N) / f_k(N) \to 1$ as $N \to \infty$.
 -/
 @[category research open, AMS 11]
-theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
@@ -48,12 +48,13 @@ theorem erdos_142.variants.lower (k : ℕ) (hk : 1 < k) :
 
 
 /--
-Find functions $f_k$, such that $r_k(N) = O_k(f_k)$, where $r_k(N)$ the largest possible size of a
-subset of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
+Determine the order of magnitude of $r_k(N)$, the largest possible size of a subset
+of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic progression.
+That is, find $f_k$ with $r_k(N) \asymp_k f_k(N)$.
 -/
 @[category research open, AMS 11]
-theorem erdos_142.variants.upper (k : ℕ) :
-    (fun N => (r k N : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_142.variants.isTheta (k : ℕ) :
+    (fun N => (r k N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 
@@ -62,9 +63,10 @@ theorem erdos_142.variants.upper (k : ℕ) :
 /--
 Prove an asymptotic formula for $r_3(N)$, the largest possible size of a subset
 of $\{1, \dots, N\}$ that does not contain any non-trivial $3$-term arithmetic progression.
+That is, find $f$ with $r_3(N) / f(N) \to 1$ as $N \to \infty$.
 -/
 @[category research open, AMS 11]
-theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 end Erdos142
