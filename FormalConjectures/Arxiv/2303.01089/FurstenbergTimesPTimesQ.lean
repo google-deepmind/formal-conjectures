@@ -29,16 +29,11 @@ noncomputable section
 
 open scoped Topology
 open Filter MeasureTheory UnitAddCircle
+open Nat (MultiplicativelyIndependent)
 
 namespace Arxiv.id2303_01089
 
 notation "𝕋" => UnitAddCircle
-
-/--
-Two integers $p, q \ge 2$ are multiplicatively independent if
-$\log p / \log q$ is irrational.
--/
-def MultiplicativelyIndependent (p q : ℕ) : Prop := Irrational (Real.log p / Real.log q)
 
 /--
 The map $T_n$ sends $x$ to $nx \bmod 1$ on the additive circle.
