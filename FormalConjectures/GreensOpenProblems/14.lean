@@ -216,86 +216,133 @@ theorem W_3_18 : W 3 18 = 312 := by sorry
 @[category research solved, AMS 5 11]
 theorem W_3_19 : W 3 19 = 349 := by sorry
 
--- Conjectured lower bounds for W(3,r) from [AKS14, Table 2].
+-- Lower bounds for `W(3,r)` from [AKS14, Table 2]. Each is proved by an explicit good partition
+-- given in [AKS14, Appendix A].
 /-- $W(3, 20) \ge 389$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_20_lower : answer(sorry) ↔ W 3 20 ≥ 389 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_20_lower : W 3 20 ≥ 389 := by sorry
 
 /-- $W(3, 21) \ge 416$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_21_lower : answer(sorry) ↔ W 3 21 ≥ 416 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_21_lower : W 3 21 ≥ 416 := by sorry
 
 /-- $W(3, 22) \ge 464$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_22_lower : answer(sorry) ↔ W 3 22 ≥ 464 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_22_lower : W 3 22 ≥ 464 := by sorry
 
 /-- $W(3, 23) \ge 516$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_23_lower : answer(sorry) ↔ W 3 23 ≥ 516 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_23_lower : W 3 23 ≥ 516 := by sorry
 
 /-- $W(3, 24) \ge 593$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_24_lower : answer(sorry) ↔ W 3 24 ≥ 593 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_24_lower : W 3 24 ≥ 593 := by sorry
 
 /-- $W(3, 25) \ge 656$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_25_lower : answer(sorry) ↔ W 3 25 ≥ 656 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_25_lower : W 3 25 ≥ 656 := by sorry
 
 /-- $W(3, 26) \ge 727$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_26_lower : answer(sorry) ↔ W 3 26 ≥ 727 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_26_lower : W 3 26 ≥ 727 := by sorry
 
 /-- $W(3, 27) \ge 770$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_27_lower : answer(sorry) ↔ W 3 27 ≥ 770 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_27_lower : W 3 27 ≥ 770 := by sorry
 
 /-- $W(3, 28) \ge 827$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_28_lower : answer(sorry) ↔ W 3 28 ≥ 827 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_28_lower : W 3 28 ≥ 827 := by sorry
 
 /-- $W(3, 29) \ge 868$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_29_lower : answer(sorry) ↔ W 3 29 ≥ 868 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_29_lower : W 3 29 ≥ 868 := by sorry
 
 /-- $W(3, 30) \ge 903$ from [AKS14, Table 2]. -/
-@[category research open, AMS 5 11]
-theorem W_3_30_lower : answer(sorry) ↔ W 3 30 ≥ 903 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_30_lower : W 3 30 ≥ 903 := by sorry
 
--- Conjectured strict bounds for W(3,r) from [AKS14, Table 3].
+-- Further lower bounds for `W(3,r)` from [AKS14, Table 3]. Each is proved by an explicit good
+-- partition given in [AKS14, Appendix A]; [AKS14] expects these bounds to be improvable.
 /-- $W(3, 31) > 930$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_31_lower : answer(sorry) ↔ W 3 31 > 930 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_31_lower : W 3 31 > 930 := by sorry
 
 /-- $W(3, 32) > 1006$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_32_lower : answer(sorry) ↔ W 3 32 > 1006 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_32_lower : W 3 32 > 1006 := by sorry
 
 /-- $W(3, 33) > 1063$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_33_lower : answer(sorry) ↔ W 3 33 > 1063 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_33_lower : W 3 33 > 1063 := by sorry
 
 /-- $W(3, 34) > 1143$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_34_lower : answer(sorry) ↔ W 3 34 > 1143 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_34_lower : W 3 34 > 1143 := by sorry
 
 /-- $W(3, 35) > 1204$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_35_lower : answer(sorry) ↔ W 3 35 > 1204 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_35_lower : W 3 35 > 1204 := by sorry
 
 /-- $W(3, 36) > 1257$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_36_lower : answer(sorry) ↔ W 3 36 > 1257 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_36_lower : W 3 36 > 1257 := by sorry
 
 /-- $W(3, 37) > 1338$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_37_lower : answer(sorry) ↔ W 3 37 > 1338 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_37_lower : W 3 37 > 1338 := by sorry
 
 /-- $W(3, 38) > 1378$ from [AKS14, Table 3]. -/
-@[category research open, AMS 5 11]
-theorem W_3_38_lower : answer(sorry) ↔ W 3 38 > 1378 := sorry
+@[category research solved, AMS 5 11]
+theorem W_3_38_lower : W 3 38 > 1378 := by sorry
 
 /-- $W(3, 39) > 1418$ from [AKS14, Table 3]. -/
+@[category research solved, AMS 5 11]
+theorem W_3_39_lower : W 3 39 > 1418 := by sorry
+
+-- [AKS14, Table 2] conjectures that the lower bounds for `20 ≤ r ≤ 30` are the exact values.
+/-- $W(3, 20) = 389$, conjectured in [AKS14, Table 2]. -/
 @[category research open, AMS 5 11]
-theorem W_3_39_lower : answer(sorry) ↔ W 3 39 > 1418 := sorry
+theorem W_3_20_eq : W 3 20 = 389 := by sorry
+
+/-- $W(3, 21) = 416$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_21_eq : W 3 21 = 416 := by sorry
+
+/-- $W(3, 22) = 464$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_22_eq : W 3 22 = 464 := by sorry
+
+/-- $W(3, 23) = 516$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_23_eq : W 3 23 = 516 := by sorry
+
+/-- $W(3, 24) = 593$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_24_eq : W 3 24 = 593 := by sorry
+
+/-- $W(3, 25) = 656$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_25_eq : W 3 25 = 656 := by sorry
+
+/-- $W(3, 26) = 727$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_26_eq : W 3 26 = 727 := by sorry
+
+/-- $W(3, 27) = 770$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_27_eq : W 3 27 = 770 := by sorry
+
+/-- $W(3, 28) = 827$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_28_eq : W 3 28 = 827 := by sorry
+
+/-- $W(3, 29) = 868$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_29_eq : W 3 29 = 868 := by sorry
+
+/-- $W(3, 30) = 903$, conjectured in [AKS14, Table 2]. -/
+@[category research open, AMS 5 11]
+theorem W_3_30_eq : W 3 30 = 903 := by sorry
 
 end Green14
