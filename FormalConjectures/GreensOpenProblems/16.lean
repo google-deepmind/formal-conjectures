@@ -44,7 +44,7 @@ noncomputable def f (N : ℕ) : ℕ :=
 @[category research open, AMS 5 11]
 theorem green_16 (N : ℕ) :
     ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧
-      A.card = answer(sorry) ∧
+      A.card = (answer(sorry) : ℕ → ℕ) N ∧
       MaximalFor (fun B => B ⊆ Icc 1 N ∧ SolutionFree B) Finset.card A := by
   sorry
 
