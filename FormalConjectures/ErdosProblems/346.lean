@@ -32,9 +32,14 @@ open Filter Topology Set
 namespace Erdos346
 
 /-- Is it true that for every lacunary, strongly complete sequence `A` that is not complete whenever
-infinitely many terms are removed from it, `lim A (n + 1) / A n = (1 + √5) / 2`? -/
-@[category research open, AMS 11]
-theorem erdos_346 : answer(sorry) ↔ ∀ {A : ℕ → ℕ}, IsLacunary A → IsAddStronglyCompleteNatSeq A →
+infinitely many terms are removed from it, `lim A (n + 1) / A n = (1 + √5) / 2`?
+
+The answer is no. A counterexample recorded at [erdosproblems.com/346] has all successive ratios
+at least `6 / 5`, but has subsequences of successive ratios tending to two different limits,
+`(1 + √5) / 2` and `(1 + √5) / 2 + 1 / 4`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_346 : answer(False) ↔ ∀ {A : ℕ → ℕ}, IsLacunary A → IsAddStronglyCompleteNatSeq A →
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) →
     Tendsto (fun n => A (n + 1) / (A n : ℝ)) atTop (𝓝 ((1 + √5) / 2)) := by
   sorry
