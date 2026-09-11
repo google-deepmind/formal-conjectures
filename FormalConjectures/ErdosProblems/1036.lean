@@ -42,14 +42,14 @@ def HasManyNonIsomorphicInducedSubgraphs {V : Type*} (G : SimpleGraph V) (k : �
     k ≤ (𝒮.ncard : ℝ)
 
 /--
-`G` contains no complete bipartite graph, and no complement of a complete bipartite graph, on
-more than `m` vertices as an induced subgraph.
+Neither `G` nor its complement contains a balanced complete bipartite graph $K_{k,k}$ on more
+than `m` vertices as a (not necessarily induced) subgraph. That is, there are no two disjoint
+sets of `k` vertices with $2k > m$ such that every pair of vertices from different sets is
+adjacent in `G`, or every such pair is non-adjacent in `G`.
 -/
-def NoLargeInducedBipartite {V : Type*} (G : SimpleGraph V) (m : ℝ) : Prop :=
-  ∀ (s : Set V) (a b : ℕ),
-    (Nonempty (G.induce s ≃g completeBipartiteGraph (Fin a) (Fin b)) ∨
-      Nonempty (G.induce s ≃g (completeBipartiteGraph (Fin a) (Fin b))ᶜ)) →
-    (s.ncard : ℝ) ≤ m
+def NoLargeBiclique {V : Type*} (G : SimpleGraph V) (m : ℝ) : Prop :=
+  ∀ k : ℕ, ((completeBipartiteGraph (Fin k) (Fin k)).IsContained G ∨
+    (completeBipartiteGraph (Fin k) (Fin k)).IsContained Gᶜ) → (2 * k : ℝ) ≤ m
 
 /--
 Let $G$ be a graph on $n$ vertices which does not contain a trivial (empty or complete) graph on
@@ -79,14 +79,14 @@ theorem erdos_1036.variants.alon_hajnal :
   sorry
 
 /--
-Erdős and Hajnal [ErHa89b] proved that if $G$ does not contain a complete bipartite graph or its
-complement on more than $c\log n$ vertices then $G$ contains at least $2^{\Omega_c(n)}$ many
-non-isomorphic induced subgraphs.
+Erdős and Hajnal [ErHa89b] proved that if neither $G$ nor its complement contains a balanced
+complete bipartite graph $K_{k,k}$ on more than $c\log n$ vertices (as a not necessarily induced
+subgraph) then $G$ contains at least $2^{\Omega_c(n)}$ many non-isomorphic induced subgraphs.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1036.variants.erdos_hajnal :
     ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      NoLargeInducedBipartite G (c * Real.log (n : ℝ)) →
+      NoLargeBiclique G (c * Real.log (n : ℝ)) →
         HasManyNonIsomorphicInducedSubgraphs G ((2 : ℝ) ^ (δ * (n : ℝ))) := by
   sorry
 
