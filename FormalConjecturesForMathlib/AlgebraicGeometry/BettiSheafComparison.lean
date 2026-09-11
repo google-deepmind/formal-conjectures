@@ -59,7 +59,7 @@ abbrev RationalSingularCochainHypercohomology (n : ℤ) : Type 1 :=
 singular-cochain resolution. -/
 def rationalCohomologySingularCochainEquiv
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    FieldCohomology ℚ X n ≃
+    H^n(X; ℚ) ≃
       RationalSingularCochainHypercohomology X n :=
   Localization.SmallShiftedHom.postcompEquiv
     (rationalToSingularCochainComplexInt X)
@@ -69,7 +69,7 @@ def rationalCohomologySingularCochainEquiv
 constant-to-singular-cochain morphism. -/
 lemma rationalCohomologySingularCochainEquiv_apply
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (α : FieldCohomology ℚ X n) :
+    (α : H^n(X; ℚ)) :
     rationalCohomologySingularCochainEquiv X n α =
       hypercohomologyMap X
         (rationalToSingularCochainComplexInt X) n α :=
@@ -78,7 +78,7 @@ lemma rationalCohomologySingularCochainEquiv_apply
 /-- The rational constant-to-singular comparison is additive. -/
 def rationalCohomologySingularCochainAddEquiv
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    FieldCohomology ℚ X n ≃+
+    H^n(X; ℚ) ≃+
       RationalSingularCochainHypercohomology X n where
   toEquiv := rationalCohomologySingularCochainEquiv X n
   map_add' α β :=
@@ -88,7 +88,7 @@ def rationalCohomologySingularCochainAddEquiv
 @[simp]
 lemma rationalCohomologySingularCochainAddEquiv_apply
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (α : FieldCohomology ℚ X n) :
+    (α : H^n(X; ℚ)) :
     rationalCohomologySingularCochainAddEquiv X n α =
       hypercohomologyMap X
         (rationalToSingularCochainComplexInt X) n α :=

@@ -25,7 +25,7 @@ public import Mathlib.Algebra.Homology.HomologySequence
 
 For `V ⊆ U` open, the actual restrictions `F → j_{U*}F|U → j_{V*}F|V`
 give a short exact sequence on injective coefficients:
-`0 → Γ̲_{X∖U} F → Γ̲_{X∖V} F → ker(j_{U*}F|U → j_{V*}F|V) → 0`.
+`0 → Γ_{X∖U} F → Γ_{X∖V} F → ker(j_{U*}F|U → j_{V*}F|V) → 0`.
 The last term is explicitly the sheaf of sections on `U` vanishing on `V`,
 viewed on `X`. Thus for closed supports `S ⊆ Z`, the sequence removes `S`
 from `Z`, by taking `U = X∖S` and `V = X∖Z`.
@@ -103,8 +103,7 @@ set_option backward.defeqAttrib.useBackward true in
 @[reassoc (attr := simp)]
 lemma sheafSectionsSupportedOutsideMap_toBetween :
     sheafSectionsSupportedOutsideMap X h ≫ toSheafSectionsBetweenOpens X h = 0 := by
-  apply NatTrans.ext
-  funext F
+  ext F : 2
   apply (cancel_mono (kernel.ι _)).1
   simp [toSheafSectionsBetweenOpens, sheafSectionsSupportedOutsideMap,
     liftSheafSectionsSupportedOutside, sheafSectionsSupportedOutsideInclusion]

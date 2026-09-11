@@ -49,6 +49,10 @@ def standardAffineSimplex (d : ℕ) (t : stdSimplex ℝ (Fin (d + 1))) :
     StandardRealModel d :=
   fun j => t (Fin.castSucc j) - t (Fin.last d)
 
+-- Mathlib proves this but does not tag it, so `fun_prop` cannot see through `stdSimplex.map`.
+attribute [fun_prop] stdSimplex.continuous_map
+
+@[fun_prop]
 lemma continuous_standardAffineSimplex (d : ℕ) : Continuous (standardAffineSimplex d) :=
   continuous_pi fun j =>
     ((continuous_apply (Fin.castSucc j)).comp continuous_subtype_val).sub
@@ -131,9 +135,7 @@ def standardFaceMap (n : ℕ) (i : Fin (n + 2)) :
   toFun t := ⟨standardAffineSimplex (n + 1) (stdSimplex.map i.succAbove t),
     standardAffineSimplex_ne_zero_of_coord_zero (n + 1) _ i
       (stdSimplex_map_succAbove_self_zero n i t)⟩
-  continuous_toFun := Continuous.subtype_mk
-    ((continuous_standardAffineSimplex (n + 1)).comp
-      (stdSimplex.continuous_map i.succAbove)) _
+  continuous_toFun := by fun_prop
 
 /-- A face of the positive-dimensional standard simplex as a singular simplex of the
 punctured space. -/

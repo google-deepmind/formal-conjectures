@@ -65,7 +65,7 @@ def derivedRationalCohomologyAddEquiv (n : ℤ) :
       ((TopCat.Sheaf.derivedGlobalSections (TopCat.of (ComplexPoint X))).obj
         ((DerivedCategory.Plus.singleFunctor (AnalyticAdditiveSheaf X) 0).obj
           (constantFieldSheaf ℚ X)))) ≃+
-      FieldCohomology ℚ X n :=
+      H^n(X; ℚ) :=
   (((DerivedCategory.homologyFunctor AddCommGrpCat n).mapIso
     (derivedRationalGlobalInjectiveModelIso X) ≪≫
       (DerivedCategory.homologyFunctorFactors AddCommGrpCat n).app _).addCommGroupIsoToAddEquiv).trans

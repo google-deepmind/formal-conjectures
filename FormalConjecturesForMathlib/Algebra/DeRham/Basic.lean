@@ -15,27 +15,51 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.LinearAlgebra.DFinsupp
-public import Mathlib.LinearAlgebra.Quotient.Basic
-
-import Mathlib.Algebra.Algebra.NonUnitalHom
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Conjugation
+public import Mathlib.LinearAlgebra.ExteriorPower.Basic
+public import Mathlib.RingTheory.Kaehler.Basic
 
 /-!
 # Algebraic de Rham forms
 
-This file gives an explicit generators-and-relations construction of relative Kähler differential
-forms. Degree `p` is generated over the base ring by symbols
-`a₀ da₁ ∧ ... ∧ daₚ`. The relations impose linearity, the Leibniz rule, vanishing on base
-constants, and alternation. We take their differential closure so that inserting the coefficient
-as the first differential defines the exterior derivative by construction.
+Relative differential forms of degree `p` are the exterior powers `⋀[A]^p Ω[A⁄R]` of the module
+of relative Kähler differentials, built from Mathlib's `exteriorPower` and `KaehlerDifferential`.
+Since `⋀[A]^p M` is a submodule of `ExteriorAlgebra A M`, all degrees live inside the single
+algebra `ExtAlg R A = ⋀ Ω[A⁄R]`, and the exterior derivative is constructed once and for all on
+that algebra.
 
-Algebra homomorphisms act on every entry of a symbol. The resulting maps commute with the exterior
-derivative, are functorial, and require no chosen bases or presentations of the algebra.
+## The exterior derivative
+
+The exterior derivative is the odd degree-one `R`-derivation `d` of `⋀ Ω[A⁄R]` extending the
+universal derivation `A → Ω[A⁄R]`. It is obtained from a universal property rather than from a
+choice of generators: an odd derivation is the same thing as an algebra map `x ↦ x + (d x) * ε`
+into the square-zero extension `Sq R A = ⋀ Ω[A⁄R] ⊕ ⋀ Ω[A⁄R] * ε` by an odd square-zero element,
+whose multiplication `(x, u) * (y, v) = (x * y, involute x * v + u * y)` encodes the graded
+Leibniz rule. Here `involute` is the grade involution, so `involute x = (-1) ^ p * x` on a form of
+degree `p`, and the rule read off from that product is the usual
+`d (x * y) = d x * y + (-1) ^ p * x * d y`.
+
+Giving `Sq R A` the twisted `A`-algebra structure `a ↦ a + (d a) * ε` turns that algebra map into
+an `A`-algebra map, so it is produced in two steps:
+
+* the universal property of `Ω[A⁄R]` applied to the derivation `a ↦ (d a) * ε` gives an
+  `A`-linear `phi : Ω[A⁄R] → Sq R A`, necessarily of the form `ω ↦ ω + (d ω) * ε`;
+* the universal property of the exterior algebra applied to `phi` gives `deRhamHom`, and `d` is
+  its `ε`-component `extDeriv`.
+
+The identities `d ∘ d = 0`, the graded Leibniz rule, and the fact that `d` raises the degree by
+one then follow by induction on the exterior algebra.
+
+## Main definitions
+
+* `Algebra.DeRham.Form R A p`: differential forms of degree `p`, that is `⋀[A]^p Ω[A⁄R]`;
+* `Algebra.DeRham.differential`: the exterior derivative `Form R A p →ₗ[R] Form R A (p + 1)`;
+* `Algebra.DeRham.mk R A p a₀ v`: the form `a₀ * d v₀ ∧ ... ∧ d vₚ₋₁`; these span `Form R A p`
+  over `R`, by `Algebra.DeRham.span_mk`;
+* `Algebra.DeRham.map`: functoriality along an `R`-algebra homomorphism.
 -/
 
 @[expose] public noncomputable section
-
-open Finsupp
 
 universe u
 
@@ -43,400 +67,687 @@ namespace Algebra.DeRham
 
 variable (R A : Type u) [CommRing R] [CommRing A] [Algebra R A]
 
-/-- A symbol `a₀ da₁ ∧ ... ∧ daₚ`. -/
-abbrev Generator (p : ℕ) := A × (Fin p → A)
+/-- The exterior algebra of the module of relative Kähler differentials. Differential forms of
+each degree live inside it as the exterior powers of `Ω[A⁄R]`. -/
+abbrev ExtAlg : Type u := ExteriorAlgebra A Ω[A⁄R]
 
-/-- The free module on differential-form symbols. -/
-abbrev RawForm (p : ℕ) := Generator A p →₀ R
+/-- The grade involution of `⋀ Ω[A⁄R]`, negating each differential. -/
+abbrev involute : ExtAlg R A →ₐ[A] ExtAlg R A := CliffordAlgebra.involute
 
-inductive Relation (p : ℕ)
-  | coeffAdd (a b : A) (v : Fin p → A)
-  | coeffSMul (r : R) (a : A) (v : Fin p → A)
-  | diffAdd (a₀ : A) (v : Fin p → A) (i : Fin p) (a b : A)
-  | diffSMul (a₀ : A) (v : Fin p → A) (i : Fin p) (r : R) (a : A)
-  | diffMul (a₀ : A) (v : Fin p → A) (i : Fin p) (a b : A)
-  | diffConst (a₀ : A) (v : Fin p → A) (i : Fin p) (r : R)
-  | alt (a₀ : A) (v : Fin p → A) (i j : Fin p) (h : v i = v j) (hne : i ≠ j)
+variable {R A}
 
-def relationValue (p : ℕ) : Relation R A p → RawForm R A p
-  | .coeffAdd a b v =>
-      single (a + b, v) 1 - single (a, v) 1 - single (b, v) 1
-  | .coeffSMul r a v =>
-      single (r • a, v) 1 - r • single (a, v) 1
-  | .diffAdd a₀ v i a b =>
-      single (a₀, Function.update v i (a + b)) 1 -
-        single (a₀, Function.update v i a) 1 -
-          single (a₀, Function.update v i b) 1
-  | .diffSMul a₀ v i r a =>
-      single (a₀, Function.update v i (r • a)) 1 -
-        r • single (a₀, Function.update v i a) 1
-  | .diffMul a₀ v i a b =>
-      single (a₀, Function.update v i (a * b)) 1 -
-        single (a₀ * a, Function.update v i b) 1 -
-          single (a₀ * b, Function.update v i a) 1
-  | .diffConst a₀ v i r =>
-      single (a₀, Function.update v i (algebraMap R A r)) 1
-  | .alt a₀ v _ _ _ _ => single (a₀, v) 1
+@[simp] lemma involute_algebraMap (a : A) :
+    involute R A (algebraMap A (ExtAlg R A) a) = algebraMap A (ExtAlg R A) a :=
+  AlgHom.commutes _ a
 
-def standardRelations (p : ℕ) : Submodule R (RawForm R A p) :=
-  Submodule.span R (Set.range (relationValue R A p))
+@[simp] lemma involute_ι (ω : Ω[A⁄R]) :
+    involute R A (ExteriorAlgebra.ι A ω) = -ExteriorAlgebra.ι A ω :=
+  CliffordAlgebra.involute_ι ω
 
-def nextGenerator {p : ℕ} (g : Generator A p) : Generator A (p + 1) :=
-  (1, Fin.cases g.1 g.2)
+/-- A single differential anticommutes with every homogeneous factor, which globally reads as
+commuting past the grade involution. -/
+lemma ι_mul_eq_involute_mul_ι (m : Ω[A⁄R]) (y : ExtAlg R A) :
+    ExteriorAlgebra.ι A m * y = involute R A y * ExteriorAlgebra.ι A m := by
+  induction y using ExteriorAlgebra.induction with
+  | algebraMap a => rw [involute_algebraMap, Algebra.commutes]
+  | ι n =>
+      rw [involute_ι, neg_mul, eq_neg_iff_add_eq_zero]
+      exact ExteriorAlgebra.ι_add_mul_swap m n
+  | mul y z hy hz => rw [← mul_assoc, hy, mul_assoc, hz, ← mul_assoc, map_mul]
+  | add y z hy hz => rw [mul_add, hy, hz, map_add, add_mul]
 
-def rawDifferential (p : ℕ) : RawForm R A p →ₗ[R] RawForm R A (p + 1) :=
-  Finsupp.lsum R fun g => Finsupp.lsingle (nextGenerator A g)
+variable (R A)
 
-omit [Algebra R A] in
-@[simp] lemma rawDifferential_single (p : ℕ) (g : Generator A p) (r : R) :
-    rawDifferential R A p (single g r) = single (nextGenerator A g) r := by
-  simp [rawDifferential]
+/-- The square-zero extension of `⋀ Ω[A⁄R]` by an odd square-zero element `ε`, with elements
+written `x + u * ε` and multiplication `(x, u) * (y, v) = (x * y, involute x * v + u * y)`.
+An `R`-algebra map `x ↦ (x, d x)` into it is precisely an odd degree-one `R`-derivation `d`. -/
+def Sq : Type u := ExtAlg R A × ExtAlg R A
 
-lemma rawDifferential_squared_single_mem_standardRelations (p : ℕ)
-    (g : Generator A p) (r : R) :
-    rawDifferential R A (p + 1) (rawDifferential R A p (single g r)) ∈
-      standardRelations R A (p + 2) := by
-  rw [rawDifferential_single, rawDifferential_single]
-  let w : Fin (p + 2) → A := Fin.cases 0 (Fin.cases g.1 g.2)
-  have hrel : relationValue R A (p + 2) (Relation.diffConst 1 w 0 1) ∈
-      standardRelations R A (p + 2) :=
-    Submodule.subset_span (Set.mem_range_self _)
-  convert (standardRelations R A (p + 2)).smul_mem r hrel using 1
-  simp only [relationValue, smul_single, smul_eq_mul, mul_one]
-  congr 2
-  apply Prod.ext
-  · rfl
-  · funext i
-    refine Fin.cases ?_ (fun j => ?_) i <;> simp [nextGenerator, w]
+namespace Sq
 
-lemma rawDifferential_squared_mem_standardRelations (p : ℕ) (x : RawForm R A p) :
-    rawDifferential R A (p + 1) (rawDifferential R A p x) ∈
-      standardRelations R A (p + 2) := by
-  classical
-  induction x using Finsupp.induction with
+variable {R A}
+
+/-- The element `x + u * ε` of the square-zero extension. -/
+def mk (x u : ExtAlg R A) : Sq R A := (x, u)
+
+/-- The part of an element of the square-zero extension not involving `ε`. -/
+def fst (s : Sq R A) : ExtAlg R A := Prod.fst s
+
+/-- The coefficient of `ε` in an element of the square-zero extension. -/
+def snd (s : Sq R A) : ExtAlg R A := Prod.snd s
+
+@[simp] lemma fst_mk (x u : ExtAlg R A) : fst (mk x u) = x := rfl
+
+@[simp] lemma snd_mk (x u : ExtAlg R A) : snd (mk x u) = u := rfl
+
+@[ext] lemma ext {s t : Sq R A} (h₁ : fst s = fst t) (h₂ : snd s = snd t) : s = t :=
+  Prod.ext h₁ h₂
+
+instance instAddCommGroup : AddCommGroup (Sq R A) :=
+  inferInstanceAs (AddCommGroup (ExtAlg R A × ExtAlg R A))
+
+@[simp] lemma fst_zero : fst (0 : Sq R A) = 0 := rfl
+
+@[simp] lemma snd_zero : snd (0 : Sq R A) = 0 := rfl
+
+@[simp] lemma fst_add (s t : Sq R A) : fst (s + t) = fst s + fst t := rfl
+
+@[simp] lemma snd_add (s t : Sq R A) : snd (s + t) = snd s + snd t := rfl
+
+@[simp] lemma fst_neg (s : Sq R A) : fst (-s) = -fst s := rfl
+
+@[simp] lemma snd_neg (s : Sq R A) : snd (-s) = -snd s := rfl
+
+instance : Mul (Sq R A) :=
+  ⟨fun s t => mk (fst s * fst t) (involute R A (fst s) * snd t + snd s * fst t)⟩
+
+@[simp] lemma fst_mul (s t : Sq R A) : fst (s * t) = fst s * fst t := rfl
+
+@[simp] lemma snd_mul (s t : Sq R A) :
+    snd (s * t) = involute R A (fst s) * snd t + snd s * fst t := rfl
+
+instance : One (Sq R A) := ⟨mk 1 0⟩
+
+@[simp] lemma fst_one : fst (1 : Sq R A) = 1 := rfl
+
+@[simp] lemma snd_one : snd (1 : Sq R A) = 0 := rfl
+
+instance instRing : Ring (Sq R A) where
+  __ := instAddCommGroup (R := R) (A := A)
+  mul_assoc s t u := by
+    ext
+    · simp [mul_assoc]
+    · simp [map_mul, mul_add, add_mul, mul_assoc, add_assoc]
+  one_mul s := by ext <;> simp
+  mul_one s := by ext <;> simp
+  left_distrib s t u := by
+    ext
+    · simp [mul_add]
+    · simp only [fst_add, snd_add, snd_mul, mul_add]
+      abel
+  right_distrib s t u := by
+    ext
+    · simp [add_mul]
+    · simp only [fst_add, snd_add, snd_mul, map_add, add_mul]
+      abel
+  zero_mul s := by ext <;> simp
+  mul_zero s := by ext <;> simp
+
+end Sq
+
+/-- The twisted embedding `a ↦ a + (d a) * ε` of `A` into the square-zero extension. -/
+def twist : A →+* Sq R A where
+  toFun a := Sq.mk (algebraMap A (ExtAlg R A) a)
+    (ExteriorAlgebra.ι A (KaehlerDifferential.D R A a))
+  map_one' := by ext <;> simp
+  map_mul' a b := by
+    ext
+    · simp
+    · simp [Algebra.smul_def, Algebra.commutes (R := A) b (ExteriorAlgebra.ι A _)]
+  map_zero' := by ext <;> simp
+  map_add' a b := by ext <;> simp
+
+@[simp] lemma fst_twist (a : A) :
+    Sq.fst (twist R A a) = algebraMap A (ExtAlg R A) a := rfl
+
+@[simp] lemma snd_twist (a : A) :
+    Sq.snd (twist R A a) = ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) := rfl
+
+lemma twist_commutes (a : A) (s : Sq R A) : twist R A a * s = s * twist R A a := by
+  ext
+  · simpa using Algebra.commutes a (Sq.fst s)
+  · simp only [Sq.snd_mul, fst_twist, snd_twist, involute_algebraMap,
+      ι_mul_eq_involute_mul_ι (KaehlerDifferential.D R A a) (Sq.fst s)]
+    rw [Algebra.commutes a (Sq.snd s)]
+    abel
+
+instance : Algebra A (Sq R A) := (twist R A).toAlgebra' (twist_commutes R A)
+
+instance : Algebra R (Sq R A) :=
+  ((twist R A).comp (algebraMap R A)).toAlgebra' fun _ s => twist_commutes R A _ s
+
+instance : IsScalarTower R A (Sq R A) := .of_algebraMap_eq fun _ => rfl
+
+namespace Sq
+
+variable {R A}
+
+@[simp] lemma fst_algebraMap (a : A) :
+    fst (algebraMap A (Sq R A) a) = algebraMap A (ExtAlg R A) a := rfl
+
+@[simp] lemma snd_algebraMap (a : A) :
+    snd (algebraMap A (Sq R A) a) = ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) := rfl
+
+@[simp] lemma fst_smul (a : A) (s : Sq R A) : fst (a • s) = a • fst s := by
+  rw [Algebra.smul_def, fst_mul, fst_algebraMap, Algebra.smul_def]
+
+lemma snd_smul (a : A) (s : Sq R A) :
+    snd (a • s) = a • snd s +
+      ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) * fst s := by
+  rw [Algebra.smul_def, snd_mul, fst_algebraMap, snd_algebraMap, involute_algebraMap,
+    Algebra.smul_def]
+
+@[simp] lemma fst_smul_base (r : R) (s : Sq R A) : fst (r • s) = r • fst s := by
+  rw [← algebraMap_smul A r s, fst_smul, algebraMap_smul]
+
+@[simp] lemma snd_smul_base (r : R) (s : Sq R A) : snd (r • s) = r • snd s := by
+  rw [← algebraMap_smul A r s, snd_smul, algebraMap_smul]
+  simp
+
+end Sq
+
+namespace Sq
+
+/-- The projection to the `ε`-free part, as an `A`-algebra map. -/
+def fstAlgHom : Sq R A →ₐ[A] ExtAlg R A where
+  toFun := fst
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
+
+@[simp] lemma fstAlgHom_apply (s : Sq R A) : fstAlgHom R A s = fst s := rfl
+
+/-- The coefficient of `ε`, as an `R`-linear map. -/
+def sndLinear : Sq R A →ₗ[R] ExtAlg R A where
+  toFun := snd
+  map_add' _ _ := rfl
+  map_smul' := snd_smul_base
+
+@[simp] lemma sndLinear_apply (s : Sq R A) : sndLinear R A s = snd s := rfl
+
+end Sq
+
+/-- The tautological `R`-derivation `a ↦ (d a) * ε` of `A` into the square-zero extension. -/
+def epsDerivation : Derivation R A (Sq R A) where
+  toFun a := Sq.mk (ExteriorAlgebra.ι A (KaehlerDifferential.D R A a)) 0
+  map_add' a b := by ext <;> simp
+  map_smul' r a := by ext <;> simp
+  map_one_eq_zero' := by ext <;> simp
+  leibniz' a b := by
+    ext
+    · simp
+    · simp [Sq.snd_smul, ExteriorAlgebra.ι_add_mul_swap]
+
+/-- Every differential `ω` determines the element `ω + (d ω) * ε` of the square-zero extension.
+This is the lift of `epsDerivation` along the universal property of Kähler differentials. -/
+def phi : Ω[A⁄R] →ₗ[A] Sq R A := (epsDerivation R A).liftKaehlerDifferential
+
+@[simp] lemma phi_D (a : A) :
+    phi R A (KaehlerDifferential.D R A a) =
+      Sq.mk (ExteriorAlgebra.ι A (KaehlerDifferential.D R A a)) 0 :=
+  (epsDerivation R A).liftKaehlerDifferential_comp_D a
+
+/-- To prove a statement about every Kähler differential it suffices to treat the exact ones
+`d a` and to check closure under zero, sums, and scalars. -/
+@[elab_as_elim]
+lemma D_induction {motive : Ω[A⁄R] → Prop} (ω : Ω[A⁄R])
+    (D : ∀ a : A, motive (KaehlerDifferential.D R A a)) (zero : motive 0)
+    (add : ∀ x y, motive x → motive y → motive (x + y))
+    (smul : ∀ (a : A) x, motive x → motive (a • x)) : motive ω := by
+  have hω : ω ∈ Submodule.span A (Set.range (KaehlerDifferential.D R A)) := by
+    rw [KaehlerDifferential.span_range_derivation]; trivial
+  induction hω using Submodule.span_induction with
+  | mem _ hx => obtain ⟨a, rfl⟩ := hx; exact D a
+  | zero => exact zero
+  | add x y _ _ hx hy => exact add x y hx hy
+  | smul a x _ hx => exact smul a x hx
+
+@[simp] lemma fst_phi (ω : Ω[A⁄R]) : Sq.fst (phi R A ω) = ExteriorAlgebra.ι A ω := by
+  have h : (Sq.fstAlgHom R A).toLinearMap.comp (phi R A) = ExteriorAlgebra.ι A := by
+    refine LinearMap.ext_on (KaehlerDifferential.span_range_derivation R A) ?_
+    rintro _ ⟨a, rfl⟩
+    simp
+  exact congrArg (fun f => f ω) h
+
+lemma snd_phi_smul (a : A) (ω : Ω[A⁄R]) :
+    Sq.snd (phi R A (a • ω)) =
+      a • Sq.snd (phi R A ω) +
+        ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) * ExteriorAlgebra.ι A ω := by
+  rw [map_smul, Sq.snd_smul, fst_phi]
+
+/-- The exterior derivative of a differential is an even element, so it commutes with everything
+of degree one. -/
+lemma involute_snd_phi (ω : Ω[A⁄R]) :
+    involute R A (Sq.snd (phi R A ω)) = Sq.snd (phi R A ω) := by
+  induction ω using D_induction with
+  | D a => simp
   | zero => simp
-  | single_add g r x hg hr ih =>
-      rw [map_add, map_add]
-      exact Submodule.add_mem _
-        (rawDifferential_squared_single_mem_standardRelations R A p g r) ih
+  | add x y hx hy => simp [hx, hy]
+  | smul a x hx =>
+      rw [snd_phi_smul, map_add, map_smul, hx, map_mul, involute_ι, involute_ι, neg_mul_neg]
 
-/-- The differential closure of the standard relations on form symbols. -/
-def relations : (p : ℕ) → Submodule R (RawForm R A p)
-  | 0 => standardRelations R A 0
-  | p + 1 => standardRelations R A (p + 1) ⊔
-      (relations p).map (rawDifferential R A p)
+lemma phi_mul_self (ω : Ω[A⁄R]) : phi R A ω * phi R A ω = 0 := by
+  ext
+  · simp
+  · rw [Sq.snd_mul, fst_phi, involute_ι, neg_mul, Sq.snd_zero,
+      ι_mul_eq_involute_mul_ι, involute_snd_phi, neg_add_cancel]
 
-lemma standardRelations_le_relations (p : ℕ) :
-    standardRelations R A p ≤ relations R A p := by
-  cases p with
-  | zero => exact le_rfl
-  | succ p => exact le_sup_left
+/-- The exterior derivative on `⋀ Ω[A⁄R]`, packaged as the algebra map `x ↦ x + (d x) * ε` into
+the square-zero extension. -/
+def deRhamHom : ExtAlg R A →ₐ[A] Sq R A :=
+  ExteriorAlgebra.lift A ⟨phi R A, phi_mul_self R A⟩
 
-lemma rawDifferential_mem_relations (p : ℕ) {x : RawForm R A p}
-    (hx : x ∈ relations R A p) :
-    rawDifferential R A p x ∈ relations R A (p + 1) := by
-  apply (le_sup_right :
-    (relations R A p).map (rawDifferential R A p) ≤ relations R A (p + 1))
-  exact ⟨x, hx, rfl⟩
+@[simp] lemma deRhamHom_ι (ω : Ω[A⁄R]) :
+    deRhamHom R A (ExteriorAlgebra.ι A ω) = phi R A ω :=
+  ExteriorAlgebra.lift_ι_apply A _ _ ω
 
-/-- Relative Kähler differential forms in degree `p`, by generators and relations. -/
-abbrev Form (p : ℕ) := RawForm R A p ⧸ relations R A p
+@[simp] lemma fst_deRhamHom (x : ExtAlg R A) : Sq.fst (deRhamHom R A x) = x := by
+  have h : (Sq.fstAlgHom R A).comp (deRhamHom R A) = AlgHom.id A (ExtAlg R A) := by
+    apply ExteriorAlgebra.hom_ext
+    ext ω
+    simp
+  exact AlgHom.congr_fun h x
 
-def mk (p : ℕ) (a₀ : A) (v : Fin p → A) : Form R A p :=
-  Submodule.Quotient.mk (single (a₀, v) 1)
+/-- The exterior derivative on the exterior algebra of Kähler differentials. -/
+def extDeriv : ExtAlg R A →ₗ[R] ExtAlg R A :=
+  (Sq.sndLinear R A).comp ((deRhamHom R A).toLinearMap.restrictScalars R)
 
-lemma relationValue_eq_zero (p : ℕ) (r : Relation R A p) :
-    Submodule.Quotient.mk (relationValue R A p r) = (0 : Form R A p) := by
-  rw [Submodule.Quotient.mk_eq_zero]
-  exact standardRelations_le_relations R A p
-    (Submodule.subset_span (Set.mem_range_self r))
+lemma deRhamHom_apply (x : ExtAlg R A) :
+    deRhamHom R A x = Sq.mk x (extDeriv R A x) := by
+  ext
+  · simp
+  · rfl
 
-@[simp] lemma mk_coeff_add (p : ℕ) (a b : A) (v : Fin p → A) :
-    mk R A p (a + b) v = mk R A p a v + mk R A p b v := by
-  have h := relationValue_eq_zero R A p (Relation.coeffAdd a b v)
-  exact eq_add_of_sub_eq' (by simpa [relationValue, mk, sub_eq_zero] using h)
+@[simp] lemma extDeriv_ι (ω : Ω[A⁄R]) :
+    extDeriv R A (ExteriorAlgebra.ι A ω) = Sq.snd (phi R A ω) := by
+  simp [extDeriv]
 
-@[simp] lemma mk_coeff_smul (p : ℕ) (r : R) (a : A) (v : Fin p → A) :
-    mk R A p (r • a) v = r • mk R A p a v := by
-  have h := relationValue_eq_zero R A p (Relation.coeffSMul r a v)
-  calc
-    _ = Submodule.Quotient.mk (single (a, v) r) := by
-      simpa [relationValue, mk, sub_eq_zero] using h
-    _ = r • mk R A p a v := by
-      change Submodule.Quotient.mk (single (a, v) r) =
-        r • Submodule.Quotient.mk (single (a, v) 1)
-      rw [← Submodule.Quotient.mk_smul (relations R A p)]
+@[simp] lemma extDeriv_algebraMap (a : A) :
+    extDeriv R A (algebraMap A (ExtAlg R A) a) =
+      ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) := by
+  show Sq.snd (deRhamHom R A (algebraMap A (ExtAlg R A) a)) = _
+  rw [AlgHom.commutes]
+  rfl
+
+/-- The exterior derivative is an odd derivation of the exterior algebra. -/
+lemma extDeriv_mul (x y : ExtAlg R A) :
+    extDeriv R A (x * y) =
+      involute R A x * extDeriv R A y + extDeriv R A x * y := by
+  show Sq.snd (deRhamHom R A (x * y)) = _
+  simp only [map_mul, Sq.snd_mul, fst_deRhamHom]
+  rfl
+
+/-- Multiplying forms adds their degrees. -/
+lemma mul_mem_exteriorPower {m n : ℕ} {x y : ExtAlg R A}
+    (hx : x ∈ ⋀[A]^m Ω[A⁄R]) (hy : y ∈ ⋀[A]^n Ω[A⁄R]) :
+    x * y ∈ ⋀[A]^(m + n) Ω[A⁄R] := by
+  rw [ExteriorAlgebra.exteriorPower, pow_add]
+  exact Submodule.mul_mem_mul hx hy
+
+lemma ι_mem_exteriorPower (ω : Ω[A⁄R]) :
+    ExteriorAlgebra.ι A ω ∈ ⋀[A]^1 Ω[A⁄R] := by
+  rw [ExteriorAlgebra.exteriorPower, pow_one]
+  exact LinearMap.mem_range_self _ _
+
+/-- The exterior derivative anticommutes with the grade involution, since it raises the degree
+by one. -/
+lemma extDeriv_involute (x : ExtAlg R A) :
+    extDeriv R A (involute R A x) = -involute R A (extDeriv R A x) := by
+  induction x using ExteriorAlgebra.induction with
+  | algebraMap a => simp
+  | ι ω => simp [involute_snd_phi]
+  | mul x y hx hy =>
+      rw [map_mul, extDeriv_mul, hx, hy, extDeriv_mul, map_add, map_mul, map_mul,
+        CliffordAlgebra.involute_involute]
+      simp only [mul_neg, neg_mul, neg_add]
+  | add x y hx hy => simp only [map_add, hx, hy, neg_add]
+
+lemma extDeriv_snd_phi (ω : Ω[A⁄R]) : extDeriv R A (Sq.snd (phi R A ω)) = 0 := by
+  induction ω using D_induction with
+  | D a => simp
+  | zero => simp
+  | add x y hx hy => rw [map_add, Sq.snd_add, map_add, hx, hy, add_zero]
+  | smul a x hx =>
+      rw [snd_phi_smul, map_add, Algebra.smul_def, extDeriv_mul, extDeriv_mul, hx,
+        involute_algebraMap, extDeriv_algebraMap, mul_zero, zero_add, involute_ι]
+      simp only [extDeriv_ι, phi_D, Sq.snd_mk, zero_mul, add_zero, neg_mul]
+      abel
+
+/-- The exterior derivative squares to zero. -/
+lemma extDeriv_extDeriv (x : ExtAlg R A) : extDeriv R A (extDeriv R A x) = 0 := by
+  induction x using ExteriorAlgebra.induction with
+  | algebraMap a => simp
+  | ι ω => rw [extDeriv_ι]; exact extDeriv_snd_phi R A ω
+  | mul x y hx hy =>
+      rw [extDeriv_mul, map_add, extDeriv_mul, extDeriv_mul, hx, hy, extDeriv_involute,
+        CliffordAlgebra.involute_involute]
+      simp only [mul_zero, zero_mul, neg_mul, zero_add, add_zero, neg_add_cancel]
+  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+
+lemma snd_phi_mem (ω : Ω[A⁄R]) : Sq.snd (phi R A ω) ∈ ⋀[A]^2 Ω[A⁄R] := by
+  induction ω using D_induction with
+  | D a => simp
+  | zero => simp
+  | add x y hx hy => rw [map_add, Sq.snd_add]; exact Submodule.add_mem _ hx hy
+  | smul a x hx =>
+      rw [snd_phi_smul]
+      exact Submodule.add_mem _ (Submodule.smul_mem _ _ hx)
+        (mul_mem_exteriorPower R A (ι_mem_exteriorPower R A _) (ι_mem_exteriorPower R A _))
+
+/-- The exterior derivative raises the degree of a form by one. -/
+lemma extDeriv_mem (p : ℕ) {x : ExtAlg R A} (hx : x ∈ ⋀[A]^p Ω[A⁄R]) :
+    extDeriv R A x ∈ ⋀[A]^(p + 1) Ω[A⁄R] := by
+  induction p generalizing x with
+  | zero =>
+      rw [ExteriorAlgebra.exteriorPower, pow_zero, Submodule.one_eq_range] at hx
+      obtain ⟨a, rfl⟩ := hx
       simp
+  | succ p ih =>
+      rw [ExteriorAlgebra.exteriorPower, pow_succ'] at hx
+      refine Submodule.mul_induction_on hx ?_ ?_
+      · rintro m hm n hn
+        obtain ⟨ω, rfl⟩ := hm
+        rw [extDeriv_mul, involute_ι, extDeriv_ι]
+        refine Submodule.add_mem _ ?_ ?_
+        · rw [neg_mul]
+          have := mul_mem_exteriorPower R A (ι_mem_exteriorPower R A ω) (ih hn)
+          rw [show 1 + (p + 1) = p + 1 + 1 by omega] at this
+          exact Submodule.neg_mem _ this
+        · have := mul_mem_exteriorPower R A (snd_phi_mem R A ω) hn
+          rwa [show 2 + p = p + 1 + 1 by omega] at this
+      · intro x y hx hy
+        rw [map_add]
+        exact Submodule.add_mem _ hx hy
+
+/-! ### Differential forms -/
+
+/-- Relative Kähler differential forms of degree `p`: the `p`-th exterior power over `A` of the
+module of relative Kähler differentials `Ω[A⁄R]`. -/
+abbrev Form (p : ℕ) : Type u := ↥(⋀[A]^p Ω[A⁄R])
+
+/-- The exterior derivative on differential forms of degree `p`. -/
+def differential (p : ℕ) : Form R A p →ₗ[R] Form R A (p + 1) where
+  toFun x := ⟨extDeriv R A x, extDeriv_mem R A p x.2⟩
+  map_add' _ _ := Subtype.ext (map_add (extDeriv R A) _ _)
+  map_smul' r _ := Subtype.ext (map_smul (extDeriv R A) r _)
+
+@[simp] lemma coe_differential (p : ℕ) (x : Form R A p) :
+    (differential R A p x : ExtAlg R A) = extDeriv R A x := rfl
+
+lemma differential_squared (p : ℕ) (x : Form R A p) :
+    differential R A (p + 1) (differential R A p x) = 0 :=
+  Subtype.ext (extDeriv_extDeriv R A x)
+
+lemma extDeriv_smul (a : A) (x : ExtAlg R A) :
+    extDeriv R A (a • x) =
+      a • extDeriv R A x +
+        ExteriorAlgebra.ι A (KaehlerDifferential.D R A a) * x := by
+  rw [Algebra.smul_def, extDeriv_mul, involute_algebraMap, extDeriv_algebraMap,
+    ← Algebra.smul_def]
+
+/-- The exact form `d a₁ ∧ ⋯ ∧ d aₚ`. -/
+def exact (p : ℕ) (v : Fin p → A) : Form R A p :=
+  exteriorPower.ιMulti A p fun i => KaehlerDifferential.D R A (v i)
+
+@[simp] lemma coe_exact (p : ℕ) (v : Fin p → A) :
+    (exact R A p v : ExtAlg R A) =
+      ExteriorAlgebra.ιMulti A p fun i => KaehlerDifferential.D R A (v i) := rfl
+
+/-- Wedges of exact forms are closed. -/
+lemma extDeriv_exact (p : ℕ) (v : Fin p → A) :
+    extDeriv R A (exact R A p v : ExtAlg R A) = 0 := by
+  induction p with
+  | zero =>
+      rw [coe_exact, ExteriorAlgebra.ιMulti_zero_apply,
+        ← map_one (algebraMap A (ExtAlg R A)), extDeriv_algebraMap]
+      simp
+  | succ p ih =>
+      rw [coe_exact, ExteriorAlgebra.ιMulti_succ_apply, extDeriv_mul, involute_ι,
+        extDeriv_ι, phi_D, Sq.snd_mk, zero_mul, add_zero]
+      have : (Matrix.vecTail fun i => KaehlerDifferential.D R A (v i)) =
+          fun i => KaehlerDifferential.D R A (Matrix.vecTail v i) := rfl
+      rw [this, ← coe_exact R A p (Matrix.vecTail v), ih (Matrix.vecTail v), mul_zero]
+
+/-- The differential form `a₀ * d a₁ ∧ ⋯ ∧ d aₚ`. Such forms span the degree `p` forms over the
+base ring. -/
+def mk (p : ℕ) (a₀ : A) (v : Fin p → A) : Form R A p := a₀ • exact R A p v
+
+@[simp] lemma coe_mk (p : ℕ) (a₀ : A) (v : Fin p → A) :
+    (mk R A p a₀ v : ExtAlg R A) =
+      a₀ • ExteriorAlgebra.ιMulti A p fun i => KaehlerDifferential.D R A (v i) := rfl
+
+@[simp] lemma differential_mk (p : ℕ) (a₀ : A) (v : Fin p → A) :
+    differential R A p (mk R A p a₀ v) = mk R A (p + 1) 1 (Fin.cons a₀ v) := by
+  refine Subtype.ext ?_
+  rw [coe_differential, coe_mk, coe_mk, extDeriv_smul, ← coe_exact, extDeriv_exact,
+    smul_zero, zero_add, one_smul, ExteriorAlgebra.ιMulti_succ_apply]
+  rfl
 
 /-- A function regarded as a differential form of degree zero. -/
 def ofFunction : A →ₗ[R] Form R A 0 where
   toFun a := mk R A 0 a Fin.elim0
-  map_add' a b := mk_coeff_add R A 0 a b Fin.elim0
-  map_smul' r a := mk_coeff_smul R A 0 r a Fin.elim0
+  map_add' a b := by simp [mk, add_smul]
+  map_smul' r a := by simp [mk, smul_assoc]
 
-@[simp] lemma ofFunction_apply (a : A) :
-    ofFunction R A a = mk R A 0 a Fin.elim0 := rfl
+lemma ofFunction_apply (a : A) : ofFunction R A a = mk R A 0 a Fin.elim0 := rfl
 
 /-- A scalar from the base ring regarded as a differential form of degree zero. -/
 def ofConstant : R →ₗ[R] Form R A 0 :=
   (ofFunction R A).comp (Algebra.linearMap R A)
 
-@[simp] lemma ofConstant_apply (r : R) :
+lemma ofConstant_apply (r : R) :
     ofConstant R A r = ofFunction R A (algebraMap R A r) := rfl
-
-@[simp] lemma mk_diff_add (p : ℕ) (a₀ : A) (v : Fin p → A) (i : Fin p) (a b : A) :
-    mk R A p a₀ (Function.update v i (a + b)) =
-      mk R A p a₀ (Function.update v i a) +
-        mk R A p a₀ (Function.update v i b) := by
-  have h := relationValue_eq_zero R A p (Relation.diffAdd a₀ v i a b)
-  exact eq_add_of_sub_eq' (by simpa [relationValue, mk, sub_eq_zero] using h)
-
-@[simp] lemma mk_diff_smul (p : ℕ) (a₀ : A) (v : Fin p → A) (i : Fin p)
-    (r : R) (a : A) :
-    mk R A p a₀ (Function.update v i (r • a)) =
-      r • mk R A p a₀ (Function.update v i a) := by
-  have h := relationValue_eq_zero R A p (Relation.diffSMul a₀ v i r a)
-  calc
-    _ = Submodule.Quotient.mk (single (a₀, Function.update v i a) r) := by
-      simpa [relationValue, mk, sub_eq_zero] using h
-    _ = r • mk R A p a₀ (Function.update v i a) := by
-      change Submodule.Quotient.mk (single (a₀, Function.update v i a) r) =
-        r • Submodule.Quotient.mk (single (a₀, Function.update v i a) 1)
-      rw [← Submodule.Quotient.mk_smul (relations R A p)]
-      simp
-
-@[simp] lemma mk_diff_mul (p : ℕ) (a₀ : A) (v : Fin p → A) (i : Fin p) (a b : A) :
-    mk R A p a₀ (Function.update v i (a * b)) =
-      mk R A p (a₀ * a) (Function.update v i b) +
-        mk R A p (a₀ * b) (Function.update v i a) := by
-  have h := relationValue_eq_zero R A p (Relation.diffMul a₀ v i a b)
-  exact eq_add_of_sub_eq' (by simpa [relationValue, mk, sub_eq_zero] using h)
-
-@[simp] lemma mk_diff_const (p : ℕ) (a₀ : A) (v : Fin p → A) (i : Fin p) (r : R) :
-    mk R A p a₀ (Function.update v i (algebraMap R A r)) = 0 :=
-  relationValue_eq_zero R A p (Relation.diffConst a₀ v i r)
-
-@[simp] lemma mk_alt (p : ℕ) (a₀ : A) (v : Fin p → A) (i j : Fin p)
-    (h : v i = v j) (hne : i ≠ j) :
-    mk R A p a₀ v = 0 :=
-  relationValue_eq_zero R A p (Relation.alt a₀ v i j h hne)
-
-/-- The exterior derivative on the generators-and-relations model of differential forms. -/
-def differential (p : ℕ) : Form R A p →ₗ[R] Form R A (p + 1) :=
-  (relations R A p).liftQ
-    ((relations R A (p + 1)).mkQ.comp (rawDifferential R A p)) <| by
-      intro x hx
-      rw [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.mkQ_apply,
-        Submodule.Quotient.mk_eq_zero]
-      exact rawDifferential_mem_relations R A p hx
-
-@[simp] lemma differential_mk (p : ℕ) (a₀ : A) (v : Fin p → A) :
-    differential R A p (mk R A p a₀ v) =
-      mk R A (p + 1) 1 (Fin.cases a₀ v) := by
-  simp [differential, mk, rawDifferential_single, nextGenerator]
 
 @[simp] lemma differential_ofFunction_algebraMap (r : R) :
     differential R A 0 (ofFunction R A (algebraMap R A r)) = 0 := by
-  rw [ofFunction_apply, differential_mk, show Fin.cases (algebraMap R A r) Fin.elim0 =
-      Function.update (fun _ : Fin 1 => (0 : A)) 0 (algebraMap R A r) by
-    funext i
-    obtain rfl := Fin.eq_zero i
-    simp]
-  exact mk_diff_const R A 1 1 (fun _ => 0) 0 r
+  refine Subtype.ext ?_
+  rw [ofFunction_apply, coe_differential, coe_mk, extDeriv_smul, ← coe_exact,
+    extDeriv_exact, smul_zero, zero_add]
+  simp
 
 @[simp] lemma differential_ofConstant (r : R) :
     differential R A 0 (ofConstant R A r) = 0 := by
   rw [ofConstant_apply, differential_ofFunction_algebraMap]
 
-lemma differential_squared (p : ℕ) (x : Form R A p) :
-    differential R A (p + 1) (differential R A p x) = 0 := by
-  obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective (relations R A p) x
-  change Submodule.Quotient.mk
-    (rawDifferential R A (p + 1) (rawDifferential R A p x)) = 0
-  rw [Submodule.Quotient.mk_eq_zero]
-  exact standardRelations_le_relations R A (p + 2)
-    (rawDifferential_squared_mem_standardRelations R A p x)
+/-! ### Generators -/
 
-variable {A} {B : Type u} [CommRing B] [Algebra R B]
+/-- Exact forms span the differential forms of degree `p` over `A`. -/
+lemma span_exact (p : ℕ) :
+    Submodule.span A (Set.range fun v : Fin p → A => exact R A p v) = ⊤ := by
+  rw [← top_le_iff, ← exteriorPower.ιMulti_span_of_span A p Ω[A⁄R]
+    (KaehlerDifferential.span_range_derivation R A), Submodule.span_le]
+  rintro _ ⟨w, hw, rfl⟩
+  choose v hv using fun i => hw ⟨i, rfl⟩
+  exact Submodule.subset_span ⟨v, congrArg _ (funext hv)⟩
 
-/-- Apply an algebra homomorphism to every coefficient in a form symbol. -/
-def generatorMap (f : A →ₐ[R] B) (p : ℕ) : Generator A p → Generator B p :=
-  fun g => (f g.1, fun i => f (g.2 i))
+/-- Forms `a₀ * d a₁ ∧ ⋯ ∧ d aₚ` span the differential forms of degree `p` over the base ring. -/
+lemma span_mk (p : ℕ) :
+    Submodule.span R (Set.range fun av : A × (Fin p → A) => mk R A p av.1 av.2) = ⊤ := by
+  have key : ∀ x : Form R A p,
+      x ∈ Submodule.span A (Set.range fun v : Fin p → A => exact R A p v) → ∀ a : A,
+      a • x ∈ Submodule.span R (Set.range fun av : A × (Fin p → A) => mk R A p av.1 av.2) := by
+    intro x hx
+    induction hx using Submodule.span_induction with
+    | mem y hy => obtain ⟨v, rfl⟩ := hy; exact fun a => Submodule.subset_span ⟨(a, v), rfl⟩
+    | zero => simp
+    | add y z _ _ hy hz =>
+        exact fun a => by rw [smul_add]; exact Submodule.add_mem _ (hy a) (hz a)
+    | smul b y _ hy => exact fun a => by rw [smul_smul]; exact hy _
+  exact top_unique fun x _ => by simpa using key x (by rw [span_exact]; trivial) 1
 
-/-- The map on free form symbols induced by an algebra homomorphism. -/
-def rawMap (f : A →ₐ[R] B) (p : ℕ) : RawForm R A p →ₗ[R] RawForm R B p :=
-  Finsupp.lmapDomain R R (generatorMap R f p)
+/-- Two `R`-linear maps out of degree `p` forms agreeing on the generators are equal. -/
+lemma linearMap_ext {M : Type*} [AddCommGroup M] [Module R M] {p : ℕ}
+    {F G : Form R A p →ₗ[R] M} (h : ∀ a₀ v, F (mk R A p a₀ v) = G (mk R A p a₀ v)) : F = G :=
+  LinearMap.ext_on (span_mk R A p) (by rintro _ ⟨⟨a₀, v⟩, rfl⟩; exact h a₀ v)
 
-@[simp] lemma rawMap_single (f : A →ₐ[R] B) (p : ℕ) (g : Generator A p) (r : R) :
-    rawMap R f p (single g r) = single (generatorMap R f p g) r := by
-  simp [rawMap]
+@[simp] lemma mk_smul_coeff (p : ℕ) (r : R) (a₀ : A) (v : Fin p → A) :
+    mk R A p (r • a₀) v = r • mk R A p a₀ v :=
+  smul_assoc r a₀ _
 
-lemma generatorMap_update (f : A →ₐ[R] B) (p : ℕ) (a₀ : A)
-    (v : Fin p → A) (i : Fin p) (a : A) :
-    generatorMap R f p (a₀, Function.update v i a) =
-      (f a₀, Function.update (fun j => f (v j)) i (f a)) := by
-  apply Prod.ext
-  · rfl
-  · funext j
-    by_cases h : j = i <;> simp [generatorMap, h]
+@[simp] lemma mk_zero_coeff (p : ℕ) (v : Fin p → A) : mk R A p 0 v = 0 :=
+  zero_smul A _
 
-lemma rawMap_relationValue_mem_standardRelations (f : A →ₐ[R] B) (p : ℕ)
-    (r : Relation R A p) :
-    rawMap R f p (relationValue R A p r) ∈ standardRelations R B p := by
-  apply Submodule.subset_span
-  cases r with
-  | coeffAdd a b v =>
-      refine ⟨Relation.coeffAdd (f a) (f b) (fun i => f (v i)), ?_⟩
-      simp [relationValue, generatorMap]
-  | coeffSMul r a v =>
-      refine ⟨Relation.coeffSMul r (f a) (fun i => f (v i)), ?_⟩
-      simp [relationValue, generatorMap]
-  | diffAdd a₀ v i a b =>
-      refine ⟨Relation.diffAdd (f a₀) (fun j => f (v j)) i (f a) (f b), ?_⟩
-      simp [relationValue, generatorMap_update R]
-  | diffSMul a₀ v i r a =>
-      refine ⟨Relation.diffSMul (f a₀) (fun j => f (v j)) i r (f a), ?_⟩
-      simp [relationValue, generatorMap_update R]
-  | diffMul a₀ v i a b =>
-      refine ⟨Relation.diffMul (f a₀) (fun j => f (v j)) i (f a) (f b), ?_⟩
-      simp [relationValue, generatorMap_update R]
-  | diffConst a₀ v i r =>
-      refine ⟨Relation.diffConst (f a₀) (fun j => f (v j)) i r, ?_⟩
-      simp [relationValue, generatorMap_update R]
-  | alt a₀ v i j h hne =>
-      refine ⟨Relation.alt (f a₀) (fun k => f (v k)) i j (congrArg f h) hne, ?_⟩
-      simp [relationValue, generatorMap]
+/-- To prove a statement about every differential form of degree `p` it suffices to treat the
+generators `a₀ * d v₀ ∧ ... ∧ d vₚ₋₁` and to check closure under zero, sums, and scalars. -/
+@[elab_as_elim]
+lemma mk_induction {p : ℕ} {motive : Form R A p → Prop} (x : Form R A p)
+    (mk : ∀ (a₀ : A) (v : Fin p → A), motive (_root_.Algebra.DeRham.mk R A p a₀ v))
+    (zero : motive 0) (add : ∀ x y, motive x → motive y → motive (x + y))
+    (smul : ∀ (r : R) x, motive x → motive (r • x)) : motive x := by
+  have hx : x ∈ Submodule.span R
+      (Set.range fun av : A × (Fin p → A) => _root_.Algebra.DeRham.mk R A p av.1 av.2) := by
+    rw [span_mk]; trivial
+  induction hx using Submodule.span_induction with
+  | mem y hy => obtain ⟨⟨a₀, v⟩, rfl⟩ := hy; exact mk a₀ v
+  | zero => exact zero
+  | add y z _ _ hy hz => exact add y z hy hz
+  | smul r y _ hy => exact smul r y hy
 
-lemma rawMap_standardRelations (f : A →ₐ[R] B) (p : ℕ) {x : RawForm R A p}
-    (hx : x ∈ standardRelations R A p) :
-    rawMap R f p x ∈ standardRelations R B p := by
-  refine Submodule.span_induction (p := fun y _ =>
-      rawMap R f p y ∈ standardRelations R B p)
-    (fun _ hr => by
-      obtain ⟨r, rfl⟩ := hr
-      exact rawMap_relationValue_mem_standardRelations R f p r)
-    (by simp)
-    (fun _ _ _ _ hx hy => by simpa using Submodule.add_mem _ hx hy)
-    (fun r _ _ hx => by simpa using (standardRelations R B p).smul_mem r hx)
-    hx
+/-! ### Functoriality -/
 
-lemma rawMap_rawDifferential (f : A →ₐ[R] B) (p : ℕ) (x : RawForm R A p) :
-    rawMap R f (p + 1) (rawDifferential R A p x) =
-      rawDifferential R B p (rawMap R f p x) := by
-  classical
-  induction x using Finsupp.induction with
-  | zero => simp
-  | single_add g r x hg hr ih =>
-      simp only [map_add, rawDifferential_single, rawMap_single]
-      rw [ih]
-      congr 2
-      apply Prod.ext
-      · simp [generatorMap, nextGenerator]
-      · funext i
-        refine Fin.cases ?_ (fun j => ?_) i <;> simp [generatorMap, nextGenerator]
+section Tower
 
-@[simp] lemma rawMap_id (p : ℕ) :
-    rawMap R (AlgHom.id R A) p = LinearMap.id := by
-  apply LinearMap.ext
-  intro x
-  classical
-  induction x using Finsupp.induction with
-  | zero => simp
-  | single_add g r x hg hr ih =>
-      simp only [map_add, rawMap_single, generatorMap, AlgHom.id_apply,
-        LinearMap.id_coe, id_eq]
-      rw [ih]
-      congr 2
+variable (B : Type u) [CommRing B] [Algebra R B] [Algebra A B] [IsScalarTower R A B]
 
-variable {C : Type u} [CommRing C] [Algebra R C]
+/-- The algebra map on exterior algebras of Kähler differentials attached to a tower
+`R → A → B`. -/
+def extAlgMap : ExtAlg R A →ₐ[A] ExtAlg R B :=
+  ExteriorAlgebra.lift A
+    ⟨((ExteriorAlgebra.ι B).restrictScalars A).comp (KaehlerDifferential.map R R A B),
+      fun _ => ExteriorAlgebra.ι_sq_zero _⟩
 
-@[simp] lemma rawMap_comp (f : A →ₐ[R] B) (g : B →ₐ[R] C) (p : ℕ) :
-    rawMap R (g.comp f) p = (rawMap R g p).comp (rawMap R f p) := by
-  apply LinearMap.ext
-  intro x
-  classical
-  induction x using Finsupp.induction with
-  | zero => simp
-  | single_add a r x ha hr ih =>
-      simp only [map_add, rawMap_single, generatorMap, AlgHom.coe_comp,
-        Function.comp_apply, LinearMap.comp_apply]
-      rw [ih]
+@[simp] lemma extAlgMap_ι (ω : Ω[A⁄R]) :
+    extAlgMap R A B (ExteriorAlgebra.ι A ω) =
+      ExteriorAlgebra.ι B (KaehlerDifferential.map R R A B ω) :=
+  ExteriorAlgebra.lift_ι_apply A _ _ ω
+
+@[simp] lemma extAlgMap_algebraMap (a : A) :
+    extAlgMap R A B (algebraMap A (ExtAlg R A) a) =
+      algebraMap B (ExtAlg R B) (algebraMap A B a) := by
+  rw [AlgHom.commutes, IsScalarTower.algebraMap_apply A B (ExtAlg R B)]
+
+@[simp] lemma extAlgMap_algebraMap_base (r : R) :
+    extAlgMap R A B (algebraMap R (ExtAlg R A) r) = algebraMap R (ExtAlg R B) r := by
+  rw [IsScalarTower.algebraMap_apply R A (ExtAlg R A), extAlgMap_algebraMap,
+    ← IsScalarTower.algebraMap_apply R A B, ← IsScalarTower.algebraMap_apply R B (ExtAlg R B)]
+
+lemma extAlgMap_involute (x : ExtAlg R A) :
+    extAlgMap R A B (involute R A x) = involute R B (extAlgMap R A B x) := by
+  induction x using ExteriorAlgebra.induction with
+  | algebraMap a => simp
+  | ι ω => simp
+  | mul x y hx hy => simp only [map_mul, hx, hy]
+  | add x y hx hy => simp only [map_add, hx, hy]
+
+lemma extAlgMap_ιMulti (p : ℕ) (w : Fin p → Ω[A⁄R]) :
+    extAlgMap R A B (ExteriorAlgebra.ιMulti A p w) =
+      ExteriorAlgebra.ιMulti B p fun i => KaehlerDifferential.map R R A B (w i) := by
+  induction p with
+  | zero => simp [ExteriorAlgebra.ιMulti_zero_apply]
+  | succ p ih =>
+      rw [ExteriorAlgebra.ιMulti_succ_apply, map_mul, extAlgMap_ι,
+        ExteriorAlgebra.ιMulti_succ_apply, ih (Matrix.vecTail w)]
       rfl
 
-lemma rawMap_relations (f : A →ₐ[R] B) (p : ℕ) {x : RawForm R A p}
-    (hx : x ∈ relations R A p) :
-    rawMap R f p x ∈ relations R B p := by
-  induction p with
+lemma extAlgMap_mem (p : ℕ) {x : ExtAlg R A} (hx : x ∈ ⋀[A]^p Ω[A⁄R]) :
+    extAlgMap R A B x ∈ ⋀[B]^p Ω[B⁄R] := by
+  induction p generalizing x with
   | zero =>
-      exact rawMap_standardRelations R f 0 hx
+      rw [ExteriorAlgebra.exteriorPower, pow_zero, Submodule.one_eq_range] at hx
+      obtain ⟨a, rfl⟩ := hx
+      rw [ExteriorAlgebra.exteriorPower, pow_zero, Submodule.one_eq_range]
+      exact ⟨algebraMap A B a, (extAlgMap_algebraMap R A B a).symm⟩
   | succ p ih =>
-      rw [relations] at hx
-      rcases Submodule.mem_sup.mp hx with ⟨y, hy, z, ⟨w, hw, rfl⟩, rfl⟩
-      rw [map_add, rawMap_rawDifferential R]
-      apply Submodule.add_mem
-      · exact standardRelations_le_relations R B (p + 1)
-          (rawMap_standardRelations R f (p + 1) hy)
-      · exact rawDifferential_mem_relations R B p (ih hw)
+      rw [ExteriorAlgebra.exteriorPower, pow_succ'] at hx
+      refine Submodule.mul_induction_on hx ?_ ?_
+      · rintro _ ⟨ω, rfl⟩ n hn
+        rw [map_mul, extAlgMap_ι]
+        have := mul_mem_exteriorPower R B
+          (ι_mem_exteriorPower R B (KaehlerDifferential.map R R A B ω)) (ih hn)
+        rwa [show 1 + p = p + 1 by omega] at this
+      · intro x y hx hy
+        rw [map_add]
+        exact Submodule.add_mem _ hx hy
+
+lemma extAlgMap_snd_phi (ω : Ω[A⁄R]) :
+    extAlgMap R A B (Sq.snd (phi R A ω)) =
+      Sq.snd (phi R B (KaehlerDifferential.map R R A B ω)) := by
+  induction ω using D_induction with
+  | D a => simp
+  | zero => simp
+  | add x y hx hy => simp only [map_add, Sq.snd_add, hx, hy]
+  | smul a x hx =>
+      rw [snd_phi_smul, map_add, map_smul, hx, map_mul, extAlgMap_ι, extAlgMap_ι,
+        KaehlerDifferential.map_D, map_smul,
+        ← algebraMap_smul (R := A) B a (KaehlerDifferential.map R R A B x), snd_phi_smul,
+        ← algebraMap_smul (R := A) B a (Sq.snd (phi R B (KaehlerDifferential.map R R A B x)))]
+
+lemma extAlgMap_extDeriv (x : ExtAlg R A) :
+    extAlgMap R A B (extDeriv R A x) = extDeriv R B (extAlgMap R A B x) := by
+  induction x using ExteriorAlgebra.induction with
+  | algebraMap a =>
+      rw [extDeriv_algebraMap, extAlgMap_ι, KaehlerDifferential.map_D, extAlgMap_algebraMap,
+        extDeriv_algebraMap]
+  | ι ω => rw [extDeriv_ι, extAlgMap_snd_phi, extAlgMap_ι, extDeriv_ι]
+  | mul x y hx hy =>
+      rw [extDeriv_mul, map_add, map_mul, map_mul, hx, hy, extAlgMap_involute, map_mul,
+        extDeriv_mul]
+  | add x y hx hy => simp only [map_add, hx, hy]
+
+/-- Pull differential forms forward along a tower `R → A → B`. -/
+def mapTower (p : ℕ) : Form R A p →ₗ[R] Form R B p where
+  toFun x := ⟨extAlgMap R A B x, extAlgMap_mem R A B p x.2⟩
+  map_add' x y := Subtype.ext (map_add (extAlgMap R A B) _ _)
+  map_smul' r x := Subtype.ext (by
+    show extAlgMap R A B (r • (x : ExtAlg R A)) = r • extAlgMap R A B (x : ExtAlg R A)
+    rw [Algebra.smul_def, map_mul, extAlgMap_algebraMap_base, Algebra.smul_def])
+
+@[simp] lemma coe_mapTower (p : ℕ) (x : Form R A p) :
+    (mapTower R A B p x : ExtAlg R B) = extAlgMap R A B x := rfl
+
+end Tower
+
+section AlgHomMap
+
+variable {A}
+variable {B C : Type u} [CommRing B] [CommRing C] [Algebra R B] [Algebra R C]
 
 /-- Pull differential forms forward along an algebra homomorphism. -/
 def map (f : A →ₐ[R] B) (p : ℕ) : Form R A p →ₗ[R] Form R B p :=
-  (relations R A p).liftQ ((relations R B p).mkQ.comp (rawMap R f p)) <| by
-    intro x hx
-    rw [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.mkQ_apply,
-      Submodule.Quotient.mk_eq_zero]
-    exact rawMap_relations R f p hx
+  letI := f.toAlgebra
+  haveI : IsScalarTower R A B := IsScalarTower.of_algebraMap_eq fun r => (f.commutes r).symm
+  mapTower R A B p
 
 @[simp] lemma map_mk (f : A →ₐ[R] B) (p : ℕ) (a₀ : A) (v : Fin p → A) :
-    map R f p (mk R A p a₀ v) = mk R B p (f a₀) (fun i => f (v i)) := by
-  simp [map, mk, rawMap, generatorMap]
+    map R f p (mk R A p a₀ v) = mk R B p (f a₀) fun i => f (v i) := by
+  let _ := f.toAlgebra
+  have : IsScalarTower R A B := IsScalarTower.of_algebraMap_eq fun r => (f.commutes r).symm
+  refine Subtype.ext ?_
+  show extAlgMap R A B (mk R A p a₀ v : ExtAlg R A) =
+    ((mk R B p (f a₀) fun i => f (v i) : Form R B p) : ExtAlg R B)
+  rw [coe_mk, coe_mk, map_smul, extAlgMap_ιMulti]
+  have hfam : (fun i => KaehlerDifferential.map R R A B (KaehlerDifferential.D R A (v i))) =
+      fun i => KaehlerDifferential.D R B (f (v i)) := by
+    funext i
+    exact KaehlerDifferential.map_D R R A B (v i)
+  rw [hfam]
+  exact (algebraMap_smul (R := A) B a₀ _).symm
+
+lemma map_differential (f : A →ₐ[R] B) (p : ℕ) (x : Form R A p) :
+    map R f (p + 1) (differential R A p x) = differential R B p (map R f p x) := by
+  let _ := f.toAlgebra
+  have : IsScalarTower R A B := IsScalarTower.of_algebraMap_eq fun r => (f.commutes r).symm
+  exact Subtype.ext (extAlgMap_extDeriv R A B x)
+
+@[simp] lemma map_id (p : ℕ) : map R (AlgHom.id R A) p = LinearMap.id :=
+  linearMap_ext R A fun a₀ v => by simp
+
+@[simp] lemma map_comp (f : A →ₐ[R] B) (g : B →ₐ[R] C) (p : ℕ) :
+    map R (g.comp f) p = (map R g p).comp (map R f p) :=
+  linearMap_ext R A fun a₀ v => by simp
 
 @[simp] lemma map_ofFunction (f : A →ₐ[R] B) (a : A) :
     map R f 0 (ofFunction R A a) = ofFunction R B (f a) := by
   rw [ofFunction_apply, map_mk, ofFunction_apply]
-  exact congrArg _ (funext fun i : Fin 0 => i.elim0)
+  congr 1
+  exact funext fun i : Fin 0 => i.elim0
 
 @[simp] lemma map_ofConstant (f : A →ₐ[R] B) (r : R) :
     map R f 0 (ofConstant R A r) = ofConstant R B r := by
   rw [ofConstant_apply, map_ofFunction, f.commutes, ofConstant_apply]
 
-lemma map_differential (f : A →ₐ[R] B) (p : ℕ) (x : Form R A p) :
-    map R f (p + 1) (differential R A p x) =
-      differential R B p (map R f p x) := by
-  obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective (relations R A p) x
-  change Submodule.Quotient.mk (rawMap R f (p + 1) (rawDifferential R A p x)) =
-    Submodule.Quotient.mk (rawDifferential R B p (rawMap R f p x))
-  rw [rawMap_rawDifferential R]
-
-@[simp] lemma map_id (p : ℕ) : map R (AlgHom.id R A) p = LinearMap.id := by
-  apply LinearMap.ext
-  intro x
-  obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective (relations R A p) x
-  apply (Submodule.Quotient.eq (relations R A p)).2
-  have hraw : rawMap R (AlgHom.id R A) p x = x := by
-    classical
-    induction x using Finsupp.induction with
-    | zero => simp
-    | single_add g r x hg hr ih =>
-        simp only [map_add, rawMap_single, generatorMap, AlgHom.id_apply]
-        rw [ih]
-  rw [hraw, sub_self]
-  exact Submodule.zero_mem _
-
-@[simp] lemma map_comp (f : A →ₐ[R] B) (g : B →ₐ[R] C) (p : ℕ) :
-    map R (g.comp f) p = (map R g p).comp (map R f p) := by
-  apply LinearMap.ext
-  intro x
-  obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective (relations R A p) x
-  apply (Submodule.Quotient.eq (relations R C p)).2
-  have hraw : rawMap R (g.comp f) p x = rawMap R g p (rawMap R f p x) := by
-    classical
-    induction x using Finsupp.induction with
-    | zero => simp
-    | single_add a r x ha hr ih =>
-        simp only [map_add, rawMap_single, generatorMap, AlgHom.coe_comp,
-          Function.comp_apply]
-        rw [ih]
-  rw [hraw, sub_self]
-  exact Submodule.zero_mem _
+end AlgHomMap
 
 end Algebra.DeRham

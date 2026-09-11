@@ -23,7 +23,7 @@ public import FormalConjecturesForMathlib.AlgebraicGeometry.DerivedSupportRation
 
 The comparison is the actual complex-orientation duality followed by the constructed
 injective-resolution/support-cone equivalence. Forgetting support then lands in the
-repository's `FieldCohomology` itself, with no supplied duality or comparison argument.
+repository's `H^n(X; ℚ)` itself, with no supplied duality or comparison argument.
 
 This module transports Borel–Moore classes; it does not produce fundamental classes
 for general algebraic components. Agreement with the actual derived-global
@@ -76,7 +76,7 @@ repository's ordinary rational cohomology. It requires a class, not a duality da
 def complexAmbientSheafBorelMooreToFieldCohomology
     (Z : Closeds (ComplexPoint X)) (i : ℤ) :
     ComplexAmbientSheafBorelMooreHomology X d Z i →+
-      FieldCohomology ℚ X (2 * (d : ℤ) - i) :=
+      H^(2 * (d : ℤ) - i)(X; ℚ) :=
   (forgetSupport X (Z : Set (ComplexPoint X))
     (2 * (d : ℤ) - i)).comp
       (complexAmbientSheafBorelMooreAddEquivRationalSupport X d Z i).toAddMonoidHom
@@ -87,7 +87,7 @@ def complexAmbientSheafBorelMooreCycleDegreeToFieldCohomology
     (Z : Closeds (ComplexPoint X)) (p : ℕ) (hp : p ≤ d) :
     ComplexAmbientSheafBorelMooreHomology X d Z
         (2 * ((d - p : ℕ) : ℤ)) →+
-      FieldCohomology ℚ X (2 * (p : ℤ)) :=
+      H^(2 * (p : ℤ))(X; ℚ) :=
   (forgetSupport X (Z : Set (ComplexPoint X))
     (2 * (p : ℤ))).comp
       (complexAmbientSheafBorelMooreCycleDegreeAddEquivRationalSupport

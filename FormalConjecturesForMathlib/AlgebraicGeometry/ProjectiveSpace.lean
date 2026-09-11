@@ -15,12 +15,11 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.CategoryTheory.ConcreteCategory.Notation
-public import Mathlib.AlgebraicGeometry.Limits
 public import Mathlib.AlgebraicGeometry.Morphisms.Proper
 public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
 public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
+import FormalConjecturesForMathlib.CategoryTheory.ConcreteCategory.Notation
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
 
 /-!
@@ -30,11 +29,13 @@ This file constructs projective space over a scheme as a pullback from `Proj`, p
 structure morphism proper for finitely many homogeneous coordinates, and packages a closed
 embedding into finite-dimensional projective space as an explicit projective presentation.
 
-The projective-space construction was contributed to Mathlib in
+The original projective-space construction was contributed to Mathlib in
 [`mathlib4` pull request #26061](https://github.com/leanprover-community/mathlib4/pull/26061).
 -/
 
 @[expose] public section
+
+-- The contents of this file will be in mathlib as of #26061
 
 universe u v
 open CategoryTheory Limits MvPolynomial AlgebraicGeometry

@@ -126,7 +126,7 @@ def cycleComponentSheafSupportedClass :
 
 /-- The unconditional ordinary class of an arbitrary integral component.
 This uses the literal inclusion of supported injective sections. -/
-def cycleComponentSheafClass : FieldCohomology ℚ X (2 * (p : ℤ)) :=
+def cycleComponentSheafClass : H^(2 * (p : ℤ))(X; ℚ) :=
   (rationalCohomologyAddEquivAmbientInjectiveHomology X (2 * (p : ℤ))).symm
     (HomologicalComplex.homologyMap
       (TopCat.Sheaf.supportRestrictionSectionsComplexShortComplex

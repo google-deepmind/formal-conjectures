@@ -109,8 +109,7 @@ def holomorphicDeRhamModuleDifferential [SmoothOfRelativeDimension d X.hom] (p :
     holomorphicFormDifferential X d U p
   naturality {U V} i := by
     apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro x
+    ext x
     exact (holomorphicFormRestriction_differential X d i p x).symm
 
 lemma holomorphicDeRhamModuleDifferential_comp
@@ -128,8 +127,7 @@ def holomorphicDeRhamDifferential [SmoothOfRelativeDimension d X.hom] (p : ℕ) 
     (holomorphicFormDifferential X d U p).toAddMonoidHom
   naturality {U V} i := by
     apply AddCommGrpCat.hom_ext
-    apply AddMonoidHom.ext
-    intro x
+    ext x
     exact (holomorphicFormRestriction_differential X d i p x).symm
 
 lemma holomorphicDeRhamDifferential_comp [SmoothOfRelativeDimension d X.hom] (p : ℕ) :
@@ -217,8 +215,7 @@ def constantsToHolomorphicDeRhamZero [SmoothOfRelativeDimension d X.hom] :
     (holomorphicFormOfConstant X d U).toAddMonoidHom
   naturality {U V} i := by
     apply AddCommGrpCat.hom_ext
-    apply AddMonoidHom.ext
-    intro c
+    ext c
     exact (holomorphicFormRestriction_ofConstant X d i c).symm
 
 /-- On a nonempty open set, distinct complex constants define distinct holomorphic zero-forms. -/
@@ -228,9 +225,8 @@ lemma holomorphicFormOfConstant_injective [SmoothOfRelativeDimension d X.hom]
   intro c c' hcc'
   have hzero : holomorphicFormOfConstant X d U (c - c') = 0 := by
     rw [map_sub, hcc', sub_self]
-  let a : Algebra.DeRham.RawForm ℂ (OpenHolomorphicFunctions X d U) 0 :=
-    Finsupp.single
-      (algebraMap ℂ (OpenHolomorphicFunctions X d U) (c - c'), Fin.elim0) 1
+  let a : Algebra.DeRham.Form ℂ (OpenHolomorphicFunctions X d U) 0 :=
+    Algebra.DeRham.ofConstant ℂ (OpenHolomorphicFunctions X d U) (c - c')
   have ha : a ∈ holomorphicFormRelations X d U 0 := by
     change Submodule.Quotient.mk a = 0 at hzero
     rwa [Submodule.Quotient.mk_eq_zero] at hzero
@@ -238,7 +234,7 @@ lemma holomorphicFormOfConstant_injective [SmoothOfRelativeDimension d X.hom]
     restrictionStableAnalyticKernel] at ha
   simp only [Submodule.mem_iInf, Submodule.mem_comap] at ha
   specialize ha U (𝟙 U)
-  rw [rawRestriction_id, LinearMap.id_apply] at ha
+  rw [formRestriction_id, LinearMap.id_apply] at ha
   let x : U.unop := Classical.arbitrary U.unop
   let e := extChartAt (modelWithCornersSelf ℂ (Fin d → ℂ)) x.1
   have hxsource : x.1 ∈ e.source := mem_extChartAt_source x.1
@@ -249,7 +245,7 @@ lemma holomorphicFormOfConstant_injective [SmoothOfRelativeDimension d X.hom]
     exact x.2
   have heval := (mem_chartEvaluationKernel_iff X d U 0 a).1 ha
     x.1 (e x.1) hxe
-  rw [chartRawEvaluation_rawConstant X d U x.1 (c - c') hxe] at heval
+  rw [chartEvaluation_ofConstant X d U x.1 (c - c') hxe] at heval
   have hcoeff := congrArg
     (fun f : (Fin d → ℂ) [⋀^Fin 0]→L[ℂ] ℂ ↦ f Fin.elim0) heval
   exact sub_eq_zero.mp (by simpa using hcoeff)
@@ -486,11 +482,7 @@ def scalarHolomorphicDeRhamPresheaf [SmoothOfRelativeDimension d X.hom]
 @[simp] lemma scalarHolomorphicDeRhamPresheaf_zero
     [SmoothOfRelativeDimension d X.hom] (p : ℕ) :
     scalarHolomorphicDeRhamPresheaf X d p 0 = 0 := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  apply AddMonoidHom.ext
-  intro x
+  ext U x
   dsimp [scalarHolomorphicDeRhamPresheaf, holomorphicDeRhamPresheaf]
   simp
   rfl
@@ -498,11 +490,7 @@ def scalarHolomorphicDeRhamPresheaf [SmoothOfRelativeDimension d X.hom]
 @[simp] lemma scalarHolomorphicDeRhamPresheaf_one
     [SmoothOfRelativeDimension d X.hom] (p : ℕ) :
     scalarHolomorphicDeRhamPresheaf X d p 1 = 𝟙 _ := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  apply AddMonoidHom.ext
-  intro x
+  ext U x
   dsimp [scalarHolomorphicDeRhamPresheaf, holomorphicDeRhamPresheaf]
   simp
   rfl
@@ -512,11 +500,7 @@ def scalarHolomorphicDeRhamPresheaf [SmoothOfRelativeDimension d X.hom]
     scalarHolomorphicDeRhamPresheaf X d p (a + b) =
       scalarHolomorphicDeRhamPresheaf X d p a +
         scalarHolomorphicDeRhamPresheaf X d p b := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  apply AddMonoidHom.ext
-  intro x
+  ext U x
   dsimp [scalarHolomorphicDeRhamPresheaf, holomorphicDeRhamPresheaf]
   simp [add_smul]
   rfl
@@ -526,11 +510,7 @@ def scalarHolomorphicDeRhamPresheaf [SmoothOfRelativeDimension d X.hom]
     scalarHolomorphicDeRhamPresheaf X d p (a * b) =
       scalarHolomorphicDeRhamPresheaf X d p b ≫
         scalarHolomorphicDeRhamPresheaf X d p a := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  apply AddMonoidHom.ext
-  intro x
+  ext U x
   dsimp [scalarHolomorphicDeRhamPresheaf, holomorphicDeRhamPresheaf]
   simp [mul_smul]
   rfl
@@ -644,15 +624,11 @@ def constantComplexSheaf :
   let J := Opens.grothendieckTopology (TopCat.of (ComplexPoint X))
   (constantSheaf J AddCommGrpCat).obj (AddCommGrpCat.of ℂ)
 
-/-- Multiplication by a complex scalar as an additive endomorphism of `ℂ`. -/
-def complexScalarAddHom (c : ℂ) : ℂ →+ ℂ :=
-  DistribSMul.toAddMonoidHom ℂ c
-
 /-- Scalar multiplication on the constant complex presheaf. -/
 def complexScalarPresheaf (c : ℂ) :
     constantComplexAddCommGrpPresheaf X ⟶
       constantComplexAddCommGrpPresheaf X where
-  app _ := AddCommGrpCat.ofHom (complexScalarAddHom c)
+  app _ := AddCommGrpCat.ofHom (DistribSMul.toAddMonoidHom ℂ c)
   naturality {U V} i := by
     ext x
     rfl
@@ -665,19 +641,15 @@ def complexScalarSheaf (c : ℂ) :
   exact (presheafToSheaf J AddCommGrpCat).map
     (complexScalarPresheaf X c)
 
-/-- Complex conjugation as an additive endomorphism of `ℂ`.
+/-- Complex conjugation on the constant complex presheaf.
 
 Conjugation is a ring automorphism of `ℂ`, so it acts on the constant complex sheaf exactly the
 way a scalar does; unlike a scalar it is only additive over `ℂ`, which is what makes the induced
 map on cohomology conjugate-linear rather than linear. -/
-def conjAddHom : ℂ →+ ℂ :=
-  (starRingEnd ℂ).toAddMonoidHom
-
-/-- Complex conjugation on the constant complex presheaf. -/
 def conjConstantComplexPresheaf :
     constantComplexAddCommGrpPresheaf X ⟶
       constantComplexAddCommGrpPresheaf X where
-  app _ := AddCommGrpCat.ofHom conjAddHom
+  app _ := AddCommGrpCat.ofHom (starRingEnd ℂ).toAddMonoidHom
   naturality {U V} i := by
     ext x
     rfl
@@ -686,13 +658,9 @@ def conjConstantComplexPresheaf :
 lemma conjConstantComplexPresheaf_comp_self :
     conjConstantComplexPresheaf X ≫ conjConstantComplexPresheaf X =
       𝟙 (constantComplexAddCommGrpPresheaf X) := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  change conjAddHom.comp conjAddHom = AddMonoidHom.id ℂ
-  apply AddMonoidHom.ext
-  intro x
-  exact Complex.conj_conj x
+  ext U : 2
+  change (starRingEnd ℂ).toAddMonoidHom.comp (starRingEnd ℂ).toAddMonoidHom = AddMonoidHom.id ℂ
+  exact AddMonoidHom.ext Complex.conj_conj
 
 /-- Complex conjugation on the constant complex sheaf. -/
 def conjConstantComplexSheaf :
@@ -719,15 +687,10 @@ lemma complexScalarPresheaf_comp_conj (c : ℂ) :
     complexScalarPresheaf X c ≫ conjConstantComplexPresheaf X =
       conjConstantComplexPresheaf X ≫
         complexScalarPresheaf X (starRingEnd ℂ c) := by
-  apply NatTrans.ext
-  funext U
-  apply AddCommGrpCat.hom_ext
-  change conjAddHom.comp (complexScalarAddHom c) =
-    (complexScalarAddHom (starRingEnd ℂ c)).comp conjAddHom
-  apply AddMonoidHom.ext
-  intro x
-  change (starRingEnd ℂ) (c * x) = (starRingEnd ℂ) c * (starRingEnd ℂ) x
-  exact map_mul (starRingEnd ℂ) c x
+  ext U : 2
+  change (starRingEnd ℂ).toAddMonoidHom.comp (DistribSMul.toAddMonoidHom ℂ c) =
+    (DistribSMul.toAddMonoidHom ℂ (starRingEnd ℂ c)).comp (starRingEnd ℂ).toAddMonoidHom
+  exact AddMonoidHom.ext (map_mul (starRingEnd ℂ) c)
 
 /-- Conjugation intertwines multiplication by `c` with multiplication by `conj c` on the constant
 complex sheaf. -/
@@ -894,8 +857,7 @@ lemma constantsToHolomorphicDeRhamZero_scalar
   let f := holomorphicFormOfConstant X d U
   change (c • LinearMap.id).toAddMonoidHom.comp f.toAddMonoidHom =
     f.toAddMonoidHom.comp (DistribSMul.toAddMonoidHom ℂ c)
-  apply AddMonoidHom.ext
-  intro x
+  ext x
   change c • f x = f (c • x)
   exact (f.map_smul c x).symm
 

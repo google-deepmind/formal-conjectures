@@ -70,8 +70,7 @@ def supportRelativeCohomologyPresheafOpenIso (n : ℕ) :
       (fun y _ => by rw [← hB]; rfl) n).toAddEquiv.toAddCommGrpIso) (by
     intro U V g
     apply AddCommGrpCat.hom_ext
-    apply AddMonoidHom.ext
-    intro a
+    ext a
     change relativeCohomologyMap ℚ n
         (neighborhoodSupportPairImageIso f hf.isEmbedding (V.unop : Set Y) B S
           (fun y _ => by rw [← hB]; rfl)).hom

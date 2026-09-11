@@ -97,9 +97,7 @@ def standardOrientationBallFaceMap (n : ℕ) (i : Fin (n + 2)) :
     apply ball_standardOrientationRadius_subset (n + 1) hball
     exact Set.mem_iUnion.mpr ⟨i, ⟨stdSimplex.map i.succAbove t,
       stdSimplex_map_succAbove_self_zero n i t, rfl⟩⟩⟩
-  continuous_toFun := Continuous.subtype_mk
-    ((continuous_standardAffineSimplex (n + 1)).comp
-      (stdSimplex.continuous_map i.succAbove)) _
+  continuous_toFun := by fun_prop
 
 lemma standardOrientationBallFace_projection (n : ℕ) (i : Fin (n + 2)) :
     standardAmbientFaceChain n i ≫

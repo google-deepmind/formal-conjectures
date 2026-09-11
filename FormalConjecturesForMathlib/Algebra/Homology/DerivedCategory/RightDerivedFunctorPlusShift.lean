@@ -91,8 +91,7 @@ lemma natTrans_ext_on_injectives {H : Type*} [Category* H]
     (h : ∀ K : HomotopyCategory.Plus (InjectiveObject C),
       α.app ((InjectiveObject.ι C).mapHomotopyCategoryPlus.obj K) =
         β.app ((InjectiveObject.ι C).mapHomotopyCategoryPlus.obj K)) : α = β := by
-  apply NatTrans.ext
-  funext K
+  ext K : 2
   let r := Classical.arbitrary ((HomotopyCategory.Plus.localizerMorphism C).RightResolution K)
   have : IsIso (G.map r.w) := hG r.w r.hw
   rw [← cancel_mono (G.map r.w), ← α.naturality, ← β.naturality, h]

@@ -237,8 +237,7 @@ public theorem standardTopologicalSimplexIdentitySimplex_map
     (TopCat.toSSet.map (singularSimplexTopCatMap X n x)).app _
         (standardTopologicalSimplexIdentitySimplex n) = x := by
   apply (TopCat.toSSetObjEquiv _ _).injective
-  apply ContinuousMap.ext
-  intro w
+  ext w
   rfl
 
 /-- Affine singular subdivision minus the identity, as a natural chain endomorphism. -/
@@ -334,8 +333,7 @@ public theorem affineSubdivisionSingularSimplexChain_zero
   rw [iota_affineFlagChainComponent, SSet.ι_chainComplexMap_f]
   congr 1
   apply (TopCat.toSSetObjEquiv _ _).injective
-  apply ContinuousMap.ext
-  intro w
+  ext w
   rw [toSSetObjEquiv_map_apply]
   change X.toSSetObjEquiv _ x
       (affineFlagContinuousMap 0 0 (permutationMaximalFlagSimplex 1) w) =

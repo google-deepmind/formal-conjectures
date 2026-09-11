@@ -315,8 +315,7 @@ lemma standardFaceSimplex_zero_point :
   change standardFaceMap 0 (0 : Fin 2)
     (default : stdSimplex ℝ (Fin 1)) = standardNegativePoint
   rw [Subsingleton.elim (default : stdSimplex ℝ (Fin 1)) (stdSimplex.vertex 0)]
-  apply Subtype.ext
-  funext j
+  ext j
   fin_cases j
   simp [standardFaceMap, standardAffineSimplex, stdSimplex.map, standardNegativePoint]
 
@@ -326,8 +325,7 @@ lemma standardFaceSimplex_one_point :
   change standardFaceMap 0 (1 : Fin 2)
     (default : stdSimplex ℝ (Fin 1)) = standardPositivePoint
   rw [Subsingleton.elim (default : stdSimplex ℝ (Fin 1)) (stdSimplex.vertex 0)]
-  apply Subtype.ext
-  funext j
+  ext j
   fin_cases j
   simp [standardFaceMap, standardAffineSimplex, stdSimplex.map, standardPositivePoint]
 

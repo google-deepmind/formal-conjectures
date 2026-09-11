@@ -81,7 +81,7 @@ lemma constantRationalSheafComplexIntIsoSingleZero_hom_quasiIso :
 /-- Degree-zero rational cohomology after replacing both extended complexes by single
 complexes. -/
 def rationalCohomologyZeroEquivSingle :
-    FieldCohomology ℚ X 0 ≃
+    H^0(X; ℚ) ≃
       Localization.SmallShiftedHom (analyticQuasiIsomorphisms X)
         ((CochainComplex.singleFunctor (AnalyticAdditiveSheaf X) 0).obj
           (constantIntegerSheaf X))
@@ -117,7 +117,7 @@ def rationalCohomologyZeroSingleEquivExt :
 /-- Degree-zero rational constant-sheaf cohomology is ordinary Hom from integer constants to
 rational constants. -/
 def rationalCohomologyZeroEquivSheafHom :
-    FieldCohomology ℚ X 0 ≃
+    H^0(X; ℚ) ≃
       (constantIntegerSheaf X ⟶ constantFieldSheaf ℚ X) :=
   ((rationalCohomologyZeroEquivSingle X).trans
     (rationalCohomologyZeroSingleEquivExt X)).trans Abelian.Ext.homEquiv₀
@@ -236,7 +236,7 @@ theorem rationalCohomologyClass_bijective
 degree-zero rational cohomology. -/
 def rationalCohomologyClassLinearEquiv
     [ConnectedSpace (ComplexPoint X)] :
-    ℚ ≃ₗ[ℚ] FieldCohomology ℚ X 0 :=
+    ℚ ≃ₗ[ℚ] H^0(X; ℚ) :=
   LinearEquiv.ofBijective (fieldCohomologyClassLinear ℚ X)
     (rationalCohomologyClass_bijective X)
 

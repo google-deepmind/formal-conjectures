@@ -144,8 +144,7 @@ lemma relativeDualCochainCohomologyEquiv_naturality {X Y : TopPair.{u}} (f : X â
     (HomologicalComplex.linearDualMap ((relativeChainFunctor R).map f))
     ComplexShape.embeddingUpNat (j := n) (j' := (n : â„¤)) rfl
   have ha := ConcreteCategory.congr_hom h a
-  apply LinearMap.ext
-  intro z
+  ext z
   change HomologicalComplex.linearDualHomologyEquiv ((relativeChainFunctor R).obj X) n
     ((((relativeChainFunctor R).obj X).linearDualCochainComplex.extendHomologyIso
       ComplexShape.embeddingUpNat rfl).hom

@@ -230,8 +230,7 @@ lemma awayCoordinateEvaluation_smul {n : ℕ} (v : CoordinateSpace n)
     (c : ℂ) (hc : c ≠ 0) (i : Fin (n + 1)) (hi : v i ≠ 0) :
     awayCoordinateEvaluation (c • v) i (mul_ne_zero hc hi) =
       awayCoordinateEvaluation v i hi := by
-  apply RingHom.ext
-  intro z
+  ext z
   obtain ⟨d, r, hr, rfl⟩ :=
     HomogeneousLocalization.Away.mk_surjective
       (UniversalGrading n) (MvPolynomial.isHomogeneous_X (ULift ℤ) i) z
@@ -384,8 +383,7 @@ lemma awayRingHom_ext {n : ℕ} (i : Fin (n + 1))
 `ℂ`. -/
 lemma degreeZero_ringHom_unique {n : ℕ}
     (φ ψ : UniversalGrading n 0 →+* ℂ) : φ = ψ := by
-  apply RingHom.ext
-  intro a
+  ext a
   obtain ⟨z, rfl⟩ :=
     (ProjectiveSpace.degreeZeroEquiv (Fin (n + 1)) (ULift ℤ)).symm.surjective a
   obtain ⟨z, rfl⟩ := (ULift.ringEquiv (R := ℤ)).symm.surjective z

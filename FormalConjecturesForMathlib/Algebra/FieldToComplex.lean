@@ -21,7 +21,8 @@ public import Mathlib.LinearAlgebra.Basis.VectorSpace
 /-!
 # A coefficient field inside the complex numbers
 
-A field `K` with an algebra map to `ℂ` embeds `K`-linearly, and that embedding splits: an
+A field `K` with an algebra map to `ℂ` embeds `K`-linearly via `Algebra.linearMap`, and that
+embedding splits: an
 injective linear map of vector spaces over a field has a left inverse. Choosing one gives a
 `K`-linear retraction `ℂ → K`, which is what lets a complex cohomology class be pushed back to
 `K`-coefficients.
@@ -35,26 +36,21 @@ carrying the algebra hypothesis.
 
 variable (K : Type) [Field K] [Algebra K ℂ]
 
-/-- The inclusion of `K` into `ℂ`, regarded as a rational-linear map. -/
-def fieldToComplexLinear : K →ₗ[K] ℂ :=
-  Algebra.linearMap K ℂ
-
 /-- A rational-linear retraction of the inclusion `K → ℂ`. Such a retraction exists because an
 injective linear map of vector spaces over a field splits. -/
 noncomputable def complexToFieldLinear : ℂ →ₗ[K] K :=
-  Classical.choose <| (fieldToComplexLinear K).exists_leftInverse_of_injective
+  Classical.choose <| (Algebra.linearMap K ℂ).exists_leftInverse_of_injective
     (LinearMap.ker_eq_bot.mpr (algebraMap K ℂ).injective)
 
 /-- The chosen rational-linear retraction is a left inverse to `K → ℂ`. -/
-lemma complexToFieldLinear_comp_fieldToComplexLinear :
-    complexToFieldLinear K ∘ₗ fieldToComplexLinear K = LinearMap.id :=
-  Classical.choose_spec <| (fieldToComplexLinear K).exists_leftInverse_of_injective
+lemma complexToFieldLinear_comp_algebraMap :
+    complexToFieldLinear K ∘ₗ Algebra.linearMap K ℂ = LinearMap.id :=
+  Classical.choose_spec <| (Algebra.linearMap K ℂ).exists_leftInverse_of_injective
     (LinearMap.ker_eq_bot.mpr (algebraMap K ℂ).injective)
 
 @[simp] lemma complexToFieldLinear_algebraMap (q : K) :
-    complexToFieldLinear K (algebraMap K ℂ q) = q := by
-  have h := LinearMap.congr_fun (complexToFieldLinear_comp_fieldToComplexLinear K) q
-  simpa [fieldToComplexLinear] using h
+    complexToFieldLinear K (algebraMap K ℂ q) = q :=
+  LinearMap.congr_fun (complexToFieldLinear_comp_algebraMap K) q
 
 /-- Multiplication by a rational scalar as an additive endomorphism of `K`. -/
 def fieldScalarAddHom (q : K) : K →+ K :=

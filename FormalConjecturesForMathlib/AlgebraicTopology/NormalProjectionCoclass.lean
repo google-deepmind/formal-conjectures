@@ -40,9 +40,8 @@ variable {M : Type} [TopologicalSpace M]
 def neighborhoodSupportInclusionPairMap {W V : Set M} (hWV : W ⊆ V) (S : Set M) :
     neighborhoodSupportComplementPair W S ⟶ neighborhoodSupportComplementPair V S :=
   TopPair.ofHom
-    (TopCat.ofHom ⟨fun w => ⟨w.1, hWV w.2⟩, continuous_subtype_val.subtype_mk _⟩)
-    (TopCat.ofHom ⟨fun w => ⟨⟨w.1.1, hWV w.1.2⟩, w.2⟩,
-      (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _ |>.subtype_mk _⟩) (by ext w; rfl)
+    (TopCat.ofHom ⟨fun w => ⟨w.1, hWV w.2⟩, by fun_prop⟩)
+    (TopCat.ofHom ⟨fun w => ⟨⟨w.1.1, hWV w.1.2⟩, w.2⟩, by fun_prop⟩) (by ext w; rfl)
 
 variable (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (c : ℕ)
   (e : OpenPartialHomeomorph M (E × (Fin c → ℂ))) (S : Set M)

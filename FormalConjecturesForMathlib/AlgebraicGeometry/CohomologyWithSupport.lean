@@ -255,7 +255,7 @@ def forgetSupportShiftedHom (Z : Set (ComplexPoint X)) :
 /-- Forget support, using the connecting morphism of the mapping-cone triangle. -/
 def forgetSupport (Z : Set (ComplexPoint X)) (n : ℤ) :
     RationalCohomologyWithSupport X Z n →+
-      FieldCohomology ℚ X n where
+      H^n(X; ℚ) where
   toFun α := α.comp (forgetSupportShiftedHom X Z) (by lia)
   map_zero' := by
     apply (Localization.SmallShiftedHom.equiv
@@ -288,7 +288,7 @@ ordinary rational cohomology. Its forward map is definitionally the support-forg
 noncomputable def forgetSupportEquivUniv (n : ℤ) :
     RationalCohomologyWithSupport X
         (Set.univ : Set (ComplexPoint X)) n ≃
-      FieldCohomology ℚ X n := by
+      H^n(X; ℚ) := by
   let eSource : RationalCohomologyWithSupport X
         (Set.univ : Set (ComplexPoint X)) n ≃
       ShiftedHom
@@ -297,7 +297,7 @@ noncomputable def forgetSupportEquivUniv (n : ℤ) :
         (n - 1) :=
     Localization.SmallShiftedHom.equiv
       (analyticQuasiIsomorphisms X) DerivedCategory.Q
-  let eTarget : FieldCohomology ℚ X n ≃
+  let eTarget : H^n(X; ℚ) ≃
       ShiftedHom
         (DerivedCategory.Q.obj (constantIntegerSheafComplexInt X))
         (DerivedCategory.Q.obj (constantFieldSheafComplexInt ℚ X)) n :=

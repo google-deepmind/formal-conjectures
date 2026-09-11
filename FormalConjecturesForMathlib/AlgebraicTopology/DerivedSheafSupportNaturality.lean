@@ -62,8 +62,7 @@ def openRestrictionPushforwardMap {U V : Opens X} (h : V ≤ U) :
       congr 1 }⟩
   naturality F G f := by
     apply CategoryTheory.Sheaf.hom_ext_iff.mpr
-    apply NatTrans.ext
-    funext W
+    ext W : 2
     exact (f.hom.naturality _).symm
 
 /-- Further restriction agrees with direct restriction from the ambient sheaf. -/
@@ -71,11 +70,9 @@ def openRestrictionPushforwardMap {U V : Opens X} (h : V ≤ U) :
 theorem toOpenRestrictionPushforward_comp {U V : Opens X} (h : V ≤ U) :
     toOpenRestrictionPushforward X U ≫ openRestrictionPushforwardMap X h =
       toOpenRestrictionPushforward X V := by
-  apply NatTrans.ext
-  funext F
+  ext F : 2
   apply CategoryTheory.Sheaf.hom_ext_iff.mpr
-  apply NatTrans.ext
-  funext W
+  ext W : 2
   change F.obj.map _ ≫ F.obj.map _ = F.obj.map _
   rw [← F.obj.map_comp]
   congr 1

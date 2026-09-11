@@ -48,30 +48,11 @@ variable (X : Over (Spec (.of ℂ))) (d : ℕ)
 noncomputable local instance :
     TopologicalSpace (ComplexPoint X) := Point.analyticTopology
 
-/-- The local fundamental class at a smooth complex point, constructed from its chosen algebraic
-étale chart and the standard complex orientation. -/
-def localFundamentalClass [SmoothOfRelativeDimension d X.hom]
-    (z : ComplexPoint X) :
-    RelativeHomology ℚ (pointComplementPair z) (2 * d) :=
-  localClassOfChart d (localChart X d z) z
-    (mem_localChart_source X d z)
-
-/-- A family of rational top-degree local homology classes on a complex analytic space. -/
-abbrev RationalLocalHomologyClassFamily :=
-  ∀ z : ComplexPoint X,
-    RelativeHomology ℚ (pointComplementPair z) (2 * d)
-
 /-- The canonical pointwise local orientation of a smooth complex scheme, constructed from its
 algebraic étale charts and the standard complex local class. -/
-def complexLocalOrientation [SmoothOfRelativeDimension d X.hom] :
-    RationalLocalHomologyClassFamily X d :=
-  fun z ↦ localFundamentalClass X d z
-
-@[simp]
-lemma complexLocalOrientation_apply [SmoothOfRelativeDimension d X.hom]
-    (z : ComplexPoint X) :
-    complexLocalOrientation X d z = localFundamentalClass X d z :=
-  rfl
+def complexLocalOrientation [SmoothOfRelativeDimension d X.hom]
+    (z : ComplexPoint X) : RelativeHomology ℚ (pointComplementPair z) (2 * d) :=
+  localClassOfChart d (localChart X d z) z (mem_localChart_source X d z)
 
 /-- The local orientation is exactly the standard complex class transported through the
 canonical algebraic étale chart at the point. -/

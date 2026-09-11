@@ -268,13 +268,8 @@ def standardPuncturedFacetIntersectionHomeomorph (d : ℕ)
   invFun x := ⟨x.1.1, x.2⟩
   left_inv _ := rfl
   right_inv _ := rfl
-  continuous_toFun := by
-    apply Continuous.subtype_mk
-    apply Continuous.subtype_mk
-    exact continuous_subtype_val
-  continuous_invFun := by
-    apply Continuous.subtype_mk
-    exact continuous_subtype_val.comp continuous_subtype_val
+  continuous_toFun := by fun_prop
+  continuous_invFun := by fun_prop
 
 /-- A nonempty proper facet intersection is contractible in its nested-subspace presentation. -/
 lemma standardPuncturedFacetIntersectionSubspace_contractibleSpace (d : ℕ)

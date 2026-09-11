@@ -50,12 +50,10 @@ def radialTargetPointPairMap (U : Set (Fin d → ℂ)) (c : Fin d → ℂ) (r : 
       simpa using injective_complexUnivBall d c r (h.trans hq.symm)))
   refine TopPair.ofHom
     (TopCat.ofHom ⟨fun w => ⟨OpenPartialHomeomorph.univBall c r (w + v), hmem w⟩,
-      ((continuous_complexUnivBall d c r).comp
-        (continuous_id.add continuous_const)).subtype_mk hmem⟩) ?_ ?_
+      by fun_prop⟩) ?_ ?_
   · refine TopCat.ofHom ⟨fun w => ⟨⟨OpenPartialHomeomorph.univBall c r (w.1 + v),
         hmem w.1⟩, hne w⟩, ?_⟩
-    exact (((continuous_complexUnivBall d c r).comp
-      (continuous_subtype_val.add continuous_const)).subtype_mk _).subtype_mk _
+    fun_prop
   · rfl
 
 /-- Forgetting the target restriction displays exactly the centered radial map followed by

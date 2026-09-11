@@ -288,8 +288,7 @@ lemma cohomologyWithSupportMap_comp (R : Type u) [Field R]
 def supportInclusionPairMap (X : TopCat.{u}) {Z W : Set X} (h : Z ⊆ W) :
     TopPair.ofSubset Wᶜ ⟶ TopPair.ofSubset Zᶜ :=
   TopPair.ofHom (𝟙 X)
-    (TopCat.ofHom ⟨fun x => ⟨x.1, fun hx => x.2 (h hx)⟩,
-      continuous_subtype_val.subtype_mk _⟩)
+    (TopCat.ofHom ⟨fun x => ⟨x.1, fun hx => x.2 (h hx)⟩, by fun_prop⟩)
     (by ext x; rfl)
 
 @[simp]

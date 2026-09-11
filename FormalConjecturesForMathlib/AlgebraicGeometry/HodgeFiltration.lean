@@ -275,15 +275,15 @@ omit [Algebra K ℂ] in
 
 /-- Multiplying by `q` in `K` before including into `ℂ` agrees with including first and then
 multiplying by `algebraMap K ℂ q`. -/
-lemma ofHom_algebraMap_comp_complexScalarAddHom (q : K) :
+lemma ofHom_algebraMap_comp_complexScalarSMul (q : K) :
     AddCommGrpCat.ofHom (algebraMap K ℂ).toAddMonoidHom ≫
-        AddCommGrpCat.ofHom (complexScalarAddHom (algebraMap K ℂ q)) =
+        AddCommGrpCat.ofHom (DistribSMul.toAddMonoidHom ℂ (algebraMap K ℂ q)) =
       AddCommGrpCat.ofHom (fieldScalarAddHom K q) ≫
         AddCommGrpCat.ofHom (@AddMonoidHomClass.toAddMonoidHom K ℂ (K →+* ℂ) Field.toSemifield.toNonAssocSemiring.toAddCommMonoidWithOne.toAddZeroClass.toAddZero
                 Complex.instSemiring.toNonAssocSemiring.toAddCommMonoidWithOne.toAddZeroClass.toAddZero RingHom.instFunLike _
         (algebraMap K ℂ)) := by
   ext r
-  simp [complexScalarAddHom, fieldScalarAddHom, map_mul]
+  simp [fieldScalarAddHom, map_mul]
 
 /-- The constant-presheaf map induced by the inclusion `K → ℂ`, followed by scalar multiplication
 by `algebraMap K ℂ q` on the constant complex presheaf, is the constant-presheaf map induced by the
@@ -291,7 +291,7 @@ composite additive map. -/
 lemma const_map_algebraMap_comp_complexScalarPresheaf (q : K) : (Functor.const (Opens (ComplexPoint X))ᵒᵖ).map (AddCommGrpCat.ofHom ↑(algebraMap K ℂ)) ≫
     complexScalarPresheaf X ((algebraMap K ℂ) q) =
   (Functor.const (Opens (ComplexPoint X))ᵒᵖ).map
-    (AddCommGrpCat.ofHom (algebraMap K ℂ : K →+ ℂ) ≫ AddCommGrpCat.ofHom (complexScalarAddHom ((algebraMap K ℂ) q))) := rfl
+    (AddCommGrpCat.ofHom (algebraMap K ℂ : K →+ ℂ) ≫ AddCommGrpCat.ofHom (DistribSMul.toAddMonoidHom ℂ ((algebraMap K ℂ) q))) := rfl
 
 set_option linter.auxLemma false in
 attribute [local implicit_reducible] TopCat.Sheaf TopCat.instCategorySheaf._aux_1 TopCat.instCategorySheaf._aux_3
@@ -304,7 +304,7 @@ lemma fieldToComplexConstantSheaf_scalar (q : K) :
     fieldScalarSheaf K X q ≫
       fieldToComplexConstantSheaf K X := by
   simp [fieldToComplexConstantSheaf, fieldScalarSheaf, complexScalarSheaf, constantSheaf,
-    constantComplexSheaf, constantFieldSheaf, ← Functor.map_comp, ← ofHom_algebraMap_comp_complexScalarAddHom,
+    constantComplexSheaf, constantFieldSheaf, ← Functor.map_comp, ← ofHom_algebraMap_comp_complexScalarSMul,
     const_map_algebraMap_comp_complexScalarPresheaf]
 
 omit [Algebra K ℂ] in
@@ -414,8 +414,12 @@ def Hypercohomology
   Localization.SmallShiftedHom.{1} (analyticQuasiIsomorphisms X)
     (constantIntegerSheafComplexInt X) K n
 
-/-- Rational constant-sheaf cohomology in integer degree `n`. -/
-abbrev FieldCohomology (n : ℤ) : Type 1 :=
+/-- `H^n(X; K)` is constant-sheaf cohomology of the analytic space `X(ℂ)` with coefficients in
+the field `K`, in integer degree `n`: the hypercohomology of the constant sheaf `K` on `X(ℂ)`.
+
+The literature writes `H^n(X; K)` for the variety `X.left` alone; here the variety is presented by
+its structure morphism `X`. -/
+scoped notation3:max "H^" n:max "(" X "; " K ")" =>
   Hypercohomology X (constantFieldSheafComplexInt K X) n
 
 /-- Complex constant-sheaf cohomology in integer degree `n`. -/
@@ -447,7 +451,7 @@ lemma hypercohomologyEquiv_add
   simp [Equiv.add_def]
 
 /-- The constant rational class `q` in degree-zero rational cohomology. -/
-def fieldCohomologyClass (q : K) : FieldCohomology K X 0 :=
+def fieldCohomologyClass (q : K) : H^0(X; K) :=
   Localization.SmallShiftedHom.mk₀ (analyticQuasiIsomorphisms X) 0 rfl
     (integerToFieldConstantSheafComplexInt K X q)
 
@@ -469,13 +473,13 @@ omit [Algebra K ℂ] in
     integerToFieldConstantSheafComplexInt_add]
 
 /-- Rational constants as an additive map into degree-zero rational cohomology. -/
-def fieldCohomologyClassAddHom : K →+ FieldCohomology K X 0 where
+def fieldCohomologyClassAddHom : K →+ H^0(X; K) where
   toFun := fieldCohomologyClass K X
   map_zero' := fieldCohomologyClass_zero K X
   map_add' := fieldCohomologyClass_add K X
 
 /-- The unit in degree-zero rational cohomology. -/
-def fieldCohomologyUnit : FieldCohomology K X 0 :=
+def fieldCohomologyUnit : H^0(X; K) :=
   fieldCohomologyClass K X 1
 
 /-- Hypercohomology of the holomorphic de Rham complex in integer degree `n`. -/
@@ -553,13 +557,13 @@ lemma complexConstantCohomologyDeRhamEquiv_apply
 
 /-- Extension of coefficients from rational to complex constant-sheaf cohomology. -/
 def fieldToComplexCohomology (n : ℤ) :
-    FieldCohomology K X n →+ ComplexConstantCohomology X n :=
+    H^n(X; K) →+ ComplexConstantCohomology X n :=
   hypercohomologyMap X
     (fieldToComplexConstantSheafComplexInt K X) n
 
 /-- The cohomological retraction induced by the chosen rational-linear retraction `ℂ → K`. -/
 def complexToFieldCohomology (n : ℤ) :
-    ComplexConstantCohomology X n →+ FieldCohomology K X n :=
+    ComplexConstantCohomology X n →+ H^n(X; K) :=
   hypercohomologyMap X
     (complexToFieldConstantSheafComplexInt K X) n
 
@@ -627,27 +631,27 @@ lemma fieldToComplexCohomology_injective (n : ℤ) :
 /-- The rational action on constant-sheaf cohomology, induced by scalar multiplication on the
 coefficient sheaf. -/
 def fieldCohomologySMul (n : ℤ) (q : K)
-    (α : FieldCohomology K X n) : FieldCohomology K X n :=
+    (α : H^n(X; K)) : H^n(X; K) :=
   hypercohomologyMap X (fieldScalarComplex K X q) n α
 
 noncomputable instance fieldCohomologySMulInstance (n : ℤ) :
-    SMul K (FieldCohomology K X n) :=
+    SMul K (H^n(X; K)) :=
   ⟨fieldCohomologySMul K X n⟩
 
 omit [Algebra K ℂ] in
-lemma field_smul_eq (n : ℤ) (q : K) (α : FieldCohomology K X n) :
+lemma field_smul_eq (n : ℤ) (q : K) (α : H^n(X; K)) :
     q • α = hypercohomologyMap X
       (fieldScalarComplex K X q) n α := rfl
 
 omit [Algebra K ℂ] in
 lemma field_smul_add (n : ℤ) (q : K)
-    (α β : FieldCohomology K X n) :
+    (α β : H^n(X; K)) :
     q • (α + β) = q • α + q • β :=
   (hypercohomologyMap X (fieldScalarComplex K X q) n).map_add α β
 
 omit [Algebra K ℂ] in
 lemma field_add_smul (n : ℤ) (a b : K)
-    (α : FieldCohomology K X n) :
+    (α : H^n(X; K)) :
     (a + b) • α = a • α + b • α := by
   change hypercohomologyMap X
       (fieldScalarComplex K X (a + b)) n α =
@@ -661,10 +665,10 @@ lemma field_add_smul (n : ℤ) (a b : K)
     Functor.map_add]
 
 omit [Algebra K ℂ] in
-lemma field_one_smul (n : ℤ) (α : FieldCohomology K X n) :
+lemma field_one_smul (n : ℤ) (α : H^n(X; K)) :
     (1 : K) • α = α := by
   rw [field_smul_eq, fieldScalarComplex_one]
-  let e : FieldCohomology K X n ≃
+  let e : H^n(X; K) ≃
       ShiftedHom
         (DerivedCategory.Q.obj (constantIntegerSheafComplexInt X))
         (DerivedCategory.Q.obj (constantFieldSheafComplexInt K X)) n :=
@@ -675,7 +679,7 @@ lemma field_one_smul (n : ℤ) (α : FieldCohomology K X n) :
 
 omit [Algebra K ℂ] in
 lemma field_mul_smul (n : ℤ) (a b : K)
-    (α : FieldCohomology K X n) :
+    (α : H^n(X; K)) :
     (a * b) • α = a • b • α := by
   change hypercohomologyMap X
       (fieldScalarComplex K X (a * b)) n α =
@@ -686,7 +690,7 @@ lemma field_mul_smul (n : ℤ) (a b : K)
 
 /-- Rational constant-sheaf cohomology is canonically a rational vector space. -/
 noncomputable instance fieldCohomologyModule (n : ℤ) :
-    Module K (FieldCohomology K X n) :=
+    Module K (H^n(X; K)) :=
   Module.ofMinimalAxioms
     (field_smul_add K X n)
     (field_add_smul K X n)
@@ -872,21 +876,21 @@ lemma fieldCohomologyClass_mul (q r : K) :
     integerToFieldConstantSheafComplexInt_comp_fieldScalarComplex]
 
 /-- Rational constants map rational-linearly to degree-zero rational cohomology. -/
-def fieldCohomologyClassLinear : K →ₗ[K] FieldCohomology K X 0 where
+def fieldCohomologyClassLinear : K →ₗ[K] H^0(X; K) where
   toFun := fieldCohomologyClass K X
   map_add' := fieldCohomologyClass_add K X
   map_smul' q r := fieldCohomologyClass_mul K X q r
 
 /-- The derived comparison from rational cohomology to holomorphic de Rham hypercohomology. -/
 def fieldToDeRhamCohomology [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    FieldCohomology K X n →+ DeRhamHypercohomology X n :=
+    H^n(X; K) →+ DeRhamHypercohomology X n :=
   hypercohomologyMap X
     (fieldToHolomorphicDeRhamComplexInt K X) n
 
 /-- The rational-to-de Rham map factors through extension from rational to complex constants. -/
 lemma fieldToDeRhamCohomology_factor
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (α : FieldCohomology K X n) :
+    (α : H^n(X; K)) :
     fieldToDeRhamCohomology K X n α =
       hypercohomologyMap X
         (constantsToHolomorphicDeRhamComplexInt X) n
@@ -921,7 +925,7 @@ lemma fieldToDeRhamCohomology_injective
 /-- The rational-to-de Rham comparison is compatible with rational scalar multiplication. -/
 lemma fieldToDeRhamCohomology_smul
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (q : K) (α : FieldCohomology K X n) :
+    (q : K) (α : H^n(X; K)) :
     fieldToDeRhamCohomology K X n (q • α) =
       q • fieldToDeRhamCohomology K X n α := by
   rw [field_smul_eq, deRham_field_smul_eq]
@@ -932,7 +936,7 @@ lemma fieldToDeRhamCohomology_smul
 /-- The rational-to-de Rham comparison as a rational-linear map. -/
 def fieldToDeRhamCohomologyLinear
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    FieldCohomology K X n →ₗ[K]
+    H^n(X; K) →ₗ[K]
       DeRhamHypercohomology X n where
   toFun := fieldToDeRhamCohomology K X n
   map_add' := (fieldToDeRhamCohomology K X n).map_add
@@ -942,7 +946,7 @@ def fieldToDeRhamCohomologyLinear
 `K` to `ℂ`. -/
 def fieldToDeRhamComplexificationBilinear
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    ℂ →ₗ[ℂ] FieldCohomology K X n →ₗ[K]
+    ℂ →ₗ[ℂ] H^n(X; K) →ₗ[K]
       DeRhamHypercohomology X n where
   toFun c := c • (fieldToDeRhamCohomologyLinear K X n)
   map_add' a b := by
@@ -956,14 +960,14 @@ def fieldToDeRhamComplexificationBilinear
 constant-sheaf cohomology to holomorphic de Rham hypercohomology. -/
 def fieldToDeRhamComplexification
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ) :
-    ℂ ⊗[K] FieldCohomology K X n →ₗ[ℂ]
+    ℂ ⊗[K] H^n(X; K) →ₗ[ℂ]
       DeRhamHypercohomology X n :=
   TensorProduct.AlgebraTensorModule.lift
     (fieldToDeRhamComplexificationBilinear K X n)
 
 @[simp] lemma fieldToDeRhamComplexification_tmul
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (c : ℂ) (α : FieldCohomology K X n) :
+    (c : ℂ) (α : H^n(X; K)) :
     fieldToDeRhamComplexification K X n (c ⊗ₜ[K] α) =
       c • fieldToDeRhamCohomology K X n α :=
   rfl
@@ -971,7 +975,7 @@ def fieldToDeRhamComplexification
 /-- On the rational lattice, the complexified comparison agrees with the original map. -/
 @[simp] lemma fieldToDeRhamComplexification_ofField
     [IsIntegral X.left] [Smooth X.hom] (n : ℤ)
-    (α : FieldCohomology K X n) :
+    (α : H^n(X; K)) :
     fieldToDeRhamComplexification K X n (1 ⊗ₜ[K] α) =
       fieldToDeRhamCohomology K X n α := by
   simp
@@ -1204,7 +1208,8 @@ lemma fieldToComplexConstantSheaf_comp_conj
     (TopCat.of (ComplexPoint X))
   change (constantSheaf J AddCommGrpCat).map
       (AddCommGrpCat.ofHom (algebraMap K ℂ).toAddMonoidHom) ≫
-    (constantSheaf J AddCommGrpCat).map (AddCommGrpCat.ofHom conjAddHom) =
+    (constantSheaf J AddCommGrpCat).map
+      (AddCommGrpCat.ofHom (starRingEnd ℂ).toAddMonoidHom) =
     (constantSheaf J AddCommGrpCat).map
       (AddCommGrpCat.ofHom (algebraMap K ℂ).toAddMonoidHom)
   rw [← Functor.map_comp]
@@ -1226,7 +1231,7 @@ lemma fieldToComplexConstantSheafComplexInt_comp_conj
 /-- Such classes are their own conjugates in complex constant-sheaf cohomology. -/
 lemma conj_fieldToComplexCohomology
     (hK : ∀ q : K, starRingEnd ℂ (algebraMap K ℂ q) = algebraMap K ℂ q)
-    (n : ℤ) (α : FieldCohomology K X n) :
+    (n : ℤ) (α : H^n(X; K)) :
     hypercohomologyMap X (conjConstantComplexSheafComplexInt X) n
         (fieldToComplexCohomology K X n α) =
       fieldToComplexCohomology K X n α := by
@@ -1238,7 +1243,7 @@ lemma conj_fieldToComplexCohomology
 makes `F^p` alone the right condition over `ℚ`. -/
 lemma deRhamConj_fieldToDeRhamCohomology [IsIntegral X.left] [Smooth X.hom]
     (hK : ∀ q : K, starRingEnd ℂ (algebraMap K ℂ q) = algebraMap K ℂ q)
-    (n : ℤ) (α : FieldCohomology K X n) :
+    (n : ℤ) (α : H^n(X; K)) :
     deRhamConj X n (fieldToDeRhamCohomology K X n α) =
       fieldToDeRhamCohomology K X n α := by
   have he : fieldToDeRhamCohomology K X n α =
@@ -1291,7 +1296,7 @@ constant-sheaf cohomology. This definition uses the canonical comparison map rat
 identifying the two cohomology theories without proof. -/
 def complexifiedFieldHodgeFiltration [IsIntegral X.left] [Smooth X.hom]
     (p n : ℤ) :
-    Submodule ℂ (ℂ ⊗[K] FieldCohomology K X n) :=
+    Submodule ℂ (ℂ ⊗[K] H^n(X; K)) :=
   (hodgeFiltrationComplexSubmodule X p n).comap
     (fieldToDeRhamComplexification K X n)
 
@@ -1299,7 +1304,7 @@ def complexifiedFieldHodgeFiltration [IsIntegral X.left] [Smooth X.hom]
 constant-sheaf cohomology with coefficients in `K`. -/
 def complexifiedFieldHodgePiece [IsIntegral X.left] [Smooth X.hom]
     (p q n : ℤ) :
-    Submodule ℂ (ℂ ⊗[K] FieldCohomology K X n) :=
+    Submodule ℂ (ℂ ⊗[K] H^n(X; K)) :=
   (hodgePiece X p q n).comap (fieldToDeRhamComplexification K X n)
 
 /-- The Hodge filtration is stable under rational scalar multiplication. -/
@@ -1385,7 +1390,7 @@ The condition is `(p,p)`, not merely `F^p`; the two agree exactly when `K → �
 The Hodge filtration is indexed by a relative dimension, but the dimension is not a choice: it is
 `dim X.left`, recovered from the scheme itself. -/
 def hodgeClasses [IsIntegral X.left] [Smooth X.hom] (p : ℕ) :
-    Submodule K (FieldCohomology K X (2 * p)) :=
+    Submodule K (H^(2 * p)(X; K)) :=
   ((hodgePiece X p p (2 * p)).restrictScalars K).comap
     (fieldToDeRhamCohomologyLinear K X (2 * p))
 
@@ -1449,9 +1454,9 @@ lemma hodgeClasses_eq_bot_of_lt
 complexification. -/
 def hodgeClassesViaComplexification
     [IsIntegral X.left] [Smooth X.hom] (p : ℕ) :
-    Submodule K (FieldCohomology K X (2 * p)) :=
+    Submodule K (H^(2 * p)(X; K)) :=
   Submodule.comap
-    (HodgeStructure.ofBase K (FieldCohomology K X (2 * p)))
+    (HodgeStructure.ofBase K (H^(2 * p)(X; K)))
     ((complexifiedFieldHodgePiece K X p p (2 * p)).restrictScalars K)
 
 /-- The direct definition of rational Hodge classes agrees with the definition using the
@@ -1462,7 +1467,7 @@ lemma hodgeClassesViaComplexification_eq [IsIntegral X.left] [Smooth X.hom] (p :
   ext α
   change fieldToDeRhamComplexification K X (2 * (p : ℤ))
       (HodgeStructure.ofBase K
-        (FieldCohomology K X (2 * (p : ℤ))) α) ∈
+        (H^(2 * (p : ℤ))(X; K)) α) ∈
         hodgePiece X p p (2 * (p : ℤ)) ↔
     fieldToDeRhamCohomology K X (2 * (p : ℤ)) α ∈
       hodgePiece X p p (2 * (p : ℤ))
@@ -1472,11 +1477,11 @@ lemma hodgeClassesViaComplexification_eq [IsIntegral X.left] [Smooth X.hom] (p :
 /-- A rational cohomology class is a Hodge class of codimension `p` when it belongs to the
 canonical subgroup of rational Hodge classes. -/
 def IsHodgeClass [IsIntegral X.left] [Smooth X.hom] (p : ℕ)
-    (α : FieldCohomology K X (2 * p)) : Prop :=
+    (α : H^(2 * p)(X; K)) : Prop :=
   α ∈ Hdg^p(K; X)
 
 lemma mem_hodgeClasses_iff [IsIntegral X.left] [Smooth X.hom]
-    (p : ℕ) (α : FieldCohomology K X (2 * p)) :
+    (p : ℕ) (α : H^(2 * p)(X; K)) :
     α ∈ Hdg^p(K; X) ↔
       IsHodgeClass K X p α :=
   Iff.rfl
@@ -1494,7 +1499,7 @@ lemma hodgeClasses_zero_eq_top [IsIntegral X.left] [Smooth X.hom]
 
 /-- Every rational degree-zero class has Hodge type `(0,0)`. -/
 lemma isHodgeClass_zero [IsIntegral X.left] [Smooth X.hom]
-    (α : FieldCohomology K X 0) :
+    (α : H^0(X; K)) :
     IsHodgeClass K X 0 α := by
   change α ∈ Hdg^0(K; X)
   rw [hodgeClasses_zero_eq_top]
