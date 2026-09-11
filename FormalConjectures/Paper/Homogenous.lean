@@ -19,8 +19,8 @@ import FormalConjecturesUtil
 /-!
 # Conjectures around homogeneous topological spaces
 
-This file formalizes the notion of a weakly first countable topological space and some conjectures
-around those.
+This file formalizes the notions of a homogeneous topological space and of (ω-)monolithic
+topological spaces, and states some open problems about homogeneous and monolithic compact spaces.
 
 *References:*
 * [Ar2013] Arhangeliski, Alexandr. "Selected old open problems in general topology."
@@ -98,16 +98,34 @@ theorem countablyMonolithicSpace_card_lt :
       HomogeneousSpace X → CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
+/-- A family `N` of subsets of a topological space `X` is a *network* for `X` if every open
+subset of `X` is a union of members of `N`, i.e. for every open `U` and every `x ∈ U` there is
+`n ∈ N` with `x ∈ n ⊆ U`. Unlike the members of a topological basis, the members of a network
+need not be open. -/
+def IsNetwork {X : Type*} [TopologicalSpace X] (N : Set (Set X)) : Prop :=
+  ∀ ⦃U : Set X⦄, IsOpen U → ∀ x ∈ U, ∃ n ∈ N, x ∈ n ∧ n ⊆ U
+
+/-- A topological space is called *monolithic* if for every infinite cardinal $\kappa$ and every
+subset $A$ with $|A| \le \kappa$, the closure of $A$ has network weight at most $\kappa$; that is,
+the closure of every infinite subset $A$ has a network of cardinality at most $|A|$.
+
+For compact Hausdorff spaces the network weight coincides with the weight, so a compact Hausdorff
+space is monolithic if and only if the closure of every infinite subset $A$ has weight at most
+$|A|$; in particular every monolithic compact Hausdorff space is ω-monolithic. -/
+class MonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
+  exists_isNetwork_closure_of_infinite :
+    ∀ ⦃s : Set X⦄, s.Infinite → ∃ N : Set (Set (closure s)), IsNetwork N ∧ #N ≤ #s
+
 /-- Problem 17 in [Ar2013]:
-Is it true that every nonempty ω-monolithic compact hausdorff space contains a point with a
+Is it true that every nonempty monolithic compact hausdorff space contains a point with a
 first countable neighborhood basis?
 
 Note: `Nonempty X` is required since the conclusion asserts the existence of a point.
 -/
 @[category research open, AMS 54]
-theorem countablyMonolithicSpace_exists_nhds_generated_countable :
+theorem monolithicSpace_exists_nhds_generated_countable :
     answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
-      Nonempty X → CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
+      Nonempty X → MonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 
 end Homogeneous
