@@ -22,6 +22,8 @@ import FormalConjecturesUtil
 * [erdosproblems.com/633](https://www.erdosproblems.com/633)
 * [So09] Soifer, Alexander, How Does One Cut a Triangle? I
 * [So09c] Soifer, Alexander, Is there anything beyond the solution?
+* [BLZ26] Beeson, Michael, Laczkovich, Miklós, and Zhang, Yan,
+  [*Solution of Erdős problem 633*](https://arxiv.org/abs/2604.03609).
 -/
 
 open Affine
@@ -69,8 +71,16 @@ lemma isCuttable_iff_isSquare_of_linearIndependent
     IsCuttable n T ↔ n ≠ 0 ∧ IsSquare n := by
   exact ⟨fun hT ↦ ⟨hT.ne_zero, sorry⟩, fun hn ↦ .of_isSquare hn.1 hn.2⟩
 
-/-- Which triangles can only be decomposed into a square number of congruent triangles? -/
-@[category research open, AMS 5 51]
+-- The complete classification is too involved to encode as the answer set here.
+set_option linter.style.category_answer false in
+/--
+Which triangles can only be decomposed into a square number of congruent triangles?
+
+Beeson, Laczkovich, and Zhang [BLZ26] classify the triangles that can be tiled only into a square
+number of congruent triangles, settling this problem. The classification is too involved to encode
+in the answer slot here, so the answer is left as `sorry` and the reference records the result.
+-/
+@[category research solved, AMS 5 51]
 lemma erdos_633 : T ∈ (answer(sorry) : Set <| Triangle ℝ ℝ²) ↔
     ∀ n, IsCuttable n T → IsSquare n := sorry
 
