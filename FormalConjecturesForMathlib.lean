@@ -19,6 +19,11 @@ public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import FormalConjecturesForMathlib.Algebra.Hochschild.Chains
+public import FormalConjecturesForMathlib.Algebra.Hochschild.Complex
+public import FormalConjecturesForMathlib.Algebra.Hochschild.FaceFormulas
+public import FormalConjecturesForMathlib.Algebra.Hochschild.FaceIdentities
+public import FormalConjecturesForMathlib.Algebra.Hochschild.TraceCriterion
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
@@ -30,11 +35,14 @@ public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
+public import FormalConjecturesForMathlib.AlgebraicTopology.AlternatingFaceMapComplex
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
+public import FormalConjecturesForMathlib.Analysis.Normed.Operator.RapidDecay
+public import FormalConjecturesForMathlib.Analysis.Normed.Operator.RapidDecayProperties
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
