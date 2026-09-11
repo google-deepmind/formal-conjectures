@@ -49,6 +49,8 @@ theorem erdos_1071.parts.i :
   sorry
 
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite?
+Here a unit line segment is a rotated and translated copy of the open interval $(0,1)$, and it is
+required to be contained in $R$.
 Solved affirmatively by [Fo99], who gave an explicit construction.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
@@ -58,7 +60,7 @@ theorem erdos_1071.parts.ii :
     answer(True) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       IsOpen R ∧ IsConnected R ∧ S.Countable ∧ S.Infinite ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
-        (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ seg.1 ∈ R ∧ seg.2 ∈ R) ∧
+        (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ openSegment ℝ seg.1 seg.2 ⊆ R) ∧
         T.Pairwise SegmentsDisjoint) S := by
   sorry
 
