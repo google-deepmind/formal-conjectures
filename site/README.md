@@ -64,7 +64,7 @@ browsing require that deployment; no older projection substitutes for it.
 
 ```
 data/
-  conjectures.json            # Complete native catalog with exact provenance
+  conjectures.json        # Complete native catalog with exact provenance
   catalog-manifest.json   # Byte digest, count, and schema reference
   verso-fragments.json    # Full-build intermediate; never published
   verso-modules.json      # Downloaded snapshot navigation for previews

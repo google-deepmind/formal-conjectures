@@ -84,7 +84,7 @@ const SOURCE_COLLECTIONS = {
   Arxiv:               { name: 'arXiv',                    url: 'https://arxiv.org/archive/math' },
   Paper:               { name: 'Papers',                   url: null },
   Books:               { name: 'Books',                    url: null },
-  WrittenOnTheWallII:  { name: 'Written on the Wall II',   url: null },
+  WrittenOnTheWallII:  { name: 'Written on the Wall II',   url: 'https://cms.dt.uh.edu/faculty/delavinae/research/wowII/' },
   Kourovka:            { name: 'Kourovka Notebook',        url: 'https://arxiv.org/pdf/1401.0300' },
   Other:               { name: 'Other',                    url: null },
 };
