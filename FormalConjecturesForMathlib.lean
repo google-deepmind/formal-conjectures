@@ -149,6 +149,7 @@ public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacq
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.CenterAction
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.LieDeriv
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.Subgroups
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.Eigenform
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
 public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
@@ -156,6 +157,10 @@ public import FormalConjecturesForMathlib.NumberTheory.DiophantineApproximation.
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors
 public import FormalConjecturesForMathlib.NumberTheory.Harmonic
+public import FormalConjecturesForMathlib.NumberTheory.Hecke.AdelicAction
+public import FormalConjecturesForMathlib.NumberTheory.Hecke.GeneralLinearGroup
+public import FormalConjecturesForMathlib.NumberTheory.Hecke.HeckePair
+public import FormalConjecturesForMathlib.NumberTheory.Hecke.Satake
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
