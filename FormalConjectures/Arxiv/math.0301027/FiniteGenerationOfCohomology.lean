@@ -22,17 +22,20 @@ import FormalConjecturesUtil
 Let $A$ be a finite-dimensional Hopf algebra over a field $k$, and view $k$ as an $A$-module
 through the counit. The cohomology ring
 $$H^*(A, k) = \mathrm{Ext}^*_A(k, k) = \bigoplus_{n \ge 0} \mathrm{Ext}^n_A(k, k)$$
-is a graded-commutative $k$-algebra under the Yoneda product. Etingof and Ostrik conjecture that
-it is a finitely generated $k$-algebra, and that $\mathrm{Ext}^*_A(k, M)$ is a finitely generated
-module over it for every finite-dimensional $A$-module $M$. They state the conjecture for every
-finite tensor category; the finite-dimensional modules over a finite-dimensional Hopf algebra form
-the main class of examples, and the conjecture is open already in this case.
+is a graded-commutative $k$-algebra under the Yoneda product. The finite generation conjecture
+asserts that it is a finitely generated $k$-algebra, and that $\mathrm{Ext}^*_A(k, M)$ is a
+finitely generated module over it for every finite-dimensional $A$-module $M$. Etingof and Ostrik
+state it for every finite tensor category; the finite-dimensional modules over a finite-dimensional
+Hopf algebra form the main class of examples, and the conjecture is open already in this case.
 
-The question for an arbitrary finite-dimensional Hopf algebra is already posed, and expressly left
-open, in Friedlander and Suslin's paper: "We do not know whether it is reasonable to expect finite
-generation of the cohomology of an arbitrary finite dimensional Hopf algebra." What is due to
-Etingof and Ostrik is the assertion that the answer is yes, together with its extension to every
-finite tensor category.
+The conjecture is not due to any one author. The question for a finite-dimensional Hopf algebra was
+asked by a number of mathematicians and had circulated since at least the 1990s: Friedlander and
+Suslin record it while expressly declining to answer it ("We do not know whether it is reasonable
+to expect finite generation of the cohomology of an arbitrary finite dimensional Hopf algebra"),
+and Friedlander and Negron later describe the conjecture as having "existed as a question at least
+since the 90's" and as "recently stated explicitly in the work of Etingof and Ostrik". What Etingof
+and Ostrik contribute is that explicit statement, together with its extension from Hopf algebras to
+every finite tensor category; it is their Conjecture 2.18 that is formalised here.
 
 The conjecture holds when $A$ is cocommutative, that is, when $A$ is the group algebra of a finite
 group scheme (Friedlander–Suslin). For the group algebra $k[G]$ of a finite group $G$ it is the
@@ -65,6 +68,12 @@ finite-dimensional modules, as the module docstring of
   (1959), 943–944.
 * E. S. Golod, *The cohomology ring of a finite $p$-group*, Dokl. Akad. Nauk SSSR 125 (1959),
   703–706.
+* [Friedlander–Negron](https://doi.org/10.2140/ant.2018.12.1281) E. M. Friedlander, C. Negron,
+  *Cohomology for Drinfeld doubles of some infinitesimal group schemes*, Algebra Number Theory 12
+  (2018), 1281–1309; the conjecture and its history, p. 1281.
+* [Oberwolfach](https://doi.org/10.4171/OWR/2019/11) H. Krause, S. Witherspoon, J. J. Zhang
+  (organisers), *Mini-Workshop: Cohomology of Hopf Algebras and Tensor Categories*, Oberwolfach
+  Rep. (2019), 663–693; "asked by a number of mathematicians", p. 664.
 -/
 
 open Bialgebra
