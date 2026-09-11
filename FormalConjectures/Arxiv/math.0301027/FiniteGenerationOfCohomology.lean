@@ -28,9 +28,31 @@ module over it for every finite-dimensional $A$-module $M$. They state the conje
 finite tensor category; the finite-dimensional modules over a finite-dimensional Hopf algebra form
 the main class of examples, and the conjecture is open already in this case.
 
+The question for an arbitrary finite-dimensional Hopf algebra is already posed, and expressly left
+open, in Friedlander and Suslin's paper: "We do not know whether it is reasonable to expect finite
+generation of the cohomology of an arbitrary finite dimensional Hopf algebra." What is due to
+Etingof and Ostrik is the assertion that the answer is yes, together with its extension to every
+finite tensor category.
+
 The conjecture holds when $A$ is cocommutative, that is, when $A$ is the group algebra of a finite
 group scheme (Friedlander–Suslin). For the group algebra $k[G]$ of a finite group $G$ it is the
-theorem of Evens and Venkov. Etingof and Ostrik note that it also holds when $A$ is commutative.
+theorem of Evens and Venkov, proved for a $p$-group by Golod. Etingof and Ostrik note that it also holds when $A$ is commutative.
+
+Etingof and Ostrik work throughout the section containing the conjecture under the standing
+assumption that $k$ is algebraically closed, whereas the statements below are for an arbitrary
+field. The generalisation is valid. For a field extension $K/k$ one has
+$\mathrm{Ext}^*_{A \otimes_k K}(K, K) \cong \mathrm{Ext}^*_A(k, k) \otimes_k K$, because $k$
+admits a resolution by finitely generated free $A$-modules and $K$ is flat over $k$; and finite
+generation descends, because the finitely many elements of $R = \mathrm{Ext}^*_A(k, k)$ occurring
+in a finite set of $K$-algebra generators of $R \otimes_k K$ generate a $k$-subalgebra $R'$ with
+$R' \otimes_k K = R \otimes_k K$, whence $R' = R$ by faithful flatness. The same argument applies
+to the module statement. The theorems of Friedlander–Suslin and of Evens–Venkov are stated below
+over an arbitrary field because that is the generality in which they are proved.
+
+$\mathrm{Ext}$ is taken in the category of all $A$-modules rather than in the finite tensor
+category of finite-dimensional ones. For finite-dimensional $A$ the two agree on
+finite-dimensional modules, as the module docstring of
+`FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology` explains.
 
 *References:*
 * [arXiv:math/0301027](https://arxiv.org/abs/math/0301027) P. Etingof, V. Ostrik, *Finite tensor
@@ -39,6 +61,10 @@ theorem of Evens and Venkov. Etingof and Ostrik note that it also holds when $A$
   *Cohomology of finite group schemes over a field*, Invent. Math. 127 (1997), 209–270.
 * [Evens](https://doi.org/10.1090/S0002-9947-1961-0137742-1) L. Evens, *The cohomology ring of a
   finite group*, Trans. Amer. Math. Soc. 101 (1961), 224–239.
+* B. B. Venkov, *Cohomology algebras for some classifying spaces*, Dokl. Akad. Nauk SSSR 127
+  (1959), 943–944.
+* E. S. Golod, *The cohomology ring of a finite $p$-group*, Dokl. Akad. Nauk SSSR 125 (1959),
+  703–706.
 -/
 
 open Bialgebra
@@ -89,5 +115,20 @@ $k$-algebra. -/
 theorem cohomologyRing_finiteType_monoidAlgebra (G : Type u) [Group G] [Finite G] :
     Algebra.FiniteType k (cohomologyRing k (MonoidAlgebra k G)) := by
   sorry
+
+omit [FiniteDimensional k A] in
+/-- Sanity check: taking the coefficient module `M` of the module statement to be `k` itself
+gives back the cohomology ring. -/
+@[category test, AMS 16 18]
+theorem cohomology_trivialModuleCat :
+    cohomology k A (trivialModuleCat k A) = cohomologyRing k A :=
+  rfl
+
+omit [FiniteDimensional k A] in
+/-- Sanity check: the cohomology ring is not the zero ring, over which every finiteness statement
+would hold trivially. -/
+@[category test, AMS 16 18]
+theorem cohomologyRing_nontrivial : Nontrivial (cohomologyRing k A) :=
+  Bialgebra.nontrivial_cohomologyRing
 
 end HopfAlgebraCohomology

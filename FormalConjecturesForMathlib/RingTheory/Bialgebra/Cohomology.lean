@@ -32,10 +32,20 @@ Let `A` be a bialgebra over a field `k`, and let `k` be the trivial `A`-module t
 * `Bialgebra.cohomology k A M`: the cohomology `H^*(A, M) = ⨁ n, Ext^n_A(k, M)` with coefficients
   in an `A`-module `M`, a graded module over `H^*(A, k)`.
 
-Here `Ext` is taken in `ModuleCat A`, the category of all `A`-modules. The `k`-linear structure
-of `ModuleCat A` is the scoped instance `ModuleCat.Algebra.instLinear`, in which `k` acts on
-morphisms through `algebraMap k A`; the `k`-algebra structure on `cohomologyRing k A` is
-registered as an instance, so downstream files do not need to open that scope.
+Here `Ext` is taken in `ModuleCat A`, the category of all `A`-modules, and not in the category of
+finite-dimensional ones. When `A` is finite-dimensional over a field the two give the same groups
+on finite-dimensional modules: such a module admits a resolution by finitely generated free
+`A`-modules, which are again finite-dimensional and are projective in both categories, and `Ext`
+is computed from that single resolution either way. So `cohomologyRing k A` is the cohomology of
+the finite tensor category of finite-dimensional `A`-modules, which is what the literature means
+by `H^*(A, k)`.
+
+Two `k`-structures on `ModuleCat A` are involved, and only one of them is scoped.
+`ModuleCat.linearOverField`, giving `Linear k (ModuleCat A)`, is a global instance, so the
+`k`-algebra structure on `cohomologyRing k A` registered below needs no `open scoped`. The
+`k`-module structure on an individual object, `ModuleCat.moduleOfAlgebraModule`, is a *scoped*
+instance; in both, `k` acts through `algebraMap k A`. A file that mentions `FiniteDimensional k M`
+for `M : ModuleCat A` therefore does have to `open scoped ModuleCat.Algebra`.
 -/
 
 open CategoryTheory Abelian
@@ -81,6 +91,24 @@ lemma cohomologyRing_algebraMap_apply (c : k) :
     algebraMap k (cohomologyRing k A) c =
       DirectSum.of _ 0 (Ext.mk₀ (c • 𝟙 (trivialModuleCat k A))) :=
   rfl
+
+/-- The cohomology ring is not the zero ring: its degree-zero part contains the identity of the
+trivial module. In particular a finiteness statement about `cohomologyRing k A` is not vacuous. -/
+lemma nontrivial_cohomologyRing : Nontrivial (cohomologyRing k A) := by
+  have hid : (𝟙 (trivialModuleCat k A)) ≠ 0 := by
+    intro h
+    have h1 : (1 : k) = 0 := congrArg (fun f => ModuleCat.Hom.hom f (1 : k)) h
+    exact one_ne_zero h1
+  have hmk : (Ext.mk₀ (𝟙 (trivialModuleCat k A)) : Ext _ _ 0) ≠ 0 := fun h =>
+    hid ((Ext.mk₀_bijective (trivialModuleCat k A) (trivialModuleCat k A)).injective
+      (by simpa using h))
+  refine ⟨⟨1, 0, ?_⟩⟩
+  intro h
+  apply hmk
+  rw [DirectSum.one_def] at h
+  rw [← Ext.gOne_eq]
+  exact DirectSum.of_injective
+    (β := fun n ↦ Ext (trivialModuleCat k A) (trivialModuleCat k A) n) 0 (by simpa using h)
 
 /-- The action of `cohomologyRing k A` on `cohomology k A M` is the Yoneda composition of
 extensions. -/
