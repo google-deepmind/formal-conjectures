@@ -20,9 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Falconer's distance set conjecture
 
-If $E \subseteq \mathbb{R}^d$ is compact with $\dim_H E > \frac{d}{2}$, then the distance set
+If $d \ge 2$ and $E \subseteq \mathbb{R}^d$ is compact with $\dim_H E > \frac{d}{2}$, then the
+distance set
 $$\{ |x - y| \mid x, y \in E \}$$
-has positive Lebesgue measure.
+has positive Lebesgue measure. The restriction $d \ge 2$ is needed; see `falconer_conjecture`.
 
 ## References
 
@@ -39,7 +40,14 @@ open scoped ENNReal EuclideanGeometry
 lemma falconer_conjecture_two (E : Set <| ℝ²) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
     0 < volume (image2 dist E E) := sorry
 
-/-- Falconer's distance set conjecture. -/
+/-- Falconer's distance set conjecture in dimension $d \ge 2$.
+
+The hypothesis $2 \le d$ excludes a degenerate case: the conclusion is false for $d = 1$.
+The base-$7$ Cantor set $E = \{\sum_{n \ge 1} a_n 7^{-n} : a_n \in \{0, 1, 2\}\}$ is compact
+with $\dim_H E = \log 3 / \log 7 > 1/2$, but $E - E$ has digits in $\{-2, \dots, 2\}$, so
+after fixing $n$ digits it is covered by $5^n$ intervals of length $\frac{2}{3} 7^{-n}$ and is
+therefore null; its distance set is the image of $E - E$ under $|\cdot|$ and is null too. -/
 @[category research open, AMS 28 42]
-lemma falconer_conjecture (d : ℕ) (E : Set <| ℝ^d) (hc : IsCompact E) (hd : d < 2 * dimH E ) :
+lemma falconer_conjecture (d : ℕ) (h2d : 2 ≤ d) (E : Set <| ℝ^d) (hc : IsCompact E)
+    (hd : d < 2 * dimH E) :
     0 < volume (image2 dist E E) := sorry
