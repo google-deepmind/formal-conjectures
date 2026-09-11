@@ -39,19 +39,6 @@ import FormalConjecturesUtil
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
 -/
 
-namespace WeierstrassCurve
-
-open NumberField IsDedekindDomain in
-/-- The minimal discriminant ideal of an elliptic curve over a number field is the product of
-the local minimal discriminant ideals `v.asIdeal ^ W.minimalDiscriminantExponent v` over
-all nonzero prime ideals `v` of its ring of integers. Only finitely many exponents are nonzero.
-See [LMFDB](https://www.lmfdb.org/knowledge/show/ec.minimal_discriminant). -/
-noncomputable def minimalDiscriminantIdeal {K : Type*} [Field K] [NumberField K]
-    (W : WeierstrassCurve K) [W.IsElliptic] : Ideal (𝓞 K) :=
-  ∏ᶠ v : HeightOneSpectrum (𝓞 K), v.asIdeal ^ W.minimalDiscriminantExponent v
-
-end WeierstrassCurve
-
 namespace BSD
 
 open scoped Topology

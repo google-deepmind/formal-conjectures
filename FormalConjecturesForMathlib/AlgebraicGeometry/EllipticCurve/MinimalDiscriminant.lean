@@ -15,14 +15,15 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.BigOperators.Finprod
 public import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 /-!
 # Minimal discriminants of elliptic curves over number fields
 
-The local exponents cutting out the minimal discriminant ideal of an elliptic curve over a
-number field.
+The minimal discriminant ideal of an elliptic curve over a number field, together with the
+local exponents cutting it out.
 
 ## References
 
@@ -46,5 +47,13 @@ noncomputable def minimalDiscriminantExponent (W : WeierstrassCurve K)
   (IsDiscreteValuationRing.addVal (v.adicCompletionIntegers K)
     (((W⁄(v.adicCompletion K)).minimal (v.adicCompletionIntegers K)).integralModel
       (v.adicCompletionIntegers K)).Δ).toNat
+
+/-- The minimal discriminant ideal of an elliptic curve over a number field is the product of
+the local minimal discriminant ideals `v.asIdeal ^ W.minimalDiscriminantExponent v` over
+all nonzero prime ideals `v` of its ring of integers. Only finitely many exponents are nonzero.
+See [LMFDB](https://www.lmfdb.org/knowledge/show/ec.minimal_discriminant). -/
+noncomputable def minimalDiscriminantIdeal (W : WeierstrassCurve K) [W.IsElliptic] :
+    Ideal (𝓞 K) :=
+  ∏ᶠ v : HeightOneSpectrum (𝓞 K), v.asIdeal ^ W.minimalDiscriminantExponent v
 
 end WeierstrassCurve
