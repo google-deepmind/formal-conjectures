@@ -38,6 +38,7 @@ def work_context(value):
     rr.array(value.get('pull_requests'),'open pull requests')
     seen=set()
     for pr in value['pull_requests']:
+        rr.require(isinstance(pr,dict),'Each work item must be a PR object')
         rr.require(type(pr.get('number')) is int and pr['number']>0 and pr['number'] not in seen,'Invalid or duplicate PR')
         seen.add(pr['number']);rr.text(pr.get('title'),'PR title')
         rr.array(pr.get('files'),'PR paths')
