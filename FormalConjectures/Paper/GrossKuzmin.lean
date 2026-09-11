@@ -29,7 +29,9 @@ x \mapsto \big(\log_p N_{K_\mathfrak{p} / \mathbb{Q}_p}(x)\big)_{\mathfrak{p} \i
 **The Gross-Kuz'min conjecture** states that the image of $\mathbb{Z}_p \otimes E'$ under $\rho$
 has $\mathbb{Z}_p$-rank $|S_p| - 1$. This is the largest value it can take: the coordinates of
 $\rho(x)$ always sum to $\log_p N_{K/\mathbb{Q}}(x) = \log_p(\pm p^k) = 0$, so the image lies in a
-hyperplane.
+hyperplane. Maksoud [Conjecture 1.3] states the conjecture as the surjectivity of $-\rho$, after
+$p$-adic completion, onto this hyperplane, which is the same thing since the hyperplane has rank
+$|S_p| - 1$.
 
 The conjecture is the exact analogue for $p$-units of Leopoldt's conjecture for units, which says
 that the matrix of $p$-adic logarithms of a fundamental system of units has full rank. Like
@@ -74,49 +76,16 @@ way and neither changing the content.
   `FormalConjectures.Wikipedia.LeopoldtConjecture` states Leopoldt's conjecture the same way,
   as `Matrix.rank` of a matrix over $\mathbb{C}_p$.
 
-The remaining objects match the sources directly:
-
-* $S_p$ is `NumberField.PrimesAbove K p`, from
-  `FormalConjecturesForMathlib.NumberTheory.NumberField.PrimesAbove`, and $|S_p|$ is
-  `Nat.card (PrimesAbove K p)`, which is at least `1` (`zero_lt_card_primesAbove`) so that
-  `|S_p| - 1` is an honest subtraction;
-* $E'$ is `pUnits K p`, Mathlib's `Set.unit` for the set $S_p$, which is
-  $\mathcal{O}_K[1/p]^\times$ by `Set.unitEquivUnitsInteger`;
-* $\log_p$ is `PadicIwasawaLog.iwasawaLog`, Iwasawa's extension of the logarithm with
-  $\log_p p = 0$, from `FormalConjecturesForMathlib.NumberTheory.Padics.IwasawaLog`. It is built
-  on `NormedSpace.log`, the logarithm series vendored from
-  [mathlib#43670](https://github.com/leanprover-community/mathlib4/pull/43670) as
-  `FormalConjecturesForMathlib.Analysis.Normed.Algebra.Logarithm`, by
-  $\log_p x = \log(x^N / p^m) / N$ for any $N \geq 1$ and $m$ putting $x^N / p^m$ in the disc
-  of convergence. The extension cannot be avoided: $\sigma(x)$ is a $p$-unit, not a unit, so it
-  has nonzero valuation and the series does not converge at it. Nor can the inputs be restricted
-  to principal units, as `leopoldt_conjecture.variants.padicRegulator` does for units: a $p$-unit
-  that is a principal unit at every prime above $p$ is a unit, and for $K = \mathbb{Q}(i)$ and
-  $p = 5$ the only such unit is $1$, so the span would be $0$ instead of having dimension
-  $|S_p| - 1 = 1$. The Iwasawa logarithm is defined on all of $\mathbb{C}_p^\times$
-  (`PadicIwasawaLog.PadicComplex.hasIwasawaLog_iff`), and every $\sigma(x)$ summed over in
-  `logNorm` is nonzero (`hasIwasawaLog_embedding`), so no junk value is involved;
-* $\rho$ is `grossRegulator` and the span of its image is `regulatorSpan`.
+The remaining objects match the sources directly.
 
 *References:*
-- L. J. Federer, B. H. Gross, *Regulators and Iwasawa modules*, with an appendix by W. Sinnott,
-  Invent. Math. **62** (1981), 443-457: for CM fields, the non-vanishing of the $p$-adic
-  regulator of the minus $p$-units, and its equivalence with the minus part of Kuz'min's form.
+- A. Maksoud, *On the rank of Leopoldt's and Gross's regulator maps*, Doc. Math. **28** (2023),
+  1441-1471, [arXiv:2201.08203](https://arxiv.org/abs/2201.08203), (2) and Conjecture 1.3: the
+  statement formalised here, as the surjectivity of Gross's regulator map onto the hyperplane.
+- B. H. Gross, *$p$-adic $L$-series at $s = 0$*, J. Fac. Sci. Univ. Tokyo Sect. IA Math. **28**
+  (1981), 979-994: Gross's formulation of the conjecture.
 - L. V. Kuz'min, *The Tate module of algebraic number fields*, Izv. Akad. Nauk SSSR Ser. Mat.
-  **36** (1972), 267-327: the original class field theoretic statement, that the
-  $\Gamma$-coinvariants of the Galois group of the maximal abelian pro-$p$ extension of
-  $K_\infty$ unramified and totally split above $p$ are finite.
-- P. Mihăilescu, *The Gross-Kuz'min conjecture for CM fields*,
-  [arXiv:1107.1146v1](https://arxiv.org/abs/1107.1146v1), §1: the $p$-units are
-  $E'(K) = (\mathcal{O}(K)[1/p])^\times$ and, for CM fields, the conjecture is the
-  non-vanishing of the $p$-adic regulator $R(E'(K))$; the same author's *Leopoldt's Conjecture
-  for CM fields*, [arXiv:1105.4544](https://arxiv.org/abs/1105.4544), is the source for
-  `FormalConjectures.Wikipedia.LeopoldtConjecture`.
-- J.-F. Jaulent, *Sur les normes cyclotomiques et les conjectures de Leopoldt et de
-  Gross-Kuz'min*, [arXiv:1509.02743](https://arxiv.org/abs/1509.02743): Scolie 6, whose exact
-  sequence on $p$-units shows that the rank of $\rho$ falls short of $|S_p| - 1$ by the
-  $\mathbb{Z}_p$-rank of the logarithmic class group, and Théorème 5, that this group is
-  isomorphic to the $\Gamma$-coinvariants of Kuz'min's module.
+  **36** (1972), 267-327: the original class field theoretic statement.
 - R. Greenberg, *On a certain l-adic representation*, Invent. Math. **21** (1973), 117-124: the
   conjecture for abelian $K/\mathbb{Q}$.
 -/
@@ -218,12 +187,8 @@ x \mapsto \big(\log_p N_{K_\mathfrak{p} / \mathbb{Q}_p}(x)\big)_\mathfrak{p}$$
 spans a subspace of dimension $|S_p| - 1$.
 
 This is the maximum possible: the coordinates of $\rho(x)$ sum to
-$\log_p N_{K/\mathbb{Q}}(x) = 0$, so the image lies in the hyperplane $\sum_\mathfrak{p} = 0$.
-Equivalently, the logarithmic class group of $K$ is finite, which is to say that Kuz'min's
-Iwasawa module has finite $\Gamma$-coinvariants [Jaulent, Scolie 6 and Théorème 5]. For a CM
-field the statement implies that Gross's $p$-adic regulator $R(E'(K))$ of the minus $p$-units
-is nonzero, and Federer and Gross show that this is equivalent to the minus part of Kuz'min's
-form [Mihăilescu, §1]. -/
+$\log_p N_{K/\mathbb{Q}}(x) = 0$, so the image lies in the hyperplane $\sum_\mathfrak{p} = 0$,
+and the conjecture says that the image spans it [Maksoud, Conjecture 1.3]. -/
 @[category research open, AMS 11]
 theorem gross_kuzmin_conjecture :
     Module.finrank ℂ_[p] (regulatorSpan K p) = Nat.card (PrimesAbove K p) - 1 := by
