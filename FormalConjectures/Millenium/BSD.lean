@@ -59,6 +59,8 @@ theorem Point.fg {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affi
 
 namespace NumberField
 
+variable {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
+
 /-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field `K`: for every elliptic
 curve `E` over `K`, the L-series of `E` has a meromorphic continuation whose order at `s = 1` is
 `rk E(K)`. Following [DD2010], Conjecture 2.1 (1), the continuation is asserted rather than assumed,
@@ -67,13 +69,12 @@ so this implies `HasseWeil.exists_hasMeromorphicContinuation`. [Tate1966], Conje
 [Gross2011] needs one only near `s = 1`. By `HasseWeil.HasMeromorphicContinuation.unique` the order
 does not depend on which continuation is taken, so the two readings differ exactly by the
 Hasse--Weil conjecture. -/
-def WeakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) : Prop :=
+def WeakBSD : Prop :=
   ∃ L : ℂ → ℂ, HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
 
 /-- The leading coefficient predicted by BSD over a number field, using the non-normalised regulator
 and dividing by the square root of the absolute field discriminant. -/
-noncomputable def leadingCoefficient {K : Type*} [Field K] [NumberField K] [DecidableEq K]
-    (E : Affine K) [E.IsElliptic] : ℝ :=
+noncomputable def leadingCoefficient [E.IsElliptic] : ℝ :=
   E.period * Point.regulator E * Nat.card E.tateShafarevich * E.toProjective.tamagawaProduct /
       (|(discr K : ℝ)|.sqrt * (Nat.card <| AddCommGroup.torsion E.Point) ^ 2 : ℝ)
 
@@ -81,45 +82,41 @@ noncomputable def leadingCoefficient {K : Type*} [Field K] [NumberField K] [Deci
 curve `E` over `K`, a meromorphic continuation of its L-series has order `rk E(K)` at `s = 1`, the
 Tate--Shafarevich group is finite, and the leading coefficient of its L-series is
 `L⁽ʳ⁾(E, 1) / r! = Ω(E)·Reg(E)·|Sha(E)|·∏ᵥcᵥ / √|Δ(K)|·|E(K)ₜₒᵣₛ|²`. See [DD2010], Conjecture 2.1. -/
-def StrongBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
-    Prop := ∃ L : ℂ → ℂ,
+def StrongBSD [E.IsElliptic] : Prop := ∃ L : ℂ → ℂ,
   HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
     Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
 statement on its own is [Tate1966], Conjecture (A)). -/
 @[category research open, AMS 11 14]
-theorem weakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K]
-    (E : Affine K) [E.IsElliptic] : WeakBSD E := by
+theorem weakBSD [E.IsElliptic] : WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1). -/
 @[category research open, AMS 11 14]
-theorem strongBSD {K : Type*} [Field K] [NumberField K]
-    [DecidableEq K] (E : Affine K) [E.IsElliptic] : StrongBSD E := by
+theorem strongBSD [E.IsElliptic] : StrongBSD E := by
   sorry
 
 /-- Strong BSD implies weak BSD, since the meromorphic continuation witnessing the strong conjecture
 already has the predicted order at `s = 1`. -/
 @[category API, AMS 11 14]
-theorem StrongBSD.weakBSD {K : Type*} [Field K] [NumberField K] [DecidableEq K] {E : Affine K}
-    [E.IsElliptic] (h : StrongBSD E) : WeakBSD E :=
+theorem StrongBSD.weakBSD [E.IsElliptic] (h : StrongBSD E) : WeakBSD E :=
   ⟨h.choose, h.choose_spec.left, h.choose_spec.right.left⟩
 
 end NumberField
 
 namespace Rat
 
+variable (E : Affine ℚ) [E.IsElliptic]
+
 /-- The **weak Birch and Swinnerton-Dyer conjecture** over `ℚ`, a Clay Millennium Prize Problem. -/
 @[category research open, AMS 11 14]
-theorem weakBSD (E : Affine ℚ) [E.IsElliptic] :
-    NumberField.WeakBSD E := by
+theorem weakBSD : NumberField.WeakBSD E := by
   sorry
 
 /-- The **strong Birch and Swinnerton-Dyer conjecture** over `ℚ`. -/
 @[category research open, AMS 11 14]
-theorem strongBSD (E : Affine ℚ) [E.IsElliptic] :
-    NumberField.StrongBSD E := by
+theorem strongBSD : NumberField.StrongBSD E := by
   sorry
 
 end Rat
