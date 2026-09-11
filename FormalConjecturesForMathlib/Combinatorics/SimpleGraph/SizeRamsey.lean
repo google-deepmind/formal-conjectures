@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Copy
-public import Mathlib.Data.Real.Basic
 public import Mathlib.Data.Set.Card
 public import Mathlib.Order.Lattice.Nat
 
@@ -47,14 +46,5 @@ noncomputable def sizeRamsey {α β : Type*} [Fintype α] [Fintype β]
     F.edgeSet.ncard = m ∧
     ∀ (R : SimpleGraph (Fin n)), R ≤ F →
       G.IsContained R ∨ H.IsContained (F \ R) }
-
-/--
-A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
-for all graphs `H` with `m` edges and no isolated vertices, `r̂(G, H) ≤ c · m`.
--/
-def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
-  ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
-    (∀ v, 0 < H.degree v) →
-    (sizeRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
 
 end SimpleGraph
