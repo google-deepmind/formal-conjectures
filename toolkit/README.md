@@ -21,23 +21,28 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Restart your shell after installation. `--python 3.11` selects the tested Python
 version; uv can download it when it is unavailable locally.
-The latest development CLI is on the fork integration branch. Try it without a
-persistent installation:
+Try the fork release candidate without a persistent installation:
 
 ```sh
-uvx --python 3.11 --from 'git+https://github.com/williamjblair/formal-conjectures.git@codex/fc-toolkit-integration' conjectures doctor
+uvx --python 3.11 --from https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl conjectures doctor
 ```
 
-Install the development version:
+Install the same version:
 
 ```sh
-uv tool install --python 3.11 'git+https://github.com/williamjblair/formal-conjectures.git@codex/fc-toolkit-integration'
+uv tool install --python 3.11 https://github.com/williamjblair/formal-conjectures/releases/download/toolkit-v0.2.0rc3/formal_conjectures_toolkit-0.2.0rc3-py3-none-any.whl
 ```
 
-This branch changes over time. The installed version identifies itself as 0.2.0rc3,
-but RC3 release assets have not been published. RC2 is the latest published wheel
-and lacks the newer agent/evaluation and terminal improvements. Use the integration
-checkout to test those improvements; do not use an unpublished RC3 wheel URL.
+The [release](https://github.com/williamjblair/formal-conjectures/releases/tag/toolkit-v0.2.0rc3)
+provides matching source and wheel distributions, checksums and a
+[qualification record](https://github.com/williamjblair/formal-conjectures/blob/toolkit-v0.2.0rc3/toolkit/qualification/rc3-final.md). It is a fork candidate;
+upstream deployment remains a separate gate.
+
+For a reproducible Git installation, use the release tag:
+
+```sh
+uv tool install --python 3.11 'git+https://github.com/williamjblair/formal-conjectures.git@toolkit-v0.2.0rc3'
+```
 
 Supported systems are macOS and Linux, including WSL. Native Windows is not supported.
 

@@ -28,7 +28,12 @@ jobs:
       - name: Build wheel from the source distribution
         run: uv build
       - name: Test isolated installation
-        run: python scripts/check_toolkit_dist.py dist/*.whl
+        env:
+          CATALOG_URL: ${{ github.repository == 'williamjblair/formal-conjectures' && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/toolkit-v')) && 'https://williamjblair.github.io/formal-conjectures/data/conjectures.json' || '' }}
+        run: |
+          args=()
+          if [ -n "$CATALOG_URL" ]; then args+=(--catalog-url "$CATALOG_URL"); fi
+          python scripts/check_toolkit_dist.py dist/*.whl "${args[@]}"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: toolkit-${{ matrix.os }}

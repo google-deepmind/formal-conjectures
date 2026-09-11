@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Test the actual wheel outside a checkout and without provider credentials."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -9,7 +10,7 @@ import tempfile
 import zipfile
 
 
-def check(wheel):
+def check(wheel, catalog_url=None):
     with zipfile.ZipFile(wheel) as archive:
         names=archive.namelist()
         assert 'conjectures/resources/review/SKILL.md' in names
@@ -40,6 +41,25 @@ def check(wheel):
             else:assert not result.stdout.startswith('{'),args
             if args[:1]==['show']:assert '∀ n : Nat, n = n' in result.stdout,result.stdout
         subprocess.run([str(python),'-c','import importlib.util; assert importlib.util.find_spec("mcp") is None; from conjectures.review import skill_path; assert (skill_path()/"SKILL.md").is_file()'],cwd=root,env=env,check=True)
+        if catalog_url:
+            # Only explicit release qualification uses a live endpoint. Normal
+            # package tests retain their deterministic local catalog fixture.
+            for command in ('find', 'show'):
+                result=subprocess.run([str(exe),command,'Erdos/92','--catalog-url',catalog_url,'--json'],cwd=root,env=env,capture_output=True,text=True,timeout=120)
+                assert result.returncode==0,(command,result.stdout,result.stderr)
+                payload=json.loads(result.stdout)
+                assert payload['command_status']=='success',payload
+                if command=='show':
+                    assert len(payload['problems'])==3,payload
+                    assert all(p['statement'] and p['source_url'] for p in payload['problems']),payload
+                    source=payload['catalog_provenance']['source']
+                    assert source['repository']=='williamjblair/formal-conjectures',source
+                    print('Published fork statements and provenance passed:',json.dumps(source,sort_keys=True))
     print('Wheel installation, resources, outside-checkout commands, and no-model runtime passed.')
 
-if __name__=='__main__':check(Path(sys.argv[1]).resolve())
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('wheel',type=Path)
+    parser.add_argument('--catalog-url',help='Explicit published fork catalog for live release qualification')
+    args=parser.parse_args()
+    check(args.wheel.resolve(),args.catalog_url)
