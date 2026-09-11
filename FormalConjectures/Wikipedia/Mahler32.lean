@@ -39,10 +39,11 @@ noncomputable def Ω (α : ℝ) : ℝ :=
 theorem mahler_conjecture (x : ℝ) (hx : IsZNumber x) : False := by
   sorry
 
-/-- If Mahler's conjecture is true, i.e. there are no Z-numbers, then `Ω(3/2)` exceeds `1/2`. -/
+/-- Mahler's conjecture would follow if `Ω(3/2)` exceeded `1/2`: a Z-number `x` has all
+fractional parts `{x (3/2)^n}` below `1/2`, so `Ω(3/2) ≤ 1/2`. -/
 @[category textbook, AMS 11]
-theorem mahler_conjecture.variants.consequence (H : type_of% mahler_conjecture) :
-    1 / 2 < Ω (3 / 2) := by
+theorem mahler_conjecture.variants.consequence (H : 1 / 2 < Ω (3 / 2)) :
+    type_of% mahler_conjecture := by
   sorry
 
 /-- It is known that for all rational `p/q > 1` in lowest terms, we have `Ω(p/q) > 1/p`. -/

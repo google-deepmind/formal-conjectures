@@ -59,9 +59,17 @@ theorem a_4 : a 4 = 9 := by
 theorem a_5 : a 5 = 171 := by
   rfl
 
-/-- Are all terms integers? -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 3 ≤ n) : a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
+/--
+Are all terms integers?
+
+No. Exact divisibility first fails at $n = 7$; the corresponding rational term has reduced
+denominator $19$.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a078590-counterexample/blob/3bdf1cee8e7e4cbc4fe83354e4be8ca1eee46de3/lean/OeisA78590CounterexampleFC.lean#L55-L61"]
+theorem conjecture :
+    answer(False) ↔ ∀ n : ℕ, 3 ≤ n → a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
   sorry
 
 end OeisA78590
