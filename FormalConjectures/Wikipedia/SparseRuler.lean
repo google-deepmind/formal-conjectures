@@ -26,9 +26,9 @@ A distance $k \in \mathbb{N}$ can be measured if there are $i, j \in \{1, \dots,
 $k = a_j - a_i$.
 
 One question concerns the structure of *optimal* rulers. Wichmann [Wi63] gave a
-parametric family of sparse rulers and conjectured that, beyond a small number of exceptions,
-every optimal ruler is of his type. The known exceptions occur at lengths $1, 13, 17, 23, 58$;
-the largest of these has $13$ segments, which motivates the bound below.
+parametric family of sparse rulers and speculated that every sufficiently large optimal ruler
+is of his type. The known exceptions occur at lengths $1, 13, 17, 23, 58$, and no further
+exceptions exist up to length $213$.
 
 The asymptotic growth of the minimal number of marks of an optimal ruler of length $L$ — i.e.
 the limit of $l(n)^2 / n$, conjectured to lie in $[2.434\ldots, 3]$ — is the subject of
@@ -90,13 +90,14 @@ lemma wichmannGaps_sum (r s : ℕ) :
     smul_eq_mul]
   ring
 
-/-- **Wichmann's conjecture on optimal rulers.** Every optimal ruler with more than $13$
-segments is a Wichmann ruler $W(r, s)$ (up to reflection, i.e. reversing the segment list).
-Posed by Wichmann [Wi63]; the finitely many known exceptions all have at most $13$ segments
-(lengths $1, 13, 17, 23, 58$), and no further exceptions are known up to length $213$. -/
+/-- **Wichmann's conjecture on optimal rulers.** Every optimal ruler of sufficiently large
+length is a Wichmann ruler $W(r, s)$ (up to reflection, i.e. reversing the segment list).
+Posed by Wichmann [Wi63]; the known exceptions have lengths $1, 13, 17, 23, 58$, and no
+further exceptions exist up to length $213$. -/
 @[category research open, AMS 5]
-theorem wichmann_conjecture {g : List ℕ} (hopt : IsOptimal g) (hseg : 13 < g.length) :
-    ∃ r s : ℕ, g = wichmannGaps r s ∨ g = (wichmannGaps r s).reverse := by
+theorem wichmann_conjecture :
+    ∃ N : ℕ, ∀ g : List ℕ, IsOptimal g → N < g.sum →
+      ∃ r s : ℕ, g = wichmannGaps r s ∨ g = (wichmannGaps r s).reverse := by
   sorry
 
 end SparseRuler
