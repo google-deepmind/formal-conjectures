@@ -58,7 +58,8 @@ theorem a_5 : a 5 = 7 := by decide
 $a(n) = 0$ for $n = 1$, $6$, $30$ and $54$. Are there any others?
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ {n : ℕ | n > 0 ∧ a n = 0} = {1, 6, 30, 54} := by
+theorem conjecture :
+    answer(sorry) ↔ ∃ n : ℕ, n > 0 ∧ a n = 0 ∧ n ∉ ({1, 6, 30, 54} : Finset ℕ) := by
   sorry
 
 end OeisA109905
