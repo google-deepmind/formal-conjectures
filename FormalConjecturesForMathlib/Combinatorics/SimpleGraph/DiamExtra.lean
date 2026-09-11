@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Diam
-public import Mathlib.Combinatorics.SimpleGraph.Metric
 
 @[expose] public section
 
@@ -31,19 +30,5 @@ this will be `0`.
 -/
 lemma diam_eq_zero_of_subsingleton [Subsingleton α] : G.diam = 0 := by
   simp [diam, ediam_eq_zero_iff_subsingleton.mpr (by assumption)]
-
-proof_wanted diam_ne_zero [Nontrivial α] : G.diam ≠ 0
-
-lemma nontrivial_of_diam_ne_zero' (h : G.diam ≠ 0) : Nontrivial α := by
-  contrapose! h
-  exact diam_eq_zero_of_subsingleton
-
-section Path
-open Path
-
-proof_wanted dist_le_diam_of_mem_path {G : SimpleGraph α} {u v : α} (p : G.Walk u v) (w : α)
-    (hw : w ∈ p.support) : G.dist w u ≤ G.diam
-
-end Path
 
 end SimpleGraph
