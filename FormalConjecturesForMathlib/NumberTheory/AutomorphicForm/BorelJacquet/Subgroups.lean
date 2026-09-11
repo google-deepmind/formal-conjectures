@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.UnitaryGroup
 public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 public import Mathlib.NumberTheory.Padics.ProperSpace
 public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
@@ -40,7 +41,8 @@ All in the namespace `Matrix.GeneralLinearGroup`:
 * `diagonalEmbedding` and `ratDiagonal`: the diagonal copy of the rational points
   `Γ = G(ℚ) = GL n ℚ` in `G(𝔸_f) × G(ℝ)`, the subgroup of condition (a).
 * `orthogonalSubgroup`: the orthogonal group `K = O n ℝ` inside `GL n ℝ`, the maximal compact
-  subgroup of condition (b2).
+  subgroup of condition (b2) — mathlib's `Matrix.orthogonalGroup n ℝ`, a submonoid of
+  `Matrix n n ℝ`, transported along the coercion to a subgroup of `GL n ℝ`.
 * `integralAdeles` and `integralAdelicSubgroup`: the integral adeles `Ẑ` and the compact open
   subgroup `GL n Ẑ` of `G(𝔸_f)` (`isOpen_integralAdelicSubgroup`,
   `isCompact_integralAdelicSubgroup`), which witnesses condition (b1) for constant automorphic
@@ -79,31 +81,42 @@ variable (n) in
 noncomputable def ratDiagonal : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ) :=
   (diagonalEmbedding n).range
 
-/-- The orthogonal group `O n ℝ` as a subgroup of `GL n ℝ`: the matrices whose transpose is
-their inverse. This is the maximal compact subgroup of `GL n ℝ` — up to conjugacy the only one,
-by the Cartan-Iwasawa-Malcev theorem — and it is the `K` of the pair `(G, K)` in the definition
-of an automorphic form for `GL n`. -/
+/-- The orthogonal group `O n ℝ` as a subgroup of `GL n ℝ`: the units of `Matrix n n ℝ` whose
+underlying matrix lies in mathlib's `Matrix.orthogonalGroup n ℝ`, the submonoid of matrices
+whose transpose is their inverse. This is the maximal compact subgroup of `GL n ℝ` — up to
+conjugacy the only one, by the Cartan-Iwasawa-Malcev theorem — and it is the `K` of the pair
+`(G, K)` in the definition of an automorphic form for `GL n`.
+
+Mathlib's `Matrix.orthogonalGroup n ℝ` is a `Submonoid (Matrix n n ℝ)`; what the definition of
+an automorphic form needs is a `Subgroup (GL n ℝ)`, so we transport it along the coercion
+`GL n ℝ → Matrix n n ℝ` rather than restate the orthogonality condition. -/
 def orthogonalSubgroup (n : Type*) [Fintype n] [DecidableEq n] : Subgroup (GL n ℝ) where
-  carrier := {y | (y : Matrix n n ℝ)ᵀ = (↑y⁻¹ : Matrix n n ℝ)}
-  one_mem' := by simp
+  carrier := {y | (y : Matrix n n ℝ) ∈ Matrix.orthogonalGroup n ℝ}
+  one_mem' := by simp [Matrix.mem_orthogonalGroup_iff]
   mul_mem' {a b} ha hb := by
-    simp only [Set.mem_ofPred_eq] at ha hb ⊢
-    rw [Units.val_mul, Matrix.transpose_mul, ha, hb]
-    simp
+    simp only [Set.mem_ofPred_eq, Units.val_mul] at ha hb ⊢
+    exact mul_mem ha hb
   inv_mem' {a} ha := by
-    simp only [Set.mem_ofPred_eq] at ha ⊢
-    rw [inv_inv, ← ha, Matrix.transpose_transpose]
+    simp only [Set.mem_ofPred_eq, Matrix.mem_orthogonalGroup_iff] at ha ⊢
+    rw [Matrix.GeneralLinearGroup.coe_inv, Matrix.inv_eq_right_inv ha,
+      Matrix.transpose_transpose]
+    exact (Matrix.mem_orthogonalGroup_iff' n ℝ).mp ((Matrix.mem_orthogonalGroup_iff n ℝ).mpr ha)
+
+lemma mem_orthogonalSubgroup {y : GL n ℝ} :
+    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ) ∈ Matrix.orthogonalGroup n ℝ :=
+  Set.mem_ofPred_eq ▸ Iff.rfl
 
 @[simp]
-lemma mem_orthogonalSubgroup {y : GL n ℝ} :
-    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ)ᵀ = (↑y⁻¹ : Matrix n n ℝ) := Iff.rfl
-
 lemma mem_orthogonalSubgroup_iff_mul_transpose {y : GL n ℝ} :
-    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ) * (y : Matrix n n ℝ)ᵀ = 1 := by
-  rw [mem_orthogonalSubgroup]
+    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ) * (y : Matrix n n ℝ)ᵀ = 1 :=
+  mem_orthogonalSubgroup.trans (Matrix.mem_orthogonalGroup_iff n ℝ)
+
+lemma mem_orthogonalSubgroup_iff_transpose_eq_coe_inv {y : GL n ℝ} :
+    y ∈ orthogonalSubgroup n ↔ (y : Matrix n n ℝ)ᵀ = (↑y⁻¹ : Matrix n n ℝ) := by
+  rw [mem_orthogonalSubgroup_iff_mul_transpose]
   refine ⟨fun h => ?_, fun h => ?_⟩
-  · rw [h]; exact y.mul_inv
   · rw [← Matrix.inv_eq_right_inv h, Matrix.GeneralLinearGroup.coe_inv]
+  · rw [h]; exact y.mul_inv
 
 /-- The entries of an orthogonal matrix are bounded by `1`: each row is a unit vector. This is
 the boundedness half of the compactness of `orthogonalSubgroup n`; see the implementation notes
@@ -123,7 +136,6 @@ section IntegralSubgroup
 
 open IsDedekindDomain RestrictedProduct
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The `v`-adic integers of `ℚ` are compact: they are homeomorphic to `ℤ_[p]` for the
 corresponding prime `p`. -/
 instance (v : HeightOneSpectrum ℤ) : CompactSpace (v.adicCompletionIntegers ℚ) := by

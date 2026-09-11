@@ -47,9 +47,12 @@ Writing `G(𝔸) = G(𝔸_f) × G(ℝ)`, where `G(𝔸_f) = GL n 𝔸ᶠ[ℤ, �
 * (d) for each `x ∈ G(𝔸_f)`, the function `y ↦ f (x, y)` on `G(ℝ)` is slowly increasing.
 
 Smooth means continuous, locally constant in the finite variable and `C^∞` in the archimedean
-one. The further condition (e) cutting out cusp forms, that the constant term along every
-unipotent radical vanishes, is not formalised here: it needs Haar integration over
-`N(ℚ) \ N(𝔸)`.
+one. The further condition (e) cutting out cusp forms, that the constant term
+`∫_{N(ℚ) \ N(𝔸)} f (n x) dn` along every unipotent radical vanishes, is not formalised here.
+Nothing is missing from mathlib to state it: with `N(X)` the upper triangular matrices with
+`1`s on the diagonal and off-diagonal entries in `X`, the set `N(Ẑ × [0, 1))` is a fundamental
+domain for `N(ℚ)` in `N(𝔸)`, so the constant term can be written as a Haar integral over it.
+It is left out only to keep this file to the definition of an automorphic form.
 
 ## Main declarations
 
@@ -221,23 +224,28 @@ namespace Matrix.GeneralLinearGroup
 
 open AutomorphicForm
 
-open scoped IsDedekindDomain.FiniteAdeleRing
+open scoped IsDedekindDomain.FiniteAdeleRing NNReal
 
-variable {n : Type*} [Fintype n] [Nonempty n]
+variable {n : Type*} [Fintype n]
 
 /-! ### Slow increase: condition (d) -/
 
 /-- The sup norm on the entries of a matrix: for `n = 2` this is
-`|(a b; c d)| = max {|a|, |b|, |c|, |d|}`. -/
+`|(a b; c d)| = max {|a|, |b|, |c|, |d|}`.
+
+The supremum is taken in `ℝ≥0` rather than `ℝ` so that it is also defined when `n` is empty,
+where it takes the value `0` — the right answer, since then `Matrix n n ℝ` is the zero ring. -/
 noncomputable def entrySup (M : Matrix n n ℝ) : ℝ :=
-  Finset.univ.sup' Finset.univ_nonempty fun i =>
-    Finset.univ.sup' Finset.univ_nonempty fun j => |M i j|
+  ((Finset.univ.sup fun i => Finset.univ.sup fun j => ‖M i j‖₊ : ℝ≥0) : ℝ)
 
-lemma le_entrySup (M : Matrix n n ℝ) (i j : n) : |M i j| ≤ entrySup M :=
-  Finset.le_sup'_of_le _ (Finset.mem_univ i) (Finset.le_sup' (|M i ·|) (Finset.mem_univ j))
+lemma le_entrySup (M : Matrix n n ℝ) (i j : n) : |M i j| ≤ entrySup M := by
+  have h : ‖M i j‖₊ ≤ (Finset.univ.sup fun i => Finset.univ.sup fun j => ‖M i j‖₊) :=
+    (Finset.le_sup (f := fun j => ‖M i j‖₊) (Finset.mem_univ j)).trans
+      (Finset.le_sup (f := fun i => Finset.univ.sup fun j => ‖M i j‖₊) (Finset.mem_univ i))
+  simpa [entrySup, Real.norm_eq_abs] using NNReal.coe_le_coe.mpr h
 
-lemma entrySup_nonneg (M : Matrix n n ℝ) : 0 ≤ entrySup M :=
-  le_trans (abs_nonneg _) (le_entrySup M (Classical.arbitrary n) (Classical.arbitrary n))
+lemma entrySup_nonneg (M : Matrix n n ℝ) : 0 ≤ entrySup M := by
+  simp only [entrySup]; exact NNReal.coe_nonneg _
 
 variable [DecidableEq n]
 
@@ -261,8 +269,11 @@ lemma gnorm_inv (y : GL n ℝ) : gnorm y⁻¹ = gnorm y := by
 cannot all be small. This makes the exponent in a slow-increase bound enlargeable, hence
 `IsSlowlyIncreasing` closed under addition. -/
 lemma inv_card_le_gnorm (y : GL n ℝ) : (Fintype.card n : ℝ)⁻¹ ≤ gnorm y := by
-  obtain ⟨i⟩ := ‹Nonempty n›
-  have hcard : (1 : ℝ) ≤ Fintype.card n := by exact_mod_cast Fintype.card_pos
+  rcases isEmpty_or_nonempty n with _ | hn
+  · simpa using gnorm_nonneg y
+  have hcard : (1 : ℝ) ≤ Fintype.card n := by
+    exact_mod_cast Fintype.card_pos_iff.mpr hn
+  obtain ⟨i⟩ := hn
   have hy : ∑ k, (y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i = 1 := by
     simpa [Matrix.mul_apply, Matrix.one_apply_eq] using congrFun (congrFun y.mul_inv i) i
   have hk : ∀ k, |(y : Matrix n n ℝ) i k * ((y⁻¹ : GL n ℝ) : Matrix n n ℝ) k i|
@@ -275,14 +286,18 @@ lemma inv_card_le_gnorm (y : GL n ℝ) : (Fintype.card n : ℝ)⁻¹ ≤ gnorm y
     rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
   rw [inv_le_iff_one_le_mul₀ (zero_lt_one.trans_le hcard)]; nlinarith [gnorm_nonneg y]
 
-lemma gnorm_pos (y : GL n ℝ) : 0 < gnorm y :=
+lemma gnorm_pos [Nonempty n] (y : GL n ℝ) : 0 < gnorm y :=
   ((inv_pos.mpr (by exact_mod_cast Fintype.card_pos)).trans_le (inv_card_le_gnorm y))
 
 /-- A function `φ : GL n ℝ → ℂ` is *slowly increasing*, or of *moderate growth*, if
-`‖φ y‖ ≤ C * ‖y‖ ^ r` for some `C` and `r`. This is condition (d) in the definition of an
-automorphic form. -/
+`‖φ y‖ ≤ C * ‖y‖ ^ r` for some real `C` and natural number `r`. This is condition (d) in the
+definition of an automorphic form.
+
+Taking the exponent to be a natural number rather than a real is no loss — a real exponent can
+always be rounded up, since `gnorm ≥ 1 / Fintype.card n` — and it makes the definition come out
+right for `GL 0`, where `gnorm` is identically `0` and `(0 : ℝ) ^ (0 : ℕ) = 1`. -/
 def IsSlowlyIncreasing (φ : GL n ℝ → ℂ) : Prop :=
-  ∃ C r : ℝ, ∀ y : GL n ℝ, ‖φ y‖ ≤ C * gnorm y ^ r
+  ∃ (C : ℝ) (r : ℕ), ∀ y : GL n ℝ, ‖φ y‖ ≤ C * gnorm y ^ r
 
 lemma IsSlowlyIncreasing.of_bounded {φ : GL n ℝ → ℂ} {C : ℝ} (h : ∀ y, ‖φ y‖ ≤ C) :
     IsSlowlyIncreasing φ :=
@@ -299,34 +314,40 @@ lemma IsSlowlyIncreasing.const_mul {φ : GL n ℝ → ℂ} (hφ : IsSlowlyIncrea
   exact mul_le_mul_of_nonneg_left (hC y) (norm_nonneg c)
 
 /-- A slow-increase bound with exponent `r` gives one with any exponent `r' ≥ r`: `gnorm` is
-bounded below by `(Fintype.card n)⁻¹ > 0`, so the ratio `gnorm y ^ (r - r')` is bounded. -/
-lemma exists_forall_norm_le_rpow_of_le {φ : GL n ℝ → ℂ} {C r : ℝ}
-    (h : ∀ y, ‖φ y‖ ≤ C * gnorm y ^ r) {r' : ℝ} (hr : r ≤ r') :
+bounded below by `(Fintype.card n)⁻¹ > 0`, so enlarging the exponent costs only the constant
+factor `(Fintype.card n) ^ (r' - r)`. -/
+lemma exists_forall_norm_le_pow_of_le [Nonempty n] {φ : GL n ℝ → ℂ} {C : ℝ} {r : ℕ}
+    (h : ∀ y, ‖φ y‖ ≤ C * gnorm y ^ r) {r' : ℕ} (hr : r ≤ r') :
     ∃ C', ∀ y, ‖φ y‖ ≤ C' * gnorm y ^ r' := by
-  have hC0 : 0 ≤ C := (mul_nonneg_iff_of_pos_right (Real.rpow_pos_of_pos (gnorm_pos _) r)).mp
-    ((norm_nonneg (φ 1)).trans (h 1))
-  have hg : ∀ y : GL n ℝ, gnorm y ^ (r - r') ≤ (Fintype.card n : ℝ)⁻¹ ^ (r - r') := fun y =>
-    Real.rpow_le_rpow_of_nonpos (inv_pos.mpr (by exact_mod_cast Fintype.card_pos))
-      (inv_card_le_gnorm y) (sub_nonpos.mpr hr)
-  refine ⟨C * (Fintype.card n : ℝ)⁻¹ ^ (r - r'), fun y => ?_⟩
-  calc ‖φ y‖ ≤ C * gnorm y ^ r := h y
-    _ = C * (gnorm y ^ (r - r') * gnorm y ^ r') := by
-        rw [← Real.rpow_add (gnorm_pos y), sub_add_cancel]
-    _ ≤ C * ((Fintype.card n : ℝ)⁻¹ ^ (r - r') * gnorm y ^ r') := mul_le_mul_of_nonneg_left
-        (mul_le_mul_of_nonneg_right (hg y) (Real.rpow_nonneg (gnorm_pos y).le _)) hC0
-    _ = C * (Fintype.card n : ℝ)⁻¹ ^ (r - r') * gnorm y ^ r' := (mul_assoc _ _ _).symm
+  have hcard : (0 : ℝ) < Fintype.card n := by exact_mod_cast Fintype.card_pos
+  have hC0 : 0 ≤ C :=
+    (mul_nonneg_iff_of_pos_right (pow_pos (gnorm_pos 1) r)).mp ((norm_nonneg (φ 1)).trans (h 1))
+  obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hr
+  refine ⟨C * (Fintype.card n : ℝ) ^ d, fun y => (h y).trans ?_⟩
+  have hcg : (1 : ℝ) ≤ (Fintype.card n : ℝ) * gnorm y := by
+    have := mul_le_mul_of_nonneg_left (inv_card_le_gnorm y) hcard.le
+    rwa [mul_inv_cancel₀ hcard.ne'] at this
+  calc C * gnorm y ^ r ≤ ((Fintype.card n : ℝ) * gnorm y) ^ d * (C * gnorm y ^ r) :=
+        le_mul_of_one_le_left (mul_nonneg hC0 (pow_nonneg (gnorm_nonneg y) r))
+          (one_le_pow₀ hcg)
+    _ = C * (Fintype.card n : ℝ) ^ d * gnorm y ^ (r + d) := by rw [pow_add, mul_pow]; ring
 
 protected lemma IsSlowlyIncreasing.add {φ ψ : GL n ℝ → ℂ} (hφ : IsSlowlyIncreasing φ)
     (hψ : IsSlowlyIncreasing ψ) : IsSlowlyIncreasing (φ + ψ) := by
   obtain ⟨C₁, r₁, h₁⟩ := hφ; obtain ⟨C₂, r₂, h₂⟩ := hψ
-  obtain ⟨C₁', h₁'⟩ := exists_forall_norm_le_rpow_of_le h₁ (le_max_left r₁ r₂)
-  obtain ⟨C₂', h₂'⟩ := exists_forall_norm_le_rpow_of_le h₂ (le_max_right r₁ r₂)
-  exact ⟨C₁' + C₂', max r₁ r₂, fun y => ((norm_add_le _ _).trans
-    (add_le_add (h₁' y) (h₂' y))).trans_eq (add_mul _ _ _).symm⟩
+  rcases isEmpty_or_nonempty n with _ | _
+  · -- `GL 0 ℝ` is trivial, so every function on it is bounded.
+    have : Subsingleton (GL n ℝ) := ⟨fun a b => Units.ext (Subsingleton.elim _ _)⟩
+    exact IsSlowlyIncreasing.of_bounded (C := ‖φ 1‖ + ‖ψ 1‖) fun y => by
+      obtain rfl : y = 1 := Subsingleton.elim y 1
+      exact norm_add_le _ _
+  · obtain ⟨C₁', h₁'⟩ := exists_forall_norm_le_pow_of_le h₁ (le_max_left r₁ r₂)
+    obtain ⟨C₂', h₂'⟩ := exists_forall_norm_le_pow_of_le h₂ (le_max_right r₁ r₂)
+    exact ⟨C₁' + C₂', max r₁ r₂, fun y => ((norm_add_le _ _).trans
+      (add_le_add (h₁' y) (h₂' y))).trans_eq (add_mul _ _ _).symm⟩
 
 /-! ### Constant functions are `Z(𝔤)`-finite -/
 
-omit [Nonempty n] in
 /-- The constant function `1` is `Z(𝔤)`-finite: the kernel of `constantsCharacter` is an ideal
 of finite codimension annihilating it. -/
 lemma isZFinite_oneSmoothGL :
@@ -334,7 +355,6 @@ lemma isZFinite_oneSmoothGL :
   IsZFinite.of_forall_smul_eq_algHom_smul (constantsCharacter n) fun z =>
     eq_smul_oneSmoothGL_of_mem_span (smul_oneSmoothGL_mem_span z)
 
-omit [Nonempty n] in
 /-- Every constant function is `Z(𝔤)`-finite. -/
 lemma isZFinite_const_smoothGL (c : ℂ) :
     IsZFinite ℂ ↥(centerUniversalEnveloping n)
@@ -378,21 +398,18 @@ structure IsAutomorphicForm (f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ) : P
 
 /-! ### The submodule of automorphic forms and the right translation action -/
 
-omit [Nonempty n] in
 lemma isSmoothAdelic_const (c : ℂ) :
     IsSmoothAdelic (fun _ : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => c) where
   continuous := continuous_const
   locallyConstant _ := IsLocallyConstant.const c
   smoothOnGL _ := isSmoothOnGL_const c
 
-omit [Nonempty n] in
 protected lemma IsSmoothAdelic.add {f g : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
     (hf : IsSmoothAdelic f) (hg : IsSmoothAdelic g) : IsSmoothAdelic (f + g) where
   continuous := hf.continuous.add hg.continuous
   locallyConstant y := (hf.locallyConstant y).add (hg.locallyConstant y)
   smoothOnGL x := (hf.smoothOnGL x).add (hg.smoothOnGL x)
 
-omit [Nonempty n] in
 protected lemma IsSmoothAdelic.const_smul {f : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ → ℂ}
     (hf : IsSmoothAdelic f) (c : ℂ) : IsSmoothAdelic (c • f) where
   continuous := hf.continuous.const_smul c
@@ -478,8 +495,7 @@ protected lemma IsAutomorphicForm.rightTranslate {f : GL n 𝔸ᶠ[ℤ, ℚ] × 
     obtain ⟨w, hw, rfl⟩ := Subgroup.mem_map.mp hu
     simpa [MulAut.conj_apply, mul_assoc] using hU w hw (x.1 * g, x.2)
   kFinite := by
-    have : FiniteDimensional ℂ (rightTranslateSpan
-      ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) ℂ f) := hf.kFinite
+    have := hf.kFinite
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.map
       (LinearMap.funLeft ℂ ℂ fun p : GL n 𝔸ᶠ[ℤ, ℚ] × GL n ℝ => (p.1 * g, p.2))
       (rightTranslateSpan ((⊥ : Subgroup (GL n 𝔸ᶠ[ℤ, ℚ])).prod (orthogonalSubgroup n)) ℂ f))
