@@ -103,14 +103,14 @@ and
 $$
   \gamma_0 = \sum_{k = 2}^{\infty} \frac{\log k}{2^k}
 $$
-then for almost all integers $f(m) = \gamma_0 + o(1)$.
+then for almost all integers $f(m) = \gamma_0 + o(1)$, i.e. for every $\varepsilon > 0$ the set of
+$n$ with $|f(n) - \gamma_0| < \varepsilon$ has natural density one.
 
 [EGRS75] Erdős, P. and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., _On the prime factors of $\binom{2n}{n}$_. Math. Comp. (1975), 83-92.
 -/
 @[category research solved, AMS 11]
 theorem erdos_377.variants.ae (γ₀ : ℝ) (hγ₀ : γ₀ = ∑' (k : ℕ), (k + 2 : ℝ).log / 2 ^ (k + 2)) :
-    ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
-      ∀ᶠ n in cofinite, sumInvPrimesNotDvdCentralBinom n = γ₀ + o n := by
+    ∀ ε > (0 : ℝ), {n : ℕ | |sumInvPrimesNotDvdCentralBinom n - γ₀| < ε}.HasDensity 1 := by
   sorry
 
 /--
