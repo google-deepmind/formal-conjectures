@@ -193,25 +193,33 @@ theorem a_4 : a 4 = 7 := by
   rw [ha4, h_least.csInf_eq]
 
 /--
-Conjecture: $f(n, k) = 2$ for infinitely many cases, where $k = a(n)$.
-
-We assume $a(n) \ne 0$ (i.e., that a suitable $k > n$ always exists), as `sInf` evaluates to $0$
-on an empty set.
+Conjecture: the sequence is infinite, that is, for every $n \geq 1$ there is some $k > n$
+with $S(n) \mid S(k)$, so that $a(n)$ is defined.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (M : ℕ) (ha : ∀ n > 0, a n ≠ 0) :
+theorem conjecture_infinite : ∀ n > 0, ∃ k > n, S n ∣ S k := by
+  sorry
+
+/--
+Conjecture: $f(n, k) = 2$ for infinitely many cases, where $k = a(n)$.
+
+No hypothesis on the existence of $a(n)$ is needed: if no suitable $k > n$ exists then
+$a(n) = 0$ and $S(0) = 4 < 2 S(n)$, so such $n$ cannot be witnesses.
+-/
+@[category research open, AMS 11]
+theorem conjecture1 (M : ℕ) :
     ∃ n : ℕ, n ≥ M ∧ n > 0 ∧ S (a n) = 2 * S n := by
   sorry
 
 /--
-Open problem: Whether the ratio $f(n, k)$ is bounded, where $k = a(n)$.
+Open problem: is the ratio $f(n, k)$ bounded, where $k = a(n)$?
 
-We assume $a(n) \ne 0$ (i.e., that a suitable $k > n$ always exists), as `sInf` evaluates to $0$
-on an empty set.
+No hypothesis on the existence of $a(n)$ is needed: if no suitable $k > n$ exists then
+$a(n) = 0$ and $S(0) / S(n) = 4 / S(n) = 0$ for $n > 0$, so such $n$ do not affect boundedness.
+When $a(n) \neq 0$ we have $S(n) \mid S(a(n))$ by definition, so the division is exact.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (ha : ∀ n > 0, a n ≠ 0) :
-    ∃ C : ℕ, ∀ n : ℕ, n > 0 → S (a n) / S n ≤ C := by
+theorem conjecture2 : answer(sorry) ↔ ∃ C : ℕ, ∀ n : ℕ, n > 0 → S (a n) / S n ≤ C := by
   sorry
 
 
