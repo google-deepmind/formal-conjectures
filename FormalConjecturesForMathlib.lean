@@ -15,30 +15,43 @@ limitations under the License.
 -/
 module  -- shake: keep-all --deprecated_module: ignore
 
+public import FormalConjecturesForMathlib.Algebra.Category.Grp.Basic
+public import FormalConjecturesForMathlib.Algebra.Category.ModuleCat.Basic
 public import FormalConjecturesForMathlib.Algebra.GCDMonoid.Finset
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import FormalConjecturesForMathlib.Algebra.Homology.DualExact
+public import FormalConjecturesForMathlib.Algebra.Homology.KernelAcyclic
+public import FormalConjecturesForMathlib.Algebra.Homology.MapExtend
+public import FormalConjecturesForMathlib.Algebra.Homology.StupidTruncation
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+public import FormalConjecturesForMathlib.Algebra.PolynomialCatenary
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
+public import FormalConjecturesForMathlib.AlgebraicGeometry.Over.Basic
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
+public import FormalConjecturesForMathlib.Analysis.Calculus.DifferentialForm.Poincare
+public import FormalConjecturesForMathlib.Analysis.Calculus.SplitDerivativeNormalChart
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
+public import FormalConjecturesForMathlib.Analysis.NormedSpace.WedgeCovectors
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
+public import FormalConjecturesForMathlib.CategoryTheory.Abelian.KernelCompositionShortExact
+public import FormalConjecturesForMathlib.CategoryTheory.ConcreteCategory.Notation
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
@@ -132,6 +145,7 @@ public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
+public import FormalConjecturesForMathlib.Geometry.Manifold.Orientation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
@@ -177,6 +191,7 @@ public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
 public import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
+public import FormalConjecturesForMathlib.RingTheory.SmoothKrullDimension
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
@@ -185,8 +200,11 @@ public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Real
+public import FormalConjecturesForMathlib.Topology.Algebra.IsOpenUnits
+public import FormalConjecturesForMathlib.Topology.ChartedSpaceParacompact
 public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
 public import FormalConjecturesForMathlib.Topology.Homogeneous
+public import FormalConjecturesForMathlib.Topology.KrullDimension
 public import FormalConjecturesForMathlib.Topology.LebesgueCoveringDimension
 public import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated
