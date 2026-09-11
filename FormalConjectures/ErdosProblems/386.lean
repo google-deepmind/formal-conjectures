@@ -27,12 +27,13 @@ namespace Erdos386
 open Nat
 
 /--
-There is a $k$, such that $2 \le k \le n - 2$ and
-$\binom{n}{k}$ can be the product of consecutive primes infinitely often?
+Let $2 \le k \le n - 2$. Can $\binom{n}{k}$ be the product of consecutive primes infinitely
+often? Here $k$ may vary with $n$: the question asks for infinitely many admissible binomial
+coefficients, not for a single $k$ that works infinitely often.
 -/
 @[category research open, AMS 11]
 theorem erdos_386 :
-    answer(sorry) ↔ ∃ k ≥ 2, ∃ᶠ n in .atTop,
+    answer(sorry) ↔ ∃ᶠ n in .atTop, ∃ k ≥ 2,
       k ≤ n - 2 ∧ ∃ p q : ℕ, n.choose k = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 
