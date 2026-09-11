@@ -40,13 +40,15 @@ Let $p>q\geq 2$ be two coprime integers. We call $n$ representable if it is the 
 integers of the form $p^kq^l$, none of which divide each other.
 
 If $\{p,q\}\neq \{2,3\}$ then what can be said about the density of non-representable
-numbers? Are there infinitely many coprime non-representable numbers?
+numbers? Are there infinitely many coprime non-representable numbers, that is, an infinite
+family of pairwise coprime non-representable integers?
 -/
 @[category research open, AMS 5 11]
 theorem erdos_1110 :
     answer(sorry) ↔ ∀ (p q : ℕ), q < p → 2 ≤ q →
       Nat.Coprime p q → ¬(p = 3 ∧ q = 2) →
-      Set.Infinite {n : ℕ | Nat.Coprime n (p * q) ∧ ¬Representable p q n} := by
+      ∃ A : Set ℕ, A.Infinite ∧ A.Pairwise Nat.Coprime ∧
+        ∀ n ∈ A, ¬Representable p q n := by
   sorry
 
 end Erdos1110
