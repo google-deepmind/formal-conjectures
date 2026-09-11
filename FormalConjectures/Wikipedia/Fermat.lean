@@ -46,10 +46,10 @@ theorem infinite_fermat_composite : answer(sorry) ↔ Infinite {n : ℕ | ¬Prim
   sorry
 
 /--
-Are all Fermat numbers are square-free?
+Does a Fermat number exist that is not square-free?
 -/
 @[category research open, AMS 11]
-theorem all_fermat_squarefree : answer(sorry) ↔ ∀ n : ℕ, Squarefree n.fermatNumber := by
+theorem exists_fermat_not_squarefree : answer(sorry) ↔ ∃ n : ℕ, ¬Squarefree n.fermatNumber := by
   sorry
 
 end Fermat
