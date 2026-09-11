@@ -91,7 +91,8 @@ The $4m$ zeros of the polynomial $Q(2m,n^2)$ seem to belong to the interval $[-1
 $4m - 2$ of these zeros appear to be approximated by the rational numbers
 $\pm k/(3m)$, where $1 \le k \le 3m - 2$, $k$ not a multiple of $3$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-lite-200usd-sol-nk5wh4g0vh3546nm/oeis_a103885_conjecture_0/Submission/Spec.lean#L2587"]
 theorem conjecture (m : ℕ) (hm : 1 ≤ m) :
     ∃ (P Q : Polynomial ℝ),
       -- P and Q have degree 2m
