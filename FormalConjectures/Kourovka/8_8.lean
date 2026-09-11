@@ -36,18 +36,15 @@ on finitely many generators by the normal closure of finitely many relators; see
 namespace Kourovka.«8.8»
 
 /--
-(D. V. Anosov) Does there exist a non-cyclic finitely presented group $G$ which
-contains an element $a$ such that each element of $G$ is conjugate to some power
-of $a$?
+Does there exist a non-cyclic finitely presented group $G$ which contains an
+element $a$ such that each element of $G$ is conjugate to some power of $a$?
 
-Here "power" means an integer power $a^n$ with $n \in \mathbb{Z}$, and "non-cyclic"
-is `¬ IsCyclic G`, which excludes the trivial group and the infinite cyclic group.
+Here a power of $a$ means $a^n$ for some $n \in \mathbb{Z}$.
 -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20]
 theorem kourovka.«8.8».parts.b : answer(sorry) ↔
     ∃ (G : Type) (_ : Group G), Group.IsFinitelyPresented G ∧ ¬ IsCyclic G ∧
       ∃ a : G, ∀ g : G, ∃ n : ℤ, IsConj g (a ^ n) := by
   sorry
 
 end Kourovka.«8.8»
-
