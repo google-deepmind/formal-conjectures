@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib.NumberTheory.NumberField.Basic
-public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Basic
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 
 public section

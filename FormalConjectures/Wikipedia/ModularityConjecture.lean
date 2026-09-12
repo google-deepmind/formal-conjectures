@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Modularity conjecture
 
-The **Modularity conjecture** (also know as the Shimura-Taniyama-Weil conjecture) states that
+The **Modularity conjecture** (also known as the Shimura-Taniyama-Weil conjecture) states that
 every rational elliptic curve is modular, meaning that it can be
 associated with a modular form. We state the `a_p` version of the conjecture, which relates the
 coefficients of the modular form to the number of points on the elliptic curve over finite fields.
@@ -30,16 +30,16 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*](https://doi.org/10.1007/978-0-387-27226-9)
 
 -/
 
 namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
-open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture UpperHalfPlane
+open scoped Real ModularForm CongruenceSubgroup
 
-/-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
+/-- The `n`-th Fourier coefficient of a modular form (around the cusp at infinity). -/
 noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff n
 

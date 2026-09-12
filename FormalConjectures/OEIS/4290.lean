@@ -36,7 +36,7 @@ theorem a_0 : a 0 = 0 := by
   dsimp [a]
   have h_empty : { m : ℕ | 0 < m ∧ 0 ∣ m ∧ ∀ d ∈ Nat.digits 10 m, d = 0 ∨ d = 1 } = ∅ := by
     ext m
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro hm h0dvd
     have hm0 : m = 0 := Nat.eq_zero_of_zero_dvd h0dvd
     omega

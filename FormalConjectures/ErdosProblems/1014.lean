@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Wikipedia.RamseyNumbers
 import FormalConjecturesUtil
 
 /-!
@@ -35,7 +34,7 @@ open scoped Topology
 
 namespace Erdos1014
 
-open RamseyNumbers
+local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
 /--
 Let $R(k,l)$ be the Ramsey number, so the minimal $n$ such that every graph on at least $n$

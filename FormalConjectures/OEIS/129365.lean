@@ -59,8 +59,12 @@ theorem a_4 : a 4 = 1 := by decide +native
 
 /--
 Conjecture (1): $a(n)$ is always an integer (the denominator divides the numerator).
+
+Answer: true, see linked proof.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a129365-conjectures/blob/9c0201540c337733d6b8afb2aff209f5489c122a/lean/OeisA129365FC.lean#L234-L395"]
 theorem conjecture1 (n : ℕ) (hn : 0 < n) :
     ((Finset.Icc 1 n).prod fun k => (n / k).factorial ^ k) ∣
       ((Finset.Icc 1 n).prod fun j => (Finset.Icc 1 n).prod fun k => Nat.gcd j k) := by
@@ -68,8 +72,12 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
 
 /--
 Conjecture (2): If $p$ is a prime, then $p \mid a(n)$ if and only if $p \le n/3$.
+
+Answer: true, see linked proof.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a129365-conjectures/blob/9c0201540c337733d6b8afb2aff209f5489c122a/lean/OeisA129365FC.lean#L234-L395"]
 theorem conjecture2 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
     (∃ m : ℕ, a n = m ∧ p ∣ m) ↔ p ≤ n / 3 := by
   sorry
@@ -77,8 +85,12 @@ theorem conjecture2 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
 /--
 Conjecture (3): For each positive integer $n$, prime $p$, and $0 \le k < p$,
 $\mathrm{ord}_p(a(np)) = \mathrm{ord}_p(a(np + k))$.
+
+Answer: true, see linked proof.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a129365-conjectures/blob/9c0201540c337733d6b8afb2aff209f5489c122a/lean/OeisA129365FC.lean#L234-L395"]
 theorem conjecture3 (n p k : ℕ) (hn : 0 < n) (hp : p.Prime) (hk : k < p) :
     padicValRat p (a (n * p)) = padicValRat p (a (n * p + k)) := by
   sorry
@@ -86,11 +98,14 @@ theorem conjecture3 (n p k : ℕ) (hn : 0 < n) (hp : p.Prime) (hk : k < p) :
 /--
 Conjecture (4): Let $b(n) = \mathrm{A004125}(n) = \sum_{k=1}^n (n \bmod k)$. Then
 $\mathrm{ord}_p(a(np)) = \sum_{i \ge 0} b(\lfloor n/p^i \rfloor)$.
+
+Answer: true, see linked proof.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a129365-conjectures/blob/9c0201540c337733d6b8afb2aff209f5489c122a/lean/OeisA129365FC.lean#L234-L395"]
 theorem conjecture4 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
     padicValRat p (a (n * p)) = ∑' i : ℕ, (b (n / p ^ i) : ℤ) := by
   sorry
 
 end OeisA129365
-

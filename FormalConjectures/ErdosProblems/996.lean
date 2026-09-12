@@ -33,7 +33,7 @@ namespace Erdos996
 
 noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@haarAddCircle T hT))
     (k : ℕ) : AddCircle T → ℂ :=
-  fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f k • fourier i x
+  fun x => ∑ i ∈ Icc (-k : ℤ) k, fourierCoeff f i • fourier i x
 
 /-- Does there exists a positive constant `C` such that for all `f ∈ L²[0,1]` and all lacunary
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
@@ -42,7 +42,7 @@ sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almos
 theorem erdos_996 : answer(sorry) ↔
     ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
-    (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
+    (fun k => (eLpNorm (⇑f - fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
     (fun k => 1 / (log (log (log k))) ^ C)
     →
     ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop
@@ -54,7 +54,7 @@ theorem erdos_996 : answer(sorry) ↔
 theorem erdos_996.variants.log2 : ∀ (C : ℝ), 0.5 < C →
     ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
-    (fun k => (eLpNorm (fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
+    (fun k => (eLpNorm (⇑f - fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]
     (fun k => 1 / (log (log k)) ^ C)
     →
     ∀ᵐ x, Tendsto (fun N => (∑ k ∈ .range N, f (n k • x)) / N) atTop

@@ -597,6 +597,126 @@ function subjectListHTML(bySubject) {
     .join('\n');
 }
 
+// ---------------------------------------------------------------------------
+// Modules page
+// ---------------------------------------------------------------------------
+
+/** Libraries with literate pages, in display order, with a one-line description. */
+const LIBRARIES = {
+  FormalConjectures: {
+    lede: 'The problem statements themselves, organised by the collection they come from.',
+  },
+  FormalConjecturesForMathlib: {
+    lede: 'Definitions and lemmas that the statements need but Mathlib does not yet have; candidates for upstreaming.',
+  },
+  FormalConjecturesUtil: {
+    lede: 'Attributes, linters, and metadata infrastructure used by the problem files.',
+  },
+  FormalConjecturesTest: {
+    lede: 'Tests of the infrastructure.',
+  },
+};
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** Split a module name on dots, keeping «quoted» segments intact. */
+function moduleSegments(module) {
+  return module.replace(/«[^»]*»|\./g, (m) => (m[0] === '«' ? m : '/')).split('/');
+}
+
+/**
+ * The list of modules with a literate page. Verso's output is authoritative;
+ * without it (no literate build), fall back to the modules the conjectures
+ * live in, which covers `FormalConjectures` only.
+ */
+function literateModules(versoFragments, conjectures) {
+  if (Array.isArray(versoFragments.modules) && versoFragments.modules.length > 0) {
+    return versoFragments.modules.map(m => ({ name: m.name, href: `/src${m.url}` }));
+  }
+  const names = [...new Set(conjectures.map(c => c.module))].sort();
+  return names.map(name => ({ name, href: moduleToSourceURL(name) }));
+}
+
+/**
+ * Render the module index: one section per library, each split into groups by
+ * the segment after the library name (the source collection, for problems).
+ * A library whose modules all share that segment is shown as a flat list.
+ */
+function modulesPageHTML(modules) {
+  const byLibrary = new Map();
+  for (const m of modules) {
+    const segs = moduleSegments(m.name);
+    const lib = segs[0];
+    if (!byLibrary.has(lib)) byLibrary.set(lib, []);
+    byLibrary.get(lib).push({ ...m, segs });
+  }
+
+  const order = Object.keys(LIBRARIES);
+  const libraries = [...byLibrary.keys()].sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    if (ia !== -1 || ib !== -1) return (ia === -1 ? order.length : ia) - (ib === -1 ? order.length : ib);
+    return a.localeCompare(b);
+  });
+
+  const listHTML = (items, depth) => `<ul class="module-list">
+${items.map(m => {
+    const label = m.segs.length > depth ? m.segs.slice(depth).join('.') : m.name;
+    return `  <li data-name="${escapeHtml(m.name)}"><a href="${escapeHtml(m.href)}">${escapeHtml(label)}</a></li>`;
+  }).join('\n')}
+</ul>`;
+
+  return libraries.map(lib => {
+    const items = byLibrary.get(lib).sort((a, b) => a.name.localeCompare(b.name));
+    const lede = LIBRARIES[lib]?.lede;
+
+    // Group by the segment after the library name; the library's root module
+    // (no such segment) and any module directly below it stay ungrouped.
+    const groups = new Map();
+    for (const m of items) {
+      const key = m.segs.length > 2 ? m.segs[1] : '';
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(m);
+    }
+    const keys = [...groups.keys()].sort((a, b) => {
+      if (a === '') return -1;
+      if (b === '') return 1;
+      return (SOURCE_COLLECTIONS[a]?.name || a).localeCompare(SOURCE_COLLECTIONS[b]?.name || b);
+    });
+
+    let body;
+    if (keys.filter(k => k !== '').length < 2) {
+      body = listHTML(items, 1);
+    } else {
+      body = keys.map(key => {
+        const members = groups.get(key);
+        if (key === '') {
+          return `<div class="module-group">\n${listHTML(members, 1)}\n</div>`;
+        }
+        const collection = lib === 'FormalConjectures' ? SOURCE_COLLECTIONS[key] : null;
+        const title = collection
+          ? `<a href="/browse/?collection=${encodeURIComponent(collection.name)}">${escapeHtml(collection.name)}</a>`
+          : escapeHtml(key);
+        return `<div class="module-group">
+<h3 class="module-group__title">${title} <span class="count-badge">${members.length} modules</span></h3>
+${listHTML(members, 2)}
+</div>`;
+      }).join('\n');
+    }
+
+    return `  <section class="section module-library" id="${escapeHtml(lib)}">
+    <div class="container">
+      <h2 class="section__title">${escapeHtml(lib)} <span class="count-badge">${items.length} modules</span></h2>
+      ${lede ? `<p class="module-library__lede">${lede}</p>` : ''}
+${body}
+    </div>
+  </section>`;
+  }).join('\n');
+}
+
 /** Render the subject × category cross-tab as an HTML table. */
 function subjectStatusTableHTML(subjectByCategory) {
   const columns = [
@@ -747,6 +867,14 @@ async function main() {
     growthPlot:           growthPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
+
+  // ---- Modules page ----
+  const modules = literateModules(versoFragments, conjectures);
+  writePage('site/modules/index.html', applyBasePath(fill(readTemplate('modules.html'), {
+    moduleCount: modules.length,
+    libraries:   modulesPageHTML(modules),
+  })));
+  console.log(`  Module index lists ${modules.length} modules.`);
 
   console.log('Done. Output in site/');
 }

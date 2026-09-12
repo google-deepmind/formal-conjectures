@@ -124,7 +124,7 @@ theorem erdos_786.parts.i.example (A : Set ℕ) (hA : A = { n | n % 4 = 2 }) :
       have h0 : ∀ i ∈ s, id i ≠ 0 := fun i hi ↦ by
         have := hmem i hi; simp only [id]; omega
       rw [Nat.factorization_prod h0]
-      simp only [Finsupp.finset_sum_apply]
+      simp only [Finsupp.finsetSum_apply]
       rw [Finset.sum_congr rfl (g := fun _ ↦ 1) fun i hi ↦ ?_, Finset.sum_const, smul_eq_mul,
         mul_one]
       have h4 := hmem i hi
@@ -177,7 +177,7 @@ $$
 \sum_{i=1}^k \frac{1}{p_i} < 1 < \sum_{i=1}^{k + 1} \frac{1}{p_i},
 $$
 and let $A$ be the set of all naturals divisible by exactly one of $p_1, ..., p_k$ (with
-multiplicity $1$). Then $A$ has density $\frac{1}{e} - \epsilon$ and has the property
+multiplicity $1$). Then $A$ has density $> \frac{1}{e} - \epsilon$ and has the property
 that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when $r = s$.
 -/
 @[category research solved, AMS 11]
@@ -186,7 +186,7 @@ theorem erdos_786.parts.i.selfridge (ε : ℝ) (hε : 0 < ε ∧ ε < 1 / rexp 1
       ∑ q ∈ consecutivePrimesFrom p k, (1 : ℝ) / q < 1 ∧
         1 < ∑ q ∈ consecutivePrimesFrom p (k + 1), (1 : ℝ) / q ∧
           letI A := { n | ∑ q ∈ consecutivePrimesFrom p k, (n : ℕ).factorization q = 1 }
-          A.HasDensity (1 / rexp 1 - ε) ∧ A.IsMulCardSet := by
+          ∃ δ, 1 / rexp 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet := by
   sorry
 
 end Erdos786

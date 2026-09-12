@@ -15,8 +15,8 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Matching
-public import Mathlib.Data.Real.Archimedean
 
 @[expose] public section
 

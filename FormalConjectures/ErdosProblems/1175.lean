@@ -53,6 +53,9 @@ theorem erdos_1175 : answer(sorry) ↔
           ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ := by
   sorry
 
+-- A consistency statement, not a ZFC theorem (see the formalization caveat in the docstring),
+-- so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 **Shelah's consistency result**: it is consistent with ZFC that there exists a graph $G$ with
 chromatic number $\aleph_1$ such that every triangle-free subgraph of $G$ has chromatic number

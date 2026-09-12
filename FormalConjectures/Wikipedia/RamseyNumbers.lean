@@ -61,8 +61,8 @@ theorem IsGraphRamsey.succ (n k l : ℕ) :
   have emb : H ↪g G := SimpleGraph.Embedding.comap (Fin.castSuccEmb : Fin n ↪ Fin (n + 1)) G
   have embc : (Hᶜ) ↪g (Gᶜ) := (SimpleGraph.Embedding.complEquiv (G := H) (H := G)).toFun emb
   rintro ⟨hG, hGc⟩
-  have hH : H.CliqueFree k := SimpleGraph.CliqueFree.comap (f := emb) (n := k) hG
-  have hHc : (Hᶜ).CliqueFree l := SimpleGraph.CliqueFree.comap (f := embc) (n := l) hGc
+  have hH : H.CliqueFree k := SimpleGraph.CliqueFree.comap emb.isContained hG
+  have hHc : (Hᶜ).CliqueFree l := SimpleGraph.CliqueFree.comap embc.isContained hGc
   exact (h H) ⟨hH, hHc⟩
 
 /-- Symmetry in the clique / independent set sizes. -/
@@ -73,15 +73,16 @@ theorem IsGraphRamsey.symm (n k l : ℕ) :
   · simpa [IsGraphRamsey, and_comm, and_left_comm, and_assoc] using h (Gᶜ)
   · simpa [IsGraphRamsey, and_comm, and_left_comm, and_assoc] using h (Gᶜ)
 
-/--
-The (graph) Ramsey number `R(k,l)` is the least natural number `n` such that `IsGraphRamsey n k l`
-holds.
--/
-noncomputable def graphRamseyNumber (k l : ℕ) : ℕ :=
-  sInf {n : ℕ | IsGraphRamsey n k l}
+/-- The shared Ramsey number agrees with the clique-free formulation. -/
+@[category API, AMS 5]
+theorem classicalRamsey_eq_sInf (k l : ℕ) :
+    SimpleGraph.classicalRamsey k l = sInf {n : ℕ | IsGraphRamsey n k l} := by
+  classical
+  simp only [SimpleGraph.classicalRamsey, SimpleGraph.graphRamsey,
+    IsGraphRamsey, not_and_or, SimpleGraph.not_cliqueFree_iff_top_isContained]
 
 -- Notation used in the literature.
-notation "R(" k ", " l ")" => graphRamseyNumber k l
+local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
 /--
 The open problem: determine the Ramsey number $R(5,5)$.

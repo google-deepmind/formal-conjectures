@@ -50,11 +50,12 @@ theorem erdos_978.parts.i {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegre
     HasPosDensity {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))} := by
   sorry
 
-/-- If the degree `k` of `f` is larger than or equal to `9`, then the set of `n` such that `f n` is
-`(k - 2)`-th power free has infinitely many elements. This result is proved in [Br11]. -/
+/-- If the degree `k` of `f` is larger than or equal to `9`, and `f n` has no fixed `(k - 2)`-th
+power divisors other than `1`, then the set of `n` such that `f n` is `(k - 2)`-th power free has
+infinitely many elements. This result is proved in [Br11]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤ f.natDegree)
-    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
+    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 

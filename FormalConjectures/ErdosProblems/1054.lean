@@ -82,7 +82,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
   · set p : ℕ → Prop := fun x => x ∈ m.divisors with hpdef
-    have hfin : (setOf p).Finite := Set.finite_mem_finset m.divisors
+    have hfin : (Set.ofPred p).Finite := Set.finite_mem_finset m.divisors
     have hg0 : Nat.nth p 0 = 1 := Nat.nth_divisors_zero hm
     -- The `j`-th smallest divisor is at least `j + 1` (for `j` below the number of divisors).
     have hlb : ∀ j, j < hfin.toFinset.card → j + 1 ≤ Nat.nth p j := by
@@ -101,8 +101,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
       intro h
       have hne : Nat.nth p 1 ≠ 0 := by rw [h]; norm_num
       have hcard1 : 1 < hfin.toFinset.card := by
-        by_contra hcon
-        push_neg at hcon
+        by_contra! hcon
         exact hne (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
       have hmem : p (Nat.nth p 1) := Nat.nth_mem_of_lt_card hfin hcard1
       rw [h] at hmem
@@ -138,8 +137,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
         · intro x hx hx2; simp only [Finset.mem_Iio] at *; exact hz x (by omega)
       · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
         have hc3 : 2 < hfin.toFinset.card := by
-          by_contra hcon
-          push_neg at hcon
+          by_contra! hcon
           exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
         have hg1 := hlb 1 (by omega)
         have hg2' := hlb 2 (by omega)
@@ -149,7 +147,6 @@ theorem f_undefined_at_3 : f 5 = 0 := by
           · intros; positivity
         rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
           Finset.sum_range_one, hg0] at hsub
-        rw [Nat.Iio_eq_range] at hsum
-        omega
+        lia
 
 end Erdos1054

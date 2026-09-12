@@ -210,10 +210,8 @@ along which the normalised prime gaps converge, as in the statement of `erdos_5`
 -/
 @[category test, AMS 11]
 theorem mem_limitPointSet_iff (x : ℝ) : x ∈ limitPointSet ↔
-    ∃ n : ℕ → ℕ, StrictMono n ∧ Tendsto (fun i => normalizedGap (n i)) atTop (𝓝 x) := by
-  refine ⟨fun hx => ?_, fun ⟨n, hn, h⟩ => h.mapClusterPt.of_comp hn.tendsto_atTop⟩
-  obtain ⟨ψ, hψ, h⟩ := TopologicalSpace.FirstCountableTopology.tendsto_subseq hx
-  exact ⟨ψ, hψ, h⟩
+    ∃ n : ℕ → ℕ, StrictMono n ∧ Tendsto (fun i => normalizedGap (n i)) atTop (𝓝 x) :=
+  ⟨fun hx => hx.tendsto_subseq, fun ⟨_n, hn, h⟩ => h.mapClusterPt.of_comp hn.tendsto_atTop⟩
 
 /-- The normalised prime gaps are nonnegative. -/
 @[category test, AMS 11]
@@ -243,7 +241,7 @@ The set $S$ of limit points is closed, as Weisenberg notes in the acknowledgemen
 and `erdos_5.variants.limit_point_set` ask the same question.
 -/
 @[category test, AMS 11]
-theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOf_clusterPt
+theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOfPred_clusterPt
 
 /--
 Weisenberg's remark, as reported on [erdosproblems.com/5](https://www.erdosproblems.com/5):

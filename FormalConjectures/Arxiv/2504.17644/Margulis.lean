@@ -70,6 +70,12 @@ variable (F : Type u) [Field F] [Fintype F]
 noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
   (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
 
+-- The `SetLike.GradeZero` instances for `Semiring`/`CommSemiring`/`Ring`/`CommRing`/`Monoid`/
+-- `Algebra` on a grade-zero piece are stated for an arbitrary graded family and unify with
+-- `↥(diagonalSubgroup ...)` before being ruled out
+attribute [-instance] SetLike.GradeZero.instMonoid SetLike.GradeZero.instSemiring
+  SetLike.GradeZero.instCommSemiring SetLike.GradeZero.instAlgebraSubtypeMemOfNat
+  SetLike.GradeZero.instRing SetLike.GradeZero.instCommRing in
 /-- **Huang–Shi, Theorem 1.2**
 
 Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set

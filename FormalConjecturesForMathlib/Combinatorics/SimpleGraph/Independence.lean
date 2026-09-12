@@ -79,7 +79,7 @@ theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     intro s hs
     apply le_csSup
     · exact ⟨Fintype.card α, fun n ⟨s, hs⟩ => hs.card_eq ▸ s.card_le_univ⟩
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       exact ⟨s, ⟨fun x hx y hy hne =>
         (Finset.mem_filter.mp hs).2 x (Finset.mem_coe.mp hx) y (Finset.mem_coe.mp hy) hne,
         rfl⟩⟩

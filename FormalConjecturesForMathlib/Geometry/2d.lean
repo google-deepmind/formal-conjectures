@@ -204,12 +204,6 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
-/--
-The minimum number of distinct distances guaranteed for any set of $n$ points.
--/
-noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
-  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
-
 /-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
 where the points are ordered such that
 $$R(x_1)\leq \cdots \leq R(x_n).$$
@@ -248,3 +242,11 @@ def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
 
 nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
   Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)
+
+/-- A set is isosceles-free if no three distinct points in it form an isosceles triangle. -/
+def Set.IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
+  A.Triplewise fun x y z ↦ ¬ _root_.IsIsosceles x y z
+
+theorem Set.IsIsoscelesFree.mono {α : Type*} [Dist α] {s t : Set α} (h : t ⊆ s)
+    (hs : s.IsIsoscelesFree) : t.IsIsoscelesFree :=
+  Set.Triplewise.mono h hs

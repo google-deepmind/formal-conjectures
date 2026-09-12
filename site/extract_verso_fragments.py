@@ -3,6 +3,7 @@
 Extract Verso fragments from literate HTML output.
 
 Produces a compact JSON with:
+- modules: [{ name, url }] for every rendered module page, across all libraries
 - moduleDocs: module path -> rendered module docstring HTML
 - constLinks: Lean const name -> { url, anchor, docHtml }
 
@@ -11,9 +12,15 @@ Usage: python3 extract_verso_fragments.py <literate-html-dir> <output-json>
 
 import json
 import os
+import re
 import sys
 
 from bs4 import BeautifulSoup
+
+# A module page's <title> is the bare module name, e.g.
+# `FormalConjectures.ErdosProblems.«1»`. Anything else (the search page, the
+# redirect at the root) is not a module.
+MODULE_NAME_RE = re.compile(r'^[A-Za-z_][\w«»\'.]*$')
 
 
 def walk_html_files(root):
@@ -31,6 +38,12 @@ def extract_from_html(html_path, base_dir):
 
     rel = os.path.relpath(os.path.dirname(html_path), base_dir)
     module_path = '/' + rel.replace(os.sep, '/') + '/'
+
+    # 0. Module name, from the page title. The search results page is the one
+    #    non-module page with a title that looks like a module name.
+    title_el = soup.find('title')
+    title = title_el.get_text(strip=True) if title_el else ''
+    module_name = title if MODULE_NAME_RE.match(title) and rel != 'search' else None
 
     # 1. Module docstring: <div class="mod-doc">...</div>
     mod_doc_el = soup.find('div', class_='mod-doc')
@@ -88,7 +101,7 @@ def extract_from_html(html_path, base_dir):
             entry['docHtml'] = doc_html
         const_map[lean_name] = entry
 
-    return module_path, module_doc, const_map
+    return module_path, module_name, module_doc, const_map
 
 
 def main():
@@ -103,22 +116,28 @@ def main():
         print(f'  Warning: {input_dir} not found, writing empty fragments.', file=sys.stderr)
         os.makedirs(os.path.dirname(output_json), exist_ok=True)
         with open(output_json, 'w') as f:
-            json.dump({'moduleDocs': {}, 'constLinks': {}}, f)
+            json.dump({'modules': [], 'moduleDocs': {}, 'constLinks': {}}, f)
         return
 
     html_files = list(walk_html_files(input_dir))
     print(f'  Scanning {len(html_files)} Verso HTML files...')
 
+    modules = []
     module_docs = {}
     const_links = {}
 
     for html_file in html_files:
-        module_path, module_doc, const_map = extract_from_html(html_file, input_dir)
+        module_path, module_name, module_doc, const_map = extract_from_html(html_file, input_dir)
+        if module_name:
+            modules.append({'name': module_name, 'url': module_path})
         if module_doc:
             module_docs[module_path] = module_doc
         const_links.update(const_map)
 
+    modules.sort(key=lambda m: m['name'])
+
     output = {
+        'modules': modules,
         'moduleDocs': module_docs,
         'constLinks': const_links,
     }
@@ -128,7 +147,7 @@ def main():
 
     file_size = os.path.getsize(output_json)
     with_doc = sum(1 for v in const_links.values() if v.get('docHtml'))
-    print(f'  Extracted {len(module_docs)} module docstrings, '
+    print(f'  Extracted {len(modules)} module pages, {len(module_docs)} module docstrings, '
           f'{len(const_links)} constants ({with_doc} with docstrings).')
     print(f'  Output: {file_size / 1024:.0f} KB')
 

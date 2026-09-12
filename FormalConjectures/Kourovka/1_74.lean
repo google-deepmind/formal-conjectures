@@ -46,7 +46,7 @@ Does there exist a Tarski monster group that admits a non-discrete Hausdorff
 group topology?
 -/
 @[category research open, AMS 20 22]
-theorem kourovka.«1.74» : answer(sorry) ↔
+theorem kourovka_1_74 : answer(sorry) ↔
     ∃ (G : Type) (_ : Group G) (_ : TopologicalSpace G),
       IsTarskiMonster G ∧ IsTopologicalGroup G ∧ T2Space G ∧
       ¬ DiscreteTopology G := by

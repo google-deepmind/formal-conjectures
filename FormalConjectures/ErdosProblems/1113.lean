@@ -60,7 +60,8 @@ def HasFinitePrimeCoveringSet (k : ℕ) : Prop :=
 Sierpiński [Si60] proved that there are infinitely many Sierpiński numbers, using covering
 systems to construct suitable covering sets for any $k$ satisfying a certain congruence.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/b8b641ba2d00dc4d1fe205a078a4159372672459/Erdos/P1113.lean#L22"]
 theorem erdos_1113.variants.infinitely_many_sierpinski :
     Set.Infinite {k : ℕ | k.IsSierpinskiNumber} := by
   sorry

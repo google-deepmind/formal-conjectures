@@ -45,15 +45,20 @@ def monotonicSubsequenceSums {n : ℕ} (x : Fin n → ℝ) : Set ℝ :=
   {S | ∃ I : Finset (Fin n), (MonotoneOn x ↑I ∨ AntitoneOn x ↑I) ∧ (∑ i ∈ I, x i) = S}
 
 /--
-The set of constants $c$ such that, for all sequences of $n$ distinct real numbers
+The set of constants $c$ such that, for all sequences of $n$ distinct positive real numbers
 $x_1,\ldots,x_n$,
 $$
 \max\left(\sum x_{i_r}\right) > (c-o(1))\frac{1}{\sqrt{n}}\sum x_i
 $$
 (where the maximum is taken over all monotonic subsequences).
+
+The source reduces to positive sequences. With signed sequences the condition is not a vanishing
+error term: for $\varepsilon > |c|$ and $x_i = -i$ the right-hand side is positive while every
+subsequence sum is nonpositive, so no constant would be admissible.
 -/
 def admissibleConstants : Set ℝ :=
   {c : ℝ | ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, ∀ x : Fin n → ℝ, Function.Injective x →
+    (∀ i, 0 < x i) →
     ∃ S ∈ monotonicSubsequenceSums x, (c - ε) / Real.sqrt (n : ℝ) * (∑ i, x i) ≤ S}
 
 /--
@@ -83,14 +88,7 @@ and is also implicit in work of Wagner [Wa17]. A proof was given and formalised 
 $c=1$.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1026 : IsGreatest admissibleConstants answer(sorry) := by
-  sorry
-
-/--
-In particular, this shows that $c=1$.
--/
-@[category research solved, AMS 5]
-theorem erdos_1026.variants.eq_one : IsGreatest admissibleConstants 1 := by
+theorem erdos_1026 : IsGreatest admissibleConstants 1 := by
   sorry
 
 /--

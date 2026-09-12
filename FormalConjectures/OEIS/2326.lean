@@ -82,6 +82,12 @@ then $a((p^{k+1}-1)/2) = p \cdot a((p^k-1)/2)$.
 Computer testing of this generalized conjecture shows that there is no counterexample for $k$
 and $p$ both up to 1000.
 - [Ahmad J. Masad](https://oeis.org/wiki/User:Ahmad_J._Masad), Oct 17 2020
+
+The two are in fact equivalent. Its $k = 2$ instance is `conjecture1`. Conversely, write
+$d = \operatorname{ord}_{p^2}(2)$. `conjecture1` for $p$ says
+$v_p(2^d - 1) = 2$, and lifting the exponent for the odd prime $p$ then gives
+$v_p(2^{d p^t} - 1) = 2 + t$, hence $\operatorname{ord}_{p^{2+t}}(2) = d p^t$ for every
+$t \ge 0$, which is every instance for that $p$.
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (k : ℕ) (hk : 2 ≤ k) (p : ℕ) (hp : p.Prime) (hp_odd : p ≠ 2) :

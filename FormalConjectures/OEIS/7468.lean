@@ -65,7 +65,7 @@ The only positive integer $n$ such that $a(n)$ is a perfect square is $n=38$.
 - Carlos Eduardo Olivieri, Mar 09 2015
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) (hsq : IsSquare (a n)) : n = 38 := by
+theorem conjecture (n : ℕ) (hn : 0 < n) : IsSquare (a n) ↔ n = 38 := by
   sorry
 
 end OeisA7468

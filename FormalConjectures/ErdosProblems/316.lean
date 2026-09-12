@@ -74,11 +74,14 @@ This is not true in general, as shown by Sándor [Sa97], who observed that the p
 $120$ form a counterexample. More generally, Sándor shows that for any $n\geq 2$ there exists a
 finite set $A\subseteq \mathbb{N}\backslash\{1\}$ with $\sum_{k\in A}\frac{1}{k} < n$ and no
 partition into $n$ parts each of which has $\sum_{k\in A_i}\frac{1}{k}<1$.
+
+A `Finpartition` has no empty parts, so partitions into at most $n$ parts are tested. Testing
+exactly $n$ parts would let the singleton $\{2\}$ satisfy the statement vacuously.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
-    P.parts.card = n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
+    P.parts.card ≤ n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
   sorry
 
 end Erdos316

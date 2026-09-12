@@ -30,6 +30,7 @@ open SimpleGraph BigOperators
 
 namespace Erdos23
 
+open scoped Classical in
 /--
 Every triangle-free graph on $5$ vertices can be made bipartite by removing at most $1$ edge.
 This is the $n = 1$ case of Erdős Problem 23.
@@ -40,6 +41,7 @@ theorem erdos_23.variants.n1 :
         H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 1 := by
   sorry
 
+open scoped Classical in
 /--
 There exists a triangle-free graph on $5$ vertices such that at least $1$ edge must be removed
 to make it bipartite. This shows the bound in `erdos_23_n1` is tight.
@@ -50,6 +52,7 @@ theorem erdos_23.variants.n1_tight :
         H ≤ G → H.IsBipartite → 1 ≤ (G.edgeFinset \ H.edgeFinset).card := by
   sorry
 
+open scoped Classical in
 /--
 Every triangle-free graph on $25$ vertices can be made bipartite by removing at most $25$
 edges.
@@ -64,6 +67,7 @@ theorem erdos_23.variants.n5 :
         H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ 25 := by
   sorry
 
+open scoped Classical in
 /--
 There exists a triangle-free graph on $25$ vertices such that at least $25$ edges must be
 removed to make it bipartite.  The balanced blow-up of $C_5$ with five parts of size $5$
@@ -84,6 +88,7 @@ are adjacent iff $j = i + 1$ or $i = j + 1$ in $\mathbb{Z}/5\mathbb{Z}$.
 def blowupC5 (n : ℕ) : SimpleGraph (ZMod 5 × Fin n) :=
   SimpleGraph.fromRel fun (i, _) (j, _) => i + 1 = j ∨ j + 1 = i
 
+open scoped Classical in
 /--
 The blow-up of $C_5$ shows that the bound $n^2$ in Erdős Problem 23 is tight:
 any bipartite subgraph must omit at least $n^2$ edges.

@@ -65,7 +65,7 @@ Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/FirstQuestion.lean"]
 theorem erdos_394.parts.i :
     answer(True) ↔
-      ∃ c > 0, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
+      ∃ c > (0 : ℝ), (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
@@ -107,7 +107,7 @@ Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \fr
 -/
 @[category research solved, AMS 11]
 theorem erdos_394.variants.lower_bound :
-    (fun x ↦ x ^ 2 / Real.log x) ≫
+    (fun x ↦ x ^ 2 / Real.log x) ≪
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
   sorry
 

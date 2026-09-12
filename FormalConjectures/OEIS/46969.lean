@@ -111,17 +111,16 @@ theorem a_5 : a 5 = 1188 := by
   rw [bernoulli_eq_bernoulli'_of_ne_one (by decide), bernoulli'_ten]
   norm_num
 
-/-- $A005382(n)$ is the $n$-th prime $p$ such that $2p-1$ is also prime (1-based). -/
-noncomputable def a005382 (n : ℕ) : ℕ :=
-  Nat.nth (fun p ↦ p.Prime ∧ (2 * p - 1).Prime) (n - 1)
-
 /--
 Conjecture I: if $n > 2$, then $\frac{a(\text{A005382}(n))}{12}$ is prime,
 where A005382 is the sequence of primes $p$ such that $2p-1$ is also prime.
+Since $\text{A005382}(1) = 2$, $\text{A005382}(2) = 3$ and $\text{A005382}(3) = 7$, this says
+that $\frac{a(p)}{12}$ is prime for every prime $p > 3$ such that $2p-1$ is also prime.
 - Lorenzo Sauras Altuzarra, Oct 13 2020
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : (a (a005382 n) / 12).Prime := by
+theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp' : (2 * p - 1).Prime) (h3 : 3 < p) :
+    (a p / 12).Prime := by
   sorry
 
 /--

@@ -37,7 +37,7 @@ theorem a_0 : a 0 = 0 := by
   change sInf {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 0 = p + 0} = 0
   have h_empty : {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 0 = p + 0} = ∅ := by
     ext p
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro hp ⟨k, hk⟩
     rw [pow_zero, add_zero] at hk
     subst hk
@@ -49,10 +49,10 @@ theorem a_0 : a 0 = 0 := by
 theorem a_1 : a 1 = 2 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 1 = p + 1} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨Nat.prime_two, 3, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       exact hp.1.two_le
   exact h_least.csInf_eq
 
@@ -61,10 +61,10 @@ theorem a_1 : a 1 = 2 := by
 theorem a_2 : a 2 = 2 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 2 = p + 2} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨Nat.prime_two, 2, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       exact hp.1.two_le
   exact h_least.csInf_eq
 
@@ -73,10 +73,10 @@ theorem a_2 : a 2 = 2 := by
 theorem a_3 : a 3 = 5 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 3 = p + 3} 5 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by norm_num, 2, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       rcases hp with ⟨hp_prime, k, hk⟩
       by_contra! h
       interval_cases p

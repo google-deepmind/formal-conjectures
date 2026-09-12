@@ -32,10 +32,15 @@ where $p_n$ is the sequence of primes?
 
 Note: In the problem statement, $p_n$ is the $n$-th prime, indexed such that $p_1=2, p_2=3, \ldots$.
 We 0-index here to reflect how Nat.nth works.
+
+Note: convergence here is convergence of the sequence of partial sums, which is what the
+problem asks about. `Summable` would be the wrong notion: it is unconditional summability,
+equivalent over $\mathbb{R}$ to absolute convergence, and $\sum_n n/p_n$ diverges.
 -/
 @[category research open, AMS 11]
 theorem erdos_15 : answer(sorry) ↔
-    Summable (fun k : ℕ => (-1 : ℚ) ^ (k + 1) * (k + 1) / (k.nth Nat.Prime)) := by
+    ∃ l : ℝ, Tendsto (fun N => ∑ k ∈ Finset.range N,
+      (-1 : ℝ) ^ (k + 1) * (k + 1) / (k.nth Nat.Prime)) atTop (𝓝 l) := by
   sorry
 
 

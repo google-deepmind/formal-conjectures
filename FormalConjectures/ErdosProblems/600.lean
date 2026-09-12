@@ -30,6 +30,7 @@ open scoped Topology
 
 namespace Erdos600
 
+open scoped Classical in
 /--
 Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n,r)$ edges,
 each edge contained in at least one triangle, must have an edge contained in at least

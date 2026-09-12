@@ -46,7 +46,8 @@ theorem erdos_1199 :
 /--
 Hindman [Hi79] has shown that this is false for 3-colourings.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/b8b641ba2d00dc4d1fe205a078a4159372672459/Erdos/P1199.lean#L85"]
 theorem erdos_1199.variants.three :
     ∃ (color : ℕ → Fin 3), ∀ (A : Set ℕ),
     A.Infinite → ∃ n ∈ (A+A), ∃ m ∈ (A+A), color n ≠ color m := by
