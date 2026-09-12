@@ -77,7 +77,7 @@ theorem a_3 : a 3 = 57 := by
 /-- We have the following formula: $a(n) = 3^n + 3 * 2^n + 6$ for $n \geq 1$. -/
 @[category textbook, AMS 11,
   formal_proof using formal_conjectures at
-    "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b"]
+    "https://github.com/google-deepmind/formal-conjectures/blob/7a286754f623759d69a3dd18f482c53c1d70959b/FormalConjectures/OEIS/87719.lean#L640"]
 theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
   sorry
 
