@@ -101,14 +101,15 @@ theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
 -- TODO(firsching): add more known bounds and open conjecture for a few small dimensions
 
 /--
-An upper bound of the maximal length of the longest snake in a box is given by
+For $n \geq 2$, an upper bound of the maximal length of the longest snake in a box is given by
 $$
 1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}.
 $$
+The case $n = 1$ is excluded since the right-hand side is negative there.
 -/
 @[category research solved, AMS 5]
-theorem snake_upper_bound (n : ℕ) : LongestSnakeInTheBox n
-    ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n)) := by
+theorem snake_upper_bound (n : ℕ) (hn : 2 ≤ n) : LongestSnakeInTheBox n
+    ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n) - 7) := by
   sorry
 
 end SnakeInBox
