@@ -21,6 +21,9 @@ import FormalConjecturesUtil
 
 *Reference:* [erdosproblems.com/1175](https://www.erdosproblems.com/1175)
 
+- [KoSh88] Komjáth, Péter and Shelah, Saharon, *Forcing constructions for uncountably chromatic
+  graphs*. J. Symbolic Logic (1988), 696--707.
+
 ## Formalization notes
 
 - **Chromatic cardinal**: `SimpleGraph.chromaticCardinal` is the cardinal-valued chromatic number
@@ -29,7 +32,7 @@ import FormalConjecturesUtil
   chromatic numbers.
 - **Triangle-free subgraph**: a subgraph `H : G.Subgraph` is triangle-free when `H.coe.CliqueFree 3`.
   This is the standard Mathlib formulation: `CliqueFree 3` means the graph has no `K₃` as a clique.
-- **Subgraph**: we use `G.Subgraph` (a spanning subgraph record) rather than an induced subgraph
+- **Subgraph**: we use `G.Subgraph` (an arbitrary subgraph record) rather than an induced subgraph
   since the problem asks for any subgraph, not just induced ones.
 -/
 
@@ -43,7 +46,7 @@ graph with chromatic number $\lambda$ contains a triangle-free subgraph with chr
 $\kappa$?
 
 Shelah proved that a negative answer is consistent when
-$\kappa = \lambda = \aleph_1$ (see `erdos_1175.variants.shelah_consistency`).
+$\kappa = \lambda = \aleph_1$ (see `erdos_1175.variants.aleph_one`).
 -/
 @[category research open, AMS 5]
 theorem erdos_1175 : answer(sorry) ↔
@@ -53,31 +56,21 @@ theorem erdos_1175 : answer(sorry) ↔
           ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = κ := by
   sorry
 
--- A consistency statement, not a ZFC theorem (see the formalization caveat in the docstring),
--- so the answer stays a placeholder.
-set_option linter.style.category_answer false in
 /--
-**Shelah's consistency result**: it is consistent with ZFC that there exists a graph $G$ with
-chromatic number $\aleph_1$ such that every triangle-free subgraph of $G$ has chromatic number
-strictly less than $\aleph_1$.
+The case $\kappa = \lambda = \aleph_1$ of Problem 1175: does every graph with chromatic number
+$\aleph_1$ contain a triangle-free subgraph with chromatic number $\aleph_1$?
 
-This shows that a negative answer to Problem 1175 (with $\kappa = \lambda = \aleph_1$) is
-consistent, so the main statement `erdos_1175` is not provable in ZFC.
-
-**Formalization caveat (consistency placeholder).** Shelah's result is a *consistency*
-statement — it asserts the existence of a model of ZFC, not a ZFC theorem. Lean operates
-inside a single (fixed) model of its set theory, so we cannot directly express "consistent
-with ZFC" without leaving ZFC. Rather than pretend that Shelah's theorem is a bare ZFC
-negation, we record it here as an explicit `answer(sorry)` consistency placeholder: the
-intended conjecture is the model-theoretic statement, and any concrete formalisation must
-either appeal to an explicit extra axiom (such as Shelah's specific forcing extension)
-or to a meta-theoretic consistency proof. Until such a wrapper exists in `FormalConjectures`,
-we leave the body as `sorry`.
+Shelah proved that a negative answer is consistent with ZFC [KoSh88, Theorem 1]: there is a
+model of ZFC containing a graph with chromatic number $\aleph_1$ all of whose triangle-free
+subgraphs have countable chromatic number. Consistency results about models of ZFC are not
+directly formalizable inside Lean's fixed model, so only the underlying question is recorded
+here. Note that this concerns only the choice $\lambda = \aleph_1$; it does not rule out a
+larger $\lambda$ in `erdos_1175`.
 -/
-@[category research solved, AMS 5]
-theorem erdos_1175.variants.shelah_consistency : answer(sorry) ↔
-    ¬ (∀ (V : Type*) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
-         ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = ℵ_ 1) := by
+@[category research open, AMS 5]
+theorem erdos_1175.variants.aleph_one : answer(sorry) ↔
+    ∀ (V : Type*) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+      ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = ℵ_ 1 := by
   sorry
 
 /--
