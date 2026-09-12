@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 2,
+  "problems": [
+    {
+      "theorem": "Example.test",
+      "module": "FormalConjectures.Example",
+      "category": "research solved",
+      "subjects": [
+        "11"
+      ],
+      "statement": "True",
+      "docstring": "A statement.",
+      "formalProofs": [
+        {
+          "kind": "lean4",
+          "link": "https://example.org/proof",
+          "conditions": [
+            "Example.assumption"
+          ]
+        }
+      ],
+      "answerKinds": [
+        "Prop"
+      ],
+      "hasSorryFreeProof": false
+    }
+  ],
+  "moduleDocstrings": {
+    "FormalConjectures.Example": "Source"
+  },
+  "provenance": {
+    "source": {
+      "repository": "owner/fc",
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "extractor": {
+      "repository": "owner/fc",
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "scripts/extract_names.lean"
+    },
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "dependencies_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "scope": "FormalConjectures",
+    "answer_mode": "postpone"
+  }
+}
