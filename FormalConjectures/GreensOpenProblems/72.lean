@@ -81,15 +81,15 @@ def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
 /-- The **no-k-in-line problem**:
-For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
-there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+For which $k > 2$ does every $N \times N$ grid with $N \geq k$ contain a set of $(k - 1) N$ points
+with no $k$ on a line, so that `AllowedSetSize k N` is the pigeonhole bound $(k - 1) N$?
 
-Note the range. [GK2025] proves this for $k > 10^{37}$, which is `no_k_in_line_big` below. At
-$k = 3$ it is the claim Green expects to fail for large $N$, so this statement is not a
-conjecture anyone has made across the whole range $k > 2$.
+[GK2025] proves that every $k > 10^{37}$ has this property, which is `no_k_in_line_big` below,
+and does not optimise this constant. At $k = 3$ it is the property that Green expects to fail
+for large $N$, see `green_72`.
 -/
 @[category research open, AMS 5 52]
-theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
+theorem NoKInLine : answer(sorry) = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineFor k N} := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
@@ -116,8 +116,8 @@ theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry
 
-/-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$
-and $N \geq k$. -/
+/-- In [GK2025] Grebennikov and Kwan prove that the pigeonhole bound $(k - 1) N$ is attained
+for $k > 10 ^ {37}$ and $N \geq k$. -/
 @[category research solved, AMS 5 52]
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) (hN : k ≤ N) :
     NoKInLineFor k N := by
