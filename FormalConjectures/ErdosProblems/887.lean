@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 887
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 * [erdosproblems.com/887](https://www.erdosproblems.com/887)
 * [ErRo97] Erdős, Paul and Rosenfeld, Moshe, The factor-difference set of integers. Acta Arith. (1997), 353--359.
 -/
+
+@[expose] public section
 open Filter Finset Real
 namespace Erdos887
 

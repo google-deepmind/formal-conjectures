@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«830»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«830»
 
 /-!
 # Amicable numbers
@@ -36,6 +37,8 @@ Several open problems about amicable numbers are formalised here:
 - [MathWorld](https://mathworld.wolfram.com/AmicableNumbers.html)
 - [OEIS A063990](https://oeis.org/A063990)
 -/
+
+@[expose] public section
 
 namespace AmicableNumbers
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = \sum_{k=1}^n (k^2 \bmod n)$
 
 *References:*
 - [A048153](https://oeis.org/A048153)-/
+
+@[expose] public section
 
 namespace OeisA48153
 

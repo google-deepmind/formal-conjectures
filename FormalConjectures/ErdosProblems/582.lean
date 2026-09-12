@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 582
@@ -46,6 +47,8 @@ import FormalConjecturesUtil
 - [LRX14] Lange, Alexander R. and Radziszowski, Stanisław P. and Xu, Xiaodong, *Use of MAX-CUT
   for Ramsey arrowing of triangles*. J. Combin. Math. Combin. Comput. (2014), 61-71.
 -/
+
+@[expose] public section
 
 namespace Erdos582
 

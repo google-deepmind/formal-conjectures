@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A binomial coefficient summation
@@ -28,6 +29,8 @@ with $\binom{n}{-1} = 0$.
 - [A003162](https://oeis.org/A003162)
 - H. W. Gould, Problem E2384 (proposal), Amer. Math. Monthly, 81 (1974), 170-171
 -/
+
+@[expose] public section
 
 namespace OeisA3162
 

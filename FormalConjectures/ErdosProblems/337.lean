@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 337
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Tu84] Turjányi, S., *A note on basis sequences*. Topics in classical number theory, Vol. I, II
   (Budapest, 1981) (1984), 1571-1576.
 -/
+
+@[expose] public section
 
 namespace Erdos337
 

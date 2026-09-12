@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n)$ is the integer whose decimal digits are the first $n+1$ decimal digits of $\pi$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A011545](https://oeis.org/A011545)
 -/
+
+@[expose] public section
 
 namespace OeisA11545
 

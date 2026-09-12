@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Numerator of $1/\det(M)$ for $M[i,j] = 1/\operatorname{lcm}(i,j)$
@@ -24,6 +26,8 @@ $M[i,j] = 1/\operatorname{lcm}(i,j)$.
 
 *References:*
 - [A060841](https://oeis.org/A060841)-/
+
+@[expose] public section
 
 namespace OeisA60841
 
@@ -39,23 +43,23 @@ def a (n : ℕ) : ℤ :=
 
 @[category test, AMS 11 15]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_2 : a 2 = 4 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_3 : a 3 = 18 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_4 : a 4 = 144 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_5 : a 5 = 900 := by
-  decide +native
+  decide +kernel
 
 /-- The exceptional values of $n$ where $1/\det(M)$ is conjectured to be an integer. -/
 def integerDetN : Set ℕ :=

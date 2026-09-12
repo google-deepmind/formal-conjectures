@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Each term is previous term plus floor of harmonic mean of two previous terms.
@@ -25,6 +26,8 @@ $a(n) = a(n-1) + \lfloor \frac{2 a(n-1) a(n-2)}{a(n-1) + a(n-2)} \rfloor$ for $n
 *References:*
 - [A114831](https://oeis.org/A114831)
 -/
+
+@[expose] public section
 
 namespace OeisA114831
 

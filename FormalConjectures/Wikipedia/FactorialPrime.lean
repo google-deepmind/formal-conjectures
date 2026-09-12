@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Factorial primes
@@ -26,6 +27,8 @@ is conjectured that there are infinitely many factorial primes.
 - [Wikipedia, Factorial prime](https://en.wikipedia.org/wiki/Factorial_prime)
 - [OEIS A088054](https://oeis.org/A088054)
 -/
+
+@[expose] public section
 
 namespace FactorialPrime
 

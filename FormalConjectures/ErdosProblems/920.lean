@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 920
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   theorem. J. Combinatorial Theory (1968), 125--175.
 - [MaVe23] Mattheus, S. and Verstraete, J., The asymptotics of $r(4,t)$. arXiv:2306.04007 (2023).
 -/
+
+@[expose] public section
 
 open Real Filter
 

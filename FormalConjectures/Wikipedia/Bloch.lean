@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bloch and Landau constants
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
 - [MathWorld](https://mathworld.wolfram.com/BlochConstant.html)
 - [Bhowmik–Sen](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/improved-bloch-and-landau-constants-for-meromorphic-functions/FD465D1F2CEF7E8C62AFF16C3E89B7B4)
 -/
+
+@[expose] public section
 open scoped Topology ENNReal
 open Metric Set Filter
 namespace Bloch

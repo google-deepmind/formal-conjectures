@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dickson's conjecture
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Leonard Eugene Dickson, *History of the Theory of Numbers, Vol. I: Divisibility and Primality*](https://archive.org/details/historyoftheoryo01dickuoft)
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
+
+@[expose] public section
 open Polynomial
 namespace Dickson
 

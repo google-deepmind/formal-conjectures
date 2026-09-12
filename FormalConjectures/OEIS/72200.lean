@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Smallest factorial containing exactly $n$ 6's
@@ -24,6 +26,8 @@ contains exactly $n$ occurrences of the digit '6', or $0$ if no such $k$ exists.
 
 *References:*
 - [A072200](https://oeis.org/A072200)-/
+
+@[expose] public section
 
 namespace OeisA72200
 
@@ -42,8 +46,8 @@ theorem a_1 : a 1 = 3 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨3, by decide +native⟩).elim
+    decide
+  · exact (h ⟨3, by decide⟩).elim
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
@@ -52,8 +56,8 @@ theorem a_2 : a 2 = 15 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨15, by decide +native⟩).elim
+    decide
+  · exact (h ⟨15, by decide⟩).elim
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
@@ -62,8 +66,8 @@ theorem a_3 : a 3 = 23 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨23, by decide +native⟩).elim
+    decide
+  · exact (h ⟨23, by decide⟩).elim
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
@@ -72,8 +76,8 @@ theorem a_4 : a 4 = 26 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨26, by decide +native⟩).elim
+    decide
+  · exact (h ⟨26, by decide⟩).elim
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
@@ -82,8 +86,8 @@ theorem a_5 : a 5 = 32 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨32, by decide +native⟩).elim
+    decide
+  · exact (h ⟨32, by decide⟩).elim
 
 /--
 It is conjectured that $a(24) = 0$ since no factorial less than $10000$ contained just 24 sixes.-/

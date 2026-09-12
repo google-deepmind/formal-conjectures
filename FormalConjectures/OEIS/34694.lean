@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest prime $\equiv 1 \pmod n$
@@ -23,6 +24,8 @@ $$a(n) = \min \{p \in \mathbb{P} \mid p \equiv 1 \pmod n\}$$
 
 *References:*
 - [A034694](https://oeis.org/A034694)-/
+
+@[expose] public section
 
 namespace OeisA34694
 

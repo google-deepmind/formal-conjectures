@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Concatenation of the next $n$ numbers
@@ -24,6 +26,8 @@ $\frac{(n-1)n}{2} + 1$ up to $\frac{n(n+1)}{2}$.
 
 *References:*
 - [A053067](https://oeis.org/A053067)-/
+
+public section
 
 namespace OeisA53067
 
@@ -45,23 +49,23 @@ def a (n : ℕ) : ℕ :=
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 23 := by
-  decide +native
+  decide
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 456 := by
-  decide +native
+  decide
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 78910 := by
-  decide +native
+  decide
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1112131415 := by
-  decide +native
+  decide
 
 open scoped Classical in
 /--

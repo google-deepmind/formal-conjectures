@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence with fourth powers of binomial coefficients
@@ -26,6 +27,8 @@ $$(2n+1)^3 a(n) = 32n^3 a(n-1) + (21n^3 + 22n^2 + 8n + 1) \binom{2n-1}{n}^4.$$
 - [A176477](https://oeis.org/A176477)
 - Z.-W. Sun, "Open Conjectures on Congruences", arXiv preprint
   [arXiv:0911.5665](https://arxiv.org/abs/0911.5665) [math.NT], 2009-2011.-/
+
+@[expose] public section
 
 namespace OeisA176477
 

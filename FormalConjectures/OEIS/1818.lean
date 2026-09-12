@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Squares of double factorials
@@ -24,6 +25,8 @@ Squares of double factorials: $a(n) = ((2n-1)!!)^2 = (1 \cdot 3 \cdot 5 \cdots (
 *References:*
 - [A001818](https://oeis.org/A001818)
 -/
+
+@[expose] public section
 
 namespace OeisA1818
 

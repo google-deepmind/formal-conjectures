@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 785
@@ -40,6 +41,8 @@ import FormalConjecturesUtil
 - [SaSz94] Sárközy, A. and Szemerédi, E., *On a problem in additive number theory*.
   Acta Math. Hungar. (1994), 237-245.
 -/
+
+@[expose] public section
 
 open Filter Pointwise
 open scoped Topology

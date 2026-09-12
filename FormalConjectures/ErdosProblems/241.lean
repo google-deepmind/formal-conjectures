@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 241
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Gr01] Green, Ben, The number of squares and {$B_h[g]$} sets. Acta Arith. (2001), 365-390.
 - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped Asymptotics

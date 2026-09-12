@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Digital sum of the Fermat number $2^{2^n} + 1$
@@ -26,6 +28,8 @@ The conjecture asks if there are any prime numbers in this sequence beyond $n=11
 - [A108301](https://oeis.org/A108301)
 -/
 
+public section
+
 namespace OeisA108301
 
 /-- The primary defining sequence `a`.
@@ -35,19 +39,19 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 3 := by native_decide
+theorem a_0 : a 0 = 3 := by decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 5 := by native_decide
+theorem a_1 : a 1 = 5 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 8 := by native_decide
+theorem a_2 : a 2 = 8 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 14 := by native_decide
+theorem a_3 : a 3 = 14 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 26 := by native_decide
+theorem a_4 : a 4 = 26 := by decide
 
 /-- $a(0)$, $a(1)$, $a(5)$, $a(6)$, $a(7)$ and $a(11)$ are primes. -/
 @[category textbook, AMS 11]

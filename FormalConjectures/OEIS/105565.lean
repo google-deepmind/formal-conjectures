@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Indicator sequence for 5 Fibonacci numbers with n digits
@@ -27,6 +28,8 @@ and $\beta = \log(5)/(2\log(\phi)) - 1$.
 *References:*
 - [A105565](https://oeis.org/A105565)
 -/
+
+@[expose] public section
 
 namespace OeisA105565
 

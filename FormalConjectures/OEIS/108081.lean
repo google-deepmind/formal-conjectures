@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = \sum_{i=0}^n \binom{2n-i}{n+i}$
@@ -27,6 +28,8 @@ to this sequence.
 *References:*
 - [A108081](https://oeis.org/A108081)
 -/
+
+@[expose] public section
 
 namespace OeisA108081
 

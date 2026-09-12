@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.GreensOpenProblems.«28»
+public import FormalConjecturesUtil
+public import FormalConjectures.GreensOpenProblems.«28»
 
 /-!
 # Mathoverflow 339137
@@ -27,6 +28,8 @@ Why do polynomials with coefficients 0,1
 *Reference:* [mathoverflow/339137](https://mathoverflow.net/questions/339137)
 asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
+
+@[expose] public section
 open scoped Polynomial
 namespace Mathoverflow339137
 

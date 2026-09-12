@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # No powers as partition numbers
@@ -23,6 +26,8 @@ There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1
 
 *Reference:* [A41](https://oeis.org/A41)
 -/
+
+@[expose] public section
 
 namespace OeisA41
 
@@ -38,16 +43,24 @@ theorem a_0 : a 0 = 1 := by decide
 theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by decide +native
+theorem a_2 : a 2 = 2 := by
+  unfold a
+  native_decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by decide +native
+theorem a_3 : a 3 = 3 := by
+  unfold a
+  native_decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 5 := by decide +native
+theorem a_4 : a 4 = 5 := by
+  unfold a
+  native_decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 7 := by decide +native
+theorem a_5 : a 5 = 7 := by
+  unfold a
+  native_decide
 
 /--
 There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1$.

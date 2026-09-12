@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A038552
@@ -45,6 +47,8 @@ number $n$.
   class-number one." Michigan Mathematical Journal 14.1 (1967): 1-27.
 - [oeis.org/A038552](https://oeis.org/A038552)
 -/
+
+@[expose] public section
 
 open NumberField Polynomial
 

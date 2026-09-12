@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 248
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/248](https://www.erdosproblems.com/248)
 - [TaTe25] T. Tao and J. Teräväinen, Quantitative correlations and some problems on prime factors of consecutive integers. arXiv:2512.01739 (2025).
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.omega
 

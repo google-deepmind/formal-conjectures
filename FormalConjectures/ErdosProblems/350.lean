@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 350
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [HSS77] Hanson, F. and Steele, J. M. and Stenger, F., Distinct sums over subsets. Proc. Amer.
   Math. Soc. (1977), 179-180.
 -/
+
+@[expose] public section
 
 namespace Erdos350
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 32
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Sh20] Shakan, George. "A Large Gap in a Dilate of a Set." SIAM Journal on Discrete Mathematics
   34.4 (2020): 2553-2555.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 open scoped Pointwise

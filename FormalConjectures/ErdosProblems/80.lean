@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 80
@@ -30,6 +31,8 @@ edge count is at least $cn^2$. So `r ≤ f c n` and `Erdos600.eFunction n r ≤ 
 same thing, and the two functions are inverse to each other in that sense. Both are built on
 `SimpleGraph.trianglesContaining`, which 600 introduced.
 -/
+
+@[expose] public section
 
 open Filter Finset SimpleGraph
 

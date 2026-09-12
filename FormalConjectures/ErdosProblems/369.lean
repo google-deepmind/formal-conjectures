@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 369
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [BaWo98] Balog, Antal and Wooley, Trevor D., *On strings of consecutive integers with no large
   prime factors*. J. Austral. Math. Soc. Ser. A (1998), 266-276.
 -/
+
+@[expose] public section
 
 open Filter
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1125
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Ke69] Kemperman, J. H. B., *On the regularity of generalized convex functions*. Trans. Amer. Math. Soc. (1969), 69-93.
 - [La84] Laczkovich, M., *On Kemperman's inequality $2f(x)\leq f(x+h)+f(x+2h)$*. Colloq. Math. (1984), 109-115.
 -/
+
+@[expose] public section
 
 namespace Erdos1125
 

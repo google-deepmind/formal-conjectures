@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Banach-Mazur Rotation Problem
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [mathoverflow/41211](https://mathoverflow.net/questions/41211/easy-proof-of-the-fact-that-isotropic-spaces-are-euclidean)
   **Easy proof of the fact that isotropic spaces are Euclidean**
 -/
+
+@[expose] public section
 open TopologicalSpace Metric MulAction
 namespace Arxiv.«math.0110202»
 

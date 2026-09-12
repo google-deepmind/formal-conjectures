@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 246
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [Yu24] Yu, Wang-Xing, *On the representation of an exponential type sequence*.
   Publ. Math. Debrecen (2024), 253--261.
 -/
+
+@[expose] public section
 
 namespace Erdos246
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Gerstenhaber problem for three commuting matrices
@@ -34,6 +35,8 @@ commuting matrices. The bound fails for four or more pairwise commuting matrices
   *A computing strategy and programs to resolve the Gerstenhaber Problem for
   commuting triples of matrices*.
 -/
+
+@[expose] public section
 
 namespace Gerstenhaber
 

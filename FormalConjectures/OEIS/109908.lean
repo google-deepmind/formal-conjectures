@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A109908
@@ -24,6 +25,8 @@ $a(n)$ = greatest prime of the form $k(n-k)-1$, or $0$ if no such prime exists.
 *References:*
 - [A109908](https://oeis.org/A109908)
 -/
+
+@[expose] public section
 
 namespace OeisA109908
 

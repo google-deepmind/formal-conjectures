@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 442
 
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
+
+@[expose] public section
 
 namespace Erdos442
 
@@ -55,6 +58,7 @@ end Set
 
 end Prelims
 
+open Classical in
 /--
 Let $\operatorname{Log} x := \max\{\log x, 1\}$,
 $\operatorname{Log}_2x = \operatorname{Log} (\operatorname{Log} x)$, and
@@ -85,6 +89,7 @@ theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
       ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop := by
   sorry
 
+open Classical in
 /--
 Tao resolved erdos_442 in the negative in Theorem 1 of https://arxiv.org/pdf/2407.04226.
 The following is a formalisation of that theorem with $C_0 = 1$.

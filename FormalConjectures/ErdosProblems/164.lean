@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«1196»
-import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«1196»
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 164
@@ -34,6 +35,8 @@ import FormalConjecturesUtil
   J. London Math. Soc. (1935), 126-128.
 - [Li23] Lichtman, J. D., *A proof of the Erdős primitive set conjecture*. arXiv:2202.02384 (2023).
 -/
+
+@[expose] public section
 
 namespace Erdos164
 

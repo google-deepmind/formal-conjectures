@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 545
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er84b] Erdős, P., On some problems in graph theory, combinatorial analysis and combinatorial
   number theory. Graph theory and combinatorics (Cambridge, 1983) (1984), 1-17.
 -/
+
+@[expose] public section
 
 open Filter
 

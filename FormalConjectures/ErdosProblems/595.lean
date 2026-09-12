@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 595
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   Recent advances in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1974),
   Academia, Prague (1975), 405-412.
 -/
+
+@[expose] public section
 
 open SimpleGraph Set
 

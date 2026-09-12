@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ascending descending base exponent transform of $2^n$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A113271](https://oeis.org/A113271)
 -/
+
+@[expose] public section
 
 namespace OeisA113271
 

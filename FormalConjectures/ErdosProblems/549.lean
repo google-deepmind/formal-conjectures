@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 549
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   (Proc. Capital Conf., George Washington Univ., Washington, D.C., 1973) (1974), 52-75.
 - [NSZ16] S. Norin and Y. R. Sun and Y. Zhao, Asymptotics of Ramsey numbers of double stars.
 -/
+
+@[expose] public section
 
 namespace Erdos549
 

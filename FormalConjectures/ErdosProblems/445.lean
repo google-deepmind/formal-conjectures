@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
+public import FormalConjecturesUtil
 
-import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 445
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
   (2000), 380--384.
 - [MathOverflow](https://mathoverflow.net/questions/69509/small-residue-classes-with-small-reciprocal)
 -/
+
+public section
 
 open Filter
 
@@ -74,7 +77,7 @@ theorem erdos_445.variants.heath_brown :
 $2 \cdot 3 = 6 \equiv 1 \pmod{5}$. -/
 @[category test, AMS 11]
 theorem erdos_445.test.small_example : Erdos445Prop 1 5 1 := by
-  refine ⟨2, 3, by omega, ?_, by omega, ?_, by native_decide⟩
+  refine ⟨2, 3, by omega, ?_, by omega, ?_, by decide⟩
   all_goals simp only [Real.rpow_one]; norm_num
 
 end Erdos445

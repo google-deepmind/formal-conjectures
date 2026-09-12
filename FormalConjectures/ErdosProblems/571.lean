@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 571
@@ -41,6 +42,8 @@ import FormalConjecturesUtil
 - [KKL21] Kang, Dong Yeap and Kim, Jaehoon and Liu, Hong, *On the rational Turán exponents
   conjecture*. J. Combin. Theory Ser. B (2021), 149-172.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

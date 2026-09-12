@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 939
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [LaPa67] Lander, L. J. and Parkin, T. R., _A counterexample to Euler's sum of powers
   conjecture_. Math. Comp. (1967), 101-103.
 -/
+
+@[expose] public section
 open Nat
 
 namespace Erdos939

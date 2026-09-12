@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 29
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [CrSi10] Croot, Ernie, and Olof Sisask. "A probabilistic technique for finding almost-periods of
   convolutions." Geometric and functional analysis 20.6 (2010): 1367-1396.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 

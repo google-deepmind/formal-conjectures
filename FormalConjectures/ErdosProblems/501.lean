@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 501
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [NPS87] Newelski, L., Pawlikowski, J., and Seredyński, F. Infinite independent sets in
   the closed case. Acta Math. Acad. Sci. Hungar. (1987).
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Cardinal ENNReal

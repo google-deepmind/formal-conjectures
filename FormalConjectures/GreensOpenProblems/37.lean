@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 37
@@ -26,6 +27,8 @@ an arithmetic progression of length `k` with common difference `d`?
 - [Ben Green's Open Problem 37](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.37)
 - [Green & Tao, *The primes contain arbitrarily long arithmetic progressions* (arXiv:math/0404188)](https://arxiv.org/abs/math/0404188)
 -/
+
+@[expose] public section
 
 namespace Green37
 

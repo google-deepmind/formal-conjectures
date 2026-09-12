@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Convergence of the Flint Hills and Cookson Hills series
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Alekseyev, On the Flint Hills series](https://doi.org/10.48550/arXiv.1104.5100)
 - [MathWorld: Cookson Hills Series](https://mathworld.wolfram.com/CooksonHillsSeries.html)
 -/
+
+@[expose] public section
 
 namespace FlintCooksonHills
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beck–Fiala theorem and conjecture
@@ -46,6 +47,8 @@ produces vectors of Euclidean norm at most $1$.
 - [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 -/
+
+@[expose] public section
 
 namespace BeckFiala
 

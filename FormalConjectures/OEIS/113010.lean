@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Number of digits of n raised to the power of the sum of the digits of n
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 *References:*
 - [A113010](https://oeis.org/A113010)
 -/
+
+public section
 
 namespace OeisA113010
 
@@ -34,19 +38,19 @@ def a (n : ℕ) : ℕ :=
   ((10).digits n).length ^ (List.sum ((10).digits n))
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by native_decide
+theorem a_3 : a 3 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by decide
 
 /--
 $n=1$ and $32$ are two fixed points. Are there any others?

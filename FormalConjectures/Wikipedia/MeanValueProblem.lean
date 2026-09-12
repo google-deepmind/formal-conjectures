@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 
 /-!
@@ -36,6 +38,8 @@ The conjecture has been proven for:
   [Critical points and values of complex polynomials](https://doi.org/10.1016/0885-064X(89)90019-8)
   by *David Tischler*
 -/
+
+@[expose] public section
 
 namespace MeanValueProblem
 

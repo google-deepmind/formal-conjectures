@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 633
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 * [So09] Soifer, Alexander, How Does One Cut a Triangle? I
 * [So09c] Soifer, Alexander, Is there anything beyond the solution?
 -/
+
+@[expose] public section
 
 open Affine
 open scoped Congruent EuclideanGeometry Similar

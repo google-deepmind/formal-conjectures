@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of a triangular number, a generalized pentagonal number, and a generalized heptagonal number
@@ -28,6 +29,8 @@ Zhi-Wei Sun has offered a USD 135 prize for the first proof of this conjecture.
 - [A287616](https://oeis.org/A287616)
 - Zhi-Wei Sun, "Universal sums of three quadratic polynomials", arXiv:1502.03056 [math.NT]
 -/
+
+@[expose] public section
 
 namespace OeisA287616
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 65
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [LiMo20] Liu, H. and Montgomery, R., A solution to Erdős and Hajnal's odd cycle problem.
   arXiv:2010.15802 (2020).
 -/
+
+@[expose] public section
 
 namespace Erdos65
 

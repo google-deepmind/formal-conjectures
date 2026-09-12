@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integer values of $\tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   results of [Ono26], MIT licensed. Its `P`, `A`, `B` and `x` are the definitions used
   here.
 -/
+
+@[expose] public section
 
 open Finset
 

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 342
@@ -24,6 +26,8 @@ import FormalConjecturesUtil
 - [OEIS A002858](https://oeis.org/A002858)
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory* (2004), xviii+437.
 -/
+
+@[expose] public section
 
 open Nat Set Filter
 open scoped Topology

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 958
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [CDL25] Clemen, F., Dumitrescu, A. and Liu, D., *On multiplicities of interpoint distances*.
   arXiv:2505.04283 (2025).
 -/
+
+@[expose] public section
 
 open Finset EuclideanGeometry
 

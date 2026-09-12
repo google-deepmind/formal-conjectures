@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Schur's theorem on Galois groups of truncated exponential polynomials
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 
 *Reference* (https://mathoverflow.net/questions/477077)
 -/
+
+@[expose] public section
 
 /-
 Note: This was asked by Nick Katz. Quasi-autoformalized using Claude 4.0 Sonnet.

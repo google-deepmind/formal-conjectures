@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dean's conjecture on cycles of length divisible by `k`
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [ChSa94] Chen, G. and Saito, A., Graphs with a cycle of length divisible by three.
   J. Combin. Theory Ser. B (1994), 277--292.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

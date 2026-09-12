@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Gottschalk's surjunctivity conjecture
@@ -32,6 +33,8 @@ Gottschalk's conjecture (1973) states that every group is surjunctive.
 - [Wikipedia](https://en.wikipedia.org/wiki/Surjunctive_group)
 - Gottschalk, W. H. (1973), "Some general dynamical notions"
 -/
+
+@[expose] public section
 
 namespace GottschalkSurjunctivity
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 347178
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/347178](https://mathoverflow.net/questions/347178)
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
+
+@[expose] public section
 
 open Real Set
 open scoped EuclideanGeometry

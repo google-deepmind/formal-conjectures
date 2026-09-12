@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 2
@@ -25,6 +26,8 @@ Erdős asked whether the smallest modulus in a distinct covering system can be a
 Hough proved that the answer is no, and Balister, Bollobás, Morris, Sahasrabudhe, and Tiba later
 gave a simpler proof with an improved explicit upper bound.
 -/
+
+@[expose] public section
 
 namespace Erdos2
 

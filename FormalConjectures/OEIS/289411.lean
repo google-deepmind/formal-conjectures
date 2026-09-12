@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Symmetry of digit sum differences $\operatorname{sign}(S_5(k) - S_1(k))$
@@ -28,6 +30,8 @@ The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mat
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A007953](https://oeis.org/A007953)
 -/
+
+public section
 
 namespace OeisA289411
 
@@ -48,19 +52,19 @@ def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_0 : a 0 = 0 := by native_decide
+lemma a_0 : a 0 = 0 := by decide
 
 @[category test, AMS 11]
-lemma a_1 : a 1 = 1 := by native_decide
+lemma a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-lemma a_2 : a 2 = 0 := by native_decide
+lemma a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 1 := by native_decide
+lemma a_3 : a 3 = 1 := by decide
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 0 := by native_decide
+lemma a_4 : a 4 = 0 := by decide
 
 
 /--

@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Sierpiński number
@@ -42,6 +44,8 @@ The *prime Sierpiński problem* asks: is 271129 the smallest *prime* Sierpiński
 The *extended Sierpiński problem* asks: is 271129 the second-smallest Sierpiński number?
 -/
 
+public section
+
 namespace SierpinskiNumber
 
 /--
@@ -55,10 +59,10 @@ theorem selfridge_78557 : Nat.IsSierpinskiNumber 78557 := by
     nlinarith [h]
   · have hcov : ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ), p ∣ (78557 * 2 ^ n + 1) := by
       have base : ∀ r, r < 36 → ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ),
-          p ∣ (78557 * 2 ^ r + 1) := by native_decide
+          p ∣ (78557 * 2 ^ r + 1) := by decide
       obtain ⟨p, hpmem, hpdvd⟩ := base (n % 36) (Nat.mod_lt _ (by norm_num))
       refine ⟨p, hpmem, ?_⟩
-      have hp36 : (2 : ℕ) ^ 36 ≡ 1 [MOD p] := by fin_cases hpmem <;> native_decide
+      have hp36 : (2 : ℕ) ^ 36 ≡ 1 [MOD p] := by fin_cases hpmem <;> decide
       have e2 : (2 : ℕ) ^ n ≡ 2 ^ (n % 36) [MOD p] := by
         conv_lhs => rw [← Nat.div_add_mod n 36, pow_add, pow_mul]
         calc ((2 : ℕ) ^ 36) ^ (n / 36) * 2 ^ (n % 36)

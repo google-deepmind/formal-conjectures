@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+public meta import FormalConjecturesUtil
+
 
 /-!
 # Green's Open Problem 39
@@ -24,6 +27,8 @@ import FormalConjecturesUtil
 - [BJR11] Bollobás, Béla, Svante Janson, and Oliver Riordan. "On covering by translates of a set."
   Random Structures & Algorithms 38.1‐2 (2011): 33-67.
 -/
+
+@[expose] public section
 
 open Filter Topology
 open scoped Pointwise
@@ -46,33 +51,36 @@ def proportionCoverable (p k c : ℕ) : ℚ :=
     (coverable.card : ℚ) / (S.card : ℚ)
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_p_p_1 : proportionCoverable 3 3 1 = 1 := by native_decide
+theorem proportionCoverable_p_p_1 : proportionCoverable 3 3 1 = 1 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_t_0 : proportionCoverable 5 2 0 = 0 := by native_decide
+theorem proportionCoverable_t_0 : proportionCoverable 5 2 0 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_2_1_2 : proportionCoverable 2 1 2 = 1 := by native_decide
+theorem proportionCoverable_2_1_2 : proportionCoverable 2 1 2 = 1 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_3_1_2 : proportionCoverable 3 1 2 = 0 := by native_decide
+theorem proportionCoverable_3_1_2 : proportionCoverable 3 1 2 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_a_gt_p : proportionCoverable 3 4 2 = 0 := by native_decide
+theorem proportionCoverable_a_gt_p : proportionCoverable 3 4 2 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_7_4_2 :
     proportionCoverable 7 4 2 = (3 : ℚ) / 5 := by
+  unfold proportionCoverable
   native_decide
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_11_3_4 :
     proportionCoverable 11 3 4 = (1 : ℚ) / 3 := by
+  unfold proportionCoverable
   native_decide
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_11_4_3 :
     proportionCoverable 11 4 3 = (1 : ℚ) / 6 := by
+  unfold proportionCoverable
   native_decide
 
 /--

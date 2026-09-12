@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integrality of the factorial ratio $\frac{(12n+6)! (6n+9)!}{108 (4n+2)! (2n+3)! ((6n+5)!)^2}$
@@ -28,6 +29,8 @@ It is conjectured that $a(n)$ are integers.
 - [A368692](https://oeis.org/A368692)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA368692
 

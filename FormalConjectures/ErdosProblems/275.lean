@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 275
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [CrVE70] R.B. Crittenden and C.L. Vanden Eynden, *Any n arithmetic progressions covering the first
   2^n integers cover all integers*, Proc. Amer. Math. Soc. 24 (1970), 475-481.
 -/
+
+@[expose] public section
 
 open Set
 

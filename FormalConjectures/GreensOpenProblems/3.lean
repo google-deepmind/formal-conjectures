@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 3
 
 *Reference:* [Ben Green's Open Problem 3](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.3 Problem 3)
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 

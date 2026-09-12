@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of Fermat number and Mersenne number minus 1: $2^{2^n} + 2^n - 1$
@@ -24,6 +25,8 @@ number). Then $a(n) = F(n) + M(n) - 1 = 2^{2^n} + 2^n - 1$.
 
 *References:*
 - [A119563](https://oeis.org/A119563)-/
+
+@[expose] public section
 
 namespace OeisA119563
 
