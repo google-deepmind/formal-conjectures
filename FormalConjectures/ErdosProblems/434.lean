@@ -60,7 +60,8 @@ theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 2 ≤ k) (h : k ≤ n
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)
         (_ : #S = k) (_ : S.gcd id = 1) }
-      (Nat.NcardUnrepresentable <| answer(Set.Icc (n - k + 1 : ℕ) n)) := by
+      (Nat.NcardUnrepresentable <|
+        (answer(fun m j => Set.Icc (m - j + 1 : ℕ) m) : ℕ → ℕ → Set ℕ) n k) := by
   sorry
 
 /--

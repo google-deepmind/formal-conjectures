@@ -62,7 +62,7 @@ theorem erdos_506 (n : ℕ) (hn : 4 ≤ n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer(sorry) := by
+      ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 /--
@@ -76,7 +76,7 @@ theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer((n - 1).choose 2 + 1 - (n - 1) / 2) := by
+      ((answer(fun m => (m - 1).choose 2 + 1 - (m - 1) / 2) : ℕ → ℕ) n) := by
   sorry
 
 /--
@@ -89,7 +89,7 @@ theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer(sorry) := by
+      ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 /--

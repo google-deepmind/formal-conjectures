@@ -42,7 +42,7 @@ $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
 @[category research open, AMS 11]
 theorem erdos_321 (N : ℕ) :
-    R N = answer(sorry) := by
+    R N = (answer(sorry) : ℕ → ℕ) N := by
   sorry
 
 /-

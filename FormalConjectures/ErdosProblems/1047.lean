@@ -124,7 +124,8 @@ a function of the degree of $f$.
 theorem erdos_1047.variants.max_non_convex_components (n : ℕ) :
     IsGreatest {k : ℕ | ∃ (f : ℂ[X]) (c : ℝ), f.Monic ∧ f.natDegree = n ∧ 0 < c ∧
       (componentsIn (sublevelSet f c)).ncard = (f.rootSet ℂ).ncard ∧
-      {t ∈ componentsIn (sublevelSet f c) | ¬ Convex ℝ t}.ncard = k} answer(sorry) := by
+      {t ∈ componentsIn (sublevelSet f c) | ¬ Convex ℝ t}.ncard = k}
+      ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 end Erdos1047

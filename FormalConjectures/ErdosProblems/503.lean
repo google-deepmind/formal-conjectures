@@ -33,7 +33,7 @@ of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, AMS 51]
 theorem erdos_503 (n : ℕ) :
-    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} answer(sorry) := by
+    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 /--

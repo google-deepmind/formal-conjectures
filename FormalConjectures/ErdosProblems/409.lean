@@ -35,7 +35,7 @@ How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reache
 -- it becomes static. See also https://oeis.org/A39651
 @[category research open, AMS 11]
 theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
-    IsLeast { i | (φ · + 1)^[i] n |>.Prime } answer(sorry) := by
+    IsLeast { i | (φ · + 1)^[i] n |>.Prime } ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 /-- If $n > 0$, then the iteration $n\mapsto\phi(n) + 1$ necessarily
@@ -123,7 +123,7 @@ How many iterations of $n\mapsto\sigma(n) - 1$ are needed before a prime is reac
 -- it is strictly increasing except at primes.
 @[category research open, AMS 11]
 theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1) :
-    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
+    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } ((answer(sorry) : ℕ → ℕ) n) := by
   sorry
 
 /-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime.

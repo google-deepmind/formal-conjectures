@@ -129,7 +129,7 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
     (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-      (𝓝 answer(sorry)) := by
+      (𝓝 ((answer(sorry) : ℝ → (ℝ → ℝ) → ℝ → ℝ) α f x)) := by
   sorry
 
 /--
@@ -140,7 +140,7 @@ $C^m$ function on $[0,1]$ should have the asserted asymptotic formula.
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := answer(sorry)
+    let limitFormula := (answer(sorry) : ℝ → (ℝ → ℝ) → ℝ → ℝ) α
     ∀ᶠ m : ℕ in atTop,
       ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
         Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
@@ -164,13 +164,13 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
 
 /--
 Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
-left as an answer. Replacing `(answer(sorry) : ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete value lets one
-state the conjecture for a chosen regularity threshold.
+left as an answer. Replacing `(answer(sorry) : ℝ → ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete value
+lets one state the conjecture for a chosen regularity threshold.
 -/
 @[category research open, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) := answer(sorry)
+    let p := (answer(sorry) : ℝ → ℕ × ((ℝ → ℝ) → ℝ → ℝ)) α
     let m := p.1
     let limitFormula := p.2
     ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
