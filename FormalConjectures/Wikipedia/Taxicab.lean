@@ -44,26 +44,21 @@ taxicab number for $k=5$, $m=2$, and $n=2$.
 
 namespace Taxicab
 
-/-- $x$ is a candidate for being a taxicab number for $k, m, n$
-if there exists a (finite) set of at least $n$ distinct,
-pairwise disjoint, non-empty, non-zero lists of length
-$m$, such that the sum of the $k$-th powers of the
-elements of each list is $x$. The disjointness condition
-ensures that the representations do not share any common terms.
+/-- $x$ is a candidate for being a taxicab number for $k, m, n$ if there exist at least $n$
+distinct multisets of $m$ positive integers such that the sum of the $k$-th powers of the
+elements of each multiset is $x$. Using multisets means that two representations that
+differ only in the order of their terms count as one way.
 -/
 def IsTaxicabFor' (k m n x : ℕ) : Prop :=
-  ∃ (S : Finset (List ℕ)),
-  S.card ≥ n ∧
-  ∀ L ∈ S, ∀ M ∈ S, L ≠ M → List.Disjoint L M ∧
-  (∀ L ∈  S, L.length = m ∧ L ≠ [] ∧ 0 ∉ L ∧ (L.map (· ^ k)).sum = x)
+  ∃ S : Finset (Multiset ℕ), n ≤ S.card ∧
+    ∀ L ∈ S, Multiset.card L = m ∧ 0 ∉ L ∧ (L.map (· ^ k)).sum = x
 
 /-- $1729$ is a possible taxicab number for $k=3, m=2, n=2$.
 -/
 @[category test, AMS 11]
 theorem taxicab_1729 : IsTaxicabFor' 3 2 2 1729 := by
   use {{1, 12}, {9, 10}}
-  simp [List.Disjoint]
-  simp +decide
+  decide
 
 /-- $x$ is a taxicab number if it is the smallest number
 that can be expressed as a sum of $m$ positive $k$-th
@@ -74,35 +69,28 @@ def IsTaxicabFor (k m n : ℕ) (x : ℕ) : Prop :=
 
 @[category test, AMS 11]
 theorem taxicab_4' : IsTaxicabFor' 1 2 2 4 := by
-  use {[1, 3], [2, 2]}
-  simp [List.Disjoint]
+  use {{1, 3}, {2, 2}}
+  decide
 
-/-- Using Aristotle (Harmonic) we get a compact proof that
-4 is the taxicab number for $k=1, m=2, n=2$. -/
+/-- $4$ is the taxicab number for $k=1, m=2, n=2$. -/
 @[category test, AMS 11]
 theorem taxicab_4 : IsTaxicabFor 1 2 2 4 := by
   constructor
   · exact taxicab_4'
-  · rintro x ⟨ S, hS₁, hS₂ ⟩
-    obtain ⟨ s, hs, t, ht, hst ⟩ := Finset.one_lt_card.mp hS₁
-    have := hS₂ s hs t ht hst
-    rcases this with ⟨ h₁, h₂ ⟩
-    specialize h₂ s hs
-    rcases s with ( _ | ⟨ a, _ | ⟨ b, _ | s ⟩ ⟩ ) <;> simp_all +arith +decide
-    rcases t with ( _ | ⟨ c, _ | ⟨ d, _ | t ⟩ ⟩ ) <;> simp_all +arith +decide
-    · grind
-    · have := hS₂ _ ht _ hs
-      simp_all +decide
-      grind
-    · have := hS₂ _ hs _ ht
-      simp_all +decide [ List.Disjoint ]
-      have := this.2 _ hs
-      have := this.2.2
-      simp_all +arith +decide
-      grind
-    · have := hS₂ _ hs _ ht
-      simp_all +decide [ List.Disjoint ]
-      grind +ring
+  · rintro x ⟨S, hS₁, hS₂⟩
+    obtain ⟨s, hs, t, ht, hst⟩ := Finset.one_lt_card.mp hS₁
+    obtain ⟨hs₁, hs₂, hs₃⟩ := hS₂ s hs
+    obtain ⟨ht₁, ht₂, ht₃⟩ := hS₂ t ht
+    obtain ⟨a, b, rfl⟩ := Multiset.card_eq_two.mp hs₁
+    obtain ⟨c, d, rfl⟩ := Multiset.card_eq_two.mp ht₁
+    simp at hs₂ ht₂ hs₃ ht₃
+    by_contra h
+    have ha : a ≤ 2 := by omega
+    have hb : b ≤ 2 := by omega
+    have hc : c ≤ 2 := by omega
+    have hd : d ≤ 2 := by omega
+    interval_cases a <;> interval_cases b <;> interval_cases c <;> interval_cases d <;>
+      first | omega | exact hst (by decide)
 
 /-- Taxicab number for $k=5$, $m=2$, and $n=2$ is not known.
 Whether such a number exists is also not known. -/
