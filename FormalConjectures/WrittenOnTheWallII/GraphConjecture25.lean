@@ -17,20 +17,30 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Written on the Wall II - Conjecture 23
+# Written on the Wall II - Conjecture 25
+
+**Verbatim statement (WOWII #25, status F):**
+> If G is a simple connected graph, then b(G) ≥ 2 CEIL[(1 + minimum of dist_even(v))/3]
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25
+
+This conjecture is **disproved** on the WOWII page (status F; "same
+counterexample as in #24"). Following the upstream pattern established in
+#3823 for Conjecture 23, we record the disproof using `answer(False) ↔ ...`.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
-namespace WrittenOnTheWallII.GraphConjecture23
+namespace WrittenOnTheWallII.GraphConjecture25
 
 open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII [Conjecture 23](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+WOWII [Conjecture 25](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25)
+(status F, disproved):
 
 For a simple connected graph `G`, `b(G) ≥ ⌊α(G) + dist_avg(M, V) / 2⌋`, where `b(G)` is
 the size of a largest induced bipartite subgraph, `α(G)` is the independence number,
@@ -58,4 +68,4 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
 
-end WrittenOnTheWallII.GraphConjecture23
+end WrittenOnTheWallII.GraphConjecture25
