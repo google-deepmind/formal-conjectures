@@ -24,6 +24,9 @@ import FormalConjecturesUtil
 **Borsuk's conjecture** (1933): Is every bounded set of diameter 1 in $\mathbb{R}^n$
 the union of at most $n + 1$ sets of diameter strictly less than 1?
 
+The covering sets are required to be subsets of the set being covered. This loses no
+generality (intersect each covering set with $S$) and guarantees that they are bounded.
+
 Erdős [Er44] suspected this is false for sufficiently large $n$. Confirmed
 by Kahn–Kalai [KK93], who disproved the conjecture for $n \geq 2015$.
 The current best is $n \geq 64$ (Jenrich–Brouwer, 2014).
@@ -55,7 +58,7 @@ theorem erdos_505.test_dim_one
     (S : Set (EuclideanSpace ℝ (Fin 1)))
     (hS : Bornology.IsBounded S) (hd : 0 < diam S) :
     ∃ (F : Fin 2 → Set (EuclideanSpace ℝ (Fin 1))),
-      S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
+      (∀ i, F i ⊆ S) ∧ S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
   sorry
 
 /-- **Erdős Problem 505** (disproved). Borsuk's conjecture is false for
@@ -73,7 +76,7 @@ theorem erdos_505 : ∃ (n : ℕ),
     ∃ (S : Set (EuclideanSpace ℝ (Fin n))),
       Bornology.IsBounded S ∧ 0 < diam S ∧
         ∀ (F : Fin (n + 1) → Set (EuclideanSpace ℝ (Fin n))),
-          S ⊆ ⋃ i, F i →
+          (∀ i, F i ⊆ S) → S ⊆ ⋃ i, F i →
           ∃ i, diam S ≤ diam (F i) := by
   sorry
 
@@ -87,7 +90,7 @@ theorem erdos_505.small_dim (n : ℕ) (hn : n ≤ 3)
     (S : Set (EuclideanSpace ℝ (Fin n)))
     (hS : Bornology.IsBounded S) (hd : 0 < diam S) :
     ∃ (F : Fin (n + 1) → Set (EuclideanSpace ℝ (Fin n))),
-      S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
+      (∀ i, F i ⊆ S) ∧ S ⊆ ⋃ i, F i ∧ ∀ i, diam (F i) < diam S := by
   sorry
 
 end Erdos505
