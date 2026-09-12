@@ -72,7 +72,7 @@ import FormalConjectures.GreensOpenProblems.«58»
 import FormalConjectures.GreensOpenProblems.«61»
 import FormalConjectures.GreensOpenProblems.«9»
 import FormalConjectures.Mathoverflow.«1973»
-import FormalConjectures.Millenium.Poincare
+import FormalConjectures.Millennium.Poincare
 import FormalConjectures.OEIS.«303656»
 import FormalConjectures.OEIS.«308734»
 import FormalConjectures.OEIS.«41»
