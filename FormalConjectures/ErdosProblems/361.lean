@@ -72,10 +72,12 @@ theorem erdos_361 (c : ℝ) (hc : 0 < c) :
 Asymptotic version of Erdős Problem 361: determine the order of growth of the largest cardinality
 as $n \to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-361-asymptotic/blob/01376b8a64e4814a006ed1f44cbf270b2a3fbd37/lean/Erdos361AsymptoticFC.lean#L139-L190"]
 theorem erdos_361.asymptotic (c : ℝ) (hc : 0 < c) :
     (fun n ↦ (subsetSumAvoidanceNumber c n : ℝ)) =Θ[atTop]
-      (answer(sorry) : ℕ → ℝ) := by
+      (answer(fun n : ℕ ↦ (n : ℝ)) : ℕ → ℝ) := by
   sorry
 
 end Erdos361
