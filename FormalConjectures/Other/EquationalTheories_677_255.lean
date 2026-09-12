@@ -57,10 +57,6 @@ theorem Finite.Equation255_not_implies_Equation677 :
 magma? The project tentatively conjectures that the answer is no; a false answer is equivalent to
 the existence of a finite countermodel satisfying Equation 677 but not Equation 255.
 
-This is deliberately a single `answer(sorry)` question rather than a pair of theorems. The
-existential countermodel and the universal implication are logical negations of each other, so
-declaring both as `theorem`s would assert a proposition and its negation simultaneously; the
-neutral form records the open problem without committing to either side.
 
 Discussion thread:
 https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/FINITE.3A.20677.20-.3E.20255 -/
