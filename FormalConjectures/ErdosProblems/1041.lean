@@ -68,5 +68,27 @@ theorem erdos_1041 :
     ∃ (z₁ z₂ : ℂ) (h : ({z₁, z₂} : Multiset ℂ) ≤ f.roots) (γ : Path z₁ z₂),
       Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
   sorry
+end Erdos1041
+
+namespace Erdos1041
+
+/--
+Under an explicit margin, every root of a small constant perturbation of a
+monic split polynomial stays inside the open unit disc.
+
+This is a quantitative root-retention lemma for polynomials whose roots
+already lie in a strictly smaller disc. It does not produce a short path
+inside `{z | ‖f(z)‖ < 1}` and does not settle `erdos_1041`.
+-/
+@[category research solved, AMS 32, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/f88e8b686908010a43e9078dda49abbabcfc4079/adapters/FormalConjecturesVariants.lean#L178-L186"]
+theorem erdos_1041.variants.perturbed_roots_in_unit_disk
+    (f : Polynomial ℂ) (hf : f.Monic) (hdeg : 0 < f.natDegree)
+    (hsplit : f.Splits) {ρ ε : ℝ} (hρ : 0 ≤ ρ)
+    (hroots : ∀ b ∈ f.roots, ‖b‖ ≤ ρ) (hε : 0 < ε)
+    (hmargin : ((f.natDegree + 1) * ε) ^ (f.natDegree : ℝ)⁻¹ + ρ < 1)
+    {shift : ℂ} (hshift : ‖shift‖ < ε) :
+    ∀ a : ℂ, (f + Polynomial.C shift).eval a = 0 → ‖a‖ < 1 := by
+  sorry
 
 end Erdos1041
