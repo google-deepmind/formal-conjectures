@@ -150,7 +150,8 @@ def ABφθSpec (A B φ θ : ℝ) : Prop :=
   (A + π / 2 - φ - θ) - (B - (θ - φ) * (1 + A) / 2 - (θ - φ)^2 / 4) = 0
 
 /-- There exist unique constants $A$, $B$, $\varphi$, and $\theta$ satisfying the spec. -/
-@[category textbook, AMS 49]
+@[category textbook, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/blob/v1.0.0/GerverSofa/KernelOnly/PartE/E24KC6KernelFinalClosure.lean"]
 theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry
