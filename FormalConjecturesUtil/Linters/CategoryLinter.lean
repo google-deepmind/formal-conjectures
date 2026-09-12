@@ -36,9 +36,6 @@ register_option linter.style.category_attribute : Bool := {
   descr := "enable the `category` attribute style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace CategoryLinter
 
 /-- Checks if a command has the `category` attribute. -/
@@ -84,7 +81,7 @@ def checkNotOpenIfSorryFree (mods : TSyntax ``Lean.Parser.Command.declModifiers)
   unless (← ProblemAttributes.getTags).any
       (fun t => t.declName == declName && t.category == .research .open) do return
   let some asyncInfo := (← getEnv).findAsync? declName | return
-  if asyncInfo.toConstantInfo.value?.any (!·.hasSorry) then
+  if asyncInfo.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry) then
     logLintIf linter.style.category_attribute declId
       "If a problem has a sorry-free proof, it should not be categorised as `open`."
 

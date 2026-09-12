@@ -55,7 +55,7 @@ private lemma edist_lt_iff_dist_lt (G : SimpleGraph α) {u v : α} (hadj : G.Adj
     G.edist w u < G.edist w v ↔ G.dist w u < G.dist w v := by
   by_cases hru : G.Reachable w u
   · have hrv : G.Reachable w v := hru.trans hadj.reachable
-    rw [← hru.coe_dist_eq_edist, ← hrv.coe_dist_eq_edist, ENat.coe_lt_coe]
+    rw [← hru.coe_dist_eq_edist, ← hrv.coe_dist_eq_edist, ENat.natCast_lt_natCast]
   · have hrv : ¬G.Reachable w v :=
       fun h => hru (h.trans hadj.symm.reachable)
     simp [edist_eq_top_of_not_reachable hru, edist_eq_top_of_not_reachable hrv,

@@ -53,8 +53,17 @@ open Real
 Conjecture:
 $$a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) +
   \frac{1}{n+1} + \frac{1}{n+2} + \dots + \frac{1}{2n}} \right\rfloor.$$
+
+**Proof sketch** (certificate style; the kernel-checked development lives at the
+`formal_proof` permalink below). Write $T(n) = \log 2 - (H(2n) - H(n))$ for the harmonic
+tail defect. The proof sandwiches $T(n)$ between two explicit telescoping bounds — $h(n)$
+from below and $h(n) + 60/(4n+1)^7$ from above, where $h$ telescopes a degree-7 rational
+certificate. The two resulting inequalities reduce to polynomial coefficient-nonnegativity
+facts discharged by elementary tactics, after which the reciprocal lands in
+$[16n^2 + 1,\, 16n^2 + 2)$ and the floor evaluates exactly.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/f24f80aeaa3d5073bf4a54ed9daa102a5e0f1fad/FormalConjectures/OEIS/108211.lean#L540"]
 theorem conjecture (n : ℕ) (hn : n > 0) :
     (a n : ℝ) =
       (⌊ 1 / ((4 * n : ℝ)⁻¹ - log 2 + ∑ k ∈ (Finset.Icc (n + 1) (2 * n)), (k : ℝ)⁻¹) ⌋ : ℝ) := by

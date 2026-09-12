@@ -65,7 +65,7 @@ theorem Q_six_twentyfour_one : Q 6 24 1 = 4 := by
   show ({n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)}).ncard = 4
   have hset : {n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)} = ({0, 1, 2, 5} : Set ℕ) := by
     ext n
-    simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
     constructor
     · rintro ⟨hn, hsq⟩
       interval_cases n

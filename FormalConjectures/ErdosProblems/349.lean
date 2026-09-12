@@ -52,15 +52,15 @@ theorem complete_for_alpha_in_Ioo_one_to_goldenRatio (t α : ℝ) (ht : 0 < t)
   sorry
 
 /--
-For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha$
+For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha > 0$
 such that the sequence $\lfloor t_k\alpha^n\rfloor$ is complete consists of at least $k$
-disjoint line segments.
+disjoint line segments, that is, it has at least $k$ connected components.
 -/
 @[category research solved, AMS 11]
 theorem exists_t_for_k_disjoint_segments (k : ℕ) :
-    ∃ t ∈ Ioo 0 1, ∃ (ι : Type), k ≤ (Set.univ : Set ι).encard ∧ ∃ I : ι → Set ℝ,
-      (∀ i, 2 ≤ (I i).encard ∧ (I i).Nonempty ∧ IsConnected (I i)) ∧
-      Pairwise (Disjoint on I) ∧ (⋃ i, I i) ⊆ {α | α > 0 ∧ IsGoodPair t α} := by
+    ∃ t ∈ Ioo 0 1,
+      let S := {α | 0 < α ∧ IsGoodPair t α}
+      k ≤ (connectedComponentIn S '' S).encard := by
   sorry
 
 /--
@@ -110,7 +110,7 @@ subtract the largest power $2^m \le k$, recurse on the remainder. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
   "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
-theorem exists_finset_sum_two_pow (k : ℕ) :
+theorem exists_finsetSum_two_pow (k : ℕ) :
     ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
   sorry
 

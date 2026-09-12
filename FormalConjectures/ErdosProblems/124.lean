@@ -89,17 +89,19 @@ lemma erdos124.converse {D : Finset ℕ} (hD₃ : ∀ d ∈ D, 3 ≤ d)
 
 /--
 For any $\varepsilon > 0$, there exists an infinite sequence $2 \le d_0 < d_1 < \dots$ such
-that all sufficiently large integer can be written as $\sum_{i \in I} a_i$ where $a_i$ has only
-the digits $0, 1$ when written in base $d_i$,
-but $\sum_{i \in I} \frac 1{d_i - 1} \le \varepsilon$.
+that all sufficiently large integers can be written as $\sum_{i \in I} a_i$ for some finite
+set $I$, where each $a_i$ has only the digits $0, 1$ when written in base $d_i$,
+and the series $\sum_{i=0}^{\infty} \frac{1}{d_i - 1}$ converges to a value at most
+$\varepsilon$.
 
 Proved by Melfi [Me04]
 -/
 @[category research solved, AMS 11]
 lemma erdos124.melfi_construction {ε : ℝ} (hε : 0 < ε) :
-    ∃ d : ℕ → ℕ, StrictMono d ∧ ∑' i, (d i - 1 : ℝ)⁻¹ ≤ ε ∧ ∀ᶠ n in atTop,
+    ∃ d : ℕ → ℕ, StrictMono d ∧ 2 ≤ d 0 ∧
+      Summable (fun i ↦ (d i - 1 : ℝ)⁻¹) ∧ ∑' i, (d i - 1 : ℝ)⁻¹ ≤ ε ∧ ∀ᶠ n in atTop,
       ∃ (I : Finset ℕ) (a : ℕ → ℕ), (∀ i ∈ I, a i ∈ sumsOfDistinctPowers (d i) 0) ∧
-        ∑ i ∈ I, a i = n :=
+        ∑ i ∈ I, a i = n := by
   sorry
 
 end Erdos124

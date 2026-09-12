@@ -35,6 +35,8 @@ open scoped Cardinal
 
 namespace Erdos1119
 
+-- The question is independent of ZFC (see the docstring), so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 Let $\mathfrak{m}$ be an infinite cardinal with $\aleph_0 < \mathfrak{m} < \mathfrak{c} =
 2^{\aleph_0}$. Let $\{f_\alpha\}$ be a family of entire functions such that, for every

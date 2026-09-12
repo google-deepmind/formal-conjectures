@@ -55,7 +55,7 @@ def moduleDocstringLinter : Linter where run := withSetOptionIn fun stx ↦ do
   let env ← getEnv
   if stx.getKind == ``Lean.Parser.Command.moduleDoc then
     -- Duplicate check
-    let numDocs := (getMainModuleDoc env).size + (getVersoModuleDocs env).snippets.size
+    let numDocs := (getMainModuleDoc env).size + (getMainVersoModuleDocs env).snippets.size
     if numDocs > 1 then
       Lean.Linter.logLintIf linter.style.moduleDocstring stx
         "This file has more than one module docstring \
@@ -68,7 +68,7 @@ def moduleDocstringLinter : Linter where run := withSetOptionIn fun stx ↦ do
     let checked ← checkedForDoc.get
     unless checked.contains fileName do
       checkedForDoc.modify (·.insert fileName)
-      let hasDoc := !(getMainModuleDoc env).isEmpty || !(getVersoModuleDocs env).snippets.isEmpty
+      let hasDoc := !(getMainModuleDoc env).isEmpty || !(getMainVersoModuleDocs env).snippets.isEmpty
       unless hasDoc do
         Lean.Linter.logLintIf linter.style.moduleDocstring stx
           "This file has no module docstring (`/-! ... -/`). \

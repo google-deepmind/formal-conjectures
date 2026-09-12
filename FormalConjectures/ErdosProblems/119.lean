@@ -69,7 +69,7 @@ This is Problem 4.1 in [Ha74] where it is attributed to Erdős.
 The weaker conjecture that $\limsup M_n=\infty$ was proved by Wagner [Wa80], who show that there is
 some $c>0$ with $M_n>(\log n)^c$ infinitely often.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos119.lean#L1759"]
 theorem erdos_119.parts.i :
     answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       atTop.limsup (fun n => (M z n : EReal)) = ⊤ := by
@@ -81,7 +81,7 @@ Is it true that there exists $c > 0$ such that for infinitely many $n$ we have $
 The second question was answered by Beck [Be91], who proved that there exists some $c>0$ such that
 $\max_{n\leq N} M_n > N^c$.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos119.lean#L1712"]
 theorem erdos_119.parts.ii :
     answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       ∃ (c : ℝ) (hc : c > 0), Infinite {n : ℕ | M z n > n ^ c} := by
@@ -94,7 +94,7 @@ The \$100 prize was offered for the third question in [Er97f]. This was resolved
 Korsky (see the proof claims), who proved that $\sum_{k\leq n}M_k \gg \frac{n^{5/4}}{\sqrt{\log n}}$
 (and hence for infinitely many $n$ we have $M_n> n^{1/4-o(1)}$).
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos119.lean#L1687"]
 theorem erdos_119.parts.iii :
     answer(True) ↔ ∀ (z : ℕ → ℂ) (hz : ∀ i : ℕ, ‖z i‖ = 1),
       ∃ (c : ℝ) (hc : c > 0), ∀ᶠ n in atTop,

@@ -261,7 +261,7 @@ by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
 @[category textbook, AMS 5 11]
 theorem minimum_overlap.variants.lower.erdos_1955 :
-    (1 : ℝ) / 4 < atTop.liminf MinOverlapQuotient := by
+    (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
 /--
@@ -295,12 +295,13 @@ theorem minimum_overlap.variants.lower.haugland_1996 :
   sorry
 
 /--
-A lower bound of $0.379005$.
+A lower bound of $0.379005$: the minimum overlap constant is at least $0.379005$.
 See [Erdős' minimum overlap problem](https://arxiv.org/abs/2201.05704)
 by *Ethan Patrick White*, 2022
 -/
 @[category research solved, AMS 5 11]
-theorem minimum_overlap.variants.lower.white_2022 : 0.379005 < atTop.liminf MinOverlapQuotient := by
+theorem minimum_overlap.variants.lower.white_2022 :
+    0.379005 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
 /--

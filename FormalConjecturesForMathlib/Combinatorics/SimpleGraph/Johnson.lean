@@ -32,8 +32,8 @@ Two vertices are adjacent if their intersection has size $k - 1$.
 @[simps -isSimp]
 def johnson (n k : ℕ) : SimpleGraph {s : Finset (Fin n) // #s = k} where
   Adj s t := #(s.val ∩ t.val) + 1 = k
-  symm s t h := by simpa [inter_comm]
-  loopless := by simp +contextual [Irreflexive]
+  symm.symm s t h := by simpa [inter_comm]
+  loopless.irrefl := by simp +contextual
 
 scoped notation "J(" n ", " k ")" => johnson n k
 

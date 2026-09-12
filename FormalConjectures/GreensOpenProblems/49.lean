@@ -44,7 +44,9 @@ namespace Green49
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with $|A + A| \leq K|A|$. Is it true that $A$
 is covered by $K^{O(1)}$ translates of a subspace of size $\leq |A|$?
 
-Solved by [GGM25].
+Solved by [GGM25], with at most $2K^{12}$ translates. The factor $2$ cannot be omitted: for
+$A = \mathbb{F}_2^n \setminus \{0\}$ one has $K = 2^n / (2^n - 1)$, so $K^C \to 1$ as
+$n \to \infty$, while every subspace of size at most $|A|$ is proper and two translates are needed.
 -/
 @[category research solved, AMS 5 11]
 theorem green_49 : answer(True) ↔
@@ -53,7 +55,7 @@ theorem green_49 : answer(True) ↔
       ∀ K ≥ (1 : ℝ), (#(A + A) : ℝ) ≤ K * #A →
         ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (T : Finset (𝔽₂ n)),
           Nat.card W ≤ #A ∧
-          (#T : ℝ) ≤ K ^ C ∧
+          (#T : ℝ) ≤ 2 * K ^ C ∧
           (A : Set (𝔽₂ n)) ⊆ T + W := by
   sorry
 

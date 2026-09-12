@@ -75,9 +75,13 @@ write $b(n)$ for the product of the first $n$ official terms.
 
 ## Main Theorem Docstrings
 
-The main problem or conjecture (typically the last theorem in the file) must have a dedicated docstring (`/-- ... -/`).
+The main problem or conjecture (typically the last theorem in the file) must have a dedicated
+docstring (`/-- ... -/`).
 - **Verbatim Citation**: The docstring must cite the conjecture from OEIS verbatim.
-- **Proof Attribution**: For solved problems where a formal proof is referenced via `@[formal_proof ...]`, the bottom of the docstring should give attribution explaining where the proof comes from or what methods were used (whether AI-generated or human-authored). This can be a link or something like "solved by [name of AI system] prompted by [name of human]".
+- **Proof Attribution**: For solved problems where a formal proof is referenced via
+  `@[formal_proof ...]`, the bottom of the docstring should give attribution explaining where
+  the proof comes from or what methods were used (whether AI-generated or human-authored). This can
+  be a link or something like "solved by [name of AI system] prompted by [name of human]".
 
 ```lean
 /--
@@ -95,12 +99,29 @@ theorem every_prime_occurs :
   sorry
 ```
 
+## Multiple Conjectures in a Single Sequence
+
+When an OEIS entry documents multiple distinct conjectures (e.g., Conjecture 1, Conjecture 2,
+or general product/modulus variants):
+- **Naming**: Disambiguate them using indexed names like `conjecture_1`, `conjecture_2`,
+  `conjecture_3a`, etc., or descriptive identifiers (e.g., `conjecture_integrality`,
+  `conjecture_supercongruence`).
+- **Docstring Disambiguation**: Each theorem's docstring must explicitly identify which OEIS
+  conjecture it matches and quote it verbatim.
+
 ## Term Theorems (`category test`)
 
-To ensure the formalized definition behaves correctly and matches the official OEIS sequence, every file **must include term theorems verifying the initial values of the sequence**.
+To ensure the formalized definition behaves correctly and matches the official OEIS sequence,
+every file **must include term theorems verifying the initial values of the sequence**.
 
-- **Quantity**: Aim for around 5 test theorems, or more if all leading terms are trivial (to ensure non-zero/non-one values are verified as well).
-- **Naming**: Every term verification theorem for sequence `a` (or predicate `A`) must be named strictly `a_0`, `a_1`, `a_2`, etc., according to the index (`a_[n]`). Note that even when testing an `UpperCamelCase` property definition like `A`, Mathlib naming rules mandate lowercasing it right inside `snake_case` theorem names (`a_0 : A 0`, `a_1 : A 1`).
+- **Placement**: Term theorems must be placed **immediately following the definition of `a`**
+  (or its immediate reduction/helper lemmas), preceding the main benchmark conjectures.
+- **Quantity**: Aim for around 5 test theorems, or more if all leading terms are trivial (to ensure
+  non-zero/non-one values are verified as well).
+- **Naming**: Every term verification theorem for sequence `a` (or predicate `A`) must be named
+  strictly `a_0`, `a_1`, `a_2`, etc., according to the index (`a_[n]`). Note that even when
+  testing an `UpperCamelCase` property definition like `A`, Mathlib naming rules mandate
+  lowercasing it right inside `snake_case` theorem names (`a_0 : A 0`, `a_1 : A 1`).
 - **Official Alignment**: Verify the starting index ($n=0, 1, 2, \dots$) and exact initial values against the official OEIS `b-file` (`https://oeis.org/A[padded_number]/b[padded_number].txt`).
 - **Attributes**: Every term theorem must be tagged with `@[category test, AMS 11]` (or another appropriate AMS subject).
 - **Computable Definitions**: If the sequence definition is kernel-computable, prove the term theorems using `by rfl`, `by decide`, `by norm_num`, or by unfolding the definition.

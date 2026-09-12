@@ -38,10 +38,13 @@ open Finset
 def IsInterval (I : Finset ℕ) : Prop :=
   ∃ a b : ℕ, I = Icc a b
 
-/-- A collection of intervals as in Erdős Problem 363. -/
+/-- A collection of intervals as in Erdős Problem 363: disjoint intervals of positive integers,
+each of size at least `4`, whose product is a square. Intervals containing `0` are excluded, since
+their product is `0`, which is a square. -/
 def IsValidCollection (S : List (Finset ℕ)) : Prop :=
   (∀ I ∈ S, IsInterval I) ∧
   (∀ I ∈ S, 4 ≤ I.card) ∧
+  (∀ I ∈ S, 0 ∉ I) ∧
   S.Pairwise Disjoint ∧
   IsSquare ((S.map (fun I => ∏ m ∈ I, m)).prod)
 

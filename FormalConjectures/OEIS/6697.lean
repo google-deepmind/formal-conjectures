@@ -80,7 +80,7 @@ lemma length_finiteWord (n : ℕ) : (finiteWord n).length = 2 ^ (n + 1) - 1 := b
 We define it as the limit: w(i) is the i-th symbol, which stabilizes after
 sufficiently many iterations. -/
 noncomputable def infiniteWord (i : ℕ) : Bool :=
-  (finiteWord (i + 1))[i]'(by grw [length_finiteWord, ← Nat.lt_two_pow_self]; simp)
+  (finiteWord (i + 1))[i]'(by grw [length_finiteWord, ← Nat.lt_two_pow_self] <;> lia)
 
 /-- A subword (factor) of length n starting at position i. -/
 noncomputable def subwordAt (i n : ℕ) : List Bool :=

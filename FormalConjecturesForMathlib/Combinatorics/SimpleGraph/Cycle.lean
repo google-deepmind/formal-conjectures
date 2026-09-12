@@ -49,6 +49,6 @@ theorem edgeFinset_eq_empty_of_isBridgeless_of_isAcyclic [Fintype V] (G : Simple
   ext u v
   simp only [SimpleGraph.bot_adj, iff_false]
   intro hadj
-  exact hbr s(u, v) hadj (G.isAcyclic_iff_forall_edge_isBridge.mp hacyc hadj)
+  exact hbr s(u, v) hadj (G.isAcyclic_iff_forall_isBridge.mp hacyc hadj)
 
 end SimpleGraph

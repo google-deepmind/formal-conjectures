@@ -21,7 +21,7 @@ public import FormalConjecturesUtil.Linters.LatexDocstringLinter
 # Tests for the LaTeX docstring linter
 
 This file contains test cases for the `LatexDocstringLinter`, verifying that
-docstrings with backslash-bracket or backslash-parenthesis are flagged.
+docstrings with backslash-bracket, backslash-parenthesis, or legacy URL links are flagged.
 -/
 
 @[expose] public section
@@ -52,6 +52,21 @@ theorem flagged_with_paren_math : True := by
 #guard_msgs in
 /-- This is a good docstring with $$ math $$. -/
 theorem not_flagged_with_good_math : True := by
+  trivial
+
+/--
+warning: Docstring URLs should use `[label](https://...)`, not `[label][https://...]`.
+
+Note: This linter can be disabled with `set_option linter.style.latex_docstring false`
+-/
+#guard_msgs in
+/-- This is a bad link: [example][https://example.com]. -/
+theorem flagged_with_legacy_url_link : True := by
+  trivial
+
+#guard_msgs in
+/-- This is a good link: [example](https://example.com). -/
+theorem not_flagged_with_inline_url_link : True := by
   trivial
 
 end LatexDocstringLinter

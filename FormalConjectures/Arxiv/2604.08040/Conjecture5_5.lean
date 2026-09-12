@@ -68,7 +68,7 @@ number of distinct prime divisors of $|G|$, then `G` is solvable.
 @[category research open, AMS 20]
 theorem solvable_of_cyc_lt :
     answer(sorry) ↔ ∀ (G : Type) [Group G] [Fintype G],
-      cyc G < 2 ^ (numPrimeFactors G + 2) → IsSolvable G := by
+      cyc G < 2 ^ (numPrimeFactors G + 2) → Group.IsSolvable G := by
   sorry
 
 /--
@@ -87,7 +87,7 @@ currently have a standalone `IsSupersolvable` class.
 -/
 @[category research solved, AMS 20]
 theorem solvable_of_cyc_lt_two_pow_succ (h : cyc G < 2 ^ (numPrimeFactors G + 1)) :
-    IsSolvable G := by
+    Group.IsSolvable G := by
   sorry
 
 /- ## Sharpness & Test cases -/

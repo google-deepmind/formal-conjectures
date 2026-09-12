@@ -34,7 +34,8 @@ This has been solved in the affirmative by Larsen - in fact, for any $\epsilon>0
 such that if $n$ has only prime divisors $>L$ and $\sigma(n)>(2+\epsilon)n$ then $n$ is the distinct
 sum of proper divisors of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos825.lean#L5893"]
 theorem erdos_825 :
     answer(True) ↔ ∃ (C : ℝ) (_ : C > 0),
       ∀ (n) (_ : σ 1 n > C * n),

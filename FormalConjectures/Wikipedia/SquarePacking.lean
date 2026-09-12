@@ -90,7 +90,7 @@ The degenerate circle is empty.
 @[category test, AMS 51]
 theorem circle_zero : Circle 0 = ∅ := by
   ext p
-  simp only [Circle, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_lt,
+  simp only [Circle, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_lt,
     NNReal.coe_zero, zero_pow, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
   positivity
 

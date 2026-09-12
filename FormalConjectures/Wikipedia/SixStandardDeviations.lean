@@ -75,7 +75,9 @@ the benchmark that Spencer's theorem improves upon by removing the logarithmic
 factor. (The shift $n + 2$ inside the logarithm is a harmless normalization keeping
 it positive for $n \in \{0, 1\}$.)
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/Lemmy00/spencer-random-coloring-lean/blob/a691214a7263c1010fdd10560091e9f8cfce903a/SpencerRandomColoring/RandomBound.lean#L37"]
 theorem six_standard_deviations.variants.random_bound :
     ∃ K : ℝ, 0 < K ∧ ∀ (n : ℕ) (S : Fin n → Finset (Fin n)),
       ∃ χ : Fin n → ℝ, (∀ j, χ j = 1 ∨ χ j = -1) ∧

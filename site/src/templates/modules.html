@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules — Formal Conjectures</title>
+  <meta name="description" content="Index of every Lean module in Formal Conjectures, linking to its annotated source rendered with Verso.">
+  <link rel="preload" href="/assets/fonts/LibertinusSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/assets/img/formal_conjectures_logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand"><img src="/assets/img/formal_conjectures_logo.svg" alt=""
+        class="site-nav__logo">Formal Conjectures</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    <ul class="site-nav__links" id="nav-links" role="list">
+      <li><a href="/browse/">Browse</a></li>
+      <li><a href="/stats/">Stats</a></li>
+      <li><a href="/modules/">Modules</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contribute/">Contribute</a></li>
+      <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Modules</h1>
+    <p class="page-header__subtitle">
+      Every Lean module in the repository, {{moduleCount}} in all, with a link to its
+      annotated source rendered by <a href="https://github.com/leanprover/verso" target="_blank" rel="noopener">Verso</a>:
+      hover over any identifier to see its type and docstring, and follow it to where it is defined.
+    </p>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="search-bar">
+        <input
+          type="search"
+          class="search-input"
+          id="module-filter"
+          placeholder="Filter modules by name…"
+          aria-label="Filter modules by name"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <p class="section__lede" id="module-filter-status" aria-live="polite"></p>
+    </div>
+  </section>
+{{libraries}}
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>Formal Conjectures &mdash; Apache 2.0 / CC-BY 4.0</span>
+    <span>
+      <a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a>
+      &middot;
+      <a href="https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures" target="_blank" rel="noopener">Zulip</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script>
+// Filter the module lists by substring of the full module name. Groups and
+// libraries with no visible module are hidden along with their headings.
+(function setupModuleFilter() {
+  const input = document.getElementById('module-filter');
+  const status = document.getElementById('module-filter-status');
+  if (!input) return;
+  const items = Array.from(document.querySelectorAll('.module-list li[data-name]'));
+  const groups = Array.from(document.querySelectorAll('.module-group'));
+  const libraries = Array.from(document.querySelectorAll('.module-library'));
+  const total = items.length;
+
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    for (const li of items) {
+      const hit = !q || li.dataset.name.toLowerCase().includes(q);
+      li.hidden = !hit;
+      if (hit) shown++;
+    }
+    for (const g of groups) {
+      g.hidden = !g.querySelector('.module-list li:not([hidden])');
+    }
+    for (const lib of libraries) {
+      lib.hidden = !lib.querySelector('.module-list li:not([hidden])');
+    }
+    status.textContent = q ? `${shown} of ${total} modules match.` : '';
+  }
+
+  input.addEventListener('input', apply);
+  // Support ?q= so that the filter can be linked to.
+  const initial = new URLSearchParams(window.location.search).get('q');
+  if (initial) { input.value = initial; apply(); }
+})();
+</script>
+</body>
+</html>

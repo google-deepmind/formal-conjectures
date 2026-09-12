@@ -50,13 +50,13 @@ theorem a_1 : a 1 = 1 := by
   have h_least : IsLeast {r : ℕ | 0 < r ∧ ((1 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   1).length) ^ i) * 10 + 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
       have : (Nat.digits 10 1).length = 1 := by decide +native
       rw [this]
       norm_num
     · intro r hr
-      simp only [Set.mem_setOf_eq] at hr
+      simp only [Set.mem_ofPred_eq] at hr
       exact hr.1
   have ha1 : a 1 = sInf {r : ℕ | 0 < r ∧ ((1 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   1).length) ^ i) * 10 + 1).Prime} := by
@@ -71,12 +71,12 @@ theorem a_2 : a 2 = 3 := by
   have h_least : IsLeast {r : ℕ | 0 < r ∧ ((2 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   2).length) ^ i) * 10 + 1).Prime} 3 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
       rw [h_digits]
       norm_num
     · intro r hr
-      simp only [Set.mem_setOf_eq] at hr
+      simp only [Set.mem_ofPred_eq] at hr
       by_contra! h
       have hr_pos := hr.1
       interval_cases r
@@ -100,13 +100,13 @@ theorem a_3 : a 3 = 1 := by
   have h_least : IsLeast {r : ℕ | 0 < r ∧ ((3 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   3).length) ^ i) * 10 + 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
       have : (Nat.digits 10 3).length = 1 := by decide +native
       rw [this]
       norm_num
     · intro r hr
-      simp only [Set.mem_setOf_eq] at hr
+      simp only [Set.mem_ofPred_eq] at hr
       exact hr.1
   have ha3 : a 3 = sInf {r : ℕ | 0 < r ∧ ((3 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   3).length) ^ i) * 10 + 1).Prime} := by
@@ -120,13 +120,13 @@ theorem a_4 : a 4 = 1 := by
   have h_least : IsLeast {r : ℕ | 0 < r ∧ ((4 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   4).length) ^ i) * 10 + 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
       have : (Nat.digits 10 4).length = 1 := by decide +native
       rw [this]
       norm_num
     · intro r hr
-      simp only [Set.mem_setOf_eq] at hr
+      simp only [Set.mem_ofPred_eq] at hr
       exact hr.1
   have ha4 : a 4 = sInf {r : ℕ | 0 < r ∧ ((4 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   4).length) ^ i) * 10 + 1).Prime} := by

@@ -16,9 +16,8 @@ limitations under the License.
 
 module
 
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Algebra.Order.Round
-public import Mathlib.Data.Real.Archimedean
-public import Mathlib.Data.Real.Basic
 
 @[expose] public section
 

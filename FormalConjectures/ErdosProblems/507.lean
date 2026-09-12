@@ -37,11 +37,13 @@ open scoped EuclideanGeometry
 namespace Erdos507
 
 /--
-The minimum area of a triangle determined by three distinct points in a set `S`.
+The minimum (unsigned) area of a triangle determined by three distinct points in a set `S`.
+Collinear triples count with area `0`. `EuclideanGeometry.triangle_area` is a signed area, so the
+absolute value is taken before the infimum.
 -/
 noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
-  sInf {EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) |
-    (t : Affine.Triangle ℝ ℝ²) (_ : ∀ i, t.points i ∈ S)}
+  sInf {abs (EuclideanGeometry.triangle_area (p 0) (p 1) (p 2)) |
+    (p : Fin 3 → ℝ²) (_ : Function.Injective p) (_ : ∀ i, p i ∈ S)}
 
 /--
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.

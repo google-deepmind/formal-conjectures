@@ -53,12 +53,15 @@ theorem erdos_325.variants.weaker :
   sorry
 
 /--
-For $k = 3$, the best known is due to Wooley [Wo15]
+For $k = 3$, the best known is due to Wooley [Wo15], who proved
+$f_{3, 3}(x) \gg x^{0.91709477}$.
+
 [Wo15] Wooley, Trevor D., Sums of three cubes, II. Acta Arith. (2015), 73-100.
 -/
 @[category research solved, AMS 11]
 theorem erdos_325.variants.wooley :
-    (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
+    (fun x : ℕ => (x : ℝ) ^ (0.91709477 : ℝ)) =O[atTop]
+      (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
   sorry
 
 end Erdos325

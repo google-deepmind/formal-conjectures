@@ -128,12 +128,12 @@ theorem union_closed.variants.singleton_mem
   set B : Finset (Finset n) := {x ∈ A | i ∉ x}
   set C : Finset (Finset n) := {x ∈ A | i ∈ x}
   have h₁ : (B : Set <| Finset n).InjOn (insert i) := by
-    simp only [Set.InjOn, coe_filter, Set.mem_setOf_eq, and_imp, B]
+    simp only [Set.InjOn, coe_filter, Set.mem_ofPred_eq, and_imp, B]
     rintro x - hx y - hy hxy
     have := congr(($hxy).erase i)
     rwa [erase_insert hx, erase_insert hy] at this
   have h₂ : (B : Set <| Finset n).MapsTo (insert i) C := by
-    simp only [Set.MapsTo, coe_filter, Set.mem_setOf_eq, mem_insert, true_or, and_true,
+    simp only [Set.MapsTo, coe_filter, Set.mem_ofPred_eq, mem_insert, true_or, and_true,
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
@@ -186,7 +186,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     · simp
     intro a ha b hb h
     simp only [coe_powerset, coe_erase, coe_univ, Set.mem_preimage, Set.mem_powerset_iff,
-      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
+      Set.subset_sdiff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
     have := congr(($h).erase i)
     rwa [erase_insert ha, erase_insert hb] at this
   simp only [card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi

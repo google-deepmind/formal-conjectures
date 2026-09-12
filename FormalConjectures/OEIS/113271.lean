@@ -48,13 +48,32 @@ theorem a_3 : a 3 = 41 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 593 := by rfl
 
+@[category test, AMS 11]
+theorem a_4_prime : (a 4).Prime := by
+  rw [a_4]
+  norm_num
+
+/-- The next term from the defining formula and the official OEIS b-file. -/
+@[category test, AMS 11]
+theorem a_5 : a 5 = 135457 := by rfl
+
+/-- The term `a(5) = 135457 = 7 * 37 * 523` is composite. -/
+@[category test, AMS 11]
+theorem a_5_not_prime : ¬ (a 5).Prime := by
+  rw [a_5]
+  norm_num
+
 /--
-The smallest primes in this (always odd) sequence are $a(1) = 3$, $a(3) = 41$ and $a(5) = 543$.
-What is the next prime?
+The first prime terms in this (always odd) sequence are $a(1) = 3$, $a(3) = 41$, and
+$a(4) = 593$. What is the next prime?
+
+The OEIS comment currently says `$a(5) = 543$`, but this conflicts with its defining formula,
+b-file, and examples: the actual index-five term is the composite number `135457`. Consequently the
+search for the next prime must begin after index `4`, not after index `5`.
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :
-  answer(sorry) = a (sInf {n : ℕ | 5 < n ∧ (a n).Prime}) := by
+  answer(sorry) = a (sInf {n : ℕ | 4 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA113271

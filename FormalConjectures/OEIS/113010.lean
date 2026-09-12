@@ -52,7 +52,7 @@ theorem a_4 : a 4 = 1 := by native_decide
 $n=1$ and $32$ are two fixed points. Are there any others?
 -/
 @[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∀ n : ℕ, a n = n ∧ n > 0 → n = 1 ∨ n = 32 := by
+theorem conjecture : answer(sorry) ↔ ∃ n : ℕ, a n = n ∧ n ≠ 1 ∧ n ≠ 32 := by
   sorry
 
 end OeisA113010

@@ -68,10 +68,35 @@ theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
 /--
 Stronger conjecture: Let $\pi(n)$ be the prime counting function (A000720).
 Then $\pi(n) \ge a(n) \ge \pi(n)/5$ for $n > 1$, with the following equalities:
+$\pi(2) = a(2)$, $\pi(10) = a(10)$ and $a(12) = \pi(12)/5$.
+
+This conjunction is false: its upper bound $\pi(n) \ge a(n)$ fails at
+$n = 512720 = 2^4 \cdot 5 \cdot 13 \cdot 17 \cdot 29$, where $a(n) = 42666$ and
+$\pi(n) = 42493$. The OEIS entry tabulates $a$ only up to $n = 10^4$. The lower bound and the
+three equalities are unaffected; see `conjecture2.variants.without_upper_bound`.-/
+@[category research solved, AMS 11]
+theorem conjecture2 : ¬ (
+    (∀ n : ℕ, 1 < n → Nat.primeCounting n ≥ a n) ∧
+    (∀ n : ℕ, 1 < n → 5 * a n ≥ Nat.primeCounting n) ∧
+    Nat.primeCounting 2 = a 2 ∧
+    Nat.primeCounting 10 = a 10 ∧
+    5 * a 12 = Nat.primeCounting 12) := by
+  sorry
+
+/--
+The upper bound of the stronger conjecture on its own. It is false: $a(512720) = 42666$ while
+$\pi(512720) = 42493$.-/
+@[category research solved, AMS 11]
+theorem conjecture2.variants.upper_bound_false :
+    ¬ ∀ n : ℕ, 1 < n → Nat.primeCounting n ≥ a n := by
+  sorry
+
+/--
+The part of the stronger conjecture that survives the counterexample to its upper bound:
+$5 a(n) \ge \pi(n)$ for $n > 1$, together with the three claimed equalities
 $\pi(2) = a(2)$, $\pi(10) = a(10)$ and $a(12) = \pi(12)/5$.-/
 @[category research open, AMS 11]
-theorem conjecture2 :
-    (∀ n : ℕ, 1 < n → Nat.primeCounting n ≥ a n) ∧
+theorem conjecture2.variants.without_upper_bound :
     (∀ n : ℕ, 1 < n → 5 * a n ≥ Nat.primeCounting n) ∧
     Nat.primeCounting 2 = a 2 ∧
     Nat.primeCounting 10 = a 10 ∧
