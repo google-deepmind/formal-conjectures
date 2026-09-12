@@ -18,7 +18,9 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
 public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Combinatorics.SimpleGraph.Copy
 public import Mathlib.Data.Set.Card
 
 @[expose] public section
@@ -142,13 +144,21 @@ def CDSColorable [Fintype α] (G : SimpleGraph α) : Prop :=
     ∃ (C : G.Coloring Nat), ∀ k : Nat,
    ∑ i < k, (C.colorClass i).ncard = indepNumK G k
 
-/-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
-def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {C : Type*}
-    (c : Sym2 V → C) : Prop :=
-  Function.Injective fun e : H.edgeSet => c (Sym2.map f e)
+/-- A homomorphism `f : H →g G` is *rainbow* with respect to an edge labelling `c` of `G` if it
+maps distinct edges of `H` to edges with distinct labels, i.e. the pullback labelling
+`c.pullback f` of `H` is injective. -/
+def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {K : Type*}
+    (c : G.EdgeLabeling K) : Prop :=
+  Function.Injective (c.pullback f)
 
 /--
-The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
+The anti-Ramsey number $\mathrm{AR}(n, H)$: the maximum number of colours in an edge colouring of
+$K_n$ without a rainbow copy of $H$, that is, without an injective homomorphism `H →g K_n` mapping
+distinct edges of `H` to distinct colours.
+
+Only the edges of $K_n$ are coloured (so the colouring is a `TopEdgeLabeling`), and only copies of
+$H$ (injective homomorphisms, `H.Copy ⊤`) are forbidden from being rainbow.
 -/
 noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
-  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, Function.Surjective c ∧ ∀ f : H →g ⊤, ¬IsRainbow f c}
+  sSup {k | ∃ c : TopEdgeLabeling (Fin n) (Fin k), Function.Surjective c ∧
+    ∀ f : H.Copy (⊤ : SimpleGraph (Fin n)), ¬IsRainbow f.toHom c}
