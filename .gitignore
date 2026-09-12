@@ -12,6 +12,12 @@ site/site/
 # Generated or downloaded website data
 site/data/conjectures.json
 site/data/verso-fragments.json
+site/data/catalog.json
+site/data/catalog-manifest.json
+site/data/evidence.json
+site/data/work.json
+
+site/data/schemas/
 
 # Generated all-imports file
 FormalConjectures.lean
@@ -19,3 +25,15 @@ FormalConjectures/All.lean
 
 # Python bytecode from the scripts in `scripts/`.
 __pycache__/
+
+# Generated review bundles and model-evaluation runs; benchmark inputs stay tracked.
+/review-artifacts/
+/.agents/skills/formal-conjectures-review/evals/results/
+
+# Local contribution runs and operator configuration
+.conjectures/
+
+# Python package build output
+*.egg-info/
+build/
+dist/

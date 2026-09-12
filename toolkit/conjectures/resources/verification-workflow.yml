@@ -1,0 +1,102 @@
+name: Qualified FC proof verification
+run-name: FC verification ${{ inputs.run_id }}
+on:
+  workflow_dispatch:
+    inputs:
+      run_id: {required: true, type: string}
+      candidate_repository: {required: true, type: string}
+      candidate_commit: {required: true, type: string}
+      candidate_path: {required: true, type: string}
+      source_repository: {required: true, type: string}
+      source_commit: {required: true, type: string}
+      source_path: {required: true, type: string}
+      declaration: {required: true, type: string}
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.repository == 'williamjblair/formal-conjectures'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate controller inputs
+        env:
+          REQUEST: ${{ toJSON(inputs) }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, sys
+          sys.path.insert(0, 'toolkit')
+          from conjectures.remote import validate_request
+          value = json.loads(os.environ['REQUEST'])
+          validate_request(value)
+          pathlib.Path(os.environ['RUNNER_TEMP'], 'request.json').write_text(json.dumps(value))
+          PY
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          use-github-cache: true
+      - name: Acquire exact source and candidate commits
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['RUNNER_TEMP'])
+          r = json.loads((root/'request.json').read_text())
+          for name, repo, rev in [('source', r['source_repository'], r['source_commit']),
+                                 ('candidate', 'https://github.com/'+r['candidate_repository']+'.git', r['candidate_commit'])]:
+              path = root/name
+              subprocess.run(['git', 'init', str(path)], check=True)
+              subprocess.run(['git', '-C', str(path), 'fetch', '--depth', '1', repo, rev], check=True)
+              subprocess.run(['git', '-C', str(path), 'checkout', '--detach', rev], check=True)
+          PY
+      - name: Build pinned verifier tools
+        run: |
+          python3 - <<'PY'
+          import pathlib, os, subprocess, sys
+          sys.path.insert(0, 'toolkit')
+          from conjectures.proof import PINS
+          for name, (repo, revision) in PINS.items():
+              path = pathlib.Path(os.environ['RUNNER_TEMP'])/name
+              subprocess.run(['git','init',str(path)],check=True)
+              subprocess.run(['git','-C',str(path),'fetch','--depth','1','https://github.com/'+repo+'.git',revision],check=True)
+              subprocess.run(['git','-C',str(path),'checkout','--detach',revision],check=True)
+              command = ['go','build','-o','landrun','./cmd/landrun'] if name=='landrun' else ['cargo','build','--release'] if name=='nanoda' else ['lake','--wfail','build']
+              subprocess.run(command,cwd=path,check=True)
+          PY
+          cmp lean-toolchain "$RUNNER_TEMP/source/lean-toolchain"
+          lake -d comparator/verifier build lean4export/lean4export
+          mkdir -p "$RUNNER_TEMP/source/.lake"
+          ln -s "$GITHUB_WORKSPACE/.lake/packages" "$RUNNER_TEMP/source/.lake/packages"
+      - name: Verify with restricted AF_UNIX and Landrun
+        run: |
+          sudo systemd-run --wait --pipe --collect \
+            --property="User=$(id -un)" \
+            --property='RestrictAddressFamilies=~AF_UNIX' \
+            --working-directory="$GITHUB_WORKSPACE" \
+            --setenv="PATH=$PATH" \
+            --setenv="PYTHONPATH=$GITHUB_WORKSPACE/toolkit" \
+            --setenv="COMPARATOR_BIN=$RUNNER_TEMP/comparator/.lake/build/bin/comparator" \
+            --setenv="COMPARATOR_LEAN4EXPORT=$GITHUB_WORKSPACE/comparator/verifier/.lake/packages/lean4export/.lake/build/bin/lean4export" \
+            --setenv="COMPARATOR_LANDRUN=$RUNNER_TEMP/landrun/landrun" \
+            --setenv="COMPARATOR_NANODA=$RUNNER_TEMP/nanoda/target/release/nanoda_bin" \
+            python3 -m conjectures.remote --request "$RUNNER_TEMP/request.json" \
+              --out "$RUNNER_TEMP/verification" --toolkit "$GITHUB_WORKSPACE" \
+              --source "$RUNNER_TEMP/source" --candidate "$RUNNER_TEMP/candidate" \
+              --generator "$RUNNER_TEMP/generator"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: verification-${{ inputs.run_id }}
+          path: |
+            ${{ runner.temp }}/verification/verification.json
+            ${{ runner.temp }}/verification/comparator-result.json
+            ${{ runner.temp }}/verification/verifier.log
+          if-no-files-found: warn
+          retention-days: 30
