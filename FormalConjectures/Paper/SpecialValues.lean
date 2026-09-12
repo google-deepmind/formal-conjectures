@@ -33,7 +33,7 @@ namespace Deligne
 
 open Complex ZMod
 
-/-- A Deligne package with respect to a parameter `M : Ω` is the tuple `(L, E, w, γ, c, σ)` where
+/-- A Deligne package with respect to a parameter `M : 𝓜` is the tuple `(L, E, w, γ, c, σ)` where
 - `L` : L-function;
 - `E` : algebraic subfield of ℂ containing L-values;
 - `w` : weight with respect to which the functional equation of `L` is expressed;
@@ -43,100 +43,100 @@ open Complex ZMod
 This contains the data required to state Deligne's conjecture for `M`. While Deligne's conjecture
 is traditionally stated for motives in the literature, we lack a formal definition of a motive.
 Moreover, this allows one to state the conjecture in potentially non-motivic cases. -/
-structure Pkg (Ω : Type*) where
+structure Pkg (𝓜 : Type*) where
   /-- The analytic `L`-function `L(M, s)`. -/
-  L : Ω → ℂ → ℂ
+  L : 𝓜 → ℂ → ℂ
   /-- The value field `E(M)`. -/
-  valueField : Ω → IntermediateField ℚ ℂ
+  valueField : 𝓜 → IntermediateField ℚ ℂ
   /-- The weight `w(M)`: the functional equation exchanges `s` and `w(M) + 1 - s`. -/
-  weight : Ω → ℤ
+  weight : 𝓜 → ℤ
   /-- The shifts of the archimedean Gamma factor, `∏ a, Γℝ(s + a)` with `a` ranging over
   `gammaShifts M` with multiplicity. -/
-  gammaShifts : Ω → Multiset ℤ
+  gammaShifts : 𝓜 → Multiset ℤ
   /-- Deligne's period `c⁺(M(n))`. -/
-  period : Ω → ℤ → ℂ
+  period : 𝓜 → ℤ → ℂ
   /-- The Galois action `σ ↦ (M ↦ Mᵟ)`. -/
-  galoisAction : Gal(ℂ/ℚ) →* Equiv.Perm Ω
+  galoisAction : Gal(ℂ/ℚ) →* Equiv.Perm 𝓜
   /-- Conjugate inputs have the same weight. -/
-  weight_galoisAction (σ : Gal(ℂ/ℚ)) (M : Ω) : weight (galoisAction σ M) = weight M
+  weight_galoisAction (σ : Gal(ℂ/ℚ)) (M : 𝓜) : weight (galoisAction σ M) = weight M
   /-- Conjugate inputs have the same Hodge numbers. -/
-  gammaShifts_galoisAction (σ : Gal(ℂ/ℚ)) (M : Ω) :
+  gammaShifts_galoisAction (σ : Gal(ℂ/ℚ)) (M : 𝓜) :
     gammaShifts (galoisAction σ M) = gammaShifts M
   /-- The coefficient field transports along the action. -/
-  valueField_galoisAction (σ : Gal(ℂ/ℚ)) (M : Ω) :
+  valueField_galoisAction (σ : Gal(ℂ/ℚ)) (M : 𝓜) :
     valueField (galoisAction σ M) = (valueField M).map σ
   /-- The coefficient field is algebraic over `ℚ`. -/
-  valueField_isAlgebraic (M : Ω) {x : ℂ} (hx : x ∈ valueField M) : IsAlgebraic ℚ x
+  valueField_isAlgebraic (M : 𝓜) {x : ℂ} (hx : x ∈ valueField M) : IsAlgebraic ℚ x
   /-- Prevents trivial junk case `· / 0 = 0 ∈ valueField`. -/
-  period_ne_zero' (M : Ω) (n : ℤ)
+  period_ne_zero' (M : 𝓜) (n : ℤ)
     (h₁ : ∀ a ∈ gammaShifts M, Odd (n + a) ∨ 0 < n + a)
     (h₂ : ∀ a ∈ gammaShifts M, Odd (weight M + 1 - n + a) ∨ 0 < weight M + 1 - n + a) :
     period M n ≠ 0
 
 namespace Pkg
 
-variable {Ω : Type*} {F : Pkg Ω}
+variable {𝓜 : Type*} {F : Pkg 𝓜} (M : 𝓜)
 
 /-- The gamma factor of the package is the product of `Γ(s + a)`, where `a` are given by the
 multiset of integer shifts defined in the package.-/
-noncomputable def gammaFactor (M : Ω) (s : ℂ) : ℂ := prodGammaℝ (F.gammaShifts M) s
+noncomputable def gammaFactor (s : ℂ) : ℂ := prodGammaℝ (F.gammaShifts M) s
 
 /-- An integer `n` is critical for `M` if the gamma factor has pole neither at `n` nor at
 `weight + 1 - n`. -/
-def IsCritical (M : Ω) (n : ℤ) : Prop :=
+def IsCritical (n : ℤ) : Prop :=
   0 ≤ meromorphicOrderAt (F.gammaFactor M) (n : ℂ) ∧
     0 ≤ meromorphicOrderAt (F.gammaFactor M) ((F.weight M + 1 - n : ℤ) : ℂ)
 
 @[category API, AMS 11 14]
-lemma isCritical_iff (M : Ω) (n : ℤ) :
+lemma isCritical_iff (n : ℤ) :
     F.IsCritical M n ↔ (∀ a ∈ F.gammaShifts M, Odd (n + a) ∨ 0 < n + a) ∧
       ∀ a ∈ F.gammaShifts M, Odd (F.weight M + 1 - n + a) ∨ 0 < F.weight M + 1 - n + a := by
   have hgf : F.gammaFactor M = prodGammaℝ (F.gammaShifts M) := rfl
   simp only [IsCritical, hgf, meromorphicOrderAt_prodGammaℝ_intCast_nonneg_iff]
 
 @[category API, AMS 11 14]
-lemma period_ne_zero (M : Ω) (n : ℤ) (h : F.IsCritical M n) : F.period M n ≠ 0 :=
+lemma period_ne_zero (n : ℤ) (h : F.IsCritical M n) : F.period M n ≠ 0 :=
   F.period_ne_zero' M n ((isCritical_iff M n).1 h).1 ((isCritical_iff M n).1 h).2
 
 /-- The normalised critical value `L(M, n) / c⁺(M, n)`. -/
-noncomputable def normalizedValue (M : Ω) (n : ℤ) : ℂ := F.L M n / F.period M n
+noncomputable def normalizedValue (n : ℤ) : ℂ := F.L M n / F.period M n
 
 /-- The package is arithmetic if the normalized critical values are in the value field. -/
-def IsArithmetic (M : Ω) : Prop := ∀ (n : ℤ), F.IsCritical M n →
+def IsArithmetic : Prop := ∀ (n : ℤ), F.IsCritical M n →
   F.normalizedValue M n ∈ F.valueField M
 
 /-- The packages is equivariant if the normalized critical values are equivariant under the
 Galois action. -/
-def IsEquivariant (M : Ω) : Prop :=
+def IsEquivariant : Prop :=
   ∀ (σ : Gal(ℂ/ℚ)) (n : ℤ), F.IsCritical M n →
     σ (F.normalizedValue M n) = F.normalizedValue (F.galoisAction σ M) n
 
 /-- Deligne's conjecture for `(L, E, w, γ, c, σ)` consists of arithmeticity and
 equivariance. -/
-abbrev Conjecture (M : Ω) : Prop := F.IsArithmetic M ∧ F.IsEquivariant M
+abbrev Conjecture : Prop := F.IsArithmetic M ∧ F.IsEquivariant M
 
 @[category API, AMS 11 14]
-lemma isCritical_galoisAction_iff (σ : Gal(ℂ/ℚ)) (M : Ω) (n : ℤ) :
+lemma isCritical_galoisAction_iff (σ : Gal(ℂ/ℚ)) (n : ℤ) :
     F.IsCritical (F.galoisAction σ M) n ↔ F.IsCritical M n := by
   simp only [isCritical_iff, gammaShifts_galoisAction, weight_galoisAction]
 
 section trivial_cases
 
-/- Some cases are trivial, either mathematically or by the choice of formalization of `Pkg`. -/
+variable {M}
 
+/- Some cases are trivial, either mathematically or by the choice of formalization of `Pkg`. -/
 
 /-- Empty critical set: if `M` has no critical integers, then the formal conjecture is vacuously
 true. This occurs in nature, for example the Dedekind zeta function of an imaginary
 quadratic field has no critical integers [Ne99]. -/
 @[category test, AMS 11 14]
-theorem conjecture_of_forall_not_isCritical {F : Pkg Ω} {M : Ω}
-    (h : ∀ n : ℤ, ¬ F.IsCritical M n) : F.Conjecture M :=
+theorem conjecture_of_forall_not_isCritical (h : ∀ n : ℤ, ¬ F.IsCritical M n) : F.Conjecture M :=
   ⟨fun n hn ↦ absurd hn (h n), fun _ n hn ↦ absurd hn (h n)⟩
 
 /-- Vanishing L-function: if the L-function vanishes at the critical points on the Galois orbit
 of `M`, then the formal conjecture is trivially true. -/
 @[category test, AMS 11 14]
-theorem conjecture_of_L_eq_zero {F : Pkg Ω} {M : Ω}
+theorem conjecture_of_L_eq_zero
     (h : ∀ (σ : Gal(ℂ/ℚ)) (n : ℤ), F.IsCritical M n → F.L (F.galoisAction σ M) n = 0) :
     F.Conjecture M := by
   have hM : ∀ n, F.IsCritical M n → F.L M n = 0 := fun n hn ↦ by simpa using h 1 n hn
@@ -147,13 +147,13 @@ theorem conjecture_of_L_eq_zero {F : Pkg Ω} {M : Ω}
 /-- Trivial period: if on the Galois orbit of `M`, the supplied period is some rescaling of the
 `L`-function. at critical integers, then the formal conjecture is trivially true. -/
 @[category test, AMS 11 14]
-theorem conjecture_of_period_eq_mul_L {F : Pkg Ω} {M : Ω} (e : ℤ → F.valueField M)
+theorem conjecture_of_period_eq_mul_L (e : ℤ → F.valueField M)
     (h : ∀ (σ : Gal(ℂ/ℚ)) (n : ℤ), F.IsCritical M n →
       F.period (F.galoisAction σ M) n = σ (e n) * F.L (F.galoisAction σ M) n) :
     F.Conjecture M := by
   have hL (σ : Gal(ℂ/ℚ)) (n : ℤ) (hn : F.IsCritical M n) :
       F.L (F.galoisAction σ M) n ≠ 0 := right_ne_zero_of_mul <|
-    h σ n hn ▸ F.period_ne_zero _ n ((F.isCritical_galoisAction_iff σ M n).2 hn)
+    h σ n hn ▸ F.period_ne_zero _ n ((F.isCritical_galoisAction_iff M σ n).2 hn)
   have hval (σ : Gal(ℂ/ℚ)) (n : ℤ) (hn : F.IsCritical M n) :
       F.normalizedValue (F.galoisAction σ M) n = (σ (e n))⁻¹ := by
     rw [normalizedValue, h σ n hn, mul_comm, ← div_div, div_self (hL σ n hn), one_div]
