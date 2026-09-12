@@ -33,21 +33,24 @@ open Filter
 
 open scoped Classical in
 /--
-Let $f_r(m)$ be maximal such that, if any graph $G$ has the property that every subgraph $H$ on $m$
-vertices is the union of a graph with chromatic number $\leq r$ and a graph with $\leq f_r(m)$
-edges, then $G$ has chromatic number $\leq r+1$.
+An edge-budget function $g$ is *admissible* for $r$ if every graph $G$ with the property that every
+subgraph $H$ on $m$ vertices is the union of a graph with chromatic number $\leq r$ and a graph
+with $\leq g(m)$ edges has chromatic number $\leq r+1$.
 
 The quantification is over all finite graphs $G$ (of any size), not just graphs on a fixed vertex
-set.
+set, and the condition on subgraphs is imposed at every size $m$ simultaneously.
+
+The function $f_r$ of the source is "maximal" among admissible functions. Since a function that is
+pointwise at most an admissible function is again admissible, $f_r(n) \gg n$ means that some
+admissible function grows at least linearly.
 -/
-noncomputable def f (r m : ℕ) : ℕ :=
-  sSup {k : ℕ |
-    ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
-      (∀ H : Subgraph G, Fintype.card H.verts = m →
-        ∃ E : Finset (Sym2 H.verts),
-          E ⊆ H.coe.edgeFinset ∧ E.card ≤ k ∧
-          chromaticNumber (H.coe.deleteEdges E) ≤ (r : ℕ∞)) →
-      chromaticNumber G ≤ (r + 1 : ℕ∞)}
+def IsAdmissible (r : ℕ) (g : ℕ → ℕ) : Prop :=
+  ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+    (∀ H : Subgraph G,
+      ∃ E : Finset (Sym2 H.verts),
+        E ⊆ H.coe.edgeFinset ∧ E.card ≤ g (Fintype.card H.verts) ∧
+        chromaticNumber (H.coe.deleteEdges E) ≤ (r : ℕ∞)) →
+    chromaticNumber G ≤ (r + 1 : ℕ∞)
 
 /-- Is it true that $f_2(n) \gg n$? Disproved by Rödl, who showed $f_r(n) = o(n)$ for all fixed
 $r \geq 2$. A conjecture of Erdős, Hajnal, and Szemerédi.
@@ -59,14 +62,16 @@ with chromatic number $\geq k$ such that every graph on $m$ vertices is bipartit
 most $\epsilon m$ edges. -/
 @[category research solved, AMS 5]
 theorem f_asymptotic_2 : answer(False) ↔
-    (fun (n : ℕ) => (n : ℝ)) =o[atTop] (fun (n : ℕ) => (f 2 n : ℝ)) := by
+    ∃ g : ℕ → ℕ, IsAdmissible 2 g ∧
+      (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (g n : ℝ)) := by
   sorry
 
-/-- More generally, is $f_r(n)\gg_r n$? Disproved by Rödl, who showed $f_r(n) = o(n)$ for all
-fixed $r \geq 2$. -/
+/-- More generally, is $f_r(n)\gg_r n$ for every $r \geq 2$? Disproved by Rödl, who showed
+$f_r(n) = o(n)$ for all fixed $r \geq 2$. -/
 @[category research solved, AMS 5]
-theorem f_asymptotic_general :
-    answer(False) ↔ ∀ r : ℕ, (fun n : ℕ => ((r : ℝ) * n)) =o[atTop] (fun n : ℕ => (f r n : ℝ)) := by
+theorem f_asymptotic_general : answer(False) ↔
+    ∀ r : ℕ, 2 ≤ r → ∃ g : ℕ → ℕ, IsAdmissible r g ∧
+      (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (g n : ℝ)) := by
   sorry
 
 end Erdos1092
