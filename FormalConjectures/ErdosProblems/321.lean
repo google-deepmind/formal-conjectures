@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,11 +19,20 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 321
 
-*Reference:* [erdosproblems.com/321](https://www.erdosproblems.com/321)
+*References:*
+- [erdosproblems.com/320](https://www.erdosproblems.com/320)
+- [erdosproblems.com/321](https://www.erdosproblems.com/321)
+- [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
+  theory. Monographies de L'Enseignement Mathematique (1980).
+- [BGMS25] S. Bettin, L. Grenié, G. Molteni, and C. Sanna, A lower bound for the number of Egyptian
+  fractions. arXiv:2509.10030 (2025).
+- [BlEr75] Bleicher, M. N. and Erdős, P., The number of distinct subsums of $\sum \sb{1}\spN\,1/i$.
+  Math. Comp. (1975), 29-42.
+- [BlEr76b] Bleicher, Michael N. and Erdős, Paul, Denominators of Egyptian fractions. II. Illinois
+  J. Math. (1976), 598-613.
 -/
 
 open Filter Real
-
 open scoped Finset
 
 namespace Erdos321
@@ -37,76 +46,55 @@ noncomputable def R (N : ℕ) : ℕ :=
       (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
 
 /--
-Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
-$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
+Let $S(N)$ be the number of distinct values of $\sum_{n \in A} \frac{1}{n}$ as $A$ ranges over all
+subsets of $\{1, ..., N\}$.
 -/
-@[category research open, AMS 11]
-theorem erdos_321 (N : ℕ) :
-    R N = answer(sorry) := by
-  sorry
-
-/-
-Formalisation note: it's possible that solution to `erdos_321` needs to be
-expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
-and `IsLittleO` variants below. Since a solution is not known this necessitates
-the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
-will therefore exist to the asymptotic formalisations. A true solution to
-the asymptotic variants should have a degree of optimality or non-triviality to it.
--/
+noncomputable def S (N : ℕ) : ℕ :=
+  #((Finset.Icc 1 N).powerset.image (fun (A : Finset ℕ) ↦ ∑ n ∈ A, (1 : ℚ) / n))
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
-$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
--/
-@[category research open, AMS 11]
-theorem erdos_321.variants.isTheta :
-    (fun N ↦ (R N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
-  sorry
+$\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Estimate $R(N)$.
 
-/--
-Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = O(g(N))$.
--/
-@[category research open, AMS 11]
-theorem erdos_321.variants.isBigO :
-    (fun N ↦ (R N : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
-  sorry
-
-/--
-Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = o(g(N))$.
--/
-@[category research open, AMS 11]
-theorem erdos_321.variants.isLittleO :
-    (fun N ↦ (R N : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
-  sorry
-
-/--
-Let $R(N)$ be the maximal such size. Results of Bleicher and Erdős from [BlEr75] and [BlEr76b] imply that
-$$
-\frac{N}{\log N} \prod_{i=3}^{k} \log_i N \le R(N),
-$$
-valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
-
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
-[BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
+It is now known that $R(N)\asymp \log S(N) \asymp \frac{N}{\log N}\prod_{j=3}^k \log_k N$
+where $k$ is such that $\log_kN=O(1)$. The lower bound is implicit in work of Bettin, Grenié,
+Molteni, and Sanna [BGMS25].
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.lower (N k : ℕ) (hk : 4 ≤ k) (hkN : k ≤ log^[k] N) :
-    N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N := by
+theorem erdos_321.parts.i :
+    answer(fun N ↦ N / log N * ∏ j ∈ Finset.Icc 3 (sSup { k | k ≤ log^[k] N }), (log^[j] N)) =O[atTop]
+      fun N ↦ (R N : ℝ) := by
   sorry
 
 /--
-Let $R(N)$ be the maximal such size. Results of Bleicher and Erdős from [BlEr75] and [BlEr76b] imply that
-$$
-R(N) \le \frac{1}{\log 2} \log_r N \left( \frac{N}{\log N} \prod_{i=3}^{r} \log_i N \right),
-$$
-valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
-
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
-[BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
+The upper bound was proved by GPT 5.6 Sol (prompted by Young, Zhu, and Luo) - see
+[erdosproblems.com/320] for more details.
 -/
 @[category research solved, AMS 11]
-theorem erdos_321.variants.upper (N r : ℕ) (hr : 1 ≤ r) (hrN : 1 ≤ log^[2 * r] N) :
-    R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
+theorem erdos_321.parts.ii :
+    (fun N ↦ (R N : ℝ)) =O[atTop]
+      answer(fun N ↦ N / log N * ∏ j ∈ Finset.Icc 3 (sSup { k | k ≤ log^[k] N }), (log^[j] N)) := by
+  sorry
+
+/--
+Results of Bleicher and Erdős from [BlEr75] and [BlEr76b] imply
+that $\frac{N}{\log N}\prod_{i=3}^k\log_iN\leq R(N)\leq \frac{1}{\log 2}\log_r N\left(\frac{N}{\log N}
+\prod_{i=3}^r \log_iN\right)$ valid for any $k\geq 4$ with $\log_kN\geq k$ and any $r\geq 1$ with
+$\log_{2r}N\geq 1$. (In these bounds $\log_in$ denotes the $i$-fold iterated logarithm.)
+-/
+@[category research solved, AMS 11]
+theorem erdos_321.variants.bleicher_erdos (N k r : ℕ) (hk : 4 ≤ k) (hkN : k ≤ log^[k] N)
+    (hr : 1 ≤ r) (hrN : 1 ≤ log^[2 * r] N) :
+    N / log N * ∏ i ∈ Finset.Icc 3 k, (log^[i] N) ≤ R N ∧
+      R N ≤ 1 / log 2 * log^[r] N * N / log N * ∏ i ∈ Finset.Icc 3 r, (log^[i] N) := by
+  sorry
+
+/--
+It is trivial that $2^{R(N)}\leq S(N)$, where $S(N)$ is defined in [erdosproblems.com/320].
+-/
+@[category textbook, AMS 11]
+theorem erdos_321.variants.pow_r_le_s (N : ℕ) :
+    2 ^ R N ≤ S N := by
   sorry
 
 end Erdos321
