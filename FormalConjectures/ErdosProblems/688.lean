@@ -40,19 +40,11 @@ def Erdos688Prop (n : ℕ) (ε : ℝ) : Prop :=
 noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Prop n ε}
 
 /--
-Estimate $\epsilon_n$ - lower bound.
+Estimate $\epsilon_n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_688.parts.i.lower_bound :
-    (answer(sorry) : ℕ → ℝ) =O[atTop] epsilonFunction := by
-  sorry
-
-/--
-Estimate $\epsilon_n$ - upper bound.
--/
-@[category research open, AMS 11]
-theorem erdos_688.parts.i.upper_bound :
-    epsilonFunction =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_688.parts.i :
+    epsilonFunction =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--
