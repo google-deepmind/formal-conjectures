@@ -29,7 +29,7 @@ $n$-th Fermat number exceeds $2^{2^n - k}$.
 
 namespace OeisA358684
 
-open Nat
+open Nat Asymptotics Filter
 
 /--
 A358684: $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the $n$-th Fermat
@@ -138,7 +138,7 @@ Substituting the definition of $a(n)$, this is equivalent to $\nu_2(P_n - 1) \le
 This is Conjecture 3.4 in [SA22].
 -/
 @[category research solved, AMS 11]
-theorem oeis_358684_conjecture_0 (n : ℕ) :
+theorem valuation_bound (n : ℕ) :
     padicValNat 2 (minFac (fermatNumber n) - 1) ≤ 2 ^ n - a n := by
   delta fermatNumber and a
   rw [Nat.sub_sub_self]
@@ -153,5 +153,13 @@ theorem oeis_358684_conjecture_0 (n : ℕ) :
     refine Nat.le_of_lt_succ <| (2).log_lt_of_lt_pow ?_ ?_
     · exact Nat.minFac_pos _|>.ne'
     · exact (Nat.minFac_le (by bound)).trans_lt this
+
+/--
+Conjecture II: $a(n) \sim 2^n$ as $n \to \infty$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_2 :
+    (fun n ↦ (a n : ℝ)) ~[atTop] (fun n ↦ ((2 ^ n : ℕ) : ℝ)) := by
+  sorry
 
 end OeisA358684
