@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Filter Nat
 
 namespace Erdos936

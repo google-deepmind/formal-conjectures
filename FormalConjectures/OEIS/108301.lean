@@ -28,7 +28,7 @@ The conjecture asks if there are any prime numbers in this sequence beyond $n=11
 - [A108301](https://oeis.org/A108301)
 -/
 
-public section
+@[expose] public section
 
 namespace OeisA108301
 

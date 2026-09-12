@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Nat
 
 namespace Erdos939

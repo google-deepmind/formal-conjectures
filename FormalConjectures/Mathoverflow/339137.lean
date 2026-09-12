@@ -30,6 +30,7 @@ asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
 
 @[expose] public section
+
 open scoped Polynomial
 namespace Mathoverflow339137
 

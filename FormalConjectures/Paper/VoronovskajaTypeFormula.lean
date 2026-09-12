@@ -71,6 +71,7 @@ $\alpha \neq 1$:
 -/
 
 @[expose] public section
+
 open Topology Filter Real unitInterval Polynomial
 namespace VoronovskajaTypeFormula
 

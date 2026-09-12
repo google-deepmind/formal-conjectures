@@ -27,7 +27,7 @@ $\frac{(n-1)n}{2} + 1$ up to $\frac{n(n+1)}{2}$.
 *References:*
 - [A053067](https://oeis.org/A053067)-/
 
-public section
+@[expose] public section
 
 namespace OeisA53067
 

@@ -44,7 +44,7 @@ The *prime Sierpiński problem* asks: is 271129 the smallest *prime* Sierpiński
 The *extended Sierpiński problem* asks: is 271129 the second-smallest Sierpiński number?
 -/
 
-public section
+@[expose] public section
 
 namespace SierpinskiNumber
 

@@ -31,7 +31,7 @@ The sequence is non-negative, so the sum over $\mathbb{Z}$ is converted to $\mat
 - [A007953](https://oeis.org/A007953)
 -/
 
-public section
+@[expose] public section
 
 namespace OeisA289411
 

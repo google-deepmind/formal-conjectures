@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Filter
 namespace LegendreConjecture
 

@@ -36,7 +36,7 @@ The smallest widely studied open case is `196`.
 * [OEIS A023109](https://oeis.org/A023109)
 -/
 
-public section
+@[expose] public section
 
 namespace LychrelNumbers
 

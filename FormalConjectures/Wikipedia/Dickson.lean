@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Polynomial
 namespace Dickson
 

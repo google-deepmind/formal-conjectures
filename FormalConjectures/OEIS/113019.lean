@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [A113019](https://oeis.org/A113019)
 -/
 
-public section
+@[expose] public section
 
 namespace OeisA113019
 

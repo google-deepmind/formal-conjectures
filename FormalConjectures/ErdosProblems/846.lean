@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open EuclideanGeometry
 
 namespace Erdos846

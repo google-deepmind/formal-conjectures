@@ -80,23 +80,28 @@ instance : DecidableRel Star5.Adj := by unfold Star5 completeBipartiteGraph; inf
 
 @[category test, AMS 5]
 theorem house_indep : α(HouseGraph) = 2 := by
-  sorry
+  rw [indep_num_eq_computable]
+  decide
 
 @[category test, AMS 5]
 theorem house_dom : dominationNumber HouseGraph = 2 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  sorry
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist HouseGraph = (7 / 5 : ℚ) by decide +kernel]
+  norm_num
 
 @[category test, AMS 5]
 theorem house_diameter : ediam HouseGraph = 2 := by
-  sorry
+  rw [ediam_eq_computable HouseGraph (by decide)]
+  exact_mod_cast (by decide +kernel : computable_ediam HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_radius : radius HouseGraph = 2 := by
-  sorry
+  rw [radius_eq_computable HouseGraph (by decide)]
+  exact_mod_cast (by decide +kernel : computable_radius HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_girth : HouseGraph.girth = 3 := by
@@ -119,27 +124,27 @@ theorem house_order : Fintype.card ↥(⊤ : Subgraph HouseGraph).verts = 5 := b
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
-  sorry
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_wiener : wienerIndex HouseGraph = 14 := by
-  sorry
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_max_deg : HouseGraph.maxDegree = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_matching : matchingNumber HouseGraph = 2 := by
@@ -166,11 +171,11 @@ theorem house_matching : matchingNumber HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_residue : residue HouseGraph = 2 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
@@ -181,23 +186,26 @@ theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_dom : dominationNumber K4 = 1 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide +kernel]
+  norm_num
 
 @[category test, AMS 5]
 theorem K4_diameter : ediam K4 = 1 := by
-  sorry
+  rw [ediam_eq_computable K4 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_ediam K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_radius : radius K4 = 1 := by
-  sorry
+  rw [radius_eq_computable K4 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_radius K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_girth : K4.girth = 3 := by
@@ -220,27 +228,28 @@ theorem K4_order : Fintype.card ↥(⊤ : Subgraph K4).verts = 4 := by
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
-  sorry
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_wiener : wienerIndex K4 = 6 := by
-  sorry
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_max_deg : K4.maxDegree = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_avg_deg : averageDegree K4 = 3 := by
-  sorry
+  unfold averageDegree
+  simp [Fintype.card_fin]
 
 @[category test, AMS 5]
 theorem K4_matching : matchingNumber K4 = 2 := by
@@ -267,11 +276,11 @@ theorem K4_matching : matchingNumber K4 = 2 := by
 
 @[category test, AMS 5]
 theorem K4_residue : residue K4 = 1 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_cvetkovic : cvetkovic K4 = 1 := by
@@ -282,23 +291,26 @@ theorem K4_cvetkovic : cvetkovic K4 = 1 := by
 
 @[category test, AMS 5]
 theorem petersen_indep : α(PetersenGraph) = 4 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  sorry
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide +kernel]
+  norm_num
 
 @[category test, AMS 5]
 theorem petersen_diameter : ediam PetersenGraph = 2 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem petersen_radius : radius PetersenGraph = 2 := by
-  sorry
+  rw [radius_eq_computable PetersenGraph (by decide)]
+  exact_mod_cast (by decide +kernel : computable_radius PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
@@ -312,27 +324,27 @@ theorem petersen_order : Fintype.card ↥(⊤ : Subgraph PetersenGraph).verts = 
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
-  sorry
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
-  sorry
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
@@ -371,11 +383,11 @@ theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
@@ -386,23 +398,26 @@ theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
 
 @[category test, AMS 5]
 theorem C6_indep : α(C6) = 3 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_dom : dominationNumber C6 = 2 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  sorry
+  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide +kernel]
+  norm_num
 
 @[category test, AMS 5]
 theorem C6_diameter : ediam C6 = 3 := by
-  sorry
+  rw [ediam_eq_computable C6 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_ediam C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_radius : radius C6 = 3 := by
-  sorry
+  rw [radius_eq_computable C6 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_radius C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
@@ -416,27 +431,27 @@ theorem C6_order : Fintype.card ↥(⊤ : Subgraph C6).verts = 6 := by
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_szeged : szegedIndex C6 = 54 := by
-  sorry
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_wiener : wienerIndex C6 = 27 := by
-  sorry
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_max_deg : C6.maxDegree = 2 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_avg_deg : averageDegree C6 = 2 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_matching : matchingNumber C6 = 3 := by
@@ -467,11 +482,11 @@ theorem C6_matching : matchingNumber C6 = 3 := by
 
 @[category test, AMS 5]
 theorem C6_residue : residue C6 = 2 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_cvetkovic : cvetkovic C6 = 3 := by
@@ -481,23 +496,27 @@ theorem C6_cvetkovic : cvetkovic C6 = 3 := by
 
 @[category test, AMS 5]
 theorem Star5_indep : α(Star5) = 5 := by
-  sorry
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_dom : dominationNumber Star5 = 1 := by
-  sorry
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
-  sorry
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide +kernel]
+  norm_num
 
 @[category test, AMS 5]
 theorem Star5_diameter : ediam Star5 = 2 := by
-  sorry
+  rw [ediam_eq_computable Star5 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_ediam Star5 = 2)
 
 @[category test, AMS 5]
 theorem Star5_radius : radius Star5 = 1 := by
-  sorry
+  rw [radius_eq_computable Star5 (by decide)]
+  exact_mod_cast (by decide +kernel : computable_radius Star5 = 1)
 
 @[category test, AMS 5]
 theorem Star5_girth : Star5.egirth = ⊤ := by
@@ -536,27 +555,27 @@ theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_szeged : szegedIndex Star5 = 25 := by
-  sorry
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_wiener : wienerIndex Star5 = 25 := by
-  sorry
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_min_deg : Star5.minDegree = 1 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_max_deg : Star5.maxDegree = 5 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
-  sorry
+  unfold averageDegree; simp [Fintype.card_sum, Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
@@ -598,11 +617,11 @@ theorem Star5_matching : matchingNumber Star5 = 1 := by
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
-  sorry
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by

@@ -54,11 +54,13 @@ abbrev bddProdUpper : Set (ℕ × ℕ) :=
 noncomputable instance : Fintype (A.bddProdUpper x) :=
   (((Set.finite_Icc 1 ⌊x⌋₊).prod (Set.finite_Icc 1 ⌊x⌋₊)).subset <| by grind).fintype
 
+noncomputable instance : Fintype (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ) :=
+  ((Set.finite_Icc 1 ⌊x⌋₊).subset Set.inter_subset_right).fintype
+
 end Set
 
 end Prelims
 
-open Classical in
 /--
 Let $\operatorname{Log} x := \max\{\log x, 1\}$,
 $\operatorname{Log}_2x = \operatorname{Log} (\operatorname{Log} x)$, and
@@ -89,7 +91,6 @@ theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
       ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop := by
   sorry
 
-open Classical in
 /--
 Tao resolved erdos_442 in the negative in Theorem 1 of https://arxiv.org/pdf/2407.04226.
 The following is a formalisation of that theorem with $C_0 = 1$.

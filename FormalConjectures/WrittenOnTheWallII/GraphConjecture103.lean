@@ -41,18 +41,18 @@ abbrev wowii103Counterexample : SimpleGraph (Fin 11) :=
 /-- The counterexample is connected. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_connected : wowii103Counterexample.Connected := by
-  sorry
+  decide
 
 /-- The counterexample has independence number nine. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_indepNum : wowii103Counterexample.indepNum = 9 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 /-- The largest induced bipartite subgraph of the counterexample has ten vertices. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_bipartiteSize :
     wowii103Counterexample.largestInducedBipartiteSubgraphSize = 10 := by
-  sorry
+  sorry --this was previously proven using `native_decide`
 
 /-- The counterexample has average eccentricity $30/11$. -/
 @[category test, AMS 5]

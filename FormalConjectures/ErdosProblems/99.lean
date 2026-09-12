@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Set Metric EuclideanGeometry
 
 namespace Erdos99

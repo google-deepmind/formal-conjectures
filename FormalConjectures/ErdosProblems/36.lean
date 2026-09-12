@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open scoped Topology
 open Filter
 namespace Erdos36
@@ -142,7 +143,8 @@ private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
     MaxOverlap A B = maxOverlapC A B := maxOverlap_eq_sup A B
 
 /-- The `n`-element subsets of `{1, …, 2n}`. -/
-private noncomputable def parts (n : ℕ) : Finset (Finset ℤ) :=
+private def parts (n : ℕ) : Finset (Finset ℤ) :=
+  letI : Preorder ℤ := Int.instLinearOrder.toPreorder
   (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
 
 @[category API, AMS 5 11]

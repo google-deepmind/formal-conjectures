@@ -28,7 +28,7 @@ public import FormalConjecturesUtil
 - [MathOverflow](https://mathoverflow.net/questions/69509/small-residue-classes-with-small-reciprocal)
 -/
 
-public section
+@[expose] public section
 
 open Filter
 

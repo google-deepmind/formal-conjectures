@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
 -/
 
 @[expose] public section
+
 open Finset SimpleGraph
 open scoped Nat
 namespace Erdos835

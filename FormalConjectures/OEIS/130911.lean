@@ -27,7 +27,7 @@ minus the number with even binary weight (evil primes).
 *References:*
 - [A130911](https://oeis.org/A130911)-/
 
-public section
+@[expose] public section
 
 namespace OeisA130911
 

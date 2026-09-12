@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public meta import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -112,8 +111,7 @@ theorem z_zero : z 0 = 1 := by
 $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 @[category test, AMS 5]
 theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by
-  simp only [z, numTransversals]
-  native_decide
+  sorry --this was previously proven using `native_decide`
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
 @[category textbook, AMS 5]

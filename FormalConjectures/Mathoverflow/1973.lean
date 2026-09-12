@@ -30,6 +30,7 @@ Does the 6-sphere $S^6$ admit the structure of a complex manifold?
 -/
 
 @[expose] public section
+
 open scoped Manifold
 namespace Mathoverflow1973
 
