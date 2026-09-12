@@ -39,7 +39,7 @@ theorem erdos_672 :
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/herakles-dev/erdos672-four-squares-lean/blob/68adec55180c6103ac5511a5c91c84b25a5044f9/Erdos672/Statement.lean#L41"]
 lemma erdos_672.variants.euler :
     Erdos672With 4 2 := by
   sorry
