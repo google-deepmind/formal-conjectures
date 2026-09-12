@@ -78,9 +78,12 @@ theorem erdos_357.parts.ii.bigTheta_version :
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = o(f)$ ? -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-357-additional-targets/blob/b60766de669af22303446a7d16563d7b7680ae7e/lean/Erdos357AdditionalTargetsFC.lean#L282-L285"]
 theorem erdos_357.parts.ii.littleO_version :
-    (answer(sorry) : ℕ → ℝ) =o[atTop] (fun n ↦ (f n : ℝ)) := by
+    (answer(fun n : ℕ ↦ Real.log (n : ℝ)) : ℕ → ℝ) =o[atTop]
+      (fun n ↦ (f n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
@@ -157,9 +160,12 @@ theorem erdos_357.variants.monotone.parts.i : (fun n ↦ (h n : ℝ)) =o[atTop] 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $g = O(h)$ ? -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-357-additional-targets/blob/b60766de669af22303446a7d16563d7b7680ae7e/lean/Erdos357AdditionalTargetsFC.lean#L287-L290"]
 theorem erdos_357.variants.monotone.parts.ii.bigO_version :
-    (answer(sorry) : ℕ → ℝ) =O[atTop] (fun n ↦ (h n : ℝ)) := by
+    (answer(fun n : ℕ ↦ √(n : ℝ)) : ℕ → ℝ) =O[atTop]
+      (fun n ↦ (h n : ℝ)) := by
   sorry
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
@@ -181,9 +187,12 @@ theorem erdos_357.variants.monotone.parts.ii.bigTheta_version :
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $g = o(h)$ ? -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-357-additional-targets/blob/b60766de669af22303446a7d16563d7b7680ae7e/lean/Erdos357AdditionalTargetsFC.lean#L292-L295"]
 theorem erdos_357.variants.monotone.parts.ii.littleO_version :
-    (answer(sorry) : ℕ → ℝ) =o[atTop] (fun n ↦ (h n : ℝ)) := by
+    (answer(fun n : ℕ ↦ Real.log (n : ℝ)) : ℕ → ℝ) =o[atTop]
+      (fun n ↦ (h n : ℝ)) := by
   sorry
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
