@@ -508,6 +508,27 @@ def getProofConditions (declName : Name) : m (List Name) := do
   let tag ← getFormalProofTag declName
   return (tag.map (·.conditions)).getD []
 
+/-- Whether `declName` is established without `sorry`, following the declarations that its
+statement and its proof use.
+
+Testing `value?.any (!·.hasSorry)` on the proof term alone is not enough: it reports
+`theorem wrapper : P := admitted_helper` as proved even when `admitted_helper` is admitted, so
+reorganising an unproved conjecture through a helper looks like a proof. `Lean.collectAxioms`
+walks the transitive dependencies instead, so `sorryAx` in any of them is caught here. It walks
+the statement as well as the proof, so a theorem whose statement mentions a definition built from
+an admitted lemma also counts as not established. It reads
+pre-computed axiom sets for imported declarations, so the walk stays inside the current module,
+and it takes its constants from the kernel environment, which is what waits on a proof that is
+still elaborating; the `findAsync?` test below only rules out a declaration that does not
+exist. -/
+def hasSorryFreeProof (declName : Name) : m Bool := do
+  let some info := (← MonadEnv.getEnv).findAsync? declName | return false
+  -- A declaration with no proof term at all, such as an `axiom`, is not proved, but
+  -- `collectAxioms` would report it as such because `sorryAx` is not among the axioms it
+  -- depends on. (An `opaque` does have a value and is judged on it, like any definition.)
+  if (info.toConstantInfo.value? (allowOpaque := true)).isNone then return false
+  return !(← collectAxioms declName).contains ``sorryAx
+
 end Helper
 
 /-- Verify that the list of problems contains the expected number of problems
