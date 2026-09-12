@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 *References:*
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.21)
-- [Ra33] Rado, Richard, *Studien zur Kombinatorik*. Math. Zeit. 36 (1933), 242-280.
+- [Ra33] Rado, Richard, *Studien zur Kombinatorik*. Math. Zeit. 36 (1933), 424-480.
 - [FoKl06] Fox, Jacob and Kleitman, Daniel, *On Rado's boundedness conjecture*. J. Combin. Theory
   Ser. A 113 (2006), no. 1, 84-100.
 - [ElJo23] Ellis, David and Johnson, Robert (editors), *A collection of open problems in
@@ -36,8 +36,10 @@ namespace Green21
 The coefficients $a_1, \dots, a_k$ satisfy **Rado's condition** if $\sum_{i \in I} a_i = 0$ for
 some non-empty $I \subseteq [k]$.
 
-For a single homogeneous equation this is exactly the criterion of Rado's theorem [Ra33]:
-$a_1x_1 + \cdots + a_kx_k = 0$ is partition regular if and only if the coefficients satisfy it.
+For a single homogeneous equation with $k > 0$ nonzero coefficients this is exactly the
+criterion of Rado's theorem [Ra33]: $a_1x_1 + \cdots + a_kx_k = 0$ is partition regular if and
+only if the coefficients satisfy it. (With a zero coefficient the condition holds trivially, but
+e.g. $0 \cdot x_1 + x_2 = 0$ has no solution in positive integers.)
 -/
 def RadoCondition {k : ℕ} (a : Fin k → ℤ) : Prop :=
   ∃ I : Finset (Fin k), I.Nonempty ∧ ∑ i ∈ I, a i = 0
@@ -97,17 +99,21 @@ theorem green_21.variants.fox_kleitman_sharp :
 
 /--
 A question [FoKl06, Conjecture 5] of Fox and Kleitman, which they call a 'modular analogue' of
-Rado's Boundedness Conjecture. Let $p$ be a prime, and suppose that $a_1, \dots, a_k$ are
-integers with $\sum_{i \in I} a_i \equiv 0 \pmod p$ only when $I = \emptyset$. Does there exist
+Rado's Boundedness Conjecture. Let $k > 0$, let $p$ be a prime, and suppose that
+$a_1, \dots, a_k$ are integers with $\sum_{i \in I} a_i \equiv 0 \pmod p$ only when
+$I = \emptyset$. Does there exist
 an $f(k)$-colouring of $(\mathbb{Z}/p\mathbb{Z})^*$ with no monochromatic solution to
 $a_1x_1 + \cdots + a_kx_k = 0$? This seems to be open even when $k = 3$; Green [Gr24] suspects
 the answer may be negative.
 
 The point of the question is that the number of colours $f(k)$ must not depend on $p$.
+
+The arity $k$ is required to be positive, as in [FoKl06]: for $k = 0$ the empty tuple is a
+monochromatic solution with sum $0$ for every colouring, so no $f(0)$ could work.
 -/
 @[category research open, AMS 5 11]
 theorem green_21.variants.fox_kleitman_modular : answer(sorry) ↔ ∃ f : ℕ → ℕ,
-    ∀ (k p : ℕ), p.Prime → ∀ a : Fin k → ℤ,
+    ∀ (k p : ℕ), 0 < k → p.Prime → ∀ a : Fin k → ℤ,
       (∀ I : Finset (Fin k), (p : ℤ) ∣ ∑ i ∈ I, a i → I = ∅) →
       ∃ col : (ZMod p)ˣ → Fin (f k), ∀ x : Fin k → (ZMod p)ˣ,
         (∀ i j, col (x i) = col (x j)) → ∑ i, (a i : ZMod p) * (x i : ZMod p) ≠ 0 := by

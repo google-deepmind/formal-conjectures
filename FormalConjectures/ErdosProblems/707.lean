@@ -94,12 +94,14 @@ theorem erdos_707.variants.counterexample_prime (A : Set ℕ) (hA : A = {1, 2, 4
 
 /--
 Alexeev and Mixon [arxiv/2510.19804] have disproved this conjecture,
-showing that $\{1, 2, 4, 8, 13\}$ cannot be extended to any perfect difference set.
+showing that $\{1, 2, 4, 8, 13\}$ cannot be extended to any perfect difference set modulo a
+positive integer. The modulus `0` is excluded, as in `erdos_707`: `IsPerfectDifferenceSet B 0`
+describes an infinite perfect difference set in `ℤ`, and every finite Sidon set extends to one.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.counterexample_mian_chowla (A : Set ℕ) (hA : A = {1, 2, 4, 8, 13}) :
    Finite A ∧ IsSidon A ∧
-   ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
+   ∀ (B : Set ℕ) (n : ℕ), 0 < n → A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
 
 /--
@@ -112,7 +114,7 @@ as pointed out in [arxiv/2510.19804].
 @[category research solved, AMS 5 11]
 theorem erdos_707.variants.counterexample_hall (A : Set ℕ) (hA : A = {1, 3, 9, 10, 13}) :
    Finite A ∧ IsSidon A ∧
-   ∀ (B : Set ℕ) (n : ℕ), A ⊆ B → ¬IsPerfectDifferenceSet B n := by
+   ∀ (B : Set ℕ) (n : ℕ), 0 < n → A ⊆ B → ¬IsPerfectDifferenceSet B n := by
   sorry
 
 

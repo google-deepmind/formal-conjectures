@@ -61,11 +61,15 @@ noncomputable def W (k r : ℕ) : ℕ := sInf (mixedMonoAPGuaranteeSet k r)
 Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
 
 We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
-We know it is not the case for $k = 3$ [Gr21, p.3].
+The answer is no, already for $k = 4$. Every red $k$-term progression with $k \ge 3$ contains a
+red $3$-term progression, so `mixedMonoAPGuaranteeSet k r ⊆ mixedMonoAPGuaranteeSet 3 r`, and
+both sets are nonempty by van der Waerden's theorem, so $W(3, r) \le W(k, r)$. Polynomial
+growth for one $k \ge 4$ would therefore force polynomial growth for $k = 3$, contradicting
+`green_14_polynomial_k_eq_3` [Gr21, p.3].
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_14_polynomial :
-    answer(sorry) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
+    answer(False) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
   sorry
 
 /-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
@@ -87,14 +91,14 @@ theorem green_14_quadratic :
 /-- [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_green :
-    answer(True) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] fun r => (W 3 r : ℝ) := by
   sorry
 
 /-- [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_hunter :
-    answer(True) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 

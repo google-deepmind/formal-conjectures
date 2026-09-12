@@ -49,10 +49,12 @@ theorem erdos_516 {f : ℂ → ℂ} {n : ℕ → ℕ}
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
-/-- Let `f = ∑ aₖzⁿₖ` be an entire function such that `nₖ > k (log k) ^ (2 + c)`.
-Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
+/-- Let `f = ∑ aₖzⁿₖ` be an entire function with strictly increasing exponents such that
+`nₖ > k (log k) ^ (2 + c)`. Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65].
+Without `StrictMono n`, repeated exponents let nonzero coefficients cancel, and `f = 0` satisfies
+the other hypotheses. -/
 @[category research solved, AMS 30]
-theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
+theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ} (hmono : StrictMono n)
     (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by

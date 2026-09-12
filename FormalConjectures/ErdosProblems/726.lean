@@ -37,12 +37,13 @@ $\sum_{p\leq n}1_{n\in (p/2,p)\pmod{p}}\frac{1}{p}\sim \frac{\log\log n}{2}$?
 A conjecture of Erdős, Graham, Ruzsa, and Straus [EGRS75].
 
 By $n\in (p/2,p)\pmod{p}$ we mean $n\equiv r\pmod{p}$ for some integer $r$ with $p/2<r<p$.
+The remainder `n % p` is computed in `ℕ` before casting to `ℝ`.
 -/
 @[category research open, AMS 11]
 theorem erdos_726 :
     answer(sorry) ↔
       (fun n : ℕ ↦ ∑ p ∈ (range (n + 1)).filter
-          (fun p : ℕ ↦ p.Prime ∧ (p : ℝ) / 2 < (n % p : ℝ)),
+          (fun p : ℕ ↦ p.Prime ∧ (p : ℝ) / 2 < ((n % p : ℕ) : ℝ)),
         (1 : ℝ) / (p : ℝ))
       ~[atTop] (fun n : ℕ ↦ Real.log (Real.log (n : ℝ)) / 2) := by
   sorry
