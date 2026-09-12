@@ -110,4 +110,32 @@ theorem erdos_944.variants.large_k_for_any_r (r : ℕ) (hr : 1 ≤ r) : ∀ᶠ k
     ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
 
-  end Erdos944
+/-
+## Verified partial result for the $k = 4$, $r = 1$ case (6-regular subproblem)
+
+Skottová and Steiner [SkSt25] proved that every $(4,1)$-graph (a $4$-vertex-critical graph with
+no critical edge) has minimum degree and edge-connectivity at least $6$, and asked (their
+Problem 5.2) whether a $6$-regular $(4,1)$-graph exists. A verified computational programme [Fe26]
+shows that there is no $6$-regular $4$-vertex-critical graph on $n \le 15$ except a unique one on
+$n = 13$ (which has critical edges); hence any $6$-regular $(4,1)$-graph has at least $16$
+vertices.
+
+[SkSt25] Skottová, Ema and Steiner, Raphael, _Critical edge sets in vertex-critical graphs_,
+arXiv:2508.08703 (2025).
+
+[Fe26] Ferudun, A., _Exact $6$-cut rigidity and small-order superconnectivity for the $6$-regular
+case of Dirac's $k = 4$ problem_, arXiv:2606.18462 (2026). The full proofs, code, certificates,
+and Lean cores are provided there.
+-/
+
+/-- Any $6$-regular $(4,1)$-graph — a $6$-regular $4$-vertex-critical graph with no critical
+edge — has at least $16$ vertices: a verified computation [Fe26] rules out every such graph on
+$n \le 15$, settling the small-order cases of Skottová–Steiner Problem 5.2 [SkSt25]. -/
+@[category research solved, AMS 5]
+theorem erdos_944.variants.dirac_conjecture.k_eq_four.six_regular_min_order
+    [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hreg : G.IsRegularOfDegree 6) (h : G.IsErdos944 4 1) :
+    16 ≤ Fintype.card V := by
+  sorry
+
+end Erdos944
