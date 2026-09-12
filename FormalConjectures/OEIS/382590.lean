@@ -24,7 +24,9 @@ where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(1)=1, a(2)=2, b(1)=1, b(2)=0
 
 *References:*
 - [A382590](https://oeis.org/A382590)
-- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
+- [mathoverflow/490330](https://mathoverflow.net/questions/490330): B. Morga, "Peculiar family of
+  recurrence formula where for $n>1$ if you take the $n$-th prime factor of each term, you get an
+  eventually periodic sequence", Mar. 31, 2025.
 -/
 
 namespace OeisA382590
@@ -56,16 +58,15 @@ def a (n : ℕ) : ℤ := (abPair n).fst
 open Nat
 
 /--
-The k-th prime factor of an integer n (where k>=1), counted with multiplicity.
-This is defined as the k-th element (0-indexed k-1) of `Nat.primeFactorsList n.natAbs`.
-Returns 1 if n has fewer than k prime factors or if n is 0, 1, or -1,
+The $k$-th smallest distinct prime factor of an integer $n$ (where $k \ge 1$).
+This is defined as the $k$-th element (0-indexed $k-1$) of the increasing list of
+distinct prime factors of `n.natAbs`.
+Returns 1 if n has fewer than k distinct prime factors or if n is 0, 1, or -1,
 following the informal convention.
 -/
 def kthPrimeFactor (k : ℕ) (n : ℤ) : ℕ :=
   if h₀ : k = 0 then 1 else
-  let n_abs := Int.natAbs n
-  let L := primeFactorsList n_abs
-  -- prime factors list length is L.length. We look for k-th element, index k-1.
+  let L := n.natAbs.primeFactors.sort (· ≤ ·)
   if h_len : k - 1 ≥ L.length then 1 else
   L[k - 1]
 
@@ -89,11 +90,14 @@ lemma a_4 : a 4 = 8 := by rfl
 /--
 Conjecture: For any $k > 1$, if you take the $k$-th prime factor of each term, you get an eventually periodic sequence. - _Pontus von Brömssen_, Mar 30 2025
 
-A formal proof has been found with the methods described in
-[arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+Here the $k$-th prime factor of $a(n)$ is the $k$-th smallest distinct prime divisor of
+$|a(n)|$; for example the second prime factors of $a(5) = 18$, $a(6) = 20$ and $a(7) = 896$
+are $3$, $5$ and $7$.
+
+This was proved by Terence Tao in a [MathOverflow answer](https://mathoverflow.net/a/490348),
+using that $a(n)$ divides $a(n+3)$ for all $n$.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/382590.wip.lean#L281"]
+@[category research solved, AMS 11]
 theorem kthPrimeFactor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
     ∀ n : ℕ, n ≥ N₀ → kthPrimeFactor k (a (n + p)) = kthPrimeFactor k (a n) := by
     sorry
