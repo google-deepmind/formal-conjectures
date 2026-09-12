@@ -49,7 +49,8 @@ namespace Erdos571
 /--
 Show that for any rational $\alpha \in [1,2)$ there exists a bipartite graph $G$ such that $$\mathrm{ex}(n;G)\asymp n^{\alpha}.$$
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/2f055a777231a73a305b379e993c37f00ed5a66b/problems/571/Erdos571.lean"]
 theorem erdos_571 :
     ∀ α : ℚ, 1 ≤ α → α < 2 →
       ∃ q : ℕ, ∃ G : SimpleGraph (Fin q), G.IsBipartite ∧
