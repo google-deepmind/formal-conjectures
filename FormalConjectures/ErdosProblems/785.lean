@@ -39,6 +39,16 @@ import FormalConjecturesUtil
 - [Ru17] Ruzsa, Imre Z., *Exact additive complements*. Q. J. Math. (2017), 227-235.
 - [SaSz94] Sárközy, A. and Szemerédi, E., *On a problem in additive number theory*.
   Acta Math. Hungar. (1994), 237-245.
+
+## Conventions
+
+Sets are subsets of `ℕ = {0, 1, 2, …}` and the counting function is $A(x) = |A \cap [0, x]|$,
+as in [ChFa10], [ChFa11], [ChFa14]. The sources using positive integers and $|A \cap [1, x]|$
+([SaSz94], [Ru17], [erdosproblems.com/785](https://www.erdosproblems.com/785)) are equivalent:
+for sets of positive integers the two counting functions agree, and conversely translating both
+sets by $1$ changes $x$ by $1$ and $A(x)B(x) - x$ by $-1$, which does not affect any of the
+statements below. Counting only $[1, x]$ while allowing $0 \in A$ would not be consistent, since
+then $0$ contributes to sums but not to the counting functions.
 -/
 
 open Filter Pointwise
@@ -46,14 +56,14 @@ open scoped Topology
 
 namespace Erdos785
 
-/-- The counting function $A(x)=\lvert A\cap [1,x]\rvert$. -/
+/-- The counting function $A(x)=\lvert A\cap [0,x]\rvert$. -/
 noncomputable def counting (A : Set ℕ) (x : ℕ) : ℕ :=
-  (A ∩ Set.Icc 1 x).ncard
+  (A ∩ Set.Iic x).ncard
 
-/-- The largest element of $A$ in $[1,x]$, that is $a^*(x)=\max A\cap [1,x]$
+/-- The largest element of $A$ in $[0,x]$, that is $a^*(x)=\max A\cap [0,x]$
 (equal to $0$ when there is no such element). -/
 noncomputable def aStar (A : Set ℕ) (x : ℕ) : ℕ :=
-  sSup (A ∩ Set.Icc 1 x)
+  sSup (A ∩ Set.Iic x)
 
 /-- Two sets $A, B\subseteq \mathbb{N}$ are *exact additive complements* if $A+B$ contains all
 large integers and $A(x)B(x)\sim x$. -/
@@ -72,7 +82,9 @@ A conjecture of Erdős and Danzer. The answer is yes, proved by Sárközy and Sz
 who actually proved that it is impossible for
 $$A(x)B(x)-x=o(A(x)).$$
 
-This was formalized in Lean by van Doorn using Aristotle.
+This was formalized in Lean by van Doorn using Aristotle. The linked proof assumes that $A$ and
+$B$ consist of positive integers; the statement below for arbitrary $A, B \subseteq \mathbb{N}$
+follows by translating both sets by $1$ (see the conventions in the module docstring).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
 "https://github.com/Woett/Lean-files/blob/main/ErdosProblem785.lean"]
@@ -92,23 +104,29 @@ theorem erdos_785.variants.danzer :
 
 /--
 Sárközy and Szemerédi [SaSz94] proved that it is impossible for
-$$A(x)B(x)-x=o(A(x)).$$
+$$A(x)B(x)-x=o(A(x)),$$
+where $A$ denotes the thinner of the two sets (by [Na59] one of $A, B$ satisfies
+$A(x) < x^{\varepsilon}$ eventually, see `erdos_785.variants.narkiewicz`). Since the statement
+here does not fix which of the two sets is thinner, it is stated with $\min(A(x), B(x))$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.sarkozy_szemeredi (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
     (h : IsExactAdditiveComplement A B) :
     ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =o[atTop]
-      (fun x : ℕ => (counting A x : ℝ)) := by
+      (fun x : ℕ => (min (counting A x) (counting B x) : ℝ)) := by
   sorry
 
 /--
-Chen and Fang [ChFa15] proved $A(x)B(x)-x\ll A(x)^c$ cannot hold for any constant $c>0$.
+Chen and Fang [ChFa15] proved $A(x)B(x)-x\ll A(x)^c$ cannot hold for any constant $c>0$,
+where $A$ denotes the thinner of the two sets (see `erdos_785.variants.sarkozy_szemeredi`);
+as there, the statement is made symmetric using $\min(A(x), B(x))$. Note that for the thicker
+set $B$ the bound $A(x)B(x) - x \ll B(x)^2$ holds trivially.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.chen_fang (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
     (h : IsExactAdditiveComplement A B) (c : ℝ) (hc : 0 < c) :
     ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =O[atTop]
-      (fun x : ℕ => (counting A x : ℝ) ^ c) := by
+      (fun x : ℕ => (min (counting A x) (counting B x) : ℝ) ^ c) := by
   sorry
 
 /--
@@ -137,7 +155,7 @@ theorem erdos_785.variants.ruzsa_upper_bound (w : ℕ → ℝ) (hw : Tendsto w a
   sorry
 
 /--
-Ruzsa [Ru17] proves that, if $a^*(x)=\max A \cap [1,x]$ and $A$ and $B$ satisfy the conditions
+Ruzsa [Ru17] proves that, if $a^*(x)=\max A \cap [0,x]$ and $A$ and $B$ satisfy the conditions
 in the problem then (after possibly changing the roles of $A$ and $B$)
 $$A(x)B(x)-x > (1-o(1))\frac{a^*(x)}{A(x)}.$$
 -/
