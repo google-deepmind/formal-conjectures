@@ -23,6 +23,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/1049](https://www.erdosproblems.com/1049)
 - [Er48] Erdős, P., On arithmetical properties of Lambert series. J. Indian Math. Soc. (N.S.)
   (1948), 63-66.
+- [BV94] Bundschuh, P. and Väänänen, K., Arithmetical investigations of a certain infinite
+  product. Compositio Math. 91 (1994), 175-199.
 -/
 
 namespace Erdos1049
@@ -44,10 +46,93 @@ theorem erdos_1049 :
 /--
 Erdős [Er48] proved that this is true if $t\geq 2$ is an integer.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/a9104f2f12aa0d4e9da8a93574b14990ed02dc2a/adapters/FormalConjecturesAdapter.lean#L94-L107"]
 theorem erdos_1049.variants.geq_2_integer :
      ∀ t : ℤ, t ≥ 2 → Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
   sorry
+
+/--
+Bundschuh and Väänänen [BV94, Theorem 2] proved a quantitative linear independence
+result for $E_q$ and $E_q'$ whose $\alpha = -1$ case gives irrationality for a range
+of non-integer rational bases.
+
+Their parameter is $\lambda = \log h(t) / \log t$, where $h$ denotes the absolute
+height; for $t = a/b > 1$ in lowest terms this is $\log a / \log(a/b)$. In the case
+$\alpha = -1$ their Theorem 2 admits every $\lambda < (1/2 + 1/\pi^2)^{-1}$, and
+$L_t(-1) = \sum_{j \geq 1} (t^j - 1)^{-1}$ is the series in question, so the
+conclusion is its irrationality. Solving the condition on $\lambda$ for $a$ and $b$
+gives the hypothesis below.
+
+At $b = 1$ the hypothesis reads $0 < 1/2 - 1/\pi^2$, so this statement contains
+`erdos_1049.variants.geq_2_integer`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1049.variants.bundschuh_vaananen (t : ℚ) (ht : 1 < t)
+    (hlam : Real.log t.den / Real.log t.num < 1 / 2 - 1 / Real.pi ^ 2) :
+    Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
+  sorry
+
+/--
+The Bundschuh–Väänänen condition holds at $t = 7/2$, because
+$$\frac{\log 2}{\log 7} < \frac{9}{25} < \frac{1}{2} - \frac{1}{\pi^2},$$
+the first inequality since $2^{25} < 7^9$ and the second since $\pi^2 > 9$.
+
+This is the smallest denominator-$2$ base the criterion reaches. The bases $a/2$
+with $a$ odd and $1 < a/2 < 7/2$ are $3/2$ and $5/2$, and the condition fails at
+both: see `erdos_1049.variants.bundschuh_vaananen_fails_at_three_halves`, and
+$\log 2 / \log 5 > 2/5 > 1/2 - 1/\pi^2$ since $2^5 > 5^2$ and $\pi^2 < 10$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1049.variants.seven_halves :
+    Irrational (∑' n : ℕ+, 1 / (((7 / 2 : ℚ) : ℝ) ^ (n : ℕ) - 1)) := by
+  refine erdos_1049.variants.bundschuh_vaananen (7 / 2) (by norm_num) ?_
+  have hden : (((7 / 2 : ℚ)).den : ℝ) = 2 := by norm_num
+  have hnum : (((7 / 2 : ℚ)).num : ℝ) = 7 := by norm_num
+  rw [hden, hnum]
+  have h7 : (0 : ℝ) < Real.log 7 := Real.log_pos (by norm_num)
+  have key : (25 : ℝ) * Real.log 2 < 9 * Real.log 7 := by
+    have h : Real.log ((2 : ℝ) ^ (25 : ℕ)) < Real.log ((7 : ℝ) ^ (9 : ℕ)) :=
+      Real.log_lt_log (by positivity) (by norm_num)
+    rw [Real.log_pow, Real.log_pow] at h
+    push_cast at h
+    linarith
+  have h1 : Real.log 2 / Real.log 7 < 9 / 25 := by
+    rw [div_lt_div_iff₀ h7 (by norm_num)]
+    linarith
+  have hpi : (3 : ℝ) < Real.pi := Real.pi_gt_three
+  have hpi2 : (9 : ℝ) < Real.pi ^ 2 := by nlinarith
+  have hinv : 1 / Real.pi ^ 2 < 1 / 9 :=
+    one_div_lt_one_div_of_lt (by norm_num) hpi2
+  linarith
+
+/--
+The criterion in `erdos_1049.variants.bundschuh_vaananen` does not reach $t = 3/2$:
+$$\frac{\log 2}{\log 3} > \frac{1}{2} > \frac{1}{2} - \frac{1}{\pi^2},$$
+the first inequality since $3 < 2^2$.
+
+So the smallest non-integer rational base lies outside the range covered by [BV94],
+and `erdos_1049` is open there.
+-/
+@[category textbook, AMS 11]
+theorem erdos_1049.variants.bundschuh_vaananen_fails_at_three_halves :
+    ¬ (Real.log ((3 / 2 : ℚ)).den / Real.log ((3 / 2 : ℚ)).num
+        < 1 / 2 - 1 / Real.pi ^ 2) := by
+  have hden : (((3 / 2 : ℚ)).den : ℝ) = 2 := by norm_num
+  have hnum : (((3 / 2 : ℚ)).num : ℝ) = 3 := by norm_num
+  rw [hden, hnum, not_lt]
+  have h3 : (0 : ℝ) < Real.log 3 := Real.log_pos (by norm_num)
+  have key : Real.log 3 < 2 * Real.log 2 := by
+    have h : Real.log 3 < Real.log ((2 : ℝ) ^ (2 : ℕ)) :=
+      Real.log_lt_log (by norm_num) (by norm_num)
+    rw [Real.log_pow] at h
+    push_cast at h
+    linarith
+  have hhalf : (1 : ℝ) / 2 < Real.log 2 / Real.log 3 := by
+    rw [lt_div_iff₀ h3]
+    linarith
+  have hpos : (0 : ℝ) < 1 / Real.pi ^ 2 := by positivity
+  linarith
 
 /--
 Convergent case (`|t| > 1`).
