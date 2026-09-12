@@ -61,10 +61,15 @@ theorem a_3 : a 3 = 2 := by
 /--
 Any subsequence a(n .. n+m) with n > 2 (as to exclude the
 untypical primes 2 and 3) should occur infinitely many times at other starting points k.
+
+This is false. The five-term block starting at $n = 3$ is $(2,4,2,4,2)$, and a congruence
+modulo $5$ shows that it occurs only at $n = 3$.
 -/
-@[category research open, AMS 11]
-theorem conjecture (n m : ℕ) (hn : n ≥ 3) :
-    Set.Infinite {k : ℕ | gapSubsequence k (m + 1) = gapSubsequence n (m + 1)} := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-oai-jajpvieznaevpoyg/prime_gap_subsequences_occur_infinitely_often/Submission/Spec.lean#L134"]
+theorem conjecture :
+    ¬ ∀ (n m : ℕ), n ≥ 3 →
+      Set.Infinite {k : ℕ | gapSubsequence k (m + 1) = gapSubsequence n (m + 1)} := by
   sorry
 
 end OeisA1223
