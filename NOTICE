@@ -1,0 +1,19 @@
+Formal Conjectures
+Copyright 2026 The Formal Conjectures Authors
+
+The material in `FormalConjecturesForMathlib` that supports the Hodge
+conjecture was ported from the Apache-2.0-licensed HodgeConjecture project:
+
+  https://github.com/Paul-Lez/HodgeConjecture
+
+It contains proofs adapted from the Apache-2.0-licensed sphere-six-complex
+project:
+
+  https://github.com/deancureton/sphere-six-complex
+
+The adapted material includes contributions by Paul Lezeau, Rado Kirov,
+Chris Birkbeck, and Dean Cureton, principally from pull requests #49, #103,
+and #185 and from the files and revisions identified in individual Lean
+module docstrings. Those source-level notices are retained.
+
+This NOTICE is informational. The licensing terms are in LICENSE.
