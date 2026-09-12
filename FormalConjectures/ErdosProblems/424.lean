@@ -22,6 +22,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/424](https://www.erdosproblems.com/424)
  - [A5244](https://oeis.org/A5244)
  - [Ben Green's Open Problem 63](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 63)
+ - [Ko26] Korsky, S., *A problem of Erdős on the sequence $a_ia_j - 1$*,
+   [arXiv:2608.07910](https://arxiv.org/abs/2608.07910)
 -/
 
 namespace Erdos424
@@ -51,6 +53,14 @@ Let $a_1 = 2$ and $a_2 = 3$ and continue the sequence by appending to $a_1, \ldo
 values of $a_i a_j - 1$ with $i \neq j$.
 Is it true that the set of integers which eventually appear has positive density?
 
+As explained on [erdosproblems.com/424](https://www.erdosproblems.com/424), "positive density"
+here means positive *lower* density: is there $c > 0$ such that for all large $x$ at least
+$cx$ of the integers in $[1, x]$ appear? See `erdos_424.variants.exact_density` for the
+literal reading.
+
+Korsky [Ko26] has announced a proof that the set has positive lower density; it is listed
+as a proof claim on [erdosproblems.com/424](https://www.erdosproblems.com/424), which still
+records the problem as open.
 -/
 @[category research open, AMS 11]
 theorem erdos_424 : answer(sorry) ↔ 0 < generatedSet.lowerDensity := by
