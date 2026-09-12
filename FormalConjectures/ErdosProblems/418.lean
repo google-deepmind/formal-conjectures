@@ -109,16 +109,14 @@ theorem erdos_418.variants.seven_mem_cototient :
 Erdős [Er73b] has shown that a positive density set of natural numbers cannot be written as
 $\sigma(n)-n$ (numbers not of this form are called nonaliquot, or sometimes untouchable).
 
-The density sits in an existential, so `HasPosDensity` is the *stronger* reading: the witness
-`S` is ours to choose, and weakening it to positive lower density would claim less rather than
-more. That is the opposite of the usual situation for Erdős' "positive density", where the
-density is a hypothesis or a claim about a fixed set. Whether the nonaliquot numbers themselves
-have a density is a separate question and is not what this states.
+Here "positive density" means positive lower density: Banks and Luca [BaLu05] proved that the
+set of nonaliquots has lower density at least $1/48$, Chen and Zhao [ChZh11] improved this to
+$0.06$, and it is not known whether the natural density of the nonaliquots exists (Pollack and
+Pomerance [PoPo16] give a heuristic predicting its value).
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
-    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
-      S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ := by
+    0 < { (σ 1 n - n : ℕ) | n }ᶜ.lowerDensity := by
   sorry
 
 /--
@@ -131,11 +129,11 @@ theorem erdos_418.variants.soln :
   sorry
 
 /--
-It is open whether the set of non-cototients has positive density.
+It is open whether the set of non-cototients has positive (lower) density.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    answer(sorry) ↔ ∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ := by
+    answer(sorry) ↔ 0 < { (n - n.totient : ℕ) | n }ᶜ.lowerDensity := by
   sorry
 
 end Erdos418
