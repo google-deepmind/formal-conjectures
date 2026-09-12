@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjectures.Millenium.RiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots
@@ -36,8 +35,10 @@ For more general values of $a$, this constant must be corrected by certain facto
   \prod_{p \mid b_0, p\nmid m} \frac{1}{1 + p - p^2}.$$
 - When $a = -1$ or $a$ is a square, then the density is $0$.
 
-Note that Artin's conjecture has been proved subject to the Generalized Riemann Hypothesis
-[Ho67].
+Note that Artin's conjecture has been proved by Hooley [Ho67] subject to the Riemann hypothesis
+for the Dedekind zeta functions of the Kummer fields $\mathbb{Q}(\zeta_k, a^{1/k})$, $k$
+squarefree. These fields are in general non-abelian over $\mathbb{Q}$, so this hypothesis is not
+covered by the Generalized Riemann Hypothesis for Dirichlet $L$-functions.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Artin%27s_conjecture_on_primitive_roots)
@@ -46,10 +47,31 @@ Note that Artin's conjecture has been proved subject to the Generalized Riemann 
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/
 
-open GRH
 open scoped Topology Nat
 
 namespace ArtinPrimitiveRootsConjecture
+
+/-- `Z` is a Dedekind zeta function of the number field `K`: it is holomorphic away from $s = 1$
+and agrees with the Dedekind zeta series of `K` on $\operatorname{Re} s > 1$, where that series
+converges. Such a `Z` is uniquely determined on $\mathbb{C} \setminus \{1\}$. -/
+def IsDedekindZeta (K : Type*) [Field K] [NumberField K] (Z : ℂ → ℂ) : Prop :=
+  DifferentiableOn ℂ Z {1}ᶜ ∧ ∀ s : ℂ, 1 < s.re → Z s = NumberField.dedekindZeta K s
+
+/-- The **Riemann hypothesis for the Dedekind zeta function** $\zeta_K$ of a number field $K$:
+every zero of (the analytic continuation of) $\zeta_K$ in the critical strip
+$0 < \operatorname{Re} s < 1$ has real part $\frac{1}{2}$. -/
+def DedekindZetaRH (K : Type*) [Field K] [NumberField K] : Prop :=
+  ∀ Z : ℂ → ℂ, IsDedekindZeta K Z → ∀ s : ℂ, 0 < s.re → s.re < 1 → Z s = 0 → s.re = 1 / 2
+
+open Polynomial in
+/-- **Hooley's hypothesis** for $a$: the Riemann hypothesis holds for the Dedekind zeta function
+of the Kummer field $\mathbb{Q}(\zeta_k, a^{1/k})$, the splitting field of $X^k - a$ over
+$\mathbb{Q}$, for every squarefree $k$. This is the hypothesis under which Hooley [Ho67] proved
+Artin's conjecture. -/
+def HooleyHypothesis (a : ℤ) : Prop :=
+  ∀ k : ℕ, Squarefree k →
+    letI := NumberField.of_module_finite ℚ (X ^ k - C (a : ℚ)).SplittingField
+    DedekindZetaRH (X ^ k - C (a : ℚ)).SplittingField
 
 /-- Let $S(a)$ be the set of primes such that $a$ is a primitive root modulo $p$. -/
 abbrev S (a : ℤ) : Set ℕ :=
@@ -95,11 +117,13 @@ theorem artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠
   sorry
 
 /--
-**Artin's Conjecture on Primitive Roots**, first half, conditional on GRH.
+**Artin's Conjecture on Primitive Roots**, first half, conditional on the Riemann hypothesis
+for the Dedekind zeta functions of the fields $\mathbb{Q}(\zeta_k, a^{1/k})$, $k$ squarefree
+[Ho67].
 -/
 @[category research solved, AMS 11]
 theorem conditional_artin_primitive_roots.parts.i (a : ℤ) (ha : ¬IsSquare a) (ha' : a ≠ -1)
-    (h : type_of% generalized_riemann_hypothesis) :
+    (h : HooleyHypothesis a) :
     ∃ x > 0, (S a).HasDensity x {p | p.Prime} := by
   sorry
 
@@ -120,14 +144,16 @@ theorem artin_primitive_roots.parts.ii
 
 
 /--
-**Artin's Conjecture on Primitive Roots**, second half, conditional on GRH.
+**Artin's Conjecture on Primitive Roots**, second half, conditional on the Riemann hypothesis
+for the Dedekind zeta functions of the fields $\mathbb{Q}(\zeta_k, a^{1/k})$, $k$ squarefree
+[Ho67].
 -/
 @[category research solved, AMS 11]
 theorem conditional_artin_primitive_roots.parts.ii
     (a a_0 b : ℤ) (ha : a = a_0 * b ^ 2)
     (ha' : ∀ n m, m ≠ 1 → a ≠ n ^ m) (ha_0 : Squarefree a_0)
     (ha_0' : ¬a_0 ≡ 1 [ZMOD 4])
-    (h : type_of% generalized_riemann_hypothesis) :
+    (h : HooleyHypothesis a) :
     (S a).HasDensity ArtinConstant {p | p.Prime} := by
   sorry
 
@@ -159,13 +185,15 @@ theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_on
   sorry
 
 /--
-**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH
+**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on the
+Riemann hypothesis for the Dedekind zeta functions of the fields $\mathbb{Q}(\zeta_k, a^{1/k})$,
+$k$ squarefree [Ho67].
 -/
 @[category research solved, AMS 11]
 theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_not_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : ¬ b.squarefreePart ≡ 1 [MOD 4])
-    (h : type_of% generalized_riemann_hypothesis) :
+    (h : HooleyHypothesis a) :
     (S a).HasDensity (ArtinConstant * powCorrectionFactor m) {p | p.Prime} := by
   sorry
 
@@ -189,13 +217,15 @@ theorem artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
   sorry
 
 /--
-**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on GRH.
+**Artin's Conjecture on Primitive Roots**, second half, power version, conditional on the
+Riemann hypothesis for the Dedekind zeta functions of the fields $\mathbb{Q}(\zeta_k, a^{1/k})$,
+$k$ squarefree [Ho67].
 -/
 @[category research solved, AMS 11]
 theorem conditional_artin_primitive_roots.variants.part_ii_power_squarefreePart_modeq_one
     (a m b : ℕ) (ha : a = b ^ m) (hb : ∀ u v, 1 < u → b ≠ v ^ u) (hm₁ : 1 < m)
     (hm₂ : Odd m) (hb' : b.squarefreePart ≡ 1 [MOD 4])
-    (h : type_of% generalized_riemann_hypothesis) :
+    (h : HooleyHypothesis a) :
     (S a).HasDensity
       (ArtinConstant * powCorrectionFactor m * entanglementFactor b m)
       {p | p.Prime} := by
