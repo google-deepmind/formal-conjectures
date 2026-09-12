@@ -111,18 +111,19 @@ theorem erdos_409.parts.ii :
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
 @[category research open, AMS 11]
-theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) (α : ℝ)
-    (hα : { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity α) :
-    α = answer(sorry) := by
+theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
+    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity answer(sorry) := by
   sorry
 
 /--
-How many iterations of $n\mapsto\sigma(n) - 1$ are needed before a prime is reached?
+If the iteration $n\mapsto\sigma(n) - 1$ starting at $n > 1$ reaches a prime, how many
+iterations are needed before a prime is reached?
 -/
--- Formalisation note: non-termination of this sequence is less clear since
--- it is strictly increasing except at primes.
+-- Formalisation note: termination of this sequence is not known in general since
+-- it is strictly increasing except at primes, so it is assumed as a hypothesis.
 @[category research open, AMS 11]
-theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1) :
+theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1)
+    (hterm : ∃ i, (σ 1 · - 1)^[i] n |>.Prime) :
     IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
   sorry
 
