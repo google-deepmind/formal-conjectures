@@ -35,6 +35,12 @@ supported on `[0,1]`, and has total integral `1`.
 - [MV10](https://arxiv.org/abs/0907.1379)
   M. Matolcsi and C. Vinuesa, *Improved bounds on the supremum of autoconvolutions*,
   J. Math. Anal. Appl. 372 (2010), 439-447.
+- [AE25](https://arxiv.org/abs/2506.13131)
+  A. Novikov et al., *AlphaEvolve: A coding agent for scientific and algorithmic discovery*,
+  arXiv:2506.13131 (2025), Appendix B.1.
+
+The constants of [CS17], [MV10] and [AE25] are stated for functions supported on
+$[-1/4, 1/4]$; rescaling to $[0, 1]$ halves them.
 -/
 
 namespace Green35
@@ -50,19 +56,21 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
-/-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value at $p = 2$ or $p = \infty$. -/
+/-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value $\sqrt{4/7}$ at
+$p = 2$ or the known value $0.64$ at $p = \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.lower :
     let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
     (∀ p, 1 < p → lb p ≤ c p) ∧
-      (ENNReal.ofReal (Real.sqrt (4 / 7)) < c 2 ∨ 0.64 < c ∞) := by
+      (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
   sorry
 
-/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value at $p = \infty$. -/
+/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.75265$ at
+$p = \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.upper :
     let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7505 := by
+    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.75265 := by
   sorry
 
 /-  Known bounds and comparisons. -/
@@ -78,9 +86,17 @@ theorem c_2_lower : ENNReal.ofReal (Real.sqrt (4 / 7)) ≤ c 2 := by
 theorem c_inf_lower : 0.64 ≤ c ∞ := by
   sorry
 
-/-- Best-known upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]). -/
+/-- Upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]); their step function has
+autoconvolution supremum $1.50972\ldots$, which rescales to $0.75486\ldots$. -/
 @[category research solved, AMS 26 28 42]
-theorem c_inf_upper : c ∞ ≤ 0.7505 := by
+theorem c_inf_upper : c ∞ ≤ 0.7549 := by
+  sorry
+
+/-- Best-known upper bound for $c(\infty)$, found by AlphaEvolve ([AE25]) and recorded in Green's
+2025 update; the step function there has autoconvolution supremum at most $1.5053$, which
+rescales to $0.75265$. -/
+@[category research solved, AMS 26 28 42]
+theorem c_inf_upper_ae25 : c ∞ ≤ 0.75265 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
