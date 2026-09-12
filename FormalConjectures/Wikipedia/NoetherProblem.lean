@@ -47,52 +47,56 @@ theorem rationalExtension_empty_index (K L ι : Type*) [Field K] [Field L] [Alge
   apply Nonempty.intro (a.trans c)
 
 /--
-We say that a rational extension `L` of `K` has the _Noether Property_
-if for any finite subgroup `H` of the Galois group of `L`, the fixed field
-`L^H` is also a rational extension.
+We say that a rational extension `L` of `K` in the indeterminates `ι` has the _Noether Property_
+if, for every identification of `L` with the rational function field `K(X_i : i ∈ ι)`, the fixed
+field `L^H` of every group `H` of `K`-automorphisms of `L` permuting the indeterminates `X_i` is
+again a rational extension of `K`. Such a group `H` is necessarily finite.
 -/
 def HasNoetherProperty (K L ι : Type) [Field K] [Field L] [Fintype ι]
     [Algebra K L] [IsRationalExtension K L ι] : Prop :=
-  ∀ H : Subgroup (L ≃ₐ[K] L), Finite H → ∃ ι' : Type,
-    IsRationalExtension K (IntermediateField.fixedField H) ι'
+  ∀ (e : L ≃ₐ[K] FractionRing (MvPolynomial ι K)) (H : Subgroup (L ≃ₐ[K] L)),
+    (∀ h ∈ H, ∃ σ : Equiv.Perm ι, h = (AlgEquiv.autCongr e).symm
+      (IsFractionRing.algEquivOfAlgEquiv (MvPolynomial.renameEquiv K σ))) →
+    ∃ ι' : Type, IsRationalExtension K (IntermediateField.fixedField H) ι'
 
 /--
 The **Noether Problem**: let `L` be the field of rational functions in `n`
-indeterminates over `K`. Is it true that `L/K` has the Noether property?
+indeterminates over `K`, and let `G` be a finite group permuting these indeterminates.
+Is the fixed field `L^G` a rational extension of `K`, i.e. does `L/K` have the Noether property?
 
 Solution: False.
 -/
 @[category research solved, AMS 12 14]
-theorem noether_problem : answer(False) ↔ ∀ (K L ι G : Type)
+theorem noether_problem : answer(False) ↔ ∀ (K L ι : Type)
     [Field K] [Field L] [Fintype ι] [Algebra K L] [IsRationalExtension K L ι],
     HasNoetherProperty K L ι := by
   sorry
 
 /--
-The Noether problem has a positive solution in the two indeterminate case.
+The Noether problem has a positive solution for groups permuting two indeterminates.
 -/
 @[category research solved, AMS 12 14]
-theorem noether_problem.variants.two {K L ι G : Type}
+theorem noether_problem.variants.two {K L ι : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 2) :
     HasNoetherProperty K L ι := by
   sorry
 
 /--
-The Noether problem has a positive solution in the three indeterminate case.
+The Noether problem has a positive solution for groups permuting three indeterminates.
 -/
 @[category research solved, AMS 12 14]
-theorem noether_problem.variants.three {K L ι G : Type}
+theorem noether_problem.variants.three {K L ι : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 3) :
     HasNoetherProperty K L ι := by
   sorry
 
 /--
-The Noether problem has a positive solution in the four indeterminate case.
+The Noether problem has a positive solution for groups permuting four indeterminates.
 -/
 @[category research solved, AMS 12 14]
-theorem noether_problem.variants.four {K L ι G : Type}
+theorem noether_problem.variants.four {K L ι : Type}
     [Field K] [Field L] [Fintype ι] [Algebra K L]
     [IsRationalExtension K L ι] (hι : Fintype.card ι = 4) :
     HasNoetherProperty K L ι := by
@@ -100,11 +104,11 @@ theorem noether_problem.variants.four {K L ι G : Type}
 
 /--
 One can find a counterexample to the Noether Problem's claim by considering a
-rational function field in 47 indeterminates.
+group permuting the 47 indeterminates of a rational function field.
 -/
 @[category research solved, AMS 12 14]
 theorem noether_problem.variants.forty_seven :
-    ∃ (K L ι G : Type)
+    ∃ (K L ι : Type)
     (_ :  Field K) (_ : Field L) (_ : Fintype ι) (_ : Algebra K L)
     (_ : IsRationalExtension K L ι),
     Fintype.card ι = 47 ∧ ¬ HasNoetherProperty K L ι := by
