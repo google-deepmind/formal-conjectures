@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -24,7 +24,7 @@ public meta import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/John_Selfridge#Selfridge's_conjecture_about_primality_testing)
 -/
 
-public meta section
+@[expose] public section
 
 namespace Selfridge
 
@@ -84,7 +84,8 @@ This test does not work.
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
     ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> decide +native
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 /--
 Selfridge's test variant:
@@ -96,7 +97,8 @@ The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 @[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
     IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 /--
 Selfridge's test variant:
@@ -108,7 +110,8 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 @[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
     IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> decide +native
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 end PrimalityTesting
 
@@ -144,16 +147,12 @@ A sufficient condition for this conjecture to hold is that there exists a Fermat
 theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
     (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
   intro hmono
-  have hp : (n.fermatNumber).Prime := hn.nat_prime
-  have h1 : fermatFactors n = 1 := by
-    unfold fermatFactors
-    rw [hp.primeFactors, Finset.card_singleton]
+  have h1 : fermatFactors n = 1 := by simp [fermatFactors, hn.nat_prime]
   have h5 : fermatFactors 5 = 2 := by
-    unfold fermatFactors Nat.fermatNumber
-    native_decide
-  have hle := hmono hn'
-  rw [h1, h5] at hle
-  omega
+    have hf : Nat.fermatNumber 5 = 641 * 6700417 := by norm_num [Nat.fermatNumber]
+    rw [fermatFactors, hf, Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    norm_num [show Nat.Prime 641 by norm_num, show Nat.Prime 6700417 by norm_num]
+  have := hmono hn'; omega
 
 end FermatNumbers
 

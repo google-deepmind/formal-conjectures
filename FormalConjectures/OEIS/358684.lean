@@ -114,17 +114,20 @@ theorem a_2 : a 2 = 0 := by norm_num [a]; simp [log2_def]
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by
   unfold a Nat.fermatNumber
-  decide +native
+  norm_num
+  decide
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by
   unfold a Nat.fermatNumber
-  decide +native
+  norm_num
+  decide
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 23 := by
   unfold a Nat.fermatNumber
-  decide +native
+  norm_num
+  decide
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = 46 := by

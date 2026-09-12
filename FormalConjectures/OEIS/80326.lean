@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ Möbius function.
 *References:*
 - [A080326](https://oeis.org/A080326)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA80326
 
@@ -47,27 +47,27 @@ def a (n : ℕ) : ℕ :=
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 6 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 6 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 30 := by
-  decide +native
+  decide +kernel
 
 /--
 Conjecture: $a(n) = \text{primorial}(n)$ for infinitely many $n$.-/

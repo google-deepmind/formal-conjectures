@@ -134,7 +134,7 @@ private lemma M_eq_image (n : ℕ) :
 
 /-- A computable stand-in for `MaxOverlap`. `Overlap` is already computable; the only obstacle
 is the `iSup`, and `maxOverlap_eq_sup` says it agrees with this `Finset.sup`. -/
-private noncomputable def maxOverlapC (A B : Finset ℤ) : ℕ :=
+private def maxOverlapC (A B : Finset ℤ) : ℕ :=
   ((A ×ˢ B).image fun p => p.1 - p.2).sup (Overlap A B)
 
 @[category API, AMS 5 11]

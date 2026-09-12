@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -25,7 +25,7 @@ public meta import FormalConjecturesUtil
 - [A114137](https://oeis.org/A114137)
 -/
 
-public meta section
+@[expose] public section
 
 namespace OeisA114137
 open Nat
@@ -58,31 +58,44 @@ lemma a_eq_of (n val : ℕ)
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 7 := by
-  apply a_eq_of 1 9 (by native_decide) (by norm_num)
+  apply a_eq_of 1 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 5 := by
-  apply a_eq_of 2 9 (by native_decide) (by norm_num)
+  apply a_eq_of 2 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  apply a_eq_of 3 9 (by native_decide) (by norm_num)
+  apply a_eq_of 3 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
   interval_cases x
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by
-  apply a_eq_of 4 21 (by native_decide) (by norm_num)
+  apply a_eq_of 4 21 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
-  apply a_eq_of 5 33 (by native_decide) (by norm_num)
+  apply a_eq_of 5 33 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
   interval_cases x
 

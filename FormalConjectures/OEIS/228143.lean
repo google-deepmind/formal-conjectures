@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -34,7 +34,7 @@ The entry function A005259 is taken to be $\sum_{k=0}^n \binom{n}{k}^2 \binom{n+
 - [A005259](https://oeis.org/A005259)
 -/
 
-public meta section
+@[expose] public section
 
 namespace OeisA228143
 
@@ -72,19 +72,19 @@ def ogfAScaled : PowerSeries ℚ :=
 
 
 @[category test, AMS 11]
-lemma a_0 : a 0 = 1 := by native_decide
+lemma a_0 : a 0 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_1 : a 1 = 48 := by native_decide
+lemma a_1 : a 1 = 48 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_2 : a 2 = 161856 := by native_decide
+lemma a_2 : a 2 = 161856 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 39002646528 := by native_decide
+lemma a_3 : a 3 = 39002646528 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 674708032182398976 := by native_decide
+lemma a_4 : a 4 = 674708032182398976 := by decide +kernel
 
 
 /--

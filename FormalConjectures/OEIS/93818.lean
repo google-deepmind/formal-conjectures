@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ the $n$-th harmonic number $H_n = \sum_{i=1}^n \frac{1}{i}$.
 *References:*
 - [A093818](https://oeis.org/A093818)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA93818
 
@@ -37,23 +37,23 @@ def a (n : ℕ) : ℕ :=
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by decide +native
+theorem a_0 : a 0 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by decide +native
+theorem a_1 : a 1 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by decide +native
+theorem a_2 : a 2 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by decide +native
+theorem a_3 : a 3 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by decide +native
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 /--
 Conjecture: Every odd prime occurs as a term in the sequence.-/

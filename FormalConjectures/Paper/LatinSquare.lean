@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import FormalConjecturesUtil
 public meta import FormalConjecturesUtil
 
 /-!
@@ -29,7 +30,7 @@ This file formalizes some conjectures and theorems around latin squares.
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
 
-public meta section
+@[expose] public section
 
 namespace LatinSquare
 
@@ -104,7 +105,7 @@ def z (n : ℕ) : ℕ := numTransversals {
 @[category test, AMS 5]
 theorem z_zero : z 0 = 1 := by
   simp only [z, numTransversals]
-  native_decide
+  decide
 
 /-- The number of transversals of the Cayley table of $\mathbb{Z}_n$ for odd $n$ forms
 [OEIS A006717](https://oeis.org/A006717), starting with

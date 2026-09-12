@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -29,7 +29,7 @@ See Wagstaff (2001) where this conjecture is posed.
 - Samuel S. Wagstaff, Jr., [Prime Numbers with a fixed number of one bits or zero bits in their binary representation](http://projecteuclid.org/euclid.em/999188636), Exp. Math. vol. 10, issue 2 (2001) 267.
 -/
 
-public meta section
+@[expose] public section
 
 namespace OeisA81091
 
@@ -42,19 +42,19 @@ def A (p : ℕ) : Prop :=
   isPrimeBitsSet 3 p
 
 @[category test, AMS 11]
-theorem a_7 : A 7 := by unfold A isPrimeBitsSet; decide +native
+theorem a_7 : A 7 := by unfold A isPrimeBitsSet; decide +kernel
 
 @[category test, AMS 11]
-theorem a_11 : A 11 := by unfold A isPrimeBitsSet; decide +native
+theorem a_11 : A 11 := by unfold A isPrimeBitsSet; decide +kernel
 
 @[category test, AMS 11]
-theorem a_13 : A 13 := by unfold A isPrimeBitsSet; decide +native
+theorem a_13 : A 13 := by unfold A isPrimeBitsSet; decide +kernel
 
 @[category test, AMS 11]
-theorem a_19 : A 19 := by unfold A isPrimeBitsSet; decide +native
+theorem a_19 : A 19 := by unfold A isPrimeBitsSet; decide +kernel
 
 @[category test, AMS 11]
-theorem a_37 : A 37 := by unfold A isPrimeBitsSet; decide +native
+theorem a_37 : A 37 := by unfold A isPrimeBitsSet; decide +kernel
 
 /--
 **Conjecture (A81091)**: There are infinite primes of the form $2^n + 2^i + 1$,

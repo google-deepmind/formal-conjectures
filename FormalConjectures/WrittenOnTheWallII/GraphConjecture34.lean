@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 34
@@ -24,7 +24,7 @@ public meta import FormalConjecturesUtil
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
-public meta section
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture34
 
@@ -61,6 +61,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
 
 /-- The edgeless graph on 3 vertices has no edges. -/
 @[category test, AMS 5]
-example : (⊥ : SimpleGraph (Fin 3)).edgeFinset.card = 0 := by decide +native
+example : (⊥ : SimpleGraph (Fin 3)).edgeFinset.card = 0 := by simp
 
 end WrittenOnTheWallII.GraphConjecture34

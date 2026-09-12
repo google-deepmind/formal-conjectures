@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -26,7 +26,7 @@ Number of primes strictly less than $n^3$.
 *References:*
 - [A038098](https://oeis.org/A038098)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA38098
 
@@ -56,7 +56,7 @@ theorem a_4 : a 4 = 18 := by
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 30 := by
-  decide +native
+  decide +kernel
 
 /--
 Conjecture (i): for any integer $k > 2$, the sequence $\pi(n^k)/n^k$ ($n = 2, 3, \ldots$) is strictly

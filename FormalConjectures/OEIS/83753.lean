@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ if no such number exists.
 *References:*
 - [A083753](https://oeis.org/A083753)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA83753
 
@@ -54,8 +54,8 @@ theorem a_1 : a 1 = 1 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨1, by decide +native⟩).elim
+    decide
+  · exact (h ⟨1, by decide⟩).elim
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
@@ -64,8 +64,8 @@ theorem a_2 : a 2 = 2 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨2, by decide +native⟩).elim
+    decide
+  · exact (h ⟨2, by decide⟩).elim
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
@@ -74,8 +74,8 @@ theorem a_3 : a 3 = 4 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨4, by decide +native⟩).elim
+    decide
+  · exact (h ⟨4, by decide⟩).elim
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
@@ -84,8 +84,8 @@ theorem a_4 : a 4 = 6 := by
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]
-    decide +native
-  · exact (h ⟨6, by decide +native⟩).elim
+    decide
+  · exact (h ⟨6, by decide⟩).elim
 
 /--
 There are no palindromic numbers greater than 1 which are the fifth or higher power of a natural

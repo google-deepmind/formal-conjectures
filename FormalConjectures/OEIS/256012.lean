@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -30,7 +30,7 @@ $\sum_{k \in P} k = n$ and every element $k \in P$ is not squarefree.
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
-public meta section
+@[expose] public section
 
 namespace OeisA256012
 
@@ -58,16 +58,16 @@ def a (n : ℕ) : ℕ :=
 lemma a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-lemma a_1 : a 1 = 0 := by native_decide
+lemma a_1 : a 1 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_2 : a 2 = 0 := by native_decide
+lemma a_2 : a 2 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 0 := by native_decide
+lemma a_3 : a 3 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 1 := by native_decide
+lemma a_4 : a 4 = 1 := by decide +kernel
 
 
 /--

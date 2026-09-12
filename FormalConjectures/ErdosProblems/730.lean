@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -26,7 +26,7 @@ public meta import FormalConjecturesUtil
   - [A129515](https://oeis.org/A129515)
 -/
 
-public meta section
+@[expose] public section
 namespace Erdos730
 
 abbrev S :=
@@ -47,7 +47,10 @@ For example, $(87,88)$ and $(607,608)$ are such pairs.
 @[category textbook, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  rintro _ (rfl | rfl) <;> exact ⟨by decide, by native_decide⟩
+  rintro _ (rfl | rfl) <;> refine ⟨by decide, ?_⟩
+  all_goals
+    simp only [Nat.centralBinom, Nat.choose_eq_descFactorial_div_factorial]
+    decide +kernel
 
 /--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.

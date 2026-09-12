@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ sublist (infix) in the binary expansion of $n^2$.
 *References:*
 - [A076141](https://oeis.org/A076141)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA76141
 
@@ -45,32 +45,32 @@ def a (n : ℕ) : ℕ :=
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by
-  decide +native
+  decide +kernel
 
 /--
 Is $a(n) \le 1$ for all $n$?-/

@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ $M(i,j) = 1$ if $i^2 + j^2$ is prime, and $0$ otherwise, where $1 \le i, j \le n
 *References:*
 - [A071524](https://oeis.org/A071524)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA71524
 
@@ -60,12 +60,12 @@ theorem a_3 : a 3 = -1 := by
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Determinant of the $n \times n$ matrix with $(i,j)$ entry $1$
 if $(i+1)^{2^m} + (j+1)^{2^m}$ is prime, and $0$ otherwise. -/

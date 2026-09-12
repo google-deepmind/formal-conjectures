@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public meta import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,7 +27,7 @@ $n, n-1, n-2, \dots, n-k$ for some $k < n$, or $0$ if no such prime exists.
 *References:*
 - [A087571](https://oeis.org/A087571)-/
 
-public meta section
+@[expose] public section
 
 namespace OeisA87571
 
@@ -51,23 +51,23 @@ def a (n : ℕ) : ℕ :=
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by decide +native
+theorem a_0 : a 0 = 0 := by decide
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by decide +native
+theorem a_1 : a 1 = 0 := by decide
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by decide +native
+theorem a_2 : a 2 = 2 := by decide
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by decide +native
+theorem a_3 : a 3 = 3 := by decide
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 43 := by decide +native
+theorem a_4 : a 4 = 43 := by decide
 
 /--
 Conjecture: There are infinitely many composite numbers $n$ such that $a(n)$ is nonzero.-/
