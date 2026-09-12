@@ -27,5 +27,23 @@ such that every integer $\leq N$ lies in at least 10 of them?
 - [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
 - [erdosproblems.com/689](https://www.erdosproblems.com/689)
 
-This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«689»`.
+The version of this problem with $10$ replaced by $2$ is `Erdos689.erdos_689` in
+`FormalConjectures.ErdosProblems.«689»`.
 -/
+
+namespace Green45
+
+/--
+Can we pick residue classes $a_p \pmod{p}$, one for each prime $p \leq N$, such that every
+integer $\leq N$ lies in at least $10$ of them?
+
+Erdős remarks that he does not know how to answer it with $10$ replaced by $2$;
+this is `Erdos689.erdos_689`.
+-/
+@[category research open, AMS 11]
+theorem green_45 :
+    answer(sorry) ↔ ∀ᶠ N in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 N,
+      10 ≤ (Finset.Icc 1 N |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
+  sorry
+
+end Green45
