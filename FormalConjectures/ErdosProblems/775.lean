@@ -40,8 +40,8 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
 theorem erdos_775 : answer(False) ↔
-    ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : ThreeUniformHypergraph (Fin n),
-      n - C ≤ (ThreeUniformHypergraph.cliqueSizes H).ncard := by
+    ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
+      n - C ≤ (UniformHypergraph.cliqueSizes H).ncard := by
   sorry
 
 /--
@@ -52,8 +52,8 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 @[category research solved, AMS 5]
 theorem erdos_775.variants.gao :
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
-      ∀ᶠ n : ℕ in atTop, ∀ H : ThreeUniformHypergraph (Fin n),
-        (ThreeUniformHypergraph.cliqueSizes H).ncard + f n ≤ n := by
+      ∀ᶠ n : ℕ in atTop, ∀ H : UniformHypergraph (Fin n) 3,
+        (UniformHypergraph.cliqueSizes H).ncard + f n ≤ n := by
   sorry
 
 /--

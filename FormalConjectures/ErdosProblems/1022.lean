@@ -35,7 +35,7 @@ size at least `t`, such that for every nonempty finite set `X` there are `< c * 
 `A ∈ F` with `A ⊆ X`, has property B. -/
 def SparseImpliesPropertyB (t : ℕ) (c : ℝ) : Prop :=
   ∀ F : Finset (Finset ℕ), (∀ A ∈ F, t ≤ A.card) →
-    (∀ X : Finset ℕ, X.Nonempty → ((F.filter (· ⊆ X)).card : ℝ) < c * (X.card : ℝ)) →
+    (∀ X : Finset ℕ, X.Nonempty → ((F.hypergraphInduce X).card : ℝ) < c * (X.card : ℝ)) →
     F.HasPropertyB
 
 /--
