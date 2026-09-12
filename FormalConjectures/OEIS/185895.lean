@@ -103,7 +103,8 @@ $a(n)$ differs in sign from $a(n-1)$ if and only if $n$ is a triangular number
 (checked up to $n = 1225 = (50 \cdot 51)/2$).
 - _Peter Bala_, Mar 17 2022
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-lite-200usd-sol-nk5wh4g0vh3546nm/oeis_185895_conjecture_1/Submission/Spec.lean#L4835"]
 theorem conjecture1 (n : ℕ) (hn : 0 < n) :
     a n * a (n - 1) < 0 ↔ IsTriangular n := by
   sorry
@@ -129,4 +130,3 @@ theorem conjecture3 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < 
   sorry
 
 end OeisA185895
-
