@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjectures.Millenium.RiemannHypothesis
+import FormalConjectures.Millennium.RiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots

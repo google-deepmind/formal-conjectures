@@ -135,7 +135,7 @@ source you cite:
 - `Kourovka` — [Kourovka Notebook](https://arxiv.org/pdf/1401.0300) (group
   theory).
 - `Mathoverflow` — [MathOverflow](https://mathoverflow.net/).
-- `Millenium` — [Millennium Prize Problems](https://www.claymath.org/millennium-problems/).
+- `Millennium` — [Millennium Prize Problems](https://www.claymath.org/millennium-problems/).
 - `OEIS` — [OEIS](https://oeis.org/).
 - `OpenQuantumProblems` — open problems in quantum theory.
 - `OptimizationConstants` — open problems about optimization constants.

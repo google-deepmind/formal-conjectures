@@ -94,7 +94,7 @@ const SOURCE_COLLECTIONS = {
   Wikipedia:           { name: 'Wikipedia',                url: 'https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics' },
   GreensOpenProblems:  { name: "Green's Open Problems",    url: 'https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf' },
   HilbertProblems:     { name: 'Hilbert Problems',         url: 'https://en.wikipedia.org/wiki/Hilbert%27s_problems' },
-  Millenium:           { name: 'Millennium Prize Problems', url: 'https://www.claymath.org/millennium-problems/' },
+  Millennium:           { name: 'Millennium Prize Problems', url: 'https://www.claymath.org/millennium-problems/' },
   Mathoverflow:        { name: 'MathOverflow',             url: 'https://mathoverflow.net' },
   OEIS:                { name: 'OEIS',                     url: 'https://oeis.org' },
   Arxiv:               { name: 'arXiv',                    url: 'https://arxiv.org/archive/math' },
