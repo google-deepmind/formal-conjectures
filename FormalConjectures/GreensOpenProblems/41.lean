@@ -71,28 +71,42 @@ theorem green_41 :
   sorry
 
 /--
-Is there a better bound than the best-known bound from [KrLe25]?
-This is an existential version of the main problem that does not require providing the bound explicitly.
--/
-@[category research open, AMS 51 52]
-theorem green_41.variants.exists_better_bound : answer(sorry) ↔
-    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
-      ∃ ans : ℝ, (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
-  sorry
-
-/-- Is $\varepsilon^{-C}$ rotations enough? -/
-@[category research open, AMS 51 52]
-theorem green_41.variants.polynomial_bound : answer(sorry) ↔
-    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ ε ^ (-C) := by
-  sorry
-
-/--
 [KrLe25] have established the first quantitative bound, showing via an analysis of [Ma15]'s method
 that $\exp\exp\exp(\varepsilon^{-C})$ rotations suffice.
 -/
 @[category research solved, AMS 51 52]
 theorem green_41.variants.kravitz_leng :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
+  sorry
+
+/-- This existential statement is already implied by the [KrLe25] bound: increase its exponent
+constant and use the old bound as `ans`. Thus this formulation does not capture an asymptotic
+improvement over [KrLe25]. -/
+@[category research solved, AMS 51 52]
+theorem green_41.variants.exists_better_bound : answer(True) ↔
+    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
+      ∃ ans : ℝ, (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
+  rw [true_iff]
+  obtain ⟨C, ε₀, hε₀, hbound⟩ := green_41.variants.kravitz_leng
+  let C' := max C 0 + 1
+  refine ⟨C', by dsimp [C']; positivity, min ε₀ (1 / 2), by positivity, ?_⟩
+  intro ε hε
+  have hεpos : 0 < ε := hε.1
+  have hεhalf : ε ≤ 1 / 2 := hε.2.trans (min_le_right _ _)
+  have hεone : ε < 1 := hεhalf.trans_lt (by norm_num)
+  have hεold : ε ∈ Ioc 0 ε₀ := ⟨hεpos, hε.2.trans (min_le_left _ _)⟩
+  refine ⟨Real.exp (Real.exp (Real.exp (ε ^ (-C)))), hbound ε hεold, ?_⟩
+  apply Real.exp_lt_exp.mpr
+  apply Real.exp_lt_exp.mpr
+  apply Real.exp_lt_exp.mpr
+  apply Real.rpow_lt_rpow_of_exponent_gt hεpos hεone
+  dsimp [C']
+  linarith [le_max_left C 0]
+
+/-- Is $\varepsilon^{-C}$ rotations enough? -/
+@[category research open, AMS 51 52]
+theorem green_41.variants.polynomial_bound : answer(sorry) ↔
+    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ ε ^ (-C) := by
   sorry
 
 end Green41
