@@ -112,7 +112,7 @@ A generalisation of the problem to sets $A \subseteq (0, N]$ of real numbers, su
 sums all differ by at least $1$ is proposed in [Er73] and [ErGr80].
 
 The positive statement is false: every natural-number counterexample to `erdos_1` embeds into
-`ℝ`, and distinct integer subset sums differ by at least one.
+$\mathbb{R}$, and distinct integer subset sums differ by at least one.
 
 [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 
