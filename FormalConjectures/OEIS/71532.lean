@@ -59,10 +59,17 @@ theorem a_5 : a 5 = 3 := by
   decide
 
 /--
-Is $a(n) > 0$ for all $n > 2$?
+"Is $a(n)>0$?"
+
+The answer is negative: $a(331523) = -1$. The restriction $n > 2$ excludes the initial
+zero $a(2) = 0$.
+
+The counterexample and formal proof were developed by Codex (GPT-6), prompted by
+Samuel Schlesinger.
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/SamuelSchlesinger/a071532-counterexample/blob/818c9f6b3f1eed9ebd1b3b9481848dc21f3e3243/Counterexample.lean#L28-L35"]
+theorem conjecture1 : answer(False) ↔ ∀ n : ℕ, 2 < n → 0 < a n := by
   sorry
 
 /--
