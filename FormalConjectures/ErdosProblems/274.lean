@@ -57,10 +57,9 @@ The conjectured answer is no: in every such exact covering, two of the subgroups
 the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
-    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
-    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
-    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
+theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (_ : Group G),
+    1 < ENat.card G ∧ ∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
+    1 < Fintype.card ι ∧ ∀ i j, i ≠ j → #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
 /--
