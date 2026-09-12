@@ -220,51 +220,69 @@ than the other. -/
 def IsComparable₂ {α : Type*} [LT α] (t₁ t₂ : Fin 3 → α) : Prop :=
   t₁ <₂ t₂ ∨ t₂ <₂ t₁
 
-/-- A set of triples is $2$-comparable if any two of them are $2$-comparable. -/
+/-- A set of triples is $2$-comparable if any two distinct members of it are $2$-comparable. -/
 def IsComparableSet₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop :=
-  ∃ t₁ t₂, t₁ ≠ t₂ ∧ t₁ ∈ s ∧ t₂ ∈ s ∧ IsComparable₂ t₁ t₂
+  ∀ t₁ ∈ s, ∀ t₂ ∈ s, t₁ ≠ t₂ → IsComparable₂ t₁ t₂
 
 open Filter in
-/-- $F(n) \leq n^2 / \exp(\Omega(\log^*(n)))$. -/
+/-- $F(n) \leq n^2 / \exp(\Omega(\log^*(n)))$, i.e. there is a constant $c > 0$ such that
+$F(n) \leq n^2 / \exp(c \log^*(n))$ for all sufficiently large $n$. -/
 @[category research solved, AMS 5]
-theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
-    (fun (n : ℕ) => (Real.iteratedLog n : ℝ)) =O[atTop] Ω ∧
-      ∀ n, F n ≤ n ^ 2 / Real.exp (Ω n) := by
+theorem maximalLength_le_isBigO : ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+    (F n : ℝ) ≤ (n : ℝ) ^ 2 / Real.exp (c * (Real.iteratedLog n : ℝ)) := by
   sorry
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
-$((a, d), (b, e), (c, f))$, where the pairs are arranged in lexicographical order. -/
-def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Function.prod a b)
+$((a, d), (b, e), (c, f))$, where the pairs are ordered lexicographically. -/
+def tripleProduct {α : Type*} (a b : Fin 3 → α) : Fin 3 → α ×ₗ α :=
+  fun i => toLex (a i, b i)
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :
-    tripleProduct (fun _ => a) (fun _ => a) = toLex (fun _ => (a, a)) := by
-  simpa [tripleProduct] using funext fun i => by simp
+    tripleProduct (fun _ => a) (fun _ => a) = fun _ => toLex (a, a) :=
+  rfl
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_vecConst_const {α : Type*} (a : α) :
-    tripleProduct ![a, a, a] ![a, a, a] = toLex ![(a, a), (a, a), (a, a)] := by
-  simp [tripleProduct]
-  ext i <;> fin_cases i <;> simp
+    tripleProduct ![a, a, a] ![a, a, a] = ![toLex (a, a), toLex (a, a), toLex (a, a)] := by
+  ext i
+  fin_cases i <;> rfl
 
 /-- We define the product $\otimes$ of two sequences $(a_i, b_i, c_i)$ and
 $(d_i, e_i, f_i)$ by the sequence $((a_i, d_j), (b_i, e_j), (c_i, f_j))$, where
 the indices $(i, j)$ are arranged lexicographically, and the pairs are also
 ordered lexicographically. -/
-def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : Lex (List (Πₗ (_ : Fin 3), α × α)) :=
-  toLex (s.flatMap (fun a => List.map (tripleProduct a) t))
+def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : List (Fin 3 → α ×ₗ α) :=
+  s.flatMap (fun a => List.map (tripleProduct a) t)
 
 local infix:100 " ⊗₂ " => sequenceProduct
 
 @[category test, AMS 5]
-theorem sequenceProduct_example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLex ![(1, 1), (1, 1), (1, 1)]] := by
+theorem sequenceProduct_example :
+    [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = [![toLex (1, 1), toLex (1, 1), toLex (1, 1)]] := by
   simp [sequenceProduct]
+
+/-- The product of two $2$-increasing sequences is $2$-increasing; this is the point of
+ordering the pairs lexicographically. -/
+@[category test, AMS 5]
+theorem isIncreasing₂_sequenceProduct_example :
+    IsIncreasing₂ ([![1, 1, 1], ![2, 2, 2]] ⊗₂ [![1, 1, 1], ![2, 2, 2]]) := by
+  unfold IsIncreasing₂ sequenceProduct tripleProduct lt₂
+  decide
 
 /-- Suppose that for some $n$ we have $F(n) = n ^ {\alpha}$. Then there are arbitrarily
 large $m$ such that $F(m) \geq m^{\alpha}$. -/
 @[category research solved, AMS 5]
 theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e) :
-    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
+    ∃ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
+  sorry
+
+/-- Moreover, for every $\beta < \alpha$ and all sufficiently large $m$ we have
+$F(m) \geq m^{\beta}$. -/
+@[category research solved, AMS 5]
+theorem maximalLength_pow_eventually {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e)
+    {b : ℝ} (hb : b < e) :
+    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ b ≤ F m := by
   sorry
 
 /-- $F(n) \leq n^{3/2}$. -/
