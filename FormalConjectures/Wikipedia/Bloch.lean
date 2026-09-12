@@ -39,11 +39,13 @@ open scoped Topology ENNReal
 open Metric Set Filter
 namespace Bloch
 
-/-- The **Bloch radius** $B_f$ of a function $f$ is the supremum of radii of univalent disks in the
-image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions whose image contains
-arbitrarily large univalent disks correctly get radius `⊤` rather than `0`. -/
+/-- The **Bloch radius** $B_f$ of a function $f$ is the supremum of radii of schlicht (univalent)
+disks in the image of the unit disk under $f$. A disk $D$ is a schlicht disk of $f$ if $f$ maps some
+open subset of the unit disk injectively onto $D$. Takes values in `ℝ≥0∞` so that functions whose
+image contains arbitrarily large schlicht disks correctly get radius `⊤` rather than `0`. -/
 noncomputable def blochRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
-  sSup (ENNReal.ofReal '' {r : ℝ | ∃ S ⊆ ball (0 : ℂ) 1, ∃ x, ball x r ⊆ f '' S ∧ InjOn f S})
+  sSup (ENNReal.ofReal '' {r : ℝ | ∃ S ⊆ ball (0 : ℂ) 1, IsOpen S ∧ InjOn f S ∧
+    ∃ x, f '' S = ball x r})
 
 @[category API, AMS 30]
 lemma zero_le_blochRadius (f : ℂ → ℂ) : 0 ≤ blochRadius f := zero_le
@@ -95,16 +97,16 @@ lemma blochRadius_id_eq_one : blochRadius id = 1 := by
   apply le_antisymm
   · -- blochRadius id ≤ 1: every valid radius r satisfies r ≤ 1
     apply sSup_le
-    rintro _ ⟨r, ⟨S, hS, x, hball, -⟩, rfl⟩
+    rintro _ ⟨r, ⟨S, hS, -, -, x, hball⟩, rfl⟩
     simp only [image_id] at hball
     by_cases hpos : 0 < r
     · exact (ENNReal.ofReal_le_ofReal
-        (radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS))).trans
+        (radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball ▸ hS))).trans
         (by simp [ENNReal.ofReal_one])
     · exact (ENNReal.ofReal_of_nonpos (by linarith)).le.trans zero_le
-  · -- 1 ≤ blochRadius id: ball 0 1 ⊆ id '' ball 0 1
+  · -- 1 ≤ blochRadius id: id '' ball 0 1 = ball 0 1
     rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 from by simp]
-    exact le_sSup ⟨1, ⟨ball (0 : ℂ) 1, Subset.rfl, 0, by simp⟩, rfl⟩
+    exact le_sSup ⟨1, ⟨ball (0 : ℂ) 1, Subset.rfl, isOpen_ball, injOn_id _, 0, by simp⟩, rfl⟩
 
 /-- The **Landau radius** $L_f$ of a function $f$ is the supremum of radii of disks contained in
 the image of the unit disk under $f$. Takes values in `ℝ≥0∞` so that functions with unbounded
@@ -113,10 +115,11 @@ noncomputable def landauRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
   sSup (ENNReal.ofReal '' {r : ℝ | ∃ x, ball x r ⊆ f '' (ball (0 : ℂ) 1)})
 
 /-- The **Bloch constant** $B$ is the largest radius such that every holomorphic function on the
-unit disk with $f'(0) = 1$ has a schlicht (univalent) disk of that radius in its image. -/
+unit disk with $f'(0) = 1$ has a schlicht (univalent) disk of that radius in its image, i.e. maps
+some open subset of the unit disk injectively onto a disk of that radius. -/
 noncomputable def blochConstant : ℝ :=
   sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
-    ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
+    ∃ S ⊆ ball 0 1, IsOpen S ∧ InjOn f S ∧ ∃ x, f '' S = ball x B}
 
 /-- It is proved in [CP96] that the Bloch constant is bounded below by
 $\sqrt{3}/4 + 2 \times 10^{-4}$ -/
@@ -142,10 +145,10 @@ theorem blochConstant_exact_value :
 
 /-- The **Univalent Bloch constant** $B_u$ is the largest radius such that every univalent
 holomorphic function on the unit disk with $f'(0) = 1$ has a schlicht disk of that radius in its
-image. -/
+image, i.e. maps some open subset of the unit disk injectively onto a disk of that radius. -/
 noncomputable def univalentBlochConstant : ℝ :=
   sSup {B : ℝ | ∀ f : ℂ → ℂ, InjOn f (ball 0 1) → DifferentiableOn ℂ f (ball 0 1) →
-    deriv f 0 = 1 → ∃ S ⊆ ball 0 1, ∃ x, ball x B ⊆ f '' S ∧ InjOn f S}
+    deriv f 0 = 1 → ∃ S ⊆ ball 0 1, IsOpen S ∧ InjOn f S ∧ ∃ x, f '' S = ball x B}
 
 /-- It is proved in [Skin2009] that the Univalent Bloch constant is bounded below by $0.5708858$. -/
 @[category research solved, AMS 30]
@@ -157,15 +160,15 @@ function, which is $1$. This is the best upper bound we know according to [Optim
 @[category research solved, AMS 30]
 theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
   apply csSup_le
-  · -- the set is nonempty: 0 is in it (ball x 0 = ∅ ⊆ anything)
-    exact ⟨0, fun f _ _ _ => ⟨∅, empty_subset _, 0, by simp⟩⟩
+  · -- the set is nonempty: 0 is in it (f '' ∅ = ∅ = ball x 0)
+    exact ⟨0, fun f _ _ _ => ⟨∅, empty_subset _, isOpen_empty, injOn_empty _, 0, by simp⟩⟩
   · -- every B in the set is ≤ 1
     intro B hB
     have h := hB id (injOn_id _) differentiableOn_id (by simp)
-    rcases h with ⟨S, hS, x, hball, -⟩
+    rcases h with ⟨S, hS, -, -, x, hball⟩
     simp only [image_id] at hball
     by_cases hpos : (0 : ℝ) < B
-    · exact radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball.trans hS)
+    · exact radius_le_of_ball_subset_ball (𝕜 := ℂ) hpos (hball ▸ hS)
     · linarith
 
 /-- The **Landau constant** $L$ is the largest radius such that every holomorphic function on the
