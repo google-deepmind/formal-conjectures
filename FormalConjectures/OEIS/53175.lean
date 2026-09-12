@@ -23,7 +23,9 @@ The Catalan-Larcombe-French sequence defined by $a(0)=1$, $a(1)=8$, and
 $$n^2 a(n) = 8(3n^2 - 3n + 1) a(n-1) - 128(n-1)^2 a(n-2)$$ for $n \ge 2$.
 
 *References:*
-- [A053175](https://oeis.org/A053175)-/
+- [A053175](https://oeis.org/A053175)
+- [ZS18] [Zhu, B.-X., Sun, Z.-W., *Hankel-type determinants for some combinatorial sequences*,
+  Int. J. Number Theory **14** (2018), 1265-1277](https://arxiv.org/abs/1609.06810)-/
 
 namespace OeisA53175
 
@@ -71,8 +73,11 @@ def hankelMatrix (n : ℕ) : Matrix (Fin (n + 1)) (Fin (n + 1)) ℤ :=
 Conjecture: let $P(n)$ be the $(n+1) \times (n+1)$ Hankel-type determinant with $(i,j)$-entry
 equal to $a(i+j)$ for all $i,j = 0, \ldots, n$. Then $P(n)/2^{n(n+3)}$ is a positive odd integer.
 - Zhi-Wei Sun, Aug 14 2013
+
+Proved by [ZS18], Theorem 1.2: $2^{-n(n+3)} |P_{i+j}|_{0 \le i,j \le n}$ is a positive odd
+integer for every $n \in \mathbb{N}$, where $P_n$ are the Catalan-Larcombe-French numbers.
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15]
 theorem conjecture (n : ℕ) :
     let detP := (hankelMatrix n).det
     let pow2 := (2 : ℤ) ^ (n * (n + 3))

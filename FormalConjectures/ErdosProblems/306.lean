@@ -20,7 +20,12 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 306
 
-*Reference:* [erdosproblems.com/306](https://www.erdosproblems.com/306)
+*References:*
+- [erdosproblems.com/306](https://www.erdosproblems.com/306)
+- [Ta26] [Tang, Yuren, *A Lean 4 formalisation of Erdős Problem
+  306*](https://github.com/Yuren-Tang/erdos-306), which derives the statement below from two
+  results of Rosser and Schoenfeld, *Approximate formulas for some functions of prime numbers*,
+  Illinois J. Math. **6** (1962), 64-94, declared there as axioms
 -/
 
 open ArithmeticFunction
