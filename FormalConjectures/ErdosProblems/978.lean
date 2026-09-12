@@ -19,76 +19,78 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 978
 
-*Reference:*
- - [erdosproblems.com/978](https://www.erdosproblems.com/978)
- - [Ho67] Hooley, C., On the power free values of polynomials. Mathematika (1967), 21--26.
- - [Br11] Browning, T. D., Power-free values of polynomials. Arch. Math. (Basel) (2011), 139--150.
- - [Er53] Erdős, P., Arithmetical properties of polynomials. J. London Math. Soc. (1953), 416--425.
+*References:*
+- [erdosproblems.com/978](https://www.erdosproblems.com/978)
+- [Br11] Browning, T. D., *The polynomial sieve and equal sums of like powers*.
+  Int. Math. Res. Not. IMRN (2011), 331-349.
+- [Er53] Erdős, P., *Arithmetical properties of polynomials*. J. London Math. Soc. (1953), 416-425.
+- [He06] Heath-Brown, D. R., *Power-free values of polynomials*. Quart. J. Math. (2006), 67-88.
+- [Ho67] Hooley, C., *On the power-free values of polynomials*. Mathematika (1967), 21-26.
 -/
 
-open Polynomial Set
+open Filter Polynomial Set
+open scoped Topology
 
 namespace Erdos978
 
-/-- Let `f ∈ ℤ[X]` be an irreducible polynomial with positive leading coefficient. Suppose that the
-degree `k` of `f` is larger than `2` and is not equal to a power of `2`. Then the set of `n` such
-that `f n` is `(k - 1)`-th power free is infinite, and this is proved in [Er53]. -/
-@[category research solved, AMS 11]
-theorem erdos_978.variants.sub_one {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegree)
-    (hp : ∀ (x : ℕ), f.natDegree ≠ 2 ^ x) (hlc : 0 < f.leadingCoeff) :
-    {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))}.Infinite := by
-  sorry
+/-- `n` is `k`-power-free if it is not divisible by `p^k` for any prime `p`. -/
+def IsPowFree (k n : ℕ) : Prop :=
+  ∀ p : ℕ, p.Prime → ¬ p ^ k ∣ n
 
-/-- Let `f ∈ ℤ[X]` be an irreducible polynomial with positive leading coefficient. Suppose that the
-degree `k` of `f` is larger than `2`, is not equal to a power of `2`, and `f n` has no fixed
-`(k - 1)`-th power divisors other than `1`. Then the set of `n` such that `f n` is `(k - 1)`-th
-power free has positive density, and this is proved in [Ho67]. -/
-@[category research solved, AMS 11]
-theorem erdos_978.parts.i {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegree)
-    (hp2 : ∀ (x : ℕ), f.natDegree ≠ 2 ^ x) (hlc : 0 < f.leadingCoeff)
-    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
-    HasPosDensity {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))} := by
-  sorry
+/-- Polynomials considered in the boxed problem: irreducible of degree `k>2` not a power of `2`,
+with positive leading coefficient. -/
+def IsAdmissible (f : ℤ[X]) : Prop :=
+  Irreducible f ∧ 2 < f.natDegree ∧ (∀ l : ℕ, f.natDegree ≠ 2 ^ l) ∧ 0 < f.leadingCoeff
 
-/-- If the degree `k` of `f` is larger than or equal to `9`, and `f n` has no fixed `(k - 2)`-th
-power divisors other than `1`, then the set of `n` such that `f n` is `(k - 2)`-th power free has
-infinitely many elements. This result is proved in [Br11]. -/
+/--
+Let $f\in \mathbb{Z}[x]$ be an irreducible polynomial of degree $k>2$ (and suppose that
+$k\neq 2^l$ for any $l\geq 1$) such that the leading coefficient of $f$ is positive.
+Does the set of integers $n\geq 1$ for which $f(n)$ is $(k-1)$-power-free have positive density?
+-/
 @[category research solved, AMS 11]
-theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤ f.natDegree)
-    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) :
-    {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
+theorem erdos_978.parts.i :
+    ∀ f : ℤ[X], IsAdmissible f →
+      { n : ℕ | 0 < n ∧
+          IsPowFree (f.natDegree - 1) (f.aeval (n : ℤ)).natAbs }.HasPosDensity := by
   sorry
 
 /--
-If $k > 3$ (and $k \neq 2^l$), then are there infinitely many $n$ for which $f(n)$ is
-$(k-2)$-power-free?
-
-This was disproved by the DeepMind prover agent.
+If $k>3$, and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$, then are there
+infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
 -/
-@[category research solved, AMS 11,
-formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/3b5d6ac2555cd63b83d418c29ff040876be9dee0/FormalConjectures/ErdosProblems/978.lean#L64"]
-theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
-    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
-    (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
-    (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
-    {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
+@[category research open, AMS 11]
+theorem erdos_978.parts.ii :
+    answer(sorry) ↔
+      ∀ f : ℤ[X], IsAdmissible f → 3 < f.natDegree →
+        (∀ p : ℕ, p.Prime → ∃ n : ℤ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.aeval n) →
+          { n : ℕ | 0 < n ∧
+            IsPowFree (f.natDegree - 2) (f.aeval (n : ℤ)).natAbs }.Infinite := by
   sorry
 
 /--
-If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
-then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
+In particular, does
+$$
+n^4+2
+$$
+represent infinitely many squarefree numbers?
 -/
 @[category research open, AMS 11]
-theorem erdos_978.parts.ii : answer(sorry) ↔
-    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
-    (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
-    (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
-    {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
+theorem erdos_978.parts.iii :
+    answer(sorry) ↔
+      { n : ℕ | Squarefree ((n : ℤ) ^ 4 + 2).natAbs }.Infinite := by
   sorry
 
-/-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers? -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.iii : answer(sorry) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
+/--
+Hooley [Ho67] settled the first question, in fact providing a precise asymptotic for the number
+of such $n\leq x$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_978.variants.hooley (f : ℤ[X]) (hf : IsAdmissible f) :
+    ∃ c : ℝ, 0 < c ∧
+      Tendsto (fun x : ℕ ↦
+        (({n : ℕ | n < x ∧ 0 < n ∧
+            IsPowFree (f.natDegree - 1) (f.aeval (n : ℤ)).natAbs }).ncard : ℝ) / x)
+        atTop (𝓝 c) := by
   sorry
 
 end Erdos978
