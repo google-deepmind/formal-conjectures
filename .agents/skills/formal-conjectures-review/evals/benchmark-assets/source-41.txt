@@ -1,0 +1,20 @@
+Source: https://www.erdosproblems.com/latex/41
+Retrieved: 2026-09-08
+Original response SHA256: eb181f41da60f7c7c4cd72be479dbe220a1633086697caaa243851c952789ce4
+Extraction: complete problem box, no FC reviews.
+
+Let $A\subset\mathbb{N}$ be an infinite set such that the triple sums $a+b+c$ are all distinct for $a,b,c\in A$ (aside from the trivial coincidences). Is it true that\[\liminf \frac{\lvert A\cap \{1,\ldots,N\}\rvert}{N^{1/3}}=0?\]
+Erd\H{o}s proved that if the pairwise sums $a+b$ are all distinct aside from the trivial coincidences then\[\liminf \frac{\lvert A\cap \{1,\ldots,N\}\rvert}{N^{1/2}}=0.\]This is discussed in problem C11 of Guy's collection \cite{Gu04}, in which Guy says Erd\H{o}s offered \$500 for the general problem of whether, for all $h\geq 2$,\[\liminf \frac{\lvert A\cap \{1,\ldots,N\}\rvert}{N^{1/h}}=0\]whenever the sum of $h$ terms in $A$ are distinct. This was proved for $h=4$ by Nash \cite{Na89} and for all even $h$ by Chen \cite{Ch96b}.
+References
+[Ch96b] Chen, Sheng,
+A note on {$B_{2k}$} sequences
+. J. Number Theory (1996), 1--3.
+  
+  [Gu04] Guy, Richard K.,
+Unsolved problems in number theory
+.  (2004), xviii+437.
+  
+  [Na89] Nash, John C. M.,
+On {$B_4$}-sequences
+. Canad. Math. Bull. (1989), 446--449.
+Back to the problem

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://google-deepmind.github.io/formal-conjectures/data/schemas/catalog-v2.schema.json",
+  "title": "Complete Formal Conjectures catalog",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "problems",
+    "moduleDocstrings",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "problems": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/problem"
+      }
+    },
+    "moduleDocstrings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "problem": {
+      "type": "object",
+      "required": [
+        "theorem",
+        "module",
+        "category",
+        "subjects",
+        "statement",
+        "docstring",
+        "answerKinds",
+        "hasSorryFreeProof"
+      ],
+      "properties": {
+        "theorem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "pattern": "^FormalConjectures\\."
+        },
+        "category": {
+          "enum": [
+            "research open",
+            "research solved",
+            "textbook",
+            "test",
+            "API"
+          ]
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]{1,2}$"
+          }
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "docstring": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formalProofs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind",
+              "link",
+              "conditions"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "formal_conjectures",
+                  "lean4",
+                  "other_system"
+                ]
+              },
+              "link": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "hasSorryFreeProof": {
+          "type": "boolean"
+        },
+        "answerKinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "Prop",
+              "non-Prop"
+            ]
+          }
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "fileFirstAdded": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fileLastModified": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source",
+        "extractor",
+        "lean_toolchain",
+        "dependencies_sha256",
+        "scope",
+        "answer_mode"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "required": [
+            "repository",
+            "commit"
+          ],
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[\\w.-]+/[\\w.-]+$"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          }
+        },
+        "extractor": {
+          "type": "object",
+          "required": [
+            "repository",
+            "commit",
+            "path"
+          ],
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[\\w.-]+/[\\w.-]+$"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "path": {
+              "const": "scripts/extract_names.lean"
+            }
+          }
+        },
+        "lean_toolchain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scope": {
+          "const": "FormalConjectures"
+        },
+        "answer_mode": {
+          "const": "postpone"
+        }
+      }
+    }
+  }
+}

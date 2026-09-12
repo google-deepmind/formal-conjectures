@@ -1,0 +1,151 @@
+"""Download and cache the published Lean catalog without parsing Lean syntax."""
+import re
+import urllib.request
+import urllib.error
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.parse import urljoin, urlsplit, urlunsplit
+from . import report as rr
+from . import catalog_data
+from .metadata import metadata_rows
+from .core import Failure, save, now, user_cache
+
+NATIVE_URL = 'https://google-deepmind.github.io/formal-conjectures/data/conjectures.json'
+MANIFEST_URL = NATIVE_URL.replace('conjectures.json','catalog-manifest.json')
+MAX_BYTES = 64*1024*1024
+MAX_AGE = 24*60*60
+
+
+def read_url(url, limit=MAX_BYTES):
+    with urllib.request.urlopen(url,timeout=15) as response:
+        raw=response.read(limit+1)
+    if len(raw)>limit:raise ValueError('Catalog response is too large')
+    return raw
+
+
+def normalize(value):
+    if not isinstance(value,dict) or not isinstance(value.get('problems'),list):
+        raise ValueError('Expected the native schema-2 problems catalog')
+    metadata_rows(value)
+    return value
+
+
+def result(data, origin, state):
+    data=normalize(data)
+    gaps=list(data.get('coverage_gaps',[]))
+    if any(not p.get('statement') for p in data['problems']):
+        gaps.append('This catalog omits statement text. Generate a complete native extract without excluding statements.')
+    if not data.get('provenance'):
+        gaps.append('The source revision is unavailable; this catalog cannot establish evidence applicability.')
+    if state=='stale':gaps.append('Catalog refresh failed; showing the retained snapshot. Retry with --refresh when online.')
+    if state in ('fresh','cached','offline','stale'):
+        origin={**origin,'includes_local_changes':False}
+    return {**data,'coverage_gaps':gaps,'catalog_origin':{**origin,'state':state}}
+
+
+def catalog_url(value):
+    if not isinstance(value,str):raise Failure('invalid_catalog_url','Catalog URL must be an HTTPS URL ending in /conjectures.json.')
+    try:
+        parts=urlsplit(value)
+        if (parts.scheme!='https' or not parts.hostname or parts.username is not None or parts.password is not None
+                or parts.query or parts.fragment or not parts.path.endswith('/conjectures.json')
+                or any(ord(c)<33 for c in value)):
+            raise ValueError()
+        parts.port  # Validate malformed port syntax before any request.
+    except ValueError:
+        raise Failure('invalid_catalog_url','Use an HTTPS URL ending in /conjectures.json, without credentials, query or fragment.')
+    return urlunsplit((parts.scheme,parts.netloc.lower(),parts.path,'',''))
+
+
+def cache_path(url):
+    # Retain the already validated upstream cache; fork snapshots never share it.
+    return user_cache()/('catalog-cache.json' if url==NATIVE_URL else 'catalog-'+rr.digest(url.encode())+'.json')
+
+
+def load(root, path=None, *, refresh=False, offline=False, url=None):
+    if path:
+        if url:raise Failure('invalid_arguments','Choose --catalog FILE or --catalog-url URL, not both.')
+        path=Path(path)
+        if not path.is_file():raise Failure('catalog_missing','Catalog file does not exist: '+str(path))
+        return result(rr.read_json(path),{'path':str(path)},'explicit')
+    from .core import config
+    url=catalog_url(url or config(root).get('catalog_url') or NATIVE_URL)
+    manifest_url=urljoin(url,'catalog-manifest.json')
+    cache=cache_path(url)
+    retained=None
+    if cache.is_file():
+        try:
+            envelope=rr.read_json(cache)
+            if envelope['origin'].get('url')!=url or envelope['origin'].get('manifest_url')!=manifest_url:raise ValueError('Cached catalog source differs')
+            data=catalog_data.verify(envelope['descriptor'],envelope['raw'].encode())
+            retained=(data,envelope['origin'])
+            age=(datetime.now(timezone.utc)-datetime.fromisoformat(envelope['origin']['retrieved_at'])).total_seconds()
+            if offline or not refresh and 0<=age<MAX_AGE:
+                return result(*retained,'offline' if offline else 'cached')
+        except (ValueError,KeyError,TypeError):pass
+    if offline:
+        if retained:return result(*retained,'offline')
+        raise Failure('catalog_unavailable','No cached catalog for '+url+'. Retry without --offline.',4)
+    try:
+        from .ui import stage
+        stage('Downloading and validating catalog from '+url)
+        descriptor=catalog_data.parse(read_url(manifest_url,1024*1024))
+        # The descriptor can only select the sibling catalog, never an arbitrary URL.
+        if descriptor.get('catalog')!='conjectures.json':raise ValueError('Unexpected catalog filename')
+        raw=read_url(url)
+        data=catalog_data.verify(descriptor,raw)
+        origin={'url':url,'manifest_url':manifest_url,'retrieved_at':now(),'sha256':rr.digest(raw)}
+        save(cache,{'schema_version':'fc.catalog-cache.v1','descriptor':descriptor,'raw':raw.decode(),'origin':origin})
+        return result(data,origin,'fresh')
+    except urllib.error.HTTPError as error:
+        if error.code!=404:
+            if retained:return result(*retained,'stale')
+            raise Failure('catalog_unavailable',f'Catalog download failed (HTTP {error.code}). Retry with --refresh.',4) from error
+        if retained:return result(*retained,'stale')
+        raise Failure('catalog_not_published','No published catalog at '+url+'. '+('Upstream browsing requires FC #5375 to merge and deploy. ' if url==NATIVE_URL else 'Check that this site deployed its catalog and sibling catalog-manifest.json. ')+'Select a deployed fork explicitly with --catalog-url URL, or use --catalog FILE for a native extract.',4) from error
+    except (ValueError,TypeError,KeyError) as error:
+        raise Failure('catalog_invalid','Catalog validation failed for '+url+': '+str(error)+'. No outcome accepted; check the published manifest and catalog.',4) from error
+    except OSError as error:
+        if retained:return result(*retained,'stale')
+        raise Failure('catalog_unavailable','Cannot obtain a validated catalog: '+str(error)+'. Retry with --refresh.',4) from error
+
+
+def matches(catalog, query):
+    words = query.casefold().split()
+    shortcut = re.fullmatch(r'erdos/(\d+)',query.casefold())
+    if shortcut:
+        return [p for p in catalog['problems'] if p['module'] in
+                ('FormalConjectures.ErdosProblems.«'+shortcut[1]+'»','FormalConjectures.ErdosProblems.'+shortcut[1])]
+    exact = [p for p in catalog['problems'] if p['theorem'] == query]
+    if exact: return exact
+    return [p for p in catalog['problems'] if all(w in ' '.join(str(p.get(k,'')) for k in
+            ('theorem','module','statement','docstring','subjects')).casefold() for w in words)]
+
+def select(catalog, query):
+    found = matches(catalog,query)
+    if len(found)!=1:
+        raise Failure('ambiguous_target' if found else 'unknown_target',
+                      'Choose an exact declaration: '+', '.join(p['theorem'] for p in found[:20]))
+    return found[0]
+
+
+def attach_evidence(problems, root, cfg, source=None, *, offline=False):
+    import importlib.util
+    if importlib.util.find_spec("conjectures.projections") is None:
+        return [{**p,"evidence":[]} for p in problems]
+    from .projections import evidence_for
+    from urllib.parse import quote
+    index=None
+    path=root/'.conjectures/evidence-index.json' if root else None
+    if path and path.is_file():index=rr.read_json(path)
+    elif cfg.get('evidence') and not offline:
+        destination=cfg['evidence'];repo=destination.get('repository','');branch=destination.get('branch','')
+        if re.fullmatch(r'[\w.-]+/[\w.-]+',repo) and branch:
+            try:
+                url=f'https://raw.githubusercontent.com/{repo}/{quote(branch,safe="")}/toolkit-index.json'
+                with urllib.request.urlopen(url,timeout=10) as response:raw=response.read(8*1024*1024+1)
+                if len(raw)<=8*1024*1024:index=rr.parse(raw)
+            except (OSError,ValueError):pass
+    if not isinstance(index,dict) or index.get('schema_version')!='fc.evidence-index.v1':index={'runs':[]}
+    source=source or {}
+    return [{**p,'evidence':evidence_for(p,index,source.get('commit'),source.get('repository'))} for p in problems]

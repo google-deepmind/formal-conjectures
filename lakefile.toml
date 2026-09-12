@@ -85,3 +85,9 @@ srcDir = "scripts"
 root = "extract_names"
 exeName = "extract_names"
 supportInterpreter = true
+
+[[lean_exe]]
+name = "export_problem"
+srcDir = "comparator"
+root = "ExportProblem"
+supportInterpreter = true

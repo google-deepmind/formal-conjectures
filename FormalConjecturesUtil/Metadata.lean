@@ -26,13 +26,11 @@ this repository's declarations, and each has been re-deriving them. This
 module is where the shared representation lives, so that one semantic fact is
 interpreted once.
 
-It starts deliberately small: `FormalProofInfo` is the schema
-`extract_names` exports as `formalProofs` (`schemaVersion` 2), moved here so
-its next consumer imports it rather than restating it. A `ProblemSpec`
-bundling declaration, module, category, subjects, answer holes and source
-range belongs here too, and arrives when `extract_names`' internal
-`TheoremInfo` migrates; growing it ahead of its consumers would be schema
-fiction.
+`FormalProofInfo` is the schema-2 `formalProofs` record. The shared
+`ProblemSpec` and environment extractor live in
+`FormalConjecturesUtil.ProblemMetadata`, which imports the attribute and
+answer elaborators. Consumers that need only proof records can import this
+smaller module.
 -/
 
 public section
