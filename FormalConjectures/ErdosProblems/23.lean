@@ -20,6 +20,7 @@ import FormalConjecturesUtil
 # Erdős Problem 23
 
 *References:*
+* [Cycle plus uniform background weighted special case](https://github.com/SproutSeeds/erdos-problems/blob/68fbae4b2f6eba86f1b28d62b1b370bfabd7d92a/packs/graph-theory/problems/23/publication/cycle-background/PROOF.md)
 * [erdosproblems.com/23](https://www.erdosproblems.com/23)
 * [OEIS A389646](https://oeis.org/A389646)
 * [Balogh-Clemen-Lidicky, Max Cuts in Triangle-free Graphs](https://arxiv.org/abs/2103.14179)
@@ -110,6 +111,66 @@ theorem erdos_23 : answer(sorry) ↔
         ∃ (H : SimpleGraph V),
           H ≤ G ∧ H.IsBipartite ∧ (G.edgeFinset \ H.edgeFinset).card ≤ n^2 := by
   sorry
+
+/-- The Clebsch graph, represented by four-bit vertices. -/
+def clebschGraph : SimpleGraph (Fin 16) :=
+  .fromRel fun u v => u.val ^^^ v.val ∈ ([1, 2, 4, 8, 15] : List ℕ)
+
+/-- Adjacency in the Mycielski lift; `none` is the apex and `true` marks twins. -/
+def clebschMycielskiAdj : Option (Fin 16 × Bool) → Option (Fin 16 × Bool) → Prop
+  | none, none => False
+  | none, some (_, b) => b = true
+  | some (_, b), none => b = true
+  | some (u, b), some (v, c) => clebschGraph.Adj u v ∧ ¬(b = true ∧ c = true)
+
+/-- The Mycielski lift of the Clebsch graph. -/
+def clebschMycielski : SimpleGraph (Option (Fin 16 × Bool)) :=
+  .fromRel clebschMycielskiAdj
+
+/-- Background weight $r$, an extra $h$ on the cycle $(0,1,3,7,15)$,
+independent twin weights $b$, and apex weight $z$. -/
+def cycleBackgroundWeight (r h z : ℝ) (b : Fin 16 → ℝ) :
+    Option (Fin 16 × Bool) → ℝ
+  | none => z
+  | some (v, false) => r + if v ∈ ({0, 1, 3, 7, 15} : Finset (Fin 16)) then h else 0
+  | some (v, true) => b v
+
+/-- The apex is adjacent to every twin. -/
+@[category test, AMS 5]
+theorem clebschMycielski_apex_adj_twin (v : Fin 16) :
+    clebschMycielski.Adj none (some (v, true)) := by
+  simp [clebschMycielski, clebschMycielskiAdj]
+
+/-- Twins are never adjacent. -/
+@[category test, AMS 5]
+theorem clebschMycielski_twins_not_adjacent (u v : Fin 16) :
+    ¬clebschMycielski.Adj (some (u, true)) (some (v, true)) := by
+  simp [clebschMycielski, clebschMycielskiAdj]
+
+/-- Zero parameters give zero vertex weights. -/
+@[category test, AMS 5]
+theorem cycleBackgroundWeight_zero (v : Option (Fin 16 × Bool)) :
+    cycleBackgroundWeight 0 0 0 (fun _ ↦ 0) v = 0 := by
+  cases v with
+  | none => rfl
+  | some p => rcases p with ⟨v, q⟩; cases q <;> simp [cycleBackgroundWeight]
+
+open scoped Classical in
+/--
+Give every original vertex of the Mycielski lift of the Clebsch graph weight $r$, with
+an additional weight $h$ on the cycle $(0,1,3,7,15)$. For all $r,h,z\geq0$ and
+arbitrary nonnegative twin weights, a cut leaves monochromatic edge weight at most
+$1/25$ of the square of the total vertex weight. The apex has weight $z$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/SproutSeeds/erdos-problems/blob/68fbae4b2f6eba86f1b28d62b1b370bfabd7d92a/packs/graph-theory/problems/23/publication/cycle-background/P23CycleBackgroundSubmission.lean#L50"]
+theorem erdos_23.variants.cycle_background :
+    ∀ (r h z : ℝ) (b : Fin 16 → ℝ), 0 ≤ r → 0 ≤ h → 0 ≤ z →
+      (∀ v, 0 ≤ b v) → ∃ c : Option (Fin 16 × Bool) → Bool,
+        (25 / 2 : ℝ) * (∑ u, ∑ v,
+          if clebschMycielski.Adj u v ∧ c u = c v then
+            cycleBackgroundWeight r h z b u * cycleBackgroundWeight r h z b v else 0) ≤
+          (16 * r + 5 * h + (∑ v, b v) + z) ^ 2 := by sorry
 
 -- TODO: add the remaining variants/statements/comments
 
