@@ -57,9 +57,12 @@ theorem a_5 : a 5 = 77 := by
 
 /--
 "Conjecture: for $n > 2$, $n$ divides $a(n-2)$ if and only if $n$ is a prime.
-Checked up to 20000. - _Amiram Eldar_ and _Thomas Ordowski_, Jul 27 2019"-/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 2 < n) : (n : ℤ) ∣ a (n - 2) ↔ n.Prime := by
+Checked up to 20000. - _Amiram Eldar_ and _Thomas Ordowski_, Jul 27 2019
+
+This is false for the composite number $16843^2$.-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_64169_conjecture_0/Submission/Spec.lean#L514"]
+theorem conjecture : ¬ ∀ (n : ℕ), 2 < n → ((n : ℤ) ∣ a (n - 2) ↔ n.Prime) := by
   sorry
 
 end OeisA64169
