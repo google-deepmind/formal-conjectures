@@ -18,6 +18,7 @@ module
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.NNRat.Floor
 public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
 public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import Mathlib.Data.Set.Card
 
@@ -142,13 +143,17 @@ def CDSColorable [Fintype α] (G : SimpleGraph α) : Prop :=
     ∃ (C : G.Coloring Nat), ∀ k : Nat,
    ∑ i < k, (C.colorClass i).ncard = indepNumK G k
 
-/-- A homomorphism is rainbow if it maps distinct edges to distinct colors. -/
-def IsRainbow {α V : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G) {C : Type*}
-    (c : Sym2 V → C) : Prop :=
-  Function.Injective fun e : H.edgeSet => c (Sym2.map f e)
+/-- A homomorphism `f : H →g G` is rainbow for an edge labeling `c` of `G` if it maps distinct
+edges of `H` to edges of `G` with distinct labels. -/
+def IsRainbow {α V K : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H →g G)
+    (c : G.EdgeLabeling K) : Prop :=
+  Function.Injective (c.pullback f)
 
 /--
-The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ without rainbow $H$.
+The anti-Ramsey number $\mathrm{AR}(n, H)$: the maximum number of colors in an edge coloring of
+$K_n$ (that is, a labeling of the edges of $K_n$ using every color) that contains no rainbow copy
+of $H$, i.e. no embedding of $H$ whose edges all receive different colors.
 -/
 noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
-  sSup {k | ∃ c : Sym2 (Fin n) → Fin k, Function.Surjective c ∧ ∀ f : H →g ⊤, ¬IsRainbow f c}
+  sSup {k | ∃ c : TopEdgeLabeling (Fin n) (Fin k), Function.Surjective c ∧
+    ∀ f : H ↪g ⊤, ¬IsRainbow f.toHom c}
