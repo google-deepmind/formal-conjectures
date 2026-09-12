@@ -84,4 +84,25 @@ theorem erdos_269.variants.infinite (P : Set ℕ) (h : ∀ p ∈ P, p.Prime) (h_
   Irrational (series P) := by
   sorry
 
+/--
+For three pairwise distinct primes $p$, $q$, $r$ and any cutoff $x$, the least
+common multiple of all $\{p,q,r\}$-smooth numbers $p^i q^j r^k \le x$ is the
+product of the largest pure powers of $p$, $q$ and $r$ that are at most $x$:
+$$ \operatorname{lcm}\{p^i q^j r^k \le x\}
+   = p^{\lfloor \log_p x \rfloor} q^{\lfloor \log_q x \rfloor}
+     r^{\lfloor \log_r x \rfloor}. $$
+The pairwise-distinctness hypotheses are necessary: for $p = q = 2$, $r = 5$
+and $x = 100$ the two sides are $1600$ and $102400$.
+
+This is a finite structural identity for the running least common multiple.
+It does not establish rationality or irrationality of `series`, and it does
+not resolve either open finite-prime variant of this problem.
+-/
+@[category textbook, AMS 11]
+theorem erdos_269.variants.smooth_prefix_lcm
+    {p q r : ℕ} (hp : p.Prime) (hq : q.Prime) (hr : r.Prime)
+    (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r) (x : ℕ) :
+    smoothPrefixLcm p q r x = threePrimeHeight p q r x :=
+  smoothPrefixLcm_eq_threePrimeHeight hp hq hr hpq hpr hqr x
+
 end Erdos269

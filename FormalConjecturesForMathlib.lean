@@ -168,6 +168,7 @@ public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
+public import FormalConjecturesForMathlib.NumberTheory.ThreePrimeSmoothLcm
 public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
 public import FormalConjecturesForMathlib.NumberTheory.WieferichPrime
 public import FormalConjecturesForMathlib.Order.Bounds.Basic
