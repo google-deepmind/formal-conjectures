@@ -47,7 +47,9 @@ theorem erdos_287 : answer(sorry) ↔
 The lower bound of $\geq 2$ is equivalent to saying that $1$ is not the sum of reciprocals of
 consecutive integers, proved by Erdős [Er32].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Zed-Rez/erdos-287-lean/blob/8bf27b1915ffbd155f071acbc57ba223451dc8ef/P287/gap_full.lean#L276-L281"]
 theorem erdos_287.variants.gap_at_least_two :
     ∀ (k : ℕ) (_ : 2 ≤ k) (s : Fin k → ℕ),
     StrictMono s → 1 < s ⟨0, by omega⟩ →
@@ -73,7 +75,7 @@ theorem erdos_287.test.best_possible :
   · norm_num [Fin.sum_univ_three, max_gap, show (![2, 3, 6] : Fin 3 → ℕ) 0 = 2 from rfl,
       show (![2, 3, 6] : Fin 3 → ℕ) 1 = 3 from rfl,
       show (![2, 3, 6] : Fin 3 → ℕ) 2 = 6 from rfl]
-  · native_decide
+  · rfl
 
 /--
 For all large $N$, there exists a prime $p \in [N, 2N]$ such that $\frac{p+1}{2}$ is also prime.
