@@ -25,10 +25,11 @@ import FormalConjecturesUtil
   Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
 -/
 
-open Classical Set Pointwise
+open Set Pointwise
 
 namespace Erdos38
 
+open scoped Classical in
 /--
 Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
 but is such that for every set $A \subseteq \mathbb{N}$ of Schnirelmann density $\alpha$

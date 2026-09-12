@@ -22,14 +22,16 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
 -/
 
-open MeasureTheory Classical Filter
+open MeasureTheory Filter
 open scoped ProbabilityTheory Topology Real
 
 namespace Erdos522
 
 /--
 A sequence of *Kac coefficients* over a subset `S` of a field `k` is a countably infinite sequence
-of independent random variables, each uniformly distributed over `S`.
+of independent random variables, each uniformly distributed over `S` with respect to the reference
+measure `μ`. The default reference measure is the counting measure, so that for a finite set `S`
+each coefficient takes every value of `S` with probability `1 / |S|`.
 
 Such a sequence determines a *Kac polynomial* of degree `n` for each `n`, which is the random
 polynomial given by `KacCoefficients.polynomial`.
@@ -37,20 +39,20 @@ polynomial given by `KacCoefficients.polynomial`.
 @[ext]
 structure KacCoefficients
     {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac) where
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count) where
   toFun : ℕ → Ω → k
   h_indep : ProbabilityTheory.iIndepFun toFun ℙ
   h_unif : ∀ i, MeasureTheory.pdf.IsUniform (toFun i) S ℙ μ
 
 variable {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac)
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count)
 
 /--
 We can always view a Kac polynomial as a random variable on `ℕ`.
 -/
 instance : FunLike (KacCoefficients S Ω μ) ℕ (Ω → k) where
   coe P := P.toFun
-  coe_injective' := by intro P Q h ; aesop
+  coe_injective P Q h := by aesop
 
 namespace KacCoefficients
 
@@ -73,7 +75,9 @@ noncomputable def roots (c : KacCoefficients S Ω μ) (n : ℕ) : Ω → Multise
 
 /-- Counts the number of roots of a Kac polynomial in the unit disk with multiplicity. -/
 noncomputable def numRootsInUnitDisk [PseudoMetricSpace k] (c : KacCoefficients S Ω μ) (n : ℕ)
-    (ω : Ω) : ℕ := (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
+    (ω : Ω) : ℕ :=
+  open scoped Classical in
+  (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
 
 end KacCoefficients
 
@@ -128,6 +132,7 @@ theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
       (ℙ {ω | |(f.roots n ω).card / (n : ℝ).log - 2 / π| ≥ o n}).toReal ≤ p n := by
   sorry
 
+open scoped Classical in
 /--
 Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots in `{z∈C:|z|≤1}`.
 -/

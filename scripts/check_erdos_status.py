@@ -17,8 +17,6 @@ import subprocess
 import sys
 import urllib.request
 
-import yaml
-
 YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
 )
@@ -62,6 +60,10 @@ FORMALLY_SOLVED_STATES = {
 
 
 def fetch_yaml():
+    # Imported here rather than at the top so the module can be imported without pyyaml,
+    # which the tests do and the script-test CI job does not install.
+    import yaml
+
     with urllib.request.urlopen(YAML_URL) as resp:
         return yaml.safe_load(resp.read())
 
@@ -151,6 +153,19 @@ def scan_lean_files():
     return result
 
 
+def classifiable():
+    """Problems the YAML gives a status this script understands.
+
+    A problem missing from this set is not agreeing with us, it is one we cannot read, which
+    is a different thing and must not be treated as resolved.
+    """
+    return {
+        str(p["number"])
+        for p in fetch_yaml()
+        if yaml_status_to_category(p.get("status", {}).get("state", "open")) is not None
+    }
+
+
 def find_mismatches():
     problems = fetch_yaml()
     yaml_statuses = {}
@@ -235,13 +250,77 @@ def create_issues(mismatches):
         subprocess.run(cmd)
 
 
+ISSUE_TITLE_RE = re.compile(r"Erdős Problem (\d+): status mismatch")
+
+
+def issues_to_close(issues, still_open, known):
+    """Which open sync issues no longer describe a real mismatch.
+
+    Kept separate from the `gh` calls so it can be tested.
+    """
+    out = []
+    for issue in issues:
+        match = ISSUE_TITLE_RE.match(issue["title"])
+        if not match:
+            continue
+        num = match.group(1)
+        # Still mismatched, or a YAML state we cannot read. Either way, leave it alone:
+        # "we cannot tell" is not the same as "resolved".
+        if num in still_open or num not in known:
+            continue
+        out.append(issue["number"])
+    return out
+
+
+def close_resolved_issues(mismatches):
+    """Close open sync issues whose mismatch has gone away.
+
+    The script opens an issue when this repository and erdosproblems.com disagree, but
+    nothing ever closed them, so the label accumulates issues describing a state that no
+    longer holds. `mismatches` is everything still disagreeing, so any other open issue under
+    the label has been overtaken by a merge.
+    """
+    # `find_mismatches` keys problems by string, so compare as strings.
+    still_open = {str(m["number"]) for m in mismatches}
+    known = classifiable()
+    result = subprocess.run(
+        [
+            "gh", "issue", "list",
+            "--label", "erdos-status-sync",
+            "--state", "open",
+            "--limit", "500",
+            "--json", "number,title",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(
+            f"Failed to list sync issues (gh exit code {result.returncode}), "
+            f"not closing anything",
+            file=sys.stderr,
+        )
+        return
+    issues = json.loads(result.stdout) if result.stdout.strip() else []
+    for number in issues_to_close(issues, still_open, known):
+        subprocess.run([
+            "gh", "issue", "close", str(number),
+            "--comment",
+            "The repository and erdosproblems.com now agree on this problem, so there is "
+            "no mismatch left to act on. Closed automatically; reopen if that is wrong.",
+        ])
+
+
 def main():
     mismatches = find_mismatches()
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
-    if "--create-issues" in sys.argv and mismatches:
-        create_issues(mismatches)
+    if "--create-issues" in sys.argv:
+        if mismatches:
+            create_issues(mismatches)
+        # Runs even when nothing mismatches, which is exactly when there is most to close.
+        close_resolved_issues(mismatches)
 
     return 1 if mismatches else 0
 

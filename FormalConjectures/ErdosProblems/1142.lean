@@ -66,7 +66,7 @@ local macro "prove_erdos_1142_prop" bound:num : tactic =>
   `(tactic| (
     refine ⟨by omega, fun k hk hlt => ?_⟩
     have : k ≤ $bound := by
-      by_contra h; push_neg at h
+      by_contra! h
       exact absurd (Nat.pow_le_pow_right (by omega : 1 ≤ 2) h) (by omega)
     interval_cases k <;> simp_all (config := { decide := true })))
 

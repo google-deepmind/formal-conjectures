@@ -32,7 +32,7 @@ instance (a b : R) :
 
 @[simp] lemma algebraMap_omega (a b : R) : algebraMap (QuadraticAlgebra R a b)
     (QuadraticAlgebra S (algebraMap R S a) (algebraMap R S b)) ω = ω := by
-  convert lift_symm_apply_coe _
+  convert! lift_symm_apply_coe _
   simp
 
 instance (a b : ℤ) : Algebra (QuadraticAlgebra ℤ a b) (QuadraticAlgebra S a b) :=
@@ -49,7 +49,7 @@ instance (a : ℤ) : Algebra (QuadraticAlgebra ℤ a 0) (QuadraticAlgebra S a 0)
 
 @[simp] lemma algebraMap_omega'' (a : ℤ) : algebraMap (QuadraticAlgebra ℤ a 0)
     (QuadraticAlgebra S a 0) ω = ω := by
-  convert lift_symm_apply_coe _
+  convert! lift_symm_apply_coe _
   simp
 
 variable {d : ℤ} [Fact  <| Squarefree d] [Fact <| d ≠ 1]

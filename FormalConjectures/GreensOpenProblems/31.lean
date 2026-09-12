@@ -132,13 +132,22 @@ theorem green_31.variants.abelian : answer(sorry) ↔
   sorry
 
 /--
+A set of binary vectors is Sidon if its pairwise sums, taken coordinatewise in `ℕ`, determine the
+unordered pair of summands.
+-/
+def IsBinarySidon {n : ℕ} (S : Set (𝔽₂ n)) : Prop :=
+  ∀ ⦃a b c d : 𝔽₂ n⦄, a ∈ S → b ∈ S → c ∈ S → d ∈ S →
+    (fun i ↦ (a i).val + (b i).val) = (fun i ↦ (c i).val + (d i).val) →
+      (a = c ∧ b = d) ∨ (a = d ∧ b = c)
+
+/--
 Another very nice old problem is whether there is a Sidon subset of $\{0, 1\}^n$ of size $N^{0.51}$,
 where $N = 2^n$ [Gr24].
 -/
 @[category research open, AMS 5 11]
 theorem green_31.variants.sidon_01n : answer(sorry) ↔
     ∃ S : (n : ℕ) → Finset (𝔽₂ n),
-      (∀ n, IsSidon (S n : Set (𝔽₂ n))) ∧
+      (∀ n, IsBinarySidon (S n : Set (𝔽₂ n))) ∧
       ∀ᶠ n in atTop, ((2 : ℝ) ^ n) ^ (0.51 : ℝ) ≤ (S n).card := by
   sorry
 
@@ -148,7 +157,8 @@ The best-known upper bound for a Sidon subset of $\{0, 1\}^n$ ($N = 2^n$) is $N^
 @[category research solved, AMS 5 11]
 theorem green_31.variants.sidon_01n_clz01 :
     ∃ C : ℝ, ∀ n, ∀ S : Finset (𝔽₂ n),
-      IsSidon (S : Set (𝔽₂ n)) → (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
+      IsBinarySidon (S : Set (𝔽₂ n)) →
+        (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
   sorry
 
 end Green31

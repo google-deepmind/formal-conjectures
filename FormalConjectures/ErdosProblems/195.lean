@@ -32,10 +32,15 @@ namespace Erdos195
 /--
 What is the largest $k$ such that in any permutation of $\mathbb{Z}$ there must exist a
 monotone $k$-term arithmetic progression $x_1 < \cdots < x_k$?
+
+Here a permutation of $\mathbb{Z}$ is a one-sided arrangement $a_1, a_2, a_3, \ldots$ of the
+integers, i.e. a bijection $\mathbb{N} \to \mathbb{Z}$, and a monotone $k$-term arithmetic
+progression is a subsequence $a_{i_1}, \ldots, a_{i_k}$ with $i_1 < \cdots < i_k$ forming an
+increasing or decreasing arithmetic progression.
 -/
 @[category research open, AMS 5]
 theorem erdos_195 :
-    answer(sorry) = sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+    answer(sorry) = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
 /--
@@ -43,7 +48,7 @@ Geneson [Ge19] proved that k ≤ 5.
 -/
 @[category research solved, AMS 5]
 theorem erdos_195.variants.leq_5_bound :
-    5 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+    5 ≥ sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
 /--
@@ -51,7 +56,7 @@ Adenwalla [Ad22] proved that k ≤ 4.
 -/
 @[category research solved, AMS 5]
 theorem erdos_195.variants.leq_4_bound :
-    4 ≥ sSup {k : ℕ | ∀ f : ℤ ≃ ℤ, HasMonotoneAP f k} := by
+    4 ≥ sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
 end Erdos195

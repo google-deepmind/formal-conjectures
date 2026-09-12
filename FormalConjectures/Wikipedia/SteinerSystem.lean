@@ -81,7 +81,7 @@ by Keevash showing that such systems must exist for sufficiently large $n$.
 *Reference:* [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems)
 -/
 @[category research open, AMS 5]
-def large_steiner_systems : LargeSteinerSystemWitness := by
+theorem large_steiner_systems : Nonempty LargeSteinerSystemWitness := by
   sorry
 
 /--
@@ -260,10 +260,13 @@ $S(4, k, n)$ systems exist (for any fixed $k > 4$). The proof is nonconstructive
 
 Explicit examples include $S(4, 5, 11)$ (the unique system, related to the Mathieu
 group $M_{11}$) and $S(4, 7, 23)$ (related to the Mathieu group $M_{23}$).
+
+Only nontrivial systems with $4 < k < n$ are counted: for every $n$ the single block
+$\{1, \dots, n\}$ is an $S(4, n, n)$, and all $4$-subsets of an $n$-set form an $S(4, 4, n)$.
 -/
 @[category research solved, AMS 5]
 theorem infinitely_many_steiner_t4 :
-    ∃ S : Set (Σ k n : ℕ, S(4, k, n)), S.Infinite := by
+    {s : Σ k n : ℕ, S(4, k, n) | 4 < s.1 ∧ s.1 < s.2.1}.Infinite := by
   sorry
 
 /--
@@ -276,12 +279,15 @@ systems exist. The proof is nonconstructive.
 
 Only two explicit examples are known: $S(5, 6, 12)$ and $S(5, 8, 24)$, both Witt
 designs related to the Mathieu groups $M_{12}$ and $M_{24}$ respectively.
+
+Only nontrivial systems with $5 < k < n$ are counted, for the same reason as in
+`infinitely_many_steiner_t4`.
 No Steiner system with $t \geq 6$ has been explicitly constructed, though Keevash's
 result guarantees their existence nonconstructively as well.
 -/
 @[category research solved, AMS 5]
 theorem infinitely_many_steiner_t5 :
-    ∃ S : Set (Σ k n : ℕ, S(5, k, n)), S.Infinite := by
+    {s : Σ k n : ℕ, S(5, k, n) | 5 < s.1 ∧ s.1 < s.2.1}.Infinite := by
   sorry
 
 end SteinerSystems

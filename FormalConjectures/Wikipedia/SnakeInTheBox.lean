@@ -41,8 +41,7 @@ A subgraph `G'` is a 'snake' of length `k` in graph `G` if it is an induced path
 -/
 def IsSnakeInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
     (k : ℕ) : Prop :=
-  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G'.verts = {v | v ∈ P.support} ∧
-  P.length = k
+  G'.IsInduced ∧ ∃ u v : V, ∃ (P : G.Walk u v), P.IsPath ∧ G' = P.toSubgraph ∧ P.length = k
 
 /--
 The length of the longest induced path (or 'snake') in a graph `G`.
@@ -62,16 +61,16 @@ since there only is one induced path and it is of length zero.
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
-  convert csSup_singleton 0
+  convert! csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
-  · rw [h]
-    use (⊤ : Subgraph _), by simp, ∅, ∅
-    simp
+    simp_all [Walk.Nil.length_eq_zero]
+  · rintro rfl
+    use ⊤, by simp, ∅, ∅, .nil
+    simp [Subgraph.ext_iff, funext_iff]
 
 open List
 

@@ -19,17 +19,24 @@ import FormalConjecturesUtil
 /-!
 # Ben Green's Open Problem 3
 
-*Reference:* [Ben Green's Open Problem 3](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.3 Problem 3)
+*References:*
+- [Ben Green's Open Problem 3](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.3 Problem 3)
+- [FGY26] Franchi, Leonardo and Gowers, W. T. and Yip, Fredy, *Product-free subsets of $(0,1)$*,
+  [arXiv:2607.06073](https://arxiv.org/abs/2607.06073), Theorem 1.1.
 -/
 
 open Set MeasureTheory
 
 namespace Green3
 
-/-- Suppose that $A \subset [0,1]$ is open and has measure greater than $\frac{1}{3}$. Is there a solution to $xy = z$ with $x, y, z \in A$? -/
-@[category research open, AMS 11]
+/-- Suppose that $A \subset [0,1]$ is open and has measure greater than $\frac{1}{3}$. Is there a
+solution to $xy = z$ with $x, y, z \in A$?
+
+The answer is yes. [FGY26] prove that an open product-free subset of $(0,1)$ has measure strictly
+less than $\frac{1}{3}$. -/
+@[category research solved, AMS 11]
 theorem green_3 :
-    answer(sorry) ↔ ∀ A : Set ℝ,
+    answer(True) ↔ ∀ A : Set ℝ,
       IsOpen A → A ⊆ Icc 0 1 → volume A > 1/3 →
         ∃ x y z, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧ x * y = z := by
   sorry

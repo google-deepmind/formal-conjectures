@@ -134,12 +134,7 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  constructor
-  · intro h i hi
-    contrapose! h
-    exact fun H => by have := H i; simp_all +decide [ χ ]
-  · intro h i; simp [χ];
-    by_cases hi : i ∈ s <;> simp_all +decide [ Finset.subset_iff ]
+  simp [χ, Pi.le_def, Finset.subset_iff]
 
 @[category API, AMS 6]
 lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔ v i = true := by

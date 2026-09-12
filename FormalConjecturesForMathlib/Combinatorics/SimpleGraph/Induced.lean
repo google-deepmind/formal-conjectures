@@ -21,7 +21,6 @@ public import Mathlib.Data.Real.Basic
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

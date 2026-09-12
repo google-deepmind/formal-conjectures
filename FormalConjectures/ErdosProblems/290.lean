@@ -31,7 +31,7 @@ namespace Erdos290
 
 /-- The denominator (in lowest terms) of the partial harmonic sum
 $\sum_{a \leq n \leq b}\frac{1}{n}$. -/
-noncomputable def harmonicDen (a b : ℕ) : ℕ := (∑ n ∈ Finset.Icc a b, (1 : ℚ) / n).den
+noncomputable def harmonicDen (a b : ℕ) : ℕ := (harmonicBlock a b).den
 
 /--
 Let $a\geq 1$. Must there exist some $b>a$ such that

@@ -42,7 +42,7 @@ theorem erdos_457 : answer(True) ↔ ∃ ε > (0 : ℝ),
 /-- Let $q(n, k)$ denote the least prime which does not divide
 $\prod_{1 \le i \le k}(n + i)$. -/
 noncomputable abbrev q (n : ℕ) (k : ℝ) : ℕ :=
-    Nat.find (Nat.exists_prime_not_dvd (∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
+    Nat.find (Nat.exists_prime_not_dvd (n := ∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
       (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
 
 /--

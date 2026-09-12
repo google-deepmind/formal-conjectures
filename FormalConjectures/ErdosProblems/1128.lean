@@ -45,22 +45,24 @@ private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 @[category API, AMS 5]
 private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
     (Set.Iio γ).Countable := by
-  rwa [countable_iff_lt_aleph_one, mk_Iio_ordinal, lift_lt_aleph_one,
-    ← lt_omega_iff_card_lt]
+  rwa [← le_aleph0_iff_set_countable, Cardinal.mk_Iio_ordinal, lift_le_aleph0,
+    ← lt_aleph_one_iff, ← lt_omega_iff_card_lt]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Initial segments of ω₁ (as sets of `Omega1` elements) are countable.
 This is the subtype-order version of `countable_Iio_of_lt_omega1`. -/
 @[category API, AMS 5]
 private lemma countable_Iio_omega1 (γ : Omega1) : (Set.Iio γ : Set Omega1).Countable := by
   -- The injection a ↦ ⟨a.1.val, a.2⟩ sends ↑(Iio γ : Set Omega1) into ↑(Iio γ.val : Set Ord)
   -- and the codomain is countable by countable_Iio_of_lt_omega1.
-  haveI hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
+  have hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
   -- Goal: (Set.Iio γ : Set Omega1).Countable = Set.Countable (Set.Iio γ)
   -- = Countable ↥(Set.Iio γ : Set Omega1) (by definition of Set.Countable)
   show Countable ↑(Set.Iio γ : Set Omega1)
   -- Use Function.Injective.countable with the injection a ↦ ⟨a.1.val, a.2⟩.
   apply Function.Injective.countable (β := ↑(Set.Iio γ.val : Set Ordinal.{0}))
     (f := fun (a : ↑(Set.Iio γ : Set Omega1)) => (⟨a.1.val, a.2⟩ : ↑(Set.Iio γ.val)))
+  -- `h` arrives as an unreduced application of the injection.
   intro ⟨⟨av, hav_ω₁⟩, hav_γ⟩ ⟨⟨bv, hbv_ω₁⟩, hbv_γ⟩ h
   simp only [Subtype.mk.injEq] at h
   exact Subtype.ext (Subtype.ext h)
@@ -72,12 +74,10 @@ private lemma countable_subset_bdd (S : Set Omega1) (hS : S.Countable) :
     ∃ γ : Omega1, ∀ s ∈ S, s < γ := by
   by_cases hemp : S.Nonempty
   · obtain ⟨f, hf⟩ := hS.exists_eq_range hemp
-    have hf_lt' : ∀ n, (f n).1 < (ℵ_ 1).ord :=
-      fun n => lt_of_lt_of_eq (f n).2 (ord_aleph 1).symm
+    have hf_lt' n : (f n).1 < ω_ 1 := (f n).2
     have hbdd : BddAbove (Set.range (fun n => (f n).1)) :=
       ⟨ω_ 1, fun o ⟨m, hm⟩ => hm ▸ (f m).2.le⟩
-    have hlt : ⨆ n, (f n).1 < ω_ 1 :=
-      lt_of_lt_of_eq (iSup_sequence_lt_omega_one _ hf_lt') (ord_aleph 1)
+    have hlt : ⨆ n, (f n).1 < ω_ 1 := iSup_lt_omega_one hf_lt'
     -- `ω_ 1` is a limit ordinal (no ord_aleph rewrite needed).
     have hsucc_lt : (⨆ n, (f n).1) + 1 < ω_ 1 := by
       rw [← succ_eq_add_one]; exact (isSuccLimit_omega 1).succ_lt hlt
@@ -246,13 +246,11 @@ theorem erdos_1128.variants.two_dimensional_false :
   -- Contrapositive: uncountable subsets of ω₁ are not bounded (i.e., cofinal in ω₁).
   have A₁_unbdd : ∀ γ : Omega1, ∃ a ∈ A₁, γ ≤ a := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hA_unc (Set.Countable.mono (fun a ha => hbdd a ha) (countable_Iio_omega1 γ))
   have B₁_unbdd : ∀ γ : Omega1, ∃ b ∈ B₁, γ ≤ b := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hB_unc (Set.Countable.mono (fun b hb => hbdd b hb) (countable_Iio_omega1 γ))
   -- A₁ and B₁ are both nonempty (since uncountable sets are nonempty).
   have hA_ne : A₁.Nonempty := by

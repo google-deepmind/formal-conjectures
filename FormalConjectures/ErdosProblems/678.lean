@@ -70,13 +70,36 @@ $$?
 The answer is yes, as proved in a strong form by Cambie [Ca24].
 [Ca24] S. Cambie, Resolution of an Erdős' problem on least common multiples. arXiv:2410.09138 (2024).
 
-This was formalized in Lean by Alexeev using Aristotle, conditional on asymptotic estimates for the
-prime counting function (specifically `pi_alt` from the PNT+ project).
-See the [formal proof](https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos678.lean).
+This was formalized in Lean by Alexeev using Aristotle, on top of the PNT+ project.
+
+For a fixed $k$ there are only finitely many such pairs, so "infinitely many" is read here as
+ranging over $k$ as well: for every sufficiently large $k$ at least one pair $(m, n)$ occurs.
+See `erdos_678.variants.infinitely_many_triples` for the reading in which the infinitude is
+stated directly, and `erdos_678.variants.not_infinitely_many_pairs` for why it cannot be asked
+of a single $k$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
 theorem erdos_678 : answer(True) ↔
-    ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
+    ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Nonempty := by
+  sorry
+
+/--
+The pairs $(m, n)$ with $m \geq n + k$ and $M(n, k) > M(m, k + 1)$ are infinite in number once
+$k$ is allowed to vary, which is the sense in which Cambie's result answers the question.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
+theorem erdos_678.variants.infinitely_many_triples :
+    {(k, m, n) | 3 ≤ k ∧ n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
+  sorry
+
+/--
+For a fixed sufficiently large $k$ only finitely many pairs occur: $M(m, k + 1) \geq m + 1$
+bounds $m$ by $M(n, k)$, and for large $n$ the inequality reverses. So the question cannot be
+read as asking for infinitely many pairs at a single $k$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
+theorem erdos_678.variants.not_infinitely_many_pairs :
+    ¬ ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
   sorry
 
 end Erdos678

@@ -19,7 +19,7 @@ import FormalConjecturesUtil
 /-!
 # Modularity conjecture
 
-The **Modularity conjecture** (also know as the Shimura-Taniyama-Weil conjecture) states that
+The **Modularity conjecture** (also known as the Shimura-Taniyama-Weil conjecture) states that
 every rational elliptic curve is modular, meaning that it can be
 associated with a modular form. We state the `a_p` version of the conjecture, which relates the
 coefficients of the modular form to the number of points on the elliptic curve over finite fields.
@@ -30,22 +30,22 @@ assumption that `p ∤ N`, in order to give an equivalent statement.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Modularity_theorem)
-- [F. Diamond and J. Shurman, *A First Course in Modular Forms*][diamondshurman2005]
+- [F. Diamond and J. Shurman, *A First Course in Modular Forms*](https://doi.org/10.1007/978-0-387-27226-9)
 
 -/
 
 namespace ModularityConjecture
 
-open Complex CongruenceSubgroup ModularFormClass ModularityConjecture
-open scoped UpperHalfPlane Real ModularForm CongruenceSubgroup
+open Complex CongruenceSubgroup ModularFormClass ModularityConjecture UpperHalfPlane
+open scoped Real ModularForm CongruenceSubgroup
 
-/-- The `n`-th Fourier coefficient of a modular forms (around the cusp at infinity). -/
+/-- The `n`-th Fourier coefficient of a modular form (around the cusp at infinity). -/
 noncomputable def modularFormAn (n : ℕ) {N : ℕ} {k : ℤ} (f : CuspForm (Gamma0 N) k) : ℂ :=
   (qExpansion N f).coeff n
 
 local notation:73 "a_[" n:0 "]" f:72 => modularFormAn n f
 
-/-- We need to reduce a rational modulo `p`, in practice we wont be dividing by zero since the
+/-- We need to reduce a rational modulo `p`, in practice we won't be dividing by zero since the
 conductor of the elliptic curve saves us. -/
 def ratRed (q : ℚ) (p : ℕ) : ZMod p :=
   (q.num : ZMod p) * (q.den : ZMod p)⁻¹
@@ -64,9 +64,9 @@ instance apFintype (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ+) :
   apply Subtype.fintype _
 
 /-- Note that normally this is written as `p + 1 - #E(𝔽ₚ)`, but since we don't have a point at
-infinty on this affine curve we only have `p` -/
-noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℕ :=
-  p - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
+infinity on this affine curve we only have `p`. The trace is integer-valued and can be negative. -/
+noncomputable def WeierstrassCurve.ap (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) : ℤ :=
+  (p : ℤ) - Cardinal.toNat (Cardinal.mk (setOfPointsModN E p))
 
 /-- Since we don't have Hecke operators yet, we define this via the q-expansion coefficients. See
  Proposition 5.8.5 of [diamondshurman2005]. -/

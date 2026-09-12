@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Data.Real.NearestInt
+
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: $p$-adic Littlewood Conjecture
 

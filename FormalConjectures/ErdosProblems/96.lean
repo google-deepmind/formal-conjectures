@@ -34,7 +34,7 @@ The set of all possible numbers of unit distances determined by the vertices of 
 $n$-gon.
 -/
 noncomputable def convexUnitDistanceCounts (n : ℕ) : Set ℕ :=
-  {unitDistancePairsCount points | (points : Finset ℝ²) (_ : points.card = n) (_ : ConvexIndep points)}
+  {unitDistNum points | (points : Finset ℝ²) (_ : points.card = n) (_ : ConvexIndep points)}
 
 /--
 This lemma confirms that the set of possible unit-distance counts is bounded above, which
@@ -43,16 +43,9 @@ the total number of pairs of points, $\binom{n}{2}$.
 -/
 @[category test, AMS 52]
 theorem convexUnitDistanceCounts_bddAbove (n : ℕ) : BddAbove <| convexUnitDistanceCounts n := by
-  unfold convexUnitDistanceCounts
-  unfold unitDistancePairsCount
   use n.choose 2
   rintro _ ⟨points, rfl, _, rfl⟩
-  rw [points.card.choose_two_right]
-  have hle : (points.offDiag.filter fun p : ℝ² × ℝ² => dist p.1 p.2 = 1).card ≤
-      points.offDiag.card := by
-    exact card_filter_le _ _
-  have hdiv := Nat.div_le_div_right (c := 2) hle
-  simpa [offDiag_card, Nat.mul_sub_left_distrib, mul_one] using hdiv
+  exact unitDistNum_le_choose_two points
 
 /--
 The **maximum number of unit distances** determined by the vertices of a convex $n$-gon.

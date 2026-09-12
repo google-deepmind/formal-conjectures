@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjecturesForMathlib.Combinatorics.Basic
+
 
 /-!
 # Erdős Problem 14

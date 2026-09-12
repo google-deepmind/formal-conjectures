@@ -40,6 +40,7 @@ bipartite by deleting `k` edges.
 def SimpleGraph.edgeDistancesToBipartite {G : SimpleGraph V} (A : G.Subgraph) : Set ℕ :=
   { (E.ncard) | (E : Set (Sym2 V)) (_ : E ⊆ A.edgeSet) (_ : IsBipartite (A.deleteEdges E).coe)}
 
+set_option backward.isDefEq.respectTransparency false in
 /--
 The set of edge distances to a bipartite graph is always non-empty because deleting all edges
 from a graph makes it bipartite.
@@ -66,6 +67,7 @@ def SimpleGraph.subgraphEdgeDistsToBipartite (G : SimpleGraph V) (n : ℕ) : Set
   { (SimpleGraph.minEdgeDistToBipartite A) |
     (A : Subgraph G) (_ : A.verts.ncard = n) (_ : A.verts.Finite) }
 
+set_option backward.isDefEq.respectTransparency false in
 /--
 The set of minimum edge distances to bipartite for subgraphs of size `n` is bounded above.
 A graph on `n` vertices has at most `n choose 2` edges, and deleting all of them
@@ -75,7 +77,7 @@ makes the graph bipartite, providing a straightforward upper bound.
 theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n : ℕ) :
     BddAbove (SimpleGraph.subgraphEdgeDistsToBipartite G n) := by
   use n.choose 2
-  simp only [upperBounds, Set.mem_setOf_eq, SimpleGraph.subgraphEdgeDistsToBipartite,
+  simp only [upperBounds, Set.mem_ofPred_eq, SimpleGraph.subgraphEdgeDistsToBipartite,
     SimpleGraph.minEdgeDistToBipartite, SimpleGraph.edgeDistancesToBipartite]
   intro m h
   replace ⟨A, ⟨hn, h_fin, h⟩⟩ := h
@@ -91,7 +93,7 @@ theorem SimpleGraph.subgraphEdgeDistsToBipartite_bddAbove (G : SimpleGraph V) (n
     · rw [Set.ncard_eq_toFinset_card _ h_fin, Set.Finite.card_toFinset]
   refine le_trans ?_ this
   apply Nat.sInf_le
-  simp only [Subgraph.deleteEdges_verts, exists_prop, Set.mem_setOf_eq]
+  simp only [Subgraph.deleteEdges_verts, exists_prop, Set.mem_ofPred_eq]
   use A.edgeSet
   refine ⟨by rfl, ?_, rfl⟩
   use fun _ => 0
@@ -117,9 +119,13 @@ noncomputable def SimpleGraph.maxSubgraphEdgeDistToBipartite
 Let $f(n)\to \infty$ possibly very slowly.
 Is there a graph of infinite chromatic number such that every finite subgraph on $n$
 vertices can be made bipartite by deleting at most $f(n)$ edges?
+
+The answer is no. A machine-checked disproof constructs a function $f(n) \to \infty$ for which
+every graph satisfying this local deletion bound has finite chromatic number.
 -/
-@[category research open, AMS 5]
-theorem erdos_74 : answer(sorry) ↔ ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/tadamcz/erdos74/blob/e127ee587c7c91267eecdb3569443d2b0ad64b52/Erdos74/Resolutions/Erdos74_118usd_22h.lean#L2511"]
+theorem erdos_74 : answer(False) ↔ ∀ f : ℕ → ℕ, Tendsto f atTop atTop →
     (∃ (V : Type u) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
     ∀ n, G.maxSubgraphEdgeDistToBipartite n ≤ f n) := by
   sorry

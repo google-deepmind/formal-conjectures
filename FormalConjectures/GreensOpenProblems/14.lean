@@ -61,11 +61,15 @@ noncomputable def W (k r : ℕ) : ℕ := sInf (mixedMonoAPGuaranteeSet k r)
 Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
 
 We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
-We know it is not the case for $k = 3$ [Gr21, p.3].
+The answer is no, already for $k = 4$. Every red $k$-term progression with $k \ge 3$ contains a
+red $3$-term progression, so `mixedMonoAPGuaranteeSet k r ⊆ mixedMonoAPGuaranteeSet 3 r`, and
+both sets are nonempty by van der Waerden's theorem, so $W(3, r) \le W(k, r)$. Polynomial
+growth for one $k \ge 4$ would therefore force polynomial growth for $k = 3$, contradicting
+`green_14_polynomial_k_eq_3` [Gr21, p.3].
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_14_polynomial :
-    answer(sorry) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
+    answer(False) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
   sorry
 
 /-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
@@ -87,42 +91,42 @@ theorem green_14_quadratic :
 /-- [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_green :
-    answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] fun r => (W 3 r : ℝ) := by
   sorry
 
 /-- [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_hunter :
-    answer(sorry) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_brown_landman_robertson :
-    answer(sorry) ↔
+    answer(True) ↔
     (fun (r : ℕ) => (r : ℝ)^(2 - 1 / Real.log (Real.log r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [LiSh10] proved $W(3, r) \gg (r / \log r)^2$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_li_shu :
-    answer(sorry) ↔
+    answer(True) ↔
     (fun (r : ℕ) => ((r : ℝ) / Real.log r)^2) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_upper_bound_schoen :
-    answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp ((r : ℝ) ^ (1 - c))) := by
   sorry
 
 /-- [KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_upper_bound_kelley_meka :
-    answer(sorry) ↔ ∃ C : ℝ,
+    answer(True) ↔ ∃ C : ℝ,
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp (C * (Real.log r)^C)) := by
   sorry
 

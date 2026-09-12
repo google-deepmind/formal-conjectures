@@ -20,8 +20,16 @@ import FormalConjecturesUtil
 
 More commonly known as the **no-three-in-line problem**.
 
-Given $N > 2$ and more than $2 * N$ points on an $N \times N$-grid,
-are there $3$ of the points on a common line?
+What is the largest subset of the grid $[N]^2$ with no three points in a line? In particular,
+for $N$ sufficiently large, is it impossible to have a set of size $2N$ with this property?
+
+The upper bound $2N$ is the easy half and is `allowedSetSize_le` below, by pigeonhole on the
+columns. The open content is whether $2N$ is attained. Green records that it is for $N$ up to
+around 50, that $(3/2 + o(1))N$ points are achievable for arbitrary $N$, and that his "personal
+suspicion is that this is optimal". The Wikipedia reference points the same way: Guy and Kelly
+conjectured $c = \sqrt[3]{2\pi^2/3} \approx 1.874$, and after an error in the heuristic was found
+Guy corrected it to $c = \pi/\sqrt3 \approx 1.814$. Both are below $2$, so the expected answer to
+the question above is yes.
 
 *References:*
 - [Ben Green's Open Problem 72](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.72)
@@ -44,11 +52,29 @@ noncomputable def AllowedSetSize (k : ℕ) (N : ℕ) : ℕ :=
   sSup {r | ∃ s, r = s.card ∧ AllowedSet k N s}
 
 /-- By the pigeon hole principle, the size of a subset of an $N \times N$ grid such that no $k$
-points lie on a line is bounded by $\leq (k - 1) * N$ for $N \geq k$. -/
+points lie on a line is bounded by $\leq (k - 1) * N$. -/
 @[category textbook, AMS 5 52]
-theorem allowedSetSize_le {k : ℕ} {N : ℕ} (h : k ≤ N) :
+theorem allowedSetSize_le {k : ℕ} {N : ℕ} :
     AllowedSetSize k N ≤ (k - 1) * N := by
-  sorry
+  refine csSup_le' ?_
+  rintro r ⟨s, rfl, hs⟩
+  -- Every column of the grid meets an allowed set in at most $k - 1$ points, since $k$ points
+  -- sharing a first coordinate lie on a common vertical line.
+  have key : ∀ x ∈ Finset.range N, (s.filter fun i => i.1 = x).card ≤ k - 1 := by
+    intro x _
+    by_contra hc
+    obtain ⟨t, hts, htc⟩ := Finset.exists_subset_card_eq (n := k)
+      (s := s.filter fun i => i.1 = x) (by omega)
+    refine hs.not_collinear (hts.trans (Finset.filter_subset _ _)) htc ?_
+    rw [collinear_iff_exists_forall_eq_smul_vadd]
+    refine ⟨((x : ℝ), 0), (0, 1), ?_⟩
+    rintro p ⟨i, hi, rfl⟩
+    exact ⟨i.2, by simp [(Finset.mem_filter.mp (hts hi)).2]⟩
+  calc s.card
+      = ∑ x ∈ Finset.range N, (s.filter fun i => i.1 = x).card :=
+        Finset.card_eq_sum_card_fiberwise fun i hi => Finset.mem_range.mpr (hs.is_bounded i hi).1
+    _ ≤ ∑ _x ∈ Finset.range N, (k - 1) := Finset.sum_le_sum key
+    _ = (k - 1) * N := by simp [mul_comm]
 
 /-- The proposition that the allowed-set size for $k$ and $N$ is $(k - 1) * N$. -/
 def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
@@ -57,20 +83,29 @@ def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
 /-- The **no-k-in-line problem**:
 For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
 there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+
+Note the range. [GK2025] proves this for $k > 10^{37}$, which is `no_k_in_line_big` below. At
+$k = 3$ it is the claim Green expects to fail for large $N$, so this statement is not a
+conjecture anyone has made across the whole range $k > 2$.
 -/
 @[category research open, AMS 5 52]
 theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
-The no-k-in-line conjecture holds for $k = 3$. -/
+For $N$ sufficiently large, is it impossible to have $2N$ points in $[N]^2$ with no three in a
+line? Green suspects the answer is yes, and that $(3/2 + o(1))N$ is optimal. -/
 @[category research open, AMS 5 52]
-theorem green_72 {N : ℕ} (hN : 3 ≤ N) : NoKInLineFor 3 N := by
+theorem green_72 : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, ¬ NoKInLineFor 3 N := by
   sorry
 
 alias no_three_in_line := green_72
 
-/-- Does the no-three-in-line problem hold when $N$ is big enough? -/
+/-- Is $2N$ attained for all sufficiently large $N$?
+
+This is not the negation of `green_72`. Negating that one gives $\exists^f N$ where this asks
+$\forall^f N$, so both can be answered `False` if the behaviour oscillates. Green asks his
+question in the `green_72` form. -/
 @[category research open, AMS 5 52]
 theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry

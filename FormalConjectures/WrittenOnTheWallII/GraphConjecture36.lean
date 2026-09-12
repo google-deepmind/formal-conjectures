@@ -25,11 +25,12 @@ import FormalConjecturesUtil
 
 namespace WrittenOnTheWallII.GraphConjecture36
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /-- `dp G` is the number of diametrical pairs of `G`: the number of unordered
 pairs `{u, v}` of vertices at distance `diam(G)`.  -/
 noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   (Finset.univ.filter
     (fun p : Sym2 α => p.lift ⟨fun u v => G.dist u v = G.diam ∧ u ≠ v,
       fun u v => by simp [SimpleGraph.dist_comm, ne_comm]⟩)).card

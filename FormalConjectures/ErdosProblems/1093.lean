@@ -27,10 +27,14 @@ namespace Erdos1093
 open Finset Nat
 
 /--
-If defined, the deficiency is the count of $0 \le i < k$ such that $n - i$ is $k$-smooth.
+If defined, the deficiency is the count of $0 \le i < k$ such that $n - i$ is $k$-smooth,
+that is, divisible only by primes $\le k$.
+
+`Nat.smoothNumbers m` is the set of positive naturals all of whose prime factors are
+$< m$, so "$k$-smooth" in the sense above is `Nat.smoothNumbers (k + 1)`.
 -/
 noncomputable def deficiency (n k : ℕ) : ℕ :=
-  #{i ∈ range k | n - i ∈ smoothNumbers k}
+  #{i ∈ range k | n - i ∈ smoothNumbers (k + 1)}
 
 /--
 Are there infinitely many binomial coefficients with deficiency 1?

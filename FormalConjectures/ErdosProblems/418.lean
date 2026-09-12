@@ -21,6 +21,7 @@ import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/418](https://www.erdosproblems.com/418)
+- [Wikipedia: Noncototient](https://en.wikipedia.org/wiki/Noncototient)
 - [BaLu05] Banks, William D. and Luca, Florian, Nonaliquots and {R}obbins numbers. Colloq. Math.
   (2005), 27--32.
 - [BrSc95] Browkin, J. and Schinzel, A., On integers not of the form {$n-\phi(n)$}. Colloq. Math.
@@ -84,13 +85,38 @@ theorem erdos_418.variants.conditional
   rwa [Nat.coprime_primes hp hq]
 
 /--
+The **Odd Noncototient Conjecture**: every non-cototient is even. Equivalently, every odd natural
+number is of the form $n - \phi(n)$ for some $n$.
+
+This is the unconditional form of `erdos_418.variants.conditional`, which derives the odd case from a
+strengthening of the Goldbach conjecture. See [Wikipedia: Noncototient].
+-/
+@[category research open, AMS 11]
+theorem erdos_418.variants.odd_noncototient :
+    { (n - n.totient : ℕ) | n }ᶜ ⊆ { k | Even k } := by
+  sorry
+
+/--
+A sanity check for the definition: $7$ is a cototient, since $7 = 15 - \phi(15)$ and $\phi(15) = 8$.
+In particular $7$ is not a non-cototient.
+-/
+@[category test, AMS 11]
+theorem erdos_418.variants.seven_mem_cototient :
+    7 ∈ { (n - n.totient : ℕ) | n } :=
+  ⟨15, by decide⟩
+
+/--
 Erdős [Er73b] has shown that a positive density set of natural numbers cannot be written as
 $\sigma(n)-n$ (numbers not of this form are called nonaliquot, or sometimes untouchable).
+
+Here "positive density" means positive lower density: Banks and Luca [BaLu05] proved that the
+set of nonaliquots has lower density at least $1/48$, Chen and Zhao [ChZh11] improved this to
+$0.06$, and it is not known whether the natural density of the nonaliquots exists (Pollack and
+Pomerance [PoPo16] give a heuristic predicting its value).
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
-    ∃ (S : Set ℕ) (hS : S.HasPosDensity),
-      S ⊆ { (σ 1 n - n : ℕ) | n }ᶜ := by
+    0 < { (σ 1 n - n : ℕ) | n }ᶜ.lowerDensity := by
   sorry
 
 /--
@@ -103,11 +129,11 @@ theorem erdos_418.variants.soln :
   sorry
 
 /--
-It is open whether the set of non-cototients has positive density.
+It is open whether the set of non-cototients has positive (lower) density.
 -/
 @[category research open, AMS 11]
 theorem erdos_418.variants.density :
-    answer(sorry) ↔ ∃ (S : Set ℕ) (hS : S.HasPosDensity), S ⊆ { (n - n.totient : ℕ) | n }ᶜ := by
+    answer(sorry) ↔ 0 < { (n - n.totient : ℕ) | n }ᶜ.lowerDensity := by
   sorry
 
 end Erdos418

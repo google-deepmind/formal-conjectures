@@ -105,6 +105,8 @@ from all problems without the `category research open` tag
 (solved, test, API, etc.).
 -/
 
+set_option linter.style.imports false
+
 namespace Subsets.FC100SolvedSet1
 
 open Lean in

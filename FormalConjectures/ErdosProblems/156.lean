@@ -27,13 +27,14 @@ import FormalConjecturesUtil
 -/
 
 open Finset Filter
-open scoped Classical
 
 namespace Erdos156
+
 /--
 The size of the smallest maximal Sidon set in $\{1, \dots, N\}$.
 -/
 noncomputable def minMaximalSidonSet (N : ℕ) : ℕ :=
+  open scoped Classical in
   sInf (((Icc 1 N).powerset.filter fun (A : Finset ℕ) ↦
     Set.IsMaximalSidonSetIn (A : Set ℕ) N).image card : Set ℕ)
 

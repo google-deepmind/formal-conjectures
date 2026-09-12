@@ -32,7 +32,7 @@ namespace Erdos91
 
 /-- A set $A$ is 'optimal' if it has $n$ points and achieves the minimum distance count. -/
 noncomputable def IsOptimal (A : Finset ℝ²) (n : ℕ) : Prop :=
-  A.card = n ∧ distinctDistances A = minimalDistinctDistances n
+  A.card = n ∧ distinctDistances A = minimalDistinctDistances ℝ² n
 
 /-- Two finite sets of points in $\mathbb{R}^2$ are similar if one can be mapped to the other by a
 DilationEquiv. -/
@@ -68,7 +68,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
   have hcard : equiTriangle.card = 3 := by
     simp [equiTriangle, Finset.mem_insert, Finset.mem_singleton]
   have hdist : distinctDistances equiTriangle = 1 := by
-    unfold distinctDistances equiTriangle
+    unfold distinctDistances distanceSet equiTriangle
     have eucl_dist_one_of_sq : ∀ {x y : ℝ²}, dist x y ^ 2 = 1 → dist x y = 1 := by
       intro x y h; nlinarith [dist_nonneg (x := x) (y := y), sq_nonneg (dist x y)]
     have hd01 : dist (!₂[(0 : ℝ), 0]) (!₂[(1 : ℝ), 0]) = 1 := eucl_dist_one_of_sq <| by
@@ -96,7 +96,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
     rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> first
       | contradiction | exact hd01 | exact hd02 | exact hd12
       | (rw [dist_comm]; first | exact hd01 | exact hd02 | exact hd12)
-  have hmin : minimalDistinctDistances 3 = 1 := by
+  have hmin : minimalDistinctDistances ℝ² 3 = 1 := by
     unfold minimalDistinctDistances
     apply le_antisymm
     · exact Nat.sInf_le ⟨equiTriangle, hcard, by exact_mod_cast hdist⟩

@@ -20,8 +20,8 @@ import FormalConjecturesUtil
 # Černý Conjecture
 
 A **synchronizing word** (also called a reset word) for a deterministic finite automaton (DFA)
-$M = (Q, \Sigma, \delta)$ is a word $w \in \Sigma^*$ such that reading $w$ from any state always
-leads to the same single state — formally, $\exists p \in Q, \forall q \in Q, \delta^*(q, w) = p$.
+$M = (Q, \Sigma, \delta)$ is a word $w \in \Sigma^\*$ such that reading $w$ from any state always
+leads to the same single state — formally, $\exists p \in Q, \forall q \in Q, \delta^\*(q, w) = p$.
 
 A DFA is called **synchronizing** if it admits at least one synchronizing word.
 

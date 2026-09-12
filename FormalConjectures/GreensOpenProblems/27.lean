@@ -81,7 +81,8 @@ theorem green_27.variants.lower_be23 :
   sorry
 
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/mkwatson/unique-sums-notes/blob/d4383f93a52e3a916ccce78d5fb7739c3bf3dabc/Green27Upper/Theorem.lean#L26"]
 theorem green_27.variants.upper_be23 :
   m =O[primesAtTop] upperBest := by
   sorry

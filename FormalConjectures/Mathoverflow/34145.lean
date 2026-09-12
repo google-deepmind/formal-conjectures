@@ -102,7 +102,7 @@ lemma lbMeasure_scale (x y : ℝ) (s : Set (ℝ × ℝ)) :
 lemma lbMeasure_unitSquare : lbMeasure unitSquare = 1 := by
   convert (Basis.addHaar_eq_iff (Basis.finTwoProd ℝ) _).1 rfl
   ext p
-  simp only [unitSquare, Set.mem_setOf_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
+  simp only [unitSquare, Set.mem_ofPred_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
     Set.mem_Icc, Fin.sum_univ_two, Fin.isValue, Basis.finTwoProd_zero, Prod.smul_mk, smul_eq_mul,
     mul_one, mul_zero, Basis.finTwoProd_one, Prod.mk_add_mk, add_zero, zero_add, Pi.le_def]
   exact ⟨fun h ↦ ⟨![p.1, p.2], by simp [Fin.forall_fin_succ, h]⟩,

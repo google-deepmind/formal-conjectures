@@ -38,7 +38,7 @@ $$
   A(n) = \frac{n}{2} - \frac{n}{2\log n} + o\left(\frac{n}{\log n}\right).
 $$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/blob/main/PrimeNumberTheoremAnd/Erdos392.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/blob/d82a35ecc798ada27f82a88b559f25b753f63a73/PrimeNumberTheoremAnd/IEANTN/Erdos392.lean"]
 theorem erdos_392 (A : ℕ → ℕ) (h : ∀ n > 0,
     IsLeast { t + 1 | (t) (_ : ∃ a : Fin (t + 1) → ℕ, (n)! = ∏ i, a i ∧
       Monotone a ∧ a (Fin.last t) ≤ n ^ 2) } (A n)) :
@@ -66,8 +66,8 @@ by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lowe
 Stirling's approximation).
 -/
 @[category research solved, AMS 11]
-theorem erdos_392.variants.implication (h : type_of% erdos_392) :
-    type_of% erdos_392.variants.lower := by
+theorem erdos_392.variants.implication (h : type_of% erdos_392.variants.lower) :
+    type_of% erdos_392 := by
   sorry
 
 end Erdos392

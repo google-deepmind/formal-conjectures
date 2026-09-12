@@ -24,7 +24,6 @@ import FormalConjecturesUtil
 -/
 
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture19
 

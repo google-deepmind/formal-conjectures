@@ -72,7 +72,7 @@ import FormalConjectures.GreensOpenProblems.«58»
 import FormalConjectures.GreensOpenProblems.«61»
 import FormalConjectures.GreensOpenProblems.«9»
 import FormalConjectures.Mathoverflow.«1973»
-import FormalConjectures.Millenium.Poincare
+import FormalConjectures.Millennium.Poincare
 import FormalConjectures.OEIS.«303656»
 import FormalConjectures.OEIS.«308734»
 import FormalConjectures.OEIS.«41»
@@ -110,6 +110,8 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture327
 A random subset of 100 open research problems, drawn uniformly at random
 from all problems with the `category research open` tag.
 -/
+
+set_option linter.style.imports false
 
 namespace Subsets.FC100OpenSet1
 
@@ -221,6 +223,6 @@ end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
 #eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
-  ("research open", 94),
-  ("research solved", 6)
+  ("research open", 91),
+  ("research solved", 9)
 ]

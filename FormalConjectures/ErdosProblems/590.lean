@@ -36,7 +36,7 @@ universe u
 Let $α$ be the infinite ordinal $\omega^{\omega}$. It was proved by Chang [Ch72] that any red/blue
 colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
-@[category research solved, AMS 3]
+@[category research solved, AMS 3, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos590.lean#L7928"]
 theorem erdos_590 : OrdinalCardinalRamsey (ω ^ ω) (ω ^ ω) 3 := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
+public import Lean
 
 /-!
 # Declaration Name Elaborator
@@ -23,6 +24,8 @@ Provides the `decl_name%` term elaborator, which resolves an identifier to its f
 `Lean.Name` at compile time. This ensures that references to declarations are checked by the
 compiler and will cause build failures if the target declaration is renamed or removed.
 -/
+
+@[expose] public section
 
 open Lean Elab Term in
 /-- `decl_name% Foo.bar` resolves the identifier to verify the declaration

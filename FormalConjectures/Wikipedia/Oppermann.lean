@@ -67,9 +67,9 @@ theorem oppermann_implies_brocard (n : ℕ) (hn : 1 ≤ n) (P : type_of% opperma
   have hprev_prime : prev.Prime := Nat.prime_nth_prime n
   have hnext_prime : next.Prime := Nat.prime_nth_prime (n+1)
   have hprev_ge : 3 ≤ prev := Nat.nth_prime_one_eq_three ▸
-    (Nat.nth_le_nth Nat.infinite_setOf_prime).mpr hn
+    (Nat.nth_le_nth Nat.infinite_setOfPred_prime).mpr hn
   have hlt : prev < next :=
-    Nat.nth_strictMono Nat.infinite_setOf_prime (Nat.lt_succ_self n)
+    Nat.nth_strictMono Nat.infinite_setOfPred_prime (Nat.lt_succ_self n)
   have hgap : prev + 2 ≤ next := by
     rcases hprev_prime.odd_of_ne_two (by omega) with ⟨k, hk⟩
     rcases hnext_prime.odd_of_ne_two (by omega) with ⟨m, hm⟩

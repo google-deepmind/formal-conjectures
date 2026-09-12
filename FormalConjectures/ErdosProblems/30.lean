@@ -33,7 +33,7 @@ noncomputable abbrev h (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 
 open Filter
 
 /--
-Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varespilon}(N^\varespilon)
+Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varepsilon}(N^\varepsilon)$
 -/
 @[category research open, AMS 11]
 theorem erdos_30 : answer(sorry) ↔

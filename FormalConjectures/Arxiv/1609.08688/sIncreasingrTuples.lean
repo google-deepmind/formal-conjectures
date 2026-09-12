@@ -35,7 +35,7 @@ namespace Arxiv.«1609.08688»
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
-two co-ordinates $i$.
+two coordinates $i$.
 -/
 def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
@@ -76,7 +76,7 @@ theorem lt₂_example_2 : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by sim
 @[category test, AMS 5]
 theorem lt₂_example_3 : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
 
-/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4). -/
+/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4)$. -/
 @[category test, AMS 5]
 theorem not_lt₂_example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
 
@@ -106,11 +106,10 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
     (h : IsIncreasing₂ s)
     (h_const : ∀ a ∈ s, ∀ j, a j = val) : s.length < 2 := by
   by_contra!
-  have h₀ : s[0] = fun _ => val := funext fun i => by simp [h_const s[0] (by simp)]
-  have h₁ : s[1] = fun _ => val := funext fun i => by simp [h_const s[1] (by simp)]
-  have := List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
-  simp [h₀, h₁] at this
-  exact not_lt₂_self _ this
+  obtain ⟨i, j, -, hi, -⟩ :=
+    List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
+  rw [h_const _ (List.getElem_mem _) i, h_const _ (List.getElem_mem _) i] at hi
+  exact lt_irrefl _ hi
 
 /--
 Let $F(n)$ be the maximal length of a $2$-increasing sequence of triples with each coordinate
@@ -144,7 +143,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
-  erw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
+  rw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
   refine ⟨by aesop, fun n hn => ?_⟩
   simp [Nat.lt_one_iff.1 hn]
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
@@ -235,7 +234,7 @@ theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
 $((a, d), (b, e), (c, f))$, where the pairs are arranged in lexicographical order. -/
-def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Pi.prod a b)
+def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Function.prod a b)
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :

@@ -90,7 +90,7 @@ Kovač [Ko24b] has proved that this is false - in fact as false as possible: the
 $x\in (0,\infty)$ for which the best underapproximations are eventually 'greedy' has Lebesgue
 measure zero.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos206.lean"]
 theorem erdos_206 : answer(False) ↔
     ∀ᵐ x ∂(volume.restrict (Set.Ioi (0 : ℝ))), EventuallyGreedy x := by
   sorry

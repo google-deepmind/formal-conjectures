@@ -43,7 +43,7 @@ conjecture instead uses this binary $C_4$-free indicator.
 
 namespace WrittenOnTheWallII.GraphConjecture160
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -51,6 +51,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.image (numTrianglesAtVertex G)).max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
 
+open scoped Classical in
 /--
 WOWII [Conjecture 160](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
