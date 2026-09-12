@@ -1,0 +1,18 @@
+# Lean erases the value of the opaque theorem used inside
+# `Finset.greedySidon.go`'s generated proof constant. The compiled dependency
+# graph therefore cannot recover this source-only reference, but the copied
+# definition body still names it and needs its statement to elaborate.
+id = "Erdos340.erdos_340.variants.co_density_zero_sub"
+declaration = "Erdos340.erdos_340.variants.co_density_zero_sub"
+
+[[copy_dependencies]]
+declaration = "IsSidon.insert"
+module = "FormalConjecturesForMathlib/Combinatorics/Basic.lean"
+
+[[copy_dependencies]]
+declaration = "Finset.IsSidon.insert_ge_max'"
+module = "FormalConjecturesForMathlib/Combinatorics/Basic.lean"
+
+[[copy_dependencies]]
+declaration = "Finset.IsSidon.exists_insert_ge"
+module = "FormalConjecturesForMathlib/Combinatorics/Basic.lean"
