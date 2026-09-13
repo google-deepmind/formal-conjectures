@@ -85,11 +85,6 @@ theorem erdos_896.variants.F_two_representations : F {1, 2} {1, 2} = 2 := by
 @[category test, AMS 11]
 theorem erdos_896.variants.F_le_card_mul (A B : Finset ℕ) :
     F A B ≤ A.card * B.card := by
-  simp only [F]
-  calc (uniqueMulProducts A B).card
-      ≤ ((A.product B).image fun p => p.1 * p.2).card :=
-        card_le_card (uniqueMulProducts_subset_image A B)
-    _ ≤ (A.product B).card := card_image_le
-    _ = A.card * B.card := by simp [card_product]
+  simpa [F] using card_uniqueMulProducts_le A B
 
 end Erdos896

@@ -69,4 +69,14 @@ lemma uniqueMulProducts_subset_image (A B : Finset ℕ) :
     uniqueMulProducts A B ⊆ (A.product B).image (fun p => p.1 * p.2) :=
   filter_subset _ _
 
+/-- There are at most `#A * #B` uniquely represented products. -/
+lemma card_uniqueMulProducts_le (A B : Finset ℕ) :
+    (uniqueMulProducts A B).card ≤ A.card * B.card := by
+  calc
+    (uniqueMulProducts A B).card
+        ≤ ((A.product B).image fun p => p.1 * p.2).card :=
+          card_le_card (uniqueMulProducts_subset_image A B)
+    _ ≤ (A.product B).card := card_image_le
+    _ = A.card * B.card := card_product A B
+
 end Finset
