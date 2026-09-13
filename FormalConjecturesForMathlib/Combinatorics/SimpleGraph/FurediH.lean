@@ -110,4 +110,9 @@ lemma not_furediH_adj_pair_pair {k : ℕ} (p q : FurediH.Pair k) :
     ¬ (furediH k).Adj (.pair p) (.pair q) := by
   simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
 
+/-- Spoke–pair adjacency is exactly the endpoint condition. -/
+lemma furediH_adj_spoke_pair_iff {k : ℕ} {i : Fin k} {p : FurediH.Pair k} :
+    (furediH k).Adj (.spoke i) (.pair p) ↔ i = p.1.1 ∨ i = p.1.2 := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
 end SimpleGraph
