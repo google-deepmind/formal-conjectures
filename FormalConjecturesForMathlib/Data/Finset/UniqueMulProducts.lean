@@ -31,4 +31,23 @@ def uniqueMulProducts (A B : Finset ℕ) : Finset ℕ :=
   ((A.product B).image (fun p => p.1 * p.2)).filter (fun m =>
     mulRepresentationCount A B m = 1)
 
+@[simp]
+lemma mulRepresentationCount_empty_left (B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount ∅ B m = 0 := by
+  simp [mulRepresentationCount]
+
+@[simp]
+lemma uniqueMulProducts_empty_left (B : Finset ℕ) :
+    uniqueMulProducts ∅ B = ∅ := by
+  simp [uniqueMulProducts]
+
+lemma mulRepresentationCount_singleton (a b m : ℕ) :
+    mulRepresentationCount {a} {b} m = if a * b = m then 1 else 0 := by
+  simp [mulRepresentationCount, filter_singleton]
+  split_ifs <;> simp
+
+lemma uniqueMulProducts_singleton (a b : ℕ) :
+    uniqueMulProducts {a} {b} = {a * b} := by
+  simp [uniqueMulProducts, mulRepresentationCount_singleton]
+
 end Finset

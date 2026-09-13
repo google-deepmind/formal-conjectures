@@ -69,7 +69,7 @@ theorem erdos_896 :
 /-- $F(\{2\},\{3\})$ counts the unique product $6$. -/
 @[category test, AMS 11]
 theorem erdos_896.variants.F_singleton : F {2} {3} = 1 := by
-  decide
+  simp [F, uniqueMulProducts_singleton]
 
 /-- Products $1,2,4$ from $\{1,2\}\times\{1,2\}$; only $1$ and $4$ are unique. -/
 @[category test, AMS 11]
