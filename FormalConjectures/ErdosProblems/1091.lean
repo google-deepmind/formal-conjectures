@@ -33,16 +33,6 @@ namespace Erdos1091
 
 open SimpleGraph Filter
 
-variable {V : Type*}
-
-/-- `G` contains an odd cycle with at least `k` diagonals (chords). -/
-def HasOddCycleWithDiagonals (G : SimpleGraph V) (k : ℕ) : Prop :=
-  ∃ c : G.Cycle, Odd c.length ∧ k ≤ c.chords.encard
-
-/-- Every subgraph of `G` on at most `r` vertices has chromatic number at most `3`. -/
-def IsLocallyThreeColorable (G : SimpleGraph V) (r : ℕ) : Prop :=
-  ∀ H : G.Subgraph, H.verts.encard ≤ r → H.coe.chromaticNumber ≤ 3
-
 /--
 Let $G$ be a $K_4$-free graph with chromatic number $4$. Must $G$ contain an odd cycle with at
 least two diagonals?
@@ -52,7 +42,7 @@ The first question was solved in the affirmative by Voss [Vo82].
 @[category research solved, AMS 5]
 theorem erdos_1091.parts.i : answer(True) ↔
     ∀ {V : Type*} [Finite V] (G : SimpleGraph V),
-      G.CliqueFree 4 → G.chromaticNumber = 4 → HasOddCycleWithDiagonals G 2 := by
+      G.CliqueFree 4 → G.chromaticNumber = 4 → HasOddCycleWithChords G 2 := by
   sorry
 
 /--
@@ -66,8 +56,8 @@ An internal OpenAI model (see [APSSV26b]) has provided a negative answer to the 
 theorem erdos_1091.parts.ii : answer(False) ↔
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
       ∀ (r : ℕ) {V : Type*} [Finite V] (G : SimpleGraph V),
-        G.chromaticNumber = 4 → IsLocallyThreeColorable G r →
-          HasOddCycleWithDiagonals G (f r) := by
+        G.chromaticNumber = 4 → G.IsLocallyColorable r 3 →
+          HasOddCycleWithChords G (f r) := by
   sorry
 
 /--
@@ -77,7 +67,7 @@ Larson [La79].
 @[category research solved, AMS 5]
 theorem erdos_1091.variants.one_diagonal {V : Type*} [Finite V] (G : SimpleGraph V)
     (hK : G.CliqueFree 4) (hχ : G.chromaticNumber = 4) :
-    HasOddCycleWithDiagonals G 1 := by
+    HasOddCycleWithChords G 1 := by
   sorry
 
 /--
@@ -87,7 +77,7 @@ contains a cut vertex, or $G$ contains a vertex with degree $\leq 2$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1091.variants.bollobas_erdos {V : Type*} [Finite V] (G : SimpleGraph V)
-    (hK : G.CliqueFree 4) (h : ¬ HasOddCycleWithDiagonals G 1) :
+    (hK : G.CliqueFree 4) (h : ¬ HasOddCycleWithChords G 1) :
     G.IsBipartite ∨ (∃ v, G.IsCutVertex v) ∨ (∃ v, (G.neighborSet v).encard ≤ 2) := by
   sorry
 
@@ -97,7 +87,7 @@ The pentagonal wheel shows that three diagonals are not guaranteed.
 @[category research solved, AMS 5]
 theorem erdos_1091.variants.three_diagonals :
     ∃ (n : ℕ) (G : SimpleGraph (Fin n)),
-      G.CliqueFree 4 ∧ G.chromaticNumber = 4 ∧ ¬ HasOddCycleWithDiagonals G 3 := by
+      G.CliqueFree 4 ∧ G.chromaticNumber = 4 ∧ ¬ HasOddCycleWithChords G 3 := by
   sorry
 
 /--

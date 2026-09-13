@@ -152,3 +152,7 @@ The anti-Ramsey number $\mathrm{AR}(n, H)$: maximum colors to edge-color $K_n$ w
 -/
 noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
   sSup {k | ∃ c : Sym2 (Fin n) → Fin k, Function.Surjective c ∧ ∀ f : H →g ⊤, ¬IsRainbow f c}
+
+/-- Every subgraph of `G` on at most `r` vertices has chromatic number at most `n`. -/
+def IsLocallyColorable (G : SimpleGraph V) (r n : ℕ) : Prop :=
+  ∀ H : G.Subgraph, H.verts.encard ≤ r → H.coe.chromaticNumber ≤ n

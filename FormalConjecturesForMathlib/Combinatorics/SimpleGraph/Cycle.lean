@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Data.Set.Card
 
 @[expose] public section
 
@@ -43,6 +44,13 @@ def Cycle.length {G : SimpleGraph V} (c : Cycle G) : ℕ := c.walk.length
 the cycle and are not themselves edges of the cycle. -/
 def Cycle.chords {G : SimpleGraph V} (c : Cycle G) : Set (Sym2 V) :=
   {e | e ∈ G.edgeSet ∧ (∀ v ∈ e, v ∈ c.walk.support) ∧ e ∉ c.edges}
+
+lemma Cycle.chords_subset_edgeSet {G : SimpleGraph V} (c : Cycle G) :
+    c.chords ⊆ G.edgeSet := fun _ he ↦ he.1
+
+/-- `G` contains an odd cycle with at least `k` chords (also called diagonals). -/
+def HasOddCycleWithChords (G : SimpleGraph V) (k : ℕ) : Prop :=
+  ∃ c : Cycle G, Odd c.length ∧ k ≤ c.chords.encard
 
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
