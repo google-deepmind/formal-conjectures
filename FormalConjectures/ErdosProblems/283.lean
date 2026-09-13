@@ -33,20 +33,22 @@ open Filter Polynomial Finset
 namespace Erdos283
 
 /--
-Given a polynomial `p`, the predicate that if the leading coefficient is positive and
-there exists no $d≥2$ with $d ∣ p(n)$ for all $n≥1$, then for all sufficiently large $m$,
-there exist integers $1≤n_1<\dots < n_k$ such that $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$
-and $$m=p(n_1)+\cdots+p(n_k)$$?
+Given a polynomial `p` with rational coefficients, the predicate that if `p` takes integer values
+at all integers, the leading coefficient is positive and there exists no $d≥2$ with $d ∣ p(n)$ for
+all $n≥1$, then for all sufficiently large $m$, there exist integers $1≤n_1<\dots < n_k$ such that
+$$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$ and $$m=p(n_1)+\cdots+p(n_k)$$?
 -/
-def Condition (p : ℤ[X]) : Prop :=
-  p.leadingCoeff > 0 → ¬ (∃ d ≥ 2, ∀ n ≥ 1, d ∣ p.eval n) →
-  ∀ᶠ m in atTop, ∃ k ≥ 1, ∃ n : Fin (k + 1) → ℤ, 0 = n 0 ∧ StrictMono n ∧
+def Condition (p : ℚ[X]) : Prop :=
+  (∀ n : ℤ, ∃ z : ℤ, p.eval (n : ℚ) = z) → p.leadingCoeff > 0 →
+  ¬ (∃ d : ℤ, d ≥ 2 ∧ ∀ n : ℤ, n ≥ 1 → ∃ z : ℤ, p.eval (n : ℚ) = d * z) →
+  ∀ᶠ (m : ℤ) in atTop, ∃ k ≥ 1, ∃ n : Fin (k + 1) → ℤ, 0 = n 0 ∧ StrictMono n ∧
   1 = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) ∧
-  m = ∑ i ∈ Finset.Icc 1 (Fin.last k),  p.eval (n i)
+  (m : ℚ) = ∑ i ∈ Finset.Icc 1 (Fin.last k), p.eval (n i : ℚ)
 
 /--
-Let $p\colon \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial whose leading coefficient is
-positive and such that there exists no $d≥2$ with $d ∣ p(n)$ for all $n≥1$. Is it true that,
+Let $p\colon \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial (with rational coefficients,
+taking integer values at all integers) whose leading coefficient is positive and such that there
+exists no $d≥2$ with $d ∣ p(n)$ for all $n≥1$. Is it true that,
 for all sufficiently large $m$, there exist integers $1≤n_1<\dots < n_k$ such that
 $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$$
 and
@@ -58,7 +60,7 @@ with $1$ replaced by any rational $\alpha>0$.
 This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P283/Proof_flat.lean"]
-theorem erdos_283 : answer(True) ↔ ∀ p : ℤ[X], Condition p := by
+theorem erdos_283 : answer(True) ↔ ∀ p : ℚ[X], Condition p := by
   sorry
 
 /--
@@ -74,14 +76,15 @@ Graham also conjectures that this remains true with $1$ replaced by an arbitrary
 -/
 @[category research solved, AMS 11]
 theorem erdos_283.variants.graham_alpha :
-  ∀ (p : ℤ[X]) (α : ℚ),
+  ∀ (p : ℚ[X]) (α : ℚ),
+    (∀ n : ℤ, ∃ z : ℤ, p.eval (n : ℚ) = z) →
     0 < p.leadingCoeff →
-    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
+    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → ∃ z : ℤ, p.eval (n : ℚ) = d * z) →
     α > 0 →
     ∀ᶠ (m : ℕ) in atTop,
       ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
         (∑ n ∈ S, (1 / (n : ℚ))) = α ∧
-        (∑ n ∈ S, p.eval (n : ℤ)) = (m : ℤ) := by
+        (∑ n ∈ S, p.eval (n : ℚ)) = (m : ℚ) := by
   sorry
 
 /--
@@ -90,12 +93,13 @@ integer is the sum of $p(n_i)$ with distinct $n_i$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_283.variants.cassels :
-  ∀ (p : ℤ[X]),
+  ∀ (p : ℚ[X]),
+    (∀ n : ℤ, ∃ z : ℤ, p.eval (n : ℚ) = z) →
     0 < p.leadingCoeff →
-    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → d ∣ p.eval n) →
+    (¬ ∃ (d : ℤ), d ≥ 2 ∧ ∀ (n : ℤ), n ≥ 1 → ∃ z : ℤ, p.eval (n : ℚ) = d * z) →
     ∀ᶠ (m : ℕ) in atTop,
       ∃ S : Finset ℕ, (∀ n ∈ S, 1 ≤ n) ∧
-        (∑ n ∈ S, p.eval (n : ℤ)) = (m : ℤ) := by
+        (∑ n ∈ S, p.eval (n : ℚ)) = (m : ℚ) := by
   sorry
 
 /--
@@ -128,7 +132,7 @@ For example, if $p(x) = x + b$ with $1 \leq b \leq 5000$, then the conjecture is
 -/
 @[category research solved, AMS 11]
 theorem erdos_283.variants.van_doorn_linear :
-  ∀ b : ℤ, 1 ≤ b → b ≤ 5000 → Condition (X + C b) := by
+  ∀ b : ℤ, 1 ≤ b → b ≤ 5000 → Condition (X + C (b : ℚ)) := by
   sorry
 
 /--
@@ -137,7 +141,7 @@ For example, if $p(x) = x^2 + b$ with $1 \leq b \leq 800$, then the conjecture i
 -/
 @[category research solved, AMS 11]
 theorem erdos_283.variants.van_doorn_quadratic :
-  ∀ b : ℤ, 1 ≤ b → b ≤ 800 → Condition (X^2 + C b) := by
+  ∀ b : ℤ, 1 ≤ b → b ≤ 800 → Condition (X^2 + C (b : ℚ)) := by
   sorry
 
 end Erdos283
