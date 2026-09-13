@@ -41,6 +41,16 @@ lemma uniqueMulProducts_empty_left (B : Finset ℕ) :
     uniqueMulProducts ∅ B = ∅ := by
   simp [uniqueMulProducts]
 
+@[simp]
+lemma mulRepresentationCount_empty_right (A : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A ∅ m = 0 := by
+  simp [mulRepresentationCount]
+
+@[simp]
+lemma uniqueMulProducts_empty_right (A : Finset ℕ) :
+    uniqueMulProducts A ∅ = ∅ := by
+  simp [uniqueMulProducts]
+
 lemma mulRepresentationCount_singleton (a b m : ℕ) :
     mulRepresentationCount {a} {b} m = if a * b = m then 1 else 0 := by
   simp [mulRepresentationCount, filter_singleton]

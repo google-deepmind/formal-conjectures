@@ -71,6 +71,11 @@ theorem erdos_896 :
 theorem erdos_896.variants.F_singleton : F {2} {3} = 1 := by
   simp [F, uniqueMulProducts_singleton]
 
+/-- $F(A,\emptyset)=F(\emptyset,B)=0$ for any finite $A,B$. -/
+@[category test, AMS 11]
+theorem erdos_896.variants.F_empty (A B : Finset ℕ) : F A ∅ = 0 ∧ F ∅ B = 0 := by
+  simp [F]
+
 /-- Products $1,2,4$ from $\{1,2\}\times\{1,2\}$; only $1$ and $4$ are unique. -/
 @[category test, AMS 11]
 theorem erdos_896.variants.F_two_representations : F {1, 2} {1, 2} = 2 := by
