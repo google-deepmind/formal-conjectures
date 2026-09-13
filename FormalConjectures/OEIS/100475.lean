@@ -92,12 +92,41 @@ $N, P \in \mathbb{N}$, with $P>0$, such that for all $n \ge N$, $f(n+P) = f(n)$.
 def IsUltimatelyPeriodic (f : ℕ → ℕ) : Prop :=
   ∃ N P, P > 0 ∧ ∀ n, n ≥ N → f (n + P) = f n
 
+/-- The totalized recurrence stays at zero when initialized at zero. The OEIS recurrence itself
+uses one-based prime indices, so this is a boundary behavior of the formalization rather than a
+term of the original sequence. -/
+@[category API, AMS 11]
+lemma aStartAt_zero (n : ℕ) : aStartAt 0 n = 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [aStartAt, ih]
+
 /--
-Starting at other than $a(n) = 1$, does this sequence ever go into a loop?
+If zero is admitted as a starting value, then a start other than $1$ does go into a loop: the
+sequence starting at zero is constant. This records the degenerate answer created by totalizing
+the one-based prime recurrence at index zero.
+-/
+@[category research solved, AMS 11]
+theorem conjecture_with_zero :
+    answer(True) ↔ ∃ x : ℕ, x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
+  change True ↔ _
+  constructor
+  · intro _
+    refine ⟨0, by omega, 0, 1, by omega, ?_⟩
+    intro n _
+    rw [aStartAt_zero, aStartAt_zero]
+  · intro _
+    trivial
+
+/--
+Starting at a positive value other than $a(0) = 1$, does this sequence ever go into a loop?
+
+The positivity hypothesis is required because the source recurrence uses the one-based prime index
+`p₁ = 2`; the `x = 0` branch above is only an artifact of making `aStartAt` total on `ℕ`.
 -/
 @[category research open, AMS 11]
-theorem conjecture (x : ℕ) (h : x ≠ 1) :
-    answer(sorry) = IsUltimatelyPeriodic (aStartAt x) := by
+theorem conjecture :
+    answer(sorry) ↔ ∃ x : ℕ, 0 < x ∧ x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
   sorry
 
 end OeisA100475
