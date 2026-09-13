@@ -226,7 +226,9 @@ def KT : NormalModalLogic := by
 Boxdot Conjecture: every normal modal logic that faithfully interprets KT
 by the boxdot translation is included in KT.
 -/
-@[category research solved, AMS 3, formal_proof using lean4 at "https://github.com/FormalizedFormalLogic/Foundation"]
+@[category research solved, AMS 3,
+  formal_proof using lean4 at
+    "https://github.com/FormalizedFormalLogic/ModalLogic/blob/bdadfabed4167bc8b947cc368451ce83cd30a017/ModalLogicArchive/Modal/Boxdot/Jerabek.lean"]
 -- The formal proof was done by Mashu Noguchi et al.
 -- see linked repo for the full list of contributors
 theorem BoxdotConjecture (L : NormalModalLogic) (H : ∀ φ, L ⊢ ■ φ ↔ KT ⊢ φ) : L.thms ⊆ KT.thms := by
