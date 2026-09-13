@@ -78,6 +78,17 @@ lemma Cycle.chords_disjoint_edges {G : SimpleGraph V} (c : Cycle G) :
   refine Set.disjoint_left.2 fun e he ↦ ?_
   simp [not_mem_edges_of_mem_chords he]
 
+/-- Endpoints of a chord lie on the cycle. -/
+lemma Cycle.mem_support_of_mem_chords {G : SimpleGraph V} {c : Cycle G} {e : Sym2 V}
+    (he : e ∈ c.chords) : ∀ v ∈ e, v ∈ c.walk.support :=
+  (mem_chords.mp he).2.1
+
+/-- Having an odd cycle with enough chords implies having some odd cycle. -/
+lemma HasOddCycleWithChords.exists_odd_cycle {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : ∃ c : Cycle G, Odd c.length := by
+  obtain ⟨c, hodd, _⟩ := h
+  exact ⟨c, hodd⟩
+
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
 
