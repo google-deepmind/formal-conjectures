@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Order.Lattice.Nat
 
@@ -51,11 +52,55 @@ lemma mem_oddCycleLengths_iff {α : Type*} {G : SimpleGraph α} {m : ℕ} :
     m ∈ G.oddCycleLengths ↔ m ∈ G.cycleLengths ∧ Odd m :=
   Iff.rfl
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+/-- Lengths strictly below `3` are never cycle lengths. -/
+lemma not_mem_cycleLengths_of_lt_three {α : Type*} {G : SimpleGraph α} {m : ℕ}
+    (hm : m < 3) : m ∉ G.cycleLengths :=
+  fun h ↦ (three_le_of_mem_cycleLengths h).not_gt hm
+
+lemma oddCycleLengths_subset_cycleLengths {α : Type*} (G : SimpleGraph α) :
+    G.oddCycleLengths ⊆ G.cycleLengths :=
+  fun _ ↦ And.left
+
+/-- Acyclic graphs have no cycle lengths. -/
+lemma IsAcyclic.cycleLengths_eq_empty {α : Type*} {G : SimpleGraph α} (h : G.IsAcyclic) :
+    G.cycleLengths = ∅ := by
+  ext m
+  simp only [Set.mem_empty_iff_false, iff_false, mem_cycleLengths_iff]
+  rintro ⟨_a, w, hc, rfl⟩
+  exact h w hc
+
+variable {α : Type*} [Fintype α]
+
+/-- A cycle uses at most `#α` vertices, so its length is `≤ Fintype.card α`. -/
+lemma mem_cycleLengths_le_card {G : SimpleGraph α} {m : ℕ}
+    (hm : m ∈ G.cycleLengths) : m ≤ Fintype.card α := by
+  obtain ⟨_a, w, hc, rfl⟩ := hm
+  have hnodup := hc.nodup_dropLast_support
+  have hlen : w.support.dropLast.length = w.length := by
+    rw [List.length_dropLast, Walk.length_support]
+    omega
+  exact hlen ▸ hnodup.length_le_card
+
+lemma bddAbove_cycleLengths (G : SimpleGraph α) : BddAbove G.cycleLengths :=
+  ⟨Fintype.card α, fun _ hm ↦ mem_cycleLengths_le_card hm⟩
 
 /-- `circumference G` is the length of the longest cycle in `G`.
     It is `0` when `G` is acyclic. -/
 noncomputable def circumference (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   sSup G.cycleLengths
+
+lemma le_circumference_of_mem_cycleLengths {G : SimpleGraph α} [DecidableRel G.Adj] {m : ℕ}
+    (hm : m ∈ G.cycleLengths) : m ≤ G.circumference :=
+  le_csSup (bddAbove_cycleLengths G) hm
+
+omit [Fintype α] in
+lemma circumference_eq_zero_of_cycleLengths_eq_empty {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : G.cycleLengths = ∅) : G.circumference = 0 := by
+  simp [circumference, h]
+
+omit [Fintype α] in
+lemma IsAcyclic.circumference_eq_zero {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : G.IsAcyclic) : G.circumference = 0 :=
+  circumference_eq_zero_of_cycleLengths_eq_empty h.cycleLengths_eq_empty
 
 end SimpleGraph

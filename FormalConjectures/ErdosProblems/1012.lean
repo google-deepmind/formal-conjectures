@@ -87,6 +87,22 @@ lemma f_le {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : f k ≤
 lemma zero_lt_f_of_bound {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : 0 < f k :=
   (Nat.sInf_mem (s := {N : ℕ | 0 < N ∧ ∀ n ≥ N, ForcesCycle k n}) ⟨N, ⟨hN, h⟩⟩).1
 
+/-- Positivity of `f k` means the defining set is nonempty, so `f k` itself is a forcing threshold. -/
+@[category API, AMS 5]
+lemma mem_forcesCycleSet_of_f_pos {k : ℕ} (hf : 0 < f k) :
+    0 < f k ∧ ∀ n ≥ f k, ForcesCycle k n := by
+  have hne : ({N : ℕ | 0 < N ∧ ∀ n ≥ N, ForcesCycle k n}).Nonempty := by
+    by_contra hempty
+    have : f k = 0 := by
+      simp [f, Set.not_nonempty_iff_eq_empty.mp hempty]
+    exact (hf.ne' this).elim
+  exact Nat.sInf_mem hne
+
+/-- Once `f k` is known positive, every `n ≥ f k` forces an `(n - k)`-cycle at the threshold. -/
+@[category API, AMS 5]
+lemma ForcesCycle_of_f_le {k n : ℕ} (hf : 0 < f k) (hn : f k ≤ n) : ForcesCycle k n :=
+  (mem_forcesCycleSet_of_f_pos hf).2 n hn
+
 
 /-- Woodall's all-lengths statement implies `f k ≤ 2 * k + 3`. -/
 @[category API, AMS 5]
