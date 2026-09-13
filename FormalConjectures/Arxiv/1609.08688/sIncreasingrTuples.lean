@@ -239,7 +239,7 @@ def tripleProduct {α : Type*} (a b : Fin 3 → α) : Fin 3 → α ×ₗ α :=
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :
-    tripleProduct (fun _ => a) (fun _ => a) = fun _ => toLex (a, a) :=
+    tripleProduct (fun _ ↦ a) (fun _ ↦ a) = fun _ ↦ toLex (a, a) :=
   rfl
 
 @[simp, category API, AMS 5]
