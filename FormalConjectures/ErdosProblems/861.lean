@@ -101,4 +101,15 @@ theorem erdos_861.variants.one_le_Acount (N : ℕ) : 1 ≤ Acount N :=
 theorem erdos_861.variants.two_pow_f_le_Acount (N : ℕ) : 2 ^ f N ≤ Acount N :=
   Finset.two_pow_maxSidonSubsetCard_le_sidonSubsetCount _
 
+/-- Trivial size bound: `f(N) ≤ N`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.f_le_card (N : ℕ) : f N ≤ (Finset.Icc 1 N).card :=
+  Finset.maxSidonSubsetCard_le_card _
+
+/-- Trivial count bound: `A(N) ≤ 2^N` (actually `≤ 2^{#(Icc 1 N)}`). -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.Acount_le_two_pow (N : ℕ) :
+    Acount N ≤ 2 ^ (Finset.Icc 1 N).card :=
+  Finset.sidonSubsetCount_le_two_pow_card _
+
 end Erdos861

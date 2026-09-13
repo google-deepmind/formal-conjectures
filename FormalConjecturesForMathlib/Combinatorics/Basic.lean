@@ -195,6 +195,32 @@ theorem two_pow_maxSidonSubsetCard_le_sidonSubsetCount (A : Finset α) [Decidabl
     _ ≤ S.card := card_le_card hsub
     _ = sidonSubsetCount A := rfl
 
+/-- A Sidon subset cannot be larger than the ambient set. -/
+theorem maxSidonSubsetCard_le_card (A : Finset α) [DecidableEq α] :
+    maxSidonSubsetCard A ≤ A.card := by
+  classical
+  refine Finset.sup_le ?_
+  intro B hB
+  exact card_le_card (mem_powerset.mp (mem_filter.mp hB).1)
+
+/-- At most all subsets of `A` are Sidon. -/
+theorem sidonSubsetCount_le_two_pow_card (A : Finset α) [DecidableEq α] :
+    sidonSubsetCount A ≤ 2 ^ A.card := by
+  classical
+  simpa [sidonSubsetCount, card_powerset] using
+    card_le_card (filter_subset (fun B : Finset α ↦ IsSidon (B : Set α)) A.powerset)
+
+@[simp]
+theorem maxSidonSubsetCard_empty [DecidableEq α] : maxSidonSubsetCard (∅ : Finset α) = 0 := by
+  classical
+  simp [maxSidonSubsetCard]
+
+@[simp]
+theorem sidonSubsetCount_empty [DecidableEq α] : sidonSubsetCount (∅ : Finset α) = 1 := by
+  classical
+  have : (∅ : Finset α).powerset = {∅} := by simp
+  simp [sidonSubsetCount, this, filter_singleton, IsSidon]
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
