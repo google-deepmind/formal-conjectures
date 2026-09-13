@@ -84,4 +84,20 @@ $y_i$ and each pair $y_i,y_j$ adjacent to the unique vertex $z_{ij}$.
 def furediH (k : ℕ) : SimpleGraph (FurediH.Vertex k) :=
   fromRel (FurediH.adjRel (k := k))
 
+/-- The apex is adjacent to every spoke. -/
+lemma furediH_adj_apex_spoke {k : ℕ} (i : Fin k) :
+    (furediH k).Adj .apex (.spoke i) := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
+/-- A spoke is adjacent to a pair-vertex precisely when it is one of the pair's endpoints. -/
+lemma furediH_adj_spoke_pair {k : ℕ} {i : Fin k} {p : FurediH.Pair k}
+    (h : i = p.1.1 ∨ i = p.1.2) :
+    (furediH k).Adj (.spoke i) (.pair p) := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel, h]
+
+/-- The apex is never adjacent to a pair-vertex. -/
+lemma not_furediH_adj_apex_pair {k : ℕ} (p : FurediH.Pair k) :
+    ¬ (furediH k).Adj .apex (.pair p) := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
 end SimpleGraph
