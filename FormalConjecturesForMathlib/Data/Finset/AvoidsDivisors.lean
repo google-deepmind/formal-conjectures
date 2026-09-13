@@ -55,4 +55,16 @@ lemma card_avoidsDivisors_le (A : Finset ℕ) (x : ℕ) :
   have hsub : avoidsDivisors A x ⊆ Icc 1 x := filter_subset _ _
   exact (card_le_card hsub).trans (by simp [Nat.card_Icc])
 
+/-- Sieving by a union is the intersection of the two sifted sets. -/
+lemma avoidsDivisors_union (A B : Finset ℕ) (x : ℕ) :
+    avoidsDivisors (A ∪ B) x = avoidsDivisors A x ∩ avoidsDivisors B x := by
+  ext m
+  simp only [mem_avoidsDivisors, mem_union, mem_inter, or_imp, forall_and]
+  tauto
+
+/-- With an empty sieve, every integer in `{1, …, x}` survives. -/
+@[simp]
+lemma card_avoidsDivisors_empty (x : ℕ) : (avoidsDivisors ∅ x).card = x := by
+  simp [avoidsDivisors_empty, Nat.card_Icc]
+
 end Finset

@@ -119,4 +119,16 @@ theorem erdos_784.variants.sieving_by_one (x : ℕ) :
     avoidsDivisors ({1} : Finset ℕ) x = ∅ :=
   avoidsDivisors_eq_empty_of_one_mem (by simp) x
 
+/-- Empty sieve: `#(avoidsDivisors ∅ x) = x`. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.card_empty_sieve (x : ℕ) :
+    (avoidsDivisors (∅ : Finset ℕ) x).card = x :=
+  card_avoidsDivisors_empty x
+
+/-- Union of sieves is intersection of survivors. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.sieve_union (A B : Finset ℕ) (x : ℕ) :
+    avoidsDivisors (A ∪ B) x = avoidsDivisors A x ∩ avoidsDivisors B x :=
+  avoidsDivisors_union A B x
+
 end Erdos784
