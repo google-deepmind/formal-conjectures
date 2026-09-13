@@ -87,4 +87,40 @@ theorem erdos_896.variants.F_le_card_mul (A B : Finset ℕ) :
     F A B ≤ A.card * B.card := by
   simpa [F] using card_uniqueMulProducts_le A B
 
+/-- `F` is symmetric in its two arguments. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_comm (A B : Finset ℕ) : F A B = F B A := by
+  simp [F, card_uniqueMulProducts_comm]
+
+/-- `maxF N` is at most `N²` (each factor set has size ≤ `N`). -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_le_sq (N : ℕ) : maxF N ≤ N * N := by
+  classical
+  refine Finset.sup_le fun p hp ↦ ?_
+  have hp' := mem_product.mp hp
+  have hA : p.1.card ≤ N := by
+    have : p.1 ⊆ Icc 1 N := mem_powerset.mp hp'.1
+    exact (card_le_card this).trans (by simp [Nat.card_Icc])
+  have hB : p.2.card ≤ N := by
+    have : p.2 ⊆ Icc 1 N := mem_powerset.mp hp'.2
+    exact (card_le_card this).trans (by simp [Nat.card_Icc])
+  have := card_uniqueMulProducts_le p.1 p.2
+  calc F p.1 p.2 ≤ p.1.card * p.2.card := by simpa [F] using this
+    _ ≤ N * N := Nat.mul_le_mul hA hB
+
+/-- `maxF` is positive for `N ≥ 1`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_pos {N : ℕ} (hN : 1 ≤ N) : 0 < maxF N := by
+  classical
+  have hmem :
+      (({1} : Finset ℕ), ({1} : Finset ℕ)) ∈
+        (Icc 1 N).powerset.product (Icc 1 N).powerset := by
+    simp [mem_product, mem_powerset, hN]
+  have hle : 1 ≤ maxF N := by
+    have : F ({1} : Finset ℕ) {1} = 1 := by
+      rw [F, uniqueMulProducts_singleton, card_singleton]
+    rw [← this]
+    exact le_sup (f := fun p : Finset ℕ × Finset ℕ ↦ F p.1 p.2) hmem
+  exact Nat.succ_le_iff.mp hle
+
 end Erdos896

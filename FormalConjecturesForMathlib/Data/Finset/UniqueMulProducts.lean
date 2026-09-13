@@ -146,4 +146,9 @@ lemma mulRepresentationCount_mono_right (A : Finset ℕ) {B B' : Finset ℕ} (h 
     card_le_card (filter_subset_filter (fun p : ℕ × ℕ ↦ p.1 * p.2 = m)
       (product_subset_product_right (s := A) (t := B) (t' := B') h))
 
+@[simp]
+lemma card_uniqueMulProducts_comm (A B : Finset ℕ) :
+    (uniqueMulProducts A B).card = (uniqueMulProducts B A).card := by
+  rw [uniqueMulProducts_comm]
+
 end Finset
