@@ -54,6 +54,23 @@ structure IsPValent (f : ℂ → ℂ) (p : ℕ) : Prop where
   /-- Some value $w$ is attained exactly $p$ times on the disk. -/
   exactly    : ∃ w : ℂ, {z ∈ Metric.ball 0 1 | f z = w}.encard = p
 
+/-- The identity is $1$-valent (univalent) on the unit disk. -/
+@[category test, AMS 30]
+theorem isPValent_id_one : IsPValent id 1 where
+  one_le_p := le_rfl
+  analyticOn := analyticOnNhd_id.analyticOn
+  atMost := fun w => by
+    calc {z ∈ Metric.ball (0 : ℂ) 1 | id z = w}.encard ≤ ({w} : Set ℂ).encard :=
+          Set.encard_le_encard (fun z hz => by simpa using hz.2)
+      _ = 1 := by simp
+  exactly := ⟨0, by
+    have : {z ∈ Metric.ball (0 : ℂ) 1 | id z = 0} = {0} := by
+      ext z
+      constructor
+      · rintro ⟨-, h⟩; simpa using h
+      · rintro rfl; simp
+    rw [this]; simp⟩
+
 /-- The $n$-th Taylor coefficient of $f$ at $0$, i.e. $b_n = f^{(n)}(0) / n!$. -/
 noncomputable def coeff (f : ℂ → ℂ) (n : ℕ) : ℂ := iteratedDeriv n f 0 / n.factorial
 
