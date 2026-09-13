@@ -33,13 +33,17 @@ open SimpleGraph
 
 namespace Erdos1012
 
+/-- Woodall/Ore edge threshold $\binom{n-k-1}{2}+\binom{k+2}{2}+1$. -/
+def edgeThreshold (k n : ℕ) : ℕ :=
+  (n - k - 1).choose 2 + (k + 2).choose 2 + 1
+
 /--
 `ForcesCycle k n` means that every graph on `n` vertices with at least
-$\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle of length $n-k$.
+`edgeThreshold k n` edges contains a cycle of length $n-k$.
 -/
 def ForcesCycle (k n : ℕ) : Prop :=
   ∀ G : SimpleGraph (Fin n),
-    (n - k - 1).choose 2 + (k + 2).choose 2 + 1 ≤ G.edgeSet.ncard →
+    edgeThreshold k n ≤ G.edgeSet.ncard →
       n - k ∈ G.cycleLengths
 
 /--
@@ -97,14 +101,14 @@ $3\leq l\leq n-k$.
 @[category research solved, AMS 5]
 theorem erdos_1012.variants.woodall (k n : ℕ) (G : SimpleGraph (Fin n))
     (hn : 2 * k + 3 ≤ n)
-    (he : (n - k - 1).choose 2 + (k + 2).choose 2 + 1 ≤ G.edgeSet.ncard) :
+    (he : edgeThreshold k n ≤ G.edgeSet.ncard) :
     ∀ l, 3 ≤ l → l ≤ n - k → l ∈ G.cycleLengths := by
   sorry
 
 /-- Ore's edge count $\binom{n-1}{2}+2$ is the $k=0$ case of the general threshold. -/
 @[category test, AMS 5]
 theorem erdos_1012.variants.ore_threshold (n : ℕ) :
-    (n - 0 - 1).choose 2 + (0 + 2).choose 2 + 1 = (n - 1).choose 2 + 2 := by
-  simp [Nat.choose_self]
+    edgeThreshold 0 n = (n - 1).choose 2 + 2 := by
+  simp [edgeThreshold, Nat.choose_self]
 
 end Erdos1012
