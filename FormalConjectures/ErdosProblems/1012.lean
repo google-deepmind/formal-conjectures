@@ -59,6 +59,14 @@ lemma ForcesCycle.of_all_lengths {k n : ℕ}
     (hnk : 3 ≤ n - k) : ForcesCycle k n :=
   fun G he ↦ h G he (n - k) hnk le_rfl
 
+/-- A stronger edge count still forces an `(n-k)`-cycle once `ForcesCycle` holds. -/
+@[category API, AMS 5]
+lemma ForcesCycle.mono_ncard {k n : ℕ} (h : ForcesCycle k n)
+    {G : SimpleGraph (Fin n)} {N : ℕ}
+    (hN : edgeThreshold k n ≤ N) (he : N ≤ G.edgeSet.ncard) :
+    n - k ∈ G.cycleLengths :=
+  h G (le_trans hN he)
+
 /--
 $f(k)$ is the least positive $N$ such that every graph on $n\geq N$ vertices with at least
 $\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle of length $n-k$.
@@ -79,6 +87,30 @@ lemma f_le {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : f k ≤
 lemma zero_lt_f_of_bound {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : 0 < f k :=
   (Nat.sInf_mem (s := {N : ℕ | 0 < N ∧ ∀ n ≥ N, ForcesCycle k n}) ⟨N, ⟨hN, h⟩⟩).1
 
+
+/-- Woodall's all-lengths statement implies `f k ≤ 2 * k + 3`. -/
+@[category API, AMS 5]
+lemma f_le_two_mul_add_three_of_woodall
+    (hW : ∀ (k n : ℕ), 2 * k + 3 ≤ n →
+      ∀ G : SimpleGraph (Fin n),
+        edgeThreshold k n ≤ G.edgeSet.ncard →
+          ∀ l, 3 ≤ l → l ≤ n - k → l ∈ G.cycleLengths)
+    (k : ℕ) : f k ≤ 2 * k + 3 := by
+  refine f_le (by omega) fun n hn ↦
+    ForcesCycle.of_all_lengths (hW k n hn) (by omega)
+
+/--
+Woodall [Wo72] proved that every graph on $n\geq 2k+3$ vertices with at least
+$\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle on $l$ vertices for all
+$3\leq l\leq n-k$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_1012.variants.woodall (k n : ℕ) (G : SimpleGraph (Fin n))
+    (hn : 2 * k + 3 ≤ n)
+    (he : edgeThreshold k n ≤ G.edgeSet.ncard) :
+    ∀ l, 3 ≤ l → l ≤ n - k → l ∈ G.cycleLengths := by
+  sorry
+
 /--
 Let $k\geq 0$. Let $f(k)$ be such that every graph on $n\geq f(k)$ vertices with at least
 $\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle on $n-k$ vertices. Determine or
@@ -91,17 +123,19 @@ $3\leq l\leq n-k$. This settles this question completely.
 The inequality is `f_le` at `N = 2k+3`, using Woodall specialised to `l = n-k`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1012 (k : ℕ) : f k ≤ 2 * k + 3 := by
-  sorry
+theorem erdos_1012 (k : ℕ) : f k ≤ 2 * k + 3 :=
+  f_le_two_mul_add_three_of_woodall
+    (fun k n hn G he ↦ erdos_1012.variants.woodall k n G hn he) k
 
 /--
 Erdős [Er62e] proved that $f(k)$ exists for all $k\geq 0$; this is not immediately stated in
 [Er62e], but Cambie has in the comments explained why the existence of $f(k)$ follows from the
-result of [Er62e].
+result of [Er62e]. Existence also follows from Woodall via `zero_lt_f_of_bound`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_1012.variants.exists (k : ℕ) : 0 < f k := by
-  sorry
+theorem erdos_1012.variants.exists (k : ℕ) : 0 < f k :=
+  zero_lt_f_of_bound (by omega : 0 < 2 * k + 3) fun n hn ↦
+    ForcesCycle.of_all_lengths (erdos_1012.variants.woodall k n · hn) (by omega)
 
 /--
 Ore [Or61] proved that $f(0)=1$, in other words, every graph on $n\geq 1$ vertices with at least
@@ -116,18 +150,6 @@ Bondy [Bo71b] proved that $f(1)=1$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1012.variants.bondy : f 1 = 1 := by
-  sorry
-
-/--
-Woodall [Wo72] proved that every graph on $n\geq 2k+3$ vertices with at least
-$\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle on $l$ vertices for all
-$3\leq l\leq n-k$.
--/
-@[category research solved, AMS 5]
-theorem erdos_1012.variants.woodall (k n : ℕ) (G : SimpleGraph (Fin n))
-    (hn : 2 * k + 3 ≤ n)
-    (he : edgeThreshold k n ≤ G.edgeSet.ncard) :
-    ∀ l, 3 ≤ l → l ≤ n - k → l ∈ G.cycleLengths := by
   sorry
 
 /-- Ore's edge count $\binom{n-1}{2}+2$ is the $k=0$ case of the general threshold. -/
