@@ -41,7 +41,11 @@ namespace GoodmanConjecture
 
 /-- A function `f : ℂ → ℂ` is **$p$-valent** on the open unit disk $\mathbb{D} = \{z : |z| < 1\}$
 if it is analytic there, attains every value at most $p$ times, and attains some value exactly
-$p$ times. Here $p \ge 1$. -/
+$p$ times. Here $p \ge 1$.
+Values are counted at distinct points. For a non-constant analytic function this agrees with
+counting with multiplicity: near a point where $f - w$ has a zero of order $m$, every value close
+to $w$ is attained at $m$ distinct points, so the maximal number of distinct preimages equals the
+maximal number of preimages counted with multiplicity. -/
 structure IsPValent (f : ℂ → ℂ) (p : ℕ) : Prop where
   one_le_p   : 1 ≤ p
   analyticOn : AnalyticOn ℂ f (Metric.ball 0 1)
