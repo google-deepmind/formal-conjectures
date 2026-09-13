@@ -108,7 +108,7 @@ theorem erdos_784.variants.primes (C : ℝ) (hC : 0 < C) :
 /--
 jif also notes that a lower bound of $(1-C)x$ is trivial by the union bound if $0<C<1$.
 -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (hC1 : C < 1) :
     ∀ᶠ x : ℕ in atTop, (1 - C) * x ≤ H C x := by
   sorry
