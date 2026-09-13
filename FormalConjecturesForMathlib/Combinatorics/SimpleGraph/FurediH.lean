@@ -100,4 +100,14 @@ lemma not_furediH_adj_apex_pair {k : ℕ} (p : FurediH.Pair k) :
     ¬ (furediH k).Adj .apex (.pair p) := by
   simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
 
+/-- Distinct spokes are never adjacent (the $y_i$ form an independent set). -/
+lemma not_furediH_adj_spoke_spoke {k : ℕ} (i j : Fin k) :
+    ¬ (furediH k).Adj (.spoke i) (.spoke j) := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
+/-- Pair-vertices are never adjacent to each other. -/
+lemma not_furediH_adj_pair_pair {k : ℕ} (p q : FurediH.Pair k) :
+    ¬ (furediH k).Adj (.pair p) (.pair q) := by
+  simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
 end SimpleGraph
