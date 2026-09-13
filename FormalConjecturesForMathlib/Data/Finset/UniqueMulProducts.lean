@@ -91,4 +91,59 @@ lemma mulRepresentationCount_eq_zero_iff (A B : Finset ℕ) (m : ℕ) :
   simp [mulRepresentationCount, Finset.card_eq_zero, Finset.filter_eq_empty_iff, Finset.mem_product]
   constructor <;> intro h <;> intros <;> apply h <;> assumption
 
+lemma mulRepresentationCount_pos_iff (A B : Finset ℕ) (m : ℕ) :
+    0 < mulRepresentationCount A B m ↔ ∃ a ∈ A, ∃ b ∈ B, a * b = m := by
+  simp [Nat.pos_iff_ne_zero, mulRepresentationCount_eq_zero_iff]
+
+/-- Swapping factors does not change representation counts (`ℕ` multiplication is commutative). -/
+lemma mulRepresentationCount_comm (A B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A B m = mulRepresentationCount B A m := by
+  classical
+  simp only [mulRepresentationCount, product_eq_sprod]
+  refine card_bij (fun p _ ↦ (p.2, p.1)) ?_ ?_ ?_
+  · intro p hp
+    rw [mem_filter, mem_product] at hp ⊢
+    exact ⟨⟨hp.1.2, hp.1.1⟩, by rw [mul_comm]; exact hp.2⟩
+  · intro p₁ _ p₂ _ h
+    cases p₁; cases p₂; simp_all
+  · intro q hq
+    rw [mem_filter, mem_product] at hq
+    refine ⟨(q.2, q.1), ?_, rfl⟩
+    rw [mem_filter, mem_product]
+    exact ⟨⟨hq.1.2, hq.1.1⟩, by rw [mul_comm]; exact hq.2⟩
+
+lemma image_mul_product_comm (A B : Finset ℕ) :
+    (A.product B).image (fun p ↦ p.1 * p.2) = (B.product A).image (fun p ↦ p.1 * p.2) := by
+  simp only [product_eq_sprod]
+  ext m
+  simp only [mem_image, mem_product]
+  constructor <;> rintro ⟨p, ⟨hp₁, hp₂⟩, rfl⟩
+  · exact ⟨(p.2, p.1), ⟨hp₂, hp₁⟩, (mul_comm _ _).symm⟩
+  · exact ⟨(p.2, p.1), ⟨hp₂, hp₁⟩, (mul_comm _ _).symm⟩
+
+lemma uniqueMulProducts_comm (A B : Finset ℕ) :
+    uniqueMulProducts A B = uniqueMulProducts B A := by
+  ext m
+  constructor
+  · intro h
+    rw [mem_uniqueMulProducts] at h ⊢
+    exact ⟨(image_mul_product_comm A B ▸ h.1), (mulRepresentationCount_comm A B m ▸ h.2)⟩
+  · intro h
+    rw [mem_uniqueMulProducts] at h ⊢
+    exact ⟨(image_mul_product_comm A B).symm ▸ h.1, (mulRepresentationCount_comm A B m).symm ▸ h.2⟩
+
+lemma mulRepresentationCount_mono_left {A A' : Finset ℕ} (h : A ⊆ A') (B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A B m ≤ mulRepresentationCount A' B m := by
+  classical
+  simpa [mulRepresentationCount, product_eq_sprod] using
+    card_le_card (filter_subset_filter (fun p : ℕ × ℕ ↦ p.1 * p.2 = m)
+      (product_subset_product_left (s := A) (s' := A') (t := B) h))
+
+lemma mulRepresentationCount_mono_right (A : Finset ℕ) {B B' : Finset ℕ} (h : B ⊆ B') (m : ℕ) :
+    mulRepresentationCount A B m ≤ mulRepresentationCount A B' m := by
+  classical
+  simpa [mulRepresentationCount, product_eq_sprod] using
+    card_le_card (filter_subset_filter (fun p : ℕ × ℕ ↦ p.1 * p.2 = m)
+      (product_subset_product_right (s := A) (t := B) (t' := B') h))
+
 end Finset
