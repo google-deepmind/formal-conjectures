@@ -62,6 +62,11 @@ lemma HasOddCycleWithChords.mono {G : SimpleGraph V} {k k' : ℕ}
   obtain ⟨c, hodd, hk⟩ := h
   exact ⟨c, hodd, (Nat.cast_le.mpr hle).trans hk⟩
 
+/-- For `k = 0`, having an odd cycle with at least `k` chords is exactly having an odd cycle. -/
+lemma HasOddCycleWithChords.zero_iff {G : SimpleGraph V} :
+    HasOddCycleWithChords G 0 ↔ ∃ c : Cycle G, Odd c.length :=
+  ⟨fun ⟨c, hodd, _⟩ ↦ ⟨c, hodd⟩, fun ⟨c, hodd⟩ ↦ ⟨c, hodd, bot_le⟩⟩
+
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
 
