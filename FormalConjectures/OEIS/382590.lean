@@ -20,7 +20,7 @@ import FormalConjecturesUtil
 # Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
 
 The sequence $a(n)$ is defined by $a(n) = a(n-1)b(n-2) + a(n-2)b(n-1)$
-where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(1)=1, a(2)=2, b(1)=1, b(2)=0$.
+where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(0) = b(0) = b(1) = 1$ and $a(1) = 2$.
 
 *References:*
 - [A382590](https://oeis.org/A382590)
@@ -66,9 +66,15 @@ following the informal convention.
 -/
 def kthPrimeFactor (k : ℕ) (n : ℤ) : ℕ :=
   if h₀ : k = 0 then 1 else
-  let L := n.natAbs.primeFactors.sort (· ≤ ·)
+  let L := (primeFactorsList n.natAbs).dedup
   if h_len : k - 1 ≥ L.length then 1 else
   L[k - 1]
+
+@[category test, AMS 11]
+lemma kthPrimeFactor_two_a_six : kthPrimeFactor 2 (a 6) = 5 := by decide +kernel
+
+@[category test, AMS 11]
+lemma kthPrimeFactor_two_a_seven : kthPrimeFactor 2 (a 7) = 7 := by decide +kernel
 
 
 @[category test, AMS 11]
@@ -88,7 +94,8 @@ lemma a_4 : a 4 = 8 := by rfl
 
 
 /--
-Conjecture: For any $k > 1$, if you take the $k$-th prime factor of each term, you get an eventually periodic sequence. - _Pontus von Brömssen_, Mar 30 2025
+Conjecture: For any $k > 1$, if you take the $k$-th prime factor of each term, you get an
+eventually periodic sequence. - _Bryle Morga_, Mar 31 2025
 
 Here the $k$-th prime factor of $a(n)$ is the $k$-th smallest distinct prime divisor of
 $|a(n)|$; for example the second prime factors of $a(5) = 18$, $a(6) = 20$ and $a(7) = 896$
