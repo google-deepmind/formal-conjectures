@@ -48,9 +48,19 @@ def Cycle.chords {G : SimpleGraph V} (c : Cycle G) : Set (Sym2 V) :=
 lemma Cycle.chords_subset_edgeSet {G : SimpleGraph V} (c : Cycle G) :
     c.chords ⊆ G.edgeSet := fun _ he ↦ he.1
 
+@[simp]
+lemma Cycle.mem_chords {G : SimpleGraph V} {c : Cycle G} {e : Sym2 V} :
+    e ∈ c.chords ↔ e ∈ G.edgeSet ∧ (∀ v ∈ e, v ∈ c.walk.support) ∧ e ∉ c.edges :=
+  Iff.rfl
+
 /-- `G` contains an odd cycle with at least `k` chords (also called diagonals). -/
 def HasOddCycleWithChords (G : SimpleGraph V) (k : ℕ) : Prop :=
   ∃ c : Cycle G, Odd c.length ∧ k ≤ c.chords.encard
+
+lemma HasOddCycleWithChords.mono {G : SimpleGraph V} {k k' : ℕ}
+    (h : HasOddCycleWithChords G k) (hle : k' ≤ k) : HasOddCycleWithChords G k' := by
+  obtain ⟨c, hodd, hk⟩ := h
+  exact ⟨c, hodd, (Nat.cast_le.mpr hle).trans hk⟩
 
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
