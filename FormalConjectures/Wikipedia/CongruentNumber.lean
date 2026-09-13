@@ -38,23 +38,35 @@ def congruentNumber (n : ℕ) : Prop :=
 theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 
-/- 5, 6, 7, and 157 are congruent numbers. -/
+/--
+The rational right triangle with side lengths $\frac{3}{2}$, $\frac{20}{3}$, and
+$\frac{41}{6}$ witnesses that $5$ is a congruent number.
+-/
 @[category test, AMS 11]
 theorem congruentNumber_5 : congruentNumber 5 := by
   use 3 / 2, 20 / 3, 41 / 6
   norm_num
 
+/--
+The $3$-$4$-$5$ right triangle witnesses that $6$ is a congruent number.
+-/
 @[category test, AMS 11]
 theorem congruentNumber_6 : congruentNumber 6 := by
   use 3, 4, 5
   norm_num
 
+/--
+The rational right triangle with side lengths $\frac{35}{12}$, $\frac{24}{5}$, and
+$\frac{337}{60}$ witnesses that $7$ is a congruent number.
+-/
 @[category test, AMS 11]
 theorem congruentNumber_7 : congruentNumber 7 := by
   use 35 / 12, 24 / 5, 337 / 60
   norm_num
 
-/- Zagier's example -/
+/--
+Zagier's rational right triangle witnesses that $157$ is a congruent number.
+-/
 @[category test, AMS 11]
 theorem congruentNumber_157_zagier : congruentNumber 157 := by
   use 411340519227716149383203 / 21666555693714761309610,

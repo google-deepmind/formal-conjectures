@@ -49,7 +49,9 @@ theorem erdos_979.variants.k2 :
 /--
 Erdős (unpublished)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-979-k3/blob/930fcc877fa4a2b4fc7c59614cbbab04a6d834ca/lean/K3Lean/Erdos979K3Final.lean#L46-L47"]
 theorem erdos_979.variants.k3 :
     Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ := by
   sorry

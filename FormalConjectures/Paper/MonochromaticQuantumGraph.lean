@@ -234,9 +234,10 @@ theorem eqSystem4_has_solution_d2 :
         pmSumN 4 2 (W := Witness4_d2 (α := α)) ![a, b, c, d] =
           (if allEqual ![a, b, c, d] then (1 : α) else (0 : α)) := by
     intro a b c d
-    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-      simp [pmSumN, pmSumList, pmSumListAux, vertices,
-        allEqual, allEqualList, Witness4_d2, mkEdge]
+    simp [pmSumN, pmSumList, pmSumListAux, vertices,
+      allEqual, allEqualList, Witness4_d2, mkEdge]
+    fin_cases a <;> simp <;> fin_cases b <;> simp <;> fin_cases c <;> simp <;> fin_cases d <;>
+      simp
   have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by funext k; fin_cases k <;> simp
   rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3)
 
@@ -262,7 +263,6 @@ private theorem eqSystem4_d3_nat :
     EqSystemN 4 3 (Witness4_d3 (α := ℕ)) := by
   native_decide
 
-set_option maxHeartbeats 400000 in
 @[category test, AMS 5 14 81]
 theorem eqSystem4_has_solution_d3 :
     ∃ W : WeightsN 4 3 α, EqSystemN 4 3 W := by
@@ -273,9 +273,10 @@ theorem eqSystem4_has_solution_d3 :
         pmSumN 4 3 (W := Witness4_d3 (α := α)) ![a, b, c, d] =
           (if allEqual ![a, b, c, d] then (1 : α) else (0 : α)) := by
     intro a b c d
-    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-      simp [pmSumN, pmSumList, pmSumListAux, vertices,
+    simp [pmSumN, pmSumList, pmSumListAux, vertices,
         allEqual, allEqualList, Witness4_d3, mkEdge]
+    fin_cases a <;> simp <;> fin_cases b <;> simp <;> fin_cases c <;> simp <;> fin_cases d <;>
+      simp
   have hι : ι = ![ι 0, ι 1, ι 2, ι 3] := by funext k; fin_cases k <;> simp
   rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3)
 
@@ -301,7 +302,6 @@ private theorem eqSystem6_d2_nat :
     EqSystemN 6 2 (Witness6_d2 (α := ℕ)) := by
   native_decide
 
-set_option maxHeartbeats 400000 in
 @[category test, AMS 5 14 81]
 theorem eqSystem6_has_solution_d2 :
     ∃ W : WeightsN 6 2 α, EqSystemN 6 2 W := by
@@ -312,10 +312,10 @@ theorem eqSystem6_has_solution_d2 :
         pmSumN 6 2 (W := Witness6_d2 (α := α)) ![a, b, c, d, e, f] =
           (if allEqual ![a, b, c, d, e, f] then (1 : α) else (0 : α)) := by
     intro a b c d e f
-    fin_cases a <;> fin_cases b <;> fin_cases c <;>
-    fin_cases d <;> fin_cases e <;> fin_cases f <;>
-      simp [pmSumN, pmSumList, pmSumListAux, vertices,
-        allEqual, allEqualList, Witness6_d2, mkEdge]
+    simp [pmSumN, pmSumList, pmSumListAux, vertices,
+      allEqual, allEqualList, Witness6_d2, mkEdge]
+    fin_cases a <;> simp <;> fin_cases b <;> simp <;> fin_cases c <;> simp <;>
+    fin_cases d <;> simp <;> fin_cases e <;> simp <;> fin_cases f <;> simp
   have hι : ι = ![ι 0, ι 1, ι 2, ι 3, ι 4, ι 5] := by funext k; fin_cases k <;> simp
   rw [hι]; exact h (ι 0) (ι 1) (ι 2) (ι 3) (ι 4) (ι 5)
 

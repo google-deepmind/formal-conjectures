@@ -30,10 +30,12 @@ open Filter
 
 namespace Erdos757
 
-/-- We say that `c` is admissible if for any finit set `A` such that for any subset `B` of size `4`,
-`(B - B).card = 11`, there exists a Sidon subset `S` of size at least `c * A.ncard`. -/
+/-- We say that `c` is admissible if, for any finite set `A` such that every four-element
+subset `B` determines at least five positive differences, there exists a Sidon subset `S`
+of size at least `c * A.ncard`. The difference condition is equivalent to
+`11 ≤ (B - B).ncard`. -/
 def IsAdmissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
-  B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
+  B.ncard = 4 → 11 ≤ (B - B).ncard) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
 
 /-- What is the supremum of the set of admissible numbers? -/
 @[category research open, AMS 5]

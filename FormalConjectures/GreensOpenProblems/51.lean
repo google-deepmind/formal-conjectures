@@ -92,12 +92,15 @@ theorem green_51.lower_ap :
         exp (c * log (N : ℝ) ^ (1/2 : ℝ)) ≤ guaranteedMaxAPLength N α := by
   sorry
 
-/-- It is known that $A + A$ need not contain an arithmetic progression of length $\sim \exp(c (\log N)^{2/3})$ [Ruz91]. -/
+/--
+It is known that $A + A$ need not contain an arithmetic progression of length
+$\sim \exp(c (\log N)^{2/3 + \varepsilon})$, for any $\varepsilon > 0$ [Ruz91].
+-/
 @[category research solved, AMS 5 11]
 theorem green_51.upper_ap :
-    ∀ (α : ℝ), 0 < α → α < 1/2 →
+    ∀ (α : ℝ), 0 < α → α < 1/2 → ∀ (ε : ℝ), 0 < ε →
       ∃ c > 0, ∀ᶠ (N : ℕ) in atTop,
-        guaranteedMaxAPLength N α ≤ exp (c * log (N : ℝ) ^ (2/3 : ℝ)) := by
+        guaranteedMaxAPLength N α ≤ exp (c * log (N : ℝ) ^ (2/3 + ε : ℝ)) := by
   sorry
 
 end Green51

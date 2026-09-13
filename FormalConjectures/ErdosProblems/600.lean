@@ -25,28 +25,21 @@ import FormalConjecturesUtil
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
-open Classical Filter
+open Filter
 open scoped Topology
 
 namespace Erdos600
 
+open scoped Classical in
 /--
 Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n,r)$ edges,
 each edge contained in at least one triangle, must have an edge contained in at least
 $r$ triangles.
 -/
-private noncomputable def trianglesContaining
-  {α : Type*}
-  (G : SimpleGraph α)
-  (uv : Sym2 α)
-  [Fintype α] :
-  Finset (Finset α) :=
-  (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
-
 def Erdos600Prop (n : ℕ) (e : ℕ) (r : ℕ) : Prop :=
   ∀ G : SimpleGraph (Fin n), G.edgeFinset.card ≥ e →
-  (∀ uv ∈ G.edgeFinset, (trianglesContaining G uv).Nonempty) →
-  ∃ uv ∈ G.edgeFinset, r ≤ (trianglesContaining G uv).card
+  (∀ uv ∈ G.edgeFinset, (G.trianglesContaining uv).Nonempty) →
+  ∃ uv ∈ G.edgeFinset, r ≤ (G.trianglesContaining uv).card
 
 noncomputable def eFunction (n : ℕ) (r : ℕ) : ℕ := sInf {e : ℕ | Erdos600Prop n e r}
 

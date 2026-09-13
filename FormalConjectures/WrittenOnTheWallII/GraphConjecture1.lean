@@ -33,9 +33,17 @@ WOWII [Conjecture 1](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 For a simple connected graph `G` the maximum number of leaves of a spanning
 tree satisfies `Ls(G) ≥ n(G) + 1 - 2·m(G)` where `n(G)` counts vertices and
 `m(G)` is the size of a maximum matching.
+
+A formal proof reduces to a spanning tree `T`. If `I` is the set of non-leaves
+of `T`, Hall's theorem applied to a bipartition of `T` gives a matching `M`
+with `|I| + 1 ≤ 2 * |M|`. Since `|V|` is the sum of the numbers of leaves and
+non-leaves, and every matching and leaf count constructed in `T` is admissible
+for the corresponding supremum in `G`, the stated inequality follows.
 -/
 
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/MiskinAleksandr23/WOWII-1/blob/eda16f6e96b313bd112351ae9859133b77d537c9/WOWII1/GraphConjecture1.lean"]
 theorem conjecture1 {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (h_conn : G.Connected) :
     (Fintype.card α : ℝ) + 1 - 2 * matchingNumber G ≤ (Ls G : ℝ) := by

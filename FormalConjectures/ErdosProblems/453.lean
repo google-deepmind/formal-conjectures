@@ -46,9 +46,9 @@ def EventuallyHasPrimeWitness : Prop :=
 
 /--
 Is it true that, for all sufficiently large $n$, there exists some $i<n$ such that
-\[
+$$
 p_n^2 < p_{n+i}p_{n-i},
-\]
+$$
 where $p_k$ is the $k$th prime?
 
 Pomerance proved that the answer is no.

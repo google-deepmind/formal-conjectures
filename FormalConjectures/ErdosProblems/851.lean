@@ -32,14 +32,14 @@ prime divisors.
 -/
 def TwoPowAddSet (r : ℕ) := {(2 ^ k + n) | (k : ℕ) (n : ℕ) (_ : n.primeFactors.card ≤ r)}
 
+/-- The set of integers of the form `2^k+p`, where `k ≥ 0` and `p` is prime. -/
+def twoPowAddPrimeSet : Set ℕ := {(2 ^ k + p) | (k : ℕ) (p : ℕ) (_ : p.Prime)}
+
 /--
 The set of integers of the form `2^k+p` (where `p` is prime) has positive lower density.
-
-Formalisation note: here we also allow `p = 1` since this simplifies the code and is equivalent
-to the original statement.
 -/
 @[category research solved, AMS 11]
-theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity (TwoPowAddSet 1) := by
+theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity twoPowAddPrimeSet := by
   sorry
 
 /--

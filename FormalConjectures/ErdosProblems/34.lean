@@ -42,9 +42,9 @@ def consecutiveSums (n : ℕ) (p : Equiv.Perm (Fin n)) : Finset ℕ :=
 
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
-\[
+$$
 S(\pi) = o(n^2)
-\]
+$$
 for all $\pi\in S_n$?
 
 Hegyvári [He86] gave a counterexample.

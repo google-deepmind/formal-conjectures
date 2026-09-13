@@ -15,16 +15,17 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Matching
-public import Mathlib.Data.Real.Archimedean
 
 @[expose] public section
 
 namespace SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
-open Classical Finset List
+open Finset List
 
+open scoped Classical in
 /-- `matchingNumber G` is the size of a maximum matching of `G`. -/
 noncomputable def matchingNumber (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   let matchings := { M : Subgraph G | M.IsMatching }

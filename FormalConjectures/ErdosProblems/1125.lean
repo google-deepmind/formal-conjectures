@@ -30,7 +30,7 @@ namespace Erdos1125
 
 /--
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that
-\[2f(x) \leq f(x+h)+f(x+2h)\]
+$$2f(x) \leq f(x+h)+f(x+2h)$$
 for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 
 A problem of Kemperman [Ke69], who proved it is true if $f$ is measurable. Erdős [Er81b] wrote 'if it were my problem I would offer \$500 for it'. This was solved by Laczkovich [La84].

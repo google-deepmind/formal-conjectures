@@ -69,7 +69,7 @@ such that
 (2) Exactly one set among $S$ and $T$ belongs to $F$.
 -/
 def boundaryCount (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) : ℕ :=
-  (Finset.univ.filter fun i : Fin n ↦ Xor' (S ∈ F) (symmDiff S {i} ∈ F)).card
+  (Finset.univ.filter fun i : Fin n ↦ Xor (S ∈ F) (symmDiff S {i} ∈ F)).card
 
 /--
 Test lemma showing that `boundaryCount` is equivalent to counting subsets $T$
@@ -78,7 +78,7 @@ that differ from $S$ in exactly one element and exactly one of $S, T$ belongs to
 @[category test, AMS 5]
 theorem boundaryCount_equiv (n : ℕ) (F : Finset (Finset (Fin n))) (S : Finset (Fin n)) :
     boundaryCount n F S = (Finset.univ.filter fun T : Finset (Fin n) ↦
-      (symmDiff S T).card = 1 ∧ Xor' (S ∈ F) (T ∈ F)).card := by
+      (symmDiff S T).card = 1 ∧ Xor (S ∈ F) (T ∈ F)).card := by
   unfold boundaryCount
   have h_cancel : ∀ (A : Finset (Fin n)), symmDiff S (symmDiff S A) = A := by
     intro A
@@ -140,6 +140,22 @@ noncomputable def IsOptimal {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) : 
   let m := μFamily p F
   edgeBoundary n p F ≤ 1000 * Real.log (1 / p) * (m * Real.logb p m / p)
 
+/--
+Following Kahn–Kalai, a family is $(C \log(1/p), p)$-optimal if the isoperimetric inequality
+(IR) is sharp up to the multiplicative constant $C \log(1/p)$, i.e.
+$$I^p(\mathcal F) \le \frac{C}{p} \cdot \mu_p(\mathcal F) \cdot \log \frac{1}{\mu_p(\mathcal F)}.$$
+`IsOptimal` is the special case $C = 1000$.
+-/
+noncomputable def IsOptimalWith {n : ℕ} (C p : ℝ) (F : Finset (Finset (Fin n))) : Prop :=
+  let m := μFamily p F
+  edgeBoundary n p F ≤ C * Real.log (1 / p) * (m * Real.logb p m / p)
+
+/-- `IsOptimal` is `IsOptimalWith` for the constant $C = 1000$. -/
+@[category test, AMS 5]
+theorem isOptimal_iff_isOptimalWith {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) :
+    IsOptimal p F ↔ IsOptimalWith 1000 p F :=
+  Iff.rfl
+
 
 /--
 Problem: For every monotone increasing family $F$, given an interval $[s,t]$ of real numbers so
@@ -164,12 +180,21 @@ theorem mathoverflow_10799 : answer(False) ↔
   sorry
 
 /--
-Conjecture 7 from Kahn–Kalai 2006: the same statement as the original
-conjecture, but with the additional assumption that $t$ is the critical probability for $F$,
+Conjecture 7 from Kahn–Kalai 2006: a fixed-`1000` variant of the original
+conjecture, with the additional assumption that $t$ is the critical probability for $F$,
 namely $\mu_t(F) = 1/2$.
+
+This variant is false by a counterexample due to Sahar Diskin and Uri Kreitner;
+see the [MathOverflow discussion](https://mathoverflow.net/questions/10799/optimal-monotone-families-for-the-discrete-isoperimetric-inequality)
+and the [counterexample note](https://gilkalai.wordpress.com/wp-content/uploads/2026/06/dual_tribes_more_readable.pdf).
+Their construction was adapted to this exact Formal Conjectures statement and
+[formalized in Lean](https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample)
+by Kenta Kitamura (KitaKen1).
 -/
-@[category research open, AMS 5 60]
-theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(sorry) ↔
+@[category research solved, AMS 5 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample/blob/5446d2f/lean/MO10799CounterexampleFC.lean#L2597-L2604"]
+theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
     ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
@@ -179,16 +204,17 @@ theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(sorry) ↔
   sorry
 
 /--
-Weaker version proven by Kahn–Kalai: the same conclusion holds when $1000 \log n$ is replaced by
-$C_\varepsilon \, n^\varepsilon$ for every fixed $\varepsilon > 0$.
+Weaker version proven by Kahn–Kalai (2006): for every fixed $\varepsilon > 0$ there is a constant
+$C = C_\varepsilon$ such that for every monotone increasing family $F$ with critical probability
+$t$, i.e. $\mu_t(F) = 1/2$, there is some $p \in [n^{-\varepsilon} t, t]$ for which $F$ is
+$(C \log(1/p), p)$-optimal.
 -/
 @[category research solved, AMS 5 60]
 theorem mathoverflow_10799.variants.weak_kahn_kalai :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
-    (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
-    (_ : t / s > C * (n : ℝ) ^ ε),
-    ∃ p, s ≤ p ∧ p ≤ t ∧ IsOptimal p F := by
+    (t : ℝ) (_ : 0 < t) (_ : t < 1) (_ : μFamily t F = 1 / 2),
+    ∃ p, (n : ℝ) ^ (-ε) * t ≤ p ∧ p ≤ t ∧ IsOptimalWith C p F := by
   sorry
 
 /--
@@ -233,7 +259,7 @@ theorem μFamily_univ (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_empty (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n ∅ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the empty family. -/
 @[category test, AMS 5]
@@ -245,7 +271,7 @@ theorem edgeBoundary_empty (n : ℕ) (p : ℝ) :
 @[category test, AMS 5]
 theorem boundaryCount_univ (n : ℕ) (S : Finset (Fin n)) :
     boundaryCount n Finset.univ S = 0 := by
-  simp [boundaryCount, Xor', filter_false]
+  simp [boundaryCount, filter_false]
 
 /-- The edge boundary is zero for the full family. -/
 @[category test, AMS 5]

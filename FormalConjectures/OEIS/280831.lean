@@ -34,19 +34,35 @@ namespace OeisA280831
 
 /-- The predicate that `n` can be written as $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative
 integers such that $x^4 + 1680 y^3 z$ is a square. -/
-def HasSquareCondition (n : ℕ) : Prop :=
+def A (n : ℕ) : Prop :=
   ∃ x y z w : ℕ, n = x ^ 2 + y ^ 2 + z ^ 2 + w ^ 2 ∧ IsSquare (x ^ 4 + 1680 * y ^ 3 * z)
 
 @[category test, AMS 11]
-theorem hasSquareCondition_0 : HasSquareCondition 0 :=
+theorem a_0 : A 0 :=
   ⟨0, 0, 0, 0, by norm_num, 0, by norm_num⟩
 
 @[category test, AMS 11]
-theorem hasSquareCondition_7 : HasSquareCondition 7 :=
+theorem a_1 : A 1 :=
+  ⟨1, 0, 0, 0, by norm_num, 1, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_2 : A 2 :=
+  ⟨1, 0, 0, 1, by norm_num, 1, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_3 : A 3 :=
+  ⟨1, 0, 1, 1, by norm_num, 1, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_4 : A 4 :=
+  ⟨2, 0, 0, 0, by norm_num, 4, by norm_num⟩
+
+@[category test, AMS 11]
+theorem a_7 : A 7 :=
   ⟨1, 1, 1, 2, by norm_num, 41, by norm_num⟩
 
 @[category test, AMS 11]
-theorem hasSquareCondition_95 : HasSquareCondition 95 :=
+theorem a_95 : A 95 :=
   ⟨6, 3, 1, 7, by norm_num, 216, by norm_num⟩
 
 /--
@@ -54,7 +70,7 @@ theorem hasSquareCondition_95 : HasSquareCondition 95 :=
 $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative integers such that $x^4 + 1680 y^3 z$ is a square.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) : HasSquareCondition n := by
+theorem conjecture (n : ℕ) : A n := by
   sorry
 
 end OeisA280831

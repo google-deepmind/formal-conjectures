@@ -40,9 +40,9 @@ noncomputable def uncoveredCount (n a : ℕ → ℕ) (k : ℕ) : ℕ := by
 
 /--
 Let $n_1<n_2<\cdots $ be an infinite sequence of integers with associated $a_k\pmod{n_k}$, such that for some $\epsilon>0$ we have $n_k>(1+\epsilon)k\log k$ for all $k$. Then
-\[
+$$
 \#\{ m<n_k : m\not\equiv a_i\pmod{n_i} \textrm{ for }1\leq i\leq k\}\neq o(k).
-\]
+$$
 
 Cambie observed that this is false.
 -/

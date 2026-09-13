@@ -34,13 +34,13 @@ namespace Erdos476
 
 /--
 Let $A\subseteq \mathbb{F}_p$. Let
-\[
+$$
 A\hat{+}A = \{ a+b : a\neq b \in A\}.
-\]
+$$
 Is it true that
-\[
+$$
 \lvert A\hat{+}A\rvert \geq \min(2\lvert A\rvert-3,p)?
-\]
+$$
 
 This is the Erdős-Heilbronn inequality, proved by Dias da Silva and Hamidoune.
 -/
