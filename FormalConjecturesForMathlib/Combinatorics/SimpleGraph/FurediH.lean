@@ -157,4 +157,43 @@ lemma furediH_adj_spoke_apex {k : ℕ} (i : Fin k) :
     (furediH k).Adj (.spoke i) .apex :=
   (furediH_adj_apex_spoke i).symm
 
+/-- Neighbours of a spoke: the apex and the pair-vertices incident to that spoke. -/
+lemma furediH_neighborSet_spoke {k : ℕ} (i : Fin k) :
+    (furediH k).neighborSet (.spoke i) =
+      {FurediH.Vertex.apex} ∪
+        FurediH.Vertex.pair '' {p : FurediH.Pair k | i = p.1.1 ∨ i = p.1.2} := by
+  ext v
+  cases v with
+  | apex =>
+      simp [mem_neighborSet, furediH_adj_spoke_apex]
+  | spoke j =>
+      simp [mem_neighborSet, not_furediH_adj_spoke_spoke]
+  | pair p =>
+      simp [mem_neighborSet, furediH_adj_spoke_pair_iff, Set.mem_image]
+
+/-- Neighbours of a pair-vertex are exactly its two endpoint spokes. -/
+lemma furediH_neighborSet_pair {k : ℕ} (p : FurediH.Pair k) :
+    (furediH k).neighborSet (.pair p) =
+      {FurediH.Vertex.spoke p.1.1, .spoke p.1.2} := by
+  ext v
+  cases v with
+  | apex =>
+      have : ¬ (furediH k).Adj (.pair p) .apex := fun h ↦
+        not_furediH_adj_apex_pair p h.symm
+      simp [mem_neighborSet, this]
+  | spoke i =>
+      simp [mem_neighborSet, (furediH k).adj_comm (.pair p) (.spoke i),
+        furediH_adj_spoke_pair_iff, eq_comm]
+  | pair q =>
+      simp [mem_neighborSet, not_furediH_adj_pair_pair]
+
+/-- Each pair-vertex has exactly two neighbours. -/
+lemma furediH_ncard_neighborSet_pair {k : ℕ} (p : FurediH.Pair k) :
+    ((furediH k).neighborSet (.pair p)).ncard = 2 := by
+  rw [furediH_neighborSet_pair]
+  have hne : p.1.1 ≠ p.1.2 := ne_of_lt p.2
+  have : FurediH.Vertex.spoke p.1.1 ∉ ({FurediH.Vertex.spoke p.1.2} : Set _) := by
+    simp [hne]
+  rw [Set.ncard_insert_of_notMem this, Set.ncard_singleton]
+
 end SimpleGraph
