@@ -152,8 +152,8 @@ def IsRainbow {α V K : Type*} {H : SimpleGraph α} {G : SimpleGraph V} (f : H �
 /--
 The anti-Ramsey number $\mathrm{AR}(n, H)$: the maximum number of colors in an edge coloring of
 $K_n$ (that is, a labeling of the edges of $K_n$ using every color) that contains no rainbow copy
-of $H$, i.e. no embedding of $H$ whose edges all receive different colors.
+of $H$, i.e. no injective homomorphism (copy) of $H$ whose edges all receive different colors.
 -/
 noncomputable def antiRamseyNum {α : Type*} [Fintype α] (H : SimpleGraph α) (n : ℕ) : ℕ :=
   sSup {k | ∃ c : TopEdgeLabeling (Fin n) (Fin k), Function.Surjective c ∧
-    ∀ f : H ↪g ⊤, ¬IsRainbow f.toHom c}
+    ∀ f : H.Copy ⊤, ¬IsRainbow f.toHom c}
