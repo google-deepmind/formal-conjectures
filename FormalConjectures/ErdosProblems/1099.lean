@@ -113,4 +113,9 @@ theorem erdos_1099.variants.sum_ratios :
 theorem erdos_1099.variants.h_one (α : ℝ) : h α 1 = 0 := by
   simp [h, Nat.divisors_one]
 
+/-- Empty consecutive-ratio sum for `n = 1`. -/
+@[category test, AMS 11]
+theorem erdos_1099.variants.sumConsecutiveRatios_one : sumConsecutiveRatios 1 = 0 := by
+  simp [sumConsecutiveRatios, Nat.divisors_one]
+
 end Erdos1099

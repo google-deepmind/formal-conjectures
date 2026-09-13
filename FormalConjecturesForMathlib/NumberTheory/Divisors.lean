@@ -59,4 +59,29 @@ lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)
         (show Nat.nth (· ∈ n.divisors) 0 ≠ 0 by rw [nth_divisors_zero hn]; omega) hfin))
       (by rw [nth_divisors_zero hn]; omega)) hi
 
+/-- Consecutive ratios are at least `1` when the earlier divisor is positive and strictly
+smaller than the next. -/
+lemma one_le_consecutiveDivisorRatio_of_lt {n i : ℕ}
+    (hpos : 0 < nth (· ∈ n.divisors) i)
+    (h : nth (· ∈ n.divisors) i < nth (· ∈ n.divisors) (i + 1)) :
+    (1 : ℝ) ≤ consecutiveDivisorRatio n i := by
+  have hposR : (0 : ℝ) < nth (· ∈ n.divisors) i := Nat.cast_pos.mpr hpos
+  rw [consecutiveDivisorRatio, le_div_iff₀ hposR, one_mul]
+  exact_mod_cast h.le
+
+/-- On valid indices (`i + 1 < τ(n)`), consecutive divisor ratios are ≥ `1`. -/
+lemma one_le_consecutiveDivisorRatio {n i : ℕ}
+    (hi : i + 1 < n.divisors.card) :
+    (1 : ℝ) ≤ consecutiveDivisorRatio n i := by
+  classical
+  have hfin : (Set.ofPred (· ∈ n.divisors)).Finite := n.divisors.finite_toSet
+  have hcard : hfin.toFinset.card = n.divisors.card := by
+    congr 1
+    ext x
+    simp [Set.Finite.mem_toFinset]
+  have hlt := nth_lt_nth_of_lt_card hfin (Nat.lt_succ_self i) (by rw [hcard]; exact hi)
+  have hpos : 0 < nth (· ∈ n.divisors) i :=
+    Nat.pos_of_mem_divisors (nth_mem_of_lt_card hfin (lt_trans (Nat.lt_succ_self i) (by rw [hcard]; exact hi)))
+  exact one_le_consecutiveDivisorRatio_of_lt hpos hlt
+
 end Nat
