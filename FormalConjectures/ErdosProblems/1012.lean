@@ -50,6 +50,15 @@ def ForcesCycle (k n : ℕ) : Prop :=
     edgeThreshold k n ≤ G.edgeSet.ncard →
       n - k ∈ G.cycleLengths
 
+/-- Specialising an all-lengths Woodall-style conclusion to `l = n - k` yields `ForcesCycle`. -/
+@[category API, AMS 5]
+lemma ForcesCycle.of_all_lengths {k n : ℕ}
+    (h : ∀ G : SimpleGraph (Fin n),
+      edgeThreshold k n ≤ G.edgeSet.ncard →
+        ∀ l, 3 ≤ l → l ≤ n - k → l ∈ G.cycleLengths)
+    (hnk : 3 ≤ n - k) : ForcesCycle k n :=
+  fun G he ↦ h G he (n - k) hnk le_rfl
+
 /--
 $f(k)$ is the least positive $N$ such that every graph on $n\geq N$ vertices with at least
 $\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle of length $n-k$.
