@@ -37,6 +37,10 @@ namespace Erdos1012
 def edgeThreshold (k n : ℕ) : ℕ :=
   (n - k - 1).choose 2 + (k + 2).choose 2 + 1
 
+@[simp, category test, AMS 5]
+lemma edgeThreshold_pos (k n : ℕ) : 1 ≤ edgeThreshold k n := by
+  simp [edgeThreshold]
+
 /--
 `ForcesCycle k n` means that every graph on `n` vertices with at least
 `edgeThreshold k n` edges contains a cycle of length $n-k$.
@@ -60,6 +64,11 @@ noncomputable def f (k : ℕ) : ℕ :=
 @[category API, AMS 5]
 lemma f_le {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : f k ≤ N :=
   Nat.sInf_le ⟨hN, h⟩
+
+/-- If some positive `N` witnesses the forcing property for all larger `n`, then `f k` is positive. -/
+@[category API, AMS 5]
+lemma zero_lt_f_of_bound {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : 0 < f k :=
+  (Nat.sInf_mem (s := {N : ℕ | 0 < N ∧ ∀ n ≥ N, ForcesCycle k n}) ⟨N, ⟨hN, h⟩⟩).1
 
 /--
 Let $k\geq 0$. Let $f(k)$ be such that every graph on $n\geq f(k)$ vertices with at least
