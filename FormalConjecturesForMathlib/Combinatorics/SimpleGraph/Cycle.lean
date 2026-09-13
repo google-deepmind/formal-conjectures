@@ -115,6 +115,46 @@ lemma Cycle.encard_chords_le_encard_edgeSet {G : SimpleGraph V} (c : Cycle G) :
     c.chords.encard ≤ G.edgeSet.encard :=
   Set.encard_le_encard c.chords_subset_edgeSet
 
+/-- Bundled cycles have positive length. -/
+lemma Cycle.length_pos {G : SimpleGraph V} (c : Cycle G) : 0 < c.length :=
+  lt_of_lt_of_le (by decide : (0 : ℕ) < 3) c.three_le_length
+
+/-- Reverse a bundled cycle (same length). -/
+def Cycle.reverse {G : SimpleGraph V} (c : Cycle G) : Cycle G where
+  base := c.base
+  walk := c.walk.reverse
+  isCycle := c.isCycle.reverse
+
+@[simp]
+lemma Cycle.length_reverse {G : SimpleGraph V} (c : Cycle G) : c.reverse.length = c.length := by
+  simp [reverse, length]
+
+/-- Every member of `cycleLengths` is the length of some bundled `Cycle`. -/
+lemma exists_cycle_of_mem_cycleLengths {G : SimpleGraph V} {m : ℕ}
+    (hm : m ∈ G.cycleLengths) : ∃ c : Cycle G, c.length = m := by
+  obtain ⟨a, w, hc, rfl⟩ := hm
+  exact ⟨⟨a, w, hc⟩, rfl⟩
+
+lemma mem_cycleLengths_iff_exists_cycle {G : SimpleGraph V} {m : ℕ} :
+    m ∈ G.cycleLengths ↔ ∃ c : Cycle G, c.length = m :=
+  ⟨exists_cycle_of_mem_cycleLengths, fun ⟨c, hc⟩ ↦ hc ▸ c.length_mem_cycleLengths⟩
+
+/-- Odd members of `oddCycleLengths` are witnessed by odd bundled cycles. -/
+lemma exists_cycle_of_mem_oddCycleLengths {G : SimpleGraph V} {m : ℕ}
+    (hm : m ∈ G.oddCycleLengths) : ∃ c : Cycle G, c.length = m ∧ Odd c.length := by
+  obtain ⟨hm', hodd⟩ := mem_oddCycleLengths_iff.mp hm
+  obtain ⟨c, rfl⟩ := exists_cycle_of_mem_cycleLengths hm'
+  exact ⟨c, rfl, hodd⟩
+
+/-- `HasOddCycleWithChords G 0` iff `oddCycleLengths` is nonempty. -/
+lemma HasOddCycleWithChords.zero_iff_oddCycleLengths_nonempty {G : SimpleGraph V} :
+    HasOddCycleWithChords G 0 ↔ G.oddCycleLengths.Nonempty := by
+  constructor
+  · exact oddCycleLengths_nonempty
+  · intro ⟨m, hm⟩
+    obtain ⟨c, rfl, hodd⟩ := exists_cycle_of_mem_oddCycleLengths hm
+    exact ⟨c, hodd, bot_le⟩
+
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
 

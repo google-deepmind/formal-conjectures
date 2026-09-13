@@ -33,6 +33,18 @@ namespace Erdos1091
 
 open SimpleGraph Filter
 
+/-- Two diagonals imply one (special case of `HasOddCycleWithChords.mono`). -/
+@[category API, AMS 5]
+lemma HasOddCycleWithChords.two_imp_one {V : Type*} {G : SimpleGraph V}
+    (h : HasOddCycleWithChords G 2) : HasOddCycleWithChords G 1 :=
+  h.mono (by omega)
+
+/-- One diagonal implies a plain odd cycle (`k = 0`). -/
+@[category API, AMS 5]
+lemma HasOddCycleWithChords.one_imp_zero {V : Type*} {G : SimpleGraph V}
+    (h : HasOddCycleWithChords G 1) : HasOddCycleWithChords G 0 :=
+  h.mono (by omega)
+
 /--
 Let $G$ be a $K_4$-free graph with chromatic number $4$. Must $G$ contain an odd cycle with at
 least two diagonals?
