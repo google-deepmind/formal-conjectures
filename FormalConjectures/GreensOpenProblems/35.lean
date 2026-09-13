@@ -38,8 +38,11 @@ supported on `[0,1]`, and has total integral `1`.
 - [AE25](https://arxiv.org/abs/2506.13131)
   A. Novikov et al., *AlphaEvolve: A coding agent for scientific and algorithmic discovery*,
   arXiv:2506.13131 (2025), Appendix B.1.
+- [GGTW25](https://arxiv.org/abs/2511.02864)
+  B. Georgiev, J. Gómez-Serrano, T. Tao and A. Z. Wagner, *Mathematical exploration and discovery
+  at scale*, arXiv:2511.02864 (2025), Section 6.2.
 
-The constants of [CS17], [MV10] and [AE25] are stated for functions supported on
+The constants of [CS17], [MV10], [AE25] and [GGTW25] are stated for functions supported on
 $[-1/4, 1/4]$; rescaling to $[0, 1]$ halves them.
 -/
 
@@ -65,12 +68,12 @@ theorem green_35.lower :
       (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
   sorry
 
-/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.75265$ at
+/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.7516$ at
 $p = \infty$. -/
 @[category research open, AMS 26 28 42]
 theorem green_35.upper :
     let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.75265 := by
+    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
   sorry
 
 /-  Known bounds and comparisons. -/
@@ -92,11 +95,17 @@ autoconvolution supremum $1.50972\ldots$, which rescales to $0.75486\ldots$. -/
 theorem c_inf_upper : c ∞ ≤ 0.7549 := by
   sorry
 
-/-- Best-known upper bound for $c(\infty)$, found by AlphaEvolve ([AE25]) and recorded in Green's
-2025 update; the step function there has autoconvolution supremum at most $1.5053$, which
-rescales to $0.75265$. -/
+/-- Upper bound for $c(\infty)$ found by AlphaEvolve ([AE25]) and recorded in Green's 2025
+update; the step function there has autoconvolution supremum at most $1.5053$, which rescales to
+$0.75265$. -/
 @[category research solved, AMS 26 28 42]
 theorem c_inf_upper_ae25 : c ∞ ≤ 0.75265 := by
+  sorry
+
+/-- Best-known upper bound for $c(\infty)$ ([GGTW25], §6.2): a step function with autoconvolution
+supremum at most $1.5032$, which rescales to $0.7516$. -/
+@[category research solved, AMS 26 28 42]
+theorem c_inf_upper_ggtw25 : c ∞ ≤ 0.7516 := by
   sorry
 
 /-- A comparison bound from Young's inequality. -/
