@@ -77,7 +77,7 @@ $$\mathrm{ex}(n;H_k) \ll (kn)^{3/2}.$$
 -/
 @[category research solved, AMS 5]
 theorem erdos_926.variants.furedi :
-    ∃ C : ℝ, ∀ (k : ℕ), 4 ≤ k →
+    ∃ C ≥ (0 : ℝ), ∀ (k : ℕ), 4 ≤ k →
       Asymptotics.IsBigOWith C atTop
         (fun n : ℕ => (extremalNumber n (furediH k) : ℝ))
         (fun n : ℕ => ((k : ℝ) * n) ^ ((3 : ℝ) / 2)) := by
@@ -90,7 +90,7 @@ by Alon, Krivelevich, and Sudakov [AKS03].
 -/
 @[category research solved, AMS 5]
 theorem erdos_926.variants.alon_krivelevich_sudakov :
-    ∃ C : ℝ, ∀ (k : ℕ), 4 ≤ k →
+    ∃ C ≥ (0 : ℝ), ∀ (k : ℕ), 4 ≤ k →
       Asymptotics.IsBigOWith C atTop
         (fun n : ℕ => (extremalNumber n (furediH k) : ℝ))
         (fun n : ℕ => (k : ℝ) * (n : ℝ) ^ ((3 : ℝ) / 2)) := by
