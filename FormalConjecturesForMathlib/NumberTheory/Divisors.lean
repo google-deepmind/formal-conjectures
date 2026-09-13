@@ -41,6 +41,11 @@ Takes a junk value if `i + 1` is not a valid index in `n.divisors`. -/
 noncomputable def consecutiveDivisorRatio (n i : ℕ) : ℝ :=
   (nth (· ∈ n.divisors) (i + 1) : ℝ) / nth (· ∈ n.divisors) i
 
+/-- The first consecutive ratio is just `d_2`, since `d_1 = 1`. -/
+lemma consecutiveDivisorRatio_zero {n : ℕ} (hn : n ≠ 0) :
+    consecutiveDivisorRatio n 0 = (nth (· ∈ n.divisors) 1 : ℝ) := by
+  rw [consecutiveDivisorRatio, nth_divisors_zero hn, Nat.cast_one, div_one]
+
 /-- Every divisor enumerated after index `0` is at least `2`. -/
 lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)
     (h : Nat.nth (· ∈ n.divisors) i ≠ 0) : 2 ≤ Nat.nth (· ∈ n.divisors) i := by
