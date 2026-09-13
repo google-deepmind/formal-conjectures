@@ -18,7 +18,11 @@ import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 304
-*Reference:* [erdosproblems.com/304](https://www.erdosproblems.com/304)
+
+*References:*
+- [Erdős Problem 304](https://www.erdosproblems.com/304)
+- [The smallest denominator not contained in a unit fraction decomposition of 1 with fixed
+  length](https://arxiv.org/abs/2512.22083), W. van Doorn and Q. Tang (2025)
 -/
 
 open Asymptotics Filter
@@ -30,6 +34,39 @@ The set of `k` for which `a / b` can be expressed as a sum of `k` distinct unit 
 -/
 def unitFractionExpressible (a b : ℕ) : Set ℕ :=
   {k | ∃ s : Finset ℕ, s.card = k ∧ (∀ n ∈ s, n > 1) ∧ (a / b : ℚ) = ∑ n ∈ s, (n : ℚ)⁻¹}
+
+/-- The denominators that occur in a $k$-term unit-fraction decomposition of $1$. -/
+def denominatorsAtLength (k : ℕ) : Set ℕ :=
+  {b | ∃ s : Finset ℕ, s.card = k ∧ (∀ n ∈ s, n > 1) ∧ b ∈ s ∧
+    (1 : ℚ) = ∑ n ∈ s, (n : ℚ)⁻¹}
+
+/-- The smallest integer greater than $1$ that does not occur in a $k$-term unit-fraction
+decomposition of $1$, denoted by $v(k)$ by van Doorn and Tang. -/
+noncomputable def firstMissingDenominator (k : ℕ) : ℕ :=
+  sInf {b : ℕ | 1 < b ∧ b ∉ denominatorsAtLength k}
+
+@[category API, AMS 11]
+lemma mem_denominatorsAtLength_of_lt_firstMissingDenominator {b k : ℕ} (hb : 1 < b)
+    (hlt : b < firstMissingDenominator k) : b ∈ denominatorsAtLength k := by
+  by_contra h
+  have hle : firstMissingDenominator k ≤ b := Nat.sInf_le ⟨hb, h⟩
+  omega
+
+/-- If $b$ occurs in a $k$-term unit-fraction decomposition of $1$, deleting the term $1/b$
+gives a $(k-1)$-term decomposition of $(b-1)/b$. -/
+@[category API, AMS 11]
+lemma unitFractionExpressible_pred_of_mem_denominatorsAtLength {b k : ℕ}
+    (h : b ∈ denominatorsAtLength k) : k - 1 ∈ unitFractionExpressible (b - 1) b := by
+  obtain ⟨s, hs_card, hs_gt, hbs, hs_sum⟩ := h
+  refine ⟨s.erase b, ?_, ?_, ?_⟩
+  • rw [Finset.card_erase_of_mem hbs, hs_card]
+  • intro n hn
+    exact hs_gt n (Finset.mem_of_mem_erase hn)
+  • rw [Finset.sum_erase hbs, ← hs_sum]
+    have hb : 1 ≤ b := by omega
+    have hb0 : (b : ℚ) ≠ 0 := by positivity
+    rw [Nat.cast_sub hb]
+    field_simp
 
 @[category API, simp, AMS 11]
 lemma zero_mem_unitFractionExpressible_iff {a b : ℕ} :
@@ -87,6 +124,15 @@ lemma dvd_of_one_mem_unitFractionExpressible {a b : ℕ}
 exist integers $1 < n_1 < n_2 < \dots < n_k$ with
 $$\frac{a}{b} = \sum_{i=1}^k \frac{1}{n_i}$$ -/
 noncomputable def smallestCollection (a b : ℕ) : ℕ := sInf (unitFractionExpressible a b)
+
+/-- The van Doorn--Tang reduction: if $b<v(k)$, then
+$N(b-1,b)\leq k-1$. -/
+@[category research solved, AMS 11]
+theorem smallestCollection_pred_le_of_lt_firstMissingDenominator {b k : ℕ} (hb : 1 < b)
+    (hlt : b < firstMissingDenominator k) : smallestCollection (b - 1) b ≤ k - 1 := by
+  apply Nat.sInf_le
+  exact unitFractionExpressible_pred_of_mem_denominatorsAtLength
+    (mem_denominatorsAtLength_of_lt_firstMissingDenominator hb hlt)
 
 -- in fact `(unitFractionExpressible a b).Nonempty` should always be true, but we do not prove it
 -- for now
@@ -175,3 +221,5 @@ theorem upper_bound : answer(sorry) ↔
   sorry
 
 end Erdos304
+
+
