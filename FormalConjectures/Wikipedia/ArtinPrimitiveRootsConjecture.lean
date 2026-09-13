@@ -21,7 +21,7 @@ import FormalConjecturesUtil
 
 Artin's conjecture predicts, given an integer $a$, densities of primes $p$ for which
 $a$ is a primitive root modulo $p$. Under certain conditions (when $a$ is not a
-power and its squarefree part is $1\pmod{4}$) the density is given by Artin's constant
+power and its squarefree part is not $1\pmod{4}$) the density is given by Artin's constant
 $$\prod_{p\ \text{prime}} \left(1 - \frac{1}{p(p - 1)}\right).$$
 For more general values of $a$, this constant must be corrected by certain factors.
 - When $a = b^m$, $m$ is a maximal odd power, the squarefree part of $b$ satisfies
