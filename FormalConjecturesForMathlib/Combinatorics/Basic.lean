@@ -163,6 +163,10 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
   (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).sup Finset.card
 
+/-- The number of Sidon subsets of the supplied `Finset`. -/
+def sidonSubsetCount (A : Finset α) [DecidableEq α] : ℕ :=
+  (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).card
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :

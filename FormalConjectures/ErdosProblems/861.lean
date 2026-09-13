@@ -34,13 +34,11 @@ open scoped Topology
 
 namespace Erdos861
 
-/-- Size of the largest Sidon subset of `{1, …, N}`. -/
-noncomputable def f (N : ℕ) : ℕ :=
-  sSup {n | ∃ A : Set ℕ, A ⊆ Icc 1 N ∧ IsSidon A ∧ A.ncard = n}
+/-- Size of the largest Sidon subset of `{1, …, N}`. Same API as `erdos_30` / `erdos_43`. -/
+noncomputable abbrev f (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 1 N)
 
 /-- Number of Sidon subsets of `{1, …, N}`. -/
-noncomputable def Acount (N : ℕ) : ℕ :=
-  {S : Set ℕ | S ⊆ Icc 1 N ∧ IsSidon S}.ncard
+noncomputable abbrev Acount (N : ℕ) : ℕ := Finset.sidonSubsetCount (Finset.Icc 1 N)
 
 /--
 Let $f(N)$ be the size of the largest Sidon subset of $\{1,\ldots,N\}$ and $A(N)$ be the number of
