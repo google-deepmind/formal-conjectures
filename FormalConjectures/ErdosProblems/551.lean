@@ -41,7 +41,7 @@ for $k\geq n\geq 3$ (except when $n=k=3$).
 Asked by Erdős, Faudree, Rousseau, and Schelp.
 This problem is #18 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_551 :
     ∀ (k n : ℕ), 3 ≤ n → n ≤ k → ¬(n = 3 ∧ k = 3) →
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph k)
