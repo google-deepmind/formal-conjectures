@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
 public import Mathlib.Data.Set.Card
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 
 @[expose] public section
 
@@ -88,6 +89,31 @@ lemma HasOddCycleWithChords.exists_odd_cycle {G : SimpleGraph V} {k : ℕ}
     (h : HasOddCycleWithChords G k) : ∃ c : Cycle G, Odd c.length := by
   obtain ⟨c, hodd, _⟩ := h
   exact ⟨c, hodd⟩
+
+/-- Every bundled cycle has length at least `3`. -/
+lemma Cycle.three_le_length {G : SimpleGraph V} (c : Cycle G) : 3 ≤ c.length :=
+  c.isCycle.three_le_length
+
+/-- The length of a bundled cycle lies in `G.cycleLengths`. -/
+lemma Cycle.length_mem_cycleLengths {G : SimpleGraph V} (c : Cycle G) :
+    c.length ∈ G.cycleLengths :=
+  ⟨c.base, c.walk, c.isCycle, rfl⟩
+
+/-- An odd bundled cycle contributes an odd length to `oddCycleLengths`. -/
+lemma Cycle.mem_oddCycleLengths_of_odd {G : SimpleGraph V} (c : Cycle G) (h : Odd c.length) :
+    c.length ∈ G.oddCycleLengths :=
+  ⟨c.length_mem_cycleLengths, h⟩
+
+/-- Having an odd cycle with chords yields a nonempty `oddCycleLengths` set. -/
+lemma HasOddCycleWithChords.oddCycleLengths_nonempty {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : G.oddCycleLengths.Nonempty := by
+  obtain ⟨c, hodd, _⟩ := h
+  exact ⟨c.length, c.mem_oddCycleLengths_of_odd hodd⟩
+
+/-- Chords form a subset of the edge set, so their `encard` is bounded by that of `edgeSet`. -/
+lemma Cycle.encard_chords_le_encard_edgeSet {G : SimpleGraph V} (c : Cycle G) :
+    c.chords.encard ≤ G.edgeSet.encard :=
+  Set.encard_le_encard c.chords_subset_edgeSet
 
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
