@@ -112,4 +112,14 @@ theorem erdos_861.variants.Acount_le_two_pow (N : ℕ) :
     Acount N ≤ 2 ^ (Finset.Icc 1 N).card :=
   Finset.sidonSubsetCount_le_two_pow_card _
 
+/-- Monotonicity in `N`: larger intervals admit at least as large a Sidon subset. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.f_mono {M N : ℕ} (h : M ≤ N) : f M ≤ f N :=
+  Finset.maxSidonSubsetCard_mono (Finset.Icc_subset_Icc_right h)
+
+/-- Monotonicity in `N` for the Sidon-subset count. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.Acount_mono {M N : ℕ} (h : M ≤ N) : Acount M ≤ Acount N :=
+  Finset.sidonSubsetCount_mono (Finset.Icc_subset_Icc_right h)
+
 end Erdos861

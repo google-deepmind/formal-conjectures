@@ -221,6 +221,25 @@ theorem sidonSubsetCount_empty [DecidableEq α] : sidonSubsetCount (∅ : Finset
   have : (∅ : Finset α).powerset = {∅} := by simp
   simp [sidonSubsetCount, this, filter_singleton, IsSidon]
 
+/-- Enlarging the ambient set cannot decrease the max Sidon subset size. -/
+theorem maxSidonSubsetCard_mono {A B : Finset α} [DecidableEq α] (h : A ⊆ B) :
+    maxSidonSubsetCard A ≤ maxSidonSubsetCard B := by
+  classical
+  refine Finset.sup_le fun C hC ↦ ?_
+  have hC' := mem_filter.mp hC
+  have hCB : C ∈ B.powerset.filter fun D : Finset α ↦ IsSidon (D : Set α) := by
+    exact mem_filter.mpr ⟨mem_powerset.mpr ((mem_powerset.mp hC'.1).trans h), hC'.2⟩
+  exact le_sup hCB
+
+/-- Enlarging the ambient set cannot decrease the number of Sidon subsets. -/
+theorem sidonSubsetCount_mono {A B : Finset α} [DecidableEq α] (h : A ⊆ B) :
+    sidonSubsetCount A ≤ sidonSubsetCount B := by
+  classical
+  refine card_le_card ?_
+  intro C hC
+  have hC' := mem_filter.mp hC
+  exact mem_filter.mpr ⟨mem_powerset.mpr ((mem_powerset.mp hC'.1).trans h), hC'.2⟩
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
