@@ -91,4 +91,14 @@ theorem erdos_861.variants.empty_sidon : IsSidon (∅ : Set ℕ) := by
   intro _ h
   cases h
 
+/-- There is always at least one Sidon subset of `{1, …, N}` (the empty set). -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.one_le_Acount (N : ℕ) : 1 ≤ Acount N :=
+  Finset.one_le_sidonSubsetCount _
+
+/-- Trivial bound underlying the Cameron–Erdős ratio: `2^{f(N)} ≤ A(N)`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.two_pow_f_le_Acount (N : ℕ) : 2 ^ f N ≤ Acount N :=
+  Finset.two_pow_maxSidonSubsetCard_le_sidonSubsetCount _
+
 end Erdos861

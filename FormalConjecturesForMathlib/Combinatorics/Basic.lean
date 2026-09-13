@@ -167,6 +167,34 @@ def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
 def sidonSubsetCount (A : Finset α) [DecidableEq α] : ℕ :=
   (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).card
 
+/-- The empty set is always Sidon, so there is at least one Sidon subset. -/
+theorem sidonSubsetCount_pos (A : Finset α) [DecidableEq α] : 0 < sidonSubsetCount A := by
+  refine card_pos.mpr ⟨∅, ?_⟩
+  simp [IsSidon]
+
+/-- Alias: `1 ≤ sidonSubsetCount A`. -/
+theorem one_le_sidonSubsetCount (A : Finset α) [DecidableEq α] : 1 ≤ sidonSubsetCount A :=
+  Nat.succ_le_iff.mpr (sidonSubsetCount_pos A)
+
+/-- Any maximum-size Sidon subset `B` contributes `2 ^ |B|` Sidon subsets via
+`IsSidon.subset`, so `2 ^ maxSidonSubsetCard A ≤ sidonSubsetCount A`. -/
+theorem two_pow_maxSidonSubsetCard_le_sidonSubsetCount (A : Finset α) [DecidableEq α] :
+    2 ^ maxSidonSubsetCard A ≤ sidonSubsetCount A := by
+  let S := A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)
+  have hS : S.Nonempty := ⟨∅, by simp [S, IsSidon]⟩
+  obtain ⟨B, hB, hBcard⟩ := exists_mem_eq_sup S hS Finset.card
+  have hB' := mem_filter.mp hB
+  have hsub : B.powerset ⊆ S := by
+    intro C hC
+    rw [mem_powerset] at hC
+    exact mem_filter.mpr ⟨mem_powerset.mpr (hC.trans (mem_powerset.mp hB'.1)),
+      IsSidon.subset hB'.2 (by simpa using hC)⟩
+  calc
+    2 ^ maxSidonSubsetCard A = 2 ^ B.card := by rw [← hBcard]; rfl
+    _ = B.powerset.card := (card_powerset B).symm
+    _ ≤ S.card := card_le_card hsub
+    _ = sidonSubsetCount A := rfl
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
