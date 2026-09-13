@@ -17,6 +17,13 @@ module
 
 public import Mathlib.Order.Interval.Finset.Nat
 public import Mathlib.Algebra.Divisibility.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Cast.Order.Field
+public import Mathlib.Data.Real.Basic
+public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.GCongr
 
 @[expose] public section
 
@@ -66,5 +73,80 @@ lemma avoidsDivisors_union (A B : Finset ℕ) (x : ℕ) :
 @[simp]
 lemma card_avoidsDivisors_empty (x : ℕ) : (avoidsDivisors ∅ x).card = x := by
   simp [avoidsDivisors_empty, Nat.card_Icc]
+
+/-- The number of multiples of `a` in `{1, …, x}` is `⌊x / a⌋`. -/
+lemma card_Icc_filter_dvd (a x : ℕ) :
+    #{m ∈ Icc 1 x | a ∣ m} = x / a := by
+  convert Nat.Ioc_filter_dvd_card_eq_div x a using 2
+  ext m
+  simp [mem_Icc, mem_Ioc]
+  omega
+
+/-- Union bound: at most `∑_{a ∈ A} ⌊x / a⌋` integers in `{1, …, x}` are sieved out. -/
+lemma card_sieved_le_sum_div (A : Finset ℕ) (x : ℕ) :
+    #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} ≤ ∑ a ∈ A, x / a := by
+  classical
+  have hEq :
+      (Icc 1 x).filter (fun m => ∃ a ∈ A, a ∣ m) =
+        A.biUnion fun a => (Icc 1 x).filter (a ∣ ·) := by
+    ext m
+    simp only [mem_filter, mem_biUnion, mem_Icc]
+    tauto
+  rw [hEq]
+  simpa [card_Icc_filter_dvd] using
+    (card_biUnion_le : (A.biUnion fun a => (Icc 1 x).filter (a ∣ ·)).card ≤
+      ∑ a ∈ A, ((Icc 1 x).filter (a ∣ ·)).card)
+
+/-- Survivors are `{1, …, x}` minus the sieved set. -/
+lemma avoidsDivisors_eq_sdiff (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = Icc 1 x \ (Icc 1 x).filter (fun m => ∃ a ∈ A, a ∣ m) := by
+  classical
+  ext m
+  simp only [mem_avoidsDivisors, mem_sdiff, mem_filter]
+  constructor
+  · rintro ⟨hm, hA⟩
+    exact ⟨hm, fun h ↦ (h.2.elim fun a ⟨ha, hd⟩ ↦ hA a ha hd)⟩
+  · rintro ⟨hm, hs⟩
+    exact ⟨hm, fun a ha hd ↦ hs ⟨hm, a, ha, hd⟩⟩
+
+/-- Cardinality lower bound via the union bound on multiples. -/
+lemma card_avoidsDivisors_add_sum_div_ge (A : Finset ℕ) (x : ℕ) :
+    x ≤ (avoidsDivisors A x).card + ∑ a ∈ A, x / a := by
+  classical
+  have hcard : (Icc 1 x).card = x := by simp [Nat.card_Icc]
+  have hsieved := card_sieved_le_sum_div A x
+  have hsle : #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} ≤ x :=
+    (card_le_card (filter_subset _ _)).trans (by simp [Nat.card_Icc])
+  have hsplit :
+      (avoidsDivisors A x).card = x - #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} := by
+    rw [avoidsDivisors_eq_sdiff, card_sdiff_of_subset (filter_subset _ _), hcard]
+  omega
+
+/-- If `∑_{a ∈ A} 1/a ≤ C`, then at least `(1 - C) x` integers in `{1, …, x}` survive. -/
+lemma le_card_avoidsDivisors_of_reciprocalSum_le (A : Finset ℕ) (x : ℕ) {C : ℝ}
+    (hC : A.reciprocalSum ≤ C) :
+    (1 - C) * (x : ℝ) ≤ (avoidsDivisors A x).card := by
+  have hge := card_avoidsDivisors_add_sum_div_ge A x
+  have hcast : (x : ℝ) ≤ (avoidsDivisors A x).card + ∑ a ∈ A, ((x / a : ℕ) : ℝ) := by
+    exact_mod_cast hge
+  have hdiv : ∑ a ∈ A, ((x / a : ℕ) : ℝ) ≤ ∑ a ∈ A, (x : ℝ) / a := by
+    gcongr
+    exact Nat.cast_div_le
+  have hsum : ∑ a ∈ A, (x : ℝ) / a = (x : ℝ) * A.reciprocalSum := by
+    simp only [reciprocalSum]
+    have hterm : ∀ a ∈ A, (x : ℝ) / a = x * ((1 : ℝ) / a) := fun a _ ↦
+      (mul_one_div (x : ℝ) (a : ℝ)).symm
+    simp only [sum_congr rfl hterm, ← mul_sum]
+  have hmul : (1 - C) * (x : ℝ) ≤ (1 - A.reciprocalSum) * x :=
+    mul_le_mul_of_nonneg_right (by linarith) (Nat.cast_nonneg _)
+  have hrewrite : (1 - A.reciprocalSum) * (x : ℝ) = x - x * A.reciprocalSum := by
+    rw [sub_mul, one_mul, mul_comm A.reciprocalSum]
+  have hchain : x - ∑ a ∈ A, (x : ℝ) / a ≤ (avoidsDivisors A x).card := by
+    linarith
+  calc (1 - C) * (x : ℝ)
+      ≤ (1 - A.reciprocalSum) * x := hmul
+    _ = x - x * A.reciprocalSum := hrewrite
+    _ = x - ∑ a ∈ A, (x : ℝ) / a := by rw [hsum]
+    _ ≤ (avoidsDivisors A x).card := hchain
 
 end Finset

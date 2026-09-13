@@ -109,9 +109,22 @@ theorem erdos_784.variants.primes (C : ℝ) (hC : 0 < C) :
 jif also notes that a lower bound of $(1-C)x$ is trivial by the union bound if $0<C<1$.
 -/
 @[category textbook, AMS 11]
-theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (hC1 : C < 1) :
+theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (_hC1 : C < 1) :
     ∀ᶠ x : ℕ in atTop, (1 - C) * x ≤ H C x := by
-  sorry
+  refine Eventually.of_forall fun x ↦ ?_
+  simp only [H]
+  have hne : Set.Nonempty
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC.le,
+      card_avoidsDivisors_empty x⟩
+  have hmem := Nat.sInf_mem hne
+  simp only [Set.mem_ofPred_eq] at hmem
+  obtain ⟨A, h₁, h₂, heq⟩ := hmem
+  have hsum : A.reciprocalSum ≤ C := by
+    clear * - h₁ h₂; first | exact h₁ | exact h₂
+  rw [← heq]
+  exact le_card_avoidsDivisors_of_reciprocalSum_le A x hsum
 
 /-- Sieving by `{1}` empties `{1, …, x}`; this motivates excluding `1` from admissible `A` in `H`. -/
 @[category test, AMS 11]
