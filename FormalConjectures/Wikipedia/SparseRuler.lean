@@ -27,8 +27,9 @@ $k = a_j - a_i$.
 
 One question concerns the structure of *optimal* rulers. Wichmann [Wi63] gave a
 parametric family of sparse rulers and speculated that every sufficiently large optimal ruler
-is of his type. The known exceptions occur at lengths $1, 13, 17, 23, 58$, and no further
-exceptions exist up to length $213$.
+is of his type. The Wikipedia article records that no optimal ruler of length $1, 13, 17, 23$
+or $58$ is a Wichmann ruler, and that every other optimal length up to $213$ is attained by one;
+non-Wichmann optimal rulers also occur alongside Wichmann ones at lengths $9, 29, 50$ and $68$.
 
 The asymptotic growth of the minimal number of marks of an optimal ruler of length $L$ — i.e.
 the limit of $l(n)^2 / n$, conjectured to lie in $[2.434\ldots, 3]$ — is the subject of
@@ -92,8 +93,10 @@ lemma wichmannGaps_sum (r s : ℕ) :
 
 /-- **Wichmann's conjecture on optimal rulers.** Every optimal ruler of sufficiently large
 length is a Wichmann ruler $W(r, s)$ (up to reflection, i.e. reversing the segment list).
-Posed by Wichmann [Wi63]; the known exceptions have lengths $1, 13, 17, 23, 58$, and no
-further exceptions exist up to length $213$. -/
+Posed by Wichmann [Wi63]. The Wikipedia article records that no optimal ruler of length
+$1, 13, 17, 23$ or $58$ is a Wichmann ruler, and that every other optimal length up to $213$ is
+attained by one; non-Wichmann optimal rulers also occur alongside Wichmann ones at lengths
+$9, 29, 50$ and $68$. -/
 @[category research open, AMS 5]
 theorem wichmann_conjecture :
     ∃ N : ℕ, ∀ g : List ℕ, IsOptimal g → N < g.sum →
