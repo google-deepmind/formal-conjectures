@@ -204,6 +204,8 @@ sets in `A` containing a common element is exactly half of the sets in `A`, that
 $\max_i |\{X \in A : i \in X\}| = |A| / 2$.
 
 If the union-closed sets conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+This is the first part of Conjecture 3 in the reference below; its second part (that the
+family then contains the power set of a $k$-element set as a "submatrix") is not formalized here.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/
