@@ -26,6 +26,9 @@ topological spaces, and states some open problems about homogeneous and monolith
 * [Ar2013] Arhangeliski, Alexandr. "Selected old open problems in general topology."
   Buletinul Academiei de Ştiinţe a Republicii Moldova. Matematica 73.2-3 (2013): 37-46.
   https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
+* [Ar1987] Arhangel'skii, A. V. "Topological homogeneity. Topological groups and their continuous
+  images." Russian Mathematical Surveys 42.2 (1987): 83-131.
+  https://doi.org/10.1070/RM1987v042n02ABEH001333
 -/
 
 open TopologicalSpace Topology Filter Set
@@ -105,9 +108,10 @@ need not be open. -/
 def IsNetwork {X : Type*} [TopologicalSpace X] (N : Set (Set X)) : Prop :=
   ∀ ⦃U : Set X⦄, IsOpen U → ∀ x ∈ U, ∃ n ∈ N, x ∈ n ∧ n ⊆ U
 
-/-- A topological space is called *monolithic* if for every infinite cardinal $\kappa$ and every
-subset $A$ with $|A| \le \kappa$, the closure of $A$ has network weight at most $\kappa$; that is,
-the closure of every infinite subset $A$ has a network of cardinality at most $|A|$.
+/-- A topological space is called *monolithic* (see [Ar1987]; [Ar2013] uses the term without
+defining it) if for every infinite cardinal $\kappa$ and every subset $A$ with $|A| \le \kappa$,
+the closure of $A$ has network weight at most $\kappa$; that is, the closure of every infinite
+subset $A$ has a network of cardinality at most $|A|$.
 
 For compact Hausdorff spaces the network weight coincides with the weight, so a compact Hausdorff
 space is monolithic if and only if the closure of every infinite subset $A$ has weight at most
