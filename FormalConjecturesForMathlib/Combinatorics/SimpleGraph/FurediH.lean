@@ -16,10 +16,12 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Fintype.Sum
 public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Set.Card
 
 @[expose] public section
 
@@ -114,5 +116,45 @@ lemma not_furediH_adj_pair_pair {k : ℕ} (p q : FurediH.Pair k) :
 lemma furediH_adj_spoke_pair_iff {k : ℕ} {i : Fin k} {p : FurediH.Pair k} :
     (furediH k).Adj (.spoke i) (.pair p) ↔ i = p.1.1 ∨ i = p.1.2 := by
   simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel]
+
+/-- The spoke vertices form an independent set. -/
+lemma furediH_isIndepSet_spokes (k : ℕ) :
+    (furediH k).IsIndepSet (Set.range (FurediH.Vertex.spoke (k := k))) := by
+  intro x hx y hy _ hadj
+  obtain ⟨i, rfl⟩ := Set.mem_range.mp hx
+  obtain ⟨j, rfl⟩ := Set.mem_range.mp hy
+  exact not_furediH_adj_spoke_spoke i j hadj
+
+/-- The pair-vertices form an independent set. -/
+lemma furediH_isIndepSet_pairs (k : ℕ) :
+    (furediH k).IsIndepSet (Set.range (FurediH.Vertex.pair (k := k))) := by
+  intro x hx y hy _ hadj
+  obtain ⟨p, rfl⟩ := Set.mem_range.mp hx
+  obtain ⟨q, rfl⟩ := Set.mem_range.mp hy
+  exact not_furediH_adj_pair_pair p q hadj
+
+/-- Neighbours of the apex are exactly the spokes. -/
+lemma furediH_neighborSet_apex (k : ℕ) :
+    (furediH k).neighborSet .apex = Set.range (FurediH.Vertex.spoke (k := k)) := by
+  ext v
+  cases v with
+  | apex =>
+      simp [mem_neighborSet, SimpleGraph.irrefl]
+  | spoke i =>
+      simp [mem_neighborSet, furediH_adj_apex_spoke]
+  | pair p =>
+      simp [mem_neighborSet, not_furediH_adj_apex_pair]
+
+/-- The apex has exactly `k` neighbours (the spokes). -/
+lemma furediH_ncard_neighborSet_apex (k : ℕ) :
+    ((furediH k).neighborSet .apex).ncard = k := by
+  rw [furediH_neighborSet_apex,
+    Set.ncard_range_of_injective (fun _ _ h ↦ FurediH.Vertex.spoke.inj h)]
+  simp [Nat.card_eq_fintype_card]
+
+/-- Each spoke is adjacent to the apex. -/
+lemma furediH_adj_spoke_apex {k : ℕ} (i : Fin k) :
+    (furediH k).Adj (.spoke i) .apex :=
+  (furediH_adj_apex_spoke i).symm
 
 end SimpleGraph
