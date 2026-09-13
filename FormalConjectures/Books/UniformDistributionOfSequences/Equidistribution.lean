@@ -67,8 +67,11 @@ theorem isEquidistributedModuloOne_three_halves_pow :
 equidistributed modulo `1`. The sequence `(3 / 2) ^ n` is lacunary, so by the theorem of
 Pollington [Pol79] and de Mathan [Mat80] the set of real numbers `x` for which `x * (3 / 2) ^ n`
 is not even dense modulo `1` has Hausdorff dimension `1`. This set is uncountable, so it contains
-transcendental numbers. By Koksma's metric theorem (Kuipers–Niederreiter, Chapter 1, Section 4),
-the sequence `x * (3 / 2) ^ n` is equidistributed modulo `1` for almost all `x`. -/
+transcendental numbers. Alternatively, an elementary nested-interval construction (see issue
+#5003) gives a Cantor set of `x` with `Int.fract (x * (3 / 2) ^ (8 * j)) ∈ [0, 1 / 10]` for all
+`j`, which already rules out equidistribution for uncountably many, hence some transcendental,
+`x`. By Koksma's metric theorem (Kuipers–Niederreiter, Chapter 1, Section 4), the sequence
+`x * (3 / 2) ^ n` is equidistributed modulo `1` for almost all `x`. -/
 @[category research solved, AMS 11]
 theorem isEquidistributedModuloOne_transcendental_three_halves_pow :
     ¬ ∀ x : ℝ, Transcendental ℚ x →
