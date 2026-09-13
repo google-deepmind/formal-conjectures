@@ -79,4 +79,16 @@ lemma card_uniqueMulProducts_le (A B : Finset ℕ) :
     _ ≤ (A.product B).card := card_image_le
     _ = A.card * B.card := card_product A B
 
+@[simp]
+lemma mem_uniqueMulProducts {A B : Finset ℕ} {m : ℕ} :
+    m ∈ uniqueMulProducts A B ↔
+      m ∈ (A.product B).image (fun p => p.1 * p.2) ∧ mulRepresentationCount A B m = 1 := by
+  simp [uniqueMulProducts]
+
+lemma mulRepresentationCount_eq_zero_iff (A B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A B m = 0 ↔ ∀ a ∈ A, ∀ b ∈ B, a * b ≠ m := by
+  classical
+  simp [mulRepresentationCount, Finset.card_eq_zero, Finset.filter_eq_empty_iff, Finset.mem_product]
+  constructor <;> intro h <;> intros <;> apply h <;> assumption
+
 end Finset
