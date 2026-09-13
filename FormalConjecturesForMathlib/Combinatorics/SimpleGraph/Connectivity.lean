@@ -18,6 +18,7 @@ module
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
+public import Mathlib.SetTheory.Cardinal.Basic
 
 @[expose] public section
 
@@ -176,4 +177,10 @@ instance decidableConnected : Decidable G.Connected :=
       fun _ _ ↦ Subsingleton.elim ..
 
 end BFS
+
+/-- A cut vertex of `G` is a vertex whose deletion strictly increases the number of connected
+components. -/
+def IsCutVertex (G : SimpleGraph V) (v : V) : Prop :=
+  Cardinal.mk G.ConnectedComponent < Cardinal.mk (G.induce ({v}ᶜ : Set V)).ConnectedComponent
+
 end SimpleGraph

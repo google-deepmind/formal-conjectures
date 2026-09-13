@@ -39,6 +39,11 @@ def Cycle.edges {G : SimpleGraph V} (c : Cycle G) : List (Sym2 V) := c.walk.edge
 /-- The length of a cycle, its number of edges. -/
 def Cycle.length {G : SimpleGraph V} (c : Cycle G) : ℕ := c.walk.length
 
+/-- The chords (also called diagonals) of a cycle: edges of `G` that join two vertices of
+the cycle and are not themselves edges of the cycle. -/
+def Cycle.chords {G : SimpleGraph V} (c : Cycle G) : Set (Sym2 V) :=
+  {e | e ∈ G.edgeSet ∧ (∀ v ∈ e, v ∈ c.walk.support) ∧ e ∉ c.edges}
+
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
 
