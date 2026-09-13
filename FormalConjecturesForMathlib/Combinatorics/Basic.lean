@@ -240,6 +240,50 @@ theorem sidonSubsetCount_mono {A B : Finset α} [DecidableEq α] (h : A ⊆ B) :
   have hC' := mem_filter.mp hC
   exact mem_filter.mpr ⟨mem_powerset.mpr ((mem_powerset.mp hC'.1).trans h), hC'.2⟩
 
+/-- Any Sidon subset `B ⊆ A` contributes `2 ^ #B` Sidon subsets of `A`. -/
+theorem two_pow_card_le_sidonSubsetCount_of_isSidon {A B : Finset α} [DecidableEq α]
+    (hBA : B ⊆ A) (hB : IsSidon (B : Set α)) :
+    2 ^ B.card ≤ sidonSubsetCount A := by
+  classical
+  have hsub : B.powerset ⊆ A.powerset.filter fun C : Finset α ↦ IsSidon (C : Set α) := by
+    intro C hC
+    exact mem_filter.mpr
+      ⟨mem_powerset.mpr ((mem_powerset.mp hC).trans hBA),
+        IsSidon.subset hB (mem_powerset.mp hC)⟩
+  calc
+    2 ^ B.card = B.powerset.card := (card_powerset B).symm
+    _ ≤ (A.powerset.filter fun C : Finset α ↦ IsSidon (C : Set α)).card := card_le_card hsub
+    _ = sidonSubsetCount A := rfl
+
+lemma IsSidon.singleton (a : α) : IsSidon ({a} : Set α) := by
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+  simp only [Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
+  subst hi₁; subst hj₁; subst hi₂; subst hj₂
+  exact Or.inl ⟨rfl, rfl⟩
+
+@[simp]
+theorem maxSidonSubsetCard_singleton [DecidableEq α] (a : α) :
+    maxSidonSubsetCard ({a} : Finset α) = 1 := by
+  classical
+  refine le_antisymm (maxSidonSubsetCard_le_card _) ?_
+  have h : ({a} : Finset α) ∈ ({a} : Finset α).powerset.filter fun B : Finset α ↦
+      IsSidon (B : Set α) :=
+    mem_filter.mpr ⟨mem_powerset_self _, by simpa using IsSidon.singleton a⟩
+  exact le_sup (f := Finset.card) h
+
+@[simp]
+theorem sidonSubsetCount_singleton [DecidableEq α] (a : α) :
+    sidonSubsetCount ({a} : Finset α) = 2 := by
+  classical
+  have hEmpty : IsSidon ((∅ : Finset α) : Set α) := by simp [IsSidon]
+  have ha : IsSidon (({a} : Finset α) : Set α) := by simpa using IsSidon.singleton a
+  have hp : ({a} : Finset α).powerset = {∅, {a}} := by
+    ext x
+    simp [mem_powerset, subset_singleton_iff]
+  have hne : (∅ : Finset α) ≠ {a} := Ne.symm (singleton_ne_empty a)
+  simp only [sidonSubsetCount, hp, filter_insert, if_pos hEmpty, filter_singleton, if_pos ha]
+  rw [card_insert_of_notMem (by simp [hne]), card_singleton]
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
