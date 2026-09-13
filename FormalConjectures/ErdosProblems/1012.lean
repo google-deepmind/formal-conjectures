@@ -56,6 +56,11 @@ threshold is already at least $1$, so the implication would hold vacuously.
 noncomputable def f (k : ℕ) : ℕ :=
   sInf {N : ℕ | 0 < N ∧ ∀ n ≥ N, ForcesCycle k n}
 
+/-- If some positive `N` forces an `(n-k)`-cycle for every `n ≥ N`, then `f k ≤ N`. -/
+@[category API, AMS 5]
+lemma f_le {k N : ℕ} (hN : 0 < N) (h : ∀ n ≥ N, ForcesCycle k n) : f k ≤ N :=
+  Nat.sInf_le ⟨hN, h⟩
+
 /--
 Let $k\geq 0$. Let $f(k)$ be such that every graph on $n\geq f(k)$ vertices with at least
 $\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle on $n-k$ vertices. Determine or
@@ -64,6 +69,8 @@ estimate $f(k)$.
 Woodall [Wo72] proved that every graph on $n\geq 2k+3$ vertices with at least
 $\binom{n-k-1}{2}+\binom{k+2}{2}+1$ edges contains a cycle on $l$ vertices for all
 $3\leq l\leq n-k$. This settles this question completely.
+
+The inequality is `f_le` at `N = 2k+3`, using Woodall specialised to `l = n-k`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1012 (k : ℕ) : f k ≤ 2 * k + 3 := by
@@ -110,5 +117,16 @@ theorem erdos_1012.variants.woodall (k n : ℕ) (G : SimpleGraph (Fin n))
 theorem erdos_1012.variants.ore_threshold (n : ℕ) :
     edgeThreshold 0 n = (n - 1).choose 2 + 2 := by
   simp [edgeThreshold, Nat.choose_self]
+
+/-- Bondy's edge count $\binom{n-2}{2}+4$ is the $k=1$ case of the general threshold. -/
+@[category test, AMS 5]
+theorem erdos_1012.variants.edgeThreshold_one {n : ℕ} (hn : 2 ≤ n) :
+    edgeThreshold 1 n = (n - 2).choose 2 + 4 := by
+  have hsub : n - 1 - 1 = n - 2 := by
+    have := hn
+    omega
+  have hfour : (3).choose 2 + 1 = 4 := rfl
+  unfold edgeThreshold
+  rw [hsub, show (1 + 2) = 3 from rfl, Nat.add_assoc, hfour]
 
 end Erdos1012
