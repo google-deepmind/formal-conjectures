@@ -21,7 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [Erdős Problem 1092](https://www.erdosproblems.com/1092)
-- [Ro82] V. Rödl, *On the chromatic number of subgraphs of a given graph*, Proc. Amer. Math. Soc. **85** (1982), 382–386
+- [Ro82] V. Rödl, *Nearly bipartite graphs with large chromatic number*, Combinatorica **2** (1982),
+  377–383.
 -/
 
 namespace Erdos1092
