@@ -67,6 +67,17 @@ lemma HasOddCycleWithChords.zero_iff {G : SimpleGraph V} :
     HasOddCycleWithChords G 0 ↔ ∃ c : Cycle G, Odd c.length :=
   ⟨fun ⟨c, hodd, _⟩ ↦ ⟨c, hodd⟩, fun ⟨c, hodd⟩ ↦ ⟨c, hodd, bot_le⟩⟩
 
+/-- Chords are never edges of the underlying cycle walk. -/
+lemma Cycle.not_mem_edges_of_mem_chords {G : SimpleGraph V} {c : Cycle G} {e : Sym2 V}
+    (he : e ∈ c.chords) : e ∉ c.edges :=
+  (mem_chords.mp he).2.2
+
+/-- The set of chords is disjoint from the set of cycle edges. -/
+lemma Cycle.chords_disjoint_edges {G : SimpleGraph V} (c : Cycle G) :
+    Disjoint c.chords {e | e ∈ c.edges} := by
+  refine Set.disjoint_left.2 fun e he ↦ ?_
+  simp [not_mem_edges_of_mem_chords he]
+
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
 
