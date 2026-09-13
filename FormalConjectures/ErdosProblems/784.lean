@@ -113,4 +113,10 @@ theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (hC1 : C < 1) :
     ∀ᶠ x : ℕ in atTop, (1 - C) * x ≤ H C x := by
   sorry
 
+/-- Sieving by `{1}` empties `{1, …, x}`; this motivates excluding `1` from admissible `A` in `H`. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.sieving_by_one (x : ℕ) :
+    avoidsDivisors ({1} : Finset ℕ) x = ∅ :=
+  avoidsDivisors_eq_empty_of_one_mem (by simp) x
+
 end Erdos784

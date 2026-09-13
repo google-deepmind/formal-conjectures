@@ -35,4 +35,24 @@ lemma avoidsDivisors_empty (x : ℕ) :
     avoidsDivisors ∅ x = Icc 1 x := by
   simp [avoidsDivisors]
 
+/-- Enlarging the divisor set can only shrink the set of unsieved integers. -/
+lemma avoidsDivisors_mono {A B : Finset ℕ} (h : A ⊆ B) (x : ℕ) :
+    avoidsDivisors B x ⊆ avoidsDivisors A x := by
+  intro m hm
+  simp only [mem_avoidsDivisors] at hm ⊢
+  exact ⟨hm.1, fun a ha ↦ hm.2 a (h ha)⟩
+
+/-- If `1 ∈ A`, then every `m` is divisible by an element of `A`, so nothing survives. -/
+lemma avoidsDivisors_eq_empty_of_one_mem {A : Finset ℕ} (h : 1 ∈ A) (x : ℕ) :
+    avoidsDivisors A x = ∅ := by
+  refine eq_empty_of_forall_notMem fun m hm ↦ ?_
+  have hA : ∀ a ∈ A, ¬a ∣ m := (mem_avoidsDivisors.mp hm).2
+  exact hA 1 h (one_dvd m)
+
+/-- The unsieved set is a subset of `{1, …, x}`, so its cardinality is at most `x`. -/
+lemma card_avoidsDivisors_le (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card ≤ x := by
+  have hsub : avoidsDivisors A x ⊆ Icc 1 x := filter_subset _ _
+  exact (card_le_card hsub).trans (by simp [Nat.card_Icc])
+
 end Finset
