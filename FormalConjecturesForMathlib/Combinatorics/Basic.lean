@@ -284,6 +284,48 @@ theorem sidonSubsetCount_singleton [DecidableEq α] (a : α) :
   simp only [sidonSubsetCount, hp, filter_insert, if_pos hEmpty, filter_singleton, if_pos ha]
   rw [card_insert_of_notMem (by simp [hne]), card_singleton]
 
+/-- The empty set is Sidon. -/
+lemma IsSidon.empty : IsSidon (∅ : Set α) := by
+  simp [IsSidon]
+
+/-- If `A` itself is Sidon, the largest Sidon subset has size `#A`. -/
+theorem maxSidonSubsetCard_eq_card [DecidableEq α] {A : Finset α}
+    (hA : IsSidon (A : Set α)) : maxSidonSubsetCard A = A.card := by
+  classical
+  refine le_antisymm (maxSidonSubsetCard_le_card _) ?_
+  have h : A ∈ A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α) :=
+    mem_filter.mpr ⟨mem_powerset_self _, hA⟩
+  exact le_sup (f := Finset.card) h
+
+/-- If `A` itself is Sidon, every subset is Sidon, so there are `2 ^ #A` Sidon subsets. -/
+theorem sidonSubsetCount_eq_two_pow_card [DecidableEq α] {A : Finset α}
+    (hA : IsSidon (A : Set α)) : sidonSubsetCount A = 2 ^ A.card := by
+  classical
+  have hEq : A.powerset.filter (fun B : Finset α ↦ IsSidon (B : Set α)) = A.powerset := by
+    ext B
+    simp only [mem_filter, mem_powerset]
+    exact ⟨And.left, fun hBA ↦ ⟨hBA, IsSidon.subset hA hBA⟩⟩
+  simp [sidonSubsetCount, hEq, card_powerset]
+
+/-- If `A` is Sidon then `maxSidonSubsetCard` and `sidonSubsetCount` attain the trivial upper bounds. -/
+theorem maxSidonSubsetCard_eq_card_iff_isSidon [DecidableEq α] (A : Finset α)
+    [Decidable (IsSidon (A : Set α))] :
+    maxSidonSubsetCard A = A.card ↔ IsSidon (A : Set α) := by
+  classical
+  constructor
+  · intro h
+    -- a max-size Sidon subset of size #A must be A itself
+    let S := A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)
+    have hS : S.Nonempty := ⟨∅, by simp [S, IsSidon]⟩
+    obtain ⟨B, hB, hBcard⟩ := exists_mem_eq_sup S hS Finset.card
+    have hB' := mem_filter.mp hB
+    have hcard : B.card = A.card := by
+      rw [← h, ← hBcard]; rfl
+    have hBA : B ⊆ A := mem_powerset.mp hB'.1
+    have hBA_eq : B = A := eq_of_subset_of_card_le hBA (by omega)
+    exact hBA_eq ▸ hB'.2
+  · exact maxSidonSubsetCard_eq_card
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
