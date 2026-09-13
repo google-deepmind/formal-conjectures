@@ -1,4 +1,4 @@
-/-
+/*
 Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--/
+-*/
 
 import FormalConjecturesUtil
 
@@ -173,7 +173,7 @@ def r (α : ℝ) : ℝ :=
   else if α ≤ π / 2 - θ then
     A + α - φ
   else if α ≤ π / 2 - φ then
-    B - (π / 2 - α - φ) * (1 + A) / 2 - (π / 2 - α - φ) ^ 2 / 4
+    B - (π / 2 - α - φ) * (1 + A) / 2 - (π / 2 - α - φ)^2 / 4
   else
     0
 
@@ -196,6 +196,12 @@ end GerversSofa
 /-- Gerver's sofa is the sofa according to the rotation path `GerversSofa.p`. -/
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
+
+/-- Gerver's concrete sofa admits a valid hallway motion. -/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0"]
+theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
+  sorry
 
 open MeasureTheory
 open scoped ENNReal
