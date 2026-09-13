@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Data.Nat.Nth
+public import Mathlib.Data.Real.Basic
 public import Mathlib.NumberTheory.Divisors
 
 @[expose] public section
@@ -33,6 +34,12 @@ enumeration of its divisors. -/
 lemma nth_divisors_zero {n : ℕ} (hn : n ≠ 0) : Nat.nth (· ∈ n.divisors) 0 = 1 := by
   rw [Nat.nth_zero]
   exact IsLeast.csInf_eq ⟨Nat.one_mem_divisors.mpr hn, fun y hy => Nat.pos_of_mem_divisors hy⟩
+
+/-- The ratio `d_{i+1}/d_i` of consecutive divisors of `n` in increasing order (0-indexed).
+
+Takes a junk value if `i + 1` is not a valid index in `n.divisors`. -/
+noncomputable def consecutiveDivisorRatio (n i : ℕ) : ℝ :=
+  (nth (· ∈ n.divisors) (i + 1) : ℝ) / nth (· ∈ n.divisors) i
 
 /-- Every divisor enumerated after index `0` is at least `2`. -/
 lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)

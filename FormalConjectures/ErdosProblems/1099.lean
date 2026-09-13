@@ -32,23 +32,14 @@ open scoped Topology
 
 namespace Erdos1099
 
-/-- The ordered list of positive divisors of `n`. -/
-def orderedDivisors (n : ℕ) : List ℕ :=
-  n.divisors.sort (· ≤ ·)
-
-/-- Consecutive ratios minus one: for $d_1<\cdots<d_k$, the list
-$(d_2/d_1-1,\ldots,d_k/d_{k-1}-1)$. Empty when `n` has fewer than two divisors. -/
-noncomputable def consecutiveRatioGaps : List ℕ → List ℝ
-  | a :: b :: rest => ((b : ℝ) / a - 1) :: consecutiveRatioGaps (b :: rest)
-  | _ => []
-
-/-- $h_\alpha(n)=\sum_i (d_{i+1}/d_i-1)^\alpha$ over consecutive divisors of $n$. -/
+/-- $h_\alpha(n)=\sum_i (d_{i+1}/d_i-1)^\alpha$ over consecutive divisors of $n$, using the
+increasing enumeration `Nat.nth (· ∈ n.divisors)` from ForMathlib. -/
 noncomputable def h (α : ℝ) (n : ℕ) : ℝ :=
-  (consecutiveRatioGaps (orderedDivisors n)).map (fun t ↦ t ^ α) |>.sum
+  ∑ i ∈ range (n.divisors.card - 1), (n.consecutiveDivisorRatio i - 1) ^ α
 
 /-- $\sum_i d_{i+1}/d_i$. -/
 noncomputable def sumConsecutiveRatios (n : ℕ) : ℝ :=
-  (consecutiveRatioGaps (orderedDivisors n)).map (fun t ↦ t + 1) |>.sum
+  ∑ i ∈ range (n.divisors.card - 1), n.consecutiveDivisorRatio i
 
 /--
 Let $1=d_1<\cdots<d_{\tau(n)}=n$ be the divisors of $n$, and for $\alpha>1$ let
@@ -120,6 +111,6 @@ theorem erdos_1099.variants.sum_ratios :
 /-- $h_\alpha(1)=0$ (a single divisor, empty sum). -/
 @[category test, AMS 11]
 theorem erdos_1099.variants.h_one (α : ℝ) : h α 1 = 0 := by
-  simp [h, orderedDivisors, consecutiveRatioGaps]
+  simp [h, Nat.divisors_one]
 
 end Erdos1099
