@@ -121,9 +121,12 @@ theorem erdos_1074.variants.PillaiPrimes_init :
   sorry
 
 /-- Regarding the first question, Hardy and Subbarao computed all EHS numbers up to $2^{10}$, and
-write "...if this trend conditions we expect [the limit] to be around 0.5, if it exists." -/
+write "...if this trend conditions we expect [the limit] to be around 0.5, if it exists. The
+frequency with which the EHS numbers occur - most often in long sequences of consecutive integers -
+makes us believe that their asymptotic density exists and is unity. Erdős, though initially
+hesitant, later agreed with this view." That is, the conjecture is that $S$ has density $1$. -/
 @[category research open, AMS 11]
-theorem erdos_1074.variants.EHSNumbers_one_half : EHSNumbers.HasDensity (1 / 2) := by
+theorem erdos_1074.variants.EHSNumbers_one : EHSNumbers.HasDensity 1 := by
   sorry
 
 end Erdos1074
