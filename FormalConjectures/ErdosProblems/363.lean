@@ -54,7 +54,7 @@ many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rver
 $1\leq i\leq n$ such that$$\prod_{1\leq i\leq n}\prod_{m\in I_i}m$$is a square?
 
 The number of intervals and their sizes are fixed: the list `ks` of sizes determines both. Without
-this restriction, finiteness fails for a trivial reason (Skałba, see [Ul05]).
+this restriction finiteness fails, by a result of Skałba (see [Ul05]).
 
 This is false: Ulas [Ul05] constructed infinitely many such collections with $n = 4$ and
 $k_1 = \cdots = k_4 = 4$.
