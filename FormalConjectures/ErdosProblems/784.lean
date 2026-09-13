@@ -34,13 +34,9 @@ import FormalConjecturesUtil
   No. 63, 32.
 -/
 
-open Filter Asymptotics Real
+open Filter Asymptotics Real Finset
 
 namespace Erdos784
-
-/-- The integers in $\{1,\ldots,x\}$ not divisible by any element of $A$. -/
-def avoidsDivisors (A : Finset ℕ) (x : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 x).filter (fun m => ∀ a ∈ A, ¬ a ∣ m)
 
 /--
 $H_C(x)$ is the minimum of $\#\{ m\leq x : a\nmid m\textrm{ for all }a\in A\}$ as $A$ ranges over
