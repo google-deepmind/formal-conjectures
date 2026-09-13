@@ -60,4 +60,13 @@ lemma uniqueMulProducts_singleton (a b : ℕ) :
     uniqueMulProducts {a} {b} = {a * b} := by
   simp [uniqueMulProducts, mulRepresentationCount_singleton]
 
+lemma mulRepresentationCount_le_card (A B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A B m ≤ A.card * B.card := by
+  simpa [mulRepresentationCount, card_product] using
+    card_filter_le (A.product B) (fun p => p.1 * p.2 = m)
+
+lemma uniqueMulProducts_subset_image (A B : Finset ℕ) :
+    uniqueMulProducts A B ⊆ (A.product B).image (fun p => p.1 * p.2) :=
+  filter_subset _ _
+
 end Finset
