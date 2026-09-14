@@ -61,7 +61,37 @@ structure ThreeUniformHypergraph (V : Type) where
   /-- Every hyperedge has exactly 3 vertices. -/
   uniform : ∀ e ∈ edges, e.card = 3
 
+/-- A finite family `H` of vertex sets is *3-uniform* if every edge has exactly `3` vertices.
+This is the `Finset`-of-`Finset`s presentation; `ThreeUniformHypergraph.ofFinset` turns such a
+family into a `ThreeUniformHypergraph`. -/
+def Finset.IsThreeUniform {V : Type*} (H : Finset (Finset V)) : Prop := ∀ e ∈ H, e.card = 3
+
+/-- `H.ContainsSubgraph m k` holds when some set of `m` vertices spans at least `k` edges of the
+family `H`. -/
+def Finset.ContainsSubgraph {V : Type*} [DecidableEq V] (H : Finset (Finset V)) (m k : ℕ) : Prop :=
+  ∃ S : Finset V, S.card = m ∧ k ≤ (Finset.filter (fun e : Finset V => e ⊆ S) H).card
+
 namespace ThreeUniformHypergraph
+
+/-- The `ThreeUniformHypergraph` given by a 3-uniform finite family of edges. -/
+def ofFinset {V : Type} (H : Finset (Finset V)) (hH : Finset.IsThreeUniform H) :
+    ThreeUniformHypergraph V where
+  edges := (H : Set (Finset V))
+  uniform := hH
+
+@[simp]
+theorem mem_edges_ofFinset {V : Type} {H : Finset (Finset V)} {hH : Finset.IsThreeUniform H}
+    {e : Finset V} : e ∈ (ofFinset H hH).edges ↔ e ∈ H := Finset.mem_coe
+
+/-- A finite set of vertices `S` spans a *complete subgraph* of `H` when every 3-element subset
+of `S` is an edge of `H`. -/
+def IsCompleteSubgraph {V : Type} (H : ThreeUniformHypergraph V) (S : Finset V) : Prop :=
+  ∀ e : Finset V, e ⊆ S → e.card = 3 → e ∈ H.edges
+
+/-- The set of sizes of the cliques (maximal complete subgraphs) of `H`. -/
+def cliqueSizes {V : Type} (H : ThreeUniformHypergraph V) : Set ℕ :=
+  { k | ∃ S : Finset V, Maximal (IsCompleteSubgraph H) S ∧ S.card = k }
+
 
 /-- A **proper coloring** of a 3-uniform hypergraph `H` by a color type `C` is a vertex
 coloring such that no hyperedge is monochromatic (all three vertices receive the same color). -/

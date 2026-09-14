@@ -92,14 +92,11 @@ The box product of two triangles is an example with 9 vertices satisfying the co
 and it is also isomorphic to it and to the Paley graph and the graph of the
 3-3 duoprism)
 -/
-def Conway9 := (completeGraph (Fin 3)) □ (completeGraph (Fin 3))
+abbrev Conway9 := completeGraph (Fin 3) □ completeGraph (Fin 3)
 
 @[category test, AMS 5]
 theorem conway9_nonEdgesAreDiagonals : NonEdgesAreDiagonals Conway9 := by
   simp only [NonEdgesAreDiagonals]
-  have : ∀ i, Fintype ↑(Conway9.neighborSet i) := by
-    intro i
-    exact Fintype.ofFinite ↑(Conway9.neighborSet i)
   have : ∀ i j, ((Conway9.neighborFinset i) ∩ Conway9.neighborFinset j).card =
     (Conway9.neighborSet i ∩ Conway9.neighborSet j).ncard := by
     simp only [neighborFinset]

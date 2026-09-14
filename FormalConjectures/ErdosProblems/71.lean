@@ -46,7 +46,7 @@ as the existence of an even element. The average degree of a finite simple graph
 `SimpleGraph.averageDegree`, i.e. $(\sum_v \deg v)/|V| \in \mathbb{Q}$, and a cycle whose
 length is in $P$ is a cycle walk `w` with `w.length ∈ P`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/71/Erdos71.lean"]
 theorem erdos_71 : answer(True) ↔
     ∀ P : Set ℕ, P.IsAPOfLength ⊤ → (∃ n ∈ P, Even n) →
       ∃ c : ℚ, ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)

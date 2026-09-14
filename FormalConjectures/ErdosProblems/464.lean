@@ -77,7 +77,7 @@ This problem has consequences for [894](https://www.erdosproblems.com/894).
 The conclusion "$\{\|\theta n_k\|\}$ is not dense in $[0,1]$" is formalized as the sequence
 $(\theta n_k)$ not being dense modulo one; see the formalization notes above.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/464/Erdos464.lean"]
 theorem erdos_464 : answer(True) ↔
     ∀ n : ℕ → ℕ, StrictMono n → (∀ k, 0 < n k) → IsLacunary n →
       ∃ θ : ℝ, Irrational θ ∧

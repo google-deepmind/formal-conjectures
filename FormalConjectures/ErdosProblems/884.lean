@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
 # Erdős Problem 884
@@ -50,9 +49,9 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
- \frac{1}{d_{i + 1} - d_i}) \right)$?
+ \frac{1}{d_{i + 1} - d_i} \right)$?
 
 This conjecture has been **disproved**:
 - In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
@@ -68,9 +67,9 @@ in increasing order.
 Does it hold that
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \ll 1 + \sum_{1 \le i < \tau(n)}
  \frac{1}{d_{i + 1} - d_i}$
-for $n \to \infty`, i.e.
+for $n \to \infty$, i.e.
 $\sum_{1 \le i < j \le \tau(n)} \frac{1}{d_j - d_i} \in O \left( 1 + \sum_{1 \le i < \tau(n)}
- \frac{1}{d_{i + 1} - d_i}) \right)$?
+ \frac{1}{d_{i + 1} - d_i} \right)$?
 
 This conjecture has been **disproved**:
 - In September 2025, Terence Tao gave a conditional _negative_ answer assuming the prime tuples
@@ -80,25 +79,28 @@ This conjecture has been **disproved**:
 
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/884/Erdos884.lean"]
 theorem erdos_884 :
     answer(False) ↔ Erdos884Prop := by
   sorry
 
 /--
-In September 2025, Terence Tao gave a conditional _negative_ answer to Erdos conjecture 884,
-disproving it under the assumption of the *Qualitative Hardy-Littlewood Conjecture*.
-See [here](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf).
-The *qualitative* version of the conjecture only states that there are infinitely many tuples
-of primes and does not require any asymptotical bounds and as such is a corollary of the general
-form of the Hardy-Littlewood Conjecture.
-We state the 'weaker' implication using general Hardy-Littlewood here, since this conjecture is
-already formalized.
+In September 2025, Terence Tao gave a conditional _negative_ answer to Erdős problem 884,
+disproving it under the assumption of the *qualitative Hardy–Littlewood prime tuples
+conjecture*, see Conjecture 1.1 and Theorem 1.1 of
+[Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf).
+
+The qualitative conjecture states that for every admissible tuple $(h_1, \dotsc, h_k)$ of
+integers, i.e. one which avoids at least one residue class modulo $p$ for every prime $p$,
+there are infinitely many natural numbers $n$ such that $n + h_1, \dotsc, n + h_k$ are all
+prime. Unlike the full Hardy–Littlewood conjecture, it does not give an asymptotic for the
+number of such $n$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_884_false_of_hardy_littlewood :
-    ∀ (k : ℕ) (m : Fin k.succ → ℕ), HardyLittlewood.FirstHardyLittlewoodConjectureFor m
-    → ¬Erdos884Prop := by
+theorem erdos_884_false_of_hardy_littlewood
+    (hHL : ∀ H : Finset ℤ, (∀ p : ℕ, p.Prime → ∃ a : ℤ, ∀ h ∈ H, ¬ (p : ℤ) ∣ a + h) →
+      {n : ℕ | ∀ h ∈ H, Prime ((n : ℤ) + h)}.Infinite) :
+    ¬Erdos884Prop := by
   sorry
 
 end Erdos884

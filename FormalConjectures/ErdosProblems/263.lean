@@ -28,15 +28,31 @@ open scoped Topology
 namespace Erdos263
 
 /--
-We call a sequence $a_n$ of positive integers an _irrationality sequence_
-if for any sequence $b_n$ of positive integers with $\frac{a_n}{b_n} \to 1$ as $n \to \infty$,
+We call a **strictly increasing** sequence $a_n$ of positive integers an
+_irrationality sequence_ if for any sequence $b_n$ of positive integers with
+$\frac{a_n}{b_n} \to 1$ as $n \to \infty$,
 the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
+
+Note: erdosproblems.com/263 was corrected on 2026-04-02 to require the sequence
+to be increasing; the pre-correction statement (no monotonicity hypothesis) had a
+counterexample to Q2 that is not increasing (see `erdos_263.parts.ii` below).
 
 Note: This is one of many possible notions of "irrationality sequences". See
 FormalConjectures/ErdosProblems/264.lean for another possible definition.
 -/
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   (∀ n : ℕ, a n > 0) ∧
+    StrictMono a ∧
+    (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
+      atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
+      Irrational (∑' n, 1 / (b n : ℝ)))
+
+/-- The nondecreasing version of `IsIrrationalitySequence`, as used by Koizumi [Ko25]: the sequence
+is positive and nondecreasing, and every positive sequence asymptotic to it has irrational
+reciprocal sum. -/
+def IsWeakIrrationalitySequence (a : ℕ → ℕ) : Prop :=
+  (∀ n : ℕ, a n > 0) ∧
+    Monotone a ∧
     (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
       atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
       Irrational (∑' n, 1 / (b n : ℝ)))
@@ -51,10 +67,16 @@ theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : �
 /--
 Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
-Answer: false.
+
+Note: this was answered **false** for the *pre-correction* statement, which did not
+require monotonicity — the counterexample sequence is not increasing. The problem
+was corrected on erdosproblems.com on 2026-04-02 to require increasing sequences;
+for the corrected statement this question is **open**. The earlier formal proof
+(for the pre-correction definition) is preserved at
+https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298"]
-theorem erdos_263.parts.ii : answer(False) ↔
+@[category research open, AMS 11]
+theorem erdos_263.parts.ii : answer(sorry) ↔
     ∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
         atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
@@ -91,7 +113,8 @@ On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisf
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
 by the above folklore result `erdos_263.variants.folklore`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/arex1337/erdos-263-lean/blob/95de79a5cd49050df80e95be6cfc161580830799/Erdos263/Folklore.lean#L700"]
 theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : StrictMono a)
@@ -101,15 +124,34 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
   sorry
 
 /--
+The same folklore result with the growth hypothesis stated as an eventual lower bound
+$a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
+`erdos_263.variants.super_doubly_exponential`, this form also covers sequences such as
+$a_n = 2^{(n+1)!}$, for which the ratio $a_{n+1} / a_n^{2+\varepsilon}$ tends to $+\infty$ and the
+real `liminf` defaults to $0$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_263.variants.super_doubly_exponential_eventual (a : ℕ → ℕ)
+    (ha : ∀ n : ℕ, a n > 0)
+    (ha' : StrictMono a)
+    (ha'' : ∃ ε c : ℝ, 0 < ε ∧ 0 < c ∧
+      ∀ᶠ n in atTop, c * (a n : ℝ) ^ (2 + ε) ≤ (a (n + 1) : ℝ)) :
+    IsIrrationalitySequence a := by
+  sorry
+
+/--
 Koizumi [Ko25] showed that $a_n = \lfloor \alpha^{2^n} \rfloor$ is an irrationality sequence
-for all but countably many $\alpha > 1$.
+for all but countably many $\alpha > 1$, in the nondecreasing sense `IsWeakIrrationalitySequence`.
+The strictly increasing predicate would fail on the whole interval $1 < \alpha < 4/3$, where
+$a_0 = a_1 = 1$.
 
 [Ko25] Koizumi, J., Irrationality of the reciprocal sum of doubly exponential sequences,
        arXiv:2504.05933 (2025).
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.doubly_exponential_all_but_countable :
-    ∀ᶠ (α : ℝ) in .cocountable, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
+    ∀ᶠ (α : ℝ) in .cocountable, α > 1 →
+      IsWeakIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
   sorry
 
 end Erdos263

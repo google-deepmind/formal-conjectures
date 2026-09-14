@@ -37,10 +37,10 @@ structure Candidate (n : ℕ) where
   Γ : Type
   Λ : Type
   Γ_fintype : Fintype Γ
-  Γ_card : Fintype.card Γ = n
+  Γ_card : Fintype.card Γ = 2
   Γ_inhabited : Inhabited Γ
   Λ_fintype : Fintype Λ
-  Λ_card : Fintype.card Λ = 2
+  Λ_card : Fintype.card Λ = n
   Λ_inhabited : Inhabited Λ
   M : Machine Γ Λ
   M_isHalting : M.IsHalting
@@ -62,7 +62,7 @@ To compute `BB n`, we need only consider machines with states and symbols indexe
 -/
 @[category API, AMS 3]
 theorem sanity_check (n : ℕ) [NeZero n] :
-    BB n = sSup {N | ∃ (M : Machine (Fin n) (Fin 2)) (_ : M.IsHalting),
+    BB n = sSup {N | ∃ (M : Machine (Fin 2) (Fin n)) (_ : M.IsHalting),
       M.haltingNumber = N} := by
   sorry
 

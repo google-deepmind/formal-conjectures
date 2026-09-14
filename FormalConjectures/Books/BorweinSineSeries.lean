@@ -46,7 +46,7 @@ conditional on such an irrationality measure of pi (cf https://arxiv.org/abs/191
 -/
 @[category research solved, formal_proof using lean4 at "https://github.com/AxiomMath/gdm-formal-conjectures/blob/main/BorweinSineSeries/solution.lean",  AMS 26 40]
 theorem borwein_sine_series :
-    answer(sorry) ↔
+    answer(True) ↔
       Summable fun n : ℕ+ ↦ ((2 / 3 + 1 / 3 * Real.sin (n : ℝ)) ^ (n : ℕ)) / (n : ℝ) := by
   sorry
 
