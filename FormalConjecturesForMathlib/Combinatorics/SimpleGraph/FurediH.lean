@@ -17,12 +17,15 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Order.Interval.Finset.Basic
 public import Mathlib.Order.Interval.Finset.Fin
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Fintype.Sum
 public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Data.Set.Card
 
 @[expose] public section
@@ -56,8 +59,20 @@ def FurediH.Vertex.equivSum (k : ℕ) :
   left_inv := by rintro (_ | _ | _) <;> rfl
   right_inv := by rintro (_ | _ | _) <;> rfl
 
+@[simp] lemma FurediH.Vertex.equivSum_symm_inl (k : ℕ) (u : Unit) :
+    (FurediH.Vertex.equivSum k).symm (.inl u) = .apex := rfl
+
+@[simp] lemma FurediH.Vertex.equivSum_symm_inr_inl (k : ℕ) (i : Fin k) :
+    (FurediH.Vertex.equivSum k).symm (.inr (.inl i)) = .spoke i := rfl
+
+@[simp] lemma FurediH.Vertex.equivSum_symm_inr_inr (k : ℕ) (p : FurediH.Pair k) :
+    (FurediH.Vertex.equivSum k).symm (.inr (.inr p)) = .pair p := rfl
+
 instance {k : ℕ} : Fintype (FurediH.Vertex k) :=
   Fintype.ofEquiv _ (FurediH.Vertex.equivSum k).symm
+
+instance {k : ℕ} : DecidableEq (FurediH.Vertex k) := fun a b => by
+  cases a <;> cases b <;> simp <;> infer_instance
 
 /-- The number of pair-vertices of $H_k$ is $\binom{k}{2}$. -/
 @[simp]
@@ -81,12 +96,25 @@ def FurediH.adjRel {k : ℕ} : FurediH.Vertex k → FurediH.Vertex k → Prop
   | .spoke a, .pair p => a = p.1.1 ∨ a = p.1.2
   | _, _ => False
 
+instance {k : ℕ} : DecidableRel (FurediH.adjRel (k := k)) := fun a b => by
+  cases a <;> cases b <;> dsimp [FurediH.adjRel] <;> infer_instance
+
 /--
 Füredi's graph $H_k$: vertices $x,y_1,\ldots,y_k$ and $z_{ij}$ for $i<j$, with $x$ adjacent to every
 $y_i$ and each pair $y_i,y_j$ adjacent to the unique vertex $z_{ij}$.
 -/
 def furediH (k : ℕ) : SimpleGraph (FurediH.Vertex k) :=
   fromRel (FurediH.adjRel (k := k))
+
+instance {k : ℕ} : DecidableRel (furediH k).Adj :=
+  inferInstanceAs (DecidableRel (fromRel (FurediH.adjRel (k := k))).Adj)
+
+noncomputable instance {k : ℕ} (v : FurediH.Vertex k) :
+    Fintype ((furediH k).neighborSet v) :=
+  inferInstance
+
+noncomputable instance {k : ℕ} : Fintype (furediH k).edgeSet :=
+  inferInstance
 
 /-- The apex is adjacent to every spoke. -/
 lemma furediH_adj_apex_spoke {k : ℕ} (i : Fin k) :
@@ -185,7 +213,7 @@ lemma furediH_neighborSet_pair {k : ℕ} (p : FurediH.Pair k) :
       simp [mem_neighborSet, this]
   | spoke i =>
       simp [mem_neighborSet, (furediH k).adj_comm (.pair p) (.spoke i),
-        furediH_adj_spoke_pair_iff, eq_comm]
+        furediH_adj_spoke_pair_iff]
   | pair q =>
       simp [mem_neighborSet, not_furediH_adj_pair_pair]
 
@@ -259,5 +287,58 @@ lemma furediH_ncard_neighborSet_spoke {k : ℕ} (i : Fin k) :
     Set.ncard_image_of_injective _ hinj, furediH_ncard_pairs_incident]
   have : (i : ℕ) < k := i.isLt
   omega
+
+lemma furediH_degree_eq_ncard_neighborSet {k : ℕ} (v : FurediH.Vertex k) :
+    (furediH k).degree v = ((furediH k).neighborSet v).ncard := by
+  simp [degree, neighborFinset_def, Set.ncard_eq_toFinset_card']
+
+lemma furediH_degree_apex (k : ℕ) : (furediH k).degree .apex = k := by
+  rw [furediH_degree_eq_ncard_neighborSet, furediH_ncard_neighborSet_apex]
+
+lemma furediH_degree_spoke {k : ℕ} (i : Fin k) :
+    (furediH k).degree (.spoke i) = k := by
+  rw [furediH_degree_eq_ncard_neighborSet, furediH_ncard_neighborSet_spoke]
+
+lemma furediH_degree_pair {k : ℕ} (p : FurediH.Pair k) :
+    (furediH k).degree (.pair p) = 2 := by
+  rw [furediH_degree_eq_ncard_neighborSet, furediH_ncard_neighborSet_pair]
+
+lemma two_mul_choose_two (k : ℕ) : 2 * Nat.choose k 2 = k * (k - 1) := by
+  rw [Nat.choose_two_right]
+  exact Nat.mul_div_cancel' (even_iff_two_dvd.mp (Nat.even_mul_pred_self k))
+
+/-- $H_k$ has exactly $k^2$ edges. -/
+theorem furediH_card_edgeFinset (k : ℕ) : (furediH k).edgeFinset.card = k ^ 2 := by
+  classical
+  have hsum :
+      ∑ v : FurediH.Vertex k, ((furediH k).neighborSet v).ncard =
+        2 * (furediH k).edgeFinset.card := by
+    simpa [furediH_degree_eq_ncard_neighborSet] using
+      (furediH k).sum_degrees_eq_twice_card_edges
+  rw [Fintype.sum_equiv (FurediH.Vertex.equivSum k)
+      (fun v => ((furediH k).neighborSet v).ncard)
+      (fun x => ((furediH k).neighborSet ((FurediH.Vertex.equivSum k).symm x)).ncard)
+      (fun v => by rw [Equiv.symm_apply_apply])] at hsum
+  simp only [Fintype.sum_sum_type, FurediH.Vertex.equivSum_symm_inl,
+    FurediH.Vertex.equivSum_symm_inr_inl, FurediH.Vertex.equivSum_symm_inr_inr] at hsum
+  simp_rw [furediH_ncard_neighborSet_apex, furediH_ncard_neighborSet_spoke,
+    furediH_ncard_neighborSet_pair] at hsum
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_punit, Fintype.card_fin,
+    FurediH.card_pair, nsmul_eq_mul, Nat.cast_id] at hsum
+  rw [show Nat.choose k 2 * 2 = k * (k - 1) from
+    (mul_comm _ _).trans (two_mul_choose_two k)] at hsum
+  -- hsum : k + (k * k + k * (k - 1)) = 2 * #edges
+  have hk : ∀ n, n + n * (n - 1) = n * n := by
+    intro n
+    cases n with
+    | zero => rfl
+    | succ n =>
+      change n + 1 + (n + 1) * n = (n + 1) * (n + 1)
+      rw [add_comm (n + 1), ← Nat.mul_succ]
+  have hpow : k + (k * k + k * (k - 1)) = 2 * k ^ 2 := by
+    rw [← add_assoc, add_comm k (k * k), add_assoc, hk k, pow_two, two_mul]
+  omega
+
+
 
 end SimpleGraph
