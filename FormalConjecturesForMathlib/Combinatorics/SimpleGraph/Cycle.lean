@@ -315,5 +315,101 @@ lemma cycleGraph_edgeFinset_nonempty (n : ℕ) :
   rw [Finset.card_pos.symm, cycleGraph_card_edgeFinset]
   omega
 
+/-- A bundled cycle's edge list has the same length as the cycle. -/
+@[simp]
+lemma Cycle.edges_length {G : SimpleGraph V} (c : Cycle G) : c.edges.length = c.length :=
+  Walk.length_edges _
+
+/-- Cycle edges are nodup (cycles are trails). -/
+lemma Cycle.edges_nodup {G : SimpleGraph V} (c : Cycle G) : c.edges.Nodup :=
+  c.isCycle.isTrail.edges_nodup
+
+/-- Eulerian cycle of `C_{n+3}` traverses exactly `n+3` edges. -/
+@[simp]
+lemma Cycle.cycleGraph_edges_length (n : ℕ) :
+    (Cycle.cycleGraph n).edges.length = n + 3 := by
+  simp [Cycle.edges_length, Cycle.length_cycleGraph]
+
+/-- Eulerian cycle edges are nodup. -/
+lemma Cycle.cycleGraph_edges_nodup (n : ℕ) : (Cycle.cycleGraph n).edges.Nodup :=
+  (Cycle.cycleGraph n).edges_nodup
+
+/-- Bridgeless graphs are forests iff they have no edges. -/
+theorem IsBridgeless.edgeFinset_eq_empty_iff_isAcyclic [Fintype V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (h : IsBridgeless G) :
+    G.edgeFinset = ∅ ↔ G.IsAcyclic := by
+  constructor
+  · intro he
+    have : G = ⊥ := edgeFinset_eq_empty.mp he
+    exact this ▸ isAcyclic_bot
+  · exact fun hacyc ↦ edgeFinset_eq_empty_of_isBridgeless_of_isAcyclic G hacyc h
+
+/-- Specialize: `C_{n+3}` has a nonempty edge set. -/
+lemma cycleGraph_edgeFinset_ne_empty (n : ℕ) :
+    (cycleGraph (n + 3)).edgeFinset ≠ ∅ :=
+  Finset.nonempty_iff_ne_empty.mp (cycleGraph_edgeFinset_nonempty n)
+
+/-- Third vertex on `Fin (n+3)` distinct from a given adjacent pair. -/
+lemma exists_fin_ne_of_ne {n : ℕ} {u v : Fin (n + 3)} (_huv : u ≠ v) :
+    ∃ w : Fin (n + 3), w ≠ u ∧ w ≠ v := by
+  classical
+  have hlt : ({u, v} : Finset (Fin (n + 3))).card < Fintype.card (Fin (n + 3)) := by
+    have : ({u, v} : Finset _).card ≤ 2 := Finset.card_le_two
+    simp only [Fintype.card_fin]
+    omega
+  obtain ⟨w, _, hw⟩ := Finset.exists_mem_notMem_of_card_lt_card hlt
+  exact ⟨w, fun h ↦ by simp [h] at hw, fun h ↦ by simp [h] at hw⟩
+
+/-- The length-2 path `v → w → u` in `K_{n+3}` is a path when vertices are pairwise distinct. -/
+lemma completeGraph_path_two {n : ℕ} {u v w : Fin (n + 3)}
+    (huv : u ≠ v) (hvw : v ≠ w) (hwu : w ≠ u) :
+    (Walk.cons (show (completeGraph (Fin (n + 3))).Adj v w from hvw)
+      (Walk.cons (show (completeGraph (Fin (n + 3))).Adj w u from hwu) Walk.nil)).IsPath := by
+  rw [Walk.cons_isPath_iff]
+  constructor
+  · rw [Walk.cons_isPath_iff]
+    exact ⟨Walk.IsPath.nil, by simp [Walk.support_nil, hwu]⟩
+  · simpa [Walk.support_cons, Walk.support_nil] using And.intro hvw huv.symm
+
+/-- Triangle through three distinct vertices is a cycle in `K_{n+3}`. -/
+lemma completeGraph_triangle_isCycle {n : ℕ} {u v w : Fin (n + 3)}
+    (huv : u ≠ v) (hvw : v ≠ w) (hwu : w ≠ u) :
+    (Walk.cons (show (completeGraph (Fin (n + 3))).Adj u v from huv)
+      (Walk.cons (show (completeGraph (Fin (n + 3))).Adj v w from hvw)
+        (Walk.cons (show (completeGraph (Fin (n + 3))).Adj w u from hwu) Walk.nil))).IsCycle := by
+  rw [Walk.cons_isCycle_iff]
+  refine ⟨completeGraph_path_two huv hvw hwu, ?_⟩
+  simp only [Walk.edges_cons, Walk.edges_nil, List.mem_cons, List.not_mem_nil, or_false]
+  refine not_or.mpr ⟨?_, ?_⟩
+  · intro h
+    rcases Sym2.eq_iff.mp h with ⟨hu, _⟩ | ⟨hu, _⟩
+    · exact huv hu
+    · exact hwu hu.symm
+  · intro h
+    rcases Sym2.eq_iff.mp h with ⟨hu, _⟩ | ⟨_, hv⟩
+    · exact hwu hu.symm
+    · exact hvw hv
+
+/-- Every edge of `K_{n+3}` lies on a triangle, so `K_{n+3}` is bridgeless. -/
+theorem completeGraph_isBridgeless (n : ℕ) :
+    IsBridgeless (completeGraph (Fin (n + 3))) := by
+  classical
+  refine IsBridgeless.of_forall_exists_cycle_mem_edges fun e he ↦ ?_
+  revert he
+  induction e using Sym2.inductionOn with
+  | hf u v =>
+    intro he
+    have huv : u ≠ v := by
+      have : ¬s(u, v).IsDiag := by simpa [mem_edgeSet] using he
+      exact mt Sym2.mk_isDiag_iff.mpr this
+    obtain ⟨w, hwu, hwv⟩ := exists_fin_ne_of_ne huv
+    have hvw : v ≠ w := hwv.symm
+    have hwu' : w ≠ u := hwu
+    refine ⟨⟨u,
+      Walk.cons (show (completeGraph (Fin (n + 3))).Adj u v from huv)
+        (Walk.cons (show (completeGraph (Fin (n + 3))).Adj v w from hvw)
+          (Walk.cons (show (completeGraph (Fin (n + 3))).Adj w u from hwu') Walk.nil)),
+      completeGraph_triangle_isCycle huv hvw hwu'⟩, ?_⟩
+    simp [Cycle.edges, Walk.edges_cons]
 
 end SimpleGraph

@@ -136,5 +136,23 @@ theorem erdos_1091.variants.cycleGraph_not_isAcyclic (n : ℕ) :
     ¬ (cycleGraph (n + 3)).IsAcyclic :=
   SimpleGraph.cycleGraph_not_isAcyclic n
 
+/-- Eulerian cycle of `C_{n+3}` has `n+3` edges. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.cycleGraph_edges_length (n : ℕ) :
+    (Cycle.cycleGraph n).edges.length = n + 3 :=
+  Cycle.cycleGraph_edges_length n
+
+/-- Bridgeless graphs are forests iff edgeless. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.isBridgeless_edgeFinset_eq_empty_iff_isAcyclic
+    {V : Type*} [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (h : IsBridgeless G) : G.edgeFinset = ∅ ↔ G.IsAcyclic :=
+  h.edgeFinset_eq_empty_iff_isAcyclic
+
+/-- `K_{n+3}` is bridgeless (every edge lies on a triangle). -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.completeGraph_isBridgeless (n : ℕ) :
+    IsBridgeless (completeGraph (Fin (n + 3))) :=
+  SimpleGraph.completeGraph_isBridgeless n
 
 end Erdos1091
