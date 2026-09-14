@@ -84,22 +84,6 @@ $$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
 $$
--/
-@[category research solved, AMS 5 11]
-theorem erdos_337.variants.three_fold :
-    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
-      (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
-      Tendsto (fun N : ℕ ↦
-          (((A + A + A) ∩ Icc 1 (3 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
-        atTop atTop := by
-  sorry
-
-/--
-Ruzsa and Turjányi do prove (under the same hypotheses) that
-$$
-\lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
-{\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
-$$
 and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
 
 This follows from the Plünnecke–Ruzsa inequality applied to $B=A\cap\{0,\ldots,N\}$: if $A$ is a
@@ -240,5 +224,39 @@ theorem erdos_337.variants.ruzsa_turjanyi :
     have h_M1_le : M + 1 ≤ (s + 1) / c :=
       le_of_pow_le_pow hs_c_pos h_h_ne h_pow_lt.le
     exact div_le_div_sub_one hc_pos h_M1_le
+
+/--
+Ruzsa and Turjányi do prove (under the same hypotheses) that
+$$
+\lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
+{\lvert A\cap \{1,\ldots,N\}\rvert}=\infty.
+$$
+
+This is weaker than `Erdos337.erdos_337.variants.ruzsa_turjanyi`: translating by a fixed
+$a\in A$ with $1\leq a\leq N$ embeds $(A+A)\cap\{1,\ldots,2N\}$ into
+$(A+A+A)\cap\{1,\ldots,3N\}$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_337.variants.three_fold :
+    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
+      (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
+      Tendsto (fun N : ℕ ↦
+          (((A + A + A) ∩ Icc 1 (3 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
+        atTop atTop := by
+  intro A h_basis ho
+  obtain ⟨h, hA⟩ := h_basis
+  obtain ⟨a, haA, ha_pos⟩ := exists_pos_mem_of_basis hA
+  refine tendsto_atTop_mono' _ ?_ (erdos_337.variants.ruzsa_turjanyi A ⟨h, hA⟩ ho)
+  filter_upwards [eventually_ge_atTop a] with N hN
+  have h_sub : (· + a) '' ((A + A) ∩ Icc 1 (2 * N)) ⊆ (A + A + A) ∩ Icc 1 (3 * N) := by
+    rintro _ ⟨x, ⟨hx_mem, hx_Icc⟩, rfl⟩
+    rw [mem_Icc] at hx_Icc
+    show x + a ∈ (A + A + A) ∩ Icc 1 (3 * N)
+    exact ⟨add_mem_add hx_mem haA, by rw [mem_Icc]; omega⟩
+  have h_fin : ((A + A + A) ∩ Icc 1 (3 * N)).Finite := (finite_Icc 1 (3 * N)).inter_of_right _
+  have h_card : ((A + A) ∩ Icc 1 (2 * N)).ncard ≤ ((A + A + A) ∩ Icc 1 (3 * N)).ncard := by
+    have h_le := ncard_le_ncard h_sub h_fin
+    rwa [ncard_image_of_injective _ (add_left_injective a)] at h_le
+  gcongr
 
 end Erdos337
