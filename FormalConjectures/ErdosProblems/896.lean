@@ -118,4 +118,45 @@ theorem erdos_896.variants.maxF_pos {N : ℕ} (hN : 1 ≤ N) : 0 < maxF N := by
     exact le_sup (f := fun p : Finset ℕ × Finset ℕ ↦ F p.1 p.2) hmem
   exact Nat.succ_le_iff.mp hle
 
+
+/-- `F({1}, B) = #B`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_one_left (B : Finset ℕ) : F {1} B = B.card := by
+  simp [F]
+
+/-- `F(A, {1}) = #A`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_one_right (A : Finset ℕ) : F A {1} = A.card := by
+  simp [F]
+
+/-- `maxF` is monotone in `N`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_mono {M N : ℕ} (h : M ≤ N) : maxF M ≤ maxF N := by
+  classical
+  refine Finset.sup_le fun p hp ↦ ?_
+  have hp' := mem_product.mp hp
+  have hA : p.1 ⊆ Icc 1 M := mem_powerset.mp hp'.1
+  have hB : p.2 ⊆ Icc 1 M := mem_powerset.mp hp'.2
+  have hAN : p.1 ⊆ Icc 1 N := hA.trans (Icc_subset_Icc_right h)
+  have hBN : p.2 ⊆ Icc 1 N := hB.trans (Icc_subset_Icc_right h)
+  have hmem :
+      (p.1, p.2) ∈ (Icc 1 N).powerset.product (Icc 1 N).powerset := by
+    simp [mem_product, mem_powerset, hAN, hBN]
+  exact le_sup (f := fun q : Finset ℕ × Finset ℕ ↦ F q.1 q.2) hmem
+
+/-- `maxF 0 = 0`. -/
+@[category test, AMS 11]
+theorem erdos_896.variants.maxF_zero : maxF 0 = 0 := by
+  classical
+  have hI : Icc 1 0 = (∅ : Finset ℕ) := by simp
+  simp [maxF, hI]
+
+/-- `maxF 1 = 1`. -/
+@[category test, AMS 11]
+theorem erdos_896.variants.maxF_one : maxF 1 = 1 := by
+  refine le_antisymm ?_ ?_
+  · simpa using maxF_le_sq 1
+  · exact Nat.succ_le_iff.mp (maxF_pos (Nat.le_refl 1))
+
+
 end Erdos896

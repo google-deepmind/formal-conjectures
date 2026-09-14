@@ -333,4 +333,39 @@ lemma card_uniqueMulProducts_zero_right (A : Finset ℕ) :
   rw [uniqueMulProducts_zero_right]
   split_ifs <;> simp
 
+
+/-- Left factor `{1}`: unique products are exactly `B`. -/
+lemma uniqueMulProducts_one_left (B : Finset ℕ) :
+    uniqueMulProducts {1} B = B := by
+  rw [uniqueMulProducts_singleton_left 1 B (by decide : (1 : ℕ) ≠ 0)]
+  simp [one_mul]
+
+/-- Symmetrically for right factor `{1}`. -/
+lemma uniqueMulProducts_one_right (A : Finset ℕ) :
+    uniqueMulProducts A {1} = A := by
+  rw [uniqueMulProducts_comm, uniqueMulProducts_one_left]
+
+@[simp]
+lemma card_uniqueMulProducts_one_left (B : Finset ℕ) :
+    (uniqueMulProducts {1} B).card = B.card := by
+  rw [uniqueMulProducts_one_left]
+
+@[simp]
+lemma card_uniqueMulProducts_one_right (A : Finset ℕ) :
+    (uniqueMulProducts A {1}).card = A.card := by
+  rw [uniqueMulProducts_one_right]
+
+/-- Representation count for left factor `{1}`: indicator of membership in `B`. -/
+lemma mulRepresentationCount_one_left (B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount {1} B m = if m ∈ B then 1 else 0 := by
+  classical
+  rw [mulRepresentationCount_singleton_left 1 B m (by decide : (1 : ℕ) ≠ 0)]
+  simp [one_mul]
+
+/-- Symmetrically for right factor `{1}`. -/
+lemma mulRepresentationCount_one_right (A : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A {1} m = if m ∈ A then 1 else 0 := by
+  rw [mulRepresentationCount_comm, mulRepresentationCount_one_left]
+
+
 end Finset
