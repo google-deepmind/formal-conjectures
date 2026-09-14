@@ -288,6 +288,35 @@ theorem sidonSubsetCount_singleton [DecidableEq α] (a : α) :
 lemma IsSidon.empty : IsSidon (∅ : Set α) := by
   simp [IsSidon]
 
+/-- Any set with at most one element is Sidon. -/
+lemma IsSidon.of_subsingleton {A : Set α} (hA : A.Subsingleton) : IsSidon A := by
+  intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ _
+  exact Or.inl ⟨hA hi₁ hj₁, hA hi₂ hj₂⟩
+
+/-- Finite sets of cardinality at most `1` are Sidon. -/
+lemma IsSidon.of_card_le_one [DecidableEq α] {A : Finset α} (hA : A.card ≤ 1) :
+    IsSidon (A : Set α) :=
+  IsSidon.of_subsingleton (card_le_one_iff_subsingleton.mp hA)
+
+/-- On `ℕ`, any Finset of size at most `2` is Sidon. -/
+lemma IsSidon.of_card_le_two {A : Finset ℕ} (hA : A.card ≤ 2) :
+    IsSidon (A : Set ℕ) := by
+  classical
+  by_cases h1 : A.card ≤ 1
+  · exact IsSidon.of_card_le_one h1
+  · have h2 : A.card = 2 := by omega
+    obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp h2
+    intro a ha b hb c hc d hd hs
+    simp only [coe_insert, coe_singleton, Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb hc hd
+    rcases ha with ha | ha <;> rcases hb with hb | hb <;>
+      rcases hc with hc | hc <;> rcases hd with hd | hd <;>
+      subst_vars <;> try exact Or.inl ⟨rfl, rfl⟩
+    all_goals
+      try exact Or.inr ⟨rfl, rfl⟩
+      try exact (hxy (by omega)).elim
+      try exact (hxy hs).elim
+      try exact (hxy hs.symm).elim
+
 /-- If `A` itself is Sidon, the largest Sidon subset has size `#A`. -/
 theorem maxSidonSubsetCard_eq_card [DecidableEq α] {A : Finset α}
     (hA : IsSidon (A : Set α)) : maxSidonSubsetCard A = A.card := by
@@ -306,6 +335,16 @@ theorem sidonSubsetCount_eq_two_pow_card [DecidableEq α] {A : Finset α}
     simp only [mem_filter, mem_powerset]
     exact ⟨And.left, fun hBA ↦ ⟨hBA, IsSidon.subset hA hBA⟩⟩
   simp [sidonSubsetCount, hEq, card_powerset]
+
+/-- Consequently `maxSidonSubsetCard A = #A` whenever `#A ≤ 2` on `ℕ`. -/
+theorem maxSidonSubsetCard_eq_card_of_card_le_two {A : Finset ℕ} [DecidableEq ℕ]
+    (hA : A.card ≤ 2) : maxSidonSubsetCard A = A.card :=
+  maxSidonSubsetCard_eq_card (IsSidon.of_card_le_two hA)
+
+/-- And `sidonSubsetCount A = 2 ^ #A` whenever `#A ≤ 2` on `ℕ`. -/
+theorem sidonSubsetCount_eq_two_pow_card_of_card_le_two {A : Finset ℕ} [DecidableEq ℕ]
+    (hA : A.card ≤ 2) : sidonSubsetCount A = 2 ^ A.card :=
+  sidonSubsetCount_eq_two_pow_card (IsSidon.of_card_le_two hA)
 
 /-- If `A` is Sidon then `maxSidonSubsetCard` and `sidonSubsetCount` attain the trivial upper bounds. -/
 theorem maxSidonSubsetCard_eq_card_iff_isSidon [DecidableEq α] (A : Finset α)
@@ -411,5 +450,16 @@ include `x` if and only if `A ∪ {x}` remains Sidon.
 Alternatively, this is precisely the set of elements in the greedy Sidon sequence that are `≤ N`. -/
 def greedySidonBelow (N : ℕ) : Finset ℕ :=
   (greedySidon.aux N).1.1.filter (· ≤ N)
+
+/-- The finite set produced by `greedySidon.aux` is always Sidon. -/
+theorem greedySidon.aux_isSidon (n : ℕ) : IsSidon ((greedySidon.aux n).1.1 : Set ℕ) :=
+  (greedySidon.aux n).1.2
+
+/-- `greedySidonBelow N` is Sidon (as a subset of a Sidon set). -/
+theorem greedySidonBelow_isSidon (N : ℕ) : IsSidon ((greedySidonBelow N) : Set ℕ) :=
+  IsSidon.subset (greedySidon.aux_isSidon N) <| by
+    intro x hx
+    simp only [greedySidonBelow, mem_coe, mem_filter] at hx ⊢
+    exact hx.1
 
 end Finset
