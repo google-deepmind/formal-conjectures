@@ -46,6 +46,6 @@ theorem erdos_99 :
       A.card = n → HasMinDist1 A →
       (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B} A) →
       ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by
-sorry
+  sorry
 
 end Erdos99

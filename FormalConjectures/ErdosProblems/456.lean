@@ -25,7 +25,7 @@ import FormalConjecturesUtil
 -/
 
 open Nat Filter
-open scoped Topology Classical Asymptotics
+open scoped Topology Asymptotics
 
 namespace Erdos456
 
@@ -41,22 +41,24 @@ Let $m_n$ be the smallest integer such that $n\mid \phi(m_n)$.
 noncomputable def m (n : ℕ) : ℕ :=
   sInf { k | 0 < k ∧ n ∣ totient k }
 
+open scoped Classical in
 /--
 Is it true that $m_n<p_n$ for almost all $n$?
 -/
 @[category research open, AMS 11]
 theorem erdos_456.parts.i :
     answer(sorry) ↔
-      Tendsto (fun N ↦ (count { n | m n < p n } N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
+      Tendsto (fun N ↦ (count (fun n ↦ m n < p n) N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
   sorry
 
+open scoped Classical in
 /--
 Does $p_n/m_n \to \infty$ for almost all $n$?
 -/
 @[category research open, AMS 11]
 theorem erdos_456.parts.ii :
     answer(sorry) ↔
-      ∃ A : Set ℕ, Tendsto (fun N ↦ (count A N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
+      ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
         Tendsto (fun n ↦ (p n : ℝ) / (m n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
   sorry
 
@@ -88,7 +90,7 @@ theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
   · subst hn
     have hempty : {k | 0 < k ∧ (0 : ℕ) ∣ totient k} = (∅ : Set ℕ) := by
       ext k
-      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
       intro hk
       rw [zero_dvd_iff]
       have := Nat.totient_pos.mpr hk
@@ -151,12 +153,13 @@ theorem erdos_456.variants.infinitely_many_n :
       omega
     omega
 
+open scoped Classical in
 /--
 Erdős [Er79e] writes it is 'easy to show' that $m_n/n \to \infty$ for almost all $n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_456.variants.m_div_n :
-    ∃ A : Set ℕ, Tendsto (fun N ↦ (count A N : ℝ) / N) atTop (𝓝 1) ∧
+    ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / N) atTop (𝓝 1) ∧
       Tendsto (fun n ↦ (m n : ℝ) / (n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
   sorry
 

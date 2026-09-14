@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 Any integer $n \geq 0$ can be written as $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative
 integers and $z \leq w$, such that both $x$ and $x + 24y$ are squares.
 
-Zhi-Wei Sun has offered a $2,400 prize for the first proof.
+Zhi-Wei Sun has offered a \$2,400 prize for the first proof.
 
 *References:*
 - [A281976](https://oeis.org/A281976)
