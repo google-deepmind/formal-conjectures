@@ -78,6 +78,41 @@ lemma H_anti {C C' : ℝ} (hC : 0 ≤ C) (h : C ≤ C') (x : ℕ) : H C' x ≤ H
     ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC, card_avoidsDivisors_empty x⟩
   exact csInf_le_csInf' hne hsub
 
+/-- Any admissible sieve witnesses an upper bound on `H C x`. -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card {C : ℝ} {A : Finset ℕ} {x : ℕ}
+    (hA : A ⊆ Icc 2 x) (hsum : A.reciprocalSum ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card :=
+  Nat.sInf_le ⟨A, hA, hsum, rfl⟩
+
+/-- If `C < 0` there are no admissible sets (reciprocal sums are nonnegative), so `H C x = 0`. -/
+@[category API, AMS 11]
+lemma H_eq_zero_of_neg {C : ℝ} (hC : C < 0) (x : ℕ) : H C x = 0 := by
+  classical
+  have hempty :
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} = ∅ := by
+    ext n
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+    rintro ⟨A, _hA, hsum, rfl⟩
+    exact not_lt_of_ge (reciprocalSum_nonneg A) (lt_of_le_of_lt hsum hC)
+  change sInf _ = 0
+  rw [hempty, Nat.sInf_empty]
+
+/-- Singleton sieve `{a}` with `2 ≤ a ≤ x` and `1/a ≤ C` gives `H C x ≤ x - ⌊x/a⌋`. -/
+@[category API, AMS 11]
+lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a ≤ x)
+    (hsum : (1 : ℝ) / a ≤ C) :
+    H C x ≤ x - x / a := by
+  have hA : ({a} : Finset ℕ) ⊆ Icc 2 x := by
+    intro y hy
+    simp only [mem_singleton] at hy
+    subst hy
+    exact mem_Icc.mpr ⟨ha, hax⟩
+  have hsum' : ({a} : Finset ℕ).reciprocalSum ≤ C := by
+    simpa [reciprocalSum_singleton] using hsum
+  simpa [card_avoidsDivisors_singleton] using H_le_avoidsDivisors_card hA hsum'
+
 /-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
 @[category test, AMS 11]
 theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
