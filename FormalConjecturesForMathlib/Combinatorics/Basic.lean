@@ -633,6 +633,51 @@ lemma greedySidon.mem_aux_iff {n x : ℕ} :
     rw [aux_eq_image, mem_image]
     exact ⟨i, mem_range.mpr (Nat.lt_succ_iff.mpr hle), rfl⟩
 
+/-- Elements of the finite greedy set are at least `1`. -/
+lemma one_le_of_mem_greedySidon_aux {n x : ℕ} (hx : x ∈ (greedySidon.aux n).1.1) :
+    1 ≤ x := by
+  obtain ⟨i, _, rfl⟩ := greedySidon.mem_aux_iff.mp hx
+  exact one_le_greedySidon i
+
+/-- `greedySidonBelow N` sits inside `{1, …, N}`. -/
+lemma greedySidonBelow_subset_Icc (N : ℕ) : greedySidonBelow N ⊆ Icc 1 N := by
+  intro x hx
+  rw [mem_greedySidonBelow] at hx
+  exact mem_Icc.mpr ⟨one_le_of_mem_greedySidon_aux hx.1, hx.2⟩
+
+/-- Hence `#greedySidonBelow N ≤ N`. -/
+lemma card_greedySidonBelow_le (N : ℕ) : (greedySidonBelow N).card ≤ N := by
+  simpa [Nat.card_Icc] using card_le_card (greedySidonBelow_subset_Icc N)
+
+/-- Membership in `greedySidonBelow` via the infinite sequence. -/
+lemma mem_greedySidonBelow_iff_exists {N x : ℕ} :
+    x ∈ greedySidonBelow N ↔ ∃ i : ℕ, greedySidon i = x ∧ x ≤ N := by
+  constructor
+  · intro hx
+    obtain ⟨hmem, hle⟩ := mem_greedySidonBelow.mp hx
+    obtain ⟨i, _, rfl⟩ := greedySidon.mem_aux_iff.mp hmem
+    exact ⟨i, rfl, hle⟩
+  · rintro ⟨i, rfl, hle⟩
+    have hi : i ≤ N := (le_greedySidon i).trans hle
+    exact mem_greedySidonBelow.mpr ⟨greedySidon.mem_aux_iff.mpr ⟨i, hi, rfl⟩, hle⟩
+
+/-- In particular `greedySidonBelow` is empty precisely when `N = 0`. -/
+lemma greedySidonBelow_eq_empty_iff (N : ℕ) :
+    greedySidonBelow N = ∅ ↔ N = 0 := by
+  constructor
+  · intro h
+    by_contra hne
+    have hpos : 1 ≤ N := Nat.one_le_iff_ne_zero.mpr hne
+    have : (1 : ℕ) ∈ greedySidonBelow N := by
+      refine mem_greedySidonBelow_iff_exists.mpr ⟨0, greedySidon_zero, ?_⟩
+      simpa [greedySidon_zero] using hpos
+    simp [h] at this
+  · rintro rfl
+    rw [eq_empty_iff_forall_notMem]
+    intro x hx
+    have hx' := mem_greedySidonBelow.mp hx
+    have : 1 ≤ x := one_le_of_mem_greedySidon_aux hx'.1
+    omega
 
 
 end Finset

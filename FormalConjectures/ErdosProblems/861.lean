@@ -149,5 +149,28 @@ theorem erdos_861.variants.greedySidon_aux_eq_image (n : ℕ) :
       (Finset.range (n + 1)).image Finset.greedySidon :=
   Finset.greedySidon.aux_eq_image n
 
+/-- `#aux n = n + 1`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidon_card_aux (n : ℕ) :
+    (Finset.greedySidon.aux n).1.1.card = n + 1 :=
+  Finset.greedySidon.card_aux n
+
+/-- `greedySidonBelow N ⊆ {1, …, N}`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidonBelow_subset_Icc (N : ℕ) :
+    Finset.greedySidonBelow N ⊆ Finset.Icc 1 N :=
+  Finset.greedySidonBelow_subset_Icc N
+
+/-- `#greedySidonBelow N ≤ N`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.card_greedySidonBelow_le (N : ℕ) :
+    (Finset.greedySidonBelow N).card ≤ N :=
+  Finset.card_greedySidonBelow_le N
+
+/-- `greedySidonBelow` is empty iff `N = 0`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.greedySidonBelow_eq_empty_iff (N : ℕ) :
+    Finset.greedySidonBelow N = ∅ ↔ N = 0 :=
+  Finset.greedySidonBelow_eq_empty_iff N
 
 end Erdos861
