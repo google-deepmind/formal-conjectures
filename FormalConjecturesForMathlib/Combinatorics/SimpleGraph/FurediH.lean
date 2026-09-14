@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Copy
 public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
@@ -441,5 +442,26 @@ noncomputable def furediH.cycle4Copy {k : ℕ} (hk : 2 ≤ k) :
 theorem furediH_contains_cycleGraph_four {k : ℕ} (hk : 2 ≤ k) :
     cycleGraph 4 ⊑ furediH k :=
   ⟨furediH.cycle4Copy hk⟩
+
+
+/-- Every vertex of $H_k$ is reachable from the apex. -/
+lemma furediH_reachable_apex (k : ℕ) (v : FurediH.Vertex k) :
+    (furediH k).Reachable .apex v := by
+  cases v with
+  | apex => exact Reachable.rfl
+  | spoke i => exact (furediH_adj_apex_spoke i).reachable
+  | pair p =>
+    exact (furediH_adj_apex_spoke p.1.1).reachable.trans
+      (furediH_adj_spoke_pair (Or.inl rfl)).reachable
+
+/-- $H_k$ is preconnected (hence path-connected between any two vertices). -/
+lemma furediH_preconnected (k : ℕ) : (furediH k).Preconnected :=
+  fun u v => (furediH_reachable_apex k u).symm.trans (furediH_reachable_apex k v)
+
+/-- $H_k$ is connected. -/
+theorem furediH_connected (k : ℕ) : (furediH k).Connected :=
+  haveI : Nonempty (FurediH.Vertex k) := ⟨.apex⟩
+  ⟨furediH_preconnected k⟩
+
 
 end SimpleGraph
