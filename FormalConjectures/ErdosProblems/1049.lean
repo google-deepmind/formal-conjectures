@@ -126,7 +126,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
     have h1 := h c hc
     rw [Filter.eventually_cofinite] at h1
     refine hinf (h1.subset fun n hn => ?_)
-    simp only [Set.mem_setOf_eq, Real.dist_eq, sub_zero, not_lt]
+    simp only [Set.mem_ofPred_eq, Real.dist_eq, sub_zero, not_lt]
     exact hn
   -- Number of divisors of `n ∈ ℕ+` is at least 1 (since `1 ∈ n.divisors`).
   have hcard_pos : ∀ (n : ℕ+), (1 : ℝ) ≤ ((n : ℕ).divisors.card : ℝ) := by
@@ -145,7 +145,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
     apply key _ 1 (by norm_num)
     convert Set.infinite_univ (α := ℕ+)
     ext n
-    simp only [one_pow, div_one, Set.mem_setOf_eq, Set.mem_univ, iff_true]
+    simp only [one_pow, div_one, Set.mem_ofPred_eq, Set.mem_univ, iff_true]
     rw [abs_of_nonneg (by positivity)]; exact hcard_pos n
   -- Case t = 0: RHS terms are τ(n)/0 = 0 by Lean's convention, so RHS sum = 0.
   -- LHS terms are 1/(0 - 1) = -1, so LHS is non-summable.
@@ -158,7 +158,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
     apply key _ 1 (by norm_num)
     convert Set.infinite_univ (α := ℕ+)
     ext n
-    simp only [zero_pow n.pos.ne', zero_sub, Set.mem_setOf_eq, Set.mem_univ, iff_true]
+    simp only [zero_pow n.pos.ne', zero_sub, Set.mem_ofPred_eq, Set.mem_univ, iff_true]
     norm_num
   -- Case t = -1: alternating signs make `1/(t^n - 1)` vanish at even n but
   -- equal -1/2 at odd n. The set of odd `n ∈ ℕ+` is infinite, which is enough
@@ -183,7 +183,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
       apply key _ 1 (by norm_num)
       convert Set.infinite_univ (α := ℕ+)
       ext n
-      simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+      simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
       -- |(-1)^n| = 1, so |τ(n) / (-1)^n| = τ(n) ≥ 1.
       rw [abs_div, abs_pow, abs_neg, abs_one, one_pow, div_one]
       rw [abs_of_nonneg (by positivity)]
@@ -216,7 +216,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
       apply key _ (1/2) (by norm_num)
       convert Set.infinite_univ (α := ℕ+)
       ext n
-      simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+      simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
       have hden_bound : |t ^ (n : ℕ) - 1| ≤ 2 := by
         calc |t ^ (n : ℕ) - 1| ≤ |t ^ (n : ℕ)| + |(1 : ℝ)| := abs_sub _ _
           _ ≤ 1 + 1 := by have := hbound n; rw [abs_one]; linarith
@@ -229,7 +229,7 @@ private lemma lambert_divergent (t : ℝ) (ht : |t| ≤ 1) :
       apply key _ 1 (by norm_num)
       convert Set.infinite_univ (α := ℕ+)
       ext n
-      simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+      simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
       rw [abs_div, le_div_iff₀ (abs_pos.mpr (htn_ne_zero n))]
       rw [abs_of_nonneg (by positivity : (0:ℝ) ≤ ((n : ℕ).divisors.card : ℝ))]
       have := hbound n
@@ -246,9 +246,8 @@ theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
      ∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1) =
      ∑' n : ℕ+, (n : ℕ).divisors.card / ((t : ℝ) ^ (n : ℕ)) := by
   intro t
-  by_cases ht : 1 < |(t : ℝ)|
+  obtain ht | ht := lt_or_ge 1 |(t : ℝ)|
   · exact lambert_convergent (t : ℝ) ht
-  · push_neg at ht
-    exact lambert_divergent (t : ℝ) ht
+  · exact lambert_divergent (t : ℝ) ht
 
 end Erdos1049

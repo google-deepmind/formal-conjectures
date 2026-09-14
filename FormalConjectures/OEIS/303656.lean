@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 Any integer $n > 1$ can be written as $a^2 + b^2 + 3^c + 5^d$ where $a, b, c, d$ are
 nonnegative integers.
 
-Zhi-Wei Sun has offered a $3,500 prize for the first proof.
+Zhi-Wei Sun has offered a \$3,500 prize for the first proof.
 
 *References:*
 - [A303656](https://oeis.org/A303656)

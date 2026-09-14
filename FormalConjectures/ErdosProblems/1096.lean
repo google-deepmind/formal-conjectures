@@ -42,7 +42,8 @@ Is it true that, provided $\epsilon>0$ is sufficiently small, $x_{k+1}-x_k \to 0
 This was solved affirmatively by Erdős and Komornik [ErKo98], who proved the conclusion
 whenever $1<q<\sqrt{q_1}$, where $q_1$ is the second Pisot-Vijayaraghavan number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos1096.lean#L44"]
 theorem erdos_1096 :
     answer(True) ↔ ∃ ε > 0, ∀ q, 1 < q → q < 1 + ε →
     ∀ x : ℕ → ℝ, StrictMono x → Set.range x = { ∑ i ∈ S, q ^ i | S : Finset ℕ } →

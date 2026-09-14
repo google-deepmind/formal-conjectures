@@ -58,7 +58,8 @@ Erdős and Rado [ErRa60] proved the factorial upper bound for the $k$-sunflower
 threshold: any family of $n$-uniform sets with more than $(k-1)^n \, n!$ members
 contains a $k$-sunflower, hence $f(n,k) \le (k-1)^n \, n! + 1$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/b8b641ba2d00dc4d1fe205a078a4159372672459/Erdos/P20.lean#L202"]
 theorem erdos_20.variants.erdos_rado_bound :
     ∀ n k, n > 0 → 2 ≤ k → f n k ≤ (k - 1) ^ n * n.factorial + 1 := by
   sorry
