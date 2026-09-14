@@ -237,4 +237,16 @@ lemma avoidsDivisors_insert_of_lt {A : Finset ℕ} {a x : ℕ} (ha : x < a) :
     _ = avoidsDivisors A x := (avoidsDivisors_eq_avoidsDivisors_filter_le A x).symm
 
 
+
+/-- Survivors always lie in `{1, …, x}`. -/
+lemma avoidsDivisors_subset (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x ⊆ Icc 1 x :=
+  filter_subset _ _
+
+/-- In particular the survivor count is at most `x`. -/
+lemma card_avoidsDivisors_le_self (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card ≤ x := by
+  simpa [Nat.card_Icc] using card_le_card (avoidsDivisors_subset A x)
+
+
 end Finset

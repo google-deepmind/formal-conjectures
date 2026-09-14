@@ -132,6 +132,26 @@ lemma H_eq_self_of_lt_inv {C : ℝ} {x : ℕ} (hx : 1 ≤ x) (hC0 : 0 ≤ C)
   simp [honly, csInf_singleton]
 
 
+
+/-- Special case `C = 0`: only the empty sieve is admissible for `x ≥ 1`, so `H 0 x = x`. -/
+@[category API, AMS 11]
+lemma H_zero_eq_self {x : ℕ} (hx : 1 ≤ x) : H (0 : ℝ) x = x :=
+  H_eq_self_of_lt_inv hx le_rfl <|
+    one_div_pos.mpr (Nat.cast_pos.mpr (Nat.pos_of_ne_zero (by omega)))
+
+/-- For `x = 0` the survivor set is empty, so `H C 0 = 0` for every `C`. -/
+@[category API, AMS 11]
+@[simp]
+lemma H_of_x_zero (C : ℝ) : H C 0 = 0 := by
+  classical
+  by_cases hC : (0 : ℝ) ≤ C
+  · have hle : H C 0 ≤ 0 := by
+      simpa [card_avoidsDivisors_empty] using
+        (H_le_avoidsDivisors_card (A := (∅ : Finset ℕ)) (x := 0) (empty_subset _)
+          (by simpa [reciprocalSum_empty] using hC))
+    exact Nat.eq_zero_of_le_zero hle
+  · exact H_eq_zero_of_neg (lt_of_not_ge hC) 0
+
 /-- Singleton sieve `{a}` with `2 ≤ a ≤ x` and `1/a ≤ C` gives `H C x ≤ x - ⌊x/a⌋`. -/
 @[category API, AMS 11]
 lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a ≤ x)
