@@ -158,4 +158,24 @@ theorem erdos_1099.variants.sumConsecutiveRatios_nonneg (n : ℕ) :
   classical
   exact Finset.sum_nonneg fun _ _ ↦ Nat.consecutiveDivisorRatio_nonneg _ _
 
+
+/-- With at least two divisors, `∑ d_{i+1}/d_i > τ(n) - 1`. -/
+@[category API, AMS 11]
+theorem erdos_1099.variants.sumConsecutiveRatios_gt_card_sub_one {n : ℕ}
+    (h : 2 ≤ n.divisors.card) :
+    ((n.divisors.card - 1 : ℕ) : ℝ) < sumConsecutiveRatios n := by
+  classical
+  let s := range (n.divisors.card - 1)
+  have hs : s.Nonempty := by
+    simp [s]
+    omega
+  have hlt : ∀ i ∈ s, (1 : ℝ) < n.consecutiveDivisorRatio i := by
+    intro i hi
+    have hi' : i + 1 < n.divisors.card := (Nat.lt_sub_iff_add_lt).mp (mem_range.mp hi)
+    exact Nat.one_lt_consecutiveDivisorRatio hi'
+  have := Finset.sum_lt_sum_of_nonempty hs hlt
+  -- this : ∑ 1 < ∑ ratio
+  simpa [s, sumConsecutiveRatios, sum_const, nsmul_one, card_range] using this
+
+
 end Erdos1099
