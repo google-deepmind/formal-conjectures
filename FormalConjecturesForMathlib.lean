@@ -108,6 +108,7 @@ public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeaver
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
 public import FormalConjecturesForMathlib.Data.Bool.Basic
+public import FormalConjecturesForMathlib.Data.Finset.AvoidsDivisors
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
