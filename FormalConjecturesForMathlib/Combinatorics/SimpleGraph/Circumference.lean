@@ -33,9 +33,23 @@ namespace SimpleGraph
 def cycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
   {m | ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = m}
 
+lemma mem_cycleLengths_iff {α : Type*} {G : SimpleGraph α} {m : ℕ} :
+    m ∈ G.cycleLengths ↔ ∃ (a : α) (w : G.Walk a a), w.IsCycle ∧ w.length = m :=
+  Iff.rfl
+
+/-- Every cycle length is at least `3`. -/
+lemma three_le_of_mem_cycleLengths {α : Type*} {G : SimpleGraph α} {m : ℕ}
+    (hm : m ∈ G.cycleLengths) : 3 ≤ m := by
+  obtain ⟨a, w, hc, rfl⟩ := hm
+  exact hc.three_le_length
+
 /-- `G.oddCycleLengths` is the set of lengths of odd cycles in `G`. -/
 def oddCycleLengths {α : Type*} (G : SimpleGraph α) : Set ℕ :=
   {m ∈ G.cycleLengths | Odd m}
+
+lemma mem_oddCycleLengths_iff {α : Type*} {G : SimpleGraph α} {m : ℕ} :
+    m ∈ G.oddCycleLengths ↔ m ∈ G.cycleLengths ∧ Odd m :=
+  Iff.rfl
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
