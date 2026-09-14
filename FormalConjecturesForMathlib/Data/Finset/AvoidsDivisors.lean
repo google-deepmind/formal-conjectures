@@ -182,4 +182,59 @@ lemma le_card_avoidsDivisors_of_reciprocalSum_le (A : Finset ℕ) (x : ℕ) {C :
     _ = x - ∑ a ∈ A, (x : ℝ) / a := by rw [hsum]
     _ ≤ (avoidsDivisors A x).card := hchain
 
+
+/-- Enlarging the divisor set does not increase the number of survivors. -/
+lemma card_avoidsDivisors_mono_left {A B : Finset ℕ} (h : A ⊆ B) (x : ℕ) :
+    (avoidsDivisors B x).card ≤ (avoidsDivisors A x).card :=
+  card_le_card (avoidsDivisors_mono h x)
+
+/-- Divisors strictly larger than `x` never divide any `m ∈ {1, …, x}`. -/
+lemma not_dvd_of_mem_Icc_of_lt {a m x : ℕ} (hm : m ∈ Icc 1 x) (ha : x < a) : ¬ a ∣ m := by
+  intro hdvd
+  have hpos : 0 < m := by
+    have : 1 ≤ m := (mem_Icc.mp hm).1
+    omega
+  have : a ≤ m := Nat.le_of_dvd hpos hdvd
+  have : m ≤ x := (mem_Icc.mp hm).2
+  omega
+
+/-- Only divisors `≤ x` affect the sieve on `{1, …, x}`. -/
+lemma avoidsDivisors_eq_avoidsDivisors_filter_le (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = avoidsDivisors (A.filter (· ≤ x)) x := by
+  ext m
+  simp only [mem_avoidsDivisors, mem_filter]
+  constructor
+  · rintro ⟨hm, hA⟩
+    exact ⟨hm, fun a ha ↦ hA a ha.1⟩
+  · rintro ⟨hm, hA⟩
+    refine ⟨hm, fun a ha hdvd ↦ ?_⟩
+    by_cases hle : a ≤ x
+    · exact hA a ⟨ha, hle⟩ hdvd
+    · exact not_dvd_of_mem_Icc_of_lt hm (lt_of_not_ge hle) hdvd
+
+/-- Same survivor count after discarding divisors `> x`. -/
+lemma card_avoidsDivisors_filter_le (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors (A.filter (· ≤ x)) x).card = (avoidsDivisors A x).card := by
+  rw [← avoidsDivisors_eq_avoidsDivisors_filter_le]
+
+/-- Inserting a useless divisor (`> x`) does not change the survivor set. -/
+lemma avoidsDivisors_insert_of_lt {A : Finset ℕ} {a x : ℕ} (ha : x < a) :
+    avoidsDivisors (insert a A) x = avoidsDivisors A x := by
+  classical
+  have h : (insert a A).filter (· ≤ x) = A.filter (· ≤ x) := by
+    ext m
+    simp only [mem_filter, mem_insert]
+    constructor
+    · rintro ⟨rfl | hm, hle⟩
+      · omega
+      · exact ⟨hm, hle⟩
+    · rintro ⟨hm, hle⟩
+      exact ⟨Or.inr hm, hle⟩
+  calc
+    avoidsDivisors (insert a A) x = avoidsDivisors ((insert a A).filter (· ≤ x)) x :=
+      avoidsDivisors_eq_avoidsDivisors_filter_le _ _
+    _ = avoidsDivisors (A.filter (· ≤ x)) x := by rw [h]
+    _ = avoidsDivisors A x := (avoidsDivisors_eq_avoidsDivisors_filter_le A x).symm
+
+
 end Finset

@@ -106,4 +106,32 @@ lemma reciprocalSum_filter_eq_zero (A : Finset ℕ) :
     reciprocalSum (A.filter (· = 0)) = 0 :=
   (reciprocalSum_eq_zero_iff _).mpr fun _a ha => (mem_filter.mp ha).2
 
+
+/-- The reciprocal sum is strictly positive iff some nonzero element is present. -/
+lemma reciprocalSum_pos_iff (A : Finset ℕ) :
+    0 < reciprocalSum A ↔ ∃ a ∈ A, a ≠ 0 := by
+  classical
+  refine ⟨?_, ?_⟩
+  · intro h
+    by_contra hne
+    have hne' : ∀ a ∈ A, a = 0 := fun a ha => by
+      by_contra hne0
+      exact hne ⟨a, ha, hne0⟩
+    have hz : reciprocalSum A = 0 := (reciprocalSum_eq_zero_iff A).mpr hne'
+    exact (ne_of_gt h) hz
+  · rintro ⟨a, ha, hne⟩
+    exact reciprocalSum_pos_of_mem ha hne
+
+/-- Dropping zeros does not change the reciprocal sum (`1/0 = 0` in `ℝ`). -/
+lemma reciprocalSum_filter_ne_zero (A : Finset ℕ) :
+    reciprocalSum (A.filter (· ≠ 0)) = reciprocalSum A := by
+  classical
+  simp only [reciprocalSum]
+  rw [sum_filter]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  by_cases ha : a = 0
+  · simp [ha]
+  · simp [ha]
+
+
 end Finset
