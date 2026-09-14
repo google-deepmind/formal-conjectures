@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Data.Nat.Nth
+public import Mathlib.Data.Nat.Count
 public import Mathlib.Data.Real.Basic
 public import Mathlib.NumberTheory.Divisors
 
@@ -127,6 +128,47 @@ lemma consecutiveDivisorRatio_sub_one_pos {n i : ℕ}
     (hi : i + 1 < n.divisors.card) :
     (0 : ℝ) < consecutiveDivisorRatio n i - 1 :=
   sub_pos.mpr (one_lt_consecutiveDivisorRatio hi)
+
+
+
+/-- Every enumerated divisor is at most `n`. -/
+lemma nth_divisors_le_self {n i : ℕ} (hn : n ≠ 0)
+    (hi : i < n.divisors.card) :
+    nth (· ∈ n.divisors) i ≤ n := by
+  classical
+  have hfin : (Set.ofPred (· ∈ n.divisors)).Finite := n.divisors.finite_toSet
+  have hcard : hfin.toFinset.card = n.divisors.card := by
+    congr 1
+    ext x
+    simp [Set.Finite.mem_toFinset]
+  have hmem := nth_mem_of_lt_card hfin (by rw [hcard]; exact hi)
+  exact Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (Nat.dvd_of_mem_divisors hmem)
+
+/-- The last entry of the increasing divisor enumeration is `n` itself. -/
+lemma nth_divisors_last {n : ℕ} (hn : n ≠ 0) :
+    nth (· ∈ n.divisors) (n.divisors.card - 1) = n := by
+  classical
+  have hmem : n ∈ n.divisors := Nat.mem_divisors_self n hn
+  have hcnt : Nat.count (· ∈ n.divisors) n = n.divisors.card - 1 := by
+    have hle : ∀ d ∈ n.divisors, d ≤ n := fun d hd =>
+      Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (Nat.dvd_of_mem_divisors hd)
+    rw [Nat.count_eq_card_filter_range]
+    have heq : {x ∈ Finset.range n | x ∈ n.divisors} = n.divisors.erase n := by
+      ext x
+      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_erase]
+      constructor
+      · rintro ⟨hxlt, hxmem⟩
+        exact ⟨ne_of_lt hxlt, hxmem⟩
+      · rintro ⟨hne, hxmem⟩
+        exact ⟨lt_of_le_of_ne (hle x hxmem) hne, hxmem⟩
+    rw [heq, Finset.card_erase_of_mem hmem]
+  rw [← hcnt, nth_count (by simpa using hmem)]
+
+/-- On valid indices, the next divisor is at most `n`. -/
+lemma nth_divisors_succ_le_self {n i : ℕ} (hn : n ≠ 0)
+    (hi : i + 1 < n.divisors.card) :
+    nth (· ∈ n.divisors) (i + 1) ≤ n :=
+  nth_divisors_le_self hn hi
 
 
 end Nat

@@ -178,4 +178,12 @@ theorem erdos_1099.variants.sumConsecutiveRatios_gt_card_sub_one {n : ℕ}
   simpa [s, sumConsecutiveRatios, sum_const, nsmul_one, card_range] using this
 
 
+
+/-- The last enumerated divisor is `n`. -/
+@[category API, AMS 11]
+theorem erdos_1099.variants.nth_divisors_last {n : ℕ} (hn : n ≠ 0) :
+    Nat.nth (· ∈ n.divisors) (n.divisors.card - 1) = n :=
+  Nat.nth_divisors_last hn
+
+
 end Erdos1099
