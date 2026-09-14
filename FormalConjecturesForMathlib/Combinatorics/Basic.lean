@@ -326,6 +326,27 @@ theorem maxSidonSubsetCard_eq_card_iff_isSidon [DecidableEq α] (A : Finset α)
     exact hBA_eq ▸ hB'.2
   · exact maxSidonSubsetCard_eq_card
 
+/-- `sidonSubsetCount A = 2 ^ #A` if and only if `A` itself is Sidon. -/
+theorem sidonSubsetCount_eq_two_pow_card_iff [DecidableEq α] (A : Finset α)
+    [Decidable (IsSidon (A : Set α))] :
+    sidonSubsetCount A = 2 ^ A.card ↔ IsSidon (A : Set α) := by
+  classical
+  constructor
+  · intro h
+    have hcard :
+        (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).card = A.powerset.card := by
+      simpa [sidonSubsetCount, card_powerset] using h
+    have hle : A.powerset.card ≤
+        (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).card := by
+      omega
+    have heq :
+        A.powerset.filter (fun B : Finset α ↦ IsSidon (B : Set α)) = A.powerset :=
+      eq_of_subset_of_card_le (filter_subset _ _) hle
+    have hA : A ∈ A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α) := by
+      simp [heq]; exact mem_powerset_self A
+    exact (mem_filter.mp hA).2
+  · exact sidonSubsetCount_eq_two_pow_card
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
