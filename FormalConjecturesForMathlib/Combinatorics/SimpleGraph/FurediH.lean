@@ -536,4 +536,18 @@ theorem furediH_chromaticNumber_le_two (k : ℕ) :
   chromaticNumber_le_two_iff_isBipartite.mpr (furediH_isBipartite k)
 
 
+
+/-- For `k ≥ 1`, `H_k` has at least the apex–spoke edge, so it is not empty. -/
+lemma furediH_ne_bot {k : ℕ} (hk : 1 ≤ k) : furediH k ≠ ⊥ := by
+  intro h
+  have hadj : (furediH k).Adj .apex (.spoke ⟨0, by omega⟩) :=
+    furediH_adj_apex_spoke _
+  simp [h] at hadj
+
+/-- For `k ≥ 1`, the chromatic number of `H_k` is exactly `2`. -/
+theorem furediH_chromaticNumber_eq_two {k : ℕ} (hk : 1 ≤ k) :
+    (furediH k).chromaticNumber = 2 :=
+  chromaticNumber_eq_two_iff.mpr ⟨furediH_isBipartite k, furediH_ne_bot hk⟩
+
+
 end SimpleGraph

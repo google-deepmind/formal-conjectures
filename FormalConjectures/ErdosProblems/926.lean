@@ -103,4 +103,12 @@ theorem erdos_926.variants.furediH_isBipartite (k : ℕ) : (furediH k).IsBiparti
   SimpleGraph.furediH_isBipartite k
 
 
+
+/-- For `k ≥ 1`, `χ(H_k) = 2`. -/
+@[category API, AMS 5]
+theorem erdos_926.variants.furediH_chromaticNumber_eq_two {k : ℕ} (hk : 1 ≤ k) :
+    (furediH k).chromaticNumber = 2 :=
+  SimpleGraph.furediH_chromaticNumber_eq_two hk
+
+
 end Erdos926
