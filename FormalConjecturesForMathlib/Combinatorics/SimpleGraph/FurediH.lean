@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Copy
@@ -548,6 +549,49 @@ lemma furediH_ne_bot {k : ℕ} (hk : 1 ≤ k) : furediH k ≠ ⊥ := by
 theorem furediH_chromaticNumber_eq_two {k : ℕ} (hk : 1 ≤ k) :
     (furediH k).chromaticNumber = 2 :=
   chromaticNumber_eq_two_iff.mpr ⟨furediH_isBipartite k, furediH_ne_bot hk⟩
+
+/-- The two parts of the bipartition are complementary. -/
+lemma furediH.partLeft_eq_compl_partRight (k : ℕ) :
+    furediH.partLeft k = (furediH.partRight k)ᶜ := by
+  ext v
+  cases v <;> simp [partLeft, partRight]
+
+/-- `spoke` is injective, so there are exactly `k` right-part vertices. -/
+lemma furediH.spoke_injective (k : ℕ) :
+    Function.Injective (FurediH.Vertex.spoke (k := k)) := by
+  intro i j h
+  cases h
+  rfl
+
+/-- Right part has cardinality `k`. -/
+@[simp]
+lemma furediH.ncard_partRight (k : ℕ) : (furediH.partRight k).ncard = k := by
+  have h : furediH.partRight k = Set.range (FurediH.Vertex.spoke (k := k)) := by
+    ext v
+    simp [partRight, Set.mem_range, eq_comm]
+  rw [h, Set.ncard_range_of_injective (spoke_injective k)]
+  simp [Nat.card_eq_fintype_card]
+
+/-- Left part has cardinality `1 + \binom{k}{2}`. -/
+@[simp]
+lemma furediH.ncard_partLeft (k : ℕ) :
+    (furediH.partLeft k).ncard = 1 + Nat.choose k 2 := by
+  classical
+  have hcard := FurediH.card_vertex k
+  have : (furediH.partLeft k).ncard + (furediH.partRight k).ncard =
+      Fintype.card (FurediH.Vertex k) := by
+    rw [partLeft_eq_compl_partRight, add_comm, Set.ncard_add_ncard_compl (furediH.partRight k)]
+    exact Nat.card_eq_fintype_card
+  rw [ncard_partRight, hcard] at this
+  omega
+
+/-- For `k ≥ 2`, `H_k` contains a `C_4`, so it is not a forest. -/
+theorem furediH_not_isAcyclic {k : ℕ} (hk : 2 ≤ k) : ¬ (furediH k).IsAcyclic := by
+  intro hacyc
+  obtain ⟨_v, p, hc, _hlen⟩ :=
+    (cycleGraph_isContained_iff (G := furediH k) (by decide : 2 < 4)).mp
+      (furediH_contains_cycleGraph_four hk)
+  exact hacyc p hc
 
 
 end SimpleGraph

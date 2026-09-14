@@ -110,5 +110,16 @@ theorem erdos_926.variants.furediH_chromaticNumber_eq_two {k : ℕ} (hk : 1 ≤ 
     (furediH k).chromaticNumber = 2 :=
   SimpleGraph.furediH_chromaticNumber_eq_two hk
 
+/-- Right bipartition part has size `k`. -/
+@[category API, AMS 5]
+theorem erdos_926.variants.ncard_partRight (k : ℕ) :
+    (SimpleGraph.furediH.partRight k).ncard = k :=
+  SimpleGraph.furediH.ncard_partRight k
+
+/-- For `k ≥ 2`, `H_k` is not a forest. -/
+@[category API, AMS 5]
+theorem erdos_926.variants.furediH_not_isAcyclic {k : ℕ} (hk : 2 ≤ k) :
+    ¬ (furediH k).IsAcyclic :=
+  SimpleGraph.furediH_not_isAcyclic hk
 
 end Erdos926
