@@ -162,5 +162,26 @@ lemma le_reciprocalSum_of_subset_Icc_two {A : Finset ℕ} {x : ℕ}
     hA.trans (Icc_subset_Icc_left (by omega : (1 : ℕ) ≤ 2))
   exact le_reciprocalSum_of_subset_Icc hsub hne (by omega)
 
+/-- Subsets of `{1, …, x}` have reciprocal sum at most their cardinality. -/
+lemma reciprocalSum_le_card_of_subset_Icc {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 1 x) :
+    reciprocalSum A ≤ A.card :=
+  reciprocalSum_le_card fun _a ha ↦ (mem_Icc.mp (hA ha)).1
+
+/-- If every element is at least `2`, then `∑ 1/a ≤ #A / 2`. -/
+lemma reciprocalSum_le_half_card {A : Finset ℕ} (hA : ∀ a ∈ A, 2 ≤ a) :
+    reciprocalSum A ≤ (A.card : ℝ) / 2 := by
+  simp only [reciprocalSum]
+  have hterm : ∀ a ∈ A, (1 : ℝ) / a ≤ (1 : ℝ) / 2 := by
+    intro a ha
+    exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2)
+      (by exact_mod_cast hA a ha)
+  refine (sum_le_sum hterm).trans ?_
+  simp [sum_const, nsmul_eq_mul, div_eq_mul_inv]
+
+/-- Admissible sieves for `H` live in `{2, …, x}`, so `∑ 1/a ≤ #A / 2`. -/
+lemma reciprocalSum_le_half_card_of_subset_Icc_two {A : Finset ℕ} {x : ℕ}
+    (hA : A ⊆ Icc 2 x) : reciprocalSum A ≤ (A.card : ℝ) / 2 :=
+  reciprocalSum_le_half_card fun _a ha ↦ (mem_Icc.mp (hA ha)).1
+
 
 end Finset

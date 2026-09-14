@@ -165,6 +165,15 @@ lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a �
     simpa [reciprocalSum_singleton] using hsum
   simpa [card_avoidsDivisors_singleton] using H_le_avoidsDivisors_card hA hsum'
 
+/-- If `#A / 2 ≤ C` for an admissible shape `A ⊆ {2, …, x}`, then `H` is at most the
+survivor count of `A` (via `∑ 1/a ≤ #A / 2`). -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card_of_half_card_le {C : ℝ} {A : Finset ℕ} {x : ℕ}
+    (hA : A ⊆ Icc 2 x) (hC : (A.card : ℝ) / 2 ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card :=
+  H_le_avoidsDivisors_card hA <|
+    (Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA).trans hC
+
 /-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
 @[category test, AMS 11]
 theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
@@ -257,5 +266,19 @@ theorem erdos_784.variants.card_empty_sieve (x : ℕ) :
 theorem erdos_784.variants.sieve_union (A B : Finset ℕ) (x : ℕ) :
     avoidsDivisors (A ∪ B) x = avoidsDivisors A x ∩ avoidsDivisors B x :=
   avoidsDivisors_union A B x
+
+/-- Subsets of `{1, …, x}` have `∑ 1/a ≤ #A`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_le_card_of_subset_Icc
+    {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 1 x) :
+    A.reciprocalSum ≤ A.card :=
+  Finset.reciprocalSum_le_card_of_subset_Icc hA
+
+/-- Admissible sieves satisfy `∑ 1/a ≤ #A / 2`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_le_half_card_of_subset_Icc_two
+    {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 2 x) :
+    A.reciprocalSum ≤ (A.card : ℝ) / 2 :=
+  Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA
 
 end Erdos784
