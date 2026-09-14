@@ -56,7 +56,7 @@ This was proved by Clemen, Dumitrescu, and Liu [CDL25], who observed that equidi
 short circular arc on a circle of radius $1$, together with the centre, are also an example.
 
 The classification is asked for all sufficiently large $n$. Small exceptions such as
-$\{(0,0), (1,0), (0,1), (0,-1)\}$ were known to Erdős, so the negative answer asserts
+$\{(0,0), (1,0), (0,1), (0,-1)\}$ exist, so the negative answer asserts
 counterexamples of arbitrarily large size, as in [CDL25].
 -/
 @[category research solved, AMS 5 52]
