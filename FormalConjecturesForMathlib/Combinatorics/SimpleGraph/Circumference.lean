@@ -69,6 +69,25 @@ lemma IsAcyclic.cycleLengths_eq_empty {α : Type*} {G : SimpleGraph α} (h : G.I
   rintro ⟨_a, w, hc, rfl⟩
   exact h w hc
 
+/-- The empty graph has no cycle lengths. -/
+@[simp]
+lemma cycleLengths_bot {α : Type*} : (⊥ : SimpleGraph α).cycleLengths = ∅ :=
+  IsAcyclic.cycleLengths_eq_empty isAcyclic_bot
+
+/-- Cycle lengths are monotone in the edge set. -/
+lemma cycleLengths_mono {α : Type*} {G H : SimpleGraph α} (h : G ≤ H) :
+    G.cycleLengths ⊆ H.cycleLengths := by
+  intro m hm
+  obtain ⟨a, w, hc, rfl⟩ := hm
+  refine ⟨a, w.mapLe h, (Walk.isCycle_mapLe h).mpr hc, ?_⟩
+  simp
+
+/-- Odd cycle lengths are monotone in the edge set. -/
+lemma oddCycleLengths_mono {α : Type*} {G H : SimpleGraph α} (h : G ≤ H) :
+    G.oddCycleLengths ⊆ H.oddCycleLengths := by
+  intro m hm
+  exact ⟨cycleLengths_mono h hm.1, hm.2⟩
+
 variable {α : Type*} [Fintype α]
 
 /-- A cycle uses at most `#α` vertices, so its length is `≤ Fintype.card α`. -/
@@ -116,5 +135,29 @@ lemma three_le_circumference_of_nonempty {G : SimpleGraph α} [DecidableRel G.Ad
     (h : G.cycleLengths.Nonempty) : 3 ≤ G.circumference := by
   obtain ⟨m, hm⟩ := h
   exact (three_le_of_mem_cycleLengths hm).trans (le_circumference_of_mem_cycleLengths hm)
+
+/-- Circumference vanishes if and only if there are no cycles. -/
+lemma circumference_eq_zero_iff {G : SimpleGraph α} [DecidableRel G.Adj] :
+    G.circumference = 0 ↔ G.cycleLengths = ∅ := by
+  constructor
+  · intro h
+    by_contra hne
+    have hne' : G.cycleLengths.Nonempty := Set.nonempty_iff_ne_empty.mpr hne
+    have : 3 ≤ G.circumference := three_le_circumference_of_nonempty hne'
+    omega
+  · exact circumference_eq_zero_of_cycleLengths_eq_empty
+
+omit [Fintype α] in
+/-- The empty graph has circumference `0`. -/
+lemma circumference_bot [DecidableEq α] : (⊥ : SimpleGraph α).circumference = 0 :=
+  circumference_eq_zero_of_cycleLengths_eq_empty cycleLengths_bot
+
+/-- Circumference is monotone in the edge set. -/
+lemma circumference_mono {G H : SimpleGraph α} [DecidableRel G.Adj] [DecidableRel H.Adj]
+    (h : G ≤ H) : G.circumference ≤ H.circumference := by
+  by_cases hg : G.cycleLengths.Nonempty
+  · refine csSup_le hg fun m hm ↦ le_circumference_of_mem_cycleLengths (cycleLengths_mono h hm)
+  · have : G.cycleLengths = ∅ := Set.not_nonempty_iff_eq_empty.mp hg
+    simp [circumference_eq_zero_of_cycleLengths_eq_empty this]
 
 end SimpleGraph
