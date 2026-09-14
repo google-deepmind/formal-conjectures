@@ -412,4 +412,64 @@ theorem completeGraph_isBridgeless (n : ℕ) :
       completeGraph_triangle_isCycle huv hvw hwu'⟩, ?_⟩
     simp [Cycle.edges, Walk.edges_cons]
 
+/-- For any `n ≥ 3`, `K_n` on `Fin n` is bridgeless. -/
+theorem completeGraph_isBridgeless_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    IsBridgeless (completeGraph (Fin n)) := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hn
+  rw [show (3 + k) = k + 3 from Nat.add_comm 3 k]
+  exact completeGraph_isBridgeless k
+
+/-- Bundled triangle `0-1-2-0` in `K_{n+3}`. -/
+lemma fin_add3_zero_ne_one (n : ℕ) : (0 : Fin (n + 3)) ≠ 1 := by
+  apply Fin.ne_of_val_ne
+  have h0 : ((0 : Fin (n + 3)) : ℕ) = 0 := rfl
+  have h1 : ((1 : Fin (n + 3)) : ℕ) = 1 % (n + 3) := Fin.val_one' (n + 3)
+  have : 1 % (n + 3) = 1 := Nat.mod_eq_of_lt (by omega)
+  omega
+
+lemma fin_add3_one_ne_two (n : ℕ) : (1 : Fin (n + 3)) ≠ 2 := by
+  apply Fin.ne_of_val_ne
+  have h1 : ((1 : Fin (n + 3)) : ℕ) = 1 % (n + 3) := Fin.val_one' (n + 3)
+  have h2 : ((2 : Fin (n + 3)) : ℕ) = 2 % (n + 3) := Fin.coe_ofNat_eq_mod (n + 3) 2
+  have : 1 % (n + 3) = 1 := Nat.mod_eq_of_lt (by omega)
+  have : 2 % (n + 3) = 2 := Nat.mod_eq_of_lt (by omega)
+  omega
+
+lemma fin_add3_two_ne_zero (n : ℕ) : (2 : Fin (n + 3)) ≠ 0 := by
+  apply Fin.ne_of_val_ne
+  have h2 : ((2 : Fin (n + 3)) : ℕ) = 2 % (n + 3) := Fin.coe_ofNat_eq_mod (n + 3) 2
+  have h0 : ((0 : Fin (n + 3)) : ℕ) = 0 := rfl
+  have : 2 % (n + 3) = 2 := Nat.mod_eq_of_lt (by omega)
+  omega
+
+/-- Bundled triangle `0-1-2-0` in `K_{n+3}`. -/
+def Cycle.completeGraph_triangle (n : ℕ) : Cycle (completeGraph (Fin (n + 3))) :=
+  ⟨0,
+    Walk.cons (show (completeGraph (Fin (n + 3))).Adj 0 1 from fin_add3_zero_ne_one n)
+      (Walk.cons (show (completeGraph (Fin (n + 3))).Adj 1 2 from fin_add3_one_ne_two n)
+        (Walk.cons (show (completeGraph (Fin (n + 3))).Adj 2 0 from fin_add3_two_ne_zero n)
+          Walk.nil)),
+    completeGraph_triangle_isCycle (fin_add3_zero_ne_one n) (fin_add3_one_ne_two n)
+      (fin_add3_two_ne_zero n)⟩
+
+@[simp]
+lemma Cycle.length_completeGraph_triangle (n : ℕ) :
+    (Cycle.completeGraph_triangle n).length = 3 := by
+  simp [completeGraph_triangle, length, Walk.length_cons]
+
+/-- `K_{n+3}` has an odd cycle (a triangle), hence `HasOddCycleWithChords _ 0`. -/
+lemma hasOddCycleWithChords_completeGraph_zero (n : ℕ) :
+    HasOddCycleWithChords (completeGraph (Fin (n + 3))) 0 :=
+  ⟨Cycle.completeGraph_triangle n, by
+    rw [Cycle.length_completeGraph_triangle]
+    exact ⟨1, rfl⟩, bot_le⟩
+
+/-- Same for any `K_n` with `n ≥ 3`. -/
+lemma hasOddCycleWithChords_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    HasOddCycleWithChords (completeGraph (Fin n)) 0 := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hn
+  rw [show (3 + k) = k + 3 from Nat.add_comm 3 k]
+  exact hasOddCycleWithChords_completeGraph_zero k
+
+
 end SimpleGraph

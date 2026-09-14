@@ -155,4 +155,29 @@ theorem erdos_1091.variants.completeGraph_isBridgeless (n : ℕ) :
     IsBridgeless (completeGraph (Fin (n + 3))) :=
   SimpleGraph.completeGraph_isBridgeless n
 
+/-- `K_n` (`n ≥ 3`) is bridgeless. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.completeGraph_isBridgeless_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    IsBridgeless (completeGraph (Fin n)) :=
+  SimpleGraph.completeGraph_isBridgeless_of_three_le hn
+
+/-- `K_{n+3}` has an odd cycle with (at least) `0` chords. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.hasOddCycleWithChords_completeGraph_zero (n : ℕ) :
+    HasOddCycleWithChords (completeGraph (Fin (n + 3))) 0 :=
+  SimpleGraph.hasOddCycleWithChords_completeGraph_zero n
+
+/-- `K_n` (`n ≥ 3`) has an odd cycle with (at least) `0` chords. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.hasOddCycleWithChords_completeGraph_of_three_le
+    {n : ℕ} (hn : 3 ≤ n) :
+    HasOddCycleWithChords (completeGraph (Fin n)) 0 :=
+  SimpleGraph.hasOddCycleWithChords_completeGraph_of_three_le hn
+
+/-- Bundled triangle in `K_{n+3}` has length `3`. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.length_completeGraph_triangle (n : ℕ) :
+    (Cycle.completeGraph_triangle n).length = 3 :=
+  Cycle.length_completeGraph_triangle n
+
 end Erdos1091
