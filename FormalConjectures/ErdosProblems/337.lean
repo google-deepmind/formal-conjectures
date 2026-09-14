@@ -101,8 +101,14 @@ $$
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
 $$
 and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Erdos337.lean#L163"]
 theorem erdos_337.variants.ruzsa_turjanyi :
     ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
