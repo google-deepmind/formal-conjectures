@@ -140,8 +140,7 @@ lemma H_zero_eq_self {x : ℕ} (hx : 1 ≤ x) : H (0 : ℝ) x = x :=
     one_div_pos.mpr (Nat.cast_pos.mpr (Nat.pos_of_ne_zero (by omega)))
 
 /-- For `x = 0` the survivor set is empty, so `H C 0 = 0` for every `C`. -/
-@[category API, AMS 11]
-@[simp]
+@[simp, category API, AMS 11]
 lemma H_of_x_zero (C : ℝ) : H C 0 = 0 := by
   classical
   by_cases hC : (0 : ℝ) ≤ C
