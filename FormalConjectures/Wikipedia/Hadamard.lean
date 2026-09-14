@@ -108,12 +108,130 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
      1,  1, -1,  -1,  1,  1,  -1, -1,  1,  -1,  1, -1;
      1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
      1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
+/-- Integer twin of `H12`: the same matrix over `ℤ`, where the orthogonality
+arithmetic is kernel-decidable. The two `decide` lemmas below do all 144×12
+products in `ℤ`; the `H12_map_row_*` lemmas transport entrywise to `ℝ`,
+keeping every declaration inside the default `maxHeartbeats` budget. -/
+private def N12 : Matrix (Fin 12) (Fin 12) ℤ :=
+!![  1,  1,  1,   1,  1,  1,   1,  1,  1,   1,  1,  1;
+     1,  1,  1,  -1, -1, -1,  -1, -1, -1,   1,  1,  1;
+     1,  1,  1,  -1, -1, -1,   1,  1,  1,  -1, -1, -1;
+     1, -1, -1,   1, -1, -1,  -1,  1,  1,  -1,  1,  1;
+     1, -1, -1,  -1,  1, -1,   1, -1,  1,   1, -1,  1;
+     1, -1, -1,  -1, -1,  1,   1,  1, -1,   1,  1, -1;
+     1, -1,  1,  -1,  1,  1,  -1,  1, -1,  -1, -1,  1;
+     1, -1,  1,   1, -1,  1,  -1, -1,  1,   1, -1, -1;
+     1, -1,  1,   1,  1, -1,   1, -1, -1,  -1,  1, -1;
+     1,  1, -1,  -1,  1,  1,  -1, -1,  1,  -1,  1, -1;
+     1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
+     1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
+
+@[category API, AMS 15]
+private lemma N12_orthogonal : N12.transpose * N12 = (12 : ℤ) • 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> decide
+
+@[category API, AMS 15]
+private lemma N12_entries : ∀ i j, N12 i j ∈ ({1, -1} : Finset ℤ) := by decide
+
+@[category API, AMS 15]
+private lemma H12_map_row_0 (j : Fin 12) :
+    H12 ⟨0, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨0, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_1 (j : Fin 12) :
+    H12 ⟨1, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨1, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_2 (j : Fin 12) :
+    H12 ⟨2, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨2, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_3 (j : Fin 12) :
+    H12 ⟨3, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨3, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_4 (j : Fin 12) :
+    H12 ⟨4, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨4, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_5 (j : Fin 12) :
+    H12 ⟨5, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨5, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_6 (j : Fin 12) :
+    H12 ⟨6, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨6, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_7 (j : Fin 12) :
+    H12 ⟨7, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨7, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_8 (j : Fin 12) :
+    H12 ⟨8, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨8, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_9 (j : Fin 12) :
+    H12 ⟨9, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨9, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_10 (j : Fin 12) :
+    H12 ⟨10, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨10, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_map_row_11 (j : Fin 12) :
+    H12 ⟨11, by omega⟩ j = ((N12.map (⇑(Int.castRingHom ℝ))) ⟨11, by omega⟩ j) := by
+  fin_cases j <;> norm_num [H12, N12]
+
+@[category API, AMS 15]
+private lemma H12_eq_map : H12 = N12.map (⇑(Int.castRingHom ℝ)) := by
+  ext i j
+  fin_cases i
+  exacts [H12_map_row_0 j, H12_map_row_1 j, H12_map_row_2 j, H12_map_row_3 j,
+    H12_map_row_4 j, H12_map_row_5 j, H12_map_row_6 j, H12_map_row_7 j,
+    H12_map_row_8 j, H12_map_row_9 j, H12_map_row_10 j, H12_map_row_11 j]
+
+@[category API, AMS 15]
+private lemma H12_orthogonal : H12.transpose * H12 = (12 : ℝ) • 1 := by
+  rw [H12_eq_map, ← Matrix.transpose_map,
+    ← Matrix.map_mul (f := Int.castRingHom ℝ), N12_orthogonal]
+  ext i j
+  simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.one_apply]
+  by_cases h : i = j <;> simp [h]
+
 /--
 which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  constructor
+  · intro i j
+    rw [H12_eq_map]
+    rcases Finset.mem_insert.mp (N12_entries i j) with h | h
+    · rw [Matrix.map_apply, h]; norm_num
+    · rw [Matrix.map_apply, Finset.mem_singleton.mp h]; norm_num
+  · have hdet : H12.det ^ 2 = (12 : ℝ) ^ 12 := by
+      have h1 : (H12.transpose * H12).det = (12 : ℝ) ^ 12 := by
+        rw [H12_orthogonal, Matrix.det_smul, Matrix.det_one]
+        simp
+      rwa [Matrix.det_mul, Matrix.det_transpose, ← sq] at h1
+    have habs : |H12.det| = (2985984 : ℝ) := by
+      have h2 : ((12 : ℝ) ^ 12) = (2985984 : ℝ) ^ 2 := by norm_num
+      rw [← Real.sqrt_sq_eq_abs, hdet, h2, Real.sqrt_sq (by norm_num : (0:ℝ) ≤ 2985984)]
+    rw [habs]
+    rw [show ((12 : ℕ) : ℝ) / 2 = ((6 : ℕ) : ℝ) from by norm_num, Real.rpow_natCast]
+    norm_num
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
