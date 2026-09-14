@@ -188,4 +188,32 @@ theorem circumference_cycleGraph (n : ℕ) :
   simpa using circumference_le_card (cycleGraph (n + 3))
 
 
+
+/-- If a cycle of length `#α` exists, the circumference attains the absolute upper bound. -/
+lemma circumference_eq_card_of_mem_cycleLengths {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : Fintype.card α ∈ G.cycleLengths) : G.circumference = Fintype.card α :=
+  le_antisymm (circumference_le_card G) (le_circumference_of_mem_cycleLengths h)
+
+/-- `cycleGraph (n + 3)` embeds into the complete graph on the same vertex set. -/
+lemma cycleGraph_le_completeGraph (n : ℕ) :
+    cycleGraph (n + 3) ≤ (⊤ : SimpleGraph (Fin (n + 3))) :=
+  le_top
+
+/-- Hence the complete graph on `n + 3` vertices has circumference at least `n + 3`. -/
+lemma n_add_three_le_circumference_completeGraph (n : ℕ) :
+    n + 3 ≤ (⊤ : SimpleGraph (Fin (n + 3))).circumference := by
+  have := circumference_mono (cycleGraph_le_completeGraph n)
+  simpa [circumference_cycleGraph n] using this
+
+/-- The complete graph on `Fin (n + 3)` has circumference exactly `n + 3`. -/
+theorem circumference_completeGraph_fin (n : ℕ) :
+    (⊤ : SimpleGraph (Fin (n + 3))).circumference = n + 3 :=
+  le_antisymm (by simpa using circumference_le_card (⊤ : SimpleGraph (Fin (n + 3))))
+    (n_add_three_le_circumference_completeGraph n)
+
+/-- Same statement with `completeGraph` notation. -/
+theorem circumference_completeGraph (n : ℕ) :
+    (completeGraph (Fin (n + 3))).circumference = n + 3 :=
+  circumference_completeGraph_fin n
+
 end SimpleGraph
