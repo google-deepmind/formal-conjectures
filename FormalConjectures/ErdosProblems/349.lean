@@ -52,15 +52,15 @@ theorem complete_for_alpha_in_Ioo_one_to_goldenRatio (t α : ℝ) (ht : 0 < t)
   sorry
 
 /--
-For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha$
+For any $k$ there exists some $t_k\in (0,1)$ such that the set of $\alpha > 0$
 such that the sequence $\lfloor t_k\alpha^n\rfloor$ is complete consists of at least $k$
-disjoint line segments.
+disjoint line segments, that is, it has at least $k$ connected components.
 -/
 @[category research solved, AMS 11]
 theorem exists_t_for_k_disjoint_segments (k : ℕ) :
-    ∃ t ∈ Ioo 0 1, ∃ (ι : Type), k ≤ (Set.univ : Set ι).encard ∧ ∃ I : ι → Set ℝ,
-      (∀ i, 2 ≤ (I i).encard ∧ (I i).Nonempty ∧ IsConnected (I i)) ∧
-      Pairwise (Disjoint on I) ∧ (⋃ i, I i) ⊆ {α | α > 0 ∧ IsGoodPair t α} := by
+    ∃ t ∈ Ioo 0 1,
+      let S := {α | 0 < α ∧ IsGoodPair t α}
+      k ≤ (connectedComponentIn S '' S).encard := by
   sorry
 
 /--

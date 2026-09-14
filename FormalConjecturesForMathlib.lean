@@ -106,6 +106,7 @@ public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import FormalConjecturesForMathlib.Computability.Complexity
 public import FormalConjecturesForMathlib.Computability.DFA
+public import FormalConjecturesForMathlib.Computability.Primrec
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
@@ -140,6 +141,7 @@ public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.GroupTheory.Torsion
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
@@ -150,6 +152,10 @@ public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.AlmostPrime
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.CenterAction
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.LieDeriv
+public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.Subgroups
 public import FormalConjecturesForMathlib.NumberTheory.BeurlingPrimes
 public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 public import FormalConjecturesForMathlib.NumberTheory.CoveringSystem
