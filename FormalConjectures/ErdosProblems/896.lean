@@ -148,15 +148,13 @@ theorem erdos_896.variants.maxF_mono {M N : ℕ} (h : M ≤ N) : maxF M ≤ maxF
 @[category test, AMS 11]
 theorem erdos_896.variants.maxF_zero : maxF 0 = 0 := by
   classical
-  have hI : Icc 1 0 = (∅ : Finset ℕ) := by simp
-  simp [maxF, hI]
+  simp [maxF, F, Icc_eq_empty_of_lt]
 
 /-- `maxF 1 = 1`. -/
 @[category test, AMS 11]
 theorem erdos_896.variants.maxF_one : maxF 1 = 1 := by
-  refine le_antisymm ?_ ?_
-  · simpa using maxF_le_sq 1
-  · exact Nat.succ_le_iff.mp (maxF_pos (Nat.le_refl 1))
+  refine le_antisymm (by simpa using maxF_le_sq 1) ?_
+  exact Nat.succ_le_of_lt (maxF_pos (Nat.le_refl 1))
 
 
 end Erdos896
