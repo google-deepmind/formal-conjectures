@@ -221,5 +221,23 @@ theorem erdos_1012.variants.circumference_completeGraph_fin_eq (n : ℕ) :
     (completeGraph (Fin n)).circumference = if 3 ≤ n then n else 0 :=
   SimpleGraph.circumference_completeGraph_fin_eq
 
+/-- Girth ≤ circumference when the graph is not a forest. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.girth_le_circumference
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (h : ¬ G.IsAcyclic) : G.girth ≤ G.circumference :=
+  SimpleGraph.girth_le_circumference h
+
+/-- `K_n` on `Fin n` (`n ≥ 3`) has girth `3`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.girth_completeGraph {n : ℕ} (hn : 3 ≤ n) :
+    (completeGraph (Fin n)).girth = 3 :=
+  SimpleGraph.girth_completeGraph_of_three_le hn
+
+/-- Girth of `C_{n+3}` is at most `n+3`. -/
+@[category test, AMS 5]
+theorem erdos_1012.variants.girth_cycleGraph_le (n : ℕ) :
+    (cycleGraph (n + 3)).girth ≤ n + 3 :=
+  SimpleGraph.girth_cycleGraph_le n
 
 end Erdos1012

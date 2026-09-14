@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Girth
 public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Order.Lattice.Nat
@@ -268,6 +269,52 @@ theorem circumference_completeGraph_fin_eq {n : ℕ} :
   split_ifs with hn
   · exact circumference_completeGraph_of_three_le hn
   · exact circumference_completeGraph_of_lt_three (lt_of_not_ge hn)
+
+/-- In a non-acyclic graph, girth is at most circumference (shortest ≤ longest cycle). -/
+lemma girth_le_circumference {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : ¬ G.IsAcyclic) : G.girth ≤ G.circumference := by
+  obtain ⟨a, w, hw, hg⟩ := exists_girth_eq_length.mpr h
+  have hmem : w.length ∈ G.cycleLengths := ⟨a, w, hw, rfl⟩
+  exact hg ▸ le_circumference_of_mem_cycleLengths hmem
+
+/-- If `#α < 3` then `G` is acyclic, so girth is the junk value `0`. -/
+lemma girth_eq_zero_of_card_lt_three {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : Fintype.card α < 3) : G.girth = 0 := by
+  have hempty : G.cycleLengths = ∅ := by
+    ext m
+    simp only [Set.mem_empty_iff_false, iff_false]
+    intro hm
+    have hle := mem_cycleLengths_le_card hm
+    have h3 := three_le_of_mem_cycleLengths hm
+    omega
+  have hacyc : G.IsAcyclic := fun {_v} p hp ↦ by
+    have hmem : p.length ∈ G.cycleLengths := ⟨_, p, hp, rfl⟩
+    exact (hempty ▸ hmem).elim
+  exact hacyc.girth_eq_zero
+
+/-- `K_n` on `Fin n` (`n ≥ 3`) has girth `3`. -/
+theorem girth_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    (completeGraph (Fin n)).girth = 3 := by
+  have heg : egirth (⊤ : SimpleGraph (Fin n)) = 3 :=
+    egirth_top (by
+      simp only [ENat.card_eq_coe_fintype_card, Fintype.card_fin]
+      exact_mod_cast hn)
+  simpa [girth, completeGraph] using congrArg ENat.toNat heg
+
+/-- Combined: girth of `K_n` on `Fin n` is `3` if `n ≥ 3`, else `0`. -/
+theorem girth_completeGraph_fin_eq {n : ℕ} :
+    (completeGraph (Fin n)).girth = if 3 ≤ n then 3 else 0 := by
+  split_ifs with hn
+  · exact girth_completeGraph_of_three_le hn
+  · exact girth_eq_zero_of_card_lt_three (by simpa using lt_of_not_ge hn)
+
+/-- Girth of `C_{n+3}` is at most `n+3` (witnessed by the Eulerian cycle). -/
+lemma girth_cycleGraph_le (n : ℕ) : (cycleGraph (n + 3)).girth ≤ n + 3 := by
+  simpa [cycleGraph.length_cycle] using girth_le_length (cycleGraph.isCycle_cycle (n := n))
+
+/-- Hence `3 ≤ girth(C_{n+3}) ≤ n+3 ≤ circumference(C_{n+3})`. -/
+lemma three_le_girth_cycleGraph (n : ℕ) : 3 ≤ (cycleGraph (n + 3)).girth :=
+  three_le_girth (cycleGraph_not_isAcyclic n)
 
 
 end SimpleGraph
