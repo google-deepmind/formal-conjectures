@@ -6,7 +6,8 @@ proof lives outside this repository. Nothing else follows the link. This script 
 
 For each `formal_proof using <kind> at "<url>"` in `FormalConjectures/`:
 
-1. Fetch the target. A GitHub `blob` URL is fetched as raw content. Report HTTP errors.
+1. Fetch the target. A GitHub `blob` URL is fetched as raw content. Report HTTP errors, and
+   whether the Wayback Machine holds a copy, which helps re-pointing but is not the proof.
 2. If the link has a line anchor (`#L123`), check that a `theorem` or `lemma` starts within
    a few lines of it. An anchor that lands on nothing is stale. Report it.
 3. If the link has no anchor and is a `formal_conjectures` link (a fork of this repository),
@@ -37,6 +38,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -168,7 +170,28 @@ def fetch(url):
         return type(e).__name__, ""
 
 
-def check_link(link, body_cache, compare=True):
+WAYBACK_CDX = "https://web.archive.org/cdx/search/cdx?output=json&limit=1&fl=timestamp&filter=statuscode:200&url="
+
+
+def wayback_snapshot(url):
+    """The date (YYYYMMDD) of the most recent Wayback Machine capture of `url`, or None.
+
+    A snapshot is help for re-pointing a dead link, not a substitute for it: a fork that was
+    rebased usually means the proof changed. The result is reported, never used to clear a
+    finding. Rate limited by archive.org, so this is called only for unreachable targets.
+    """
+    page = url.split("#")[0]
+    status, body = fetch(WAYBACK_CDX + urllib.parse.quote(page, safe=""))
+    if status != 200:
+        return None
+    try:
+        rows = json.loads(body)
+    except ValueError:
+        return None
+    return rows[1][0][:8] if len(rows) > 1 and rows[1] else None
+
+
+def check_link(link, body_cache, compare=True, wayback=True):
     """Return a list of findings for one link. Empty means the link is fine."""
     target = raw_url(link["url"])
     if target not in body_cache:
@@ -177,7 +200,11 @@ def check_link(link, body_cache, compare=True):
 
     findings = []
     if status != 200:
-        findings.append(finding(link, "unreachable", f"HTTP {status}"))
+        extra = {}
+        if wayback:
+            snapshot = wayback_snapshot(link["url"])
+            extra["wayback"] = snapshot or "none"
+        findings.append(finding(link, "unreachable", f"HTTP {status}", **extra))
         return findings
 
     if not target.endswith(".lean") or link["name"] is None:
@@ -224,7 +251,7 @@ def finding(link, kind, detail, **extra):
     return record
 
 
-def run(links, compare=True):
+def run(links, compare=True, wayback=True):
     body_cache = {}
     # Fetch every distinct target once, in parallel, then check sequentially.
     targets = sorted({raw_url(l["url"]) for l in links})
@@ -233,7 +260,7 @@ def run(links, compare=True):
             body_cache[target] = result
     findings = []
     for link in links:
-        findings.extend(check_link(link, body_cache, compare=compare))
+        findings.extend(check_link(link, body_cache, compare=compare, wayback=wayback))
     return findings
 
 
@@ -242,6 +269,7 @@ def main(argv=None):
     parser.add_argument("--quiet", action="store_true", help="print only the summary line")
     parser.add_argument("--compare", action="store_true", help="also report statement differences")
     parser.add_argument("--offline", action="store_true", help="list links without fetching")
+    parser.add_argument("--no-wayback", action="store_true", help="do not query the Wayback Machine for dead links")
     args = parser.parse_args(argv)
 
     links = find_links()
@@ -249,7 +277,7 @@ def main(argv=None):
         print(json.dumps(links, indent=2, ensure_ascii=False))
         return 0
 
-    findings = run(links, compare=args.compare)
+    findings = run(links, compare=args.compare, wayback=not args.no_wayback)
     if not args.quiet:
         print(json.dumps(findings, indent=2, ensure_ascii=False))
     counts = {}

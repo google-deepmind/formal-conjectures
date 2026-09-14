@@ -141,8 +141,9 @@ class CheckLinkTest(unittest.TestCase):
 
     def test_unreachable(self):
         cache = {raw_url(link()["url"]): (404, "")}
-        kinds = [f["kind"] for f in check_link(link(), cache)]
-        self.assertEqual(kinds, ["unreachable"])
+        findings = check_link(link(), cache, wayback=False)
+        self.assertEqual([f["kind"] for f in findings], ["unreachable"])
+        self.assertNotIn("wayback", findings[0])
 
     def test_stale_anchor_is_reported(self):
         l = link(url="https://github.com/x/y/blob/c/F.lean#L50")
