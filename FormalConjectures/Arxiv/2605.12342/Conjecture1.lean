@@ -80,6 +80,8 @@ is in the exception list: $\Gamma_{2 \oplus 2} \cong C_2$ has rank $1$. The form
 conclusion `∃ g₁ g₂, closure {g₁, g₂} = ⊤` encodes 2-generation (at most $2$ generators),
 which $\Gamma_{2 \oplus 2}$ also satisfies. The other three exceptions $(3,3), (4,3), (4,4)$
 have rank $3$ and are genuinely not 2-generated.
+
+The proof was developed and formalized by Kenta Kitamura, see [K26] for more details.
 -/
 @[category research solved, AMS 20,
   formal_proof using lean4 at
