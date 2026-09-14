@@ -31,11 +31,13 @@ def Erdos672With (k l : ℕ) : Prop :=
 
 /--
 Can the product of an arithmetic progression of positive integers $n, n + d, ..., n + (k - 1)d$
-of length ≥ 4, with $(n, d) = 1$, be a perfect power?
+of length $k ≥ 4$, with $(n, d) = 1$, be a perfect power?
+
+Erdős believed not, i.e. that `Erdos672With k l` holds for all $k ≥ 4$ and $l > 1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
-    answer(sorry) ↔ ∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l := by
+    answer(sorry) ↔ ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/

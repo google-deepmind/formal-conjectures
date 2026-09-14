@@ -65,11 +65,11 @@ theorem erdos_973.variants.le_one :
 In [Er92f] (a different) Erdős refines this analysis, proving that if
 $M_2=\min_{z_j} \max_{2\leq k\leq n+1} \left\lvert \sum_{1\leq j\leq n}z_j^k\right\rvert$
 where the minimum is taken over all $z_j\in \mathbb{C}$ with $\max \lvert z_j\rvert=1$, then
-$(1.746)^{-n} < M_2 < (1.745)^{-n}$.
+$(1.746)^{-n} < M_2 < (1.745)^{-n}$ for all sufficiently large $n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_973.variants.m2_bounds :
-    ∀ n : ℕ, n ≥ 2 → ∀ M_2 : ℝ,
+    ∀ᶠ n : ℕ in atTop, ∀ M_2 : ℝ,
       IsGLB { M | ∃ z : ℕ → ℂ,
         (∀ j ∈ Icc 1 n, ‖z j‖ ≤ 1) ∧
         (∃ j ∈ Icc 1 n, ‖z j‖ = 1) ∧
