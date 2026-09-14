@@ -41,6 +41,14 @@ def edgeThreshold (k n : ℕ) : ℕ :=
 lemma edgeThreshold_pos (k n : ℕ) : 1 ≤ edgeThreshold k n := by
   simp [edgeThreshold]
 
+/-- The Woodall/Ore threshold is nondecreasing in `n`. -/
+@[category API, AMS 5]
+lemma edgeThreshold_mono_right (k : ℕ) {n n' : ℕ} (h : n ≤ n') :
+    edgeThreshold k n ≤ edgeThreshold k n' := by
+  have : n - k - 1 ≤ n' - k - 1 := by omega
+  unfold edgeThreshold
+  gcongr
+
 /--
 `ForcesCycle k n` means that every graph on `n` vertices with at least
 `edgeThreshold k n` edges contains a cycle of length $n-k$.

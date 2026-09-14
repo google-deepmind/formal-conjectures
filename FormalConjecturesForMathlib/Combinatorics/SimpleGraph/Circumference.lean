@@ -103,4 +103,18 @@ lemma IsAcyclic.circumference_eq_zero {G : SimpleGraph α} [DecidableRel G.Adj]
     (h : G.IsAcyclic) : G.circumference = 0 :=
   circumference_eq_zero_of_cycleLengths_eq_empty h.cycleLengths_eq_empty
 
+/-- Circumference is at most the number of vertices. -/
+lemma circumference_le_card (G : SimpleGraph α) [DecidableRel G.Adj] :
+    G.circumference ≤ Fintype.card α := by
+  by_cases h : G.cycleLengths.Nonempty
+  · exact csSup_le h fun m hm ↦ mem_cycleLengths_le_card hm
+  · have hempty : G.cycleLengths = ∅ := Set.not_nonempty_iff_eq_empty.mp h
+    simp [circumference_eq_zero_of_cycleLengths_eq_empty hempty]
+
+/-- If there is any cycle, the circumference is at least `3`. -/
+lemma three_le_circumference_of_nonempty {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : G.cycleLengths.Nonempty) : 3 ≤ G.circumference := by
+  obtain ⟨m, hm⟩ := h
+  exact (three_le_of_mem_cycleLengths hm).trans (le_circumference_of_mem_cycleLengths hm)
+
 end SimpleGraph
