@@ -289,10 +289,31 @@ lemma hasOddCycleWithChords_cycleGraph_zero {n : ℕ} (h : Odd (n + 3)) :
     HasOddCycleWithChords (cycleGraph (n + 3)) 0 :=
   ⟨Cycle.cycleGraph n, by simpa [Cycle.length_cycleGraph] using h, bot_le⟩
 
-/-- In particular they are not forests. -/
-lemma cycleGraph_not_isAcyclic_of_odd {n : ℕ} (h : Odd (n + 3)) :
+/-- Every `cycleGraph (n + 3)` contains a cycle, so it is never a forest. -/
+theorem cycleGraph_not_isAcyclic (n : ℕ) : ¬ (cycleGraph (n + 3)).IsAcyclic :=
+  fun hacyc ↦ hacyc (cycleGraph.cycle n) cycleGraph.isCycle_cycle
+
+/-- The odd-length case is the unconditional statement. -/
+lemma cycleGraph_not_isAcyclic_of_odd {n : ℕ} (_h : Odd (n + 3)) :
     ¬ (cycleGraph (n + 3)).IsAcyclic :=
-  not_isAcyclic_of_hasOddCycleWithChords (hasOddCycleWithChords_cycleGraph_zero h)
+  cycleGraph_not_isAcyclic n
+
+/-- The cycle graph on `n + 3` vertices has exactly `n + 3` edges. -/
+lemma cycleGraph_card_edgeFinset (n : ℕ) :
+    (cycleGraph (n + 3)).edgeFinset.card = n + 3 := by
+  classical
+  have hdeg : ∀ v : Fin (n + 3), (cycleGraph (n + 3)).degree v = 2 :=
+    fun _ => cycleGraph_degree_three_le
+  have hsum := (cycleGraph (n + 3)).sum_degrees_eq_twice_card_edges
+  simp only [hdeg, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hsum
+  have : (n + 3) * 2 = 2 * (cycleGraph (n + 3)).edgeFinset.card := by simpa using hsum
+  omega
+
+/-- Nonempty edge set of `cycleGraph`, via the card formula. -/
+lemma cycleGraph_edgeFinset_nonempty (n : ℕ) :
+    (cycleGraph (n + 3)).edgeFinset.Nonempty := by
+  rw [Finset.card_pos.symm, cycleGraph_card_edgeFinset]
+  omega
 
 
 end SimpleGraph

@@ -117,4 +117,24 @@ theorem erdos_1091.variants.counterexample :
           (∀ c : G.Cycle, c.chords.encard ≤ 10) := by
   sorry
 
+
+/-- `C_{n+3}` is bridgeless. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.cycleGraph_isBridgeless (n : ℕ) :
+    IsBridgeless (cycleGraph (n + 3)) :=
+  SimpleGraph.cycleGraph_isBridgeless n
+
+/-- The Eulerian cycle of `C_{n+3}` has no chords. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.cycleGraph_chords_eq_empty (n : ℕ) :
+    (Cycle.cycleGraph n).chords = ∅ :=
+  Cycle.cycleGraph_chords_eq_empty n
+
+/-- `C_{n+3}` is never a forest. -/
+@[category test, AMS 5]
+theorem erdos_1091.variants.cycleGraph_not_isAcyclic (n : ℕ) :
+    ¬ (cycleGraph (n + 3)).IsAcyclic :=
+  SimpleGraph.cycleGraph_not_isAcyclic n
+
+
 end Erdos1091
