@@ -19,6 +19,8 @@ public import Mathlib.Data.Nat.Nth
 public import Mathlib.Data.Nat.Count
 public import Mathlib.Data.Real.Basic
 public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.FieldSimp
 
 @[expose] public section
 
@@ -169,6 +171,54 @@ lemma nth_divisors_succ_le_self {n i : ℕ} (hn : n ≠ 0)
     (hi : i + 1 < n.divisors.card) :
     nth (· ∈ n.divisors) (i + 1) ≤ n :=
   nth_divisors_le_self hn hi
+
+/-- Telescoping product of consecutive ratios: `∏ d_{i+1}/d_i = d_{last}/d_0`. -/
+lemma prod_div_telescope {f : ℕ → ℝ} (m : ℕ) (hf : ∀ i ≤ m, f i ≠ 0) :
+    (∏ i ∈ Finset.range m, f (i + 1) / f i) = f m / f 0 := by
+  induction m with
+  | zero => simp [hf 0 le_rfl]
+  | succ m ih =>
+    rw [Finset.prod_range_succ, ih fun i hi ↦ hf i (le_trans hi (Nat.le_succ _))]
+    field_simp [hf m (Nat.le_succ _), hf (m + 1) le_rfl, hf 0 (Nat.zero_le _)]
+
+/-- Enumerated divisors on valid indices are positive as reals. -/
+lemma nth_divisors_ne_zero {n i : ℕ} (hi : i < n.divisors.card) :
+    (nth (· ∈ n.divisors) i : ℝ) ≠ 0 := by
+  classical
+  have hfin : (Set.ofPred (· ∈ n.divisors)).Finite := n.divisors.finite_toSet
+  have hcard : hfin.toFinset.card = n.divisors.card := by
+    congr 1
+    ext x
+    simp [Set.Finite.mem_toFinset]
+  have hmem := nth_mem_of_lt_card hfin (by rw [hcard]; exact hi)
+  exact ne_of_gt (Nat.cast_pos.mpr (Nat.pos_of_mem_divisors hmem))
+
+/--
+The product of all consecutive divisor ratios telescopes to `n`:
+`∏_{i < τ(n)-1} d_{i+1}/d_i = n` (since `d_0 = 1` and `d_{τ-1} = n`).
+-/
+theorem prod_consecutiveDivisorRatio {n : ℕ} (hn : n ≠ 0) :
+    (∏ i ∈ Finset.range (n.divisors.card - 1), consecutiveDivisorRatio n i) = (n : ℝ) := by
+  classical
+  let k := n.divisors.card - 1
+  have hτ : 0 < n.divisors.card :=
+    Finset.card_pos.mpr ⟨1, Nat.one_mem_divisors.mpr hn⟩
+  have hk : n.divisors.card = k + 1 := by omega
+  let f := fun i : ℕ ↦ (nth (· ∈ n.divisors) i : ℝ)
+  have hf : ∀ i ≤ k, f i ≠ 0 := by
+    intro i hi
+    exact nth_divisors_ne_zero (by omega)
+  have htele : (∏ i ∈ Finset.range k, f (i + 1) / f i) = f k / f 0 :=
+    prod_div_telescope k hf
+  calc
+    (∏ i ∈ Finset.range (n.divisors.card - 1), consecutiveDivisorRatio n i)
+        = ∏ i ∈ Finset.range k, f (i + 1) / f i := by
+          simp only [k, consecutiveDivisorRatio, f]
+    _ = f k / f 0 := htele
+    _ = (n : ℝ) / 1 := by
+      simp only [f, k]
+      rw [nth_divisors_zero hn, nth_divisors_last hn, Nat.cast_one]
+    _ = n := by simp
 
 
 end Nat

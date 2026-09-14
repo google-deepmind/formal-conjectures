@@ -106,6 +106,10 @@ theorem erdos_1099.variants.liminf_ge_one (α : ℝ) (hα : 1 < α) :
       _ = h α n := rfl
   exact_mod_cast hR
 
+/--
+Erdős asked whether $h_\alpha(n!)$ stays bounded for each fixed $\alpha > 1$.
+-/
+@[category research open, AMS 11]
 theorem erdos_1099.variants.factorial :
     answer(sorry) ↔
       ∀ α > (1 : ℝ), ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, h α n.factorial ≤ C := by
@@ -185,5 +189,16 @@ theorem erdos_1099.variants.nth_divisors_last {n : ℕ} (hn : n ≠ 0) :
     Nat.nth (· ∈ n.divisors) (n.divisors.card - 1) = n :=
   Nat.nth_divisors_last hn
 
+/-- The first enumerated divisor is `1`. -/
+@[category API, AMS 11]
+theorem erdos_1099.variants.nth_divisors_zero {n : ℕ} (hn : n ≠ 0) :
+    Nat.nth (· ∈ n.divisors) 0 = 1 :=
+  Nat.nth_divisors_zero hn
+
+/-- Consecutive ratios telescope: `∏ d_{i+1}/d_i = n`. -/
+@[category API, AMS 11]
+theorem erdos_1099.variants.prod_consecutiveDivisorRatio {n : ℕ} (hn : n ≠ 0) :
+    (∏ i ∈ range (n.divisors.card - 1), n.consecutiveDivisorRatio i) = (n : ℝ) :=
+  Nat.prod_consecutiveDivisorRatio hn
 
 end Erdos1099
