@@ -140,4 +140,14 @@ theorem erdos_861.variants.greedySidon_strictMono :
 theorem erdos_861.variants.greedySidon_zero : Finset.greedySidon 0 = 1 :=
   Finset.greedySidon_zero
 
+
+
+/-- The finite greedy set equals the initial segment of the sequence. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidon_aux_eq_image (n : ℕ) :
+    (Finset.greedySidon.aux n).1.1 =
+      (Finset.range (n + 1)).image Finset.greedySidon :=
+  Finset.greedySidon.aux_eq_image n
+
+
 end Erdos861

@@ -588,4 +588,51 @@ lemma le_greedySidon (n : ℕ) : n ≤ greedySidon n :=
 
 
 
+
+
+/-- The finite Sidon set at step `n` is exactly `{greedySidon 0, …, greedySidon n}`. -/
+lemma greedySidon.aux_eq_image (n : ℕ) :
+    (greedySidon.aux n).1.1 = (Finset.range (n + 1)).image greedySidon := by
+  induction n with
+  | zero =>
+    ext x
+    simp [aux_zero, greedySidon_zero]
+  | succ n ih =>
+    have hunion :
+        (greedySidon.aux (n + 1)).1.1 =
+          (greedySidon.aux n).1.1 ∪ {greedySidon (n + 1)} := by
+      dsimp [greedySidon.aux, greedySidon]
+    have hnotin : greedySidon (n + 1) ∉ (Finset.range (n + 1)).image greedySidon := by
+      intro h
+      obtain ⟨i, hi, hgi⟩ := Finset.mem_image.mp h
+      have hi' : i < n + 1 := mem_range.mp hi
+      exact (hi'.ne (greedySidon.injective hgi)).elim
+    ext x
+    simp only [hunion, ih, mem_union, mem_image, mem_range, mem_singleton]
+    constructor
+    · rintro (⟨i, hi, rfl⟩ | rfl)
+      · exact ⟨i, by omega, rfl⟩
+      · exact ⟨n + 1, by omega, rfl⟩
+    · rintro ⟨i, hi, rfl⟩
+      have : i ≤ n ∨ i = n + 1 := by omega
+      cases this with
+      | inl hle => exact Or.inl ⟨i, Nat.lt_succ_iff.mpr hle, rfl⟩
+      | inr heq =>
+        subst heq
+        exact Or.inr rfl
+
+/-- Membership in the finite greedy set ↔ some index `≤ n`. -/
+lemma greedySidon.mem_aux_iff {n x : ℕ} :
+    x ∈ (greedySidon.aux n).1.1 ↔ ∃ i ≤ n, greedySidon i = x := by
+  constructor
+  · intro hx
+    rw [aux_eq_image, mem_image] at hx
+    obtain ⟨i, hi, rfl⟩ := hx
+    exact ⟨i, Nat.lt_succ_iff.mp (mem_range.mp hi), rfl⟩
+  · rintro ⟨i, hle, rfl⟩
+    rw [aux_eq_image, mem_image]
+    exact ⟨i, mem_range.mpr (Nat.lt_succ_iff.mpr hle), rfl⟩
+
+
+
 end Finset
