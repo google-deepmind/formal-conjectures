@@ -61,8 +61,10 @@ Is there an $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively p
 which is prime-free?
 -/
 
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a103425-prime-free/blob/b04b155/lean/OeisA103425FC.lean#L13-L35"]
+theorem conjecture : answer(True) ↔
     ∃ (a b c : ℤ) (x : ℕ → ℤ),
       Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧
       IsWeightedTribonacci a b c x ∧
