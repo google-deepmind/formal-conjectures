@@ -181,6 +181,24 @@ lemma isBridgeless_bot : IsBridgeless (⊥ : SimpleGraph V) := by
   intro e he
   exact (SimpleGraph.edgeSet_bot ▸ he).elim
 
+/-- Graphs with no edges are bridgeless. -/
+lemma isBridgeless_of_edgeSet_eq_empty {G : SimpleGraph V} (h : G.edgeSet = ∅) :
+    IsBridgeless G := by
+  intro e he
+  exact (h ▸ he).elim
+
+/-- An edge of a cycle is never a bridge. -/
+lemma Cycle.not_isBridge_of_mem_edges {G : SimpleGraph V} (c : Cycle G) {e : Sym2 V}
+    (he : e ∈ c.edges) : ¬ G.IsBridge e :=
+  fun hbr ↦ hbr.notMem_edges_of_isCycle c.isCycle he
+
+/-- If every edge lies on some cycle, then `G` is bridgeless. -/
+lemma IsBridgeless.of_forall_exists_cycle_mem_edges {G : SimpleGraph V}
+    (h : ∀ e ∈ G.edgeSet, ∃ c : Cycle G, e ∈ c.edges) : IsBridgeless G := by
+  intro e he hbr
+  obtain ⟨c, hc⟩ := h e he
+  exact c.not_isBridge_of_mem_edges hc hbr
+
 /-- An odd cycle (even without chords) witnesses that `G` is not acyclic. -/
 lemma not_isAcyclic_of_hasOddCycleWithChords {G : SimpleGraph V} {k : ℕ}
     (h : HasOddCycleWithChords G k) : ¬ G.IsAcyclic := by
