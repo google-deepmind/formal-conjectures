@@ -59,7 +59,7 @@ with $1$ replaced by any rational $\alpha>0$.
 
 This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P283/Proof_flat.lean"]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/286f856aa3fc08957b80950fd18a45aab8d045ea/Erdos/P283/Proof_flat.lean#L9738-L9746"]
 theorem erdos_283 : answer(True) ↔ ∀ p : ℚ[X], Condition p := by
   sorry
 
