@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Order.Interval.Finset.Basic
+public import Mathlib.Order.Interval.Finset.Fin
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Fintype.Sum
@@ -195,5 +197,67 @@ lemma furediH_ncard_neighborSet_pair {k : ℕ} (p : FurediH.Pair k) :
   have : FurediH.Vertex.spoke p.1.1 ∉ ({FurediH.Vertex.spoke p.1.2} : Set _) := by
     simp [hne]
   rw [Set.ncard_insert_of_notMem this, Set.ncard_singleton]
+
+/-- There are exactly `k - 1` pair-vertices incident to a fixed spoke. -/
+lemma furediH_ncard_pairs_incident {k : ℕ} (i : Fin k) :
+    ({p : FurediH.Pair k | i = p.1.1 ∨ i = p.1.2}).ncard = k - 1 := by
+  classical
+  set S := (Finset.univ : Finset (FurediH.Pair k)).filter
+    fun p => i = p.1.1 ∨ i = p.1.2
+  have hS : ({p : FurediH.Pair k | i = p.1.1 ∨ i = p.1.2}).toFinset = S := by
+    ext; simp [S]
+  rw [Set.ncard_eq_toFinset_card', hS]
+  set Sfst := (Finset.univ : Finset (FurediH.Pair k)).filter fun p => i = p.1.1
+  set Ssnd := (Finset.univ : Finset (FurediH.Pair k)).filter fun p => i = p.1.2
+  have hdisj : Disjoint Sfst Ssnd := by
+    refine Finset.disjoint_left.2 fun p hp1 hp2 => ?_
+    have h1 := (Finset.mem_filter.mp hp1).2
+    have h2 := (Finset.mem_filter.mp hp2).2
+    exact (ne_of_lt p.2) (h1.symm.trans h2)
+  have hunion : S = Sfst ∪ Ssnd := by
+    ext p; simp [S, Sfst, Ssnd]
+  rw [hunion, Finset.card_union_of_disjoint hdisj]
+  have c1 : Sfst.card = (Finset.Ioi i).card := by
+    refine Finset.card_bij (fun p _ => p.1.2) ?_ ?_ ?_
+    · intro p hp
+      have hp' : i = p.1.1 := (Finset.mem_filter.mp hp).2
+      exact Finset.mem_Ioi.mpr (hp' ▸ p.2)
+    · intro p hp q hq h
+      have hp' := (Finset.mem_filter.mp hp).2
+      have hq' := (Finset.mem_filter.mp hq).2
+      exact Subtype.ext (Prod.ext (hp'.symm.trans hq') h)
+    · intro j hj
+      refine ⟨⟨(i, j), Finset.mem_Ioi.mp hj⟩, by simp [Sfst], rfl⟩
+  have c2 : Ssnd.card = (Finset.Iio i).card := by
+    refine Finset.card_bij (fun p _ => p.1.1) ?_ ?_ ?_
+    · intro p hp
+      have hp' : i = p.1.2 := (Finset.mem_filter.mp hp).2
+      exact Finset.mem_Iio.mpr (by simpa [hp'] using p.2)
+    · intro p hp q hq h
+      have hp' := (Finset.mem_filter.mp hp).2
+      have hq' := (Finset.mem_filter.mp hq).2
+      exact Subtype.ext (Prod.ext h (hp'.symm.trans hq'))
+    · intro j hj
+      refine ⟨⟨(j, i), Finset.mem_Iio.mp hj⟩, by simp [Ssnd], rfl⟩
+  rw [c1, c2, Fin.card_Ioi, Fin.card_Iio]
+  omega
+
+/-- Each spoke has exactly `k` neighbours (apex + `k - 1` incident pairs). -/
+lemma furediH_ncard_neighborSet_spoke {k : ℕ} (i : Fin k) :
+    ((furediH k).neighborSet (.spoke i)).ncard = k := by
+  classical
+  rw [furediH_neighborSet_spoke]
+  have hdisj :
+      Disjoint ({FurediH.Vertex.apex} : Set _)
+        (FurediH.Vertex.pair '' {p : FurediH.Pair k | i = p.1.1 ∨ i = p.1.2}) := by
+    refine Set.disjoint_left.2 fun _ hx hx' => ?_
+    obtain ⟨_, _, rfl⟩ := hx'
+    simp at hx
+  have hinj : Function.Injective (FurediH.Vertex.pair (k := k)) :=
+    fun _ _ h => FurediH.Vertex.pair.inj h
+  rw [Set.ncard_union_eq hdisj, Set.ncard_singleton,
+    Set.ncard_image_of_injective _ hinj, furediH_ncard_pairs_incident]
+  have : (i : ℕ) < k := i.isLt
+  omega
 
 end SimpleGraph
