@@ -368,4 +368,16 @@ lemma mulRepresentationCount_one_right (A : Finset ℕ) (m : ℕ) :
   rw [mulRepresentationCount_comm, mulRepresentationCount_one_left]
 
 
+
+/-- Nonzero left singleton: unique products nonempty ↔ `B` nonempty. -/
+lemma uniqueMulProducts_singleton_left_nonempty_iff (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    (uniqueMulProducts {a} B).Nonempty ↔ B.Nonempty := by
+  rw [uniqueMulProducts_singleton_left a B ha, image_nonempty]
+
+/-- Nonzero right singleton: unique products nonempty ↔ `A` nonempty. -/
+lemma uniqueMulProducts_singleton_right_nonempty_iff (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    (uniqueMulProducts A {b}).Nonempty ↔ A.Nonempty := by
+  rw [uniqueMulProducts_singleton_right A b hb, image_nonempty]
+
+
 end Finset

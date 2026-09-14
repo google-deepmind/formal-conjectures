@@ -157,4 +157,25 @@ theorem erdos_896.variants.maxF_one : maxF 1 = 1 := by
   exact Nat.succ_le_of_lt (maxF_pos (Nat.le_refl 1))
 
 
+
+/-- `F({a}, B) = #B` whenever `a ≠ 0`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_eq_card_singleton_left (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    F {a} B = B.card := by
+  simpa [F] using card_uniqueMulProducts_singleton_left a B ha
+
+/-- `F(A, {b}) = #A` whenever `b ≠ 0`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_eq_card_singleton_right (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    F A {b} = A.card := by
+  simpa [F] using card_uniqueMulProducts_singleton_right A b hb
+
+/-- Nonzero left singleton yields a positive `F` precisely when `B` is nonempty. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_singleton_left_pos_iff (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    0 < F {a} B ↔ B.Nonempty := by
+  simp only [F]
+  rw [card_pos, uniqueMulProducts_singleton_left_nonempty_iff a B ha]
+
+
 end Erdos896
