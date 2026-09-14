@@ -96,4 +96,11 @@ theorem erdos_926.variants.alon_krivelevich_sudakov :
         (fun n : ℕ => (k : ℝ) * (n : ℝ) ^ ((3 : ℝ) / 2)) := by
   sorry
 
+
+/-- Füredi's $H_k$ is bipartite. -/
+@[category API, AMS 5]
+theorem erdos_926.variants.furediH_isBipartite (k : ℕ) : (furediH k).IsBipartite :=
+  SimpleGraph.furediH_isBipartite k
+
+
 end Erdos926

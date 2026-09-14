@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Copy
@@ -462,6 +463,77 @@ lemma furediH_preconnected (k : ℕ) : (furediH k).Preconnected :=
 theorem furediH_connected (k : ℕ) : (furediH k).Connected :=
   haveI : Nonempty (FurediH.Vertex k) := ⟨.apex⟩
   ⟨furediH_preconnected k⟩
+
+
+
+/-- Left part of the natural bipartition: apex and all pair-vertices. -/
+def furediH.partLeft (k : ℕ) : Set (FurediH.Vertex k) :=
+  {v | ∀ i : Fin k, v ≠ .spoke i}
+
+/-- Right part: the spoke-vertices `y_i`. -/
+def furediH.partRight (k : ℕ) : Set (FurediH.Vertex k) :=
+  {v | ∃ i : Fin k, v = .spoke i}
+
+@[simp] lemma furediH.apex_mem_partLeft (k : ℕ) :
+    (FurediH.Vertex.apex : FurediH.Vertex k) ∈ furediH.partLeft k := by
+  intro i; simp
+
+@[simp] lemma furediH.pair_mem_partLeft {k : ℕ} (p : FurediH.Pair k) :
+    FurediH.Vertex.pair p ∈ furediH.partLeft k := by
+  intro i; simp
+
+@[simp] lemma furediH.spoke_mem_partRight {k : ℕ} (i : Fin k) :
+    FurediH.Vertex.spoke i ∈ furediH.partRight k :=
+  ⟨i, rfl⟩
+
+@[simp] lemma furediH.spoke_not_mem_partLeft {k : ℕ} (i : Fin k) :
+    FurediH.Vertex.spoke i ∉ furediH.partLeft k := by
+  intro h; exact (h i) rfl
+
+/-- $H_k$ is bipartite with parts `{apex} ∪ \{z_{ij}\}$ and `{y_1,…,y_k}`. -/
+lemma furediH_isBipartiteWith (k : ℕ) :
+    (furediH k).IsBipartiteWith (furediH.partLeft k) (furediH.partRight k) where
+  disjoint := by
+    rw [Set.disjoint_left]
+    intro v hvL hvR
+    obtain ⟨i, rfl⟩ := hvR
+    exact furediH.spoke_not_mem_partLeft i hvL
+  mem_of_adj := by
+    intro v w hadj
+    cases v with
+    | apex =>
+      cases w with
+      | apex =>
+        simp [furediH] at hadj
+      | spoke i =>
+        exact Or.inl ⟨furediH.apex_mem_partLeft k, furediH.spoke_mem_partRight i⟩
+      | pair p =>
+        exact (not_furediH_adj_apex_pair p hadj).elim
+    | spoke i =>
+      cases w with
+      | apex =>
+        exact Or.inr ⟨furediH.spoke_mem_partRight i, furediH.apex_mem_partLeft k⟩
+      | spoke j =>
+        exact (not_furediH_adj_spoke_spoke i j hadj).elim
+      | pair p =>
+        exact Or.inr ⟨furediH.spoke_mem_partRight i, furediH.pair_mem_partLeft p⟩
+    | pair p =>
+      cases w with
+      | apex =>
+        exact (not_furediH_adj_apex_pair p hadj.symm).elim
+      | spoke i =>
+        exact Or.inl ⟨furediH.pair_mem_partLeft p, furediH.spoke_mem_partRight i⟩
+      | pair q =>
+        exact (not_furediH_adj_pair_pair p q hadj).elim
+
+/-- Hence $H_k$ is bipartite (2-colorable). -/
+theorem furediH_isBipartite (k : ℕ) : (furediH k).IsBipartite :=
+  isBipartite_iff_exists_isBipartiteWith.mpr ⟨_, _, furediH_isBipartiteWith k⟩
+
+/-- In particular the chromatic number is at most `2`. -/
+theorem furediH_chromaticNumber_le_two (k : ℕ) :
+    (furediH k).chromaticNumber ≤ 2 :=
+  chromaticNumber_le_two_iff_isBipartite.mpr (furediH_isBipartite k)
 
 
 end SimpleGraph
