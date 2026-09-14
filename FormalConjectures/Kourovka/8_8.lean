@@ -44,6 +44,20 @@ many generators by the normal closure of finitely many relators; see
 namespace Kourovka.«8.8»
 
 /--
+Does there exist a non-cyclic finitely-generated group $G$ containing an
+element $a$ such that every element of $G$ is conjugate to a power of $a$?
+
+Here a power of $a$ means $a^n$ for some $n \in \mathbb{Z}$.
+
+Answered affirmatively by V. S. Guba, Math. USSR-Izv. 29 (1986), 233–277.
+-/
+@[category research solved, AMS 20]
+theorem kourovka_8_8a : answer(True) ↔
+    ∃ (G : Type) (_ : Group G), ¬ IsCyclic G ∧ Group.FG G ∧
+      ∃ a : G, ∀ g : G, ∃ n : ℤ, IsConj g (a ^ n) := by
+  sorry
+
+/--
 Does there exist a non-cyclic finitely presented group $G$ which contains an
 element $a$ such that each element of $G$ is conjugate to some power of $a$?
 
