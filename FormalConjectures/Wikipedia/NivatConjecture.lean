@@ -20,7 +20,7 @@ import FormalConjectures.Util.ProblemImports
 # Nivat conjecture
 
 *References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/Nivat_conjecture)
+- [Wikipedia](https://en.wikipedia.org/wiki/Nivat%27s_Conjecture)
 -/
 
 namespace NivatConjecture
