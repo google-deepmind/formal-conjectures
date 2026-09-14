@@ -270,4 +270,29 @@ lemma Cycle.length_cycleGraph (n : ℕ) : (Cycle.cycleGraph n).length = n + 3 :=
   cycleGraph.length_cycle
 
 
+
+/-- The Eulerian cycle of `cycleGraph` has no chords: every edge of the graph is a cycle edge. -/
+theorem Cycle.cycleGraph_chords_eq_empty (n : ℕ) :
+    (Cycle.cycleGraph n).chords = ∅ := by
+  ext e
+  simp only [mem_chords, Set.mem_empty_iff_false, iff_false]
+  rintro ⟨he, _hsup, hnotin⟩
+  exact hnotin (mem_cycleGraph_cycle_edges_of_mem_edgeSet he)
+
+@[simp]
+lemma Cycle.cycleGraph_chords_encard (n : ℕ) :
+    (Cycle.cycleGraph n).chords.encard = 0 := by
+  simp [cycleGraph_chords_eq_empty]
+
+/-- Odd cycle graphs have an odd cycle with (at least) `0` chords. -/
+lemma hasOddCycleWithChords_cycleGraph_zero {n : ℕ} (h : Odd (n + 3)) :
+    HasOddCycleWithChords (cycleGraph (n + 3)) 0 :=
+  ⟨Cycle.cycleGraph n, by simpa [Cycle.length_cycleGraph] using h, bot_le⟩
+
+/-- In particular they are not forests. -/
+lemma cycleGraph_not_isAcyclic_of_odd {n : ℕ} (h : Odd (n + 3)) :
+    ¬ (cycleGraph (n + 3)).IsAcyclic :=
+  not_isAcyclic_of_hasOddCycleWithChords (hasOddCycleWithChords_cycleGraph_zero h)
+
+
 end SimpleGraph
