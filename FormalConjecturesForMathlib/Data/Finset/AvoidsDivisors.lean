@@ -129,6 +129,12 @@ lemma avoidsDivisors_mono_right (A : Finset ℕ) {x y : ℕ} (h : x ≤ y) :
   simp only [mem_avoidsDivisors, mem_Icc] at hm ⊢
   exact ⟨⟨hm.1.1, hm.1.2.trans h⟩, hm.2⟩
 
+/-- Growing the range does not decrease the number of survivors. -/
+lemma card_avoidsDivisors_mono_right (A : Finset ℕ) {x y : ℕ} (h : x ≤ y) :
+    (avoidsDivisors A x).card ≤ (avoidsDivisors A y).card :=
+  card_le_card (avoidsDivisors_mono_right A h)
+
+
 /-- Sieving by a singleton `{a}` removes exactly the multiples of `a`. -/
 lemma avoidsDivisors_singleton (a x : ℕ) :
     avoidsDivisors {a} x = (Icc 1 x).filter (fun m => ¬ a ∣ m) := by

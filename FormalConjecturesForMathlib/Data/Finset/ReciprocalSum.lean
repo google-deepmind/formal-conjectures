@@ -70,4 +70,40 @@ lemma reciprocalSum_lt_reciprocalSum_insert {A : Finset ℕ} {a : ℕ}
   rw [reciprocalSum_insert h, lt_add_iff_pos_left]
   exact div_pos zero_lt_one (Nat.cast_pos.mpr (Nat.pos_of_ne_zero ha))
 
+/-- Erasing an element subtracts its reciprocal. -/
+lemma reciprocalSum_erase {A : Finset ℕ} {a : ℕ} (ha : a ∈ A) :
+    reciprocalSum A = (1 : ℝ) / a + reciprocalSum (A.erase a) := by
+  classical
+  conv_lhs => rw [← insert_erase ha]
+  rw [reciprocalSum_insert (by simp [mem_erase])]
+
+/-- A nonzero member forces a strictly positive reciprocal sum. -/
+lemma reciprocalSum_pos_of_mem {A : Finset ℕ} {a : ℕ} (ha : a ∈ A) (hne : a ≠ 0) :
+    0 < reciprocalSum A := by
+  have hpos : 0 < (1 : ℝ) / a :=
+    div_pos zero_lt_one (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hne))
+  have hle : (1 : ℝ) / a ≤ reciprocalSum A := by
+    simpa [reciprocalSum_singleton] using
+      reciprocalSum_mono (singleton_subset_iff.mpr ha)
+  exact lt_of_lt_of_le hpos hle
+
+/-- Under the convention `1/0 = 0`, the reciprocal sum vanishes iff every element is `0`. -/
+lemma reciprocalSum_eq_zero_iff (A : Finset ℕ) :
+    reciprocalSum A = 0 ↔ ∀ a ∈ A, a = 0 := by
+  classical
+  constructor
+  · intro h a ha
+    by_contra hne
+    exact (reciprocalSum_pos_of_mem ha hne).ne' h
+  · intro h
+    simp only [reciprocalSum]
+    exact Finset.sum_eq_zero fun a ha => by
+      simp [h a ha]
+
+/-- Filtering to `{0}` yields reciprocal sum `0`. -/
+@[simp]
+lemma reciprocalSum_filter_eq_zero (A : Finset ℕ) :
+    reciprocalSum (A.filter (· = 0)) = 0 :=
+  (reciprocalSum_eq_zero_iff _).mpr fun _a ha => (mem_filter.mp ha).2
+
 end Finset
