@@ -88,4 +88,10 @@ lemma one_le_consecutiveDivisorRatio {n i : ℕ}
     Nat.pos_of_mem_divisors (nth_mem_of_lt_card hfin (lt_trans (Nat.lt_succ_self i) (by rw [hcard]; exact hi)))
   exact one_le_consecutiveDivisorRatio_of_lt hpos hlt
 
+/-- On valid indices, `consecutiveDivisorRatio - 1` is nonnegative. -/
+lemma consecutiveDivisorRatio_sub_one_nonneg {n i : ℕ}
+    (hi : i + 1 < n.divisors.card) :
+    (0 : ℝ) ≤ consecutiveDivisorRatio n i - 1 :=
+  sub_nonneg.mpr (one_le_consecutiveDivisorRatio hi)
+
 end Nat

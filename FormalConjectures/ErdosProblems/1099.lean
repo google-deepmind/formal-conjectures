@@ -62,17 +62,50 @@ theorem erdos_1099 :
 
 /--
 The $\liminf$ is trivially $\geq 1$, just considering the term $i=1$.
+(Stated in `EReal` so the liminf is well-defined without an a-priori upper bound.)
 -/
 @[category textbook, AMS 11]
 theorem erdos_1099.variants.liminf_ge_one (α : ℝ) (hα : 1 < α) :
-    1 ≤ liminf (fun n : ℕ ↦ h α n) atTop := by
-  sorry
+    (1 : EReal) ≤ liminf (fun n : ℕ ↦ (h α n : EReal)) atTop := by
+  refine le_liminf_of_le (by isBoundedDefault) ?_
+  filter_upwards [eventually_ge_atTop 2] with n hn
+  have hn0 : n ≠ 0 := by omega
+  have h1mem : 1 ∈ n.divisors := Nat.one_mem_divisors.mpr hn0
+  have hnmem : n ∈ n.divisors := Nat.mem_divisors_self n hn0
+  have hne : (1 : ℕ) ≠ n := by omega
+  have hcard : 2 ≤ n.divisors.card := by
+    refine Nat.succ_le_iff.mpr ?_
+    exact Finset.one_lt_card.mpr ⟨1, h1mem, n, hnmem, hne⟩
+  have h0 : (0 : ℕ) ∈ range (n.divisors.card - 1) := by
+    simp only [mem_range]; omega
+  have hnth2 : 2 ≤ Nat.nth (· ∈ n.divisors) 1 := by
+    have hfin : (Set.ofPred (· ∈ n.divisors)).Finite := n.divisors.finite_toSet
+    have hcard' : hfin.toFinset.card = n.divisors.card := by
+      congr 1; ext x; simp [Set.Finite.mem_toFinset]
+    refine Nat.two_le_nth_divisors hn0 (by decide) ?_
+    refine ne_of_gt (Nat.pos_of_mem_divisors (Nat.nth_mem_of_lt_card hfin ?_))
+    rw [hcard']; omega
+  have hbase : (1 : ℝ) ≤ n.consecutiveDivisorRatio 0 - 1 := by
+    rw [Nat.consecutiveDivisorRatio_zero hn0]
+    have : (2 : ℝ) ≤ (Nat.nth (· ∈ n.divisors) 1 : ℝ) := Nat.cast_le.mpr hnth2
+    linarith
+  have hterm0 : (1 : ℝ) ≤ (n.consecutiveDivisorRatio 0 - 1) ^ α :=
+    one_le_rpow hbase (le_of_lt (lt_trans Real.zero_lt_one hα))
+  have hnonneg : ∀ i ∈ range (n.divisors.card - 1),
+      (0 : ℝ) ≤ (n.consecutiveDivisorRatio i - 1) ^ α := by
+    intro i hi
+    have hi' : i + 1 < n.divisors.card := (Nat.lt_sub_iff_add_lt).mp (mem_range.mp hi)
+    have hge1 : (1 : ℝ) ≤ n.consecutiveDivisorRatio i :=
+      Nat.one_le_consecutiveDivisorRatio hi'
+    exact Real.rpow_nonneg (sub_nonneg.mpr hge1) _
+  have hR : (1 : ℝ) ≤ h α n := by
+    calc
+      (1 : ℝ) ≤ (n.consecutiveDivisorRatio 0 - 1) ^ α := hterm0
+      _ ≤ ∑ i ∈ range (n.divisors.card - 1), (n.consecutiveDivisorRatio i - 1) ^ α :=
+          single_le_sum hnonneg h0
+      _ = h α n := rfl
+  exact_mod_cast hR
 
-/--
-Erdős [Er81h] remarks that $n!$ would be a good candidate for an infinite sequence of $n$ with
-$h_\alpha(n)$ bounded. It remains open whether this sequence satisfies this property.
--/
-@[category research open, AMS 11]
 theorem erdos_1099.variants.factorial :
     answer(sorry) ↔
       ∀ α > (1 : ℝ), ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, h α n.factorial ≤ C := by
