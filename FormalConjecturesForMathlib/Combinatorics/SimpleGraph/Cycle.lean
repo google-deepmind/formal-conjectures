@@ -129,6 +129,23 @@ def Cycle.reverse {G : SimpleGraph V} (c : Cycle G) : Cycle G where
 lemma Cycle.length_reverse {G : SimpleGraph V} (c : Cycle G) : c.reverse.length = c.length := by
   simp [reverse, length]
 
+@[simp]
+lemma Cycle.reverse_reverse {G : SimpleGraph V} (c : Cycle G) : c.reverse.reverse = c := by
+  cases c
+  simp [reverse]
+
+/-- Reversing a cycle does not change its chord set. -/
+@[simp]
+lemma Cycle.chords_reverse {G : SimpleGraph V} (c : Cycle G) : c.reverse.chords = c.chords := by
+  ext e
+  simp [chords, reverse, edges, Walk.edges_reverse, List.mem_reverse, Walk.support_reverse,
+    List.mem_reverse]
+
+/-- A bundled cycle's length is odd iff it lies in `oddCycleLengths`. -/
+lemma Cycle.mem_oddCycleLengths_iff_odd {G : SimpleGraph V} (c : Cycle G) :
+    c.length ∈ G.oddCycleLengths ↔ Odd c.length :=
+  ⟨And.right, fun h ↦ c.mem_oddCycleLengths_of_odd h⟩
+
 /-- Every member of `cycleLengths` is the length of some bundled `Cycle`. -/
 lemma exists_cycle_of_mem_cycleLengths {G : SimpleGraph V} {m : ℕ}
     (hm : m ∈ G.cycleLengths) : ∃ c : Cycle G, c.length = m := by
@@ -157,6 +174,18 @@ lemma HasOddCycleWithChords.zero_iff_oddCycleLengths_nonempty {G : SimpleGraph V
 
 /-- `G` is bridgeless if none of its edges is a bridge. -/
 def IsBridgeless (G : SimpleGraph V) : Prop := ∀ e ∈ G.edgeSet, ¬ G.IsBridge e
+
+/-- The empty graph is bridgeless. -/
+@[simp]
+lemma isBridgeless_bot : IsBridgeless (⊥ : SimpleGraph V) := by
+  intro e he
+  exact (SimpleGraph.edgeSet_bot ▸ he).elim
+
+/-- An odd cycle (even without chords) witnesses that `G` is not acyclic. -/
+lemma not_isAcyclic_of_hasOddCycleWithChords {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : ¬ G.IsAcyclic := by
+  obtain ⟨c, _, _⟩ := h
+  exact fun hacyc ↦ hacyc c.walk c.isCycle
 
 /-- In a forest every edge is a bridge, so an acyclic bridgeless graph has no edges at all. -/
 theorem edgeFinset_eq_empty_of_isBridgeless_of_isAcyclic [Fintype V] (G : SimpleGraph V)
