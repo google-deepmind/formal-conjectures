@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Set.Card
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 
@@ -213,5 +216,58 @@ theorem edgeFinset_eq_empty_of_isBridgeless_of_isAcyclic [Fintype V] (G : Simple
   simp only [SimpleGraph.bot_adj, iff_false]
   intro hadj
   exact hbr s(u, v) hadj (G.isAcyclic_iff_forall_isBridge.mp hacyc hadj)
+
+
+/-- A bridgeless graph with at least one edge is not a forest. -/
+lemma IsBridgeless.not_isAcyclic_of_mem_edgeSet {G : SimpleGraph V}
+    (h : IsBridgeless G) {e : Sym2 V} (he : e ∈ G.edgeSet) : ¬ G.IsAcyclic := by
+  intro hacyc
+  exact h e he (isAcyclic_iff_forall_isBridge.mp hacyc he)
+
+/-- The edges of the Eulerian cycle of `cycleGraph (n + 3)` are exactly all of its edges. -/
+lemma cycleGraph_edgeFinset_eq_cycle_edges (n : ℕ) :
+    (cycleGraph (n + 3)).edgeFinset = (cycleGraph.cycle n).edges.toFinset := by
+  classical
+  let G := cycleGraph (n + 3)
+  let c := cycleGraph.cycle n
+  have hnodup : c.edges.Nodup := cycleGraph.isCycle_cycle.isTrail.edges_nodup
+  have hsub : c.edges.toFinset ⊆ G.edgeFinset := by
+    intro e he
+    simpa [mem_edgeFinset] using Walk.edges_subset_edgeSet c (List.mem_toFinset.mp he)
+  have hclen : c.edges.toFinset.card = n + 3 := by
+    rw [List.toFinset_card_of_nodup hnodup, Walk.length_edges, cycleGraph.length_cycle]
+  have hdeg : ∀ v : Fin (n + 3), G.degree v = 2 := fun _ => cycleGraph_degree_three_le
+  have hGcard : G.edgeFinset.card = n + 3 := by
+    have hsum := G.sum_degrees_eq_twice_card_edges
+    simp only [hdeg, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hsum
+    -- `(n + 3) * 2 = 2 * #edges`
+    have : (n + 3) * 2 = 2 * G.edgeFinset.card := by simpa using hsum
+    omega
+  exact (Finset.eq_of_subset_of_card_le hsub (by rw [hGcard, hclen])).symm
+
+/-- Every edge of `cycleGraph (n + 3)` lies on its Eulerian cycle. -/
+lemma mem_cycleGraph_cycle_edges_of_mem_edgeSet {n : ℕ} {e : Sym2 (Fin (n + 3))}
+    (he : e ∈ (cycleGraph (n + 3)).edgeSet) :
+    e ∈ (cycleGraph.cycle n).edges := by
+  classical
+  have h := cycleGraph_edgeFinset_eq_cycle_edges n
+  have : e ∈ (cycleGraph (n + 3)).edgeFinset := by
+    simpa [SimpleGraph.mem_edgeFinset] using he
+  rw [h] at this
+  exact List.mem_toFinset.mp this
+
+/-- Hence `cycleGraph (n + 3)` is bridgeless. -/
+theorem cycleGraph_isBridgeless (n : ℕ) : IsBridgeless (cycleGraph (n + 3)) :=
+  IsBridgeless.of_forall_exists_cycle_mem_edges fun _e he =>
+    ⟨⟨0, cycleGraph.cycle n, cycleGraph.isCycle_cycle⟩, mem_cycleGraph_cycle_edges_of_mem_edgeSet he⟩
+
+/-- Bundled form of the Eulerian cycle of `cycleGraph (n + 3)`. -/
+def Cycle.cycleGraph (n : ℕ) : Cycle (cycleGraph (n + 3)) :=
+  ⟨0, cycleGraph.cycle n, cycleGraph.isCycle_cycle⟩
+
+@[simp]
+lemma Cycle.length_cycleGraph (n : ℕ) : (Cycle.cycleGraph n).length = n + 3 :=
+  cycleGraph.length_cycle
+
 
 end SimpleGraph
