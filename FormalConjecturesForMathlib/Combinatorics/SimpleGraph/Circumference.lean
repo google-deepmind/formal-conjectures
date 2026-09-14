@@ -216,4 +216,32 @@ theorem circumference_completeGraph (n : ℕ) :
     (completeGraph (Fin (n + 3))).circumference = n + 3 :=
   circumference_completeGraph_fin n
 
+
+/-- For any `n ≥ 3`, the complete graph on `Fin n` has circumference `n`. -/
+theorem circumference_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    (completeGraph (Fin n)).circumference = n := by
+  obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hn
+  rw [hk, show (3 + k) = k + 3 from Nat.add_comm 3 k]
+  exact circumference_completeGraph k
+
+/-- Hence `K_n` on `Fin n` (`n ≥ 3`) is not a forest. -/
+lemma completeGraph_fin_not_isAcyclic {n : ℕ} (hn : 3 ≤ n) :
+    ¬ (completeGraph (Fin n)).IsAcyclic := by
+  intro h
+  have hz : (completeGraph (Fin n)).circumference = 0 := h.circumference_eq_zero
+  have hpos : (completeGraph (Fin n)).circumference = n :=
+    circumference_completeGraph_of_three_le hn
+  omega
+
+/-- When `n + 3` is odd, that length lies in `oddCycleLengths` of `K_{n+3}`. -/
+lemma mem_oddCycleLengths_completeGraph_fin {n : ℕ} (h : Odd (n + 3)) :
+    n + 3 ∈ (completeGraph (Fin (n + 3))).oddCycleLengths :=
+  oddCycleLengths_mono (cycleGraph_le_completeGraph n) (mem_oddCycleLengths_cycleGraph h)
+
+/-- Same with `⊤` notation. -/
+lemma circumference_top_fin_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    (⊤ : SimpleGraph (Fin n)).circumference = n := by
+  simpa [completeGraph] using circumference_completeGraph_of_three_le hn
+
+
 end SimpleGraph

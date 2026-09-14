@@ -193,4 +193,18 @@ theorem erdos_1012.variants.edgeThreshold_one {n : ℕ} (hn : 2 ≤ n) :
   unfold edgeThreshold
   rw [hsub, show (1 + 2) = 3 from rfl, Nat.add_assoc, hfour]
 
+
+/-- `K_n` on `Fin n` (`n ≥ 3`) has circumference `n`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.circumference_completeGraph {n : ℕ} (hn : 3 ≤ n) :
+    (completeGraph (Fin n)).circumference = n :=
+  SimpleGraph.circumference_completeGraph_of_three_le hn
+
+/-- `C_{n+3}` has circumference `n + 3`. -/
+@[category test, AMS 5]
+theorem erdos_1012.variants.circumference_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).circumference = n + 3 :=
+  SimpleGraph.circumference_cycleGraph n
+
+
 end Erdos1012
