@@ -462,4 +462,69 @@ theorem greedySidonBelow_isSidon (N : ℕ) : IsSidon ((greedySidonBelow N) : Set
     simp only [greedySidonBelow, mem_coe, mem_filter] at hx ⊢
     exact hx.1
 
+
+/-- The Sidon set grows when the greedy step advances. -/
+lemma greedySidon.aux_subset_succ (n : ℕ) :
+    (greedySidon.aux n).1.1 ⊆ (greedySidon.aux (n + 1)).1.1 := by
+  intro x hx
+  dsimp [greedySidon.aux]
+  exact Finset.mem_union_left _ hx
+
+/-- Monotonicity of the finite greedy Sidon sets in the step index. -/
+lemma greedySidon.aux_mono {m n : ℕ} (hmn : m ≤ n) :
+    (greedySidon.aux m).1.1 ⊆ (greedySidon.aux n).1.1 := by
+  induction n with
+  | zero =>
+    have : m = 0 := Nat.eq_zero_of_le_zero hmn
+    subst this
+    exact Subset.rfl
+  | succ n ih =>
+    have hcases : m ≤ n ∨ m = n + 1 := Nat.le_succ_iff.mp hmn
+    cases hcases with
+    | inl hmn' => exact (ih hmn').trans (aux_subset_succ n)
+    | inr hm =>
+      subst hm
+      exact Subset.rfl
+
+/-- The value `greedySidon n` is a member of the set at step `n`. -/
+lemma greedySidon.mem_aux (n : ℕ) : greedySidon n ∈ (greedySidon.aux n).1.1 := by
+  cases n with
+  | zero =>
+    change (greedySidon.aux 0).2 ∈ (greedySidon.aux 0).1.1
+    simp [greedySidon.aux]
+  | succ n =>
+    change (greedySidon.aux (n + 1)).2 ∈ (greedySidon.aux (n + 1)).1.1
+    dsimp [greedySidon.aux]
+    exact Finset.mem_union_right _ (Finset.mem_singleton_self _)
+
+/-- Hence `greedySidon m` lies in the set at every later step `n ≥ m`. -/
+lemma greedySidon.mem_aux_of_le {m n : ℕ} (hmn : m ≤ n) :
+    greedySidon m ∈ (greedySidon.aux n).1.1 :=
+  aux_mono hmn (mem_aux m)
+
+/-- Membership in `greedySidonBelow`. -/
+lemma mem_greedySidonBelow {N x : ℕ} :
+    x ∈ greedySidonBelow N ↔ x ∈ (greedySidon.aux N).1.1 ∧ x ≤ N := by
+  simp [greedySidonBelow]
+
+/-- The infinite greedy Sidon sequence has Sidon range. -/
+theorem isSidon_range_greedySidon : IsSidon (Set.range greedySidon) := by
+  intro a ha b hb c hc d hd hsum
+  obtain ⟨i, rfl⟩ := Set.mem_range.mp ha
+  obtain ⟨j, rfl⟩ := Set.mem_range.mp hb
+  obtain ⟨k, rfl⟩ := Set.mem_range.mp hc
+  obtain ⟨l, rfl⟩ := Set.mem_range.mp hd
+  let N := max (max i j) (max k l)
+  have hi : i ≤ N := by omega
+  have hj : j ≤ N := by omega
+  have hk : k ≤ N := by omega
+  have hl : l ≤ N := by omega
+  refine greedySidon.aux_isSidon N
+    (greedySidon i) ?_ (greedySidon j) ?_ (greedySidon k) ?_ (greedySidon l) ?_ hsum
+  · simpa using greedySidon.mem_aux_of_le hi
+  · simpa using greedySidon.mem_aux_of_le hj
+  · simpa using greedySidon.mem_aux_of_le hk
+  · simpa using greedySidon.mem_aux_of_le hl
+
+
 end Finset
