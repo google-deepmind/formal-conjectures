@@ -122,4 +122,22 @@ theorem erdos_861.variants.f_mono {M N : ℕ} (h : M ≤ N) : f M ≤ f N :=
 theorem erdos_861.variants.Acount_mono {M N : ℕ} (h : M ≤ N) : Acount M ≤ Acount N :=
   Finset.sidonSubsetCount_mono (Finset.Icc_subset_Icc_right h)
 
+
+/-- The infinite greedy Sidon sequence has Sidon range. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.isSidon_range_greedySidon :
+    IsSidon (Set.range Finset.greedySidon) :=
+  Finset.isSidon_range_greedySidon
+
+/-- The greedy Sidon sequence is strictly increasing. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidon_strictMono :
+    StrictMono Finset.greedySidon :=
+  Finset.greedySidon.strictMono
+
+/-- Trivial: `greedySidon 0 = 1`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.greedySidon_zero : Finset.greedySidon 0 = 1 :=
+  Finset.greedySidon_zero
+
 end Erdos861

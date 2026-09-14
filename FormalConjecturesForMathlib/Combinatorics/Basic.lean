@@ -527,4 +527,65 @@ theorem isSidon_range_greedySidon : IsSidon (Set.range greedySidon) := by
   · simpa using greedySidon.mem_aux_of_le hl
 
 
+/-- The greedy Sidon sequence starts at `1`. -/
+@[simp] lemma greedySidon_zero : greedySidon 0 = 1 := by
+  simp [greedySidon, greedySidon.aux]
+
+/-- At step `0` the finite set is `{1}`. -/
+lemma greedySidon.aux_zero : (greedySidon.aux 0).1.1 = ({1} : Finset ℕ) := by
+  simp [greedySidon.aux]
+
+/-- Each greedy step adds exactly one new element, so `#aux n = n + 1`. -/
+lemma greedySidon.card_aux (n : ℕ) : (greedySidon.aux n).1.1.card = n + 1 := by
+  induction n with
+  | zero => simp [aux_zero]
+  | succ n ih =>
+    dsimp [greedySidon.aux]
+    set A := (greedySidon.aux n).1.1 with hAeq
+    set hA := (greedySidon.aux n).1.2
+    set s := if h : A.Nonempty then A.max' h + 1 else (greedySidon.aux n).2
+    set s' := greedySidon.go A hA s with hs'
+    have hs'notin : s'.1 ∉ A := s'.2.2.1
+    change (A ∪ {s'.1}).card = n + 1 + 1
+    rw [Finset.card_union_of_disjoint (Finset.disjoint_singleton_right.mpr hs'notin),
+      Finset.card_singleton, ih]
+
+/-- `greedySidon (n + 1)` is strictly larger than `greedySidon n`. -/
+lemma greedySidon.lt_succ (n : ℕ) : greedySidon n < greedySidon (n + 1) := by
+  change (greedySidon.aux n).2 < (greedySidon.aux (n + 1)).2
+  dsimp [greedySidon.aux]
+  set A := (greedySidon.aux n).1.1
+  set hA := (greedySidon.aux n).1.2
+  set s0 := (greedySidon.aux n).2
+  set s := if h : A.Nonempty then A.max' h + 1 else s0
+  set s' := greedySidon.go A hA s
+  have hs'ge : s ≤ s'.1 := s'.2.1
+  have hmem : s0 ∈ A := by
+    simpa [greedySidon, A, s0] using greedySidon.mem_aux n
+  have hAne : A.Nonempty := ⟨s0, hmem⟩
+  have hs_eq : s = A.max' hAne + 1 := by simp [s, hAne]
+  have : s0 < s := by
+    rw [hs_eq]
+    exact Nat.lt_succ_of_le (Finset.le_max' A s0 hmem)
+  exact lt_of_lt_of_le this hs'ge
+
+/-- `greedySidon` is strictly monotone. -/
+lemma greedySidon.strictMono : StrictMono greedySidon :=
+  strictMono_nat_of_lt_succ greedySidon.lt_succ
+
+/-- Hence `greedySidon` is injective. -/
+lemma greedySidon.injective : Function.Injective greedySidon :=
+  greedySidon.strictMono.injective
+
+/-- Every term of the greedy Sidon sequence is at least `1`. -/
+lemma one_le_greedySidon (n : ℕ) : 1 ≤ greedySidon n := by
+  simpa [greedySidon_zero] using
+    (greedySidon.strictMono.monotone (Nat.zero_le n) : greedySidon 0 ≤ greedySidon n)
+
+/-- Index lower bound: `n ≤ greedySidon n` (via strict monotonicity on `ℕ`). -/
+lemma le_greedySidon (n : ℕ) : n ≤ greedySidon n :=
+  StrictMono.id_le greedySidon.strictMono n
+
+
+
 end Finset
