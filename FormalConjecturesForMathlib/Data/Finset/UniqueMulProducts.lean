@@ -267,4 +267,70 @@ lemma card_uniqueMulProducts_singleton_right (A : Finset ℕ) (b : ℕ) (hb : b 
   exact card_image_of_injective _ (mul_right_injective_nat hb)
 
 
+
+/-- Left factor `0`: products are `0` with multiplicity `#B`, and nothing else. -/
+lemma mulRepresentationCount_zero_left (B : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount {0} B m = if m = 0 then B.card else 0 := by
+  classical
+  by_cases hm : m = 0
+  · subst hm
+    change (({0} ×ˢ B).filter fun p => p.1 * p.2 = 0).card = B.card
+    have hself : (({0} ×ˢ B).filter fun p => p.1 * p.2 = 0) = {0} ×ˢ B :=
+      filter_eq_self.mpr fun p hp => by
+        have hp0 : p.1 = 0 := (mem_product.mp hp).1 |> mem_singleton.mp
+        simp [hp0]
+    rw [hself, card_product, card_singleton, one_mul]
+  · rw [if_neg hm]
+    exact (mulRepresentationCount_eq_zero_iff _ _ _).mpr fun a ha b _hb hprod => by
+      have ha0 : a = 0 := mem_singleton.mp ha
+      simp [ha0] at hprod
+      exact hm hprod.symm
+
+/-- Symmetrically for right factor `0`. -/
+lemma mulRepresentationCount_zero_right (A : Finset ℕ) (m : ℕ) :
+    mulRepresentationCount A {0} m = if m = 0 then A.card else 0 := by
+  rw [mulRepresentationCount_comm, mulRepresentationCount_zero_left]
+
+/-- Unique products with left `{0}`: `{0}` iff `#B = 1`, otherwise empty. -/
+lemma uniqueMulProducts_zero_left (B : Finset ℕ) :
+    uniqueMulProducts {0} B = if B.card = 1 then ({0} : Finset ℕ) else ∅ := by
+  classical
+  split_ifs with hB
+  · ext m
+    simp only [mem_uniqueMulProducts, mulRepresentationCount_zero_left, hB, mem_singleton]
+    constructor
+    · rintro ⟨_him, hcnt⟩
+      by_contra hm
+      simp [hm] at hcnt
+    · intro hm
+      subst hm
+      obtain ⟨b, rfl⟩ := card_eq_one.mp hB
+      refine ⟨mem_image.mpr ⟨(0, b), by simp, by simp⟩, by simp⟩
+  · ext m
+    simp only [mem_uniqueMulProducts, mulRepresentationCount_zero_left]
+    constructor
+    · rintro ⟨_him, hcnt⟩
+      by_cases hm : m = 0
+      · subst hm; simp [hB] at hcnt
+      · simp [hm] at hcnt
+    · intro hmem
+      exact absurd hmem (notMem_empty m)
+
+/-- Symmetrically for right `{0}`. -/
+lemma uniqueMulProducts_zero_right (A : Finset ℕ) :
+    uniqueMulProducts A {0} = if A.card = 1 then ({0} : Finset ℕ) else ∅ := by
+  rw [uniqueMulProducts_comm, uniqueMulProducts_zero_left]
+
+@[simp]
+lemma card_uniqueMulProducts_zero_left (B : Finset ℕ) :
+    (uniqueMulProducts {0} B).card = if B.card = 1 then 1 else 0 := by
+  rw [uniqueMulProducts_zero_left]
+  split_ifs <;> simp
+
+@[simp]
+lemma card_uniqueMulProducts_zero_right (A : Finset ℕ) :
+    (uniqueMulProducts A {0}).card = if A.card = 1 then 1 else 0 := by
+  rw [uniqueMulProducts_zero_right]
+  split_ifs <;> simp
+
 end Finset
