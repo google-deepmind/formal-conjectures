@@ -49,7 +49,7 @@ arithmetic progression for all $i\neq j$?
 -/
 @[category research open, AMS 5]
 theorem erdos_272 :
-    (fun N ↦ (maxArithInterCard N : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+    ∀ N ≥ 1, maxArithInterCard N = (answer(sorry) : ℕ → ℕ) N := by
   sorry
 
 /--
