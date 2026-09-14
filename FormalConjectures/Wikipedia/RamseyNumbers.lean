@@ -112,4 +112,64 @@ theorem ramsey_number_five_five_upper_bound :
     IsGraphRamsey 46 5 5 := by
   sorry
 
+/- ## Other small Ramsey numbers
+
+Besides $R(5,5)$, several small Ramsey numbers are known exactly, while others (such as $R(6,6)$)
+remain open. The values below are collected in the dynamic survey [Rad] (see also
+[OEIS A212954]): the exact diagonal value $R(4,4) = 18$, the exact off-diagonal values $R(3,k)$
+for $3 \le k \le 9$, and $R(4,5) = 25$. -/
+
+/-- $R(3,3) = 6$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_three : R(3, 3) = 6 := by
+  sorry
+
+/-- $R(3,4) = 9$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_four : R(3, 4) = 9 := by
+  sorry
+
+/-- $R(3,5) = 14$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_five : R(3, 5) = 14 := by
+  sorry
+
+/-- $R(3,6) = 18$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_six : R(3, 6) = 18 := by
+  sorry
+
+/-- $R(3,7) = 23$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_seven : R(3, 7) = 23 := by
+  sorry
+
+/-- $R(3,8) = 28$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_eight : R(3, 8) = 28 := by
+  sorry
+
+/-- $R(3,9) = 36$ (Grinstead–Roberts). -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_nine : R(3, 9) = 36 := by
+  sorry
+
+/-- The diagonal Ramsey number $R(4,4) = 18$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_four : R(4, 4) = 18 := by
+  sorry
+
+/-- $R(4,5) = 25$ (McKay–Radziszowski). -/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_five : R(4, 5) = 25 := by
+  sorry
+
+/--
+The diagonal Ramsey number $R(6,6)$ is unknown. The best known bounds recorded in [Rad] are
+$102 \le R(6,6) \le 165$.
+-/
+@[category research open, AMS 5]
+theorem ramsey_number_six_six : R(6, 6) = answer(sorry) := by
+  sorry
+
 end RamseyNumbers
