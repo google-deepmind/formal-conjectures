@@ -194,4 +194,77 @@ lemma card_uniqueMulProducts_le_sq_of_subset {A B S : Finset ℕ}
     (card_uniqueMulProducts_le A B).trans
       (Nat.mul_le_mul (card_le_card hA) (card_le_card hB))
 
+
+/-- With a single nonzero left factor, each attainable product has representation count `1`. -/
+lemma mulRepresentationCount_singleton_left (a : ℕ) (B : Finset ℕ) (m : ℕ)
+    (ha : a ≠ 0) :
+    mulRepresentationCount {a} B m = if ∃ b ∈ B, a * b = m then 1 else 0 := by
+  classical
+  by_cases h : ∃ b ∈ B, a * b = m
+  · obtain ⟨b, hb, rfl⟩ := h
+    rw [if_pos ⟨b, hb, rfl⟩, mulRepresentationCount, card_eq_one]
+    refine ⟨(a, b), Finset.ext fun p => ?_⟩
+    constructor
+    · intro hp
+      have hp' := mem_filter.mp hp
+      have ha' : p.1 = a := mem_singleton.mp (mem_product.mp hp'.1).1
+      have heq : a * p.2 = a * b := by
+        convert hp'.2
+        exact ha'.symm
+      have hb' : p.2 = b := Nat.mul_left_cancel (Nat.pos_of_ne_zero ha) heq
+      exact mem_singleton.mpr (Prod.ext ha' hb')
+    · intro hp
+      rw [mem_singleton.mp hp]
+      exact mem_filter.mpr ⟨mem_product.mpr ⟨mem_singleton_self a, hb⟩, rfl⟩
+  · rw [if_neg h, mulRepresentationCount_eq_zero_iff]
+    intro x hx y hy hxy
+    exact h ⟨y, hy, by simpa [mem_singleton.mp hx] using hxy⟩
+
+/-- Nonzero left singleton: uniquely represented products are exactly `{a} · B`. -/
+lemma uniqueMulProducts_singleton_left (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    uniqueMulProducts {a} B = B.image (fun b => a * b) := by
+  classical
+  ext m
+  constructor
+  · intro hm
+    have him := (mem_uniqueMulProducts.mp hm).1
+    obtain ⟨p, hp, rfl⟩ := mem_image.mp him
+    have hpA := (mem_product.mp hp).1
+    have hpB := (mem_product.mp hp).2
+    have ha' : p.1 = a := mem_singleton.mp hpA
+    exact mem_image.mpr ⟨p.2, hpB, by rw [ha']⟩
+  · intro hm
+    obtain ⟨b, hb, rfl⟩ := mem_image.mp hm
+    refine mem_uniqueMulProducts.mpr ⟨?_, ?_⟩
+    · exact mem_image.mpr ⟨(a, b), mem_product.mpr ⟨mem_singleton_self a, hb⟩, rfl⟩
+    · rw [mulRepresentationCount_singleton_left a B (a * b) ha, if_pos ⟨b, hb, rfl⟩]
+
+/-- Left multiplication by nonzero `a` is injective. -/
+lemma mul_left_injective_nat {a : ℕ} (ha : a ≠ 0) :
+    Function.Injective fun b : ℕ => a * b :=
+  fun _ _ h => Nat.mul_left_cancel (Nat.pos_of_ne_zero ha) h
+
+/-- Right multiplication by nonzero `b` is injective. -/
+lemma mul_right_injective_nat {b : ℕ} (hb : b ≠ 0) :
+    Function.Injective fun a : ℕ => a * b :=
+  fun _ _ h => Nat.mul_right_cancel (Nat.pos_of_ne_zero hb) h
+
+/-- Hence `# uniqueMulProducts {a} B = #B` when `a ≠ 0`. -/
+lemma card_uniqueMulProducts_singleton_left (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    (uniqueMulProducts {a} B).card = B.card := by
+  rw [uniqueMulProducts_singleton_left a B ha]
+  exact card_image_of_injective _ (mul_left_injective_nat ha)
+
+/-- Symmetric: nonzero right singleton. -/
+lemma uniqueMulProducts_singleton_right (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    uniqueMulProducts A {b} = A.image (fun a => a * b) := by
+  rw [uniqueMulProducts_comm, uniqueMulProducts_singleton_left b A hb]
+  simp [mul_comm]
+
+lemma card_uniqueMulProducts_singleton_right (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    (uniqueMulProducts A {b}).card = A.card := by
+  rw [uniqueMulProducts_singleton_right A b hb]
+  exact card_image_of_injective _ (mul_right_injective_nat hb)
+
+
 end Finset
