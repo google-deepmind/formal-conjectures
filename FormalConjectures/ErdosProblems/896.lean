@@ -94,19 +94,14 @@ theorem erdos_896.variants.F_comm (A B : Finset ℕ) : F A B = F B A := by
 
 /-- `maxF N` is at most `N²` (each factor set has size ≤ `N`). -/
 @[category API, AMS 11]
-theorem erdos_896.variants.maxF_le_sq (N : ℕ) : maxF N ≤ N * N := by
+theorem erdos_896.variants.maxF_le_sq (N : ℕ) : maxF N ≤ N ^ 2 := by
   classical
   refine Finset.sup_le fun p hp ↦ ?_
   have hp' := mem_product.mp hp
-  have hA : p.1.card ≤ N := by
-    have : p.1 ⊆ Icc 1 N := mem_powerset.mp hp'.1
-    exact (card_le_card this).trans (by simp [Nat.card_Icc])
-  have hB : p.2.card ≤ N := by
-    have : p.2 ⊆ Icc 1 N := mem_powerset.mp hp'.2
-    exact (card_le_card this).trans (by simp [Nat.card_Icc])
-  have := card_uniqueMulProducts_le p.1 p.2
-  calc F p.1 p.2 ≤ p.1.card * p.2.card := by simpa [F] using this
-    _ ≤ N * N := Nat.mul_le_mul hA hB
+  have hA : p.1 ⊆ Icc 1 N := mem_powerset.mp hp'.1
+  have hB : p.2 ⊆ Icc 1 N := mem_powerset.mp hp'.2
+  have hcard : (Icc 1 N).card = N := by simp [Nat.card_Icc]
+  simpa [F, hcard, sq] using card_uniqueMulProducts_le_sq_of_subset hA hB
 
 /-- `maxF` is positive for `N ≥ 1`. -/
 @[category API, AMS 11]
