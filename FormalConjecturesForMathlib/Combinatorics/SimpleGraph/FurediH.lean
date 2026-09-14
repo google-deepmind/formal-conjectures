@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Order.Interval.Finset.Basic
@@ -340,5 +342,104 @@ theorem furediH_card_edgeFinset (k : ℕ) : (furediH k).edgeFinset.card = k ^ 2 
   omega
 
 
+
+
+/-- Apex together with all pair-vertices form an independent set. -/
+lemma furediH_isIndepSet_apex_pairs (k : ℕ) :
+    (furediH k).IsIndepSet ({FurediH.Vertex.apex} ∪ Set.range (FurediH.Vertex.pair (k := k))) := by
+  intro x hx y hy hxy hadj
+  cases hx with
+  | inl hx =>
+    cases hy with
+    | inl hy => exact hxy (hx.trans hy.symm)
+    | inr hy =>
+      obtain ⟨p, rfl⟩ := Set.mem_range.mp hy
+      rw [Set.mem_singleton_iff] at hx
+      subst hx
+      exact not_furediH_adj_apex_pair p hadj
+  | inr hx =>
+    cases hy with
+    | inl hy =>
+      obtain ⟨p, rfl⟩ := Set.mem_range.mp hx
+      rw [Set.mem_singleton_iff] at hy
+      subst hy
+      exact not_furediH_adj_apex_pair p hadj.symm
+    | inr hy =>
+      obtain ⟨p, rfl⟩ := Set.mem_range.mp hx
+      obtain ⟨q, rfl⟩ := Set.mem_range.mp hy
+      exact not_furediH_adj_pair_pair p q hadj
+
+/-- $H_k$ is triangle-free. -/
+theorem furediH_cliqueFree_three (k : ℕ) : (furediH k).CliqueFree 3 := by
+  classical
+  intro s hs
+  obtain ⟨a, b, c, hab, hac, hbc, rfl⟩ := Finset.card_eq_three.mp hs.card_eq
+  have hab' : (furediH k).Adj a b := hs.isClique (by simp) (by simp) hab
+  have hac' : (furediH k).Adj a c := hs.isClique (by simp) (by simp) hac
+  have hbc' : (furediH k).Adj b c := hs.isClique (by simp) (by simp) hbc
+  cases a <;> cases b <;> cases c <;>
+    simp [furediH, SimpleGraph.fromRel_adj, FurediH.adjRel] at hab' hac' hbc'
+
+/-- Explicit $C_4$ copy in $H_k$ for $k \ge 2$: spoke $0$, apex, spoke $1$, pair $\{0,1\}$. -/
+noncomputable def furediH.cycle4Copy {k : ℕ} (hk : 2 ≤ k) :
+    Copy (cycleGraph 4) (furediH k) := by
+  classical
+  let i : Fin k := ⟨0, by omega⟩
+  let j : Fin k := ⟨1, by omega⟩
+  have hij : i < j := by simp [i, j]
+  let p : FurediH.Pair k := ⟨(i, j), hij⟩
+  let f : Fin 4 → FurediH.Vertex k := fun x =>
+    match x.val with
+    | 0 => FurediH.Vertex.spoke i
+    | 1 => FurediH.Vertex.apex
+    | 2 => FurediH.Vertex.spoke j
+    | _ => FurediH.Vertex.pair p
+  refine Hom.toCopy ⟨f, ?_⟩ ?_
+  · intro a b hab
+    -- Order of `fin_cases a <;> fin_cases b` is row-major on `{0,1,2,3}²`.
+    fin_cases a <;> fin_cases b
+    · exact (hab.ne rfl).elim
+    · simpa [f] using furediH_adj_spoke_apex i
+    · have : ¬(cycleGraph 4).Adj (0 : Fin 4) 2 := by decide
+      exact (this hab).elim
+    · simpa [f] using furediH_adj_spoke_pair (p := p) (Or.inl rfl)
+    · simpa [f] using (furediH_adj_spoke_apex i).symm
+    · exact (hab.ne rfl).elim
+    · simpa [f] using furediH_adj_apex_spoke j
+    · have : ¬(cycleGraph 4).Adj (1 : Fin 4) 3 := by decide
+      exact (this hab).elim
+    · have : ¬(cycleGraph 4).Adj (2 : Fin 4) 0 := by decide
+      exact (this hab).elim
+    · simpa [f] using (furediH_adj_apex_spoke j).symm
+    · exact (hab.ne rfl).elim
+    · simpa [f] using furediH_adj_spoke_pair (p := p) (Or.inr rfl)
+    · simpa [f] using (furediH_adj_spoke_pair (p := p) (Or.inl rfl)).symm
+    · have : ¬(cycleGraph 4).Adj (3 : Fin 4) 1 := by decide
+      exact (this hab).elim
+    · simpa [f] using (furediH_adj_spoke_pair (p := p) (Or.inr rfl)).symm
+    · exact (hab.ne rfl).elim
+  · intro a b h
+    fin_cases a <;> fin_cases b
+    · rfl
+    · cases h
+    · exact absurd (FurediH.Vertex.spoke.inj h) (by simp [i, j] : i ≠ j)
+    · cases h
+    · cases h
+    · rfl
+    · cases h
+    · cases h
+    · exact absurd (FurediH.Vertex.spoke.inj h).symm (by simp [i, j] : i ≠ j)
+    · cases h
+    · rfl
+    · cases h
+    · cases h
+    · cases h
+    · cases h
+    · rfl
+
+/-- For $k \ge 2$, Füredi's $H_k$ contains a $4$-cycle (supports the $\mathrm{ex}\gg n^{3/2}$ lower bound). -/
+theorem furediH_contains_cycleGraph_four {k : ℕ} (hk : 2 ≤ k) :
+    cycleGraph 4 ⊑ furediH k :=
+  ⟨furediH.cycle4Copy hk⟩
 
 end SimpleGraph
