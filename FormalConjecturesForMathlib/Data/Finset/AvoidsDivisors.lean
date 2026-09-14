@@ -122,6 +122,33 @@ lemma card_avoidsDivisors_add_sum_div_ge (A : Finset ℕ) (x : ℕ) :
     rw [avoidsDivisors_eq_sdiff, card_sdiff_of_subset (filter_subset _ _), hcard]
   omega
 
+/-- Growing the range can only add survivors. -/
+lemma avoidsDivisors_mono_right (A : Finset ℕ) {x y : ℕ} (h : x ≤ y) :
+    avoidsDivisors A x ⊆ avoidsDivisors A y := by
+  intro m hm
+  simp only [mem_avoidsDivisors, mem_Icc] at hm ⊢
+  exact ⟨⟨hm.1.1, hm.1.2.trans h⟩, hm.2⟩
+
+/-- Sieving by a singleton `{a}` removes exactly the multiples of `a`. -/
+lemma avoidsDivisors_singleton (a x : ℕ) :
+    avoidsDivisors {a} x = (Icc 1 x).filter (fun m => ¬ a ∣ m) := by
+  ext m
+  simp [mem_avoidsDivisors]
+
+/-- Cardinality after sieving by a single `a`: `x - ⌊x / a⌋`. -/
+lemma card_avoidsDivisors_singleton (a x : ℕ) :
+    (avoidsDivisors {a} x).card = x - x / a := by
+  classical
+  have hsub : (Icc 1 x).filter (a ∣ ·) ⊆ Icc 1 x := filter_subset _ _
+  have hEq :
+      (Icc 1 x).filter (fun m => ∃ b ∈ ({a} : Finset ℕ), b ∣ m) =
+        (Icc 1 x).filter (a ∣ ·) := by
+    ext m
+    simp
+  rw [avoidsDivisors_eq_sdiff, hEq, card_sdiff_of_subset hsub, Nat.card_Icc,
+    card_Icc_filter_dvd]
+  omega
+
 /-- If `∑_{a ∈ A} 1/a ≤ C`, then at least `(1 - C) x` integers in `{1, …, x}` survive. -/
 lemma le_card_avoidsDivisors_of_reciprocalSum_le (A : Finset ℕ) (x : ℕ) {C : ℝ}
     (hC : A.reciprocalSum ≤ C) :

@@ -57,6 +57,33 @@ def BoundHolds (C : ℝ) : Prop :=
   ∃ c > (0 : ℝ), ∃ K > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
     K * (x : ℝ) / (log x) ^ c ≤ H C x
 
+/-- For `C ≥ 0` the empty sieve is admissible, so `H C x ≤ x`. -/
+@[category API, AMS 11]
+lemma H_le_self {C : ℝ} (hC : 0 ≤ C) (x : ℕ) : H C x ≤ x := by
+  refine Nat.sInf_le ⟨∅, empty_subset _, by simpa [reciprocalSum_empty] using hC,
+    card_avoidsDivisors_empty x⟩
+
+/-- Enlarging `C` can only shrink `H` when `C ≥ 0` (empty sieve is admissible). -/
+@[category API, AMS 11]
+lemma H_anti {C C' : ℝ} (hC : 0 ≤ C) (h : C ≤ C') (x : ℕ) : H C' x ≤ H C x := by
+  classical
+  let S : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C)}
+  let S' : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C')}
+  have hsub : S ⊆ S' := by
+    rintro _ ⟨A, hA, hsum, rfl⟩
+    exact ⟨A, hA, hsum.trans h, rfl⟩
+  have hne : S.Nonempty :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC, card_avoidsDivisors_empty x⟩
+  exact csInf_le_csInf' hne hsub
+
+/-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
+    (avoidsDivisors {a} x).card = x - x / a :=
+  card_avoidsDivisors_singleton a x
+
 /--
 Let $C>0$. Does there exist a $c>0$ (depending on $C$) such that, for all sufficiently large $x$,
 if $A\subseteq [1,x]$ has $\sum_{n\in A}\frac{1}{n}\leq C$ then
