@@ -99,6 +99,39 @@ lemma H_eq_zero_of_neg {C : ℝ} (hC : C < 0) (x : ℕ) : H C x = 0 := by
   change sInf _ = 0
   rw [hempty, Nat.sInf_empty]
 
+
+/-- If `0 ≤ C < 1/x` (and `x ≥ 1`) then only the empty sieve is admissible, so `H C x = x`. -/
+@[category API, AMS 11]
+lemma H_eq_self_of_lt_inv {C : ℝ} {x : ℕ} (hx : 1 ≤ x) (hC0 : 0 ≤ C)
+    (hC : C < (1 : ℝ) / x) : H C x = x := by
+  classical
+  let S : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C)}
+  have hempty_mem : x ∈ S :=
+    ⟨∅, empty_subset _, by simpa [reciprocalSum_empty] using hC0, card_avoidsDivisors_empty x⟩
+  have honly : S = {x} := by
+    ext n
+    constructor
+    · rintro ⟨A, hA, hsum, rfl⟩
+      have hAempty : A = ∅ := by
+        by_contra hne
+        have hAne : A.Nonempty := Finset.nonempty_iff_ne_empty.mpr hne
+        obtain ⟨a, ha⟩ := hAne
+        have haI := mem_Icc.mp (hA ha)
+        have hx2 : 2 ≤ x := le_trans haI.1 haI.2
+        have hge : (1 : ℝ) / x ≤ A.reciprocalSum :=
+          le_reciprocalSum_of_subset_Icc_two hA ⟨a, ha⟩ hx2
+        exact (not_le_of_gt hC) (hge.trans hsum)
+      subst hAempty
+      simp [card_avoidsDivisors_empty]
+    · intro hn
+      simp only [Set.mem_singleton_iff] at hn
+      subst hn
+      exact hempty_mem
+  change sInf S = x
+  simp [honly, csInf_singleton]
+
+
 /-- Singleton sieve `{a}` with `2 ≤ a ≤ x` and `1/a ≤ C` gives `H C x ≤ x - ⌊x/a⌋`. -/
 @[category API, AMS 11]
 lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a ≤ x)
