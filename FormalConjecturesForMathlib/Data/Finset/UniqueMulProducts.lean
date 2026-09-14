@@ -379,5 +379,26 @@ lemma uniqueMulProducts_singleton_right_nonempty_iff (A : Finset ℕ) (b : ℕ) 
     (uniqueMulProducts A {b}).Nonempty ↔ A.Nonempty := by
   rw [uniqueMulProducts_singleton_right A b hb, image_nonempty]
 
+/-- Two nonzero singletons: the unique product is exactly `{a * b}`. -/
+lemma uniqueMulProducts_singleton_singleton (a b : ℕ) (ha : a ≠ 0) (_hb : b ≠ 0) :
+    uniqueMulProducts {a} {b} = {a * b} := by
+  rw [uniqueMulProducts_singleton_left a {b} ha]
+  simp
+
+@[simp]
+lemma card_uniqueMulProducts_singleton_singleton (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
+    (uniqueMulProducts {a} {b}).card = 1 := by
+  simp [uniqueMulProducts_singleton_singleton a b ha hb]
+
+/-- Nonzero left singleton: card of unique products equals `#B`. -/
+lemma card_pos_uniqueMulProducts_singleton_left_iff (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
+    0 < (uniqueMulProducts {a} B).card ↔ B.Nonempty := by
+  rw [card_pos, uniqueMulProducts_singleton_left_nonempty_iff a B ha]
+
+/-- Nonzero right singleton: card of unique products equals `#A` positivity. -/
+lemma card_pos_uniqueMulProducts_singleton_right_iff (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    0 < (uniqueMulProducts A {b}).card ↔ A.Nonempty := by
+  rw [card_pos, uniqueMulProducts_singleton_right_nonempty_iff A b hb]
+
 
 end Finset

@@ -177,5 +177,17 @@ theorem erdos_896.variants.F_singleton_left_pos_iff (a : ℕ) (B : Finset ℕ) (
   simp only [F]
   rw [card_pos, uniqueMulProducts_singleton_left_nonempty_iff a B ha]
 
+/-- Nonzero right singleton yields a positive `F` precisely when `A` is nonempty. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_singleton_right_pos_iff (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
+    0 < F A {b} ↔ A.Nonempty := by
+  simp only [F]
+  rw [card_pos, uniqueMulProducts_singleton_right_nonempty_iff A b hb]
+
+/-- Two nonzero singletons: `F({a},{b}) = 1`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_singleton_singleton (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
+    F {a} {b} = 1 := by
+  simpa [F] using card_uniqueMulProducts_singleton_singleton a b ha hb
 
 end Erdos896
