@@ -69,6 +69,10 @@ lemma one_le_consecutiveDivisorRatio_of_lt {n i : ℕ}
   rw [consecutiveDivisorRatio, le_div_iff₀ hposR, one_mul]
   exact_mod_cast h.le
 
+/-- Consecutive divisor ratios are always nonnegative (junk values included). -/
+lemma consecutiveDivisorRatio_nonneg (n i : ℕ) : (0 : ℝ) ≤ consecutiveDivisorRatio n i :=
+  div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+
 /-- On valid indices (`i + 1 < τ(n)`), consecutive divisor ratios are ≥ `1`. -/
 lemma one_le_consecutiveDivisorRatio {n i : ℕ}
     (hi : i + 1 < n.divisors.card) :

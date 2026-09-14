@@ -118,4 +118,11 @@ theorem erdos_1099.variants.h_one (α : ℝ) : h α 1 = 0 := by
 theorem erdos_1099.variants.sumConsecutiveRatios_one : sumConsecutiveRatios 1 = 0 := by
   simp [sumConsecutiveRatios, Nat.divisors_one]
 
+/-- Consecutive-ratio sums are nonnegative. -/
+@[category API, AMS 11]
+theorem erdos_1099.variants.sumConsecutiveRatios_nonneg (n : ℕ) :
+    0 ≤ sumConsecutiveRatios n := by
+  classical
+  exact Finset.sum_nonneg fun _ _ ↦ Nat.consecutiveDivisorRatio_nonneg _ _
+
 end Erdos1099
