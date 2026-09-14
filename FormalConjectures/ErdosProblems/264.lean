@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 264
@@ -39,8 +39,10 @@ is irrational.
 Note: there are other possible definitions of this concept. See
 FormalConjectures/ErdosProblems/263.lean for another possible definition.
 -/
-def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℕ, BddAbove (Set.range b) →
-  0 ∉ Set.range (a + b) → 0 ∉ Set.range b → Irrational (∑' n, (1 : ℝ) / (a n + b n))
+def IsIrrationalitySequence (a : ℕ → ℕ) : Prop := ∀ b : ℕ → ℤ,
+  BddAbove (Set.range b) → BddBelow (Set.range b) →
+  0 ∉ Set.range (fun n ↦ (a n : ℤ) + b n) → 0 ∉ Set.range b →
+  Irrational (∑' n, (1 : ℝ) / ((a n : ℤ) + b n))
 
 /--
 Is $2^n$ an example of an irrationality sequence? Kovač and Tao proved that it is not [KoTa24]
@@ -75,7 +77,7 @@ is not an irrationality sequence.
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
-    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
+    (h₄ : ∃ C > 0, ∀ᶠ n in atTop, C ≤ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
     ¬IsIrrationalitySequence a := by
   sorry
 

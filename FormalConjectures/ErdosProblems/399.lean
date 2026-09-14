@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 399
@@ -48,9 +48,10 @@ This is discussed in problem D2 of Guy's collection [Gu04].
 
 This was formalized in Lean by Lu using Codex.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/399.lean"]
+@[category research solved, AMS 11]
 theorem erdos_399 : answer(False) ↔
     ¬ ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
+  show False ↔ _
   simp only [false_iff, Classical.not_not]
   exact ⟨10, 48, 36, 4, by decide⟩
 

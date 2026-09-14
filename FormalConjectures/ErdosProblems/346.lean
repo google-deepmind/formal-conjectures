@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 346
@@ -32,9 +32,14 @@ open Filter Topology Set
 namespace Erdos346
 
 /-- Is it true that for every lacunary, strongly complete sequence `A` that is not complete whenever
-infinitely many terms are removed from it, `lim A (n + 1) / A n = (1 + √5) / 2`? -/
-@[category research open, AMS 11]
-theorem erdos_346 : answer(sorry) ↔ ∀ {A : ℕ → ℕ}, IsLacunary A → IsAddStronglyCompleteNatSeq A →
+infinitely many terms are removed from it, `lim A (n + 1) / A n = (1 + √5) / 2`?
+
+The answer is no. A counterexample recorded at [erdosproblems.com/346] has all successive ratios
+at least `6 / 5`, but has subsequences of successive ratios tending to two different limits,
+`(1 + √5) / 2` and `(1 + √5) / 2 + 1 / 4`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_346 : answer(False) ↔ ∀ {A : ℕ → ℕ}, IsLacunary A → IsAddStronglyCompleteNatSeq A →
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) →
     Tendsto (fun n => A (n + 1) / (A n : ℝ)) atTop (𝓝 ((1 + √5) / 2)) := by
   sorry
@@ -45,16 +50,43 @@ def f (n : ℕ) : ℕ := if Even n then n.fib - 1 else n.fib + 1
 /-- The sequence `f` is lacunary. -/
 @[category test, AMS 11]
 theorem erdos_346.variants.f_isLacunary : IsLacunary f := by
-  sorry
+  refine ⟨3/2, by norm_num, Filter.eventually_atTop.mpr ⟨9, fun k hk => ?_⟩⟩
+  -- Key: `2·fib(k+1) > 3·fib(k) + 5` for `k ≥ 9`, since
+  -- `2·fib(k+1) - 3·fib(k) = fib(k-3) ≥ fib(6) = 8 > 5`.
+  have hfib_strict : 3 * Nat.fib k + 5 < 2 * Nat.fib (k + 1) := by
+    obtain ⟨m, rfl⟩ : ∃ m, k = m + 9 := ⟨k - 9, by omega⟩
+    have h1 : Nat.fib (m + 9 + 1) = Nat.fib (m + 8) + Nat.fib (m + 9) := by
+      rw [show m + 9 + 1 = m + 8 + 2 from by ring, Nat.fib_add_two]
+    have h2 : Nat.fib (m + 9) = Nat.fib (m + 7) + Nat.fib (m + 8) := by
+      rw [show m + 9 = m + 7 + 2 from by ring, Nat.fib_add_two]
+    have h3 : Nat.fib (m + 8) = Nat.fib (m + 6) + Nat.fib (m + 7) := by
+      rw [show m + 8 = m + 6 + 2 from by ring, Nat.fib_add_two]
+    have h4 : 8 ≤ Nat.fib (m + 6) :=
+      le_trans (by decide : 8 ≤ Nat.fib 6) (Nat.fib_mono (by omega))
+    omega
+  have hfib_R : 3 * (Nat.fib k : ℝ) + 5 < 2 * Nat.fib (k + 1) := by
+    exact_mod_cast hfib_strict
+  have hpos : 1 ≤ Nat.fib k := Nat.fib_pos.mpr (by omega)
+  have hpos1 : 1 ≤ Nat.fib (k + 1) := Nat.fib_pos.mpr (by omega)
+  unfold f
+  by_cases heven : Even k
+  · have hodd : ¬ Even (k + 1) := by simp [Nat.even_add_one, heven]
+    rw [if_pos heven, if_neg hodd]
+    push_cast [Nat.cast_sub hpos]
+    linarith
+  · have hodd_plus : Even (k + 1) := by simp [Nat.even_add_one, heven]
+    rw [if_neg heven, if_pos hodd_plus]
+    push_cast [Nat.cast_sub hpos1]
+    linarith
 
 /-- The sequence `f` is strongly complete, and this is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by
   sorry
 
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
-@[category test, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_346.variants.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
     ¬ IsAddComplete (range f \ B) := by
   sorry
@@ -68,11 +100,13 @@ theorem erdos_346.variants.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
   sorry
 
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
-satisfying the aforementioned properties. -/
+satisfying the aforementioned properties: there is a strictly increasing sequence `A` that is
+strongly complete and not complete whenever infinitely many terms are removed from it, but with
+$\liminf_n A(n+1)/A(n) = 1$ and $\limsup_n A(n+1)/A(n) = \infty$. -/
 @[category research solved, AMS 11]
-theorem erdos_346.variants.example : ∃ A : ℕ → ℕ, IsAddStronglyCompleteNatSeq A ∧
+theorem erdos_346.variants.example : ∃ A : ℕ → ℕ, StrictMono A ∧ IsAddStronglyCompleteNatSeq A ∧
     (∀ B : Set ℕ, B ⊆ range A → B.Infinite → ¬ IsAddComplete (range A \ B)) ∧
-    liminf (fun n => A (n + 1) / (2 : ℝ)) atTop = 1 ∧
+    liminf (fun n => A (n + 1) / (A n : ℝ)) atTop = 1 ∧
     limsup (fun n => A (n + 1) / (A n : ENNReal)) atTop = ⊤ := by
   sorry
 

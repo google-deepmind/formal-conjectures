@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 520
@@ -30,11 +30,14 @@ variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)
 
 /--
 A random function $f$ is Rademacher multiplicative if $f(1) = 1$,
-for each prime $p$, we independently choose $f(p) \in \{-1, 1\}$ uniformly at random,
+for each prime $p$, we independently choose $f(p) \in \{-1, 1\}$ uniformly at random (so each
+$f(p)$ is a measurable function of the sample point),
 for each square-free integer $n = p_1 \cdots p_r$, $f(n) = f(p_1) \cdots f(p_r)$, and
 for each non-squarefree integer $n$, $f(n) = 0$.
 -/
 structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
+  /-- Prime entries are random variables. -/
+  measurable_of_prime p : p.Prime → Measurable (f p)
   /-- Prime entries are independent. -/
   iIndepFun_primes : iIndepFun (fun p : Primes ↦ f p) ℙ
   /-- Primes entries are uniformly distributed on `{-1, 1}`. -/
@@ -52,7 +55,8 @@ $$
 -/
 @[category research open, AMS 11 60]
 theorem erdos_520 :
-    answer(sorry) ↔ ∃ c > 0, ∀ (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
+    answer(sorry) ↔ ∃ c > 0, ∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+      (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
       ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c := by
   sorry
 

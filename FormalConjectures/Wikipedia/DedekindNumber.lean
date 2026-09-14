@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Dedekind Numbers
@@ -134,12 +134,7 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  constructor
-  · intro h i hi
-    contrapose! h
-    exact fun H => by have := H i; simp_all +decide [ χ ]
-  · intro h i; simp [χ];
-    by_cases hi : i ∈ s <;> simp_all +decide [ Finset.subset_iff ]
+  simp [χ, Pi.le_def, Finset.subset_iff]
 
 @[category API, AMS 6]
 lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔ v i = true := by
@@ -165,6 +160,7 @@ lemma fromSperner_monotone {n : ℕ} (A : Finset (Finset (Fin n))) (_ : IsSperne
       exact decide_eq_true
         ( ⟨ s, hsA, fun i hi => by simpa using Finset.mem_filter.mp ( hs_w hi ) |>.2 ⟩ )
 
+/-- Every true set of a monotone Boolean function contains a minimal true set. -/
 @[category textbook, AMS 5 6]
 lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : Monotone f)
     {s : Finset (Fin n)} (hs : f (χ s) = true) :
@@ -180,6 +176,7 @@ lemma exists_minimal_true_subset {n : ℕ} {f : (Fin n → Bool) → Bool} (_ : 
         not_lt_of_ge ( ht₂ u ⟨ hu.trans ht₁.1, hu' ⟩ )
         ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.2 ⟨ hu, by aesop ⟩ )
 
+/-- Converting a monotone function to a Sperner family and back yields the same function. -/
 @[category textbook, AMS 5 6]
 lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Monotone f) :
     fromSperner (toSperner f) = f := by
@@ -198,6 +195,7 @@ lemma fromSperner_toSperner {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : Mono
     refine' hf _ hs.1
     intro i; by_cases hi : i ∈ s <;> simp_all +decide [ χ ]
 
+/-- Converting a Sperner family to a monotone function and back yields the same family. -/
 @[category textbook, AMS 5 6]
 lemma toSperner_fromSperner {n : ℕ} (A : Finset (Finset (Fin n))) (hA : IsSperner A) :
     toSperner (fromSperner A) = A := by

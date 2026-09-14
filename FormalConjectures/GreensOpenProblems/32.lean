@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 32
@@ -116,10 +116,14 @@ theorem green_32.variants.szemeredi_regime :
 /--
 In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
 Bohr sets [Gr24].
+
+The lower bound $101 \le \omega(p)$ makes the set size $\lfloor \omega(p) \rfloor$ exceed $100$.
+With only $100 < \omega(p)$, a function with $100 < \omega(p) < 101$ asks for sets of size $100$
+with a gap of length $p - 1$ in some dilate, which is impossible.
 -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.dirichlet_regime :
-    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 100 < ω p ∧ ω p ≤ c * Real.log p) →
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 101 ≤ ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by
   sorry
 
@@ -135,14 +139,14 @@ theorem green_32.variants.log_regime :
 A set $A$ has a coset hole of size $L$ if there exists a subspace $W$ and a vector $v$ such that
 the affine space $v + W$ has size at least $L$ and is disjoint from $A$.
 -/
-def HasCosetHole {n : ℕ} (A : Finset (Fin n → ZMod 2)) (L : ℕ) : Prop :=
-  ∃ W : Submodule (ZMod 2) (Fin n → ZMod 2), ∃ v : Fin n → ZMod 2,
-    L ≤ Nat.card W ∧ ∀ w : W, v + (w : Fin n → ZMod 2) ∉ A
+def HasCosetHole {n : ℕ} (A : Finset (𝔽₂ n)) (L : ℕ) : Prop :=
+  ∃ W : Submodule (ZMod 2) (𝔽₂ n), ∃ v : 𝔽₂ n,
+    L ≤ Nat.card W ∧ ∀ w : W, v + (w : 𝔽₂ n) ∉ A
 
 /-- The empty set in $\mathbb{F}_2^n$ has a coset hole (using the trivial subspace). -/
 @[category test, AMS 5 11]
 theorem hasCosetHole_empty (n : ℕ) :
-    HasCosetHole (∅ : Finset (Fin n → ZMod 2)) 0 := by
+    HasCosetHole (∅ : Finset (𝔽₂ n)) 0 := by
   exact ⟨⊥, 0, Nat.zero_le _, fun _ => by simp⟩
 
 /--
@@ -153,7 +157,7 @@ size at least $100\sqrt{N}$ for sufficiently large $n$.
 @[category research solved, AMS 5 11]
 theorem green_32.variants.finite_field :
     ∀ᶠ n in atTop,
-      ∀ A : Finset (Fin n → ZMod 2), A.card = ⌊Real.sqrt (2^n : ℝ)⌋₊ →
+      ∀ A : Finset (𝔽₂ n), A.card = ⌊Real.sqrt (2^n : ℝ)⌋₊ →
       HasCosetHole A ⌊100 * Real.sqrt (2^n : ℝ)⌋₊ := by
   sorry
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 592
@@ -34,7 +34,7 @@ red/blue colouring of the edges of $K_α$ there is either a red $K_α$ or a blue
 -/
 @[category research open, AMS 3]
 theorem erdos_592 (β : Ordinal.{u}) : β.card ≤ ℵ₀ →
-    OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ (answer(sorry) : Ordinal.{u} → Prop) β := by
+    (OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ (answer(sorry) : Ordinal.{u} → Prop) β) := by
   sorry
 
 -- TODO(firsching): add condition by Galvin and Larson.

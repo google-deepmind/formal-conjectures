@@ -14,10 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 92
+
+Both questions here are disproved, by way of Erdős Problem 90. The source says so directly: this
+is a stronger form of the unit distance conjecture, so the disproof of that conjecture disproves
+these too. See `FormalConjectures.ErdosProblems.«90»`.
 
 *Reference:* [erdosproblems.com/92](https://www.erdosproblems.com/92)
 -/
@@ -53,16 +57,22 @@ noncomputable def possible_f_values (n : ℕ) : Set ℕ :=
 
 /--
 A sanity check to ensure the set of possible `f(n)` values is bounded above. A trivial bound is
-`n-1`, since any point can have at most `n-1` other points equidistant from it.
+`n`, since the points equidistant from any `x` form a subset of the other `n - 1` points.
 This ensures `sSup` is well-defined.
 -/
 @[category test, AMS 52]
 theorem possible_f_values_BddAbove (n : ℕ) : BddAbove (possible_f_values n) := by
-  use n - 1
-  rintro k ⟨points, h_card, h_prop⟩
-  unfold Erdos92.hasMinEquidistantProperty at *
-  unfold Erdos92.maxEquidistantPointsAt at *
-  sorry
+  refine ⟨n, fun k hk => ?_⟩
+  obtain ⟨points, hcard, ⟨x, hx⟩, hall⟩ := hk
+  refine (hall x hx).trans ?_
+  unfold maxEquidistantPointsAt
+  refine csSup_le' fun m hm => ?_
+  rw [Finset.mem_coe, Finset.mem_image] at hm
+  obtain ⟨d, hd, rfl⟩ := hm
+  calc ((points.erase x).filter fun p => dist x p = d).card
+      ≤ (points.erase x).card := Finset.card_filter_le _ _
+    _ ≤ points.card := Finset.card_erase_le
+    _ = n := hcard
 
 /--
 Let $f(n)$ be maximal such that there exists a set $A$ of $n$ points in $\mathbb^2$
@@ -72,17 +82,26 @@ noncomputable def f (n : ℕ) : ℕ := sSup <| possible_f_values n
 
 /--
 Is it true that $f(n)\leq n^{o(1)}$?
+
+The source records this as disproved: "This is a stronger form of the unit distance conjecture
+(see [90]). As such the recent disproof of [90] also disproves this." That disproof is
+`Erdos90.erdos_90`, which this repository already records as `research solved` with the answer
+`False`.
 -/
-@[category research open, AMS 52]
-theorem erdos_92.variants.weak : answer(sorry) ↔ ∃ o : ℕ → ℝ,
+@[category research solved, AMS 52]
+theorem erdos_92.variants.weak : answer(False) ↔ ∃ o : ℕ → ℝ,
   o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ n, (f n : ℝ) ≤ n^(o n) := by
   sorry
 
 /--
 Or even $f(n) < n^{c/\log\log n}$ for some constant $c > 0$?
+
+Also disproved, and by the weak form rather than separately: since $c/\log\log n \to 0$, the bound
+$n^{c/\log\log n}$ is of the form $n^{o(1)}$, so this statement implies
+`erdos_92.variants.weak` and is false whenever that one is.
 -/
-@[category research open, AMS 52]
-theorem erdos_92.variants.strong : answer(sorry) ↔
+@[category research solved, AMS 52]
+theorem erdos_92.variants.strong : answer(False) ↔
     ∃ c > 0, ∀ᶠ n in atTop, (f n : ℝ) ≤ n^(c / (n : ℝ).log.log) := by
   sorry
 

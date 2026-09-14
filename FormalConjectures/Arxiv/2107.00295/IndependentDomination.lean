@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-namespace Arxiv.«2107.00295»
+import FormalConjecturesUtil
 
 /-!
-# Conjecture 1.6
+# Independent Domination of Regular Graphs, Conjecture 1.6
 
 *Reference:* [arxiv/2107.00295](https://arxiv.org/abs/2107.00295)
 **On independent domination of regular graphs**
 by *Eun-Kyung Cho, Ilkyoo Choi, Boram Park*
 -/
-
+namespace Arxiv.«2107.00295»
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
 
 /--

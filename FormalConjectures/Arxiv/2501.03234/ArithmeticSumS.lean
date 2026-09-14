@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# Conjectures 1.1, 4.1, 4.2, 4.3 and 4.4
+# An Arithmetic Sum Associated with the Classical Theta Function
 
 *Reference:* [arxiv/2501.03234](https://arxiv.org/abs/2501.03234)
-**Theorems and Conjectures on an Arithmetic Sum Associated with the Classical Theta Function θ3**
+**An Arithmetic Sum Associated with the Classical Theta Function**
 by *Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alexandru Zaharescu*
 -/
 

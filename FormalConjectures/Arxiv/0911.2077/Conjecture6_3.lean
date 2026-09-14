@@ -14,20 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-namespace Arxiv.«0911.2077»
+import FormalConjecturesUtil
 
 /-!
-# Conjecture 6.3
+# Central Binomial Tail Bounds, Conjecture 6.3
 
 *Reference:* [arxiv/0911.2077](https://arxiv.org/abs/0911.2077)
 **Central Binomial Tail Bounds**
 by *Matus Telgarsky*
 -/
-
+namespace Arxiv.«0911.2077»
 open NNReal ENNReal ProbabilityTheory
-
 
 /-- As usual, let $\Phi$ be the distribution function of the standard normal. -/
 local notation "Φ" => cdf (gaussianReal 0 1)
@@ -56,8 +53,7 @@ theorem arxiv.id0911_2077.conjecture6_3
       exact this
     1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
       + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k)
-      ≤ ((PMF.binomial (⟨p, le_of_lt h_p.1⟩) hp' (2 * k)).toMeasure
-        (Set.Ici ⟨k, by omega⟩)).toReal := by
+      ≤ (binomial (2 * k) ⟨p, h_p.1.le, hp'⟩).real (Set.Icc k (2 * k)) := by
   sorry
 
 end Arxiv.«0911.2077»

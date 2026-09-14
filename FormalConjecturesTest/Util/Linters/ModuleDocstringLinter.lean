@@ -13,17 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Linters.ModuleDocstringLinter
+public meta import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 
 /-!
 # Tests for the module docstring linter
 
-This file tests that the module docstring linter correctly flags files with
-more than one `/-! ... -/` block, and does not flag the first one.
+This file tests that the module docstring linter:
+1. Does not flag the first `/-! ... -/` block.
+2. Flags files with more than one `/-! ... -/` block.
+3. Can be disabled with `set_option`.
+
+The "missing module docstring" warning is tested in
+`ModuleDocstringLinterMissing.lean`.
 -/
 
--- The module docstring above is the first (and only expected) one, so no warning.
+@[expose] public section
+
+-- Enable the linter for this test file
+-- (it is off by default; enabled via lakefile for FormalConjectures).
+set_option linter.style.moduleDocstring true
 
 -- A second module docstring should trigger the linter.
 /--

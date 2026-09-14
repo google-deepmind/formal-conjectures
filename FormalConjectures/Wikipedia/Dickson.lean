@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-open Polynomial
+import FormalConjecturesUtil
 
 /-!
 # Dickson's conjecture
@@ -28,7 +27,7 @@ open Polynomial
 - [Leonard Eugene Dickson, *History of the Theory of Numbers, Vol. I: Divisibility and Primality*](https://archive.org/details/historyoftheoryo01dickuoft)
 - [Arxiv](https://arxiv.org/pdf/0906.3850)
 -/
-
+open Polynomial
 namespace Dickson
 
 /--
@@ -44,11 +43,11 @@ theorem dickson_conjecture (fs : Finset ℤ[X]) (hfs : ∀ f ∈ fs, f.degree = 
 /-  ## Special cases -/
 
 /--
-**Polignac's conjecture**
-For any integer $k$ there are infinitely many primes $p$ such that $p + 2k$ is prime.
+**The generalized twin-prime conjecture**
+For any positive integer $k$ there are infinitely many primes $p$ such that $p + 2k$ is prime.
 -/
 @[category research open, AMS 11]
-theorem polignac_conjecture (k : ℕ) :
+theorem generalized_twin_primes (k : ℕ) (hk : 0 < k) :
     Infinite {p : ℕ | p.Prime ∧ (p + 2 * k).Prime} := by
   sorry
 

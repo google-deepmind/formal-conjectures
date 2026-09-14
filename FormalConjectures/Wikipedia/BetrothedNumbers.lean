@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Betrothed numbers
@@ -56,10 +56,13 @@ Do there exist betrothed numbers $(m, n)$ where both have the same parity
 
 All known betrothed pairs consist of one even and one odd number.
 
+The requirement $m \neq n$ is part of the question: $\mathrm{IsBetrothed}\ n\ n$ says
+$\sigma(n) = 2n + 1$, i.e. that $n$ is quasiperfect, which is the separate open problem
+`QuasiperfectNumbers.exists_quasiperfect`.
 -/
 @[category research open, AMS 11]
 theorem same_parity_betrothed :
-    answer(sorry) ↔ ∃ m n : ℕ, IsBetrothed m n ∧ (Even m ↔ Even n) := by
+    answer(sorry) ↔ ∃ m n : ℕ, m ≠ n ∧ IsBetrothed m n ∧ (Even m ↔ Even n) := by
   sorry
 
 /--

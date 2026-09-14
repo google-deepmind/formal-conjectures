@@ -101,6 +101,31 @@ def HasPosDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : Prop :=
   ∃ α > 0, S.HasDensity α A
 
+/--
+The two-sided partial natural density of a set of integers, counted inside the interval
+`[-N, N]`.
+-/
+noncomputable def intPartialDensity (S : Set ℤ) (N : ℕ) : ℝ :=
+  open scoped Classical in
+  (((Finset.Icc (-(N : ℤ)) (N : ℤ)).filter (fun m => m ∈ S)).card : ℝ) /
+    (2 * (N : ℝ) + 1)
+
+/-- A set of integers has two-sided natural density `α`. -/
+def HasIntDensity (S : Set ℤ) (α : ℝ) : Prop :=
+  Tendsto (fun N : ℕ => S.intPartialDensity N) atTop (𝓝 α)
+
+@[simp]
+theorem intPartialDensity_empty (N : ℕ) : intPartialDensity (∅ : Set ℤ) N = 0 := by
+  simp [intPartialDensity]
+
+namespace HasIntDensity
+
+@[simp]
+theorem empty : HasIntDensity (∅ : Set ℤ) 0 := by
+  simp [HasIntDensity]
+
+end HasIntDensity
+
 namespace HasDensity
 
 -- TODO(mercuris): generalise these to non-univ `A`
@@ -189,7 +214,7 @@ end Nat
 
 section LogarithmicDensity
 
-open Finset Real Classical
+open Finset Real
 
 /--
 A set `A` of natural numbers has logarithmic density `d` if the sequence
@@ -199,6 +224,7 @@ then it also has logarithmic density `d` (see `Set.HasDensity.hasLogDensity`), b
 is false.
 -/
 def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
+  open scoped Classical in
   Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / .log n : ℝ)) atTop (𝓝 d)
 
 /-- If a set has natural density `d`, then it also has logarithmic density `d`. -/

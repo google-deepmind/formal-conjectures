@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
-# The curling Number Conjecture
+# The Curling Number Conjecture
 
-*Reference:* [arxiv/0912.2382](https://arxiv.org/abs/0912.2382) **The Curling Number Conjecture** by *Benjamin Chaffin and N. J. A. Sloane*
+*Reference:* [arxiv/0912.2382](https://arxiv.org/abs/0912.2382)
+**The Curling Number Conjecture**
+by *Benjamin Chaffin and N. J. A. Sloane*
 -/
 
 namespace Arxiv.«0912.2382»

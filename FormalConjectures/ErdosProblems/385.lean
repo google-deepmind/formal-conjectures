@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 385
@@ -33,7 +33,21 @@ noncomputable def F (n : ℕ) : ℕ := sSup {m + m.minFac | (m < n) (_ : m.Compo
 /-- Note that trivially $F(n) \leq n + \sqrt{n}$. -/
 @[category test, AMS 11]
 theorem trivial_ub (n : ℕ) : F n ≤ n + √n := by
-  sorry
+  have hkey : F n ≤ n + n.sqrt := by
+    apply csSup_le'
+    rintro x ⟨m, hm, hcomp, rfl⟩
+    have h1 : 0 < m := by have := hcomp.1; omega
+    have hsq : m.minFac ^ 2 ≤ m := Nat.minFac_sq_le_self h1 hcomp.2
+    have hmf : m.minFac ≤ m.sqrt := Nat.le_sqrt.mpr (by rw [← sq]; exact hsq)
+    have hmn : m.sqrt ≤ n.sqrt := Nat.sqrt_le_sqrt hm.le
+    omega
+  calc (F n : ℝ) ≤ ((n + n.sqrt : ℕ) : ℝ) := by exact_mod_cast hkey
+    _ = n + (n.sqrt : ℝ) := by push_cast; ring
+    _ ≤ n + √n := by
+        gcongr
+        rw [show ((n.sqrt : ℕ) : ℝ) = √((n.sqrt ^ 2 : ℕ) : ℝ) from by
+          push_cast; rw [Real.sqrt_sq (Nat.cast_nonneg _)]]
+        exact Real.sqrt_le_sqrt (by exact_mod_cast Nat.sqrt_le' n)
 
 /-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
 prime divisor of $m$. Is it true that $F(n)>n$ for all sufficiently large $n$? -/

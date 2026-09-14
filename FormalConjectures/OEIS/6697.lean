@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Subword complexity of the morphism a → aab, b → b
@@ -35,9 +35,9 @@ $$\sum_{n \geq 0} a_n x^n = \frac{1}{1-x} + \frac{x}{(1-x)^2}\left(\frac{1}{1-x}
 - N. J. A. Sloane and Simon Plouffe, *The Encyclopedia of Integer Sequences*, Academic Press, 1995.
 -/
 
-open PowerSeries WithPiTopology List
-
 namespace OeisA6697
+
+open PowerSeries WithPiTopology List
 
 /-- The morphism σ on {a, b} defined by a ↦ aab, b ↦ b, represented on Bool where
 `false` = a and `true` = b. -/
@@ -80,7 +80,7 @@ lemma length_finiteWord (n : ℕ) : (finiteWord n).length = 2 ^ (n + 1) - 1 := b
 We define it as the limit: w(i) is the i-th symbol, which stabilizes after
 sufficiently many iterations. -/
 noncomputable def infiniteWord (i : ℕ) : Bool :=
-  (finiteWord (i + 1))[i]'(by grw [length_finiteWord, ← Nat.lt_two_pow_self]; simp)
+  (finiteWord (i + 1))[i]'(by grw [length_finiteWord, ← Nat.lt_two_pow_self] <;> lia)
 
 /-- A subword (factor) of length n starting at position i. -/
 noncomputable def subwordAt (i n : ℕ) : List Bool :=

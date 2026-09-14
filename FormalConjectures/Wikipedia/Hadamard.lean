@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Hadamard's conjecture
@@ -44,7 +44,7 @@ def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 /--
 Both definitions are equivalent.
 
-TOOD(firsching): complete and golf the proof
+TODO(firsching): complete and golf the proof
 -/
 @[category test, AMS 15]
 theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
@@ -109,7 +109,7 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
      1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
      1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
 /--
-which satisifies the condition.
+which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by

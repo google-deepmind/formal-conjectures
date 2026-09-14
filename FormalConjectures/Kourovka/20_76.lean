@@ -14,23 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-
-namespace Kourovka.«20.76»
+import FormalConjecturesUtil
 
 /-!
 # Conjecture 20.76
 by L. Pyber
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 !-/
-
+namespace Kourovka.«20.76»
 /--
 Let $G$ be a finite $p$-group and assume that all abelian normal subgroups of $G$
 have order at most $p^k$. Is it true that every abelian subgroup of $G$ has order at most
 $p^{2k}$?
 -/
 @[category research open, AMS 20]
-theorem kourovka.«20.76» : answer(sorry) ↔
+theorem kourovka_20_76 : answer(sorry) ↔
     ∀ᵉ (p : ℕ) (hp : p.Prime) (G : Type) (_ : Group G) (hg : IsPGroup p G) (_ : Finite G) (k : ℕ)
     (h : ∀ H: Subgroup G, H.Normal ∧ IsMulCommutative H → Nat.card H ≤ p ^ k),
     (∀ H : Subgroup G, IsMulCommutative H → Nat.card H ≤ p ^ (2 * k)) := by

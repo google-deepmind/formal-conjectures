@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 /-!
 # Kurepa's conjecture
 
@@ -55,6 +55,9 @@ theorem kurepa_conjecture.variants.prime (p : ℕ) (h_p : 2 < p) :
     p.Prime → (!p : ℕ) % p ≠ 0 := by
   sorry
 
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the conjecture restricted to primes greater than 2.
+-/
 @[category textbook, AMS 11]
 theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ p, 2 < p → p.Prime → (!p : ℕ) % p ≠ 0) := by
@@ -90,6 +93,9 @@ An equivalent formulation in terms of the gcd of $n!$ and $!n$.
 theorem kurepa_conjecture.variants.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := by
   sorry
 
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the statement that $\gcd(n!, !n) = 2$ for all integers greater than 2.
+-/
 @[category textbook, AMS 11]
 theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ n, 2 < n → (n)!.gcd (!n) = 2) := by

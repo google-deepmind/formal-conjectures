@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Infinite Regular Primes
@@ -37,8 +37,9 @@ of the `p`-th cyclotomic field. -/
 noncomputable def IsRegularPrime [Fact p.Prime] : Prop :=
   p.Coprime <| Fintype.card <| ClassGroup (𝓞 <| CyclotomicField p ℚ)
 
+/-- The prime 37 is not a regular prime. -/
 @[category textbook, AMS 11]
-theorem not_isRegularPrime_37_first : ¬ @IsRegularPrime 37 (by decide) := by
+theorem not_isRegularPrime_37 : ¬ @IsRegularPrime 37 (by decide) := by
   sorry
 
 /-- The set of regular primes. -/
@@ -47,20 +48,18 @@ def regularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), @IsRegularPrime p �
 /-- The set of irregular primes. -/
 def irregularPrimes : Set ℕ := { p | ∃ (hp : Nat.Prime p), ¬ @IsRegularPrime p ⟨hp⟩ }
 
+/-- The primes 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, and 31 are regular. -/
 @[category textbook, AMS 11]
 lemma small_regular_primes :
     { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 } ⊆ regularPrimes := by
   sorry
 
-@[category textbook, AMS 11]
-theorem not_isRegularPrime_37_second : ¬ @IsRegularPrime 37 (by decide) := by
-  sorry
-
-/-- An equivanlent definitions of regualr prime `p` is that it does not divide the numerator of the
-first `p-3` Bernoulli numbers. Not in Mathlib. -/
+/-- **Kummer's criterion.** An equivalent definition of a regular prime `p` is that it does not
+divide the numerator of any of the Bernoulli numbers $B_k$ for $k = 2, 4, 6, \dots, p - 3$.
+Not in Mathlib. -/
 @[category textbook, AMS 11]
 theorem isRegularPrime_iff_Bernoulli (p : ℕ) [Fact p.Prime] :
-    IsRegularPrime p ↔ ∀ k ∈ Finset.Icc 2 (p - 3), ¬ (p : ℤ) ∣ (bernoulli' k).num := by
+    IsRegularPrime p ↔ ∀ k ∈ Finset.Icc 2 (p - 3), Even k → ¬ (p : ℤ) ∣ (bernoulli' k).num := by
   sorry
 
 /-- The set of irregular primes is infinite. -/

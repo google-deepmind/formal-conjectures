@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 153
@@ -31,14 +31,16 @@ open Filter Finset Nat
 
 namespace Erdos153
 
-/-- Define `f n` to be the minimum of
-`∑ (i : Set.Ico 1 ((A + A).card), (s i - s (i - 1)) ^ 2 / n` as `A` ranges over all Sidon sets
-of size `n`, where `s` is an order embedding from `Fin n` into `A`. -/
+/-- Define $f(n)$ to be the minimum of
+$\frac{1}{t}\sum_{1\leq i<t}(s_{i+1}-s_i)^2$ as $A$ ranges over all Sidon sets of size $n$, where
+$A+A=\{s_1<\cdots<s_t\}$. -/
 noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ IsSidon (A : Set ℕ)},
   let s := (A.1 + A).orderIsoOfFin rfl
-  ∑ i : Set.Ico 1 ((A.1 + A).card), (s ⟨i, i.2.2⟩ - s ⟨i - 1, by grind⟩) ^ 2 / (n : ℝ)
+  (∑ i : Set.Ico 1 ((A.1 + A).card), (s ⟨i, i.2.2⟩ - s ⟨i - 1, by grind⟩) ^ 2 : ℝ) / ((A.1 + A).card : ℝ)
 
-/-- Must `lim f n = ∞`? -/
+/-- Let $A$ be a finite Sidon set and $A+A=\{s_1<\cdots<s_t\}$. Is it true that
+$$\frac{1}{t}\sum_{1\leq i<t}(s_{i+1}-s_i)^2 \to \infty$$
+as $\lvert A\rvert\to \infty$? -/
 @[category research open, AMS 5]
 theorem erdos_153 : answer(sorry) ↔ Tendsto f atTop atTop := by
   sorry

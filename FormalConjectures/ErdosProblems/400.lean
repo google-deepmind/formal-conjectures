@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 400

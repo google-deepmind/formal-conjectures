@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 347
@@ -41,7 +41,7 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 This has been solved in the affirmative by ebarschkis in the comments (based on idea of Tao and
 van Doorn, also in the comments).
 
-Thos was formalized in Lean by Barschkis using Aristotle.
+This was formalized in Lean by Barschkis using Aristotle.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean"]
 theorem erdos_347 :

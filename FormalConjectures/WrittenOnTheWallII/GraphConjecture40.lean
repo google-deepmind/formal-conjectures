@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 40
@@ -39,7 +39,7 @@ number and `b(G)` is the largest induced bipartite subgraph size.
 -/
 @[category research open, AMS 5]
 theorem conjecture40 (h_conn : G.Connected) (h_nontrivial : 1 < Fintype.card α) :
-    ⌈((p G + b G + 1) / 2)⌉ ≤  G.largestInducedForestSize := by
+    ⌈(((pathCoverNumber G : ℝ) + b G + 1) / 2)⌉ ≤  G.largestInducedForestSize := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture40

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 859
@@ -45,7 +45,7 @@ theorem erdos_859.variants.erdos_upper_lower_bounds : ∃ᵉ (c₃ > (0 : ℝ)) 
 
 /-
 **Erdős Problem 859**
-The density `dₜ` of `DivisorSumSet (t : ℕ)` is assymptotically equivalent to ` c₁ / log (t) ^ c₂`
+The density `dₜ` of `DivisorSumSet (t : ℕ)` is asymptotically equivalent to ` c₁ / log (t) ^ c₂`
 for some positive constants `c₁` and `c₂`.
 -/
 /-- The density of the divisor sum set is asymptotically equivalent to $c_1 / \log(t)^{c_2}$. -/
@@ -55,14 +55,14 @@ theorem erdos_859 :
       (fun (t : ℕ) ↦ d t) ~[atTop] (fun t ↦ c₁ / Real.log t ^ c₂) := by
   sorry
 
-/-
+/--
 A case where we can easily calculate the density of `DivisorSumSet t` is that of `t=0`.
 -/
 @[category textbook, AMS 11]
 lemma erdos_859.variants.trivial_case : DivisorSumSet 0 = Set.univ := by
   simp [DivisorSumSet, Exists.intro ∅]
 
-/-
+/--
 An easy sanity check is to prove that for every natural number `t` the density `dₜ` is
 a positive number.
 Hint: investigate some multiplicative structure of `DivisorSumSet t`.
