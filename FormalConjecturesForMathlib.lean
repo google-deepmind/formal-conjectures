@@ -44,7 +44,6 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Coset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
-public import FormalConjecturesForMathlib.Combinatorics.Additive.PluenneckeBasis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
