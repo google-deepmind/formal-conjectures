@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Order.Lattice.Nat
 
@@ -159,5 +160,32 @@ lemma circumference_mono {G H : SimpleGraph α} [DecidableRel G.Adj] [DecidableR
   · refine csSup_le hg fun m hm ↦ le_circumference_of_mem_cycleLengths (cycleLengths_mono h hm)
   · have : G.cycleLengths = ∅ := Set.not_nonempty_iff_eq_empty.mp hg
     simp [circumference_eq_zero_of_cycleLengths_eq_empty this]
+
+
+/-- The canonical Eulerian cycle of `cycleGraph (n + 3)` witnesses length `n + 3`. -/
+lemma mem_cycleLengths_cycleGraph (n : ℕ) :
+    n + 3 ∈ (cycleGraph (n + 3)).cycleLengths :=
+  ⟨0, cycleGraph.cycle n, cycleGraph.isCycle_cycle, cycleGraph.length_cycle⟩
+
+/-- Consequently `cycleGraph (n + 3)` is not acyclic. -/
+lemma cycleGraph_not_isAcyclic (n : ℕ) : ¬ (cycleGraph (n + 3)).IsAcyclic := by
+  intro h
+  have hempty := h.cycleLengths_eq_empty
+  have hmem := mem_cycleLengths_cycleGraph n
+  rw [hempty] at hmem
+  exact hmem
+
+/-- Odd-length cycle graphs contribute their length to `oddCycleLengths`. -/
+lemma mem_oddCycleLengths_cycleGraph {n : ℕ} (h : Odd (n + 3)) :
+    n + 3 ∈ (cycleGraph (n + 3)).oddCycleLengths :=
+  ⟨mem_cycleLengths_cycleGraph n, h⟩
+
+/-- The circumference of `cycleGraph (n + 3)` is exactly `n + 3`. -/
+theorem circumference_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).circumference = n + 3 := by
+  refine le_antisymm ?_ (le_circumference_of_mem_cycleLengths (mem_cycleLengths_cycleGraph n))
+  -- `circumference ≤ #Fin (n+3) = n+3`
+  simpa using circumference_le_card (cycleGraph (n + 3))
+
 
 end SimpleGraph
