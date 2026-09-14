@@ -21,7 +21,11 @@ import FormalConjecturesUtil
 
 *Reference:* [arxiv/2605.12342](https://arxiv.org/abs/2605.12342)
 **Groups of permutations that are even on maximal proper subsets, and related monoids**
+*Reference:* 
+- [arxiv/2605.12342](https://arxiv.org/abs/2605.12342)
+**Groups of permutations that are even on maximal proper subsets, and related monoids**
 by *Vítor H. Fernandes*
+- [K26](https://github.com/KitaKen1/fernandes-conjecture-1-lean)
 
 For positive integers $m, n \ge 2$, let $\mathrm{S}_m \times \mathrm{S}_n$ be the direct product of
 symmetric groups on $[m] = \{1, \dots, m\}$ and $[n'] = \{1', \dots, n'\}$. Define
