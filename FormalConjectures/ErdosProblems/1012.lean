@@ -207,4 +207,19 @@ theorem erdos_1012.variants.circumference_cycleGraph (n : ℕ) :
   SimpleGraph.circumference_cycleGraph n
 
 
+
+/-- If `#V < 3` then every graph on `V` has circumference `0`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.circumference_eq_zero_of_card_lt_three
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (h : Fintype.card V < 3) : G.circumference = 0 :=
+  SimpleGraph.circumference_eq_zero_of_card_lt_three h
+
+/-- `K_n` on `Fin n` has circumference `n` when `n ≥ 3`, else `0`. -/
+@[category test, AMS 5]
+theorem erdos_1012.variants.circumference_completeGraph_fin_eq (n : ℕ) :
+    (completeGraph (Fin n)).circumference = if 3 ≤ n then n else 0 :=
+  SimpleGraph.circumference_completeGraph_fin_eq
+
+
 end Erdos1012

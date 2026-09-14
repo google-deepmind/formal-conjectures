@@ -244,4 +244,30 @@ lemma circumference_top_fin_of_three_le {n : ℕ} (hn : 3 ≤ n) :
   simpa [completeGraph] using circumference_completeGraph_of_three_le hn
 
 
+
+/-- If `#α < 3` then `G` has no cycle of length `≥ 3`, so the circumference vanishes. -/
+lemma circumference_eq_zero_of_card_lt_three {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : Fintype.card α < 3) : G.circumference = 0 := by
+  by_contra hne
+  have hcycles : G.cycleLengths.Nonempty := by
+    have : G.cycleLengths ≠ ∅ := fun hempty =>
+      hne (circumference_eq_zero_of_cycleLengths_eq_empty hempty)
+    exact Set.nonempty_iff_ne_empty.mpr this
+  have h3 : 3 ≤ G.circumference := three_le_circumference_of_nonempty hcycles
+  have hle : G.circumference ≤ Fintype.card α := circumference_le_card G
+  omega
+
+/-- For `n < 3`, `K_n` on `Fin n` has circumference `0`. -/
+lemma circumference_completeGraph_of_lt_three {n : ℕ} (hn : n < 3) :
+    (completeGraph (Fin n)).circumference = 0 :=
+  circumference_eq_zero_of_card_lt_three (by simpa)
+
+/-- Combined: circumference of `K_n` on `Fin n` is `n` if `n ≥ 3`, else `0`. -/
+theorem circumference_completeGraph_fin_eq {n : ℕ} :
+    (completeGraph (Fin n)).circumference = if 3 ≤ n then n else 0 := by
+  split_ifs with hn
+  · exact circumference_completeGraph_of_three_le hn
+  · exact circumference_completeGraph_of_lt_three (lt_of_not_ge hn)
+
+
 end SimpleGraph
