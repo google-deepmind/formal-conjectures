@@ -343,7 +343,7 @@ theorem sidonSubsetCount_eq_two_pow_card_iff [DecidableEq α] (A : Finset α)
         A.powerset.filter (fun B : Finset α ↦ IsSidon (B : Set α)) = A.powerset :=
       eq_of_subset_of_card_le (filter_subset _ _) hle
     have hA : A ∈ A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α) := by
-      simp [heq]; exact mem_powerset_self A
+      rw [heq]; exact mem_powerset_self A
     exact (mem_filter.mp hA).2
   · exact sidonSubsetCount_eq_two_pow_card
 
