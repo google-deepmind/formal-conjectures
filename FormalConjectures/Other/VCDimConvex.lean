@@ -72,12 +72,12 @@ $\mathrm{VC}_n$ dimension at most $d$. -/
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
-/-- Is it true that, if $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has
-$\mathrm{VC}_n$ dimension at most 2? -/
+/-- Is it true that, for all $n$, every convex set in $\mathbb R^{n + 1}$ has
+$\mathrm{VC}_n$ dimension at most 3? -/
 @[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_n_two_of_convex_rn_add_one :
-    answer(sorry) ↔ ∀ {n : ℕ}, 2 ≤ n → ∀ {C : Set (EuclideanSpace ℝ (Fin (n + 1)))},
-      Convex ℝ C → HasAddVCNDimAtMost C n 2 := by
+    answer(sorry) ↔ ∀ ⦃n : ℕ⦄, n ≠ 0 → ∀ ⦃C : Set (EuclideanSpace ℝ (Fin (n + 1)))⦄,
+      Convex ℝ C → HasAddVCNDimAtMost C n 3 := by
   sorry
 
 end VCDimConvex
