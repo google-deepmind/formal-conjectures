@@ -125,17 +125,10 @@ where $\epsilon > 0$. Hence we should assume it is non-negative valued.
 The existence of such a graph was proved [UlamErdos750] by GPT 5.5 Pro (prompted by Chojecki).
 Indeed, this constructs a graph with infinite chromatic number such that every subgraph on $m$
 vertices can be made bipartite after deleting at most $f(m)$ many vertices.
-
-This was formalized in Lean by Ammanamanchi using Claude Code 4.7 and GPT-5.5 Pro.
-
-The linked proof is not complete on its own. It declares Stiebitz's theorem as an axiom and
-derives the result from it, so it is marked `conditional` and names
-`erdos_750.variants.stiebitz`.
 -/
 @[category research solved, AMS 5,
-  conditional formal_proof using lean4 at
-    "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P750/Proof.lean"
-  assuming erdos_750.variants.stiebitz]
+  formal_proof using lean4 at
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/750/Erdos750.lean"]
 theorem erdos_750 :
     answer(True) ↔ ∀ (f : ℕ → ℝ≥0) (hf : atTop.Tendsto f atTop),
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧

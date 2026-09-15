@@ -68,13 +68,10 @@ $$
   d \mid p_{n + 1} + \cdots + p_{n + k},
 $$
 where $p_r$ denotes the $r$th prime?
-
-The linked proof is not complete on its own. It declares Shiu's theorem as an axiom and derives
-the result from it, so it is marked `conditional` and names `erdos_427.variants.shiu`.
 -/
 @[category research solved, AMS 11,
-  conditional formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"
-  assuming erdos_427.variants.shiu]
+  formal_proof using lean4 at
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/427/Erdos427.lean"]
 theorem erdos_427 : answer(True) ↔ erdos427 := by
   sorry
 

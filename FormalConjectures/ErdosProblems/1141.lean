@@ -103,14 +103,10 @@ is $1722$.
 
 The answer is negative: [APSSV26b] proves a stronger finiteness theorem, deducing it from
 Pollack [Po17]. Oriike [Or26] formalised the deduction in Lean.
-
-The linked proof is the deduction and not the whole result. It declares Theorem 1.3 of [Po17] and
-Mertens' third theorem as axioms, so it is marked `conditional` and names both.
 -/
 @[category research solved, AMS 11,
-  conditional formal_proof using lean4 at
-    "https://github.com/yuta0x89/ErdosProblems/blob/a1319f732cdee5140faf47d984e2c451c1184803/Erdos1141.lean"
-  assuming erdos_1141.variants.pollack_1_3 erdos_1141.variants.mertens_third]
+  formal_proof using lean4 at
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/1141/Erdos1141.lean"]
 theorem erdos_1141 :
     answer(False) ↔ Infinite { n | Erdos1141Prop n } := by
   sorry
