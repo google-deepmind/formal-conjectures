@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 This file contains tests for graph invariants on 5 specific concrete graphs:
 1. `HouseGraph`: A graph on 5 vertices.
 2. `K4`: The complete graph on 4 vertices.
-3. `PetersenGraph`: The Petersen graph on 10 vertices.
+3. `PetersenGraph`: The Petersen graph on 10 vertices (`SimpleGraph.petersenGraph`).
 4. `C6`: The cycle graph on 6 vertices.
 5. `Star5`: The star graph with 5 leaves (6 vertices total).
 
@@ -53,16 +53,9 @@ abbrev HouseGraph : SimpleGraph (Fin 5) :=
 /-- K4: Complete graph on 4 vertices. -/
 abbrev K4 : SimpleGraph (Fin 4) := completeGraph (Fin 4)
 
-/-- Petersen Graph on 10 vertices. -/
-abbrev PetersenGraph : SimpleGraph (Fin 10) :=
-  SimpleGraph.fromEdgeSet {
-    -- Outer Cycle
-    s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 0),
-    -- Spokes
-    s(0, 5), s(1, 6), s(2, 7), s(3, 8), s(4, 9),
-    -- Inner Star
-    s(5, 7), s(7, 9), s(9, 6), s(6, 8), s(8, 5)
-  }
+/-- Petersen Graph on 10 vertices (the Kneser graph `K(5,2)` from
+`FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen`). -/
+abbrev PetersenGraph : SimpleGraph PetersenVertex := petersenGraph
 
 /-- C6: Cycle graph on 6 vertices. -/
 abbrev C6 : SimpleGraph (Fin 6) := cycleGraph 6
@@ -346,34 +339,34 @@ theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
   have hbdd : BddAbove (Set.image (fun M : Subgraph PetersenGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
     refine ⟨(Fintype.card (Fin 10) : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
-    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 10)
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card PetersenVertex
     have hb := matching_card_bound PetersenGraph M hM
-    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 10))
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card PetersenVertex)
   unfold matchingNumber
   apply le_antisymm
   · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
     rintro x ⟨M, hM, rfl⟩
     show (M.edgeSet.toFinset.card : ℝ) ≤ 5
     have hb := matching_card_bound PetersenGraph M hM
-    simp only [Fintype.card_fin] at hb
+    simp only [card_petersenVertex] at hb
     exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 5)
   · apply le_csSup hbdd
-    refine ⟨PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 0 5 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 1 6 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 2 7 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 3 8 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 4 9 by decide), ?_, ?_⟩
+    refine ⟨PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 1}, by decide⟩ : PetersenVertex) (⟨{2, 3}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 2}, by decide⟩ : PetersenVertex) (⟨{3, 4}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 3}, by decide⟩ : PetersenVertex) (⟨{1, 4}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 4}, by decide⟩ : PetersenVertex) (⟨{1, 2}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{1, 3}, by decide⟩ : PetersenVertex) (⟨{2, 4}, by decide⟩ : PetersenVertex) by decide), ?_, ?_⟩
     · apply Subgraph.IsMatching.sup
       · apply Subgraph.IsMatching.sup
         · apply Subgraph.IsMatching.sup
           · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
-              (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+              (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; (simp [Set.disjoint_left]; decide))
           · exact Subgraph.IsMatching.subgraphOfAdj _
           · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-            simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+            (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
         · exact Subgraph.IsMatching.subgraphOfAdj _
         · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-          simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+          (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
       · exact Subgraph.IsMatching.subgraphOfAdj _
       · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-        simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
-    · simp
+        (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
+    · simp; norm_cast
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
