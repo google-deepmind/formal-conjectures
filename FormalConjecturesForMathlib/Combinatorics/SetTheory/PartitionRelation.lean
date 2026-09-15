@@ -61,4 +61,23 @@ def cardinalPartitionRel (μ : Cardinal.{u}) (r : ℕ) (γ : Ordinal.{u})
         #H = ν i ∧
         ∀ (s : Finset A) (hs : s.card = r), (↑s : Set A) ⊆ H → col ⟨s, hs⟩ = i
 
+/--
+`cardinalBracketRamsey2 α β r` asserts the **square-bracket partition relation**
+$$\alpha \to [\beta]^2_r.$$
+
+For any `r`-colouring of the unordered pairs from a set of cardinality `α`, there is a
+subset of cardinality `β` on which some colour is *missing* (the colouring restricted to
+its pairs is not surjective onto the `r` colours). Here the superscript `2` is the
+uniformity (pairs) and the subscript `r` is the number of colours.
+
+This is the weak (bracket) form of the round-bracket relation `α → (β)²_r`, which would
+instead demand a *monochromatic* `β`-sized subset. The colouring is given as a symmetric
+function `f : X → X → Fin r`; the diagonal values `f x x` are irrelevant, as pairs are
+never taken on the diagonal.
+-/
+def cardinalBracketRamsey2 (α β : Cardinal.{u}) (r : ℕ) : Prop :=
+  ∀ (X : Type u), #X = α →
+    ∀ (f : X → X → Fin r), (∀ x y, f x y = f y x) →
+      ∃ Y : Set X, #Y = β ∧ ∃ c : Fin r, ∀ x ∈ Y, ∀ y ∈ Y, x ≠ y → f x y ≠ c
+
 end Combinatorics
