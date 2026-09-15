@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import FormalConjectures.Wikipedia.BorsukConjecture
 public import FormalConjecturesUtil
 
 /-!
