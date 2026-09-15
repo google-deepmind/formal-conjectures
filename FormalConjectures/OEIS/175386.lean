@@ -43,8 +43,6 @@ def a (n : ℕ) : ℕ :=
     (num : ℚ) / (i : ℚ)
   ).den
 
-
-
 @[category test, AMS 11]
 lemma a_1 : a 1 = 1 := by native_decide
 
