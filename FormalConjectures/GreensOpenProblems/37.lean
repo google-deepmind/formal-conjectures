@@ -65,15 +65,21 @@ theorem green_37_theta (k : ℕ) :
   sorry
 
 /-- Determine an upper bound (big O) for `m(N, k)`. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-37-sublinear-upper-bound/blob/d57f5a85a61b6d96bfbb4d2b82a455a3dd39b374/lean/Green37UpperBoundsFC.lean#L236-L240"]
 theorem green_37_bigO (k : ℕ) :
-    (fun N ↦ (m N k : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun N ↦ (m N k : ℝ)) =O[atTop]
+      (answer(fun N : ℕ ↦ (N : ℝ)) : ℕ → ℝ) := by
   sorry
 
 /-- Determine a strict upper bound (little o) for `m(N, k)`. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-37-sublinear-upper-bound/blob/d57f5a85a61b6d96bfbb4d2b82a455a3dd39b374/lean/Green37UpperBoundsFC.lean#L230-L234"]
 theorem green_37_littleO (k : ℕ) :
-    (fun N ↦ (m N k : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun N ↦ (m N k : ℝ)) =o[atTop]
+      (answer(fun N : ℕ ↦ (N : ℝ)) : ℕ → ℝ) := by
   sorry
 
 end Green37
