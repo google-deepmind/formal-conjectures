@@ -19,13 +19,16 @@ import FormalConjecturesUtil
 /-!
 # Conjectures around homogeneous topological spaces
 
-This file formalizes the notion of a weakly first countable topological space and some conjectures
-around those.
+This file formalizes the notions of a homogeneous topological space and of (ω-)monolithic
+topological spaces, and states some open problems about homogeneous and monolithic compact spaces.
 
 *References:*
 * [Ar2013] Arhangeliski, Alexandr. "Selected old open problems in general topology."
   Buletinul Academiei de Ştiinţe a Republicii Moldova. Matematica 73.2-3 (2013): 37-46.
   https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-46).pdf.pdf
+* [Ar1987] Arhangel'skii, A. V. "Topological homogeneity. Topological groups and their continuous
+  images." Russian Mathematical Surveys 42.2 (1987): 83-131.
+  https://doi.org/10.1070/RM1987v042n02ABEH001333
 -/
 
 open TopologicalSpace Topology Filter Set
@@ -98,16 +101,54 @@ theorem countablyMonolithicSpace_card_lt :
       HomogeneousSpace X → CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
+/-- A topological space is *monolithic* (see [Ar1987]; [Ar2013] uses the term without
+defining it) if every subspace has network weight at most its density. -/
+class MonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
+  networkWeight_le_density : ∀ Y : Set X, networkWeight Y ≤ density Y
+
+/-- Monolithicity in the form `nw(cl A) ≤ |A| + ω` for every subset `A`. -/
+@[category test, AMS 54]
+theorem monolithicSpace_iff_networkWeight_closure_le (X : Type*) [TopologicalSpace X] :
+    MonolithicSpace X ↔ ∀ s : Set X, networkWeight (closure s) ≤ #s + ℵ₀ := by
+  constructor
+  · intro h s
+    refine (h.networkWeight_le_density _).trans ?_
+    have hd : Dense ((↑) ⁻¹' s : Set (closure s)) := by
+      rw [Subtype.dense_iff, Subtype.image_preimage_coe, inter_eq_right.mpr subset_closure]
+    exact hd.density_le.trans
+      (add_le_add_left (Cardinal.mk_preimage_of_injective _ _ Subtype.val_injective) _)
+  · intro h
+    refine ⟨fun Y => ?_⟩
+    obtain ⟨D, hD, hD'⟩ := exists_dense_mk_add_aleph0_eq_density (X := Y)
+    have hsub : Y ⊆ closure (Subtype.val '' D) := Subtype.dense_iff.mp hD
+    calc networkWeight Y
+        ≤ networkWeight (closure (Subtype.val '' D)) :=
+          (IsEmbedding.inclusion hsub).isInducing.networkWeight_le
+      _ ≤ #(Subtype.val '' D) + ℵ₀ := h _
+      _ = density Y := by rw [Cardinal.mk_image_eq Subtype.val_injective, hD']
+
+/-- Every discrete space is monolithic. -/
+@[category test, AMS 54]
+instance DiscreteTopology.toMonolithicSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
+    MonolithicSpace X where
+  networkWeight_le_density _ := by rw [networkWeight_discrete, density_discrete]
+
+/-- Every second countable space is monolithic. -/
+@[category test, AMS 54]
+instance SecondCountableTopology.toMonolithicSpace (X : Type*) [TopologicalSpace X]
+    [SecondCountableTopology X] : MonolithicSpace X where
+  networkWeight_le_density _ := networkWeight_le_aleph0.trans aleph0_le_density
+
 /-- Problem 17 in [Ar2013]:
-Is it true that every nonempty ω-monolithic compact hausdorff space contains a point with a
+Is it true that every nonempty monolithic compact hausdorff space contains a point with a
 first countable neighborhood basis?
 
 Note: `Nonempty X` is required since the conclusion asserts the existence of a point.
 -/
 @[category research open, AMS 54]
-theorem countablyMonolithicSpace_exists_nhds_generated_countable :
+theorem monolithicSpace_exists_nhds_generated_countable :
     answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
-      Nonempty X → CountablyMonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
+      Nonempty X → MonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 
 end Homogeneous
