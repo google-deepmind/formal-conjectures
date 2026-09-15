@@ -59,7 +59,8 @@ theorem a_4 : a 4 = 1 := by native_decide
 /--
 $n=1$ and $32$ are fixed points. Are there any others?
 
-Yes: 9^9 = 387420489 is also a fixed point. - [Kenta Kitamura](https://oeis.org/wiki/User:Kenta_Kitamura), Aug 14 2026
+Yes: 9^9 = 387420489 is also a fixed point. 
+- [Kenta Kitamura](https://oeis.org/wiki/User:Kenta_Kitamura), Aug 14 2026
 -/
 @[category research solved, AMS 11]
 theorem conjecture : answer(False) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 := by
@@ -70,5 +71,13 @@ theorem conjecture : answer(False) ↔ ∀ n : ℕ, a n = n → n = 1 ∨ n = 32
     have hfixed : a 387420489 = 387420489 := by
       simp [a]
     rcases h 387420489 hfixed with h | h <;> omega
+
+/--
+$n=1$ and $32$ and $387420489 = 9^9$ are the only fixed points.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/google-deepmind/formal-conjectures/blob/7bc39939333bfaacfa9f7a8381e5287dc0491f86/FormalConjectures/OEIS/113019.lean#L191"]
+theorem three_fixed_points : ∀ n : ℕ, a n = n → n = 1 ∨ n = 32 ∨ n = 387420489 := by
+  sorry
 
 end OeisA113019
