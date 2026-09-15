@@ -79,6 +79,17 @@ weak.linter.style.imports = true
 weak.google.answer = "postpone"
 
 
+[[lean_lib]]
+name = "ComparatorFacts"
+srcDir = "comparator/adapter"
+
+[[lean_exe]]
+name = "comparator_facts"
+srcDir = "comparator/adapter"
+root = "comparator_facts"
+exeName = "comparator_facts"
+supportInterpreter = true
+
 [[lean_exe]]
 name = "extract_names"
 srcDir = "scripts"
