@@ -17,21 +17,47 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# Conjecture 1.74 (Tarski monster topologizability)
+# Conjecture 1.74 (Minimal topological groups)
 
 by V. P. Platonov
 
-Problem 1.74 asks to describe all "minimal topological groups" in Platonov's
-sense: non-discrete Hausdorff topological groups all of whose proper closed
-subgroups are discrete. A natural test case: does there exist a Tarski monster
-group admitting a non-discrete Hausdorff group topology? A Tarski monster
-would be a minimal group in this sense, since all its proper subgroups are
-finite (hence discrete in any Hausdorff group topology).
+Describe all "minimal topological groups", that is, non-discrete Hausdorff
+topological groups all of whose proper closed subgroups are discrete. The
+minimal locally compact groups can be described without much effort, but the
+problem is probably complicated in the general case.
 
-*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
+A Tarski monster group equipped with a non-discrete Hausdorff group topology
+is a minimal topological group in this sense, since all its proper subgroups
+are finite (hence discrete in any Hausdorff group topology). Such topologizable
+Tarski monsters exist by a theorem of Klyachko, Olshanskii and Osin.
+
+*References:*
+- [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
+- A. A. Klyachko, A. Yu. Olshanskii, D. V. Osin, *On topologizable and
+  non-topologizable groups*, Topology Appl. 160 (2013), 2104–2120,
+  [arXiv:1210.7895](https://arxiv.org/abs/1210.7895), Theorem 1.4.
 -/
 
 namespace Kourovka.«1.74»
+
+/--
+A minimal topological group in Platonov's sense: a non-discrete Hausdorff
+topological group all of whose proper closed subgroups are discrete.
+-/
+def IsMinimalTopologicalGroup (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  IsTopologicalGroup G ∧ T2Space G ∧ ¬ DiscreteTopology G ∧
+    ∀ H : Subgroup G, H ≠ ⊤ → IsClosed (H : Set G) → DiscreteTopology H
+
+/--
+Describe all minimal topological groups, that is, all non-discrete Hausdorff
+topological groups whose proper closed subgroups are all discrete.
+-/
+@[category research open, AMS 20 22]
+theorem kourovka_1_74 :
+    ∀ (G : Type) [Group G] [TopologicalSpace G],
+      IsMinimalTopologicalGroup G ↔
+        (answer(sorry) : ∀ (G : Type) [Group G] [TopologicalSpace G], Prop) G := by
+  sorry
 
 /--
 A Tarski monster group: an infinite group in which every non-trivial proper
@@ -42,11 +68,14 @@ def IsTarskiMonster (G : Type*) [Group G] : Prop :=
     ∀ H : Subgroup G, H ≠ ⊥ → H ≠ ⊤ → Nat.card H = p
 
 /--
-Does there exist a Tarski monster group that admits a non-discrete Hausdorff
-group topology?
+There exists a Tarski monster group that admits a non-discrete Hausdorff group
+topology. This follows from Theorem 1.4 of Klyachko, Olshanskii and Osin, which
+gives a topologizable Tarski monster of every sufficiently large odd exponent $n$;
+taking $n$ to be a prime $p$ makes every non-trivial proper subgroup cyclic of
+order $p$. Any such group is a minimal topological group.
 -/
-@[category research open, AMS 20 22]
-theorem kourovka_1_74 : answer(sorry) ↔
+@[category research solved, AMS 20 22]
+theorem kourovka_1_74.variants.tarski_monster : answer(True) ↔
     ∃ (G : Type) (_ : Group G) (_ : TopologicalSpace G),
       IsTarskiMonster G ∧ IsTopologicalGroup G ∧ T2Space G ∧
       ¬ DiscreteTopology G := by
