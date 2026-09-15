@@ -23,21 +23,6 @@ by R. I. Grigorchuk
 
 Both parts of the problem are due to D. V. Anosov.
 
-Part a) asks whether there exists a non-cyclic finitely generated group $G$
-containing an element $a$ such that every element of $G$ is conjugate to a
-power of $a$. It was answered affirmatively by V. S. Guba
-(Math. USSR-Izv. 29 (1986), 233–277) and now sits in the Archive of the
-notebook.
-
-Part b) asks the same question for finitely presented groups:
-
-Does there exist a non-cyclic finitely presented group $G$ which contains an
-element $a$ such that each element of $G$ is conjugate to some power of $a$?
-
-A group is finitely presented if it is a quotient of a free group on finitely
-many generators by the normal closure of finitely many relators; see
-`Group.IsFinitelyPresented`.
-
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v46)
 -/
 
