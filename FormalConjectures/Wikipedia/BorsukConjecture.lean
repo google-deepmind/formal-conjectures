@@ -32,9 +32,7 @@ computation; the same configuration was found independently by Konz and by Ji [J
 cases $4 \leq n \leq 62$ are open. In dimension $4$, every bounded set can be partitioned into
 $9$ parts of smaller diameter [La82], and a 2026 preprint reduces this to $8$ parts [TV26].
 
-Formal proofs of the results below that carry a `formal_proof` attribute are available at the
-linked locations. Erdős Problem 505
-(`FormalConjectures.ErdosProblems.«505»`) points to this file.
+Erdős Problem 505 (`FormalConjectures.ErdosProblems.«505»`) points to this file.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Borsuk%27s_conjecture)
