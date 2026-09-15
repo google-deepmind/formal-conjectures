@@ -54,9 +54,11 @@ Similar remarks hold for the `variants.monotone` formalisations later in this fi
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = O(f)$ ? -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-357-sqrt-lower-bound/blob/d40ef76f3af54a644aeb38e68acd15f667994903/lean/Erdos357BigOLowerBoundFC.lean#L221-L224"]
 theorem erdos_357.parts.ii.bigO_version :
-    (answer(sorry) : ℕ → ℝ) =O[atTop] (fun n ↦ (f n : ℝ)) := by
+    (answer(fun n : ℕ ↦ √(n : ℝ)) : ℕ → ℝ) =O[atTop] (fun n ↦ (f n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
