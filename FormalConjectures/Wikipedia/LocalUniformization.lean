@@ -42,6 +42,8 @@ $k(a^{1/p}) \mid k$ for $a \in k \setminus k^p$ has no model that is smooth over
 
 For a field extension, `Algebra.EssFiniteType k F` says that $F$ is finitely generated as a
 field over $k$, and `Algebra.trdeg k F` is the transcendence degree, the dimension of a model.
+The centre `ValuationSubring.centerOn` and the predicate `ValuationSubring.HasLocalUniformization`
+are defined in `FormalConjecturesForMathlib.RingTheory.Valuation.LocalUniformization`.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Local_uniformization)
@@ -75,57 +77,18 @@ field over $k$, and `Algebra.trdeg k F` is the transcendence degree, the dimensi
   uniformization](https://doi.org/10.1016/j.jalgebra.2012.09.023), J. Algebra 373 (2013), 65--119.
 -/
 
-open IsLocalRing
+open IsLocalRing ValuationSubring
 
-namespace ValuationSubring
-
-variable {F : Type*} [Field F] {k : Type*} [Field k] [Algebra k F]
-
-/--
-The *centre* of a valuation subring `𝒪` of `F` on a `k`-subalgebra `A` of `F` contained in `𝒪`:
-the prime ideal `𝔪_𝒪 ∩ A` of `A`.
--/
-def centerOn (𝒪 : ValuationSubring F) (A : Subalgebra k F) (hA : ∀ a : A, (a : F) ∈ 𝒪) :
-    Ideal A :=
-  (maximalIdeal 𝒪).comap (A.val.toRingHom.codRestrict 𝒪 hA)
-
-instance (𝒪 : ValuationSubring F) (A : Subalgebra k F) (hA : ∀ a : A, (a : F) ∈ 𝒪) :
-    (𝒪.centerOn A hA).IsPrime :=
-  Ideal.IsPrime.comap _
-
-/-- The centre of `𝒪` on `A` consists of the elements of `A` of valuation less than one. -/
-@[category API, AMS 12 13]
-theorem mem_centerOn_iff (𝒪 : ValuationSubring F) (A : Subalgebra k F)
-    (hA : ∀ a : A, (a : F) ∈ 𝒪) (a : A) :
-    a ∈ 𝒪.centerOn A hA ↔ 𝒪.valuation (a : F) < 1 := by
-  rw [centerOn, Ideal.mem_comap, valuation_lt_one_iff]
-  rfl
-
-/--
-A valuation subring `𝒪` of `F` *admits local uniformization over* `k` if some affine model of
-`F` over `k` inside `𝒪` is regular at the centre of `𝒪`: there is a finitely generated
-`k`-subalgebra `A` of `F` with `A ⊆ 𝒪` and fraction field `F` whose localisation at the centre
-of `𝒪` is a regular local ring.
--/
-def HasLocalUniformization (𝒪 : ValuationSubring F) (k : Type*) [Field k] [Algebra k F] : Prop :=
-  ∃ (A : Subalgebra k F) (hA : ∀ a : A, (a : F) ∈ 𝒪),
-    Algebra.FiniteType k A ∧ IsFractionRing A F ∧
-      IsRegularLocalRing (Localization.AtPrime (𝒪.centerOn A hA))
-
-/-- A regular affine model of `F` over `k` inside `𝒪` uniformizes `𝒪`. -/
-@[category API, AMS 12 13 14]
-theorem hasLocalUniformization_of_isRegularRing (𝒪 : ValuationSubring F) (A : Subalgebra k F)
-    (hA : ∀ a : A, (a : F) ∈ 𝒪) [Algebra.FiniteType k A] [IsFractionRing A F]
-    [IsRegularRing A] : 𝒪.HasLocalUniformization k :=
-  ⟨A, hA, ‹_›, ‹_›, IsRegularRing.isRegularLocalRing_localization _⟩
+namespace LocalUniformization
 
 /--
 The trivial valuation subring of a function field is uniformized by any affine model, since its
 centre is the generic point.
 -/
 @[category test, AMS 12 13 14]
-theorem hasLocalUniformization_top (A : Subalgebra k F) [Algebra.FiniteType k A]
-    [IsFractionRing A F] : (⊤ : ValuationSubring F).HasLocalUniformization k := by
+theorem hasLocalUniformization_top {F : Type*} [Field F] {k : Type*} [Field k] [Algebra k F]
+    (A : Subalgebra k F) [Algebra.FiniteType k A] [IsFractionRing A F] :
+    (⊤ : ValuationSubring F).HasLocalUniformization k := by
   have hA : ∀ a : A, (a : F) ∈ (⊤ : ValuationSubring F) := fun a => mem_top _
   refine ⟨A, hA, ‹_›, ‹_›, ?_⟩
   have hbot : (⊤ : ValuationSubring F).centerOn A hA = ⊥ := by
@@ -142,10 +105,6 @@ theorem hasLocalUniformization_top (A : Subalgebra k F) [Algebra.FiniteType k A]
   let _ : Field (Localization.AtPrime ((⊤ : ValuationSubring F).centerOn A hA)) :=
     IsFractionRing.toField A
   infer_instance
-
-end ValuationSubring
-
-namespace LocalUniformization
 
 /--
 **Local uniformization in positive characteristic.**
