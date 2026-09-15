@@ -74,20 +74,25 @@ theorem erdos_307.variants.coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Fins
   sorry
 
 /--
-A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution with `Q` nonempty uses at
-least 59 primes in total, and `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and, by
-symmetry, the same for `∏ Q`); so no solution lies below a prime-product of `2.09·10⁵⁶`. The full
-`sorry`-free proof is in the linked repository (`Closed.lean`): the left conjunct is `card_ge_59`,
-the right is `erdos307_barrier_closed`. Both depend on `propext, Classical.choice, Quot.sound` and
-nothing further: the evaluation of the first 59 primes is kernel-checked by `decide`, so no
-`native_decide` enters this statement.
+A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution uses at least 60 primes
+in total, and if `Q` is nonempty then `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and,
+by symmetry, the same for `∏ Q`); so no solution lies below a prime-product of `2.09·10⁵⁶`. The full
+`sorry`-free proofs are in the linked repository: the left conjunct is `erdos307_sixty`
+(`Sixty.lean`), the right is `erdos307_barrier_closed` (`Closed.lean`). Both depend on
+`propext, Classical.choice, Quot.sound` and nothing further, and neither uses `native_decide`: the
+evaluation of the prime reciprocals is kernel-checked by `decide`.
+
+The cardinality bound is `60`, not the `59` this statement carried previously. `59` is Rosen's bound
+and follows from a mass argument alone; reaching `60` requires excluding the `49,961` admissible
+`59`-element supports one at a time, which is what `erdos307_sixty` does. Note that the
+`60` conjunct does not need `Q.Nonempty`, which is retained only for the product conjunct.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-"https://github.com/ElVec1o/erdos307/blob/76d242b024102f32d8411c714be4ad140a8b7c4b/lean/Erdos307/Closed.lean#L121"]
+"https://github.com/ElVec1o/erdos307/blob/9edae5bf4baf6ca96f51ffe1db3aa66347085e83/lean/Erdos307/Sixty.lean#L587"]
 theorem erdos_307.barrier {P Q : Finset ℕ}
     (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime) (hQne : Q.Nonempty)
     (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
-    59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
+    60 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
 end Erdos307
