@@ -101,47 +101,43 @@ theorem countablyMonolithicSpace_card_lt :
       HomogeneousSpace X → CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
-/-- A topological space `X` is *monolithic* (see [Ar1987]; [Ar2013] uses the term without
-defining it) if for every infinite cardinal `κ`, every subspace of `X` of density at most `κ` has
-network weight at most `κ`. -/
+/-- A topological space is *monolithic* (see [Ar1987]; [Ar2013] uses the term without
+defining it) if every subspace has network weight at most its density. -/
 class MonolithicSpace (X : Type*) [TopologicalSpace X] : Prop where
-  networkWeight_le_of_density_le :
-    ∀ ⦃κ : Cardinal⦄, ℵ₀ ≤ κ → ∀ ⦃Y : Set X⦄, density Y ≤ κ → networkWeight Y ≤ κ
+  networkWeight_le_density : ∀ Y : Set X, networkWeight Y ≤ density Y
 
-/-- A space is monolithic iff `nw(cl A) ≤ |A| + ω` for every subset `A`, the other standard
-formulation of monolithicity. -/
+/-- Monolithicity in the form `nw(cl A) ≤ |A| + ω` for every subset `A`. -/
 @[category test, AMS 54]
 theorem monolithicSpace_iff_networkWeight_closure_le (X : Type*) [TopologicalSpace X] :
-    MonolithicSpace X ↔ ∀ s : Set X, networkWeight (closure s) ≤ max #s ℵ₀ := by
+    MonolithicSpace X ↔ ∀ s : Set X, networkWeight (closure s) ≤ #s + ℵ₀ := by
   constructor
   · intro h s
-    refine h.networkWeight_le_of_density_le (le_max_right _ _) ?_
+    refine (h.networkWeight_le_density _).trans ?_
     have hd : Dense ((↑) ⁻¹' s : Set (closure s)) := by
       rw [Subtype.dense_iff, Subtype.image_preimage_coe, inter_eq_right.mpr subset_closure]
     exact hd.density_le.trans
-      ((Cardinal.mk_preimage_of_injective _ _ Subtype.val_injective).trans (le_max_left _ _))
+      (add_le_add_left (Cardinal.mk_preimage_of_injective _ _ Subtype.val_injective) _)
   · intro h
-    refine ⟨fun κ hκ Y hY => ?_⟩
-    obtain ⟨D, hD, hD'⟩ := exists_dense_mk_eq_density (X := Y)
+    refine ⟨fun Y => ?_⟩
+    obtain ⟨D, hD, hD'⟩ := exists_dense_mk_add_aleph0_eq_density (X := Y)
     have hsub : Y ⊆ closure (Subtype.val '' D) := Subtype.dense_iff.mp hD
     calc networkWeight Y
         ≤ networkWeight (closure (Subtype.val '' D)) :=
           (IsEmbedding.inclusion hsub).isInducing.networkWeight_le
-      _ ≤ max #(Subtype.val '' D) ℵ₀ := h _
-      _ = max #D ℵ₀ := by rw [Cardinal.mk_image_eq Subtype.val_injective]
-      _ ≤ κ := max_le (hD'.trans_le hY) hκ
+      _ ≤ #(Subtype.val '' D) + ℵ₀ := h _
+      _ = density Y := by rw [Cardinal.mk_image_eq Subtype.val_injective, hD']
 
 /-- Every discrete space is monolithic. -/
 @[category test, AMS 54]
 instance DiscreteTopology.toMonolithicSpace (X : Type*) [TopologicalSpace X] [DiscreteTopology X] :
     MonolithicSpace X where
-  networkWeight_le_of_density_le _ _ _ hY := by rwa [networkWeight_eq_mk, ← density_eq_mk]
+  networkWeight_le_density _ := by rw [networkWeight_discrete, density_discrete]
 
 /-- Every second countable space is monolithic. -/
 @[category test, AMS 54]
 instance SecondCountableTopology.toMonolithicSpace (X : Type*) [TopologicalSpace X]
     [SecondCountableTopology X] : MonolithicSpace X where
-  networkWeight_le_of_density_le _ hκ _ _ := networkWeight_le_aleph0.trans hκ
+  networkWeight_le_density _ := networkWeight_le_aleph0.trans aleph0_le_density
 
 /-- Problem 17 in [Ar2013]:
 Is it true that every nonempty monolithic compact hausdorff space contains a point with a

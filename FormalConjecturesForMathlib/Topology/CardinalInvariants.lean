@@ -22,7 +22,10 @@ public import Mathlib.Topology.Bases
 # Cardinal invariants of topological spaces
 
 This file defines networks of a topological space and two cardinal invariants:
-the *density* `d(X)` and the *network weight* `nw(X)`.
+the *density* `d(X)` and the *network weight* `nw(X)`. As usual, both are made infinite by adding
+`ℵ₀`, following the convention for cardinal invariants in Felix Pernegger's
+[pibase-lean](https://github.com/felixpernegger/pibase-lean)
+(`PiBaseLean/AdditionalDefs/Cardinal.lean`).
 -/
 
 @[expose] public section
@@ -48,10 +51,6 @@ theorem IsTopologicalBasis.isNetwork {B : Set (Set X)} (hB : IsTopologicalBasis 
 theorem isNetwork_setOf_isOpen : IsNetwork {U : Set X | IsOpen U} :=
   isTopologicalBasis_opens.isNetwork
 
-theorem isNetwork_range_singleton [DiscreteTopology X] :
-    IsNetwork (range (singleton : X → Set X)) :=
-  fun _ _ x hx => ⟨{x}, mem_range_self x, rfl, singleton_subset_iff.mpr hx⟩
-
 /-- The preimage of a network under an inducing map is a network. -/
 theorem IsNetwork.preimage {N : Set (Set Y)} (hN : IsNetwork N) {f : X → Y}
     (hf : IsInducing f) : IsNetwork ((f ⁻¹' ·) '' N) := by
@@ -60,22 +59,17 @@ theorem IsNetwork.preimage {N : Set (Set Y)} (hN : IsNetwork N) {f : X → Y}
   obtain ⟨n, hn, hfx, hnV⟩ := hN hV (f x) hx
   exact ⟨f ⁻¹' n, mem_image_of_mem _ hn, hfx, preimage_mono hnV⟩
 
-/-- Every network for a discrete space contains all singletons. -/
-theorem IsNetwork.singleton_mem [DiscreteTopology X] {N : Set (Set X)} (hN : IsNetwork N)
-    (x : X) : {x} ∈ N := by
-  obtain ⟨n, hn, hx, hsub⟩ := hN (isOpen_discrete {x}) x rfl
-  rwa [subset_antisymm hsub (singleton_subset_iff.mpr hx)] at hn
-
 variable (X)
 
-/-- The *density* `d(X)` of a topological space `X` is the least cardinality of a dense subset. -/
+/-- The *density* `d(X)` of a topological space `X`: the least cardinality of a dense subset,
+plus `ℵ₀`. -/
 noncomputable def density : Cardinal :=
-  ⨅ s : {s : Set X // Dense s}, #s.1
+  (⨅ s : {s : Set X // Dense s}, #s.1) + ℵ₀
 
-/-- The *network weight* `nw(X)` of a topological space `X` is the least cardinality of a
-network for `X`. -/
+/-- The *network weight* `nw(X)` of a topological space `X`: the least cardinality of a network,
+plus `ℵ₀`. -/
 noncomputable def networkWeight : Cardinal :=
-  ⨅ N : {N : Set (Set X) // IsNetwork N}, #N.1
+  (⨅ N : {N : Set (Set X) // IsNetwork N}, #N.1) + ℵ₀
 
 variable {X}
 
@@ -83,60 +77,74 @@ instance : Nonempty {s : Set X // Dense s} := ⟨⟨univ, dense_univ⟩⟩
 
 instance : Nonempty {N : Set (Set X) // IsNetwork N} := ⟨⟨_, isNetwork_setOf_isOpen⟩⟩
 
-theorem _root_.Dense.density_le {s : Set X} (hs : Dense s) : density X ≤ #s :=
-  ciInf_le' (fun s : {s : Set X // Dense s} => #s.1) ⟨s, hs⟩
+theorem aleph0_le_density : ℵ₀ ≤ density X := le_add_self
+
+theorem aleph0_le_networkWeight : ℵ₀ ≤ networkWeight X := le_add_self
+
+theorem _root_.Dense.density_le {s : Set X} (hs : Dense s) : density X ≤ #s + ℵ₀ :=
+  add_le_add_left (ciInf_le' (fun s : {s : Set X // Dense s} => #s.1) ⟨s, hs⟩) _
 
 theorem IsNetwork.networkWeight_le {N : Set (Set X)} (hN : IsNetwork N) :
-    networkWeight X ≤ #N :=
-  ciInf_le' (fun N : {N : Set (Set X) // IsNetwork N} => #N.1) ⟨N, hN⟩
-
-theorem le_density {c : Cardinal} (h : ∀ s : Set X, Dense s → c ≤ #s) : c ≤ density X :=
-  le_ciInf fun s => h s.1 s.2
-
-theorem le_networkWeight {c : Cardinal} (h : ∀ N : Set (Set X), IsNetwork N → c ≤ #N) :
-    c ≤ networkWeight X :=
-  le_ciInf fun N => h N.1 N.2
+    networkWeight X ≤ #N + ℵ₀ :=
+  add_le_add_left (ciInf_le' (fun N : {N : Set (Set X) // IsNetwork N} => #N.1) ⟨N, hN⟩) _
 
 /-- The density is attained by some dense subset. -/
-theorem exists_dense_mk_eq_density : ∃ s : Set X, Dense s ∧ #s = density X :=
+theorem exists_dense_mk_add_aleph0_eq_density : ∃ s : Set X, Dense s ∧ #s + ℵ₀ = density X :=
   let ⟨⟨s, hs⟩, h⟩ := ciInf_mem fun s : {s : Set X // Dense s} => #s.1
-  ⟨s, hs, h⟩
+  ⟨s, hs, congrArg (· + ℵ₀) h⟩
 
 /-- The network weight is attained by some network. -/
-theorem exists_isNetwork_mk_eq_networkWeight :
-    ∃ N : Set (Set X), IsNetwork N ∧ #N = networkWeight X :=
+theorem exists_isNetwork_mk_add_aleph0_eq_networkWeight :
+    ∃ N : Set (Set X), IsNetwork N ∧ #N + ℵ₀ = networkWeight X :=
   let ⟨⟨N, hN⟩, h⟩ := ciInf_mem fun N : {N : Set (Set X) // IsNetwork N} => #N.1
-  ⟨N, hN, h⟩
+  ⟨N, hN, congrArg (· + ℵ₀) h⟩
+
+theorem le_density {c : Cardinal} (h : ∀ s : Set X, Dense s → c ≤ #s + ℵ₀) : c ≤ density X :=
+  let ⟨s, hs, h'⟩ := exists_dense_mk_add_aleph0_eq_density (X := X)
+  h' ▸ h s hs
+
+theorem le_networkWeight {c : Cardinal} (h : ∀ N : Set (Set X), IsNetwork N → c ≤ #N + ℵ₀) :
+    c ≤ networkWeight X :=
+  let ⟨N, hN, h'⟩ := exists_isNetwork_mk_add_aleph0_eq_networkWeight (X := X)
+  h' ▸ h N hN
 
 theorem density_le_aleph0_iff : density X ≤ ℵ₀ ↔ SeparableSpace X := by
   constructor
   · intro h
-    obtain ⟨s, hs, hs'⟩ := exists_dense_mk_eq_density (X := X)
-    exact ⟨s, countable_coe_iff.mp (mk_le_aleph0_iff.mp (hs'.trans_le h)), hs⟩
+    obtain ⟨s, hs, hs'⟩ := exists_dense_mk_add_aleph0_eq_density (X := X)
+    exact ⟨s, countable_coe_iff.mp (mk_le_aleph0_iff.mp (le_self_add.trans (hs'.trans_le h))),
+      hs⟩
   · rintro ⟨s, hsc, hsd⟩
-    exact hsd.density_le.trans (mk_le_aleph0_iff.mpr hsc.to_subtype)
+    exact hsd.density_le.trans ((add_le_add_left (mk_le_aleph0_iff.mpr hsc.to_subtype) _).trans_eq
+      aleph0_add_aleph0)
 
 theorem networkWeight_le_aleph0 [SecondCountableTopology X] : networkWeight X ≤ ℵ₀ :=
   let ⟨_, hbc, _, hb⟩ := exists_countable_basis (α := X)
-  hb.isNetwork.networkWeight_le.trans (mk_le_aleph0_iff.mpr hbc.to_subtype)
+  hb.isNetwork.networkWeight_le.trans
+    ((add_le_add_left (mk_le_aleph0_iff.mpr hbc.to_subtype) _).trans_eq aleph0_add_aleph0)
 
 /-- The network weight of a subspace is at most that of the ambient space. -/
 theorem _root_.Topology.IsInducing.networkWeight_le {X Y : Type u} [TopologicalSpace X]
-    [TopologicalSpace Y] {f : X → Y} (hf : IsInducing f) : networkWeight X ≤ networkWeight Y :=
-  let ⟨_, hN, hN'⟩ := exists_isNetwork_mk_eq_networkWeight (X := Y)
-  (hN.preimage hf).networkWeight_le.trans (hN' ▸ mk_image_le)
+    [TopologicalSpace Y] {f : X → Y} (hf : IsInducing f) :
+    networkWeight X ≤ networkWeight Y :=
+  let ⟨_, hN, hN'⟩ := exists_isNetwork_mk_add_aleph0_eq_networkWeight (X := Y)
+  (hN.preimage hf).networkWeight_le.trans (hN' ▸ add_le_add_left mk_image_le _)
 
-/-- The density of a discrete space is its cardinality. -/
-theorem density_eq_mk [DiscreteTopology X] : density X = #X := by
-  refine le_antisymm (dense_univ.density_le.trans_eq mk_univ) (le_density fun s hs => ?_)
+theorem density_discrete [DiscreteTopology X] : density X = #X + ℵ₀ := by
+  refine le_antisymm (dense_univ.density_le.trans_eq (by rw [mk_univ]))
+    (le_density fun s hs => ?_)
   obtain rfl := dense_discrete.mp hs
-  exact mk_univ.ge
+  rw [mk_univ]
 
-/-- The network weight of a discrete space is its cardinality. -/
-theorem networkWeight_eq_mk [DiscreteTopology X] : networkWeight X = #X := by
-  refine le_antisymm (isNetwork_range_singleton.networkWeight_le.trans mk_range_le)
-    (le_networkWeight fun N hN => ?_)
-  exact mk_le_of_injective (f := fun x => (⟨{x}, hN.singleton_mem x⟩ : N))
-    fun _ _ h => singleton_injective (congrArg Subtype.val h)
+theorem networkWeight_discrete [DiscreteTopology X] : networkWeight X = #X + ℵ₀ := by
+  refine le_antisymm ?_ (le_networkWeight fun N hN => ?_)
+  · have : IsNetwork (range (singleton : X → Set X)) :=
+      fun _ _ x hx => ⟨{x}, mem_range_self x, rfl, singleton_subset_iff.mpr hx⟩
+    exact this.networkWeight_le.trans (add_le_add_left mk_range_le _)
+  · have h (x : X) : {x} ∈ N := by
+      obtain ⟨n, hn, hx, hsub⟩ := hN (isOpen_discrete {x}) x rfl
+      rwa [subset_antisymm hsub (singleton_subset_iff.mpr hx)] at hn
+    exact add_le_add_left (mk_le_of_injective (f := fun x => (⟨{x}, h x⟩ : N))
+      fun _ _ h => singleton_injective (congrArg Subtype.val h)) _
 
 end TopologicalSpace
