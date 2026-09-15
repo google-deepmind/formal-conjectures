@@ -51,6 +51,16 @@ theorem a_5 : a 5 = 1 := by
 /--
 Are there composite numbers $n > 4$ such that $n \equiv a(n) \pmod{\phi(n)}$?
 - Thomas Ordowski, Dec 02 2019
+
+This question is equivalent to Lehmer's totient problem `LehmerTotient.lehmer_totient`; a
+positive answer here falsifies the universal statement asked about in
+`Erdos828.erdos_828.variants.lehmer_conjecture`. Any composite
+$n$ with $\phi(n) \mid n - 1$ is squarefree, so $a(n) = 1$ and the condition here holds.
+Conversely, let $n > 4$ be composite with $\phi(n) \mid n - a(n)$ and $e = a(n) \ge 2$, and
+pick $p$ with $p^e \mid n$. Then $p^{e-1} \mid \phi(n) \mid n - e$ and $p^{e-1} \mid n$, so
+$p^{e-1} \mid e$, which forces $p = 2$ and $e = 2$. Now $n = 4m$ with $m$ odd and squarefree,
+and $2\phi(m) \mid 4m - 2$ makes $\phi(m)$ odd, so $m = 1$ and $n = 4$. Hence $e = 1$ and the
+condition is $\phi(n) \mid n - 1$.
 -/
 @[category research open, AMS 11]
 theorem conjecture1 :

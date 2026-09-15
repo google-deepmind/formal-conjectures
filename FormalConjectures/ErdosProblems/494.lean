@@ -27,6 +27,8 @@ import FormalConjecturesUtil
       221-254.
   - [GFS62] Gordon, B. and Fraenkel, A. S. and Straus, E. G., On the determination of sets
       by the sets of sums of a certain order. Pacific J. Math. (1962), 187--196.
+  - [FoIz94] Fomin, D. V. and Izhboldin, O. T., Sets of multiple sums. Proc. St. Petersburg
+      Math. Soc. 3 (1994), 244-259.
 -/
 
 open Filter
@@ -66,14 +68,18 @@ theorem erdos_494.variants.k_eq_2_card_pow_two :
 
 /--
 Selfridge and Straus [SeSt58] also showed that the conjecture is true when
-1) $k = 3$ and $|A| > 6$ or
+1) $k = 3$ and $|A| > 6$, except possibly for $|A| = 27$ and $|A| = 486$, or
 2) $k = 4$ and $|A| > 12$.
 More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$ is divisible by
 a prime greater than $k$.
+
+The cases $|A| = 27$ and $|A| = 486$ were left open in [SeSt58]. Fomin and Izhboldin [FoIz94]
+later found two distinct sets of each of these sizes with the same multiset of $3$-sums, so
+these exceptions are genuine.
 -/
 @[category research solved, AMS 5]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
-    ∀ card > 6, Erdos494Unique 3 card := by
+    ∀ card > 6, card ≠ 27 → card ≠ 486 → Erdos494Unique 3 card := by
   sorry
 
 /--

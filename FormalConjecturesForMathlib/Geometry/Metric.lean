@@ -18,6 +18,7 @@ module
 public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import Mathlib.Data.Finset.Sym
 public import Mathlib.Data.Sym.Card
+public import Mathlib.Order.Lattice.Nat
 public import Mathlib.Topology.MetricSpace.Defs
 
 @[expose] public section
@@ -40,6 +41,11 @@ between pairs of points.
 -/
 noncomputable def distinctDistances (points : Finset X) : ℕ :=
   #(distanceSet points)
+
+variable (X) in
+/-- The minimum number of distinct distances determined by a set of `n` points in `X`. -/
+noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
+  sInf {m : ℕ | ∃ points : Finset X, #points = n ∧ distinctDistances points = m}
 
 /-- The multiplicity of the distance `d` determined by `points`, that is, the number of unordered
 pairs of distinct points at distance `d` apart. -/

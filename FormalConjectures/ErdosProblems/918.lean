@@ -27,7 +27,7 @@ import FormalConjecturesUtil
 
 universe u
 
-open scoped Cardinal
+open scoped Cardinal Ordinal
 
 namespace Erdos918
 
@@ -42,16 +42,24 @@ theorem erdos_918.parts.i :
 
 /-- Is there a graph with $\aleph_{\omega+1}$ vertices and chromatic number $\aleph_1$ such that
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
+-- Formalisation note: `ω` here is `Ordinal.omega0`, from `open scoped Ordinal`, as in 623.lean.
+-- It is the fixed first infinite ordinal, not a variable: `variants.erdos_hajnal` settles every
+-- finite `k`, and `ℵ_ω` is the limit of that family, so this asks the single next case.
 @[category research open, AMS 5]
 theorem erdos_918.parts.ii :
-    answer(sorry) ↔ ∀ (ω : Ordinal),
+    answer(sorry) ↔
     ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
 /-- Is there a graph with $\aleph_2$ vertices and chromatic number $\aleph_2$ such that every
 subgraph on $\aleph_1$ vertices has chromatic number $\leq\aleph_0$? -/
--- Formalisation note: It is not clear whether this question for general subgraphs is open or not
+-- Formalisation note: for the `≤ ℵ₀` direction this is the same question as `parts.i`, not a
+-- separate one. Every subgraph on `W` is contained in the induced subgraph on `W`, so its
+-- chromatic cardinal is no larger; and the top subgraph induced on `W` has `coe` equal to
+-- `G.induce W`. So the two quantifications are equivalent and the answers cannot differ. The
+-- `= ℵ₀` pair below is genuinely different, because an edgeless subgraph has chromatic
+-- cardinal `1`, and that is the source's own reason for the impossibility there.
 @[category research open, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.i :
     answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
@@ -62,7 +70,7 @@ theorem erdos_918.variants.all_subgraphs.parts.i :
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
 @[category research open, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.ii :
-    answer(sorry) ↔ ∀ (ω : Ordinal),
+    answer(sorry) ↔
       ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
@@ -78,17 +86,22 @@ theorem erdos_918.variants.erdos_hajnal (k : ℕ) (hk : 0 < k) : ∃ (V : Type u
       ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with induced subgraphs. -/
+-- Formalisation note: the source states the impossibility for general subgraphs, in a
+-- parenthetical, "assuming subgraph and not induced subgraph was intended". It does not
+-- assert it for induced subgraphs, and the argument for the general case does not carry
+-- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
+-- on `W`, so the edgeless-subgraph argument is unavailable here.
 @[category textbook, AMS 5]
 theorem erdos_918.variants.eq_aleph_0.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (W : Set V) (_ : #W = ℵ₁), (G.induce W).chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with all subgraphs. -/
@@ -98,22 +111,27 @@ theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.i :
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ₁), H.coe.chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with induced subgraphs. -/
+-- Formalisation note: the source states the impossibility for general subgraphs, in a
+-- parenthetical, "assuming subgraph and not induced subgraph was intended". It does not
+-- assert it for induced subgraphs, and the argument for the general case does not carry
+-- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
+-- on `W`, so the edgeless-subgraph argument is unavailable here.
 @[category textbook, AMS 5]
-theorem erdos_918.variants.eq_aleph_0.parts.ii (ω : Ordinal) :
+theorem erdos_918.variants.eq_aleph_0.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal = ℵ₀ := by
   sorry
 
-/-- In [ErHa69] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
+/-- In [Er69b] the questions are stated with $= \aleph_0$ rather than $\leq\aleph_0$. This is
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with all subgraphs. -/
 @[category textbook, AMS 5]
-theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii (ω : Ordinal) :
+theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal = ℵ₀ := by
   sorry
