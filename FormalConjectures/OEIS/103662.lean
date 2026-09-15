@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest power with base>1 and exponent $n$ without digit 0
@@ -25,6 +26,8 @@ Also it is conjectured that $a(40)$ does not exist (i.e. the sequence is empty f
 *References:*
 - [A103662](https://oeis.org/A103662)
 -/
+
+@[expose] public section
 
 namespace OeisA103662
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 Title: Degree sequences in triangle-free graphs
 Authors: P. Erdős, S. Fajtlowicz and W. Staton,
 Published in Discrete Mathematics 92 (1991) 85–88.
 -/
+
+@[expose] public section
 
 open BigOperators
 open scoped Finset

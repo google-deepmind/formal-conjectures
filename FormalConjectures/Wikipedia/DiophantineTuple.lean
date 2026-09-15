@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Diophantine $m$-tuples
@@ -38,6 +39,8 @@ $i \neq j$.
 - [Gi99] Gibbs, Philip,
   [*Some rational Diophantine sextuples*](https://arxiv.org/abs/math/9902081), (1999).
 -/
+
+@[expose] public section
 
 namespace DiophantineTuple
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 726
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EGRS75] Erdős, P., and Graham, R. L. and Ruzsa, I. Z. and Straus, E. G., On the prime factors of
   $(\sp{2n}\sb{n})$. Math. Comp. (1975), 83-92.
 -/
+
+@[expose] public section
 
 open Nat Filter Finset
 open scoped Topology Asymptotics

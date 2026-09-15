@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 318
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
     theory. Monographies de L'Enseignement Mathematique (1980).
   - [La26] D. Larsen, [Erdős problem 318](https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.pdf) (2026)
 -/
+
+@[expose] public section
 
 open Set Real
 

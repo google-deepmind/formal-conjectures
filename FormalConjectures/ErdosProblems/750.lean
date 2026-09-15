@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 750
@@ -38,6 +39,8 @@ import FormalConjecturesUtil
 - [MuSt19] Müller, T. and Stehlík, M., _Generalised Mycielski graphs and the Borsuk-Ulam theorem_.
   Electron. J. Combin. (2019), P4.8.
 -/
+
+@[expose] public section
 
 open Filter Finset NNReal SimpleGraph
 

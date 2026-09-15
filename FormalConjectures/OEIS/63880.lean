@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A063880
@@ -30,6 +32,8 @@ with $108$ being the only primitive term.
 *References:*
 - [A063880](https://oeis.org/A063880)
 -/
+
+@[expose] public section
 
 namespace OeisA63880
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 163
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   Colloq. Math. Soc. János Bolyai (1975).
 - [Le17] Lee, C., Ramsey numbers of degenerate graphs. Ann. of Math. (2) 185 (2017), 791-829.
 -/
+
+@[expose] public section
 
 namespace Erdos163
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 175
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 Sárközy proved the assertion for all sufficiently large `n`; Granville--Ramaré and Velammal
 independently proved the full range `n ≥ 5`.
 -/
+
+@[expose] public section
 
 namespace Erdos175
 

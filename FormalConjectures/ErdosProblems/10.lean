@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 10
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Cr71] Crocker, R., On the sum of a prime and of two powers of two. Pacific J. Math. 36 (1971),
   103-107.
 -/
+
+@[expose] public section
 
 namespace Erdos10
 

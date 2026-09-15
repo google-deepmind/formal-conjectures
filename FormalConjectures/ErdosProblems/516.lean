@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 516
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
  - [Ko65] Kövari, Thomas, A gap-theorem for entire functions of infinite order. Michigan Math. J.
     (1965), 133--140.
 -/
+
+@[expose] public section
 
 open scoped Nat
 open Filter Real Set

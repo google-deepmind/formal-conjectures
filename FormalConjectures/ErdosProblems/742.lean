@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 742
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Fü92] Füredi, Zoltán, The maximum number of edges in a minimal graph of diameter 2.
   J. Graph Theory 16 (1992), 81-98.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

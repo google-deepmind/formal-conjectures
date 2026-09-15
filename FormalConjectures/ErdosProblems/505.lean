@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.BorsukConjecture
+public import FormalConjectures.Wikipedia.BorsukConjecture
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 505
@@ -51,7 +52,9 @@ Lean 4 code in this file was drafted with assistance from Claude (Anthropic).
 The mathematical content and references are the author's own work.
 -/
 
-open Borsuk
+@[expose] public section
+
+open Metric Set Borsuk
 
 namespace Erdos505
 

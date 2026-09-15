@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Mathoverflow 507128
 
 *Reference:* [mathoverflow/507128](https://mathoverflow.net/questions/507128/embeddability-order-on-picard-groups)
 asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 -/
+
+@[expose] public section
 
 namespace Mathoverflow507128
 

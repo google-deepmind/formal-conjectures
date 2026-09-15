@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ratio of product of GCDs to product of factorials of floor divisions
@@ -24,6 +25,8 @@ $$a(n) = \frac{\prod_{j=1}^n \prod_{k=1}^n \gcd(j,k)}{\prod_{k=1}^n (\lfloor n/k
 *References:*
 - [A129365](https://oeis.org/A129365)
 -/
+
+@[expose] public section
 
 namespace OeisA129365
 

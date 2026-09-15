@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 16
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 * [Schoen and Sisask](T. Schoen and O. Sisask, Roth’s theorem for four variables and additive structures in sums of sparse sets Forum of Mathematics, Sigma (2016), Vol. 4, e5, 28 pages.)
 * [Yufei Zhao](Via Personal Communication with Ben Green)
 -/
+
+@[expose] public section
 
 open Finset Real Filter Topology
 

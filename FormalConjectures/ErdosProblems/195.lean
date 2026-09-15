@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 195
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ge19] Geneson, Jesse, Forbidden arithmetic progressions in permutations of subsets of the
   integers. Discrete Math. (2019), 1489-1491.
 -/
+
+@[expose] public section
 
 namespace Erdos195
 

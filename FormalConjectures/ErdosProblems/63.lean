@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 63
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   arXiv:2010.15802 (2020).
 - [Re24] Reiher, C., *Graphs of large girth*. arXiv:2403.13571 (2024).
 -/
+
+@[expose] public section
 
 namespace Erdos63
 

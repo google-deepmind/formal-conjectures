@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 54
@@ -30,6 +31,8 @@ Advances and Applications, 77, 1995 Birkhäuser Verlag Basel/Switzerland.
 Here $nK = K + \cdots + K$ ($n$ times) is the $n$-fold sumset of $K$, written `n • K` for `n : ℕ`
 with `open scoped Pointwise`.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory
 open scoped Pointwise ENNReal

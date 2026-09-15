@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Komlós conjecture
@@ -36,6 +37,8 @@ conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
 - [J. Spencer, *Six standard deviations suffice*,
   Trans. Amer. Math. Soc. **289** (1985), 679–706](https://doi.org/10.1090/S0002-9947-1985-0784009-0)
 -/
+
+@[expose] public section
 
 namespace KomlosConjecture
 

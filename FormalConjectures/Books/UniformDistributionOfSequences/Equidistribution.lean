@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Equidistributed Sequences
 
@@ -28,6 +29,8 @@ are equidistributed modulo 1 or not.
 by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Wikipedia](https://en.wikipedia.org/wiki/Equidistributed_sequence)
 -/
+
+@[expose] public section
 
 namespace Equidistribution
 

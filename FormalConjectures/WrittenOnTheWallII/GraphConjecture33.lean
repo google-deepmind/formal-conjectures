@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 33
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture33
 
@@ -52,6 +55,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
 
 /-- In `K₃`, the max degree is 2. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
+example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide
 
 end WrittenOnTheWallII.GraphConjecture33

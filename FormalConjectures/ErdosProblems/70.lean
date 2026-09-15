@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 70
@@ -32,6 +33,8 @@ $\lambda$ in [ErRa56]). This is the triple analogue of `OrdinalCardinalRamsey` u
 Problems 590–592; the file also contains the analogous relation for an ordinal in place
 of the real line.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 open scoped Cardinal

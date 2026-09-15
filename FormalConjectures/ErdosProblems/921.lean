@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 921
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [KST84] Kierstead, H. A., Szemerédi, E. and Trotter, W. T., On coloring graphs with locally
   small chromatic number. Combinatorica (1984), 183-185.
 -/
+
+@[expose] public section
 
 open Filter
 

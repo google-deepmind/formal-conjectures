@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 1.74 (Tarski monster topologizability)
@@ -30,6 +31,8 @@ finite (hence discrete in any Hausdorff group topology).
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
+
+@[expose] public section
 
 namespace Kourovka.«1.74»
 

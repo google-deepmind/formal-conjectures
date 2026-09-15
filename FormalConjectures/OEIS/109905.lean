@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A109905
@@ -25,6 +26,8 @@ $1$ to $\lfloor n/2 \rfloor$. $a(n)=0$ if no such prime exists.
 *References:*
 - [A109905](https://oeis.org/A109905)
 -/
+
+@[expose] public section
 
 namespace OeisA109905
 

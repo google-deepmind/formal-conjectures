@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Monochromatic quantum graphs (inherited vertex colorings)
@@ -71,6 +72,8 @@ coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
 * [Chandran2024] [Krenn–Gu conjecture for sparse graphs](https://arxiv.org/abs/2407.00303)
   by *N. Chandran, S. Gajjala, S. Illickan, M. Krenn*, MFCS 2024.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open scoped NNReal

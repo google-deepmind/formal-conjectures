@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Barker sequences
@@ -28,6 +29,8 @@ has length greater than $13$.
 * [Barker code](https://en.wikipedia.org/wiki/Barker_code)
 * [OEIS A091704](https://oeis.org/A091704)
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2104.00502»
 

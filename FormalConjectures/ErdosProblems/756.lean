@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 756
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   Combinatorica (1990), 261-269.
 - [HoPa34] Hopf, H. and Pannwitz, E., *Aufgabe 167*. Jber. Deutsch. Math. Verein. (1934), 114.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped EuclideanGeometry Asymptotics

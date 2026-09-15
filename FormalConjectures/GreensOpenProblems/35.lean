@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 35
@@ -36,6 +37,8 @@ supported on `[0,1]`, and has total integral `1`.
   M. Matolcsi and C. Vinuesa, *Improved bounds on the supremum of autoconvolutions*,
   J. Math. Anal. Appl. 372 (2010), 439-447.
 -/
+
+@[expose] public section
 
 namespace Green35
 

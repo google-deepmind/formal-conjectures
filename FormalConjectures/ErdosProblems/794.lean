@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 794
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [FrFu84] Frankl, P. and Füredi, Z., *An exact result for $3$-graphs*. Discrete Math. (1984),
   323-328.
 -/
+
+@[expose] public section
 
 open Filter
 

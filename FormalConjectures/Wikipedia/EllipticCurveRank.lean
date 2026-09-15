@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Some conjectures about ranks of elliptic curves over ℚ
 
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 - [ICARM](https://elliptic-rank.icarm.cloud/curve/273)
 -/
+
+@[expose] public section
 
 namespace EllipticCurveRank
 

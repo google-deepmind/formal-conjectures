@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Infinitude of Wall–Sun–Sun primes
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [EJ10] A.-S. Elsenhans and J. Jahnel, *The Fibonacci sequence modulo $p^2$ – An investigation by
   computer for $p < 10^{14}$*, [arXiv:1006.0824](https://arxiv.org/abs/1006.0824)
 -/
+
+@[expose] public section
 
 open Algebra (IsQuadraticExtension)
 open NumberField

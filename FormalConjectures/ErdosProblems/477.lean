@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 477
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - The resolution is recorded at [erdosproblems.com/477](https://www.erdosproblems.com/477), with a
   proof exposition by T. F. Bloom of a construction found independently by several provers.
 -/
+
+@[expose] public section
 
 open Polynomial Set
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1119
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [ScWe24] Schilhan, Jonathan and Weinert, Thilo, Wetzel families and the continuum.
   J. Lond. Math. Soc. (2) (2024), Paper No. e12918, 27.
 -/
+
+@[expose] public section
 
 open Cardinal Order
 open scoped Cardinal

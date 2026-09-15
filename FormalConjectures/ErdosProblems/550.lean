@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 550
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/550](https://www.erdosproblems.com/550)
 - [Ch77] Chvátal, V., Tree-complete graph Ramsey numbers. J. Graph Theory (1977), 93.
 -/
+
+@[expose] public section
 
 open Filter
 

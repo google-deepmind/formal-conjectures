@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Sum of $a(k)/k!$ over divisors equals harmonic number
@@ -26,6 +28,8 @@ where $H_d = \sum_{j=1}^d \frac{1}{j}$ is the $d$-th harmonic number.
 
 *References:*
 - [A067857](https://oeis.org/A067857)-/
+
+@[expose] public section
 
 namespace OeisA67857
 
@@ -41,27 +45,27 @@ def a (n : ℕ) : ℚ :=
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 14 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 154 := by
-  decide +native
+  decide +kernel
 
 /--
 The terms are not all positive. The first negative one is
