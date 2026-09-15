@@ -83,8 +83,8 @@ also works, showing $(1+o(1))\frac{\log\log n}{\log n}n \leq \lvert A\rvert$ is 
 -/
 @[category research solved, AMS 11]
 theorem erdos_888.variants.semiprimes :
-    (fun n : ℕ ↦ (Nat.findGreatest (p n) n : ℝ)) ≫
-      (fun n : ℕ ↦ (n : ℝ) * Real.log (Real.log n) / Real.log n) := by
+    ∃ c : ℕ → ℝ, c =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n : ℕ in atTop,
+      (1 + c n) * ((n : ℝ) * Real.log (Real.log n) / Real.log n) ≤ Nat.findGreatest (p n) n := by
   sorry
 
 end Erdos888

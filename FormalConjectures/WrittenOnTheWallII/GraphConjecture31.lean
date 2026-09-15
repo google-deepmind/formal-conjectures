@@ -47,7 +47,9 @@ $\mathrm{path}(G) \ge 2 \cdot \mathrm{rad}(G) - 1$,
 where $\mathrm{path}(G)$ is the floor of the average distance and
 $\mathrm{rad}(G)$ is the graph radius.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/wowii-graph-conjecture-31-lean/blob/a948e9fc07e11b786aee8dadb1376b4d938454d6/lean/GraphConjecture31.lean"]
 theorem conjecture31 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     2 * (G.radius.toNat : ℤ) - 1 ≤ (path G : ℤ) := by
   sorry

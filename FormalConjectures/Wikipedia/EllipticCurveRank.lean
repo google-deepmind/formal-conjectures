@@ -188,8 +188,14 @@ theorem goldfeld_conjecture (E : RatEllipticCurve) (r : ℕ) (hr : r = 0 ∨ r =
 
 /-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
 introduction of [Smith2025], in the case $2 \leq r$: a density $0$ of the quadratic twists $E^d$
-of an elliptic curve $E$ over $\mathbb{Q}$ have rank $r$. -/
-@[category research open, AMS 11 14]
+of an elliptic curve $E$ over $\mathbb{Q}$ have rank $r$.
+
+For the Mordell–Weil rank used here this is an unconditional theorem: by Theorem 1.1 of
+[Smith2025], $100\%$ of the twists $E^d$ have $2^\infty$-Selmer corank $0$ or $1$, and the
+Mordell–Weil rank is at most the $2^\infty$-Selmer corank (equation (1.1) there), so the twists
+of rank at least $2$ have density $0$. The corresponding statement for the analytic rank is
+open. -/
+@[category research solved, AMS 11 14]
 theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr : 2 ≤ r) :
     atTop.Tendsto
       (fun H ↦ ({d ∈ twistIndexLE H | E.twistRank d = r}.ncard / (twistIndexLE H).ncard : ℝ))
@@ -197,9 +203,10 @@ theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr
   sorry
 
 /-- Goldfeld's conjecture with $d$ restricted to squarefree integers, which is how it is usually
-stated informally: 50% of the quadratic twists of $E$ have rank $0$ and 50% have rank $1$. Every
-quadratic twist of $E$ is isomorphic to $E^d$ for a unique squarefree $d$, so the squarefree $d$
-enumerate the distinct twists without repetition. -/
+stated informally: 50% of the quadratic twists of $E$ have rank $0$ and 50% have rank $1$. The
+twist $E^d$ only depends on the class of $d$ modulo nonzero rational squares, and the squarefree
+integers are a system of representatives of these classes. (They need not give pairwise
+non-isomorphic curves: if $B = 0$ then $E^{-d} = E^d$.) -/
 @[category research open, AMS 11 14]
 theorem goldfeld_conjecture.variants.squarefree (E : RatEllipticCurve) (r : ℕ)
     (hr : r = 0 ∨ r = 1) :
@@ -224,8 +231,8 @@ Notice that this contradicts the previous conjecture. -/
 theorem finite_twentyone_lt_finrank : {E : RatEllipticCurve | 21 < E.rank}.Finite := by
   sorry
 
-/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank `r` and
-naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
+/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank at least
+`r` and naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
 Note: ℰ_H in 8.2(b) should be ℰ_{≤H}, see the statement of Theorem 7.3.3.
 When `r = 1`, the exponent is `20 / 24 = 5 / 6`, which agrees with the exponent in
 `card_heightLE_div_pow_five_div_six_tensto` and is consistent with
