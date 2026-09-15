@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/First_Hardy%E2%80%93Littlewood_conjecture)
 -/
 
-open Filter
+open Asymptotics Filter
 
 open scoped Nat.Prime
 
@@ -58,15 +58,23 @@ noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n :
   open scoped Classical in
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
+/--
+The first Hardy–Littlewood conjecture for the tuple $(m_0, m_1, \dots, m_k)$: if $m_0 = 0$ and
+the $m_i$ are pairwise distinct, then
+$$
+  \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t}.
+$$
+-/
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
-  let C : ℝ :=
+  m 0 = 0 → Function.Injective m →
+    let C : ℝ :=
       2 ^ k * ∏' (q : { q : ℕ // q.Prime ∧ 3 ≤ q}),
         (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
     let π_P : ℕ → ℝ := fun n => (Nat.primeTupleCounting m n : ℝ)
-    π_P =O[atTop] fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
+    π_P ~[atTop] fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
 
 /--
-Let $P = (m_1, \dots, m_k)$ be a tuple of positive even integers. Let
+Let $P = (m_1, \dots, m_k)$ be a tuple of distinct positive even integers. Let
 $\pi_P(n)$ denote the number of primes $p\leq n$ such that $(p, p + m_1, \dots, p + m_k)$
 forms an admissible prime constellation. Let $w(q; m_1, \dots, m_k)$ denote the
 number of distinct residues of $0, m_1, \dots, m_k$ modulo $q$, and let
