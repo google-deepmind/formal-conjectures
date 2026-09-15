@@ -197,6 +197,12 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+/-- Gerver's concrete sofa admits a valid hallway motion. -/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0"]
+theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
+  sorry
+
 open MeasureTheory
 open scoped ENNReal
 
