@@ -18,7 +18,10 @@ import FormalConjecturesUtil
 /-!
 # Infinitude of Wall–Sun–Sun primes
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+- [EJ10] A.-S. Elsenhans and J. Jahnel, *The Fibonacci sequence modulo $p^2$ – An investigation by
+  computer for $p < 10^{14}$*, [arXiv:1006.0824](https://arxiv.org/abs/1006.0824)
 -/
 
 open Algebra (IsQuadraticExtension)
@@ -137,50 +140,6 @@ theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite :=
   sorry
 
 @[category API, AMS 11]
-private lemma lucasSequence_dvd_U_two_mul (P Q : ℤ) :
-    ∀ k : ℕ, P ∣ LucasSequence.U P Q (2 * k) := by
-  intro k
-  induction k with
-  | zero => simp [LucasSequence.U]
-  | succ k ih =>
-      rw [Nat.mul_succ]
-      simp only [LucasSequence.U]
-      exact dvd_sub (dvd_mul_right P _) (dvd_mul_of_dvd_right ih Q)
-
-@[category API, AMS 11]
-private lemma gcd_coe_prime_eq_one {D : ℤ} {p : ℕ} (hp : p.Prime)
-    (hpd : ¬ (p : ℤ) ∣ D) : D.gcd (p : ℤ) = 1 := by
-  have hpnat : ¬ p ∣ D.natAbs := by
-    intro h
-    apply hpd
-    rw [← Int.natAbs_dvd_natAbs]
-    simpa using h
-  rw [Int.gcd_eq_natAbs]
-  simpa [Nat.gcd_comm] using (hp.coprime_iff_not_dvd.mpr hpnat).gcd_eq_one
-
-@[category API, AMS 11]
-private lemma isLucasWieferichPrime_of_sq_dvd_a {a b D : ℤ} {p : ℕ} (hp : p.Prime)
-    (hodd : Odd p) (hdisc : a ^ 2 - 4 * b = D) (hpd : ¬ (p : ℤ) ∣ D)
-    (ha : (p : ℤ) ^ 2 ∣ a) : IsLucasWieferichPrime a b p := by
-  refine ⟨hp, hodd, ?_, ?_⟩
-  · simpa [hdisc] using hpd
-  · rw [Int.modEq_zero_iff_dvd]
-    have hgcd : D.gcd (p : ℤ) = 1 := gcd_coe_prime_eq_one hp hpd
-    have hJ : J(D | p) = 1 ∨ J(D | p) = -1 := jacobiSym.eq_one_or_neg_one hgcd
-    rcases hodd with ⟨k, hk⟩
-    rcases hJ with hJ | hJ
-    · have hindex : ((p : ℤ) - J(a ^ 2 - 4 * b | p)).toNat = 2 * k := by
-        rw [hdisc, hJ, hk]
-        omega
-      rw [hindex]
-      exact ha.trans (lucasSequence_dvd_U_two_mul a b k)
-    · have hindex : ((p : ℤ) - J(a ^ 2 - 4 * b | p)).toNat = 2 * (k + 1) := by
-        rw [hdisc, hJ, hk]
-        omega
-      rw [hindex]
-      exact ha.trans (lucasSequence_dvd_U_two_mul a b (k + 1))
-
-@[category API, AMS 11]
 private lemma exists_parameters {D : ℤ} {p : ℕ}
     (hmod : (4 : ℤ) ∣ D ∨ D ≡ 1 [ZMOD 4]) (hodd : Odd p) :
     ∃ a b : ℤ, a ^ 2 - 4 * b = D ∧ (p : ℤ) ^ 2 ∣ a := by
@@ -196,20 +155,11 @@ private lemma exists_parameters {D : ℤ} {p : ℕ}
     push_cast
     nlinarith
 
-/--
-A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - 4b$, such
-that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
-kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^2-4b}{p}}\right)$.
-The discriminant of this number is the quantity $a^2 - 4b$.
-
-In the statement below, `a` and `b` are existentially quantified separately for every prime `p`.
-This makes the literal statement elementary: one can choose `a` to be divisible by `p²`, while
-choosing `b` so that `a² - 4b = D`. See `infinite_isLucasWieferichPrime_fixed_parameters` for the
-intended open conjecture, in which the Lucas sequence is fixed before `p` varies.
--/
-@[category research solved, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscr D)
-    (hD₁ : D ≠ 1) :
+/-- An earlier formulation of `infinite_isWallSunSunPrime_of_disc_eq`, which chose the Lucas
+parameters $(a, b)$ separately for every prime $p$, was degenerate: it is provable. -/
+@[category test, AMS 11]
+theorem infinite_isWallSunSunPrime_of_disc_eq_varying_parameters {D : ℤ}
+    (hD : IsFundamentalDiscr D) :
     {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
   have hDzero : D ≠ 0 := by
     intro h
@@ -236,15 +186,31 @@ theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscr
     simp only [Int.natAbs_natCast] at this
     omega
   obtain ⟨a, b, hab, ha⟩ := exists_parameters hmod hodd
-  exact ⟨a, b, hab, isLucasWieferichPrime_of_sq_dvd_a hp hodd hab hpd ha⟩
+  exact ⟨a, b, hab, IsLucasWieferichPrime.of_sq_dvd hp hodd (hab ▸ hpd) ha⟩
 
-/-- The intended Lucas--Wieferich infinitude conjecture: fix the Lucas sequence parameters
-`(a,b)` first, require their discriminant to be a non-one fundamental discriminant, and then ask
-for infinitely many associated Lucas--Wieferich primes. -/
+/--
+Let $K$ be a real quadratic field of discriminant $D$ and let $\varepsilon$ be a fundamental unit
+of $K$. Following [EJ10, Remark 2.2.8], an odd prime $p \nmid D$ is a Wall–Sun–Sun prime for $K$
+if, in $\mathcal{O}_K$, $\varepsilon^{p-1} \equiv 1 \pmod{p^2}$ when
+$\left(\tfrac{D}{p}\right) = 1$, and $\varepsilon^{2p+2} \equiv 1 \pmod{p^2}$ when
+$\left(\tfrac{D}{p}\right) = -1$. Both exponents are even, so the condition does not depend on the
+choice of $\varepsilon$, and it is equivalent to asking the same congruence for every unit of $K$.
+For $K = \mathbb{Q}(\sqrt{5})$ and $\varepsilon = \frac{1 + \sqrt{5}}{2}$ these are the classical
+Wall–Sun–Sun primes other than $2$ and $5$ [EJ10, Proposition 2.2.6].
+
+It is conjectured that for every fundamental discriminant $D \neq 1$ there are infinitely many
+Wall–Sun–Sun primes with discriminant $D$ (Wikipedia; [EJ10, §4.1] gives the heuristic for
+$\mathbb{Q}(\sqrt{5})$). It is stated here for $D > 0$ only. Wikipedia's sentence also covers
+$D < 0$, but [EJ10] gives the definition above only for real quadratic fields, and its literal
+extension to imaginary quadratic fields is degenerate: there every unit is a root of unity of
+order dividing $4$ or $6$, and that order divides the relevant exponent $p - 1$ or $2p + 2$ for
+every odd prime $p \nmid D$.
+-/
 @[category research open, AMS 11]
-theorem infinite_isLucasWieferichPrime_fixed_parameters {a b : ℤ}
-    (hD : IsFundamentalDiscr (a ^ 2 - 4 * b)) (hD₁ : a ^ 2 - 4 * b ≠ 1) :
-    {p : ℕ | IsLucasWieferichPrime a b p}.Infinite := by
+theorem infinite_isWallSunSunPrime_of_disc_eq {K : Type*} [Field K] [NumberField K]
+    [IsQuadraticExtension ℚ K] [IsTotallyReal K] {D : ℤ} (hD : discr K = D) :
+    {p : ℕ | p.Prime ∧ Odd p ∧ ¬ (p : ℤ) ∣ D ∧ ∀ ε : (𝓞 K)ˣ,
+      (p : 𝓞 K) ^ 2 ∣ (ε : 𝓞 K) ^ (if J(D | p) = 1 then p - 1 else 2 * p + 2) - 1}.Infinite := by
   sorry
 
 end WallSunSun
