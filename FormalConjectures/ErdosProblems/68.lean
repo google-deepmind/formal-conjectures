@@ -35,6 +35,29 @@ theorem erdos_68 :
   sorry
 
 /--
+For the exact rational prefix $H_m = \sum_{k=2}^{m} 1/(k!-1)$, let
+$Z_m = \lfloor m!\,H_m \rfloor + 1$ be its strict factorial-grid successor.
+The series in `erdos_68` is irrational exactly when, beyond every cutoff, some
+$Z_m$ fails to be divisible by its index $m$.
+
+The right-hand side is a purely integral, exactly computable condition: no
+real-number reasoning is needed to evaluate it at any index. The equivalence
+is hypothesis-free.
+
+This is an exact arithmetic reformulation of `erdos_68`; it does not decide
+either side, and in particular does not establish that such divisibility
+failures occur cofinally.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/ceaee37f2df872af9e19c90f2b88d87f06fec85d/adapters/FormalConjecturesVariants.lean#L487-L494"]
+theorem erdos_68.variants.iff_cofinal_divisibility_miss :
+    Irrational (∑' n : ℕ, 1 / ((n + 2).factorial - 1 : ℝ)) ↔
+      ∀ B : ℕ, ∃ m : ℕ,
+        B < m ∧
+          ¬ ((m : ℤ) ∣ strictFacTopRat (factorialGapPrefix m) m) := by
+  sorry
+
+/--
 $$\sum_{n=2}^\infty \frac{1}{n!-1} = \sum_{n=2}^\infty \sum_{k=1}^\infty \frac{1}{(n!)^k}$$
 -/
 @[category textbook, AMS 11]
