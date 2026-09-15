@@ -148,25 +148,30 @@ theorem erdos_90.variants.polynomial_lower_bound_implies_erdos_90 :
 /--
 **Sawin's Lemma 2: lattice geometry of unit distances** (Sawin, [arXiv:2605.20579](https://arxiv.org/abs/2605.20579)).
 
-Let $d \ge 1$, $R \ge 2$, and suppose $\Lambda \subset \mathbb{R}^{2d}$ is a lattice equipped with
-an additive embedding $\pi : \Lambda \to \mathbb{R}^2$. Suppose $S \subseteq \Lambda$ is a finite
-set of "matching" vectors satisfying $\|v\| \le 1$ and $\|\pi v\| = 1$ for every $v \in S$. Then
-there is a finite point set $U \subset \mathbb{R}^2$ with unit-distance density at least
-$(1 - 1/R)^{2d}\,\#S$, i.e. $(1-1/R)^{2d}\,\#S\,\#U \le \#\{\text{unit pairs in } U\}$.
+Let $d \ge 1$, $R > 1$, and suppose $\Lambda \subset \mathbb{R}^{2d}$ is an additive subgroup
+all of whose nonzero vectors have norm at least $\rho > 0$ (so $\Lambda$ is a lattice; Sawin takes
+$\rho$ to be the norm of a shortest nonzero vector of $\Lambda$), equipped with an additive
+embedding $\pi : \Lambda \to \mathbb{R}^2$. Suppose $S \subseteq \Lambda$ is a finite set of
+"matching" vectors satisfying $\|v\| \le 1$ and $\|\pi v\| = 1$ for every $v \in S$. Then there
+is a finite point set $U \subset \mathbb{R}^2$ of size $\#U \le (2R/\rho + 1)^{2d}$ whose
+unit-distance density is at least $(1 - 1/R)^{2d}\,\#S$, i.e.
+$(1-1/R)^{2d}\,\#S\,\#U \le \#\{(u_1, u_2) \in U^2 : |u_1 - u_2| = 1\}$. The right-hand side
+counts ordered pairs, so it equals twice `unitDistNum U`.
 
 This pure geometry-of-numbers reduction is the elementary heart of the disproof.
 -/
 @[category research solved, AMS 52]
 theorem sawin_lattice_reduction
-    (d : ℕ) (hd : 1 ≤ d) (R : ℝ) (hR : 2 ≤ R)
+    (d : ℕ) (hd : 1 ≤ d) (R : ℝ) (hR : 1 < R)
     (Λ : Submodule ℤ (EuclideanSpace ℝ (Fin (2*d))))
+    (ρ : ℝ) (hρ : 0 < ρ) (hΛ : ∀ v : Λ, v ≠ 0 → ρ ≤ ‖(v : EuclideanSpace ℝ (Fin (2*d)))‖)
     (π : Λ →+ ℝ²) (hπ : Function.Injective π)
     (S : Finset Λ)
     (hS_norm : ∀ v ∈ S, ‖(v : EuclideanSpace ℝ (Fin (2*d)))‖ ≤ 1)
     (hS_proj : ∀ v ∈ S, ‖π v‖ = 1) :
-    ∃ U : Finset ℝ², 0 < U.card ∧
+    ∃ U : Finset ℝ², 0 < U.card ∧ (U.card : ℝ) ≤ (2 * R / ρ + 1) ^ (2*d) ∧
       ((1 : ℝ) - 1/R) ^ (2*d) * (S.card : ℝ) * (U.card : ℝ) ≤
-        (unitDistNum U : ℝ) := by
+        2 * (unitDistNum U : ℝ) := by
   sorry
 
 /--
