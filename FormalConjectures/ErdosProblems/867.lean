@@ -62,7 +62,30 @@ Taking $A=(N/2,N]\cap \mathbb{N}$ shows $\lvert A\rvert \geq N/2-O(1)$ is possib
 theorem erdos_867.variants.lower_bound :
     ∃ C : ℝ, ∀ N : ℕ, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
       ((N : ℝ) / 2 - C ≤ (A.card : ℝ)) := by
-  sorry
+  -- Take `A = (N/2, N]`: any two of its elements already sum to more than `N`.
+  refine ⟨0, fun N => ⟨Finset.Icc (N / 2 + 1) N, ?_, ?_, ?_⟩⟩
+  · intro x hx
+    simp only [Finset.mem_Icc] at hx ⊢
+    omega
+  · intro m n hcard hmem
+    set T := Finset.Icc m n ∩ Finset.Icc (N / 2 + 1) N with hT
+    have hlow : ∀ x ∈ T, N / 2 + 1 ≤ x := by
+      intro x hx
+      simp only [hT, Finset.mem_inter, Finset.mem_Icc] at hx
+      omega
+    have hsum : T.card * (N / 2 + 1) ≤ ∑ a ∈ T, a := by
+      simpa [mul_comm] using Finset.card_nsmul_le_sum T _ _ hlow
+    have h2 : 2 * (N / 2 + 1) ≤ ∑ a ∈ T, a :=
+      le_trans (Nat.mul_le_mul_right _ hcard) hsum
+    simp only [Finset.mem_Icc] at hmem
+    omega
+  · rw [Nat.card_Icc, sub_zero]
+    have h2 : N + 1 - (N / 2 + 1) = N - N / 2 := by omega
+    rw [h2]
+    have h3 : N ≤ 2 * (N - N / 2) := by omega
+    have h4 : (N : ℝ) ≤ ((2 * (N - N / 2) : ℕ) : ℝ) := by exact_mod_cast h3
+    push_cast at h4
+    linarith
 
 /--
 Adenwalla has observed that
