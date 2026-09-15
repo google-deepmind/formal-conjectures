@@ -80,15 +80,16 @@ This question has been resolved by [FSS20], showing that $C = 4$.
 theorem green_19 : C = 4 := by
   sorry
 
-/-- [Ma21] showed that $3.13 \leq C$. -/
-@[category research open, AMS 5 11]
+/-- [Ma21] showed that $3.13 \leq C$. This also follows from `green_19`. -/
+@[category research solved, AMS 5 11]
 theorem green_19.lower : C >= 3.13 := by
-  sorry
+  rw [green_19]
+  norm_num
 
-/-- [Ma21] showed that $C \leq 4$. -/
-@[category research open, AMS 5 11]
+/-- [Ma21] showed that $C \leq 4$. This also follows from `green_19`. -/
+@[category research solved, AMS 5 11]
 theorem green_19.upper : C <= 4 := by
-  sorry
+  rw [green_19]
 
 /- TODO(jeangud): in [FSS20] they mention that the corresponding question for squares
 $(x, y), (x, y + d), (x + d, y), (x + d, y + d)$ is wide open (and here it is not even clear that
