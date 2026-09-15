@@ -202,3 +202,38 @@ info: 0 General and overarching topics
 -/
 #guard_msgs in
 #AMS
+
+section HasSorryFreeProof
+
+/-! `ProblemAttributes.hasSorryFreeProof` follows the declarations that a statement and a proof
+use, and reports a declaration with no proof term at all as not proved. The declarations used
+here are Lean's own axioms; the repository does not add any of its own. -/
+
+private theorem an_admitted_thm : 1 + 1 = 3 := by sorry
+private theorem a_wrapper_over_an_admitted_thm : 1 + 1 = 3 := an_admitted_thm
+private theorem a_real_proof : 1 + 1 = 2 := rfl
+
+/-- info: true -/
+#guard_msgs in
+#eval ProblemAttributes.hasSorryFreeProof (m := Lean.CoreM) ``a_real_proof
+
+-- An `axiom` has no proof term, so it is not proved even though `sorryAx` is absent.
+/-- info: false -/
+#guard_msgs in
+#eval ProblemAttributes.hasSorryFreeProof (m := Lean.CoreM) ``Classical.choice
+
+/-- info: false -/
+#guard_msgs in
+#eval ProblemAttributes.hasSorryFreeProof (m := Lean.CoreM) ``an_admitted_thm
+
+-- A wrapper whose own proof term carries no `sorry` is still not proved.
+/-- info: false -/
+#guard_msgs in
+#eval ProblemAttributes.hasSorryFreeProof (m := Lean.CoreM) ``a_wrapper_over_an_admitted_thm
+
+-- A declaration that does not exist is not proved.
+/-- info: false -/
+#guard_msgs in
+#eval ProblemAttributes.hasSorryFreeProof (m := Lean.CoreM) `no_such_declaration
+
+end HasSorryFreeProof
