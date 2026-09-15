@@ -74,7 +74,7 @@ lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) 
 
 /-- Is it true that, if $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most 2? -/
-@[category research solved, AMS 5 52]
+@[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_n_two_of_convex_rn_add_one :
     answer(sorry) ↔ ∀ {n : ℕ}, 2 ≤ n → ∀ {C : Set (EuclideanSpace ℝ (Fin (n + 1)))},
       Convex ℝ C → HasAddVCNDimAtMost C n 2 := by
