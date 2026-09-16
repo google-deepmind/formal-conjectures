@@ -22,9 +22,6 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/450](https://www.erdosproblems.com/450)
 -/
 
-open Filter
-open scoped Topology
-
 namespace Erdos450
 
 /-- `m` has a divisor strictly between `n` and `2n`. -/
@@ -44,18 +41,22 @@ every `y ≥ Y ε n`, the window is `ε`-sparse. -/
 def IsSufficientScale (Y : ℝ → ℕ → ℕ) : Prop :=
   ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → ∀ y : ℕ, Y ε n ≤ y → UniformlySparse ε n y
 
+/-- The least window length `y₀` such that every window `(x, x+y)` with `y ≥ y₀` is
+`ε`-sparse, or `⊤` if no such `y₀` exists. -/
+noncomputable def windowThreshold (ε : ℝ) (n : ℕ) : ℕ∞ :=
+  ⨅ y : {y : ℕ // ∀ z ≥ y, UniformlySparse ε n z}, (y.1 : ℕ∞)
+
 /--
 How large must $y=y(\epsilon,n)$ be such that the number of integers in
 $(x,x+y)$ with a divisor in $(n,2n)$ is at most $\epsilon y$?
 
-A **linear** scale is known to suffice (see `erdos_450.linear_scale_suffices`).
-Whether the optimal scale is *sublinear* — a sufficient `Y` with `Y ε n = o(n)` —
-is open.
+The bound is required for every $x$ and every window length at least $y$, and
+$y(\epsilon,n)$ is the least such threshold (or $\infty$ if there is none).
+A **linear** scale $y \le C(\epsilon) n$ is known to suffice for fixed $\epsilon$
+and all large $n$ (see `erdos_450.linear_scale_suffices`).
 -/
 @[category research open, AMS 11]
-theorem erdos_450 : answer(sorry) ↔
-    ∃ Y : ℝ → ℕ → ℕ, IsSufficientScale Y ∧
-      ∀ ε : ℝ, 0 < ε → Tendsto (fun n : ℕ => (Y ε n : ℝ) / n) atTop (𝓝 0) := by
+theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = answer(sorry) := by
   sorry
 
 /--

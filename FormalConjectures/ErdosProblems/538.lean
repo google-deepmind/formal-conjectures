@@ -22,8 +22,7 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/538](https://www.erdosproblems.com/538)
 -/
 
-open Filter
-open scoped Topology
+open Asymptotics Filter
 
 namespace Erdos538
 
@@ -48,21 +47,22 @@ Let $r\geq 2$ and suppose that $A\subseteq\{1,\ldots,N\}$ is such that, for any
 $m$, there are at most $r$ solutions to $m=pa$ where $p$ is prime and $a\in A$.
 Give the best possible upper bound for $\sum_{n\in A}\frac{1}{n}$.
 
-The order is known — `∑ 1/n = Θ_r(log N / loglog N)` (see `erdos_538.matching_order`) —
-but the sharp constant is not. This asks whether `maxMass r N` has a well-defined
-leading constant `c_r` in `c_r · log N / loglog N`.
+Erdős observed that $\sum_{n\in A}\frac{1}{n}\ll r\frac{\log N}{\log\log N}$, and the
+order `Θ_r(log N / loglog N)` is known (see `erdos_538.matching_order`). The best possible
+upper bound is the asymptotic size of the largest reciprocal sum `maxMass r N` over
+admissible `A`.
 -/
 @[category research open, AMS 11]
-theorem erdos_538 : answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
-    ∃ c : ℝ, 0 < c ∧
-      Tendsto (fun N : ℕ => maxMass r N * Real.log (Real.log N) / Real.log N) atTop (𝓝 c) := by
+theorem erdos_538 :
+    let f : ℕ → ℕ → ℝ := answer(sorry)
+    ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] f r := by
   sorry
 
 /--
 The reciprocal sum has matching order `Θ_r(log N / loglog N)`: an explicit
 upper bound for every admissible `A`, together with a witnessing construction
 achieving the same order. This pins the order (up to the one iterated-logarithm
-factor) but not the sharp constant asked for in `erdos_538`.
+factor) but not the best possible upper bound asked for in `erdos_538`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-538/Research/FinalMatchingOrder.lean"]
 theorem erdos_538.matching_order (r N : ℕ) (hr : 2 ≤ r) (hN : 2 ≤ N) :

@@ -25,13 +25,19 @@ import FormalConjecturesUtil
 namespace Erdos486
 
 /--
-For each $n \in \mathbb{N}$ choose some $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$.
-Let $B = \{m \in \mathbb{N} : \forall n, m \not\equiv x \pmod{n} \text{ for all } x \in X_n\}$.
+Let $A \subseteq \mathbb{N}$, and for each $n \in A$ choose some
+$X_n \subseteq \mathbb{Z}/n\mathbb{Z}$. Let
+$B = \{m \in \mathbb{N} : m \not\in X_n \pmod{n} \text{ for all } n \in A \text{ with } m > n\}$.
 Must $B$ have a logarithmic density?
+
+The set $A$ is encoded by taking $X_n = \emptyset$ for $n \notin A$. Only positive moduli
+$n$ are considered, since $\mathbb{Z}/0\mathbb{Z} = \mathbb{Z}$ would allow $B$ to be an
+arbitrary set.
 -/
 @[category research open, AMS 11]
 theorem erdos_486 : answer(sorry) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n), ∃ d, {m : ℕ | ∀ n, (m : ZMod n) ∉ X n}.HasLogDensity d := by
+    ∀ X : (n : ℕ) → Set (ZMod n),
+      ∃ d, {m : ℕ | ∀ n, 0 < n → n < m → (m : ZMod n) ∉ X n}.HasLogDensity d := by
   sorry
 
 end Erdos486

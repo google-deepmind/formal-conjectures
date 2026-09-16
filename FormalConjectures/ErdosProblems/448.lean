@@ -30,6 +30,8 @@ import FormalConjecturesUtil
   Ann. Inst. Fourier (Grenoble) **31** (1981), 17–37.
 - [Fo08] Ford, Kevin, *The distribution of integers with a divisor in a given interval.*
   Ann. of Math. (2) **168** (2008), 367–433.
+- [Te13] Tenenbaum, Gérald, *Some of Erdős' unconventional problems in number theory, thirty-four
+  years later.* Erdős Centennial, Bolyai Soc. Math. Stud. **25** (2013), 651–681.
 -/
 
 namespace Erdos448
@@ -106,12 +108,15 @@ theorem erdos_448.variants.hall_tenenbaum_upper_bound :
 
 /--
 Hall and Tenenbaum [HaTe88] further prove that $\tau^+(n)/\tau(n)$ has a distribution function:
-there is a function `F` such that, for every $z$, the set $\{n : \tau^+(n)/\tau(n) \le z\}$ has
-density `F z`. -/
+there is a distribution function `F` (non-decreasing, with $F(-\infty) = 0$ and $F(+\infty) = 1$)
+such that, for every continuity point $z$ of `F`, the set $\{n : \tau^+(n)/\tau(n) \le z\}$ has
+density `F z`. Tenenbaum [Te13] proved that `F` is continuous at $z = 1$ and asked to determine
+its discontinuity points, if any. -/
 @[category research solved, AMS 11]
 theorem erdos_448.variants.hall_tenenbaum_distribution :
-    ∃ F : ℝ → ℝ, ∀ z : ℝ,
-      {n : ℕ | (tauPlus n : ℝ) / (n.divisors.card : ℝ) ≤ z}.HasDensity (F z) := by
+    ∃ F : ℝ → ℝ, Monotone F ∧ Tendsto F atBot (𝓝 0) ∧ Tendsto F atTop (𝓝 1) ∧
+      ∀ z : ℝ, ContinuousAt F z →
+        {n : ℕ | (tauPlus n : ℝ) / (n.divisors.card : ℝ) ≤ z}.HasDensity (F z) := by
   sorry
 
 /--

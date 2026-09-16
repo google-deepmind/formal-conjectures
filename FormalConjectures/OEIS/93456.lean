@@ -55,10 +55,11 @@ theorem a_4 : a 4 = 720 := by decide +native
 
 /--
 Conjecture: There are finitely many numbers such that $a(n)$ is not $\equiv 0 \pmod{a(n-1)}$.
-(Also mentioned in A093455.)-/
-@[category research open, AMS 11]
+(Also mentioned in A093455.) In fact there are infinitely many such numbers.-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_93456_conjecture_0/Submission/Spec.lean#L109"]
 theorem conjecture :
-    Set.Finite {n : ℕ | 1 < n ∧ ¬ (a (n - 1) ∣ a n)} := by
+    ¬ Set.Finite {n : ℕ | 1 < n ∧ ¬ (a (n - 1) ∣ a n)} := by
   sorry
 
 end OeisA93456
