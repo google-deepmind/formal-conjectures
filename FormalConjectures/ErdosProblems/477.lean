@@ -22,6 +22,8 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/477](https://www.erdosproblems.com/477)
 - [Sek59](http://dml.cz/dmlcz/100376) Milan Sekanina, Замечания к фактoризации беcкoнечнoй цикличеcкoй группы, Czechoslovak Mathematical Journal, Vol. 9 (1959), No. 4, 485–495
+- The resolution is recorded at [erdosproblems.com/477](https://www.erdosproblems.com/477), with a
+  proof exposition by T. F. Bloom of a construction found independently by several provers.
 -/
 
 open Polynomial Set
@@ -32,9 +34,12 @@ namespace Erdos477
 Is there a polynomial $f:\mathbb{Z}\to \mathbb{Z}$ of degree at least $2$ and a set
 $A\subset \mathbb{Z}$ such that for any $n\in \mathbb{Z}$ there is exactly one $a\in A$ and
 $b\in \{ f(k) : k\in\mathbb{Z}\}$ such that $n=a+b$?
+
+The answer is yes, contrary to the expectation of Erdős and Graham: such an `A` exists whenever
+$f(n) = n^d$ for even $d \ge 6$.
 -/
-@[category research open, AMS 12]
-theorem erdos_477 : answer(sorry) ↔
+@[category research solved, AMS 12]
+theorem erdos_477 : answer(True) ↔
     ∃ f : ℤ[X], 2 ≤ f.degree ∧ ∃ A : Set ℤ,
       ∀ z, ∃! ab ∈ A ×ˢ (Set.range f.eval), z = ab.1 + ab.2 := by
   sorry
@@ -72,12 +77,14 @@ theorem erdos_477.variants.X_pow_three :
   sorry
 
 /--
-Probably there is no such $A$ for the polynomial $X^k$ for any $k \ge 2$. This is asked in [Sek59].
+Sekanina [Sek59] asked whether there is no such $A$ for $X^k$, for every $k \ge 2$.
+This is false: a complement exists for every even $k \ge 6$.
 -/
-@[category research open, AMS 12]
-theorem erdos_477.variants.monomial (k : ℕ) (hk : 2 ≤ k) :
-    letI f := X ^ k
-    ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (Set.range f.eval), z = a.1 + a.2 := by
+@[category research solved, AMS 12]
+theorem erdos_477.variants.monomial : answer(False) ↔
+    ∀ (k : ℕ), 2 ≤ k →
+      letI f := X ^ k
+      ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (Set.range f.eval), z = a.1 + a.2 := by
   sorry
 
 end Erdos477

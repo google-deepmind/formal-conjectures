@@ -45,7 +45,8 @@ determines $\gg \frac{n}{\sqrt{\log n}}$ many distinct distances.
 -/
 @[category research open, AMS 52]
 theorem erdos_89 :
-    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop]
+      (fun n => (minimalDistinctDistances ℝ² n : ℝ)) := by
   sorry
 
 /--
@@ -54,7 +55,8 @@ many distinct distances.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
-    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop]
+      (fun n => (minimalDistinctDistances ℝ² n : ℝ)) := by
   sorry
 
 /--
@@ -65,7 +67,7 @@ $O(\frac{n}{\sqrt{\log n}})$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.grid_upper_bound :
-    (fun n => (minimalDistinctDistances n : ℝ)) =O[atTop]
+    (fun n => (minimalDistinctDistances ℝ² n : ℝ)) =O[atTop]
       (fun (n : ℕ) => n/(n : ℝ).log.sqrt) := by
   sorry
 

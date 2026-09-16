@@ -61,23 +61,21 @@ How many rotated (about the origin) copies of the 'pyjama set'
 $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
 $\mathbb{R}^2$?
 
-In particular, can one find a better bound than the best-known bound from [KrLe25]?
+That is, determine the minimal number of rotations as a function of $\varepsilon > 0$.
 -/
 @[category research open, AMS 51 52]
-theorem green_41 :
-    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
-      let ans := (answer(sorry) : ℝ)
-      (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
+theorem green_41 : ∀ ε > 0, minCopies ε = (answer(sorry) : ℝ → ℕ) ε := by
   sorry
 
 /--
-Is there a better bound than the best-known bound from [KrLe25]?
-This is an existential version of the main problem that does not require providing the bound explicitly.
+Can the triple-exponential bound of [KrLe25] be improved by one exponential? That is, do
+$\exp\exp(\varepsilon^{-C})$ rotations suffice for some $C$ and all sufficiently small
+$\varepsilon > 0$? [KrLe25, Section 8.1] discusses where the three exponentials are lost and
+which of them one might hope to save.
 -/
 @[category research open, AMS 51 52]
-theorem green_41.variants.exists_better_bound : answer(sorry) ↔
-    ∃ C : ℝ, C > 0 ∧ ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
-      ∃ ans : ℝ, (minCopies ε : ℝ) ≤ ans ∧ ans < Real.exp (Real.exp (Real.exp (ε ^ (-C)))) := by
+theorem green_41.variants.double_exponential_bound : answer(sorry) ↔
+    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (ε ^ (-C))) := by
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
