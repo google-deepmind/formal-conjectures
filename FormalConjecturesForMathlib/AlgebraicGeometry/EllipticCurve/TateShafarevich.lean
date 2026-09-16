@@ -75,7 +75,9 @@ noncomputable def galoisRepresentation : TopRep ℤ <| Field.absoluteGaloisGroup
 field, using restriction to every infinite and finite completion. -/
 noncomputable def tateShafarevich [NumberField K] :
     AddSubgroup <| continuousCohomology 1 W.galoisRepresentation :=
-  tateSha (fun v : InfinitePlace K ↦ v.Completion) W.galoisRepresentation 1 ⊓
-    tateSha (fun v : HeightOneSpectrum <| 𝓞 K ↦ v.adicCompletion K) W.galoisRepresentation 1
+  ContinuousCohomology.tateShafarevich
+      (fun v : InfinitePlace K ↦ v.Completion) W.galoisRepresentation 1 ⊓
+    ContinuousCohomology.tateShafarevich
+      (fun v : HeightOneSpectrum <| 𝓞 K ↦ v.adicCompletion K) W.galoisRepresentation 1
 
 end WeierstrassCurve.Affine
