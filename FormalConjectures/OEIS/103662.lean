@@ -77,11 +77,11 @@ theorem a_3 : a 3 = 8 := by
 
 /--
 For statistical reasons it is conjectured that the sequence is finite.
-This is formalized as the assertion that for large enough $n$, no valid zeroless power exists,
-which in our definition results in $a(n) = 0$.
+Finite means here that for some $n$, no power $b^n$ with base $b > 1$ has a zeroless decimal
+representation, which in our definition results in $a(n) = 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
+theorem conjecture : ∃ n : ℕ, a n = 0 := by
   sorry
 
 /--

@@ -67,11 +67,12 @@ theorem erdos_756.variants.bhowmick (n : ℕ) :
   sorry
 
 /--
-More generally, they construct, for any $m$ and large $n$, a set of $n$ points such that
+More generally, they construct, for any positive integer $m$ and large $n$, a set of $n$ points
+such that
 $\lfloor \frac{n}{2(m+1)}\rfloor$ distances occur at least $n+m$ times.
 -/
 @[category research solved, AMS 52]
-theorem erdos_756.variants.bhowmick_general (m : ℕ) :
+theorem erdos_756.variants.bhowmick_general (m : ℕ) (hm : 1 ≤ m) :
     ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℝ², A.card = n ∧
       n / (2 * (m + 1)) ≤ (richDistances A (n + m)).card := by
   sorry

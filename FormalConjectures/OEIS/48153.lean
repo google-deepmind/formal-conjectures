@@ -55,7 +55,8 @@ theorem a_5 : a 5 = 10 := by
 
 /--
 "Conjecture: $a(n) <= \frac{n^2-1}{2}$. - _Aspen A.M. Meissner_, Mar 06 2025"-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-lite-200usd-ant-me0xxoowyqauyrvj/oeis_48153_conjecture_0/Submission/Spec.lean#L3215"]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) : a n ≤ (n ^ 2 - 1) / 2 := by
   sorry
 
