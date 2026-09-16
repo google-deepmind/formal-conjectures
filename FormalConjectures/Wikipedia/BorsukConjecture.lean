@@ -65,6 +65,8 @@ Erdős Problem 505 (`FormalConjectures.ErdosProblems.«505»`) points to this fi
   Borsuk's problem*. https://arxiv.org/abs/1505.04952
 -/
 
+@[expose] public section
+
 open Metric Bornology
 
 open scoped EuclideanGeometry
