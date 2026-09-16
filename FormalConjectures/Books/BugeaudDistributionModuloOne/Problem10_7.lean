@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Confined Powers of Non-Pisot Numbers

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Conjectures about Mersenne primes
@@ -78,14 +78,15 @@ theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
     NewMersenneConjectureStatement p := by
   sorry
 
-/-- It suffices to check this conjecture for primes -/
+/-- It suffices to check this conjecture for odd primes. The statement fails at `p = 2`:
+`mersenne 2 = 3` is prime and `2 = 2 ^ 0 + 1`, but `2` gives no Wagstaff prime. -/
 @[category textbook, AMS 11]
 theorem new_mersenne_conjecture_of_prime :
-    (∀ p, p.Prime → NewMersenneConjectureStatement p) →
+    (∀ p, p.Prime → Odd p → NewMersenneConjectureStatement p) →
     ∀ p, Odd p → NewMersenneConjectureStatement p := by
   intro H p hp_odd
   by_cases hp_prime : p.Prime
-  · exact H p hp_prime
+  · exact H p hp_prime hp_odd
   suffices ¬Nat.GivesWagstaffPrime p by
     have hF1 : ¬(mersenne p).Prime := fun h => hp_prime h.of_mersenne
     refine ⟨?_, ?_, ?_⟩ <;> grind

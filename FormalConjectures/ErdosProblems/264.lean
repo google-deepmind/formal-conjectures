@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 264
@@ -77,7 +77,7 @@ is not an irrationality sequence.
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
-    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
+    (h₄ : ∃ C > 0, ∀ᶠ n in atTop, C ≤ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
     ¬IsIrrationalitySequence a := by
   sorry
 

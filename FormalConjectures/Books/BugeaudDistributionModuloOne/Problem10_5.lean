@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Lacunary Sequences in Real Number Fields
@@ -86,7 +86,7 @@ theorem problem_10_5_of_moreover (h : type_of% problem_10_5_moreover) :
       rw [Filter.le_limsup_iff hcob hb]
       exact fun a ha => MapClusterPt.frequently hcluster (eventually_gt_nhds ha)
     linarith [hy.1]
-  · push_neg at hε1
+  · push Not at hε1
     have h0 : (0 : ℝ) ≤ limsup (fun n => Int.fract (ξ * (t n : ℝ))) atTop :=
       le_limsup_of_frequently_le
         ((Filter.Eventually.of_forall

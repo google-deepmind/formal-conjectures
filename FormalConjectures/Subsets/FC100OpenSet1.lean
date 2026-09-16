@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.DeclName
+import FormalConjecturesUtil.DeclName
 import FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture
 import FormalConjectures.Arxiv.«1601.03081».UniqueCrystalComponents
 import FormalConjectures.Arxiv.«2501.03234».ArithmeticSumS
@@ -72,7 +72,7 @@ import FormalConjectures.GreensOpenProblems.«58»
 import FormalConjectures.GreensOpenProblems.«61»
 import FormalConjectures.GreensOpenProblems.«9»
 import FormalConjectures.Mathoverflow.«1973»
-import FormalConjectures.Millenium.Poincare
+import FormalConjectures.Millennium.Poincare
 import FormalConjectures.OEIS.«303656»
 import FormalConjectures.OEIS.«308734»
 import FormalConjectures.OEIS.«41»
@@ -110,6 +110,8 @@ import FormalConjectures.WrittenOnTheWallII.GraphConjecture327
 A random subset of 100 open research problems, drawn uniformly at random
 from all problems with the `category research open` tag.
 -/
+
+set_option linter.style.imports false
 
 namespace Subsets.FC100OpenSet1
 
@@ -221,6 +223,6 @@ end Subsets.FC100OpenSet1
 
 open Lean Meta ProblemAttributes in
 #eval verifyCategoryCounts Subsets.FC100OpenSet1.problems [
-  ("research open", 95),
-  ("research solved", 5)
+  ("research open", 89),
+  ("research solved", 11)
 ]

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 962
@@ -26,7 +26,7 @@ import FormalConjectures.Util.ProblemImports
 - [Tao](https://www.erdosproblems.com/forum/thread/962)
 -/
 
-open Classical Filter Real
+open Filter Real
 
 namespace Erdos962
 
@@ -43,6 +43,7 @@ Let $k(n)$ be the maximal $k$ such that there exists $m \le n$ with
 $m+1, \ldots, m+k$ each divisible by a prime $> k$.
 -/
 noncomputable def k (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.findGreatest (fun k => Erdos962Prop n k) n
 
 /--

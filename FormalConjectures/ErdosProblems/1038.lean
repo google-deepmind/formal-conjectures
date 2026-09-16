@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1038

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Moving Sofa Problem
@@ -85,11 +85,11 @@ theorem isMovingSofa_unitSquare : ∃ m, IsMovingSofa unitSquare m := by
   refine ⟨fun _ => .refl ℝ ℝ², ?_, ?_, continuous_const, rfl, ?_, ?_, ?_⟩
   · unfold unitSquare parallelepiped
     refine ⟨⟨0, 0, by simp, by simp⟩, (convex_Icc _ _).isPreconnected.image _ ?_⟩
-    exact (continuous_finset_sum _ fun i _ =>
+    exact (continuous_finsetSum _ fun i _ =>
       (continuous_apply i).smul continuous_const).continuousOn
   · unfold unitSquare parallelepiped
     exact (isCompact_Icc.image
-      (continuous_finset_sum _ fun i _ =>
+      (continuous_finsetSum _ fun i _ =>
         (continuous_apply i).smul continuous_const)).isClosed
   · intro p hp
     have h0 := mem_Icc_of_mem_unitSquare hp 0
@@ -115,8 +115,13 @@ The rigid motion that translates by $p$ and then rotates counterclockwise by $\a
 Note that [Ge92] used this definition while [Ro18] used rotation first and then translation.
 -/
 def rotateTranslate (α : Real.Angle) (p : ℝ²) : E(2) :=
-  (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
-    |>.trans (AffineIsometryEquiv.vaddConst ℝ p)
+  (AffineIsometryEquiv.vaddConst ℝ p).trans
+    (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
+
+/-- `rotateTranslate α p` sends $q$ to $R_\alpha(q + p)$: the translation is applied first. -/
+@[category test, AMS 49]
+theorem rotateTranslate_apply (α : Real.Angle) (p q : ℝ²) :
+    rotateTranslate α p q = EuclideanGeometry.o.rotation α (q + p) := rfl
 
 /--
 The sofa according to a rotation path $p : [0, \pi/2] \to \mathbb{R}^2$ as in [Ge92] is the
@@ -192,6 +197,12 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+/-- Gerver's concrete sofa admits a valid hallway motion. -/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0"]
+theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
+  sorry
+
 open MeasureTheory
 open scoped ENNReal
 
@@ -207,7 +218,7 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
 
 /-- What is the sofa constant? -/
 @[category research solved, AMS 49]
-theorem sofaConstant_eq : sofaConstant = answer(sorry) := by
+theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
@@ -215,10 +226,17 @@ theorem sofaConstant_eq : sofaConstant = answer(sorry) := by
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
-/-- Gerver's sofa is the unique sofa that attains the sofa constant. -/
+/--
+Gerver's sofa is the unique sofa that attains the sofa constant, up to a rigid motion.
+
+The motion is needed: `horizontalHallway` is $(-\infty, 1] \times [0, 1]$, so a leftward
+translate of any moving sofa is again one, obtained by sliding right and then following the
+original motion. It has the same area, so uniqueness cannot hold on the nose.
+-/
 @[category research open, AMS 49]
-theorem sofaConstant_eq_volume_iff_eq_gerversSofa :
-    ∀ s : Set ℝ², sofaConstant = volume s ↔ s = gerversSofa := by
+theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
+    (hs : ∃ m, IsMovingSofa s m) :
+    volume s = sofaConstant ↔ ∃ g : E(2), s = g '' gerversSofa := by
   sorry
 
 end MovingSofa

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Reed's omega, delta, and chi conjecture
@@ -25,7 +25,6 @@ import FormalConjectures.Util.ProblemImports
 - [mathoverflow/37923](https://mathoverflow.net/questions/37923) asked by user [Andrew D. King](https://mathoverflow.net/users/4580/andrew-d-king)
 -/
 
-open Classical
 open scoped Finset
 
 namespace ReedOmegaDeltaChi

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 350
@@ -43,7 +43,7 @@ theorem decidableDistinctSubsetSums_1_2 : DecidableDistinctSubsetSums {1, 2} := 
 
 @[category test, AMS 5 11]
 theorem distinctSubsetSums_1_2 : DistinctSubsetSums ({1, 2} : Set ℕ) := by
-  simp only [DistinctSubsetSums, Set.Pairwise, Set.mem_setOf_eq, ne_eq, id_eq]
+  simp only [DistinctSubsetSums, Set.Pairwise, Set.mem_ofPred_eq, ne_eq, id_eq]
   intro x hx y hy hxy
   -- FIXME: Why is `norm_cast` useless here?
   simp_rw [← Finset.coe_singleton, ← Finset.coe_insert, Finset.coe_subset, ←Finset.mem_powerset] at *
@@ -78,7 +78,7 @@ theorem erdos_350 (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A) :
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n^s < 1/(1 - 2^(-s))`, for any `s > 0`.
 Proved by Hanson, Steele, and Stenger [HSS77].
 
-We exlude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
+We exclude here the case `s = 0`, because in the informal formulation then the right hand side is to be interpreted as `∞`, while the left hand side counts the elements in `A`.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_350.variants.strengthening (A : Finset ℕ) (hA : DecidableDistinctSubsetSums A)

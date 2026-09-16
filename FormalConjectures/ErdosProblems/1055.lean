@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1055
@@ -26,11 +26,18 @@ namespace Erdos1055
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
-of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor. -/
+of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
+
+The classes partition the primes, so `IsOfClass r p` says that $p$ is in class
+*exactly* $r$: the first conjunct of the successor case rules out every class
+$\leq r - 1$ for $p$ itself. Without it `IsOfClass 2` would also hold of every
+prime of class $1$, because at $r = 2$ the "with equality" clause quantifies over
+the single value $m = 1$ and so says nothing. -/
 def IsOfClass : ℕ+ → ℕ → Prop := fun r ↦
   PNat.caseStrongInductionOn (p := fun (_ : ℕ+) ↦ ℕ → Prop) r
     (fun p ↦ (p + 1).primeFactors ⊆ {2, 3})
     (fun n H p ↦
+      (∀ (m : ℕ+) (hm : m ≤ n), ¬ H m hm p) ∧
       (∀ r ∈ (p + 1).primeFactors,
         ∃ (m : ℕ+) (hm : m ≤ n), H m hm r) ∧
       (∃ r ∈ (p + 1).primeFactors,
@@ -44,13 +51,14 @@ Show that for each $r$ there exists a prime $p$ of class $r$. -/
 theorem exists_p (r : ℕ+) : ∃ p, p.Prime ∧ IsOfClass r p := by
   sorry
 
-open Classical
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
 Let $p_r$ is the least prime in class $r$. -/
-noncomputable def p (r : ℕ+) : ℕ := Nat.find (exists_p r)
+noncomputable def p (r : ℕ+) : ℕ :=
+  open scoped Classical in
+  Nat.find (exists_p r)
 
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Casas-Alvero Conjecture
@@ -80,7 +80,7 @@ theorem hasCasasAlveroProp_iffᵣ {P : K[X]} [IsAlgClosed K] :
   refine ⟨?_, HasCasasAlveroPropᵣ.hasCasasAlveroProp⟩
   simp_rw [HasCasasAlveroProp, HasCasasAlveroPropᵣ,
     isCoprime_iff_aeval_ne_zero_of_isAlgClosed K K, coe_aeval_eq_eval]
-  push_neg
+  push Not
   exact (· · ·)
 
 universe u in

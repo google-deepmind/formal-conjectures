@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Data.Real.NearestInt
+import FormalConjecturesUtil
+
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Fractional Parts of Powers
 

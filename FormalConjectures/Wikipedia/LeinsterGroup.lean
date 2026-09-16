@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Leinster Groups
@@ -37,8 +37,7 @@ TODO: The following properties from the Wikipedia article can also be formalized
 
 namespace LeinsterGroup
 
-open scoped Classical
-
+open scoped Classical in
 /--
 A finite group `G` is a **Leinster group** if the sum of the orders of all its normal subgroups
 equals twice the group's order.

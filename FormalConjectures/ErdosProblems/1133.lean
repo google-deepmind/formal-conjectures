@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1133
@@ -34,7 +34,7 @@ Let $C>0$. There exists $\epsilon>0$ such that if $n$ is sufficiently large the 
 
 For any $x_1,\ldots,x_n\in [-1,1]$ there exist $y_1,\ldots,y_n\in [-1,1]$ such that, if $P$ is a
 polynomial of degree $m<(1+\epsilon)n$ with $P(x_i)=y_i$ for at least $(1-\epsilon)n$ many
-$1\leq i\leq n$, then \[\max_{x\in [-1,1]}\lvert P(x)\rvert >C.\]
+$1\leq i\leq n$, then $$\max_{x\in [-1,1]}\lvert P(x)\rvert >C.$$
 -/
 @[category research open, AMS 26 41]
 theorem erdos_1133 :

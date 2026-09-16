@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 315
@@ -29,7 +29,6 @@ The notions `IsTotalDominatingSet`, `IsMinimalTotalDominatingSet`,
 `FormalConjecturesForMathlib.Combinatorics.SimpleGraph.GraphConjectures.WellTotallyDominated`.
 -/
 
-open Classical
 
 namespace WrittenOnTheWallII.GraphConjecture315
 
@@ -98,7 +97,7 @@ since no vertex has a neighbor in the empty edge set. -/
 @[category test, AMS 5]
 example : ¬IsTotalDominatingSet (⊥ : SimpleGraph (Fin 2)) Finset.univ := by
   unfold IsTotalDominatingSet
-  push_neg
+  push Not
   exact ⟨0, fun w _ => by simp⟩
 
 end WrittenOnTheWallII.GraphConjecture315

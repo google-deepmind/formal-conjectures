@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+import FormalConjecturesUtil
 
 /-!
 # The length of an $s$-increasing sequence of $r$-tuples
@@ -35,7 +35,7 @@ namespace Arxiv.«1609.08688»
 /--
 Let $a = (a_1, a_2, a_3)$ and $b = (b_1, b_2, b_3)$ be two triples of integers.
 Say that $a$ is $2$-less than $b$, or $a <_2 b$, if $a_i < b_i$ for at least
-two co-ordinates $i$.
+two coordinates $i$.
 -/
 def lt₂ {α : Type*} [LT α] (a b : Fin 3 → α) : Prop :=
   ∃ (i j : Fin 3), i ≠ j ∧ a i < b i ∧ a j < b j
@@ -76,7 +76,7 @@ theorem lt₂_example_2 : ![5, 6, 1] <₂ ![7, 7, 7] := ⟨0, 2, by simp, by sim
 @[category test, AMS 5]
 theorem lt₂_example_3 : ![7, 7, 7] <₂ ![7, 8, 9] := ⟨1, 2, by simp, by simp⟩
 
-/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4). -/
+/-- but $(1, 2, 3)$ is not $2$-less than $(1, 2, 4)$. -/
 @[category test, AMS 5]
 theorem not_lt₂_example : ¬![1, 2, 3] <₂ ![1, 2, 4] := not_lt₂_of_exists 0 1 zero_ne_one (by simp) (by simp)
 
@@ -106,11 +106,10 @@ theorem isIncreasing₂_const_length {α : Type*} [LinearOrder α] {val : α} {s
     (h : IsIncreasing₂ s)
     (h_const : ∀ a ∈ s, ∀ j, a j = val) : s.length < 2 := by
   by_contra!
-  have h₀ : s[0] = fun _ => val := funext fun i => by simp [h_const s[0] (by simp)]
-  have h₁ : s[1] = fun _ => val := funext fun i => by simp [h_const s[1] (by simp)]
-  have := List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
-  simp [h₀, h₁] at this
-  exact not_lt₂_self _ this
+  obtain ⟨i, j, -, hi, -⟩ :=
+    List.pairwise_iff_getElem.1 h 0 1 (by linarith) (by linarith) zero_lt_one
+  rw [h_const _ (List.getElem_mem _) i, h_const _ (List.getElem_mem _) i] at hi
+  exact lt_irrefl _ hi
 
 /--
 Let $F(n)$ be the maximal length of a $2$-increasing sequence of triples with each coordinate
@@ -144,7 +143,7 @@ theorem maximalLength_one : maximalLength 1 = 1 := by
     simp at hs₂
     rw [show a = fun _ => 1 from funext fun i => by simp [hs₂ i]]
   simp [maximalLength, fun x => exists_congr (this x)]
-  erw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
+  rw [Nat.sSup_def ⟨1, by aesop⟩, Nat.find_eq_iff]
   refine ⟨by aesop, fun n hn => ?_⟩
   simp [Nat.lt_one_iff.1 hn]
   exact ⟨1, ⟨[fun _ => 1], by simp⟩, one_ne_zero⟩
@@ -178,10 +177,37 @@ lemma exists_pair_of_mem_Icc {s : List (Fin 3 → ℕ)} {n : ℕ} (_hn : 2 ≤ n
     Finset.exists_ne_map_eq_of_card_lt_of_maps_to ht_card hf
   exact ⟨i, j, hij, congrArg Prod.fst hfij, congrArg Prod.snd hfij⟩
 
-/-- For all $n$ we have $F(n) \leq n^2$. -/
+/--
+For all $n$ we have $F(n) \leq n^2$.
+
+This is the upper bound in [GoLo21, Proposition 1.4], proved by applying the
+pigeonhole principle to the first two coordinates.
+-/
 @[category research solved, AMS 5]
 theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
-  sorry
+  by_cases hn : 2 ≤ n
+  · rw [maximalLength]
+    refine csSup_le ?_ ?_
+    · exact ⟨0, ⟨[], by simp, isIncreasing₂_nil, rfl⟩⟩
+    · intro _ hm
+      rcases hm with ⟨s, hs_range, hs_inc, rfl⟩
+      by_contra hle
+      have hs_length : n ^ 2 < s.length := Nat.lt_of_not_ge hle
+      obtain ⟨i, j, hij, h0, h1⟩ :=
+        exists_pair_of_mem_Icc hn hs_range hs_length
+      have hp : s.Pairwise lt₂ := hs_inc
+      rcases lt_or_gt_of_ne hij with hij | hji
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.ge h1.ge)
+          (List.pairwise_iff_get.1 hp i j hij)
+      · exact (not_lt₂_of_exists 0 1 zero_ne_one h0.le h1.le)
+          (List.pairwise_iff_get.1 hp j i hji)
+  · cases n with
+    | zero => simp [maximalLength_zero]
+    | succ n =>
+      cases n with
+      | zero => simp [maximalLength_one]
+      | succ n =>
+        exact (hn (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le _)))).elim
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
 @[category research solved, AMS 5]
@@ -194,51 +220,69 @@ than the other. -/
 def IsComparable₂ {α : Type*} [LT α] (t₁ t₂ : Fin 3 → α) : Prop :=
   t₁ <₂ t₂ ∨ t₂ <₂ t₁
 
-/-- A set of triples is $2$-comparable if any two of them are $2$-comparable. -/
+/-- A set of triples is $2$-comparable if any two distinct members of it are $2$-comparable. -/
 def IsComparableSet₂ {α : Type*} [LT α] (s : List (Fin 3 → α)) : Prop :=
-  ∃ t₁ t₂, t₁ ≠ t₂ ∧ t₁ ∈ s ∧ t₂ ∈ s ∧ IsComparable₂ t₁ t₂
+  ∀ t₁ ∈ s, ∀ t₂ ∈ s, t₁ ≠ t₂ → IsComparable₂ t₁ t₂
 
 open Filter in
-/-- $F(n) \leq n^2 / \exp(\Omega(\log^*(n)))$. -/
+/-- $F(n) \leq n^2 / \exp(\Omega(\log^*(n)))$, i.e. there is a constant $c > 0$ such that
+$F(n) \leq n^2 / \exp(c \log^*(n))$ for all sufficiently large $n$. -/
 @[category research solved, AMS 5]
-theorem maximalLength_le_isBigO : ∃ Ω : ℕ → ℝ,
-    (fun (n : ℕ) => (Real.iteratedLog n : ℝ)) =O[atTop] Ω ∧
-      ∀ n, F n ≤ n ^ 2 / Real.exp (Ω n) := by
+theorem maximalLength_le_isBigO : ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+    (F n : ℝ) ≤ (n : ℝ) ^ 2 / Real.exp (c * (Real.iteratedLog n : ℝ)) := by
   sorry
 
 /-- We define the product of two triples $(a, b, c)$ and $(d, e, f)$ by
-$((a, d), (b, e), (c, f))$, where the pairs are arranged in lexicographical order. -/
-def tripleProduct {α : Type*} (a b : Fin 3 → α) : Πₗ (_ : Fin 3), α × α := toLex (Pi.prod a b)
+$((a, d), (b, e), (c, f))$, where the pairs are ordered lexicographically. -/
+def tripleProduct {α : Type*} (a b : Fin 3 → α) : Fin 3 → α ×ₗ α :=
+  fun i => toLex (a i, b i)
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_const {α : Type*} (a : α) :
-    tripleProduct (fun _ => a) (fun _ => a) = toLex (fun _ => (a, a)) := by
-  simpa [tripleProduct] using funext fun i => by simp
+    tripleProduct (fun _ ↦ a) (fun _ ↦ a) = fun _ ↦ toLex (a, a) :=
+  rfl
 
 @[simp, category API, AMS 5]
 theorem tripleProduct_vecConst_const {α : Type*} (a : α) :
-    tripleProduct ![a, a, a] ![a, a, a] = toLex ![(a, a), (a, a), (a, a)] := by
-  simp [tripleProduct]
-  ext i <;> fin_cases i <;> simp
+    tripleProduct ![a, a, a] ![a, a, a] = ![toLex (a, a), toLex (a, a), toLex (a, a)] := by
+  ext i
+  fin_cases i <;> rfl
 
 /-- We define the product $\otimes$ of two sequences $(a_i, b_i, c_i)$ and
 $(d_i, e_i, f_i)$ by the sequence $((a_i, d_j), (b_i, e_j), (c_i, f_j))$, where
 the indices $(i, j)$ are arranged lexicographically, and the pairs are also
 ordered lexicographically. -/
-def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : Lex (List (Πₗ (_ : Fin 3), α × α)) :=
-  toLex (s.flatMap (fun a => List.map (tripleProduct a) t))
+def sequenceProduct {α : Type*} (s t : List (Fin 3 → α)) : List (Fin 3 → α ×ₗ α) :=
+  s.flatMap (fun a => List.map (tripleProduct a) t)
 
 local infix:100 " ⊗₂ " => sequenceProduct
 
 @[category test, AMS 5]
-theorem sequenceProduct_example : [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = toLex [toLex ![(1, 1), (1, 1), (1, 1)]] := by
+theorem sequenceProduct_example :
+    [![1, 1, 1]] ⊗₂ [![1, 1, 1]] = [![toLex (1, 1), toLex (1, 1), toLex (1, 1)]] := by
   simp [sequenceProduct]
+
+/-- The product of two $2$-increasing sequences is $2$-increasing; this is the point of
+ordering the pairs lexicographically. -/
+@[category test, AMS 5]
+theorem isIncreasing₂_sequenceProduct_example :
+    IsIncreasing₂ ([![1, 1, 1], ![2, 2, 2]] ⊗₂ [![1, 1, 1], ![2, 2, 2]]) := by
+  unfold IsIncreasing₂ sequenceProduct tripleProduct lt₂
+  decide
 
 /-- Suppose that for some $n$ we have $F(n) = n ^ {\alpha}$. Then there are arbitrarily
 large $m$ such that $F(m) \geq m^{\alpha}$. -/
 @[category research solved, AMS 5]
 theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e) :
-    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
+    ∃ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
+  sorry
+
+/-- Moreover, for every $\beta < \alpha$ and all sufficiently large $m$ we have
+$F(m) \geq m^{\beta}$. -/
+@[category research solved, AMS 5]
+theorem maximalLength_pow_eventually {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e)
+    {b : ℝ} (hb : b < e) :
+    ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ b ≤ F m := by
   sorry
 
 /-- $F(n) \leq n^{3/2}$. -/
