@@ -103,7 +103,7 @@ The class BPP is the set of decision problems $L$
 such that there exists a polynomial $p$ over ℕ
 and a poly-time Turing machine computing a relation $R$
 where for all $x$, a uniformly random string $r$ of length $p (|x|)$ satisfies
-$R (x, r) = L (x)$ with probability at least `2/3`.
+$R (x, r) = L (x)$ with probability at least $2/3$.
 
 See Definition 7.4 in Arora-Barak (2009).
 -/
