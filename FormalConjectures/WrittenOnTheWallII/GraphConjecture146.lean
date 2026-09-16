@@ -81,13 +81,13 @@ theorem conjecture146 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 -- Sanity checks
 
 /-- In `graphSquare G`, adjacent vertices in $G$ are also adjacent
-($\mathrm{dist} \le 1 \le 2$). -/
+(`edist` is at most $1 \le 2$). -/
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) (u v : Fin 4) (h : G.Adj u v) :
     (graphSquare G).Adj u v := by
   refine ⟨G.ne_of_adj h, ?_⟩
-  -- dist u v ≤ length of the 1-step walk ≤ 2
-  exact (G.dist_le (Walk.cons h Walk.nil)).trans (by norm_num)
+  -- edist u v ≤ length of the 1-step walk ≤ 2
+  exact (G.edist_le (Walk.cons h Walk.nil)).trans (by norm_num)
 
 /-- `graphSquare` is loopless: no vertex is adjacent to itself. -/
 @[category test, AMS 5]
@@ -102,5 +102,15 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ graphSquareRadius G := Nat.zero_le _
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 4)) (u v : Fin 4) (h : (graphSquare G).Adj u v) :
     (graphSquare G).Adj v u := h.symm
+
+/-- `graphSquare` does not join different connected components: the square of the edgeless
+graph on two vertices is still edgeless. -/
+@[category test, AMS 5]
+example : graphSquare (⊥ : SimpleGraph (Fin 2)) = ⊥ := by
+  ext u v
+  simp only [graphSquare, bot_adj, iff_false, not_and]
+  intro huv
+  rw [SimpleGraph.edist_bot_of_ne huv]
+  simp
 
 end WrittenOnTheWallII.GraphConjecture146

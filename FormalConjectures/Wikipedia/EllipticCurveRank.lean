@@ -25,6 +25,11 @@ import FormalConjecturesUtil
     https://ems.press/journals/jems/articles/16228
 - [BS2013] Manjul Bhargava and Arul Shankar. The average size of the 5-Selmer group of
    elliptic curves is 6, and the average rank is less than 1, https://arxiv.org/pdf/1312.7859
+- [Goldfeld1979] Dorian Goldfeld. Conjectures on elliptic curves over quadratic fields,
+   Number Theory Carbondale 1979, Lecture Notes in Math. 751, 108-118,
+   https://doi.org/10.1007/BFb0062705
+- [Smith2025] Alexander Smith. The Birch and Swinnerton-Dyer conjecture implies Goldfeld's
+   conjecture, https://arxiv.org/abs/2503.17619
 - [Wikipedia](https://en.wikipedia.org/wiki/Rank_of_an_elliptic_curve)
 - [ICARM](https://elliptic-rank.icarm.cloud/curve/273)
 -/
@@ -118,6 +123,99 @@ theorem _02062_le_density_rank_zero : 0.2062 ≤ atTop.liminf
     fun H ↦ ({E ∈ heightLE H | E.rank = 0}.ncard / (heightLE H).ncard : ℝ) := by
   sorry
 
+/-- The quadratic twist $E^d$ of $E : y^2 = x^3 + Ax + B$ by an integer $d$, given by the
+Weierstrass equation $y^2 = x^3 + d^2Ax + d^3B$. For $d \neq 0$ this is the twist of $E$
+corresponding to the quadratic field $\mathbb{Q}(\sqrt{d})$. See Section 1 of [Smith2025]. -/
+def quadraticTwist (E : RatEllipticCurve) (d : ℤ) : Affine ℚ :=
+  { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := d ^ 2 * E.A, a₆ := d ^ 3 * E.B }
+
+/-- The twist of $E$ by $d = 1$ is $E$ itself. -/
+@[category API, AMS 11 14]
+theorem quadraticTwist_one (E : RatEllipticCurve) : E.quadraticTwist 1 = E.toWeierstrass := by
+  simp [quadraticTwist, toWeierstrass]
+
+/-- The quadratic twist of an elliptic curve over $\mathbb{Q}$ by a nonzero $d$ is again an
+elliptic curve. -/
+@[category API, AMS 11 14]
+theorem isElliptic_quadraticTwist (E : RatEllipticCurve) {d : ℤ} (hd : d ≠ 0) :
+    (E.quadraticTwist d).IsElliptic where
+  isUnit := isUnit_iff_ne_zero.mpr <| by
+    convert mul_ne_zero (pow_ne_zero 6 (Int.cast_ne_zero.mpr hd)) E.toWeierstrass.isUnit_Δ.ne_zero
+    simp only [quadraticTwist, toWeierstrass, Δ, b₂, b₄, b₆]
+    ring
+
+/-- The naïve height of the Weierstrass model $E^d$ is $|d|^6$ times the naïve height of $E$.
+Ordering the twists of $E$ by $|d|$ is therefore the same as ordering them by naïve height. -/
+@[category API, AMS 11 14]
+theorem naiveHeight_quadraticTwist (E : RatEllipticCurve) (d : ℤ) :
+    max (4 * (d ^ 2 * E.A).natAbs ^ 3) (27 * (d ^ 3 * E.B).natAbs ^ 2)
+      = d.natAbs ^ 6 * E.naiveHeight := by
+  simp only [naiveHeight, ← Nat.mul_max_mul_left, Int.natAbs_mul, Int.natAbs_pow, mul_pow]
+  ring_nf
+
+/-- The rank of the quadratic twist $E^d$ of an elliptic curve $E$ over $\mathbb{Q}$. -/
+noncomputable abbrev twistRank (E : RatEllipticCurve) (d : ℤ) : ℕ :=
+  finrank ℤ (E.quadraticTwist d).Point
+
+/-- The set of nonzero integers $d$ with $|d| \leq H$, which index the quadratic twists $E^d$
+ordered by $|d|$. By `naiveHeight_quadraticTwist` this is the same as ordering them by height. -/
+def twistIndexLE (H : ℕ) : Set ℤ := {d : ℤ | d ≠ 0 ∧ |d| ≤ (H : ℤ)}
+
+/-- There are $2H$ nonzero integers $d$ with $|d| \leq H$. This is the normalisation used in
+[Smith2025]. -/
+@[category API, AMS 11 14]
+theorem ncard_twistIndexLE (H : ℕ) : (twistIndexLE H).ncard = 2 * H := by
+  have : twistIndexLE H = ↑((Finset.Icc (-(H : ℤ)) H).erase 0) :=
+    Set.ext fun d ↦ by simp [twistIndexLE, abs_le, and_comm]
+  rw [this, Set.ncard_coe_finset, Finset.card_erase_of_mem (by simp), Int.card_Icc]
+  lia
+
+/-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
+introduction of [Smith2025]: when the quadratic twists $E^d$ of an elliptic curve $E$ over
+$\mathbb{Q}$ are ordered by $|d|$, 50% of them have rank $0$ and 50% have rank $1$. See
+`goldfeld_conjecture.variants.two_le` for the remaining case $2 \leq r$.
+
+Goldfeld states the conjecture for the analytic rank of $E^d$, which the Birch and
+Swinnerton-Dyer conjecture predicts is equal to the Mordell–Weil rank used here. Corollary 1.2
+of [Smith2025] proves that the Birch and Swinnerton-Dyer conjecture for the quadratic twist
+family of $E$ implies Goldfeld's conjecture for $E$. -/
+@[category research open, AMS 11 14]
+theorem goldfeld_conjecture (E : RatEllipticCurve) (r : ℕ) (hr : r = 0 ∨ r = 1) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | E.twistRank d = r}.ncard / (twistIndexLE H).ncard : ℝ))
+      (𝓝 (1 / 2)) := by
+  sorry
+
+/-- **Goldfeld's conjecture** ([Goldfeld1979], Conjecture B), in the form stated in the
+introduction of [Smith2025], in the case $2 \leq r$: a density $0$ of the quadratic twists $E^d$
+of an elliptic curve $E$ over $\mathbb{Q}$ have rank $r$.
+
+For the Mordell–Weil rank used here this is an unconditional theorem: by Theorem 1.1 of
+[Smith2025], $100\%$ of the twists $E^d$ have $2^\infty$-Selmer corank $0$ or $1$, and the
+Mordell–Weil rank is at most the $2^\infty$-Selmer corank (equation (1.1) there), so the twists
+of rank at least $2$ have density $0$. The corresponding statement for the analytic rank is
+open. -/
+@[category research solved, AMS 11 14]
+theorem goldfeld_conjecture.variants.two_le (E : RatEllipticCurve) (r : ℕ) (hr : 2 ≤ r) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | E.twistRank d = r}.ncard / (twistIndexLE H).ncard : ℝ))
+      (𝓝 0) := by
+  sorry
+
+/-- Goldfeld's conjecture with $d$ restricted to squarefree integers, which is how it is usually
+stated informally: 50% of the quadratic twists of $E$ have rank $0$ and 50% have rank $1$. The
+twist $E^d$ only depends on the class of $d$ modulo nonzero rational squares, and the squarefree
+integers are a system of representatives of these classes. (They need not give pairwise
+non-isomorphic curves: if $B = 0$ then $E^{-d} = E^d$.) -/
+@[category research open, AMS 11 14]
+theorem goldfeld_conjecture.variants.squarefree (E : RatEllipticCurve) (r : ℕ)
+    (hr : r = 0 ∨ r = 1) :
+    atTop.Tendsto
+      (fun H ↦ ({d ∈ twistIndexLE H | Squarefree d ∧ E.twistRank d = r}.ncard /
+        {d ∈ twistIndexLE H | Squarefree d}.ncard : ℝ))
+      (𝓝 (1 / 2)) := by
+  sorry
+
 /-- From [PPVW2016], Section 3.1: "from the mid-1960s to the present,
 it seems that most experts conjectured unboundedness." -/
 @[category research open, AMS 11 14]
@@ -133,16 +231,22 @@ Notice that this contradicts the previous conjecture. -/
 theorem finite_twentyone_lt_finrank : {E : RatEllipticCurve | 21 < E.rank}.Finite := by
   sorry
 
-/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank `r` and
-naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
+/-- [PPVW2016] 8.2(b): for 1 ≤ r ≤ 20, the number of elliptic curves over ℚ with rank at least
+`r` and naïve height at most `H` is asymptotically `H ^ ((21 - r) / 24 + o(1))`.
 Note: ℰ_H in 8.2(b) should be ℰ_{≤H}, see the statement of Theorem 7.3.3.
 When `r = 1`, the exponent is `20 / 24 = 5 / 6`, which agrees with the exponent in
 `card_heightLE_div_pow_five_div_six_tensto` and is consistent with
-`half_rank_zero_and_half_rank_one`. -/
+`half_rank_zero_and_half_rank_one`.
+The equality is asserted only for large `H`, matching the `o(1)` above: it cannot hold
+at small `H`, because `heightLE H` is empty for `H ≤ 3` (`naiveHeight E ≤ 3` forces
+`A = B = 0`, which both `Δ_ne_zero` and `reduced` exclude) and consists only of the two
+rank-zero curves `y² = x³ ± x` for `4 ≤ H ≤ 26`, while the right hand side is
+`Real.rpow` and hence strictly positive. -/
 @[category research open, AMS 11 14]
 theorem rank_height_count_asymptotic (r : ℕ) (h₁ : 1 ≤ r) (h₂ : r ≤ 20) :
     ∃ f : ℕ → ℝ, atTop.Tendsto f (𝓝 0) ∧
-      ∀ H : ℕ, 1 < H → {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
+      ∀ᶠ H : ℕ in atTop,
+        {E ∈ heightLE H | r ≤ E.rank}.ncard = (H : ℝ) ^ ((21 - r) / 24 + f H) := by
   sorry
 
 /-- [PPVW2016] 8.2(c): the number of elliptic curves over ℚ with rank ≥ 21 and naïve height

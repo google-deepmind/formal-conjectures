@@ -84,13 +84,14 @@ theorem erdos_920.variants.lower_bound_k_eq_4 :
   sorry
 
 /--
-A positive answer to this question for all $k\geq 5$ follows from the lower bound in
-[erdosproblems.com/986] given by Bradač [Br26].
+A positive answer to this question for all $k\geq 5$, i.e.
+$f_k(n) \gg \frac{n^{1-\frac{1}{k-1}}}{(\log n)^{c_k}}$ for some constant $c_k>0$, follows from
+the lower bound in [erdosproblems.com/986] given by Bradač [Br26].
 -/
 @[category research solved, AMS 5]
-theorem erdos_920.variants.lower_bound_k_ge_5 (k : ℕ) (hk : k ≥ 3) :
+theorem erdos_920.variants.lower_bound_k_ge_5 (k : ℕ) (hk : k ≥ 5) :
     ∃ c > 0, (fun n ↦ f k n) ≫ (fun (n : ℕ) ↦
-    (n : ℝ) ^ (1 - 2 / ((k : ℝ) + 1)) / (log n) ^ c) := by
+    (n : ℝ) ^ (1 - 1 / ((k : ℝ) - 1)) / (log n) ^ c) := by
   sorry
 
 end Erdos920

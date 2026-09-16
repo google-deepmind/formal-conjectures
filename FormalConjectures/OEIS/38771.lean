@@ -127,7 +127,7 @@ This conjecture is true for the first 133 terms.
 - [Dmitry Kamenetsky](https://oeis.org/wiki/User:Dmitry_Kamenetsky), Jan 06 2019
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ a n = p * q := by
+theorem conjecture2 (n : ℕ) : (a n).IsSemiprime := by
   sorry
 
 end OeisA38771
