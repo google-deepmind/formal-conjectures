@@ -108,7 +108,7 @@ strings `r : Fin (p (|x|)) → Bool` that make `R` answer correctly.
 
 See Definition 7.4 in Arora-Barak (2009).
 -/
-def BPP : ComplexityClass :=
+def BPP : DecisionComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
       IsPolyTime R ∧
       ∀ x, (2 : ℚ) / 3 ≤
