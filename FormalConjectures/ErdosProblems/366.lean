@@ -40,12 +40,15 @@ theorem exists_three_full_then_two_full : ∃ n > 0, (3).Full n ∧ (2).Full (n 
   norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 /--
-Are there infinitely many 3-full $n$ such that $n+1$ is 2-full?
+Erdős and Graham asked whether $(8, 9)$ is the only pair of consecutive integers $n$, $n+1$
+with $n$ $3$-full and $n+1$ $2$-full. The answer is no: $12167 = 23^3$ and
+$12168 = 2^3 3^2 13^2$ is another such pair, already known to Golomb [Go70].
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_366.variants.three_two :
-    answer(sorry) ↔ {n | (3).Full n ∧ (2).Full (n + 1)}.Infinite := by
-  sorry
+    answer(False) ↔ ∀ n > 0, (3).Full n ∧ (2).Full (n + 1) → n = 8 := by
+  refine ⟨False.elim, fun h ↦ absurd (h 12167 (by norm_num) ?_) (by norm_num)⟩
+  norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 /--
 Are there any consecutive pairs of $3$-full integers?

@@ -111,32 +111,33 @@ theorem a_5 : a 5 = 1188 := by
   rw [bernoulli_eq_bernoulli'_of_ne_one (by decide), bernoulli'_ten]
   norm_num
 
-/-- $A005382(n)$ is the $n$-th prime $p$ such that $2p-1$ is also prime (1-based). -/
-noncomputable def a005382 (n : ℕ) : ℕ :=
-  Nat.nth (fun p ↦ p.Prime ∧ (2 * p - 1).Prime) (n - 1)
-
 /--
 Conjecture I: if $n > 2$, then $\frac{a(\text{A005382}(n))}{12}$ is prime,
 where A005382 is the sequence of primes $p$ such that $2p-1$ is also prime.
+Since $\text{A005382}(1) = 2$, $\text{A005382}(2) = 3$ and $\text{A005382}(3) = 7$, this says
+that $\frac{a(p)}{12}$ is prime for every prime $p > 3$ such that $2p-1$ is also prime.
 - Lorenzo Sauras Altuzarra, Oct 13 2020
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : (a (a005382 n) / 12).Prime := by
+theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp' : (2 * p - 1).Prime) (h3 : 3 < p) :
+    (a p / 12).Prime := by
   sorry
 
 /--
 Conjecture II: if $\frac{a(n)}{12}$ is prime, then $\frac{a(n-1)}{12} - (n-1)$,
 $\frac{a(n)}{12} - n$ and $\frac{a(n+2)}{12} - (n+2)$ are multiples of 6.
 - Lorenzo Sauras Altuzarra, Oct 13 2020
+
+This is false for $n = 236791$.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 2 ≤ n)
-    (h_div : 12 ∣ a n) (h_prime : Nat.Prime (a n / 12))
-    (h_div_prev : 12 ∣ a (n - 1)) (h_div_succ : 12 ∣ a (n + 2)) :
-    6 ∣ ((a (n - 1) / 12 : ℤ) - (n - 1 : ℤ)) ∧
-    6 ∣ ((a n / 12 : ℤ) - (n : ℤ)) ∧
-    6 ∣ ((a (n + 2) / 12 : ℤ) - (n + 2 : ℤ)) := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_a046969_conjecture_2/Submission/Spec.lean#L845"]
+theorem conjecture2 :
+    ¬ ∀ (n : ℕ), 2 ≤ n → 12 ∣ a n → Nat.Prime (a n / 12) →
+      12 ∣ a (n - 1) → 12 ∣ a (n + 2) →
+      6 ∣ ((a (n - 1) / 12 : ℤ) - (n - 1 : ℤ)) ∧
+      6 ∣ ((a n / 12 : ℤ) - (n : ℤ)) ∧
+      6 ∣ ((a (n + 2) / 12 : ℤ) - (n + 2 : ℤ)) := by
   sorry
 
 end OeisA46969
-

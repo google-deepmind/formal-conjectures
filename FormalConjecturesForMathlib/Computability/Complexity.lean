@@ -46,7 +46,7 @@ abbrev DecisionProblem := List Bool → Bool
 /--
 The type of complexity classes. We define these as sets of decision problems.
 -/
-abbrev ComplexityClass := Set DecisionProblem
+abbrev DecisionComplexityClass := Set DecisionProblem
 
 /--
 `IsPolyTimeWithEncoding ea eb f` asserts that `f` is computable in polynomial time
@@ -74,7 +74,7 @@ theorem isPolyTime_id {α : Type} [BitstringEncoding α] : IsPolyTime (id : α �
 The class P is the set of decision problems
 decidable in polynomial time by a deterministic Turing machine.
 -/
-def P : ComplexityClass :=
+def P : DecisionComplexityClass :=
   { L | IsPolyTime L }
 
 /--
@@ -85,7 +85,7 @@ such that the Turing machine accepts the pair `(x,w)`.
 
 See Definition 2.1 in Arora-Barak (2009).
 -/
-def NP : ComplexityClass :=
+def NP : DecisionComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
       IsPolyTime R ∧
       ∀ x, L x ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ R (x, w) }
@@ -94,7 +94,7 @@ def NP : ComplexityClass :=
 The class coNP is the set of decision problems
 whose complements are in NP.
 -/
-def coNP : ComplexityClass :=
+def coNP : DecisionComplexityClass :=
   { L | Lᶜ ∈ NP }
 
 end ComplexityTheory

@@ -32,8 +32,6 @@ namespace Erdos1043
 
 open MeasureTheory Polynomial
 
-attribute [local instance] Measure.Subtype.measureSpace
-
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ ≤ 1}
@@ -46,6 +44,9 @@ $$\{ z: \lvert f(z)\rvert\leq 1\}$$
 onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.
+
+The projection onto the line $\ell = \mathbb{R} u$ is measured with the Lebesgue measure of that
+line, so `volume` of the projected set is its length.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
