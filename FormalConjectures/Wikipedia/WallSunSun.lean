@@ -18,7 +18,10 @@ import FormalConjecturesUtil
 /-!
 # Infinitude of Wall–Sun–Sun primes
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Wall%E2%80%93Sun%E2%80%93Sun_prime)
+- [EJ10] A.-S. Elsenhans and J. Jahnel, *The Fibonacci sequence modulo $p^2$ – An investigation by
+  computer for $p < 10^{14}$*, [arXiv:1006.0824](https://arxiv.org/abs/1006.0824)
 -/
 
 open Algebra (IsQuadraticExtension)
@@ -118,6 +121,8 @@ end NumberField
 
 namespace WallSunSun
 
+open scoped NumberTheorySymbols
+
 /--
 A prime $p$ is a Wall–Sun–Sun prime if and only if $L_p \equiv 1 \pmod{p^2}$, where $L_p$ is the
 $p$-th Lucas number. It is conjectured that there is at least one Wall–Sun–Sun prime.
@@ -134,19 +139,78 @@ $p$-th Lucas number. It is conjectured that there are infinitely many Wall-Sun-S
 theorem infinite_isWallSunSunPrime : {p : ℕ | IsWallSunSunPrime p}.Infinite := by
   sorry
 
-/--
-A Lucas–Wieferich prime associated with $(a,b)$ is an odd prime $p$, not dividing $a^2 - 4b$, such
-that $U_{p-\varepsilon}(a,b) \equiv 0 \pmod{p^2}$ where $U(a,b)$ is the Lucas sequence of the first
-kind and $\varepsilon$ is the Legendre symbol $\left({\tfrac {a^2-4b}{p}}\right)$.
-The discriminant of this number is the quantity $a^2 - 4b$. It is conjectured that there are
-infinitely many Lucas–Wieferich primes of any given non-one fundamental discriminant.
+@[category API, AMS 11]
+private lemma exists_parameters {D : ℤ} {p : ℕ}
+    (hmod : (4 : ℤ) ∣ D ∨ D ≡ 1 [ZMOD 4]) (hodd : Odd p) :
+    ∃ a b : ℤ, a ^ 2 - 4 * b = D ∧ (p : ℤ) ^ 2 ∣ a := by
+  rcases hmod with hfour | hone
+  · rcases hfour with ⟨d, rfl⟩
+    refine ⟨2 * (p : ℤ) ^ 2, (p : ℤ) ^ 4 - d, by ring, ?_⟩
+    exact dvd_mul_left _ _
+  · rcases hodd with ⟨k, rfl⟩
+    rcases hone.dvd with ⟨c, hc⟩
+    refine ⟨((2 * k + 1 : ℕ) : ℤ) ^ 2,
+      4 * (k : ℤ) ^ 4 + 8 * (k : ℤ) ^ 3 + 6 * (k : ℤ) ^ 2 + 2 * (k : ℤ) + c,
+      ?_, dvd_refl _⟩
+    push_cast
+    nlinarith
 
-TODO: Source this conjecture
+/-- An earlier formulation of `infinite_isWallSunSunPrime_of_disc_eq`, which chose the Lucas
+parameters $(a, b)$ separately for every prime $p$, was degenerate: it is provable. -/
+@[category test, AMS 11]
+theorem infinite_isWallSunSunPrime_of_disc_eq_varying_parameters {D : ℤ}
+    (hD : IsFundamentalDiscr D) :
+    {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
+  have hDzero : D ≠ 0 := by
+    intro h
+    subst D
+    simp [IsFundamentalDiscr] at hD
+  have hmod : (4 : ℤ) ∣ D ∨ D ≡ 1 [ZMOD 4] := by
+    rcases hD with h | h
+    · exact Or.inl h.1
+    · exact Or.inr h.2.1
+  let B := max D.natAbs 2
+  have hinf : ({p : ℕ | p.Prime} \ Set.Iic B).Infinite :=
+    Nat.infinite_setOfPred_prime.sdiff (Set.finite_Iic B)
+  apply hinf.mono
+  intro p hpB
+  rcases hpB with ⟨hp, hpB⟩
+  simp only [Set.mem_ofPred_eq] at hp
+  simp only [Set.mem_Iic, not_le] at hpB
+  have hpD : D.natAbs < p := lt_of_le_of_lt (le_max_left _ _) hpB
+  have hp2 : 2 < p := lt_of_le_of_lt (le_max_right _ _) hpB
+  have hodd : Odd p := hp.odd_of_ne_two (by omega)
+  have hpd : ¬ (p : ℤ) ∣ D := by
+    intro h
+    have := Int.natAbs_le_of_dvd_ne_zero h hDzero
+    simp only [Int.natAbs_natCast] at this
+    omega
+  obtain ⟨a, b, hab, ha⟩ := exists_parameters hmod hodd
+  exact ⟨a, b, hab, IsLucasWieferichPrime.of_sq_dvd hp hodd (hab ▸ hpd) ha⟩
+
+/--
+Let $K$ be a real quadratic field of discriminant $D$ and let $\varepsilon$ be a fundamental unit
+of $K$. Following [EJ10, Remark 2.2.8], an odd prime $p \nmid D$ is a Wall–Sun–Sun prime for $K$
+if, in $\mathcal{O}_K$, $\varepsilon^{p-1} \equiv 1 \pmod{p^2}$ when
+$\left(\tfrac{D}{p}\right) = 1$, and $\varepsilon^{2p+2} \equiv 1 \pmod{p^2}$ when
+$\left(\tfrac{D}{p}\right) = -1$. Both exponents are even, so the condition does not depend on the
+choice of $\varepsilon$, and it is equivalent to asking the same congruence for every unit of $K$.
+For $K = \mathbb{Q}(\sqrt{5})$ and $\varepsilon = \frac{1 + \sqrt{5}}{2}$ these are the classical
+Wall–Sun–Sun primes other than $2$ and $5$ [EJ10, Proposition 2.2.6].
+
+It is conjectured that for every fundamental discriminant $D \neq 1$ there are infinitely many
+Wall–Sun–Sun primes with discriminant $D$ (Wikipedia; [EJ10, §4.1] gives the heuristic for
+$\mathbb{Q}(\sqrt{5})$). It is stated here for $D > 0$ only. Wikipedia's sentence also covers
+$D < 0$, but [EJ10] gives the definition above only for real quadratic fields, and its literal
+extension to imaginary quadratic fields is degenerate: there every unit is a root of unity of
+order dividing $4$ or $6$, and that order divides the relevant exponent $p - 1$ or $2p + 2$ for
+every odd prime $p \nmid D$.
 -/
 @[category research open, AMS 11]
-theorem infinite_isWallSunSunPrime_of_disc_eq {D : ℤ} (hD : IsFundamentalDiscr D)
-    (hD₁ : D ≠ 1) :
-    {p : ℕ | ∃ a b, a ^ 2 - 4 * b = D ∧ IsLucasWieferichPrime a b p}.Infinite := by
+theorem infinite_isWallSunSunPrime_of_disc_eq {K : Type*} [Field K] [NumberField K]
+    [IsQuadraticExtension ℚ K] [IsTotallyReal K] {D : ℤ} (hD : discr K = D) :
+    {p : ℕ | p.Prime ∧ Odd p ∧ ¬ (p : ℤ) ∣ D ∧ ∀ ε : (𝓞 K)ˣ,
+      (p : 𝓞 K) ^ 2 ∣ (ε : 𝓞 K) ^ (if J(D | p) = 1 then p - 1 else 2 * p + 2) - 1}.Infinite := by
   sorry
 
 end WallSunSun
