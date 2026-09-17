@@ -82,3 +82,14 @@ Frozen sources:
 - [https://www.erdosproblems.com/latex/295](https://www.erdosproblems.com/latex/295); retained record SHA-256 `81539914c3ae23a091ab4afacb0ae7e9bd84e01c8b56245e2a65f8ee8e11667d`.
 
 Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.
+
+## Coverage follow-up — 17 September 2026
+
+Both coverage gaps were closed by reading the missing evidence directly. The original run results above are unchanged; this addendum records what the retained sources could not show.
+
+**#5397.** Fox and Kleitman's own preprint (§6.3, p. 13) states Conjecture 5 "for each positive integer n", where n is the number of variables. The PR's positive-arity guard therefore matches the primary source, not only Green's account. Two points remain outside this PR's change. The primary conjecture covers prime-power moduli while the FC statement follows Green's prime restatement. The PR's new Rado page range, 424–480, is only partly supported: Crossref lists the article at 424–470, and pages 471–480 carry a separate record.
+
+**#5091.** The public record of [PALOMAR-2026-08-22-000001](https://data.palomar-registry.org/entries/PALOMAR-2026-08-22-000001-v1.json) is `registered`. It binds `williamjblair/lean-proofs@03729c9c`, the commit FC links, and records verification run 32546908101 with the pinned Comparator, Landrun, lean4export and NanoDa revisions. The registered Challenge states the set `S` of `FormalConjectures/ErdosProblems/730.lean` character for character. The registered Solution proves it with `Erdos730.FullDensityTheorem.pairSet_infinite`, so the kernel checked the bridge between `FullDensityCore.PairSet` and that set by definitional equality.
+
+This follow-up used no model calls. It is additional evidence for the two cases, not a rescoring of the packet.
+
