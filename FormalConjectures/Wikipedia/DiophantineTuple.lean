@@ -66,8 +66,8 @@ The property of being a Diophantine tuple is closed under subsets. [Du16]
 -/
 @[category textbook, AMS 11]
 theorem isDiophantineTuple_of_subset (s t : Finset R) (h1 : IsDiophantineTuple t)
-    (h2 : s ⊆ t) : IsDiophantineTuple s := by 
-  sorry
+    (h2 : s ⊆ t) : IsDiophantineTuple s :=
+  ⟨fun x hx => h1.1 x (h2 hx), fun x hx y hy hxy => h1.2 x (h2 hx) y (h2 hy) hxy⟩
 
 /-
 Conjectures / theorems about existence of integral Diophantine m-tuples for various values of m
@@ -154,7 +154,33 @@ Proof: suppose a 5-tuple $a < b < c < d_1 < d_2$ exists; then $d_1 = d_2$ by uni
 -/
 @[category textbook, AMS 11]
 theorem noIntegralDiophantineFiveTuple_of_hasUniqueExtensionOfForall :
-    HasUniqueExtensionOfForall → NoIntegralDiophantineFiveTuple := by sorry
+    HasUniqueExtensionOfForall → NoIntegralDiophantineFiveTuple := by
+  rintro h ⟨t, ht, hcard⟩
+  set g := t.orderEmbOfFin hcard with hg
+  have hm : StrictMono g := (t.orderEmbOfFin hcard).strictMono
+  have hmem : ∀ i, g i ∈ t := fun i => t.orderEmbOfFin_mem hcard i
+  have h01 : g 0 < g 1 := hm (by decide)
+  have h12 : g 1 < g 2 := hm (by decide)
+  have h23 : g 2 < g 3 := hm (by decide)
+  have h34 : g 3 < g 4 := hm (by decide)
+  have hs3 : ({g 0, g 1, g 2} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hs4 : ({g 0, g 1, g 2, g 3} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hs4' : ({g 0, g 1, g 2, g 4} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hc3 : ({g 0, g 1, g 2} : Finset ℕ).card = 3 :=
+    Finset.card_eq_three.mpr ⟨_, _, _, h01.ne, (h01.trans h12).ne, h12.ne, rfl⟩
+  obtain ⟨-, hu⟩ := h (g 0) (g 1) (g 2) hc3 (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs3)
+  have e1 : g 3 = regularExtension (g 0) (g 1) (g 2) := by
+    refine hu _ (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs4) ?_
+    simp only [max_eq_right h12.le]
+    omega
+  have e2 : g 4 = regularExtension (g 0) (g 1) (g 2) := by
+    refine hu _ (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs4') ?_
+    simp only [max_eq_right h12.le]
+    omega
+  omega
 
 /--
 `HasUniqueExtension` is known to hold for certain triples, including $\{1, 3, 8\}$: this is
