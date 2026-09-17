@@ -83,25 +83,11 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
         exporter.ROOT=source
         workspace=exporter.export(source/request['source_path'],request['declaration'],output/'generated',
                                   generator,request['source_commit'],request['source_repository'])
-        config=rr.read_json(workspace/'config.json')
-        record['semantic_assessment_required']=bool(config.get('definition_names'))
-        if config.get('enable_nanoda') is not True:raise Failure('kernel_policy','Both kernels are required',3)
         # Resolve only trusted generated dependencies before importing any candidate source.
         stage('Preparing isolated workspace dependencies')
         command(['lake','update'],cwd=workspace,timeout=600)
         command(['lake','exe','cache','get'],cwd=workspace,timeout=1200)
-        for name,raw in submissions.items():
-            path=workspace/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
-        result_path=output/'comparator-result.json'
-        args=['lake','env',os.environ['COMPARATOR_BIN'],'config.json','--result-json',str(result_path)]
-        record.update(submission_files=rr.descriptors(submissions),trusted_config_sha256=rr.digest((workspace/'config.json').read_bytes()),
-                      tool_hashes={k:rr.digest(Path(os.environ[k]).read_bytes()) for k in
-                      ('COMPARATOR_BIN','COMPARATOR_LANDRUN','COMPARATOR_LEAN4EXPORT','COMPARATOR_NANODA')})
-        stage('Checking submission policy and both kernels');log_location(output/'verifier.log')
-        value,code=invoke_comparator(args,workspace,output)
-        record.update(outcome={'pass':'pass','rejected':'fail','error':'error'}[value['outcome']],
-                      comparator=value,exit_code=code,
-                      policy_outcome=value['outcome'] if value['outcome']!='error' else 'not_evaluated')
+        check_workspace(workspace,submissions,output,record)
     except (Failure,ValueError,OSError,subprocess.SubprocessError,RuntimeError) as error:
         record.update(outcome='fail' if isinstance(error,Failure) and error.code==1 else 'error',
                       reason=getattr(error,'reason','execution_error'),detail=str(error))
@@ -117,6 +103,26 @@ def execute(request,output,toolkit,source,candidate,generator,producer='github_a
                 except OSError as error:
                     record.setdefault('cleanup_warnings',[]).append(str(error))
         record['finished_at']=now();save(output/'verification.json',record)
+    return record
+
+def check_workspace(workspace,submissions,output,record):
+    """Import only submitted Lean files into a prepared trusted workspace and run Comparator."""
+    output.mkdir(parents=True,exist_ok=True)
+    config=rr.read_json(workspace/'config.json')
+    record['semantic_assessment_required']=bool(config.get('definition_names'))
+    if config.get('enable_nanoda') is not True:raise Failure('kernel_policy','Both kernels are required',3)
+    for name,raw in submissions.items():
+        path=workspace/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
+    result_path=output/'comparator-result.json'
+    args=['lake','env',os.environ['COMPARATOR_BIN'],'config.json','--result-json',str(result_path)]
+    record.update(submission_files=rr.descriptors(submissions),trusted_config_sha256=rr.digest((workspace/'config.json').read_bytes()),
+                  tool_hashes={k:rr.digest(Path(os.environ[k]).read_bytes()) for k in
+                  ('COMPARATOR_BIN','COMPARATOR_LANDRUN','COMPARATOR_LEAN4EXPORT','COMPARATOR_NANODA')})
+    stage('Checking submission policy and both kernels');log_location(output/'verifier.log')
+    value,code=invoke_comparator(args,workspace,output)
+    record.update(outcome={'pass':'pass','rejected':'fail','error':'error'}[value['outcome']],
+                  comparator=value,exit_code=code,
+                  policy_outcome=value['outcome'] if value['outcome']!='error' else 'not_evaluated')
     return record
 
 def main():

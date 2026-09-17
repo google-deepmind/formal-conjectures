@@ -62,26 +62,43 @@ hosted authority. Changed binaries require explicit setup again.
 
 ## Freeze a suite
 
-A suite references the existing catalog. It does not contain a duplicate catalog,
-reference answers, or agent credentials. Its source must match the selected catalog.
+A suite names an exact source commit and exact declarations. It does not contain a duplicate
+catalog, reference answers or agent credentials. Its **core** is the source plus each case's
+`id`, `declaration` and source `path`; images, budgets and exposure notes are not part of it.
 
 ```json
 {
-  "schema_version": "fc.proof-suite.v1",
+  "schema_version": "fc.proof-suite.v2",
   "source": {"repository": "OWNER/REPO", "commit": "EXACT_SOURCE_COMMIT"},
   "execution": {
-    "solver_image": "registry/solver@sha256:DIGEST",
-    "verifier_image": "registry/verifier@sha256:DIGEST",
+    "solver_image": "registry/fc-eval-solver@sha256:DIGEST",
+    "verifier_image": "registry/fc-eval-verifier@sha256:DIGEST",
     "toolkit_commit": "EXACT_VERIFIER_COMMIT",
-    "agent_seconds": 600
+    "agent_seconds": 1800
   },
-  "cases": [{"id": "example", "declaration": "Exact.declaration", "exposure": "Describe prior development exposure"}]
+  "cases": [{"id": "example", "declaration": "Exact.declaration",
+             "path": "FormalConjectures/Example.lean", "exposure": "Describe prior development exposure"}]
 }
 ```
 
 This is a schema example, not an executable release command. Supply full 40-character
-commits and 64-character image digests. The exporter rejects floating tags, duplicate
-cases, missing exposure descriptions, and mismatching catalog revisions before export.
+commits and 64-character image digests. Floating tags, duplicate cases, unsafe paths and
+missing exposure descriptions are rejected.
+
+## Build suite images once
+
+Setup is not part of an attempt. Build two images per suite core, then freeze the suite with
+their digests:
+
+1. **Verifier suite image** (`eval-suite.Dockerfile`, target `verifier`), built on the pinned
+   verifier base. The trusted controller exports every case once, resolves one shared set of
+   pinned Lake packages with the Mathlib cache, builds each Challenge and records a case file
+   bound to the core digest. `/tests/test.sh` is part of the image.
+2. **Solver suite image** (target `solver`), built on the solver base. It receives only the
+   shared packages, read-only, so an agent's first `lake build` needs no network.
+
+`python3 -m conjectures.eval_suite core --suite suite.json` prints the core used as the build
+context. Build natively for each architecture; the AF_UNIX filter cannot load under emulation.
 
 ```sh
 conjectures eval export suite.json --format harbor --out tasks
@@ -89,25 +106,27 @@ uvx --from git+https://github.com/harbor-framework/harbor.git@191d1b989bbba1d77c
 conjectures eval summarize ./jobs --json
 ```
 
-Replace `YOUR_AGENT` and `YOUR_MODEL` with your existing harness configuration.
-The command isolates the exact Harbor revision used for contract qualification;
-it does not replace your installed Harbor. Older versions may not support separate
-verifier environments. Do not use an older harness that ignores that requirement.
-
-Export records a file-digest manifest and creates one Harbor task per declaration.
-The solver gets a workspace and instructions. Only `/app/Submission.lean` and
-`/app/Submission/` transfer to a fresh verifier environment. No solution keys are
-exported. Harbor owns model access, attempt counts, budgets and trial logs.
+Export copies each case workspace out of the verifier image, so solver and verifier grade the
+same Challenge, and fails if the image carries a different core or toolkit revision. It records
+a file-digest manifest and creates one Harbor task per declaration. Each task builds only a thin
+solver layer that adds its workspace. Only `/app/Submission.lean` and `/app/Submission/` transfer
+to the verifier, which runs from the prebuilt image with `network_mode = "no-network"`. Harbor
+owns model access, attempt counts, budgets and trial logs. Agent setup, such as installing an
+agent client, is outside `agent_seconds`.
 
 ## Verifier image contract
 
-Use Harbor task schema 1.4 with **separate verifier environments**. Both base images
-must be available by registry digest and support UID/GID 1000. The solver image needs
-the source's Lean toolchain and dependencies. The verifier image needs Python 3.11+,
-Git, elan, libseccomp2, the clean pinned toolkit at `/opt/fc`, and already-built tools
-at `/opt/fc-tools/{generator,comparator,landrun,nanoda}`. Build the compatible exporter
-in `/opt/fc/comparator/verifier`. The shared tool acquisition implementation can build
-these resources during image construction. Keep credentials and agent logs out of it.
+Use Harbor task schema 1.4 with **separate verifier environments**. Base images must be
+available by registry digest and support UID/GID 1000. The verifier base needs Python 3.11+,
+Git, elan, libseccomp2, the clean pinned toolkit at `/opt/fc`, and already-built tools at
+`/opt/fc-tools/{generator,comparator,landrun,nanoda}`, with the compatible exporter built in
+`/opt/fc/comparator/verifier`. A suite verifier image adds `/opt/fc-suite` and `/tests/test.sh`.
+Keep credentials and agent logs out of both.
+
+At verification the controller checks the task's suite and core digests against the image,
+copies the prepared case workspace into container-local storage, links the read-only shared
+packages, imports only the submitted Lean files and runs Comparator inside Landrun. Build
+outputs never go to the mounted log directory.
 
 The grader adds an inherited AF_UNIX seccomp restriction before running the same
 trusted FC controller and Comparator. Existing container restrictions remain in

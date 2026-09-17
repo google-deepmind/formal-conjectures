@@ -1,4 +1,3 @@
-import contextlib
 import copy
 import tempfile
 import tomllib
@@ -6,7 +5,7 @@ import unittest
 from types import SimpleNamespace
 from pathlib import Path
 from unittest.mock import patch
-from conjectures import evaluation, eval_verifier, core
+from conjectures import evaluation, eval_suite, eval_verifier, core
 
 
 class EvaluationTests(unittest.TestCase):
@@ -29,68 +28,99 @@ class EvaluationTests(unittest.TestCase):
         return {'schema_version':evaluation.SCHEMA,'source':{'repository':'fixture/fc','commit':'a'*40},
                 'execution':{'solver_image':'example/solver@sha256:'+'b'*64,'verifier_image':'example/verifier@sha256:'+'c'*64,
                              'toolkit_commit':'d'*40,'agent_seconds':600},
-                'cases':[{'id':'plain','declaration':'Fixture.plain','exposure':'Development fixture'}]}
+                'cases':[{'id':'plain','declaration':'Fixture.plain','path':'FormalConjectures/Example.lean',
+                          'exposure':'Development fixture'}]}
 
-    def test_frozen_suite_rejects_floating_pins_duplicate_tasks_and_missing_exposure(self):
+    def test_frozen_suite_rejects_floating_pins_duplicate_tasks_and_missing_fields(self):
         suite=self.suite();evaluation.validate_suite(suite)
         mutations=[lambda x:x['execution'].update(solver_image='image:latest'),
                    lambda x:x['cases'].append(x['cases'][0]),lambda x:x['cases'][0].pop('exposure'),
+                   lambda x:x['cases'][0].pop('path'),lambda x:x['cases'][0].update(path='../escape.lean'),
                    lambda x:x['source'].update(commit='main')]
         for mutate in mutations:
             value=copy.deepcopy(suite);mutate(value)
             with self.assertRaises(ValueError):evaluation.validate_suite(value)
 
-    def test_harbor_task_has_separate_verifier_and_only_submission_artifacts(self):
+    def test_suite_core_excludes_images_budgets_and_exposure(self):
+        suite=self.suite();value=eval_suite.core(suite)
+        changed=copy.deepcopy(suite);changed['execution']['agent_seconds']=60;changed['cases'][0]['exposure']='other'
+        self.assertEqual(eval_suite.core_digest(value),eval_suite.core_digest(eval_suite.core(changed)))
+        changed['cases'][0]['declaration']='Fixture.other'
+        self.assertNotEqual(eval_suite.core_digest(value),eval_suite.core_digest(eval_suite.core(changed)))
+
+    def test_harbor_task_uses_prebuilt_offline_verifier_and_only_submission_artifacts(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);(root/'environment').mkdir()
-            target={'id':'plain','source':{'declaration':'Fixture.plain'},'suite_sha256':'a'*64,'exposure':'known'}
-            evaluation.write_task(root,target,self.suite()['execution'])
+            target={'id':'plain','source':{'declaration':'Fixture.plain'},'suite_sha256':'a'*64,'core_sha256':'e'*64,
+                    'exposure':'known','semantic_assessment_required':False}
+            execution=self.suite()['execution']
+            evaluation.write_task(root,target,execution)
             config=tomllib.loads((root/'task.toml').read_text())
             self.assertEqual(config['verifier']['environment_mode'],'separate')
+            self.assertEqual(config['verifier']['environment']['docker_image'],execution['verifier_image'])
+            self.assertEqual(config['verifier']['environment']['network_mode'],'no-network')
+            self.assertEqual(config['verifier']['env'],{'FC_EVAL_CASE':'plain','FC_EVAL_SUITE_SHA256':'a'*64,'FC_EVAL_CORE_SHA256':'e'*64})
             self.assertEqual(config['artifacts'],['/app/Submission.lean','/app/Submission'])
             self.assertFalse((root/'solution').exists())
-            self.assertIn('PYTHONPATH=/opt/fc/toolkit',(root/'tests/test.sh').read_text())
+            self.assertIn('/opt/fc-suite/packages',(root/'environment/Dockerfile').read_text())
+            self.assertIn(execution['solver_image'],(root/'environment/Dockerfile').read_text())
+            self.assertFalse((root/'tests/Dockerfile').exists())
 
-    def test_infrastructure_failure_never_emits_zero_reward(self):
+    def test_verifier_binding_failures_never_emit_a_reward(self):
         with tempfile.TemporaryDirectory() as d:
-            root=Path(d);target=root/'target.json'
-            core.save(target,{'schema_version':'fc.proof-task.v1','id':'case','suite_sha256':'a'*64})
+            root=Path(d);suite=root/'suite';value=eval_suite.core(self.suite())
+            digest=eval_suite.core_digest(value)
+            core.save(suite/'suite-core.json',value)
+            core.save(suite/'cases/plain/target.json',{'schema_version':eval_suite.CASE,'id':'plain','core_sha256':digest,
+                                                       'source':{},'toolkit_commit':'d'*40,'semantic_assessment_required':False})
+            cases=[('plain','a'*64,'f'*64,'suite_binding_mismatch'),('plain',None,digest,'invalid_input'),
+                   ('../escape','a'*64,digest,'invalid_input')]
+            for index,(case,suite_sha,core_sha,reason) in enumerate(cases):
+                with self.subTest(reason=reason,case=case):
+                    out=root/f'result-{index}'
+                    with patch.object(eval_verifier,'restrict',side_effect=AssertionError('restriction must follow binding checks')):
+                        result=eval_verifier.run(case,root,out,suite_sha,core_sha,suite=suite)
+                    self.assertEqual(result['status'],'error')
+                    self.assertFalse((out/'reward.txt').exists())
+            out=root/'result-sandbox'
             with patch.object(eval_verifier,'restrict',side_effect=core.Failure('unqualified_executor','missing sandbox',3)):
-                result=eval_verifier.run(target,root,root/'result')
-            self.assertEqual(result['status'],'error')
-            self.assertFalse((root/'result/reward.txt').exists())
-            self.assertEqual(evaluation.summarize(root)['counts']['error'],1)
-            with self.assertRaises(core.Failure):eval_verifier.run(target,root,root/'result')
+                result=eval_verifier.run('plain',root,out,'a'*64,digest,suite=suite)
+            self.assertEqual((result['status'],result['reason']),('error','unqualified_executor'))
+            self.assertFalse((out/'reward.txt').exists())
+            self.assertEqual(evaluation.summarize(out)['counts']['error'],1)
+            with self.assertRaises(core.Failure):eval_verifier.run('plain',root,out,'a'*64,digest,suite=suite)
 
-    def test_export_is_atomic_and_does_not_create_operator_runs(self):
-        from conjectures import proof,catalog
+    def test_export_uses_image_workspaces_and_rejects_another_suite_core(self):
+        from conjectures import proof
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);suite=self.suite();suite_path=root/'suite.json';core.save(suite_path,suite)
-            data={'schemaVersion':2,'provenance':{'source':suite['source']},'problems':[
-                {'theorem':'Fixture.plain','module':'FormalConjectures.Example','statement':'True'}]}
-            args=SimpleNamespace(suite=suite_path,out=root/'tasks',catalog=None)
-            prepared=[]
-            @contextlib.contextmanager
-            def prepared_source(repo,repository,revision):
-                prepared.append((repository,revision));yield root/'checkout'
-            def generate(repo,problem,repository,revision,artifact,source=None):
-                self.assertEqual(repository,suite['source']['repository']);self.assertEqual(revision,'a'*40)
-                self.assertEqual(source,root/'checkout')
-                workspace=artifact/'workspace';workspace.mkdir(parents=True)
-                core.save(workspace/'fc-provenance.json',{'source':{'repository':'https://github.com/fixture/fc.git',
-                    'commit':revision,'module':problem['module'],'path':problem['githubPath'],'declaration':problem['theorem']}})
-                core.save(workspace/'config.json',{'definition_names':['answer']})
-                (workspace/'Submission.lean').write_text('def answer := sorry')
-                return workspace
-            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=generate),patch.object(proof,'prepared_source',prepared_source),patch.object(proof,'start_run',side_effect=AssertionError('No operator run')):
-                value=evaluation.export(None,args)
-            # One checkout serves every case at the frozen source revision.
-            self.assertEqual(prepared,[(suite['source']['repository'],'a'*40)])
-            target=core.rr.read_json(args.out/'plain/tests/target.json')
-            self.assertTrue(target['semantic_assessment_required'])
+            value=eval_suite.core(suite);digest=eval_suite.core_digest(value)
+            def image_files(image,paths,destination,core_value=value):
+                self.assertEqual(image,suite['execution']['verifier_image'])
+                core.save(destination/'suite-core.json',core_value)
+                baked=destination/'cases/plain'
+                core.save(baked/'target.json',{'schema_version':eval_suite.CASE,'id':'plain','core_sha256':digest,
+                    'source':{'repository':'https://github.com/fixture/fc.git','commit':'a'*40,'path':'FormalConjectures/Example.lean',
+                              'module':'FormalConjectures.Example','declaration':'Fixture.plain'},
+                    'toolkit_commit':'d'*40,'semantic_assessment_required':True})
+                core.save(baked/'workspace/fc-provenance.json',{'source':{'declaration':'Fixture.plain','module':'FormalConjectures.Example','repository':'https://github.com/fixture/fc.git','commit':'a'*40,'path':'FormalConjectures/Example.lean'}})
+                (baked/'workspace/Submission.lean').write_text('def answer := sorry')
+                (baked/'workspace/.lake/build').mkdir(parents=True)
+            args=SimpleNamespace(suite=suite_path,out=root/'tasks')
+            with patch.object(evaluation,'image_files',side_effect=image_files),patch.object(proof,'start_run',side_effect=AssertionError('No operator run')):
+                evaluation.export(None,args)
+            config=tomllib.loads((args.out/'plain/task.toml').read_text())
+            self.assertTrue(config['metadata']['semantic_assessment_required'])
+            self.assertTrue((args.out/'plain/environment/workspace/Submission.lean').is_file())
+            self.assertFalse((args.out/'plain/environment/workspace/.lake').exists())
             self.assertTrue((args.out/'manifest.json').is_file())
             self.assertFalse(list(args.out.rglob('.conjectures')))
-            args.out=root/'failed'
-            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=core.Failure('export_failed','fixture',3)),patch.object(proof,'prepared_source',prepared_source):
-                with self.assertRaises(core.Failure):evaluation.export(None,args)
+            other={**value,'cases':[{**value['cases'][0],'declaration':'Fixture.other'}]}
+            args.out=root/'mismatch'
+            with patch.object(evaluation,'image_files',side_effect=lambda i,p,dest:image_files(i,p,dest,other)):
+                with self.assertRaises(core.Failure) as caught:evaluation.export(None,args)
+            self.assertEqual(caught.exception.reason,'suite_image_mismatch')
             self.assertFalse(args.out.exists())
+
+
+if __name__=='__main__':unittest.main()
