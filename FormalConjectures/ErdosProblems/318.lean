@@ -99,11 +99,13 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
     have : p ≠ 1 := by grind
     simp_all [neg_div, zero_lt_iff, (not_iff_not.2 mem_singleton_iff).1 (hs hp).2]
 
-/-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
-[Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
+/-- For any infinite set `A` containing exactly one positive even number, `A` does not have
+property `P₁`. Sattler [Sa82] credits this observation to Erdős, who presumably found this after
+[ErGr80]. The element `0` is not counted, since `P₁` ignores it, and the infinitude hypothesis
+excludes degenerate sets such as `{2}`, on which `P₁` holds vacuously. -/
 @[category research solved, AMS 11]
-theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
-    ¬ P₁ A := by
+theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : A.Infinite)
+    (hA' : {n | n ∈ A \ {0} ∧ Even n}.ncard = 1) : ¬ P₁ A := by
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.

@@ -38,21 +38,31 @@ open Finset
 def IsInterval (I : Finset ℕ) : Prop :=
   ∃ a b : ℕ, I = Icc a b
 
-/-- A collection of intervals as in Erdős Problem 363. -/
+/-- A collection of intervals as in Erdős Problem 363: disjoint intervals of positive integers,
+each of size at least `4`, whose product is a square. Intervals containing `0` are excluded, since
+their product is `0`, which is a square. -/
 def IsValidCollection (S : List (Finset ℕ)) : Prop :=
   (∀ I ∈ S, IsInterval I) ∧
   (∀ I ∈ S, 4 ≤ I.card) ∧
+  (∀ I ∈ S, 0 ∉ I) ∧
   S.Pairwise Disjoint ∧
   IsSquare ((S.map (fun I => ∏ m ∈ I, m)).prod)
 
 /--
-Is it true that there are only finitely many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert \geq 4$ for $1\leq i\leq n$ such that$$\prod_{1\leq i\leq n}\prod_{m\in I_i}m$$is a square?
+Is it true that, for each fixed $n$ and fixed sizes $k_1,\ldots,k_n \geq 4$, there are only finitely
+many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert = k_i$ for
+$1\leq i\leq n$ such that$$\prod_{1\leq i\leq n}\prod_{m\in I_i}m$$is a square?
 
-This is false: Ulas [Ul05] constructed infinitely many such collections.
+The number of intervals and their sizes are fixed: the list `ks` of sizes determines both. Without
+this restriction finiteness fails, by a result of Skałba (see [Ul05]).
+
+This is false: Ulas [Ul05] constructed infinitely many such collections with $n = 4$ and
+$k_1 = \cdots = k_4 = 4$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos363.lean"]
-theorem erdos_363 : answer(False) ↔ {S : List (Finset ℕ) | IsValidCollection S}.Finite := by
+theorem erdos_363 : answer(False) ↔ ∀ ks : List ℕ,
+    {S : List (Finset ℕ) | IsValidCollection S ∧ S.map Finset.card = ks}.Finite := by
   sorry
 
 end Erdos363
