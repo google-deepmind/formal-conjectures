@@ -47,7 +47,7 @@ def core_digest(value):
 
 def packages(workspace):
     manifest=rr.read_json(workspace/'lake-manifest.json')
-    return sorted((p.get('name'),p.get('url'),p.get('rev')) for p in manifest.get('packages',[]))
+    return tuple(sorted((p.get('name'),p.get('url'),p.get('rev')) for p in manifest.get('packages',[])))
 
 
 def prepare(core_path,out,toolkit,generator):
@@ -64,8 +64,10 @@ def prepare(core_path,out,toolkit,generator):
             stage('Exporting '+case['declaration'])
             problem={'theorem':case['declaration'],'githubPath':case['path'],'module':''}
             workspaces[case['id']]=proof.generate(None,problem,repository,commit,out/'cases'/case['id'],generator,source=source)
-    pins={tuple(packages(ws)) for ws in workspaces.values()}
-    if len(pins)!=1:raise Failure('package_pins_differ','Suite cases require different package revisions.',3)
+    # Every case must request the same pinned dependencies before they can share one package directory.
+    requests={json.dumps(rr.read_json(out/'cases'/case_id/'request.json')['dependencies'],sort_keys=True) for case_id in workspaces}
+    if len(requests)!=1:raise Failure('package_pins_differ','Suite cases require different package revisions.',3)
+    resolved=None
     for index,(case_id,workspace) in enumerate(workspaces.items()):
         (workspace/'.lake').mkdir(exist_ok=True)
         (workspace/'.lake/packages').symlink_to(shared)
@@ -74,8 +76,9 @@ def prepare(core_path,out,toolkit,generator):
         if index==0:command(['lake','exe','cache','get'],cwd=workspace,timeout=1800)
         stage('Building the trusted Challenge for '+case_id)
         command(['lake','build','Challenge'],cwd=workspace,timeout=3600)
-        if tuple(packages(workspace))!=next(iter(pins)):
-            raise Failure('package_pins_changed','Dependency resolution changed a pinned package.',3)
+        resolved=resolved or packages(workspace)
+        if packages(workspace)!=resolved:
+            raise Failure('package_pins_changed','Dependency resolution differs between suite cases.',3)
         provenance=rr.read_json(workspace/'fc-provenance.json')
         config=rr.read_json(workspace/'config.json')
         save(out/'cases'/case_id/'target.json',{'schema_version':CASE,'id':case_id,'core_sha256':digest,
