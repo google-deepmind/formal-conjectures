@@ -19,7 +19,10 @@ import FormalConjecturesUtil
 /-!
 # Erdős Problem 10
 
-*Reference:* [erdosproblems.com/10](https://www.erdosproblems.com/10)
+*References:*
+- [erdosproblems.com/10](https://www.erdosproblems.com/10)
+- [Cr71] Crocker, R., On the sum of a prime and of two powers of two. Pacific J. Math. 36 (1971),
+  103-107.
 -/
 
 namespace Erdos10
@@ -86,9 +89,16 @@ theorem erdos_10.variants.two_pows :
 Bogdan Grechuk has observed that $1117175146$ is not the sum of a prime and at most $3$
 powers of $2$, and pointed out that parity considerations, coupled with the fact that there
 are many integers not the sum of a prime and $2$ powers of $2$ suggest that there exist
-infinitely many even integers which are not the sum of a prime and at most $3$ powers of $2$).
+infinitely many even integers which are not the sum of a prime and at most $3$ powers of $2$.
+
+This follows from Crocker's construction [Cr71] of infinitely many odd $t \equiv 15 \pmod{16}$
+which are not the sum of a prime and $2$ powers of $2$: each such $t + 1$ is even and not the
+sum of a prime and at most $3$ powers of $2$.
+
+The linked Lean formalisation is by Daryxx, see comment section.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://gist.github.com/DaryxXx/e112c74cc648b08a420b0959315cf65f/4b347897ff1811f1db1d82594c581f54b8f31b7d#file-main-lean-L2287"]
 theorem erdos_10.variants.grechuk :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 3 := by
   sorry

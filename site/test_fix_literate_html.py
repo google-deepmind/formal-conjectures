@@ -4,8 +4,40 @@
 import os
 import tempfile
 import unittest
+from urllib.parse import parse_qs, urljoin, urlsplit
 
 import fix_literate_html as fix
+
+
+class BreadcrumbTest(unittest.TestCase):
+
+    def test_parent_links_resolve_to_filtered_modules_under_any_base_path(self):
+        html = '''<ol class="breadcrumbs" aria-label="Breadcrumb">
+<li><a href="FormalConjectures/">FormalConjectures</a></li>
+<li><a href="FormalConjectures/Wikipedia/">Wikipedia</a></li>
+<li><span class="current">ABC</span></li></ol>'''
+        fixed = fix.fix_breadcrumbs(html)
+        for base in ('https://example.com/', 'https://example.com/formal-conjectures/'):
+            page = urljoin(base, 'src/FormalConjectures/Wikipedia/ABC/')
+            verso_base = urljoin(page, '../../../')
+            for prefix in ('FormalConjectures.', 'FormalConjectures.Wikipedia.'):
+                href = '../modules/?q=' + prefix
+                self.assertIn(f'href="{href}"', fixed)
+                target = urlsplit(urljoin(verso_base, href))
+                self.assertEqual(target.path, urlsplit(urljoin(base, 'modules/')).path)
+                self.assertEqual(parse_qs(target.query), {'q': [prefix]})
+        self.assertIn('<span class="current">ABC</span>', fixed)
+        self.assertEqual(fix.fix_breadcrumbs(fixed), fixed)
+
+    def test_nested_escaped_names_and_non_breadcrumb_links(self):
+        link = '<a href="FormalConjectures/Arxiv/%C2%AB0911.2077%C2%BB/">Paper</a>'
+        html = f'<nav>{link}</nav><ol class="breadcrumbs"><li>{link}</li></ol>'
+        fixed = fix.fix_breadcrumbs(html)
+        self.assertIn(f'<nav>{link}</nav>', fixed)
+        self.assertIn(
+            'href="../modules/?q=FormalConjectures.Arxiv.%C2%AB0911.2077%C2%BB."',
+            fixed,
+        )
 
 
 class FixHtmlFileTest(unittest.TestCase):

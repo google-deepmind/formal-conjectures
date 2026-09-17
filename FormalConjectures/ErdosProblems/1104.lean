@@ -34,36 +34,32 @@ noncomputable def triangleFreeMaxChromatic (n : ℕ) : ℕ :=
 
 /--
 Lower bound (Hefty–Horn–King–Pfender 2025).
-There exists a constant $c_1 \in (0,1]$ such that, for sufficiently large $n$,
 $$
-c_1 \sqrt{\frac{n}{\log n}} \le f(n),
+(1 - o(1)) \sqrt{\frac{n}{\log n}} \le f(n),
 $$
 where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1104.variants.lower :
-    ∃ c₁ : ℝ, 0 < c₁ ∧ c₁ ≤ 1 ∧
-      (∀ᶠ n : ℕ in atTop,
-        c₁ * Real.sqrt (n : ℝ) / Real.sqrt (Real.log (n : ℝ))
-          ≤ (triangleFreeMaxChromatic n : ℝ)) := by
+    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+      (1 - ε) * Real.sqrt (n : ℝ) / Real.sqrt (Real.log (n : ℝ))
+        ≤ (triangleFreeMaxChromatic n : ℝ) := by
   sorry
 
 /--
 Upper bound (Davies–Illingworth 2022).
-There exists a constant $c_2 \ge 2$ such that, for sufficiently large $n$,
 $$
-f(n) \le c_2 \sqrt{\frac{n}{\log n}},
+f(n) \le (2 + o(1)) \sqrt{\frac{n}{\log n}},
 $$
 where $f(n)$ denotes the maximum chromatic number of a triangle-free graph on
 $n$ vertices, formalized as `triangleFreeMaxChromatic n`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1104.variants.upper :
-    ∃ c₂ : ℝ, 2 ≤ c₂ ∧
-      (∀ᶠ n : ℕ in atTop,
-        (triangleFreeMaxChromatic n : ℝ)
-          ≤ c₂ * Real.sqrt (n : ℝ) / Real.sqrt (Real.log (n : ℝ))) := by
+    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+      (triangleFreeMaxChromatic n : ℝ)
+        ≤ (2 + ε) * Real.sqrt (n : ℝ) / Real.sqrt (Real.log (n : ℝ)) := by
   sorry
 
 end Erdos1104

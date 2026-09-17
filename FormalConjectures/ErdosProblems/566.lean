@@ -39,9 +39,8 @@ is $G$ Ramsey size linear?
 @[category research open, AMS 5]
 theorem erdos_566 : answer(sorry) ↔
     ∀ (p : ℕ) (G : SimpleGraph (Fin p)),
-      -- G is sparse: every induced subgraph on k ≥ 2 vertices has ≤ 2k - 3 edges
       (∀ S : Finset (Fin p), 2 ≤ S.card → (G.induce S).edgeSet.ncard ≤ 2 * S.card - 3) →
-      IsRamseySizeLinear G := by
+      G.IsRamseySizeLinear := by
   sorry
 
 end Erdos566

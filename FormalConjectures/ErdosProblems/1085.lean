@@ -76,13 +76,13 @@ theorem erdos_1085.variants.upper_d4_erdos (hd : 4 ≤ d) :
   sorry
 
 /-- Erdős and Pach showed that, for $d \ge 5$ odd, there exist constants $c_1(d), c_2(d) > 0$
-such that $\frac{p - 1}{2p} n^2 - c_1 n^{4/3} ≤ f_d(n) \le \frac{p - 1}{2p} n^2 + c_2 n^{4/3}$ where
+such that $\frac{p - 1}{2p} n^2 + c_1 n^{4/3} \le f_d(n) \le \frac{p - 1}{2p} n^2 + c_2 n^{4/3}$ where
 $p = \lfloor\frac d2\rfloor$. -/
 @[category research solved, AMS 52]
 theorem erdos_1085.variants.upper_lower_d5_odd (hd : 5 ≤ d) (hd_odd : Odd d) :
     ∃ c₁ > (0 : ℝ), ∃ c₂ : ℝ, ∀ᶠ n in atTop,
       ↑(d / 2 - 1) / (2 * ↑(d / 2)) * n ^ 2 + c₁ * n ^ (4 / 3 : ℝ) ≤ f d n ∧
-      f d n ≤ ↑(d / 2 - 1) / ↑(d / 2) * n ^ 2 + c₂ * n ^ (4 / 3 : ℝ) := by
+      f d n ≤ ↑(d / 2 - 1) / (2 * ↑(d / 2)) * n ^ 2 + c₂ * n ^ (4 / 3 : ℝ) := by
   sorry
 
 end Erdos1085
