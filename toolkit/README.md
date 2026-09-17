@@ -1,9 +1,5 @@
 # Formal Conjectures toolkit
 
-This focused branch implements review, catalog, and checks. Proof and evidence
-commands arrive in their dependent PRs; release-wheel examples install the combined
-fork release candidate. Unavailable operations report `unavailable_command`.
-
 `conjectures` browses FC problems, prepares contribution reviews for your existing
 agent, and retains reports and proof evidence. It needs no AI login or model
 configuration. Your agent conducts semantic review; the CLI handles deterministic
@@ -105,6 +101,10 @@ not inherit each other's proof results. Recorded evidence and maintainer accepta
 are separate.
 
 ## Review a contribution
+
+For portable skill installation, standalone proof workspaces and proof-evaluation
+exports, see [Agents and proof evaluations](EVALUATIONS.md). These additions reuse
+the same exporter and verification records; the external agent owns model access.
 
 Run inside your FC checkout, or pass `--repo /path/to/formal-conjectures`.
 Ask your existing agent:
@@ -224,10 +224,24 @@ destination. Inspect the files before publishing. Raw snapshots, complete source
 documents, invocation logs, and private artifacts stay local. Reports remain attributed
 to their producer; they do not confer maintainer acceptance.
 
-`--post` archives first and rechecks PR head/base and request ordering before posting
-one advisory summary. `review finish --post` uses that same path. If publication fails,
-the review remains available; retry publication separately. Historical records retain
-their original applicability.
+`--post` archives first, then queues the designated publisher in the repository that
+owns the PR. Configure it explicitly with `setup evidence --publisher-repository
+OWNER/REPO --publisher-ref COMMIT` alongside the archive options above. The revision
+must have a tag and match the bundled workflow. Without a configured publisher,
+`--post` returns exit 4 and retains the archive.
+
+The owning repository must install `contribution-publisher.yml` and set
+`FC_PUBLISH_ENABLED=true`, `FC_EVIDENCE_REPOSITORY`, and `FC_EVIDENCE_BRANCH`.
+Maintainers control upstream installation. The workflow uses its own `GITHUB_TOKEN`,
+serializes requests per PR without cancelling an active publisher, and rechecks
+head/base and ordering before updating its own bot comment. Existing operator
+comments remain history. No local command writes comments directly.
+
+Use the returned `conjectures run wait` command to retrieve the workflow/comment
+receipt. Pending requests displaced by GitHub are reported as cancelled; retry them
+explicitly. `run logs` exposes the retained publisher log. `review finish --post`
+uses the same path. Publication never changes the retained mathematical outcome.
+Later PR changes make the report historical; comments always name reviewed revisions.
 
 ## Configuration, scripts, and help
 
@@ -292,9 +306,27 @@ or `ai`), `name`, `method`, `scope` (strings), `independence` (`independent`,
 identity are checked. Attribution and independence remain self-reported, not quality scores
 or proof of independent review. The review request/report schemas are unchanged.
 
-## Opt-in Actions preparation
+Published evidence is read through its immutable archive revision, manifest, and artifact
+hashes before displaying outcomes. `show` distinguishes not configured, no matching records,
+unavailable transport, and invalid evidence. `--offline` revalidates a retained archive cache;
+a failed refresh never silently substitutes another source. Validation establishes integrity
+and input bindings, not producer authenticity or mathematical correctness.
 
-The same CLI can prepare an authorized PR review in GitHub Actions. See the
-[workflow guide](../scripts/review-report/WORKFLOW.md). It remains disabled until
-maintainers configure a trusted image and explicitly enable it. Existing agents
-complete the retained draft; the workflow has no model or publication job.
+Site and board builds use `python -m conjectures.projections --repository OWNER/REPO
+--branch DATA_BRANCH --out evidence.json` (one command). Optional `--work work.json` joins
+an `fc.work-context.v1` snapshot by repository and PR number, then compares exact head/base
+revisions. Queue waiting times and classification remain owned by queueboard. No fuzzy
+matching or automatic duplicate closure is performed.
+
+
+`show` also reads the FC site's published work snapshot and lists open PRs that touch the
+same module, with its observation time. This is related work, not a declaration-equivalence
+claim. `--offline` uses only retained data. Site maintainers may enable these projections
+with `FC_EVIDENCE_REPOSITORY`, `FC_EVIDENCE_BRANCH`, and `FC_WORK_CONTEXT_URL`; absent
+configuration is displayed explicitly. This implementation does not enable upstream feeds.
+
+## Delivery and tracking
+
+[The delivery map](https://github.com/williamjblair/formal-conjectures/blob/codex/fc-toolkit-integration/toolkit/DELIVERY.md) lists the four consolidated follow-ups and their
+prerequisites. Issue #4394 owns the roadmap; #5376 tracks toolkit acceptance and
+#5377 tracks website handoff. Open drafts mean active work, not completed release gates.

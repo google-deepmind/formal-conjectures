@@ -18,28 +18,25 @@ same defect reversed. The category linter warns when a `research open` statement
 `research solved` declaration records a known result and is sanctioned. An unfilled
 `answer(sorry)` *slot* under `research solved` is different: `CONTRIBUTING.md` says the
 slot "should be replaced by `answer(True)` or `answer(False)`", so until then the
-declaration records no answer. Raise it as a question, not a finding, unless the PR under
-review introduces it — it is a known backlog (#4965 tracks the class), and count the
-class in the tree you are reviewing before you say how common it is.
+declaration records no answer. For a PR review, distinguish introduced or changed slots from
+pre-existing ones. Report an actionable discrepancy in scope; do not turn unrelated unfinished
+answers into a backlog survey. Follow the repository's current answer policy.
 
 **What a `formal_proof` link shows.** Read any existing verification evidence first. Follow
 [`../references/verifying-proofs.md`](../references/verifying-proofs.md) to check its statement,
 proof and bridge revisions, verifier policy and outcome. A `comparator.json` is configuration,
 not a result. A pass applies only to the recorded inputs and permitted axioms; it does not
-settle source fidelity or whether an answer is meaningful. Legacy links have these known traps:
+settle source fidelity or whether an answer is meaningful. Check these relationships:
 
 - *The proof assumes something unproved.* A `sorry`-free file can take an unproved result
-  as a hypothesis; `#print axioms` does not show it. Erdős 427, 750 and 1141 each linked
-  such a proof (Shiu, Stiebitz, Pollack + Mertens); these now use
-  `conditional formal_proof ... assuming <decl>` (#4881).
-- *The link names no file.* A repo root, commit page or discussion thread shows no file
-  to open; a link checker accepts it and a reader finds nothing. 18 links were like this
-  (#4895). Finding the proof yourself does not excuse the link: the reader gets the link,
-  not your investigation, so a root link stays a finding even when its repository does
-  contain the proof — name the exact file and declaration the link should point at.
+  as a hypothesis; `#print axioms` does not show it. Check that the actual hypotheses are
+  represented by the conditional-proof metadata required by `PROOFS.md`.
+- *The proof cannot be located reproducibly.* Inspect what the link and accompanying metadata
+  identify under `PROOFS.md`. A reachable repository or discussion page alone is not verification.
+  When the locator is insufficient, explain what is missing and give the exact file, declaration
+  and revision if established. Do not infer an invalid proof solely from the URL's shape.
 - *The kind is wrong.* A proof in this repository uses
-  `formal_proof using formal_conjectures`; Erdős 316 and 399 linked their own file with
-  the wrong kind (#4883).
+  `formal_proof using formal_conjectures`; check the linked proof's actual location and system.
 
 Examine the declaration, not the file: a `sorry` on some other statement in the same
 file is normal.

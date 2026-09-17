@@ -1,7 +1,7 @@
 name: Toolkit package qualification
 on:
   pull_request:
-    paths: ['toolkit/**', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'scripts/check_toolkit_dist.py', '.agents/skills/formal-conjectures-review/**', '.github/workflows/toolkit-release.yml']
+    paths: ['toolkit/**', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'scripts/check_toolkit_dist.py', '.agents/skills/formal-conjectures-review/**', '.agents/skills/conjectures/**', '.github/workflows/toolkit-release.yml']
   push:
     tags: ['toolkit-v*']
   workflow_dispatch:

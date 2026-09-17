@@ -38,15 +38,19 @@ def doctor(root,cfg,capability=None, catalog_url=None):
     review=[];verify=[];evidence=[]
     if not root:
         review.append('Enter an FC checkout or pass --repo PATH.')
-        verify.append('Enter the FC checkout used for init, or pass --repo PATH.')
         evidence.append('Enter the FC checkout containing the run, or pass --repo PATH.')
     if not docker:review.append('Start Docker; installation: https://docs.docker.com/get-started/get-docker/')
     if not image_ready:review.append('Run conjectures setup review to build/select the pinned review image.')
     if not authenticated:
         review.append('For PR access, run gh auth login (or select your existing CONJECTURES_GH wrapper). Local changes can still be prepared.')
-        verify.append('Run gh auth login or select your existing CONJECTURES_GH wrapper.')
+        if (cfg.get('executor') or {}).get('kind')!='linux':verify.append('Run gh auth login or select your existing CONJECTURES_GH wrapper.')
         evidence.append('Run gh auth login or select your existing CONJECTURES_GH wrapper.')
     if not cfg.get('executor'):verify.append('Run conjectures setup verify --repository OWNER/REPO --ref COMMIT.')
+    elif cfg['executor'].get('kind')=='linux':
+        try:
+            from .linux_executor import validate
+            validate(cfg['executor'])
+        except (Failure,OSError,subprocess.SubprocessError) as error:verify.append(str(error))
     if not cfg.get('evidence'):evidence.append('Run conjectures setup evidence --repository OWNER/REPO --branch BRANCH.')
     if not tools['lake'] or not tools['lean']:verify.append('Install the checkout’s Lean toolchain with elan before initializing a proof workspace.')
     from .catalog import load
@@ -137,7 +141,18 @@ def setup(root,args):
         receipt={'catalog_origin':data['catalog_origin'],'provenance':data['provenance']}
     elif args.operation=='review':
         image,receipt=review_image(args.source_ref,args.image);update={'image':image}
+    elif args.operation=='verify' and getattr(args,'local',False):
+        if args.repository or args.ref or not args.toolkit or not args.tools:
+            raise Failure('invalid_arguments','Use --local --toolkit PATH --tools PATH without --repository/--ref.')
+        from .linux_executor import profile
+        if args.build_tools:
+            from .tool_acquisition import build
+            build(args.toolkit,args.tools)
+        update={'executor':profile(args.toolkit,args.tools)}
+        receipt={'method':'local_linux','qualification':update['executor']['qualification']}
     else:
+        if args.operation=='verify' and (not args.repository or not args.ref or getattr(args,'toolkit',None) or getattr(args,'tools',None) or getattr(args,'build_tools',False)):
+            raise Failure('invalid_arguments','Use --repository OWNER/REPO --ref COMMIT, or --local --toolkit PATH --tools PATH.')
         public_repo(args.repository)
         if args.operation=='verify':
             import importlib.util
@@ -156,6 +171,14 @@ def setup(root,args):
             if args.branch==github(f'repos/{args.repository}')['default_branch']:
                 raise Failure('not_evidence_branch','Choose an existing data-only branch, not the default code branch.',4)
             update={'evidence':{'repository':args.repository,'branch':args.branch}}
+            publisher_repo=getattr(args,'publisher_repository',None);publisher_ref=getattr(args,'publisher_ref',None)
+            if bool(publisher_repo)!=bool(publisher_ref):raise Failure('publisher_configuration','Use both --publisher-repository and --publisher-ref.',2)
+            if publisher_repo:
+                from .publisher import validate_setup
+                update['evidence']['publisher']=validate_setup(publisher_repo,publisher_ref)
+            else:
+                previous=config(None if args.global_config else root)['evidence'] or {}
+                if previous.get('publisher'):update['evidence']['publisher']=previous['publisher']
         receipt={'validated':update,'qualification':'Configuration validation does not establish completed release qualification.'}
     destination.parent.mkdir(parents=True,exist_ok=True)
     with run_lock(destination.parent):

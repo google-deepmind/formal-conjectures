@@ -153,3 +153,4 @@ def invoke_model(prompt_text, destination, model, timeout, schema=None, server_a
     }
     write(destination / "invocation.json", record)
     return record
+

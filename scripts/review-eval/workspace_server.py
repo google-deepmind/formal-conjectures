@@ -24,7 +24,10 @@ from pathlib import Path
 class WorkspaceTools:
     """Scratch commands and recorded builds have no shared writable filesystem."""
 
-    def __init__(self, container, output, module, max_calls, image, candidate, candidate_path):
+    def __init__(self, container, output, module, max_calls, image, candidate, candidate_path, timeout=60):
+        if not isinstance(timeout, int) or not 1 <= timeout <= 300:
+            raise ValueError("Tool timeout must be between 1 and 300 seconds")
+        self.timeout = timeout
         if not re.fullmatch(r"sha256:[0-9a-f]{64}", image):
             raise ValueError("Build image must be pinned by image ID")
         path = Path(candidate_path)
@@ -100,7 +103,7 @@ class WorkspaceTools:
             proc = subprocess.run(
                 invocation,
                 capture_output=True,
-                timeout=65,
+                timeout=self.timeout + 5,
                 check=False,
             )
             record = {
@@ -109,7 +112,7 @@ class WorkspaceTools:
                 "exit_code": proc.returncode,
                 "stdout": proc.stdout.decode(errors="replace"),
                 "stderr": proc.stderr.decode(errors="replace"),
-                "timed_out": False,
+                "timed_out": proc.returncode == 124,
             }
         except subprocess.TimeoutExpired as error:
             record = {
@@ -145,12 +148,12 @@ class WorkspaceTools:
         Network and host filesystem are unavailable. Full output is retained as evidence.
         Use build() for the recorded focused build. Commands time out after 60 seconds.
         """
-        return self.invoke(["timeout", "-k", "2", "60", "sh", "-c", command])
+        return self.invoke(["timeout", "-k", "2", str(self.timeout), "sh", "-c", command])
 
     def build(self) -> dict:
         """Build the original candidate in a fresh pinned container, independent of scratch changes."""
         return self.invoke(
-            ["timeout", "-k", "2", "60", "lake", "--wfail", "build", self.module],
+            ["timeout", "-k", "2", str(self.timeout), "lake", "--wfail", "build", self.module],
             "build",
         )
 

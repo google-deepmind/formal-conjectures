@@ -50,7 +50,11 @@ def logged_command(args, path, *, cwd=None, timeout=1800):
 def git(root, *args, **kwargs):
     return command(['git', '-C', root, *args], **kwargs)
 
-def workspace(path=None, required=True):
+def workspace(path=None, required=True, allow_proof=False):
+    if allow_proof:
+        start=Path(path or Path.cwd()).resolve()
+        for directory in (start,*start.parents):
+            if (directory/'fc-provenance.json').is_file():return directory
     try:
         root = Path(command(['git', '-C', str(path or Path.cwd()), 'rev-parse', '--show-toplevel']).decode().strip()).resolve()
         if (root/'FormalConjectures').is_dir():
@@ -103,10 +107,14 @@ def config(root):
         result['catalog_url']=catalog_url(result['catalog_url'])
     if result['image'] is not None and not isinstance(result['image'],str):
         raise Failure('invalid_configuration','image must be a digest string or null.')
-    for name, fields in [('executor', ('kind','repository','ref')), ('evidence', ('repository','branch'))]:
+    executor_fields=('kind','toolkit','ref','tools') if isinstance(result['executor'],dict) and result['executor'].get('kind')=='linux' else ('kind','repository','ref')
+    for name, fields in [('executor', executor_fields), ('evidence', ('repository','branch'))]:
         value=result[name]
         if value is not None and (not isinstance(value,dict) or any(not isinstance(value.get(k),str) or not value[k] for k in fields)):
             raise Failure('invalid_configuration', name+' must include '+', '.join(fields)+' as nonempty strings.')
+    publisher=(result['evidence'] or {}).get('publisher')
+    if publisher is not None and (not isinstance(publisher,dict) or any(not isinstance(publisher.get(k),str) or not publisher[k] for k in ('repository','ref'))):
+        raise Failure('invalid_configuration','publisher requires repository and ref strings.')
     for key, ceiling in (('build_seconds',1800), ('scratch_seconds',300), ('scratch_calls',100)):
         if type(result['limits'][key]) is not int or not 0 < result['limits'][key] <= ceiling:
             raise Failure('invalid_configuration', f'{key} must be an integer from 1 to {ceiling}')

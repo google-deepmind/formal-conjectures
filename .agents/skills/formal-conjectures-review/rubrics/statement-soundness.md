@@ -5,6 +5,9 @@ whether its unknowns are really unknown. A statement with unsatisfiable hypothes
 true and says nothing; the file builds, the type is correct, and no automatic check
 notices. This angle may block.
 
+Named cases below are historical examples. Check the actual definitions and elaborated types
+at the reviewed revision; the example does not establish a current defect.
+
 ## What to hunt for
 
 **Hypotheses that cannot hold.** For each hypothesis, ask what must exist, then whether
@@ -18,9 +21,9 @@ fibre over `3` is empty, so no `fmax` satisfies it (#4896).
 **Junk values.** Lean functions are total; `sInf ∅ = 0` is the junk value that occurs
 here. A junk value is not a defect by itself — the question is never "does this
 definition have a junk value", it is whether anything reads it at the degenerate input
-and whether reaching it changes a claim. Enumerate every declaration that uses the
-definition and say what the junk does to each; that table is the deliverable even when
-the answer is "nothing breaks". Rules of thumb: junk `0` at the bottom of `ℕ` can only
+and whether reaching it changes a claim. Trace its effect through the scoped declarations;
+report an affected declaration and the changed claim only when there is a discrepancy.
+Do not expand a clean review into a repository-wide inventory. Rules of thumb: junk `0` at the bottom of `ℕ` can only
 make an *upper* bound easier — dangerous only for a lower bound, an exact value, or a
 `≠ 0` claim — **except** where it sits in the admissibility predicate of an
 `∃ a, Admissible a ∧ P a`, where it makes the existential easier and can decide a
@@ -55,12 +58,9 @@ costs the reviewer more than no finding.
 
 ## Known definition traps
 
-- `Nat.Full k n` is `∀ p ∈ n.primeFactors, p ^ k ∣ n`, and `primeFactors 0 = ∅`, so `0` and `1`
-  are vacuously Full. `decide` cannot settle it: the `Decidable` instance exists but does not
-  reduce, and gets stuck on `List.decidableBAll` over `primeFactorsList`. Use the lemmas in
-  `FormalConjecturesForMathlib/Data/Nat/Full.lean`, which ships `Full.zero_right`,
-  `Full.one_right` and a `primeFactorsEq` dsimproc, or `norm_num [Nat.Full, Nat.primeFactors,
-  Nat.primeFactorsList]`, which needs `set_option maxRecDepth 4000`; the default 512 fails.
+- `Nat.Full k n` quantifies over `n.primeFactors`; with this definition, `0` and `1` are
+  vacuously Full. Check whether the source permits these inputs before treating this as a defect.
+  See [Lean checking](../references/checking-in-lean.md#what-actually-reduces) for computation issues.
 - `Finset.Coprime S` is `S.gcd id = 1`, the gcd of the whole set. It is not pairwise, so a set
   containing `1` is coprime whatever else it holds. Before you propose making it pairwise, check
   the source's own example: for Erdős 939 that example is not pairwise coprime, so the change

@@ -1,0 +1,43 @@
+name: Designated contribution publisher
+run-name: FC publication ${{ inputs.request_id }}
+on:
+  workflow_dispatch:
+    inputs:
+      request_id: {required: true, type: string}
+      run_id: {required: true, type: string}
+      pr: {required: true, type: string}
+      archive_repository: {required: true, type: string}
+      archive_commit: {required: true, type: string}
+      manifest_sha256: {required: true, type: string}
+permissions: {}
+concurrency:
+  group: fc-designated-publisher-${{ inputs.pr }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: vars.FC_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Publish the validated archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUBLISH_REQUEST: ${{ toJSON(inputs) }}
+          FC_EVIDENCE_REPOSITORY: ${{ vars.FC_EVIDENCE_REPOSITORY }}
+          FC_EVIDENCE_BRANCH: ${{ vars.FC_EVIDENCE_BRANCH }}
+          PYTHONPATH: toolkit
+        run: python3 -m conjectures.publisher "$RUNNER_TEMP/publication"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: publication-${{ inputs.request_id }}
+          path: ${{ runner.temp }}/publication/receipt.json
+          if-no-files-found: warn
+          retention-days: 30

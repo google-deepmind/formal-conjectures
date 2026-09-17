@@ -116,6 +116,8 @@ def render(value, args):
     verification=value.get('verification_summary')
     if verification:
         lines.append('Verification policy: '+str(verification['policy_outcome']))
+        if verification.get('semantic_assessment_required'):
+            lines.append('Semantic assessment: required for submitted definitions; not established by kernel verification.')
         for key in ('stage','policy_reason','reason','detail'):
             if verification.get(key):lines.append(key.replace('_',' ').capitalize()+': '+str(verification[key]))
     observation=value.get('current_observation')
@@ -127,6 +129,9 @@ def render(value, args):
         lines += ['Changed: '+change for change in observation['changes']]
         if observation.get('reason'):lines.append('Freshness: '+observation['reason'])
         lines.append(observation['scope'])
+    if value.get('publisher'):
+        publisher=value['publisher'];lines.append('Advisory publication: '+publisher['status'])
+        if publisher.get('receipt',{}).get('comment_url'):lines.append('Comment: '+publisher['receipt']['comment_url'])
     if value.get('evidence_paths'):lines.append('Evidence: '+', '.join(value['evidence_paths']))
     if value.get('experimental'): lines.append('Experimental: '+str(value['experimental']))
     if getattr(args,'verbose',False):

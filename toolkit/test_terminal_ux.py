@@ -8,7 +8,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from rich.console import Console
-from conjectures import catalog, catalog_data, cli, core, interface, onboarding, presentation, ui
+from conjectures import catalog, catalog_data, cli, core, interface, onboarding, presentation, ui, work
 import unittest
 import test_catalog
 import test_cli
@@ -176,3 +176,7 @@ class CatalogSelectionTests(unittest.TestCase):
             with self.assertRaises(core.Failure):onboarding.setup(None,args)
         self.assertEqual(path.read_bytes(),before)
 
+    def test_related_work_uses_selected_site_and_separate_cache(self):
+        with patch.object(work,'user_cache',return_value=self.root),patch.object(work,'read_url',return_value=b'{"status":"not_configured"}') as network:
+            self.assertEqual(work.load(url=self.fork)['status'],'not_configured')
+        self.assertEqual(network.call_args.args[0],'https://example.org/fork/data/work.json')

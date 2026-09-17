@@ -35,7 +35,7 @@ covering system whose moduli all divide $n$?
 
 This was answered affirmatively by Haight [Ha79].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos277.lean#L1294"]
 theorem erdos_277 :
    answer(True) ↔ ∀ c : ℝ, ∃ n : ℕ, (σ 1 n : ℝ) > c * n ∧
       ∀ (m : StrictCoveringSystem ℤ), ∃ i, (n : ℤ) ∉ m.moduli i  := by

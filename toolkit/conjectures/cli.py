@@ -1,7 +1,6 @@
 """One interface for FC contribution review and exact-target proof workspaces."""
 import argparse
 import json
-import importlib.util
 import os
 import shutil
 import subprocess
@@ -21,11 +20,17 @@ def dispatch(args):
     if args.command=='skill':
         from . import skills
         return skills.install(args.name,args.dir) if args.operation=='install' else {'outcome':'pass','paths':{'skill':str(skills.path(args.name)/'SKILL.md')}}
+    if args.command=='eval':
+        from . import evaluation
+        return evaluation.summarize(args.directory) if args.operation=='summarize' else evaluation.export(workspace(getattr(args,'repo',None),required=False),args)
     if args.command=='completion':
         from .interface import completion
         return {'text': completion(args.shell)}
-    optional = args.command in ('doctor','find','show') or (args.command=='setup' and args.global_config)
-    root=workspace(getattr(args,'repo',None),required=not optional);cfg=config(root)
+    optional = args.command in ('doctor','find','show','init','verify') or (args.command=='setup' and args.global_config)
+    root=workspace(getattr(args,'repo',None),required=not optional,
+                   allow_proof=args.command in ('doctor','verify','status','run','setup','evidence'))
+    if args.command=='verify' and root is None:root=args.directory.resolve()
+    cfg=config(root)
     if args.command=='doctor':
         stage('Checking tools and capability configuration')
         return doctor(root,cfg,args.capability,getattr(args,'catalog_url',None))
@@ -45,6 +50,10 @@ def dispatch(args):
         if args.command=='show':
             from .catalog import attach_evidence
             found=attach_evidence(found,root,cfg,source,offline=args.offline)
+            from . import work
+            context=work.load(offline=args.offline,url=data.get('catalog_origin',{}).get('url')) if source else {'status':'unconfirmed','pull_requests':[]}
+            found=[{**p,'related_work':work.related(p,context,source),'work_availability':context['status'],
+                    'work_observed_at':context.get('observed_at')} for p in found]
         missing=args.command=='show' and any(not p.get('statement') for p in found)
         return {'outcome':'incomplete' if missing else 'pass','problems':found,'total':total,
                 'reason':'statement_unavailable' if missing else 'catalog_loaded',
@@ -54,11 +63,14 @@ def dispatch(args):
                 'catalog_note':'Published metadata is descriptive; acceptance and exact-target verification are separate.'}
     if args.command=='status' or (args.command=='run' and args.operation=='list'):
         records=runs(root)
+        for record in records:
+            path=root/'.conjectures/runs'/record['id']/'publisher.json'
+            if path.is_file():record['publisher']=rr.read_json(path)
         if args.command=='run':
             if args.status:records=[r for r in records if r['status']==args.status]
             records=records[:args.limit]
         from .inspection import next_action
-        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete')]
+        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete') or (r.get('outcome')=='pass' and r.get('result',{}).get('semantic_assessment_required')) or r.get('publisher',{}).get('status') in ('dispatching','queued','in_progress','error','cancellation_requested')]
         actions=[next_action(r) for r in outstanding]
         return {'outcome':'pass','runs':records,'outstanding':len(outstanding),'next_actions':actions,
                 'next_action':None if records else 'Try conjectures review --pr 4941, or conjectures doctor --for review.'}
@@ -70,6 +82,10 @@ def dispatch(args):
         if args.operation=='logs':
             from .inspection import logs
             return logs(directory,record,args.artifact)
+        if (directory/'publisher.json').is_file() and args.operation in ('wait','cancel'):
+            from . import publisher
+            if args.operation=='wait':return publisher.wait(directory,args.timeout)
+            with run_lock(directory):return publisher.control(directory,'cancel')
         if record['kind']=='review':
             if args.operation=='cancel':
                 with run_lock(directory):
@@ -78,6 +94,7 @@ def dispatch(args):
                     require_pending(record)
                     return finish(directory,record,'cancelled',reason='operator_cancelled',next_action='Start a new review to continue.')
             return {**record,'command_status':'incomplete' if record['status']=='awaiting_review' else 'success'}
+        import importlib.util
         if importlib.util.find_spec("conjectures.proof") is None:
             raise Failure("unavailable_command","Proof controls are not included in this revision.",4)
         from .proof import control, wait
@@ -86,8 +103,6 @@ def dispatch(args):
     if args.command=='review':
         from . import review
         if args.operation!='prepare':
-            if getattr(args,'post',False) and importlib.util.find_spec('conjectures.evidence') is None:
-                raise Failure('unavailable_command','Publication follows in the evidence PR',4)
             directory=run_dir(root,args.run)
             with run_lock(directory):
                 record=rr.read_json(directory/'run.json')
@@ -99,8 +114,8 @@ def dispatch(args):
                     from .evidence import publish,post
                     # Publication errors never overwrite a retained semantic review outcome.
                     publication=publish(root,directory,cfg)
-                    post(directory,publication)
-                    result={**result,'publication':publication}
+                    posting=post(directory,publication,cfg)
+                    result={**result,'publication':publication,'publisher':posting,'command_status':posting['command_status'],'next_action':posting['next_action']}
                 return result
         directory,record=start_run(root,'review')
         try:
@@ -133,12 +148,14 @@ def dispatch(args):
         from .inspection import check_local
         return check_local(root,paths,cfg)
     if args.command in ('init','verify'):
+        import importlib.util
         if importlib.util.find_spec('conjectures.proof') is None:
             raise Failure('unavailable_command','Proof workspace support is not included in this revision',4)
         from . import proof
         stage('Resolving the exact proof target' if args.command=='init' else 'Resolving the trusted proof workspace')
         return proof.initialize(root,args,cfg) if args.command=='init' else proof.verify(root,args.directory,cfg)
     if args.command=='evidence':
+        import importlib.util
         if importlib.util.find_spec('conjectures.evidence') is None:
             raise Failure('unavailable_command','Evidence publication is not included in this revision',4)
         from .evidence import publish,post
@@ -146,7 +163,9 @@ def dispatch(args):
         directory=run_dir(root,args.run)
         with run_lock(directory):
             result=publish(root,directory,cfg,args.dry_run)
-            if args.post: post(directory,result)
+            if args.post:
+                posting=post(directory,result,cfg)
+                result={**result,'publisher':posting,'command_status':posting['command_status'],'next_action':posting.get('next_action')}
             return result
 
 def operation_code(args, result):

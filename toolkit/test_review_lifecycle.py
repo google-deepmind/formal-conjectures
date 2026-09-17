@@ -1,7 +1,6 @@
 """Observable preparation, report completion and independent receipt boundaries."""
 import copy
 import json
-import importlib.util
 import os
 import subprocess
 import tempfile
@@ -46,7 +45,8 @@ class ReviewLifecycleTests(unittest.TestCase):
         self.assertTrue(Path(self.record['paths']['template']).is_file())
         self.assertFalse(any(name in __import__('sys').modules for name in ('conjectures.codex','conjectures.eval_workspace','mcp')))
     def test_complete_external_report_without_model_credentials(self):
-        with patch.dict(os.environ,{},clear=True):result=self.complete()
+        # Clear credentials, not the executable search path the freshness check uses.
+        with patch.dict(os.environ,{'PATH':os.environ.get('PATH','')},clear=True):result=self.complete()
         self.assertEqual(result['outcome'],'pass');self.assertEqual(result['status'],'completed')
         self.assertTrue(Path(result['report']).is_file())
         bundle=rr.read_json(self.directory/'bundle/report.json')
@@ -54,13 +54,12 @@ class ReviewLifecycleTests(unittest.TestCase):
         self.assertEqual(bundle['review']['reviewer'],'Existing agent; model unknown')
         self.assertEqual(rr.assemble(self.directory/'input',self.directory/'input',self.directory/'review.json',self.directory/'evidence')['report.json'],(self.directory/'bundle/report.json').read_bytes())
     def test_invalid_report_is_correctable_and_cannot_publish(self):
+        from conjectures.evidence import export
         bad=copy.deepcopy(self.result);bad['request_id']='wrong';core.save(self.report,bad)
         with self.assertRaises(ValueError):self.complete()
         self.assertEqual(rr.read_json(self.directory/'run.json')['status'],'awaiting_review')
         self.assertFalse((self.directory/'evidence').exists())
-        if importlib.util.find_spec('conjectures.evidence'):
-            from conjectures.evidence import export
-            with self.assertRaises(core.Failure):export(self.root,self.directory)
+        with self.assertRaises(core.Failure):export(self.root,self.directory)
         core.save(self.report,self.result);self.assertEqual(self.complete()['outcome'],'pass')
     def test_supplied_checks_cannot_override_controller(self):
         receipt=rr.read_json(self.directory/'controller/build.json');receipt['exit_code']=1

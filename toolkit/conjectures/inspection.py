@@ -82,20 +82,25 @@ def show(root, directory, record, *, refresh=True):
             value['current_applicability'] = value['current_observation']['applicability']
     if record['kind'] == 'verify' and record.get('result'):
         result = record['result'];comparator = result.get('comparator') or {}
-        value['verification_summary'] = {k:result.get(k) for k in ('outcome','reason','detail','pins','producer')}
+        value['verification_summary'] = {k:result.get(k) for k in ('outcome','reason','detail','pins','producer','semantic_assessment_required')}
         value['verification_summary'].update(stage=comparator.get('stage'),
             policy_reason=comparator.get('reason'), policy_outcome=comparator.get('outcome') if comparator.get('outcome') in ('pass','rejected') else 'not_evaluated')
         value['evidence_paths'] = ['remote/verification.json']
+    if (directory/'publisher.json').is_file():value['publisher']=rr.read_json(directory/'publisher.json')
     value['next_action'] = next_action(value)
     return value
 
 
 def next_action(record):
     identity = record['id']
+    if record.get('publisher',{}).get('status') in ('queued','in_progress','cancellation_requested','dispatching'):
+        return 'Retrieve publication: conjectures run wait '+identity
     if record['status'] == 'awaiting_review':return 'Complete review draft: conjectures review finish '+identity
     if record['kind'] == 'verify' and record['status'] in ('queued','in_progress','running','cancellation_requested'):
         return 'Retrieve verification: conjectures run wait '+identity
     if record.get('current_applicability') == 'historical':return 'Inputs changed. Prepare a new review; retain this result as history.'
+    if record.get('outcome') == 'pass' and (record.get('verification_summary') or record.get('result') or {}).get('semantic_assessment_required'):
+        return 'Arrange semantic assessment of the submitted definitions against the source. Kernel verification alone does not establish their intended meaning.'
     if record.get('verification_summary') and record.get('outcome') in ('fail','error','incomplete'):
         return 'Inspect verifier logs: conjectures run logs '+identity+'\nResolve the reported cause before starting a new verification.'
     if record.get('review_summary') and record.get('outcome') in ('fail','error','incomplete'):
