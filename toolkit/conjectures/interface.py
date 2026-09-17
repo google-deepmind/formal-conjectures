@@ -85,7 +85,7 @@ def parser():
     q=command('eval','Export frozen proof tasks or inspect retained evaluation results (experimental)','conjectures eval export suite.json --format harbor --out tasks')
     r=q.add_subparsers(dest='operation',required=True)
     s=command('export','Generate tasks for an external agent harness; launches no model',parent=r)
-    s.add_argument('suite',type=Path,help='Frozen fc.proof-suite.v1 JSON, including exact source and image pins')
+    s.add_argument('suite',type=Path,help='Frozen fc.proof-suite.v2 JSON: exact source, cases and prebuilt suite image pins')
     s.add_argument('--format',choices=['harbor'],default='harbor')
     s.add_argument('--out',type=Path,required=True,help='New output task directory')
     s.add_argument('--catalog',type=Path,help='Native catalog matching the suite source revision')

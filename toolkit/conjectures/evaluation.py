@@ -1,23 +1,26 @@
-"""Frozen proof tasks and a thin Harbor export; agents run in the external harness."""
+"""Frozen proof suites exported as Harbor tasks; agents run in the external harness.
+
+A suite is bound to two prebuilt images. The verifier image carries every prepared workspace
+and pinned package for the suite core, so verification needs no network. The solver image
+carries the same packages, so an agent's budget is not spent acquiring dependencies.
+"""
 import json
 import re
 import shutil
 import tempfile
 from pathlib import Path
-from . import report as rr
-from .core import Failure, save
+from . import report as rr, eval_suite
+from .core import Failure, command, save
 
-SCHEMA='fc.proof-suite.v1'
+SCHEMA='fc.proof-suite.v2'
 IMAGE=r'[a-zA-Z0-9][a-zA-Z0-9._/:-]*@sha256:[a-f0-9]{64}'
+TEST_SCRIPT=('#!/bin/sh\nset -eu\nexport PYTHONPATH=/opt/fc/toolkit\n'
+             'exec python3 -m conjectures.eval_verifier --submission /app --out /logs/verifier\n')
 
 
 def validate_suite(suite):
     rr.obj(suite,'schema_version source execution cases','proof suite')
     rr.require(suite['schema_version']==SCHEMA,'Unsupported proof suite')
-    rr.obj(suite['source'],'repository commit','source')
-    for key in ('repository','commit'):rr.text(suite['source'][key],key)
-    rr.require(re.fullmatch(r'[\w.-]+/[\w.-]+',suite['source']['repository']) is not None,'Use source OWNER/REPO')
-    rr.require(re.fullmatch('[a-f0-9]{40}',suite['source']['commit']) is not None,'Pin an exact source commit')
     execution=suite['execution']
     rr.obj(execution,'solver_image verifier_image toolkit_commit agent_seconds','execution')
     for key in ('solver_image','verifier_image'):
@@ -26,57 +29,55 @@ def validate_suite(suite):
     rr.text(execution['toolkit_commit'],'toolkit_commit')
     rr.require(re.fullmatch('[a-f0-9]{40}',execution['toolkit_commit']) is not None,'Pin the trusted verifier toolkit commit')
     rr.require(type(execution['agent_seconds']) is int and 0<execution['agent_seconds']<=86400,'Agent budget must be 1–86400 seconds')
-    rr.require(isinstance(suite['cases'],list) and 0<len(suite['cases'])<=100,'Select 1–100 exact targets')
-    ids=set();targets=set()
+    rr.require(isinstance(suite['cases'],list),'Select exact targets')
     for case in suite['cases']:
-        rr.obj(case,'id declaration exposure','case')
-        rr.text(case['id'],'case ID')
-        rr.require(re.fullmatch('[a-z0-9][a-z0-9-]{0,63}',case['id']) is not None,'Invalid case ID')
-        rr.text(case['declaration'],'declaration');rr.text(case['exposure'],'known development exposure')
-        rr.require(case['id'] not in ids and case['declaration'] not in targets,'Duplicate case or declaration')
-        ids.add(case['id']);targets.add(case['declaration'])
+        rr.obj(case,'id declaration path exposure','case')
+        rr.text(case['exposure'],'known development exposure')
+    eval_suite.core(suite)
+
+
+def image_files(image,paths,destination):
+    """Copy prepared suite files out of the verifier image; nothing in the image is executed."""
+    container=command(['docker','create','--pull','missing',image],timeout=3600).decode().strip()
+    try:
+        for path in paths:command(['docker','cp',f'{container}:{path}',str(destination)],timeout=1800)
+    finally:command(['docker','rm',container])
 
 
 def export(root,args):
-    from . import catalog,proof
+    from . import proof
     suite=rr.read_json(args.suite);validate_suite(suite)
-    data=catalog.load(root,args.catalog,url=getattr(args,'catalog_url',None))
-    source=data.get('provenance',{}).get('source',{})
-    if source.get('repository')!=suite['source']['repository'] or source.get('commit')!=suite['source']['commit']:
-        raise Failure('catalog_binding_mismatch','Suite and selected catalog must name the same exact repository and revision.',4)
-    selected={case['id']:catalog.select(data,case['declaration']) for case in suite['cases']}
+    core=eval_suite.core(suite);core_sha256=eval_suite.core_digest(core);suite_sha256=rr.digest(rr.encode(suite))
     out=args.out.resolve()
     if out.exists():raise Failure('output_exists','Select a new export directory; existing tasks are preserved.')
     out.parent.mkdir(parents=True,exist_ok=True)
-    source=suite['source']
-    with tempfile.TemporaryDirectory(prefix='.fc-eval-',dir=out.parent) as temp,proof.prepared_source(root,source['repository'],source['commit']) as checkout:
+    with tempfile.TemporaryDirectory(prefix='.fc-eval-',dir=out.parent) as temp:
         staging=Path(temp)/'tasks';staging.mkdir()
+        prepared=Path(temp)/'prepared';prepared.mkdir()
+        # Solver workspaces come from the verifier image, so both sides grade the same Challenge.
+        image_files(suite['execution']['verifier_image'],[f'{eval_suite.ROOT}/suite-core.json',f'{eval_suite.ROOT}/cases'],prepared)
+        if rr.read_json(prepared/'suite-core.json')!=core:
+            raise Failure('suite_image_mismatch','The verifier image was prepared for a different suite core.',4)
         for case in suite['cases']:
-            task=staging/case['id'];task.mkdir()
-            workspace=task/'environment/workspace'
-            from .catalog_data import module_path
-            problem=selected[case['id']]
-            problem={**problem,'githubPath':problem.get('githubPath') or module_path(problem['module'])}
-            generated=proof.generate(root,problem,source['repository'],source['commit'],Path(temp)/case['id'],source=checkout)
-            shutil.copytree(generated,workspace)
-            provenance=rr.read_json(workspace/'fc-provenance.json')
-            proof.write_handoff(workspace,provenance)
-            # An exported task must not carry operator run records or development caches.
-            shutil.rmtree(workspace/'.conjectures',ignore_errors=True)
+            baked=prepared/'cases'/case['id']
+            target=rr.read_json(baked/'target.json')
+            if target.get('core_sha256')!=core_sha256 or target.get('toolkit_commit')!=suite['execution']['toolkit_commit']:
+                raise Failure('suite_image_mismatch','A prepared case does not match the frozen suite.',4)
+            task=staging/case['id'];workspace=task/'environment/workspace'
+            shutil.copytree(baked/'workspace',workspace,ignore=shutil.ignore_patterns('.lake'))
+            proof.write_handoff(workspace,rr.read_json(workspace/'fc-provenance.json'))
             (workspace/'Submission').mkdir(exist_ok=True)
-            holes=bool(rr.read_json(workspace/'config.json').get('definition_names'))
-            target={'schema_version':'fc.proof-task.v1','id':case['id'],'source':provenance['source'],
-                    'toolkit_commit':suite['execution']['toolkit_commit'],'semantic_assessment_required':holes,
-                    'suite_sha256':rr.digest(rr.encode(suite)),'exposure':case['exposure']}
-            write_task(task,target,suite['execution'])
+            write_task(task,{'id':case['id'],'source':target['source'],'suite_sha256':suite_sha256,
+                             'core_sha256':core_sha256,'exposure':case['exposure'],
+                             'semantic_assessment_required':target['semantic_assessment_required']},suite['execution'])
         save(staging/'suite.json',suite)
         files={p.relative_to(staging).as_posix():p.read_bytes() for p in staging.rglob('*') if p.is_file()}
-        save(staging/'manifest.json',{'schema_version':'fc.proof-eval-export.v1','suite_sha256':rr.digest(rr.encode(suite)),
-                                     'files':rr.descriptors(files)})
+        save(staging/'manifest.json',{'schema_version':'fc.proof-eval-export.v2','suite_sha256':suite_sha256,
+                                     'core_sha256':core_sha256,'files':rr.descriptors(files)})
         staging.rename(out)
     return {'outcome':'pass','paths':{'tasks':str(out),'manifest':str(out/'manifest.json')},
             'message':f'Exported {len(suite["cases"])} frozen tasks. No agent was launched.',
-            'next_action':'Run these tasks with your external Harbor harness and qualified images; preserve all trial records.'}
+            'next_action':'Run these tasks with your external Harbor harness; preserve all trial records.'}
 
 
 def write_task(task,target,execution):
@@ -85,22 +86,26 @@ def write_task(task,target,execution):
         f"Prove `{target['source']['declaration']}` in /app. Read /app/AGENTS.md and Challenge.lean.\n"
         'Edit Submission.lean and Lean files under Submission/. The harness grades those files\n'
         'in a separate trusted environment. Do not alter the target or grading configuration.\n'
-        'Use lake build for development feedback. Do not publish or push your work.\n')
+        'Dependencies are prebuilt: use lake build for feedback and do not run lake update.\n'
+        'Do not publish or push your work.\n')
     (task/'task.toml').write_text(
         'schema_version = "1.4"\nartifacts = ["/app/Submission.lean", "/app/Submission"]\n'
         f'\n[task]\nname = "fc/{target["id"]}"\nversion = "{target["suite_sha256"][:16]}"\n'
-        f'\n[metadata]\nsuite_sha256 = {q(target["suite_sha256"])}\nexposure = {q(target["exposure"])}\n'
+        f'\n[metadata]\nsuite_sha256 = {q(target["suite_sha256"])}\ncore_sha256 = {q(target["core_sha256"])}\n'
+        f'exposure = {q(target["exposure"])}\nsemantic_assessment_required = {str(target["semantic_assessment_required"]).lower()}\n'
         f'\n[agent]\ntimeout_sec = {execution["agent_seconds"]}\n'
-        '\n[environment]\nos = "linux"\ncpus = 4\nmemory_mb = 8192\n'
-        '\n[verifier]\ntimeout_sec = 3600\nenvironment_mode = "separate"\n'
-        '\n[verifier.environment]\nos = "linux"\ncpus = 4\nmemory_mb = 8192\n')
+        '\n[environment]\nos = "linux"\ncpus = 4\nmemory_mb = 8192\nbuild_timeout_sec = 1800\n'
+        '\n[verifier]\ntimeout_sec = 1800\nenvironment_mode = "separate"\n'
+        f'\n[verifier.env]\nFC_EVAL_CASE = {q(target["id"])}\nFC_EVAL_SUITE_SHA256 = {q(target["suite_sha256"])}\n'
+        f'FC_EVAL_CORE_SHA256 = {q(target["core_sha256"])}\n'
+        f'\n[verifier.environment]\nos = "linux"\ncpus = 4\nmemory_mb = 8192\nbuild_timeout_sec = 1800\n'
+        f'docker_image = {q(execution["verifier_image"])}\nnetwork_mode = "no-network"\n')
     (task/'environment/Dockerfile').write_text(
-        f'FROM {execution["solver_image"]}\nCOPY --chown=1000:1000 workspace /app\nWORKDIR /app\nUSER 1000:1000\n')
+        f'FROM {execution["solver_image"]}\nCOPY --chown=1000:1000 workspace /app\nWORKDIR /app\n'
+        'RUN mkdir -p /app/.lake && ln -s /opt/fc-suite/packages /app/.lake/packages\nUSER 1000:1000\n')
     tests=task/'tests';tests.mkdir()
-    save(tests/'target.json',target)
-    (tests/'Dockerfile').write_text(
-        f'FROM {execution["verifier_image"]}\nCOPY --chown=1000:1000 . /tests\nUSER 1000:1000\nWORKDIR /app\n')
-    (tests/'test.sh').write_text('#!/bin/sh\nset -eu\nexport PYTHONPATH=/opt/fc/toolkit\nexec python3 -m conjectures.eval_verifier --target /tests/target.json --submission /app --out /logs/verifier\n')
+    # The verifier image owns /tests/test.sh; this copy documents the command it runs.
+    (tests/'test.sh').write_text(TEST_SCRIPT)
 
 
 def summarize(directory):
