@@ -1271,14 +1271,19 @@ a.sibling-item__name:hover { color: var(--color-link); text-decoration: none; }
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
   overflow-x: auto;
-  background: var(--color-bg-alt);
+  background: #fafafa;
 }
 
 .verso-code-container code.hl {
   display: block;
-  padding: 1rem 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  white-space: pre;
+  overflow-wrap: normal;
+  tab-size: 2;
+  font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  color: var(--verso-code-color, #000);
+  padding: 1.25rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
 }
 
 .verso-code-loading {

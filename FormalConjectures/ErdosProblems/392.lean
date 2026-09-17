@@ -66,8 +66,8 @@ by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lowe
 Stirling's approximation).
 -/
 @[category research solved, AMS 11]
-theorem erdos_392.variants.implication (h : type_of% erdos_392) :
-    type_of% erdos_392.variants.lower := by
+theorem erdos_392.variants.implication (h : type_of% erdos_392.variants.lower) :
+    type_of% erdos_392 := by
   sorry
 
 end Erdos392

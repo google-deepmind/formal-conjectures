@@ -26,7 +26,7 @@ with $\binom{n}{-1} = 0$.
 
 *References:*
 - [A003162](https://oeis.org/A003162)
-- H. W. Gould, Problem E2384, Amer. Math. Monthly, 81 (1974), 170-171
+- H. W. Gould, Problem E2384 (proposal), Amer. Math. Monthly, 81 (1974), 170-171
 -/
 
 namespace OeisA3162
@@ -69,7 +69,9 @@ theorem a_4 : a 4 = 6 := by eval_a
 
 /--
 $a(n)$ is an integer for all $n \ge 0$.
-- Solution to Problem E2384 by H. W. Gould, Amer. Math. Monthly, 81 (1974), 170-171
+
+Gould proposed this as Monthly Problem E2384. The 1974 reference in the module docstring
+is that proposal, not a solution to it.
 -/
 @[category textbook, AMS 11]
 theorem a_is_integer (n : ℕ) : (a n).den = 1 := by
