@@ -59,4 +59,28 @@ theorem erdos_557.variants.explicit (k n : ℕ) (T : SimpleGraph (Fin n)) (hT : 
     multicolourGraphRamsey k T ≤ k * (n - 2) + 3 := by
   sorry
 
+/--
+The best-possible bound $R_k(T) \leq k(n-2)+2$ for every $k$ and every tree $T$ on $n \geq 2$
+vertices, attained by stars. It follows from the sharp form of the Erdős–Sós theorem (a graph on
+$m$ vertices with more than $(n-2)m/2$ edges contains every tree on $n$ vertices) by the
+pigeonhole principle.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/zhangjun725/erdos557/blob/828ad6fdb5d0f1a72b8dcd812f4c91c285570ff6/Erdos557/Tight.lean#L108"]
+theorem erdos_557.variants.tight (k n : ℕ) (hn : 2 ≤ n) (T : SimpleGraph (Fin n))
+    (hT : T.IsTree) : multicolourGraphRamsey k T ≤ k * (n - 2) + 2 := by
+  sorry
+
+/--
+When $n$ is odd and $k \geq 2$ is even, $R_k(T) \leq k(n-2)+1$ for every tree $T$ on $n$ vertices,
+again attained by stars: with $m = k(n-2)+1$ some colour class has at least $(n-2)m/2$ edges, and
+$(n-2)m$ is odd, so it has more than $(n-2)m/2$ edges.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/zhangjun725/erdos557/blob/828ad6fdb5d0f1a72b8dcd812f4c91c285570ff6/Erdos557/Tight.lean#L114"]
+theorem erdos_557.variants.tight_odd (k n : ℕ) (hk : 0 < k) (hke : Even k) (hn : 2 ≤ n)
+    (hno : Odd n) (T : SimpleGraph (Fin n)) (hT : T.IsTree) :
+    multicolourGraphRamsey k T ≤ k * (n - 2) + 1 := by
+  sorry
+
 end Erdos557
