@@ -16,7 +16,6 @@ site/data/catalog.json
 site/data/catalog-manifest.json
 site/data/evidence.json
 site/data/work.json
-
 site/data/schemas/
 
 # Generated all-imports file

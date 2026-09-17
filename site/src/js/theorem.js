@@ -59,7 +59,6 @@ async function init() {
     notice.textContent = renderingError + '. The statement below is from the verified catalog.';
     document.getElementById('theorem-detail').prepend(notice);
   }
-
   const evidenceEl = document.getElementById('contribution-evidence');
   try {
     await loadScript(`${_base}/assets/js/evidence.js`);

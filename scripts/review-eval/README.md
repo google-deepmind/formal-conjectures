@@ -94,7 +94,10 @@ python3 scripts/review-eval/check_build_isolation.py \
 
 It verifies that a false candidate still fails after the scratch Lake configuration is
 replaced with an empty successful target, and that a valid candidate builds in two fresh
-containers. Keep the output directory with the validation evidence.
+containers. Keep the output directory with the validation evidence. On an emulated
+host, pass `--timeout 180` explicitly if the default 60-second check expires. This
+changes only the qualification command; normal reviewer tools retain their
+60-second bound. A timeout is an execution error, not a rejected Lean statement.
 
 ```sh
 conjectures setup review --json > review-environment.json
@@ -208,6 +211,20 @@ Build receipts from the 8 September development runs used the reviewer workspace
 predate the fresh-container check and must not be promoted to that stronger claim. Retain
 their original transcripts, grades and failures; rerun mechanical checks separately when
 needed. These observations remain provisional and do not establish mathematical accuracy.
+
+The five-case comparison produced valid reports for 5/5 skill runs and 3/5 baseline runs.
+Its assessed results contain only one clean case and one usable reference defect per arm;
+the Jacobson reference remains disputed. The targeted follow-up informed skill development.
+Neither batch establishes a reliable false-alarm rate, defect-detection rate or general
+advantage. The packet's human forms remain unfilled; its runs do not evaluate later skill edits.
+
+Before making performance claims, adjudicate the existing reference keys, freeze the procedure
+and executor, and run matched comparisons on held-out problem families with clean controls.
+Repeat runs to expose variability and obtain human assessments of supported findings, missed
+defects, false alarms, appropriate uncertainty and reviewer effort. Report completion failures
+alongside quality denominators. Test delegation as a separate condition with the same overall
+budget; this harness does not establish its benefit. Existing-agent integration checks remain
+separate from the offline benchmark.
 
 The superseded packet-only cases, selected outputs and their exact tooling remain in
 [Git history](https://github.com/williamjblair/formal-conjectures/tree/ba5930b643b2ab1f85036ec2c3c6ff5a82f75aeb/.agents/skills/formal-conjectures-review/evals)

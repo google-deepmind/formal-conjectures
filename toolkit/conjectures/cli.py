@@ -1,7 +1,6 @@
 """One interface for FC contribution review and exact-target proof workspaces."""
 import argparse
 import json
-import importlib.util
 import os
 import shutil
 import subprocess
@@ -21,11 +20,17 @@ def dispatch(args):
     if args.command=='skill':
         from . import skills
         return skills.install(args.name,args.dir) if args.operation=='install' else {'outcome':'pass','paths':{'skill':str(skills.path(args.name)/'SKILL.md')}}
+    if args.command=='eval':
+        from . import evaluation
+        return evaluation.summarize(args.directory) if args.operation=='summarize' else evaluation.export(workspace(getattr(args,'repo',None),required=False),args)
     if args.command=='completion':
         from .interface import completion
         return {'text': completion(args.shell)}
-    optional = args.command in ('doctor','find','show') or (args.command=='setup' and args.global_config)
-    root=workspace(getattr(args,'repo',None),required=not optional);cfg=config(root)
+    optional = args.command in ('doctor','find','show','init','verify') or (args.command=='setup' and args.global_config)
+    root=workspace(getattr(args,'repo',None),required=not optional,
+                   allow_proof=args.command in ('doctor','verify','status','run','setup','evidence'))
+    if args.command=='verify' and root is None:root=args.directory.resolve()
+    cfg=config(root)
     if args.command=='doctor':
         stage('Checking tools and capability configuration')
         return doctor(root,cfg,args.capability,getattr(args,'catalog_url',None))
@@ -65,7 +70,7 @@ def dispatch(args):
             if args.status:records=[r for r in records if r['status']==args.status]
             records=records[:args.limit]
         from .inspection import next_action
-        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete') or r.get('publisher',{}).get('status') in ('dispatching','queued','in_progress','error','cancellation_requested')]
+        outstanding=[r for r in records if r['status'] not in ('completed','cancelled') or r.get('outcome') in ('fail','error','incomplete') or (r.get('outcome')=='pass' and r.get('result',{}).get('semantic_assessment_required')) or r.get('publisher',{}).get('status') in ('dispatching','queued','in_progress','error','cancellation_requested')]
         actions=[next_action(r) for r in outstanding]
         return {'outcome':'pass','runs':records,'outstanding':len(outstanding),'next_actions':actions,
                 'next_action':None if records else 'Try conjectures review --pr 4941, or conjectures doctor --for review.'}
@@ -89,6 +94,7 @@ def dispatch(args):
                     require_pending(record)
                     return finish(directory,record,'cancelled',reason='operator_cancelled',next_action='Start a new review to continue.')
             return {**record,'command_status':'incomplete' if record['status']=='awaiting_review' else 'success'}
+        import importlib.util
         if importlib.util.find_spec("conjectures.proof") is None:
             raise Failure("unavailable_command","Proof controls are not included in this revision.",4)
         from .proof import control, wait
@@ -97,8 +103,6 @@ def dispatch(args):
     if args.command=='review':
         from . import review
         if args.operation!='prepare':
-            if getattr(args,'post',False) and importlib.util.find_spec('conjectures.evidence') is None:
-                raise Failure('unavailable_command','Publication follows in the evidence PR',4)
             directory=run_dir(root,args.run)
             with run_lock(directory):
                 record=rr.read_json(directory/'run.json')
@@ -144,12 +148,14 @@ def dispatch(args):
         from .inspection import check_local
         return check_local(root,paths,cfg)
     if args.command in ('init','verify'):
+        import importlib.util
         if importlib.util.find_spec('conjectures.proof') is None:
             raise Failure('unavailable_command','Proof workspace support is not included in this revision',4)
         from . import proof
         stage('Resolving the exact proof target' if args.command=='init' else 'Resolving the trusted proof workspace')
         return proof.initialize(root,args,cfg) if args.command=='init' else proof.verify(root,args.directory,cfg)
     if args.command=='evidence':
+        import importlib.util
         if importlib.util.find_spec('conjectures.evidence') is None:
             raise Failure('unavailable_command','Evidence publication is not included in this revision',4)
         from .evidence import publish,post

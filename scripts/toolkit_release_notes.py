@@ -21,13 +21,13 @@ Install:
 
 ```sh
 uv tool install --python 3.11 {url}
-conjectures find erdos/730
-conjectures show erdos/730
+conjectures find erdos/730 --catalog-url https://williamjblair.github.io/formal-conjectures/data/conjectures.json
+conjectures show erdos/730 --catalog-url https://williamjblair.github.io/formal-conjectures/data/conjectures.json
 ```
 
-See [the usage guide](https://github.com/{repo}/blob/{tag}/toolkit/README.md) for review setup and [the qualification checklist](https://github.com/{repo}/blob/{tag}/toolkit/RELEASE.md) for current limits. Checksums are in SHA256SUMS.
+See [the usage guide](https://github.com/{repo}/blob/{tag}/toolkit/README.md) for review setup and [the qualification record](https://github.com/{repo}/blob/{tag}/toolkit/qualification/rc3-final.md) for exact runs and current limits. Checksums are in SHA256SUMS.
 
-Default browsing requires upstream #5375 and its catalog deployment. Until then, `find` and `show` report catalog unavailable; there is no mirror or fallback. Installation and `doctor` work independently.
+The examples explicitly select the deployed fork. Default browsing still requires upstream #5375 and its catalog deployment. There is no automatic fork fallback. Installation and `doctor` work independently.
 
 The CLI uses existing agent sessions and has no model login or launcher. Human-readable output, structured JSON, review drafts, run inspection, setup, and bounded waiting are included. Advisory posting requires the owning repository's designated publisher workflow and explicit configuration; the CLI does not post locally. Proof verification and publication remain experimental while the qualification checklist has open gates. Deterministic tests and installation success do not establish mathematical review accuracy.
 '''

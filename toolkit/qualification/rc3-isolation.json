@@ -1,0 +1,132 @@
+{
+  "status": "pass",
+  "image": "sha256:e6750e0d24e5a27c4ff5c7c77f970cb48e3d161cd3b681ffbd0f2364d4766805",
+  "cases": {
+    "invalid_candidate": {
+      "evidence": "evidence/tool-001.json",
+      "kind": "build",
+      "command": [
+        "timeout",
+        "-k",
+        "2",
+        "180",
+        "lake",
+        "--wfail",
+        "build",
+        "FormalConjectures.ReviewIsolation"
+      ],
+      "exit_code": 1,
+      "stdout": "\u2716 [8896/8896] Building FormalConjectures.ReviewIsolation (11s)\ntrace: .> LEAN_PATH=/opt/review-cache/.lake/packages/Cli/.lake/build/lib/lean:/opt/review-cache/.lake/packages/batteries/.lake/build/lib/lean:/opt/review-cache/.lake/packages/Qq/.lake/build/lib/lean:/opt/review-cache/.lake/packages/aesop/.lake/build/lib/lean:/opt/review-cache/.lake/packages/proofwidgets/.lake/build/lib/lean:/opt/review-cache/.lake/packages/importGraph/.lake/build/lib/lean:/opt/review-cache/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/opt/review-cache/.lake/packages/plausible/.lake/build/lib/lean:/opt/review-cache/.lake/packages/mathlib/.lake/build/lib/lean:/opt/review-cache/.lake/build/lib/lean /opt/lean/bin/lean /opt/review-cache/FormalConjectures/ReviewIsolation.lean -o /opt/review-cache/.lake/build/lib/lean/FormalConjectures/ReviewIsolation.olean -i /opt/review-cache/.lake/build/lib/lean/FormalConjectures/ReviewIsolation.ilean -c /opt/review-cache/.lake/build/ir/FormalConjectures/ReviewIsolation.c --setup /opt/review-cache/.lake/build/ir/FormalConjectures/ReviewIsolation.setup.json --json\nerror: FormalConjectures/ReviewIsolation.lean:21:32: Tactic `assumption` failed\n\n\u22a2 False\nerror: Lean exited with code 1\nSome required targets logged failures:\n- FormalConjectures.ReviewIsolation\n",
+      "stderr": "WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested\nerror: build failed\n",
+      "timed_out": false,
+      "environment": {
+        "isolation": "fresh_container",
+        "image": "sha256:e6750e0d24e5a27c4ff5c7c77f970cb48e3d161cd3b681ffbd0f2364d4766805",
+        "module": "FormalConjectures.ReviewIsolation",
+        "candidate_path": "FormalConjectures/ReviewIsolation.lean",
+        "candidate_sha256": "c029c1b93dabdeb59d77b52208fba729b81aafc65a376ada78271c1a5de142dd"
+      },
+      "wall_seconds": 21.016
+    },
+    "poison_scratch": {
+      "evidence": "evidence/tool-002.json",
+      "kind": "command",
+      "command": [
+        "timeout",
+        "-k",
+        "2",
+        "180",
+        "sh",
+        "-c",
+        "printf '%s\\n' 'name = \"reviewProbe\"' '[[lean_lib]]' 'name = \"FormalConjectures.ReviewIsolation\"' 'roots = []' > lakefile.toml; lake --wfail build FormalConjectures.ReviewIsolation"
+      ],
+      "exit_code": 0,
+      "stdout": "Build completed successfully (1 job).\n",
+      "stderr": "",
+      "timed_out": false,
+      "wall_seconds": 1.021
+    },
+    "isolated_after_poison": {
+      "evidence": "evidence/tool-003.json",
+      "kind": "build",
+      "command": [
+        "timeout",
+        "-k",
+        "2",
+        "180",
+        "lake",
+        "--wfail",
+        "build",
+        "FormalConjectures.ReviewIsolation"
+      ],
+      "exit_code": 1,
+      "stdout": "\u2716 [8896/8896] Building FormalConjectures.ReviewIsolation (4.8s)\ntrace: .> LEAN_PATH=/opt/review-cache/.lake/packages/Cli/.lake/build/lib/lean:/opt/review-cache/.lake/packages/batteries/.lake/build/lib/lean:/opt/review-cache/.lake/packages/Qq/.lake/build/lib/lean:/opt/review-cache/.lake/packages/aesop/.lake/build/lib/lean:/opt/review-cache/.lake/packages/proofwidgets/.lake/build/lib/lean:/opt/review-cache/.lake/packages/importGraph/.lake/build/lib/lean:/opt/review-cache/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/opt/review-cache/.lake/packages/plausible/.lake/build/lib/lean:/opt/review-cache/.lake/packages/mathlib/.lake/build/lib/lean:/opt/review-cache/.lake/build/lib/lean /opt/lean/bin/lean /opt/review-cache/FormalConjectures/ReviewIsolation.lean -o /opt/review-cache/.lake/build/lib/lean/FormalConjectures/ReviewIsolation.olean -i /opt/review-cache/.lake/build/lib/lean/FormalConjectures/ReviewIsolation.ilean -c /opt/review-cache/.lake/build/ir/FormalConjectures/ReviewIsolation.c --setup /opt/review-cache/.lake/build/ir/FormalConjectures/ReviewIsolation.setup.json --json\nerror: FormalConjectures/ReviewIsolation.lean:21:32: Tactic `assumption` failed\n\n\u22a2 False\nerror: Lean exited with code 1\nSome required targets logged failures:\n- FormalConjectures.ReviewIsolation\n",
+      "stderr": "WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested\nerror: build failed\n",
+      "timed_out": false,
+      "environment": {
+        "isolation": "fresh_container",
+        "image": "sha256:e6750e0d24e5a27c4ff5c7c77f970cb48e3d161cd3b681ffbd0f2364d4766805",
+        "module": "FormalConjectures.ReviewIsolation",
+        "candidate_path": "FormalConjectures/ReviewIsolation.lean",
+        "candidate_sha256": "c029c1b93dabdeb59d77b52208fba729b81aafc65a376ada78271c1a5de142dd"
+      },
+      "wall_seconds": 12.14
+    },
+    "valid_candidate": {
+      "evidence": "evidence/tool-004.json",
+      "kind": "build",
+      "command": [
+        "timeout",
+        "-k",
+        "2",
+        "180",
+        "lake",
+        "--wfail",
+        "build",
+        "FormalConjectures.ReviewIsolation"
+      ],
+      "exit_code": 0,
+      "stdout": "\u2714 [8896/8896] Built FormalConjectures.ReviewIsolation (4.8s)\nBuild completed successfully (8896 jobs).\n",
+      "stderr": "WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested\n",
+      "timed_out": false,
+      "environment": {
+        "isolation": "fresh_container",
+        "image": "sha256:e6750e0d24e5a27c4ff5c7c77f970cb48e3d161cd3b681ffbd0f2364d4766805",
+        "module": "FormalConjectures.ReviewIsolation",
+        "candidate_path": "FormalConjectures/ReviewIsolation.lean",
+        "candidate_sha256": "65511bef1e30aa76f0e06df7db4e1a9c14ed97cad6a496446ab3d3a2c85434d7"
+      },
+      "wall_seconds": 12.282
+    },
+    "valid_candidate_repeat": {
+      "evidence": "evidence/tool-005.json",
+      "kind": "build",
+      "command": [
+        "timeout",
+        "-k",
+        "2",
+        "180",
+        "lake",
+        "--wfail",
+        "build",
+        "FormalConjectures.ReviewIsolation"
+      ],
+      "exit_code": 0,
+      "stdout": "\u2714 [8896/8896] Built FormalConjectures.ReviewIsolation (4.5s)\nBuild completed successfully (8896 jobs).\n",
+      "stderr": "WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested\n",
+      "timed_out": false,
+      "environment": {
+        "isolation": "fresh_container",
+        "image": "sha256:e6750e0d24e5a27c4ff5c7c77f970cb48e3d161cd3b681ffbd0f2364d4766805",
+        "module": "FormalConjectures.ReviewIsolation",
+        "candidate_path": "FormalConjectures/ReviewIsolation.lean",
+        "candidate_sha256": "65511bef1e30aa76f0e06df7db4e1a9c14ed97cad6a496446ab3d3a2c85434d7"
+      },
+      "wall_seconds": 11.559
+    }
+  },
+  "tooling": {
+    "check_build_isolation.py": "07e9389704f87ad2349b2364484a51af5b4d2ad2f7ccb4741191fb0b854442b3",
+    "workspace_server.py": "cda311658001dca3235d98f7e350ea372eaac461df44f994d1ea3a82f45a8af9"
+  }
+}

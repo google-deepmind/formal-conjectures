@@ -11,6 +11,12 @@ class Build(build_py):
         dest = Path(self.build_lib)/'conjectures/resources/review'
         shutil.copytree(source, dest, ignore=shutil.ignore_patterns('evals'), dirs_exist_ok=True)
         shutil.copytree(Path('.agents/skills/conjectures'), dest.parent/'agent-skill', dirs_exist_ok=True)
-        for name in ('README.md','RELEASE.md'):
+        for name in ('README.md','RELEASE.md','EVALUATIONS.md'):
             shutil.copy2(Path('toolkit')/name, dest.parent/name)
+        native = Path('comparator')
+        if (native/'ExportProblem.lean').is_file():
+            target = dest.parent/'exporter'
+            target.mkdir(exist_ok=True)
+            for name in ('ExportProblem.lean','WorkspaceTest.lean','export_problem.py'):
+                shutil.copy2(native/name,target/name)
 setup(cmdclass={'build_py': Build})

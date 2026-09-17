@@ -1,16 +1,16 @@
 # RC3 pilot: adjudication packet
 
-Human assessment is pending. This is one development-exposed existing-agent attempt per case, not a blinded accuracy benchmark. No paid model calls were made. Model identity, token usage and per-case effort were unavailable. All five independent builds passed.
+William Blair reviewed this packet on 11 September 2026 and replied “yeah looks good.” This records qualitative approval of the packet; no per-case scores, missed-issue counts or effort measurements were supplied. This is one development-exposed existing-agent attempt per case, not a blinded accuracy benchmark. No paid model calls were made. Model identity, token usage and per-case effort were unavailable. All five independent builds passed.
 
 The frozen manifest SHA-256 is `63272348d7e43ea80d7e5755243859b6a1daefec69b65a678c98d1a9ec8ce834`. Original records remain in `.conjectures/qualification/rc3/` and `.conjectures/runs/`. #5391 was excluded before attempts because its shared-utility changes exceeded supported scope; #5344 replaced it. No case was replaced after an attempt.
 
-| Case | Provisional result | Coverage gap | Human assessment |
+| Case | Provisional result | Coverage gap | Assessment |
 |---|---|---|---|
-| [#5402](https://github.com/google-deepmind/formal-conjectures/pull/5402) | pass | None identified | Pending |
-| [#5397](https://github.com/google-deepmind/formal-conjectures/pull/5397) | incomplete | Fox–Kleitman primary source absent | Pending |
-| [#4862](https://github.com/google-deepmind/formal-conjectures/pull/4862) | pass | None identified | Pending |
-| [#5091](https://github.com/google-deepmind/formal-conjectures/pull/5091) | incomplete | Exact registry receipt and predicate bridge unverified | Pending |
-| [#5344](https://github.com/google-deepmind/formal-conjectures/pull/5344) | pass | None identified | Pending |
+| [#5402](https://github.com/google-deepmind/formal-conjectures/pull/5402) | pass | None identified | Packet approved; unscored |
+| [#5397](https://github.com/google-deepmind/formal-conjectures/pull/5397) | incomplete | Fox–Kleitman primary source absent | Packet approved; unscored |
+| [#4862](https://github.com/google-deepmind/formal-conjectures/pull/4862) | pass | None identified | Packet approved; unscored |
+| [#5091](https://github.com/google-deepmind/formal-conjectures/pull/5091) | incomplete | Exact registry receipt and predicate bridge unverified | Packet approved; unscored |
+| [#5344](https://github.com/google-deepmind/formal-conjectures/pull/5344) | pass | None identified | Packet approved; unscored |
 
 No actionable findings or counterexamples were established. That does not establish an absence of missed issues. Assess each case for missed issues, usefulness and review effort; assess the two coverage questions for whether they are useful and appropriately scoped.
 
@@ -29,7 +29,7 @@ Frozen sources:
 - [https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/); retained record SHA-256 `6991173178b74b385d64d42855c666fa2d012934fdcb591f12f4a3a771103fad`.
 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0); retained record SHA-256 `585e251ab92ddf7e487f84f9b87ddcf8a2cfaea289f9290598ee6e61c747e827`.
 
-Human assessment: **pending**. Supported findings: —. Unsupported findings: —. Missed issues: —. Useful: —. Effort: —.
+Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.
 
 ## #5397
 
@@ -41,7 +41,7 @@ Frozen sources:
 - [https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.21](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.21); retained record SHA-256 `853c825a4794bb7f1f669567bfdc04a2546de5681010bfe820b336a2fb7e46b1`.
 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0); retained record SHA-256 `eb364781cbe9125ea858145f5cbe92f45ad6ff539bf43803f833b1b1dbac9bde`.
 
-Human assessment: **pending**. Supported findings: —. Unsupported findings: —. Missed issues: —. Useful: —. Effort: —.
+Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.
 
 ## #4862
 
@@ -54,7 +54,7 @@ Frozen sources:
 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0); retained record SHA-256 `dafe52bd0b800f4962c36e0e31101e18f145e02f5b45b0daede0558a7cd52901`.
 - [https://www.erdosproblems.com/latex/973](https://www.erdosproblems.com/latex/973); retained record SHA-256 `d5357c8a33506838a08bcf8a6d3c4460d7edf9839d4cd33e295ca12b0664327e`.
 
-Human assessment: **pending**. Supported findings: —. Unsupported findings: —. Missed issues: —. Useful: —. Effort: —.
+Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.
 
 ## #5091
 
@@ -69,7 +69,7 @@ Frozen sources:
 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0); retained record SHA-256 `b77e62aee047d40c8a4e4d15d95e9145bc3badcb854bec8852a91b8232217515`.
 - [https://www.erdosproblems.com/latex/730](https://www.erdosproblems.com/latex/730); retained record SHA-256 `177a708c7174239551d2578d1a4e81bc32262230ccbe51b4a6c958e55974d1d7`.
 
-Human assessment: **pending**. Supported findings: —. Unsupported findings: —. Missed issues: —. Useful: —. Effort: —.
+Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.
 
 ## #5344
 
@@ -81,4 +81,4 @@ Frozen sources:
 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0); retained record SHA-256 `faa83ca08ee352427199bbc5559c76125fb29d38d8a2233e1cda1a969a1f72e2`.
 - [https://www.erdosproblems.com/latex/295](https://www.erdosproblems.com/latex/295); retained record SHA-256 `81539914c3ae23a091ab4afacb0ae7e9bd84e01c8b56245e2a65f8ee8e11667d`.
 
-Human assessment: **pending**. Supported findings: —. Unsupported findings: —. Missed issues: —. Useful: —. Effort: —.
+Human assessment: **packet approved, unscored** (11 September 2026). Supported findings, unsupported findings, missed issues, usefulness and effort were not separately scored.

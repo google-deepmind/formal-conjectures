@@ -1,5 +1,7 @@
 """Offline boundary tests; these do not establish hosted Actions qualification."""
 
+import io
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,6 +9,7 @@ from unittest.mock import patch
 
 try:
     import review_workflow as workflow
+    import review_model_api as adapter
     from conjectures import execution as w
 except ModuleNotFoundError as error:
     if error.name not in ("review_report", "review_eval"):
@@ -69,6 +72,45 @@ class WorkflowTests(unittest.TestCase):
     def test_timeout_is_an_execution_error(self):
         with patch.object(w.subprocess, "run", side_effect=w.subprocess.TimeoutExpired("docker", 70)):
             self.assertIsNone(w.execute("container", ["lake", "build"])["exit_code"])
+
+    def test_model_tools_remain_container_calls_and_keep_evidence(self):
+        request = {"id": "r", "scope": ["FormalConjectures/Example.lean"], "sources": []}
+        answer = {"context_policy": "fresh", "prior_reviews": [], "reviewer": "invented"}
+        responses = [
+            {
+                "status": "completed",
+                "output": [
+                    {
+                        "type": "function_call",
+                        "name": "execute",
+                        "arguments": json.dumps({"command": "cat FormalConjectures/Example.lean"}),
+                        "call_id": "c",
+                    }
+                ],
+            },
+            {
+                "status": "completed",
+                "model": "actual-model",
+                "output": [
+                    {"type": "message", "content": [{"type": "output_text", "text": json.dumps(answer)}]}
+                ],
+            },
+        ]
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            adapter.os.environ, {"OPENAI_API_KEY": "test"}
+        ), patch.object(
+            adapter.urllib.request, "urlopen", side_effect=[io.BytesIO(json.dumps(x).encode()) for x in responses]
+        ), patch.object(
+            __import__("conjectures.execution", fromlist=["execute"]), "execute", return_value={"exit_code": 0, "output": "source"}
+        ) as execute:
+            result = adapter.model_review(request, "isolated-container", Path(directory), "requested-model")
+            self.assertEqual(result["reviewer"], "actual-model")
+            execute.assert_called_once_with(
+                "isolated-container", ["sh", "-c", "cat FormalConjectures/Example.lean"], 60
+            )
+            self.assertTrue((Path(directory) / "tool-001.json").is_file())
+            self.assertEqual(len(list(Path(directory).glob("model-response-*.json"))), 2)
+
 
 
 if __name__ == "__main__":

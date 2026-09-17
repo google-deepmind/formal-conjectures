@@ -1,0 +1,27 @@
+{
+  "kind": "development infrastructure qualification",
+  "recorded_at": "2026-09-10",
+  "harbor_commit": "191d1b989bbba1d77c2db23e17aec308d7c08046",
+  "harbor_version": "0.22.0",
+  "client_commit": "e684c58b5",
+  "agent": "nop",
+  "model_calls": 0,
+  "base_image": "python@sha256:d09d15e60962ca365d1cd544a48773bac9d33f2fb1b00f2aa0deec78ade7dc31",
+  "fixture": "Generated separate-verifier task, with an infrastructure-only Python image plus bash/git/libseccomp and the toolkit wheel. Trusted /opt/fc and proof tools deliberately absent. This is not a qualified proof image.",
+  "wheel_sha256": "0a9302eb59406b0c7dbdc2862aa078370449bf600f00d44b260ae64720363bba",
+  "fc_result": {
+    "detail": "fatal: cannot change to '/opt/fc': No such file or directory\n",
+    "finished_at": "2026-09-10T14:40:16.068023+00:00",
+    "policy_outcome": "not_evaluated",
+    "reason": "execution_error",
+    "schema_version": "fc.proof-eval-result.v1",
+    "started_at": "2026-09-10T14:40:16.065147+00:00",
+    "status": "error",
+    "suite_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "task": "missing-tools"
+  },
+  "harbor_exception": "RewardFileNotFoundError",
+  "reward_present": false,
+  "submission_artifact_sha256": "f908a2e2c1cb27608827facb7308b4974bca6cf97b8486137691f0bcb797b21a",
+  "conclusion": "Actual Harbor task execution retained the infrastructure error and submission artifact without a mathematical reward. Successful proof grading remains unqualified."
+}

@@ -140,6 +140,22 @@ noncomputable def IsOptimal {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) : 
   let m := μFamily p F
   edgeBoundary n p F ≤ 1000 * Real.log (1 / p) * (m * Real.logb p m / p)
 
+/--
+Following Kahn–Kalai, a family is $(C \log(1/p), p)$-optimal if the isoperimetric inequality
+(IR) is sharp up to the multiplicative constant $C \log(1/p)$, i.e.
+$$I^p(\mathcal F) \le \frac{C}{p} \cdot \mu_p(\mathcal F) \cdot \log \frac{1}{\mu_p(\mathcal F)}.$$
+`IsOptimal` is the special case $C = 1000$.
+-/
+noncomputable def IsOptimalWith {n : ℕ} (C p : ℝ) (F : Finset (Finset (Fin n))) : Prop :=
+  let m := μFamily p F
+  edgeBoundary n p F ≤ C * Real.log (1 / p) * (m * Real.logb p m / p)
+
+/-- `IsOptimal` is `IsOptimalWith` for the constant $C = 1000$. -/
+@[category test, AMS 5]
+theorem isOptimal_iff_isOptimalWith {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) :
+    IsOptimal p F ↔ IsOptimalWith 1000 p F :=
+  Iff.rfl
+
 
 /--
 Problem: For every monotone increasing family $F$, given an interval $[s,t]$ of real numbers so
@@ -188,16 +204,17 @@ theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
   sorry
 
 /--
-Weaker version proven by Kahn–Kalai: the same conclusion holds when $1000 \log n$ is replaced by
-$C_\varepsilon \, n^\varepsilon$ for every fixed $\varepsilon > 0$.
+Weaker version proven by Kahn–Kalai (2006): for every fixed $\varepsilon > 0$ there is a constant
+$C = C_\varepsilon$ such that for every monotone increasing family $F$ with critical probability
+$t$, i.e. $\mu_t(F) = 1/2$, there is some $p \in [n^{-\varepsilon} t, t]$ for which $F$ is
+$(C \log(1/p), p)$-optimal.
 -/
 @[category research solved, AMS 5 60]
 theorem mathoverflow_10799.variants.weak_kahn_kalai :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
-    (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
-    (_ : t / s > C * (n : ℝ) ^ ε),
-    ∃ p, s ≤ p ∧ p ≤ t ∧ IsOptimal p F := by
+    (t : ℝ) (_ : 0 < t) (_ : t < 1) (_ : μFamily t F = 1 / 2),
+    ∃ p, (n : ℝ) ^ (-ε) * t ≤ p ∧ p ≤ t ∧ IsOptimalWith C p F := by
   sorry
 
 /--

@@ -82,6 +82,15 @@ def parser():
         if op=='install':s.add_argument('--dir',type=Path,required=True,help='Parent skill discovery directory, e.g. .agents/skills or .claude/skills')
     q=command('doctor','Check readiness without changing configuration','conjectures doctor --for review')
     q.add_argument('--for',dest='capability',choices=['browse','review','verify','evidence'],help='Return readiness for this capability')
+    q=command('eval','Export frozen proof tasks or inspect retained evaluation results (experimental)','conjectures eval export suite.json --format harbor --out tasks')
+    r=q.add_subparsers(dest='operation',required=True)
+    s=command('export','Generate tasks for an external agent harness; launches no model',parent=r)
+    s.add_argument('suite',type=Path,help='Frozen fc.proof-suite.v1 JSON, including exact source and image pins')
+    s.add_argument('--format',choices=['harbor'],default='harbor')
+    s.add_argument('--out',type=Path,required=True,help='New output task directory')
+    s.add_argument('--catalog',type=Path,help='Native catalog matching the suite source revision')
+    s=command('summarize','Count retained verifier attempts, keeping errors and manual assessment separate',parent=r)
+    s.add_argument('directory',type=Path,help='Harness output directory containing fc-result.json artifacts')
     for name in ('find','show'):
         q=command(name,'Search the catalog' if name=='find' else 'Read a statement, its variants, sources, and evidence',f'conjectures {name} erdos/730')
         q.add_argument('target',help='Search text, exact declaration, or erdos/NUMBER')
@@ -137,8 +146,13 @@ def parser():
             s.add_argument('--image',help='Existing image pinned by SHA-256 digest')
             s.add_argument('--source-ref',default='main',help='Reviewed upstream main revision used to build the image')
         else:
-            s.add_argument('--repository',required=True,help='Existing GitHub OWNER/REPO')
-            s.add_argument('--ref' if op=='verify' else '--branch',required=True,help='Qualified exact executor commit' if op=='verify' else 'Existing data-only branch')
+            s.add_argument('--repository',required=op=='evidence',help='Existing GitHub OWNER/REPO')
+            s.add_argument('--ref' if op=='verify' else '--branch',required=op=='evidence',help='Qualified exact executor commit' if op=='verify' else 'Existing data-only branch')
+            if op=='verify':
+                s.add_argument('--local',action='store_true',help='Configure this unprivileged Linux host instead of GitHub (experimental)')
+                s.add_argument('--toolkit',type=Path,help='Clean trusted toolkit checkout used by the Linux controller')
+                s.add_argument('--tools',type=Path,help='Directory containing the pinned generator, comparator, landrun and nanoda checkouts, already built')
+                s.add_argument('--build-tools',action='store_true',help='Explicitly acquire and build the pinned Linux tools before configuring them')
             if op=='evidence':
                 s.add_argument('--publisher-repository',help='PR-owning repository with the designated publisher installed')
                 s.add_argument('--publisher-ref',help='Qualified exact publisher commit, with a published tag')

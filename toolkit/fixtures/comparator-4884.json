@@ -1,0 +1,27 @@
+{
+  "authority_effect": "none",
+  "invocation": {
+    "exit_code": 1,
+    "outcome": "error",
+    "reason": "nonzero_exit"
+  },
+  "nonclaims": [
+    "not_an_acceptance_or_merge_decision",
+    "not_a_claim_of_mathematical_truth",
+    "terminal_text_was_not_used_as_a_property_verdict"
+  ],
+  "policy_result": {
+    "outcome": "not_evaluated"
+  },
+  "result_parse": {
+    "outcome": "not_attempted",
+    "reason": "invocation_not_successful"
+  },
+  "schema": "formal-conjectures.comparator-outcome.v1",
+  "terminal_evidence": {
+    "stderr_bytes": 79,
+    "stderr_sha256": "sha256:b117865cc14cfce0cfc65c81d9dc82b9f4dec60c8c3da7bb33349429cfe99002",
+    "stdout_bytes": 1388,
+    "stdout_sha256": "sha256:aa3c8cc3e760c4914019b55ba1c49574f4ab371cacb671db27021cd6f9daef9b"
+  }
+}
