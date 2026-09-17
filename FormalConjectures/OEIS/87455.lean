@@ -35,20 +35,21 @@ def a : ℕ → ℤ
   | 1 => 1
   | n + 2 => 2 * a (n + 1) - 3 * a n
 
-/-- The leading decimal digit of a natural number. -/
-def leadingDigit (n : ℕ) : ℕ :=
-  n / 10 ^ ((Nat.digits 10 n).length - 1)
+/-- The decimal significand of an integer `x`: the unique real number $S(x) \in [1, 10)$ such that
+$|x| = S(x) \cdot 10^k$ for some integer $k$, with the convention $S(0) = 0$. -/
+noncomputable def significand (x : ℤ) : ℝ :=
+  (x.natAbs : ℝ) / 10 ^ ((Nat.digits 10 x.natAbs).length - 1)
 
-/-- A sequence of integers satisfies Benford's law if for each digit $d \in \{1, \dots, 9\}$,
-the asymptotic relative frequency of terms with leading decimal digit $d$ is $\log_{10}(1 + 
-    1/d)$. -/
+/-- A sequence of integers satisfies Benford's law if, for every $t \in [1, 10)$, the asymptotic
+relative frequency of terms whose decimal significand is at most $t$ equals $\log_{10} t$
+(Berger-Hill). This is strictly stronger than the law for the leading digit alone. -/
 def SatisfiesBenford (s : ℕ → ℤ) : Prop :=
-  ∀ d ∈ Finset.Icc 1 9,
+  ∀ t ∈ Set.Ico (1 : ℝ) 10,
     Filter.Tendsto
       (fun N : ℕ =>
-        ((Finset.range N).filter (fun n => leadingDigit (s n).natAbs = d)).card / (N : ℝ))
+        ((Finset.range N).filter (fun n => significand (s n) ≤ t)).card / (N : ℝ))
       Filter.atTop
-      (nhds (Real.log (1 + 1 / (d : ℝ)) / Real.log 10))
+      (nhds (Real.logb 10 t))
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]

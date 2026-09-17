@@ -55,9 +55,13 @@ def productSet {n m : ℕ} (A : Set (Fin n → ℝ)) (B : Set (Fin m → ℝ)) :
   {x | (fun i ↦ x (Fin.castAdd m i)) ∈ A ∧ (fun j ↦ x (Fin.natAdd n j)) ∈ B}
 
 /-- Spectrality of a product with an `n`-dimensional convex body forces spectrality of its
-bounded, measurable `m`-dimensional right factor. -/
+bounded, measurable `m`-dimensional right factor.
+
+Following [KLM2023, §1.1], a convex body is a compact convex set with nonempty interior;
+Mathlib's `ConvexBody` does not require the latter, so it is imposed explicitly here. -/
 def spectralProductImpliesRightSpectral (n m : ℕ) : Prop :=
   ∀ (A : ConvexBody (Fin n → ℝ)) (B : Set (Fin m → ℝ)),
+    (interior (A : Set (Fin n → ℝ))).Nonempty →
     Bornology.IsBounded B → MeasurableSet B →
       isSpectral (productSet (A : Set (Fin n → ℝ)) B) → isSpectral B
 

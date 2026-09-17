@@ -72,7 +72,8 @@ Solution: yes.
 Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmetic progressions_
 -/
 
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos219.lean"]
 theorem erdos_219 : answer(True) ↔ ∀ N : ℕ, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l := by
   sorry
 
