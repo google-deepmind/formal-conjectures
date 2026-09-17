@@ -1,5 +1,6 @@
 """Pinned workspace generation and qualified GitHub verification dispatch."""
 from .ui import stage, log_location
+import contextlib
 import json
 import re
 import shutil
@@ -104,10 +105,10 @@ def initialize(root,args,cfg):
     except BaseException as error:
         finish(directory,record,'error',reason=getattr(error,'reason','export_error'),detail=str(error));raise
 
-def generate(root,problem,repository,revision,artifact,generator=None):
-    """Shared deterministic export for contributor workspaces and evaluation tasks."""
+@contextlib.contextmanager
+def prepared_source(root,repository,revision):
+    """One exact source checkout with pinned dependencies, reusable for every declaration at that revision."""
     from . import exporter
-    generator=generator or checkout_tool(root or user_cache()/'operator','generator')
     with tempfile.TemporaryDirectory(prefix='fc-export-source-') as temp:
         source=Path(temp).resolve()/'source'
         if root is None:command(['git','init',source])
@@ -117,13 +118,26 @@ def generate(root,problem,repository,revision,artifact,generator=None):
         exporter.install_native(source)
         stage('Acquiring pinned source dependencies and the Mathlib cache')
         command(['lake','exe','cache','get'],cwd=source,timeout=1200)
-        previous=exporter.ROOT
-        try:
-            exporter.ROOT=source
-            stage('Exporting the exact declaration and generating its workspace')
-            return exporter.export(source/problem['githubPath'],problem['theorem'],artifact,generator,
-                                   revision,f'https://github.com/{repository}.git')
-        finally:exporter.ROOT=previous
+        yield source
+
+
+def generate(root,problem,repository,revision,artifact,generator=None,source=None):
+    """Shared deterministic export for contributor workspaces and evaluation tasks."""
+    from . import exporter
+    generator=generator or checkout_tool(root or user_cache()/'operator','generator')
+    if source is None:
+        with prepared_source(root,repository,revision) as prepared:
+            return generate(root,problem,repository,revision,artifact,generator,prepared)
+    # Export only writes build outputs into the checkout, so a prepared source is reusable.
+    if git(source,'rev-parse','HEAD').decode().strip()!=revision:
+        raise Failure('source_binding_mismatch','Prepared source checkout does not match the requested revision',3)
+    previous=exporter.ROOT
+    try:
+        exporter.ROOT=source
+        stage('Exporting the exact declaration and generating its workspace')
+        return exporter.export(source/problem['githubPath'],problem['theorem'],artifact,generator,
+                               revision,f'https://github.com/{repository}.git')
+    finally:exporter.ROOT=previous
 
 
 def verify(root,candidate,cfg):

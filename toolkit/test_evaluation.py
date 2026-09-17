@@ -1,3 +1,4 @@
+import contextlib
 import copy
 import tempfile
 import tomllib
@@ -68,21 +69,28 @@ class EvaluationTests(unittest.TestCase):
             data={'schemaVersion':2,'provenance':{'source':suite['source']},'problems':[
                 {'theorem':'Fixture.plain','module':'FormalConjectures.Example','statement':'True'}]}
             args=SimpleNamespace(suite=suite_path,out=root/'tasks',catalog=None)
-            def generate(repo,problem,repository,revision,artifact):
+            prepared=[]
+            @contextlib.contextmanager
+            def prepared_source(repo,repository,revision):
+                prepared.append((repository,revision));yield root/'checkout'
+            def generate(repo,problem,repository,revision,artifact,source=None):
                 self.assertEqual(repository,suite['source']['repository']);self.assertEqual(revision,'a'*40)
+                self.assertEqual(source,root/'checkout')
                 workspace=artifact/'workspace';workspace.mkdir(parents=True)
                 core.save(workspace/'fc-provenance.json',{'source':{'repository':'https://github.com/fixture/fc.git',
                     'commit':revision,'module':problem['module'],'path':problem['githubPath'],'declaration':problem['theorem']}})
                 core.save(workspace/'config.json',{'definition_names':['answer']})
                 (workspace/'Submission.lean').write_text('def answer := sorry')
                 return workspace
-            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=generate),patch.object(proof,'start_run',side_effect=AssertionError('No operator run')):
+            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=generate),patch.object(proof,'prepared_source',prepared_source),patch.object(proof,'start_run',side_effect=AssertionError('No operator run')):
                 value=evaluation.export(None,args)
+            # One checkout serves every case at the frozen source revision.
+            self.assertEqual(prepared,[(suite['source']['repository'],'a'*40)])
             target=core.rr.read_json(args.out/'plain/tests/target.json')
             self.assertTrue(target['semantic_assessment_required'])
             self.assertTrue((args.out/'manifest.json').is_file())
             self.assertFalse(list(args.out.rglob('.conjectures')))
             args.out=root/'failed'
-            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=core.Failure('export_failed','fixture',3)):
+            with patch.object(catalog,'load',return_value=data),patch.object(proof,'generate',side_effect=core.Failure('export_failed','fixture',3)),patch.object(proof,'prepared_source',prepared_source):
                 with self.assertRaises(core.Failure):evaluation.export(None,args)
             self.assertFalse(args.out.exists())
