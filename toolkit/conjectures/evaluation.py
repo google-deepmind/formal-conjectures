@@ -48,7 +48,8 @@ def export(root,args):
     out=args.out.resolve()
     if out.exists():raise Failure('output_exists','Select a new export directory; existing tasks are preserved.')
     out.parent.mkdir(parents=True,exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.fc-eval-',dir=out.parent) as temp:
+    source=suite['source']
+    with tempfile.TemporaryDirectory(prefix='.fc-eval-',dir=out.parent) as temp,proof.prepared_source(root,source['repository'],source['commit']) as checkout:
         staging=Path(temp)/'tasks';staging.mkdir()
         for case in suite['cases']:
             task=staging/case['id'];task.mkdir()
@@ -56,7 +57,7 @@ def export(root,args):
             from .catalog_data import module_path
             problem=selected[case['id']]
             problem={**problem,'githubPath':problem.get('githubPath') or module_path(problem['module'])}
-            generated=proof.generate(root,problem,suite['source']['repository'],suite['source']['commit'],Path(temp)/case['id'])
+            generated=proof.generate(root,problem,source['repository'],source['commit'],Path(temp)/case['id'],source=checkout)
             shutil.copytree(generated,workspace)
             provenance=rr.read_json(workspace/'fc-provenance.json')
             proof.write_handoff(workspace,provenance)
