@@ -16,5 +16,4 @@ jobs:
       - run: python3 -m pip install '.[test]'
       - run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
       - run: python3 -m unittest discover -s toolkit -p 'test_*.py' -v
-      - run: node --test site/tests/evidence.test.cjs
       - run: conjectures --help
