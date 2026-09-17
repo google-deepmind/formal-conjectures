@@ -36,8 +36,12 @@ If $T$ is a tree on $n$ vertices then
 $$R(T) \leq 2n-2.$$
 
 This problem is #14 in Ramsey Theory in the graphs problem collection.
+
+Solved: the bound follows from the Erdős–Sós theorem (Erdős problem 548) by the pigeonhole
+principle, as noted on the problem page.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/zhangjun725/erdos557/blob/c4e0ab13027f8bb50defade11cf8a53c7b8b0ba9/Erdos557/Erdos547.lean#L84"]
 theorem erdos_547 :
     ∀ (n : ℕ) (hn : 2 ≤ n) (T : SimpleGraph (Fin n)),
       T.IsTree → SimpleGraph.diagonalGraphRamsey T ≤ 2 * n - 2 := by
