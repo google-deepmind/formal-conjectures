@@ -35,7 +35,7 @@ theorem lovaszThetaFunction_isEmpty [IsEmpty α] (G : SimpleGraph α) [Decidable
   have hset : {(Matrix.IsHermitian.maxEigenvalue hA) | (A : Matrix α α ℝ) (hA : A.IsHermitian)
       (_ : ∀ i, A i i = 1) (_ : ∀ i j, ¬G.Adj i j → A i j = 1)} = {0} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_setOf, Set.mem_singleton_iff]
     constructor
     · rintro ⟨A, hA, _, _, rfl⟩
       simp [Matrix.IsHermitian.maxEigenvalue]
@@ -131,7 +131,7 @@ theorem lovaszThetaFunction_bot :
     have hset : {(Matrix.IsHermitian.maxEigenvalue hA) | (A : Matrix α α ℝ) (hA : A.IsHermitian)
         (_ : ∀ i, A i i = 1) (_ : ∀ i j, ¬(⊥ : SimpleGraph α).Adj i j → A i j = 1)} = {hJ.maxEigenvalue} := by
       ext x
-      simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+      simp only [Set.mem_setOf, Set.mem_singleton_iff]
       constructor
       · rintro ⟨A, hA, _, hnonadj, rfl⟩
         have hAJ : A = J := by
