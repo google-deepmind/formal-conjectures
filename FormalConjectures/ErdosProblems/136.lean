@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 136
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [JoMu22] Joos, F. and Mubayi, D., *Ramsey theory constructions from hypergraph matchings*.
   arXiv:2208.12563 (2022).
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
