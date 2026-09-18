@@ -22,6 +22,8 @@ import FormalConjecturesUtil
 *References:*
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
+  - [Pr26] Price, L. (with GPT Pro), *Erdős Problem 730*,
+    [proof claim](https://www.erdosproblems.com/forum/thread/730/proof-claims#proof-claim-58) (2026).
 -/
 namespace Erdos730
 
@@ -32,9 +34,15 @@ abbrev S :=
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
+
+The answer is yes: Price [Pr26] (with GPT Pro) proved the stronger statement that for all $x$
+there are $\gg x^{1/2}$ many $n \le x$ such that $\binom{2n}{n}$ and $\binom{2n+2}{n+1}$ have
+the same set of prime divisors. The linked formal proof (Blair, with Codex and Claude Code)
+establishes `S.Infinite` for a verbatim copy of `S`.
 -/
-@[category research open, AMS 11]
-theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos730.lean#L44"]
+theorem erdos_730 : answer(True) ↔ S.Infinite := by
   sorry
 
 /--
