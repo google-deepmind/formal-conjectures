@@ -77,7 +77,8 @@ arXiv:2407.04226 (2024).
 
 Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos442.lean#L995"]
 theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
       1 / x.maxLogOne.maxLogOne * ∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) atTop atTop →

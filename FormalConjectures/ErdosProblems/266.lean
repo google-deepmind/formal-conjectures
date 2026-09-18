@@ -35,7 +35,8 @@ This was disproven by Kovač and Tao in [KoTa24].
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos266.lean#L306"]
 theorem erdos_266 :
     ¬ ∀ (a : ℕ → ℕ), ((∀ n : ℕ, a n ≥ 1) ∧ Summable ((1 : ℝ) / a ·) →
       ∃ t ≥ (1 : ℕ), Irrational <| ∑' n, (1 : ℝ) / ((a n) + t)) := by
