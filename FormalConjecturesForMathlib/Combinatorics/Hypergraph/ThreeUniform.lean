@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Set.Card
 public import Mathlib.SetTheory.Cardinal.Basic
 public import Mathlib.SetTheory.Cardinal.Ordinal
 
@@ -38,6 +39,10 @@ gap for the special case of 3-uniform hypergraphs (every edge has exactly 3 vert
   a proper coloring (a `Cardinal`-valued chromatic number, distinguishing infinite values)
 - `ThreeUniformHypergraph.Appears` : sub-hypergraph embedding (injective vertex map
   carrying edges to edges)
+- `ThreeUniformHypergraph.deleteEdge`, `ThreeUniformHypergraph.deleteVertex` : deleting an edge,
+  or a vertex together with all edges containing it
+- `ThreeUniformHypergraph.degree` : the number of edges containing a vertex
+- `ThreeUniformHypergraph.IsTransversal` : a vertex set meeting every edge
 - `ThreeUniformHypergraph.IsTwoColorable` : vertex set has a 2-coloring with no monochromatic
   edge (also called Property B); the 3-uniform analogue of bipartiteness for graphs
 - `IsObligatory` : a finite hypergraph appears in every hypergraph of chromatic cardinal > ℵ₀
@@ -122,6 +127,25 @@ is 2-colorable as a graph. For 3-uniform hypergraphs, 2-colorability is a necess
 for being obligatory (every obligatory finite 3-uniform hypergraph is 2-colorable). -/
 def IsTwoColorable {V : Type} (F : ThreeUniformHypergraph V) : Prop :=
   ∃ f : V → Fin 2, F.IsProperColoring f
+
+/-- The hypergraph obtained from `H` by deleting the edge `e`. -/
+def deleteEdge {V : Type} (H : ThreeUniformHypergraph V) (e : Finset V) :
+    ThreeUniformHypergraph V where
+  edges := H.edges \ {e}
+  uniform _ hf := H.uniform _ hf.1
+
+/-- The hypergraph obtained from `H` by deleting the vertex `v` and every edge containing it. -/
+def deleteVertex {V : Type} (H : ThreeUniformHypergraph V) (v : V) : ThreeUniformHypergraph V where
+  edges := {e ∈ H.edges | v ∉ e}
+  uniform _ hf := H.uniform _ hf.1
+
+/-- The degree of a vertex `v` in `H`: the number of edges containing `v`. -/
+noncomputable def degree {V : Type} (H : ThreeUniformHypergraph V) (v : V) : ℕ∞ :=
+  {e ∈ H.edges | v ∈ e}.encard
+
+/-- A set of vertices `T` is a **transversal** of `H` if it meets every edge of `H`. -/
+def IsTransversal {V : Type} (H : ThreeUniformHypergraph V) (T : Finset V) : Prop :=
+  ∀ e ∈ H.edges, ∃ v ∈ e, v ∈ T
 
 end ThreeUniformHypergraph
 
