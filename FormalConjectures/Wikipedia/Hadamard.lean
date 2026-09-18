@@ -108,12 +108,59 @@ def H12 : Matrix (Fin 12) (Fin 12) ℝ :=
      1,  1, -1,  -1,  1,  1,  -1, -1,  1,  -1,  1, -1;
      1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
      1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
+/-- The integer matrix with the same entries as `H12`. -/
+def H12ℤ : Matrix (Fin 12) (Fin 12) ℤ :=
+!![  1,  1,  1,   1,  1,  1,   1,  1,  1,   1,  1,  1;
+     1,  1,  1,  -1, -1, -1,  -1, -1, -1,   1,  1,  1;
+     1,  1,  1,  -1, -1, -1,   1,  1,  1,  -1, -1, -1;
+     1, -1, -1,   1, -1, -1,  -1,  1,  1,  -1,  1,  1;
+     1, -1, -1,  -1,  1, -1,   1, -1,  1,   1, -1,  1;
+     1, -1, -1,  -1, -1,  1,   1,  1, -1,   1,  1, -1;
+     1, -1,  1,  -1,  1,  1,  -1,  1, -1,  -1, -1,  1;
+     1, -1,  1,   1, -1,  1,  -1, -1,  1,   1, -1, -1;
+     1, -1,  1,   1,  1, -1,   1, -1, -1,  -1,  1, -1;
+     1,  1, -1,  -1,  1,  1,  -1, -1,  1,  -1,  1, -1;
+     1,  1, -1,   1, -1,  1,   1, -1, -1,  -1, -1,  1;
+     1,  1, -1,   1,  1, -1,  -1,  1, -1,   1, -1, -1 ]
+
+/-- `H12` is the image of `H12ℤ` under the cast `ℤ → ℝ`. -/
+@[category API, AMS 15]
+theorem H12_eq_map : H12 = H12ℤ.map (Int.castRingHom ℝ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [H12, H12ℤ]
+
+/-- Every entry of `H12ℤ` is `1` or `-1`. -/
+@[category API, AMS 15]
+theorem H12ℤ_entries : ∀ p : Fin 12 × Fin 12, H12ℤ p.1 p.2 = 1 ∨ H12ℤ p.1 p.2 = -1 := by
+  decide +kernel
+
+/-- The columns of `H12ℤ` are pairwise orthogonal with squared norm `12`. -/
+@[category API, AMS 15]
+theorem H12ℤ_transpose_mul : H12ℤ.transpose * H12ℤ = Matrix.diagonal (fun _ => 12) := by
+  decide
+
+/-- The columns of `H12` are pairwise orthogonal with squared norm `12`. -/
+@[category API, AMS 15]
+theorem H12_transpose_mul : H12.transpose * H12 = Matrix.diagonal (fun _ => (12 : ℝ)) := by
+  rw [H12_eq_map, ← Matrix.transpose_map, ← Matrix.map_mul, H12ℤ_transpose_mul,
+    Matrix.diagonal_map (by simp)]
+  simp
+
 /--
 which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  refine ⟨fun i j => ?_, ?_⟩
+  · rw [H12_eq_map, Matrix.map_apply]
+    rcases H12ℤ_entries (i, j) with h | h <;> simp [h]
+  · have hdet : H12.det ^ 2 = (12 : ℝ) ^ 12 := by
+      have h := congrArg Matrix.det H12_transpose_mul
+      rw [Matrix.det_mul, Matrix.det_transpose, Matrix.det_diagonal] at h
+      simpa [sq] using h
+    rw [← Real.sqrt_sq_eq_abs, hdet, show ((12 : ℝ) ^ 12) = ((12 : ℝ) ^ 6) ^ 2 by norm_num,
+      Real.sqrt_sq (by positivity)]
+    norm_num [show ((12 : ℕ) : ℝ) / 2 = ((6 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
