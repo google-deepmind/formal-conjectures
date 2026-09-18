@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 473
@@ -24,6 +26,8 @@ import FormalConjecturesUtil
 - [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
   number theory*, Monographies de L'Enseignement Mathématique (1980).
 -/
+
+@[expose] public section
 
 namespace Erdos473
 
