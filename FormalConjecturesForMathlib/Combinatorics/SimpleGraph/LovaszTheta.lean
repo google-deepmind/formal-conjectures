@@ -25,20 +25,19 @@ namespace SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
-Lovász Theta Function (ϑ(G))
+Lovász Theta Function ($\vartheta(G)$).
 The Lovász theta function is defined as:
-ϑ(G) = min λ_max(A)
-where the minimum is taken over all symmetric matrices A such that:
+$$\vartheta(G) = \min \lambda_{\max}(A)$$
+where the minimum is taken over all real symmetric (Hermitian) matrices $A$ such that:
 
-A_ij = 1 for all i = j (diagonal entries are 1)
-A_ij = 0 for all {i,j} ∈ E (entries corresponding to edges are 0)
-A is positive semidefinite
+* $A_{ii} = 1$ for all $i$ (diagonal entries are $1$), and
+* $A_{ij} = 1$ for all $\{i,j\} \notin E(G)$ (entries corresponding to non-edges are $1$).
 
-Here λ_max(A) denotes the maximum eigenvalue of A.
+Here $\lambda_{\max}(A)$ denotes the maximum eigenvalue of $A$.
 -/
 noncomputable def lovaszThetaFunction
     (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
   sInf {(Matrix.IsHermitian.maxEigenvalue hA) | (A : Matrix α α ℝ) (hA : A.IsHermitian)
-      (_ : ∀ i, A i i = 1) (_ : ∀ i j, G.Adj i j → A i j = 0)}
+      (_ : ∀ i, A i i = 1) (_ : ∀ i j, ¬G.Adj i j → A i j = 1)}
 
 end SimpleGraph
