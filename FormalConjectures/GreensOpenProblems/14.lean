@@ -149,15 +149,18 @@ theorem green_14_variant_2r2 :
 
 -- Known exact values for `W(3,r)` from [AKS14].
 /-- $W(3, 3) = 9$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L289"]
 theorem W_3_3 : W 3 3 = 9 := by sorry
 
 /-- $W(3, 4) = 18$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L301"]
 theorem W_3_4 : W 3 4 = 18 := by sorry
 
 /-- $W(3, 5) = 22$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L313"]
 theorem W_3_5 : W 3 5 = 22 := by sorry
 
 /-- $W(3, 6) = 32$ from [AKS14]. -/
