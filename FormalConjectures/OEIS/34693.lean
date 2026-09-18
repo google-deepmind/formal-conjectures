@@ -31,8 +31,7 @@ open Filter
 noncomputable def a (n : ℕ) : ℕ := Nat.nth (fun k ↦ (k * n + 1).Prime) 0
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by
-  simpa [a] using Nat.nth_eq_zero.2 <| .inr ⟨by convert Set.finite_empty; aesop, by aesop⟩
+theorem a_0 : a 0 = 0 := by simp [a]
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by

@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Data.Nat.Prime.Nth
 
 /-!
 # Determinants of 2 X 2 matrices of non-overlapping blocks of 4 consecutive primes

@@ -15,8 +15,8 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Algebra.Order.Floor.Defs
-public import Mathlib.Data.Real.Archimedean
 
 @[expose] public section
 /-!

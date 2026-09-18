@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Algebra.IsPrimePow
 
 /-!
 # Conjecture relating two characterizations of a set of integers.

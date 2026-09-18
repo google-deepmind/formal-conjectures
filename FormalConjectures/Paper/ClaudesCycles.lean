@@ -89,7 +89,7 @@ coincide. It needs `1 < m`. -/
 @[category test, AMS 5]
 theorem bumpAt_injective {m : ℕ} [NeZero m] (hm : 1 < m) (v : Vertex m) :
     Function.Injective fun b => bumpAt b v := by
-  haveI : Fact (1 < m) := ⟨hm⟩
+  have : Fact (1 < m) := ⟨hm⟩
   intro b b' h
   by_contra hne
   have hb : bumpAt b v b = bumpAt b' v b := congrFun h b

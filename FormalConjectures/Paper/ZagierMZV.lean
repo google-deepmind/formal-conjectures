@@ -136,7 +136,7 @@ theorem no_admissible_weight_one (s : List ℕ) (h : AdmissibleIndex s) : weight
 theorem dim_mzv_weight_zero : Module.finrank ℚ (mzvSpanOfWeight 0) = 1 := by
   have h_set : mzvSetOfWeight 0 = {1} := by
     ext x
-    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨s, ⟨h_adm, hw⟩, rfl⟩
       cases s with
@@ -158,7 +158,7 @@ theorem dim_mzv_weight_zero : Module.finrank ℚ (mzvSpanOfWeight 0) = 1 := by
 theorem dim_mzv_weight_one : Module.finrank ℚ (mzvSpanOfWeight 1) = 0 := by
   have h_set : mzvSetOfWeight 1 = ∅ := by
     ext x
-    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_setOf_eq, Set.mem_empty_iff_false]
+    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_ofPred_eq, Set.mem_empty_iff_false]
     constructor
     · rintro ⟨s, ⟨h_adm, hw⟩, rfl⟩
       exact no_admissible_weight_one s h_adm hw

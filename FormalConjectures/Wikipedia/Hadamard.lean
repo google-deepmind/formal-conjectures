@@ -113,7 +113,14 @@ which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  have h : H12.transpose * H12 = (12 : ℝ) • 1 := by
+    rw [← Matrix.ext_iff]
+    norm_num +decide [Fin.forall_fin_succ, Matrix.mul_apply, Fin.sum_univ_succ, H12,
+      Matrix.one_apply]
+  have hd : H12.det ^ 2 = 12 ^ 12 := by simpa [Matrix.det_smul, ← sq] using congrArg Matrix.det h
+  refine ⟨by simp [Fin.forall_fin_succ, H12], ?_⟩
+  rw [← Real.sqrt_sq_eq_abs, hd]
+  norm_num
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.

@@ -53,8 +53,7 @@ theorem arxiv.id0911_2077.conjecture6_3
       exact this
     1 - Φ ((1 / 2 - p) * sqrt (2 * k : ℝ≥0) / σ)
       + (1 / 2) * ((2 * k).choose k) * σ ^ (2 * k)
-      ≤ ((PMF.binomial (⟨p, le_of_lt h_p.1⟩) hp' (2 * k)).toMeasure
-        (Set.Ici ⟨k, by omega⟩)).toReal := by
+      ≤ (binomial (2 * k) ⟨p, h_p.1.le, hp'⟩).real (Set.Icc k (2 * k)) := by
   sorry
 
 end Arxiv.«0911.2077»

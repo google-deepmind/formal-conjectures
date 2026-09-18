@@ -97,7 +97,8 @@ $\frac{1 - t(n)}{1 + t(n)} = \frac{1}{2^n} + \frac{1}{3^n} + \frac{1}{5^n} + \fr
   O(\frac{1}{11^n})$,
 where $t(n) = \zeta(2n)/\zeta(n)^2$. Cf. A348829. - Thomas Ordowski, Nov 13 2022
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/872759d0b464254d868f107fe7f9cf762900f57d/FormalConjectures/OEIS/114362.lean#L646"]
 theorem conjecture2 :
     (fun n : ℕ => (1 - t n) / (1 + t n) -
       (1 / (2:ℝ)^n + 1 / (3:ℝ)^n + 1 / (5:ℝ)^n + 1 / (7:ℝ)^n))

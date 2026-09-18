@@ -44,6 +44,7 @@ open Filter SimpleGraph
 
 namespace Erdos22
 
+open scoped Classical in
 /--
 Let $\epsilon > 0$ and let $n$ be sufficiently large depending on $\epsilon$. Is there a graph
 on $n$ vertices with at least $n^2/8$ many edges which contains no $K_4$, such that the largest
@@ -58,6 +59,7 @@ theorem erdos_22 : answer(True) ↔
         (G.indepNum : ℝ) ≤ ε * n ∧ (n : ℝ) ^ 2 / 8 ≤ G.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 The matching upper bound, due to Szemerédi [Sz72]: a $K_4$-free graph on $n$ vertices whose
 independence number is sublinear in $n$ has at most $(1/8 + o(1))n^2$ edges. That is, for every
@@ -73,6 +75,7 @@ theorem erdos_22.variants.szemeredi_upper (ε : ℝ) (hε : 0 < ε) :
         (G.edgeFinset.card : ℝ) ≤ (1 / 8 + ε) * n ^ 2 := by
   sorry
 
+open scoped Classical in
 /--
 The construction of Bollobás and Erdős [BoEr76]: for every $\epsilon > 0$ and $\delta > 0$,
 for all sufficiently large $n$ there is a $K_4$-free graph on $n$ vertices with independence
@@ -86,6 +89,7 @@ theorem erdos_22.variants.bollobas_erdos_lower (ε δ : ℝ) (hε : 0 < ε) (hδ
         (G.indepNum : ℝ) ≤ δ * n ∧ (1 / 8 - ε) * n ^ 2 ≤ G.edgeFinset.card := by
   sorry
 
+open scoped Classical in
 /--
 The quantitative strengthening proved by Fox, Loh, and Zhao [FLZ15]: there is a constant
 $C > 0$ such that for all sufficiently large $n$ there exists a $K_4$-free graph on $n$

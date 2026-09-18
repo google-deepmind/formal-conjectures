@@ -27,6 +27,8 @@ import FormalConjecturesUtil
       221-254.
   - [GFS62] Gordon, B. and Fraenkel, A. S. and Straus, E. G., On the determination of sets
       by the sets of sums of a certain order. Pacific J. Math. (1962), 187--196.
+  - [FoIz94] Fomin, D. V. and Izhboldin, O. T., Sets of multiple sums. Proc. St. Petersburg
+      Math. Soc. 3 (1994), 244-259.
 -/
 
 open Filter
@@ -57,21 +59,27 @@ theorem erdos_494.variants.k_eq_2_card_not_pow_two :
 Selfridge and Straus [SeSt58] gave counterexamples to the conjecture
 when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L533"]
 theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
 
 /--
 Selfridge and Straus [SeSt58] also showed that the conjecture is true when
-1) $k = 3$ and $|A| > 6$ or
+1) $k = 3$ and $|A| > 6$, except possibly for $|A| = 27$ and $|A| = 486$, or
 2) $k = 4$ and $|A| > 12$.
 More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$ is divisible by
 a prime greater than $k$.
+
+The cases $|A| = 27$ and $|A| = 486$ were left open in [SeSt58]. Fomin and Izhboldin [FoIz94]
+later found two distinct sets of each of these sizes with the same multiset of $3$-sums, so
+these exceptions are genuine.
 -/
 @[category research solved, AMS 5]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
-    ∀ card > 6, Erdos494Unique 3 card := by
+    ∀ card > 6, card ≠ 27 → card ≠ 486 → Erdos494Unique 3 card := by
   sorry
 
 /--
@@ -95,7 +103,9 @@ theorem erdos_494.variants.card_divisible_by_prime_gt_k :
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L592"]
 theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
@@ -104,7 +114,9 @@ theorem erdos_494.variants.k_eq_card :
 Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to be a set of
 the total sum 0 and considering $-A$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L916"]
 theorem erdos_494.variants.card_eq_2k :
     ∀ k > 2, ¬Erdos494Unique k (2 * k) := by
   sorry
@@ -127,7 +139,9 @@ noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
 /-- A counterexample to the product version of the conjecture (by Steinerberger). -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L951"]
 theorem erdos_494.variants.product :
     ∃ (A B : Finset ℂ), A.card = B.card ∧ prodMultiset A 3 = prodMultiset B 3 ∧
       A ≠ B := by
