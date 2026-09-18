@@ -24,6 +24,8 @@ The sequence $a(n)$ has exponential generating function
 $$E(x) = \prod_{k=1}^\infty \left(1 - \frac{x^k}{k!}\right),$$
 so that $a(n) = n! [x^n] \prod_{k=1}^n \left(1 - \frac{x^k}{k!}\right)$.
 
+Since $a(n)$ is a sum of multinomial coefficients with ± signs, it is always
+an integer.
 *References:*
 - [A185895](https://oeis.org/A185895)
 -/
@@ -129,4 +131,3 @@ theorem conjecture3 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < 
   sorry
 
 end OeisA185895
-
