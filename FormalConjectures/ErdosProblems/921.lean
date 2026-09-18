@@ -41,8 +41,14 @@ $$f_k(n) \asymp n^{\frac{1}{k-2}}.$$
 A question of Erdős and Gallai.
 
 Proved for all $k\geq 4$ by Kierstead, Szemerédi, and Trotter [KST84].
+
+The linked formal proof (Codex and GPT-5.6 Sol) states this as `f k n = Θ(n ^ (1 / (k - 2)))`,
+where `f k n` is the largest `m` such that some graph on `n` vertices with chromatic number `k`
+has no odd cycle of length at most `m`; the two eventual statements below are the two halves
+of this estimate.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos921.lean#L39"]
 theorem erdos_921 : answer(True) ↔
     ∀ (k : ℕ), 4 ≤ k →
       ∃ (c₁ c₂ : ℝ), 0 < c₁ ∧ 0 < c₂ ∧
