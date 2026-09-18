@@ -241,9 +241,9 @@ jobs:
         with:
           path: |
             docbuild/.lake/build
-          key: literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
+          key: literate-build-v4-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
           restore-keys: |
-            literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-
+            literate-build-v4-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-
 
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
@@ -277,7 +277,7 @@ jobs:
         with:
           path: |
             docbuild/.lake/build
-          key: literate-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
+          key: literate-build-v4-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml') }}-${{ github.sha }}
 
       # Only a push writes to the shared cache. An entry saved from anywhere
       # else is scoped to a ref nothing later restores from, while it takes
