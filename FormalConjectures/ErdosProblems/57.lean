@@ -34,8 +34,13 @@ If $G$ is a graph with infinite chromatic number and $a_1 < a_2 < \cdots$ are le
 cycles of $G$ then $\sum \frac{1}{a_i} = \infty$.
 
 Conjectured by Erdős and Hajnal [ErHa66], and solved by Liu and Montgomery [LiMo20].
+
+The linked formal proof (Codex and GPT-5.6 Sol) states the conclusion as
+`¬ Summable (oddCycleReciprocal G)`, where `oddCycleReciprocal G n` is `n⁻¹` if `n` is an odd
+cycle length of `G` and `0` otherwise; this is the indicator form of the sum below.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos57.lean#L11124"]
 theorem erdos_57 :
     ∀ {V : Type*} (G : SimpleGraph V), G.chromaticNumber = ⊤ →
       ¬ Summable (fun (a : G.oddCycleLengths) ↦ 1 / (a : ℝ)) := by
