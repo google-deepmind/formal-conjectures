@@ -48,7 +48,8 @@ form $2^k+n$, where $k \geq 0$ and $n$ has at most $r$ prime divisors, is at lea
 
 This was proved affirmatively by Price and GPT-5.2 Pro [Pr26].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos851.lean#L37"]
 theorem erdos_851 (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) : ∃ r,
     1 - ε ≤ (TwoPowAddSet r).lowerDensity := by
   sorry
