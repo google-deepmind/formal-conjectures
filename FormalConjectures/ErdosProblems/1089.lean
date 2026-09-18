@@ -33,23 +33,10 @@ open scoped Topology
 
 namespace Erdos1089
 
-/-- The set of nonzero distances determined by a finite set of points in `ℝ^d`. -/
-noncomputable def distanceFinset {d : ℕ} (P : Finset (EuclideanSpace ℝ (Fin d))) : Finset ℝ :=
-  open scoped Classical in
-  P.offDiag.image fun xy => dist xy.1 xy.2
-
-/-- The number of distinct nonzero distances determined by `P`. -/
-noncomputable def distanceCount {d : ℕ} (P : Finset (EuclideanSpace ℝ (Fin d))) : ℕ :=
-  (distanceFinset P).card
-
-/-- Every `m`-point subset of `ℝ^d` determines at least `n` distinct distances. -/
-def ForcesDistances (d n m : ℕ) : Prop :=
-  ∀ P : Finset (EuclideanSpace ℝ (Fin d)), P.card = m → n ≤ distanceCount P
-
 /-- `g d n` is the least `m` such that every `m` points in `ℝ^d` determine at least `n` distinct
-distances. -/
+distances, i.e. the least `m` with `n ≤ minimalDistinctDistances (EuclideanSpace ℝ (Fin d)) m`. -/
 noncomputable def g (d n : ℕ) : ℕ :=
-  sInf {m : ℕ | ForcesDistances d n m}
+  sInf {m : ℕ | n ≤ minimalDistinctDistances (EuclideanSpace ℝ (Fin d)) m}
 
 /--
 Let $g_d(n)$ be minimal such that every collection of $g_d(n)$ points in $\mathbb{R}^d$ determines
@@ -71,13 +58,13 @@ theorem erdos_1089 : answer(True) ↔
   sorry
 
 /--
-For $n \ge 2$ one has $\binom{d+1}{n-1} + 1 \le g_d(n) \le \binom{d+n-1}{n-1} + 1$ for all $d$,
-and $g_d(n) / d^{n-1} \to 1/(n-1)!$ as $d \to \infty$.
+For $n \ge 2$ one has $\binom{d+1}{n-1} + 1 \le g_d(n) \le \binom{d+n-1}{n-1} + 1$ for all
+$d \ge 1$, and $g_d(n) / d^{n-1} \to 1/(n-1)!$ as $d \to \infty$.
 -/
 @[category research solved, AMS 51 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1089.lean#L769"]
 theorem erdos_1089.variants.bounds_and_limit (n : ℕ) (hn : 2 ≤ n) :
-    (∀ d, (d + 1).choose (n - 1) + 1 ≤ g d n ∧ g d n ≤ (d + n - 1).choose (n - 1) + 1) ∧
+    (∀ d, 1 ≤ d → (d + 1).choose (n - 1) + 1 ≤ g d n ∧ g d n ≤ (d + n - 1).choose (n - 1) + 1) ∧
       Tendsto (fun d : ℕ => (g d n : ℝ) / (d : ℝ) ^ (n - 1)) atTop
         (𝓝 ((1 : ℝ) / (n - 1).factorial)) := by
   sorry
