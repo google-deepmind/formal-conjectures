@@ -37,7 +37,8 @@ namespace Erdos175
 /--
 Show that, for any $n\geq 5$, the binomial coefficient $\binom{2n}{n}$ is not squarefree.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos175.lean#L678"]
 theorem erdos_175 (n : ℕ) (hn : 5 ≤ n) :
     ¬ Squarefree ((2 * n).choose n) := by
   sorry
