@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 948
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 - [ErGa91] Erdős, P. and Galvin, F., *Some Ramsey-type theorems*. Discrete Math. 87 (1991),
   261–269.
 -/
+
+@[expose] public section
 
 namespace Erdos948
 
