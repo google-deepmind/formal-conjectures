@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 793
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   Conf. on Combinatorial Mathematics and its Applications (Univ. North Carolina, Chapel Hill, N.C.,
   1970) (1970), 136-145.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Topology
