@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 869
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [La26] Larsen, D., *Three questions of Erdős–Nathanson on asymptotic bases of order 2*.
   [arXiv:2603.03472](https://arxiv.org/abs/2603.03472) (2026).
 -/
+
+@[expose] public section
 
 namespace Erdos869
 
