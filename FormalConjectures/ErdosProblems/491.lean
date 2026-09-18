@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 491
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [Wi70] E. Wirsing, A characterization of $\log n$ as an additive arithmetic function.
   Symposia Math. (1970), 45-57.
 -/
+
+@[expose] public section
 
 open Filter
 
