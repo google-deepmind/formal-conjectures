@@ -40,11 +40,14 @@ trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
 The earlier formalization used the number of induced four-cycles. The historical
 conjecture instead uses this binary $C_4$-free indicator.
 
+**Provenance.** Statement corrected by Dominic Dabish.
+
 -/
 
 @[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture160
+
 
 open SimpleGraph
 
@@ -53,6 +56,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /-- The maximum number of triangles incident to any vertex in $G$. -/
 noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.image (numTrianglesAtVertex G)).max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
+
 
 open scoped Classical in
 /--
@@ -67,8 +71,16 @@ where:
 - $\max_v l(v)$ is the maximum local independence number over vertices,
 - $\max_v T(v)$ is the maximum number of triangles incident to any vertex,
 - $\chi_{C_4}(G)$ is `1` if $G$ has no cycle of length four and `0` otherwise.
+
+A formal proof uses the $C_4$-free neighborhood identity $d(v) = \lambda(v) + T(v)$
+with a star/geodesic case analysis, routed through the connected-seed
+spanning-tree bound developed for Conjecture 2. An independent second proof,
+via a closest maximizer pair joined by a shortest path, is linked from the
+pull request that recorded the solution.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/f0d70dfa13f92a4b631289e44487690833be8798/WOWII160AltProof.lean#L714"]
 theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     let maxT := maxTrianglesAtVertex G

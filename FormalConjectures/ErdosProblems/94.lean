@@ -59,8 +59,8 @@ Note it is trivial that $\sum f(u_i)=\binom{n}{2}$.
 -/
 @[category test, AMS 5 52]
 theorem erdos_94.variants.sum_multiplicity (P : Finset ℝ²) :
-    ∑ u ∈ distanceSet P, distanceMultiplicity P u = P.card.choose 2 := by
-  sorry
+    ∑ u ∈ distanceSet P, distanceMultiplicity P u = P.card.choose 2 :=
+  sum_distanceMultiplicity P
 
 /--
 Lefmann and Theile [LeTh95] prove a stronger version of this question, that

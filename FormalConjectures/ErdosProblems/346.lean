@@ -87,12 +87,71 @@ theorem erdos_346.variants.f_isLacunary : IsLacunary f := by
 theorem erdos_346.variants.f_isAddStronglyCompleteNatSeq : IsAddStronglyCompleteNatSeq f := by
   sorry
 
+/-- The recurrence `f (m + 2) = f (m + 1) + f m - (-1) ^ m` for `m ≥ 1`, written without
+subtraction. -/
+@[category API, AMS 11]
+theorem erdos_346.variants.f_add_two (m : ℕ) (hm : 1 ≤ m) :
+    f (m + 2) + (if Even m then 1 else 0) = f (m + 1) + f m + (if Even m then 0 else 1) := by
+  have h1 : 1 ≤ Nat.fib m := Nat.fib_pos.2 hm
+  have h2 : 1 ≤ Nat.fib (m + 1) := Nat.fib_pos.2 (by omega)
+  have h3 : Nat.fib (m + 2) = Nat.fib m + Nat.fib (m + 1) := Nat.fib_add_two
+  by_cases he : Even m
+  · have he1 : ¬ Even (m + 1) := by simp [Nat.even_add_one, he]
+    have he2 : Even (m + 2) := by simp [Nat.even_add, he]
+    simp only [f, if_pos he, if_neg he1, if_pos he2]
+    omega
+  · have he1 : Even (m + 1) := by simp [Nat.even_add_one, he]
+    have he2 : ¬ Even (m + 2) := by simp [Nat.even_add, he]
+    simp only [f, if_neg he, if_pos he1, if_neg he2]
+    omega
+
+/-- `f 0 + ⋯ + f (m - 1) = f (m + 1) - [m even]` for `m ≥ 1`; this is [Gr64d, Eq. (1)]. -/
+@[category API, AMS 11]
+theorem erdos_346.variants.sum_range_f (m : ℕ) (hm : 1 ≤ m) :
+    ∑ i ∈ Finset.range m, f i + (if Even m then 1 else 0) = f (m + 1) := by
+  induction m with
+  | zero => omega
+  | succ k ih =>
+    rcases Nat.eq_zero_or_pos k with rfl | hk
+    · decide
+    · have h1 := ih hk
+      have h2 : f (k + 1 + 1) + (if Even k then 1 else 0) =
+          f (k + 1) + f k + (if Even k then 0 else 1) := erdos_346.variants.f_add_two k hk
+      have hpar : (if Even (k + 1) then 1 else 0) + (if Even k then 1 else 0) = 1 := by
+        by_cases he : Even k <;> simp [Nat.even_add_one, he]
+      have hpar' : (if Even k then 1 else 0) + (if Even k then 0 else 1) = 1 := by
+        split_ifs <;> rfl
+      rw [Finset.sum_range_succ]
+      omega
+
+/-- `f` is strictly increasing from index `4` on. -/
+@[category API, AMS 11]
+theorem erdos_346.variants.f_strictMono : StrictMono fun k => f (4 + k) := by
+  refine strictMono_nat_of_lt_succ fun k => ?_
+  show f (4 + k) < f (4 + (k + 1))
+  have h := erdos_346.variants.f_add_two (3 + k) (by omega)
+  have hf : 2 ≤ f (3 + k) := by
+    have h2 : 2 ≤ Nat.fib (3 + k) := le_trans (by decide : 2 ≤ Nat.fib 3) (Nat.fib_mono (by omega))
+    by_cases he : Even (3 + k)
+    · have h4 : 4 ≤ 3 + k := by
+        rcases Nat.even_iff.1 he with h
+        omega
+      have h3 : 3 ≤ Nat.fib (3 + k) :=
+        le_trans (by decide : 3 ≤ Nat.fib 4) (Nat.fib_mono h4)
+      simp only [f, if_pos he]
+      omega
+    · simp only [f, if_neg he]
+      omega
+  rw [show 4 + (k + 1) = 3 + k + 2 by omega, show 4 + k = 3 + k + 1 by omega]
+  split_ifs at h <;> omega
+
 /-- The sequence `f` is not complete whenever infinitely many terms are removed from it, and this
 is proved in [Gr64d]. -/
 @[category research solved, AMS 11]
 theorem erdos_346.variants.f_not_isAddComplete {B : Set ℕ} (h : B ⊆ range f) (hB : B.Infinite) :
-    ¬ IsAddComplete (range f \ B) := by
-  sorry
+    ¬ IsAddComplete (range f \ B) :=
+  not_isAddComplete_range_diff_of_sum_range_le (n₀ := 4) erdos_346.variants.f_strictMono
+    (fun m hm => by have := erdos_346.variants.sum_range_f m (by omega); omega) h hB
 
 /-- Erdős and Graham [ErGr80] remark that it is easy to see that if `A (n + 1) / A n > (1 + √5) / 2`
 then the second property is automatically satisfied. -/
