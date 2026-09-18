@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 485
@@ -33,6 +35,8 @@ import FormalConjecturesUtil
 - [ScZa09] Schinzel, Andrzej and Zannier, Umberto, *On the number of terms of a power of a
   polynomial*. Atti Accad. Naz. Lincei Rend. Lincei Mat. Appl. (2009), 95-98.
 -/
+
+@[expose] public section
 
 open Filter Polynomial
 
