@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1021
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
 - [Ja19] Janzer, Oliver, *Improved bounds for the extremal number of subdivisions*. Electron. J.
   Combin. (2019), Paper No. 3.3, 6.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
