@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 574
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [FNV06] Füredi, Zoltan and Naor, Assaf and Verstraëte, Jacques, *On the Turán number for the
   hexagon*. Adv. Math. (2006), 476--496.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
