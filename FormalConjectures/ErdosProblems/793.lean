@@ -22,7 +22,7 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/793](https://www.erdosproblems.com/793)
 - [Er38] Erdős, P., *On sequences of integers no one of which divides the product of two others
-  and on some related problems*. Mitt. Forsch.-Inst. Math. Mech. Univ. Tomsk 2 (1938), 74-82.
+  and on related problems*. Tomsk. Gos. Univ. Ucen Zap. (1938), 74-82.
 - [Er69] Erdős, Paul, *Some applications of graph theory to number theory*. The Many Facets of
   Graph Theory (Proc. Conf., Western Mich. Univ., Kalamazoo, Mich., 1968) (1969), 77-82.
 - [Er70b] Erdős, P., *Some applications of graph theory to number theory*. Proc. Second Chapel Hill
