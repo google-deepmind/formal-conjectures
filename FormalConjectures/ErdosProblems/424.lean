@@ -58,12 +58,16 @@ here means positive *lower* density: is there $c > 0$ such that for all large $x
 $cx$ of the integers in $[1, x]$ appear? See `erdos_424.variants.exact_density` for the
 literal reading.
 
-Korsky [Ko26] has announced a proof that the set has positive lower density; it is listed
-as a proof claim on [erdosproblems.com/424](https://www.erdosproblems.com/424), which still
-records the problem as open.
+The answer is yes: Korsky [Ko26] (with ChatGPT 5.6 Pro) proved that the set has positive lower
+density. The linked formal proof (Alexeev and Codex) shows that there is `c > 0` with
+`c * x ≤ #{n ∈ [1, x] | n ∈ generatedSet}` for all large `x`, which gives
+`c / 2 ≤ generatedSet.lowerDensity`. The proof is listed as a proof claim on
+[erdosproblems.com/424](https://www.erdosproblems.com/424), which still records the problem as
+open.
 -/
-@[category research open, AMS 11]
-theorem erdos_424 : answer(sorry) ↔ 0 < generatedSet.lowerDensity := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos424.lean#L6409"]
+theorem erdos_424 : answer(True) ↔ 0 < generatedSet.lowerDensity := by
   sorry
 
 /--
