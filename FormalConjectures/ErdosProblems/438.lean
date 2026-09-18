@@ -44,14 +44,10 @@ namespace Erdos438
 def SquareSumFree (A : Finset ℕ) : Prop :=
   ∀ a ∈ A, ∀ b ∈ A, ¬ IsSquare (a + b)
 
-/-- All square-sum-free subsets of `{1, …, N}`. -/
-noncomputable def candidateSets (N : ℕ) : Finset (Finset ℕ) := by
-  classical
-  exact (Finset.Icc 1 N).powerset.filter SquareSumFree
-
 /-- The largest size of a square-sum-free subset of `{1, …, N}`. -/
-noncomputable def extremalSize (N : ℕ) : ℕ :=
-  (candidateSets N).sup Finset.card
+noncomputable def extremalSize (N : ℕ) : ℕ := by
+  classical
+  exact ((Finset.Icc 1 N).powerset.filter SquareSumFree).sup Finset.card
 
 /--
 How large can $A \subseteq \{1, \ldots, N\}$ be if $A + A$ contains no square numbers?
