@@ -49,7 +49,23 @@ there is a subsequence of `s` that tends to `x`
 theorem isAccumulationPoint_exists_subsequence_tendsto
     (x : ℝ) (s : ℕ → ℝ) (hx : IsAccumulationPoint x s) :
     ∃ (u : ℕ → ℕ), StrictMono u ∧ Filter.atTop.Tendsto (s ∘ u) (𝓝 x) := by
-  sorry
+  refine MapClusterPt.tendsto_subseq (mapClusterPt_iff_frequently.2 fun U hU => ?_)
+  rw [Filter.frequently_atTop]
+  intro N
+  by_contra hcon
+  push Not at hcon
+  -- Shrink `U` to exclude the finitely many values `s n ≠ x` with `n < N`.
+  have hV : U ∩ ⋂ n ∈ Finset.range N, {y | s n ≠ x → y ≠ s n} ∈ 𝓝 x := by
+    refine Filter.inter_mem hU ((Filter.biInter_finset_mem _).2 fun n _ => ?_)
+    by_cases h : s n = x
+    · exact Filter.mem_of_superset Filter.univ_mem fun y _ h' => absurd h h'
+    · exact Filter.mem_of_superset (isOpen_compl_singleton.mem_nhds (Ne.symm h))
+        fun y hy _ => hy
+  obtain ⟨y, ⟨hyU, hyI⟩, ⟨n, rfl⟩, hyx⟩ := mem_closure_iff_nhds.1 hx _ hV
+  rw [Set.mem_iInter₂] at hyI
+  rcases Nat.lt_or_ge n N with hn | hn
+  · exact hyI n (Finset.mem_range.2 hn) hyx rfl
+  · exact hcon n hn hyU
 
 /--
 The sequence `(3/2)^n` is equidistributed modulo `1`.
@@ -83,12 +99,46 @@ theorem isAccumulationPoint_three_halves_pow :
     IsAccumulationPoint answer(sorry) (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
   sorry
 
+/-- The values of `(3/2)^n` modulo `1` are pairwise distinct: if `(3/2)^n - (3/2)^m` were an
+integer for `m < n`, then `3^n - 3^m * 2^(n - m)` would be even. -/
+@[category API, AMS 11]
+theorem fract_three_halves_pow_injective :
+    Function.Injective fun n : ℕ => Int.fract ((3 / 2 : ℝ) ^ n) := by
+  intro n m hnm
+  by_contra hne
+  wlog hlt : m < n generalizing n m
+  · exact this hnm.symm (Ne.symm hne) (lt_of_le_of_ne (not_lt.1 hlt) hne)
+  obtain ⟨z, hz⟩ := Int.fract_eq_fract.1 hnm
+  have h2 : (2 : ℝ) ^ n ≠ 0 := by positivity
+  have key : ((3 : ℤ) ^ n - 3 ^ m * 2 ^ (n - m) : ℤ) = z * 2 ^ n := by
+    have : ((3 : ℝ) ^ n - 3 ^ m * 2 ^ (n - m)) = z * 2 ^ n := by
+      have hm : (2 : ℝ) ^ n = 2 ^ m * 2 ^ (n - m) := by
+        rw [← pow_add, Nat.add_sub_cancel' hlt.le]
+      have e1 : (3 / 2 : ℝ) ^ n * 2 ^ n = 3 ^ n := by
+        rw [div_pow, div_mul_cancel₀ _ h2]
+      have e2 : (3 / 2 : ℝ) ^ m * 2 ^ n = 3 ^ m * 2 ^ (n - m) := by
+        rw [hm, ← mul_assoc, div_pow, div_mul_cancel₀ _ (by positivity)]
+      rw [← e1, ← e2, ← sub_mul, hz]
+    exact_mod_cast this
+  have hmod := congrArg (fun t : ℤ => (t : ZMod 2)) key
+  simp only [Int.cast_sub, Int.cast_mul, Int.cast_pow, Int.cast_ofNat] at hmod
+  rw [show (2 : ZMod 2) = 0 from rfl, zero_pow (by omega), zero_pow (by omega),
+    show (3 : ZMod 2) = 1 from rfl] at hmod
+  simp at hmod
+
 /--
-There is an accumulation point of the sequence `(3/2)^n` modulo `1`.
+There is an accumulation point of the sequence `(3/2)^n` modulo `1`: its values are pairwise
+distinct and lie in `[0, 1]`, so they have an accumulation point by compactness.
 -/
 @[category test, AMS 11]
 theorem isAccumulationPoint_three_halves_pow_exists :
     ∃ p, (IsAccumulationPoint p (fun n => Int.fract <| (3 / 2 : ℝ)^n)) := by
-  sorry
+  have hinf : (Set.range fun n : ℕ => Int.fract ((3 / 2 : ℝ) ^ n)).Infinite :=
+    Set.infinite_range_of_injective fract_three_halves_pow_injective
+  have hsub : (Set.range fun n : ℕ => Int.fract ((3 / 2 : ℝ) ^ n)) ⊆ Set.Icc 0 1 := by
+    rintro _ ⟨n, rfl⟩
+    exact ⟨Int.fract_nonneg _, (Int.fract_lt_one _).le⟩
+  obtain ⟨x, -, hx⟩ := hinf.exists_accPt_of_subset_isCompact isCompact_Icc hsub
+  exact ⟨x, mem_closure_iff_clusterPt.2 (accPt_principal_iff_clusterPt.1 hx)⟩
 
 end Equidistribution
