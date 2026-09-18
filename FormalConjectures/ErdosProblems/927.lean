@@ -41,20 +41,6 @@ noncomputable def g (n : ℕ) : ℕ := by
   exact Finset.sup (Finset.univ (α := SimpleGraph (Fin n)))
     fun G => (SimpleGraph.cliqueSizes G).ncard
 
-/-- The iterated logarithm: `logStar n` is the number of times one has to apply `Nat.log 2`
-to `n` to reach a value at most `1`. -/
-def logStar : ℕ → ℕ
-  | 0 => 0
-  | 1 => 0
-  | (n + 2) => logStar (Nat.log 2 (n + 2)) + 1
-termination_by n => n
-decreasing_by
-  simp_wf
-  have : Nat.log 2 (n + 2) < n + 2 := by
-    apply Nat.log_lt_of_lt_pow (by omega)
-    exact Nat.lt_pow_self (by norm_num : (1 : ℕ) < 2)
-  omega
-
 /--
 Let $g(n)$ be the maximum number of different sizes of cliques that can occur in a graph on $n$
 vertices. Estimate $g(n)$ - in particular, is it true that
@@ -67,16 +53,17 @@ lower bound to $n - \log_2 n - \log_*(n) - O(1) < g(n)$ and conjectured this was
 of magnitude. This was disproved by Spencer [Sp71], who proved that in fact
 $g(n) > n - \log_2 n - O(1)$.
 
-Here $\log_2 n$ and $\log_*(n)$ are formalised as `Nat.log 2 n` and `logStar n` (iterating
-`Nat.log 2` until the value is at most `1`); both differ from the quantities in the problem by
-$O(1)$, so the statement is unaffected. See also `erdos_775.variants.spencer` and
+Here $\log_2 n$ and $\log_*(n)$ are formalised as `Nat.log 2 n` and `Nat.iteratedLog 2 n`
+(iterating `Nat.log 2` until the value is at most `1`); both differ from the quantities in the
+problem by $O(1)$, so the statement is unaffected. See also `erdos_775.variants.spencer` and
 `erdos_775.variants.moon_moser`.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos927.lean#L23"]
 theorem erdos_927 : answer(False) ↔
     ∃ C : ℕ, ∀ᶠ n : ℕ in atTop,
-      g n + Nat.log 2 n + logStar n ≤ n + C ∧ n ≤ g n + Nat.log 2 n + logStar n + C := by
+      g n + Nat.log 2 n + Nat.iteratedLog 2 n ≤ n + C ∧
+        n ≤ g n + Nat.log 2 n + Nat.iteratedLog 2 n + C := by
   sorry
 
 end Erdos927
