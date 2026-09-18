@@ -108,8 +108,14 @@ matching upper bound follows from the construction, so the chromatic number is e
 
 This is stated ahead of `erdos_750` because the formal proof linked there assumes it, and the
 `assuming` clause must name a declaration that already exists. See also [SaSt89] and [MuSt19].
+
+The linked formal proof (Alexeev and Codex, via signed-biclique chains and a `ℤ_p`-Tucker
+lemma) uses the same `IsRecursivelyBuiltMr`, except that its `genMyc s G` has `MycAdj s G`
+directly as adjacency relation instead of `SimpleGraph.fromRel (MycAdj s G)`; the two graphs are
+equal since `MycAdj` is symmetric and irreflexive.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos750/Stiebitz.lean#L41"]
 theorem erdos_750.variants.stiebitz {V : Type u} (G : SimpleGraph V) (r : ℕ)
     (h : IsRecursivelyBuiltMr r G) : (r : ℕ∞) ≤ G.chromaticNumber := by
   sorry
@@ -128,14 +134,18 @@ vertices can be made bipartite after deleting at most $f(m)$ many vertices.
 
 This was formalized in Lean by Ammanamanchi using Claude Code 4.7 and GPT-5.5 Pro.
 
-The linked proof is not complete on its own. It declares Stiebitz's theorem as an axiom and
-derives the result from it, so it is marked `conditional` and names
-`erdos_750.variants.stiebitz`.
+The first linked proof is not complete on its own. It declares Stiebitz's theorem as an axiom
+and derives the result from it, so it is marked `conditional` and names
+`erdos_750.variants.stiebitz`. The second linked proof (plby/lean-proofs) replaces that axiom
+by the proof of `erdos_750.variants.stiebitz` linked above, and is unconditional; it produces a
+graph on a `V : Type`, which gives the statement below in any universe by lifting `V`.
 -/
 @[category research solved, AMS 5,
   conditional formal_proof using lean4 at
     "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P750/Proof.lean"
-  assuming erdos_750.variants.stiebitz]
+  assuming erdos_750.variants.stiebitz,
+  formal_proof using lean4 at
+    "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos750.lean#L50"]
 theorem erdos_750 :
     answer(True) ↔ ∀ (f : ℕ → ℝ≥0) (hf : atTop.Tendsto f atTop),
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
