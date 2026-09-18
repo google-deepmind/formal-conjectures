@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 339
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 - [HHP03] Hegyvári, N., Hennecart, F. and Plagne, A., *A proof of two Erdős conjectures on
   restricted addition and further results*. J. Reine Angew. Math. 560 (2003), 199-220.
 -/
+
+@[expose] public section
 
 open Function
 
