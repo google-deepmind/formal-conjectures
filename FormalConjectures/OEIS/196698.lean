@@ -64,7 +64,7 @@ theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
 
 /--
 "I conjecture the contrary: infinitely many elements of this sequence are equal to $0$."
-- Charles R Greathouse IV, Nov 21 2011
+- _Charles R Greathouse IV_, Nov 21 2011
 -/
 @[category research open, AMS 11]
 theorem conjecture2 : Set.Infinite {n : ℕ | a n = 0} := by

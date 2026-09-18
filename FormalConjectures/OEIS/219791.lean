@@ -58,7 +58,7 @@ theorem conjecture1 (n : ℕ) (hn : n > 0) (h1 : n ≠ 1) (h6 : n ≠ 6) (h16 : 
 Conjecture: For any positive integer $k$, each
 sufficiently large integer $n$ can be written as $x + y$ ($x > 0, y > 0$) with $(xy)^{2^k} + 1$
 prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (k : ℕ) (hk : 0 < k) :

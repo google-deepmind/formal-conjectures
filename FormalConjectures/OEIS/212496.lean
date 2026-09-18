@@ -57,7 +57,7 @@ theorem a_5 : a 5 = 1 := by native_decide
 
 /--
 "On May 16 2012, Zhi-Wei Sun conjectured that $a(n)$ is positive for each $n > 4$."
-- Zhi-Wei Sun, May 19 2012
+- _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
@@ -66,7 +66,7 @@ theorem conjecture1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
 /--
 "Moreover, he guessed that $a(n) > \sqrt{n}$ for any $n > 324$ (and also
 $a(n) < \sqrt{n}\log(\log(n))$ for $n > 5892$)."
-- Zhi-Wei Sun, May 19 2012
+- _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n : ℕ) :
@@ -76,7 +76,7 @@ theorem conjecture2 (n : ℕ) :
 
 /--
 "Sun also conjectured that $b(n) = \sum_{k=1}^n (-1)^{k-\Omega(k)}/k < 0$ for all $n=1,2,3,\dots$"
-- Zhi-Wei Sun, May 19 2012
+- _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (n : ℕ) (hn : 0 < n) : b n < 0 := by
@@ -85,7 +85,7 @@ theorem conjecture3 (n : ℕ) (hn : 0 < n) : b n < 0 := by
 /--
 "Moreover, he guessed that $b(n) < -1/\sqrt{n}$ for all $n > 1$, and
 $b(n) > -\log(\log(n))/\sqrt{n}$ for $n > 2008$."
-- Zhi-Wei Sun, May 19 2012
+- _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (n : ℕ) :

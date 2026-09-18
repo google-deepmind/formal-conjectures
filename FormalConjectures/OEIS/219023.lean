@@ -59,7 +59,7 @@ theorem conjecture1 (n : ℕ) (hn : 2732 < n) : 0 < a n := by
 /--
 Conjecture: For $n > 3512$, there is a prime $p \in (n, 2n)$
 such that both $n^2 - n + p$ and $n^2 + n - p$ are prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n : ℕ) (hn : 3512 < n) :
@@ -70,7 +70,7 @@ theorem conjecture2 (n : ℕ) (hn : 3512 < n) :
 /--
 Conjecture: For $n > 1828$, there is a prime $p < n$ such that
 both $n^2 - n - p$ and $n^2 + n + p$ are prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (n : ℕ) (hn : 1828 < n) :
@@ -81,7 +81,7 @@ theorem conjecture3 (n : ℕ) (hn : 1828 < n) :
 /--
 Conjecture: For $n > 4517$, there is a prime $p \in (n, 2n)$
 such that both $n^2 - n - p$ and $n^2 + n + p$ are prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (n : ℕ) (hn : 4517 < n) :

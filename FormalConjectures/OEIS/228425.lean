@@ -75,7 +75,7 @@ theorem conjecture2 (k : ℕ) (hk : 3 ≤ k) :
 The pair $(k, m)$ works if $k$ is among $3, 4, 6$, and $m > k$ is not congruent to $k$ modulo $2$,
 in the sense that all sufficiently large integers $n$ can be written as $x + y$ ($x, y > 0$) with
 $p_k(x) + p_m(y)$ prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (k m : ℕ) (hk : k = 3 ∨ k = 4 ∨ k = 6) (hm : k < m)
@@ -88,7 +88,7 @@ theorem conjecture3 (k m : ℕ) (hk : k = 3 ∨ k = 4 ∨ k = 6) (hm : k < m)
 For $k = 5$, the pair $(5, m)$ works (with $m > 5$) if $m$ is congruent to $0$ or $4$ modulo $6$,
 in the sense that all sufficiently large integers $n$ can be written as $x + y$ ($x, y > 0$) with
 $p_5(x) + p_m(y)$ prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (m : ℕ) (hm : 5 < m) (hmod : m ≡ 0 [MOD 6] ∨ m ≡ 4 [MOD 6]) :
@@ -110,7 +110,7 @@ def sunPolygonalPairs : Finset (ℕ × ℕ) :=
 The only pairs $(k, m)$ with $2 < k \le 10$ and $k < m \le 100$ such that any integer $n > 1$ can
 be written as $x + y$ ($x, y > 0$) with $p_k(x) + p_m(y)$ prime, are the $31$ pairs in
 `sunPolygonalPairs`.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture5 (k m : ℕ) (hk : 2 < k) (hk10 : k ≤ 10) (hm : k < m) (hm100 : m ≤ 100) :

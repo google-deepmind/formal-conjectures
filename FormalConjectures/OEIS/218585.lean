@@ -73,7 +73,7 @@ theorem conjecture1 (n : ℕ) (hn : 1 < n) (h8 : n ≠ 8) : 0 < a n := by
 /--
 Conjecture: The number of primes of the form $nx + (n - x)^2$
 with $0 < x < n / 3$ is positive for $n > 12$.
-- Zak Seidov, Sep 25 2013
+- _Zak Seidov_, Sep 25 2013
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n : ℕ) (hn : 12 < n) :
@@ -85,7 +85,7 @@ Conjecture:
 $$\lim_{N \to \infty} \frac{\sum_{p < N, \, p \equiv 1 \pmod 3} x(p)}{\sum_{p < N, \, p \equiv 1 \pmod 3} y(p)} = 1 + \sqrt{3},$$
 where for a prime $p \equiv 1 \pmod 3$, $x(p) > y(p) > 0$ are the unique positive integers such
 that $p = x(p)^2 + x(p)y(p) + y(p)^2$.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture3 :
@@ -101,7 +101,7 @@ Conjecture:
 $$\lim_{N \to \infty} \frac{\sum_{p < N, \, p \equiv 1 \pmod 3} x(p)^2}{\sum_{p < N, \, p \equiv 1 \pmod 3} y(p)^2} = \frac{52}{9},$$
 where for a prime $p \equiv 1 \pmod 3$, $x(p) > y(p) > 0$ are the unique positive integers such
 that $p = x(p)^2 + x(p)y(p) + y(p)^2$.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture4 :

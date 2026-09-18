@@ -133,7 +133,7 @@ theorem a_4 : a 4 = 7 := by
 
 /--
 "Conjecture: all the terms are primes and $a(n) < n^2$ for all $n > 1$."
-- Zhi-Wei Sun, Mar 18 2012
+- _Zhi-Wei Sun_, Mar 18 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture :

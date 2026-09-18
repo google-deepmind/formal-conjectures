@@ -73,7 +73,7 @@ theorem conjecture2 (n : ℕ) (hn : n > 1157) :
 Conjecture: For each prime $p$, any sufficiently
 large integer $n$ can be written as $x + y$, where $x$ and $y$ are positive integers with
 $\frac{(xy)^p - 1}{xy - 1}$ prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (p : ℕ) (hp : p.Prime) :

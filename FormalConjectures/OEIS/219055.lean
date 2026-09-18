@@ -64,7 +64,7 @@ theorem conjecture1 (n : ℕ) (hn : (Even n ∧ 8012 < n) ∨ (Odd n ∧ 15727 <
 Conjecture: For any two multiples $d_1$ and $d_2$ of
 $6$, all sufficiently large integers $n$ can be written as $p + q(3 - (-1)^n)/2$ with $p > q$ and
 $p, q, p - d_1, q + d_2$ all prime.
-- Zhi-Wei Sun
+- _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (d₁ d₂ : ℤ) (hd₁ : 6 ∣ d₁) (hd₂ : 6 ∣ d₂) :
