@@ -156,7 +156,32 @@ then the second property is automatically satisfied. -/
 theorem erdos_346.variants.gt_goldenRatio_not_IsAddComplete {A : ℕ → ℕ}
     (hA : ∀ n, (1 + √5) / 2 * A n < A (n + 1)) {B : Set ℕ} (h : B ⊆ range A) (hB : B.Infinite) :
     ¬ IsAddComplete (range A \ B) := by
-  sorry
+  -- Since `φ² = φ + 1`, the hypothesis gives `A (n + 2) > φ A (n + 1) > A (n + 1) + A n`, so the
+  -- partial sums satisfy `A 0 + ⋯ + A (m - 1) ≤ A (m + 1)`, and the general lemma applies.
+  have hs5 : (2 : ℝ) < √5 := by
+    have h4 : √(4 : ℝ) = 2 := by rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+    linarith [Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 4) (by norm_num : (4 : ℝ) < 5)]
+  have hs5sq : √5 * √5 = (5 : ℝ) := Real.mul_self_sqrt (by norm_num)
+  have hlt : ∀ n, A n < A (n + 1) := fun n => by
+    have h1 := hA n
+    have h0 : (0 : ℝ) ≤ A n := by positivity
+    exact_mod_cast (show (A n : ℝ) < A (n + 1) by nlinarith)
+  have hfib : ∀ n, A (n + 1) + A n < A (n + 2) := fun n => by
+    have h1 := hA n
+    have h2 := hA (n + 1)
+    have h0 : (0 : ℝ) ≤ A n := by positivity
+    have h0' : (0 : ℝ) ≤ A (n + 1) := by positivity
+    exact_mod_cast (show (A (n + 1) : ℝ) + A n < A (n + 2) by nlinarith)
+  have hsum : ∀ m, ∑ i ∈ Finset.range m, A i ≤ A (m + 1) := by
+    intro m
+    induction m with
+    | zero => simp
+    | succ k ih =>
+      have := hfib k
+      rw [Finset.sum_range_succ, show k + 1 + 1 = k + 2 by omega]
+      omega
+  exact not_isAddComplete_range_diff_of_sum_range_le (n₀ := 0)
+    (by simpa using strictMono_nat_of_lt_succ hlt) (fun m _ => hsum m) h hB
 
 /-- Erdős and Graham [ErGr80] also say that it is not hard to construct very irregular sequences
 satisfying the aforementioned properties: there is a strictly increasing sequence `A` that is
