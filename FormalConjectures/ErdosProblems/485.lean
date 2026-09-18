@@ -38,18 +38,10 @@ open Filter Polynomial
 
 namespace Erdos485
 
-/-- The number of nonzero coefficients (terms) of a rational polynomial. -/
-def termCount (P : ℚ[X]) : ℕ :=
-  P.support.card
-
-/-- The possible numbers of terms of `P ^ 2`, as `P` ranges over rational polynomials with exactly
-`k` terms. -/
-def squareTermCounts (k : ℕ) : Set ℕ :=
-  {m | ∃ P : ℚ[X], termCount P = k ∧ termCount (P ^ 2) = m}
-
-/-- The minimum number of terms of the square of a rational polynomial with exactly `k` terms. -/
+/-- The minimum number of terms of the square of a rational polynomial with exactly `k` nonzero
+terms, where the number of terms of `P` is `P.support.card`. -/
 noncomputable def f (k : ℕ) : ℕ :=
-  sInf (squareTermCounts k)
+  sInf {m | ∃ P : ℚ[X], P.support.card = k ∧ (P ^ 2).support.card = m}
 
 /--
 Let $f(k)$ be the minimum number of terms in $P(x)^2$, where $P \in \mathbb{Q}[x]$ ranges over all
