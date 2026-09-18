@@ -115,7 +115,8 @@ Füredi [Fü92] proved the Murty-Simon conjecture for all sufficiently large $n$
 exists $n_0$ such that every diameter-$2$-critical graph on $n \geq n_0$ vertices has at most
 $\lfloor n^2 / 4 \rfloor$ edges.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos742.lean#L4279"]
 theorem furedi_bound : ∃ n₀ : ℕ, ∀ (V : Type*) [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj],
     n₀ ≤ Fintype.card V → IsDiameter2Critical G →
