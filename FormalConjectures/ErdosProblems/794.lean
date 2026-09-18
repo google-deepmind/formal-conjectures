@@ -53,7 +53,7 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
 theorem erdos_794 : answer(False) ↔
-    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsThreeUniform →
+    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
       n ^ 3 + 1 ≤ H.card → H.ContainsSubgraph 4 3 ∨ H.ContainsSubgraph 5 7 := by
   sorry
 
@@ -64,7 +64,7 @@ second condition can be dropped.
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.balogh {V : Type*} [DecidableEq V] (H : Finset (Finset V))
-    (hH : H.IsThreeUniform) (h : H.ContainsSubgraph 5 7) : H.ContainsSubgraph 4 3 := by
+    (hH : H.IsUniform 3) (h : H.ContainsSubgraph 5 7) : H.ContainsSubgraph 4 3 := by
   sorry
 
 /--
@@ -74,7 +74,7 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.harris :
-    harrisHypergraph.IsThreeUniform ∧ harrisHypergraph.card = 28 ∧
+    harrisHypergraph.IsUniform 3 ∧ harrisHypergraph.card = 28 ∧
       ¬ harrisHypergraph.ContainsSubgraph 4 3 ∧ ¬ harrisHypergraph.ContainsSubgraph 5 7 := by
   sorry
 
@@ -87,7 +87,7 @@ so likely there is simply a typo in this problem's statement).
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.frankl_furedi (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), H.IsThreeUniform ∧
+    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), H.IsUniform 3 ∧
       ¬ H.ContainsSubgraph 4 3 ∧ (2 / 7 - ε) * (n.choose 3 : ℝ) ≤ (H.card : ℝ) := by
   sorry
 
