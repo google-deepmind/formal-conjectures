@@ -51,7 +51,8 @@ constant $c_k>0$?
 This problem follows immediately from Mattheus and Verstraete's lower bound [MaVe23] for k = 4 and
 Bradač's lower bound [Br26] for k ≥ 5.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos920.lean#L76"]
 theorem erdos_920 :
     answer(True) ↔ ∀ k : ℕ, k ≥ 4 → ∃ c > 0,
       (fun n ↦ f k n) ≫ (fun n ↦ (n : ℝ) ^ (1 - 1 / ((k : ℝ) - 1)) / (log n) ^ c) := by

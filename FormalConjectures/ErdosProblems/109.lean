@@ -35,7 +35,8 @@ are infinite.
 
 The Erdős sumset conjecture. Proved by Moreira, Richter, and Robertson [MRR19].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos109.lean#L9074"]
 theorem erdos_109 (A : Set ℕ) (h : A.upperDensity > 0) :
     ∃ B C : Set ℕ, B.Infinite ∧ C.Infinite ∧ B + C ⊆ A := by
   sorry

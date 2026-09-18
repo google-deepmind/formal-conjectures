@@ -34,7 +34,8 @@ noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 Let $r_k(N)$ be the size of the largest subset of ${1,...,N}$ which does not contain a non-trivial
 $k$-term arithmetic progression. Prove that $r_k(N) = o(N)$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos139.lean#L36"]
 theorem erdos_139 (k : ℕ) (hk : 1 < k) :
     Filter.Tendsto (fun N => (r k N / N : ℝ)) Filter.atTop (𝓝 0) := by
   sorry
