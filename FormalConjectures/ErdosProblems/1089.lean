@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1089
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
   cardinality of an $s$-distance subset in real Euclidean space. II*. Combinatorica (1983),
   147-152.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
