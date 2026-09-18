@@ -39,8 +39,13 @@ $$R(4,k) \gg \frac{k^3}{(\log k)^{O(1)}}.$$
 This is true, and was proved by Mattheus and Verstraëte [MaVe23], who showed that
 $R(4,k) \gg \frac{k^3}{(\log k)^4}$.
 This problem is #5 in Ramsey Theory in the graphs problem collection.
+
+The linked formal proof (Codex and GPT-5.6 Sol, via the construction of Bradač used for
+Problem 920) gives `k ^ 3 / (log k) ^ c = O(R(4, k))` for a natural `c > 0`, with the Ramsey
+number defined through `CliqueFree`/`IndepSetFree`; this implies the statement below.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos166.lean#L83"]
 theorem erdos_166 : answer(True) ↔
     ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧
       ∀ᶠ (k : ℕ) in atTop,
