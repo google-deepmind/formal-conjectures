@@ -35,7 +35,8 @@ Erdős asked this at a 1988 number theory conference in Banff.
 
 A positive answer was given by Corrales-Rodrigáñez and Schoof [CoSc97].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1214.lean#L948"]
 theorem erdos_1214 :
     answer(True) ↔ ∀ x y : ℕ, x ≥ 1 → y ≥ 1 →
       (∀ n : ℕ, n ≥ 1 → { p : ℕ | p.Prime ∧ p ∣ x ^ n - 1 } = { p : ℕ | p.Prime ∧ p ∣ y ^ n - 1 }) →
