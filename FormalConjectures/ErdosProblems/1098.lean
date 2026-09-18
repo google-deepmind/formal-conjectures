@@ -31,8 +31,7 @@ namespace Erdos1098
 and an edge between `g` and `h` if and only if `g` and `h` do not commute, $gh \neq hg$. -/
 def nonCommutingGraph (G : Type*) [Group G] : SimpleGraph G where
   Adj g h := g * h ≠ h * g
-  symm := fun _ _ h => h.symm
-  loopless := fun _ h => h rfl
+  symm.symm := fun _ _ h => h.symm
 
 @[simp, category API, AMS 5 20]
 theorem nonCommutingGraph_adj {G : Type*} [Group G] (g h : G) :

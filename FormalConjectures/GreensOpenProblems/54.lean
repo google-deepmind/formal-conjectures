@@ -24,6 +24,11 @@ import FormalConjecturesUtil
 - [Ben Green's Open Problem 54](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.54)
 - Original formulation: M. Talagrand, *Are All Sets of Positive Measure Essentially Convex?*, in Operator Theory:
 Advances and Applications, 77, 1995 Birkhäuser Verlag Basel/Switzerland.
+- [Hua–Song–Tudose, *On Talagrand's convexity conjecture*](https://arxiv.org/abs/2605.10908) (2026)
+- [M. Talagrand, *Some open problems*](https://michel.talagrand.net/Korea15.pdf), §2
+
+Here $nK = K + \cdots + K$ ($n$ times) is the $n$-fold sumset of $K$, written `n • K` for `n : ℕ`
+with `open scoped Pointwise`.
 -/
 
 open MeasureTheory ProbabilityTheory
@@ -37,23 +42,27 @@ noncomputable def gaussianMeasureInf : Measure (ℕ → ℝ) :=
   Measure.infinitePi (fun _ : ℕ => gaussianReal 0 1)
 
 /--
-Let $K \subset \mathbb{R}^n$ be a balanced compact set (that is, $\lambda K \subseteq K$ whenever
-$|\lambda| \leq 1$) and suppose that the normalised Gaussian measure $\gamma_n(K) \geq 0.99$.
-Does $10K$ contain a compact convex set $C$ with $\gamma_n(C) \geq 0.01$?
+Let $K \subset \mathbb{R}^{\mathbb{N}}$ be a balanced compact set (that is, $\lambda K \subseteq K$
+whenever $|\lambda| \leq 1$) and suppose that the normalised Gaussian measure
+$\gamma_\infty(K) \geq 0.99$. Does the sumset $10K = K + \cdots + K$ ($10$ times) contain a compact
+convex set $C$ with $\gamma_\infty(C) \geq 0.01$?
+
+The answer is yes: Hua, Song and Tudose proved that if $\gamma_n(A) > 5/6$ then $3(A + A + A)$
+contains a symmetric convex body $C$ with $\gamma_n(C) \geq 1/4$, uniformly in $n$.
 -/
-@[category research open, AMS 46 52 60]
+@[category research solved, AMS 46 52 60]
 theorem green_54 :
-    answer(sorry) ↔ ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
-    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℝ) • K ∧
+    answer(True) ↔ ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
+    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℕ) • K ∧
     (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C := by
   sorry
 
 /--
-The same statement is known to be false for 2K instead of 10K.
+The same statement is known to be false for the sumset $2K = K + K$ instead of $10K$.
 -/
 @[category research solved, AMS 46 52 60]
 theorem green_54_known_case : ¬ (∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
-    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (2 : ℝ) • K ∧
+    gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ K + K ∧
     (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C) := by
   sorry
 

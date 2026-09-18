@@ -84,13 +84,20 @@ $$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
 $$
+and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
+
+This follows from the Plünnecke–Ruzsa inequality applied to $B=A\cap\{0,\ldots,N\}$: if $A$ is a
+basis of order $h$ then $hB$ contains every element of $\{N_0,\ldots,N\}$, so
+$(\lvert B+B\rvert/\lvert B\rvert)^h\geq \lvert hB\rvert/\lvert B\rvert\gg N/\lvert B\rvert$,
+which tends to infinity since $\lvert B\rvert=o(N)$.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_337.variants.three_fold :
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/9e4cd5617edacb313fb1da32adb4751f1fa8f603/FormalConjectures/ErdosProblems/337.lean#L95"]
+theorem erdos_337.variants.ruzsa_turjanyi :
     ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦
-          (((A + A + A) ∩ Icc 1 (3 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
+          (((A + A) ∩ Icc 1 (2 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by
   sorry
 
@@ -98,16 +105,20 @@ theorem erdos_337.variants.three_fold :
 Ruzsa and Turjányi do prove (under the same hypotheses) that
 $$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
-{\lvert A\cap \{1,\ldots,N\}\rvert}=\infty,
+{\lvert A\cap \{1,\ldots,N\}\rvert}=\infty.
 $$
-and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
+
+This is weaker than `Erdos337.erdos_337.variants.ruzsa_turjanyi`: translating by a fixed
+$a\in A$ with $1\leq a\leq N$ embeds $(A+A)\cap\{1,\ldots,2N\}$ into
+$(A+A+A)\cap\{1,\ldots,3N\}$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_337.variants.ruzsa_turjanyi :
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/9e4cd5617edacb313fb1da32adb4751f1fa8f603/FormalConjectures/ErdosProblems/337.lean#L240"]
+theorem erdos_337.variants.three_fold :
     ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦
-          (((A + A) ∩ Icc 1 (2 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
+          (((A + A + A) ∩ Icc 1 (3 * N)).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by
   sorry
 

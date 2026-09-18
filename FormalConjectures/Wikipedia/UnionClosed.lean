@@ -128,12 +128,12 @@ theorem union_closed.variants.singleton_mem
   set B : Finset (Finset n) := {x ∈ A | i ∉ x}
   set C : Finset (Finset n) := {x ∈ A | i ∈ x}
   have h₁ : (B : Set <| Finset n).InjOn (insert i) := by
-    simp only [Set.InjOn, coe_filter, Set.mem_setOf_eq, and_imp, B]
+    simp only [Set.InjOn, coe_filter, Set.mem_ofPred_eq, and_imp, B]
     rintro x - hx y - hy hxy
     have := congr(($hxy).erase i)
     rwa [erase_insert hx, erase_insert hy] at this
   have h₂ : (B : Set <| Finset n).MapsTo (insert i) C := by
-    simp only [Set.MapsTo, coe_filter, Set.mem_setOf_eq, mem_insert, true_or, and_true,
+    simp only [Set.MapsTo, coe_filter, Set.mem_ofPred_eq, mem_insert, true_or, and_true,
       and_imp, B, C]
     intro x hx hix
     rw [Finset.insert_eq]
@@ -186,7 +186,7 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
     · simp
     intro a ha b hb h
     simp only [coe_powerset, coe_erase, coe_univ, Set.mem_preimage, Set.mem_powerset_iff,
-      Set.subset_diff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
+      Set.subset_sdiff, Set.subset_univ, Set.disjoint_singleton_right, mem_coe, true_and] at ha hb
     have := congr(($h).erase i)
     rwa [erase_insert ha, erase_insert hb] at this
   simp only [card_univ, Fintype.card_finset, Nat.cast_pow, Nat.cast_ofNat, this] at hi
@@ -199,14 +199,23 @@ theorem union_closed.variants.sharpness [Fintype n] (c : ℝ) (hc : 1 / 2 < c) :
   simp at this
 
 /--
-If the UC conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+The union-closed sets conjecture is tight for a union-closed family `A` if the largest number of
+sets in `A` containing a common element is exactly half of the sets in `A`, that is,
+$\max_i |\{X \in A : i \in X\}| = |A| / 2$.
+
+If the union-closed sets conjecture is tight for some family `A` then $|A| = 2^k$ for some $k$.
+This is the first part of Conjecture 3 in the reference below; its second part (that the
+family then contains the power set of a $k$-element set as a "submatrix") is not formalized here.
 
 Reference: Conjecture 3 in https://www.nieuwarchief.nl/serie5/pdf/naw5-2023-24-4-225.pdf.
 -/
 @[category research open, AMS 5]
 theorem union_closed.variants.cardinality_even_of_union_closed_tight
-    [Nonempty n] (hA : A ≠ {∅} ∧ A ≠ ∅) (hA : IsUnionClosed A)
-    (UCC_tight : ∀ i, #{x ∈ A | i ∈ x} = (1 / 2 : ℝ) * #A) :
+    [Nonempty n]
+    (h_ne_singleton_empty : A ≠ {∅})
+    (h_ne_empty : A ≠ ∅)
+    (h_union_closed : IsUnionClosed A)
+    (h_tight : IsGreatest (Set.range fun i : n => (#{x ∈ A | i ∈ x} : ℚ)) ((1 / 2 : ℚ) * #A)) :
     ∃ k, #A = 2 ^ k := by
   sorry
 

@@ -126,17 +126,23 @@ theorem sin_exp_transcendental : Transcendental ℚ (Real.sin (exp 1)) := by
 /--
 At least one of $\pi + e$ and $\pi e$ is transcendental.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/6703489001e7374c5fd963dc5f8e98c34ea567cb/research/formal-conjectures-pilot/ExpTranscendence.lean#L149-L153"]
 theorem exp_add_pi_or_exp_add_mul_transcendental :
     Transcendental ℚ (π + rexp 1) ∨ Transcendental ℚ (π * exp 1) := by
   sorry
 
 /--
-At least one of Catalan constant and the Gompertz constant is transcendental.
+At least one of the Euler–Mascheroni constant $\gamma$ and the Gompertz constant $\delta$ is
+transcendental.
+
+[Ri12] Rivoal, T. (2012). On the arithmetic nature of the values of the gamma function, Euler's
+constant, and Gompertz's constant. Michigan Mathematical Journal, 61(2), 239–254.
 -/
 @[category research solved, AMS 11 33]
-theorem transcendental_catalanConstant_or_gompertzConstant :
-    Transcendental ℚ catalanConstant ∨ Transcendental ℚ gompertzConstant := by
+theorem transcendental_eulerMascheroniConstant_or_gompertzConstant :
+    Transcendental ℚ eulerMascheroniConstant ∨ Transcendental ℚ gompertzConstant := by
   sorry
 
 /--

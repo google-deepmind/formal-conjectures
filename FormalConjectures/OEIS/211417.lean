@@ -130,10 +130,21 @@ D(r)*a(n)/Product_{i = 1..r, i coprime to 30} (30*n - i) is integral for all n."
 - _Peter Bala_, Aug 28 2025
 
 This generalizes `thirty_mul_sub_one_dvd_a` (the $r = 1$ case where $D(1) = 1$).
+
+**Proof sketch** (kernel-checked development at the `formal_proof` permalink below, which
+proves the non-vacuous form with the explicit positive witness $D = (r!)^{r^2}$):
+Legendre-valuation analysis of the Landau step function
+$\Delta(x) = \lfloor 30x \rfloor + \lfloor x \rfloor - \lfloor 15x \rfloor -
+\lfloor 10x \rfloor - \lfloor 6x \rfloor$, whose values lie in $\{0, 1\}$. Three
+ingredients: a unit-class rigidity lemma ($\Delta_c = 1$ for every unit class $c$ modulo
+$30$), a witness-uniqueness bound for prime powers $p^k > r$ (at most one factor of the
+divisor product is divisible by $p^k$), and a uniform low-layer budget for $p^k \le r$
+absorbed by the witness constant.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L651"]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
-    ∃ D : ℤ, ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
+    ∃ D : ℤ, 0 < D ∧ ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
 
 /--

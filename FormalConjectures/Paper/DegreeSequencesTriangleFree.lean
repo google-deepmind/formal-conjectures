@@ -148,17 +148,60 @@ lemma lemma2_b
   rw [hsplit]
   omega
 
+/-- Helper for `lemma2_c` and `lemma2_d`: shifting the index by `2 * (n + 1)` raises each term
+by at least `n + 1`, so a block of `m` terms starting at `2 * n + 3` exceeds the block
+`d 1, …, d m` by at least `m * (n + 1)`. -/
+@[category API, AMS 5]
+private lemma lemma2_helper_shift (m : ℕ)
+    (h_mono : Monotone d)
+    (h_no_three : ∀ i, d (i + 2) ≠ d i) :
+    ∑ i ∈ Finset.Icc 1 m, d i + m * (n + 1) ≤
+      ∑ i ∈ Finset.Icc (2 * n + 3) (2 * n + 2 + m), d i := by
+  -- Reindex `i ↦ i + 2 * (n + 1)`.
+  have hreindex : ∑ i ∈ Finset.Icc (2 * n + 3) (2 * n + 2 + m), d i =
+      ∑ i ∈ Finset.Icc 1 m, d (i + 2 * (n + 1)) := by
+    rw [show Finset.Icc (2 * n + 3) (2 * n + 2 + m) =
+        (Finset.Icc 1 m).image (· + 2 * (n + 1)) by
+      ext x; simp [Finset.mem_Icc]; omega]
+    rw [Finset.sum_image]; intro a _ b _ hab; exact Nat.add_right_cancel hab
+  rw [hreindex]
+  have hpt : ∀ i, d i + (n + 1) ≤ d (i + 2 * (n + 1)) := fun i => by
+    have h1 := lemma1_b d i (n + 1) h_mono h_no_three
+    have h2 := h_mono (show i ≤ i + 2 * (n + 1) by omega)
+    omega
+  have hsum : ∑ _ ∈ Finset.Icc 1 m, (n + 1) = m * (n + 1) := by
+    rw [Finset.sum_const, Nat.card_Icc, smul_eq_mul, Nat.add_sub_cancel]
+  rw [← hsum, ← Finset.sum_add_distrib]
+  exact Finset.sum_le_sum fun i _ => hpt i
+
 /-- **Lemma 2 (c)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
 @[category API, AMS 5]
 lemma lemma2_c
     (h_mono : Monotone d)
-    (h_pos : ∀ k, 0 < d k)
+    (_h_pos : ∀ k, 0 < d k)
     (h_no_three : ∀ i, d (i + 2) ≠ d i) :
     2 * n * n + 2 * n ≤
       (∑ i ∈ .Icc (2 * n + 2) (4 * n + 2), d i) -
         ∑ i ∈ .Icc 1 (2 * n + 1), d i := by
-  sorry
+  -- Split off `d (2 * n + 2)` above and `d (2 * n + 1)` below; the remaining `2 * n` terms
+  -- above are the `2 * n` terms below shifted by `2 * (n + 1)`.
+  have hup : ∑ i ∈ Finset.Icc (2 * n + 2) (4 * n + 2), d i =
+      d (2 * n + 2) + ∑ i ∈ Finset.Icc (2 * n + 3) (2 * n + 2 + 2 * n), d i := by
+    rw [show Finset.Icc (2 * n + 2) (4 * n + 2) =
+        insert (2 * n + 2) (Finset.Icc (2 * n + 3) (2 * n + 2 + 2 * n)) by
+      ext x; simp [Finset.mem_Icc]; omega]
+    rw [Finset.sum_insert (by simp [Finset.mem_Icc])]
+  have hlo : ∑ i ∈ Finset.Icc 1 (2 * n + 1), d i =
+      ∑ i ∈ Finset.Icc 1 (2 * n), d i + d (2 * n + 1) := by
+    rw [show Finset.Icc 1 (2 * n + 1) = insert (2 * n + 1) (Finset.Icc 1 (2 * n)) by
+      ext x; simp [Finset.mem_Icc]; omega]
+    rw [Finset.sum_insert (by simp [Finset.mem_Icc]), add_comm]
+  have h := lemma2_helper_shift d n (2 * n) h_mono h_no_three
+  have hm : d (2 * n + 1) ≤ d (2 * n + 2) := h_mono (by omega)
+  rw [hup, hlo]
+  have : 2 * n * (n + 1) = 2 * n * n + 2 * n := by ring
+  omega
 
 /-- **Lemma 2 (d)**
 Inequality involving sums of terms of a nondecreasing sequence with no three terms equal. -/
@@ -170,7 +213,24 @@ lemma lemma2_d
     2 * n * n + 4 * n + 2 ≤
       (∑ i ∈ .Icc (2 * n + 2) (4 * n + 3), d i) -
         ∑ i ∈ .Icc 1 (2 * n + 1), d i := by
-  sorry
+  -- Split off `d (2 * n + 2) ≥ n + 1` above; the remaining `2 * n + 1` terms above are the
+  -- terms below shifted by `2 * (n + 1)`.
+  have hup : ∑ i ∈ Finset.Icc (2 * n + 2) (4 * n + 3), d i =
+      d (2 * n + 2) + ∑ i ∈ Finset.Icc (2 * n + 3) (2 * n + 2 + (2 * n + 1)), d i := by
+    rw [show Finset.Icc (2 * n + 2) (4 * n + 3) =
+        insert (2 * n + 2) (Finset.Icc (2 * n + 3) (2 * n + 2 + (2 * n + 1))) by
+      ext x; simp [Finset.mem_Icc]; omega]
+    rw [Finset.sum_insert (by simp [Finset.mem_Icc])]
+  have h := lemma2_helper_shift d n (2 * n + 1) h_mono h_no_three
+  have hbig : n + 1 ≤ d (2 * n + 2) := by
+    have h1 := lemma1_b d 2 n h_mono h_no_three
+    have h2 := h_mono (show 2 ≤ 2 + 2 * n by omega)
+    have hp := h_pos 2
+    rw [show 2 + 2 * n = 2 * n + 2 by ring] at h1 h2
+    omega
+  rw [hup]
+  have : (2 * n + 1) * (n + 1) = 2 * n * n + 3 * n + 1 := by ring
+  omega
 
 end DegreeSequencesTriangleFree
 
