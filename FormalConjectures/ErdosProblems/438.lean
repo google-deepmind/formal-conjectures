@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 438
@@ -33,6 +35,8 @@ import FormalConjecturesUtil
 - [KLS02] Khalfalah, A. and Lodha, S. and Szemerédi, E., *Tight bound for the density of sequence
   of integers the sum of no two of which is a perfect square*. Discrete Math. (2002), 243-255.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
