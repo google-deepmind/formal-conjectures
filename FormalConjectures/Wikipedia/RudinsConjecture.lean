@@ -108,12 +108,16 @@ theorem rudins_conjecture_strong (N : ℕ) (hN : 6 ≤ N) : Q N 24 1 = Qmax N :=
   sorry
 
 /--
-The strongest form of Rudin's conjecture also asserts *uniqueness*: for $N \ge 6$, any non-trivial
-arithmetic progression attaining the maximum $Q(N)$ has common difference $24$. (Its initial term
-is then forced by $\gcd(24, a) = 1$; the progression $24n + 1$ is the canonical representative.)
+The super-strong form of Rudin's conjecture, due to González-Jiménez and Xarles, also asserts
+*uniqueness* at the values $N = GP_k + 1 \ge 8$, where $GP_k = k(3k - 1)/2$ with $k \in \mathbb{Z}$
+is a generalized pentagonal number: any non-trivial arithmetic progression attaining the maximum
+$Q(N)$ has common difference $24$. (Its initial term is then forced by $\gcd(24, a) = 1$; the
+progression $24n + 1$ is the canonical representative.) Uniqueness fails at other values of $N$:
+for $N = 6$ the progression $120 n + 49$ also attains $Q(6) = 4$.
 -/
 @[category research open, AMS 11]
-theorem rudins_conjecture_unique (N : ℕ) (hN : 6 ≤ N) (q a : ℕ)
+theorem rudins_conjecture_unique (N : ℕ) (hN : 8 ≤ N)
+    (hN' : ∃ k : ℤ, (N : ℤ) = k * (3 * k - 1) / 2 + 1) (q a : ℕ)
     (hqa : IsNontrivial q a) (hmax : Q N q a = Qmax N) : q = 24 := by
   sorry
 
