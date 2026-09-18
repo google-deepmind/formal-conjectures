@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 479
@@ -22,14 +23,17 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/479](https://www.erdosproblems.com/479)
 -/
 
+@[expose] public section
+
 namespace Erdos479
 
 /--
-Is it true that, for all $k\neq 1$, there are infinitely many $n$ such that
+Is it true that, for every integer $k\neq 1$, there are infinitely many $n$ such that
 $2^n\equiv k\pmod{n}$?
 -/
 @[category research open, AMS 11]
-theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k > 1), { n | 2 ^ n ≡ k [MOD n]}.Infinite := by
+theorem erdos_479 : answer(sorry) ↔ ∀ᵉ (k : ℤ) (k ≠ 1),
+    { n : ℕ | (2 : ℤ) ^ n ≡ k [ZMOD (n : ℤ)] }.Infinite := by
   sorry
 
 end Erdos479

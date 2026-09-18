@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Lehmer's Mahler measure problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
 -/
+
+@[expose] public section
 
 namespace LehmerMahlerMeasureProblem
 
@@ -57,10 +60,10 @@ theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])
   sorry
 
 /--
-If $f$ is not reciprocal and $M(f) > 1$ then $M(f) \ge M(X^3 - X - 1)$.
+If $f$ is irreducible and not reciprocal and $M(f) > 1$ then $M(f) \ge M(X^3 - X - 1)$.
 -/
 @[category research solved, AMS 11]
-theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X])
+theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X]) (hi : Irreducible f)
     (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^3 - X - 1) := by
   sorry
@@ -70,11 +73,12 @@ def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
   ∀ i ≤ f.natDegree, Odd (f.coeff i)
 
 /--
-If all the coefficients of $f$ are odd and $M(f) > 1$, then $M(f) \ge M(X^2 - X - 1)$.
+If $f$ is not reciprocal, all the coefficients of $f$ are odd and $M(f) > 1$, then
+$M(f) \ge M(X^2 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
-    (hf : mahlerMeasureZ f > 1) (hf' : f.HasOddCoeffs) :
+    (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) (hf'' : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
 

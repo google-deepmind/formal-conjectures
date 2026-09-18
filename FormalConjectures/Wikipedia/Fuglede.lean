@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Fuglede's conjecture in dimensions 1 and 2
@@ -22,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [Fuglede's conjecture](https://en.wikipedia.org/wiki/Fuglede%27s_conjecture)
 -/
+
+@[expose] public section
 
 namespace Fuglede
 
@@ -52,12 +55,15 @@ theorem FugledeConjecture.variants.dim_2 :
   sorry
 
 /--
-**Fuglede's conjecture** in three or higher dimensions has been disproven.
-(Note that counterexamples in lower dimensions would also disprove the conjecture in higher dimensions.)
+**Fuglede's conjecture** fails in every dimension $n \geq 3$: for each such $n$ there is a bounded
+subset of $\mathbb{R}^n$ with positive Lebesgue measure that is spectral but does not tile
+$\mathbb{R}^n$ by translation, or that tiles $\mathbb{R}^n$ by translation but is not spectral.
+(Note that counterexamples in lower dimensions would also disprove the conjecture in higher
+dimensions.)
 -/
 @[category research solved, AMS 42 46 47]
-theorem FugledeConjecture.variants.dim_3_or_higher :
-    answer(False) ↔ ∀ n : ℕ, 3 ≤ n → FugledeConjectureFor n := by
+theorem FugledeConjecture.variants.dim_3_or_higher (n : ℕ) (hn : 3 ≤ n) :
+    ¬ FugledeConjectureFor n := by
   sorry
 
 end Fuglede

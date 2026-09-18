@@ -13,8 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Linters.AMSLinter
+public meta import FormalConjecturesUtil.Linters.AMSLinter
+
+@[expose] public section
+
+-- Off by default; on here because this file is what tests it.
+set_option linter.style.ams_attribute true
 
 namespace AMSLinter
 

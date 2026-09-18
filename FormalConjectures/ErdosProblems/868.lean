@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 868
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/868](https://www.erdosproblems.com/868)
 - [LaLa26] Larsen and Larsen, [Erdős problem 868](https://github.com/Larsen-Daniel/Erdos-868/blob/main/868.pdf) (2026)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -74,7 +77,9 @@ theorem erdos_868.variants.fixed_ε :
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/868.lean#L132"]
 theorem erdos_868.variants.Hartter_Nathanson (o : ℕ) (ho : 1 < o) : ∃ (A : Set ℕ),
     A.IsAsymptoticAddBasisOfOrder o ∧ ∀ B ⊆ A, B.IsAsymptoticAddBasisOfOrder o →
     ∃ b ∈ B, (B \ {b}).IsAsymptoticAddBasisOfOrder o := by

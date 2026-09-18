@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 951
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
  - [Er77c] Erdős, Paul, Problems and results on combinatorial number theory. III. Number theory day (Proc. Conf., Rockefeller Univ.,
     New York, 1976) (1977), 43-72.
 -/
+
+@[expose] public section
 
 open scoped Finsupp Nat.Prime Topology
 open Filter
@@ -36,8 +39,8 @@ at least one apart. -/
 def Erdos951Prop (a : ℕ → ℝ) : Prop :=
   ∀ (k ℓ : ℕ →₀ ℕ), k ≠ ℓ → |beurlingInteger a k - beurlingInteger a ℓ| ≥ 1
 
-/-- If `a` has property `Erdos951Prop` and `1 < a 0`, then `a` is a set of Beurling
-prime numbers. -/
+/-- If a strictly increasing sequence `a : ℕ → ℝ` has property `Erdos951Prop`
+and `1 < a 0`, then `a` is a sequence of Beurling prime numbers. -/
 @[category API, AMS 11]
 theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     (hm : StrictMono a) (he : Erdos951Prop a) :
@@ -61,11 +64,13 @@ theorem erdos_951 : answer(sorry) ↔
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
-/-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
-is `x + o(log x)`, then `a` must be the sequence of primes. -/
+/-- Beurling conjectured that if `1 < a 0 < a 1 < ⋯` has property `Erdos951Prop` and the number
+of reals in $[1, x]$ of the form $\prod_i a_i^{k_i}$ is $x + o(\log x)$, then `a` must be the
+sequence of primes. Property `Erdos951Prop` makes distinct exponent vectors give distinct
+Beurling integers, so counting the set `BeurlingIntegers a` counts the generalised integers. -/
 @[category research solved, AMS 11]
 theorem erdos_951.variants.beurling :
-    ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
+    ∀ a : ℕ → ℝ, IsBeurlingPrimes a → Erdos951Prop a →
     ((fun x => (BeurlingIntegers a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
     a = Nat.cast ∘ Nat.nth Nat.Prime := by
   sorry

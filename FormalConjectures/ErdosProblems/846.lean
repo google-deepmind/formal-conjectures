@@ -13,20 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 846
 
 *Reference:* [erdosproblems.com/846](https://www.erdosproblems.com/846)
 -/
+
+@[expose] public section
+
 open EuclideanGeometry
 
 namespace Erdos846
 
 section Prelims
-open Classical
 
 /-- We say a subset `A` of points in the plane is `ε`-non-trilinear if any subset
 `B` of `A`, contains a non-trilinear subset `C` of size at least `ε|B|`. -/

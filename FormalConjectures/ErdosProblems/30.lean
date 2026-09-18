@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 30
 
 *Reference:* [erdosproblems.com/30](https://www.erdosproblems.com/30)
 -/
+
+@[expose] public section
 
 namespace Erdos30
 
@@ -33,7 +36,7 @@ noncomputable abbrev h (N : ℕ) : ℕ := Finset.maxSidonSubsetCard (Finset.Icc 
 open Filter
 
 /--
-Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varespilon}(N^\varespilon)
+Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varepsilon}(N^\varepsilon)$
 -/
 @[category research open, AMS 11]
 theorem erdos_30 : answer(sorry) ↔

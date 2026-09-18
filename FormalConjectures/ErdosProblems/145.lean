@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 145
 
 *Reference:* [erdosproblems.com/145](https://www.erdosproblems.com/145)
 -/
+
+@[expose] public section
 
 namespace Erdos145
 
@@ -72,13 +75,14 @@ theorem erdos_145.variants.le_three {α : ℝ} (hα : α ∈ Set.Icc 0 3) :
   sorry
 
 /--
-Greaves, Harman, and Huxley [GHH97] showed that this is true for $0 \leq \alpha\leq 11/3$.
+Greaves, Harman, and Huxley showed (in Chapter 11 of [GHH97]) that this is true for
+$0 \leq \alpha < 11/3$.
 
 [GHH97] Greaves, G. R. H. and Harman, G. and Huxley, M. N., Sieve Methods, Exponential Sums, and
   their Applications in Number Theory. (1997).
 -/
 @[category research solved, AMS 11]
-theorem erdos_145.variants.le_eleven_thirds {α : ℝ} (hα : α ∈ Set.Icc 0 (11 / 3)) :
+theorem erdos_145.variants.lt_eleven_thirds {α : ℝ} (hα : α ∈ Set.Ico 0 (11 / 3)) :
     ∃ β : ℝ,
       atTop.Tendsto (fun x : ℝ ↦ 1 / x * ∑ n ∈ A x, (s (n + 1) - s n : ℝ) ^ α) (𝓝 β) := by
   sorry

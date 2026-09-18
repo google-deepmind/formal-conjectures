@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Open questions about Fermat numbers
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Fermat_number)
 -/
+
+@[expose] public section
 
 namespace Fermat
 
@@ -46,10 +49,10 @@ theorem infinite_fermat_composite : answer(sorry) ↔ Infinite {n : ℕ | ¬Prim
   sorry
 
 /--
-Are all Fermat numbers are square-free?
+Does a Fermat number exist that is not square-free?
 -/
 @[category research open, AMS 11]
-theorem all_fermat_squarefree : answer(sorry) ↔ ∀ n : ℕ, Squarefree n.fermatNumber := by
+theorem exists_fermat_not_squarefree : answer(sorry) ↔ ∃ n : ℕ, ¬Squarefree n.fermatNumber := by
   sorry
 
 end Fermat
