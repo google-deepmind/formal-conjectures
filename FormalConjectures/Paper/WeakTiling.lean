@@ -93,10 +93,23 @@ theorem problem_4_2 :
 
 /-- **Problem 4.3.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
     a weak tiling measure for $\Omega$. Must $\nu$ be expressible as a convex combination of
-    proper tiling measures? -/
-@[category research open, AMS 42 46]
+    proper tiling measures?
+
+The answer is negative.
+
+An AI-assisted investigation by Kenta Kitamura produced a counterexample for
+$\Omega = (0,1) \cup (2,3) \cup (12,13) \cup (30,31)$.
+A finite computation shows that every convex combination of proper tiling measures
+for this $\Omega$ assigns equal mass to $\{7\}$ and $\{15\}$.
+However, the constructed weak tiling measure $\nu$ satisfies
+$\nu(\{7\}) = \frac{1}{2}$ and $\nu(\{15\}) = 0$, so $\nu$ cannot be expressed
+as a convex combination of proper tiling measures.
+-/
+@[category research solved, AMS 42 46,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/weak-tiling-counterexample/blob/5bf93234cc51f02fd7681407d77dcebde592f3ac/formal-conjectures-v4.27.0/WeakTilingCounterexample.lean"]
 theorem problem_4_3 :
-    answer(sorry) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
+    answer(False) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
       (ν : Measure ℝ) (_ : IsWeakTilingMeasure Ω ν),
       ∃ (T : ℕ → Set ℝ) (c : ℕ → ℝ≥0), (∀ i, IsProperTiling Ω (T i)) ∧ ∑' i : ℕ, c i = 1 ∧
       ν = Measure.sum

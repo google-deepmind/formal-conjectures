@@ -27,6 +27,9 @@ import FormalConjecturesUtil
   birthday), Vol. I. Colloq. Math. Soc. János Bolyai 10, North-Holland (1975), 425–513.
 - [Er95d] Erdős, Paul, Some of my favourite problems in various branches of combinatorics.
   Matematiche (Catania) 47 (1992), no. 2, 231–240 (1995).
+- [EHR73] Erdős, Paul and Hajnal, András and Rothschild, Bruce, On chromatic number of graphs
+  and set-systems. Cambridge Summer School in Mathematical Logic (Cambridge, 1971),
+  Lecture Notes in Math. 337, Springer (1973), 531–538.
 -/
 
 open Cardinal Set SimpleGraph
@@ -36,68 +39,80 @@ namespace Erdos593
 /- ## Main open problem -/
 
 /--
-**Erdős Problem 593 ($500)**: Characterize those finite 3-uniform hypergraphs which appear
+**Erdős Problem 593 (\$500)**: Characterize those finite 3-uniform hypergraphs which appear
 in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
 
-A natural conjectural characterization, recorded here, is that the obligatory finite 3-uniform
-hypergraphs are exactly the 2-colorable ones (Property B). The forward direction
-(`IsObligatory → IsTwoColorable`) and converse (`IsTwoColorable → IsObligatory`) are stated as
-separate variants below; in the graph case ($r = 2$), Erdős–Galvin–Hajnal [EGH75] proved the
-analogous result (obligatory ⇔ bipartite).
+The answer is the set of obligatory finite 3-uniform hypergraphs, represented here on the
+labelled vertex sets `Fin n`.
+
+Two-colorability (Property B) is a necessary condition, see
+`erdos_593.variants.obligatory_implies_two_colorable`, but it is not sufficient: two triples
+sharing a pair form a 2-colorable hypergraph that is not obligatory, see
+`erdos_593.variants.common_pair_not_obligatory`. In the graph case ($r = 2$) the problem is
+completely solved by Erdős–Galvin–Hajnal [EGH75]: the obligatory graphs are exactly the finite
+bipartite graphs.
+
+A resolution has been claimed by E. Li (arXiv:2606.24882, 2026); at the time of writing
+erdosproblems.com still lists the problem as open.
 -/
 @[category research open, AMS 5]
-theorem erdos_593 : answer(sorry) ↔
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      IsObligatory F ↔ F.IsTwoColorable := by
+theorem erdos_593 :
+    {p : Σ n : ℕ, ThreeUniformHypergraph (Fin n) | IsObligatory p.2} = answer(sorry) := by
   sorry
 
 /--
-**Erdős Problem 593 — Necessary direction**: Every obligatory finite 3-uniform
-hypergraph is 2-colorable.
+**Necessary direction**: every obligatory finite 3-uniform hypergraph is 2-colorable.
 
-This is the natural necessary condition for the conjectural characterization in `erdos_593`:
-if a finite 3-uniform hypergraph `F` is not 2-colorable, one expects to construct a
-hypergraph with large chromatic number that contains no copy of `F`.
+This follows from two constructions in [EGH75]. By [EHR73] (see [EGH75, p. 426]) there are
+3-uniform hypergraphs of arbitrarily large chromatic number consisting of edge-disjoint
+triples, so an obligatory `F` is linear (no two edges share two vertices). By the remark
+preceding [EGH75, Theorem 10.9] there are, for every infinite cardinal $\kappa$, 3-uniform
+hypergraphs of chromatic number $> \kappa$ all of whose linear sub-hypergraphs are
+2-colorable. An obligatory `F` appears in such a hypergraph, hence is 2-colorable.
 -/
-@[category research open, AMS 5]
-theorem erdos_593.variants.obligatory_implies_two_colorable : answer(sorry) ↔
+@[category research solved, AMS 5]
+theorem erdos_593.variants.obligatory_implies_two_colorable : answer(True) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       IsObligatory F → F.IsTwoColorable := by
   sorry
 
 /--
-**Erdős Problem 593 — Sufficient direction**: Every finite 2-colorable 3-uniform
+**Sufficient direction fails**: it is not the case that every finite 2-colorable 3-uniform
 hypergraph is obligatory.
 
-This is the converse direction of the `erdos_593` characterization: if 2-colorability
-matches the graph-case characterization (bipartite ⇔ obligatory), then every 2-colorable
-finite 3-uniform hypergraph must appear in every 3-uniform hypergraph of chromatic number
-$> \aleph_0$.
-
-Together with `erdos_593.variants.obligatory_implies_two_colorable`, this implies `erdos_593`.
+The hypergraph `commonPair` with edges $\{0,1,2\}$ and $\{0,1,3\}$ is 2-colorable but does
+not appear in the 3-uniform hypergraphs of large chromatic number consisting of edge-disjoint
+triples constructed in [EHR73], see `erdos_593.variants.common_pair_not_obligatory`.
 -/
-@[category research open, AMS 5]
-theorem erdos_593.variants.two_colorable_implies_obligatory : answer(sorry) ↔
+@[category research solved, AMS 5]
+theorem erdos_593.variants.two_colorable_implies_obligatory : answer(False) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       F.IsTwoColorable → IsObligatory F := by
   sorry
 
-/--
-**Conjunction of the two open implications gives the conjectured characterization**: if both
-`obligatory_implies_two_colorable` and `two_colorable_implies_obligatory` hold, then the
-characterization conjectured in `erdos_593` (`IsObligatory F ↔ F.IsTwoColorable`) follows by
-elementary `Iff` manipulation.
--/
+/-- The 3-uniform hypergraph on four vertices consisting of two triples sharing a pair,
+$\{0,1,2\}$ and $\{0,1,3\}$. -/
+def commonPair : ThreeUniformHypergraph (Fin 4) :=
+  ThreeUniformHypergraph.ofFinset {{0, 1, 2}, {0, 1, 3}} (by unfold Finset.IsThreeUniform; decide)
+
+/-- Two triples sharing a pair are 2-colorable: color the shared pair with one color and the
+remaining two vertices with the other. -/
 @[category test, AMS 5]
-theorem erdos_593.variants.implications_combine
-    (h₁ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-            IsObligatory F → F.IsTwoColorable)
-    (h₂ : ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-            F.IsTwoColorable → IsObligatory F) :
-    ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
-      IsObligatory F ↔ F.IsTwoColorable := by
-  intro W _ F
-  exact ⟨h₁ W F, h₂ W F⟩
+theorem erdos_593.variants.commonPair_isTwoColorable : commonPair.IsTwoColorable :=
+  ⟨fun i => if i.val < 2 then 0 else 1, by
+    intro e he
+    simp only [commonPair, ThreeUniformHypergraph.mem_edges_ofFinset] at he
+    revert e
+    decide⟩
+
+/--
+Two triples sharing a pair are **not** obligatory: by [EHR73] (see [EGH75, p. 426]) there are
+3-uniform hypergraphs of arbitrarily large chromatic number consisting of edge-disjoint
+triples, and `commonPair` does not appear in any of them.
+-/
+@[category research solved, AMS 5]
+theorem erdos_593.variants.common_pair_not_obligatory : ¬ IsObligatory commonPair := by
+  sorry
 
 /- ## Variants and partial results -/
 
@@ -107,8 +122,9 @@ For the 2-uniform (graph) case, a graph of chromatic cardinal $> \aleph_0$ must 
 finite bipartite graphs. Specifically, for every finite bipartite graph `F` and every graph
 `G` with chromatic cardinal $> \aleph_0$, there is a graph embedding from `F` into `G`.
 
-This uses `Nonempty (F ↪g G)` (graph embedding), aligned with the injective vertex map
-used in the hypergraph `Appears` definition.
+This uses `F ⊑ G` (`SimpleGraph.IsContained`, an injective graph homomorphism), aligned with
+the injective edge-preserving map used in the hypergraph `Appears` definition. A graph embedding
+`F ↪g G` would require an induced copy, which the theorem does not provide.
 -/
 @[category research solved, AMS 5]
 theorem erdos_593.variants.graph_case_bipartite_obligatory :
@@ -116,7 +132,7 @@ theorem erdos_593.variants.graph_case_bipartite_obligatory :
     ∀ (V : Type*) (G : SimpleGraph V),
       ℵ₀ < G.chromaticCardinal →
       ∀ (W : Type*) [Fintype W] (F : SimpleGraph W), F.IsBipartite →
-        Nonempty (F ↪g G) := by
+        F ⊑ G := by
   simp only [true_iff]
   -- This is the Erdős–Galvin–Hajnal theorem [EGH75].
   sorry
@@ -164,11 +180,7 @@ theorem erdos_593.variants.uncountable_vertices_if_large_chromatic
     obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hge
     exact ⟨u, hu, v, hv, fun heq => huv (hφ heq)⟩
   -- So χ(H) ≤ #ℕ = ℵ₀.
-  have hle : H.chromaticCardinal ≤ ℵ₀ := by
-    apply csInf_le
-    · -- The set {κ | ∃ C, #C = κ ∧ ∃ f, proper} is bounded below by 0.
-      exact ⟨0, fun _ ⟨_, _, _, _⟩ => Cardinal.zero_le _⟩
-    · exact ⟨ℕ, Cardinal.mk_nat, φ, hprop⟩
+  have hle : H.chromaticCardinal ≤ ℵ₀ := csInf_le' ⟨ℕ, Cardinal.mk_nat, φ, hprop⟩
   exact absurd (lt_of_lt_of_le hχ hle) (lt_irrefl _)
 
 /--
@@ -180,19 +192,14 @@ particular, $\chi(H) > \aleph_0$ implies `H` has at least one hyperedge.
 theorem erdos_593.variants.nonempty_edges_if_large_chromatic
     {V : Type} (H : ThreeUniformHypergraph V) (hχ : ℵ₀ < H.chromaticCardinal) :
     H.edges.Nonempty := by
-  by_contra hempty
-  push_neg at hempty
+  by_contra! hempty
   -- H has no edges (hempty : H.edges = ∅), so any coloring is proper.
   have hprop : H.IsProperColoring (fun _ : V => (0 : Fin 1)) := by
     intro e he
     rw [hempty] at he
     exact (Set.mem_empty_iff_false e).mp he |>.elim
   -- Hence χ(H) ≤ 1 < ℵ₀.
-  have hle : H.chromaticCardinal ≤ 1 := by
-    apply csInf_le
-    · exact ⟨0, fun _ ⟨_, _, _, _⟩ => Cardinal.zero_le _⟩
-    · refine ⟨Fin 1, ?_, fun _ => 0, hprop⟩
-      simp
+  have hle : H.chromaticCardinal ≤ 1 := csInf_le' ⟨Fin 1, by simp, fun _ => 0, hprop⟩
   have h1le : (1 : Cardinal) ≤ ℵ₀ := le_of_lt Cardinal.one_lt_aleph0
   exact absurd (lt_of_lt_of_le hχ (hle.trans h1le)) (lt_irrefl _)
 

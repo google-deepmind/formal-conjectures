@@ -44,33 +44,32 @@ noncomputable def f (N : ℕ) : ℕ :=
 @[category research open, AMS 5 11]
 theorem green_16 (N : ℕ) :
     ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧
-      A.card = answer(sorry) ∧
+      A.card = (answer(sorry) : ℕ → ℕ) N ∧
       MaximalFor (fun B => B ⊆ Icc 1 N ∧ SolutionFree B) Finset.card A := by
   sorry
 
 /-- From [Ruzsa] $f(N) \gg N^{1/2}$. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_16_lower_bound :
     (fun N ↦ (N : ℝ) ^ (1 / 2 : ℝ)) ≪ fun N ↦ (f N : ℝ) := by
   sorry
 
 /-- From [Schoen and Sisask] $f(N) \ll N \cdot e^{-c(\log N)^{1/7}}$. -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_16_upper_bound :
     ∃ c > (0 : ℝ), (fun N ↦ (f N : ℝ)) ≪ fun N ↦ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ)) := by
   sorry
 
-/-- $f(N) \gg N \cdot e^{-c(\log N)^{1/7}}$. -/
-@[category research open, AMS 5 11]
-theorem green_16_conjectured_lower_bound :
-    ∃ c > (0 : ℝ), (fun N ↦ (N : ℝ) * exp (-c * (log N) ^ (1 / 7 : ℝ))) ≪ fun N ↦ (f N : ℝ) := by
-  sorry
+/-- A solution $(x, y, z, x', y', z')$ of $x + 2y + 3z = x' + 2y' + 3z'$ is *trivial* if for every
+value $a$ the coefficients of the variables equal to $a$ have the same sum on both sides. -/
+def IsTrivialZhaoSolution (x y z x' y' z' : ℕ) : Prop :=
+  ∀ a : ℕ, (if x = a then 1 else 0) + (if y = a then 2 else 0) + (if z = a then 3 else 0) =
+    (if x' = a then 1 else 0) + (if y' = a then 2 else 0) + (if z' = a then 3 else 0)
 
 /-- A set has no nontrivial solution to $x + 2y + 3z = x' + 2y' + 3z'$. -/
 def ZhaoSolutionFree (A : Finset ℕ) : Prop :=
-  ∀ x y z x' y' z', x ∈ A → y ∈ A → z ∈ A → x' ∈ A → y' ∈ A → z' ∈ A →
-    [x, y, z, x', y', z'].Nodup →
-    x + 2 * y + 3 * z ≠ x' + 2 * y' + 3 * z'
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ x' ∈ A, ∀ y' ∈ A, ∀ z' ∈ A,
+    x + 2 * y + 3 * z = x' + 2 * y' + 3 * z' → IsTrivialZhaoSolution x y z x' y' z'
 
 /-- The maximum size of a Zhao-solution-free subset of $[N]$. -/
 noncomputable def g (N : ℕ) : ℕ :=
@@ -80,7 +79,8 @@ noncomputable def g (N : ℕ) : ℕ :=
 $N^{1/3 - o(1)}$ with no nontrivial solutions to $x + 2y + 3z = x' + 2y' + 3z'$? -/
 @[category research open, AMS 5 11]
 theorem zhao_question :
-    ¬∃ h : ℕ → ℝ, Tendsto h atTop (𝓝 0) ∧ ∀ᶠ N in atTop, (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - h N) := by
+    answer(sorry) ↔ ∃ h : ℕ → ℝ, Tendsto h atTop (𝓝 0) ∧
+      ∀ᶠ N in atTop, (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - h N) := by
   sorry
 
 end Green16

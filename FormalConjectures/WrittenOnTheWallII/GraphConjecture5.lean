@@ -30,8 +30,8 @@ open SimpleGraph
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [Nontrivial V]
 
-open Classical
 
+open scoped Classical in
 /--
 WOWII [Conjecture 5](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

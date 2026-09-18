@@ -48,8 +48,14 @@ Erdős [Er80e] had previously shown the answer is no for $C=3,4$ and infinitely 
 values of $C$.
 
 See also [774].
+
+The linked proof writes the representation function as
+`Set.ncard {p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n}`, which counts the same ordered
+pairs as `sumRep`, and states the partition condition as a named definition with the same two
+conjuncts used below. Its `∃ t` additionally carries `1 ≤ t`, which costs nothing: `t = 0`
+forces `A = ∅`, and `A = {1}` has all representation counts at most `C` for `C ≥ 1`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/328/Erdos328.lean"]
 theorem erdos_328 : answer(False) ↔
     ∀ C : ℕ, 0 < C →
       ∃ t : ℕ, ∀ A : Set ℕ, (∀ n, sumRep A n ≤ C) →

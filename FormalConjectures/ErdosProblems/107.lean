@@ -74,7 +74,7 @@ private lemma convexIndep_triple_of_not_collinear {a b c : ℝ²}
   have hx_aff : x ∈ affineSpan ℝ (({a, b, c} : Set ℝ²) \ {x}) :=
     convexHull_subset_affineSpan _ hmem
   rw [show ({a, b, c} : Set ℝ²) = insert x (({a, b, c} : Set ℝ²) \ {x}) from
-        (Set.insert_diff_self_of_mem hx).symm,
+        (Set.insert_sdiff_self_of_mem hx).symm,
       collinear_insert_iff_of_mem_affineSpan hx_aff]
   -- The two-element complement is collinear.
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx

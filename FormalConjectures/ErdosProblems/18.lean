@@ -84,8 +84,7 @@ theorem practicalH_six : practicalH 6 = 2 := by
     apply le_csInf
     · exact ⟨2, {1, 3}, by rw [hdiv]; decide, by decide, {1, 3}, by simp, by decide⟩
     · rintro k ⟨D, hDsub, hDcard, B, hBsub, hBsum⟩
-      by_contra hk
-      push_neg at hk
+      by_contra! hk
       interval_cases k
       · -- D.card = 0 : D = ∅, so B = ∅ and the sum is 0 ≠ 4.
         rw [Finset.card_eq_zero] at hDcard
@@ -132,8 +131,7 @@ theorem practicalH_twelve : practicalH 12 = 3 := by
     apply le_csInf
     · exact ⟨3, {1, 4, 6}, by rw [hdiv]; decide, by decide, {1, 4, 6}, by simp, by decide⟩
     · rintro k ⟨D, hDsub, hDcard, B, hBsub, hBsum⟩
-      by_contra hk
-      push_neg at hk
+      by_contra! hk
       interval_cases k
       · rw [Finset.card_eq_zero] at hDcard
         subst hDcard
@@ -156,7 +154,7 @@ theorem practicalH_twelve : practicalH 12 = 3 := by
           fin_cases ha <;> fin_cases hb <;> decide
         exact key B (Finset.mem_powerset.mpr hBp) hBsum.symm
 
-/-- For any practical number $n$, $h(n) ≤ number of divisors of $n$. -/
+/-- For any practical number $n$, $h(n)$ ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
     practicalH n ≤ n.divisors.card := by
@@ -176,7 +174,7 @@ theorem factorial_isPractical (n : ℕ) : Nat.IsPractical n.factorial := by
     by_cases hle : m ≤ n.factorial
     · exact subsetSums_mono (by exact_mod_cast (Nat.divisors_subset_of_dvd
         (Nat.factorial_ne_zero _) (Nat.factorial_dvd_factorial n.le_succ))) (ih m hle)
-    · push_neg at hle; rw [Nat.factorial_succ] at hm
+    · push Not at hle; rw [Nat.factorial_succ] at hm
       set q := m / (n + 1); set r := m % (n + 1)
       have h_div : m = (n + 1) * q + r := (Nat.div_add_mod m (n + 1)).symm
       have h_r_lt : r < n + 1 := Nat.mod_lt m (Nat.succ_pos n)
