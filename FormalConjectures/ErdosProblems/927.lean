@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 927
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
 - [Sp71] Spencer, J. H., *On cliques in graphs*. Israel J. Math. (1971), 419-421.
 -/
+
+@[expose] public section
 
 open Filter
 
