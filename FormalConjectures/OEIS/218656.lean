@@ -59,7 +59,7 @@ theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
 /--
 Conjecture: If $x^4 + y^4$ in the definition of $a(n)$ is
 replaced by $x^2 + y^2$, then the count is positive for all $n \ge 1$.
-- Thomas Ordowski, Nov 03 2012
+- _Thomas Ordowski_, Nov 03 2012
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (n : ℕ) (hn : 1 ≤ n) :
@@ -70,7 +70,7 @@ theorem conjecture2 (n : ℕ) (hn : 1 ≤ n) :
 Conjecture: If $x^4 + y^4$ in the definition of $a(n)$ is replaced by $x^8 + y^8$, then the count
 is positive for all $n \ge 1$ except for $2n + 1 \in \{7, 9, 55, 73, 75, 105\}$
 (i.e., $n \in \{3, 4, 27, 36, 37, 52\}$).
-- Thomas Ordowski, Nov 03 2012; exceptions noted by Mauro Fiorentini, Sep 22 2023
+- _Thomas Ordowski_, Nov 03 2012; exceptions noted by _Mauro Fiorentini_, Sep 22 2023
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({3, 4, 27, 36, 37, 52} : Set ℕ)) :
@@ -80,7 +80,7 @@ theorem conjecture3 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({3, 4, 27, 36, 37, 
 /--
 Conjecture: If $x^4 + y^4$ in the definition of $a(n)$ is replaced by $x^{16} + y^{16}$, then the
 count is positive for all $n \ge 1$ except for $2n + 1 \in \{5, 9\}$ (i.e., $n \in \{2, 4\}$).
-- Thomas Ordowski, Nov 03 2012; exceptions noted by Mauro Fiorentini, Sep 22 2023
+- _Thomas Ordowski_, Nov 03 2012; exceptions noted by _Mauro Fiorentini_, Sep 22 2023
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({2, 4} : Set ℕ)) :

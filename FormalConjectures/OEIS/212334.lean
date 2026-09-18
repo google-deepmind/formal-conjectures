@@ -57,7 +57,7 @@ theorem a_4 : a 4 = 3593 := by decide
 
 /--
 "It appears that for primes $p \ge 5$, $a(p) \equiv 1 \pmod{p^5}$."
-- Peter Bala, Dec 12 2021
+- _Peter Bala_, Dec 12 2021
 -/
 @[category research open, AMS 11]
 theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
@@ -67,7 +67,7 @@ theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
 /--
 "Conjecture: for $r \ge 2$, and all primes $p \ge 5$,
 $a(p^r) \equiv a(p^{r-1}) \pmod{p^{3r+3}}$."
-- Peter Bala, Oct 13 2022
+- _Peter Bala_, Oct 13 2022
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (p r : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hr2 : 2 ≤ r) :

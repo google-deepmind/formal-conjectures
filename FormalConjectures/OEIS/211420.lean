@@ -53,7 +53,7 @@ theorem a_4 : a 4 = 15628090140 := by decide
 /--
 "It appears that $35 \cdot a(n)/(n + 1)$, $3 \cdot a(n)/(2n + 1)$ and $5 \cdot a(n)/(3n + 1)$ are
 integers for all $n$."
-- Peter Bala, Aug 26 2025
+- _Peter Bala_, Aug 26 2025
 -/
 @[category research open, AMS 11]
 theorem conjecture1 (n : ℕ) :
@@ -63,7 +63,7 @@ theorem conjecture1 (n : ℕ) :
 /--
 "More generally, we conjecture that there are constants $C(k, r) > 0$, $k = 1, 2$ or $3$, $r \ge 1$,
 such that $a(n) \cdot C(k, r)/((kn + 1)(kn + 2)\cdots(kn + r))$ is an integer for all $n$."
-- Peter Bala, Aug 26 2025
+- _Peter Bala_, Aug 26 2025
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (k r : ℕ) (hk : k = 1 ∨ k = 2 ∨ k = 3) (hr : 1 ≤ r) :
@@ -72,7 +72,7 @@ theorem conjecture2 (k r : ℕ) (hk : k = 1 ∨ k = 2 ∨ k = 3) (hr : 1 ≤ r) 
 
 /--
 "It also appears that $a(n)$ is divisible by $8n - 1$ for all $n$."
-- Peter Bala, Aug 26 2025
+- _Peter Bala_, Aug 26 2025
 -/
 @[category research open, AMS 11]
 theorem conjecture3 (n : ℕ) :
@@ -82,7 +82,7 @@ theorem conjecture3 (n : ℕ) :
 /--
 "More generally, we conjecture that there are constants $K(r) > 0$, $r \ge 0$, such that
 $a(n) \cdot K(r)/((8n - 1)(8n - 3)\cdots(8n - (2r+1)))$ is an integer for all $n$."
-- Peter Bala, Aug 26 2025
+- _Peter Bala_, Aug 26 2025
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (r : ℕ) :

@@ -67,7 +67,7 @@ theorem a_4 : a 4 = -207 := by rfl
 /--
 Conjecture, (i): $S_n(x)$ is irreducible over the field of rational numbers
 for every $n = 1, 2, 3, \dots$
-- Zhi-Wei Sun, Mar 20 2013
+- _Zhi-Wei Sun_, Mar 20 2013
 -/
 @[category research open, AMS 11 12]
 theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) :
