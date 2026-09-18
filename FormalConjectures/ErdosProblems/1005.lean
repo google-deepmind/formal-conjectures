@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1005
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
 - [vD25b] van Doorn, W., *Improved bounds for the Mayer-Erdős phenomenon on similarly ordered Farey
   fractions*. [arXiv:2509.00121](https://arxiv.org/abs/2509.00121) (2025).
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
