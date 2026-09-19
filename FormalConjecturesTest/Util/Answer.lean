@@ -73,6 +73,29 @@ set_option google.answer "always_true"
 theorem this_works : (answer(sorry) : Prop) := by
   trivial
 
+/-- A `Prop`-valued `answer(sorry)` elaborates to `True` in this mode but keeps its answer
+annotation, so metadata extracted here can still tell it apart from a statement that has no
+answer at all. -/
+theorem prop_sorry_keeps_its_marker : answer(sorry) ↔ 1 + 1 = 2 := by
+  sorry
+
+theorem no_answer_has_no_marker : 1 + 1 = 2 := by
+  rfl
+
+/-- info: 1 -/
+#guard_msgs in
+#eval show Lean.CoreM Nat from do
+  let env ← Lean.getEnv
+  let some ci := env.find? ``prop_sorry_keeps_its_marker | return 0
+  return (Google.findAnswerExprs ci.type).size
+
+/-- info: 0 -/
+#guard_msgs in
+#eval show Lean.CoreM Nat from do
+  let env ← Lean.getEnv
+  let some ci := env.find? ``no_answer_has_no_marker | return 0
+  return (Google.findAnswerExprs ci.type).size
+
 end AlwaysTrue
 
 section FindAnswerExprTests
