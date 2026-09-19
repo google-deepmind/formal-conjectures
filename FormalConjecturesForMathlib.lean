@@ -193,6 +193,7 @@ public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Real
+public import FormalConjecturesForMathlib.Topology.CardinalInvariants
 public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
 public import FormalConjecturesForMathlib.Topology.Homogeneous
