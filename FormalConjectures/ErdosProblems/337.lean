@@ -110,6 +110,8 @@ $$
 \lim_{N\to \infty}\frac{\lvert (A+A+A)\cap \{1,\ldots,3N\}\rvert}
 {\lvert A\cap \{1,\ldots,N\}\rvert}=\infty.
 $$
+and conjecture that the same should be true with $(A+A)\cap \{1,\ldots,2N\}$ in the numerator.
+
 
 This is weaker than `Erdos337.erdos_337.variants.ruzsa_turjanyi`: translating by a fixed
 $a\in A$ with $1\leq a\leq N$ embeds $(A+A)\cap\{1,\ldots,2N\}$ into
