@@ -61,9 +61,7 @@ literal reading.
 The answer is yes: Korsky [Ko26] (with ChatGPT 5.6 Pro) proved that the set has positive lower
 density. The linked formal proof (Alexeev and Codex) shows that there is `c > 0` with
 `c * x ≤ #{n ∈ [1, x] | n ∈ generatedSet}` for all large `x`, which gives
-`c / 2 ≤ generatedSet.lowerDensity`. The proof is listed as a proof claim on
-[erdosproblems.com/424](https://www.erdosproblems.com/424), which still records the problem as
-open.
+`c / 2 ≤ generatedSet.lowerDensity`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos424.lean#L6409"]
