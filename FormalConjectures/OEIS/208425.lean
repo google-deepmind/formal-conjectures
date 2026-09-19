@@ -50,8 +50,8 @@ theorem a_3 : a 3 = 25 := by decide
 theorem a_4 : a 4 = 151 := by decide
 
 /--
-"Conjecture: (i) For any prime $p > 3$ and positive integer $n$, the number
-$(a(pn)-a(n))/(pn)^3$ is always a $p$-adic integer."
+Conjecture (i): For any prime $p > 3$ and positive integer $n$, the number
+$(a(pn)-a(n))/(pn)^3$ is always a $p$-adic integer.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
@@ -60,8 +60,8 @@ theorem conjecture1 (p : ℕ) (hp : p.Prime) (hpgt3 : 3 < p) (n : ℕ) (hn : 0 <
   sorry
 
 /--
-"For any prime $p \equiv 1 \pmod{3}$, we have
-$\sum_{k=0}^{p-1} a(k) \equiv \binom{2(p-1)/3}{(p-1)/3} \pmod{p^2}$."
+Conjecture (ii), part 1: For any prime $p \equiv 1 \pmod{3}$, we have
+$\sum_{k=0}^{p-1} a(k) \equiv \binom{2(p-1)/3}{(p-1)/3} \pmod{p^2}$.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
@@ -71,8 +71,8 @@ theorem conjecture2 (p : ℕ) (hp : p.Prime) (hmod : p % 3 = 1) :
   sorry
 
 /--
-"For any prime $p \equiv 2 \pmod{3}$, we have
-$\sum_{k=0}^{p-1} a(k) \equiv \frac{2p}{\binom{2(p+1)/3}{(p+1)/3}} \pmod{p^2}$."
+Conjecture (ii), part 2: For any prime $p \equiv 2 \pmod{3}$, we have
+$\sum_{k=0}^{p-1} a(k) \equiv \frac{2p}{\binom{2(p+1)/3}{(p+1)/3}} \pmod{p^2}$.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
