@@ -66,8 +66,8 @@ subgraph which contains $\gg n^{2/3}$ distinct degrees (with no restriction on t
 vertices). -/
 @[category research solved, AMS 5]
 theorem erdos_637.variants.jenssen_keevash_long_yepremyan :
-    ∀ C : ℝ, 0 < C → ∃ β : ℝ, 0 < β ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      IsRamseyGraph C G →
+    ∀ C : ℝ, 0 < C → ∃ β : ℝ, 0 < β ∧ ∀ᶠ n : ℕ in atTop,
+      ∀ G : SimpleGraph (Fin n), IsRamseyGraph C G →
         ∃ W : Finset (Fin n), β * (n : ℝ) ^ (2 / 3 : ℝ) ≤ distinctDegrees G W := by
   sorry
 
