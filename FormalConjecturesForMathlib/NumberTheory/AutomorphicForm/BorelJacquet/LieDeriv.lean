@@ -180,13 +180,13 @@ noncomputable def extendGL (φ : GL n ℝ → ℂ) : Matrix n n ℝ → ℂ :=
 
 lemma contDiffOn_extendGL {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) :
     ContDiffOn ℝ ∞ (extendGL φ) {M : Matrix n n ℝ | IsUnit M} := by
-  rw [extendGL, dif_pos hφ]
+  rw [extendGL, dite_eq_left hφ]
   exact hφ.choose_spec.1
 
 @[simp]
 lemma extendGL_coe {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (y : GL n ℝ) :
     extendGL φ (y : Matrix n n ℝ) = φ y := by
-  rw [extendGL, dif_pos hφ]
+  rw [extendGL, dite_eq_left hφ]
   exact hφ.choose_spec.2 y
 
 lemma contDiffAt_extendGL {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (y : GL n ℝ) :
