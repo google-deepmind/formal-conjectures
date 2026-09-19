@@ -239,7 +239,8 @@ $n$. Kevin Ford observed that this follows from the negative solution to Erdős 
 `sq_card_divisors_le` above; the same argument is given for an essentially identical problem by
 Hall and Tenenbaum [HaTe88, §4.6].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos449.lean#L361"]
 theorem erdos_449 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε →
       {n : ℕ | (r n : ℝ) < ε * (n.divisors.card : ℝ)}.HasDensity 1 := by
