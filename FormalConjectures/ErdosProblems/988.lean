@@ -31,7 +31,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter
+open Filter MeasureTheory
 
 namespace Erdos988
 
@@ -39,19 +39,27 @@ namespace Erdos988
 abbrev Sphere : Type := Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1
 
 /-- The spherical cap $\{x\in S^2 : \langle x,u\rangle\geq t\}$ with centre `u` and inner-product
-threshold `t ∈ [-1, 1]`. By Archimedes' theorem its normalised surface measure is
-$\alpha_C=(1-t)/2$. -/
+threshold `t ∈ [-1, 1]`. -/
 def cap (u : Sphere) (t : ℝ) : Set Sphere :=
   {x | t ≤ inner ℝ (x : EuclideanSpace ℝ (Fin 3)) (u : EuclideanSpace ℝ (Fin 3))}
+
+/-- The surface measure on the unit sphere, induced by Lebesgue measure on $\mathbb{R}^3$. -/
+noncomputable def surface : Measure Sphere :=
+  (volume : Measure (EuclideanSpace ℝ (Fin 3))).toSphere
+
+/-- The normalised surface measure $\alpha_C$ of a subset `C` of the sphere, so that the entire
+sphere has measure $1$. -/
+noncomputable def normalizedArea (C : Set Sphere) : ℝ :=
+  (surface C).toReal / (surface Set.univ).toReal
 
 open scoped Classical in
 /-- The spherical cap discrepancy
 $$D(P) = \max_C \lvert \lvert C\cap P\rvert - \alpha_C \lvert P\rvert \rvert$$
 of a finite set `P ⊆ S²`, where the maximum is taken over all spherical caps $C$ and
-$\alpha_C=(1-t)/2$ is the normalised measure of the cap with threshold $t$. -/
+$\alpha_C$ is the normalised surface measure of $C$. -/
 noncomputable def discrepancy (P : Finset Sphere) : ℝ :=
   sSup {r | ∃ (u : Sphere) (t : ℝ), t ∈ Set.Icc (-1 : ℝ) 1 ∧
-    r = |((P.filter (· ∈ cap u t)).card : ℝ) - (1 - t) / 2 * P.card|}
+    r = |((P.filter (· ∈ cap u t)).card : ℝ) - normalizedArea (cap u t) * P.card|}
 
 /-- The minimal spherical cap discrepancy $\min_{\lvert P\rvert=n}D(P)$ of an `n`-point subset
 of the sphere. -/
