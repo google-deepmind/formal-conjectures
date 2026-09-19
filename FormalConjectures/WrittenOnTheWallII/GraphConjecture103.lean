@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 103
@@ -46,13 +47,15 @@ theorem wowii103Counterexample_connected : wowii103Counterexample.Connected := b
 /-- The counterexample has independence number nine. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_indepNum : wowii103Counterexample.indepNum = 9 := by
-  sorry --this was previously proven using `native_decide`
+  rw [indep_num_eq_computable]
+  decide +native
 
 /-- The largest induced bipartite subgraph of the counterexample has ten vertices. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_bipartiteSize :
     wowii103Counterexample.largestInducedBipartiteSubgraphSize = 10 := by
-  sorry --this was previously proven using `native_decide`
+  rw [largestInducedBipartiteSubgraphSize_eq_computable]
+  decide +native
 
 /-- The counterexample has average eccentricity $30/11$. -/
 @[category test, AMS 5]

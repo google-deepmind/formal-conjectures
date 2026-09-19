@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 340
@@ -51,22 +52,22 @@ theorem greedySidon_one : greedySidon 1 = 2 := by
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_three : greedySidon 3 = 8 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 @[category test, AMS 5]
 theorem greedySidon_four : greedySidon 4 = 13 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_five : greedySidon 5 = 21 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 5]
 theorem greedySidon_ten : greedySidon 10 = 97 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
@@ -125,7 +126,9 @@ theory. Monographies de L'Enseignement Mathematique (1980).
 @[category research solved, AMS 5]
 theorem erdos_340.variants._22_mem_sub :
     22 ∈ Set.range greedySidon - Set.range greedySidon := by
-  sorry --this was previously proven using `native_decide`
+  have h : (22 : ℕ) = greedySidon 14 - greedySidon 13 := by decide +native
+  rw [h]
+  exact Set.sub_mem_sub (Set.mem_range_self 14) (Set.mem_range_self 13)
 
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.

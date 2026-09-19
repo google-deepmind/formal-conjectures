@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 /-!
 # Testing Graph Invariants
@@ -124,7 +125,7 @@ theorem house_order : Fintype.card ↥(⊤ : Subgraph HouseGraph).verts = 5 := b
 
 @[category test, AMS 5]
 theorem house_size : HouseGraph.edgeFinset.card = 6 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
@@ -171,7 +172,7 @@ theorem house_matching : matchingNumber HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_residue : residue HouseGraph = 2 := by
-  sorry --this was previously proven using `native_decide`
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
@@ -276,7 +277,7 @@ theorem K4_matching : matchingNumber K4 = 2 := by
 
 @[category test, AMS 5]
 theorem K4_residue : residue K4 = 1 := by
-  sorry --this was previously proven using `native_decide`
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
@@ -295,7 +296,7 @@ theorem petersen_indep : α(PetersenGraph) = 4 := by
 
 @[category test, AMS 5]
 theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
-  sorry --this was previously proven using `native_decide`
+  rw [dom_num_eq_computable]; decide +native
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
@@ -305,7 +306,8 @@ theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
 
 @[category test, AMS 5]
 theorem petersen_diameter : ediam PetersenGraph = 2 := by
-  sorry --this was previously proven using `native_decide`
+  rw [ediam_eq_computable PetersenGraph (by decide)]
+  exact_mod_cast (by decide +native : computable_ediam PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_radius : radius PetersenGraph = 2 := by
@@ -324,7 +326,7 @@ theorem petersen_order : Fintype.card ↥(⊤ : Subgraph PetersenGraph).verts = 
 
 @[category test, AMS 5]
 theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
@@ -383,7 +385,7 @@ theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
-  sorry --this was previously proven using `native_decide`
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
@@ -482,7 +484,7 @@ theorem C6_matching : matchingNumber C6 = 3 := by
 
 @[category test, AMS 5]
 theorem C6_residue : residue C6 = 2 := by
-  sorry --this was previously proven using `native_decide`
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
@@ -617,7 +619,7 @@ theorem Star5_matching : matchingNumber Star5 = 1 := by
 
 @[category test, AMS 5]
 theorem Star5_residue : residue Star5 = 5 := by
-  sorry --this was previously proven using `native_decide`
+  unfold residue; decide +native
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by

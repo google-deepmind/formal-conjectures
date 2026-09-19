@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 /-!
 # Factor bounds for Fermat numbers
@@ -131,7 +132,7 @@ theorem a_5 : a 5 = 23 := by
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = 46 := by
-  sorry --this was previously proven using `native_decide`
+  decide +native
 
 @[category test, AMS 11]
 theorem a_7 : a 7 = 73 := by

@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 
 /-!
@@ -72,12 +73,12 @@ theorem proportionCoverable_7_4_2 :
 @[category test, AMS 5 60]
 theorem proportionCoverable_11_3_4 :
     proportionCoverable 11 3 4 = (1 : ℚ) / 3 := by
-  sorry --this was previously proven using `native_decide`
+  native_decide
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_11_4_3 :
     proportionCoverable 11 4 3 = (1 : ℚ) / 6 := by
-  sorry --this was previously proven using `native_decide`
+  native_decide
 
 /--
 If $A \subset \mathbb{Z}/p\mathbb{Z}$ is random, $|A| = \sqrt{p}$, can we almost surely cover
