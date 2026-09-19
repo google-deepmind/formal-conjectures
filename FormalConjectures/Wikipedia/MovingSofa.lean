@@ -245,28 +245,53 @@ theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
 /-!
 ## The ambidextrous sofa
 
-Romik [Ro18, §1] asks for the largest shape that can negotiate a right-angle turn both to the
-left and to the right. The right-turning hallway
-$(-\infty, 1] \times [0, 1] \cup [0, 1] \times [0, \infty)$ is the image of `hallway` under the
-reflection $\sigma(x, y) = (x, 1 - y)$, which fixes `horizontalHallway`. So $s$ turns right iff
-$\sigma(s)$ turns left: conjugating a motion by $\sigma$ preserves continuity,
-$m(0) = \mathrm{id}$, and orientation-preservation.
+Romik [Ro18, §1.2] asks for the largest shape that can negotiate a right-angled turn both to the
+right and to the left. Travelling along `hallway` from its horizontal side into its vertical side
+is a right turn. Its mirror image $(-\infty, 1] \times [0, 1] \cup [0, 1] \times [0, \infty)$ under
+the reflection $\rho(x, y) = (x, 1 - y)$ is a left turn, and $\rho$ fixes `horizontalHallway`.
+So, following [Ro18, Thm. 5], a shape is ambidextrous if both it and its image under $\rho$ are
+moving sofas: conjugating a motion by $\rho$ preserves continuity, $m(0) = \mathrm{id}$, and
+orientation-preservation.
+
+The line of reflection is fixed, so both turns start from the same placement. This matters: if
+the reflected shape were allowed to start from a different placement, every moving sofa would be
+ambidextrous, since reflecting a motion in the diagonal $x = y$ and reversing time moves a mirror
+image of the shape around the corner.
 -/
 
-/-- The reflection $\sigma(x, y) = (x, 1 - y)$ in the horizontal line $y = 1/2$. -/
-def reflectY : E(2) :=
-  ((ℝ ∙ (EuclideanSpace.basisFun (Fin 2) ℝ 0)).reflection.toAffineIsometryEquiv).trans
-    (AffineIsometryEquiv.vaddConst ℝ !₂[0, 1])
+/-- The horizontal line $y = 1/2$, the axis of symmetry of the horizontal side of the hallway. -/
+def midline : AffineSubspace ℝ ℝ² :=
+  AffineSubspace.mk' !₂[0, 1 / 2] (ℝ ∙ (EuclideanSpace.basisFun (Fin 2) ℝ 0))
 
-/-- Sanity check: `reflectY` acts as $(x, y) \mapsto (x, 1 - y)$. -/
+instance : Nonempty midline := ⟨⟨_, AffineSubspace.self_mem_mk' _ _⟩⟩
+
+/-- Sanity check: reflection in `midline` acts as $(x, y) \mapsto (x, 1 - y)$. -/
 @[category test, AMS 49]
-theorem reflectY_apply (q : ℝ²) : reflectY q = !₂[q 0, 1 - q 1] := by
-  unfold reflectY
-  simp only [AffineIsometryEquiv.coe_trans, Function.comp_apply,
-    AffineIsometryEquiv.coe_vaddConst, LinearIsometryEquiv.coe_toAffineIsometryEquiv]
-  rw [Submodule.reflection_apply, Submodule.starProjection_singleton]
+theorem reflection_midline_apply (q : ℝ²) :
+    EuclideanGeometry.reflection midline q = !₂[q 0, 1 - q 1] := by
+  rw [EuclideanGeometry.reflection_apply_of_mem midline q (AffineSubspace.self_mem_mk' _ _),
+    midline, AffineSubspace.direction_mk', Submodule.reflection_apply,
+    Submodule.starProjection_singleton]
   ext i
-  fin_cases i <;> simp [EuclideanSpace.inner_eq_star_dotProduct] <;> ring
+  fin_cases i <;> simp [EuclideanSpace.inner_eq_star_dotProduct, Matrix.vecHead] <;> ring
+
+/-- A set closed under reflection in `midline` is its own image. -/
+@[category API, AMS 49]
+private lemma reflection_midline_image_eq_self {S : Set ℝ²}
+    (h : ∀ p ∈ S, EuclideanGeometry.reflection midline p ∈ S) :
+    EuclideanGeometry.reflection midline '' S = S :=
+  Set.Subset.antisymm (Set.image_subset_iff.2 h) fun p hp =>
+    ⟨_, h p hp, EuclideanGeometry.reflection_reflection midline p⟩
+
+/-- Sanity check: the horizontal side of the hallway is symmetric under reflection in `midline`,
+so a shape and its reflection start in the same corridor. -/
+@[category test, AMS 49]
+theorem reflection_midline_image_horizontalHallway :
+    EuclideanGeometry.reflection midline '' horizontalHallway = horizontalHallway := by
+  refine reflection_midline_image_eq_self ?_
+  rintro _ ⟨x, y, ⟨hx, hy0, hy1⟩, rfl⟩
+  rw [reflection_midline_apply]
+  exact ⟨x, 1 - y, ⟨by simpa using hx, by simp; linarith, by simp; linarith⟩, by simp⟩
 
 /-- A point lies in the unit square iff both coordinates lie in `[0,1]`. -/
 @[category API, AMS 49]
@@ -274,38 +299,33 @@ private lemma mem_unitSquare_iff {p : ℝ²} : p ∈ unitSquare ↔ ∀ i, p i �
   rw [unitSquare, ← OrthonormalBasis.coe_toBasis, parallelepiped_basis_eq]
   simp
 
-/-- The unit square is symmetric under `reflectY`. -/
+/-- Sanity check: the unit square is symmetric under reflection in `midline`. -/
 @[category test, AMS 49]
-theorem reflectY_image_unitSquare : reflectY '' unitSquare = unitSquare := by
-  have hmem : ∀ p ∈ unitSquare, reflectY p ∈ unitSquare := by
-    intro p hp
-    rw [mem_unitSquare_iff] at hp ⊢
-    intro i
-    rw [reflectY_apply]
-    fin_cases i
-    · simpa using hp 0
-    · have := hp 1
-      simp only [Set.mem_Icc] at this ⊢
-      constructor <;> simp <;> linarith [this.1, this.2]
-  have hinv : ∀ p, reflectY (reflectY p) = p := by
-    intro p
-    rw [reflectY_apply, reflectY_apply]
-    ext i
-    fin_cases i <;> simp
-  refine Set.Subset.antisymm (Set.image_subset_iff.2 hmem) fun p hp => ?_
-  exact ⟨reflectY p, hmem p hp, hinv p⟩
+theorem reflection_midline_image_unitSquare :
+    EuclideanGeometry.reflection midline '' unitSquare = unitSquare := by
+  refine reflection_midline_image_eq_self fun p hp => ?_
+  rw [mem_unitSquare_iff] at hp ⊢
+  intro i
+  rw [reflection_midline_apply]
+  fin_cases i
+  · simpa using hp 0
+  · have := hp 1
+    simp only [Set.mem_Icc] at this ⊢
+    constructor <;> simp <;> linarith [this.1, this.2]
 
 /--
-A closed connected set is an **ambidextrous sofa** [Ro18] if it can be moved around the corner
-turning left and, separately, turning right.
+A closed connected set is an **ambidextrous sofa** if it can be moved around the corner turning
+right and, from the same placement, turning left, i.e. if both it and its reflection in `midline`
+are moving sofas [Ro18, Thm. 5].
 -/
 def IsAmbidextrousSofa (s : Set ℝ²) : Prop :=
-  (∃ m, IsMovingSofa s m) ∧ (∃ m, IsMovingSofa (reflectY '' s) m)
+  (∃ m, IsMovingSofa s m) ∧ (∃ m, IsMovingSofa (EuclideanGeometry.reflection midline '' s) m)
 
 /-- Sanity check: the unit square is ambidextrous. -/
 @[category test, AMS 49]
 theorem isAmbidextrousSofa_unitSquare : IsAmbidextrousSofa unitSquare :=
-  ⟨isMovingSofa_unitSquare, by rw [reflectY_image_unitSquare]; exact isMovingSofa_unitSquare⟩
+  ⟨isMovingSofa_unitSquare,
+    by rw [reflection_midline_image_unitSquare]; exact isMovingSofa_unitSquare⟩
 
 /-- The **ambidextrous sofa constant** is the maximal area of an ambidextrous sofa. -/
 def ambidextrousSofaConstant : ℝ≥0∞ :=
@@ -347,22 +367,24 @@ theorem existsUnique_Y : ∃! x : ℝ, x * (4 * x ^ 2 + 3) = 1 := by
   refine ⟨x, hx, fun y hy => ?_⟩
   nlinarith [sq_nonneg (x - y), sq_nonneg (x + y), sq_nonneg x, sq_nonneg y]
 
-/-- $X$ is the real root of $x^2 (x + 3) = 8$; numerically $X ≈ 1.3553$. -/
+/-- $X = \sqrt[3]{3 + 2\sqrt2} + \sqrt[3]{3 - 2\sqrt2} - 1 ≈ 1.3553$, the real root of
+$x^2 (x + 3) = 8$. -/
 def X : ℝ := existsUnique_X.exists.choose
 
-/-- $Y$ is the real root of $x (4 x^2 + 3) = 1$; numerically $Y ≈ 0.2980$. -/
+/-- $Y = \tfrac12\bigl(\sqrt[3]{\sqrt2 + 1} - \sqrt[3]{\sqrt2 - 1}\bigr) ≈ 0.2980$, the real root of
+$x (4 x^2 + 3) = 1$. -/
 def Y : ℝ := existsUnique_Y.exists.choose
 
 /--
-The area of Romik's ambidextrous sofa is $X + \arctan Y ≈ 1.644955218425440$ [Ro18, Thm. 4].
-Romik's shape is bounded by 18 curves (arcs of circles and of sextics) and is not defined here.
+The area of Romik's ambidextrous sofa is $X + \arctan Y ≈ 1.644955218425440$ [Ro18, eq. (5)].
+The shape itself, bounded by 18 arcs of circles and sextic curves [Ro18, §5–6], is not defined here.
 -/
 def area : ℝ := X + Real.arctan Y
 
 end RomiksSofa
 
 /--
-Romik's ambidextrous sofa [Ro18, Thm. 4] has area `RomiksSofa.area`, so the ambidextrous sofa
+Romik's ambidextrous sofa has area `RomiksSofa.area` [Ro18, Thm. 5], so the ambidextrous sofa
 constant is at least that.
 -/
 @[category research solved, AMS 49]
@@ -371,8 +393,9 @@ theorem romiksSofa_area_le_ambidextrousSofaConstant :
   sorry
 
 /--
-Romik's ambidextrous sofa is conjectured to be optimal [Ro18, §1]; see also [Wikipedia].
-Unlike the one-corner problem, no proof is known.
+Romik's ambidextrous sofa is optimal. Romik derived it from local-optimality considerations and
+proposed it as the solution [Ro18, §1.2, §5]; [Wikipedia] records it as the conjectured optimum.
+Even its local optimality is open [Ro18, §7, Problem 1].
 -/
 @[category research open, AMS 49]
 theorem ambidextrousSofaConstant_eq_romiksSofa_area :
