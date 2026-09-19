@@ -1,0 +1,89 @@
+{
+  "cases": [
+    {
+      "actual": "fail",
+      "case": "unfinished",
+      "expected": "fail",
+      "policy_reason": "disallowed_axiom",
+      "policy_stage": "axiom_policy",
+      "run_id": "20260911T084959Z-367f85cd8af1",
+      "seconds": 514.6
+    },
+    {
+      "actual": "fail",
+      "case": "imported_assumption",
+      "expected": "fail",
+      "policy_reason": "disallowed_axiom",
+      "policy_stage": "axiom_policy",
+      "run_id": "20260911T085834Z-373cb0e383be",
+      "seconds": 500.4
+    },
+    {
+      "actual": "pass",
+      "case": "valid",
+      "expected": "pass",
+      "policy_reason": "verified",
+      "policy_stage": "complete",
+      "run_id": "20260911T090655Z-bb7d080b0950",
+      "seconds": 491.4
+    },
+    {
+      "actual": "error",
+      "case": "changed_executor",
+      "expected": "error",
+      "run_id": "20260911T091506Z-a9aca4d2d82c"
+    },
+    {
+      "actual": "fail",
+      "case": "changed_target",
+      "expected": "fail",
+      "reason": "changed_target"
+    },
+    {
+      "actual": "error",
+      "case": "verifier_crash",
+      "expected": "error",
+      "policy_outcome": "not_evaluated",
+      "reason": "missing_verifier_result"
+    },
+    {
+      "actual": "error",
+      "case": "missing_result",
+      "expected": "error",
+      "policy_outcome": "not_evaluated",
+      "reason": "missing_verifier_result"
+    },
+    {
+      "actual": "fail",
+      "case": "submission_symlink",
+      "expected": "fail",
+      "run_id": "20260911T091506Z-9a28cf796648"
+    }
+  ],
+  "client_commit": "1a7a17cb5767a677b67478c22a3107efe46414a8",
+  "executor": {
+    "binaries": {
+      "COMPARATOR_BIN": {
+        "path": "/home/runner/work/_temp/tools/comparator/.lake/build/bin/comparator",
+        "sha256": "6fbdaf5d5ace9cda27084fdc6c752fcbe27aaac63a0ba5aaf7ddcca9e3470cfb"
+      },
+      "COMPARATOR_LANDRUN": {
+        "path": "/home/runner/work/_temp/tools/landrun/landrun",
+        "sha256": "e1512a5f0f80ee626add58a1728473fcb93b431190d6b4a4e92ea09626b1be98"
+      },
+      "COMPARATOR_LEAN4EXPORT": {
+        "path": "/home/runner/work/formal-conjectures/formal-conjectures/comparator/verifier/.lake/packages/lean4export/.lake/build/bin/lean4export",
+        "sha256": "805ab4cc6a88dcef109644d201c3142261f524aecaf58b04913a9f029e21e9b5"
+      },
+      "COMPARATOR_NANODA": {
+        "path": "/home/runner/work/_temp/tools/nanoda/target/release/nanoda_bin",
+        "sha256": "e09ee8143ee61f5a9082b5d29e30b3f3e7abecf437e949e8c460edc8d8077d87"
+      }
+    },
+    "kind": "linux",
+    "qualification": "operator_configured; exact pins and sandbox prerequisites checked; release qualification remains separate",
+    "ref": "1a7a17cb5767a677b67478c22a3107efe46414a8",
+    "toolkit": "/home/runner/work/formal-conjectures/formal-conjectures",
+    "tools": "/home/runner/work/_temp/tools"
+  }
+}

@@ -1,0 +1,122 @@
+name: Toolkit Harbor qualification
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/fc-harbor-qualification']
+permissions:
+  contents: read
+jobs:
+  harbor:
+    if: github.repository == 'williamjblair/formal-conjectures'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      HARBOR_REV: 191d1b989bbba1d77c2db23e17aec308d7c08046
+      REGISTRY_IMAGE: registry:2@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
+    steps:
+      - name: Free runner disk for Lean images
+        run: |
+          echo "QUALIFICATION=$RUNNER_TEMP/harbor-qualification" >> "$GITHUB_ENV"
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          use-github-cache: true
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.11'
+      - run: python -m pip install . uv==0.12.15
+      # Images are pushed only to a registry inside this job. Digest references are
+      # real registry digests; nothing is published outside the runner.
+      - name: Build digest-pinned solver and verifier images
+        env:
+          PYTHONPATH: toolkit
+        run: |
+          mkdir -p "$QUALIFICATION/context"
+          docker run -d --name registry -p 127.0.0.1:5000:5000 "$REGISTRY_IMAGE"
+          pins="$(python3 -c 'from conjectures.proof import PINS
+          for name,(repo,rev) in PINS.items(): print(f"--build-arg {name.upper()}_REPOSITORY={repo} --build-arg {name.upper()}_REV={rev}")')"
+          # shellcheck disable=SC2086
+          docker build -f toolkit/conjectures/resources/eval-verifier.Dockerfile \
+            --build-arg FC_REPOSITORY="$GITHUB_REPOSITORY" --build-arg FC_COMMIT="$GITHUB_SHA" $pins \
+            -t localhost:5000/fc-eval-verifier:qualification "$QUALIFICATION/context"
+          docker build -f toolkit/conjectures/resources/eval-solver.Dockerfile \
+            --build-arg LEAN_TOOLCHAIN="$(cat lean-toolchain)" \
+            -t localhost:5000/fc-eval-solver:qualification "$QUALIFICATION/context"
+          for image in fc-eval-verifier fc-eval-solver; do
+            docker push "localhost:5000/$image:qualification"
+            docker image inspect --format '{{index .RepoDigests 0}}' "localhost:5000/$image:qualification" > "$QUALIFICATION/$image.digest"
+            cat "$QUALIFICATION/$image.digest"
+          done
+          docker image ls
+          df -h /
+      - name: Export the frozen suite
+        env:
+          PYTHONPATH: toolkit
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          q = Path(os.environ['QUALIFICATION'])
+          source = {'repository': os.environ['GITHUB_REPOSITORY'], 'commit': os.environ['GITHUB_SHA']}
+          cases = {'plain': 'PackageExportFixture.plain', 'numerical': 'PackageExportFixture.numerical'}
+          (q/'catalog.json').write_text(json.dumps({'schemaVersion': 2, 'provenance': {'source': source},
+              'problems': [{'theorem': t, 'module': 'FormalConjecturesTest.PackageExport', 'githubPath': 'FormalConjecturesTest/PackageExport.lean',
+                            'statement': 'Qualification fixture; the native exporter checks the exact signature.'}
+                           for t in cases.values()]}))
+          (q/'suite.json').write_text(json.dumps({'schema_version': 'fc.proof-suite.v1', 'source': source,
+              'execution': {'solver_image': (q/'fc-eval-solver.digest').read_text().strip(),
+                            'verifier_image': (q/'fc-eval-verifier.digest').read_text().strip(),
+                            'toolkit_commit': os.environ['GITHUB_SHA'], 'agent_seconds': 600},
+              'cases': [{'id': i, 'declaration': t, 'exposure': 'Public test fixture with known reference proofs.'}
+                        for i, t in cases.items()]}))
+          PY
+          conjectures eval export "$QUALIFICATION/suite.json" --format harbor \
+            --catalog "$QUALIFICATION/catalog.json" --out "$QUALIFICATION/tasks"
+          python3 toolkit/qualify_harbor.py prepare --tasks "$QUALIFICATION/tasks" --out "$QUALIFICATION/trials" \
+            | tee "$QUALIFICATION/trials.txt"
+      - name: Run Harbor trials without a model
+        run: |
+          while read -r trial agent; do
+            echo "::group::$trial ($agent)"
+            uvx --from "git+https://github.com/harbor-framework/harbor.git@$HARBOR_REV" harbor run \
+              -p "$QUALIFICATION/trials/$trial" -a "$agent" -o "$QUALIFICATION/jobs" --job-name "$trial" -n 1 --yes \
+              || echo "Harbor exited nonzero for $trial; the result check decides qualification."
+            echo "::endgroup::"
+          done < "$QUALIFICATION/trials.txt"
+      - name: Check retained outcomes
+        env:
+          PYTHONPATH: toolkit
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          q = Path(os.environ['QUALIFICATION'])
+          (q/'details.json').write_text(json.dumps({
+              'kind': 'Harbor end-to-end qualification', 'client_commit': os.environ['GITHUB_SHA'],
+              'harbor_commit': os.environ['HARBOR_REV'], 'run_id': os.environ['GITHUB_RUN_ID'],
+              'solver_image': (q/'fc-eval-solver.digest').read_text().strip(),
+              'verifier_image': (q/'fc-eval-verifier.digest').read_text().strip(),
+              'export_manifest_sha256': __import__('hashlib').sha256((q/'tasks/manifest.json').read_bytes()).hexdigest()}))
+          PY
+          python3 toolkit/qualify_harbor.py check --jobs "$QUALIFICATION/jobs" \
+            --receipt "$QUALIFICATION/receipt.json" --details "$QUALIFICATION/details.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: harbor-qualification
+          path: |
+            ${{ runner.temp }}/harbor-qualification/*.json
+            ${{ runner.temp }}/harbor-qualification/*.digest
+            ${{ runner.temp }}/harbor-qualification/trials.txt
+            ${{ runner.temp }}/harbor-qualification/tasks/manifest.json
+            ${{ runner.temp }}/harbor-qualification/jobs/**
+          if-no-files-found: warn
