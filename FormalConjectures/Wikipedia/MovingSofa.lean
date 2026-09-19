@@ -245,18 +245,12 @@ theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
 /-!
 ## The ambidextrous sofa
 
-Romik [Ro18, §1.2] asks for the largest shape that can negotiate a right-angled turn both to the
-right and to the left. Travelling along `hallway` from its horizontal side into its vertical side
-is a right turn. Its mirror image $(-\infty, 1] \times [0, 1] \cup [0, 1] \times [0, \infty)$ under
-the reflection $\rho(x, y) = (x, 1 - y)$ is a left turn, and $\rho$ fixes `horizontalHallway`.
-So, following [Ro18, Thm. 5], a shape is ambidextrous if both it and its image under $\rho$ are
-moving sofas: conjugating a motion by $\rho$ preserves continuity, $m(0) = \mathrm{id}$, and
-orientation-preservation.
-
-The line of reflection is fixed, so both turns start from the same placement. This matters: if
-the reflected shape were allowed to start from a different placement, every moving sofa would be
-ambidextrous, since reflecting a motion in the diagonal $x = y$ and reversing time moves a mirror
-image of the shape around the corner.
+Romik [Ro18, §1.2] asks for the largest shape that can turn both right and left around the
+corner. Following [Ro18, Thm. 5], a shape is ambidextrous if both it and its reflection
+$\rho(x, y) = (x, 1 - y)$ are moving sofas: $\rho$ fixes `horizontalHallway` and turns `hallway`
+into its mirror image. The line of reflection is fixed, so both turns start from the same
+placement; otherwise every moving sofa would be ambidextrous, by reflecting a motion in the
+diagonal $x = y$ and reversing time.
 -/
 
 /-- The horizontal line $y = 1/2$, the axis of symmetry of the horizontal side of the hallway. -/
@@ -283,8 +277,7 @@ private lemma reflection_midline_image_eq_self {S : Set ℝ²}
   Set.Subset.antisymm (Set.image_subset_iff.2 h) fun p hp =>
     ⟨_, h p hp, EuclideanGeometry.reflection_reflection midline p⟩
 
-/-- Sanity check: the horizontal side of the hallway is symmetric under reflection in `midline`,
-so a shape and its reflection start in the same corridor. -/
+/-- Sanity check: reflection in `midline` fixes the horizontal side of the hallway. -/
 @[category test, AMS 49]
 theorem reflection_midline_image_horizontalHallway :
     EuclideanGeometry.reflection midline '' horizontalHallway = horizontalHallway := by
@@ -313,11 +306,8 @@ theorem reflection_midline_image_unitSquare :
     simp only [Set.mem_Icc] at this ⊢
     constructor <;> simp <;> linarith [this.1, this.2]
 
-/--
-A closed connected set is an **ambidextrous sofa** if it can be moved around the corner turning
-right and, from the same placement, turning left, i.e. if both it and its reflection in `midline`
-are moving sofas [Ro18, Thm. 5].
--/
+/-- A closed connected set is an **ambidextrous sofa** if both it and its reflection in `midline`
+are moving sofas [Ro18, Thm. 5]. -/
 def IsAmbidextrousSofa (s : Set ℝ²) : Prop :=
   (∃ m, IsMovingSofa s m) ∧ (∃ m, IsMovingSofa (EuclideanGeometry.reflection midline '' s) m)
 
