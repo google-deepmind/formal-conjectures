@@ -138,6 +138,7 @@ public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.GroupTheory.GroupNumber
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
