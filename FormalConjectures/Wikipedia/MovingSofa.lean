@@ -330,7 +330,7 @@ theorem one_le_ambidextrousSofaConstant : 1 ≤ ambidextrousSofaConstant := by
       le_iSup₂ (α := ℝ≥0∞) unitSquare isAmbidextrousSofa_unitSquare
 
 /-- Every ambidextrous sofa is a moving sofa. -/
-@[category test, AMS 49]
+@[category API, AMS 49]
 theorem ambidextrousSofaConstant_le_sofaConstant :
     ambidextrousSofaConstant ≤ sofaConstant :=
   iSup₂_le fun s hs => le_iSup₂ (α := ℝ≥0∞) s hs.1
@@ -338,7 +338,7 @@ theorem ambidextrousSofaConstant_le_sofaConstant :
 namespace RomiksSofa
 
 /-- The cubic $x^2 (x + 3) = 8$ has exactly one real root. -/
-@[category test, AMS 49]
+@[category textbook, AMS 49]
 theorem existsUnique_X : ∃! x : ℝ, x ^ 2 * (x + 3) = 8 := by
   have hc : Continuous (fun x : ℝ => x ^ 2 * (x + 3)) := by fun_prop
   obtain ⟨x, -, hx⟩ := intermediate_value_Icc (a := (0:ℝ)) (b := 2) (by norm_num)
@@ -349,7 +349,7 @@ theorem existsUnique_X : ∃! x : ℝ, x ^ 2 * (x + 3) = 8 := by
   nlinarith [sq_nonneg (x - y), sq_nonneg (x + y), mul_pos hx0 hy0]
 
 /-- The cubic $x (4 x^2 + 3) = 1$ has exactly one real root. -/
-@[category test, AMS 49]
+@[category textbook, AMS 49]
 theorem existsUnique_Y : ∃! x : ℝ, x * (4 * x ^ 2 + 3) = 1 := by
   have hc : Continuous (fun x : ℝ => x * (4 * x ^ 2 + 3)) := by fun_prop
   obtain ⟨x, -, hx⟩ := intermediate_value_Icc (a := (0:ℝ)) (b := 1) (by norm_num)
