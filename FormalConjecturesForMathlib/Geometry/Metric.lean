@@ -15,7 +15,6 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import Mathlib.Algebra.BigOperators.Ring.Finset
 public import Mathlib.Data.Finset.Sym
 public import Mathlib.Data.Nat.Choose.Basic
