@@ -13,6 +13,7 @@ name = "formal_conjectures"
 keywords = ["math"]
 defaultTargets = ["FormalConjectures", "FormalConjecturesUtil", "FormalConjecturesForMathlib"]
 testDriver = "FormalConjecturesTest"
+requiresModuleSystem = true
 
 [leanOptions]
 # Pretty-prints `fun a ↦ b`
