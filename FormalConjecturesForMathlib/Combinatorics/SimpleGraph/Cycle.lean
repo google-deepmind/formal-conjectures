@@ -457,6 +457,45 @@ lemma Cycle.length_completeGraph_triangle (n : ℕ) :
     (Cycle.completeGraph_triangle n).length = 3 := by
   simp [completeGraph_triangle, length, Walk.length_cons]
 
+/-- A triangle has no diagonals: every edge among its three vertices is a cycle edge. -/
+lemma Cycle.completeGraph_triangle_chords (n : ℕ) :
+    (Cycle.completeGraph_triangle n).chords = ∅ := by
+  ext e
+  simp only [Set.mem_empty_iff_false, iff_false, mem_chords]
+  rintro ⟨heG, hsup, hne⟩
+  have hsupport :
+      (Cycle.completeGraph_triangle n).walk.support = [0, 1, 2, 0] := by
+    simp [completeGraph_triangle, Walk.support_cons, Walk.support_nil]
+  have hedges :
+      (Cycle.completeGraph_triangle n).edges = [s(0, 1), s(1, 2), s(2, 0)] := by
+    simp [completeGraph_triangle, Cycle.edges, Walk.edges_cons, Walk.edges_nil]
+  revert hne hsup heG
+  refine e.inductionOn fun u v ↦ ?_
+  intro heG hsup hne
+  have mem3 : ∀ x : Fin (n + 3),
+      x ∈ (Cycle.completeGraph_triangle n).walk.support → x = 0 ∨ x = 1 ∨ x = 2 := by
+    intro x hx
+    rw [hsupport] at hx
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+    tauto
+  have hu := mem3 u (hsup u (by simp))
+  have hv := mem3 v (hsup v (by simp))
+  have hneuv : u ≠ v := (completeGraph (Fin (n + 3))).ne_of_adj heG
+  have : s(u, v) = s(0, 1) ∨ s(u, v) = s(1, 2) ∨ s(u, v) = s(2, 0) := by
+    rcases hu with rfl | rfl | rfl <;> rcases hv with rfl | rfl | rfl
+    · exact (hneuv rfl).elim
+    · exact Or.inl rfl
+    · exact Or.inr (Or.inr (Sym2.eq_swap))
+    · exact Or.inl (Sym2.eq_swap)
+    · exact (hneuv rfl).elim
+    · exact Or.inr (Or.inl rfl)
+    · exact Or.inr (Or.inr rfl)
+    · exact Or.inr (Or.inl (Sym2.eq_swap))
+    · exact (hneuv rfl).elim
+  rw [hedges] at hne
+  simp only [List.mem_cons, List.not_mem_nil, or_false] at hne
+  exact hne this
+
 /-- `K_{n+3}` has an odd cycle (a triangle), hence `HasOddCycleWithChords _ 0`. -/
 lemma hasOddCycleWithChords_completeGraph_zero (n : ℕ) :
     HasOddCycleWithChords (completeGraph (Fin (n + 3))) 0 :=

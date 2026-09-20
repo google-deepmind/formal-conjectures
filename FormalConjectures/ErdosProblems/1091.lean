@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1091
@@ -29,9 +30,11 @@ import FormalConjecturesUtil
   Ser. B (1982), 264--285.
 -/
 
-namespace Erdos1091
+@[expose] public section
 
 open SimpleGraph Filter
+
+namespace Erdos1091
 
 /-- Two diagonals imply one (special case of `HasOddCycleWithChords.mono`). -/
 @[category API, AMS 5]
@@ -179,5 +182,11 @@ theorem erdos_1091.variants.hasOddCycleWithChords_completeGraph_of_three_le
 theorem erdos_1091.variants.length_completeGraph_triangle (n : ℕ) :
     (Cycle.completeGraph_triangle n).length = 3 :=
   Cycle.length_completeGraph_triangle n
+
+/-- A triangle in `K_{n+3}` has no diagonals. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.completeGraph_triangle_chords (n : ℕ) :
+    (Cycle.completeGraph_triangle n).chords = ∅ :=
+  Cycle.completeGraph_triangle_chords n
 
 end Erdos1091
