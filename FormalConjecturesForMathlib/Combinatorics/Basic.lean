@@ -679,5 +679,11 @@ lemma greedySidonBelow_eq_empty_iff (N : ℕ) :
     have : 1 ≤ x := one_le_of_mem_greedySidon_aux hx'.1
     omega
 
+/-- The greedy Sidon set in `{1, …, N}` grows with `N`. -/
+lemma greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
+    greedySidonBelow M ⊆ greedySidonBelow N := by
+  intro x hx
+  rw [mem_greedySidonBelow] at hx ⊢
+  exact ⟨greedySidon.aux_mono h hx.1, hx.2.trans h⟩
 
 end Finset

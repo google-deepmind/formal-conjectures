@@ -13,21 +13,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 861
 
 *References:*
 - [erdosproblems.com/861](https://www.erdosproblems.com/861)
+- [Er92c] Erdős, P., *Some of my forgotten problems in number theory*. Hardy-Ramanujan J. (1992),
+  34-50.
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [KLRS15] Kohayakawa, Yoshiharu and Lee, Sang June and Rödl, Vojtěch and Samotij, Wojciech,
   *The number of Sidon sets and the maximum size of Sidon sets contained in a sparse random set of
   integers*. Random Structures Algorithms (2015), 1--25.
 - [SaTh15] Saxton, David and Thomason, Andrew, *Hypergraph containers*. Invent. Math. (2015),
   925--992.
+
+See also [30](https://www.erdosproblems.com/30) and [862](https://www.erdosproblems.com/862).
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Set
 open scoped Topology
@@ -172,5 +179,17 @@ theorem erdos_861.variants.card_greedySidonBelow_le (N : ℕ) :
 theorem erdos_861.variants.greedySidonBelow_eq_empty_iff (N : ℕ) :
     Finset.greedySidonBelow N = ∅ ↔ N = 0 :=
   Finset.greedySidonBelow_eq_empty_iff N
+
+/-- The greedy Sidon set in `{1, …, N}` is monotone in `N`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
+    Finset.greedySidonBelow M ⊆ Finset.greedySidonBelow N :=
+  Finset.greedySidonBelow_mono h
+
+/-- It is known that $f(N)\sim N^{1/2}$. -/
+@[category research solved, AMS 5 11]
+theorem erdos_861.variants.f_sqrt :
+    (fun N : ℕ ↦ (f N : ℝ)) ~[atTop] fun N : ℕ ↦ (N : ℝ).sqrt := by
+  sorry
 
 end Erdos861
