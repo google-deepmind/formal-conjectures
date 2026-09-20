@@ -159,6 +159,23 @@ lemma H_of_x_zero (C : ℝ) : H C 0 = 0 := by
     exact Nat.eq_zero_of_le_zero hle
   · exact H_eq_zero_of_neg (lt_of_not_ge hC) 0
 
+/-- Admissible sieves live in `{2, …, x}`, so `1` always survives and `H_C(x) ≥ 1`
+when `C ≥ 0` and `x ≥ 1`. -/
+@[category API, AMS 11]
+lemma one_le_H {C : ℝ} {x : ℕ} (hC : 0 ≤ C) (hx : 1 ≤ x) : 1 ≤ H C x := by
+  classical
+  have hne : Set.Nonempty
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC,
+      card_avoidsDivisors_empty x⟩
+  have hmem := Nat.sInf_mem hne
+  simp only [Set.mem_ofPred_eq] at hmem
+  obtain ⟨A, hA, _, heq⟩ := hmem
+  have : 1 ≤ (avoidsDivisors A x).card :=
+    one_le_card_avoidsDivisors hx (one_not_mem_of_subset_Icc_two hA)
+  simpa [H, heq] using this
+
 /-- Singleton sieve `{a}` with `2 ≤ a ≤ x` and `1/a ≤ C` gives `H C x ≤ x - ⌊x/a⌋`. -/
 @[category API, AMS 11]
 lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a ≤ x)
@@ -303,5 +320,17 @@ theorem erdos_784.variants.reciprocalSum_le_half_card_of_subset_Icc_two
     {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 2 x) :
     A.reciprocalSum ≤ (A.card : ℝ) / 2 :=
   Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA
+
+/-- `1` survives every sieve that excludes `1`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.one_mem_avoidsDivisors {A : Finset ℕ} {x : ℕ}
+    (hx : 1 ≤ x) (h1 : 1 ∉ A) : 1 ∈ avoidsDivisors A x :=
+  Finset.one_mem_avoidsDivisors hx h1
+
+/-- The sieve is empty iff `x = 0` or `1 ∈ A`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_eq_empty_iff (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = ∅ ↔ x = 0 ∨ 1 ∈ A :=
+  Finset.avoidsDivisors_eq_empty_iff A x
 
 end Erdos784

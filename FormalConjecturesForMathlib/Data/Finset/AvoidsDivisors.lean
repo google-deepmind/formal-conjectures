@@ -248,5 +248,44 @@ lemma card_avoidsDivisors_le_self (A : Finset ℕ) (x : ℕ) :
     (avoidsDivisors A x).card ≤ x := by
   simpa [Nat.card_Icc] using card_le_card (avoidsDivisors_subset A x)
 
+/-- `1` is never a member of `{2, …, x}`. -/
+lemma one_not_mem_of_subset_Icc_two {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 2 x) :
+    1 ∉ A := by
+  intro h
+  have := mem_Icc.mp (hA h)
+  omega
+
+/-- If `1 ∉ A` and `x ≥ 1`, then `1` survives the sieve (nothing in `A` divides `1`). -/
+lemma one_mem_avoidsDivisors {A : Finset ℕ} {x : ℕ} (hx : 1 ≤ x) (h1 : 1 ∉ A) :
+    1 ∈ avoidsDivisors A x := by
+  refine mem_avoidsDivisors.mpr ⟨mem_Icc.mpr ⟨le_rfl, hx⟩, ?_⟩
+  intro a ha hdvd
+  exact h1 ((Nat.dvd_one.mp hdvd) ▸ ha)
+
+/-- Hence the survivor set is nonempty whenever `x ≥ 1` and `1 ∉ A`. -/
+lemma one_le_card_avoidsDivisors {A : Finset ℕ} {x : ℕ} (hx : 1 ≤ x) (h1 : 1 ∉ A) :
+    1 ≤ (avoidsDivisors A x).card :=
+  Finset.card_pos.mpr ⟨1, one_mem_avoidsDivisors hx h1⟩
+
+/-- The sieve empties `{1, …, x}` precisely when the range is empty or `1` is a divisor. -/
+lemma avoidsDivisors_eq_empty_iff (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = ∅ ↔ x = 0 ∨ 1 ∈ A := by
+  constructor
+  · intro h
+    by_cases hx : x = 0
+    · exact Or.inl hx
+    · refine Or.inr ?_
+      have hx1 : 1 ≤ x := Nat.one_le_iff_ne_zero.mpr hx
+      by_contra h1
+      have : 1 ∈ avoidsDivisors A x := one_mem_avoidsDivisors hx1 h1
+      simp [h] at this
+  · rintro (rfl | h1)
+    · simp [avoidsDivisors, Icc_eq_empty_of_lt]
+    · exact avoidsDivisors_eq_empty_of_one_mem h1 x
+
+/-- Same characterisation in terms of cardinality. -/
+lemma card_avoidsDivisors_eq_zero_iff (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card = 0 ↔ x = 0 ∨ 1 ∈ A := by
+  rw [card_eq_zero, avoidsDivisors_eq_empty_iff]
 
 end Finset
