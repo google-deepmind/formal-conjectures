@@ -72,7 +72,9 @@ lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C
 
 /-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most $d$. -/
-@[category research open, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/vcdim-convex-finite-bound/blob/9d7685c7c7c8c8e82f47d59da5495a8d5374db99/lean/VCDimConvexBoundFC.lean#L14-L17"]
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
