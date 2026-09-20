@@ -30,8 +30,9 @@ $k = b$.
 corrects nothing.
 
 The definitions used here are in `FormalConjecturesForMathlib`:
-`Nat.MultiplicativelyIndependent`, `AutomaticSequence.IsAutomatic`,
-`AutomaticSequence.IsAutomaticInBase` and `AutomaticSequence.IsBroadlyAutomaticInBase`.
+`Nat.MultiplicativelyIndependent` and `Nat.MultiplicativelyIndependentFamily`,
+`AutomaticSequence.IsAutomatic`, `AutomaticSequence.IsAutomaticInBase` and
+`AutomaticSequence.IsBroadlyAutomaticInBase`.
 
 *References:*
   - [AF20](https://arxiv.org/abs/2012.08283) Adamczewski, Boris, and Colin Faverjon.
@@ -56,18 +57,20 @@ open AutomaticSequence
 
 /--
 **Adamczewski–Faverjon** [AF20, Conjecture A.3], proved there from Part (i) of Theorem 1.1.
-Let $b_1, \dots, b_r$ be pairwise multiplicatively independent integers, each at least $2$,
-and for every $i$ let $\xi_i$ be automatic in base $b_i$. Then $\xi_1, \dots, \xi_r$ are
-algebraically independent over $\overline{\mathbb{Q}}$, unless one of them is rational.
+Let $b_1, \dots, b_r$ be multiplicatively independent positive integers, and for every $i$ let
+$\xi_i$ be a real number that is automatic in base $b_i$. Then $\xi_1, \dots, \xi_r$ are
+algebraically independent over $\mathbb{Q}$, unless one of them is rational.
 
-Two formalisation choices. Automaticity is the broad notion that the proof of Conjecture A.3
-uses: the base-$b_i$ digits of $\xi_i$ are $k$-automatic for some $k$. Algebraic independence
-over $\overline{\mathbb{Q}}$ is stated as algebraic independence over $\mathbb{Q}$; the two
-agree because $\overline{\mathbb{Q}}$ is algebraic over $\mathbb{Q}$.
+Two points of fidelity. The hypothesis is the *joint* multiplicative independence of
+$b_1, \dots, b_r$ that [AF20] defines on p. 3 (no nonzero integer tuple $(n_i)$ has
+$\prod_i b_i^{n_i} = 1$), not the weaker pairwise condition; it is what the proof feeds to
+Part (i) of Theorem 1.1, via the multiplicative independence of $1/b_1, \dots, 1/b_r$.
+Automaticity is the broad notion that the proof of Conjecture A.3 uses: the base-$b_i$ digits
+of $\xi_i$ are $k$-automatic for some $k \ge 2$, which need not be $b_i$.
 -/
 @[category research solved, AMS 11 68]
 theorem adamczewski_faverjon {r : ℕ} (b : Fin r → ℕ) (hb : ∀ i, 2 ≤ b i)
-    (hind : Pairwise fun i j => Nat.MultiplicativelyIndependent (b i) (b j))
+    (hind : Nat.MultiplicativelyIndependentFamily b)
     (ξ : Fin r → ℝ) (hauto : ∀ i, IsBroadlyAutomaticInBase (b i) (ξ i))
     (hirr : ∀ i, Irrational (ξ i)) :
     AlgebraicIndependent ℚ ξ := by
@@ -85,10 +88,9 @@ theorem problem_10_32.variants.strong (ξ : ℝ) (hξ : Irrational ξ) (b₁ b�
     (h₁ : IsBroadlyAutomaticInBase b₁ ξ) (h₂ : IsBroadlyAutomaticInBase b₂ ξ) : False := by
   -- Apply Conjecture A.3 with `r = 2` and `ξ₁ = ξ₂ = ξ`.
   have key : AlgebraicIndependent ℚ ![ξ, ξ] := by
-    refine adamczewski_faverjon ![b₁, b₂] (fun i => ?_) (fun i j hij => ?_) ![ξ, ξ]
+    refine adamczewski_faverjon ![b₁, b₂] (fun i => ?_) hind.family ![ξ, ξ]
       (fun i => ?_) (fun i => ?_)
     · fin_cases i <;> assumption
-    · fin_cases i <;> fin_cases j <;> simp_all [hind.symm]
     · fin_cases i <;> assumption
     · fin_cases i <;> assumption
   -- Equal numbers are never algebraically independent.
