@@ -189,4 +189,17 @@ theorem erdos_1091.variants.completeGraph_triangle_chords (n : ℕ) :
     (Cycle.completeGraph_triangle n).chords = ∅ :=
   Cycle.completeGraph_triangle_chords n
 
+/-- An odd cycle with (at least `k`) chords forbids bipartiteness. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.hasOddCycleWithChords_not_isBipartite
+    {V : Type*} {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : ¬ G.IsBipartite :=
+  h.not_isBipartite
+
+/-- Hence `K_{n+3}` is not bipartite. -/
+@[category test, AMS 5]
+theorem erdos_1091.variants.completeGraph_not_isBipartite (n : ℕ) :
+    ¬ (completeGraph (Fin (n + 3))).IsBipartite :=
+  SimpleGraph.completeGraph_not_isBipartite n
+
 end Erdos1091

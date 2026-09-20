@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
 public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 public import Mathlib.Combinatorics.SimpleGraph.Finite
@@ -510,5 +511,30 @@ lemma hasOddCycleWithChords_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
   rw [show (3 + k) = k + 3 from Nat.add_comm 3 k]
   exact hasOddCycleWithChords_completeGraph_zero k
 
+/-- An odd bundled cycle forbids 2-colourability, hence bipartiteness. -/
+lemma Cycle.not_isBipartite {G : SimpleGraph V} (c : Cycle G) (h : Odd c.length) :
+    ¬ G.IsBipartite := by
+  intro hbi
+  have heven : Even c.walk.length :=
+    two_colorable_iff_forall_loop_even.mp hbi c.base c.walk
+  have hodd : Odd c.walk.length := by simpa [Cycle.length] using h
+  exact Nat.not_even_iff_odd.mpr hodd heven
+
+/-- An odd cycle with (at least `k`) chords is incompatible with bipartiteness.
+This is the bipartite alternative in the Bollobás–Erdős form of problem 1091. -/
+lemma HasOddCycleWithChords.not_isBipartite {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : ¬ G.IsBipartite := by
+  obtain ⟨c, hodd, _⟩ := h
+  exact c.not_isBipartite hodd
+
+/-- In particular `K_{n+3}` is not bipartite. -/
+lemma completeGraph_not_isBipartite (n : ℕ) :
+    ¬ (completeGraph (Fin (n + 3))).IsBipartite :=
+  (hasOddCycleWithChords_completeGraph_zero n).not_isBipartite
+
+/-- Same for any `K_n` with `n ≥ 3`. -/
+lemma completeGraph_not_isBipartite_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    ¬ (completeGraph (Fin n)).IsBipartite :=
+  (hasOddCycleWithChords_completeGraph_of_three_le hn).not_isBipartite
 
 end SimpleGraph
