@@ -13,17 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 896
 
 *References:*
 - [erdosproblems.com/896](https://www.erdosproblems.com/896)
+- [Er72] Erdős, Paul, *Extremal problems in number theory*. Proceedings of the 1972 Number Theory
+  Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86.
 - [Fo08] Ford, Kevin, *The distribution of integers with a divisor in a given interval*. Ann. of
   Math. (2) (2008), 367-433.
+
+See also [490](https://www.erdosproblems.com/490).
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Finset
 open scoped Topology
@@ -189,5 +196,30 @@ theorem erdos_896.variants.F_singleton_right_pos_iff (A : Finset ℕ) (b : ℕ) 
 theorem erdos_896.variants.F_singleton_singleton (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
     F {a} {b} = 1 := by
   simpa [F] using card_uniqueMulProducts_singleton_singleton a b ha hb
+
+/-- `{1} × {1, …, N}` realises `N` unique products, so `maxF N ≥ N`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_ge_card {N : ℕ} (hN : 1 ≤ N) : N ≤ maxF N := by
+  classical
+  have hmem :
+      (({1} : Finset ℕ), Icc 1 N) ∈
+        (Icc 1 N).powerset.product (Icc 1 N).powerset := by
+    simp [mem_product, mem_powerset, hN]
+  have hF : F ({1} : Finset ℕ) (Icc 1 N) = N := by
+    simp [F_one_left, Nat.card_Icc]
+  have : F ({1} : Finset ℕ) (Icc 1 N) ≤ maxF N :=
+    le_sup (f := fun p : Finset ℕ × Finset ℕ ↦ F p.1 p.2) hmem
+  simpa [hF] using this
+
+/-- Unique products of subsets of `{1, …, N}` lie in `{1, …, N²}`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.uniqueMulProducts_subset_Icc_sq
+    {A B : Finset ℕ} {N : ℕ} (hA : A ⊆ Icc 1 N) (hB : B ⊆ Icc 1 N) :
+    uniqueMulProducts A B ⊆ Icc 1 (N * N) := by
+  intro m hm
+  obtain ⟨p, hp, rfl⟩ := mem_image.mp (uniqueMulProducts_subset_image A B hm)
+  have ha := mem_Icc.mp (hA (mem_product.mp hp).1)
+  have hb := mem_Icc.mp (hB (mem_product.mp hp).2)
+  exact mem_Icc.mpr ⟨Nat.mul_le_mul ha.1 hb.1, Nat.mul_le_mul ha.2 hb.2⟩
 
 end Erdos896
