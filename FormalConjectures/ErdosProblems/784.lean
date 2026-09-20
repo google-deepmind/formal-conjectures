@@ -13,14 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 784
 
 *References:*
 - [erdosproblems.com/784](https://www.erdosproblems.com/784)
+- [Er72] Erdős, Paul, *Extremal problems in number theory*. Proceedings of the 1972 Number Theory
+  Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86.
+- [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+  combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971)
+  (1973), 117-138.
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
 - [ErRu80] Erdős, P. and Ruzsa, I. Z., *On the small sieve. I. Sifting by primes*. J. Number Theory
@@ -33,6 +39,8 @@ import FormalConjecturesUtil
 - [We25] Weingartner, Andreas, *The Schinzel-Szekeres function*. Res. Number Theory (2025), Paper
   No. 63, 32.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real Finset
 
@@ -248,6 +256,21 @@ theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (_hC1 : C < 1) :
     clear * - h₁ h₂; first | exact h₁ | exact h₂
   rw [← heq]
   exact le_card_avoidsDivisors_of_reciprocalSum_le A x hsum
+
+/-- The boxed bound $H_C(x)\gg x/(\log x)^c$ holds for every $0<C<1$, via the union bound
+and $x/\log x=o(x)$. -/
+@[category textbook, AMS 11]
+theorem erdos_784.variants.BoundHolds_of_lt_one (C : ℝ) (hC : 0 < C) (hC1 : C < 1) :
+    BoundHolds C := by
+  refine ⟨1, one_pos, 1 - C, sub_pos.mpr hC1, ?_⟩
+  have hunion := erdos_784.variants.union_bound C hC hC1
+  have hlog : Tendsto (fun x : ℕ ↦ log x) atTop atTop :=
+    tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
+  filter_upwards [hunion, hlog.eventually (eventually_ge_atTop 1)] with x hH hlogx
+  have hpow : (1 : ℝ) ≤ (log x) ^ (1 : ℝ) := by
+    rw [rpow_one]
+    exact hlogx
+  exact (div_le_self (mul_nonneg (sub_nonneg.mpr hC1.le) (Nat.cast_nonneg _)) hpow).trans hH
 
 /-- Sieving by `{1}` empties `{1, …, x}`; this motivates excluding `1` from admissible `A` in `H`. -/
 @[category test, AMS 11]
