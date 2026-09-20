@@ -58,12 +58,14 @@ noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n :
   open scoped Classical in
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
+-- partial product over primes below N, then ∃ C > 0, Tendsto
+def HardyLittlewoodPartial {k : ℕ} (m : Fin k.succ → ℕ) (N : ℕ) : ℝ :=
+  2 ^ k * ∏ q in Nat.primesBelow N, (1 - Nat.numResidues q m / q) / (1 - 1 / q) ^ k.succ
+
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
-  let C : ℝ :=
-      2 ^ k * ∏' (q : { q : ℕ // q.Prime ∧ 3 ≤ q}),
-        (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
-    let π_P : ℕ → ℝ := fun n => (Nat.primeTupleCounting m n : ℝ)
-    π_P =O[atTop] fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
+  ∃ (C : ℝ), 0 < C ∧
+  Tendsto (fun N => HardyLittlewoodPartial m N) atTop (𝓝 C) ∧
+  ∀ N : ℕ, 1 ≤ N → HardyLittlewoodPartial m N ≥ C * ∫ t in (2)..N, 1 / t.log ^ k.succ / real.log N
 
 /--
 Let $P = (m_1, \dots, m_k)$ be a tuple of positive even integers. Let
