@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesUtil
 
 /-!
 # TxGraffiti Conjecture 4: the saturation number versus the harmonic index
