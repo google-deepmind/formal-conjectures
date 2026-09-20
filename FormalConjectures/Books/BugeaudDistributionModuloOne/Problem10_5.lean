@@ -42,7 +42,9 @@ in $\mathbb{K}$ such that
 $$\limsup_{n \to \infty} \{\xi t_n\} \ge 1 - \varepsilon,$$
 for any real number $\xi$ not in $\mathbb{K}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/bugeaud-10-5-lacunary/blob/fa5533b0229a19f2092c777cadb43ef4b0f2600b/lean/Bugeaud105/Compatibility.lean#L18-L19"]
 theorem problem_10_5 (K : IntermediateField ℚ ℝ) [FiniteDimensional ℚ K]
     {ε : ℝ} (hε : 0 < ε) :
     ∃ t : ℕ → K, (∀ n, 0 < (t n : ℝ)) ∧
@@ -58,7 +60,9 @@ subinterval of $[0, 1]$ of length $\varepsilon$ contains a limit point of the se
 $(\{\xi t_n\})_{n \ge 1}$. This is strictly stronger than `problem_10_5`: the limsup
 bound is the special case at the subinterval $[1 - \varepsilon, 1]$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/bugeaud-10-5-lacunary/blob/fa5533b0229a19f2092c777cadb43ef4b0f2600b/lean/Bugeaud105/Compatibility.lean#L14-L16"]
 theorem problem_10_5_moreover (K : IntermediateField ℚ ℝ) [FiniteDimensional ℚ K]
     {ε : ℝ} (hε : 0 < ε) :
     ∃ t : ℕ → K, (∀ n, 0 < (t n : ℝ)) ∧
