@@ -119,6 +119,17 @@ lemma circumference_eq_zero_of_cycleLengths_eq_empty {G : SimpleGraph α} [Decid
     (h : G.cycleLengths = ∅) : G.circumference = 0 := by
   simp [circumference, h]
 
+/-- If the circumference is positive, it is attained: some cycle has that length. -/
+lemma mem_cycleLengths_of_circumference_pos {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : 0 < G.circumference) : G.circumference ∈ G.cycleLengths := by
+  have hne : G.cycleLengths.Nonempty := by
+    by_contra hempty
+    have hz : G.circumference = 0 :=
+      circumference_eq_zero_of_cycleLengths_eq_empty
+        (Set.not_nonempty_iff_eq_empty.mp hempty)
+    omega
+  simpa [circumference] using Nat.sSup_mem hne (bddAbove_cycleLengths G)
+
 omit [Fintype α] in
 lemma IsAcyclic.circumference_eq_zero {G : SimpleGraph α} [DecidableRel G.Adj]
     (h : G.IsAcyclic) : G.circumference = 0 :=
@@ -316,5 +327,18 @@ lemma girth_cycleGraph_le (n : ℕ) : (cycleGraph (n + 3)).girth ≤ n + 3 := by
 lemma three_le_girth_cycleGraph (n : ℕ) : 3 ≤ (cycleGraph (n + 3)).girth :=
   three_le_girth (cycleGraph_not_isAcyclic n)
 
+/-- Combining: `girth(C_{n+3}) ≤ circumference(C_{n+3}) = n+3`. -/
+lemma girth_le_circumference_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).girth ≤ (cycleGraph (n + 3)).circumference :=
+  (girth_cycleGraph_le n).trans (by rw [circumference_cycleGraph])
+
+/-- The Hamiltonian length of `K_n` (`n ≥ 3`) is realised by some cycle. -/
+lemma mem_cycleLengths_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
+    n ∈ (completeGraph (Fin n)).cycleLengths := by
+  have hpos : 0 < (completeGraph (Fin n)).circumference := by
+    rw [circumference_completeGraph_of_three_le hn]
+    omega
+  simpa [circumference_completeGraph_of_three_le hn] using
+    mem_cycleLengths_of_circumference_pos hpos
 
 end SimpleGraph

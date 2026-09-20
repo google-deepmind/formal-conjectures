@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1012
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Wo72] Woodall, D. R., *Sufficient conditions for circuits in graphs*. Proc. London Math. Soc.
   (3) (1972), 739--755.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -239,5 +242,18 @@ theorem erdos_1012.variants.girth_completeGraph {n : ℕ} (hn : 3 ≤ n) :
 theorem erdos_1012.variants.girth_cycleGraph_le (n : ℕ) :
     (cycleGraph (n + 3)).girth ≤ n + 3 :=
   SimpleGraph.girth_cycleGraph_le n
+
+/-- A positive circumference is attained by some cycle. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.mem_cycleLengths_of_circumference_pos
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (h : 0 < G.circumference) : G.circumference ∈ G.cycleLengths :=
+  SimpleGraph.mem_cycleLengths_of_circumference_pos h
+
+/-- `K_n` (`n ≥ 3`) has a Hamiltonian cycle. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.mem_cycleLengths_completeGraph {n : ℕ} (hn : 3 ≤ n) :
+    n ∈ (completeGraph (Fin n)).cycleLengths :=
+  SimpleGraph.mem_cycleLengths_completeGraph_of_three_le hn
 
 end Erdos1012
