@@ -220,12 +220,14 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0"]
 theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
