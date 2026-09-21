@@ -255,11 +255,28 @@ theorem two_pow_card_le_sidonSubsetCount_of_isSidon {A B : Finset α} [Decidable
     _ ≤ (A.powerset.filter fun C : Finset α ↦ IsSidon (C : Set α)).card := card_le_card hsub
     _ = sidonSubsetCount A := rfl
 
+/-- Any Sidon subset of `A` has size at most `maxSidonSubsetCard A`. -/
+theorem card_le_maxSidonSubsetCard {A B : Finset α} [DecidableEq α]
+    (hBA : B ⊆ A) (hB : IsSidon (B : Set α)) :
+    B.card ≤ maxSidonSubsetCard A := by
+  classical
+  have h : B ∈ A.powerset.filter fun C : Finset α ↦ IsSidon (C : Set α) :=
+    mem_filter.mpr ⟨mem_powerset.mpr hBA, hB⟩
+  exact le_sup (f := Finset.card) h
+
 lemma IsSidon.singleton (a : α) : IsSidon ({a} : Set α) := by
   intro i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
   simp only [Set.mem_singleton_iff] at hi₁ hj₁ hi₂ hj₂
   subst hi₁; subst hj₁; subst hi₂; subst hj₂
   exact Or.inl ⟨rfl, rfl⟩
+
+/-- Nonempty ambient sets admit a Sidon singleton, so the max size is at least `1`. -/
+theorem one_le_maxSidonSubsetCard_of_nonempty [DecidableEq α] {A : Finset α}
+    (hA : A.Nonempty) : 1 ≤ maxSidonSubsetCard A := by
+  classical
+  obtain ⟨a, ha⟩ := hA
+  have hsub : ({a} : Finset α) ⊆ A := singleton_subset_iff.mpr ha
+  simpa using card_le_maxSidonSubsetCard hsub (by simpa using IsSidon.singleton a)
 
 @[simp]
 theorem maxSidonSubsetCard_singleton [DecidableEq α] (a : α) :
@@ -685,5 +702,37 @@ lemma greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
   intro x hx
   rw [mem_greedySidonBelow] at hx ⊢
   exact ⟨greedySidon.aux_mono h hx.1, hx.2.trans h⟩
+
+/-- Hence `#greedySidonBelow` is monotone in `N`. -/
+lemma card_greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
+    (greedySidonBelow M).card ≤ (greedySidonBelow N).card :=
+  card_le_card (greedySidonBelow_mono h)
+
+/-- `1` belongs to `greedySidonBelow N` precisely when `N ≥ 1`. -/
+lemma one_mem_greedySidonBelow_iff (N : ℕ) :
+    (1 : ℕ) ∈ greedySidonBelow N ↔ 1 ≤ N := by
+  constructor
+  · intro h
+    exact (mem_greedySidonBelow.mp h).2
+  · intro hN
+    exact mem_greedySidonBelow_iff_exists.mpr
+      ⟨0, greedySidon_zero, by simpa [greedySidon_zero] using hN⟩
+
+/-- In particular `#greedySidonBelow N ≥ 1` for `N ≥ 1`. -/
+lemma one_le_card_greedySidonBelow_of_one_le {N : ℕ} (hN : 1 ≤ N) :
+    1 ≤ (greedySidonBelow N).card :=
+  card_pos.mpr ⟨1, (one_mem_greedySidonBelow_iff N).mpr hN⟩
+
+/-- The greedy construction is a Sidon subset of `{1, …, N}`, so
+`#greedySidonBelow N ≤ maxSidonSubsetCard (Icc 1 N)`. -/
+lemma card_greedySidonBelow_le_maxSidonSubsetCard (N : ℕ) :
+    (greedySidonBelow N).card ≤ maxSidonSubsetCard (Icc 1 N) :=
+  card_le_maxSidonSubsetCard (greedySidonBelow_subset_Icc N) (greedySidonBelow_isSidon N)
+
+/-- Consequently `2 ^ #greedySidonBelow N ≤ sidonSubsetCount (Icc 1 N)`. -/
+lemma two_pow_card_greedySidonBelow_le_sidonSubsetCount (N : ℕ) :
+    2 ^ (greedySidonBelow N).card ≤ sidonSubsetCount (Icc 1 N) :=
+  two_pow_card_le_sidonSubsetCount_of_isSidon
+    (greedySidonBelow_subset_Icc N) (greedySidonBelow_isSidon N)
 
 end Finset

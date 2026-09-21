@@ -186,6 +186,36 @@ theorem erdos_861.variants.greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
     Finset.greedySidonBelow M ⊆ Finset.greedySidonBelow N :=
   Finset.greedySidonBelow_mono h
 
+/-- `#greedySidonBelow` is monotone in `N`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.card_greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) :
+    (Finset.greedySidonBelow M).card ≤ (Finset.greedySidonBelow N).card :=
+  Finset.card_greedySidonBelow_mono h
+
+/-- `1 ∈ greedySidonBelow N` iff `N ≥ 1`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.one_mem_greedySidonBelow_iff (N : ℕ) :
+    (1 : ℕ) ∈ Finset.greedySidonBelow N ↔ 1 ≤ N :=
+  Finset.one_mem_greedySidonBelow_iff N
+
+/-- The greedy Sidon set in `{1, …, N}` is a lower bound for `f(N)`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.card_greedySidonBelow_le_f (N : ℕ) :
+    (Finset.greedySidonBelow N).card ≤ f N :=
+  Finset.card_greedySidonBelow_le_maxSidonSubsetCard N
+
+/-- Hence `2 ^ #greedySidonBelow N ≤ A(N)`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.two_pow_card_greedySidonBelow_le_Acount (N : ℕ) :
+    2 ^ (Finset.greedySidonBelow N).card ≤ Acount N :=
+  Finset.two_pow_card_greedySidonBelow_le_sidonSubsetCount N
+
+/-- For `N ≥ 1`, `f(N) ≥ 1`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.one_le_f_of_one_le {N : ℕ} (hN : 1 ≤ N) : 1 ≤ f N := by
+  have : (Finset.Icc 1 N).Nonempty := ⟨1, by simp [hN]⟩
+  exact Finset.one_le_maxSidonSubsetCard_of_nonempty this
+
 /-- It is known that $f(N)\sim N^{1/2}$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_861.variants.f_sqrt :
