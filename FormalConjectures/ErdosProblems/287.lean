@@ -100,7 +100,9 @@ More precisely: if the prime conjecture holds, then there exists $k_0$ such that
 $k \geq k_0$, any Egyptian fraction representation of $1$ with $k$ terms and all terms $> 1$
 must have $\max(n_{i+1} - n_i) \geq 3$.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Zed-Rez/erdos-287-lean/blob/43c2ef1c8f534d1c7547b1e18310daacba936083/P287/Part3.lean#L39-L47"]
 theorem erdos_287.variants.prime_conjecture_implies : type_of% erdos_287.variants.prime_conjecture →
     ∃ (k₀ : ℕ), ∀ᵉ (k : ℕ) (hk₀ : k₀ ≤ k) (hk : 2 ≤ k) (s : Fin k → ℕ),
       StrictMono s → 1 < s ⟨0, by omega⟩ →
