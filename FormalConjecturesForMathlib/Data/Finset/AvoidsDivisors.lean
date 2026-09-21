@@ -337,4 +337,17 @@ lemma card_avoidsDivisors_filter_ne_zero (A : Finset ℕ) (x : ℕ) :
     (avoidsDivisors (A.filter (· ≠ 0)) x).card = (avoidsDivisors A x).card := by
   rw [← avoidsDivisors_eq_avoidsDivisors_filter_ne_zero]
 
+/-- Including `a` in the sieve can only shrink survivors relative to sieving by `{a}`. -/
+lemma avoidsDivisors_subset_avoidsDivisors_singleton {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    avoidsDivisors A x ⊆ avoidsDivisors {a} x :=
+  avoidsDivisors_mono (singleton_subset_iff.mpr ha) x
+
+/-- Hence `#survivors ≤ x - ⌊x/a⌋` whenever `a ∈ A`. -/
+lemma card_avoidsDivisors_le_sub_div_of_mem {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    (avoidsDivisors A x).card ≤ x - x / a := by
+  simpa [card_avoidsDivisors_singleton] using
+    card_le_card (avoidsDivisors_subset_avoidsDivisors_singleton (a := a) ha)
+
 end Finset

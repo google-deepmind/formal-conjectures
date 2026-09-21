@@ -357,4 +357,35 @@ theorem erdos_784.variants.avoidsDivisors_insert (A : Finset ℕ) (a x : ℕ) :
     avoidsDivisors (insert a A) x = (avoidsDivisors A x).filter (fun m => ¬ a ∣ m) :=
   Finset.avoidsDivisors_insert A a x
 
+/-- If `a ∈ A` then survivors of `A` are among survivors of `{a}`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_subset_singleton {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    avoidsDivisors A x ⊆ avoidsDivisors {a} x :=
+  Finset.avoidsDivisors_subset_avoidsDivisors_singleton ha
+
+/-- If `a ∈ A` then `#survivors ≤ x - ⌊x/a⌋`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_avoidsDivisors_le_sub_div_of_mem {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    (avoidsDivisors A x).card ≤ x - x / a :=
+  Finset.card_avoidsDivisors_le_sub_div_of_mem ha
+
+/-- If `A ⊆ {n, …, x}` with `n ≥ 2` and `#A / n ≤ C`, then `H C x` is at most the
+survivor count of `A`. -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card_of_card_div_le {C : ℝ} {A : Finset ℕ} {x n : ℕ}
+    (hn : 2 ≤ n) (hA : A ⊆ Icc n x) (hC : (A.card : ℝ) / n ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card := by
+  have hA2 : A ⊆ Icc 2 x := hA.trans (Icc_subset_Icc_left hn)
+  exact H_le_avoidsDivisors_card hA2 <|
+    (Finset.reciprocalSum_le_card_div (by omega)
+      (fun _a ha ↦ (mem_Icc.mp (hA ha)).1)).trans hC
+
+/-- Reciprocal sum of a union is at most the sum of the reciprocal sums. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_union_le (A B : Finset ℕ) :
+    (A ∪ B).reciprocalSum ≤ A.reciprocalSum + B.reciprocalSum :=
+  Finset.reciprocalSum_union_le A B
+
 end Erdos784

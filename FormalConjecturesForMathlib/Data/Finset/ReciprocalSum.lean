@@ -183,5 +183,22 @@ lemma reciprocalSum_le_half_card_of_subset_Icc_two {A : Finset ℕ} {x : ℕ}
     (hA : A ⊆ Icc 2 x) : reciprocalSum A ≤ (A.card : ℝ) / 2 :=
   reciprocalSum_le_half_card fun _a ha ↦ (mem_Icc.mp (hA ha)).1
 
+/-- If every element is at least `n > 0`, then `∑ 1/a ≤ #A / n`. -/
+lemma reciprocalSum_le_card_div {A : Finset ℕ} {n : ℕ} (hn : 0 < n)
+    (hA : ∀ a ∈ A, n ≤ a) :
+    reciprocalSum A ≤ (A.card : ℝ) / n := by
+  simp only [reciprocalSum]
+  have hterm : ∀ a ∈ A, (1 : ℝ) / a ≤ (1 : ℝ) / n := by
+    intro a ha
+    exact one_div_le_one_div_of_le (Nat.cast_pos.mpr hn) (by exact_mod_cast hA a ha)
+  refine (sum_le_sum hterm).trans ?_
+  simp [sum_const, nsmul_eq_mul, div_eq_mul_inv]
+
+/-- Reciprocal sum of a union is at most the sum of the reciprocal sums. -/
+lemma reciprocalSum_union_le (A B : Finset ℕ) :
+    reciprocalSum (A ∪ B) ≤ reciprocalSum A + reciprocalSum B := by
+  classical
+  rw [← union_sdiff_self_eq_union, reciprocalSum_union_of_disjoint disjoint_sdiff]
+  exact add_le_add le_rfl (reciprocalSum_mono sdiff_subset)
 
 end Finset
