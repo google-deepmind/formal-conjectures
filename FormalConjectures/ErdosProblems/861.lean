@@ -22,6 +22,10 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/861](https://www.erdosproblems.com/861)
+- [A003022](https://oeis.org/A003022)
+- [A143823](https://oeis.org/A143823)
+- [A143824](https://oeis.org/A143824)
+- [A227590](https://oeis.org/A227590)
 - [Er92c] Erdős, P., *Some of my forgotten problems in number theory*. Hardy-Ramanujan J. (1992),
   34-50.
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
@@ -197,6 +201,12 @@ theorem erdos_861.variants.card_greedySidonBelow_mono {M N : ℕ} (h : M ≤ N) 
 theorem erdos_861.variants.one_mem_greedySidonBelow_iff (N : ℕ) :
     (1 : ℕ) ∈ Finset.greedySidonBelow N ↔ 1 ≤ N :=
   Finset.one_mem_greedySidonBelow_iff N
+
+/-- The greedy Sidon subset of `{1, …, N}` is Sidon. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.greedySidonBelow_isSidon (N : ℕ) :
+    IsSidon (Finset.greedySidonBelow N : Set ℕ) :=
+  Finset.greedySidonBelow_isSidon N
 
 /-- The greedy Sidon set in `{1, …, N}` is a lower bound for `f(N)`. -/
 @[category API, AMS 5 11]

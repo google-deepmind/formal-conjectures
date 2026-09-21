@@ -276,7 +276,10 @@ theorem one_le_maxSidonSubsetCard_of_nonempty [DecidableEq α] {A : Finset α}
   classical
   obtain ⟨a, ha⟩ := hA
   have hsub : ({a} : Finset α) ⊆ A := singleton_subset_iff.mpr ha
-  simpa using card_le_maxSidonSubsetCard hsub (by simpa using IsSidon.singleton a)
+  have hsid : IsSidon (({a} : Finset α) : Set α) := by
+    rw [coe_singleton]
+    exact IsSidon.singleton a
+  simpa using card_le_maxSidonSubsetCard hsub hsid
 
 @[simp]
 theorem maxSidonSubsetCard_singleton [DecidableEq α] (a : α) :
