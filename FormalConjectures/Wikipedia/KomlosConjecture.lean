@@ -40,6 +40,8 @@ recorded in the `formal_proof` attributes below.
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 - [J. Spencer, *Six standard deviations suffice*,
   Trans. Amer. Math. Soc. **289** (1985), 679–706](https://doi.org/10.1090/S0002-9947-1985-0784009-0)
+- [S. Guo, E. X. Fang and J. Lu, *Vector balancing via directional total variation*,
+  arXiv:2609.11189](https://arxiv.org/abs/2609.11189)
 - [S. R. Karingula and S. Lovett, *An elementary proof of the Komlós conjecture*,
   arXiv:2609.20979](https://arxiv.org/abs/2609.20979)
 -/
