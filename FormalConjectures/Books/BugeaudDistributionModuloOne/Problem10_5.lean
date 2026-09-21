@@ -41,6 +41,11 @@ $\varepsilon > 0$, there exists a lacunary sequence $(t_n)_{n \ge 1}$ of positiv
 in $\mathbb{K}$ such that
 $$\limsup_{n \to \infty} \{\xi t_n\} \ge 1 - \varepsilon,$$
 for any real number $\xi$ not in $\mathbb{K}$.
+
+This follows from the stronger `problem_10_5_moreover` via
+`problem_10_5_of_moreover`. A Lean 4 formalization by Kenta Kitamura
+([KitaKen1 on GitHub](https://github.com/KitaKen1)) is available at
+[KitaKen1/bugeaud-10-5-lacunary](https://github.com/KitaKen1/bugeaud-10-5-lacunary).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -59,6 +64,16 @@ sequence $(t_n)$ can be chosen so that, for any real $\xi$ not in $\mathbb{K}$, 
 subinterval of $[0, 1]$ of length $\varepsilon$ contains a limit point of the sequence
 $(\{\xi t_n\})_{n \ge 1}$. This is strictly stronger than `problem_10_5`: the limsup
 bound is the special case at the subinterval $[1 - \varepsilon, 1]$.
+
+A Lean 4 formalization by Kenta Kitamura
+([KitaKen1 on GitHub](https://github.com/KitaKen1)) proves this statement using the
+explicit positive integer sequence
+$$t_{Jk+r} = (J+r)2^k \qquad (k \ge 0,\ 0 \le r < J).$$
+Here $Q$ is a positive integer chosen so that $Q > 1/\varepsilon$, and $J = 10Q!$.
+Since $\mathbb{K}$ contains $\mathbb{Q}$, every term belongs to $\mathbb{K}$.
+The proof verifies that this sequence is lacunary and has the required cluster-point
+property simultaneously for every $\xi \notin \mathbb{K}$. See
+[KitaKen1/bugeaud-10-5-lacunary](https://github.com/KitaKen1/bugeaud-10-5-lacunary).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
