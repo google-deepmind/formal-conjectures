@@ -71,7 +71,11 @@ lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C
     HasAddVCNDimAtMost C 2 2 := sorry
 
 /-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
-$\mathrm{VC}_n$ dimension at most $d$. -/
+$\mathrm{VC}_n$ dimension at most $d$.
+
+This holds with the explicit bound $d = 2^{8(n + 2)^n} - 1$; see
+[Kitamura's Lean formalization](https://github.com/KitaKen1/vcdim-convex-finite-bound).
+-/
 @[category research solved, AMS 5 52,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/vcdim-convex-finite-bound/blob/9d7685c7c7c8c8e82f47d59da5495a8d5374db99/lean/VCDimConvexBoundFC.lean#L14-L17"]
