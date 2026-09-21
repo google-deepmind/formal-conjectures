@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 65
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Gr26] [Ben Green's Open Problem 65](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.65)
 - [Gr22] [Green, Ben. "On Sárközy's theorem for shifted primes."](https://arxiv.org/abs/2206.08001)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -37,7 +40,7 @@ def IsPrimeMinusOne (d : ℤ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ d = (p : ℤ) - 1
 
 /-- The interval $[N] = \{1, \ldots, N\}$, viewed as a finite set of integers. -/
-def interval (N : ℕ) : Finset ℤ :=
+noncomputable def interval (N : ℕ) : Finset ℤ :=
   Finset.Icc (1 : ℤ) (N : ℤ)
 
 /-- The signed difference set $A - A$. -/
