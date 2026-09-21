@@ -226,6 +226,30 @@ theorem erdos_861.variants.one_le_f_of_one_le {N : ℕ} (hN : 1 ≤ N) : 1 ≤ f
   have : (Finset.Icc 1 N).Nonempty := ⟨1, by simp [hN]⟩
   exact Finset.one_le_maxSidonSubsetCard_of_nonempty this
 
+/-- `f(N) = 0` if and only if `N = 0`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.f_eq_zero_iff (N : ℕ) : f N = 0 ↔ N = 0 := by
+  rw [f, Finset.maxSidonSubsetCard_eq_zero_iff, Finset.Icc_eq_empty_iff]
+  omega
+
+/-- `A(N) = 1` if and only if `N = 0` (only the empty Sidon subset). -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.Acount_eq_one_iff (N : ℕ) : Acount N = 1 ↔ N = 0 := by
+  rw [Acount, Finset.sidonSubsetCount_eq_one_iff, Finset.Icc_eq_empty_iff]
+  omega
+
+/-- `#greedySidonBelow N = 0` iff `N = 0`. -/
+@[category test, AMS 5 11]
+theorem erdos_861.variants.card_greedySidonBelow_eq_zero_iff (N : ℕ) :
+    (Finset.greedySidonBelow N).card = 0 ↔ N = 0 :=
+  Finset.card_greedySidonBelow_eq_zero_iff N
+
+/-- `greedySidon i ∈ greedySidonBelow N` iff `greedySidon i ≤ N`. -/
+@[category API, AMS 5 11]
+theorem erdos_861.variants.greedySidon_mem_greedySidonBelow_iff {i N : ℕ} :
+    Finset.greedySidon i ∈ Finset.greedySidonBelow N ↔ Finset.greedySidon i ≤ N :=
+  Finset.greedySidon_mem_greedySidonBelow_iff
+
 /-- It is known that $f(N)\sim N^{1/2}$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_861.variants.f_sqrt :

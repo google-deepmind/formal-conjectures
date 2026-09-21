@@ -281,6 +281,37 @@ theorem one_le_maxSidonSubsetCard_of_nonempty [DecidableEq α] {A : Finset α}
     exact IsSidon.singleton a
   simpa using card_le_maxSidonSubsetCard hsub hsid
 
+/-- `maxSidonSubsetCard A = 0` if and only if `A` is empty. -/
+theorem maxSidonSubsetCard_eq_zero_iff [DecidableEq α] (A : Finset α) :
+    maxSidonSubsetCard A = 0 ↔ A = ∅ := by
+  classical
+  constructor
+  · intro h
+    by_contra hne
+    have : 1 ≤ maxSidonSubsetCard A :=
+      one_le_maxSidonSubsetCard_of_nonempty (nonempty_iff_ne_empty.mpr hne)
+    omega
+  · rintro rfl
+    simp
+
+/-- `sidonSubsetCount A = 1` if and only if `A` is empty. -/
+theorem sidonSubsetCount_eq_one_iff [DecidableEq α] (A : Finset α) :
+    sidonSubsetCount A = 1 ↔ A = ∅ := by
+  classical
+  constructor
+  · intro h
+    by_contra hne
+    obtain ⟨a, ha⟩ := nonempty_iff_ne_empty.mpr hne
+    have hsub : ({a} : Finset α) ⊆ A := singleton_subset_iff.mpr ha
+    have hsid : IsSidon (({a} : Finset α) : Set α) := by
+      rw [coe_singleton]
+      exact IsSidon.singleton a
+    have : 2 ≤ sidonSubsetCount A := by
+      simpa using two_pow_card_le_sidonSubsetCount_of_isSidon hsub hsid
+    omega
+  · rintro rfl
+    simp
+
 @[simp]
 theorem maxSidonSubsetCard_singleton [DecidableEq α] (a : α) :
     maxSidonSubsetCard ({a} : Finset α) = 1 := by
@@ -737,5 +768,19 @@ lemma two_pow_card_greedySidonBelow_le_sidonSubsetCount (N : ℕ) :
     2 ^ (greedySidonBelow N).card ≤ sidonSubsetCount (Icc 1 N) :=
   two_pow_card_le_sidonSubsetCount_of_isSidon
     (greedySidonBelow_subset_Icc N) (greedySidonBelow_isSidon N)
+
+/-- `#greedySidonBelow N = 0` precisely when `N = 0`. -/
+lemma card_greedySidonBelow_eq_zero_iff (N : ℕ) :
+    (greedySidonBelow N).card = 0 ↔ N = 0 := by
+  rw [card_eq_zero, greedySidonBelow_eq_empty_iff]
+
+/-- A greedy Sidon term lies in `greedySidonBelow N` iff it does not exceed `N`. -/
+lemma greedySidon_mem_greedySidonBelow_iff {i N : ℕ} :
+    greedySidon i ∈ greedySidonBelow N ↔ greedySidon i ≤ N := by
+  constructor
+  · intro h
+    exact (mem_greedySidonBelow.mp h).2
+  · intro hle
+    exact mem_greedySidonBelow_iff_exists.mpr ⟨i, rfl, hle⟩
 
 end Finset
