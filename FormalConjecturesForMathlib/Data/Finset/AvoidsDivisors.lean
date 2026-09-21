@@ -350,4 +350,22 @@ lemma card_avoidsDivisors_le_sub_div_of_mem {A : Finset ℕ} {a x : ℕ}
   simpa [card_avoidsDivisors_singleton] using
     card_le_card (avoidsDivisors_subset_avoidsDivisors_singleton (a := a) ha)
 
+
+/-- If every sieve element exceeds `x`, nothing in `{1, …, x}` is hit. -/
+lemma avoidsDivisors_eq_Icc_of_forall_lt {A : Finset ℕ} {x : ℕ}
+    (hA : ∀ a ∈ A, x < a) : avoidsDivisors A x = Icc 1 x := by
+  classical
+  have hfilt : A.filter (· ≤ x) = ∅ :=
+    filter_eq_empty_iff.mpr fun a ha ↦ not_le_of_gt (hA a ha)
+  calc
+    avoidsDivisors A x = avoidsDivisors (A.filter (· ≤ x)) x :=
+      avoidsDivisors_eq_avoidsDivisors_filter_le _ _
+    _ = avoidsDivisors ∅ x := by rw [hfilt]
+    _ = Icc 1 x := avoidsDivisors_empty x
+
+/-- Hence the survivor count is `x` when every sieve element exceeds `x`. -/
+lemma card_avoidsDivisors_eq_of_forall_lt {A : Finset ℕ} {x : ℕ}
+    (hA : ∀ a ∈ A, x < a) : (avoidsDivisors A x).card = x := by
+  simp [avoidsDivisors_eq_Icc_of_forall_lt hA, Nat.card_Icc]
+
 end Finset

@@ -205,6 +205,13 @@ lemma H_le_x_sub_x_div_two {C : ℝ} {x : ℕ} (hx : 2 ≤ x) (hC : (1 : ℝ) / 
     H C x ≤ x - x / 2 :=
   H_le_card_singleton_sieve (a := 2) (by omega) hx hC
 
+/-- For `n ≥ 2`, `x ≥ n` and `C ≥ 1/n`, sieving by `{n}` yields `H C x ≤ x - ⌊x/n⌋`. -/
+@[category API, AMS 11]
+lemma H_le_x_sub_x_div {C : ℝ} {n x : ℕ} (hn : 2 ≤ n) (hx : n ≤ x)
+    (hC : (1 : ℝ) / n ≤ C) :
+    H C x ≤ x - x / n :=
+  H_le_card_singleton_sieve (a := n) hn hx hC
+
 /-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
 @[category test, AMS 11]
 theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
@@ -387,5 +394,26 @@ lemma H_le_avoidsDivisors_card_of_card_div_le {C : ℝ} {A : Finset ℕ} {x n : 
 theorem erdos_784.variants.reciprocalSum_union_le (A B : Finset ℕ) :
     (A ∪ B).reciprocalSum ≤ A.reciprocalSum + B.reciprocalSum :=
   Finset.reciprocalSum_union_le A B
+
+
+/-- If every sieve element exceeds `x`, the survivor set is `{1, …, x}`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_eq_Icc_of_forall_lt {A : Finset ℕ} {x : ℕ}
+    (hA : ∀ a ∈ A, x < a) : avoidsDivisors A x = Icc 1 x :=
+  Finset.avoidsDivisors_eq_Icc_of_forall_lt hA
+
+/-- Subsets of `{1, …, x}` satisfy `#A / x ≤ ∑ 1/a`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.le_reciprocalSum_card_div_of_subset_Icc
+    {A : Finset ℕ} {x : ℕ} (hx : 0 < x) (hA : A ⊆ Icc 1 x) :
+    (A.card : ℝ) / x ≤ A.reciprocalSum :=
+  Finset.le_reciprocalSum_card_div_of_subset_Icc hx hA
+
+/-- Lower bound dual to `reciprocalSum_le_card_div`: elements `≤ n` give `∑ 1/a ≥ #A / n`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_div_le_reciprocalSum {A : Finset ℕ} {n : ℕ}
+    (hn : 0 < n) (hA : ∀ a ∈ A, 0 < a ∧ a ≤ n) :
+    (A.card : ℝ) / n ≤ A.reciprocalSum :=
+  Finset.card_div_le_reciprocalSum hn hA
 
 end Erdos784

@@ -201,4 +201,25 @@ lemma reciprocalSum_union_le (A B : Finset ℕ) :
   rw [← union_sdiff_self_eq_union, reciprocalSum_union_of_disjoint disjoint_sdiff]
   exact add_le_add le_rfl (reciprocalSum_mono sdiff_subset)
 
+
+/-- If every element is at most `n` (and positive), then `∑ 1/a ≥ #A / n`. -/
+lemma card_div_le_reciprocalSum {A : Finset ℕ} {n : ℕ} (_hn : 0 < n)
+    (hA : ∀ a ∈ A, 0 < a ∧ a ≤ n) :
+    (A.card : ℝ) / n ≤ reciprocalSum A := by
+  simp only [reciprocalSum]
+  have hterm : ∀ a ∈ A, (1 : ℝ) / n ≤ (1 : ℝ) / a := by
+    intro a ha
+    have ⟨hpos, hle⟩ := hA a ha
+    exact one_div_le_one_div_of_le (Nat.cast_pos.mpr hpos) (by exact_mod_cast hle)
+  refine le_trans ?_ (sum_le_sum hterm)
+  simp [sum_const, nsmul_eq_mul, div_eq_mul_inv]
+
+/-- Subsets of `{1, …, x}` satisfy `#A / x ≤ ∑ 1/a` when `x > 0`. -/
+lemma le_reciprocalSum_card_div_of_subset_Icc {A : Finset ℕ} {x : ℕ}
+    (hx : 0 < x) (hA : A ⊆ Icc 1 x) :
+    (A.card : ℝ) / x ≤ reciprocalSum A :=
+  card_div_le_reciprocalSum hx fun _a ha ↦ by
+    have := mem_Icc.mp (hA ha)
+    exact ⟨lt_of_lt_of_le (Nat.succ_pos 0) this.1, this.2⟩
+
 end Finset
