@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # First Proof, Theorem 6
@@ -24,12 +25,13 @@ import FormalConjecturesUtil
 by *Mohammed Abouzaid, Andrew J. Blumberg, Martin Hairer, Joe Kileel, Tamara G. Kolda, Paul D. Nelson, Daniel Spielman, Nikhil Srivastava, Rachel Ward, Shmuel Weinberger, Lauren Williams*
 -/
 
+@[expose] public section
+
 namespace Arxiv.«2602.05192»
 
 
 open Matrix Polynomial SimpleGraph
 
-open Classical
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -42,6 +44,7 @@ I say that a set of vertices $S$ is $\epsilon$-light if the matrix $\epsilon L -
 positive semidefinite.
 -/
 def IsEpsilonLight (G : SimpleGraph V) (ε : ℝ) (S : Finset V) : Prop :=
+  open scoped Classical in
   letI G_S := G.induce S |>.spanningCoe
   letI L := lapMatrix ℝ G
   letI L_S := lapMatrix ℝ (G_S)

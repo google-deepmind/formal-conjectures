@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Spectrum of Sequence
 *References:*
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
   - [Men73] Mendès France, Michel. "Les ensembles de Bésineau."
     Séminaire Delange-Pisot-Poitou 15.1 (1973): 1-6.
 -/
+
+@[expose] public section
 
 namespace Bugeaud04
 

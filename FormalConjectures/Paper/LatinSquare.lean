@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about Latin Squares
@@ -28,15 +29,15 @@ This file formalizes some conjectures and theorems around latin squares.
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
 
-namespace LatinSquare
+@[expose] public section
 
-variable {n : ℕ}
+namespace LatinSquare
 
 /--
 Two latin squares of the same order are orthogonal if superimposing them gives each ordered pair of
 symbols at most once.
 -/
-def Orthogonal (L M : LatinSquare n) : Prop :=
+def Orthogonal {n : ℕ} (L M : LatinSquare n) : Prop :=
   Function.Injective fun p : Fin n × Fin n => (L.mat p.1 p.2, M.mat p.1 p.2)
 
 /-- A family of latin squares is mutually orthogonal if any two distinct members are orthogonal. -/
@@ -56,14 +57,14 @@ Each Latin square of odd order has at least one transversal.
 -/
 @[category research open, AMS 5]
 theorem oddOrderLatinSquareTransversal : answer(sorry) ↔
-    Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
+    ∀ (n : ℕ), Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
 /--
 The conjecture is known to be true for $n \leq 9$.
 -/
 @[category research solved, AMS 5]
-theorem oddOrderLeq9LatinSquareTransversal : answer(sorry) ↔
+theorem oddOrderLeq9LatinSquareTransversal : answer(True) ↔
     ∀ n ≤ 9, Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
@@ -87,7 +88,7 @@ Every latin square has a near-transversal
 -/
 @[category research open, AMS 5]
 theorem latinSquareNearTransversal : answer(sorry) ↔
-    ∀ (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
+    ∀ (n : ℕ) (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
   sorry
 
 /-- The number of transversals of the Cayley table of the cyclic group $\mathbb{Z}_n$ -/
@@ -101,20 +102,23 @@ def z (n : ℕ) : ℕ := numTransversals {
 
 /-- The $0 \times 0$ Cayley table has exactly $1$ transversal (vacuously). -/
 @[category test, AMS 5]
-theorem z_zero : z 0 = 1 := by native_decide
+theorem z_zero : z 0 = 1 := by
+  simp only [z, numTransversals]
+  decide
 
 /-- The number of transversals of the Cayley table of $\mathbb{Z}_n$ for odd $n$ forms
 [OEIS A006717](https://oeis.org/A006717), starting with
 $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 @[category test, AMS 5]
-theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decide
+theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by
+  sorry --this was previously proven using `native_decide`
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
 @[category textbook, AMS 5]
 theorem z_even (n : ℕ) : z (2 * (n + 1)) = 0 := by
   set N := 2 * (n + 1) with hN_def
   have hNpos : 0 < N := by positivity
-  haveI : NeZero N := ⟨hNpos.ne'⟩
+  have : NeZero N := ⟨hNpos.ne'⟩
   rw [z, numTransversals, Fintype.card_eq_zero_iff]
   refine ⟨fun ⟨σ, hσ, himg⟩ => ?_⟩
   simp only [Matrix.of_apply] at himg
@@ -240,7 +244,7 @@ If $n$ is even, then $f(n, 2) = n$; if $n$ is odd, then $f(n, 2) > n$.
 
 /-
 TODO(rao107): Conjecture 10.10 in [Wa2011]:
-Every latin hypercube of odd dimension or of odd oder has a transversal.
+Every latin hypercube of odd dimension or of odd order has a transversal.
 -/
 
 end LatinSquare

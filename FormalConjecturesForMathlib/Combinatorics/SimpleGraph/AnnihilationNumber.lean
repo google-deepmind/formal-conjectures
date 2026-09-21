@@ -23,7 +23,6 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

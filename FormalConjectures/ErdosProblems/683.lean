@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
-import FormalConjectures.ErdosProblems.«961»
+public import FormalConjectures.ErdosProblems.«961»
 
 /-!
 # Erdős Problem 683
@@ -28,6 +29,8 @@ import FormalConjectures.ErdosProblems.«961»
 - [Er79d] Erdős, P., Some unconventional problems in number theory. Acta Math. Acad. Sci. Hungar. (1979), 71-80.
 -/
 
+@[expose] public section
+
 namespace Erdos683
 
 open Filter Real Erdos961
@@ -38,11 +41,19 @@ Let $P(n, k)$ be the largest prime factor of $\binom{n}{k}$.
 def P (n k : ℕ) : ℕ := (n.choose k).primeFactors.sup id
 
 /--
-There exists $c > 0$ such that $P(n, k) > \min\{n-k+1, k^{1 + c}\}$ for all $0 < k < n$.}
+Let $P(n, k)$ be the largest prime factor of $\binom{n}{k}$.
+There exists $c > 0$ such that $P(n, k) \ge \min(n - k + 1, k^{1 + c})$ for all $0 < k \le n/2$.
+
+Erdős stated this for $1 \le k \le n$ with the bound $\min(n-k+1, k^{1+c})$ [Er79d]. The
+minimum is needed even for $k \le n/2$: at $n = 2k$ every prime factor of $\binom{2k}{k}$ is at
+most $2k$, so $P(n, k) \ge k^{1+c}$ fails for large $k$. The range $k \le n/2$ is natural
+(cf. [#961](https://www.erdosproblems.com/961) and the
+[discussion](https://www.erdosproblems.com/forum/discuss/683)).
 -/
 @[category research open, AMS 11]
 theorem erdos_683 : answer(sorry) ↔
-    (∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k < n → P n k > min (n - k + 1 : ℝ) (k ^ (1 + c))) := by
+    ∃ c > (0 : ℝ), ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 →
+      (P n k : ℝ) ≥ min (↑(n - k + 1) : ℝ) ((k : ℝ) ^ (1 + c)) := by
   sorry
 
 /--
@@ -54,19 +65,23 @@ theorem erdos_683.variant.sylvester_schur :
   sorry
 
 /--
-Erdos [Er55d] improved this to $P(n, k) \gg k \log k $ for $k \le n/2$.
+Erdős [Er55d] improved this to $P(n, k) \gg \min(n - k + 1, k \log k)$ for $k \le n/2$. The
+minimum cannot be dropped: at $n = 2k$ one has $P(n, k) \le 2k$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_683.variant.erdos_log :
-    ∃ c > 0, ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 → P n k > c * k * Real.log k := by
+    ∃ c > 0, ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 →
+      (P n k : ℝ) ≥ min (↑(n - k + 1) : ℝ) (c * k * Real.log k) := by
   sorry
 
 /--
-Standard heuristics suggest that $P(n, k) > e^{c\sqrt{k}}$ for some constant $c > 0$.
+Standard heuristics suggest that $P(n, k) > \min(n - k + 1, e^{c\sqrt{k}})$ for some constant
+$c > 0$.
 -/
 @[category research open, AMS 11]
 theorem erdos_683.variant.exp_sqrt :
-    ∃ c > 0, ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 → P n k > Real.exp (c * Real.sqrt k) := by
+    ∃ c > 0, ∀ n k : ℕ, 0 < k ∧ k ≤ n / 2 →
+      (P n k : ℝ) > min (↑(n - k + 1) : ℝ) (Real.exp (c * Real.sqrt k)) := by
   sorry
 
 -- TODO: Erdos 683 and 961 are equivalent.

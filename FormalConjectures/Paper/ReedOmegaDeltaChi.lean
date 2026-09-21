@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Reed's omega, delta, and chi conjecture
@@ -25,7 +26,8 @@ import FormalConjecturesUtil
 - [mathoverflow/37923](https://mathoverflow.net/questions/37923) asked by user [Andrew D. King](https://mathoverflow.net/users/4580/andrew-d-king)
 -/
 
-open Classical
+@[expose] public section
+
 open scoped Finset
 
 namespace ReedOmegaDeltaChi

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Köthe conjecture
@@ -22,7 +23,9 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/K%C3%B6the_conjecture)
 -/
 
-open Ideal TwoSidedIdeal Classical Polynomial
+@[expose] public section
+
+open Ideal TwoSidedIdeal Polynomial
 
 open Matrix
 
@@ -56,6 +59,7 @@ theorem KotherConjecture.variants.le_KotherRadical {I : Ideal R} (hI : IsNil I) 
     (I : Set R) ⊆ KotheRadical R := by
   sorry
 
+open scoped Classical in
 /-- The **Köthe conjecture**: for any nil ideal `I` of `R`, the matrix ideal `M_n(I)` is a nil ideal
 of the matrix ring `M_n(R)`. -/
 @[category research open, AMS 16]
@@ -70,6 +74,7 @@ theorem KotherConjecture.variants.two_by_two_matrix {I : TwoSidedIdeal R} (hI : 
     IsNil (matrix (Fin 2) I) := by
   sorry
 
+open scoped Classical in
 /-- The **Köthe conjecture**: for any positive integer `n`, the Köthe radical of `R` is the matrix ideal `M_2(Nil*(R))`. -/
 @[category research open, AMS 16]
 theorem KotherConjecture.variants.matrixOver_KotherRadical

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 872
@@ -32,6 +33,8 @@ value grows linearly, and the questions below concern the Prolonger-first quanti
 - [erdosproblems.com/872](https://www.erdosproblems.com/872)
 - [erdosproblems.com/forum/thread/872](https://www.erdosproblems.com/forum/thread/872)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -60,9 +63,9 @@ structure GamePos (n : ℕ) where
   claimed : Finset ℕ
   pool : Finset ℕ
 
-open scoped Classical in
 /-- The legal moves from a position: unclaimed elements whose insertion preserves primitiveness. -/
 def legalMoves {n : ℕ} (p : GamePos n) : Finset ℕ :=
+  open scoped Classical in
   p.pool.filter fun x => IsPrimitive n (insert x p.claimed)
 
 /-- Membership in `legalMoves`: a legal move is a pool element whose insertion preserves

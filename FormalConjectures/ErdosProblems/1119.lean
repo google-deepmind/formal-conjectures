@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1119
@@ -30,11 +31,15 @@ import FormalConjecturesUtil
   J. Lond. Math. Soc. (2) (2024), Paper No. e12918, 27.
 -/
 
+@[expose] public section
+
 open Cardinal Order
 open scoped Cardinal
 
 namespace Erdos1119
 
+-- The question is independent of ZFC (see the docstring), so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 Let $\mathfrak{m}$ be an infinite cardinal with $\aleph_0 < \mathfrak{m} < \mathfrak{c} =
 2^{\aleph_0}$. Let $\{f_\alpha\}$ be a family of entire functions such that, for every
@@ -83,7 +88,8 @@ any family of entire functions taking at most $\mathfrak{m}$ distinct values at 
 point has cardinality at most $\mathfrak{m}$. In [Ha74] it is written that this is
 'easy to see'.
 -/
-@[category research solved, AMS 3 30]
+@[category research solved, AMS 3 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1119.lean#L203"]
 theorem erdos_1119.variants.easy_case (m : Cardinal.{0}) (hm : ℵ₀ < m)
     (hsucc : succ m < 𝔠) (F : Set (ℂ → ℂ))
     (hF : ∀ f ∈ F, Differentiable ℂ f)

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 621
@@ -29,10 +30,13 @@ import FormalConjecturesUtil
   (2016).
 -/
 
-open SimpleGraph Classical
+@[expose] public section
+
+open SimpleGraph
 
 namespace Erdos621
 
+open scoped Classical in
 /--
 Let $G$ be a graph on $n$ vertices, $\alpha_1(G)$ be the maximum number of edges that contain
 at most one edge from every triangle, and $\tau_1(G)$ be the minimum number of edges that
@@ -51,8 +55,12 @@ edges that need to be removed to make the graph bipartite.
 
 Here $\alpha_1(G)$ and $\tau_1(G)$ are taken over subsets of the edge set of $G$, and the
 inequality is stated multiplied through by $4$ so that it lives in the natural numbers.
+
+The linked file states $\tau_1$ as the least number of edges whose deletion leaves $G$
+triangle-free, which is the same as meeting every triangle of $G$, and quantifies over an
+arbitrary `Fintype V` rather than `Fin n`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos621.lean"]
 theorem erdos_621 : answer(True) ↔
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (a t : ℕ),
       IsGreatest {k : ℕ | ∃ A ⊆ G.edgeFinset, A.card = k ∧
