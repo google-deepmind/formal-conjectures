@@ -199,6 +199,12 @@ lemma H_le_avoidsDivisors_card_of_half_card_le {C : ℝ} {A : Finset ℕ} {x : �
   H_le_avoidsDivisors_card hA <|
     (Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA).trans hC
 
+/-- For `C ≥ 1/2` and `x ≥ 2`, sieving by `{2}` yields `H C x ≤ x - ⌊x/2⌋`. -/
+@[category API, AMS 11]
+lemma H_le_x_sub_x_div_two {C : ℝ} {x : ℕ} (hx : 2 ≤ x) (hC : (1 : ℝ) / 2 ≤ C) :
+    H C x ≤ x - x / 2 :=
+  H_le_card_singleton_sieve (a := 2) (by omega) hx hC
+
 /-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
 @[category test, AMS 11]
 theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
@@ -332,5 +338,23 @@ theorem erdos_784.variants.one_mem_avoidsDivisors {A : Finset ℕ} {x : ℕ}
 theorem erdos_784.variants.avoidsDivisors_eq_empty_iff (A : Finset ℕ) (x : ℕ) :
     avoidsDivisors A x = ∅ ↔ x = 0 ∨ 1 ∈ A :=
   Finset.avoidsDivisors_eq_empty_iff A x
+
+/-- Survivor count equals `x` minus the number of integers hit by the sieve. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_avoidsDivisors_eq_sub_sieved (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card = x - #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} :=
+  Finset.card_avoidsDivisors_eq_sub_sieved A x
+
+/-- Nat union bound: `#survivors ≥ x - ∑ ⌊x/a⌋`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.le_card_avoidsDivisors_sub_sum_div (A : Finset ℕ) (x : ℕ) :
+    x - ∑ a ∈ A, x / a ≤ (avoidsDivisors A x).card :=
+  Finset.le_card_avoidsDivisors_sub_sum_div A x
+
+/-- Inserting a sieve element filters previous survivors by non-divisibility. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_insert (A : Finset ℕ) (a x : ℕ) :
+    avoidsDivisors (insert a A) x = (avoidsDivisors A x).filter (fun m => ¬ a ∣ m) :=
+  Finset.avoidsDivisors_insert A a x
 
 end Erdos784

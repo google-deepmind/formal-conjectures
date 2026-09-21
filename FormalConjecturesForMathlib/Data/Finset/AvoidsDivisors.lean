@@ -288,4 +288,53 @@ lemma card_avoidsDivisors_eq_zero_iff (A : Finset ℕ) (x : ℕ) :
     (avoidsDivisors A x).card = 0 ↔ x = 0 ∨ 1 ∈ A := by
   rw [card_eq_zero, avoidsDivisors_eq_empty_iff]
 
+/-- Explicit survivor count: range size minus the number of multiples of some `a ∈ A`. -/
+lemma card_avoidsDivisors_eq_sub_sieved (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card = x - #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} := by
+  classical
+  rw [avoidsDivisors_eq_sdiff, card_sdiff_of_subset (filter_subset _ _), Nat.card_Icc]
+  omega
+
+/-- Nat form of the union bound: at least `x - ∑ ⌊x/a⌋` survivors. -/
+lemma le_card_avoidsDivisors_sub_sum_div (A : Finset ℕ) (x : ℕ) :
+    x - ∑ a ∈ A, x / a ≤ (avoidsDivisors A x).card :=
+  Nat.sub_le_iff_le_add.mpr (card_avoidsDivisors_add_sum_div_ge A x)
+
+/-- Inserting a divisor keeps only those previous survivors not divisible by it. -/
+lemma avoidsDivisors_insert (A : Finset ℕ) (a x : ℕ) :
+    avoidsDivisors (insert a A) x = (avoidsDivisors A x).filter (fun m => ¬ a ∣ m) := by
+  ext m
+  simp only [mem_avoidsDivisors, mem_filter, mem_insert]
+  constructor
+  · rintro ⟨hm, hA⟩
+    exact ⟨⟨hm, fun b hb ↦ hA b (Or.inr hb)⟩, hA a (Or.inl rfl)⟩
+  · rintro ⟨⟨hm, hA⟩, ha⟩
+    refine ⟨hm, fun b hb ↦ ?_⟩
+    rcases hb with rfl | hb
+    · exact ha
+    · exact hA b hb
+
+/-- `0` never divides a positive integer, so zeros in the sieve are irrelevant on `{1, …, x}`. -/
+lemma avoidsDivisors_eq_avoidsDivisors_filter_ne_zero (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = avoidsDivisors (A.filter (· ≠ 0)) x := by
+  ext m
+  simp only [mem_avoidsDivisors, mem_filter]
+  constructor
+  · rintro ⟨hm, hA⟩
+    exact ⟨hm, fun a ha ↦ hA a ha.1⟩
+  · rintro ⟨hm, hA⟩
+    refine ⟨hm, fun a ha hdvd ↦ ?_⟩
+    by_cases hz : a = 0
+    · have hpos : 0 < m := by
+        have : 1 ≤ m := (mem_Icc.mp hm).1
+        omega
+      have : m = 0 := Nat.eq_zero_of_zero_dvd (by simpa [hz] using hdvd)
+      omega
+    · exact hA a ⟨ha, hz⟩ hdvd
+
+/-- Same survivor count after discarding zeros from the sieve. -/
+lemma card_avoidsDivisors_filter_ne_zero (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors (A.filter (· ≠ 0)) x).card = (avoidsDivisors A x).card := by
+  rw [← avoidsDivisors_eq_avoidsDivisors_filter_ne_zero]
+
 end Finset
