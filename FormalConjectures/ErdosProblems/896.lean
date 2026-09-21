@@ -226,41 +226,8 @@ theorem erdos_896.variants.uniqueMulProducts_subset_Icc_sq
 /-- `F(A,B)` cannot exceed the number of distinct products `a*b`. -/
 @[category API, AMS 11]
 theorem erdos_896.variants.F_le_card_image (A B : Finset ℕ) :
-    F A B ≤ ((A.product B).image fun p : ℕ × ℕ => p.1 * p.2).card := by
-  simpa [F] using card_uniqueMulProducts_le_card_image A B
-
-/-- `F({0}, B)` is `1` iff `#B = 1`, else `0`. -/
-@[category API, AMS 11]
-theorem erdos_896.variants.F_zero_left (B : Finset ℕ) :
-    F {0} B = if B.card = 1 then 1 else 0 := by
-  simp [F]
-
-/-- `F(A, {0})` is `1` iff `#A = 1`, else `0`. -/
-@[category API, AMS 11]
-theorem erdos_896.variants.F_zero_right (A : Finset ℕ) :
-    F A {0} = if A.card = 1 then 1 else 0 := by
-  simp [F]
-
-/-- `maxF N = 0` precisely when `N = 0`. -/
-@[category API, AMS 11]
-theorem erdos_896.variants.maxF_eq_zero_iff (N : ℕ) : maxF N = 0 ↔ N = 0 := by
-  constructor
-  · intro h
-    by_contra hN
-    exact Nat.ne_of_gt (maxF_pos (Nat.pos_of_ne_zero hN)) h
-  · rintro rfl
-    exact maxF_zero
-
-/-- Any admissible pair realises at most `maxF N`. -/
-@[category API, AMS 11]
-theorem erdos_896.variants.F_le_maxF {A B : Finset ℕ} {N : ℕ}
-    (hA : A ⊆ Icc 1 N) (hB : B ⊆ Icc 1 N) : F A B ≤ maxF N := by
-  classical
-  have hmem :
-      (A, B) ∈ (Icc 1 N).powerset.product (Icc 1 N).powerset := by
-    simp [mem_product, mem_powerset, hA, hB]
-  simpa [maxF] using
-    (le_sup (f := fun p : Finset ℕ × Finset ℕ ↦ F p.1 p.2) hmem)
+    F A B ≤ ((A.product B).image fun p : ℕ × ℕ => p.1 * p.2).card :=
+  card_uniqueMulProducts_le_card_image A B
 
 /-- Ford-style easy upper bound: `maxF N` cannot exceed `#{1..N}·{1..N}`. -/
 @[category API, AMS 11]
@@ -272,7 +239,8 @@ theorem erdos_896.variants.maxF_le_card_mulImage (N : ℕ) :
   have hp' := mem_product.mp hp
   have hA : p.1 ⊆ Icc 1 N := mem_powerset.mp hp'.1
   have hB : p.2 ⊆ Icc 1 N := mem_powerset.mp hp'.2
-  simpa [F] using card_uniqueMulProducts_le_card_image_of_subset hA hB
+  simpa [F] using
+    (card_uniqueMulProducts_le_card_image_of_subset hA hB)
 
 end Erdos896
 
