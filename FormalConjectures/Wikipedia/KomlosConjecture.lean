@@ -25,10 +25,14 @@ that for all $n, m$ and all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with
 $\|v\_i\|\_2 \le 1$, there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
 $$\left\|\sum\_{i=1}^n \varepsilon\_i v\_i\right\|\_\infty \le K.$$
 
-The best known bound is due to Banaszczyk, who proved that one can always achieve
-$O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set systems
-is a special case (up to scaling), and the conjecture would imply the Beck–Fiala
+For a long time the best known bound was due to Banaszczyk, who proved that one can always
+achieve $O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set systems
+is a special case (up to scaling), and the conjecture implies the Beck–Fiala
 conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
+
+The conjecture was proved in September 2026 by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$.
+Karingula and Lovett gave an elementary proof with $K = 36$, which is formalised in
+`FormalConjecturesForMathlib/Combinatorics/Discrepancy/` and used below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_theory#Major_open_problems)
@@ -36,6 +40,8 @@ conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 - [J. Spencer, *Six standard deviations suffice*,
   Trans. Amer. Math. Soc. **289** (1985), 679–706](https://doi.org/10.1090/S0002-9947-1985-0784009-0)
+- [S. R. Karingula and S. Lovett, *An elementary proof of the Komlós conjecture*,
+  arXiv:2609.20979](https://arxiv.org/abs/2609.20979)
 -/
 
 @[expose] public section
@@ -50,14 +56,17 @@ all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$ (encod
 $\sum\_j v\_{ij}^2 \le 1$), there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
 $\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le K$, i.e.
 $\left|\sum\_i \varepsilon\_i v\_{ij}\right| \le K$ for every coordinate $j$.
+
+Proved by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$ and by Karingula and Lovett with $K = 36$.
+The proof below uses the constant $36$ from `Komlos.exists_signs_abs_sum_le`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem komlos_conjecture :
     ∃ K : ℝ, 0 < K ∧ ∀ (n m : ℕ) (v : Fin n → Fin m → ℝ),
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →
       ∃ ε : Fin n → ℝ, (∀ i, ε i = 1 ∨ ε i = -1) ∧
-        ∀ j, |∑ i, ε i * v i j| ≤ K := by
-  sorry
+        ∀ j, |∑ i, ε i * v i j| ≤ K :=
+  ⟨36, by norm_num, fun _ _ v hv => Komlos.exists_signs_abs_sum_le v hv⟩
 
 /--
 **Banaszczyk's theorem**
@@ -66,8 +75,9 @@ There exists a constant $C > 0$ such that for all $n, m \in \mathbb{N}$ and all 
 $v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$, there exist signs
 $\varepsilon\_i \in \{-1, +1\}$ such that
 $\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le C \sqrt{\log(n + 2)}$.
-This is the best known bound towards the Komlós conjecture. (The shift $n + 2$ inside
-the logarithm is a harmless normalization keeping it positive for $n \in \{0, 1\}$.)
+This was the best known bound towards the Komlós conjecture before its solution. (The shift
+$n + 2$ inside the logarithm is a harmless normalization keeping it positive for
+$n \in \{0, 1\}$.) It follows from the Komlós conjecture with $C = 36 / \sqrt{\log 2}$.
 
 [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
 Random Structures & Algorithms **12** (1998), 351–360.]
@@ -78,7 +88,14 @@ theorem komlos_conjecture.variants.banaszczyk :
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →
       ∃ ε : Fin n → ℝ, (∀ i, ε i = 1 ∨ ε i = -1) ∧
         ∀ j, |∑ i, ε i * v i j| ≤ C * Real.sqrt (Real.log (n + 2)) := by
-  sorry
+  have h1 : 0 < Real.sqrt (Real.log 2) := Real.sqrt_pos.2 (Real.log_pos one_lt_two)
+  refine ⟨36 / Real.sqrt (Real.log 2), div_pos (by norm_num) h1, fun n m v hv => ?_⟩
+  obtain ⟨ε, hε, h⟩ := Komlos.exists_signs_abs_sum_le v hv
+  refine ⟨ε, hε, fun j => (h j).trans ?_⟩
+  have h2 : Real.sqrt (Real.log 2) ≤ Real.sqrt (Real.log (n + 2)) :=
+    Real.sqrt_le_sqrt (Real.log_le_log two_pos (by linarith [(n.cast_nonneg : (0 : ℝ) ≤ n)]))
+  rw [div_mul_eq_mul_div, le_div_iff₀ h1]
+  nlinarith
 
 /--
 Sanity check: with no vectors at all ($n = 0$), the empty signed sum is $0$ in every
