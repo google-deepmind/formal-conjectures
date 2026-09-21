@@ -401,4 +401,29 @@ lemma card_pos_uniqueMulProducts_singleton_right_iff (A : Finset ℕ) (b : ℕ) 
   rw [card_pos, uniqueMulProducts_singleton_right_nonempty_iff A b hb]
 
 
+/-- Unique products are at most as many as all (not necessarily unique) products. -/
+lemma card_uniqueMulProducts_le_card_image (A B : Finset ℕ) :
+    (uniqueMulProducts A B).card ≤ ((A.product B).image fun p => p.1 * p.2).card :=
+  card_le_card (uniqueMulProducts_subset_image A B)
+
+/-- Enlarging factor sets enlarges the set of (not necessarily unique) products. -/
+lemma image_mul_product_subset_of_subset {A A' B B' : Finset ℕ}
+    (hA : A ⊆ A') (hB : B ⊆ B') :
+    (A.product B).image (fun p => p.1 * p.2) ⊆ (A'.product B').image (fun p => p.1 * p.2) := by
+  intro m hm
+  obtain ⟨p, hp, rfl⟩ := mem_image.mp hm
+  exact mem_image.mpr ⟨p, product_subset_product hA hB hp, rfl⟩
+
+/-- If `A ⊆ S` and `B ⊆ T`, unique products of `A,B` are among the products of `S,T`. -/
+lemma uniqueMulProducts_subset_image_of_subset {A B S T : Finset ℕ}
+    (hA : A ⊆ S) (hB : B ⊆ T) :
+    uniqueMulProducts A B ⊆ (S.product T).image (fun p => p.1 * p.2) :=
+  (uniqueMulProducts_subset_image A B).trans (image_mul_product_subset_of_subset hA hB)
+
+/-- Ford-style comparison: unique products of subsets cannot exceed all products of the ambient sets. -/
+lemma card_uniqueMulProducts_le_card_image_of_subset {A B S T : Finset ℕ}
+    (hA : A ⊆ S) (hB : B ⊆ T) :
+    (uniqueMulProducts A B).card ≤ ((S.product T).image fun p => p.1 * p.2).card :=
+  card_le_card (uniqueMulProducts_subset_image_of_subset hA hB)
+
 end Finset
