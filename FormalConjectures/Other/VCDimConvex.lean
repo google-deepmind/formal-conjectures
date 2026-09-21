@@ -82,6 +82,16 @@ This holds with the explicit bound $d = 2^{8(n + 2)^n} - 1$; see
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
+/-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
+$\mathrm{VC}_n$ dimension at most $d$.
+
+The bound can be taken to be $d = c^n$ for some constant $c \ge 2$ independent of $n$.
+-/
+@[category research open, AMS 5 52]
+lemma exists_exponential_bound_hasAddVCNDimAtMost_n_of_convex_rn_add_one :
+    ∃ c : ℕ, 2 ≤ c ∧ ∀ (n : ℕ) (hn : 1 ≤ n),
+      ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n (c ^ n) := sorry
+
 /-- Is it true that, for all $n$, every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most 3? -/
 @[category research open, AMS 5 52]
