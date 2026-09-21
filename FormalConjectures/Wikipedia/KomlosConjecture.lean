@@ -60,13 +60,14 @@ $\left|\sum\_i \varepsilon\_i v\_{ij}\right| \le K$ for every coordinate $j$.
 Proved by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$ and by Karingula and Lovett with $K = 36$.
 The proof below uses the constant $36$ from `Komlos.exists_signs_abs_sum_le`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/416b6597cb193b6745748fdfef0d64342c71dae9/FormalConjectures/Wikipedia/KomlosConjecture.lean#L64"]
 theorem komlos_conjecture :
     ∃ K : ℝ, 0 < K ∧ ∀ (n m : ℕ) (v : Fin n → Fin m → ℝ),
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →
       ∃ ε : Fin n → ℝ, (∀ i, ε i = 1 ∨ ε i = -1) ∧
-        ∀ j, |∑ i, ε i * v i j| ≤ K :=
-  ⟨36, by norm_num, fun _ _ v hv => Komlos.exists_signs_abs_sum_le v hv⟩
+        ∀ j, |∑ i, ε i * v i j| ≤ K := by
+  sorry
 
 /--
 **Banaszczyk's theorem**
@@ -82,20 +83,14 @@ $n \in \{0, 1\}$.) It follows from the Komlós conjecture with $C = 36 / \sqrt{\
 [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
 Random Structures & Algorithms **12** (1998), 351–360.]
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/416b6597cb193b6745748fdfef0d64342c71dae9/FormalConjectures/Wikipedia/KomlosConjecture.lean#L86"]
 theorem komlos_conjecture.variants.banaszczyk :
     ∃ C : ℝ, 0 < C ∧ ∀ (n m : ℕ) (v : Fin n → Fin m → ℝ),
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →
       ∃ ε : Fin n → ℝ, (∀ i, ε i = 1 ∨ ε i = -1) ∧
         ∀ j, |∑ i, ε i * v i j| ≤ C * Real.sqrt (Real.log (n + 2)) := by
-  have h1 : 0 < Real.sqrt (Real.log 2) := Real.sqrt_pos.2 (Real.log_pos one_lt_two)
-  refine ⟨36 / Real.sqrt (Real.log 2), div_pos (by norm_num) h1, fun n m v hv => ?_⟩
-  obtain ⟨ε, hε, h⟩ := Komlos.exists_signs_abs_sum_le v hv
-  refine ⟨ε, hε, fun j => (h j).trans ?_⟩
-  have h2 : Real.sqrt (Real.log 2) ≤ Real.sqrt (Real.log (n + 2)) :=
-    Real.sqrt_le_sqrt (Real.log_le_log two_pos (by linarith [(n.cast_nonneg : (0 : ℝ) ≤ n)]))
-  rw [div_mul_eq_mul_div, le_div_iff₀ h1]
-  nlinarith
+  sorry
 
 /--
 Sanity check: with no vectors at all ($n = 0$), the empty signed sum is $0$ in every
