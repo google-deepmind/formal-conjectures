@@ -91,7 +91,12 @@ theorem erdos_944.variants.dirac_conjecture.k_ge_five (k : ℕ) (hk : 5 ≤ k) :
   sorry
 
 /--
-The case $k=4$ and $r=1$ remains open: Are there $4$-critical graphs without any critical edges?
+The case $k=4$ and $r=1$ was the remaining open case: Are there $4$-critical graphs
+without any critical edges?
+
+Answer: Yes. The Lean formalization linked below proves the existence of such a graph.
+Together with Jensen's result for $k \ge 5$, this settles Dirac's conjecture for every
+$k \ge 4$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
