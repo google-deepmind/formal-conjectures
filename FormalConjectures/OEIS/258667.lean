@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Asymptotics of an inner sum formula for $a(n)$
@@ -28,7 +29,7 @@ are seated at every other chair, M is the first man allowed to choose one of the
 The sequence gives the number of ways of seating the other men, with no man seated next to his
 wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
 
-$$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\
+$$a(n) = \begin{cases} 0 & \text{if } n \le 5 \cr
 \sum_{k=0}^{n-1}(-1)^k(n-k-1)! \sum_{\max(k-n+5, 0) \le j \le \min(k,4)}
 \binom{8-j}{j}\binom{2n-k+j-10}{k-j} & \text{if } n > 5 \end{cases}$$
 
@@ -36,6 +37,8 @@ $$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\
 - [A258667](https://oeis.org/A258667)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA258667
 
@@ -48,7 +51,7 @@ open BigOperators Nat Int Real Asymptotics Filter
 The inner sum of the formula used in a:
 $$\sum_{\max(k-n+5, 0) \le j \le \min(k,4)} \binom{8-j}{j}\binom{2n-k+j-10}{k-j}$$
 -/
-private def inner_sum (n k : ℕ) : ℤ :=
+def inner_sum (n k : ℕ) : ℤ :=
   let L : ℕ := max 0 (k + 5 - n)
   let U : ℕ := min k 4
   Finset.sum (Finset.Icc L U) fun j =>
@@ -64,7 +67,7 @@ are seated at every other chair, M is the first man allowed to choose one of the
 The sequence gives the number of ways of seating the other men, with no man seated next to his
 wife, if M chooses the chair that is 9 seats clockwise from his wife's chair.
 
-$$a(n) = \begin{cases} 0 & \text{if } n \le 5 \\
+$$a(n) = \begin{cases} 0 & \text{if } n \le 5 \cr
 \sum_{k=0}^{n-1}(-1)^k(n-k-1)! \sum_{\max(k-n+5, 0) \le j \le \min(k,4)}
 \binom{8-j}{j}\binom{2n-k+j-10}{k-j} & \text{if } n > 5 \end{cases}$$
 -/

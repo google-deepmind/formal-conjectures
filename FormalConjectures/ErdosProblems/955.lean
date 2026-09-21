@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 955
@@ -36,6 +37,8 @@ import FormalConjecturesUtil
 - [Tr20] Troupe, Lee, Divisor sums representable as the sum of two squares. Proc. Amer. Math. Soc.
   (2020), 4189--4202.
 -/
+
+@[expose] public section
 
 open Nat Filter
 open scoped ArithmeticFunction ArithmeticFunction.sigma Topology
@@ -128,7 +131,7 @@ $\lvert A\cap [1,x]\rvert\leq x^{1/2+o(1)}$ then $s^{-1}(A)$ has density $0$.
 theorem erdos_955.variants.pollack_pomerance_thompson_bound :
     ∀ (A : Set ℕ) (ε : ℕ → ℝ),
       Tendsto ε atTop (𝓝 0) →
-      (∀ᶠ n : ℕ in atTop, (count A n : ℝ) ≤ (n : ℝ) ^ ((1 / 2 : ℝ) + ε n)) →
+      (∀ᶠ n : ℕ in atTop, (count (· ∈ A) n : ℝ) ≤ (n : ℝ) ^ ((1 / 2 : ℝ) + ε n)) →
       { x | s x ∈ A }.HasDensity 0 := by
   sorry
 

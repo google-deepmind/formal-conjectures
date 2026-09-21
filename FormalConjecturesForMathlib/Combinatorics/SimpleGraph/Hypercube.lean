@@ -36,8 +36,8 @@ open scoped Finset
 vectors, and two vertices are adjacent when they differ in exactly one coordinate. -/
 def hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
   Adj u v := #{i | u i ≠ v i} = 1
-  symm _ _ := by simp [eq_comm]
-  loopless _ := by simp
+  symm.symm _ _ := by simp [eq_comm]
+  loopless.irrefl _ := by simp
 
 @[simp]
 theorem hypercube_adj {n : ℕ} {u v : Fin n → Bool} :

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 *References:*
 - [A038771](https://oeis.org/A038771)
 -/
+
+@[expose] public section
 
 open Filter Topology Real
 
@@ -106,7 +109,25 @@ Choose q prime such that q is coprime with a, and p > a + q prime such that q | 
 -/
 @[category textbook, AMS 11]
 theorem a_n_exists (n : ℕ) : a n ≠ 0 := by
-  sorry
+  unfold a
+  set Q : ℕ := ∏ i ∈ Finset.range n, Nat.nth Nat.Prime i with hQdef
+  have hQ : 0 < Q := Finset.prod_pos fun i _ => (Nat.prime_nth_prime i).pos
+  -- A prime `q > Q` is coprime to `Q`.
+  obtain ⟨q, hqQ, hq⟩ := Nat.exists_infinite_primes (Q + 1)
+  have : NeZero q := ⟨hq.ne_zero⟩
+  have hunit : IsUnit (Q : ZMod q) := by
+    rw [ZMod.isUnit_iff_coprime]
+    exact ((Nat.Prime.coprime_iff_not_dvd hq).2 (Nat.not_dvd_of_pos_of_lt hQ (by omega))).symm
+  -- By Dirichlet there is a prime `p > Q + q` with `p ≡ Q (mod q)`; then `c = p - Q` is composite.
+  obtain ⟨p, hp, hpp, hpq⟩ := Nat.forall_exists_prime_gt_and_eq_mod hunit (Q + q)
+  have hdvd : q ∣ p - Q := by
+    have h := (ZMod.natCast_eq_natCast_iff p Q q).1 hpq
+    exact (Nat.modEq_iff_dvd' (by omega)).1 h.symm
+  have hmem : p - Q ∈ {c : ℕ | (c > 1 ∧ ¬ c.Prime) ∧ (Q + c).Prime} := by
+    refine ⟨⟨by omega, Nat.not_prime_of_dvd_of_lt hdvd hq.two_le (by omega)⟩, ?_⟩
+    rwa [Nat.add_sub_cancel' (by omega : Q ≤ p)]
+  have := Nat.sInf_mem ⟨_, hmem⟩
+  exact fun h0 => by rw [h0] at this; exact absurd this.1.1 (by norm_num)
 
 /--
 Conjecture:
@@ -127,7 +148,7 @@ This conjecture is true for the first 133 terms.
 - [Dmitry Kamenetsky](https://oeis.org/wiki/User:Dmitry_Kamenetsky), Jan 06 2019
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ a n = p * q := by
+theorem conjecture2 (n : ℕ) : (a n).IsSemiprime := by
   sorry
 
 end OeisA38771

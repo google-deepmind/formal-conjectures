@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k \ge 1$ such that $2 \cdot n^k - 1$ is prime
@@ -23,6 +24,8 @@ $a(n) = \min \{k \ge 1 \mid \text{Prime}(2 \cdot n^k - 1)\}$ for $n \ge 2$.
 
 *References:*
 - [A119591](https://oeis.org/A119591)-/
+
+@[expose] public section
 
 namespace OeisA119591
 
@@ -36,7 +39,7 @@ theorem a_0 : a 0 = 0 := by
   dsimp [a]
   have h_empty : {k : ℕ | 0 < k ∧ (2 * 0 ^ k - 1).Prime} = ∅ := by
     ext k
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro hk
     rw [zero_pow hk.ne', mul_zero, show (0 - 1 : ℕ) = 0 from rfl]
     exact Nat.not_prime_zero
@@ -48,7 +51,7 @@ theorem a_1 : a 1 = 0 := by
   dsimp [a]
   have h_empty : {k : ℕ | 0 < k ∧ (2 * 1 ^ k - 1).Prime} = ∅ := by
     ext k
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro _
     rw [one_pow, mul_one, show (2 - 1 : ℕ) = 1 from rfl]
     exact Nat.not_prime_one
@@ -59,7 +62,7 @@ theorem a_1 : a 1 = 0 := by
 theorem a_2 : a 2 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ (2 * 2 ^ k - 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, by norm_num⟩
     · intro k hk
       exact hk.1
@@ -70,7 +73,7 @@ theorem a_2 : a 2 = 1 := by
 theorem a_3 : a 3 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ (2 * 3 ^ k - 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, by norm_num⟩
     · intro k hk
       exact hk.1
@@ -81,7 +84,7 @@ theorem a_3 : a 3 = 1 := by
 theorem a_4 : a 4 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ (2 * 4 ^ k - 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, by norm_num⟩
     · intro k hk
       exact hk.1
@@ -92,10 +95,10 @@ theorem a_4 : a 4 = 1 := by
 theorem a_5 : a 5 = 4 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ (2 * 5 ^ k - 1).Prime} 4 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, by norm_num⟩
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_pos := hk.1
       interval_cases k
@@ -115,7 +118,7 @@ theorem a_5 : a 5 = 4 := by
 theorem a_6 : a 6 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ (2 * 6 ^ k - 1).Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, by norm_num⟩
     · intro k hk
       exact hk.1

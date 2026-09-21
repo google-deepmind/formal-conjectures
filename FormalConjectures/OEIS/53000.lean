@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = (\text{smallest prime} > n^2) - n^2$
@@ -24,6 +25,8 @@ The difference between the smallest prime strictly greater than $n^2$ and $n^2$.
 *References:*
 - [A053000](https://oeis.org/A053000)-/
 
+@[expose] public section
+
 namespace OeisA53000
 
 /-- $a(n) = (\text{smallest prime} > n^2) - n^2$. -/
@@ -31,39 +34,19 @@ noncomputable def a (n : ℕ) : ℕ :=
   (sInf {p | Nat.Prime p ∧ n ^ 2 < p}) - n ^ 2
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 2 := by
-  dsimp [a]
-  have h : sInf {p | Nat.Prime p ∧ 0 < p} = 2 :=
-    (Nat.isLeast_find ⟨2, by decide⟩).csInf_eq
-  rw [h]
+theorem a_0 : a 0 = 2 := tsub_eq_of_eq_add <| IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by
-  dsimp [a]
-  have h : sInf {p | Nat.Prime p ∧ 1 < p} = 2 :=
-    (Nat.isLeast_find ⟨2, by decide⟩).csInf_eq
-  rw [h]
+theorem a_1 : a 1 = 1 := tsub_eq_of_eq_add <| IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by
-  dsimp [a]
-  have h : sInf {p | Nat.Prime p ∧ 4 < p} = 5 :=
-    (Nat.isLeast_find ⟨5, by decide⟩).csInf_eq
-  rw [h]
+theorem a_2 : a 2 = 1 := tsub_eq_of_eq_add <| IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 2 := by
-  dsimp [a]
-  have h : sInf {p | Nat.Prime p ∧ 9 < p} = 11 :=
-    (Nat.isLeast_find ⟨11, by decide⟩).csInf_eq
-  rw [h]
+theorem a_3 : a 3 = 2 := tsub_eq_of_eq_add <| IsLeast.csInf_eq <| by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by
-  dsimp [a]
-  have h : sInf {p | Nat.Prime p ∧ 16 < p} = 17 :=
-    (Nat.isLeast_find ⟨17, by decide⟩).csInf_eq
-  rw [h]
+theorem a_4 : a 4 = 1 := tsub_eq_of_eq_add <| IsLeast.csInf_eq <| by decide
 
 /--
 Conjecture: $a(n) \le 1 + \phi(n)$ for $n > 0$. This improves on Oppermann's conjecture, which says

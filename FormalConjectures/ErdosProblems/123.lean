@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 123
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
 - [MaCh16] Ma, Mi-Mi and Chen, Yong-Gao, On {$d$}-complete sequences of integers. J. Number Theory
   (2016), 1--12.
 -/
+
+@[expose] public section
 
 open Filter
 open Submonoid

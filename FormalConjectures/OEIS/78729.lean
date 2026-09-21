@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k > 0$ such that $(k+1)(k+2)\cdots(k+n) + 1$ is prime
@@ -27,6 +28,8 @@ if such $k$ exists; otherwise $a(n) = 0$.
 - [A078729](https://oeis.org/A078729)
 -/
 
+@[expose] public section
+
 namespace OeisA78729
 
 open Classical in
@@ -37,10 +40,13 @@ noncomputable def a (n : ℕ) : ℕ :=
   else
     0
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
   classical
+  -- `dsimp` normalises `Finset.range 1` inside the condition but not in the `Decidable`
+  -- instance, which stops `split_ifs` from firing.
   dsimp [a]
   split_ifs with h
   · rw [Nat.find_eq_iff]

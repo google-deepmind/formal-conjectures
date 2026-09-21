@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least positive multiple of $n$ in base 10 with digits 0 and 1
@@ -24,6 +25,8 @@ Least positive multiple of $n$ that when written in base 10 uses only 0's and 1'
 *References:*
 - [A004290](https://oeis.org/A004290)
 -/
+
+@[expose] public section
 
 namespace OeisA4290
 
@@ -36,7 +39,7 @@ theorem a_0 : a 0 = 0 := by
   dsimp [a]
   have h_empty : { m : ℕ | 0 < m ∧ 0 ∣ m ∧ ∀ d ∈ Nat.digits 10 m, d = 0 ∨ d = 1 } = ∅ := by
     ext m
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro hm h0dvd
     have hm0 : m = 0 := Nat.eq_zero_of_zero_dvd h0dvd
     omega

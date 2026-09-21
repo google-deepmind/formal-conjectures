@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 648
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er95c] Erdős, Paul, *Some problems in number theory*. Octogon Math. Mag. (1995), 3-5.
 - [Ca25b] S. Cambie, *On Erdős problem #648*. arXiv:2503.22691 (2025).
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 

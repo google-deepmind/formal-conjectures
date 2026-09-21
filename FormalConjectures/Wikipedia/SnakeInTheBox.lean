@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Snake in the box
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Hypercube](https://en.wikipedia.org/wiki/Hypercube_graph)
 - [xkcd](https://xkcd.com/3125/)
 -/
+
+@[expose] public section
 
 universe u
 
@@ -61,23 +64,16 @@ since there only is one induced path and it is of length zero.
 @[category test, AMS 5]
 theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
   simp_rw [LongestSnakeInTheBox, LongestSnakeInGraph, IsSnakeInGraphOfLength, Hypercube]
-  convert csSup_singleton 0
+  convert! csSup_singleton 0
   ext n
-  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSubgraph, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_,
-    fun h ↦ ?_⟩
+  refine ⟨fun ⟨S, ⟨h_induced, ⟨u, ⟨v, ⟨P, ⟨hPath, hSupport, hLength⟩⟩⟩⟩⟩⟩ ↦ ?_, ?_⟩
   · have hu := Finset.eq_empty_of_isEmpty u
     have hv := Finset.eq_empty_of_isEmpty v
     subst hu hv
-    simp_all
-  · rw [h]
-    let P : (fromRel fun a b : Finset (Fin 0) => (a ∆ b).card = 1).Walk ∅ ∅ := .nil
-    refine ⟨P.toSubgraph, ?_, ∅, ∅, P, ?_⟩
-    · intro v hv w hw hadj
-      simp [P] at hv hw
-      subst v
-      subst w
-      exact hadj.ne rfl
-    · simp [P]
+    simp_all [Walk.Nil.length_eq_zero]
+  · rintro rfl
+    use ⊤, by simp, ∅, ∅, .nil
+    simp [Subgraph.ext_iff, funext_iff]
 
 open List
 
@@ -108,14 +104,15 @@ theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
 -- TODO(firsching): add more known bounds and open conjecture for a few small dimensions
 
 /--
-An upper bound of the maximal length of the longest snake in a box is given by
+For $n \geq 2$, an upper bound of the maximal length of the longest snake in a box is given by
 $$
 1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}.
 $$
+The case $n = 1$ is excluded since the right-hand side is negative there.
 -/
 @[category research solved, AMS 5]
-theorem snake_upper_bound (n : ℕ) : LongestSnakeInTheBox n
-    ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n)) := by
+theorem snake_upper_bound (n : ℕ) (hn : 2 ≤ n) : LongestSnakeInTheBox n
+    ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n) - 7) := by
   sorry
 
 end SnakeInBox

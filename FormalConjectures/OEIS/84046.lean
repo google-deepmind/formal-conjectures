@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest prime $p$ such that $p + n$ is an $n$-th power
@@ -24,6 +25,8 @@ That is, the smallest prime of the form $k^n - n$.
 
 *References:*
 - [A084046](https://oeis.org/A084046)-/
+
+@[expose] public section
 
 namespace OeisA84046
 
@@ -37,7 +40,7 @@ theorem a_0 : a 0 = 0 := by
   change sInf {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 0 = p + 0} = 0
   have h_empty : {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 0 = p + 0} = ∅ := by
     ext p
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
     intro hp ⟨k, hk⟩
     rw [pow_zero, add_zero] at hk
     subst hk
@@ -49,10 +52,10 @@ theorem a_0 : a 0 = 0 := by
 theorem a_1 : a 1 = 2 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 1 = p + 1} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨Nat.prime_two, 3, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       exact hp.1.two_le
   exact h_least.csInf_eq
 
@@ -61,10 +64,10 @@ theorem a_1 : a 1 = 2 := by
 theorem a_2 : a 2 = 2 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 2 = p + 2} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨Nat.prime_two, 2, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       exact hp.1.two_le
   exact h_least.csInf_eq
 
@@ -73,10 +76,10 @@ theorem a_2 : a 2 = 2 := by
 theorem a_3 : a 3 = 5 := by
   have h_least : IsLeast {p : ℕ | p.Prime ∧ ∃ k : ℕ, k ^ 3 = p + 3} 5 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by norm_num, 2, by norm_num⟩
     · intro p hp
-      simp only [Set.mem_setOf_eq] at hp
+      simp only [Set.mem_ofPred_eq] at hp
       rcases hp with ⟨hp_prime, k, hk⟩
       by_contra! h
       interval_cases p
@@ -98,9 +101,14 @@ theorem a_3 : a 3 = 5 := by
   exact h_least.csInf_eq
 
 /--
-Conjecture: if a(k) = 0 then k is an even square.-/
-@[category research open, AMS 11]
-theorem conjecture (k : ℕ) (h : a k = 0) : ∃ m : ℕ, k = (2 * m) ^ 2 := by
+Conjecture: if a(k) = 0 then k is an even square.
+
+This is false for $k = 27$. Every candidate $x^{27} - 27$ factors as
+$(x^9 - 3)(x^{18} + 3x^9 + 9)$, so $a(27) = 0$, but $27$ is not an even square.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-oai-jajpvieznaevpoyg/a084046_conjecture_0/Submission/Spec.lean#L17"]
+theorem conjecture : ¬ ∀ k : ℕ, a k = 0 → ∃ m : ℕ, k = (2 * m) ^ 2 := by
   sorry
 
 end OeisA84046

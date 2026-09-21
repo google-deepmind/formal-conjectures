@@ -15,13 +15,13 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.ENat.Lattice
 public import Mathlib.Data.Multiset.Sort
 public import Mathlib.Data.Real.Basic
-public import Mathlib.Data.Real.Sqrt
 public import Mathlib.Data.Set.Card
 public import Mathlib.Order.CompletePartialOrder
 

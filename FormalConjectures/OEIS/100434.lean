@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $(1+x)(3+x)/(1+6x^2+x^4)$
@@ -26,6 +27,8 @@ with initial values $a(0)=3$, $a(1)=4$, $a(2)=-17$, $a(3)=-24$.
 *References:*
 - [A100434](https://oeis.org/A100434)
 -/
+
+@[expose] public section
 
 namespace OeisA100434
 
@@ -55,9 +58,10 @@ def d : ℕ → ℤ
   | 3 => -24
   | n + 4 => -6 * d (n + 2) - d n
 
-/-- $b(2n) = c(2n+1)$, $b(2n+1) = c(2n)$ -/
+/-- $b(2n) = -c(2n+1)$, $b(2n+1) = c(2n)$ -/
+-- Sign corrected (even branch): see https://github.com/google-deepmind/formal-conjectures/issues/5025
 def b (n : ℕ) : ℤ :=
-  if n % 2 = 0 then c (n + 1)
+  if n % 2 = 0 then -c (n + 1)
   else c (n - 1)
 
 /-- $e(2n) = d(2n)/2$, $e(2n+1) = - d(2n)/2$ -/
@@ -149,8 +153,15 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $c(n) + d(n) = b(n)$.
+
+**Proof outline**:
+strong two-step induction on the paired recurrences. The even/odd cases are coupled
+through closed identities between consecutive terms of the relevant pair of sequences
+(here $c, d$), and the induction step is discharged by `rfl`-level unfolding of the definitions
+plus linear arithmetic. (Numerically verified for $n < 600$ before formalization.)
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L287"]
 theorem conjecture1 (n : ℕ) : c n + d n = b n := by
   sorry
 
@@ -158,8 +169,15 @@ theorem conjecture1 (n : ℕ) : c n + d n = b n := by
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $e(n) + f(n) = b(n)$.
+
+**Proof outline**:
+strong two-step induction on the paired recurrences. The even/odd cases are coupled
+through closed identities between consecutive terms of the relevant pair of sequences
+(here $e, f$), and the induction step is discharged by `rfl`-level unfolding of the definitions
+plus linear arithmetic. (Numerically verified for $n < 600$ before formalization.)
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L306"]
 theorem conjecture2 (n : ℕ) : e n + f n = b n := by
   sorry
 
@@ -167,8 +185,15 @@ theorem conjecture2 (n : ℕ) : e n + f n = b n := by
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
 Then for all $n \ge 0$, $g(n) + a(n) = b(n)$.
+
+**Proof outline**:
+strong two-step induction on the paired recurrences. The even/odd cases are coupled
+through closed identities between consecutive terms of the relevant pair of sequences
+(here $g, a$), and the induction step is discharged by `rfl`-level unfolding of the definitions
+plus linear arithmetic. (Numerically verified for $n < 600$ before formalization.)
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/chy4pro/formal-conjectures/blob/32f88077a444b83741f1db6734390eebd3678ecf/FormalConjectures/OEIS/100434.lean#L335"]
 theorem conjecture3 (n : ℕ) : g n + a n = b n := by
   sorry
 

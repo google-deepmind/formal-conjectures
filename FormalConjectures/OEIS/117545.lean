@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k$ such that cyclotomic polynomial $\Phi_k(n)$ is prime
@@ -24,6 +25,8 @@ where $\Phi_k(n)$ is the $k$-th cyclotomic polynomial evaluated at $n$.
 
 *References:*
 - [A117545](https://oeis.org/A117545)-/
+
+@[expose] public section
 
 namespace OeisA117545
 
@@ -37,13 +40,13 @@ theorem a_1 : a 1 = 2 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ ((Polynomial.cyclotomic k ℤ).eval (1 :
   ℤ)).natAbs.Prime} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       have : Polynomial.cyclotomic 2 ℤ = Polynomial.X + 1 := Polynomial.cyclotomic_two ℤ
       rw [this]
       norm_num
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_pos := hk.1
       interval_cases k
@@ -60,13 +63,13 @@ theorem a_2 : a 2 = 2 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ ((Polynomial.cyclotomic k ℤ).eval (2 :
   ℤ)).natAbs.Prime} 2 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       have : Polynomial.cyclotomic 2 ℤ = Polynomial.X + 1 := Polynomial.cyclotomic_two ℤ
       rw [this]
       norm_num
     · intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       by_contra! h
       have hk_pos := hk.1
       interval_cases k
@@ -83,7 +86,7 @@ theorem a_3 : a 3 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ ((Polynomial.cyclotomic k ℤ).eval (3 :
   ℤ)).natAbs.Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       have h1 : Polynomial.cyclotomic 1 ℤ = Polynomial.X - 1 := Polynomial.cyclotomic_one ℤ
       rw [h1]
@@ -98,7 +101,7 @@ theorem a_4 : a 4 = 1 := by
   have h_least : IsLeast {k : ℕ | 0 < k ∧ ((Polynomial.cyclotomic k ℤ).eval (4 :
   ℤ)).natAbs.Prime} 1 := by
     constructor
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       have h1 : Polynomial.cyclotomic 1 ℤ = Polynomial.X - 1 := Polynomial.cyclotomic_one ℤ
       rw [h1]

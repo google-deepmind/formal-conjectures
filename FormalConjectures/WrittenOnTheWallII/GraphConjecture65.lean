@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 65
@@ -36,9 +37,17 @@ triangles, so it has at most $15$ vertices. Conversely, deleting one non-path ve
 from each triangle leaves a tree on $15$ vertices.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture65
 
 open SimpleGraph Finset
+
+/- Synthesizing `∀ v, Fintype ↥(graph.neighborSet v)` on our 18-edges graph uses more than the
+default `synthInstance.maxSize` of 128 instances. That option bounds how many instances a solution
+may use, not how long the search may take. Raising it is free -- synthesis costs ~13ms either way
+about 1% of this file's elaboration time; the rest is `decide` and kernel type-checking. -/
+set_option synthInstance.maxSize 400
 
 namespace Counterexample
 
@@ -192,7 +201,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero
 /-- In the complete graph `K₃`, min degree equals max degree (regular graph). -/
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).minDegree = (⊤ : SimpleGraph (Fin 3)).maxDegree := by
-  decide +native
+  decide
 
 /-- `distMin G S` is always nonneg. -/
 @[category test, AMS 5]

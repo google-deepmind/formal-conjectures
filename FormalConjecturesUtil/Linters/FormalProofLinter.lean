@@ -41,16 +41,13 @@ register_option linter.style.conditional_formal_proof : Bool := {
   descr := "enable the `conditional formal_proof` style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace FormalProofLinter
 
 /-- Whether `declName` has a proof term with no `sorry` in it, waiting on the
 declaration to finish elaborating. -/
 def isProved (declName : Name) : CommandElabM Bool := do
   let some info := (← getEnv).findAsync? declName | return false
-  return info.toConstantInfo.value?.any (!·.hasSorry)
+  return info.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry)
 
 /-- Return every formal-proof tag attached to `declName`.
 
