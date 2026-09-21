@@ -31,8 +31,8 @@ is a special case (up to scaling), and the conjecture implies the Beck–Fiala
 conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
 
 The conjecture was proved in September 2026 by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$.
-Karingula and Lovett gave an elementary proof with $K = 36$, which is formalised in
-`FormalConjecturesForMathlib/Combinatorics/Discrepancy/` and used below.
+Karingula and Lovett gave an elementary proof with $K = 36$. A formalisation of their proof is
+recorded in the `formal_proof` attributes below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_theory#Major_open_problems)
@@ -58,7 +58,6 @@ $\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le K$, i.e.
 $\left|\sum\_i \varepsilon\_i v\_{ij}\right| \le K$ for every coordinate $j$.
 
 Proved by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$ and by Karingula and Lovett with $K = 36$.
-The proof below uses the constant $36$ from `Komlos.exists_signs_abs_sum_le`.
 -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/416b6597cb193b6745748fdfef0d64342c71dae9/FormalConjectures/Wikipedia/KomlosConjecture.lean#L64"]
