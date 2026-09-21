@@ -68,7 +68,7 @@ theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → �
 `limsup (fun r => ratio r f) atTop = 1`? -/
 @[category research solved, AMS 30,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-516-fejer-counterexample/blob/675d078d1c9fee4fcaa1c1a2eecde1c174853ff5/lean/Erdos516FejerFC.lean#L1304-L1314"]
+    "https://github.com/KitaKen1/erdos-516-fejer-counterexample/blob/675d078d1c9fee4fcaa1c1a2eecde1c174853ff5/lean/Erdos516FejerFC.lean#L1295-L1304"]
 theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(False) ↔
     ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
