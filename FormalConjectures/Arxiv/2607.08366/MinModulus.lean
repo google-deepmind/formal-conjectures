@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Minimum modulus for the unique multiset-sum problem
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 The paper's Main Theorem fixes the super-increasing set $\{2^k - 1\}$ and pins the least modulus
 at which *it* is valid. Conjecture 1 says no other set of $n$ residues does better, and is open.
 -/
+
+@[expose] public section
 
 open Finset
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 990
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Ha72b] Hayman, W. K., *Angular value distribution of power series with gaps*. Proc. London Math.
   Soc. (3) (1972), 590-624.
 -/
+
+@[expose] public section
 
 open Polynomial
 

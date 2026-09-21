@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 502
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [PePo21] Petrov, Fedor and Pohoata, Cosmin, *A remark on sets with few distances in
   $\mathbb{R}^d$*. Proc. Amer. Math. Soc. (2021), 569-571.
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry
 
