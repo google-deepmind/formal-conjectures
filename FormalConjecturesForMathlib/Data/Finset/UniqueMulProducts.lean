@@ -426,4 +426,42 @@ lemma card_uniqueMulProducts_le_card_image_of_subset {A B S T : Finset ℕ}
     (uniqueMulProducts A B).card ≤ ((S.product T).image fun p => p.1 * p.2).card :=
   card_le_card (uniqueMulProducts_subset_image_of_subset hA hB)
 
+
+
+/-- Representation count is positive precisely on the multiplicative image of `A × B`. -/
+lemma mulRepresentationCount_pos_iff_mem_image (A B : Finset ℕ) (m : ℕ) :
+    0 < mulRepresentationCount A B m ↔
+      m ∈ (A.product B).image (fun p => p.1 * p.2) := by
+  constructor
+  · intro h
+    obtain ⟨a, ha, b, hb, rfl⟩ := (mulRepresentationCount_pos_iff A B m).mp h
+    exact mem_image.mpr ⟨(a, b), mem_product.mpr ⟨ha, hb⟩, rfl⟩
+  · intro h
+    obtain ⟨p, hp, rfl⟩ := mem_image.mp h
+    exact (mulRepresentationCount_pos_iff A B _).mpr
+      ⟨p.1, (mem_product.mp hp).1, p.2, (mem_product.mp hp).2, rfl⟩
+
+/-- The multiplicative image of `A × B` has cardinality at most `#A * #B`. -/
+lemma card_image_mul_product_le (A B : Finset ℕ) :
+    ((A.product B).image fun p => p.1 * p.2).card ≤ A.card * B.card := by
+  calc
+    ((A.product B).image fun p => p.1 * p.2).card
+        ≤ (A.product B).card := card_image_le
+    _ = A.card * B.card := card_product A B
+
+/-- Shrinking factor sets preserves uniqueness whenever the product is still represented. -/
+lemma mem_uniqueMulProducts_of_subset_of_pos {A A' B B' : Finset ℕ} {m : ℕ}
+    (hA : A ⊆ A') (hB : B ⊆ B')
+    (huniq : m ∈ uniqueMulProducts A' B')
+    (hpos : 0 < mulRepresentationCount A B m) :
+    m ∈ uniqueMulProducts A B := by
+  have hcnt' : mulRepresentationCount A' B' m = 1 := (mem_uniqueMulProducts.mp huniq).2
+  have hle : mulRepresentationCount A B m ≤ 1 :=
+    (mulRepresentationCount_mono_left hA B m).trans
+      ((mulRepresentationCount_mono_right A' hB m).trans_eq hcnt')
+  have hcnt : mulRepresentationCount A B m = 1 :=
+    Nat.le_antisymm hle (Nat.succ_le_of_lt hpos)
+  exact mem_uniqueMulProducts.mpr
+    ⟨(mulRepresentationCount_pos_iff_mem_image A B m).mp hpos, hcnt⟩
+
 end Finset

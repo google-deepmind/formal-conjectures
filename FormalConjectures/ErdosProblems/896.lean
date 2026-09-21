@@ -242,5 +242,77 @@ theorem erdos_896.variants.maxF_le_card_mulImage (N : ℕ) :
   simpa [F] using
     (card_uniqueMulProducts_le_card_image_of_subset hA hB)
 
-end Erdos896
 
+
+/-- `F(A,B) = 0` iff there are no uniquely represented products. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_eq_zero_iff (A B : Finset ℕ) :
+    F A B = 0 ↔ uniqueMulProducts A B = ∅ := by
+  simp [F, card_eq_zero]
+
+/-- `maxF N = 0` precisely when `N = 0`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_eq_zero_iff (N : ℕ) : maxF N = 0 ↔ N = 0 := by
+  constructor
+  · intro h
+    by_contra hN
+    exact Nat.ne_of_gt (maxF_pos (Nat.one_le_iff_ne_zero.mpr hN)) h
+  · rintro rfl
+    exact maxF_zero
+
+/-- `maxF N` is positive precisely when `N ≥ 1`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.maxF_pos_iff (N : ℕ) : 0 < maxF N ↔ 1 ≤ N := by
+  rw [Nat.pos_iff_ne_zero, Ne, maxF_eq_zero_iff, Nat.one_le_iff_ne_zero]
+
+/-- Any admissible pair realises at most `maxF N`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_le_maxF {A B : Finset ℕ} {N : ℕ}
+    (hA : A ⊆ Icc 1 N) (hB : B ⊆ Icc 1 N) : F A B ≤ maxF N := by
+  classical
+  have hmem :
+      (A, B) ∈ (Icc 1 N).powerset.product (Icc 1 N).powerset := by
+    simp [mem_product, mem_powerset, hA, hB]
+  simpa [maxF] using
+    (le_sup (f := fun p : Finset ℕ × Finset ℕ ↦ F p.1 p.2) hmem)
+
+/-- `F({0}, B)` is `1` iff `#B = 1`, else `0`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_zero_left (B : Finset ℕ) :
+    F {0} B = if B.card = 1 then 1 else 0 := by
+  simp [F]
+
+/-- `F(A, {0})` is `1` iff `#A = 1`, else `0`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.F_zero_right (A : Finset ℕ) :
+    F A {0} = if A.card = 1 then 1 else 0 := by
+  simp [F]
+
+/-- Distinct products `a*b` number at most `#A * #B`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.card_mulImage_le (A B : Finset ℕ) :
+    ((A.product B).image fun p : ℕ × ℕ => p.1 * p.2).card ≤ A.card * B.card :=
+  card_image_mul_product_le A B
+
+/-- All (not necessarily unique) products of subsets of `{1, …, N}` lie in `{1, …, N²}`. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.image_mul_product_subset_Icc_sq
+    {A B : Finset ℕ} {N : ℕ} (hA : A ⊆ Icc 1 N) (hB : B ⊆ Icc 1 N) :
+    (A.product B).image (fun p : ℕ × ℕ => p.1 * p.2) ⊆ Icc 1 (N * N) := by
+  intro m hm
+  obtain ⟨p, hp, rfl⟩ := mem_image.mp hm
+  have ha := mem_Icc.mp (hA (mem_product.mp hp).1)
+  have hb := mem_Icc.mp (hB (mem_product.mp hp).2)
+  exact mem_Icc.mpr ⟨Nat.mul_le_mul ha.1 hb.1, Nat.mul_le_mul ha.2 hb.2⟩
+
+/-- Thin wrapper: shrinking factor sets preserves uniqueness when still represented. -/
+@[category API, AMS 11]
+theorem erdos_896.variants.mem_uniqueMulProducts_of_subset_of_pos
+    {A A' B B' : Finset ℕ} {m : ℕ}
+    (hA : A ⊆ A') (hB : B ⊆ B')
+    (huniq : m ∈ uniqueMulProducts A' B')
+    (hpos : 0 < mulRepresentationCount A B m) :
+    m ∈ uniqueMulProducts A B :=
+  Finset.mem_uniqueMulProducts_of_subset_of_pos hA hB huniq hpos
+
+end Erdos896
