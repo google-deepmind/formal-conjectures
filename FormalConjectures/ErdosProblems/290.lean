@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 290
@@ -27,11 +28,13 @@ import FormalConjecturesUtil
   arXiv:2411.03073 (2024).
 -/
 
+@[expose] public section
+
 namespace Erdos290
 
 /-- The denominator (in lowest terms) of the partial harmonic sum
 $\sum_{a \leq n \leq b}\frac{1}{n}$. -/
-noncomputable def harmonicDen (a b : ℕ) : ℕ := (∑ n ∈ Finset.Icc a b, (1 : ℚ) / n).den
+noncomputable def harmonicDen (a b : ℕ) : ℕ := (harmonicBlock a b).den
 
 /--
 Let $a\geq 1$. Must there exist some $b>a$ such that

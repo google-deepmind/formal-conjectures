@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 9
@@ -24,6 +25,8 @@ References:
 - [BlSi20] Bloom, Thomas F., and Olof Sisask. "Breaking the logarithmic barrier in Roth's theorem on
   arithmetic progressions." arXiv preprint arXiv:2007.03528 (2020).
 -/
+
+@[expose] public section
 
 open Filter
 

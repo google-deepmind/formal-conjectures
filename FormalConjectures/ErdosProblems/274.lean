@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 274
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 * [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
 
+@[expose] public section
+
 open scoped Pointwise Cardinal
 
 namespace Erdos274
@@ -40,7 +43,7 @@ union covers `G`.
 
 Note that this differs from `Partition (α := Subgroup G)` because the covering condition there
 invokes `Subgroup.sup` which is subgroup generation and thus stronger than union. This definition
-is easier to use in this contect than the alternative `Partition (α := Set G)`, which lacks
+is easier to use in this context than the alternative `Partition (α := Set G)`, which lacks
 subgroup definitions such as `Subgroup.index`. -/
 structure Group.ExactCovering (G : Type*) [Group G] (ι : Type*) [Fintype ι] where
   parts : ι → Subgroup G
@@ -57,10 +60,9 @@ The conjectured answer is no: in every such exact covering, two of the subgroups
 the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
-    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
-    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
-    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
+theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (_ : Group G),
+    1 < ENat.card G ∧ ∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
+    1 < Fintype.card ι ∧ ∀ i j, i ≠ j → #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
 /--

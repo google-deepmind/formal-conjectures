@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 254
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ca60] Cassels, J. W. S., On the representation of integers as the sums of distinct summands taken
   from a fixed set. Acta Sci. Math. (Szeged) (1960), 111-124.
 -/
+
+@[expose] public section
 
 open Filter Set
 
@@ -35,13 +38,26 @@ An integer `n` can be written as a sum of distinct elements of `A`.
 def IsSumOfDistinct (A : Set ℕ) (n : ℕ) : Prop :=
   ∃ S : Finset ℕ, (S : Set ℕ) ⊆ A ∧ S.sum (fun x ↦ x) = n
 
+/-- The hypothesis `¬ Summable (fun n : A ↦ distToNearestInt (θ * n))` used below says exactly
+that the partial sums of `‖θ n‖` over `n ∈ A` diverge, which is the form the linked proof uses.
+`distToNearestInt` is nonnegative, so this is an instance of
+`not_summable_subtype_iff_tendsto_sum_indicator`. -/
+@[category API, AMS 11]
+theorem not_summable_iff_tendsto_partial_sums (A : Set ℕ) (θ : ℝ) :
+    ¬ Summable (fun n : A ↦ distToNearestInt (θ * (n : ℝ))) ↔
+      Tendsto (fun N : ℕ =>
+          ∑ n ∈ Finset.range N, A.indicator (fun n => distToNearestInt (θ * (n : ℝ))) n)
+        atTop atTop :=
+  not_summable_subtype_iff_tendsto_sum_indicator
+    (f := fun m : ℕ => distToNearestInt (θ * (m : ℝ))) fun _ => distToNearestInt_nonneg _
+
 /--
 Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\cap [1,x]\rvert \to
 \infty\textrm{ as }x\to \infty$ and $\sum_{n\in A} \{ \theta n\}=\infty$ for every $\theta\in
 (0,1)$, where $\{x\}$ is the distance of $x$ from the nearest integer. Then every sufficiently large
 integer is the sum of distinct elements of $A$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-254/Research/Basic.lean"]
 theorem erdos_254 :
     ∀ (A : Set ℕ),
       (Tendsto (fun x : ℕ ↦ (A ∩ Icc 1 (2 * x)).ncard - (A ∩ Icc 1 x).ncard) atTop atTop) ∧

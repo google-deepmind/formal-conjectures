@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 52
 
 *Reference:* [erdosproblems.com/52](https://www.erdosproblems.com/52)
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -35,6 +38,6 @@ theorem erdos_52 : answer(sorry) ↔ ∀ (ε : ℝ), 0 < ε → ε < 1 → ∃ (
     (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (2 - ε) := by
   sorry
 
--- TODO(firsching): Add addtional material.
+-- TODO(firsching): Add additional material.
 
 end Erdos52

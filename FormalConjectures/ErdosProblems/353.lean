@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 353
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ko25] J. Koizumi, *Isosceles trapezoids of unit area with vertices in sets of infinite planar
   measure*. arXiv:2501.01914 (2025).
 -/
+
+@[expose] public section
 
 open Affine EuclideanGeometry MeasureTheory
 
@@ -50,7 +53,7 @@ This statement formalizes the leading question, for isosceles trapezoids; the re
 configurations are given as variants below. The area of a polygon is taken to be the Lebesgue
 measure of the convex hull of its vertices.
 -/
-@[category research solved, AMS 28 51]
+@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
 theorem erdos_353 : answer(True) ↔
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, ∃ d ∈ A,
@@ -69,7 +72,7 @@ triangle, all of area $1$.
 Note the area condition forces `a`, `b`, `c` to be affinely independent, so no separate
 non-degeneracy hypothesis is needed.
 -/
-@[category research solved, AMS 28 51]
+@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
 theorem erdos_353.variants.isosceles_triangle :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A,
@@ -88,7 +91,7 @@ triangle, all of area $1$.
 Note the area condition forces `a`, `b`, `c` to be affinely independent, so no separate
 non-degeneracy hypothesis is needed.
 -/
-@[category research solved, AMS 28 51]
+@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
 theorem erdos_353.variants.right_angled_triangle :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A,
@@ -105,7 +108,7 @@ is, every set with infinite measure contains four distinct points on a circle su
 quadrilateral determined by these four points has area $1$. The quadrilateral determined by
 four distinct concyclic points is their convex hull.
 -/
-@[category research solved, AMS 28 51]
+@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
 theorem erdos_353.variants.cyclic_quadrilateral :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ Q : Set ℝ², Q ⊆ A ∧ Q.ncard = 4 ∧ Cospherical Q ∧
@@ -117,7 +120,7 @@ The answer is negative for convex polygons with congruent sides: Kovač and Pred
 [KoPr24] prove that there exists a set of infinite measure such that every convex polygon
 with congruent sides and all vertices in the set has area $<1$.
 -/
-@[category research solved, AMS 28 51]
+@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
 theorem erdos_353.variants.congruent_sides :
     ∃ A : Set ℝ², MeasurableSet A ∧ volume A = ⊤ ∧
       ∀ (n : ℕ) (v : Fin (n + 3) → ℝ²),

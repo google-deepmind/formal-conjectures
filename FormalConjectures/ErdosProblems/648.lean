@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 648
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er95c] Erdős, Paul, *Some problems in number theory*. Octogon Math. Mag. (1995), 3-5.
 - [Ca25b] S. Cambie, *On Erdős problem #648*. arXiv:2503.22691 (2025).
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
@@ -60,7 +63,7 @@ The sequence $a_1<a_2<\cdots<a_t$ is packaged as a strictly monotone map `a : Fi
 with $2\leq a_i<n$, the greatest prime factor $P$ is `Nat.maxPrimeFac`, and $g(n)$ is the
 supremum in `ℕ` of the achievable lengths $t$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos648.lean"]
 theorem erdos_648 :
     (fun n => (g n : ℝ)) =Θ[atTop] fun n => Real.sqrt ((n : ℝ) / Real.log (n : ℝ)) := by
   sorry

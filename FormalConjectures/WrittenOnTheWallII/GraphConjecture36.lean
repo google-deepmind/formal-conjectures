@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 36
@@ -28,13 +29,16 @@ three, one diametrical pair, and largest induced-path order five.
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture36
 
-open Classical SimpleGraph
+open SimpleGraph
 
 /-- `dp G` is the number of diametrical pairs of `G`: the number of unordered
 pairs `{u, v}` of vertices at distance `diam(G)`.  -/
 noncomputable def dp {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   (Finset.univ.filter
     (fun p : Sym2 α => p.lift ⟨fun u v => G.dist u v = G.diam ∧ u ≠ v,
       fun u v => by simp [SimpleGraph.dist_comm, ne_comm]⟩)).card

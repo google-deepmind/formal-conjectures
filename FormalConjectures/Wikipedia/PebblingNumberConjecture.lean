@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pebbling number conjecture
@@ -23,12 +24,14 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Graph_pebbling)
 - [Pebbling on Graph Products and Other Binary Graph Constructions](https://arxiv.org/abs/1801.07808)
 -/
+
+@[expose] public section
 variable {V : Type} {G : SimpleGraph V} [DecidableEq V]
 
 namespace PebblingNumberConjecture
 
 /--
-A Pebble distribution is an assigment of zero or more pebbles to each of the vertices.
+A Pebble distribution is an assignment of zero or more pebbles to each of the vertices.
 -/
 def PebbleDistribution (V : Type) := V → ℕ
 

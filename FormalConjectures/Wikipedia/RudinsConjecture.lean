@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rudin's conjecture on squares in arithmetic progressions
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - González-Jiménez, E. and Xarles, X., *On a conjecture of Rudin on squares in arithmetic
   progressions*, LMS J. Comput. Math. 17 (2014), 58–76.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
@@ -65,7 +68,7 @@ theorem Q_six_twentyfour_one : Q 6 24 1 = 4 := by
   show ({n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)}).ncard = 4
   have hset : {n : ℕ | n < 6 ∧ IsSquare (24 * n + 1)} = ({0, 1, 2, 5} : Set ℕ) := by
     ext n
-    simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
     constructor
     · rintro ⟨hn, hsq⟩
       interval_cases n
