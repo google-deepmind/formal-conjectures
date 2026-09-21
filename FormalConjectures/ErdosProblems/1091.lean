@@ -202,4 +202,36 @@ theorem erdos_1091.variants.completeGraph_not_isBipartite (n : ℕ) :
     ¬ (completeGraph (Fin (n + 3))).IsBipartite :=
   SimpleGraph.completeGraph_not_isBipartite n
 
+/-- Cycle edges lie in the edge set. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.cycle_mem_edgeSet_of_mem_edges
+    {V : Type*} {G : SimpleGraph V} (c : Cycle G) {e : Sym2 V}
+    (he : e ∈ c.edges) : e ∈ G.edgeSet :=
+  c.mem_edgeSet_of_mem_edges he
+
+/-- An odd cycle with chords forces chromatic number ≥ 3. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.hasOddCycleWithChords_three_le_chromaticNumber
+    {V : Type*} {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : 3 ≤ G.chromaticNumber :=
+  h.three_le_chromaticNumber
+
+/-- Odd `C_{n+3}` is not bipartite. -/
+@[category test, AMS 5]
+theorem erdos_1091.variants.cycleGraph_not_isBipartite_of_odd {n : ℕ} (h : Odd (n + 3)) :
+    ¬ (cycleGraph (n + 3)).IsBipartite :=
+  SimpleGraph.cycleGraph_not_isBipartite_of_odd h
+
+/-- Triangle chords in `K_{n+3}` have `encard` 0. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.completeGraph_triangle_chords_encard (n : ℕ) :
+    (Cycle.completeGraph_triangle n).chords.encard = 0 :=
+  Cycle.completeGraph_triangle_chords_encard n
+
+/-- `K_{n+3}` has chromatic number at least 3. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.completeGraph_three_le_chromaticNumber (n : ℕ) :
+    3 ≤ (completeGraph (Fin (n + 3))).chromaticNumber :=
+  SimpleGraph.completeGraph_three_le_chromaticNumber n
+
 end Erdos1091

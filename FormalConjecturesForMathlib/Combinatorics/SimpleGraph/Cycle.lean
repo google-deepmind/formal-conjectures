@@ -537,4 +537,36 @@ lemma completeGraph_not_isBipartite_of_three_le {n : ℕ} (hn : 3 ≤ n) :
     ¬ (completeGraph (Fin n)).IsBipartite :=
   (hasOddCycleWithChords_completeGraph_of_three_le hn).not_isBipartite
 
+/-- Cycle edges are edges of the underlying graph. -/
+lemma Cycle.mem_edgeSet_of_mem_edges {G : SimpleGraph V} (c : Cycle G) {e : Sym2 V}
+    (he : e ∈ c.edges) : e ∈ G.edgeSet :=
+  c.walk.edges_subset_edgeSet he
+
+/-- An odd bundled cycle forces chromatic number at least `3`. -/
+lemma Cycle.three_le_chromaticNumber_of_odd {G : SimpleGraph V} (c : Cycle G)
+    (h : Odd c.length) : 3 ≤ G.chromaticNumber :=
+  c.walk.three_le_chromaticNumber_of_odd_loop (by simpa [Cycle.length] using h)
+
+/-- Having an odd cycle with (at least `k`) chords forces chromatic number ≥ `3`. -/
+lemma HasOddCycleWithChords.three_le_chromaticNumber {G : SimpleGraph V} {k : ℕ}
+    (h : HasOddCycleWithChords G k) : 3 ≤ G.chromaticNumber := by
+  obtain ⟨c, hodd, _⟩ := h
+  exact c.three_le_chromaticNumber_of_odd hodd
+
+/-- Odd cycle graphs are not bipartite. -/
+lemma cycleGraph_not_isBipartite_of_odd {n : ℕ} (h : Odd (n + 3)) :
+    ¬ (cycleGraph (n + 3)).IsBipartite :=
+  (hasOddCycleWithChords_cycleGraph_zero h).not_isBipartite
+
+/-- The bundled triangle in `K_{n+3}` has no chords, so `encard` is zero. -/
+@[simp]
+lemma Cycle.completeGraph_triangle_chords_encard (n : ℕ) :
+    (Cycle.completeGraph_triangle n).chords.encard = 0 := by
+  simp [completeGraph_triangle_chords]
+
+/-- Hence `K_{n+3}` has chromatic number at least `3`. -/
+lemma completeGraph_three_le_chromaticNumber (n : ℕ) :
+    3 ≤ (completeGraph (Fin (n + 3))).chromaticNumber :=
+  (hasOddCycleWithChords_completeGraph_zero n).three_le_chromaticNumber
+
 end SimpleGraph
