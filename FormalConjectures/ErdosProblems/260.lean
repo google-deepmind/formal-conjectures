@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 260
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Wang--Grau Ribas, *Positive dyadic density for rational weighted binary expansions*]
   (https://arxiv.org/abs/2606.24972)
 -/
+
+@[expose] public section
 
 namespace Erdos260
 

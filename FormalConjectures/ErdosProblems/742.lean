@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 742
@@ -29,6 +30,8 @@ import FormalConjectures.Util.ProblemImports
 - [Fü92] Füredi, Zoltán, The maximum number of edges in a minimal graph of diameter 2.
   J. Graph Theory 16 (1992), 81-98.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -115,7 +118,8 @@ Füredi [Fü92] proved the Murty-Simon conjecture for all sufficiently large $n$
 exists $n_0$ such that every diameter-$2$-critical graph on $n \geq n_0$ vertices has at most
 $\lfloor n^2 / 4 \rfloor$ edges.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos742.lean#L4279"]
 theorem furedi_bound : ∃ n₀ : ℕ, ∀ (V : Type*) [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj],
     n₀ ≤ Fintype.card V → IsDiameter2Critical G →

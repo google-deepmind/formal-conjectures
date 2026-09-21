@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Furstenberg's `times p, times q` conjectures
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 with some large Fourier coefficients**
 by *Catalin Badea, Sophie Grivaux*
 -/
+
+@[expose] public section
 
 noncomputable section
 

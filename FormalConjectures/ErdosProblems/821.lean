@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 821
@@ -31,6 +32,8 @@ import FormalConjectures.Util.ProblemImports
 - [LuPo11] Luca, Florian and Pollack, Paul, An arithmetic function arising from {C}armichael's
   conjecture. J. Théor. Nombres Bordeaux (2011), 697--714.
 -/
+
+@[expose] public section
 
 open Nat Filter
 

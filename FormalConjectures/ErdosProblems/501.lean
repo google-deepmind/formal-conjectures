@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 501
@@ -33,6 +34,8 @@ import FormalConjectures.Util.ProblemImports
 - [NPS87] Newelski, L., Pawlikowski, J., and Seredyński, F. Infinite independent sets in
   the closed case. Acta Math. Acad. Sci. Hungar. (1987).
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Cardinal ENNReal
@@ -112,13 +115,13 @@ independent set of size 3?
 
 This is implied by the stronger theorem of Newelski–Pawlikowski–Seredyński [NPS87] below;
 Gladysz [Gl62] earlier proved the existence of an independent set of size 2. -/
-@[category research solved, AMS 5 28]
+@[category research solved, AMS 5 28, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos501.lean#L38"]
 theorem erdos_501.variants.closed_size3 : answer(True) ↔
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →
       ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  simp only [true_iff]
   sorry
 
 /--
@@ -127,7 +130,8 @@ theorem erdos_501.variants.closed_size3 : answer(True) ↔
 If all the sets `A x` are closed with Lebesgue measure `< 1`, then there **is** an
 infinite independent set. This gives a strong affirmative answer to the second
 question of Problem 501. -/
-@[category research solved, AMS 5 28]
+@[category research solved, AMS 5 28, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos501.lean#L31"]
 theorem erdos_501.variants.newelski_pawlikowski_seredynski : answer(True) ↔
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →

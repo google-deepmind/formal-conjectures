@@ -27,10 +27,20 @@ open scoped Pointwise
 variable {α : Type*} [AddCommMonoid α]
 
 /--
+A set $S$ is said to be product-free if the product set $S \cdot S$ is disjoint from $S$,
+i.e. if the equation $x \cdot y = z$ has no solution with $x, y, z \in S$.
+-/
+@[to_additive IsSumFree /--
 A set $A$ is said to be sum-free if the sumset $A + A$ is disjoint from $A$, i.e.
 if the equation $a + b = c$ has no solution with $a, b, c \in A$.
--/
-def IsSumFree (A : Set α) : Prop := Disjoint (A + A) A
+-/]
+def IsProductFree {M : Type*} [Mul M] (S : Set M) : Prop := Disjoint (S * S) S
+
+@[to_additive isSumFree_iff]
+theorem isProductFree_iff {M : Type*} [Mul M] {S : Set M} :
+    IsProductFree S ↔ ∀ x ∈ S, ∀ y ∈ S, x * y ∉ S := by
+  simp [IsProductFree, Set.disjoint_left, Set.mem_mul]
+  aesop
 
 /--
 `allUniqueSums A` is the set of elements in `α` that can be written as the sum of exactly one
@@ -74,7 +84,7 @@ lemma IsSidon.avoids_isAPOfLength_three {A : Set ℕ} (hA : IsSidon A)
   have ha₂ : a + 2 • d ∈ A := mem_of_mem_inter_left <| hss (hY ▸ ⟨2, by norm_num, by simp⟩)
   have := hA _ ha _ ha₁ _ ha₂ _ ha₁ (by simp; omega)
   simp at this
-  simp [hY, this.1, setOf_and] at hY_card
+  simp [hY, this.1, ofPred_and] at hY_card
   linarith [ncard_singleton _ ▸ ncard_inter_le_ncard_right {a | ∃ x, x < 3} {a}]
 
 theorem IsSidon.subset {A B : Set α} (hB : IsSidon B) (hAB : A ⊆ B) : IsSidon A :=

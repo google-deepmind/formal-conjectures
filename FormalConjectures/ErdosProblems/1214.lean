@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1214
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [CoSc97] Corrales-Rodrigáñez, Capi and Schoof, René, The support problem and its
   elliptic analogue. J. Number Theory (1997) [Volume 64, Issue 2], 276--290.
 -/
+
+@[expose] public section
 
 namespace Erdos1214
 
@@ -35,7 +38,8 @@ Erdős asked this at a 1988 number theory conference in Banff.
 
 A positive answer was given by Corrales-Rodrigáñez and Schoof [CoSc97].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1214.lean#L948"]
 theorem erdos_1214 :
     answer(True) ↔ ∀ x y : ℕ, x ≥ 1 → y ≥ 1 →
       (∀ n : ℕ, n ≥ 1 → { p : ℕ | p.Prime ∧ p ∣ x ^ n - 1 } = { p : ℕ | p.Prime ∧ p ∣ y ^ n - 1 }) →

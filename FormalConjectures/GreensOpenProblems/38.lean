@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 38
@@ -26,6 +27,8 @@ import FormalConjectures.Util.ProblemImports
 - [Po20] Polak, Sven. "New methods in coding theory: Error-correcting codes and the Shannon capacity."
   arXiv preprint arXiv:2005.02945 (2020).
 -/
+
+@[expose] public section
 
 open Filter Set
 open scoped Pointwise
@@ -69,20 +72,22 @@ noncomputable def C₁ : ℝ := (367 : ℝ) ^ (5⁻¹ : ℝ)
 /-- The upper bound constant $C_2 \approx 3.3177$ from [La79]. -/
 noncomputable def C₂ : ℝ := (7 * Real.cos (Real.pi / 7)) / (1 + Real.cos (Real.pi / 7))
 
-/-- Can we improve the lower bound? -/
+/-- Can we improve the lower bound? The answer sequence must be eventually nonnegative, since
+`=O` compares norms. -/
 @[category research open, AMS 5 11]
 theorem green_38.lower :
     let ans := (answer(sorry) : ℕ → ℝ)
-    ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
+    (∀ᶠ n in atTop, 0 ≤ ans n) ∧ ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
     ∃ c > C₁, (fun n ↦ c ^ n) =O[atTop] ans := by
   sorry
 
-/-- Can we improve the best upper bound? -/
+/-- Can we improve the best upper bound? The base `c` must be positive, since `=O` compares
+norms. -/
 @[category research open, AMS 5 11]
 theorem green_38.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧
-    ∃ c < C₂, ans =O[atTop] (fun n ↦ c ^ n) := by
+    ∃ c : ℝ, 0 < c ∧ c < C₂ ∧ ans =O[atTop] (fun n ↦ c ^ n) := by
   sorry
 
 /--
@@ -90,7 +95,7 @@ The current best lower bound is $(C_1 - o(1))^n \leqslant |A|$ where
 $C_1 = 367^{1/5} \approx 3.2578$ [Po20, Section 9.1]. -/
 @[category research solved, AMS 5 11]
 theorem green_38.variants.best_lower :
-    ∀ ε > 0, ∀ᶠ n in atTop, (C₁ - ε) ^ n ≤ LargestAdmissibleCardinality n := by
+    ∀ ε ∈ Set.Ioo (0 : ℝ) C₁, ∀ᶠ n in atTop, (C₁ - ε) ^ n ≤ LargestAdmissibleCardinality n := by
   sorry
 
 /-- The current best upper bound is $|A| \leqslant (C_2 + o(1))^n$ where

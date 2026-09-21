@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1095
@@ -32,6 +33,8 @@ import FormalConjectures.Util.ProblemImports
 - [SSW20] Sorenson, Brianna and Sorenson, Jonathan and Webster, Jonathan, An algorithm and estimates
   for the {E}rdős-{S}elfridge function. (2020), 371--385.
 -/
+
+@[expose] public section
 
 open Nat hiding log
 open Real Filter
@@ -72,7 +75,8 @@ theorem erdos_1095.variants.lower_conjecture : ∃ c > 0, ∀ᶠ k in atTop, g k
 Sorenson, Sorenson, and Webster [SSWE20] give heuristic evidence that $\log g(k) \asymp \frac{k}{\log k}$.
 -/
 @[category research open, AMS 11]
-theorem erdos_1095.variants.log_equivalent : (fun k ↦ log (g k)) ~[atTop] (fun k ↦ k / log k) := by
+theorem erdos_1095.variants.log_equivalent :
+    (fun k ↦ log (g k)) =Θ[atTop] (fun k ↦ (k : ℝ) / log k) := by
   sorry
 
 end Erdos1095

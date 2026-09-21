@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 476
@@ -30,17 +31,19 @@ import FormalConjectures.Util.ProblemImports
   derivatives and additive theory*. Bull. London Math. Soc. (1994), 140-146.
 -/
 
+@[expose] public section
+
 namespace Erdos476
 
 /--
 Let $A\subseteq \mathbb{F}_p$. Let
-\[
+$$
 A\hat{+}A = \{ a+b : a\neq b \in A\}.
-\]
+$$
 Is it true that
-\[
+$$
 \lvert A\hat{+}A\rvert \geq \min(2\lvert A\rvert-3,p)?
-\]
+$$
 
 This is the Erdős-Heilbronn inequality, proved by Dias da Silva and Hamidoune.
 -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 419
@@ -26,6 +27,8 @@ import FormalConjectures.Util.ProblemImports
 - [EGIP96] Erdős, Paul and Graham, S. W. and Ivić, Aleksandar and Pomerance, Carl,
   *On the number of divisors of $n!$*. (1996), 337--355.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped ArithmeticFunction.sigma
@@ -42,9 +45,9 @@ def limitPointSet : Set ℝ :=
 
 /--
 If $\tau(n)$ counts the number of divisors of $n$, then what is the set of limit points of
-\[
+$$
 \frac{\tau((n+1)!)}{\tau(n!)}?
-\]
+$$
 
 The limit points are exactly $\{1\} \cup \{1+1/k : k \geq 1\}$.
 -/
