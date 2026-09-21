@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 202
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   Math. Soc. (2024), 235-243.
 -/
 
+@[expose] public section
+
 open Filter Real
 
 namespace Erdos202
@@ -44,9 +47,6 @@ noncomputable def f (N : ℕ) : ℕ :=
   sSup {r : ℕ | ∃ n : Fin r → ℕ, ∃ a : Fin r → ℤ,
     StrictMono n ∧ (∀ i, 0 < n i ∧ n i ≤ N) ∧
     ∀ m : ℤ, ∀ i j : Fin r, m ≡ a i [ZMOD (n i : ℤ)] → m ≡ a j [ZMOD (n j : ℤ)] → i = j}
-
-/-- The scale $L(N)=\exp(\sqrt{\log N\log\log N})$. -/
-noncomputable def L (N : ℕ) : ℝ := exp (sqrt (log N * log (log N)))
 
 /--
 Let $n_1<\cdots < n_r\leq N$ with associated $a_i\pmod{n_i}$ such that the congruence classes are
@@ -61,7 +61,7 @@ $$f(N)= N L(N)^{-1+o(1)}.$$
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos202.lean"]
 theorem erdos_202 : ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
-    ∀ᶠ N : ℕ in atTop, (f N : ℝ) = (N : ℝ) * L N ^ (-1 + o N) := by
+    ∀ᶠ N : ℕ in atTop, (f N : ℝ) = (N : ℝ) * scaleL N ^ (-1 + o N) := by
   sorry
 
 /--

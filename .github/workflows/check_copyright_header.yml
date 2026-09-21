@@ -16,6 +16,9 @@ name: 'Check Copyright Header'
 
 on:
   pull_request:
+  # Required checks have to report on the merge queue's branch too, or the
+  # queue waits for a run that never starts.
+  merge_group:
 
 jobs:
   check-copyright:

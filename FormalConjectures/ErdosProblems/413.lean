@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 413
@@ -28,6 +29,8 @@ if `m + ω(m) ≤ n` for all `m < n`. He believed there should be infinitely man
 even posed a relaxed variant asking whether there is some `ε > 0` for which infinitely many `n`
 satisfy `m + ε · ω(m) ≤ n` for every `m < n`.
 -/
+
+@[expose] public section
 
 open ArithmeticFunction
 open scoped omega Omega
@@ -49,7 +52,17 @@ theorem erdos_413.parts.i :
 def expProd (n : ℕ) : ℕ :=
   n.factorization.prod fun _ e => e
 
-/-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density. -/
+/-- Erdős proved that the barrier set for `expProd` is infinite and even has positive density.
+
+`HasPosDensity` is the right reading rather than positive lower density. In [Er79d] this is
+Theorem 1, "the density of integers satisfying (2) is positive", where `d₀(n) = ∏ αᵢ` is
+`expProd`. The averaging argument there bounds the density below, but Erdős states the existence
+separately on the last page: "With a little more trouble, I can prove that the density of
+integers `n` for which `n` is a barrier for `d₀(n)` exists." He goes further, that if `αᵢ` is the
+density of `n` with `max_{m<n} (m + d₀(m)) = n + i`, then every `αᵢ` exists and they sum to `1`.
+
+[Er79d] Erdős, P., *Some unconventional problems in number theory*.
+Acta Math. Acad. Sci. Hungar. (1979), 71-80. -/
 @[category research solved, AMS 11]
 theorem erdos_413.variants.hasPosDensity_barrier_expProd :
     { n | IsBarrier (fun m => expProd m) n }.HasPosDensity := by

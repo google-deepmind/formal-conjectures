@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 36
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 * [CKS05] Cohn, H., Kleinberg, R., Szegedy, B., and Umans, C. "Group-theoretic Algorithms for
   Matrix Multiplication" (Problem 4.7)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Pointwise

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 844
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ch74] Chvátal, V., *Intersecting families of edges in hypergraphs having the hereditary
   property*. (1974), 61-66.
 -/
+
+@[expose] public section
 
 namespace Erdos844
 
@@ -50,8 +53,11 @@ in common. By the result of Chvátal [Ch74] discussed in [701] this is maximised
 all even squarefree numbers.
 
 An alternative proof was independently found by Alexeev, Mixon, and Sawin [AMS25].
+
+This was formalized in Lean by Jennings using Aristotle.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+"https://gist.githubusercontent.com/JohnEdwardJennings/e32f2c412b0225091e7519d60741bd2d/raw/7d811ea413e2f7c0c0442749958aaac421eb6807/Erdos844.lean"]
 theorem erdos_844 : answer(True) ↔ ∀ N : ℕ,
     IsGreatest {k : ℕ | ∃ A ⊆ Finset.Icc 1 N,
       (∀ a ∈ A, ∀ b ∈ A, ¬ Squarefree (a * b)) ∧ A.card = k}

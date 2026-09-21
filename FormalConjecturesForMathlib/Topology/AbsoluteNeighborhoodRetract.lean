@@ -21,6 +21,8 @@ public import Mathlib.Topology.ContinuousOn
 
 @[expose] public section
 
+universe u
+
 /--
 A topological space `X` is an *absolute neighborhood retract* (ANR) if, whenever it is
 embedded as a closed subspace of a normal space `Y`, there exists a continuous retraction
@@ -30,6 +32,7 @@ More precisely, for every closed embedding `e : X → Y` into a normal space `Y`
 exist an open set `U ⊆ Y` containing the image of `e` and a continuous map `r : Y → X`
 defined on `U` such that `r ∘ e = id`.
 -/
-class IsAbsoluteNeighborhoodRetract (X : Type*) [TopologicalSpace X] : Prop where
-  exists_neighborhood_retract : ∀ (Y : Type _) [TopologicalSpace Y] [NormalSpace Y] (e : X → Y), Topology.IsClosedEmbedding e →
-  ∃ (U : Set Y) (r : Y → X), IsOpen U ∧ Set.range e ⊆ U ∧ ContinuousOn r U ∧ ∀ x : X, r (e x) = x
+class IsAbsoluteNeighborhoodRetract (X : Type u) [TopologicalSpace X] : Prop where
+  exists_neighborhood_retract (Y : Type u) [TopologicalSpace Y] [NormalSpace Y] (e : X → Y) :
+    Topology.IsClosedEmbedding e → ∃ (U : Set Y) (r : Y → X),
+      IsOpen U ∧ Set.range e ⊆ U ∧ ContinuousOn r U ∧ ∀ x : X, r (e x) = x

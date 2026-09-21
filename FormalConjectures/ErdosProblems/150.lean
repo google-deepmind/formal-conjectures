@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 150
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
 - [GaMa18] Gaspers, Serge and Mackenzie, Simon, *On the number of minimal separators in graphs*.
   J. Graph Theory (2018), 653-659.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -61,8 +64,11 @@ That $\alpha<2$ was proved by Fomin, Kratsch, Todinca, and Villanger [FKTV08], w
 $\alpha \leq 1.7087$. This was independently studied by Bradač [Br24] (unaware of this earlier
 work), who proved that $\alpha \leq 2^{H(1/3)}\approx 1.8899$, where $H(\cdot)$ is the binary
 entropy function.
+
+This was formalized in Lean by Monticone using Aristotle.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos150.lean"]
 theorem erdos_150 : answer(True) ↔
     ∃ α : ℝ, α < 2 ∧
       Tendsto (fun n : ℕ ↦ (maxMinimalCuts n : ℝ) ^ (1 / n : ℝ)) atTop (𝓝 α) := by

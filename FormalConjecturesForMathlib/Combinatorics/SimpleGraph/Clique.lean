@@ -48,5 +48,12 @@ def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ 
 def cliqueSizes {V : Type} (G : SimpleGraph V) : Set ℕ :=
   { k | ∃ S : Finset V, Maximal (fun T : Finset V => G.IsClique (T : Set V)) S ∧ S.card = k }
 
+open scoped Classical in
+/-- The triangles of `G` containing the edge `uv`, that is, the `3`-cliques of `G` whose vertex
+set contains both endpoints of `uv`. -/
+noncomputable def trianglesContaining {α : Type*} [Fintype α] (G : SimpleGraph α)
+    (uv : Sym2 α) : Finset (Finset α) :=
+  (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
+
 
 end SimpleGraph

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 489
 
 *Reference:* [erdosproblems.com/489](https://www.erdosproblems.com/489)
 -/
+
+@[expose] public section
 
 namespace Erdos489
 
@@ -51,8 +54,8 @@ and the existence of this limit was proved by Erdős.
 
 See also [208].
 -/
-@[category research open, AMS 11]
-theorem erdos_489 : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
+theorem erdos_489 : answer(True) ↔
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
         (fun x : ℕ => (x : ℝ).sqrt) →

@@ -15,9 +15,10 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.Tactic.Linter.Term
-
-import Lean.Linter.Basic
+public meta import FormalConjecturesForMathlib.Tactic.Linter.Term
+public meta import Lean.Linter.Basic
+public meta import Lean.Meta.AppBuilder
+public meta import Lean.Elab.Command
 
 /-! # The Exists Implication Linter
 
@@ -29,7 +30,7 @@ corrected syntax.
 
 -/
 
-public section
+public meta section
 
 open Lean Meta
 

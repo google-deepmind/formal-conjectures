@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 331
 
 *Reference:* [erdosproblems.com/331](https://www.erdosproblems.com/331)
 -/
+
+@[expose] public section
 
 open Nat Filter
 open scoped Asymptotics
@@ -41,12 +44,12 @@ any $n\geq 1$ there is exactly one solution to $n=a+b$ with $a\in A$ and $b\in B
 
 This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem%23331.lean"]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/d30552f64c55686d40b928a0a3b8e2396357a4ee/ErdosProblem331.lean"]
 theorem erdos_331 :
     answer(False) ↔
       ∀ A B : Set ℕ,
-      (fun (n : ℕ) ↦ (n : ℝ) ^ (1 / 2 : ℝ)) =O[atTop] (fun (n : ℕ) ↦ (count A n : ℝ)) →
-      (fun (n : ℕ) ↦ (n : ℝ) ^ (1 / 2 : ℝ)) =O[atTop] (fun (n : ℕ) ↦ (count B n : ℝ)) →
+      (fun (n : ℕ) ↦ (n : ℝ) ^ (1 / 2 : ℝ)) =O[atTop] (fun (n : ℕ) ↦ (count (· ∈ A) n : ℝ)) →
+      (fun (n : ℕ) ↦ (n : ℝ) ^ (1 / 2 : ℝ)) =O[atTop] (fun (n : ℕ) ↦ (count (· ∈ B) n : ℝ)) →
       { s : ℕ × ℕ × ℕ × ℕ | let ⟨a₁, a₂, b₁, b₂⟩ := s
         a₁ ∈ A ∧ a₂ ∈ A ∧ b₁ ∈ B ∧ b₂ ∈ B ∧
         a₁ ≠ a₂ ∧ a₁ + b₂ = a₂ + b₁ }.Infinite := by
@@ -62,8 +65,8 @@ for $B$.
 theorem erdos_331.variants.ruzsa :
     answer(sorry) ↔
       ∀ A B : Set ℕ,
-      (∃ c_A > 0, (fun (n : ℕ) ↦ (count A n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_A * (n : ℝ) ^ (1 / 2 : ℝ))) →
-      (∃ c_B > 0, (fun (n : ℕ) ↦ (count B n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_B * (n : ℝ) ^ (1 / 2 : ℝ))) →
+      (∃ c_A > 0, (fun (n : ℕ) ↦ (count (· ∈ A) n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_A * (n : ℝ) ^ (1 / 2 : ℝ))) →
+      (∃ c_B > 0, (fun (n : ℕ) ↦ (count (· ∈ B) n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_B * (n : ℝ) ^ (1 / 2 : ℝ))) →
       { s : ℕ × ℕ × ℕ × ℕ | let ⟨a₁, a₂, b₁, b₂⟩ := s
         a₁ ∈ A ∧ a₂ ∈ A ∧ b₁ ∈ B ∧ b₂ ∈ B ∧
         a₁ ≠ a₂ ∧ a₁ + b₂ = a₂ + b₁ }.Infinite := by
