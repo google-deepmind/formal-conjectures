@@ -431,4 +431,30 @@ theorem girth_cycleGraph (n : ℕ) : (cycleGraph (n + 3)).girth = n + 3 := by
     (exists_girth_eq_length (G := cycleGraph (n + 3))).mpr (cycleGraph_not_isAcyclic n)
   rw [hg, length_eq_of_isCycle_cycleGraph hw]
 
+/-- Cycle lengths of `C_{n+3}` are characterised: only `n + 3` occurs. -/
+theorem mem_cycleLengths_cycleGraph_iff {n m : ℕ} :
+    m ∈ (cycleGraph (n + 3)).cycleLengths ↔ m = n + 3 := by
+  constructor
+  · intro hm
+    obtain ⟨_a, w, hw, rfl⟩ := hm
+    exact length_eq_of_isCycle_cycleGraph hw
+  · rintro rfl
+    exact mem_cycleLengths_cycleGraph n
+
+/-- Consequently `cycleLengths(C_{n+3}) = {n + 3}`. -/
+theorem cycleLengths_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).cycleLengths = {n + 3} := by
+  ext m
+  simp [mem_cycleLengths_cycleGraph_iff]
+
+/-- For cycle graphs, girth and circumference coincide. -/
+theorem girth_eq_circumference_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).girth = (cycleGraph (n + 3)).circumference := by
+  rw [girth_cycleGraph, circumference_cycleGraph]
+
+/-- In a non-acyclic finite graph, girth is at most the number of vertices. -/
+lemma girth_le_card {G : SimpleGraph α} [DecidableRel G.Adj]
+    (h : ¬ G.IsAcyclic) : G.girth ≤ Fintype.card α :=
+  (girth_le_circumference h).trans (circumference_le_card G)
+
 end SimpleGraph

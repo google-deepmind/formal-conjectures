@@ -275,4 +275,29 @@ theorem erdos_1012.variants.girth_cycleGraph (n : ℕ) :
     (cycleGraph (n + 3)).girth = n + 3 :=
   SimpleGraph.girth_cycleGraph n
 
+/-- Cycle lengths of `C_{n+3}` are exactly `{n + 3}`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.mem_cycleLengths_cycleGraph_iff {n m : ℕ} :
+    m ∈ (cycleGraph (n + 3)).cycleLengths ↔ m = n + 3 :=
+  SimpleGraph.mem_cycleLengths_cycleGraph_iff
+
+/-- `cycleLengths(C_{n+3}) = {n + 3}`. -/
+@[category test, AMS 5]
+theorem erdos_1012.variants.cycleLengths_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).cycleLengths = {n + 3} :=
+  SimpleGraph.cycleLengths_cycleGraph n
+
+/-- Girth and circumference of `C_{n+3}` coincide. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.girth_eq_circumference_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).girth = (cycleGraph (n + 3)).circumference :=
+  SimpleGraph.girth_eq_circumference_cycleGraph n
+
+/-- Non-acyclic finite graphs satisfy `girth ≤ #V`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.girth_le_card
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    (h : ¬ G.IsAcyclic) : G.girth ≤ Fintype.card V :=
+  SimpleGraph.girth_le_card h
+
 end Erdos1012
