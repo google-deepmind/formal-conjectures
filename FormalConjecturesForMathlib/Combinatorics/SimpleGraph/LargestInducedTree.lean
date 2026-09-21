@@ -63,8 +63,8 @@ lemma one_le_largestInducedTreeSize (G : SimpleGraph α) [Nonempty α] :
     simp [s]
   have hT : (G.induce (s : Set α)).IsTree := by
     rw [hs]
-    letI : Nonempty ↥({x} : Set α) := ⟨⟨x, by simp⟩⟩
-    letI : Subsingleton ↥({x} : Set α) := ⟨fun a b => by
+    let : Nonempty ↥({x} : Set α) := ⟨⟨x, by simp⟩⟩
+    let : Subsingleton ↥({x} : Set α) := ⟨fun a b => by
       apply Subtype.ext
       have ha : (a : α) = x := Set.mem_singleton_iff.mp a.property
       have hb : (b : α) = x := Set.mem_singleton_iff.mp b.property
@@ -82,7 +82,7 @@ lemma IsTree.induce_insert_of_unique_adj {G : SimpleGraph α} {s : Finset α} {z
     (G.induce ((insert z s : Finset α) : Set α)).IsTree := by
   classical
   constructor
-  · have hsconn : (G.induce (s : Set α)).Preconnected := hT.isConnected.preconnected
+  · have hsconn : (G.induce (s : Set α)).Preconnected := hT.connected.preconnected
     have hzconn : (G.induce ({z} : Set α)).Preconnected := .of_subsingleton
     have hconn := connected_induce_union (v := z) (w := a) (s := ({z} : Set α))
       (t := (s : Set α)) hzconn hsconn (by simp) (by simpa using ha) hza
@@ -94,7 +94,7 @@ lemma IsTree.induce_insert_of_unique_adj {G : SimpleGraph α} {s : Finset α} {z
     let q : G.Walk (e v) (e v) := c.map e.toHom
     have hq : q.IsCycle := by
       dsimp [q]
-      exact (Walk.map_isCycle_iff_of_injective e.injective).2 hc
+      exact (Walk.isCycle_map_iff_of_injective e.injective).2 hc
     have hq_mem (w : α) (hw : w ∈ q.support) : w ∈ insert z s := by
       dsimp [q] at hw
       rw [Walk.support_map] at hw
@@ -102,15 +102,15 @@ lemma IsTree.induce_insert_of_unique_adj {G : SimpleGraph α} {s : Finset α} {z
       change (w' : α) ∈ insert z s
       exact w'.property
     by_cases hzq : z ∈ q.support
-    · let r : G.Walk z z := q.rotate hzq
+    · let r : G.Walk z z := q.rotate z hzq
       have hr : r.IsCycle := by
         dsimp [r]
         exact hq.rotate hzq
       have hrsnd : r.snd ∈ q.support := by
-        apply (q.mem_support_rotate_iff hzq).mp
+        apply (q.mem_support_rotate_iff z hzq).mp
         simpa only [r] using r.getVert_mem_support 1
       have hrpenultimate : r.penultimate ∈ q.support := by
-        apply (q.mem_support_rotate_iff hzq).mp
+        apply (q.mem_support_rotate_iff z hzq).mp
         simpa only [r] using r.getVert_mem_support (r.length - 1)
       have hadj_snd : G.Adj z r.snd := r.adj_snd hr.not_nil
       have hadj_penultimate : G.Adj z r.penultimate :=
@@ -133,14 +133,14 @@ lemma IsTree.induce_insert_of_unique_adj {G : SimpleGraph α} {s : Finset α} {z
         · simpa using hmem
       let qi := q.induce (s : Set α) hqs
       have hqi : qi.IsCycle := by
-        apply (Walk.map_isCycle_iff_of_injective
+        apply (Walk.isCycle_map_iff_of_injective
           (f := (SimpleGraph.Embedding.induce (G := G) (s : Set α)).toHom)
           (SimpleGraph.Embedding.induce (G := G) (s : Set α)).injective).mp
         rw [show qi.map (SimpleGraph.Embedding.induce (G := G) (s : Set α)).toHom = q by
           dsimp [qi]
           exact Walk.map_induce q hqs]
         exact hq
-      exact hT.IsAcyclic qi hqi
+      exact hT.isAcyclic qi hqi
 
 
 omit [Fintype α] in
@@ -154,8 +154,8 @@ lemma Walk.induce_support_isTree_of_length_eq_dist {G : SimpleGraph α} {u v : �
         ext
         simp
       have hsingle : (G.induce ({u} : Set α)).IsTree := by
-        letI : Nonempty ↥({u} : Set α) := ⟨⟨u, by simp⟩⟩
-        letI : Subsingleton ↥({u} : Set α) := ⟨fun a b => by
+        let : Nonempty ↥({u} : Set α) := ⟨⟨u, by simp⟩⟩
+        let : Subsingleton ↥({u} : Set α) := ⟨fun a b => by
           apply Subtype.ext
           have ha : (a : α) = u := by
             simpa only [Set.mem_singleton_iff] using a.property
@@ -233,7 +233,7 @@ theorem girth_sub_one_le_largestInducedTreeSize (G : SimpleGraph α)
       let q : G.Walk (e x) (e x) := d.map e.toHom
       have hq : q.IsCycle := by
         dsimp [q]
-        exact (Walk.map_isCycle_iff_of_injective e.injective).2 hd
+        exact (Walk.isCycle_map_iff_of_injective e.injective).2 hd
       have hd_tail_path : d.tail.IsPath := by
         rw [Walk.isPath_def, d.support_tail_of_not_nil hd.not_nil]
         exact hd.support_nodup
@@ -291,7 +291,7 @@ lemma Connected.exists_adj_finset_compl {G : SimpleGraph α}
   obtain ⟨u, hu⟩ := hs
   have hzex : ∃ z : α, z ∉ s := by
     by_contra hn
-    push_neg at hn
+    push Not at hn
     apply hsu
     exact Finset.eq_univ_of_forall hn
   obtain ⟨z, hz⟩ := hzex
@@ -341,10 +341,10 @@ lemma IsTree.girth_add_one_le_card_of_two_leaves_of_two_adj
   let q : G.Walk a b := p.map e.toHom
   have hq : q.IsPath := by
     dsimp [q]
-    exact (Walk.map_isPath_iff_of_injective e.injective).2 hp
+    exact (Walk.isPath_map_iff_of_injective e.injective).2 hp
   have hq_s : ∀ w ∈ q.support, w ∈ s := by
     intro w hw
-    dsimp [q] at hw
+    change w ∈ (p.map e.toHom).support at hw
     rw [Walk.support_map] at hw
     obtain ⟨w', hw', rfl⟩ := List.mem_map.mp hw
     exact w'.property
@@ -441,7 +441,7 @@ lemma girth_add_one_le_largestInducedTreeSize_of_two_leaves
     rw [hset] at hT
     have hTuniv : (G.induce Set.univ).IsTree := hT
     have hGtree : G.IsTree := (induceUnivIso G).isTree_iff.mp hTuniv
-    exact hcyc hGtree.IsAcyclic
+    exact hcyc hGtree.isAcyclic
   obtain ⟨z, hz, a, ha, b, hb, hab, hza, hzb⟩ :=
     exists_two_adj_of_maximum_induced_tree_containing
       hG hrs hs hT hmax hsu

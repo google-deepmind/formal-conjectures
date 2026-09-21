@@ -110,10 +110,10 @@ private lemma exists_subpath_between {x y a b : β} {p : H.Walk x y} (hp : p.IsP
   classical
   by_cases hbt : b ∈ (p.takeUntil a ha).support
   · exact Or.inr ⟨(p.takeUntil a ha).dropUntil b hbt, (hp.takeUntil ha).dropUntil hbt,
-      List.Subset.trans ((p.takeUntil a ha).support_dropUntil_subset hbt)
-        (p.support_takeUntil_subset ha),
-      List.Subset.trans ((p.takeUntil a ha).edges_dropUntil_subset hbt)
-        (p.edges_takeUntil_subset ha)⟩
+      List.Subset.trans ((p.takeUntil a ha).support_dropUntil_subset_support hbt)
+        (p.support_takeUntil_subset_support ha),
+      List.Subset.trans ((p.takeUntil a ha).edges_dropUntil_subset_edges hbt)
+        (p.edges_takeUntil_subset_edges ha)⟩
   · have hbd : b ∈ (p.dropUntil a ha).support := by
       have h2 : b ∈ ((p.takeUntil a ha).append (p.dropUntil a ha)).support := by
         rw [p.take_spec ha]
@@ -122,10 +122,10 @@ private lemma exists_subpath_between {x y a b : β} {p : H.Walk x y} (hp : p.IsP
       · exact absurd hcase hbt
       · exact hcase
     exact Or.inl ⟨(p.dropUntil a ha).takeUntil b hbd, (hp.dropUntil ha).takeUntil hbd,
-      List.Subset.trans ((p.dropUntil a ha).support_takeUntil_subset hbd)
-        (p.support_dropUntil_subset ha),
-      List.Subset.trans ((p.dropUntil a ha).edges_takeUntil_subset hbd)
-        (p.edges_dropUntil_subset ha)⟩
+      List.Subset.trans ((p.dropUntil a ha).support_takeUntil_subset_support hbd)
+        (p.support_dropUntil_subset_support ha),
+      List.Subset.trans ((p.dropUntil a ha).edges_takeUntil_subset_edges hbd)
+        (p.edges_dropUntil_subset_edges ha)⟩
 
 /-- In a tree, the unique path between two adjacent vertices is the single edge. -/
 private lemma tree_isPath_eq_cons_nil (hH : H.IsTree) {a b : β} (hab : H.Adj a b)
@@ -201,11 +201,11 @@ lemma IsTree.girth_le_length_add_two_of_two_adj
   let q : G.Walk a b := p.map e.toHom
   have hq : q.IsPath := by
     dsimp [q]
-    exact (Walk.map_isPath_iff_of_injective e.injective).2 hp
-  have hq_length : q.length = p.length := by simp [q]
+    exact (Walk.isPath_map_iff_of_injective e.injective).2 hp
+  have hq_length : q.length = p.length := p.length_map e.toHom
   have hq_s : ∀ w ∈ q.support, w ∈ s := by
     intro w hw
-    dsimp [q] at hw
+    change w ∈ (p.map e.toHom).support at hw
     rw [Walk.support_map] at hw
     obtain ⟨w', hw', rfl⟩ := List.mem_map.mp hw
     exact w'.property
@@ -296,7 +296,7 @@ lemma IsTree.card_support_inter_closedNeighborFinset_le_three
         have hûeq : û = (⟨v, hvs⟩ : ↥(s : Set α)) := Subtype.ext hûv
         rwa [hûeq] at hûp
       by_contra hgt
-      push_neg at hgt
+      push Not at hgt
       obtain ⟨u₁, u₂, u₃, h1, h2, h3, h12, h13, h23⟩ := Finset.two_lt_card_iff.mp hgt
       obtain ⟨û₁, hû₁p, hû₁⟩ := (hmemW u₁).mp (Finset.mem_inter.mp h1).1
       obtain ⟨û₂, hû₂p, hû₂⟩ := (hmemW u₂).mp (Finset.mem_inter.mp h2).1
@@ -337,6 +337,7 @@ lemma IsTree.card_support_inter_closedNeighborFinset_le_three
     _ ≤ (W ∩ G.neighborFinset v).card + 1 := Finset.card_insert_le _ _
     _ ≤ 3 := by omega
 
+omit [Fintype α] in
 /-- Extract an explicit independent neighbour set witnessing `indepNeighborsCard`. -/
 lemma exists_indepSet_finset_neighbors (G : SimpleGraph α) (v : α) :
     ∃ S : Finset α, (∀ s ∈ S, G.Adj v s) ∧ G.IsIndepSet (S : Set α) ∧
@@ -366,8 +367,8 @@ lemma isTree_induce_insert_indepSet_neighbors (v : α) (S : Finset α) :
       intro _ _
       have hset : ((insert v (∅ : Finset α) : Finset α) : Set α) = {v} := by simp
       rw [hset]
-      letI : Nonempty ↥({v} : Set α) := ⟨⟨v, by simp⟩⟩
-      letI : Subsingleton ↥({v} : Set α) := ⟨fun a b => by
+      let : Nonempty ↥({v} : Set α) := ⟨⟨v, by simp⟩⟩
+      let : Subsingleton ↥({v} : Set α) := ⟨fun a b => by
         apply Subtype.ext
         have ha : (a : α) = v := by simpa only [Set.mem_singleton_iff] using a.property
         have hb : (b : α) = v := by simpa only [Set.mem_singleton_iff] using b.property
@@ -458,7 +459,7 @@ theorem maxDegree_add_girth_le_largestInducedTreeSize_add_three
     rw [hset] at hT
     have hTuniv : (G.induce Set.univ).IsTree := hT
     have hGtree : G.IsTree := (induceUnivIso G).isTree_iff.mp hTuniv
-    exact hcyc hGtree.IsAcyclic
+    exact hcyc hGtree.isAcyclic
   obtain ⟨z, hz, a, ha, b, hb, hab, hza, hzb⟩ :=
     exists_two_adj_of_maximum_induced_tree_containing hG hrs hsne hT hmax hsu
   obtain ⟨p, hp, -⟩ :=

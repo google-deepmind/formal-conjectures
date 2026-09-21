@@ -98,7 +98,7 @@ lemma exists_distinct_degree_one_of_secondSmallestDegree_eq_one [Nontrivial α]
     ∃ x y : α, x ≠ y ∧ G.degree x = 1 ∧ G.degree y = 1 := by
   let ds := degreeSequence G
   have hlen : 2 ≤ ds.length := by
-    simpa [ds, degreeSequence] using Fintype.one_lt_card (α := α)
+    simpa [ds, degreeSequence] using Nat.succ_le_of_lt (Fintype.one_lt_card (α := α))
   obtain ⟨a, b, tail, hds⟩ : ∃ a b tail, ds = a :: b :: tail := by
     cases h : ds with
     | nil => simp [h] at hlen
@@ -133,7 +133,7 @@ lemma exists_distinct_degree_one_of_secondSmallestDegree_eq_one [Nontrivial α]
     exact hcount
   have hleaves : 2 ≤ (Finset.univ.filter fun v : α => G.degree v = 1).card := by
     rw [Multiset.count_map] at hcountm
-    simpa only [← Finset.filter_val, eq_comm] using hcountm
+    simpa only [← Finset.filter_val, Finset.card_val, eq_comm] using hcountm
   have htwo : 1 < (Finset.univ.filter fun v : α => G.degree v = 1).card := by
     omega
   obtain ⟨x, hx, y, hy, hxy⟩ := Finset.one_lt_card.mp htwo
