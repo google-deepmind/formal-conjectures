@@ -234,4 +234,31 @@ theorem erdos_1091.variants.completeGraph_three_le_chromaticNumber (n : ℕ) :
     3 ≤ (completeGraph (Fin (n + 3))).chromaticNumber :=
   SimpleGraph.completeGraph_three_le_chromaticNumber n
 
+/-- Bipartite graphs forbid odd cycles with chords. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.isBipartite_not_hasOddCycleWithChords
+    {V : Type*} {G : SimpleGraph V} (h : G.IsBipartite) (k : ℕ) :
+    ¬ HasOddCycleWithChords G k :=
+  h.not_hasOddCycleWithChords k
+
+/-- Forests forbid odd cycles with chords. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.not_hasOddCycleWithChords_of_isAcyclic
+    {V : Type*} {G : SimpleGraph V} (h : G.IsAcyclic) (k : ℕ) :
+    ¬ HasOddCycleWithChords G k :=
+  SimpleGraph.not_hasOddCycleWithChords_of_isAcyclic h k
+
+/-- `K_{n+3}` is never a forest. -/
+@[category test, AMS 5]
+theorem erdos_1091.variants.completeGraph_not_isAcyclic (n : ℕ) :
+    ¬ (completeGraph (Fin (n + 3))).IsAcyclic :=
+  SimpleGraph.completeGraph_not_isAcyclic n
+
+/-- Odd `C_{n+3}` has chromatic number ≥ 3. -/
+@[category API, AMS 5]
+theorem erdos_1091.variants.cycleGraph_three_le_chromaticNumber_of_odd
+    {n : ℕ} (h : Odd (n + 3)) :
+    3 ≤ (cycleGraph (n + 3)).chromaticNumber :=
+  SimpleGraph.cycleGraph_three_le_chromaticNumber_of_odd h
+
 end Erdos1091

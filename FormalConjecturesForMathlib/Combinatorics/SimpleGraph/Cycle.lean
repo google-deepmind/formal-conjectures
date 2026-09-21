@@ -569,4 +569,24 @@ lemma completeGraph_three_le_chromaticNumber (n : ℕ) :
     3 ≤ (completeGraph (Fin (n + 3))).chromaticNumber :=
   (hasOddCycleWithChords_completeGraph_zero n).three_le_chromaticNumber
 
+/-- Bipartite graphs admit no odd cycle with (any number of) chords. -/
+lemma IsBipartite.not_hasOddCycleWithChords {G : SimpleGraph V} (h : G.IsBipartite) (k : ℕ) :
+    ¬ HasOddCycleWithChords G k :=
+  fun h' ↦ h'.not_isBipartite h
+
+/-- Forests admit no odd cycle with chords. -/
+lemma not_hasOddCycleWithChords_of_isAcyclic {G : SimpleGraph V} (h : G.IsAcyclic) (k : ℕ) :
+    ¬ HasOddCycleWithChords G k :=
+  fun h' ↦ not_isAcyclic_of_hasOddCycleWithChords h' h
+
+/-- `K_{n+3}` contains a triangle, so it is never a forest. -/
+theorem completeGraph_not_isAcyclic (n : ℕ) :
+    ¬ (completeGraph (Fin (n + 3))).IsAcyclic :=
+  not_isAcyclic_of_hasOddCycleWithChords (hasOddCycleWithChords_completeGraph_zero n)
+
+/-- Odd `C_{n+3}` has chromatic number at least `3`. -/
+lemma cycleGraph_three_le_chromaticNumber_of_odd {n : ℕ} (h : Odd (n + 3)) :
+    3 ≤ (cycleGraph (n + 3)).chromaticNumber :=
+  (hasOddCycleWithChords_cycleGraph_zero h).three_le_chromaticNumber
+
 end SimpleGraph
