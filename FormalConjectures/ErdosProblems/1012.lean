@@ -256,4 +256,23 @@ theorem erdos_1012.variants.mem_cycleLengths_completeGraph {n : ℕ} (hn : 3 ≤
     n ∈ (completeGraph (Fin n)).cycleLengths :=
   SimpleGraph.mem_cycleLengths_completeGraph_of_three_le hn
 
+/-- Every vertex of `C_{n+3}` has two neighbours. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.ncard_neighborSet_cycleGraph {n : ℕ} (v : Fin (n + 3)) :
+    ((cycleGraph (n + 3)).neighborSet v).ncard = 2 :=
+  SimpleGraph.ncard_neighborSet_cycleGraph v
+
+/-- Every cycle in `C_{n+3}` has length `n + 3`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.length_eq_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) :
+    w.length = n + 3 :=
+  SimpleGraph.length_eq_of_isCycle_cycleGraph hw
+
+/-- Girth of `C_{n+3}` is exactly `n + 3`. -/
+@[category API, AMS 5]
+theorem erdos_1012.variants.girth_cycleGraph (n : ℕ) :
+    (cycleGraph (n + 3)).girth = n + 3 :=
+  SimpleGraph.girth_cycleGraph n
+
 end Erdos1012

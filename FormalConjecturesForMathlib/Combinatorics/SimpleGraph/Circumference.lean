@@ -17,8 +17,10 @@ module
 
 public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Combinatorics.SimpleGraph.Acyclic
-public import Mathlib.Combinatorics.SimpleGraph.Girth
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Girth
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Order.Lattice.Nat
 
@@ -340,5 +342,93 @@ lemma mem_cycleLengths_completeGraph_of_three_le {n : ℕ} (hn : 3 ≤ n) :
     omega
   simpa [circumference_completeGraph_of_three_le hn] using
     mem_cycleLengths_of_circumference_pos hpos
+
+/-- Every vertex of `C_{n+3}` has neighbour-set cardinality `2`. -/
+lemma ncard_neighborSet_cycleGraph {n : ℕ} (v : Fin (n + 3)) :
+    ((cycleGraph (n + 3)).neighborSet v).ncard = 2 := by
+  rw [Set.ncard_eq_toFinset_card', Set.toFinset_card, card_neighborSet_eq_degree]
+  exact cycleGraph_degree_three_le
+
+/-- On the support of a cycle in `C_{n+3}`, the cycle subgraph realises every ambient edge. -/
+lemma neighborSet_toSubgraph_eq_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) {v : Fin (n + 3)}
+    (hv : v ∈ w.support) :
+    w.toSubgraph.neighborSet v = (cycleGraph (n + 3)).neighborSet v := by
+  refine Set.eq_of_subset_of_ncard_le (w.toSubgraph.neighborSet_subset v) ?_ (Set.toFinite _)
+  rw [hw.ncard_neighborSet_toSubgraph_eq_two hv, ncard_neighborSet_cycleGraph]
+
+/-- Adjacency in `C_{n+3}` cannot leave the support of a cycle. -/
+lemma mem_support_of_adj_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) {v u : Fin (n + 3)}
+    (hv : v ∈ w.support) (hadj : (cycleGraph (n + 3)).Adj v u) :
+    u ∈ w.support := by
+  have hmem : u ∈ w.toSubgraph.neighborSet v := by
+    rw [neighborSet_toSubgraph_eq_of_isCycle_cycleGraph hw hv]
+    exact hadj
+  exact w.mem_verts_toSubgraph.mp (w.toSubgraph.edge_vert hmem.symm)
+
+/-- Support membership propagates along any walk that starts on the cycle. -/
+lemma mem_support_of_walk_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle)
+    {x y : Fin (n + 3)} (p : (cycleGraph (n + 3)).Walk x y)
+    (hx : x ∈ w.support) : y ∈ w.support := by
+  induction p with
+  | nil => exact hx
+  | cons hadj _p ih =>
+    exact ih (mem_support_of_adj_of_isCycle_cycleGraph hw hx hadj)
+
+/-- Every cycle in `C_{n+3}` is Hamiltonian: its support is the full vertex set. -/
+lemma mem_support_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) (v : Fin (n + 3)) :
+    v ∈ w.support := by
+  have hconn : (cycleGraph (n + 3)).Connected := cycleGraph_connected (n := n + 2)
+  obtain ⟨p⟩ := hconn a v
+  exact mem_support_of_walk_of_isCycle_cycleGraph hw p w.start_mem_support
+
+/-- Consequently every vertex appears in `support.dropLast` of a cycle in `C_{n+3}`. -/
+lemma mem_support_dropLast_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) (v : Fin (n + 3)) :
+    v ∈ w.support.dropLast := by
+  have hv : v ∈ w.support := mem_support_of_isCycle_cycleGraph hw v
+  have heq : w.support.dropLast ++ [a] = w.support := by
+    rw [← Walk.support_dropLast hw.not_nil]
+    exact Walk.support_dropLast_concat hw.not_nil
+  have hcases : v ∈ w.support.dropLast ∨ v = a := by
+    have := List.mem_append.mp (heq ▸ hv)
+    exact this.elim Or.inl fun h ↦ Or.inr (List.mem_singleton.mp h)
+  cases hcases with
+  | inl h => exact h
+  | inr hv_eq =>
+    subst hv_eq
+    -- `support = a :: tail.support` and `tail.support ≠ []`, so `dropLast` starts with `a`
+    have hcons := Walk.cons_support_tail (p := w) hw.not_nil
+    have htail_ne : w.tail.support ≠ [] := by
+      have h3 := hw.three_le_length
+      have : w.tail.support.length = w.length := by
+        rw [Walk.length_support, Walk.length_tail_add_one hw.not_nil]
+      exact List.ne_nil_of_length_pos (by omega)
+    rw [← hcons, List.dropLast_cons_of_ne_nil htail_ne]
+    exact List.mem_cons_self
+
+/-- Every cycle walk in `C_{n+3}` has length exactly `n + 3`. -/
+theorem length_eq_of_isCycle_cycleGraph {n : ℕ} {a : Fin (n + 3)}
+    {w : (cycleGraph (n + 3)).Walk a a} (hw : w.IsCycle) :
+    w.length = n + 3 := by
+  have hnodup := hw.nodup_dropLast_support
+  have hlen : w.support.dropLast.length = w.length := by
+    rw [List.length_dropLast, Walk.length_support]
+    omega
+  have hcard : w.support.dropLast.toFinset.card = n + 3 := by
+    have : w.support.dropLast.toFinset = (Finset.univ : Finset (Fin (n + 3))) := by
+      ext v
+      simp [mem_support_dropLast_of_isCycle_cycleGraph hw]
+    rw [this, Finset.card_univ, Fintype.card_fin]
+  rw [← hlen, ← List.toFinset_card_of_nodup hnodup, hcard]
+
+/-- The girth of `C_{n+3}` is exactly `n + 3`. -/
+theorem girth_cycleGraph (n : ℕ) : (cycleGraph (n + 3)).girth = n + 3 := by
+  obtain ⟨_a, w, hw, hg⟩ :=
+    (exists_girth_eq_length (G := cycleGraph (n + 3))).mpr (cycleGraph_not_isAcyclic n)
+  rw [hg, length_eq_of_isCycle_cycleGraph hw]
 
 end SimpleGraph
