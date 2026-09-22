@@ -27,8 +27,9 @@ automaton fed the base-`k` digits of the index. By the kernel criterion of [Eil7
 exactly when the `k`-kernel of `a` is finite, and that is the definition used here: it needs no
 automaton, and finiteness of the kernel is what proofs about automatic sequences consume.
 
-Note that `IsAutomatic k a` already forces the range of `a` to be finite, since `a m` is the
-value at `0` of the kernel element `n ↦ a (k ^ e * n + m)` for any `k ^ e > m`.
+For `k ≥ 2`, `IsAutomatic k a` already forces the range of `a` to be finite, by
+`AutomaticSequence.IsAutomatic.finite_range`. For `k ≤ 1` the `k`-kernel of `a` is `{a}`, so
+every sequence is `k`-automatic.
 
 *References:*
   - [AS03] Allouche, Jean-Paul, and Jeffrey Shallit. "Automatic Sequences: Theory,
@@ -63,6 +64,15 @@ A sequence `a` is *`k`-automatic* if its `k`-kernel is finite. By [Eil74] this i
 index.
 -/
 def IsAutomatic (k : ℕ) (a : ℕ → α) : Prop := (kKernel k a).Finite
+
+/--
+A `k`-automatic sequence with `k ≥ 2` takes finitely many values: `a m` is the value at `0` of
+the kernel element `n ↦ a (k ^ m * n + m)`.
+-/
+theorem IsAutomatic.finite_range {k : ℕ} {a : ℕ → α} (hk : 2 ≤ k) (h : IsAutomatic k a) :
+    (Set.range a).Finite :=
+  (h.image fun b => b 0).subset <| Set.range_subset_iff.2 fun m =>
+    ⟨fun n => a (k ^ m * n + m), ⟨m, m, Nat.lt_pow_self hk, rfl⟩, by simp⟩
 
 /-- The `k`-kernel of a constant sequence is a singleton. -/
 @[simp]

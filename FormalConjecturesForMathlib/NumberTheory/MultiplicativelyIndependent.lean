@@ -59,11 +59,20 @@ integers $(n_i)$ with $\prod_i b_i^{n_i} = 1$; equivalently, the numbers $\log b
 linearly independent over $\mathbb{Q}$, which is the form used here.
 
 This is the joint notion, which is strictly stronger than pairwise multiplicative
-independence of the `b i`. For a family of two it agrees with
-`Nat.MultiplicativelyIndependent`, by `Nat.MultiplicativelyIndependent.family`.
+independence of the `b i` (`Nat.MultiplicativelyIndependentFamily.pairwise`). For a family of
+two it agrees with `Nat.MultiplicativelyIndependent`, by `Nat.MultiplicativelyIndependent.family`.
 -/
 def MultiplicativelyIndependentFamily {ι : Type*} (b : ι → ℕ) : Prop :=
   LinearIndependent ℚ fun i => Real.log (b i)
+
+/-- A multiplicatively independent family is pairwise multiplicatively independent. -/
+theorem MultiplicativelyIndependentFamily.pairwise {ι : Type*} {b : ι → ℕ}
+    (h : MultiplicativelyIndependentFamily b) :
+    Pairwise fun i j => MultiplicativelyIndependent (b i) (b j) := by
+  intro i j hij ⟨q, hq⟩
+  have hj := h.ne_zero j
+  refine (linearIndepOn_pair_iff _ hij.symm hj).1 (h.linearIndepOn _) q ?_
+  rw [Rat.smul_def, hq, div_mul_cancel₀ _ hj]
 
 /-- A multiplicatively independent pair is a multiplicatively independent family. -/
 theorem MultiplicativelyIndependent.family {p q : ℕ} (h : MultiplicativelyIndependent p q) :
