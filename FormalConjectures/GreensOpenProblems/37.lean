@@ -69,16 +69,31 @@ theorem green_37_theta (k : ℕ) :
     (fun N ↦ (m N k : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℕ → ℝ) k := by
   sorry
 
-/-- Determine an upper bound (big O) for `m(N, k)`. -/
-@[category research open, AMS 5 11]
-theorem green_37_bigO (k : ℕ) :
-    (fun N ↦ (m N k : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
-  sorry
+/-- The interval `{0, …, kN}` contains, for each `d = 1, …, N`, the arithmetic progression
+`{0, d, …, (k - 1)d}`, so `m(N, k) ≤ kN + 1`. -/
+@[category API, AMS 5 11]
+theorem m_le_mul_add_one (N k : ℕ) : m N k ≤ k * N + 1 := by
+  apply Nat.sInf_le
+  refine ⟨Finset.range (k * N + 1), Finset.card_range _, ?_⟩
+  intro d hd
+  refine ⟨0, ((Finset.range k).image (fun i ↦ i * d) : Set ℕ), ?_, ?_, ?_⟩
+  · intro x hx
+    obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hx
+    simp only [Finset.mem_coe, Finset.mem_range] at hi ⊢
+    exact Nat.lt_succ_of_le (Nat.mul_le_mul (Nat.le_of_lt hi) hd.2)
+  · rw [ENat.card_coe_set_eq, Set.encard_coe_eq_coe_finsetCard,
+      Finset.card_image_of_injective _
+        (fun _ _ h ↦ Nat.eq_of_mul_eq_mul_right hd.1 h), Finset.card_range]
+  · ext x; simp
 
-/-- Determine a strict upper bound (little o) for `m(N, k)`. -/
+/--
+Writing `F_k(N)` for `m(N, k)`, Green conjectures that `F_k(N) ≫_k N^(1 - c_k)` for some
+sequence `c_k` with `c_k → 0` as `k → ∞`.
+-/
 @[category research open, AMS 5 11]
-theorem green_37_littleO (k : ℕ) :
-    (fun N ↦ (m N k : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem green_37_lower_bound :
+    ∃ c : ℕ → ℝ, Tendsto c atTop (nhds 0) ∧
+      ∀ k, 0 < k → (fun N : ℕ ↦ (N : ℝ) ^ (1 - c k)) =O[atTop] fun N ↦ (m N k : ℝ) := by
   sorry
 
 end Green37
