@@ -49,7 +49,7 @@ $\mathbb{Q}_p$ (Ax–Kochen and Ershov).
 The instances of the problem are the elements of `MvPolynomial ℕ ℤ`, the integer
 polynomials in the variables $X_0, X_1, X_2, \dots$. This type is `Primcodable`, so it makes
 sense to ask whether a predicate on it is decidable by an algorithm: it is `Denumerable` by
-`MvPolynomial.instDenumerable`, and `Primcodable.ofDenumerable` turns that into a
+`MvPolynomial.instDenumerableNatInt`, and `Primcodable.ofDenumerable` turns that into a
 `Primcodable` structure. Restricting to integer coefficients is no loss of generality, because
 clearing denominators turns an equation with rational coefficients into an equivalent one with
 integer coefficients.

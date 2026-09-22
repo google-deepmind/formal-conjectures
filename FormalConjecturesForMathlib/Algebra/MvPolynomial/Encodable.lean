@@ -23,25 +23,38 @@ public import Mathlib.Logic.Denumerable
 @[expose] public section
 
 /-!
-# `Encodable` and `Denumerable` instances for multivariate polynomials
+# `Encodable` and `Denumerable` structures on multivariate polynomials
 
 `MvPolynomial σ R` is `AddMonoidAlgebra R (σ →₀ ℕ)`, so a polynomial is determined by its
 finitely supported family of coefficients. Transporting the `Encodable (α →₀ β)` instance
 along `AddMonoidAlgebra.coeffEquiv` therefore encodes the polynomials over an encodable
-coefficient ring in an encodable set of variables.
+coefficient ring in an encodable set of variables (`MvPolynomial.encodable`).
 
-In particular `MvPolynomial ℕ ℤ` is `Denumerable`, and hence `Primcodable` through
-`Primcodable.ofDenumerable`, so it makes sense to ask whether a predicate on integer
-polynomials in countably many variables is decidable by an algorithm. This is what
-Hilbert's 10th problem asks; see `FormalConjectures/HilbertProblems/10.lean`.
+In particular `MvPolynomial ℕ ℤ` is `Denumerable` (`MvPolynomial.instDenumerableNatInt`), and
+hence `Primcodable` through `Primcodable.ofDenumerable`, so it makes sense to ask whether a
+predicate on integer polynomials in countably many variables is decidable by an algorithm. This
+is what Hilbert's 10th problem asks; see `FormalConjectures/HilbertProblems/10.lean`.
+
+`MvPolynomial.encodable` is a `def`, not an instance: `Denumerable.ofEncodableOfInfinite`
+re-enumerates the codes, so the `Encodable` structure of `MvPolynomial.instDenumerableNatInt` is
+a different one, and two instances would give a diamond on `MvPolynomial ℕ ℤ`.
 -/
 
 namespace MvPolynomial
 
-instance instEncodable {σ R : Type*} [CommSemiring R] [Encodable σ] [Encodable R]
+/-- `MvPolynomial σ R` is encodable when `σ` and `R` are, via the `Encodable (α →₀ β)` instance
+transported along `AddMonoidAlgebra.coeffEquiv`. Not an instance; see the module docstring. -/
+@[instance_reducible]
+def encodable {σ R : Type*} [CommSemiring R] [Encodable σ] [Encodable R]
     [∀ x : R, Decidable (x ≠ 0)] : Encodable (MvPolynomial σ R) :=
   .ofEquiv _ AddMonoidAlgebra.coeffEquiv
 
-instance instDenumerable : Denumerable (MvPolynomial ℕ ℤ) := .ofEncodableOfInfinite _
+instance instDenumerableNatInt : Denumerable (MvPolynomial ℕ ℤ) :=
+  letI : Encodable (MvPolynomial ℕ ℤ) := encodable
+  .ofEncodableOfInfinite _
+
+/-- The only `Encodable` instance on `MvPolynomial ℕ ℤ` is the one coming from
+`MvPolynomial.instDenumerableNatInt`. -/
+example : (inferInstance : Encodable (MvPolynomial ℕ ℤ)) = Denumerable.toEncodable := rfl
 
 end MvPolynomial
