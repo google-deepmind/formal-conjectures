@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence with bitwise XOR
@@ -25,6 +26,8 @@ where $\mathrm{XOR}$ is the bitwise exclusive-or operator on integers.
 
 *References:*
 - [A182510](https://oeis.org/A182510)-/
+
+@[expose] public section
 
 namespace OeisA182510
 

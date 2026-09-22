@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Size of smallest subset of $\{1, 2, \dots, n\}$ with distinct subset sums
@@ -27,6 +28,8 @@ where $S \cdot S$ is the set of all products of elements of $S$.
 - [A194806](https://oeis.org/A194806)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA194806
 
