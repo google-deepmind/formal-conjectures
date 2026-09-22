@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Casas-Alvero Conjecture
@@ -37,6 +39,8 @@ The conjecture is now claimed to be proven in this paper:
 * [Proof of the Casas-Alvero conjecture: Soham Ghosh)](https://arxiv.org/pdf/2501.09272)
 
 -/
+
+@[expose] public section
 
 namespace CasasAlvero
 
@@ -69,10 +73,7 @@ theorem HasCasasAlveroPropᵣ.hasCasasAlveroProp {P : K[X]}
 @[category API, AMS 12]
 theorem HasCasasAlveroProp.map_iff {P : K[X]} :
     HasCasasAlveroProp (P.map f) ↔ HasCasasAlveroProp P := by
-  simp_rw [HasCasasAlveroProp]
-  congr!
-  · exact natDegree_map _
-  · rw [hasseDeriv_map, isCoprime_map]
+  simp [HasCasasAlveroProp, P.natDegree_map f, hasseDeriv_map, isCoprime_map]
 
 @[category API, AMS 12]
 theorem hasCasasAlveroProp_iffᵣ {P : K[X]} [IsAlgClosed K] :

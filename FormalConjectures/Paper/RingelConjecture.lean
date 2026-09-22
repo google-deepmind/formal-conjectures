@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ringel's Conjecture
@@ -26,6 +27,8 @@ Ringel's conjecture (1963): the complete graph $K_{2n+1}$ decomposes into copies
 with $n$ edges. It remains open; the case of all sufficiently large $n$ is proved by
 Montgomery–Pokrovskiy–Sudakov, see `Arxiv/2001.02665/RingelConjecture.lean`.
 -/
+
+@[expose] public section
 namespace RingelConjecture
 
 open SimpleGraph

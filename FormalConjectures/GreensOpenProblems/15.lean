@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 15
@@ -26,6 +27,8 @@ References:
 - [CCS14] J. Cassaigne, J. D. Currie, L. Schaeffer and J. Shallit, "Avoidance of additive cubes and
   related results", Adv. in Appl. Math. 56 (2014), 25–66.
 -/
+
+@[expose] public section
 
 open Set
 open scoped NNReal

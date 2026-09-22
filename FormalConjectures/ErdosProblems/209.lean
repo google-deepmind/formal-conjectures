@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 209
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Es16] Escudero, Juan García, *Gallai triangles in configurations of lines in the projective
   plane*. C. R. Math. Acad. Sci. Paris (2016), 551-554.
 -/
+
+@[expose] public section
 
 open EuclideanGeometry Affine
 

@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Normality of Irrational Algebraic Numbers
 
 It is unknown whether every irrational algebraic real number is normal in any integer base.
+Here a real number is *normal in base* $b$ if, for every $k \ge 1$, every string of $k$ digits
+appears in its base-$b$ expansion with asymptotic frequency $1/b^k$.
 The stronger conjecture that every irrational algebraic real number is absolutely normal is stated
 separately: normality in one base and normality in every base are not equivalent definitions.
 
@@ -29,6 +32,8 @@ separately: normality in one base and normality in every base are not equivalent
   expansions." Experimental Mathematics 10.2 (2001): 175-190.
   https://projecteuclid.org/journals/experimental-mathematics/volume-10/issue-2/On-the-random-character-of-fundamental-constant-expansions/em/999188630.full
 -/
+
+@[expose] public section
 
 open NormalNumber
 
