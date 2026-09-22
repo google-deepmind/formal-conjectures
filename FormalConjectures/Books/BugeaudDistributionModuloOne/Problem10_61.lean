@@ -107,7 +107,8 @@ below $1$, then Problem 10.61 holds at $\alpha$.
 [Ste26] states the criterion for a Pisot number of any degree $d \ge 2$, but proves it only
 in this degree-two case.
 -/
-@[category research solved, AMS 11 37]
+@[category research solved, AMS 11 37, formal_proof using lean4 at
+  "https://github.com/rwst/Pisot-Cantor-61/blob/a464f1cd3c8d14229a2f1d7881773987446d0df0/BB61/Criterion.lean#L230"]
 theorem problem_10_61.variants.covering_criterion {a b : ℤ} {α : ℝ}
     (hroot : α ^ 2 = a * α + b) (hα : 1 < α) (hβ : (a : ℝ) - α ≠ 0)
     (hconj : |(a : ℝ) - α| < 1) (hA : routeAExponent α |(a : ℝ) - α| < 1) :
@@ -121,7 +122,8 @@ $(\log_2 \alpha - 1)(\log_2(\alpha / |b|) - 1) > 1$, which for units reads $\alp
 The criterion therefore never reaches the slice $2 < \alpha \le 4$, and says nothing about
 a quadratic $\alpha$ with $A(\alpha) \ge 1$.
 -/
-@[category research solved, AMS 11 37]
+@[category research solved, AMS 11 37, formal_proof using lean4 at
+  "https://github.com/rwst/Pisot-Cantor-61/blob/a464f1cd3c8d14229a2f1d7881773987446d0df0/BB61/RouteANormalForm.lean#L283"]
 theorem problem_10_61.variants.covering_criterion_range {a b : ℤ} {α : ℝ}
     (hroot : α ^ 2 = a * α + b) (hα : 1 < α) (hconj : |(a : ℝ) - α| < 1) (hb : b ≠ 0) :
     routeAExponent α |(a : ℝ) - α| < 1 ↔
@@ -134,7 +136,8 @@ reaches: Problem 10.61 holds there in the strong form. There is one open interva
 $J \subseteq (0, 1)$, the same for every $\xi \in C(\alpha)$ and every $n \ge 0$, that
 $\{\xi \alpha^n\}$ misses.
 -/
-@[category research solved, AMS 11 37]
+@[category research solved, AMS 11 37, formal_proof using lean4 at
+  "https://github.com/rwst/Pisot-Cantor-61/blob/a464f1cd3c8d14229a2f1d7881773987446d0df0/BB61/RouteA.lean#L163"]
 theorem problem_10_61.variants.two_add_sqrt_five :
     ∃ x r : ℝ, 0 < r ∧ Set.Ioo (x - r) (x + r) ⊆ Set.Ioo 0 1 ∧
       ∀ ξ ∈ pisotCantorSet (2 + Real.sqrt 5), ∀ n : ℕ,
@@ -146,7 +149,8 @@ theorem problem_10_61.variants.two_add_sqrt_five :
 confinement-gap certificate in exact $\mathbb{Z}[\sqrt 3]$ arithmetic. This $\alpha$ lies
 in the slice $2 < \alpha \le 4$, which the covering criterion does not reach.
 -/
-@[category research solved, AMS 11 37]
+@[category research solved, AMS 11 37, formal_proof using lean4 at
+  "https://github.com/rwst/Pisot-Cantor-61/blob/a464f1cd3c8d14229a2f1d7881773987446d0df0/BB61/GapSqrtThree.lean#L298"]
 theorem problem_10_61.variants.two_add_sqrt_three :
     ∀ ξ ∈ pisotCantorSet (2 + Real.sqrt 3),
       ¬ IsEquidistributedModuloOne fun n : ℕ => ξ * (2 + Real.sqrt 3) ^ (n + 1) := by
