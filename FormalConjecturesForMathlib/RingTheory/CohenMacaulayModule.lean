@@ -85,6 +85,16 @@ theorem IsSmallCohenMacaulay.nontrivial (h : IsSmallCohenMacaulay R M) : Nontriv
   exact hrs.top_ne_smul (@Subsingleton.elim _ ((Submodule.subsingleton_iff R).mpr hM) _ _)
 
 /--
+A balanced big Cohen-Macaulay module is nonzero: on the zero module the maximal ideal acts by the
+identity.
+-/
+theorem IsBalancedBigCohenMacaulay.nontrivial (h : IsBalancedBigCohenMacaulay R M) :
+    Nontrivial M := by
+  by_contra hM
+  rw [not_nontrivial_iff_subsingleton] at hM
+  exact h.smul_top_ne_top (@Subsingleton.elim _ ((Submodule.subsingleton_iff R).mpr hM) _ _)
+
+/--
 Over a Noetherian local ring, `m • M ≠ M` follows from the regularity of a single system of
 parameters, because the ideal that a system of parameters generates contains a power of the
 maximal ideal.
