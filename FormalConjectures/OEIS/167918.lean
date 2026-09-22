@@ -200,7 +200,7 @@ Conjecture: the sequence is infinite, that is, for every $n \geq 1$ there is som
 with $S(n) \mid S(k)$, so that $a(n)$ is defined.
 -/
 @[category research open, AMS 11]
-theorem conjecture_infinite : ∀ n > 0, ∃ k > n, S n ∣ S k := by
+theorem conjecture_infinite (n : ℕ) (hn : n > 0) : ∃ k > n, S n ∣ S k := by
   sorry
 
 /--
