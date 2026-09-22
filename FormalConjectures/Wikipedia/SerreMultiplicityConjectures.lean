@@ -32,7 +32,9 @@ and conjectured the following three properties:
 
 Serre proved all three when $R$ is of equal characteristic, or of mixed characteristic and
 unramified. Vanishing was proved in general by Roberts and, independently, by Gillet and Soulé.
-Non-negativity was proved in general by Gabber. Positivity is open in general.
+Non-negativity was proved in general by Gabber. Positivity is open in general. For Serre's two
+special cases, this file states only positivity, since non-negativity and vanishing are now known
+in general.
 
 The intersection multiplicity is `Module.intersectionMultiplicity`, defined in
 `FormalConjecturesForMathlib.RingTheory.IntersectionMultiplicity`.
@@ -127,7 +129,7 @@ Serre proved the positivity conjecture when $R$ is of equal characteristic, that
 contains a field [Se00].
 -/
 @[category research solved, AMS 13 14]
-theorem intersectionMultiplicity_pos_of_algebra (k : Type*) [Field k] [Algebra k R]
+theorem intersectionMultiplicity_pos_of_equalCharacteristic (k : Type*) [Field k] [Algebra k R]
     (h : IsFiniteLength R (M ⊗[R] N))
     (hdim : Module.supportDim R M + Module.supportDim R N = ringKrullDim R) :
     0 < intersectionMultiplicity R M N := by

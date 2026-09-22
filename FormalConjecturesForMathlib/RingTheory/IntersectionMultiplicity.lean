@@ -38,6 +38,7 @@ every `Tor_i` has finite length, so `ENat.toNat` truncates nothing.
 
 - `Module.intersectionMultiplicity R M N`: the alternating sum above.
 - `Module.intersectionMultiplicity_of_projective`: if `N` is projective, `χ(M, N) = ℓ(M ⊗ N)`.
+- `Module.intersectionMultiplicity_eq_zero_of_subsingleton`: if `M = 0`, then `χ(M, N) = 0`.
 - `Module.intersectionMultiplicity_self_self`: over a field `k`, `χ(k, k) = 1`.
 -/
 
@@ -82,6 +83,21 @@ theorem intersectionMultiplicity_of_projective [Module.Projective R N] :
       ModuleCat.isZero_iff_subsingleton.mp
         (isZero_Tor_succ_of_projective (ModuleCat.{u} R) (ModuleCat.of R M) (ModuleCat.of R N) n)
     simp
+
+/-- If `M` is the zero module, then `χ(M, N) = 0`: the functor `M ⊗ -` is zero, so all its left
+derived functors vanish. -/
+theorem intersectionMultiplicity_eq_zero_of_subsingleton [Subsingleton M] :
+    intersectionMultiplicity R M N = 0 := by
+  have hM := ModuleCat.isZero_of_subsingleton (ModuleCat.of R M)
+  have hTor (i : ℕ) : IsZero (((Tor (ModuleCat.{u} R) i).obj (ModuleCat.of R M)).obj
+      (ModuleCat.of R N)) := by
+    refine IsZero.of_iso ?_ ((projectiveResolution (ModuleCat.of R N)).isoLeftDerivedObj _ i)
+    exact ShortComplex.isZero_homology_of_isZero_X₂ _
+      (((tensoringRight (ModuleCat.{u} R)).obj _).map_isZero hM)
+  unfold intersectionMultiplicity
+  refine finsum_eq_zero_of_forall_eq_zero fun i => ?_
+  have := ModuleCat.isZero_iff_subsingleton.mp (hTor i)
+  simp
 
 /-- Normalisation: over a field `k`, `χ(k, k) = 1`. -/
 theorem intersectionMultiplicity_self_self (k : Type u) [Field k] :
