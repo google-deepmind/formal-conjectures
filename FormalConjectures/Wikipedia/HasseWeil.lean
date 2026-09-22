@@ -42,6 +42,8 @@ Conjecture 2.10), so the weaker continuation is recorded here as well.
   [math.harvard.edu](https://people.math.harvard.edu/~gross/preprints/lectures-pcmi.pdf)
 -/
 
+@[expose] public section
+
 namespace HasseWeil
 
 section NumberField
