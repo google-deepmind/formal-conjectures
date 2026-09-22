@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«1043»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«1043»
 
 /-!
 # Erdős Problem 1048
@@ -28,6 +29,8 @@ import FormalConjectures.ErdosProblems.«1043»
   (1961), 97-115.
 -/
 
+@[expose] public section
+
 namespace Erdos1048
 
 open Polynomial Erdos1043
@@ -38,7 +41,7 @@ def openLevelSet (f : Polynomial ℂ) : Set ℂ :=
 
 /--
 If $f\in \mathbb{C}[x]$ is a monic polynomial with all roots satisfying
-$\lvert z\rvert \leq r$ for some $r<2$, then must
+$\lvert z\rvert \leq r$ for some $0 < r < 2$, then must
 $$\{ z: \lvert f(z)\rvert <1\}$$
 have a connected component with diameter $>2-r$?
 
@@ -50,7 +53,7 @@ $\to 0$ as $n\to \infty$.
 -/
 @[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
 theorem erdos_1048 : answer(False) ↔
-    ∀ (r : ℝ) (f : ℂ[X]), r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
+    ∀ (r : ℝ) (f : ℂ[X]), 0 < r → r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
       ∃ z ∈ openLevelSet f, ENNReal.ofReal (2 - r) <
         Metric.ediam (connectedComponentIn (openLevelSet f) z) := by
   sorry

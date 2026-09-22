@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ramsey numbers
@@ -39,6 +40,8 @@ $2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForM
 - [OEIS A212954](https://oeis.org/A212954)
 - [MathWorld: Ramsey Number](https://mathworld.wolfram.com/RamseyNumber.html)
 -/
+
+@[expose] public section
 
 namespace RamseyNumbers
 

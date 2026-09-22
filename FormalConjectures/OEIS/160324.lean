@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of ways to express $n$ as sum of square, pentagonal, and hexagonal numbers
@@ -23,6 +24,8 @@ $$a(n) = |\{(x, y, z) \in \mathbb{N}^3 : x^2 + p_5(y) + p_6(z) = n\}|$$
 
 *References:*
 - [A160324](https://oeis.org/A160324)-/
+
+@[expose] public section
 
 namespace OeisA160324
 
