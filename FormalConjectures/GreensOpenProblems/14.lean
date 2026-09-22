@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 14
@@ -38,6 +39,8 @@ import FormalConjecturesUtil
 - [Ko15] Kouril, Michal. "Leveraging FPGA clusters for SAT computations." Parallel Computing:
   On the Road to Exascale (2015): 525-532.
 -/
+
+@[expose] public section
 
 open Filter Set Topology
 
@@ -63,11 +66,15 @@ noncomputable def W (k r : ℕ) : ℕ := sInf (mixedMonoAPGuaranteeSet k r)
 Is $W(k, r)$ a polynomial in $r$, for fixed $k$?
 
 We formulate this as asking if $W(k, r)$ has polynomial growth in $r$.
-We know it is not the case for $k = 3$ [Gr21, p.3].
+The answer is no, already for $k = 4$. Every red $k$-term progression with $k \ge 3$ contains a
+red $3$-term progression, so `mixedMonoAPGuaranteeSet k r ⊆ mixedMonoAPGuaranteeSet 3 r`, and
+both sets are nonempty by van der Waerden's theorem, so $W(3, r) \le W(k, r)$. Polynomial
+growth for one $k \ge 4$ would therefore force polynomial growth for $k = 3$, contradicting
+`green_14_polynomial_k_eq_3` [Gr21, p.3].
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11]
 theorem green_14_polynomial :
-    answer(sorry) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
+    answer(False) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
   sorry
 
 /-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
@@ -89,14 +96,14 @@ theorem green_14_quadratic :
 /-- [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_green :
-    answer(True) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] fun r => (W 3 r : ℝ) := by
   sorry
 
 /-- [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$. -/
 @[category research solved, AMS 5 11]
 theorem green_14_lower_bound_hunter :
-    answer(True) ↔ ∃ c : ℝ, ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
@@ -147,15 +154,18 @@ theorem green_14_variant_2r2 :
 
 -- Known exact values for `W(3,r)` from [AKS14].
 /-- $W(3, 3) = 9$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L289"]
 theorem W_3_3 : W 3 3 = 9 := by sorry
 
 /-- $W(3, 4) = 18$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L301"]
 theorem W_3_4 : W 3 4 = 18 := by sorry
 
 /-- $W(3, 5) = 22$ from [AKS14]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+  "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L313"]
 theorem W_3_5 : W 3 5 = 22 := by sorry
 
 /-- $W(3, 6) = 32$ from [AKS14]. -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 453
@@ -34,6 +35,8 @@ import FormalConjecturesUtil
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [Po79] Pomerance, Carl, *The prime number graph*. Math. Comp. (1979), 399-408.
 -/
+
+@[expose] public section
 
 namespace Erdos453
 

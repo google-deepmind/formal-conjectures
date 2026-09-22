@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numerator of $\sum_{k=1}^n 2^k/k$.
@@ -26,6 +27,8 @@ if and only if n is prime.
 *References:*
 - [A108866](https://oeis.org/A108866)
 -/
+
+@[expose] public section
 
 namespace OeisA108866
 

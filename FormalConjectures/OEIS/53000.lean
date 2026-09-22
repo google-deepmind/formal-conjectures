@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = (\text{smallest prime} > n^2) - n^2$
@@ -23,6 +24,8 @@ The difference between the smallest prime strictly greater than $n^2$ and $n^2$.
 
 *References:*
 - [A053000](https://oeis.org/A053000)-/
+
+@[expose] public section
 
 namespace OeisA53000
 
