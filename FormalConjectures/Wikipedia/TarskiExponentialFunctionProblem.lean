@@ -56,15 +56,7 @@ decidability.
 
 namespace TarskiExponentialFunctionProblem
 
-open FirstOrder FirstOrder.Language
-
-/-- For the complete theory of the real exponential field, deciding consequences is the same
-as deciding membership, since the theory contains every sentence true in $\mathbb{R}_{\exp}$. -/
-@[category test, AMS 3]
-theorem isDecidable_iff_isRecursive :
-    (Language.orderedExpField.completeTheory ℝ).IsDecidable ↔
-      (Language.orderedExpField.completeTheory ℝ).IsRecursive :=
-  Theory.isDecidable_completeTheory_iff ℝ
+open FirstOrder
 
 /--
 **Tarski's theorem.** The first-order theory of the real ordered field
@@ -87,10 +79,30 @@ theorem tarski_exponential_function_problem :
 /-- The real version of Schanuel's conjecture: if $x_1, \ldots, x_n$ are real numbers that are
 linearly independent over $\mathbb{Q}$, then the field
 $\mathbb{Q}(x_1, \ldots, x_n, e^{x_1}, \ldots, e^{x_n})$ has transcendence degree at least $n$
-over $\mathbb{Q}$. -/
+over $\mathbb{Q}$.
+
+It is the special case of real arguments of Schanuel's conjecture, which is stated for complex
+numbers as `Schanuel.schanuel_conjecture`. -/
 def RealSchanuelConjecture : Prop :=
   ∀ (n : ℕ) (x : Fin n → ℝ), LinearIndependent ℚ x →
     n ≤ Algebra.trdeg ℚ (IntermediateField.adjoin ℚ (Set.range x ∪ Set.range (Real.exp ∘ x)))
+
+/-- Schanuel's conjecture for complex numbers, as stated in `Schanuel.schanuel_conjecture`,
+implies its real version. -/
+@[category API, AMS 11]
+theorem realSchanuelConjecture_of_schanuelConjecture
+    (h : ∀ (n : ℕ) (z : Fin n → ℂ), LinearIndependent ℚ z →
+      n ≤ Algebra.trdeg ℚ
+        (IntermediateField.adjoin ℚ (Set.range z ∪ Set.range (Complex.exp ∘ z)))) :
+    RealSchanuelConjecture := by
+  intro n x hx
+  let f : ℝ →ₐ[ℚ] ℂ := Complex.ofRealAm.restrictScalars ℚ
+  have hz := h n (f ∘ x) (hx.map' f.toLinearMap (LinearMap.ker_eq_bot.2 Complex.ofReal_injective))
+  have hexp : Complex.exp ∘ f ∘ x = f ∘ Real.exp ∘ x :=
+    funext fun i => (Complex.ofReal_exp (x i)).symm
+  rw [hexp, Set.range_comp, Set.range_comp, ← Set.image_union,
+    ← IntermediateField.adjoin_map] at hz
+  exact hz.trans_eq (IntermediateField.equivMap _ f).trdeg_eq.symm
 
 /--
 **Macintyre–Wilkie.** If the real version of Schanuel's conjecture holds, then the first-order
