@@ -56,11 +56,12 @@ noncomputable def path (G : SimpleGraph α) : ℕ :=
 /-- An explicit induced path witnesses a lower bound for `path`. -/
 theorem length_le_path_of_isInducedPath (G : SimpleGraph α) (l : List α)
     (hl : G.isInducedPath l) : l.length ≤ path G := by
+  classical
   unfold path
   let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
     ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
   have hmem : l.toFinset ∈ inducedPaths := by
-    simp only [inducedPaths, Finset.mem_filter, Finset.mem_univ, true_and]
+    simp [inducedPaths]
     exact ⟨l, rfl, hl⟩
   have hcard : l.toFinset.card ∈ inducedPaths.image Finset.card :=
     Finset.mem_image.mpr ⟨l.toFinset, hmem, rfl⟩
@@ -72,11 +73,12 @@ theorem length_le_path_of_isInducedPath (G : SimpleGraph α) (l : List α)
   | coe maximum =>
       rw [hmaximum] at hle
       have hleNat : l.toFinset.card ≤ maximum := WithBot.coe_le_coe.mp hle
-      simpa [hmaximum] using hleNat
+      simpa [hmaximum, Option.getD] using hleNat
 
 /-- A uniform upper bound on the lengths of induced paths bounds `path`. -/
 theorem path_le_of_isInducedPath_length_le (G : SimpleGraph α) (k : ℕ)
     (h : ∀ l : List α, G.isInducedPath l → l.length ≤ k) : path G ≤ k := by
+  classical
   unfold path
   let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
     ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
@@ -94,13 +96,14 @@ theorem path_le_of_isInducedPath_length_le (G : SimpleGraph α) (k : ℕ)
       have : maximum ≤ k := by
         rw [hmaximum] at hmax
         exact WithBot.coe_le_coe.mp hmax
-      simpa [hmaximum] using this
+      simpa [hmaximum, Option.getD] using this
 
 /-- If `G` has no induced path on `k + 1` vertices, then `path G ≤ k`. -/
 theorem path_le_of_not_exists_inducedPath_succ (G : SimpleGraph α) (k : ℕ)
     (h : ¬ ∃ e : Fin (k + 1) → α, Function.Injective e ∧
       ∀ i j : Fin (k + 1), G.Adj (e i) (e j) ↔
         i.val + 1 = j.val ∨ j.val + 1 = i.val) : path G ≤ k := by
+  classical
   apply path_le_of_isInducedPath_length_le G k
   intro l hl
   by_contra hlength

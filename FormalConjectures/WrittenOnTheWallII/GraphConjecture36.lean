@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import Mathlib.Data.Sym.Sym2
+public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
+public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 
 /-!
 # Written on the Wall II - Conjecture 36
@@ -28,6 +31,8 @@ three, one diametrical pair, and largest induced-path order five.
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+set_option linter.style.imports false
 
 @[expose] public section
 
