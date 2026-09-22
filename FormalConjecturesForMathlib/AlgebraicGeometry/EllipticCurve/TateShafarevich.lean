@@ -70,7 +70,6 @@ noncomputable def galoisRepresentation : TopRep ℤ <| Field.absoluteGaloisGroup
                  map_one' := by ext P; cases P <;> rfl
                  map_mul' _ _ := by ext P; cases P <;> rfl }
 
-
 /-- The Tate--Shafarevich subgroup of the first continuous Galois cohomology group over a number
 field, using restriction to every infinite and finite completion. -/
 noncomputable def tateShafarevich [NumberField K] :
