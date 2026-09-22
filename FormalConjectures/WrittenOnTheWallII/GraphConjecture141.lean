@@ -35,16 +35,16 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 141](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
-`tree(G) ≥ ⌊girth(G) / 2⌋ - 1 + max_v l(v)`
-where `tree(G)` is the number of vertices of a largest induced tree subgraph,
-`girth(G)` is the length of the shortest cycle (0 if acyclic), and
-`l(v) = indepNeighbors G v` is the independence number of the neighbourhood of `v`.
+For a simple connected graph $G$,
+$\mathrm{tree}(G) \ge (1/2) \cdot \mathrm{girth}(G) - 1 + \max_v l(v)$
+where $\mathrm{tree}(G)$ is the number of vertices of a largest induced tree subgraph,
+$\mathrm{girth}(G)$ is the length of the shortest cycle ($0$ if acyclic), and
+$l(v)$ (`indepNeighborsCard G v`) is the independence number of the neighbourhood of $v$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture141 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
-    (G.girth / 2 : ℤ) - 1 + ((Finset.univ.sup (indepNeighborsCard G) : ℕ) : ℤ) ≤
-    (largestInducedTreeSize G : ℤ) := by
+    (G.girth : ℝ) / 2 - 1 + ((Finset.univ.sup (indepNeighborsCard G) : ℕ) : ℝ) ≤
+    (largestInducedTreeSize G : ℝ) := by
   classical
   obtain ⟨v, -, hv⟩ :=
     Finset.exists_mem_eq_sup (Finset.univ : Finset α) Finset.univ_nonempty
@@ -52,20 +52,22 @@ theorem conjecture141 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
   have hstar : Finset.univ.sup (indepNeighborsCard G) + 1 ≤ largestInducedTreeSize G := by
     rw [hv]
     exact indepNeighborsCard_add_one_le_largestInducedTreeSize G v
-  by_cases hcyc : G.IsAcyclic
-  · have hg0 : G.girth = 0 := hcyc.girth_eq_zero
-    rw [hg0]
-    push_cast
-    omega
-  · have hg3 : 3 ≤ G.girth := G.three_le_girth hcyc
-    rcases Nat.lt_or_ge G.girth 6 with hg5 | hg6
-    · omega
-    · have hg4 : 4 ≤ G.girth := by omega
-      have hmain := maxDegree_add_girth_le_largestInducedTreeSize_add_three G h hcyc hg4
-      have hsup : Finset.univ.sup (indepNeighborsCard G) ≤ G.maxDegree :=
-        Finset.sup_le fun w _ =>
-          (indepNeighborsCard_le_degree G w).trans (G.degree_le_maxDegree w)
+  have key : G.girth + 2 * Finset.univ.sup (indepNeighborsCard G) ≤
+      2 * largestInducedTreeSize G + 2 := by
+    by_cases hcyc : G.IsAcyclic
+    · rw [hcyc.girth_eq_zero]
       omega
+    · have hg3 : 3 ≤ G.girth := G.three_le_girth hcyc
+      rcases Nat.lt_or_ge G.girth 4 with hg3' | hg4
+      · omega
+      · have hmain := maxDegree_add_girth_le_largestInducedTreeSize_add_three G h hcyc hg4
+        have hsup : Finset.univ.sup (indepNeighborsCard G) ≤ G.maxDegree :=
+          Finset.sup_le fun w _ =>
+            (indepNeighborsCard_le_degree G w).trans (G.degree_le_maxDegree w)
+        omega
+  have := (Nat.cast_le (α := ℝ)).2 key
+  push_cast at this
+  linarith
 
 -- Sanity checks
 
