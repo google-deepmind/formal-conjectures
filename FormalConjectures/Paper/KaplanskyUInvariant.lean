@@ -78,7 +78,15 @@ namespace KaplanskyUInvariant
 open QuadraticForm
 
 /-- `IsUInvariant n` means that some field of characteristic not `2` has $u$-invariant $n$, i.e.
-$n$ is the largest dimension of an anisotropic quadratic form over that field. -/
+$n$ is the largest dimension of an anisotropic quadratic form over that field.
+
+The field is taken in `Type` (universe $0$), which loses nothing. A quadratic form in $m$
+variables is given by finitely many coefficients, so for fixed $n$ the property "characteristic
+not $2$ and $u$-invariant $n$" is one first-order sentence in the language of rings: $1 + 1 \ne 0$,
+some form in $n$ variables is anisotropic, and every form in $n + 1$ variables is isotropic (then
+so is every form in more variables). By the downward Löwenheim–Skolem theorem, a field with this
+property in any universe has a countable elementary subfield, which has the same property and is
+isomorphic to a field in `Type`. Conversely, `ULift` moves a field in `Type` to any universe. -/
 def IsUInvariant (n : ℕ) : Prop :=
   ∃ (F : Type) (_ : Field F) (_ : NeZero (2 : F)), IsGreatest (anisotropicDims F) n
 
@@ -198,13 +206,18 @@ theorem u_invariant_values.variants.karpenko (n : ℕ) (h₁ : ∀ r, 2 ^ r ≠ 
   sorry
 
 /--
-The special case $n = 11$ of `u_invariant_values.variants.karpenko`, the first odd value not of
-the form $2^r + 1$ shown to be a $u$-invariant; it was announced in the preprint
-*Fields of $u$-invariant 11* (21 April 2026) that [Karpenko2026] absorbs.
+The special case $n = 11$ of `u_invariant_values.variants.karpenko` (neither $12$ nor $14$ is a
+power of $2$), the first odd value not of the form $2^r + 1$ shown to be a $u$-invariant; it was
+announced in the preprint *Fields of $u$-invariant 11* (21 April 2026) that [Karpenko2026]
+absorbs.
 -/
 @[category research solved, AMS 11 12]
 theorem u_invariant_values.variants.eleven : IsUInvariant 11 := by
-  sorry
+  refine u_invariant_values.variants.karpenko 11 (fun r h ↦ ?_) (fun r h ↦ ?_) <;>
+  · rcases Nat.lt_or_ge r 4 with hr | hr
+    · interval_cases r <;> simp_all
+    · have := Nat.pow_le_pow_right two_pos hr
+      omega
 
 /--
 The expectation recorded in [MerkurjevParimala2025, §5.1]: every odd integer $\ge 9$ is a
