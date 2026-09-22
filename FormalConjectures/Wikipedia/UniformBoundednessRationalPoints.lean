@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Uniform boundedness conjecture for rational points
@@ -69,6 +70,8 @@ $\ell(D) \geq \deg D + 1 - g$ holds for every divisor $D$; see [Sti2009], Sectio
   Springer GTM 254, Chapter 1, https://doi.org/10.1007/978-3-540-76878-4
 - [Stacks] The Stacks Project, Theorem 53.2.6, https://stacks.math.columbia.edu/tag/0BY1
 -/
+
+@[expose] public section
 
 namespace UniformBoundedness
 
