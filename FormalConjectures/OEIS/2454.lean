@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Central factorial numbers: $((2n)!!)^2$
@@ -25,6 +26,8 @@ Central factorial numbers: $a(n) = 4^n (n!)^2 = ((2n)!!)^2$.
 - [A002454](https://oeis.org/A002454)
 - [SSX22] [She, Y.-F., Sun, Z.-W., Xia, W., *A novel permanent identity with applications*,
   arXiv:2208.12167 (2022)](https://arxiv.org/abs/2208.12167)-/
+
+@[expose] public section
 
 namespace OeisA2454
 

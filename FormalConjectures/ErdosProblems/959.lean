@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 959
@@ -22,10 +23,11 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/959](https://www.erdosproblems.com/959)
 -/
 
+@[expose] public section
+
 namespace Erdos959
 
 open EuclideanGeometry Filter
-open scoped Topology
 
 noncomputable section
 
@@ -76,13 +78,10 @@ the distance $d$ is determined, ordered so that
 $f(d_1)\geq f(d_2)\geq \cdots \geq f(d_k)$. Estimate
 $$\max (f(d_1)-f(d_2)),$$
 where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
-
-The asymptotic order of `extremalGap` is not known; a natural formalization of
-"estimate" asks whether it has a well-defined polynomial growth exponent.
 -/
 @[category research open, AMS 52]
-theorem erdos_959 : answer(sorry) ↔
-    ∃ γ : ℝ, Tendsto (fun n : ℕ => Real.log (extremalGap n) / Real.log n) atTop (𝓝 γ) := by
+theorem erdos_959 :
+    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--

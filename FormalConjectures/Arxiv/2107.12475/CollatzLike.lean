@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Digit $2$ in base $3$ representation of $2^n$
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   by *Tristan Stérin, Damien Woods*, Reachability Problems, Lecture Notes in Computer Science
   15050, Springer, Cham (2024)
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2107.12475»
 

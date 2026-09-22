@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Tu-Deng Conjecture
@@ -45,6 +47,8 @@ The conjecture is no longer open: [LLX26] and, independently, [Cu26] give comple
 [Lean26] is a Lean 4 development of the same bound, stated for the count of natural-number
 representatives $x < 2^k - 1$ rather than for the set of residue pairs used below.
 -/
+
+@[expose] public section
 
 namespace TuDengConjecture
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Monochromatic quantum graphs (inherited vertex colorings)
@@ -75,6 +76,8 @@ coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
   graph equation systems over integral domains](https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/tree/6c5340384479dbb36129b2e0084449be2458cce2),
   commit `6c534038`.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open scoped NNReal
@@ -404,19 +407,26 @@ theorem eqSystem4_no_solution_ge4 :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+A complete Lean 4 proof is available in the linked external certificate repository.
+-/
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/algal/krenn-gu-6x3-certificate/blob/c04696e515e0c02be140353fb52ea60c62e827b1/KrennGuCertificate/Unrestricted.lean#L201-L222"]
 theorem eqSystem6_no_solution_d3 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℂ, EqSystemN 6 3 W := by
   sorry
 
 
 /-- For $N = 6$ and $D = 4$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-n6-d4-lean/blob/7d30141a19714986d6f9e632314fd880c9a1e86e/lean/QuantumCR/FormalConjecturesWrapper.lean#L30-L37"]
 theorem eqSystem6_no_solution_d4 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 4 ℂ, EqSystemN 6 4 W := by
   sorry
 
@@ -668,51 +678,63 @@ theorem eqSystem4_no_solution_ge4_int :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L32-L39"]
 theorem eqSystem6_no_solution_d3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ, EqSystemN 6 3 W := by
   sorry
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L41-L48"]
 theorem eqSystem6_no_solution_d5_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℤ, EqSystemN 6 5 W := by
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L50-L58"]
 theorem eqSystem6_no_solution_ge3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℤ, EqSystemN 6 D W := by
   sorry
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L60-L67"]
 theorem eqSystem8_no_solution_d3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 8 3 ℤ, EqSystemN 8 3 W := by
   sorry
 
 
 /-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L69-L76"]
 theorem eqSystem10_no_solution_d3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 3 ℤ, EqSystemN 10 3 W := by
   sorry
 
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{Z}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L78-L86"]
 theorem eqSystem_no_solution_ge6_ge3_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
         ¬ ∃ W : WeightsN N D ℤ, EqSystemN N D W := by
   sorry
@@ -737,9 +759,11 @@ theorem eqSystem4_no_solution_ge4_trinary_int :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L88-L97"]
 theorem eqSystem6_no_solution_d3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 6 3 W := by
@@ -747,9 +771,11 @@ theorem eqSystem6_no_solution_d3_trinary_int :
 
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L99-L108"]
 theorem eqSystem6_no_solution_d5_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 5 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 6 5 W := by
@@ -757,9 +783,11 @@ theorem eqSystem6_no_solution_d5_trinary_int :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L110-L120"]
 theorem eqSystem6_no_solution_ge3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℤ,
             (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
@@ -768,9 +796,11 @@ theorem eqSystem6_no_solution_ge3_trinary_int :
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L122-L131"]
 theorem eqSystem8_no_solution_d3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 8 3 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 8 3 W := by
@@ -779,9 +809,11 @@ theorem eqSystem8_no_solution_d3_trinary_int :
 
 /-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L133-L142"]
 theorem eqSystem10_no_solution_d3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 3 ℤ,
           (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧
             EqSystemN 10 3 W := by
@@ -789,9 +821,11 @@ theorem eqSystem10_no_solution_d3_trinary_int :
 
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{Z}$ with weights in $\{-1, 0, 1\}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graphs-lean/blob/d3ed1892ef181f5f5f5d61d9b5817f05b53a6675/lean/QuantumLean/FormalConjecturesWrappers.lean#L144-L154"]
 theorem eqSystem_no_solution_ge6_ge3_trinary_int :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
         ¬ ∃ W : WeightsN N D ℤ,
             (∀ e, W e = (-1 : ℤ) ∨ W e = 0 ∨ W e = 1) ∧

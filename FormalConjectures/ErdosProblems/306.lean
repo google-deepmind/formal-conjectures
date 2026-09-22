@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   results of Rosser and Schoenfeld, *Approximate formulas for some functions of prime numbers*,
   Illinois J. Math. **6** (1962), 64-94, declared there as axioms
 -/
+
+@[expose] public section
 
 open ArithmeticFunction
 open scoped omega Omega

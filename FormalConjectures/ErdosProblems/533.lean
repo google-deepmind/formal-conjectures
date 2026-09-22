@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 533
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   *Geometric constructions for Ramsey–Turán theory*,
   [arXiv:2103.10423](https://arxiv.org/abs/2103.10423) (2021).
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 
@@ -57,7 +60,8 @@ The answer is **no**: Balogh and Lenz [BaLe13] disproved it by showing $\delta_3
 the exact value $\delta_3(5) = 1/12$ was determined by the matching lower-bound construction of
 Liu, Reiher, Sharifzadeh, and Staden [LRSS21] (see `erdos_533.variants.lrss_lower`).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos533.lean#L2922"]
 theorem erdos_533 : answer(False) ↔
     ∀ δ : ℝ, 0 < δ → ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
       ∀ G : SimpleGraph (Fin n), G.CliqueFree 5 →

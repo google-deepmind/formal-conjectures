@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Catalan-Larcombe-French sequence
@@ -26,6 +27,8 @@ $$n^2 a(n) = 8(3n^2 - 3n + 1) a(n-1) - 128(n-1)^2 a(n-2)$$ for $n \ge 2$.
 - [A053175](https://oeis.org/A053175)
 - [ZS18] [Zhu, B.-X., Sun, Z.-W., *Hankel-type determinants for some combinatorial sequences*,
   Int. J. Number Theory **14** (2018), 1265-1277](https://arxiv.org/abs/1609.06810)-/
+
+@[expose] public section
 
 namespace OeisA53175
 
