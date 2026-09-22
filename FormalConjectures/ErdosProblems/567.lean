@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 567
@@ -30,6 +31,8 @@ In other words, is $G$ Ramsey size linear? A special case of Problem 566.
 [EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
 Combin. Probab. Comput. (1993), 389-399.
 -/
+
+@[expose] public section
 
 namespace Erdos567
 

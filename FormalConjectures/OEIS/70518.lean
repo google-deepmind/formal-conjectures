@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Value of $n$-th cyclotomic polynomial at $n$
@@ -25,6 +26,8 @@ $$a(n) = |\Phi_n(n)|$$
 
 *References:*
 - [A070518](https://oeis.org/A070518)-/
+
+@[expose] public section
 
 namespace OeisA70518
 

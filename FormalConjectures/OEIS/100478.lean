@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pentanacci $\pi$ sequence
@@ -25,6 +26,8 @@ for $n>5$, $a(n) = \pi(\sum_{j=1}^5 a(n-j))$ where $\pi = A000720$.
 *References:*
 - [A100478](https://oeis.org/A100478)
 -/
+
+@[expose] public section
 
 namespace OeisA100478
 

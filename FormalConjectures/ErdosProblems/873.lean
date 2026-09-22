@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 873
 
 *Reference:* [erdosproblems.com/873](https://www.erdosproblems.com/873)
 -/
+
+@[expose] public section
 
 namespace Erdos873
 
@@ -37,6 +40,42 @@ $F(A,X,k) < X^\epsilon$?-/
 @[category research open, AMS 11]
 theorem erdos_873 : answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)), 0 < a 0 → StrictMono a →
     ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal := by
+  sorry
+
+/-
+## Statements following the original question
+
+The paper states (2), (3), and then conjectures an all-X strengthening of (3).
+-/
+
+/-- The upper bound (2). -/
+@[category research solved, AMS 11]
+theorem erdos_873.variants.triple_upper_bound :
+    ∃ C : ℝ, 0 < C ∧
+      ∀ (a : ℕ → ℕ), 0 < a 0 → StrictMono a →
+        ∀ᶠ X : ℝ in Filter.atTop,
+          (F a X 3 : EReal) ≤
+            (C * X ^ (1 / 3 : ℝ) * Real.log X).toEReal := by
+  sorry
+
+/-- The infinitely-often lower bound (3). -/
+@[category research solved, AMS 11]
+theorem erdos_873.variants.triple_lower_bound_infinitely_often :
+    ∃ (a : ℕ → ℕ) (c : ℝ),
+      0 < a 0 ∧ StrictMono a ∧ 0 < c ∧
+        ∀ X₀ : ℝ, ∃ X > X₀,
+          (c * X ^ (1 / 3 : ℝ) * Real.log X).toEReal ≤ (F a X 3 : EReal) := by
+  sorry
+
+/-- There may be a sequence for which the lower bound in (3) holds for every X. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/KitaKen1/erdos-873-lean/blob/44cbf183239517795522bd3f18124b08c095cc6d/lean/Erdos873Final.lean#L17-L24"]
+theorem erdos_873.variants.supplement_all_scale :
+    answer(False) ↔
+      ∃ (a : ℕ → ℕ) (c : ℝ),
+        0 < a 0 ∧ StrictMono a ∧ 0 < c ∧
+          ∀ X : ℝ, 0 < X →
+            (c * X ^ (1 / 3 : ℝ) * Real.log X).toEReal ≤ (F a X 3 : EReal) := by
   sorry
 
 end Erdos873

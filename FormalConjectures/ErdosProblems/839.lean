@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 839
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 See also [Erdős Problem 359](https://www.erdosproblems.com/359) and
 [Erdős Problem 867](https://www.erdosproblems.com/867).
 -/
+
+@[expose] public section
 
 open Filter Real Finset
 open scoped ENNReal

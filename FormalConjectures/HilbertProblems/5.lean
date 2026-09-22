@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's Fifth Problem and the Hilbert–Smith Conjecture
@@ -47,6 +48,10 @@ instance `ℝ` with the discrete topology acting on `ℝ` by translations.
 The acting group is not assumed Hausdorff: a topological group acting continuously and
 faithfully on a Hausdorff space is Hausdorff, because the closure of the identity acts trivially.
 
+The hypotheses on the manifold `X` are written in each theorem. A section variable
+`[ChartedSpace (EuclideanSpace ℝ (Fin n)) X]` is included only in a theorem that mentions `n`,
+so it would be dropped silently from a statement that mentions only `X`.
+
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Hilbert%E2%80%93Smith_conjecture)
 - [Tao's blog](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/)
@@ -59,13 +64,13 @@ faithfully on a Hausdorff space is Hausdorff, because the closure of the identit
   Enseign. Math. 61 (2015), 3–43. https://doi.org/10.4171/LEM/61-1/2-2
 -/
 
+@[expose] public section
+
 namespace Hilbert5
 
 open scoped Manifold ContDiff Bundle
 
-variable {G : Type*} [Group G] [TopologicalSpace G]
-variable {n : ℕ} {X : Type*} [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
-  [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+variable {G : Type*} [Group G] [TopologicalSpace G] {n : ℕ}
 
 /-- The circle group admits a Lie group structure. -/
 @[category test, AMS 22]
@@ -81,7 +86,9 @@ theorem admitsLieGroupStructure_multiplicative_int :
 /-- **Hilbert–Smith conjecture**: every locally compact topological group acting continuously
 and faithfully on a connected finite-dimensional topological manifold is a Lie group. -/
 @[category research open, AMS 22 57 58]
-theorem hilbert_smith_conjecture
+theorem hilbert_smith_conjecture {X : Type*}
+    [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
     [IsTopologicalGroup G] [LocallyCompactSpace G]
     [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
     AdmitsLieGroupStructure G := by
@@ -122,20 +129,22 @@ on a connected finite-dimensional topological manifold. This is equivalent to
 `hilbert_smith_conjecture` by the Gleason–Yamabe theorem together with Newman's theorem on
 periodic transformations of manifolds. -/
 @[category research open, AMS 22 57 58]
-theorem hilbert_smith_padic_formulation (p : ℕ) [Fact p.Prime]
-    [AddAction ℤ_[p] X] [ContinuousVAdd ℤ_[p] X] :
+theorem hilbert_smith_padic_formulation {X : Type*}
+    [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+    (p : ℕ) [Fact p.Prime] [AddAction ℤ_[p] X] [ContinuousVAdd ℤ_[p] X] :
     ¬ FaithfulVAdd ℤ_[p] X := by
   sorry
 
-/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff,
-second-countable topological group modeled on a finite-dimensional Euclidean space is continuously
-isomorphic to a real-analytic Lie group.
+/-- **Hilbert's fifth problem** (Gleason–Montgomery–Zippin, 1952): every Hausdorff topological
+group modeled on a finite-dimensional Euclidean space is continuously isomorphic to a real-analytic
+Lie group.
 
 The input `ChartedSpace` supplies only a topological atlas. The compatible analytic atlas and
 analytic group operations belong to the output `LieGroupPresentation`. -/
 @[category research solved, AMS 22 57]
 theorem hilbert_fifth_problem
-    [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G]
+    [IsTopologicalGroup G] [T2Space G]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) G] :
     Nonempty (LieGroupPresentation G n) := by
   sorry

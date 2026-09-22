@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 548
@@ -36,6 +37,8 @@ import FormalConjecturesUtil
   contain no {$C_4$}*. Acta Math. Appl. Sin. Engl. Ser. (2004), 397-400.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Erdos548
@@ -43,7 +46,8 @@ namespace Erdos548
 /--
 Let $n\geq k+1$. Every graph on $n$ vertices with at least $\frac{k-1}{2}n+1$ edges contains every tree on $k+1$ vertices.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/4c355efbf8e90c2572aa8d0c8d6f3b4b43f011f4/problems/548/Erdos548.lean#L1182"]
 theorem erdos_548 (n k : ℕ) (hk : k + 1 ≤ n) (G : SimpleGraph (Fin n))
     (H : ((k : ℚ) - 1) / 2 * n + 1 ≤ (G.edgeSet.ncard : ℚ))
     (T : SimpleGraph (Fin (k + 1))) (hT : T.IsTree) : T.IsContained G := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1080
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   on {$m,n$} vertices with many edges and without small cycles. J. Combin. Theory Ser. B (1994),
   111--117.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
