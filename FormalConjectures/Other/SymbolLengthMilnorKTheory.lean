@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The symbol length of $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$
@@ -100,6 +101,8 @@ are in `FormalConjecturesForMathlib/FieldTheory/MilnorKTheory.lean`.
   174 (2011), 401–438,
   [doi:10.4007/annals.2011.174.1.11](https://doi.org/10.4007/annals.2011.174.1.11).
 -/
+
+@[expose] public section
 
 open MilnorK
 
