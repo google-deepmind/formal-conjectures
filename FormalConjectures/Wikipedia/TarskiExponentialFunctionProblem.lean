@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Tarski's exponential function problem
@@ -50,6 +51,8 @@ decidability.
   arXiv:2603.08365 (2026). Assuming Schanuel's conjecture, gives an axiomatisation of the
   theory of $\mathbb{R}_{\exp}$ and recovers the Macintyre–Wilkie decidability result.
 -/
+
+@[expose] public section
 
 namespace TarskiExponentialFunctionProblem
 
