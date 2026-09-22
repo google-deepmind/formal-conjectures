@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Convergence of fraction numerators $a(n)/b(n)$ to $e$
@@ -31,6 +32,8 @@ $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [b](https://oeis.org/b)
 -/
+
+@[expose] public section
 
 namespace OeisA340737
 

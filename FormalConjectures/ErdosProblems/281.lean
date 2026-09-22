@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 281
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   Arithmetica (1936), 147-151.
 - [HaRo66] Halberstam, H. and Roth, K. F., *Sequences. Vol. I*. (1966), xx+291.
 -/
+
+@[expose] public section
 
 open Filter Topology
 

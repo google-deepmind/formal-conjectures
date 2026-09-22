@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Lovász–Plummer conjecture (proved 2011) and Sheehan's conjecture
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 * [Th98] Thomassen, C. (1998). "Independent dominating sets and a second Hamiltonian cycle in
   regular graphs." *J. Combin. Theory Ser. B* 72, pp. 104--109.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

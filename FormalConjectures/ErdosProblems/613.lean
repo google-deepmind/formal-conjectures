@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 613
 
 *Reference:* [erdosproblems.com/613](https://www.erdosproblems.com/613)
 -/
+
+@[expose] public section
 
 namespace Erdos613
 
@@ -29,7 +32,7 @@ namespace Erdos613
 Let $n \geq 3$ and $G$ be a graph with $\binom{2n+1}{2} - \binom{n}{2} - 1$ edges.
 Must $G$ be the union of a bipartite graph and a graph with maximum degree less than $n$?
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos613.lean#L1170"]
 theorem erdos_613 :
     answer(False) ↔
       ∀ n ≥ 3, ∀ (V : Type*) [Fintype V] (G : SimpleGraph V), [DecidableRel G.Adj] →

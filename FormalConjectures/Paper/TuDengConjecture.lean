@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Tu-Deng Conjecture
@@ -35,6 +37,8 @@ Boolean functions (a bent class and a balanced class) achieve optimal algebraic 
 which is the motivation for the conjecture. They verified the conjecture numerically for
 $k \le 29$ (Remark 3.1 of the ePrint version).
 -/
+
+@[expose] public section
 
 namespace TuDengConjecture
 

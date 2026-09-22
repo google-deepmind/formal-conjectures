@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 541
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [GHW10] Gao, Weidong and Hamidoune, Yahya Ould and Wang, Guoqing, Distinct length modular zero-sum
   subsequences: a proof of Graham's conjecture. J. Number Theory (2010), 1425--1431.
 -/
+
+@[expose] public section
 
 open Filter
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of Abelian cubes of length $3n$ over an alphabet of size 3
@@ -26,6 +27,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^3 \sum_{j=0}^k \binom{k}{j}^3.$$
 
 *References:*
 - [A141057](https://oeis.org/A141057)-/
+
+@[expose] public section
 
 namespace OeisA141057
 
@@ -56,7 +59,8 @@ theorem a_4 : a 4 = 6219 := by decide
 /--
 Conjecture: the supercongruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^{3k}}$ hold
 for primes $p \ge 5$ and positive integers $n$ and $k$.-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_a141057_supercongruence_conjecture/Submission/Spec.lean#L955"]
 theorem conjecture1 (p k n : ℕ) (hp : p.Prime) (h_p_ge_5 : 5 ≤ p) (h_k_pos : 1 ≤ k)
     (h_n_pos : 1 ≤ n) :
     (a (n * p ^ k) : ℤ) ≡ a (n * p ^ (k - 1)) [ZMOD (p ^ (3 * k))] := by
