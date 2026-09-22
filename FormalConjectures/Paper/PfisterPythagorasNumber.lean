@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pfister's problem on the Pythagoras number of $\mathbb{R}(X_1, \dots, X_n)$
@@ -60,6 +61,8 @@ value is known for $n \le 2$ and open for every $n \ge 3$. The survey
   Amer. Math. Soc. 72 (2025), no. 7, 711–718,
   [doi:10.1090/noti3192](https://doi.org/10.1090/noti3192).
 -/
+
+@[expose] public section
 
 namespace PfisterPythagorasNumber
 
