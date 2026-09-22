@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hadamard's conjecture
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
  - [Wikipedia](https://en.wikipedia.org/wiki/Hadamard_matrix#Hadamard_conjecture)
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
 -/
+
+@[expose] public section
 
 namespace Hadamard
 
@@ -113,7 +116,14 @@ which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  have h : H12.transpose * H12 = (12 : ℝ) • 1 := by
+    rw [← Matrix.ext_iff]
+    norm_num +decide [Fin.forall_fin_succ, Matrix.mul_apply, Fin.sum_univ_succ, H12,
+      Matrix.one_apply]
+  have hd : H12.det ^ 2 = 12 ^ 12 := by simpa [Matrix.det_smul, ← sq] using congrArg Matrix.det h
+  refine ⟨by simp [Fin.forall_fin_succ, H12], ?_⟩
+  rw [← Real.sqrt_sq_eq_abs, hd]
+  norm_num
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.

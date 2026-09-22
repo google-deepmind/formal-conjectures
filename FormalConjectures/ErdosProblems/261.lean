@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 261
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
  - [TUZ20] Tengely, Szabolcs and Ulas, Maciej and Zygadlo, Jakub, On a Diophantine equation of
     Erdős and Graham. J. Number Theory (2020), 445--459.
 -/
+
+@[expose] public section
 
 open scoped Cardinal
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 248
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [TaTe25] T. Tao and J. Teräväinen, Quantitative correlations and some problems on prime factors of consecutive integers. arXiv:2512.01739 (2025).
 -/
 
+@[expose] public section
+
 open scoped ArithmeticFunction.omega
 
 namespace Erdos248
@@ -32,7 +35,8 @@ namespace Erdos248
 Are there infinitely many $n$ such that $\omega(n + k) \ll k$ for all $k \geq 1$?
 Here $\omega(n)$ is the number of distinct prime divisors of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos248.lean#L47"]
 theorem erdos_248 : (∃ C > (0 : ℝ), { n | ∀ k ≥ 1, ω (n + k) ≤ C * k }.Infinite) := by
   sorry
 
