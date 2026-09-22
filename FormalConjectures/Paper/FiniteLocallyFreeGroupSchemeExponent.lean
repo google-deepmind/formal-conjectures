@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Is a finite locally free group scheme killed by its order?
@@ -44,6 +45,8 @@ base, and being killed by `m` is local on the base, so nothing is lost.
   four*](https://leanprover-community.github.io/mathlib4_docs/Counterexamples/GrothendieckPower.html),
   the counterexample
 -/
+
+@[expose] public section
 
 namespace FiniteLocallyFreeGroupSchemeExponent
 
