@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's 10th problem
@@ -81,6 +82,8 @@ David, Stock, Pal, Matiyasevich and Schleicher
   [doi:10.1007/s00222-025-01392-3](https://doi.org/10.1007/s00222-025-01392-3),
   [arXiv:2501.18774](https://arxiv.org/abs/2501.18774).
 -/
+
+@[expose] public section
 
 namespace Hilbert10
 

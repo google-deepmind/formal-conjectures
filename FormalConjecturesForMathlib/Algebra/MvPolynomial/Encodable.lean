@@ -20,7 +20,7 @@ public import Mathlib.Algebra.MvPolynomial.Basic
 public import Mathlib.Data.Finsupp.Encodable
 public import Mathlib.Logic.Denumerable
 
-public section
+@[expose] public section
 
 /-!
 # `Encodable` and `Denumerable` instances for multivariate polynomials
