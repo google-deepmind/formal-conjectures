@@ -89,6 +89,7 @@ theorem m_le_mul_add_one (N k : ℕ) : m N k ≤ k * N + 1 := by
 /--
 Writing `F_k(N)` for `m(N, k)`, Green conjectures that `F_k(N) ≫_k N^(1 - c_k)` for some
 sequence `c_k` with `c_k → 0` as `k → ∞`.
+The restriction to `0 < k` excludes the degenerate case `m(N, 0) = 0`.
 -/
 @[category research open, AMS 5 11]
 theorem green_37_lower_bound :
