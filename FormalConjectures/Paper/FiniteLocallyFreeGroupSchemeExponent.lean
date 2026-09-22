@@ -23,8 +23,8 @@ public import FormalConjecturesUtil
 A finite locally free group scheme of rank `n` is the group scheme analogue of a finite group of
 order `n`. Lagrange's theorem gives `g ^ n = 1` in a finite group of order `n`, and Grothendieck
 asked whether the `n`-th power map of such a group scheme is trivial. The answer is affirmative
-over a reduced base and for commutative group schemes, and negative in general. Which exponent
-does kill every group scheme of a given rank is open.
+over a reduced base and for commutative group schemes, and negative in general. Which exponents
+kill every group scheme of a given rank is open.
 
 A group scheme is represented here by its coordinate Hopf algebra `A` over the base ring `R`.
 `A` is not assumed to be cocommutative, so the group scheme is not assumed to be commutative.
@@ -66,11 +66,11 @@ def IsKilledBy (R : Type u) [CommRing R] (A : Type v) [CommRing A] [HopfAlgebra 
 /-- A positive integer `m` is a universal killing exponent in rank `n` if every finite locally
 free group scheme of rank `n`, over every commutative ring, is killed by `m`.
 
-The hypotheses that `A` is finite and flat over `R`, with constant `rankAtStalk` equal to `n`,
-express that the group scheme is finite locally free of rank `n`. -/
+The hypotheses that `A` is finite and projective over `R`, with constant `rankAtStalk` equal to
+`n`, express that the group scheme is finite locally free of rank `n`. -/
 def IsUniversalKillingExponent (n m : ℕ+) : Prop :=
   ∀ (R : Type u) [CommRing R] (A : Type v) [CommRing A] [HopfAlgebra R A]
-    [Module.Finite R A] [Module.Flat R A],
+    [Module.Finite R A] [Module.Projective R A],
     Module.rankAtStalk (R := R) A = (fun _ ↦ (n : ℕ)) → IsKilledBy R A m
 
 /-- Unfolding `IsKilledBy` at `m = 1`: the group scheme is trivial exactly when the identity of
@@ -148,12 +148,13 @@ Grothendieck's question: is every finite locally free group scheme of rank $n$, 
 commutative ring, killed by $n$?
 
 The answer is no. There is a commutative Hopf algebra of rank $4$ over a finite non-reduced ring
-whose fourth power map is not trivial; its eighth power map is trivial.
+whose fourth power map is not trivial; its eighth power map is trivial. The formalised
+counterexample lives in `Type`, so the statement quantifies over rings and algebras in `Type`.
 -/
 @[category research solved, AMS 14 16, formal_proof using lean4 at
   "https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Counterexamples/GrothendieckPower.lean#L882-L892"]
 theorem killed_by_rank :
-    answer(False) ↔ ∀ n : ℕ+, IsUniversalKillingExponent.{u, v} n n := by
+    answer(False) ↔ ∀ n : ℕ+, IsUniversalKillingExponent.{0, 0} n n := by
   sorry
 
 /--
@@ -173,7 +174,7 @@ deduced there from the case of a field.
 -/
 @[category research solved, AMS 14 16]
 theorem killed_by_rank.variants.reduced_base (n : ℕ+) (R : Type*) [CommRing R] [IsReduced R]
-    (A : Type*) [CommRing A] [HopfAlgebra R A] [Module.Finite R A] [Module.Flat R A]
+    (A : Type*) [CommRing A] [HopfAlgebra R A] [Module.Finite R A] [Module.Projective R A]
     (hn : Module.rankAtStalk (R := R) A = fun _ ↦ (n : ℕ)) :
     IsKilledBy R A n := by
   sorry
@@ -185,7 +186,8 @@ coordinate Hopf algebra. See [SGA 3], Exp. VIIA, Rem. 8.5.3 and [TO70], p. 4.
 -/
 @[category research solved, AMS 14 16]
 theorem killed_by_rank.variants.commutative (n : ℕ+) (R : Type*) [CommRing R] (A : Type*)
-    [CommRing A] [HopfAlgebra R A] [Coalgebra.IsCocomm R A] [Module.Finite R A] [Module.Flat R A]
+    [CommRing A] [HopfAlgebra R A] [Coalgebra.IsCocomm R A] [Module.Finite R A]
+    [Module.Projective R A]
     (hn : Module.rankAtStalk (R := R) A = fun _ ↦ (n : ℕ)) :
     IsKilledBy R A n := by
   sorry
@@ -193,16 +195,17 @@ theorem killed_by_rank.variants.commutative (n : ℕ+) (R : Type*) [CommRing R] 
 /--
 Determine the function assigning to each positive integer $n$ the least positive integer $m$
 such that every finite locally free group scheme of rank $n$, over every commutative ring, is
-killed by $m$.
+killed by $m$. The value is $0$ if there is no such $m$, since `sInf ∅ = 0` in `ℕ`. As in
+`killed_by_rank`, the rings and algebras are in `Type`.
 
 Grothendieck asked whether this least exponent is $n$ itself. It is not, already for $n = 4$.
-The exponents that kill every group scheme of rank $n$ are the multiples of the least one, so
-minimality for $\le$ agrees with minimality for divisibility.
+If some positive exponent kills every group scheme of rank $n$, then these exponents are the
+multiples of the least one, so minimality for $\le$ agrees with minimality for divisibility.
 -/
 @[category research open, AMS 14 16]
 theorem optimal_exponent :
-    let exponent : ℕ+ → ℕ+ := answer(sorry)
-    ∀ n, IsLeast {m | IsUniversalKillingExponent.{u, v} n m} (exponent n) := by
+    let exponent : ℕ+ → ℕ := answer(sorry)
+    ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = exponent n := by
   sorry
 
 end FiniteLocallyFreeGroupSchemeExponent
