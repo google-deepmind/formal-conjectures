@@ -70,12 +70,14 @@ theorem counterexample_residue : residue counterexample = 10 := by
 /- ### The two decidable core facts feeding the pigeonhole forest bound -/
 
 /-- Any six core vertices contain an edge (the core has independence number `5`). -/
+@[category test, AMS 5]
 private lemma core_six_edge :
     ∀ t : Finset (Fin 18), (∀ v ∈ t, v.val ≤ 9) → 5 < t.card →
       ∃ u ∈ t, ∃ v ∈ t, counterexample.Adj u v := by
   native_decide
 
 /-- Any seven core vertices span a `4`-cycle. -/
+@[category test, AMS 5]
 private lemma core_seven_c4 :
     ∀ t : Finset (Fin 18), (∀ v ∈ t, v.val ≤ 9) → 6 < t.card →
       ∃ a ∈ t, ∃ x ∈ t, ∃ c ∈ t, ∃ y ∈ t,
@@ -84,6 +86,7 @@ private lemma core_seven_c4 :
   native_decide
 
 /-- Every core vertex is adjacent to the hub. -/
+@[category test, AMS 5]
 private lemma core_adj_hub :
     ∀ v : Fin 18, v.val ≤ 9 → counterexample.Adj v ⟨10, by omega⟩ := by
   decide
@@ -91,6 +94,7 @@ private lemma core_adj_hub :
 /- ### Acyclicity obstructions via path uniqueness -/
 
 /-- Two internally distinct two-edge paths between the same endpoints defeat acyclicity. -/
+@[category API, AMS 5]
 private lemma not_isAcyclic_of_two_paths {V : Type*} {G : SimpleGraph V} {a c x y : V}
     (hax : G.Adj a x) (hxc : G.Adj x c) (hay : G.Adj a y) (hyc : G.Adj y c)
     (hac : a ≠ c) (hxy : x ≠ y) : ¬ G.IsAcyclic := by
@@ -107,6 +111,7 @@ private lemma not_isAcyclic_of_two_paths {V : Type*} {G : SimpleGraph V} {a c x 
 
 /-- A triangle defeats acyclicity: the edge `a b` and the two-edge path through `h`
 are distinct paths between `a` and `b`. -/
+@[category API, AMS 5]
 private lemma not_isAcyclic_of_triangle {V : Type*} {G : SimpleGraph V} {a b h : V}
     (hab : G.Adj a b) (hah : G.Adj a h) (hbh : G.Adj b h) : ¬ G.IsAcyclic := by
   intro hG
@@ -119,6 +124,7 @@ private lemma not_isAcyclic_of_triangle {V : Type*} {G : SimpleGraph V} {a b h :
 
 /-- A graph in which every edge meets one fixed vertex is acyclic: around any cycle the
 fixed vertex would have to occupy two distinct interior positions. -/
+@[category API, AMS 5]
 private lemma isAcyclic_of_all_edges_meet {V : Type*} {G : SimpleGraph V} (h : V)
     (hstar : ∀ ⦃u v : V⦄, G.Adj u v → u = h ∨ v = h) : G.IsAcyclic := by
   intro w c hc
