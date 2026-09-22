@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A nonlinear recurrence sequence
@@ -26,6 +27,8 @@ $a(0) = 4, a(1) = 16$.
 *References:*
 - [A022030](https://oeis.org/A022030)
 -/
+
+@[expose] public section
 
 namespace OeisA22030
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Claude's Cycles
@@ -52,6 +53,8 @@ explicit solutions in [Kn26], whose header gives even `m ≥ 4`.
 - [KM26] K. Morrison, a Lean formalisation of the odd case,
   <https://github.com/kim-em/KnuthClaudeLean>
 -/
+
+@[expose] public section
 
 namespace ClaudesCycles
 
@@ -114,7 +117,7 @@ theorem not_hasHamiltonianArcDecomposition_one : ¬ HasHamiltonianArcDecompositi
 
 /-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
 into three directed cycles [Knu26]. -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean/blob/bdda6025fb7954f614ed9a7ac7382455fd064940/Solution.lean#L5"]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
     HasHamiltonianArcDecomposition m := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime gaps
@@ -24,6 +25,8 @@ Differences between consecutive primes: $a(n) = p_{n+1} - p_n$.
 *References:*
 - [A001223](https://oeis.org/A001223)
 -/
+
+@[expose] public section
 
 namespace OeisA1223
 

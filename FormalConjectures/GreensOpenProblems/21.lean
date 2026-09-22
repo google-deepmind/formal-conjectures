@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 21
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [ElJo23] Ellis, David and Johnson, Robert (editors), *A collection of open problems in
   celebration of Imre Leader's 60th birthday*. arXiv preprint arXiv:2310.18163 (2023).
 -/
+
+@[expose] public section
 
 open Finset
 

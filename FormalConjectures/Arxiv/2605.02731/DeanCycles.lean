@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dean's conjecture on cycles of length divisible by `k`
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [LuMaZh26] Luo, Yufan and Ma, Jie and Zhao, Ziyuan, Dean's conjecture and cycles modulo k.
   [arXiv:2601.13552](https://arxiv.org/abs/2601.13552) (2026).
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

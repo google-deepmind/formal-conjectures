@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Alternating sum of signs of powers of $3/2$
@@ -23,6 +24,8 @@ The sequence $a(n) = -\sum_{k=1}^n (-1)^{\lfloor (3/2)^k \rfloor}$.
 
 *References:*
 - [A071532](https://oeis.org/A071532)-/
+
+@[expose] public section
 
 namespace OeisA71532
 

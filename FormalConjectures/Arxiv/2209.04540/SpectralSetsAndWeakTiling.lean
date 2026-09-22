@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Spectral sets and weak tiling
@@ -29,6 +30,8 @@ This file formalizes Problems 7.1 and 7.2 from Kolountzakis, Lev, and Matolcsi.
 - [GL20] Rachel Greenfeld and Nir Lev, Spectrality of product domains and Fuglede's conjecture
   for convex polytopes, *Journal d'Analyse Mathématique* 140 (2020), 409–441.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 
