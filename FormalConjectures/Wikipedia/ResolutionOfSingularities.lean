@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Resolution of singularities
@@ -47,6 +49,8 @@ Over an arbitrary field one asks instead that $Y$ be regular.
 * [CP2019] V. Cossart and O. Piltant, [Resolution of singularities of arithmetical
   threefolds](https://doi.org/10.1016/j.jalgebra.2019.02.017), J. Algebra 529 (2019), 268--535.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 
