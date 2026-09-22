@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 57
@@ -38,6 +39,8 @@ equals the real convex hull of the complex-valued base set.
 **Motivation:** $\Phi(G)$ is a 'generalised convolution algebra' as considered by
 Conlon–Fox–Zhao, whereas $\Phi'(G)$ consists of Tao's $\text{UAP}_2(G)$-functions.
 -/
+
+@[expose] public section
 
 namespace Green57
 

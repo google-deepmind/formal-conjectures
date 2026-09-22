@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of two squares and two central-binomial-type terms
@@ -33,6 +34,8 @@ $a, b, c, d$ nonnegative integers, $a \le b$ and $c \le d$.
   [DOI 10.5281/zenodo.21863025](https://doi.org/10.5281/zenodo.21863025). The counterexample is
   recorded as an approved comment on the OEIS entry (Aug 10 2026).
 -/
+
+@[expose] public section
 
 namespace OeisA303639
 

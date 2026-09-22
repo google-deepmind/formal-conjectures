@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 741
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [Er94b] Erdős, Paul, Some problems in number theory, combinatorics and combinatorial geometry.
     Math. Pannon. (1994), 261-269.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 open Set
