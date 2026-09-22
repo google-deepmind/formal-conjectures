@@ -88,6 +88,16 @@ theorem IsNetwork.networkWeight_le {N : Set (Set X)} (hN : IsNetwork N) :
     networkWeight X ≤ #N + ℵ₀ :=
   add_le_add_left (ciInf_le' (fun N : {N : Set (Set X) // IsNetwork N} => #N.1) ⟨N, hN⟩) _
 
+theorem density_le_mk_add_aleph0 : density X ≤ #X + ℵ₀ :=
+  dense_univ.density_le.trans_eq (by rw [mk_univ])
+
+/-- The sets `⋂₀ {U | IsOpen U ∧ x ∈ U}`, for `x : X`, form a network of `X`. -/
+theorem isNetwork_range_sInter : IsNetwork (range fun x : X => ⋂₀ {U | IsOpen U ∧ x ∈ U}) :=
+  fun _ hU x hx => ⟨_, mem_range_self x, fun _ hV => hV.2, fun _ hy => hy _ ⟨hU, hx⟩⟩
+
+theorem networkWeight_le_mk_add_aleph0 : networkWeight X ≤ #X + ℵ₀ :=
+  isNetwork_range_sInter.networkWeight_le.trans (add_le_add_left mk_range_le _)
+
 /-- The density is attained by some dense subset. -/
 theorem exists_dense_mk_add_aleph0_eq_density : ∃ s : Set X, Dense s ∧ #s + ℵ₀ = density X :=
   let ⟨⟨s, hs⟩, h⟩ := ciInf_mem fun s : {s : Set X // Dense s} => #s.1
@@ -131,20 +141,16 @@ theorem _root_.Topology.IsInducing.networkWeight_le {X Y : Type u} [TopologicalS
   (hN.preimage hf).networkWeight_le.trans (hN' ▸ add_le_add_left mk_image_le _)
 
 theorem density_discrete [DiscreteTopology X] : density X = #X + ℵ₀ := by
-  refine le_antisymm (dense_univ.density_le.trans_eq (by rw [mk_univ]))
-    (le_density fun s hs => ?_)
+  refine le_antisymm density_le_mk_add_aleph0 (le_density fun s hs => ?_)
   obtain rfl := dense_discrete.mp hs
   rw [mk_univ]
 
 theorem networkWeight_discrete [DiscreteTopology X] : networkWeight X = #X + ℵ₀ := by
-  refine le_antisymm ?_ (le_networkWeight fun N hN => ?_)
-  · have : IsNetwork (range (singleton : X → Set X)) :=
-      fun _ _ x hx => ⟨{x}, mem_range_self x, rfl, singleton_subset_iff.mpr hx⟩
-    exact this.networkWeight_le.trans (add_le_add_left mk_range_le _)
-  · have h (x : X) : {x} ∈ N := by
-      obtain ⟨n, hn, hx, hsub⟩ := hN (isOpen_discrete {x}) x rfl
-      rwa [subset_antisymm hsub (singleton_subset_iff.mpr hx)] at hn
-    exact add_le_add_left (mk_le_of_injective (f := fun x => (⟨{x}, h x⟩ : N))
-      fun _ _ h => singleton_injective (congrArg Subtype.val h)) _
+  refine le_antisymm networkWeight_le_mk_add_aleph0 (le_networkWeight fun N hN => ?_)
+  have h (x : X) : {x} ∈ N := by
+    obtain ⟨n, hn, hx, hsub⟩ := hN (isOpen_discrete {x}) x rfl
+    rwa [subset_antisymm hsub (singleton_subset_iff.mpr hx)] at hn
+  exact add_le_add_left (mk_le_of_injective (f := fun x => (⟨{x}, h x⟩ : N))
+    fun _ _ h => singleton_injective (congrArg Subtype.val h)) _
 
 end TopologicalSpace
