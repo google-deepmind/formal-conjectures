@@ -24,6 +24,8 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/446](https://www.erdosproblems.com/446)
 - [OEIS A399690](https://oeis.org/A399690) and [OEIS A399691](https://oeis.org/A399691): the
   numerators and denominators of the rational numbers $\delta(n)$.
+- [OEIS A399697](https://oeis.org/A399697) and [OEIS A399698](https://oeis.org/A399698): the
+  numerators and denominators of the rational numbers $\delta_1(n)$.
 - [OEIS A074738](https://oeis.org/A074738): the constant $\alpha$.
 - [Be34] Besicovitch, A., *On the density of certain sequences of integers*. Math. Annalen (1934),
   336--341.
@@ -77,7 +79,8 @@ noncomputable def growth446 (n : ℕ) : ℝ :=
   (growthDenominator446 n)⁻¹
 
 /-- $\delta_r(n)$, the density of the integers which have exactly $r$ divisors in $(n, 2n)$,
-computed over one period as for `delta`. -/
+computed over one period as for `delta`. The values of $\delta_1(n)$ are recorded in OEIS
+A399697 and A399698. -/
 noncomputable def deltaR (r n : ℕ) : ℝ :=
   (((((Finset.range (intervalLcm n)).filter
     (fun m ↦ divisorCount n m = r)).card : ℕ) : ℝ) /
