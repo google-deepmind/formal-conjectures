@@ -864,9 +864,11 @@ theorem ame_11_6_open :
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/ame-11-10-lean/blob/6b7d009a43970587a3386b690221bec4339ce271/lean/AME11_10FC.lean#L15-L21"]
 theorem ame_11_10_open :
-    answer(sorry) ↔ ExistsAME 11 10 := by
+    answer(True) ↔ ExistsAME 11 10 := by
   sorry
 
 /-- Does an $\mathrm{AME}(12,5)$ state exist?
