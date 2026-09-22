@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 26
@@ -27,6 +28,8 @@ References:
   fields." Journal of Combinatorial Theory, Series A 57.2 (1991): 203-210.
 - [Yu25] Yu, Yang. "Note on the Additive Basis Conjecture." arXiv preprint arXiv:2510.01300 (2025).
 -/
+
+@[expose] public section
 
 open Set
 open scoped Pointwise

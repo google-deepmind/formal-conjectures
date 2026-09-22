@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 13: Mutually unbiased bases
@@ -118,6 +119,8 @@ The dimension-six case is not known to be solved. At present, the best-known gen
 
 This is why the theorem `mutuallyUnbiasedBases_dim6` is marked as an open research statement.
 -/
+
+@[expose] public section
 noncomputable section
 namespace OpenQuantumProblem13
 
