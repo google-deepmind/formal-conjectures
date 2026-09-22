@@ -162,12 +162,14 @@ def report(found):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("extraction",
-                        help="the JSON written by `lake exe extract_names`")
+    parser.add_argument("extraction", nargs="+",
+                        help="one or more JSON files written by `lake exe extract_names`")
     args = parser.parse_args(argv)
 
     try:
-        found = load_extraction(args.extraction)
+        found = set()
+        for extraction in args.extraction:
+            found.update(load_extraction(extraction))
     except DataError as error:
         print(f"::error::{error}")
         return 2
