@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -34,6 +35,8 @@ import FormalConjecturesUtil
    arithmetic functions. III. Proc. Amer. Math. Soc. (1987), 1--7.
 -/
 
+@[expose] public section
+
 open Filter Real
 open scoped ArithmeticFunction.sigma
 
@@ -43,7 +46,8 @@ namespace Erdos946
 There are infinitely many $n$ such that $τ(n) = τ(n+1)$. Proved in [He84].
 Here τ is the divisor counting function, which is `σ 0` in mathlib.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos946.lean#L75"]
 theorem erdos_946 : {n : ℕ | σ 0 n = σ 0 (n + 1)}.Infinite := by
   sorry
 

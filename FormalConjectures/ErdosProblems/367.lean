@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 367
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/367](https://www.erdosproblems.com/367)
 - [ErGr80] P. Erdős and R. L. Graham, *Old and New Problems and Results in Combinatorial Number Theory*, L'Enseignement Mathématique (1980).
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 

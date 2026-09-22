@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest index $k > n$ such that $(p_k+p_{k+1})/(p_n+p_{n+1})$ is an integer $\ge 2$
 
 *References:*
 - [A167918](https://oeis.org/A167918)-/
+
+@[expose] public section
 
 namespace OeisA167918
 
@@ -195,11 +198,11 @@ theorem a_4 : a 4 = 7 := by
 /--
 Conjecture: $f(n, k) = 2$ for infinitely many cases, where $k = a(n)$.
 
-We assume $a(n) \ne 0$ (i.e., that a suitable $k > n$ always exists), as `sInf` evaluates to $0$
-on an empty set.
+No hypothesis on the existence of $a(n)$ is needed: if no suitable $k > n$ exists then
+$a(n) = 0$ and $S(0) = 4 < 2 S(n)$, so such $n$ cannot be witnesses.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (M : ℕ) (ha : ∀ n > 0, a n ≠ 0) :
+theorem conjecture1 (M : ℕ) :
     ∃ n : ℕ, n ≥ M ∧ n > 0 ∧ S (a n) = 2 * S n := by
   sorry
 

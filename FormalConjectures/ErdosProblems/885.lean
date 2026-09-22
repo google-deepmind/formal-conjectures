@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 885
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Ji99] Jiménez-Urroz, J., A note on a conjecture of Erdős and {R}osenfeld. (1999)
 - [Br19] Bremner, A., On a problem of Erdős related to common factor differences. (2019)
 -/
+
+@[expose] public section
 
 open Nat Set Finset
 

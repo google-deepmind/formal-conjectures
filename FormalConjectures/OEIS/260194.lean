@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A GCD-Driven Sequence with Universal Jumps
@@ -26,6 +27,8 @@ an adjacent difference.
 *References:*
 - [OEIS A260194](https://oeis.org/A260194)
 -/
+
+@[expose] public section
 
 namespace OeisA260194
 

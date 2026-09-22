@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(1)=1, a(2)=1, a(n)=(2^{a(n-1)} + 1)/a(n-2)$
@@ -24,6 +25,8 @@ $$a(n) = \frac{2^{a(n-1)} + 1}{a(n-2)}$$
 
 *References:*
 - [A078590](https://oeis.org/A078590)-/
+
+@[expose] public section
 
 namespace OeisA78590
 
@@ -59,9 +62,17 @@ theorem a_4 : a 4 = 9 := by
 theorem a_5 : a 5 = 171 := by
   rfl
 
-/-- Are all terms integers? -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 3 ≤ n) : a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
+/--
+Are all terms integers?
+
+No. Exact divisibility first fails at $n = 7$; the corresponding rational term has reduced
+denominator $19$.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a078590-counterexample/blob/3bdf1cee8e7e4cbc4fe83354e4be8ca1eee46de3/lean/OeisA78590CounterexampleFC.lean#L55-L61"]
+theorem conjecture :
+    answer(False) ↔ ∀ n : ℕ, 3 ≤ n → a (n - 2) ∣ 2 ^ a (n - 1) + 1 := by
   sorry
 
 end OeisA78590
