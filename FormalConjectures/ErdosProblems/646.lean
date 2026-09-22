@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 646
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Be97] Berend, Daniel, *On the parity of exponents in the factorization of $n!$*.
   J. Number Theory (1997), 13-19.
 -/
+
+@[expose] public section
 
 open scoped Nat
 

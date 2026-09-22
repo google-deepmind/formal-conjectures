@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.HasseWeil
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.HasseWeil
+
 
 /-!
 # The Birch and Swinnerton-Dyer (BSD) Conjecture
@@ -39,6 +41,8 @@ import FormalConjectures.Wikipedia.HasseWeil
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
 -/
+
+@[expose] public section
 
 namespace BSD
 

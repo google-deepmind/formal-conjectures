@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1
 
 *Reference:* [erdosproblems.com/1](https://www.erdosproblems.com/1)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -93,7 +96,9 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ �
 A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
 record $\sqrt{2 / \pi}$ first provided in unpublished work of Elkies and Gleason.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/MyTH-zyxeon/formal-conjectures/blob/362eed1a8864d142ae65f51af7981a7c7530956e/FormalConjectures/Scratch/HarperCompression.lean#L2174"]
 theorem erdos_1.variants.lb_strong : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ → ℝ)),
     ∀ (N : ℕ) (A : Finset ℕ) (h : IsSumDistinctSet A N),
       (√(2 / π) - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by

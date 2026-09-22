@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 871
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [ErNa88] Erdős, Paul and Nathanson, Melvyn B., *Partitions of bases into disjoint unions of bases*. J. Number Theory (1988), 1-9.
 - [ErNa89] Erdős, Paul and Nathanson, Melvyn B., *Additive bases with many representations*. Acta Arith. (1989), 399-406.
 -/
+
+@[expose] public section
 
 namespace Erdos871
 

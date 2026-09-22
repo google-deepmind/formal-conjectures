@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 548
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
 - [YiLi04] Yin, Jian-hua and Li, Jiong-sheng, *The Erdős-Sós conjecture for graphs whose complements
   contain no {$C_4$}*. Acta Math. Appl. Sin. Engl. Ser. (2004), 397-400.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

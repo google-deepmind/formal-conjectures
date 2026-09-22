@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 363
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ul05] Ulas, Maciej, *On products of disjoint blocks of consecutive integers*.
   Enseign. Math. (2) (2005), 331--334.
 -/
+
+@[expose] public section
 
 namespace Erdos363
 

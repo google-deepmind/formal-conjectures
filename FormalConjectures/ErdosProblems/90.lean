@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 90: The unit distance problem
@@ -36,6 +37,8 @@ This file records the main statement (`erdos_90`), the two constructive disproof
 logical implications between them, and the load-bearing reductions of Sawin's proof
 (`sawin_lattice_reduction` and `sawin_totally_real_tower`) as further benchmark challenges.
 -/
+
+@[expose] public section
 
 open Filter EuclideanGeometry NumberField
 open scoped EuclideanGeometry

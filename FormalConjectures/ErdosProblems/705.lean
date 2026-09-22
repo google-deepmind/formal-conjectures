@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 705
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/705](https://www.erdosproblems.com/705)
 - [OD99] P. O'Donnell, High girth unit-distance graphs. PhD Dissertation, Rutgers University (1999).
 -/
+
+@[expose] public section
 
 namespace Erdos705
 
@@ -36,7 +39,8 @@ Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
 The general case was solved by O'Donnell [OD99], who constructed finite unit distance graphs with
 chromatic number $4$ and arbitrarily large girth.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos705.lean#L8323"]
 theorem erdos_705:
   answer(False) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
     (UnitDistancePlaneGraph V).girth ≥ k → (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Monochromatic quantum graphs (inherited vertex colorings)
@@ -71,6 +72,8 @@ coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
 * [Chandran2024] [Krenn–Gu conjecture for sparse graphs](https://arxiv.org/abs/2407.00303)
   by *N. Chandran, S. Gajjala, S. Illickan, M. Krenn*, MFCS 2024.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open scoped NNReal
@@ -400,10 +403,15 @@ theorem eqSystem4_no_solution_ge4 :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+A complete Lean 4 proof is available in the linked external certificate repository.
+-/
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/algal/krenn-gu-6x3-certificate/blob/c04696e515e0c02be140353fb52ea60c62e827b1/KrennGuCertificate/Unrestricted.lean#L201-L222"]
 theorem eqSystem6_no_solution_d3 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℂ, EqSystemN 6 3 W := by
   sorry
 
