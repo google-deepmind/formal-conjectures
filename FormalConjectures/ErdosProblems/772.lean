@@ -81,7 +81,9 @@ theorem erdos_772.variants.alon_erdos (k : ℕ) (hk : 1 ≤ k) :
 
 Since $1_A\ast 1_A$ counts ordered pairs, the bound needs $k\geq 4$: the construction of
 Erdős has at most two unordered representations of each sum, hence at most four ordered ones,
-while $k\leq 2$ forces $A$ itself to be Sidon and so $H_k(n)=n$. -/
+while $k\leq 2$ forces $A$ itself to be Sidon and so $H_k(n)=n$. For $k=3$ the only collisions
+are $a+b=2c$, so the Sidon subsets of $A$ are its $3$-term-progression-free subsets, which have
+size $n^{1-o(1)}$, and the bound fails there too. -/
 @[category research solved, AMS 5 11]
 theorem erdos_772.variants.upper_bound :
     ∃ C : ℝ, ∀ k ≥ 4, ∀ᶠ n : ℕ in atTop,
