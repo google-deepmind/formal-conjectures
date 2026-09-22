@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Algebra.Polynomial.Laurent
 public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Matrix.Block
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 public import Mathlib.LinearAlgebra.Matrix.Notation
 public import Mathlib.RingTheory.Adjoin.Basic
@@ -46,6 +47,8 @@ subgroup scheme of some `GLₙ`.
 * `Matrix.IsMultiplicative.isGroupLikeElem_det`: the determinant of a multiplicative matrix is
   group-like, hence a unit by `IsGroupLikeElem.isUnit`. A multiplicative matrix therefore does
   define a homomorphism into `GLₙ`, and not merely into the monoid scheme of `n × n` matrices.
+* `Matrix.IsMultiplicative.fromBlocks_ringInverse_det`: appending `(det a)⁻¹` to a multiplicative
+  matrix `a` as an extra diagonal entry gives a multiplicative matrix.
 * `HopfAlgebra.isLinear_self` and `LaurentPolynomial.isLinear`: the trivial group scheme and the
   multiplicative group are linear.
 
@@ -53,8 +56,7 @@ subgroup scheme of some `GLₙ`.
 
 `HopfAlgebra.IsLinear` asks that the entries of `a` alone generate `A`. Bruhat and Tits state the
 criterion for `Spec A → GLₙ` to be a closed immersion with `(det a)⁻¹` adjoined as well. The two
-conditions agree: `(det a)⁻¹` is group-like, so appending it to `a` as an extra diagonal entry
-gives a multiplicative matrix, one size larger, whose entries generate `A`.
+conditions agree by `Matrix.IsMultiplicative.fromBlocks_ringInverse_det`.
 
 ## References
 
@@ -120,13 +122,44 @@ theorem IsMultiplicative.isGroupLikeElem_det {R : Type u} [CommRing R] {A : Type
     rw [h2, Matrix.det_mul, ← AlgHom.map_det, ← AlgHom.map_det] at h3
     simpa using h3
 
+/-- A block diagonal matrix with multiplicative diagonal blocks is multiplicative. It corresponds
+to the direct sum of the two representations. -/
+theorem IsMultiplicative.fromBlocks {R : Type u} [CommRing R] {A : Type v} [CommRing A]
+    [Bialgebra R A] {ι : Type w} {κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ]
+    [DecidableEq κ] {a : Matrix ι ι A} {d : Matrix κ κ A} (ha : IsMultiplicative R a)
+    (hd : IsMultiplicative R d) : IsMultiplicative R (Matrix.fromBlocks a 0 0 d) where
+  comul_apply i j := by
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [Fintype.sum_sum_type, ha.comul_apply, hd.comul_apply]
+  counit_apply i j := by
+    rw [← fromBlocks_one]
+    rcases i with i | i <;> rcases j with j | j <;> simp [ha.counit_apply, hd.counit_apply]
+
+/-- If `a` is a multiplicative matrix over a Hopf algebra, then so is the block diagonal matrix
+with blocks `a` and `(det a)⁻¹`. The determinant is group-like by
+`Matrix.IsMultiplicative.isGroupLikeElem_det`, hence a unit, and its inverse is group-like too. -/
+theorem IsMultiplicative.fromBlocks_ringInverse_det {R : Type u} [CommRing R] {A : Type v}
+    [CommRing A] [HopfAlgebra R A] {ι : Type w} [Fintype ι] [DecidableEq ι] {a : Matrix ι ι A}
+    (h : IsMultiplicative R a) :
+    IsMultiplicative R (Matrix.fromBlocks a 0 0 !![Ring.inverse a.det]) := by
+  have hg := h.isGroupLikeElem_det
+  refine h.fromBlocks ((isMultiplicative_fin_one_iff R _).2 (hg.of_mul_eq_one ?_ ?_))
+  · exact Ring.mul_inverse_cancel _ hg.isUnit
+  · exact Ring.inverse_mul_cancel _ hg.isUnit
+
 end Matrix
 
 namespace HopfAlgebra
 
 /-- The affine group scheme `Spec A` over `R` is *linear* when it is a closed subgroup scheme of
-some `GLₙ`, that is, when the entries of some multiplicative `n × n` matrix over `A` generate `A`
-as an `R`-algebra. -/
+some `GLₙ`, that is, when the entries of some multiplicative `n × n` matrix `a` over `A` generate
+`A` as an `R`-algebra.
+
+In *Groupes réductifs sur un corps local II*, 1.4.5, Bruhat and Tits adjoin `(det a)⁻¹` to the
+entries of `a` in this criterion. It can be omitted: by
+`Matrix.IsMultiplicative.fromBlocks_ringInverse_det`, the block diagonal matrix with blocks `a`
+and `(det a)⁻¹` is again multiplicative, one size larger, and its entries generate the same
+subalgebra as the entries of `a` together with `(det a)⁻¹`. -/
 def IsLinear (R : Type u) [CommRing R] (A : Type v) [CommRing A] [HopfAlgebra R A] : Prop :=
   ∃ (n : ℕ) (a : Matrix (Fin n) (Fin n) A), Matrix.IsMultiplicative R a ∧
     Algebra.adjoin R (Set.range fun ij : Fin n × Fin n ↦ a ij.1 ij.2) = ⊤

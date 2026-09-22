@@ -21,31 +21,17 @@ public import FormalConjecturesUtil
 # Mathoverflow 22078: is a smooth affine group scheme over the dual numbers linear?
 
 Every affine group scheme of finite type over a field $k$ is a closed subgroup scheme of some
-$\mathrm{GL}_n$. Brian Conrad asked whether this stays true over the ring of dual numbers
-$k[\epsilon] = k[x]/(x^2)$, or over any artinian local ring. The proof over a field produces a
-finite-dimensional subcomodule of the coordinate ring that generates it as an algebra, and uses
-that a finitely generated submodule of the coordinate ring is free. Over $k[\epsilon]$ a finitely
-generated submodule need not be free, and the argument breaks down.
+$\mathrm{GL}_n$. Brian Conrad asked whether every smooth affine group scheme over the ring of dual
+numbers $k[\epsilon] = k[x]/(x^2)$ is too.
 
-The answer is no in characteristic zero. Push out the Heisenberg central extension
-$1 \to \mathbb{G}_a \to H \to \mathbb{G}_a^2 \to 1$ over $k[\epsilon]$ along the homomorphism
-$\mathbb{G}_a \to \mathbb{G}_m$, $x \mapsto 1 + \epsilon x$. This gives a smooth affine central
-extension $1 \to \mathbb{G}_m \to G \to \mathbb{G}_a^2 \to 1$ with no faithful representation on
-a finite free $k[\epsilon]$-module, so with no closed immersion into any $\mathrm{GL}_n$. Indeed,
-such a representation $M$ is the direct sum of the weight spaces $M_i$ of the central
-$\mathbb{G}_m$; each $M_i$ is a direct summand of $M$, hence free, and a subrepresentation. The
-element $1 + \epsilon$ of $\mathbb{G}_m(k[\epsilon])$ is a commutator in $G(k[\epsilon])$, so it
-acts on $M_i$ with determinant $1$. It acts by the scalar $1 + i\epsilon$, so that determinant is
-$1 + i \operatorname{rank}(M_i)\epsilon$, forcing $i \operatorname{rank}(M_i) = 0$ in $k$. In
-characteristic zero this kills every weight $i \neq 0$, so $\mathbb{G}_m$ acts trivially on $M$.
-In characteristic $p$ the ranks may be multiples of $p$, the argument gives nothing, and the
-question is open.
+The answer is no in characteristic zero, by this [answer](https://mathoverflow.net/a/513098):
+pushing out the Heisenberg extension of $\mathbb{G}_a^2$ by $\mathbb{G}_a$ along
+$\mathbb{G}_a \to \mathbb{G}_m$, $x \mapsto 1 + \epsilon x$, gives a smooth affine group scheme
+over $k[\epsilon]$ with no faithful representation on a finite free $k[\epsilon]$-module. In
+characteristic $p > 0$ the question is open.
 
-A group scheme is represented here by its coordinate Hopf algebra `A` over the base ring `R`.
-`A` is not assumed to be cocommutative, so the group scheme is not assumed to be commutative.
-Linearity is `HopfAlgebra.IsLinear`, which lives in
-`FormalConjecturesForMathlib/RingTheory/HopfAlgebra/Linear.lean` together with the multiplicative
-matrices that express a homomorphism into `GLₙ`, and with lemmas exercising both.
+A group scheme is represented by its coordinate Hopf algebra `A`, which is not assumed to be
+cocommutative. Linearity is `HopfAlgebra.IsLinear`.
 
 *References:*
 - [mathoverflow/22078](https://mathoverflow.net/questions/22078) asked by
@@ -55,9 +41,9 @@ matrices that express a homomorphism into `GLₙ`, and with lemmas exercising bo
 - [B. Conrad, *Reductive group schemes*](http://math.stanford.edu/~conrad/papers/luminysga3.pdf),
   Rem. 2.3.3, which states the question and refers to [SGA 3], Exp. VIB, 13.2 and 13.5, and
   Exp. XI, 4.3.
-- [F. Bruhat and J. Tits, *Groupes réductifs sur un corps local
-  II*](http://www.numdam.org/item/PMIHES_1984__60__5_0/), 1.4.5, for the criterion used in
-  `IsLinear` below and for the case of a Dedekind base.
+- [BT84] [F. Bruhat and J. Tits, *Groupes réductifs sur un corps local
+  II*](http://www.numdam.org/item/PMIHES_1984__60__5_0/), 1.4.5, for the criterion behind
+  `IsLinear` and for the case of a Dedekind base.
 - [G. Battiston and M. Romagny, *Representations of affine group schemes over general
   rings*](https://arxiv.org/abs/1807.01009), which claimed an affirmative answer over an artinian
   base and was withdrawn because of an error in its Thm. 4.1.
