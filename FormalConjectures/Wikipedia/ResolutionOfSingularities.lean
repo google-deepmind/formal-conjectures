@@ -25,8 +25,8 @@ $k$-variety $Y$ and a proper birational morphism $Y \to X$. Hironaka proved that
 over a field of characteristic zero admits one. In positive characteristic this is known over a
 perfect field in dimension at most three, and is open from dimension four on. Perfectness of $k$
 cannot be dropped from the statement in this form: over an imperfect field it fails already in
-dimension zero, for the reason recorded in the docstring of `resolution_of_singularities` below.
-Over an arbitrary field one asks instead that $Y$ be regular.
+dimension zero, see `exists_not_hasResolution_of_not_perfectField` below. Over an arbitrary field
+one asks instead that $Y$ be regular.
 
 *References:*
 * [Wikipedia](https://en.wikipedia.org/wiki/Resolution_of_singularities)
@@ -99,10 +99,7 @@ separated and of finite type over $k$. Then there is an integral scheme $Y$ that
 $k$ together with a proper birational morphism $Y \to X$.
 
 This is open from dimension four on; see [Hau2010]. Perfectness of $k$ is needed for the
-conclusion as stated: if $k$ is imperfect and $a \in k \setminus k^p$, then
-$\operatorname{Spec} k(a^{1/p})$ satisfies all the hypotheses, but every scheme birational to
-it has function field $k(a^{1/p})$, which is inseparable over $k$, so none of them is smooth
-over $k$.
+conclusion as stated; see `exists_not_hasResolution_of_not_perfectField`.
 -/
 @[category research open, AMS 14]
 theorem resolution_of_singularities (k : Type u) [Field k] [PerfectField k] (p : ℕ)
@@ -139,6 +136,28 @@ theorem resolution_of_singularities_of_topologicalKrullDim_le_three (k : Type u)
     [LocallyOfFiniteType sX] [QuasiCompact sX] [IsSeparated sX]
     (hX : topologicalKrullDim X ≤ 3) :
     Scheme.HasResolution sX := by
+  sorry
+
+/--
+**Resolution of singularities fails over imperfect fields.**
+If the field $k$ is not perfect, then there is an integral scheme $X$ of dimension zero that is
+separated and of finite type over $k$ and has no resolution of singularities: no integral scheme
+smooth over $k$ admits a proper birational morphism to $X$.
+
+A witness: $k$ has characteristic $p > 0$ and there is some $a \in k \setminus k^p$. Take
+$X = \operatorname{Spec} k(a^{1/p})$. Every integral scheme birational to $X$ has function field
+$k(a^{1/p})$, which is not separable over $k$, whereas the function field of an integral scheme
+smooth over $k$ is separable over $k$.
+
+So the hypothesis `PerfectField k` cannot be dropped from `resolution_of_singularities` or from
+`resolution_of_singularities_of_topologicalKrullDim_le_three`.
+-/
+@[category textbook, AMS 14]
+theorem exists_not_hasResolution_of_not_perfectField (k : Type u) [Field k]
+    (hk : ¬ PerfectField k) :
+    ∃ (X : Scheme.{u}) (sX : X ⟶ Spec (.of k)), IsIntegral X ∧ LocallyOfFiniteType sX ∧
+      QuasiCompact sX ∧ IsSeparated sX ∧ topologicalKrullDim X = 0 ∧
+      ¬ Scheme.HasResolution sX := by
   sorry
 
 end AlgebraicGeometry
