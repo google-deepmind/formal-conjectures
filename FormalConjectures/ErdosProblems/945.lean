@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 945
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/945](https://www.erdosproblems.com/945)
  - [ErMi52] Erdős, P. and Mirsky, L., The distribution of values of the divisor function {$d(n)$}. Proc. London Math. Soc. (3) (1952), 257--271.
 -/
+
+@[expose] public section
 
 open Filter Real
 

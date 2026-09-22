@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 23
@@ -23,6 +24,8 @@ References:
 - [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.23)
 - [FrKlMo25] Frantzikinakis, N., O. Klurman, and J. Moreira. "Partition regularity of Pythagorean pairs." Forum of Mathematics, Pi 13. Cambridge University Press (2025).
 -/
+
+@[expose] public section
 
 namespace Green23
 

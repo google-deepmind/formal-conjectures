@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k > 0$ such that $(k+1)(k+2)\cdots(k+n) + 1$ is prime
@@ -26,6 +27,8 @@ if such $k$ exists; otherwise $a(n) = 0$.
 *References:*
 - [A078729](https://oeis.org/A078729)
 -/
+
+@[expose] public section
 
 namespace OeisA78729
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 830
 
 *Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 open Filter Real
@@ -29,11 +32,10 @@ namespace Erdos830
 
 open scoped Classical in
 /--
-Let $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$.
+Let $A(x)$ count the number of amicable pairs $1\leq a\leq b\leq x$.
 -/
 noncomputable abbrev A (x : ℝ) : ℝ :=
-  (1 / 2) * Finset.card <| (Finset.Icc 1 ⌊x⌋₊ ×ˢ Finset.Icc 1 ⌊x⌋₊).filter
-    fun (a, b) ↦ IsAmicable a b
+  ((Finset.Icc 1 ⌊x⌋₊ ×ˢ Finset.Icc 1 ⌊x⌋₊).filter fun (a, b) ↦ a ≤ b ∧ IsAmicable a b).card
 
 /-- **Erdos Problem 830, Part 1**
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$. Are there
