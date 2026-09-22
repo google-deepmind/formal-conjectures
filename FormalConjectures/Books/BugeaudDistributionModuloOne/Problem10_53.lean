@@ -36,57 +36,7 @@ once, by an explicit construction.
 
 namespace Bugeaud53
 
-open Filter
-
-open scoped ENNReal
-
-/--
-The block complexity $p(n, a)$ of a sequence $a$, that is, the number of distinct blocks
-$a_k a_{k+1} \cdots a_{k+n-1}$ of $n$ consecutive terms of $a$. It is `⊤` when $n \ge 1$ and
-$a$ takes infinitely many values.
--/
-noncomputable def blockComplexity {α : Type*} (a : ℕ → α) (n : ℕ) : ℝ≥0∞ :=
-  {w : Fin n → α | ∃ k, ∀ i, w i = a (k + i)}.encard
-
-/--
-The entropy of a sequence $a$,
-$$E(a) = \lim_{n \to \infty} \frac{\log p(n, a)}{n}.$$
-The limit exists because $n \mapsto \log p(n, a)$ is subadditive, so it agrees with the `limsup`
-used here. The value is `⊤` exactly when $a$ takes infinitely many values.
--/
-noncomputable def blockEntropy {α : Type*} (a : ℕ → α) : EReal :=
-  limsup (fun n : ℕ ↦ (blockComplexity a n).log / (n : EReal)) atTop
-
-/--
-The sequence $(c_n)_{n \ge 1}$ of partial quotients of the continued fraction expansion
-$\xi = [c_0; c_1, c_2, \ldots]$, indexed from $0$. The integer part $c_0$ is not part of the
-sequence. The expansion of an irrational number never terminates, so the default value `0` is
-never used for such $\xi$.
--/
-noncomputable def partQuot (ξ : ℝ) (n : ℕ) : ℝ :=
-  ((GenContFract.of ξ).partDens.get? n).getD 0
-
-/-- The entropy $E(\xi)$ of the continued fraction expansion of $\xi$. -/
-noncomputable def cfEntropy (ξ : ℝ) : EReal := blockEntropy (partQuot ξ)
-
-/-- The entropy $E(\xi, b)$ of the base $b$ expansion of $\xi$. -/
-noncomputable def baseEntropy (b : ℕ) (ξ : ℝ) : EReal :=
-  blockEntropy (NormalNumber.digitSeq b ξ)
-
-/-- A constant sequence has exactly one block of each length. -/
-@[category test, AMS 11 37]
-theorem blockComplexity_const {α : Type*} (c : α) (n : ℕ) :
-    blockComplexity (fun _ ↦ c) n = 1 := by
-  have h : {w : Fin n → α | ∃ k : ℕ, ∀ i, w i = (fun _ : ℕ ↦ c) (k + (i : ℕ))}
-      = {fun _ ↦ c} := by
-    ext w
-    simp [funext_iff]
-  simp only [blockComplexity, h, Set.encard_singleton, ENat.toENNReal_one]
-
-/-- A constant sequence has zero entropy. -/
-@[category test, AMS 11 37]
-theorem blockEntropy_const {α : Type*} (c : α) : blockEntropy (fun _ ↦ c) = 0 := by
-  simp [blockEntropy, blockComplexity_const]
+open Real
 
 /--
 Problem 10.53. There is an irrational real number $\xi$ such that $E(\xi) < \log 2$ and
