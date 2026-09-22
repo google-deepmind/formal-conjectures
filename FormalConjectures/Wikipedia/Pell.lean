@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Infinitude of Pell number primes
@@ -28,6 +29,8 @@ $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A129](https://oeis.org/A129)
 
 The conjecture says that there are infinitely many prime Pell numbers.
 -/
+
+@[expose] public section
 
 namespace PellNumbers
 
@@ -49,7 +52,7 @@ theorem pellNumber_two : pellNumber 2 = 2 := rfl
 @[category test, AMS 11]
 theorem pellNumber_five : pellNumber 5 = 29 := rfl
 
-/-- Similar to Fibonacci numbers, there exist numerous identites around Pell numbers, i.e.
+/-- Similar to Fibonacci numbers, there exist numerous identities around Pell numbers, i.e.
 P_{2n+1} = P_n ^ 2 + P_{n+1} ^ 2 -/
 @[category textbook, AMS 11]
 theorem pellNumber_sq_add_pellNumber_succ_sq (n : ℕ) :

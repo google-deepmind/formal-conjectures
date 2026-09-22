@@ -13,16 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
-# Smallest number k such that kn + 1 is prime
+# Smallest number $k$ such that $kn + 1$ is prime
 
-Smallest number $k$ such that $kn + 1$ is prime.
-
-*Reference:* [A34693](https://oeis.org/A34693)
+*References:*
+- [A34693](https://oeis.org/A34693)
 -/
+
+@[expose] public section
 
 namespace OeisA34693
 
@@ -32,8 +34,7 @@ open Filter
 noncomputable def a (n : ℕ) : ℕ := Nat.nth (fun k ↦ (k * n + 1).Prime) 0
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by
-  simpa [a] using Nat.nth_eq_zero.2 <| .inr ⟨by convert Set.finite_empty; aesop, by aesop⟩
+theorem a_0 : a 0 = 0 := by simp [a]
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 209
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Es16] Escudero, Juan García, *Gallai triangles in configurations of lines in the projective
   plane*. C. R. Math. Acad. Sci. Paris (2016), 551-554.
 -/
+
+@[expose] public section
 
 open EuclideanGeometry Affine
 
@@ -62,7 +65,7 @@ each of these intersection points only intersects two lines from $A$?
 Füredi and Palásti [FuPa84] showed this is false when $d\geq 4$ is not divisible by $9$.
 Escudero [Es16] showed this is false for all $d\geq 4$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/209/Erdos209.lean"]
 theorem erdos_209 : answer(False) ↔
     ∀ d : ℕ, 4 ≤ d → ∀ A : Finset (AffineSubspace ℝ ℝ²), A.card = d →
       (∀ L ∈ A, IsLine L) →

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 241
@@ -26,10 +27,14 @@ import FormalConjecturesUtil
   Helv. (1962/63), 141-147.
 - [Gr01] Green, Ben, The number of squares and {$B_h[g]$} sets. Acta Arith. (2001), 365-390.
 - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
+- [Wh24] White, Ethan Patrick, An optimal $L^2$ autoconvolution inequality. Canad. Math. Bull.
+  67 (2024), 108-121. [doi:10.4153/S0008439523000565](https://doi.org/10.4153/S0008439523000565)
 -/
 
+@[expose] public section
+
 open Filter Finset
-open scoped Asymptotics Classical
+open scoped Asymptotics
 
 namespace Erdos241
 
@@ -40,6 +45,7 @@ $a,b,c\in A$ are all distinct (aside from the trivial coincidences).
 Formalization note: this is generalized to allow for different $r$.
 -/
 noncomputable def f (N r : ℕ) : ℕ :=
+  open scoped Classical in
   letI candidates := (Icc 1 N).powerset.filter (fun A ↦
     ∀ m₁ m₂ : Multiset ℕ,
       m₁.card = r → m₂.card = r →
@@ -70,13 +76,27 @@ theorem erdos_241.variants.lower_bound :
   sorry
 
 /--
-The best upper bound known to date is due to Green [Gr01], $f(N) \leq ((7/2)^{1/3}+o(1))N^{1/3}$.
+Green [Gr01] proved the upper bound $f(N) \leq ((7/2)^{1/3}+o(1))N^{1/3}$
 (note that $(7/2)^{1/3}\approx 1.519$).
 -/
 @[category research solved, AMS 5]
 theorem erdos_241.variants.upper_bound :
     ∃ ε : ℕ → ℝ, ε =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
     ∀ᶠ N in atTop, (f N 3 : ℝ) ≤ ((7 / 2 : ℝ) ^ ((1 : ℝ) / 3) + ε N) * (N : ℝ) ^ ((1 : ℝ) / 3) := by
+  sorry
+
+/--
+Green's argument gives $f(N) \leq ((2/\mu_2^2)^{1/3}+o(1))N^{1/3}$, where
+$\mu_2^2 = \inf \lVert g \ast g \rVert_2^2$ over $g \colon [-1/2,1/2] \to \mathbb{R}$ with
+$\int g = 1$; Green used $\mu_2^2 \geq 4/7$. White [Wh24, Theorem 1 and Corollary 2] proved
+$0.574636066 \leq \mu_2^2 \leq 0.574642912$, which gives the best upper bound known to date,
+$f(N) \leq ((2/0.574636066)^{1/3}+o(1))N^{1/3}$ (note that $(2/0.574636066)^{1/3}\approx 1.5155$).
+-/
+@[category research solved, AMS 5]
+theorem erdos_241.variants.upper_bound_white :
+    ∃ ε : ℕ → ℝ, ε =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
+    ∀ᶠ N in atTop, (f N 3 : ℝ) ≤
+      ((2 / 0.574636066 : ℝ) ^ ((1 : ℝ) / 3) + ε N) * (N : ℝ) ^ ((1 : ℝ) / 3) := by
   sorry
 
 /--

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1041
@@ -22,7 +23,9 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-open Polynomial MeasureTheory ENNReal Classical
+@[expose] public section
+
+open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
 
@@ -37,6 +40,7 @@ Hausdorff measure $\mathcal{H}^1(s)$.
 -/
 noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 
+open scoped Classical in
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
 If $f$ is a monic degree $n$ polynomial with all roots in the unit disk,

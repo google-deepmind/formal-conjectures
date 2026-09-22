@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 36
@@ -25,7 +26,9 @@ import FormalConjecturesUtil
   Matrix Multiplication" (Problem 4.7)
 -/
 
-open Classical Filter
+@[expose] public section
+
+open Filter
 open scoped Pointwise
 
 namespace Green36
@@ -33,12 +36,14 @@ namespace Green36
 /-- The simultaneous double product property [CKS05, 4.1]. -/
 def SimultaneousDoubleProduct {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, i ≠ k → Disjoint (A i + B j) (A j + B k))
 
 /-- A variant of the simultaneous double product property, as stated in [Gr24, Problem 36]. -/
 def Green36Property {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, j ≠ k → Disjoint (A i + B i) (A j + B k))
 

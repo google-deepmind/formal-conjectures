@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Data.Finset.Basic
 public import Mathlib.Data.Fintype.Card
-public import Mathlib.Data.Nat.Lattice
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
