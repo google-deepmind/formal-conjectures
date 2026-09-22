@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = \sum_{j=1}^{n} (3^j + (-2)^j)$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A116150](https://oeis.org/A116150)
 -/
+
+@[expose] public section
 
 namespace OeisA116150
 

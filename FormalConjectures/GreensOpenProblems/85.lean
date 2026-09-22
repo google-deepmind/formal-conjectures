@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 85
@@ -29,6 +30,8 @@ References:
 - [Mu02] Mubayi, Dhruv. "Some exact results and new asymptotics for hypergraph Turán numbers." Combinatorics, Probability and Computing 11.3 (2002): 299-309 Conjecture 1.4.
 - [CPZ20] Conlon, David, Cosmin Pohoata, and Dmitriy Zakharov. "Random multilinear maps and the Erd\H {o} s box problem." arXiv preprint arXiv:2011.09024 (2020).
 -/
+
+@[expose] public section
 
 open Filter MeasureTheory Set Topology
 

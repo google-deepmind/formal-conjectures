@@ -88,6 +88,18 @@ noncomputable def graphRamsey {α β : Type*} [Fintype α] [Fintype β]
     (G : SimpleGraph α) (H : SimpleGraph β) : ℕ :=
   sInf { n : ℕ | ∀ (C : SimpleGraph (Fin n)), G.IsContained C ∨ H.IsContained Cᶜ }
 
+/-- The diagonal graph Ramsey number `R(G, G)`. -/
+noncomputable def diagonalGraphRamsey {α : Type*} [Fintype α] (G : SimpleGraph α) : ℕ :=
+  graphRamsey G G
+
+/-- The classical two-color Ramsey number `R(k, l) = R(K_k, K_l)`. -/
+noncomputable def classicalRamsey (k l : ℕ) : ℕ :=
+  graphRamsey (completeGraph (Fin k)) (completeGraph (Fin l))
+
+/-- The diagonal classical Ramsey number `R(k) = R(K_k, K_k)`. -/
+noncomputable def diagonalRamsey (k : ℕ) : ℕ :=
+  classicalRamsey k k
+
 /--
 A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
 for all graphs `H` with `m` edges and no isolated vertices, the Ramsey number satisfies
