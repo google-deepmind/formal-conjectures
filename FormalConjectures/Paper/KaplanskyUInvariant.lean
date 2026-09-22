@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Kaplansky's problem on the values of the $u$-invariant
@@ -69,6 +70,8 @@ $13$ and $15$.
   Amer. Math. Soc. 72 (2025), no. 7, 711–718,
   [doi:10.1090/noti3192](https://doi.org/10.1090/noti3192).
 -/
+
+@[expose] public section
 
 namespace KaplanskyUInvariant
 
