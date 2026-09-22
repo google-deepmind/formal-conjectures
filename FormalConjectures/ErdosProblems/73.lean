@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 73
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Re99] Reed, B., Mangoes and Blueberries. Combinatorica (1999), 267-296.
 -/
 
+@[expose] public section
+
 namespace Erdos73
 
 /--
@@ -32,8 +35,14 @@ $\ge (n-k)/2$, where $n$ is the number of vertices of $H$. Must $G$ be the union
 graph and $O_k(1)$ many vertices?
 
 Proved by Reed [Re99].
+
+The linked formal proof (Alexeev and Codex, following Reed's mangoes-and-blueberries argument)
+states the hypothesis as `∀ H : G.Subgraph, H.verts.ncard ≤ 2 * H.coe.indepNum + k` and the
+conclusion as `(G.induce Dᶜ).IsBipartite`, for graphs on `Fin n` (and, equivalently, on any
+finite vertex type); this implies the statement below.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos73.lean#L122"]
 theorem erdos_73 : answer(True) ↔
     ∀ (k : ℕ), ∃ (C : ℕ),
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V),

@@ -95,6 +95,21 @@ noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let members := Finset.univ.filter (fun v : α => v ∈ S)
   (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
+/-- The average distance between distinct vertices of a set `S`:
+$\operatorname{dist}_{\operatorname{avg}}(S)$ is the mean of $\operatorname{dist}_G(u, v)$ over
+all ordered pairs $(u, v)$ of distinct vertices of $S$. Returns `0` when $S$ contains fewer than
+two vertices.
+
+This is DeLaVina's `dist_avg(S)` invariant ("average distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 23. It is distinct from `distavg`,
+which averages the distances from *all* vertices of `G` to the set. -/
+noncomputable def distAvgSet (G : SimpleGraph α) (S : Set α) : ℝ :=
+  open scoped Classical in
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if pairs.Nonempty then
+    (∑ p ∈ pairs, (G.dist p.1 p.2 : ℝ)) / (pairs.card : ℝ)
+  else 0
+
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
   if Fintype.card α > 0 then

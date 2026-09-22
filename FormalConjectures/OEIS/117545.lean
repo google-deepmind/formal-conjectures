@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k$ such that cyclotomic polynomial $\Phi_k(n)$ is prime
@@ -24,6 +25,8 @@ where $\Phi_k(n)$ is the $k$-th cyclotomic polynomial evaluated at $n$.
 
 *References:*
 - [A117545](https://oeis.org/A117545)-/
+
+@[expose] public section
 
 namespace OeisA117545
 

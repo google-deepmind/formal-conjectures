@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1095
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
 - [SSW20] Sorenson, Brianna and Sorenson, Jonathan and Webster, Jonathan, An algorithm and estimates
   for the {E}rdős-{S}elfridge function. (2020), 371--385.
 -/
+
+@[expose] public section
 
 open Nat hiding log
 open Real Filter
