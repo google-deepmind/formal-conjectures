@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Wikipedia.DedekindNumber
-import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.DedekindNumber
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 497
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Kl69] Kleitman, Daniel, *On Dedekind's problem: The number of monotone Boolean functions*.
   Proc. Amer. Math. Soc. (1969), 677-682.
 -/
+
+@[expose] public section
 
 open Filter
 

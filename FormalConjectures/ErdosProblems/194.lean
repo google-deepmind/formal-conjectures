@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 194
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/194](https://www.erdosproblems.com/194)
 - [ABJ11] Ardal, H. and Brown, T. and Jungić, V., Chaotic orderings of the rationals and reals. Amer. Math. Monthly (2011), 921-925.
 -/
+
+@[expose] public section
 
 namespace Erdos194
 
