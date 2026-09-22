@@ -95,6 +95,21 @@ noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let members := Finset.univ.filter (fun v : α => v ∈ S)
   (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
 
+/-- The average distance between distinct vertices of a set `S`:
+$\operatorname{dist}_{\operatorname{avg}}(S)$ is the mean of $\operatorname{dist}_G(u, v)$ over
+all ordered pairs $(u, v)$ of distinct vertices of $S$. Returns `0` when $S$ contains fewer than
+two vertices.
+
+This is DeLaVina's `dist_avg(S)` invariant ("average distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 23. It is distinct from `distavg`,
+which averages the distances from *all* vertices of `G` to the set. -/
+noncomputable def distAvgSet (G : SimpleGraph α) (S : Set α) : ℝ :=
+  open scoped Classical in
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if pairs.Nonempty then
+    (∑ p ∈ pairs, (G.dist p.1 p.2 : ℝ)) / (pairs.card : ℝ)
+  else 0
+
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
   if Fintype.card α > 0 then
@@ -103,10 +118,15 @@ noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
     0
 
 /-- The **square** of a graph `G`, denoted `G²`: two distinct vertices are adjacent
-iff their distance in `G` is at most 2. -/
+iff their distance in `G` is at most 2.
+
+The bound uses the extended distance `SimpleGraph.edist`, which is `⊤` for unreachable
+vertices. The natural-valued `SimpleGraph.dist` is `0` there, so it would make distinct
+vertices in different components adjacent: the square of the edgeless graph on two vertices
+would be the complete graph. -/
 def graphSquare (G : SimpleGraph α) : SimpleGraph α where
-  Adj u v := u ≠ v ∧ G.dist u v ≤ 2
-  symm.symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
+  Adj u v := u ≠ v ∧ G.edist u v ≤ 2
+  symm.symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [edist_comm]⟩
   loopless.irrefl v := by simp
 
 /-- Check whether four distinct vertices form an induced 4-cycle in `G`.

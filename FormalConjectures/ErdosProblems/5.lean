@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 5
@@ -44,6 +45,8 @@ import FormalConjecturesUtil
 - [We31] Westzynthius, E., *Über die Verteilung der Zahlen, die zu den n ersten Primzahlen
   teilerfremd sind*. Commentat. Phys. Math. (1931), 1-37.
 -/
+
+@[expose] public section
 
 open Filter MeasureTheory Real Set
 open scoped Topology
