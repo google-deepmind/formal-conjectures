@@ -76,6 +76,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build project
+    permissions:
+      contents: read
+      actions: read
+    env:
+      BASE_PATH: /formal-conjectures
     steps:
 
       - name: Checkout project
@@ -83,6 +88,17 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+
+      # Reuse only the website. Lean validation and cache refresh still run.
+      # Lookup, download, or integrity failures leave the full site build enabled.
+      - name: Reuse validated merge-queue website
+        id: reuse
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        timeout-minutes: 5
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/queue_artifact.py reuse "$RUNNER_TEMP/queue-pages"
 
       # Two independent halves of this job, each with its own switch.
       #
@@ -104,6 +120,7 @@ jobs:
           WEBSITE_ONLY: ${{ inputs.website_only }}
           REF_NAME: ${{ github.ref_name }}
           EVENT_NAME: ${{ github.event_name }}
+          REUSED_SITE: ${{ steps.reuse.outputs.reused }}
         run: |
           if [[ "$WEBSITE_ONLY" == "true" ]] || \
              [[ "$REF_NAME" == *-webtest ]]; then
@@ -126,6 +143,12 @@ jobs:
             else
               echo "::notice::Pull request touches the site, building it."
             fi
+          fi
+          # Reuse changes only the site half. Keep Lean validation and its
+          # cache writes enabled, including when #5435 separates the caches.
+          if [[ "$REUSED_SITE" == "true" ]]; then
+            site=false
+            echo "::notice::Reusing the validated website; Lean validation and cache refresh remain enabled."
           fi
           echo "site=$site" >> "$GITHUB_OUTPUT"
 
@@ -396,7 +419,6 @@ jobs:
           cd site
           node build.js
         env:
-          BASE_PATH: /formal-conjectures
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Assemble deploy artifact
@@ -417,6 +439,35 @@ jobs:
         with:
           path: _deploy
 
+      # upload-pages-artifact has already created artifact.tar. Re-upload that
+      # file unchanged; running upload-pages-artifact again would double-wrap it.
+      - name: Upload reused deploy artifact
+        if: steps.reuse.outputs.reused == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/queue-pages/artifact.tar
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
+
+      # The receipt is usable only after this entire workflow (including the
+      # parallel script tests) succeeds. Bind the exact immutable Pages artifact.
+      - name: Record merge-queue build inputs
+        if: github.event_name == 'merge_group'
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.deployment.outputs.artifact_id }}
+        run: python3 scripts/queue_artifact.py record "$RUNNER_TEMP/queue-receipt"
+
+      - name: Upload merge-queue receipt
+        if: github.event_name == 'merge_group'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: queue-build-receipt
+          path: ${{ runner.temp }}/queue-receipt/receipt.json
+          retention-days: 1
+          if-no-files-found: error
+
   # Deployment job
   deploy:
     if: >-
@@ -427,7 +478,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, scripts]
     # Only the deployment job needs write access to Pages and the OIDC token.
     permissions:
       contents: read
