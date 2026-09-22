@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 599
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [AhBe09] Aharoni, Ron and Berger, Eli, *Menger's theorem for infinite graphs*,
   *Invent. Math.* **176** (2009), 1--62.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

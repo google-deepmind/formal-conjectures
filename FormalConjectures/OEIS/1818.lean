@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Squares of double factorials
@@ -23,7 +24,11 @@ Squares of double factorials: $a(n) = ((2n-1)!!)^2 = (1 \cdot 3 \cdot 5 \cdots (
 
 *References:*
 - [A001818](https://oeis.org/A001818)
+- [She, Sun, Xia, *A novel permanent identity with applications*, Theorem 1.3(ii)](https://arxiv.org/abs/2208.12167)
+- [Yang, Zhang, *Sun-type determinant and permanent congruences*, Proposition 17](https://arxiv.org/abs/2605.19502)
 -/
+
+@[expose] public section
 
 namespace OeisA1818
 
@@ -69,7 +74,7 @@ matrix $[m(j,k)]_{j,k=1..2n}$ coincides with $a(n) = ((2n-1)!!)^2$, where $m(j,k
 $(1+\zeta^{j-k})/(1-\zeta^{j-k})$ if $j \neq k$, and $1$ otherwise.
 - Zhi-Wei Sun, Dec 21 2021
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15]
 theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) :
     ∀ (ζ : ℂ), IsPrimitiveRoot ζ (2 * n) →
       Matrix.permanent (fun (i j : Fin (2 * n)) =>
@@ -86,7 +91,7 @@ $[f(j,k)]_{j,k=1..p-1}$ is congruent to $a((p-1)/2) = ((p-2)!!)^2 \pmod{p^2}$,
 where $f(j,k)$ is $(j+k)/(j-k)$ if $j \neq k$, and $f(j,k) = 1$ otherwise.
 - Zhi-Wei Sun, Dec 22 2021
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15]
 theorem conjecture2 {p : ℕ} (hp : p.Prime) (h_odd : p ≠ 2) :
     let N : ℕ := p - 1
     let R := ZMod (p ^ 2)
