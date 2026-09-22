@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The small Cohen-Macaulay modules conjecture
@@ -75,6 +77,8 @@ Systems of parameters and Cohen-Macaulay modules are defined in
 - [Bh14] B. Bhatt, *On the non-existence of small Cohen-Macaulay algebras*, J. Algebra 411
   (2014), 1-11. [arXiv:1207.5413](https://arxiv.org/abs/1207.5413)
 -/
+
+@[expose] public section
 
 open IsLocalRing Module
 
