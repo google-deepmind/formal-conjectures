@@ -200,4 +200,5 @@ public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
 public import FormalConjecturesForMathlib.Topology.Homogeneous
 public import FormalConjecturesForMathlib.Topology.LebesgueCoveringDimension
+public import FormalConjecturesForMathlib.Topology.MetricSpace.Isometry
 public import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated
