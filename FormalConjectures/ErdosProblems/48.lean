@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 48
 
 *Reference:* [erdosproblems.com/48](https://www.erdosproblems.com/48)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 
@@ -29,7 +32,8 @@ namespace Erdos48
 /--
 Are there infinitely many integers $n, m$ such that $ϕ(n) = σ(m)$?
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos48.lean#L599"]
 theorem erdos_48 :
     answer(True) ↔ {(n, m) : ℕ × ℕ | n.totient = σ 1 m}.Infinite := by
   sorry
