@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://google-deepmind.github.io/formal-conjectures/data/schemas/website-modules-v1.schema.json",
+  "title": "Verso source-page index for a catalog snapshot",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "catalog_sha256",
+    "modules"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fc.website-modules.v1"
+    },
+    "catalog_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^FormalConjectures(?:ForMathlib|Util|Test)?(?:\\.|$)"
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^/FormalConjectures(?:ForMathlib|Util|Test)?/"
+          }
+        }
+      }
+    }
+  }
+}
