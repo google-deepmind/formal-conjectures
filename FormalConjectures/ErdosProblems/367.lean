@@ -86,12 +86,17 @@ theorem erdos_367.variants.k_ge_three_lower :
 It would also be interesting to find upper and lower bounds for the analogous product with $B_r$
 for $r \geq 3$, where $B_r(n)$ is the $r$-full part of $n$ (that is, the product of prime powers
 $p^a \mid n$ such that $p^{a+1} \nmid n$ and $a \geq r$). Is it true that, for every fixed
-$r,k \geq 2$ and $\epsilon > 0$,
-$\limsup \frac{\prod_{n \leq m < n+k} B_r(m)}{n^{1+\epsilon}} \to \infty$?
+$r,k \geq 2$, there is some $\epsilon = \epsilon(r, k) > 0$ with
+$\limsup \frac{\prod_{n \leq m < n+k} B_r(m)}{n^{1+\epsilon}} = \infty$?
+
+The webpage writes "for every fixed $r,k \geq 2$ and $\epsilon > 0$", but van Doorn observes in
+the [comments](https://www.erdosproblems.com/forum/thread/367#post-1766) that the intended
+reading lets $\epsilon$ depend on $r$ and $k$. Since $B_r(m) \mid m$, the product is at most
+$\prod_{n \leq m < n+k} m$, so the reading with $\epsilon$ universally quantified is false.
 -/
 @[category research open, AMS 11]
 theorem erdos_367.variants.higher_full_parts : answer(sorry) ↔
-    ∀ r k : ℕ, 3 ≤ r → 2 ≤ k → ∀ ε : ℝ, 0 < ε →
+    ∀ r k : ℕ, 3 ≤ r → 2 ≤ k → ∃ ε : ℝ, 0 < ε ∧
       atTop.limsup (fun n ↦
         ((∏ m ∈ .Ico n (n + k), B r m : ℕ) / (n : ℝ) ^ (1 + ε) |>.toEReal)) = ⊤ := by
   sorry
