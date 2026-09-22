@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $(1-\sqrt{1-4x-4x^2})/(2(1+x))$
@@ -24,6 +25,8 @@ $$a(n) = \sum_{k=0}^{n-1} \frac{1}{k+1} \binom{2k}{k} \binom{k}{n-1-k}$$
 
 *References:*
 - [A052709](https://oeis.org/A052709)-/
+
+@[expose] public section
 
 namespace OeisA52709
 
@@ -88,7 +91,8 @@ initial interval of positive integers and avoiding three terms
 $(\dots, x, \dots, y, \dots, z, \dots)$ such that $x \le y \le z$.
 - Gus Wiseman, Jun 17 2021
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_52709_conjecture_0/Submission/Spec.lean#L1289"]
 theorem conjecture (n : ℕ) (hn : 0 < n) [Fintype (sequencesCountedByA052709 n)] :
     a n = Fintype.card (sequencesCountedByA052709 n) := by
   sorry
