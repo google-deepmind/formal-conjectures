@@ -58,6 +58,8 @@ for commutative Noetherian local rings.
   formalised below follow this paper.
 -/
 
+@[expose] public section
+
 open CategoryTheory
 
 namespace AuslanderReiten
