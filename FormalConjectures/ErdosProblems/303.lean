@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 303
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BrRo91] Brown, Tom C. and Rödl, Voijtech, Monochromatic solutions to equations with unit
   fractions. Bull. Austral. Math. Soc. (1991), 387-392.
 -/
+
+@[expose] public section
 
 namespace Erdos303
 

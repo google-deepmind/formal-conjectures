@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 918
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [ErHa68b] Erdős, P. and Hajnal, A., On chromatic number of infinite graphs. (1968), 83--98.
 - [Er69b] Erdős, P., Problems and results in chromatic graph theory. Proof Techniques in Graph Theory (Proc. Second Ann Arbor Graph Theory Conf., Ann Arbor, Mich., 1968) (1969), 27-35.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -44,7 +47,7 @@ theorem erdos_918.parts.i :
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
 -- Formalisation note: `ω` here is `Ordinal.omega0`, from `open scoped Ordinal`, as in 623.lean.
 -- It is the fixed first infinite ordinal, not a variable: `variants.erdos_hajnal` settles every
--- finite `k`, and `ℵ_ω` is the limit of that family, so this asks the single next case.
+-- finite `k` under GCH, and `ℵ_ω` is the limit of that family, so this asks the single next case.
 @[category research open, AMS 5]
 theorem erdos_918.parts.ii :
     answer(sorry) ↔
@@ -75,13 +78,16 @@ theorem erdos_918.variants.all_subgraphs.parts.ii :
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
 
-/-- A question of Erd\H{o}s and Hajnal [ErHa68b], who proved that for every finite $k$
-there is a graph with chromatic number $\aleph_1$ and $\aleph_k$ vertices where each subgraph on
-less than $\aleph_k$ vertices has chromatic number $\leq \aleph_0$. -/
+/-- A question of Erd\H{o}s and Hajnal [ErHa68b], who proved, assuming the generalized continuum
+hypothesis, that for every finite $k \geq 1$ there is a graph with chromatic number $\aleph_1$ and
+$\aleph_k$ vertices where each subgraph on less than $\aleph_k$ vertices has chromatic number
+$\leq \aleph_0$. -/
 -- Formalisation note: the source is missing the assumption that the graph have ℵₖ vertices
--- which can be found in [ErHa68b]
+-- which can be found in [ErHa68b, Corollary 1]. That corollary assumes the generalized continuum
+-- hypothesis, stated here as `2 ^ c = Order.succ c` for every infinite cardinal `c`.
 @[category research solved, AMS 5]
-theorem erdos_918.variants.erdos_hajnal (k : ℕ) (hk : 0 < k) : ∃ (V : Type u) (G : SimpleGraph V),
+theorem erdos_918.variants.erdos_hajnal (hGCH : ∀ c : Cardinal.{u}, ℵ₀ ≤ c → 2 ^ c = Order.succ c)
+    (k : ℕ) (hk : 0 < k) : ∃ (V : Type u) (G : SimpleGraph V),
     #V = ℵ_ k ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W < ℵ_ k), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry

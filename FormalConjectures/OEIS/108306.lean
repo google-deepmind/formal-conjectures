@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A108306: Expansion of $(3x+1)/(1-3x-3x^2)$
@@ -25,6 +26,8 @@ and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
 *References:*
 - [A108306](https://oeis.org/A108306)
 -/
+
+@[expose] public section
 
 namespace OeisA108306
 
@@ -72,7 +75,16 @@ These results are a case (a=5, b=2) of the general conjecture below.
 @[category textbook, AMS 11]
 theorem a_is_invert_transform_case (n : ℕ) :
     a n = (m ^ (n + 1)) 0 0 := by
-  sorry
+  -- `m` satisfies `m ^ 2 = 3 m + 3`, so its powers satisfy the recurrence of `a`.
+  have hm : ∀ n, m ^ (n + 2) = 3 • m ^ (n + 1) + 3 • m ^ n := fun n => by
+    rw [pow_add, show m ^ 2 = 3 • m + 3 • (1 : Matrix (Fin 2) (Fin 2) ℕ) by decide, mul_add,
+      mul_smul_comm, mul_smul_comm, mul_one, ← pow_succ]
+  induction n using Nat.twoStepInduction with
+  | zero => decide
+  | one => decide
+  | more k ih1 ih2 =>
+    rw [a, ih1, ih2, show k + 2 + 1 = k + 1 + 2 by omega, hm (k + 1)]
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
 
 /--
 The c sequence for the general INVERT transform conjecture.

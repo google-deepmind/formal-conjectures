@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.OEIS.«89026»
+public import FormalConjecturesUtil
+public import FormalConjectures.OEIS.«89026»
 
 /-!
 # Wolstenholme numbers
@@ -25,6 +26,8 @@ Wolstenholme numbers: numerator of $\sum_{k=1}^n \frac{1}{k^2}$.
 *References:*
 - [A007406](https://oeis.org/A007406)
 -/
+
+@[expose] public section
 
 namespace OeisA7406
 
