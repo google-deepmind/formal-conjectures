@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Eisenbud-Green-Harris conjecture
@@ -66,6 +68,8 @@ Eisenbud-Green-Harris conjecture is its $i = 0$ case [CS18]. It is not formalise
   functions, Lect. Notes Pure Appl. Math. 254, 113-144.
   [PDF](https://math.okstate.edu/people/chris/lpp-updated-final.pdf)
 -/
+
+@[expose] public section
 
 open MvPolynomial
 
