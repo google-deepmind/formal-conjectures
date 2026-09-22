@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 22078: is a smooth affine group scheme over the dual numbers linear?
@@ -61,6 +62,8 @@ matrices that express a homomorphism into `GLₙ`, and with lemmas exercising bo
   rings*](https://arxiv.org/abs/1807.01009), which claimed an affirmative answer over an artinian
   base and was withdrawn because of an error in its Thm. 4.1.
 -/
+
+@[expose] public section
 
 namespace Mathoverflow22078
 
