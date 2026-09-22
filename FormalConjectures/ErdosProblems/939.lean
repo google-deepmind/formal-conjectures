@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 939
@@ -30,6 +31,9 @@ import FormalConjecturesUtil
 - [LaPa67] Lander, L. J. and Parkin, T. R., _A counterexample to Euler's sum of powers
   conjecture_. Math. Comp. (1967), 101-103.
 -/
+
+@[expose] public section
+
 open Nat
 
 namespace Erdos939
@@ -42,6 +46,9 @@ A set `S` belongs to `Erdos939Sums r` if it meets the following criteria:
 - The elements of the set are coprime (their greatest common divisor is 1).
 - Every element in `S` is an `$r$-powerful` number.
 - The sum of the elements in `S`, i.e., `$\sum_{s \in S} s$`, is also an `$r$-powerful` number.
+
+The summands are taken to be distinct (`S` is a `Finset`). The source does not say whether
+repeated summands are allowed; all known examples and constructions use distinct summands.
 -/
 def Erdos939Sums (r : ℕ) :=
     {S : Finset ℕ | S.card = r - 2 ∧ S.Coprime ∧ r.Full (∑ s ∈ S, s) ∧
@@ -55,16 +62,34 @@ theorem erdos_939 : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Nonempty := 
   sorry
 
 /--
-If $r≥4$ are there infinitely many sums of $r-2$ coprime $r$-powerful numbers
+If $r≥4$, are there at most finitely many sums of $r-2$ coprime $r$-powerful numbers
 that are themselves $r$-powerful?
 
+The answer is no: for every $r \ge 6$ there are infinitely many such sums, see
+`erdos_939.variants.infinite_of_six_le`. (For $r = 4$ and $r = 5$ the question is open; for
+$r = 4$ no example is known at all, see `erdos_939`.)
 A construction in the site's comments, from GPT-5.5 Pro prompted by Price, gives infinitely
 many for every $r \ge 6$. This statement quantifies over every $r \ge 4$, so it stays open at
 $r = 4$ and $r = 5$. The category is unchanged because the construction is recorded in the
 comments and not in the literature.
 -/
-@[category research open, AMS 11]
-theorem erdos_939.variants.infinite : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Infinite := by
+@[category research solved, AMS 11]
+theorem erdos_939.variants.finite : answer(False) ↔ ∀ r ≥ 4, (Erdos939Sums r).Finite := by
+  sorry
+
+/--
+For every $r \ge 6$ there are infinitely many sums of $r - 2$ coprime $r$-powerful numbers that
+are themselves $r$-powerful.
+
+A construction, found by GPT-5.5 Pro prompted by Liam Price and recorded in the comments on
+[erdosproblems.com/939](https://www.erdosproblems.com/forum/thread/939), expands
+$(X+Y)^r = (X-Y)^r + \sum_{j \text{ odd}} 2\binom{r}{j} X^{r-j} Y^j$, splits the $j = 3$ term into
+$\lfloor r/2 \rfloor - 2$ distinct pieces to obtain exactly $r - 2$ summands, and takes
+$X = q^r$, $Y = B^r$ with $B$ divisible by all primes in the coefficients and $q > B$ a prime not
+dividing $B$; varying $q$ gives infinitely many solutions.
+-/
+@[category research solved, AMS 11]
+theorem erdos_939.variants.infinite_of_six_le : ∀ r ≥ 6, (Erdos939Sums r).Infinite := by
   sorry
 
 /--

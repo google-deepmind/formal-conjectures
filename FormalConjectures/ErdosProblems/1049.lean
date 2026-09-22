@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1049
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er48] Erdős, P., On arithmetical properties of Lambert series. J. Indian Math. Soc. (N.S.)
   (1948), 63-66.
 -/
+
+@[expose] public section
 
 namespace Erdos1049
 

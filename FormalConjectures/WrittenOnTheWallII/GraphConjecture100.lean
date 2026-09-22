@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 100
@@ -39,6 +40,8 @@ Combined with the overline above, the inequality reads:
   `α(G) ≤ ⌈(max_v l(v) + 0.5 · degreeL2Norm(Gᶜ)) / 2⌉`
 where `l(v) = indepNeighbors G v`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture100
 

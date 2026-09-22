@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integer part of area of a regular polygon with $n$ sides each of length 1
@@ -25,6 +26,8 @@ $\frac{n}{4} \cot(\pi / n) = \frac{n}{4 \tan(\pi / n)}$.
 *References:*
 - [A064313](https://oeis.org/A064313)
 -/
+
+@[expose] public section
 
 namespace OeisA64313
 

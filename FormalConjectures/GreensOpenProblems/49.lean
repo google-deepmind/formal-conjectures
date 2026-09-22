@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 49
@@ -35,6 +36,8 @@ Also known as the *Marton's conjecture* or the *Polynomial Freiman-Ruzsa conject
 - [Ta08] T. C. Tao, A counterexample to a strong polynomial Freiman-Ruzsa conjecture, blog post November 2008, available at http://tinyurl.com/36j6hyxv.
 -/
 
+@[expose] public section
+
 open scoped Pointwise Finset
 
 namespace Green49
@@ -44,7 +47,9 @@ namespace Green49
 Suppose that $A \subset \mathbb{F}_2^n$ is a set with $|A + A| \leq K|A|$. Is it true that $A$
 is covered by $K^{O(1)}$ translates of a subspace of size $\leq |A|$?
 
-Solved by [GGM25].
+Solved by [GGM25], with at most $2K^{12}$ translates. The factor $2$ cannot be omitted: for
+$A = \mathbb{F}_2^n \setminus \{0\}$ one has $K = 2^n / (2^n - 1)$, so $K^C \to 1$ as
+$n \to \infty$, while every subspace of size at most $|A|$ is proper and two translates are needed.
 -/
 @[category research solved, AMS 5 11]
 theorem green_49 : answer(True) ↔
@@ -53,7 +58,7 @@ theorem green_49 : answer(True) ↔
       ∀ K ≥ (1 : ℝ), (#(A + A) : ℝ) ≤ K * #A →
         ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (T : Finset (𝔽₂ n)),
           Nat.card W ≤ #A ∧
-          (#T : ℝ) ≤ K ^ C ∧
+          (#T : ℝ) ≤ 2 * K ^ C ∧
           (A : Set (𝔽₂ n)) ⊆ T + W := by
   sorry
 
