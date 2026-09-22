@@ -25,10 +25,6 @@ it with the multivariate Mahler method, in a form that is stronger than the ques
 the base-$b$ digit sequence may be $k$-automatic for an arbitrary $k \ge 2$, not only for
 $k = b$.
 
-[AF20] is a preprint. It is not published as of 2026; the 2024 addendum
-[arXiv:2407.18578](https://arxiv.org/abs/2407.18578) strengthens its Theorem 1.1 (i) and
-corrects nothing.
-
 The definitions used here are in `FormalConjecturesForMathlib`:
 `Nat.MultiplicativelyIndependent` and `Nat.MultiplicativelyIndependentFamily`,
 `AutomaticSequence.IsAutomatic`, `AutomaticSequence.IsAutomaticInBase` and
