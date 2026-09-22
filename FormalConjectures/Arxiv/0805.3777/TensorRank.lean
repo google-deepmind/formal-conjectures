@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Generic and maximal rank of 3-tensors
@@ -84,6 +85,8 @@ below therefore writes the format in the order its own source uses.
   ([arxiv/1402.2371](https://arxiv.org/abs/1402.2371)), Theorem 1. Used for
   `isMaxRank_le_two_mul_isGenericRank`.
 -/
+
+@[expose] public section
 
 namespace Arxiv.«0805.3777»
 
