@@ -93,15 +93,15 @@ theorem erdos_1000.variants.totient_le (n : ℕ → ℕ) (hn : StrictMono n) (hn
       · subst h
         have : n k = 1 := by simpa [Nat.coprime_zero_right] using ha2
         simp [this]
-      · simp only [h, if_false]
+      · simp only [h, ite_false]
         rw [Nat.gcd_comm]; exact ha2
     have hpos : 0 < n k := lt_of_le_of_lt (Nat.zero_le a) ha1
     have hmem : 1 ≤ (if a = 0 then n k else a) ∧ (if a = 0 then n k else a) ≤ n k := by
       by_cases h : a = 0
       · subst h
-        rw [if_pos rfl]
+        rw [ite_eq_left rfl]
         omega
-      · rw [if_neg h]
+      · rw [ite_eq_right h]
         omega
     simp only [Finset.mem_Icc]
     refine ⟨hmem, ?_⟩

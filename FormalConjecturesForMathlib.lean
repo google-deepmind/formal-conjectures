@@ -24,7 +24,6 @@ public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
-public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
@@ -117,7 +116,6 @@ public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
-public import FormalConjecturesForMathlib.Data.Int.Order.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Full
 public import FormalConjecturesForMathlib.Data.Nat.Init
@@ -133,7 +131,6 @@ public import FormalConjecturesForMathlib.Data.Real.NearestInt
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
-public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplexity
@@ -191,7 +188,6 @@ public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
 public import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
-public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
