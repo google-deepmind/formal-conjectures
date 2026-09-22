@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-! # The Poincaré Conjecture
 
@@ -26,6 +27,10 @@ References:
 
 The formalisations in this file are based on the ones written by Junyan Xu in Mathlib4.
 -/
+
+@[expose] public section
+
+universe u
 
 namespace PoincareConjecture
 
@@ -74,7 +79,7 @@ to the sphere. As in `ConjectureFor`, the manifold must be Hausdorff: `ChartedSp
 `IsManifold` do not imply this, and in every positive dimension there is a non-Hausdorff smooth
 manifold that is homotopy equivalent to the sphere. -/
 def SmoothConjectureFor (n : ℕ) : Prop :=
-  ∀ (M : Type) [TopologicalSpace M] [T2Space M] [ChartedSpace (ℝ^n) M]
+  ∀ (M : Type u) [TopologicalSpace M] [T2Space M] [ChartedSpace (ℝ^n) M]
     [IsManifold (𝓡 n) ∞ M], M ≃ₕ 𝕊ⁿ → Nonempty (M ≃ₘ⟮𝓡 n, 𝓡 n⟯ 𝕊ⁿ)
 
 /-- A reformulation of the Millennium Problem in terms of smooth 3-folds. -/

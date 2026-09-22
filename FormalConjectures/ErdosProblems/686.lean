@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 686
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er79d] Erdős, P., *Some unconventional problems in number theory*. Acta Math.
   Acad. Sci. Hungar. (1979), 71-80.
 -/
+
+@[expose] public section
 
 namespace Erdos686
 

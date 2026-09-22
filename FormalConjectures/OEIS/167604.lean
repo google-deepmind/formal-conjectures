@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Chua's Euclidean prime sequence
@@ -28,6 +29,8 @@ whether every prime occurs.
 - Andrew R. Booker,
   [A variant of the Euclid--Mullin sequence containing every prime](https://arxiv.org/abs/1605.08929)
 -/
+
+@[expose] public section
 
 namespace OeisA167604
 
