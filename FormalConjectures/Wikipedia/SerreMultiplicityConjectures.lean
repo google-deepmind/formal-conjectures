@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Serre's multiplicity conjectures
@@ -49,6 +51,8 @@ The intersection multiplicity is `Module.intersectionMultiplicity`, defined in
   J. Pure Appl. Algebra 223 (2019), 1801–1816.
   [arXiv:1510.05146](https://arxiv.org/abs/1510.05146)
 -/
+
+@[expose] public section
 
 open IsLocalRing Module TensorProduct
 
