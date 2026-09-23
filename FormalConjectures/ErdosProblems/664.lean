@@ -69,13 +69,14 @@ theorem erdos_664.variants.two_fifths :
 /--
 In [Er81] the condition $\lvert A_i\cap A_j\rvert\leq 1$ for all $i\neq j$ is replaced by every
 two points in $\{1,\ldots,n\}$ being contained in exactly one $A_i$, that is,
-$A_1,\ldots,A_m$ is a pairwise balanced block design (and the condition $c<1$ is omitted). This
-weaker version remains open, although Alon conjectures the answer there to also be no.
+$A_1,\ldots,A_m$ is a pairwise balanced block design. The bound $\lvert A_i\rvert>c\sqrt{n}$ is
+kept, only the condition $c<1$ is omitted. This weaker version remains open, although Alon
+conjectures the answer there to also be no.
 -/
 @[category research open, AMS 5]
 theorem erdos_664.variants.block_design : answer(sorry) ↔
-    ∃ K : ℕ, ∀ (n m : ℕ) (A : Fin m → Finset (Fin n)),
-      (∀ x y : Fin n, x ≠ y → ∃! i, x ∈ A i ∧ y ∈ A i) →
+    ∀ c : ℝ, 0 < c → ∃ K : ℕ, ∀ (n m : ℕ) (A : Fin m → Finset (Fin n)),
+      (∀ i, c * √n < (A i).card) → (∀ x y : Fin n, x ≠ y → ∃! i, x ∈ A i ∧ y ∈ A i) →
         ∃ B : Finset (Fin n), (∀ i, (B ∩ A i).Nonempty) ∧
           ∀ i, (B ∩ A i).card ≤ K := by
   sorry

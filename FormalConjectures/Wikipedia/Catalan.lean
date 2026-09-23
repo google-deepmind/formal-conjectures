@@ -33,7 +33,8 @@ namespace Catalan
 The only natural number solution to the equation $x^a - y^b = 1$ such that $a, b > 1$ and
 $x, y > 0$ is given by $a = 2$, $b = 3$, $x = 3$, and $y = 2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/cadamcat/catalan-lean4/blob/4bf1f742eb341decbdfc59ec56e1616f4d13e33b/Catalan/Final/Assembly.lean#L32"]
 theorem catalans_conjecture (a b x y : ℕ) (ha : 1 < a) (hb : 1 < b) (hx : 0 < x) (hy : 0 < y)
     (heq : x ^ a - y ^ b = 1) : a = 2 ∧ b = 3 ∧ x = 3 ∧ y = 2 := by
   sorry

@@ -119,7 +119,7 @@ For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
 @[category textbook, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N.sqrt / 2 ≤ A.card := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ Real.sqrt N / 2 ≤ A.card := by
   sorry
 
 /--
