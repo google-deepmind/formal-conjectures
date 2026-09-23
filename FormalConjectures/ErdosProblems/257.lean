@@ -101,4 +101,25 @@ theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
+/--
+If an infinite support has summable reciprocals, its reciprocal Mersenne
+series is irrational at every integer base at least two. No pairwise
+coprimality assumption is needed. Exponent zero contributes zero under Lean's
+real-division convention.
+
+Erdős stated the coprimality-free result in *On the irrationality of certain
+series*, Math. Student 36 (1968), p. 222. A proof and formalisation appear in
+W. Cook,
+*Reciprocal Mersenne Subseries*:
+https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/docs/papers/full-text/erdos257-mersenne-reasoning-surface.md
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/dd713e23309d91c701b50124b40b8e7bdeb20573/research/adapters/FormalConjecturesVariants.lean#L681-L689"]
+theorem erdos_257.variants.summable_reciprocal_support
+    (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite)
+    (hsum : Summable (Set.indicator A (fun a : ℕ => (1 : ℝ) / (a : ℝ)))) :
+    Irrational (∑' a : ℕ,
+      Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a) := by
+  sorry
+
 end Erdos257
