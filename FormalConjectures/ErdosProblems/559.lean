@@ -76,7 +76,7 @@ with maximum degree $3$ such that $\hat{R}(G)\gg n(\log n)^{c}$ for some absolut
 $c>0$. -/
 @[category research solved, AMS 5]
 theorem erdos_559.variants.rodl_szemeredi :
-    ∃ c > 0, ∃ C > 0, ∃ᶠ n : ℕ in atTop, ∃ G : SimpleGraph (Fin n),
+    ∃ c > (0 : ℝ), ∃ C > 0, ∃ᶠ n : ℕ in atTop, ∃ G : SimpleGraph (Fin n),
       G.maxDegree ≤ 3 ∧ C * n * (log n) ^ c ≤ sizeRamsey G G := by
   sorry
 
