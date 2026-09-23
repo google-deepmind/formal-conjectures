@@ -1,0 +1,20 @@
+# Greetings from The On-Line Encyclopedia of Integer Sequences! http://oeis.org/
+
+Search: id:a109074
+Showing 1-1 of 1
+
+%I A109074 #7 Sep 29 2024 12:58:22
+%S A109074 1,1,3,26,323,2415,26970,66526,717541,278992987,30741431,753069156,
+%T A109074 21291561634,1258540885373,11255629805034,833378477982,
+%U A109074 181778972767041,101220208716435,644821697046585,4759584409762049637,7692170694126370209,19898042621084590853
+%N A109074 Numerator of binomial(6*n-2,2*n)/(2*binomial(4*n-1,2*n)).
+%C A109074 It is conjectured that binomial(6*n-2,2*n)/(2*binomial(4*n-1,2*n)) = A005156(n+1)/A005156(n).
+%D A109074 D. M. Bressoud, Proofs and Confirmations, Camb. Univ. Press, 1999; see conjecture (6.18).
+%e A109074 1/2, 1, 3, 26/3, 323/13, 2415/34, 26970/133, 66526/115, 717541/435, 278992987/59334, 30741431/2294, ...
+%t A109074 Table[Numerator[Binomial[6n-2,2n]/(2Binomial[4n-1,2n])],{n,0,30}] (* _Harvey P. Dale_, Sep 29 2024 *)
+%Y A109074 Cf. A134357, A005156.
+%K A109074 nonn,frac
+%O A109074 0,3
+%A A109074 _N. J. A. Sloane_, May 04 2008
+
+# Content is available under The OEIS End-User License Agreement: http://oeis.org/LICENSE
