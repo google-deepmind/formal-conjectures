@@ -74,37 +74,37 @@ theorem erdos_147 : answer(False) ↔
 open scoped Classical in
 /--
 Janzer [Ja23] disproved the conjecture for even $r\geq 4$: for any even $r \geq 4$ and
-$\epsilon>0$ there exists an $r$-regular bipartite graph $H$ such that
+$\epsilon>0$ there exists a nonempty $r$-regular bipartite graph $H$ such that
 $\mathrm{ex}(n;H) \ll n^{2-\frac{2}{r}+\epsilon}$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_147.variants.janzer_even (r : ℕ) (hr : 4 ≤ r) (heven : Even r) (ε : ℝ)
     (hε : 0 < ε) :
-    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), H.IsBipartite ∧ H.IsRegularOfDegree r ∧
+    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), 0 < q ∧ H.IsBipartite ∧ H.IsRegularOfDegree r ∧
       (fun n : ℕ => (extremalNumber n H : ℝ)) =O[atTop]
         fun n : ℕ => (n : ℝ) ^ (2 - 2 / (r : ℝ) + ε) := by
   sorry
 
 open scoped Classical in
 /--
-Janzer [Ja23b] constructed, for any $\epsilon>0$, a $3$-regular bipartite graph $H$ such that
-$\mathrm{ex}(n;H)\ll n^{\frac{4}{3}+\epsilon}$.
+Janzer [Ja23b] constructed, for any $\epsilon>0$, a nonempty $3$-regular bipartite graph $H$
+such that $\mathrm{ex}(n;H)\ll n^{\frac{4}{3}+\epsilon}$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_147.variants.cubic (ε : ℝ) (hε : 0 < ε) :
-    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), H.IsBipartite ∧ H.IsRegularOfDegree 3 ∧
+    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), 0 < q ∧ H.IsBipartite ∧ H.IsRegularOfDegree 3 ∧
       (fun n : ℕ => (extremalNumber n H : ℝ)) =O[atTop]
         fun n : ℕ => (n : ℝ) ^ (4 / 3 + ε : ℝ) := by
   sorry
 
 open scoped Classical in
 /--
-Janzer [Ja23] conjectures that for any $r\geq 3$ and $\epsilon>0$ there exists an $r$-regular
-graph $H$ such that $\mathrm{ex}(n;H) \ll n^{2-\frac{2}{r}+\epsilon}$.
+Janzer [Ja23] conjectures that for any $r\geq 3$ and $\epsilon>0$ there exists a nonempty
+$r$-regular graph $H$ such that $\mathrm{ex}(n;H) \ll n^{2-\frac{2}{r}+\epsilon}$.
 -/
 @[category research open, AMS 5]
 theorem erdos_147.variants.janzer_conjecture : answer(sorry) ↔ ∀ r : ℕ, 3 ≤ r → ∀ ε : ℝ, 0 < ε →
-    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), H.IsRegularOfDegree r ∧
+    ∃ (q : ℕ) (H : SimpleGraph (Fin q)), 0 < q ∧ H.IsRegularOfDegree r ∧
       (fun n : ℕ => (extremalNumber n H : ℝ)) =O[atTop]
         fun n : ℕ => (n : ℝ) ^ (2 - 2 / (r : ℝ) + ε) := by
   sorry

@@ -58,7 +58,9 @@ theorem erdos_1007 :
 /--
 The smallest number of edges in a graph of dimension $4$ is achieved solely by $K_{3,3}$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/Dishah3241/Erdos1007/blob/43f89415a6663848a1445effbda8b3abe77b052b/Erdos1007/Standalone/Mathlib/InlineErdos1007Proof.lean#L306"]
 theorem erdos_1007.variants.dimension_four_extremal (n : ℕ) (G : SimpleGraph (Fin n))
     (hdim : G.HasDimension 4) (hcard : G.edgeSet.ncard = 9)
     (hdeg : ∀ v : Fin n, ∃ w : Fin n, G.Adj v w) :

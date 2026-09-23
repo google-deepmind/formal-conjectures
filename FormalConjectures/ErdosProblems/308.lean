@@ -86,19 +86,20 @@ theorem erdos_308.variants.shape : ∀ᶠ N : ℕ in atTop,
   sorry
 
 /--
-Croot [Cr99] proved that if $f(N)$ is the smallest integer not representable then
+Croot [Cr99] bounded $\eta(N)$, the largest integer such that every integer in
+$\{1,\ldots,\eta(N)\}$ is representable; this is $f(N)-1$, so his bounds read
 $$\left\lfloor\sum_{n\leq N}\frac{1}{n}-\frac{9}{2}(1+o(1))\frac{(\log\log N)^2}{\log N}
-\right\rfloor \leq f(N)$$
+\right\rfloor + 1 \leq f(N)$$
 and
 $$f(N)\leq \left\lfloor\sum_{n\leq N}\frac{1}{n}-\frac{1}{2}(1+o(1))
-\frac{(\log\log N)^2}{\log N}\right\rfloor.$$
+\frac{(\log\log N)^2}{\log N}\right\rfloor + 1.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_308.variants.croot :
     ∃ o₁ o₂ : ℕ → ℝ, Tendsto o₁ atTop (nhds 0) ∧ Tendsto o₂ atTop (nhds 0) ∧
       ∀ᶠ N : ℕ in atTop,
-        ⌊(harmonic N : ℝ) - 9 / 2 * (1 + o₁ N) * (log (log N)) ^ 2 / log N⌋₊ ≤ f N ∧
-        f N ≤ ⌊(harmonic N : ℝ) - 1 / 2 * (1 + o₂ N) * (log (log N)) ^ 2 / log N⌋₊ := by
+        ⌊(harmonic N : ℝ) - 9 / 2 * (1 + o₁ N) * (log (log N)) ^ 2 / log N⌋₊ + 1 ≤ f N ∧
+        f N ≤ ⌊(harmonic N : ℝ) - 1 / 2 * (1 + o₂ N) * (log (log N)) ^ 2 / log N⌋₊ + 1 := by
   sorry
 
 /--

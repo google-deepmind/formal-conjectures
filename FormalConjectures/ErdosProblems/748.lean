@@ -61,9 +61,11 @@ theorem erdos_748 : answer(True) ↔
   sorry
 
 /-- It is trivial to see that $f(n) \geq 2^{\frac{n}{2}}$, considering all subsets of
-$[n/2,n]$. -/
+$(n/2,n]$. The source writes $[n/2,n]$, but for even $n$ that interval is not sum-free,
+since $n/2 + n/2 = n$. -/
 @[category textbook, AMS 5 11]
-theorem erdos_748.variants.lower_bound (n : ℕ) : 2 ^ (n / 2) ≤ f n := by
+theorem erdos_748.variants.lower_bound (n : ℕ) :
+    (2 : ℝ) ^ ((n : ℝ) / 2) ≤ (f n : ℝ) := by
   sorry
 
 /-- Green [Gr04] and Sapozhenko [Sa03] proved that $f(n) \ll 2^{n/2}$. -/
