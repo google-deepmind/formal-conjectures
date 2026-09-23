@@ -29,15 +29,8 @@ public import FormalConjecturesUtil
 
 ### AI disclosure
 
-The three quadratic sublevel-set theorems below (`quadratic_sublevel_formula`,
-`quadratic_upperBound`, `quadratic_extremizer`) were adapted from locally developed
-proofs with assistance from Codex, which checked statement scope and ran the
-compilation and axiom audits.  The mathematical content and this contribution
-remain the author's responsibility.
-
-The supremum and infimum bound variants (`sup_lowerBound`, `inf_le_two`,
-`inf_lt_two`) were developed with assistance from Claude (Opus).  The author is
-responsible for this contribution.
+Lean 4 code in this file was drafted with assistance from OpenAI Codex and Claude (Anthropic).
+The mathematical content and references are the author's own work.
 -/
 
 @[expose] public section
