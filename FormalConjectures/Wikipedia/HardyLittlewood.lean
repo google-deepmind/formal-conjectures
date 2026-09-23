@@ -81,11 +81,12 @@ the $m_i$ are pairwise distinct, then
 $$
   \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t},
 $$
-where $C_P > 0$ is the limit of the partial Euler products.
+where $C_P \geq 0$ is the limit of the partial Euler products (zero for inadmissible
+tuples, positive for admissible ones).
 -/
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
   m 0 = 0 → Function.Injective m →
-    ∃ C : ℝ, 0 < C ∧
+    ∃ C : ℝ, 0 ≤ C ∧
       Tendsto (HardyLittlewoodPartialProduct m) atTop (𝓝 C) ∧
       (fun n => (Nat.primeTupleCounting m n : ℝ)) ~[atTop]
         fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
