@@ -44,9 +44,9 @@ Let $1=d_1<\cdots <d_{\tau(n)}=n$ be the divisors of $n$ and
 $$G(n) = \sum_{1\leq i<\tau(n)}\frac{d_i}{d_{i+1}}.$$
 Is it true that $G(n)\to \infty$ for almost all $n$?
 
-The answer is yes: Tao observed that $\tau(n/m)/m\leq G(n)\leq \tau(n)$ for any $m\mid n$, so
-that $G(n)$ behaves very similarly to $\tau(n)$. In [Er82e] Erdős recalls this conjecture and
-observes that it is indeed trivial that $G(n)\to \infty$ for almost all $n$.
+The answer is yes: Tao observed that $\tau(n/m)/m\leq G(n)\leq \tau(n)$ for any $m\mid n$ with
+$m>1$, so that $G(n)$ behaves very similarly to $\tau(n)$. In [Er82e] Erdős recalls this
+conjecture and observes that it is indeed trivial that $G(n)\to \infty$ for almost all $n$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos673.lean#L914"]
@@ -71,9 +71,10 @@ theorem erdos_673.variants.average :
     Tendsto (fun X : ℕ ↦ (∑ n ∈ Finset.Icc 1 X, G n) / X) atTop atTop := by
   sorry
 
-/-- Tao observed that, for any divisor $m\mid n$, $\frac{\tau(n/m)}{m} \leq G(n) \leq \tau(n)$. -/
+/-- Tao observed that, for any divisor $m\mid n$ with $m>1$,
+$\frac{\tau(n/m)}{m} \leq G(n) \leq \tau(n)$. -/
 @[category textbook, AMS 11]
-theorem erdos_673.variants.tao (n m : ℕ) (hn : 0 < n) (hm : m ∣ n) :
+theorem erdos_673.variants.tao (n m : ℕ) (hn : 0 < n) (hm : 1 < m) (hmn : m ∣ n) :
     ((n / m).divisors.card : ℝ) / m ≤ G n ∧ G n ≤ n.divisors.card := by
   sorry
 
