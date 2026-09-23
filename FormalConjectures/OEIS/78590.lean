@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(1)=1, a(2)=1, a(n)=(2^{a(n-1)} + 1)/a(n-2)$
@@ -24,6 +25,8 @@ $$a(n) = \frac{2^{a(n-1)} + 1}{a(n-2)}$$
 
 *References:*
 - [A078590](https://oeis.org/A078590)-/
+
+@[expose] public section
 
 namespace OeisA78590
 

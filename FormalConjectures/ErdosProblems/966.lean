@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 966
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er75b] Erdős, Paul, *Problems and results in combinatorial number theory*. Journées
   Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) (1975), 295-310.
 -/
+
+@[expose] public section
 
 namespace Erdos966
 

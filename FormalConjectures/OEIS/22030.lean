@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A nonlinear recurrence sequence
@@ -26,6 +27,8 @@ $a(0) = 4, a(1) = 16$.
 *References:*
 - [A022030](https://oeis.org/A022030)
 -/
+
+@[expose] public section
 
 namespace OeisA22030
 
@@ -66,7 +69,9 @@ theorem a_5 : a 5 = 3889 := by rfl
 Conjecture: $a(n) = 4 a(n-1) - a(n-3) + a(n-4)$.
 - Colin Barker, Feb 16 2012
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a022030-lean/blob/f74afc2/lean/OeisA22030FC.lean#L270-L275"]
 theorem conjecture (n : ℕ) (hn : 4 ≤ n) :
     a n = 4 * a (n - 1) - a (n - 3) + a (n - 4) := by
   sorry
