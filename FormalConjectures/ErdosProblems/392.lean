@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 392
 
 *Reference:* [erdosproblems.com/392](https://www.erdosproblems.com/392)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -66,8 +69,8 @@ by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lowe
 Stirling's approximation).
 -/
 @[category research solved, AMS 11]
-theorem erdos_392.variants.implication (h : type_of% erdos_392) :
-    type_of% erdos_392.variants.lower := by
+theorem erdos_392.variants.implication (h : type_of% erdos_392.variants.lower) :
+    type_of% erdos_392 := by
   sorry
 
 end Erdos392

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations as $p + 2^x + 7 \cdot 2^y$ with $p \equiv 5 \pmod 6$
@@ -28,6 +29,8 @@ p \equiv 5 \pmod 6, x, y \in \mathbb{Z}^+\right\}\right|.$$
 - [A157225](https://oeis.org/A157225)
 - Z.-W. Sun, "Mixed sums of primes and other terms", arXiv preprint
   [arXiv:0901.3075](https://arxiv.org/abs/0901.3075) [math.NT], 2009.-/
+
+@[expose] public section
 
 namespace OeisA157225
 

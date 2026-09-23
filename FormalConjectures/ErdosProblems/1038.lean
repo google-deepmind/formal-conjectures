@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1038
@@ -38,6 +39,8 @@ The supremum and infimum bound variants (`sup_lowerBound`, `inf_le_two`,
 `inf_lt_two`) were developed with assistance from Claude (Opus).  The author is
 responsible for this contribution.
 -/
+
+@[expose] public section
 
 open scoped Real ENNReal
 open MeasureTheory Set

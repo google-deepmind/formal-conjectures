@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 347178
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/347178](https://mathoverflow.net/questions/347178)
 asked by user [*Biagio Ricceri*](https://mathoverflow.net/users/149235/biagio-ricceri)
 -/
+
+@[expose] public section
 
 open Real Set
 open scoped EuclideanGeometry
@@ -36,7 +39,7 @@ Answer: No. A counterexample in $\mathbb R^2$ is recorded in the linked formal p
 -/
 @[category research solved, AMS 26,
   formal_proof using formal_conjectures at
-    "https://github.com/google-deepmind/formal-conjectures/commit/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b"]
+    "https://github.com/google-deepmind/formal-conjectures/blob/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b/FormalConjectures/Mathoverflow/347178.lean#L670"]
 theorem mathoverflow_347178 :
     answer(False) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (_ : ContDiff ℝ 1 f),
         (BddAbove (range f) ↔ BddAbove (range (fun x ↦ f (x + gradient f x)))) ∧
@@ -51,7 +54,7 @@ Answer: No. The same counterexample is recorded in the linked formal proof.
 -/
 @[category research solved, AMS 26,
   formal_proof using formal_conjectures at
-    "https://github.com/google-deepmind/formal-conjectures/commit/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b"]
+    "https://github.com/google-deepmind/formal-conjectures/blob/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b/FormalConjectures/Mathoverflow/347178.lean#L690"]
 theorem mathoverflow_347178.variants.bounded_iff :
     answer(False) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (_ : ContDiff ℝ 1 f),
         BddAbove (range f) ↔ BddAbove (range fun x ↦ f (x + gradient f x)) := by

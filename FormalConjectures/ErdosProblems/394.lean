@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 394
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [ErHa78] Erdős, P. and Hall, R. R., On some unconventional problems on the divisors of integers.
   J. Austral. Math. Soc. Ser. A (1978), 479--485.
 -/
+
+@[expose] public section
 
 open Nat Filter Finset
 open scoped Asymptotics Topology Nat
@@ -65,7 +68,7 @@ Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/FirstQuestion.lean"]
 theorem erdos_394.parts.i :
     answer(True) ↔
-      ∃ c > 0, (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
+      ∃ c > (0 : ℝ), (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
       (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 

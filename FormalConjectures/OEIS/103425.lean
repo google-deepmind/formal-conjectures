@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = 3a(n-1) + a(n-2) - 3a(n-3)$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A103425](https://oeis.org/A103425)
 -/
+
+@[expose] public section
 
 namespace OeisA103425
 
