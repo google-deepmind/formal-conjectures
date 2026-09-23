@@ -174,7 +174,7 @@ $|A|(|A|+1)/2 \le 2N+1$.
 number theory, and on some related problems.* J. London Math. Soc. **16**,
 212–215 (Theorem on p. 213). -/
 @[category textbook, AMS 11]
-theorem erdos_30.variants.erdos_turan (A : Finset ℕ) (N : ℕ)
+theorem erdos_30.variants.erdos_turan_counting (A : Finset ℕ) (N : ℕ)
     (hS : IsSidon ((A : Set ℕ))) (hA : A ⊆ Finset.range (N + 1)) :
     A.card * (A.card + 1) / 2 ≤ 2 * N + 1 := by
   rw [← erdos_30.variants.distinct_sums_card A hS]
