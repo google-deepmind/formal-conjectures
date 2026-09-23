@@ -152,9 +152,12 @@ What is the smallest circle that can contain 3 unit squares?
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
 -/
-@[category research open, AMS 51]
+@[category research solved, AMS 51,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219"]
 theorem least_three_square_packing_in_circle :
-    IsLeast {r : ℝ≥0 | Nonempty (Packing 3 UnitSquare (Circle r))} answer(sorry) := by
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 3 UnitSquare (Circle r))}
+      answer((5 * NNReal.sqrt 17) / 16) := by
   sorry
 
 /--
