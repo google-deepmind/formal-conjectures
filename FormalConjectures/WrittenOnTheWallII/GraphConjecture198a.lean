@@ -39,8 +39,13 @@ For a simple connected graph `G`, if `b(G) ≤ 2 + ecc_avg(G)`, then `G` has a H
 Here `b(G)` is the number of vertices in a largest induced bipartite subgraph, and
 `ecc_avg(G)` is the average eccentricity of `G`.
 A Hamiltonian path is a walk visiting every vertex exactly once.
+
+The proof splits on `b(G) ∈ {diam G + 1, diam G + 2}`: if `b(G) = diam G + 1`, the vertices off a
+diametral path can be threaded into it; otherwise `G` is self-centred, which is impossible for
+`diam G ≥ 3` and handled by a longest-path argument for `diam G = 2`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/enzocage/wowii-198a-lean"]
 theorem conjecture198a (G : SimpleGraph α) (h : G.Connected)
     (hb : b G ≤ 2 + averageEccentricity G) :
     ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by
