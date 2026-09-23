@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 997
@@ -34,6 +35,8 @@ import FormalConjectures.Util.ProblemImports
   Circ. Mat. Palermo (2) (1955), 33--47.
 - [Mo26] P. Monticone, [Lean formalisation of Erdős problem 997](https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean) (2026)
 -/
+
+@[expose] public section
 
 open Set
 
@@ -60,7 +63,7 @@ if $p_n$ is the sequence of primes?
 The answer is yes, by [APSSV26, Section 4]; a Lean formalisation is available in [Mo26].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
+  "https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
 theorem erdos_997 :
     answer(True) ↔
       ∀ α : ℝ, ¬ IsWellDistributed (fun n ↦ Int.fract (α * (n.nth Nat.Prime))) := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1125
@@ -26,11 +27,13 @@ import FormalConjectures.Util.ProblemImports
 - [La84] Laczkovich, M., *On Kemperman's inequality $2f(x)\leq f(x+h)+f(x+2h)$*. Colloq. Math. (1984), 109-115.
 -/
 
+@[expose] public section
+
 namespace Erdos1125
 
 /--
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that
-\[2f(x) \leq f(x+h)+f(x+2h)\]
+$$2f(x) \leq f(x+h)+f(x+2h)$$
 for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 
 A problem of Kemperman [Ke69], who proved it is true if $f$ is measurable. Erdős [Er81b] wrote 'if it were my problem I would offer \$500 for it'. This was solved by Laczkovich [La84].

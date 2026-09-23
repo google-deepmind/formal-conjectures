@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1067
@@ -30,6 +31,8 @@ import FormalConjectures.Util.ProblemImports
 - [Th17] Thomassen, Carsten, Infinitely connected subgraphs in graphs of uncountable chromatic
   number. Combinatorica (2017), 785--793.
 -/
+
+@[expose] public section
 
 open Cardinal SimpleGraph
 
@@ -60,12 +63,15 @@ theorem erdos_1067 :
   sorry
 
 /--
-Thomassen [Th17] constructed a counterexample to the version which asks for infinite
-edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
+Does every graph with chromatic number $\aleph_1$ contain an infinitely edge-connected subgraph
+with chromatic number $\aleph_1$?
+
+Thomassen [Th17] proved that the answer is yes: every graph of uncountable chromatic number has a
+subgraph with infinite edge-connectivity and uncountable chromatic number.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067.variants.infinite_edge_connectivity :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+    answer(True) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 

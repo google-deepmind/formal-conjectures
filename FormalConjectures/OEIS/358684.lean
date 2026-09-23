@@ -13,16 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
+# Factor bounds for Fermat numbers
+
 $a(n)$ is the minimum integer $k$ such that the smallest prime factor of the
-$n$-th Fermat number exceeds $2^(2^n - k)$.
+$n$-th Fermat number exceeds $2^{2^n - k}$.
 
 *References:*
 - [A358684](https://oeis.org/A358684)
 - [SA22](https://doi.org/10.26493/2590-9770.1473.ec5) Lorenzo Sauras-Altuzarra, *Some properties of the factors of Fermat numbers*, Art Discrete Appl. Math. (2022).
 -/
+
+@[expose] public section
 
 
 namespace OeisA358684
@@ -97,31 +103,38 @@ theorem a_equiv_a' (n : ℕ) : a n = a' n := by
     omega
 
 @[category test, AMS 11]
-theorem zero : a 0 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_0 : a 0 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem one : a 1 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_1 : a 1 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem two : a 2 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_2 : a 2 = 0 := by norm_num [a]; simp [log2_def]
 
 @[category test, AMS 11]
-theorem three : a 3 = 0 := by
-  norm_num only [a, Nat.log2_eq_log_two,Nat.fermatNumber]
+theorem a_3 : a 3 = 0 := by
+  unfold a Nat.fermatNumber
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem four : a 0 = 0 := by norm_num [a]; simp [log2_def]
+theorem a_4 : a 4 = 0 := by
+  unfold a Nat.fermatNumber
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem five : a 5 = 23 := by
-  norm_num [a, fermatNumber,Nat.log2_eq_log_two]
+theorem a_5 : a 5 = 23 := by
+  unfold a Nat.fermatNumber
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem six : a 6 = 46 := by
-  decide +native
+theorem a_6 : a 6 = 46 := by
+  sorry --this was previously proven using `native_decide`
 
 @[category test, AMS 11]
-theorem seven : a 7 = 73 := by
+theorem a_7 : a 7 = 73 := by
   sorry
 
 /--

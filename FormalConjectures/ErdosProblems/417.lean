@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 417
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
 
+@[expose] public section
+
 open Nat Set Filter
 open scoped Topology
 
@@ -33,15 +36,12 @@ namespace Erdos417
 /--
 Let$$V'(x)=\#\{\phi(m) : 1\leq m\leq x\}$$and$$V(x)=\#\{\phi(m) \leq x : 1\leq m\}.$$
 Does $\lim V(x)/V'(x)$ exist?
-
-Formalization note: We formalize the limit of the inverse fraction V'(x)/V(x)
-to ensure the limit is finite (bounded between 0 and 1).
 -/
 @[category research open, AMS 11]
 theorem erdos_417.parts.i :
-    answer(sorry) ↔ ∃ L : ℝ, Tendsto (fun x ↦
-      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
-      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))
+    answer(sorry) ↔ ∃ L : ENNReal, Tendsto (fun x ↦
+      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ENNReal) /
+      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ENNReal))
       atTop (𝓝 L) := by
   sorry
 
@@ -50,9 +50,9 @@ Is it $>1$?
 -/
 @[category research open, AMS 11]
 theorem erdos_417.parts.ii :
-    answer(sorry) ↔ ∃ L < 1, Tendsto (fun x ↦
-      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ℝ) /
-      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ℝ))
+    answer(sorry) ↔ ∃ L > (1 : ENNReal), Tendsto (fun x ↦
+      ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ENNReal) /
+      ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ENNReal))
       atTop (𝓝 L) := by
   sorry
 

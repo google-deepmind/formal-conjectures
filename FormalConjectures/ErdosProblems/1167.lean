@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1167
@@ -25,7 +26,12 @@ The original Erdős–Hajnal problem list gives the additional conditions $\gamm
 and $\kappa_\alpha > r$. Without $\gamma \geq 2$, the statement is false: taking $\gamma = 1$ and
 $\kappa_0 = \aleph_1$ with $\lambda = \aleph_0$ gives a counterexample, since the partition relation
 with one color degenerates to a cardinality comparison (see `erdos_1167.unrestricted_is_false`).
+Without $\kappa_\alpha > r$ it is also false: with $r = 2$, $\lambda = \aleph_0$ and targets
+$(2, \aleph_1)$, the premise $2^{\aleph_0} \to (3, \aleph_1)^3$ holds, but a constant colouring
+of the pairs of $\aleph_0$ has neither a red pair nor a blue set of size $\aleph_1$.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal Combinatorics
 
@@ -35,7 +41,7 @@ universe u
 
 /--
 **Erdős Problem 1167.** Let $r \geq 2$ be finite, $\gamma \geq 2$, and $\lambda$ be an infinite
-cardinal. Let $\kappa_\alpha$ be cardinals for all $\alpha < \gamma$. Is it true
+cardinal. Let $\kappa_\alpha > r$ be cardinals for all $\alpha < \gamma$. Is it true
 that
 $$2^\lambda \to (\kappa_\alpha + 1)_{\alpha < \gamma}^{r+1}$$
 implies
@@ -50,7 +56,7 @@ theorem erdos_1167 : answer(sorry) ↔
     ∀ (r : ℕ), 2 ≤ r →
     ∀ (lam : Cardinal.{u}), ℵ₀ ≤ lam →
     ∀ (γ : Ordinal.{u}), 2 ≤ γ →
-    ∀ (κ : γ.ToType → Cardinal.{u}),
+    ∀ (κ : γ.ToType → Cardinal.{u}), (∀ α, (r : Cardinal.{u}) < κ α) →
       cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) γ (fun α => κ α + 1) →
       cardinalPartitionRel lam r γ κ := by
   sorry
@@ -74,7 +80,7 @@ theorem finite_targets (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ
 -/
 @[category research open, AMS 5]
 theorem binary_colors (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
-    (κ : (2 : Ordinal.{u}).ToType → Cardinal.{u}) :
+    (κ : (2 : Ordinal.{u}).ToType → Cardinal.{u}) (hκ : ∀ α, (r : Cardinal.{u}) < κ α) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) 2 (fun α => κ α + 1) →
     cardinalPartitionRel lam r 2 κ := by
   sorry
@@ -105,7 +111,8 @@ Erdős–Rado stepping-up/down theorem for pairs.
 -/
 @[category research open, AMS 5]
 theorem r_eq_two (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
-    (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (κ : γ.ToType → Cardinal.{u}) :
+    (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (κ : γ.ToType → Cardinal.{u})
+    (hκ : ∀ α, (2 : Cardinal.{u}) < κ α) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) 3 γ (fun α => κ α + 1) →
     cardinalPartitionRel lam 2 γ κ := by
   sorry

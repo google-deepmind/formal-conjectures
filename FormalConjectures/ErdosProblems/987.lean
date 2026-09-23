@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 987
@@ -36,7 +37,10 @@ import FormalConjectures.Util.ProblemImports
 - [Li69] Lindström, B., An inequality for $B_2$-sequences. J. Combinatorial Theory (1969), 211-212.
 -/
 
+@[expose] public section
+
 open Filter Finset Asymptotics
+open scoped ExponentialSum
 
 namespace Erdos987
 
@@ -45,11 +49,6 @@ Here we use 0-indexing for generality and convenience, while in the original pro
 formulation 1-indexing was used. This change does not affect the meaning of the problem.
 In the description of the problem below we remain faithful to the original one.
 -/
-
-/-- Shorthand for the additive character $e(x) = e^{2 \pi i x}$.
-(Matches `Real.fourierChar` / `𝐞` from `Mathlib/Analysis/Complex/Circle.lean`, but
-kept as a local definition for readability across the many sites that use it.) -/
-noncomputable def e (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
 
 /--
 For an infinite sequence $x_1, x_2, \ldots \in (0, 1)$, define

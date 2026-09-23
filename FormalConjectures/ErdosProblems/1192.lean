@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1192
@@ -26,8 +27,10 @@ import FormalConjectures.Util.ProblemImports
   Ann. Discrete Math. 6 (1980), 89--115.
 -/
 
+@[expose] public section
+
 open Nat Filter Finset Set
-open scoped Asymptotics Classical BigOperators
+open scoped Asymptotics BigOperators
 
 namespace Erdos1192
 
@@ -62,7 +65,7 @@ theorem erdos_1192.f_r_singleton_self (n : ℕ) : f_r {n} 1 n = 1 := by
   dsimp [f_r]
   have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({n} : Set ℕ)) ∧ ∑ i, v i = n } = { fun _ ↦ n } := by
     ext v
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨h1, _⟩
       ext i
@@ -78,7 +81,7 @@ theorem erdos_1192.f_r_no_rep : f_r {0} 1 1 = 0 := by
   dsimp [f_r]
   have h : { v : Fin 1 → ℕ | (∀ i, v i ∈ ({0} : Set ℕ)) ∧ ∑ i, v i = 1 } = ∅ := by
     ext v
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
     rintro ⟨h1, h2⟩
     have h3 : v = fun _ ↦ 0 := by ext i; exact h1 i
     rw [h3] at h2
@@ -99,6 +102,7 @@ theorem erdos_1192 :
           (fun (x : ℕ) ↦ (x : ℝ)) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős and Rényi proved by the probabilistic method that there exists a set $A$ such that
 $$\sum_{n\leq x}f_r(n)^2 \ll x$$ and $$\lvert A\cap [1,x]\rvert\gg x^{1/r}$$ for all $x$.
@@ -109,7 +113,7 @@ theorem erdos_1192.variants.renyi :
       ((fun (x : ℕ) ↦ ∑ n ∈ range (x + 1), (f_r A r n : ℝ) ^ 2) =O[atTop]
         (fun (x : ℕ) ↦ (x : ℝ))) ∧
       ((fun (x : ℕ) ↦ (x : ℝ) ^ (1 / (r : ℝ))) =O[atTop]
-        (fun (x : ℕ) ↦ (count A x : ℝ))) := by
+        (fun (x : ℕ) ↦ (count (· ∈ A) x : ℝ))) := by
   sorry
 
 /--

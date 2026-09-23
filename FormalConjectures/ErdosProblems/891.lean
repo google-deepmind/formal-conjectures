@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.Dickson
 
 /-!
 # Erdős Problem 891
@@ -24,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 - [Po18] Pólya, Georg, Zur arithmetischen {U}ntersuchung der {P}olynome. Math. Z. (1918), 143--148.
 - [Wikipedia] https://en.wikipedia.org/wiki/Dickson%27s_conjecture
 -/
+
+@[expose] public section
 
 open Nat Filter Finset
 open scoped ArithmeticFunction.omega
@@ -68,9 +72,13 @@ $p_1\cdots p_k$ with $p_1\cdots p_k-1$. Indeed, let $L_k$ be the lowest common m
 integers at most $p_1\cdots p_k$. By Dickson's conjecture [Wikipedia], there are infinitely many
 $n'$ such that $\frac{L_k}{m}n'+1$ is prime for all $1\leq m < p_1\cdots p_k$. It follows that,
 if $n=L_kn'+1$, then all integers in $[n,n+p_1\cdots p_k-1)$ have at most $k$ prime factors.
+
+The statement is conditional on Dickson's conjecture, formalised as
+`Dickson.dickson_conjecture`.
 -/
-@[category research open, AMS 11]
-theorem erdos_891.variants.weisenberg (k : ℕ) (hk : k ≥ 2) :
+@[category research solved, AMS 11]
+theorem erdos_891.variants.weisenberg (k : ℕ) (hk : k ≥ 2)
+    (hdickson : type_of% Dickson.dickson_conjecture) :
     ∃ᶠ n in atTop,
       ∀ m ∈ Ico n (n + (∏ i ∈ range k, i.nth Nat.Prime) - 1),
       ω m ≤ k := by
