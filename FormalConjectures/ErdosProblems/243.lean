@@ -44,4 +44,25 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
 
+/--
+Let $(a_n)_{n\geq 0}$ be a strictly increasing sequence of positive integers. If
+\[
+  \frac{a_n^2}{a_{n+1}}=1+\frac{3}{n}+o(n^{-3}),
+\]
+then its reciprocal sum is irrational.
+
+This is the zero-indexed formal version of the cubic-rate theorem in Will Cook,
+*Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*, Theorem 16. The rate keeps
+the same index on both sides; shifting $n$ would change its lower-order terms.
+This variant does not settle the unrestricted Erdős problem above.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/lean/ErdosProblems/Erdos243/PaperCompleteR21/SquareSpecialisationUnconditional.lean#L70-L77"]
+theorem erdos_243.variants.cubic_rate (a : ℕ → ℕ)
+    (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
+    (hrate : Tendsto (fun n : ℕ => (n : ℝ) ^ 3 *
+      ((a n : ℝ) ^ 2 / (a (n + 1) : ℝ) - (1 + 3 / (n : ℝ)))) atTop (𝓝 0)) :
+    Irrational (∑' n : ℕ, 1 / (a n : ℝ)) := by
+  sorry
+
 end Erdos243
