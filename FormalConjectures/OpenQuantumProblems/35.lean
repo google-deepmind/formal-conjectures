@@ -863,7 +863,12 @@ theorem ame_11_6_open :
     answer(sorry) ↔ ExistsAME 11 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist? -/
+/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist?
+
+Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
+is given here:
+https://github.com/KitaKen1/ame-11-10-lean
+-/
 @[category research solved, AMS 5 15 81 94,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/ame-11-10-lean/blob/6b7d009a43970587a3386b690221bec4339ce271/lean/AME11_10FC.lean#L15-L21"]
