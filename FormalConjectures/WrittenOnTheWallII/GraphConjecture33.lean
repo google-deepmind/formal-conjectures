@@ -35,16 +35,26 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 33](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `path(G) ≥ ⌈2 · dist_avg(M, V)⌉`, where `path(G)`
-is the floor of the average distance of `G`, `M` is the set of maximum-degree vertices,
-and `dist_avg(M, V)` is the average distance from all vertices to `M`.
+For a simple connected graph $G$,
+$\operatorname{path}(G) \ge \lceil 2 \operatorname{dist}\_{\operatorname{avg}}(M, V) \rceil$,
+where $\operatorname{path}(G)$ is the number of vertices of a largest induced path of $G$,
+$M$ is the set of maximum-degree vertices, and
+$\operatorname{dist}\_{\operatorname{avg}}(M, V)$ is the average of all nonzero distances
+$\operatorname{dist}\_G(m, v)$ with $m \in M$ and $v \in V$.
+
+The conjecture is false: the source records an October 2005 counterexample with
+$\operatorname{path}(G) = 7$ and $\operatorname{dist}\_{\operatorname{avg}}(M, V) = 3.56$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture33 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let M : Set α := {v | G.degree v = G.maxDegree}
-      Int.ceil (2 * distavg G M) ≤ (path G : ℤ) := by
+      let distAvg : ℝ :=
+        open scoped Classical in
+        let pairs := (M.toFinset ×ˢ Finset.univ).filter (fun p => G.dist p.1 p.2 ≠ 0)
+        (∑ p ∈ pairs, (G.dist p.1 p.2 : ℝ)) / pairs.card
+      Int.ceil (2 * distAvg) ≤ (path G : ℤ) := by
   sorry
 
 -- Sanity checks
