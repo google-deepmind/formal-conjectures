@@ -139,6 +139,9 @@ public import FormalConjecturesForMathlib.Data.Sym.Sym2
 public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplexity
+public import FormalConjecturesForMathlib.FieldTheory.FunctionField.Curve
+public import FormalConjecturesForMathlib.FieldTheory.FunctionField.Genus
+public import FormalConjecturesForMathlib.FieldTheory.FunctionField.Place
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
