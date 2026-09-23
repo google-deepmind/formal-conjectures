@@ -40,8 +40,13 @@ $b\in \{ f(k) : k\in\mathbb{Z}\}$ such that $n=a+b$?
 
 The answer is yes, contrary to the expectation of Erdős and Graham: such an `A` exists whenever
 $f(n) = n^d$ for even $d \ge 6$.
+
+The linked formal proof (Codex, following Price's exposition) exhibits a complement of
+$\{k^6 : k \in \mathbb{Z}\}$; it states uniqueness as `∃! p : ℤ × ℤ, p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n`
+and the degree condition as `2 ≤ f.natDegree`.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L54"]
 theorem erdos_477 : answer(True) ↔
     ∃ f : ℤ[X], 2 ≤ f.degree ∧ ∃ A : Set ℤ,
       ∀ z, ∃! ab ∈ A ×ˢ (Set.range f.eval), z = ab.1 + ab.2 := by
@@ -81,9 +86,11 @@ theorem erdos_477.variants.X_pow_three :
 
 /--
 Sekanina [Sek59] asked whether there is no such $A$ for $X^k$, for every $k \ge 2$.
-This is false: a complement exists for every even $k \ge 6$.
+This is false: a complement exists for every even $k \ge 6$. The linked formal proof gives the
+case $k = 6$.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L42"]
 theorem erdos_477.variants.monomial : answer(False) ↔
     ∀ (k : ℕ), 2 ≤ k →
       letI f := X ^ k

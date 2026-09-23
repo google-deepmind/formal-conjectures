@@ -800,10 +800,16 @@ theorem ame_8_10_open :
     answer(sorry) ↔ ExistsAME 8 10 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(9,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(9,6)$ state exist?
+
+Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
+is given here:
+https://github.com/KitaKen1/ame-9-6-lean
+-/
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://github.com/KitaKen1/ame-9-6-lean/blob/500ee827dffbeed9bb2ed502adcd6690943a7463/lean/AME96/FormalTarget.lean#L13"]
 theorem ame_9_6_open :
-    answer(sorry) ↔ ExistsAME 9 6 := by
+    answer(True) ↔ ExistsAME 9 6 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist? -/
@@ -863,10 +869,17 @@ theorem ame_11_6_open :
     answer(sorry) ↔ ExistsAME 11 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist?
+
+Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
+is given here:
+https://github.com/KitaKen1/ame-11-10-lean
+-/
+@[category research solved, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/ame-11-10-lean/blob/6b7d009a43970587a3386b690221bec4339ce271/lean/AME11_10FC.lean#L15-L21"]
 theorem ame_11_10_open :
-    answer(sorry) ↔ ExistsAME 11 10 := by
+    answer(True) ↔ ExistsAME 11 10 := by
   sorry
 
 /-- Does an $\mathrm{AME}(12,5)$ state exist?

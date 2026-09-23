@@ -39,8 +39,13 @@ $$R(H)\ll_d n.$$
 Solved by Lee [Le17], who proved that $R(H) \leq 2^{2^{O(d)}}n$.
 
 This problem is #9 in Ramsey Theory in the graphs problem collection.
+
+The linked formal proof (Codex and GPT-5.6 Sol) gives, for graphs `H` on `Fin n`, a natural
+constant `C ≥ 1` with `RamseyFor H (C * n)` (every red/blue colouring of `K_{C n}` contains a
+monochromatic copy of `H`); transporting along `Fintype.equivFin` gives the statement below.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos163.lean#L53"]
 theorem erdos_163 : answer(True) ↔
     ∀ (d : ℕ), 1 ≤ d →
       ∃ C > (0 : ℝ), ∀ (V : Type) [Fintype V] (H : SimpleGraph V),
