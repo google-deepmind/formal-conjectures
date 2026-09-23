@@ -68,7 +68,7 @@ Acta Arith. 111 (2004), 153--164;
 [Bundschuh--Väänänen (1994), Theorem 2](https://numdam.org/item/CM_1994__91_2_175_0.pdf).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/bb9475c9dd9fb7d9fc8de94d1a8dfd1df79121cb/research/adapters/FC1049HeightRegion.lean#L23-L32"]
+  "https://github.com/wcook04/plectis-erdos/blob/afb0053fac7f3d1473b6fd855ed726744c4eb8b7/research/adapters/FC1049HeightRegion.lean#L23-L35"]
 theorem erdos_1049.variants.rational_base_region_81_200 :
     ∀ a b : ℕ, 0 < b → b < a → a.Coprime b →
       Real.log b / Real.log a < (81 : ℝ) / 200 →
