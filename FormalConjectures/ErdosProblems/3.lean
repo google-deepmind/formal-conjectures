@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 3
@@ -22,10 +23,12 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/3](https://www.erdosproblems.com/3)
 -/
 
+@[expose] public section
+
 namespace Erdos3
 
 /--
-If $A \subset \mathbb{N} has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
+If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
 long arithmetic progressions?
 -/
 @[category research open, AMS 11]

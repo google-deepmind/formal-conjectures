@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1201
@@ -22,8 +23,9 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/1201](https://www.erdosproblems.com/1201)
 -/
 
+@[expose] public section
+
 open Nat Filter Finset
-open Classical
 
 namespace Erdos1201
 
@@ -35,6 +37,7 @@ noncomputable def Erdos1201Set (ε : ℝ) (k : ℕ) : Set ℕ :=
   { n : ℕ |
     ((sSup {p : ℕ | p.Prime ∧ p ∣ ∏ i ∈ range (k + 1), (n + i)} : ℕ) : ℝ) > (n : ℝ) ^ (1 - ε) }
 
+open scoped Classical in
 /--
 Is it true that for every $\epsilon,\eta>0$ there exists a $k$ such that the density of $n$
 for which $P(n(n+1)\cdots(n+k))>n^{1-\epsilon}$ is at least $1-\eta$ (where $P(m)$ is the greatest
@@ -45,9 +48,10 @@ theorem erdos_1201 :
     answer(sorry) ↔
       ∀ ε > 0, ∀ η > 0, ∃ k : ℕ,
         atTop.liminf (fun x : ℕ ↦
-          (((count (Erdos1201Set ε k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
+          (((count (· ∈ Erdos1201Set ε k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős wrote he could prove this for $\epsilon=1/2$.
 -/
@@ -55,7 +59,7 @@ Erdős wrote he could prove this for $\epsilon=1/2$.
 theorem erdos_1201.variants.epsilon_half :
     ∀ η > 0, ∃ k : ℕ,
       atTop.liminf (fun x : ℕ ↦
-        (((count (Erdos1201Set (1 / 2 : ℝ) k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
+        (((count (· ∈ Erdos1201Set (1 / 2 : ℝ) k) x : ℝ) / (x : ℝ)) : EReal)) ≥ (1 - η : EReal) := by
   sorry
 
 end Erdos1201

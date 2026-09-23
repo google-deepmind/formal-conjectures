@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 825
 
 *Reference:* [erdosproblems.com/825](https://www.erdosproblems.com/825)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 
@@ -34,7 +37,8 @@ This has been solved in the affirmative by Larsen - in fact, for any $\epsilon>0
 such that if $n$ has only prime divisors $>L$ and $\sigma(n)>(2+\epsilon)n$ then $n$ is the distinct
 sum of proper divisors of $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos825.lean#L5893"]
 theorem erdos_825 :
     answer(True) ↔ ∃ (C : ℝ) (_ : C > 0),
       ∀ (n) (_ : σ 1 n > C * n),

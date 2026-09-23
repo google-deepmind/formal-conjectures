@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 24
@@ -26,6 +27,8 @@ References:
 - [HaL28] Hardy, G. H., and J. E. Littlewood. "Notes on the theory of series (VIII): an inequality."
   Journal of the London Mathematical Society 1.2 (1928): 105-110.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -47,10 +50,10 @@ noncomputable def max013AffineTranslates (n : ℕ) : ℕ :=
 If $A$ is a set of $n$ integers, what is the maximum number of affine translates of the set
 $\lbrace 0,1,3 \rbrace$ that $A$ can contain?
 
-Conjectured in [Aa19] p.579: $\left({1}{3} + o(1)\right) n^2$.
+Conjectured in [Aa19] p.579: $\left(\frac{1}{3} + o(1)\right) n^2$.
 -/
 @[category research open, AMS 5 11]
-theorem green_24 : ∀ n, max013AffineTranslates n = answer(sorry) := by
+theorem green_24 : ∀ n, max013AffineTranslates n = (answer(sorry) : ℕ → ℕ) n := by
   sorry
 
 /-  A collection of associated bounds and conjectured values. -/
@@ -82,7 +85,7 @@ theorem upper_HL : gamma ≤ 3/4 := by
 theorem lower_HL : gamma ≥ 1/12 := by
   sorry
 
-/-- Conjecture p.579 in [Aa19]: $\left({1}{3} + o(1)\right) n^2$. -/
+/-- Conjecture p.579 in [Aa19]: $\left(\frac{1}{3} + o(1)\right) n^2$. -/
 @[category research open, AMS 5 11]
 theorem conjecture : gamma = 1/3 := by
   sorry

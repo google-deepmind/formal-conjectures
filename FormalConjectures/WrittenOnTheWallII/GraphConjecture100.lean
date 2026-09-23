@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 100
@@ -40,9 +41,11 @@ Combined with the overline above, the inequality reads:
 where `l(v) = indepNeighbors G v`.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture100
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -89,6 +92,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.indepNum := Nat.zero_le _
 
 /-- The Euclidean norm of the degree sequence is nonnegative. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 2)) : 0 ≤ degreeL2Norm G := Real.sqrt_nonneg _
+example (G : SimpleGraph (Fin 2)) [DecidableRel G.Adj] : 0 ≤ degreeL2Norm G :=
+  Real.sqrt_nonneg _
 
 end WrittenOnTheWallII.GraphConjecture100
