@@ -63,12 +63,15 @@ theorem erdos_1067 :
   sorry
 
 /--
-Thomassen [Th17] constructed a counterexample to the version which asks for infinite
-edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
+Does every graph with chromatic number $\aleph_1$ contain an infinitely edge-connected subgraph
+with chromatic number $\aleph_1$?
+
+Thomassen [Th17] proved that the answer is yes: every graph of uncountable chromatic number has a
+subgraph with infinite edge-connectivity and uncountable chromatic number.
 -/
 @[category research solved, AMS 5]
 theorem erdos_1067.variants.infinite_edge_connectivity :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+    answer(True) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 

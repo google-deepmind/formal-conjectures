@@ -57,10 +57,10 @@ residue modulo $p$ is the sum of at most $C_\epsilon$ many elements of
 $$\{ n^{-1} : 1\leq n\leq p^\epsilon\}$$
 where $n^{-1}$ denotes the inverse of $n$ modulo $p$?
 
-The original question was answered in the affirmative, with $C_\epsilon \ll \epsilon^{-3}$, by
-Shparlinski [Sh02]. This was improved to $\ll \epsilon^{-2}$ by Glibichuk [Gl06]. It is trivial
-that at least $\gg \epsilon^{-1}$ summands are required, and it may be that
-$C_\epsilon\leq \epsilon^{-1-o(1)}$ is possible.
+The original question was answered in the affirmative by Shparlinski [Sh02], who proved that
+$\ll \epsilon^{-3}$ summands suffice for all sufficiently large primes. This was improved to
+$\ll \epsilon^{-2}$ by Glibichuk [Gl06]. It is trivial that at least $\gg \epsilon^{-1}$
+summands are required, and it may be that $C_\epsilon\leq \epsilon^{-1-o(1)}$ is possible.
 
 See also [540](https://www.erdosproblems.com/540).
 -/
@@ -70,16 +70,26 @@ theorem erdos_1180 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∃ C : ℕ, ∀ 
     ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s := by
   sorry
 
-/-- Shparlinski [Sh02] proved that $C_\epsilon \ll \epsilon^{-3}$. -/
+/--
+Shparlinski [Sh02] proved that $\ll \epsilon^{-3}$ summands suffice for every residue modulo
+every sufficiently large prime, where the threshold on $p$ may depend on $\epsilon$. No bound
+polynomial in $\epsilon^{-1}$ can hold for all primes, since when $p^\epsilon < 2$ the only
+admissible denominator is $1$.
+-/
 @[category research solved, AMS 11]
 theorem erdos_1180.variants.shparlinski : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
-    (C ε : ℝ) ≤ K * ε⁻¹ ^ 3 := by
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 3 ∧ Represents ε p a s := by
   sorry
 
-/-- Glibichuk [Gl06] proved that $C_\epsilon \ll \epsilon^{-2}$. -/
+/--
+Glibichuk [Gl06] improved the bound to $\ll \epsilon^{-2}$ summands, again for every
+sufficiently large prime.
+-/
 @[category research solved, AMS 11]
 theorem erdos_1180.variants.glibichuk : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
-    (C ε : ℝ) ≤ K * ε⁻¹ ^ 2 := by
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 2 ∧ Represents ε p a s := by
   sorry
 
 /-- It is trivial that at least $\gg \epsilon^{-1}$ summands are required. -/
