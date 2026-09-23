@@ -21,8 +21,8 @@ public import FormalConjecturesUtil
 # Mathoverflow 22078: is a smooth affine group scheme over the dual numbers linear?
 
 Every affine group scheme of finite type over a field $k$ is a closed subgroup scheme of some
-$\mathrm{GL}_n$. Brian Conrad asked whether every smooth affine group scheme over the ring of dual
-numbers $k[\epsilon] = k[x]/(x^2)$ is too.
+$\mathrm{GL}_n$. Brian Conrad asked whether every smooth affine group scheme over an artin local
+ring is too, or even just over the ring of dual numbers $k[\epsilon] = k[x]/(x^2)$.
 
 The answer is no in characteristic zero, by this [answer](https://mathoverflow.net/a/513098):
 pushing out the Heisenberg extension of $\mathbb{G}_a^2$ by $\mathbb{G}_a$ along

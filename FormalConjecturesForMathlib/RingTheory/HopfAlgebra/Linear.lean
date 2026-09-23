@@ -36,9 +36,9 @@ subgroup scheme of some `GLₙ`.
 ## Main definitions
 
 * `Matrix.IsMultiplicative R a`: the entries of a square matrix `a` over a bialgebra `A` satisfy
-  `Δ aᵢⱼ = ∑ₖ aᵢₖ ⊗ aₖⱼ` and `ε aᵢⱼ = δᵢⱼ`. Such matrices are exactly the homomorphisms of group
-  schemes `Spec A → GLₙ`: `a` is the image of the matrix of coordinates of `GLₙ` under the
-  corresponding map of Hopf algebras.
+  `Δ aᵢⱼ = ∑ₖ aᵢₖ ⊗ aₖⱼ` and `ε aᵢⱼ = δᵢⱼ`. When `A` is a Hopf algebra, such matrices are exactly
+  the homomorphisms of group schemes `Spec A → GLₙ`: `a` is the image of the matrix of coordinates
+  of `GLₙ` under the corresponding map of Hopf algebras.
 * `HopfAlgebra.IsLinear R A`: the entries of some multiplicative matrix over `A` generate `A` as
   an `R`-algebra, that is, `Spec A` is a closed subgroup scheme of some `GLₙ`.
 
@@ -75,9 +75,9 @@ namespace Matrix
 /-- A square matrix `a` over a bialgebra `A` is *multiplicative* when `Δ aᵢⱼ = ∑ₖ aᵢₖ ⊗ aₖⱼ` and
 `ε aᵢⱼ = δᵢⱼ`.
 
-Multiplicative matrices indexed by `ι` are exactly the homomorphisms of group schemes
-`Spec A → GL(ι)`: such a matrix is the image of the matrix of coordinates of `GL(ι)` under the
-induced map of Hopf algebras. No invertibility hypothesis is needed, by
+When `A` is a Hopf algebra, multiplicative matrices indexed by `ι` are exactly the homomorphisms
+of group schemes `Spec A → GL(ι)`: such a matrix is the image of the matrix of coordinates of
+`GL(ι)` under the induced map of Hopf algebras. No invertibility hypothesis is needed, by
 `Matrix.IsMultiplicative.isGroupLikeElem_det`. -/
 structure IsMultiplicative (R : Type u) [CommRing R] {A : Type v} [CommRing A] [Bialgebra R A]
     {ι : Type w} [Fintype ι] [DecidableEq ι] (a : Matrix ι ι A) : Prop where
