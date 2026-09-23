@@ -23,6 +23,14 @@ import FormalConjecturesUtil
  - [erdosproblems.com/1038](https://www.erdosproblems.com/1038)
  - [Tao25] Tao, Terence. Sublevel Sets of Logarithmic Potentials. Terry Tao’s Blog, Dec. 2025
   (https://terrytao.wordpress.com/wp-content/uploads/2025/12/erdos-1038-1.pdf)
+
+### AI disclosure
+
+The three quadratic sublevel-set theorems below (`quadratic_sublevel_formula`,
+`quadratic_upperBound`, `quadratic_extremizer`) were adapted from locally developed
+proofs with assistance from Codex, which checked statement scope and ran the
+compilation and axiom audits.  The mathematical content and this contribution
+remain the author's responsibility.
 -/
 
 open scoped Real ENNReal
