@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Asymptotics Filter
+open Asymptotics Filter Topology
 
 open scoped Nat.Prime
 
@@ -62,19 +62,33 @@ noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n :
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
 /--
+The partial Euler product for the Hardy–Littlewood constant, taken over the odd primes
+$q < N$:
+$$
+  2^k \prod_{\substack{q < N \\ q \text{ prime} \\ q \geq 3}}
+    \frac{1 - \frac{w(q; m_1, \dots, m_k)}{q}}{\left(1 - \frac{1}{q}\right)^{k+1}}.
+$$
+The constant is the limit of these partial products as $N \to \infty$; stating it as
+an ordered limit avoids the junk value of Mathlib's unconditional `∏'`.
+-/
+noncomputable def HardyLittlewoodPartialProduct {k : ℕ} (m : Fin k.succ → ℕ) (N : ℕ) : ℝ :=
+  2 ^ k * ∏ q in (Nat.primesBelow N).filter (fun q => 3 ≤ q),
+    (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
+
+/--
 The first Hardy–Littlewood conjecture for the tuple $(m_0, m_1, \dots, m_k)$: if $m_0 = 0$ and
 the $m_i$ are pairwise distinct, then
 $$
-  \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t}.
+  \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t},
 $$
+where $C_P > 0$ is the limit of the partial Euler products.
 -/
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
   m 0 = 0 → Function.Injective m →
-    let C : ℝ :=
-      2 ^ k * ∏' (q : { q : ℕ // q.Prime ∧ 3 ≤ q}),
-        (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
-    let π_P : ℕ → ℝ := fun n => (Nat.primeTupleCounting m n : ℝ)
-    π_P ~[atTop] fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
+    ∃ C : ℝ, 0 < C ∧
+      Tendsto (HardyLittlewoodPartialProduct m) atTop (𝓝 C) ∧
+      (fun n => (Nat.primeTupleCounting m n : ℝ)) ~[atTop]
+        fun n => C * ∫ t in (2)..n, 1 / t.log ^ k.succ
 
 /--
 Let $P = (m_1, \dots, m_k)$ be a tuple of distinct positive even integers. Let
