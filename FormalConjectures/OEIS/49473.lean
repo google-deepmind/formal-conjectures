@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Nearest integer to $n/\sqrt{2}$
@@ -23,6 +24,8 @@ Nearest integer to $n/\sqrt{2}$, defined by $\lfloor n/\sqrt{2} + 1/2 \rfloor$.
 
 *References:*
 - [A049473](https://oeis.org/A049473)-/
+
+@[expose] public section
 
 namespace OeisA49473
 
@@ -185,7 +188,9 @@ A049473 consists solely of $0$'s and $1$'s, in positions given by the nonhomogen
 sequences A001954 and A001953, respectively.
 - Clark Kimberling, Oct 05 2014
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a049473-zeta3-beatty/blob/b3a74bf/lean/OeisA49473FC.lean#L667-L673"]
 theorem conjecture :
     (∀ n : ℕ, 1 ≤ n → s (a n) < 1 / (n : ℝ) ^ 2 ∧ 1 / (n : ℝ) ^ 2 < s (a n - 1)) ∧
     (∀ n : ℕ, 1 ≤ n →

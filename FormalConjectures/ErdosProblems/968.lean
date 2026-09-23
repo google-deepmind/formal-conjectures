@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 968
@@ -31,6 +32,8 @@ increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ 
 [ErPr61] Erdős, P. and Prachar, K., _Sätze und Probleme über pₖ/k_. Abh. Math. Sem. Univ. Hamburg
 (1961/62), 251–256.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped BigOperators

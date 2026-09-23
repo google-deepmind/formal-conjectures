@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.Hadamard
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.Hadamard
 
 /-!
 # The circulant Hadamard conjecture
@@ -27,6 +28,8 @@ also attributed to Ryser, says that no circulant Hadamard matrix has order great
 * S. Steinerberger,
   [A note on approximate Hadamard matrices](https://arxiv.org/abs/2402.13202)
 -/
+
+@[expose] public section
 
 namespace CirculantHadamard
 

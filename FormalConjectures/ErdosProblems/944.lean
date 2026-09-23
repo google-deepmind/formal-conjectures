@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 944
 
 *Reference:* [erdosproblems.com/944](https://www.erdosproblems.com/944)
 -/
+
+@[expose] public section
 
 universe u
 variable {V : Type u}
@@ -51,9 +54,9 @@ such that every vertex is critical, yet every critical set of edges has size $>1
 
 This was conjectured by Dirac in 1970.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_944.variants.dirac_conjecture :
-    answer(sorry) ↔ ∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
+    answer(True) ↔ ∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
 
@@ -91,11 +94,18 @@ theorem erdos_944.variants.dirac_conjecture.k_ge_five (k : ℕ) (hk : 5 ≤ k) :
   sorry
 
 /--
-The case $k=4$ and $r=1$ remains open: Are there $4$-critical graphs without any critical edges?
+The case $k=4$ and $r=1$ was the remaining open case: Are there $4$-critical graphs
+without any critical edges?
+
+Answer: Yes. The Lean formalization linked below proves the existence of such a graph.
+Together with Jensen's result for $k \ge 5$, this settles Dirac's conjecture for every
+$k \ge 4$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-944-dirac-k4-lean/blob/9606d77/lean4web/Erdos944K4R1Lean4Web.lean#L676-L690"]
 theorem erdos_944.variants.dirac_conjecture.k_eq_four :
-    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1 := by
+    answer(True) ↔ ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1 := by
   sorry
 
 /--

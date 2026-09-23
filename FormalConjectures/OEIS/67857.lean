@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Sum of $a(k)/k!$ over divisors equals harmonic number
@@ -25,7 +27,11 @@ $$a(n) = n! \sum_{d \mid n} \mu(n/d) H_d$$
 where $H_d = \sum_{j=1}^d \frac{1}{j}$ is the $d$-th harmonic number.
 
 *References:*
-- [A067857](https://oeis.org/A067857)-/
+- [A067857](https://oeis.org/A067857)
+- [A001221](https://oeis.org/A001221)
+-/
+
+@[expose] public section
 
 namespace OeisA67857
 
@@ -41,35 +47,44 @@ def a (n : ℕ) : ℚ :=
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 14 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 154 := by
-  decide +native
+  decide +kernel
 
 /--
 The terms are not all positive. The first negative one is
 $a(30) = -22690644647302814715858124800000$.
-Conjecture: $a(n) < 0$ if and only if A001221(n) is an odd number $\ge 3$.-/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
-    a n < 0 ↔ Odd (cardDistinctFactors n) ∧ 3 ≤ cardDistinctFactors n := by
+Conjecture: $a(n) < 0$ if and only if A001221(n) is an odd number $\ge 3$.
+
+This conjecture is false. A counterexample is the product of all primes at most $1000$,
+which has $168$ distinct prime factors and a negative sequence value.
+
+The counterexample and formal proof were developed by Codex (GPT-6),
+prompted by Samuel Schlesinger.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/SamuelSchlesinger/a067857-counterexample/blob/44317ddb5bd735f7a1f6764c22db10c455e4b584/Counterexample.lean#L89-L92"]
+theorem conjecture :
+    answer(False) ↔ ∀ n : ℕ, 0 < n →
+      (a n < 0 ↔ Odd (cardDistinctFactors n) ∧ 3 ≤ cardDistinctFactors n) := by
   sorry
 
 end OeisA67857
