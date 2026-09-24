@@ -63,7 +63,7 @@ weak.linter.style.latex_docstring = true
 weak.linter.style.imports = true
 # `lakefile.toml` and `lakefile.extract.toml` differ only in the next line.
 # See `scripts/extract_names.lean`.
-weak.google.answer = "always_true"
+weak.google.answer = "postpone"
 
 [[lean_exe]]
 name = "extract_names"
