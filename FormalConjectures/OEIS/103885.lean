@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = [x^{2n}] \left(\frac{1 + x}{1 - x}\right)^n$
@@ -26,6 +27,8 @@ with $a(0) = 1$.
 *References:*
 - [A103885](https://oeis.org/A103885)
 -/
+
+@[expose] public section
 
 namespace OeisA103885
 
@@ -63,7 +66,7 @@ noncomputable def aSubsequenceReal (m n : ℕ) : ℝ :=
   (a (m * n) : ℝ)
 
 /-- The indices $k = 1$ to $2m$, used in the product -/
-private def productIndices (m : ℕ) : Finset ℕ :=
+def productIndices (m : ℕ) : Finset ℕ :=
   Finset.Ioc 0 (2 * m)
 
 /-- The factor $\prod_{k=1}^{2m} (2mn + k)$ -/

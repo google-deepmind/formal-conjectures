@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Moving Sofa Problem
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Ro18] Romik, D. _Differential equations and exact solutions in the moving sofa problem_. Experimental mathematics 27.3 (2018): 316-330.
 - [Ba24] Baek, J. _Optimality of Gerver's Sofa_. arXiv preprint arXiv:2411.19826 (2024).
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -197,6 +200,12 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+/-- Gerver's concrete sofa admits a valid hallway motion. -/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0"]
+theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
+  sorry
+
 open MeasureTheory
 open scoped ENNReal
 
@@ -211,12 +220,14 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0"]
 theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 

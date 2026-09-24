@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 257
 
 *Reference:* [erdosproblems.com/257](https://www.erdosproblems.com/257)
 -/
+
+@[expose] public section
 
 namespace Erdos257
 
@@ -92,7 +95,8 @@ is irrational.
 
 [Er48] Erdős, P., _On arithmetical properties of Lambert series_. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/b9f1eb80aa11bbf66fb1df88804502b8c9c27d8e/research/adapters/FormalConjecturesAdapter.lean#L121-L134"]
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry

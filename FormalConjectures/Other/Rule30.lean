@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Rule 30 Prize Problems
@@ -38,6 +39,8 @@ model-relative and has no canonical model-independent phrasing. All three are op
 - [Rule 30 Prizes](https://rule30prize.org/).
 - [Wikipedia: Rule 30](https://en.wikipedia.org/wiki/Rule_30).
 -/
+
+@[expose] public section
 
 namespace Rule30
 

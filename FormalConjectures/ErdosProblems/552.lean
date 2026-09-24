@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 552
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   complete bipartite graph-tree Ramsey numbers. Graph theory in memory of G. A. Dirac (Sandbjerg,
   1985) (1989), 79-89.
 -/
+
+@[expose] public section
 
 namespace Erdos552
 

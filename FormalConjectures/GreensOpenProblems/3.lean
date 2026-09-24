@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 3
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [FGY26] Franchi, Leonardo and Gowers, W. T. and Yip, Fredy, *Product-free subsets of $(0,1)$*,
   [arXiv:2607.06073](https://arxiv.org/abs/2607.06073), Theorem 1.1.
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 

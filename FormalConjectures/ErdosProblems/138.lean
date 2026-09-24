@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [CFS26] Campos, M., Fox, J. and Schildkraut, C., A new lower bound for two-color van der Waerden
   numbers. [arXiv:2608.20824](https://arxiv.org/abs/2608.20824) (2026).
 -/
+
+@[expose] public section
 
 open Nat Filter
 

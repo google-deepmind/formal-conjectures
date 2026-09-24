@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integrality and supercongruences of the factorial ratio $\frac{(6n)! n!}{(3n)! (2n)!^2}$
@@ -28,6 +29,8 @@ $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
 - [Me11] R. Meštrović, *Wolstenholme's theorem: Its Generalizations and Extensions in the last
   hundred and fifty years (1862-2012)*, [arXiv:1111.3057](https://arxiv.org/abs/1111.3057) (2011).
 -/
+
+@[expose] public section
 
 namespace OeisA211417
 
@@ -144,7 +147,7 @@ divisor product is divisible by $p^k$), and a uniform low-layer budget for $p^k 
 absorbed by the witness constant.
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L651"]
+"https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L555"]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
     ∃ D : ℤ, 0 < D ∧ ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry

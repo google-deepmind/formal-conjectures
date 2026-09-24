@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 448
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [Te13] Tenenbaum, Gérald, *Some of Erdős' unconventional problems in number theory, thirty-four
   years later.* Erdős Centennial, Bolyai Soc. Math. Stud. **25** (2013), 651–681.
 -/
+
+@[expose] public section
 
 namespace Erdos448
 
@@ -77,7 +80,8 @@ $$ \sum_{n \leq x} \tau^+(n) \asymp x\frac{(\log x)^{1-\alpha}}{(\log\log x)^{3/
 where
 $$ \alpha = 1-\frac{1+\log\log 2}{\log 2} = 0.08607\cdots. $$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos448.lean#L35"]
 theorem erdos_448 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε →
       {n : ℕ | (tauPlus n : ℝ) < ε * (n.divisors.card : ℝ)}.HasDensity 1 := by

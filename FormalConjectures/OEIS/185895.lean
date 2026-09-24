@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -27,6 +28,8 @@ so that $a(n) = n! [x^n] \prod_{k=1}^n \left(1 - \frac{x^k}{k!}\right)$.
 *References:*
 - [A185895](https://oeis.org/A185895)
 -/
+
+@[expose] public section
 
 open Polynomial
 
@@ -124,7 +127,9 @@ The Gauss congruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^k}$ hold
 for all primes $p$ and positive integers $n$ and $k$.
 - _Peter Bala_, Mar 17 2022
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a185895-conjecture3/blob/e40e3db2b47beeef22b00a481fc3a41b518168d9/lean/OeisA185895Conjecture3FC.lean#L579-L589"]
 theorem conjecture3 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
     a (n * p ^ k) ≡ a (n * p ^ (k - 1)) [ZMOD (p : ℤ) ^ k] := by
   sorry
