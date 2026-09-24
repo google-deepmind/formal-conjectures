@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://google-deepmind.github.io/formal-conjectures/data/schemas/website-rendering-v1.schema.json",
+  "title": "Derived per-module Verso rendering",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "catalog_sha256",
+    "module",
+    "moduleDocs",
+    "constLinks",
+    "contributors"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fc.website-rendering.v1"
+    },
+    "catalog_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "module": {
+      "type": "string",
+      "minLength": 1
+    },
+    "moduleDocs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "constLinks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "url",
+          "anchor"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "anchor": {
+            "type": "string"
+          },
+          "docHtml": {
+            "type": "string"
+          },
+          "codeHtml": {
+            "type": "string"
+          },
+          "hoverDocs": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "contributors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

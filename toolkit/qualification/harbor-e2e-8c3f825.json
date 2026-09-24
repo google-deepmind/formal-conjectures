@@ -1,0 +1,86 @@
+{
+  "client_commit": "8c3f82545f51a58d4fa9241e0cc72af61e93eed0",
+  "conclusion": "passed",
+  "export_manifest_sha256": "6eb14c546e90846310e5937709d1f395267cfbdd88a3652ee42623f96f331d79",
+  "failures": [],
+  "harbor_commit": "191d1b989bbba1d77c2db23e17aec308d7c08046",
+  "kind": "Harbor end-to-end qualification",
+  "model_calls": 0,
+  "run_id": "35156959562",
+  "solver_image": "localhost:5000/fc-eval-solver@sha256:88076921280e7ee2182a178e75d3c3c3fa37be89cc84420cce6232432eb07572",
+  "summary": {
+    "assessment_required": 1,
+    "error": 0,
+    "rejected": 2,
+    "verified": 1
+  },
+  "trials": {
+    "numerical-valid": {
+      "agent": "oracle",
+      "fc_status": "assessment_required",
+      "harbor_exception": "RewardFileNotFoundError",
+      "harbor_rewards": null,
+      "policy_outcome": "pass",
+      "reason": "verified",
+      "reward_file": null,
+      "stage": "complete",
+      "submission_artifact": [
+        "artifacts/app/Submission.lean"
+      ],
+      "trial": "numerical-valid__j5TRAqk",
+      "verifier_environment_mode": "separate"
+    },
+    "plain-imported": {
+      "agent": "oracle",
+      "fc_status": "rejected",
+      "harbor_exception": null,
+      "harbor_rewards": {
+        "reward": 0.0
+      },
+      "policy_outcome": "rejected",
+      "reason": "disallowed_axiom",
+      "reward_file": "0",
+      "stage": "axiom_policy",
+      "submission_artifact": [
+        "artifacts/app/Submission.lean"
+      ],
+      "trial": "plain-imported__zhahkgt",
+      "verifier_environment_mode": "separate"
+    },
+    "plain-unfinished": {
+      "agent": "nop",
+      "fc_status": "rejected",
+      "harbor_exception": null,
+      "harbor_rewards": {
+        "reward": 0.0
+      },
+      "policy_outcome": "rejected",
+      "reason": "disallowed_axiom",
+      "reward_file": "0",
+      "stage": "axiom_policy",
+      "submission_artifact": [
+        "artifacts/app/Submission.lean"
+      ],
+      "trial": "plain-unfinished__JMzqtxk",
+      "verifier_environment_mode": "separate"
+    },
+    "plain-valid": {
+      "agent": "oracle",
+      "fc_status": "verified",
+      "harbor_exception": null,
+      "harbor_rewards": {
+        "reward": 1.0
+      },
+      "policy_outcome": "pass",
+      "reason": "verified",
+      "reward_file": "1",
+      "stage": "complete",
+      "submission_artifact": [
+        "artifacts/app/Submission.lean"
+      ],
+      "trial": "plain-valid__gwivcdm",
+      "verifier_environment_mode": "separate"
+    }
+  },
+  "verifier_image": "localhost:5000/fc-eval-verifier@sha256:10e1922e25bdbe009cec15aad381221220d78df8e4801552527d8de95608535f"
+}
