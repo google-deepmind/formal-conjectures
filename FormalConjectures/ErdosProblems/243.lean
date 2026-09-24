@@ -51,8 +51,8 @@ $$
 $$
 then its reciprocal sum is irrational.
 
-This is the zero-indexed formal version of the cubic-rate theorem in Will Cook,
-*Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*, Theorem 16. The rate keeps
+This is the zero-indexed formal version of the cubic-rate theorem in Section 7
+of Will Cook, *Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*. The rate keeps
 the same index on both sides; shifting $n$ would change its lower-order terms.
 This variant does not settle the unrestricted Erdős problem above.
 -/
