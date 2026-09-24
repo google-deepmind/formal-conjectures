@@ -301,9 +301,11 @@ unsafe def main (args : List String) : IO Unit := do
                     link := tag.proofLink,
                     conditions := tag.conditions.map Name.toString : FormalProofInfo })
                 |>.toArray.qsort (fun a b => a.sortKey < b.sortKey) |>.toList
-              -- Check whether the proof term is sorry-free
-              let hasSorryFreeProof :=
-                info.value? (allowOpaque := true) |>.any (!·.hasSorry)
+              -- Check whether the declaration is established without `sorry`, following the
+              -- declarations that its statement and its proof use. Testing `info.value?` alone
+              -- would report a wrapper whose proof is `exact admitted_helper` as proved, and
+              -- would miss a statement that mentions an admitted definition.
+              let hasSorryFreeProof ← ProblemAttributes.hasSorryFreeProof name
               -- Warn about suspicious category / sorry combinations
               if let some catTag := categoryFullMap.get? name then
                 match catTag.category, hasSorryFreeProof with

@@ -155,4 +155,17 @@ Note: This linter can be disabled with `set_option linter.style.category_attribu
 theorem test_duplicate_category : 1 + 1 = 2 := by
   rfl
 
+-- The check follows the declarations that the statement and the proof use. A wrapper whose own
+-- proof term carries no `sorry` but whose helper is admitted is not proved, so the linter stays
+-- silent.
+#guard_msgs in
+@[category research open]
+theorem test_admitted_helper : 1 + 1 = 3 := by
+  sorry
+
+#guard_msgs in
+@[category research open]
+theorem test_wrapper_over_admitted_helper : 1 + 1 = 3 :=
+  test_admitted_helper
+
 end CategoryLinter
