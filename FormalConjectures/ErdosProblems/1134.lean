@@ -84,8 +84,9 @@ is unknown if the smallest set $A$ which contains $0$ and is closed under
 $$x\mapsto 2x,\quad x\mapsto 3x+2,\quad x\mapsto 6x+3$$
 has positive density.
 -/
-@[category research open, AMS 11]
-theorem erdos_1134.variants.klarner : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/KitaKen1/erdos-1134-lean/blob/57042c7e43ae71cd7008e461cf3b9d81b8d8a20f/lean/Erdos1134KlarnerFC.lean#L2110-L2113"]
+theorem erdos_1134.variants.klarner : answer(False) ↔
     0 < (⋂₀ {S : Set ℕ | 0 ∈ S ∧
       ∀ x ∈ S, 2 * x ∈ S ∧ 3 * x + 2 ∈ S ∧ 6 * x + 3 ∈ S}).lowerDensity := by
   sorry
