@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Equational Theories
 
 *Reference:* [Equational Theories project site](https://teorth.github.io/equational_theories/implications/?677&finite)
 -/
+
+@[expose] public section
 
 namespace EquationalTheories_677_255
 

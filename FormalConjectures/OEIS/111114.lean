@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integer part of $\mathrm{prime}(n)/\pi(n)$
@@ -24,6 +25,8 @@ Here $\mathrm{prime}(n)$ is the $n$-th prime number, and $\pi(n)$ is the prime-c
 *References:*
 - [A111114](https://oeis.org/A111114)
 -/
+
+@[expose] public section
 
 namespace OeisA111114
 

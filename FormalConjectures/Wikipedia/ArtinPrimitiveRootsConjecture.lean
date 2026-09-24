@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+public import FormalConjectures.Millennium.RiemannHypothesis
 
 /-!
 # Artin's conjecture on primitive roots
@@ -47,6 +49,9 @@ covered by the Generalized Riemann Hypothesis for Dirichlet $L$-functions.
 - [Ho67] Hooley, C. "On Artin's conjecture." _Journal für die reine und angewandte Mathematik_ 225 (1967): 209-220.
 -/
 
+@[expose] public section
+
+open GRH
 open scoped Topology Nat
 
 namespace ArtinPrimitiveRootsConjecture

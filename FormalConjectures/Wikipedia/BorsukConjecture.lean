@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Borsuk's conjecture
@@ -63,6 +64,8 @@ Erdős Problem 505 (`FormalConjectures.ErdosProblems.«505»`) points to this fi
 - [Ka15] Kalai, G. (2015). *Some old and new problems in combinatorial geometry I: Around
   Borsuk's problem*. https://arxiv.org/abs/1505.04952
 -/
+
+@[expose] public section
 
 open Metric Bornology
 

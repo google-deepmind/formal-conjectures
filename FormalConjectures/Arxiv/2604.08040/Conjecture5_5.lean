@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Group structure via subgroup counts
@@ -41,6 +42,8 @@ if $\mathrm{cyc}(G) < 2^{t+2}$, then $G$ is solvable.
   ([PDF page 15](https://arxiv.org/pdf/2604.08040v1#page=15))
 * **OpenConjecture ID:** 1512
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2604.08040»
 

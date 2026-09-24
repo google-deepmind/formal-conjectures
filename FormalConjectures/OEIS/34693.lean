@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest number $k$ such that $kn + 1$ is prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A34693](https://oeis.org/A34693)
 -/
+
+@[expose] public section
 
 namespace OeisA34693
 

@@ -13,15 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fuglede's conjecture in dimensions 1 and 2
 
 *References:*
 - [Fuglede's conjecture](https://en.wikipedia.org/wiki/Fuglede%27s_conjecture)
+- [Zh26] [Zhang, Tao, *Both directions of Fuglede's conjecture fail in dimension two*,
+  arXiv:2607.15632 (2026)](https://arxiv.org/abs/2607.15632)
 -/
+
+@[expose] public section
 
 namespace Fuglede
 
@@ -45,6 +50,10 @@ theorem FugledeConjecture.variants.dim_1 :
 
 /--
 **Fuglede's conjecture** in two dimensions: A bounded subset of ℝ^2 with positive Lebesgue measure is spectral iff it tiles ℝ^2 by translation.
+
+[Zh26], a July 2026 preprint, announces a negative answer in both directions, from two
+explicit $60$-point subsets of $\mathbb{Z}_{60} \times \mathbb{Z}_{12}$ lifted to finite
+unions of unit squares in $\mathbb{R}^2$. It is not yet published.
 -/
 @[category research open, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_2 :

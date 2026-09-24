@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture about cardinality of Lindelöf spaces
@@ -28,6 +30,8 @@ This is Problem 1 in https://www.math.md/files/basm/y2013-n2-3/y2013-n2-3-(pp37-
   by A. V. Arhangel’skii
 
 -/
+
+@[expose] public section
 
 open Cardinal
 
