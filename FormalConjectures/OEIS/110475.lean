@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of symbols '*' and '^' to write the canonical prime factorization of n
@@ -28,6 +29,8 @@ $(\text{number of distinct prime factors with exponent } > 1)$.
 *References:*
 - [A110475](https://oeis.org/A110475)
 -/
+
+@[expose] public section
 
 namespace OeisA110475
 

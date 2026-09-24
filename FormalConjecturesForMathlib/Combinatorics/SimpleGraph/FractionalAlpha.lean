@@ -16,8 +16,8 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Basic
-public import Mathlib.Data.Real.Archimedean
 
 @[expose] public section
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Spectral sets and weak tiling
@@ -30,17 +31,20 @@ This file formalizes Problems 7.1 and 7.2 from Kolountzakis, Lev, and Matolcsi.
   for convex polytopes, *Journal d'Analyse Mathématique* 140 (2020), 409–441.
 -/
 
+@[expose] public section
+
 open MeasureTheory
 
 namespace NowhereDenseSpectralSet
 
 /--
 [KLM2023, Problem 7.1] asks whether a bounded, measurable, nowhere dense subset
-$\Omega \subset \mathbb{R}^d$ of positive measure can be spectral for every $d \ge 2$.
+$\Omega \subset \mathbb{R}^d$ of positive measure can be spectral. The answer is known to be
+negative for $d = 1$, so the dimension is restricted to $d \ge 2$, where the problem is open.
 -/
 @[category research open, AMS 42 46]
 theorem exists_nowhereDense_spectralSet :
-    answer(sorry) ↔ ∀ᵉ (d : ℕ) (hd : 2 ≤ d),
+    answer(sorry) ↔ ∃ d : ℕ, 2 ≤ d ∧
       ∃ Ω : Set (Fin d → ℝ), Bornology.IsBounded Ω ∧ MeasurableSet Ω ∧
         IsNowhereDense Ω ∧ 0 < volume Ω ∧ isSpectral Ω := by
   sorry
@@ -55,9 +59,13 @@ def productSet {n m : ℕ} (A : Set (Fin n → ℝ)) (B : Set (Fin m → ℝ)) :
   {x | (fun i ↦ x (Fin.castAdd m i)) ∈ A ∧ (fun j ↦ x (Fin.natAdd n j)) ∈ B}
 
 /-- Spectrality of a product with an `n`-dimensional convex body forces spectrality of its
-bounded, measurable `m`-dimensional right factor. -/
+bounded, measurable `m`-dimensional right factor.
+
+Following [KLM2023, §1.1], a convex body is a compact convex set with nonempty interior;
+Mathlib's `ConvexBody` does not require the latter, so it is imposed explicitly here. -/
 def spectralProductImpliesRightSpectral (n m : ℕ) : Prop :=
   ∀ (A : ConvexBody (Fin n → ℝ)) (B : Set (Fin m → ℝ)),
+    (interior (A : Set (Fin n → ℝ))).Nonempty →
     Bornology.IsBounded B → MeasurableSet B →
       isSpectral (productSet (A : Set (Fin n → ℝ)) B) → isSpectral B
 

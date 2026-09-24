@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 961
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [Ju74] Jutila, Matti, On numbers with a large prime factor. {II}. J. Indian Math. Soc. (N.S.) (1974), 125--130.
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -46,7 +50,7 @@ theorem erdos_961.variants.sylvester_schur_1_1 : Erdos961Prop 1 1 := by
   constructor
   · simp
   · rw [Nat.mem_smoothNumbers]
-    push_neg
+    push Not
     intro hm0
     obtain ⟨p, hp, hpm⟩ := Nat.exists_prime_and_dvd (by omega : m ≠ 1)
     exact ⟨p, (Nat.mem_primeFactorsList hm0).mpr ⟨hp, hpm⟩, hp.two_le⟩

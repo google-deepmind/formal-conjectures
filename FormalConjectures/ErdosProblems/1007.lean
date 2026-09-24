@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1007
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ho13] House, Roger F., *A 4-dimensional graph has at least 9 edges*. Discrete Math. (2013),
   1783-1789.
 -/
+
+@[expose] public section
 
 namespace Erdos1007
 
@@ -42,21 +45,12 @@ such that every edge of $G$ is a unit line segment.
 
 What is the smallest number of edges in a graph with dimension $4$?
 
-The smallest number of edges is $9$, achieved solely by $K_{3,3}$, proved by House [Ho13]. An
+Answer: The smallest number of edges is $9$, achieved solely by $K_{3,3}$, proved by House [Ho13]. An
 alternative proof was given by Chaffee and Noble [ChNo16], who also prove that the smallest
 number of edges in a graph of dimension $5$ is $15$ (achieved by $K_6$ and $K_{1,3,3}$).
 -/
-@[category research solved, AMS 5 52]
-theorem erdos_1007 :
-    IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
-      answer(sorry) := by
-  sorry
-
-/--
-The smallest number of edges in a graph of dimension $4$ is $9$.
--/
 @[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1007.lean"]
-theorem erdos_1007.variants.dimension_four :
+theorem erdos_1007 :
     IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 4 ∧ G.edgeSet.ncard = m}
       9 := by
   sorry
@@ -64,7 +58,9 @@ theorem erdos_1007.variants.dimension_four :
 /--
 The smallest number of edges in a graph of dimension $4$ is achieved solely by $K_{3,3}$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/Dishah3241/Erdos1007/blob/43f89415a6663848a1445effbda8b3abe77b052b/Erdos1007/Standalone/Mathlib/InlineErdos1007Proof.lean#L306"]
 theorem erdos_1007.variants.dimension_four_extremal (n : ℕ) (G : SimpleGraph (Fin n))
     (hdim : G.HasDimension 4) (hcard : G.edgeSet.ncard = 9)
     (hdeg : ∀ v : Fin n, ∃ w : Fin n, G.Adj v w) :

@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Clique
-public import Mathlib.Combinatorics.SimpleGraph.EdgeLabeling
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
 
 @[expose] public section
 

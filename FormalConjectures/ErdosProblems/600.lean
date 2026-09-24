@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 600
@@ -25,11 +26,14 @@ import FormalConjecturesUtil
 - [RuSz78] Ruzsa, I. Z. and Szemerédi, E., _Triple systems with no six points carrying three triangles_. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II (1978), 939-945.
 -/
 
+@[expose] public section
+
 open Filter
 open scoped Topology
 
 namespace Erdos600
 
+open scoped Classical in
 /--
 Let $e(n,r)$ be minimal such that every graph on $n$ vertices with at least $e(n,r)$ edges,
 each edge contained in at least one triangle, must have an edge contained in at least

@@ -17,17 +17,22 @@ module
 
 public import Mathlib
 public import FormalConjecturesForMathlib
+public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
+public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 public import FormalConjecturesUtil.Answer
 public import FormalConjecturesUtil.Linters.AMSLinter
 public import FormalConjecturesUtil.Linters.AnswerLinter
+public import FormalConjecturesUtil.Linters.CategoryAnswerLinter
 public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 public import FormalConjecturesUtil.Linters.CategoryLinter
 public import FormalConjecturesUtil.Linters.CopyrightLinter
 public import FormalConjecturesUtil.Linters.ExistsImplicationLinter
 public import FormalConjecturesUtil.Linters.FormalProofLinter
+public import FormalConjecturesUtil.Linters.ImportLinter
 public import FormalConjecturesUtil.Linters.LatexDocstringLinter
 public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 public import FormalConjecturesUtil.Linters.NamespaceLinter
+public import FormalConjecturesUtil.Linters.StubLinter
 
 /-!
 # Standard imports for open problems

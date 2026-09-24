@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Group structure via subgroup counts
@@ -42,6 +43,8 @@ if $\mathrm{cyc}(G) < 2^{t+2}$, then $G$ is solvable.
 * **OpenConjecture ID:** 1512
 -/
 
+@[expose] public section
+
 namespace Arxiv.«2604.08040»
 
 variable (G : Type*) [Group G] [Fintype G]
@@ -68,7 +71,7 @@ number of distinct prime divisors of $|G|$, then `G` is solvable.
 @[category research open, AMS 20]
 theorem solvable_of_cyc_lt :
     answer(sorry) ↔ ∀ (G : Type) [Group G] [Fintype G],
-      cyc G < 2 ^ (numPrimeFactors G + 2) → IsSolvable G := by
+      cyc G < 2 ^ (numPrimeFactors G + 2) → Group.IsSolvable G := by
   sorry
 
 /--
@@ -87,7 +90,7 @@ currently have a standalone `IsSupersolvable` class.
 -/
 @[category research solved, AMS 20]
 theorem solvable_of_cyc_lt_two_pow_succ (h : cyc G < 2 ^ (numPrimeFactors G + 1)) :
-    IsSolvable G := by
+    Group.IsSolvable G := by
   sorry
 
 /- ## Sharpness & Test cases -/

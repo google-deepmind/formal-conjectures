@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Difference between first odd semiprime $> 2^n$ and $2^n$
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 *References:*
 - [A114137](https://oeis.org/A114137)
 -/
+
+@[expose] public section
 
 namespace OeisA114137
 open Nat
@@ -33,17 +37,17 @@ $$a(n) = \min \{s \mid s > 2^n \text{ and } s \text{ is an odd semiprime}\} - 2^
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   let m := 2^n
-  let s : Set ℕ := { s | s > m ∧ IsOddSemiprime s }
+  let s : Set ℕ := { s | s > m ∧ s.IsSemiprime ∧ Odd s }
   sInf s - m
 
 @[category API, AMS 11]
 lemma a_eq_of (n val : ℕ)
-  (h_mem : IsOddSemiprime val)
+  (h_mem : val.IsSemiprime ∧ Odd val)
   (h_gt : 2^n < val)
-  (h_min : ∀ x, 2^n < x → x < val → ¬ IsOddSemiprime x) :
+  (h_min : ∀ x, 2^n < x → x < val → ¬ (x.IsSemiprime ∧ Odd x)) :
   a n = val - 2^n := by
-  change sInf { s | s > 2^n ∧ IsOddSemiprime s } - 2^n = val - 2^n
-  have h_S : sInf { s | s > 2^n ∧ IsOddSemiprime s } = val := by
+  change sInf { s | s > 2^n ∧ s.IsSemiprime ∧ Odd s } - 2^n = val - 2^n
+  have h_S : sInf { s | s > 2^n ∧ s.IsSemiprime ∧ Odd s } = val := by
     apply IsLeast.csInf_eq
     constructor
     · exact ⟨h_gt, h_mem⟩
@@ -54,31 +58,44 @@ lemma a_eq_of (n val : ℕ)
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 7 := by
-  apply a_eq_of 1 9 (by native_decide) (by norm_num)
+  apply a_eq_of 1 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 5 := by
-  apply a_eq_of 2 9 (by native_decide) (by norm_num)
+  apply a_eq_of 2 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  apply a_eq_of 3 9 (by native_decide) (by norm_num)
+  apply a_eq_of 3 9 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
   interval_cases x
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by
-  apply a_eq_of 4 21 (by native_decide) (by norm_num)
+  apply a_eq_of 4 21 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
-  interval_cases x <;> native_decide
+  interval_cases x <;>
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply]
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
-  apply a_eq_of 5 33 (by native_decide) (by norm_num)
+  apply a_eq_of 5 33 (by
+    norm_num [IsSemiprime, IsAlmostPrime, ArithmeticFunction.cardFactors_apply,
+      Nat.primeFactorsList]) (by norm_num)
   intro x h1 h2
   interval_cases x
 

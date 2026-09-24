@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 522
 
 *Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
 -/
+
+@[expose] public section
 
 open MeasureTheory Filter
 open scoped ProbabilityTheory Topology Real
@@ -29,7 +32,9 @@ namespace Erdos522
 
 /--
 A sequence of *Kac coefficients* over a subset `S` of a field `k` is a countably infinite sequence
-of independent random variables, each uniformly distributed over `S`.
+of independent random variables, each uniformly distributed over `S` with respect to the reference
+measure `μ`. The default reference measure is the counting measure, so that for a finite set `S`
+each coefficient takes every value of `S` with probability `1 / |S|`.
 
 Such a sequence determines a *Kac polynomial* of degree `n` for each `n`, which is the random
 polynomial given by `KacCoefficients.polynomial`.
@@ -37,20 +42,20 @@ polynomial given by `KacCoefficients.polynomial`.
 @[ext]
 structure KacCoefficients
     {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac) where
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count) where
   toFun : ℕ → Ω → k
   h_indep : ProbabilityTheory.iIndepFun toFun ℙ
   h_unif : ∀ i, MeasureTheory.pdf.IsUniform (toFun i) S ℙ μ
 
 variable {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac)
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count)
 
 /--
 We can always view a Kac polynomial as a random variable on `ℕ`.
 -/
 instance : FunLike (KacCoefficients S Ω μ) ℕ (Ω → k) where
   coe P := P.toFun
-  coe_injective' := by intro P Q h ; aesop
+  coe_injective P Q h := by aesop
 
 namespace KacCoefficients
 
