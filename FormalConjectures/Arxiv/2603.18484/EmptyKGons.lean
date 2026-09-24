@@ -73,7 +73,7 @@ open EuclideanGeometry
 
 namespace EmptyKGons
 
-/-!
+/-
 ## The three open conjectures on the leading constant
 
 Each is phrased, following [ASP26] and [BMP05], as the existence of a constant
@@ -90,7 +90,7 @@ hold. See `variants` below.
 /-- The leading constant `c_k` of `h_k(n)`: the `n²`-coefficient of the number of
 `k`-holes, defined as `liminf_{n→∞} h_k(n) / n²`. -/
 noncomputable def leadingConst (k : ℕ) : ℝ :=
-  Filter.liminf (fun n => (minKHoles k n : ℝ) / (n : ℝ) ^ 2) Filter.atTop
+  Filter.liminf (fun n : ℕ => (minKHoles k n : ℝ) / (n : ℝ) ^ 2) Filter.atTop
 
 /--
 **Problem 1 (Bárány–Károlyi).** Is there an absolute constant `ε > 0` such that
@@ -102,7 +102,7 @@ whether the leading constant can be pushed above `1`.
 @[category research open, AMS 52]
 theorem h3_leading_constant :
     answer(sorry) ↔
-      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n in Filter.atTop,
+      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n : ℕ in Filter.atTop,
         (1 + ε) * (n : ℝ) ^ 2 ≤ minKHoles 3 n := by
   sorry
 
@@ -116,7 +116,7 @@ is whether the leading constant exceeds `1/2`.
 @[category research open, AMS 52]
 theorem h4_leading_constant :
     answer(sorry) ↔
-      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n in Filter.atTop,
+      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n : ℕ in Filter.atTop,
         (1 / 2 + ε) * (n : ℝ) ^ 2 ≤ minKHoles 4 n := by
   sorry
 
@@ -131,7 +131,7 @@ super-linear bounds (see `variants` below).
 @[category research open, AMS 52]
 theorem h5_quadratic :
     answer(sorry) ↔
-      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n in Filter.atTop,
+      ∃ ε : ℝ, 0 < ε ∧ ∀ᶠ n : ℕ in Filter.atTop,
         ε * (n : ℝ) ^ 2 ≤ minKHoles 5 n := by
   sorry
 
@@ -145,7 +145,7 @@ quantity.
 -/
 @[category research solved, AMS 52]
 theorem quadratic_upper_bound (k : ℕ) (hk : k ∈ ({3, 4, 5} : Set ℕ)) :
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n in Filter.atTop,
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in Filter.atTop,
       (minKHoles k n : ℝ) ≤ C * (n : ℝ) ^ 2 := by
   sorry
 
@@ -176,7 +176,7 @@ theorem c5_ge_c3_sub_one : leadingConst 5 ≥ leadingConst 3 - 1 := by
 -/
 @[category research solved, AMS 52]
 theorem h5_superlinear :
-    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n in Filter.atTop,
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in Filter.atTop,
       c * (n : ℝ) * Real.log n ^ (4 / 5 : ℝ) ≤ minKHoles 5 n := by
   sorry
 
@@ -186,7 +186,7 @@ record. This is the paper this folder is named after.
 -/
 @[category research solved, AMS 52]
 theorem h5_astudillo_sole :
-    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n in Filter.atTop,
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in Filter.atTop,
       c * (n : ℝ) ^ (20 / 11 : ℝ) ≤ minKHoles 5 n := by
   sorry
 

@@ -78,7 +78,7 @@ This is the central open problem of [Sch20]; it is currently unknown. Known:
 theorem eightHoles_in_space3 :
     answer(sorry) ↔
       ∃ N : ℕ, ∀ P : Finset (Space 3),
-        InGenPos P → N ≤ P.card → HasKHole 8 (↑P) := by
+        InGenPos P → N ≤ P.card → HasKHole 8 (↑P : Set (Space 3)) := by
   sorry
 
 /--
@@ -87,7 +87,7 @@ contains a `7`-hole [Sch20]. In particular `H(3) ≥ 7`.
 -/
 @[category research solved, AMS 52]
 theorem h3_7_upper_bound :
-    ∀ P : Finset (Space 3), InGenPos P → 14 ≤ P.card → HasKHole 7 (↑P) := by
+    ∀ P : Finset (Space 3), InGenPos P → 14 ≤ P.card → HasKHole 7 (↑P : Set (Space 3)) := by
   sorry
 
 /--
@@ -97,7 +97,7 @@ There are arbitrarily large point sets in general position in `ℝ³` with no
 @[category research solved, AMS 52]
 theorem no_23_hole_arbitrarily_large :
     ∀ N : ℕ, ∃ P : Finset (Space 3),
-      InGenPos P ∧ N ≤ P.card ∧ ¬ HasKHole 23 (↑P) := by
+      InGenPos P ∧ N ≤ P.card ∧ ¬ HasKHole 23 (↑P : Set (Space 3)) := by
   sorry
 
 end HigherDimHoles
