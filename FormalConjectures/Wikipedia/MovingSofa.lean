@@ -159,7 +159,7 @@ def ABφθSpec (A B φ θ : ℝ) : Prop :=
 
 /-- There exist unique constants $A$, $B$, $\varphi$, and $\theta$ satisfying the spec. -/
 @[category textbook, AMS 49,
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/releases/tag/v1.0.0"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Defs.lean#L173"]
 theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry
@@ -204,7 +204,7 @@ def gerversSofa : Set ℝ² :=
 /-- Gerver's concrete sofa admits a valid hallway motion. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/releases/tag/v1.0.0"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L20"]
 theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
   sorry
 
@@ -223,15 +223,15 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
 
 /-- What is the sofa constant? -/
 @[category research solved, AMS 49,
-  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/releases/tag/v1.0.0"]
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26"]
 theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
 @[category research solved, AMS 49,
-  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/releases/tag/v1.0.0",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/releases/tag/v1.0.0"]
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L30"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
