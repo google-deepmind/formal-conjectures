@@ -44,4 +44,27 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
 
+/--
+Let $(a_n)_{n\geq 0}$ be a strictly increasing sequence of positive integers. If
+$$
+  \frac{a_n^2}{a_{n+1}}=1+\frac{3}{n}+o(n^{-3}),
+$$
+then its reciprocal sum is irrational.
+
+This is the zero-indexed formal version of [Theorem 7.2 (PDF p. 12)](https://raw.githubusercontent.com/wcook04/plectis-erdos/7ab6a901a2fe07e8d0e5c99dc46821adffc7411b/paper/243/erdos-243-reciprocal-tail-rigidity.pdf#page=12)
+in Will Cook, *Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*. The
+[rounded recurrence beginning at $a_1=8$ (PDF p. 13)](https://raw.githubusercontent.com/wcook04/plectis-erdos/7ab6a901a2fe07e8d0e5c99dc46821adffc7411b/paper/243/erdos-243-reciprocal-tail-rigidity.pdf#page=13)
+is an example satisfying the rate. The rate keeps the same index on both sides;
+shifting $n$ would change its lower-order terms.
+This variant does not settle the unrestricted Erdős problem above.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/a1779f508dbede5da6d8c2d5fefe0d8f6dcef6d9/research/adapters/FC243CubicRate.lean#L53-L60"]
+theorem erdos_243.variants.cubic_rate (a : ℕ → ℕ)
+    (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
+    (hrate : Tendsto (fun n : ℕ => (n : ℝ) ^ 3 *
+      ((a n : ℝ) ^ 2 / (a (n + 1) : ℝ) - (1 + 3 / (n : ℝ)))) atTop (𝓝 0)) :
+    Irrational (∑' n : ℕ, 1 / (a n : ℝ)) := by
+  sorry
+
 end Erdos243
