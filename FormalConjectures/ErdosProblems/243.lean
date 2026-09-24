@@ -51,9 +51,11 @@ $$
 $$
 then its reciprocal sum is irrational.
 
-This is the zero-indexed formal version of the cubic-rate theorem in Section 7
-of Will Cook, *Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*. The rate keeps
-the same index on both sides; shifting $n$ would change its lower-order terms.
+This is the zero-indexed formal version of [Theorem 7.2 (PDF p. 12)](https://raw.githubusercontent.com/wcook04/plectis-erdos/7ab6a901a2fe07e8d0e5c99dc46821adffc7411b/paper/243/erdos-243-reciprocal-tail-rigidity.pdf#page=12)
+in Will Cook, *Cubic-Rate Irrationality and Reciprocal-Tail Rigidity*. The
+[rounded recurrence beginning at $a_1=8$ (PDF p. 13)](https://raw.githubusercontent.com/wcook04/plectis-erdos/7ab6a901a2fe07e8d0e5c99dc46821adffc7411b/paper/243/erdos-243-reciprocal-tail-rigidity.pdf#page=13)
+is an example satisfying the rate. The rate keeps the same index on both sides;
+shifting $n$ would change its lower-order terms.
 This variant does not settle the unrestricted Erdős problem above.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
