@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 898
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   (1982), 59--79.
 - [Wikipedia](https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Mordell_inequality)
 -/
+
+@[expose] public section
 
 open Affine EuclideanGeometry
 

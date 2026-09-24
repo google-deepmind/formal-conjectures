@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $(1-\sqrt{1-4x-4x^2})/(2(1+x))$
@@ -24,6 +25,8 @@ $$a(n) = \sum_{k=0}^{n-1} \frac{1}{k+1} \binom{2k}{k} \binom{k}{n-1-k}$$
 
 *References:*
 - [A052709](https://oeis.org/A052709)-/
+
+@[expose] public section
 
 namespace OeisA52709
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Product of composite numbers in triangular intervals
@@ -24,6 +25,8 @@ where $n(n-1)/2 = \binom{n}{2}$ and $n(n+1)/2 = \binom{n+1}{2}$.
 
 *References:*
 - [A093456](https://oeis.org/A093456)-/
+
+@[expose] public section
 
 namespace OeisA93456
 

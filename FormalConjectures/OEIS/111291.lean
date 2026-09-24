@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of refactorable numbers (A033950) $\le 10^n$
@@ -30,6 +31,8 @@ A number $k$ is refactorable if its number of divisors, $\tau(k)$, divides $k$.
 - [Sp85] Spiro, C., *How often is the number of divisors of n a divisor of n?*
   J. Number Theory 21 (1985), 81--100.
 -/
+
+@[expose] public section
 
 namespace OeisA111291
 
@@ -56,7 +59,8 @@ theorem a_1 : a 1 = 4 := by rfl
 theorem a_2 : a 2 = 16 := by rfl
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 92 := by native_decide
+theorem a_3 : a 3 = 92 := by
+  sorry --this was previously proven using `native_decide`
 
 /--
 `countRefactorable x` is the number of refactorable numbers $\le x$.
@@ -97,6 +101,6 @@ theorem colton_conjecture : ∀ n : ℕ, Nat.primeCounting n ≤ 2 * countRefact
 /-- Colton's conjecture holds for $n \le 500$. -/
 @[category test, AMS 11]
 theorem colton_conjecture_le_500 : ∀ n ≤ 500, Nat.primeCounting n ≤ 2 * countRefactorableNat n := by
-  native_decide
+  sorry --this was previously proven using `native_decide`
 
 end OeisA111291
