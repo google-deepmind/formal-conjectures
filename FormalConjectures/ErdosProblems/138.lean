@@ -27,6 +27,10 @@ public import FormalConjecturesUtil
 - [Er80] Erdős, Paul, A survey of problems in combinatorial number theory. Ann. Discrete Math. (1980), 89-115.
 - [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved. Combinatorica (1981), 25-42.
 - [Go01] Gowers, W. T., A new proof of Szemerédi's theorem. Geom. Funct. Anal. (2001), 465-588.
+- [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven
+  Formal Proof Search* by George Tsoukalas et al.
+- [CFS26] Campos, M., Fox, J. and Schildkraut, C., A new lower bound for two-color van der Waerden
+  numbers. [arXiv:2608.20824](https://arxiv.org/abs/2608.20824) (2026).
 -/
 
 @[expose] public section
@@ -123,8 +127,19 @@ theorem erdos_138.variants.difference :
 
 /--
 In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
+
+Campos, Fox and Schildkraut [CFS26] independently prove $W(k) \geq (1 - o(1)) k 2^{k-1}$, which
+implies this; they report that their proof was generated with ChatGPT. (The related variant
+`erdos_138.variants.difference`, $W(k+1) - W(k) \to \infty$, was solved separately in
+[arxiv/2605.22763].)
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Erdos138.lean#L1033"]
 theorem erdos_138.variants.dvd_two_pow :
-    answer(sorry) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
+    answer(True) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

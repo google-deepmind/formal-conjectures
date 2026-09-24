@@ -812,10 +812,18 @@ theorem ame_9_6_open :
     answer(True) ↔ ExistsAME 9 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/--
+Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist?
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
+-/
+@[category research solved, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Oqp35.lean#L1238"]
 theorem ame_9_10_open :
-    answer(sorry) ↔ ExistsAME 9 10 := by
+    answer(True) ↔ ExistsAME 9 10 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(10,6)$ state exist? -/
