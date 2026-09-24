@@ -86,7 +86,7 @@ element). The size hypothesis `3 ≤ n` ensures triangles can exist.
 Equivalent negated form: no rank-`3` uniform chirotope with a non-trivial
 `2`-coloring has all triangles (mutations) monochromatic (`IsMonochromatic`).
 -/
-@[category research open, AMS 52 5]
+@[category research open, AMS 5 52]
 theorem two_colored_triangle (n : ℕ) (hn : 3 ≤ n) (χ : Chirotope 3 n)
     (hχ : IsUniformChirotope 3 n χ) (col : Fin n → Bool)
     (hred : ∃ x, col x = false) (hblue : ∃ y, col y = true) :
@@ -106,7 +106,7 @@ orientation `orient (p (t 0)) (p (t 1)) (p (t 2))`, the standard `2×2` determin
 direction of `a → b → c`. The straight-line case has a simple direct argument and
 is known to hold.
 -/
-@[category research solved, AMS 52 5]
+@[category research solved, AMS 5 52]
 theorem two_colored_triangle_realizable (n : ℕ) (hn : 3 ≤ n) (χ : Chirotope 3 n)
     (hχ : IsUniformChirotope 3 n χ)
     (hreal : ∃ p : Fin n → ℝ × ℝ, ∀ t : Fin 3 → Fin n,

@@ -55,7 +55,7 @@ on the ground set `Fin n`, with `1 ≤ r ≤ n`, admits at least one mutation, i
 at least one simplicial tope: there is an `r`-subset `I` of the ground set that is
 flippable. This is open in general.
 -/
-@[category research open, AMS 52 5]
+@[category research open, AMS 5 52]
 theorem las_vergnas_simplex (r n : ℕ) (hr : 1 ≤ r) (hn : r ≤ n)
     (χ : Chirotope r n) (hχ : IsUniformChirotope r n χ) :
     ∃ I : Finset (Fin n), IsMutation χ I := by
@@ -70,7 +70,7 @@ a simplicial cell (triangle). This is the classical, solved specialization of th
 Las Vergnas simplex conjecture; Levi and Shannon in fact guarantee at least `n` such
 triangles.
 -/
-@[category research solved, AMS 52 5]
+@[category research solved, AMS 5 52]
 theorem rank_three (n : ℕ) (hn : 3 ≤ n)
     (χ : Chirotope 3 n) (hχ : IsUniformChirotope 3 n χ) :
     ∃ I : Finset (Fin n), IsMutation χ I := by
@@ -82,7 +82,7 @@ pseudolines has at least `n` simplicial cells (triangles): the number of mutatio
 a uniform rank-`3` chirotope on `Fin n` is at least `n`. This sharper, solved bound
 implies `rank_three`.
 -/
-@[category research solved, AMS 52 5]
+@[category research solved, AMS 5 52]
 theorem rank_three_lower_bound (n : ℕ) (hn : 3 ≤ n)
     (χ : Chirotope 3 n) (hχ : IsUniformChirotope 3 n χ) :
     n ≤ numMutations χ := by

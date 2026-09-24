@@ -72,7 +72,7 @@ on `Fin n` — has at most `∑_{i=0}^{d-2} binomial(n-1, i)` complete cells (to
 of whose single-coordinate flips are again topes, counted up to antipode). The sum
 `i = 0, …, d-2` is `Finset.range (d - 1)`.
 -/
-@[category research open, AMS 52 5]
+@[category research open, AMS 5 52]
 theorem roudneff (d n : ℕ) (hd : 2 ≤ d) (hn : 2 * d + 1 ≤ n)
     (χ : Chirotope (d + 1) n) (hχ : IsUniformChirotope (d + 1) n χ) :
     numCompleteCells χ ≤ ∑ i ∈ Finset.range (d - 1), Nat.choose (n - 1) i := by
@@ -87,7 +87,7 @@ namespace variants
 cyclic hyperplane arrangement) whose number of complete cells equals the bound.
 Hence the conjectured inequality cannot be improved.
 -/
-@[category research solved, AMS 52 5]
+@[category research solved, AMS 5 52]
 theorem roudneff_tight (d n : ℕ) (hd : 2 ≤ d) (hn : 2 * d + 1 ≤ n) :
     ∃ χ : Chirotope (d + 1) n, IsUniformChirotope (d + 1) n χ ∧
       numCompleteCells χ = ∑ i ∈ Finset.range (d - 1), Nat.choose (n - 1) i := by
@@ -103,7 +103,7 @@ does *not* contradict the fact that a rank-`3` arrangement has at least `n`
 simplicial cells (mutations), because a complete cell is a different object from a
 simplicial cell.
 -/
-@[category research open, AMS 52 5]
+@[category research open, AMS 5 52]
 theorem roudneff_dim_two (n : ℕ) (hn : 5 ≤ n)
     (χ : Chirotope 3 n) (hχ : IsUniformChirotope 3 n χ) :
     numCompleteCells χ ≤ ∑ i ∈ Finset.range 1, Nat.choose (n - 1) i := by
