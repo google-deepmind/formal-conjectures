@@ -129,7 +129,7 @@ hereditary consequence:
 https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/docs/papers/full-text/erdos257-mersenne-reasoning-surface.md
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/48cc8f861a7128c578334ada7696fe3c9f8e6fef/research/adapters/FormalConjecturesVariants.lean#L692-L710"]
+  "https://github.com/wcook04/plectis-erdos/blob/5e7c9a61ba86288a8005679f18bfa7ed98117692/research/adapters/FormalConjecturesVariants.lean#L692-L710"]
 theorem erdos_257.variants.finite_prime_weighted_support :
     (∀ (b : ℕ) (A : Set ℕ), 2 ≤ b → 0 ∉ A → A.Infinite →
       erdos_257.variants.finitePrimeWeighted b A →
