@@ -741,12 +741,14 @@ theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
-/-- A seven-party AME state exists exactly when the local dimension is at least `3`.
+/-- For a physical local dimension $d \ge 2$, a seven-party AME state exists exactly when
+$d \ge 3$. The hypothesis excludes the degenerate dimension $d = 1$, for which the unique
+computational-basis state is AME under the definitions of this file.
 Shi--Zhang--Zhao--Li (2026) construct cyclic quadratic-phase states in every odd dimension and
 a coupled binary--odd-dimensional state in every dimension congruent to `2` modulo `4`; together
 with power-of-two constructions and the product property, this covers every `d ≥ 3`. -/
 @[category research solved, AMS 5 15 81 94]
-theorem ame_7_exists_iff (d : ℕ) : ExistsAME 7 d ↔ 3 ≤ d := by
+theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,3)$ state exists; see Helwig et al. (2012) and Goyeneche et al. (2015). -/
@@ -769,7 +771,7 @@ theorem ame_7_6_open :
     answer(True) ↔ ExistsAME 7 6 := by
   constructor
   · intro
-    exact (ame_7_exists_iff 6).2 (by norm_num)
+    exact (ame_7_exists_iff 6 (by norm_num)).2 (by norm_num)
   · simp
 
 /-- An $\mathrm{AME}(7,10)$ state exists, by the complete seven-party classification of
@@ -779,7 +781,7 @@ theorem ame_7_10_open :
     answer(True) ↔ ExistsAME 7 10 := by
   constructor
   · intro
-    exact (ame_7_exists_iff 10).2 (by norm_num)
+    exact (ame_7_exists_iff 10 (by norm_num)).2 (by norm_num)
   · simp
 
 /-- Open benchmark statement: does an $\mathrm{AME}(8,4)$ state exist? -/
