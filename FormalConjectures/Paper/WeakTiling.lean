@@ -79,9 +79,11 @@ def HasBoundedDensity (Λ : Set ℝ) : Prop :=
 
 /-- **Problem 4.1.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
     a weak tiling measure for $\Omega$. Must $\mathrm{supp}(\nu)$ have bounded density? -/
-@[category research open, AMS 42 46]
+@[category research solved, AMS 42 46,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/weak-tiling-bounded-density/blob/5d10499e1932cc017b7aaf8e931926dc969bd8f7/lean/WeakTilingProblem41FC.lean#L11484-L11487"]
 theorem problem_4_1 :
-    answer(sorry) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
+    answer(True) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
       (ν : Measure ℝ) (_ : IsWeakTilingMeasure Ω ν), HasBoundedDensity ν.support := by
   sorry
 
