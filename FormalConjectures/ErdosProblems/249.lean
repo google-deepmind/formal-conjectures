@@ -38,4 +38,22 @@ irrational? Here $\phi$ is the Euler totient function.
 theorem erdos_249 : answer(sorry) ↔ Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
   sorry
 
+/--
+Let `f` assign rational values to residues modulo `2^k`, where `k ≥ 1`.
+The binary series with coefficients `f (φ(n) mod 2^k)` is rational exactly
+when `f` has the same value on every even residue class. This is a solved
+variant; the series with unreduced totients above remains open.
+
+*Source:* [Cook, Bases and Integral Relations for the $k$-Kernel of Euler's Totient, "Residue series and dyadic observables"](https://github.com/wcook04/plectis-erdos/blob/c4bff4aa152465b3c92fffe808f76b0e5f78293c/paper/249/erdos-249-binary-totient-series.tex#L297-L306).
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/c4bff4aa152465b3c92fffe808f76b0e5f78293c/lean/ErdosProblems/Erdos249/PaperCompleteR7/RationalObservableClassification.lean#L221-L233"]
+theorem erdos_249.variants.rational_dyadic_observable
+    {k : ℕ} (hk : 1 ≤ k) (f : ZMod (2 ^ k) → ℚ) :
+    (∃ q : ℚ,
+      (∑' n : ℕ, (f (Nat.totient (n + 1) : ZMod (2 ^ k)) : ℝ) /
+        2 ^ (n + 1)) = (q : ℝ)) ↔
+      ∀ r : ℕ, r < 2 ^ k → r % 2 = 0 → f (r : ZMod (2 ^ k)) = f 0 := by
+  sorry
+
 end Erdos249
