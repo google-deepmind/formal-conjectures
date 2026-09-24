@@ -72,7 +72,7 @@ The constant is the limit of these partial products as $N \to \infty$; stating i
 an ordered limit avoids the junk value of Mathlib's unconditional `∏'`.
 -/
 noncomputable def HardyLittlewoodPartialProduct {k : ℕ} (m : Fin k.succ → ℕ) (N : ℕ) : ℝ :=
-  2 ^ k * ∏ q in (Nat.primesBelow N).filter (fun q => 3 ≤ q),
+  2 ^ k * ∏ q ∈ (Nat.primesBelow N).filter (fun q => 3 ≤ q),
     (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
 
 /--
