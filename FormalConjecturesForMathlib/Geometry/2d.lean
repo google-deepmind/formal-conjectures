@@ -23,6 +23,7 @@ public import Mathlib.Data.Set.Card
 public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
 public import FormalConjecturesForMathlib.Geometry.Metric
+public import FormalConjecturesForMathlib.Geometry.Holes
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
 
@@ -73,14 +74,56 @@ lemma NonCollinearFor.subset {n : ℕ} {S T : Set P} (h : S ⊆ T) (hS : NonColl
 
 /-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
 i.e., the point set encloses a convex shape.
-Also known as a "convex-independent set". -/
+Also known as a "convex-independent set". This is the planar (`d = 2`) case of the
+dimension-generic `ConvexPos`. -/
 def ConvexIndep (S : Set ℝ²) : Prop :=
-  ∀ a ∈ S, a ∉ convexHull ℝ (S \ {a})
+  ConvexPos (d := 2) S
+
+/-- Two points `p q` of a set `S` are *visible* in `S` if the open segment between
+them contains no other point of `S`. This is the edge relation of the *visibility
+graph* of `S`. -/
+def Visible (S : Set ℝ²) (p q : ℝ²) : Prop :=
+  ∀ r ∈ S, r ≠ p → r ≠ q → r ∉ openSegment ℝ p q
 
 /-- The set `P` contains a convex `n`-gon.
 See also `IsConvexPolygon`. -/
 def HasConvexNGon (n : ℕ) (P : Set ℝ²) : Prop :=
   ∃ S : Finset ℝ², S.card = n ∧ ↑S ⊆ P ∧ ConvexIndep S
+
+/-- `EmptyShapeIn S P` means that `S` carves out an *empty* shape inside `P`:
+the convex hull of `S` contains no point of `P` other than the points of `S`
+themselves. This is the planar (`d = 2`) case of the dimension-generic
+`EmptyIn`. -/
+def EmptyShapeIn (S P : Set ℝ²) : Prop :=
+  EmptyIn (d := 2) S P
+
+/-- `ConvexEmptyIn S P` means that `S` is in convex position and forms an empty
+region in `P`, i.e. `S` is the vertex set of a convex polygon (a "hole") whose
+convex hull contains no point of `P` other than the points of `S`. When `P` is in
+general position (no three collinear) this is exactly "no point of `P` in the
+interior". This is the planar (`d = 2`) case of the dimension-generic
+`IsHoleIn`. -/
+def ConvexEmptyIn (S P : Set ℝ²) : Prop :=
+  IsHoleIn (d := 2) S P
+
+/-- The set `P` contains an *empty* convex `k`-gon (a `k`-hole): a `k`-element
+subset in convex position whose convex hull contains no other point of `P`.
+This is the empty (hole) analogue of `HasConvexNGon`, and the planar (`d = 2`)
+case of the dimension-generic `HasKHole`. -/
+def HasEmptyKGon (k : ℕ) (P : Set ℝ²) : Prop :=
+  HasKHole (d := 2) k P
+
+open Classical in
+/-- The number of `k`-holes of a finite point set `P`: the number of `k`-element
+subsets of `P` that are in convex position and empty in `P`. Written `h_k` for a
+fixed set; the extremal quantity `h_k(n)` is `minKHoles` below. -/
+noncomputable def numKHoles (k : ℕ) (P : Finset ℝ²) : ℕ :=
+  ((P.powersetCard k).filter (fun S : Finset ℝ² => ConvexEmptyIn ↑S ↑P)).card
+
+/-- `minKHoles k n` is the classical function `h_k(n)`: the minimum number of
+`k`-holes over all sets of `n` points in the plane with no three on a line. -/
+noncomputable def minKHoles (k n : ℕ) : ℕ :=
+  sInf {m | ∃ P : Finset ℝ², P.card = n ∧ NonTrilinear (P : Set ℝ²) ∧ numKHoles k P = m}
 
 /-- The statement that a sequence of points form a counter-clockwise convex polygon. -/
 def IsCcwConvexPolygon (p : Fin n → P) : Prop :=
