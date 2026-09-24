@@ -15,29 +15,20 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil
-
-
-/-!
-# No powers as partition numbers
-
-There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-
-*Reference:* [A41](https://oeis.org/A41)
--/
+public import Mathlib.Algebra.Polynomial.SpecificDegree
+public import Mathlib.Tactic.Linarith
 
 @[expose] public section
 
-namespace OeisA41
+namespace Polynomial
 
-open Nat
+variable {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
 
-/--
-There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1$.
-See comment by Zhi-Wei Sun (Dec 02 2013).
--/
-@[category research open, AMS 11]
-theorem noPowerPartitionNumber : answer(sorry) ↔ ∀ k, ¬IsPerfectPower (partitionNumber k) := by
-  sorry
+/-- Over a linearly ordered field, `X ^ 2 + a` is irreducible for every `0 < a`, since it has no
+root. -/
+theorem irreducible_X_sq_add_C_of_pos {a : K} (ha : 0 < a) : Irreducible (X ^ 2 + C a) :=
+  irreducible_of_degree_le_three_of_not_isRoot (by simp) fun x hx ↦ by
+    simp only [IsRoot.def, eval_add, eval_pow, eval_X, eval_C] at hx
+    nlinarith [sq_nonneg x]
 
-end OeisA41
+end Polynomial

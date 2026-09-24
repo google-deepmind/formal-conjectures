@@ -27,6 +27,7 @@ public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+public import FormalConjecturesForMathlib.Algebra.Polynomial.Irreducible
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
@@ -52,6 +53,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumse
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
