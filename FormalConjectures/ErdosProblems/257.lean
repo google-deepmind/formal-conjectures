@@ -101,4 +101,63 @@ theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
+/-! ### Finite-prime weighted supports -/
+
+/-- The part of `a` supported on the primes in `P`. -/
+def erdos_257.variants.primeSetPart (P : Finset ℕ) (a : ℕ) : ℕ :=
+  ∏ p ∈ P, p ^ a.factorization p
+
+/-- The weighted cost of an exponent in base `b`. -/
+noncomputable def erdos_257.variants.primeWeightedTerm
+    (b : ℕ) (P : Finset ℕ) (a : ℕ) : ℝ :=
+  (erdos_257.variants.primeSetPart P a : ℝ) /
+    ((a : ℝ) * ((b : ℝ) ^ erdos_257.variants.primeSetPart P a - 1))
+
+@[category test, AMS 11]
+example : erdos_257.variants.primeSetPart {2} 12 = 4 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeSetPart, hfac]
+
+@[category test, AMS 11]
+example : erdos_257.variants.primeWeightedTerm 2 {2} 12 = (1 : ℝ) / 45 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeWeightedTerm, erdos_257.variants.primeSetPart, hfac]
+
+/-- A support has summable weighted cost for some finite nonempty prime set. -/
+noncomputable def erdos_257.variants.finitePrimeWeighted (b : ℕ) (A : Set ℕ) : Prop :=
+  ∃ P : Finset ℕ, P.Nonempty ∧ (∀ p ∈ P, Nat.Prime p) ∧
+    Summable (Set.indicator A (erdos_257.variants.primeWeightedTerm b P))
+
+/--
+An infinite set of positive exponents with summable finite-prime weighted cost
+has an irrational reciprocal Mersenne series at the same integer base. If the
+cost is summable at base two, every infinite subset has an irrational series
+at every integer base at least two.
+
+Source: W. Cook, *Reciprocal Mersenne Subseries*, Theorem 1 and its
+hereditary consequence:
+https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/docs/papers/full-text/erdos257-mersenne-reasoning-surface.md
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/5e7c9a61ba86288a8005679f18bfa7ed98117692/research/adapters/FormalConjecturesVariants.lean#L692-L710"]
+theorem erdos_257.variants.finite_prime_weighted_support :
+    (∀ (b : ℕ) (A : Set ℕ), 2 ≤ b → 0 ∉ A → A.Infinite →
+      erdos_257.variants.finitePrimeWeighted b A →
+        Irrational (∑' a : ℕ,
+          Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a)) ∧
+    (∀ H : Set ℕ, 0 ∉ H → erdos_257.variants.finitePrimeWeighted 2 H →
+      ∀ A : Set ℕ, A ⊆ H → A.Infinite →
+        ∀ b : ℕ, 2 ≤ b →
+          Irrational (∑' a : ℕ,
+            Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a)) := by
+  sorry
+
 end Erdos257
