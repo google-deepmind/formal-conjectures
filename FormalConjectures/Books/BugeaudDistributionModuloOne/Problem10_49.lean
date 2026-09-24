@@ -23,14 +23,10 @@ Problem 10.49 asks for a real number that is normal to a given integer base and 
 fraction expansion is normal. It was extracted from Queffélec [Que06]. Scheerer [Sch17] and then
 Becher and Yuhjtman [BY19] answered it, in the stronger form that asks for every base at once.
 
-Two notions of normality appear here.
-
-* Normality to base $b$ is simple normality to every power $b^k$, $k \ge 1$, which is Pillai's
-  theorem [BY19]. `NormalNumber.IsNormalInBase` is *simple* normality, so it is used here only
-  through the powers $b^k$, and `NormalNumber.IsAbsolutelyNormal`, which is simple normality to
-  every base $b \ge 2$, is absolute normality on the nose.
-* Continued fraction normality is stated as in [Sch17, (1.2)]: the orbit of $x$ under the Gauss
-  map equidistributes with respect to the Gauss-Kuzmin measure.
+Normality to base $b$ is `NormalNumber.IsNormalInBase`: every block of $k$ digits occurs in the
+base $b$ expansion with asymptotic frequency $b^{-k}$. Continued fraction normality is stated as
+in [Sch17, (1.2)]: the orbit of $x$ under the Gauss map equidistributes with respect to the
+Gauss-Kuzmin measure.
 
 Both [Sch17] and [BY19] produce a *computable* number, and [BY19] computes the first $n$ partial
 quotients in $O(n^4)$ operations. Computability and the operation count are not stated below.
@@ -75,15 +71,6 @@ noncomputable def IsCFNormal (x : ℝ) : Prop :=
     Tendsto (fun n : ℕ ↦ (((Finset.range n).filter
       fun i ↦ gaussMap^[i] x ∈ Set.Ico α β).card : ℝ) / n) atTop (nhds (gaussKuzmin α β))
 
-/--
-A real number $x$ is *normal to base* $b$ if every block of $k$ digits occurs in the base $b$
-expansion of $x$ with asymptotic frequency $b^{-k}$. By a theorem of Pillai this is simple
-normality to every power $b^k$ with $k \ge 1$ [BY19], which is how it is stated here. Note that
-`NormalNumber.IsNormalInBase` alone is simple normality, a strictly weaker condition.
--/
-noncomputable def IsNormalToBase (b : ℕ) (x : ℝ) : Prop :=
-  ∀ k : ℕ, 1 ≤ k → NormalNumber.IsNormalInBase (b ^ k) x
-
 /-- The Gauss-Kuzmin measure of the whole interval $[0, 1)$ is $1$. -/
 @[category test, AMS 11 37]
 theorem gaussKuzmin_zero_one : gaussKuzmin 0 1 = 1 := by
@@ -95,12 +82,6 @@ theorem gaussKuzmin_zero_one : gaussKuzmin 0 1 = 1 := by
 theorem gaussMap_zero : gaussMap 0 = 0 := by
   simp [gaussMap]
 
-/-- An absolutely normal number is normal to every individual base, since $b^k \ge 2$. -/
-@[category test, AMS 11 37]
-theorem isNormalToBase_of_isAbsolutelyNormal {x : ℝ} (hx : NormalNumber.IsAbsolutelyNormal x)
-    {b : ℕ} (hb : 2 ≤ b) : IsNormalToBase b x :=
-  fun k hk ↦ hx _ (hb.trans (Nat.le_self_pow (by omega) b))
-
 /--
 Problem 10.49. For every integer base $b \ge 2$ there is a real number $\xi \in [0, 1)$ that is
 normal to base $b$ and whose continued fraction expansion is normal. Posed in [Que06]; answered
@@ -111,7 +92,7 @@ some base admits such a number, follows from this one.
 -/
 @[category research solved, AMS 11 37]
 theorem problem_10_49 (b : ℕ) (hb : 2 ≤ b) :
-    ∃ ξ ∈ Set.Ico (0 : ℝ) 1, IsNormalToBase b ξ ∧ IsCFNormal ξ := by
+    ∃ ξ ∈ Set.Ico (0 : ℝ) 1, NormalNumber.IsNormalInBase b ξ ∧ IsCFNormal ξ := by
   sorry
 
 /--
