@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest power with base>1 and exponent $n$ without digit 0
@@ -25,6 +26,8 @@ Also it is conjectured that $a(40)$ does not exist (i.e. the sequence is empty f
 *References:*
 - [A103662](https://oeis.org/A103662)
 -/
+
+@[expose] public section
 
 namespace OeisA103662
 
@@ -77,11 +80,11 @@ theorem a_3 : a 3 = 8 := by
 
 /--
 For statistical reasons it is conjectured that the sequence is finite.
-This is formalized as the assertion that for large enough $n$, no valid zeroless power exists,
-which in our definition results in $a(n) = 0$.
+Finite means here that for some $n$, no power $b^n$ with base $b > 1$ has a zeroless decimal
+representation, which in our definition results in $a(n) = 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture : ∃ N : ℕ, ∀ n : ℕ, n > N → a n = 0 := by
+theorem conjecture : ∃ n : ℕ, a n = 0 := by
   sorry
 
 /--

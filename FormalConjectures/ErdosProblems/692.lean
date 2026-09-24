@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 692
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ca25] Cambie, S., *Resolution of Erdős' problems about unimodularity*.
   arXiv:2501.10333 (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos692
 
@@ -45,6 +48,14 @@ $\delta_1(n,m)$ is the density of the set of integers with exactly one divisor i
 -/
 def IsDelta₁ (n m : ℕ) (δ : ℝ) : Prop :=
   (exactlyOneDivisorIn n m).HasDensity δ
+
+/--
+The set of local maxima of the sequence `f` on `(a, ∞)`. Each local maximum is recorded by the
+first index `m` of a maximal interval `[m, b]` on which `f` is constant, with `f` strictly smaller
+at `m - 1` and at `b + 1`.
+-/
+def localMaxima (f : ℕ → ℝ) (a : ℕ) : Set ℕ :=
+  {m | a < m ∧ f (m - 1) < f m ∧ ∃ b, m ≤ b ∧ (∀ j ∈ Set.Icc m b, f j = f m) ∧ f (b + 1) < f m}
 
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
@@ -94,13 +105,13 @@ theorem erdos_692.variants.cambie_three :
 
 /--
 Cambie [Ca25] has shown that, for fixed $n$, the sequence $\delta_1(n,m)$ has superpolynomially
-many local maxima $m$.
+many local maxima $m$. A local maximum is a maximal run of equal values of the sequence that is
+strictly larger than the values just before and just after the run.
 -/
 @[category research solved, AMS 11]
 theorem erdos_692.variants.cambie_local_maxima (k : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
-      ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ k ≤
-        ({m : ℕ | n + 1 < m ∧ δ n (m - 1) ≤ δ n m ∧ δ n (m + 1) ≤ δ n m}.ncard : ℝ) := by
+      ∀ᶠ n : ℕ in atTop, (n : ℕ∞) ^ k ≤ (localMaxima (δ n) (n + 1)).encard := by
   sorry
 
 end Erdos692
