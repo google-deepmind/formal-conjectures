@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 506
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   Euclidean plane*, Acta Math. Hungar. (1994), 283–289.
 - [PuSm] Purdy and Smith. No reference found.
 -/
+
+@[expose] public section
 
 namespace Erdos506
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 184
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos184
@@ -41,11 +44,6 @@ A graph $H$ is a cycle or an edge if it is connected and 2-regular, or if it has
 def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
   open scoped Classical in
   (H.Connected ∧ H.IsRegularOfDegree 2) ∨ H.edgeFinset.card = 1
-
-/-- D is a decomposition of G into subgraphs. -/
-def IsDecomposition {V : Type*} (G : SimpleGraph V) (D : Finset G.Subgraph) : Prop :=
-  Set.PairwiseDisjoint (D : Set G.Subgraph) (fun H ↦ H.edgeSet) ∧
-  (⋃ H ∈ D, H.edgeSet) = G.edgeSet
 
 open scoped Classical in
 /--

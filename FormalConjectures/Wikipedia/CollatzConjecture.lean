@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Collatz conjecture
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 * [La85] Lagarias, Jeffrey C., The {$3x+1$} problem and its generalizations. Amer. Math. Monthly
   (1985), 3--23.
 -/
+
+@[expose] public section
 
 namespace CollatzConjecture
 

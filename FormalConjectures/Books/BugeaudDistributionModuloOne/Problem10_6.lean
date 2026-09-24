@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Rapidly Increasing Sequences Dense Modulo One
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   - [Pol79] Pollington, Andrew Douglas. "On the density of sequence $\{n_ {k}\xi\} $."
     Illinois Journal of Mathematics 23.4 (1979): 511-515.
 -/
+
+@[expose] public section
 
 namespace Bugeaud06
 

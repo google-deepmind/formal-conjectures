@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.Mahler32
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.Mahler32
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Mahler's Z-numbers
 
@@ -30,6 +31,8 @@ See also FormalConjectures/Wikipedia/Mahler32.lean.
     "On the range of fractional parts $\{\xi(p/q)^n\}$."
     Acta Arithmetica 70.2 (1995): 125-147.
 -/
+
+@[expose] public section
 
 namespace Bugeaud09
 
