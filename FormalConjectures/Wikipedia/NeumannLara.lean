@@ -65,7 +65,7 @@ open SimpleGraph
 
 namespace NeumannLara
 
-/-! ### Digraphs, directed cycles, digirth, and the dichromatic number -/
+/- ### Digraphs, directed cycles, digirth, and the dichromatic number -/
 
 variable {V : Type*}
 
@@ -78,12 +78,12 @@ structure Digraph (V : Type*) where
   irrefl : ∀ a, ¬ Adj a a
 
 /-- A *directed cycle* of length `k` in `D`: an injective tour
-`c : Fin k → V` with an arc from `c i` to the cyclically next vertex `c (i + 1)`.
-We require `k ≥ 1`; note `Fin k` addition is modular, so for `k = 1` this would
-demand a loop (excluded by irreflexivity) and for `k = 2` a pair of anti-parallel
-arcs. -/
+`c : Fin k → V` with an arc from `c i` to the cyclically next vertex
+`c (finRotate k i)`. We require `k ≥ 1`; `finRotate k` is the cyclic successor, so
+for `k = 1` this would demand a loop (excluded by irreflexivity) and for `k = 2` a
+pair of anti-parallel arcs. -/
 def IsDirectedCycleOfLength (D : Digraph V) (k : ℕ) (c : Fin k → V) : Prop :=
-  1 ≤ k ∧ Function.Injective c ∧ ∀ i : Fin k, D.Adj (c i) (c (i + 1))
+  1 ≤ k ∧ Function.Injective c ∧ ∀ i : Fin k, D.Adj (c i) (c (finRotate k i))
 
 /-- `D` *has a directed cycle* if it has a directed cycle of some length `k ≥ 1`. -/
 def HasDirectedCycle (D : Digraph V) : Prop :=
@@ -96,7 +96,7 @@ def DigirthGE (D : Digraph V) (g : ℕ) : Prop :=
 
 /-- The digraph induced by `D` on a vertex subset `S`: same arcs, restricted to
 `S`. Modelled on the subtype `↥S`. -/
-def induced (D : Digraph V) (S : Set V) : Digraph S where
+def Digraph.induced (D : Digraph V) (S : Set V) : Digraph S where
   Adj a b := D.Adj a b
   irrefl a := D.irrefl a
 
@@ -111,7 +111,7 @@ subdigraph. The *dichromatic number* is the least such `k`. -/
 def DichromaticLE (D : Digraph V) (k : ℕ) : Prop :=
   ∃ col : V → Fin k, ∀ c : Fin k, InducesAcyclic D {v | col v = c}
 
-/-! ### Underlying graph and planarity
+/- ### Underlying graph and planarity
 
 Planarity is not in Mathlib; we use the combinatorial (Wagner) predicate
 `SimpleGraph.IsPlanar` from
@@ -120,21 +120,15 @@ Planarity is not in Mathlib; we use the combinatorial (Wagner) predicate
 
 /-- The *underlying simple graph* of a digraph `D`: an (undirected) edge between
 `a` and `b` whenever there is an arc in either direction and `a ≠ b`. -/
-def underlying (D : Digraph V) : SimpleGraph V where
+def Digraph.underlying (D : Digraph V) : SimpleGraph V where
   Adj a b := a ≠ b ∧ (D.Adj a b ∨ D.Adj b a)
-  symm := by
-    rintro a b ⟨hab, h⟩
-    exact ⟨hab.symm, h.symm⟩
-  loopless := by
-    rintro a ⟨h, -⟩
-    exact h rfl
 
 /-- A digraph is *planar* if its underlying simple graph is planar (in the
 combinatorial Wagner sense above). -/
 def IsPlanarDigraph (D : Digraph V) : Prop :=
   IsPlanar D.underlying
 
-/-! ### The conjecture -/
+/- ### The conjecture -/
 
 /--
 **The Neumann-Lara conjecture (1985; independently Škrekovski).**

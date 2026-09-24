@@ -1,10 +1,3 @@
--- NOTE: this file is a copy taken on 2026-09-04 from the open pull request #5196
--- ("Add graph minors (ForMathlib) and Hadwiger's conjecture", branch
--- henrykmichalewski:hadwiger). It is included here so the minor-dependent
--- conjectures (Neumann-Lara, Tait) build before #5196 is merged.
--- If the original in #5196 (or wherever `SimpleGraph.IsMinor` eventually lands
--- in the repo/Mathlib) changes, the upstream version should be used instead of
--- this copy, and this note removed.
 /-
 Copyright 2026 The Formal Conjectures Authors.
 
@@ -20,6 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
+-- NOTE: this file is a copy taken on 2026-09-04 from the open pull request #5196
+-- ("Add graph minors (ForMathlib) and Hadwiger's conjecture", branch
+-- henrykmichalewski:hadwiger). It is included here so the minor-dependent
+-- conjectures (Neumann-Lara, Tait) build before #5196 is merged.
+-- If the original in #5196 (or wherever `SimpleGraph.IsMinor` eventually lands
+-- in the repo/Mathlib) changes, the upstream version should be used instead of
+-- this copy, and this note removed.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
