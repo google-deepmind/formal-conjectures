@@ -54,6 +54,28 @@ theorem erdos_1049.variants.geq_2_integer :
   sorry
 
 /--
+For coprime integers $a>b>0$, the Lambert series at $t=a/b$ is irrational when
+$\log b/\log a<81/200$. This includes every positive power of $31/4$.
+The explicit rational-base region follows by specialising Zudilin's cyclotomic forms;
+his published theorem in [Zu04] concerns integer bases.
+The earlier Bundschuh--Väänänen rational-base region does not include $31/4$.
+The numerical bound implies the proof's contour hypothesis by
+[this comparison](https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/lean/ErdosProblems/Erdos1049/RationalBaseContour.lean#L260-L263).
+
+*Reference:* [Cook, Erdős #1049, rational-base theorem](https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/paper/1049/erdos-1049-rational-base-lambert.tex),
+[Zu04] W. Zudilin, *Heine's basic transform and a permutation group for $q$-harmonic series*,
+Acta Arith. 111 (2004), 153--164;
+[Bundschuh--Väänänen (1994), Theorem 2](https://numdam.org/item/CM_1994__91_2_175_0.pdf).
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/afb0053fac7f3d1473b6fd855ed726744c4eb8b7/research/adapters/FC1049HeightRegion.lean#L23-L35"]
+theorem erdos_1049.variants.rational_base_region_81_200 :
+    ∀ a b : ℕ, 0 < b → b < a → a.Coprime b →
+      Real.log b / Real.log a < (81 : ℝ) / 200 →
+      Irrational (∑' n : ℕ+, 1 / ((((a : ℝ) / b) ^ (n : ℕ)) - 1)) := by
+  sorry
+
+/--
 Convergent case (`|t| > 1`).
 
 Substitute `r := t⁻¹` so `‖r‖ < 1`, then apply Mathlib's series identity
