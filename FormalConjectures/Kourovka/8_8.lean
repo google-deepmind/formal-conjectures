@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 8.8
@@ -25,6 +26,8 @@ Both parts of the problem are due to D. V. Anosov.
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v46)
 -/
+
+@[expose] public section
 
 namespace Kourovka.«8.8»
 

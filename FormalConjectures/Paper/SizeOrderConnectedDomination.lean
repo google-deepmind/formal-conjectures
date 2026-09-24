@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Size, Order, and Connected Domination
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [S. Mukwembi, _Size, order, and connected domination_,
   Canad. Math. Bull. 57 (2014), no. 1, 141–144](https://doi.org/10.4153/CMB-2013-020-5)
 -/
+
+@[expose] public section
 
 namespace SizeOrderConnectedDomination
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Energy-critical NLS in three dimensions.
@@ -32,6 +33,8 @@ The main theorem is:
 * [Colliander, Keel, Staffilani, Takaoka, Tao](https://doi.org/10.4007/annals.2008.167.767),
   Annals of Mathematics 167 (2008) proves the a priori estimate, and thereby, global well-posedness.
 -/
+
+@[expose] public section
 
 open Set ContDiff EuclideanGeometry Laplacian MeasureTheory
 
