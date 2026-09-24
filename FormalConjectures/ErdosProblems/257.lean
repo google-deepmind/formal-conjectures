@@ -113,6 +113,24 @@ noncomputable def erdos_257.variants.primeWeightedTerm
   (erdos_257.variants.primeSetPart P a : ℝ) /
     ((a : ℝ) * ((b : ℝ) ^ erdos_257.variants.primeSetPart P a - 1))
 
+@[category test, AMS 11]
+example : erdos_257.variants.primeSetPart {2} 12 = 4 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeSetPart, hfac]
+
+@[category test, AMS 11]
+example : erdos_257.variants.primeWeightedTerm 2 {2} 12 = (1 : ℝ) / 45 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeWeightedTerm, erdos_257.variants.primeSetPart, hfac]
+
 /-- A support has summable weighted cost for some finite nonempty prime set. -/
 noncomputable def erdos_257.variants.finitePrimeWeighted (b : ℕ) (A : Set ℕ) : Prop :=
   ∃ P : Finset ℕ, P.Nonempty ∧ (∀ p ∈ P, Nat.Prime p) ∧
