@@ -24,9 +24,10 @@ fraction expansion is normal. It was extracted from Queffélec [Que06]. Scheerer
 Becher and Yuhjtman [BY19] answered it, in the stronger form that asks for every base at once.
 
 Normality to base $b$ is `NormalNumber.IsNormalInBase`: every block of $k$ digits occurs in the
-base $b$ expansion with asymptotic frequency $b^{-k}$. Continued fraction normality is stated as
-in [Sch17, (1.2)]: the orbit of $x$ under the Gauss map equidistributes with respect to the
-Gauss-Kuzmin measure.
+base $b$ expansion with asymptotic frequency $b^{-k}$. Continued fraction normality is
+`IsCFNormal`, stated as in [Sch17, (1.2)]: the orbit of $x$ under the Gauss map `gaussMap`
+equidistributes with respect to the Gauss-Kuzmin measure `gaussKuzmin`. The last three
+definitions are in `FormalConjecturesForMathlib`.
 
 Both [Sch17] and [BY19] produce a *computable* number, and [BY19] computes the first $n$ partial
 quotients in $O(n^4)$ operations. Computability and the operation count are not stated below.
@@ -44,43 +45,6 @@ quotients in $O(n^4)$ operations. Computability and the operation count are not 
 -/
 
 namespace Bugeaud49
-
-open Filter
-
-/--
-The Gauss map $T_G(x) = 1/x \bmod 1$, with $T_G(0) = 0$. Iterating it on $x \in [0, 1)$ shifts
-the continued fraction expansion of $x$ by one partial quotient.
--/
-noncomputable def gaussMap (x : ℝ) : ℝ := Int.fract x⁻¹
-
-/--
-The Gauss-Kuzmin measure of $[\alpha, \beta)$,
-$$\mu_G([\alpha, \beta)) = \frac{1}{\log 2} \int_\alpha^\beta \frac{dx}{1 + x}
-  = \frac{1}{\log 2} \log \frac{1 + \beta}{1 + \alpha}.$$
--/
-noncomputable def gaussKuzmin (α β : ℝ) : ℝ := Real.log ((1 + β) / (1 + α)) / Real.log 2
-
-/--
-A real number $x$ is *continued fraction normal* if for all $0 \le \alpha < \beta < 1$ the orbit
-of $x$ under the Gauss map visits $[\alpha, \beta)$ with asymptotic frequency
-$\mu_G([\alpha, \beta))$ [Sch17, (1.2)]. Equivalently, every block of partial quotients occurs
-with the frequency given by the Gauss measure.
--/
-noncomputable def IsCFNormal (x : ℝ) : Prop :=
-  ∀ α β : ℝ, 0 ≤ α → α < β → β < 1 →
-    Tendsto (fun n : ℕ ↦ (((Finset.range n).filter
-      fun i ↦ gaussMap^[i] x ∈ Set.Ico α β).card : ℝ) / n) atTop (nhds (gaussKuzmin α β))
-
-/-- The Gauss-Kuzmin measure of the whole interval $[0, 1)$ is $1$. -/
-@[category test, AMS 11 37]
-theorem gaussKuzmin_zero_one : gaussKuzmin 0 1 = 1 := by
-  rw [gaussKuzmin]
-  norm_num
-
-/-- The Gauss map fixes $0$, matching the convention $T_G(0) = 0$. -/
-@[category test, AMS 11 37]
-theorem gaussMap_zero : gaussMap 0 = 0 := by
-  simp [gaussMap]
 
 /--
 Problem 10.49. For every integer base $b \ge 2$ there is a real number $\xi \in [0, 1)$ that is
