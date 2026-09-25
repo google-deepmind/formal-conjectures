@@ -32,8 +32,7 @@ and extension of colorings from shared vertices to the entire graph.
 
 namespace SimpleGraph
 
-open scoped Classical
-
+open scoped Classical in
 /-- A configuration of `n` pairwise edge-disjoint copies of `K_n` covering the vertex type `V`. -/
 structure EFLConfig (V : Type*) (n : ℕ) where
   /-- The vertex sets of the `n` cliques. -/
@@ -62,12 +61,14 @@ theorem graph_adj {u v : V} : C.graph.Adj u v ↔
 /-- A vertex is *shared* if it lies in two different cliques. -/
 def IsShared (v : V) : Prop := ∃ i j, i ≠ j ∧ v ∈ C.A i ∧ v ∈ C.A j
 
+open scoped Classical in
 /-- The finite set of shared vertices. -/
 noncomputable def sharedSet : Finset V :=
   ((Finset.univ : Finset (Fin n)).biUnion C.A).filter C.IsShared
 
 @[simp]
 theorem mem_sharedSet {v : V} : v ∈ C.sharedSet ↔ C.IsShared v := by
+  classical
   simp only [sharedSet, Finset.mem_filter, Finset.mem_biUnion, Finset.mem_univ, true_and]
   exact ⟨And.right, fun h => ⟨C.cover v, h⟩⟩
 
@@ -93,6 +94,7 @@ so that shared vertices in a common clique get distinct colours, then `G` is
 theorem colorable_of_sharedColoring (c : V → Fin n)
     (hc : ∀ i u v, u ∈ C.A i → v ∈ C.A i → C.IsShared u → C.IsShared v → c u = c v → u = v) :
     C.graph.Colorable n := by
+  classical
   -- private vertices and free colours of each clique
   let P : Fin n → Finset V := fun i => (C.A i).filter (fun v => ¬ C.IsShared v)
   let U : Fin n → Finset V := fun i => (C.A i).filter C.IsShared
@@ -144,6 +146,7 @@ theorem colorable_of_sharedColoring (c : V → Fin n)
 
 /-- There are at most `n.choose 2` shared vertices (two cliques share at most one vertex). -/
 theorem card_sharedSet_le : C.sharedSet.card ≤ n.choose 2 := by
+  classical
   -- assign to each shared vertex a pair of cliques containing it
   let f : V → Finset (Fin n) := fun v =>
     if h : C.IsShared v then {Classical.choose h, Classical.choose (Classical.choose_spec h)}
@@ -177,6 +180,7 @@ theorem card_sharedSet_le : C.sharedSet.card ≤ n.choose 2 := by
 
 /-- The Erdős–Faber–Lovász conjecture holds for `n ≤ 3`. -/
 theorem chromaticNumber_eq_of_le_three (hn : n ≤ 3) : C.graph.chromaticNumber = n := by
+  classical
   refine le_antisymm ?_ C.le_chromaticNumber
   apply SimpleGraph.Colorable.chromaticNumber_le
   have hS : C.sharedSet.card ≤ n := by
