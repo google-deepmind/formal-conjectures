@@ -77,7 +77,7 @@ theorem conjecture1 (n : ℕ) : a (2^n) = a (2^(n + 1) + 1) := by
   sorry
 
 /--
-Second part of conjecture1.
+Second part of the conjecture, $a(2^n)=\textrm{A033638}(n)=\lfloor n^2 / 4 \rfloor + 1$.
 It holds by induction on $n$, since $a(2^{n+1}) = a(2^n) + a(2^n - 2)$ for $n \ge 1$ and
 $a(2^m - 2) = \lfloor (m+1)/2 \rfloor$ for $m \ge 1$.
 -/
