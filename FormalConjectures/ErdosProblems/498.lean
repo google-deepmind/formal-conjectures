@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 498
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Kl70] Kleitman, Daniel J., _On a lemma of Littlewood and Offord on the distributions of linear
   combinations of vectors_. Advances in Math. (1970), 155-157.
 -/
+
+@[expose] public section
 
 namespace Erdos498
 

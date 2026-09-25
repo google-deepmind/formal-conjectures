@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Numerator of $1/\det(M)$ for $M[i,j] = 1/\operatorname{lcm}(i,j)$
@@ -23,7 +25,12 @@ Numerator of $1/\det(M)$ where $M$ is the $n \times n$ matrix with
 $M[i,j] = 1/\operatorname{lcm}(i,j)$.
 
 *References:*
-- [A060841](https://oeis.org/A060841)-/
+- [A060841](https://oeis.org/A060841)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
+-/
+
+@[expose] public section
 
 namespace OeisA60841
 
@@ -39,35 +46,49 @@ def a (n : ℕ) : ℤ :=
 
 @[category test, AMS 11 15]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_2 : a 2 = 4 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_3 : a 3 = 18 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_4 : a 4 = 144 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11 15]
 theorem a_5 : a 5 = 900 := by
-  decide +native
+  decide +kernel
 
 /-- The exceptional values of $n$ where $1/\det(M)$ is conjectured to be an integer. -/
 def integerDetN : Set ℕ :=
   Set.Icc 1 34 ∪ {36, 38}
 
 /--
-"Conjecture: $1/\det(M)$ is an integer only for n: 1 to 34, 36 and 38.
-All denominators are powers of two (A000079). - _Robert G. Wilson v_, Aug 02 2015"-/
+"Conjecture: $1/\det(M)$ is an integer only for n: 1 to 34, 36 and 38." - _Robert G. Wilson v_,
+Aug 02 2015
+-/
 @[category research open, AMS 11 15]
-theorem conjecture :
-    (∀ n : ℕ, 1 ≤ n → (((lcmMatrix n).det)⁻¹.den = 1 ↔ n ∈ integerDetN)) ∧
-    (∀ n : ℕ, 1 ≤ n → ∃ k : ℕ, ((lcmMatrix n).det)⁻¹.den = 2 ^ k) := by
+theorem conjecture1 :
+    ∀ n : ℕ, 1 ≤ n → (((lcmMatrix n).det)⁻¹.den = 1 ↔ n ∈ integerDetN) := by
+  sorry
+
+/--
+"All denominators are powers of two (A000079)." - _Robert G. Wilson v_, Aug 02 2015
+
+This is false: for $n = 1807$ the denominator of $1/\det(M)$ is divisible by $3$.
+See T. Adamczewski, OEIS Open: How many conjectures can language models turn into theorems?,
+[arXiv:2608.11941](https://arxiv.org/abs/2608.11941). The Lean disproof there uses the closed
+form $1/\det(M) = \prod_{k=1}^n k^2/\varphi(k)$ from the OEIS entry:
+https://github.com/epoch-research/LeanOpenProblems-results/blob/fd09021e79869476ef83cda231312f1a2a89c8d7/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_60841_conjecture_0/Submission/Spec.lean#L272
+-/
+@[category research solved, AMS 11 15]
+theorem conjecture2 :
+    ¬ ∀ n : ℕ, 1 ≤ n → ∃ k : ℕ, ((lcmMatrix n).det)⁻¹.den = 2 ^ k := by
   sorry
 
 end OeisA60841

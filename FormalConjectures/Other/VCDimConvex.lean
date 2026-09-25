@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²
@@ -26,6 +28,8 @@ This file states that every convex set in ℝⁿ has finite VCₙ dimension, con
 ℝⁿ⁺² with infinite VCₙ dimension (even more strongly, which n-shatters an infinite set),
 and conjectures that every convex set in ℝⁿ⁺¹ has finite VCₙ dimension.
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry Pointwise
 
@@ -61,8 +65,7 @@ lemma hasAddVCNDimAtMost_two_one_of_convex_r3 :
     ¬ ∀ {C : Set ℝ³} (hC : Convex ℝ C),
       HasAddVCNDimAtMost C 2 1 := sorry
 
-/-- Every convex set in $\mathbb R^3$ has
-$\mathrm{VC}_2$ dimension at most 2. -/
+/-- Every convex set in $\mathbb R^3$ has $\mathrm{VC}_2$ dimension at most 2. -/
 @[category research open, AMS 5 52]
 lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
     HasAddVCNDimAtMost C 2 2 := sorry
@@ -73,19 +76,12 @@ $\mathrm{VC}_n$ dimension at most $d$. -/
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
 
-/-- Is it true that, if $n \ge 2$, every convex set in $\mathbb R^{n + 1}$ has
-$\mathrm{VC}_n$ dimension at most 1?
-
-The answer is no: the counterexample to the $n = 2$ case recorded in
-`hasAddVCNDimAtMost_two_one_of_convex_r3` disproves the universal statement. -/
-@[category research solved, AMS 5 52]
-lemma hasAddVCNDimAtMost_n_one_of_convex_rn_add_one :
-    answer(False) ↔ ∀ {n : ℕ}, 2 ≤ n → ∀ {C : Set (EuclideanSpace ℝ (Fin (n + 1)))},
-      Convex ℝ C → HasAddVCNDimAtMost C n 1 := by
-  constructor
-  · simp
-  · intro h
-    exact hasAddVCNDimAtMost_two_one_of_convex_r3 fun {C} hC ↦
-      h (n := 2) (C := C) (by norm_num) hC
+/-- Is it true that, for all $n$, every convex set in $\mathbb R^{n + 1}$ has
+$\mathrm{VC}_n$ dimension at most 3? -/
+@[category research open, AMS 5 52]
+lemma hasAddVCNDimAtMost_n_two_of_convex_rn_add_one :
+    answer(sorry) ↔ ∀ ⦃n : ℕ⦄, n ≠ 0 → ∀ ⦃C : Set (EuclideanSpace ℝ (Fin (n + 1)))⦄,
+      Convex ℝ C → HasAddVCNDimAtMost C n 3 := by
+  sorry
 
 end VCDimConvex

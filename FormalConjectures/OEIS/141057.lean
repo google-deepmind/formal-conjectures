@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of Abelian cubes of length $3n$ over an alphabet of size 3
@@ -26,6 +27,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^3 \sum_{j=0}^k \binom{k}{j}^3.$$
 
 *References:*
 - [A141057](https://oeis.org/A141057)-/
+
+@[expose] public section
 
 namespace OeisA141057
 

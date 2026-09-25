@@ -28,18 +28,28 @@ formal proof links, and answer kinds) from formalized mathematical conjectures
 in the repository.
 
 ### Usage
+
+The script reads the compiled `.olean` files, so build the problems first.
+
+If you do not need `answerKinds`, use the default build and exclude that field:
 ```bash
-# Compile with postpone setting for answerKind extraction
-lake build FormalConjecturesAnswerPostpone
-lake exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
+lake build
+lake exe extract_names --exclude=answerKinds [directory-or-file] [--no-docstrings]
 ```
 
-**IMPORTANT NOTE**: Make sure to build with `lake build FormalConjecturesAnswerPostpone`
-before running this script. This compiles the library under `weak.google.answer = "postpone"`
-mode, allowing `extract_names` to correctly locate and extract `answerKinds` (Prop vs
-non-Prop answer metadata). Otherwise, `answer(sorry)` simplifies to `True` during
-default elaboration, and `answerKinds` will always be extracted as `[]` for `Prop`
-valued answers.
+If you need `answerKinds`, build and run with `lakefile.extract.toml`:
+```bash
+lake -f lakefile.extract.toml build
+lake -f lakefile.extract.toml exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
+```
+
+`lakefile.extract.toml` is `lakefile.toml` with `weak.google.answer = "postpone"`.
+In the default `always_true` mode, a `Prop`-valued `answer(sorry)` elaborates to a bare
+`True`. The `answer` annotation is then lost, so `answerKinds` is `[]` for such answers, and
+`statement` shows `True` instead of `sorry`.
+
+Both lakefiles write to the same `.lake/build`. Switching between them rebuilds all
+problem files.
 -/
 
 @[expose] public meta section
@@ -212,8 +222,8 @@ unsafe def main (args : List String) : IO Unit := do
     | _ =>
       let usageMsg :=
         "Usage: extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]\n\n" ++
-        "Note: Make sure to run `lake build FormalConjecturesAnswerPostpone` before running " ++
-        "this script so that `answerKind` metadata is extracted correctly."
+        "Note: Build first. For correct `answerKinds`, build and run with " ++
+        "`lake -f lakefile.extract.toml`. Otherwise pass `--exclude=answerKinds`."
       throw <| IO.userError usageMsg
 
   -- Pre-compute git timestamps for each file and build module name array (only when not excluded)

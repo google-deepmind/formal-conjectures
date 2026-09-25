@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Kaplansky's Conjectures
@@ -25,6 +26,8 @@ Throughout, "torsion-free" means that the identity is the only element of finite
 (`Monoid.IsTorsionFree`). This is weaker than Mathlib's `IsMulTorsionFree`, which asks for
 uniqueness of roots and fails for the Promislow group below.
 -/
+
+@[expose] public section
 
 variable (K : Type*) [Field K]
 variable (G : Type*) [Group G] (hG : Monoid.IsTorsionFree G)

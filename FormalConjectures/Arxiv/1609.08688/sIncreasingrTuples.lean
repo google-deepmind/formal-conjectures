@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The length of an $s$-increasing sequence of $r$-tuples
@@ -29,6 +30,8 @@ including Conjecture 1.8.
   **The length of an $s$-increasing sequence of $r$-tuples**
   by *W. T. Gowers, J. Long*, Combinatorics, Probability and Computing (2021), 686-721
 -/
+
+@[expose] public section
 
 namespace Arxiv.«1609.08688»
 
