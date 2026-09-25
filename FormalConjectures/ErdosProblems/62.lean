@@ -97,14 +97,14 @@ theorem erdos_62.variants.large_girth :
 
 /-! ## Relations between the variants -/
 
-@[category API]
+@[category API, AMS 5]
 theorem chromaticCardinal_le_of_colorable {V : Type} (G : SimpleGraph V) {n : ℕ}
     (h : G.Colorable n) : G.chromaticCardinal ≤ n := by
   obtain ⟨c⟩ := h
   apply csInf_le (OrderBot.bddBelow _)
   exact ⟨Fin n, by simp, ⟨c⟩⟩
 
-@[category API]
+@[category API, AMS 5]
 theorem colorable_of_chromaticCardinal_lt {V : Type} (G : SimpleGraph V) {n : ℕ}
     (h : G.chromaticCardinal < (n + 1 : ℕ)) : G.Colorable n := by
   have hne : {κ : Cardinal | ∃ (C : Type) (_ : #C = κ), Nonempty (G.Coloring C)}.Nonempty :=
@@ -118,7 +118,7 @@ theorem colorable_of_chromaticCardinal_lt {V : Type} (G : SimpleGraph V) {n : �
   obtain ⟨e⟩ := this
   exact ⟨(Embedding.completeGraph e).toHom.comp c⟩
 
-@[category API]
+@[category API, AMS 5]
 theorem chromaticCardinal_eq_natCast {V : Type} (G : SimpleGraph V) (n : ℕ)
     (h₁ : G.Colorable (n + 1)) (h₂ : ¬ G.Colorable n) :
     G.chromaticCardinal = (n + 1 : ℕ) :=
@@ -127,14 +127,14 @@ theorem chromaticCardinal_eq_natCast {V : Type} (G : SimpleGraph V) (n : ℕ)
 
 /-- A graph which is not `3`-colourable contains a finite induced subgraph of chromatic
 number `4`. -/
-@[category API]
+@[category API, AMS 5]
 theorem exists_isContained_chromaticCardinal_eq_four {V : Type} (G : SimpleGraph V)
     (hG : ¬ G.Colorable 3) :
     ∃ (W : Type) (H : SimpleGraph W), H.chromaticCardinal = 4 ∧ H ⊑ G := by
   -- By compactness, some finite induced subgraph is not `3`-colourable.
   have hex : ∃ n, ∃ S : Set V, S.Finite ∧ S.ncard = n ∧ ¬ (G.induce S).Colorable 3 := by
     by_contra hcon
-    push_neg at hcon
+    push Not at hcon
     apply hG
     obtain ⟨f⟩ := nonempty_hom_of_forall_finite_subgraph_hom
       (F := (⊤ : SimpleGraph (Fin 3))) (G := G) fun G' hG' =>
@@ -153,9 +153,9 @@ theorem exists_isContained_chromaticCardinal_eq_four {V : Type} (G : SimpleGraph
     exact hSnot ⟨Coloring.mk (fun w => absurd w.2 (Set.notMem_empty _))
       fun {a} _ => absurd a.2 (Set.notMem_empty _)⟩
   obtain ⟨v, hv⟩ := hSne
-  obtain ⟨c⟩ := hmin (S \ {v}) hSfin.diff (by
+  obtain ⟨c⟩ := hmin (S \ {v}) hSfin.sdiff (by
     rw [← hScard]
-    exact Set.ncard_diff_singleton_lt_of_mem hv hSfin)
+    exact Set.ncard_sdiff_singleton_lt_of_mem hv hSfin)
   have h4 : (G.induce S).Colorable 4 := by
     refine ⟨Coloring.mk
       (fun w => if h : (w : V) = v then 3 else (c ⟨w, w.2, h⟩).castSucc) ?_⟩
@@ -170,11 +170,12 @@ theorem exists_isContained_chromaticCardinal_eq_four {V : Type} (G : SimpleGraph
       intro heq
       exact c.valid (show (G.induce (S \ {v})).Adj ⟨a, a.2, ha⟩ ⟨b, b.2, hb⟩ from hab)
         (Fin.castSucc_injective _ heq)
-  refine ⟨S, G.induce S, ?_, ⟨⟨(Embedding.induce S).toHom, (Embedding.induce S).injective⟩⟩⟩
+  refine ⟨S, G.induce S, ?_, ⟨⟨(Embedding.induce (G := G) S).toHom,
+    (Embedding.induce (G := G) S).injective⟩⟩⟩
   rw [chromaticCardinal_eq_natCast (G.induce S) 3 h4 hSnot]
   norm_num
 
-@[category API]
+@[category API, AMS 5]
 theorem not_colorable_three_of_chromaticCardinal_eq_aleph0 {V : Type} {G : SimpleGraph V}
     (h : G.chromaticCardinal = ℵ₀) : ¬ G.Colorable 3 := fun hc => by
   have := chromaticCardinal_le_of_colorable G hc
@@ -182,7 +183,7 @@ theorem not_colorable_three_of_chromaticCardinal_eq_aleph0 {V : Type} {G : Simpl
   exact absurd this (not_le.2 (Cardinal.natCast_lt_aleph0 (n := 3)))
 
 /-- A positive answer to `erdos_62.variants.aleph0` gives a positive answer to `erdos_62`. -/
-@[category API]
+@[category API, AMS 5]
 theorem erdos_62_of_aleph0
     (h : ∀ (V₁ V₂ : Type) (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂),
       G₁.chromaticCardinal = ℵ_ 1 → G₂.chromaticCardinal = ℵ_ 1 →
@@ -205,7 +206,7 @@ def pairFamily {V₁ V₂ : Type} (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph 
 
 /-- A positive answer to `erdos_62.variants.finite_collection` gives a positive answer to
 `erdos_62`. -/
-@[category API]
+@[category API, AMS 5]
 theorem erdos_62_of_finite_collection
     (h : ∀ (n : ℕ) (V : Fin n → Type) (G : ∀ i, SimpleGraph (V i)),
       (∀ i, (G i).chromaticCardinal = ℵ_ 1) →
