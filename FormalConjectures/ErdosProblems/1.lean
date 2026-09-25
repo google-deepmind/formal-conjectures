@@ -250,6 +250,27 @@ theorem erdos_1.variants.least_N_3 :
       decide
 
 /--
+The minimal value of $N$ such that there exists a sum-distinct set with four
+elements is $7$.
+
+https://oeis.org/A276661
+-/
+@[category textbook, AMS 5 11]
+theorem erdos_1.variants.least_N_4 :
+    IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 4 } 7 := by
+  refine ⟨⟨{3, 5, 6, 7}, ⟨by decide, by decide⟩, by decide⟩, ?_⟩
+  rintro N ⟨A, ⟨hA, hinj⟩, hcard⟩
+  by_contra! hN
+  have hA6 : A ∈ (Finset.Icc 1 6).powersetCard 4 :=
+    Finset.mem_powersetCard.mpr ⟨fun x hx => by
+      have := Finset.mem_Icc.mp (hA hx)
+      exact Finset.mem_Icc.mpr ⟨this.1, by omega⟩, hcard⟩
+  have key : ∀ B ∈ (Finset.Icc 1 6).powersetCard 4,
+      ¬ (fun (⟨S, _⟩ : B.powerset) => S.sum id).Injective := by
+    decide
+  exact key A hA6 hinj
+
+/--
 The minimal value of $N$ such that there exists a sum-distinct set with five
 elements is $13$.
 
@@ -258,7 +279,17 @@ https://oeis.org/A276661
 @[category research solved, AMS 5 11]
 theorem erdos_1.variants.least_N_5 :
     IsLeast { N | ∃ A, IsSumDistinctSet A N ∧ A.card = 5 } 13 := by
-  sorry
+  refine ⟨⟨{6, 9, 11, 12, 13}, ⟨by decide, by decide⟩, by decide⟩, ?_⟩
+  rintro N ⟨A, ⟨hA, hinj⟩, hcard⟩
+  by_contra! hN
+  have hA12 : A ∈ (Finset.Icc 1 12).powersetCard 5 :=
+    Finset.mem_powersetCard.mpr ⟨fun x hx => by
+      have := Finset.mem_Icc.mp (hA hx)
+      exact Finset.mem_Icc.mpr ⟨this.1, by omega⟩, hcard⟩
+  have key : ∀ B ∈ (Finset.Icc 1 12).powersetCard 5,
+      ¬ (fun (⟨S, _⟩ : B.powerset) => S.sum id).Injective := by
+    decide +kernel
+  exact key A hA12 hinj
 
 /--
 The minimal value of $N$ such that there exists a sum-distinct set with nine
