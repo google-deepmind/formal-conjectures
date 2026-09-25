@@ -525,9 +525,11 @@ theorem eqSystem10_no_solution_d7 :
 
 /-- For $N = 10$ and $D = 8$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/monochromatic-quantum-graph-n10-d8-lean/blob/a9309005c7a27a2615f8e7eebef7a1db017809ab/lean/QuantumGraphTenEightFC.lean#L5466-L5473"]
 theorem eqSystem10_no_solution_d8 :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 8 ℂ, EqSystemN 10 8 W := by
   sorry
 
