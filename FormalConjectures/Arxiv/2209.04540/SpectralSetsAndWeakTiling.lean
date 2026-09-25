@@ -93,9 +93,11 @@ theorem isSpectral_right_of_product_two_dimensional :
 [KLM2023, Problem 7.2] For a three-dimensional convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 -/
-@[category research open, AMS 42 46]
+@[category research solved, AMS 42 46,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/klm-7-2-spectral-product-3d/blob/2874890904e117df17d8abf1dd27254eebfb2829/lean/SpectralProduct3DFC.lean#L20962-L20966"]
 theorem isSpectral_right_of_product_three_dimensional :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
   sorry
 
