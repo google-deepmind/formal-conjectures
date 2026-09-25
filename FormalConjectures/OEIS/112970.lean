@@ -67,7 +67,7 @@ theorem a_3 : a 3 = 1 := by unfold a; unfold a; rfl
 theorem a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
 
 /--
-Conjectures: a(2^n)=a(2^(n+1)+1)=A033638(n).
+Conjecture: a(2^n)=a(2^(n+1)+1)=A033638(n).
 This formalizes the equality a(2^n) = a(2^(n+1)+1).
 -/
 @[category research solved, AMS 11,
@@ -76,14 +76,23 @@ This formalizes the equality a(2^n) = a(2^(n+1)+1).
 theorem conjecture1 (n : ℕ) : a (2^n) = a (2^(n + 1) + 1) := by
   sorry
 
-/-- Conjectures: a(2^n-1)=a(3*2^n-1)=1. This formalizes the equality part a(2^n-1) = a(3*2^n-1). -/
+/--
+Second part of conjecture1.
+It holds by induction on $n$, since $a(2^{n+1}) = a(2^n) + a(2^n - 2)$ for $n \ge 1$ and
+$a(2^m - 2) = \lfloor (m+1)/2 \rfloor$ for $m \ge 1$.
+-/
+@[category research solved, AMS 11]
+theorem conjecture1_value (n : ℕ) : a (2^n) = n ^ 2 / 4 + 1 := by
+  sorry
+
+/-- Conjecture: a(2^n-1)=a(3*2^n-1)=1. This formalizes the equality part a(2^n-1) = a(3*2^n-1). -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a112970-formal-conjectures/blob/71ae72f443bd9bee7d958f0a19d9f9ec5ab82af5/lean/OeisA112970FC.lean#L56-L64"]
 theorem conjecture2 (n : ℕ) : a (2^n - 1) = a (3 * 2^n - 1) := by
   sorry
 
-/-- Conjectures: a(2^n-1)=a(3*2^n-1)=1. This formalizes the value part a(2^n-1)=1. -/
+/-- Conjecture: a(2^n-1)=a(3*2^n-1)=1. This formalizes the value part a(2^n-1)=1. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a112970-formal-conjectures/blob/71ae72f443bd9bee7d958f0a19d9f9ec5ab82af5/lean/OeisA112970FC.lean#L48-L54"]

@@ -70,7 +70,7 @@ In particular, if $p$ is an odd prime then $p$ divides $a(p)$. For $p=2$, $2$ di
 -/
 @[category textbook, AMS 11]
 theorem prime_divides_some_term (p : ℕ) (hp : p.Prime) :
-    ∃ n : ℕ, (p : ℤ) ∣ a n := by
+    ∃ n : ℕ, a n ≠ 0 ∧ (p : ℤ) ∣ a n := by
   sorry
 
 /--
