@@ -69,8 +69,8 @@ This can be proven by observing that for any language in P,
 we can construct a verifier that ignores the witness and simply runs the poly-time decider for the
 language.
 -/
-@[category textbook, AMS 68]
-theorem P_subset_NP :
+@[category textbook, AMS 68, formal_proof using lean4 at
+  "https://github.com/AItoBit/p-subset-np/blob/beaeee15c37af6efac518426e117861c00ff3acc/PSubsetNP.lean#L358"]
     P ⊆ NP := by
   sorry
 
