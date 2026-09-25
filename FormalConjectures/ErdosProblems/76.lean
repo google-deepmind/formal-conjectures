@@ -80,6 +80,7 @@ def halfColouring (n : ℕ) : Sym2 (Fin n) → Bool :=
   Sym2.lift ⟨fun a b => decide ((a.val < n / 2) ↔ (b.val < n / 2)), by
     intro a b; simp only [decide_eq_decide]; exact Iff.comm⟩
 
+@[category API, AMS 5]
 private lemma mono_half_subset {n : ℕ} {t : Finset (Fin n)}
     (ht : IsMonoTriangle (halfColouring n) t) :
     t ⊆ Finset.univ.filter (fun i : Fin n => i.val < n / 2) ∨
@@ -91,20 +92,23 @@ private lemma mono_half_subset {n : ℕ} {t : Finset (Fin n)}
   by_cases ha : a.val < n / 2 <;> by_cases hb : b.val < n / 2 <;>
     by_cases hd : d.val < n / 2 <;> simp_all
 
+@[category API, AMS 5]
 private lemma mono_edges_card {n : ℕ} {c : Sym2 (Fin n) → Bool} {t : Finset (Fin n)}
-    (ht : IsMonoTriangle c t) : (t.offDiag.image Sym2.mk).card = 3 := by
+    (ht : IsMonoTriangle c t) : (t.offDiag.image Sym2.mk.uncurry).card = 3 := by
   obtain ⟨a, b, d, hab, had, hbd, rfl, -, -⟩ := ht
   rw [Sym2.card_image_offDiag, Finset.card_insert_of_notMem (by simp [hab, had]),
     Finset.card_pair hbd]
   rfl
 
+@[category API, AMS 5]
 private lemma edges_disjoint {n : ℕ} {s t : Finset (Fin n)} (h : (s ∩ t).card ≤ 1) :
-    Disjoint (s.offDiag.image Sym2.mk) (t.offDiag.image Sym2.mk) := by
+    Disjoint (s.offDiag.image Sym2.mk.uncurry) (t.offDiag.image Sym2.mk.uncurry) := by
   rw [Finset.disjoint_left]
   rintro e he he'
   obtain ⟨⟨x, y⟩, hxy, rfl⟩ := Finset.mem_image.mp he
   obtain ⟨⟨x', y'⟩, hxy', he2⟩ := Finset.mem_image.mp he'
   simp only [Finset.mem_offDiag] at hxy hxy'
+  simp only [Function.uncurry_apply_pair] at he2
   have hx : x ∈ t ∧ y ∈ t := by
     rcases Sym2.eq_iff.mp he2 with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
     · exact ⟨hxy'.1, hxy'.2.1⟩
@@ -117,6 +121,7 @@ private lemma edges_disjoint {n : ℕ} {s t : Finset (Fin n)} (h : (s ∩ t).car
   rw [Finset.card_pair hxy.2.2] at this
   omega
 
+@[category API, AMS 5]
 private lemma card_filter_lt (n k : ℕ) (h : k ≤ n) :
     (Finset.univ.filter (fun i : Fin n => i.val < k)).card = k := by
   rw [← Finset.card_map Fin.valEmbedding, ← Finset.card_range k]
@@ -124,6 +129,7 @@ private lemma card_filter_lt (n k : ℕ) (h : k ≤ n) :
   · rintro ⟨a, h1, rfl⟩; exact h1
   · intro hx; exact ⟨⟨x, by omega⟩, hx, rfl⟩
 
+@[category API, AMS 5]
 private lemma card_filter_not_lt (n k : ℕ) :
     (Finset.univ.filter (fun i : Fin n => ¬ i.val < k)).card = n - k := by
   rw [← Finset.card_map Fin.valEmbedding, ← Nat.card_Ico k n]
@@ -131,6 +137,7 @@ private lemma card_filter_not_lt (n k : ℕ) :
   · rintro ⟨a, h1, rfl⟩; omega
   · intro hx; exact ⟨⟨x, by omega⟩, by simp; omega, rfl⟩
 
+@[category API, AMS 5]
 private lemma four_choose_le (n : ℕ) :
     4 * ((n / 2).choose 2 + (n - n / 2).choose 2) ≤ n ^ 2 := by
   rw [Nat.choose_two_right, Nat.choose_two_right]
@@ -160,12 +167,12 @@ theorem erdos_76.variants.sharp (n : ℕ) :
   refine ⟨halfColouring n, fun T ⟨hmono, hdisj⟩ => ?_⟩
   set A := Finset.univ.filter (fun i : Fin n => i.val < n / 2)
   set B := Finset.univ.filter (fun i : Fin n => ¬ i.val < n / 2)
-  have hcard : (T.biUnion fun t => t.offDiag.image Sym2.mk).card = 3 * T.card := by
+  have hcard : (T.biUnion fun t => t.offDiag.image Sym2.mk.uncurry).card = 3 * T.card := by
     rw [Finset.card_biUnion (fun s hs t ht hst => edges_disjoint (hdisj hs ht hst)),
       Finset.sum_congr rfl (fun t ht => mono_edges_card (hmono t ht))]
     simp [mul_comm]
-  have hsub : (T.biUnion fun t => t.offDiag.image Sym2.mk) ⊆
-      A.offDiag.image Sym2.mk ∪ B.offDiag.image Sym2.mk := by
+  have hsub : (T.biUnion fun t => t.offDiag.image Sym2.mk.uncurry) ⊆
+      A.offDiag.image Sym2.mk.uncurry ∪ B.offDiag.image Sym2.mk.uncurry := by
     intro e he
     obtain ⟨t, ht, he⟩ := Finset.mem_biUnion.mp he
     rcases mono_half_subset (hmono t ht) with h | h
