@@ -173,6 +173,7 @@ jobs:
 
       - name: Generate FormalConjecturesForMathlib.lean
         if: steps.mode.outputs.website_only != 'true'
+        timeout-minutes: 30
         run: |
           ./scripts/mk_all_formathlib.sh
 
@@ -333,7 +334,7 @@ jobs:
         if: steps.mode.outputs.site == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '18'
+          node-version: '24'
 
       # CI builds only with `lakefile.toml` (`always_true` mode), where `answerKinds`
       # is wrong for `Prop` answers. The site does not use it, so it is excluded.
