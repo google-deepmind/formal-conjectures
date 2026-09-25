@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1133
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er67] Erdős, P., Problems and results on the convergence and divergence properties of the
   Lagrange interpolation polynomials and some extremal problems. Mathematica (Cluj) (1967), 65-73.
 -/
+
+@[expose] public section
 
 open Filter Set
 

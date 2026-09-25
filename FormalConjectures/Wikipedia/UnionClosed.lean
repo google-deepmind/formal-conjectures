@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Union-closed sets conjecture
@@ -27,6 +28,8 @@ In this file, we:
 * prove two solved variants of the conjecture
 * prove the conjecture is sharp
 -/
+
+@[expose] public section
 
 open Finset
 

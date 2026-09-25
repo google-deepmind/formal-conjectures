@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Taxicab numbers
@@ -41,6 +42,8 @@ taxicab number for $k=5$, $m=2$, and $n=2$.
  - [OEIS taxicab 4th powers](https://oeis.org/A018786)
  - [OEIS taxicab conjecture](https://oeis.org/A088703)
 -/
+
+@[expose] public section
 
 namespace Taxicab
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Optimal monotone families for the discrete isoperimetric inequality
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   and *Huy Tuan Pham* (2022)
 
 -/
+
+@[expose] public section
 
 namespace Mathoverflow10799
 

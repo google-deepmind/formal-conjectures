@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of decompositions of $2n+1$ into $2p+q$, where $p$ and $q$ are both odd primes
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A103151](https://oeis.org/A103151)
 -/
+
+@[expose] public section
 
 namespace OeisA103151
 
