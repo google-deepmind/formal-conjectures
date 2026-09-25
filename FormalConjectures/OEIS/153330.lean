@@ -174,11 +174,12 @@ theorem conjecture3 (n : ℕ) (v : ℤ) (hn : 0 < n) (ha : a n = some v)
 
 /--
 Conjecture 4 (Ya-Ping Lu, 2024):
-The ratio of the number of terms with value $m$ to that of $-m$ approaches 1 as $n \to \infty$,
-for any $m \notin \{1, 3, 6, 16\}$.
+For an $m$ that appears in the sequence, the ratio of the number of terms with value $m$ to that
+of $-m$ approaches 1 as $n \to \infty$, for any $|m| \notin \{1, 3, 6, 16\}$.
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (m : ℤ) (hm : m ≠ 1 ∧ m ≠ 3 ∧ m ≠ 6 ∧ m ≠ 16) :
+theorem conjecture4 (m : ℤ) (hm : m.natAbs ∉ ({1, 3, 6, 16} : Finset ℕ))
+    (hocc : ∃ n, 0 < n ∧ a n = some m) :
     Filter.atTop.Tendsto
       (fun n : ℕ ↦
         (((Finset.Icc 1 n).filter (fun i ↦ a i = some m)).card : ℝ) /
