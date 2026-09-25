@@ -46,7 +46,7 @@ The series equals $0$ for $m=1$ and $3/4$ for $m=2$.
 For $m=0$, Lean's remainder leaves each coefficient unchanged, giving the open
 series above.
 
-*Source:* [The Binary Totient Series, Bounded residues and rationality](https://github.com/wcook04/plectis-erdos/blob/a14777b3219873bc8343205cca0bb3bb6530e8fa/paper/249/erdos-249-binary-totient-series.tex#L292-L306).
+*Source:* [Bases and Integral Relations for the $k$-Kernel of Euler's Totient, Bounded residues and rationality](https://github.com/wcook04/plectis-erdos/blob/a14777b3219873bc8343205cca0bb3bb6530e8fa/paper/249/erdos-249-binary-totient-series.tex#L292-L306).
 Erick Wong's [2015 answer](https://math.stackexchange.com/a/1211557) proves the
 antecedent with the base equal to the modulus; here the base stays $2$.
 Yazdani's [2001 Corollary 4](https://www.numdam.org/article/JTNB_2001__13_2_651_0.pdf)
