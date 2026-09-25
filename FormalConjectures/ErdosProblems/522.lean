@@ -98,9 +98,11 @@ almost surely?
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089"]
 theorem erdos_522 :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
@@ -116,9 +118,11 @@ $$
 $$
 almost surely?
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9101-L9104"]
 theorem erdos_522.variants.zero_one :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       {n : ℕ} (hn : 1 ≤ n) (f : KacCoefficients ({0, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * f.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
