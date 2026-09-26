@@ -266,8 +266,10 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
 /-- **Open problem.** Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It is the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
 [BFZ24, (4.20)]. -/
-@[category research open, AMS 15]
-theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(sorry) := by
+@[category research solved, AMS 15,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/mrank-3-3-5-lean/blob/fbec93aa021bd994380cd27eb60e444e7cc85e93/lean/TensorRank335FC.lean#L3365-L3367"]
+theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(6) := by
   sorry
 
 /-- The maximal rank is at most twice the generic rank [BT15, Theorem 1]. -/
