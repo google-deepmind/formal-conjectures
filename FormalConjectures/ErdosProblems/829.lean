@@ -120,6 +120,23 @@ theorem stewart : ∃ C > (0 : ℝ),
     ∃ᶠ (n : ℕ) in atTop, C * (Real.log n) ^ ((11 : ℝ) / 13) ≤ (sumRep cubes n : ℝ) := by
   sorry
 
+/--
+For every $n$, the number of ordered representations of $n$ as a sum of two cubes satisfies
+$(1_A \ast 1_A)(n) \le 6\,\tau_3(3 n_1)$, where $A$ is the set of perfect cubes,
+$n_1 = \prod_{p^e \| n,\ p \equiv 1 \pmod 3} p^e$, and
+$\tau_3(m) = \sum_{d \mid m} \tau(d)$ is the number of ordered triples with product $m$.
+This gives $(1_A \ast 1_A)(n) \ll (\log n)^{2K}$ for $n$ with at most $K$ distinct prime
+factors $p \equiv 1 \pmod 3$. It does not resolve the problem.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Aspect5/formal-conjectures/blob/1d5198fb8a3cceb65b5d980068b9175aeb4c3955/Erdos829Proof/Upstream.lean#L37"]
+theorem split_part_bound (n : ℕ) :
+    sumRep cubes n ≤
+      6 * ∑ d ∈ (3 * ∏ p ∈ n.primeFactors with p % 3 = 1, p ^ n.factorization p).divisors,
+        d.divisors.card := by
+  sorry
+
 end variants
 
 end Erdos829
