@@ -50,6 +50,8 @@ windmill family has an exact limiting ratio, are established in Gupta.
   minimality of $F_4$ (formalised below) and the exact windmill limit.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»
