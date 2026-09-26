@@ -200,6 +200,91 @@ def EqSystemN {α : Type} [Semiring α] (N D : Nat) (W : WeightsN N D α) : Prop
     pmSumN N D W ι =
       (if allEqual ι then (1 : α) else (0 : α))
 
+section ColorRestriction
+
+variable {α : Type} {N D D' : ℕ}
+
+/-- Restrict endpoint colors along a map of palettes. -/
+def restrictColors (f : Fin D' → Fin D) (W : WeightsN N D α) : WeightsN N D' α :=
+  fun e => W ⟨e.u, e.v, f e.i, f e.j⟩
+
+@[simp, category API, AMS 5 81]
+theorem restrictColors_mkEdge (f : Fin D' → Fin D) (W : WeightsN N D α)
+    (u v : V N) (i j : Fin D') :
+    restrictColors f W (mkEdge u v i j) = W (mkEdge u v (f i) (f j)) := rfl
+
+variable [Semiring α]
+
+/-- Restricting endpoint colors commutes with the matching recursion. -/
+@[category API, AMS 5 81]
+theorem pmSumListAux_restrictColors (f : Fin D' → Fin D) (W : WeightsN N D α)
+    (ι : V N → Fin D') : ∀ (n : ℕ) (L : List (V N)),
+      pmSumListAux (restrictColors f W) ι n L = pmSumListAux W (f ∘ ι) n L
+  | 0, _ => rfl
+  | 1, _ => rfl
+  | _ + 2, [] => rfl
+  | _ + 2, [_] => rfl
+  | n + 2, a :: b :: L => by
+    simp only [pmSumListAux]
+    congr 1
+    refine List.map_congr_left fun u _ => ?_
+    rw [pmSumListAux_restrictColors f W ι n ((b :: L).erase u)]
+    rfl
+
+/-- Restricting endpoint colors pushes a vertex coloring forward. -/
+@[category API, AMS 5 81]
+theorem pmSumList_restrictColors (f : Fin D' → Fin D) (W : WeightsN N D α)
+    (ι : V N → Fin D') (L : List (V N)) :
+    pmSumList (restrictColors f W) ι L = pmSumList W (f ∘ ι) L :=
+  pmSumListAux_restrictColors f W ι _ _
+
+@[category API, AMS 5 81]
+theorem pmSumN_restrictColors (f : Fin D' → Fin D) (W : WeightsN N D α)
+    (ι : V N → Fin D') :
+    pmSumN N D' (restrictColors f W) ι = pmSumN N D W (f ∘ ι) :=
+  pmSumList_restrictColors f W ι _
+
+/-- An injective color map preserves monochromaticity. -/
+@[category API, AMS 5 81]
+theorem allEqual_comp (f : Fin D' → Fin D) (hf : Function.Injective f)
+    (ι : V N → Fin D') : allEqual (f ∘ ι) ↔ allEqual ι :=
+  List.IsChain.iff fun _ _ => ⟨fun h => hf h, fun h => congrArg f h⟩
+
+/-- A solution restricts along any injection of palettes. -/
+@[category API, AMS 5 81]
+theorem eqSystemN_restrictColors {f : Fin D' → Fin D} (hf : Function.Injective f)
+    {W : WeightsN N D α} (h : EqSystemN N D W) :
+    EqSystemN N D' (restrictColors f W) := by
+  intro ι
+  rw [pmSumN_restrictColors, h]
+  exact if_congr (allEqual_comp f hf ι) rfl rfl
+
+/-- Solvability is monotone downwards in the number of colors. -/
+@[category API, AMS 5 81]
+theorem exists_eqSystemN_of_le (hD : D' ≤ D)
+    (h : ∃ W : WeightsN N D α, EqSystemN N D W) :
+    ∃ W : WeightsN N D' α, EqSystemN N D' W := by
+  obtain ⟨W, hW⟩ := h
+  exact ⟨restrictColors (Fin.castLE hD) W,
+    eqSystemN_restrictColors (Fin.strictMono_castLE hD).injective hW⟩
+
+/-- Nonexistence is monotone upwards in the number of colors. -/
+@[category API, AMS 5 81]
+theorem not_exists_eqSystemN_of_le (hD : D' ≤ D)
+    (h : ¬ ∃ W : WeightsN N D' α, EqSystemN N D' W) :
+    ¬ ∃ W : WeightsN N D α, EqSystemN N D W :=
+  fun hW => h (exists_eqSystemN_of_le hD hW)
+
+end ColorRestriction
+
+/-- Nonexistence for three colors implies nonexistence for every larger palette. -/
+@[category API, AMS 5 81]
+theorem no_solution_ge3_of_no_solution_d3
+    (h : ∀ N : ℕ, N ≥ 6 → Even N → ¬ ∃ W : WeightsN N 3 ℂ, EqSystemN N 3 W) :
+    ∀ N D : ℕ, N ≥ 6 → Even N → D ≥ 3 →
+      ¬ ∃ W : WeightsN N D ℂ, EqSystemN N D W :=
+  fun N _ hN hEven hD => not_exists_eqSystemN_of_le hD (h N hN hEven)
+
 /-
 # Witnesses & theorems (sanity checks)
 
