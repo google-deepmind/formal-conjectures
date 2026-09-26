@@ -20,7 +20,12 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 522
 
-*Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
+*References:*
+- [erdosproblems.com/522](https://www.erdosproblems.com/522)
+- [Ka26] Kawada, S., *Almost-Sure Radial Laws for Nested Random Polynomials and Erdős
+  Problem #522*, [doi:10.5281/zenodo.22970145](https://doi.org/10.5281/zenodo.22970145) (2026).
+  Lean 4 formalization: [chreia/erdos-522](https://github.com/chreia/erdos-522/tree/b3c1d7c089fcada59cc48cf664cd3d02157407ca),
+  v1.0.0.
 -/
 
 @[expose] public section
@@ -97,10 +102,17 @@ almost surely?
 
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
+
+This is true. A Lean proof is given in [Ka26]. One linked theorem, from v1.0.0 of the
+formalization, proves $R_n / n \to 1/2$ almost surely for independent uniform signs on an
+arbitrary probability space. The other linked file copies the definitions of this file and
+derives the statement below from that theorem.
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at "https://github.com/chreia/erdos-522/blob/b3c1d7c089fcada59cc48cf664cd3d02157407ca/lean/Erdos522/Probability/IndependentCoefficientRadialLaws.lean#L39-L47",
+  formal_proof using lean4 at "https://github.com/chreia/erdos-522/blob/57af1556d1b40f37d09d1270495acc0f282ff0fc/lean/Erdos522/Bridge/FormalConjectures.lean#L238-L253"]
 theorem erdos_522 :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
