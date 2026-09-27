@@ -68,9 +68,9 @@ theorem F_one : F 1 = 1 := by
       exact ⟨⟨1, rfl⟩, by simp, by simp⟩
   rw [F, h, Set.ncard_singleton]
 
-/-- The fifth term of the sequence is $u_4 = 1806$. -/
+/-- The first values of the sequence are $1, 2, 6, 42, 1806$. -/
 @[category test, AMS 11]
-theorem u_four : u 4 = 1806 := by
+theorem u_first_values : u 0 = 1 ∧ u 1 = 2 ∧ u 2 = 6 ∧ u 3 = 42 ∧ u 4 = 1806 := by
   decide
 
 /--
