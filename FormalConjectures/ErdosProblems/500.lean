@@ -24,18 +24,19 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/500](https://www.erdosproblems.com/500)
 - [Ra10] Razborov, Alexander A., *On 3-hypergraphs with forbidden 4-vertex configurations*. SIAM
   J. Discrete Math. (2010), 946-963.
-- [BaTa11] Baber, Rahil and Talbot, John, *Hypergraphs do jump*. Combin. Probab. Comput. (2011),
-  161-171.
+- [Ba12] Baber, Rahil, *Turán densities of hypercubes*. arXiv:1201.3587 (2012).
+- [FRV13] Falgas-Ravry, Victor and Vaughan, Emil R., *Applications of the semi-definite method to
+  the Turán density problem for 3-graphs*. Combin. Probab. Comput. (2013), 21-54.
 -/
 
 @[expose] public section
 
-open Asymptotics Filter
+open Asymptotics Filter Topology
 
 namespace Erdos500
 
 /-- `ex₃ n` is $\mathrm{ex}_3(n,K_4^3)$, the largest number of edges of a $3$-uniform hypergraph
-on $n$ vertices that contains no $K_4^3$, that is, no set of $4$ vertices spanning all $4$
+on $n$ vertices that contains no $K_4^3$, that is, no set of $4$ vertices that spans all $4$
 possible $3$-edges. -/
 noncomputable def ex₃ (n : ℕ) : ℕ :=
   sSup {k | ∃ H : Finset (Finset (Fin n)),
@@ -74,6 +75,48 @@ theorem ex₃_three : ex₃ 3 = 1 := by
       rw [Fintype.card_fin] at this
       omega
 
+/-- On four vertices a $K_4^3$ is the set of all four $3$-edges, so $\mathrm{ex}_3(4,K_4^3) = 3$.
+Unlike the case $n = 3$, this case depends on the condition `¬ H.ContainsSubgraph 4 4`. -/
+@[category test, AMS 5]
+theorem ex₃_four : ex₃ 4 = 3 := by
+  have key : ∀ H : Finset (Finset (Fin 4)), H.IsThreeUniform → ¬ H.ContainsSubgraph 4 4 →
+      H.card ≤ 3 := by
+    intro H hH hno
+    by_contra hlt
+    have hlt : 4 ≤ H.card := by omega
+    have hsub : H ⊆ (Finset.univ : Finset (Fin 4)).powersetCard 3 := by
+      intro e he
+      rw [Finset.mem_powersetCard]
+      exact ⟨Finset.subset_univ _, hH e he⟩
+    have hcard : ((Finset.univ : Finset (Fin 4)).powersetCard 3).card = 4 := by
+      rw [Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin]
+      rfl
+    have h4 : H.card = 4 := by
+      have := Finset.card_le_card hsub
+      omega
+    apply hno
+    refine ⟨Finset.univ, by simp, ?_⟩
+    rw [Finset.filter_true_of_mem (fun e _ => Finset.subset_univ e), h4]
+  let H0 : Finset (Finset (Fin 4)) := {{0, 1, 2}, {0, 1, 3}, {0, 2, 3}}
+  have hH0 : H0.IsThreeUniform := by
+    intro e he
+    simp only [H0, Finset.mem_insert, Finset.mem_singleton] at he
+    rcases he with rfl | rfl | rfl <;> rfl
+  have hH0c : H0.card = 3 :=
+    Finset.card_eq_three.mpr
+      ⟨{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, by decide, by decide, by decide, rfl⟩
+  have hH0n : ¬ H0.ContainsSubgraph 4 4 := by
+    rintro ⟨S, -, hS⟩
+    have := Finset.card_filter_le H0 (fun e => e ⊆ S)
+    omega
+  apply le_antisymm
+  · refine csSup_le ⟨3, H0, hH0, hH0n, hH0c⟩ ?_
+    rintro k ⟨H, hH, hno, rfl⟩
+    exact key H hH hno
+  · refine le_csSup ⟨3, ?_⟩ ⟨H0, hH0, hH0n, hH0c⟩
+    rintro k ⟨H, hH, hno, rfl⟩
+    exact key H hH hno
+
 /--
 What is $\mathrm{ex}_3(n,K_4^3)$? That is, the largest number of $3$-edges which can placed on $n$
 vertices so that there exists no $K_4^3$, a set of 4 vertices which is covered by all 4 possible
@@ -82,7 +125,7 @@ $3$-edges.
 See also [712](https://www.erdosproblems.com/712) for the general case.
 -/
 @[category research open, AMS 5]
-theorem erdos_500 (n : ℕ) : ex₃ n = answer(sorry) := by
+theorem erdos_500 : ∀ n : ℕ, ex₃ n = (answer(sorry) : ℕ → ℕ) n := by
   sorry
 
 /--
@@ -114,12 +157,26 @@ $$\mathrm{ex}_3(n,K_4^3)\leq (0.561666+o(1))\binom{n}{3},$$
 due to Razborov [Ra10]. (erdosproblems.com gives $0.5611666$ and omits the $o(1)$; without it
 the bound fails at $n=4$, where $\mathrm{ex}_3(4,K_4^3)=3>0.561666\binom{4}{3}$.)
 
-[Ra10, (2)] gives this bound in complementary form, as a result that numerical computations
-suggest, not as a theorem. [BaTa11] reproduce the computation.
+[Ra10, (2)] obtains this bound in complementary form from a floating-point computation.
+Falgas-Ravry and Vaughan [FRV13] obtain $\pi(K_4^3) < 0.561666$ with their Flagmatic software,
+which turns the computation into a rigorous rational bound. Here
+$\pi(K_4^3)=\lim_{n\to\infty}\mathrm{ex}_3(n,K_4^3)/\binom{n}{3}$ is the Turán density.
+Baber [Ba12] improves the bound to $\pi(K_4^3) \leq 0.5615$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop, (ex₃ n : ℝ) ≤ (0.561666 + ε) * (n.choose 3 : ℝ) := by
+  sorry
+
+/--
+The asymptotic form of the question: what is the Turán density
+$$\pi(K_4^3)=\lim_{n\to\infty}\frac{\mathrm{ex}_3(n,K_4^3)}{\binom{n}{3}}?$$
+By `erdos_500.variants.lower_bound` and [Ba12], $\frac{5}{9}\leq\pi(K_4^3)\leq 0.5615$.
+Turán's conjecture says that $\pi(K_4^3)=\frac{5}{9}$.
+-/
+@[category research open, AMS 5]
+theorem erdos_500.variants.asymptotic :
+    Tendsto (fun n : ℕ ↦ (ex₃ n : ℝ) / (n.choose 3 : ℝ)) atTop (𝓝 answer(sorry)) := by
   sorry
 
 end Erdos500
