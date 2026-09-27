@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A generalized Stern sequence
@@ -25,6 +26,8 @@ $a(2n+1) = a(n)$ and $a(2n) = a(n) + a(n-2)$ with $a(0)=1$, $a(1)=1$ and $a(n)=0
 *References:*
 - [A112970](https://oeis.org/A112970)
 -/
+
+@[expose] public section
 
 namespace OeisA112970
 

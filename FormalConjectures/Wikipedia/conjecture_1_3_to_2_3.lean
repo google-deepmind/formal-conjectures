@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The $\frac 1 3$–$\frac 2 3$ conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/1/3%E2%80%932/3_conjecture)
 -/
+
+@[expose] public section
 
 namespace Conjecture_1_3_to_2_3
 

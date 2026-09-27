@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.HilbertProblems.«5»
+public import FormalConjecturesUtil
+public import FormalConjectures.HilbertProblems.«5»
 
 /-!
 # Hilbert's Fifth Problem
@@ -31,4 +32,6 @@ structure. This was resolved affirmatively by Gleason, Montgomery, and Zippin in
 - [Montgomery–Zippin 1952](https://doi.org/10.2307/1969549)
 - [Tao's blog](https://terrytao.wordpress.com/2011/08/13/the-hilbert-smith-conjecture/)
 -/
+
+@[expose] public section
 

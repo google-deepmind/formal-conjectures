@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 44: Extending Sidon Sets
 
 *Reference:* [erdosproblems.com/44](https://www.erdosproblems.com/44)
 -/
+
+@[expose] public section
 
 open Function Set Finset
 
@@ -116,15 +119,16 @@ For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
 @[category textbook, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N.sqrt / 2 ≤ A.card := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ Real.sqrt N / 2 ≤ A.card := by
   sorry
 
 /--
-The greedy construction gives a Sidon set of size approximately `√N`.
+The greedy construction gives a Sidon set `A ⊆ {1, ..., N}` of size at least $N^{1/3}$,
+stated here as $N \le |A|^3$. See Section 1 of [arXiv:2103.15850](https://arxiv.org/abs/2103.15850).
 -/
 @[category textbook, AMS 5 11]
 theorem greedy_sidon_construction (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ A.card ≥ N.sqrt := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N ≤ A.card ^ 3 := by
   sorry
 
 end Erdos44

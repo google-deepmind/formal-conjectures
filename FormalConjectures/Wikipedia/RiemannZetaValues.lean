@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Particular values of the Riemann zeta function
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Particular_values_of_the_Riemann_zeta_function)
 -/
+
+@[expose] public section
 
 namespace RiemannZetaValues
 

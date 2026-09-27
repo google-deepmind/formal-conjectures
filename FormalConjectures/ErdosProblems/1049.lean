@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1049
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er48] Erdős, P., On arithmetical properties of Lambert series. J. Indian Math. Soc. (N.S.)
   (1948), 63-66.
 -/
+
+@[expose] public section
 
 namespace Erdos1049
 
@@ -44,7 +47,8 @@ theorem erdos_1049 :
 /--
 Erdős [Er48] proved that this is true if $t\geq 2$ is an integer.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/b9f1eb80aa11bbf66fb1df88804502b8c9c27d8e/research/adapters/FormalConjecturesAdapter.lean#L96-L107"]
 theorem erdos_1049.variants.geq_2_integer :
      ∀ t : ℤ, t ≥ 2 → Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
   sorry

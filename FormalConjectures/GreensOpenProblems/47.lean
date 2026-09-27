@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 47
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Wa14] Walsh, Miguel N. "The algebraicity of ill-distributed sets."
   Geometric and Functional Analysis 24.3 (2014): 959-967.
 -/
+
+@[expose] public section
 
 open Filter
 

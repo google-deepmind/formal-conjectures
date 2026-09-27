@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence $a(n) = (a(n-1) + a(n-2)) \pmod n$
@@ -23,6 +24,8 @@ $a(0) = a(1) = 1$; $a(n) = (a(n-1) + a(n-2)) \pmod n$.
 
 *References:*
 - [A096535](https://oeis.org/A096535)-/
+
+@[expose] public section
 
 namespace OeisA96535
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Practical numbers
@@ -25,6 +26,8 @@ integer $m \le n$ can be represented as a sum of distinct divisors of $n$.
 *References:*
 - [A005153](https://oeis.org/A005153)
 -/
+
+@[expose] public section
 
 namespace OeisA5153
 

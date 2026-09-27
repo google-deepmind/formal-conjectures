@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1035
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er93] Erdős, Paul, *Some of my favorite solved and unsolved problems in graph theory*.
   Quaestiones Math. (1993), 333-350.
 -/
+
+@[expose] public section
 
 namespace Erdos1035
 

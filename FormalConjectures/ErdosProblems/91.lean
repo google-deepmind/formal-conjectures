@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 91
@@ -26,13 +27,15 @@ import FormalConjecturesUtil
 - [erdosproblems.com/91](https://www.erdosproblems.com/91)
 -/
 
+@[expose] public section
+
 open Finset EuclideanGeometry Filter
 
 namespace Erdos91
 
 /-- A set $A$ is 'optimal' if it has $n$ points and achieves the minimum distance count. -/
 noncomputable def IsOptimal (A : Finset ℝ²) (n : ℕ) : Prop :=
-  A.card = n ∧ distinctDistances A = minimalDistinctDistances n
+  A.card = n ∧ distinctDistances A = minimalDistinctDistances ℝ² n
 
 /-- Two finite sets of points in $\mathbb{R}^2$ are similar if one can be mapped to the other by a
 DilationEquiv. -/
@@ -96,7 +99,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
     rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> first
       | contradiction | exact hd01 | exact hd02 | exact hd12
       | (rw [dist_comm]; first | exact hd01 | exact hd02 | exact hd12)
-  have hmin : minimalDistinctDistances 3 = 1 := by
+  have hmin : minimalDistinctDistances ℝ² 3 = 1 := by
     unfold minimalDistinctDistances
     apply le_antisymm
     · exact Nat.sInf_le ⟨equiTriangle, hcard, by exact_mod_cast hdist⟩

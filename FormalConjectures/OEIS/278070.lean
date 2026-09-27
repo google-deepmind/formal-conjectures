@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Congruences $a(n+k) \equiv a(n) \pmod k$ for hypergeometric values ${}_2F_1(n, -n; ; -1)$
@@ -29,6 +30,8 @@ the subtraction via `Nat.pred`.
 - [A278070](https://oeis.org/A278070)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA278070
 
