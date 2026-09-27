@@ -92,7 +92,7 @@ $$F(k) \geq \exp\left(\exp\left(\left(\frac{(\log 2)(\log 3)}{3}+o(1)\right)
 which is the statement formalised here.
 -/
 @[category research solved, AMS 11]
-theorem erdos_148.lower_bound :
+theorem erdos_148.variants.lower_bound :
     ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ k : ℕ in atTop,
       exp (exp ((log 2 * log 3 / 3 + o k) * ((k : ℝ) / log k))) ≤ F k := by
   sorry
@@ -111,7 +111,7 @@ $(\frac{2}{5}+\varepsilon)2^{k-1} = (\frac{1}{5}+\frac{\varepsilon}{2})2^k$. The
 formalised here uses the constant of the paper.
 -/
 @[category research solved, AMS 11]
-theorem erdos_148.upper_bound :
+theorem erdos_148.variants.upper_bound :
     ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ k : ℕ in atTop,
       (F k : ℝ) ≤ c₀ ^ ((1 / 5 + o k) * 2 ^ k) := by
   sorry
