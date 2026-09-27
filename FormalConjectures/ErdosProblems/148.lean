@@ -35,8 +35,8 @@ open Filter Real
 namespace Erdos148
 
 /-- `F k` is the number of solutions to $1 = \frac{1}{n_1} + \cdots + \frac{1}{n_k}$ with
-$1 \leq n_1 < \cdots < n_k$, that is, the number of `k`-element sets of positive integers whose
-reciprocals sum to `1`. -/
+$1 \leq n_1 < \cdots < n_k$, that is, the number of $k$-element sets of positive integers whose
+reciprocals sum to $1$. -/
 noncomputable def F (k : ℕ) : ℕ :=
   {S : Finset ℕ | S.card = k ∧ 0 ∉ S ∧ ∑ n ∈ S, (1 : ℚ) / n = 1}.ncard
 
@@ -47,8 +47,9 @@ def u : ℕ → ℕ
   | n + 1 => u n * (u n + 1)
 
 /-- The constant $c_0 = \lim_{n \to \infty} u_n^{2^{-n}} = 1.5979102\ldots$ of
-[ElPl21, Corollary 3]. The sequence $u_n^{2^{-n}}$ is increasing and bounded by $2$, so the limit
-is its supremum. This constant is the square of the Vardi constant $1.26408\ldots$. -/
+[ElPl21, Corollary 3]. The sequence $u_n^{2^{-n}}$ is increasing and bounded by $2$
+[ElPl21, Remark 3], so the limit is its supremum. This constant is the square of the Vardi
+constant $1.26408\ldots$. -/
 noncomputable def c₀ : ℝ := ⨆ n : ℕ, (u n : ℝ) ^ ((1 : ℝ) / 2 ^ n)
 
 /-- The only representation of $1$ as a single unit fraction is $1 = \frac{1}{1}$. -/
@@ -103,12 +104,11 @@ $$2^{c^{\frac{k}{\log k}}}\leq F(k) \leq c_0^{(\frac{1}{5}+o(1))2^k},$$
 where $c>0$ is some absolute constant and $c_0=1.26408\cdots$ is the 'Vardi constant'. The lower
 bound is due to Konyagin [Ko14] and the upper bound to Elsholtz and Planitzer [ElPl21].
 
-[ElPl21, Corollary 3(2)] states the upper bound as $F(k) < c_0^{(\frac{2}{5}+\varepsilon)2^{k-1}}$
-for every $\varepsilon > 0$ and all $k \geq k(\varepsilon)$, where
-$c_0 = \lim_{n \to \infty} u_n^{2^{-n}} = 1.5979102\ldots$ for the sequence $u_0 = 1$,
-$u_{n+1} = u_n(u_n+1)$. This $c_0$ is the square of the Vardi constant $1.26408\ldots$, and
-$(\frac{2}{5}+\varepsilon)2^{k-1} = (\frac{1}{5}+\frac{\varepsilon}{2})2^k$. The statement
-formalised here uses the constant of the paper.
+[ElPl21, Corollary 3(2)] shows that for every $\varepsilon > 0$ and all $k \geq k(\varepsilon)$,
+the number $f_k(1,1) \geq F(k)$ of solutions with $n_1 \leq \cdots \leq n_k$ is less than
+$c_0^{(\frac{2}{5}+\varepsilon)2^{k-1}} = c_0^{(\frac{1}{5}+\frac{\varepsilon}{2})2^k}$. In the
+paper $c_0 = 1.5979102\ldots$ is the constant `c₀`, the square of the Vardi constant, and the
+statement formalised here uses it.
 -/
 @[category research solved, AMS 11]
 theorem erdos_148.variants.upper_bound :
