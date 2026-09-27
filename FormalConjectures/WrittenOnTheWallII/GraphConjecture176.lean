@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 176
@@ -28,6 +30,8 @@ leaves in a spanning tree and largest induced bipartite subgraph order ten.
 The two maximum-degree vertices of its square are at distance five in the
 original graph, so the claimed inequality would give `14 ≥ 17`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture176
 
