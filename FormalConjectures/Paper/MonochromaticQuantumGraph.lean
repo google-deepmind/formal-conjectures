@@ -666,9 +666,10 @@ theorem eqSystem16_no_solution_d3 :
 
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{C}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/7f78a17ecedd245bd1c17b0dce3f6a9ea2afd66f/formal/upstream-adapter/FullProof.lean#L38"]
 theorem eqSystem_no_solution_ge6_ge3 :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
         ¬ ∃ W : WeightsN N D ℂ, EqSystemN N D W := by
   sorry
