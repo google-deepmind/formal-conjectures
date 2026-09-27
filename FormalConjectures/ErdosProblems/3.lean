@@ -73,7 +73,7 @@ Proved by Kelley and Meka [KeMe23].
 -/
 @[category research solved, AMS 11]
 theorem erdos_3.variants.kelley_meka : ∃ β > (0 : ℝ), ∃ c > (0 : ℝ),
-    (fun N ↦ (r 3 N : ℝ)) =O[atTop] fun N : ℕ ↦ (N : ℝ) * Real.exp (-c * Real.log N ^ β) := by
+    (fun N ↦ (r 3 N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.exp (-c * Real.log N ^ β) := by
   sorry
 
 /--
@@ -83,7 +83,7 @@ Proved by Green and Tao [GrTa17].
 -/
 @[category research solved, AMS 11]
 theorem erdos_3.variants.green_tao : ∃ c > (0 : ℝ),
-    (fun N ↦ (r 4 N : ℝ)) =O[atTop] fun N : ℕ ↦ (N : ℝ) * Real.log N ^ (-c) := by
+    (fun N ↦ (r 4 N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.log N ^ (-c) := by
   sorry
 
 /--
@@ -93,7 +93,7 @@ Proved by Gowers [Go01].
 -/
 @[category research solved, AMS 11]
 theorem erdos_3.variants.gowers (k : ℕ) (hk : 3 ≤ k) : ∃ c > (0 : ℝ),
-    (fun N ↦ (r k N : ℝ)) =O[atTop] fun N : ℕ ↦ (N : ℝ) * Real.log (Real.log N) ^ (-c) := by
+    (fun N ↦ (r k N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.log (Real.log N) ^ (-c) := by
   sorry
 
 /--
@@ -103,7 +103,7 @@ Proved by Leng, Sah and Sawhney [LSS24].
 -/
 @[category research solved, AMS 11]
 theorem erdos_3.variants.leng_sah_sawhney (k : ℕ) (hk : 5 ≤ k) : ∃ c > (0 : ℝ),
-    (fun N ↦ (r k N : ℝ)) =O[atTop]
+    (fun N ↦ (r k N : ℝ)) ≪
       fun N : ℕ ↦ (N : ℝ) * Real.exp (-Real.log (Real.log N) ^ c) := by
   sorry
 
