@@ -60,6 +60,18 @@ def explicitGraph (adj : List Bool × ℕ × ℕ → Bool) (n : ℕ) : SimpleGra
   SimpleGraph.fromRel fun u v ↦ adj (List.replicate n true, u, v)
 
 /--
+The graph on `Fin n` described by an adjacency oracle `adj` which receives `n` in binary. Two
+distinct vertices `u` and `v` are adjacent if `adj (n, u, v)` or `adj (n, v, u)` is `true`.
+
+If `adj` is computable in polynomial time, then each adjacency query is answered in time
+polynomial in $\log n$. This is the notion of a *strongly explicit* family of graphs, which is
+what "explicit Ramsey graph" usually means in the literature (e.g. [Co15], [Li23b]). Compare
+`explicitGraph`, where only time polynomial in $n$ is allowed.
+-/
+def stronglyExplicitGraph (adj : ℕ × ℕ × ℕ → Bool) (n : ℕ) : SimpleGraph (Fin n) :=
+  SimpleGraph.fromRel fun u v ↦ adj (n, u, v)
+
+/--
 The graph `G` has no clique and no independent set with `m` vertices.
 -/
 def NoHomogeneousSet {V : Type*} (G : SimpleGraph V) (m : ℕ) : Prop :=
@@ -73,7 +85,9 @@ Equivalently, give an explicit construction of graphs on $n$ vertices which cont
 and no independent set of size $\geq c \log n$, for some constant $c > 0$.
 
 We formalise "explicit" as: the adjacency relation of the graph on $n$ vertices is decided by a
-single algorithm that runs in time polynomial in $n$ (see `explicitGraph`).
+single algorithm that runs in time polynomial in $n$ (see `explicitGraph`). This is the weakest
+reasonable notion ("weakly explicit"); even this is open. The strongly explicit version, with time
+polynomial in $\log n$, is `erdos_78.variants.strongly_explicit`.
 
 This problem is #4 in Ramsey Theory in the graphs problem collection.
 -/
@@ -123,6 +137,28 @@ of size $(\log n)^C$, for some constant $C > 0$.
 theorem erdos_78.variants.li :
     ∃ C > (0 : ℝ), ∃ adj : List Bool × ℕ × ℕ → Bool, IsPolyTime adj ∧
       ∀ᶠ n in atTop, NoHomogeneousSet (explicitGraph adj n) ⌈(log n) ^ C⌉₊ := by
+  sorry
+
+/--
+The strongly explicit version of `erdos_78`: an explicit family of graphs on $n$ vertices with no
+clique and no independent set of size $\geq c \log n$, where each adjacency query is answered in
+time polynomial in $\log n$ (see `stronglyExplicitGraph`).
+-/
+@[category research open, AMS 5 68]
+theorem erdos_78.variants.strongly_explicit :
+    ∃ c > (0 : ℝ), ∃ adj : ℕ × ℕ × ℕ → Bool, IsPolyTime adj ∧
+      ∀ᶠ n in atTop, NoHomogeneousSet (stronglyExplicitGraph adj n) ⌈c * log n⌉₊ := by
+  sorry
+
+/--
+The construction of Li [Li23b] is strongly explicit: there are graphs on $n$ vertices with no
+clique and no independent set of size $(\log n)^C$, for some constant $C > 0$, whose adjacency
+queries are answered in time polynomial in $\log n$.
+-/
+@[category research solved, AMS 5 68]
+theorem erdos_78.variants.li_strongly_explicit :
+    ∃ C > (0 : ℝ), ∃ adj : ℕ × ℕ × ℕ → Bool, IsPolyTime adj ∧
+      ∀ᶠ n in atTop, NoHomogeneousSet (stronglyExplicitGraph adj n) ⌈(log n) ^ C⌉₊ := by
   sorry
 
 end Erdos78
