@@ -693,9 +693,10 @@ theorem eqSystem4_no_solution_ge4_real :
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/5e7d0fe0b6058f4658ccc5dae5f148ea8e7bc248/formal/upstream-adapter/RealCorollaries.lean#L69"]
 theorem eqSystem6_no_solution_d3_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
   sorry
 
@@ -712,18 +713,20 @@ theorem eqSystem6_no_solution_d5_real :
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/5e7d0fe0b6058f4658ccc5dae5f148ea8e7bc248/formal/upstream-adapter/RealCorollaries.lean#L74"]
 theorem eqSystem6_no_solution_ge3_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ D : Nat, D ≥ 3 →
         ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W := by
   sorry
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/5e7d0fe0b6058f4658ccc5dae5f148ea8e7bc248/formal/upstream-adapter/RealCorollaries.lean#L79"]
 theorem eqSystem8_no_solution_d3_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 8 3 ℝ, EqSystemN 8 3 W := by
   sorry
 
@@ -731,17 +734,19 @@ theorem eqSystem8_no_solution_d3_real :
 
 /-- For $N = 10$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/5e7d0fe0b6058f4658ccc5dae5f148ea8e7bc248/formal/upstream-adapter/RealCorollaries.lean#L84"]
 theorem eqSystem10_no_solution_d3_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ¬ ∃ W : WeightsN 10 3 ℝ, EqSystemN 10 3 W := by
   sorry
 
 /-- For all even $N \geq 6$ and $D \geq 3$, does there exist no solution to the monochromatic
 quantum graph equation system over $\mathbb{R}$? -/
-@[category research open, AMS 5 14 81]
+@[category research solved, AMS 5 14 81, formal_proof using lean4 at
+  "https://github.com/rrajasek95/krenn-conjecture/blob/5e7d0fe0b6058f4658ccc5dae5f148ea8e7bc248/formal/upstream-adapter/RealCorollaries.lean#L63"]
 theorem eqSystem_no_solution_ge6_ge3_real :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ N D : Nat, N ≥ 6 → Even N → D ≥ 3 →
         ¬ ∃ W : WeightsN N D ℝ, EqSystemN N D W := by
   sorry
