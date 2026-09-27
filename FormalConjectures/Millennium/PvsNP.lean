@@ -71,6 +71,7 @@ language.
 -/
 @[category textbook, AMS 68, formal_proof using lean4 at
   "https://github.com/AItoBit/p-subset-np/blob/beaeee15c37af6efac518426e117861c00ff3acc/PSubsetNP.lean#L358"]
+theorem P_subset_NP :
     P ⊆ NP := by
   sorry
 
