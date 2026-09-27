@@ -104,7 +104,7 @@ $$\mathrm{ex}_3(n,K_4^3)\geq\left(\frac{5}{9}+o(1)\right)\binom{n}{3}.$$
 This is probably the truth.
 -/
 @[category research open, AMS 5]
-theorem erdos_500.variants.turan_conjecture : answer(sorry) ↔
+theorem erdos_500.variants.turan_conjecture :
     (fun n ↦ (ex₃ n : ℝ)) ~[atTop] fun n ↦ 5 / 9 * (n.choose 3 : ℝ) := by
   sorry
 
