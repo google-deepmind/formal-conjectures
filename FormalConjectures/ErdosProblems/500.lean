@@ -24,9 +24,8 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/500](https://www.erdosproblems.com/500)
 - [Ra10] Razborov, Alexander A., *On 3-hypergraphs with forbidden 4-vertex configurations*. SIAM
   J. Discrete Math. (2010), 946-963.
-- [Ba12] Baber, Rahil, *Turán densities of hypercubes*. arXiv:1201.3587 (2012).
-- [FRV13] Falgas-Ravry, Victor and Vaughan, Emil R., *Applications of the semi-definite method to
-  the Turán density problem for 3-graphs*. Combin. Probab. Comput. (2013), 21-54.
+- [BaTa11] Baber, Rahil and Talbot, John, *Hypergraphs do jump*. Combin. Probab. Comput. (2011),
+  161-171.
 -/
 
 @[expose] public section
@@ -157,13 +156,10 @@ $$\mathrm{ex}_3(n,K_4^3)\leq (0.561666+o(1))\binom{n}{3},$$
 due to Razborov [Ra10]. (erdosproblems.com gives $0.5611666$ and omits the $o(1)$; without it
 the bound fails at $n=4$, where $\mathrm{ex}_3(4,K_4^3)=3>0.561666\binom{4}{3}$.)
 
-[Ra10, (2)] obtains this bound in complementary form from a floating-point computation.
-Falgas-Ravry and Vaughan [FRV13] obtain $\pi(K_4^3) < 0.561666$ with their Flagmatic software,
-which turns the computation into a rigorous rational bound. Here
-$\pi(K_4^3)=\lim_{n\to\infty}\mathrm{ex}_3(n,K_4^3)/\binom{n}{3}$ is the Turán density.
-Baber [Ba12] improves the bound to $\pi(K_4^3) \leq 0.5615$.
+[Ra10, (2)] gives this bound in complementary form, as a result that numerical computations
+suggest, not as a theorem. [BaTa11] reproduce the computation.
 -/
-@[category research solved, AMS 5]
+@[category research open, AMS 5]
 theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop, (ex₃ n : ℝ) ≤ (0.561666 + ε) * (n.choose 3 : ℝ) := by
   sorry
@@ -171,7 +167,7 @@ theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
 /--
 The asymptotic form of the question: what is the Turán density
 $$\pi(K_4^3)=\lim_{n\to\infty}\frac{\mathrm{ex}_3(n,K_4^3)}{\binom{n}{3}}?$$
-By `erdos_500.variants.lower_bound` and [Ba12], $\frac{5}{9}\leq\pi(K_4^3)\leq 0.5615$.
+By `erdos_500.variants.lower_bound`, $\pi(K_4^3)\geq\frac{5}{9}$.
 Turán's conjecture says that $\pi(K_4^3)=\frac{5}{9}$.
 -/
 @[category research open, AMS 5]
