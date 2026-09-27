@@ -91,7 +91,7 @@ each part or two vertices in $X_i$ and one vertex in $X_{i+1}$ (where $X_4=X_1$)
 $$\mathrm{ex}_3(n,K_4^3)\geq\left(\frac{5}{9}+o(1)\right)\binom{n}{3}.$$
 -/
 @[category research solved, AMS 5]
-theorem erdos_500.lower_bound (ε : ℝ) (hε : 0 < ε) :
+theorem erdos_500.variants.lower_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop, (5 / 9 - ε) * (n.choose 3 : ℝ) ≤ ex₃ n := by
   sorry
 
@@ -112,13 +112,14 @@ The current best upper bound is
 $$\mathrm{ex}_3(n,K_4^3)\leq 0.5611666\binom{n}{3},$$
 due to Razborov [Ra10].
 
-[Ra10] proves the Turán density bound $\pi(K_4^3) \leq 0.561666$, see also
-[BaTa11, Section 2.4]. A density bound carries an $o(1)$ term: for example
-$\mathrm{ex}_3(4,K_4^3) = 3 > 0.561666 \binom{4}{3}$. The statement formalised here uses the
-value of the paper and the $o(1)$ term.
+[Ra10, (2)] reports that numerical computations suggest $\pi_{\min}(I_4^3) \geq 0.438334$,
+that is $\pi(K_4^3) \leq 0.561666$, and does not state this bound as a theorem.
+[BaTa11, Section 2.4] reproduce the computation. A density bound carries an $o(1)$ term: for
+example $\mathrm{ex}_3(4,K_4^3) = 3 > 0.561666 \binom{4}{3}$. The statement formalised here
+uses the value of [Ra10] and the $o(1)$ term.
 -/
-@[category research solved, AMS 5]
-theorem erdos_500.upper_bound (ε : ℝ) (hε : 0 < ε) :
+@[category research open, AMS 5]
+theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop, (ex₃ n : ℝ) ≤ (0.561666 + ε) * (n.choose 3 : ℝ) := by
   sorry
 
