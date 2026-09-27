@@ -105,7 +105,7 @@ $4/2^4 = 5/2^5 + 6/2^6$ and $\sum_{m \ge 1} m/2^m = 2$, so $7/4$ is represented 
 $\mathbb{N}_{>0} \setminus \{4\}$ and by $\mathbb{N}_{>0} \setminus \{5, 6\}$. It is generally believed that
 "two" here is a misprint for $2^{\aleph_0}$ (see `erdos_261.parts.iii`, which remains open). -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/g8r-b8/erdos261-lean/blob/976bddf21eafc93ea86a7a1bfd92b847070a6f31/Erdos261.lean"]
+  "https://github.com/g8r-b8/erdos261-lean/blob/976bddf21eafc93ea86a7a1bfd92b847070a6f31/Erdos261.lean#L87"]
 theorem erdos_261.variants.two_representations : answer(True) ↔ ∃ x : ℚ,
     2 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
