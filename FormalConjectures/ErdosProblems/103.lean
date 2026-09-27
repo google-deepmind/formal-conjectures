@@ -47,9 +47,9 @@ other. -/
 def Congruent (A B : Finset ℝ²) : Prop :=
   ∃ f : ℝ² ≃ᵢ ℝ², f '' A = B
 
-/-- `h n` is the number of pairwise incongruent minimisers for `n` points. It is the supremum
-of the sizes of finite families of pairwise incongruent minimisers. It is `⊤` if there are
-infinitely many congruence classes. -/
+/-- `h n` is the number of congruence classes of minimisers for `n` points, as an element of
+`ℕ∞`: the supremum of the cardinalities of finite families of pairwise incongruent minimisers,
+which is `⊤` when there are infinitely many classes. -/
 noncomputable def h (n : ℕ) : ℕ∞ :=
   ⨆ (S : Finset (Finset ℝ²)) (_ : (∀ A ∈ S, IsMinimiser n A) ∧
       ∀ A ∈ S, ∀ B ∈ S, A ≠ B → ¬ Congruent A B), (S.card : ℕ∞)
