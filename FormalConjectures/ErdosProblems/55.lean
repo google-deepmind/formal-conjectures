@@ -73,7 +73,8 @@ $A$ with $|A \cap \{1, \ldots, N\}| \ll r (\log N)^2$ for all large $N$. This is
 there is some $c > 0$ such that no $A$ with $|A \cap \{1, \ldots, N\}| \leq c r (\log N)^2$ for
 all large $N$ is Ramsey $r$-complete.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos55.lean#L46"]
 theorem erdos_55 :
     (∃ C : ℝ, ∀ r : ℕ, 2 ≤ r → ∃ A : Set ℕ, IsRamseyComplete r A ∧
       ∀ᶠ N : ℕ in atTop, ((A ∩ Set.Icc 1 N).ncard : ℝ) ≤ C * r * Real.log N ^ 2) ∧
