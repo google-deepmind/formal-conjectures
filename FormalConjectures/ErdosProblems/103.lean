@@ -30,17 +30,15 @@ open Filter EuclideanGeometry
 
 namespace Erdos103
 
-/-- A finite set of points is *separated* if any two distinct points are at distance at
-least $1$. -/
-def IsSeparated (A : Finset ℝ²) : Prop :=
-  ∀ᵉ (x ∈ A) (y ∈ A), x ≠ y → 1 ≤ dist x y
+/-- The sets of $n$ points in $\mathbb{R}^2$ whose pairwise distances are all at least $1$. -/
+def separatedSets (n : ℕ) : Set (Finset ℝ²) :=
+  {B | B.card = n ∧ Metric.IsSeparated' 1 (B : Set ℝ²)}
 
 /-- `A` is a *minimiser* for `n` if it is a separated set of `n` points whose diameter is at
-most the diameter of every separated set of `n` points. -/
+most the diameter of every separated set of `n` points (compare `Erdos99.erdos_99`). -/
 def IsMinimiser (n : ℕ) (A : Finset ℝ²) : Prop :=
-  A.card = n ∧ IsSeparated A ∧
-    ∀ B : Finset ℝ², B.card = n → IsSeparated B →
-      Metric.diam (A : Set ℝ²) ≤ Metric.diam (B : Set ℝ²)
+  A ∈ separatedSets n ∧
+    IsMinOn (fun B : Finset ℝ² => Metric.diam (B : Set ℝ²)) (separatedSets n) A
 
 /-- Two finite sets of points are *congruent* if an isometry of the plane maps one onto the
 other. -/
