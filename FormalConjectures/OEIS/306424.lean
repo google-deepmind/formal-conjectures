@@ -52,21 +52,31 @@ $b = 3..k-1$ never contains more than two distinct digits.
 -/
 noncomputable def a (n : ℕ) : ℕ := n.nth Condition
 
+@[category test, AMS 11]
 lemma Condition_lt_four {k : ℕ} (hk : k ≤ 3) : Condition k := by
   intro b ⟨hb1, hb2⟩
   omega
 
+@[category test, AMS 11]
 lemma Condition_zero : Condition 0 := Condition_lt_four (by omega)
+
+@[category test, AMS 11]
 lemma Condition_one : Condition 1 := Condition_lt_four (by omega)
+
+@[category test, AMS 11]
 lemma Condition_two : Condition 2 := Condition_lt_four (by omega)
+
+@[category test, AMS 11]
 lemma Condition_three : Condition 3 := Condition_lt_four (by omega)
 
+@[category test, AMS 11]
 lemma Condition_four : Condition 4 := by
   intro b ⟨hb1, hb2⟩
   have hb : b = 3 := by omega
   subst hb
   decide
 
+@[category test, AMS 11]
 lemma Condition_five : Condition 5 := by
   intro b ⟨hb1, hb2⟩
   interval_cases b
