@@ -67,16 +67,28 @@ theorem erdos_62.variants.aleph0 :
 
 /--
 Erdős also asked [Er87]: given finitely many graphs $G_1, \dots, G_n$ with chromatic number
-$\aleph_1$, must there be a graph $H$ with chromatic number $4$ or $\aleph_0$ which is a
-subgraph of every $G_i$?
+$\aleph_1$, must there be a graph $H$ with chromatic number $4$ which is a subgraph of every
+$G_i$?
 -/
 @[category research open, AMS 3 5]
 theorem erdos_62.variants.finite_collection :
     answer(sorry) ↔
       ∀ (n : ℕ) (V : Fin n → Type) (G : ∀ i, SimpleGraph (V i)),
         (∀ i, (G i).chromaticCardinal = ℵ_ 1) →
-          ∃ (W : Type) (H : SimpleGraph W),
-            (H.chromaticCardinal = 4 ∨ H.chromaticCardinal = ℵ₀) ∧ ∀ i, H ⊑ G i := by
+          ∃ (W : Type) (H : SimpleGraph W), H.chromaticCardinal = 4 ∧ ∀ i, H ⊑ G i := by
+  sorry
+
+/--
+The stronger version of `erdos_62.variants.finite_collection` [Er87]: given finitely many graphs
+$G_1, \dots, G_n$ with chromatic number $\aleph_1$, must there be a graph $H$ with chromatic
+number $\aleph_0$ which is a subgraph of every $G_i$?
+-/
+@[category research open, AMS 3 5]
+theorem erdos_62.variants.finite_collection_aleph0 :
+    answer(sorry) ↔
+      ∀ (n : ℕ) (V : Fin n → Type) (G : ∀ i, SimpleGraph (V i)),
+        (∀ i, (G i).chromaticCardinal = ℵ_ 1) →
+          ∃ (W : Type) (H : SimpleGraph W), H.chromaticCardinal = ℵ₀ ∧ ∀ i, H ⊑ G i := by
   sorry
 
 /--
@@ -210,8 +222,7 @@ def pairFamily {V₁ V₂ : Type} (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph 
 theorem erdos_62_of_finite_collection
     (h : ∀ (n : ℕ) (V : Fin n → Type) (G : ∀ i, SimpleGraph (V i)),
       (∀ i, (G i).chromaticCardinal = ℵ_ 1) →
-        ∃ (W : Type) (H : SimpleGraph W),
-          (H.chromaticCardinal = 4 ∨ H.chromaticCardinal = ℵ₀) ∧ ∀ i, H ⊑ G i) :
+        ∃ (W : Type) (H : SimpleGraph W), H.chromaticCardinal = 4 ∧ ∀ i, H ⊑ G i) :
     ∀ (V₁ V₂ : Type) (G₁ : SimpleGraph V₁) (G₂ : SimpleGraph V₂),
       G₁.chromaticCardinal = ℵ_ 1 → G₂.chromaticCardinal = ℵ_ 1 →
         ∃ (W : Type) (G : SimpleGraph W), G.chromaticCardinal = 4 ∧ G ⊑ G₁ ∧ G ⊑ G₂ := by
@@ -219,10 +230,6 @@ theorem erdos_62_of_finite_collection
   obtain ⟨W, H, hH, hs⟩ := h 2 ![V₁, V₂] (pairFamily G₁ G₂) fun i => by
     fin_cases i
     exacts [h₁, h₂]
-  rcases hH with hH | hH
-  · exact ⟨W, H, hH, hs 0, hs 1⟩
-  · obtain ⟨W', H', hH', hs'⟩ := exists_isContained_chromaticCardinal_eq_four H
-      (not_colorable_three_of_chromaticCardinal_eq_aleph0 hH)
-    exact ⟨W', H', hH', hs'.trans (hs 0), hs'.trans (hs 1)⟩
+  exact ⟨W, H, hH, hs 0, hs 1⟩
 
 end Erdos62
