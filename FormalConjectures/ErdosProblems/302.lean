@@ -106,4 +106,17 @@ theorem erdos_302.variants.upper_nine_tenths (f : ℕ → ℕ) (hf : ∀ N, IsMa
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ ((9 : ℝ) / 10 + ε) * N := by
   sorry
 
+/--
+Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
+([erdos-302-upper-bound](https://github.com/KitaKen1/erdos-302-upper-bound)) that
+$$f(N) \leq (0.8461739827964010+o(1))N.$$
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-302-upper-bound/blob/9447ceb/lean/Erdos302ReflectiveUpperFC.lean#L92-L99"]
+theorem erdos_302.variants.upper_0_8461739827964010 (f : ℕ → ℕ)
+    (hf : ∀ N, IsMaxNoTripleCard N (f N)) (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ ((8461739827964010 : ℝ) / 10000000000000000 + ε) * N := by
+  sorry
+
 end Erdos302

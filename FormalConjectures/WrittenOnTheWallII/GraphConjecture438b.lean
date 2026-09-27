@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 438b
@@ -30,6 +32,8 @@ where `H₂` is the set of vertices of degree at most two. The conjecture is
 true. In fact, the same inequality holds with an arbitrary vertex subset in
 place of `H₂`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture438b
 
