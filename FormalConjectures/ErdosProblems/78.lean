@@ -54,7 +54,8 @@ are adjacent if `adj (1ⁿ, u, v)` or `adj (1ⁿ, v, u)` is `true`.
 
 The number of vertices is given in unary, as the list `List.replicate n true`. So if `adj` is
 computable in polynomial time, then the whole graph on `n` vertices is computable in time
-polynomial in `n`. This is the usual notion of an *explicit* family of graphs.
+polynomial in `n`. This is the notion of a *weakly explicit* family of graphs; compare
+`stronglyExplicitGraph`.
 -/
 def explicitGraph (adj : List Bool × ℕ × ℕ → Bool) (n : ℕ) : SimpleGraph (Fin n) :=
   SimpleGraph.fromRel fun u v ↦ adj (List.replicate n true, u, v)
