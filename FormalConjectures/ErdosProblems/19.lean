@@ -200,7 +200,7 @@ open scoped Classical in
 /--
 The Erdős–Faber–Lovász conjecture holds for $n \le 3$.
 -/
-@[category research solved, AMS 5]
+@[category test, AMS 5]
 theorem erdos_19.variants.le_three {V : Type*} {n : ℕ} (C : EFLConfig V n) (hn : n ≤ 3) :
     C.graph.chromaticNumber = n := by
   refine le_antisymm ?_ C.le_chromaticNumber
