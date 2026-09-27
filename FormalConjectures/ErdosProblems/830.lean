@@ -20,7 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 830
 
-*Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
+*References:*
+- [erdosproblems.com/830](https://www.erdosproblems.com/830)
+- [Po15] Pomerance, Carl, *On amicable numbers*. (2015), 321-327.
 -/
 
 @[expose] public section
@@ -76,6 +78,7 @@ theorem erdos_830.variants.pomerance : ∀ᶠ x in atTop, A x ≤ x * rexp (- Re
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show that
 $A(x) \leq x \exp(-(\tfrac{1}{2}+o(1))(\log x\log\log\log x)^{1/2})$.
+(erdosproblems.com has $\log\log x$; [Po15, Theorem 1.1] has $\log\log\log x$.)
 -/
 @[category research solved, AMS 11]
 theorem erdos_830.variants.pomerance_stronger :
