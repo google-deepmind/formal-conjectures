@@ -44,7 +44,7 @@ sufficiently large primes' or such.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos649.lean"]
 theorem erdos_649 : answer(False) ↔
-    ∀ p q : ℕ, p.Prime → q.Prime →
+    ∀ p q : ℕ, p.Prime → q.Prime → p ≠ q →
       ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q := by
   sorry
 
