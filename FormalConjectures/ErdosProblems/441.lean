@@ -80,7 +80,8 @@ O\left(\left(\frac{N}{\log N}\right)^{1/2}\log\log N\right).$$
 In [ChDa07] the same authors prove that, infinitely often, Erdős' construction is not optimal: if
 $B$ is that construction and $A$ is such that $\lvert A\rvert=g(N)$ then, for infinitely many
 $N$, $\lvert A\rvert\geq \lvert B\rvert+t-2$, where $t\geq 0$ is defined such that the $t$-fold
-iterated logarithm of $N$ is in $[0,1)$.
+iterated logarithm of $N$ is in $[0,1)$. (erdosproblems.com omits the $-2$; [ChDa07] proves
+the bound with it.)
 
 This is discussed in problems B26 and E2 of Guy's collection [Gu04].
 -/
@@ -93,7 +94,8 @@ theorem erdos_441 : answer(False) ↔
 /--
 Chen and Dai [ChDa07] proved that, infinitely often, Erdős' construction is not optimal: for
 infinitely many $N$, $g(N) \geq \lvert B\rvert+t-2$, where $B$ is the construction and $t\geq 0$
-is such that the $t$-fold iterated logarithm of $N$ is in $[0,1)$.
+is such that the $t$-fold iterated logarithm of $N$ is in $[0,1)$. (erdosproblems.com omits the
+$-2$; [ChDa07] proves the bound with it.)
 -/
 @[category research solved, AMS 11]
 theorem erdos_441.variants.chen_dai_infinitely_often :
