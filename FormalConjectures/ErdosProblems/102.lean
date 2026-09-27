@@ -29,10 +29,6 @@ namespace Erdos102
 
 open EuclideanGeometry Filter
 
-/-- A line in the plane: an affine subspace whose direction is one-dimensional. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
-
 open scoped Classical in
 /-- The number of points of `P` that lie on `L`. -/
 noncomputable def pointsOn (P : Finset ℝ²) (L : AffineSubspace ℝ ℝ²) : ℕ :=
@@ -52,7 +48,13 @@ noncomputable def maxCollinear (P : Finset ℝ²) : ℕ :=
   sSup {k : ℕ | ∃ L, IsLine L ∧ pointsOn P L = k}
 
 /-- $h_c(n)$: the minimum of `maxCollinear P` over all admissible `P`. It is `⊤` when no
-admissible configuration exists. -/
+admissible configuration exists.
+
+Two distinct lines share at most one pair of points, and a line with more than three points of
+`P` contains at least $\binom{4}{2} = 6$ pairs. Hence `richLineCount P` $< n^2 / 12$, so for
+$c \geq 1/12$ and $n \geq 1$ no configuration is admissible and $h_c(n) = \top$. The problem is
+only meaningful for small $c > 0$; the statements below either quantify over all $c > 0$ (where
+small $c$ govern the truth value) or restrict to sufficiently small $c$. -/
 noncomputable def h (c : ℝ) (n : ℕ) : ℕ∞ :=
   ⨅ (P : Finset ℝ²) (_ : Admissible c n P), (maxCollinear P : ℕ∞)
 
@@ -72,6 +74,7 @@ theorem le_maxCollinear_iff (P : Finset ℝ²) (M : ℕ) :
   have hbdd : BddAbove {k : ℕ | ∃ L, IsLine L ∧ pointsOn P L = k} := by
     refine ⟨P.card, ?_⟩
     rintro k ⟨L, -, rfl⟩
+    classical
     exact Finset.card_filter_le _ _
   have hne : {k : ℕ | ∃ L, IsLine L ∧ pointsOn P L = k}.Nonempty := by
     obtain ⟨L, hL⟩ := exists_line
@@ -120,6 +123,29 @@ It is not known whether $h_c(n) \geq 5$ for all sufficiently large $n$.
 @[category research open, AMS 52]
 theorem erdos_102.variants.five :
     answer(sorry) ↔ ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
+  sorry
+
+/--
+It is easy to see that $h_c(n) \ll_c n^{1/2}$: for all sufficiently small $c > 0$ there are
+admissible configurations (e.g. grids) in which no line contains more than $C_c n^{1/2}$ points.
+-/
+@[category research solved, AMS 52]
+theorem erdos_102.variants.upper_sqrt :
+    ∃ c₀ > (0 : ℝ), ∀ c ∈ Set.Ioc 0 c₀, ∃ C : ℝ, ∀ᶠ n in atTop,
+      h c n ≤ (⌈C * Real.sqrt n⌉₊ : ℕ∞) := by
+  sorry
+
+/--
+Erdős [Er95] suggested that perhaps $h_c(n) \gg_c n^{1/2}$. Zach Hunter pointed out that this is
+false: the points of $\{1, \dots, m\}^d$ with $n \approx m^d$, randomly projected to
+$\mathbb{R}^2$, meet every line in $\ll_d n^{1/d}$ points and determine $\gg_d n^2$ lines with
+more than three points. This gives $h_c(n) \ll n^{1 / \log(1/c)}$; we state the underlying form:
+for every $d \geq 1$ there is $c > 0$ with $h_c(n) \ll_d n^{1/d}$.
+-/
+@[category research solved, AMS 52]
+theorem erdos_102.variants.hunter :
+    ∀ d : ℕ, 1 ≤ d → ∃ c > (0 : ℝ), ∃ C : ℝ, ∀ᶠ n in atTop,
+      h c n ≤ (⌈C * (n : ℝ) ^ (1 / (d : ℝ))⌉₊ : ℕ∞) := by
   sorry
 
 end Erdos102
