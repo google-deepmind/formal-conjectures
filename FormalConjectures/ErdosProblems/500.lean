@@ -34,8 +34,9 @@ open Asymptotics Filter
 
 namespace Erdos500
 
-/-- `ex₃ n` is the largest number of edges of a $3$-uniform hypergraph on `n` vertices that
-contains no $K_4^3$, that is, no set of $4$ vertices spanning all $4$ possible $3$-edges. -/
+/-- `ex₃ n` is $\mathrm{ex}_3(n,K_4^3)$, the largest number of edges of a $3$-uniform hypergraph
+on $n$ vertices that contains no $K_4^3$, that is, no set of $4$ vertices spanning all $4$
+possible $3$-edges. -/
 noncomputable def ex₃ (n : ℕ) : ℕ :=
   sSup {k | ∃ H : Finset (Finset (Fin n)),
     H.IsThreeUniform ∧ ¬ H.ContainsSubgraph 4 4 ∧ H.card = k}
@@ -112,11 +113,13 @@ The current best upper bound is
 $$\mathrm{ex}_3(n,K_4^3)\leq 0.5611666\binom{n}{3},$$
 due to Razborov [Ra10].
 
-[Ra10, (2)] reports that numerical computations suggest $\pi_{\min}(I_4^3) \geq 0.438334$,
-that is $\pi(K_4^3) \leq 0.561666$, and does not state this bound as a theorem.
-[BaTa11, Section 2.4] reproduce the computation. A density bound carries an $o(1)$ term: for
-example $\mathrm{ex}_3(4,K_4^3) = 3 > 0.561666 \binom{4}{3}$. The statement formalised here
-uses the value of [Ra10] and the $o(1)$ term.
+Let $\pi(K_4^3) = \lim_{n \to \infty} \mathrm{ex}_3(n,K_4^3)/\binom{n}{3}$ be the Turán density.
+[Ra10, (2)] reports, in complementary form, that numerical computations suggest
+$\pi(K_4^3) \leq 0.561666$; the paper does not state this bound as a theorem, and
+[BaTa11, Section 2.4] reproduce the computation. The value $0.5611666$ above differs from the
+value in both sources. A bound on $\pi(K_4^3)$ gives the inequality only with an $o(1)$ term;
+without it the inequality fails at $n = 4$, where
+$\mathrm{ex}_3(4,K_4^3) = 3 > 0.561666\binom{4}{3}$.
 -/
 @[category research open, AMS 5]
 theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
