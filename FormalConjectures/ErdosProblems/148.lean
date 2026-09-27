@@ -88,7 +88,7 @@ $$2^{c^{\frac{k}{\log k}}}\leq F(k) \leq c_0^{(\frac{1}{5}+o(1))2^k},$$
 where $c>0$ is some absolute constant and $c_0=1.5979102\ldots$ is the square of the 'Vardi
 constant' $1.26408\cdots$. The lower bound is due to Konyagin [Ko14] and the upper bound to
 Elsholtz and Planitzer [ElPl21]. (erdosproblems.com gives $c_0=1.26408\cdots$;
-[ElPl21, Corollary 3] has $c_0=1.5979102\ldots$.)
+[ElPl21, Remark 3] gives $c_0=1.5979102\ldots$.)
 
 [Ko14, Theorem 1] states the lower bound in the explicit form
 $$F(k) \geq \exp\left(\exp\left(\left(\frac{(\log 2)(\log 3)}{3}+o(1)\right)
@@ -107,7 +107,7 @@ $$2^{c^{\frac{k}{\log k}}}\leq F(k) \leq c_0^{(\frac{1}{5}+o(1))2^k},$$
 where $c>0$ is some absolute constant and $c_0=1.5979102\ldots$ is the square of the 'Vardi
 constant' $1.26408\cdots$. The lower bound is due to Konyagin [Ko14] and the upper bound to
 Elsholtz and Planitzer [ElPl21]. (erdosproblems.com gives $c_0=1.26408\cdots$;
-[ElPl21, Corollary 3] has $c_0=1.5979102\ldots$.)
+[ElPl21, Remark 3] gives $c_0=1.5979102\ldots$.)
 
 [ElPl21, Corollary 3(2)] shows that for every $\varepsilon > 0$ and all $k \geq k(\varepsilon)$,
 the number $f_k(1,1) \geq F(k)$ of solutions with $n_1 \leq \cdots \leq n_k$ is less than
