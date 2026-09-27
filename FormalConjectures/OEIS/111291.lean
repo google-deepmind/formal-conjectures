@@ -62,6 +62,9 @@ theorem a_2 : a 2 = 16 := by rfl
 @[category test, AMS 11]
 theorem a_3 : a 3 = 92 := by native_decide
 
+@[category test, AMS 11]
+theorem a_4 : a 4 = 665 := by native_decide
+
 /--
 `countRefactorable x` is the number of refactorable numbers $\le x$.
 -/
