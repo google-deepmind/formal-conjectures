@@ -16,7 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-meta import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation
 
 /-!
 # TxGraffiti Conjecture 4: the saturation number versus the harmonic index
@@ -49,6 +51,8 @@ windmill family has an exact limiting ratio, are established in Gupta.
   index](https://arxiv.org/abs/2606.15761), C. Gupta — the order-$9$
   minimality of $F_4$ (formalised below) and the exact windmill limit.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

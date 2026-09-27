@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Algebraic consequences of the Farrell–Jones conjecture
@@ -29,6 +31,8 @@ integral domains.
   **On the Farrell–Jones Conjecture and its applications**
   by *Arthur Bartels, Wolfgang Lück, Holger Reich*, J. Topol. 1 (2008), 57–86.
 -/
+
+@[expose] public section
 
 namespace Arxiv.«math.0703548»
 
