@@ -22,7 +22,11 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/830](https://www.erdosproblems.com/830)
+- [Er55b] Erdős, P., *On amicable numbers*. Publ. Math. Debrecen (1955), 108-111.
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 - [Po15] Pomerance, Carl, *On amicable numbers*. (2015), 321-327.
+- [Po81] Pomerance, Carl, *On the distribution of amicable numbers. II*. J. Reine Angew. Math.
+  (1981), 183-188.
 -/
 
 @[expose] public section
