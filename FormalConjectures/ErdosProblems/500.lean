@@ -110,16 +110,12 @@ theorem erdos_500.variants.turan_conjecture : answer(sorry) ↔
 
 /--
 The current best upper bound is
-$$\mathrm{ex}_3(n,K_4^3)\leq 0.5611666\binom{n}{3},$$
-due to Razborov [Ra10].
+$$\mathrm{ex}_3(n,K_4^3)\leq (0.561666+o(1))\binom{n}{3},$$
+due to Razborov [Ra10]. (erdosproblems.com gives $0.5611666$ and omits the $o(1)$; without it
+the bound fails at $n=4$, where $\mathrm{ex}_3(4,K_4^3)=3>0.561666\binom{4}{3}$.)
 
-Let $\pi(K_4^3) = \lim_{n \to \infty} \mathrm{ex}_3(n,K_4^3)/\binom{n}{3}$ be the Turán density.
-[Ra10, (2)] reports, in complementary form, that numerical computations suggest
-$\pi(K_4^3) \leq 0.561666$; the paper does not state this bound as a theorem, and
-[BaTa11, Section 2.4] reproduce the computation. The value $0.5611666$ above differs from the
-value in both sources. A bound on $\pi(K_4^3)$ gives the inequality only with an $o(1)$ term;
-without it the inequality fails at $n = 4$, where
-$\mathrm{ex}_3(4,K_4^3) = 3 > 0.561666\binom{4}{3}$.
+[Ra10, (2)] gives this bound in complementary form, as a result that numerical computations
+suggest, not as a theorem. [BaTa11] reproduce the computation.
 -/
 @[category research open, AMS 5]
 theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
