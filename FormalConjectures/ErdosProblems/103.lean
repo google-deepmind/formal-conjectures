@@ -60,7 +60,7 @@ the diameter subject to the constraint that $d(x,y)\geq 1$ for all points $x\neq
 that $h(n)\to \infty$?
 -/
 @[category research open, AMS 52]
-theorem erdos_103 : answer(sorry) ↔ Tendsto h atTop atTop := by
+theorem erdos_103 : answer(sorry) ↔ Tendsto h atTop (nhds ⊤) := by
   sorry
 
 /--
