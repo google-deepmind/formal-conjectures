@@ -83,6 +83,9 @@ Klarner has several (open) variants of this problem - see Section 8.9 of [La16].
 is unknown if the smallest set $A$ which contains $0$ and is closed under
 $$x\mapsto 2x,\quad x\mapsto 3x+2,\quad x\mapsto 6x+3$$
 has positive density.
+
+The answer is negative: Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
+([erdos-1134-lean](https://github.com/KitaKen1/erdos-1134-lean)) that $A$ has natural density $0$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/KitaKen1/erdos-1134-lean/blob/57042c7e43ae71cd7008e461cf3b9d81b8d8a20f/lean/Erdos1134KlarnerFC.lean#L2110-L2113"]
