@@ -29,6 +29,8 @@ This file formalizes Problems 7.1 and 7.2 from Kolountzakis, Lev, and Matolcsi.
   *Journal of Functional Analysis* 271 (2016), 2808–2821.
 - [GL20] Rachel Greenfeld and Nir Lev, Spectrality of product domains and Fuglede's conjecture
   for convex polytopes, *Journal d'Analyse Mathématique* 140 (2020), 409–441.
+- [Ki26] Kenta Kitamura, A Lean proof of Problem 7.2 of Kolountzakis–Lev–Matolcsi in dimension
+  three, [GitHub repository](https://github.com/KitaKen1/klm-7-2-spectral-product-3d) (2026).
 -/
 
 @[expose] public section
@@ -92,6 +94,8 @@ theorem isSpectral_right_of_product_two_dimensional :
 /--
 [KLM2023, Problem 7.2] For a three-dimensional convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
+
+The answer is yes. For the Lean proof, see [Ki26].
 -/
 @[category research solved, AMS 42 46,
   formal_proof using lean4 at
