@@ -34,6 +34,8 @@ public import FormalConjecturesUtil
   462 (2025): 110095.
 - [Al23] Alweiss, Ryan. "Monochromatic Sums and Products over $\mathbb {Q} $." arXiv preprint
   arXiv:2307.08901 (2023).
+- [Ki26] Kitamura, Kenta. [A Lean proof of an improved bound for Green's Problem 22](https://github.com/KitaKen1/green-22-exponent-43)
+  (2026).
 -/
 
 @[expose] public section
@@ -69,6 +71,8 @@ If $\{1, \ldots, N\}$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are 
 $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
 
 Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhney bound.
+
+[Ki26] proves $N_0(r) \le \lceil \exp(\exp(r^{43})) \rceil$ for all large $r$.
 -/
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at
@@ -77,6 +81,26 @@ theorem green_22 :
     let ans := (answer(fun r => ⌈Real.exp (Real.exp (r ^ 43))⌉₊) : ℕ → ℝ)
     ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
     ans =o[atTop] GreenSawhneyBound := by
+  sorry
+
+/--
+Improve upon the bound $N_0(r) \le \lceil \exp(\exp(r^{43})) \rceil$ of [Ki26].
+-/
+@[category research open, AMS 5 11]
+theorem green_22.variants.improved_upper_bound :
+    let ans := (answer(sorry) : ℕ → ℝ)
+    ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
+    ans =o[atTop] (fun r : ℕ => (⌈Real.exp (Real.exp (r ^ 43))⌉₊ : ℝ)) := by
+  sorry
+
+/--
+Is there a better than doubly exponential upper bound, that is, is
+$N_0(r) \le \exp(\exp(r^{\varepsilon}))$ for every $\varepsilon > 0$ and all large $r$?
+-/
+@[category research open, AMS 5 11]
+theorem green_22.variants.better_than_doubly_exponential :
+    answer(sorry) ↔ ∀ ε > (0 : ℝ), ∀ᶠ r in atTop,
+      (N₀ r : ℝ) ≤ Real.exp (Real.exp ((r : ℝ) ^ ε)) := by
   sorry
 
 /--
