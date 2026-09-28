@@ -111,6 +111,10 @@ Does $V_1(n) = 1$ have finite solutions?
 This is a modification of `erdos_889.variants.v1_eq_1_finite`,
 which might make it more amenable to attack according to [ErSe67].
 
+Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
+([erdos-889-capital-v1-finite](https://github.com/KitaKen1/erdos-889-capital-v1-finite))
+that there are only finitely many $n$ with $V_1(n) = 1$.
+
 [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
 -/
 @[category research solved, AMS 11,
