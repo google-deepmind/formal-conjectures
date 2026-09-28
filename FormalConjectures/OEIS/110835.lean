@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $m > 0$ such that there are no primes between $nm$ and $n(m+1)$ inclusive.
@@ -24,6 +25,8 @@ Sierpinski's conjecture (1958) is precisely that a(n) >= n for all n.
 *References:*
 - [A110835](https://oeis.org/A110835)
 -/
+
+@[expose] public section
 
 namespace OeisA110835
 

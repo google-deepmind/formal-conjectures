@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Binary representation of primes that divide a number, in decimal
@@ -26,6 +28,8 @@ where $\pi(p) = \mathrm{primeCounting}(p)$ gives the 1-based index of the prime 
 *References:*
 - [A087207](https://oeis.org/A087207)-/
 
+@[expose] public section
+
 namespace OeisA87207
 
 /-- Binary representation of the prime factors of $n$, represented in decimal:
@@ -35,23 +39,23 @@ def a (n : ℕ) : ℕ :=
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by decide +native
+theorem a_0 : a 0 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by decide +native
+theorem a_1 : a 1 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by decide +native
+theorem a_2 : a 2 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 2 := by decide +native
+theorem a_3 : a 3 = 2 := by decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by decide +native
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 /--
 Starting at any $n$ and iterating the map $n \mapsto a(n)$, we will always reach $0$.

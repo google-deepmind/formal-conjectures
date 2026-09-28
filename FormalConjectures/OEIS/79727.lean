@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.OEIS.«3625»
+public import FormalConjecturesUtil
+public import FormalConjectures.OEIS.«3625»
 
 /-!
 # $a(n) = \sum_{k=0}^n \binom{2k}{k}^3$
@@ -25,6 +26,8 @@ $$a(n) = \sum_{k=0}^n \binom{2k}{k}^3$$
 
 *References:*
 - [A079727](https://oeis.org/A079727)-/
+
+@[expose] public section
 
 namespace OeisA79727
 

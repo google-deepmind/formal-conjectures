@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 25: Logarithmic density of size-dependent congruences
 
 *Reference:* [erdosproblems.com/25](https://www.erdosproblems.com/25)
 -/
+
+@[expose] public section
 
 open Filter Finset Real Nat Set
 open scoped Topology

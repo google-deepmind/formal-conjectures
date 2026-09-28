@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1085
@@ -24,6 +25,8 @@ of points which are distance 1 apart. Estimate f_d(n).
 
 *Reference:* [erdosproblems.com/1085](https://www.erdosproblems.com/1085)
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped EuclideanGeometry Topology

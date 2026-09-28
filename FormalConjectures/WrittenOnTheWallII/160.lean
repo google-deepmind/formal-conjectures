@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 160
@@ -39,9 +40,14 @@ trees of $G$ (exposed as `SimpleGraph.Ls G : ℝ`).
 The earlier formalization used the number of induced four-cycles. The historical
 conjecture instead uses this binary $C_4$-free indicator.
 
+**Provenance.** Statement corrected by Dominic Dabish.
+
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture160
+
 
 open SimpleGraph
 
@@ -50,6 +56,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /-- The maximum number of triangles incident to any vertex in $G$. -/
 noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.image (numTrianglesAtVertex G)).max' (Finset.image_nonempty.mpr Finset.univ_nonempty)
+
 
 open scoped Classical in
 /--
@@ -64,8 +71,16 @@ where:
 - $\max_v l(v)$ is the maximum local independence number over vertices,
 - $\max_v T(v)$ is the maximum number of triangles incident to any vertex,
 - $\chi_{C_4}(G)$ is `1` if $G$ has no cycle of length four and `0` otherwise.
+
+A formal proof uses the $C_4$-free neighborhood identity $d(v) = \lambda(v) + T(v)$
+with a star/geodesic case analysis, routed through the connected-seed
+spanning-tree bound developed for Conjecture 2. An independent second proof,
+via a closest maximizer pair joined by a shortest path, is linked from the
+pull request that recorded the solution.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/f0d70dfa13f92a4b631289e44487690833be8798/WOWII160AltProof.lean#L714"]
 theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
     let maxT := maxTrianglesAtVertex G
@@ -79,13 +94,13 @@ theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In $K_3$, `maxTrianglesAtVertex = 1`. -/
 @[category test, AMS 5]
 example : maxTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) = 1 := by
   unfold maxTrianglesAtVertex numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In the path $P_3$, vertex $1$ is adjacent to $0$ and $2$, but $0$ and $2$ are not adjacent.
 So $T(1) = 0$. -/
@@ -93,6 +108,6 @@ So $T(1) = 0$. -/
 example : numTrianglesAtVertex
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 end WrittenOnTheWallII.GraphConjecture160

@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«28»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 40
 
 *Reference:* [erdosproblems.com/40](https://www.erdosproblems.com/40)
 -/
+
+@[expose] public section
 
 open AdditiveCombinatorics Filter Real Set
 open scoped Pointwise

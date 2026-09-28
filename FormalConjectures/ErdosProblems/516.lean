@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 516
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
  - [Ko65] Kövari, Thomas, A gap-theorem for entire functions of infinite order. Michigan Math. J.
     (1965), 133--140.
 -/
+
+@[expose] public section
 
 open scoped Nat
 open Filter Real Set
@@ -42,7 +45,8 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos516.lean#L4812"]
 theorem erdos_516 {f : ℂ → ℂ} {n : ℕ → ℕ}
     (hn : HasFabryGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : OfFiniteOrder f) :

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bloch and Landau constants
@@ -38,6 +39,9 @@ import FormalConjecturesUtil
   Journal of Universal Computer Science 14 (2008), 896–907. In particular, a schlicht disk is the
   image of a subdomain under a biholomorphic restriction.
 -/
+
+@[expose] public section
+
 open scoped Topology ENNReal
 open Metric Set Filter
 namespace Bloch

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 714
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [KST54] Kövari, T. and Sós, V. T. and Turán, P., *On a problem of K. Zarankiewicz*. Colloq. Math.
   (1954), 50-57.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

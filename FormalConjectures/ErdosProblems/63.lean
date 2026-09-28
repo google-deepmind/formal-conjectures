@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 63
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Re24] Reiher, C., *Graphs of large girth*. arXiv:2403.13571 (2024).
 -/
 
+@[expose] public section
+
 namespace Erdos63
 
 /--
@@ -38,8 +41,12 @@ many $n$?
 
 Conjectured by Mihók and Erdős. Solved affirmatively following the work of Liu and Montgomery
 [LiMo20].
+
+The linked formal proof (Codex) states the conclusion as `{n | HasCycleLength G (2 ^ n)}.Infinite`,
+with `HasCycleLength G m` unfolding to `m ∈ G.cycleLengths`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos63.lean#L46"]
 theorem erdos_63 :
     answer(True) ↔
       ∀ {V : Type*} (G : SimpleGraph V), G.chromaticNumber = ⊤ →
