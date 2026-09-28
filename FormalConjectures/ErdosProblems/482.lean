@@ -26,6 +26,8 @@ public import FormalConjecturesUtil
 - [GrPo70] Graham, R. L. and Pollak, H. O., Note on a nonlinear recurrence related to {$\surd 2$}. Math. Mag. (1970), 143-145.
 - [St05] Stoll, Th., On families of nonlinear recurrences related to digits. J. Integer Seq. (2005), Article 05.3.2, 8.
 - [St06] Stoll, Thomas, On a problem of Erd\H{o}s and Graham concerning digits. Acta Arith. (2006), 89-100.
+- [RaGi91] Rabinowitz, S. and Gilbert, P., A nonlinear recurrence yielding binary digits. Math. Mag.
+  64 (1991), 168-171.
 
 A formal Lean proof is given in an external repository,
 [`gotrevor/lean-gallery`](https://github.com/gotrevor/lean-gallery), formalized by Trevor Morris with
@@ -106,7 +108,7 @@ noncomputable def binaryDigit (t : ℝ) : ℕ → Fin 2
   | 1 => 1
   | k + 2 => Real.digits (t - 1) 2 k
 
-/-- The explicit binary answer to the open-ended part (Rabinowitz–Gilbert; see [St05]): for every normalized real
+/-- The explicit binary answer to the open-ended part [RaGi91], [St05]: for every normalized real
 $t \in [1, 2)$, the recurrence with coefficients $\alpha(t) = 2(t+1)/(t+2)$ and
 $\beta(t) = (t+2)/(t+1)$ reads off the binary digits of $t$, and those digits reconstruct $t$.
 Unlike `erdos_482.variants.stoll_general`, the coefficients are given, not merely shown to exist. -/
