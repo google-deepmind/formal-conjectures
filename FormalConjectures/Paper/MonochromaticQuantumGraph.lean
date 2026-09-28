@@ -75,6 +75,10 @@ coefficient domains (e.g. `ℂ`, `ℝ`, `ℤ`, and restricted integer weights).
 * [Ki26] [A solver-free Lean 4 proof of the sharp bound $D \le N - 2$ for monochromatic quantum
   graph equation systems over integral domains](https://github.com/KitaKen1/monochromatic-quantum-graph-sharp-bound-lean/tree/6c5340384479dbb36129b2e0084449be2458cce2),
   commit `6c534038`.
+
+* [Ki26b] [A solver-free Lean 4 proof that the monochromatic quantum graph equation system has no
+  solution for $N = 10$ and $D = 8$ over integral domains](https://github.com/KitaKen1/monochromatic-quantum-graph-n10-d8-lean/tree/a9309005c7a27a2615f8e7eebef7a1db017809ab),
+  commit `a9309005`.
 -/
 
 @[expose] public section
@@ -524,7 +528,10 @@ theorem eqSystem10_no_solution_d7 :
   sorry
 
 /-- For $N = 10$ and $D = 8$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
+equation system over $\mathbb{C}$?
+
+The sharp bound $D \le N - 2$ of [Ki26] does not cover this equality case $D = N - 2$; it is
+settled over an integral domain in [Ki26b]. -/
 @[category research solved, AMS 5 14 81,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/monochromatic-quantum-graph-n10-d8-lean/blob/a9309005c7a27a2615f8e7eebef7a1db017809ab/lean/QuantumGraphTenEightFC.lean#L5466-L5473"]
