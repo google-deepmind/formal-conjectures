@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Riesel Problem
@@ -25,6 +26,8 @@ $k \cdot 2^m-1$ is prime, or $-1$ if no such prime exists.
 *References:*
 - [A108129](https://oeis.org/A108129)
 -/
+
+@[expose] public section
 
 namespace OeisA108129
 variable {m n : ℕ}
@@ -45,7 +48,10 @@ noncomputable def a (n : ℕ) : ℤ :=
 
 @[category API, AMS 11]
 lemma a_of_isLeast (hm : IsLeast {m | m ≠ 0 ∧ ((2 * n - 1) * 2 ^ m - 1).Prime} m) : a n = m := by
-  rw [a, if_neg (by rintro rfl; simp at hm), dif_pos ⟨m, hm.1⟩, find_of_isLeast hm]
+  have hn : n ≠ 0 := by
+    rintro rfl
+    simpa using hm.1
+  rw [a, if_neg hn, dif_pos ⟨m, hm.1⟩, find_of_isLeast hm]
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := a_of_isLeast <| by decide

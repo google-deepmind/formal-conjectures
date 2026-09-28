@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 955
@@ -36,6 +37,8 @@ import FormalConjecturesUtil
 - [Tr20] Troupe, Lee, Divisor sums representable as the sum of two squares. Proc. Amer. Math. Soc.
   (2020), 4189--4202.
 -/
+
+@[expose] public section
 
 open Nat Filter
 open scoped ArithmeticFunction ArithmeticFunction.sigma Topology

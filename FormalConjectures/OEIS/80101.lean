@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of prime powers strictly between $n$-th prime and $(n+1)$-th prime
@@ -24,6 +25,8 @@ and the $(n+1)$-th prime $p_{n+1}$: $p_n < k < p_{n+1}$.
 
 *References:*
 - [A080101](https://oeis.org/A080101)-/
+
+@[expose] public section
 
 namespace OeisA80101
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1051
@@ -31,14 +32,19 @@ import FormalConjecturesUtil
   Problems. arXiv:2601.22401 (2026).
 -/
 
+@[expose] public section
+
 namespace Erdos1051
 
 /--
 A sequence of integers `a` satisfies the growth condition if
 $\liminf a_n^{\frac{1}{2^n}} > 1$.
+
+The `liminf` is taken in `EReal` so that the case $\liminf a_n^{1/2^n} = \infty$ is included; the
+real-valued `liminf` of a sequence that is unbounded above defaults to $0$ instead.
 -/
 def GrowthCondition (a : ℕ → ℤ) : Prop :=
-  Filter.liminf (fun n => ((a n : ℝ) ^ (1 / 2 ^ n : ℝ))) Filter.atTop > 1
+  Filter.liminf (fun n => (((a n : ℝ) ^ (1 / 2 ^ n : ℝ) : ℝ) : EReal)) Filter.atTop > 1
 
 /--
 The series $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$.

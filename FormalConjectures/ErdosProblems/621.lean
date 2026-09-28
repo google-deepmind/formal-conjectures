@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 621
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [NoSu16] S. Norin and Y.-R. Sun, *Triangle-free independent sets vs. cuts*. arXiv:1602.04370
   (2016).
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

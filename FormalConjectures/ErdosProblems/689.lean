@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 689
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 * [erdosproblems.com/689](https://www.erdosproblems.com/689)
 * [Ben Green's Open Problem 45](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.45)
 -/
+
+@[expose] public section
 
 namespace Erdos689
 

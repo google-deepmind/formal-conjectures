@@ -135,7 +135,7 @@ source you cite:
 - `Kourovka` — [Kourovka Notebook](https://arxiv.org/pdf/1401.0300) (group
   theory).
 - `Mathoverflow` — [MathOverflow](https://mathoverflow.net/).
-- `Millenium` — [Millennium Prize Problems](https://www.claymath.org/millennium-problems/).
+- `Millennium` — [Millennium Prize Problems](https://www.claymath.org/millennium-problems/).
 - `OEIS` — [OEIS](https://oeis.org/).
 - `OpenQuantumProblems` — open problems in quantum theory.
 - `OptimizationConstants` — open problems about optimization constants.
@@ -347,6 +347,7 @@ is outside of the scope of this repository.
   with `¬ P`.
 - Follow the same AI usage conventions as
   [Mathlib](https://leanprover-community.github.io/contribute/index.html).
+- Use tex for math in comments, e.g. `If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$`
 
 ## Code reviews
 

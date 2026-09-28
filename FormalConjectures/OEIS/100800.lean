@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A100800
@@ -26,6 +27,8 @@ exists.
 *References:*
 - [A100800](https://oeis.org/A100800)
 -/
+
+@[expose] public section
 
 namespace OeisA100800
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 125
@@ -27,6 +28,8 @@ There are four possibilities for the density of $A+B$:
 3. $A+B$ has positive upper and lower density that are equal (and hence positive density).
 4. $A+B$ has positive upper and lower density that are unequal (and hence no density).
 -/
+
+@[expose] public section
 
 open Nat Pointwise
 
