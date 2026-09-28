@@ -20,7 +20,18 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 522
 
-*Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
+*References:*
+- [erdosproblems.com/522](https://www.erdosproblems.com/522)
+- [Ch26] Chojecki, P., *A strong law for the roots of random Littlewood polynomials* (2026),
+  [ulam.ai/research/erdos522-final.pdf](https://www.ulam.ai/research/erdos522-final.pdf).
+- [Ka26] Kawada, S., *Almost-Sure Radial Laws for Nested Random Polynomials and Erdős
+  Problem #522*, [doi:10.5281/zenodo.22970145](https://zenodo.org/records/22970145) (2026).
+  Lean 4 formalization: [chreia/erdos-522](https://github.com/chreia/erdos-522).
+- [Ki26] Kitamura, K., *A Lean proof of Erdős Problem 522*,
+  [KitaKen1/erdos-522-strong-law](https://github.com/KitaKen1/erdos-522-strong-law) (2026).
+- [KZ26] Kwon, Y. and Zou, J., *A fourth moment estimate for logarithmic integrals of random
+  Littlewood polynomials and Erdős's root-count problem* (2026),
+  [ykwon0407/erdos-521-522](https://github.com/ykwon0407/erdos-521-522).
 -/
 
 @[expose] public section
@@ -97,6 +108,9 @@ almost surely?
 
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
+
+This is true. Proofs were posted on the erdosproblems.com forum in April 2026 [Ch26], [KZ26],
+and Lean proofs were given independently in September 2026 [Ka26], [Ki26].
 -/
 @[category research solved, AMS 12 60,
   formal_proof using lean4 at
@@ -117,6 +131,8 @@ $$
   \frac{R_n}{n/2}\to 1
 $$
 almost surely?
+
+This is true; a Lean proof is given in [Ki26].
 -/
 @[category research solved, AMS 12 60,
   formal_proof using lean4 at
