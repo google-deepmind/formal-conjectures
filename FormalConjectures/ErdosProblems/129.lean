@@ -158,7 +158,7 @@ theorem card_no_mono_triangle_le (N n : ℕ) (S : Finset (Fin N)) (hS : S.card =
     fun p _ => card_le_three
   have hdisj : ((univ : Finset (Fin t × Fin t)) : Set (Fin t × Fin t)).PairwiseDisjoint Tri := by
     rintro ⟨a, b⟩ - ⟨a', b'⟩ - hpq
-    haveI : NeZero t := ⟨fun h => by have := a.2; omega⟩
+    have : NeZero t := ⟨fun h => by have := a.2; omega⟩
     rw [Function.onFun, disjoint_left]
     intro e he1 he2
     simp only [Tri, mem_insert, mem_singleton] at he1 he2
@@ -383,7 +383,7 @@ theorem two_pow_lt_R (n : ℕ) (hn : 100 ≤ n) : 2 ^ (n / 100) < R n 3 2 := by
   have hne : {N | HasRamseyProperty n 3 2 N}.Nonempty := ⟨_, hasRamseyProperty_four_pow n⟩
   have hmem : HasRamseyProperty n 3 2 (R n 3 2) := Nat.sInf_mem hne
   by_contra hle
-  push_neg at hle
+  rw [not_lt] at hle
   exact not_hasRamseyProperty n _ hn hle hmem
 
 /-- Even the "for all sufficiently large $n$" version of the bound fails for two colours:
