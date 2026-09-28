@@ -37,18 +37,9 @@ namespace Erdos111
 
 variable {V : Type*}
 
-/-- The least number of edges that must be deleted from the subgraph of `G` induced on the
-finite vertex set `S` to make it bipartite. -/
-noncomputable def minDelBipartite (G : SimpleGraph V) (S : Finset V) : ℕ :=
-  sInf {k : ℕ | ∃ E : Finset (Sym2 V), E.card = k ∧
-    ((G.deleteEdges (E : Set (Sym2 V))).induce (S : Set V)).Colorable 2}
-
-/-- `h G n` is $h_G(n)$: the least number such that every subgraph of `G` on `n` vertices can be
-made bipartite by deleting at most `h G n` edges. It suffices to consider induced subgraphs, since
-any subgraph on the vertex set `S` is a subgraph of the induced one. The value is `0` if `G` has
-fewer than `n` vertices. -/
-noncomputable def h (G : SimpleGraph V) (n : ℕ) : ℕ :=
-  ⨆ S : {S : Finset V // S.card = n}, minDelBipartite G S.1
+/-! Throughout, $h_G(n)$ is `G.maxSubgraphEdgeDistToBipartite n`: the least number such that every
+subgraph of `G` on `n` vertices can be made bipartite by deleting at most that many edges
+(Definition 3.1 in [EHS82]). It is `0` if `G` has fewer than `n` vertices. -/
 
 /--
 Let $h_G(n)$ be the least number such that every subgraph of $G$ on $n$ vertices can be made
@@ -58,7 +49,7 @@ graph $G$ with chromatic number $\aleph_1$?
 @[category research open, AMS 5]
 theorem erdos_111 :
     answer(sorry) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
-      Tendsto (fun n : ℕ => (h G n : ℝ) / n) atTop atTop := by
+      Tendsto (fun n : ℕ => (G.maxSubgraphEdgeDistToBipartite n : ℝ) / n) atTop atTop := by
   sorry
 
 /-- Every graph $G$ with chromatic number $\aleph_1$ satisfies $h_G(n) \gg n$, since it contains
@@ -66,7 +57,8 @@ infinitely many vertex-disjoint odd cycles of some fixed length $2r+1$. -/
 @[category research solved, AMS 5]
 theorem erdos_111.variants.linear_lower_bound (G : SimpleGraph V)
     (hG : G.chromaticCardinal = ℵ_ 1) :
-    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop, c * n ≤ (h G n : ℝ) := by
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
+      c * n ≤ (G.maxSubgraphEdgeDistToBipartite n : ℝ) := by
   sorry
 
 /-- Erdős, Hajnal and Szemerédi [EHS82] constructed a graph $G$ with chromatic number $\aleph_1$
@@ -74,16 +66,30 @@ such that $h_G(n) \ll n^{3/2}$. -/
 @[category research solved, AMS 5]
 theorem erdos_111.variants.three_halves :
     ∃ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 ∧
-      ∃ C : ℝ, ∀ᶠ n : ℕ in atTop, (h G n : ℝ) ≤ C * (n : ℝ) ^ ((3 : ℝ) / 2) := by
+      ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
+        (G.maxSubgraphEdgeDistToBipartite n : ℝ) ≤ C * (n : ℝ) ^ ((3 : ℝ) / 2) := by
   sorry
 
-/-- Erdős [Er81] conjectured that for every $\epsilon > 0$ there is a graph $G$ with chromatic
-number $\aleph_1$ such that $h_G(n) \ll n^{1+\epsilon}$. -/
+/-- Erdős [Er81] conjectured that the bound of [EHS82] can be improved to
+$h_G(n) \ll n^{1+\epsilon}$ for every $\epsilon > 0$, i.e. that a single graph $G$ with chromatic
+number $\aleph_1$ satisfies $h_G(n) \ll_\epsilon n^{1+\epsilon}$ for every
+$\epsilon > 0$ (so $h_G(n) = n^{1+o(1)}$). See `erdos_111.variants.one_add_eps_weak`
+for the reading with the quantifiers swapped. -/
 @[category research open, AMS 5]
 theorem erdos_111.variants.one_add_eps :
+    answer(sorry) ↔ ∃ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 ∧
+      ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
+        (G.maxSubgraphEdgeDistToBipartite n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
+  sorry
+
+/-- A weaker reading of the [Er81] conjecture, where the graph may depend on $\epsilon$: for every
+$\epsilon > 0$ there is a graph $G$ with chromatic number $\aleph_1$ such that
+$h_G(n) \ll n^{1+\epsilon}$. This is implied by `erdos_111.variants.one_add_eps`. -/
+@[category research open, AMS 5]
+theorem erdos_111.variants.one_add_eps_weak :
     answer(sorry) ↔ ∀ ε : ℝ, 0 < ε → ∃ (V : Type) (G : SimpleGraph V),
-      G.chromaticCardinal = ℵ_ 1 ∧
-        ∃ C : ℝ, ∀ᶠ n : ℕ in atTop, (h G n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
+      G.chromaticCardinal = ℵ_ 1 ∧ ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
+        (G.maxSubgraphEdgeDistToBipartite n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
   sorry
 
 end Erdos111
