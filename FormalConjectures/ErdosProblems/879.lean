@@ -31,36 +31,28 @@ open Filter Asymptotics
 
 namespace Erdos879
 
-/-- The sum of the elements of a finite set of natural numbers. -/
-def setWeight (S : Finset ℕ) : ℕ := ∑ a ∈ S, a
-
-/-- An admissible subset of `{1, ..., n}`: distinct members are pairwise coprime. -/
+/-- An admissible subset of $\{1, \ldots, n\}$: distinct members are pairwise coprime. -/
 def IsAdmissible (n : ℕ) (S : Finset ℕ) : Prop :=
-  S ⊆ Finset.Icc 1 n ∧
-    ∀ a ∈ S, ∀ b ∈ S, a ≠ b → Nat.Coprime a b
+  S ⊆ Finset.Icc 1 n ∧ (S : Set ℕ).Pairwise Nat.Coprime
 
-/-- The maximum weight of an admissible subset of `{1, ..., n}`. -/
+/-- The maximum of $\sum_{a \in S} a$ over all admissible subsets $S$ of $\{1, \ldots, n\}$. -/
 noncomputable def G (n : ℕ) : ℕ := by
   classical
-  exact ((Finset.Icc 1 n).powerset.filter (IsAdmissible n)).sup setWeight
+  exact ((Finset.Icc 1 n).powerset.filter (IsAdmissible n)).sup (fun S ↦ S.sum id)
 
 /--
 The comparison function
-`H(n) = ∑_{p < n, p prime} p + n · π(√n)`.
-
-Here `Nat.sqrt n` is `⌊√n⌋`, and `Nat.primeCounting` counts primes at most its argument.
+$$H(n) = \sum_{p < n} p + n \pi(\sqrt{n}),$$
+where $p$ runs over primes. Since $\pi(\sqrt{n}) = \pi(\lfloor \sqrt{n} \rfloor)$, the second
+term uses `Nat.primeCounting (Nat.sqrt n)`.
 -/
 def H (n : ℕ) : ℕ :=
   (∑ p ∈ (Finset.range n).filter Nat.Prime, p) +
     n * Nat.primeCounting (Nat.sqrt n)
 
-/-- An admissible set whose sum is maximal among all admissible sets for `n`. -/
+/-- An admissible set whose sum is maximal among all admissible sets for $n$. -/
 def IsOptimal (n : ℕ) (S : Finset ℕ) : Prop :=
-  IsAdmissible n S ∧
-    ∀ T : Finset ℕ, IsAdmissible n T → setWeight T ≤ setWeight S
-
-/-- The number of distinct prime factors of `a`. -/
-def omega (a : ℕ) : ℕ := a.primeFactors.card
+  IsAdmissible n S ∧ ∀ T : Finset ℕ, IsAdmissible n T → T.sum id ≤ S.sum id
 
 /--
 Call a set $S \subseteq \{1, \ldots, n\}$ admissible if $(a,b)=1$ for all $a \neq b \in S$.
@@ -83,6 +75,7 @@ theorem erdos_879.parts.i :
 Is it true that, for every $k \geq 2$, if $n$ is sufficiently large then the admissible set which
 maximises $G(n)$ contains at least one integer with at least $k$ prime factors?
 
+Prime factors are counted without multiplicity, i.e. by `a.primeFactors.card`.
 The linked Lean proof gives a negative answer, already for $k=3$.
 -/
 @[category research solved, AMS 11,
@@ -92,7 +85,7 @@ theorem erdos_879.parts.ii :
     answer(False) ↔
       ∀ k : ℕ, 2 ≤ k →
         ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
-          ∃ S : Finset ℕ, IsOptimal n S ∧ ∃ a ∈ S, k ≤ omega a := by
+          ∃ S : Finset ℕ, IsOptimal n S ∧ ∃ a ∈ S, k ≤ a.primeFactors.card := by
   sorry
 
 end Erdos879
