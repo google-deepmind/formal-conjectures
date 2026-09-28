@@ -87,7 +87,7 @@ theorem erdos_144.variants.erdos_hall (β : ℝ) (hβ : Real.log 3 - 1 < β) :
 theorem closeDivisorSet_two :
     closeDivisorSet 2 = {n | ∃ d₁ d₂ : ℕ, d₁ ∣ n ∧ d₂ ∣ n ∧ d₁ < d₂ ∧ d₂ < 2 * d₁} := by
   ext n
-  simp only [closeDivisorSet, Set.mem_setOf_eq]
+  simp only [closeDivisorSet, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨a, b, ha, hb, hab, h⟩
     exact ⟨a, b, ha, hb, hab, by exact_mod_cast h⟩
