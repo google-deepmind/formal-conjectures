@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 89
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 Lean 4 code in this file was drafted with assistance from OpenAI Codex.
 The mathematical content and references are the author's own work.
 -/
+
+@[expose] public section
 
 open Filter
 open EuclideanGeometry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numerator of a sum involving binomial coefficients
@@ -26,6 +27,8 @@ with $a(0) = 0$.
 *References:*
 - [A357513](https://oeis.org/A357513)
 -/
+
+@[expose] public section
 namespace OeisA357513
 
 open Nat
@@ -73,7 +76,7 @@ proved by AlphaProof
 -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-    "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
+    "https://github.com/google-deepmind/formal-conjectures/blob/9c7f21e7d4445637538bc1817b058b9b3f31bd2b/FormalConjectures/OEIS/357513.lean#L232"]
 theorem a357513_supercongruence (p : ℕ) (hp : p.Prime) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
     (a (p - 1) : ℤ) ≡ 0 [ZMOD (p : ℤ) ^ 4] := by
   sorry

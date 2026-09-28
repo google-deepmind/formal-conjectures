@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 77
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [GNNW24] Gupta, P. and Ndiaye, N. and Norin, S. and Wei, L., Optimizing the CGMS upper bound on
   Ramsey numbers. arXiv:2407.19026 (2024).
 -/
+
+@[expose] public section
 
 open scoped Topology
 

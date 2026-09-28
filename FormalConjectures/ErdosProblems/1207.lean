@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1207
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [PaTa02] Pach, János and Tardos, Gábor, *Isosceles triangles determined by a planar point set*.
   Graphs Combin. (2002), 769--779.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped EuclideanGeometry

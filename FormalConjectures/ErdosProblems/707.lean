@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 707: Embedding Sidon Sets in Perfect Difference Sets
@@ -31,6 +32,8 @@ difference set modulo `p^2 + p + 1` for some prime power `p`?
 This problem is related to Erdős Problem 329 about the maximum density of Sidon sets.
 If this conjecture is true, it would imply that the maximum density of Sidon sets is 1.
 -/
+
+@[expose] public section
 
 open Function Set
 

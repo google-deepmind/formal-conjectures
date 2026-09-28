@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 358
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/358](https://www.erdosproblems.com/358)
 - [Ta26] T. Tao, [Erdős problem 358](https://terrytao.wordpress.com/wp-content/uploads/2026/02/erdos-358-2.pdf) (2026)
 -/
+
+@[expose] public section
 
 namespace Erdos358
 

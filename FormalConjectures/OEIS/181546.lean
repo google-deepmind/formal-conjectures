@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of fourth powers of Fibonacci-like binomial coefficients
@@ -24,6 +25,8 @@ $$a(n) = \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n-k}{k}^4.$$
 
 *References:*
 - [A181546](https://oeis.org/A181546)-/
+
+@[expose] public section
 
 namespace OeisA181546
 

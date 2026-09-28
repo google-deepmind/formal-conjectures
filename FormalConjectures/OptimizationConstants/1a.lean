@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   for the Sidon autocorrelation constant $C_{1a}$," 2026,
   [GitHub](https://github.com/AndreiPiterbarg/sidon-autocorrelation)
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primes congruent to $\{3, 5, 6\} \pmod 7$
@@ -24,6 +25,8 @@ Primes congruent to $3, 5, \text{ or } 6 \pmod 7$.
 *References:*
 - [A003625](https://oeis.org/A003625)
 -/
+
+@[expose] public section
 
 namespace OeisA3625
 

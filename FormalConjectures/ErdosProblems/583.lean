@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 583
@@ -41,6 +42,8 @@ import FormalConjecturesUtil
 - [Py96] Pyber, L., *Covering the edges of a connected graph by paths*. J. Combin. Theory Ser. B
   (1996), 152-159.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

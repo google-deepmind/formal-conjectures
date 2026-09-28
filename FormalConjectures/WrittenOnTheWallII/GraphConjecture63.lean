@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 63
@@ -29,6 +30,8 @@ has minimum even-distance count $9$, while its largest induced forest and
 largest induced bipartite subgraph both have order $4$. The conjectured lower
 bound is therefore $\lceil(9 + 4 + 1)/3\rceil = 5 > 4$.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture63
 

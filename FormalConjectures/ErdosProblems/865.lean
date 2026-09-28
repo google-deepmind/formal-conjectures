@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 865
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ci26] R. Cipollini, [A sharp $5/8$ bound for an Erdős–Sós pairwise-sums problem](https://arxiv.org/html/2606.29361)
   (2026).
 -/
+
+@[expose] public section
 
 open Finset Filter
 open scoped Asymptotics

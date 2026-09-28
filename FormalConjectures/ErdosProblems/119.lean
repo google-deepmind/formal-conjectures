@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 119
@@ -41,6 +42,8 @@ import FormalConjecturesUtil
 - [Wa80] Wagner, Gerold, On a problem of Erdős in {D}iophantine approximation. Bull. London Math.
   Soc. (1980), 81--88.
 -/
+
+@[expose] public section
 
 open Filter Finset Set
 

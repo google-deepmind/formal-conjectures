@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1063
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
  * [Mo85] Monier, Jean-Marie, _Problems and Solutions: Solutions of Advanced Problems: 6447_.
    Amer. Math. Monthly **92** (1985), 435-436.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Nat Topology

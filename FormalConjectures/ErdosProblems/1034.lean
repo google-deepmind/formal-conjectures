@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1034
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [MaTa25] Ma, Jie and Tang, Quanyu, *On Erdős problem #1034*.
   [staff.ustc.edu.cn/~jiema/Erdos-1034.pdf](http://staff.ustc.edu.cn/~jiema/Erdos-1034.pdf)
 -/
+
+@[expose] public section
 
 open Filter
 

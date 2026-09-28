@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime-th recurrence with reversal at each step
@@ -25,6 +26,8 @@ with $a(0)=1$, where $p_k$ is the $k$-th prime number.
 *References:*
 - [A100475](https://oeis.org/A100475)
 -/
+
+@[expose] public section
 
 namespace OeisA100475
 

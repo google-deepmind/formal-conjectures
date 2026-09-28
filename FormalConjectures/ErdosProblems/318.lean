@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 318
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   - [La26] D. Larsen, [Erdős problem 318](https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.pdf) (2026)
 -/
 
+@[expose] public section
+
 open Set Real
 
 namespace Erdos318
@@ -44,12 +47,14 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L761"]
 theorem erdos_318.variants.univ : P₁ univ := by
   sorry
 
 /-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L782"]
 theorem erdos_318.variants.odd : P₁ {n | Odd n} := by
   sorry
 
@@ -121,7 +126,8 @@ theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
 /-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L599"]
 theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
