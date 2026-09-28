@@ -56,4 +56,14 @@ theorem green_47 :
       ∨ (∃ P : Polynomial ℚ, P.degree = 2 ∧ ∀ a ∈ A, ∃ z : ℤ, (a : ℚ) = P.eval (z : ℚ)) := by
   sorry
 
+/-- In Green and Harper's formulation [GH14, Conjecture 1.7], the quadratic containment
+is allowed to fail on a finite subset of $A$. -/
+@[category research open, AMS 11]
+theorem green_47.variants.finite_exceptions :
+    answer(sorry) ↔ ∀ A : Set ℕ,
+      (∀ᶠ p in atTop, Nat.Prime p → Set.ncard (Set.image (fun a : ℕ => (a : ZMod p)) A) ≤ (p + 1) / 2) →
+      ((fun X : ℕ => ((A ∩ Set.Iic X).ncard : ℝ)) ≪ (fun X : ℕ => Real.sqrt (X : ℝ) / (Real.log (X : ℝ)) ^ 100))
+      ∨ (∃ P : Polynomial ℚ, P.degree = 2 ∧ {a ∈ A | ¬∃ z : ℤ, (a : ℚ) = P.eval (z : ℚ)}.Finite) := by
+  sorry
+
 end Green47
