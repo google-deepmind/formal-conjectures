@@ -79,6 +79,9 @@ below therefore writes the format in the order its own source uses.
   https://doi.org/10.1007/s10463-010-0294-5 ([arxiv/0806.4048](https://arxiv.org/abs/0806.4048)).
   Theorem 4.5 proves the first of the two bounds that [AS79] states without proof; Proposition
   4.9(1) is the special case used for `isMaxRank_three`.
+* [Ki26] K. Kitamura, *A Lean proof that the maximal rank of complex $3 \times 3 \times 5$
+  tensors is 6*, GitHub repository (2026), https://github.com/KitaKen1/mrank-3-3-5-lean. Used
+  for `isMaxRank_three_three_five`.
 * [BT15] G. Blekherman, Z. Teitler, *On maximum, typical and generic ranks*, Math. Ann. 362
   (2015), 1021-1031, https://doi.org/10.1007/s00208-014-1150-3
   ([arxiv/1402.2371](https://arxiv.org/abs/1402.2371)), Theorem 1. Used for
@@ -263,9 +266,9 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
     6 ≤ R ∧ R ≤ 7 := by
   sorry
 
-/-- **Open problem.** Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It is the one
+/-- Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It was the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
-[BFZ24, (4.20)]. -/
+[BFZ24, (4.20)]. The answer is `6`. A Lean proof is given in [Ki26]. -/
 @[category research solved, AMS 15,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/mrank-3-3-5-lean/blob/fbec93aa021bd994380cd27eb60e444e7cc85e93/lean/TensorRank335FC.lean#L3365-L3367"]
