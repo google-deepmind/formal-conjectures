@@ -71,6 +71,8 @@ number of distinct prime divisors of $|G|$, then `G` is solvable.
 This is Theorem 7.1 of the second version of the paper,
 [arXiv:2604.08040v2](https://arxiv.org/abs/2604.08040v2) (Das, Dey, Galindo, Sharma),
 proved there using the classification of finite simple groups.
+
+The Lean proof here by Kenta Kitamura instead uses only the Feit–Thompson theorem and the Gorenstein–Walter classification of groups with dihedral Sylow 2-subgroups, together with counting arguments on Sylow 2-subgroups and families of cyclic subgroups.
 -/
 @[category research solved, AMS 20,
   formal_proof using lean4 at
