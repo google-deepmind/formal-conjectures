@@ -69,7 +69,7 @@ Answer: Yes. Upper boundedness of $f$ alone suffices.
 -/
 @[category research solved, AMS 26,
   formal_proof using lean4 at
-    "https://github.com/inozemtsev/gradient-supremum/blob/69bea456a0d8b125b009b2d36b69b35699545766/GradientSupremum/Mathoverflow347178.lean#L30"]
+    "https://github.com/inozemtsev/gradient-supremum/blob/6c8ed6927e14c946c61fe51f57fd10ac81aba314/GradientSupremum/Mathoverflow347178.lean#L26"]
 theorem mathoverflow_347178.variants.bounded_only :
     answer(True) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
