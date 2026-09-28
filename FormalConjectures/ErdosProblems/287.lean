@@ -24,6 +24,8 @@ public import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/287](https://www.erdosproblems.com/287)
 -/
 
+@[expose] public section
+
 namespace Erdos287
 
 /-- The maximum gap between consecutive terms of a finite sequence `s : Fin k → ℕ`,

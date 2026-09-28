@@ -30,6 +30,8 @@ $$Z(G) \le \alpha(G) + 1,$$
 where $Z(G)$ is the zero forcing number and $\alpha(G)$ the independence number.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»

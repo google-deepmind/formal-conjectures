@@ -29,9 +29,11 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
+public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Tamagawa
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
@@ -108,6 +110,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistan
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
+public import FormalConjecturesForMathlib.Computability.AutomaticSequence
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import FormalConjecturesForMathlib.Computability.Complexity
 public import FormalConjecturesForMathlib.Computability.DFA
@@ -151,6 +154,7 @@ public import FormalConjecturesForMathlib.GroupTheory.Torsion
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
+public import FormalConjecturesForMathlib.LinearAlgebra.QuadraticForm.UInvariant
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
 public import FormalConjecturesForMathlib.ModelTheory.Decidability
@@ -161,6 +165,7 @@ public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.AlmostPrime
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
+public import FormalConjecturesForMathlib.NumberTheory.AutomaticNumber
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.CenterAction
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.LieDeriv
@@ -175,6 +180,7 @@ public import FormalConjecturesForMathlib.NumberTheory.ExpansionEntropy
 public import FormalConjecturesForMathlib.NumberTheory.Harmonic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
+public import FormalConjecturesForMathlib.NumberTheory.MultiplicativelyIndependent
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDiscriminant
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
@@ -196,12 +202,14 @@ public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule
+public import FormalConjecturesForMathlib.RingTheory.CohenMacaulayModule
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Basic
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Defs
 public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
 public import FormalConjecturesForMathlib.RingTheory.IntersectionMultiplicity
 public import FormalConjecturesForMathlib.RingTheory.MvPolynomial.LexPlusPowers
 public import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
+public import FormalConjecturesForMathlib.RingTheory.SystemOfParameters
 public import FormalConjecturesForMathlib.RingTheory.Valuation.LocalUniformization
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
@@ -211,6 +219,7 @@ public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Real
+public import FormalConjecturesForMathlib.Topology.CardinalInvariants
 public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
 public import FormalConjecturesForMathlib.Topology.Homogeneous
