@@ -15,7 +15,6 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
-import Mathlib.Geometry.Euclidean.Angle.Oriented.Rotation
 
 /-!
 # The number of least-squares matchings under rotations is polynomially bounded
