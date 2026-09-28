@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Snake in the box
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Hypercube](https://en.wikipedia.org/wiki/Hypercube_graph)
 - [xkcd](https://xkcd.com/3125/)
 -/
+
+@[expose] public section
 
 universe u
 

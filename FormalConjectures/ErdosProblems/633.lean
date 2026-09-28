@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 633
@@ -25,6 +27,8 @@ import FormalConjecturesUtil
 * [BLZ26] Beeson, Michael, Laczkovich, Miklós, and Zhang, Yan,
   [*Solution of Erdős problem 633*](https://arxiv.org/abs/2604.03609).
 -/
+
+@[expose] public section
 
 open Affine
 open scoped Congruent EuclideanGeometry Similar

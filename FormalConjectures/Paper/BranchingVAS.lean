@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Decidability of reachability for branching vector addition systems
@@ -52,6 +54,8 @@ Branching vector addition systems are distinguished from ordinary vector additio
   Grégoire Sutre* (2026), a recent preprint claiming a positive resolution to the conjecture:
   reachability for branching vector addition systems is decidable.
 -/
+
+@[expose] public section
 
 namespace BranchingVAS
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence involving LCM: $a(n) = x(n+1)/x(n) - 2$
@@ -24,6 +25,8 @@ for $n > 1$.
 
 *References:*
 - [A135508](https://oeis.org/A135508)-/
+
+@[expose] public section
 
 namespace OeisA135508
 

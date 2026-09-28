@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 546
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [AKS03] Alon, N., Krivelevich, M. and Sudakov, B., Turán numbers of bipartite graphs and Ramsey
   graphs of bounded degree. Combin. Probab. Comput. (2003), 477-483.
 -/
+
+@[expose] public section
 
 namespace Erdos546
 

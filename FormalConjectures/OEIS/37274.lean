@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Home primes (OEIS A037274)
@@ -32,6 +33,8 @@ $$25 \longmapsto 55 \longmapsto 511 \longmapsto 773.$$
 * M. Herman and J. Schiffman, *Investigating home primes and their families*,
   Mathematics Teacher 107 (2014), 606–614
 -/
+
+@[expose] public section
 
 namespace OeisA37274
 

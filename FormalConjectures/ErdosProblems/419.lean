@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 419
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [EGIP96] Erdős, Paul and Graham, S. W. and Ivić, Aleksandar and Pomerance, Carl,
   *On the number of divisors of $n!$*. (1996), 337--355.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped ArithmeticFunction.sigma

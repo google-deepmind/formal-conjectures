@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1020
@@ -44,6 +45,8 @@ import FormalConjecturesUtil
 - [LuMi14] Łuczak, Tomasz and Mieczkowska, Katarzyna, *On {E}rdős' extremal problem on matchings in
   hypergraphs*. J. Combin. Theory Ser. A (2014), 178--194.
 -/
+
+@[expose] public section
 
 namespace Erdos1020
 

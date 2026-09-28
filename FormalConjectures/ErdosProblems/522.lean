@@ -13,14 +13,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 522
 
-*Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
+*References:*
+- [erdosproblems.com/522](https://www.erdosproblems.com/522)
+- [Ch26] Chojecki, P., *A strong law for the roots of random Littlewood polynomials* (2026),
+  [ulam.ai/research/erdos522-final.pdf](https://www.ulam.ai/research/erdos522-final.pdf).
+- [Ka26] Kawada, S., *Almost-Sure Radial Laws for Nested Random Polynomials and Erdős
+  Problem #522*, [doi:10.5281/zenodo.22970145](https://zenodo.org/records/22970145) (2026).
+  Lean 4 formalization: [chreia/erdos-522](https://github.com/chreia/erdos-522).
+- [Ki26] Kitamura, K., *A Lean proof of Erdős Problem 522*,
+  [KitaKen1/erdos-522-strong-law](https://github.com/KitaKen1/erdos-522-strong-law) (2026).
+- [KZ26] Kwon, Y. and Zou, J., *A fourth moment estimate for logarithmic integrals of random
+  Littlewood polynomials and Erdős's root-count problem* (2026),
+  [ykwon0407/erdos-521-522](https://github.com/ykwon0407/erdos-521-522).
 -/
+
+@[expose] public section
 
 open MeasureTheory Filter
 open scoped ProbabilityTheory Topology Real
@@ -94,10 +108,15 @@ almost surely?
 
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
+
+This is true. Proofs were posted on the erdosproblems.com forum in April 2026 [Ch26], [KZ26],
+and Lean proofs were given independently in September 2026 [Ka26], [Ki26].
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089"]
 theorem erdos_522 :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
@@ -112,10 +131,14 @@ $$
   \frac{R_n}{n/2}\to 1
 $$
 almost surely?
+
+This is true; a Lean proof is given in [Ki26].
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9101-L9104"]
 theorem erdos_522.variants.zero_one :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       {n : ℕ} (hn : 1 ≤ n) (f : KacCoefficients ({0, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * f.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry

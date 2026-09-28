@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures in Complexity Theory
@@ -28,6 +30,8 @@ in complexity theory, including
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
 - [The Clay Institute](https://www.claymath.org/millennium/p-vs-np/)
 -/
+
+@[expose] public section
 
 namespace ComplexityTheory
 
@@ -65,7 +69,8 @@ This can be proven by observing that for any language in P,
 we can construct a verifier that ignores the witness and simply runs the poly-time decider for the
 language.
 -/
-@[category textbook, AMS 68]
+@[category textbook, AMS 68, formal_proof using lean4 at
+  "https://github.com/AItoBit/p-subset-np/blob/beaeee15c37af6efac518426e117861c00ff3acc/PSubsetNP.lean#L358"]
 theorem P_subset_NP :
     P ⊆ NP := by
   sorry

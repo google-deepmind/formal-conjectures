@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 775
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [MoMo65] Moon, J. W. and Moser, L., *On cliques in graphs*. Israel J. Math. (1965), 23-28.
 - [Sp71] Spencer, J. H., *On cliques in graphs*. Israel J. Math. (1971), 419-421.
 -/
+
+@[expose] public section
 
 open Filter
 

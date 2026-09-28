@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 593
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   and set-systems. Cambridge Summer School in Mathematical Logic (Cambridge, 1971),
   Lecture Notes in Math. 337, Springer (1973), 531–538.
 -/
+
+@[expose] public section
 
 open Cardinal Set SimpleGraph
 

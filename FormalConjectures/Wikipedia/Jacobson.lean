@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Jacobson Conjecture
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   J. London Math. Soc. Series 2, 15 (1): 41–47
   https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/jlms/s2-15.1.41
 -/
+
+@[expose] public section
 
 open Ring
 

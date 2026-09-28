@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Kurepa's conjecture
 
 *Reference:* [On the left factorial function !N](https://oeis.org/A3422), by *Đuro Kurepa* Math. Balkanica 1, p. 147-153, 1971
 
 -/
+
+@[expose] public section
 
 namespace Kurepa
 
