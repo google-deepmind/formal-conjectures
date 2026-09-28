@@ -63,12 +63,16 @@ open-ended, but presumably Erdős and Graham would have been satisfied with the 
 generalisations of Stoll ([St05] and [St06]).
 
 The binary expansion is $\sqrt{2} = 1.0110101\ldots$, and the $n$th digit counts the leading $1$ as
-digit $1$. That digit is $\lfloor \sqrt{2} \cdot 2^{n-1} \rfloor \bmod 2$. -/
+digit $1$.  It is stated with Mathlib's `Real.digits`: the $n$th digit of $\sqrt{2}$ is digit $n - 1$
+of $\sqrt{2}/2 = 0.10110101\ldots$, that is $\lfloor \sqrt{2} \cdot 2^{n-1} \rfloor \bmod 2$.  The
+second conjunct records that these digits are the binary expansion: they reconstruct $\sqrt{2}/2$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/gotrevor/lean-gallery/blob/a834bbad2f36eedcc16066b2bc4da49f98ab5b85/LeanGallery/NumberTheory/Erdos482/Statement.lean#L41-L45"]
-theorem erdos_482 (n : ℕ) (hn : 1 ≤ n) :
-    (a (2 * n + 1) : ℤ) - 2 * a (2 * n - 1) = (⌊√2 * 2 ^ (n - 1)⌋₊ % 2 : ℕ) := by
+    "https://github.com/gotrevor/lean-gallery/blob/a28a487968d989b24c9dde9b1958aa5b92c6fccb/LeanGallery/NumberTheory/Erdos482/Statement.lean#L46-L49"]
+theorem erdos_482 :
+    (∀ n : ℕ, 1 ≤ n →
+      (a (2 * n + 1) : ℤ) - 2 * a (2 * n - 1) = (Real.digits (√2 / 2) 2 (n - 1) : ℕ)) ∧
+      Real.ofDigits (Real.digits (√2 / 2) 2) = √2 / 2 := by
   sorry
 
 /-- Stoll's general answer to the open-ended part [St05]: for every real $w > 0$ and every base
