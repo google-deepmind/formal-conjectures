@@ -64,7 +64,7 @@ The binary expansion is $\sqrt{2} = 1.0110101\ldots$, and the $n$th digit counts
 digit $1$. That digit is $\lfloor \sqrt{2} \cdot 2^{n-1} \rfloor \bmod 2$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/gotrevor/lean-gallery/blob/main/LeanGallery/NumberTheory/Erdos482/Statement.lean"]
+    "https://github.com/gotrevor/lean-gallery/blob/a834bbad2f36eedcc16066b2bc4da49f98ab5b85/LeanGallery/NumberTheory/Erdos482/Statement.lean#L41-L45"]
 theorem erdos_482 (n : ℕ) (hn : 1 ≤ n) :
     (a (2 * n + 1) : ℤ) - 2 * a (2 * n - 1) = (⌊√2 * 2 ^ (n - 1)⌋₊ % 2 : ℕ) := by
   sorry
@@ -77,12 +77,46 @@ The mantissa normalization is $w / g^{\lfloor \log_g w \rfloor}$, so the right-h
 standard Mathlib base-$g$ digit of the normalized expansion. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/gotrevor/lean-gallery/blob/main/LeanGallery/NumberTheory/Erdos482/Statement.lean"]
+    "https://github.com/gotrevor/lean-gallery/blob/a834bbad2f36eedcc16066b2bc4da49f98ab5b85/LeanGallery/NumberTheory/Erdos482/Statement.lean#L64-L67"]
 theorem erdos_482.variants.stoll_general (g : ℕ) [NeZero g] (hg : 2 ≤ g) (w : ℝ) (hw : 0 < w) :
     ∃ a b ε : ℝ, a * b = g ∧
       ∀ n : ℕ, 1 ≤ n →
         generalRecurrence g a b ε (2 * n) - g * generalRecurrence g a b ε (2 * n - 2) =
           (Real.digits (w / (g : ℝ) ^ ⌊Real.logb g w⌋ * (g : ℝ) ^ (n - 1) / g) g 0 : ℕ) := by
+  sorry
+
+/-- The odd-step coefficient of the Rabinowitz–Gilbert/Stoll binary recurrence. -/
+noncomputable def alpha (t : ℝ) : ℝ := 2 * (t + 1) / (t + 2)
+
+/-- The even-step coefficient of the Rabinowitz–Gilbert/Stoll binary recurrence. -/
+noncomputable def beta (t : ℝ) : ℝ := (t + 2) / (t + 1)
+
+/-- Zero-based form of the Rabinowitz–Gilbert/Stoll binary recurrence: `stollBinary t k` is the
+paper's $u_{k+1}$.  At $t = \sqrt{2}$ both coefficients equal $\sqrt{2}$, and this is the sequence
+`a` shifted by one. -/
+noncomputable def stollBinary (t : ℝ) : ℕ → ℕ
+  | 0 => 1
+  | n + 1 =>
+      ⌊(if Even n then alpha t else beta t) * ((stollBinary t n : ℝ) + 1 / 2)⌋₊
+
+/-- The binary digits of a normalized real $t \in [1, 2)$, indexed from one and including the
+leading digit.  The value at index zero is padding. -/
+noncomputable def binaryDigit (t : ℝ) : ℕ → Fin 2
+  | 0 => 0
+  | 1 => 1
+  | k + 2 => Real.digits (t - 1) 2 k
+
+/-- The explicit binary answer to the open-ended part (Rabinowitz–Gilbert; see [St05]): for every normalized real
+$t \in [1, 2)$, the recurrence with coefficients $\alpha(t) = 2(t+1)/(t+2)$ and
+$\beta(t) = (t+2)/(t+1)$ reads off the binary digits of $t$, and those digits reconstruct $t$.
+Unlike `erdos_482.variants.stoll_general`, the coefficients are given, not merely shown to exist. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/plby/lean-proofs/blob/33a6b9a285cb64ac276ce4d0b3a4111b82c972b6/src/latest/ErdosProblems/Erdos482.lean#L323-L332"]
+theorem erdos_482.variants.binary_explicit (t : ℝ) (ht1 : 1 ≤ t) (ht2 : t < 2) :
+    (∀ n, 1 ≤ n →
+        stollBinary t (2 * n) - 2 * stollBinary t (2 * n - 2) = (binaryDigit t n).val) ∧
+      Real.ofDigits (fun k ↦ binaryDigit t (k + 2)) = t - 1 := by
   sorry
 
 end Erdos482
