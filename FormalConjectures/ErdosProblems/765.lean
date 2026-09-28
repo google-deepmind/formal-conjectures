@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 765
@@ -38,6 +40,8 @@ import FormalConjecturesUtil
 - [MaYa23] Ma, Jie and Yang, Tianchi, *Upper bounds on the extremal number of the 4-cycle*. Bull.
   Lond. Math. Soc. (2023), 1655--1667.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
