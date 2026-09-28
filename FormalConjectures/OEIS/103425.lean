@@ -59,6 +59,9 @@ def IsWeightedTribonacci (a b c : ℤ) (x : ℕ → ℤ) : Prop :=
 The current sequence contains primes, including $3, 5, 41, 21523361$.
 Is there an $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively prime
 which is prime-free?
+
+Yes: take $(a, b, c) = (1, 1, -1)$ and the constant sequence $x(n) = 4$.
+The linked Lean proof is by Kenta Kitamura.
 -/
 
 @[category research solved, AMS 11,
@@ -70,5 +73,50 @@ theorem conjecture : answer(True) ↔
       IsWeightedTribonacci a b c x ∧
       ∀ n, ¬ (x n).natAbs.Prime := by
   sorry
+
+/--
+Is there a non-constant $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively
+prime which is prime-free?
+
+Yes: take $(a, b, c) = (1, 1, -1)$ and $x(n) = 4(n + 1)$.
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.nonconstant : answer(True) ↔
+    ∃ (a b c : ℤ) (x : ℕ → ℤ),
+      Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧
+      IsWeightedTribonacci a b c x ∧
+      (∃ m n, x m ≠ x n) ∧
+      ∀ n, ¬ (x n).natAbs.Prime := by
+  constructor
+  · intro _
+    refine ⟨1, 1, -1, fun n ↦ 4 * (n + 1), by norm_num, fun n ↦ by push_cast; ring,
+      ⟨0, 1, by norm_num⟩, fun n ↦ ?_⟩
+    rw [show (4 * ((n : ℤ) + 1)).natAbs = 4 * (n + 1) by omega, Nat.prime_mul_iff]
+    norm_num
+  · intro _
+    trivial
+
+/--
+Is there a non-constant $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively
+prime and pairwise distinct which is prime-free?
+
+Yes: take $(a, b, c) = (3, -3, 1)$ and $x(n) = (n + 2)^2$.
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.nonconstant_distinct_coeffs : answer(True) ↔
+    ∃ (a b c : ℤ) (x : ℕ → ℤ),
+      Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧
+      a ≠ b ∧ a ≠ c ∧ b ≠ c ∧
+      IsWeightedTribonacci a b c x ∧
+      (∃ m n, x m ≠ x n) ∧
+      ∀ n, ¬ (x n).natAbs.Prime := by
+  constructor
+  · intro _
+    refine ⟨3, -3, 1, fun n ↦ (n + 2) ^ 2, by norm_num, by norm_num, by norm_num, by norm_num,
+      fun n ↦ by push_cast; ring, ⟨0, 1, by norm_num⟩, fun n ↦ ?_⟩
+    rw [Int.natAbs_pow]
+    exact Nat.Prime.not_prime_pow le_rfl
+  · intro _
+    trivial
 
 end OeisA103425
