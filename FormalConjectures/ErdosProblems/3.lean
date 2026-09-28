@@ -50,17 +50,6 @@ theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
   sorry
 
 /--
-The case of $3$-term progressions: if $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$,
-then $A$ contains a non-trivial $3$-term arithmetic progression.
-
-Proved by Bloom and Sisask [BlSi20].
--/
-@[category research solved, AMS 11]
-theorem erdos_3.variants.three : ∀ A : Set ℕ,
-    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
-  sorry
-
-/--
 $r_k(N)$ is the largest size of a subset of $\{1, \dots, N\}$ that does not contain a non-trivial
 $k$-term arithmetic progression.
 -/
@@ -74,6 +63,20 @@ Proved by Kelley and Meka [KeMe23].
 @[category research solved, AMS 11]
 theorem erdos_3.variants.kelley_meka : ∃ β > (0 : ℝ), ∃ c > (0 : ℝ),
     (fun N ↦ (r 3 N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.exp (-c * Real.log N ^ β) := by
+  sorry
+
+/--
+The case of $3$-term progressions: if $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$,
+then $A$ contains a non-trivial $3$-term arithmetic progression.
+
+Proved by Bloom and Sisask [BlSi20].
+-/
+@[category research solved, AMS 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/wilsonwu-ai/sundai-erdos-3/blob/8a58287a16558bf1e708eaa2d0f7cba4c86566a3/lean/Erdos3ThreeCase.lean"
+    assuming erdos_3.variants.kelley_meka]
+theorem erdos_3.variants.three : ∀ A : Set ℕ,
+    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
   sorry
 
 /--
