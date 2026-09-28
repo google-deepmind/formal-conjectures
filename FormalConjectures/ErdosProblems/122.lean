@@ -30,7 +30,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter Topology ArithmeticFunction
+open Filter Topology
 
 namespace Erdos122
 
@@ -73,7 +73,7 @@ theorem erdos_122.variants.divisor_count : Erdos122Property fun n ↦ n.divisors
 /-- Erdős, Pomerance and Sárközy [EPS97] proved the property for $\omega(n)$, the number of
 distinct prime divisors of $n$. -/
 @[category research solved, AMS 11]
-theorem erdos_122.variants.omega : Erdos122Property fun n ↦ ω n := by
+theorem erdos_122.variants.omega : Erdos122Property fun n ↦ n.primeFactors.card := by
   sorry
 
 /-- Erdős conjectured that the property fails for Euler's totient function $\phi(n)$. -/
@@ -83,7 +83,7 @@ theorem erdos_122.variants.totient : ¬ Erdos122Property Nat.totient := by
 
 /-- Erdős conjectured that the property fails for the sum of divisors function $\sigma(n)$. -/
 @[category research open, AMS 11]
-theorem erdos_122.variants.sigma : ¬ Erdos122Property fun n ↦ σ 1 n := by
+theorem erdos_122.variants.sigma : ¬ Erdos122Property fun n ↦ ∑ d ∈ n.divisors, d := by
   sorry
 
 /-- The zero function does not have the property. Take $F(x) = x$. Then
@@ -97,7 +97,7 @@ theorem not_erdos122Property_zero : ¬ Erdos122Property fun _ ↦ 0 := by
   have hsub : {n : ℕ | (x : ℝ) < ((n + 0 : ℕ) : ℝ) ∧ ((n + 0 : ℕ) : ℝ) < x + x} ⊆
       ↑(Finset.Ioo x (x + x)) := by
     intro n hn
-    simp only [Set.mem_setOf_eq, add_zero] at hn
+    simp only [Set.mem_ofPred_eq, add_zero] at hn
     simp only [Finset.coe_Ioo, Set.mem_Ioo]
     exact ⟨by exact_mod_cast hn.1, by exact_mod_cast hn.2⟩
   have h2 : count (fun _ ↦ 0) (fun x ↦ (x : ℝ)) x ≤ x :=
