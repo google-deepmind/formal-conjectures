@@ -278,6 +278,10 @@ def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
   (affineSpan ℝ {a, b}).Parallel (affineSpan ℝ {c, d}) ∧
   dist a c = dist b d
 
+/-- A line in the plane: an affine subspace of `ℝ²` whose direction is one-dimensional. -/
+def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
+  Module.finrank ℝ L.direction = 1
+
 end EuclideanGeometry
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
