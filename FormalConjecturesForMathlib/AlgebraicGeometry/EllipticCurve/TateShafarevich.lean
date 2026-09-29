@@ -70,8 +70,10 @@ noncomputable def galoisRepresentation : TopRep ℤ <| Field.absoluteGaloisGroup
                  map_one' := by ext P; cases P <;> rfl
                  map_mul' _ _ := by ext P; cases P <;> rfl }
 
-/-- The Tate--Shafarevich subgroup of the first continuous Galois cohomology group over a number
-field, using restriction to every infinite and finite completion. -/
+/-- The subgroup of the first continuous Galois cohomology group consisting of classes whose
+restrictions vanish at every infinite and finite place. When `W.IsElliptic`, this is the classical
+Tate--Shafarevich group of `W` over `K`. The construction also applies to the nonsingular locus
+of a singular Weierstrass curve. -/
 noncomputable def tateShafarevich [NumberField K] :
     AddSubgroup <| continuousCohomology 1 W.galoisRepresentation :=
   ContinuousCohomology.tateShafarevich
