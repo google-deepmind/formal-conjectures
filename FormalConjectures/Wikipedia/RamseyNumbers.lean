@@ -172,4 +172,22 @@ $102 \le R(6,6) \le 165$.
 theorem ramsey_number_six_six : R(6, 6) = answer(sorry) := by
   sorry
 
+/--
+Lower bound $102 \le R(6,6)$, equivalently: there exists a graph on $101$ vertices with no
+$6$-clique and no independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_six_six_lower_bound :
+    ∃ G : SimpleGraph (Fin 101), G.CliqueFree 6 ∧ (Gᶜ).CliqueFree 6 := by
+  sorry
+
+/--
+Upper bound $R(6,6) \le 165$, i.e. every graph on $165$ vertices contains a $6$-clique or an
+independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_six_six_upper_bound :
+    IsGraphRamsey 165 6 6 := by
+  sorry
+
 end RamseyNumbers
