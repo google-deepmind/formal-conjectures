@@ -45,15 +45,6 @@ namespace Erdos556
 open SimpleGraph
 
 /--
-The $k$-colour Ramsey number of a graph `G`: the least `N` such that every `k`-colouring of the
-edges of the complete graph on `Fin N` (an edge-colouring `c : Fin k → SimpleGraph (Fin N)` of
-`⊤`) contains a monochromatic copy of `G`, i.e. `G ⊑ c i` for some colour `i`.
--/
-noncomputable def multicolourRamsey {V : Type*} (G : SimpleGraph V) (k : ℕ) : ℕ :=
-  sInf {N : ℕ | ∀ c : Fin k → SimpleGraph (Fin N),
-    (⊤ : SimpleGraph (Fin N)).IsEdgeColouring c → ∃ i, G ⊑ c i}
-
-/--
 Erdős Problem 556 (Bondy–Erdős): for all $n \ge 3$,
 $$R(C_n; 3) \le 4n - 3.$$
 -/
@@ -79,6 +70,26 @@ $4n - 3$, so equality holds whenever the conjectured upper bound does.
 @[category research solved, AMS 5]
 theorem erdos_556.variants.odd_lower_bound (n : ℕ) (hn : 3 ≤ n) (hodd : Odd n) :
     4 * n - 3 ≤ multicolourRamsey (cycleGraph n) 3 := by
+  sorry
+
+/--
+Kohayakawa, Simonovits and Skokan [KSS05] settled the conjecture for large odd $n$: for all
+sufficiently large odd $n$,
+$$R(C_n; 3) = 4n - 3.$$
+-/
+@[category research solved, AMS 5]
+theorem erdos_556.variants.kss_large_odd :
+    ∀ᶠ n : ℕ in atTop, Odd n → multicolourRamsey (cycleGraph n) 3 = 4 * n - 3 := by
+  sorry
+
+/--
+Benevides and Skokan [BeSk09] settled the even case for large $n$: for all sufficiently large
+even $n$,
+$$R(C_n; 3) = 2n.$$
+-/
+@[category research solved, AMS 5]
+theorem erdos_556.variants.benevides_skokan_large_even :
+    ∀ᶠ n : ℕ in atTop, Even n → multicolourRamsey (cycleGraph n) 3 = 2 * n := by
   sorry
 
 end Erdos556
