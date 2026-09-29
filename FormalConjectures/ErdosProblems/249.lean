@@ -38,4 +38,24 @@ irrational? Here $\phi$ is the Euler totient function.
 theorem erdos_249 : answer(sorry) ↔ Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
   sorry
 
+/--
+For every modulus $m \ge 3$ and integer base $B \ge 2$, the numbers
+$$
+1,\qquad \sum_{n \ge 1}\frac{\phi(n) \bmod m}{B^{dn}}\quad(d \ge 1)
+$$
+are linearly independent over $\mathbb{Q}$.
+
+This solved variant concerns bounded least-residue coefficients. The irrationality
+of the unreduced totient series in `erdos_249` remains open.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/d85765c9ead139e1c562c93e675ad92616923f6b/Solutions/ExternalVerification249CountableDilationIndependence.lean#L12-L19"]
+theorem erdos_249.variants.least_residue_dilation_independence
+    (m B : ℕ) (hm : 3 ≤ m) (hB : 2 ≤ B) :
+    LinearIndependent ℚ (fun d : ℕ =>
+      if d = 0 then (1 : ℝ) else
+        ∑' n : ℕ, ((Nat.totient (n + 1) % m : ℕ) : ℝ) /
+          ((B ^ d : ℕ) : ℝ) ^ (n + 1)) := by
+  sorry
+
 end Erdos249
