@@ -111,6 +111,6 @@ theorem admissible_zero_iff {t n m : ℕ} :
     refine ⟨c, fun X hX b ↦ ⟨?_, by simp⟩⟩
     obtain ⟨Z, hZX, hZ⟩ := Finset.exists_subset_card_eq hX
     obtain ⟨Y, hYZ, hY, hcY⟩ := hc Z hZ b
-    exact Finset.card_pos.2 ⟨Y, by simp [colourCount, hYZ.trans hZX, hY, hcY]⟩
+    exact Finset.card_pos.2 ⟨Y, by simp [hYZ.trans hZX, hY, hcY]⟩
 
 end Erdos161
