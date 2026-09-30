@@ -13,70 +13,125 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-module
+import Mathlib
 
-public import FormalConjecturesUtil
+open scoped ENNReal
 
 /-!
-# Erdős Problem 169
+# Erdős Problem 169: statement formalization
 
-*Reference:* [erdosproblems.com/169](https://www.erdosproblems.com/169)
+Source: the supplied `169(1).pdf`, pp. 1–4.
+
+This file defines the main question and the uniform-tail question from p. 2.
+It does NOT prove either question, the numerical records in the comments,
+or the asserted equivalence with Erdős Problem 3.
+
+Reciprocal sums and their supremum live in `ENNReal`, so divergence is
+represented by infinity rather than by the default value of a real `tsum`.
+`W k` is the TWO-colour van der Waerden number on {1, ..., N}.
+
+No `sorry`, additional axioms, or `native_decide` are used. The conjectures
+are definitions of propositions, not theorems asserting those propositions.
+Compilation has not been checked in the authoring environment.
 -/
-
-@[expose] public section
-
-open scoped ENNReal Topology
 
 namespace Erdos169
 
-/--
-The set of $N$ such that every $2$-colouring of $\{1, \dots, N\}$ contains a monochromatic
-$k$-term arithmetic progression.
--/
-def monoAPGuaranteeSet (k : ℕ) : Set ℕ :=
-  {N | ∀ coloring : Finset.Icc 1 N → Fin 2, ContainsMonoAPofLength coloring k}
+/-- A nonconstant k-term arithmetic progression contained in A. -/
+def HasAP (A : Set ℕ) (k : ℕ) : Prop :=
+  ∃ a d : ℕ, 0 < d ∧ ∀ i : ℕ, i < k → a + i * d ∈ A
 
-/-- The two-colour van der Waerden number $W(k)$, defined as in Erdős Problem 138. -/
-noncomputable def W (k : ℕ) : ℕ := sInf (monoAPGuaranteeSet k)
+/-- A contains no nonconstant k-term arithmetic progression. -/
+def APFree (A : Set ℕ) (k : ℕ) : Prop :=
+  ¬ HasAP A k
 
-/-- The sum of the reciprocals of the elements of $A$, allowing $\infty$. -/
+/-- A is a set of strictly positive integers with no k-term progression. -/
+def Admissible (A : Set ℕ) (k : ℕ) : Prop :=
+  (∀ n ∈ A, 0 < n) ∧ APFree A k
+
+/-- The sum of reciprocals, with infinity permitted. -/
 noncomputable def reciprocalSum (A : Set ℕ) : ℝ≥0∞ :=
-  ∑' n : A, (n.val : ℝ≥0∞)⁻¹
+  ∑' n : A, ((n.val : ℝ≥0∞)⁻¹)
 
-/-- The supremum of reciprocal sums over sets of positive integers containing no
-$k$-term arithmetic progression. -/
+/-- The extremal function from Problem 169. -/
 noncomputable def f (k : ℕ) : ℝ≥0∞ :=
-  ⨆ (A : Set ℕ) (_ : A ⊆ Set.Ioi 0) (_ : A.IsAPOfLengthFree k), reciprocalSum A
+  ⨆ (A : Set ℕ) (_ : Admissible A k), reciprocalSum A
 
-@[category API, AMS 5 11]
-lemma reciprocalSum_le_f {A : Set ℕ} {k : ℕ}
-    (hpos : A ⊆ Set.Ioi 0) (hfree : A.IsAPOfLengthFree k) : reciprocalSum A ≤ f k := by
-  exact le_iSup_of_le A (le_iSup_of_le hpos (le_iSup_of_le hfree le_rfl))
+/-- Every two-colouring of {1, ..., N} contains a monochromatic k-AP.
+Colourings of all naturals are equivalent here, since only 1,...,N are used. -/
+def VanDerWaerdenProperty (k N : ℕ) : Prop :=
+  ∀ c : ℕ → Fin 2, ∃ a d : ℕ,
+    0 < a ∧ 0 < d ∧
+    (∀ i : ℕ, i < k → a + i * d ≤ N) ∧
+    (∀ i : ℕ, i < k → c (a + i * d) = c a)
 
-/--
-Let $k\geq 3$ and $f(k)$ be the supremum of $\sum_{n\in A}\frac{1}{n}$ as $A$ ranges over
-all sets of positive integers which do not contain a $k$-term arithmetic progression.
-Is
-$$\lim_{k\to\infty}\frac{f(k)}{\log W(k)}=\infty$$
-where $W(k)$ is the van der Waerden number?
--/
-@[category research open, AMS 5 11]
-theorem erdos_169 : answer(sorry) ↔
-    Filter.Tendsto (fun k : ℕ =>
-      f (k + 3) / ENNReal.ofReal (Real.log (W (k + 3) : ℝ)))
-      Filter.atTop (𝓝 (⊤ : ℝ≥0∞)) := by
-  sorry
+/-- Least positive N with the two-colour van der Waerden property.
+Existence is the classical van der Waerden theorem, not proved in this file.
+As usual for `sInf` on naturals, an empty defining set would give zero. -/
+noncomputable def W (k : ℕ) : ℕ :=
+  sInf {N : ℕ | 0 < N ∧ VanDerWaerdenProperty k N}
 
-/--
-For every $\epsilon>0$ and $k\geq 3$, if $A$ is a set of positive integers without a
-$k$-term arithmetic progression and $\min(A)$ is sufficiently large in terms of $\epsilon$
-and $k$, is $\sum_{n\in A}\frac{1}{n}<\epsilon$?
--/
-@[category research open, AMS 5 11]
-theorem erdos_169.variants.uniform_tail : answer(sorry) ↔
-    ∀ ε : ℝ, 0 < ε → ∀ k : ℕ, 3 ≤ k →
-      ∃ N : ℕ, ∀ A : Set ℕ, A ⊆ Set.Ioi 0 → A.IsAPOfLengthFree k →
-        (∀ n ∈ A, N ≤ n) → reciprocalSum A < ENNReal.ofReal ε := by
-  sorry
+/-- For k ≥ 3 this is the positive real number log(W(k)), in ENNReal. -/
+noncomputable def logW (k : ℕ) : ℝ≥0∞ :=
+  ENNReal.ofReal (Real.log (W k : ℝ))
+
+/-- The quotient, retaining the possibility that f(k) is infinite. -/
+noncomputable def normalizedF (k : ℕ) : ℝ≥0∞ :=
+  f k / logW k
+
+/-- Main question: does f(k) / log(W(k)) tend to infinity?
+`𝓝 ⊤` is intentional: infinity is an actual point of ENNReal.
+Starting at k + 3 restricts the sequence to the domain in the PDF. -/
+def Conjecture : Prop :=
+  Filter.Tendsto (fun k : ℕ => normalizedF (k + 3))
+    Filter.atTop (nhds (⊤ : ℝ≥0∞))
+
+/-- The finiteness assertion discussed in the PDF. Its equivalence with
+Erdős Problem 3 is not asserted as a proved theorem here. -/
+def FiniteExtremalSums : Prop :=
+  ∀ k : ℕ, 3 ≤ k → f k < ⊤
+
+/-- The uniform-tail question on p. 2. The cutoff formulation also handles
+the empty set without needing to assign it a minimum. -/
+def UniformTailConjecture : Prop :=
+  ∀ k : ℕ, 3 ≤ k → ∀ ε : ℝ, 0 < ε →
+    ∃ N : ℕ, ∀ A : Set ℕ,
+      Admissible A k → (∀ n ∈ A, N ≤ n) →
+      reciprocalSum A < ENNReal.ofReal ε
+
+/-! Elementary structural facts, independent of the conjectures. -/
+
+/-- A progression remains a progression in a larger set. -/
+theorem hasAP_mono {A B : Set ℕ} {k : ℕ}
+    (hAB : A ⊆ B) (h : HasAP A k) : HasAP B k := by
+  rcases h with ⟨a, d, hd, hmem⟩
+  exact ⟨a, d, hd, fun i hi => hAB (hmem i hi)⟩
+
+/-- An initial segment of a progression is a shorter progression. -/
+theorem hasAP_of_le {A : Set ℕ} {k l : ℕ}
+    (hkl : k ≤ l) (h : HasAP A l) : HasAP A k := by
+  rcases h with ⟨a, d, hd, hmem⟩
+  exact ⟨a, d, hd, fun i hi => hmem i (lt_of_lt_of_le hi hkl)⟩
+
+/-- Avoiding k-term progressions implies avoiding longer progressions. -/
+theorem apFree_of_le {A : Set ℕ} {k l : ℕ}
+    (hkl : k ≤ l) (h : APFree A k) : APFree A l := by
+  intro hl
+  exact h (hasAP_of_le hkl hl)
+
+/-- Every admissible reciprocal sum is bounded by the defining supremum. -/
+theorem reciprocalSum_le_f {A : Set ℕ} {k : ℕ}
+    (h : Admissible A k) : reciprocalSum A ≤ f k := by
+  unfold f
+  exact le_iSup_of_le A (le_iSup_of_le h le_rfl)
+
+/-- The extremal function is nondecreasing. -/
+theorem f_monotone : Monotone f := by
+  intro k l hkl
+  unfold f
+  refine iSup_le fun A => iSup_le fun h => ?_
+  exact le_iSup_of_le A
+    (le_iSup_of_le (show Admissible A l from
+      ⟨h.1, apFree_of_le hkl h.2⟩) le_rfl)
 
 end Erdos169
