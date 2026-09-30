@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
   intersections. Canadian J. Math. (1966), 106-112.
 - [Er71] Erdős, P., Some unsolved problems in graph theory and combinatorial analysis. Combinatorial
   Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
+- [Py85] Pyber, L., An Erdős-Gallai conjecture. Combinatorica (1985), 67-79.
 -/
 
 @[expose] public section
@@ -93,11 +94,11 @@ theorem erdos_184.variants.lower_bound :
 open scoped Classical in
 /--
 In [Er71] Erdős suggests that only $n-1$ many cycles and edges are required if we do not
-require them to be edge-disjoint.
+require them to be edge-disjoint. Pyber [Py85] proved this.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_184.variants.covering :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
       ∃ (D : Finset G.Subgraph),
         (∀ H ∈ D, IsCycleOrEdge H.coe) ∧
