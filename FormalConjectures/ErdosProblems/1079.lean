@@ -51,8 +51,8 @@ The number of edges in the neighbourhood of $v$ is the number of edges of $G$ bo
 endpoints are adjacent to $v$. Graphs on a single vertex are excluded, since there every degree
 is $0$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_1079 : answer(True) ↔ ∀ r : ℕ, 4 ≤ r → ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 2 ≤ n →
+@[category research solved, question, AMS 5]
+theorem erdos_1079 : ∀ r : ℕ, 4 ≤ r → ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 2 ≤ n →
     ∀ G : SimpleGraph (Fin n), extremalNumber n (completeGraph (Fin r)) ≤ G.edgeSet.ncard →
       ∃ v : Fin n, c * n ≤ G.degree v ∧
         extremalNumber (G.degree v) (completeGraph (Fin (r - 1))) ≤

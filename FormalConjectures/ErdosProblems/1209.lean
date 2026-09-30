@@ -85,13 +85,12 @@ grow arbitrarily fast
 
 See also [erdosproblems.com/429] and [erdosproblems.com/1102].
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_1209.parts.i :
-    answer(False) ↔
-      ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
-        (∃ n, ∀ k, (n + a k).Prime) →
-        {n | ∀ k, (n + a k).Prime}.Infinite := by
-  refine ⟨fun h => h.elim, fun ⟨f, hf⟩ => ?_⟩
+    ¬ ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
+      (∃ n, ∀ k, (n + a k).Prime) →
+      {n | ∀ k, (n + a k).Prime}.Infinite := by
+  rintro ⟨f, hf⟩
   have hmono : StrictMono (seq f) :=
     strictMono_nat_of_lt_succ fun k => lt_of_le_of_lt (le_max_left _ _) (seq_succ_spec f k).1
   have hbound : ∀ k, f k ≤ seq f k := by
@@ -154,13 +153,12 @@ What if we ask for $n+a_k$ to be squarefree instead of prime?
 
 A similar construction provides a counterexample to the squarefree question.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_1209.parts.ii :
-    answer(False) ↔
-      ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
-        (∃ n, ∀ k, Squarefree (n + a k)) →
-        {n | ∀ k, Squarefree (n + a k)}.Infinite := by
-  refine ⟨fun h => h.elim, fun ⟨f, hf⟩ => ?_⟩
+    ¬ ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
+      (∃ n, ∀ k, Squarefree (n + a k)) →
+      {n | ∀ k, Squarefree (n + a k)}.Infinite := by
+  rintro ⟨f, hf⟩
   have h0 := Classical.choose_spec (Nat.exists_infinite_primes (f 0))
   have hmono : StrictMono (seq' f) :=
     strictMono_nat_of_lt_succ fun k => lt_of_le_of_lt (le_max_left _ _) (seq'_succ_spec f k).1
@@ -194,33 +192,33 @@ that $2^l\equiv 1\pmod{m}$ then $p\mid n+2^{2^{k+rl}}$ for all $r\geq 1$.
 
 This was formalized in Lean by Barschkis using ChatGPT.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem1209/Formalization.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem1209/Formalization.lean"]
 theorem erdos_1209.parts.iii.a :
-    answer(False) ↔ ∃ n : ℕ, ∀ k : ℕ, (n + 2 ^ (2 ^ k)).Prime := by
+    ¬ ∃ n : ℕ, ∀ k : ℕ, (n + 2 ^ (2 ^ k)).Prime := by
   sorry
 
 /--
 Are there $n$ such that $n+2^{2^k}$ is always squarefree?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.b :
-    answer(sorry) ↔ ∃ n : ℕ, ∀ k : ℕ, Squarefree (n + 2 ^ (2 ^ k)) := by
+    ∃ n : ℕ, ∀ k : ℕ, Squarefree (n + 2 ^ (2 ^ k)) := by
   sorry
 
 /--
 Are there $n$ such that $n+2^{2^k}$ is infinitely often a prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.c :
-    answer(sorry) ↔ ∃ n : ℕ, {k | (n + 2 ^ (2 ^ k)).Prime}.Infinite := by
+    ∃ n : ℕ, {k | (n + 2 ^ (2 ^ k)).Prime}.Infinite := by
   sorry
 
 /--
 Are there $n$ such that $n+2^{2^k}$ is infinitely often squarefree?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.d :
-    answer(sorry) ↔ ∃ n : ℕ, {k | Squarefree (n + 2 ^ (2 ^ k))}.Infinite := by
+    ∃ n : ℕ, {k | Squarefree (n + 2 ^ (2 ^ k))}.Infinite := by
   sorry
 
 end Erdos1209

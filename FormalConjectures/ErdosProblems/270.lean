@@ -55,10 +55,10 @@ for any $\alpha \in (0,\infty)$ there exists a function $f:\mathbb{N}\to\mathbb{
 $f(n)\to \infty$ as $n\to\infty$ and
 $$\sum_{n\geq 1} \frac{1}{(n+1)\cdots (n+f(n))}=\alpha.$$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos270.lean#L1027"]
-theorem erdos_270 : answer(False) ↔
-    ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
+theorem erdos_270 :
+    ¬ ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
 /--
@@ -78,14 +78,14 @@ It is still possible that this sum is always irrational if $f$ is assumed to be 
 Crmarić and Kovač [CrKo25] show that the set of the possible values of such a sum has Lebesgue
 measure zero.
 -/
-@[category research open, AMS 11]
-theorem erdos_270.variants.monotone : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_270.variants.monotone :
     ∀ f : ℕ → ℕ, Monotone f → Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
 /-- Even the case $f(n)=n$ is unknown. -/
-@[category research open, AMS 11]
-theorem erdos_270.variants.linear : answer(sorry) ↔ Irrational (series id) := by
+@[category research open, question, AMS 11]
+theorem erdos_270.variants.linear : Irrational (series id) := by
   sorry
 
 end Erdos270

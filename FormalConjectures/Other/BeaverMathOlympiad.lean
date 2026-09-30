@@ -61,15 +61,15 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 
 The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
-@[category research open, AMS 5 11 68]
+@[category research open, question, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_1 :
-    answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
+    ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
     (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
     (b_ini : b 0 = 2)
@@ -192,8 +192,8 @@ Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 
 The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor mxdys
 on August 7th 2024.
@@ -201,8 +201,8 @@ on August 7th 2024.
 The correspondence between the machine's halting problem and the below reformulation has been proven
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
-@[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
+@[category research open, question, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_5 :
     ∀ (a b f : ℕ → ℕ), ∀ᵉ (hf : f = fun x ↦ 10 * 2 ^ x - 1)
     (a_ini : a 0 = 0) (b_ini : b 0 = 5)
     (a_rec : ∀ n, a (n + 1) = if f (a n) ≤ b n then a n + 1 else a n)
@@ -226,11 +226,11 @@ $a_i = \lfloor b_i/2 \rfloor + 1$?
 [BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA`](https://wiki.bbchallenge.org/wiki/1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 -/
-@[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
+@[category research open, question, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_8 :
     ∀ᵉ (a : ℕ → ℤ) (b : ℕ → ℤ)
     (a_ini : a 0 = 10)
     (a_rec : ∀ n, a (n + 1) =

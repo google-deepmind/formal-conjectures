@@ -33,8 +33,8 @@ open EuclideanGeometry
 Let $A\subset \mathbb{R}^2$ be a set of $n$ points with no three on a line.
 Does $A$ determine at least $\lfloor n/2\rfloor$ distinct distances?
 -/
-@[category research open, AMS 51]
-theorem erdos_1082.parts.i : answer(sorry) ↔ ∀ (A : Finset ℝ²) (hA_n3c : NonTrilinear (A : Set ℝ²)),
+@[category research open, question, AMS 51]
+theorem erdos_1082.parts.i : ∀ (A : Finset ℝ²) (hA_n3c : NonTrilinear (A : Set ℝ²)),
     A.card / 2 ≤ distinctDistances A:= by
   sorry
 
@@ -52,9 +52,9 @@ determines $3$ distances.
 
 This counterexample has originally been found by Heiko Harborth.
 -/
-@[category research solved, AMS 51, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean"]
-theorem erdos_1082.parts.ii : answer(False) ↔
-    ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear (A : Set ℝ²)),
+@[category research solved, question, AMS 51, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean"]
+theorem erdos_1082.parts.ii :
+    ¬ ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear (A : Set ℝ²)),
     ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a := by
   sorry
 end Erdos1082

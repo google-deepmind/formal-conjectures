@@ -67,17 +67,17 @@ density. The linked formal proof (Alexeev and Codex) shows that there is `c > 0`
 `c * x ≤ #{n ∈ [1, x] | n ∈ generatedSet}` for all large `x`, which gives
 `c / 2 ≤ generatedSet.lowerDensity`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos424.lean#L6409"]
-theorem erdos_424 : answer(True) ↔ 0 < generatedSet.lowerDensity := by
+theorem erdos_424 : 0 < generatedSet.lowerDensity := by
   sorry
 
 /--
 A literal interpretation of "positive density": the natural density of `generatedSet` exists
 (i.e. the lower and upper density agree) and is positive.
 -/
-@[category research open, AMS 11]
-theorem erdos_424.variants.exact_density : answer(sorry) ↔ generatedSet.HasPosDensity := by
+@[category research open, question, AMS 11]
+theorem erdos_424.variants.exact_density : generatedSet.HasPosDensity := by
   sorry
 
 -- TODO(firsching): formalize the statements from the additional material

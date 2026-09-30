@@ -37,8 +37,8 @@ $\sum_{g \in G} \phi(|g|) = \sum_{h \in H} \phi(|h|)$,
 where $\phi$ is the Euler totient function. Suppose that $G$ is simple. Is
 $H$ necessarily simple?
 -/
-@[category research open, AMS 20]
-theorem kourovka_19_25 : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_19_25 :
     ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
        Fintype.card G = Fintype.card H →
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →

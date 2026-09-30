@@ -53,9 +53,9 @@ $<\frac{1}{\log 2}\log\log n$ many prime factors.
 This was proved in the affirmative by Stewart [St13], who proved that
 $P(2^n-1)\gg n^{1+\frac{1}{104\log\log n}}$ for all large $n$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos977.lean#L4271"]
-theorem erdos_977 : answer(True) ↔
+theorem erdos_977 :
     Tendsto (fun n : ℕ ↦ (Nat.maxPrimeFac (2 ^ n - 1) : ℝ) / n) atTop atTop := by
   sorry
 
@@ -76,8 +76,8 @@ In [Er65b] Erdős also asks about $P(n!+1)$: is it true that $P(n!+1)/n\to\infty
 be open still. Murty and Wong [MuWo02] proved that $P(n!+1)>(1+o(1))n\log n$ assuming the abc
 conjecture.
 -/
-@[category research open, AMS 11]
-theorem erdos_977.variants.factorial : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_977.variants.factorial :
     Tendsto (fun n : ℕ ↦ (Nat.maxPrimeFac (n.factorial + 1) : ℝ) / n) atTop atTop := by
   sorry
 

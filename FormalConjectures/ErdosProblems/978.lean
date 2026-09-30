@@ -68,10 +68,10 @@ $(k-2)$-power-free?
 
 This was disproved by the DeepMind prover agent.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/3b5d6ac2555cd63b83d418c29ff040876be9dee0/FormalConjectures/ErdosProblems/978.lean#L64"]
-theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
-    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+theorem erdos_978.variants.allow_fixed_divisors :
+    ¬ ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
@@ -81,8 +81,8 @@ theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
 If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
 then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
 -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_978.parts.ii :
     ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
@@ -90,8 +90,8 @@ theorem erdos_978.parts.ii : answer(sorry) ↔
   sorry
 
 /-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers? -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.iii : answer(sorry) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_978.parts.iii : {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
   sorry
 
 end Erdos978

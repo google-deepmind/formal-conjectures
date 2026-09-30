@@ -42,9 +42,9 @@ noncomputable def deficiency (n k : ℕ) : ℕ :=
 /--
 Are there infinitely many binomial coefficients with deficiency 1?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1093.parts.i :
-    answer(sorry) ↔ {x : ℕ × ℕ | let k := x.1; let n := x.2; 2 * k ≤ n ∧ deficiency n k = 1 ∧
+    {x : ℕ × ℕ | let k := x.1; let n := x.2; 2 * k ≤ n ∧ deficiency n k = 1 ∧
       ∀ p, p.Prime → (p ∣ choose n k) → k < p}.Infinite := by
   sorry
 

@@ -61,8 +61,8 @@ lemma factorDifferenceSet_finite {n : ℕ} (hn : 1 ≤ n) : (factorDifferenceSet
 Is it true that, for every $k \geq 1$, there exist integers $N_1 < \dots < N_k$ such that
 $|\cap_i D(N_i)| \geq k$?
 -/
-@[category research open, AMS 11]
-theorem erdos_885 : answer(sorry) ↔ ∀ k ≥ 1,
+@[category research open, question, AMS 11]
+theorem erdos_885 : ∀ k ≥ 1,
     ∃ Ns : Finset ℕ,
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = k ∧

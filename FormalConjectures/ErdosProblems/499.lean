@@ -37,9 +37,9 @@ This is true, and was proved by Marcus and Minc [MaMi62]
 
 [MaMi62] Marcus, Marvin and Minc, Henryk, Some results on doubly stochastic matrices. Proc. Amer. Math. Soc. (1962), 571-579.
 -/
-@[category research solved, AMS 15, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos499.lean"]
+@[category research solved, question, AMS 15, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos499.lean"]
 lemma erdos_499 :
-    answer(True) ↔ (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+    (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) := by
   sorry
 
@@ -68,9 +68,9 @@ Proved by Marcus and Ree [MaRe59].
 
 [MaRe59] Marcus, M. and Ree, R., Diagonals of doubly stochastic matrices. Quart. J. Math. Oxford Ser. (2) (1959), 296-302.
 -/
-@[category research solved, AMS 15]
+@[category research solved, question, AMS 15]
 lemma erdos_499.variants.one_le :
-    answer(True) ↔ ∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
+    ∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i) := by
   sorry
 

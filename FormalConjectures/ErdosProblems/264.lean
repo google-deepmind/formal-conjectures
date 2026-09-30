@@ -58,8 +58,8 @@ theorem erdos_264.parts.i : ¬IsIrrationalitySequence (2 ^ ·) := by sorry
 /--
 Is $n!$ an example of an irrationality sequence?
 -/
-@[category research open, AMS 11]
-theorem erdos_264.parts.ii : answer(sorry) ↔ IsIrrationalitySequence Nat.factorial := by sorry
+@[category research open, question, AMS 11]
+theorem erdos_264.parts.ii : IsIrrationalitySequence Nat.factorial := by sorry
 
 /--
 One example is $2^{2^n}$.

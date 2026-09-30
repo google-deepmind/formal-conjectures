@@ -68,9 +68,9 @@ $1\leq a_1<\cdots$ such that $\lim a_n^{1/\phi^{n}}=C$ where this infinite sum i
 
 This was formalized in Lean by Baretto.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
 theorem erdos_1051 :
-    answer(True) ↔ ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
+    ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
       Irrational (ErdosSeries a) := by
   sorry
 

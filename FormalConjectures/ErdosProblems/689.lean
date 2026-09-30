@@ -33,9 +33,9 @@ Let `n` be sufficiently large. Is there some choice of congruence class `a_p` fo
 `2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences
 `≡ a_p (mod p)`?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_689 :
-    answer(sorry) ↔ ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
+    ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
       2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 

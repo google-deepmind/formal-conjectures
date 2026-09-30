@@ -62,10 +62,10 @@ Here $\log_2 n$ and $\log_*(n)$ are formalised as `Nat.log 2 n` and `Nat.iterate
 problem by $O(1)$, so the statement is unaffected. See also `erdos_775.variants.spencer` and
 `erdos_775.variants.moon_moser`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos927.lean#L23"]
-theorem erdos_927 : answer(False) ↔
-    ∃ C : ℕ, ∀ᶠ n : ℕ in atTop,
+theorem erdos_927 :
+    ¬ ∃ C : ℕ, ∀ᶠ n : ℕ in atTop,
       g n + Nat.log 2 n + Nat.iteratedLog 2 n ≤ n + C ∧
         n ≤ g n + Nat.log 2 n + Nat.iteratedLog 2 n + C := by
   sorry

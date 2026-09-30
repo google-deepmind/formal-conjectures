@@ -47,8 +47,8 @@ $$
 
 This is the Erdős-Heilbronn inequality, proved by Dias da Silva and Hamidoune.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos476.lean"]
-theorem erdos_476 : answer(True) ↔
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos476.lean"]
+theorem erdos_476 :
     ∀ p : ℕ, Fact p.Prime → ∀ A : Finset (ZMod p),
       A.restrictedSumset.card ≥ min (2 * A.card - 3) p := by
   sorry

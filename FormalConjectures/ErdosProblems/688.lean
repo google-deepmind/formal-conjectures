@@ -53,8 +53,8 @@ theorem erdos_688.parts.i :
 /--
 In particular, is it true that $\epsilon_n = o(1)$?
 -/
-@[category research open, AMS 11]
-theorem erdos_688.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_688.parts.ii :
     epsilonFunction =o[atTop] (fun (n : ℕ) ↦ (1 : ℝ)) := by
   sorry
 

@@ -33,8 +33,8 @@ We say that $N$ is powerful if whenever $p\mid N$ we also have $p^2\mid N$.
 
 Let $k\geq 3$. Can the product of any $k$ consecutive positive integers ever be powerful?
 -/
-@[category research open, AMS 11]
-theorem erdos_137 : answer(sorry) ↔ ∃ k ≥ 3, ∃ n, (∏ x ∈ Finset.Ioc n (n + k), x).Powerful := by
+@[category research open, question, AMS 11]
+theorem erdos_137 : ∃ k ≥ 3, ∃ n, (∏ x ∈ Finset.Ioc n (n + k), x).Powerful := by
   sorry
 
 /--

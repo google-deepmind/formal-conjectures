@@ -55,8 +55,8 @@ $a_i\pmod{n_i}$ for $1\leq i\leq k$ is less than $\epsilon$?
 
 The answer is yes; the linked Lean proof formalizes Somani's argument.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos281.lean"]
-theorem erdos_281 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos281.lean"]
+theorem erdos_281 :
     ∀ (n : ℕ → ℕ), StrictMono n → (∀ i, 0 < n i) →
       (∀ a : ResidueChoice n, Set.HasIntDensity (avoidAll n a) 0) →
         ∀ ε : ℝ, 0 < ε →

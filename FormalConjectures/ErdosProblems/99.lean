@@ -44,9 +44,9 @@ def FormsEquilateralTriangle (p q r : ℝ²) : Prop :=
 
 /-- For sufficiently large n, is it the case that any set of n points with minimum distance $1$
 that minimizes diameter must contain an equilateral triangle of side length 1? -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_99 :
-    answer(sorry) ↔ ∀ᶠ n in Filter.atTop, ∀ A : Finset ℝ²,
+    ∀ᶠ n in Filter.atTop, ∀ A : Finset ℝ²,
       A.card = n → HasMinDist1 A →
       (IsMinOn (fun B: Finset ℝ² => diam (B : Set ℝ²)) {B : Finset ℝ² | B.card = n ∧ HasMinDist1 B} A) →
       ∃ᵉ (p ∈ A) (q ∈ A) (r ∈ A), FormsEquilateralTriangle p q r := by

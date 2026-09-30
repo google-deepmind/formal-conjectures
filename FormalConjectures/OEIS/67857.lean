@@ -80,10 +80,10 @@ which has $168$ distinct prime factors and a negative sequence value.
 The counterexample and formal proof were developed by Codex (GPT-6),
 prompted by Samuel Schlesinger.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/SamuelSchlesinger/a067857-counterexample/blob/44317ddb5bd735f7a1f6764c22db10c455e4b584/Counterexample.lean#L89-L92"]
 theorem conjecture :
-    answer(False) ↔ ∀ n : ℕ, 0 < n →
+    ¬ ∀ n : ℕ, 0 < n →
       (a n < 0 ↔ Odd (cardDistinctFactors n) ∧ 3 ≤ cardDistinctFactors n) := by
   sorry
 

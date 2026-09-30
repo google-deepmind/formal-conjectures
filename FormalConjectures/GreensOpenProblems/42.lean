@@ -86,9 +86,9 @@ def CohnElkiesOptimal (d : ℕ) (bound : ℝ) : Prop :=
 /--
 Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packings in 2 dimensions?
 -/
-@[category research open, AMS 51 52]
+@[category research open, question, AMS 51 52]
 theorem green_42 :
-    answer(sorry) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
+    CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
 /-- [CoEl03] proved this when $d = 1$. -/

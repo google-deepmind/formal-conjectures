@@ -107,6 +107,28 @@ theorem a_test_to_sanity_check_some_definition : ¬ FermatLastTheoremWith 1 := b
   sorry
 ```
 
+## The Question Attribute
+
+### Overview
+Records that the source poses the statement as a yes-or-no question ("Is it true that...?",
+"Does...?", "Are there...?") rather than as a claim. The Lean statement is the proposition the
+question asks about. For a solved question, the statement is the one that holds: unchanged if
+the answer is yes, and negated (`¬ (...)`) if the answer is no.
+
+The attribute is independent of `category`, but it only makes sense on a `research open` or
+`research solved` problem: a textbook exercise, a `test`, or an `API` statement is not a
+question anyone left open.
+
+### Usage example
+```
+/-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
+Guy and Selfridge conjectured that it is not. -/
+@[category research open, question, AMS 11]
+theorem catalan_dickson :
+    ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
+  sorry
+```
+
 ## The Problem Subject Attribute
 
 Provides information about the subject of a mathematical problem, via a
@@ -461,6 +483,39 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
+/-- Defines the `questionExt` extension recording which declarations are posed as
+yes-or-no questions by their source. -/
+initialize questionExt : SimplePersistentEnvExtension Name (Std.HashSet Name) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
+    addEntryFn := .insert
+  }
+
+def addQuestionEntry {m : Type → Type} [MonadEnv m] (declName : Name) : m Unit :=
+  modifyEnv (questionExt.addEntry · declName)
+
+syntax (name := Question_attr) &"question" : attr
+
+/-- Records that the source poses a statement as a yes-or-no question.
+
+Usage: `@[question]`, together with a `research` category. The statement is
+the proposition the question asks about. Once the question is answered, the statement is the
+one that holds: unchanged for a yes, negated with `¬` for a no. -/
+initialize Lean.registerBuiltinAttribute {
+  name := `Question_attr
+  descr := "Annotation that a statement is posed as a yes-or-no question."
+  add := fun decl _stx _attrKind => do
+    -- Inside a `module`, a theorem is still registered as an axiom when attributes run, so
+    -- the check is on the type rather than on the kind of the constant.
+    let some info := (← getEnv).find? decl
+      | throwError "unknown declaration '{decl}'"
+    unless ← Meta.MetaM.run' (Meta.isProp info.type) do
+      throwError "the `question` attribute only applies to theorems, \
+        but the type of '{decl}' is not a proposition"
+    addQuestionEntry decl
+  applicationTime := .afterTypeChecking
+}
+
 section Helper
 
 /-- Split an array into preimages of a function.
@@ -493,6 +548,14 @@ def getCategoryStats : m (Category → Nat) := do
 
 def getSubjectTags : m (Array SubjectTag) := do
   return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- The declarations tagged `@[question]`. -/
+def getQuestionTags : m (Array Name) := do
+  return questionExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- Whether a given declaration is tagged `@[question]`. -/
+def isQuestion (declName : Name) : m Bool := do
+  return questionExt.getState (← MonadEnv.getEnv) |>.contains declName
 
 def getFormalProofTags : m (Array FormalProofTag) := do
   return formalProofExt.getState (← MonadEnv.getEnv) |>.toArray

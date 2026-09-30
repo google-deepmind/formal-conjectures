@@ -52,10 +52,10 @@ for all $\pi\in S_n$?
 
 Hegyvári [He86] gave a counterexample.
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos34.lean"]
-theorem erdos_34 : answer(False) ↔
-    ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
+theorem erdos_34 :
+    ¬ ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
       ((consecutiveSums n p).card : ℝ) < c * (n : ℝ) ^ 2 := by
   sorry
 

@@ -63,8 +63,8 @@ def IsWeakIrrationalitySequence (a : ℕ → ℕ) : Prop :=
 /--
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
 -/
-@[category research open, AMS 11]
-theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) := by
+@[category research open, question, AMS 11]
+theorem erdos_263.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) := by
   sorry
 
 /--
@@ -78,8 +78,8 @@ for the corrected statement this question is **open**. The earlier formal proof
 (for the pre-correction definition) is preserved at
 https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298
 -/
-@[category research open, AMS 11]
-theorem erdos_263.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_263.parts.ii :
     ∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
         atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by

@@ -39,9 +39,9 @@ are monochromatic?
 
 Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
 theorem erdos_532 :
-    answer(True) ↔ ∀ (c : ℕ → Fin 2),
+    ∀ (c : ℕ → Fin 2),
       ∃ A : Set ℕ, A.Infinite ∧
         ∃ color : Fin 2,
           ∀ S : Finset ℕ, S.Nonempty → ↑S ⊆ A →

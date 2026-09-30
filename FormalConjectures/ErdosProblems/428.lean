@@ -39,9 +39,9 @@ noncomputable def primeDensityRatio (A : Set ℕ) (n : ℕ) : ℝ :=
 Is there a set $A\subseteq \mathbb{N}$ such that, for infinitely many $n$, all of $n-a$
 are prime for all $a\in A$ with $0 < a < n$ and $$\liminf\frac{\lvert A\cap [1,x]\rvert}{\pi(x)}>0?$$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_428 :
-    answer(sorry) ↔ ∃ A : Set ℕ,
+    ∃ A : Set ℕ,
       (∃ᶠ n in atTop, ∀ a ∈ A, 0 < a → a < n → (n - a).Prime) ∧
       liminf (fun n ↦ primeDensityRatio A n) atTop > 0 := by
   sorry

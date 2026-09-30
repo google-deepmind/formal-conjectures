@@ -46,8 +46,8 @@ $$\max_{\substack{z\in\mathbb{C}\\ \lvert p(z)\rvert\leq 1}} \lvert p'(z)\rvert
 Eremenko and Lempert [ErLe94] have shown this is true, and in fact Chebyshev polynomials are the
 extreme examples.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos115.lean"]
-theorem erdos_115 : answer(True) ↔
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos115.lean"]
+theorem erdos_115 :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ p : Polynomial ℂ, p.Monic → p.natDegree = n →
       IsConnected {z : ℂ | ‖p.eval z‖ ≤ 1} → ∀ z : ℂ, ‖p.eval z‖ ≤ 1 →
         ‖p.derivative.eval z‖ ≤ (1 / 2 + ε) * (n : ℝ) ^ 2 := by

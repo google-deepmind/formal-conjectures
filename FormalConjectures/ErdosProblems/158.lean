@@ -56,8 +56,8 @@ lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
     grind
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
-@[category research open, AMS 5]
-theorem erdos_158 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
+@[category research open, question, AMS 5]
+theorem erdos_158 : ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 

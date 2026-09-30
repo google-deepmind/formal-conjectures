@@ -54,8 +54,8 @@ $\sum_{n \le x} \tau(f(n)) \approx c \cdot x \log x$?
 
 Note that it is unclear whether the polynomial should have integer coefficients or merely be
 integer-valued. We assume the former. -/
-@[category research open, AMS 11]
-theorem erdos_975 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_975 :
     ∀ f : ℤ[X], f.natDegree ≠ 0 → Irreducible f → (∀ᶠ n in atTop, 1 ≤ f.eval n) →
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry

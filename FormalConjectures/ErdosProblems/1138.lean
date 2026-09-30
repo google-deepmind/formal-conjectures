@@ -59,9 +59,9 @@ Let $x/2 < y < x$ and $C > 1$. If $d = \max_{p_n < x}(p_{n+1} - p_n)$,
 where $p_n$ denotes the $n$-th prime, then is it true that
 $$\pi(y + Cd) - \pi(y) \sim \frac{Cd}{\log y}$$?
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/YanYablonovskiy/formal-conjectures/blob/7c134317104d3b98ecc751afbb79ec0adddf8e7c/FormalConjectures/ErdosProblems/1138a.lean#L496"]
-theorem erdos_1138 : answer(False) ↔ ∀C > 1,
+theorem erdos_1138 : ¬ ∀C > 1,
     primeCount_Ioc_mul_const C ~[snd_gt_half_fst] fun (x, y) ↦
       C * (sup_primeGap x) / Real.log y := by
   sorry

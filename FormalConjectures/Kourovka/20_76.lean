@@ -30,8 +30,8 @@ Let $G$ be a finite $p$-group and assume that all abelian normal subgroups of $G
 have order at most $p^k$. Is it true that every abelian subgroup of $G$ has order at most
 $p^{2k}$?
 -/
-@[category research open, AMS 20]
-theorem kourovka_20_76 : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_20_76 :
     ∀ᵉ (p : ℕ) (hp : p.Prime) (G : Type) (_ : Group G) (hg : IsPGroup p G) (_ : Finite G) (k : ℕ)
     (h : ∀ H: Subgroup G, H.Normal ∧ IsMulCommutative H → Nat.card H ≤ p ^ k),
     (∀ H : Subgroup G, IsMulCommutative H → Nat.card H ≤ p ^ (2 * k)) := by

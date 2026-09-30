@@ -30,8 +30,8 @@ namespace Erdos985
 /--
 Is it true that, for every prime $p$, there is a prime $q \leq p$ which is a primitive root modulo $p$?
 -/
-@[category research open, AMS 11]
-theorem erdos_985 : answer(sorry) ↔ ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
+@[category research open, question, AMS 11]
+theorem erdos_985 : ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
     ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   sorry
 

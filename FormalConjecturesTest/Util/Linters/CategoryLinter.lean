@@ -155,4 +155,44 @@ Note: This linter can be disabled with `set_option linter.style.category_attribu
 theorem test_duplicate_category : 1 + 1 = 2 := by
   rfl
 
+/--
+warning: The `question` attribute belongs to a `research open` or `research solved` problem, not to a `textbook`, `test`, or `API` statement.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category test, question]
+theorem question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+warning: The `question` attribute belongs to a `research open` or `research solved` problem, not to a `textbook`, `test`, or `API` statement.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[question, category API]
+theorem question_on_api : 1 + 1 = 2 := by
+  rfl
+
+/--
+warning: The `question` attribute belongs to a `research open` or `research solved` problem, not to a `textbook`, `test`, or `API` statement.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category textbook, question]
+theorem question_on_textbook : 1 + 1 = 2 := by
+  rfl
+
+#guard_msgs in
+@[category research solved, question]
+theorem question_on_solved : 1 + 1 = 2 := by
+  rfl
+
+#guard_msgs in
+@[category research open, question]
+theorem question_on_research : 1 + 1 = 2 := by
+  sorry
+
 end CategoryLinter

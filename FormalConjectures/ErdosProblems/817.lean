@@ -50,9 +50,9 @@ $$
   g_3(n) \gg 3^n
 $$ -/
 -- Formalisation note : only formalising the "In particular" part
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_817 :
-    answer(sorry) ↔ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
+    (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

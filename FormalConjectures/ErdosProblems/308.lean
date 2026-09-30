@@ -69,9 +69,9 @@ fractions with denominators from $\{1,\ldots,N\}$ has the shape $\{1,\ldots,m\}$
 
 It follows from Croot's bounds [Cr99] that this holds for all sufficiently large $N$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos308.lean#L458"]
-theorem erdos_308.parts.ii : answer(True) ↔
+theorem erdos_308.parts.ii :
     ∀ᶠ N : ℕ in atTop, ∃ m, representable N = Set.Icc 1 m := by
   sorry
 
@@ -107,8 +107,8 @@ Is it true that, for every $N\geq 1$, the set of integers representable as the s
 unit fractions with denominators from $\{1,\ldots,N\}$ has the shape $\{1,\ldots,m\}$ for some
 $m$?
 -/
-@[category research open, AMS 11]
-theorem erdos_308.variants.all_N : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_308.variants.all_N :
     ∀ N ≥ 1, ∃ m, representable N = Set.Icc 1 m := by
   sorry
 

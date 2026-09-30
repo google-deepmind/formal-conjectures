@@ -47,9 +47,9 @@ Hegyvári [He86] has proved the answer is yes, and gives an explicit bound of th
 $f(a,K) \ll ae^{O(K)}$. Hegyvári believes that the exponential dependence on $K$ here is not best
 possible.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1213.lean#L495"]
-theorem erdos_1213 : answer(True) ↔ ∀ a K : ℕ, 1 ≤ a → 1 ≤ K → ∃ f : ℕ,
+theorem erdos_1213 : ∀ a K : ℕ, 1 ≤ a → 1 ≤ K → ∃ f : ℕ,
     ∀ (s : ℕ) (A : ℕ → ℕ), 0 < s → A 0 = a → StrictMonoOn A (Set.Iio s) →
       (∀ i, i + 1 < s → A (i + 1) - A i ≤ K) → f < A (s - 1) → HasEqualIntervalSums A s := by
   sorry

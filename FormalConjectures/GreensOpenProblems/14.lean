@@ -72,9 +72,9 @@ both sets are nonempty by van der Waerden's theorem, so $W(3, r) \le W(k, r)$. P
 growth for one $k \ge 4$ would therefore force polynomial growth for $k = 3$, contradicting
 `green_14_polynomial_k_eq_3` [Gr21, p.3].
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_polynomial :
-    answer(False) ↔ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
+    ¬ ∀ k ≥ 4, ∃ d : ℕ, (fun r => (W k r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ d := by
   sorry
 
 /-- We know $W(3, r)$ does not have polynomial growth in $r$ [Gr21, p.3]. -/
@@ -88,50 +88,48 @@ Is $W(3, r) \ll r^2$?
 
 [Gr21] proves a superpolynomial lower bound $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_quadratic :
-    answer(False) ↔ (fun r => (W 3 r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ 2 := by
+    ¬ (fun r => (W 3 r : ℝ)) =O[atTop] fun r => (r : ℝ) ^ 2 := by
   sorry
 
 /-- [Gr21] proved a lower bound of shape $W(3, r) \gg \exp(c(\log r)^{4/3-o(1)})$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_lower_bound_green :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(4/3 - o r))) =O[atTop] fun r => (W 3 r : ℝ) := by
   sorry
 
 /-- [Hu22] improved this to $W(3, r) \gg \exp(c(\log r)^{2-o(1)})$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_lower_bound_hunter :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
+    ∃ c : ℝ, 0 < c ∧ ∃ (o : ℕ → ℝ) (_ : Tendsto o atTop (𝓝 0)),
     (fun (r : ℕ) => Real.exp (c * (Real.log r)^(2 - o r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [BLR08] proved $W(3, r) \gg r^{2 - 1/\log \log r}$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_lower_bound_brown_landman_robertson :
-    answer(True) ↔
     (fun (r : ℕ) => (r : ℝ)^(2 - 1 / Real.log (Real.log r))) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [LiSh10] proved $W(3, r) \gg (r / \log r)^2$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_lower_bound_li_shu :
-    answer(True) ↔
     (fun (r : ℕ) => ((r : ℝ) / Real.log r)^2) =O[atTop] (fun r => (W 3 r : ℝ)) := by
   sorry
 
 /-- [Sc20] proves the upper bound $W(3, r) < \exp(r^{1-c})$ for some $c > 0$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_upper_bound_schoen :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧
+    ∃ c : ℝ, 0 < c ∧
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp ((r : ℝ) ^ (1 - c))) := by
   sorry
 
 /-- [KeMe23] gives a corresponding upper bound $W(3, r) \ll \exp(C(\log r)^C)$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_14_upper_bound_kelley_meka :
-    answer(True) ↔ ∃ C : ℝ,
+    ∃ C : ℝ,
     (fun (r : ℕ) => ((W 3 r) : ℝ)) =O[atTop] (fun r => Real.exp (C * (Real.log r)^C)) := by
   sorry
 
@@ -228,9 +226,9 @@ theorem W_3_19 : W 3 19 = 349 := by sorry
 -- (certificates) in [AKS14, Appendix A]; [AKS14] conjectures these bounds to be exact.
 /-- $W(3, 20) \ge 389$ from [AKS14, Table 2], proved by an explicit good partition.
 A kernel-checked Lean proof from the certificate was given by Dominic Dabish. -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/DomTheDeveloper/formal-conjectures/blob/013a0f04de0057d2bd1034c7cc4caf10ac8dc2cf/FormalConjectures/GreensOpenProblems/Green14FastKernel20.lean"]
-theorem W_3_20_lower : answer(True) ↔ W 3 20 ≥ 389 := sorry
+theorem W_3_20_lower : W 3 20 ≥ 389 := sorry
 
 /-- $W(3, 20) = 389$, conjectured in [AKS14, Table 2] and established by Kouril [Ko15] using
 FPGA-based SAT solving. -/
@@ -238,121 +236,121 @@ FPGA-based SAT solving. -/
 theorem W_3_20 : W 3 20 = 389 := by sorry
 
 /-- $W(3, 21) \ge 416$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_21_lower : answer(True) ↔ W 3 21 ≥ 416 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_21_lower : W 3 21 ≥ 416 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 21) = 416$. -/
-@[category research open, AMS 5 11]
-theorem W_3_21_eq : answer(sorry) ↔ W 3 21 = 416 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_21_eq : W 3 21 = 416 := sorry
 
 /-- $W(3, 22) \ge 464$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_22_lower : answer(True) ↔ W 3 22 ≥ 464 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_22_lower : W 3 22 ≥ 464 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 22) = 464$. -/
-@[category research open, AMS 5 11]
-theorem W_3_22_eq : answer(sorry) ↔ W 3 22 = 464 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_22_eq : W 3 22 = 464 := sorry
 
 /-- $W(3, 23) \ge 516$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_23_lower : answer(True) ↔ W 3 23 ≥ 516 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_23_lower : W 3 23 ≥ 516 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 23) = 516$. -/
-@[category research open, AMS 5 11]
-theorem W_3_23_eq : answer(sorry) ↔ W 3 23 = 516 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_23_eq : W 3 23 = 516 := sorry
 
 /-- $W(3, 24) \ge 593$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_24_lower : answer(True) ↔ W 3 24 ≥ 593 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_24_lower : W 3 24 ≥ 593 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 24) = 593$. -/
-@[category research open, AMS 5 11]
-theorem W_3_24_eq : answer(sorry) ↔ W 3 24 = 593 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_24_eq : W 3 24 = 593 := sorry
 
 /-- $W(3, 25) \ge 656$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_25_lower : answer(True) ↔ W 3 25 ≥ 656 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_25_lower : W 3 25 ≥ 656 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 25) = 656$. -/
-@[category research open, AMS 5 11]
-theorem W_3_25_eq : answer(sorry) ↔ W 3 25 = 656 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_25_eq : W 3 25 = 656 := sorry
 
 /-- $W(3, 26) \ge 727$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_26_lower : answer(True) ↔ W 3 26 ≥ 727 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_26_lower : W 3 26 ≥ 727 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 26) = 727$. -/
-@[category research open, AMS 5 11]
-theorem W_3_26_eq : answer(sorry) ↔ W 3 26 = 727 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_26_eq : W 3 26 = 727 := sorry
 
 /-- $W(3, 27) \ge 770$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_27_lower : answer(True) ↔ W 3 27 ≥ 770 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_27_lower : W 3 27 ≥ 770 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 27) = 770$. -/
-@[category research open, AMS 5 11]
-theorem W_3_27_eq : answer(sorry) ↔ W 3 27 = 770 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_27_eq : W 3 27 = 770 := sorry
 
 /-- $W(3, 28) \ge 827$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_28_lower : answer(True) ↔ W 3 28 ≥ 827 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_28_lower : W 3 28 ≥ 827 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 28) = 827$. -/
-@[category research open, AMS 5 11]
-theorem W_3_28_eq : answer(sorry) ↔ W 3 28 = 827 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_28_eq : W 3 28 = 827 := sorry
 
 /-- $W(3, 29) \ge 868$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_29_lower : answer(True) ↔ W 3 29 ≥ 868 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_29_lower : W 3 29 ≥ 868 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 29) = 868$. -/
-@[category research open, AMS 5 11]
-theorem W_3_29_eq : answer(sorry) ↔ W 3 29 = 868 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_29_eq : W 3 29 = 868 := sorry
 
 /-- $W(3, 30) \ge 903$ from [AKS14, Table 2], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_30_lower : answer(True) ↔ W 3 30 ≥ 903 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_30_lower : W 3 30 ≥ 903 := sorry
 
 /-- [AKS14, Table 2] conjectures that $W(3, 30) = 903$. -/
-@[category research open, AMS 5 11]
-theorem W_3_30_eq : answer(sorry) ↔ W 3 30 = 903 := sorry
+@[category research open, question, AMS 5 11]
+theorem W_3_30_eq : W 3 30 = 903 := sorry
 
 -- Further lower bounds for W(3,r) from [AKS14, Table 3], established by the good partitions
 -- (certificates) in [AKS14, Appendix A]; [AKS14] expects these can be improved.
 /-- $W(3, 31) > 930$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_31_lower : answer(True) ↔ W 3 31 > 930 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_31_lower : W 3 31 > 930 := sorry
 
 /-- $W(3, 32) > 1006$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_32_lower : answer(True) ↔ W 3 32 > 1006 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_32_lower : W 3 32 > 1006 := sorry
 
 /-- $W(3, 33) > 1063$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_33_lower : answer(True) ↔ W 3 33 > 1063 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_33_lower : W 3 33 > 1063 := sorry
 
 /-- $W(3, 34) > 1143$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_34_lower : answer(True) ↔ W 3 34 > 1143 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_34_lower : W 3 34 > 1143 := sorry
 
 /-- $W(3, 35) > 1204$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_35_lower : answer(True) ↔ W 3 35 > 1204 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_35_lower : W 3 35 > 1204 := sorry
 
 /-- $W(3, 36) > 1257$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_36_lower : answer(True) ↔ W 3 36 > 1257 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_36_lower : W 3 36 > 1257 := sorry
 
 /-- $W(3, 37) > 1338$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_37_lower : answer(True) ↔ W 3 37 > 1338 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_37_lower : W 3 37 > 1338 := sorry
 
 /-- $W(3, 38) > 1378$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_38_lower : answer(True) ↔ W 3 38 > 1378 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_38_lower : W 3 38 > 1378 := sorry
 
 /-- $W(3, 39) > 1418$ from [AKS14, Table 3], proved by an explicit good partition. -/
-@[category research solved, AMS 5 11]
-theorem W_3_39_lower : answer(True) ↔ W 3 39 > 1418 := sorry
+@[category research solved, question, AMS 5 11]
+theorem W_3_39_lower : W 3 39 > 1418 := sorry
 
 end Green14

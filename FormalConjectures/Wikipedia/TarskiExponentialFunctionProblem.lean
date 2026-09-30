@@ -71,9 +71,9 @@ theorem isDecidable_completeTheory_real_orderedField :
 **Tarski's exponential function problem.** Is the first-order theory of the real exponential
 field $\mathbb{R}_{\exp} = (\mathbb{R}, +, \cdot, -, 0, 1, \le, \exp)$ decidable?
 -/
-@[category research open, AMS 3 12]
+@[category research open, question, AMS 3 12]
 theorem tarski_exponential_function_problem :
-    answer(sorry) ↔ (Language.orderedExpField.completeTheory ℝ).IsDecidable := by
+    (Language.orderedExpField.completeTheory ℝ).IsDecidable := by
   sorry
 
 /-- The real version of Schanuel's conjecture: if $x_1, \ldots, x_n$ are real numbers that are

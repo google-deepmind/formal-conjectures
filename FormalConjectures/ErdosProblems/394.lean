@@ -65,23 +65,21 @@ theorem t_one {n : ℕ} (hn : 0 < n) : t 1 n = n := by
 /--
 Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/FirstQuestion.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/FirstQuestion.lean"]
 theorem erdos_394.parts.i :
-    answer(True) ↔
-      ∃ c > (0 : ℝ), (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
-      (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
+    ∃ c > (0 : ℝ), (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
+    (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
 /--
 Is it true that, for $k\geq 2$, $\sum_{n\leq x}t_{k+1}(n) =o\left(\sum_{n\leq x}t_k(n)\right)?$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/DenseHierarchyLittleO.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-394/Research/DenseHierarchyLittleO.lean"]
 theorem erdos_394.parts.ii :
-    answer(True) ↔
-      ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
-      (t (k + 1) n : ℝ)) =o[atTop]
-      (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
-      (t k n : ℝ)) := by
+    ∀ k ≥ 2, (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
+    (t (k + 1) n : ℝ)) =o[atTop]
+    (fun (x : ℝ) ↦ ∑ n ∈ Icc 1 ⌊x⌋₊,
+    (t k n : ℝ)) := by
   sorry
 
 /--
@@ -118,11 +116,10 @@ theorem erdos_394.variants.lower_bound :
 They ask about the behaviour of $t_{n-3}(n!)$ and also ask whether, for infinitely many $n$,
 $t_k(n!)< t_{k-1}(n!)-1$ for all $1\leq k < n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_394.variants.factorial_gap_conjecture :
-    answer(sorry) ↔
-      Set.Infinite { n : ℕ | ∀ k, 2 ≤ k → k < n →
-      t k (n !) < t (k - 1) (n !) - 1 } := by
+    Set.Infinite { n : ℕ | ∀ k, 2 ≤ k → k < n →
+    t k (n !) < t (k - 1) (n !) - 1 } := by
   sorry
 
 set_option maxRecDepth 20000 in

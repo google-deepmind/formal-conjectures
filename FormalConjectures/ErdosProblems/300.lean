@@ -60,10 +60,10 @@ theorem erdos_300 : Tendsto (fun N : ℕ => (A N : ℝ) / N) atTop (𝓝 (1 - 1 
 
 /-- Erdős and Graham [ErGr80] believed that $A(N)=(1+o(1))N$; this was disproved by Croot
 [Cr03]. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos300.lean#L4356"]
-theorem erdos_300.variants.erdos_graham : answer(False) ↔
-    Tendsto (fun N : ℕ => (A N : ℝ) / N) atTop (𝓝 1) := by
+theorem erdos_300.variants.erdos_graham :
+    ¬ Tendsto (fun N : ℕ => (A N : ℝ) / N) atTop (𝓝 1) := by
   sorry
 
 end Erdos300

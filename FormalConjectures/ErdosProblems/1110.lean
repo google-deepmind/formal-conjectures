@@ -46,9 +46,9 @@ If $\{p,q\}\neq \{2,3\}$ then what can be said about the density of non-represen
 numbers? Are there infinitely many coprime non-representable numbers, that is, an infinite
 family of pairwise coprime non-representable integers?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_1110 :
-    answer(sorry) ↔ ∀ (p q : ℕ), q < p → 2 ≤ q →
+    ∀ (p q : ℕ), q < p → 2 ≤ q →
       Nat.Coprime p q → ¬(p = 3 ∧ q = 2) →
       ∃ A : Set ℕ, A.Infinite ∧ A.Pairwise Nat.Coprime ∧
         ∀ n ∈ A, ¬Representable p q n := by

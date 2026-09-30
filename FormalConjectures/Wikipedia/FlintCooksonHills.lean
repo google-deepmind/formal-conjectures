@@ -35,21 +35,19 @@ namespace FlintCooksonHills
 The Flint Hills series summing $csc(n)^2 / n^3$ from $n=1$ to $\infty$ converges.
 (Note that we 0-index the series below.)
 -/
-@[category research open, AMS 40]
+@[category research open, question, AMS 40]
 theorem flint_hills_series_converges :
-    answer(sorry) ↔
-      Summable (fun n : ℕ =>
-        1 / ((((n + 1) : ℝ)^3) * (Real.sin (n + 1)^2))) := by
+    Summable (fun n : ℕ =>
+      1 / ((((n + 1) : ℝ)^3) * (Real.sin (n + 1)^2))) := by
   sorry
 
 /--
 The Cookson Hills series summing $sec(n)^2 / n^3$ from $n=1$ to $\infty$ converges.
 -/
-@[category research open, AMS 40]
+@[category research open, question, AMS 40]
 theorem cookson_hills_series_converges :
-    answer(sorry) ↔
-      Summable (fun n : ℕ =>
-        1 / ((((n + 1) : ℝ)^3) * (Real.cos (n + 1)^2))) := by
+    Summable (fun n : ℕ =>
+      1 / ((((n + 1) : ℝ)^3) * (Real.cos (n + 1)^2))) := by
   sorry
 
 end FlintCooksonHills

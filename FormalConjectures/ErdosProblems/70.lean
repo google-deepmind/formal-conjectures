@@ -109,9 +109,8 @@ Is it true that $\mathfrak{c} \to (\beta, n)^3_2$?
 Note: The cases $n \le 3$ are trivially true (compare `omega_three`), so the
 genuine content of the conjecture begins at $n = 4$.
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem erdos_70 :
-    answer(sorry) ↔
     ∀ᵉ (β : Ordinal.{0}) (n : ℕ) (_ : β.card ≤ ℵ₀) (_ : 2 ≤ n),
       RealCardinalRamsey3 β n := by
   sorry
@@ -140,9 +139,9 @@ Erdős and Rado proved $\mathfrak{c} \to (\omega + n, 4)^3_2$ for every finite $
 This variant asks whether the result extends to $\beta = \omega \cdot 2$, the simplest
 countable ordinal not covered by their theorem.
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem omega_times_two_four :
-    answer(sorry) ↔ RealCardinalRamsey3 (ω * 2) 4 := by
+    RealCardinalRamsey3 (ω * 2) 4 := by
   sorry
 
 /--
@@ -159,10 +158,10 @@ merely asks for one blue triple to exist. The proof splits into two cases:
 The problem becomes non-trivial only for $n \ge 4$; see `omega_times_two_four` for
 the simplest genuinely open case.
 -/
-@[category research solved, AMS 3, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 3, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/c024db0fa3ac32c6dddcd6c28d7b0cd994dad580/FormalConjectures/ErdosProblems/70.lean#L126"]
 theorem omega_three :
-    answer(True) ↔ OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
+    OrdinalCardinalRamsey3 (𝔠).ord ω 3 := by
   sorry
 
 /--
@@ -174,9 +173,8 @@ main Erdős problem (which asks for *countable* $\beta$). Under CH, $\omega_1 = 
 making this a self-referential question about $\mathfrak{c}.\mathrm{ord} \to
 (\mathfrak{c}.\mathrm{ord}, n)^3_2$.
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem omega_one :
-    answer(sorry) ↔
     ∀ᵉ (n : ℕ) (_ : 2 ≤ n),
       OrdinalCardinalRamsey3 (𝔠).ord (Cardinal.aleph 1).ord n := by
   sorry

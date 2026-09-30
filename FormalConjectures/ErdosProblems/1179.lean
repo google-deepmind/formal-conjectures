@@ -80,9 +80,9 @@ lower bound is `erdos_1179.variants.lower_bound`.
 
 See also [543](https://www.erdosproblems.com/543).
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1179.lean#L3564"]
-theorem erdos_1179 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k : ℕ → ℕ,
+theorem erdos_1179 : ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k : ℕ → ℕ,
     Tendsto (fun N : ℕ ↦ (k N : ℝ) / Real.logb 2 N) atTop (nhds 1) ∧
       ∀ (G : ℕ → Type) [∀ i, AddCommGroup (G i)] [∀ i, Fintype (G i)],
         Tendsto (fun i ↦ Fintype.card (G i)) atTop atTop →

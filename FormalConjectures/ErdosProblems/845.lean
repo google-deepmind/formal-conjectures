@@ -37,13 +37,12 @@ integers can be written as such a sum in which $b_t<6b_1$.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos845.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos845.lean"]
 theorem erdos_845 :
-    answer(False) ↔
-      ∀ᵉ (C : ℝ) (hC : 0 < C),
-        let f : ℕ × ℕ → ℕ := fun (k, l) ↦ 2 ^ k * 3 ^ l
-        { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
-          (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 := by
+    ¬ ∀ᵉ (C : ℝ) (hC : 0 < C),
+      let f : ℕ × ℕ → ℕ := fun (k, l) ↦ 2 ^ k * 3 ^ l
+      { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
+        (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 := by
   sorry
 
 end Erdos845

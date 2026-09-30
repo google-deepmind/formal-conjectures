@@ -77,9 +77,9 @@ $$A(x)B(x)-x=o(A(x)).$$
 
 This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
 "https://github.com/Woett/Lean-files/blob/main/ErdosProblem785.lean"]
-theorem erdos_785 : answer(True) ↔
+theorem erdos_785 :
     ∀ A B : Set ℕ, A.Infinite → B.Infinite → 0 ∉ A → 0 ∉ B → IsExactAdditiveComplement A B →
       Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) atTop atTop := by
   sorry
@@ -173,8 +173,8 @@ theorem erdos_785.variants.chen_fang_limsup (A B : Set ℕ) (hA : A.Infinite) (h
 /--
 Chen conjectures that this should be true with $3/2$.
 -/
-@[category research open, AMS 11]
-theorem erdos_785.variants.chen_conjecture : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_785.variants.chen_conjecture :
     ∀ A B : Set ℕ, A.Infinite → B.Infinite → 0 ∉ A → 0 ∉ B → IsAdditiveComplement A B →
       limsup (fun x : ℕ => ((counting A x * counting B x : ℝ) / (x : ℝ) : EReal)) atTop
           < ((3 / 2 : ℝ) : EReal) →

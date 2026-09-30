@@ -221,8 +221,8 @@ No hypothesis on the existence of $a(n)$ is needed: if no suitable $k > n$ exist
 $a(n) = 0$ and $S(0) / S(n) = 4 / S(n) = 0$ for $n > 0$, so such $n$ do not affect boundedness.
 When $a(n) \neq 0$ we have $S(n) \mid S(a(n))$ by definition, so the division is exact.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 : answer(sorry) ↔ ∃ C : ℕ, ∀ n : ℕ, n > 0 → S (a n) / S n ≤ C := by
+@[category research open, question, AMS 11]
+theorem conjecture2 : ∃ C : ℕ, ∀ n : ℕ, n > 0 → S (a n) / S n ≤ C := by
   sorry
 
 

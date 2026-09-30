@@ -45,8 +45,8 @@ $n_k \leq e^{C^k}$ for some constant $C>1$ (simply taking $n_k$ to be the lowest
 some interval $[1,C^k]$). Sawhney has observed that there is also a doubly exponential lower bound,
 and hence this bound is essentially sharp.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos45.lean"]
-theorem erdos_45 : answer(True) ↔
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos45.lean"]
+theorem erdos_45 :
     ∀ k : ℕ, 2 ≤ k → ∃ n : ℕ, ∀ colouring : ℕ → Fin k,
       ∃ colour : Fin k, ∃ D' ⊆ {d ∈ n.divisors | 1 < d ∧ d < n},
         (∀ d ∈ D', colouring d = colour) ∧ D'.reciprocalSum = 1 := by

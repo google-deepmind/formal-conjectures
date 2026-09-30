@@ -37,9 +37,9 @@ namespace Erdos417
 Let$$V'(x)=\#\{\phi(m) : 1\leq m\leq x\}$$and$$V(x)=\#\{\phi(m) \leq x : 1\leq m\}.$$
 Does $\lim V(x)/V'(x)$ exist?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_417.parts.i :
-    answer(sorry) ↔ ∃ L : ENNReal, Tendsto (fun x ↦
+    ∃ L : ENNReal, Tendsto (fun x ↦
       ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ENNReal) /
       ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ENNReal))
       atTop (𝓝 L) := by
@@ -48,9 +48,9 @@ theorem erdos_417.parts.i :
 /--
 Is it $>1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_417.parts.ii :
-    answer(sorry) ↔ ∃ L > (1 : ENNReal), Tendsto (fun x ↦
+    ∃ L > (1 : ENNReal), Tendsto (fun x ↦
       ({ k | k ∈ range totient ∧ (k : ℝ) ≤ x }.ncard : ENNReal) /
       ((totient '' { m | 1 ≤ m ∧ (m : ℝ) ≤ x }).ncard : ENNReal))
       atTop (𝓝 L) := by

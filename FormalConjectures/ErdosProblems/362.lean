@@ -52,9 +52,9 @@ This was removed by Sárközy and Szemerédi [SaSz65], thereby answering the fir
 affirmative. Stanley [St80] has shown that this quantity is maximised when
 $A=\{-\lfloor \frac{N-1}{2}\rfloor,\ldots,\lfloor\frac{N}{2}\rfloor\}$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos362.lean#L2541"]
-theorem erdos_362 : answer(True) ↔ ∃ C : ℝ, ∀ (A : Finset ℕ) (t : ℕ), A.Nonempty →
+theorem erdos_362 : ∃ C : ℝ, ∀ (A : Finset ℕ) (t : ℕ), A.Nonempty →
     ({S ∈ A.powerset | ∑ n ∈ S, n = t}.card : ℝ) ≤ C * 2 ^ A.card / (A.card : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 
@@ -66,9 +66,9 @@ with the implied constant independent of $l$ and $t$?
 The second question was answered in the affirmative by Halász [Ha77], as a consequence of a more
 general multi-dimensional result.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos362.lean#L2541"]
-theorem erdos_362.variants.fixed_card : answer(True) ↔ ∃ C : ℝ, ∀ (A : Finset ℕ) (l t : ℕ),
+theorem erdos_362.variants.fixed_card : ∃ C : ℝ, ∀ (A : Finset ℕ) (l t : ℕ),
     A.Nonempty →
       ({S ∈ A.powersetCard l | ∑ n ∈ S, n = t}.card : ℝ) ≤ C * 2 ^ A.card / (A.card : ℝ) ^ 2 := by
   sorry

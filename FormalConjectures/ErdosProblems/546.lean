@@ -39,8 +39,8 @@ This is true, and was proved by Sudakov [Su11].
 
 This problem is #11 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
-theorem erdos_546 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_546 :
     ∃ C > (0 : ℝ), ∀ (m : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, 0 < G.degree v) →
       G.edgeSet.ncard = m →

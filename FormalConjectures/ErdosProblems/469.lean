@@ -47,10 +47,10 @@ converge?
 Yes: the sum converges. This was proved by Lewis [Le25], whose proof has been formalized in
 Lean.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos469.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos469.lean"]
 theorem erdos_469 :
     letI A := {n : ℕ | 0 < n ∧ n.IsSumDivisors ∧ ∀ m < n, m ∣ n → ¬ m.IsSumDivisors}
-    answer(True) ↔ Summable fun n : A ↦ 1 / (n : ℝ) := by
+    Summable fun n : A ↦ 1 / (n : ℝ) := by
   sorry
 
 end Erdos469

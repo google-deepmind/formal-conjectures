@@ -54,8 +54,8 @@ The linked proof gives more than finiteness: it classifies the solutions outrigh
 $(0,\{1\})$, $(1,\{2\})$, $(3,\{2,3\})$, $(5,\{2,3,4\})$ and $(7,\{2,3,5\})$, so the set below
 has exactly five elements.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/403/Erdos403.lean"]
-theorem erdos_403 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/403/Erdos403.lean"]
+theorem erdos_403 :
     {p : ℕ × Finset ℕ | (∀ a ∈ p.2, 0 < a) ∧
       2 ^ p.1 = ∑ a ∈ p.2, a.factorial}.Finite := by
   sorry

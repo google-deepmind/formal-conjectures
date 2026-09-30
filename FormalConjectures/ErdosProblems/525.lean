@@ -69,9 +69,9 @@ coefficients $f(z)$ have $\lvert f(z)\rvert <1$ for some $\lvert z\rvert=1$?
 The answer is yes: Littlewood [Li66] conjectured the stronger $m(f)=o(1)$ almost surely, which
 was proved by Kashin [Ka87].
 -/
-@[category research solved, AMS 30 60, formal_proof using lean4 at
+@[category research solved, question, AMS 30 60, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos525.lean#L118"]
-theorem erdos_525.parts.i : answer(True) ↔
+theorem erdos_525.parts.i :
     (fun n : ℕ ↦ ((exceptional n).ncard : ℝ)) =o[atTop] fun n : ℕ ↦ (2 : ℝ) ^ n := by
   sorry
 

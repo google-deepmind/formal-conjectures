@@ -87,8 +87,8 @@ theorem monoAPNumber_two_two : W 2 = 3 := by
 In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
 -/
-@[category research open, AMS 11]
-theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
+@[category research open, question, AMS 11]
+theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
@@ -109,9 +109,9 @@ theorem erdos_138.variants.upper (k : ℕ) : W k ≤ 2 ^ (2 ^ (2 ^ 2 ^ 2 ^ (k + 
 /--
 In [Er81] Erdős asks whether $\frac{W(k+1)}{W(k)} \to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_138.variants.quotient :
-    answer(sorry) ↔ atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
+    atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
 /--
@@ -119,10 +119,10 @@ In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
 
 The DeepMind prover agent has found a formal proof of this statement.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/6ac8d0cbe1a85e71747c62c1391a84788015ebc1/FormalConjectures/ErdosProblems/138.lean#L844"]
 theorem erdos_138.variants.difference :
-    answer(True) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
+    atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
 /--
@@ -137,9 +137,9 @@ Solved: a Lean 4 proof, derived from the Atlas proofs in
 [facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
 `formal_proof`.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Erdos138.lean#L1033"]
 theorem erdos_138.variants.dvd_two_pow :
-    answer(True) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
+    atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

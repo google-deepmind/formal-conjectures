@@ -172,10 +172,10 @@ properties. The related [Kahn–Kalai conjecture](https://arxiv.org/abs/math/060
 **This conjecture is false** without the additional assumption $\mu_t(F) = 1/2$.
 A counterexample was found by Shlomo Perles (April 7, 2026).
 -/
-@[category research solved, AMS 5 60, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 60, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/408f53dc0856c0882a5e77acd24fc83b978f0bc9/FormalConjectures/Mathoverflow/10799.lean#L252"]
-theorem mathoverflow_10799 : answer(False) ↔
-    ∀ (n : ℕ) (_ : 2 ≤ n)
+theorem mathoverflow_10799 :
+    ¬ ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
     (_ : t / s > 1000 * Real.log n),
@@ -194,11 +194,11 @@ Their construction was adapted to this exact Formal Conjectures statement and
 [formalized in Lean](https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample)
 by Kenta Kitamura (KitaKen1).
 -/
-@[category research solved, AMS 5 60,
+@[category research solved, question, AMS 5 60,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample/blob/5446d2f/lean/MO10799CounterexampleFC.lean#L2597-L2604"]
-theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
-    ∀ (n : ℕ) (_ : 2 ≤ n)
+theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 :
+    ¬ ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
     (_ : μFamily t F = 1 / 2)

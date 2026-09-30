@@ -51,8 +51,8 @@ Solved by [GGM25], with at most $2K^{12}$ translates. The factor $2$ cannot be o
 $A = \mathbb{F}_2^n \setminus \{0\}$ one has $K = 2^n / (2^n - 1)$, so $K^C \to 1$ as
 $n \to \infty$, while every subspace of size at most $|A|$ is proper and two translates are needed.
 -/
-@[category research solved, AMS 5 11]
-theorem green_49 : answer(True) ↔
+@[category research solved, question, AMS 5 11]
+theorem green_49 :
     ∃ C > 0,
       ∀ n (A : Finset (𝔽₂ n)), A.Nonempty →
       ∀ K ≥ (1 : ℝ), (#(A + A) : ℝ) ≤ K * #A →

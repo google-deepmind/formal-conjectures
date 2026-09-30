@@ -81,9 +81,9 @@ theorem a_5 : a 5 = 1 := by
 /--
 Is $a(33900)$ the last term equal to $1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-  answer(sorry) ↔ ∀ n > 33900, a n ≠ 1 := by
+  ∀ n > 33900, a n ≠ 1 := by
   sorry
 
 end OeisA114216

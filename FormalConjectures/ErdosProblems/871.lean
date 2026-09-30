@@ -35,19 +35,18 @@ Let $A$ be an additive basis of order $2$, and suppose $1_A\ast 1_A(n)\to \infty
 
 A question of Erdős and Nathanson [ErNa88], who proved this is true if $1_A\ast 1_A(n) > c\log n$ (for all large $n$) for some constant $c>(\log\frac{4}{3})^{-1}$. Erdős and Nathanson [ErNa89] also proved that for every $t$ there exists a basis $A$ of order $2$ such that $1_A\ast 1_A(n)\geq t$ for all large $n$ and yet $A$ cannot be partitioned into two disjoint additive bases. This has been disproved by Larsen using Claude Opus 4.5 - in fact only a small modification of the argument of [ErNa89] is required.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos871.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos871.lean"]
 theorem erdos_871 :
-    answer(False) ↔
-      ∀ (A : Set ℕ),
-        (∀ᶠ n in Filter.atTop, ∃ a ∈ A, ∃ b ∈ A, a + b = n) ∧
-        (∀ t, ∀ᶠ n in Filter.atTop, ∃ pairs : Finset (ℕ × ℕ),
-          pairs.card ≥ t ∧
-            ∀ p ∈ pairs, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧ p.1 ≤ p.2) →
-        ∃ (B C : Set ℕ),
-          (∀ x, x ∈ A ↔ x ∈ B ∨ x ∈ C) ∧
-          Disjoint B C ∧
-          (∀ᶠ n in Filter.atTop, ∃ a ∈ B, ∃ b ∈ B, a + b = n) ∧
-          (∀ᶠ n in Filter.atTop, ∃ a ∈ C, ∃ b ∈ C, a + b = n) := by
+    ¬ ∀ (A : Set ℕ),
+      (∀ᶠ n in Filter.atTop, ∃ a ∈ A, ∃ b ∈ A, a + b = n) ∧
+      (∀ t, ∀ᶠ n in Filter.atTop, ∃ pairs : Finset (ℕ × ℕ),
+        pairs.card ≥ t ∧
+          ∀ p ∈ pairs, p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n ∧ p.1 ≤ p.2) →
+      ∃ (B C : Set ℕ),
+        (∀ x, x ∈ A ↔ x ∈ B ∨ x ∈ C) ∧
+        Disjoint B C ∧
+        (∀ᶠ n in Filter.atTop, ∃ a ∈ B, ∃ b ∈ B, a + b = n) ∧
+        (∀ᶠ n in Filter.atTop, ∃ a ∈ C, ∃ b ∈ C, a + b = n) := by
   sorry
 
 end Erdos871

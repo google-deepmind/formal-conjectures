@@ -46,9 +46,9 @@ The linked formal proof (van Doorn and Aristotle, see `erdos_698.variants.bergma
 explicit bound $\gcd > \frac{2^i \sqrt n}{4 i \sqrt{i - 1}}$, so $h(n) = \lfloor \sqrt n / 4 \rfloor$
 works since $i \sqrt{i - 1} \le 2^i$ for $i \ge 2$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos698.lean#L452"]
-theorem erdos_698 : answer(True) ↔
+theorem erdos_698 :
     ∃ h : ℕ → ℕ, Tendsto h atTop atTop ∧
       ∀ n i j : ℕ, 2 ≤ i → i < j → j ≤ n / 2 →
         h n ≤ Nat.gcd (n.choose i) (n.choose j) := by

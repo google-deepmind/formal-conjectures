@@ -40,9 +40,9 @@ def UnitSquareCorners : Fin 4 → ℝ² :=
 /--
 Does there exist a point in the plane at rational distance from all four vertices of the unit square?
 -/
-@[category research open, AMS 11 51]
+@[category research open, question, AMS 11 51]
 theorem rational_distance_problem :
-    answer(sorry) ↔ ∃ P : ℝ² , ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) := by
+    ∃ P : ℝ² , ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) := by
   sorry
 
 end RationalDistanceProblem

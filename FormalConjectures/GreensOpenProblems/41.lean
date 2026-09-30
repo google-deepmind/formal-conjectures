@@ -76,14 +76,14 @@ $\exp\exp(\varepsilon^{-C})$ rotations suffice for some $C$ and all sufficiently
 $\varepsilon > 0$? [KrLe25, Section 8.1] discusses where the three exponentials are lost and
 which of them one might hope to save.
 -/
-@[category research open, AMS 51 52]
-theorem green_41.variants.double_exponential_bound : answer(sorry) ↔
+@[category research open, question, AMS 51 52]
+theorem green_41.variants.double_exponential_bound :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (ε ^ (-C))) := by
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
-@[category research open, AMS 51 52]
-theorem green_41.variants.polynomial_bound : answer(sorry) ↔
+@[category research open, question, AMS 51 52]
+theorem green_41.variants.polynomial_bound :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ ε ^ (-C) := by
   sorry
 

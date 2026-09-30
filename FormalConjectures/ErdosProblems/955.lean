@@ -70,10 +70,9 @@ If $A\subset \mathbb{N}$ has density $0$ then $s^{-1}(A)$ must also have density
 
 A conjecture of Erdős, Granville, Pomerance, and Spiro [EGPS90].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_955 :
-    answer(sorry) ↔
-      ∀ A : Set ℕ, A.HasDensity 0 → { x | s x ∈ A }.HasDensity 0 := by
+    ∀ A : Set ℕ, A.HasDensity 0 → { x | s x ∈ A }.HasDensity 0 := by
   sorry
 
 /--

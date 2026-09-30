@@ -56,9 +56,9 @@ The condition that $E$ is connected is equivalent to $E$ containing all zeros of
 The answer is yes, and in fact the centre of this disc can be taken to be
 $\frac{z_1+\cdots+z_n}{n}$, where the $z_i$ are the roots of $f$, as shown by Pommerenke [Po59].
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1046.lean#L329"]
-theorem erdos_1046 : answer(True) ↔ ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
+theorem erdos_1046 : ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
     ∃ c : ℂ, lemniscate f ⊆ ball c 2 := by
   sorry
 
@@ -76,8 +76,8 @@ theorem erdos_1046.variants.centroid : ∀ f : ℂ[X], f.Monic → IsConnected (
 Erdős, Herzog, and Piranian [EHP58] conjecture that if $\{ z: \lvert f(z)\rvert\leq 1\}$ is
 connected then its diameter is at least $2$.
 -/
-@[category research open, AMS 30]
-theorem erdos_1046.variants.diameter : answer(sorry) ↔ ∀ f : ℂ[X], f.Monic →
+@[category research open, question, AMS 30]
+theorem erdos_1046.variants.diameter : ∀ f : ℂ[X], f.Monic →
     IsConnected (closedLemniscate f) → 2 ≤ Metric.ediam (closedLemniscate f) := by
   sorry
 

@@ -48,8 +48,8 @@ theorem erdos_544.parts.i :
 Similarly, prove or disprove that
 $$R(3,k+1)-R(3,k)=o(k).$$
 -/
-@[category research open, AMS 5]
-theorem erdos_544.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_544.parts.ii :
     (fun k : ℕ ↦ (SimpleGraph.classicalRamsey 3 (k + 1) : ℝ) -
       (SimpleGraph.classicalRamsey 3 k : ℝ)) =o[atTop] (fun k : ℕ ↦ (k : ℝ)) := by
   sorry

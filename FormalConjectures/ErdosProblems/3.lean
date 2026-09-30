@@ -43,8 +43,8 @@ namespace Erdos3
 If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
 long arithmetic progressions?
 -/
-@[category research open, AMS 11]
-theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
+@[category research open, question, AMS 11]
+theorem erdos_3 : ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry

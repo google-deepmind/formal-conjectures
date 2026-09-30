@@ -37,8 +37,8 @@ $$
 Here two intervals are adjacent if their union is again an interval, so any two of the
 $I_i$ must be separated by at least one integer.
 -/
-@[category research open, AMS 11]
-theorem erdos_289 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_289 :
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
     (∀ i, (I i).1 < (I i).2) ∧
     (∀ i j, i ≠ j → (I i).2 + 1 < (I j).1 ∨ (I j).2 + 1 < (I i).1) ∧

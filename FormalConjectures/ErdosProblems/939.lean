@@ -57,8 +57,8 @@ def Erdos939Sums (r : ℕ) :=
 /--
 If $r≥4$ then can the sum of $r-2$ coprime $r$-powerful numbers ever be itself $r$-powerful?
 -/
-@[category research open, AMS 11]
-theorem erdos_939 : answer(sorry) ↔ ∀ r ≥ 4, (Erdos939Sums r).Nonempty := by
+@[category research open, question, AMS 11]
+theorem erdos_939 : ∀ r ≥ 4, (Erdos939Sums r).Nonempty := by
   sorry
 
 /--
@@ -73,8 +73,8 @@ many for every $r \ge 6$. This statement quantifies over every $r \ge 4$, so it 
 $r = 4$ and $r = 5$. The category is unchanged because the construction is recorded in the
 comments and not in the literature.
 -/
-@[category research solved, AMS 11]
-theorem erdos_939.variants.finite : answer(False) ↔ ∀ r ≥ 4, (Erdos939Sums r).Finite := by
+@[category research solved, question, AMS 11]
+theorem erdos_939.variants.finite : ¬ ∀ r ≥ 4, (Erdos939Sums r).Finite := by
   sorry
 
 /--
@@ -100,9 +100,9 @@ example. In Nitaj's construction at least two of $a, b, c$ are perfect cubes. Co
 constructed infinitely many triples of which none is a perfect cube, and Walsh [Wa24] gave a
 further construction.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_939.variants.triples :
-    answer(True) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
+    {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
       0 < a ∧ 0 < b ∧
       (3).Full a ∧ (3).Full b ∧ (3).Full c ∧
       a + b = c}.Infinite := by

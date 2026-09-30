@@ -40,11 +40,10 @@ The chromatic number can be infinite: there is an infinite general-position set
 whose integer-distance graph admits no finite proper colouring. How large the
 *clique* number can be is not addressed here.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-130/Research/Basic.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-130/Research/Basic.lean"]
 theorem erdos_130 :
-    answer(True) ↔
-      ∃ A : Set ℝ², A.Infinite ∧ InGeneralPosition A ∧
-        (IntegerDistancePlaneGraph A).chromaticNumber = ⊤ := by
+    ∃ A : Set ℝ², A.Infinite ∧ InGeneralPosition A ∧
+      (IntegerDistancePlaneGraph A).chromaticNumber = ⊤ := by
   sorry
 
 end Erdos130

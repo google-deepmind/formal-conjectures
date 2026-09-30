@@ -35,10 +35,10 @@ If $A\subset \mathbb{R}$ does not contain a 3-term arithmetic progression then m
 
 Baumgartner [Ba75] answered this in the negative.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos199.lean"]
-theorem erdos_199 : answer(False) ↔
-    ∀ A : Set ℝ, ThreeAPFree A →
+theorem erdos_199 :
+    ¬ ∀ A : Set ℝ, ThreeAPFree A →
       ∃ S : Set ℝ, S.IsAPOfLength ⊤ ∧ S ⊆ Aᶜ := by
   sorry
 

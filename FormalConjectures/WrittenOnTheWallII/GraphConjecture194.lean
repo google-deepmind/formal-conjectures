@@ -52,10 +52,10 @@ the 18-vertex graph described above.
 Counterexample (Graph6): `Q~~~~~~~~~~~~}~}^~??G??_??_`
 
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/4bff865a14c2cd61fefbffbe9c49cbfc5a89ac45/FormalConjectures/WrittenOnTheWallII/GraphConjecture194.lean#L128-L140"]
-theorem conjecture194 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem conjecture194 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) (_h : G.Connected),
       (G.indepNum : ℝ) ≤ 1 + averageIndepNeighbors G →
       ∃ a b : α, ∃ p : G.Walk a b, p.IsHamiltonian := by

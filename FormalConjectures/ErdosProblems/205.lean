@@ -54,9 +54,9 @@ for all $k$ with $2^k<n$, $n-2^k$ has at least
 $$\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}$$
 many prime factors.
 -/
-@[category research solved, AMS 11]
-theorem erdos_205.parts.i : answer(False) ↔
-    ∀ᶠ n : ℕ in atTop, IsRepresentable (fun m => Real.log (Real.log m)) n := by
+@[category research solved, question, AMS 11]
+theorem erdos_205.parts.i :
+    ¬ ∀ᶠ n : ℕ in atTop, IsRepresentable (fun m => Real.log (Real.log m)) n := by
   sorry
 
 /--
@@ -67,9 +67,9 @@ multiplicity.) What about $<\epsilon \log\log m$?
 Barreto and Leeham, using ChatGPT and Aristotle, have proved a negative answer, which was
 quantified by Tao and Alexeev (see the comments).
 -/
-@[category research solved, AMS 11]
-theorem erdos_205.parts.ii : answer(False) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+@[category research solved, question, AMS 11]
+theorem erdos_205.parts.ii :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       IsRepresentable (fun m => ε * Real.log (Real.log m)) n := by
   sorry
 
@@ -81,9 +81,9 @@ multiplicity.) Or some more slowly growing function?
 Barreto and Leeham, using ChatGPT and Aristotle, have proved a negative answer, which was
 quantified by Tao and Alexeev (see the comments).
 -/
-@[category research solved, AMS 11]
-theorem erdos_205.parts.iii : answer(False) ↔
-    ∃ f : ℕ → ℝ, f =o[atTop] (fun m : ℕ => Real.log (Real.log m)) ∧
+@[category research solved, question, AMS 11]
+theorem erdos_205.parts.iii :
+    ¬ ∃ f : ℕ → ℝ, f =o[atTop] (fun m : ℕ => Real.log (Real.log m)) ∧
       ∀ᶠ n : ℕ in atTop, IsRepresentable f n := by
   sorry
 
@@ -102,8 +102,8 @@ theorem erdos_205.variants.many_prime_factors : ∃ c > (0 : ℝ),
 The $n$ constructed in this way are divisible by a large power of $2$. It remains open whether
 there exist arbitrarily large odd counterexamples.
 -/
-@[category research open, AMS 11]
-theorem erdos_205.variants.odd_counterexamples : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_205.variants.odd_counterexamples :
     {n : ℕ | Odd n ∧ ¬ IsRepresentable (fun m => Real.log (Real.log m)) n}.Infinite := by
   sorry
 

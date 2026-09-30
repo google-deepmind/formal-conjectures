@@ -58,9 +58,9 @@ A problem of Erdős [Er40, Er73, ErGr80], which is discussed in problem B40 of G
 $\sum_{1 \leq k < \phi(n)} (a_{k+1} - a_k)^\gamma \ll n^\gamma / \phi(n)^{\gamma - 1}$ for every
 $\gamma \geq 1$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos220.lean#L39"]
-theorem erdos_220 : answer(True) ↔
+theorem erdos_220 :
     ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, 1 ≤ n →
       (sumSquaredGaps (sortedTotatives n) : ℝ) ≤ C * (n : ℝ) ^ 2 / (n.totient : ℝ) := by
   sorry

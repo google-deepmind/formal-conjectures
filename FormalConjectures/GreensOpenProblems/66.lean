@@ -37,12 +37,11 @@ def IsSumOfTwoSquares (n : ℕ) : Prop :=
 Is there always a sum of two squares between $X - \frac{1}{10}X^{1/4}$ and $X$?
 We formalize this as an eventual statement for sufficiently large real $X$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_66 :
-    answer(sorry) ↔
-      ∀ᶠ X : ℝ in atTop,
-        ∃ n : ℕ, IsSumOfTwoSquares n ∧
-          (n : ℝ) ∈ Set.Icc (X - (1 / 10 : ℝ) * X ^ (1 / 4 : ℝ)) X := by
+    ∀ᶠ X : ℝ in atTop,
+      ∃ n : ℕ, IsSumOfTwoSquares n ∧
+        (n : ℝ) ∈ Set.Icc (X - (1 / 10 : ℝ) * X ^ (1 / 4 : ℝ)) X := by
   sorry
 
 /--

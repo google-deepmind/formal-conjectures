@@ -67,9 +67,9 @@ entropy function.
 
 This was formalized in Lean by Monticone using Aristotle.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos150.lean"]
-theorem erdos_150 : answer(True) ↔
+theorem erdos_150 :
     ∃ α : ℝ, α < 2 ∧
       Tendsto (fun n : ℕ ↦ (maxMinimalCuts n : ℝ) ^ (1 / n : ℝ)) atTop (𝓝 α) := by
   sorry
@@ -80,9 +80,9 @@ Asked by Erdős and Nešetřil, who also ask whether $c(3m+2)=3^m$.
 Note that the lower bound $1.4457\leq \alpha$ of Gaspers and Mackenzie [GaMa18] provides a
 negative answer to the above question of Erdős and Nešetřil.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_150.variants.erdos_nesetril :
-    answer(False) ↔ ∀ m : ℕ, maxMinimalCuts (3 * m + 2) = 3 ^ m := by
+    ¬ ∀ m : ℕ, maxMinimalCuts (3 * m + 2) = 3 ^ m := by
   sorry
 
 /--

@@ -53,19 +53,19 @@ theorem erdos_770.variants.odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '
 
 
 /-- For every prime `p`, does the density of integers with `h n = p` exist? -/
-@[category research open, AMS 11]
-theorem erdos_770.parts.i : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.i : ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
   sorry
 
 /-- Does `liminf h n = ∞`? -/
-@[category research open, AMS 11]
-theorem erdos_770.parts.ii : answer(sorry) ↔ liminf h atTop = ⊤ := by
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.ii : liminf h atTop = ⊤ := by
   sorry
 
 /-- Is it true that if `p` is the greatest prime such that `p - 1 ∣ n` and `p > n ^ ε`, then
 `h n = p`? -/
-@[category research open, AMS 11]
-theorem erdos_770.parts.iii : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.iii : ∀ ε > 0, ∀ᶠ n in atTop,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry

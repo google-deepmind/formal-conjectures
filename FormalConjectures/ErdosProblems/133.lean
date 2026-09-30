@@ -62,9 +62,9 @@ $f(n)\leq (\frac{2}{\sqrt{3}}+o(1))\sqrt{n}$. In particular $f(n)/\sqrt{n}\not\t
 
 The precise asymptotics of $f(n)$ are unknown; Alon believes that the truth is $f(n)\sim \sqrt{n}$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos133.lean#L597"]
-theorem erdos_133 : answer(False) ↔ Tendsto (fun n : ℕ ↦ (f n : ℝ) / √n) atTop atTop := by
+theorem erdos_133 : ¬ Tendsto (fun n : ℕ ↦ (f n : ℝ) / √n) atTop atTop := by
   sorry
 
 /-- The order of growth of $f(n)$ is $\sqrt{n}$. -/
@@ -95,9 +95,9 @@ theorem erdos_133.variants.furedi_seress : ∀ ε : ℝ, 0 < ε →
   sorry
 
 /-- Is $f(n)\sim \sqrt{n}$? Alon believes that this is the truth. -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_133.variants.asymptotic :
-    answer(sorry) ↔ (fun n : ℕ ↦ (f n : ℝ)) ~[atTop] fun n ↦ √n := by
+    (fun n : ℕ ↦ (f n : ℝ)) ~[atTop] fun n ↦ √n := by
   sorry
 
 end Erdos133

@@ -43,9 +43,9 @@ depends on the axiom of choice.
 The plane is identified with $\mathbb{C}$: the sets congruent to $S$ are the sets $uS + t$ with
 $\lvert u\rvert = 1$ and $t \in \mathbb{C}$, and $\mathbb{Z}^2$ is the set of Gaussian integers.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
+@[category research solved, question, AMS 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos215.lean#L55"]
-theorem erdos_215 : answer(True) ↔ ∃ S : Set ℂ, ∀ u t : ℂ, ‖u‖ = 1 →
+theorem erdos_215 : ∃ S : Set ℂ, ∀ u t : ℂ, ‖u‖ = 1 →
     ∃! z : ℂ, z ∈ (fun w => u * w + t) '' S ∧ ∃ a b : ℤ, z = a + b * Complex.I := by
   sorry
 

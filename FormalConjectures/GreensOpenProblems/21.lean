@@ -74,8 +74,8 @@ terms of $k$ only?
 This problem, which is known as Rado's boundedness conjecture, dates back to 1933 [Ra33]. It is
 open for all $k \geq 4$.
 -/
-@[category research open, AMS 5 11]
-theorem green_21 : answer(sorry) ↔ ∃ B : ℕ → ℕ, ∀ (k : ℕ) (a : Fin k → ℤ),
+@[category research open, question, AMS 5 11]
+theorem green_21 : ∃ B : ℕ → ℕ, ∀ (k : ℕ) (a : Fin k → ℤ),
     ¬ RadoCondition a → minColours a ≤ B k := by
   sorry
 
@@ -114,8 +114,8 @@ The point of the question is that the number of colours $f(k)$ must not depend o
 The arity $k$ is required to be positive, as in [FoKl06]: for $k = 0$ the empty tuple is a
 monochromatic solution with sum $0$ for every colouring, so no $f(0)$ could work.
 -/
-@[category research open, AMS 5 11]
-theorem green_21.variants.fox_kleitman_modular : answer(sorry) ↔ ∃ f : ℕ → ℕ,
+@[category research open, question, AMS 5 11]
+theorem green_21.variants.fox_kleitman_modular : ∃ f : ℕ → ℕ,
     ∀ (k p : ℕ), 0 < k → p.Prime → ∀ a : Fin k → ℤ,
       (∀ I : Finset (Fin k), (p : ℤ) ∣ ∑ i ∈ I, a i → I = ∅) →
       ∃ col : (ZMod p)ˣ → Fin (f k), ∀ x : Fin k → (ZMod p)ˣ,

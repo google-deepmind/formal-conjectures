@@ -48,8 +48,8 @@ We state the problem by asking if `Nat.primeFactorsList` is polynomial-time comp
 (assuming typical encodings of ℕ and List ℕ into bitstrings).
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Integer_factorization) -/
-@[category research open, AMS 68]
-theorem isPolyTime_primeFactorsList : answer(sorry) ↔ IsPolyTime Nat.primeFactorsList := by
+@[category research open, question, AMS 68]
+theorem isPolyTime_primeFactorsList : IsPolyTime Nat.primeFactorsList := by
   sorry
 
 end PolyTime

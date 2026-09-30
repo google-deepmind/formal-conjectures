@@ -43,10 +43,10 @@ asked whether every simple connected graph $G$ satisfies
 $f(G) \geq \lceil(\min_v \operatorname{distEven}(v) + b(G) + 1)/3\rceil$.
 The answer is no, as witnessed by $C_5[K_4]$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
 "https://github.com/Kuberwastaken/wowii-63-85-counterexample/blob/cba739842ec59adf7426c180009175b31935701d/lean/WOWII63.lean#L184-L195"]
-theorem conjecture63 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem conjecture63 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) (_h : G.Connected),
       let minDistEven := (Finset.univ.image (G.distEven ·)).min' (by simp)
       ⌈((minDistEven : ℝ) + G.b + 1) / 3⌉ ≤ (G.largestInducedForestSize : ℝ) := by

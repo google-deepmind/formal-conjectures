@@ -42,9 +42,9 @@ The answer is yes, proved by Freiman [Fr73].
 
 [Fr73] Fre\u{\i}man, G. A., _Foundations of a structural theory of set addition_. (1973), vii+108.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_245 :
-    answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
+    ∀ (A : Set ℕ), A.Infinite →
       atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
       3 ≤ atTop.limsup
         fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)

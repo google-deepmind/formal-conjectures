@@ -58,21 +58,21 @@ whether the two explicit sequences mentioned above satisfy this property.
 The statement "$\liminf h_\alpha(n)$ is finite" is formalised as "$h_\alpha(n)\leq C$ for
 infinitely many $n$".
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1099.lean#L63"]
-theorem erdos_1099 : answer(True) ↔
+theorem erdos_1099 :
     ∀ α : ℝ, 1 < α → ∃ C : ℝ, ∃ᶠ n : ℕ in atTop, h α n ≤ C := by
   sorry
 
 /-- Is $h_\alpha(n!)$ bounded? -/
-@[category research open, AMS 11]
-theorem erdos_1099.variants.factorial : answer(sorry) ↔ ∀ α : ℝ, 1 < α →
+@[category research open, question, AMS 11]
+theorem erdos_1099.variants.factorial : ∀ α : ℝ, 1 < α →
     ∃ C : ℝ, ∀ n : ℕ, h α n.factorial ≤ C := by
   sorry
 
 /-- Is $h_\alpha(\mathrm{lcm}(1,\ldots,n))$ bounded? -/
-@[category research open, AMS 11]
-theorem erdos_1099.variants.lcm : answer(sorry) ↔ ∀ α : ℝ, 1 < α →
+@[category research open, question, AMS 11]
+theorem erdos_1099.variants.lcm : ∀ α : ℝ, 1 < α →
     ∃ C : ℝ, ∀ n : ℕ, h α ((Finset.Icc 1 n).lcm id) ≤ C := by
   sorry
 

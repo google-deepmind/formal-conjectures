@@ -43,9 +43,9 @@ def SimpleGraph.IsErdos944 (G : SimpleGraph V) (k r : ℕ) : Prop :=  G.IsCritic
 Let $k \ge 4$ and $r\ge 1$. Must there exist a graph $G$ with chromatic number $k$
  such that every vertex is critical, yet every critical set of edges has size $>r$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_944 :
-    answer(sorry) ↔ ∀ k ≥ 4, ∀ r ≥ 1, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r := by
+    ∀ k ≥ 4, ∀ r ≥ 1, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k r := by
   sorry
 
 /--
@@ -54,9 +54,9 @@ such that every vertex is critical, yet every critical set of edges has size $>1
 
 This was conjectured by Dirac in 1970.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_944.variants.dirac_conjecture :
-    answer(True) ↔ ∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
+    ∀ k ≥ 4, ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
 
@@ -101,11 +101,11 @@ Answer: Yes. The Lean formalization linked below proves the existence of such a 
 Together with Jensen's result for $k \ge 5$, this settles Dirac's conjecture for every
 $k \ge 4$.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-944-dirac-k4-lean/blob/9606d77/lean4web/Erdos944K4R1Lean4Web.lean#L676-L690"]
 theorem erdos_944.variants.dirac_conjecture.k_eq_four :
-    answer(True) ↔ ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1 := by
+    ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 4 1 := by
   sorry
 
 /--

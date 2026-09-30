@@ -66,8 +66,8 @@ Mayer [Ma42] proved that $f(n) \to \infty$ and Erdős [Er43] that $f(n) \gg n$. 
 proved $(1/12 - o(1)) n \le f(n) \le n / 4 + O(1)$ and conjectured that $f(n) = (1/4 + o(1)) n$,
 which was proved by Cipollini and GPT-5.5; see `erdos_1005.variants.constant`.
 -/
-@[category research solved, AMS 11]
-theorem erdos_1005 : answer(True) ↔
+@[category research solved, question, AMS 11]
+theorem erdos_1005 :
     ∃ c : ℝ, 0 < c ∧ Tendsto (fun n : ℕ => (f n : ℝ) / n) atTop (𝓝 c) := by
   sorry
 
