@@ -21,28 +21,36 @@ public import FormalConjecturesUtil
 /-!
 # Littlewood's mutually touching infinite cylinders problem
 
-Is seven the maximum number of congruent infinite circular cylinders in Euclidean
-three-space such that every two cylinders touch and their interiors are disjoint?
+Littlewood asked whether seven congruent infinite circular cylinders can touch
+pairwise in [Lit68, Problem 7, p. 20], as quoted in [BLR15, Section 1].
+This file states the maximum-seven formulation of the cylinder problem, given in
+[Ko25, Introduction]: is seven the maximum number of such cylinders in Euclidean
+three-space with pairwise disjoint interiors?
 
 After scaling the common radius to $1/2$, the problem is equivalent to asking for
 the greatest number of affine lines in Euclidean three-space whose pairwise distances
 are one.
 
 *References:*
-- [S. Bozóki, T.-L. Lee and L. Rónyai, *Seven mutually touching infinite cylinders*]
-  (https://arxiv.org/abs/1308.5164)
-- [J. Koizumi, *A new upper bound for mutually touching infinite cylinders*]
-  (https://arxiv.org/abs/2506.19309)
+- [Lit68] J. E. Littlewood, *Some Problems in Real and Complex Analysis*,
+  D. C. Heath, 1968, Problem 7, p. 20. The original question is quoted in [BLR15].
+- [BLR15] S. Bozóki, T.-L. Lee and L. Rónyai,
+  [*Seven mutually touching infinite cylinders*](https://arxiv.org/abs/1308.5164),
+  Computational Geometry 48 (2015), 87–93, Section 1.
+- [Ko25] J. Koizumi,
+  [*A new upper bound for mutually touching infinite cylinders*]
+  (https://arxiv.org/abs/2506.19309), Introduction.
 -/
 
 @[expose] public section
 
-namespace Arxiv.«2506.19309»
+namespace LittlewoodCylinders
 
 /--
 Is seven the greatest number of affine lines in Euclidean three-space whose pairwise
 distances are exactly one? This is the normalized form of Littlewood's problem on
-mutually touching congruent infinite circular cylinders.
+mutually touching congruent infinite circular cylinders, as stated in [Ko25].
+It includes both seven-cylinder existence and the upper bound of seven.
 -/
 @[category research solved, AMS 51 52,
   formal_proof using lean4 at
@@ -59,4 +67,4 @@ theorem littlewood_cylinders : answer(True) ↔
       7 := by
   sorry
 
-end Arxiv.«2506.19309»
+end LittlewoodCylinders
