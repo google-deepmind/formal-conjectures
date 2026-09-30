@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjectures.ErdosProblems.«138»
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 169
@@ -28,6 +28,16 @@ public import FormalConjectures.ErdosProblems.«138»
 open scoped ENNReal Topology
 
 namespace Erdos169
+
+/--
+The set of $N$ such that every $2$-colouring of $\{1, \dots, N\}$ contains a monochromatic
+$k$-term arithmetic progression.
+-/
+def monoAPGuaranteeSet (k : ℕ) : Set ℕ :=
+  {N | ∀ coloring : Finset.Icc 1 N → Fin 2, ContainsMonoAPofLength coloring k}
+
+/-- The two-colour van der Waerden number $W(k)$, defined as in Erdős Problem 138. -/
+noncomputable def W (k : ℕ) : ℕ := sInf (monoAPGuaranteeSet k)
 
 /-- The sum of the reciprocals of the elements of $A$, allowing $\infty$. -/
 noncomputable def reciprocalSum (A : Set ℕ) : ℝ≥0∞ :=
@@ -53,7 +63,7 @@ where $W(k)$ is the van der Waerden number?
 @[category research open, AMS 5 11]
 theorem erdos_169 : answer(sorry) ↔
     Filter.Tendsto (fun k : ℕ =>
-      f (k + 3) / ENNReal.ofReal (Real.log (Erdos138.W (k + 3) : ℝ)))
+      f (k + 3) / ENNReal.ofReal (Real.log (W (k + 3) : ℝ)))
       Filter.atTop (𝓝 (⊤ : ℝ≥0∞)) := by
   sorry
 
