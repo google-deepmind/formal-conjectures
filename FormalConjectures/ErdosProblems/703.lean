@@ -63,7 +63,7 @@ $$T(n,r)<(2-\delta)^n?$$
 
 The answer is yes, proved by Frankl and Rödl [FrRo87].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos703.lean#L331"]
 theorem erdos_703 : answer(True) ↔
     ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧

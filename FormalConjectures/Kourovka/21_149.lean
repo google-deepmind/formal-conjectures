@@ -98,7 +98,7 @@ bigger Dlab group $A$ if $G$ embeds into $A$ by an injective homomorphism $e$ an
 satisfies $e(\alpha(f)) = u^{-1} e(f) u$ for all $f \in G$. This includes the inclusions and the
 order-preserving embeddings of [GYZ]. The slope groups are arbitrary.
 -/
-@[category research solved, AMS 6 20,
+@[category research solved, question, AMS 6 20,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/kourovka-21-149-lean/blob/5c34c22661071d412f66a42009a1fe68db473b31/lean/Kourovka21149FC.lean#L5740-L5775"]
 theorem kourovka_21_149 : answer(True) ↔
@@ -115,7 +115,7 @@ automorphisms?
 This was answered affirmatively by the formal reasoning agent Aristotle (Harmonic), as reported
 in [vDJMM, Appendix A].
 -/
-@[category research solved, AMS 6 20,
+@[category research solved, question, AMS 6 20,
   formal_proof using lean4 at
     "https://github.com/pitmonticone/Kourovka/blob/dcfdbdad8c434e30f6151fb3b4343364d70eeed4/Kourovka/Problem_21_149.lean#L770-L775",
   formal_proof using lean4 at

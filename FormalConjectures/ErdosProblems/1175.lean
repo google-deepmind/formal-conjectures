@@ -51,7 +51,7 @@ $\kappa$?
 Shelah proved that a negative answer is consistent when
 $\kappa = \lambda = \aleph_1$ (see `erdos_1175.variants.aleph_one`).
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1175 : answer(sorry) ↔
     ∀ (κ : Cardinal), ℵ₀ < κ →
       ∃ (μ : Cardinal),
@@ -70,7 +70,7 @@ directly formalizable inside Lean's fixed model, so only the underlying question
 here. Note that this concerns only the choice $\lambda = \aleph_1$; it does not rule out a
 larger $\lambda$ in `erdos_1175`.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1175.variants.aleph_one : answer(sorry) ↔
     ∀ (V : Type*) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.CliqueFree 3 ∧ H.coe.chromaticCardinal = ℵ_ 1 := by
@@ -82,7 +82,7 @@ of `erdos_1175` with `λ ≤ chromaticCardinal` (a graph of chromatic number ≥
 triangle-free subgraph of chromatic number κ). This is a strengthening of `erdos_1175`
 (see `erdos_1175.test.threshold_implies_exact`).
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1175.variants.threshold_formulation : answer(sorry) ↔
     ∀ (κ : Cardinal), ℵ₀ < κ →
       ∃ (μ : Cardinal),

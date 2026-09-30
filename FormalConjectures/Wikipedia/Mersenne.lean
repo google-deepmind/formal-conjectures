@@ -131,7 +131,7 @@ theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) (h : Odd
 /--
 Are there infinitely many Mersenne primes?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_mersenne_primes :
   answer(sorry) ↔ Set.Infinite { p : ℕ | (mersenne p).Prime } := by
     sorry
@@ -141,7 +141,7 @@ The first five Catalan-Mersenne numbers $c_0, \ldots, c_4$ are known to be prime
 Catalan conjectured that they are prime "up to a certain limit".
 Are all Catalan-Mersenne numbers $c_n$ with $n \geq 5$ prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem catalans_mersenne_conjecture :
     answer(sorry) ↔ ∀ n ≥ 5, Nat.Prime (catalanMersenne n) := by
   sorry

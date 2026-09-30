@@ -63,7 +63,7 @@ $$\sum_{x\in X}\frac{1}{\log x}\geq 2^{-8}\log\log\log n.$$
 A $2$-colouring of the pairs of $\{2,\ldots,n\}$ is a graph `G` on this vertex set; a
 monochromatic set is a clique or an independent set of `G`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos191.lean#L1272"]
 theorem erdos_191 : answer(True) ↔ ∀ C : ℝ, 0 < C → ∀ᶠ n : ℕ in atTop,
     ∀ G : SimpleGraph (Finset.Icc 2 n), ∃ X : Finset (Finset.Icc 2 n),

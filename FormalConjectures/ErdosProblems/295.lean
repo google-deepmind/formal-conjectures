@@ -53,7 +53,7 @@ $N ≤ n_1 < ⋯ < n_k$ with $\frac 1 {n_1} + ... + \frac 1 {n_k} = 1$
 
 Is it true that $\lim_{N \to \infty} k(N) - (e - 1)N = \infty$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_295 :
     answer(sorry) ↔ Filter.atTop.Tendsto (fun N => k N - (rexp 1 - 1)*N) Filter.atTop := by
   sorry

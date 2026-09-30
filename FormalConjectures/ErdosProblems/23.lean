@@ -118,7 +118,7 @@ open scoped Classical in
 /--
 Can every triangle-free graph on $5n$ vertices be made bipartite by deleting at most $n^2$ edges?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_23 : answer(sorry) ↔
     ∀ (n : ℕ) (V : Type) [Fintype V], Fintype.card V = 5 * n →
       ∀ (G : SimpleGraph V), G.CliqueFree 3 →

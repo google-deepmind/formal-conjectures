@@ -50,7 +50,7 @@ graph `G` satisfies
 `Ls(G) + b(G) ≥ n(G) + dist_min(G, M(G²))`.
 The answer is no, witnessed by `D₇`.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/b0ba2b9206176b4fc30bd633de206ac230b4e01f/lean/GraphConjecture176.lean#L1-L377"]
 theorem conjecture176 : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V]

@@ -79,7 +79,7 @@ def HasBoundedDensity (Λ : Set ℝ) : Prop :=
 
 /-- **Problem 4.1.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
     a weak tiling measure for $\Omega$. Must $\mathrm{supp}(\nu)$ have bounded density? -/
-@[category research open, AMS 42 46]
+@[category research open, question, AMS 42 46]
 theorem problem_4_1 :
     answer(sorry) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
       (ν : Measure ℝ) (_ : IsWeakTilingMeasure Ω ν), HasBoundedDensity ν.support := by
@@ -88,7 +88,7 @@ theorem problem_4_1 :
 /-- **Problem 4.2.** Let $\Omega \subset \mathbb{R}$ be a finite union of three or more
     intervals. If $\Omega$ weakly tiles its complement, must it also tile its complement
     properly? -/
-@[category research open, AMS 42 46]
+@[category research open, question, AMS 42 46]
 theorem problem_4_2 :
     answer(sorry) ↔ ∀ (n : ℕ) (_ : 3 ≤ n) (Ω : Set ℝ)
       (_ : IsUnionOfNIntervals n Ω) (ν : Measure ℝ) (_ : IsWeakTilingMeasure Ω ν),
@@ -109,7 +109,7 @@ However, the constructed weak tiling measure $\nu$ satisfies
 $\nu(\{7\}) = \frac{1}{2}$ and $\nu(\{15\}) = 0$, so $\nu$ cannot be expressed
 as a convex combination of proper tiling measures.
 -/
-@[category research solved, AMS 42 46,
+@[category research solved, question, AMS 42 46,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/weak-tiling-counterexample/blob/5bf93234cc51f02fd7681407d77dcebde592f3ac/formal-conjectures-v4.27.0/WeakTilingCounterexample.lean"]
 theorem problem_4_3 :

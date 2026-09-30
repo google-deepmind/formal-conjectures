@@ -72,7 +72,7 @@ noncomputable def f (k : ℕ) : ℕ :=
 /--
 It is conjectured that $f(k) \ll (\log k)^O(1)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_961 : answer(sorry) ↔ ∃ C : ℕ, ∀ᶠ k : ℕ in atTop, f k < log k ^ C := by
   sorry
 

@@ -52,7 +52,7 @@ such that $\inf_k \| \theta n_k\|>\delta$. In particular, the solution to
 best known quantitative bound, due to Peres and Schlag [PeSc10], being that there is a colouring
 with no solutions using at most $\ll \epsilon^{-1}\log(1/\epsilon)$ colours.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos894.lean#L310"]
 theorem erdos_894 : answer(True) ↔
     ∀ n : ℕ → ℕ, StrictMono n → (∀ k, 0 < n k) → IsLacunary n →

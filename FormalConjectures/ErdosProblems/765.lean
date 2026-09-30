@@ -70,7 +70,7 @@ $n$, having proved the upper bound $\mathrm{ex}(n; C_4) \le \frac{n^{3/2}}{2} + 
 in [Er75]. This is false: Ma and Yang [MaYa23] proved that, for some absolute constant $c > 0$ and
 a positive density set of $n$, $\mathrm{ex}(n; C_4) \le \frac{n^{3/2}}{2} + (\frac14 - c) n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_765.variants.second_term : answer(False) ↔
     (fun n : ℕ ↦ (SimpleGraph.extremalNumber n (SimpleGraph.cycleGraph 4) : ℝ) -
       (n : ℝ) ^ (3 / 2 : ℝ) / 2 - (n : ℝ) / 4) =O[atTop] fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 : ℝ) := by

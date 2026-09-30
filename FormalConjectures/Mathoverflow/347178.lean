@@ -37,7 +37,7 @@ $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$?
 
 Answer: No. A counterexample in $\mathbb R^2$ is recorded in the linked formal proof.
 -/
-@[category research solved, AMS 26,
+@[category research solved, question, AMS 26,
   formal_proof using formal_conjectures at
     "https://github.com/google-deepmind/formal-conjectures/blob/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b/FormalConjectures/Mathoverflow/347178.lean#L670"]
 theorem mathoverflow_347178 :
@@ -52,7 +52,7 @@ $\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ eq
 
 Answer: No. The same counterexample is recorded in the linked formal proof.
 -/
-@[category research solved, AMS 26,
+@[category research solved, question, AMS 26,
   formal_proof using formal_conjectures at
     "https://github.com/google-deepmind/formal-conjectures/blob/fc20c0b55eab6fc26e2bb5b24fb3005303a0910b/FormalConjectures/Mathoverflow/347178.lean#L690"]
 theorem mathoverflow_347178.variants.bounded_iff :
@@ -65,7 +65,7 @@ Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Does the equ
 $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$
 hold when both suprema are finite?
 -/
-@[category research open, AMS 26]
+@[category research open, question, AMS 26]
 theorem mathoverflow_347178.variants.bounded_only :
     answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),

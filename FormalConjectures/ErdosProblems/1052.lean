@@ -38,7 +38,7 @@ def IsUnitaryPerfect (n : ℕ) : Prop :=
 
 /--
 Are there only finitely many unitary perfect numbers? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1052 :
     answer(sorry) ↔ {n | IsUnitaryPerfect n}.Finite := by
   sorry

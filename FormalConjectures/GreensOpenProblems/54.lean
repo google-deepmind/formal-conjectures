@@ -53,7 +53,7 @@ convex set $C$ with $\gamma_\infty(C) \geq 0.01$?
 The answer is yes: Hua, Song and Tudose proved that if $\gamma_n(A) > 5/6$ then $3(A + A + A)$
 contains a symmetric convex body $C$ with $\gamma_n(C) \geq 1/4$, uniformly in $n$.
 -/
-@[category research solved, AMS 46 52 60]
+@[category research solved, question, AMS 46 52 60]
 theorem green_54 :
     answer(True) ↔ ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
     gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℕ) • K ∧

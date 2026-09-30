@@ -42,7 +42,7 @@ def Quasiperfect (n : ℕ) : Prop :=
 **Quasiperfect Numbers Conjecture.**
 Do quasiperfect numbers exist?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_quasiperfect :
     answer(sorry) ↔ ∃ n, Quasiperfect n := by
   sorry

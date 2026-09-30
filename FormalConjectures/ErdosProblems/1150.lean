@@ -34,7 +34,7 @@ Is there some constant $c > 0$ such that, for all large enough $n$ and all polyn
 degree $n$ with coefficients in $\{-1, 1\}$,
 $$\max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?$$
 -/
-@[category research open, AMS 12 30]
+@[category research open, question, AMS 12 30]
 theorem erdos_1150 :
     answer(sorry) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop,
       ∀ P : ℂ[X],  (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n →

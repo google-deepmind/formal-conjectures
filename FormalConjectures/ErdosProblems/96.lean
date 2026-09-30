@@ -61,7 +61,7 @@ noncomputable def maxConvexUnitDistances (n : ℕ) : ℕ :=
 If $n$ points in $\mathbb{R}^2$ form a convex polygon then there are $O(n)$ many pairs which are
 distance $1$ apart.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_96 :
     answer(sorry) ↔ (fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ) := by
   sorry

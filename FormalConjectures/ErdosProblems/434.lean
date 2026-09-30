@@ -71,7 +71,7 @@ For $2 \le k \le n$, the interval $A = \{n, n - 1, \dots, n - k + 1\}$ maximises
 of integers not representable as the sum of finitely many elements from $A$ (with repetitions
 allowed), as proved by Kiss [Ki02].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
 theorem erdos_434.parts.ii : answer(True) ↔ ∀ᵉ (n ≥ 1) (k ≥ 2), k ≤ n →
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)

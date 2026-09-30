@@ -48,7 +48,7 @@ $\binom{n}{k}$ has a divisor in $(cn, n]$?
 
 Bui, Naprienko, Pratt, and Zaharescu [BNPZ26] answered this negatively.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_387 : answer(False) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n k : ℕ, 1 ≤ k → k < n →
     ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry
@@ -58,7 +58,7 @@ example : ∀ i < 15, ¬ 99215 - i ∣ Nat.choose 99215 15 :=
   fun i hi => by interval_cases i <;> native_decide
 
 /-- The following is Schinzel's conjecture, which appears in [Gu04]. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_387.variants.schinzel : answer(sorry) ↔
     ∀ᶠ k in atTop, ¬ IsPrimePow k → ∃ n : ℕ, ∀ i < k, ¬ n - i ∣ n.choose k := by
   sorry
@@ -84,7 +84,7 @@ $\binom{n}{k}$ has a divisor in $(cn, n]$?
 This variant appears in [Gu04]. Bui, Naprienko, Pratt, and Zaharescu [BNPZ26] answered it
 negatively.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_387.variants.guy : answer(False) ↔ ∀ c : ℝ, c < 1 → ∀ᶠ n : ℕ in atTop, ∀ k : ℕ, 1 ≤ k →
     k < n → ∃ d : ℕ, (d : ℝ) ∈ Set.Ioc (c * n) n ∧ d ∣ n.choose k := by
   sorry

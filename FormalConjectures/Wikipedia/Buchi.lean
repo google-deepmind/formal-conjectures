@@ -38,7 +38,7 @@ def IsBuchi (M : ℕ) : Prop :=
 There exists a positive integer $M$ such that, for all integers $x$ and $a$,
 if $(x+n)^2 + a$ is a square for $M$ consecutive values of $n$, then $a = 0$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem buchi_problem :
     answer(sorry) ↔ ∃ M : ℕ, 1 ≤ M ∧ IsBuchi M := by
   sorry

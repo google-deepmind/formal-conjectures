@@ -59,7 +59,7 @@ Mader [Ma73] disproved the conjecture in general for all $m \geq 6$. Sørensen a
 [SoTh74] proved that the conjectured bound of Bollobás and Erdős holds if the graph is
 $3$-connected.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos915.lean#L362"]
 theorem erdos_915 : answer(False) ↔
     ∀ m n : ℕ, 2 ≤ m → 1 ≤ n → ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
@@ -76,7 +76,7 @@ edges then $G$ contains two vertices connected by $m$ edge-disjoint paths (where
 the number of vertices of degree $\leq r$). In particular, this confirms (and is stronger than)
 the conjecture.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_915.variants.edge_disjoint : answer(True) ↔
     ∀ m n : ℕ, 2 ≤ m → 1 ≤ n → ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       Fintype.card V = 1 + n * (m - 1) → G.edgeSet.ncard = 1 + n * m.choose 2 →

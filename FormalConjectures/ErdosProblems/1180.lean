@@ -64,7 +64,7 @@ summands are required, and it may be that $C_\epsilon\leq \epsilon^{-1-o(1)}$ is
 
 See also [540](https://www.erdosproblems.com/540).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1180.lean#L1249"]
 theorem erdos_1180 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∃ C : ℕ, ∀ p : ℕ, p.Prime → ∀ a : ZMod p,
     ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s := by
@@ -99,7 +99,7 @@ theorem erdos_1180.variants.lower_bound : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0
   sorry
 
 /-- Is $C_\epsilon\leq \epsilon^{-1-o(1)}$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1180.variants.optimal : answer(sorry) ↔ ∀ δ : ℝ, 0 < δ →
     ∀ᶠ ε : ℝ in nhdsWithin 0 (Set.Ioi 0), (C ε : ℝ) ≤ ε⁻¹ ^ (1 + δ) := by
   sorry

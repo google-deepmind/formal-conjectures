@@ -50,7 +50,7 @@ theorem f_0_1 : f 0 1 = 1 := by
 /--
 Is it true that $f(n,k) < c_k^n$ for some constant $c_k>0$ and for all $n > 0$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n := by
   sorry
 

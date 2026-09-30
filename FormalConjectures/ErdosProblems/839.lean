@@ -51,7 +51,7 @@ Let $1 \leq a_1 < a_2 < \cdots$ be a strictly increasing sequence of positive in
 such that no $a_i$ is the sum of consecutive $a_j$ for $j < i$.
 Is it true that $\limsup a_n / n = \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_839.parts.i : answer(sorry) ↔
     ∀ (a : ℕ → ℕ), (∀ n, 1 ≤ a n) → StrictMono a → SumOfConsecutiveFree a →
     atTop.limsup (fun n : ℕ => (a n : ℝ≥0∞) / n) = ⊤ := by
@@ -67,7 +67,7 @@ Is it true that $\lim_{x \to \infty} \frac{1}{\log x} \sum_{a_n < x} \frac{1}{a_
 This is equivalent to asking whether the range $\{a_1,a_2,\ldots\}$ has logarithmic density zero
 (see `Set.HasLogDensity`).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_839.parts.ii : answer(sorry) ↔
     ∀ (a : ℕ → ℕ), (∀ n, 1 ≤ a n) → StrictMono a → SumOfConsecutiveFree a →
     Set.HasLogDensity (Set.range a) 0 := by

@@ -56,7 +56,7 @@ $$\sum_{a\in A}\frac{1}{a}\leq \frac{31}{30}?$$
 The answer is yes, proved by Schinzel and Szekeres [ScSz59]. The bound is best possible as
 $A=\{2,3,5\}$ demonstrates.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
 theorem erdos_542.parts.i : answer(True) ↔
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 31 / 30 := by
@@ -78,7 +78,7 @@ The answer is no, proved by Schinzel and Szekeres [ScSz59].
 The element $1$ is excluded: $A=\{1\}$ satisfies the hypothesis and leaves no such $m$, so
 without this restriction the answer would be negative for a trivial reason.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
 theorem erdos_542.parts.ii : answer(False) ↔
     ∃ c > 0, ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 ∉ A →
@@ -120,7 +120,7 @@ In [Er73] Erdős further speculates that in fact
 $$\sum_{a\in A}\frac{1}{a}\leq 1+o(1),$$
 where the $o(1)$ term $\to 0$ as $n\to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
     ∃ o : ℕ → ℝ, Tendsto o atTop (nhds 0) ∧
       ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 1 + o n := by
@@ -130,7 +130,7 @@ theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
 In [Er98] Erdős mentions that he, Schinzel, and Szekeres conjectured that $2,3,5$ and
 $3,4,5,7,11$ are the only two sequences for which the sum is $>1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_542.variants.only_two : answer(sorry) ↔
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 < ∑ a ∈ A, (1 : ℝ) / a →
       A = {2, 3, 5} ∨ A = {3, 4, 5, 7, 11} := by

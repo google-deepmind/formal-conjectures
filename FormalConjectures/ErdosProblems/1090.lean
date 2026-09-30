@@ -34,7 +34,7 @@ Let $k\geq 3$. Does there exist a finite set $A\subset \mathbb{R}^2$ such that, 
 
 Erdős [Er75f] says Graham and Selfridge proved the answer is yes when $k=3$. Hunter has observed that, for sufficiently large $n$, a generic projection of $[k]^n$ into $\mathbb{R}^2$ has this property, by the Hales-Jewett theorem.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
 theorem erdos_1090 : answer(True) ↔ ∀ (k : ℕ), ∀ (hk : 3 ≤ k),
     ∃ (A : Finset (Fin 2 → ℝ)), ∀ (C : A → Fin 2),
       ∃ (S : Finset (Fin 2 → ℝ)), ∃ (hSA : S ⊆ A),

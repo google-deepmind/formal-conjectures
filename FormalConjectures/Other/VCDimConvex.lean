@@ -94,7 +94,7 @@ lemma exists_exponential_bound_hasAddVCNDimAtMost_n_of_convex_rn_add_one :
 
 /-- Is it true that, for all $n$, every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most 3? -/
-@[category research open, AMS 5 52]
+@[category research open, question, AMS 5 52]
 lemma hasAddVCNDimAtMost_n_two_of_convex_rn_add_one :
     answer(sorry) ↔ ∀ ⦃n : ℕ⦄, n ≠ 0 → ∀ ⦃C : Set (EuclideanSpace ℝ (Fin (n + 1)))⦄,
       Convex ℝ C → HasAddVCNDimAtMost C n 3 := by

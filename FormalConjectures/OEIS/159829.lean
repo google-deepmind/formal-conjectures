@@ -92,7 +92,7 @@ for $n, m \ge 1$.
 Answer: No.
 - _Kenta Kitamura_, 2026
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a159829-conjecture1-counterexample/blob/6632e626baa7f28ad14045aa7408a84178ec128d/lean/A159829Conjecture1FC.lean#L52-L61"]
 theorem conjecture1 :

@@ -49,7 +49,7 @@ noncomputable def eFunction (n : ℕ) (r : ℕ) : ℕ := sInf {e : ℕ | Erdos60
 /--
 Let $r \geq 2$. Is it true that $e(n,r+1) - e(n,r) \to \infty$ as $n \to \infty$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_600.parts.i :
     answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
       Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) - (eFunction n r : ℝ)) atTop atTop := by
@@ -58,7 +58,7 @@ theorem erdos_600.parts.i :
 /--
 Let $r \geq 2$. Is it true that $\frac{e(n,r+1)}{e(n,r)} \to 1$ as $n \to \infty$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_600.parts.ii :
     answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r →
       Tendsto (fun (n : ℕ) ↦ (eFunction n (r + 1) : ℝ) / (eFunction n r : ℝ)) atTop (𝓝 1) := by

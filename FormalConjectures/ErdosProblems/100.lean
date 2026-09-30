@@ -40,7 +40,7 @@ def DistancesSeparated (A : Finset ℝ²) : Prop :=
     |dist p₁ q₁ - dist p₂ q₂| ≥ 1
 
 /-- Is the diameter of $A$ at least $Cn$ for some constant $C > 0$? -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_100 :
     answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →

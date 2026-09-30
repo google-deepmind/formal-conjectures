@@ -102,7 +102,7 @@ theorem a_5 : a 5 = 1 := by
 /--
 In this powers of 2 sequence, does 1 occur infinitely often?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture1 :
   answer(sorry) ↔ Set.Infinite {n : ℕ | a n = 1} := by
   sorry
@@ -110,7 +110,7 @@ theorem conjecture1 :
 /--
 Does every odd number occur?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture2 :
   answer(sorry) ↔ ∀ k : ℕ, Odd k → ∃ n : ℕ, a n = k := by
   sorry

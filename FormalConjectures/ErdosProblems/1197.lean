@@ -56,7 +56,7 @@ sufficiently large (depending on $x$) $n$.
 This was solved in the negative by ebarschkis in the comments, who constructed a counterexample
 using a variant of the Buczolich-Mauldin construction.
 -/
-@[category research solved, AMS 11 28, formal_proof using lean4 at
+@[category research solved, question, AMS 11 28, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1197.lean#L705"]
 theorem erdos_1197 : answer(False) ↔ ∀ E : Set ℝ, MeasurableSet E → E ⊆ Set.Ioi 0 → 0 < volume E →
     ∀ᵐ x ∂(volume.restrict (Set.Ioi (0 : ℝ))), ∀ᶠ n : ℕ in atTop,

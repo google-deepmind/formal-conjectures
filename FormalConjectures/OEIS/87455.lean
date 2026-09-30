@@ -77,7 +77,7 @@ theorem a_4 : a 4 = -7 := by rfl
 /--
 It is an open question whether or not this sequence satisfies Benford's law
 [Berger-Hill, 2017; Arno Berger, email, Jan 06 2017]. - N. J. A. Sloane, Feb 08 2017-/
-@[category research open, AMS 11 60]
+@[category research open, question, AMS 11 60]
 theorem conjecture : answer(sorry) ↔ SatisfiesBenford a := by
   sorry
 

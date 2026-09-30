@@ -50,7 +50,7 @@ scalar multiplication notation `10 • A` where `•` denotes the iterated addit
 Note: We model $\mathbb{F}_2^n$ as `Fin n → ZMod 2`, which is an $n$-dimensional vector space
 over $\mathbb{F}_2$.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_50 : answer(sorry) ↔
     ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (𝔽₂ n),
     A.Nonempty →

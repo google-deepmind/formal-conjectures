@@ -61,7 +61,7 @@ the implication for even one $g(N) → \infty$ already answers Erdős Problem 28
 positively, because a basis of order $2$ satisfies
 $\lvert A\cap \{1,\ldots,N\}\rvert \gg N^{1/2}$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_40.variants.weaker :
     answer(sorry) ↔ ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
   sorry

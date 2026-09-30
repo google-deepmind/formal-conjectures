@@ -66,7 +66,7 @@ theorem a_5 : a 5 = 4 := by native_decide
 (25,27) is the smallest pair of prime powers (q,q+2) such that both q and q+2 are not primes,
 conjecture: there are more (but not < 10^6).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
   answer(sorry) ↔ ∃ q ≥ 1000000,
     IsOeisPrimePower q ∧ IsOeisPrimePower (q + 2) ∧

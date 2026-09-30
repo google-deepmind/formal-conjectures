@@ -55,7 +55,7 @@ open scoped Asymptotics
 /--
 Is it true that, for every $\varepsilon > 0$, $h(N) = \sqrt N + O_{\varepsilon}(N^\varepsilon)$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_30 : answer(sorry) ↔
     ∀ᵉ (ε > 0), (fun N => h N - (N : Real).sqrt) =O[atTop] fun N => (N : ℝ)^(ε : ℝ) := by
   sorry
@@ -64,7 +64,7 @@ theorem erdos_30 : answer(sorry) ↔
 A stronger conjecture: is it true that $h(N) = \sqrt N + O(1)$?
 Erdős thought this was perhaps too optimistic.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_30.variants.O_one : answer(sorry) ↔
     (fun N => h N - (N : ℝ).sqrt) =O[atTop] fun _ => (1 : ℝ) := by
   sorry

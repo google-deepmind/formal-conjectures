@@ -39,7 +39,7 @@ In other words, is $G$ Ramsey size linear?
 
 This problem is #33 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_568 : answer(sorry) ↔
     ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       (∃ c₁ > (0 : ℝ), ∀ (n : ℕ) (T : SimpleGraph (Fin n)),

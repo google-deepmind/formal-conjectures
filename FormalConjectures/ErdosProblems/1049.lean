@@ -39,7 +39,7 @@ $\tau(n)$ counts the divisors of $n$?
 
 A conjecture of Chowla.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1049 :
     answer(sorry) ↔ ∀ t : ℚ, t > 1 → Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
   sorry

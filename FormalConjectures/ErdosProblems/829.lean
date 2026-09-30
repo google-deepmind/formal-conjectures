@@ -53,7 +53,7 @@ it true that $(1_A \ast 1_A)(n) \ll (\log n)^{O(1)}$?  That is, does there exist
 number $C$ such that the number of representations of $n$ as a sum of two cubes is
 $O((\log n)^C)$ as $n \to \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_829 :
     answer(sorry) ↔
       ∃ C : ℕ, (fun n : ℕ => (sumRep cubes n : ℝ)) =O[atTop]

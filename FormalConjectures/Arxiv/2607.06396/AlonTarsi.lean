@@ -50,7 +50,7 @@ def totalLength {G : SimpleGraph V} (C : Multiset (Cycle G)) : ℕ := (C.map Sim
 **Conjecture 4 (Alon-Tarsi, 1985).** Every bridgeless graph has a list of cycles covering
 every edge, with $\sum_{C} |E(C)| \leq \frac{7}{5}|E(G)|$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem alon_tarsi_short_cycle_cover :
     answer(sorry) ↔ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsBridgeless →

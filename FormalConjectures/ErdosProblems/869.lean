@@ -44,7 +44,7 @@ A question of Erdős and Nathanson [ErNa88, Er92c]. The answer is no: Larsen [La
 disjoint bases $A_1, A_2$ of order $2$ such that $A_1 \cup A_2$ contains no minimal basis of
 order $2$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos869.lean#L3490"]
 theorem erdos_869 : answer(False) ↔
     ∀ (A₁ A₂ : Set ℕ), Disjoint A₁ A₂ →

@@ -46,7 +46,7 @@ Is there an entire non-linear function $f$ such that, for all $x\in\mathbb{R}$, 
 Barth and Schneider [BaSc70] proved the stronger result for countable dense subsets of
 $\mathbb{R}$.
 -/
-@[category research solved, AMS 30,
+@[category research solved, question, AMS 30,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos226.lean"]
 theorem erdos_226 : answer(True) ↔
     ∃ F : ℂ → ℂ, Differentiable ℂ F ∧ (∀ x : ℝ, (F x).im = 0) ∧

@@ -91,7 +91,7 @@ family of edges joined to an independent set makes $\mu^*/H$ arbitrarily
 large; the windmill generalisation and its exact limit appear in
 [arXiv:2606.15761](https://arxiv.org/abs/2606.15761).
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem tx_graffiti_conjecture_4 : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V] (G : SimpleGraph V)
       [DecidableRel G.Adj] (_hConn : G.Connected),

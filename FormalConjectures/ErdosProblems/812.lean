@@ -39,7 +39,7 @@ local notation "R" => hypergraphRamsey 2
 /--
 Is it true that $\frac{R(n+1)}{R(n)}\geq 1+c$ for some constant $c>0$, for all large $n$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_812.parts.i :
     answer(sorry) ↔ ∃ c > 0, ∀ᶠ n in atTop, (R (n + 1) : ℝ) / (R n : ℝ) ≥ 1 + c:= by
   sorry
@@ -47,7 +47,7 @@ theorem erdos_812.parts.i :
 /--
 Is it true that $R(n+1)-R(n) \gg n^2$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_812.parts.ii :
     answer(sorry) ↔
       (fun n : ℕ ↦ (R (n + 1) : ℝ) - (R n : ℝ)) ≫ (fun n : ℕ ↦ (n : ℝ) ^ 2) := by

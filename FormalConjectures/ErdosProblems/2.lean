@@ -37,7 +37,7 @@ Can the smallest modulus of a covering system be arbitrarily large?
 This problem has a negative answer: there is a universal bound on the least modulus of any
 distinct covering system.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_2 :
     answer(False) ↔
       ∀ B : ℕ, ∃ c : StrictCoveringSystem ℤ, ∀ i, ∃ m : ℕ,

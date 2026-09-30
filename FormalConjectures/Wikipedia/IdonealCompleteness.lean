@@ -98,7 +98,7 @@ theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdone
 /--
 Idoneal numbers completeness conjecture.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem idoneal_numbers_completeness :
     answer(sorry) ↔
       ∀ n : ℕ, IsIdoneal n → n ∈ knownIdonealNumbers := by

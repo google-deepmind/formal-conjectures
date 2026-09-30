@@ -32,7 +32,7 @@ namespace Green58
 Suppose $A, B ⊆ \{1, \dots, N\}$ both have size at least $N^{0.49}$. Must the sumset $A + B$
 contain a composite number?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_58 :
     answer(sorry) ↔
       ∀ᶠ (N : ℕ) in Filter.atTop, ∀ᵉ (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),

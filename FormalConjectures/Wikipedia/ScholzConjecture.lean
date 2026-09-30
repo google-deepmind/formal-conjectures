@@ -40,7 +40,7 @@ The Scholz conjecture, also known as the Scholz-Brauer conjecture, asserts that
 for every positive integer $n$, the addition-chain length of $2^n - 1$ is at most
 $n - 1 + \ell(n)$.
 -/
-@[category research open, AMS 11 68]
+@[category research open, question, AMS 11 68]
 theorem scholz_conjecture :
     answer(sorry) ↔ ∀ (n : ℕ), 0 < n → ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
   sorry

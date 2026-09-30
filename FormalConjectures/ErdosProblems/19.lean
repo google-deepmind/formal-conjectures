@@ -191,7 +191,7 @@ open EFLConfig
 /--
 If $G$ is an edge-disjoint union of $n$ copies of $K_n$, then is $\chi(G) = n$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_19 : answer(sorry) ↔
     ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
   sorry

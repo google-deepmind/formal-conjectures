@@ -57,7 +57,7 @@ produced a model of $\mathfrak{c} = \aleph_2$ in which the answer is yes (with
 $\mathfrak{m} = \aleph_1$), while Schilhan and Weinert [ScWe24] produced a different
 model of $\mathfrak{c} = \aleph_2$ in which the answer is no.
 -/
-@[category research solved, AMS 3 30]
+@[category research solved, question, AMS 3 30]
 theorem erdos_1119 : answer(sorry) ↔
     ∀ (m : Cardinal.{0}), ℵ₀ < m → m < 𝔠 →
     ∀ F : Set (ℂ → ℂ), (∀ f ∈ F, Differentiable ℂ f) →

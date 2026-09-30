@@ -157,7 +157,7 @@ The problem asks for asymptotic lower bounds on `L(n)`. Two specific targets are
 
 /-- Erdős Problem 872, part (i) (weak form): there exists a constant $\epsilon > 0$ such that the
 game length is at least $\epsilon \cdot n$ for all sufficiently large $n$. -/
-@[category research open, AMS 5 11 91]
+@[category research open, question, AMS 5 11 91]
 theorem erdos_872.parts.i : answer(sorry) ↔
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
@@ -170,7 +170,7 @@ $L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as corre
 formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
 question negatively under the Prolonger-first convention. Neither is published, so the statement
 is recorded here as the original Erdős question. -/
-@[category research open, AMS 5 11 91]
+@[category research open, question, AMS 5 11 91]
 theorem erdos_872.parts.ii : answer(sorry) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
@@ -191,7 +191,7 @@ The set of primes in $\{2, \dots, n\}$ is a maximal primitive subset of size $\p
 thread asks whether this is the smallest possible for all $n \geq 2$. Equivalently: must every
 completed play of the saturation game, by both players and regardless of strategy, claim at least
 $\pi(n)$ elements? (Terminal positions of the game are exactly the maximal primitive subsets.) -/
-@[category research open, AMS 5 11 91]
+@[category research open, question, AMS 5 11 91]
 theorem erdos_872.variants.prime_question : answer(sorry) ↔
     ∀ n ≥ 2, ∀ A : Finset ℕ, Maximal (IsPrimitive n) A →
       ((Finset.Icc 2 n).filter Nat.Prime).card ≤ A.card := by

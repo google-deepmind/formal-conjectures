@@ -31,7 +31,7 @@ namespace LehmerTotient
 Does there exist a composite number $n > 1$ such that Euler’s totient function
 $\varphi(n)$ divides $n - 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem lehmer_totient :
     answer(sorry) ↔ ∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1 := by
   sorry

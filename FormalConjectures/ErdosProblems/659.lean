@@ -54,7 +54,7 @@ Boris Alexeev provides a formalisation of the reduction, which is conditional on
 (assumed as an axiom in the proof to obtain the $O(n/\sqrt{\log n})$ bound).
 See the [formal proof](https://github.com/plby/lean-proofs/blob/226d5fad7143dcebea2bbb5ec87f18a3a1dcea69/src/v4.24.0/ErdosProblems/Erdos659.lean).
 -/
-@[category research solved, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_659 : answer(True) ↔ ∃ A : ℕ → Finset ℝ²,
    (∀ n, #(A n) = n ∧ ∀ S ⊆ A n, #S = 4 → 3 ≤ distinctDistances S) ∧
     (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) := by

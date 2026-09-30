@@ -111,7 +111,7 @@ theorem erdos_342.test.a3 : ∀ a : ℕ → ℕ, IsUlamSequence a → a 3 = 4 :=
 
 /--
 Do infinitely many pairs $(a, a+2)$ occur in Ulam's sequence? -/
-@[category research open, AMS 5 11 40]
+@[category research open, question, AMS 5 11 40]
 theorem erdos_342.parts.i :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
@@ -121,7 +121,7 @@ theorem erdos_342.parts.i :
 /--
 Does Ulam's sequence eventually have periodic differences? That is, is $a(n+1) - a(n)$ eventually periodic?
 -/
-@[category research open, AMS 5 11 40]
+@[category research open, question, AMS 5 11 40]
 theorem erdos_342.parts.ii :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →
@@ -132,7 +132,7 @@ theorem erdos_342.parts.ii :
 /--
 Part (iii), is the density of the sequence 0?
 -/
-@[category research open, AMS 5 11 40]
+@[category research open, question, AMS 5 11 40]
 theorem erdos_342.parts.iii :
     answer(sorry) ↔
       ∀ a : ℕ → ℕ, IsUlamSequence a →

@@ -43,7 +43,7 @@ Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 The answer is no; this follows from a construction of Wirsing [Wi81], rediscovered by
 Archivara [Ar25] and formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
 theorem erdos_897.parts.i : answer(False) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
@@ -59,7 +59,7 @@ Is it true that $\limsup_n f(n+1)/ f(n) = ∞$?
 
 The answer is no; the same counterexample is formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
 theorem erdos_897.parts.ii : answer(False) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
@@ -92,7 +92,7 @@ Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
 open.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
@@ -110,7 +110,7 @@ Is it true that $\limsup_n f(n+1)/f(n) = ∞$?
 The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
 open.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_897.variants.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup

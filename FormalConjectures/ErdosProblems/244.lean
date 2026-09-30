@@ -29,7 +29,7 @@ namespace Erdos244
 
 /-- Let $C > 1$. Does the set of integers of the form $p + \lfloor C^k \rfloor$,
 for some prime $p$ and $k\geq 0$, have density $>0$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_244 : answer(sorry) ↔
     ∀ C > (1 : ℝ), 0 < { p + ⌊C ^ k⌋₊ | (p) (k) (_ : p.Prime) }.lowerDensity := by
   sorry

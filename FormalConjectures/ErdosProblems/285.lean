@@ -45,7 +45,7 @@ Proved by Martin [Ma00].
 
 [Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_285 :
     answer(True) ↔ ∀ᵉ (f : ℕ → ℕ)
     (S : Set ℕ)

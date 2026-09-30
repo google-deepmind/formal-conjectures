@@ -58,7 +58,7 @@ for $n$ sufficiently large?
 
 The answer is yes: the conjectured equality was proved for $n\geq 3k+3$ by Jiang [Ji04].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos767.lean#L1566"]
 theorem erdos_767 : answer(True) ↔
     ∀ k ≥ 1, ∀ n ≥ 3 * k + 3, g k n = (k + 1) * n - (k + 1) ^ 2 := by

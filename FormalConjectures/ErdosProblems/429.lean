@@ -45,7 +45,7 @@ Weisenberg [We24] has shown the answer is no: $A$ can be arbitrarily sparse and 
 least one residue class modulo every prime $p$, and yet $A+n$ is not contained in the primes
 for any $n\in \mathbb{Z}$. (Weisenberg gives several constructions of such an $A$.)
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos429.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos429.lean"]
 theorem erdos_429 : answer(False) ↔
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
       ∀ A : Set ℕ, A.Infinite → (∀ N, (A ∩ Set.Icc 1 N).ncard ≤ f N) →

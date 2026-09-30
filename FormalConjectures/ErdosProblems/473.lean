@@ -39,7 +39,7 @@ A question of Segal [ErGr80, p.94]. The answer is yes, as shown by Odlyzko. The 
 proof (Codex and GPT-5.6 Sol) builds the permutation as a spanning one-way ray of the graph on the
 positive integers in which two numbers are adjacent when their sum is prime.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos473.lean#L236"]
 theorem erdos_473 : answer(True) ↔
     ∃ a : ℕ ≃ ℕ+, ∀ n : ℕ, ((a n : ℕ) + (a (n + 1) : ℕ)).Prime := by
@@ -50,7 +50,7 @@ Segal also asked whether for every $n \ge 2$ there is a permutation $a_1, \ldots
 $\{1, \ldots, n\}$ such that $a_k + a_{k+1}$ is prime for all $1 \le k < n$. This is conjectured to
 be true, and has been verified for infinitely many $n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_473.variants.finite : answer(sorry) ↔
     ∀ n : ℕ, 2 ≤ n → ∃ a : Fin n ≃ Fin n, ∀ k : Fin n, ∀ h : k.val + 1 < n,
       ((a k).val + 1 + ((a ⟨k.val + 1, h⟩).val + 1)).Prime := by

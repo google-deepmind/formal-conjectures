@@ -47,7 +47,7 @@ $\overline K_7 \vee (K_3 \sqcup K_3)$. It has independence number $7$, residue
 $2$, and largest induced bipartite subgraph size $9$, so its conjectured
 right-hand side is $6$.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using formal_conjectures at
     "https://github.com/DomTheDeveloper/formal-conjectures/blob/cf59008ef1cd432bf9803275dcf5d62ab1f094a3/FormalConjectures/WrittenOnTheWallII/GraphConjecture109.lean",
   formal_proof using lean4 at

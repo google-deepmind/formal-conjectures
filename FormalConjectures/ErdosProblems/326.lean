@@ -48,7 +48,7 @@ Erdős and Graham conjectured a negative answer to this question [ErGr80].
 "Minimal basis of order $2$" is formalised as `Minimal` for the predicate
 `Set.IsAsymptoticAddBasisOfOrder · 2` on sets of naturals ordered by inclusion.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_326 : answer(sorry) ↔ ∃ (a : ℕ → ℕ), StrictMono a ∧
     Minimal (fun A : Set ℕ ↦ A.IsAsymptoticAddBasisOfOrder 2) (Set.range a) ∧
       ∃ (c : ℝ), c ≠ 0 ∧ Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 c) := by

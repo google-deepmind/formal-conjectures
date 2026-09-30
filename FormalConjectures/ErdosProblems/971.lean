@@ -38,7 +38,7 @@ Let `p(a, d)` be the least prime congruent to `a (mod d)`.
 Does there exist a constant `c > 0` such that for all large `d`,
 `p(a, d) > (1 + c) * φ(d) * log d` for `≫ φ(d)` many values of `a`?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_971 : answer(sorry) ↔
     ∃ c > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ d in atTop,
       C * (d.totient : ℝ) ≤

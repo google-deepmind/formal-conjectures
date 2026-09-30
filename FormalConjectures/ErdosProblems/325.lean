@@ -39,7 +39,7 @@ noncomputable def cardIsSumThreePowerBelow (k x : ℕ) : ℕ :=
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
 is it true that $f_{k, 3}(x) \gg x ^ (3 / k)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_325 :
      answer(sorry) ↔ ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ (3 / k : ℝ)) =O[atTop]
       (fun x : ℕ => (cardIsSumThreePowerBelow k x : ℝ)) := by
@@ -49,7 +49,7 @@ theorem erdos_325 :
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
 is it even true that $f_{k, 3}(x) \gg_{\epsilon} x ^ (3 / k - \epsilon)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_325.variants.weaker :
     answer(sorry) ↔ ∀ ε > 0, ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ ((3 / k : ℝ) - ε)) =O[atTop]
       (fun x => (cardIsSumThreePowerBelow k x : ℝ)) := by

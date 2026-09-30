@@ -46,7 +46,7 @@ and $\binom{2m}{m}$ have the same set of prime divisors?
 Yes: there are infinitely many consecutive pairs $(n, n+1)$. The formal proof
 registered as [PALOMAR-2026-08-22-000001] proves `S.Infinite` for this `S`.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/03729c9cbb0b602f5a828bb850c85e84c5a6d460/ErdosProblems/Erdos730/FullDensityTheorem.lean#L40"]
 theorem erdos_730 : answer(True) ↔ S.Infinite := by
   sorry

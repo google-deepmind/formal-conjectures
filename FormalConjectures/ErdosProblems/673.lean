@@ -48,7 +48,7 @@ The answer is yes: Tao observed that $\tau(n/m)/m\leq G(n)\leq \tau(n)$ for any 
 $m>1$, so that $G(n)$ behaves very similarly to $\tau(n)$. In [Er82e] Erdős recalls this
 conjecture and observes that it is indeed trivial that $G(n)\to \infty$ for almost all $n$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos673.lean#L914"]
 theorem erdos_673.parts.i : answer(True) ↔ ∀ C : ℝ, {n : ℕ | C < G n}.HasDensity 1 := by
   sorry

@@ -36,7 +36,7 @@ Can $G$ be made into a triangle-free graph with diameter $2$ by adding at most $
 
 Asked by Erdős and Gyárfás, who proved that this is the case when $G$ has maximum degree $\ll \log n/\log\log n$. A construction of Simonovits shows that this conjecture is false if we just have maximum degree $\leq Cn^{1/2}$, for some large enough $C$. In this note Alon solves this problem in a strong form, in particular proving that a triangle-free graph on $n$ vertices with maximum degree $<n^{1/2-\epsilon}$ can be made into a triangle-free graph with diameter $2$ by adding at most $O(n^{2-\epsilon})$ edges.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
 theorem erdos_134 : answer(True) ↔
     ∀ (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ),
     ∃ N : ℕ, ∀ n ≥ N, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],

@@ -42,7 +42,7 @@ $$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq\binom{f(N)}{2}+O(1)?$$
 The answer is no; the Erdős Problems page notes that this follows from the solution to
 Erdős Problem 42.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_43.parts.i : answer(False) ↔
     ∃ C : ℝ, ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
@@ -62,7 +62,7 @@ for some constant $c>0$?
 
 The answer is no; the Erdős Problems page records a negative answer due to Barreto.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_43.parts.ii : answer(False) ↔
     ∃ᵉ (c > 0), ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧
     ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),

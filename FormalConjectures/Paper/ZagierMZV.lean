@@ -93,7 +93,7 @@ The $\mathbb{Q}$-dimension of the vector space spanned by all multiple zeta valu
 of weight $n$ equals $d_n$, where $d_n$ is the Zagier dimension sequence
 satisfying $d_0 = 1$, $d_1 = 0$, $d_2 = 1$, and $d_n = d_{n-2} + d_{n-3}$ for $n \geq 3$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem zagier_conjecture :
     answer(sorry) ↔ ∀ n : ℕ, Module.finrank ℚ (mzvSpanOfWeight n) = zagierDim n := by
   sorry

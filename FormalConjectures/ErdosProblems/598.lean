@@ -40,7 +40,7 @@ Let $m$ be an infinite cardinal and $\kappa$ be the successor cardinal of $2^{\a
 Can one colour the countable subsets of $m$ using $\kappa$ many colours so that every
 $X \subseteq m$ with $|X| = \kappa$ contains subsets of all possible colours?
 -/
-@[category research open, AMS 3 5]
+@[category research open, question, AMS 3 5]
 theorem erdos_598 : answer(sorry) ↔
     ∀ (m : Type*) [Infinite m],
     ∃ c : { s : Set m // s.Countable } → κ.out,

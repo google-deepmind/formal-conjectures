@@ -43,7 +43,7 @@ Is it true that for every $\epsilon,\eta>0$ there exists a $k$ such that the den
 for which $P(n(n+1)\cdots(n+k))>n^{1-\epsilon}$ is at least $1-\eta$ (where $P(m)$ is the greatest
 prime divisor of $m$)?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1201 :
     answer(sorry) ↔
       ∀ ε > 0, ∀ η > 0, ∃ k : ℕ,

@@ -35,7 +35,7 @@ size at least $\epsilon N$ then there must be distinct $a,b,c\in A$ such that
 $$[a, b]=[b, c]=[a, c],$$
 where $[\cdot, \cdot]$ denotes the least common multiple?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_536 :
     answer(sorry) ↔ ∀ᵉ (ε > (0: ℝ)), ∀ᶠ N in atTop,
     ∀ (A : Finset ℕ), A ⊆ Icc 1 N → (ε * (N : ℝ)) ≤ (A.card : ℝ) →

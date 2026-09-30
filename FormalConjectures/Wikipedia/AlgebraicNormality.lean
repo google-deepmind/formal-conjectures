@@ -44,14 +44,14 @@ def IsIrrationalAlgebraic (x : ℝ) : Prop :=
   IsAlgebraic ℚ x ∧ Irrational x
 
 /-- The strong normality conjecture: every irrational algebraic real is absolutely normal. -/
-@[category research open, AMS 11 12 41]
+@[category research open, question, AMS 11 12 41]
 theorem irrational_algebraic_absolutely_normal :
     answer(sorry) ↔ ∀ x : ℝ, IsIrrationalAlgebraic x → IsAbsolutelyNormal x := by
   sorry
 
 /-- The weaker normality conjecture: every irrational algebraic real is normal in at least one
 integer base `b ≥ 2`. -/
-@[category research open, AMS 11 12 41]
+@[category research open, question, AMS 11 12 41]
 theorem irrational_algebraic_normal_in_some_base :
     answer(sorry) ↔
       ∀ x : ℝ, IsIrrationalAlgebraic x → ∃ b : ℕ, 2 ≤ b ∧ IsNormalInBase b x := by

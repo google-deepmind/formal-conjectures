@@ -50,7 +50,7 @@ then $G(A)$ contains all odd cycles of length $\leq n/3 + 1$?
 
 A problem of Erdős and Sárközy [ErSa97].
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_883.parts.i : answer(sorry) ↔
     ∀ (n : ℕ) (A : Finset ℕ),
       A ⊆ Finset.Icc 1 n →
@@ -68,7 +68,7 @@ then $G(A)$ must contain a complete $(1,\ell,\ell)$ tripartite graph on $2\ell+1
 The second question was solved by Sárközy [Sa99], who proved this with
 $\ell \gg \log n/\log\log n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_883.parts.ii : answer(True) ↔
     ∀ l : ℕ, 1 ≤ l → ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 n →

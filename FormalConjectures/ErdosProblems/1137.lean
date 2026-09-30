@@ -34,7 +34,7 @@ namespace Erdos1137
 Let $d_n=p_{n+1}-p_n$, where $p_n$ denotes the $n$th prime. Is it true that
 $$\frac{\max_{n < x}d_{n}d_{n-1}}{(\max_{n < x}d_n)^2}\to 0$$ as $x\to \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1137 :
     answer(sorry) ↔
      Tendsto (fun x ↦

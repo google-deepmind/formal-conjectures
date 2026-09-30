@@ -93,7 +93,7 @@ theorem volume_lpSum_eq_of_isParallelogramAtOrigin (K : Set ℝ²)
 centre of symmetry containing the origin, for $p > 1$, equality in Corollary 29 holds only for
 parallelograms with a vertex at the origin.
 -/
-@[category research solved, AMS 52,
+@[category research solved, question, AMS 52,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/lp-rogers-shephard-conjectures-lean/blob/c646c668c0568b8533bf5534abcf02aab4d2df72/lean/LpRogersShephardFC.lean#L108-L128"]
 theorem isParallelogramAtOrigin_of_volume_lpSum_eq :

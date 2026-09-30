@@ -51,7 +51,7 @@ if $\kappa_\alpha$ is infinite.
 
 A problem of Erdős, Hajnal, and Rado.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1167 : answer(sorry) ↔
     ∀ (r : ℕ), 2 ≤ r →
     ∀ (lam : Cardinal.{u}), ℵ₀ ≤ lam →

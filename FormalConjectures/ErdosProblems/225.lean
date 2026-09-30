@@ -66,7 +66,7 @@ normalise by $c_0c_n\neq 0$ and $n\geq 1$: a factor $e^{im\theta}$ affects neith
 $\lvert f\rvert$ on the real line, while a single term $c_me^{im\theta}$ has no zeros and
 $\int_0^{2\pi}\lvert f\rvert = 2\pi$.
 -/
-@[category research solved, AMS 30 42, formal_proof using lean4 at
+@[category research solved, question, AMS 30 42, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos225.lean#L2034"]
 theorem erdos_225 : answer(True) ↔
     ∀ (n : ℕ) (c : ℕ → ℂ), 0 < n → c 0 ≠ 0 → c n ≠ 0 →

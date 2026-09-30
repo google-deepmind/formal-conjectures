@@ -44,7 +44,7 @@ WOWII 438b states that every connected graph of order greater than three
 satisfies
 `alpha₂(G) ≤ alpha(G) + alpha(G[V \ H₂]) + |E(G[H₂])|`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
 "https://github.com/Kuberwastaken/c5-k4/blob/e62f216625438bc099707e466d2825ab483717a4/lean/GraphConjecture438b.lean"]
 theorem conjecture438b : answer(True) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)

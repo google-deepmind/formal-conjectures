@@ -42,7 +42,7 @@ namespace NowhereDenseSpectralSet
 $\Omega \subset \mathbb{R}^d$ of positive measure can be spectral. The answer is known to be
 negative for $d = 1$, so the dimension is restricted to $d \ge 2$, where the problem is open.
 -/
-@[category research open, AMS 42 46]
+@[category research open, question, AMS 42 46]
 theorem exists_nowhereDense_spectralSet :
     answer(sorry) ↔ ∃ d : ℕ, 2 ≤ d ∧
       ∃ Ω : Set (Fin d → ℝ), Bornology.IsBounded Ω ∧ MeasurableSet Ω ∧
@@ -73,7 +73,7 @@ def spectralProductImpliesRightSpectral (n m : ℕ) : Prop :=
 [KLM2023, Problem 7.2; GL16] For a one-dimensional convex body $A$ and a bounded,
 measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
-@[category research solved, AMS 42 46]
+@[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_one_dimensional :
     answer(True) ↔
       ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
@@ -83,7 +83,7 @@ theorem isSpectral_right_of_product_one_dimensional :
 [KLM2023, Problem 7.2; GL20] For a two-dimensional convex body $A$ and a bounded,
 measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
-@[category research solved, AMS 42 46]
+@[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_two_dimensional :
     answer(True) ↔
       ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
@@ -93,7 +93,7 @@ theorem isSpectral_right_of_product_two_dimensional :
 [KLM2023, Problem 7.2] For a three-dimensional convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 -/
-@[category research open, AMS 42 46]
+@[category research open, question, AMS 42 46]
 theorem isSpectral_right_of_product_three_dimensional :
     answer(sorry) ↔
       ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
@@ -103,7 +103,7 @@ theorem isSpectral_right_of_product_three_dimensional :
 [KLM2023, Problem 7.2] For every positive dimension $n$, a convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 -/
-@[category research open, AMS 42 46]
+@[category research open, question, AMS 42 46]
 theorem isSpectral_right_of_product_of_convexBody :
     answer(sorry) ↔
       ∀ (n m : ℕ), 0 < n → 0 < m →

@@ -52,7 +52,7 @@ completed in 2022, shows that any other Wieferich prime exceeds $2^{64}$. On the
 heuristic count of $\log \log x$ Wieferich primes up to $x$ predicts that there are infinitely
 many, see `infinite_isWieferichPrime`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem isWieferichPrime_iff :
     answer(sorry) ↔ ∀ p, IsWieferichPrime p ↔ p = 1093 ∨ p = 3511 := by
   sorry
@@ -63,13 +63,13 @@ $a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qu
 (`isWieferichPrimeBase_one_iff`). So is the case $a = 0$ under our definition
 (`isWieferichPrimeBase_zero_iff`), which is why the source's restriction to $a > 0$ is dropped.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinite_isWieferichPrimeBase :
     answer(sorry) ↔ ∀ a : ℕ, {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
   sorry
 
 /-- Are there any Wieferich primes to base $47$? None is currently known. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPrimeBase 47 p := by
   sorry
 

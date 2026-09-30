@@ -217,7 +217,7 @@ theorem gibbs_6_tuple :
 /--
 Does there exist a rational Diophantine 7-tuple? [Du16]
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem rational_7_tuple :
     answer(sorry) ↔ ∃ t, IsRationalDiophantineTuple t ∧ t.card = 7 := by
   sorry

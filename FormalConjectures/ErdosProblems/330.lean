@@ -68,7 +68,7 @@ posed. See #3979.
 
 Such a set exists, so the answer is yes. The linked proof gives one of order `2`.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/Jayyhk/erdos-lean/blob/a5ffc87b3d684fc00ea906b9e746c283740da900/problems/330/Erdos330.lean"]
 theorem erdos_330_statement :
     answer(True) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧

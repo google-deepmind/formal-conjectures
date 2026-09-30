@@ -56,7 +56,7 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}
 $$
 exist? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1074.parts.i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
   sorry
 
@@ -75,7 +75,7 @@ $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}
 $$
 exist? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1074.parts.iii : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
 

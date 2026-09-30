@@ -273,6 +273,36 @@ Within a Lean file, you can use the `#AMS` command to list all the possible
 values. To determine the subject associated to a tag in VS Code, you can hover
 over the number.
 
+## The `@[question]` attribute
+
+The `question` tag records that the source poses the statement as a yes-or-no
+question ("Is it true that...?", "Does...?", "Are there...?") rather than as a
+claim. It is independent of the `category` attribute, but it only belongs on a
+`research open` or `research solved` problem.
+
+The Lean statement is the proposition the question asks about. Once the
+question is answered, the statement is the one that holds: unchanged if the
+answer is yes, and negated with `¬` if the answer is no. Keep every quantifier
+inside the statement, so that a negative answer only prepends `¬`.
+
+```lean
+/-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
+Guy and Selfridge conjectured that it is not. -/
+@[category research open, question, AMS 11]
+theorem catalan_dickson :
+    ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
+  sorry
+```
+
+A genuine question is one where the source does not commit to an answer. A
+conjecture that is merely phrased as a question ("Is every even integer
+greater than 2 the sum of two primes?") is a claim, and is stated without the
+tag.
+
+Do not use `question` for a problem that asks for a value, such as "What is
+the chromatic number of the plane?". Those use a non-`Prop` `answer(sorry)`,
+see below.
+
 ## The `answer( )` elaborator
 
 Some open questions are formulated in a way that requires a user-provided
@@ -321,11 +351,12 @@ is outside of the scope of this repository.
 - Every file should be put in the corresponding directory of the repository,
   e.g. a problem sourced from Wikipedia should live in
   `FormalConjectures/Wikipedia`.
-- When a problem is stated as a question in English, the preferred style is
-  to use `answer(sorry)`:
+- When a problem is stated as a yes-or-no question in English, tag it with
+  `@[question]` and use `answer(sorry)`:
 
   ```lean
   /-- English version: "Does P hold?" -/
+  @[category research open, question]
   theorem myConjecture : answer(sorry) ↔ P := by
     sorry
   ```
@@ -333,7 +364,7 @@ is outside of the scope of this repository.
   This way the informal "Does ...", "Are there ..." or "Is it true that ..."
   corresponds to the `answer(sorry)` in the formalised statement. If the
   problem has been solved, `answer(sorry)` should be replaced by
-  `answer(True)` or `answer(False)` accordingly.
+  `answer(True)` or `answer(False)` accordingly; the `question` tag stays.
 
   If the problem is not stated as a question, the following style is preferred:
 

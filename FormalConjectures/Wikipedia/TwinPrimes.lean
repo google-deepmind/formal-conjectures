@@ -33,7 +33,7 @@ namespace TwinPrimes
 /--
 Are there infinitely many primes p such that p + 2 is prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem twin_primes :
     answer(sorry) ↔ {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
   sorry

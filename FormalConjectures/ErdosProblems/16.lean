@@ -58,7 +58,7 @@ Chen [Ch23] has proved the answer is no.
 
 This was formalized in Lean by Chin using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
 theorem erdos_16 :
     answer(False) ↔
       ∃ A B : Set ℕ, Erdos16Set = A ∪ B ∧

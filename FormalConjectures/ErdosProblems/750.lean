@@ -129,7 +129,7 @@ The existence of such a graph was proved [UlamErdos750] by GPT 5.5 Pro (prompted
 Indeed, this constructs a graph with infinite chromatic number such that every subgraph on $m$
 vertices can be made bipartite after deleting at most $f(m)$ many vertices.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/750/Erdos750.lean"]
 theorem erdos_750 :
@@ -143,7 +143,7 @@ theorem erdos_750 :
 In [Er69b] Erdős conjectures this for $f(m)=\epsilon m$ for any fixed $\epsilon>0$. This follows
 from a result of Erdős, Hajnal, and Szemerédi [EHS82], as described by Sellke in the comments.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_750.variants.epsilon :
     answer(True) ↔ ∀ (ε : ℝ≥0), ε > 0 →
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
@@ -154,7 +154,7 @@ theorem erdos_750.variants.epsilon :
 /--
 In [ErHa67b] Erdős and Hajnal prove this for $f(m)\geq cm$ for all $c>1/4$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_750.variants.c_gt_quarter :
     answer(True) ↔ ∀ (c : ℝ≥0), c > 1 / 4 →
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧

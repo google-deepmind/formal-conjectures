@@ -80,7 +80,7 @@ $$ \sum_{n \leq x} \tau^+(n) \asymp x\frac{(\log x)^{1-\alpha}}{(\log\log x)^{3/
 where
 $$ \alpha = 1-\frac{1+\log\log 2}{\log 2} = 0.08607\cdots. $$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos448.lean#L35"]
 theorem erdos_448 : answer(False) ↔
     ∀ ε : ℝ, 0 < ε →

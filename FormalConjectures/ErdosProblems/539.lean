@@ -68,7 +68,7 @@ theorem erdos_539 :
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(\sqrt{n})$? -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-539-sqrt-disproof/blob/f4b14f9ef32c111162d3fd587e1c65b27a1524d5/lean/Erdos539SqrtFC.lean#L41-L44"]
 theorem erdos_539.variants.sq :
@@ -83,7 +83,7 @@ theorem erdos_539.variants.sq_isBigO :
   sorry
 
 /-- Is $h(n) = O(\sqrt{n})$? -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-539-sqrt-disproof/blob/f4b14f9ef32c111162d3fd587e1c65b27a1524d5/lean/Erdos539SqrtFC.lean#L36-L39"]
 theorem erdos_539.variants.isBigO_sq :
@@ -95,7 +95,7 @@ theorem erdos_539.variants.isBigO_sq :
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(n^{2/3})$?
 The answer is negative; see [Sc+26, Theorem A.1] and the linked Lean proof. -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root :
@@ -111,7 +111,7 @@ theorem erdos_539.variants.isBigO_sq_cube_root :
   sorry
 
 /-- This lower bound is false; see [Sc+26, Theorem A.1] and the linked Lean proof. -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root_isBigO :

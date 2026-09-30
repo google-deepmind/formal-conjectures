@@ -74,7 +74,7 @@ forbidden intersection size of 1.
 countably infinite set is in bijection with `ℕ`, the two formulations are equivalent, but
 working over an arbitrary ground type makes the statement apply immediately to, e.g.,
 almost-disjoint families of countable subsets of an uncountable space. -/
-@[category research open, AMS 3 5]
+@[category research open, question, AMS 3 5]
 theorem erdos_602 : answer(sorry) ↔
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
@@ -95,7 +95,7 @@ particular satisfies `|A_i ∩ A_j| ≠ 1`), then Property B holds trivially.
 `a_i` and `b_i`. We can define a colouring that assigns colour 0 to `a_i` and colour 1
 to `b_i` for each `i` (using disjointness, these choices don't conflict), and extend
 arbitrarily elsewhere. Then no `A_i` is monochromatic. -/
-@[category research solved, AMS 3 5]
+@[category research solved, question, AMS 3 5]
 theorem erdos_602.variants.disjoint : answer(True) ↔
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Infinite) →
@@ -154,7 +154,7 @@ If the index set is countable, the answer is yes, and the intersection
 condition is unnecessary. This is Bernstein's Lemma:
 every countable system of infinite sets has Property B.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, question, AMS 3 5]
 theorem erdos_602.variants.countable_index : answer(True) ↔
     ∀ {α : Type*} (A : ℕ → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
@@ -241,7 +241,7 @@ If the family consists of exactly two countably infinite sets `A₀` and `A₁` 
 - If `|A₀ ∩ A₁| ≥ 2`: the intersection contains two distinct points `x` and `y`.
   Assign `x` colour 0 and `y` colour 1. Both `A₀` and `A₁` contain `x` and `y`,
   so neither is monochromatic. -/
-@[category research solved, AMS 3 5]
+@[category research solved, question, AMS 3 5]
 theorem erdos_602.variants.two_sets : answer(True) ↔
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →

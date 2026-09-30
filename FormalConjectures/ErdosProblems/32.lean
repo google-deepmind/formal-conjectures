@@ -70,7 +70,7 @@ open scoped Classical in
 Does there exist a set $A \subseteq \mathbb{N}$ such that $|A \cap \{1, \ldots, N\}| = o((\log N)^2)$
 and every sufficiently large integer can be written as $p + a$ for some prime $p$ and $a \in A$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_32 : answer(sorry) ↔ ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =o[atTop]
@@ -82,7 +82,7 @@ open scoped Classical in
 Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Guy04] writes
 that Erdős offered \$50 for the solution.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_32.variants.log_bound : answer(sorry) ↔ ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =O[atTop]

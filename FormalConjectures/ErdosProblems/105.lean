@@ -44,7 +44,7 @@ and no points from $B$?
 This has been disproved by Xichuan in the comments, who has found three explicit
 counterexamples.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos105.lean"]
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos105.lean"]
 theorem erdos_105 : answer(False) ↔
     ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 3 →
       ¬ Collinear ℝ (A : Set ℝ²) →
@@ -74,7 +74,7 @@ theorem erdos_105.variants.beck_szemeredi_trotter : ∃ c > (0 : ℝ),
 /--
 It remains possible that this holds with $n-4$ (or in general with $n-O(1)$ or $(1-o(1))n$).
 -/
-@[category research open, AMS 5 52]
+@[category research open, question, AMS 5 52]
 theorem erdos_105.variants.sub_four : answer(sorry) ↔
     ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 4 →
       ¬ Collinear ℝ (A : Set ℝ²) →

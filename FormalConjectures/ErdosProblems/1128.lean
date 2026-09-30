@@ -147,7 +147,7 @@ Note: The positive statement asserts that every 2-colouring of every $\aleph_1^3
 contains a monochromatic countably infinite box. Since the answer is False, this
 positive statement fails.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, question, AMS 3 5]
 theorem erdos_1128 : answer(False) ↔
     ∀ (A B C : Type) (_ : #A = aleph 1) (_ : #B = aleph 1) (_ : #C = aleph 1)
       (f : A → B → C → Fin 2),

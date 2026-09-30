@@ -40,7 +40,7 @@ maximal Sidon set `A ⊆ {1,…,N}` there is another Sidon set `B ⊆ {1,…,N}`
 
 This was proved for all $M$ by GPT 5.5 Pro (prompted by Sandhu), see discussion thread for more details.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean"]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean"]
 theorem erdos_42 : answer(True) ↔
     ∀ M ≥ 1, ∀ᶠ N in atTop, ∀ (A : Set ℕ) (_ : IsMaximalSidonSetIn A N),
     ∃ᵉ (B : Set ℕ), B ⊆ Set.Icc 1 N ∧ IsSidon B ∧ B.ncard = M ∧
@@ -54,7 +54,7 @@ This version provides a constructive function f such that for all M ≥ 1 and N 
 every maximal Sidon set A ⊆ {1,…,N} has another Sidon set B ⊆ {1,…,N} of size M with
 disjoint difference sets (apart from 0).
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using formal_conjectures at "https://github.com/KitaKen1/erdos-42-constructive-variant/blob/1f82c76be43cb56f22e2f7f792e392d5fb3ff78c/lean/Erdos42Constructive.lean"]
 theorem erdos_42.variants.constructive : answer(True) ↔
     ∃ (f : ℕ → ℕ), ∀ (M N : ℕ) (_ : 1 ≤ M) (_ : f M ≤ N),

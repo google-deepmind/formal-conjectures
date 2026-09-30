@@ -63,7 +63,7 @@ instance (n : ℕ) : Decidable (IsIntegerValue n) := by unfold IsIntegerValue; i
 $$x_n = \tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$$
 is not an integer.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem tan_arctan_sum_not_integer :
     answer(sorry) ↔ ∀ n : ℕ, 5 ≤ n → ¬ IsIntegerValue n := by
   sorry

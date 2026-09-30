@@ -46,6 +46,38 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   rfl
 
+-- The `question` attribute
+
+#guard_msgs in
+/-- Is `2 + 2` equal to `4`? -/
+@[category research solved, question, AMS 11]
+theorem a_question : 2 + 2 = 4 := by
+  rfl
+
+-- The attribute is independent of the order of attributes.
+#guard_msgs in
+@[question, category research open]
+theorem a_question_first : 2 + 2 = 4 := by
+  sorry
+
+-- `question` is not a keyword.
+#guard_msgs in
+example (question : Nat) : question = question := rfl
+
+/--
+error: the `question` attribute only applies to theorems, but the type of 'not_a_theorem' is not a proposition
+-/
+#guard_msgs in
+@[question]
+def not_a_theorem : Prop := True
+
+open ProblemAttributes in
+/-- info: [true, true, false] -/
+#guard_msgs in
+#eval show Lean.CoreM _ from do
+  return [← isQuestion `a_question, ← isQuestion `a_question_first,
+    ← isQuestion `a_formally_solved_problem]
+
 -- formal_proof on non-research categories
 #guard_msgs in
 @[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]

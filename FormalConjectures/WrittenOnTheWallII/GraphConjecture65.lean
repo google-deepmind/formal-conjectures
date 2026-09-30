@@ -171,7 +171,7 @@ and $\operatorname{dist\_min}(S)$ is the minimum distance between two distinct v
 The answer is no. `Counterexample.graph` has a conjectured lower bound of $16$, but every
 induced forest in it has at most $15$ vertices.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem conjecture65 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connected),

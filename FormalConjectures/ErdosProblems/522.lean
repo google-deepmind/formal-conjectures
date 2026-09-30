@@ -116,7 +116,7 @@ More generally, [Ka26] proves an almost-sure radial law: the number of roots in
 $\{\lvert z\rvert \le 1 + x/n\}$ is $\Phi(x)\,n + o(n)$ for every $x$, where
 $\Phi(x) = \tfrac12\left(1 + \coth x - \tfrac1x\right)$. This problem is the case $x = 0$.
 -/
-@[category research solved, AMS 12 60,
+@[category research solved, question, AMS 12 60,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089",
   formal_proof using lean4 at
@@ -142,7 +142,7 @@ almost surely?
 
 This is true; a Lean proof is given in [Ki26].
 -/
-@[category research solved, AMS 12 60,
+@[category research solved, question, AMS 12 60,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9101-L9104"]
 theorem erdos_522.variants.zero_one :

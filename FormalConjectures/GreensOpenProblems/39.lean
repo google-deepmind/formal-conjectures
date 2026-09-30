@@ -84,7 +84,7 @@ theorem proportionCoverable_11_4_3 :
 If $A \subset \mathbb{Z}/p\mathbb{Z}$ is random, $|A| = \sqrt{p}$, can we almost surely cover
 $\mathbb{Z}/p\mathbb{Z}$ with $100\sqrt{p}$ translates of $A$? [Gr24]
 -/
-@[category research open, AMS 5 60]
+@[category research open, question, AMS 5 60]
 theorem green_39 : answer(sorry) ↔
     Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
@@ -97,7 +97,7 @@ theorem green_39 : answer(sorry) ↔
 /--
 "I do not know how to answer this even with 100 replaced by 1.01." [Gr24]"
 -/
-@[category research open, AMS 5 60]
+@[category research open, question, AMS 5 60]
 theorem green_39.variant_101 : answer(sorry) ↔
     Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
@@ -116,7 +116,7 @@ strictly less than $p$ for $\theta < 1/2$. We interpret the question as asking w
 $O(p^{1-\theta})$ translates suffice. This generalizes the main conjecture where
 $\sqrt{p} = p^{1-1/2}$.
 -/
-@[category research open, AMS 5 60]
+@[category research open, question, AMS 5 60]
 theorem green_39.variant_theta : answer(sorry) ↔
     ∀ (θ : ℝ), 0 < θ → θ ≤ 1/2 →
     ∃ C > 1, Tendsto

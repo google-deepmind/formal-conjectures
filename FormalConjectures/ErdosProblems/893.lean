@@ -43,7 +43,7 @@ Does the limit $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ tend to infinity?
 
 (Other finite limits have been ruled out by [KoLu25], see below)
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_893 :
     answer(sorry) ↔ Tendsto (fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) atTop atTop := by
   sorry

@@ -68,7 +68,7 @@ Are all terms integers?
 No. Exact divisibility first fails at $n = 7$; the corresponding rational term has reduced
 denominator $19$.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a078590-counterexample/blob/3bdf1cee8e7e4cbc4fe83354e4be8ca1eee46de3/lean/OeisA78590CounterexampleFC.lean#L55-L61"]
 theorem conjecture :

@@ -57,7 +57,7 @@ $\lceil b/l_{\mathrm{avg}} \rceil \ge 7 > 6 \ge f(G)$.
 The counterexample has been found by Moritz Firsching and Goran Žužić using an
 experimental pipeline.
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/4bd72a06842a10e1b8d7bb0fd6b1ef5e6bd20210/FormalConjectures/WrittenOnTheWallII/GraphConjecture58.lean#L772"]
 theorem conjecture58 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]

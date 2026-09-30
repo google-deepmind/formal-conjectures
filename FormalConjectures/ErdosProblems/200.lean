@@ -38,7 +38,7 @@ noncomputable def longestPrimeArithmeticProgressions (n : ℕ) : ℕ :=
 /--
 Does the longest arithmetic progression of primes in $\{1,\ldots,N\}$ have length $o(\log N)$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_200 : answer(sorry) ↔
     (fun n => (longestPrimeArithmeticProgressions n : ℝ)) =o[atTop] (fun n => log n) := by
   sorry

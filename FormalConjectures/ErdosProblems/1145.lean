@@ -61,7 +61,7 @@ $\limsup 1_A\ast 1_B(n)=\infty$?
 
 A conjecture of Erdős and Sárközy.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1145 : answer(sorry) ↔ Erdos1145Prop := by
   sorry
 

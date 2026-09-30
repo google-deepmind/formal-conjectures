@@ -59,7 +59,7 @@ greater than three satisfies
 `i(G) ≤ α(G[N(C)]) + 2 floor(CW(G)-1)`.
 The answer is no, witnessed by a nonuniform `P₇` clique blow-up.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/85fff48cdd7cc1f743802320fdc94db14d1f841e/lean/GraphConjecture430a.lean#L1-L390"]
 theorem conjecture430a : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]

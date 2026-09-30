@@ -43,7 +43,7 @@ Is it true that $f_{k,k}(x) \gg_\epsilon x^{1-\epsilon}$ for all $\epsilon>0$?
 This would have significant applications to Waring's problem. Erdős and Graham describe this as
 'unattackable by the methods at our disposal'.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_323.parts.i :
     answer(sorry) ↔ ∀ k ≥ 1, ∀ ε > (0 : ℝ),
       (fun (x : ℕ) ↦ (x : ℝ) ^ (1 - ε)) =O[atTop] (fun (x : ℕ) ↦ (f k k x : ℝ)) := by
@@ -52,7 +52,7 @@ theorem erdos_323.parts.i :
 /--
 Is it true that if $m < k$ then $f_{k,m}(x) \gg x^{m/k}$ for sufficiently large $x$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_323.parts.ii :
     answer(sorry) ↔ ∀ k m : ℕ, 1 ≤ m → m < k →
       (fun (x : ℕ) ↦ (x : ℝ) ^ ((m : ℝ) / (k : ℝ))) =O[atTop] (fun (x : ℕ) ↦ (f k m x : ℝ)) := by
@@ -71,7 +71,7 @@ theorem erdos_323.variants.k_eq_2 :
 /--
 For $k>2$ it is not known if $f_{k,k}(x)=o(x)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_323.variants.k_gt_2 :
     answer(sorry) ↔ ∀ k > 2, (fun (x : ℕ) ↦ (f k k x : ℝ)) =o[atTop] (fun (x : ℕ) ↦ (x : ℝ)) := by
   sorry

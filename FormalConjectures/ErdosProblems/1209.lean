@@ -85,7 +85,7 @@ grow arbitrarily fast
 
 See also [erdosproblems.com/429] and [erdosproblems.com/1102].
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_1209.parts.i :
     answer(False) ↔
       ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
@@ -154,7 +154,7 @@ What if we ask for $n+a_k$ to be squarefree instead of prime?
 
 A similar construction provides a counterexample to the squarefree question.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_1209.parts.ii :
     answer(False) ↔
       ∃ f : ℕ → ℕ, ∀ a : ℕ → ℕ, StrictMono a → (∀ k, f k ≤ a k) →
@@ -194,7 +194,7 @@ that $2^l\equiv 1\pmod{m}$ then $p\mid n+2^{2^{k+rl}}$ for all $r\geq 1$.
 
 This was formalized in Lean by Barschkis using ChatGPT.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem1209/Formalization.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem1209/Formalization.lean"]
 theorem erdos_1209.parts.iii.a :
     answer(False) ↔ ∃ n : ℕ, ∀ k : ℕ, (n + 2 ^ (2 ^ k)).Prime := by
   sorry
@@ -202,7 +202,7 @@ theorem erdos_1209.parts.iii.a :
 /--
 Are there $n$ such that $n+2^{2^k}$ is always squarefree?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.b :
     answer(sorry) ↔ ∃ n : ℕ, ∀ k : ℕ, Squarefree (n + 2 ^ (2 ^ k)) := by
   sorry
@@ -210,7 +210,7 @@ theorem erdos_1209.parts.iii.b :
 /--
 Are there $n$ such that $n+2^{2^k}$ is infinitely often a prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.c :
     answer(sorry) ↔ ∃ n : ℕ, {k | (n + 2 ^ (2 ^ k)).Prime}.Infinite := by
   sorry
@@ -218,7 +218,7 @@ theorem erdos_1209.parts.iii.c :
 /--
 Are there $n$ such that $n+2^{2^k}$ is infinitely often squarefree?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1209.parts.iii.d :
     answer(sorry) ↔ ∃ n : ℕ, {k | Squarefree (n + 2 ^ (2 ^ k))}.Infinite := by
   sorry

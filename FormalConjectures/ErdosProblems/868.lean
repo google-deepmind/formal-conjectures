@@ -46,7 +46,7 @@ must $A$ contain a minimal additive basis of order $2$?
 
 Larsen and Larsen [LaLa26] answered this in the negative.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_868.parts.i :
     answer(False) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
       atTop.Tendsto (fun n => ncard_add_repr A 2 n) atTop → ∃ B ⊆ A,
@@ -60,7 +60,7 @@ basis of order $2$?
 
 Larsen and Larsen [LaLa26] constructed a counterexample with $f(n) > c \log n$ for all large $n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_868.parts.ii :
     answer(False) ↔ ∀ᵉ (A : Set ℕ) (ε > 0), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, ε * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
@@ -69,7 +69,7 @@ theorem erdos_868.parts.ii :
 
 /-- Erdős and Nathanson proved that this is true if $f(n) > c \log n$ for all large $n$, for
 some fixed constant $c > (\log \frac{4}{3})^{-1}$. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_868.variants.fixed_ε :
     answer(True) ↔ ∀ᵉ (A : Set ℕ) (c > (Real.log (4 / 3))⁻¹), A.IsAsymptoticAddBasisOfOrder 2 →
       (∀ᶠ (n : ℕ) in atTop, c * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,

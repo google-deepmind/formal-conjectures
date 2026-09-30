@@ -61,7 +61,7 @@ small counterexamples recorded on the source page.
 
 This problem is #10 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_545 : answer(sorry) ↔
     ∀ᶠ m : ℕ in atTop, ∀ (n t : ℕ), t < n → m = n.choose 2 + t →
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],

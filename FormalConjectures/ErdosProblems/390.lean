@@ -46,7 +46,7 @@ theorem erdos_390.variants.theta :
   sorry
 
 /-- Does there exists a constant `c` such that `f n - 2 * n ~ c * (n / log n)`? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_390 :
     answer(sorry) ↔ ∃ c,
       (fun n => f n - 2 * n : ℕ → ℝ) ~[atTop] (fun n => c * n / log (n : ℝ)) := by

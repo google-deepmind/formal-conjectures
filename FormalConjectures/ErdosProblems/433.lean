@@ -49,7 +49,7 @@ noncomputable def g (k n : ℕ) : ℕ :=
 /-- For every fixed $k \geq 2$, Erdős and Graham conjectured that
 $$g(k,n) \sim \frac{n^2}{k-1}.$$
 The conjecture was proved by Dixmier [Di90]. -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_433 : answer(True) ↔ ∀ k, 2 ≤ k →
     Tendsto (fun n : ℕ => (g k n : ℝ) / ((n : ℝ) ^ 2 / ((k : ℝ) - 1))) atTop (𝓝 1) := by
   sorry

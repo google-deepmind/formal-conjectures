@@ -55,7 +55,7 @@ graph `G` satisfies
 
 The answer is no, witnessed by `T(7) = L(K₇)`.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/3bfa33d7470055a9a11d9ffde29186245dc3a329/lean/GraphConjecture181.lean#L1-L381"]
 theorem conjecture181 : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V]

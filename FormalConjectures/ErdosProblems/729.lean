@@ -36,7 +36,7 @@ that the denominator of $$\frac{n!}{a!b!}$$contains only primes $\ll_C 1$?
 
 Erdős [Er68c] proved that if $a!b!\mid n!$ then $a+b\leq n+O(\log n)$. This has been proved in the affirmative by Barreto and Leeham, using ChatGPT and Aristotle, with a modification of the argument used for [728].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos729.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos729.lean"]
 theorem erdos_729 :
     answer(True) ↔ ∀ (C : ℝ) (hC : C > 0),
       ∃ K ≥ 3, Set.Infinite { T : ℕ × ℕ × ℕ |

@@ -81,7 +81,7 @@ See `erdos_678.variants.infinitely_many_triples` for the reading in which the in
 stated directly, and `erdos_678.variants.not_infinitely_many_pairs` for why it cannot be asked
 of a single $k$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
 theorem erdos_678 : answer(True) ↔
     ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Nonempty := by
   sorry

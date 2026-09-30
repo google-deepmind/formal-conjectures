@@ -128,7 +128,7 @@ The symbol length problem in the form of [Krashen2024, Problem 2.1.3.12]: is the
 $m$, $n$ and prime $p$, a bound $k$ such that every class in $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$
 is a sum of at most $k$ symbols?
 -/
-@[category research open, AMS 12 19]
+@[category research open, question, AMS 12 19]
 theorem symbol_length_problem.variants.bounded :
     answer(sorry) ↔ ∀ m n p : ℕ, p.Prime →
       (symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n).Nonempty := by
@@ -141,7 +141,7 @@ $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$ is a sum of at most $k$ symbols for every
 Degree $0$ is excluded because $K^M_0(F)/p = \mathbb{Z}/p$ has symbol length $p - 1$
 (`symbol_length_problem.variants.degree_zero`), which is not bounded independently of $p$.
 -/
-@[category research open, AMS 12 19]
+@[category research open, question, AMS 12 19]
 theorem symbol_length_problem.variants.uniform :
     answer(sorry) ↔ ∀ m n : ℕ, 0 < n → ∃ k : ℕ, ∀ p : ℕ, p.Prime →
       k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n := by
@@ -200,7 +200,7 @@ symbol, which holds for $p \le 3$ by a theorem of Artin and is open for $p \ge 5
 does not involve $p$, an affirmative answer would settle
 `symbol_length_problem.variants.uniform` in degree $2$.
 -/
-@[category research open, AMS 12 16 19]
+@[category research open, question, AMS 12 16 19]
 theorem symbol_length_problem.variants.degree_two_isLeast :
     answer(sorry) ↔ ∀ m p : ℕ, 1 ≤ m → p.Prime →
       IsLeast (symbolLengthBounds (MvRatFunc (Fin m) ℂ) p 2) (m - 1) := by

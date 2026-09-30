@@ -45,7 +45,7 @@ Is it true that, for every bipartite graph $G$, there exists some $\alpha\in [1,
 The condition that $G$ have at least two edges excludes degenerate forbidden graphs whose
 extremal number is eventually zero, for which the displayed asymptotic with $c>0$ is impossible.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_713.parts.i : answer(sorry) ↔
     ∀ (q : ℕ) (G : SimpleGraph (Fin q)), G.IsBipartite → 2 ≤ G.edgeFinset.card →
       ∃ α c : ℝ, α ∈ Set.Ico 1 2 ∧ 0 < c ∧
@@ -61,7 +61,7 @@ Must $\alpha$ be rational?
 The same nondegeneracy condition on $G$ is used as in part (i). Rationality means that the real
 number $\alpha$ lies in the image of the canonical embedding $\mathbb{Q}\to\mathbb{R}$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_713.parts.ii : answer(sorry) ↔
     ∀ (q : ℕ) (G : SimpleGraph (Fin q)), G.IsBipartite → 2 ≤ G.edgeFinset.card →
       ∀ α c : ℝ, α ∈ Set.Ico 1 2 → 0 < c →

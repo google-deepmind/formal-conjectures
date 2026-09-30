@@ -41,7 +41,7 @@ Asked by Barbeau [Ba76].
 
 [Ba76] Barbeau, E. J., _Computer challenge corner: Problem 477: A brute force program._
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_307 : answer(sorry) ↔ ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
@@ -70,7 +70,7 @@ theorem erdos_307.variants.coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 �
 /--
 There are no examples known of the weakened coprime version if we insist that $1\not\in P\cup Q$.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_307.variants.coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 ∉ P ∪ Q ∧
     1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by

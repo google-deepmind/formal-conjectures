@@ -48,7 +48,7 @@ Suppose that $X, Y$ are two finitely-supported independent random variables taki
 and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly
 distributed on their ranges?
 -/
-@[category research open, AMS 60]
+@[category research open, question, AMS 60]
 theorem green_28 : answer(sorry) ↔
   ∀ (X Y : PMF ℤ), -- marginals, independence is built into indepSum
     X.support.Finite ∧ Y.support.Finite ∧ IsUniformOnSupport (indepSum X Y) →

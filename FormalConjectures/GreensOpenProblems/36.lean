@@ -56,7 +56,7 @@ $|A_i + B_i| = |A_i||B_i|$, such that the sets $A_i + B_i$ are disjoint from the
 NOTE: according to [CKS05, 4.1], the conditions should be $A_i + B_j$ disjoint from $A_j + B_k$ for
 $i \neq k$. See `green_36.variants.cks05`.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36 :
     answer(sorry) ↔
       ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
@@ -67,7 +67,7 @@ theorem green_36 :
   sorry
 
 /-- Variant using the exact simultaneous double product property from [CKS05, 4.1]. -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36.variants.cks05 :
     answer(sorry) ↔
       ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,

@@ -80,7 +80,7 @@ lower bound of $\frac{8}{3}n-O(1)$ has not been improved, and it has been specul
 It is trivial that $f(1)=1$ and $f(2)=3$. The values $f(3)=6$ and $f(4)=9$ were established by
 Tripathi [Tr14]. Barát and Wanless [BaWa21] proved that $f(5)=13$, and that $13\leq f(6)\leq 18$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos21.lean#L13036"]
 theorem erdos_21 : answer(True) ↔ ∃ C : ℕ, ∀ᶠ n : ℕ in atTop, f n ≤ C * n := by
   sorry
@@ -91,7 +91,7 @@ theorem erdos_21.variants.lower (n : ℕ) : (8 / 3 : ℝ) * n - 3 ≤ f n := by
   sorry
 
 /-- It has been speculated (see e.g. [Ka94]) that the correct answer is $3n+O(1)$. -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_21.variants.three_n : answer(sorry) ↔ ∃ C : ℕ, ∀ᶠ n : ℕ in atTop,
     f n ≤ 3 * n + C ∧ 3 * n ≤ f n + C := by
   sorry

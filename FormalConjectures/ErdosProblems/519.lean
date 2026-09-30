@@ -55,7 +55,7 @@ $$
 
 Atkinson proved that $c=1/6$ suffices.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos519.lean"]
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos519.lean"]
 theorem erdos_519 : answer(True) ↔
     ∃ c : ℝ, 0 < c ∧
       ∀ (n : ℕ) (hn : 0 < n) (z : Fin n → ℂ),

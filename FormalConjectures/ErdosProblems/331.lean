@@ -44,7 +44,7 @@ any $n\geq 1$ there is exactly one solution to $n=a+b$ with $a\in A$ and $b\in B
 
 This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/d30552f64c55686d40b928a0a3b8e2396357a4ee/ErdosProblem331.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/d30552f64c55686d40b928a0a3b8e2396357a4ee/ErdosProblem331.lean"]
 theorem erdos_331 :
     answer(False) ↔
       ∀ A B : Set ℕ,
@@ -61,7 +61,7 @@ Ruzsa suggests that a non-trivial variant of this problem arises if one imposes 
 condition that $|A \cap \{1,\dots,N\}| \sim c_A N^{1/2}$ for some constant $c_A>0$, and similarly
 for $B$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_331.variants.ruzsa :
     answer(sorry) ↔
       ∀ A B : Set ℕ,

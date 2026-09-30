@@ -46,7 +46,7 @@ $\lvert \mathcal{F}\rvert =o(2^n)$?
 In [Er65b] Erdős reported that the estimate $\lvert \mathcal{F}\rvert=o(2^n)$ was proved in
 unpublished work by Sárközy and Szemerédi.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_447.parts.i : answer(True) ↔
     (fun n : ℕ => (maxUnionFree n : ℝ)) =o[atTop] (fun n : ℕ => (2 : ℝ) ^ n) := by
   sorry
@@ -59,7 +59,7 @@ $$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}?$$
 Solved by Kleitman [Kl71], who proved
 $$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
 theorem erdos_447.parts.ii : answer(True) ↔
     ∃ c : ℕ → ℝ, (c =o[atTop] (1 : ℕ → ℝ)) ∧ ∀ᶠ n : ℕ in atTop,
       (maxUnionFree n : ℝ) < (1 + c n) * (n.choose (n / 2) : ℝ) := by

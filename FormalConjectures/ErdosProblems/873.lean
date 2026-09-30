@@ -37,7 +37,7 @@ noncomputable abbrev F (a : ℕ → ℕ) (X : ℝ) (k : ℕ) : ℕ∞ :=
 such that $[a_i,a_{i+1}, \dots ,a_{i+k−1}] < X$, where the left-hand side is the least common
 multiple. Is it true that, for every $\epsilon > 0$, there exists some $k$ such that
 $F(A,X,k) < X^\epsilon$?-/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_873 : answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (ε > (0 : ℝ)), 0 < a 0 → StrictMono a →
     ∃ k, ∀ X > 0, F a X k < (X^ε).toEReal := by
   sorry
@@ -68,7 +68,7 @@ theorem erdos_873.variants.triple_lower_bound_infinitely_often :
   sorry
 
 /-- There may be a sequence for which the lower bound in (3) holds for every X. -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/KitaKen1/erdos-873-lean/blob/44cbf183239517795522bd3f18124b08c095cc6d/lean/Erdos873Final.lean#L17-L24"]
 theorem erdos_873.variants.supplement_all_scale :
     answer(False) ↔

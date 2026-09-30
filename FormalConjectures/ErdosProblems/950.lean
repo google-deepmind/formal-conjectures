@@ -44,7 +44,7 @@ noncomputable def f (n : ℕ) : ℝ :=
 /--
 Is it true that $\liminf f(n)=1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_950.parts.i :
     answer(sorry) ↔ atTop.liminf (fun n : ℕ ↦ (f n : EReal)) = 1 := by
   sorry
@@ -52,7 +52,7 @@ theorem erdos_950.parts.i :
 /--
 Is it true that $\limsup f(n)=\infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_950.parts.ii :
     answer(sorry) ↔ atTop.limsup (fun n : ℕ ↦ (f n : EReal)) = ⊤ := by
   sorry
@@ -60,7 +60,7 @@ theorem erdos_950.parts.ii :
 /--
 Is it true that $f(n)=o(\log\log n)$ for all $n$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_950.parts.iii :
     answer(sorry) ↔ f =o[atTop] (fun n : ℕ ↦ Real.log (Real.log n)) := by
   sorry
@@ -81,7 +81,7 @@ Erdős writes that a 'weaker conjecture which is perhaps not quite inaccessible'
 for every $\epsilon>0$, if $x$ is sufficiently large there exists $y<x$ such that
 $\pi(x)< \pi(y)+\epsilon \pi(x-y)$. Compare this to [855].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_950.variants.weaker_pi :
     answer(sorry) ↔ ∀ ε > 0, ∀ᶠ x in atTop, ∃ y < x,
       (π x : ℝ) < (π y : ℝ) + ε * (π (x - y) : ℝ) := by
@@ -103,7 +103,7 @@ theorem erdos_950.variants.weaker_pi_implies_f
 The study of $f(p)$ is even harder, and Erdős could not prove that
 $\sum_{p<x}f(p)^2\sim \pi(x)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_950.variants.sum_primes :
     answer(sorry) ↔
       (fun x : ℕ ↦ ∑ p ∈ (Finset.range x).filter Prime, (f p) ^ 2) ~[atTop]

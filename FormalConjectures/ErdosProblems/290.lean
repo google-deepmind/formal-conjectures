@@ -47,7 +47,7 @@ fact $b(a) \ll a$. Indeed, if $a\in (3^k,3^{k+1}]$ then one can take $b=2\cdot 3
 also proves that $b(a)>a+(1/2-o(1))\log a$, and considers various generalisations of the original
 problem.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem290.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem290.lean"]
 theorem erdos_290 : answer(True) ↔
     (∀ a : ℕ, 1 ≤ a → ∃ b : ℕ, a < b ∧ harmonicDen a (b + 1) < harmonicDen a b) := by
   sorry

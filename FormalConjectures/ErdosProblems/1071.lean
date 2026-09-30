@@ -42,7 +42,7 @@ Solved affirmatively by [Da85], who gave an explicit construction.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean"]
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean"]
 theorem erdos_1071.parts.i :
     answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
@@ -59,7 +59,7 @@ Solved affirmatively by [Fo99], who gave an explicit construction.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071b.lean"]
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071b.lean"]
 theorem erdos_1071.parts.ii :
     answer(True) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       IsOpen R ∧ IsConnected R ∧ S.Countable ∧ S.Infinite ∧

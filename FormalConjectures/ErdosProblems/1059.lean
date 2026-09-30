@@ -37,7 +37,7 @@ def AllFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀d ∈ factorialsLessThanN n, (n - d).Composite
 
 /-- Are there infinitely many primes $p$ such that $p - k!$ is composite for each $k$ such that $1 ≤ k! < p$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1059 :
     answer(sorry) ↔ Set.Infinite {p | p.Prime ∧ AllFactorialSubtractionsComposite p} := by
   sorry

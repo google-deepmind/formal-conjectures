@@ -64,7 +64,7 @@ Properties of $G$:
 The counterexample has been found by Moritz Firsching and Goran Žužić using an
 experimental pipeline.
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/6e85aabe821e6ddf718d050a5bd8f19a48e4f2d9/FormalConjectures/WrittenOnTheWallII/GraphConjecture327.lean#L233"]
 theorem conjecture327 : answer(False) ↔
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj] (_hG : G.Connected)

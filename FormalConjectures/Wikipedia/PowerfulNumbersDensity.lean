@@ -79,7 +79,7 @@ $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + \frac{\zeta(2/3)}{\zeta(2)} x^{1/
 O(x^{1/6 - \delta})?$$
 Improvements are known under the Riemann Hypothesis.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem error_term_improvement :
     answer(sorry) ↔ ∃ δ > (0 : ℝ),
       (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]

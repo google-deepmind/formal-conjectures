@@ -47,7 +47,7 @@ The answer is no, by Luo, Yang and Zhu [LYZ26]: the maximum exceeds $e^{-\lambda
 fixed $\lambda>0$ once $n$ is large, so it decays subexponentially and no such $C$ exists. See
 `erdos_973.variants.luo_yang_zhu` below.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_973 :
     answer(False) ↔
       ∃ C : ℝ, C > 1 ∧

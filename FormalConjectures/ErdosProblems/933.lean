@@ -43,7 +43,7 @@ def l (n : ℕ) : ℕ := padicValNat 3 (n * (n + 1))
 If $n(n+1)=2^k3^lm$, where $(m,6)=1$, then is it true that
 $\limsup_{n\to \infty} \frac{2^k3^l}{n\log n}=\infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_933 :
     answer(sorry) ↔
       atTop.limsup (fun n : ℕ ↦

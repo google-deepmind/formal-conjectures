@@ -31,7 +31,7 @@ open scoped Pointwise
 
 /-- Are there two infinite sets $A$ and $B$ such that $A+B$ agrees with the primes up to finitely
 many exceptions? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_431 : answer(sorry) ↔
     ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧
       (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime} := by

@@ -72,7 +72,7 @@ theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
 Is the upper density of the set of odd numbers that cannot be expressed as a prime plus
 two powers of 2 positive?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_9 : answer(sorry) ↔ 0 < Erdos9A.upperDensity := by
   sorry
 

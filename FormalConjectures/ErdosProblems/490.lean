@@ -56,7 +56,7 @@ Doorn, if the limit exists it must be $\geq 1$.
 
 See also [425](https://www.erdosproblems.com/425) and [896](https://www.erdosproblems.com/896).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos490.lean#L38"]
 theorem erdos_490 : answer(True) ↔ ∃ C : ℝ, ∀ᶠ N : ℕ in atTop,
     ∀ A B : Finset ℕ, A ⊆ Finset.Icc 1 N → B ⊆ Finset.Icc 1 N →
@@ -70,7 +70,7 @@ $$\lim_{N\to \infty}\max_{A,B\subseteq [N]}\frac{\lvert A\rvert\lvert B\rvert\lo
 exists, where the maximum is over $A$ and $B$ with all the products $ab$ distinct, and to
 determine its value.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_490.variants.limit : answer(sorry) ↔ ∃ L : ℝ, Tendsto (fun N : ℕ =>
     (sSup {x : ℝ | ∃ A B : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ B ⊆ Finset.Icc 1 N ∧
       (∀ a₁ ∈ A, ∀ b₁ ∈ B, ∀ a₂ ∈ A, ∀ b₂ ∈ B, a₁ * b₁ = a₂ * b₂ → a₁ = a₂ ∧ b₁ = b₂) ∧

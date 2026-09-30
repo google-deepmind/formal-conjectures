@@ -106,7 +106,7 @@ Let $a(1) = 1$, $a(2) = 2$, and for $k \ge 3$ let $a(k)$ be the least integer gr
 than $a(k-1)$ that is a sum of at least two consecutive terms of the sequence.
 What is the asymptotic behaviour of this sequence? It seems likely that $a_n = n + o(n)$.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_423 : answer(sorry) ↔
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     (fun n : ℕ => (a n : ℝ) - n) =o[atTop] (fun n : ℕ => (n : ℝ)) := by

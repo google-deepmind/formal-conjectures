@@ -53,7 +53,7 @@ solution. An explicit construction was given by Jain, Pham, Sawhney, and Zakharo
 The formal statement records the existence of such a set; the linked formal proof exhibits an
 explicit construction.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos29.lean#L104"]
 theorem erdos_29 : answer(True) ↔ ∃ A : Set ℕ, A + A = Set.univ ∧ ∀ ε : ℝ, 0 < ε →
     (fun n : ℕ => (sumRep A n : ℝ)) =o[atTop] fun n : ℕ => (n : ℝ) ^ ε := by

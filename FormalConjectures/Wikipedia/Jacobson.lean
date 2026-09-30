@@ -47,7 +47,7 @@ def JacobsonConjectureFor (R : Type u) [Ring R] : Prop :=
 /-- The Jacobson conjecture (in its modern form):
 In a (noncommutative) ring which is left and right Noetherian,
 the intersection of the powers of the Jacobson ideal is trivial -/
-@[category research open, AMS 16]
+@[category research open, question, AMS 16]
 theorem jacobson_conjecture :
     answer(sorry) ↔ ∀ (R : Type) [Ring R] [IsNoetherianRing R] [IsRightNoetherianRing R],
       JacobsonConjectureFor R := by
@@ -62,7 +62,7 @@ theorem jacobson_conjecture_of_comm_ring (R : Type u) [CommRing R] [IsNoetherian
 /-- Originally, on page 200 of [Ja1956], Jacobson asked if the Jacobson conjecture holds for all right
 Noetherian rings. However in [He1965] Herstein constructs a right Noetherian ring for which the
 Jacobson conjecture does not hold. -/
-@[category research solved, AMS 16]
+@[category research solved, question, AMS 16]
 theorem jacobson_conjecture_of_right_noetherian :
     answer(False) ↔ ∀ (R : Type) [Ring R] [IsRightNoetherianRing R], JacobsonConjectureFor R := by
   sorry

@@ -75,7 +75,7 @@ def HasNUnitDistanceProperty (n : ℕ) (A : Finset ℝ²) : Prop :=
 /--
 Does every convex polygon have a vertex with no other 4 vertices equidistant from it?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_97 :
     answer(sorry) ↔ ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
   sorry
@@ -108,7 +108,7 @@ theorem erdos_97.variants.three_equidistant :
 Erdős also conjectured that there is a $k$ for which every convex polygon has a vertex
 with no other $k$ vertices equidistant from it.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_97.variants.k_equidistant : answer(sorry) ↔
     ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
   sorry

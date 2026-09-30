@@ -38,7 +38,7 @@ This is Erdős's question [Er93, p. 345].
 
 See also [576] for the extremal number of edges that guarantee a $Q_n$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1035 : answer(sorry) ↔
     ∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2 ^ n))) [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2 ^ n) →

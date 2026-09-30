@@ -38,7 +38,7 @@ def primeSet (α : ℝ) : Set ℕ :=
 Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
 such that $\lfloor p\alpha \rfloor$ is also prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_972 : answer(sorry) ↔ ∀ α > 1, Irrational α → (primeSet α).Infinite := by
   sorry
 

@@ -35,25 +35,25 @@ The predicate that `a n` is only powerful for finitely many `n`.
 def EventuallyNotPowerful (a : ℕ → ℕ) : Prop := atTop.Eventually (fun n => ¬ (a n).Powerful)
 
 /-- Is $2^n + 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.two_pow_add_one :
    answer(sorry) ↔ EventuallyNotPowerful (2 ^ · + 1) := by
   sorry
 
 /-- Is $2^n - 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.two_pow_sub_one :
    answer(sorry) ↔ EventuallyNotPowerful (2 ^ · - 1) := by
   sorry
 
 /-- Is $n! + 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.factorial_add_one :
    answer(sorry) ↔ EventuallyNotPowerful (·! + 1) := by
   sorry
 
 /-- Is $n! - 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.factorial_sub_one :
    answer(sorry) ↔ EventuallyNotPowerful (·! - 1) := by
   sorry

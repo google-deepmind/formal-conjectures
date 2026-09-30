@@ -45,7 +45,7 @@ Conjectured by Mihók and Erdős. Solved affirmatively following the work of Liu
 The linked formal proof (Codex) states the conclusion as `{n | HasCycleLength G (2 ^ n)}.Infinite`,
 with `HasCycleLength G m` unfolding to `m ∈ G.cycleLengths`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos63.lean#L46"]
 theorem erdos_63 :
     answer(True) ↔

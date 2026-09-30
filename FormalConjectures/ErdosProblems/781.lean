@@ -65,7 +65,7 @@ Is it true that $f(k)=k^2-k+1$ for all $k$?
 
 The answer is no, since $f(k)\gg k^3$ by Alon and Spencer [AlSp89].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos781.lean#L3202"]
 theorem erdos_781.parts.ii : answer(False) ↔ ∀ k ≥ 1, f k = k ^ 2 - k + 1 := by
   sorry

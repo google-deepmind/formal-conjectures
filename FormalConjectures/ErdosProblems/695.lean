@@ -35,7 +35,7 @@ $$
 \lim_{k \to \infty} q_k^{1/k} = \infty?
 $$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_695 : answer(sorry) ↔
     ∀ {q : ℕ → ℕ},
       StrictMono q →
@@ -50,7 +50,7 @@ $$
 q(k) \leq \exp(k (\log k)^{1 + o(1)})?
 $$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_695.variants.upperBound : answer(sorry) ↔
     ∃ q : ℕ → ℕ,
       StrictMono q ∧

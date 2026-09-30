@@ -42,7 +42,7 @@ A conjecture of Erdős, Graham, Ruzsa, and Straus [EGRS75].
 By $n\in (p/2,p)\pmod{p}$ we mean $n\equiv r\pmod{p}$ for some integer $r$ with $p/2<r<p$.
 The remainder `n % p` is computed in `ℕ` before casting to `ℝ`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_726 :
     answer(sorry) ↔
       (fun n : ℕ ↦ ∑ p ∈ (range (n + 1)).filter

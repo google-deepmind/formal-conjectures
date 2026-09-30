@@ -65,7 +65,7 @@ $p^{e-1} \mid e$, which forces $p = 2$ and $e = 2$. Now $n = 4m$ with $m$ odd an
 and $2\phi(m) \mid 4m - 2$ makes $\phi(m)$ odd, so $m = 1$ and $n = 4$. Hence $e = 1$ and the
 condition is $\phi(n) \mid n - 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture1 :
     answer(sorry) ↔ ∃ n : ℕ, 4 < n ∧ ¬ n.Prime ∧ n.totient ∣ (n - a n) := by
   sorry
@@ -75,7 +75,7 @@ Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\lambda(
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $b^n \equiv b^{a(n)} \pmod n$ for all $b$.)
 - Thomas Ordowski, Dec 02 2019
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture2 :
     answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
   sorry
@@ -85,7 +85,7 @@ Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\operato
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $2^n \equiv 2^{a(n)} \pmod n$.)
 - Thomas Ordowski, Dec 02 2019
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture3 :
     answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
   sorry

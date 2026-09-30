@@ -54,7 +54,7 @@ See also [146](https://www.erdosproblems.com/146) and [147](https://www.erdospro
 
 The linked formal proof refutes the "only if" direction via Janzer's construction.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos113.lean#L4902"]
 theorem erdos_113 : answer(False) ↔ ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.IsBipartite →
     (((fun n : ℕ => (extremalNumber n G : ℝ)) =O[atTop] fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ)) ↔

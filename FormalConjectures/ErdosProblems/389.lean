@@ -33,7 +33,7 @@ $$
   n(n + 1) \cdots (n + k - 1) \mid (n + k) \cdots (n + 2k - 1)?
 $$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_389 : answer(sorry) ↔
     ∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) := by
   sorry

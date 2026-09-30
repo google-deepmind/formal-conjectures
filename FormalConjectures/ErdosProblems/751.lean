@@ -46,7 +46,7 @@ that is not $3$-colourable has a finite subgraph that is not $3$-colourable, and
 subgraph are cycles of the whole. Mathlib does not have de Bruijn-Erdős, so that step is not
 formalised here.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_751.parts.i :
     answer(False) ↔
       ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
@@ -62,7 +62,7 @@ The answer is no: Bondy and Vince [BoVi98] proved that every graph with minimum 
 has two cycles whose lengths differ by at most $2$, and hence the same is true for every graph with
 chromatic number $4$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_751.parts.ii :
     answer(False) ↔
       ∀ k g : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧ g ≤ G.girth ∧

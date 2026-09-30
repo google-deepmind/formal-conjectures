@@ -55,7 +55,7 @@ Main conjecture:
 
 $\log k(n) \le (\log n)^{(1/2 + o(1))}$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_962 :
     answer(sorry) ↔
       ∃ ε : ℕ → ℝ,

@@ -69,7 +69,7 @@ proof works with the concrete model `ℕ → Bool` with the product of fair coin
 squarefree-supported Rademacher function is `IsRademacherMultiplicative`; this refutes the
 statement below.
 -/
-@[category research solved, AMS 11 60, formal_proof using lean4 at
+@[category research solved, question, AMS 11 60, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos520.lean#L24"]
 theorem erdos_520 :
     answer(False) ↔ ∃ c > 0, ∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]

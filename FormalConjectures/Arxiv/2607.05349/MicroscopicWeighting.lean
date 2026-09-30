@@ -139,7 +139,7 @@ q^\top = \frac{1}{128472094291} \begin{pmatrix} 43681853675722 \cr -538732482936
 $$
 This certificate shows that the obstruction $v^\top B$ annihilates $\ker A$, making it impossible to construct a convergent weighting.
 -/
-@[category research solved, AMS 15 51,
+@[category research solved, question, AMS 15 51,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/microscopic-weighting-counterexample/blob/eff8979/lean/MicroscopicWeightingCounterexampleFC.lean#L886-L894"]
 theorem microscopic_weighting_iff_finite_concentration :

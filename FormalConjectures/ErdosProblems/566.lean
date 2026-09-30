@@ -39,7 +39,7 @@ Is it true that, if $H$ has $m$ edges and no isolated vertices, then $R(G,H) \ll
 In other words: if $G$ is sparse (every induced subgraph on $k$ vertices has $≤ 2k-3$ edges),
 is $G$ Ramsey size linear?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_566 : answer(sorry) ↔
     ∀ (p : ℕ) (G : SimpleGraph (Fin p)),
       (∀ S : Finset (Fin p), 2 ≤ S.card → (G.induce S).edgeSet.ncard ≤ 2 * S.card - 3) →

@@ -77,7 +77,7 @@ theorem centerColumn_prefix :
 /-- **Rule 30 Prize, Problem 1 (non-periodicity).** The center column of Rule 30 is not
 eventually periodic: there is no positive period $p$ and threshold $N$ past which the column
 repeats with period $p$. -/
-@[category research open, AMS 37 68]
+@[category research open, question, AMS 37 68]
 theorem centerColumn_not_eventually_periodic :
     answer(sorry) ↔
       ¬ ∃ p : ℕ, 0 < p ∧ ∃ N : ℕ, ∀ t : ℕ, N ≤ t → centerColumn (t + p) = centerColumn t := by
@@ -87,7 +87,7 @@ theorem centerColumn_not_eventually_periodic :
 in the center column: the set of times at which it is black has natural density $1/2$. This is
 Wolfram's phrasing that the discrete limit of $\mathrm{Total}[c[t]]/t$ as $t \to \infty$ is
 $1/2$. -/
-@[category research open, AMS 37 68]
+@[category research open, question, AMS 37 68]
 theorem centerColumn_frequency_half :
     answer(sorry) ↔ {t : ℕ | centerColumn t}.HasDensity (1 / 2) := by
   sorry

@@ -81,7 +81,7 @@ theorem a_4 : a 4 = 110101 := by
 /--
 Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
     answer(sorry) ↔ ∃ n > 0, n ≠ 2 ∧ n ≠ 121 ∧ (a n).Prime := by
   sorry

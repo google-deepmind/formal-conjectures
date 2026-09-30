@@ -76,7 +76,7 @@ of primes?
 Erdős and Graham [ErGr80] conjectured that the answer is yes. A negative answer would imply
 that there are infinitely many Fermat primes.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1113 :
     answer(sorry) ↔
       ∃ k, k.IsSierpinskiNumber ∧ ¬ HasFinitePrimeCoveringSet k := by

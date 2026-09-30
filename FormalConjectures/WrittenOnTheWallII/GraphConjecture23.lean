@@ -43,7 +43,7 @@ between distinct vertices of `M`.
 This conjecture is false; there is a counterexample with `b(G) = 19`, `α(G) = 15`,
 and `dist_avg(M) = 10`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem conjecture23 : answer(False) ↔
   ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),

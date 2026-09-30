@@ -56,7 +56,7 @@ property B), see [901](https://www.erdosproblems.com/901).
 
 This is true, and a proof was given in the comment section by Koishi Chan.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1027.lean#L209"]
 theorem erdos_1027 : answer(True) ↔ ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧
     ∀ᶠ n : ℕ in atTop, ∀ (α : Type) [DecidableEq α] (F : Finset (Finset α)),

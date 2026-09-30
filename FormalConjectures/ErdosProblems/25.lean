@@ -35,7 +35,7 @@ Let $n_1 < n_2 < \dots$ be an arbitrary sequence of integers, each with an assoc
 $a_i \pmod{n_i}$. Let $A$ be the set of integers $n$ such that for every $i$ either $n < n_i$ or
 $n \not\equiv a_i \pmod{n_i}$. Must the logarithmic density of $A$ exist?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_25 : answer(sorry) ↔
     ∀ (seq_n : ℕ → ℕ) (seq_a : ℕ → ℤ), (∀ i, 0 < seq_n i) → StrictMono seq_n →
       ∃ d, Set.HasLogDensity

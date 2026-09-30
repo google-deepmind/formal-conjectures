@@ -60,7 +60,7 @@ theorem a_37 : A 37 := by unfold A isPrimeBitsSet; decide +kernel
 **Conjecture (A81091)**: There are infinite primes of the form $2^n + 2^i + 1$,
 with $0 < i < n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjectureA81091 :
     answer(sorry) ↔ Set.Infinite {p : ℕ | A p} := by
   sorry

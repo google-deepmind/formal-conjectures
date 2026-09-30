@@ -106,7 +106,7 @@ $$\sup_{\varphi \in \Phi'(\mathbb{Z}/3\mathbb{Z})} \operatorname{Re}\langle a, \
 The DeepMind prover agent provided a formal proof, showing that $\frac{183095}{30000}$ separates the
 support functions.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1071"]
 theorem green_57.variants.z3_functional :
     let a : ZMod 3 → ℂ := ![(-1 : ℂ), -3, 3]
@@ -121,7 +121,7 @@ separates the two spaces. A branch-and-bound verification over the phase variabl
 $\max_{\Phi'} \operatorname{Re}\langle a, \varphi \rangle < 6.112 < 6.115 \approx
 \max_{\Phi} \operatorname{Re}\langle a, \varphi \rangle$.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1100"]
 theorem green_57.variants.z3 :
     answer(False) ↔ (Φ (ZMod 3) = Φ' (ZMod 3)) := by
@@ -135,7 +135,7 @@ third kernel is required to depend only on $x_1 + x_2$?
 
 Green guesses that the answer is probably 'no'.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1120"]
 theorem green_57 :
   answer(False) ↔

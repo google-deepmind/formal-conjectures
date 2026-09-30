@@ -47,7 +47,7 @@ def Erdos945Prop : Prop := ∃ O : ℝ → ℝ, O =O[atTop] (1 : ℝ → ℝ) �
 /--
 Is it true that $F(x) \leq (\log x)^{O(1)}$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_945 : answer(sorry) ↔ Erdos945Prop := by
   sorry
 
@@ -62,7 +62,7 @@ def Erdos945Constant : Prop :=
 Is there a constant $C > 0$ such that, for all large $x$, every interval $[x, x+(\log x)C]$
 contains two integers with the same number of divisors?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
   sorry
 

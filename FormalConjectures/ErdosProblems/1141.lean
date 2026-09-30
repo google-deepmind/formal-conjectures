@@ -107,7 +107,7 @@ is $1722$.
 The answer is negative: [APSSV26b] proves a stronger finiteness theorem, deducing it from
 Pollack [Po17]. Oriike [Or26] formalised the deduction in Lean.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/1141/Erdos1141.lean"]
 theorem erdos_1141 :

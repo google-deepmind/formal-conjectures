@@ -95,7 +95,7 @@ see https://github.com/KitaKen1/oeis-a100478-eventual-periodicity/blob/642eed0ff
 tadamcz showed the sequence always becomes constant, see
 https://tadamcz.com/fc-review-results/aea251bb26/#/f/OEIS/100478.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture:
   answer(True) ↔ ∀ v : Fin 5 → ℕ, (∀ i, 0 < v i) → ∃ c ∈ ({66, 67, 68, 70, 71, 72} : Finset ℕ),
   ∀ᶠ n in Filter.atTop, aGeneral v n = c := by

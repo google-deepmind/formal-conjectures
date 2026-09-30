@@ -49,7 +49,7 @@ that $n\in [p_{k-1},p_k)$ and the only primes dividing $n!+1$ are $p_{k}$ and $p
 A conjecture of Erdős and Stewart, as reported in problem A2 of Guy's collection [Gu04]. The only
 known cases are $n=1,2,3,4,5$. Luca [Lu01] proved that indeed these are the only solutions.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1058.lean#L47"]
 theorem erdos_1058 : answer(True) ↔ {n | IsSolution n}.Finite := by
   sorry

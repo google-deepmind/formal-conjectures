@@ -97,13 +97,13 @@ theorem taxicab_4 : IsTaxicabFor 1 2 2 4 := by
 
 /-- Taxicab number for $k=5$, $m=2$, and $n=2$ is not known.
 Whether such a number exists is also not known. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem taxicab_for_5_2_2 : answer(sorry) ↔ ∃ x : ℕ, IsTaxicabFor 5 2 2 x := by
   sorry
 
 /-- Taxicab number for $k=5$ and $m=2$ is not-known for any $n ≥ 2$.
 Whether such a number exists is also not known. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem taxicab_for_5_2_n : answer(sorry) ↔ ∃ n : ℕ, n ≥ 2 ∧ (∃ x : ℕ, IsTaxicabFor 5 2 n x)
   := by sorry
 

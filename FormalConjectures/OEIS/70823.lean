@@ -81,7 +81,7 @@ where $s$ is a squarefree number?
 
 Answer: False, $a(20)$ is divisible by $13^2$ but not by $13^3$.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a070823-counterexample/blob/51399770e734616c6463be034e41f7469991d752/lean/OeisA70823CounterexampleFC.lean#L72-L81"]
 theorem conjecture :

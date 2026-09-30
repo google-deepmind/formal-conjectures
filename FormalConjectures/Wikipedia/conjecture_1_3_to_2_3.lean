@@ -35,7 +35,7 @@ $x$ appears before $y$ in a random linear extension is between $\frac 1 3$ and $
 The set of all total order extensions is represented as order preserving
 bijections $P$ of $1, ..., n$.
 -/
-@[category research open, AMS 6]
+@[category research open, question, AMS 6]
 theorem conjecture_1_3_to_2_3 : answer(sorry) ↔ ∀ (P : Type) [Finite P] [PartialOrder P]
     (not_total : ¬ Std.Total (α := P) (· ≤ ·)) (total_ext : Set <| OrderHom P ℕ)
     (total_ext_def : ∀ σ, σ ∈ total_ext ↔ Set.range σ = Set.Icc 1 (Nat.card P)),

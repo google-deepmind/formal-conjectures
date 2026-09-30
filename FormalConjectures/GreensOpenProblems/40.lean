@@ -60,7 +60,7 @@ noncomputable def f (r : ℕ) : ℝ≥0∞ :=
   liminf (fun n ↦ minDensity n r) atTop
 
 /-- Does $f(r) \to \infty$? [Gr24]-/
-@[category research open, AMS 5 94]
+@[category research open, question, AMS 5 94]
 theorem green_40 : answer(sorry) ↔ Tendsto f atTop (𝓝 ⊤) := by
   sorry
 
@@ -75,12 +75,12 @@ theorem green_40.upper_bound (r : ℕ) : f r ≤ (r ^ r : ℝ≥0∞) / (r.facto
   sorry
 
 /-- The possibility that f(r) = 1 for all r has not been ruled out [Gr24] -/
-@[category research open, AMS 5 94]
+@[category research open, question, AMS 5 94]
 theorem green_40.f_eq_one_for_all : answer(sorry) ↔ ∀ r, f r = 1 := by
   sorry
 
 /-- It is not known whether f(2) = 1 [Gr24] -/
-@[category research open, AMS 5 94]
+@[category research open, question, AMS 5 94]
 theorem green_40.f_two_eq_one : answer(sorry) ↔ f 2 = 1 := by
   sorry
 
@@ -107,7 +107,7 @@ noncomputable def f_tilde (r : ℕ) : ℝ≥0∞ :=
   liminf (fun n ↦ minDensityFinset n r) atTop
 
 /-- Does $\tilde{f}(r) \to \infty$? [Gr24] -/
-@[category research open, AMS 5 94]
+@[category research open, question, AMS 5 94]
 theorem green_40.variants.arbitrary_subsets : answer(sorry) ↔ Tendsto f_tilde atTop (𝓝 ⊤) := by
   sorry
 
@@ -155,7 +155,7 @@ noncomputable def f_all (r : ℕ) : ℝ≥0∞ :=
 The target filter is `𝓝 ⊤`, as in `green_40` and `green_40.variants.arbitrary_subsets`. On
 `ℝ≥0∞`, `atTop` is the principal ultrafilter at `⊤`, so `Tendsto f_all atTop atTop` would say
 that `f_all r = ⊤` for all large `r` rather than that `f_all r → ∞`. -/
-@[category research open, AMS 5 94]
+@[category research open, question, AMS 5 94]
 theorem green_40.variants.all_n : answer(sorry) ↔ Tendsto f_all atTop (𝓝 ⊤) := by
   sorry
 

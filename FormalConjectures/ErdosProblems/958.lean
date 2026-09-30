@@ -62,7 +62,7 @@ The classification is asked for all sufficiently large $n$. Small exceptions suc
 $\{(0,0), (1,0), (0,1), (0,-1)\}$ exist, so the negative answer asserts
 counterexamples of arbitrarily large size, as in [CDL25].
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, question, AMS 5 52]
 theorem erdos_958 : answer(False) ↔
     ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
       ((#(distanceSet A) = n - 1 ∧

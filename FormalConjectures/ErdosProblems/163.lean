@@ -44,7 +44,7 @@ The linked formal proof (Codex and GPT-5.6 Sol) gives, for graphs `H` on `Fin n`
 constant `C ≥ 1` with `RamseyFor H (C * n)` (every red/blue colouring of `K_{C n}` contains a
 monochromatic copy of `H`); transporting along `Fintype.equivFin` gives the statement below.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos163.lean#L53"]
 theorem erdos_163 : answer(True) ↔
     ∀ (d : ℕ), 1 ≤ d →

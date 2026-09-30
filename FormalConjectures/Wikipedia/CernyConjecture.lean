@@ -56,7 +56,7 @@ namespace CernyConjecture
 /-- **Černý Conjecture**: Every synchronizing DFA with $n$ states admits a
 synchronizing word of length at most $(n - 1)^2$.
 -/
-@[category research open, AMS 68]
+@[category research open, question, AMS 68]
 theorem cerny_conjecture :
     answer(sorry) ↔ ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
     ∃ w : List α, M.IsSynchronizingWord w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by

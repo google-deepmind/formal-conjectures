@@ -46,7 +46,7 @@ every $f$ and $k \ge 1$, a colouring $c : \mathbb{Z} \to \{0, \ldots, k - 1\}$ s
 strictly increasing $a$ with $a_n < f(n)$ infinitely often and every colour, some nonempty finite
 sum of the $a_i$ has that colour.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos948.lean#L451"]
 theorem erdos_948 : answer(False) ↔
     ∃ (f : ℕ → ℕ) (k : ℕ), 0 < k ∧ ∀ colouring : ℤ → Fin k,
@@ -58,7 +58,7 @@ theorem erdos_948 : answer(False) ↔
 The original question asks for the set of finite sums to be monochromatic. Galvin showed that
 this fails for $k = 2$, and it fails for every $k \ge 2$ by the negative answer to `erdos_948`.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos948.lean#L451"]
 theorem erdos_948.variants.monochromatic : answer(False) ↔
     ∃ (f : ℕ → ℕ) (k : ℕ), 2 ≤ k ∧ ∀ colouring : ℤ → Fin k,

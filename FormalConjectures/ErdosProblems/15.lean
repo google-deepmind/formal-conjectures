@@ -40,7 +40,7 @@ Note: convergence here is convergence of the sequence of partial sums, which is 
 problem asks about. `Summable` would be the wrong notion: it is unconditional summability,
 equivalent over $\mathbb{R}$ to absolute convergence, and $\sum_n n/p_n$ diverges.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_15 : answer(sorry) ↔
     ∃ l : ℝ, Tendsto (fun N => ∑ k ∈ Finset.range N,
       (-1 : ℝ) ^ (k + 1) * (k + 1) / (k.nth Nat.Prime)) atTop (𝓝 l) := by

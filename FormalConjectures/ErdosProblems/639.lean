@@ -58,7 +58,7 @@ The linked file proves the bound for every finite vertex type with at least $10$
 gives the `atTop` reading below, and collects the uncovered edges as the edge set of a graph
 rather than as a set of pairs.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
 theorem erdos_639 : answer(True) ↔
     ∀ᶠ (n : ℕ) in atTop, ∀ C : Sym2 (Fin n) → Fin 2,
       {e : Sym2 (Fin n) | ¬e.IsDiag ∧

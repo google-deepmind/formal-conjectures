@@ -41,7 +41,7 @@ states the hypothesis as `∀ H : G.Subgraph, H.verts.ncard ≤ 2 * H.coe.indepN
 conclusion as `(G.induce Dᶜ).IsBipartite`, for graphs on `Fin n` (and, equivalently, on any
 finite vertex type); this implies the statement below.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos73.lean#L122"]
 theorem erdos_73 : answer(True) ↔
     ∀ (k : ℕ), ∃ (C : ℕ),

@@ -143,7 +143,7 @@ theorem a_5 : a 5 = 58546472 := by
 /--
 After $a(2) = 5$, is there another prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture : answer(sorry) ↔ ∃ n > 2, (a n).Prime := by
   sorry
 

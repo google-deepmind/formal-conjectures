@@ -50,7 +50,7 @@ In [Ru99] Ruzsa states "The simplest set with a chance to be an essential compon
 collection of numbers in the form $2^m3^n$ and Erdős often asked whether it is an essential
 component or not; I do not even have a plausible guess."
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1146 :
     answer(sorry) ↔ IsEssentialComponent { k | ∃ m n : ℕ, k = 2 ^ m * 3 ^ n } := by
   sorry

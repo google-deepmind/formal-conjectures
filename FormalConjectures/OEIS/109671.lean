@@ -70,7 +70,7 @@ theorem a_5 : a 5 = 1 := by native_decide
 /--
 Does the sequence contain every positive integer (cf. A169741)?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
     answer(sorry) ↔ ∀ m : ℕ, 0 < m → ∃ n : ℕ, 0 < n ∧ a n = m := by
   sorry

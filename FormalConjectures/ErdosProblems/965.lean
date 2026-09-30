@@ -42,7 +42,7 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.
 In [Ko16] Péter Komjáth constructed a counterexample.
 The same result was proven independently in [SWCol] by Sokoup and Weiss.
 -/
-@[category research solved, AMS 3 5,
+@[category research solved, question, AMS 3 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos965.lean#L42"]
 theorem erdos_965 :
     answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
@@ -57,7 +57,7 @@ In fact, in both [Ko16] and [SWCol] a single 2-coloring of ℝ is constructed su
 $k ≥ 2$ and every uncountable $A ⊆ ℝ$ the sums of $k$ distinct elements of $A$ are not
 monochromatic.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, question, AMS 3 5]
 theorem erdos_965.variants.generalization : answer(False) ↔
     ∀ f : ℝ → Fin 2, ∃ k ≥ 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
       ↑s ⊆ A → ↑t ⊆ A → s.card = k → t.card = k → f (s.sum id) = f (t.sum id) := by

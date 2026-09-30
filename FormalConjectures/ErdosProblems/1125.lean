@@ -38,7 +38,7 @@ for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 
 A problem of Kemperman [Ke69], who proved it is true if $f$ is measurable. Erdős [Er81b] wrote 'if it were my problem I would offer \$500 for it'. This was solved by Laczkovich [La84].
 -/
-@[category research solved, AMS 26, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1125.lean"]
+@[category research solved, question, AMS 26, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1125.lean"]
 theorem erdos_1125 : answer(True) ↔ ∀ (f : ℝ → ℝ)
     (hf : ∀ x : ℝ, ∀ h : ℝ, h > 0 → 2 * f x ≤ f (x + h) + f (x + 2 * h)),
     Monotone f := by

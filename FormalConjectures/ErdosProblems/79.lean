@@ -43,7 +43,7 @@ its proper subgraphs are?
 Asked by Erdős, Faudree, Rousseau, and Schelp [EFRS93]. $K_4$ was long the only known example.
 Wigderson [Wi24] proved that there are infinitely many such graphs.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_79 : answer(True) ↔
     ∀ (N : ℕ), ∃ (n : ℕ) (_ : N ≤ n) (G : SimpleGraph (Fin n)),
       ¬ G.IsRamseySizeLinear ∧

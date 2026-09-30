@@ -57,14 +57,14 @@ Let $h(n)$ count the number of incongruent sets of $n$ points in $\mathbb{R}^2$ 
 the diameter subject to the constraint that $d(x,y)\geq 1$ for all points $x\neq y$. Is it true
 that $h(n)\to \infty$?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_103 : answer(sorry) ↔ Tendsto h atTop (nhds ⊤) := by
   sorry
 
 /--
 It is not even known whether $h(n)\geq 2$ for all large $n$.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_103.variants.two_le : answer(sorry) ↔ ∀ᶠ n in atTop, 2 ≤ h n := by
   sorry
 

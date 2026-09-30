@@ -73,7 +73,7 @@ preceding [EGH75, Theorem 10.9] there are, for every infinite cardinal $\kappa$,
 hypergraphs of chromatic number $> \kappa$ all of whose linear sub-hypergraphs are
 2-colorable. An obligatory `F` appears in such a hypergraph, hence is 2-colorable.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_593.variants.obligatory_implies_two_colorable : answer(True) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       IsObligatory F → F.IsTwoColorable := by
@@ -87,7 +87,7 @@ The hypergraph `commonPair` with edges $\{0,1,2\}$ and $\{0,1,3\}$ is 2-colorabl
 not appear in the 3-uniform hypergraphs of large chromatic number consisting of edge-disjoint
 triples constructed in [EHR73], see `erdos_593.variants.common_pair_not_obligatory`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_593.variants.two_colorable_implies_obligatory : answer(False) ↔
     ∀ (W : Type) [Fintype W] (F : ThreeUniformHypergraph W),
       F.IsTwoColorable → IsObligatory F := by
@@ -129,7 +129,7 @@ This uses `F ⊑ G` (`SimpleGraph.IsContained`, an injective graph homomorphism)
 the injective edge-preserving map used in the hypergraph `Appears` definition. A graph embedding
 `F ↪g G` would require an induced copy, which the theorem does not provide.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_593.variants.graph_case_bipartite_obligatory :
     answer(True) ↔
     ∀ (V : Type*) (G : SimpleGraph V),
@@ -146,7 +146,7 @@ For every odd $k \geq 3$, there exists a graph with chromatic cardinal $\aleph_1
 contains no cycle of length $k$. This shows the class of obligatory graphs is strictly
 smaller than all finite graphs.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_593.variants.graph_case_no_odd_cycle :
     answer(True) ↔
     ∀ k : ℕ, Odd k → 3 ≤ k →

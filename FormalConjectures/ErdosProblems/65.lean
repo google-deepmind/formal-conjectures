@@ -40,7 +40,7 @@ $$\sum\frac{1}{a_i}\gg \log k?$$
 Gyárfás, Komlós, and Szemerédi [GKS84] have proved that this sum is $\gg \log k$, so that only
 the second question remains.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_65.parts.i : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ (k : ℝ) (hk : 0 < k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
@@ -55,7 +55,7 @@ Is the sum $\sum\frac{1}{a_i}$ minimised when $G$ is a complete bipartite graph?
 
 This problem is #65 in Extremal Graph Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_65.parts.ii : answer(sorry) ↔
     ∀ (k : ℝ) (hk : 0 < k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),

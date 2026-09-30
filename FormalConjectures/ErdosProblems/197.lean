@@ -33,7 +33,7 @@ namespace Erdos197
 Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to avoid monotone
 3-term arithmetic progressions?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_197 :
     answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
       (∃ f : ℕ ≃ A, ¬HasMonotoneAP (Subtype.val ∘ f) 3) ∧

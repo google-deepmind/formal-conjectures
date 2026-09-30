@@ -49,7 +49,7 @@ $n\geq 0$, there exist $a,b\in(n,n+p^c)$ such that $ab\equiv 1\pmod{p}$?
 
 This is discussed in this MathOverflow question [MathOverflow].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_445 :
     answer(sorry) ↔ ∀ c : ℝ, c > 1 / 2 →
       ∀ᶠ p : ℕ in atTop, p.Prime → ∀ n : ℕ, Erdos445Prop c p n := by

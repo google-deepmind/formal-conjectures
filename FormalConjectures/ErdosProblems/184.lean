@@ -95,7 +95,7 @@ open scoped Classical in
 In [Er71] Erdős suggests that only $n-1$ many cycles and edges are required if we do not
 require them to be edge-disjoint.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_184.variants.covering :
     answer(sorry) ↔
       ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),

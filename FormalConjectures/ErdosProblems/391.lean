@@ -64,7 +64,7 @@ Both questions were answered by Alexeev, Conway, Rosenfeld, Sutherland, Tao, Uhr
 $$\frac{t(n)}{n}= \frac{1}{e}-\frac{c_0}{\log n}+O\left(\frac{1}{(\log n)^{1+c}}\right),$$
 where $c_0=0.3044\cdots$ is an explicit constant, for some $c>0$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos391.lean#L4924"]
 theorem erdos_391 : answer(True) ↔
     Tendsto (fun n : ℕ => (t n : ℝ) / n) atTop (𝓝 (1 / Real.exp 1)) := by
@@ -78,7 +78,7 @@ for infinitely many $n$?
 This was answered in the affirmative by Alexeev, Conway, Rosenfeld, Sutherland, Tao, Uhr, and
 Ventullo [ACRSTUV25].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos391.lean#L4924"]
 theorem erdos_391.variants.deficit : answer(True) ↔ ∃ c : ℝ, 0 < c ∧
     {n : ℕ | (t n : ℝ) / n ≤ 1 / Real.exp 1 - c / Real.log n}.Infinite := by

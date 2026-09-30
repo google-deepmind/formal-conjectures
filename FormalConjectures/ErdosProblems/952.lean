@@ -34,7 +34,7 @@ namespace Erdos952
 Is there an infinite sequence of distinct Gaussian primes $x_1,x_2,\ldots$
 such that $\lvert x_{n+1}-x_n\rvert \ll 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_952 : answer(sorry) ↔
   ∃ (x : ℕ → GaussianInt) (C : ℤ),
     Function.Injective x ∧

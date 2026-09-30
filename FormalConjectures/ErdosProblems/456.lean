@@ -48,7 +48,7 @@ open scoped Classical in
 /--
 Is it true that $m_n<p_n$ for almost all $n$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_456.parts.i :
     answer(sorry) ↔
       Tendsto (fun N ↦ (count (fun n ↦ m n < p n) N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
@@ -58,7 +58,7 @@ open scoped Classical in
 /--
 Does $p_n/m_n \to \infty$ for almost all $n$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_456.parts.ii :
     answer(sorry) ↔
       ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
@@ -68,7 +68,7 @@ theorem erdos_456.parts.ii :
 /--
 Are there infinitely many primes $p$ such that $p-1$ is the only $n$ for which $m_n=p$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_456.parts.iii :
     answer(sorry) ↔
       { q | q.Prime ∧ ∀ n, m n = q ↔ n = q - 1 }.Infinite := by

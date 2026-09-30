@@ -37,7 +37,7 @@ namespace Green62
 Let $p$ be a large prime, and let $A$ be the set of all primes less than $p$.
 Is every $x \in \{1, \ldots, p-1\}$ congruent to some product $a_1 a_2$ where $a_1, a_2 \in A$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_62 :
     answer(sorry) ↔
       ∀ᶠ p in atTop, p.Prime →

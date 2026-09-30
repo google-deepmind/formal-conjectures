@@ -35,7 +35,7 @@ $B\subseteq A\in\mathcal{F}$ then $B\in \mathcal{F}$). There exists some element
 whenever $\mathcal{F}'\subseteq \mathcal{F}$ is an intersecting subfamily we have
 $$\lvert \mathcal{F}'\rvert \leq \lvert \{ A\in \mathcal{F} : x\in A\}\rvert.$$
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_701 : answer(sorry) ↔ ∀ {X : Type} [Nonempty X] [Fintype X],
     ∀ (F : Set (Set X)), IsLowerSet F →
       ∃ x : X, ∀ᵉ (F' ⊆ F),

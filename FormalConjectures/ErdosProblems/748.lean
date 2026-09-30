@@ -54,7 +54,7 @@ independently by Green [Gr04] and Sapozhenko [Sa03].
 
 The statement $f(n)=2^{(1+o(1))n/2}$ is formalised as $\log_2 f(n)/n\to 1/2$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos748.lean#L1228"]
 theorem erdos_748 : answer(True) ↔
     Tendsto (fun n : ℕ ↦ logb 2 (f n) / n) atTop (nhds (1 / 2)) := by

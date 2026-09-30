@@ -34,7 +34,7 @@ Is
 $$\sum_{n} \frac{\phi(n)}{2^n}$$
 irrational? Here $\phi$ is the Euler totient function.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_249 : answer(sorry) ↔ Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
   sorry
 

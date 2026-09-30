@@ -82,7 +82,7 @@ by an internal model at OpenAI, which constructed (for infinitely many $n$) a se
 in $\mathbb{R}^2$ such that the number of unit distance pairs in $P$ is at least $n^{1+c}$, where
 $c > 0$ is an absolute constant.
 -/
-@[category research solved, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_90 : answer(False) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
     (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
   sorry

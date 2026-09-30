@@ -42,7 +42,7 @@ Solved in the affirmative by Barth and Schneider [BaSc72].
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos229.lean"]
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos229.lean"]
 theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
     answer(True) ↔ ∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →

@@ -49,7 +49,7 @@ and also that $f(c)=0$ if $c<2$ for odd $n$ or $c<3/2$ for even $n$.
 A family of edge disjoint triangles is a finite set of $3$-cliques of $G$ any two of which share
 at most one vertex.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1009.lean#L2347"]
 theorem erdos_1009 : answer(True) ↔ ∀ c : ℝ, 0 < c → ∃ f : ℕ, ∀ (n k : ℕ) (G : SimpleGraph (Fin n)),
     n ^ 2 / 4 + k ≤ G.edgeSet.ncard → (k : ℝ) < c * n →

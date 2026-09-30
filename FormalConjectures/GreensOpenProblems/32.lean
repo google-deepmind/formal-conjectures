@@ -82,7 +82,7 @@ def HasLargeGapDilate (ω : ℕ → ℝ) : Prop :=
 Let $p$ be a prime and let $A \subset \mathbb{Z}/p\mathbb{Z}$ be a set of size $\lfloor \sqrt{p} \rfloor$.
 Is there a dilate of $A$ containing a gap of length $100\sqrt{p}$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_32 :
     answer(sorry) ↔ HasLargeGapDilate (fun p ↦ Real.sqrt p) := by
   sorry
@@ -131,7 +131,7 @@ theorem green_32.variants.dirichlet_regime :
   sorry
 
 /-- Even what happens in the regime $\omega(p) \sim 10 \log p$ is unclear [Gr24]. -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_32.variants.log_regime :
     answer(sorry) ↔
     (∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ 10 * Real.log p) →

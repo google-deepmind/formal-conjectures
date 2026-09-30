@@ -63,7 +63,7 @@ Equivalently, every edge should be part of a unique triangle and every non-adjac
 one of the two diagonals of a unique 4-cycle.
 The first condition is equivalent to being locally linear.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem conway99Graph : answer(sorry) ↔ ∃ G : SimpleGraph (Fin 99),
     G.LocallyLinear ∧ NonEdgesAreDiagonals G := by
   sorry

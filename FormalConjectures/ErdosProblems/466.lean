@@ -60,7 +60,7 @@ Graham proved this is true, and in fact $N(X,1/10)> \frac{\log X}{10}$. This was
 improved by Sárközy [Sa76], who proved that for all sufficiently small $\delta>0$,
 $N(X,\delta)>X^{1/2-\delta^{1/7}}$.
 -/
-@[category research solved, AMS 11 52, formal_proof using lean4 at
+@[category research solved, question, AMS 11 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos466.lean#L292"]
 theorem erdos_466 : answer(True) ↔ ∃ δ : ℝ, 0 < δ ∧ Tendsto (fun X ↦ N X δ) atTop atTop := by
   sorry

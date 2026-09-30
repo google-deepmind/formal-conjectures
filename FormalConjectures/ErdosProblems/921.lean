@@ -50,7 +50,7 @@ where `f k n` is the largest `m` such that some graph on `n` vertices with chrom
 has no odd cycle of length at most `m`; the two eventual statements below are the two halves
 of this estimate.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos921.lean#L39"]
 theorem erdos_921 : answer(True) ↔
     ∀ (k : ℕ), 4 ≤ k →

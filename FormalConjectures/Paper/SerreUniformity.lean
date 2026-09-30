@@ -64,7 +64,7 @@ def HasFullTorsionAction (E : WeierstrassCurve ℚ) (p : ℕ) : Prop :=
 $C$ such that every non-CM elliptic curve over $\mathbb{Q}$ has surjective mod-$p$
 Galois representation for every prime $p > C$?
 -/
-@[category research open, AMS 11 14]
+@[category research open, question, AMS 11 14]
 theorem serre_uniformity :
     answer(sorry) ↔
       ∃ C : ℕ, ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
@@ -78,7 +78,7 @@ representation for every prime $p > 37$. From the introduction of [Lem17]: "This
 remains open today, but, over the last forty years, there has been a lot of progress towards
 a proof for $K = \mathbb{Q}$ — it is believed that, in this case, $p_K = 37$."
 -/
-@[category research open, AMS 11 14]
+@[category research open, question, AMS 11 14]
 theorem serre_uniformity.variants.bound_37 :
     answer(sorry) ↔
       ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →

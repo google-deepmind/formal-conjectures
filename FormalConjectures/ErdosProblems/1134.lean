@@ -65,7 +65,7 @@ $$6^{-\tau}+\sum_{k\geq 0}(3\cdot 2^k)^{-\tau}=1.$$
 Their proof is given in [La16]. This problem is repeated by Guy [Gu83b] in an article called
 'Don't Try to Solve These Problems'. This is Problem E36 in Guy's collection [Gu04].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1134.lean#L79"]
 theorem erdos_1134 : answer(False) ↔ 0 < A.lowerDensity := by
   sorry
@@ -84,7 +84,7 @@ is unknown if the smallest set $A$ which contains $0$ and is closed under
 $$x\mapsto 2x,\quad x\mapsto 3x+2,\quad x\mapsto 6x+3$$
 has positive density.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1134.variants.klarner : answer(sorry) ↔
     0 < (⋂₀ {S : Set ℕ | 0 ∈ S ∧
       ∀ x ∈ S, 2 * x ∈ S ∧ 3 * x + 2 ∈ S ∧ 6 * x + 3 ∈ S}).lowerDensity := by

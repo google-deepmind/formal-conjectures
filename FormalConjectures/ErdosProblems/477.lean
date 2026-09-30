@@ -45,7 +45,7 @@ The linked formal proof (Codex, following Price's exposition) exhibits a complem
 $\{k^6 : k \in \mathbb{Z}\}$; it states uniqueness as `∃! p : ℤ × ℤ, p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n`
 and the degree condition as `2 ≤ f.natDegree`.
 -/
-@[category research solved, AMS 12, formal_proof using lean4 at
+@[category research solved, question, AMS 12, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L54"]
 theorem erdos_477 : answer(True) ↔
     ∃ f : ℤ[X], 2 ≤ f.degree ∧ ∃ A : Set ℤ,
@@ -89,7 +89,7 @@ Sekanina [Sek59] asked whether there is no such $A$ for $X^k$, for every $k \ge 
 This is false: a complement exists for every even $k \ge 6$. The linked formal proof gives the
 case $k = 6$.
 -/
-@[category research solved, AMS 12, formal_proof using lean4 at
+@[category research solved, question, AMS 12, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L42"]
 theorem erdos_477.variants.monomial : answer(False) ↔
     ∀ (k : ℕ), 2 ≤ k →

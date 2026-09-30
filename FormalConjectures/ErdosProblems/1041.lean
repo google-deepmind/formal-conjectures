@@ -76,7 +76,7 @@ The linked formalisation proves, for the member $s = 10^{-6}$ of ani's family, t
 connected subset of $\{ z \mid |f(z)| < 1 \}$ containing two distinct roots has
 one-dimensional Hausdorff measure greater than $2$.
 -/
-@[category research solved, AMS 32, formal_proof using lean4 at
+@[category research solved, question, AMS 32, formal_proof using lean4 at
   "https://github.com/wcook04/plectis-erdos/blob/0ee31b3a99ef93d2b679a427b474b23710597bad/lean/ErdosProblems/Erdos1041/Counterexample/HausdorffLength.lean#L449-L454"]
 theorem erdos_1041 :
     answer(False) ↔ ∀ (n : ℕ) (f : ℂ[X]), n ≥ 2 → f.natDegree = n → f.Monic →

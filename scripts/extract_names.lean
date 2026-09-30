@@ -24,8 +24,8 @@ public import FormalConjecturesUtil.Answer
 # Extract Names
 
 This script extracts metadata (theorem names, statements, categories, subjects,
-formal proof links, and answer kinds) from formalized mathematical conjectures
-in the repository.
+formal proof links, whether the source poses the statement as a question, and answer
+kinds) from formalized mathematical conjectures in the repository.
 
 ### Usage
 
@@ -118,7 +118,7 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofs",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds",
+   "hasSorryFreeProof", "moduleDocstrings", "question", "answerKinds",
    "fileFirstAdded", "fileLastModified"]
 
 -- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
@@ -135,6 +135,8 @@ structure TheoremInfo where
   formalProofs : List FormalProofInfo
   hasSorryFreeProof : Bool
   subsets : List String
+  /-- Whether the declaration carries the `question` attribute. -/
+  question : Bool
   answerKinds : List String
   fileFirstAdded : Option String
   fileLastModified : Option String
@@ -154,6 +156,8 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
+    ++ (if exclude.contains "question" || !info.question then [] else
+        [("question", toJson info.question)])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
@@ -331,6 +335,7 @@ unsafe def main (args : List String) : IO Unit := do
                 formalProofs := formalProofs,
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
+                question := ← isQuestion name
                 answerKinds := answerKinds
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified

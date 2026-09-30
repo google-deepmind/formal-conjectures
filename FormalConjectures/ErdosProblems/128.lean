@@ -33,7 +33,7 @@ namespace Erdos128
 Let G be a graph with n vertices such that every induced subgraph on ≥ $n/2$
 vertices has more than $n^2/50$ edges. Must G contain a triangle?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_128 :
     answer(sorry) ↔ ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       (∀ V' : Set V, 2 * V'.ncard + 1 ≥ Fintype.card V →

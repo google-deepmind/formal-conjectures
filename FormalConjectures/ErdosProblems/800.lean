@@ -36,7 +36,7 @@ where the implied constant is absolute.
 
 A problem of Burr and Erdős. Solved in the affirmative by Alon [Al94].
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_800 : answer(True) ↔
     ∃ C > (0 : ℝ), ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       Fintype.card V = n →

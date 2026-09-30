@@ -56,7 +56,7 @@ all lie in $A$?
 
 Note: A is taken as $\alpha$-dense, i.e. $|A| \ge \alpha |G|^2$ [Au16, Question 2]
 -/
-@[category research open, AMS 5 11 20]
+@[category research open, question, AMS 5 11 20]
 theorem green_18 : answer(sorry) ↔
     ∀ α > 0, ∃ c > 0, ∃ m₀ : ℕ,
       ∀ (G : Type*) [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)),

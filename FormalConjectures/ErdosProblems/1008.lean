@@ -41,7 +41,7 @@ no $C_4$?
 This problem was first solved in the affirmative by Conlon, Fox, and Sudakov [CFS14b]. A simple
 proof is given by Hunter in the comments.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1008.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1008.lean"]
 theorem erdos_1008 : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       ∃ H ≤ G, (cycleGraph 4).Free H ∧
@@ -53,7 +53,7 @@ Originally asked by Bollobás and Erdős in 'a colloquium on graph theory at Tih
 replaced by $m^{3/4}$. Folkman showed this is false with the counterexample $K_{n,n^2}$, which has
 $n^3$ edges, and yet every subgraph with $>n^2+\binom{n}{2}$ edges contains a $C_4$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_1008.variants.three_quarters : answer(False) ↔
     ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       ∃ H ≤ G, (cycleGraph 4).Free H ∧

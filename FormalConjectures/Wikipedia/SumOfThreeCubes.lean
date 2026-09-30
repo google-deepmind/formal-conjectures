@@ -89,7 +89,7 @@ theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
 
 /-- An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and only if
 `n` is not `4` or `5` mod `9`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem isSumOfThreeCubes_iff_mod_9 :
     answer(sorry) ↔ ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9]) := by
   sorry

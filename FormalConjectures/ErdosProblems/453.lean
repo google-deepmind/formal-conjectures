@@ -56,7 +56,7 @@ where $p_k$ is the $k$th prime?
 
 Pomerance proved that the answer is no.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
 theorem erdos_453 : answer(False) ↔ EventuallyHasPrimeWitness := by
   sorry
 

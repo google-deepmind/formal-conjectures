@@ -48,7 +48,7 @@ pendant leaves, joined by a path of five edges to the root of a perfect binary t
 four. Then $\operatorname{path}(G) = 11$, while $C$ and $M$ are singletons whose distance sums
 are $154$ and $266$, so the bound is $\lceil (154 + 266) / 38 \rceil = 12$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem conjecture34 :
   answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]

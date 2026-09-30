@@ -39,7 +39,7 @@ namespace Green15
 Does there exist a Lipschitz function $f : \mathbb{N} \to \mathbb{Z}$ whose graph
 $\Gamma = \{(n, f(n)) : n \in \mathbb{N}\} \subseteq \mathbb{Z}^2$ is free of 3-term progressions?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_15 :
     answer(sorry) ↔ ∃ K : ℝ≥0, ∃ f : ℕ → ℤ, LipschitzWith K f ∧
       IsAPOfLengthFree {((n, f n) : ℤ × ℤ) | (n : ℕ)} 3 := by

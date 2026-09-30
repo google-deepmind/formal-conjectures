@@ -67,7 +67,7 @@ using `answer(sorry) ↔`.
 The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
-@[category research open, AMS 5 11 68]
+@[category research open, question, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_1 :
     answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
@@ -201,7 +201,7 @@ on August 7th 2024.
 The correspondence between the machine's halting problem and the below reformulation has been proven
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
-@[category research open, AMS 5 11 68]
+@[category research open, question, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
     ∀ (a b f : ℕ → ℕ), ∀ᵉ (hf : f = fun x ↦ 10 * 2 ^ x - 1)
     (a_ini : a 0 = 0) (b_ini : b 0 = 5)
@@ -229,7 +229,7 @@ $a_i = \lfloor b_i/2 \rfloor + 1$?
 There is presently no consensus on whether the machine halts or not, hence the problem is formulated
 using `answer(sorry) ↔`.
 -/
-@[category research open, AMS 5 11 68]
+@[category research open, question, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
     ∀ᵉ (a : ℕ → ℤ) (b : ℕ → ℤ)
     (a_ini : a 0 = 10)

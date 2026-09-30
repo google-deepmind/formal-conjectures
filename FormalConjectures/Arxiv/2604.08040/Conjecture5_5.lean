@@ -74,7 +74,7 @@ proved there using the classification of finite simple groups.
 
 The Lean proof here by Kenta Kitamura instead uses only the Feit–Thompson theorem and the Gorenstein–Walter classification of groups with dihedral Sylow 2-subgroups, together with counting arguments on Sylow 2-subgroups and families of cyclic subgroups.
 -/
-@[category research solved, AMS 20,
+@[category research solved, question, AMS 20,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/das-dey-sharma-conjecture-5-5/blob/7a2600dd6471536cf246ad8d78d756e130d2fe9e/lean/Conjecture55FC.lean#L15-L18"]
 theorem solvable_of_cyc_lt :

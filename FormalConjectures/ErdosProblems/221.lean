@@ -42,7 +42,7 @@ Lorentz [Lo54] proved there is such a set with, for all large $N$,
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll \frac{\log\log N}{\log N}N$$
 The answer is yes, proved by Ruzsa [Ru72].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]
 theorem erdos_221 :
     answer(True) ↔ ∃ A : Set ℕ,
       ((fun N => ({a ∈ A | a ≤ N}.ncard : ℝ)) ≪ (fun N => (N : ℝ) / Real.log N)) ∧

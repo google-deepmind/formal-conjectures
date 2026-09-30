@@ -34,7 +34,7 @@ def solutionSet (n k : ℕ) : Set (Multiset ℕ) :=
 Let $k ≥ 2$, and let $f_k(n)$ count the number of solutions to $n = p_1^k + \dots + p_k^k$,
 where the $p_i$ are prime numbers. Is it true that $\limsup f_k(n) = \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_979 : answer(sorry) ↔
     ∀ k ≥ 2, Filter.limsup (fun n => (solutionSet n k).encard) Filter.atTop = ⊤ := by
   sorry

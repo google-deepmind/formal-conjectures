@@ -53,7 +53,7 @@ Is it true that $C(x)=x^{1-o(1)}$?
 
 This is discussed in problem A13 of Guy's collection [Gu04].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1057 :
     answer(sorry) ↔ Tendsto (fun x ↦ Real.log (carmichaelCounting x) / Real.log x) atTop (𝓝 1) := by
   sorry
@@ -73,7 +73,7 @@ theorem erdos_1057.variants.upper_bound :
 Pomerance [Po89] gave a heuristic suggesting that this is the true order of growth, and in fact
 $C(x)= x \exp\left(-(1+o(1))\frac{\log x\log\log\log x}{\log\log x}\right)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1057.variants.pomerance :
     answer(sorry) ↔ Tendsto (fun x ↦
       -(Real.log (carmichaelCounting x / x) * Real.log (Real.log x)) /

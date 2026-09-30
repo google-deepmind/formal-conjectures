@@ -152,7 +152,7 @@ $$\frac{1}{\Phi_n(p\boxplus_n q)} \ge \frac{1}{\Phi_n(p)}+\frac{1}{\Phi_n(q)}?$$
 
 [arxiv/2602.05192v2](https://arxiv.org/abs/2602.05192v2) contains a proof.
 -/
-@[category research solved, AMS 26, formal_proof using lean4 at
+@[category research solved, question, AMS 26, formal_proof using lean4 at
 "https://github.com/frenzymath/Archon-FirstProof-Results/blob/main/FirstProof/FirstProof4/Problem4.lean"]
 theorem four : answer(True) ↔ ∀ (p q : ℝ[X]) (n : ℕ), FourProp p q n := by
   sorry
@@ -162,7 +162,7 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $2$, then
 $$\frac{1}{\Phi_2(p\boxplus_n q)} \ge \frac{1}{\Phi_2(p)}+\frac{1}{\Phi_2(q)}?$$
 -/
-@[category research solved, AMS 26]
+@[category research solved, question, AMS 26]
 theorem four_2 : answer(True) ↔ ∀ (p q : ℝ[X]), FourProp p q 2 := by
   sorry
 
@@ -171,8 +171,8 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $3$, then
 $$\frac{1}{\Phi_3(p\boxplus_n q)} \ge \frac{1}{\Phi_3(p)}+\frac{1}{\Phi_3(q)}?$$
 -/
-@[category research solved, AMS 26]
-theorem four_3 : answer(True  ) ↔ ∀ (p q : ℝ[X]), FourProp p q 3 := by
+@[category research solved, question, AMS 26]
+theorem four_3 : answer(True) ↔ ∀ (p q : ℝ[X]), FourProp p q 3 := by
   sorry
 
 end Arxiv.«2602.05192»

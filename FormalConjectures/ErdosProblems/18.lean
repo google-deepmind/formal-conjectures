@@ -217,7 +217,7 @@ Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^
 More precisely: does there exist a constant $C > 0$ such that for infinitely many
 practical numbers $m$, we have $h(m) < (\log \log m)^C$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_18a : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧ ∃ᶠ m in atTop, Nat.IsPractical m ∧
       (practicalH m : ℝ) < (log (log m)) ^ C := by
@@ -228,7 +228,7 @@ theorem erdos_18a : answer(sorry) ↔
 Is it true that $h(n!) < n^{o(1)}$? That is, for all $\varepsilon > 0$,
 is $h(n!) < n^\varepsilon$ for sufficiently large $n$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_18b : answer(sorry) ↔
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (n : ℝ) ^ ε := by
   sorry
@@ -239,7 +239,7 @@ Or perhaps even $h(n!) < (\log n)^{O(1)}$?
 
 Erdős offered \$250 for a proof or disproof.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_18c : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry

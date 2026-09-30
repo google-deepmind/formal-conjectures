@@ -56,7 +56,7 @@ Estimate $f(n)$. In particular, is it true that $f((\log n)^2,n) \geq n^{1/2-o(1
 The answer is no: Alon and Sudakov [AlSu07] proved that in fact
 $$\frac{(\log n)^2}{\log\log n}\ll f((\log n)^2,n) \ll (\log n)^2.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos804.lean#L3532"]
 theorem erdos_804.parts.i : answer(False) ↔
     ∀ ε > 0, ∀ᶠ n : ℕ in atTop,
@@ -69,7 +69,7 @@ Is it true that $f((\log n)^3,n)\gg (\log n)^3$?
 The answer is no: Alon and Sudakov [AlSu07] proved that in fact
 $$f((\log n)^3,n)\asymp \frac{(\log n)^2}{\log\log n}.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos804.lean#L3532"]
 theorem erdos_804.parts.ii : answer(False) ↔
     ∃ c > 0, ∀ᶠ n : ℕ in atTop, c * (log n) ^ 3 ≤ f ⌊(log n) ^ 3⌋₊ n := by

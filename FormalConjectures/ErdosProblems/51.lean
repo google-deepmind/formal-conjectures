@@ -35,7 +35,7 @@ Is there an infinite set $A \subset \mathbb{N}$ such that for every $a \in A$,
 there is an integer n such that $\phi(n)=a$, and
 yet if $n_a$ is the smallest such integer, then $\frac{n_a}{a} → \infty$ as $a → ∞$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_51 : answer(sorry) ↔ ∃ A : Set ℕ, ∃ n : A → ℕ,
       A.Infinite ∧
       (∀ a : A, IsLeast (φ ⁻¹' {(a : ℕ)}) (n a)) ∧

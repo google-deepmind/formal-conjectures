@@ -67,7 +67,7 @@ Yes: take $(a, b, c) = (1, 1, -1)$ and the constant sequence $x(n) = 4$.
 The linked Lean proof is by Kenta Kitamura.
 -/
 
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a103425-prime-free/blob/b04b155/lean/OeisA103425FC.lean#L13-L35"]
 theorem conjecture : answer(True) ↔
@@ -83,7 +83,7 @@ prime which is prime-free?
 
 Yes: take $(a, b, c) = (1, 1, -1)$ and $x(n) = 4(n + 1)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture.variants.nonconstant : answer(True) ↔
     ∃ (a b c : ℤ) (x : ℕ → ℤ),
       Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧
@@ -105,7 +105,7 @@ prime and pairwise distinct which is prime-free?
 
 Yes: take $(a, b, c) = (3, -3, 1)$ and $x(n) = (n + 2)^2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture.variants.nonconstant_distinct_coeffs : answer(True) ↔
     ∃ (a b c : ℤ) (x : ℕ → ℤ),
       Nat.gcd (Int.gcd a b) c.natAbs = 1 ∧

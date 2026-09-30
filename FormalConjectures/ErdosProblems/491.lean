@@ -46,7 +46,7 @@ A question of Erdős [Er61, p.237; Er82e, p.65], who had proved that $f(n) = c' 
 stronger hypotheses $f(n+1) - f(n) = o(1)$ or $f(n+1) \ge f(n)$. The answer is yes, proved by
 Wirsing [Wi70]. See also `erdos_897.variants.log_growth`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos491.lean#L34"]
 theorem erdos_491 : answer(True) ↔
     ∀ (f : ℕ → ℝ), (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →

@@ -37,7 +37,7 @@ def p : ℕ → ℕ := fun n => Fintype.card (Nat.Partition n)
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
 $∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1106.parts.i :
     answer(sorry) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
   sorry
@@ -46,7 +46,7 @@ theorem erdos_1106.parts.i :
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
 $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1106.parts.ii :
     answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
   sorry

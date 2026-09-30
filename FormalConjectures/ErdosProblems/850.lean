@@ -30,7 +30,7 @@ namespace Erdos850
 Can there exist two distinct integers $x$ and $y$ such that $x,y$ have the same prime factors,
 $x+1,y+1$ have the same prime factors, and $x+2,y+2$ also have the same prime factors?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_850 :
     answer(sorry) ↔ ∃ x y : ℕ, x ≠ y ∧ x.primeFactors = y.primeFactors
       ∧ (x + 1).primeFactors = (y + 1).primeFactors

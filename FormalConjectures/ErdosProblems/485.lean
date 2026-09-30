@@ -57,7 +57,7 @@ $f(k) < k^{1-c}$ for some $c > 0$. The answer is yes: Schinzel [Sc87] proved
 $f(k) > \log \log k / \log 2$, and Schinzel and Zannier [ScZa09] improved this to
 $f(k) \gg \log k$.
 -/
-@[category research solved, AMS 11 12, formal_proof using lean4 at
+@[category research solved, question, AMS 11 12, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos485.lean#L39"]
 theorem erdos_485 : answer(True) ↔ Tendsto f atTop atTop := by
   sorry

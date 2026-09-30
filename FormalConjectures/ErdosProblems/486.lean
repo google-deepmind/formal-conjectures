@@ -46,7 +46,7 @@ $49/50$. The first linked formal proof establishes this for the real-cutoff norm
 $\frac{1}{\log x}\sum_{m < x, m \in B} \frac{1}{m}$ with the moduli restricted to $A$; the
 second derives the statement below (`Set.HasLogDensity`, all moduli) from it.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos486.lean#L20",
   formal_proof using formal_conjectures at

@@ -172,7 +172,7 @@ theorem erdos_304.variants.upper_1985 :
 /--
 Is it true that $$N(b) \ll \log \log b$$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem upper_bound : answer(sorry) ↔
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry

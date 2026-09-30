@@ -36,7 +36,7 @@ Is it true that for all large $n$ there exists $k$
 such that $n + k$ is composite and $p(n+k) > k^2$,
 where $p(m)$ is the least prime factor of $m$ ?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_681 : answer(sorry) ↔
     ∀ᶠ n in .atTop, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
   sorry

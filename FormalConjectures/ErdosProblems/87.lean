@@ -41,7 +41,7 @@ The restriction $\epsilon < 1$ excludes negative bases in $(1-\epsilon)^k$.
 
 This problem is #12 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_87.parts.i : answer(sorry) ↔
     ∀ ε > (0 : ℝ), ε < 1 → ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
@@ -56,7 +56,7 @@ for every graph $G$ with chromatic number $\chi(G)=k$?
 
 This problem is #13 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_87.parts.ii : answer(sorry) ↔
     ∃ c > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →

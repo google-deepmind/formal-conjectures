@@ -41,7 +41,7 @@ F(N + k) \leq F(N) + 1
 $$
 for all sufficiently large $N$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_155 : answer(sorry) ↔ ∀ k ≥ 1, ∀ᶠ N in atTop, F (N + k) ≤ F N + 1 := by
   sorry
 

@@ -200,7 +200,7 @@ theorem Reachable.five_pow_six : Reachable (5^6) 29 :=
   .add .one <| .mul h8 <| .mul h9 <| .add .one <| .mul h8 h27
 
 /-- Is `5n` the complexity of `5^n` for `0 < n`? Answer: No. -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem complexity_five_pow : answer(False) ↔ ∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 * n := by
   show False ↔ _
   simp [false_iff, not_forall]
@@ -210,12 +210,12 @@ theorem complexity_five_pow : answer(False) ↔ ∀ n : ℕ, 0 < n → complexit
 
 Reference: https://arxiv.org/abs/1207.4841
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem complexity_three_pow : answer(True) ↔ ∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * n := by
   sorry
 
 /-- Is `2n` the complexity of `2^n` for `0 < n`? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem complexity_two_pow : answer(sorry) ↔ ∀ n : ℕ, 0 < n → complexity (2 ^ n) = 2 * n := by
   sorry
 

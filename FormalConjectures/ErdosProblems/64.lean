@@ -31,7 +31,7 @@ namespace Erdos64
 Does every finite graph with minimum degree at least $3$
 contain a cycle of length $2^k$ for some $k \geq 2$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_64 :
     answer(sorry) ↔ ∀ (V : Type*) (G : SimpleGraph V) [Fintype V] [DecidableRel G.Adj],
         G.minDegree ≥ 3 → ∃ (k : ℕ) (v : V) (c : G.Walk v v),
