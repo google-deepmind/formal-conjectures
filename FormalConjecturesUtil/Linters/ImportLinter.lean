@@ -52,39 +52,38 @@ register_option linter.style.imports : Bool := {
 
 namespace ImportLinter
 
-/-- Whether an `import` syntax node carries a modifier of the given kind, such as `meta`. -/
-def hasImportModifier (kind : SyntaxNodeKind) (stx : Syntax) : Bool :=
-  -- a modifier is parsed as an `optional` node wrapping a node of the given kind
-  stx.getArgs.any fun arg ↦ arg.isOfKind kind || arg.getArgs.any (·.isOfKind kind)
-
-/-- Whether an `import` syntax node carries the `meta` modifier. -/
-def isMetaImport (stx : Syntax) : Bool := hasImportModifier ``Lean.Parser.Module.meta stx
-
-/-- Whether an `import` syntax node carries the `public` modifier. -/
-def isPublicImport (stx : Syntax) : Bool := hasImportModifier ``Lean.Parser.Module.public stx
-
-/-- An `import` of a parsed header. -/
-structure HeaderImport where
-  /-- The identifier of the imported module. -/
-  id : Syntax
-  /-- Whether the import carries the `public` modifier. -/
-  isPublic : Bool
-  /-- Whether the import carries the `meta` modifier. -/
-  isMeta : Bool
-
 /--
-Collects every `import` of a parsed header, with its modifiers. This mirrors
-`Mathlib.Linter.getImportIds`, which discards the modifiers.
+An `import` of a parsed header, retaining its syntax node.
+
+TODO(v4.34.0): Replace `ImportRef`, `ImportRef.getIdent`, and `headerToImportRefs` with
+`ImportGraph.Lean.headerToImportRefs` from `ImportGraph.Imports.Pretty`
+(added in `leanprover-community/import-graph#133`).
 -/
-partial def getImports (stx : Syntax) : Array HeaderImport :=
-  let rest := (stx.getArgs.map getImports).flatten
-  if stx.isOfKind `Lean.Parser.Module.import then
-    -- The module name is the last identifier in the import node arguments
-    match stx.getArgs.filter (·.isIdent) |>.back? with
-    | some n => rest.push { id := n, isPublic := isPublicImport stx, isMeta := isMetaImport stx }
-    | none => rest
-  else
-    rest
+structure ImportRef extends Import where
+  /-- The syntax node of the `import` statement. -/
+  stx : TSyntax ``Parser.Module.import
+deriving Repr, Inhabited, BEq
+
+/-- Extracts the module identifier from an `ImportRef`. -/
+def ImportRef.getIdent (i : ImportRef) : Ident :=
+  match i.stx with
+  | `(Parser.Module.import| $[public]? $[meta]? import $[all]? $n:ident) => n
+  | _ => ⟨.missing⟩
+
+/-- Collects every `import` of a parsed header, with its modifiers and syntax. -/
+def headerToImportRefs (header : TSyntax ``Parser.Module.header) : Array ImportRef :=
+  match header with
+  | `(Parser.Module.header| $[module%$moduleTk]? $[prelude]? $imports*) =>
+    imports.map fun
+      | stx@`(Parser.Module.import|
+          $[public%$publicTk]? $[meta%$metaTk]? import $[all%$allTk]? $n:ident) =>
+        { module := n.getId
+          importAll := allTk.isSome
+          isExported := publicTk.isSome || moduleTk.isNone
+          isMeta := metaTk.isSome
+          stx := ⟨stx⟩ }
+      | _ => { module := `illformedStx, stx := ⟨.missing⟩ }
+  | _ => #[{ module := `illformedStx, stx := ⟨.missing⟩ }]
 
 /--
 Checks a parsed header against the Formal Conjectures import rules. `meta` imports are exempt
@@ -92,39 +91,39 @@ from the rules on direct `Mathlib` and `FormalConjecturesForMathlib` imports.
 -/
 def checkImports (header : HeaderSyntax) (isFormalConjecturesModule : Bool := true)
     (firstCmdStx : Syntax := .missing) : CommandElabM Unit := do
-  let imports := getImports header
+  let imports := headerToImportRefs header
   for imp in imports do
-    let modName := imp.id.getId
+    let modName := imp.module
     if imp.isMeta then
       if modName ∈ [`FormalConjecturesUtil, `FormalConjecturesForMathlib, `Mathlib] then
-        Linter.logLintIf linter.style.imports imp.id
+        Linter.logLintIf linter.style.imports imp.getIdent
           m!"'meta import {modName}' loads the compiled code of the whole library. \
              Instead, 'meta import' only the module defining the declaration that is evaluated \
              (for example by 'native_decide')."
       continue
     if modName == `Mathlib || modName.getRoot == `Mathlib then
-      Linter.logLintIf linter.style.imports imp.id
+      Linter.logLintIf linter.style.imports imp.getIdent
         m!"Direct imports from 'Mathlib' (such as '{modName}') are disallowed in 'FormalConjectures'. \
            Use 'import FormalConjecturesUtil' instead."
     if modName == `FormalConjecturesForMathlib || modName.getRoot == `FormalConjecturesForMathlib then
-      Linter.logLintIf linter.style.imports imp.id
+      Linter.logLintIf linter.style.imports imp.getIdent
         m!"Direct imports from 'FormalConjecturesForMathlib' (such as '{modName}') are disallowed in 'FormalConjectures'. \
            Use 'import FormalConjecturesUtil' instead."
 
   if isFormalConjecturesModule then
-    let targetStx := imports[0]?.map (·.id) |>.getD firstCmdStx
+    let targetStx := imports[0]?.map (·.getIdent.raw) |>.getD firstCmdStx
     unless header.isModule do
       Linter.logLintIf linter.style.imports targetStx
         "Files in 'FormalConjectures' must be modules. Add 'module' before the imports, use \
          'public import FormalConjecturesUtil', and add '@[expose] public section' after the \
          module docstring."
-    match imports.find? fun imp ↦ !imp.isMeta && imp.id.getId == `FormalConjecturesUtil with
+    match imports.find? fun imp ↦ !imp.isMeta && imp.module == `FormalConjecturesUtil with
     | none =>
       Linter.logLintIf linter.style.imports targetStx
         "Files in 'FormalConjectures' must import 'FormalConjecturesUtil'."
     | some util =>
-      if header.isModule && !util.isPublic then
-        Linter.logLintIf linter.style.imports util.id
+      if !util.isExported then
+        Linter.logLintIf linter.style.imports util.getIdent
           "Use 'public import FormalConjecturesUtil'. In a module, a plain 'import' is private, \
            so the statements of public declarations cannot use it."
 
