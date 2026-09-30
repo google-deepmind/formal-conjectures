@@ -109,6 +109,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import FormalConjecturesForMathlib.Computability.Complexity
+public import FormalConjecturesForMathlib.Computability.ComputableReal
 public import FormalConjecturesForMathlib.Computability.DFA
 public import FormalConjecturesForMathlib.Computability.Primrec
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
