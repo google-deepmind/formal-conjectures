@@ -87,10 +87,10 @@ TODO: use `SeparableClosure K` for the coefficient field when the API for absolu
 supports this directly. The automorphism group of the algebraic closure itself gives the usual
 absolute Galois group by restriction to the separable closure. -/
 noncomputable def galoisRepresentation : TopRep ℤ <| Field.absoluteGaloisGroup K := .of <|
-  .ofMonoidHom { toFun σ := { __ := (Affine.Point.map (W' := W) σ.toAlgHom).toIntLinearMap
-                              cont := continuous_of_discreteTopology }
-                 map_one' := by ext P; cases P <;> rfl
-                 map_mul' _ _ := by ext P; cases P <;> rfl }
+  .ofMonoidHom {
+    toFun σ := { __ := (Affine.Point.map (W' := W) σ.toAlgHom).toIntLinearMap }
+    map_one' := by ext; simp
+    map_mul' σ τ := by ext; simp [ContinuousLinearMap.mk_apply _, Point.map_map] }
 
 /-- The subgroup of the first continuous Galois cohomology group consisting of classes whose
 restrictions vanish at every infinite and finite place. When `W.IsElliptic`, this is the classical
