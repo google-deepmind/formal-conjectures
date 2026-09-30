@@ -42,6 +42,28 @@ points over the separable closure of `K`, with its action restricted to each loc
 
 @[expose] public section
 
+@[simp]
+lemma Field.absoluteGaloisGroup.one_toAlgHom {K : Type*} [Field K] :
+    (1 : Field.absoluteGaloisGroup K).toAlgHom = AlgHom.id K (AlgebraicClosure K) := rfl
+
+@[simp]
+lemma Field.absoluteGaloisGroup.mul_toAlgHom {K : Type*} [Field K]
+    (σ τ : Field.absoluteGaloisGroup K) :
+    (σ * τ).toAlgHom = σ.toAlgHom.comp τ.toAlgHom := rfl
+
+@[simp]
+lemma WeierstrassCurve.Affine.Point.map_id' {R S F : Type*} [CommRing R] [CommRing S]
+    [Field F] {W' : WeierstrassCurve.Affine R} [DecidableEq F] [Algebra R S] [Algebra R F]
+    [Algebra S F] [IsScalarTower R S F] (P : (W'.baseChange F).Point) :
+    WeierstrassCurve.Affine.Point.map (AlgHom.id S F) P = P := by
+  cases P <;> rfl
+
+lemma ContinuousLinearMap.mk_apply {R S M M₂ : Type*} [Semiring R] [Semiring S]
+    {σ : R →+* S} [TopologicalSpace M] [AddCommMonoid M] [TopologicalSpace M₂]
+    [AddCommMonoid M₂] [Module R M] [Module S M₂] (toLinearMap : M →ₛₗ[σ] M₂)
+    (cont : Continuous toLinearMap.toFun) (m : M) :
+    ContinuousLinearMap.mk toLinearMap cont m = toLinearMap m := rfl
+
 namespace WeierstrassCurve.Affine
 
 open ContinuousCohomology IsDedekindDomain NumberField
