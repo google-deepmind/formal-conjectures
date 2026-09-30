@@ -83,14 +83,18 @@ def HasLipschitzBoundary (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))) : Prop :=
         ∀ x ∈ U, x ∈ Ω ↔ (σ x) (Fin.last N) <
           g ((WithLp.equiv 2 (Fin N → ℝ)).symm (fun i : Fin N => (σ x) i.castSucc))
 
-/-- The domain hypotheses of Pompeiu's problem: `Ω` is bounded, open, connected (a "domain"),
-simply connected, and has Lipschitz boundary. -/
+/-- The domain hypotheses of Pompeiu's problem: $\Omega$ is bounded, open, connected (a "domain"),
+simply connected, has Lipschitz boundary, and for $N \ge 2$ the complement of its closure is
+connected.
+For $N = 1$, connectedness of $(\overline{\Omega})^c$ follows from simple connectivity. -/
 structure IsAdmissibleDomain (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))) : Prop where
-  bounded            : Bornology.IsBounded Ω
-  isOpen             : IsOpen Ω
-  connected          : IsConnected Ω
-  simplyConnected    : SimplyConnectedSpace Ω
-  lipschitzBoundary  : HasLipschitzBoundary Ω
+  bounded                : Bornology.IsBounded Ω
+  isOpen                 : IsOpen Ω
+  connected              : IsConnected Ω
+  simplyConnected        : SimplyConnectedSpace Ω
+  -- For `N = 1`, `IsConnected (closure Ω)ᶜ` already follows from `simplyConnected`.
+  connectedComplClosure  : 2 ≤ N → IsConnected (closure Ω)ᶜ
+  lipschitzBoundary      : HasLipschitzBoundary Ω
 
 /--
 **Pompeiu's conjecture is false.** There is a bounded, simply connected Lipschitz domain in
@@ -102,7 +106,7 @@ has two independent proofs: the Lean-formalized construction of Cao-Labora and d
   formal_proof using lean4 at
     "https://github.com/jaumededios/Schiffer/blob/2938e277969c329caf154e48a3d8823f3635c7f1/Schiffer/FormalConjecturesSolution.lean#L446-L469"]
 theorem pompeiu_conjecture :
-    ¬ ∀ (N : ℕ) (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))),
+    ¬ ∀ Ω : Set (EuclideanSpace ℝ (Fin 2)),
       IsAdmissibleDomain Ω → (¬ HasPompeiuProperty Ω ↔ IsBall Ω) := by
   sorry
 
@@ -126,7 +130,7 @@ Pompeiu property without being a ball. Two independent proofs are given in [CLD2
   formal_proof using lean4 at
     "https://github.com/jaumededios/Schiffer/blob/2938e277969c329caf154e48a3d8823f3635c7f1/Schiffer/FormalConjecturesSolution.lean#L446-L469"]
 theorem not_hasPompeiuProperty_imp_ball :
-    ¬ ∀ (N : ℕ) (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))),
+    ¬ ∀ Ω : Set (EuclideanSpace ℝ (Fin 2)),
       IsAdmissibleDomain Ω → ¬ HasPompeiuProperty Ω → IsBall Ω := by
   sorry
 
