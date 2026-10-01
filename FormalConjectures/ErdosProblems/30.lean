@@ -81,7 +81,8 @@ theorem erdos_30.variants.erdos_turan :
 The proofs of Erdős–Turán [ErTu41] and Lindström [Li69] in fact give, for all $N$,
 $h(N) \le N^{1/2} + N^{1/4} + 1$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at "https://github.com/MendozaLab/formal-conjectures/blob/3343a9cfe688e89b36deb00aa0c74d35a88ba400/FormalConjecturesForMathlib/Combinatorics/Sidon/Lindstrom.lean"]
 theorem erdos_30.variants.lindstrom (N : ℕ) :
     (h N : ℝ) ≤ (N : ℝ).sqrt + (N : ℝ) ^ (4⁻¹ : ℝ) + 1 := by
   sorry
