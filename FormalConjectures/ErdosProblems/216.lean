@@ -77,7 +77,7 @@ theorem erdos_216 : (∀ k ≥ 3, (cardSet k).Nonempty) ↔ answer(False) := by
 theorem empty_zero (P : Set ℝ²) : HasEmptyConvexNGon 0 P := by
   refine ⟨∅, by simp, by simp, ?_, ?_⟩
   · intro a ha
-    exact ha.elim
+    cases ha
   · intro p hp
     simp [convexHull_empty]
 
