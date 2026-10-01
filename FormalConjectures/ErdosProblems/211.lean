@@ -1,16 +1,22 @@
 /-
 Copyright 2026 The Formal Conjectures Authors.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     https://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib
+module
+
+public import Mathlib
+public import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 211
@@ -24,20 +30,14 @@ implication to the quadratic special case below have complete proofs.
 -/
 
 
-namespace EuclideanGeometry
-
-scoped notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
-
-/-- An affine line has a one-dimensional direction. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
-
-end EuclideanGeometry
+@[expose] public section
 
 namespace Erdos211
 
 open EuclideanGeometry Filter
-open scoped Classical
+
+noncomputable local instance (L : AffineSubspace ℝ ℝ²) : DecidablePred (fun p : ℝ² => p ∈ L) :=
+  Classical.decPred _
 
 /-- Distinct lines containing two distinct points of the configuration. -/
 noncomputable def determinedLines (s : Finset ℝ²) : Finset (AffineSubspace ℝ ℝ²) := by
