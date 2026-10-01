@@ -53,6 +53,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Sidon.Lindstrom
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
