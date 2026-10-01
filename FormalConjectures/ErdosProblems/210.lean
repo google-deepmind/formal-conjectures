@@ -16,6 +16,7 @@ limitations under the License.
 
 
 import Mathlib
+import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # The Sylvester–Gallai theorem
@@ -231,16 +232,6 @@ theorem exists_ordinary_line (s : Finset V) (hs : ¬ Collinear ℝ (s : Set V)) 
 
 end SylvesterGallai
 
-
-namespace EuclideanGeometry
-
-scoped notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
-
-/-- An affine line is an affine subspace with a one-dimensional direction. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
-
-end EuclideanGeometry
 
 /-!
 # Erdős Problem 210
