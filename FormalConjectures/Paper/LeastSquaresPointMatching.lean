@@ -17,7 +17,7 @@ limitations under the License.
 import FormalConjecturesUtil
 
 /-!
-# The number of least-squares matchings under rotations is polynomially bounded
+# The number of least-squares partial matchings under translations is polynomially bounded
 
 *References:* Günter Rote: Partial least-squares point matching under translations.
 In: 26th European Workshop on Computational Geometry (EuroCG'10), Dortmund, March 2010, pp. 249–251,
