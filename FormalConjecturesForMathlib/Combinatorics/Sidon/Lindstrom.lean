@@ -26,10 +26,10 @@ public import Mathlib.Order.Interval.Finset.Nat
 # Lindström's upper bound for Sidon sets
 
 For a Sidon set $A \subseteq \{1, \dots, N\}$ with $k = |A|$ and a window length
-$1 \le m \le k - 1$, the $M = \sum_{\ell=1}^{m} (k - \ell)$ differences $a_{i+\ell} - a_i$ are pairwise distinct positive
-integers (so their sum is at least $M(M+1)/2$) and, by telescoping, their sum is at most
-$(N-1) m (m+1) / 2$. Choosing $m = \lceil N^{1/4} \rceil$ gives Lindström's bound
-$k \le \sqrt N + N^{1/4} + 1$.
+$1 \le m \le k - 1$, the $M = \sum_{\ell=1}^{m} (k - \ell)$ differences $a_{i+\ell} - a_i$ are
+pairwise distinct positive integers (so their sum is at least $M(M+1)/2$) and, by telescoping,
+their sum is at most $(N-1) m (m+1) / 2$. Choosing $m = \lceil N^{1/4} \rceil$ gives Lindström's
+bound $k \le \sqrt N + N^{1/4} + 1$.
 
 *References:*
 - [ErTu41] Erdős, P. and Turán, P., *On a problem of Sidon in additive number theory, and on
