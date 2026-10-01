@@ -36,9 +36,14 @@ $$
 $$
 Here two intervals are adjacent if their union is again an interval, so any two of the
 $I_i$ must be separated by at least one integer.
+
+This is true: an informal proof was found by our UCLA collaborators and formalized in Lean 4
+by the LEAP Antigravity prover agent (see the linked `formal_proof`).
 -/
-@[category research open, AMS 11]
-theorem erdos_289 : answer(sorry) ↔
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/289.lean#L9514"]
+theorem erdos_289 : answer(True) ↔
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
     (∀ i, (I i).1 < (I i).2) ∧
     (∀ i j, i ≠ j → (I i).2 + 1 < (I j).1 ∨ (I j).2 + 1 < (I i).1) ∧
