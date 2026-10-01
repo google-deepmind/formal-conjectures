@@ -31,6 +31,11 @@ increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ 
 
 [ErPr61] Erdős, P. and Prachar, K., _Sätze und Probleme über pₖ/k_. Abh. Math. Sem. Univ. Hamburg
 (1961/62), 251–256.
+
+[FMT18] Ford, K. and Maynard, J. and Tao, T., _Chains of large gaps between primes_. Irregularities
+in the distribution of prime numbers, Springer (2018), 1–21.
+
+[Ma15] Maynard, J., _Small gaps between primes_. Ann. of Math. (2015), 383–413.
 -/
 
 @[expose] public section
@@ -80,18 +85,27 @@ theorem erdos_968.variants.decreasing_steps_pos_lower_density :
 
 /--
 Erdős asked whether there are infinitely many solutions to `uₙ < uₙ₊₁ < uₙ₊₂`.
+
+The answer is yes. Since `uₙ < uₙ₊₁` is equivalent to `pₙ₊₁ - pₙ > pₙ / n`, it suffices to have
+infinitely many `n` with two consecutive prime gaps larger than `pₙ / n ∼ log n`. Ford, Maynard,
+and Tao [FMT18] proved that for every fixed `k` there are infinitely many `n` with `k` consecutive
+prime gaps all of size `≫ log pₙ · log log pₙ · log log log log pₙ / log log log pₙ`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_968.variants.infinite_increasingTriples :
-    answer(sorry) ↔ {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
+    answer(True) ↔ {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
   sorry
 
 /--
 Erdős asked whether there are infinitely many solutions to `uₙ > uₙ₊₁ > uₙ₊₂`.
+
+The answer is yes. Since `uₙ > uₙ₊₁` is equivalent to `pₙ₊₁ - pₙ < pₙ / n`, it suffices to have
+infinitely many `n` with `pₙ₊₂ - pₙ` bounded, because `pₙ / n → ∞`. Maynard [Ma15] proved that
+`liminf (pₙ₊₂ - pₙ) < ∞`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_968.variants.infinite_decreasingTriples :
-    answer(sorry) ↔ {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
+    answer(True) ↔ {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
   sorry
 
 end Erdos968
