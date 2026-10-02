@@ -154,7 +154,7 @@ theorem tendsto_maxTerm_div_maxModulus_polynomial (p : ℂ[X]) (hp : p ≠ 0) :
         have h0 : Tendsto (fun r : ℝ =>
             ∑ k ∈ Finset.range d, ‖p.coeff k‖ / c * (r⁻¹) ^ (d - k)) atTop (𝓝 0) := by
           rw [show (0 : ℝ) = ∑ k ∈ Finset.range d, ‖p.coeff k‖ / c * 0 by simp]
-          refine tendsto_finset_sum _ fun k hk => ?_
+          refine tendsto_finsetSum _ fun k hk => ?_
           refine Tendsto.const_mul _ ?_
           have hk : 0 < d - k := Nat.sub_pos_of_lt (Finset.mem_range.mp hk)
           have := (tendsto_inv_atTop_zero (𝕜 := ℝ)).pow (d - k)
