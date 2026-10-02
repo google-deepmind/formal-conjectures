@@ -36,7 +36,7 @@ namespace Erdos235
 /-- The product of the first `k + 1` primes.
 On [erdosproblems.com/235](https://www.erdosproblems.com/235) this is $N_{k+1}=2\cdot 3\cdots p_{k+1}$.
 The limit as $k\to\infty$ is the same for either indexing. -/
-def N (k : ℕ) : ℕ :=
+noncomputable def N (k : ℕ) : ℕ :=
   primorial (Nat.nth Nat.Prime k)
 
 /-- The increasing list of integers `< n` that are coprime to `n`. -/
