@@ -99,7 +99,7 @@ lemma a_3 : a 3 = 3 := by
   · intro k hk
     simp only [Set.mem_ofPred_eq] at hk
     by_contra hlt
-    push_neg at hlt
+    push Not at hlt
     interval_cases k <;> exact absurd hk (by decide)
 
 @[category test, AMS 11]
@@ -116,7 +116,7 @@ lemma a_4 : a 4 = 4 := by
     · intro b hb
       simp only [Set.mem_ofPred_eq] at hb
       by_contra hb4
-      push_neg at hb4
+      push Not at hb4
       interval_cases b <;> exact absurd hb (by decide)
 
 @[category test, AMS 11]
@@ -125,7 +125,7 @@ lemma a_5 : a 5 = 6 := by
     intro s h6 hlt
     refine le_antisymm (Nat.sInf_le h6) ?_
     by_contra h
-    push_neg at h
+    push Not at h
     exact hlt _ h (Nat.sInf_mem ⟨6, h6⟩)
   unfold a
   norm_num
