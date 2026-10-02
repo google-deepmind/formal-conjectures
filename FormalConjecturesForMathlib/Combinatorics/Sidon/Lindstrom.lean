@@ -124,6 +124,14 @@ theorem sum_window_diff_le {a : ℕ → ℕ} {N k : ℕ} (hmono : ∀ i j, i < j
   rw [add_comm ℓ n] at h2
   omega
 
+/-- In a Sidon set, a positive difference determines its endpoints: if `a₁ - b₁ = a₂ - b₂` with
+`b₁ < a₁` and `b₂ < a₂`, then `a₁ = a₂` and `b₁ = b₂`. -/
+theorem IsSidon.eq_of_sub_eq {A : Finset ℕ} (hS : IsSidon (A : Set ℕ))
+    {a₁ b₁ a₂ b₂ : ℕ} (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
+    (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂) (heq : a₁ - b₁ = a₂ - b₂) :
+    a₁ = a₂ ∧ b₁ = b₂ := by
+  rcases hS a₁ ha₁ a₂ ha₂ b₂ hb₂ b₁ hb₁ (by omega) with h | h <;> omega
+
 /-- The counting step, in terms of an explicit enumeration `a` of `k` elements of the Sidon set. -/
 theorem IsSidon.lindstrom_count_of_enum {A : Finset ℕ} (hS : IsSidon (A : Set ℕ)) {N k : ℕ}
     {a : ℕ → ℕ} (hmem : ∀ i < k, a i ∈ A) (hmono : ∀ i j, i < j → j < k → a i < a j)
@@ -147,7 +155,7 @@ theorem IsSidon.lindstrom_count_of_enum {A : Finset ℕ} (hS : IsSidon (A : Set 
     simp only at h1 h2 h3 h1' h2' h3'
     have hlt : a i < a (i + ℓ) := hmono _ _ (by omega) h3
     have hlt' : a i' < a (i' + ℓ') := hmono _ _ (by omega) h3'
-    obtain ⟨e1, e2⟩ := sidon_diff_injective hS (hmem _ h3) (hmem _ (by omega)) (hmem _ h3')
+    obtain ⟨e1, e2⟩ := IsSidon.eq_of_sub_eq hS (hmem _ h3) (hmem _ (by omega)) (hmem _ h3')
       (hmem _ (by omega)) hlt hlt' heq
     have := hinj _ _ h3 h3' e1
     have := hinj _ _ (by omega) (by omega) e2
@@ -191,7 +199,7 @@ end Finset
 
 
 /-- Real form of the counting inequality: `(k - (m + 1) / 2) ^ 2 * m ≤ (m + 1) * N`. -/
-lemma lindstrom_sq_bound {k m N : ℕ} (hm : 1 ≤ m) (hmk : m + 1 ≤ k)
+lemma Finset.lindstrom_sq_bound {k m N : ℕ} (hm : 1 ≤ m) (hmk : m + 1 ≤ k)
     (h : (∑ ℓ ∈ Finset.Icc 1 m, (k - ℓ)) * ((∑ ℓ ∈ Finset.Icc 1 m, (k - ℓ)) + 1) ≤
       m * (m + 1) * (N - 1)) :
     ((k : ℝ) - (m + 1) / 2) ^ 2 * m ≤ (m + 1) * N := by
@@ -214,7 +222,7 @@ lemma lindstrom_sq_bound {k m N : ℕ} (hm : 1 ≤ m) (hmk : m + 1 ≤ k)
 
 /-- L2 (real bounding step): from the integer inequality for every admissible `m`, derive the
 real bound `k ≤ √N + N ^ (1 / 4) + 1`. -/
-theorem lindstrom_real_of_count {k N : ℕ}
+theorem Finset.lindstrom_real_of_count {k N : ℕ}
     (h : ∀ m, 1 ≤ m → m + 1 ≤ k →
       (∑ ℓ ∈ Finset.Icc 1 m, (k - ℓ)) * ((∑ ℓ ∈ Finset.Icc 1 m, (k - ℓ)) + 1) ≤
         m * (m + 1) * (N - 1)) :
