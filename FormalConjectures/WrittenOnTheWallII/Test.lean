@@ -318,8 +318,104 @@ theorem petersen_radius : radius PetersenGraph = 2 := by
   exact_mod_cast (by decide +kernel : computable_radius PetersenGraph = 2)
 
 @[category test, AMS 5]
-theorem petersen_girth : PetersenGraph.girth = 5 := by
-  sorry
+theorem petersen_girth : PetersenGraph.girth = 5  := by
+  have hex : ∃ (w : PetersenGraph.Walk 0 0), w.IsCycle ∧ w.length = 5 := by
+    refine ⟨Walk.cons (show PetersenGraph.Adj 0 1 from by decide)
+        (Walk.cons (show PetersenGraph.Adj 1 2 from by decide)
+          (Walk.cons (show PetersenGraph.Adj 2 3 from by decide)
+            (Walk.cons (show PetersenGraph.Adj 3 4 from by decide)
+              (Walk.cons (show PetersenGraph.Adj 4 0 from by decide) Walk.nil)))), ?_⟩
+    refine ⟨?_, ?_⟩
+    · rw [Walk.isCycle_def]
+      refine ⟨?_, ?_, ?_⟩
+      · rw [Walk.isTrail_def]
+        decide
+      · simp
+      · decide
+    · rfl
+  obtain ⟨hw5, hcyc, hl5⟩ := hex
+  have T3 : ∀ a b c : Fin 10,
+      ¬ (PetersenGraph.Adj a b ∧ PetersenGraph.Adj b c ∧ PetersenGraph.Adj c a ∧ b ≠ c) := by
+    have h : ((List.finRange 10).all (fun a : Fin 10 => (List.finRange 10).all (fun b : Fin 10 =>
+        (List.finRange 10).all (fun c : Fin 10 => !(PetersenGraph.Adj a b && PetersenGraph.Adj b c && PetersenGraph.Adj c a && !(b == c))))) = true) := by
+      decide
+    intro a b c h'
+    rcases h' with ⟨e1, e2, e3, e4⟩
+    have hb := List.all_eq_true.mp h a (List.mem_finRange a)
+    have hb' := List.all_eq_true.mp hb b (List.mem_finRange b)
+    have hb'' := List.all_eq_true.mp hb' c (List.mem_finRange c)
+    have hbc : (!(b == c)) = true := by simp [e4]
+    have hx : (decide (PetersenGraph.Adj a b) && decide (PetersenGraph.Adj b c) && decide (PetersenGraph.Adj c a) && !(b == c)) = true := by
+      rw [decide_eq_true e1, decide_eq_true e2, decide_eq_true e3, hbc]
+      rfl
+    rw [hx] at hb''
+    simp at hb''
+  have T4 : ∀ a b c d : Fin 10,
+      ¬ (PetersenGraph.Adj a b ∧ PetersenGraph.Adj b c ∧ PetersenGraph.Adj c d ∧
+         PetersenGraph.Adj d a ∧ b ≠ d ∧ a ≠ c) := by
+    have h : ((List.finRange 10).all (fun a : Fin 10 => (List.finRange 10).all (fun b : Fin 10 =>
+        (List.finRange 10).all (fun c : Fin 10 => (List.finRange 10).all (fun d : Fin 10 =>
+          !(PetersenGraph.Adj a b && PetersenGraph.Adj b c && PetersenGraph.Adj c d && PetersenGraph.Adj d a && !(b == d) && !(a == c)))))) = true) := by
+      decide
+    intro a b c d h'
+    rcases h' with ⟨e1, e2, e3, e4, e5, e6⟩
+    have hb := List.all_eq_true.mp h a (List.mem_finRange a)
+    have hb' := List.all_eq_true.mp hb b (List.mem_finRange b)
+    have hb'' := List.all_eq_true.mp hb' c (List.mem_finRange c)
+    have hb3 := List.all_eq_true.mp hb'' d (List.mem_finRange d)
+    have hbd : (!(b == d)) = true := by simp [e5]
+    have hac : (!(a == c)) = true := by simp [e6]
+    have hx : (decide (PetersenGraph.Adj a b) && decide (PetersenGraph.Adj b c) && decide (PetersenGraph.Adj c d) && decide (PetersenGraph.Adj d a) && !(b == d) && !(a == c)) = true := by
+      rw [decide_eq_true e1, decide_eq_true e2, decide_eq_true e3, decide_eq_true e4, hbd, hac]
+      rfl
+    rw [hx] at hb3
+    simp at hb3
+  have E : ∀ a : Fin 10, ∀ w : PetersenGraph.Walk a a, w.IsCycle → 5 ≤ w.length := by
+    intro a w hw
+    have h3 := hw.three_le_length
+    by_contra hlt
+    push Not at hlt
+    have hlr : w.length = 3 ∨ w.length = 4 := by omega
+    rcases hlr with hlen | hlen
+    · cases w with
+      | nil => simp at hlen
+      | cons e1 w1 =>
+        cases w1 with
+        | nil => simp at hlen
+        | cons e2 w2 =>
+          cases w2 with
+          | nil => simp at hlen
+          | cons e3 w3 =>
+            cases w3 with
+            | cons e4 w4 => simp at hlen
+            | nil =>
+              have hnd := hw.2
+              simp [Walk.support_cons, Walk.support_nil] at hnd
+              exact T3 a _ _ ⟨e1, e2, e3, fun h => by subst h; simp at hnd⟩
+    · cases w with
+      | nil => simp at hlen
+      | cons e1 w1 =>
+        cases w1 with
+        | nil => simp at hlen
+        | cons e2 w2 =>
+          cases w2 with
+          | nil => simp at hlen
+          | cons e3 w3 =>
+            cases w3 with
+            | nil => simp at hlen
+            | cons e4 w4 =>
+              cases w4 with
+              | cons e5 w5 => simp at hlen
+              | nil =>
+                have hnd := hw.2
+                simp [Walk.support_cons, Walk.support_nil] at hnd
+                exact T4 a _ _ _ ⟨e1, e2, e3, e4, fun h => by subst h; simp at hnd, fun h => by subst h; simp at hnd⟩
+  have hne : ¬ PetersenGraph.IsAcyclic := fun ha => ha hw5 hcyc
+  obtain ⟨a, w, hw, hgl⟩ := exists_girth_eq_length.mpr hne
+  refine le_antisymm ?_ ?_
+  · simpa only [hl5] using girth_le_length hcyc
+  · rw [hgl]
+    exact E a w hw
 
 open scoped Classical in
 @[category test, AMS 5]
@@ -425,8 +521,88 @@ theorem C6_radius : radius C6 = 3 := by
   exact_mod_cast (by decide +kernel : computable_radius C6 = 3)
 
 @[category test, AMS 5]
-theorem C6_girth : C6.girth = 6 := by
-  sorry
+theorem C6_girth : C6.girth = 6  := by
+  have hex : ∃ (w : C6.Walk 0 0), w.IsCycle ∧ w.length = 6 := by
+    refine ⟨Walk.cons (show C6.Adj 0 1 from by decide)
+      (Walk.cons (show C6.Adj 1 2 from by decide)
+        (Walk.cons (show C6.Adj 2 3 from by decide)
+          (Walk.cons (show C6.Adj 3 4 from by decide)
+            (Walk.cons (show C6.Adj 4 5 from by decide)
+              (Walk.cons (show C6.Adj 5 0 from by decide) Walk.nil))))), ?_⟩
+    refine ⟨?_, ?_⟩
+    · rw [Walk.isCycle_def]
+      refine ⟨?_, ?_, ?_⟩
+      · rw [Walk.isTrail_def]
+        decide
+      · simp
+      · decide
+    · rfl
+  obtain ⟨hw6, hcyc, hl6⟩ := hex
+  have A : ∀ u v : Fin 6, C6.Adj u v ↔ (v.val = (u.val + 1) % 6 ∨ v.val = (u.val + 5) % 6) := by
+    intro u v
+    have h1 := u.isLt
+    have h2 := v.isLt
+    simp only [C6, cycleGraph_adj', Fin.sub_def]
+    omega
+  have B : ∀ u v : Fin 6, C6.Adj u v → u.val % 2 ≠ v.val % 2 := by
+    intro u v h
+    have h1 := u.isLt
+    have h2 := v.isLt
+    rcases (A u v).mp h with e | e <;> omega
+  have C : ∀ a b : Fin 6, ∀ w : C6.Walk a b, (a.val + b.val + w.length) % 2 = 0 := by
+    intro a b w
+    induction w with
+    | nil => simp only [Walk.length_nil]; omega
+    | cons h rest ih =>
+      have hp := B _ _ h
+      simp only [Walk.length_cons]
+      omega
+  have D : ∀ a b c d : Fin 6, b ≠ d → a ≠ c →
+      ¬ (C6.Adj a b ∧ C6.Adj b c ∧ C6.Adj c d ∧ C6.Adj d a) := by
+    intro a b c d hbd hac h
+    rcases h with ⟨e1, e2, e3, e4⟩
+    have h1 := a.isLt
+    have h2 := b.isLt
+    have h3 := c.isLt
+    have h4 := d.isLt
+    have hb : b.val ≠ d.val := fun e => hbd (Fin.ext e)
+    have hc : a.val ≠ c.val := fun e => hac (Fin.ext e)
+    rcases (A a b).mp e1 with f1 | f1 <;>
+    rcases (A d a).mp e4 with f2 | f2 <;>
+    rcases (A b c).mp e2 with f3 | f3 <;>
+    rcases (A c d).mp e3 with f4 | f4 <;>
+    omega
+  have E : ∀ a : Fin 6, ∀ w : C6.Walk a a, w.IsCycle → 6 ≤ w.length := by
+    intro a w hw
+    have h3 := hw.three_le_length
+    have hev := C a a w
+    by_contra hlt
+    push Not at hlt
+    have hlen : w.length = 4 := by omega
+    cases w with
+    | nil => simp at hlen
+    | cons e1 w1 =>
+      cases w1 with
+      | nil => simp at hlen
+      | cons e2 w2 =>
+        cases w2 with
+        | nil => simp at hlen
+        | cons e3 w3 =>
+          cases w3 with
+          | nil => simp at hlen
+          | cons e4 w4 =>
+            cases w4 with
+            | cons e5 w5 => simp at hlen
+            | nil =>
+              have hnd := hw.2
+              simp [Walk.support_cons, Walk.support_nil] at hnd
+              exact D a _ _ _ (fun h => by subst h; simp at hnd) (fun h => by subst h; simp at hnd) ⟨e1, e2, e3, e4⟩
+  have hne : ¬ C6.IsAcyclic := fun ha => ha hw6 hcyc
+  obtain ⟨a, w, hw, hgl⟩ := exists_girth_eq_length.mpr hne
+  refine le_antisymm ?_ ?_
+  · simpa only [hl6] using girth_le_length hcyc
+  · rw [hgl]
+    exact E a w hw
 
 open scoped Classical in
 @[category test, AMS 5]
