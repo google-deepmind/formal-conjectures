@@ -53,7 +53,7 @@ noncomputable def sumTwoSq (k : ℕ) : ℕ := Nat.nth IsSumTwoSq k
 
 lemma isSumTwoSq_zero : IsSumTwoSq 0 := ⟨0, 0, by simp⟩
 
-lemma infinite_setOf_isSumTwoSq : (setOf IsSumTwoSq).Infinite :=
+lemma infinite_setOf_isSumTwoSq : (Set.ofPred IsSumTwoSq).Infinite :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => n ^ 2)
     (Nat.pow_left_injective two_ne_zero) fun n => ⟨n, 0, by simp⟩
 
@@ -147,7 +147,7 @@ theorem sumTwoSq_gap_isBigO :
 /-- If a prime `p ≡ 3 (mod 4)` divides `n` exactly once, then `n` is not a sum of two squares. -/
 lemma not_isSumTwoSq_of_modEq {p n : ℕ} (hp : p.Prime) (hp4 : p % 4 = 3)
     (hn : n ≡ p [MOD p ^ 2]) : ¬ IsSumTwoSq n := by
-  haveI := Fact.mk hp
+  have := Fact.mk hp
   have hp2 : p < p ^ 2 := by
     have := hp.two_le
     nlinarith
@@ -175,7 +175,7 @@ lemma not_isSumTwoSq_of_modEq {p n : ℕ} (hp : p.Prime) (hp4 : p % 4 = 3)
 /-- The set of primes congruent to `3` modulo `4`. -/
 lemma infinite_setOf_prime_mod_four_eq_three :
     {p : ℕ | p.Prime ∧ (p : ZMod 4) = 3}.Infinite :=
-  Nat.infinite_setOf_prime_and_eq_mod (by decide)
+  Nat.infinite_setOfPred_prime_and_eq_mod (by decide)
 
 /-- For every `L` there is `N` such that none of `N, N + 1, …, N + L - 1` is a sum of
 two squares. -/
