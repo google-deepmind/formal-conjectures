@@ -47,6 +47,8 @@ particular, this holds for numbers that are normal in base $b$.
 * `Real.baseEntropy_le`: the entropy of a base `b` expansion is at most `log b`.
 * `NormalNumber.IsRichInBase.baseEntropy_eq`, `NormalNumber.IsNormalInBase.baseEntropy_eq`:
   rich and normal numbers have entropy `log b`.
+* `NormalNumber.IsRichInBase.not_isEventuallyPeriodic`: the expansion of a rich number is not
+  eventually periodic.
 -/
 
 @[expose] public section
@@ -142,5 +144,20 @@ theorem IsRichInBase.baseEntropy_eq {b : ℕ} (hb : 1 ≤ b) {ξ : ℝ} (h : IsR
 theorem IsNormalInBase.baseEntropy_eq {b : ℕ} (hb : 1 ≤ b) {ξ : ℝ} (h : IsNormalInBase b ξ) :
     Real.baseEntropy b ξ = (Real.log b : EReal) :=
   h.isRichInBase.baseEntropy_eq hb
+
+/-- The base-$b$ expansion of a number that is rich in base $b \ge 2$ is not eventually
+periodic. -/
+theorem IsRichInBase.not_isEventuallyPeriodic {b : ℕ} (hb : 2 ≤ b) {ξ : ℝ}
+    (h : IsRichInBase b ξ) : ¬ IsEventuallyPeriodic (digitSeq b ξ) := fun hp ↦ by
+  obtain ⟨C, -, hC⟩ := hp.blockComplexity_le
+  have := hC C
+  rw [(isRichInBase_iff_blockComplexity (by omega) ξ).1 h C] at this
+  exact this.not_gt (by exact_mod_cast Nat.lt_pow_self (by omega))
+
+/-- The base-$b$ expansion of a number that is normal in base $b \ge 2$ is not eventually
+periodic. -/
+theorem IsNormalInBase.not_isEventuallyPeriodic {b : ℕ} (hb : 2 ≤ b) {ξ : ℝ}
+    (h : IsNormalInBase b ξ) : ¬ IsEventuallyPeriodic (digitSeq b ξ) :=
+  h.isRichInBase.not_isEventuallyPeriodic hb
 
 end NormalNumber
