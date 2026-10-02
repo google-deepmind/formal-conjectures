@@ -224,13 +224,13 @@ def AsymptoticFormula : Prop :=
 /-- Ceiling(n / p) for natural inputs with p > 0 in every intended use. -/
 def ceilDiv (n p : ℕ) : ℕ := (n + p - 1) / p
 
-/-- Swanepoel's Corollary 3: the eventual exact values, using Mathlib's Turán number. -/
+/-- Swanepoel's Corollary 3: the eventual exact values, counting edges in Mathlib's Turán graph. -/
 def exactValue (d n : ℕ) : ℕ :=
   if d = 4 then
-    SimpleGraph.turanNumber n 2 + ceilDiv n 2 + (if n % 4 = 3 then 0 else 1)
-  else if d = 5 then SimpleGraph.turanNumber n 2 + n
-  else if d % 2 = 0 then SimpleGraph.turanNumber n (d / 2) + d / 2
-  else SimpleGraph.turanNumber n (d / 2) + ceilDiv n (d / 2) + d / 2 - 1
+    (SimpleGraph.turanGraph n 2).edgeFinset.card + ceilDiv n 2 + (if n % 4 = 3 then 0 else 1)
+  else if d = 5 then (SimpleGraph.turanGraph n 2).edgeFinset.card + n
+  else if d % 2 = 0 then (SimpleGraph.turanGraph n (d / 2)).edgeFinset.card + d / 2
+  else (SimpleGraph.turanGraph n (d / 2)).edgeFinset.card + ceilDiv n (d / 2) + d / 2 - 1
 
 /-- The threshold can depend on dimension; no uniform threshold is claimed. -/
 def EventualExactFormula : Prop :=
