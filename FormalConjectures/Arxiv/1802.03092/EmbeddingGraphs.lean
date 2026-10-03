@@ -23,7 +23,11 @@ public import FormalConjecturesUtil
 N. Frankl, A. Kupavskii and K. J. Swanepoel, *Embedding graphs in Euclidean space*,
 J. Combin. Theory Ser. A 171 (2020), 105146, §5, Problem 1.
 
-*Reference:* [arxiv/1802.03092](https://arxiv.org/abs/1802.03092)
+*References:*
+- [arxiv/1802.03092](https://arxiv.org/abs/1802.03092)
+- [MS26] Mishra, A. and Senthilkumar, A., *The square of the nine-cycle answers Problem 1 of
+  Frankl, Kupavskii and Swanepoel (negatively)* (2026),
+  [anshM123/FKS-Problem-One](https://github.com/anshM123/FKS-Problem-One).
 -/
 
 @[expose] public section
@@ -103,20 +107,30 @@ $\mathbb{R}^d$?
 The exception is read componentwise. Excluding only the graph $K_{d+1}$ would leave the
 counterexample $K_{d+1} \sqcup K_1$. The paper also uses a componentwise exception in the
 preceding discussion of its Euclidean result. "Maximum degree $d$" is read as at most $d$;
-Proposition 2 already covers smaller maximum degrees. -/
-@[category research open, AMS 5 52]
+Proposition 2 already covers smaller maximum degrees.
+
+The answer is no [MS26]: the square of the nine-cycle is connected, $4$-regular and not
+$K_5$, but has no spherical representation in $\mathbb{R}^4$. Nine vertices is the smallest
+possible order of a counterexample at $d = 4$. -/
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/anshM123/FKS-Problem-One/blob/447a08006920ae77d101c35c4ccf94f0f6fa18fc/lean/DMSolutions/FKS_Problem1/Solution.lean#L22"]
 theorem problem_1 :
-    answer(sorry) ↔ ∀ d : ℕ, 3 < d → ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+    answer(False) ↔ ∀ d : ℕ, 3 < d → ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
       G.maxDegree ≤ d → ¬ HasCompleteComponent d G → HasSphericalDimAtMost d G := by
   sorry
 
 open scoped Classical in
 /-- The $d=4$ instance of Problem 1: does every finite graph of maximum degree at most $4$
 with no connected component isomorphic to $K_5$ have a spherical representation in
-$\mathbb{R}^4$? -/
-@[category research open, AMS 5 52]
+$\mathbb{R}^4$?
+
+The answer is no [MS26]: the square of the nine-cycle is a counterexample. -/
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/anshM123/FKS-Problem-One/blob/447a08006920ae77d101c35c4ccf94f0f6fa18fc/lean/DMSolutions/FKS_Problem1/Solution.lean#L29"]
 theorem problem_1.variants.dimension_four :
-    answer(sorry) ↔ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+    answer(False) ↔ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
       G.maxDegree ≤ 4 → ¬ HasCompleteComponent 4 G → HasSphericalDimAtMost 4 G := by
   sorry
 
