@@ -104,6 +104,29 @@ def checkExactlyOneCategory (a : TSyntax ``Lean.Parser.Command.declModifiers) (s
     return false
   return true
 
+/-- Whether the modifiers carry the `question` attribute. -/
+def hasQuestionAttribute (stx : TSyntax ``Command.declModifiers) : Bool :=
+  match stx with
+  | `(declModifiers| $(_)? @[$[$atts],*] $(_)? $(_)? $(_)? $(_)?) =>
+    atts.any fun att => match att with
+      | `(attrInstance | question) => true
+      | _ => false
+  | _ => false
+
+/-- Warns when a `@[question]` declaration is not categorised as `research open` or
+`research solved`. A question is something a source asked and left open at some point, so it
+belongs to a research problem, not to a textbook exercise, a test, or an API statement. -/
+def checkQuestionCategory (mods : TSyntax ``Command.declModifiers) : CommandElabM Unit := do
+  unless hasQuestionAttribute mods do return
+  for catStx in ← ProblemAttributes.toCategorySyntax mods do
+    let cat ← match catStx with
+      | `(attrInstance | category $s) => liftCoreM <| ProblemAttributes.Syntax.toCategory s
+      | _ => continue
+    unless cat matches .research _ do
+      logLintIf linter.style.category_attribute catStx
+        "The `question` attribute belongs to a `research open` or `research solved` problem, \
+         not to a `textbook`, `test`, or `API` statement."
+
 /-- The problem category linter checks that every theorem/lemma/example
 has been given a problem category attribute. -/
 def categoryLinter : Linter where
@@ -111,7 +134,9 @@ def categoryLinter : Linter where
     match stx with
       | `(command| $a:declModifiers theorem $declId:declId $_:declSig $_:declVal)
       | `(command| $a:declModifiers lemma $declId:declId $_:declSig $_:declVal) =>
-        if ← checkExactlyOneCategory a stx then checkNotOpenIfSorryFree a declId
+        if ← checkExactlyOneCategory a stx then
+          checkQuestionCategory a
+          checkNotOpenIfSorryFree a declId
       -- An `example` has no name to look a proof up under, so only the attribute check
       -- applies to it.
       | `(command| $a:declModifiers example $_:optDeclSig $_:declVal) =>

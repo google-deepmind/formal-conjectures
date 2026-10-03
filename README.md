@@ -68,7 +68,7 @@ There are two special directories:
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
     mathlib's directory structure.
 
-For details on the `@[category]`, `@[formal_proof]`, `@[AMS]` attributes and
+For details on the `@[category]`, `@[formal_proof]`, `@[AMS]`, `@[question]` attributes and
 the `answer( )` elaborator that statements in this repository use, see
 [CONTRIBUTING.md](./CONTRIBUTING.md).
 
