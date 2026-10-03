@@ -47,13 +47,22 @@ noncomputable def n (k : ℕ) : ℕ :=
 Estimate $n_k$ by finding a better upper bound than Cambie's
 $n_k \leq k \cdot \operatorname{lcm}(1, \dotsc, k-1)$.
 
+An improved upper bound
+$n_k \ll \exp\left(\frac{k}{\log k}(\log \log k + \log \log \log k + \log 2)\right)$
+was found by our UCLA collaborators and formally proved in Lean 4 by the LEAP Antigravity
+prover agent (see the linked `formal_proof`).
+
 The comparator takes its least common multiple in `ℕ` and casts the result. Writing the
 ascription as `((… ).lcm (fun n : ℕ => n) : ℝ)` instead puts it on the `Finset.lcm`
 application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where `lcm` of
 non-zero elements is `1` and the whole comparator collapses to `k`. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5524"]
 theorem erdos_1063.better_upper :
-    let upper_bound : ℕ → ℝ := answer(sorry)
+    let upper_bound : ℕ → ℝ := answer(fun k =>
+      Real.exp ((k : ℝ) / Real.log k *
+        (Real.log (Real.log k) + Real.log (Real.log (Real.log k)) + Real.log 2)))
     (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
     upper_bound =o[atTop] fun k =>
       (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
@@ -63,7 +72,9 @@ theorem erdos_1063.better_upper :
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
 $n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5533"]
 theorem erdos_1063.variants.exists_exception {n k : ℕ} (hk : 2 ≤ k) (h : 2 * k ≤ n) :
     ∃ i < k, ¬ (n - i) ∣ n.choose k := by
   sorry
@@ -111,7 +122,9 @@ theorem erdos_1063.variants.small_values :
 by $k! - i$ for $1 \le i < k$.
 
 The hypothesis `3 ≤ k` is necessary. At $k = 2$ the bound is false: $n_2 = 4$ and $2! = 2$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5537"]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
   sorry
@@ -124,13 +137,17 @@ $2 \cdot \operatorname{lcm}(1) = 2$, while $n_2 = 4$.
 
 The source writes the bound as $k[2, 3, \dotsc, k-1]$. That agrees with the range used here,
 because including $1$ does not change a least common multiple. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5541"]
 theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
   sorry
 
 /-- The least common multiple bound implies $n_k \le \exp((1 + o(1))k)$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5545"]
 theorem erdos_1063.variants.exp_upper_bound :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ k, (n k : ℝ) ≤ exp ((1 + f k) * k) := by
