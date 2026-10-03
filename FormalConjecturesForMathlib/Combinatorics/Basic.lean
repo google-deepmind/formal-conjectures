@@ -158,6 +158,54 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
     i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
   rfl
 
+/-- Ordered-pair characterisation of the Sidon property for a `Finset ℕ`: `(A : Set ℕ)` is Sidon
+iff whenever `a₁ ≤ b₁`, `a₂ ≤ b₂` are elements of `A` with `a₁ + b₁ = a₂ + b₂`, then `a₁ = a₂`
+and `b₁ = b₂`. -/
+theorem isSidon_coe_iff (A : Finset ℕ) :
+    IsSidon (A : Set ℕ) ↔
+      ∀ a₁ ∈ A, ∀ b₁ ∈ A, ∀ a₂ ∈ A, ∀ b₂ ∈ A,
+        a₁ ≤ b₁ → a₂ ≤ b₂ → a₁ + b₁ = a₂ + b₂ → a₁ = a₂ ∧ b₁ = b₂ := by
+  constructor
+  · intro hS a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ hab₁ hab₂ hsum
+    rcases hS a₁ ha₁ a₂ ha₂ b₁ hb₁ b₂ hb₂ hsum with h | h <;> omega
+  · intro hS i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
+    rcases le_total i₁ i₂ with h₁ | h₁ <;> rcases le_total j₁ j₂ with h₂ | h₂
+    · exact .inl (hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum)
+    · have := hS i₁ hi₁ i₂ hi₂ j₂ hj₂ j₁ hj₁ h₁ h₂ (by omega); exact .inr ⟨this.1, this.2⟩
+    · have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁ h₂ (by omega); exact .inr ⟨this.2, this.1⟩
+    · have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁ h₂ (by omega); exact .inl ⟨this.2, this.1⟩
+
+/-- In a Sidon set, a positive difference determines its endpoints: if `a₁ - b₁ = a₂ - b₂` with
+`b₁ < a₁` and `b₂ < a₂`, then `a₁ = a₂` and `b₁ = b₂`. -/
+theorem sidon_diff_injective {A : Finset ℕ} (hS : IsSidon (A : Set ℕ))
+    {a₁ b₁ a₂ b₂ : ℕ} (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
+    (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂) (heq : a₁ - b₁ = a₂ - b₂) :
+    a₁ = a₂ ∧ b₁ = b₂ := by
+  -- `a₁ + b₂ = a₂ + b₁`, so the Sidon property applies to the pairs `(a₁, b₂)` and `(a₂, b₁)`
+  rcases hS a₁ ha₁ a₂ ha₂ b₂ hb₂ b₁ hb₁ (by omega) with h | h <;> omega
+
+/-- Twice the number of pairs `(a, b) ∈ A ×ˢ A` with `a < b` is `|A| * (|A| - 1)`. -/
+theorem two_mul_card_product_filter_lt (A : Finset ℕ) :
+    2 * #{p ∈ A ×ˢ A | p.1 < p.2} = #A * (#A - 1) := by
+  have h_swap : #{p ∈ A ×ˢ A | p.2 < p.1} = #{p ∈ A ×ˢ A | p.1 < p.2} :=
+    card_bij' (fun p _ ↦ p.swap) (fun p _ ↦ p.swap)
+      (by aesop) (by aesop) (by simp) (by simp)
+  have h_union : A.offDiag = {p ∈ A ×ˢ A | p.1 < p.2} ∪ {p ∈ A ×ˢ A | p.2 < p.1} := by
+    ext ⟨a, b⟩
+    simp only [mem_offDiag, mem_union, mem_filter, mem_product, ne_iff_lt_or_gt]
+    tauto
+  have h_disj : Disjoint {p ∈ A ×ˢ A | p.1 < p.2} {p ∈ A ×ˢ A | p.2 < p.1} :=
+    disjoint_filter.2 fun _ _ h₁ h₂ ↦ absurd h₂ h₁.not_gt
+  rw [Nat.mul_sub_one, ← A.offDiag_card, h_union, card_union_of_disjoint h_disj, h_swap, two_mul]
+
+/-- Twice the number of pairs `(a, b) ∈ A ×ˢ A` with `b < a` is `|A| * (|A| - 1)`. -/
+theorem two_mul_card_product_filter_gt (A : Finset ℕ) :
+    2 * #{p ∈ A ×ˢ A | p.2 < p.1} = #A * (#A - 1) := by
+  rw [← two_mul_card_product_filter_lt]
+  congr 1
+  exact card_bij' (fun p _ ↦ p.swap) (fun p _ ↦ p.swap)
+    (by aesop) (by aesop) (by simp) (by simp)
+
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
