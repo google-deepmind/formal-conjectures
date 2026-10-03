@@ -171,6 +171,31 @@ theorem least_three_square_packing_in_circle :
   sorry
 
 /--
+Eight unit squares can be packed into a circle of radius $1.979$.
+David W. Cantrell found a packing of radius approximately $1.97877$ in March 2002.
+
+Reference: [Friedman's table](https://erich-friedman.github.io/packing/squincir/)
+-/
+@[category textbook, AMS 51]
+theorem eight_square_packing_in_circle_bound :
+    Nonempty (Packing 8 UnitSquare (Circle 1.979)) := by
+  sorry
+
+/--
+What is the smallest circle that can contain 8 unit squares?
+This is the smallest open case: the optimal radii for one to seven unit squares
+have been proved in Lean.
+
+References: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle),
+[Friedman's table](https://erich-friedman.github.io/packing/squincir/), and
+[Vu-Le's Lean proof](https://github.com/vltanh/lean4-squares-in-circles).
+-/
+@[category research open, AMS 51]
+theorem least_eight_square_packing_in_circle :
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 8 UnitSquare (Circle r))} answer(sorry) := by
+  sorry
+
+/--
 Twenty-one unit circles can be packed into a square of side length < 9.359.
 
 Reference: [Visualizations](https://erich-friedman.github.io/packing/cirinsqu/)
