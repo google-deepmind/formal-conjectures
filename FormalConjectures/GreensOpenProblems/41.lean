@@ -24,6 +24,10 @@ public import FormalConjecturesUtil
 - [Gr24] [Ben Green's Open Problem 41](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.41)
 - [Ma15] Manners, Freddie. "A solution to the pyjama problem." Inventiones mathematicae 202.1 (2015): 239-270.
 - [KrLe25] Kravitz, Noah, and James Leng. "Quantitative pyjama." arXiv preprint arXiv:2510.17744 (2025).
+- [Ki26] Kitamura, Kenta. "A Lean proof of the double-exponential bound in Green's Problem 41."
+  [GitHub repository](https://github.com/KitaKen1/green-41-double-exponential) (2026).
+- [Ki26b] Kitamura, Kenta. "A Lean proof of a quasi-polynomial bound in Green's Problem 41."
+  [GitHub repository](https://github.com/KitaKen1/green-41-quasi-polynomial) (2026).
 
 -/
 
@@ -75,10 +79,29 @@ Can the triple-exponential bound of [KrLe25] be improved by one exponential? Tha
 $\exp\exp(\varepsilon^{-C})$ rotations suffice for some $C$ and all sufficiently small
 $\varepsilon > 0$? [KrLe25, Section 8.1] discusses where the three exponentials are lost and
 which of them one might hope to save.
+
+Kenta Kitamura [Ki26] gave a Lean proof that the answer is yes, with $C = 102$; the README of
+[Ki26] explains the argument.
 -/
-@[category research open, AMS 51 52]
-theorem green_41.variants.double_exponential_bound : answer(sorry) ↔
+@[category research solved, AMS 51 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-41-double-exponential/blob/e2b49ac630b116f49661f5f701a38fac238cda76/lean/Green41DoubleExponentialFC.lean#L4845-L4849"]
+theorem green_41.variants.double_exponential_bound : answer(True) ↔
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (ε ^ (-C))) := by
+  sorry
+
+/--
+Is a quasi-polynomial number of rotations, $\exp((\log \varepsilon^{-1})^C)$, enough?
+
+Kenta Kitamura [Ki26b] gave a Lean proof that the answer is yes, with $C = 5$; the README of
+[Ki26b] explains the argument.
+-/
+@[category research solved, AMS 51 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-41-quasi-polynomial/blob/5f8398aef8be85d0f5f82f3d3edd88bf7cb0b262/lean/Green41QuasiPolynomial/FinalQuasi.lean#L339-L342"]
+theorem green_41.variants.quasi_polynomial_bound : answer(True) ↔
+    ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
+      (minCopies ε : ℝ) ≤ Real.exp (Real.log ε⁻¹ ^ C) := by
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
