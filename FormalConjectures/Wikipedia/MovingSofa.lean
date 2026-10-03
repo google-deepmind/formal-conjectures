@@ -204,7 +204,8 @@ def gerversSofa : Set ℝ² :=
 /-- Gerver's concrete sofa admits a valid hallway motion. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L20"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L161-L168"]
 theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
   sorry
 
@@ -224,14 +225,16 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
 /-- What is the sofa constant? -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173"]
 theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L30"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L30",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
@@ -242,7 +245,8 @@ The motion is needed: `horizontalHallway` is $(-\infty, 1] \times [0, 1]$, so a 
 translate of any moving sofa is again one, obtained by sliding right and then following the
 original motion. It has the same area, so uniqueness cannot hold on the nose.
 -/
-@[category research open, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L176-L190"]
 theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
     (hs : ∃ m, IsMovingSofa s m) :
     volume s = sofaConstant ↔ ∃ g : E(2), s = g '' gerversSofa := by
