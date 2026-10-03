@@ -117,7 +117,9 @@ The coefficients $c(n)$ of $A(x)^2 = (\sum_{n \ge 0} a(n) x^n)^2$ differ in sign
 if and only if $n$ is a triangular number.
 - _Peter Bala_, Mar 17 2022
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/kei825/oeis-a185895-conjecture2/blob/8ddd5a7d2bde415940f944440921fd760283f79d/OeisA185895Conjecture2.lean#L4959-L4961"]
 theorem conjecture2 (n : ℕ) (hn : 0 < n) :
     c n * c (n - 1) < 0 ↔ IsTriangular n := by
   sorry
