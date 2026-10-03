@@ -81,7 +81,7 @@ open scoped Classical in
 The graph $K_{3,n-3}$ shows that at least $(1+c)n$ many cycles and edges are required, for some
 constant $c>0$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_Erdos184_erdos_184_variants_lower_bound.lean#L285"]
 theorem erdos_184.variants.lower_bound :
     ∃ c > 0, ∀ᶠ n in atTop,
       let G : SimpleGraph (Fin n) := fromRel (fun (i j : Fin n) => (i : ℕ) < 3 ∧ 3 ≤ (j : ℕ));
