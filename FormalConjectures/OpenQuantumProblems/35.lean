@@ -722,7 +722,8 @@ theorem ame_3_2_exists : ExistsAME 3 2 := by
   simpa using ame_3_exists (d := 2) (by decide)
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(5,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-5-2/blob/f0720e63065eb40c58a40f7b7af3d21f94d06453/AME52/FormalTarget.lean#L25-L26"]
 theorem ame_5_2_exists : ExistsAME 5 2 := by
   sorry
 
