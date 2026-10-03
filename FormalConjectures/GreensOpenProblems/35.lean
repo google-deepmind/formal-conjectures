@@ -42,8 +42,10 @@ supported on `[0,1]`, and has total integral `1`.
 - [GGTW25](https://arxiv.org/abs/2511.02864)
   B. Georgiev, J. Gómez-Serrano, T. Tao and A. Z. Wagner, *Mathematical exploration and discovery
   at scale*, arXiv:2511.02864 (2025), Section 6.2.
+- [YD26](https://arxiv.org/abs/2601.16175)
+  M. Yuksekgonul et al., *Learning to Discover at Test Time*, arXiv:2601.16175 (2026).
 
-The constants of [CS17], [MV10], [AE25] and [GGTW25] are stated for functions supported on
+The constants of [CS17], [MV10], [AE25], [GGTW25] and [YD26] are stated for functions supported on
 $[-1/4, 1/4]$; rescaling to $[0, 1]$ halves them.
 -/
 
@@ -71,11 +73,11 @@ theorem green_35.lower :
       (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
   sorry
 
-/-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.7516$ at
-$p = \infty$. -/
-@[category research open, AMS 26 28 42]
+/-- Upper bound for $c(p)$ for $1 < p \le \infty$. The TTT-Discover construction gives
+$c(\infty) \le 0.751435$ after rescaling to $[0,1]$ [YD26]. -/
+@[category research solved, AMS 26 28 42]
 theorem green_35.upper :
-    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
+    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(fun p : ℝ≥0∞ ↦ if p = ∞ then 0.7515 else ⊤)
     (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
   sorry
 
