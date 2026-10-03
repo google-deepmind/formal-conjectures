@@ -20,7 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 143
 
-*Reference:* [erdosproblems.com/143](https://www.erdosproblems.com/143)
+*References:*
+- [erdosproblems.com/143](https://www.erdosproblems.com/143)
+- [Be35] Behrend, F., *On sequences of numbers not divisible one by another*. J. London Math. Soc.
+  (1935), 42-44.
+- [KLL25] Koukoulopoulos, D., Lamzouri, Y. and Lichtman, J. D., *Erdős's integer dilation
+  approximation problem and GCD graphs*. [arXiv:2502.09539](https://arxiv.org/abs/2502.09539)
+  (2025).
 -/
 
 @[expose] public section
@@ -60,17 +66,35 @@ theorem erdos_143.parts.ii (A : Set ℝ) (h : WellSeparatedSet A) :
     Summable fun (x : A) ↦ 1 / (x * Real.log x) := by
   sorry
 
--- TODO(firsching): add the two other conjectures.
-/-
+/--
+Or
 $$
 \sum_{\substack{x < n \\ x \in A}} \frac{1}{x} = o(\log n)?
 $$
 
-Perhaps even
-
-$$
-\sum_{\substack{x < n \\ x \in A}} \frac{1}{x} \ll \frac{\log x}{\sqrt{\log \log x}}?
-$$
+This was proved by Koukoulopoulos, Lamzouri, and Lichtman [KLL25].
 -/
+@[category research solved, AMS 11]
+theorem erdos_143.parts.iii : answer(True) ↔ ∀ (A : Set ℝ), WellSeparatedSet A →
+    (fun n : ℕ ↦ ∑ᶠ x ∈ A ∩ Set.Iio (n : ℝ), 1 / x) =o[atTop] (fun n : ℕ ↦ Real.log n) := by
+  sorry
+
+/--
+Over the years Erdős asked for various different quantitative estimates, for example
+$$
+\liminf \frac{\lvert A\cap [1,x]\rvert}{x}=0
+$$
+or even (motivated by Behrend's bound [Be35])
+$$
+\sum_{\substack{x < n \\ x \in A}} \frac{1}{x} \ll \frac{\log x}{\sqrt{\log\log x}}.
+$$
+
+The variable $x$ on the right-hand side is read as $n$.
+-/
+@[category research open, AMS 11]
+theorem erdos_143.variants.behrend_bound : answer(sorry) ↔ ∀ (A : Set ℝ), WellSeparatedSet A →
+    (fun n : ℕ ↦ ∑ᶠ x ∈ A ∩ Set.Iio (n : ℝ), 1 / x) =O[atTop]
+      (fun n : ℕ ↦ Real.log n / Real.sqrt (Real.log (Real.log n))) := by
+  sorry
 
 end Erdos143
