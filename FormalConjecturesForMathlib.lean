@@ -145,6 +145,9 @@ public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplex
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
+public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
+public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
+public import FormalConjecturesForMathlib.Geometry.Group.WordProd
 public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
@@ -223,4 +226,6 @@ public import FormalConjecturesForMathlib.Topology.Discrete
 public import FormalConjecturesForMathlib.Topology.GDelta
 public import FormalConjecturesForMathlib.Topology.Homogeneous
 public import FormalConjecturesForMathlib.Topology.LebesgueCoveringDimension
+public import FormalConjecturesForMathlib.Topology.MetricSpace.GromovProduct
+public import FormalConjecturesForMathlib.Topology.MetricSpace.Hyperbolic
 public import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated
