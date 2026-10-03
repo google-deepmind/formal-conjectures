@@ -60,14 +60,17 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?-/
-@[category research open, AMS 5]
+for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?
+
+Trivially $c(N) \leq N$, and `erdos_319.variants.lb` gives $c(N) \geq (1 - \frac{1}{e} + o(1))N$,
+so $c(N) = \Theta(N)$. -/
+@[category research solved, AMS 5]
 theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    c =Θ[atTop] (answer(fun N ↦ (N : ℝ)) : ℕ → ℝ) := by
   sorry
 
 /-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of
