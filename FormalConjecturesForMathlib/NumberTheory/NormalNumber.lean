@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.Order.Archimedean.Real.Basic
-public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Topology.MetricSpace.Basic
 
 /-!
 # Normal numbers
@@ -69,6 +69,26 @@ noncomputable def IsSimplyNormalInBase (b : ℕ) (x : ℝ) : Prop :=
         (((Finset.range n).filter (fun k => digitSeq b x k = d)).card : ℝ) / n)
       atTop
       (nhds (1 / (b : ℝ)))
+
+/-- If the fractional part of `x` is `0`, then every digit of `x` is `0`. -/
+theorem digitSeq_eq_zero_of_fract_eq_zero {b : ℕ} {x : ℝ} (hx : Int.fract x = 0) (n : ℕ) :
+    digitSeq b x n = 0 := by
+  simp [digitSeq, hx]
+
+/-- A real number whose fractional part is `0` is not simply normal in any base `b ≥ 2`:
+all of its digits are `0`, so the digit `1` has frequency `0` instead of `1 / b`. -/
+theorem not_isSimplyNormalInBase_of_fract_eq_zero {b : ℕ} (hb : 2 ≤ b) {x : ℝ}
+    (hx : Int.fract x = 0) : ¬ IsSimplyNormalInBase b x := by
+  intro h
+  have hfil : ∀ n : ℕ, ((Finset.range n).filter fun k => digitSeq b x k = 1) = ∅ := fun n => by
+    simp [digitSeq_eq_zero_of_fract_eq_zero hx]
+  have key := h 1 (by omega)
+  simp only [hfil, Finset.card_empty, Nat.cast_zero, zero_div] at key
+  have hzero : (1 : ℝ) / b = 0 := tendsto_nhds_unique key tendsto_const_nhds
+  rw [div_eq_zero_iff, Nat.cast_eq_zero] at hzero
+  rcases hzero with hzero | hzero
+  · exact one_ne_zero hzero
+  · omega
 
 /-- A real number `x` is *normal in base* `b`
 if every string `w` of `k` digits `< b` appears with asymptotic frequency `1 / b ^ k`
