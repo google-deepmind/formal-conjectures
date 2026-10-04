@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjecturesForMathlib.NumberTheory.CongruenceCovering
 
 /-!
 # Erdős Problem 278: minimum covered density
