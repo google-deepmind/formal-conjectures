@@ -1,0 +1,29 @@
+name: Erdős 265 proof audit
+on:
+  push:
+    branches: [codex/erdos-265-proof]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+      - name: Download Mathlib cache
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get
+      - name: Check proof and print axioms
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          set -o pipefail
+          lake env lean -DmaxHeartbeats=0 Erdos265Proof.lean | tee proof-audit.log
+          if grep -q 'sorryAx' proof-audit.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: erdos265-proof-audit
+          path: proof-audit.log
