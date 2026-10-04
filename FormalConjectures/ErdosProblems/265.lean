@@ -53,7 +53,7 @@ Here this is expressed as $a_n\geq c^{2^n}$ infinitely often for some $c>1$.
 The zero-based indexing changes the critical root by a square, preserving this question.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/KitaKen1/erdos-265-lean/blob/16db9f29ad68a861552f74b8c2fe2148433c3e80/lean/Erdos265/Main.lean#L136"]
+  "https://github.com/AItoBit/formal-conjectures/blob/2a18dc351bdf5a45d75c232c79c9f609e177b13d/Erdos265Proof.lean"]
 theorem erdos_265 : answer(False) ↔ ∃ a : ℕ → ℕ, IsRationalPair a ∧
     ∃ c : ℝ, 1 < c ∧ ∃ᶠ n : ℕ in atTop, c ^ 2 ^ n ≤ (a n : ℝ) := by
   sorry
