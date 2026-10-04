@@ -55,9 +55,11 @@ structure LocalSchwartzSolution (l : ℝ) where
 
 /--
 The Hamiltonian of the energy-critical NLS in $ℝ^3$.
+The kinetic term is $\frac12\sum_{j=1}^3 |\partial_j u|^2$, as in (1.2) of the reference.
 -/
 noncomputable def energy (u : ℝ^3 → ℂ) : ℝ :=
-  ∫ x, (1 / 2) * ‖fderiv ℝ u x‖^2 + (1 / 6) * ‖u x‖^6
+  ∫ x, (1 / 2) * (∑ j : Fin 3, ‖fderiv ℝ u x (EuclideanSpace.single j 1)‖^2) +
+    (1 / 6) * ‖u x‖^6
 
 /--
 The space-time $L^10$ norm, restricted to the time interval $[-l,l]$.
