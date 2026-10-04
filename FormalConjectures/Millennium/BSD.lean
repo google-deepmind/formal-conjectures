@@ -13,175 +13,162 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib
+module
+
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.HasseWeil
+
 
 /-!
-# The weak Birch and Swinnerton-Dyer conjecture: two equivalent forms
-
-Self-contained single file: it only imports `Mathlib` (it needs a Mathlib recent enough to have
-`WeierstrassCurve.LSeries`, from `Mathlib/AlgebraicGeometry/EllipticCurve/LFunction.lean`; checked
-with Lean `v4.35.0-rc3` and Mathlib master `aaf410c`). The parts that in the
-formal-conjectures repository come from `FormalConjecturesUtil` and
-`FormalConjectures.Wikipedia.HasseWeil` are copied here, and the `@[category ...]`/`@[AMS ...]`
-attributes (which only exist in that repository) are dropped.
-
-**No `sorry` in this file.** The Birch and Swinnerton-Dyer conjecture is an open problem (a Clay
-Millennium Problem), so it is *stated* as the propositions `BSD.Weak` and `BSD.WeakAnalytic`
-(definitions of `Prop`), never claimed as a theorem. What is *proved* here:
-
-* `AddCommGroup.freeRank_eq_finrank`: for a finitely generated abelian group, Mathlib's
-  `AddCommGroup.freeRank` equals `Module.finrank ℤ`.
-* `BSD.WeakAnalytic.weak : WeakAnalytic K → Weak K` (no extra hypotheses).
-* `BSD.Weak.weakAnalytic`, `BSD.weak_iff_weakAnalytic`: the converse and the equivalence,
-  *conditional* on the Hasse--Weil continuation and the Mordell--Weil theorem, passed as explicit
-  hypotheses (both are known theorems over `ℚ`, but are not in Mathlib).
-
-All of these proofs use only Lean's three standard foundational axioms (`propext`,
-`Classical.choice`, `Quot.sound`); no `sorry`, `native_decide` or new `axiom` is involved.
-
-Both forms use Mathlib's own `WeierstrassCurve.LSeries` (Euler product built from
-`Reduction.lean`/`LFunction.lean`), so no new notion of minimal model, `a_p` or Euler product is
-introduced. `WeakAnalytic ℚ` is the statement in Wiles' official Clay description: `L(E, s)` has a
-holomorphic continuation whose Taylor expansion at `s = 1` is `c (s - 1)^r + ⋯` with `c ≠ 0` and
-`r = rank E(ℚ)`. Over `ℚ` it is a reformulation of `Weak ℚ`, not a new problem.
+# The Birch and Swinnerton-Dyer (BSD) Conjecture
 
 *References:*
-- [Clay] A. Wiles, official problem description,
+- [The Clay Institute](https://www.claymath.org/millennium/birch-and-swinnerton-dyer-conjecture/),
+  official problem description by Andrew Wiles:
   [claymath.org](https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf)
-- [Tate1966] J. Tate, "On the conjectures of Birch and Swinnerton-Dyer and a geometric analog",
-  Séminaire Bourbaki, Exp. 306 (1966).
-- [Gross2011] B. H. Gross, "Lectures on the conjecture of Birch and Swinnerton-Dyer",
-  IAS/Park City Math. Ser. 18 (2011), Conjecture 2.10.
+- [BSD1965] B. J. Birch and H. P. F. Swinnerton-Dyer. "Notes on elliptic curves. II."
+  Journal fur die reine und angewandte Mathematik 218 (1965), 79-108,
+  [doi](https://doi.org/10.1515/crll.1965.218.79)
+- [Tate1966] John Tate. "On the conjectures of Birch and Swinnerton-Dyer and a geometric analog."
+  Seminaire Bourbaki, Vol. 9, Exp. No. 306 (1966), 415-440,
+  [numdam](https://www.numdam.org/item/SB_1964-1966__9__415_0/)
+- [Gross2011] Benedict H. Gross. "Lectures on the conjecture of Birch and Swinnerton-Dyer."
+  Arithmetic of L-functions, IAS/Park City Math. Ser. 18, AMS (2011), 169-209,
+  [math.harvard.edu](https://people.math.harvard.edu/~gross/preprints/lectures-pcmi.pdf)
+- [Ang2025] David Kurniadi Angdinata. "L-functions of Dirichlet twists of elliptic curves:
+  computations and congruences." PhD thesis, University College London (2025),
+  [discovery.ucl.ac.uk](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
+- [Ada] Tom Adamczewski. "Autoformalized conjectures",
+  [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
+
+`WeierstrassCurve.LSeries` is Mathlib's Euler product: `LFunction` multiplies the local factors
+`localEulerFactor`, read off a minimal model over each `p`-adic completion.
+`weak_iff_analyticOrder` shows that, once an entire continuation of this series exists, `Weak ℚ`
+is the equality of its analytic order at $s = 1$ with `AddCommGroup.freeRank`. Wiles' account of
+the Clay problem is this equality for the product over primes of good reduction. That product and
+`E.LSeries` differ by the Euler factors at primes of bad reduction, which are holomorphic and
+non-zero at $s = 1$. The comparison of those two products is left unformalised.
 -/
 
-open Module
-
-/-! ## The free rank of a finitely generated abelian group -/
-
-/-- The free rank of a finitely generated abelian group is its `ℤ`-rank. -/
-theorem AddCommGroup.freeRank_eq_finrank (G : Type*) [AddCommGroup G] [AddGroup.FG G] :
-    AddCommGroup.freeRank G = finrank ℤ G := by
-  set Q := G ⧸ Submodule.torsion ℤ G
-  let e : (G ⧸ AddCommGroup.torsion G) ≃+ Q :=
-    QuotientAddGroup.congr _ _ (AddEquiv.refl G) (by simp [← Submodule.torsion_int])
-  have : Module.Finite ℤ G := Module.Finite.iff_addGroup_fg.mpr inferInstance
-  have hFG : AddGroup.FG Q := Module.Finite.iff_addGroup_fg.mp inferInstance
-  rw [AddCommGroup.freeRank_def, AddGroup.rank_congr e,
-    ← finrank_quotient_eq_of_le_torsion le_rfl]
-  have hspan (s : Set Q) : (Submodule.span ℤ s).toAddSubgroup = AddSubgroup.closure s :=
-    Submodule.span_int_eq_addSubgroupClosure s
-  apply le_antisymm
-  · let b := Module.Free.chooseBasis ℤ Q
-    classical
-    calc AddGroup.rank Q ≤ (Finset.univ.image b).card := by
-          apply AddGroup.rank_le
-          rw [Finset.coe_image, Finset.coe_univ, Set.image_univ, ← hspan, b.span_eq]
-          rfl
-      _ ≤ Finset.univ.card := Finset.card_image_le
-      _ = finrank ℤ Q := by rw [Finset.card_univ, Module.finrank_eq_card_chooseBasisIndex]
-  · obtain ⟨S, hS, hcl⟩ := AddGroup.rank_spec Q
-    rw [← hS]
-    have htop : Submodule.span ℤ (S : Set Q) = ⊤ := by
-      apply Submodule.toAddSubgroup_injective
-      rw [hspan, hcl]
-      rfl
-    calc finrank ℤ Q = finrank ℤ (⊤ : Submodule ℤ Q) := (finrank_top ℤ Q).symm
-      _ = finrank ℤ (Submodule.span ℤ (S : Set Q)) := by rw [htop]
-      _ ≤ S.card := finrank_span_finset_le_card S
-
-/-! ## Continuations of the `L`-series (copied from formal-conjectures `HasseWeil.lean`) -/
-
-namespace HasseWeil
-
-variable {K : Type*} [Field K] [NumberField K] {E : WeierstrassCurve K}
-
-/-- The `L`-series of `E` has the meromorphic continuation `L`: `L` is meromorphic on `ℂ` and
-agrees with `E.LSeries` on `Re s > 3/2`, where the series converges absolutely. -/
-def HasMeromorphicContinuation (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  Meromorphic L ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
-
-/-- The `L`-series of `E` has the analytic continuation `L`: `L` is analytic on `ℂ` and agrees
-with `E.LSeries` on `Re s > 3/2`. -/
-def HasAnalyticContinuation (E : WeierstrassCurve K) (L : ℂ → ℂ) : Prop :=
-  (∀ z, AnalyticAt ℂ L z) ∧ ∀ s : ℂ, 3 / 2 < s.re → L s = E.LSeries s
-
-/-- An analytic continuation is a meromorphic continuation. -/
-theorem HasAnalyticContinuation.hasMeromorphicContinuation {L : ℂ → ℂ}
-    (hL : HasAnalyticContinuation E L) : HasMeromorphicContinuation E L :=
-  ⟨fun z ↦ (hL.1 z).meromorphicAt, hL.2⟩
-
-open scoped Topology in
-/-- Two meromorphic continuations of the `L`-series of `E` agree on a punctured neighbourhood of
-every point. -/
-theorem HasMeromorphicContinuation.unique {L L' : ℂ → ℂ}
-    (hL : HasMeromorphicContinuation E L) (hL' : HasMeromorphicContinuation E L') (x : ℂ) :
-    L =ᶠ[𝓝[≠] x] L' := by
-  have h2 : meromorphicOrderAt (L - L') 2 = ⊤ := meromorphicOrderAt_eq_top_iff.2 <|
-    Filter.eventually_of_mem (nhdsWithin_le_nhds <| (Complex.isOpen_re_gt (3 / 2)).mem_nhds
-      (by norm_num)) fun s hs ↦ sub_eq_zero.2 ((hL.2 s hs).trans (hL'.2 s hs).symm)
-  have key : meromorphicOrderAt (L - L') x = ⊤ := not_not.1 fun hx ↦
-    (hL.1.sub hL'.1).exists_meromorphicOrderAt_ne_top_iff_forall.1 ⟨x, hx⟩ 2 h2
-  exact (meromorphicOrderAt_eq_top_iff.1 key).mono fun s hs ↦ sub_eq_zero.1 hs
-
-end HasseWeil
-
-/-! ## The two forms of the weak BSD conjecture -/
+@[expose] public section
 
 namespace BSD
 
 open HasseWeil
 
-/-- **Weak Birch and Swinnerton-Dyer conjecture** for a number field `K` (statement only, open
-problem; [Tate1966], Conjecture (A); [Gross2011], Conjecture 2.10): for every elliptic curve `E`
-over `K` with `E(K)` finitely generated (Mordell--Weil, not in Mathlib, hence a hypothesis), every
-meromorphic continuation `L` of its `L`-series has order `rank E(K)` at `s = 1`. -/
+/-- The **weak Birch and Swinnerton-Dyer conjecture** for a number field $K$: for every elliptic
+curve $E$ over $K$, a meromorphic continuation of its $L$-series has order
+$\operatorname{rank}_{\mathbb{Z}} E(K)$ at $s = 1$. [Gross2011], Conjecture 2.10 states the
+conjecture assuming only a meromorphic continuation near $s = 1$, while
+`HasseWeil.HasMeromorphicContinuation` asks for one on all of $\mathbb{C}$.
+
+The rank is `AddCommGroup.freeRank`, which requires $E(K)$ to be finitely generated. That is the
+Mordell--Weil theorem, which Mathlib does not have and which this repository states as a `sorry`
+in `EllipticCurveRank.mordell_weil`, so it appears here as a hypothesis. -/
 def Weak (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
   ∀ (E : WeierstrassCurve K) [E.IsElliptic] [AddGroup.FG E.toAffine.Point] (L : ℂ → ℂ),
     HasMeromorphicContinuation E L →
       meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point
 
-/-- **Weak Birch and Swinnerton-Dyer conjecture**, analytic form (statement only, open problem;
-the form of Wiles' Clay description): for every elliptic curve `E` over `K`, the `L`-series of `E`
-has an analytic continuation `L` to `ℂ` whose order of vanishing at `s = 1` is a natural number `r`
-(so `c ≠ 0` in `c (s - 1)^r + ⋯`), and `rank_ℤ E(K) = r`. The rank is `Module.rank`, so the
-statement also asserts that it is finite; no `AddGroup.FG` hypothesis is needed. -/
-def WeakAnalytic (K : Type*) [Field K] [NumberField K] [DecidableEq K] : Prop :=
-  ∀ (E : WeierstrassCurve K) [E.IsElliptic], ∃ L : ℂ → ℂ, HasAnalyticContinuation E L ∧
-    ∃ r : ℕ, analyticOrderAt L 1 = r ∧ Module.rank ℤ E.toAffine.Point = r
+/-- **Weak Birch and Swinnerton-Dyer conjecture** ([Tate1966], Conjecture (A)). -/
+@[category research open, AMS 11 14]
+theorem weak_birch_swinnerton_dyer_conjecture (K : Type*) [Field K] [NumberField K]
+    [DecidableEq K] : Weak K := by
+  sorry
 
-variable {K : Type*} [Field K] [NumberField K] [DecidableEq K]
+/-- The **weak Birch and Swinnerton-Dyer conjecture** over $\mathbb{Q}$, a Clay Millennium Prize
+Problem. Once every elliptic curve over $\mathbb{Q}$ has an entire continuation of its $L$-series,
+`weak_iff_analyticOrder` identifies this with the analytic-order formulation below. -/
+@[category research open, AMS 11 14]
+theorem weak_birch_swinnerton_dyer_conjecture_rat : Weak ℚ := by
+  sorry
 
-/-- The analytic form implies the weak BSD conjecture, with no further hypotheses. -/
-theorem WeakAnalytic.weak (h : WeakAnalytic K) : Weak K := by
-  intro E _ _ L hL
-  obtain ⟨L', hL', r, hr, hrank⟩ := h E
-  have hfin : Module.finrank ℤ E.toAffine.Point = r := Module.finrank_eq_of_rank_eq hrank
-  rw [meromorphicOrderAt_congr (hL.unique hL'.hasMeromorphicContinuation 1),
-    (hL'.1 1).meromorphicOrderAt_eq, hr, AddCommGroup.freeRank_eq_finrank, hfin]
-  simp
+/-! ## Analytic order over $\mathbb{Q}$
 
-/-- The weak BSD conjecture implies the analytic form, assuming the Hasse--Weil continuation
-`hHW` and the Mordell--Weil theorem `hMW` for `K` (conditional result). -/
-theorem Weak.weakAnalytic
-    (hHW : ∀ (E : WeierstrassCurve K) [E.IsElliptic], ∃ L, HasAnalyticContinuation E L)
-    (hMW : ∀ (E : WeierstrassCurve K) [E.IsElliptic], Module.Finite ℤ E.toAffine.Point)
-    (h : Weak K) : WeakAnalytic K := by
-  intro E _
-  obtain ⟨L, hL⟩ := hHW E
-  have : AddGroup.FG E.toAffine.Point := Module.Finite.iff_addGroup_fg.mp (hMW E)
-  have key := h E L hL.hasMeromorphicContinuation
-  rw [(hL.1 1).meromorphicOrderAt_eq, AddCommGroup.freeRank_eq_finrank] at key
-  refine ⟨L, hL, Module.finrank ℤ E.toAffine.Point, ?_, (Module.finrank_eq_rank _ _).symm⟩
-  cases hn : analyticOrderAt L 1 with
-  | top => simp [hn] at key
-  | coe n => simp_all
+Wiles states the Clay problem as follows. The $L$-series of an elliptic curve $E$ over
+$\mathbb{Q}$ extends to an entire function, and the Taylor expansion of that function at $s = 1$
+is $c(s - 1)^r$ plus higher-order terms, with $c \neq 0$ and $r = \operatorname{rank} E(\mathbb{Q})$.
+The entire continuation is the modularity theorem, recorded as
+`HasseWeil.exists_hasAnalyticContinuation_rat`. The series itself is `E.LSeries`. -/
 
-/-- Given the Hasse--Weil continuation and the Mordell--Weil theorem for `K`, the weak BSD
-conjecture is equivalent to its analytic form (conditional result). -/
-theorem weak_iff_weakAnalytic
-    (hHW : ∀ (E : WeierstrassCurve K) [E.IsElliptic], ∃ L, HasAnalyticContinuation E L)
-    (hMW : ∀ (E : WeierstrassCurve K) [E.IsElliptic], Module.Finite ℤ E.toAffine.Point) :
-    Weak K ↔ WeakAnalytic K :=
-  ⟨Weak.weakAnalytic hHW hMW, WeakAnalytic.weak⟩
+section AnalyticOrder
+
+open scoped Topology
+
+variable {E : WeierstrassCurve ℚ}
+
+/-- Two entire continuations of `E.LSeries` agree on $\mathbb{C}$. -/
+@[category API, AMS 11 14]
+theorem analyticContinuation_eq {L L' : ℂ → ℂ} (hL : HasAnalyticContinuation E L)
+    (hL' : HasAnalyticContinuation E L') : L = L' := by
+  apply AnalyticOnNhd.eq_of_frequently_eq (z₀ := 2) (fun z _ ↦ hL.1 z) (fun z _ ↦ hL'.1 z)
+  refine (Filter.eventually_of_mem (nhdsWithin_le_nhds <|
+      (Complex.isOpen_re_gt (3 / 2)).mem_nhds (x := 2) (by norm_num)) fun s hs ↦
+    (hL.2 s hs).trans (hL'.2 s hs).symm).frequently
+
+/-- Where `f` is analytic, its analytic order at `z` is the natural number `r` if and only if its
+meromorphic order at `z` is `r`. -/
+@[category API, AMS 11 14]
+theorem analyticOrderAt_eq_nat_iff_meromorphicOrderAt {f : ℂ → ℂ} {z : ℂ} {r : ℕ}
+    (hf : AnalyticAt ℂ f z) : analyticOrderAt f z = r ↔ meromorphicOrderAt f z = r := by
+  rw [hf.meromorphicOrderAt_eq]
+  constructor
+  · intro h
+    rw [h]
+    simp
+  · intro h
+    cases hord : analyticOrderAt f z with
+    | top =>
+      rw [hord, ENat.map_top] at h
+      exact (WithTop.top_ne_natCast (α := ℤ) r h).elim
+    | coe n =>
+      rw [hord, WithTop.map_coe] at h
+      norm_cast at h
+      rw [hord]
+      exact_mod_cast h
+
+variable [AddGroup.FG E.toAffine.Point]
+
+/-- Suppose the group of rational points of `E` is finitely generated and `E.LSeries` has an entire
+continuation. The analytic order of that continuation at $s = 1$ equals `AddCommGroup.freeRank`
+if and only if every meromorphic continuation has that same meromorphic order. -/
+@[category API, AMS 11 14]
+theorem meromorphicOrder_eq_freeRank_iff_analyticOrder
+    (hAn : ∃ L, HasAnalyticContinuation E L) :
+    (∃ L, HasAnalyticContinuation E L ∧
+        analyticOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point) ↔
+      ∀ L, HasMeromorphicContinuation E L →
+        meromorphicOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point := by
+  obtain ⟨L₀, hL₀⟩ := hAn
+  constructor
+  · rintro ⟨L, hL, hr⟩ M hM
+    have hagree : L =ᶠ[𝓝[≠] 1] M :=
+      hL.hasMeromorphicContinuation.unique hM 1
+    rw [← meromorphicOrderAt_congr hagree]
+    exact (analyticOrderAt_eq_nat_iff_meromorphicOrderAt (hL.1 1)).1 hr
+  · intro hMer
+    refine ⟨L₀, hL₀, (analyticOrderAt_eq_nat_iff_meromorphicOrderAt (hL₀.1 1)).2 ?_⟩
+    exact hMer L₀ hL₀.hasMeromorphicContinuation
+
+end AnalyticOrder
+
+/-- Assume every elliptic curve over $\mathbb{Q}$ has an entire continuation of `E.LSeries`.
+Then `Weak ℚ` holds if and only if, for every such curve with finitely generated Mordell--Weil
+group, that continuation has analytic order `AddCommGroup.freeRank` at $s = 1$.
+
+This is Wiles' formulation of the Clay problem, expressed with `WeierstrassCurve.LSeries`.
+The hypothesis is `HasseWeil.exists_hasAnalyticContinuation_rat`. Finite generation is
+`EllipticCurveRank.mordell_weil`. -/
+@[category API, AMS 11 14]
+theorem weak_iff_analyticOrder
+    (hAn : ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], ∃ L, HasAnalyticContinuation E L) :
+    Weak ℚ ↔ ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] [AddGroup.FG E.toAffine.Point],
+      ∃ L, HasAnalyticContinuation E L ∧
+        analyticOrderAt L 1 = AddCommGroup.freeRank E.toAffine.Point := by
+  constructor
+  · intro hW E _ _
+    exact (meromorphicOrder_eq_freeRank_iff_analyticOrder (hAn E)).2 fun L hL ↦ hW E L hL
+  · intro hClay E _ _ L hL
+    exact (meromorphicOrder_eq_freeRank_iff_analyticOrder (hAn E)).1 (hClay E) L hL
 
 end BSD
