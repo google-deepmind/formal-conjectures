@@ -36,6 +36,9 @@ Millennium Problem), so it is *stated* as the propositions `BSD.Weak` and `BSD.W
   *conditional* on the Hasse--Weil continuation and the Mordell--Weil theorem, passed as explicit
   hypotheses (both are known theorems over `ℚ`, but are not in Mathlib).
 
+All of these proofs use only Lean's three standard foundational axioms (`propext`,
+`Classical.choice`, `Quot.sound`); no `sorry`, `native_decide` or new `axiom` is involved.
+
 Both forms use Mathlib's own `WeierstrassCurve.LSeries` (Euler product built from
 `Reduction.lean`/`LFunction.lean`), so no new notion of minimal model, `a_p` or Euler product is
 introduced. `WeakAnalytic ℚ` is the statement in Wiles' official Clay description: `L(E, s)` has a
@@ -182,6 +185,3 @@ theorem weak_iff_weakAnalytic
   ⟨Weak.weakAnalytic hHW hMW, WeakAnalytic.weak⟩
 
 end BSD
-
-#print axioms BSD.weak_iff_weakAnalytic
-
