@@ -55,17 +55,15 @@ variable {ι : Type*} [Fintype ι]
 /-- `x` is covered by the system of congruences `x ≡ a i (mod n i)`. -/
 def Covered (n : ι → ℕ) (a : ι → ℤ) (x : ℤ) : Prop := ∃ i, x ≡ a i [ZMOD n i]
 
-open scoped Classical in
+open Classical in
 /-- Number of covered integers in `{0, …, L-1}`. -/
 noncomputable def coverCount (L : ℕ) (n : ι → ℕ) (a : ι → ℤ) : ℕ :=
   ((Finset.range L).filter (fun x : ℕ => Covered n a x)).card
 
-open scoped Classical in
+open Classical in
 /-- A set `s ⊆ ℕ` has natural density `δ`. -/
 def HasNatDensity (s : Set ℕ) (δ : ℝ) : Prop :=
   Tendsto (fun N : ℕ => (((Finset.range N).filter (· ∈ s)).card : ℝ) / N) atTop (𝓝 δ)
-
-open scoped Classical
 
 /-! ### The compression step at one prime -/
 
@@ -73,6 +71,7 @@ lemma coverCount_compress {L q M p k : ℕ} (hp : p.Prime) (hq : q = p ^ k)
     (hcop : q.Coprime M) (hL : L = q * M) (n : ι → ℕ) (hn : ∀ i, n i ∣ L)
     (e : ℤ) (he0 : (q : ℤ) ∣ e) (he1 : e ≡ 1 [ZMOD M]) (a : ι → ℤ) :
     coverCount L n (fun i => a i * e) ≤ coverCount L n a := by
+  classical
   subst hq
   set gq : ι → ℕ := fun i => (n i).gcd (p ^ k) with hgqdef
   set gM : ι → ℕ := fun i => (n i).gcd M with hgMdef
@@ -183,6 +182,7 @@ lemma coverCount_compress {L q M p k : ℕ} (hp : p.Prime) (hq : q = p ^ k)
 omit [Fintype ι] in
 lemma coverCount_of_dvd {L : ℕ} (n : ι → ℕ) (hn : ∀ i, n i ∣ L) (a : ι → ℤ)
     (ha : ∀ i, (L : ℤ) ∣ a i) : coverCount L n a = coverCount L n 0 := by
+  classical
   unfold coverCount
   congr 1
   refine Finset.filter_congr fun x _ => ?_
@@ -195,6 +195,7 @@ lemma coverCount_of_dvd {L : ℕ} (n : ι → ℕ) (hn : ∀ i, n i ∣ L) (a : 
 covered residues is minimized when all residues are `0`. -/
 theorem coverCount_zero_le {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i ∣ L) (a : ι → ℤ) :
     coverCount L n 0 ≤ coverCount L n a := by
+  classical
   suffices H : ∀ m d : ℕ, L - d ≤ m → d ∣ L → ∀ a : ι → ℤ, (∀ i, (d : ℤ) ∣ a i) →
       coverCount L n 0 ≤ coverCount L n a from
     H _ 1 le_rfl (one_dvd _) a (fun _ => by simp)
@@ -251,6 +252,7 @@ theorem coverCount_zero_le {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, 
 omit [Fintype ι] in
 lemma count_mul_period (s : Set ℕ) [DecidablePred (· ∈ s)] {L : ℕ} (hper : ∀ x, x + L ∈ s ↔ x ∈ s) :
     ∀ m : ℕ, Nat.count (· ∈ s) (m * L) = m * Nat.count (· ∈ s) L := by
+  classical
   have hshift : ∀ m x, m * L + x ∈ s ↔ x ∈ s := by
     intro m
     induction m with
@@ -269,9 +271,10 @@ lemma count_mul_period (s : Set ℕ) [DecidablePred (· ∈ s)] {L : ℕ} (hper 
     exact Finset.filter_congr fun x _ => hshift m x
 
 omit [Fintype ι] in
-theorem hasNatDensity_of_periodic (s : Set ℕ) {L : ℕ} (hL : 0 < L)
+theorem hasNatDensity_of_periodic (s : Set ℕ) [DecidablePred (· ∈ s)] {L : ℕ} (hL : 0 < L)
     (hper : ∀ x, x + L ∈ s ↔ x ∈ s) :
     HasNatDensity s ((((Finset.range L).filter (· ∈ s)).card : ℝ) / L) := by
+  classical
   have hshift : ∀ m x, m * L + x ∈ s ↔ x ∈ s := by
     intro m
     induction m with
@@ -336,6 +339,7 @@ theorem hasNatDensity_of_periodic (s : Set ℕ) {L : ℕ} (hL : 0 < L)
 omit [Fintype ι] in
 lemma card_multiples_of_dvd {m L : ℕ} (hmL : m ∣ L) (hL : 0 < L) :
     ((Finset.range L).filter (fun x => m ∣ x)).card = L / m := by
+  classical
   have hm : 0 < m := Nat.pos_of_dvd_of_pos hmL hL
   have hper : ∀ x, x + m ∈ {x : ℕ | m ∣ x} ↔ x ∈ {x : ℕ | m ∣ x} := by
     intro x; simp [Nat.dvd_add_self_right]
@@ -358,6 +362,7 @@ omit [Fintype ι] in
 /-- Shifting all residues by the same constant does not change the covered count. -/
 lemma coverCount_shift_le {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i ∣ L) (a : ι → ℤ)
     (c : ℤ) : coverCount L n (fun i => a i + c) ≤ coverCount L n a := by
+  classical
   unfold coverCount
   have hpos : (0 : ℤ) < L := by exact_mod_cast hL
   refine Finset.card_le_card_of_injOn (fun x : ℕ => (((x : ℤ) - c) % L).toNat) ?_ ?_
@@ -388,6 +393,7 @@ omit [Fintype ι] in
 /-- All residues equal to a common value `c` gives the same count as all residues `0`. -/
 lemma coverCount_const {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i ∣ L) (c : ℤ) :
     coverCount L n (fun _ => c) = coverCount L n 0 := by
+  classical
   apply le_antisymm
   · calc coverCount L n (fun _ => c) = coverCount L n (fun i => (0 : ι → ℤ) i + c) := by
           congr 1; funext i; simp
@@ -401,6 +407,7 @@ lemma coverCount_const {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i 
 theorem coverCount_zero_eq {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i ∣ L) :
     (coverCount L n 0 : ℤ) = ∑ t ∈ (Finset.univ : Finset ι).powerset.filter (·.Nonempty),
       (-1 : ℤ) ^ (t.card + 1) * ((L / t.lcm n : ℕ) : ℤ) := by
+  classical
   set S : ι → Finset ℕ := fun i => (Finset.range L).filter (fun x => ((n i : ℕ) : ℤ) ∣ (x : ℤ))
   have hU : (Finset.range L).filter (fun x : ℕ => Covered n 0 x) = Finset.univ.biUnion S := by
     ext x
@@ -429,6 +436,7 @@ omit [Fintype ι] in
 theorem hasNatDensity_covered {L : ℕ} (hL : 0 < L) (n : ι → ℕ) (hn : ∀ i, n i ∣ L)
     (a : ι → ℤ) :
     HasNatDensity {x : ℕ | Covered n a x} ((coverCount L n a : ℝ) / L) := by
+  classical
   have hper : ∀ x : ℕ, x + L ∈ {x : ℕ | Covered n a x} ↔ x ∈ {x : ℕ | Covered n a x} := by
     intro x
     show Covered n a ((x + L : ℕ) : ℤ) ↔ Covered n a ((x : ℕ) : ℤ)
@@ -457,6 +465,7 @@ theorem rogers_min_density (n : ι → ℕ) (hn : ∀ i, 0 < n i) :
       (∀ c : ℤ, δ (fun _ => c) = δ 0) ∧
       δ 0 = ∑ t ∈ (Finset.univ : Finset ι).powerset.filter (·.Nonempty),
         (-1 : ℝ) ^ (t.card + 1) / ((t.lcm n : ℕ) : ℝ) := by
+  classical
   set L : ℕ := (Finset.univ : Finset ι).lcm n with hLdef
   have hlcm0 : ∀ t : Finset ι, t.lcm n ≠ 0 := by
     intro t h

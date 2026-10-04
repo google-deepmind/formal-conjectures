@@ -29,8 +29,6 @@ remains open and is not included here.
 
 @[expose] public section
 
-open scoped Classical
-
 namespace Erdos278
 
 open CongruenceCovering
