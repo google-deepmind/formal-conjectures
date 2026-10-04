@@ -271,7 +271,8 @@ lemma count_mul_period (s : Set ℕ) [DecidablePred (· ∈ s)] {L : ℕ} (hper 
     exact Finset.filter_congr fun x _ => hshift m x
 
 omit [Fintype ι] in
-theorem hasNatDensity_of_periodic (s : Set ℕ) [DecidablePred (· ∈ s)] {L : ℕ} (hL : 0 < L)
+open Classical in
+theorem hasNatDensity_of_periodic (s : Set ℕ) {L : ℕ} (hL : 0 < L)
     (hper : ∀ x, x + L ∈ s ↔ x ∈ s) :
     HasNatDensity s ((((Finset.range L).filter (· ∈ s)).card : ℝ) / L) := by
   classical
