@@ -122,6 +122,7 @@ theorem analyticOrderAt_eq_nat_iff_meromorphicOrderAt {f : ℂ → ℂ} {z : ℂ
       rw [hord, ENat.map_top] at h
       exact (WithTop.top_ne_natCast (α := ℤ) r h).elim
     | coe n =>
+      rw [hord] at h
       rw [ENat.map_natCast] at h
       exact_mod_cast h
 
