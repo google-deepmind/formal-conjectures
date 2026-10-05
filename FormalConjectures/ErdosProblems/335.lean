@@ -91,7 +91,7 @@ because nothing prevents `X_A`, `X_B` from being countable null sets) in
 def LiteralCircleQuestion : Prop :=
   ∀ A B : Set ℕ, IsErdos335Pair A B → IsCircleRotationPair A B
 
-/-! ### Statement of Ackelsberg–Richter, Theorem 1.4 (stated, **not** proved here) -/
+/- ### Statement of Ackelsberg–Richter, Theorem 1.4 (stated, **not** proved here) -/
 
 /-- `hℕ = {h, 2h, 3h, …}`. -/
 def multiples (h : ℕ) : Set ℕ := {n | 0 < n ∧ h ∣ n}
@@ -132,7 +132,7 @@ def AckelsbergRichterTheorem14 : Prop :=
             HasDensityAlong Ns (symmDiff B (shiftDown B t)) 0))
 
 
-/-!
+/-
 ## The literal circle-rotation formulation is degenerate
 
 The problem page describes pairs of the form `A = {n > 0 : {nθ} ∈ X_A}`,
@@ -210,7 +210,7 @@ theorem literalCircleQuestion_holds : LiteralCircleQuestion :=
   fun A B h => isCircleRotationPair_of_pos A B h.1 h.2.1
 
 
-/-!
+/-
 ## Solutions of `d(A + B) = d(A) + d(B)` coming from rotations on finite cyclic groups
 
 For `m ≥ 1` and `X, Y ⊆ ℤ/mℤ`, let `A = {n ≥ 1 : n mod m ∈ X}`, `B = {n ≥ 1 : n mod m ∈ Y}`
@@ -360,7 +360,6 @@ theorem hasDensity_periodicSet {m : ℕ} [NeZero m] (X : Finset (ZMod m)) :
     rw [ZMod.card] at this
     exact_mod_cast this
   refine tendsto_div_of_bounded _ _ (m + 2) fun N => ?_
-  have key' := count_periodicSet_div_mod X N
   set M := N + 1 with hM
   have hdiv := Nat.div_add_mod M m
   have hr : M % m < m := Nat.mod_lt _ (Nat.pos_of_ne_zero (NeZero.ne m))
@@ -371,6 +370,7 @@ theorem hasDensity_periodicSet {m : ℕ} [NeZero m] (X : Finset (ZMod m)) :
   have hite : ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) ≤ 1 := by
     split_ifs <;> simp
   have hite0 : (0 : ℝ) ≤ ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) := by positivity
+  have key' := count_periodicSet_div_mod X N
   have hcr' : (Nat.count (fun n : ℕ => (n : ZMod m) ∈ X) r : ℝ) ≤ r := by exact_mod_cast hcr
   have hr' : (r : ℝ) < m := by exact_mod_cast hr
   have hr0 : (0 : ℝ) ≤ r := by positivity
