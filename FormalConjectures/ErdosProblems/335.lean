@@ -360,6 +360,7 @@ theorem hasDensity_periodicSet {m : ℕ} [NeZero m] (X : Finset (ZMod m)) :
     rw [ZMod.card] at this
     exact_mod_cast this
   refine tendsto_div_of_bounded _ _ (m + 2) fun N => ?_
+  have key' := count_periodicSet_div_mod X N
   set M := N + 1 with hM
   have hdiv := Nat.div_add_mod M m
   have hr : M % m < m := Nat.mod_lt _ (Nat.pos_of_ne_zero (NeZero.ne m))
@@ -370,7 +371,6 @@ theorem hasDensity_periodicSet {m : ℕ} [NeZero m] (X : Finset (ZMod m)) :
   have hite : ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) ≤ 1 := by
     split_ifs <;> simp
   have hite0 : (0 : ℝ) ≤ ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) := by positivity
-  have key' := count_periodicSet_div_mod X N
   have hcr' : (Nat.count (fun n : ℕ => (n : ZMod m) ∈ X) r : ℝ) ≤ r := by exact_mod_cast hcr
   have hr' : (r : ℝ) < m := by exact_mod_cast hr
   have hr0 : (0 : ℝ) ≤ r := by positivity
