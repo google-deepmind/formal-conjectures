@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Convergence of fraction numerators $a(n)/b(n)$ to $e$
@@ -24,13 +25,15 @@ $$a(1) = 3, a(2) = 5$$
 For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
 \left(\frac{n-2}{2}\right) a(n-3)
-& \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+& \text{if } n \text{ is even} \cr 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 
 *References:*
 - [A340737](https://oeis.org/A340737)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [b](https://oeis.org/b)
 -/
+
+@[expose] public section
 
 namespace OeisA340737
 
@@ -47,7 +50,7 @@ $$a(1) = 3, a(2) = 5$$
 For $n > 2$:
 $$a(n) = \begin{cases} \left(\frac{n+2}{2}\right) a(n-1) - a(n-2) -
 \left(\frac{n-2}{2}\right) a(n-3)
-& \text{if } n \text{ is even} \\ 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+& \text{if } n \text{ is even} \cr 2 a(n-1) + n a(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
 def a (n : ℕ) : ℕ :=
   match n with
@@ -82,7 +85,7 @@ $$b(1) = 1, b(2) = 2$$
 For $n > 2$:
 $$b(n) = \begin{cases} \left(\frac{n+2}{2}\right) b(n-1) - b(n-2) -
 \left(\frac{n-2}{2}\right) b(n-3)
-& \text{if } n \text{ is even} \\ 2 b(n-1) + n b(n-2) & \text{if } n \text{ is odd} \end{cases}$$
+& \text{if } n \text{ is even} \cr 2 b(n-1) + n b(n-2) & \text{if } n \text{ is odd} \end{cases}$$
 -/
 def b (n : ℕ) : ℕ :=
   match n with

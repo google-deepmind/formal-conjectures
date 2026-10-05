@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The 2-4-6-8 Conjecture
@@ -26,10 +27,17 @@ Zhi-Wei Sun has offered a $2,468 prize for the first proof (or $2,468 RMB for a 
 
 The conjecture has been verified for all $n$ up to $1.2 \times 10^{12}$ by Yaakov Baruch (March 2019).
 
+The conjecture is false: $n = 896315812331399$ has no such representation. The counterexample
+was found in the OEIS Open project, with a Lean proof.
+
 *References:*
 - [A306477](https://oeis.org/A306477)
 - [mathoverflow/323541](https://mathoverflow.net/questions/323541): Z.-W. Sun, "Positive integers written as C(w,2) + C(x,4) + C(y,6) + C(z,8) with w,x,y,z in {2,3,...},", Feb. 19, 2019.
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 -/
+
+@[expose] public section
 
 namespace OeisA306477
 
@@ -65,9 +73,14 @@ theorem a_6 : A 6 :=
 /--
 **Zhi-Wei Sun's 2-4-6-8 Conjecture (A306477)**: Any integer $n > 0$ can be written as
 $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$ for nonnegative integers $w, x, y, z$.
+
+This is false: $n = 896315812331399$ is a counterexample.
+See T. Adamczewski, OEIS Open: How many conjectures can language models turn into theorems?,
+[arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) : A n := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/fd09021e79869476ef83cda231312f1a2a89c8d7/runs/oeis-open-lite-fable51-wm0v421z5ygi8f6b/oeis_306477_conjecture_1/Submission/Spec.lean#L793"]
+theorem conjecture : ¬ ∀ n : ℕ, 0 < n → A n := by
   sorry
 
 end OeisA306477

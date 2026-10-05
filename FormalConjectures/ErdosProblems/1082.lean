@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1082
 
 *Reference:* [erdosproblems.com/1082](https://www.erdosproblems.com/1082)
 -/
+
+@[expose] public section
 
 namespace Erdos1082
 
@@ -51,6 +55,6 @@ This counterexample has originally been found by Heiko Harborth.
 @[category research solved, AMS 51, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/0aca4d71095301c0fd2dca32611b7addb2ea735c/FormalConjectures/ErdosProblems/1082.lean"]
 theorem erdos_1082.parts.ii : answer(False) ↔
     ∀ (A : Finset ℝ²) (hA : A.Nonempty) (hA_n3c : NonTrilinear (A : Set ℝ²)),
-    ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a - 1 := by
+    ∃ (a : ℝ²) (ha : a ∈ A), A.card / 2 ≤ distinctDistancesFrom A a := by
   sorry
 end Erdos1082

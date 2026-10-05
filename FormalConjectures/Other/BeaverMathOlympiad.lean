@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beaver Math Olympiad (BMO)
@@ -38,6 +39,8 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
+@[expose] public section
+
 namespace BeaverMathOlympiad
 
 /--
@@ -46,7 +49,7 @@ namespace BeaverMathOlympiad
 Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (1, 2)$ and
 
 $$(a_{n+1}, b_{n+1}) = \begin{cases}
-(a_n-b_n, 4b_n+2) & \text{if }a_n \ge b_n \\
+(a_n-b_n, 4b_n+2) & \text{if }a_n \ge b_n \cr
 (2a_n+1, b_n-a_n) & \text{if }a_n < b_n
 \end{cases}$$
 
@@ -122,7 +125,7 @@ Let $v_2(n)$ be the largest integer $k$ such that $2^k$ divides $n$.
 Let $(a_n)_{n \ge 0}$ be a sequence such that
 
 $$a_n = \begin{cases}
-2 & \text{if } n=0 \\
+2 & \text{if } n=0 \cr
 a_{n-1}+2^{v_2(a_{n-1})+2}-1 & \text{if } n \ge 1
 \end{cases}$$
 
@@ -178,7 +181,7 @@ theorem beaver_math_olympiad_problem_4
 Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (0, 5)$ and
 
 $$(a_{n+1}, b_{n+1}) = \begin{cases}
-(a_n+1, b_n-f(a_n)) & \text{if } b_n \ge f(a_n) \\
+(a_n+1, b_n-f(a_n)) & \text{if } b_n \ge f(a_n) \cr
 (a_n, 3b_n+a_n+5) & \text{if } b_n < f(a_n)
 \end{cases}$$
 
@@ -213,7 +216,7 @@ theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
 Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (10, 12)$ and
 
 $$(a_{n+1}, b_{n+1}) = \begin{cases}
-(a_n - \lfloor b_n/2 \rfloor - 3, 3 \lfloor (b_n+1)/2 \rfloor + 6) & \text{if } a_n > \lfloor b_n/2 \rfloor \\
+(a_n - \lfloor b_n/2 \rfloor - 3, 3 \lfloor (b_n+1)/2 \rfloor + 6) & \text{if } a_n > \lfloor b_n/2 \rfloor \cr
 (3 a_n + 5, b_n - 2 a_n) & \text{if } a_n \le \lfloor b_n/2 \rfloor
 \end{cases}$$
 

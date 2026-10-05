@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1043
@@ -28,11 +30,11 @@ import FormalConjecturesUtil
   97-115.
 -/
 
+@[expose] public section
+
 namespace Erdos1043
 
 open MeasureTheory Polynomial
-
-attribute [local instance] Measure.Subtype.measureSpace
 
 /-- The set $\{ z \in \mathbb{C} : \lvert f(z)\rvert\leq 1\}$ -/
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
@@ -46,6 +48,9 @@ $$\{ z: \lvert f(z)\rvert\leq 1\}$$
 onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.
+
+The projection onto the line $\ell = \mathbb{R} u$ is measured with the Lebesgue measure of that
+line, so `volume` of the projected set is its length.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 416
 
 *Reference:* [erdosproblems.com/416](https://www.erdosproblems.com/416)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology Real
@@ -69,6 +72,8 @@ theorem erdos_416.variants.Erdos : ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ →
     ∀ᶠ x in Filter.atTop, V x = x * x.log ^ (-1 + f x) := by
   sorry
 
+-- TODO: define the constant from the paper, 0.8178146... here and add it in the statement
+set_option linter.style.category_answer false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
@@ -81,6 +86,8 @@ theorem erdos_416.variants.Maier_Pomerance :
       ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
   sorry
 
+-- TODO: add the constants `C₁, C₂, C₃` from the paper here
+set_option linter.style.category_answer false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`
