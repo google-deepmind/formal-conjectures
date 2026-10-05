@@ -192,6 +192,56 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
   simpa using Tendsto.mul_const _ <|
     Tendsto.congr' (eventually_atTop.2 ⟨1, fun k hk => by field_simp⟩) h
 
+/-- The number of multiples of `k ≥ 1` below `n ≥ 1` is `⌈n / k⌉ = (n + k - 1) / k`. -/
+theorem ncard_multiples_Iio {k : ℕ} (hk : 1 ≤ k) {n : ℕ} (hn : 1 ≤ n) :
+    ({m : ℕ | k ∣ m} ∩ Iio n).ncard = (n + k - 1) / k := by
+  have hkpos : 0 < k := hk
+  have : {m : ℕ | k ∣ m} ∩ Iio n = (fun j => j * k) '' Iio ((n + k - 1) / k) := by
+    ext m
+    simp only [mem_inter_iff, mem_ofPred_eq, mem_Iio, mem_image]
+    constructor
+    · rintro ⟨⟨j, rfl⟩, hm⟩
+      refine ⟨j, ?_, mul_comm _ _⟩
+      rw [Nat.lt_iff_add_one_le, Nat.le_div_iff_mul_le hkpos]
+      rw [mul_comm k j] at hm
+      rw [add_mul]
+      omega
+    · rintro ⟨j, hj, rfl⟩
+      refine ⟨⟨j, mul_comm _ _⟩, ?_⟩
+      rw [Nat.lt_iff_add_one_le, Nat.le_div_iff_mul_le hkpos, add_mul] at hj
+      omega
+  rw [this, ncard_image_of_injective _ (mul_left_injective₀ (by omega)), ncard_Iio]
+
+/-- The set of multiples of a positive integer `k` has natural density `1 / k`. -/
+theorem hasDensity_multiples {k : ℕ} (hk : 1 ≤ k) : {n : ℕ | k ∣ n}.HasDensity (1 / (k : ℝ)) := by
+  have hkR : (0 : ℝ) < k := by exact_mod_cast hk
+  simp only [HasDensity, partialDensity, inter_univ, univ_inter, ncard_Iio]
+  have hlow : ∀ n : ℕ, 1 ≤ n → 1 / (k : ℝ) ≤ (({n : ℕ | k ∣ n} ∩ Iio n).ncard : ℝ) / n := by
+    intro n hn
+    rw [ncard_multiples_Iio hk hn]
+    have h1 : n ≤ k * ((n + k - 1) / k) := by
+      have := Nat.lt_mul_div_succ (n + k - 1) (show 0 < k from hk)
+      rw [mul_add, mul_one] at this
+      omega
+    have h2 : (n : ℝ) ≤ k * (((n + k - 1) / k : ℕ) : ℝ) := by exact_mod_cast h1
+    have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+    rw [div_le_div_iff₀ hkR hnR]
+    linarith
+  have hup : ∀ n : ℕ, 1 ≤ n →
+      (({n : ℕ | k ∣ n} ∩ Iio n).ncard : ℝ) / n ≤ 1 / (k : ℝ) + 1 / n := by
+    intro n hn
+    rw [ncard_multiples_Iio hk hn]
+    have h1 : k * ((n + k - 1) / k) ≤ n + k - 1 := Nat.mul_div_le _ _
+    have h2 : (k : ℝ) * (((n + k - 1) / k : ℕ) : ℝ) ≤ n + k := by
+      have : k * ((n + k - 1) / k) ≤ n + k := by omega
+      exact_mod_cast this
+    have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+    rw [div_add_div _ _ hkR.ne' hnR.ne', div_le_div_iff₀ hnR (by positivity)]
+    nlinarith
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds ?_
+    (eventually_atTop.2 ⟨1, hlow⟩) (eventually_atTop.2 ⟨1, hup⟩)
+  simpa using Tendsto.const_add (1 / (k : ℝ)) tendsto_one_div_atTop_nhds_zero_nat
+
 /-- A finite set has natural density zero. -/
 theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
   simp [HasDensity, partialDensity]
