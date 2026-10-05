@@ -43,6 +43,18 @@ the complete changed files from this worktree. Retain both tips and their merge 
 recorded commits cannot be retrieved, report that gap rather than substitute another base.
 Do not transplant individual files into another revision or discard local changes.
 
+Before the first Lean build or scratch check, fetch the pinned Mathlib cache from the reviewed
+project root, as in `CONTRIBUTING.md`. For a local review, use the recorded project root in
+place of `$review_tree`:
+
+```bash
+(cd "$review_tree" && lake exe cache get)
+```
+
+Do this only after pinning the checkout and selecting its trusted execution environment.
+If cache retrieval fails, record the failure; do not silently rebuild all of Mathlib.
+Then build only the affected modules with `lake --wfail build` from the same project root.
+
 Keep scratch witnesses and evidence outside the worktree. After saving the report and checking
 for any work worth preserving, remove only this review worktree, without force:
 
