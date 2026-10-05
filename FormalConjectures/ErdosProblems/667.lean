@@ -24,8 +24,8 @@ that is guaranteed inside a locally dense graph.
 
 *References:*
 * [erdosproblems.com/667](https://www.erdosproblems.com/667)
-* [Er97f] P. Erdős, _Some old and new problems in various branches of combinatorics_.
-  Discrete Math. 165/166 (1997), 227-231.
+* [Er97f] P. Erdős, _Some unsolved problems_. In: Combinatorics, Geometry and Probability
+  (Cambridge, 1993), Cambridge Univ. Press (1997), 1-10.
 * [EFRS94] P. Erdős, R. J. Faudree, C. C. Rousseau and R. H. Schelp,
   _A local density condition for triangles_. Discrete Math. 127 (1994), 153-161.
 -/
@@ -62,9 +62,14 @@ $$ c(p, q) = \liminf_{n \to \infty} \frac{\log H(n)}{\log n} $$
 a strictly increasing function of $q$ for $1 \leq q \leq \binom{p-1}{2} + 1$?
 
 A problem of Erdős, Faudree, Rousseau, and Schelp. When $q = 1$ this corresponds exactly to the
-classical Ramsey problem, and hence $\tfrac{1}{p-1} \leq c(p, 1) \leq \tfrac{2}{p+1}$. It is easy
-to see that if $q = \binom{p-1}{2} + 1$ then $c(p, q) = 1$. Erdős, Faudree, Rousseau and Schelp
-have shown that $c(p, \binom{p-1}{2}) \leq 1/2$.
+classical Ramsey problem, and hence $\tfrac{1}{p-1} \leq c(p, 1) \leq \tfrac{2}{p+1}$ for
+$p \geq 3$. It is easy to see that if $q = \binom{p-1}{2} + 1$ then $c(p, q) = 1$.
+
+erdosproblems.com/667 also states that Erdős, Faudree, Rousseau and Schelp showed
+$c(p, \binom{p-1}{2}) \leq 1/2$. This cannot hold for all $p$: for $p = 6$, $q = 10$, the
+complement of a $(6, 10)$-locally dense graph is $C_6$-free, so Bondy–Simonovits together with
+$\alpha(F) \geq n^2 / (2e(F) + n)$ gives $c(6, 10) \geq 2/3$. That remark is therefore not
+formalised here.
 -/
 @[category research open, AMS 5]
 theorem erdos_667 :
@@ -93,10 +98,11 @@ theorem erdos_667.variants.endpoint (p : ℕ) (hp : 2 ≤ p) :
 
 /--
 The case $q = 1$ is the classical Ramsey problem, giving the bounds
-$\tfrac{1}{p-1} \leq c(p, 1) \leq \tfrac{2}{p+1}$.
+$\tfrac{1}{p-1} \leq c(p, 1) \leq \tfrac{2}{p+1}$ for $p \geq 3$. (For $p = 2$ the condition
+forces $G$ to be complete, so $c(2, 1) = 1$ and the upper bound fails.)
 -/
 @[category research solved, AMS 5]
-theorem erdos_667.variants.ramsey_bounds (p : ℕ) (hp : 2 ≤ p) :
+theorem erdos_667.variants.ramsey_bounds (p : ℕ) (hp : 3 ≤ p) :
     1 / ((p : ℝ) - 1) ≤ c p 1 ∧ c p 1 ≤ 2 / ((p : ℝ) + 1) := by
   sorry
 
