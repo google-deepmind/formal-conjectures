@@ -1,0 +1,20 @@
+Source: https://www.erdosproblems.com/latex/757
+Retrieved: 2026-09-08
+Original response SHA256: 76b312a72ccb3755841492091664c485fca5c8d0a7befd6c30f786869efbdf04
+Extraction: complete problem box, no FC reviews.
+
+Let $A\subset \mathbb{R}$ be a set of size $n$ such that every subset $B\subseteq A$ with $\lvert B\rvert =4$ has $\lvert B-B\rvert\geq 11$. Find the best constant $c>0$ such that $A$ must always contain a Sidon set of size $\geq cn$.
+For comparison, note that if $B$ were a Sidon set then $\lvert B-B\rvert=13$, so this condition is saying that at most one difference is 'missing' from $B-B$. Equivalently, one can view $A$ as a set such that every four points determine at least five distinct distances, and ask for a subset with all distances distinct.
+Without loss of generality, one can assume $A\subset \mathbb{N}$.
+Erd\H{o}s and S\'{o}s proved that $c\geq 1/2$. Gy\'{a}rf\'{a}s and Lehel \cite{GyLe95} proved\[\frac{1}{2}+\frac{1}{141\cdot 76}\leq c\leq\frac{3}{5}.\](The example proving the upper bound is the set of the first $n$ Fibonacci numbers.)
+Ma and Tang \cite{MaTa26} have improved these bounds to\[\frac{9}{17}\leq c\leq \frac{4}{7}.\]
+References
+[GyLe95] Gy\'{a}rf\'{a}s, Andr\'{a}s and Lehel, Jen\H{o},
+Linear sets with five distinct differences among any four
+elements
+. J. Combin. Theory Ser. B (1995), 108-118.
+  
+  [MaTa26] J. Ma and Q. Tang,
+Largest Sidon subsets in weak Sidon sets
+. arXiv:2602.23282 (2026).
+Back to the problem
