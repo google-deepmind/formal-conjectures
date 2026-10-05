@@ -22,7 +22,9 @@ public import FormalConjecturesUtil
 
 Conjectures 1 and 2 in Section 4 of da Fonseca's survey [dF18].
 Conjecture 1 originates with Bapat and Lal [BL94]; Conjecture 2 is da Fonseca's
-extension to a half-line. The two statements below have negative answers.
+extension to a half-line. For Conjecture 2, we use the non-diagonal formulation
+in [Mi20, Remark, p. 917]. [dF18] omits this condition; diagonal matrices have a
+constant q-permanent. The two statements below have negative answers.
 Kenta Kitamura's order-144 counterexample has a Lean formalization [Ki26];
 the second statement follows by restricting any proposed half-line monotonicity
 to $[-1,1]$.
@@ -40,6 +42,9 @@ a simpler counterexample. These are related solved results.
 - [dF18] C. M. da Fonseca, *The mu-permanent revisited*,
   [arXiv:1804.02231](https://arxiv.org/abs/1804.02231) (2018),
   Section 4, Conjectures 1–2; Section 5, Conjectures 3–4.
+- [Mi20] L. Mitchell, *A note on Bapat's q-permanent conjecture*,
+  Operators and Matrices 14 (2020), 915–919, Remark, p. 917,
+  https://doi.org/10.7153/oam-2020-14-56.
 - [Ki26] Kenta Kitamura, *bapat-lal-q-permanent-lean*, Lean 4 formalization (2026),
   [GitHub repository](https://github.com/KitaKen1/bapat-lal-q-permanent-lean).
 - [MI19] *Open Problems in Numerical Linear Algebra*,
@@ -73,7 +78,7 @@ namespace BapatLal
 non-diagonal Hermitian positive definite matrix
 strictly increasing for $q \in [-1,1]$? The answer is negative [Ki26]. -/
 @[category research solved, AMS 15,
-    formal_proof using lean4 at "https://github.com/KitaKen1/bapat-lal-q-permanent-lean/blob/42dabed0c50511040a5c72b80c81593ba58fd82e/lean/Bapat/Main.lean#L25"]
+    formal_proof using lean4 at "https://github.com/KitaKen1/bapat-lal-q-permanent-lean/blob/2d1f9c72f7303f4d8ed4037861df4fa53064b43e/lean/Bapat/Main.lean#L25"]
 theorem qPermanentMonotonicity :
     answer(False) ↔
       ∀ (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ),
@@ -81,15 +86,16 @@ theorem qPermanentMonotonicity :
           StrictMonoOn (fun q : ℝ => (A.qPermanent q).re) (Set.Icc (-1) 1) := by
   sorry
 
-/-- Conjecture 2 in [dF18, Section 4]: does every Hermitian positive definite matrix
-have some $ε < -1$ on whose half-line $(ε, ∞)$ its q-permanent is strictly increasing?
+/-- Conjecture 2 in [dF18, Section 4], with the non-diagonal hypothesis explicitly
+stated in [Mi20, Remark, p. 917]: does every non-diagonal Hermitian positive definite
+matrix have some $ε < -1$ on whose half-line $(ε, ∞)$ its q-permanent is strictly increasing?
 The answer is negative [Ki26], by the same counterexample as Conjecture 1. -/
 @[category research solved, AMS 15,
-    formal_proof using lean4 at "https://github.com/KitaKen1/bapat-lal-q-permanent-lean/blob/42dabed0c50511040a5c72b80c81593ba58fd82e/lean/Bapat/DaFonseca.lean#L18"]
+    formal_proof using lean4 at "https://github.com/KitaKen1/bapat-lal-q-permanent-lean/blob/2d1f9c72f7303f4d8ed4037861df4fa53064b43e/lean/Bapat/DaFonseca.lean#L21"]
 theorem qPermanentHalfLineMonotonicity :
     answer(False) ↔
       ∀ (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ),
-        A.PosDef →
+        A.PosDef → ¬ A.IsDiag →
           ∃ ε : ℝ, ε < -1 ∧
             StrictMonoOn (fun q : ℝ => (A.qPermanent q).re) (Set.Ioi ε) := by
   sorry
