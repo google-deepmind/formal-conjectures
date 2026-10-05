@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Nat.Parity
+public import Mathlib.Algebra.Ring.Parity
 public import Mathlib.Order.Interval.Finset.Nat
 public import Mathlib.Data.Rat.Cast.Order
 public import Mathlib.Tactic.FieldSimp
