@@ -73,6 +73,15 @@ jobs:
       - name: Run website post-processing tests
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
 
+      # `lakefile.extract.toml` builds the problems for `extract_names` with
+      # `answerKinds`. It must equal `lakefile.toml` except for the answer mode.
+      - name: Check lakefile.extract.toml
+        run: |
+          grep -qx 'weak.google.answer = "always_true"' lakefile.toml
+          grep -qx 'weak.google.answer = "postpone"' lakefile.extract.toml
+          diff <(sed 's/^weak\.google\.answer = "always_true"$/weak.google.answer = "postpone"/' lakefile.toml) \
+            lakefile.extract.toml
+
   build:
     runs-on: ubuntu-latest
     name: Build project
@@ -326,11 +335,14 @@ jobs:
         with:
           node-version: '18'
 
+      # CI builds only with `lakefile.toml` (`always_true` mode), where `answerKinds`
+      # is wrong for `Prop` answers. The site does not use it, so it is excluded.
+      # See `scripts/extract_names.lean` for how to extract it.
       - name: Generate conjectures data for website
         if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified \
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,answerKinds,fileFirstAdded,fileLastModified \
             > site/data/conjectures.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
