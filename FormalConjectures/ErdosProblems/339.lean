@@ -110,5 +110,3 @@ theorem distinctSums_pair : 5 ∈ distinctSums 2 {1, 2, 3} := by
   rcases hx with rfl | rfl <;> simp
 
 end Erdos339
-
-
