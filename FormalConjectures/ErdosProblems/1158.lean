@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1158
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er64f] Erdős, P., On extremal problems of graphs and generalized graphs. Israel J. Math. (1964),
   183--190.
 -/
+
+@[expose] public section
 
 namespace Erdos1158
 

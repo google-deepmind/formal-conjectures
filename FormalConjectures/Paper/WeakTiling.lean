@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Weak tiling problems
@@ -26,6 +28,8 @@ Problems 4.1, 4.2, and 4.3 from [arxiv/2506.23631](https://arxiv.org/abs/2506.23
 See also `FormalConjectures.Wikipedia.Fuglede` for Fuglede's spectral set conjecture, which
 motivates the study of weak tilings.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set ENNReal NNReal
 

@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«28»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 40
 
 *Reference:* [erdosproblems.com/40](https://www.erdosproblems.com/40)
 -/
+
+@[expose] public section
 
 open AdditiveCombinatorics Filter Real Set
 open scoped Pointwise
@@ -42,14 +45,24 @@ def Erdos40For (g : ℕ → ℝ) : Prop :=
 For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
+-/
+@[category research open, AMS 11]
+theorem erdos_40 :
+    {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = answer(sorry) := by
+  sorry
 
-Asked here in decision form: is there any such $g$ at all? Establishing the
-implication for even one $g(N) → \infty$ already answers Erdős Problem 28
+/--
+Is there any function $g(N) → \infty$ such that
+$$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
+implies $\limsup 1_A\ast 1_A(n)=\infty$?
+
+This is a weaker form of Erdős Problem 40, which asks for all such $g$. Establishing
+the implication for even one $g(N) → \infty$ already answers Erdős Problem 28
 positively, because a basis of order $2$ satisfies
 $\lvert A\cap \{1,\ldots,N\}\rvert \gg N^{1/2}$.
 -/
 @[category research open, AMS 11]
-theorem erdos_40 :
+theorem erdos_40.variants.weaker :
     answer(sorry) ↔ ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
   sorry
 

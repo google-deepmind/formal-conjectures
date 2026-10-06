@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $< n^2$
@@ -23,6 +24,8 @@ Number of primes strictly less than $n^2$.
 
 *References:*
 - [A038107](https://oeis.org/A038107)-/
+
+@[expose] public section
 
 namespace OeisA38107
 

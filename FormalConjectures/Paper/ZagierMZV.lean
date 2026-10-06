@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Zagier's Conjecture on Multiple Zeta Values
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   Ecole Norm. Sup. (4), 38(1):1–56, 2005.
 - [OEIS A000931](https://oeis.org/A000931)
 -/
+
+@[expose] public section
 
 -- TODO(jgd) There are additional conjectures in Co18 which would be nice to formalize.
 

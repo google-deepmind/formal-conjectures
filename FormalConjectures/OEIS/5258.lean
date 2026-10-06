@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Apéry numbers
@@ -25,6 +26,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}$$
 *References:*
 - [A005258](https://oeis.org/A005258)
 -/
+
+@[expose] public section
 
 namespace OeisA5258
 

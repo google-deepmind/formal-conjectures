@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 903
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [dBEr48] de Bruijn, N. G. and Erdős, P., On a combinatorial problem. Nederl. Akad. Wetensch.,
   Proc. (1948), 1277--1279 = Indagationes Math. 10, 421--423.
 -/
+
+@[expose] public section
 
 namespace Erdos903
 

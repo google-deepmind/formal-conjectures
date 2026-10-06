@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1043
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
 - [Po61] Pommerenke, Ch., On metric properties of complex polynomials. Michigan Math. J. (1961),
   97-115.
 -/
+
+@[expose] public section
 
 namespace Erdos1043
 

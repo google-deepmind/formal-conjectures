@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 42
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   arXiv preprint arXiv:2102.08753 (2021).
 
 -/
+
+@[expose] public section
 
 open Real Complex MeasureTheory
 open scoped EuclideanGeometry FourierTransform

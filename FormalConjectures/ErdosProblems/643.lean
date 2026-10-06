@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 643
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [PiVe09] Pikhurko, Oleg and Verstra\"{e}te, Jacques, The maximum size of hypergraphs without
   generalized 4-cycles. J. Combin. Theory Ser. A (2009), 637--649.
 -/
+
+@[expose] public section
 
 namespace Erdos643
 

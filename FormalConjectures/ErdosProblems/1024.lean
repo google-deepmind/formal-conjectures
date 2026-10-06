@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1024
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [PhRo86] Phelps, K. T. and R\"odl, V., Steiner triple systems with minimum independence number. Ars
   Combin. (1986), 167--172.
 -/
+
+@[expose] public section
 
 namespace Erdos1024
 

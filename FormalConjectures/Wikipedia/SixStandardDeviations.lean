@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Six standard deviations suffice (Spencer's theorem)
@@ -46,6 +47,8 @@ not just $n$ of them.
 - [S. Lovett and R. Meka, *Constructive discrepancy minimization by walking on the edges*,
   SIAM J. Comput. **44** (2015), 1573–1582](https://doi.org/10.1137/130929400)
 -/
+
+@[expose] public section
 
 namespace SixStandardDeviations
 

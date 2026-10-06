@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 834
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Li25] R. Li, On an Erdős-Lovász problem: $3$-critical $3$-graphs of minimum degree $7$.
   arXiv:2512.24850 (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos834
 

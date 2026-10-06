@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1178
@@ -36,6 +37,8 @@ import FormalConjecturesUtil
 - [SoSo17] Solymosi, David and Solymosi, Jozsef, Small cores in 3-uniform hypergraphs. J. Combin.
   Theory Ser. B (2017), 897--910.
 -/
+
+@[expose] public section
 
 namespace Erdos1178
 

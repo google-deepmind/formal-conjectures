@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 594
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [EHS74] Erdős, P. and Hajnal, A. and Shelah, S., On some general properties of chromatic
   numbers. Topics in topology (Proc. Colloq., Keszthely, 1972) (1974), 243-255.
 -/
+
+@[expose] public section
 
 open Cardinal
 open scoped Cardinal
@@ -48,7 +51,7 @@ if and only if it admits no proper colouring with countably many colours; this i
 encoded as `IsEmpty (G.Coloring ℕ)`. The conclusion states that there is some
 $N$ such that for every $k \geq N$ the graph contains a cycle of odd length $2k + 1$.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, AMS 3 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos594.lean#L907"]
 theorem erdos_594 : answer(True) ↔
     ∀ (V : Type) (G : SimpleGraph V), IsEmpty (G.Coloring ℕ) →
       ∃ N : ℕ, ∀ k : ℕ, N ≤ k →
