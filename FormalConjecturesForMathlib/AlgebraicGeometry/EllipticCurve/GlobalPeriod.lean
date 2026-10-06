@@ -104,7 +104,7 @@ open scoped Classical in
 /-- The *global period* of the real and complex period integrals at all infinite places, up to a
 normalisation factor in terms of minimal discriminants. See [DD2010], §2.1. -/
 def period {K : Type*} [Field K] [NumberField K] (E : WeierstrassCurve K) : ℝ :=
-  (|(Algebra.norm ℚ E.Δ : ℝ)| / E.minimalDiscriminantIdeal.absNorm) ^ (1 / 12 : ℝ) *
+  (|(Algebra.norm ℚ E.Δ : ℝ)| / E.minimalDiscriminant.absNorm) ^ (1 / 12 : ℝ) *
     ∏ v : NumberField.InfinitePlace K,
       if hv : v.IsReal then (E.map <| NumberField.InfinitePlace.embedding_of_isReal hv).realPeriod
         else (E.map v.embedding).complexPeriod
