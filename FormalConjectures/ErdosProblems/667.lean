@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+   module
+
+   public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 667
@@ -29,7 +31,7 @@ that is guaranteed inside a locally dense graph.
 * [EFRS94] P. Erdős, R. J. Faudree, C. C. Rousseau and R. H. Schelp,
   _A local density condition for triangles_. Discrete Math. 127 (1994), 153-161.
 -/
-
+   @[expose] public section
 open SimpleGraph Filter
 open scoped Classical
 
