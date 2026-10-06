@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-   module
+module
 
-   public import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 667
@@ -31,9 +31,9 @@ that is guaranteed inside a locally dense graph.
 * [EFRS94] P. Erdős, R. J. Faudree, C. C. Rousseau and R. H. Schelp,
   _A local density condition for triangles_. Discrete Math. 127 (1994), 153-161.
 -/
-   @[expose] public section
+
+@[expose] public section
 open SimpleGraph Filter
-open scoped Classical
 
 namespace Erdos667
 
@@ -43,6 +43,7 @@ least `q` edges. -/
 def LocallyDense (p q : ℕ) {n : ℕ} (G : SimpleGraph (Fin n)) : Prop :=
   ∀ s : Finset (Fin n), s.card = p → q ≤ (G.induce s).edgeSet.ncard
 
+open Classical in
 /-- `H p q n` is `H(n) = H(n; p, q)`: the largest `m` such that *every* `(p, q)`-locally dense
 graph on `n` vertices must contain a complete graph on `m` vertices `Kₘ`.
 
