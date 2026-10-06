@@ -149,6 +149,15 @@ public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.GroupTheory.DerivedLength
+public import FormalConjecturesForMathlib.GroupTheory.ElementOrders
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.InvolutionFixedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.MovedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.OrbitCounts
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.TransitivityDegree
+public import FormalConjecturesForMathlib.GroupTheory.PrimeDivisors
+public import FormalConjecturesForMathlib.GroupTheory.RationalClasses
+public import FormalConjecturesForMathlib.GroupTheory.SubgroupCounts
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
@@ -199,6 +208,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule
 public import FormalConjecturesForMathlib.RingTheory.CohenMacaulayModule
