@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 33
@@ -23,25 +24,37 @@ import FormalConjectures.Util.ProblemImports
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture33
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
 WOWII [Conjecture 33](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`, `path(G) ≥ ⌈2 · dist_avg(M, V)⌉`, where `path(G)`
-is the floor of the average distance of `G`, `M` is the set of maximum-degree vertices,
-and `dist_avg(M, V)` is the average distance from all vertices to `M`.
+For a simple connected graph $G$,
+$\operatorname{path}(G) \ge \lceil 2 \operatorname{dist}\_{\operatorname{avg}}(M, V) \rceil$,
+where $\operatorname{path}(G)$ is the number of vertices of a largest induced path of $G$,
+$M$ is the set of maximum-degree vertices, and
+$\operatorname{dist}\_{\operatorname{avg}}(M, V)$ is the average of all nonzero distances
+$\operatorname{dist}\_G(m, v)$ with $m \in M$ and $v \in V$.
+
+The conjecture is false: the source records an October 2005 counterexample with
+$\operatorname{path}(G) = 7$ and $\operatorname{dist}\_{\operatorname{avg}}(M, V) = 3.56$.
 -/
 @[category research solved, AMS 5]
 theorem conjecture33 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let M : Set α := {v | G.degree v = G.maxDegree}
-      Int.ceil (2 * distavg G M) ≤ (path G : ℤ) := by
+      let distAvg : ℝ :=
+        open scoped Classical in
+        let pairs := (M.toFinset ×ˢ Finset.univ).filter (fun p => G.dist p.1 p.2 ≠ 0)
+        (∑ p ∈ pairs, (G.dist p.1 p.2 : ℝ)) / pairs.card
+      Int.ceil (2 * distAvg) ≤ (path G : ℤ) := by
   sorry
 
 -- Sanity checks
@@ -52,6 +65,6 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ (path G : ℤ) := Int.natCast_nonneg _
 
 /-- In `K₃`, the max degree is 2. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
+example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide
 
 end WrittenOnTheWallII.GraphConjecture33

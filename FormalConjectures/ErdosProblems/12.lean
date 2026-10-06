@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 12
@@ -22,7 +23,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/12](https://www.erdosproblems.com/12)
 -/
 
-open Classical Filter Set
+@[expose] public section
+
+open Filter Set
 
 namespace Erdos12
 
@@ -119,20 +122,23 @@ theorem erdos_12.variants.example (A : Set ℕ)
 Let $A$ be a set of natural numbers with the property that there are no distinct $a,b,c \in A$ such
 that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime then
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll N^{2/3}$$
+for infinitely many $N$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.schoen (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ)) := by
+    ∃ C > (0 : ℝ), {N : ℕ | (A ∩ Icc 1 N).ncard ≤ C * (N : ℝ) ^ (2 / 3 : ℝ)}.Infinite := by
   sorry
 
 /--
 Let $A$ be a set of natural numbers with the property that there are no distinct $a,b,c \in A$ such
 that $a \mid (b+c)$ and $b,c > a$. If all elements in $A$ are pairwise coprime then
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll N^{2/3}/\log N$$
+for infinitely many $N$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_12.variants.baier (A : Set ℕ) (hA : IsGood A) (hA' : A.Pairwise Nat.Coprime) :
-    (fun N ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log) := by
+    ∃ C > (0 : ℝ),
+      {N : ℕ | (A ∩ Icc 1 N).ncard ≤ C * (N : ℝ) ^ (2 / 3 : ℝ) / (N : ℝ).log}.Infinite := by
   sorry
 
 end Erdos12

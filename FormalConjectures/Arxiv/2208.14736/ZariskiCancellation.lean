@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Zariski Cancellation
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 **The Zariski Cancellation Problem and related problems in Affine Algebraic Geometry**
 by *Neena Gupta*
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2208.14736»
 

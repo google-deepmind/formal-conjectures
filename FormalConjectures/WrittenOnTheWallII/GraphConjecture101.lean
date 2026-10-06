@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 101
@@ -32,9 +33,11 @@ where $G - v$ is the subgraph of $G$ induced on $V(G) \setminus \{v\}$.
 These vertices are also called "critical vertices for independence."
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture101
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 453
@@ -35,6 +36,8 @@ import FormalConjectures.Util.ProblemImports
 - [Po79] Pomerance, Carl, *The prime number graph*. Math. Comp. (1979), 399-408.
 -/
 
+@[expose] public section
+
 namespace Erdos453
 
 /-- The eventual prime inequality asked in Erdős Problem 453, using Mathlib's zero-based primes. -/
@@ -46,9 +49,9 @@ def EventuallyHasPrimeWitness : Prop :=
 
 /--
 Is it true that, for all sufficiently large $n$, there exists some $i<n$ such that
-\[
+$$
 p_n^2 < p_{n+i}p_{n-i},
-\]
+$$
 where $p_k$ is the $k$th prime?
 
 Pomerance proved that the answer is no.

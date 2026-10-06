@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Chvátal's Conjecture
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 * [A Conjecture in Extremal Combinatorics](https://users.encs.concordia.ca/~chvatal/conjecture.html)
 * [Chvátal's Conjecture and Correlation Inequalities](https://arxiv.org/abs/1608.08954)
 -/
+
+@[expose] public section
 
 namespace Chvatal
 

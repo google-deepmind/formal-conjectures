@@ -19,6 +19,6 @@ public import Mathlib.Analysis.Matrix.Spectrum
 
 @[expose] public section
 
-noncomputable def Matrix.IsHermitian.maxEigenvalue {𝕜 : Type*} [Field 𝕜] [RCLike 𝕜]
+noncomputable def Matrix.IsHermitian.maxEigenvalue {𝕜 : Type*} [RCLike 𝕜]
     {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n 𝕜} (hA : A.IsHermitian) : ℝ :=
   iSup hA.eigenvalues

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 532
@@ -27,11 +28,13 @@ import FormalConjectures.Util.ProblemImports
 - [Hi74] Hindman, Neil, *Finite sums from sequences within cells of a partition of $\mathbb{N}$*. J. Combinatorial Theory Ser. A (1974), 1-11.
 -/
 
+@[expose] public section
+
 namespace Erdos532
 
 /--
 If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
-all finite subset sums\[ \sum_{n\in S}n\](as $S$ ranges over all non-empty finite subsets of $A$)
+all finite subset sums$$ \sum_{n\in S}n$$(as $S$ ranges over all non-empty finite subsets of $A$)
 are monochromatic?
 
 Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).

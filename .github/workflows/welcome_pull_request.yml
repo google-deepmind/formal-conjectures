@@ -15,6 +15,7 @@
 name: Welcome Pull Requests
 
 on:
+  # zizmor: ignore[dangerous-triggers]
   pull_request_target:
     types: [opened]
 
@@ -25,6 +26,9 @@ permissions:
 jobs:
   welcome:
     name: Post welcome comment
+    if: >-
+      github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR' ||
+      github.event.pull_request.author_association == 'FIRST_TIMER'
     runs-on: ubuntu-latest
     steps:
     - name: Post polite guidance comment

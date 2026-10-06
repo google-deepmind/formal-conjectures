@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 264
 
 *Reference:* [erdosproblems.com/264](https://www.erdosproblems.com/264)
 -/
+
+@[expose] public section
 
 namespace Erdos264
 
@@ -77,7 +80,7 @@ is not an irrationality sequence.
 @[category research solved, AMS 11]
 theorem erdos_264.variants.ko_tao_neg {a : ℕ → ℕ} (h₁ : StrictMono a) (h₂ : 0 ∉ Set.range a)
     (h₃ : Summable ((1 : ℝ) / a ·))
-    (h₄ : 0 < atTop.liminf fun n ↦ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
+    (h₄ : ∃ C > 0, ∀ᶠ n in atTop, C ≤ a n ^ 2 * ∑' k : Set.Ioi n, (1 : ℝ) / a k ^ 2) :
     ¬IsIrrationalitySequence a := by
   sorry
 

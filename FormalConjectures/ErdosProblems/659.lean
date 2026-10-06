@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 659
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 - [ErFi96] Erdős, Paul and Fishburn, Peter, Maximum planar sets that determine {$k$} distances. Discrete Math. (1996), 115--125.
 - [Gr26](https://arxiv.org/abs/2601.09102): Benjamin Grayzel, Solution to a Problem of Erdős Concerning Distances and Points
 -/
+
+@[expose] public section
 
 open EuclideanGeometry Finset Real
 

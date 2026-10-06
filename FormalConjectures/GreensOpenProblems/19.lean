@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 19
@@ -29,7 +30,9 @@ import FormalConjectures.Util.ProblemImports
   Dynamical Systems 31.3 (2011): 771-792.
 -/
 
-open Finset Real Classical
+@[expose] public section
+
+open Finset Real
 
 namespace Green19
 
@@ -47,6 +50,7 @@ From [FSS20]: given $A \subseteq G \times G$ and $d \in G$, let
 $$S_d(A) = \lbrace (x, y) \in G \times G : (x, y), (x + d, y), (x, y + d) \in A \rbrace$$
 -/
 noncomputable def S (d : G) (A : Finset (G × G)) : Finset (G × G) :=
+  open scoped Classical in
   univ.filter (fun p => IsCorner A p.1 p.2 d)
 
 end GroupDefs
@@ -79,15 +83,16 @@ This question has been resolved by [FSS20], showing that $C = 4$.
 theorem green_19 : C = 4 := by
   sorry
 
-/-- [Ma21] showed that $3.13 \leq C$. -/
-@[category research open, AMS 5 11]
+/-- [Ma21] showed that $3.13 \leq C$. This also follows from `green_19`. -/
+@[category research solved, AMS 5 11]
 theorem green_19.lower : C >= 3.13 := by
-  sorry
+  rw [green_19]
+  norm_num
 
-/-- [Ma21] showed that $C \leq 4$. -/
-@[category research open, AMS 5 11]
+/-- [Ma21] showed that $C \leq 4$. This also follows from `green_19`. -/
+@[category research solved, AMS 5 11]
 theorem green_19.upper : C <= 4 := by
-  sorry
+  rw [green_19]
 
 /- TODO(jeangud): in [FSS20] they mention that the corresponding question for squares
 $(x, y), (x, y + d), (x + d, y), (x + d, y + d)$ is wide open (and here it is not even clear that

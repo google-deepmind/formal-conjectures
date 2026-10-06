@@ -20,6 +20,7 @@ public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Data.Real.Basic
 public import Mathlib.Data.Set.Card
 public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Tactic.SetNotationForOrder
 
 import Mathlib.Tactic
 
@@ -61,14 +62,14 @@ theorem growthFunction_zero (S : Set G) :
 /-- The identity is always in the Cayley ball. -/
 lemma one_mem_cayleyBall (S : Set G) (n : ℕ) :
     1 ∈ CayleyBall S n := by
-  simp only [CayleyBall, Set.mem_setOf_eq]
+  simp only [CayleyBall, Set.mem_ofPred_eq]
   use ∅
   simp
 
 /-- The Cayley ball is monotonic in its radius. -/
 lemma cayleyBall_monotone (S : Set G) {m n : ℕ} (h : m ≤ n) :
     CayleyBall S m ⊆ CayleyBall S n := by
-  simp only [CayleyBall, Set.setOf_subset_setOf, forall_exists_index, and_imp]
+  simp only [CayleyBall, Set.ofPred_subset_ofPred, forall_exists_index, and_imp]
   exact fun g l lLength LSubS lProdG ↦ ⟨l, by linarith, LSubS, lProdG⟩
 
 /-- Closure property: if `g ∈ CayleyBall S m` and `h ∈ CayleyBall S n`, then
@@ -76,7 +77,7 @@ lemma cayleyBall_monotone (S : Set G) {m n : ℕ} (h : m ≤ n) :
 lemma cayleyBall_mul (S : Set G) {g h : G} {m n : ℕ}
     (hg : g ∈ CayleyBall S m) (hh : h ∈ CayleyBall S n) :
     g * h ∈ CayleyBall S (m + n) := by
-  simp only [CayleyBall, Set.mem_setOf_eq] at hg hh ⊢
+  simp only [CayleyBall, Set.mem_ofPred_eq] at hg hh ⊢
   obtain ⟨lg, lgLength, lgSubS, lgProd⟩ := hg
   obtain ⟨lh, lhLength, lhSubS, lhProd⟩ := hh
   refine ⟨lg ++ lh, ?_, ?_, by simp [lhProd, lgProd]⟩
@@ -92,7 +93,7 @@ lemma cayleyBall_mul (S : Set G) {g h : G} {m n : ℕ}
 lemma cayleyBall_inv (S : Set G) {g : G} {n : ℕ}
     (hg : g ∈ CayleyBall S n) :
     g⁻¹ ∈ CayleyBall S n := by
-  simp only [CayleyBall, Set.mem_setOf_eq] at hg ⊢
+  simp only [CayleyBall, Set.mem_ofPred_eq] at hg ⊢
   obtain ⟨lg, lgLength, lgSubS, lgProd⟩ := hg
   refine ⟨lg.reverse.map (·⁻¹), by simp [lgLength], ?_,
     by simp [List.prod_inv_reverse, lgProd.symm]⟩
@@ -126,7 +127,7 @@ theorem tendsto_atTop_growthFunction_of_infinite [Infinite G] {S : Set G} (hS : 
   delta GrowthFunction
   have (n : ℕ) : Fintype (CayleyBall S n) := (cayleyBall_finite hS n).fintype
   apply ((Finset.tendsto_card_atTop).comp (f := fun n ↦ (CayleyBall S n).toFinset) ?_).congr
-    (by simp [Set.ncard_eq_toFinset_card'])
+    (by simp)
   apply tendsto_atTop_atTop_of_monotone fun _ _ ↦ by simpa using cayleyBall_monotone S
   intro A
   obtain rfl | hA := A.eq_empty_or_nonempty

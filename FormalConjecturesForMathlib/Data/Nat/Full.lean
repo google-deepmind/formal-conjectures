@@ -18,6 +18,7 @@ module
 public import Mathlib.Algebra.Order.Ring.Nat
 public import Mathlib.Algebra.Order.Star.Basic
 public import Mathlib.Data.Nat.PrimeFin
+public meta import Mathlib.Data.Nat.PrimeFin
 
 @[expose] public section
 
@@ -69,7 +70,7 @@ theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full
 theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Prime)
     (h : n % p ^ (k + 1) = p) : ¬ (k + 1).Full n := by
   rw [Full]
-  push_neg
+  push Not
   use p
   simp [mem_primeFactors, hp, ne_eq, true_and]
   constructor
@@ -86,7 +87,7 @@ open Lean Meta Qq in
 /-- Simproc to compute the set `Nat.primeFactors`. -/
 dsimproc primeFactorsEq (Nat.primeFactors _) := fun e ↦ do
   unless e.isAppOfArity `Nat.primeFactors 1 do return .continue
-  let some n ← fromExpr? e.appArg! | return .continue
+  let some n ← Lean.Nat.fromExpr? e.appArg! | return .continue
   let outAsList : List Q(ℕ) := (unsafe n.primeFactors.val.unquot).map mkNatLit
   let outAsFinset : Q(Finset ℕ) := outAsList.foldl (fun s n ↦ q(insert $n $s)) q({})
   return .done outAsFinset

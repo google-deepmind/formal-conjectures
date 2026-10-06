@@ -16,13 +16,12 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Paths
-public import Mathlib.Data.Nat.Lattice
 public import Mathlib.Data.Real.Basic
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

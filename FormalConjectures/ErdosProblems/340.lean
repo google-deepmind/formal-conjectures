@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 340
 
 *Reference:* [erdosproblems.com/340](https://www.erdosproblems.com/340)
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped Real Pointwise
@@ -29,18 +33,22 @@ namespace Erdos340
 
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
-  decide +native
+  norm_num [greedySidon, greedySidon.aux, greedySidon.go, Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
-  decide +native
+  norm_num [greedySidon, greedySidon.aux, greedySidon.go, Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
-  decide +native
+  simp [greedySidon, greedySidon.aux, greedySidon.go]
+  norm_num [Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by

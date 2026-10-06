@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1113
@@ -47,6 +48,8 @@ See also Erdős Problems [203](https://www.erdosproblems.com/203) and
 [276](https://www.erdosproblems.com/276).
 -/
 
+@[expose] public section
+
 namespace Erdos1113
 
 /--
@@ -60,7 +63,8 @@ def HasFinitePrimeCoveringSet (k : ℕ) : Prop :=
 Sierpiński [Si60] proved that there are infinitely many Sierpiński numbers, using covering
 systems to construct suitable covering sets for any $k$ satisfying a certain congruence.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/b8b641ba2d00dc4d1fe205a078a4159372672459/Erdos/P1113.lean#L22"]
 theorem erdos_1113.variants.infinitely_many_sierpinski :
     Set.Infinite {k : ℕ | k.IsSierpinskiNumber} := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # A conjecture by Margulis on matrix groups
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 **Bounded diagonal orbits in homogeneous spaces over function fields**
 by *Qianlin Huang, Ronggang Shi*
 -/
+
+@[expose] public section
 
 namespace Margulis
 
@@ -44,7 +47,7 @@ theorem conjecture_1_1 {n : ℕ} (hn : 3 ≤ n)
 
 end
 
- /-
+/-
 ## Diagonal orbits over function fields (Huang–Shi, Theorem 1.2)
 
 We now formulate a Lean version of the main theorem of Huang–Shi.
@@ -66,14 +69,23 @@ section FunctionFieldDiagonalOrbit
 
 variable (F : Type u) [Field F] [Fintype F]
 
-/-- The natural inclusion `F[t] →+* F((t⁻¹))`. -/
+/-- The natural inclusion `F[t] →+* F((t⁻¹))`. The field `F((t⁻¹))` is modelled by the Laurent
+series field `F⸨X⸩`, whose variable `X` plays the role of `t⁻¹`, so the polynomial variable `t`
+is sent to `X⁻¹`. -/
 noncomputable def polyToLaurent : F[X] →+* F⸨X⸩ :=
-  (HahnSeries.ofPowerSeries ℤ F).comp Polynomial.coeToPowerSeries.ringHom
+  Polynomial.eval₂RingHom HahnSeries.C (HahnSeries.single (-1 : ℤ) 1)
 
+-- The `SetLike.GradeZero` instances for `Semiring`/`CommSemiring`/`Ring`/`CommRing`/`Monoid`/
+-- `Algebra` on a grade-zero piece are stated for an arbitrary graded family and unify with
+-- `↥(diagonalSubgroup ...)` before being ruled out
+attribute [-instance] SetLike.GradeZero.instMonoid SetLike.GradeZero.instSemiring
+  SetLike.GradeZero.instCommSemiring SetLike.GradeZero.instAlgebraSubtypeMemOfNat
+  SetLike.GradeZero.instRing SetLike.GradeZero.instCommRing in
 /-- **Huang–Shi, Theorem 1.2**
 
 Let `F` be a finite field of characteristic `p ∈ {3, 5, 7, 11}`, and set
-`K = F((t⁻¹))`, `A = F[t]`. Let
+`K = F((t⁻¹))`, `A = F[t]`. Here `K` is modelled by the Laurent series field `F⸨X⸩` with
+`X = t⁻¹`, so that `A` is embedded via `t ↦ X⁻¹`. Let
 
 * `D` be the diagonal subgroup of `SL₄(K)`,
 * `Γ = SL₄(A)` the lattice subgroup embedded into `SL₄(K)` via the natural inclusion `A →+* K`.

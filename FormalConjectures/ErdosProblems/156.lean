@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 156
@@ -26,14 +27,17 @@ import FormalConjectures.Util.ProblemImports
 - [Ru98b] Ruzsa, Imre Z., A small maximal Sidon set. Ramanujan J. (1998), 55-58.
 -/
 
+@[expose] public section
+
 open Finset Filter
-open scoped Classical
 
 namespace Erdos156
+
 /--
 The size of the smallest maximal Sidon set in $\{1, \dots, N\}$.
 -/
 noncomputable def minMaximalSidonSet (N : ℕ) : ℕ :=
+  open scoped Classical in
   sInf (((Icc 1 N).powerset.filter fun (A : Finset ℕ) ↦
     Set.IsMaximalSidonSetIn (A : Set ℕ) N).image card : Set ℕ)
 

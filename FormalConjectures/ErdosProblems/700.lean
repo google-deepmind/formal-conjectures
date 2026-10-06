@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 700
@@ -29,6 +30,8 @@ A problem of Erdős and Szekeres [ErSz78].
  * [OEIS A091963](https://oeis.org/A091963)
  * Guy, R. K., _Unsolved Problems in Number Theory_, B31, B33.
 -/
+
+@[expose] public section
 
 namespace Erdos700
 
@@ -66,10 +69,10 @@ dividing $n$.
 
 Erdős–Szekeres [ErSz78] note that $f(n) = n/P(n)$ when $n$ is a product of two primes
 (`erdos_700.variants.prime_mul`), with $n = 30$ a further example. The characterisation itself is
-open; we state it as the (unknown) predicate that is equivalent to being such an `n`. -/
+open; we state it as the (unknown) set of all composite `n` with `f n = n / P n`. -/
 @[category research open, AMS 11]
-theorem erdos_700.parts.i (n : ℕ) (hn : ¬ n.Prime) (hn1 : 1 < n) :
-    f n = n / P n ↔ answer(sorry) := by
+theorem erdos_700.parts.i :
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
   sorry
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
@@ -103,7 +106,7 @@ theorem erdos_700.parts.iii :
 @[category API, AMS 11]
 lemma prime_dvd_of_not_dvd_choose (P n k : ℕ) (hP : P.Prime) (hPn : P ∣ n)
     (h : ¬ P ∣ n.choose k) : P ∣ k := by
-  haveI := Fact.mk hP
+  have := Fact.mk hP
   by_contra hk
   apply h
   have hmod : n.choose k ≡ (n % P).choose (k % P) * (n / P).choose (k / P) [MOD P] :=
@@ -151,7 +154,7 @@ theorem erdos_700.variants.prime_pow (p a : ℕ) (hp : p.Prime) (ha : 2 ≤ a) :
       · rw [pow_zero, Nat.dvd_one] at hpg; omega
       · exact hj0
     have hj2 : j ≤ 1 := by
-      by_contra h; push_neg at h
+      by_contra! h
       exact hp2g ((Nat.pow_dvd_pow_iff_le_right hp.one_lt).2 h)
     rw [hjeq, show j = 1 from by omega, pow_one]
   have hle : f (p ^ a) ≤ p := by
@@ -176,8 +179,8 @@ so any `k` with `gcd(pq, C(pq,k)) = 1` must be a multiple of `pq`, of which ther
 @[category research solved, AMS 11]
 theorem erdos_700.variants.prime_mul (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p < q) :
     f (p * q) = p := by
-  haveI := Fact.mk hp
-  haveI := Fact.mk hq
+  have := Fact.mk hp
+  have := Fact.mk hq
   have hp2 : 2 ≤ p := hp.two_le
   have hq2 : 2 ≤ q := hq.two_le
   have hpndq : ¬ p ∣ q := fun h => by

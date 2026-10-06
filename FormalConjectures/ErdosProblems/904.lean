@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 904
@@ -27,6 +28,8 @@ import FormalConjectures.Util.ProblemImports
 - [Fa92] Faudree, Ralph J., *Complete subgraphs with large degree sums*. J. Graph Theory (1992), 327-334.
 - [BoNi05] Bollobás, Béla and Nikiforov, Vladimir, *The sum of degrees in cliques*. Electron. J. Combin. (2005), Note 21, 10.
 -/
+
+@[expose] public section
 
 namespace Erdos904
 
@@ -43,7 +46,7 @@ Let $r\geq 2$ and let $t_r(n)$ be the Turán number (the maximal number of edges
 vertices with no $K_{r+1}$).
 
 If $G$ is a graph with $n$ vertices and $m\geq t_r(n)$ edges there exists a clique on $r$ vertices,
-say $x_1,\ldots,x_r$, such that\[d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.\]
+say $x_1,\ldots,x_r$, such that $$d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.$$
 
 A conjecture of Bollobás and Erdős. This was conjectured in [Er75] only in the special case $r=3$. Edwards [Ed78] proved the conjecture for $2\leq r\leq 8$ (under the additional assumption that $n\geq r^2$). Faudree [Fa92] proved the conjecture for all $r\geq 2$ provided $n>\frac{r-1}{4}r^2$. The full conjecture was proved by Bollobás and Nikiforov [BoNi05].
 -/

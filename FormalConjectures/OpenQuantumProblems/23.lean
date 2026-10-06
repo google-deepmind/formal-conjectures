@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 23: SIC-POVMs
@@ -104,6 +105,8 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   *Quantum Designs: Foundations of a Noncommutative Design Theory*,
   PhD thesis, University of Vienna (1999).
 -/
+
+@[expose] public section
 noncomputable section
 namespace OpenQuantumProblem23
 
@@ -183,7 +186,7 @@ lemma isSICFamily_one_of_normalized {ψ : StateVector 1} (hψ : IsNormalized ψ)
 @[category test, AMS 15 47 81]
 theorem hasSICPOVM_one : HasSICPOVM 1 := by
   refine ⟨fun _ => EuclideanSpace.single 0 1, isSICFamily_one_of_normalized ?_⟩
-  simp [IsNormalized, EuclideanSpace.norm_single]
+  simp [IsNormalized]
 
 /- ## Explicit low-dimensional witnesses -/
 

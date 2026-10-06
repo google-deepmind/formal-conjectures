@@ -34,6 +34,7 @@ structure LatinSquare (n : ℕ) where
   /-- Each column is a permutation of `Fin n`. -/
   col_injective : ∀ j, Function.Injective (mat.transpose j)
 
+set_option backward.isDefEq.respectTransparency false in
 /--
 There are finitely many latin squares of order `n`, since each is determined by a matrix in
 the finite type `Matrix (Fin n) (Fin n) (Fin n)`. This is useful for defining the maximum number of

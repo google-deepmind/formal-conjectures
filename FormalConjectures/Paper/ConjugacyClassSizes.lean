@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # The $S_3$-conjecture (conjugacy classes of distinct sizes)
@@ -38,6 +39,8 @@ up to isomorphism, $S_3$ is the only nontrivial finite ah-group. The conjecture 
 for all solvable groups (independently by Zhang and by Knörr–Lempken–Thielcke), but the general
 non-solvable case remains open.
 -/
+
+@[expose] public section
 
 namespace ConjugacyClassSizes
 
@@ -142,7 +145,7 @@ Knörr–Lempken–Thielcke (1995).
 -/
 @[category research solved, AMS 20]
 theorem conjClassSizes_iff_sym_three_solvable
-    (G : Type) [Group G] [Fintype G] [IsSolvable G] [Nontrivial G]
+    (G : Type) [Group G] [Fintype G] [Group.IsSolvable G] [Nontrivial G]
     (h : HasDistinctConjClassSizes (G := G)) :
     Nonempty (G ≃* Equiv.Perm (Fin 3)) := by
   sorry
