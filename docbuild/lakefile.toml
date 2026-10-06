@@ -10,4 +10,4 @@ path = "../"
 [[require]]
 name = "verso"
 git = "https://github.com/mo271/verso.git"
-rev = "5207ca14f0c419f2268aae29c76ce23b2d4dc340"
+rev = "5ce19c4a239e2d0ed4153399bd17957cffff0535"

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 650
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [VLT26] W. Van Doorn, Y. Li, and Q. Tang, *Optimal bounds for an Erdős problem on matching
   integers to distinct multiples*. arXiv:2603.28636 (2026).
 -/
+
+@[expose] public section
 
 namespace Erdos650
 

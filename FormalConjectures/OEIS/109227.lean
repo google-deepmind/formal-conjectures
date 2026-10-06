@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A109227
@@ -27,6 +28,8 @@ Conjecture: $a(2)$ and $a(121)$ are primes. Are there any more?
 *References:*
 - [A109227](https://oeis.org/A109227)
 -/
+
+@[expose] public section
 
 namespace OeisA109227
 

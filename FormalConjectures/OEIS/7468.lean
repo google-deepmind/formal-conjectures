@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of next $n$ primes
@@ -26,6 +27,8 @@ with $a(0) = 0$.
 *References:*
 - [A007468](https://oeis.org/A007468)
 -/
+
+@[expose] public section
 
 namespace OeisA7468
 
@@ -65,7 +68,7 @@ The only positive integer $n$ such that $a(n)$ is a perfect square is $n=38$.
 - Carlos Eduardo Olivieri, Mar 09 2015
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) (hsq : IsSquare (a n)) : n = 38 := by
+theorem conjecture (n : ℕ) (hn : 0 < n) : IsSquare (a n) ↔ n = 38 := by
   sorry
 
 end OeisA7468

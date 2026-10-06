@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 52
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [Green's Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.52)
 
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Pointwise

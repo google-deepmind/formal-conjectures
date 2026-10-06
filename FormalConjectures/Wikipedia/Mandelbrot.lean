@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about the Mandelbrot and Multibrot sets
@@ -30,6 +31,8 @@ The first two conjectures are related in that the former implies the latter.
  - [arxiv/math/9902155](https://arxiv.org/abs/math/9902155)
  - [mathoverflow/37229](https://mathoverflow.net/questions/37229/)
 -/
+
+@[expose] public section
 
 open Topology Set Function Filter Bornology Metric MeasureTheory
 

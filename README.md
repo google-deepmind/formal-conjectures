@@ -102,7 +102,7 @@ benchmark version but instead go into `v{N+1}`.
 If your work has used formal-conjectures, please consider citing it via
 ```
 @misc{FormalConjectures,
-  author       = {{The Formal Conjectures Authors}}
+  author       = {{The Formal Conjectures Authors}},
   title        = {{T}he {F}ormal {C}onjectures {R}epository},
   year         = {2025},
   url          = {https://github.com/google-deepmind/formal-conjectures},

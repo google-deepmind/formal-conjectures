@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1061
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/1061](https://www.erdosproblems.com/1061)
  - [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B15.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 open scoped ArithmeticFunction.sigma
