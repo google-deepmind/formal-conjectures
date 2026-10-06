@@ -67,7 +67,7 @@ Every bridgeless cubic graph on $n$ vertices has at least $2^{n/3656}$ perfect m
 
 *Reference:* [EKKKN11].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/e1059f02264088e9fc4e2866855b8cf68d9cbeda/Proofs/T_LovaszPlummerConjecture_lovasz_plummer_conjecture_variants_explicit.lean#L34280"]
 theorem lovasz_plummer_conjecture.variants.explicit
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hcubic : ∀ v, G.degree v = 3) (hbridgeless : G.IsBridgeless) :
