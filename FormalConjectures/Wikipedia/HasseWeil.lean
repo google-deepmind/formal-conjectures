@@ -30,8 +30,10 @@ the modularity theorem.
 [Wikipedia] states the conjecture for the Hasse--Weil zeta function and asks only for a
 meromorphic continuation, which is equivalent to a meromorphic continuation of $L(E, s)$. That
 weaker form is the one the Birch and Swinnerton-Dyer conjecture rests on, so it is recorded here as
-well. [Gross2011], Conjecture 2.10 takes it as a hypothesis; a statement of that conjecture which
-instead asserts the continuation implies `exists_hasMeromorphicContinuation` below.
+well. [Gross2011], Conjecture 2.10 takes it as a hypothesis, and only near $s = 1$. The
+formulation of the Birch and Swinnerton-Dyer conjecture in `FormalConjectures/Millennium/BSD.lean`
+instead asserts a global meromorphic continuation, so it implies
+`exists_hasMeromorphicContinuation` below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Hasse%E2%80%93Weil_zeta_function#Hasse%E2%80%93Weil_conjecture)

@@ -56,10 +56,12 @@ appears in the Birch and Swinnerton-Dyer conjecture, and it is defined even when
 globally minimal equation.
 
 *References:*
-- [LMFDB](https://beta.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
+- [LMFDB](https://www.lmfdb.org/knowledge/show/ec.period), knowl `ec.period`
 - [Sil09] Silverman, J. H., *The Arithmetic of Elliptic Curves*, 2nd ed., Graduate Texts in
   Mathematics 106, Springer, 2009. Chapter III §1 (Weierstrass equations, the invariant
   differential) and Chapter VI (elliptic curves over $\mathbb{C}$).
+- [DEW2019] Dokchitser, V., Evans, H. and Wiersema, H., "On a BSD-type formula for L-values of
+  Artin twists of elliptic curves", Notation 17, [arXiv](https://arxiv.org/abs/1905.04282)
 - [DD2010] Dokchitser, T. and Dokchitser, V., "On the Birch-Swinnerton-Dyer quotients modulo
   squares", Annals of Mathematics 172 (2010), 567-596, §2.1 and Conjecture 2.1,
   [PDF](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
@@ -101,8 +103,13 @@ end Complex
 section NumberField
 
 open scoped Classical in
-/-- The *global period* of the real and complex period integrals at all infinite places, up to a
-normalisation factor in terms of minimal discriminants. See [DD2010], §2.1. -/
+/-- The *global period* $\Omega(E) = (|N_{K/\mathbb{Q}}(\Delta_E)| / N(\mathfrak{D}_{E/K}))^{1/12}
+\prod_v \Omega_v(E)$, the product of the real and complex period integrals over the infinite places
+$v$ of $K$, scaled by the discriminant factor. This is the global period of [LMFDB], knowl
+`ec.period`. It is not the bare product of archimedean periods in [DD2010], Conjecture 2.1: the
+discriminant factor equals the product over the finite places of the differential correction
+factors $|\omega / \omega_v^{\min}|_v$ that [DD2010] include in $C(E/K)$, by the scaling of the
+discriminant under a change of differential, see [DEW2019], Notation 17. -/
 def period {K : Type*} [Field K] [NumberField K] (E : WeierstrassCurve K) : ℝ :=
   (|(Algebra.norm ℚ E.Δ : ℝ)| / E.minimalDiscriminant.absNorm) ^ (1 / 12 : ℝ) *
     ∏ v : NumberField.InfinitePlace K,

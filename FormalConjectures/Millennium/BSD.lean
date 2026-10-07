@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.EllipticCurveRank
 public import FormalConjectures.Wikipedia.HasseWeil
 
 
@@ -41,8 +42,6 @@ public import FormalConjectures.Wikipedia.HasseWeil
   [discovery.ucl.ac.uk](https://discovery.ucl.ac.uk/10223687/1/main-pages.pdf)
 - [Ada] Tom Adamczewski. "Autoformalized conjectures",
   [Birch and Swinnerton-Dyer](https://tadamcz.com/autoformalization-results/#/p/wp-birch-and-swinnerton-dyer-conjecture)
-- [Silverman2009] Joseph H. Silverman. *The Arithmetic of Elliptic Curves*. 2nd ed., Graduate Texts
-  in Mathematics 106, Springer (2009), [doi](https://doi.org/10.1007/978-0-387-09494-6)
 - [DD2010] Tim Dokchitser and Vladimir Dokchitser. "On the Birch-Swinnerton-Dyer quotients
   modulo squares." Annals of Mathematics 172 (2010), 567-596, Conjecture 2.1,
   [annals](https://annals.math.princeton.edu/wp-content/uploads/annals-v172-n1-p11-p.pdf)
@@ -54,12 +53,7 @@ namespace WeierstrassCurve.Affine
 
 open Projective HasseWeil NumberField
 
-/-- **Mordell--Weil theorem**: the rational points of an elliptic curve over a number field form
-a finitely generated group. See [Silverman2009], Theorem VIII.6.7. -/
-@[instance, category textbook, AMS 11 14]
-theorem Point.fg {K : Type*} [Field K] [NumberField K] [DecidableEq K] (E : Affine K)
-    [E.IsElliptic] : AddGroup.FG E.Point := by
-  sorry
+attribute [local instance] EllipticCurveRank.mordell_weil
 
 namespace NumberField
 
