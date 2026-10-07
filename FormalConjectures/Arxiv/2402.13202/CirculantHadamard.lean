@@ -27,6 +27,8 @@ also attributed to Ryser, says that no circulant Hadamard matrix has order great
 *Reference:*
 * S. Steinerberger,
   [A note on approximate Hadamard matrices](https://arxiv.org/abs/2402.13202)
+* OpenAI,
+  [The circulant Hadamard conjecture](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-circulant-Hadamard-conjecture-September-23-2026/paper.pdf)
 -/
 
 @[expose] public section
@@ -51,7 +53,8 @@ theorem orderFourGenerator_isHadamard :
         Fin.sub_def, Fin.neg_def, Matrix.ofNat_apply]
 
 /-- Every circulant Hadamard matrix has order at most four. -/
-@[category research open, AMS 15]
+@[category research solved, AMS 15,
+  formal_proof using lean4 at "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/LinearAlgebra/CirculantHadamard/Main.lean#L21"]
 theorem circulant_hadamard_conjecture {n : ℕ} (v : Fin n → ℝ)
     (hv : Hadamard.IsHadamard' (Matrix.circulant v)) : n ≤ 4 := by
   sorry
