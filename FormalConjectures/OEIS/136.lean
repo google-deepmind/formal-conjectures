@@ -51,34 +51,33 @@ instance {a b c d : ℕ} : Decidable (IntervalsCross a b c d) := by
 connections between consecutive stamps in the original strip cross in the stack ordering.
 Connection $i$ links the stack positions $\sigma(i)$ and $\sigma(i+1)$ of consecutive
 stamps $i$ and $i+1$. -/
-def IsStampFolding {n : ℕ} (σ : Fin n → Fin n) : Prop :=
-  Function.Bijective σ ∧
-    ∀ (i j : Fin (n - 1)), i < j →
-      ¬IntervalsCross
-        (σ ⟨i.val, by omega⟩).val (σ ⟨i.val + 1, by omega⟩).val
-        (σ ⟨j.val, by omega⟩).val (σ ⟨j.val + 1, by omega⟩).val
+def IsStampFolding {n : ℕ} (σ : Equiv.Perm (Fin n)) : Prop :=
+  ∀ (i j : Fin (n - 1)), i < j →
+    ¬IntervalsCross
+      (σ ⟨i.val, by omega⟩).val (σ ⟨i.val + 1, by omega⟩).val
+      (σ ⟨j.val, by omega⟩).val (σ ⟨j.val + 1, by omega⟩).val
 
-instance {n : ℕ} (σ : Fin n → Fin n) : Decidable (IsStampFolding σ) := by
+instance {n : ℕ} (σ : Equiv.Perm (Fin n)) : Decidable (IsStampFolding σ) := by
   unfold IsStampFolding; infer_instance
 
 /-- Number of distinct stamp foldings of a strip of $n$ labeled stamps (OEIS A000136). -/
 def a (n : ℕ) : ℕ :=
-  ((Finset.univ : Finset (Fin n → Fin n)).filter fun σ => IsStampFolding σ).card
+  ((Finset.univ : Finset (Equiv.Perm (Fin n))).filter fun σ => IsStampFolding σ).card
 
 @[category test, AMS 5]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 5]
-theorem a_2 : a 2 = 2 := by native_decide
+theorem a_2 : a 2 = 2 := by decide
 
 @[category test, AMS 5]
-theorem a_3 : a 3 = 6 := by native_decide
+theorem a_3 : a 3 = 6 := by decide
 
 @[category test, AMS 5]
-theorem a_4 : a 4 = 16 := by native_decide
+theorem a_4 : a 4 = 16 := by decide
 
 @[category test, AMS 5]
-theorem a_5 : a 5 = 50 := by native_decide
+theorem a_5 : a 5 = 50 := by decide
 
 /--
 "Determine the precise limiting ratio $\lim_{n \to \infty} \frac{a_{n+1}}{a_n}$."
