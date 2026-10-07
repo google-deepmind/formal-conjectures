@@ -15,20 +15,23 @@ limitations under the License.
 -/
 module
 
-public import Mathlib
-public import FormalConjecturesForMathlib.Geometry.«2d»
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 211
 
-The Erdős–Beck bound is a known theorem, independently established by Beck and by
-Szemerédi and Trotter. In this file `erdos_211` records its statement as a proposition;
-it does not supply a formal proof of that theorem. The pair-counting results and the
-implication to the quadratic special case below have complete proofs.
-
-*Reference:* [erdosproblems.com/211](https://www.erdosproblems.com/211).
+*References:*
+- [erdosproblems.com/211](https://www.erdosproblems.com/211)
+- [Be83] Beck, József, *On the lattice property of the plane and some problems of Dirac,
+  Motzkin and Erdős in combinatorial geometry*. Combinatorica (1983), 281-297.
+- [SzTr83] Szemerédi, Endre and Trotter, Jr., William T., *Extremal problems in discrete
+  geometry*. Combinatorica (1983), 381-392.
+- [Er84] Erdős, P., *Research problems*. Period. Math. Hungar. (1984), 101-103.
+- [BGS74] Burr, Stefan A. and Grünbaum, Branko and Sloane, N. J. A., *The orchard problem*.
+  Geometriae Dedicata (1974), 397-424.
+- [FuPa84] Füredi, Z. and Palásti, I., *Arrangements of lines with a large number of triangles*.
+  Proc. Amer. Math. Soc. (1984), 561-566.
 -/
-
 
 @[expose] public section
 
@@ -46,46 +49,46 @@ noncomputable def determinedLines (s : Finset ℝ²) : Finset (AffineSubspace �
   classical
   exact s.offDiag.image fun p => line[ℝ, p.1, p.2]
 
-/-- For $1\leq k<n$, any $n$ distinct plane points, at most $n-k$ on a line,
-determine at least $ckn$ lines, for an absolute positive constant $c$.
-This is the known Erdős–Beck theorem; this declaration only formalizes its statement. -/
-def erdos_211 : Prop :=
+/-- The uniform Erdős–Beck lower bound. -/
+def MainBound : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∀ (n k : ℕ), 1 ≤ k → k < n →
     ∀ s : Finset ℝ², s.card = n →
       (∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ n - k) →
       c * (k : ℝ) * (n : ℝ) ≤ ((determinedLines s).card : ℝ)
 
-/-- The stated quadratic special case for $2n$ points, at most $n$ on a line.
-This declaration records the statement; `quadratic_of_erdos_211` proves the implication. -/
-def erdos_211.variants.quadratic : Prop :=
+/-- The quadratic lower bound for configurations with at most half the points on a line. -/
+def QuadraticBound : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n →
     ∀ s : Finset ℝ², s.card = 2 * n →
       (∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ n) →
       c * (n : ℝ) ^ 2 ≤ ((determinedLines s).card : ℝ)
 
-/-- Erdős's speculative asymptotic coefficient $1/6$, interpreted uniformly in
-$1≤k<n$ as $n→∞$. This is a statement, not a claimed proof or an answer
-established by the supplied source. -/
-def erdos_211.variants.one_sixth : Prop :=
+/-- Erdős speculates that there are at least $(1+o(1))kn/6$ determined lines [Er84].
+The asymptotic bound is uniform over $1 \leq k < n$. -/
+@[category research open, AMS 5 52]
+theorem erdos_211.variants.one_sixth :
   ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ (n k : ℕ), N ≤ n → 1 ≤ k → k < n →
     ∀ s : Finset ℝ², s.card = n →
       (∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ n - k) →
-      (1 - ε) / 6 * (k : ℝ) * (n : ℝ) ≤ ((determinedLines s).card : ℝ)
+      (1 - ε) / 6 * (k : ℝ) * (n : ℝ) ≤ ((determinedLines s).card : ℝ) := by
+  sorry
 
-/-- The configurations cited to motivate sharpness: arbitrarily large point sets,
-no four collinear, and asymptotically $n^2/6$ three-point lines. The indexing parameter
-need not equal the number of points. This declaration records the cited construction,
-without claiming a formal proof of its existence. -/
-def erdos_211.variants.sharpness : Prop :=
+/-- There are arbitrarily large configurations with no four collinear points and
+$\sim n^2/6$ three-point lines, constructed by Burr, Grünbaum, and Sloane [BGS74]
+and Füredi and Palásti [FuPa84]. The index need not equal the number of points. -/
+@[category research solved, AMS 5 52]
+theorem erdos_211.variants.sharpness :
   ∃ s : ℕ → Finset ℝ²,
     Tendsto (fun i => (s i).card) atTop atTop ∧
     (∀ (i : ℕ) (L : AffineSubspace ℝ ℝ²), IsLine L →
       ((s i).filter fun p => p ∈ L).card ≤ 3) ∧
     Tendsto (fun i =>
       (((determinedLines (s i)).filter fun L => ((s i).filter fun p => p ∈ L).card = 3).card : ℝ) /
-        ((s i).card : ℝ) ^ 2) atTop (nhds (1 / 6 : ℝ))
+        ((s i).card : ℝ) ^ 2) atTop (nhds (1 / 6 : ℝ)) := by
+  sorry
 
 /-- Membership means that two distinct points of the configuration generate the line. -/
+@[category API, AMS 5 52]
 theorem mem_determinedLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
     L ∈ determinedLines s ↔ ∃ a ∈ s, ∃ b ∈ s, a ≠ b ∧ line[ℝ, a, b] = L := by
   classical
@@ -93,12 +96,14 @@ theorem mem_determinedLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
   aesop
 
 /-- A span of two distinct points is a geometric line. -/
+@[category API, AMS 5 52]
 theorem isLine_pair {a b : ℝ²} (hab : a ≠ b) : IsLine (line[ℝ, a, b]) := by
   unfold IsLine
   rw [direction_affineSpan, vectorSpan_pair]
   exact finrank_span_singleton (vsub_ne_zero.mpr hab)
 
 /-- Two distinct points on a geometric line span the whole line. -/
+@[category API, AMS 5 52]
 theorem line_pair_eq {a b : ℝ²} {L : AffineSubspace ℝ ℝ²}
     (hL : IsLine L) (ha : a ∈ L) (hb : b ∈ L) (hab : a ≠ b) :
     line[ℝ, a, b] = L := by
@@ -108,12 +113,14 @@ theorem line_pair_eq {a b : ℝ²} {L : AffineSubspace ℝ ℝ²}
   · exact (isLine_pair hab).trans hL.symm
 
 /-- Every determined line is one-dimensional. -/
+@[category API, AMS 5 52]
 theorem isLine_of_mem_determinedLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²}
     (hL : L ∈ determinedLines s) : IsLine L := by
   obtain ⟨a, _, b, _, hab, rfl⟩ := mem_determinedLines.mp hL
   exact isLine_pair hab
 
 /-- The finite image counts precisely all geometric lines containing at least two points. -/
+@[category API, AMS 5 52]
 theorem determinedLines_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
     L ∈ determinedLines s ↔ IsLine L ∧ 2 ≤ ((s : Set ℝ²) ∩ (L : Set ℝ²)).ncard := by
   classical
@@ -139,6 +146,7 @@ theorem determinedLines_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
       hab, line_pair_eq hL (Finset.mem_filter.mp ha).2 (Finset.mem_filter.mp hb).2 hab⟩
 
 /-- The fiber over a geometric line consists of the ordered pairs of distinct incident points. -/
+@[category API, AMS 5 52]
 theorem pair_fiber_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} (hL : IsLine L) :
     (s.offDiag.filter fun p => line[ℝ, p.1, p.2] = L) =
       (s.filter fun p => p ∈ L).offDiag := by
@@ -153,6 +161,7 @@ theorem pair_fiber_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} (hL : Is
     exact ⟨⟨ha, hb, hab⟩, line_pair_eq hL haL hbL hab⟩
 
 /-- Exact double counting: each ordered pair belongs to its unique determined line. -/
+@[category API, AMS 5 52]
 theorem ordered_pair_count (s : Finset ℝ²) :
     s.card * (s.card - 1) = ∑ L ∈ determinedLines s,
       (s.filter fun p => p ∈ L).card * ((s.filter fun p => p ∈ L).card - 1) := by
@@ -171,6 +180,7 @@ theorem ordered_pair_count (s : Finset ℝ²) :
 
 /-- Elementary bound when no line contains more than $r$ points.
 This is weaker than the Erdős–Beck bound and is not a proof of `erdos_211`. -/
+@[category API, AMS 5 52]
 theorem pair_count_bound {s : Finset ℝ²} {r : ℕ}
     (hr : ∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ r) :
     s.card * (s.card - 1) ≤ (determinedLines s).card * (r * (r - 1)) := by
@@ -185,6 +195,7 @@ theorem pair_count_bound {s : Finset ℝ²} {r : ℕ}
     _ = _ := by simp
 
 /-- In a configuration with no three collinear points, every unordered pair gives a line. -/
+@[category API, AMS 5 52]
 theorem line_count_no_three {s : Finset ℝ²}
     (hs : ∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ 2) :
     s.card * (s.card - 1) = 2 * (determinedLines s).card := by
@@ -208,12 +219,14 @@ theorem line_count_no_three {s : Finset ℝ²}
 
 /-- With at most three points on each line, double counting gives the sharp
 leading coefficient $1/6$ in a quadratic lower bound. -/
+@[category API, AMS 5 52]
 theorem six_mul_lines_no_four {s : Finset ℝ²}
     (hs : ∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ 3) :
     s.card * (s.card - 1) ≤ 6 * (determinedLines s).card := by
   simpa [Nat.mul_comm] using pair_count_bound hs
 
 /-- The real-valued form of the preceding bound, including empty configurations. -/
+@[category API, AMS 5 52]
 theorem real_lower_bound_no_four {s : Finset ℝ²}
     (hs : ∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ 3) :
     (s.card : ℝ) * ((s.card : ℝ) - 1) / 6 ≤ ((determinedLines s).card : ℝ) := by
@@ -227,7 +240,8 @@ theorem real_lower_bound_no_four {s : Finset ℝ²}
     linarith
 
 /-- The quadratic special case follows with twice the constant in the main bound. -/
-theorem quadratic_of_erdos_211 (h : erdos_211) : erdos_211.variants.quadratic := by
+@[category API, AMS 5 52]
+theorem quadratic_of_erdos_211 (h : MainBound) : QuadraticBound := by
   obtain ⟨c, hc, h⟩ := h
   refine ⟨2 * c, by positivity, ?_⟩
   intro n hn s hs hcap
@@ -238,5 +252,18 @@ theorem quadratic_of_erdos_211 (h : erdos_211) : erdos_211.variants.quadratic :=
     omega)
   push_cast at hb
   nlinarith
+
+/-- Let $1\leq k<n$. Given $n$ points in $\mathbb{R}^2$, at most $n-k$ on any line,
+there are $\gg kn$ many lines which contain at least two points.
+Solved by Beck [Be83] and Szemerédi and Trotter [SzTr83]. -/
+@[category research solved, AMS 5 52]
+theorem erdos_211 : MainBound := by
+  sorry
+
+/-- Given any $2n$ points with at most $n$ on a line there are $\gg n^2$ many lines
+formed by the points. Solved by Beck [Be83] and Szemerédi and Trotter [SzTr83]. -/
+@[category research solved, AMS 5 52]
+theorem erdos_211.variants.quadratic : QuadraticBound :=
+  quadratic_of_erdos_211 erdos_211
 
 end Erdos211
