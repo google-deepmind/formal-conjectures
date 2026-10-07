@@ -18,7 +18,8 @@ import FormalConjecturesUtil
 /-! # Equivalents to the Riemann Hypothesis
 
 This file contains formal statements that are known to be equivalent to the Riemann Hypothesis,
-following the survey [Co26], §4.
+following the survey [Co26], §4. The statement of the Riemann Hypothesis itself is in
+`FormalConjectures.Millennium.RiemannHypothesis`.
 
 *References:*
 * [Co26] A. Connes, [The Riemann Hypothesis: Past, Present and a Letter Through
@@ -130,14 +131,14 @@ $\sum_{\nu = 1}^n c_{\nu}\theta_{\nu} = 0$. -/
 @[category research solved, AMS 11 28]
 theorem beurling_nyman_criterion : RiemannHypothesis ↔
     Dense { fractScalarInvSumL2 n c θ | (n) (c) (θ)
-      (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0)} := by
+      (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0) } := by
   sorry
 
 /-- The statement that the Beurling-Nyman criterion holds. -/
 @[category research open, AMS 11 28]
 theorem beurling_nyman_criterion_rhs :
     Dense { fractScalarInvSumL2 n c θ | (n) (c) (θ)
-      (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0)} := by
+      (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0) } := by
   sorry
 
 /-- The additive Archimedean factor appearing in the Weil criterion. -/
