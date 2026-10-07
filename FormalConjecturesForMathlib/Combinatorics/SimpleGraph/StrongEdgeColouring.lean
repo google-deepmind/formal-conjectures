@@ -164,7 +164,7 @@ lemma card_not_stronglyIndependent_le {V : Type*} [Fintype V] [DecidableEq V]
     simp only [mem_filter, mem_univ, true_and, ne_eq, Subtype.mk.injEq] at hmem
     obtain ⟨hne, hnot⟩ := hmem
     simp only [T, mem_union, mem_erase, mem_biUnion, mem_incidenceFinset, incidenceSet,
-      Set.mem_setOf_eq, mem_neighborFinset]
+      Set.mem_ofPred_eq, mem_neighborFinset]
     by_cases hu : u ∈ f
     · exact Or.inl (Or.inl ⟨hne, hf, hu⟩)
     by_cases hv : v ∈ f
