@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Poisson $n$-Lie algebra construction from scalar matrices and commuting derivations
@@ -51,6 +53,8 @@ $$[x_1, \dots, x_{k-1}, a \cdot b, x_{k+1}, \dots, x_n] =
 
 When both hold, $(\mathcal{A}, \cdot, [-,\dots,-])$ is called a **Poisson $n$-Lie algebra**.
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2605.01785»
 
@@ -205,26 +209,6 @@ theorem poissonNLie_of_scalarMatrix (n : ℕ) (hn : 2 ≤ n) (m : ℕ) (hm : 1 �
 
 /- ## Tests -/
 
-private lemma bracketMatrix_update
-    (d : Fin (n + m) → Derivation F A A)
-    (M : Matrix (Fin (n + m)) (Fin m) F)
-    (x : Fin n → A) (k : Fin n) (a : A) :
-    bracketMatrix d M (Function.update x k a) =
-      (bracketMatrix d M x).updateCol (Fin.castAdd m k) (fun i => d i a) := by
-  classical
-  ext i j
-  by_cases hjk : j = Fin.castAdd m k
-  · subst j
-    simp [bracketMatrix]
-  · by_cases hj : j.val < n
-    · have hfin : (⟨j.val, hj⟩ : Fin n) ≠ k := by
-        intro h
-        apply hjk
-        apply Fin.ext
-        simpa using congrArg Fin.val h
-      simp [bracketMatrix, hjk, hj, hfin]
-    · simp [bracketMatrix, hjk, hj]
-
 /--
 The bracket vanishes whenever two arguments coincide: $[x_1, \dots, x_n] = 0$ when $x_i = x_j$
 for some $i \ne j$. This follows from the fact that two columns of `bracketMatrix` become equal,
@@ -258,7 +242,24 @@ theorem nLieBracket_add_in_slot
     nLieBracket d M (Function.update x k (a + b)) =
       nLieBracket d M (Function.update x k a) +
       nLieBracket d M (Function.update x k b) := by
-  simp only [nLieBracket, bracketMatrix_update]
+  classical
+  have hupdate (z : A) :
+      bracketMatrix d M (Function.update x k z) =
+        (bracketMatrix d M x).updateCol (Fin.castAdd m k) (fun i => d i z) := by
+    ext i j
+    by_cases hjk : j = Fin.castAdd m k
+    · subst j
+      simp [bracketMatrix]
+    · by_cases hj : j.val < n
+      · have hfin : (⟨j.val, hj⟩ : Fin n) ≠ k := by
+          intro h
+          apply hjk
+          apply Fin.ext
+          simpa using congrArg Fin.val h
+        simp [bracketMatrix, hjk, hj, hfin]
+      · simp [bracketMatrix, hjk, hj]
+  simp only [nLieBracket]
+  rw [hupdate (a + b), hupdate a, hupdate b]
   have hcol : (fun i => d i (a + b)) = (fun i => d i a) + (fun i => d i b) := by
     funext i
     simp
