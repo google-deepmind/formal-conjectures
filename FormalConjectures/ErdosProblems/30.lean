@@ -196,11 +196,8 @@ theorem erdos_30.variants.distinct_sums_card (A : Finset ℕ) (hS : IsSidon (A :
 theorem erdos_30.variants.distinct_sums_in_range (A : Finset ℕ) (N : ℕ)
     (hA : A ⊆ Finset.range (N + 1)) :
     A + A ⊆ Finset.range (2 * N + 1) := by
-  intro s hs
-  obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp hs
-  have := Finset.mem_range.mp (hA ha)
-  have := Finset.mem_range.mp (hA hb)
-  exact Finset.mem_range.mpr (by lia)
+  grw [hA, Finset.range_add_range]
+  simp [two_mul]
 
 /--
 The counting bound of Erdős and Turán [ErTu41] in its sum form: a Sidon set

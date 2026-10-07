@@ -144,8 +144,8 @@ theorem isSidon_iff_le [LinearOrder α] (A : Set α) :
   · intro hS a₁ ha₁ b₁ hb₁ a₂ ha₂ b₂ hb₂ hab₁ hab₂ hsum
     rcases hS a₁ ha₁ a₂ ha₂ b₁ hb₁ b₂ hb₂ hsum with h | ⟨h₁, h₂⟩
     · exact h
-    · have : a₁ = b₁ := le_antisymm hab₁ (h₂ ▸ h₁ ▸ hab₂)
-      exact ⟨this.trans h₂, this.symm.trans h₁⟩
+    · obtain rfl : a₁ = b₁ := le_antisymm hab₁ (h₂ ▸ h₁ ▸ hab₂)
+      exact ⟨h₂, h₁⟩
   · intro hS i₁ hi₁ j₁ hj₁ i₂ hi₂ j₂ hj₂ hsum
     rcases le_total i₁ i₂ with h₁ | h₁ <;> rcases le_total j₁ j₂ with h₂ | h₂
     · exact .inl (hS i₁ hi₁ i₂ hi₂ j₁ hj₁ j₂ hj₂ h₁ h₂ hsum)
@@ -153,7 +153,8 @@ theorem isSidon_iff_le [LinearOrder α] (A : Set α) :
       exact .inr ⟨this.1, this.2⟩
     · have := hS i₂ hi₂ i₁ hi₁ j₁ hj₁ j₂ hj₂ h₁ h₂ ((add_comm _ _).trans hsum)
       exact .inr ⟨this.2, this.1⟩
-    · have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁ h₂ ((add_comm _ _).trans (hsum.trans (add_comm _ _)))
+    · have := hS i₂ hi₂ i₁ hi₁ j₂ hj₂ j₁ hj₁ h₁ h₂
+        ((add_comm _ _).trans (hsum.trans (add_comm _ _)))
       exact .inl ⟨this.2, this.1⟩
 
 namespace IsMaximalSidonSetIn
@@ -174,6 +175,19 @@ end IsMaximalSidonSetIn
 end Set
 
 namespace Finset
+
+/-- The sum of `{0, …, m}` and `{0, …, n}` is `{0, …, m + n}`. -/
+theorem range_add_range (m n : ℕ) :
+    range (m + 1) + range (n + 1) = range (m + n + 1) := by
+  ext k
+  simp only [mem_add, mem_range]
+  constructor
+  · rintro ⟨a, ha, b, hb, rfl⟩
+    lia
+  · intro hk
+    by_cases hkm : k ≤ m
+    · exact ⟨k, by lia, 0, by lia, by simp⟩
+    · exact ⟨m, by lia, k - m, by lia, by lia⟩
 
 instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := by
   refine decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
