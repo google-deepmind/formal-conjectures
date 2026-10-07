@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Moments of the Riemann zeta function on the critical line
@@ -41,6 +43,8 @@ The statements and constants below are taken from §3.4.5 of [Co26].
 - [KS00] J. P. Keating, N. C. Snaith, *Random matrix theory and $\zeta(1/2+it)$*, Commun. Math.
   Phys. 214 (2000), no. 1, 57–89.
 -/
+
+@[expose] public section
 
 open Complex Filter Real
 open scoped Asymptotics Nat
