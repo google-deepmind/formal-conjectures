@@ -21,7 +21,7 @@ public import Mathlib.Data.Real.Basic
 @[expose] public section
 
 namespace SimpleGraph
-open Classical Finset
+open Finset
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
@@ -48,6 +48,14 @@ noncomputable def indepNeighbors (G : SimpleGraph α) (v : α) : ℝ :=
 noncomputable def averageIndepNeighbors (G : SimpleGraph α) : ℝ :=
   (∑ v ∈ Finset.univ, indepNeighbors G v) / (Fintype.card α : ℝ)
 
+/-- Abbreviation for the average independence number of the neighborhoods.
+-/
+noncomputable abbrev l (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
+/-- The same quantity under a different name, used in some conjectures.
+-/
+noncomputable abbrev l_avg (G : SimpleGraph α) : ℝ := averageIndepNeighbors G
+
 /-- Computable independence number via powerset enumeration. -/
 def computable_indep_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.powerset.filter (fun s : Finset α =>
@@ -71,9 +79,50 @@ theorem indep_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     intro s hs
     apply le_csSup
     · exact ⟨Fintype.card α, fun n ⟨s, hs⟩ => hs.card_eq ▸ s.card_le_univ⟩
-    · simp only [Set.mem_setOf_eq]
+    · simp only [Set.mem_ofPred_eq]
       exact ⟨s, ⟨fun x hx y hy hne =>
         (Finset.mem_filter.mp hs).2 x (Finset.mem_coe.mp hx) y (Finset.mem_coe.mp hy) hne,
         rfl⟩⟩
+
+/-- Maximum local independence number over all vertices.
+    For each vertex, we compute the independence number of the subgraph
+    induced by its neighbors, and take the maximum over all vertices. -/
+noncomputable def maxLocalIndependence (G : SimpleGraph α) : ℕ :=
+  let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
+  (locals.max).getD 0
+
+/-- Minimum local independence number over all vertices.
+    For each vertex, we compute the independence number of the subgraph
+    induced by its neighbors, and take the minimum over all vertices. -/
+noncomputable def minLocalIndependence (G : SimpleGraph α) : ℕ :=
+  let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
+  (locals.min).getD 0
+
+/-- Edges of `G` whose two endpoints lie in `S`. -/
+def internalEdges (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) :
+    Finset (Sym2 α) :=
+  G.edgeFinset.filter fun e => e.toFinset ⊆ S
+
+/-- A vertex set is 2-independent when its induced graph has maximum degree
+at most one. -/
+def IsTwoIndependent (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Prop :=
+  ∀ v ∈ S, (S.filter fun w => G.Adj v w).card ≤ 1
+
+/-- Maximum cardinality of an independent subset contained in `B`. -/
+noncomputable def indepNumOn (G : SimpleGraph α) [DecidableRel G.Adj]
+    (B : Finset α) : ℕ :=
+  by
+    classical
+    exact (B.powerset.filter fun (A : Finset α) => G.IsIndepSet (A : Set α)).sup card
+
+/-- Maximum cardinality of a 2-independent vertex set. -/
+noncomputable def alphaTwo (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  by
+    classical
+    exact (Finset.univ.powerset.filter fun S => IsTwoIndependent G S).sup card
+
+/-- The set of vertices of degree at most two. -/
+def lowDegreeLayer (G : SimpleGraph α) [DecidableRel G.Adj] : Finset α :=
+  Finset.univ.filter fun v => G.degree v ≤ 2
 
 end SimpleGraph

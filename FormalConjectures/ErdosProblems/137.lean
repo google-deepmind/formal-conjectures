@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 137
@@ -23,14 +24,17 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/137](https://www.erdosproblems.com/137)
 -/
 
+@[expose] public section
+
 namespace Erdos137
 
 /--
-Let $k\geq 3$. Can the product of any $k$ consecutive integers $N$ ever be powerful? That is,
-must there always exist a prime $p\mid N$ such that $p^2\nmid N$?
+We say that $N$ is powerful if whenever $p\mid N$ we also have $p^2\mid N$.
+
+Let $k\geq 3$. Can the product of any $k$ consecutive positive integers ever be powerful?
 -/
 @[category research open, AMS 11]
-theorem erdos_137 : answer(sorry) ↔ ∀ k ≥ 3, ∀ n, ¬ (∏ x ∈ Finset.Ioc n (n + k), x).Powerful := by
+theorem erdos_137 : answer(sorry) ↔ ∃ k ≥ 3, ∃ n, (∏ x ∈ Finset.Ioc n (n + k), x).Powerful := by
   sorry
 
 /--

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 897
@@ -28,6 +29,8 @@ import FormalConjectures.Util.ProblemImports
 - [Wi81] E. Wirsing, Additive and completely additive functions with restricted growth.
   Recent progress in analytic number theory, Vol. 2 (Durham, 1979), 231--280 (1981).
 -/
+
+@[expose] public section
 -- TODO(lezeau): add `ArithmeticFunction.IsAdditive` to `ForMathlib`
 
 namespace Erdos897
@@ -67,9 +70,10 @@ theorem erdos_897.parts.ii : answer(False) ↔ ∀ (f : ℕ → ℝ),
 
 /--
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
-$c$.
+$c$. This is Erdős Problem 491; see `erdos_491`, whose linked formal proof gives this statement.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos491.lean#L34"]
 theorem erdos_897.variants.log_growth
     (f : ℕ → ℝ)
     (hf : ∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b)

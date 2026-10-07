@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 499
 *Reference:* [erdosproblems.com/499](https://www.erdosproblems.com/499)
 -/
+
+@[expose] public section
 
 open Nat
 
@@ -34,7 +37,7 @@ This is true, and was proved by Marcus and Minc [MaMi62]
 
 [MaMi62] Marcus, Marvin and Minc, Henryk, Some results on doubly stochastic matrices. Proc. Amer. Math. Soc. (1962), 571-579.
 -/
-@[category research solved, AMS 15]
+@[category research solved, AMS 15, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos499.lean"]
 lemma erdos_499 :
     answer(True) ↔ (∀ n, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       n ^ (- n : ℤ) ≤ ∏ i, M i (σ i)) := by

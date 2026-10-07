@@ -16,11 +16,15 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Order.CompletePartialOrder
 
 @[expose] public section
 
 namespace SimpleGraph
 variable {V : Type*} {G : SimpleGraph V}
+
+open Finset List
 
 @[inherit_doc] scoped notation "α(" G ")" => indepNum G
 
@@ -33,5 +37,23 @@ variable {V : Type*} {G : SimpleGraph V}
   rw [← Nat.add_one_le_iff]
   exact le_csSup ⟨Nat.card V, by simp [mem_upperBounds, isNIndepSet_iff, Finset.card_le_univ]⟩
     ⟨{v}, by simp [isNIndepSet_iff]⟩
+
+/-- Infinite graphs: definitions for clique number so that the clique number of a graph
+with unbounded clique size is `∞` rather than 0.
+-/
+noncomputable
+def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ : G.IsClique s), #s
+
+/-- The set of sizes of the cliques (maximal complete subgraphs) of `G`. -/
+def cliqueSizes {V : Type} (G : SimpleGraph V) : Set ℕ :=
+  { k | ∃ S : Finset V, Maximal (fun T : Finset V => G.IsClique (T : Set V)) S ∧ S.card = k }
+
+open scoped Classical in
+/-- The triangles of `G` containing the edge `uv`, that is, the `3`-cliques of `G` whose vertex
+set contains both endpoints of `uv`. -/
+noncomputable def trianglesContaining {α : Type*} [Fintype α] (G : SimpleGraph α)
+    (uv : Sym2 α) : Finset (Finset α) :=
+  (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
+
 
 end SimpleGraph

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 47
@@ -30,6 +31,8 @@ import FormalConjectures.Util.ProblemImports
   Geometric and Functional Analysis 24.3 (2014): 959-967.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Green47
@@ -43,12 +46,24 @@ $|A \pmod p| \leqslant \frac{1}{2}(p + 1)$ for all sufficiently large $p$.
 Is it true that either $|A \cap [X]| \ll X^{1/2} / \log^{100} X$, or $A$ is contained in the
 image of $\mathbb{Z}$ under a quadratic map $\phi : \mathbb{Q} \to \mathbb{Q}$?
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-47-exact-containment-counterexample/blob/d6912b65cd04463ca81d2e7dfb52367718a3e3b2/lean/Green47ExactContainmentFC.lean#L19-L25"]
 theorem green_47 :
-    answer(sorry) ↔ ∀ A : Set ℕ,
+    answer(False) ↔ ∀ A : Set ℕ,
       (∀ᶠ p in atTop, Nat.Prime p → Set.ncard (Set.image (fun a : ℕ => (a : ZMod p)) A) ≤ (p + 1) / 2) →
       ((fun X : ℕ => ((A ∩ Set.Iic X).ncard : ℝ)) ≪ (fun X : ℕ => Real.sqrt (X : ℝ) / (Real.log (X : ℝ)) ^ 100))
       ∨ (∃ P : Polynomial ℚ, P.degree = 2 ∧ ∀ a ∈ A, ∃ z : ℤ, (a : ℚ) = P.eval (z : ℚ)) := by
+  sorry
+
+/-- In Green and Harper's formulation [GH14, Conjecture 1.7], the quadratic containment
+is allowed to fail on a finite subset of $A$. -/
+@[category research open, AMS 11]
+theorem green_47.variants.finite_exceptions :
+    answer(sorry) ↔ ∀ A : Set ℕ,
+      (∀ᶠ p in atTop, Nat.Prime p → Set.ncard (Set.image (fun a : ℕ => (a : ZMod p)) A) ≤ (p + 1) / 2) →
+      ((fun X : ℕ => ((A ∩ Set.Iic X).ncard : ℝ)) ≪ (fun X : ℕ => Real.sqrt (X : ℝ) / (Real.log (X : ℝ)) ^ 100))
+      ∨ (∃ P : Polynomial ℚ, P.degree = 2 ∧ {a ∈ A | ¬∃ z : ℤ, (a : ℚ) = P.eval (z : ℚ)}.Finite) := by
   sorry
 
 end Green47

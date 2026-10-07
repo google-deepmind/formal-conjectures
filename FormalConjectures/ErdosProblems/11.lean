@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 11
 
 *Reference:* [erdosproblems.com/11](https://www.erdosproblems.com/11)
 -/
+
+@[expose] public section
 
 namespace Erdos11
 
@@ -66,13 +69,14 @@ theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (h
   sorry
 
 /--
-Suppose that every odd $n$ is the sum of a squarefree number and a power of 2. Then the set of primes
-$p$ such that $2 ^ p ≡ 2 \mod p ^ 2$ is infinite. This is Theorem 1 in [GrSo98].
+Suppose that every odd $n > 1$ is the sum of a squarefree number and a power of 2. Then the set of
+primes $p$ such that $2^p \not\equiv 2 \pmod{p^2}$ (the non-Wieferich primes) is infinite.
+This is Theorem 1 in [GrSo98].
 [GrSo98] Granville, A. and Soundararajan, K., A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$. The Ramanujan Journal (1998), 283-298.
 -/
 @[category research solved, AMS 11]
 theorem erdos_11.variants.granville_soundararajan (H : type_of% erdos_11) :
-    {p : ℕ | p.Prime ∧ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
+    {p : ℕ | p.Prime ∧ ¬ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
   sorry
 
 end Erdos11

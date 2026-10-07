@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 /-!
 # Written on the Wall II - Conjecture 316
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture316
 
@@ -34,8 +37,14 @@ WOWII [Conjecture 316](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 Let `G` be a simple connected graph and let `P` denote the set of pendant vertices
 (vertices of degree 1). If `|P| ≥ deg_avg(Gᶜ)`, then `G` is well totally dominated,
 where `deg_avg(Gᶜ)` is the average degree of the complement of `G`.
+
+**Proof sketch.** In the trivial cases (`P = ∅`, or at most `2` vertices) `G` is complete,
+and complete graphs are well totally dominated. Otherwise the set `C` of non-pendant
+vertices satisfies `|C| ≤ 3` and is a clique of `G`, and a case split on the set `Q ⊆ C`
+of neighbours of pendant vertices shows that `G` is well totally dominated.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/KitaKen1/wowii-graph-conjecture-316-lean/blob/3335e07151bc43e86d5c104dd30fee3596f06410/GraphConjecture316.lean"]
 theorem conjecture316 (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (h : (averageDegree Gᶜ : ℚ) ≤ (pendantVertices G).card) :
     IsWellTotallyDominated G := by
@@ -51,6 +60,7 @@ example : averageDegree (⊥ : SimpleGraph (Fin 3)) = 0 := by
 /-- In `P₃` (path 0-1-2), the average degree is 4/3 and there are 2 pendant vertices. -/
 @[category test, AMS 5]
 example : averageDegree (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) = 4/3 := by
-  unfold averageDegree; decide +native
+  unfold averageDegree
+  decide +kernel
 
 end WrittenOnTheWallII.GraphConjecture316

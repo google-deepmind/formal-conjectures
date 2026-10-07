@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 253
 
 *Reference:* [erdosproblems.com/253](https://www.erdosproblems.com/253)
 -/
+
+@[expose] public section
 
 namespace Erdos253
 
@@ -38,7 +41,7 @@ $\frac{a_{i+1}}{a_i} \to 1$. If every arithmetic progression contains infinitely
 integers which are the sum of distinct $a_i$ then every sufficiently large integer is
 the sum of distinct $a_i$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos253.lean#L699"]
 theorem erdos_253 : ¬ ∀ a : ℕ → ℕ, 0 < a 0 →
     RepresentsAPs a → (Filter.atTop.Tendsto (fun n ↦ (a <| n + 1 : ℝ) / a n) (𝓝 1)) →
       subsetSums (Set.range a) ∈ Filter.cofinite := by

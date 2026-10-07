@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 31
@@ -22,7 +23,8 @@ import FormalConjectures.Util.ProblemImports
 Write $F(N)$ for the largest Sidon subset of $[N]$.
 Improve, at least for infinitely many $N$, the bounds $N^{1/2} + O(1) \le F(N) \le N^{1/2} + N^{1/4} + O(1)$.
 
-Note: the upper bound was improved to $N^{1/2} + 0.98183 N^{1/4} + O(1)$ in [CHO25].
+Note: the upper bound was improved to $N^{1/2} + 0.98183 N^{1/4} + O(1)$ in [CHO25], and then to
+$N^{1/2} + 0.94349\ldots N^{1/4} + O(1)$ in [HZ26].
 
 Related to Erdős Problem 30.
 
@@ -34,6 +36,8 @@ Related to Erdős Problem 30.
   The American Mathematical Monthly 130.5 (2023): 437-445.
 - [CHO25] Carter, Daniel, Zach Hunter, and Kevin O’Bryant. "On the diameter of finite Sidon sets."
   Acta Mathematica Hungarica 175.1 (2025): 108-126.
+- [HZ26] Hou, Jianfeng, and Hongbin Zhao. "An Improved Upper Bound for Finite Sidon Sets via
+  Vector-Valued Smoothing." [arXiv:2607.01169](https://arxiv.org/abs/2607.01169) (2026).
 - [ET41] Erdos, Paul, and Pál Turán. "On a problem of Sidon in additive number theory, and on some
   related problems." J. London Math. Soc 16.4 (1941): 212-215.
 - [Li69] Lindström, Bernt. “A remark on B4-Sequences.” Journal of Combinatorial Theory,
@@ -41,6 +45,8 @@ Related to Erdős Problem 30.
 - [CLZ01] Cohen, G.D., Litsyn, S., & Zémor, G. (2001). Binary B2-Sequences : A New Upper Bound.
   J. Comb. Theory A, 94, 152-155.
 -/
+
+@[expose] public section
 
 namespace Green31
 
@@ -66,25 +72,25 @@ theorem green_31.variants.lower_eventually :
   sorry
 
 /--
-Can we improve the upper bound $N^{1/2} + 0.98183 N^{1/4} + O(1)$ [CHO25], at least for infinitely
+Can we improve the upper bound $N^{1/2} + 0.94349 N^{1/4} + O(1)$ [HZ26], at least for infinitely
 many $N$?
 -/
 @[category research open, AMS 5 11]
 theorem green_31.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     (∃ᶠ N in atTop, F N ≤ ans N) ∧
-    ∃ c < (0.98183 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
+    ∃ c < (0.94349 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry
 
 /--
-Can we improve the upper bound $N^{1/2} + 0.98183 N^{1/4} + O(1)$ [CHO25], for all sufficiently
+Can we improve the upper bound $N^{1/2} + 0.94349 N^{1/4} + O(1)$ [HZ26], for all sufficiently
 large $N$?
 -/
 @[category research open, AMS 5 11]
 theorem green_31.variants.upper_eventually :
     let ans := (answer(sorry) : ℕ → ℝ)
     (∀ᶠ N in atTop, F N ≤ ans N) ∧
-    ∃ c < (0.98183 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
+    ∃ c < (0.94349 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry
 
 /-- [Li69] proved $F(n) \le n^{1/2} + n^{1/4} + O(1)$. -/
@@ -106,6 +112,15 @@ theorem green_31.variants.upper_bfr23 :
 @[category research solved, AMS 5 11]
 theorem green_31.variants.upper_cho25 :
     ∃ C : ℝ, ∀ᶠ N in atTop, F N ≤ Real.sqrt (N : ℝ) + (0.98183 : ℝ) * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
+  sorry
+
+/--
+[HZ26] improved the upper bound to $N^{1/2} + \gamma_0 N^{1/4} + O(1)$ with
+$\gamma_0 = 0.94349\ldots < 0.9435$.
+-/
+@[category research solved, AMS 5 11]
+theorem green_31.variants.upper_hz26 :
+    ∃ C : ℝ, ∀ᶠ N in atTop, F N ≤ Real.sqrt (N : ℝ) + (0.9435 : ℝ) * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry
 
 /--
@@ -132,13 +147,22 @@ theorem green_31.variants.abelian : answer(sorry) ↔
   sorry
 
 /--
+A set of binary vectors is Sidon if its pairwise sums, taken coordinatewise in `ℕ`, determine the
+unordered pair of summands.
+-/
+def IsBinarySidon {n : ℕ} (S : Set (𝔽₂ n)) : Prop :=
+  ∀ ⦃a b c d : 𝔽₂ n⦄, a ∈ S → b ∈ S → c ∈ S → d ∈ S →
+    (fun i ↦ (a i).val + (b i).val) = (fun i ↦ (c i).val + (d i).val) →
+      (a = c ∧ b = d) ∨ (a = d ∧ b = c)
+
+/--
 Another very nice old problem is whether there is a Sidon subset of $\{0, 1\}^n$ of size $N^{0.51}$,
 where $N = 2^n$ [Gr24].
 -/
 @[category research open, AMS 5 11]
 theorem green_31.variants.sidon_01n : answer(sorry) ↔
-    ∃ S : (n : ℕ) → Finset (Fin n → ZMod 2),
-      (∀ n, IsSidon (S n : Set (Fin n → ZMod 2))) ∧
+    ∃ S : (n : ℕ) → Finset (𝔽₂ n),
+      (∀ n, IsBinarySidon (S n : Set (𝔽₂ n))) ∧
       ∀ᶠ n in atTop, ((2 : ℝ) ^ n) ^ (0.51 : ℝ) ≤ (S n).card := by
   sorry
 
@@ -147,8 +171,9 @@ The best-known upper bound for a Sidon subset of $\{0, 1\}^n$ ($N = 2^n$) is $N^
 -/
 @[category research solved, AMS 5 11]
 theorem green_31.variants.sidon_01n_clz01 :
-    ∃ C : ℝ, ∀ n, ∀ S : Finset (Fin n → ZMod 2),
-      IsSidon (S : Set (Fin n → ZMod 2)) → (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
+    ∃ C : ℝ, ∀ n, ∀ S : Finset (𝔽₂ n),
+      IsBinarySidon (S : Set (𝔽₂ n)) →
+        (S.card : ℝ) ≤ C * ((2 : ℝ) ^ n) ^ (0.5753 : ℝ) := by
   sorry
 
 end Green31

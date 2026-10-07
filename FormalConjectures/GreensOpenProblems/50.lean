@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 50
@@ -28,6 +29,8 @@ multiplication on sets.
 
 *Reference:* [Ben Green's Open Problem 50](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.6 Problem 50)
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -49,11 +52,11 @@ over $\mathbb{F}_2$.
 -/
 @[category research open, AMS 5 11]
 theorem green_50 : answer(sorry) ↔
-    ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (Fin n → ZMod 2),
+    ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (𝔽₂ n),
     A.Nonempty →
     let α : ℝ := A.dens
-    ∃ (W : Submodule (ZMod 2) (Fin n → ZMod 2)) (v : Fin n → ZMod 2),
-      v +ᵥ (W : Set (Fin n → ZMod 2)) ⊆ ↑(10 • A) ∧
+    ∃ (W : Submodule (ZMod 2) (𝔽₂ n)) (v : 𝔽₂ n),
+      v +ᵥ (W : Set (𝔽₂ n)) ⊆ ↑(10 • A) ∧
       (n : ℝ) - C * Real.logb 2 (1 / α) ≤ Module.finrank (ZMod 2) W := by
   sorry
 

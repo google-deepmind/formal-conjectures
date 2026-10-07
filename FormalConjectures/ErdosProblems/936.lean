@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 936
 
 *Reference:* [erdosproblems.com/936](https://www.erdosproblems.com/936)
 -/
+
+@[expose] public section
+
 open Filter Nat
 
 namespace Erdos936

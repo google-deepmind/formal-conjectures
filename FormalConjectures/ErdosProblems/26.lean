@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 26
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
   _Some of Erdős' unconventional problems in number theory, thirty-four years later_,
   arXiv:1908.00488 [math.NT] (2019)
 -/
+
+@[expose] public section
 
 namespace Erdos26
 
@@ -99,7 +102,8 @@ theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThi
 /--
 If we allow for $\sum_{a\in A} \frac{1}{a} < \infty$ then Rusza has found a counter-example.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos26.lean#L752"]
 theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
     StrictMono A ∧ ¬IsThick A ∧ ∀ k, ¬IsBehrend (A · + k) := by
   sorry

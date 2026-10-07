@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Zagier's Conjecture on Multiple Zeta Values
@@ -29,6 +30,8 @@ import FormalConjectures.Util.ProblemImports
   Ecole Norm. Sup. (4), 38(1):1–56, 2005.
 - [OEIS A000931](https://oeis.org/A000931)
 -/
+
+@[expose] public section
 
 -- TODO(jgd) There are additional conjectures in Co18 which would be nice to formalize.
 
@@ -136,7 +139,7 @@ theorem no_admissible_weight_one (s : List ℕ) (h : AdmissibleIndex s) : weight
 theorem dim_mzv_weight_zero : Module.finrank ℚ (mzvSpanOfWeight 0) = 1 := by
   have h_set : mzvSetOfWeight 0 = {1} := by
     ext x
-    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨s, ⟨h_adm, hw⟩, rfl⟩
       cases s with
@@ -158,7 +161,7 @@ theorem dim_mzv_weight_zero : Module.finrank ℚ (mzvSpanOfWeight 0) = 1 := by
 theorem dim_mzv_weight_one : Module.finrank ℚ (mzvSpanOfWeight 1) = 0 := by
   have h_set : mzvSetOfWeight 1 = ∅ := by
     ext x
-    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_setOf_eq, Set.mem_empty_iff_false]
+    simp only [mzvSetOfWeight, Set.mem_image, Set.mem_ofPred_eq, Set.mem_empty_iff_false]
     constructor
     · rintro ⟨s, ⟨h_adm, hw⟩, rfl⟩
       exact no_admissible_weight_one s h_adm hw

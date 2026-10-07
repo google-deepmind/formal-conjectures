@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 789
@@ -23,17 +24,24 @@ In this problem, a function $h : \mathbb{N} \to\mathbb{N}$ is defined maximally 
 some counting property.
 
 The problem asks to estimate $h(n)$. This has been interpreted here as asking for $\Theta(h(n))$.
-The principal version includes `answer(sorry)` for an unknown function. On the other hand, the best
-known upper bound is $\sqrt{n}$ and the best known lower bound is $(n\log(n))^{1/3}$ so we
-also provide these candidates as variants. Moreover, it suffices to show $O(h(n))$ and
-$O((n\log(n))^{1/3})$ respectively for each, so further variants are provided for those.
+The principal version includes `answer(sorry)` for an unknown function.
+
+Straus [Str66] proved that $h(n) \ll \sqrt{n}$. Erdős [Er62c] and Choi [Ch74b] proved that
+$(n\log(n))^{1/3} \ll h(n)$. Korsky [Ko26] improved this to $h(n) \gg \sqrt{n\log\log n/\log n}$.
+The variants record these bounds and the open question whether $h(n) = \Theta(\sqrt{n})$. The file
+proves Korsky's bound, following [Ko26], and derives from it the Erdős–Choi bound and
+$h(n) \neq O((n\log(n))^{1/3})$.
 
 *References:*
 - [erdosproblems.com/789](https://www.erdosproblems.com/789)
 - [Str66] Straus, E. G., _On a problem in combinatorial number theory_. J. Math. Sci. (1966), 77--80.
 - [Er62c] Erdős, Pál, _Some remarks on number theory_. {III}. Mat. Lapok (1962), 28--38.
 - [Ch74b] Choi, S. L. G., _On an extremal problem in number theory_. J. Number Theory (1974), 105--111.
+- [Ko26] Korsky, S., _A near-square-root bound for an additive problem of Erdős and Straus_ (2026).
+  [Proof claim](https://www.erdosproblems.com/forum/thread/789/proof-claims).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -91,31 +99,40 @@ theorem erdos_789.variants.sq_isBigO :
     (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (subsetSumThreshold n : ℝ) := by
   sorry
 
-/--
-Let $h(n)$ be maximal such that if $A\subseteq \mathbb{Z}$ with $\lvert A\rvert=n$
-then there is $B\subseteq A$ with $\lvert B\rvert \geq h(n)$ such that if
-$a_1+\cdots+a_r=b_1+\cdots+b_s$ with $a_i,b_i\in B$ then $r=s$.
 
-Is $h(n) = \Theta((n\log(n)))^{1/3})$?
--/
-@[category research open, AMS 5]
-theorem erdos_789.variants.cube_root_linearithmic :
-    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop]
-      fun n ↦ (n * Real.log n) ^ ((1 : ℝ) / 3) := by
+/-- Korsky [Ko26] proved that $h(n) \gg \sqrt{n\log\log n/\log n}$. -/
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/57a0dc60e2cc245b69870647d122fb851f72d8e4/FormalConjectures/ErdosProblems/789.lean#L907"]
+theorem erdos_789.variants.sqrt_loglog_div_log_isBigO :
+    (fun n : ℕ ↦ √(n * Real.log (Real.log n) / Real.log n)) =O[atTop]
+      fun n ↦ (subsetSumThreshold n : ℝ) := by
   sorry
 
-/-- Erdős [Er62c] and Choi [Ch74b] proved that $(n\log(n))^{1/3}\ll h(n)$. -/
-@[category research solved, AMS 5]
+
+/-- Erdős [Er62c] and Choi [Ch74b] proved that $(n\log(n))^{1/3}\ll h(n)$. This also follows from
+`erdos_789.variants.sqrt_loglog_div_log_isBigO`. -/
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/57a0dc60e2cc245b69870647d122fb851f72d8e4/FormalConjectures/ErdosProblems/789.lean#L973"]
 theorem erdos_789.variants.cube_root_linearithmic_isBigO :
     (fun n : ℕ ↦ (n * Real.log n) ^ ((1 : ℝ) / 3)) =O[atTop]
       fun n ↦ (subsetSumThreshold n : ℝ) := by
   sorry
 
-/-- By the solved variant `erdos_789.variants.cube_root_linearithmic_isBigO`, in order to prove
-`erdos_789.variants.cube_root_linarithmic` it suffices to show $h(n) = O((n\log(n))^{1/3})$. -/
-@[category research open, AMS 5]
+/-- It is not true that $h(n) = O((n\log(n))^{1/3})$. This follows from
+`erdos_789.variants.sqrt_loglog_div_log_isBigO` [Ko26]. -/
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/57a0dc60e2cc245b69870647d122fb851f72d8e4/FormalConjectures/ErdosProblems/789.lean#L981"]
 theorem erdos_789.variants.isBigO_cube_root_linearithmic :
-    (fun n ↦ (subsetSumThreshold n : ℝ)) =O[atTop]
+    ¬ (fun n ↦ (subsetSumThreshold n : ℝ)) =O[atTop]
+      fun n ↦ (n * Real.log n) ^ ((1 : ℝ) / 3) := by
+  sorry
+
+/-- It is not true that $h(n) = \Theta((n\log(n))^{1/3})$. This follows from
+`erdos_789.variants.isBigO_cube_root_linearithmic`. -/
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/57a0dc60e2cc245b69870647d122fb851f72d8e4/FormalConjectures/ErdosProblems/789.lean#L994"]
+theorem erdos_789.variants.cube_root_linearithmic :
+    ¬ (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop]
       fun n ↦ (n * Real.log n) ^ ((1 : ℝ) / 3) := by
   sorry
 

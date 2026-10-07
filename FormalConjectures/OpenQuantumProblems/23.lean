@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 23: SIC-POVMs
@@ -104,6 +105,8 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   *Quantum Designs: Foundations of a Noncommutative Design Theory*,
   PhD thesis, University of Vienna (1999).
 -/
+
+@[expose] public section
 noncomputable section
 namespace OpenQuantumProblem23
 
@@ -183,7 +186,7 @@ lemma isSICFamily_one_of_normalized {ψ : StateVector 1} (hψ : IsNormalized ψ)
 @[category test, AMS 15 47 81]
 theorem hasSICPOVM_one : HasSICPOVM 1 := by
   refine ⟨fun _ => EuclideanSpace.single 0 1, isSICFamily_one_of_normalized ?_⟩
-  simp [IsNormalized, EuclideanSpace.norm_single]
+  simp [IsNormalized]
 
 /- ## Explicit low-dimensional witnesses -/
 
@@ -242,10 +245,29 @@ lemma sicOverlapSq_two : sicOverlapSq 2 = (1 / 3 : ℝ) := by
 lemma sicOverlapSq_three : sicOverlapSq 3 = (1 / 4 : ℝ) := by
   simp [sicOverlapSq]; norm_num
 
+/-- The unit complex number `ω` (primitive cube root) has norm `1`. -/
+@[category API, AMS 15 47 81]
+private lemma omega_norm : ‖ω‖ = 1 := by
+  rw [Complex.norm_def, ω]
+  simp [Complex.normSq_apply]
+  have : Real.sqrt 3 * Real.sqrt 3 = 3 := Real.mul_self_sqrt (by norm_num)
+  rw [show (-1 / 2 : ℝ) * (-1 / 2) + Real.sqrt 3 / 2 * (Real.sqrt 3 / 2) = 1
+    from by nlinarith]
+
 /-- Every vector in the tetrahedral qubit SIC family is normalized. -/
 @[category test, AMS 15 47 81]
 lemma qubitSICFamily_normalized (i : Fin 4) :
-    IsNormalized (qubitSICFamily i) := by sorry
+    IsNormalized (qubitSICFamily i) := by
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have sqrt2_pos : (0:ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have sqrt3_pos : (0:ℝ) < Real.sqrt 3 := Real.sqrt_pos.mpr (by norm_num)
+  have omega2_norm : ‖ω ^ 2‖ = 1 := by rw [norm_pow, omega_norm]; ring
+  fin_cases i <;>
+    simp [IsNormalized, qubitSICFamily, vec2, mkStateVector,
+      EuclideanSpace.norm_eq, Fin.sum_univ_two, tetraA, tetraB,
+      omega_norm, omega2_norm, abs_of_pos sqrt2_pos, abs_of_pos sqrt3_pos]
+  all_goals (try (field_simp; linarith [h2, h3]))
 
 /-- The tetrahedral qubit SIC family has the correct constant pairwise overlap. -/
 @[category test, AMS 15 47 81]
@@ -255,15 +277,6 @@ lemma qubitSICFamily_pairwise :
 /-- Dimension $2$ admits a SIC-POVM, witnessed by the tetrahedral qubit SIC. -/
 @[category test, AMS 15 47 81]
 theorem hasSICPOVM_two : HasSICPOVM 2 := by sorry
-
-/-- The unit complex number `ω` (primitive cube root) has norm `1`. -/
-@[category API, AMS 15 47 81]
-private lemma omega_norm : ‖ω‖ = 1 := by
-  rw [Complex.norm_def, ω]
-  simp [Complex.normSq_apply]
-  have : Real.sqrt 3 * Real.sqrt 3 = 3 := Real.mul_self_sqrt (by norm_num)
-  rw [show (-1 / 2 : ℝ) * (-1 / 2) + Real.sqrt 3 / 2 * (Real.sqrt 3 / 2) = 1
-    from by nlinarith]
 
 /-- Every vector in the Hesse qutrit SIC family is normalized. -/
 @[category test, AMS 15 47 81]

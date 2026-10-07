@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 348
 
 *Reference:* [erdosproblems.com/348](https://www.erdosproblems.com/348)
 -/
+
+@[expose] public section
 
 namespace Erdos348
 
@@ -35,8 +38,8 @@ $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
 @[category research open, AMS 11]
 theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
-      (_ : ∀ s, s.card = m → IsAddComplete (Set.range (Function.updateFinset a s 0)))
-        (_ : ∀ t, t.card = n → ¬IsAddComplete (Set.range (Function.updateFinset a t 0))) } =
+      (_ : ∀ s, s.card = m → IsAddCompleteNatSeq' (Function.updateFinset a s 0))
+        (_ : ∀ t, t.card = n → ¬IsAddCompleteNatSeq' (Function.updateFinset a t 0)) } =
     answer(sorry) := by
   sorry
 
