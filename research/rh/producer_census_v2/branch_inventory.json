@@ -1,0 +1,3764 @@
+{
+  "schema": "AEGIS_RH_PRODUCER_CENSUS_BRANCHES_V2",
+  "observed_date_utc": "2026-09-27",
+  "authority_effect": "NONE",
+  "branch_inventory_complete_at_read": true,
+  "content_search_exhaustive": false,
+  "repositories": [
+    {
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "branches": [
+        {
+          "name": "agent/agent-provenance-forensics-v1",
+          "sha": "94bcd83329c9e6ea4bb035068812e4f42388b750"
+        },
+        {
+          "name": "agent/commit-bound-integration-ledger",
+          "sha": "0b00ab682b7432a08577b5dfd2075fa0a0f3ffad"
+        },
+        {
+          "name": "agent/coordinator-fail-closed-authority-v1",
+          "sha": "baa22087096177c71845ecf3d1273eb08fef941c"
+        },
+        {
+          "name": "agent/evidence-bound-skill-authority-v2",
+          "sha": "a323d6180ea7015ad22a735ad297f5b7cd5d362b"
+        },
+        {
+          "name": "agent/experiment-admission-v0-1",
+          "sha": "3eaceb43f04b8b509cf805687546784cd851a94a"
+        },
+        {
+          "name": "agent/fix-grace-chain-runtime",
+          "sha": "70f6f9a0fb62d21c52a4a4d72bf6fa6f22ada6e3"
+        },
+        {
+          "name": "agent/fix-osv-scanner",
+          "sha": "beed15dac77c1175e6c8dc2695f90f3e2bab5cc0"
+        },
+        {
+          "name": "agent/gcp-ngs-census-v1",
+          "sha": "91b4306143520820965255353c21de33763704d8"
+        },
+        {
+          "name": "agent/gcp-trigger-census-clean",
+          "sha": "a392ef0da9c42dfbfe00c5a5b504a1095c23b92f"
+        },
+        {
+          "name": "agent/global-launch-wave-1",
+          "sha": "83b1af9bccb89777c22da8eadb93c5d8cf2a083c"
+        },
+        {
+          "name": "agent/jetson-execution-contract-v1",
+          "sha": "b321d98004224aa64db606d1c198cd2ce1d5b72b"
+        },
+        {
+          "name": "agent/operator-meta-model-v1",
+          "sha": "61d0c5a1e92b61f02ebcbfd67ff0b5b033016718"
+        },
+        {
+          "name": "agent/operator-sovereignty-evidence",
+          "sha": "906253bf24832c56d216d03952ab3ec010f62023"
+        },
+        {
+          "name": "agent/operator-sovereignty-rfc",
+          "sha": "ad7b320a49b3f2f2af42a801b5dbeb422349cd1e"
+        },
+        {
+          "name": "agent/p3-reproducible-build-binding-v1",
+          "sha": "2b72bc832430d38dda86599600d710d2d4f7658a"
+        },
+        {
+          "name": "agent/queued-control-plane-enforcement-v1",
+          "sha": "eef9322ca0c80d50e8b199dff28d0c5c632b185e"
+        },
+        {
+          "name": "agent/scale-os-control-plane-v1",
+          "sha": "3107450aec9053c4c4f8e178592a42b3108dbbd6"
+        },
+        {
+          "name": "agent/sovereignty-contracts-v1",
+          "sha": "4f4444c4ca096039a847a22f61c2d7a8bd326a34"
+        },
+        {
+          "name": "agents/rh-proof-closure-swarm-v1",
+          "sha": "4f1b52a454be9779bf39245cb4343d8d8e4b7270"
+        },
+        {
+          "name": "archive/claude-test-coverage-before-wif-recovery-20260902",
+          "sha": "d47e5336837457bbb4e6982cab58c80a832c8e45"
+        },
+        {
+          "name": "archive/claude-test-coverage-pre-gcp-census-20260902",
+          "sha": "d329eae1b15ad89bf38e38857e53de9151ed7b4c"
+        },
+        {
+          "name": "archive/pr-216-pre-reconcile-07fcbc4",
+          "sha": "07fcbc4692cccb20cbfaceab0807f69e0114153e"
+        },
+        {
+          "name": "audit/epistemic-lineage-v1",
+          "sha": "49d69413bf6faa89629e610ab1326778a6f1dbec"
+        },
+        {
+          "name": "audit/repository-topology-2026-07-31",
+          "sha": "d9ce9be3b79322122541db99a8f3b49cb4116ed1"
+        },
+        {
+          "name": "audit/rh-assumption-census-v1-495bfd85",
+          "sha": "b45ea51e6ca8c5c280e67284fbc18130cff9c05b"
+        },
+        {
+          "name": "audit/weil-mixed-closure-incident-v1-495bfd85",
+          "sha": "495bfd85d79abcb2b4f6898fe9c156488492426a"
+        },
+        {
+          "name": "automation/cognitive-manifest-trigger",
+          "sha": "1f7cbdc07d7182ab843a48d653c6f360d0cac031"
+        },
+        {
+          "name": "backup/agent-dispatch-observability-v1-red",
+          "sha": "38840f3c55c0128162d87708dc499eeae3882c5f"
+        },
+        {
+          "name": "backup/polyglot-metacognition-v1-main-8d89",
+          "sha": "efa2c012f7886a93697de2e2e9181a00eee46a09"
+        },
+        {
+          "name": "backup/polyglot-metacognition-v1-pre-forward-port",
+          "sha": "3e8d96c3656ebfa50f25b0fde89ddfbd894dd70d"
+        },
+        {
+          "name": "bridge/pr582-production-wiring-v1",
+          "sha": "452dd684df79f3fc35f055d3817fda703ec033de"
+        },
+        {
+          "name": "chatgpt/scale-os-handoff-20260718",
+          "sha": "e9df53afd7cc77c91043ba8a1b806f1b228ea3e1"
+        },
+        {
+          "name": "chore/agent-skills-sync-clean",
+          "sha": "8606c90014dc59d234ddc9de9d38a787a2d32d8e"
+        },
+        {
+          "name": "chore/claude-api-migrate-opus-5-v1",
+          "sha": "3666f47fceda042b6c02b732d9e7786814a09acb"
+        },
+        {
+          "name": "chore/coq-inventory-generator-v1",
+          "sha": "90d4d203b0185130cc895c9b1211c5fb16af1fb3"
+        },
+        {
+          "name": "chore/remove-vercel",
+          "sha": "104e6503e1664964767bafd88a325efb46e3ca43"
+        },
+        {
+          "name": "ci/agent-dispatch-admission-v1",
+          "sha": "99d2f94d2ed498d70167d3c96b4371620e773f0a"
+        },
+        {
+          "name": "ci/dormant-corpus-required-gate-v1",
+          "sha": "ff0ed3ef640144405668adf2ab0b6aba9979de82"
+        },
+        {
+          "name": "ci/fc-upstream-4331-62f56e8-20260915",
+          "sha": "b1b7f6873c3087ed735feba224aa260f9113451f"
+        },
+        {
+          "name": "ci/repository-knowledge-main-attestation-v1",
+          "sha": "5c758655e65bf036d4c28e72c3c44abd1e4ab9e7"
+        },
+        {
+          "name": "ci/rh-lean-cloudflare-replay-v1",
+          "sha": "b167008231fa4f903eb0a50734d20ccba9064836"
+        },
+        {
+          "name": "claude/aegis-epistemic-audit-amendment-ai8be8",
+          "sha": "902966f245e6d30bc8ba4c1d763f2b26a9a33587"
+        },
+        {
+          "name": "claude/blissful-rubin-mt9jS",
+          "sha": "f8aafe62dd02989cf1601fb10bb47091486a2c0d"
+        },
+        {
+          "name": "claude/dns-fix-xxq4ni",
+          "sha": "e313c29dfa53d173024935697572ff9e0063db35"
+        },
+        {
+          "name": "claude/fable-mythos-behavior-analysis-yjm4yr",
+          "sha": "921310e9dffe5b61a60b9522687d92e6d63bbd7d"
+        },
+        {
+          "name": "claude/multi-platform-integration-v1",
+          "sha": "d6c3b30d9081ab5985f6641fb7edf73d9d32688c"
+        },
+        {
+          "name": "claude/pr582-production-wiring-v1",
+          "sha": "268f1addfe942c591f2a348eb56954390b29eb76"
+        },
+        {
+          "name": "claude/proof-prism-v1-ltti67",
+          "sha": "e3c626e7edc22941f12a9167be9f2a8b5578b0c9"
+        },
+        {
+          "name": "claude/repo-cognition-v1",
+          "sha": "2971e9fc29947c3c3e102487ddc34342a87332d3"
+        },
+        {
+          "name": "claude/slack-session-yyw7h6",
+          "sha": "00f2d44d522b1c07e7f5c581cbe0f5c5ec7b9d81"
+        },
+        {
+          "name": "claude/test-coverage-analysis-keTIk",
+          "sha": "a4cfa60e942488681ea1dded38ba05f6cc0932b6"
+        },
+        {
+          "name": "claude/writer-target-ref-assertions-v1",
+          "sha": "65d4036247e49e07a3095b5843dc3e75e678a51c"
+        },
+        {
+          "name": "codex/add-foundry-backend-type-and-integration-tests",
+          "sha": "b1ce670a1958dc3132b219309af58c1c2ae37f1d"
+        },
+        {
+          "name": "codex/add-provider-neutral-inference-gateway",
+          "sha": "5b91bbcd55ed5f50d9acd42197171dcd3963c684"
+        },
+        {
+          "name": "codex/add-rh-assumption-census-v1-documentation",
+          "sha": "6f828a4515a66497007f7c8b5318e13c764c6e0a"
+        },
+        {
+          "name": "codex/add-ultrareview-feature",
+          "sha": "59ae004601958c33040d9513d55be50889b57d9e"
+        },
+        {
+          "name": "codex/continue-aegis-implementation-and-resolve-blockers",
+          "sha": "674d9b378367ed3b7239f3a395389da66a01c03a"
+        },
+        {
+          "name": "codex/continue-work-in-claude-s-place",
+          "sha": "630a6fe96f0242c097e4b213452a7f8fcb069bde"
+        },
+        {
+          "name": "codex/create-product-endpoints-and-dashboard-views",
+          "sha": "096130c9787da34babf449a0de03d4c70f98e10e"
+        },
+        {
+          "name": "codex/define-billing-schema-and-implement-webhooks",
+          "sha": "39fb5297ae0bf0a37bc301ba0c118a426def9c44"
+        },
+        {
+          "name": "codex/enforce-4096-token-limit-in-managedagentsclient",
+          "sha": "732cd9ef440dd005a00b0b8afabf4983dd4aadb2"
+        },
+        {
+          "name": "codex/exp-transcendence-20260913",
+          "sha": "6703489001e7374c5fd963dc5f8e98c34ea567cb"
+        },
+        {
+          "name": "codex/formal-benchmark-pilot-20260913",
+          "sha": "317b360a6a9d7e11616709487879a4c05c5baf7e"
+        },
+        {
+          "name": "codex/implement-automaton-2-verifier-logic",
+          "sha": "d889a1eac89480544078830872919d0eca2acde1"
+        },
+        {
+          "name": "codex/inspect-mathematical-repository-for-rh-proof-obligations",
+          "sha": "82a2a4cf7e360ac9d40bb1fb2198d2082bbd6c73"
+        },
+        {
+          "name": "codex/introduce-evidenceclaim-divergence-framework",
+          "sha": "93d420468cdc0377b7a22056eb9eac445d8437b6"
+        },
+        {
+          "name": "codex/konfigurisi-i-pocni-koristiti-chatgpt-enterprise",
+          "sha": "67fc644de48b07e850acbda5e576f64e2cefa97c"
+        },
+        {
+          "name": "codex/metacognitive-ecosystem-backbone",
+          "sha": "adf574d24343f3c52b0e39c81cda0ebadace9daa"
+        },
+        {
+          "name": "codex/review-slack-context-request",
+          "sha": "ea4dfd27ec174bb20896d1fe44188e0342eae4cf"
+        },
+        {
+          "name": "codex/update-openapi-documentation",
+          "sha": "afa725343eb539d82cd4827b4223d4974556e14a"
+        },
+        {
+          "name": "codex/update-pr-#192-with-april-2026-package",
+          "sha": "64f312f85e2fe8e14c22e31fdd8b5c83070497c7"
+        },
+        {
+          "name": "codex/validate-aegis_batch_max_usd-in-configuration",
+          "sha": "e7ccee1e0a488861c9b24dae518d3e2a21259b5e"
+        },
+        {
+          "name": "commercial/agent-action-audit-demo-v1",
+          "sha": "1fef85b15135bc1ce62b6184b916beac28fb2b7b"
+        },
+        {
+          "name": "control/fix-main-governed-manifest-signer-v1",
+          "sha": "4b535d060aecb7ceaaf8480269f9dae22d359a66"
+        },
+        {
+          "name": "control/promote-manifest-signer-to-signed-v4",
+          "sha": "15b95d5083613c7dd3301da3de80d360275ec736"
+        },
+        {
+          "name": "control/publish-cognitive-writer-digest-transition-v1",
+          "sha": "9d476b0d17469b5b4f8206ce87964753a6699504"
+        },
+        {
+          "name": "control/publish-cognitive-writer-transition-anchors-v1",
+          "sha": "f2f629397b9a949ec6979267be774a95721edd32"
+        },
+        {
+          "name": "control/publish-phase2-cognitive-anchor-v1",
+          "sha": "fcef468217ccf88ffdead465d06daf61ce510c3b"
+        },
+        {
+          "name": "control/rebind-pr536-cognitive-manifest-v1",
+          "sha": "43496123e52721010dcfc1b7c6eba15faa0cc670"
+        },
+        {
+          "name": "control/rebind-pr540-witness-manifest-v1",
+          "sha": "32e7fd19389360f0165f464947f30b8feac346e5"
+        },
+        {
+          "name": "control/validate-pr508-exact-head-v1",
+          "sha": "ccb4a1605fff3b9553e66b825b34ffcd17ddaaf4"
+        },
+        {
+          "name": "control/validate-pr517-signed-head-v1",
+          "sha": "3edb56aea0e8d21125e60c9e5ce032c0d95dfcff"
+        },
+        {
+          "name": "decommission/cognitive-manifest-claude-anchor-v1",
+          "sha": "224fd4775be3ad802a8bacc2f5b96cfcfaf241fe"
+        },
+        {
+          "name": "dependabot/npm_and_yarn/npm_and_yarn-42c978b579",
+          "sha": "ee5a70d98a6ae379af7cf297bb9bc0db0a5f8567"
+        },
+        {
+          "name": "derive/epistemic-audit-amendment-v1-1",
+          "sha": "5b8cfee9f70683cc2876416a5edb6bdaa5f78c17"
+        },
+        {
+          "name": "diagnostic/bare-run-checkpoint-20260802",
+          "sha": "774fe504c5a0ebb7740324de01e940e41328daf5"
+        },
+        {
+          "name": "diagnostic/github-runner-admission-probe-20260926",
+          "sha": "dbdad9ac13c629d7cca8eb9f2d821d98a7047e89"
+        },
+        {
+          "name": "diagnostic/m1-record-contract-v2",
+          "sha": "85148d439eaf03528f49bd7dfc54d15937e81fd7"
+        },
+        {
+          "name": "diagnostic/m2-slot-address-v1",
+          "sha": "b9d4d22d9fe36286fc049c3f031e4e2e87903bfa"
+        },
+        {
+          "name": "docs/tactical-deploy-state-v1",
+          "sha": "bec6c95d640f38a0a7103cfb22d2f7085aec49c3"
+        },
+        {
+          "name": "enforce/claim-promotion-v04",
+          "sha": "0eb86dfe729b2644a57a18d6fad0e770eb2593ff"
+        },
+        {
+          "name": "evidence/ccrdt-exact-source-replay-v1",
+          "sha": "90814340a8ccedaffdf89162663502252ebc05db"
+        },
+        {
+          "name": "evidence/macc-exact-source-replay-v1",
+          "sha": "5305b2448a1ec4304a4e4cfedb783e074b779ee4"
+        },
+        {
+          "name": "evidence/nfeg-exact-source-replay-v1",
+          "sha": "066354c5314944e439d6bc1a53054ab076ee09de"
+        },
+        {
+          "name": "evidence/pareto-ldlt-exact-head-v1",
+          "sha": "3a9c4b4a8d476bbc3d965ccdc0e591cda3063866"
+        },
+        {
+          "name": "evidence/pcep-exact-source-replay-v1",
+          "sha": "3f4d640dc0a0133ab486ac790871c6bb8c495274"
+        },
+        {
+          "name": "evidence/pr599-hosted-rebind-v1",
+          "sha": "9030651def0f245adbc924740d3b62b6f7d81e94"
+        },
+        {
+          "name": "evidence/rh-millennium-moment-589adf-v1",
+          "sha": "62f8bf11841bec59ede864c3addc12069e7ed5d4"
+        },
+        {
+          "name": "evidence/rh-millennium-moment-2026-09-23",
+          "sha": "5ffb5e2b969cd3873160696d88ea593ac28f77e3"
+        },
+        {
+          "name": "evidence/rh-millennium-moment-20260923-v1",
+          "sha": "dfcbd6fcdd671be1c49972b20d5f49225b3d1f0c"
+        },
+        {
+          "name": "evidence/sgm-exact-source-replay-v1",
+          "sha": "e1e7470527ec551c843927d0c053b77732f7db1a"
+        },
+        {
+          "name": "experimental/egraph-0-equality-saturation-v1",
+          "sha": "268effc1ebcaf892eb81b30ae1afd3349b12fc8a"
+        },
+        {
+          "name": "experimental/quantum-tourbillon-mpvc-v1-hardening",
+          "sha": "cd5b2aa890d97e09d33f87bdada2d51abe841f29"
+        },
+        {
+          "name": "experimental/quantum-tourbillon-mpvc-v1",
+          "sha": "7003e7b343fabf6a486e2fe5d5ecc393c077ebbd"
+        },
+        {
+          "name": "feat/abjad-encoder-v0-1-canonical-freeze",
+          "sha": "d569569fe50f1578b2a4ec490947fc5a673859bb"
+        },
+        {
+          "name": "feat/aedr-falsification-surface-ingestion-v1",
+          "sha": "acc7dd4f2d711f4b5670282dcf6ca67d0a975fd1"
+        },
+        {
+          "name": "feat/aedr-live-acquisition-v1",
+          "sha": "22b1e662d074b3b5dcd2ab75e6ed4ddb3be2f07c"
+        },
+        {
+          "name": "feat/aedr-multilayer-dag-v1",
+          "sha": "3394b1b9d20fa520a91e831875e17bba21b0a318"
+        },
+        {
+          "name": "feat/aegisq-ifg-receipt-binding-v1",
+          "sha": "6987c08e843af03a644114413ea3da9331c460f2"
+        },
+        {
+          "name": "feat/agentic-self-healing-runtime-v1",
+          "sha": "3d9d1e03b63c667f33f918fa8048c0340fb96547"
+        },
+        {
+          "name": "feat/anthropic-native-agent-adapter-v1",
+          "sha": "97a7e8c9a7372c522191f0e35f4578094ef70340"
+        },
+        {
+          "name": "feat/app-intents-under-version-control",
+          "sha": "bbf0bdad3bbd5079716ad677db68ba2bfbab8d4b"
+        },
+        {
+          "name": "feat/apple-foundation-models-runtime-v1",
+          "sha": "e2844a53a39fc7df9a35829c7a5c57e5e48d44e0"
+        },
+        {
+          "name": "feat/apple-intelligence-platform-evidence-v1",
+          "sha": "ca0b1e41333918fb0d8f4920f4ac9ee0bea304c5"
+        },
+        {
+          "name": "feat/archive-runtime-bridge-v1",
+          "sha": "d4bed01873130b3b7ab196ae2a67d4a9b5953b71"
+        },
+        {
+          "name": "feat/archive-runtime-read-surface-v1",
+          "sha": "9cd4535842aaa29c1658f5257a088078d249638a"
+        },
+        {
+          "name": "feat/archive-runtime-sdk-v1",
+          "sha": "9124dd17d96d3703042b027af24af44e14e5e03f"
+        },
+        {
+          "name": "feat/attested-runtime-binding-v1",
+          "sha": "3547f22931ac46f317fa64483111110a64334e29"
+        },
+        {
+          "name": "feat/authorization-time-evidence-v1",
+          "sha": "8068e06d70b2ad0d7aaac555585b4aa1ce7df5d3"
+        },
+        {
+          "name": "feat/automaton-3-sovereign-execution",
+          "sha": "bca8c5df6a96e897c1883c2d311f38a9ed8f0013"
+        },
+        {
+          "name": "feat/autopoietic-runtime-v1",
+          "sha": "0a190d059e7f3efe8d2b5318ebcdfa83449eea2b"
+        },
+        {
+          "name": "feat/avd00-frozen-comparative-benchmark-v1",
+          "sha": "0e50ca7202130d194936d7aab8c1a511ca7a0af3"
+        },
+        {
+          "name": "feat/chatgpt-connected-surface-v1",
+          "sha": "315ef7ef2565b43910e4a6fc1edc4e089697d132"
+        },
+        {
+          "name": "feat/ci-execution-signature-v1",
+          "sha": "7cd7289005e5abb20df81946a07fccad9a7b9d50"
+        },
+        {
+          "name": "feat/cockpit-controlled-failure-case-v1",
+          "sha": "e4c1ceb441bf386454822e35af3816d128f31f63"
+        },
+        {
+          "name": "feat/cockroach-memory-sentinel-v1-current",
+          "sha": "32b7eb6a37fb69d19dd80189390b6641c5004ef1"
+        },
+        {
+          "name": "feat/cockroach-memory-sentinel-v1-final",
+          "sha": "38a5cecda40182966dbdaebcf1904bc11f774aab"
+        },
+        {
+          "name": "feat/cockroach-memory-sentinel-v1-final2",
+          "sha": "32b7eb6a37fb69d19dd80189390b6641c5004ef1"
+        },
+        {
+          "name": "feat/cockroach-memory-sentinel-v1-sync",
+          "sha": "24ace492f9b8d42a0e05b6a53f6992c06e1092af"
+        },
+        {
+          "name": "feat/cockroach-memory-sentinel-v1",
+          "sha": "24ace492f9b8d42a0e05b6a53f6992c06e1092af"
+        },
+        {
+          "name": "feat/cognitive-execution-substrate-manifest-v1",
+          "sha": "b4a4d7cc869105e0953e7a6c8631bcf798cf0540"
+        },
+        {
+          "name": "feat/company-brain-v1",
+          "sha": "e76b4cdd387b721d470319c67211a796a54ca120"
+        },
+        {
+          "name": "feat/cross-plane-transfer-v1",
+          "sha": "8b3baccc4b362864f5e250bce0515f5ff0a585c7"
+        },
+        {
+          "name": "feat/cross-provider-proofline-v1",
+          "sha": "e31effc46934552fd7f9ce1c7e71f115523c5dd1"
+        },
+        {
+          "name": "feat/cross-runtime-verification-receipt-v1",
+          "sha": "2f73e0b7db5037f2640ad1d8ee4128e320709a38"
+        },
+        {
+          "name": "feat/cstar-kernel-v0.1",
+          "sha": "db0da29c16ddca78c491b9a28e6639db0d3f2d3d"
+        },
+        {
+          "name": "feat/eat-jwt-attestation-crypto-v1",
+          "sha": "9808568208a35c0e108f6b6235b686ba4087c98a"
+        },
+        {
+          "name": "feat/epistemic-admission-kernel-v1",
+          "sha": "2b0ea842f6b1fdce7d9b9329f706637da11cd3f0"
+        },
+        {
+          "name": "feat/epistemic-quotient-v1",
+          "sha": "45e543c2e99db16eca8719708f46873f17dc6ae2"
+        },
+        {
+          "name": "feat/evolutionary-learning-mesh-v1",
+          "sha": "13350c77aca61da2139a4bacdabb7792d3cb23fa"
+        },
+        {
+          "name": "feat/frontier-provider-mesh-v1",
+          "sha": "db311cfc900f594dc24aa5cc842586495a43ce61"
+        },
+        {
+          "name": "feat/google-adk-native-agent-adapter-v1",
+          "sha": "37485f6dfdfab6635a3c5e0b8f76c4b3aa7e77b2"
+        },
+        {
+          "name": "feat/harness-residual-entailment-pshp-lock",
+          "sha": "6ef6baeb0cdd69109e8621eb91339a19fd7daa80"
+        },
+        {
+          "name": "feat/holon-llm-inference-v1",
+          "sha": "9da5e8c5d58eb1461a837081325be5795d4c3644"
+        },
+        {
+          "name": "feat/khatt-abjad-capability-bridge-v1",
+          "sha": "c4910b007d9ad2df05d4b2b6a730911dea98c041"
+        },
+        {
+          "name": "feat/lifequest-admission-contract-20260802",
+          "sha": "c62377988f173c55000300ee96d70e184f8c6a7f"
+        },
+        {
+          "name": "feat/live-agentic-healing-bridge-v1",
+          "sha": "09d8de732e24fdb9214d61563c564770a9d7c324"
+        },
+        {
+          "name": "feat/metacognitive-evidence-state-v2",
+          "sha": "69ae42126ac86737a748049638c7b615156507e7"
+        },
+        {
+          "name": "feat/metacognitive-executive-v1",
+          "sha": "955338f6cf2590c1c38b79ab57a9d09692fd560e"
+        },
+        {
+          "name": "feat/mhp1-derivation-composition-v1",
+          "sha": "c01de9f663c43ca2e23cf953b163cd399906ff49"
+        },
+        {
+          "name": "feat/mhp1-morphism-engine-v1",
+          "sha": "65491f6a432292d4e55f27c58a1ad9748f12277a"
+        },
+        {
+          "name": "feat/mhp1-transitive-composition-v1",
+          "sha": "2c28fbae30d36a21399e984dda0fa3d4dac217e0"
+        },
+        {
+          "name": "feat/mycorrhizal-1bna-sync-v1",
+          "sha": "4728880cc0f3e705dcb3e211142039a001a5aa90"
+        },
+        {
+          "name": "feat/mycorrhizal-structural-witness-registry-v1",
+          "sha": "55e9e0a68067a892f3e0194d277f56595e22611c"
+        },
+        {
+          "name": "feat/nvidia-dlss5-mcp-v0.1",
+          "sha": "7324ffcc6f9a980c8b2e3daf95b1d982cdd243db"
+        },
+        {
+          "name": "feat/openai-ads-conversions-v1-20260919",
+          "sha": "110dcf8935cdc6ddee6b3534576f46c151160749"
+        },
+        {
+          "name": "feat/openai-agents-sdk-runner-v1",
+          "sha": "a2900275a0dceb5e38170d40aea7fd93fd08bc84"
+        },
+        {
+          "name": "feat/openai-native-agent-adapter-v1",
+          "sha": "8840f09cad6352aa4039e3618c4046724b5c8f5f"
+        },
+        {
+          "name": "feat/openai-sota-autonomous-company-v1",
+          "sha": "6d3e108d7aa92022d84e08e65fcf3db20ad29734"
+        },
+        {
+          "name": "feat/openai-sota-runtime-v1",
+          "sha": "ad556afe03ce7cdcb812c5aa72157c298c33c691"
+        },
+        {
+          "name": "feat/ops-center-archive-coverage-v1",
+          "sha": "fe2166d266a63f114b8a742f046e72431acdf5e2"
+        },
+        {
+          "name": "feat/ops-center-sources-bridge-v1",
+          "sha": "c97cd0997348420363ed8d89cb6036dca1f2c005"
+        },
+        {
+          "name": "feat/platform-sources-envelope-v1",
+          "sha": "1fc38056c2820c3c46a1a19809fd4cef3a49f790"
+        },
+        {
+          "name": "feat/production-cookbook-dashboard",
+          "sha": "ea7e988442d4ae09d0277f35ec9140a1ceccb28a"
+        },
+        {
+          "name": "feat/provider-capability-registry-v1",
+          "sha": "11984d96ddd914014be106fb8b08889fbd8786ac"
+        },
+        {
+          "name": "feat/provider-native-agent-contract-v1",
+          "sha": "a33a61c8432426ed67e648bacbc144dbab8b239d"
+        },
+        {
+          "name": "feat/provider-native-agent-team-v1",
+          "sha": "65138ff74a610405e88950c8162115b2bd62e09c"
+        },
+        {
+          "name": "feat/provider-native-cognitive-fabric-v1",
+          "sha": "bca9afd53217364dd5c47f763487fab134808195"
+        },
+        {
+          "name": "feat/provider-native-conductor-v1",
+          "sha": "e985606bec0087b086a750bf05089beda0d4af96"
+        },
+        {
+          "name": "feat/provider-native-fanout-sdk-integration-v1",
+          "sha": "e17aaf53bdd4055e11b695702996b9c636361771"
+        },
+        {
+          "name": "feat/provider-native-fanout-v1",
+          "sha": "7854d157525428ba206ed4fcdc0df6561a77c1fc"
+        },
+        {
+          "name": "feat/provider-native-sdk-runtime-v1",
+          "sha": "0030ef8114073b82cff2cfb5095d6cf1e0f227d1"
+        },
+        {
+          "name": "feat/qform-proof-carrying-v1",
+          "sha": "39e0f92507bee7ca0b78be527af1de567b863504"
+        },
+        {
+          "name": "feat/qm-scheduler-phase1-core-kernel",
+          "sha": "3635991336c83382119f6e513b8bfc5be34715d3"
+        },
+        {
+          "name": "feat/qm-scheduler-v0.1-impl",
+          "sha": "c6e701a6d8030dc8bab25661652e11fe94484cf4"
+        },
+        {
+          "name": "feat/quantum-dna-claims-gate-v1",
+          "sha": "d766cbf99f0bb1e91300c94bae64c469a5d7d89d"
+        },
+        {
+          "name": "feat/repository-cartographer-v1",
+          "sha": "221e95365e362631616b859b78a063a6fb438f86"
+        },
+        {
+          "name": "feat/repository-knowledge-dispatch-gate-v1",
+          "sha": "49e80e39bd1c8112b85845a3ed80f07e31aee6ae"
+        },
+        {
+          "name": "feat/revenue-audit-offer-v1",
+          "sha": "da4fd1ad2bbd95d101a18ced761729dfa0876ce0"
+        },
+        {
+          "name": "feat/revenuecat-pocket-auditor-v1",
+          "sha": "20144ed4d8d70bf6f9b6442ac0f43430eb6cd821"
+        },
+        {
+          "name": "feat/runtime-pop-crypto-verifier-v1",
+          "sha": "cce66c7c37288b30c10255c4de6b64aef1d6b139"
+        },
+        {
+          "name": "feat/runtime-pop-execution-principal-v1",
+          "sha": "2c19516a26ae2719345972f606650864ce110be1"
+        },
+        {
+          "name": "feat/scitt-authorization-receipt-v1",
+          "sha": "0c7203d99b9bb110078cdc00cd137c96146f30a7"
+        },
+        {
+          "name": "feat/self-improvement-loop-v1",
+          "sha": "160181fd224cd7f0d0a3fcbf65ac00fba45b9531"
+        },
+        {
+          "name": "feat/sigil-closing-bible-v1",
+          "sha": "1e935664ebfba7215b35f845c4880d4d0fe2ec20"
+        },
+        {
+          "name": "feat/sol-cross-platform-control-plane",
+          "sha": "476c236548386ef46cd33bea4e1f5ec801202cce"
+        },
+        {
+          "name": "feat/sovereign-provider-mesh-v1",
+          "sha": "bacb8fe0e75884797cac62c433a23d84bc383b0d"
+        },
+        {
+          "name": "feat/spectral-time-inference-v1",
+          "sha": "a452e56b73480e99e80ed6d080ea7e19fa4d657d"
+        },
+        {
+          "name": "feat/tactical-archive-runtime-v1",
+          "sha": "013da2e9b65307030e49ce8711229018cc70f86d"
+        },
+        {
+          "name": "feat/tactical-sources-coverage-v1",
+          "sha": "fcf80d43b627df58766b84937ea1560671263da8"
+        },
+        {
+          "name": "feat/tactical-vercel-contract-v1",
+          "sha": "e593ea544926309525ef681aba8dea8ae080d744"
+        },
+        {
+          "name": "feat/temporal-elasticity-receipt-v1",
+          "sha": "5143dc1c62f2958f7e10a7dd780f31010d059b8e"
+        },
+        {
+          "name": "feat/uci-1-collective-work-contract-v1",
+          "sha": "3eff8948219f06d6cbfed9c01b5871f34c62879e"
+        },
+        {
+          "name": "feat/uci-4-effect-chain-integration-v1-red-anchor",
+          "sha": "a7703f5758c59a4887f39b930824cbe683e960d3"
+        },
+        {
+          "name": "feat/uci-4-effect-chain-integration-v1",
+          "sha": "bda5c5369b15ec91f2651ddbf6d219f6b7a1d0f6"
+        },
+        {
+          "name": "feat/uci-5-atomic-admission-reference-v1",
+          "sha": "be07805af9887ff15272167740b07cf958c3137e"
+        },
+        {
+          "name": "feat/uci-6-collective-memory-admission-v1",
+          "sha": "156062855a91b77133d8999ce34883432435b167"
+        },
+        {
+          "name": "feat/uci-7-agi-evidence-protocol-v1",
+          "sha": "1aa405975e2b3f3c1b1c0022a6b75e0b21d395ec"
+        },
+        {
+          "name": "feat/uci-8-evaluation-campaign-v1",
+          "sha": "a0df36bce52da01cfb5d8b9f2fae8866a21fc2b8"
+        },
+        {
+          "name": "feature/always-on-witness-fabric-v1",
+          "sha": "fb13fb7f655bcd6c877f6864cc9dde0414edc3ab"
+        },
+        {
+          "name": "fix/abjad-ts-orthography-normalization-v1",
+          "sha": "1af37a4a10772640b8d7f145e3689e254b6b3907"
+        },
+        {
+          "name": "fix/automaton2-single-anchor-writer",
+          "sha": "1e4a75786304af8f09e034ba1a2b86dd2a534401"
+        },
+        {
+          "name": "fix/autonomous-agent-evidence-boundary-v1",
+          "sha": "70d6247bbcbe75916c870f59c7cd31623faed080"
+        },
+        {
+          "name": "fix/autonomous-safety-gates",
+          "sha": "597741ade5a4ed5877b4cc66514d69aa72642000"
+        },
+        {
+          "name": "fix/body-head-provenance-gate",
+          "sha": "e96b2c6a5df042c5dd6e0fbf7adec69318a69f65"
+        },
+        {
+          "name": "fix/bridge-evidence-composition-v1",
+          "sha": "a77dfd4c2d6b92cdf5ad629c7137ed3485353277"
+        },
+        {
+          "name": "fix/claims-ledger-always-report",
+          "sha": "7db1f04d3ef665cbb8573fd0d612799556afd6b9"
+        },
+        {
+          "name": "fix/claude-artifact-discovery-v1",
+          "sha": "54a74bd1c97c5743aa210900cb9f3d7e3c0b285c"
+        },
+        {
+          "name": "fix/cognitive-manifest-github-signed-writer-v1",
+          "sha": "20e2ffd522209fc4d2b854ab68d44dbc309631b1"
+        },
+        {
+          "name": "fix/cognitive-writer-merge-gate-v1",
+          "sha": "79bd4e609e653a0021b1a5fa118130407c6f3b30"
+        },
+        {
+          "name": "fix/company-external-hosted-replay-admission-v2",
+          "sha": "696c24b6236482a98980f26752af0e1c70dee7dd"
+        },
+        {
+          "name": "fix/coq-attestation-build-bindings-v1",
+          "sha": "28905d761f006f1203e62b5aa977ad45a20f7a0b"
+        },
+        {
+          "name": "fix/coq-attestation-inventory",
+          "sha": "579c94c0984f6784cc0a861b695f1f9ad36e950e"
+        },
+        {
+          "name": "fix/coq-o0-dependency-diagnostic-v1",
+          "sha": "78133c194e38b1f6d0acafeedbfe3aab38ce2175"
+        },
+        {
+          "name": "fix/ga4-production-binding-v1",
+          "sha": "4f64b8fbfbb0768a5c0553b8fb21326277a39e93"
+        },
+        {
+          "name": "fix/integration-ledger-committed-evidence-v1",
+          "sha": "2d6289a9522cfafe0788a6a9d949c46d05fbd99a"
+        },
+        {
+          "name": "fix/live-state-evidence-truth-v1",
+          "sha": "b6b58fe5fc9c23db8852260d23c6eea5a37444ed"
+        },
+        {
+          "name": "fix/live-state-truthfulness-v1",
+          "sha": "f990659ecf1cddf40a0114ad79983eafbf384d22"
+        },
+        {
+          "name": "fix/m1-checkpoint-preflight-v2",
+          "sha": "1f4a24f5777680096a93fe523ae500e50944ce56"
+        },
+        {
+          "name": "fix/m1-fixed-slot-contract-v1",
+          "sha": "17340d29b9a21cbcbecec597da73cb61bd295d45"
+        },
+        {
+          "name": "fix/m1-record-live-cutover-v2",
+          "sha": "e19be60aeb7b51c7edb2d2850e6e28b34d2d57b9"
+        },
+        {
+          "name": "fix/m1-wrap-fail-closed-v1",
+          "sha": "914a01e3f1679f454031a280b91e5782150a8558"
+        },
+        {
+          "name": "fix/m2-slot-address-v1",
+          "sha": "a191a5326847f19886e62f36faaa8a3e849365de"
+        },
+        {
+          "name": "fix/main-ruleset-automata-enforcement-v1",
+          "sha": "5f20b73d6c22568e8fce8faca6118ba6e1fc1af2"
+        },
+        {
+          "name": "fix/paypal-capture-validation",
+          "sha": "0d292f82da4d62553eb678445adc431bc991f823"
+        },
+        {
+          "name": "fix/paypal-payment-receipts-v1",
+          "sha": "495bfd85d79abcb2b4f6898fe9c156488492426a"
+        },
+        {
+          "name": "fix/pr264-verification-surface",
+          "sha": "31aec51c32caa2431cb94ee742c912059802568b"
+        },
+        {
+          "name": "fix/pr-overlap-guard-v1",
+          "sha": "3c74a8ee9cc798d6f50cdd4438285ce154d2096f"
+        },
+        {
+          "name": "fix/provider-containment-gate-v1",
+          "sha": "e00563aed8c3ebb7c39135900839d10c64421f5d"
+        },
+        {
+          "name": "fix/remove-conflicting-codeql-workflow",
+          "sha": "c1e4121adbcf8a0867957b27ace63607590d1a15"
+        },
+        {
+          "name": "fix/repository-enforcement-public-observation-v1",
+          "sha": "606d18c9324f744d8c75b479e0e93651629bf133"
+        },
+        {
+          "name": "fix/restore-access-route-v1",
+          "sha": "9af16c5b7c068bf2c44bea7e206ae1112380630b"
+        },
+        {
+          "name": "fix/rfc8785-fail-closed-canonicalization",
+          "sha": "f7689145ffd24ac7c6a796ef5e621b1b674c14f5"
+        },
+        {
+          "name": "fix/rh-four-block-prime-eight-elaboration-v4",
+          "sha": "91250b2ba324ae025f433643f666332573eb415d"
+        },
+        {
+          "name": "fix/rh-nine-prime-window-compile-6aff",
+          "sha": "4ea03d16d96ff5ebb35d829cc452db865cec8ae0"
+        },
+        {
+          "name": "fix/rh-zero-negint-positivity",
+          "sha": "5b0357b8f054d19f94e67e80f2773a44f0747461"
+        },
+        {
+          "name": "fix/rh-zero-radial-truncation-sum-syntax",
+          "sha": "b169a55fe3dcc0060ac4f7131c3d68ab83a76f1f"
+        },
+        {
+          "name": "fix/rh-zero-translation-v11-pin-v1",
+          "sha": "b484f6f7a96c0331b3ef2befe0d8e1962e88851e"
+        },
+        {
+          "name": "fix/rh-zeta-divisor-support-bridge-api",
+          "sha": "3c1e89037019c8149c0056fce9b07e8d53d6421b"
+        },
+        {
+          "name": "fix/supabase-security-definer-execute",
+          "sha": "0f8efda518919139f3b788dba076e656590c8b2c"
+        },
+        {
+          "name": "fix/swarm-epistemic-fail-closed-v1",
+          "sha": "66a3a78057c1bdc9c38bd1a4651ec9394b899aa7"
+        },
+        {
+          "name": "fix/template-epistemic-boundary-v1",
+          "sha": "534052e82adff26b6c9e0271ec15af437a74e6f5"
+        },
+        {
+          "name": "fix/vercel-monorepo-ignore-command",
+          "sha": "cb032548880d5527a37537cc77fafb813dfe4f73"
+        },
+        {
+          "name": "fix/weil-v22-integral-coercion",
+          "sha": "36d3e3dbf79a78a10286e0097717c7081200164c"
+        },
+        {
+          "name": "forward/polyglot-metacognition-v1-atomic-20260902",
+          "sha": "efa2c012f7886a93697de2e2e9181a00eee46a09"
+        },
+        {
+          "name": "forward/polyglot-metacognition-v1-main-20260902",
+          "sha": "08363196cab01a1a4b994add6d5ede55fe57510b"
+        },
+        {
+          "name": "governance/amps-v1",
+          "sha": "cc234e455015e104c70da6515c95e2a650dd6b46"
+        },
+        {
+          "name": "governance/execution-directive-v1",
+          "sha": "5d20e2f5ce929119201efbc9ba1bfc9751961a85"
+        },
+        {
+          "name": "governance/h-meta-contract-v1",
+          "sha": "a6029ab7caa07d4c99460018a71df9e02231e46c"
+        },
+        {
+          "name": "governance/t3-omega-path-binding-v1-20260920",
+          "sha": "7ae3acc44e0d6658053776927ddfc429f972b956"
+        },
+        {
+          "name": "gtm/agent-action-boundary-audit-v1",
+          "sha": "d229d090e6f91b7fcf4da97f1662bdcd7cec4351"
+        },
+        {
+          "name": "gtm/paypal-audit-checkout-v1",
+          "sha": "5cacf4b051e616a93fd7b87cc12220ebedb6c8fc"
+        },
+        {
+          "name": "guard/pr-overlap-v2",
+          "sha": "cc06f57907aaac681815015e4b1e0768b1a179d6"
+        },
+        {
+          "name": "hackathon/tameion-arc-treasury-witness-v1",
+          "sha": "3d5e58e2501bd2c2775fd7192146f664c36154d8"
+        },
+        {
+          "name": "hardening/agent-dispatch-observability-v1",
+          "sha": "83b8c82e455b557936467364cf21e881015c31e7"
+        },
+        {
+          "name": "hardening/cudaq-reproducibility-v2",
+          "sha": "eb1b9a186cf2bb5eaaa1307983f33938ce579459"
+        },
+        {
+          "name": "hardening/frontier-engineering-baseline-v1",
+          "sha": "264285ae678013fa29af48f1edf5d72d0d84b780"
+        },
+        {
+          "name": "hardening/legacy-quantum-quarantine-v1",
+          "sha": "44334cdc0996985d27a2882bd138d96bdf533041"
+        },
+        {
+          "name": "hardening/mycorrhizal-structural-witness-security-signed-v2",
+          "sha": "1de78711450db3f3b2f26ab1d5cebbf98b7f7eb4"
+        },
+        {
+          "name": "hardening/mycorrhizal-structural-witness-security-signed-v3",
+          "sha": "bfefa9a9b5f9714f5c711596a8763e00724844f0"
+        },
+        {
+          "name": "hardening/mycorrhizal-structural-witness-security-signed-v4",
+          "sha": "5136fc2822426bd673194ef3685631caa2612283"
+        },
+        {
+          "name": "hardening/mycorrhizal-structural-witness-security-v1",
+          "sha": "f47cf00c90f03a68154f1967be3f49751285cb51"
+        },
+        {
+          "name": "hardening/mycorrhizal-structural-witness-v1",
+          "sha": "13a29d850ad272bc9a61c841728d7a9206916900"
+        },
+        {
+          "name": "hardening/repository-evidence-contract-v1",
+          "sha": "4a93fe873ec53c5f1467fa024502d0fd278d6128"
+        },
+        {
+          "name": "infra/astra-rh-millennium-env-v1",
+          "sha": "e0162c09afc1f72539e360fd8907a21a05d24dd4"
+        },
+        {
+          "name": "infra/zero-discretion-gates",
+          "sha": "be252aa837a5d1aaef69b7739ad4129a1b5d696c"
+        },
+        {
+          "name": "integration/aegis-universal-intelligence-rh-v1",
+          "sha": "abb5aa9ea5410da8937c5ff6b605a4c259f5ed0d"
+        },
+        {
+          "name": "integration/amps-hardened-mpvc-join-v1",
+          "sha": "446ef9683e9dceaea790ff57cdf363b9f56d9b7b"
+        },
+        {
+          "name": "integration/archive-restoration-product-v1",
+          "sha": "fe6de6d019bae84a5f3a9e5cd13e2d99d57296a4"
+        },
+        {
+          "name": "integration/archive-restoration-v1",
+          "sha": "f95115235eaae61dd54da5eae3f5773d4cc30188"
+        },
+        {
+          "name": "integration/authorization-effect-chain-v1",
+          "sha": "2db77aa4013ec52dd7497288e69b17aac856ff1f"
+        },
+        {
+          "name": "integration/cognitive-writer-phase2-pr508-v1",
+          "sha": "fe00d040803feb2741fb989b18d1ac4dc1fa11a3"
+        },
+        {
+          "name": "integration/effect-chain-main-a34d",
+          "sha": "1406aacca95fef02a942621a7060e0b6b14a5809"
+        },
+        {
+          "name": "integration/m1-m2-core-matrix-v1",
+          "sha": "ed9780ed90ce41b2da0983ff2501af4c58e3c0ff"
+        },
+        {
+          "name": "integration/ops-center-coverage-v1",
+          "sha": "bec6c95d640f38a0a7103cfb22d2f7085aec49c3"
+        },
+        {
+          "name": "integration/rh-final-closure-v1",
+          "sha": "cfe368ce2ffa0d196a4319c02b956997edf9f3fa"
+        },
+        {
+          "name": "integration/uci1-core-on-309",
+          "sha": "d636b6fa87efd2c2cfb3efcee0495778faf95420"
+        },
+        {
+          "name": "isolate/pr509-lean-theorem-delta-v1",
+          "sha": "4a20c05a146c196cac0d3f09b7c25a3fbcce4a6b"
+        },
+        {
+          "name": "land/aegis-factorisation-v1",
+          "sha": "edd4a4b45106d9d0f809b97d6bf1d6bbbd1b028c"
+        },
+        {
+          "name": "land/aegis-factorisation-v2",
+          "sha": "34cb773b188d269259b00892bda0c600279613ac"
+        },
+        {
+          "name": "land/weil-finite-source-chain-v1",
+          "sha": "f0dc49bdfc0ad6fe050ef6c04975ba2af3668eda"
+        },
+        {
+          "name": "main",
+          "sha": "495bfd85d79abcb2b4f6898fe9c156488492426a"
+        },
+        {
+          "name": "modernization/genomics-evidence-binding",
+          "sha": "72b53365bf7268978cd3a92436dde8d026162900"
+        },
+        {
+          "name": "noop",
+          "sha": "7b45c64aa31ad9ccffe6915e0003a0d1505ab4d2"
+        },
+        {
+          "name": "openai/aegis-v04-fail-closed-admission",
+          "sha": "d09310717319352771b204e98f3eb09886c9f121"
+        },
+        {
+          "name": "openai/qp-pd-v2-biological-binding",
+          "sha": "4626389c7866bc5faa2a21bb0f60fbd72329938a"
+        },
+        {
+          "name": "ops/gcp-wif-preflight-v1",
+          "sha": "90aac7a2f453fe5af35807937b84221caeae15b5"
+        },
+        {
+          "name": "plan/quantummanifold-scheduler-v0.1",
+          "sha": "cadfe64366fe399735a72478cd86b6acbd326e36"
+        },
+        {
+          "name": "pr1-transition-receipt-separation",
+          "sha": "6bf071d9c757d0f3514904f1efad3e3b14a60a09"
+        },
+        {
+          "name": "pr2-independent-effect-observation",
+          "sha": "154c37a49c7b8aab7400312fba1749b3c17f0796"
+        },
+        {
+          "name": "pr3-pre-admission-verifier-closure",
+          "sha": "fa7ca8e680e0e05bfdf40fa4fc27bffd09f0fe64"
+        },
+        {
+          "name": "pr3-verify-effect-receipt-gate",
+          "sha": "bf29570cf4ae189de93f38a9018e124c2136c687"
+        },
+        {
+          "name": "pr4-complete-verification",
+          "sha": "6407db1b0c4176f67a1d7ecbb16eca77d131d87e"
+        },
+        {
+          "name": "pr5a-exact-lineage-integration",
+          "sha": "b84f0de24555e4b77a28f4c478fa62e74ace5f3c"
+        },
+        {
+          "name": "prep/cognitive-writer-digest-transition-v1",
+          "sha": "f08859aaa1a5f8197a92f645f21cba998a0426b1"
+        },
+        {
+          "name": "probe/contents-api-signature-20260910",
+          "sha": "cf27e7d1dbba0e0046ee37b37ecd549672591358"
+        },
+        {
+          "name": "probe/cross-branch-signed-data-control-v1",
+          "sha": "1a7f831c4259f3678dac03e233e9632e309690c7"
+        },
+        {
+          "name": "probe/cross-branch-signed-data-target-v1",
+          "sha": "311f771d0b449bea86b1eb728ef6c0c81b0a3a24"
+        },
+        {
+          "name": "probe/cross-branch-signed-workflow-target-v1",
+          "sha": "495bfd85d79abcb2b4f6898fe9c156488492426a"
+        },
+        {
+          "name": "probe/github-signed-commit-v1",
+          "sha": "462da35fc9ea00bb379824376eb840a373476985"
+        },
+        {
+          "name": "probe/server-squash-signature-20260910",
+          "sha": "44def7df6ffd37cb01f51075ea56ba9dfffb4081"
+        },
+        {
+          "name": "probe/signed-manifest-refresh-v2",
+          "sha": "073e66af01241a9abf508473b9e389e49ff5a962"
+        },
+        {
+          "name": "probe/signed-manifest-refresh-v3",
+          "sha": "8d24207c42235a907a127b8487d8c9a2d4e66968"
+        },
+        {
+          "name": "probe/skill-corpus-census-v1",
+          "sha": "1734b54023dc4f183b7753c6c9f761700c2823d2"
+        },
+        {
+          "name": "probe/weil-constructive-trig-viability-v1",
+          "sha": "fddb393041c1d87e67ad602f800ad120fce8e49d"
+        },
+        {
+          "name": "probe/weil-corn-trig-viability-v1",
+          "sha": "23d01b042373d2c0481554a7d40d4cb9199814c9"
+        },
+        {
+          "name": "proof/authority-meet-v1-20260907",
+          "sha": "8974f608e70433bd152fdb662563b29e5f33e823"
+        },
+        {
+          "name": "proof/ccrdt-v1",
+          "sha": "edf6192d49e79f2c1bbf9d99fe0e3b43ae98f46d"
+        },
+        {
+          "name": "proof/ccrdt-v2",
+          "sha": "cb16c42a7ec39a96544736daa17cb2f9ac0607b0"
+        },
+        {
+          "name": "proof/corn-o0-completion-equivalence-v1",
+          "sha": "e44297fc203020229524ca3a4fce59d38b117eff"
+        },
+        {
+          "name": "proof/corn-o0-derivative-image-bridge-v1",
+          "sha": "9c7868fa866e50640946c88e5a623d5f5a40cde0"
+        },
+        {
+          "name": "proof/corn-o0-morphism-a1c-red-v1",
+          "sha": "e5bac41bb3d6bc006850a25b2e72d30264664e3d"
+        },
+        {
+          "name": "proof/corn-o0-morphism-a1c-v1",
+          "sha": "eb41908edb956a820255ce31d952fda343501ef2"
+        },
+        {
+          "name": "proof/corn-o0-transport-trig-commutation-v1",
+          "sha": "f461ddf0af67ec8c5c9a958b244ad753223cf9d2"
+        },
+        {
+          "name": "proof/corn-o0-trig-image-bridge-v1",
+          "sha": "bf99df8cc9b08767dc42b38ce4ee860716346b65"
+        },
+        {
+          "name": "proof/gq-full-cloudflare-replay-v1",
+          "sha": "7459a4a07db9a8fc8a10280cde29dcafe8ed5aac"
+        },
+        {
+          "name": "proof/gq-full-cloudflare-replay-v2",
+          "sha": "ce5f1f558a345a20fd30de5aa8c782afb515850d"
+        },
+        {
+          "name": "proof/gq-lean-cloudflare-replay-v1",
+          "sha": "3b2656715ec73df4e17adc83442c8746fe574300"
+        },
+        {
+          "name": "proof/kg-003-cct-coq-v1",
+          "sha": "44abcfacbb589bdf2ad6a153fa7eff3e984aa357"
+        },
+        {
+          "name": "proof/kg-004-trace-refinement-v1",
+          "sha": "22d8df79cea8e41a13926a78f0471236f67fbbb9"
+        },
+        {
+          "name": "proof/kg-005-proof-producing-refinement-v1",
+          "sha": "5c13d0270e5f853c7adf6872126f926ba5edaed9"
+        },
+        {
+          "name": "proof/macc-v1",
+          "sha": "7182e70e2325a0f78ba2d52e9ac7d4f0825789ed"
+        },
+        {
+          "name": "proof/macc-v2",
+          "sha": "1cadc6389caa2351215d38104a0c8a2ebcad3bbb"
+        },
+        {
+          "name": "proof/macc-v3",
+          "sha": "036548aafd7853b4e5e1efb37e3fa6b43c3cd63d"
+        },
+        {
+          "name": "proof/mellin-compact-support-v1",
+          "sha": "877e72254d68f034ac9d9134d5418c1996015b56"
+        },
+        {
+          "name": "proof/mellin-differentiable-compact-support-v1",
+          "sha": "8b45d65f406a5c1118e8c0aa12e74c4e3c564e9f"
+        },
+        {
+          "name": "proof/nfeg-v2",
+          "sha": "c4436801882f7ea19477c7c3def46e2feeaef6f6"
+        },
+        {
+          "name": "proof/nfeg-v3",
+          "sha": "c63d608bf1ce6ae870b698d5e46ce6d86ec34376"
+        },
+        {
+          "name": "proof/no-free-epistemic-gain-cloudflare-v1",
+          "sha": "63ffc9fa501efb38c4c9d814fd9d8e3976d3420b"
+        },
+        {
+          "name": "proof/pcep-v1",
+          "sha": "bde7c8765d593714ab4361f18dbd73e616b912da"
+        },
+        {
+          "name": "proof/pcep-v2",
+          "sha": "23823aeb5dfafe09383a5c40fbf6bdb6979f7d08"
+        },
+        {
+          "name": "proof/pcep-v3",
+          "sha": "c51f605eb19f20d73c90735e6ef2e4df3ca7f703"
+        },
+        {
+          "name": "proof/proof-carrying-epistemic-promotion-cloudflare-v1",
+          "sha": "bde7c8765d593714ab4361f18dbd73e616b912da"
+        },
+        {
+          "name": "proof/qform-error-algebra-v1",
+          "sha": "97063f9d74c24f3889530cdc366e60f31b3edd48"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-finalprep",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-2",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-3",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-4",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-5",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-6",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-preflight-7",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-staging",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-staging-2",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1-inventory-work",
+          "sha": "c7c50050eea3403da716c8e185ff63e8fce92299"
+        },
+        {
+          "name": "proof/qform-error-o0-recovery-v1",
+          "sha": "a0aa9a33de497b0ed46e39cdea2eb622d515e7a9"
+        },
+        {
+          "name": "proof/qform-error-o0-v1",
+          "sha": "31f389ffe89d3862f4cb432c0b03200ded5abd13"
+        },
+        {
+          "name": "proof/rh-abjad-factorization-boundary-v1",
+          "sha": "3ba65ca6e92f55507af2dff5ef9fc80b433f92e1"
+        },
+        {
+          "name": "proof/rh-abjad-four-phase-bridge-v1",
+          "sha": "28159750c0abaf418eaad17aca3d87dca222284b"
+        },
+        {
+          "name": "proof/rh-abjad-gram-positivity-v1",
+          "sha": "3f0dc44ce503f31c3d11a9f639bb137aaea9cc32"
+        },
+        {
+          "name": "proof/rh-autocorr-prime-windows-v1",
+          "sha": "70eace587bfabcc502c30647bcce75d7db3c16b3"
+        },
+        {
+          "name": "proof/rh-autocorrelation-closure-v1-9f0a2463",
+          "sha": "f10d066152dd07fcbe6497566213d91f29e68c5a"
+        },
+        {
+          "name": "proof/rh-autocorrelation-pole-aggregation-v1",
+          "sha": "d88587788630a5bafa12fdeb0619f3806f89d035"
+        },
+        {
+          "name": "proof/rh-bounded-zero-finiteness-v1",
+          "sha": "3864bb8379fdfb79a9963dc802ee1d26ef9bad69"
+        },
+        {
+          "name": "proof/rh-contour-zero-residue-summability-v2",
+          "sha": "0f92242e62f59a25ae98268aa1983e6426c8f9a0"
+        },
+        {
+          "name": "proof/rh-cumulative-mellin-bridge-v1",
+          "sha": "c3d6eb5a2bc1f3c7f7c76e25910cddbba66ca0da"
+        },
+        {
+          "name": "proof/rh-digamma-series-completion-v1",
+          "sha": "589adf0480bd4d7c12c9828027ea6228398377f4"
+        },
+        {
+          "name": "proof/rh-finite-prime-source-sum",
+          "sha": "4c734a45c98a0844776e6cf96b1129b553f3b8e6"
+        },
+        {
+          "name": "proof/rh-fixed-line-assembly-v4-7adb0980",
+          "sha": "d72220f62acfd3aa67611363de9c0988eb9b4228"
+        },
+        {
+          "name": "proof/rh-fixed-line-contract-v2-d8858778",
+          "sha": "17924a8943e9681593205b4109c4e44a3939e730"
+        },
+        {
+          "name": "proof/rh-fixed-line-fz-core-v3-77adaa32",
+          "sha": "940c06c86f8fdedc76ebdc4819f4d25e8125d236"
+        },
+        {
+          "name": "proof/rh-fixed-line-kernel-integral-v6-a61d1668",
+          "sha": "ed2fb15d55f5a0b09bcb4b4fe3dec8872c0a0217"
+        },
+        {
+          "name": "proof/rh-fixed-line-x-tail-v7-ed2fb15d",
+          "sha": "fe2ebcaa9f5f03583f98550c1a90180b60d99e64"
+        },
+        {
+          "name": "proof/rh-formal-conjectures-bridge-v1",
+          "sha": "0f58b389bcdee76acd5d7f0b95fd3306fdbee75a"
+        },
+        {
+          "name": "proof/rh-four-block-margin-v1",
+          "sha": "f707302f79c6a5ce7f5efb84492151234cff5bc7"
+        },
+        {
+          "name": "proof/rh-gauss-series-integral-reduction-v1",
+          "sha": "8e7d1e1bcbfdca0893993000a6e4c610f3247bf0"
+        },
+        {
+          "name": "proof/rh-lean-cloudflare-replay-v1",
+          "sha": "7a449d6f9da3400c5f051617faa88a7d78607e59"
+        },
+        {
+          "name": "proof/rh-li-criterion-rebind-v1",
+          "sha": "977284802a4a7d68f4e2bdca3982b09918eb7687"
+        },
+        {
+          "name": "proof/rh-li-terminal-current-v1",
+          "sha": "d4ef1e015f98c93ec6c631b02e20307b6a55fd62"
+        },
+        {
+          "name": "proof/rh-localization-defect-v1",
+          "sha": "c120728c970e8f05f60cb6018d8186d83032794f"
+        },
+        {
+          "name": "proof/rh-mellin-decay-estimate-v1",
+          "sha": "6ec8bb0ee39c462a5b544620b5ad2648c52ecb1e"
+        },
+        {
+          "name": "proof/rh-mellin-fixed-line-moment1-v2-77adaa32",
+          "sha": "2a302fbb1d05c891fb6db0d2a325edb8e2ab38f0"
+        },
+        {
+          "name": "proof/rh-paired-hadamard-fixed-line-v1-17924a89",
+          "sha": "53bc21debc3a944489f890b9eceff94126c35ab7"
+        },
+        {
+          "name": "proof/rh-paired-hadamard-tsum-fusion-v1-53bc21de",
+          "sha": "4c354ced84041976fd873c977065a134391802ae"
+        },
+        {
+          "name": "proof/rh-paired-kernel-tsum-v2-53bc21de",
+          "sha": "77adaa32bbedd32c765409b550b564413094b520"
+        },
+        {
+          "name": "proof/rh-paired-mellin-profile-v5-d72220f6",
+          "sha": "8408778885bf328077c82bd0286d76df4be1d3e2"
+        },
+        {
+          "name": "proof/rh-paired-zero-evaluation-v9-a352abf3",
+          "sha": "cce2ca53598b19f05ea72b4c9c5e1b35721ba1b1"
+        },
+        {
+          "name": "proof/rh-prime-canonical-reindex-v1-f10d0661",
+          "sha": "ddb42bc689e5a1cd676a2d7986fe66003cda33f3"
+        },
+        {
+          "name": "proof/rh-prime-line-identity-v1",
+          "sha": "ec6ce36278c99bbfb40c8200dbc09ec3c0b95faa"
+        },
+        {
+          "name": "proof/rh-reciprocal-paired-test-v8-fe2ebcaa",
+          "sha": "a352abf328c701868910cc944c521be91b0ad9ed"
+        },
+        {
+          "name": "proof/rh-restricted-weil-completion-v13",
+          "sha": "0540e45d8503a77bd48495f06b5603e3b138d095"
+        },
+        {
+          "name": "proof/rh-restricted-weil-continuation-v13",
+          "sha": "6db277cf1a8bc460c4bff4b92c8b11ab7694e700"
+        },
+        {
+          "name": "proof/rh-restricted-weil-criterion-v1",
+          "sha": "dcfa2a51f52d941937a7cb72996d58b2d0ec0f43"
+        },
+        {
+          "name": "proof/rh-restricted-weil-final-bridge-v13",
+          "sha": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5"
+        },
+        {
+          "name": "proof/rh-restricted-weil-resolvent-analytic-v13",
+          "sha": "acc0268f61132e3a98c00938ce8477fa0e1444a2"
+        },
+        {
+          "name": "proof/rh-restricted-weil-topology-v13",
+          "sha": "a6826e3d8e81261a5b35e374bc2860770efd9555"
+        },
+        {
+          "name": "proof/rh-signed-four-block-reality-v1",
+          "sha": "a7b94b2888fd5c47ec181b997547ac87a6fbcf60"
+        },
+        {
+          "name": "proof/rh-signed-four-block-schur-v1",
+          "sha": "99ab306ec4deefcffd388d1572224b2b9a50bb51"
+        },
+        {
+          "name": "proof/rh-small-window-producer-v1",
+          "sha": "46807c98e13398fa884a399e3559e7a9e7f9d5c5"
+        },
+        {
+          "name": "proof/rh-small-window-unconditional-v1",
+          "sha": "d9b9f805acda913e98bed9f8bbfd47c4d83566a7"
+        },
+        {
+          "name": "proof/rh-weil-criterion-domain-v1",
+          "sha": "db428f818c63efcbe16db3e6cca7bd00c5371ead"
+        },
+        {
+          "name": "proof/rh-weil-rhs-legitimacy-v1",
+          "sha": "9f0a2463c2f20ae3e4a931646027219ee6061ef3"
+        },
+        {
+          "name": "proof/rh-window-eighth-globalization-v13",
+          "sha": "10800b9a1aaf9cd275b312b751b74e6dda0632f4"
+        },
+        {
+          "name": "proof/rh-window-exhaustion-v1",
+          "sha": "05b6a49692baa7b88cc580c8bbf52e6eb6658450"
+        },
+        {
+          "name": "proof/rh-window-nine-over-64-globalization-v14",
+          "sha": "7630d13ce4c29b0ffee77b1fbf68881bcd816ff4"
+        },
+        {
+          "name": "proof/rh-zero-counting-bound-v1",
+          "sha": "c85a58ca753e5d99fc9f117e0dc481e1f2cf0bde"
+        },
+        {
+          "name": "proof/rh-zero-counting-one-plus-epsilon-v2",
+          "sha": "0d00694b357447baaac1febe0da38390fc065164"
+        },
+        {
+          "name": "proof/rh-zero-critical-strip-composition-v1",
+          "sha": "fb49502c3ec558e47fe62218288a3f86d5288a6e"
+        },
+        {
+          "name": "proof/rh-zero-critical-strip-v1",
+          "sha": "f8a4b478e81d466507361350a060b5b41d4408ab"
+        },
+        {
+          "name": "proof/rh-zero-finite-truncation-v1",
+          "sha": "7f37b1bc1489623522368c9de93c28a563cc869f"
+        },
+        {
+          "name": "proof/rh-zero-height-cofinality-v1",
+          "sha": "0cf24355342fd1d271078a3b39a19a9c6938c1bf"
+        },
+        {
+          "name": "proof/rh-zero-height-conjugation-v1",
+          "sha": "99c851c7f8799a835fa0b82123ef9a1bed77f210"
+        },
+        {
+          "name": "proof/rh-zero-height-finite-sum-v1",
+          "sha": "88e404935984aeb676ca1e0168572b79a389c556"
+        },
+        {
+          "name": "proof/rh-zero-height-limit-contract-v1",
+          "sha": "7ca60ad9c6c5297e2a4ebf1c1870840357d5e19b"
+        },
+        {
+          "name": "proof/rh-zero-height-multiplicity-sum-v1",
+          "sha": "e65825da04be3faac34fceae56455062e5ba3c86"
+        },
+        {
+          "name": "proof/rh-zero-height-shell-mass-v1",
+          "sha": "d21e4e816138dd5a667c54efead726563769c271"
+        },
+        {
+          "name": "proof/rh-zero-height-summability-bridge-v1",
+          "sha": "a312ba0b7533e043ebc9c69083eb47a67ff8a716"
+        },
+        {
+          "name": "proof/rh-zero-height-truncation-v1",
+          "sha": "cef68b5fd8d98b4ad2144ae32ab1f5bfde742505"
+        },
+        {
+          "name": "proof/rh-zero-lower-localization-v1",
+          "sha": "4032b37cd7865b9dc545ff7797cb54290a7611b2"
+        },
+        {
+          "name": "proof/rh-zero-majorant-summability-v1",
+          "sha": "d23cb372232f7033f33f248e30e760f3839a916f"
+        },
+        {
+          "name": "proof/rh-zero-multiplicity-binding-v1",
+          "sha": "a779dfccbc74e211175c1369b1821005673dd1b4"
+        },
+        {
+          "name": "proof/rh-zero-multiplicity-v1",
+          "sha": "8d75749e84482da79721af538d76f52ab1336513"
+        },
+        {
+          "name": "proof/rh-zero-negative-integer-classification-v1",
+          "sha": "a36fc036864018e3579eb69f665351aaf7effd86"
+        },
+        {
+          "name": "proof/rh-zero-nonpositive-integer-v1",
+          "sha": "0f7aaa340df3fa086ae1ef32cd960f5083c25fc4"
+        },
+        {
+          "name": "proof/rh-zero-nonpositive-trivial-v1",
+          "sha": "59c946ecb6076b1f2673b6c52525eca3664ede2d"
+        },
+        {
+          "name": "proof/rh-zero-radial-truncation-v1",
+          "sha": "d0bb1a7b3e123a5cadb4f8bb2a912e326cc57e6b"
+        },
+        {
+          "name": "proof/rh-zero-shell-analytic-synthesis-v1",
+          "sha": "59c26b825fa248d070e42fae04ccf7a15b285084"
+        },
+        {
+          "name": "proof/rh-zero-shell-factorization-v1",
+          "sha": "455162069189faab0451e9114cf7420fdf9a34a4"
+        },
+        {
+          "name": "proof/rh-zero-shell-quadratic-bound-v1",
+          "sha": "aae3384ce570b76405e0d2b352dae4c12ceef83d"
+        },
+        {
+          "name": "proof/rh-zero-side-interface-v1",
+          "sha": "88397ad9d8422151cf7059a2f2462797179941ae"
+        },
+        {
+          "name": "proof/rh-zero-strip-preboundary-v1",
+          "sha": "da5838a173b5e6d3b9d782e780795df2f37e6ce6"
+        },
+        {
+          "name": "proof/rh-zero-trivial-classification-v1",
+          "sha": "701649c136849114153a4797986a4efee05cea1c"
+        },
+        {
+          "name": "proof/rh-zero-upper-localization-v1",
+          "sha": "7364684165501a271ecf5a0fdbc4158b13e6f557"
+        },
+        {
+          "name": "proof/rh-zeta-divisor-exhaustion-v1",
+          "sha": "8b1cd6361eb6ad7844a8b17bde28dbceb3426c45"
+        },
+        {
+          "name": "proof/rh-zeta-divisor-ledger-v1",
+          "sha": "b45571a51e10121fc9bed3ee9e15572f365d5f02"
+        },
+        {
+          "name": "proof/rh-zeta-divisor-support-bridge-v1",
+          "sha": "99563f50c252411ee4eac188acc6bdb4f8d58b3f"
+        },
+        {
+          "name": "proof/sgm-cloudflare-replay-v1",
+          "sha": "7555b3443f57c4d1c33bbc3b5abf7c08ec051d83"
+        },
+        {
+          "name": "proof/sgm-cloudflare-replay-v2",
+          "sha": "e2d008720942327822d773a4d892820856090fbe"
+        },
+        {
+          "name": "proof/sgm-cloudflare-replay-v3",
+          "sha": "5c736a30b51c941147de46ea3ce3df6105c67f41"
+        },
+        {
+          "name": "proof/sgm-cloudflare-replay-v4",
+          "sha": "50ecdf9b2e8a0aa35a33c4e3a138f7d8a8f28429"
+        },
+        {
+          "name": "proof/vsqc-v1",
+          "sha": "acbe4fc4da6576d2c6fbd67a2ee56651b8d9243f"
+        },
+        {
+          "name": "proof/weil-analytic-v21-probe",
+          "sha": "c8021b228ec5b1b7027032a34bb8498c2561df42"
+        },
+        {
+          "name": "proof/weil-arch-tail-order-lean-v1",
+          "sha": "63aafb60427338ef55ea8ccb8ae34fd931b505c1"
+        },
+        {
+          "name": "proof/weil-arch-tail-order-v1",
+          "sha": "c5d33ed7aca7b0cf5e13077ebf56606fcb69d1b0"
+        },
+        {
+          "name": "proof/weil-canonical-prime-source-sum-v1",
+          "sha": "99d3700c2d5a2aab73a756109dda80de439d1baa"
+        },
+        {
+          "name": "proof/weil-concrete-finite-semantics-v1-isolated",
+          "sha": "e18edd1ba317ae1634862bd9f8e1c75f72b8c0c1"
+        },
+        {
+          "name": "proof/weil-concrete-finite-semantics-v1-production",
+          "sha": "1760f4ea290035784b2cc731cded4fe0cf2df037"
+        },
+        {
+          "name": "proof/weil-concrete-finite-semantics-v1",
+          "sha": "bb3b33dd88d1b179c84c3cdb2cd47bca8f5ccd40"
+        },
+        {
+          "name": "proof/weil-constructive-prime-trig-v1",
+          "sha": "ef922187df86fa78335b03e262765837e5543b7f"
+        },
+        {
+          "name": "proof/weil-convergence-bridge-v1",
+          "sha": "7c94ba577f62e5a9fcd96b9b5ae4859d106db081"
+        },
+        {
+          "name": "proof/weil-diagonal-kernel-reduction-v21",
+          "sha": "021217c744e7efcadea1ad7f2516fcb0ae425873"
+        },
+        {
+          "name": "proof/weil-finite-source-calculus-v1",
+          "sha": "8633831e652e3622e3b3d3ace6cdcbafe3d67058"
+        },
+        {
+          "name": "proof/weil-mixed-log-kernel-v27-c38ea896",
+          "sha": "851a48f604ed3a061a9b0e234add88c11c80466a"
+        },
+        {
+          "name": "proof/weil-moment-restriction-bridge-v1",
+          "sha": "56ab4921ceea294ebf3d5dd092225b2c2ed53fde"
+        },
+        {
+          "name": "proof/weil-o0-globalization-v1",
+          "sha": "41ad4ea70c09eb2b88c8457d3b7185c5db4f986a"
+        },
+        {
+          "name": "proof/weil-primality-activation-v1",
+          "sha": "c82ee1dbbd10adef66ff5c8885f5afa427fcc261"
+        },
+        {
+          "name": "proof/weil-prime-diagonal-trust-probe-v1",
+          "sha": "c013bb76cbbf22edfcb942cbda5ab1d7cf32f5a8"
+        },
+        {
+          "name": "proof/weil-prime-diagonal-v1",
+          "sha": "44015987bee321e0dd722f1c67b909d141f75512"
+        },
+        {
+          "name": "proof/weil-prime-evaluation-v30-20260919",
+          "sha": "87f1a447537f535c0b64fe1d575cd18e851cc060"
+        },
+        {
+          "name": "proof/weil-prime-power-arithmetic-v1",
+          "sha": "c6bbb5851aed4e58f75ca727e2ede94371c44784"
+        },
+        {
+          "name": "proof/weil-prime-power-weight-bridge-v1",
+          "sha": "41bc7e65d8ec8737cf32352ea60a878411e49f6c"
+        },
+        {
+          "name": "proof/weil-prime-source-derivative-v1",
+          "sha": "8bc3b9884505881249bf79c96e2ccaf6650d7c5e"
+        },
+        {
+          "name": "proof/weil-semantic-bridge-obstruction-lean-v1",
+          "sha": "e9c89aae10761ae92c21b5bec36b27dc1943ce92"
+        },
+        {
+          "name": "proof/weil-three-block-17-module-probe",
+          "sha": "1d748f1a026c3a51473c69d65cd0116406bc8f33"
+        },
+        {
+          "name": "proof/weil-three-block-cross-v28-49c36e5a",
+          "sha": "2f36af25534546e16dbb6659e24656ceb79ef4e9"
+        },
+        {
+          "name": "proof/weil-three-block-prime-windows-v23",
+          "sha": "f98c2620676a2f966d78644e2207b8e58e028095"
+        },
+        {
+          "name": "proof/weil-three-block-rational-v1-cf660498",
+          "sha": "3ea7bae7ccd17348262a3895eb8065ed289981f0"
+        },
+        {
+          "name": "proof/weil-three-block-translated-packets-v22",
+          "sha": "7e3c85664c65faf1e02f6887c22b4350386a1af8"
+        },
+        {
+          "name": "proof/weil-von-mangoldt-canonical-v1",
+          "sha": "29853d7a719e850eaf42403ae09196adaaeb0223"
+        },
+        {
+          "name": "proof/weil-width-arch-budget-v25-efb65a76",
+          "sha": "40c08df2daf6bf5e808e2d22a93dc4611f7df82d"
+        },
+        {
+          "name": "proof/weil-width-arch-budget-v26-40c08df2",
+          "sha": "8a125072db3575d784a0c3dcb25a4ab67f5cf24c"
+        },
+        {
+          "name": "proof/weil-width-arch-budget-v26-b872e6af",
+          "sha": "79c92eff2f7252e921b5634dac960e2f7c547dec"
+        },
+        {
+          "name": "proof/weil-width-arch-integral-v27-be5935e2",
+          "sha": "49c36e5a20c4afe72961314932453f261d5a0304"
+        },
+        {
+          "name": "proof/weil-width-diagonal-arch-frontier-v24-f98c2620",
+          "sha": "efb65a7602fefa47c38ec53e4db533dc6653a152"
+        },
+        {
+          "name": "proof/weil-zero-side-identification-lean-v1",
+          "sha": "668a69ebe0cc32c794079eb847163235ac08ee31"
+        },
+        {
+          "name": "rebind/mycorrhizal-1bna-registry-secure-main-signed-v1",
+          "sha": "6857aecf1af14e0315c10f2268fd233ed0a1ad7c"
+        },
+        {
+          "name": "rebind/mycorrhizal-1bna-registry-secure-signed-v1",
+          "sha": "64a6edfc8f4fe46d30867d37416236e79489d0c0"
+        },
+        {
+          "name": "rebuild/system-rebuild-v1",
+          "sha": "b4e15e57ce0e4dc3a2d09b617172af240a8297f0"
+        },
+        {
+          "name": "reconcile/platform-epistemic-boundaries-v1",
+          "sha": "a81e5c3d338f2b13faa66e0f42f2f3d7fe3c1739"
+        },
+        {
+          "name": "reconstruct/coq-build-binding-41ad-v1",
+          "sha": "4aab772fefe85a8b5dfa4cd5421b15186565c859"
+        },
+        {
+          "name": "red/quanphotonic-falsification-6eb2ac20",
+          "sha": "7c6baec615a701a0b48714f9af798700c5fd4b74"
+        },
+        {
+          "name": "refactor/sota-foundation-v1",
+          "sha": "039ca4a96a1d700103219cac43c215ed1491601d"
+        },
+        {
+          "name": "release/provider-neutral-signed-v1",
+          "sha": "71a6deecdc1baffa0f1f37e7b1066a654613a45a"
+        },
+        {
+          "name": "repair/agent-dispatch-current-main-v1",
+          "sha": "3e82aa45a4dfd1e54595d43336442a21e0e24d38"
+        },
+        {
+          "name": "repair/cognitive-anchor-d93-v1",
+          "sha": "5af4252d3b7829d043f6115e9d30c4193211ebe1"
+        },
+        {
+          "name": "repair/cognitive-anchor-recovery-admission-v1",
+          "sha": "503372e363454de62f7d9b56004fbd691852baba"
+        },
+        {
+          "name": "repair/cognitive-anchor-writer-authority-v1",
+          "sha": "5da6cb7fa6a5c393317b9ea4f223fec7a36469a3"
+        },
+        {
+          "name": "repair/cognitive-anchor-writer-authority-v2",
+          "sha": "29e19c7b7329b10dc2f7aacd035de7fa464235d1"
+        },
+        {
+          "name": "repair/cognitive-anchor-zero-parent-v1",
+          "sha": "495fccdded0d9f5cdef2aac2ac5bbd8465063cf1"
+        },
+        {
+          "name": "repair/cognitive-recovery-admission-validator-v1",
+          "sha": "ad29ffecd4b8e1ade816a3bd8bd9a1cec7557063"
+        },
+        {
+          "name": "repair/cognitive-recovery-atomic-replay-v1",
+          "sha": "6795387258809f1506cf9d2a9316d0c470f42b8a"
+        },
+        {
+          "name": "repair/main-cognitive-lineage-v1",
+          "sha": "9f8dc064bc75ff96013ec3d617ac17d13030d882"
+        },
+        {
+          "name": "repair/pr-191-safety-only",
+          "sha": "e2e7590af987bcb0bc408a43d77f725d08de4dbb"
+        },
+        {
+          "name": "repair/pr-203-main-replay",
+          "sha": "e085d87b38fd7a8ec8a96da08537b120106a9aea"
+        },
+        {
+          "name": "repair/trusted-admission-v2",
+          "sha": "342df5efe106bcf22eef11031d570e76b779a0b6"
+        },
+        {
+          "name": "repair/trusted-ruleset-workflow-v1",
+          "sha": "feaaa520529c65d709c5ee0bae24b923beb4de34"
+        },
+        {
+          "name": "rescue/cloudrun-ls-20260614",
+          "sha": "d7e460625b0b65b6c78cb8e07797049b1e4f699a"
+        },
+        {
+          "name": "rescue/kernel-one-20260614",
+          "sha": "0f6d316f7d9bf7a88e57200a602412459ab3ec7b"
+        },
+        {
+          "name": "rescue/kernel-one-standalone",
+          "sha": "ea1c660472dfb92f0dbffc112ef2f3b46f419040"
+        },
+        {
+          "name": "rescue/onboarding-doc",
+          "sha": "1ab7c10bcd66e36c0b8a0648454077fd25ba8155"
+        },
+        {
+          "name": "research/aedr-dag-reactor-v1",
+          "sha": "d46821b5fec045511c331af19b22899506e93f16"
+        },
+        {
+          "name": "research/boundary-falsifiers-v1",
+          "sha": "a9144302d3daf4e0038d155aeff2ac17b75ff75f"
+        },
+        {
+          "name": "research/conservative-consensus-crdt-v1",
+          "sha": "4c25c8d7ebe4d55b2a1dc5c93196ee6498ba0210"
+        },
+        {
+          "name": "research/conservative-epistemic-crdt-v1",
+          "sha": "aca2ee7dbf063de30d3ceb6b366f2dde37abf21f"
+        },
+        {
+          "name": "research/cp-cg-secular-admission-bind-v1",
+          "sha": "8eaec4573684d3d430a78ddeba734c5461fdc4d7"
+        },
+        {
+          "name": "research/cross-boundary-authority-v1",
+          "sha": "450a641a5466702ed18b4d4277efeefbbd9c9a01"
+        },
+        {
+          "name": "research/cross-domain-collision-v1",
+          "sha": "07d128889305ae39966e363d8aa7bc4578a5569e"
+        },
+        {
+          "name": "research/epstein-lattice-weil-control-v1",
+          "sha": "8a9af929fcddd7189edf40116840b187d532a8e4"
+        },
+        {
+          "name": "research/evidence-discovery-engine-v1",
+          "sha": "8764d401379fd66f3295b0a51c51807eb0613481"
+        },
+        {
+          "name": "research/gravity-quantum-authority-v1",
+          "sha": "a841235b4d49f8399aa7f796493caef5dcfbea07"
+        },
+        {
+          "name": "research/gravity-quantum-crossframework-v1",
+          "sha": "e4312011994ec2658a997f1781063b970865ec04"
+        },
+        {
+          "name": "research/gravity-quantum-cudaq-phase-v1",
+          "sha": "fd297154264455c055ee40b10eed44f86e23edf6"
+        },
+        {
+          "name": "research/gravity-quantum-cudaq-twoqubit-v1",
+          "sha": "35d7aa884d17670a9bc2f8e1fdfb2b5d988f8958"
+        },
+        {
+          "name": "research/gravity-quantum-interface-v1",
+          "sha": "32a8ca327e934186d0a052fd0f4a0cad6077fc59"
+        },
+        {
+          "name": "research/multi-agent-conservative-consensus-v1",
+          "sha": "9649b1eada1ffff8740b8cf6c286f9ec961fc083"
+        },
+        {
+          "name": "research/no-free-epistemic-gain-v1",
+          "sha": "acdff800a64f1322221447c62d5b711e6299d5a5"
+        },
+        {
+          "name": "research/openai-navier-workflow-v1-selfreview",
+          "sha": "b106e70badfb2b676a991280aa7119fa622f1af3"
+        },
+        {
+          "name": "research/openai-navier-workflow-v1",
+          "sha": "7888eeca7c0e9a6c0f2896ca157942e0aaeb27bb"
+        },
+        {
+          "name": "research/paretomod9-lean-kernel-20260915",
+          "sha": "3aa68eec912fbcb4c8f2130b7fe9957c5f996325"
+        },
+        {
+          "name": "research/paretomod9-rust-replay-20260915",
+          "sha": "33a4bbe8eb7eb054b27828242d406a75573356bd"
+        },
+        {
+          "name": "research/phi-finite-section-congruence-v1",
+          "sha": "e8dcc005a1e887661b7019f8b7f27d7a3f21a853"
+        },
+        {
+          "name": "research/polyglot-metacognition-v1",
+          "sha": "80dd4260ec6691d131e26dfce2322c88a6a06f1d"
+        },
+        {
+          "name": "research/proof-carrying-epistemic-promotion-v1",
+          "sha": "31b9d6ea43ad84173653d54ad9387be8bfa469bd"
+        },
+        {
+          "name": "research/proof-carrying-qpy-curriculum-v1",
+          "sha": "4d6e6b34677affe489ea20aea2ed9353aa53839b"
+        },
+        {
+          "name": "research/prospective-epoch-v1",
+          "sha": "dd5bffa5baa48b9c6adec5b126f6bfff2f9d59da"
+        },
+        {
+          "name": "research/quantum-cudaq-witness",
+          "sha": "7853f4e63029b24c987f9bdd2f58df8fcffa92d6"
+        },
+        {
+          "name": "research/rh-conditioning",
+          "sha": "c1aedbec8b0a22d77332277430dc37841f608330"
+        },
+        {
+          "name": "research/rh-cross-term-kernel-v1-f10d0661",
+          "sha": "cf660498847634a5a45fc6c19644132be3ec8417"
+        },
+        {
+          "name": "research/rh-eleven-block-actual-bridge-v1",
+          "sha": "2b9da4e3a4029c7eca3cc3f0db88831c01743eca"
+        },
+        {
+          "name": "research/rh-eleven-block-actual-expansion-v1",
+          "sha": "2b9da4e3a4029c7eca3cc3f0db88831c01743eca"
+        },
+        {
+          "name": "research/rh-eleven-block-lean-sos-v1",
+          "sha": "d5fe8333bfb39c1cf9f62b4277ca76a23d94d468"
+        },
+        {
+          "name": "research/rh-eleven-block-sos-preflight-v1",
+          "sha": "2d09039b05cc57d18673bfb5f87e9b1dbad837d9"
+        },
+        {
+          "name": "research/rh-fine-diagonal-5671-v1",
+          "sha": "3339fdd8b389c0ef3489cf862f891510801b72db"
+        },
+        {
+          "name": "research/rh-fine-diagonal-upgrade-v3",
+          "sha": "ca24dfa466d5d4c5eaec1b269f2f0a21a64a5c5c"
+        },
+        {
+          "name": "research/rh-finite-prime-phase-independent-v1",
+          "sha": "658f53d3b01c1bc80aa18a6fa7bb55579b8970fc"
+        },
+        {
+          "name": "research/rh-gap9-prime-bound-v1",
+          "sha": "414a0120517fa3ae3354a31780c09e03a7fa5ff1"
+        },
+        {
+          "name": "research/rh-gap9-shift-transport-v1",
+          "sha": "2508b69676caeb09fb5a79a84ed091d18a75d683"
+        },
+        {
+          "name": "research/rh-gap10-prime-bound-v1",
+          "sha": "3df9ad4530072b300fbab96ace0c30b16bbd8fd4"
+        },
+        {
+          "name": "research/rh-gap10-shift-transport-v1",
+          "sha": "8ac133a165f6d9da7a306d9b9840711cffa80ff2"
+        },
+        {
+          "name": "research/rh-nine-packet-1083-over-640-v1",
+          "sha": "e2ecb02617d3f4ad960f96e157563e5eb07a66dd"
+        },
+        {
+          "name": "research/rh-nine-packet-fine-margin-v1",
+          "sha": "9768a496f4fb489045226f4c5ebb8af8f29e9a33"
+        },
+        {
+          "name": "research/rh-rational-nine-packet-prime-window-v1",
+          "sha": "ecb39e85e9fa35d4bccd01fc1a23a948ae9043c1"
+        },
+        {
+          "name": "research/rh-rational-ten-packet-concrete-v1",
+          "sha": "39c2851ae698542b4002d1f1ca5f5d24ddf1e240"
+        },
+        {
+          "name": "research/rh-signed-four-block-preflight-v1",
+          "sha": "9061a95afcb69e8b3243ef3e621b0ae0ebabd340"
+        },
+        {
+          "name": "research/rh-spectral-operator-audit-v1",
+          "sha": "42a9abb11142f1875f7b5c0fd6fd97bb86b50aa1"
+        },
+        {
+          "name": "research/rh-ten-block-actual-bridge-v1",
+          "sha": "5bd888e5ecc61b159d084f888c6260344908ffa6"
+        },
+        {
+          "name": "research/rh-ten-block-actual-expansion-v1",
+          "sha": "51bc2d2bdd8f824dab4e75d4aff7e8a8faf690e6"
+        },
+        {
+          "name": "research/rh-ten-block-lean-sos-v1",
+          "sha": "9a32528817969eb0ed6be3d8572bc4403109f8fe"
+        },
+        {
+          "name": "research/rh-ten-block-sos-preflight-v1",
+          "sha": "c49cf685e6c30383f6b0c204b963c8aca264f6d0"
+        },
+        {
+          "name": "research/shard-closure-measurement",
+          "sha": "34d11abe4e067ed98e3413c0ca6dcd25772e86bc"
+        },
+        {
+          "name": "research/statistical-godel-machine-v1",
+          "sha": "aca2ee7dbf063de30d3ceb6b366f2dde37abf21f"
+        },
+        {
+          "name": "research/t3-boundary-neuro-v1-20260920",
+          "sha": "d12ad935cacea9535c855bc5a53883332942f8f0"
+        },
+        {
+          "name": "research/verified-semantic-quotient-consensus-v1",
+          "sha": "43035ca71e519faa2a04ea58ac4f7b46d8d47614"
+        },
+        {
+          "name": "research/weil-levy-gap-v1",
+          "sha": "cc157a4b13cb989747d91e18637a76f9dd60d6c7"
+        },
+        {
+          "name": "research/weil-moment-restricted-gap-t1-v1",
+          "sha": "a43dd157c8ee93ee4f3f52d378f883bfe95c10ca"
+        },
+        {
+          "name": "research/weil-retained-bc-v22-20260915",
+          "sha": "398d024a5f528e4b9acb8121296d7195100d6a32"
+        },
+        {
+          "name": "research/weil-v21-analytic-constants-replay-20260915",
+          "sha": "acb0643991e3b43d0c5dbf8e90ce25ab2a693b23"
+        },
+        {
+          "name": "research/weil-v21-log-isometry-replay-20260915",
+          "sha": "07f948e34b7cb9031d6664ac6146ba9799d2e4be"
+        },
+        {
+          "name": "research/zero-discretion-type-gates-v1",
+          "sha": "85ceacf48d34dfe3a4dba81f7bb5cb027fb38db3"
+        },
+        {
+          "name": "restore/archive-arc-data-training-v1",
+          "sha": "79aae45cfcd98d594c5213460282ac2260ea7aec"
+        },
+        {
+          "name": "restore/archive-eccf-gcce-v1",
+          "sha": "b2cbae6744269b162ff5447b6dcdff173125cd59"
+        },
+        {
+          "name": "restore/archive-pge-provenance-v1",
+          "sha": "ea6d5bab2210171fe40a2dc29f595b09b2f42759"
+        },
+        {
+          "name": "restore/archive-sovereign-brain-ledger-v1",
+          "sha": "535d807ecfaf62b2cb6400fb89abbadd7e822229"
+        },
+        {
+          "name": "restore/archive-swarm-arc-v1",
+          "sha": "20a944f2da0e97ddda67196d05a64bbef725089d"
+        },
+        {
+          "name": "salvage/measurement-evidence-boundary-v1",
+          "sha": "867f0a45e16af3e8224c22178cd9a58674d0c539"
+        },
+        {
+          "name": "salvage/provider-neutral-google-skill-corpus-v1",
+          "sha": "33a4d70893f9c4222c7094a48ea83bdd921d08a9"
+        },
+        {
+          "name": "salvage/provider-neutral-skill-corpus-v1",
+          "sha": "eecc26bc6fd81cc7b0a799b28c55072c2f6408af"
+        },
+        {
+          "name": "scratch/materialize-polyglot-anchor-69e3",
+          "sha": "b1d33425c8d71eec323ddca8e4639ba19ac74f62"
+        },
+        {
+          "name": "security/activate-main-enforcement-v1",
+          "sha": "836e7141fb2480cb8e2d9954ffa7ad0472309b27"
+        },
+        {
+          "name": "security/aedr-iap-v1",
+          "sha": "df01691b728b4fdc7871456e3872ca3790c6d7e2"
+        },
+        {
+          "name": "security/agent-dispatch-capability-v1",
+          "sha": "2e51d41a51614ab95c14d353c5c87240c7eb4e57"
+        },
+        {
+          "name": "security/branch-protection-enforcement-v1",
+          "sha": "8f771622dd6f31f695e8a279c65b63ecc4e4566f"
+        },
+        {
+          "name": "security/capability-own-principal-binding-v1",
+          "sha": "24c8680321e370fa950b8203d1c12370b117cdac"
+        },
+        {
+          "name": "security/daybreak-blue-hardening-v1",
+          "sha": "75192261d6512da514cc5dcef93eda4c4cc2777d"
+        },
+        {
+          "name": "security/glasswing-evidence-contract-v1",
+          "sha": "3674520b3a26a98c78a2d0378d2ddf782e9ac2d9"
+        },
+        {
+          "name": "security/main-anchor-producer-v1",
+          "sha": "c6b7d759b80afa1a2b312b6e7f734c6f7e44a710"
+        },
+        {
+          "name": "security/main-ruleset-contract-v2",
+          "sha": "fe7582bf05d7a7242cf8c2f4949b4ac84bf056c9"
+        },
+        {
+          "name": "security/main-ruleset-contract-v3",
+          "sha": "cf4895038ff9a70d57494cfd66c81d965d305669"
+        },
+        {
+          "name": "security/trusted-required-workflow-v1",
+          "sha": "ca85c76be78bbd880674e01d28d12b3dd8b84430"
+        },
+        {
+          "name": "spec/quantummanifold-scheduler-v1",
+          "sha": "8764d401379fd66f3295b0a51c51807eb0613481"
+        },
+        {
+          "name": "spec/thread-manifold-contract-v1",
+          "sha": "b5240780b32817eaafb1c7d6b106562dc7e4ac87"
+        },
+        {
+          "name": "spec/universal-collective-intelligence-kernel-v1",
+          "sha": "65a189ee27910a643a851d5a6792893c8f25bc82"
+        },
+        {
+          "name": "staging/cognitive-writer-phase2-squash-v1",
+          "sha": "083dceb535226c7dead4e74ce1d7791e076205b3"
+        },
+        {
+          "name": "staging/core-matrix-m1-m2-signed-v1",
+          "sha": "495bfd85d79abcb2b4f6898fe9c156488492426a"
+        },
+        {
+          "name": "tmp/memory-sentinel-reconcile",
+          "sha": "32b7eb6a37fb69d19dd80189390b6641c5004ef1"
+        },
+        {
+          "name": "tmp/pr423-signature-rebind-20260917",
+          "sha": "2d6289a9522cfafe0788a6a9d949c46d05fbd99a"
+        },
+        {
+          "name": "tmp-do-not-use",
+          "sha": "17340d29b9a21cbcbecec597da73cb61bd295d45"
+        },
+        {
+          "name": "tmp-unused",
+          "sha": "a4a26229d7965ad8aa3d3db2e6f70dc35b75a016"
+        },
+        {
+          "name": "trace/proof-trace-sdk-main-v1",
+          "sha": "f8ace875c55cc6d5eda581128d7403f442e0908e"
+        },
+        {
+          "name": "trace/proof-trace-sdk-v1",
+          "sha": "7db6819644fa62076161a98d18d2ef7bc7365f40"
+        },
+        {
+          "name": "trace/security-evidence-bridge-v1",
+          "sha": "2e980ca6a46fb3a40f8828d70c7546208a802579"
+        },
+        {
+          "name": "trace/security-evidence-prooftrace-v1",
+          "sha": "c9d042d871e7de1cf4ed9120ba282abb4db3a5e6"
+        },
+        {
+          "name": "transition/cognitive-writer-digest-allowlist-signed-v1",
+          "sha": "083dceb535226c7dead4e74ce1d7791e076205b3"
+        },
+        {
+          "name": "validation/signed-zero-vuln-bfefa-v1",
+          "sha": "46c2c3e10f65affa6ea6536cb2477392a50cc017"
+        },
+        {
+          "name": "verification/repository-wide-receipt-v1",
+          "sha": "44a09a18c2333863387b323e2de392f30e9a9bf0"
+        },
+        {
+          "name": "verify/cstar-v04-coq-20260910",
+          "sha": "441acef24fc68830c8e5eab49ca25dc476bb470f"
+        },
+        {
+          "name": "verify/cstar-v05-twisted-20260911",
+          "sha": "856a8b1ef1c8ca3aed84c246a1a858aaa700f244"
+        },
+        {
+          "name": "verify/cstar-v06-abelian-20260917",
+          "sha": "b9764cd346b3329cad2d738c1cb071c125e401c3"
+        },
+        {
+          "name": "verify/cstar-v06-dev-20260917",
+          "sha": "7353c68176c286427cf021d8780e500c41089933"
+        },
+        {
+          "name": "verify/cstar-v06-source-20260917",
+          "sha": "c6c4f3cd0edd70d4ccccbc135e16c91063cc6884"
+        },
+        {
+          "name": "verify/cstar-v06-zmod-20260911",
+          "sha": "08ff5a4d310d03c4e7b55f5e395a4177163b776c"
+        },
+        {
+          "name": "verify/cstar-v07-h3-normalization-20260917",
+          "sha": "a800fee016a96224c70b93b2165b68d7deaed1d6"
+        },
+        {
+          "name": "verify/cstar-v08-h3-normalization-injective-20260919",
+          "sha": "d16253a5adf1e5089ab04a8a5c46aa6cab468eb1"
+        },
+        {
+          "name": "verify/cstar-v09-h3-class-equivalence-20260919",
+          "sha": "08c0efbdc3daebe06317f081d3852d3b0bb227a1"
+        },
+        {
+          "name": "verify/cstar-v10-h3-gauge-equivalence-relations-20260919",
+          "sha": "191ea0dbdf8647b372973158bd6cf7bfdc83cc1d"
+        },
+        {
+          "name": "verify/openai-ten-proofs-2026-08-01",
+          "sha": "89f3b99df35413b6ab4a5c8311c620837b40622c"
+        },
+        {
+          "name": "verify/pr551-proof-receipt-v1-20260919",
+          "sha": "ae628a3bae8473d158c1169e442e442dc13227ed"
+        },
+        {
+          "name": "verify/pr679-rh-restricted-weil-bridge-v13-exact-head",
+          "sha": "ece0a7a5ac4d5032376511778e8b049acc4ce299"
+        },
+        {
+          "name": "wire/api-domain-to-worker",
+          "sha": "196f7337481f82c853db1710323f3ca5aa617b6e"
+        }
+      ],
+      "pagination_complete": true,
+      "pages": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        99,
+        0
+      ]
+    },
+    {
+      "repository": "Aegis-Omega/AegisOmega",
+      "branches": [
+        {
+          "name": "agent/ci-trust-plane-semantics-v1",
+          "sha": "8d510526770d4cd4085b8bda96ca2520b88e89e9"
+        },
+        {
+          "name": "agent/commit-bound-integration-ledger",
+          "sha": "0b00ab682b7432a08577b5dfd2075fa0a0f3ffad"
+        },
+        {
+          "name": "agent/coordinator-fail-closed-authority-v1",
+          "sha": "baa22087096177c71845ecf3d1273eb08fef941c"
+        },
+        {
+          "name": "agent/evidence-bound-skill-authority-v2",
+          "sha": "a323d6180ea7015ad22a735ad297f5b7cd5d362b"
+        },
+        {
+          "name": "agent/experiment-admission-v0-1",
+          "sha": "3eaceb43f04b8b509cf805687546784cd851a94a"
+        },
+        {
+          "name": "agent/fix-grace-chain-runtime",
+          "sha": "70f6f9a0fb62d21c52a4a4d72bf6fa6f22ada6e3"
+        },
+        {
+          "name": "agent/fix-osv-scanner",
+          "sha": "beed15dac77c1175e6c8dc2695f90f3e2bab5cc0"
+        },
+        {
+          "name": "agent/gcp-ngs-census-v1",
+          "sha": "7c98eae1b333bfc1bafd8a85f84fef52f336f623"
+        },
+        {
+          "name": "agent/genomics-real-input-preflight-v1",
+          "sha": "a13067622bb82cfde4c55133e90b9c265999457e"
+        },
+        {
+          "name": "agent/operator-sovereignty-evidence",
+          "sha": "906253bf24832c56d216d03952ab3ec010f62023"
+        },
+        {
+          "name": "agent/operator-sovereignty-rfc",
+          "sha": "ad7b320a49b3f2f2af42a801b5dbeb422349cd1e"
+        },
+        {
+          "name": "agent/queued-control-plane-enforcement-v1",
+          "sha": "eef9322ca0c80d50e8b199dff28d0c5c632b185e"
+        },
+        {
+          "name": "agent/scale-os-control-plane-v1",
+          "sha": "3107450aec9053c4c4f8e178592a42b3108dbbd6"
+        },
+        {
+          "name": "agent/sovereignty-contracts-v1",
+          "sha": "4f4444c4ca096039a847a22f61c2d7a8bd326a34"
+        },
+        {
+          "name": "archive/pr-216-pre-reconcile-07fcbc4",
+          "sha": "07fcbc4692cccb20cbfaceab0807f69e0114153e"
+        },
+        {
+          "name": "automation/cognitive-manifest-trigger",
+          "sha": "1f7cbdc07d7182ab843a48d653c6f360d0cac031"
+        },
+        {
+          "name": "chatgpt/scale-os-handoff-20260718",
+          "sha": "e9df53afd7cc77c91043ba8a1b806f1b228ea3e1"
+        },
+        {
+          "name": "claude/aegis-epistemic-audit-amendment-ai8be8",
+          "sha": "2e0bf9415bb73dde1e35f34f4f7e919247c79fee"
+        },
+        {
+          "name": "claude/blissful-rubin-mt9jS",
+          "sha": "f8aafe62dd02989cf1601fb10bb47091486a2c0d"
+        },
+        {
+          "name": "claude/dns-fix-xxq4ni",
+          "sha": "e313c29dfa53d173024935697572ff9e0063db35"
+        },
+        {
+          "name": "claude/fable-mythos-behavior-analysis-yjm4yr",
+          "sha": "58d88c9477bbe6e0e751f620eeebd8aca00fe091"
+        },
+        {
+          "name": "claude/slack-session-yyw7h6",
+          "sha": "00f2d44d522b1c07e7f5c581cbe0f5c5ec7b9d81"
+        },
+        {
+          "name": "claude/test-coverage-analysis-keTIk",
+          "sha": "d47e5336837457bbb4e6982cab58c80a832c8e45"
+        },
+        {
+          "name": "codex/add-foundry-backend-type-and-integration-tests",
+          "sha": "084713eff00d954becc3c1483d55fb9a26d45698"
+        },
+        {
+          "name": "codex/add-provider-neutral-inference-gateway",
+          "sha": "5b91bbcd55ed5f50d9acd42197171dcd3963c684"
+        },
+        {
+          "name": "codex/add-ultrareview-feature",
+          "sha": "59ae004601958c33040d9513d55be50889b57d9e"
+        },
+        {
+          "name": "codex/create-product-endpoints-and-dashboard-views",
+          "sha": "096130c9787da34babf449a0de03d4c70f98e10e"
+        },
+        {
+          "name": "codex/define-billing-schema-and-implement-webhooks",
+          "sha": "39fb5297ae0bf0a37bc301ba0c118a426def9c44"
+        },
+        {
+          "name": "codex/enforce-4096-token-limit-in-managedagentsclient",
+          "sha": "c0624456d12bf54ac1f363d1b230b85f78b30220"
+        },
+        {
+          "name": "codex/implement-automaton-2-verifier-logic",
+          "sha": "d889a1eac89480544078830872919d0eca2acde1"
+        },
+        {
+          "name": "codex/research-registry-v1",
+          "sha": "1586366c53fdc14ad90f337b73cd641421111dc1"
+        },
+        {
+          "name": "codex/update-pr-#192-with-april-2026-package",
+          "sha": "a5f42776cb5828d19dc72a8c3115c03cde300c7f"
+        },
+        {
+          "name": "codex/validate-aegis_batch_max_usd-in-configuration",
+          "sha": "782468a65436d728410a02ff41e6a0c9f6ba0b84"
+        },
+        {
+          "name": "cstar-kernel-v0.1-20260910",
+          "sha": "3c857cff355cfcce59d4e3e3cc8d2ade9cd0fe5a"
+        },
+        {
+          "name": "dependabot/npm_and_yarn/npm_and_yarn-a06f58e668",
+          "sha": "c05da1bc4b67a620fb1c50f4e705fdb94dcbb854"
+        },
+        {
+          "name": "exp02-ncbi-acquisition-20260910",
+          "sha": "685c7f5f51c227ec29e624de194488f1ad41d50e"
+        },
+        {
+          "name": "exp02-r1-bsubtilis-acquisition-20260910",
+          "sha": "6129aba53b881aa1cdb6f410f96f6ebc4d516496"
+        },
+        {
+          "name": "feat/automaton-3-sovereign-execution",
+          "sha": "bca8c5df6a96e897c1883c2d311f38a9ed8f0013"
+        },
+        {
+          "name": "feat/sol-cross-platform-control-plane",
+          "sha": "9950dcd51f09fa6df321b143349b74a44b590cbd"
+        },
+        {
+          "name": "fix/autonomous-safety-gates",
+          "sha": "cfcd18059e441c9137df43356a976f67b6cabf8a"
+        },
+        {
+          "name": "fix/supabase-security-definer-execute",
+          "sha": "0f8efda518919139f3b788dba076e656590c8b2c"
+        },
+        {
+          "name": "main",
+          "sha": "ed426124475cc9ee8b4d138b2928ae547352e97b"
+        },
+        {
+          "name": "qbp01-data-feasibility-20260910",
+          "sha": "0dd6ab1e91a6fb28dfc722b50d9cabeaa824ef88"
+        },
+        {
+          "name": "qbp01-gba1-lipid-census-20260910",
+          "sha": "37cabc79fc68a181e5f407ea6fcd0706fea6b6d1"
+        },
+        {
+          "name": "qbp01-public-data-null-acquisition-20260910",
+          "sha": "2c4e41a50c1625430f3dd11868fd136036aabc22"
+        },
+        {
+          "name": "repair/ci-trust-plane-v1",
+          "sha": "09860e3690ee67d3af2d754f18f447c92711a531"
+        },
+        {
+          "name": "rescue/cloudrun-ls-20260614",
+          "sha": "d7e460625b0b65b6c78cb8e07797049b1e4f699a"
+        },
+        {
+          "name": "rescue/kernel-one-20260614",
+          "sha": "0f6d316f7d9bf7a88e57200a602412459ab3ec7b"
+        },
+        {
+          "name": "rescue/kernel-one-standalone",
+          "sha": "ea1c660472dfb92f0dbffc112ef2f3b46f419040"
+        },
+        {
+          "name": "rescue/onboarding-doc",
+          "sha": "1ab7c10bcd66e36c0b8a0648454077fd25ba8155"
+        },
+        {
+          "name": "research-openai-swarm-v1",
+          "sha": "2c3e31c1844e25ca48ff5efb36dc67c31b1b1cc6"
+        },
+        {
+          "name": "wire/api-domain-to-worker",
+          "sha": "196f7337481f82c853db1710323f3ca5aa617b6e"
+        }
+      ],
+      "pagination_complete": true
+    },
+    {
+      "repository": "Aegis-Omega/sovereign-guard",
+      "branches": [
+        {
+          "name": "dependabot/npm_and_yarn/npm_and_yarn-53cbaf2a5b",
+          "sha": "f905ff95d6a5d54969e314e7d39dd9c512794ebb"
+        },
+        {
+          "name": "feat/npm-proof-carrying-release-v1",
+          "sha": "cc3aedd9187b0a7cba9141ecd5079cc6b291967c"
+        },
+        {
+          "name": "feat/python-aware-scanner",
+          "sha": "8e0d9c0ad4e6a667d6dbeae012bfe9c1a7de48e5"
+        },
+        {
+          "name": "master",
+          "sha": "3c6568684fc58bbab015f0ea34a87f9df4cfe1aa"
+        }
+      ],
+      "pagination_complete": true
+    },
+    {
+      "repository": "tarikskalic33/info",
+      "branches": [
+        {
+          "name": "adk-runtime-witness",
+          "sha": "ea2b22e80f052b8ca0868072f5fb51f5a4091bd5"
+        },
+        {
+          "name": "aegis-pr1-external-witness",
+          "sha": "aafdc58e6d65f64201110cd844868ad35b65f8c8"
+        },
+        {
+          "name": "aegis-pr2-effect-observation-witness",
+          "sha": "4930da735d1b7b70c43492c333491b62b127ae23"
+        },
+        {
+          "name": "aegis-pr2-external-witness",
+          "sha": "8f22fc3d59af6a687527bc9840735dc9e68aa4d1"
+        },
+        {
+          "name": "aegis-pr2-final-observation-witness",
+          "sha": "fed2e6f83db495e404f220e191c365d919e70cf2"
+        },
+        {
+          "name": "aegis-pr2-final-scoped-witness",
+          "sha": "16ce6fc8459c8fc0004d24b072a5541e3e63773a"
+        },
+        {
+          "name": "aegis-pr2-full-exact-head-witness",
+          "sha": "08c032452bb7b631d39c0c798a0634cec97e5fde"
+        },
+        {
+          "name": "aegis-pr2-observation-only-witness",
+          "sha": "b458d86c252d121dbdda658f0e31778705fd8de8"
+        },
+        {
+          "name": "aegis-pr2-policy-bound-final-witness",
+          "sha": "7534dab13dbc294320e2eaa80e33dae65bc5edae"
+        },
+        {
+          "name": "aegis-pr2-tdd-red",
+          "sha": "ed8077e713629b969fe9d6b18487905046900eb9"
+        },
+        {
+          "name": "aegis-pr3-red-contract",
+          "sha": "e43914e1b1c3ecc80489054b5903751b63e500ba"
+        },
+        {
+          "name": "aegis-pr4-witness",
+          "sha": "75f9dfe9e56cebe3f7a981945eca0092e3672a93"
+        },
+        {
+          "name": "aegis-pr5a-binding-green-witness",
+          "sha": "0470c1c0ec2980638c73cd4b5fdbf29d32989c41"
+        },
+        {
+          "name": "aegis-pr5a-binding-red-witness",
+          "sha": "6597d595a0ab10d856233722de6df56cbf56d0e3"
+        },
+        {
+          "name": "aegis-pr5a-final-baseline-witness",
+          "sha": "01b1a99a49ec14f7f8a8d224db38f905912368cc"
+        },
+        {
+          "name": "aegis-pr5a-full-baseline-witness",
+          "sha": "9978a812c45f7fb289d28a89c52a2f6c63eae108"
+        },
+        {
+          "name": "aegis-pr5a-green-witness",
+          "sha": "a92156f1294f9a2f9ddb43da56fe95d8ac893173"
+        },
+        {
+          "name": "aegis-pr5a-mcp-green-witness",
+          "sha": "c2339751991b17d1b74f190f550cb53dad40b33a"
+        },
+        {
+          "name": "aegis-pr5a-witness",
+          "sha": "47a1cd9af28ec82b914334f4faac5b0e423c03ab"
+        },
+        {
+          "name": "aegis-pr264-dependency-triage",
+          "sha": "75be5c1e7a190ddae7aca8274b8beabbc4f98a79"
+        },
+        {
+          "name": "aegis-pr264-exact-head-witness",
+          "sha": "c2467544648bf7701fd865215511b218dd76cf6b"
+        },
+        {
+          "name": "aegis-pr264-verification-fix-witness",
+          "sha": "fcb36c4b27ef524b8a2aa851f32e1f84adfb6098"
+        },
+        {
+          "name": "aegis-repository-enforcement-witness-v1",
+          "sha": "faa034d42da7568650f0c484530b20d5106ccaa3"
+        },
+        {
+          "name": "main",
+          "sha": "bb1c637e809fcdcc4ff7dd10a027deb0d076677f"
+        },
+        {
+          "name": "proofline-fleet",
+          "sha": "2e5c23f56d542edd7bb988cf5080939029362809"
+        },
+        {
+          "name": "trace-authority-stale-fixtures",
+          "sha": "0a79caac10051059df3dd2294aef078029d82689"
+        },
+        {
+          "name": "witness/amil-lock-kernel-bound-495bfd85",
+          "sha": "b8dd0cba3de9c863fc2c1817832186f4b2437cfc"
+        },
+        {
+          "name": "witness/uci4-green-1cdd2c6",
+          "sha": "d6daf4924289170132072f9181f9ff01b00abf2a"
+        },
+        {
+          "name": "witness/uci4-red-13a8ffb",
+          "sha": "a92b0b6c8465bf0f0a73c58e6c5b8f481630a1d8"
+        },
+        {
+          "name": "witness/uci5-ci-contract-red-418a846",
+          "sha": "3abb3838dafba7cd56afcb066f5e3439c0137d99"
+        },
+        {
+          "name": "witness/uci5-green-66e4523",
+          "sha": "e8c54379e5aa09b3edf97f8230e3b3fe6730d89c"
+        },
+        {
+          "name": "witness/uci5-red-d508861",
+          "sha": "7eba88f3ead244ad5374e12bd09677d02d3736c7"
+        },
+        {
+          "name": "witness/uci6-green-5457427",
+          "sha": "7eccd15a93cd9d463178550c6b4cab78807c16c3"
+        },
+        {
+          "name": "witness/uci6-red-78fd533",
+          "sha": "39f7b79a3cdb7630a418e62058a8abe718909cc9"
+        },
+        {
+          "name": "witness/uci-1",
+          "sha": "428f893e2e147010b02205934ace1dc78f3c5a4b"
+        }
+      ],
+      "pagination_complete": true
+    },
+    {
+      "repository": "tarikskalic33/formal-conjectures",
+      "branches": [
+        {
+          "name": "evidence/deepmind-rh-target-baseline-v1",
+          "sha": "780849e5b1d04973afdf8364a8a1bcf87fd49e70"
+        },
+        {
+          "name": "evidence/deepmind-rh-target-direct-v1",
+          "sha": "dcd2990122c170588bc1c30e45a1335e3cb189a8"
+        },
+        {
+          "name": "evidence/rh-eleven-block-bridge-4d83-replay-v1",
+          "sha": "22c0f00c500eb7e5938fd18b8e365ec4a92abd14"
+        },
+        {
+          "name": "evidence/rh-eleven-block-lean-sos-d5fe-replay-v1",
+          "sha": "74529f62f849e3a2ce327528fc0aef819e73bfa9"
+        },
+        {
+          "name": "evidence/rh-eleven-block-sos-2d09-replay-v1",
+          "sha": "cf3c4b1387bc778e08142c54bcbad9efefb20600"
+        },
+        {
+          "name": "evidence/rh-fine-diagonal-3339-replay-v1",
+          "sha": "b7d166d8734d558b4535e524f8e0252cb83358b7"
+        },
+        {
+          "name": "evidence/rh-fine-diagonal-ca24dfa-replay-v1",
+          "sha": "3b97cbfd2943995f593d1185487d78ce7f3845df"
+        },
+        {
+          "name": "evidence/rh-formalconjectures-target-589adf-v1",
+          "sha": "918eaf9870c50e890358599a2e4e97eacfb26aa9"
+        },
+        {
+          "name": "evidence/rh-formalconjectures-v13-559e-replay",
+          "sha": "141bf5ed3ad6723ec6205dcc93e414526072ef4f"
+        },
+        {
+          "name": "evidence/rh-formalconjectures-v13-b998-replay",
+          "sha": "0bf4f353542669d85ae223301c8f8da35ae93a0f"
+        },
+        {
+          "name": "evidence/rh-gap9-db08d-replay-v1",
+          "sha": "2e55bc2a990e43e6476c1b2104acb0b93e3d0f96"
+        },
+        {
+          "name": "evidence/rh-gap9-shift-9dcb-replay-v1",
+          "sha": "a6b917631af503c952dec8c2a0e30294473da885"
+        },
+        {
+          "name": "evidence/rh-gap10-3df-replay-v1",
+          "sha": "c3232eee9f0bf6ce916314d2ae90f775da468a18"
+        },
+        {
+          "name": "evidence/rh-gap10-shift-8ac-replay-v1",
+          "sha": "ea903935ee3ad859acda05e9dd66a9c51cd9d378"
+        },
+        {
+          "name": "evidence/rh-hermitian-preflight-02a3",
+          "sha": "8eb18ea62c1d7e61ef87aa51919c29603c030f65"
+        },
+        {
+          "name": "evidence/rh-laplace-v12-preflight-be882",
+          "sha": "c79065703c2b083d59913f54941af89e963b4d66"
+        },
+        {
+          "name": "evidence/rh-nine-fine-margin-605bb-replay-v1",
+          "sha": "4321ae509306882a49ba1687c450765165298658"
+        },
+        {
+          "name": "evidence/rh-nine-packet-7da906-replay-v1",
+          "sha": "7b69c2dee4e0f9b0f5a379e2c8b87d26b4b85f5e"
+        },
+        {
+          "name": "evidence/rh-nine-packet-1083-2727-replay-v1",
+          "sha": "a491f7eb73d6703e97320591d20fa5be744a5140"
+        },
+        {
+          "name": "evidence/rh-nine-window-4ea03d-compile-replay",
+          "sha": "c23f7d4856b569886d67ae3d5957b220d98c86ac"
+        },
+        {
+          "name": "evidence/rh-public-contribution-packet-v1",
+          "sha": "589798ff7f48df644050ed7bbbb4520c49b79075"
+        },
+        {
+          "name": "evidence/rh-restricted-weil-continuation-6db2-v1",
+          "sha": "63710b2cdd907b536720c5df18c598472e37c5c5"
+        },
+        {
+          "name": "evidence/rh-restricted-weil-resolvent-bde4-v1",
+          "sha": "ecee69b7ccf3a4f3c8bb4194769834483dc9a436"
+        },
+        {
+          "name": "evidence/rh-restricted-weil-topology-628d-v1",
+          "sha": "90ad05f78ecb270ce0a12534232d06f9dfc2d26a"
+        },
+        {
+          "name": "evidence/rh-signed-four-block-reality-360875-v1",
+          "sha": "3c1cbe0588597470962ef43aebb44ffeaff2ecfc"
+        },
+        {
+          "name": "evidence/rh-small-window-46807c-replay-v1",
+          "sha": "90054ec368dcda4c064380530c9d8bc0bfdd621a"
+        },
+        {
+          "name": "evidence/rh-small-window-hosted-replay-v1",
+          "sha": "79389e7b2e6aebf2f3854a77f1c4274787f126d0"
+        },
+        {
+          "name": "evidence/rh-small-window-unconditional-d9b9-v1",
+          "sha": "9161f810300408782a2c8c1469fe4552db71d05f"
+        },
+        {
+          "name": "evidence/rh-ten-block-bridge-95f-replay-v1",
+          "sha": "3c33ab616b7cd06f20faf76e2c0dac9736713838"
+        },
+        {
+          "name": "evidence/rh-ten-block-expansion-15d-replay-v1",
+          "sha": "1f66cf22344317b756e59a66646127fa4e6e44f5"
+        },
+        {
+          "name": "evidence/rh-ten-block-lean-sos-af9-replay-v1",
+          "sha": "6c03d4962741ff7f8dd75bb4979b67758e6cc836"
+        },
+        {
+          "name": "evidence/rh-ten-block-sos-c49-replay-v1",
+          "sha": "5a299c391c38f99d4082669eeab47ddd2fee41a6"
+        },
+        {
+          "name": "evidence/rh-ten-packet-38ab-replay-v1",
+          "sha": "09b107949add02e6316e012ecd8ef8d3c0d5bb42"
+        },
+        {
+          "name": "evidence/rh-v13-kernel-replay-589adf",
+          "sha": "18905daab982c5aa4c7c784684214aa3d7cd3263"
+        },
+        {
+          "name": "evidence/rh-v13-kernel-replay-856870f5",
+          "sha": "ccba17491b099cd75883d8522a968323e142df58"
+        },
+        {
+          "name": "evidence/rh-zero-kernel-bound-preflight-be882",
+          "sha": "cbf04cbc0b8c05edb721483bb32c71e5fa398169"
+        },
+        {
+          "name": "main",
+          "sha": "02da1ad1288b4881ea1f8e575fbe84af7db04364"
+        },
+        {
+          "name": "proof/exp-add-pi-or-product-formal-proof",
+          "sha": "ef0b503ced7678447a1aaa3c4a4d2a2cf8c543be"
+        },
+        {
+          "name": "proof/rh-606-port-v1",
+          "sha": "5d8e4d24a752e5ae6c76f7e724969da0a2b41498"
+        },
+        {
+          "name": "proof/rh-deepmind-li-terminal-direct-v1",
+          "sha": "5c2a68a9be1d6a1397c974af937048d9a6a1ff2a"
+        },
+        {
+          "name": "proof/rh-deepmind-target-direct-replay-v1",
+          "sha": "5920218e03dca84f3d152a86e9c0668588cecb03"
+        },
+        {
+          "name": "proof/rh-deepmind-target-direct-replay-v2",
+          "sha": "532ad2b58f9093dd0826e46c922c0b12b68a6dbd"
+        },
+        {
+          "name": "proof/rh-fixed-window-true-matrix-v1",
+          "sha": "e9c3bff76e3babe21363fe9b5062dadd55b373b3"
+        },
+        {
+          "name": "proof/rh-li-paired-laurent-v1",
+          "sha": "c4d1129f025ef8e2c18165bd0cb0b3c1fa230b5a"
+        },
+        {
+          "name": "proof/rh-li-weighted-paired-target-v1",
+          "sha": "06a281dd7f09876ea067d0f88a225c7b7cefe596"
+        },
+        {
+          "name": "proof/rh-pr606-port-v1",
+          "sha": "19eec3a5d5dc433050f559972449db6f1debf574"
+        },
+        {
+          "name": "proof/rh-restricted-criterion-v13-terminal",
+          "sha": "df6ff582973bd0e5b560894ee48bcb27b32bf4ef"
+        },
+        {
+          "name": "proof/rh-small-window-producer-fork-v1",
+          "sha": "448e4174a068f33d3457a390d721ad05bd113e55"
+        },
+        {
+          "name": "proof/rh-snowflake-log23-globalization-v1",
+          "sha": "7e1c2babc1f162734d7ef4122f0bcc18d8da7bdd"
+        },
+        {
+          "name": "proof/riemann-hypothesis-aegis-v1",
+          "sha": "b1a8716d35b22ff45a0a2d4635940959366919e1"
+        }
+      ],
+      "pagination_complete": true
+    }
+  ],
+  "branch_query_pages": [
+    {
+      "query": "global",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "agent/global-launch-wave-1"
+            },
+            {
+              "branch": "proof/rh-window-eighth-globalization-v13"
+            },
+            {
+              "branch": "proof/rh-window-nine-over-64-globalization-v14"
+            },
+            {
+              "branch": "proof/weil-o0-globalization-v1"
+            }
+          ],
+          "cursor": "NA"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "frame",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "codex/introduce-evidenceclaim-divergence-framework"
+            },
+            {
+              "branch": "research/gravity-quantum-crossframework-v1"
+            }
+          ],
+          "cursor": "Mg"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "moment",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "evidence/rh-millennium-moment-589adf-v1"
+            },
+            {
+              "branch": "evidence/rh-millennium-moment-2026-09-23"
+            },
+            {
+              "branch": "evidence/rh-millennium-moment-20260923-v1"
+            },
+            {
+              "branch": "proof/rh-mellin-fixed-line-moment1-v2-77adaa32"
+            },
+            {
+              "branch": "proof/weil-moment-restriction-bridge-v1"
+            },
+            {
+              "branch": "research/weil-moment-restricted-gap-t1-v1"
+            }
+          ],
+          "cursor": "Ng"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "prime",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "fix/rh-four-block-prime-eight-elaboration-v4"
+            },
+            {
+              "branch": "fix/rh-nine-prime-window-compile-6aff"
+            },
+            {
+              "branch": "proof/rh-autocorr-prime-windows-v1"
+            },
+            {
+              "branch": "proof/rh-finite-prime-source-sum"
+            },
+            {
+              "branch": "proof/rh-prime-canonical-reindex-v1-f10d0661"
+            },
+            {
+              "branch": "proof/rh-prime-line-identity-v1"
+            },
+            {
+              "branch": "proof/weil-canonical-prime-source-sum-v1"
+            },
+            {
+              "branch": "proof/weil-constructive-prime-trig-v1"
+            },
+            {
+              "branch": "proof/weil-prime-diagonal-trust-probe-v1"
+            },
+            {
+              "branch": "proof/weil-prime-diagonal-v1"
+            },
+            {
+              "branch": "proof/weil-prime-evaluation-v30-20260919"
+            },
+            {
+              "branch": "proof/weil-prime-power-arithmetic-v1"
+            },
+            {
+              "branch": "proof/weil-prime-power-weight-bridge-v1"
+            },
+            {
+              "branch": "proof/weil-prime-source-derivative-v1"
+            },
+            {
+              "branch": "proof/weil-three-block-prime-windows-v23"
+            },
+            {
+              "branch": "research/rh-finite-prime-phase-independent-v1"
+            },
+            {
+              "branch": "research/rh-gap9-prime-bound-v1"
+            },
+            {
+              "branch": "research/rh-gap10-prime-bound-v1"
+            },
+            {
+              "branch": "research/rh-rational-nine-packet-prime-window-v1"
+            }
+          ],
+          "cursor": "MTk"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "certificate",
+      "pages": [
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "weil",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "audit/weil-mixed-closure-incident-v1-495bfd85"
+            },
+            {
+              "branch": "fix/weil-v22-integral-coercion"
+            },
+            {
+              "branch": "land/weil-finite-source-chain-v1"
+            },
+            {
+              "branch": "probe/weil-constructive-trig-viability-v1"
+            },
+            {
+              "branch": "probe/weil-corn-trig-viability-v1"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-completion-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-continuation-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-criterion-v1"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-final-bridge-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-resolvent-analytic-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-topology-v13"
+            },
+            {
+              "branch": "proof/rh-weil-criterion-domain-v1"
+            },
+            {
+              "branch": "proof/rh-weil-rhs-legitimacy-v1"
+            },
+            {
+              "branch": "proof/weil-analytic-v21-probe"
+            },
+            {
+              "branch": "proof/weil-arch-tail-order-lean-v1"
+            },
+            {
+              "branch": "proof/weil-arch-tail-order-v1"
+            },
+            {
+              "branch": "proof/weil-canonical-prime-source-sum-v1"
+            },
+            {
+              "branch": "proof/weil-concrete-finite-semantics-v1-isolated"
+            },
+            {
+              "branch": "proof/weil-concrete-finite-semantics-v1-production"
+            },
+            {
+              "branch": "proof/weil-concrete-finite-semantics-v1"
+            },
+            {
+              "branch": "proof/weil-constructive-prime-trig-v1"
+            },
+            {
+              "branch": "proof/weil-convergence-bridge-v1"
+            },
+            {
+              "branch": "proof/weil-diagonal-kernel-reduction-v21"
+            },
+            {
+              "branch": "proof/weil-finite-source-calculus-v1"
+            },
+            {
+              "branch": "proof/weil-mixed-log-kernel-v27-c38ea896"
+            },
+            {
+              "branch": "proof/weil-moment-restriction-bridge-v1"
+            },
+            {
+              "branch": "proof/weil-o0-globalization-v1"
+            },
+            {
+              "branch": "proof/weil-primality-activation-v1"
+            },
+            {
+              "branch": "proof/weil-prime-diagonal-trust-probe-v1"
+            },
+            {
+              "branch": "proof/weil-prime-diagonal-v1"
+            },
+            {
+              "branch": "proof/weil-prime-evaluation-v30-20260919"
+            },
+            {
+              "branch": "proof/weil-prime-power-arithmetic-v1"
+            },
+            {
+              "branch": "proof/weil-prime-power-weight-bridge-v1"
+            },
+            {
+              "branch": "proof/weil-prime-source-derivative-v1"
+            },
+            {
+              "branch": "proof/weil-semantic-bridge-obstruction-lean-v1"
+            },
+            {
+              "branch": "proof/weil-three-block-17-module-probe"
+            },
+            {
+              "branch": "proof/weil-three-block-cross-v28-49c36e5a"
+            },
+            {
+              "branch": "proof/weil-three-block-prime-windows-v23"
+            },
+            {
+              "branch": "proof/weil-three-block-rational-v1-cf660498"
+            },
+            {
+              "branch": "proof/weil-three-block-translated-packets-v22"
+            },
+            {
+              "branch": "proof/weil-von-mangoldt-canonical-v1"
+            },
+            {
+              "branch": "proof/weil-width-arch-budget-v25-efb65a76"
+            },
+            {
+              "branch": "proof/weil-width-arch-budget-v26-40c08df2"
+            },
+            {
+              "branch": "proof/weil-width-arch-budget-v26-b872e6af"
+            },
+            {
+              "branch": "proof/weil-width-arch-integral-v27-be5935e2"
+            },
+            {
+              "branch": "proof/weil-width-diagonal-arch-frontier-v24-f98c2620"
+            },
+            {
+              "branch": "proof/weil-zero-side-identification-lean-v1"
+            },
+            {
+              "branch": "research/epstein-lattice-weil-control-v1"
+            },
+            {
+              "branch": "research/weil-levy-gap-v1"
+            },
+            {
+              "branch": "research/weil-moment-restricted-gap-t1-v1"
+            },
+            {
+              "branch": "research/weil-retained-bc-v22-20260915"
+            },
+            {
+              "branch": "research/weil-v21-analytic-constants-replay-20260915"
+            },
+            {
+              "branch": "research/weil-v21-log-isometry-replay-20260915"
+            },
+            {
+              "branch": "verify/pr679-rh-restricted-weil-bridge-v13-exact-head"
+            }
+          ],
+          "cursor": "NTQ"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    },
+    {
+      "query": "rh",
+      "pages": [
+        {
+          "branches": [
+            {
+              "branch": "agents/rh-proof-closure-swarm-v1"
+            },
+            {
+              "branch": "audit/rh-assumption-census-v1-495bfd85"
+            },
+            {
+              "branch": "ci/rh-lean-cloudflare-replay-v1"
+            },
+            {
+              "branch": "codex/add-rh-assumption-census-v1-documentation"
+            },
+            {
+              "branch": "codex/inspect-mathematical-repository-for-rh-proof-obligations"
+            },
+            {
+              "branch": "evidence/rh-millennium-moment-589adf-v1"
+            },
+            {
+              "branch": "evidence/rh-millennium-moment-2026-09-23"
+            },
+            {
+              "branch": "evidence/rh-millennium-moment-20260923-v1"
+            },
+            {
+              "branch": "feat/mycorrhizal-1bna-sync-v1"
+            },
+            {
+              "branch": "feat/mycorrhizal-structural-witness-registry-v1"
+            },
+            {
+              "branch": "fix/rh-four-block-prime-eight-elaboration-v4"
+            },
+            {
+              "branch": "fix/rh-nine-prime-window-compile-6aff"
+            },
+            {
+              "branch": "fix/rh-zero-negint-positivity"
+            },
+            {
+              "branch": "fix/rh-zero-radial-truncation-sum-syntax"
+            },
+            {
+              "branch": "fix/rh-zero-translation-v11-pin-v1"
+            },
+            {
+              "branch": "fix/rh-zeta-divisor-support-bridge-api"
+            },
+            {
+              "branch": "hardening/mycorrhizal-structural-witness-security-signed-v2"
+            },
+            {
+              "branch": "hardening/mycorrhizal-structural-witness-security-signed-v3"
+            },
+            {
+              "branch": "hardening/mycorrhizal-structural-witness-security-signed-v4"
+            },
+            {
+              "branch": "hardening/mycorrhizal-structural-witness-security-v1"
+            },
+            {
+              "branch": "hardening/mycorrhizal-structural-witness-v1"
+            },
+            {
+              "branch": "infra/astra-rh-millennium-env-v1"
+            },
+            {
+              "branch": "integration/aegis-universal-intelligence-rh-v1"
+            },
+            {
+              "branch": "integration/rh-final-closure-v1"
+            },
+            {
+              "branch": "proof/rh-abjad-factorization-boundary-v1"
+            },
+            {
+              "branch": "proof/rh-abjad-four-phase-bridge-v1"
+            },
+            {
+              "branch": "proof/rh-abjad-gram-positivity-v1"
+            },
+            {
+              "branch": "proof/rh-autocorr-prime-windows-v1"
+            },
+            {
+              "branch": "proof/rh-autocorrelation-closure-v1-9f0a2463"
+            },
+            {
+              "branch": "proof/rh-autocorrelation-pole-aggregation-v1"
+            },
+            {
+              "branch": "proof/rh-bounded-zero-finiteness-v1"
+            },
+            {
+              "branch": "proof/rh-contour-zero-residue-summability-v2"
+            },
+            {
+              "branch": "proof/rh-cumulative-mellin-bridge-v1"
+            },
+            {
+              "branch": "proof/rh-digamma-series-completion-v1"
+            },
+            {
+              "branch": "proof/rh-finite-prime-source-sum"
+            },
+            {
+              "branch": "proof/rh-fixed-line-assembly-v4-7adb0980"
+            },
+            {
+              "branch": "proof/rh-fixed-line-contract-v2-d8858778"
+            },
+            {
+              "branch": "proof/rh-fixed-line-fz-core-v3-77adaa32"
+            },
+            {
+              "branch": "proof/rh-fixed-line-kernel-integral-v6-a61d1668"
+            },
+            {
+              "branch": "proof/rh-fixed-line-x-tail-v7-ed2fb15d"
+            },
+            {
+              "branch": "proof/rh-formal-conjectures-bridge-v1"
+            },
+            {
+              "branch": "proof/rh-four-block-margin-v1"
+            },
+            {
+              "branch": "proof/rh-gauss-series-integral-reduction-v1"
+            },
+            {
+              "branch": "proof/rh-lean-cloudflare-replay-v1"
+            },
+            {
+              "branch": "proof/rh-li-criterion-rebind-v1"
+            },
+            {
+              "branch": "proof/rh-li-terminal-current-v1"
+            },
+            {
+              "branch": "proof/rh-localization-defect-v1"
+            },
+            {
+              "branch": "proof/rh-mellin-decay-estimate-v1"
+            },
+            {
+              "branch": "proof/rh-mellin-fixed-line-moment1-v2-77adaa32"
+            },
+            {
+              "branch": "proof/rh-paired-hadamard-fixed-line-v1-17924a89"
+            },
+            {
+              "branch": "proof/rh-paired-hadamard-tsum-fusion-v1-53bc21de"
+            },
+            {
+              "branch": "proof/rh-paired-kernel-tsum-v2-53bc21de"
+            },
+            {
+              "branch": "proof/rh-paired-mellin-profile-v5-d72220f6"
+            },
+            {
+              "branch": "proof/rh-paired-zero-evaluation-v9-a352abf3"
+            },
+            {
+              "branch": "proof/rh-prime-canonical-reindex-v1-f10d0661"
+            },
+            {
+              "branch": "proof/rh-prime-line-identity-v1"
+            },
+            {
+              "branch": "proof/rh-reciprocal-paired-test-v8-fe2ebcaa"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-completion-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-continuation-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-criterion-v1"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-final-bridge-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-resolvent-analytic-v13"
+            },
+            {
+              "branch": "proof/rh-restricted-weil-topology-v13"
+            },
+            {
+              "branch": "proof/rh-signed-four-block-reality-v1"
+            },
+            {
+              "branch": "proof/rh-signed-four-block-schur-v1"
+            },
+            {
+              "branch": "proof/rh-small-window-producer-v1"
+            },
+            {
+              "branch": "proof/rh-small-window-unconditional-v1"
+            },
+            {
+              "branch": "proof/rh-weil-criterion-domain-v1"
+            },
+            {
+              "branch": "proof/rh-weil-rhs-legitimacy-v1"
+            },
+            {
+              "branch": "proof/rh-window-eighth-globalization-v13"
+            },
+            {
+              "branch": "proof/rh-window-exhaustion-v1"
+            },
+            {
+              "branch": "proof/rh-window-nine-over-64-globalization-v14"
+            },
+            {
+              "branch": "proof/rh-zero-counting-bound-v1"
+            },
+            {
+              "branch": "proof/rh-zero-counting-one-plus-epsilon-v2"
+            },
+            {
+              "branch": "proof/rh-zero-critical-strip-composition-v1"
+            },
+            {
+              "branch": "proof/rh-zero-critical-strip-v1"
+            },
+            {
+              "branch": "proof/rh-zero-finite-truncation-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-cofinality-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-conjugation-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-finite-sum-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-limit-contract-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-multiplicity-sum-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-shell-mass-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-summability-bridge-v1"
+            },
+            {
+              "branch": "proof/rh-zero-height-truncation-v1"
+            },
+            {
+              "branch": "proof/rh-zero-lower-localization-v1"
+            },
+            {
+              "branch": "proof/rh-zero-majorant-summability-v1"
+            },
+            {
+              "branch": "proof/rh-zero-multiplicity-binding-v1"
+            },
+            {
+              "branch": "proof/rh-zero-multiplicity-v1"
+            },
+            {
+              "branch": "proof/rh-zero-negative-integer-classification-v1"
+            },
+            {
+              "branch": "proof/rh-zero-nonpositive-integer-v1"
+            },
+            {
+              "branch": "proof/rh-zero-nonpositive-trivial-v1"
+            },
+            {
+              "branch": "proof/rh-zero-radial-truncation-v1"
+            },
+            {
+              "branch": "proof/rh-zero-shell-analytic-synthesis-v1"
+            },
+            {
+              "branch": "proof/rh-zero-shell-factorization-v1"
+            },
+            {
+              "branch": "proof/rh-zero-shell-quadratic-bound-v1"
+            },
+            {
+              "branch": "proof/rh-zero-side-interface-v1"
+            },
+            {
+              "branch": "proof/rh-zero-strip-preboundary-v1"
+            },
+            {
+              "branch": "proof/rh-zero-trivial-classification-v1"
+            },
+            {
+              "branch": "proof/rh-zero-upper-localization-v1"
+            }
+          ],
+          "cursor": "MTAw"
+        },
+        {
+          "branches": [
+            {
+              "branch": "proof/rh-zeta-divisor-exhaustion-v1"
+            },
+            {
+              "branch": "proof/rh-zeta-divisor-ledger-v1"
+            },
+            {
+              "branch": "proof/rh-zeta-divisor-support-bridge-v1"
+            },
+            {
+              "branch": "rebind/mycorrhizal-1bna-registry-secure-main-signed-v1"
+            },
+            {
+              "branch": "rebind/mycorrhizal-1bna-registry-secure-signed-v1"
+            },
+            {
+              "branch": "research/rh-conditioning"
+            },
+            {
+              "branch": "research/rh-cross-term-kernel-v1-f10d0661"
+            },
+            {
+              "branch": "research/rh-eleven-block-actual-bridge-v1"
+            },
+            {
+              "branch": "research/rh-eleven-block-actual-expansion-v1"
+            },
+            {
+              "branch": "research/rh-eleven-block-lean-sos-v1"
+            },
+            {
+              "branch": "research/rh-eleven-block-sos-preflight-v1"
+            },
+            {
+              "branch": "research/rh-fine-diagonal-5671-v1"
+            },
+            {
+              "branch": "research/rh-fine-diagonal-upgrade-v3"
+            },
+            {
+              "branch": "research/rh-finite-prime-phase-independent-v1"
+            },
+            {
+              "branch": "research/rh-gap9-prime-bound-v1"
+            },
+            {
+              "branch": "research/rh-gap9-shift-transport-v1"
+            },
+            {
+              "branch": "research/rh-gap10-prime-bound-v1"
+            },
+            {
+              "branch": "research/rh-gap10-shift-transport-v1"
+            },
+            {
+              "branch": "research/rh-nine-packet-1083-over-640-v1"
+            },
+            {
+              "branch": "research/rh-nine-packet-fine-margin-v1"
+            },
+            {
+              "branch": "research/rh-rational-nine-packet-prime-window-v1"
+            },
+            {
+              "branch": "research/rh-rational-ten-packet-concrete-v1"
+            },
+            {
+              "branch": "research/rh-signed-four-block-preflight-v1"
+            },
+            {
+              "branch": "research/rh-spectral-operator-audit-v1"
+            },
+            {
+              "branch": "research/rh-ten-block-actual-bridge-v1"
+            },
+            {
+              "branch": "research/rh-ten-block-actual-expansion-v1"
+            },
+            {
+              "branch": "research/rh-ten-block-lean-sos-v1"
+            },
+            {
+              "branch": "research/rh-ten-block-sos-preflight-v1"
+            },
+            {
+              "branch": "verify/pr679-rh-restricted-weil-bridge-v13-exact-head"
+            }
+          ],
+          "cursor": "MTI5"
+        },
+        {
+          "branches": [],
+          "cursor": null
+        }
+      ]
+    }
+  ],
+  "memory_sha_comparison": {
+    "repository": "Aegis-Omega/AEGIS-OMEGA",
+    "current_source": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5",
+    "memory_source": "752bec1b7c3df50cde610caba575dbf3cc7af8a3",
+    "status": "behind",
+    "ahead_by": 0,
+    "behind_by": 17,
+    "merge_base": "752bec1b7c3df50cde610caba575dbf3cc7af8a3"
+  },
+  "limitations": [
+    "A complete current branch inventory is not a complete scan of every file or historical commit.",
+    "Code/commit search endpoints can be limited to indexed/default branch surfaces; they were not used to infer branch-wide absence.",
+    "The source audit is a selected exact-ref expansion of the earlier bounded source inspection."
+  ]
+}

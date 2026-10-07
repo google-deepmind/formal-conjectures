@@ -1,0 +1,10 @@
+{
+  "README.md": "c0a8c466a5d4012ac28df685657f24cd80066bbdf784332a112af85443850daa",
+  "regenerate.py": "45f3e69abee49f350d97a83337045df08dc0c1fa3118efc71b4567b0a5b0ecb7",
+  "certify.py": "0325252f0f3add06895f6b587484aae5ed5ac8124d50aeb7e2b9585629273549",
+  "independent_replay.py": "72ab0374562bf5dbea0fe4224e00bbccd7849378ff3540735a385fb43caf965a",
+  "candidate.json": "65eb6e252f2193a0d5abfea24267ede17c9fb2a7751e54e18fadef4f693031c3",
+  "certificate.json": "790fb6ee2e8cf6c07cf2d829e8d1046dee214d41dea19ee1009f19afb03323a6",
+  "independent_receipt.json": "66c6b24f3520fa0c8fa996064360380ef7f83a96ac82824af842697b0beb3c93",
+  "requirements.txt": "b1ba862cac3d547059a76232503ae5acb833e6021370b3c7ac9f08a52228cb11"
+}

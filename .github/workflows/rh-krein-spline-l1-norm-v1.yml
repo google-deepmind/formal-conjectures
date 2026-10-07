@@ -1,0 +1,136 @@
+name: RH Krein spline L1 norm v1
+
+on:
+  pull_request:
+    paths:
+      - 'AEGISOverlay/RHKreinSplineL1NormV1.lean'
+      - '.github/workflows/rh-krein-spline-l1-norm-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rh-spline-l1-norm-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  BASELINE_SHA: 97085b01c639fe1b74d10ad7a9e6f7920215b8f3
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+
+jobs:
+  spline-l1-norm:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+
+      - name: Install pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(cat lean-toolchain)" = "$LEAN_TOOLCHAIN"
+          test "$(git hash-object scripts/verify_rh_overlay_axioms.py)" = 77be75a3bb9f4e155e2b3ba71295d6a5f36ce907
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake update
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "$MATHLIB_SHA"
+          mkdir -p evidence-l1/sources evidence-l1/oleans
+          lean --version | tee evidence-l1/lean-version.txt
+
+      - name: Freshly compile unchanged predecessor modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin "$BASELINE_SHA"
+          modules=(FormalConjectures/Millennium/RHSnowflakeLog23 AEGISOverlay/RHMultiGeneratorComplementarityV1 AEGISOverlay/RHBoxFourierComplementarityV1 AEGISOverlay/RHKreinSplineSupportV1 AEGISOverlay/RHKreinSplineContinuityV1 AEGISOverlay/RHKreinSplineL1DerivativeBoundV1)
+          for m in "${modules[@]}"; do
+            test "$(git rev-parse "$BASELINE_SHA:$m.lean")" = "$(git hash-object "$m.lean")"
+            mkdir -p ".lake/build/lib/lean/$(dirname "$m")" "evidence-l1/sources/$(dirname "$m")" "evidence-l1/oleans/$(dirname "$m")"
+            cp "$m.lean" "evidence-l1/sources/$m.lean"
+            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-l1/$(basename "$m").log"
+            ! grep -E 'sorryAx|error:' "evidence-l1/$(basename "$m").log"
+            cp ".lake/build/lib/lean/$m.olean" "evidence-l1/oleans/$m.olean"
+            lake env lean --deps "$m.lean" > "evidence-l1/$(basename "$m").deps"
+          done
+
+      - name: Verify absent-theorem red baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > L1Before.lean <<'LEAN'
+          import AEGISOverlay.RHKreinSplineL1DerivativeBoundV1
+          #check AEGIS.RHKreinSplineL1NormV1.integral_norm_deriv_convolution_normalizedBox_le
+          LEAN
+          if lake env lean L1Before.lean > evidence-l1/red-baseline.log 2>&1; then
+            echo 'Unexpected existing endpoint: baseline is not red' >&2
+            exit 1
+          fi
+          cat evidence-l1/red-baseline.log
+          grep -Ei 'unknown (identifier|constant)' evidence-l1/red-baseline.log
+          grep -F 'AEGIS.RHKreinSplineL1NormV1.integral_norm_deriv_convolution_normalizedBox_le' evidence-l1/red-baseline.log
+
+      - name: Compile L1 theorem producer and strict axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          m=AEGISOverlay/RHKreinSplineL1NormV1
+          cp "$m.lean" "evidence-l1/sources/$m.lean"
+          lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee evidence-l1/producer.log
+          python3 scripts/verify_rh_overlay_axioms.py "$m.lean" evidence-l1/producer.log | tee evidence-l1/axiom-verifier.log
+          cp ".lake/build/lib/lean/$m.olean" "evidence-l1/oleans/$m.olean"
+          lake env lean --deps "$m.lean" > evidence-l1/producer.deps
+
+      - name: Emit bound source and artifact manifest
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, re, subprocess
+          from pathlib import Path
+          root = Path('evidence-l1')
+          source = Path('AEGISOverlay/RHKreinSplineL1NormV1.lean').read_text()
+          names = re.findall(r'^#print axioms (\S+)$', source, re.M)
+          required = 'AEGIS.RHKreinSplineL1NormV1.integral_norm_deriv_convolution_normalizedBox_le'
+          if required not in names or len(names) != len(set(names)):
+              raise SystemExit('Missing or duplicate endpoint probe')
+          files = {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in sorted(root.rglob('*')) if p.is_file()}
+          receipt = {
+              'schema': 'aegis.rh.spline-l1-norm.v1', 'status': 'PASS',
+              'authority_effect': 'NONE', 'rh_proven': False,
+              'source_sha': os.environ['SOURCE_SHA'], 'baseline_sha': os.environ['BASELINE_SHA'],
+              'actual_checkout': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              'lean_toolchain': os.environ['LEAN_TOOLCHAIN'], 'mathlib_sha': os.environ['MATHLIB_SHA'],
+              'producer_git_blob': subprocess.check_output(['git','hash-object','AEGISOverlay/RHKreinSplineL1NormV1.lean'],text=True).strip(),
+              'unchanged_predecessor_count': 6, 'endpoints': names, 'endpoint_count': len(names),
+              'run_id': os.environ['GITHUB_RUN_ID'], 'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'files_sha256': files,
+              'limits': ['L1 spline lane only; no full finite-cell certificate or RH proof.',
+                         'Mathlib cache and the pinned Lean toolchain are trusted build dependencies.']
+          }
+          if receipt['actual_checkout'] != receipt['source_sha']:
+              raise SystemExit('Checkout mismatch')
+          (root/'receipt.json').write_text(json.dumps(receipt, indent=2)+'\n')
+          print(json.dumps({k:v for k,v in receipt.items() if k != 'files_sha256'},indent=2))
+          PY
+
+      - name: Upload replay evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-spline-l1-${{ env.SOURCE_SHA }}-${{ github.run_id }}
+          path: evidence-l1/
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,133 @@
+name: RH Digamma Series Real V1
+
+on:
+  push:
+    branches:
+      - 'proof/rh-digamma-series-completion-v1'
+    paths:
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilDigammaIntegralReductionV1.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesRealV1.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesHalfPlaneV1.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaCoreV10.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaFubiniV10.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaAssemblyV10.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanCorrectionV10.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaXSpaceV10.lean'
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilFixedLineCompletedGammaV10.lean'
+      - '.github/workflows/rh-digamma-series-real-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+
+jobs:
+  digamma-real:
+    name: compile real-axis digamma series completion
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout pinned Mathlib
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: leanprover-community/mathlib4
+          ref: ${{ env.MATHLIB_SHA }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout exact AEGIS candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: ${{ env.SOURCE_SHA }}
+          path: .aegis
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Verify exact source and toolchain pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$MATHLIB_SHA"
+          test "$(git -C .aegis rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(cat lean-toolchain)" = "$LEAN_TOOLCHAIN"
+          git -C .aegis rev-parse HEAD > exact-source.log
+          git rev-parse HEAD >> exact-source.log
+          sha256sum lake-manifest.json >> exact-source.log
+
+      - name: Install pinned elan and Mathlib cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake exe cache get
+          lean --version >> exact-source.log
+
+      - name: Compile exact theorem chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean evidence
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilDigammaIntegralReductionV1.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesRealV1.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesHalfPlaneV1.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaCoreV10.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaFubiniV10.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaAssemblyV10.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanCorrectionV10.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaXSpaceV10.lean .
+          cp .aegis/sovereign-omega-v2/formal/bridges/lean/WeilFixedLineCompletedGammaV10.lean .
+          sha256sum WeilDigammaIntegralReductionV1.lean WeilDigammaSeriesRealV1.lean WeilDigammaSeriesHalfPlaneV1.lean WeilFixedLineGammaCoreV10.lean WeilFixedLineGammaFubiniV10.lean WeilFixedLineGammaAssemblyV10.lean WeilArchimedeanCorrectionV10.lean WeilFixedLineGammaXSpaceV10.lean WeilFixedLineCompletedGammaV10.lean >> exact-source.log
+          lake env lean -o .lake/build/lib/lean/WeilDigammaIntegralReductionV1.olean WeilDigammaIntegralReductionV1.lean 2>&1 | tee evidence/reduction.log
+          lake env lean -o .lake/build/lib/lean/WeilDigammaSeriesRealV1.olean WeilDigammaSeriesRealV1.lean 2>&1 | tee evidence/series-real.log
+          lake env lean -o .lake/build/lib/lean/WeilDigammaSeriesHalfPlaneV1.olean WeilDigammaSeriesHalfPlaneV1.lean 2>&1 | tee evidence/series-half-plane.log
+          lake env lean -o .lake/build/lib/lean/WeilFixedLineGammaCoreV10.olean WeilFixedLineGammaCoreV10.lean 2>&1 | tee evidence/gamma-core.log
+          lake env lean -o .lake/build/lib/lean/WeilFixedLineGammaFubiniV10.olean WeilFixedLineGammaFubiniV10.lean 2>&1 | tee evidence/gamma-fubini.log
+          lake env lean -o .lake/build/lib/lean/WeilFixedLineGammaAssemblyV10.olean WeilFixedLineGammaAssemblyV10.lean 2>&1 | tee evidence/gamma-assembly.log
+          lake env lean -o .lake/build/lib/lean/WeilArchimedeanCorrectionV10.olean WeilArchimedeanCorrectionV10.lean 2>&1 | tee evidence/arch-correction.log
+          lake env lean -o .lake/build/lib/lean/WeilFixedLineGammaXSpaceV10.olean WeilFixedLineGammaXSpaceV10.lean 2>&1 | tee evidence/gamma-xspace.log
+          lake env lean -o .lake/build/lib/lean/WeilFixedLineCompletedGammaV10.olean WeilFixedLineCompletedGammaV10.lean 2>&1 | tee evidence/completed-gamma.log
+
+      - name: Audit public theorem closures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > WeilDigammaSeriesRealAudit.lean <<'EOF'
+          import WeilDigammaSeriesHalfPlaneV1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.summable_norm_seriesTerm_v1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.digamma_ofReal_eq_logGamma_deriv_v1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.logGamma_deriv_shift_v1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.logGamma_deriv_shift_sub_log_tendsto_zero_v1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.real_digamma_series_v1
+          #print axioms AEGIS.WeilDigammaSeriesRealV1.digamma_series_ofReal_v1
+          #print axioms AEGIS.WeilDigammaSeriesHalfPlaneV1.analyticOnNhd_series_tsum_v1
+          #print axioms AEGIS.WeilDigammaSeriesHalfPlaneV1.analyticOnNhd_digamma_add_gamma_v1
+          #print axioms AEGIS.WeilDigammaSeriesHalfPlaneV1.digamma_series_halfPlane_v1
+          #print axioms AEGIS.WeilDigammaSeriesHalfPlaneV1.gauss_digamma_integral_v1
+          #print axioms AEGIS.WeilFixedLineGammaCoreV10.weil_paired_profile_integral_one_v10
+          #print axioms AEGIS.WeilFixedLineGammaFubiniV10.weil_gauss_fixed_line_fubini_v10
+          #print axioms AEGIS.WeilFixedLineGammaAssemblyV10.weil_fixed_line_digamma_plus_gamma_log_integral_v10
+          #print axioms AEGIS.WeilArchimedeanCorrectionV10.integral_one_div_mul_one_add_v10
+          #print axioms AEGIS.WeilFixedLineGammaXSpaceV10.half_fixed_line_digamma_plus_gamma_eq_arch_v10
+          #print axioms AEGIS.WeilFixedLineCompletedGammaV10.weil_fixed_line_completed_gamma_eq_archimedean_v10
+          EOF
+          lake env lean WeilDigammaSeriesRealAudit.lean 2>&1 | tee evidence/axioms.log
+          ! grep -F 'sorryAx' evidence/axioms.log
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-digamma-series-real-${{ env.SOURCE_SHA }}
+          path: |
+            exact-source.log
+            evidence/
+          if-no-files-found: warn
+          retention-days: 30

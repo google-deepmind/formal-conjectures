@@ -1,0 +1,234 @@
+{
+  "schema": "AEGIS_RH_SOURCE_PRODUCER_CENSUS_V2",
+  "observed_date_utc": "2026-09-27",
+  "status": "EXPANDED_BOUNDED_SOURCE_INSPECTION",
+  "rh_proven": false,
+  "authority_effect": "NONE",
+  "unconditional_global_sign_producer_found": false,
+  "source_inspections": [
+    {
+      "ref": "05b6a49692baa7b88cc580c8bbf52e6eb6658450",
+      "path": "sovereign-omega-v2/formal/bridges/lean/WeilWindowExhaustionV1.lean",
+      "declaration": "weil_compact_smooth_negativity_iff_positive_nat_windows_v1",
+      "classification": "CONDITIONAL_REDUCTION",
+      "finding": "Equivalence to signs for every positive natural window. Does not prove any cofinal family of window signs.",
+      "premises": [
+        "∀ n : ℕ, 0 < n → WindowArithmeticNonpositiveV1 (n : ℝ)"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "98e15e9320c68f7f956cf3012fa992e3fb211985",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/05b6a49692baa7b88cc580c8bbf52e6eb6658450/sovereign-omega-v2/formal/bridges/lean/WeilWindowExhaustionV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": true
+    },
+    {
+      "ref": "28159750c0abaf418eaad17aca3d87dca222284b",
+      "path": "sovereign-omega-v2/formal/bridges/lean/WeilAbjadFourPhaseBridgeV1.lean",
+      "declaration": "weil_four_phase_nonnegative_iff_components_v1",
+      "classification": "UNCONDITIONAL_SCALAR_EQUIVALENCE",
+      "finding": "Four scalar phase signs are exactly bounds on real and imaginary cross components. No actual zeta sign is produced.",
+      "premises": [
+        "None for equivalence; use toward zeta requires either phase signs or component bounds."
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "e631a19ff29eababf6546519a386f9014b71ba7f",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/28159750c0abaf418eaad17aca3d87dca222284b/sovereign-omega-v2/formal/bridges/lean/WeilAbjadFourPhaseBridgeV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": true
+    },
+    {
+      "ref": "2b9da4e3a4029c7eca3cc3f0db88831c01743eca",
+      "path": "sovereign-omega-v2/formal/bridges/lean/RHElevenBlockActualBridgeV1.lean",
+      "declaration": "eleven_value_bound_v1",
+      "classification": "FINITE_CONDITIONAL_BOUND",
+      "finding": "Finite algebraic coercivity margin106083/118400 consumes11 diagonal bounds and55 cross bounds. No actual packet producer or universal sign.",
+      "premises": [
+        "0≤E",
+        "11 lower bounds5671/3200·E",
+        "55 off-diagonal bounds indexed by gaps1..10"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "a87a55c179e0933a0cf75373c6e59adba75d02b6",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/2b9da4e3a4029c7eca3cc3f0db88831c01743eca/sovereign-omega-v2/formal/bridges/lean/RHElevenBlockActualBridgeV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "7c94ba577f62e5a9fcd96b9b5ae4859d106db081",
+      "path": "harness/sdk/weil_convergence_bridge.py",
+      "declaration": "request_global_weil_claim",
+      "classification": "EVIDENCE_ONLY_SOFTWARE",
+      "finding": "Function always sets closed=False, global_weil_positivity_proven=False, rh_proven=False. Hash commitments do not prove approximation or contribution semantics.",
+      "premises": [
+        "Unintegrated density,continuity,coverage theorem artifacts"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "969d7674a12a882a964910da706def0179e09387",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/7c94ba577f62e5a9fcd96b9b5ae4859d106db081/harness/sdk/weil_convergence_bridge.py",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": true
+    },
+    {
+      "ref": "3f0dc44ce503f31c3d11a9f639bb137aaea9cc32",
+      "path": "sovereign-omega-v2/formal/tests/lean/WeilAbjadGramPositivityV1Spec.lean",
+      "declaration": "weil_abjad_isometric_orbit_nonnegative_v1 (check only)",
+      "classification": "MISSING_PRODUCER",
+      "finding": "Spec imports WeilAbjadGramPositivityV1, but complete recursive tree on this branch contains no producer module by that name; only Spec and workflow.",
+      "premises": [
+        "Absent module WeilAbjadGramPositivityV1"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "41ee226b3f745c4bb9909719e3467225f327f509",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/3f0dc44ce503f31c3d11a9f639bb137aaea9cc32/sovereign-omega-v2/formal/tests/lean/WeilAbjadGramPositivityV1Spec.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "658f53d3b01c1bc80aa18a6fa7bb55579b8970fc",
+      "path": "research/rh/finite_prime_phase_independent.py",
+      "declaration": "finite reflected phase sum experiment",
+      "classification": "BOUNDED_NUMERICAL_IDENTITY",
+      "finding": "Finite cancellation is explicitly tested to be weight-independent; it does not exploit multiplicativity or provide actual global Weil positivity.",
+      "premises": [
+        "Artificial phase S(x)=sin(2πx/m); finite prime cutoff20000"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "4c850d69823e78419aee33ebf82a873e63670f7e",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/658f53d3b01c1bc80aa18a6fa7bb55579b8970fc/research/rh/finite_prime_phase_independent.py",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "42a9abb11142f1875f7b5c0fd6fd97bb86b50aa1",
+      "path": "sovereign-omega-v2/python/rh_spectral_operator_registry.py",
+      "declaration": "validate_registry",
+      "classification": "EVIDENCE_ONLY_SOFTWARE",
+      "finding": "Validator enforces open spectral targets and rh_proven=False, not a constructed positive operator.",
+      "premises": [
+        "At least4 open construction premises for S2"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "129f3677540068bac979d4ed29e757636759f14b",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/42a9abb11142f1875f7b5c0fd6fd97bb86b50aa1/sovereign-omega-v2/python/rh_spectral_operator_registry.py",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "41ad4ea70c09eb2b88c8457d3b7185c5db4f986a",
+      "path": "sovereign-omega-v2/formal/theories/Weil/Globalization.v",
+      "declaration": "globalization_ready_implies_global_weil_positivity_v1",
+      "classification": "ABSTRACT_CONDITIONAL_LIMIT",
+      "finding": "Constructive-real finite-to-limit order theorem for abstract QW. No producer of GlobalizationReadyV1 and no identification with actual Weil form.",
+      "premises": [
+        "pointwise_converges_v1 QR QW",
+        "vanishing_nonnegative_error_v1 eps",
+        "FiniteLowerBoundV1 QR eps"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "d8f687841db4fd362778a9ba034e0f26316fdaa0",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/41ad4ea70c09eb2b88c8457d3b7185c5db4f986a/sovereign-omega-v2/formal/theories/Weil/Globalization.v",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": true
+    },
+    {
+      "ref": "e9c3bff76e3babe21363fe9b5062dadd55b373b3",
+      "path": "AegisRH/fixed_window_true_matrix_arb.py",
+      "declaration": "finite true-matrix Arb evaluator",
+      "classification": "FINITE_NUMERICAL_CERTIFICATE",
+      "finding": "Actual source fixes fixed_window_global_nonnegativity_proven=False. Batch finite N checks do not produce cofinality/universal theorem.",
+      "premises": [
+        "Finite supplied dimension list",
+        "Open cofinal approximation theorem"
+      ],
+      "repository": "tarikskalic33/formal-conjectures",
+      "git_blob_sha": "89f5322c320b35a3f21ad131d11c65cacc433f4e",
+      "url": "https://github.com/tarikskalic33/formal-conjectures/blob/e9c3bff76e3babe21363fe9b5062dadd55b373b3/AegisRH/fixed_window_true_matrix_arb.py",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": null
+    },
+    {
+      "ref": "d4ef1e015f98c93ec6c631b02e20307b6a55fd62",
+      "path": "sovereign-omega-v2/formal/bridges/lean/RHDeepMindTerminalV1.lean",
+      "declaration": "li_nonnegativity_closes_rh_v1",
+      "classification": "CONDITIONAL_CRITERION",
+      "finding": "Li criterion implication consumes LiNonnegativityV1; reverse theorem consumes RH. No unconditional Li sign producer.",
+      "premises": [
+        "∀ n : ℕ, 0 ≤ (LiCriterion.taylorCoeff LiCriterion.riemannXi n).re"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "c0d2b36ced2aa2426087437b00b111291e1c840f",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/d4ef1e015f98c93ec6c631b02e20307b6a55fd62/sovereign-omega-v2/formal/bridges/lean/RHDeepMindTerminalV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "c120728c970e8f05f60cb6018d8186d83032794f",
+      "path": "sovereign-omega-v2/formal/bridges/lean/WeilLocalizationAlgebraV1.lean",
+      "declaration": "weil_frame_localization_identity_v1",
+      "classification": "UNCONDITIONAL_FINITE_ALGEBRA",
+      "finding": "Exact normalized finite-frame IMS identity. Defect multiplies Re(z·conj(w)), which can have either sign. No integrated Weil defect bound.",
+      "premises": [
+        "Two frame sum-of-squares normalizations"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "4da96eddd5481efd5c0b93fa44c57f1c07066e76",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/c120728c970e8f05f60cb6018d8186d83032794f/sovereign-omega-v2/formal/bridges/lean/WeilLocalizationAlgebraV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "44015987bee321e0dd722f1c67b909d141f75512",
+      "path": "sovereign-omega-v2/formal/theories/Weil/FinitePrimeDiagonal.v",
+      "declaration": "prime_diagonal_source_sign_bridge",
+      "classification": "CONDITIONAL_RATIONAL_IDENTITY",
+      "finding": "Matches two finite source sign conventions under equal phase values; no inequality or global positivity.",
+      "premises": [
+        "c_complement == c_direct"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "8bba2c667764b2150ca689779dede10474d00bcf",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/44015987bee321e0dd722f1c67b909d141f75512/sovereign-omega-v2/formal/theories/Weil/FinitePrimeDiagonal.v",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": false
+    },
+    {
+      "ref": "aae3384ce570b76405e0d2b352dae4c12ceef83d",
+      "path": "sovereign-omega-v2/formal/bridges/lean/ZeroShellQuadraticBoundV1.lean",
+      "declaration": "quadratic_shell_bound_implies_zero_summable_v1",
+      "classification": "CONDITIONAL_SUMMABILITY",
+      "finding": "Consumes the quadratic-shell certificate rather than constructing it. Summability also does not establish sign.",
+      "premises": [
+        "HasQuadraticShellMassBoundV1 f"
+      ],
+      "repository": "Aegis-Omega/AEGIS-OMEGA",
+      "git_blob_sha": "45e7f91166b32832c54e6538041d1a5d12171b12",
+      "url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/aae3384ce570b76405e0d2b352dae4c12ceef83d/sovereign-omega-v2/formal/bridges/lean/ZeroShellQuadraticBoundV1.lean",
+      "source_read": true,
+      "fresh_kernel_replay": false,
+      "same_blob_at_current_pin": true
+    }
+  ],
+  "scope": {
+    "current_branch_heads_inventoried": 740,
+    "AEGIS_OMEGA_branch_heads": 599,
+    "exact_source_files_inspected": 13,
+    "full_historical_content_scan": false
+  },
+  "limitations": [
+    "No new compilation is claimed for inspected remote sources. Existing proof replay authority remains bound to its exact prior source and logs.",
+    "This receipt closes branch-pagination omissions and selected named-producer gaps; it does not establish mathematical impossibility or exhaustive search of all available source contents.",
+    "Current full branch inventory is complete only at the API reads represented here; later refs require refresh."
+  ]
+}

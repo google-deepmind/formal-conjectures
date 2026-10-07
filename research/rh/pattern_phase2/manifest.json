@@ -1,0 +1,12 @@
+{
+  "sha256": {
+    "OPERATOR_PATTERN_LEDGER.md": "75beceefede386f4e692944289ae499563b11b6389a9a785366f3cac5f831bda",
+    "README.md": "32af4cb3ec64133f14ba50dbdedeb57b7e1fbc0beb22094e22bdb53939a06bfd",
+    "compare_orders.py": "cfb0c7424d11bf78a47fa2c7b627989e63aaaba7c705547263eb96a70616d175",
+    "order_comparison.json": "ce4c6054f46cb69960fb3a748c1071e4150fbc2802d8bdd0aafcebd6dbe461e1",
+    "repository_search_receipt.json": "84f311acee4798be7dd73a7e3a9d00571353cbba6599df2f423c81c7dfaaa57f",
+    "structure_checks.py": "a7c789c58b88914e2e19f598d65951e034d69dabe1434ca5947b635d68c13366",
+    "structure_receipt.json": "0336ed501fa0c0180b22ae1b6fbca49cca6b2e77b3a49615cde8534503ff0ea2"
+  },
+  "authority_effect": "NONE"
+}

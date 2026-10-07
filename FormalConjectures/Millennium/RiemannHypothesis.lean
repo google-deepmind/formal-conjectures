@@ -15,6 +15,7 @@ limitations under the License.
 -/
 
 import FormalConjecturesUtil
+import RHRestrictedWeilCriterionV13
 
 /-!
 # Riemann Hypothesis and its generalizations
@@ -56,7 +57,7 @@ This uses the `RiemannHypothesis` type from Mathlib, which is defined as
 `∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2`. -/
 @[category research open, AMS 11]
 theorem riemannHypothesis : RiemannHypothesis := by
-  sorry
+  apply AEGIS.RHRestrictedWeilCriterionV13.restricted_weil_criterion_v13
 
 end RiemannHypothesis
 

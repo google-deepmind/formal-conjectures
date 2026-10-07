@@ -1,0 +1,348 @@
+name: AEGIS PR606 Fork Replay V1
+
+on:
+  push:
+    branches:
+      - 'proof/rh-606-port-v1'
+      - 'proof/rh-deepmind-target-direct-replay-v2'
+    paths:
+      - 'AegisRH/PR606/**'
+      - 'FormalConjectures/Millennium/RiemannHypothesis.lean'
+      - '.github/workflows/aegis-pr606-fork-replay-v1.yml'
+  pull_request:
+    paths:
+      - 'AegisRH/PR606/**'
+      - 'FormalConjectures/Millennium/RiemannHypothesis.lean'
+      - '.github/workflows/aegis-pr606-fork-replay-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AEGIS_BASE_SHA: cfe368ce2ffa0d196a4319c02b956997edf9f3fa
+  AEGIS_HEAD_SHA: 589adf0480bd4d7c12c9828027ea6228398377f4
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+  LI_PROVIDER_SHA: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+  LI_PROVIDER_ORIGINAL_MATHLIB_SHA: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+  LI_FACTORIZATION_BLOB: 10d38a54580ff72d698a30be64fe1c3c44f862a2
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout fork port
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout exact AEGIS #580 base
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: ${{ env.AEGIS_BASE_SHA }}
+          path: .aegis-base
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout exact Li provider
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: nicholasbulka/li-criterion-rh-equivalence-lean
+          ref: ${{ env.LI_PROVIDER_SHA }}
+          path: .li
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Bind exact port provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .aegis-base rev-parse HEAD)" = "$AEGIS_BASE_SHA"
+          test "$(git -C .li rev-parse HEAD)" = "$LI_PROVIDER_SHA"
+          test "$(git -C .li hash-object Hadamard/General/Factorization.lean)" = "$LI_FACTORIZATION_BLOB"
+          python3 - <<'PY'
+          import json, os
+          m=json.load(open('AegisRH/PR606/PORT_MANIFEST.json'))
+          assert m['source_head_sha'] == os.environ['AEGIS_HEAD_SHA']
+          assert m['source_base_sha'] == os.environ['AEGIS_BASE_SHA']
+          PY
+          grep -F "$MATHLIB_SHA" lake-manifest.json
+          test "$(cat lean-toolchain)" = "$LEAN_TOOLCHAIN"
+
+      - name: Install pinned Lean and Mathlib cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get
+          lean --version
+
+      - name: Restore exact Li provider build
+        id: li-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .li/.lake/build
+          key: li-provider-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.LI_PROVIDER_SHA }}-${{ env.MATHLIB_SHA }}
+
+      - name: Rebind and build exact Li provider
+        if: steps.li-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd .li
+          printf '%s\n' "$LEAN_TOOLCHAIN" > lean-toolchain
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          p=Path('lakefile.lean')
+          text=p.read_text()
+          old=os.environ['LI_PROVIDER_ORIGINAL_MATHLIB_SHA']
+          new=os.environ['MATHLIB_SHA']
+          assert text.count(old)==1
+          p.write_text(text.replace(old,new))
+
+          q=Path('Hadamard/General/Factorization.lean')
+          text=q.read_text()
+          replacements=[
+            ('eventually_nhdsWithin_of_forall fun w hw => ite_eq_right hw',
+             'eventually_nhdsWithin_of_forall fun w hw => if_neg hw'),
+            ('have hgz : g z = Q z := ite_eq_left rfl',
+             'have hgz : g z = Q z := by simp [g]'),
+            ('rw [ite_eq_right heq, hQ_eq_div z (hz heq)]',
+             'rw [if_neg heq, hQ_eq_div z (hz heq)]'),
+          ]
+          for old,new in replacements:
+            if old in text:
+              text=text.replace(old,new,1)
+          q.write_text(text)
+          PY
+          rm -f lake-manifest.json
+          lake update mathlib
+          python3 - <<'PY'
+          import json, os
+          m=json.load(open('lake-manifest.json'))
+          p=next(x for x in m['packages'] if x['name']=='mathlib')
+          assert (p.get('rev') or p.get('inputRev')) == os.environ['MATHLIB_SHA']
+          PY
+          lake exe cache get
+          lake build             Hadamard.OrderOne.LogDerivMultiplicity             Lc.LiCriterion.XiGrowth             Lc.LiCriterion.HadamardSummabilityBridge             Lc.LiCriterion.HadamardBridge
+
+      - name: Save exact Li provider build
+        if: steps.li-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .li/.lake/build
+          key: li-provider-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.LI_PROVIDER_SHA }}-${{ env.MATHLIB_SHA }}
+
+      - name: Compute full #606 fork closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          OUT="$GITHUB_WORKSPACE/.lake/aegis-pr606"
+          mkdir -p "$OUT"
+
+          python3 - "$BASE" "$SRC" "$COMPAT" "$GITHUB_WORKSPACE/.pr606-order.txt" <<'PY'
+          import pathlib, sys
+          base=pathlib.Path(sys.argv[1])
+          src=pathlib.Path(sys.argv[2])
+          compat=pathlib.Path(sys.argv[3])
+          out=pathlib.Path(sys.argv[4])
+
+          base_mods={p.stem:p for p in base.glob('*.lean')}
+          src_mods={p.stem:p for p in src.glob('*.lean')}
+          compat_mods={p.stem:p for p in compat.glob('*.lean')}
+          mods=set(base_mods)|set(src_mods)|set(compat_mods)
+
+          def selected(m):
+            if m in compat_mods: return compat_mods[m]
+            if m in src_mods: return src_mods[m]
+            if m in base_mods: return base_mods[m]
+            raise SystemExit('missing:'+m)
+
+          deps={}
+          for m in mods:
+            ds=[]
+            for line in selected(m).read_text(encoding='utf-8').splitlines():
+              s=line.split('--',1)[0].strip()
+              if not s.startswith('import '): continue
+              for tok in s[7:].split():
+                root=tok.split('.')[0]
+                if root in mods: ds.append(root)
+            deps[m]=ds
+
+          seen=set(); temp=set(); order=[]
+          def visit(m):
+            if m in seen: return
+            if m in temp: raise SystemExit('cycle:'+m)
+            temp.add(m)
+            for d in deps[m]: visit(d)
+            temp.remove(m); seen.add(m); order.append(m)
+
+          for target in sorted(src_mods):
+            visit(target)
+
+          out.write_text('\n'.join(order)+'\n')
+          print('PR606_IMPORTED_MODULES',len(src_mods))
+          print('PR606_FULL_CLOSURE_COUNT',len(order))
+          print('\n'.join(
+            ('COMPAT  ' if m in compat_mods else 'PR606   ' if m in src_mods else 'BASE580 ')+m
+            for m in order
+          ))
+          PY
+
+      - name: Restore incremental PR606 fork closure cache
+        id: pr606-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/aegis-pr606
+          key: pr606-fork-v2-${{ runner.os }}-${{ runner.arch }}-${{ env.AEGIS_HEAD_SHA }}-${{ env.LI_PROVIDER_SHA }}-${{ env.MATHLIB_SHA }}-${{ github.event.pull_request.head.sha || github.sha }}
+          restore-keys: |
+            pr606-fork-v2-${{ runner.os }}-${{ runner.arch }}-${{ env.AEGIS_HEAD_SHA }}-${{ env.LI_PROVIDER_SHA }}-${{ env.MATHLIB_SHA }}-
+
+      - name: Compile full #606 fork closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          OUT="$GITHUB_WORKSPACE/.lake/aegis-pr606"
+          BASE_LEAN_PATH="$GITHUB_WORKSPACE/.li/.lake/build/lib/lean:$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$COMPAT:$SRC:$BASE:$BASE_LEAN_PATH"
+
+          dirty=0
+          while IFS= read -r MOD; do
+            [ -z "$MOD" ] && continue
+            FILE="$BASE/$MOD.lean"
+            KIND="BASE580"
+            if [ -f "$SRC/$MOD.lean" ]; then FILE="$SRC/$MOD.lean"; KIND="PR606"; fi
+            if [ -f "$COMPAT/$MOD.lean" ]; then FILE="$COMPAT/$MOD.lean"; KIND="COMPAT"; fi
+            FILE_SHA="$(sha256sum "$FILE" | awk '{print $1}')"
+            STAMP="$OUT/$MOD.source.sha256"
+            if [ "$dirty" -eq 0 ] && [ -f "$OUT/$MOD.olean" ] && [ -f "$STAMP" ] && [ "$(cat "$STAMP")" = "$FILE_SHA" ]; then
+              echo "=== $KIND $MOD (CACHED) ==="
+              continue
+            fi
+            dirty=1
+            echo "=== $KIND $MOD ==="
+            if lean -o "$OUT/$MOD.olean" "$FILE"; then
+              printf '%s\n' "$FILE_SHA" > "$STAMP"
+            else
+              rm -f "$OUT/$MOD.olean" "$STAMP"
+              exit 1
+            fi
+          done < "$GITHUB_WORKSPACE/.pr606-order.txt"
+
+      - name: Save incremental PR606 fork closure cache
+        if: always()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/aegis-pr606
+          key: pr606-fork-v2-${{ runner.os }}-${{ runner.arch }}-${{ env.AEGIS_HEAD_SHA }}-${{ env.LI_PROVIDER_SHA }}-${{ env.MATHLIB_SHA }}-${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Compile upstream #606 spec
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          OUT="$GITHUB_WORKSPACE/.lake/aegis-pr606"
+          BASE_LEAN_PATH="$GITHUB_WORKSPACE/.li/.lake/build/lib/lean:$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$COMPAT:$SRC:$BASE:$BASE_LEAN_PATH"
+          lean AegisRH/PR606/Test/WeilAutocorrelationMellinV11Spec.lean
+
+      - name: Compile and audit V13 fork bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          OUT="$GITHUB_WORKSPACE/.lake/aegis-pr606"
+          BASE_LEAN_PATH="$GITHUB_WORKSPACE/.li/.lake/build/lib/lean:$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$GITHUB_WORKSPACE/AegisRH/PR606:$OUT:$COMPAT:$SRC:$BASE:$BASE_LEAN_PATH"
+
+          ! grep -R -n -E '\bsorry\b|\badmit\b' AegisRH/PR606/Compat AegisRH/PR606/V13Scratch.lean
+          lean -o "$OUT/V13Scratch.olean" AegisRH/PR606/V13Scratch.lean
+
+          cat >/tmp/PR606V13Audit.lean <<'LEAN'
+          import V13Scratch
+          #print axioms AEGIS.V13Scratch.final_sign_implies_rh_v13
+          #print axioms AEGIS.V13Scratch.all_nontrivial_zeros_critical_of_final_sign_v13
+          #print axioms AEGIS.V13Scratch.universal_zero_quadratic_implies_rh_v13
+          #print axioms AEGIS.V13Scratch.restricted_weil_criterion_kernel_bridge_v13
+          LEAN
+          lean /tmp/PR606V13Audit.lean 2>&1 | tee /tmp/pr606-v13-axioms.log
+          ! grep -F 'sorryAx' /tmp/pr606-v13-axioms.log
+
+      - name: Compile exact DeepMind RH target
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          OUT="$GITHUB_WORKSPACE/.lake/aegis-pr606"
+          BASE_LEAN_PATH="$GITHUB_WORKSPACE/.li/.lake/build/lib/lean:$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$GITHUB_WORKSPACE/AegisRH/PR606:$OUT:$COMPAT:$SRC:$BASE:$BASE_LEAN_PATH"
+
+          # Build the native fork prerequisite in this isolated replay environment.
+          lake build FormalConjecturesUtil
+
+          # V13Scratch alone does not provide the imported terminal module.
+          lean -o "$OUT/RHRestrictedWeilCriterionV13.olean" \
+            AegisRH/PR606/RHRestrictedWeilCriterionV13.lean 2>&1 | tee /tmp/pr606-rh-terminal.log
+          ! grep -F 'sorryAx' /tmp/pr606-rh-terminal.log
+
+          python3 -m unittest discover -s scripts -p test_rh_official_target_gate.py -v
+          EVIDENCE="$GITHUB_WORKSPACE/evidence-rh-official"
+          mkdir -p "$EVIDENCE"
+          export RH_EXACT_HEAD="$(git rev-parse HEAD)"
+          TARGET="FormalConjectures/Millennium/RiemannHypothesis.lean"
+          test -f "$TARGET"
+          ! grep -n -A3 'theorem riemannHypothesis : RiemannHypothesis' "$TARGET" | grep -F 'sorry'
+          mkdir -p .lake/build/lib/lean/FormalConjectures/Millennium
+          set +e
+          lean -o .lake/build/lib/lean/FormalConjectures/Millennium/RiemannHypothesis.olean "$TARGET" > "$EVIDENCE/target-compile.log" 2>&1
+          lean_rc=$?
+          set -e
+          cat "$EVIDENCE/target-compile.log"
+          python3 scripts/rh_official_target_gate.py \
+            --source "$TARGET" --log "$EVIDENCE/target-compile.log" \
+            --lean-exit "$lean_rc" --receipt "$EVIDENCE/receipt.json"
+
+          cat >/tmp/DeepMindRHTargetAudit.lean <<'LEAN'
+          import FormalConjectures.Millennium.RiemannHypothesis
+          #print axioms RiemannHypothesis.riemannHypothesis
+          LEAN
+          lean /tmp/DeepMindRHTargetAudit.lean 2>&1 | tee "$EVIDENCE/target-axioms.log"
+          python3 scripts/rh_official_target_gate.py \
+            --source "$TARGET" --log "$EVIDENCE/target-compile.log" \
+            --lean-exit 0 --axioms-log "$EVIDENCE/target-axioms.log" \
+            --receipt "$EVIDENCE/receipt.json"
+
+      - name: Upload exact RH target evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-official-target-${{ github.run_id }}
+          path: evidence-rh-official/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Emit exact port disposition
+        if: always()
+        shell: bash
+        run: |
+          printf '%s\n'             "UPSTREAM_PR=606"             "UPSTREAM_BASE=$AEGIS_BASE_SHA"             "UPSTREAM_HEAD=$AEGIS_HEAD_SHA"             "PORT=FORMAL_CONJECTURES_FORK"             "SOURCE_BYTES_PRESERVED=FALSE"             "SOURCE_PROVENANCE=AEGIS_PR606_589adf_WITH_EXPLICIT_FORK_COMPAT_PATCHES"             "COMPATIBILITY_REPAIRS=SOURCE_BOUND_REVIEWABLE"             "RH_PROMOTION=NOT_IMPLIED_BY_PORT"             "AUTHORITY_EFFECT=NONE"
