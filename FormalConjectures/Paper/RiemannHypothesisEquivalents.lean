@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-! # Equivalents to the Riemann Hypothesis
 
@@ -25,6 +27,8 @@ following the survey [Co26], §4. The statement of the Riemann Hypothesis itself
 * [Co26] A. Connes, [The Riemann Hypothesis: Past, Present and a Letter Through
   Time](https://arxiv.org/abs/2602.04022), 2026.
 -/
+
+@[expose] public section
 
 open Real MeasureTheory
 open scoped ArithmeticFunction.sigma CompactlySupported Convolution ContDiff
