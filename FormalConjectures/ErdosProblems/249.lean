@@ -47,7 +47,7 @@ variant; the series with unreduced totients above remains open.
 *Source:* [Cook, Bases and Integral Relations for the $k$-Kernel of Euler's Totient, "Residue series and dyadic observables"](https://github.com/wcook04/plectis-erdos/blob/c4bff4aa152465b3c92fffe808f76b0e5f78293c/paper/249/erdos-249-binary-totient-series.tex#L297-L306).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/c4bff4aa152465b3c92fffe808f76b0e5f78293c/lean/ErdosProblems/Erdos249/PaperCompleteR7/RationalObservableClassification.lean#L221-L233"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/587c48f213106c20ba2cdf3d585700c1394fc44f/verification/FC249RationalObservable/lean/ErdosProblems/Erdos249/PaperCompleteR7/RationalObservableClassification.lean#L222-L233"]
 theorem erdos_249.variants.rational_dyadic_observable
     {k : ℕ} (hk : 1 ≤ k) (f : ZMod (2 ^ k) → ℚ) :
     (∃ q : ℚ,
