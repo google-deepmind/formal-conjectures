@@ -14,26 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib
+module
 
-
-/-! ### From `Erdos207/Defs.lean` -/
+public import FormalConjecturesUtil
 
 
 /-!
-# Erdős Problem 207: definitions and statement
+# Erdős Problem 207
 
-Erdős Problem 207 ([Er76], proved by Kwan, Sah, Sawhney and Simkin [KSSS22b]):
+*Reference:* [erdosproblems.com/207](https://www.erdosproblems.com/207)
 
-> For any `g ≥ 2`, if `n` is sufficiently large and `n ≡ 1, 3 (mod 6)` then there exists a
-> 3-uniform hypergraph on `n` vertices such that
-> * every pair of vertices is contained in exactly one edge (i.e. the hypergraph is a Steiner
->   triple system), and
-> * for any `2 ≤ j ≤ g`, any collection of `j` edges contains at least `j + 3` vertices.
-
-A 3-uniform hypergraph on a vertex type `V` is modelled as a finset of finsets of `V`, each of
-cardinality `3`.
+[KSSS22b] Kwan, M., Sah, A., Sawhney, M., and Simkin, M.,
+_High-girth Steiner triple systems_. [arXiv:2201.04554](https://arxiv.org/abs/2201.04554) (2022).
 -/
+
+@[expose] public section
 
 section
 
@@ -51,25 +46,32 @@ any collection of `j` (distinct) edges of `H` spans at least `j + 3` vertices. -
 def GirthCondition (H : Finset (Finset V)) (g : ℕ) : Prop :=
   ∀ S ⊆ H, 2 ≤ S.card → S.card ≤ g → S.card + 3 ≤ (S.biUnion id).card
 
-/-- **Erdős Problem 207** (proved by Kwan–Sah–Sawhney–Simkin, 2022).
-For every `g ≥ 2`, for all sufficiently large `n` with `n ≡ 1, 3 (mod 6)` there is a Steiner
-triple system on `n` vertices in which every `j` edges, `2 ≤ j ≤ g`, span at least `j + 3`
-vertices.
-
-This is stated as a `Prop`; its proof (an iterative absorption argument) is not formalized
-here. -/
+/-- The proposition stated by Erdős Problem 207. -/
 def Statement : Prop :=
   ∀ g : ℕ, 2 ≤ g → ∀ᶠ n in Filter.atTop, (n % 6 = 1 ∨ n % 6 = 3) →
     ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g
+
+/--
+For any $g\geq 2$, if $n$ is sufficiently large and $n\equiv 1,3\pmod{6}$ then there exists a
+3-uniform hypergraph on $n$ vertices such that
+* every pair of vertices is contained in exactly one edge (i.e. the graph is a Steiner triple
+  system) and
+* for any $2\leq j\leq g$ any collection of $j$ edges contains at least $j+3$ vertices.
+
+Proved by Kwan, Sah, Sawhney, and Simkin [KSSS22b].
+-/
+@[category research solved, AMS 5]
+theorem erdos_207 : Statement := by
+  sorry
 
 end Erdos207
 
 end
 
-/-! ### From `Erdos207/Basic.lean` -/
+/- ### From `Erdos207/Basic.lean` -/
 
 
-/-!
+/-
 # Basic facts about Steiner triple systems
 
 * `Erdos207.isSteinerTripleSystem_of_op`: a *Steiner quasigroup* (an idempotent, commutative
@@ -87,6 +89,7 @@ namespace Erdos207
 variable {V W : Type*} [DecidableEq V] [DecidableEq W]
 
 /-- A Steiner quasigroup on a finite type gives a Steiner triple system. -/
+@[category API, AMS 5]
 theorem isSteinerTripleSystem_of_op [Fintype V] (op : V → V → V) (idem : ∀ x, op x x = x)
     (comm : ∀ x y, op x y = op y x) (canc : ∀ x y, op x (op x y) = y) :
     IsSteinerTripleSystem
@@ -120,6 +123,7 @@ theorem isSteinerTripleSystem_of_op [Fintype V] (op : V → V → V) (idem : ∀
 
 omit [DecidableEq V] in
 /-- Steiner triple systems transfer along bijections of the vertex type. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.map_equiv {H : Finset (Finset V)} (hH : IsSteinerTripleSystem H)
     (f : V ≃ W) : IsSteinerTripleSystem (H.image (Finset.map f.toEmbedding)) := by
   obtain ⟨h3, hu⟩ := hH
@@ -139,12 +143,14 @@ theorem IsSteinerTripleSystem.map_equiv {H : Finset (Finset V)} (hH : IsSteinerT
 
 omit [DecidableEq V] in
 /-- A Steiner triple system on a finite type with `n` elements gives one on `Fin n`. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.exists_fin [Fintype V] {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) {n : ℕ} (hn : Fintype.card V = n) :
     ∃ H' : Finset (Finset (Fin n)), IsSteinerTripleSystem H' :=
   ⟨_, hH.map_equiv (Fintype.equivFinOfCardEq hn)⟩
 
 /-- In a Steiner triple system two distinct edges share at most one vertex. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.card_inter_le_one {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) {e f : Finset V} (he : e ∈ H) (hf : f ∈ H) (hef : e ≠ f) :
     (e ∩ f).card ≤ 1 := by
@@ -157,6 +163,7 @@ theorem IsSteinerTripleSystem.card_inter_le_one {H : Finset (Finset V)}
 
 /-- Every Steiner triple system satisfies the girth condition of Erdős Problem 207 for `g = 3`:
 any two edges span at least `5` vertices and any three edges span at least `6` vertices. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.girthCondition_three {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) : GirthCondition H 3 := by
   intro S hS h2 h3
@@ -185,6 +192,7 @@ theorem IsSteinerTripleSystem.girthCondition_three {H : Finset (Finset V)}
     omega
 
 /-- The girth condition is monotone in `g`. -/
+@[category API, AMS 5]
 theorem GirthCondition.mono {H : Finset (Finset V)} {g g' : ℕ} (h : GirthCondition H g)
     (hg : g' ≤ g) : GirthCondition H g' :=
   fun S hS h2 h3 => h S hS h2 (h3.trans hg)
@@ -193,10 +201,10 @@ end Erdos207
 
 end
 
-/-! ### From `Erdos207/Bose.lean` -/
+/- ### From `Erdos207/Bose.lean` -/
 
 
-/-!
+/-
 # Bose's construction of Steiner triple systems of order `6k + 3`
 -/
 
@@ -213,14 +221,19 @@ def op (c : R) : R × ZMod 3 → R × ZMod 3 → R × ZMod 3
     else if a = b then (a, -i - j)
     else if j = i + 1 then (2 * b - a, i) else (2 * a - b, j)
 
+@[category API, AMS 5]
 lemma zmod3_aux₁ : ∀ i j : ZMod 3, j = i + 1 → i ≠ j + 1 := by decide
+@[category API, AMS 5]
 lemma zmod3_aux₂ : ∀ i j : ZMod 3, i ≠ j → j ≠ i + 1 → i = j + 1 := by decide
+@[category API, AMS 5]
 lemma zmod3_aux₃ : ∀ i j : ZMod 3, i ≠ j → i ≠ -i - j := by decide
 
+@[category API, AMS 5]
 lemma op_idem (c : R) (p : R × ZMod 3) : op c p p = p := by
   obtain ⟨a, i⟩ := p
   simp [op]
 
+@[category API, AMS 5]
 lemma op_comm (c : R) (p q : R × ZMod 3) : op c p q = op c q p := by
   obtain ⟨a, i⟩ := p
   obtain ⟨b, j⟩ := q
@@ -249,10 +262,12 @@ variable {c : R} (hc : 2 * c = 1)
 include hc
 
 omit [DecidableEq R] in
+@[category API, AMS 5]
 lemma eq_of_two_mul_eq {a b : R} (h : 2 * a = 2 * b) : a = b := by
   have := congrArg (c * ·) h
   linear_combination this - (a - b) * hc
 
+@[category API, AMS 5]
 lemma op_canc (p q : R × ZMod 3) : op c p (op c p q) = q := by
   obtain ⟨a, i⟩ := p
   obtain ⟨b, j⟩ := q
@@ -278,6 +293,7 @@ lemma op_canc (p q : R × ZMod 3) : op c p (op c p q) = q := by
         subst h2
         simp [op, hab, h1, hne']
 
+@[category API, AMS 5]
 theorem isSteinerTripleSystem [Fintype R] :
     IsSteinerTripleSystem ((Finset.univ.offDiag).image
       fun p : (R × ZMod 3) × (R × ZMod 3) => ({p.1, p.2, op c p.1 p.2} : Finset (R × ZMod 3)))
@@ -287,6 +303,7 @@ theorem isSteinerTripleSystem [Fintype R] :
 end
 
 /-- **Bose's construction**: there is a Steiner triple system on `6 k + 3` points. -/
+@[category API, AMS 5]
 theorem exists_isSteinerTripleSystem (k : ℕ) :
     ∃ H : Finset (Finset (Fin (6 * k + 3))), IsSteinerTripleSystem H := by
   have hc : 2 * ((k + 1 : ℕ) : ZMod (2 * k + 1)) = 1 := by
@@ -301,10 +318,10 @@ end Erdos207.Bose
 
 end
 
-/-! ### From `Erdos207/Skolem.lean` -/
+/- ### From `Erdos207/Skolem.lean` -/
 
 
-/-!
+/-
 # Skolem's construction of Steiner triple systems of order `6k + 1`
 
 We work with an abelian group `Q` of order `2k` together with an element `κ` of order `2` and
@@ -332,12 +349,16 @@ def op (κ : Q) (r : Q ≃ Q) : Option (Q × ZMod 3) → Option (Q × ZMod 3) �
     if i = j then (if x = y then some (x, i) else some (r (x + y), i + 1))
     else if j = i + 1 then third r x y i else third r y x j
 
+@[category API, AMS 5]
 lemma zmod3_aux₁ : ∀ i j : ZMod 3, j = i + 1 → i ≠ j + 1 := by decide
+@[category API, AMS 5]
 lemma zmod3_aux₂ : ∀ i j : ZMod 3, i ≠ j → j ≠ i + 1 → i = j + 1 := by decide
 
+@[category API, AMS 5]
 lemma op_idem (κ : Q) (r : Q ≃ Q) (p : Option (Q × ZMod 3)) : op κ r p p = p := by
   rcases p with _ | ⟨x, i⟩ <;> simp [op]
 
+@[category API, AMS 5]
 lemma op_comm (κ : Q) (r : Q ≃ Q) (p q : Option (Q × ZMod 3)) : op κ r p q = op κ r q p := by
   rcases p with _ | ⟨x, i⟩ <;> rcases q with _ | ⟨y, j⟩
   · rfl
@@ -362,18 +383,22 @@ variable {κ : Q} {r : Q ≃ Q} (hκ : κ + κ = 0) (hκ0 : κ ≠ 0)
 include hκ hκ0 hd
 
 omit [DecidableEq Q] hκ0 hd in
+@[category API, AMS 5]
 lemma add_κ_add_κ (x : Q) : x + κ + κ = x := by
   rw [add_assoc, hκ, add_zero]
 
 omit [DecidableEq Q] hκ0 hd in
+@[category API, AMS 5]
 lemma d_add_κ (x : Q) : r (x + κ + (x + κ)) = r (x + x) := by
   congr 1
   rw [add_add_add_comm, hκ, add_zero]
 
 omit [DecidableEq Q] hκ hd in
+@[category API, AMS 5]
 lemma ne_add_κ (x : Q) : x ≠ x + κ := fun h => hκ0 (by simpa using h)
 
 omit [DecidableEq Q] in
+@[category API, AMS 5]
 lemma base_add_κ (x : Q) : r (x + κ + (x + κ)) = x + κ ↔ r (x + x) ≠ x := by
   rw [d_add_κ hκ]
   constructor
@@ -382,6 +407,7 @@ lemma base_add_κ (x : Q) : r (x + κ + (x + κ)) = x + κ ↔ r (x + x) ≠ x :
   · intro h
     exact (hd x).resolve_left h
 
+@[category API, AMS 5]
 lemma op_canc (p q : Option (Q × ZMod 3)) : op κ r p (op κ r p q) = q := by
   rcases p with _ | ⟨x, i⟩ <;> rcases q with _ | ⟨y, j⟩
   · rfl
@@ -447,6 +473,7 @@ lemma op_canc (p q : Option (Q × ZMod 3)) : op κ r p (op κ r p q) = q := by
           simp [op, third, hl, hl', hdy, hv]
 
 
+@[category API, AMS 5]
 theorem isSteinerTripleSystem [Fintype Q] :
     IsSteinerTripleSystem ((Finset.univ.offDiag).image
       fun p : Option (Q × ZMod 3) × Option (Q × ZMod 3) =>
@@ -460,6 +487,7 @@ so that `x ∘ y := r (x + y)` is a half-idempotent commutative quasigroup. -/
 def rFun (k : ℕ) (s : ZMod (2 * k)) : ZMod (2 * k) :=
   ((s.val / 2 + k * (s.val % 2) : ℕ) : ZMod (2 * k))
 
+@[category API, AMS 5]
 lemma rFun_val {k : ℕ} (hk : 0 < k) (s : ZMod (2 * k)) :
     (rFun k s).val = s.val / 2 + k * (s.val % 2) := by
   have : NeZero (2 * k) := ⟨by omega⟩
@@ -468,6 +496,7 @@ lemma rFun_val {k : ℕ} (hk : 0 < k) (s : ZMod (2 * k)) :
   rw [ZMod.val_natCast, Nat.mod_eq_of_lt]
   rcases Nat.mod_two_eq_zero_or_one s.val with h | h <;> rw [h] <;> omega
 
+@[category API, AMS 5]
 lemma rFun_injective {k : ℕ} (hk : 0 < k) : Function.Injective (rFun k) := by
   have : NeZero (2 * k) := ⟨by omega⟩
   intro s t hst
@@ -479,6 +508,7 @@ lemma rFun_injective {k : ℕ} (hk : 0 < k) : Function.Injective (rFun k) := by
   rcases Nat.mod_two_eq_zero_or_one s.val with h1 | h1 <;>
     rcases Nat.mod_two_eq_zero_or_one t.val with h2 | h2 <;> rw [h1, h2] at h <;> omega
 
+@[category API, AMS 5]
 lemma rFun_add_self {k : ℕ} (hk : 0 < k) (x : ZMod (2 * k)) :
     rFun k (x + x) = x ∨ rFun k (x + x) = x + k := by
   have : NeZero (2 * k) := ⟨by omega⟩
@@ -503,6 +533,7 @@ lemma rFun_add_self {k : ℕ} (hk : 0 < k) (x : ZMod (2 * k)) :
     rw [this]; omega
 
 /-- **Skolem's construction**: there is a Steiner triple system on `6 k + 1` points. -/
+@[category API, AMS 5]
 theorem exists_isSteinerTripleSystem (k : ℕ) :
     ∃ H : Finset (Finset (Fin (6 * k + 1))), IsSteinerTripleSystem H := by
   rcases Nat.eq_zero_or_pos k with rfl | hk
@@ -530,10 +561,10 @@ end Erdos207.Skolem
 
 end
 
-/-! ### From `Erdos207/Kirkman.lean` -/
+/- ### From `Erdos207/Kirkman.lean` -/
 
 
-/-!
+/-
 # Kirkman's theorem
 
 A Steiner triple system on `n ≥ 1` points exists if and only if `n ≡ 1, 3 (mod 6)`.
@@ -551,6 +582,7 @@ variable {V : Type*} [DecidableEq V] [Fintype V]
 
 /-- In a Steiner triple system on `n` points every point lies on exactly `(n - 1) / 2` edges;
 in particular `n - 1 = 2 * deg v`. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.card_sub_one_eq {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) (v : V) :
     Fintype.card V - 1 = 2 * (H.filter (v ∈ ·)).card := by
@@ -582,6 +614,7 @@ theorem IsSteinerTripleSystem.card_sub_one_eq {H : Finset (Finset V)}
   rw [Finset.card_erase_of_mem he.2, hH.1 e he.1]
 
 /-- In a Steiner triple system on `n` points there are exactly `n.choose 2 / 3` edges. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.choose_two_eq {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) : (Fintype.card V).choose 2 = 3 * H.card := by
   have hcover : Finset.univ.powersetCard 2 = H.biUnion (fun e => e.powersetCard 2) := by
@@ -617,6 +650,7 @@ theorem IsSteinerTripleSystem.choose_two_eq {H : Finset (Finset V)}
 
 /-- **Necessary condition**: if there is a Steiner triple system on `n ≥ 1` points, then
 `n ≡ 1, 3 (mod 6)`. -/
+@[category API, AMS 5]
 theorem IsSteinerTripleSystem.card_mod_six {H : Finset (Finset V)}
     (hH : IsSteinerTripleSystem H) (hV : Nonempty V) :
     Fintype.card V % 6 = 1 ∨ Fintype.card V % 6 = 3 := by
@@ -637,6 +671,7 @@ theorem IsSteinerTripleSystem.card_mod_six {H : Finset (Finset V)}
 
 /-- **Kirkman's theorem**: for `n ≥ 1` there is a Steiner triple system on `n` points if and only
 if `n ≡ 1, 3 (mod 6)`. -/
+@[category API, AMS 5]
 theorem exists_isSteinerTripleSystem_iff {n : ℕ} (hn : 1 ≤ n) :
     (∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H) ↔ (n % 6 = 1 ∨ n % 6 = 3) := by
   constructor
@@ -652,33 +687,7 @@ end Erdos207
 
 end
 
-/-! ### From `Erdos207.lean` -/
-
-
-/-!
-# Erdős Problem 207
-
-*Reference:* [erdosproblems.com/207](https://www.erdosproblems.com/207)
-
-> For any `g ≥ 2`, if `n` is sufficiently large and `n ≡ 1, 3 (mod 6)` then there exists a
-> 3-uniform hypergraph on `n` vertices such that every pair of vertices is contained in exactly
-> one edge (a Steiner triple system) and for any `2 ≤ j ≤ g` any collection of `j` edges contains
-> at least `j + 3` vertices.
-
-Status: **proved** by Kwan, Sah, Sawhney and Simkin (2022), "High-girth Steiner triple systems".
-Their proof (iterative absorption) is far beyond what is formalized here, so the full statement
-`Erdos207.Statement` is only *stated*. What is proved in this development:
-
-* `Erdos207.exists_isSteinerTripleSystem_iff` (Kirkman's theorem): for `n ≥ 1` a Steiner triple
-  system on `n` points exists iff `n ≡ 1, 3 (mod 6)`; in particular the congruence condition in
-  the problem is necessary (`Erdos207.mod_six_of_exists`).
-* `Erdos207.IsSteinerTripleSystem.girthCondition_three`: every Steiner triple system satisfies the
-  girth condition for `g = 3`.
-* `Erdos207.statement_of_le_three`: hence the statement of Erdős Problem 207 holds for `g ∈ {2, 3}`
-  (in fact for *every* `n ≡ 1, 3 (mod 6)`, see `Erdos207.exists_of_le_three`).
-* `Erdos207.not_girthCondition_four_fano`: the condition for `g = 4` is not automatic: the Fano
-  plane violates it.
--/
+/- Basic cases and the Fano plane. -/
 
 section
 
@@ -686,6 +695,7 @@ namespace Erdos207
 
 /-- The congruence condition of Erdős Problem 207 is necessary: if some Steiner triple system on
 `n ≥ 1` points satisfies the girth condition (for any `g`), then `n ≡ 1, 3 (mod 6)`. -/
+@[category API, AMS 5]
 theorem mod_six_of_exists {n g : ℕ} (hn : 1 ≤ n)
     (h : ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g) :
     n % 6 = 1 ∨ n % 6 = 3 := by
@@ -693,12 +703,14 @@ theorem mod_six_of_exists {n g : ℕ} (hn : 1 ≤ n)
   exact (exists_isSteinerTripleSystem_iff hn).1 ⟨H, hH⟩
 
 /-- Erdős Problem 207 for `g ≤ 3` holds for **every** `n ≡ 1, 3 (mod 6)`. -/
+@[category API, AMS 5]
 theorem exists_of_le_three {g n : ℕ} (hg : g ≤ 3) (hn : n % 6 = 1 ∨ n % 6 = 3) :
     ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g := by
   obtain ⟨H, hH⟩ := (exists_isSteinerTripleSystem_iff (by omega)).2 hn
   exact ⟨H, hH, hH.girthCondition_three.mono hg⟩
 
 /-- The statement of Erdős Problem 207 restricted to `g ∈ {2, 3}`. -/
+@[category test, AMS 5]
 theorem statement_of_le_three : ∀ g : ℕ, 2 ≤ g → g ≤ 3 → ∀ᶠ n in Filter.atTop,
     (n % 6 = 1 ∨ n % 6 = 3) →
       ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g :=
@@ -708,6 +720,8 @@ theorem statement_of_le_three : ∀ g : ℕ, 2 ≤ g → g ≤ 3 → ∀ᶠ n in
 def fano : Finset (Finset (Fin 7)) :=
   {{0, 1, 3}, {1, 2, 4}, {2, 3, 5}, {3, 4, 6}, {4, 5, 0}, {5, 6, 1}, {6, 0, 2}}
 
+/-- The Fano plane is a Steiner triple system. -/
+@[category test, AMS 5]
 theorem isSteinerTripleSystem_fano : IsSteinerTripleSystem fano := by
   refine ⟨by simp [fano], fun x y hxy => ?_⟩
   have h : ∀ x y : Fin 7, x ≠ y → (fano.filter fun e => x ∈ e ∧ y ∈ e).card = 1 := by
@@ -719,6 +733,7 @@ theorem isSteinerTripleSystem_fano : IsSteinerTripleSystem fano := by
 
 /-- The girth condition for `g = 4` is a genuine restriction: the Fano plane contains a Pasch
 configuration (four lines on six points), so it violates the condition for `g = 4`. -/
+@[category test, AMS 5]
 theorem not_girthCondition_four_fano : ¬ GirthCondition fano 4 := by
   intro h
   have := h {{1, 2, 4}, {2, 3, 5}, {3, 4, 6}, {5, 6, 1}} (by decide) (by decide) (by decide)
@@ -732,12 +747,14 @@ end
 namespace Erdos207
 
 /-- The congruence condition $n \equiv 1, 3 \pmod 6$ is necessary. -/
+@[category textbook, AMS 5]
 theorem erdos_207.variants.mod_six_necessary {n g : ℕ} (hn : 1 ≤ n)
     (h : ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g) :
     n % 6 = 1 ∨ n % 6 = 3 :=
   mod_six_of_exists hn h
 
 /-- For $g \le 3$ the statement holds for every $n \equiv 1, 3 \pmod 6$. -/
+@[category textbook, AMS 5]
 theorem erdos_207.variants.le_three {g n : ℕ} (hg : g ≤ 3) (hn : n % 6 = 1 ∨ n % 6 = 3) :
     ∃ H : Finset (Finset (Fin n)), IsSteinerTripleSystem H ∧ GirthCondition H g :=
   exists_of_le_three hg hn
