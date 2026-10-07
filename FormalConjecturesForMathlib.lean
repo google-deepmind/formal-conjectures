@@ -87,6 +87,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Gravity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube

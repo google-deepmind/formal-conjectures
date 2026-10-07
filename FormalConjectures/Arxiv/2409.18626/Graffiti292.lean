@@ -35,9 +35,10 @@ public import FormalConjecturesUtil
 The source fixes two conventions. Eigenvalues are those of the adjacency matrix (p. 1).
 Conjectures that involve distance are only for connected graphs (p. 2).
 
-The source does not define the mean of a matrix. `graffiti_292` takes the mean over all $n^2$
-entries. `graffiti_292.variants.off_diagonal_mean` takes it over the $n(n-1)$ off-diagonal
-entries.
+The gravity matrix is `SimpleGraph.gravity`. The source does not define the mean of a matrix.
+`graffiti_292` takes the mean over all $n^2$ entries (`SimpleGraph.meanGravity`).
+`graffiti_292.variants.off_diagonal_mean` takes it over the $n(n-1)$ off-diagonal entries
+(`SimpleGraph.meanGravityOffDiagonal`).
 -/
 
 @[expose] public section
@@ -46,24 +47,6 @@ namespace Graffiti292
 
 open SimpleGraph
 
-/-- The gravity matrix of `G`. The $(u, v)$ entry is $0$ if $u = v$, and otherwise
-$\frac{d(u) d(v)}{(n - 1) \operatorname{dist}(u, v)}$, where $n$ is the number of vertices.
-If no path joins $u$ and $v$, then `G.dist u v = 0` and the entry is $0$, as in the source. -/
-noncomputable def gravity {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
-    [DecidableRel G.Adj] (u v : α) : ℝ :=
-  if u = v then 0
-  else (G.degree u * G.degree v : ℝ) / ((Fintype.card α - 1 : ℝ) * G.dist u v)
-
-/-- The mean of the $n^2$ entries of the gravity matrix of `G`. -/
-noncomputable def meanGravity {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
-    [DecidableRel G.Adj] : ℝ :=
-  (∑ u, ∑ v, gravity G u v) / (Fintype.card α : ℝ) ^ 2
-
-/-- The mean of the $n(n-1)$ off-diagonal entries of the gravity matrix of `G`. -/
-noncomputable def meanGravityOffDiagonal {α : Type*} [Fintype α] [DecidableEq α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] : ℝ :=
-  (∑ u, ∑ v, gravity G u v) / (Fintype.card α * (Fintype.card α - 1) : ℝ)
-
 /-- **Graffiti 292.** Let $G$ be a connected graph on $n$ vertices with girth at least $5$.
 Then the least positive adjacency eigenvalue of $G$ is at most $n / \overline{Gr}$, where
 $\overline{Gr}$ is the mean of the gravity matrix of $G$.
@@ -71,36 +54,27 @@ $\overline{Gr}$ is the mean of the gravity matrix of $G$.
 Here `i` indexes the least positive eigenvalue. Acyclic graphs have `egirth = ⊤`, so they
 satisfy the girth hypothesis. -/
 @[category research solved, AMS 5 15, formal_proof using lean4 at
-  "https://github.com/agnt-gg/graffiti-292-lean/blob/5e6337907f2f41790f540d28cbfe419e19e44261/Graffiti292.lean#L321"]
+  "https://github.com/agnt-gg/graffiti-lean/blob/cceea87d0c42d56701ec3dea4f647b8a4bcf0309/Graffiti/Graffiti292.lean#L20"]
 theorem graffiti_292 {α : Type*} [Fintype α] [DecidableEq α] (G : SimpleGraph α)
     [DecidableRel G.Adj] (hconn : G.Connected) (hgirth : 5 ≤ G.egirth) (i : α)
     (hpos : 0 < (G.isHermitian_adjMatrix ℝ).eigenvalues i)
     (hleast : ∀ j, 0 < (G.isHermitian_adjMatrix ℝ).eigenvalues j →
       (G.isHermitian_adjMatrix ℝ).eigenvalues i ≤ (G.isHermitian_adjMatrix ℝ).eigenvalues j) :
-    (G.isHermitian_adjMatrix ℝ).eigenvalues i ≤ Fintype.card α / meanGravity G := by
+    (G.isHermitian_adjMatrix ℝ).eigenvalues i ≤ Fintype.card α / G.meanGravity := by
   sorry
 
 /-- **Graffiti 292, off-diagonal mean.** The statement of `graffiti_292`, with the mean of the
 gravity matrix taken over the $n(n-1)$ off-diagonal entries. -/
 @[category research solved, AMS 5 15, formal_proof using lean4 at
-  "https://github.com/agnt-gg/graffiti-292-lean/blob/5e6337907f2f41790f540d28cbfe419e19e44261/Graffiti292.lean#L334"]
+  "https://github.com/agnt-gg/graffiti-lean/blob/cceea87d0c42d56701ec3dea4f647b8a4bcf0309/Graffiti/Graffiti292.lean#L33"]
 theorem graffiti_292.variants.off_diagonal_mean {α : Type*} [Fintype α] [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (hconn : G.Connected) (hgirth : 5 ≤ G.egirth)
     (i : α) (hpos : 0 < (G.isHermitian_adjMatrix ℝ).eigenvalues i)
     (hleast : ∀ j, 0 < (G.isHermitian_adjMatrix ℝ).eigenvalues j →
       (G.isHermitian_adjMatrix ℝ).eigenvalues i ≤ (G.isHermitian_adjMatrix ℝ).eigenvalues j) :
     (G.isHermitian_adjMatrix ℝ).eigenvalues i ≤
-      Fintype.card α / meanGravityOffDiagonal G := by
+      Fintype.card α / G.meanGravityOffDiagonal := by
   sorry
-
-/-- For $K_2$, each off-diagonal entry of the gravity matrix is $1$, so the mean of the four
-entries is $1/2$. This checks the $(n - 1)$ factor and the $n^2$ normalisation. -/
-@[category test, AMS 5]
-example : meanGravity (⊤ : SimpleGraph (Fin 2)) = 1 / 2 := by
-  have h01 : (⊤ : SimpleGraph (Fin 2)).dist 0 1 = 1 := dist_eq_one_iff_adj.mpr (by decide)
-  have h10 : (⊤ : SimpleGraph (Fin 2)).dist 1 0 = 1 := dist_eq_one_iff_adj.mpr (by decide)
-  simp [meanGravity, gravity, Fin.sum_univ_two, h01, h10, complete_graph_degree]
-  norm_num
 
 /-- The hypotheses of `graffiti_292` can hold: $K_2$ is connected and acyclic. -/
 @[category test, AMS 5]
