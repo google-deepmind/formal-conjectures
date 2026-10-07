@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Polynomial-time computability of comparisons of sums of square roots
@@ -31,6 +33,8 @@ This problem is relevant to questions in computational geometry
 - [Wikipedia: Square-root sum problem](https://en.wikipedia.org/wiki/Square-root_sum_problem)
 
 -/
+
+@[expose] public section
 
 namespace PolyTime
 
