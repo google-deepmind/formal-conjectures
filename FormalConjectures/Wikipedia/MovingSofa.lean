@@ -248,14 +248,8 @@ theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
 ## The ambidextrous sofa
 
 Romik [Ro18, §1.2] asks for the largest shape that can turn both right and left around the
-corner. `hallway` turns right. The reflection $\rho(x, y) = (x, 1 - y)$ in the line $y = 1/2$
-maps `horizontalHallway` to itself and turns `hallway` into the hallway that turns left, so a
-shape $s$ can turn left exactly when $\rho(s)$ can turn right. Following [Ro18, Thm. 5], $s$ is
-ambidextrous if both $s$ and $\rho(s)$ are moving sofas.
-
-Both turns start from the same position of $s$ in `horizontalHallway`. Without that requirement
-every moving sofa would count: reflecting its right turn in the diagonal $x = y$, running it
-backwards, and then reflecting in $y = 1/2$ gives a left turn for a rotated copy of it.
+corner. `hallway` turns right; its reflection in `midline`, $(x, y) \mapsto (x, 1 - y)$, turns
+left and fixes `horizontalHallway`, so both turns start from the same position.
 -/
 
 /-- The horizontal line $y = 1/2$, the axis of symmetry of the horizontal side of the hallway. -/
