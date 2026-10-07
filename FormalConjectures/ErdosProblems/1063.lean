@@ -67,7 +67,9 @@ theorem erdos_1063.better_upper :
 An improved upper bound
 $n_k \ll \exp\left(\frac{k}{\log k}(\log \log k + \log \log \log k + \log 2)\right)$,
 which is $o\bigl(k \cdot \operatorname{lcm}(1, \dotsc, k - 1)\bigr)$, was formally proved in
-Lean 4 by the LEAP prover agent [Ku+26] (see the linked `formal_proof`). -/
+Lean 4 by the LEAP prover agent [Ku+26] (see the linked `formal_proof`).
+This is an improvement over another upper bound propsed [here](https://github.com/pw/erdos1063-upper-bound/blob/a28481f5b4bda374086533397269c5b550c759b8/README.md).
+  -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
     "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5524"]
