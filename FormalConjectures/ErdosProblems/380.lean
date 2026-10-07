@@ -191,8 +191,8 @@ theorem mainTarget_of_excess_negligible
 @[category API, AMS 11]
 theorem badInterval_24_25 : BadInterval 24 25 := by
   have hi : Finset.Icc (24 : ℕ) 25 = {24, 25} := by decide
-  norm_num [BadInterval, BadNumber, intervalProduct, hi,
-    Nat.maxPrimeFac]
+  have hmax : Nat.maxPrimeFac 600 = 5 := by decide +kernel
+  norm_num [BadInterval, BadNumber, intervalProduct, hi, hmax]
 
 @[category API, AMS 11]
 theorem covered_24 : Covered 24 :=
@@ -200,7 +200,8 @@ theorem covered_24 : Covered 24 :=
 
 @[category API, AMS 11]
 theorem not_bad_24 : ¬ BadNumber 24 := by
-  norm_num [BadNumber, Nat.maxPrimeFac]
+  have hmax : Nat.maxPrimeFac 24 = 3 := by decide +kernel
+  norm_num [BadNumber, hmax]
 
 @[category API, AMS 11]
 theorem covered_not_iff_bad : ¬ (∀ n : ℕ, Covered n ↔ BadNumber n) := by
