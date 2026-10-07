@@ -61,7 +61,7 @@ the statement is false or trivial for $n < 3$. -/
 @[category test, AMS 52]
 theorem f_zero_eq : f 0 = 0 := by
   have : ∀ P, HasConvexNGon 0 P := by
-    intro; use ∅; simp [ConvexIndep]
+    intro; use ∅; simp [ConvexIndep, ConvexPos]
   simp [f, cardSet, this]
 
 /-- Three distinct non-collinear points form a convex-independent set. -/
