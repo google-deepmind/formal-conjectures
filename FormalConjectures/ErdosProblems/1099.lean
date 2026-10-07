@@ -26,6 +26,8 @@ public import FormalConjecturesUtil
   Analytic number theory (Philadelphia, Pa., 1980) (1981), 171-182.
 - [Vo84] Vose, Michael D., *Integers with consecutive divisors in small ratio*. J. Number Theory
   (1984), 233-238.
+- [Te87] Tenenbaum, Gérald, *Sur un problème extrémal en arithmétique*. Ann. Inst. Fourier
+  (1987), 1-18.
 -/
 
 @[expose] public section
@@ -52,8 +54,8 @@ Erdős [Er81h] remarks that $n!$ or the least common multiple of $\{1,\ldots,n\}
 candidates for an infinite sequence of $n$ with $h_\alpha(n)$ bounded.
 
 The $\liminf$ is trivially $\geq 1$, just considering the term $i=1$. A positive answer to the
-main question was provided by Vose [Vo84] by constructing a specific sequence. It remains open
-whether the two explicit sequences mentioned above satisfy this property.
+main question was provided by Vose [Vo84] by constructing a specific sequence. Tenenbaum [Te87]
+proved that the two explicit sequences mentioned above satisfy this property.
 
 The statement "$\liminf h_\alpha(n)$ is finite" is formalised as "$h_\alpha(n)\leq C$ for
 infinitely many $n$".
@@ -64,15 +66,17 @@ theorem erdos_1099 : answer(True) ↔
     ∀ α : ℝ, 1 < α → ∃ C : ℝ, ∃ᶠ n : ℕ in atTop, h α n ≤ C := by
   sorry
 
-/-- Is $h_\alpha(n!)$ bounded? -/
-@[category research open, AMS 11]
-theorem erdos_1099.variants.factorial : answer(sorry) ↔ ∀ α : ℝ, 1 < α →
+/-- Is $h_\alpha(n!)$ bounded? Tenenbaum [Te87, Théorème 1] proved that it is, for every
+$\alpha > 1$. -/
+@[category research solved, AMS 11]
+theorem erdos_1099.variants.factorial : answer(True) ↔ ∀ α : ℝ, 1 < α →
     ∃ C : ℝ, ∀ n : ℕ, h α n.factorial ≤ C := by
   sorry
 
-/-- Is $h_\alpha(\mathrm{lcm}(1,\ldots,n))$ bounded? -/
-@[category research open, AMS 11]
-theorem erdos_1099.variants.lcm : answer(sorry) ↔ ∀ α : ℝ, 1 < α →
+/-- Is $h_\alpha(\mathrm{lcm}(1,\ldots,n))$ bounded? Tenenbaum [Te87, Théorème 1] proved that it
+is, for every $\alpha > 1$. -/
+@[category research solved, AMS 11]
+theorem erdos_1099.variants.lcm : answer(True) ↔ ∀ α : ℝ, 1 < α →
     ∃ C : ℝ, ∀ n : ℕ, h α ((Finset.Icc 1 n).lcm id) ≤ C := by
   sorry
 
