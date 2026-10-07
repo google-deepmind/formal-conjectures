@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
 - [BEFRS89] Burr, S. and Erdős, P. and Faudree, R. J. and Rousseau, C. C. and Schelp, R. H., Some
   complete bipartite graph-tree Ramsey numbers. Graph theory in memory of G. A. Dirac (Sandbjerg,
   1985) (1989), 79-89.
+- [Ch97] Chen, G., *A result on $C_4$-star Ramsey numbers*. Discrete Mathematics **163** (1997),
+  243-246.
 -/
 
 @[expose] public section
@@ -58,6 +60,20 @@ theorem erdos_552.parts.ii : answer(sorry) ↔
       Set.Infinite {n : ℕ |
         (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
           (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
+  sorry
+
+/--
+Burr, Erdős, Faudree, Rousseau and Schelp also asked whether $f(n + 1) \le f(n) + 2$ for all $n$,
+where $f(n) = R(C_4, S_n)$. Chen [Ch97] proved this for $n \ge 1$. It fails for $n = 0$, since
+$R(C_4, S_1) = 4$ and $R(C_4, S_0) = 1$.
+-/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/agnt-gg/erdos-lean/blob/8e5972f4e6787049b168e5350b1a2badc9eb8bcd/Erdos/Erdos552.lean#L292"]
+theorem erdos_552.variants.succ_le_add_two (n : ℕ) (hn : 1 ≤ n) :
+    SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
+        (completeBipartiteGraph (Fin 1) (Fin (n + 1))) ≤
+      SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
+        (completeBipartiteGraph (Fin 1) (Fin n)) + 2 := by
   sorry
 
 -- TODO: Add variants of the problem.
