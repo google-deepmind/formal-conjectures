@@ -82,7 +82,7 @@ theorem erdos_149.variants.max_degree_le_three (V : Type) [Fintype V] (G : Simpl
 `j < t`, and `(i, j)` is adjacent to `(i', j')` iff `i' = i ± 1`. -/
 def c5Blowup (t : ℕ) : SimpleGraph (ZMod 5 × Fin t) where
   Adj p q := p.1 - q.1 = 1 ∨ q.1 - p.1 = 1
-  symm := fun _ _ h => h.symm
+  symm := ⟨fun _ _ h => h.symm⟩
   loopless := ⟨fun p h => by simp at h; revert h; decide⟩
 
 instance (t : ℕ) : DecidableRel (c5Blowup t).Adj :=
