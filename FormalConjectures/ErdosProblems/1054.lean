@@ -20,7 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 1054
 
-*Reference:* [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+*References:*
+- [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+- [Li00] Li, Hongze, The exceptional set of Goldbach numbers (II). Acta Arith. 92 (2000),
+  71--88. [doi:10.4064/aa-92-1-71-88](https://doi.org/10.4064/aa-92-1-71-88)
 -/
 
 @[expose] public section
@@ -44,9 +47,19 @@ theorem erdos_1054.parts.i : answer(sorry) ↔ (fun n ↦ (f n : ℝ)) =o[atTop]
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$? -/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.ii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
+of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$?
+
+The answer is no. By [Tao](https://www.erdosproblems.com/forum/thread/1054#post-1636) and
+[Kovač](https://www.erdosproblems.com/forum/thread/1054#post-1758), the $n$ for which $f(n)$ is
+defined and $f(n)\leq \delta n$ have upper density $\ll \delta^2$. In this formalisation
+$f(n)=0$ when no $m$ works, and $0=o(n)$. So the disproof also needs $f$ to be defined on a set
+of positive upper density. Almost all even numbers are sums of two odd primes [Li00]. The numbers
+$2p$ with $p$ prime have density $0$, so almost all even numbers are sums of two distinct primes
+$p<q$. Then $1+p+q$ is the sum of the three smallest divisors of $pq$, so $f$ is defined for
+almost all odd $n$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1054.parts.ii : answer(False) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
     (fun (n : A) ↦ (f ↑n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
