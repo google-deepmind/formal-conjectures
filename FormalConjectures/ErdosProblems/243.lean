@@ -104,7 +104,7 @@ shifting $n$ would change its lower-order terms.
 This variant does not settle the unrestricted Erdős problem above.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/a1779f508dbede5da6d8c2d5fefe0d8f6dcef6d9/research/adapters/FC243CubicRate.lean#L53-L60"]
+  "https://github.com/wcook04/plectis-erdos/blob/9eb4ba2cd2bf73b1e75faed00f8d4ce044b892b2/verification/ExternalVerification/FC243CubicRate/Solution.lean#L53-L60"]
 theorem erdos_243.variants.cubic_rate (a : ℕ → ℕ)
     (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
     (hrate : Tendsto (fun n : ℕ => (n : ℝ) ^ 3 *
