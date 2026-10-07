@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+/- Original Mathlib author: Hang Lu Su. -/
 module
 
 public import Mathlib.Analysis.Normed.Group.Defs
@@ -26,8 +27,9 @@ family given by `Group.Generators`. The word length defines a norm on `G` induci
 `dist g h = ‖g⁻¹ * h‖`.
 
 This file is copied from `Mathlib.Geometry.Group.WordMetric`
-(leanprover-community/mathlib4#43118). It is in Mathlib from `v4.34.0`. Delete it when this
-repository moves to that version.
+(leanprover-community/mathlib4#43118). It is in Mathlib from `v4.34.0`.
+
+TODO: delete this file when this repository moves to Mathlib `v4.34.0`.
 
 ## Main definitions
 

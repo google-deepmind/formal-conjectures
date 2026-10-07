@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+/- Original Mathlib authors: Hang Lu Su, Katerina Hristova. -/
 module
 
 public import Mathlib.Topology.MetricSpace.Pseudo.Defs
@@ -24,8 +25,9 @@ The Gromov product of `y` and `z` with respect to `x` in a pseudometric space is
 `(y, z)_x = (dist x y + dist x z - dist y z) / 2`.
 
 This file is copied from `Mathlib.Topology.MetricSpace.GromovProduct`
-(leanprover-community/mathlib4#43641). It is in Mathlib from `v4.34.0`. Delete it when this
-repository moves to that version.
+(leanprover-community/mathlib4#43641). It is in Mathlib from `v4.34.0`.
+
+TODO: delete this file when this repository moves to Mathlib `v4.34.0`.
 
 ## Main definitions
 

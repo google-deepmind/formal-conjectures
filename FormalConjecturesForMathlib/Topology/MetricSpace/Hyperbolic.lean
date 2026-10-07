@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+/- Original Mathlib authors: Hang Lu Su, Katerina Hristova. -/
 module
 
 public import Mathlib.Topology.MetricSpace.Bounded
@@ -22,6 +23,8 @@ public import FormalConjecturesForMathlib.Topology.MetricSpace.GromovProduct
 # Gromov hyperbolic pseudometric spaces
 
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#43723.
+
+TODO: delete this file when this repository moves to a Mathlib version that contains it.
 
 ## Main definitions
 

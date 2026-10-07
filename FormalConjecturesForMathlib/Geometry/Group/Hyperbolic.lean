@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+/- Original Mathlib authors: Hang Lu Su, Katerina Hristova. -/
 module
 
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
@@ -25,6 +26,8 @@ A finitely generated group is hyperbolic if its induced metric space with respec
 of `Group.Generators` satisfies the Gromov hyperbolicity condition.
 
 This is being upstreamed to Mathlib in leanprover-community/mathlib4#44339.
+
+TODO: delete this file when this repository moves to a Mathlib version that contains it.
 
 ## Main definitions
 
