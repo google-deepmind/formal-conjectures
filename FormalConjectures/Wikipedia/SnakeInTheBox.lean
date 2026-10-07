@@ -24,6 +24,10 @@ public import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Snake-in-the-box)
 - [Hypercube](https://en.wikipedia.org/wiki/Hypercube_graph)
 - [xkcd](https://xkcd.com/3125/)
+- [DK67] L. Danzer and V. Klee, *Lengths of snakes in boxes*, Journal of Combinatorial Theory 2
+  (1967), 258–265.
+- [Ze97] G. Zémor, *An upper bound on the size of the snake-in-the-box*, Combinatorica 17
+  (1997), 287–298.
 -/
 
 @[expose] public section
@@ -58,6 +62,24 @@ The length of the longest snake for the `Hypercube n` graph.
 noncomputable def LongestSnakeInTheBox (n : ℕ) : ℕ := LongestSnakeInGraph <| Hypercube n
 
 /--
+A subgraph `G'` is a 'coil' of length `k` in graph `G` if it is an induced cycle of length `k`.
+-/
+def IsCoilInGraphOfLength {V : Type u} [DecidableEq V] (G : SimpleGraph V) (G' : Subgraph G)
+    (k : ℕ) : Prop :=
+  G'.IsInduced ∧ ∃ u : V, ∃ (P : G.Walk u u), P.IsCycle ∧ G' = P.toSubgraph ∧ P.length = k
+
+/--
+The length of the longest induced cycle (or 'coil') in a graph `G`.
+-/
+noncomputable def LongestCoilInGraph {V : Type u} [DecidableEq V] (G : SimpleGraph V) : ℕ :=
+  sSup {k | ∃ (S : Subgraph G), IsCoilInGraphOfLength G S k}
+
+/--
+The length of the longest coil for the `Hypercube n` graph.
+-/
+noncomputable def LongestCoilInTheBox (n : ℕ) : ℕ := LongestCoilInGraph <| Hypercube n
+
+/--
 The longest snake in the $0$-dimensional cube, i.e. the cube consisting of one point, is zero,
 since there only is one induced path and it is of length zero.
 -/
@@ -75,6 +97,24 @@ theorem snake_zero_zero : LongestSnakeInTheBox 0 = 0 := by
     use ⊤, by simp, ∅, ∅, .nil
     simp [Subgraph.ext_iff, funext_iff]
 
+/--
+The longest coil in the $0$-dimensional cube is zero, since it contains no cycles.
+-/
+@[category test, AMS 5]
+theorem coil_zero_zero : LongestCoilInTheBox 0 = 0 := by
+  simp_rw [LongestCoilInTheBox, LongestCoilInGraph, IsCoilInGraphOfLength, Hypercube]
+  convert! csSup_empty
+  ext n
+  simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_exists, not_and]
+  intro S _ u P hCycle _ _
+  cases P with
+  | nil => exact hCycle.ne_nil rfl
+  | @cons _ v _ h =>
+    have hu := Finset.eq_empty_of_isEmpty u
+    have hv := Finset.eq_empty_of_isEmpty v
+    subst hu hv
+    exact h.ne rfl
+
 open List
 
 /--
@@ -84,6 +124,15 @@ it is $0, 1, 2, 4, 7, 13, 26, 50, 98$.
 @[category research solved, AMS 5]
 theorem snake_small_dimensions :
     map LongestSnakeInTheBox (range 9) = [0, 1, 2, 4, 7, 13, 26, 50, 98] := by
+  sorry
+
+/--
+The maximum length for the coil-in-the-box problem is known for dimensions zero through eight;
+it is $0, 0, 4, 6, 8, 14, 26, 48, 96$.
+-/
+@[category research solved, AMS 5]
+theorem coil_small_dimensions :
+    map LongestCoilInTheBox (range 9) = [0, 0, 4, 6, 8, 14, 26, 48, 96] := by
   sorry
 
 /--
@@ -104,16 +153,23 @@ theorem snake_dim_nine_lower_bound : 190 ≤ LongestSnakeInTheBox 9 := by
 -- TODO(firsching): add more known bounds and open conjecture for a few small dimensions
 
 /--
-For $n \geq 2$, an upper bound of the maximal length of the longest snake in a box is given by
-$$
-1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}.
-$$
-The case $n = 1$ is excluded since the right-hand side is negative there.
+For $n \geq 1$, an upper bound on the length of the longest snake in a box is $2^{n-1}$
+(see [DK67, Theorem B]).
 -/
 @[category research solved, AMS 5]
-theorem snake_upper_bound (n : ℕ) (hn : 2 ≤ n) : LongestSnakeInTheBox n
+theorem snake_upper_bound (n : ℕ) (hn : 1 ≤ n) : LongestSnakeInTheBox n ≤ 2 ^ (n - 1) := by
+  sorry
+
+/--
+For $n \geq 2$, an upper bound on the maximal length of the longest coil in a box is given by
+$$
+1 + 2^{n-1}\frac{6n}{6n + \frac{1}{6\sqrt{6}}n^{\frac 1 2} - 7}
+$$
+(see [Ze97]). The case $n = 1$ is excluded since the right-hand side is negative there.
+-/
+@[category research solved, AMS 5]
+theorem coil_upper_bound (n : ℕ) (hn : 2 ≤ n) : LongestCoilInTheBox n
     ≤ (1 : ℝ) + 2 ^ (n - 1) * (6 * n) / (6 * n + (1 / (6 * √6) * √n) - 7) := by
   sorry
 
 end SnakeInBox
--- TODO(firsching): add "coil-in-the-box"

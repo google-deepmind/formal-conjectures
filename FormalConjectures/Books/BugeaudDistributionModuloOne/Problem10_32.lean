@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Automatic Expansions in Two Bases
@@ -46,6 +47,8 @@ The definitions used here are in `FormalConjecturesForMathlib`:
     Mathematik 330 (1982): 159-172. Its transcendence method was the first attack on the
     problem; Nishioka later reported a gap in its main proof.
 -/
+
+@[expose] public section
 
 namespace Bugeaud32
 
