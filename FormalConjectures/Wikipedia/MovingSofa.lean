@@ -297,30 +297,26 @@ private lemma mem_unitSquare_iff {p : ℝ²} : p ∈ unitSquare ↔ ∀ i, p i �
   rw [unitSquare, ← OrthonormalBasis.coe_toBasis, parallelepiped_basis_eq]
   simp
 
-/-- Sanity check: the unit square is symmetric under reflection in `midline`. -/
-@[category test, AMS 49]
-theorem reflection_midline_image_unitSquare :
-    EuclideanGeometry.reflection midline '' unitSquare = unitSquare := by
-  refine reflection_midline_image_eq_self fun p hp => ?_
-  rw [mem_unitSquare_iff] at hp ⊢
-  intro i
-  rw [reflection_midline_apply]
-  fin_cases i
-  · simpa using hp 0
-  · have := hp 1
-    simp only [Set.mem_Icc] at this ⊢
-    constructor <;> simp <;> linarith [this.1, this.2]
-
 /-- A closed connected set is an **ambidextrous sofa** if both it and its reflection in `midline`
 are moving sofas [Ro18, Thm. 5]. -/
 def IsAmbidextrousSofa (s : Set ℝ²) : Prop :=
   (∃ m, IsMovingSofa s m) ∧ (∃ m, IsMovingSofa (EuclideanGeometry.reflection midline '' s) m)
 
-/-- Sanity check: the unit square is ambidextrous. -/
+/-- Sanity check: the unit square is ambidextrous, since it is symmetric under reflection in
+`midline`. -/
 @[category test, AMS 49]
-theorem isAmbidextrousSofa_unitSquare : IsAmbidextrousSofa unitSquare :=
-  ⟨isMovingSofa_unitSquare,
-    by rw [reflection_midline_image_unitSquare]; exact isMovingSofa_unitSquare⟩
+theorem isAmbidextrousSofa_unitSquare : IsAmbidextrousSofa unitSquare := by
+  have h : EuclideanGeometry.reflection midline '' unitSquare = unitSquare := by
+    refine reflection_midline_image_eq_self fun p hp => ?_
+    rw [mem_unitSquare_iff] at hp ⊢
+    intro i
+    rw [reflection_midline_apply]
+    fin_cases i
+    · simpa using hp 0
+    · have := hp 1
+      simp only [Set.mem_Icc] at this ⊢
+      constructor <;> simp <;> linarith [this.1, this.2]
+  exact ⟨isMovingSofa_unitSquare, by rw [h]; exact isMovingSofa_unitSquare⟩
 
 /-- The **ambidextrous sofa constant** is the maximal area of an ambidextrous sofa. -/
 def ambidextrousSofaConstant : ℝ≥0∞ :=
