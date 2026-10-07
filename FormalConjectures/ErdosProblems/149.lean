@@ -94,6 +94,7 @@ lemma c5Blowup_degree (t : ℕ) (p : ZMod 5 × Fin t) : (c5Blowup t).degree p = 
   have : (c5Blowup t).neighborFinset p =
       (univ.filter (fun a : ZMod 5 => p.1 - a = 1 ∨ a - p.1 = 1)) ×ˢ (univ : Finset (Fin t)) := by
     ext q
+    rw [mem_neighborFinset]
     simp [c5Blowup]
   rw [this, card_product, card_univ, Fintype.card_fin]
   congr 1
