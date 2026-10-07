@@ -83,6 +83,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Decompositio
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degeneracy
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DiamExtra
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.DistanceMatrix
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring
