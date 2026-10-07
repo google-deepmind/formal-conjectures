@@ -70,9 +70,10 @@ Hasse--Weil conjecture. -/
 def WeakBSD : Prop :=
   ∃ L : ℂ → ℂ, HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point
 
-/-- The leading coefficient predicted by BSD over a number field, using the non-normalised regulator
-and dividing by the square root of the absolute field discriminant. -/
-noncomputable def leadingCoefficient [E.IsElliptic] : ℝ :=
+/-- The *BSD quotient* of [DD2010], the leading coefficient predicted by BSD over a number field,
+using the non-normalised regulator and dividing by the square root of the absolute field
+discriminant. -/
+noncomputable def bsdQuotient [E.IsElliptic] : ℝ :=
   E.period * Point.regulator E * Nat.card E.tateShafarevich * E.toProjective.tamagawaProduct /
       (|(discr K : ℝ)|.sqrt * (Nat.card <| AddCommGroup.torsion E.Point) ^ 2 : ℝ)
 
@@ -82,7 +83,7 @@ Tate--Shafarevich group is finite, and the leading coefficient of its L-series i
 `L⁽ʳ⁾(E, 1) / r! = Ω(E)·Reg(E)·|Sha(E)|·∏ᵥcᵥ / √|Δ(K)|·|E(K)ₜₒᵣₛ|²`. See [DD2010], Conjecture 2.1. -/
 def StrongBSD [E.IsElliptic] : Prop := ∃ L : ℂ → ℂ,
   HasMeromorphicContinuation E L ∧ meromorphicOrderAt L 1 = Module.finrank ℤ E.Point ∧
-    Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = leadingCoefficient E
+    Finite E.tateShafarevich ∧ meromorphicTrailingCoeffAt L 1 = bsdQuotient E
 
 /-- The **weak Birch and Swinnerton-Dyer conjecture** ([DD2010], Conjecture 2.1 (1); the order
 statement on its own is [Tate1966], Conjecture (A)). -/
