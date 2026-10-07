@@ -117,14 +117,15 @@ def IsPoissonNLie (b : (Fin n → A) → A) : Prop :=
 /- ## Results from the paper (proved cases) -/
 
 /--
-**Proposition 3.4 (Cao–Normatov–Omirov, 2026).** For $n = 3$ and $m = 2$, the $3$-ary
-determinant bracket arising from any 5 pairwise commuting derivations and any scalar matrix
-$M \in M_{5,2}(\mathbb{F})$ makes $(\mathcal{A}, \cdot, [-,-,-])$ a Poisson 3-Lie algebra.
+**Proposition 3.4 (Cao–Normatov–Omirov, 2026).** The paper proves this result for $n = 3$ and
+$m = 2$ under Assumptions 1 and 2. The linked Lean proof establishes the stronger statement below
+without those assumptions, for any pairwise commuting derivations and scalar matrix.
 
-The proof in the paper uses a case analysis on $|I \cap J| = 3, 2, 1$ combined with the
-Grassmann–Plücker relations.
+The paper's proof uses a case analysis on $|I \cap J| = 3, 2, 1$ and the Grassmann–Plücker
+relations.
 -/
-@[category research solved, AMS 17]
+@[category research solved, AMS 17,
+  formal_proof using lean4 at "https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L627"]
 theorem poissonThreeLie_of_scalarMatrix
     (d : Fin (3 + 2) → Derivation F A A)
     (hcomm : ∀ i j : Fin (3 + 2), ∀ a : A, d i (d j a) = d j (d i a))
@@ -133,15 +134,12 @@ theorem poissonThreeLie_of_scalarMatrix
   sorry
 
 /--
-**Solved for $n = 4$, $m = 2$ (Cao–Normatov–Omirov, 2026).** The $4$-ary determinant bracket
-arising from any 6 pairwise commuting derivations and a scalar matrix $M \in M_{6,2}(\mathbb{F})$
-makes $(\mathcal{A}, \cdot, [-,-,-,-])$ a Poisson 4-Lie algebra.
-
-Stated after Proposition 3.4 in the paper: "By arguments analogous to those used in the proof
-of Proposition 3.4, one can show that $(\mathcal{A}, [-,-,-,-])$ forms a Poisson 4-Lie algebra
-for any scalar matrix $A \in M_{6,2}(\mathbb{F})$."
+The remark after Proposition 3.4 states this result for $n = 4$, $m = 2$ under Assumptions 1 and
+2. The linked Lean proof establishes the stronger statement below without those assumptions, for
+any pairwise commuting derivations and scalar matrix.
 -/
-@[category research solved, AMS 17]
+@[category research solved, AMS 17,
+  formal_proof using lean4 at "https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L627"]
 theorem poissonFourLie_of_scalarMatrix_m2
     (d : Fin (4 + 2) → Derivation F A A)
     (hcomm : ∀ i j : Fin (4 + 2), ∀ a : A, d i (d j a) = d j (d i a))
@@ -150,12 +148,12 @@ theorem poissonFourLie_of_scalarMatrix_m2
   sorry
 
 /--
-**Solved for $n = 4$, $m = 3$ (Cao–Normatov–Omirov, 2026).** The Poisson 4-Lie structure
-also holds for scalar matrices $M \in M_{7,3}(\mathbb{F})$.
-
-Stated after Proposition 3.4 in the paper.
+The remark after Proposition 3.4 also states the $n = 4$, $m = 3$ case under Assumptions 1 and 2.
+The linked Lean proof establishes the stronger statement below without those assumptions, for any
+pairwise commuting derivations and scalar matrix.
 -/
-@[category research solved, AMS 17]
+@[category research solved, AMS 17,
+  formal_proof using lean4 at "https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L627"]
 theorem poissonFourLie_of_scalarMatrix_m3
     (d : Fin (4 + 3) → Derivation F A A)
     (hcomm : ∀ i j : Fin (4 + 3), ∀ a : A, d i (d j a) = d j (d i a))
@@ -163,20 +161,39 @@ theorem poissonFourLie_of_scalarMatrix_m3
     IsPoissonNLie (n := 4) (nLieBracket d M) := by
   sorry
 
-/- ## The main open conjecture -/
+/- ## The main conjecture and its generalization -/
 
 /--
-**Conjecture 3.5 (Cao–Normatov–Omirov, 2026).** For all integers $n \ge 2$ and $m \ge 1$,
-the $n$-ary determinant bracket defined by any $n + m$ pairwise commuting derivations of a
-unital commutative associative $\mathbb{F}$-algebra and any scalar matrix
-$A \in M_{(n+m) \times m}(\mathbb{F})$ makes the algebra a **Poisson $n$-Lie algebra**.
+The determinant bracket is a Poisson $n$-Lie bracket for arbitrary natural numbers $n$ and $m$,
+any pairwise commuting derivations, and any scalar matrix. This is stronger than Conjecture 3.5,
+which considers $n \ge 2$ and $m \ge 1$.
 
-- **Proved:** $n = 3$ (Proposition 3.4) and $n = 4$ (remark after Prop. 3.4).
-- **Open:** All $n \ge 5$, and the general case for arbitrary $n \ge 2$.
+*Formal proof:* [Lean 4 proof](https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L627)
+-/
+@[category research solved, AMS 17,
+  formal_proof using lean4 at "https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L627"]
+theorem poissonNLie_of_scalarMatrix_general (n m : ℕ)
+    {F : Type*} [Field F]
+    {A : Type*} [CommRing A] [Algebra F A]
+    (d : Fin (n + m) → Derivation F A A)
+    (hcomm : ∀ i j : Fin (n + m), ∀ a : A, d i (d j a) = d j (d i a))
+    (M : Matrix (Fin (n + m)) (Fin m) F) :
+    IsPoissonNLie (nLieBracket d M) := by
+  sorry
+
+/--
+**Conjecture 3.5 (Cao–Normatov–Omirov, 2026).** For all $n \ge 2$ and $m \ge 1$, the
+determinant bracket from $n + m$ pairwise commuting derivations and a scalar matrix makes the
+algebra a Poisson $n$-Lie algebra.
+
+The paper's conjecture does not assume Assumptions 1 and 2. Those assumptions occur in its
+low-dimensional results above; the linked proof establishes this conjecture and the stronger
+general statement without them.
 
 *Source:* [Conjecture 3.5, page 9 of arXiv:2605.01785](https://arxiv.org/pdf/2605.01785#page=9)
 -/
-@[category research open, AMS 17]
+@[category research solved, AMS 17,
+  formal_proof using lean4 at "https://github.com/KitaKen1/poisson-n-lie-scalar-matrix/blob/68aee7902a7f659a2994de916976db82ea3dbc4f/lean/PoissonNLieScalarMatrix.lean#L638"]
 theorem poissonNLie_of_scalarMatrix (n : ℕ) (hn : 2 ≤ n) (m : ℕ) (hm : 1 ≤ m)
     {F : Type*} [Field F]
     {A : Type*} [CommRing A] [Algebra F A]
@@ -187,6 +204,26 @@ theorem poissonNLie_of_scalarMatrix (n : ℕ) (hn : 2 ≤ n) (m : ℕ) (hm : 1 �
   sorry
 
 /- ## Tests -/
+
+private lemma bracketMatrix_update
+    (d : Fin (n + m) → Derivation F A A)
+    (M : Matrix (Fin (n + m)) (Fin m) F)
+    (x : Fin n → A) (k : Fin n) (a : A) :
+    bracketMatrix d M (Function.update x k a) =
+      (bracketMatrix d M x).updateCol (Fin.castAdd m k) (fun i => d i a) := by
+  classical
+  ext i j
+  by_cases hjk : j = Fin.castAdd m k
+  · subst j
+    simp [bracketMatrix]
+  · by_cases hj : j.val < n
+    · have hfin : (⟨j.val, hj⟩ : Fin n) ≠ k := by
+        intro h
+        apply hjk
+        apply Fin.ext
+        simpa using congrArg Fin.val h
+      simp [bracketMatrix, hjk, hj, hfin]
+    · simp [bracketMatrix, hjk, hj]
 
 /--
 The bracket vanishes whenever two arguments coincide: $[x_1, \dots, x_n] = 0$ when $x_i = x_j$
@@ -221,8 +258,10 @@ theorem nLieBracket_add_in_slot
     nLieBracket d M (Function.update x k (a + b)) =
       nLieBracket d M (Function.update x k a) +
       nLieBracket d M (Function.update x k b) := by
-  simp only [nLieBracket]
-  -- Follows from multilinearity of the determinant and additivity of derivations
-  sorry
+  simp only [nLieBracket, bracketMatrix_update]
+  have hcol : (fun i => d i (a + b)) = (fun i => d i a) + (fun i => d i b) := by
+    funext i
+    simp
+  rw [hcol, Matrix.det_updateCol_add]
 
 end Arxiv.«2605.01785»
