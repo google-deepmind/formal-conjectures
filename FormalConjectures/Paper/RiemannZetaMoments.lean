@@ -23,7 +23,7 @@ to $c_k (\log T)^{k^2}$ for some constants $c_k$. This is a theorem for $k = 1$
 (Hardy–Littlewood, $c_1 = 1$) and $k = 2$ (Ingham, $c_2 = 1/(2\pi^2)$), and these are the only
 proven cases. Conrey–Ghosh and Conrey–Gonek conjectured $c_3 = 42 a_3 / 9!$ and
 $c_4 = 24024 a_4 / 16!$, with $a_k$ the arithmetic factor
-$a_k = \prod_p (1 - 1/p)^{k^2} \sum_{m \ge 0} \bigl(\Gamma(m+k)/(m!\,\Gamma(k))\bigr)^2 p^{-m}$;
+$a_k = \prod_p (1 - 1/p)^{k^2} \sum_{m \ge 0} \binom{m+k-1}{m}^2 p^{-m}$;
 Keating–Snaith conjectured $c_k = a_k f_k$ with $f_k = \prod_{j=0}^{k-1} j!/(j+k)!$ from random
 matrix theory, recovering $g_k = (k^2)!\,f_k = 1, 2, 42, 24024$.
 
@@ -82,12 +82,22 @@ theorem moments₂ : moment 2 ~[atTop] fun T ↦ (1 / (2 * π ^ 2)) * T.log ^ 4 
 /-- The arithmetic factor expected to appear in the asymptotic behaviour of the $k$th moment of the
 Riemann zeta function, defined by
 $$
-  a_k = \prod_{p \text{ prime}} (1 - 1/p)^{k^2} \sum_{m=0}^{\infty} \left(\frac{\Gamma(m+k)}{m! \Gamma(k)}\right)^2 p^{-m}.
+  a_k = \prod_{p \text{ prime}} (1 - 1/p)^{k^2} \sum_{m=0}^{\infty} \binom{m+k-1}{m}^2 p^{-m}.
 $$
+For $k \ge 1$ we have $\binom{m+k-1}{m} = \Gamma(m+k)/(m!\,\Gamma(k))$. We use `Nat.multichoose`, so
+that $a_0 = 1$ and the Keating–Snaith formula also holds for $k = 0$.
 -/
 noncomputable def arithmeticFactor (k : ℕ) : ℝ :=
-  ∏' p : Nat.Primes, (1 - 1 / p) ^ (k ^ 2) *
-    ∑' m : ℕ, (Real.Gamma (m + k) / (m ! * Real.Gamma k)) ^ 2 / p ^ m
+  ∏' p : Nat.Primes, (1 - 1 / p) ^ (k ^ 2) * ∑' m : ℕ, (k.multichoose m : ℝ) ^ 2 / p ^ m
+
+@[category test, AMS 11]
+theorem arithmeticFactor_zero : arithmeticFactor 0 = 1 := by
+  have h (p : Nat.Primes) : ∑' m : ℕ, ((0 : ℕ).multichoose m : ℝ) ^ 2 / p ^ m = 1 := by
+    rw [tsum_eq_single 0 fun m hm ↦ ?_]
+    · simp
+    · obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hm
+      simp [Nat.multichoose_zero_succ]
+  simp [arithmeticFactor, h]
 
 /-- The constant in the asymptotic formula for the 3rd zeta moment is conjectured
 to be $42a_3/9!$ [CG98]. -/
