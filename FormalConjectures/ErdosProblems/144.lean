@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/144](https://www.erdosproblems.com/144)
 
 [MaTe84] Maier, H. and Tenenbaum, G., On the set of divisors of an integer.
-  Invent. Math. (1984), 319-328.
+  Invent. Math. 76 (1984), 121-128.
 -/
 
 @[expose] public section
