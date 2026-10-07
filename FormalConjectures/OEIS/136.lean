@@ -21,9 +21,9 @@ public import FormalConjecturesUtil
 # Stamp folding
 
 The number of distinct ways to fold a strip of $n$ labeled stamps into a flat pile.
-A permutation $\sigma$ of $\{0, \ldots, n-1\}$ represents a valid stamp folding if the
-connections between consecutive stamps do not cross in the folded stack: for all
-$0 \le i < j \le n-2$, the intervals
+A permutation $\sigma$ of $\{0, \ldots, n-1\}$ represents a valid stamp folding if
+connections between consecutive stamps with indices of the same parity do not cross in the
+folded stack: for all $0 \le i < j \le n-2$ with $i \equiv j \pmod 2$, the intervals
 $[\min(\sigma(i), \sigma(i+1)), \max(\sigma(i), \sigma(i+1))]$ and
 $[\min(\sigma(j), \sigma(j+1)), \max(\sigma(j), \sigma(j+1))]$ are either disjoint or nested.
 
@@ -48,11 +48,11 @@ instance {a b c d : ℕ} : Decidable (IntervalsCross a b c d) := by
   unfold IntervalsCross; infer_instance
 
 /-- A permutation $\sigma$ of $\{0, \ldots, n-1\}$ is a valid stamp folding if no two
-connections between consecutive stamps in the original strip cross in the stack ordering.
-Connection $i$ links the stack positions $\sigma(i)$ and $\sigma(i+1)$ of consecutive
-stamps $i$ and $i+1$. -/
+connections of the same parity between consecutive stamps in the original strip cross in the
+stack ordering. Connection $i$ links the stack positions $\sigma(i)$ and $\sigma(i+1)$ of
+consecutive stamps $i$ and $i+1$. -/
 def IsStampFolding {n : ℕ} (σ : Equiv.Perm (Fin n)) : Prop :=
-  ∀ (i j : Fin (n - 1)), i < j →
+  ∀ (i j : Fin (n - 1)), i < j → i.val % 2 = j.val % 2 →
     ¬IntervalsCross
       (σ ⟨i.val, by omega⟩).val (σ ⟨i.val + 1, by omega⟩).val
       (σ ⟨j.val, by omega⟩).val (σ ⟨j.val + 1, by omega⟩).val
