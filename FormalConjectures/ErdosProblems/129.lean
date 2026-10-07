@@ -47,14 +47,14 @@ noncomputable def R (n k r : ℕ) : ℕ := sInf {N | HasRamseyProperty n k r N}
 /-- Exponential lower bound (Girao): $2 ^ {\lfloor n / 100 \rfloor} < R(n; 3, 2)$ for all
 $n \ge 100$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/AItoBit/erdos-129-lean/blob/e3af8eb2ea2263d5c746fbf119a1c3b1ca03cd5f/Erdos129.lean"]
+  "https://github.com/AItoBit/erdos-129-lean/blob/06e2f9ba62d7511e3d9ccfd96dcada975b6bd9e1/Erdos129.lean"]
 theorem two_pow_lt_R (n : ℕ) (hn : 100 ≤ n) : 2 ^ (n / 100) < R n 3 2 := by
   sorry
 
 /-- Even the "for all sufficiently large $n$" version of the bound fails for two colours:
 for no $C \ge 0$ does $R(n; 3, 2) < C ^ {\sqrt{n}}$ hold eventually. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/AItoBit/erdos-129-lean/blob/e3af8eb2ea2263d5c746fbf119a1c3b1ca03cd5f/Erdos129.lean"]
+  "https://github.com/AItoBit/erdos-129-lean/blob/06e2f9ba62d7511e3d9ccfd96dcada975b6bd9e1/Erdos129.lean"]
 theorem not_eventually_R_lt (C : ℝ) (hC : 0 ≤ C) :
     ¬ ∀ᶠ n : ℕ in Filter.atTop, (R n 3 2 : ℝ) < C ^ Real.sqrt n := by
   sorry
@@ -68,7 +68,7 @@ Antonio Girao has pointed out that this problem as written is easily disproved, 
 indeed $R(n;3,2) \geq C^{n}$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/AItoBit/erdos-129-lean/blob/e3af8eb2ea2263d5c746fbf119a1c3b1ca03cd5f/Erdos129.lean"]
+  "https://github.com/AItoBit/erdos-129-lean/blob/06e2f9ba62d7511e3d9ccfd96dcada975b6bd9e1/Erdos129.lean"]
 theorem erdos_129 : answer(False) ↔
     ∀ r : ℕ, 2 ≤ r → ∃ C : ℝ, 1 < C ∧ ∀ n : ℕ, (R n 3 r : ℝ) < C ^ Real.sqrt n := by
   sorry
