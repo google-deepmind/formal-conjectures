@@ -23,14 +23,19 @@ public import FormalConjecturesUtil
 Walk along the successive antidiagonals of an $\mathbb{N} \times \mathbb{N}$ chessboard, each in
 order of increasing column, and place a queen on each square that is not attacked by an earlier
 queen. Every column receives exactly one queen. Let $S_c$ be the row of the queen in column $c$.
-The first $50000$ queens lie almost exactly on two lines of slopes $\varphi$ and $1/\varphi$,
-where $\varphi$ is the golden ratio.
+Dekking, Shallit and Sloane observed that the first $50000$ queens lie almost exactly on two lines
+of slopes $\varphi$ and $1/\varphi$, where $\varphi$ is the golden ratio, and conjectured that
+every queen is within a bounded distance of one of these lines. Ho proved this.
 
 *References:*
 - [arxiv/1907.09120](https://arxiv.org/abs/1907.09120)
   **Queens in exile: non-attacking queens on infinite chess boards**
   by *F. Michel Dekking, Jeffrey Shallit, N. J. A. Sloane*,
   Electron. J. Combin. 27(1) (2020), #P1.52. See Section 8, where this is Conjecture 25.
+- [arxiv/2609.31336](https://arxiv.org/abs/2609.31336)
+  **Greedy queens and the golden ratio**
+  by *Boon Suan Ho*, where Theorem 1 proves Conjecture 25 and Theorem 2 sharpens the constants.
+  The accompanying Lean proof is at [boonsuan/queens](https://github.com/boonsuan/queens).
 - [A275895](https://oeis.org/A275895) and [A065188](https://oeis.org/A065188)
 - [First Alfa](https://www.nqueens.de/sub/FirstAlfa.en.html) on nqueens.de
 -/
@@ -113,12 +118,27 @@ theorem greedyQueens_first_terms :
 /--
 **Conjecture 25.** There are constants $\epsilon_1, \epsilon_2$ such that
 $|S_c - c\varphi| < \epsilon_1$ if $S_c > c$, and $|S_c - c/\varphi| < \epsilon_2$ if $S_c < c$.
+
+Proved by Ho, who gives the explicit constants of `conjecture25.variants.explicit_bounds`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/boonsuan/queens/blob/5ea251f8b6ef2473e69456e8b6c0c9633aae9315/formalization/Queens/Exactness.lean#L33"]
 theorem conjecture25 :
     ∃ ε₁ ε₂ : ℝ, ∀ c : ℕ,
       (c < greedyQueens c → |(greedyQueens c : ℝ) - c * φ| < ε₁) ∧
       (greedyQueens c < c → |(greedyQueens c : ℝ) - c / φ| < ε₂) := by
+  sorry
+
+/--
+Ho's Theorem 1 gives the explicit constants $\epsilon_1 = 5/\varphi$ and
+$\epsilon_2 = 4 + 5/\varphi$. This is the statement of `Queens.main` in the linked Lean proof.
+Theorem 2 of the same paper sharpens both constants.
+-/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/boonsuan/queens/blob/5ea251f8b6ef2473e69456e8b6c0c9633aae9315/formalization/Queens/Exactness.lean#L33"]
+theorem conjecture25.variants.explicit_bounds (c : ℕ) :
+    (c < greedyQueens c → |(greedyQueens c : ℝ) - c * φ| < 5 / φ) ∧
+    (greedyQueens c < c → |(greedyQueens c : ℝ) - c / φ| < 4 + 5 / φ) := by
   sorry
 
 end Arxiv.«1907.09120»
