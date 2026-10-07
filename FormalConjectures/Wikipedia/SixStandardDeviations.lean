@@ -90,7 +90,7 @@ theorem six_standard_deviations.variants.random_bound :
 There is a positive universal constant $K$ such that every family of $n$ subsets
 of the `n` points has a colouring with discrepancy at most $K\sqrt{n}$ in every
 row. This qualitative form has the optimal order of growth, but it does not assert
-the sharp constant $6$ in Spencer's theorem.
+the constant $6$ in Spencer's theorem.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
