@@ -25,7 +25,6 @@ public import FormalConjecturesUtil
 - [Ta26c] T. Tao, *Products of consecutive integers with unusual anatomy*.
   [arXiv:2603.27990v3](https://arxiv.org/abs/2603.27990v3) (2026),
   Definitions 1.2 and 1.4, Theorem 1.7.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos380.md)
 -/
 
 @[expose] public section
@@ -360,6 +359,7 @@ Intervals are positive and nonempty. The integer $1$ is not bad because it has n
 The witness interval for a counted integer may extend beyond $x$.
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos380.lean#L63"]
 theorem erdos_380 : answer(True) ↔ MainTarget := by
   sorry
 
