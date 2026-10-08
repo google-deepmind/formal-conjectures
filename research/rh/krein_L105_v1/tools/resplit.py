@@ -1,9 +1,10 @@
 # Re-split heavy L105 batches (kernel OOM) into sub-files of <= UNIT pieces; each sub-cell re-checked in the mirror.
 import json, sys
+from pathlib import Path
 from fractions import Fraction as Q
 from gen105 import HDR, qs, rq, glue_chain, R, D
 from split import check
-S='/tmp/claude-0/-home-user-AEGIS-OMEGA/eb61930d-8cb3-5904-af97-9be2520ea188/scratchpad'
+S=str(Path(__file__).resolve().parent)
 B=json.load(open('batches105.json'))
 ok=set(l.split()[0] for l in open(f'{S}/batch105.log') if ' OK' in l)
 UNIT=25

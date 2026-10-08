@@ -1,8 +1,9 @@
 import json, sys, os
+from pathlib import Path
 from fractions import Fraction as Q
-R='/home/user/mathlib4-433/tree105'
+R=str(Path(__file__).resolve().parents[1])
 D=json.load(open('design105F.json'))
-HDR=open('/home/user/mathlib4-433/tree_cell2/RHKreinHatAtV1.lean').read().split('-/')[0]+'-/\n'
+HDR=(Path(R)/'RHKreinHatAtV1.lean').read_text().split('-/')[0]+'-/\n'
 def qs(s):
     q=Q(s); return f"{q.numerator}" if q.denominator==1 else f"{q.numerator}/{q.denominator}"
 def rq(s): return f"((({qs(s)} : ℚ)) : ℝ)"
