@@ -27,7 +27,6 @@ public import FormalConjecturesUtil
 * [FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C. and Yu, G., *Sieving by large
   integers and covering systems of congruences*. J. Amer. Math. Soc. (2007).
   [arXiv:math/0507374](https://arxiv.org/abs/math/0507374)
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos27.md)
 -/
 
 @[expose] public section
@@ -60,6 +59,7 @@ $\varepsilon$-almost covering system with $N \leq n_1 < \cdots < n_k \leq CN$?
 The answer is no, as proved by Filaseta, Ford, Konyagin, Pomerance and Yu [FFKPY07].
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos27.lean#L2157"]
 theorem erdos_27 : answer(False) ↔
     ∃ C > (1 : ℝ), ∀ ε > (0 : ℝ), ∀ N ≥ 1, ∃ (S : Finset ℕ) (a : ℕ → ℕ),
       (∀ n ∈ S, N ≤ n ∧ (n : ℝ) ≤ C * N) ∧ IsAlmostCovering ε S a := by
