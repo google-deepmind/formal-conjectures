@@ -62,8 +62,8 @@ We use the universal-constant, eventual form in [SzVu06b, Corollary 1.4]: one su
 large positive constant works for every set. Requiring the bound for every $N\geq 1$ would
 make its hypothesis impossible at $N=1$ when the constant exceeds $1$.
 -/
-@[category research solved, AMS 5 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos344.lean#L8994"]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos344.lean#L8994"]
 theorem erdos_344 : answer(True) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ A : Set ℕ,
       (∀ᶠ N : ℕ in atTop, C * Real.sqrt N ≤ countUpTo A N) → IsSubcomplete A := by
