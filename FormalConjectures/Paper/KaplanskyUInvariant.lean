@@ -148,7 +148,7 @@ theorem u_invariant_values.variants.kaplansky_conjecture :
 
 /-- The $u$-invariant is never $3$ [Kaplansky1953, Theorem 2]; see also
 [Lam2005, Proposition XI.6.8] and [EKM2008, Corollary 36.4]. -/
-@[category research solved, AMS 11 12]
+@[category research solved, AMS 11 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_KaplanskyUInvariant_u_invariant_values_variants_not_three.lean#L212"]
 theorem u_invariant_values.variants.not_three : ¬ IsUInvariant 3 := by
   sorry
 
