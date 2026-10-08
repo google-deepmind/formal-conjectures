@@ -44,6 +44,7 @@ open AEGIS.RHPrimeOnlyGrowthBridgeV1
 open AEGIS.RHSignedPrimeActualKernelTailV5
 open AEGIS.RHSignedPrimeChebyshevFiniteBridgeV6
 open AEGIS.RHSignedPrimeConvolutionIntegrabilityV7
+open AEGIS.RHFixedPacketFrontierV1
 
 /-- The flat lower tail of the actual prime weight forces its derivative to vanish. -/
 private theorem primeWeight_deriv_zero_below_one_v8
