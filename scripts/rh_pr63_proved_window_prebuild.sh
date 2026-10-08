@@ -53,7 +53,7 @@ def visit(n):
                 visit(dep)
             elif dep.startswith("AEGISOverlay.") and dep.split(".",1)[1] in allmods:
                 visit(dep.split(".",1)[1])
-            elif dep.startswith(("Mathlib.","FormalConjectures.","Lc.","Hadamard.")):
+            elif dep.split(".")[0] in {"Mathlib", "Lean", "Std", "Aesop", "Batteries", "Qq", "Lc", "Hadamard", "FormalConjectures"}:
                 continue
             elif dep.split(".")[0] in allmods:
                 visit(dep.split(".")[0])
