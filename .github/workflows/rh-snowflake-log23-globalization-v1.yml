@@ -122,7 +122,13 @@ jobs:
             test -f "$src"
             test "$(git hash-object "$src")" = "$expected_blob"
             cp "$src" "$m.lean"
-            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-moment-potential/$m.log"
+            # The source-locked RHMomentPotentialV4 emits a known style-only focus warning.
+            # Disable only that linter for this replay; keep warnings/errors/sorryAx admission fail-closed.
+            if [ "$m" = "RHMomentPotentialV4" ]; then
+              lake env lean -D linter.unnecessarySeqFocus=false -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-moment-potential/$m.log"
+            else
+              lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-moment-potential/$m.log"
+            fi
             python3 scripts/verify_rh_overlay_axioms.py "$m.lean" "evidence-moment-potential/$m.log"
             printf '%s %s %s\n' "$m" "$expected_blob" "$(sha256sum "$src" | cut -d' ' -f1)" >> evidence-moment-potential/source-lock.txt
           done
