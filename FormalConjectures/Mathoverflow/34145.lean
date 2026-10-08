@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 34145
@@ -29,6 +30,9 @@ $1 / (n + 2)$, so that the first rectangle is $1/1$ by $1/2$, the second is $1/2
 *Reference:* [mathoverflow/34145](https://mathoverflow.net/q/34145)
 asked by user [*Kaveh*](https://mathoverflow.net/users/7507/kaveh)
 -/
+
+@[expose] public section
+
 open Real MeasureTheory Measure Module
 namespace Mathoverflow34145
 
@@ -102,7 +106,7 @@ lemma lbMeasure_scale (x y : ℝ) (s : Set (ℝ × ℝ)) :
 lemma lbMeasure_unitSquare : lbMeasure unitSquare = 1 := by
   convert (Basis.addHaar_eq_iff (Basis.finTwoProd ℝ) _).1 rfl
   ext p
-  simp only [unitSquare, Set.mem_setOf_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
+  simp only [unitSquare, Set.mem_ofPred_eq, Basis.coe_parallelepiped, mem_parallelepiped_iff,
     Set.mem_Icc, Fin.sum_univ_two, Fin.isValue, Basis.finTwoProd_zero, Prod.smul_mk, smul_eq_mul,
     mul_one, mul_zero, Basis.finTwoProd_one, Prod.mk_add_mk, add_zero, zero_add, Pi.le_def]
   exact ⟨fun h ↦ ⟨![p.1, p.2], by simp [Fin.forall_fin_succ, h]⟩,

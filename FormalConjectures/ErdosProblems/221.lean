@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 221
@@ -25,18 +26,20 @@ import FormalConjecturesUtil
 - [Ru72] Ruzsa, Jr., I., *On a problem of P. Erdős*. Canad. Math. Bull. (1972), 309-310.
 -/
 
+@[expose] public section
+
 open Filter Asymptotics
 
 namespace Erdos221
 
 /--
 Is there a set $A\subset\mathbb{N}$ such that, for all large $N$,
-\[\lvert A\cap\{1,\ldots,N\}\rvert \ll N/\log N\]
+$$\lvert A\cap\{1,\ldots,N\}\rvert \ll N/\log N$$
 and such that every large integer can be written as $2^k+a$ for some
 $k\geq 0$ and $a\in A$?
 
 Lorentz [Lo54] proved there is such a set with, for all large $N$,
-\[\lvert A\cap\{1,\ldots,N\}\rvert \ll \frac{\log\log N}{\log N}N\]
+$$\lvert A\cap\{1,\ldots,N\}\rvert \ll \frac{\log\log N}{\log N}N$$
 The answer is yes, proved by Ruzsa [Ru72].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]

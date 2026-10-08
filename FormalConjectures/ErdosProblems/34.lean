@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 34
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ko15] Konieczny, J., *On consecutive sums in permutations*. arXiv:1504.07156 (2015).
 -/
 
+@[expose] public section
+
 namespace Erdos34
 
 open scoped BigOperators
@@ -42,9 +45,9 @@ def consecutiveSums (n : ℕ) (p : Equiv.Perm (Fin n)) : Finset ℕ :=
 
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
-\[
+$$
 S(\pi) = o(n^2)
-\]
+$$
 for all $\pi\in S_n$?
 
 Hegyvári [He86] gave a counterexample.

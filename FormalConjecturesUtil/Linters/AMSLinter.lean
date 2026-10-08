@@ -36,9 +36,6 @@ register_option linter.style.ams_attribute : Bool := {
   descr := "enable the `AMS` attribute style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace AMSLinter
 
 /-- Checks if a command has the `AMS` attribute. -/
@@ -55,7 +52,6 @@ def toAMS (stx : TSyntax ``Command.declModifiers) :
 def mkAMSSyntax (nums : TSyntaxArray `num) : CommandElabM <| TSyntax ``attrInstance := do
   return ← `(attrInstance | AMS $nums*)
 
-set_option linter.dupNamespace false in
 /-- The problem category linter checks that every theorem/lemma/example
 has been given an `AMS` attribute. -/
 def AMSLinter : Linter where

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 455
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/455](https://www.erdosproblems.com/455)
  - [Ri76] Richter, Bernd, Über die Monotonie von Differenzenfolgen. Acta Arith. (1976), 225-227.
 -/
+
+@[expose] public section
 
 open Filter ENNReal
 

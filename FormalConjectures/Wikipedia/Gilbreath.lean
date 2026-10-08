@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Gilbreath's conjecture
@@ -22,11 +23,13 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture)
 -/
 
+@[expose] public section
+
 namespace Gilbreath
 
 /--
 **Gilbreath's nth difference**, $d^n$
-Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|
+Let $d^0(n) = p_n$ and $d^k(n) = |d^{k-1}(n+1) - d^{k-1}(n)|$
 -/
 noncomputable def d : ℕ → (ℕ → ℕ)
   | 0 => fun n ↦ n.nth Nat.Prime

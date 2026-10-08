@@ -1,0 +1,134 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 867
+
+*References:*
+- [erdosproblems.com/867](https://www.erdosproblems.com/867)
+- [CoPh96] Coppersmith, Don and Phillips, Steven, *On a question of Erdős on subsequence sums*.
+  SIAM J. Discrete Math. (1996), 173-177.
+- [Fr93] Freud, R., *Adding numbers - on a problem of P. Erdős*. James Cook Mathematical
+  Notes (1993), 6199-6202.
+-/
+
+@[expose] public section
+
+open Filter
+
+namespace Erdos867
+
+/-- A finite set of naturals $A=\{a_1<\cdots<a_t\}$ is *consecutive-sum-free* if it has no
+solutions to $a_i+a_{i+1}+\cdots+a_j\in A$ with $i<j$; equivalently, whenever an interval
+$[m,n]$ contains at least two elements of $A$, the sum of the elements of $A$ lying in
+$[m,n]$ is not itself an element of $A$. -/
+def ConsecutiveSumFree (A : Finset ℕ) : Prop :=
+  ∀ m n : ℕ, 2 ≤ (Finset.Icc m n ∩ A).card → (∑ a ∈ Finset.Icc m n ∩ A, a) ∉ A
+
+/--
+Is it true that if $A=\{a_1<\cdots <a_t\}\subseteq \{1,\ldots,N\}$ has no solutions to
+$$a_i+a_{i+1}+\cdots+a_j\in A$$
+then
+$$\lvert A\rvert \leq \frac{N}{2}+O(1)?$$
+
+In fact this problem is false. Freud [Fr93] constructed a sequence with density $\geq 19/36$.
+The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
+maximal size of such an $A$ satisfies
+$$\frac{13}{24}N -O(1)\leq \lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.$$
+-/
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos867.lean"]
+theorem erdos_867 : answer(False) ↔
+    ∃ C : ℝ, ∀ N : ℕ, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
+      (A.card : ℝ) ≤ (N : ℝ) / 2 + C := by
+  sorry
+
+/--
+Taking $A=(N/2,N]\cap \mathbb{N}$ shows $\lvert A\rvert \geq N/2-O(1)$ is possible.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_867.variants.lower_bound :
+    ∃ C : ℝ, ∀ N : ℕ, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
+      ((N : ℝ) / 2 - C ≤ (A.card : ℝ)) := by
+  -- Take `A = (N/2, N]`: any two of its elements already sum to more than `N`.
+  refine ⟨0, fun N => ⟨Finset.Icc (N / 2 + 1) N, ?_, ?_, ?_⟩⟩
+  · intro x hx
+    simp only [Finset.mem_Icc] at hx ⊢
+    omega
+  · intro m n hcard hmem
+    set T := Finset.Icc m n ∩ Finset.Icc (N / 2 + 1) N with hT
+    have hlow : ∀ x ∈ T, N / 2 + 1 ≤ x := by
+      intro x hx
+      simp only [hT, Finset.mem_inter, Finset.mem_Icc] at hx
+      omega
+    have hsum : T.card * (N / 2 + 1) ≤ ∑ a ∈ T, a := by
+      simpa [mul_comm] using Finset.card_nsmul_le_sum T _ _ hlow
+    have h2 : 2 * (N / 2 + 1) ≤ ∑ a ∈ T, a :=
+      le_trans (Nat.mul_le_mul_right _ hcard) hsum
+    simp only [Finset.mem_Icc] at hmem
+    omega
+  · rw [Nat.card_Icc, sub_zero]
+    have h2 : N + 1 - (N / 2 + 1) = N - N / 2 := by omega
+    rw [h2]
+    have h3 : N ≤ 2 * (N - N / 2) := by omega
+    have h4 : (N : ℝ) ≤ ((2 * (N - N / 2) : ℕ) : ℝ) := by exact_mod_cast h3
+    push_cast at h4
+    linarith
+
+/--
+Adenwalla has observed that
+$$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_867.variants.adenwalla (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ N : ℕ in atTop, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
+      (A.card : ℝ) ≤ (2 / 3 + ε) * (N : ℝ) := by
+  sorry
+
+/--
+Freud [Fr93] constructed a sequence with density $\geq 19/36$.
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_867.variants.freud :
+    ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
+      (((19 / 36 : ℝ) - ε) * (N : ℝ) ≤ (A.card : ℝ)) := by
+  sorry
+
+/--
+The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
+maximal size of such an $A$ satisfies
+$$\frac{13}{24}N -O(1)\leq \lvert A\rvert.$$
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_867.variants.coppersmith_phillips_lower_bound :
+    ∃ C : ℝ, ∀ N : ℕ, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
+      ((13 / 24 : ℝ) * (N : ℝ) - C ≤ (A.card : ℝ)) := by
+  sorry
+
+/--
+The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove that the
+maximal size of such an $A$ satisfies
+$$\lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.$$
+-/
+@[category research solved, AMS 5 11]
+theorem erdos_867.variants.coppersmith_phillips_upper_bound :
+    ∀ᶠ N : ℕ in atTop, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
+      (A.card : ℝ) ≤ (2 / 3 - 1 / 512) * (N : ℝ) + Real.log (N : ℝ) := by
+  sorry
+
+end Erdos867

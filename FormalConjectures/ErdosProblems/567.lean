@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 567
 
 Let $G$ be either $Q_3$ or $K_{3,3}$ or $H_5$ (the last formed by adding two vertex-disjoint chords
 to $C_5$). Is it true that, if $H$ has $m$ edges and no isolated vertices, then
-$$ \hat{r}(G,H) \ll m? $$
+$$ R(G,H) \ll m? $$
 
 In other words, is $G$ Ramsey size linear? A special case of Problem 566.
 
@@ -31,6 +32,8 @@ In other words, is $G$ Ramsey size linear? A special case of Problem 566.
 Combin. Probab. Comput. (1993), 389-399.
 -/
 
+@[expose] public section
+
 namespace Erdos567
 
 open SimpleGraph
@@ -38,10 +41,7 @@ open scoped Finset
 
 /-- $Q_3$ is the 3-dimensional hypercube graph (8 vertices, 12 edges).
 Vertices are 3-bit vectors. Two vertices are adjacent iff they differ in exactly one bit. -/
-def Q3 : SimpleGraph (Fin 3 → Bool) where
-  Adj u v := #{i | u i ≠ v i} = 1
-  symm _ _ := by simp [eq_comm]
-  loopless _ := by simp
+abbrev Q3 : SimpleGraph (Fin 3 → Bool) := hypercube 3
 
 /-- $K_{3,3}$ is the complete bipartite graph with partition sizes 3, 3 (6 vertices, 9 edges). -/
 def K33 : SimpleGraph (Fin 3 ⊕ Fin 3) := completeBipartiteGraph (Fin 3) (Fin 3)

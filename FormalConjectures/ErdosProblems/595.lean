@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 595
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   Academia, Prague (1975), 405-412.
 -/
 
+@[expose] public section
+
 open SimpleGraph Set
 
 namespace Erdos595
@@ -42,7 +45,7 @@ def IsCountableUnionOfTriangleFree {V : Type*} (G : SimpleGraph V) : Prop :=
 -/
 
 /--
-**Erdős Problem 595 ($250)**: Is there an infinite graph $G$ which contains no $K_4$ and is
+**Erdős Problem 595 (\$250)**: Is there an infinite graph $G$ which contains no $K_4$ and is
 not the union of countably many triangle-free graphs?
 
 A problem of Erdős and Hajnal [Er87].
@@ -194,8 +197,8 @@ This sanity check confirms the $K_4$-free hypothesis of Problem 595 is non-trivi
 @[category textbook, AMS 5]
 theorem erdos_595.variants.K4_not_cliqueFree :
     ¬ (⊤ : SimpleGraph (Fin 4)).CliqueFree 4 := by
-  rw [not_cliqueFree_iff]
-  exact ⟨(Iso.completeGraph (Fintype.equivFin (Fin 4))).symm.toEmbedding⟩
+  rw [SimpleGraph.not_cliqueFree_iff_top_isContained]
+  exact IsContained.of_le fun ⦃v w⦄ a ↦ a
 
 /--
 **Reformulation via edge colourings**: A graph `G` is a countable union of triangle-free graphs

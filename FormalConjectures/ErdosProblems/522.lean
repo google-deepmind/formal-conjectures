@@ -13,23 +13,39 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 522
 
-*Reference:* [erdosproblems.com/522](https://www.erdosproblems.com/522)
+*References:*
+- [erdosproblems.com/522](https://www.erdosproblems.com/522)
+- [Ch26] Chojecki, P., *A strong law for the roots of random Littlewood polynomials* (2026),
+  [ulam.ai/research/erdos522-final.pdf](https://www.ulam.ai/research/erdos522-final.pdf).
+- [Ka26] Kawada, S., *Almost-Sure Radial Laws for Nested Random Polynomials and Erdős
+  Problem #522*, [doi:10.5281/zenodo.22970145](https://zenodo.org/records/22970145) (2026).
+  Lean 4 formalization: [chreia/erdos-522](https://github.com/chreia/erdos-522).
+- [Ki26] Kitamura, K., *A Lean proof of Erdős Problem 522*,
+  [KitaKen1/erdos-522-strong-law](https://github.com/KitaKen1/erdos-522-strong-law) (2026).
+- [KZ26] Kwon, Y. and Zou, J., *A fourth moment estimate for logarithmic integrals of random
+  Littlewood polynomials and Erdős's root-count problem* (2026),
+  [ykwon0407/erdos-521-522](https://github.com/ykwon0407/erdos-521-522).
 -/
 
-open MeasureTheory Classical Filter
+@[expose] public section
+
+open MeasureTheory Filter
 open scoped ProbabilityTheory Topology Real
 
 namespace Erdos522
 
 /--
 A sequence of *Kac coefficients* over a subset `S` of a field `k` is a countably infinite sequence
-of independent random variables, each uniformly distributed over `S`.
+of independent random variables, each uniformly distributed over `S` with respect to the reference
+measure `μ`. The default reference measure is the counting measure, so that for a finite set `S`
+each coefficient takes every value of `S` with probability `1 / |S|`.
 
 Such a sequence determines a *Kac polynomial* of degree `n` for each `n`, which is the random
 polynomial given by `KacCoefficients.polynomial`.
@@ -37,20 +53,20 @@ polynomial given by `KacCoefficients.polynomial`.
 @[ext]
 structure KacCoefficients
     {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac) where
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count) where
   toFun : ℕ → Ω → k
   h_indep : ProbabilityTheory.iIndepFun toFun ℙ
   h_unif : ∀ i, MeasureTheory.pdf.IsUniform (toFun i) S ℙ μ
 
 variable {k : Type*} [Field k] [MeasurableSpace k] (S : Set k)
-    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := by volume_tac)
+    (Ω : Type*) [MeasureSpace Ω] (μ : Measure k := Measure.count)
 
 /--
 We can always view a Kac polynomial as a random variable on `ℕ`.
 -/
 instance : FunLike (KacCoefficients S Ω μ) ℕ (Ω → k) where
   coe P := P.toFun
-  coe_injective' := by intro P Q h ; aesop
+  coe_injective P Q h := by aesop
 
 namespace KacCoefficients
 
@@ -73,7 +89,9 @@ noncomputable def roots (c : KacCoefficients S Ω μ) (n : ℕ) : Ω → Multise
 
 /-- Counts the number of roots of a Kac polynomial in the unit disk with multiplicity. -/
 noncomputable def numRootsInUnitDisk [PseudoMetricSpace k] (c : KacCoefficients S Ω μ) (n : ℕ)
-    (ω : Ω) : ℕ := (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
+    (ω : Ω) : ℕ :=
+  open scoped Classical in
+  (c.roots n ω).countP (· ∈ Metric.closedBall 0 1)
 
 end KacCoefficients
 
@@ -90,10 +108,23 @@ almost surely?
 
 There is some ambiguity as to whether the intended coefficient set is $\{-1, 1\}$ or $\{0, 1\}$,
 see `erdos_522.variants.zero_one` for the alternate version.
+
+This is true. Proofs were posted on the erdosproblems.com forum in April 2026 [Ch26], [KZ26],
+and Lean proofs were given independently in September 2026 [Ka26], [Ki26].
+
+More generally, [Ka26] proves an almost-sure radial law: the number of roots in
+$\{\lvert z\rvert \le 1 + x/n\}$ is $\Phi(x)\,n + o(n)$ for every $x$, where
+$\Phi(x) = \tfrac12\left(1 + \coth x - \tfrac1x\right)$. This problem is the case $x = 0$.
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089",
+  formal_proof using lean4 at
+    "https://github.com/chreia/erdos-522/blob/b3c1d7c089fcada59cc48cf664cd3d02157407ca/lean/Erdos522/Probability/IndependentCoefficientRadialLaws.lean#L39-L47",
+  formal_proof using lean4 at
+    "https://github.com/chreia/erdos-522/blob/57af1556d1b40f37d09d1270495acc0f282ff0fc/lean/Erdos522/Bridge/FormalConjectures.lean#L238-L253"]
 theorem erdos_522 :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
@@ -108,10 +139,14 @@ $$
   \frac{R_n}{n/2}\to 1
 $$
 almost surely?
+
+This is true; a Lean proof is given in [Ki26].
 -/
-@[category research open, AMS 12 60]
+@[category research solved, AMS 12 60,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9101-L9104"]
 theorem erdos_522.variants.zero_one :
-    answer(sorry) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       {n : ℕ} (hn : 1 ≤ n) (f : KacCoefficients ({0, 1} : Set ℂ) Ω),
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * f.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
@@ -128,6 +163,7 @@ theorem erdos_522.variants.number_real_roots : ∃ p o : ℕ → ℝ,
       (ℙ {ω | |(f.roots n ω).card / (n : ℝ).log - 2 / π| ≥ o n}).toReal ≤ p n := by
   sorry
 
+open scoped Classical in
 /--
 Yakir proved that almost all Kac polynomials have `n/2+O(n^(9/10))` many roots in `{z∈C:|z|≤1}`.
 -/

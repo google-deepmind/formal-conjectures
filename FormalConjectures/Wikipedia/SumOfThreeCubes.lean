@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of three cubes
@@ -27,6 +28,8 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
  - [mathoverflow/100324](https://mathoverflow.net/a/100324)
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
+
+@[expose] public section
 
 namespace SumOfThreeCubes
 

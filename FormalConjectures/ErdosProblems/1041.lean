@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1041
@@ -22,9 +23,13 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/1041](https://www.erdosproblems.com/1041)
 -/
 
-open Polynomial MeasureTheory ENNReal Classical
+@[expose] public section
+
+open Polynomial MeasureTheory ENNReal
 
 namespace Erdos1041
+
+section ComponentLemma
 
 variable (n : ℕ) (f : ℂ[X]) (hn : n ≥ 2) (hnum : f.natDegree = n)
 variable (h_monic : f.Monic)
@@ -37,6 +42,7 @@ Hausdorff measure $\mathcal{H}^1(s)$.
 -/
 noncomputable def length (s : Set ℂ) : ℝ≥0∞ := μH[1] s
 
+open scoped Classical in
 /--
 **Erdős–Herzog–Piranian Component Lemma** (Metric Properties of Polynomials, 1958):
 If $f$ is a monic degree $n$ polynomial with all roots in the unit disk,
@@ -53,6 +59,8 @@ theorem exists_connected_component_contains_two_roots :
       2 ≤ (f.roots.filter (· ∈ C)).card := by
   sorry
 
+end ComponentLemma
+
 /--
 Let
 $$ f(z) = \prod_{i=1}^{n} (z - z_i) \in \mathbb{C}[x] $$
@@ -61,11 +69,20 @@ with $|z_i| < 1$ for all $i$.
 Conjecture: Must there always exist a path of length less than 2 in
 $$ \{ z \in \mathbb{C} \mid |f(z)| < 1 \} $$
 which connects two of the roots of $f$?
+
+The answer is negative. ani gave a counterexample of degree seven on the
+[Erdős problems forum](https://www.erdosproblems.com/forum/thread/1041) on 7 September 2026.
+The linked formalisation proves, for the member $s = 10^{-6}$ of ani's family, that every
+connected subset of $\{ z \mid |f(z)| < 1 \}$ containing two distinct roots has
+one-dimensional Hausdorff measure greater than $2$.
 -/
-@[category research open, AMS 32]
+@[category research solved, AMS 32, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/0ee31b3a99ef93d2b679a427b474b23710597bad/lean/ErdosProblems/Erdos1041/Counterexample/HausdorffLength.lean#L449-L454"]
 theorem erdos_1041 :
-    ∃ (z₁ z₂ : ℂ) (h : ({z₁, z₂} : Multiset ℂ) ≤ f.roots) (γ : Path z₁ z₂),
-      Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
+    answer(False) ↔ ∀ (n : ℕ) (f : ℂ[X]), n ≥ 2 → f.natDegree = n → f.Monic →
+      f.rootSet ℂ ⊆ Metric.ball 0 1 →
+      ∃ (z₁ z₂ : ℂ) (h : ({z₁, z₂} : Multiset ℂ) ≤ f.roots) (γ : Path z₁ z₂),
+        Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
   sorry
 
 end Erdos1041

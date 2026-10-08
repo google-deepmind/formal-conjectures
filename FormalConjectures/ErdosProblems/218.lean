@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 218
 
 *Reference:* [erdosproblems.com/218](https://www.erdosproblems.com/218)
 -/
+
+@[expose] public section
 
 namespace Erdos218
 
@@ -33,7 +36,7 @@ theorem erdos_218.variants.le : {n | primeGap n ≤ primeGap (n + 1)}.HasDensity
   sorry
 
 /--
-The set of indices $n$ for which a prime gap is preceeded by a larger or equal prime gap has a
+The set of indices $n$ for which a prime gap is preceded by a larger or equal prime gap has a
 natural density of $\frac 1 2$.
 -/
 @[category research open, AMS 11]
@@ -41,7 +44,7 @@ theorem erdos_218.variants.ge : {n | primeGap (n + 1) ≤ primeGap n}.HasDensity
   sorry
 
 /--
-There are infintely many indices $n$ such that the prime gap at $n$ is equal to the prime gap
+There are infinitely many indices $n$ such that the prime gap at $n$ is equal to the prime gap
 at $n+1$. This is equivalent to the existence of infinitely many arithmetic progressions of
 length $3$, see `erdos_141.variants.infinite_three`.
 -/

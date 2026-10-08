@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 82
@@ -22,7 +23,9 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/82](https://www.erdosproblems.com/82)
 -/
 
-open Classical SimpleGraph Filter
+@[expose] public section
+
+open SimpleGraph Filter
 
 namespace Erdos82
 
@@ -32,6 +35,7 @@ variable {V : Type*} [Fintype V]
 A predicate that holds if $S$ is a regular induced subgraph of $G$
 -/
 def IsRegularInduced {G : SimpleGraph V} (S : Subgraph G) : Prop :=
+  open scoped Classical in
   S.IsInduced ∧ ∃ k, (S.coe).IsRegularOfDegree k
 
 /--

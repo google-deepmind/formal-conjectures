@@ -22,11 +22,7 @@ public import Mathlib.Data.Finset.Card
 namespace Finset
 variable {α : Type*} {s t : Finset α}
 
-lemma card_le_card_iff_of_subset (hst : s ⊆ t) : #t ≤ #s ↔ s = t where
-  mp := eq_of_subset_of_card_le hst
-  mpr := by rintro rfl; rfl
-
 lemma card_lt_card_iff_of_subset (hst : s ⊆ t) : #s < #t ↔ s ≠ t := by
-  rw [← not_le, card_le_card_iff_of_subset hst]
+  rw [← not_le, eq_iff_card_le_of_subset hst]
 
 end Finset

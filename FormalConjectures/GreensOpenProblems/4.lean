@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 4
 
 *Reference:* [Ben Green's Open Problem 4](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.4 Problem 4)
 -/
+
+@[expose] public section
 
 namespace Green4
 
@@ -35,7 +39,7 @@ theorem green_4 (n : ℕ) :
   sorry
 
 /-- Defines a family of subsets of $A_n$ where each permutation $\pi$ in a subset obeys $\pi(x)$
-and $\forall v \in I$, \pi(v)\notin I$ for a fixed $x$ and $I$. It is easy to demonstrate that such
+and $\forall v \in I$, $\pi(v)\notin I$ for a fixed $x$ and $I$. It is easy to demonstrate that such
 a subset is product-free, because for any a,b,c in such a set, $(a*b) (x)=a(b(x))\notin I$ but $c(x)
 in I$
 -/

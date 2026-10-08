@@ -33,31 +33,7 @@ register_option linter.style.category_docstring : Bool := {
   descr := "enable the research category docstring style linter"
 }
 
--- FIXME: False positive
-set_option linter.style.docString.empty false
-
 namespace CategoryDocstringLinter
-
-/-- Extract the `category` attributes from a declaration's modifiers. -/
-def toCategorySyntax
-    (stx : TSyntax ``Command.declModifiers) :
-    CommandElabM (Array <| TSyntax ``attrInstance) := do
-  match stx with
-  | `(declModifiers| $(_)? @[$[$atts],*] $(_)? $(_)? $(_)? $(_)?) =>
-    atts.filterM fun att ↦ do
-      match att with
-      | `(attrInstance | category $_) => return true
-      | _ => return false
-  | _ => return #[]
-
-/-- Extract the categories from a declaration's modifiers. -/
-def toCategories
-    (stx : TSyntax ``Command.declModifiers) :
-    CommandElabM (Array ProblemAttributes.Category) := do
-  let cats ← toCategorySyntax stx
-  cats.mapM fun
-    | `(attrInstance | category $s) => liftCoreM <| ProblemAttributes.Syntax.toCategory s
-    | _ => throwUnsupportedSyntax
 
 /-- Whether the given category requires a docstring. -/
 def categoryNeedsDocstring : ProblemAttributes.Category → Bool

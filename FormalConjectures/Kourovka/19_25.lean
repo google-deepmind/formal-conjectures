@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 19.25
@@ -23,6 +24,8 @@ by B. Curtin, G. R. Pourgholi
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
+
+@[expose] public section
 
 open scoped Nat Group
 
@@ -35,8 +38,9 @@ where $\phi$ is the Euler totient function. Suppose that $G$ is simple. Is
 $H$ necessarily simple?
 -/
 @[category research open, AMS 20]
-theorem kourovka.«19.25» : answer(sorry) ↔
+theorem kourovka_19_25 : answer(sorry) ↔
     ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
+       Fintype.card G = Fintype.card H →
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →
        IsSimpleGroup G → IsSimpleGroup H := by
   sorry
