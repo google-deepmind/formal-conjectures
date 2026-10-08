@@ -49,7 +49,8 @@ Tao's construction [Ta24c]: for every sufficiently large $n$ there is a set of $
 $\mathbb{R}^2$ in which any four points determine at least five distinct distances, yet which
 determines only $O(n^2 / \sqrt{\log n})$ distinct distances.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos135.lean"]
 theorem erdos_135.variants.tao :
     ∃ K N₀ : ℝ, ∀ n : ℕ, N₀ ≤ n → ∃ A : Finset ℝ², A.card = n ∧ FourFive A ∧
       (distinctDistances A : ℝ) ≤ K * (n : ℝ) ^ 2 / Real.sqrt (Real.log n) := by
@@ -65,7 +66,8 @@ determining only $\ll n^2 / \sqrt{\log n}$ distinct distances (see `erdos_135.va
 The hypothesis $2 \le n$ only excludes the degenerate empty and one-point sets, which
 determine no distances at all.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos135.lean"]
 theorem erdos_135 : answer(False) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ A : Finset ℝ², 2 ≤ A.card → FourFive A →
       C * (A.card : ℝ) ^ 2 ≤ distinctDistances A := by
