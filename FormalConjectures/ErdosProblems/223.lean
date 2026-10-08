@@ -36,7 +36,6 @@ This is therefore a PARTIAL proof formalization, not a complete solution.
 The quoted small-dimensional formulas require n >= 3 and n >= 4, respectively;
 they are false at n = 2. Diameter pairs are unordered, distinct two-element
 subsets. Euclidean diameter is exactly 1, not merely bounded by 1.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos223.md)
 -/
 
 /- Verified with Lean v4.35.0-rc3 and Mathlib commit
