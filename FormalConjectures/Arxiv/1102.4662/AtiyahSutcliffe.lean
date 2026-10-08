@@ -24,11 +24,18 @@ Atiyah and Sutcliffe associate a homogeneous binary polynomial to each point
 in a configuration of distinct points in Euclidean three-space. Their first
 conjecture says that these polynomials are always linearly independent.
 
+The conjecture is false: there is an injective configuration of 46 points
+whose polynomials are linearly dependent (a half-turn symmetric helix with one
+pair of points moved to a zero of a Schur residual). The counterexample is
+verified in Lean against the definitions of this file; see the linked proof.
+
 *References:*
 - M. F. Atiyah and P. M. Sutcliffe,
   [The Geometry of Point Particles](https://doi.org/10.1098/rspa.2001.0913)
 - Marcin Mazur and Bogdan V. Petrenko,
   [On the conjectures of Atiyah and Sutcliffe](https://arxiv.org/abs/1102.4662)
+- Formal counterexample:
+  [AtiyahSutcliffeDisproof.lean](https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean)
 -/
 
 @[expose] public section
@@ -110,10 +117,22 @@ theorem twoPoint_xAxis_polynomial :
 
 /-- [Atiyah–Sutcliffe Conjecture 1](https://doi.org/10.1098/rspa.2001.0913), stated as
 Conjecture 1.1 in [Mazur–Petrenko](https://arxiv.org/abs/1102.4662): the configuration
-polynomials are linearly independent. -/
-@[category research open, AMS 51 70]
-theorem conjecture_one {n : ℕ} (x : Fin n → Point) (hx : Function.Injective x) :
-    LinearIndependent ℂ (pointPolynomial x) := by
+polynomials are linearly independent. The conjecture is false. -/
+@[category research solved, AMS 51 70,
+  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean"]
+theorem conjecture_one :
+    answer(False) ↔ ∀ {n : ℕ} (x : Fin n → Point), Function.Injective x →
+      LinearIndependent ℂ (pointPolynomial x) := by
+  sorry
+
+/-- There is an injective configuration whose polynomials are linearly dependent: 46 points on
+a half-turn symmetric helix, with one pair moved to a zero of the Schur residual of the even
+coefficient block. -/
+@[category research solved, AMS 51 70,
+  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean"]
+theorem conjecture_one_false :
+    ¬ ∀ {n : ℕ} (x : Fin n → Point), Function.Injective x →
+      LinearIndependent ℂ (pointPolynomial x) := by
   sorry
 
 end
