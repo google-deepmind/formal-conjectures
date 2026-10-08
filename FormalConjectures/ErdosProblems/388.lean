@@ -54,7 +54,7 @@ theorem block_product_strictMono {k : ℕ} (hk : 0 < k) :
     StrictMono (fun m => blockProduct m k) := by
   intro m n hmn
   unfold blockProduct
-  apply Finset.prod_lt_prod_of_nonempty₀
+  apply Finset.prod_lt_prod_of_nonempty
   · intro i _
     omega
   · intro i _
