@@ -25,6 +25,37 @@ FormalConjectures/Millennium/RiemannHypothesis.lean:81:8: warning: declaration u
 class TargetGateTests(unittest.TestCase):
     def test_exact_residual_is_open_not_success(self):
         self.assertEqual(classify(SOURCE, EXPECTED, 1)[0], "OPEN_UNIVERSAL_ZERO_QUADRATIC")
+    def test_proved_693_window_remainder_stays_open(self):
+        log = (
+            "FormalConjectures/Millennium/RiemannHypothesis.lean:60:49: error: unsolved goals\n"
+            "⊢ ∀ (L : ℝ), 693 / 2000 < L → "
+            "AEGIS.WeilWindowExhaustionV1.WindowArithmeticNonpositiveV1 L\n"
+        )
+        source = SOURCE.replace(
+            "import FormalConjecturesUtil",
+            "import FormalConjecturesUtil\nimport RHSmallWindowCanonicalJoinV1").replace(
+            "apply AEGIS.RHRestrictedWeilCriterionV13.restricted_weil_criterion_v13",
+            "apply AEGIS.RHSmallWindowCanonicalJoinV1.riemannHypothesis_of_above_693_over_2000_v1")
+        self.assertEqual(classify(source, log, 1)[0], "OPEN_PROVED_WINDOW_COMPLEMENT")
+        self.assertEqual(classify(SOURCE, log, 1)[0], "COMPILER_FAILURE_UNEXPECTED")
+
+    def test_unverified_large_window_source_is_not_rh(self):
+        log = (
+            "error: unsolved goals\n"
+            "⊢ ∀ L : ℝ, 694 / 2000 < L → "
+            "AEGIS.WeilWindowExhaustionV1.WindowArithmeticNonpositiveV1 L\n"
+        )
+        self.assertEqual(classify(SOURCE, log, 1)[0], "COMPILER_FAILURE_UNEXPECTED")
+
+    def test_extra_goal_with_693_window_fails_closed(self):
+        log = (
+            "error: unsolved goals\n"
+            "⊢ ∀ L : ℝ, 693 / 2000 < L → "
+            "AEGIS.WeilWindowExhaustionV1.WindowArithmeticNonpositiveV1 L\n"
+            "⊢ False\n"
+        )
+        self.assertEqual(classify(SOURCE, log, 1)[0], "COMPILER_FAILURE_UNEXPECTED")
+
     def test_correct_residual_with_additional_error_fails(self):
         self.assertEqual(classify(SOURCE, EXPECTED + "error: unknown identifier x\n", 1)[0], "COMPILER_FAILURE_UNEXPECTED")
     def test_different_residual_fails(self):

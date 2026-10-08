@@ -1,0 +1,27 @@
+{
+  "schema": "aegis.rh.pr63.direct_official_source_join.v1",
+  "repository": "tarikskalic33/formal-conjectures",
+  "pr": 63,
+  "parent_head": "b23652c7ec0b398936f945984d2bd14609e43c58",
+  "source_AEGIS_pin": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5",
+  "producer": "AEGIS.RHSmallWindowCanonicalJoinV1.riemannHypothesis_of_above_693_over_2000_v1",
+  "source_producer_path": "AegisRH/SmallWindow/RHSmallWindowCanonicalJoinV1.lean",
+  "theorem_statement_unchanged": true,
+  "large_window_premise": "∀ L : ℝ, (693 / 2000 : ℝ) < L → WindowArithmeticNonpositiveV1 L",
+  "status": "OPEN_LARGE_WINDOW_PREMISE",
+  "exact_head_replay": "PENDING",
+  "rh_unconditionally_proven": false,
+  "new_axioms": 0,
+  "sorry_added": false,
+  "main_untouched": true,
+  "changed_paths": [
+    "FormalConjectures/Millennium/RiemannHypothesis.lean",
+    "scripts/rh_pr63_proved_window_prebuild.sh",
+    "scripts/rh_pr63_import_prebuild.sh",
+    ".github/workflows/build-and-docs.yml",
+    ".github/workflows/aegis-pr606-fork-replay-v1.yml",
+    ".github/workflows/aegis-rh-deepmind-target-direct-v1.yml",
+    "scripts/rh_official_target_gate.py",
+    "scripts/test_rh_official_target_gate.py"
+  ]
+}

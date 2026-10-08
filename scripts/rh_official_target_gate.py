@@ -14,6 +14,11 @@ import sys
 
 OFFICIAL = "FormalConjectures/Millennium/RiemannHypothesis.lean"
 GOAL = "AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10"
+WINDOW_GOAL_PATTERN = re.compile(
+    r"^∀\s+(?:\(L\s*:\s*ℝ\)|L\s*:\s*ℝ),\s*"
+    r"(?:693\s*/\s*2000|\(693\s*/\s*2000\s*:\s*ℝ\))\s*<\s*L\s*→\s*"
+    r"(?:AEGIS\.WeilWindowExhaustionV1\.)?WindowArithmeticNonpositiveV1\s+L$"
+)
 THEOREM = "RiemannHypothesis.riemannHypothesis"
 ALLOWED_AXIOMS = frozenset({"propext", "Classical.choice", "Quot.sound"})
 LEAN_ERROR = re.compile(r"(?m)^(?:[^\n]*?:\d+:\d+:\s*)?error(?:\([^)]*\))?:\s*([^\n]+)$")
@@ -38,6 +43,11 @@ def classify(source: str, log: str, lean_exit: int, axioms_log: str | None = Non
     if lean_exit != 0:
         if errors == ["unsolved goals"] and goals == [GOAL]:
             return "OPEN_UNIVERSAL_ZERO_QUADRATIC", errors
+        if (errors == ["unsolved goals"] and len(goals) == 1
+                and WINDOW_GOAL_PATTERN.fullmatch(goals[0])
+                and "import RHSmallWindowCanonicalJoinV1" in source
+                and "apply AEGIS.RHSmallWindowCanonicalJoinV1.riemannHypothesis_of_above_693_over_2000_v1" in body):
+            return "OPEN_PROVED_WINDOW_COMPLEMENT", errors
         return "COMPILER_FAILURE_UNEXPECTED", errors
     if errors or goals or "sorryAx" in log:
         return "COMPILER_OUTPUT_INVALID", errors
@@ -75,7 +85,11 @@ def main(argv: list[str] | None = None) -> int:
         "source_sha256": hashlib.sha256(original).hexdigest(),
         "lean_exit_code": args.lean_exit,
         "compiler_errors": errors,
-        "expected_residual": GOAL if status == "OPEN_UNIVERSAL_ZERO_QUADRATIC" else None,
+        "expected_residual": (
+            GOAL if status == "OPEN_UNIVERSAL_ZERO_QUADRATIC" else
+            "WINDOW_SIGN_FOR_ALL_L_GT_693_OVER_2000"
+            if status == "OPEN_PROVED_WINDOW_COMPLEMENT" else None
+        ),
         "disposition": status,
         "rh_proven_unconditionally": status == "FORMAL_RH_CLOSED",
     }

@@ -219,6 +219,16 @@ jobs:
           path: .li/.lake/build
           key: li-provider-v1-${{ runner.os }}-${{ runner.arch }}-35df682f3b709ffe5fbcfdd452dfa964bd622b87-0df444a360eaa60ab8c11dca51a86af692955474
 
+      - name: Checkout certified 693/2000 window source
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: 2c3d041b633147ec97c7ef753aa9d157a47bb9f5
+          path: .aegis-window
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Prebuild and audit exact RH terminal import
         if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
         env:

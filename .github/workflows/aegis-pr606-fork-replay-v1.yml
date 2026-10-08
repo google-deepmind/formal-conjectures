@@ -61,6 +61,15 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Checkout certified 693/2000 window source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: 2c3d041b633147ec97c7ef753aa9d157a47bb9f5
+          path: .aegis-window
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Bind exact port provenance
         shell: bash
         run: |
@@ -308,6 +317,9 @@ jobs:
           lean -o "$OUT/RHRestrictedWeilCriterionV13.olean" \
             AegisRH/PR606/RHRestrictedWeilCriterionV13.lean 2>&1 | tee /tmp/pr606-rh-terminal.log
           ! grep -F 'sorryAx' /tmp/pr606-rh-terminal.log
+
+          # Compile the exact proved-window producer consumed by the official RH statement.
+          bash scripts/rh_pr63_proved_window_prebuild.sh "$OUT"
 
           python3 -m unittest discover -s scripts -p test_rh_official_target_gate.py -v
           EVIDENCE="$GITHUB_WORKSPACE/evidence-rh-official"

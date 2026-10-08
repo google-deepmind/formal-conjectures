@@ -126,6 +126,10 @@ LEAN
 lean "$AUDIT" > "$AUDIT_LOG" 2>&1
 python3 scripts/verify_rh_overlay_axioms.py "$AUDIT" "$AUDIT_LOG"
 
+# Reuse the certified near-log-two window as an actual Mathlib RH input.
+# The large-window obligation remains visible in the official target.
+bash "$ROOT/scripts/rh_pr63_proved_window_prebuild.sh" "$OUT"
+
 # Canary: native Lake must find all imported .olean files without custom paths.
 unset LEAN_PATH
 lake env lean "$AUDIT" > "$AUDIT_LOG" 2>&1

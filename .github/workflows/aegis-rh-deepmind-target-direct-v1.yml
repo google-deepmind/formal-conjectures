@@ -71,6 +71,15 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Checkout certified 693/2000 window source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: 2c3d041b633147ec97c7ef753aa9d157a47bb9f5
+          path: .aegis-window
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Verify exact environment pins
         shell: bash
         run: |
@@ -224,6 +233,14 @@ jobs:
             echo "=== $MOD ==="
             lean -o "$OUT/$MOD.olean" "$FILE"
           done < "$GITHUB_WORKSPACE/.deepmind-rh-order.txt"
+
+      - name: Compile source-bound canonical RH proved-window join
+        shell: bash
+        run: |
+          set -euo pipefail
+          export RH_WINDOW_SRC_OVERRIDE="$GITHUB_WORKSPACE/.port-source/AegisRH/PR606/Source"
+          export RH_WINDOW_COMPAT_OVERRIDE="$GITHUB_WORKSPACE/.port-source/AegisRH/PR606/Compat"
+          bash scripts/rh_pr63_proved_window_prebuild.sh "$GITHUB_WORKSPACE/.lake/deepmind-rh-target"
 
       - name: Compile current DeepMind RH target
         shell: bash
