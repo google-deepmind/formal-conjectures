@@ -1,0 +1,64 @@
+{
+  "schema": "aegis.rh.proof_source_intake.v1",
+  "status": "SOURCE_BOUND_PENDING_EXACT_HEAD_REPLAY",
+  "source_repository": "tarikskalic33/formal-conjectures",
+  "source_pr": 64,
+  "source_head_sha": "22fed70befb40031e93567642d8c699c6f241241",
+  "destination_pr": 63,
+  "destination_parent_sha": "b08aad5c3164cad5fcb77ef03c91f2585161e67c",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_sha": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "source_proof_run": {
+    "id": 37716194081,
+    "required_job": "krein-critical-line",
+    "conclusion": "success",
+    "axioms": "standard_only"
+  },
+  "source_modules": [
+    {
+      "path": "AEGISOverlay/RHPrimeOnlyReflectedBridgeV2.lean",
+      "git_blob_sha": "1cd613ed111b838147ebcc7d86db1298f292786e",
+      "assumption_type": "ReflectedFixedKernelArithmeticRemainderBoundedV2"
+    },
+    {
+      "path": "AEGISOverlay/RHPrimeOnlyReflectedTailV3.lean",
+      "git_blob_sha": "69afe10801a4745613b046c4317a77f260733fde",
+      "assumption_type": "EventuallyReflectedFixedKernelArithmeticRemainderBoundedV3"
+    },
+    {
+      "path": "AEGISOverlay/RHPrimeDiscrepancyLogSubstitutionV4.lean",
+      "git_blob_sha": "8665a52126089eef155a9f46533b3de923eadd0c",
+      "unconditional_theorem": "full_prime_discrepancy_orbit_eq_chebyshev_x_integral"
+    },
+    {
+      "path": "AEGISOverlay/RHSignedPrimeActualKernelTailV5.lean",
+      "git_blob_sha": "1ca8851921d63b148311cafaad0764bc299f07ff",
+      "unconditional_theorem": "signed_prime_reflected_zero_kernel_tail_bounded",
+      "conditional_theorems": [
+        "riemannHypothesis_of_signed_dictionary_and_prime_growth",
+        "fixed_signed_prime_eventually_bounded_iff_rh"
+      ]
+    }
+  ],
+  "workflow": {
+    "path": ".github/workflows/rh-snowflake-log23-globalization-v1.yml",
+    "merged_blob_sha": "dabca08082914a0c136fe9b7ce165eb5c9631579",
+    "retained_steps": [
+      "Replay archived compact smooth two-moment right inverse"
+    ],
+    "added_steps": [
+      "Replay exact archived signed-prime and V14 kernel sources",
+      "Upload signed-prime archived proof logs"
+    ],
+    "axiom_audit": "scripts/verify_rh_overlay_axioms.py"
+  },
+  "exact_head_replay_status": "PENDING",
+  "constraints": {
+    "no_adhoc_axioms": true,
+    "no_sorry_added": true,
+    "source_module_blobs_unchanged": true,
+    "protected_main_unchanged": true,
+    "rh_claim": "not_promoted",
+    "no_merge": true
+  }
+}
