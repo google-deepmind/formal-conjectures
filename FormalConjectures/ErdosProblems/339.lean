@@ -69,8 +69,8 @@ theorem erdos_339.variants.upper_density : answer(True) ↔
 
 /-- If every sufficiently large integer is a sum of exactly $r$ elements of $A$, then the
 sums of exactly $r$ distinct elements of $A$ have positive lower density. -/
-@[category research solved, AMS 5 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos339.lean#L456"]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos339.lean#L456"]
 theorem erdos_339.variants.exact_order :
     ∀ (A : Set ℕ) (r : ℕ), A.IsAsymptoticAddBasisOfOrder r →
       0 < (distinctSums r A).lowerDensity := by
