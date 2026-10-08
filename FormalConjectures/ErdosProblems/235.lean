@@ -91,8 +91,8 @@ $$f(c)=(1+o(1))(1-e^{-c})$$
 See also [234](https://www.erdosproblems.com/234) for a more difficult version of this problem using
 actual primes.
 -/
-@[category research solved, AMS 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
 theorem erdos_235 :
     ∃ f : ℝ → ℝ, ContinuousOn f (Set.Ici (0 : ℝ)) ∧
       ∀ c, 0 ≤ c → Tendsto (fun k ↦ proportion k c) atTop (𝓝 (f c)) := by
@@ -104,8 +104,8 @@ For each fixed $c\geq 0$,
 $$f(c)=(1+o(1))(1-e^{-c})$$
 as $k\to\infty$.
 -/
-@[category research solved, AMS 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
 theorem erdos_235.variants.hooley (c : ℝ) (hc : 0 ≤ c) :
     Tendsto (fun k ↦ proportion k c) atTop (𝓝 (1 - Real.exp (-c))) := by
   sorry
