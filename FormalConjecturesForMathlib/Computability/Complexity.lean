@@ -27,6 +27,7 @@ including the complexity classes P, NP, coNP, and BPP.
 *References:*
 - Sanjeev Arora and Boaz Barak. Computational Complexity: A Modern Approach.
   Cambridge University Press, 2009.
+- [Wikipedia: Complexity class](https://en.wikipedia.org/wiki/Complexity_class)
 -/
 
 @[expose] public section
