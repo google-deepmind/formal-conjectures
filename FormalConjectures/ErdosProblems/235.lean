@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/235](https://www.erdosproblems.com/235)
 - [Ho65] Hooley, Christopher, _On the difference between consecutive numbers prime to $n$_. II.
   Publ. Math. Debrecen (1965), 39--49.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos235.md)
 -/
 
 @[expose] public section
