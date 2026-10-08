@@ -1,0 +1,50 @@
+{
+  "schema": "aegis.rh.pr63.abel_chebyshev_v6.source_receipt.v1",
+  "date": "2026-10-08",
+  "repository": "tarikskalic33/formal-conjectures",
+  "pr": 63,
+  "target_branch": "integration/rh-proof-spine-main-root-v1",
+  "base_head": "b402b9ff41839b5a24bdcb57c0be1c21204c0361",
+  "lean": "leanprover/lean4:v4.33.1",
+  "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "archived_tar": {
+    "path": "research/rh/integration/AEGIS_PR63_ARCHIVED_ABEL_SOURCES_V6.tar.gz",
+    "git_blob_sha": "68390516335b34ea8bf12ba0ed0568d2ef30d509",
+    "sha256": "dafcf849489f9b5f5ed7275ca74c53e4d0e6740d14bddbe51b62332d79a40801",
+    "source_modules": {
+      "WeilSignedPrimeFiniteSupportV1.lean": "5800bea6ca4468c8ea2f028738cadda1f818bc0e",
+      "WeilPrimeAbelReductionV1.lean": "10ebac3a041ca87840e18aca521a93790f647a20",
+      "WeilPrimeDiscrepancyV1.lean": "9d43fb9bd3b7bca72c94ab76eb604fde2d0a9e36",
+      "WeilPrimeDiscrepancyEstimateV1.lean": "a8a48cafc2bc2117e2c7836abdbdf3eef4884600"
+    }
+  },
+  "candidate": {
+    "path": "AEGISOverlay/RHSignedPrimeChebyshevFiniteBridgeV6.lean",
+    "git_blob_sha": "cbfdf71ab7d1d0cd56ebfc791670a162435bbf26",
+    "named_theorems": [
+      "neg_abel_integrand_eq_chebyshev_integrand",
+      "signed_prime_eq_finite_chebyshev_convolution",
+      "eventual_signed_prime_equals_combined_of_analytic_closure"
+    ],
+    "new_axioms": 0,
+    "sorry_used": false,
+    "new_mathematical_assumptions_in_goal_statement": false,
+    "conditional_premises": [
+      "EventuallyChebyshevFiniteIntegralExtendsV6",
+      "EventuallyArithmeticConvolutionsIntegrableV6"
+    ]
+  },
+  "workflow": {
+    "path": ".github/workflows/rh-snowflake-log23-globalization-v1.yml",
+    "git_blob_sha": "2cb2888ed59d68ac3ce621835d243aee4dbcfb4c",
+    "expected_job": "krein-critical-line",
+    "new_step": "Compile exact archived Abel and Chebyshev V6 join"
+  },
+  "disposition": "PENDING_EXACT_HEAD_LEAN_KERNEL_REPLAY",
+  "rh_proven_unconditionally": false,
+  "stronger_growth_premise": "SubexponentialAtTopV1 (primeOnlyOrbitV1 detectingPacket): OPEN",
+  "no_protected_main_mutation": true,
+  "no_new_branch": true,
+  "prior_verified_head": "fda2f91f302e64209570a8930433f363985830bd",
+  "concurrent_source_changes_preserved": true
+}

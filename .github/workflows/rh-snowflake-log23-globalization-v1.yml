@@ -548,6 +548,32 @@ jobs:
           lean --version > evidence-krein/lean-version.txt
           exit "$result"
 
+      - name: Compile exact archived Abel and Chebyshev V6 join
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence-krein .lake/build/lib/lean
+          archive=research/rh/integration/AEGIS_PR63_ARCHIVED_ABEL_SOURCES_V6.tar.gz
+          printf '%s  %s\n' dafcf849489f9b5f5ed7275ca74c53e4d0e6740d14bddbe51b62332d79a40801 "$archive" | sha256sum -c -
+          test "$(tar -tzf "$archive" | wc -l)" -eq 4
+          tar -xzf "$archive" -C .
+          cat > evidence-krein/abel-source-lock.txt <<'PINS'
+          WeilSignedPrimeFiniteSupportV1 5800bea6ca4468c8ea2f028738cadda1f818bc0e
+          WeilPrimeAbelReductionV1 10ebac3a041ca87840e18aca521a93790f647a20
+          WeilPrimeDiscrepancyV1 9d43fb9bd3b7bca72c94ab76eb604fde2d0a9e36
+          WeilPrimeDiscrepancyEstimateV1 a8a48cafc2bc2117e2c7836abdbdf3eef4884600
+          PINS
+          while read -r m expected_blob; do
+            test "$(git hash-object "$m.lean")" = "$expected_blob"
+            echo "=== ARCHIVED ABEL $m ==="
+            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-krein/$m-abel.log"
+            ! grep -F 'sorryAx' "evidence-krein/$m-abel.log"
+            ! grep -F 'error:' "evidence-krein/$m-abel.log"
+          done < evidence-krein/abel-source-lock.txt
+          cp AEGISOverlay/RHSignedPrimeChebyshevFiniteBridgeV6.lean RHSignedPrimeChebyshevFiniteBridgeV6.lean
+          lake env lean -o .lake/build/lib/lean/RHSignedPrimeChebyshevFiniteBridgeV6.olean RHSignedPrimeChebyshevFiniteBridgeV6.lean 2>&1 | tee evidence-krein/RHSignedPrimeChebyshevFiniteBridgeV6.log
+          python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHSignedPrimeChebyshevFiniteBridgeV6.lean evidence-krein/RHSignedPrimeChebyshevFiniteBridgeV6.log
+
       - name: Upload Krein bridge replay logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
