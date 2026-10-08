@@ -41,7 +41,6 @@ public import FormalConjecturesUtil
 * Two distinct triangles are edge-disjoint iff they share at most one vertex.
 * "At least $(1 + o(1)) n^2 / 12$" means: for every $\varepsilon > 0$ and all sufficiently
   large $n$, every colouring admits such a family of size at least $(1 - \varepsilon) n^2 / 12$.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos76.md)
 -/
 
 @[expose] public section
@@ -68,6 +67,7 @@ Conjectured by Erdős, Faudree, and Ordman. The answer is yes, proved by Gruslys
 [GrLe20].
 -/
 @[category research solved, AMS 5]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos76.lean#L58"]
 theorem erdos_76 :
     answer(True) ↔
       ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → ∀ c : Sym2 (Fin n) → Bool,
