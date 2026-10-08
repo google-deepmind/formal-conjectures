@@ -5,6 +5,7 @@ on:
     paths:
       - 'FormalConjectures/Millennium/RHSnowflakeLog23.lean'
       - 'AEGISOverlay/**'
+      - 'AegisRH/SmallWindow/**'
       - 'scripts/verify_rh_overlay_axioms.py'
       - '.github/workflows/rh-snowflake-log23-globalization-v1.yml'
   workflow_dispatch:
@@ -386,7 +387,7 @@ jobs:
           python3 - "$ROOT" evidence-krein/modules.txt <<'PY'
           import pathlib,sys
           root=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2])
-          targets=["WeilAutocorrelationMellinV11","RHKreinPairingV13","RHDyadicTowerV13","RHRestrictedWeilBridgeV13","WeilZeroTranslationV11","RHGramExpansionV13","RestrictedWeilCriterionResidueWitnessV11","WeilThreeBlockPrimeEvaluationV30","RHKreinFactorV13","WeilMomentAnnihilatorV1","WeilRHImpliesFinalSignV13","WeilTwoPointPositivityV1","RHEulerGammaV13","RHNarrowMomentPacketV1","WeilSeparatedArchBridgeV31","WeilThreeBlockCrossAssemblyV30","WeilWindowExhaustionV1","RestrictedWeilCriterionZeroKernelV10","RHThreeCellClassV13","WeilPrimeSummabilityV1","WeilAutocorrelationClosureV1","RHHatCoxClass693V13"]
+          targets=["WeilAutocorrelationMellinV11","RHKreinPairingV13","RHDyadicTowerV13","RHRestrictedWeilBridgeV13","WeilZeroTranslationV11","RHGramExpansionV13","RestrictedWeilCriterionResidueWitnessV11","WeilThreeBlockPrimeEvaluationV30","RHKreinFactorV13","WeilMomentAnnihilatorV1","WeilRHImpliesFinalSignV13","WeilTwoPointPositivityV1","RHEulerGammaV13","RHNarrowMomentPacketV1","WeilSeparatedArchBridgeV31","WeilThreeBlockCrossAssemblyV30","WeilWindowExhaustionV1","RHNarrowDiagonalUpgradeV2","RestrictedWeilCriterionZeroKernelV10","RHThreeCellClassV13","WeilPrimeSummabilityV1","WeilAutocorrelationClosureV1","RHHatCoxClass693V13"]
           mods={p.stem:p for p in root.glob("*.lean")}
           for target in targets:
               if target not in mods:
@@ -540,6 +541,13 @@ jobs:
             cp "AEGISOverlay/$m.lean" "$m.lean"
             if ! lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-krein/$m.log"; then result=1; fi
             if ! python3 scripts/verify_rh_overlay_axioms.py "AEGISOverlay/$m.lean" "evidence-krein/$m.log"; then result=1; fi
+          done
+          # Source PR #12 unchanged; replay it against this exact main-root source closure.
+          # The join imports the existing near-log-two theorem and restricted-Weil gate.
+          for m in RHSmallWindowProducerV1 RHSmallWindowCanonicalJoinV1; do
+            cp "AegisRH/SmallWindow/$m.lean" "$m.lean"
+            if ! lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-krein/$m.log"; then result=1; fi
+            if ! python3 scripts/verify_rh_overlay_axioms.py "AegisRH/SmallWindow/$m.lean" "evidence-krein/$m.log"; then result=1; fi
           done
           if ! python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHKreinCriticalLineBridgeV1.lean evidence-krein/overlay.log; then result=1; fi
           git rev-parse HEAD > evidence-krein/formal-conjectures-sha.txt

@@ -1,0 +1,180 @@
+name: AEGIS RH Small Window Producer V1
+
+on:
+  push:
+    branches:
+      - 'proof/rh-small-window-producer-fork-v1'
+    paths:
+      - 'AegisRH/SmallWindow/**'
+      - '.github/workflows/aegis-rh-small-window-producer-v1.yml'
+  pull_request:
+    paths:
+      - 'AegisRH/SmallWindow/**'
+      - '.github/workflows/aegis-rh-small-window-producer-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aegis-rh-small-window-producer-v1-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  AEGIS_DEP_SHA: 4f1b52a454be9779bf39245cb4343d8d8e4b7270
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout fork exact head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+
+      - name: Checkout exact Mathlib
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: leanprover-community/mathlib4
+          ref: ${{ env.MATHLIB_SHA }}
+          path: .mathlib
+          persist-credentials: false
+
+      - name: Checkout exact AEGIS dependency source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: ${{ env.AEGIS_DEP_SHA }}
+          path: .aegis
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Bind exact sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(git -C .mathlib rev-parse HEAD)" = "$MATHLIB_SHA"
+          test "$(git -C .aegis rev-parse HEAD)" = "$AEGIS_DEP_SHA"
+          test "$(cat .mathlib/lean-toolchain)" = "$LEAN_TOOLCHAIN"
+          mkdir -p evidence .build
+
+      - name: Install pinned Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          cd .mathlib
+          lake exe cache get
+          lean --version | tee ../evidence/lean-version.log
+
+      - name: Compile dependency chain and producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/.aegis/sovereign-omega-v2/formal/bridges/lean"
+          FROOT="$GITHUB_WORKSPACE/AegisRH/SmallWindow"
+          OUT="$GITHUB_WORKSPACE/.build"
+          BASE_LEAN_PATH="$(cd "$GITHUB_WORKSPACE/.mathlib" && lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$FROOT:$ROOT:$BASE_LEAN_PATH"
+
+          modules=(
+            WeilCriterionCompactSmoothV1
+            WeilPrimeSummabilityV1
+            WeilArchimedeanConvergenceV1
+            WeilAutocorrelationRealityV1
+            WeilAutocorrelationClosureV1
+            WeilFiniteSourceCalculusV1
+            WeilArchSineKernelV1
+            WeilArchSineKernelIntegerV1
+            WeilArchFiniteQuadraticV1
+            WeilArchTailIntegralV1
+            WeilThreeBlockRationalV1
+            WeilMixedClosureV2
+            WeilThreeBlockComplexV2
+            WeilMixedAlgebraV2
+            WeilDisjointEnergyV2
+            WeilThreeBlockAnalyticConstantsV21
+            WeilLogCoordinateIsometryV21
+            WeilThreeBlockNormBridgeV21
+            WeilThreeBlockTranslatedPacketsV22
+            WeilWidthPrimeVanishingV23
+            WeilDiagonalKernelReductionV21
+            WeilArchimedeanCothTailV1
+            WeilWidthDiagonalArchFrontierV24
+            WeilWidthArchCorrelationV25
+            WeilWidthArchBudgetV26
+            WeilWidthArchIntegralV27
+            WeilThreeBlockCrossPrimeV28
+            WeilThreeBlockCrossPrimeWindowV29
+            WeilThreeBlockPrimeEvaluationV30
+            WeilThreeBlockCrossAssemblyV30
+            WeilSeparatedArchBridgeV31
+            RHNarrowDiagonalUpgradeV2
+          )
+
+          for m in "${modules[@]}"; do
+            echo "=== AEGIS $m ==="
+            lean -o "$OUT/$m.olean" "$ROOT/$m.lean" 2>&1 | tee "evidence/$m.log"
+          done
+
+          echo "=== FORK WeilWindowExhaustionV1 ==="
+          lean -o "$OUT/WeilWindowExhaustionV1.olean" "$FROOT/WeilWindowExhaustionV1.lean" 2>&1 |
+            tee evidence/WeilWindowExhaustionV1.log
+
+          echo "=== FORK RHSmallWindowProducerV1 ==="
+          lean -o "$OUT/RHSmallWindowProducerV1.olean" "$FROOT/RHSmallWindowProducerV1.lean" 2>&1 |
+            tee evidence/RHSmallWindowProducerV1.log
+
+      - name: Audit producer axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/.aegis/sovereign-omega-v2/formal/bridges/lean"
+          FROOT="$GITHUB_WORKSPACE/AegisRH/SmallWindow"
+          OUT="$GITHUB_WORKSPACE/.build"
+          BASE_LEAN_PATH="$(cd "$GITHUB_WORKSPACE/.mathlib" && lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$FROOT:$ROOT:$BASE_LEAN_PATH"
+
+          cat > /tmp/RHSmallWindowProducerAudit.lean <<'EOF'
+          import RHSmallWindowProducerV1
+          #print axioms AEGIS.RHSmallWindowProducerV1.window_one_over_64_implies_retained_v1
+          #print axioms AEGIS.RHSmallWindowProducerV1.middle_three_block_eq_base_v1
+          #print axioms AEGIS.RHSmallWindowProducerV1.windowArithmeticNonpositive_one_over_64_v1
+          #print axioms AEGIS.RHSmallWindowProducerV1.windowArithmeticNonpositive_of_nonneg_le_one_over_64_v1
+          #print axioms AEGIS.RHSmallWindowProducerV1.windowArithmeticNonpositive_one_over_128_v1
+          EOF
+          lean /tmp/RHSmallWindowProducerAudit.lean 2>&1 | tee evidence/small-window-axioms.log
+          ! grep -F 'sorryAx' evidence/small-window-axioms.log
+
+      - name: Emit exact disposition
+        if: always()
+        shell: bash
+        run: |
+          cat > evidence/DISPOSITION.txt <<EOF
+          FORK_SOURCE_SHA=$SOURCE_SHA
+          AEGIS_DEP_SHA=$AEGIS_DEP_SHA
+          MATHLIB_SHA=$MATHLIB_SHA
+          TARGET=WindowArithmeticNonpositiveV1(1/64)
+          UNIVERSAL_FINAL_SIGN=NOT_CLAIMED
+          RIEMANN_HYPOTHESIS=NOT_CLAIMED
+          AUTHORITY_EFFECT=NONE
+          EOF
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: aegis-rh-small-window-${{ env.SOURCE_SHA }}
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 30
