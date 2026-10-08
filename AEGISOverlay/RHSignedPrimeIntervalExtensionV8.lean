@@ -29,6 +29,7 @@ SOURCE CANDIDATE: exact-head Lean/kernel/axiom replay required.
 -/
 
 open Set MeasureTheory Filter Complex
+open scoped Topology
 set_option autoImplicit false
 noncomputable section
 
