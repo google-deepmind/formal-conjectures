@@ -133,7 +133,7 @@ It may be true that there are at least $n^{1-o(1)}$ many such distances. In [Er9
 @[category research open, AMS 52]
 theorem erdos_132.variants.polynomial_count : answer(sorry) ↔
     ∃ E : ℕ → ℝ, E =o[atTop] (fun _ => (1 : ℝ)) ∧
-      ∀ n : ℕ, (n : ℝ) ^ (1 - E n) ≤ (minLowMultiplicityDistances n : ℝ) := by
+      ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 - E n) ≤ (minLowMultiplicityDistances n : ℝ) := by
   sorry
 
 end Erdos132
