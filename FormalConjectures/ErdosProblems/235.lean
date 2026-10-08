@@ -24,7 +24,6 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/235](https://www.erdosproblems.com/235)
 - [Ho65] Hooley, Christopher, _On the difference between consecutive numbers prime to $n$_. II.
   Publ. Math. Debrecen (1965), 39--49.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos235.md)
 -/
 
 @[expose] public section
@@ -93,6 +92,7 @@ See also [234](https://www.erdosproblems.com/234) for a more difficult version o
 actual primes.
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
 theorem erdos_235 :
     ∃ f : ℝ → ℝ, ContinuousOn f (Set.Ici (0 : ℝ)) ∧
       ∀ c, 0 ≤ c → Tendsto (fun k ↦ proportion k c) atTop (𝓝 (f c)) := by
@@ -105,6 +105,7 @@ $$f(c)=(1+o(1))(1-e^{-c})$$
 as $k\to\infty$.
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos235.lean#L4266"]
 theorem erdos_235.variants.hooley (c : ℝ) (hc : 0 ≤ c) :
     Tendsto (fun k ↦ proportion k c) atTop (𝓝 (1 - Real.exp (-c))) := by
   sorry
