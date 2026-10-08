@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
   Geometriae Dedicata (1974), 397-424.
 - [FuPa84] Füredi, Z. and Palásti, I., *Arrangements of lines with a large number of triangles*.
   Proc. Amer. Math. Soc. (1984), 561-566.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos211.md)
 -/
 
 @[expose] public section
