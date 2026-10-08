@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 * [FFKPY07] Filaseta, M., Ford, K., Konyagin, S., Pomerance, C. and Yu, G., *Sieving by large
   integers and covering systems of congruences*. J. Amer. Math. Soc. (2007).
   [arXiv:math/0507374](https://arxiv.org/abs/math/0507374)
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos27.md)
 -/
 
 @[expose] public section
