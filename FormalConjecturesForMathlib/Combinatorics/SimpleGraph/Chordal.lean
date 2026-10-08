@@ -48,7 +48,7 @@ def IsSplitGraph (G : SimpleGraph V) : Prop :=
   ∃ S : Set V, G.IsClique S ∧ G.IsIndepSet Sᶜ
 
 /-- Every finite graph has a clique edge partition consisting of its edges. -/
-theorem exists_cliqueEdgePartition_card_eq {V : Type*} [Fintype V] [DecidableEq V]
+theorem exists_isCliqueEdgePartition_card_eq {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] :
     ∃ P : Finset (Finset V), G.IsCliqueEdgePartition P ∧ P.card = G.edgeFinset.card := by
   refine ⟨G.edgeFinset.image Sym2.toFinset, ⟨?_, ?_⟩, ?_⟩
