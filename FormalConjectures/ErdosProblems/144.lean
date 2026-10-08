@@ -48,8 +48,8 @@ exists and is equal to $1$.
 
 Proved by Maier and Tenenbaum [MaTe84].
 -/
-@[category research solved, AMS 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos144.lean#L94"]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos144.lean#L94"]
 theorem erdos_144 :
     Set.HasDensity {n : ℕ | ∃ d₁ d₂ : ℕ, d₁ ∣ n ∧ d₂ ∣ n ∧ d₁ < d₂ ∧ d₂ < 2 * d₁} 1 := by
   sorry
