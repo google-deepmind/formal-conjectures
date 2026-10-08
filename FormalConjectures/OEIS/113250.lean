@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $-(1 - 48x^2 - 256x^3) / ((1 - 4x)(1 + 4x)(1 + 4x + 16x^2))$
@@ -28,6 +29,8 @@ The recurrence is $a(n) = -4 a(n-1) + 64 a(n-3) + 256 a(n-4)$.
 *References:*
 - [A113250](https://oeis.org/A113250)
 -/
+
+@[expose] public section
 
 namespace OeisA113250
 

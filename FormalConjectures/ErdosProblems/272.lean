@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 272
 
 *Reference:* [erdosproblems.com/272](https://www.erdosproblems.com/272)
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Finset
 
@@ -46,7 +49,7 @@ arithmetic progression for all $i\neq j$?
 -/
 @[category research open, AMS 5]
 theorem erdos_272 :
-    (fun N ↦ (maxArithInterCard N : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+    ∀ N ≥ 1, maxArithInterCard N = (answer(sorry) : ℕ → ℕ) N := by
   sorry
 
 /--

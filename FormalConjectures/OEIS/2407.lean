@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Cuban Primes
@@ -25,6 +26,8 @@ sequence is conjectured to be infinite.
 *References:*
 - [OEIS A002407](https://oeis.org/A002407)
 -/
+
+@[expose] public section
 
 namespace OeisA2407
 
