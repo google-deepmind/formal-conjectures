@@ -31,7 +31,6 @@ public import FormalConjecturesUtil
   Geometriae Dedicata (1974), 397-424.
 - [FuPa84] Füredi, Z. and Palásti, I., *Arrangements of lines with a large number of triangles*.
   Proc. Amer. Math. Soc. (1984), 561-566.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos211.md)
 -/
 
 @[expose] public section
@@ -258,6 +257,7 @@ theorem quadratic_of_erdos_211 (h : MainBound) : QuadraticBound := by
 there are $\gg kn$ many lines which contain at least two points.
 Solved by Beck [Be83] and Szemerédi and Trotter [SzTr83]. -/
 @[category research solved, AMS 5 52]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos211.lean#L900"]
 theorem erdos_211 : MainBound := by
   sorry
 
