@@ -257,6 +257,9 @@ jobs:
       - name: Build literate source pages
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
+          # Restored caches can retain pages for deleted or renamed modules.
+          # Verso loads every JSON page, including ones Lake no longer builds.
+          python3 scripts/prune_literate_cache.py . docbuild/.lake/build/literate
           cd docbuild
           lake build FormalConjectures:literate \
             FormalConjecturesForMathlib:literate \
