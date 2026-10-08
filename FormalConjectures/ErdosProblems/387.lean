@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 387
@@ -34,6 +35,8 @@ import FormalConjecturesUtil
  - [BNPZ26] Bui, H., Naprienko, S., Pratt, K., and Zaharescu, A. Binomial coefficients with
     divisors avoiding an interval. arXiv:2605.21221 (2026).
 -/
+
+@[expose] public section
 
 open Filter
 

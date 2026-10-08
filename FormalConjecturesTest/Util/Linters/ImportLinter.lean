@@ -25,7 +25,25 @@ set_option linter.style.imports true
 
 -- Standard valid import
 #guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil"
+
+-- Files must be modules
+/--
+warning: Files in 'FormalConjectures' must be modules. Add 'module' before the imports, use 'public import FormalConjecturesUtil', and add '@[expose] public section' after the module docstring.
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
 #check_imports "import FormalConjecturesUtil"
+
+-- In a module, a plain `import` is private
+/--
+warning: Use 'public import FormalConjecturesUtil'. In a module, a plain 'import' is private, so the statements of public declarations cannot use it.
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
+#check_imports "module\nimport FormalConjecturesUtil"
 
 /--
 warning: Direct imports from 'Mathlib' (such as 'Mathlib.Data.Nat.Prime.Nth') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
@@ -33,7 +51,7 @@ warning: Direct imports from 'Mathlib' (such as 'Mathlib.Data.Nat.Prime.Nth') ar
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import FormalConjecturesUtil\nimport Mathlib.Data.Nat.Prime.Nth"
+#check_imports "module\npublic import FormalConjecturesUtil\npublic import Mathlib.Data.Nat.Prime.Nth"
 
 /--
 warning: Direct imports from 'Mathlib' (such as 'Mathlib') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
@@ -41,7 +59,7 @@ warning: Direct imports from 'Mathlib' (such as 'Mathlib') are disallowed in 'Fo
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import FormalConjecturesUtil\nimport Mathlib"
+#check_imports "module\npublic import FormalConjecturesUtil\npublic import Mathlib"
 
 /--
 warning: Direct imports from 'Mathlib' (such as 'Mathlib.Topology.Basic') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
@@ -53,7 +71,7 @@ warning: Files in 'FormalConjectures' must import 'FormalConjecturesUtil'.
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import Mathlib.Topology.Basic"
+#check_imports "module\npublic import Mathlib.Topology.Basic"
 
 /--
 warning: Files in 'FormalConjectures' must import 'FormalConjecturesUtil'.
@@ -61,7 +79,7 @@ warning: Files in 'FormalConjectures' must import 'FormalConjecturesUtil'.
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import FormalConjectures.ErdosProblems.«508»"
+#check_imports "module\npublic import FormalConjectures.ErdosProblems.«508»"
 
 /--
 warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConjecturesForMathlib.Combinatorics.Basic') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
@@ -69,7 +87,7 @@ warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConje
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import FormalConjecturesUtil\nimport FormalConjecturesForMathlib.Combinatorics.Basic"
+#check_imports "module\npublic import FormalConjecturesUtil\npublic import FormalConjecturesForMathlib.Combinatorics.Basic"
 
 /--
 warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConjecturesForMathlib') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
@@ -77,7 +95,7 @@ warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConje
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "import FormalConjecturesUtil\nimport FormalConjecturesForMathlib"
+#check_imports "module\npublic import FormalConjecturesUtil\npublic import FormalConjecturesForMathlib"
 
 -- When disabled via set_option, no warnings are emitted
 set_option linter.style.imports false in
@@ -87,3 +105,48 @@ set_option linter.style.imports false in
 set_option linter.style.imports false in
 #guard_msgs in
 #check_imports "import FormalConjecturesForMathlib.Combinatorics.Basic"
+
+-- `meta import`s only load compiled code and are exempt from the direct-import rules
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\nmeta import FormalConjecturesForMathlib.Combinatorics.Basic"
+
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\nmeta import Mathlib.Combinatorics.Enumerative.Partition"
+
+-- `meta import`ing a whole library is disallowed
+/--
+warning: 'meta import FormalConjecturesUtil' loads the compiled code of the whole library. Instead, 'meta import' only the module defining the declaration that is evaluated (for example by 'native_decide').
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\nmeta import FormalConjecturesUtil"
+
+/--
+warning: 'meta import FormalConjecturesForMathlib' loads the compiled code of the whole library. Instead, 'meta import' only the module defining the declaration that is evaluated (for example by 'native_decide').
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\nmeta import FormalConjecturesForMathlib"
+
+/--
+warning: 'meta import Mathlib' loads the compiled code of the whole library. Instead, 'meta import' only the module defining the declaration that is evaluated (for example by 'native_decide').
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\nmeta import Mathlib"
+
+-- a `meta import` of `FormalConjecturesUtil` also does not count as importing it
+/--
+warning: 'meta import FormalConjecturesUtil' loads the compiled code of the whole library. Instead, 'meta import' only the module defining the declaration that is evaluated (for example by 'native_decide').
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+---
+warning: Files in 'FormalConjectures' must import 'FormalConjecturesUtil'.
+
+Note: This linter can be disabled with `set_option linter.style.imports false`
+-/
+#guard_msgs in
+#check_imports "module\nmeta import FormalConjecturesUtil"

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 619
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er99] Erdős, Paul, *A selection of problems and results in combinatorics*.
   Combin. Probab. Comput. **8** (1999), 1-6.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Array read by upward antidiagonals
@@ -25,6 +26,8 @@ $m^2 - n^2$, $m \ge n+1$.
 *References:*
 - [A105020](https://oeis.org/A105020)
 -/
+
+@[expose] public section
 
 namespace OeisA105020
 

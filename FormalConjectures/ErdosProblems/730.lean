@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Erdős Problem 730
@@ -22,7 +24,15 @@ import FormalConjecturesUtil
 *References:*
   - [erdosproblems.com/730](https://www.erdosproblems.com/730)
   - [A129515](https://oeis.org/A129515)
+  - [PALOMAR-2026-08-22-000001](https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-22-000001&version=1):
+    a Lean 4 proof that there are infinitely many such pairs, checked by Comparator
+    against the statement `S.Infinite` below and registered with the Palomar registry.
+    The proof follows an argument posted on the erdosproblems.com forum
+    (Liam Price, 24 June 2026), which shows that there are infinitely many
+    consecutive pairs $(n, n+1)$.
 -/
+
+@[expose] public section
 namespace Erdos730
 
 abbrev S :=
@@ -32,9 +42,13 @@ abbrev S :=
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?
+
+Yes: there are infinitely many consecutive pairs $(n, n+1)$. The formal proof
+registered as [PALOMAR-2026-08-22-000001] proves `S.Infinite` for this `S`.
 -/
-@[category research open, AMS 11]
-theorem erdos_730 : answer(sorry) ↔ S.Infinite := by
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/03729c9cbb0b602f5a828bb850c85e84c5a6d460/ErdosProblems/Erdos730/FullDensityTheorem.lean#L40"]
+theorem erdos_730 : answer(True) ↔ S.Infinite := by
   sorry
 
 /--
@@ -43,7 +57,10 @@ For example, $(87,88)$ and $(607,608)$ are such pairs.
 @[category textbook, AMS 11]
 theorem erdos_730.variants.explicit_pairs :
     {(87, 88), (607, 608)} ⊆ S := by
-  rintro _ (rfl | rfl) <;> exact ⟨by decide, by native_decide⟩
+  rintro _ (rfl | rfl) <;> refine ⟨by decide, ?_⟩
+  all_goals
+    simp only [Nat.centralBinom, Nat.choose_eq_descFactorial_div_factorial]
+    decide +kernel
 
 /--
 There are examples where $(n, m) ∈ S$ with $m ≠ n + 1$.

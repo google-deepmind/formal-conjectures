@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Wikipedia.RamseyNumbers
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1014
@@ -29,13 +29,15 @@ import FormalConjecturesUtil
   https://cdn.openai.com/pdf/6dc7175d-d9e7-4b8d-96b8-48fe5798cd5b/Ramsey.pdf
 -/
 
+@[expose] public section
+
 open Filter
 
 open scoped Topology
 
 namespace Erdos1014
 
-open RamseyNumbers
+local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
 /--
 Let $R(k,l)$ be the Ramsey number, so the minimal $n$ such that every graph on at least $n$
