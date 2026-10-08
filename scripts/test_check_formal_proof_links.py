@@ -92,6 +92,17 @@ class DeclarationStatementTest(unittest.TestCase):
         # `erdos_1` must not be found by looking for `erdos_1.variants.op`.
         self.assertIsNone(declaration_statement(FILE, "op"))
 
+    def test_does_not_match_a_longer_dotted_name(self):
+        # Looking up `erdos_1` where only the dotted variants exist must find nothing.
+        only_variants = FILE.replace("theorem erdos_1 :", "theorem erdos_2 :")
+        self.assertIsNone(declaration_statement(only_variants, "erdos_1"))
+        self.assertIsNone(declaration_statement(only_variants, "erdos_1.variants"))
+
+    def test_matches_a_name_with_universe_parameters(self):
+        self.assertEqual(
+            normalise(declaration_statement("theorem erdos_1.{u} : True := trivial", "erdos_1")),
+            ".{u}:True")
+
 
 class RawUrlTest(unittest.TestCase):
 
@@ -154,6 +165,13 @@ class CheckLinkTest(unittest.TestCase):
     def test_name_missing_in_a_fork_is_reported(self):
         cache = {raw_url(link()["url"]): (200, "theorem something_else : True := trivial")}
         kinds = [f["kind"] for f in check_link(link(), cache)]
+        self.assertEqual(kinds, ["name-not-found"])
+
+    def test_dotted_variant_does_not_stand_in_for_the_name(self):
+        # Anchorless fork link, default run (no --compare): a target that only declares
+        # `erdos_1.variants.two` does not contain `erdos_1`.
+        cache = {raw_url(link()["url"]): (200, "theorem erdos_1.variants.two : True := trivial")}
+        kinds = [f["kind"] for f in check_link(link(), cache, compare=False)]
         self.assertEqual(kinds, ["name-not-found"])
 
     def test_name_missing_in_an_external_repo_is_not_reported(self):

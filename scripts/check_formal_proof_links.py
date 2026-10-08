@@ -108,11 +108,13 @@ def declaration_statement(content, name):
     """The statement text of `name` in `content`: from after the name to the first `:=`.
 
     Returns None when the declaration is not found. Matches on the final name segment so a
-    declaration written inside a namespace is found by its short name.
+    declaration written inside a namespace is found by its short name. The match must end the
+    declaration name: `erdos_1` is not found in `erdos_1.variants.two`. A following `.{` is
+    allowed, since it opens universe parameters (`erdos_1.{u}`).
     """
     short = name.rsplit(".", 1)[-1]
     pattern = re.compile(
-        r"\b(?:theorem|lemma)\s+(?:[\w.'«»]*\.)?" + re.escape(short) + r"(?![\w'])"
+        r"\b(?:theorem|lemma)\s+(?:[\w.'«»]*\.)?" + re.escape(short) + r"(?![\w'])(?!\.(?!\{))"
     )
     m = pattern.search(content)
     if not m:
