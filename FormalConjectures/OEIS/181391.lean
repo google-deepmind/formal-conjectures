@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Van Eck's sequence (OEIS A181391)
@@ -26,6 +28,8 @@ the distance to its most recent earlier occurrence; otherwise the next value is 
 - [OEIS A181391](https://oeis.org/A181391)
 - N. J. A. Sloane, [Some Open Problems](https://neilsloane.com/doc/EMMay2016.pdf#page=14)
 -/
+
+@[expose] public section
 
 namespace OeisA181391
 
