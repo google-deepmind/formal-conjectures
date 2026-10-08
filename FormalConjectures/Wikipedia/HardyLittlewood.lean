@@ -68,8 +68,10 @@ $$
   2^k \prod_{\substack{q < N \\ q \text{ prime} \\ q \geq 3}}
     \frac{1 - \frac{w(q; m_1, \dots, m_k)}{q}}{\left(1 - \frac{1}{q}\right)^{k+1}}.
 $$
-The constant is the limit of these partial products as $N \to \infty$; stating it as
-an ordered limit avoids the junk value of Mathlib's unconditional `∏'`.
+The constant is the limit of these partial products as $N \to \infty$. The limit is taken
+in increasing-prime order, matching the order in the classical formula. For a tuple with
+pairwise distinct entries, $w(q) = k + 1$ for all primes $q$ above the largest entry, so the
+factors are $1 + O(q^{-2})$ and the tail converges absolutely.
 -/
 noncomputable def HardyLittlewoodPartialProduct {k : ℕ} (m : Fin k.succ → ℕ) (N : ℕ) : ℝ :=
   2 ^ k * ∏ q ∈ (Nat.primesBelow N).filter (fun q => 3 ≤ q),
