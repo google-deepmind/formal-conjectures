@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
   combinatorial number theory (1980), p. 72.
 - [GrRa96] Granville, Andrew and Ramaré, Olivier, Explicit bounds on exponential sums
   and the scarcity of squarefree binomial coefficients. Mathematika (1996), 73–107.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos378.md)
 -/
 
 @[expose] public section
@@ -51,6 +50,7 @@ Aggarwal and Cambie have observed this problem is resolved by the results of Gra
 and Ramaré [GrRa96].
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos378.lean#L3256"]
 theorem erdos_378 : answer(True) ↔
     ∀ r : ℕ, ∃ d : ℝ, 0 < d ∧
       Tendsto (fun N : ℕ => (countUpTo r N : ℝ) / N) atTop (𝓝 d) := by
@@ -61,6 +61,7 @@ For every $r$, the set of $n$ with at least $r$ squarefree binomial coefficients
 $\binom{n}{k}$, $1\leq k<n$, has positive lower density. This follows from [GrRa96].
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos378.lean#L3256"]
 theorem erdos_378.variants.lower_density_pos (r : ℕ) :
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop, c * N ≤ (countUpTo r N : ℝ) := by
   sorry
