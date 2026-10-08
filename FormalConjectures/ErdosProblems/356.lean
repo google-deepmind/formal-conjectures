@@ -51,8 +51,8 @@ The original problem was solved (in the affirmative) by Beker [Be23b].
 
 We require $1\leq a_i$, as in Beker's formulation of the problem.
 -/
-@[category research solved, AMS 5 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos356.lean#L1135"]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos356.lean#L1135"]
 theorem erdos_356 : answer(True) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in Filter.atTop,
       ∃ (k : ℕ) (a : ℕ → ℤ), IsAdmissible n k a ∧
