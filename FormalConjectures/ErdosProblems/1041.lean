@@ -85,8 +85,13 @@ theorem erdos_1041 :
         Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
   sorry
 
-/-- For distinct real roots normalized from `-1` to `1`, one complete interval
-between adjacent roots obeys the displayed bound. This is Will Cook's
+/-- Let $n\ge 2$ and $-1=y_0<y_1<\cdots<y_{n-1}=1$ be real roots.
+There is an $i<n-1$ such that, for every $x\in[y_i,y_{i+1}]$,
+$$
+\left|\prod_{j=0}^{n-1}(x-y_j)\right|
+\le \frac{1}{\left(2^{n-1}\cos\frac{\pi}{2n}\right)^n}.
+$$
+Here the formal statement uses $n=m+2$. This is Will Cook's
 [quantitative whole-gap theorem](https://github.com/wcook04/plectis-erdos/blob/a14777b3219873bc8343205cca0bb3bb6530e8fa/paper/1041/erdos1041-lemniscate-reasoning-surface.tex#L1745-L1832).
 [Erdős, Herzog and Piranian (1958)](https://users.renyi.hu/~p_erdos/1958-05.pdf)
 proved a qualitative collinear result; the sharp constant comes from the
