@@ -4,11 +4,11 @@
 
 ## Source comparison
 
-- AEGIS #679 at `4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe`: 191 byte-exact formal Lean source files archived as `*.lean.src`, plus 4 nonidentical research artifacts from its source revision. Archive: `research/rh/aegis_source_4d7578e/`.
+- AEGIS #679 at `4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe`: 191 byte-exact primary Lean source files archived as `*.lean.src`, **10 byte-exact Lean specification/test files**, **22 byte-exact Coq source files**, plus 4 nonidentical RH research artifacts from its source revision. Archive: `research/rh/aegis_source_4d7578e/`.
 - AEGIS #699 at `0c1477fb032bb979a1bc61efd23caa4cacfe376c`: 80 byte-exact UTF-8 `research/rh` files, including Krein primal, certificates and Feshbach receipts. Archive: `research/rh/aegis_source_0c1477f/`.
 - AEGIS #693 at `4f93fffcea401e8ede433cc27d525ff7ad1579e3`: 16 additional/alternate byte-exact Epstein and critical-line source files not identical to the two snapshots above. Archive: `research/rh/aegis_source_4f93fff/`.
 
-**Verified file total:** 291/291 staged paths matched their pinned Git blob SHA during assembly. Full per-file source/path/hash/size evidence is in `AEGIS_RH_SOURCE_PORT_MANIFEST_20261008.json`.
+**Verified file total:** 323/323 staged paths matched their pinned Git blob SHA during assembly. Full per-file source/path/hash/size evidence is in `AEGIS_RH_SOURCE_PORT_MANIFEST_20261008.json`.
 
 ### Explicit exclusions
 
@@ -27,3 +27,9 @@ Those 2 compressed upstream blobs could not be copied by the connected GitHub te
 ## Source and verification contract
 
 Use `source_pin`, `source_path` and `blob_sha` in the JSON manifest to reconstruct or check byte-identity. Rename a `*.lean.src` copy to `*.lean` only in a pinned isolated Lean workspace with all dependencies resolved, then replay the exact theorem statements and inspect axioms. Numerical receipts remain empirical inputs; their existence is not a formal proof.
+
+### Supplemental formal source closure (exact #679)
+
+The full #679 formal tree comprises 201 Lean files (191 main bridge modules and 10 specification modules) plus 22 Coq modules. The original 191 archived Lean sources remain unchanged. This update appends only the **32 previously missing source blobs** in `research/rh/aegis_source_4d7578e/tests/lean/` and `research/rh/aegis_source_4d7578e/coq/`, with no duplicate copies. Every new entry is bound by Git SHA in the same canonical manifest.
+
+These Coq modules are evidence sources, **not** automatic Lean dependencies and **not** proof of the unresolved universal RH gate. Compilation and axiom replay must precede any activation.

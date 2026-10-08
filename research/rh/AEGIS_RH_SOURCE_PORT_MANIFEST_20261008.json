@@ -26,13 +26,15 @@
       "folder": "research/rh/aegis_source_4f93fff"
     }
   },
-  "files_total": 291,
+  "files_total": 323,
   "inventory_counts": {
     "aegis_679_formal": 191,
     "aegis_699_research": 80,
     "aegis_679_research_variant": 4,
     "aegis_693_epstein_variant": 16,
-    "unported_binary": 2
+    "unported_binary": 2,
+    "aegis_679_lean_tests": 10,
+    "aegis_679_coq": 22
   },
   "files": [
     {
@@ -2362,6 +2364,262 @@
       "archive_path": "research/rh/aegis_source_4f93fff/research/test_epstein_lattice_weil_probe.py",
       "blob_sha": "b7b9fd9cc3458b9a6751fdc59988708ea2acff54",
       "bytes": 7562
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/coq/SemanticBridgeObstruction.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/bridges/coq/SemanticBridgeObstruction.v",
+      "blob_sha": "c643fbb7b597e5d895f3f34097c3efedffd35dd8",
+      "bytes": 1342
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilAutocorrelationMellinV11Spec.lean",
+      "blob_sha": "938657931b5f5458916db0722151fd57046a3096",
+      "bytes": 485
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineAssemblyV4Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineAssemblyV4Spec.lean",
+      "blob_sha": "8df1dfa7f8856a529160a6bc548b9542fde206f3",
+      "bytes": 1327
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineExplicitFormulaContractV2Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineExplicitFormulaContractV2Spec.lean",
+      "blob_sha": "f1d8dcf688825556c0ca9903eaa3844918ff0b1f",
+      "bytes": 1577
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineFubiniCoreV3Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineFubiniCoreV3Spec.lean",
+      "blob_sha": "2fee3871f1e8290bcc73bc869e3f53bb8473a7c7",
+      "bytes": 1318
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineKernelIntegralV6Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineKernelIntegralV6Spec.lean",
+      "blob_sha": "860716607c21cfe08b132a6abb4fdb407bf42fb4",
+      "bytes": 525
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineXSpaceTailV7Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineXSpaceTailV7Spec.lean",
+      "blob_sha": "916af0e22acabdd78909d0d42eb2df43a24f0f3d",
+      "bytes": 771
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedHadamardFixedLineV1Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedHadamardFixedLineV1Spec.lean",
+      "blob_sha": "6b6dacc4ac5b880a6a933e9296fb20ededbf6aec",
+      "bytes": 1851
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedHadamardKernelTsumV2Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedHadamardKernelTsumV2Spec.lean",
+      "blob_sha": "6c1db482f8d26c9b2c16417f906550bf8d12616e",
+      "bytes": 1462
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedMellinProfileV5Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedMellinProfileV5Spec.lean",
+      "blob_sha": "f2e9e185666020353379148a85e23245d9ca7f81",
+      "bytes": 846
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilReciprocalPairedTestV8Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilReciprocalPairedTestV8Spec.lean",
+      "blob_sha": "7b74bd92df466011cae3317df5bc76de0f928a08",
+      "bytes": 700
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Bisimulation/ThreeWay.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Bisimulation/ThreeWay.v",
+      "blob_sha": "a235224fa19846118508b8171e4d201493823708",
+      "bytes": 473
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Event.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Event.v",
+      "blob_sha": "401a6403755cf88e7d7145aee9cdc3675a4c887c",
+      "bytes": 111
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Hash.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Hash.v",
+      "blob_sha": "8c00641484233b0faab4c348dbab28cf0f876610",
+      "bytes": 185
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/LatticeConvergence.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/LatticeConvergence.v",
+      "blob_sha": "aaa697aab3694b956df5a35b9a74afe2775d221d",
+      "bytes": 6820
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/LockIrreversibility.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/LockIrreversibility.v",
+      "blob_sha": "a551219d459f444b7bc1864bb260c04c18f7f250",
+      "bytes": 4317
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Reducer.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Reducer.v",
+      "blob_sha": "2d2924de5cd2adfb796814d9f9d97ee8af41ee6a",
+      "bytes": 300
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/AnalyticDefinitions.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/AnalyticDefinitions.v",
+      "blob_sha": "45e57d4bef0c227917bab901bf555386a2f24756",
+      "bytes": 3860
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/ConcreteFiniteGuinandWeilSemanticsV1.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/ConcreteFiniteGuinandWeilSemanticsV1.v",
+      "blob_sha": "a2fe539ea09813f4b0b38d2b4cd5149cb81ff90f",
+      "bytes": 14344
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/FiniteBridge.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/FiniteBridge.v",
+      "blob_sha": "ec9ab44b0eeb08d6062689e0d64ca53711179607",
+      "bytes": 2696
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/FiniteEntryDictionary.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/FiniteEntryDictionary.v",
+      "blob_sha": "420a776ad4642f32cb9454dad7d11fea58e07fdf",
+      "bytes": 3570
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/Globalization.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/Globalization.v",
+      "blob_sha": "d8f687841db4fd362778a9ba034e0f26316fdaa0",
+      "bytes": 5302
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0.v",
+      "blob_sha": "b78765a0a5db31bbc9f36a2b073191e5d248a90f",
+      "bytes": 326
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0ClosureProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0ClosureProbe.v",
+      "blob_sha": "dc397ed41ca17ba130e4bfbb45f1d2418a404afc",
+      "bytes": 166
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0DependencyProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0DependencyProbe.v",
+      "blob_sha": "8429ccdfcc4ba63b47555ef3c91e0930d6973ab9",
+      "bytes": 152
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0ProductionConstructiveProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0ProductionConstructiveProbe.v",
+      "blob_sha": "2595ea0e78359a71bbe87d460d49fffd111f1564",
+      "bytes": 416
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeCompact.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeCompact.v",
+      "blob_sha": "1f9aeec8644c30062a6b260c769a5188027ce301",
+      "bytes": 513
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeConstructive.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeConstructive.v",
+      "blob_sha": "04bea158f497008a7efabccef1275b651c5b6967",
+      "bytes": 707
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeContinuity.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeContinuity.v",
+      "blob_sha": "3b8218d6d970f2366da5328b1b694d1447bd0df1",
+      "bytes": 366
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeFunction.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeFunction.v",
+      "blob_sha": "56b4f96af1b2acfeea8b48a013c4b4fa7cc6345d",
+      "bytes": 275
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeReals.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeReals.v",
+      "blob_sha": "eb0efe6f225df339cbd2f1b762a2a8d59ebeb344",
+      "bytes": 208
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/WeilCriterion.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/WeilCriterion.v",
+      "blob_sha": "de49cbc6eb48b2dc5e41db6e08bd5342df0932c6",
+      "bytes": 689
     }
   ],
   "external_binary_blobs": [
