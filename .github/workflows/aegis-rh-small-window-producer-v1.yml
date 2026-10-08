@@ -17,8 +17,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: aegis-rh-small-window-producer-v1-${{ github.event.pull_request.head.sha || github.sha }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}

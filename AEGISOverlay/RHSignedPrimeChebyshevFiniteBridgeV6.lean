@@ -47,6 +47,7 @@ open AEGIS.WeilPrimeDiscrepancyEstimateV1
 open AEGIS.WeilSignedKernelReductionV1
 open AEGIS.RHPrimePowerKernelConnectorV1
 open AEGIS.RHPrimeOnlyGrowthBridgeV1
+open AEGIS.RHFixedPacketFrontierV1
 open AEGIS.RHPrimeDiscrepancyLogSubstitutionV4
 open AEGIS.RHSignedPrimeActualKernelTailV5
 
@@ -57,7 +58,7 @@ theorem neg_abel_integrand_eq_chebyshev_integrand
     -(deriv (PrimeWeightV1 g d) x * PrimeDiscrepancyV1 x) =
       primeDiscrepancyKernelV1 g (d - Real.log x) *
         (((Real.exp (-Real.log x / 2) *
-            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ) := by
+            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) := by
   rw [primeWeight_deriv_v1 g d x hx, discrepancy_eq_mathlib_v1 x]
   simp only [primeDiscrepancyKernelV1, Complex.ofReal_mul]
   ring
@@ -74,7 +75,7 @@ theorem signed_prime_eq_finite_chebyshev_convolution
           ∫ x in Ioc (1 : ℝ) (N : ℝ),
             primeDiscrepancyKernelV1 g (d - Real.log x) *
               (((Real.exp (-Real.log x / 2) *
-                  (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ) := by
+                  (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) := by
   obtain ⟨L, hL, hS⟩ := prime_correlation_discrepancy_v1 g hm
   refine ⟨L, hL, ?_⟩
   intro d hd
@@ -90,7 +91,7 @@ theorem signed_prime_eq_finite_chebyshev_convolution
     _ = ∫ x in Ioc (1 : ℝ) (N : ℝ),
           primeDiscrepancyKernelV1 g (d - Real.log x) *
             (((Real.exp (-Real.log x / 2) *
-                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ) := by
+                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) := by
       apply integral_congr_ae
       filter_upwards [ae_restrict_mem measurableSet_Ioc] with x hx
       exact neg_abel_integrand_eq_chebyshev_integrand g d x
@@ -108,11 +109,11 @@ def EventuallyChebyshevFiniteIntegralExtendsV6 : Prop :=
     (∫ x in Ioc (1 : ℝ) (N : ℝ),
       primeDiscrepancyKernelV1 detectingPacket (d - Real.log x) *
         (((Real.exp (-Real.log x / 2) *
-            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) =
+            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ))) =
     (∫ x in Ioi (0 : ℝ),
       primeDiscrepancyKernelV1 detectingPacket (d - Real.log x) *
         (((Real.exp (-Real.log x / 2) *
-            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ))
+            (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)))
 
 /-- The exact analytic integrability needed to split the full psi orbit into
 prime-only and higher-prime-power convolutions. A proof should use the compact
@@ -158,11 +159,11 @@ theorem eventual_signed_prime_equals_combined_of_analytic_closure
         ∫ x in Ioc (1 : ℝ) (N : ℝ),
           primeDiscrepancyKernelV1 detectingPacket (d - Real.log x) *
             (((Real.exp (-Real.log x / 2) *
-                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ) := hFiniteEq
+                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) := hFiniteEq
     _ = ∫ x in Ioi (0 : ℝ),
           primeDiscrepancyKernelV1 detectingPacket (d - Real.log x) *
             (((Real.exp (-Real.log x / 2) *
-                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ) :=
+                (Chebyshev.psi x - x) : ℝ) : ℂ) / (x : ℂ)) :=
           hExtend' d hdT₁ N hN hUpper
     _ = fullPrimeDiscrepancyOrbitV1 detectingPacket d :=
           (full_prime_discrepancy_orbit_eq_chebyshev_x_integral
