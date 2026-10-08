@@ -49,7 +49,7 @@ The statements and constants below are taken from §3.4.5 of [Co26].
 open Complex Filter Real
 open scoped Asymptotics Nat
 
-namespace riemannZeta
+namespace RiemannZetaMoments
 
 /-- The $k$th moment of the Riemann zeta function is the integral
 $$
@@ -67,20 +67,20 @@ $$
 for some constant $c_k$.
 -/
 @[category research open, AMS 11]
-theorem moments (k : ℕ) : ∃ c > (0 : ℝ),
+theorem moment_isEquiv (k : ℕ) : ∃ c > (0 : ℝ),
     moment k ~[atTop] fun T ↦ c * T.log ^ (k ^ 2) := by
   sorry
 
 /-- The asymptotic behaviour of the first moment of the Riemann zeta function was proved by
 Hardy and Littlewood, where $c_1 = 1$ [Co26, §3.4.5]. -/
 @[category research solved, AMS 11]
-theorem moments₁ : moment 1 ~[atTop] fun T ↦ T.log := by
+theorem moment_isEquiv₁ : moment 1 ~[atTop] fun T ↦ T.log := by
   sorry
 
 /-- The asymptotic behaviour of the second moment of the Riemann zeta function was proved by
 Ingham [In26], where $c_2 = 1/(2\pi^2)$. -/
 @[category research solved, AMS 11]
-theorem moments₂ : moment 2 ~[atTop] fun T ↦ (1 / (2 * π ^ 2)) * T.log ^ 4 := by
+theorem moment_isEquiv₂ : moment 2 ~[atTop] fun T ↦ (1 / (2 * π ^ 2)) * T.log ^ 4 := by
   sorry
 
 /-- The arithmetic factor expected to appear in the asymptotic behaviour of the $k$th moment of the
@@ -106,21 +106,22 @@ theorem arithmeticFactor_zero : arithmeticFactor 0 = 1 := by
 /-- The constant in the asymptotic formula for the 3rd zeta moment is conjectured
 to be $42a_3/9!$ [CG98]. -/
 @[category research open, AMS 11]
-theorem moments₃ : moment 3 ~[atTop] fun T ↦ 42 * arithmeticFactor 3 / 9 ! * T.log ^ 9 := by
+theorem moment_isEquiv₃ : moment 3 ~[atTop] fun T ↦ 42 * arithmeticFactor 3 / 9 ! * T.log ^ 9 := by
   sorry
 
 /-- The constant in the asymptotic formula for the 4th zeta moment is conjectured to
 be $24024a_4/16!$ [CGo01]. -/
 @[category research open, AMS 11]
-theorem moments₄ : moment 4 ~[atTop] fun T ↦ 24024 * arithmeticFactor 4 / 16 ! * T.log ^ 16 := by
+theorem moment_isEquiv₄ :
+    moment 4 ~[atTop] fun T ↦ 24024 * arithmeticFactor 4 / 16 ! * T.log ^ 16 := by
   sorry
 
 /-- The Keating–Snaith conjecture [KS00] for the $k$th moment of the Riemann zeta function,
 provides the value of $c_k$ in the asymptotic formula [Co26, §3.4.5]. -/
 @[category research open, AMS 11]
-theorem momentsₖ (k : ℕ) : moment k ~[atTop]
+theorem moment_isEquivₖ (k : ℕ) : moment k ~[atTop]
     fun T ↦ (arithmeticFactor k * ∏ j ∈ Finset.range k, (j ! : ℝ) / (j + k) !) *
       T.log ^ (k ^ 2) := by
   sorry
 
-end riemannZeta
+end RiemannZetaMoments
