@@ -24,7 +24,6 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/140](https://www.erdosproblems.com/140)
 - [KeMe23] Kelley, Zander and Meka, Raghu, *Strong bounds for 3-progressions*. 2023 IEEE 64th
   Annual Symposium on Foundations of Computer Science (FOCS) (2023).
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos140.md)
 -/
 
 @[expose] public section
@@ -61,6 +60,7 @@ $C > 0$.
 Proved by Kelley and Meka [KeMe23].
 -/
 @[category research solved, AMS 5 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos140.lean#L68"]
 theorem erdos_140 (C : ℝ) (hC : 0 < C) :
     (fun N : ℕ => (r3 N : ℝ)) =O[atTop] (fun N : ℕ => (N : ℝ) / Real.log N ^ C) := by
   sorry
