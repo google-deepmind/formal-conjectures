@@ -2,7 +2,27 @@ import json, sys, os
 from pathlib import Path
 from fractions import Fraction as Q
 R=str(Path(__file__).resolve().parents[1])
-D=json.load(open('design105F.json'))
+TOOLS=Path(__file__).resolve().parent
+D=json.loads((TOOLS / 'design105F.json').read_text(encoding='utf-8'))
+# Structural fail-closed validation only; this is not a proof of certificate positivity.
+def validate_design(cells):
+    if not isinstance(cells, list) or not cells:
+        raise ValueError('L105_EMPTY_CERTIFICATE_DESIGN')
+    end = Q(0)
+    for i, cell in enumerate(cells):
+        lo, hi = Q(cell['lo']), Q(cell['hi'])
+        if lo != end or hi <= lo:
+            raise ValueError(f'L105_NONCONTIGUOUS_WINDOW_{i}')
+        cuts = [Q(x) for x in cell['breaks']]
+        if not cuts or cuts[-1] != hi or any(not (a < b <= hi) for a,b in zip([lo]+cuts[:-1],cuts)):
+            raise ValueError(f'L105_INVALID_CELL_BREAKS_{i}')
+        if cell['deg'] not in (16,36) or not (0 <= cell['K0'] <= cell['N'] <= 256):
+            raise ValueError(f'L105_INVALID_CERTIFICATE_PARAMETERS_{i}')
+        end = hi
+    if end != Q(3000):
+        raise ValueError('L105_CERTIFICATE_DOES_NOT_COVER_0_TO_3000')
+
+validate_design(D)
 HDR=(Path(R)/'RHKreinHatAtV1.lean').read_text().split('-/')[0]+'-/\n'
 def qs(s):
     q=Q(s); return f"{q.numerator}" if q.denominator==1 else f"{q.numerator}/{q.denominator}"
@@ -57,6 +77,6 @@ open AEGIS.RHKreinL105CheckerV1 AEGIS.RHKreinL105TailV1
         s+=(f"theorem b{k:03d} : ∀ t : ℝ, {rq(D[idx[0]]['lo'])} ≤ t → t ≤ {rq(D[idx[-1]]['hi'])} → 0 ≤ Fcert t :=\n"
             f"  {glue_chain([f'w{i:04d}' for i in idx])}\n\nend AEGIS.RHKreinL105BatchV1\n")
         open(f'{R}/{nm}.lean','w').write(s)
-    json.dump(names,open('batches105.json','w'))
+    (TOOLS / 'batches105.json').write_text(json.dumps(names), encoding='utf-8')
     print(len(B),'batch files')
 write(int(sys.argv[1]) if len(sys.argv)>1 else 200)

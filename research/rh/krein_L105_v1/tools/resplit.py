@@ -5,7 +5,7 @@ from fractions import Fraction as Q
 from gen105 import HDR, qs, rq, glue_chain, R, D
 from split import check
 S=str(Path(__file__).resolve().parent)
-B=json.load(open('batches105.json'))
+B=json.loads((Path(S) / 'batches105.json').read_text(encoding='utf-8'))
 ok=set(l.split()[0] for l in open(f'{S}/batch105.log') if ' OK' in l)
 UNIT=25
 def w(i): return len(D[i]['breaks'])*D[i]['N']/256

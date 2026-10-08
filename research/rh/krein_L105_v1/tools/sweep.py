@@ -1,5 +1,7 @@
 import sys, json, time
 from m105 import *
+from pathlib import Path
+TOOLS = Path(__file__).resolve().parent
 pa=(36,30,12,120,36,40); N=256
 def pieces_for(lo,hi,K0,hats,maxdepth=16):
     c=(lo+hi)/2; r=(hi-lo)/2
@@ -32,5 +34,5 @@ while t<T1:
     cells.append({'lo':str(lo),'hi':str(hi),'K0':K0,'hats':hats,'breaks':[str(b) for b in sorted(br)]})
     t=hi
     if len(cells)%100==0: print(len(cells),float(t),'hatcells',nh,'pieces',sum(len(c['breaks']) for c in cells),f'{time.time()-t0:.0f}s',flush=True)
-json.dump(cells,open('design105.json','w'))
+(TOOLS / 'design105.json').write_text(json.dumps(cells), encoding='utf-8')
 print('DONE cells',len(cells),'hatcells',nh,'pieces',sum(len(c['breaks']) for c in cells))

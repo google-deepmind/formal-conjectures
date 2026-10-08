@@ -1,7 +1,9 @@
 import json, collections
 from m105 import *
+from pathlib import Path
+TOOLS = Path(__file__).resolve().parent
 pa=(36,30,12,120,36,40)
-D=json.load(open('design105.json'))
+D=json.loads((TOOLS / 'design105.json').read_text(encoding='utf-8'))
 out=[]; cnt=collections.Counter()
 for i,cell in enumerate(D):
     lo=Q(cell['lo']); hi=Q(cell['hi']); K0=cell['K0']; hats=cell['hats']
@@ -18,4 +20,4 @@ for i,cell in enumerate(D):
     assert best is not None, (i, cell['lo'])
     cell['N']=best; cnt[best]+=1; out.append(cell)
     if i%200==0: print(i, cnt, flush=True)
-json.dump(out,open('design105N.json','w')); print('DONE',cnt)
+(TOOLS / 'design105N.json').write_text(json.dumps(out), encoding='utf-8'); print('DONE',cnt)

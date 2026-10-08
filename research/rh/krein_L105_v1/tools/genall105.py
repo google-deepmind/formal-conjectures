@@ -2,8 +2,10 @@ import json
 from pathlib import Path
 from fractions import Fraction as Q
 R=str(Path(__file__).resolve().parents[1])
-B=json.load(open('batches105.json'))
+B=json.loads((Path(__file__).resolve().parent / 'batches105.json').read_text(encoding='utf-8'))
 HDR=(Path(R)/'RHKreinHatAtV1.lean').read_text().split('-/')[0]+'-/\n'
+if not B or any(name != f'RHKreinL105Batch{i:03d}' or not indices for i,(name,indices) in enumerate(B)):
+    raise ValueError('L105_INVALID_BATCH_MANIFEST')
 imports="\n".join(f"import {nm}" for nm,_ in B)
 e=f"b{0:03d}"
 for k in range(1,len(B)): e=f"(glue {e} b{k:03d})"

@@ -70,6 +70,45 @@ jobs:
           print('KREIN_21_OVER_20_KERNEL_REPLAY=NOT_RUN')
           print('RIEMANN_HYPOTHESIS=NOT_PROVED')
           PY
+      - name: Check generator location independence using disposable non-proof fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, subprocess, sys, tempfile, shutil
+          from pathlib import Path
+          original = Path.cwd() / 'research/rh/krein_L105_v1/tools'
+          with tempfile.TemporaryDirectory(prefix='aegis-l105-generator-smoke-') as temp:
+              root = Path(temp)
+              tools = root / 'tools'
+              tools.mkdir()
+              for name in ('gen105.py', 'genall105.py'):
+                  shutil.copy2(original / name, tools / name)
+              (root / 'RHKreinHatAtV1.lean').write_text('/-\nTEST FIXTURE ONLY; NOT A PROOF\n-/\n')
+              fixture = [
+                  {'lo':'0','hi':'1500','N':16,'K0':0,'deg':36,'hats':True,'breaks':['1500']},
+                  {'lo':'1500','hi':'3000','N':16,'K0':0,'deg':16,'hats':False,'breaks':['3000']}
+              ]
+              (tools / 'design105F.json').write_text(json.dumps(fixture))
+              # Execute from outside the generator and certificate directories.
+              for name in ('gen105.py', 'genall105.py'):
+                  subprocess.run([sys.executable, str(tools / name)], cwd=Path(temp).parent,
+                                 check=True, capture_output=True, text=True)
+              batches=json.loads((tools/'batches105.json').read_text())
+              assert batches==[['RHKreinL105Batch000',[0,1]]], batches
+              assert (root/'RHKreinL105Batch000.lean').is_file()
+              assert (root/'RHKreinL105AllV1.lean').is_file()
+              # The second fixture has a gap; it MUST be rejected before any proof-generation.
+              fixture[1]['lo']='1501'
+              (tools/'design105F.json').write_text(json.dumps(fixture))
+              proc=subprocess.run([sys.executable,str(tools/'gen105.py')],cwd=Path(temp).parent,
+                                  capture_output=True,text=True)
+              assert proc.returncode != 0
+              assert 'L105_NONCONTIGUOUS_WINDOW_1' in proc.stderr
+          print('GENERATOR_PATH_SMOKE=PASS')
+          print('DISCONTINUOUS_DESIGN_REJECTED=PASS')
+          print('REAL_L105_BATCH_KERNEL_REPLAY=NOT_RUN')
+          PY
       - name: Record known missing finite certificate design without inventing data
         if: always()
         shell: bash
