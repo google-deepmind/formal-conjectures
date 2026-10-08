@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
   combinatorial number theory (1980), p. 72.
 - [GrRa96] Granville, Andrew and Ramaré, Olivier, Explicit bounds on exponential sums
   and the scarcity of squarefree binomial coefficients. Mathematika (1996), 73–107.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos378.md)
 -/
 
 @[expose] public section
