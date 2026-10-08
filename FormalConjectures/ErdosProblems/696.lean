@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 696
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 * [Lean proof](https://github.com/davidturturean/erdos-696/blob/4fa1bf2c6ff6f2e0c7024f814614c7455404fdd3/Erdos696/Main.lean#L35), assuming
   the Siegel-Walfisz theorem, the Brun-Titchmarsh inequality, and Mertens' theorem as custom axioms.
 -/
+
+@[expose] public section
 
 namespace Erdos696
 
