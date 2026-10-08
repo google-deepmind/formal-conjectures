@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Toronto spaces
@@ -29,6 +30,8 @@ W.R. Brian proved that this holds under GCH.
  - [Wikipedia](https://en.wikipedia.org/wiki/Toronto_space)
  - [The Toronto problem](https://wrbrian.wordpress.com/wp-content/uploads/2012/01/thetorontoproblem.pdf) by *W.R. Brian*
 -/
+
+@[expose] public section
 
 namespace Toronto
 

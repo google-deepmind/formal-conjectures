@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 872
@@ -32,6 +33,8 @@ value grows linearly, and the questions below concern the Prolonger-first quanti
 - [erdosproblems.com/872](https://www.erdosproblems.com/872)
 - [erdosproblems.com/forum/thread/872](https://www.erdosproblems.com/forum/thread/872)
 -/
+
+@[expose] public section
 
 open Filter
 

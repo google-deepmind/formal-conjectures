@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 145
@@ -46,6 +47,8 @@ $\mathrm{ecc}(B)$ is the eccentricity of the boundary vertices, and
 $\lambda_{\min}(\overline{G})$ is the local independence minimum of the complement
 $\overline{G}$.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture145
 

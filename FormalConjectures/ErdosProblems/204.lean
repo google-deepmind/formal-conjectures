@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 204
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/204](https://www.erdosproblems.com/204)
 - [Ad25] S. Adenwalla, A Question of Erdős and Graham on Covering Systems. arXiv:2501.15170 (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos204
 

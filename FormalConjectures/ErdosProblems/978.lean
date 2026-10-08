@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 978
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
  - [Br11] Browning, T. D., Power-free values of polynomials. Arch. Math. (Basel) (2011), 139--150.
  - [Er53] Erdős, P., Arithmetical properties of polynomials. J. London Math. Soc. (1953), 416--425.
 -/
+
+@[expose] public section
 
 open Polynomial Set
 
@@ -50,11 +53,12 @@ theorem erdos_978.parts.i {f : ℤ[X]} (hi : Irreducible f) (hd : 2 < f.natDegre
     HasPosDensity {n : ℕ | Powerfree (f.natDegree - 1) (f.eval (n : ℤ))} := by
   sorry
 
-/-- If the degree `k` of `f` is larger than or equal to `9`, then the set of `n` such that `f n` is
-`(k - 2)`-th power free has infinitely many elements. This result is proved in [Br11]. -/
+/-- If the degree `k` of `f` is larger than or equal to `9`, and `f n` has no fixed `(k - 2)`-th
+power divisors other than `1`, then the set of `n` such that `f n` is `(k - 2)`-th power free has
+infinitely many elements. This result is proved in [Br11]. -/
 @[category research solved, AMS 11]
 theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤ f.natDegree)
-    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) :
+    (hp : ∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 

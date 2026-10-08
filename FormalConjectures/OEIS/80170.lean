@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture relating two characterizations of a set of integers.
@@ -37,6 +38,8 @@ taking 1 off each number in the sequence defined by 2.
 - [A80170](https://oeis.org/A80170)
 - [A51283](https://oeis.org/A51283)
 -/
+
+@[expose] public section
 
 namespace OeisA80170
 

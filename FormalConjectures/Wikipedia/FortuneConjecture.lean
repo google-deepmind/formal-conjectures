@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fortune's Conjecture
@@ -36,6 +37,8 @@ The first few Fortunate numbers are $3, 5, 7, 13, 23, 17, 19, 23, 37, 61, \ldots
 - [PrimePages glossary entry](https://primes.utm.edu/glossary/xpage/FortunateNumber.html)
 - [PlanetMath: Fortune's conjecture](https://planetmath.org/fortunesconjecture)
 -/
+
+@[expose] public section
 
 namespace FortuneConjecture
 

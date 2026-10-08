@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 688
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/688](https://www.erdosproblems.com/688)
 - [Er80] Erdős, Paul, _A survey of problems in combinatorial number theory_. Ann. Discrete Math. (1980), 89-115.
 -/
+
+@[expose] public section
 
 open Real Filter
 
@@ -40,19 +43,11 @@ def Erdos688Prop (n : ℕ) (ε : ℝ) : Prop :=
 noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Prop n ε}
 
 /--
-Estimate $\epsilon_n$ - lower bound.
+Estimate $\epsilon_n$.
 -/
 @[category research open, AMS 11]
-theorem erdos_688.parts.i.lower_bound :
-    (answer(sorry) : ℕ → ℝ) =O[atTop] epsilonFunction := by
-  sorry
-
-/--
-Estimate $\epsilon_n$ - upper bound.
--/
-@[category research open, AMS 11]
-theorem erdos_688.parts.i.upper_bound :
-    epsilonFunction =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+theorem erdos_688.parts.i :
+    epsilonFunction =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 /--

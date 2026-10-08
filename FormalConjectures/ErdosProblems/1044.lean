@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«1041»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«1041»
 
 /-!
 # Erdős Problem 1044
@@ -27,6 +28,8 @@ import FormalConjectures.ErdosProblems.«1041»
 - [Ta26] Tang, Quanyu, *On Erdős Problem 1044* (2026),
   [github.com/QuanyuTang/erdos-problem-1044](https://github.com/QuanyuTang/erdos-problem-1044).
 -/
+
+@[expose] public section
 
 open Polynomial ENNReal
 

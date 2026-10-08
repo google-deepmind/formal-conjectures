@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 214
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Ju79] Juhász, Rozália, *Ramsey type theorems in the plane*. J. Combin. Theory Ser. A (1979),
   152-160.
 -/
+
+@[expose] public section
 
 open scoped Congruent EuclideanGeometry
 
