@@ -22,6 +22,10 @@ public import FormalConjecturesUtil
 
 *Reference:* [erdosproblems.com/144](https://www.erdosproblems.com/144)
 
+[ErHa79] Erdős, P. and Hall, R. R., *The propinquity of divisors*.
+  Bull. London Math. Soc. 11 (1979), 304–307.
+  [Paper](https://users.renyi.hu/~p_erdos/1979-26.pdf)
+
 [MaTe84] Maier, H. and Tenenbaum, G., On the set of divisors of an integer.
   Invent. Math. 76 (1984), 121-128.
 -/
@@ -75,7 +79,7 @@ theorem erdos_144.variants.maier_tenenbaum (β : ℝ) (hβ : β < Real.log 3 - 1
   sorry
 
 /--
-Erdős–Hall: if $\beta > \log 3 - 1$, the set of $n$ with divisors
+Erdős–Hall [ErHa79]: if $\beta > \log 3 - 1$, the set of $n$ with divisors
 $d_1 < d_2 < d_1 (1 + (\log n)^{-\beta})$ has density $0$.
 -/
 @[category research solved, AMS 11]
