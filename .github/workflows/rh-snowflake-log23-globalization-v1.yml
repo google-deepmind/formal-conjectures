@@ -105,6 +105,41 @@ jobs:
             lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-structural/source-$m.log"
           done
 
+      - name: Replay archived compact smooth two-moment right inverse
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .aegis rev-parse HEAD)" = "$AEGIS_SHA"
+          ROOT=".aegis/sovereign-omega-v2/formal/bridges/lean"
+          mkdir -p evidence-moment-potential .lake/build/lib/lean
+          test "$(git hash-object "$ROOT/WeilMomentKillerConstructionV1.lean")" = "f599d884d0d59f7e652887fb9e055ce95ea54aa6"
+          cp "$ROOT/WeilMomentKillerConstructionV1.lean" WeilMomentKillerConstructionV1.lean
+          lake env lean -o .lake/build/lib/lean/WeilMomentKillerConstructionV1.olean WeilMomentKillerConstructionV1.lean 2>&1 | tee evidence-moment-potential/WeilMomentKillerConstructionV1.log
+          for entry in RHMomentPotentialV4:23e2de9c703c09ac4b0c9502ef622d041b5afa29 RHMomentPotentialSupportV1:d134ba3de9fa4b93aeb48999669be41c5b057faa; do
+            m="${entry%%:*}"
+            expected_blob="${entry#*:}"
+            src="research/rh/verified_archive_sources/$m.lean.src"
+            test -f "$src"
+            test "$(git hash-object "$src")" = "$expected_blob"
+            cp "$src" "$m.lean"
+            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "evidence-moment-potential/$m.log"
+            python3 scripts/verify_rh_overlay_axioms.py "$m.lean" "evidence-moment-potential/$m.log"
+            printf '%s %s %s\n' "$m" "$expected_blob" "$(sha256sum "$src" | cut -d' ' -f1)" >> evidence-moment-potential/source-lock.txt
+          done
+          git rev-parse HEAD > evidence-moment-potential/fork-head.txt
+          git -C .aegis rev-parse HEAD > evidence-moment-potential/aegis-head.txt
+          git -C .lake/packages/mathlib rev-parse HEAD > evidence-moment-potential/mathlib-head.txt
+          lean --version > evidence-moment-potential/lean-version.txt
+
+      - name: Upload compact moment potential proof receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-moment-potential-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}
+          path: evidence-moment-potential/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: Compile and audit complementary symbols and Euler operator obstruction
         shell: bash
         run: |
