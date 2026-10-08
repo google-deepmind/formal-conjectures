@@ -54,7 +54,7 @@ private theorem primeWeight_deriv_zero_below_one_v8
     (hx : 0 < x) (hx1 : x < 1) :
     deriv (PrimeWeightV1 g d) x = 0 := by
   have hevent :
-      PrimeWeightV1 g d =ᶠ[𝓝 x] (fun _ : ℝ => (0 : ℂ)) := by
+      PrimeWeightV1 g d =ᶠ[Filter.nhds x] (fun _ : ℝ => (0 : ℂ)) := by
     filter_upwards [eventually_gt_nhds hx, eventually_lt_nhds hx1] with y hypos hy1
     exact primeWeight_zero_below_one_v1 g L d y hw hd hypos hy1.le
   simpa only [deriv_const] using Filter.EventuallyEq.deriv_eq hevent
@@ -66,7 +66,7 @@ private theorem primeWeight_deriv_zero_above_cutoff_v8
     (hx : (N : ℝ) < x) :
     deriv (PrimeWeightV1 g d) x = 0 := by
   have hevent :
-      PrimeWeightV1 g d =ᶠ[𝓝 x] (fun _ : ℝ => (0 : ℂ)) := by
+      PrimeWeightV1 g d =ᶠ[Filter.nhds x] (fun _ : ℝ => (0 : ℂ)) := by
     filter_upwards [eventually_gt_nhds hx] with y hy
     exact hUpper y hy.le
   simpa only [deriv_const] using Filter.EventuallyEq.deriv_eq hevent
