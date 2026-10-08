@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Euclid–Fortunate prime coverage
@@ -25,6 +27,8 @@ the least prime strictly greater than that product plus one.
 *References:*
 - [OEIS A067836](https://oeis.org/A067836)
 -/
+
+@[expose] public section
 
 namespace OeisA67836
 
