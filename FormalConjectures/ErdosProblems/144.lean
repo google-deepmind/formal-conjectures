@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 
 [MaTe84] Maier, H. and Tenenbaum, G., On the set of divisors of an integer.
   Invent. Math. 76 (1984), 121-128.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos144.md)
 -/
 
 @[expose] public section
