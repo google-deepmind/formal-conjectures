@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
 
 [KSSS22b] Kwan, M., Sah, A., Sawhney, M., and Simkin, M.,
 _High-girth Steiner triple systems_. [arXiv:2201.04554](https://arxiv.org/abs/2201.04554) (2022).
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos207.md)
 -/
 
 @[expose] public section
