@@ -28,6 +28,7 @@ public import FormalConjecturesUtil
   Math. Pannon. (1994), 261-269.
 - [Pi23] Pilatte, C., *A solution to the Erdős–Sárközy–Sós problem on asymptotic Sidon bases of
   order 3*. Compositio Math. (2024), 1418-1432.
+- [Lean formalisation and conditional reductions (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos157.md)
 -/
 
 @[expose] public section
