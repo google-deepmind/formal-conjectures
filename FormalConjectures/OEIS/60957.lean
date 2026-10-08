@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of different products of subsets of $\{1, 2, \dots, n\}$
@@ -24,6 +25,8 @@ of $\{1, 2, \dots, n\}$.
 
 *References:*
 - [A060957](https://oeis.org/A060957)-/
+
+@[expose] public section
 
 namespace OeisA60957
 

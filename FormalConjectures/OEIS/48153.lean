@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = \sum_{k=1}^n (k^2 \bmod n)$
 
 *References:*
 - [A048153](https://oeis.org/A048153)-/
+
+@[expose] public section
 
 namespace OeisA48153
 
@@ -55,7 +58,8 @@ theorem a_5 : a 5 = 10 := by
 
 /--
 "Conjecture: $a(n) <= \frac{n^2-1}{2}$. - _Aspen A.M. Meissner_, Mar 06 2025"-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-lite-200usd-ant-me0xxoowyqauyrvj/oeis_48153_conjecture_0/Submission/Spec.lean#L3215"]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) : a n ≤ (n ^ 2 - 1) / 2 := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 42
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   arXiv preprint arXiv:2102.08753 (2021).
 
 -/
+
+@[expose] public section
 
 open Real Complex MeasureTheory
 open scoped EuclideanGeometry FourierTransform
@@ -50,11 +53,12 @@ noncomputable def fHat (f : V → ℝ) (t : V) : ℝ :=
   (𝓕 (fun x ↦ (f x : ℂ)) t).re
 
 /--
-Definition 2.1 from [CoEl03]: A function is admissible if both the function and its Fourier
-transform decay sufficiently fast.
+Definition 2.1 from [CoEl03]: A function is admissible if it is continuous and both the function
+and its Fourier transform decay sufficiently fast. Continuity is essential: changing `f` at a
+single point leaves `fHat f` unchanged, so without it every positive bound would be achievable.
 -/
 def CohnElkiesAdmissible (f : V → ℝ) : Prop :=
-  ∃ C > 0, ∃ δ > 0,
+  Continuous f ∧ ∃ C > 0, ∃ δ > 0,
     (∀ x : V, |f x| ≤ C / (1 + ‖x‖) ^ ((Module.finrank ℝ V : ℝ) + δ)) ∧
     (∀ t : V, |fHat f t| ≤ C / (1 + ‖t‖) ^ ((Module.finrank ℝ V : ℝ) + δ))
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 42: Maximal Sidon Sets and Disjoint Difference Sets
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 This problem asks whether maximal Sidon sets can coexist with other Sidon sets that have
 disjoint difference sets (apart from 0).
 -/
+
+@[expose] public section
 
 open Function Set Filter
 open scoped Pointwise

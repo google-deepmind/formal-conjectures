@@ -13,14 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 331
 
-*Reference:* [erdosproblems.com/331](https://www.erdosproblems.com/331)
+*References:*
+- [erdosproblems.com/331](https://www.erdosproblems.com/331)
+- [ErFr84] Erdős, P. and Freud, R., On disjoint sets of differences. J. Number Theory (1984),
+  99--109.
 -/
+
+@[expose] public section
 
 open Nat Filter
 open scoped Asymptotics
@@ -57,10 +63,17 @@ open scoped Classical in
 Ruzsa suggests that a non-trivial variant of this problem arises if one imposes the stronger
 condition that $|A \cap \{1,\dots,N\}| \sim c_A N^{1/2}$ for some constant $c_A>0$, and similarly
 for $B$.
+
+The answer is yes. Write $A(N) = |A \cap \{1,\dots,N\}|$ and $B(N) = |B \cap \{1,\dots,N\}|$.
+Erdős and Freud [ErFr84, Theorem 4] proved that if $a_1 - a_2 = b_1 - b_2$ has only trivial
+solutions and $\liminf_N \min(A(N), B(N)) / N^{1/2} > 0$, then neither $A(N) / N^{1/2}$ nor
+$B(N) / N^{1/2}$ tends to a limit. If there were only finitely many non-trivial solutions, removing
+the finitely many elements of $A$ that occur in them would give sets with the same asymptotics and
+no non-trivial solution.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_331.variants.ruzsa :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ A B : Set ℕ,
       (∃ c_A > 0, (fun (n : ℕ) ↦ (count (· ∈ A) n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_A * (n : ℝ) ^ (1 / 2 : ℝ))) →
       (∃ c_B > 0, (fun (n : ℕ) ↦ (count (· ∈ B) n : ℝ)) ~[atTop] (fun (n : ℕ) ↦ c_B * (n : ℝ) ^ (1 / 2 : ℝ))) →

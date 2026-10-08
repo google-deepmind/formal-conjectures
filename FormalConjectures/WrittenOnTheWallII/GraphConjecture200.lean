@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 200
@@ -45,6 +46,8 @@ This is a smallest counterexample overall: an exhaustive search over all
 graphs on at most 3 vertices are trivially traceable) found no graph
 satisfying the premise without a Hamiltonian path.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture200
 
