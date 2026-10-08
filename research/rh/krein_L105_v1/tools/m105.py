@@ -7,6 +7,7 @@ predict `checkWide ... = true` before the kernel runs.
 from fractions import Fraction as Q
 from math import factorial, floor, ceil
 import json
+from pathlib import Path
 
 def fl(q): return q.numerator // q.denominator
 def cl(q): return -((-q.numerator) // q.denominator)
@@ -111,7 +112,7 @@ def phaseRow(C, S, h, n):
 # ---- certificate data ----
 L105 = Q(21, 20)
 def hk(k): return Q(107 + 2 * k, 100)          # u_k = 21/20 + (k+1)/50
-_P = json.load(open('/tmp/claude-0/-home-user-AEGIS-OMEGA/eb61930d-8cb3-5904-af97-9be2520ea188/scratchpad/l105/best_L1.05_s8.0_r3e-10.json'))
+_P = json.loads((Path(__file__).resolve().parents[2] / 'aegis_source_4d7578e' / 'research' / 'krein_lp_L1.05_svd.json').read_text())
 CQ = [Q(x) for x in _P['coef'][:-5]]           # exact dyadic values of the float coefficients
 DQ = [Q(x) for x in _P['coef'][-5:]]
 NH = len(CQ)
