@@ -32,9 +32,12 @@ jobs:
           test "$(git hash-object research/rh/krein_L105_v1/RHKreinL105DataV1.lean)" = 1b88c253ed33ab041880bc0cd3c117d1d2e09e34
           test "$(git hash-object research/rh/aegis_source_4d7578e/research/krein_lp_L1.05_svd.json)" = 8693c140b4be1f785074aa7040b5c50be5ef5fd2
           test "$(git hash-object research/rh/krein_L105_v1/tools/m105.py)" = edb52a548ea8befa22ba155553c175bd721ea756
-          test "$(git hash-object research/rh/krein_L105_v1/tools/gen105.py)" = 1326bd3eab1a2c9a634cbf8405a1b8f7e691f5ae
-          test "$(git hash-object research/rh/krein_L105_v1/tools/genall105.py)" = 2cb4b5f721f95a023a01d8163845125d7a76deb5
-          test "$(git hash-object research/rh/krein_L105_v1/tools/resplit.py)" = 7d04e361c8eec4a74472968e6aa5bfd48466616d
+          test "$(git hash-object research/rh/krein_L105_v1/tools/gen105.py)" = 3f283411bb216bd79099600dd4945c74b5e8eff6
+          test "$(git hash-object research/rh/krein_L105_v1/tools/genall105.py)" = f3769a0b5b34a0c10f167a5782970d772d2de974
+          test "$(git hash-object research/rh/krein_L105_v1/tools/resplit.py)" = 5107d8e04454e814bd9a897b17876ae46d36c523
+          test "$(git hash-object research/rh/krein_L105_v1/tools/sweep.py)" = ed523d5040912814843f6028d7a576c28fca32c8
+          test "$(git hash-object research/rh/krein_L105_v1/tools/minN.py)" = 1f34cdd274ad09fb7f58818733258721bf817ddd
+          test "$(git hash-object research/rh/krein_L105_v1/tools/deg16.py)" = fc93a9781c89103418a558c06d5382eea9c9b047
           printf 'EXACT_HEAD=%s\nLEAN_DATA_BLOB=1b88c253ed33ab041880bc0cd3c117d1d2e09e34\nJSON_BLOB=8693c140b4be1f785074aa7040b5c50be5ef5fd2\n' "$GITHUB_SHA" > evidence-l105/source.txt
       - name: Run exact dyadic binding test without Lean or extra mathematical assumptions
         shell: bash
