@@ -1,0 +1,34 @@
+{
+  "schema": "AEGIS_RH_ADDITIONAL_SOURCE_RECOVERY_V1",
+  "scope": "source-exact archive plus header-only active reintroduction; no RH status promotion",
+  "fork_base_head": "fda2f91f302e64209570a8930433f363985830bd",
+  "source_repo": "Aegis-Omega/AEGIS-OMEGA",
+  "items": [
+    {
+      "file": "RHWindowSevenOver32V1",
+      "branch": "proof/rh-window-nine-over-64-globalization-v14",
+      "original_blob": "83c8682c8c98cd43a7caf8b63cd859c48e05748e",
+      "archive_path": "research/rh/verified_archive_sources/RHWindowSevenOver32V1.lean.src",
+      "active_path": "AEGISOverlay/RHWindowSevenOver32V1.lean",
+      "semantic_delta": "Apache header prefix only"
+    },
+    {
+      "file": "WeilPrimeReindexV1",
+      "branch": "proof/rh-prime-canonical-reindex-v1-f10d0661",
+      "original_blob": "385b003211da4ca7deab5431603674cda3527165",
+      "archive_path": "research/rh/verified_archive_sources/WeilPrimeReindexV1.lean.src",
+      "active_path": "AEGISOverlay/WeilPrimeReindexV1.lean",
+      "semantic_delta": "Apache header prefix only"
+    },
+    {
+      "file": "WeilAutocorrelationPrimeNormalFormV1",
+      "branch": "proof/rh-prime-canonical-reindex-v1-f10d0661",
+      "original_blob": "0468be1800ab9d7d928d241b4847e470498b29b3",
+      "archive_path": "research/rh/verified_archive_sources/WeilAutocorrelationPrimeNormalFormV1.lean.src",
+      "active_path": "AEGISOverlay/WeilAutocorrelationPrimeNormalFormV1.lean",
+      "semantic_delta": "Apache header prefix only"
+    }
+  ],
+  "needs_exact_head_kernel_replay": true,
+  "rh_unconditional_claim": false
+}
