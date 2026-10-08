@@ -65,7 +65,7 @@ theorem canonical_weil_autocorrelation_prime_term_real_v1
   have hmC : (m : ℂ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hm)
   unfold CanonicalWeilPrimeTermV1 CanonicalWeilAutocorrelationPrimeRealTermV1
   rw [hrec]
-  simp [div_eq_mul_inv, hmC, mul_assoc, Complex.add_conj]
+  simp [div_eq_mul_inv, hmC, Complex.add_conj]
 
 /-- Direct composition of autocorrelation closure with PR #501: the actual
 prime side is a finite canonical `m=i+2` sum. -/

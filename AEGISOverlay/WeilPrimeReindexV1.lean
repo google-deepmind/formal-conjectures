@@ -157,3 +157,15 @@ theorem weil_prime_sum_eq_canonical_finite_sum_v1
   refine ⟨N, ?_⟩
   rw [weil_prime_sum_eq_canonical_tail_v1]
   exact hN
+
+#print axioms weil_prime_term_eq_canonical_succ_v1
+#print axioms canonical_weil_prime_term_one_zero_v1
+#print axioms weil_prime_term_zero_index_zero_v1
+#print axioms weil_prime_term_tail_reindex_v1
+#print axioms canonical_weil_prime_tail_zero_index_v1
+#print axioms canonical_weil_prime_tail_eventually_zero_v1
+#print axioms canonical_weil_prime_tail_hasFiniteSupport_v1
+#print axioms canonical_weil_prime_tail_summable_v1
+#print axioms weil_prime_sum_eq_canonical_tail_v1
+#print axioms canonical_weil_prime_tail_sum_eq_finite_sum_v1
+#print axioms weil_prime_sum_eq_canonical_finite_sum_v1

@@ -33,6 +33,7 @@ noncomputable section
 namespace AEGIS.RHWindow693Over2000V1
 
 open AEGIS.RHHatCoxClass693V13
+open AEGIS.RHDyadicDiagonalV13
 open AEGIS.WeilWindowExhaustionV1
 open AEGIS.WeilThreeBlockTranslatedPacketsV22
 open AEGIS.WeilAutocorrelationExplicitFormulaV10
