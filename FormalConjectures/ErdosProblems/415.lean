@@ -190,17 +190,34 @@ theorem has_increasing_prefix {N k l : ℕ} (hlk : l ≤ k) (h : HasIncreasing N
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 8000000 in
 @[category test, AMS 11]
-theorem all_three_826 : AllPatterns 826 3 := by decide
+theorem all_three_826 : AllPatterns 826 3 := by
+  intro π
+  fin_cases π <;> first
+    | exact ⟨⟨4, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
+    | exact ⟨⟨5, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
+    | exact ⟨⟨12, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
+    | exact ⟨⟨15, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
+    | exact ⟨⟨104, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
+    | exact ⟨⟨312, by decide⟩, by decide, by
+        simp only [StrictAt, Nat.totient_eq_div_primeFactors_mul]; decide⟩
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 8000000 in
 @[category test, AMS 11]
-theorem no_increasing_four_826 : ¬ HasIncreasing 826 4 := by decide
+theorem no_increasing_four_826 : ¬ HasIncreasing 826 4 := by
+  simp only [HasIncreasing, IncreasingAt, Nat.totient_eq_div_primeFactors_mul]
+  decide
 
 set_option maxRecDepth 100000 in
 @[category test, AMS 11]
 theorem decreasing_four_826 : HasDecreasing 826 4 := by
   refine ⟨⟨822, by decide⟩, by decide, ?_⟩
+  simp only [DecreasingAt, Nat.totient_eq_div_primeFactors_mul]
   decide
 
 @[category test, AMS 11]
@@ -265,3 +282,4 @@ theorem erdos_415.variants.unrestricted_scale : ProposedScaleUnrestricted := by
   sorry
 
 end Erdos415
+
