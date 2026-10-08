@@ -11,13 +11,19 @@ For each `formal_proof using <kind> at "<url>"` in `FormalConjectures/`:
 2. If the link has a line anchor (`#L123`), check that a `theorem` or `lemma` starts within
    a few lines of it. An anchor that lands on nothing is stale. Report it.
 3. If the link has no anchor and is a `formal_conjectures` link (a fork of this repository),
-   check that a declaration with the same final name segment as the annotated one exists in
-   the target. A fork keeps our names. Other kinds use their own names and are not checked.
+   check that a declaration whose name agrees with the annotated one exists in the target.
+   Names agree when one equals the other or ends with it at a `.` boundary, so a namespace
+   prefix on either side is allowed, but `erdos_1.parts.i` never stands in for
+   `erdos_1.variants.i`. A fork keeps our names. Other kinds use their own names and are not
+   checked.
 4. With `--compare`, when the annotated declaration is also found by name in the target,
    compare the two statements (the text between the name and `:=`, whitespace and comments
    removed) and report a difference. A difference is not always a defect: an external proof
    may state the result in its own terms. It is always worth a look, which is why it is opt-in
    and never fails the run.
+
+Comments and docstrings are ignored throughout: a `theorem` mentioned in a comment is not a
+declaration, and a comment between an attribute and its declaration does not hide it.
 
 Statement comparison is textual. It cannot see through `abbrev`s, renamed binders, or
 `open` namespaces, so it over-reports. It never under-reports a missing file or a missing name.
@@ -54,8 +60,16 @@ ATTRIBUTE_BLOCK = re.compile(r"@\[(?:[^\[\]]|\[[^\]]*\])*?\]", re.DOTALL)
 # One `formal_proof` tag inside an attribute block.
 FORMAL_PROOF_TAG = re.compile(r'formal_proof\s+using\s+(\w+)\s+at\s+"([^"]+)"')
 
-# The declaration that follows an attribute block.
-DECLARATION_AFTER = re.compile(r"\s*(?:private\s+|protected\s+)?(?:theorem|lemma|def)\s+([^\s:({]+)")
+# The declaration that follows an attribute block, matched on comment-blanked text. Further
+# attribute blocks and modifiers may come first. `foo.{u}` is captured as `foo.`.
+DECLARATION_AFTER = re.compile(
+    r"\s*(?:@\[(?:[^\[\]]|\[[^\]]*\])*?\]\s*)*"
+    r"(?:(?:private|protected|noncomputable|nonrec)\s+)*"
+    r"(?:theorem|lemma|def)\s+([^\s:({]+)"
+)
+
+# A `theorem` or `lemma` and its name as written. `foo.{u}` is captured as `foo.`.
+DECLARATION_NAME = re.compile(r"\b(?:theorem|lemma)\s+([^\s:({]+)")
 
 # A GitHub `blob` URL with optional line anchor `#L12` or range `#L12-L34`.
 GITHUB_BLOB = re.compile(r"https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/(.+?)(?:#L(\d+)(?:-L(\d+))?)?$")
@@ -73,6 +87,45 @@ ANCHOR_SLACK_BELOW = 3
 DECLARATION_LINE = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+)?(?:theorem|lemma)\b")
 
 
+def mask_comments(text):
+    """`text` with every comment and docstring replaced by spaces, keeping newlines, so offsets
+    and line numbers are unchanged. Handles nested `/- -/` blocks and leaves string literals,
+    where `--` is not a comment, alone."""
+    out = list(text)
+    i, n, depth = 0, len(text), 0
+    while i < n:
+        if depth == 0:
+            if text[i] == '"':
+                i += 1
+                while i < n and text[i] != '"':
+                    i += 2 if text[i] == "\\" else 1
+                i += 1
+            elif text.startswith("--", i):
+                end = text.find("\n", i)
+                end = n if end < 0 else end
+                out[i:end] = " " * (end - i)
+                i = end
+            elif text.startswith("/-", i):
+                depth = 1
+                out[i:i + 2] = "  "
+                i += 2
+            else:
+                i += 1
+        elif text.startswith("/-", i):
+            depth += 1
+            out[i:i + 2] = "  "
+            i += 2
+        elif text.startswith("-/", i):
+            depth -= 1
+            out[i:i + 2] = "  "
+            i += 2
+        else:
+            if text[i] != "\n":
+                out[i] = " "
+            i += 1
+    return "".join(out)
+
+
 def find_links(root=CONJECTURES_DIR):
     """Return one record per `formal_proof` tag under `root`."""
     links = []
@@ -84,12 +137,13 @@ def find_links(root=CONJECTURES_DIR):
             with open(path, encoding="utf-8") as f:
                 content = f.read()
             rel = os.path.relpath(path, REPO_ROOT).replace(os.sep, "/")
-            for block in ATTRIBUTE_BLOCK.finditer(content):
+            masked = mask_comments(content)
+            for block in ATTRIBUTE_BLOCK.finditer(masked):
                 tags = FORMAL_PROOF_TAG.findall(block.group(0))
                 if not tags:
                     continue
-                decl = DECLARATION_AFTER.match(content, block.end())
-                name = decl.group(1) if decl else None
+                decl = DECLARATION_AFTER.match(masked, block.end())
+                name = decl.group(1).rstrip(".") if decl else None
                 statement = declaration_statement(content, name) if name else None
                 for kind, url in tags:
                     links.append(
@@ -107,21 +161,27 @@ def find_links(root=CONJECTURES_DIR):
 def declaration_statement(content, name):
     """The statement text of `name` in `content`: from after the name to the first `:=`.
 
-    Returns None when the declaration is not found. Matches on the final name segment so a
-    declaration written inside a namespace is found by its short name. The match must end the
-    declaration name: `erdos_1` is not found in `erdos_1.variants.two`. A following `.{` is
-    allowed, since it opens universe parameters (`erdos_1.{u}`).
+    Returns None when the declaration is not found. The written name must agree with `name`
+    (see `names_agree`), so a declaration inside a namespace is found by its short name, but
+    `erdos_1` is not found in `erdos_1.variants.two`, nor `erdos_1.variants.i` in
+    `erdos_1.parts.i`. Universe parameters (`erdos_1.{u}`) are allowed. Comments are ignored,
+    and the returned statement has them blanked.
     """
-    short = name.rsplit(".", 1)[-1]
-    pattern = re.compile(
-        r"\b(?:theorem|lemma)\s+(?:[\w.'«»]*\.)?" + re.escape(short) + r"(?![\w'])(?!\.(?!\{))"
-    )
-    m = pattern.search(content)
-    if not m:
-        return None
-    rest = content[m.end():]
-    end = rest.find(":=")
-    return rest if end < 0 else rest[:end]
+    text = mask_comments(content)
+    for m in DECLARATION_NAME.finditer(text):
+        written = m.group(1).rstrip(".")
+        if not names_agree(written, name):
+            continue
+        rest = text[m.start(1) + len(written):]
+        end = rest.find(":=")
+        return rest if end < 0 else rest[:end]
+    return None
+
+
+def names_agree(written, name):
+    """Whether a declaration written as `written` can be the declaration `name`: equal, or one
+    ends with the other at a `.` boundary. A namespace prefix on either side is allowed."""
+    return written == name or written.endswith("." + name) or name.endswith("." + written)
 
 
 def normalise(statement):
@@ -154,7 +214,7 @@ def declaration_near(body, anchor):
     """Whether a `theorem`/`lemma` starts near the anchor `(first, last)` (1-based): up to
     `ANCHOR_SLACK_ABOVE` lines before `first` or `ANCHOR_SLACK_BELOW` after `last`."""
     first, last = anchor
-    lines = body.splitlines()
+    lines = mask_comments(body).splitlines()
     lo = max(0, first - 1 - ANCHOR_SLACK_ABOVE)
     hi = min(len(lines), last + ANCHOR_SLACK_BELOW)
     return any(DECLARATION_LINE.match(l) for l in lines[lo:hi])

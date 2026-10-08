@@ -24,6 +24,8 @@ from check_formal_proof_links import (
     declaration_statement,
     find_links,
     line_anchor,
+    mask_comments,
+    names_agree,
     normalise,
     raw_url,
 )
@@ -79,6 +81,55 @@ class FindLinksTest(unittest.TestCase):
         self.assertEqual(normalise(links[0]["statement"]), ":answer(True)↔∀n:ℕ,0≤n")
 
 
+COMMENTED_FILE = '''
+@[category research solved, AMS 3, formal_proof using lean4 at "https://example.org/c.lean"]
+-- The formal proof was done by someone else.
+theorem boxdot : True := by
+  sorry
+
+-- @[category research solved, formal_proof using lean4 at "https://example.org/old.lean"]
+@[category research open, AMS 3]
+theorem still_open : True := by
+  sorry
+'''
+
+
+class FindLinksCommentsTest(unittest.TestCase):
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        with open(os.path.join(self.tmp.name, "C.lean"), "w", encoding="utf-8") as f:
+            f.write(COMMENTED_FILE)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_a_comment_between_attribute_and_declaration_does_not_hide_it(self):
+        links = find_links(self.tmp.name)
+        self.assertEqual([(l["name"], l["url"]) for l in links], [("boxdot", "https://example.org/c.lean")])
+        self.assertEqual(normalise(links[0]["statement"]), ":True")
+
+    def test_a_commented_out_attribute_is_not_a_link(self):
+        urls = [l["url"] for l in find_links(self.tmp.name)]
+        self.assertNotIn("https://example.org/old.lean", urls)
+
+
+class MaskCommentsTest(unittest.TestCase):
+
+    def test_keeps_length_and_newlines(self):
+        text = "a -- note\n/- block\n -/ b\n/-- doc -/ c"
+        masked = mask_comments(text)
+        self.assertEqual(len(masked), len(text))
+        self.assertEqual(masked.count("\n"), text.count("\n"))
+        self.assertEqual(masked.split(), ["a", "b", "c"])
+
+    def test_nested_block_comments(self):
+        self.assertEqual(mask_comments("/- a /- b -/ c -/ d").split(), ["d"])
+
+    def test_double_dash_inside_a_string_is_not_a_comment(self):
+        self.assertEqual(mask_comments('x "a--b" y'), 'x "a--b" y')
+
+
 class DeclarationStatementTest(unittest.TestCase):
 
     def test_matches_on_the_final_name_segment(self):
@@ -97,6 +148,34 @@ class DeclarationStatementTest(unittest.TestCase):
         only_variants = FILE.replace("theorem erdos_1 :", "theorem erdos_2 :")
         self.assertIsNone(declaration_statement(only_variants, "erdos_1"))
         self.assertIsNone(declaration_statement(only_variants, "erdos_1.variants"))
+
+    def test_does_not_match_a_different_parent_with_the_same_final_segment(self):
+        target = "theorem erdos_1.parts.i : True := trivial"
+        self.assertIsNone(declaration_statement(target, "erdos_1.variants.i"))
+        self.assertEqual(normalise(declaration_statement(target, "erdos_1.parts.i")), ":True")
+
+    def test_a_namespace_prefix_on_either_side_still_matches(self):
+        qualified = "theorem Erdos1.erdos_1.parts.i : True := trivial"
+        self.assertEqual(normalise(declaration_statement(qualified, "erdos_1.parts.i")), ":True")
+        in_namespace = "namespace erdos_1.parts\ntheorem i : True := trivial\nend erdos_1.parts"
+        self.assertEqual(normalise(declaration_statement(in_namespace, "erdos_1.parts.i")), ":True")
+
+    def test_names_agree_at_dot_boundaries_only(self):
+        self.assertTrue(names_agree("erdos_1", "erdos_1"))
+        self.assertTrue(names_agree("A.erdos_1", "erdos_1"))
+        self.assertTrue(names_agree("i", "erdos_1.parts.i"))
+        self.assertFalse(names_agree("xerdos_1", "erdos_1"))
+        self.assertFalse(names_agree("erdos_1.parts.i", "erdos_1.variants.i"))
+
+    def test_a_theorem_mentioned_in_a_comment_is_not_found(self):
+        for target in ["-- theorem erdos_1 : True := trivial\ntheorem other : True := trivial",
+                       "/- theorem erdos_1 : True := trivial -/",
+                       "/-- Compare theorem erdos_1. -/\ntheorem other : True := trivial"]:
+            self.assertIsNone(declaration_statement(target, "erdos_1"), target)
+
+    def test_a_colon_equals_in_a_comment_does_not_end_the_statement(self):
+        target = "theorem erdos_1 : -- note := here\n  True := trivial"
+        self.assertEqual(normalise(declaration_statement(target, "erdos_1")), ":True")
 
     def test_matches_a_name_with_universe_parameters(self):
         self.assertEqual(
@@ -146,6 +225,10 @@ class DeclarationNearTest(unittest.TestCase):
 
     def test_anchor_far_from_any_declaration(self):
         self.assertFalse(declaration_near(self.BODY, (2, 2)))
+
+    def test_a_theorem_inside_a_block_comment_near_the_anchor_does_not_count(self):
+        body = "\n".join(["-- header"] * 20 + ["/-", "theorem t : True := trivial", "-/"] + [""] * 20)
+        self.assertFalse(declaration_near(body, (22, 22)))
 
 
 class CheckLinkTest(unittest.TestCase):
