@@ -55,7 +55,7 @@ Bucić, Chen, and Ma [BCM26] proved this for all $k \geq 4$, and Shahab [Sh26] p
 $k = 3$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/Asad-Shahab/erdos-809-lean/blob/7ec4aaa6e9d685e8f9948005d8be69923cce2ab8/Erdos809/OddCycles.lean#L11"]
+  "https://github.com/Asad-Shahab/erdos-809-lean/blob/15f8839e2a21f64fc5558714506ebba465926eda/Erdos809/Verification/FormalConjecturesBridge.lean#L37-L40"]
 theorem erdos_809 : answer(True) ↔ ∀ k, 3 ≤ k →
     (fun n ↦ (strongChromaticNum (cycleGraph (2 * k + 1)) n (n ^ 2 / 4 + 1) : ℝ)) ~[atTop]
       fun n ↦ (n : ℝ) ^ 2 / 8 := by
@@ -76,7 +76,7 @@ Bucić, Chen, and Ma [BCM26] proved that
 $\chi_S(n, \lfloor n^2/4 \rfloor + 1, C_{2k+1}) \sim n^2/8$ for every $k \geq 4$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/Asad-Shahab/erdos-809-lean/blob/7ec4aaa6e9d685e8f9948005d8be69923cce2ab8/Erdos809/LongOddCycles/Main.lean#L54"]
+  "https://github.com/Asad-Shahab/erdos-809-lean/blob/15f8839e2a21f64fc5558714506ebba465926eda/Erdos809/Verification/FormalConjecturesBridge.lean#L21-L24"]
 theorem erdos_809.variants.bucic_chen_ma (k : ℕ) (hk : 4 ≤ k) :
     (fun n ↦ (strongChromaticNum (cycleGraph (2 * k + 1)) n (n ^ 2 / 4 + 1) : ℝ)) ~[atTop]
       fun n ↦ (n : ℝ) ^ 2 / 8 := by
@@ -86,7 +86,7 @@ theorem erdos_809.variants.bucic_chen_ma (k : ℕ) (hk : 4 ≤ k) :
 Shahab [Sh26] proved that $\chi_S(n, \lfloor n^2/4 \rfloor + 1, C_7) \sim n^2/8$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/Asad-Shahab/erdos-809-lean/blob/7ec4aaa6e9d685e8f9948005d8be69923cce2ab8/Erdos809/Main.lean#L40"]
+  "https://github.com/Asad-Shahab/erdos-809-lean/blob/15f8839e2a21f64fc5558714506ebba465926eda/Erdos809/Verification/FormalConjecturesBridge.lean#L26-L34"]
 theorem erdos_809.variants.seven_cycle :
     (fun n ↦ (strongChromaticNum (cycleGraph 7) n (n ^ 2 / 4 + 1) : ℝ)) ~[atTop]
       fun n ↦ (n : ℝ) ^ 2 / 8 := by
