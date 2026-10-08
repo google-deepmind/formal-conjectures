@@ -722,7 +722,8 @@ theorem ame_3_2_exists : ExistsAME 3 2 := by
   simpa using ame_3_exists (d := 2) (by decide)
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(5,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-5-2/blob/f0720e63065eb40c58a40f7b7af3d21f94d06453/AME52/FormalTarget.lean#L25-L26"]
 theorem ame_5_2_exists : ExistsAME 5 2 := by
   sorry
 
@@ -741,12 +742,14 @@ theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
-/-- A seven-party AME state exists exactly when the local dimension is at least `3`.
+/-- For a physical local dimension $d \ge 2$, a seven-party AME state exists exactly when
+$d \ge 3$. The hypothesis excludes the degenerate dimension $d = 1$, for which the unique
+computational-basis state is AME under the definitions of this file.
 Shi--Zhang--Zhao--Li (2026) construct cyclic quadratic-phase states in every odd dimension and
 a coupled binary--odd-dimensional state in every dimension congruent to `2` modulo `4`; together
 with power-of-two constructions and the product property, this covers every `d ≥ 3`. -/
 @[category research solved, AMS 5 15 81 94]
-theorem ame_7_exists_iff (d : ℕ) : ExistsAME 7 d ↔ 3 ≤ d := by
+theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,3)$ state exists; see Helwig et al. (2012) and Goyeneche et al. (2015). -/
@@ -769,7 +772,7 @@ theorem ame_7_6_open :
     answer(True) ↔ ExistsAME 7 6 := by
   constructor
   · intro
-    exact (ame_7_exists_iff 6).2 (by norm_num)
+    exact (ame_7_exists_iff 6 (by norm_num)).2 (by norm_num)
   · simp
 
 /-- An $\mathrm{AME}(7,10)$ state exists, by the complete seven-party classification of
@@ -779,7 +782,7 @@ theorem ame_7_10_open :
     answer(True) ↔ ExistsAME 7 10 := by
   constructor
   · intro
-    exact (ame_7_exists_iff 10).2 (by norm_num)
+    exact (ame_7_exists_iff 10 (by norm_num)).2 (by norm_num)
   · simp
 
 /-- Open benchmark statement: does an $\mathrm{AME}(8,4)$ state exist? -/
@@ -812,10 +815,18 @@ theorem ame_9_6_open :
     answer(True) ↔ ExistsAME 9 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/--
+Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist?
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
+-/
+@[category research solved, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Oqp35.lean#L1238"]
 theorem ame_9_10_open :
-    answer(sorry) ↔ ExistsAME 9 10 := by
+    answer(True) ↔ ExistsAME 9 10 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(10,6)$ state exist? -/

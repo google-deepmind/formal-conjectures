@@ -56,6 +56,22 @@ theorem erdos_166 : answer(True) ↔
           C * (k : ℝ) ^ 3 / (Real.log k) ^ c := by
   sorry
 
--- TODO: Add variants of the problem.
+/--
+Mattheus and Verstraëte [MaVe23] proved the explicit lower bound
+$$R(4,k) \gg \frac{k^3}{(\log k)^4}.$$
+-/
+@[category research solved, AMS 5]
+theorem erdos_166.variants.mattheus_verstraete :
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ (k : ℕ) in atTop,
+      (SimpleGraph.classicalRamsey 4 k : ℝ) ≥ C * (k : ℝ) ^ 3 / (Real.log k) ^ 4 := by
+  sorry
+
+/-- The bound of Mattheus and Verstraëte answers `erdos_166`, with logarithmic exponent $4$. -/
+@[category test, AMS 5]
+theorem erdos_166.variants.mattheus_verstraete_implies :
+    type_of% erdos_166.variants.mattheus_verstraete → type_of% erdos_166 := by
+  rintro ⟨C, hC, h⟩
+  refine ⟨fun _ ↦ ⟨4, C, by norm_num, hC, h.mono fun k hk ↦ ?_⟩, fun _ ↦ trivial⟩
+  simpa using hk
 
 end Erdos166

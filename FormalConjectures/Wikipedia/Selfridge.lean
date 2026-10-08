@@ -82,9 +82,9 @@ This test does not work.
 -/
 @[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
-    ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
+    ∃ n > 1, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
+  refine ⟨?_, ⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
   decide +kernel
 
 /--
