@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
 
 [KSSS22b] Kwan, M., Sah, A., Sawhney, M., and Simkin, M.,
 _High-girth Steiner triple systems_. [arXiv:2201.04554](https://arxiv.org/abs/2201.04554) (2022).
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos207.md)
 -/
 
 @[expose] public section
@@ -62,6 +61,7 @@ For any $g\geq 2$, if $n$ is sufficiently large and $n\equiv 1,3\pmod{6}$ then t
 Proved by Kwan, Sah, Sawhney, and Simkin [KSSS22b].
 -/
 @[category research solved, AMS 5]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos207.lean#L400"]
 theorem erdos_207 : Statement := by
   sorry
 
