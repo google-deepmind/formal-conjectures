@@ -27,7 +27,7 @@ public import FormalConjecturesUtil
 - [ErHa99] Eremenko, A. and Hayman, W., *On the length of lemniscates*. Michigan Math. J. (1999),
   409-415. [arXiv:0805.2295](https://arxiv.org/abs/0805.2295)
 - [Ta25] Tao, T., *The maximal length of the Erdős–Herzog–Piranian lemniscate in high degree*
-  (2025).
+  (2025). [arXiv:2512.12455](https://arxiv.org/abs/2512.12455)
 -/
 
 @[expose] public section
