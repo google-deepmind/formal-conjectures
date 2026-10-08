@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
   bounds*. J. Amer. Math. Soc. 19 (2006), 119-169.
 - [SzVu06b] Szemerédi, E. and Vu, V., *Finite and infinite arithmetic progressions in sumsets*.
   Ann. of Math. 163 (2006), 1-35.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos344.md)
 -/
 
 @[expose] public section
