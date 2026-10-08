@@ -264,7 +264,7 @@ jobs:
           OUT="$GITHUB_WORKSPACE/.lake/l105-build"
           mkdir -p "$OUT"
           ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
-          export LEAN_PATH="$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
+          export LEAN_PATH="$GITHUB_WORKSPACE:$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
           export GEN L105 REFLECTIVE OVERLAY SRC COMPAT L105SRC WIN BASE OUT
           python3 - <<'PY'
           from pathlib import Path
@@ -333,7 +333,7 @@ jobs:
           BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
           OUT="$GITHUB_WORKSPACE/.lake/l105-build"
           ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
-          export LEAN_PATH="$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
+          export LEAN_PATH="$GITHUB_WORKSPACE:$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
           cat > /tmp/RHL105Axioms.lean <<'LEAN'
           import RHWindowL105FinalV1
           #print axioms AEGIS.RHKreinL105AllV1.zero_quadratic_nonneg_width_21_20
