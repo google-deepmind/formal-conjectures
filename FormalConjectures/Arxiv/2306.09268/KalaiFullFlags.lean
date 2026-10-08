@@ -21,14 +21,15 @@ public import FormalConjecturesUtil
 # Kalai's full flag conjecture
 
 Does every centrally symmetric $n$-dimensional convex polytope, for $n ≥ 1$,
-have at least $2^n n!$ complete flags [SZ11, Section 10, p. 21]?
+have at least $2^n n!$ complete flags [FVW23, Section 1]?
+The source discusses this conjecture immediately after Theorem 1.2.
 A complete flag is a chain of nonempty proper faces of dimensions
 $0, \ldots, n-1$. The answer is affirmative [Ki26].
 
 *References:*
-- [SZ11] M. W. Schmitt and G. M. Ziegler, *Ten Problems in Geometry*,
-  preprint dated May 1, 2011, Section 10, p. 21,
-  https://www.mi.fu-berlin.de/math/groups/discgeom/ziegler/Preprintfiles/127PREPRINT.pdf.
+- [FVW23] D. Faifman, C. Vernicos and C. Walsh,
+  *Volume growth of Funk geometry and the flags of polytopes*,
+  https://arxiv.org/abs/2306.09268, Section 1 (discussion after Theorem 1.2).
 - [Ki26] Kenta Kitamura, *Kalai's full flag conjecture in Lean 4* (2026),
   https://github.com/KitaKen1/funk-volume-kalai-flags.
 -/
@@ -56,7 +57,7 @@ structure FullFlag {n : ℕ} (P : Set (Fin n → ℝ)) where
   dimension : ∀ i, Module.finrank ℝ (affineSpan ℝ (faces i)).direction = i.val
   chain : StrictMono faces
 
-/-- Kalai's full flag conjecture (2008) [SZ11, Section 10, p. 21]: does every centrally symmetric
+/-- Kalai's full flag conjecture [FVW23, Section 1]: does every centrally symmetric
 $n$-dimensional convex polytope have at least $2^n n!$ complete flags?
 The answer is affirmative [Ki26]. -/
 @[category research solved, AMS 52,
