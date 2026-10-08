@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 429
@@ -29,14 +30,16 @@ import FormalConjecturesUtil
   Integers (2024).
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos429
 
 /--
 Is it true that, if $A\subseteq \mathbb{N}$ is sparse enough and does not cover all residue
-classes modulo $p$ for any prime $p$, then there exists some $n$ such that $n+a$ is prime for
-all $a\in A$?
+classes modulo $p$ for any prime $p$, then there exists some $n\in \mathbb{Z}$ such that $n+a$ is
+prime for all $a\in A$?
 
 Weisenberg [We24] has shown the answer is no: $A$ can be arbitrarily sparse and missing at
 least one residue class modulo every prime $p$, and yet $A+n$ is not contained in the primes
@@ -47,7 +50,7 @@ theorem erdos_429 : answer(False) ↔
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
       ∀ A : Set ℕ, A.Infinite → (∀ N, (A ∩ Set.Icc 1 N).ncard ≤ f N) →
         (∀ p : ℕ, p.Prime → ∃ b : ZMod p, ∀ a ∈ A, (a : ZMod p) ≠ b) →
-        ∃ n : ℕ, ∀ a ∈ A, (n + a).Prime := by
+        ∃ n : ℤ, ∀ a ∈ A, (n + a).toNat.Prime := by
   sorry
 
 end Erdos429

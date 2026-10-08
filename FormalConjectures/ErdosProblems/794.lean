@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 794
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [FrFu84] Frankl, P. and Füredi, Z., *An exact result for $3$-graphs*. Discrete Math. (1984),
   323-328.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -53,7 +56,7 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
 theorem erdos_794 : answer(False) ↔
-    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsThreeUniform →
+    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
       n ^ 3 + 1 ≤ H.card → H.ContainsSubgraph 4 3 ∨ H.ContainsSubgraph 5 7 := by
   sorry
 
@@ -64,8 +67,37 @@ second condition can be dropped.
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.balogh {V : Type*} [DecidableEq V] (H : Finset (Finset V))
-    (hH : H.IsThreeUniform) (h : H.ContainsSubgraph 5 7) : H.ContainsSubgraph 4 3 := by
-  sorry
+    (hH : H.IsUniform 3) (h : H.ContainsSubgraph 5 7) : H.ContainsSubgraph 4 3 := by
+  obtain ⟨S, hS, hk⟩ := h
+  by_contra hcon
+  simp only [Finset.ContainsSubgraph, not_exists, not_and, not_le] at hcon
+  -- Each of the five `4`-subsets of `S` spans at most `2` edges.
+  have hub : ∑ T ∈ S.powersetCard 4, (H.filter (· ⊆ T)).card ≤ 10 := by
+    calc ∑ T ∈ S.powersetCard 4, (H.filter (· ⊆ T)).card ≤ ∑ T ∈ S.powersetCard 4, 2 :=
+          Finset.sum_le_sum fun T hT => by
+            have := hcon T (Finset.mem_powersetCard.1 hT).2
+            omega
+      _ = 10 := by simp [Finset.card_powersetCard, hS]
+  -- Each edge inside `S` lies in two of the `4`-subsets of `S`, so the double count is at
+  -- least `2 * 7`.
+  have hlb : 2 * (H.filter (· ⊆ S)).card ≤ ∑ T ∈ S.powersetCard 4, (H.filter (· ⊆ T)).card := by
+    calc 2 * (H.filter (· ⊆ S)).card = ∑ e ∈ H.filter (· ⊆ S), 2 := by simp [mul_comm]
+      _ ≤ ∑ e ∈ H.filter (· ⊆ S), ((S.powersetCard 4).filter (e ⊆ ·)).card := by
+          refine Finset.sum_le_sum fun e he => ?_
+          obtain ⟨heH, heS⟩ := Finset.mem_filter.1 he
+          have he3 := hH e heH
+          rw [show 4 = e.card + 1 by omega, Finset.card_filter_subset_powersetCard_card_add_one heS]
+          omega
+      _ = ∑ T ∈ S.powersetCard 4, (H.filter (· ⊆ T)).card := by
+          simp only [Finset.card_filter]
+          rw [Finset.sum_comm]
+          refine Finset.sum_congr rfl fun T hT => ?_
+          rw [Finset.sum_filter]
+          refine Finset.sum_congr rfl fun e _ => ?_
+          by_cases heT : e ⊆ T
+          · simp [heT, heT.trans (Finset.mem_powersetCard.1 hT).1]
+          · simp [heT]
+  omega
 
 /--
 Harris has provided the following simple counterexample to the problem as stated: the
@@ -74,9 +106,10 @@ one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge 
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.harris :
-    harrisHypergraph.IsThreeUniform ∧ harrisHypergraph.card = 28 ∧
+    harrisHypergraph.IsUniform 3 ∧ harrisHypergraph.card = 28 ∧
       ¬ harrisHypergraph.ContainsSubgraph 4 3 ∧ ¬ harrisHypergraph.ContainsSubgraph 5 7 := by
-  sorry
+  unfold Finset.IsUniform Finset.ContainsSubgraph
+  decide +kernel
 
 /--
 This problem is then now asking how many edges a $3$-uniform hypergraph can have before it
@@ -87,7 +120,7 @@ so likely there is simply a typo in this problem's statement).
 -/
 @[category research solved, AMS 5]
 theorem erdos_794.variants.frankl_furedi (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), H.IsThreeUniform ∧
+    ∀ᶠ n : ℕ in atTop, ∃ H : Finset (Finset (Fin n)), H.IsUniform 3 ∧
       ¬ H.ContainsSubgraph 4 3 ∧ (2 / 7 - ε) * (n.choose 3 : ℝ) ≤ (H.card : ℝ) := by
   sorry
 

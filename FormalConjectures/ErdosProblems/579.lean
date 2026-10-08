@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 579
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EHSS83] P. Erdős, A. Hajnal, V. T. Sós and E. Szemerédi, *More results on Ramsey–Turán
   type problems*, Combinatorica **3** (1983), 69–81.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

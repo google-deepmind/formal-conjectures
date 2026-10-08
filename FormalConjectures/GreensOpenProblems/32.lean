@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 32
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Sh20] Shakan, George. "A Large Gap in a Dilate of a Set." SIAM Journal on Discrete Mathematics
   34.4 (2020): 2553-2555.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 open scoped Pointwise
@@ -116,10 +119,14 @@ theorem green_32.variants.szemeredi_regime :
 /--
 In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
 Bohr sets [Gr24].
+
+The lower bound $101 \le \omega(p)$ makes the set size $\lfloor \omega(p) \rfloor$ exceed $100$.
+With only $100 < \omega(p)$, a function with $100 < \omega(p) < 101$ asks for sets of size $100$
+with a gap of length $p - 1$ in some dilate, which is impossible.
 -/
 @[category research solved, AMS 5 11]
 theorem green_32.variants.dirichlet_regime :
-    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 100 < ω p ∧ ω p ≤ c * Real.log p) →
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 101 ≤ ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by
   sorry
 

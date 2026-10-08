@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Carmichael's totient function conjecture
@@ -26,6 +27,8 @@ $φ(n) = φ(m)$ where $φ$ is the Euler totient function.
 - [Wikipedia](https://en.wikipedia.org/wiki/Carmichael%27s_totient_function_conjecture)
 - [F1998] Kevin Ford. The distribution of totients. https://arxiv.org/abs/1104.3264
 -/
+
+@[expose] public section
 
 universe u v
 

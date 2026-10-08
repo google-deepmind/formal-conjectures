@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ascending descending base exponent transform of squares
@@ -24,6 +25,8 @@ a n is $\sum_{i=1}^n (i^2)^((n-i+1)^2)$.
 *References:*
 - [A113257](https://oeis.org/A113257)
 -/
+
+@[expose] public section
 
 namespace OeisA113257
 
