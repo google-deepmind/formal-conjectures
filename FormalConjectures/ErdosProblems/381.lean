@@ -25,6 +25,7 @@ public import FormalConjecturesUtil
 - [Er44] Erdős, P., *On highly composite numbers*. J. London Math. Soc. (1944), 130–133.
 - [Ni71] Nicolas, Jean-Louis, *Répartition des nombres hautement composés de Ramanujan*.
   Canadian J. Math. (1971), 116–130.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos381.md)
 -/
 
 @[expose] public section
