@@ -76,7 +76,10 @@ theorem normalized_prime_only_locally_integrable_v7 :
       (fun y : ℝ =>
         Real.exp (-y / 2) * (Chebyshev.theta (Real.exp y) - Real.exp y)) volume :=
     LocallyIntegrable.continuous_mul hf hdiff
-  simpa [normalizedPrimeOnlyDiscrepancyComplexV1] using
+  change LocallyIntegrable (fun y : ℝ =>
+      ((Real.exp (-y / 2) *
+        (Chebyshev.theta (Real.exp y) - Real.exp y) : ℝ) : ℂ)) volume
+  exact
     (complex_ofReal_locally_integrable_v7
       (fun y : ℝ =>
         Real.exp (-y / 2) * (Chebyshev.theta (Real.exp y) - Real.exp y)) hreal)
@@ -94,7 +97,10 @@ theorem normalized_prime_powers_locally_integrable_v7 :
         Real.exp (-y / 2) *
           (Chebyshev.psi (Real.exp y) - Chebyshev.theta (Real.exp y))) volume :=
     LocallyIntegrable.continuous_mul hf hdiff
-  simpa [normalizedPrimePowerCorrectionComplexV1] using
+  change LocallyIntegrable (fun y : ℝ =>
+      ((Real.exp (-y / 2) *
+        (Chebyshev.psi (Real.exp y) - Chebyshev.theta (Real.exp y)) : ℝ) : ℂ)) volume
+  exact
     (complex_ofReal_locally_integrable_v7
       (fun y : ℝ =>
         Real.exp (-y / 2) *
