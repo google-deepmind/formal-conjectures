@@ -423,7 +423,7 @@ The **Amitsur Conjecture**: If `J` is a nil ideal in `R`, then `J[x]` is a nil i
 This is known to be false, see Agata Smoktunowicz, _Polynomial rings over nil rings need not be nil_.
 -/
 @[category research solved, AMS 16]
-theorem amitsur_conjecture (J : TwoSidedIdeal R) (hJ : IsNil J) :
+theorem amitsur_conjecture : ¬ ∀ (R : Type) [Ring R] (J : TwoSidedIdeal R), IsNil J →
     IsNil (TwoSidedIdeal.map (Polynomial.C) J) := by
   sorry
 
