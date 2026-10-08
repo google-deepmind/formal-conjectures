@@ -24,6 +24,8 @@ import FormalConjecturesUtil
 - [ErGr80] P. Erdős and R. L. Graham, *Old and new problems and results in combinatorial number
   theory*. Monographies de L'Enseignement Mathématique (1980), p. 81.
 - [OEIS A383044](https://oeis.org/A383044): numbers $m$ with $\phi(m) + \phi(m + \phi(m)) = m$.
+- [Ste25] S. Steinerberger, *On an iterated arithmetic function problem of Erdős and Graham*,
+  arXiv:2504.08023 (2025), §2.1.
 -/
 
 namespace Erdos411
@@ -38,9 +40,15 @@ Let $g_1=g(n)=n+\phi(n)$ and $g_k(n)=g(g_{k-1}(n))$. For which $n$ and $r$ is it
 $g_{k+r}(n)=2g_k(n)$ for all large $k$?
 
 Here `g^[k]` is the $k$-fold iterate of `g`. The known solutions with $r = 2$ include $n = 10$ and
-$n = 94$ (see `erdos_411.variants.ten` and `erdos_411.variants.ninety_four`); more generally
-$n = 2^l p$ with $l \geq 1$ and $p \in \{2, 3, 5, 7, 35, 47\}$. Steinerberger observed that for
-$r = 2$ the condition is equivalent to $\phi(n) + \phi(n + \phi(n)) = n$ (OEIS A383044).
+$n = 94$ (see `erdos_411.variants.ten` and `erdos_411.variants.ninety_four`), and more generally
+every $n$ whose orbit reaches $2^l p$ with $l \geq 1$ and $p \in \{2, 3, 5, 7, 35, 47\}$.
+
+Because the condition is only required for all large $k$, it is a property of the tail of the
+orbit and not of the seed: by [Ste25, §2.1] the case $r = 2$ reduces to the equation
+$\phi(m) + \phi(m + \phi(m)) = m$ (OEIS A383044) applied to some iterate $m = g_k(n)$, and the
+seed itself need not satisfy it. For instance $\phi(18) + \phi(18 + \phi(18)) = 14 \neq 18$, yet
+$g(18) = 24$ does satisfy the equation, so $(18, 2)$ is a solution
+(see `erdos_411.variants.eighteen`).
 -/
 @[category research open, AMS 11]
 theorem erdos_411 :
@@ -49,14 +57,19 @@ theorem erdos_411 :
   sorry
 
 /--
-Cambie conjectures (comments on the problem page) that the only solutions have $r = 2$ and
-$n = 2^l p$ for some $l \geq 1$ and $p \in \{2, 3, 5, 7, 35, 47\}$.
+Cambie conjectures (comments on the problem page) that the only solutions have $r = 2$ and that
+the orbit of $n$ reaches $2^l p$ for some $l \geq 1$ and $p \in \{2, 3, 5, 7, 35, 47\}$.
+
+The membership is stated for an iterate `g^[j] p.1` rather than for `p.1` itself. Requiring it of
+the seed would be strictly stronger and false: `(18, 2)` is a solution whose odd part is `9`, so
+it is excluded by any condition imposed directly on the seed, while `g^[1] 18 = 24 = 2 ^ 3 * 3`
+lies in the family. Taking `j = 0` recovers the seed case.
 -/
 @[category research open, AMS 11]
 theorem erdos_411.variants.cambie : answer(sorry) ↔
     {p : ℕ × ℕ | 0 < p.1 ∧ 0 < p.2 ∧ ∀ᶠ k in atTop, g^[k + p.2] p.1 = 2 * g^[k] p.1} =
-      {p : ℕ × ℕ | p.2 = 2 ∧
-        ∃ l, 1 ≤ l ∧ ∃ q ∈ ({2, 3, 5, 7, 35, 47} : Finset ℕ), p.1 = 2 ^ l * q} := by
+      {p : ℕ × ℕ | p.2 = 2 ∧ ∃ j l, 1 ≤ l ∧
+        ∃ q ∈ ({2, 3, 5, 7, 35, 47} : Finset ℕ), g^[j] p.1 = 2 ^ l * q} := by
   sorry
 
 /-- If `a` is even then `g (2 * a) = 2 * g a`, since `φ (2 * a) = 2 * φ a` for even `a`. -/
@@ -100,5 +113,16 @@ theorem erdos_411.variants.ten : ∀ k, g^[k + 2] 10 = 2 * g^[k] 10 := fun k =>
 @[category test, AMS 11]
 theorem erdos_411.variants.ninety_four : ∀ k, g^[k + 2] 94 = 2 * g^[k] 94 := fun k =>
   (iterate_add_two_eq (a := 94) (by norm_num) (by norm_num) (by decide) k).1
+
+/--
+`n = 18`, `r = 2` is a solution whose seed is not in the family: `18 = 2 * 9` has odd part `9`,
+but the orbit enters the family at `g 18 = 24 = 2 ^ 3 * 3`, and `g (g 24) = 48 = 2 * 24`.
+-/
+@[category test, AMS 11]
+theorem erdos_411.variants.eighteen (k : ℕ) :
+    g^[k + 2] (g 18) = 2 * g^[k] (g 18) := by
+  have h : g 18 = 24 := by decide
+  rw [h]
+  exact (iterate_add_two_eq (a := 24) (by norm_num) (by norm_num) (by decide) k).1
 
 end Erdos411
