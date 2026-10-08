@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Dirichlet divisor problem
@@ -25,8 +27,9 @@ $$D(x) = x \log x + (2\gamma - 1) x + \Delta(x), \qquad \Delta(x) = O(x^{1/2}),$
 where $\gamma$ is the Euler–Mascheroni constant. The **Dirichlet divisor problem** asks for the
 infimum $\theta$ of exponents with $\Delta(x) = O(x^{\theta})$. It is conjectured that
 $\theta = 1/4$, i.e. $\Delta(x) = O(x^{1/4 + \varepsilon})$ for every $\varepsilon > 0$. Hardy
-showed $\theta \ge 1/4$, so the conjecture would be sharp; the best known upper bound is due to
-Huxley ($\theta \le 131/416 \approx 0.3149$), and the problem is open.
+showed $\theta \ge 1/4$, so the conjecture would be sharp. Huxley's bound
+$\theta \le 131/416 \approx 0.3149$ [Hu03] is now historical: the best known upper bound is
+$\theta \le 0.314483\ldots$, due to Li and Yang [LY23]. The problem remains open.
 
 *References:*
 - [Wikipedia: Divisor summatory function](https://en.wikipedia.org/wiki/Divisor_summatory_function)
@@ -36,7 +39,11 @@ Huxley ($\theta \le 131/416 \approx 0.3149$), and the problem is open.
 - [Ha16] G. H. Hardy, *On Dirichlet's divisor problem*, Proc. London Math. Soc. (1916), 1-25.
 - [Hu03] M. N. Huxley, *Exponential sums and lattice points III*, Proc. London Math. Soc.
   (2003), 591-609.
+- [LY23] X. Li, X. Yang, *An improvement on Gauss's circle problem and Dirichlet's divisor
+  problem*, [arXiv:2308.14859](https://arxiv.org/abs/2308.14859) (2023), Theorem 1.2.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
