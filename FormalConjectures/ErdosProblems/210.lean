@@ -23,6 +23,7 @@ import FormalConjecturesForMathlib.Geometry.«2d»
 
 Kelly's minimum-distance proof for finite subsets of real inner product spaces.
 Distances are squared to avoid square roots.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos210.md)
 -/
 
 
