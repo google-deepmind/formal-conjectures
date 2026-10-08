@@ -1,0 +1,47 @@
+{
+  "authority_effect": "NONE",
+  "binding_sha256": "4425693b0b5f1787bb4be69a90ba0bf59c65f6605c3d6cacf1a56d7db134426b",
+  "canonicalization": "aegis-json-integral-float-v1",
+  "certificate": {
+    "git_blob_sha": "5d5933d716179f3750ca41172f3347d1166c6150",
+    "path": "research/rh/KREIN_ARB_CERTIFICATE_L1.0.json",
+    "upstream_schema": "aegis.rh.krein-arb-certificate.v1"
+  },
+  "exact_head": "163304475c6141d05c64ab773a5eb4fbf66addcc",
+  "limitations": [
+    "metadata binding only; this file does not rerun Arb",
+    "the Arb inequality is not Lean-kernel checked",
+    "no width >= L claim",
+    "no RH claim"
+  ],
+  "lp_candidate": {
+    "generator_git_blob_sha": "ff3f12dd29d446af0559e31110020ff4f86725ef",
+    "generator_path": "research/rh/krein_lp_cutting_plane_v1.py",
+    "git_blob_sha": "b44296a5864978e4cfdf4796213114acd26fbde5",
+    "path": "research/rh/krein_lp_L1.0.json"
+  },
+  "observed_committed_result": {
+    "cells": 12186,
+    "tail_lower_prefix": "3.792104378370854040667093697334418867001409542121331641417870393823906828621",
+    "zero_cell_lower_prefix": "0.0001247108245301879293338303183767709209453631999256551964851253"
+  },
+  "parameters": {
+    "L": 1,
+    "L_exact": "1/1",
+    "delta_bound": 10000000,
+    "hat_bound": 1000000,
+    "m_certified": "0.0015",
+    "span": 8,
+    "tail_start": "3000",
+    "zero_cell": "0.004"
+  },
+  "repository": "Aegis-Omega/AEGIS-OMEGA",
+  "rh_proven": false,
+  "schema": "aegis.rh.krein-certificate-receipt.v2",
+  "status": "BOUND_COMMITTED_CERTIFICATE_METADATA",
+  "verifier": {
+    "git_blob_sha": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a",
+    "path": "research/rh/verify_krein_arb_v1.py",
+    "precision_bits": 256
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "L": 1.05,
+  "L_lt_log3": true,
+  "authority_effect": "NONE",
+  "basis": {
+    "endpoint_constraints": "g1(0)=g1(L)=g1'(0)=g1'(L)=0 exactly",
+    "family": "clamped-sine-difference",
+    "finite_family_independence": "existing g family has cosine-mode expansions; complementary g family has sine-mode expansions, hence the finite trigonometric representations are linearly independent",
+    "g": "(1/4-D^2)g1",
+    "g1": "(k+2)sin(k*pi*x/L)-k sin((k+2)*pi*x/L), k=1..n"
+  },
+  "comparison_by_dimension": {
+    "128": {
+      "complementary_basis_base": 0.003616428300631429,
+      "complementary_minus_existing": 0.00028263537151985204,
+      "complementary_relative_to_existing": 1.084778922245531,
+      "existing_basis": 0.003333792929111577,
+      "strict_minus_base": 9.457476047181751e-08
+    },
+    "160": {
+      "complementary_basis_base": 0.0035692007837928854,
+      "complementary_minus_existing": 0.0002382553867621086,
+      "complementary_relative_to_existing": 1.0715278572187015,
+      "existing_basis": 0.003330945397030777,
+      "strict_minus_base": 1.3246452934805725e-07
+    },
+    "192": {
+      "complementary_basis_base": 0.003534832427984024,
+      "complementary_minus_existing": 0.00020532809933338034,
+      "complementary_relative_to_existing": 1.06166926937638,
+      "existing_basis": 0.0033295043286506436,
+      "strict_minus_base": 1.7876647751295313e-07
+    },
+    "224": {
+      "complementary_basis_base": 0.00351151439043924,
+      "complementary_minus_existing": 0.00018273121197331195,
+      "complementary_relative_to_existing": 1.0548942968576054,
+      "existing_basis": 0.003328783178465928,
+      "strict_minus_base": 2.2858289578297705e-07
+    },
+    "256": {
+      "complementary_basis_base": 0.003492646017245106,
+      "complementary_minus_existing": 0.0001642456552561596,
+      "complementary_relative_to_existing": 1.049346724370025,
+      "existing_basis": 0.0033284003619889462,
+      "strict_minus_base": 2.875711797947246e-07
+    },
+    "32": {
+      "complementary_basis_base": 0.004216249891720253,
+      "complementary_minus_existing": 0.0007086956742924531,
+      "complementary_relative_to_existing": 1.202048387668876,
+      "existing_basis": 0.0035075542174278,
+      "strict_minus_base": 1.6080961577104314e-08
+    },
+    "64": {
+      "complementary_basis_base": 0.0038426419964842913,
+      "complementary_minus_existing": 0.0004793804073634617,
+      "complementary_relative_to_existing": 1.1425343805888062,
+      "existing_basis": 0.0033632615891208296,
+      "strict_minus_base": 3.539256930714871e-08
+    },
+    "96": {
+      "complementary_basis_base": 0.0036962698970113457,
+      "complementary_minus_existing": 0.0003549775729423349,
+      "complementary_relative_to_existing": 1.1062396038757976,
+      "existing_basis": 0.003341292324069011,
+      "strict_minus_base": 6.147544275806466e-08
+    }
+  },
+  "falsification_assessment": {
+    "conditioning_at_n256": {
+      "generalized_vs_whitened_abs_diff": 3.3003114130458755e-16,
+      "gram_cond2_normalized": 6732.466793092334,
+      "gram_cond2_raw": 20785482838167.465,
+      "lambda_min": 0.003492646017245106,
+      "lambda_min_raw_scaling": 0.0034926460172457433,
+      "lambda_min_whitened": 0.003492646017245436,
+      "normalized_vs_raw_abs_diff": 6.375108774214766e-16
+    },
+    "dimension_sequence_decreasing": true,
+    "max_abs_larger_truncation_minus_base": 2.8757117980469926e-07,
+    "max_abs_strict_combined_minus_base": 2.875711797947246e-07,
+    "max_abs_tighter_quadrature_minus_base": 2.7451999007332972e-15,
+    "negative_observed": false,
+    "outcome": "NO_NUMERICAL_FALSIFICATION_OBSERVED_IN_TESTED_REGIMES",
+    "reason": "No tested minimum is nonpositive. Halving dt changes results at roundoff scale; extending T to 6000 shifts minima slightly upward. The dimension sequence still decreases, so the unrestricted limit remains unresolved.",
+    "zero_limit_inference": "UNRESOLVED"
+  },
+  "implementation_self_check": {
+    "endpoint_constraint_max_abs": 3.944304526105059e-31,
+    "fourier_max_abs_error": 2.7727704652149366e-11,
+    "fourier_max_relative_error": 3.826995515126429e-13,
+    "gauss_legendre_order": 500,
+    "gram_max_abs_error": 2.2910535335540771e-07,
+    "gram_max_relative_error": 2.3608378145481547e-14,
+    "small_n": 6
+  },
+  "interpretation": "Finite-subspace minima are upper bounds on the unrestricted infimum. Positive values, stable quadrature, and positive finite-n extrapolations do not prove universal positivity or RH.",
+  "operator": "same Krein-primal symbol/operator as krein_primal_convergence_v2.py",
+  "rh_proven": false,
+  "runs": {
+    "base": {
+      "conditioning_at_nmax": {
+        "generalized_vs_whitened_abs_diff": 3.3003114130458755e-16,
+        "gram_cond2_normalized": 6732.466793092334,
+        "gram_cond2_raw": 20785482838167.465,
+        "lambda_min": 0.003492646017245106,
+        "lambda_min_raw_scaling": 0.0034926460172457433,
+        "lambda_min_whitened": 0.003492646017245436,
+        "normalized_vs_raw_abs_diff": 6.375108774214766e-16
+      },
+      "elapsed_seconds": 5.348748445510864,
+      "lambda_min_by_dimension": {
+        "128": 0.003616428300631429,
+        "160": 0.0035692007837928854,
+        "192": 0.003534832427984024,
+        "224": 0.00351151439043924,
+        "256": 0.003492646017245106,
+        "32": 0.004216249891720253,
+        "64": 0.0038426419964842913,
+        "96": 0.0036962698970113457
+      },
+      "quadrature": {
+        "chunk": 2000,
+        "dt": 0.02,
+        "xi_midpoint_T": 3000.0
+      }
+    },
+    "larger_truncation": {
+      "elapsed_seconds": 11.81246566772461,
+      "lambda_min_by_dimension": {
+        "128": 0.0036165228753921655,
+        "160": 0.0035693332483223176,
+        "192": 0.0035350111944619077,
+        "224": 0.0035117429733355697,
+        "256": 0.0034929335884249105,
+        "32": 0.004216265972682062,
+        "64": 0.003842677389053562,
+        "96": 0.0036963313724540166
+      },
+      "quadrature": {
+        "chunk": 2000,
+        "dt": 0.02,
+        "xi_midpoint_T": 6000.0
+      }
+    },
+    "strict_combined": {
+      "elapsed_seconds": 22.612574338912964,
+      "lambda_min_by_dimension": {
+        "128": 0.003616522875391901,
+        "160": 0.0035693332483222335,
+        "192": 0.003535011194461537,
+        "224": 0.003511742973335023,
+        "256": 0.0034929335884249005,
+        "32": 0.00421626597268183,
+        "64": 0.0038426773890535984,
+        "96": 0.0036963313724541038
+      },
+      "quadrature": {
+        "chunk": 2000,
+        "dt": 0.01,
+        "xi_midpoint_T": 6000.0
+      }
+    },
+    "tighter_quadrature": {
+      "elapsed_seconds": 11.331296682357788,
+      "lambda_min_by_dimension": {
+        "128": 0.003616428300630792,
+        "160": 0.0035692007837912917,
+        "192": 0.0035348324279824333,
+        "224": 0.0035115143904364946,
+        "256": 0.0034926460172428394,
+        "32": 0.004216249891719807,
+        "64": 0.0038426419964834816,
+        "96": 0.003696269897010662
+      },
+      "quadrature": {
+        "chunk": 2000,
+        "dt": 0.01,
+        "xi_midpoint_T": 3000.0
+      }
+    }
+  },
+  "schema": "aegis.rh.krein-primal-complementary-basis.v1",
+  "source_binding": {
+    "complementary_script_git_blob_sha": "81c13703df9a48ef7e9387811c4c359e73dd8ab4",
+    "complementary_script_path": "research/rh/krein_primal_complementary_basis_v1.py",
+    "existing_result_git_blob_sha": "24db597371010c6a5dc39f599c07c311e1c5bafc",
+    "existing_result_path": "research/rh/KREIN_PRIMAL_CONVERGENCE_L1.05_V2.json",
+    "existing_script_git_blob_sha": "982bb18e3d8acdf88cde795d4fcd921d9581a972",
+    "existing_script_path": "research/rh/krein_primal_convergence_v2.py",
+    "parent_head": "6399141cffaaca98d2dc96890810cd9a5551f455",
+    "pr": 699
+  },
+  "status": "NUMERICAL_DIAGNOSTIC_ONLY",
+  "tail_fit_base_last_five_checkpoints": {
+    "a+b/n": {
+      "coefficients": [
+        0.0033696898798545585,
+        0.03169786993221905
+      ],
+      "extrapolated_a": 0.0033696898798545585
+    },
+    "a+b/n+c/n^2": {
+      "coefficients": [
+        0.0033543258373401903,
+        0.037250529490433594,
+        -0.47202432123548843
+      ],
+      "extrapolated_a": 0.0033543258373401903
+    }
+  }
+}

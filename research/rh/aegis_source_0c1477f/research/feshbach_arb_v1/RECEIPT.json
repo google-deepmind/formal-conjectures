@@ -1,0 +1,39 @@
+{
+ "L": "1.05",
+ "c_inf_lower": "0.957511064294598",
+ "claim": "Q(G) >= 0.0025 ||G||^2 for every moment-zero G in L^2[0,1.05]",
+ "cvs_source": "AEGIS-OMEGA agents/rh-proof-closure-swarm-v1 harness/sdk/guinand_weil_arb.py blob 0f0cc53d6c428b61df84308296708dc5fd1eb81e",
+ "krein_slack_cells": 12040,
+ "krein_slack_m": "0.99",
+ "krein_tail_F_over_W": "4.198",
+ "not_machine_checked": [
+  "CvS matrix = restricted Weil form on trigonometric basis (arXiv:2607.02828 Lemma 2.1/Thm 2.5)",
+  "hat Krein pairing (Lean RHKreinGenuineCertificateV1 exists, not linked)",
+  "Feshbach inequality and |n|>10000 tail bound"
+ ],
+ "prior_certified_margin": "0.00025",
+ "rh_proven": false,
+ "schema": "AEGIS_KREIN_FESHBACH_ARB_RECEIPT_V1",
+ "schur": "POSITIVE_DEFINITE",
+ "schur_mu": "0.0025",
+ "sha256": {
+  "README.md": "570f37d4b22c507117c7f925e6f0026b7292a83e44d1795c39b9863ca5295b49",
+  "blocks.log": "c8f47b99514d739988c396771964de29b9d9a9931b0aa4a6cb7221a495697deb",
+  "blocks_N16_NP10000.json": "d4069dd33314cc1f1da1f8e451c3b4295b4c679887911243775a42bac87d7f83",
+  "complement_lp.json": "5d0a25da83ed58c64e3fcf227c53589c3ae7d137224e51130ca24e39aef95720",
+  "complement_lp.py": "957c1d3b957dfeae3cd16587e9c1e20e62ef1b7ac3ab18769d970c0e6a15aac7",
+  "complement_trace_arb.py": "dd9f9bdd452fa7fb5ad2454d8f58f55fea4b5d78ac9d638cfa9ca5065417f272",
+  "cvs_entries.py": "b9e2c3b9bd0fffb0250c74a6b19c51021036fc22ecb223bda11bbf2e2160eee1",
+  "feshbach_blocks_arb.py": "f10dd4449727e73ec2c4cac18180490da84dd4da675bf5d73f6483495353c62d",
+  "krein_slack.log": "f19ce491ca296435e12581404d9965bdf42fc1c60b22a6ae954dbdd079677fb6",
+  "run_all.sh": "c987b5da8ea5259150f60126e2f5827b9b49bc92516641a6da03edf930a001e1",
+  "sbar.json": "100416835cb95dd9aae94a79fd9e964b39dc851138f86d2d191569efdfa51903",
+  "schur.log": "7ec86f8e3055066b97624ee3665a028bb7f9366f817838bdc653c1dada0f7c94",
+  "schur_arb.py": "c3843706f7832f5d167bca1cdec86e902bce245c556b39044b86efbd061dc809",
+  "trace.log": "4658e304ebde7f318ab74b932279b84bb4c25dd5f3190363828ffe5f95fe8959",
+  "trace_arb.json": "e41449af9cbbc6d1e4326aa2c186c296a9533ebfde65c2e61e3eaa98108771c8",
+  "verify_krein_slack_arb.py": "26e0b9f2458ccffb3387f8907fb03b55a48a4efc640c518c284a54020dee5024"
+ },
+ "status": "INTERVAL_CERTIFIED_NOT_LEAN",
+ "trPTP_upper": "0.0324889357054019"
+}

@@ -1,0 +1,36 @@
+{
+ "schema": "aegis.rh.krein-arb-certificate.v1",
+ "L": 0.9,
+ "m_certified": "0.02",
+ "m_lp_float": 0.02227680478819884,
+ "claim": "F(xi)=W(xi)(S(xi)-m)+Hhat(xi) >= 0 for every real xi, W=(xi^2+1/4)^2, S=Re psi(1/4+i xi/2)-log pi-sqrt2 log2 cos(xi log2), H = 199 hats (half-width 0.02, centres L+0.02k) + delta^(j)(|u|-L), j<=4",
+ "method": "Arb (python-flint 0.8.0, 256-bit) degree-20 Taylor models of xi^2 F on 12034 adaptive cells of [0.02,3000]; exact second-difference rewrite of the hat sum; remainders: exponential Taylor bound, polygamma series bound; cell [0,0.02] via xi^2-division (G(0)=G'(0)=0 exactly); xi>=3000 via monotone Re psi tail bound",
+ "results": {
+  "zero_cell_lower_bound": "[7.9427916193436188790761131578481170662088769178234211073099350e-5 +/- 9.26e-67]",
+  "cells": 12039,
+  "tail_lower_bound_F_over_W": "[4.040473512782946009661637507553893093951639077689003710841364717508506874155 +/- 6.91e-76]"
+ },
+ "lp_source": "research/rh/krein_dual_beyond_log2.py (columns(), symbol(), same grid), LP re-solved with hat bound 1e5",
+ "lp_coefficient_scale": {
+  "max_abs_hat": 100000.0,
+  "sum_abs_hat": 18399533.3
+ },
+ "not_covered": [
+  "the dual argument F>=0 => zero quadratic >= m E itself (Krein pairing for the delta^(j) columns, j<=4) is not machine-formalized here",
+  "no Lean proof of this certificate",
+  "positivity for every L is RH; this is one window L=0.8"
+ ],
+ "files": {
+  "verify_krein_arb_v1.py": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a",
+  "krein_lp_L0.9.json": "a397699cd26666307ed8793651fedb1adbb5f996"
+ },
+ "versions": {
+  "python": "3.11.15",
+  "python_flint": "0.8.0",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1"
+ },
+ "authority_effect": "NONE",
+ "rh_proven": false,
+ "receipt_sha256": "84263b7e5f46efaf31a4832be47264c71f44acc5d2be4307fab703eea9a1867a"
+}

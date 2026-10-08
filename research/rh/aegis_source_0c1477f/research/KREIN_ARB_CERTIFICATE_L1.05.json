@@ -1,0 +1,56 @@
+{
+ "L": 1.05,
+ "L_exact": "4728779608739021/4503599627370496",
+ "authority_effect": "NONE",
+ "claim": "F(xi)=W(xi)(S(xi)-m)+Hhat(xi) >= 0 for every real xi, W=(xi^2+1/4)^2, S=Re psi(1/4+i xi/2)-log pi-sqrt2 log2 cos(xi log2), H = 399 hats (half-width 0.02, centres L+0.02k, exact support min(uk)-w-L = 5/2^58 >= 0) + delta^(j)(|u|-L), j<=4",
+ "execution_receipt": {
+  "cells_verified": 13116,
+  "hat_support": {
+   "min_uk_minus_w_minus_L": "5/288230376151711744",
+   "ok": true
+  },
+  "receipt_sha256": "7a059fa2520efc22fa9204a49b73574021755bb27d99aca4bd9654a57e096f43",
+  "schema": "aegis.rh.krein-arb-receipt.v2",
+  "status": "EXECUTION_BOUND",
+  "stdout_sha256": "ec73d15b0368f28349757a6f5f1d4248a37d1739af6581a27faefa5ed4242176"
+ },
+ "files": {
+  "krein_lp_L1.05.json": "8693c140b4be1f785074aa7040b5c50be5ef5fd2",
+  "krein_lp_svd_cp_v1.py": "7ad4069a578ad7ddebe8a0608cf56737171b6b92",
+  "verify_krein_arb_v1.py": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a"
+ },
+ "fine_grid_min_float": 0.00033340752302302157,
+ "lean_consumer": "RHKreinZetaBridgeV1.certificate_zero_quadratic_nonneg (PR #693): Re sum_rho Z_rho(A_g) >= 0 for every moment-zero packet of log-support width < L (L <= log 3)",
+ "lp_coefficient_scale": {
+  "delta": [
+   45005352.3540244,
+   -1191945.377344245,
+   -16019.456634411457,
+   214.3443719256154,
+   2.665465364054279
+  ],
+  "max_abs_hat": 1379804969.1436303,
+  "sum_abs_hat": 75408414560.02547
+ },
+ "lp_source": "krein_lp_svd_cp_v1.py 1.05 8 0.02 3e-10, iterate 2: LP over the 252 leading left singular vectors of the row-scaled column matrix, |d4|<=3, cutting plane on a 0.0005 grid of [0,300]",
+ "m_certified": "0.00025",
+ "m_lp_float": 0.0004144564806525923,
+ "method": "Arb (python-flint 0.8.0, 256-bit) via verify_krein_arb_v1.py (unchanged); zero cell [0,0.004]; xi>=3000 monotone tail bound. m_certified = 0.75 x float fine-grid minimum, then certified by Arb.",
+ "not_covered": "the pointwise inequality is Arb-checked, not Lean-checked; widths >= L; RH",
+ "receipt_sha256": "ea28e9c08e36e447c05a0bfc1a20151e060ac916d6065fc3a425c3fe0f6d594f",
+ "receipt_sha256_recipe": "sha256 of json.dumps(all other fields, sort_keys=True, separators=(',',':'), ensure_ascii=True)",
+ "results": [
+  "zero cell [0,[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80]]: lower bound of F = [0.0070695228309341127950033786258101464920993403069037443741979 +/- 3.15e-62]",
+  "cells verified on [[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80], 3000.000000000000000000000000000000000000000000000000000000000000000000000000]: 13116",
+  "tail lower bound (F/W for xi >= X): [2.449244182364114598328731035423041208188283570003324119011106120275741364931 +/- 6.50e-76]",
+  "CERTIFIED: F(xi) >= 0 for all real xi, m = [0.0002500000000000000000000000000000000000000000000000000000000000000000000000000 +/- 5.20e-81]"
+ ],
+ "rh_proven": false,
+ "schema": "aegis.rh.krein-arb-certificate.v1",
+ "versions": {
+  "numpy": "2.4.6",
+  "python": "3.11.15",
+  "python_flint": "0.8.0",
+  "scipy": "1.17.1"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "L": "1.6",
+ "N": 200,
+ "NP": 16000,
+ "Xi0": 560,
+ "args": "TAIL_ORDER=4 ./run_all.sh 1.6 200 16000 1.5 560 1.0 1.35 4.5e-12 (blocks stored at 70 digits, Schur at 320 bits)",
+ "c_inf_used": "1.32327472167",
+ "c_t": "1.5",
+ "claim": "Q(G) >= 4.5e-12 ||G||^2 for every moment-zero G in L^2[0,1.6] (prime powers 2, 3, 4)",
+ "comparison_note": "Zhu (arXiv:2608.24827) certifies 8.9e-18 at the same width for the full form (pole term included, no moment condition); this receipt is the moment-zero (pole-free) restriction, a different normalisation.",
+ "krein_cells": 3200,
+ "lam1_ritz": "5.353e-12",
+ "m": "1.35",
+ "mu": "4.5e-12",
+ "not_machine_checked": [
+  "CvS matrix = restricted Weil form on trigonometric basis (arXiv:2607.02828)",
+  "hat Krein pairing",
+  "Feshbach inequality and order-4 |n|>NP tail bound"
+ ],
+ "rh_proven": false,
+ "schema": "AEGIS_KREIN_FESHBACH_ARB_RECEIPT_V2",
+ "sha256": {
+  "blocks.log": "40c31aabd9f2e25b2dd564e8ee645806474145b6fa70dc50964ca85e35370c93",
+  "blocks_N200_NP16000.json (not committed)": "c4385e190f361f964d5fdf643e77312cf4e94ef28adcc2adae413c69d675f312",
+  "complement_lp.json": "b12f2efa3704c10e080cde82a073d09bfa068d80b4d6ce8498eaa3512f6b3a1c",
+  "krein_slack.log": "cb93d84566d6d93c2b9c157d7e15ac8f4d2aa4a20312d3a5580d1fe7e183868f",
+  "sbar.json": "b3a5465e76ba92596dac9cecf91bb3de72a042fbc285e395b784914160a7b2bb",
+  "schur.log": "8c32261db03c0a528629d486c055822cce38a554c09e89f2cbca88ae8cf77d24",
+  "trace.log": "a8b98b7c7254a68fac5d2cc4ad9afcbbc59efd90a56f95a475a66820c607fa7d",
+  "trace_arb.json": "4e600bbc5403077290bf890d80a41c664dee0650499f06497f6d797c3b90fe23"
+ },
+ "status": "INTERVAL_CERTIFIED_NOT_LEAN",
+ "step": "1.0",
+ "tail_order": 4
+}

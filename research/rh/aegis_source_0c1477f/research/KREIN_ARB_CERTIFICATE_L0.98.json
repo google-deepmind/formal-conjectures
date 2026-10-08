@@ -1,0 +1,42 @@
+{
+ "L": 0.98,
+ "L_exact": "2206763817411543/2251799813685248",
+ "authority_effect": "NONE",
+ "claim": "F(xi)=W(xi)(S(xi)-m)+Hhat(xi) >= 0 for every real xi, W=(xi^2+1/4)^2, S=Re psi(1/4+i xi/2)-log pi-sqrt2 log2 cos(xi log2), H = 399 hats (half-width 0.02, centres L+0.02k) + delta^(j)(|u|-L), j<=4",
+ "files": {
+  "krein_lp_L0.98.json": "1a253779b1df1a0245b8a41956144d212597ae54",
+  "verify_krein_arb_v1.py": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a"
+ },
+ "lean_consumer": "RHKreinZetaBridgeV1.certificate_zero_quadratic_nonneg (PR #693): Re sum_rho Z_rho(A_g) >= 0 for every moment-zero packet of log-support width < L",
+ "lp_coefficient_scale": {
+  "delta": [
+   191188.40856742376,
+   -11954.832295302807,
+   -696.0195598640462,
+   44.906338396938715,
+   1.472037640214469
+  ],
+  "max_abs_hat": 1000000.0,
+  "sum_abs_hat": 355797734.0225365
+ },
+ "lp_source": "krein_lp_cutting_plane_v1.py 0.98 8 1e6 1e6 (first LP iterate; hats bound 1e6, delta bound 1e6)",
+ "m_certified": "0.005",
+ "m_lp_float": 0.0071873119231722635,
+ "method": "Arb (python-flint 0.8.0, 256-bit) via verify_krein_arb_v1.py (unchanged); zero cell [0,0.004]; xi>=3000 monotone tail bound. m_certified chosen below min F/W on a 0.0002 float grid, then certified by Arb.",
+ "not_covered": "the pointwise inequality is Arb-checked, not Lean-checked; widths >= L; RH",
+ "receipt_sha256": "96ace3d3c66b31bdebc2965ae13b17efea80597ab8f599332f2b6ad9ae4d38a4",
+ "results": [
+  "zero cell [0,[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80]]: lower bound of F = [0.0001304919734561549976760717572249348521273023860184687893630273 +/- 5.97e-65]",
+  "cells verified on [[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80], 3000.000000000000000000000000000000000000000000000000000000000000000000000000]: 12157",
+  "tail lower bound (F/W for xi >= X): [3.696148152628815205549060105016740468012357853104460327251282571556592625541 +/- 7.82e-76]",
+  "CERTIFIED: F(xi) >= 0 for all real xi, m = [0.005000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 7.02e-80]"
+ ],
+ "rh_proven": false,
+ "schema": "aegis.rh.krein-arb-certificate.v1",
+ "versions": {
+  "numpy": "2.4.6",
+  "python": "3.11.15",
+  "python_flint": "0.8.0",
+  "scipy": "1.17.1"
+ }
+}

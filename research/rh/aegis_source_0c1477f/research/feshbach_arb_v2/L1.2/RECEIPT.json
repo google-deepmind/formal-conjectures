@@ -1,0 +1,33 @@
+{
+ "L": "1.2",
+ "N": 100,
+ "NP": 10000,
+ "Xi0": 450,
+ "args": "1.2 100 10000 2.0 450 1.0 1.98 5e-5",
+ "c_inf": "1.92058314849207",
+ "c_t": "2.0",
+ "claim": "Q(G) >= 5e-5 ||G||^2 for every moment-zero G in L^2[0,1.2] (all prime powers q < e^L)",
+ "krein_cells": 3338,
+ "lam1_ritz": "6.639e-5",
+ "m": "1.98",
+ "mu": "5e-5",
+ "not_machine_checked": [
+  "CvS matrix = restricted Weil form on trigonometric basis (arXiv:2607.02828)",
+  "hat Krein pairing",
+  "Feshbach inequality and |n|>NP tail bound"
+ ],
+ "rh_proven": false,
+ "schema": "AEGIS_KREIN_FESHBACH_ARB_RECEIPT_V2",
+ "sha256": {
+  "blocks.log": "56059824cb4f224458c149638e46b213c3db909600eaadc59a4be0fb1701c609",
+  "blocks_N100_NP10000.json.gz": "2c244d63c1b14f0ac32a3490fb90add3b564aee33a581625fdd252023f16a27a",
+  "complement_lp.json": "881a40ca60881116d9abe5bd362a5f7b4526ce1b3055c73e3dcb1e43756d594b",
+  "krein_slack.log": "e81aad0670d4ed57536e76b588534bb1fbcc66a3de01e16030cf64e3b1e803a0",
+  "sbar.json": "d33d02b53ec2f8f1fbbaa3af5767b361e49a42f3a5d52654b0ae09c1e17823cf",
+  "schur.log": "db31df3b8068b6a2417b0b71e3851aeb02c6b6dfb49e2e8f4950e311a2a1b197",
+  "trace.log": "abe42727e539566514ba56f274beb1f8ea880f2ff028c27394e1a64471cf44ee",
+  "trace_arb.json": "160021d1ed89d298e8e71a2ee88463b6ace560c7ca556970e8a6dd2a63e3003c"
+ },
+ "status": "INTERVAL_CERTIFIED_NOT_LEAN",
+ "step": "1.0"
+}
