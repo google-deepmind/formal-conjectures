@@ -52,7 +52,10 @@ theorem erdos_513.variants.upper_bound : ∃ c > 0,
     (liminf (fun r : ℝ => ratio r f) atTop) ≤ 2 / π - c := by
   sorry
 
-/-- For all transcendental entire function `f`, `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. -/
+/-- The supremum $B$ over all transcendental entire $f$ satisfies $B > 1/2$: there is such an $f$
+with `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. This was observed by Kövári (unpublished), and
+[ClHa64] proves the stronger bound `> 4 / 7`. It does not hold for every `f`: for `f = exp` the
+`liminf` is `0`. -/
 @[category research solved, AMS 30]
 theorem erdos_513.variants.lower_bound :
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
