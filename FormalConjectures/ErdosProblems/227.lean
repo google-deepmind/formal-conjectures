@@ -26,6 +26,7 @@ Let `f = ∑ aₙ zⁿ` be an entire function which is not a polynomial. Is it t
 
 The answer is **no** (Clunie–Hayman, 1964): the limit can take any value in `[0, 1/2]`.
 That construction is *not* formalized here; see the final remarks.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos227.md)
 -/
 
 @[expose] public section
