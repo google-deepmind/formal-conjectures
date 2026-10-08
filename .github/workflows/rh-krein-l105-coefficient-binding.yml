@@ -181,3 +181,173 @@ jobs:
           path: evidence-l105/
           if-no-files-found: warn
           retention-days: 30
+
+
+  kernel-replay:
+    name: replay reconstructed L105 modules in Lean 4.33.1
+    needs: data-rebind
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact fork HEAD
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: \${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Checkout exact AEGIS base and window dependencies
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: 2c3d041b633147ec97c7ef753aa9d157a47bb9f5
+          path: .aegis-window
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Checkout exact AEGIS base closure
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: cfe368ce2ffa0d196a4319c02b956997edf9f3fa
+          path: .aegis-base
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Download generated exact-head certificate sources
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: rh-l105-coefficient-binding-\${{ github.sha }}
+          path: evidence-l105
+      - name: Verify pins and materialize source-only AEGIS modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C .aegis-window rev-parse HEAD)" = "2c3d041b633147ec97c7ef753aa9d157a47bb9f5"
+          test "$(git -C .aegis-base rev-parse HEAD)" = "cfe368ce2ffa0d196a4319c02b956997edf9f3fa"
+          mkdir -p .lake/l105-generated .lake/l105-source evidence-l105/replay
+          cp evidence-l105/generated/RHKreinL105Batch[0-9][0-9][0-9].lean .lake/l105-generated/
+          cp evidence-l105/generated/RHKreinL105AllV1.lean .lake/l105-generated/
+          for source_root in \
+            research/rh/aegis_source_4d7578e/lean \
+            research/rh/aegis_source_4f93fff/lean
+          do
+            for source in "$source_root"/*.lean.src; do
+              cp "$source" ".lake/l105-source/$(basename "$source" .src)"
+            done
+          done
+          printf 'EXACT_HEAD=%s\nAEGIS_WINDOW=2c3d041b633147ec97c7ef753aa9d157a47bb9f5\nAEGIS_BASE=cfe368ce2ffa0d196a4319c02b956997edf9f3fa\n' "$GITHUB_SHA" > evidence-l105/replay/pins.txt
+      - name: Install pinned Lean 4.33.1 and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.33.1"
+          grep -Fq "0df444a360eaa60ab8c11dca51a86af692955474" lake-manifest.json
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "0df444a360eaa60ab8c11dca51a86af692955474"
+          lean --version | tee evidence-l105/replay/lean-version.txt
+      - name: Compute and compile exact L105 dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
+          L105="$GITHUB_WORKSPACE/research/rh/krein_L105_v1"
+          REFLECTIVE="$GITHUB_WORKSPACE/research/rh/krein_reflective_v1"
+          OVERLAY="$GITHUB_WORKSPACE/AEGISOverlay"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          L105SRC="$GITHUB_WORKSPACE/.lake/l105-source"
+          WIN="$GITHUB_WORKSPACE/.aegis-window/sovereign-omega-v2/formal/bridges/lean"
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          OUT="$GITHUB_WORKSPACE/.lake/l105-build"
+          mkdir -p "$OUT"
+          ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
+          export GEN L105 REFLECTIVE OVERLAY SRC COMPAT L105SRC WIN BASE OUT
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, sys
+          roots=[Path(os.environ[k]) for k in
+                 ("BASE","WIN","L105SRC","SRC","COMPAT","OVERLAY","REFLECTIVE","L105","GEN")]
+          modules={}
+          for root in roots:
+              for p in root.rglob("*.lean"):
+                  modules[p.stem]=p
+          skip={"Mathlib","Lean","Std","Aesop","Batteries","Qq","Lc","Hadamard","FormalConjectures"}
+          def imported_names(path):
+              for raw in path.read_text(encoding="utf-8").splitlines():
+                  line=raw.split("--",1)[0].strip()
+                  if not line.startswith("import "):
+                      continue
+                  for token in line[7:].split():
+                      top=token.split(".",1)[0]
+                      if top in skip:
+                          continue
+                      name=token.split(".")[-1]
+                      if name in modules:
+                          yield name
+                      else:
+                          raise SystemExit(f"L105_IMPORT_UNRESOLVED:{path.name}:{token}")
+          seen=set()
+          active=set()
+          order=[]
+          def visit(name):
+              if name in seen:
+                  return
+              if name in active:
+                  raise SystemExit(f"L105_IMPORT_CYCLE:{name}")
+              if name not in modules:
+                  raise SystemExit(f"L105_MODULE_UNRESOLVED:{name}")
+              active.add(name)
+              for dep in imported_names(modules[name]):
+                  visit(dep)
+              active.remove(name)
+              seen.add(name)
+              order.append(name)
+          visit("RHWindowL105FinalV1")
+          order_path=Path(".lake/l105-order.txt")
+          order_path.write_text("\n".join(f"{n}\t{modules[n]}" for n in order)+"\n",encoding="utf-8")
+          print("L105_CLOSURE_COUNT",len(order))
+          print("L105_TARGET",modules["RHWindowL105FinalV1"])
+          PY
+          while IFS="$(printf '\t')" read -r name file; do
+            test -n "$name" || continue
+            echo "=== L105 $name ==="
+            lean -o "$OUT/$name.olean" "$file" 2>&1 | tee "evidence-l105/replay/$name.log"
+          done < .lake/l105-order.txt
+          ! grep -R -n -E 'sorryAx|declaration uses .sorry.' evidence-l105/replay
+      - name: Audit exact L105 theorem axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
+          L105="$GITHUB_WORKSPACE/research/rh/krein_L105_v1"
+          REFLECTIVE="$GITHUB_WORKSPACE/research/rh/krein_reflective_v1"
+          OVERLAY="$GITHUB_WORKSPACE/AEGISOverlay"
+          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
+          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
+          L105SRC="$GITHUB_WORKSPACE/.lake/l105-source"
+          WIN="$GITHUB_WORKSPACE/.aegis-window/sovereign-omega-v2/formal/bridges/lean"
+          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
+          OUT="$GITHUB_WORKSPACE/.lake/l105-build"
+          ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
+          cat > /tmp/RHL105Axioms.lean <<'LEAN'
+          import RHWindowL105FinalV1
+          #print axioms AEGIS.RHKreinL105AllV1.zero_quadratic_nonneg_width_21_20
+          #print axioms AEGIS.RHWindowL105FinalV1.window_lt_21_40
+          #print axioms AEGIS.RHWindowL105FinalV1.rh_of_windows_from_21_40
+          LEAN
+          lean /tmp/RHL105Axioms.lean 2>&1 | tee evidence-l105/replay/axioms.log
+          ! grep -F 'sorryAx' evidence-l105/replay/axioms.log
+          printf 'L105_BATCH_KERNEL_REPLAY=PASS\nWINDOW_LT_21_OVER_40=PROVED\nWINDOWS_L_GE_21_OVER_40=OPEN\nRIEMANN_HYPOTHESIS=NOT_PROVED\n' > evidence-l105/replay/disposition.txt
+      - name: Upload exact-head L105 kernel evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-l105-kernel-replay-\${{ github.sha }}-\${{ github.run_id }}
+          path: evidence-l105/replay/
+          if-no-files-found: warn
+          retention-days: 30
