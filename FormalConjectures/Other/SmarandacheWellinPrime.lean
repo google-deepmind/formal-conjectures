@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Smarandache–Wellin primes
@@ -29,6 +31,8 @@ this sequence are prime.
 * [OEIS A069151](https://oeis.org/A069151)
 * [OEIS A046035](https://oeis.org/A046035)
 -/
+
+@[expose] public section
 
 namespace SmarandacheWellinPrime
 
