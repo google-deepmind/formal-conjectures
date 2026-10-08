@@ -32,7 +32,6 @@ public import FormalConjecturesUtil
   bounds*. J. Amer. Math. Soc. 19 (2006), 119-169.
 - [SzVu06b] Szemerédi, E. and Vu, V., *Finite and infinite arithmetic progressions in sumsets*.
   Ann. of Math. 163 (2006), 1-35.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos344.md)
 -/
 
 @[expose] public section
@@ -64,6 +63,7 @@ large positive constant works for every set. Requiring the bound for every $N\ge
 make its hypothesis impossible at $N=1$ when the constant exceeds $1$.
 -/
 @[category research solved, AMS 5 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos344.lean#L8994"]
 theorem erdos_344 : answer(True) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ A : Set ℕ,
       (∀ᶠ N : ℕ in atTop, C * Real.sqrt N ≤ countUpTo A N) → IsSubcomplete A := by
