@@ -130,9 +130,11 @@ def AtMostTwoPerCircle (A : Finset ℝ²) : Prop :=
   ∀ x ∈ A, ∀ r : ℝ, #((A.erase x).filter fun y ↦ dist y x = r) ≤ 2
 
 /--
-Erdős and Pach [ErPa90] (see also [Er87b]) suggest that the bound $(1-o(1))n$ holds if, in
-addition, every circle centred at a point $x_i$ contains at most $2$ other points $x_j$. We state
-this in their setting, with no three points on a line and no four points on a circle.
+Erdős and Pach [ErPa90] suggest that the bound $(1-o(1))n$ holds under the assumption that every
+circle centred at a point $x_i$ contains at most $2$ other points $x_j$. We state this for points
+in general position (no three on a line and no four on a circle [Er87b, p. 167]), the setting in
+which [Er87b] and [ErPa90] ask the weaker question. Without the assumption of no three points on a
+line the statement is false: the sets of [Fe26] satisfy the circle condition.
 -/
 @[category research open, AMS 52]
 theorem erdos_654.variants.erdos_pach : answer(sorry) ↔
