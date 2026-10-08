@@ -29,6 +29,7 @@ mkdir -p "$OUT"
 
 python3 - "$BASE" "$WBASE" "$SRC" "$COMPAT" "$LOCAL" "$OVERLAY" "$WIN" "$ORDER" "$OUT" <<'PY'
 from pathlib import Path
+import hashlib
 import sys
 base, wbase, src, compat, local, overlay, win, orderpath, out = map(Path, sys.argv[1:])
 roots=(base, wbase, src, compat, local, overlay, win)
@@ -63,17 +64,39 @@ def visit(n):
     done.add(n)
     order.append(n)
 visit("RHSmallWindowCanonicalJoinV1")
-order=[n for n in order if not (out / (n+".olean")).exists()]
-orderpath.write_text("\n".join(f"{n}\t{chosen(n)}" for n in order)+"\n",encoding="utf-8")
-print(f"RH_PROVED_WINDOW_BUILD_COUNT={len(order)}")
-for n in order: print("RH_PROVED_WINDOW_SOURCE",n,str(chosen(n)))
+# A cached .olean is safe only with a matching source stamp. Rebuild all later
+# modules in topological order after the first dirty source (conservative
+# dependency invalidation, including modules restored from older CI caches).
+pending=[]
+dirty=False
+for n in order:
+    source=chosen(n)
+    digest=hashlib.sha256(source.read_bytes()).hexdigest()
+    olean=out / (n+".olean")
+    stamp=out / (n+".source.sha256")
+    valid=olean.is_file() and stamp.is_file() and stamp.read_text(encoding="ascii").strip()==digest
+    if dirty or not valid:
+        dirty=True
+        pending.append((n,source,digest))
+orderpath.write_text("\n".join(f"{n}\t{p}\t{digest}" for n,p,digest in pending)+"\n",encoding="utf-8")
+print(f"RH_PROVED_WINDOW_BUILD_COUNT={len(pending)}")
+print(f"RH_PROVED_WINDOW_CACHE_VERIFIED_COUNT={len(order)-len(pending)}")
+for n,p,digest in pending: print("RH_PROVED_WINDOW_SOURCE",n,str(p),digest)
 PY
 BASE_LEAN_PATH="$(lake env printenv LEAN_PATH)"
 export LEAN_PATH="$OUT:$WIN:$OVERLAY:$LOCAL:$COMPAT:$SRC:$WBASE:$BASE:$ROOT/.li/.lake/build/lib/lean:$BASE_LEAN_PATH"
-while IFS="$(printf '\t')" read -r name file; do
+while IFS="$(printf '\t')" read -r name file digest; do
     test -n "$name" || continue
+    test -n "$digest"
     echo "RH_PROVED_WINDOW_COMPILE $name $file"
+    actual="$(sha256sum "$file" | cut -d ' ' -f 1)"
+    if [ "$actual" != "$digest" ]; then
+        echo "RH_WINDOW_SOURCE_CHANGED_DURING_BUILD:$name" >&2
+        exit 1
+    fi
+    rm -f "$OUT/$name.olean" "$OUT/$name.source.sha256"
     lean -o "$OUT/$name.olean" "$file"
+    printf '%s\n' "$digest" > "$OUT/$name.source.sha256"
 done < "$ORDER"
 
 cat > "$AUDIT" <<'LEAN'
