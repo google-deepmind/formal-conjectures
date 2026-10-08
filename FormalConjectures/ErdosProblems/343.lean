@@ -28,6 +28,7 @@ public import FormalConjecturesUtil
   fixed sequence*. Canadian J. Math. 18 (1966), 643-655.
 - [SzVu06] Szemerédi, E. and Vu, V., *Long arithmetic progressions in sumsets: thresholds and
   bounds*. J. Amer. Math. Soc. 19 (2006), 119-169.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos343.md)
 -/
 
 @[expose] public section
