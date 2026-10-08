@@ -211,6 +211,14 @@ jobs:
           path: .aegis-base
           fetch-depth: 1
           persist-credentials: false
+      - name: Checkout pinned Li/Hadamard zero-counting provider
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: nicholasbulka/li-criterion-rh-equivalence-lean
+          ref: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+          path: .li-l105
+          fetch-depth: 1
+          persist-credentials: false
       - name: Download generated exact-head certificate sources
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -248,6 +256,59 @@ jobs:
           lake exe cache get
           test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "0df444a360eaa60ab8c11dca51a86af692955474"
           lean --version | tee evidence-l105/replay/lean-version.txt
+      - name: Restore exact Li/Hadamard provider build
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .li-l105/.lake/build
+          key: rh-li-provider-v1-${{ runner.os }}-${{ hashFiles('lean-toolchain') }}-35df682f3b709ffe5fbcfdd452dfa964bd622b87-0df444a360eaa60ab8c11dca51a86af692955474-10d38a54580ff72d698a30be64fe1c3c44f862a2
+      - name: Bind and build pinned Li/Hadamard zero-counting provider
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .li-l105 rev-parse HEAD)" = "35df682f3b709ffe5fbcfdd452dfa964bd622b87"
+          test "$(git -C .li-l105 hash-object Hadamard/General/Factorization.lean)" = "10d38a54580ff72d698a30be64fe1c3c44f862a2"
+          printf 'leanprover/lean4:v4.33.1\n' > .li-l105/lean-toolchain
+          python3 - <<'PY'
+          from pathlib import Path
+          root=Path('.li-l105')
+          p=root/'lakefile.lean'
+          old='de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11'
+          new='0df444a360eaa60ab8c11dca51a86af692955474'
+          original=p.read_text(encoding='utf-8')
+          assert original.count(old)==1, 'L105_LI_MATHLIB_PIN_MISMATCH'
+          p.write_text(original.replace(old,new,1),encoding='utf-8')
+          q=root/'Hadamard/General/Factorization.lean'
+          source=q.read_text(encoding='utf-8')
+          for before,after in [
+            ('eventually_nhdsWithin_of_forall fun w hw => ite_eq_right hw',
+             'eventually_nhdsWithin_of_forall fun w hw => if_neg hw'),
+            ('have hgz : g z = Q z := ite_eq_left rfl',
+             'have hgz : g z = Q z := by simp [g]'),
+            ('rw [ite_eq_right heq, hQ_eq_div z (hz heq)]',
+             'rw [if_neg heq, hQ_eq_div z (hz heq)]'),
+          ]:
+              assert source.count(before)==1, 'L105_LI_COMPAT_SOURCE_MISMATCH'
+              source=source.replace(before,after,1)
+          q.write_text(source,encoding='utf-8')
+          PY
+          rm -f .li-l105/lake-manifest.json
+          (
+            cd .li-l105
+            lake update mathlib
+            lake exe cache get
+            test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "0df444a360eaa60ab8c11dca51a86af692955474"
+            lake build Hadamard.OrderOne.TailEstimates Hadamard.OrderOne.LogDerivMultiplicity \
+              Lc.LiCriterion.XiGrowth Lc.LiCriterion.HadamardSummabilityBridge \
+              Lc.LiCriterion.HadamardBridge
+          )
+          for module in Hadamard/OrderOne/TailEstimates Lc/LiCriterion/XiGrowth Lc/LiCriterion/HadamardSummabilityBridge; do
+            test -s ".li-l105/.lake/build/lib/lean/$module.olean" || {
+              echo "L105_PROVIDER_OLEAN_MISSING:$module" >&2; exit 1;
+            }
+          done
+          mkdir -p .lake/l105-build
+          cp -a .li-l105/.lake/build/lib/lean/. .lake/l105-build/
+          printf 'LI_PROVIDER_SHA=35df682f3b709ffe5fbcfdd452dfa964bd622b87\nLI_PROVIDER_SOURCE_BLOB=10d38a54580ff72d698a30be64fe1c3c44f862a2\nMATHLIB_SHA=0df444a360eaa60ab8c11dca51a86af692955474\n' >> evidence-l105/replay/pins.txt
       - name: Compute and compile exact L105 dependency closure
         shell: bash
         run: |
