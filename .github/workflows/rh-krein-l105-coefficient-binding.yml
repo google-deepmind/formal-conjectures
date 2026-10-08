@@ -276,6 +276,7 @@ jobs:
               for p in root.rglob("*.lean"):
                   modules[p.stem]=p
           skip={"Mathlib","Lean","Std","Aesop","Batteries","Qq","Lc","Hadamard","FormalConjectures"}
+          import_spellings={}
           def imported_names(path):
               for raw in path.read_text(encoding="utf-8").splitlines():
                   line=raw.split("--",1)[0].strip()
@@ -287,6 +288,10 @@ jobs:
                           continue
                       name=token.split(".")[-1]
                       if name in modules:
+                          previous=import_spellings.get(name)
+                          if previous is not None and previous != token:
+                              raise SystemExit(f"L105_IMPORT_ALIAS_CONFLICT:{name}:{previous}:{token}")
+                          import_spellings[name]=token
                           yield name
                       else:
                           raise SystemExit(f"L105_IMPORT_UNRESOLVED:{path.name}:{token}")
@@ -308,18 +313,16 @@ jobs:
               order.append(name)
           visit("RHWindowL105FinalV1")
           order_path=Path(".lake/l105-order.txt")
-          order_path.write_text("\n".join(f"{n}\t{modules[n]}" for n in order)+"\n",encoding="utf-8")
+          order_path.write_text("\n".join(f"{n}\t{import_spellings.get(n,n).replace('.', '/')}\t{modules[n]}" for n in order)+"\n",encoding="utf-8")
           print("L105_CLOSURE_COUNT",len(order))
           print("L105_TARGET",modules["RHWindowL105FinalV1"])
           PY
-          while IFS="$(printf '\t')" read -r name file; do
+          while IFS="$(printf '\t')" read -r name module_path file; do
             test -n "$name" || continue
-            echo "=== L105 $name ==="
-            # Qualified AEGISOverlay imports require a matching relative .olean path.
-            olean="$OUT/$name.olean"
-            if [[ "$file" == "$OVERLAY/"* ]]; then
-              olean="$OUT/AEGISOverlay/$name.olean"
-            fi
+            test -n "$module_path" || { echo "L105_IMPORT_NAME_MISSING:$name" >&2; exit 1; }
+            echo "=== L105 $name [$module_path] ==="
+            # Emit exactly where Lean resolves the actual import spelling.
+            olean="$OUT/$module_path.olean"
             mkdir -p "$(dirname "$olean")"
             lean -o "$olean" "$file" 2>&1 | tee "evidence-l105/replay/$name.log"
             test -s "$olean" || { echo "L105_OLEAN_MISSING:$olean" >&2; exit 1; }
