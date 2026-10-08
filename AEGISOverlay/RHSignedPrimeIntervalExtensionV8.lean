@@ -119,7 +119,44 @@ theorem eventual_signed_prime_equals_combined_v8 :
   eventual_signed_dictionary_of_interval_extension_v7
     eventually_finite_chebyshev_integral_extends_v8
 
+/-!
+## Terminal reuse of the established signed-prime dictionary
+
+The already kernel-proved V8 equality discharges the dictionary premise of
+the original V5 reflected-kernel theorem. The only remaining analytic input to
+the resulting actual Mathlib RH theorem is the prime-only subexponential
+growth hypothesis. This module does not assert that hypothesis.
+-/
+
+/-- Actual zero-kernel versus arithmetic-orbit remainder, now unconditionally
+bounded on a positive translation tail; no unproved dictionary premise. -/
+theorem eventual_reflected_kernel_remainder_bounded_v8 :
+    AEGIS.RHPrimeOnlyReflectedTailV3.EventuallyReflectedFixedKernelArithmeticRemainderBoundedV3 :=
+  AEGIS.RHSignedPrimeActualKernelTailV5.eventual_reflected_remainder_of_signed_dictionary
+    eventual_signed_prime_equals_combined_v8
+
+/-- Direct consumer: only the separate, explicit prime-only exponential-type-zero
+estimate is required after the verified Abel/Chebyshev dictionary is supplied. -/
+theorem riemannHypothesis_of_prime_only_subexponential_growth_v8
+    (hPrime : AEGIS.RHSubexpBoundedPerturbationV1.SubexponentialAtTopV1
+      (primeOnlyOrbitV1 detectingPacket)) :
+    RiemannHypothesis :=
+  AEGIS.RHPrimeOnlyReflectedTailV3.riemannHypothesis_of_prime_only_growth_and_eventual_reflected_bridge
+    hPrime eventual_reflected_kernel_remainder_bounded_v8
+
+/-- The same explicit growth premise reaches the exact original Millennium
+zero-quadratic carrier, with no new axiom or change of theorem statement. -/
+theorem universal_zero_quadratic_of_prime_only_growth_v8
+    (hPrime : AEGIS.RHSubexpBoundedPerturbationV1.SubexponentialAtTopV1
+      (primeOnlyOrbitV1 detectingPacket)) :
+    AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10 :=
+  AEGIS.WeilRHImpliesFinalSignV13.rh_implies_universal_v13
+    (riemannHypothesis_of_prime_only_subexponential_growth_v8 hPrime)
+
 end AEGIS.RHSignedPrimeIntervalExtensionV8
 
 #print axioms AEGIS.RHSignedPrimeIntervalExtensionV8.eventually_finite_chebyshev_integral_extends_v8
 #print axioms AEGIS.RHSignedPrimeIntervalExtensionV8.eventual_signed_prime_equals_combined_v8
+#print axioms AEGIS.RHSignedPrimeIntervalExtensionV8.eventual_reflected_kernel_remainder_bounded_v8
+#print axioms AEGIS.RHSignedPrimeIntervalExtensionV8.riemannHypothesis_of_prime_only_subexponential_growth_v8
+#print axioms AEGIS.RHSignedPrimeIntervalExtensionV8.universal_zero_quadratic_of_prime_only_growth_v8
