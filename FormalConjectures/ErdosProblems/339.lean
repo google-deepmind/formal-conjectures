@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
   theory*. Monographies de L'Enseignement Mathematique (1980).
 - [HHP03] Hegyvári, N., Hennecart, F. and Plagne, A., *A proof of two Erdős' conjectures on
   restricted addition and further results*. J. Reine Angew. Math. 560 (2003), 199-220.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos339.md)
 -/
 
 @[expose] public section
