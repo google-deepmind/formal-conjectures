@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
   Discrete Math. (1997), 227-231.
 - [Ta24c] Tao, Terence, *Planar point sets with forbidden 4-point patterns and few distinct
   distances*. [arXiv:2409.01343](https://arxiv.org/abs/2409.01343) (2024).
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos135.md)
 -/
 
 @[expose] public section
