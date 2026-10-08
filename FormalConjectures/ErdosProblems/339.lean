@@ -74,9 +74,7 @@ sums of exactly $r$ distinct elements of $A$ have positive lower density. -/
 theorem erdos_339.variants.exact_order :
     ∀ (A : Set ℕ) (r : ℕ), A.IsAsymptoticAddBasisOfOrder r →
       0 < (distinctSums r A).lowerDensity := by
-  intro A r hA
-  apply (erdos_339.mp trivial) A r
-  exact (Set.isAsymptoticAddBasisOfOrder_iff_atTop.mp hA).mono fun _ hn ↦ ⟨r, le_rfl, hn⟩
+  sorry
 
 @[category test, AMS 5 11]
 theorem distinctSums_zero (A : Set ℕ) : distinctSums 0 A = {0} := by
