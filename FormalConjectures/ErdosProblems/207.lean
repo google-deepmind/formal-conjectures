@@ -60,8 +60,8 @@ For any $g\geq 2$, if $n$ is sufficiently large and $n\equiv 1,3\pmod{6}$ then t
 
 Proved by Kwan, Sah, Sawhney, and Simkin [KSSS22b].
 -/
-@[category research solved, AMS 5]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos207.lean#L400"]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos207.lean#L400"]
 theorem erdos_207 : Statement := by
   sorry
 
