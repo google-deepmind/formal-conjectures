@@ -94,7 +94,8 @@ $$
 Ho's construction uses $n = q + 1$ points in dimension $q^2 + q = n^2 - n$, for every prime power
 $q$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/boonsuan/erdos670/blob/c053b2580e0cf7e74c8d905f96feb101061612a3/DiameterConstruction/MainTheorem.lean#L452"]
 theorem erdos_670.variants.ho :
     ∀ ε > (0 : ℝ), ∃ᶠ n : ℕ in atTop,
       ∃ A : Finset (EuclideanSpace ℝ (Fin (n ^ 2 - n))), A.card = n ∧
