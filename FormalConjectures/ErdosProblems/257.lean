@@ -137,10 +137,16 @@ noncomputable def erdos_257.variants.finitePrimeWeighted (b : ℕ) (A : Set ℕ)
     Summable (Set.indicator A (erdos_257.variants.primeWeightedTerm b P))
 
 /--
-An infinite set of positive exponents with summable finite-prime weighted cost
-has an irrational reciprocal Mersenne series at the same integer base. If the
-cost is summable at base two, every infinite subset has an irrational series
-at every integer base at least two.
+Let $b \ge 2$ be an integer and $A$ an infinite set of positive integers.
+For a finite nonempty set of primes $P$, put $h_P(a)=\prod_{p\in P}p^{v_p(a)}$.
+If
+$$
+\sum_{a\in A}\frac{h_P(a)}{a(b^{h_P(a)}-1)}<\infty,
+$$
+then $\sum_{a\in A}1/(b^a-1)$ is irrational. If a positive-integer host $H$
+has this summable weighted cost at base $2$, the series
+$\sum_{a\in A}1/(b^a-1)$ is irrational for every infinite subset $A\subseteq H$
+and every integer base $b\ge 2$.
 
 Source: W. Cook, *Reciprocal Mersenne Subseries*, Theorem 1 and its
 hereditary consequence:
@@ -193,9 +199,13 @@ end MixedSupport
 
 open MixedSupport
 
-/-- Every infinite subset of a mixed finite-prime weighted and arbitrary-weight
-logarithmic-budget host has irrational reciprocal-power series at every integer base
-at least two. These sufficient support classes do not settle arbitrary infinite support.
+/-- Let $E$ be a set of positive integers with summable finite-prime weighted
+cost at base $2$, and let $V$ admit a `LogBudgetCover`. For every infinite
+$A\subseteq E\cup V$ and every integer base $b\ge 2$, the series
+$$
+\sum_{a\in A}\frac{1}{b^a-1}
+$$
+is irrational. These sufficient support classes do not settle arbitrary infinite support.
 The classical digit-block method is due to Erdős; the mixed cover formulation is
 formalized in Cook's source, with priority unadjudicated. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
