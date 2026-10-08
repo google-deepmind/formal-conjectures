@@ -44,12 +44,13 @@ def IsAdmissible (f : ℕ → ℕ) : Prop :=
   ∀ C : ℤ → Bool, ∃ b : Bool,
     ∃ᶠ d in atTop, 0 < d ∧ HasMonochromaticAP C b d (f d)
 
-set_option linter.style.category_attribute false in
-/-- Determine the admissible length functions. The parameter $A$ records an unanswered
-set-valued question; this definition does not assert that an answer has been found. -/
+/-- Find the best function $f(d)$ such that, in any 2-colouring of the integers, at least
+one colour class contains an arithmetic progression with common difference $d$ of length
+$f(d)$ for infinitely many $d$. -/
 @[category research open, AMS 5 11]
-def erdos_187 (A : Set (ℕ → ℕ)) : Prop :=
-  answer(A) = {f | IsAdmissible f}
+theorem erdos_187 :
+    (answer(sorry) : Set (ℕ → ℕ)) = {f | IsAdmissible f} := by
+  sorry
 
 /-- Infinitely many natural-number differences means an infinite set of differences. -/
 @[category API, AMS 5 11]
