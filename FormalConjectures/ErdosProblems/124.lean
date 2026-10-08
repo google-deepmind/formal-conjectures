@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 124
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/124](https://www.erdosproblems.com/124)
 - [BEGL96] Burr, S. A. and Erdős, P. and Graham, R. L. and Li, W. Wen-Ching, Complete sequences of sets of integer powers. Acta Arith. (1996), 133-138.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Pointwise

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 283
@@ -27,6 +28,8 @@ reciprocals sum to 1. (2019), 213--221.
 - [Gr63] Graham, R. L., A theorem on partitions. J. Austral. Math. Soc. (1963), 435-441.
 - [vD25] W. van Doorn, Partitions with prescribed sum of rationals: asymptotic bounds. arXiv:2502.02200 (2025).
 -/
+
+@[expose] public section
 
 open Filter Polynomial Finset
 
@@ -59,7 +62,7 @@ with $1$ replaced by any rational $\alpha>0$.
 
 This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P283/Proof_flat.lean"]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/286f856aa3fc08957b80950fd18a45aab8d045ea/Erdos/P283/Proof_flat.lean#L9738-L9746"]
 theorem erdos_283 : answer(True) ↔ ∀ p : ℚ[X], Condition p := by
   sorry
 

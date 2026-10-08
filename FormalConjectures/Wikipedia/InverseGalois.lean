@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Inverse Galois problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Inverse_Galois_problem)
 -/
+
+@[expose] public section
 
 namespace InverseGalois
 
@@ -72,7 +75,7 @@ theorem inverse_galois_problem.variants.abelian
 /--
 Every finite symmetric group is realizable.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/4e37e8779287010f34ffc6c817ea45fc26d8ba0a/Proofs/T_InverseGalois_inverse_galois_problem_variants_symmetric_group.lean#L392"]
 theorem inverse_galois_problem.variants.symmetric_group
     {S : Type*} [Fintype S] :
     IsRealizable ℚ (S ≃ S) := by

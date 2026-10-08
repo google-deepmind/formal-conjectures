@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 571
 
 *References:*
 - [erdosproblems.com/571](https://www.erdosproblems.com/571)
+- [Formal Lean proof](https://github.com/Jayyhk/erdos-lean/blob/2f055a777231a73a305b379e993c37f00ed5a66b/problems/571/Erdos571.lean)
 - [BuCo18] Bukh, Boris and Conlon, David, *Rational exponents in extremal graph theory*. J. Eur.
   Math. Soc. (JEMS) (2018), 1747-1757.
 - [CJL21] Conlon, David and Janzer, Oliver and Lee, Joonkyung, *More on the extremal number of
@@ -42,14 +44,20 @@ import FormalConjecturesUtil
   conjecture*. J. Combin. Theory Ser. B (2021), 149-172.
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos571
 
 /--
 Show that for any rational $\alpha \in [1,2)$ there exists a bipartite graph $G$ such that $$\mathrm{ex}(n;G)\asymp n^{\alpha}.$$
+
+The proof constructs balanced rooted models for all rational parameters. Its upper-bound closure replaces old edges by paths
+of arbitrary length, adds two color-class hubs, and commutes with positive rooted powers.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/2f055a777231a73a305b379e993c37f00ed5a66b/problems/571/Erdos571.lean"]
 theorem erdos_571 :
     ∀ α : ℚ, 1 ≤ α → α < 2 →
       ∃ q : ℕ, ∃ G : SimpleGraph (Fin q), G.IsBipartite ∧

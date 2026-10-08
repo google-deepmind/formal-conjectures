@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 100
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 * [GuKa15](Guth, Larry and Katz, Nets Hawk, On the Erd\H{o}s distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.)
 * [Piepmeyer](No references found)
 -/
+
+@[expose] public section
 
 open Set Metric Filter Real
 open scoped EuclideanGeometry

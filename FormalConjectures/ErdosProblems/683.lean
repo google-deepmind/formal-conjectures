@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
-import FormalConjectures.ErdosProblems.«961»
+public import FormalConjectures.ErdosProblems.«961»
 
 /-!
 # Erdős Problem 683
@@ -27,6 +28,8 @@ import FormalConjectures.ErdosProblems.«961»
 - [Er55d] Erdős, P., On consecutive integers. Nieuw Arch. Wisk. (3) (1955), 124--128.
 - [Er79d] Erdős, P., Some unconventional problems in number theory. Acta Math. Acad. Sci. Hungar. (1979), 71-80.
 -/
+
+@[expose] public section
 
 namespace Erdos683
 

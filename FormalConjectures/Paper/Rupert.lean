@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Is Every Convex Polyhedron Rupert?
@@ -65,6 +66,8 @@ Question: are all convex polyhedra with nonempty interior Rupert?
 
 -/
 
+@[expose] public section
+
 namespace Rupert
 
 open scoped Matrix
@@ -107,7 +110,7 @@ def IsRupert (vertices : Finset ℝ³) : Prop :=
 There exists a convex polyhedron with nonempty interior for which the Rupert property does
 not hold.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron"]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron/blob/1ee88118097acc9db768b44b3c6ea9f60a4e4b67/KernelCaseAnalysis/ProofOfMainTheorem.lean#L21"]
 theorem is_every_convex_polyhedron_rupert :
     answer(False) ↔ ∀ (vertices : Finset ℝ³),
        (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices := by

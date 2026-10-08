@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 36
@@ -23,6 +24,9 @@ import FormalConjecturesUtil
  - [erdosproblems.com/36](https://www.erdosproblems.com/36)
  - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
+
+@[expose] public section
+
 open scoped Topology
 open Filter
 namespace Erdos36
@@ -140,6 +144,7 @@ private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
 
 /-- The `n`-element subsets of `{1, …, 2n}`. -/
 private def parts (n : ℕ) : Finset (Finset ℤ) :=
+  letI : Preorder ℤ := Int.instLinearOrder.toPreorder
   (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
 
 @[category API, AMS 5 11]

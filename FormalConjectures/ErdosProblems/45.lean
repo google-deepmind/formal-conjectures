@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 45
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   (2003), 545-556.
 - [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
 -/
+
+@[expose] public section
 
 namespace Erdos45
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Optimal monotone families for the discrete isoperimetric inequality
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   and *Huy Tuan Pham* (2022)
 
 -/
+
+@[expose] public section
 
 namespace Mathoverflow10799
 
@@ -220,7 +223,8 @@ theorem mathoverflow_10799.variants.weak_kahn_kalai :
 /--
 Now a famous isoperimetric relation asserts that
 (IR) $I^p(F) \ge \frac{1}{p} \mu_p(F) \log_p \mu_p(F)$
-This relation is true for every family $F$ and every $p$. It is especially famous and simple when
+This relation holds for monotone increasing families $F$ and $0 < p < 1$.
+It is especially famous and simple when
 $p=1/2$ and $\mu_p(F)=1/2$. In this case, it says that given a set of half the vertices of the
 discrete cube $2^X$, the number of edges between $F$ and its complement is at least $2^{n-1}$.
 
@@ -230,7 +234,7 @@ definition of `IsOptimal` used in the counterexample proof.
 -/
 @[category textbook, AMS 5 60]
 theorem discrete_isoperimetric_inequality (n : ℕ) (p : ℝ) (hp : 0 < p) (hp' : p < 1)
-    (F : Finset (Finset (Fin n))) :
+    (F : Finset (Finset (Fin n))) (hF : IsMonotoneIncreasing F) :
     let m := μFamily p F
     edgeBoundary n p F ≥ m * Real.logb p m / p := by
   sorry
