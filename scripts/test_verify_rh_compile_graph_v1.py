@@ -78,6 +78,39 @@ class CompileGraphTests(unittest.TestCase):
         self.write('RHKreinCriticalLineBridgeV1', 'import Mathlib.Tactic')
         self.assertIn('omitted', '\n'.join(audit(self.root, WORKFLOW)[0]))
 
+    def test_pinned_small_window_pair_preserves_import_order(self):
+        w = WORKFLOW.replace('- name: Upload Krein bridge replay logs',
+            '      for m in RHSmallWindowProducerV1 RHSmallWindowCanonicalJoinV1; do\\n'
+            '        true\\n'
+            '      done\\n'
+            '- name: Upload Krein bridge replay logs')
+        subdir = self.root / 'AegisRH' / 'SmallWindow'
+        subdir.mkdir(parents=True)
+        (subdir / 'RHSmallWindowProducerV1.lean').write_text('import Mathlib.Tactic')
+        (subdir / 'RHSmallWindowCanonicalJoinV1.lean').write_text(
+            'import RHSmallWindowProducerV1\\nimport Second')
+        self.assertEqual(audit(self.root, w), ([], 4))
+        (subdir / 'RHSmallWindowProducerV1.lean').write_text(
+            'import RHSmallWindowCanonicalJoinV1')
+        self.assertIn('built after', '\\n'.join(audit(self.root, w)[0]))
+
+    def test_rejects_noncanonical_third_loop(self):
+        w = WORKFLOW.replace('- name: Upload Krein bridge replay logs',
+            '      for m in RandomModule; do\\n'
+            '        true\\n'
+            '      done\\n'
+            '- name: Upload Krein bridge replay logs')
+        with self.assertRaisesRegex(ValueError, 'unrecognized small-window'):
+            compile_plan(w)
+
+    def test_rejects_missing_small_window_source(self):
+        w = WORKFLOW.replace('- name: Upload Krein bridge replay logs',
+            '      for m in RHSmallWindowProducerV1 RHSmallWindowCanonicalJoinV1; do\\n'
+            '        true\\n'
+            '      done\\n'
+            '- name: Upload Krein bridge replay logs')
+        self.assertIn('missing declared source', '\\n'.join(audit(self.root, w)[0]))
+
     def test_rejects_unrecognized_plan(self):
         with self.assertRaisesRegex(ValueError, 'compile-step anchors'):
             compile_plan('unrelated workflow')

@@ -32,12 +32,17 @@ def compile_plan(workflow: str) -> list[tuple[str, str]]:
         raise ValueError("compile-step anchors not unique")
     block = workflow.split(STEP, 1)[1].split(NEXT_STEP, 1)[0]
     groups = GROUP.findall(block)
-    if len(groups) != 2:
-        raise ValueError(f"expected overlay and root compile loops, found {len(groups)}")
+    if len(groups) not in (2, 3):
+        raise ValueError(f"expected overlay/root and optional small-window loops, found {len(groups)}")
     names = [[s for s in group.split() if s] for group in groups]
+    # The third loop is a fixed, source-bound extension, never arbitrary modules.
+    if len(names) == 3 and names[2] != ["RHSmallWindowProducerV1", "RHSmallWindowCanonicalJoinV1"]:
+        raise ValueError("unrecognized small-window compile plan")
     if any(not group or any(not MODULE.fullmatch(m) for m in group) for group in names):
         raise ValueError("invalid module list")
-    plan = [("AEGISOverlay", m) for m in names[0]] + [("root", m) for m in names[1]]
+    plan = ([("AEGISOverlay", m) for m in names[0]]
+            + [("root", m) for m in names[1]]
+            + ([("SmallWindow", m) for m in names[2]] if len(names) == 3 else []))
     modules = [m for _, m in plan]
     if len(set(modules)) != len(modules):
         raise ValueError("duplicate compiled module")
@@ -50,7 +55,8 @@ def audit(root: Path, workflow: str) -> tuple[list[str], int]:
     problems: list[str] = []
     imports_checked = 0
     for group, name in plan:
-        source = root / "AEGISOverlay" / f"{name}.lean"
+        source_dir = "AegisRH/SmallWindow" if group == "SmallWindow" else "AEGISOverlay"
+        source = root / source_dir / f"{name}.lean"
         if not source.is_file():
             problems.append(f"{name}: missing declared source {source}")
             continue
@@ -79,6 +85,10 @@ def audit(root: Path, workflow: str) -> tuple[list[str], int]:
                     continue
                 imports_checked += 1
                 dep_group, dep_index = where[dep]
+                # Inside the explicitly pinned small-window pair, an unqualified
+                # import can refer to the earlier producer in the same directory.
+                if dep_group == "SmallWindow" and group == "SmallWindow" and required_group == "root":
+                    required_group = "SmallWindow"
                 if dep_group != required_group:
                     problems.append(f"{name}: import {target} expects {dep_group} module, not {required_group}")
                 if dep_index >= where[name][1]:
