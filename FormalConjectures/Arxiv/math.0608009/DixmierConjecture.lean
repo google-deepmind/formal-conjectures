@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Arxiv.«math.0608009».PoissonConjecture
+public import FormalConjectures.Arxiv.«math.0608009».PoissonConjecture
+public import FormalConjecturesUtil
 
 /-!
 # The Dixmier Conjecture
@@ -42,26 +43,32 @@ import FormalConjectures.Arxiv.«math.0608009».PoissonConjecture
   (2020). A third proof.
 - [Alp26] [Counterexample to the Jacobian conjecture](https://x.com/__alpoge__/status/2079028340955197566)
   by *Levent Alpöge* (2026), disproving the Jacobian conjecture in dimension $3$
+- [Lon26] [An Explicit Counterexample to the Rank-Two Poisson Conjecture](https://arxiv.org/abs/2608.23777)
+  by *Christopher D. Long* (2026), disproving $PC_2$
 
 The Dixmier Conjecture $DC_n$ asserts that, over a field `K` of characteristic zero, every
 endomorphism of the `n`-th Weyl algebra $A_n(K)$ is an automorphism. For $n = 1$ this is
-Problem 1 of [Dix68] and remains open; it is the weakest link of the surviving chain of
-implications (see below).
+Problem 1 of [Dix68] and remains open.
 
-By [BCW82], $DC_n \Longrightarrow JC_n$ (the Jacobian conjecture in dimension `n`), and by
-[AvdE07], Theorem 7, the full chain
+By [BCW82], $DC_n \Longrightarrow JC_n$ (the Jacobian conjecture in dimension `n`) over a
+fixed field `K`. By [AvdE07], Theorem 7, the chain
 $$JC_{2n} \Longrightarrow PC_n \Longrightarrow DC_n \Longrightarrow JC_n$$
-holds per dimension. Since the Jacobian conjecture fails in every dimension $n ≥ 3$
-[Alp26], the contrapositive of [BCW82] gives that $DC_n$ is **false for all $n ≥ 3$**,
-while $DC_1$ and $DC_2$ remain open, sitting in the surviving totally ordered chain
-$PC_2 \Longrightarrow DC_2 \Longrightarrow JC_2 \Longrightarrow PC_1 \Longrightarrow DC_1$.
+holds when each conjecture is quantified over all fields of characteristic zero
+([AvdE07], Notations 5 and 7). Since the Jacobian conjecture fails in every dimension
+$n ≥ 3$ [Alp26], the contrapositive of [BCW82] gives that $DC_n$ is **false for all
+$n ≥ 3$**. $DC_1$ and $DC_2$ remain open. The chain only propagates falsity upwards, so the
+failure of $PC_2$ [Lon26] does not settle $DC_2$.
 
 The Weyl algebra $A_n(K)$ is `WeylAlgebra K (Fin n)`, with the $2n$ generators indexed by
 `Fin n ⊕ Fin n` as in `FormalConjecturesForMathlib/Algebra/WeylAlgebra.lean`; the Poisson
 side of the chain is stated in `PoissonConjecture.lean` in this directory.
 -/
 
+@[expose] public section
+
 namespace Arxiv.«math.0608009»
+
+open JacobianConjecture
 
 variable {K : Type*} [Field K] [CharZero K]
 
@@ -83,19 +90,17 @@ theorem dixmier_conjecture : ¬ ∀ n, DixmierConjectureFor K n := by
   sorry
 
 /--
-The Dixmier Conjecture in dimension $1$ — Problem 1 of [Dix68] — is open. It is the weakest
-link of the surviving chain
-$PC_2 \Longrightarrow DC_2 \Longrightarrow JC_2 \Longrightarrow PC_1 \Longrightarrow DC_1$
-([AvdE07], Theorem 7): every other open conjecture in the family implies it.
+The Dixmier Conjecture in dimension $1$ — Problem 1 of [Dix68] — is open. By [AvdE07],
+Theorem 7, it is implied by $PC_1$, and hence by $JC_2$ (Keller's problem).
 -/
 @[category research open, AMS 16]
 theorem dixmier_conjecture.variants.dimension_one : DixmierConjectureFor K 1 := by
   sorry
 
 /--
-The Dixmier Conjecture in dimension $2$ ($DC_2$) is open. It is implied by $PC_2$ and
-implies Keller's original two-variable Jacobian conjecture $JC_2$ ([AvdE07], Theorem 7;
-[BCW82]).
+The Dixmier Conjecture in dimension $2$ ($DC_2$) is open. It implies Keller's
+two-variable Jacobian conjecture $JC_2$ [BCW82]. It is implied by $JC_4$ ([AvdE07],
+Theorem 7), but $JC_4$ and $PC_2$ are false ([Alp26], [Lon26]).
 -/
 @[category research open, AMS 16]
 theorem dixmier_conjecture.variants.dimension_two : DixmierConjectureFor K 2 := by
@@ -125,17 +130,20 @@ The Dixmier conjecture in dimension `n` implies the Jacobian conjecture in dimen
 -/
 @[category research solved, AMS 14 16]
 theorem dixmier_conjecture.variants.jacobian_implication (n : ℕ)
-    (h : DixmierConjectureFor K n) : JacobianConjectureFor K n := by
+    (h : DixmierConjectureFor K n) : JacobianConjectureProp K (Fin n) := by
   sorry
 
 /--
-The Poisson conjecture in dimension `n` implies the Dixmier conjecture in dimension `n`
-([AvdE07], Theorem 7; the proof passes through reduction to prime characteristic and the
-Azumaya property of Weyl algebras in characteristic `p`).
+If the Poisson conjecture in dimension `n` holds over every field of characteristic zero,
+then so does the Dixmier conjecture in dimension `n`. This is $CPC(n, 0) \Longrightarrow
+CDC(n, 0)$ in [AvdE07], Theorem 7, where both statements quantify over all fields of
+characteristic zero (Notations 5 and 7). The proof reduces to prime characteristic and
+uses the Azumaya property of Weyl algebras in characteristic `p`.
 -/
 @[category research solved, AMS 14 16 17]
 theorem dixmier_conjecture.variants.poisson_implication (n : ℕ)
-    (h : PoissonConjectureFor K n) : DixmierConjectureFor K n := by
+    (h : ∀ (L : Type) [Field L] [CharZero L], PoissonConjectureFor L n)
+    (L : Type) [Field L] [CharZero L] : DixmierConjectureFor L n := by
   sorry
 
 section Tests

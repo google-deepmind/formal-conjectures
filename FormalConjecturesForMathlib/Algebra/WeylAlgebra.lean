@@ -87,34 +87,43 @@ instance : Algebra R (WeylAlgebra R σ) :=
 
 instance : Inhabited (WeylAlgebra R σ) := ⟨0⟩
 
+/-- The quotient map from the free algebra on `σ ⊕ σ` onto the Weyl algebra. -/
+noncomputable def mkAlgHom : FreeAlgebra R (σ ⊕ σ) →ₐ[R] WeylAlgebra R σ :=
+  RingQuot.mkAlgHom R (Rel R σ)
+
+variable {R σ} in
+theorem mkAlgHom_rel {x y : FreeAlgebra R (σ ⊕ σ)} (h : Rel R σ x y) :
+    mkAlgHom R σ x = mkAlgHom R σ y :=
+  RingQuot.mkAlgHom_rel R h
+
 variable {σ}
 
 /-- The canonical generators of the Weyl algebra: `of R (Sum.inl i)` is the `i`-th
 "position" generator ($Y_i$) and `of R (Sum.inr i)` the `i`-th "momentum" generator
 ($Y_{i+n}$). -/
 noncomputable def of (v : σ ⊕ σ) : WeylAlgebra R σ :=
-  RingQuot.mkAlgHom R (Rel R σ) (FreeAlgebra.ι R v)
+  mkAlgHom R σ (FreeAlgebra.ι R v)
 
 /-- The position generators pairwise commute. -/
 theorem of_inl_mul_comm (i j : σ) :
     of R (Sum.inl i) * of R (Sum.inl j) = of R (Sum.inl j) * of R (Sum.inl i) := by
-  simpa only [of, map_mul] using RingQuot.mkAlgHom_rel R (Rel.inl_mul_comm (R := R) (σ := σ) i j)
+  simpa only [of, map_mul] using mkAlgHom_rel (Rel.inl_mul_comm (R := R) (σ := σ) i j)
 
 /-- The momentum generators pairwise commute. -/
 theorem of_inr_mul_comm (i j : σ) :
     of R (Sum.inr i) * of R (Sum.inr j) = of R (Sum.inr j) * of R (Sum.inr i) := by
-  simpa only [of, map_mul] using RingQuot.mkAlgHom_rel R (Rel.inr_mul_comm (R := R) (σ := σ) i j)
+  simpa only [of, map_mul] using mkAlgHom_rel (Rel.inr_mul_comm (R := R) (σ := σ) i j)
 
 /-- Position and momentum generators with distinct indices commute. -/
 theorem of_inl_mul_of_inr_of_ne {i j : σ} (h : i ≠ j) :
     of R (Sum.inl i) * of R (Sum.inr j) = of R (Sum.inr j) * of R (Sum.inl i) := by
-  simpa only [of, map_mul] using RingQuot.mkAlgHom_rel R (Rel.inl_mul_inr_of_ne (R := R) (σ := σ) h)
+  simpa only [of, map_mul] using mkAlgHom_rel (Rel.inl_mul_inr_of_ne (R := R) (σ := σ) h)
 
 /-- The defining commutation relation: `x i * y i = y i * x i + 1`. -/
 theorem of_inl_mul_of_inr_self (i : σ) :
     of R (Sum.inl i) * of R (Sum.inr i) = of R (Sum.inr i) * of R (Sum.inl i) + 1 := by
   simpa only [of, map_mul, map_add, map_one] using
-    RingQuot.mkAlgHom_rel R (Rel.inl_mul_inr_self (R := R) (σ := σ) i)
+    mkAlgHom_rel (Rel.inl_mul_inr_self (R := R) (σ := σ) i)
 
 /-- The canonical commutation relation in commutator form: `[x i, y i] = 1`. -/
 theorem commutator_of_inl_of_inr_self (i : σ) :
