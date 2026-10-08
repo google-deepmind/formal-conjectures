@@ -594,6 +594,14 @@ jobs:
           lake env lean -o .lake/build/lib/lean/RHSignedPrimeConvolutionIntegrabilityV7.olean RHSignedPrimeConvolutionIntegrabilityV7.lean 2>&1 | tee evidence-krein/RHSignedPrimeConvolutionIntegrabilityV7.log
           python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHSignedPrimeConvolutionIntegrabilityV7.lean evidence-krein/RHSignedPrimeConvolutionIntegrabilityV7.log
 
+      - name: Compile and audit Chebyshev V8 interval extension and dictionary
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp AEGISOverlay/RHSignedPrimeIntervalExtensionV8.lean RHSignedPrimeIntervalExtensionV8.lean
+          lake env lean -o .lake/build/lib/lean/RHSignedPrimeIntervalExtensionV8.olean RHSignedPrimeIntervalExtensionV8.lean 2>&1 | tee evidence-krein/RHSignedPrimeIntervalExtensionV8.log
+          python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHSignedPrimeIntervalExtensionV8.lean evidence-krein/RHSignedPrimeIntervalExtensionV8.log
+
       - name: Upload Krein bridge replay logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
