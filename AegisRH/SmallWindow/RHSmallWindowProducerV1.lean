@@ -84,7 +84,7 @@ theorem windowArithmeticNonpositive_one_over_64_v1 :
 
 /-- Every smaller nonnegative window inherits the same sign result. -/
 theorem windowArithmeticNonpositive_of_nonneg_le_one_over_64_v1
-    {L : ℝ} (hL0 : 0 ≤ L) (hL : L ≤ (1 / 64 : ℝ)) :
+    {L : ℝ} (_hL0 : 0 ≤ L) (hL : L ≤ (1 / 64 : ℝ)) :
     WindowArithmeticNonpositiveV1 L := by
   exact windowArithmeticNonpositive_mono_v1 hL
     windowArithmeticNonpositive_one_over_64_v1
