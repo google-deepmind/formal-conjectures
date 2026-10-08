@@ -27,6 +27,9 @@ including the complexity classes P, NP, coNP, and BPP.
 *References:*
 - Sanjeev Arora and Boaz Barak. Computational Complexity: A Modern Approach.
   Cambridge University Press, 2009.
+- Melissa Antonelli, Ugo Dal Lago, and Paolo Pistone. On Randomized Computational Models
+  and Complexity Classes: a Historical Overview. 2024.
+  [arXiv:2409.11999](https://arxiv.org/abs/2409.11999)
 - [Wikipedia: Complexity class](https://en.wikipedia.org/wiki/Complexity_class)
 -/
 
@@ -106,7 +109,7 @@ and a poly-time Turing machine computing a relation $R$
 where for all $x$, a uniformly random string $r$ of length $p (|x|)$ satisfies
 $R (x, r) = L (x)$ with probability at least $2/3$.
 
-See Definition 7.4 in Arora-Barak (2009).
+See Definition 7.4 in Arora-Barak (2009), or Antonelli et al. (2024).
 -/
 def BPP : DecisionComplexityClass :=
   { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
