@@ -42,6 +42,7 @@ open AEGIS.RHPrimePowerKernelConnectorV1
 open AEGIS.RHPrimeDiscrepancyLogSubstitutionV4
 open AEGIS.RHSignedPrimeActualKernelTailV5
 open AEGIS.RHSignedPrimeChebyshevFiniteBridgeV6
+open AEGIS.RHFixedPacketFrontierV1
 open AEGIS.WeilWidthArchCorrelationV25
 
 private theorem theta_log_locally_integrable_v7 :
@@ -62,7 +63,7 @@ private theorem complex_ofReal_locally_integrable_v7
   apply locallyIntegrableOn_univ.mp
   have h := Complex.ofRealCLM.locallyIntegrableOn_comp
     (hf.locallyIntegrableOn Set.univ)
-  simpa only [Function.comp_apply, Complex.ofRealCLM_apply] using h
+  simpa [Function.comp_def, Complex.ofRealCLM_apply] using h
 
 /-- No prime-growth hypothesis: actual theta normalized discrepancy is locally integrable. -/
 theorem normalized_prime_only_locally_integrable_v7 :
@@ -75,7 +76,7 @@ theorem normalized_prime_only_locally_integrable_v7 :
       (fun y : ℝ =>
         Real.exp (-y / 2) * (Chebyshev.theta (Real.exp y) - Real.exp y)) volume :=
     LocallyIntegrable.continuous_mul hf hdiff
-  simpa only [normalizedPrimeOnlyDiscrepancyComplexV1] using
+  simpa [normalizedPrimeOnlyDiscrepancyComplexV1] using
     (complex_ofReal_locally_integrable_v7
       (fun y : ℝ =>
         Real.exp (-y / 2) * (Chebyshev.theta (Real.exp y) - Real.exp y)) hreal)
@@ -93,7 +94,7 @@ theorem normalized_prime_powers_locally_integrable_v7 :
         Real.exp (-y / 2) *
           (Chebyshev.psi (Real.exp y) - Chebyshev.theta (Real.exp y))) volume :=
     LocallyIntegrable.continuous_mul hf hdiff
-  simpa only [normalizedPrimePowerCorrectionComplexV1] using
+  simpa [normalizedPrimePowerCorrectionComplexV1] using
     (complex_ofReal_locally_integrable_v7
       (fun y : ℝ =>
         Real.exp (-y / 2) *
@@ -106,9 +107,13 @@ theorem discrepancy_kernel_hasCompactSupport_v7 (g : WeilCompactSmoothGV1) :
   have hd : HasCompactSupport (deriv (logCorrelationV25 g)) := hs.deriv
   have hscale : HasCompactSupport
       (fun u : ℝ => logCorrelationV25 g u / (2 : ℂ)) := by
-    simpa only [Pi.mul_apply, div_eq_mul_inv] using
-      (hs.mul_right (f' := fun _u : ℝ => (2 : ℂ)⁻¹))
-  simpa only [primeDiscrepancyKernelV1] using hd.add hscale
+    change HasCompactSupport
+      (logCorrelationV25 g * (fun _u : ℝ => (2 : ℂ)⁻¹))
+    exact hs.mul_right
+  change HasCompactSupport
+    (deriv (logCorrelationV25 g) +
+      (fun u : ℝ => logCorrelationV25 g u / (2 : ℂ)))
+  exact hd.add hscale
 
 private theorem discrepancy_kernel_continuous_v7 (g : WeilCompactSmoothGV1) :
     Continuous (primeDiscrepancyKernelV1 g) := by
@@ -117,7 +122,10 @@ private theorem discrepancy_kernel_continuous_v7 (g : WeilCompactSmoothGV1) :
     hc.continuous_deriv (by simp)
   have hb : Continuous (fun u : ℝ => logCorrelationV25 g u / (2 : ℂ)) :=
     hc.continuous.div_const 2
-  simpa only [primeDiscrepancyKernelV1] using hd.add hb
+  change Continuous
+    (deriv (logCorrelationV25 g) +
+      (fun u : ℝ => logCorrelationV25 g u / (2 : ℂ)))
+  exact hd.add hb
 
 /-- Both arithmetic convolutions have honest Bochner integrals at every shift. -/
 theorem arithmetic_convolutions_integrable_v7
