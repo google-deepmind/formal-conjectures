@@ -86,7 +86,7 @@ See T. Adamczewski, OEIS Open: How many conjectures can language models turn int
 form $1/\det(M) = \prod_{k=1}^n k^2/\varphi(k)$ from the OEIS entry:
 https://github.com/epoch-research/LeanOpenProblems-results/blob/fd09021e79869476ef83cda231312f1a2a89c8d7/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_60841_conjecture_0/Submission/Spec.lean#L272
 -/
-@[category research solved, AMS 11 15]
+@[category research solved, AMS 11 15, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA60841_conjecture2.lean#L377"]
 theorem conjecture2 :
     ¬ ∀ n : ℕ, 1 ≤ n → ∃ k : ℕ, ((lcmMatrix n).det)⁻¹.den = 2 ^ k := by
   sorry
