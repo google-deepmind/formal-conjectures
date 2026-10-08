@@ -27,7 +27,13 @@ public import FormalConjecturesUtil
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
 - [LYZ26] Luo, Yanping and Yang, Ruiyi and Zhu, Keheng, Exterior power sums.
   [arxiv/2607.22017](https://arxiv.org/abs/2607.22017)
+- [TWHC26] Tan, Xiaojun and Wang, Qihang and Huang, Wei and Chen, Kun, Residual bounds for
+  Schur-stable polynomials. [arxiv/2608.02043](https://arxiv.org/abs/2608.02043)
 - [Tu84b] Turán, Paul, On a new method of analysis and its applications. (1984), xvi+584.
+- [PALOMAR-2026-09-20-000008](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-20-000008&version=1):
+  a Lean 4 proof of the negative answer (`not_erdos_973`) and uniform eventual exponential lower
+  bound (`eventually_exterior_power_sum_strict_lower_bound`), checked by Comparator and NanoDa and
+  registered with the Palomar registry.
 -/
 
 @[expose] public section
@@ -43,11 +49,15 @@ $\max_{2\leq k\leq n+1}\left\lvert \sum_{1\leq i\leq n}z_i^k\right\rvert < C^{-n
 
 This is Problem 7.3 in [Ha74], where it is attributed to Erdős.
 
-The answer is no, by Luo, Yang and Zhu [LYZ26]: the maximum exceeds $e^{-\lambda n}$ for every
-fixed $\lambda>0$ once $n$ is large, so it decays subexponentially and no such $C$ exists. See
-`erdos_973.variants.luo_yang_zhu` below.
+The answer is no, by Luo, Yang and Zhu [LYZ26] (and via the residual-polynomial method of Tan,
+Wang, Huang and Chen [TWHC26]): the maximum exceeds $e^{-\lambda n}$ for every fixed $\lambda>0$
+once $n$ is large, so it decays subexponentially and no such $C$ exists. See
+`erdos_973.variants.luo_yang_zhu` below. The formal proof registered as
+[PALOMAR-2026-09-20-000008] proves `not_erdos_973` for this statement.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/linrock/math-proofs/blob/1571a487465fb6a87f92dcc46f1bd71b0846c413/erdos-973/Solution.lean#L47"]
 theorem erdos_973 :
     answer(False) ↔
       ∃ C : ℝ, C > 1 ∧
@@ -63,9 +73,12 @@ $n$, any $z_1,\dots,z_n$ with $\lvert z_j\rvert\geq 1$ satisfy
 $\max_{2\leq k\leq n+1}\left\lvert\sum_j z_j^k\right\rvert > e^{-\lambda n}$.
 
 This is sharper than `erdos_973.variants.tang`, whose bound $(2e)^{-(1+o(1))n}$ pins the rate at
-$\log(2e) = 1 + \log 2$, still exponential decay.
+$\log(2e) = 1 + \log 2$, still exponential decay. Formally proved in [PALOMAR-2026-09-20-000008] as
+`eventually_exterior_power_sum_strict_lower_bound` (with $C = e^\lambda > 1$).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/linrock/math-proofs/blob/1571a487465fb6a87f92dcc46f1bd71b0846c413/erdos-973/Solution.lean#L53"]
 theorem erdos_973.variants.luo_yang_zhu (lam : ℝ) (hlam : 0 < lam) :
     ∀ᶠ n in atTop, ∀ z : ℕ → ℂ,
       (∀ i ∈ Icc 1 n, 1 ≤ ‖z i‖) →
