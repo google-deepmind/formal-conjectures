@@ -18,6 +18,7 @@ import AEGISOverlay.RHPrimePowerKernelConnectorV1
 import RHSubexpBoundedPerturbationV1
 import RHKernelSubexponentialV1
 import RHGlobalPrimeArchFrontierV1
+import WeilZeroKernelHermitianV11
 
 /-!
 # Prime-only growth: exact connection between the independent RH lanes
@@ -167,12 +168,13 @@ theorem combinedArithmetic_subexponential_iff_primeOnly_v1
     (combinedArithmeticOrbitV1 g) (primeOnlyOrbitV1 g)
     (combinedArithmetic_boundedDifference_primeOnly_v1 g)
 
-/-- The independent analytic link still needed: the canonical zero
-kernel differs from the combined Chebyshev arithmetic orbit by
-a uniformly bounded remainder on the positive half-line. -/
+/-- Correct reflected/sign-reversed arithmetic orientation: the archived
+exact signed-prime identity reads K_g(-t) = -B(g,T_t g), so it is
+-K_g(-t), NOT K_g(t), that is compared to the arithmetic orbit.
+The bounded remainder itself is still an explicitly open analytic input. -/
 def FixedKernelArithmeticRemainderBoundedV1 : Prop :=
   BoundedDifferenceOnNonnegativeV1
-    (fun t : ℝ => WeilZeroTranslationKernelV11 detectingPacket t)
+    (fun t : ℝ => -WeilZeroTranslationKernelV11 detectingPacket (-t))
     (combinedArithmeticOrbitV1 detectingPacket)
 
 /-- Precise terminal: subexponential prime-only arithmetic growth AND
@@ -186,12 +188,22 @@ theorem riemannHypothesis_of_primeOnly_growth_and_kernel_bridge_v1
   have hArithmetic : SubexponentialAtTopV1
       (combinedArithmeticOrbitV1 detectingPacket) :=
     (combinedArithmetic_subexponential_iff_primeOnly_v1 detectingPacket).2 hPrime
-  have hKernel : SubexponentialAtTopV1
-      (fun t : ℝ => WeilZeroTranslationKernelV11 detectingPacket t) :=
+  have hReflected : SubexponentialAtTopV1
+      (fun t : ℝ => -WeilZeroTranslationKernelV11 detectingPacket (-t)) :=
     subexponential_of_bounded_difference_v1
-      (fun t : ℝ => WeilZeroTranslationKernelV11 detectingPacket t)
+      (fun t : ℝ => -WeilZeroTranslationKernelV11 detectingPacket (-t))
       (combinedArithmeticOrbitV1 detectingPacket)
       hArithmetic hBridge
+  have hKernel : SubexponentialAtTopV1
+      (fun t : ℝ => WeilZeroTranslationKernelV11 detectingPacket t) := by
+    intro ε hε
+    obtain ⟨C, hC0, hBound⟩ := hReflected ε hε
+    refine ⟨C, hC0, ?_⟩
+    intro t ht
+    have h := hBound t ht
+    simpa only [norm_neg,
+      AEGIS.WeilZeroKernelHermitianV11.zero_translation_kernel_neg_eq_conj_v11
+        detectingPacket t detectingPacket_moments, norm_conj] using h
   exact riemannHypothesis_of_fixed_detecting_packet_subexponential hKernel
 
 /-- The same two analytic premises produce the *exact* universal residual
