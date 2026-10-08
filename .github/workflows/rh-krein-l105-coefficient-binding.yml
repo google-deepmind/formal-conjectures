@@ -112,14 +112,65 @@ jobs:
           print('DISCONTINUOUS_DESIGN_REJECTED=PASS')
           print('REAL_L105_BATCH_KERNEL_REPLAY=NOT_RUN')
           PY
+      - name: Reconstruct exact L105 design and generated batch sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/research/rh/krein_L105_v1"
+          TOOLS="$ROOT/tools"
+          mkdir -p evidence-l105/generated
+          python3 "$TOOLS/sweep.py" | tee evidence-l105/sweep.log
+          python3 "$TOOLS/minN.py" | tee evidence-l105/minN.log
+          python3 "$TOOLS/deg16.py" | tee evidence-l105/deg16.log
+          python3 "$TOOLS/gen105.py" 200 | tee evidence-l105/gen105.log
+          python3 "$TOOLS/genall105.py" | tee evidence-l105/genall105.log
+          python3 - <<'PY' | tee evidence-l105/reconstruction-summary.txt
+          import json
+          from pathlib import Path
+          root=Path("research/rh/krein_L105_v1")
+          tools=root/"tools"
+          design=json.loads((tools/"design105F.json").read_text(encoding="utf-8"))
+          batches=json.loads((tools/"batches105.json").read_text(encoding="utf-8"))
+          pieces=sum(len(c["breaks"]) for c in design)
+          hats=sum(bool(c["hats"]) for c in design)
+          assert len(design)==1744, len(design)
+          assert pieces==4517, pieces
+          assert hats==170, hats
+          assert design[0]["lo"]=="0" and design[-1]["hi"]=="3000"
+          assert len(batches)==116, len(batches)
+          assert all(name == f"RHKreinL105Batch{i:03d}" and ids for i,(name,ids) in enumerate(batches))
+          files=sorted(root.glob("RHKreinL105Batch[0-9][0-9][0-9].lean"))
+          assert len(files)==116, len(files)
+          assert (root/"RHKreinL105AllV1.lean").is_file()
+          print("DESIGN105F_RECONSTRUCTION=PASS")
+          print("CELLS=1744")
+          print("PIECES=4517")
+          print("HAT_CELLS=170")
+          print("BATCH_MODULES=116")
+          print("FINITE_CERTIFICATE_SOURCE=RECONSTRUCTED_AT_EXACT_HEAD")
+          print("REAL_L105_BATCH_KERNEL_REPLAY=NOT_RUN")
+          print("WINDOWS_L_GE_21_OVER_40=OPEN")
+          print("RIEMANN_HYPOTHESIS=NOT_PROVED")
+          PY
+          git rev-parse HEAD > evidence-l105/generated/exact-head.txt
+          sha256sum "$TOOLS/design105F.json" "$TOOLS/batches105.json" "$ROOT"/RHKreinL105Batch[0-9][0-9][0-9].lean "$ROOT/RHKreinL105AllV1.lean" |
+            sort > evidence-l105/generated/source-sha256.txt
+          cp "$TOOLS/design105F.json" "$TOOLS/batches105.json" evidence-l105/generated/
+          cp "$ROOT"/RHKreinL105Batch[0-9][0-9][0-9].lean "$ROOT/RHKreinL105AllV1.lean" evidence-l105/generated/
+
       - name: Record known missing finite certificate design without inventing data
         if: always()
         shell: bash
         run: |
-          if test -f research/rh/krein_L105_v1/tools/design105F.json; then
+          if git ls-files --error-unmatch research/rh/krein_L105_v1/tools/design105F.json >/dev/null 2>&1; then
             echo 'DESIGN105F=SOURCE_PRESENT' > evidence-l105/design-status.txt
+          elif test -f research/rh/krein_L105_v1/tools/design105F.json; then
+            echo 'DESIGN105F=RECONSTRUCTED_AT_EXACT_HEAD' > evidence-l105/design-status.txt
           else
-            echo 'DESIGN105F=NOT_COMMITTED_GENERATION_REQUIRED' > evidence-l105/design-status.txt
+            echo 'DESIGN105F=NOT_RECONSTRUCTED' > evidence-l105/design-status.txt
+          fi
+          if test -f research/rh/krein_L105_v1/RHKreinL105AllV1.lean; then
+            echo 'L105_ASSEMBLY_SOURCE=PRESENT' >> evidence-l105/design-status.txt
           fi
           printf 'WINDOWS_L_GE_21_OVER_40=OPEN\nPROTECTED_MAIN_ADMISSION=NOT_EXECUTED\n' >> evidence-l105/design-status.txt
       - name: Upload machine-checkable data receipts
