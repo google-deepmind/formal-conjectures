@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
   theory*. Monographies de L'Enseignement Mathematique (1980), p. 58.
 - [Be23b] Beker, A., *On a problem of Erdős and Graham about consecutive sums in strictly
   increasing sequences*. arXiv:2311.10087 (2023).
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos356.md)
 -/
 
 @[expose] public section
