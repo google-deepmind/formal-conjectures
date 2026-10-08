@@ -27,6 +27,7 @@ We state irrationality together with the eventual approximation bound directly.
 *Reference:* [Cas26] Ryan Matthew Casper, *The irrationality exponent of nonzero
 rational arctangents is 2*, preprint with Lean formalization, October 7, 2026,
 Sections 1 and 8.
+[Preprint](https://github.com/Mattie/math/blob/c32ec1ca766621c4365b550ea2446e18474d92d6/preprints/The-irrationality-exponent-of-nonzero-rational-arctangents-is-2-October-7-2026/paper.pdf).
 -/
 
 @[expose] public section
@@ -38,7 +39,8 @@ in radians is irrational. For every $\nu > 2$, there is an integer threshold
 $Q \ge 2$, depending on $r$ and $\nu$, such that $q^{-\nu} \le |\arctan r-p/q|$
 for all $p,q \in \mathbb{Z}$ with $q \ge Q$. The case $r=0$ is excluded because
 $\arctan 0=0$ is rational. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+    formal_proof using lean4 at "https://github.com/Mattie/math/blob/c32ec1ca766621c4365b550ea2446e18474d92d6/preprints/The-irrationality-exponent-of-nonzero-rational-arctangents-is-2-October-7-2026/lean/Arctangent/FormalConjectures.lean#L14-L22"]
 theorem rational_arctan_irrationality_and_bound (r : ℚ) (hr : r ≠ 0) :
     Irrational (Real.arctan (r : ℝ)) ∧
       ∀ nu : ℝ, 2 < nu →
