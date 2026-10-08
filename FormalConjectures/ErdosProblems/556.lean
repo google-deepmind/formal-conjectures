@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 556
@@ -22,9 +24,9 @@ import FormalConjecturesUtil
 A problem of Bondy and Erdős: for the cycle $C_n$, the $3$-colour Ramsey number satisfies
 $$R(C_n; 3) \le 4n - 3.$$
 The bound is best possible for odd $n$, where equality is conjectured (and known for large odd
-$n$). Łuczak proved the asymptotic bound $R(C_n; 3) \le (4 + o(1))n$; Kohayakawa, Simonovits and
-Skokan settled large odd $n$, and Benevides and Skokan large even $n$, but the inequality for all
-$n$ remains open.
+$n$). Łuczak proved the asymptotic bound $R(C_n; 3) \le (4 + o(1))n$, and $(3 + o(1))n$ for even
+$n$; Kohayakawa, Simonovits and Skokan settled large odd $n$, and Benevides and Skokan large even
+$n$, but the inequality for all $n$ remains open.
 
 *References:*
 - [erdosproblems.com/556](https://www.erdosproblems.com/556)
@@ -37,6 +39,8 @@ $n$ remains open.
 - [BeSk09] F. S. Benevides, J. Skokan, *The 3-colored Ramsey number of even cycles*, J. Combin.
   Theory Ser. B 99 (2009), 690-708.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -61,6 +65,17 @@ $$R(C_n; 3) \le (4 + \varepsilon)n.$$
 theorem erdos_556.variants.luczak_asymptotic :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       (multicolourRamsey (cycleGraph n) 3 : ℝ) ≤ (4 + ε) * n := by
+  sorry
+
+/--
+Łuczak's asymptotic bound for even $n$ [Lu99]: for every $\varepsilon > 0$, for all sufficiently
+large even $n$,
+$$R(C_n; 3) \le (3 + \varepsilon)n.$$
+-/
+@[category research solved, AMS 5]
+theorem erdos_556.variants.luczak_asymptotic_even :
+    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, Even n →
+      (multicolourRamsey (cycleGraph n) 3 : ℝ) ≤ (3 + ε) * n := by
   sorry
 
 /--
