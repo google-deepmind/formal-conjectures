@@ -25,6 +25,7 @@ public import FormalConjecturesUtil
 - [Ta26c] T. Tao, *Products of consecutive integers with unusual anatomy*.
   [arXiv:2603.27990v3](https://arxiv.org/abs/2603.27990v3) (2026),
   Definitions 1.2 and 1.4, Theorem 1.7.
+- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos380.md)
 -/
 
 @[expose] public section
