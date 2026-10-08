@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Emirps
@@ -26,6 +28,8 @@ infinitely many emirps.
 * [Wikipedia, Emirp](https://en.wikipedia.org/wiki/Emirp)
 * [OEIS A006567](https://oeis.org/A006567)
 -/
+
+@[expose] public section
 
 namespace Emirp
 
