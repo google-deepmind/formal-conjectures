@@ -13,18 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-
-import Mathlib
-import FormalConjecturesForMathlib.Geometry.«2d»
+public import FormalConjecturesUtil
 
 /-!
-# The Sylvester–Gallai theorem
+# Erdős Problem 210
 
-Kelly's minimum-distance proof for finite subsets of real inner product spaces.
-Distances are squared to avoid square roots.
+*References:*
+- [erdosproblems.com/210](https://www.erdosproblems.com/210)
+- [Mo51] Motzkin, T. S., *The lines and planes connecting the points of a finite set*.
+  Transactions of the American Mathematical Society 70 (1951), 451–464.
+- [KeMo58] Kelly, L. M. and Moser, W. O. J., *On the number of ordinary lines determined by
+  n points*. Canadian Journal of Mathematics 10 (1958), 210–219.
+- [CsSa93] Csima, J. and Sawyer, E. T., *There exist 6n/13 ordinary points*.
+  Discrete & Computational Geometry 9 (1993), 187–202.
+- [GrTa13] Green, B. and Tao, T., *On sets defining few ordinary lines*.
+  Discrete & Computational Geometry 50 (2013), 409–468.
 -/
 
+@[expose] public section
 
 namespace SylvesterGallai
 
@@ -35,27 +43,32 @@ variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
 private noncomputable def areaSq (u v : V) : ℝ :=
   ‖u‖ ^ 2 * ‖v‖ ^ 2 - ⟪u, v⟫ ^ 2
 
+@[category API, AMS 5 51]
 private lemma areaSq_nonneg (u v : V) : 0 ≤ areaSq u v := by
   have h := abs_real_inner_le_norm u v
   have := pow_le_pow_left₀ (abs_nonneg ⟪u, v⟫) h 2
   dsimp [areaSq]
   nlinarith [sq_abs ⟪u, v⟫]
 
+@[category API, AMS 5 51]
 private lemma areaSq_comm (u v : V) : areaSq u v = areaSq v u := by
   simp only [areaSq, real_inner_comm v u]
   ring
 
+@[category API, AMS 5 51]
 private lemma areaSq_smul (u v : V) (t : ℝ) :
     areaSq (t • u) v = t ^ 2 * areaSq u v := by
   simp [areaSq, norm_smul, real_inner_smul_left, mul_pow]
   ring
 
+@[category API, AMS 5 51]
 private lemma areaSq_shear (u v : V) (t : ℝ) : areaSq u (v + t • u) = areaSq u v := by
   simp only [areaSq, norm_add_sq_real, inner_add_right, real_inner_smul_right,
     norm_smul, Real.norm_eq_abs, mul_pow, sq_abs, real_inner_self_eq_norm_sq,
     real_inner_comm v u]
   ring
 
+@[category API, AMS 5 51]
 private lemma areaSq_zero_iff {u v : V} (hu : u ≠ 0) :
     areaSq u v = 0 ↔ ∃ t : ℝ, v = t • u := by
   have hn : 0 < ‖u‖ ^ 2 := by positivity
@@ -77,6 +90,7 @@ private lemma areaSq_zero_iff {u v : V} (hu : u ≠ 0) :
     simp [areaSq, norm_smul, real_inner_smul_right, mul_pow]
     ring
 
+@[category API, AMS 5 51]
 private lemma mem_line {a b x : V} :
     x ∈ line[ℝ, a, b] ↔ ∃ t : ℝ, x = a + t • (b - a) := by
   rw [mem_affineSpan_pair_iff_exists_lineMap_eq]
@@ -86,6 +100,7 @@ private lemma mem_line {a b x : V} :
 private noncomputable def heightSq (p a b : V) : ℝ :=
   areaSq (b - a) (p - a) / ‖b - a‖ ^ 2
 
+@[category API, AMS 5 51]
 private lemma areaSq_pos {p a b : V} (hab : a ≠ b) (hp : p ∉ line[ℝ, a, b]) :
     0 < areaSq (b - a) (p - a) := by
   refine lt_of_le_of_ne (areaSq_nonneg _ _) ?_
@@ -94,6 +109,7 @@ private lemma areaSq_pos {p a b : V} (hab : a ≠ b) (hp : p ∉ line[ℝ, a, b]
   apply hp
   exact mem_line.mpr ⟨t, by rw [← ht]; abel⟩
 
+@[category API, AMS 5 51]
 private lemma off_line {a b p x y : V} (hp : p ∉ line[ℝ, a, b])
     (hx : x ∈ line[ℝ, a, b]) (hy : y ∈ line[ℝ, a, b]) (hxy : x ≠ y) :
     x ∉ line[ℝ, p, y] := by
@@ -103,6 +119,7 @@ private lemma off_line {a b p x y : V} (hp : p ∉ line[ℝ, a, b])
     hc.mem_affineSpan_of_mem_of_ne (by simp) (by simp) (by simp) hxy
   exact hp ((affineSpan_pair_le_of_mem_of_mem hx hy) hp')
 
+@[category API, AMS 5 51]
 private lemma areaSq_triangle (p x y : V) :
     areaSq (y - p) (x - p) = areaSq (x - y) (p - y) := by
   have h₁ : x - p = (x - y) + (y - p) := by abel
@@ -114,6 +131,7 @@ private lemma areaSq_triangle (p x y : V) :
   simp only [areaSq, norm_neg, inner_neg_right, neg_sq]
 
 /-- Kelly's strict inequality for two points on the same side of the perpendicular foot. -/
+@[category API, AMS 5 51]
 private lemma heightSq_lt {a b p x y : V} (hab : a ≠ b) (hp : p ∉ line[ℝ, a, b])
     (hx : x ∈ line[ℝ, a, b]) (hy : y ∈ line[ℝ, a, b])
     (hs : 0 ≤ ⟪x - p, b - a⟫ * ⟪y - p, b - a⟫)
@@ -161,6 +179,7 @@ private lemma heightSq_lt {a b p x y : V} (hab : a ≠ b) (hp : p ∉ line[ℝ, 
   rw [← hn, ← heq] at hmul
   nlinarith
 
+@[category API, AMS 5 51]
 private lemma same_side_pair (f : Fin 3 → ℝ) :
     ∃ i j, i ≠ j ∧ 0 ≤ f i * f j ∧ (f i) ^ 2 ≤ (f j) ^ 2 := by
   have hsign : 0 ≤ f 0 * f 1 ∨ 0 ≤ f 1 * f 2 ∨ 0 ≤ f 0 * f 2 := by
@@ -178,6 +197,7 @@ private lemma same_side_pair (f : Fin 3 → ℝ) :
   · exact hpair 1 2 (by decide) h
   · exact hpair 0 2 (by decide) h
 
+@[category API, AMS 5 51]
 private lemma exists_off_line (s : Finset V) (hs : ¬ Collinear ℝ (s : Set V)) :
     ∃ p ∈ s, ∃ a ∈ s, ∃ b ∈ s, a ≠ b ∧ p ∉ line[ℝ, a, b] := by
   classical
@@ -196,6 +216,7 @@ private lemma exists_off_line (s : Finset V) (hs : ¬ Collinear ℝ (s : Set V))
   exact ⟨t, by simpa [vadd_eq_add, add_comm] using ht⟩
 
 /-- A finite noncollinear subset of a real inner product space has an ordinary line. -/
+@[category API, AMS 5 51]
 theorem exists_ordinary_line (s : Finset V) (hs : ¬ Collinear ℝ (s : Set V)) :
     ∃ a ∈ s, ∃ b ∈ s, a ≠ b ∧ ∀ p ∈ s, p ∈ line[ℝ, a, b] → p = a ∨ p = b := by
   classical
@@ -232,23 +253,6 @@ theorem exists_ordinary_line (s : Finset V) (hs : ¬ Collinear ℝ (s : Set V)) 
 
 end SylvesterGallai
 
-
-/-!
-# Erdős Problem 210
-
-*References:*
-- [erdosproblems.com/210](https://www.erdosproblems.com/210)
-- [Mo51] Motzkin, T. S., *The lines and planes connecting the points of a finite set*.
-  Transactions of the American Mathematical Society 70 (1951), 451–464.
-- [KeMo58] Kelly, L. M. and Moser, W. O. J., *On the number of ordinary lines determined by
-  n points*. Canadian Journal of Mathematics 10 (1958), 210–219.
-- [CsSa93] Csima, J. and Sawyer, E. T., *There exist 6n/13 ordinary points*.
-  Discrete & Computational Geometry 9 (1993), 187–202.
-- [GrTa13] Green, B. and Tao, T., *On sets defining few ordinary lines*.
-  Discrete & Computational Geometry 50 (2013), 409–468.
--/
-
-
 namespace Erdos210
 
 open EuclideanGeometry Filter
@@ -269,32 +273,49 @@ noncomputable def f (n : ℕ) : ℕ :=
 not all on a line, there are at least $f(n)$ lines which contain exactly two points
 (called ordinary lines). Does $f(n)\to\infty$?
 That $f(n)\to\infty$ was proved by Motzkin [Mo51]. -/
-def erdos_210.parts.i : Prop := True ↔ Tendsto f atTop atTop
+@[category research solved, AMS 5 51]
+theorem erdos_210.parts.i : answer(True) ↔ Tendsto f atTop atTop := by
+  sorry
 
 /-- Kelly and Moser [KeMo58] proved that $f(n)\geq 3n/7$ for all $n$.
 Only $n\geq3$ have noncollinear configurations. -/
-def erdos_210.lower_bound : Prop := ∀ n : ℕ, 3 ≤ n → 3 * n ≤ 7 * f n
+@[category research solved, AMS 5 51]
+theorem erdos_210.lower_bound : ∀ n : ℕ, 3 ≤ n → 3 * n ≤ 7 * f n := by
+  sorry
 
 /-- Csima and Sawyer [CsSa93] proved $f(n)\geq6n/13$ when $n\geq8$. -/
-def erdos_210.variants.csima_sawyer : Prop := ∀ n : ℕ, 8 ≤ n → 6 * n ≤ 13 * f n
+@[category research solved, AMS 5 51]
+theorem erdos_210.variants.csima_sawyer : ∀ n : ℕ, 8 ≤ n → 6 * n ≤ 13 * f n := by
+  sorry
 
 /-- Green and Tao [GrTa13] proved $f(n)\geq n/2$ for sufficiently large $n$. -/
-def erdos_210.variants.green_tao : Prop := ∀ᶠ n : ℕ in atTop, n ≤ 2 * f n
+@[category research solved, AMS 5 51]
+theorem erdos_210.variants.green_tao : ∀ᶠ n : ℕ in atTop, n ≤ 2 * f n := by
+  sorry
 
 /-- Green and Tao [GrTa13] proved $f(n)\geq3\lfloor n/4\rfloor$ for sufficiently
-large odd $n$. -/
-def erdos_210.variants.green_tao_odd : Prop :=
-  ∀ᶠ n : ℕ in atTop, Odd n → 3 * (n / 4) ≤ f n
+large odd $n$ [GrTa13, Theorem 2.2]. -/
+@[category research solved, AMS 5 51]
+theorem erdos_210.variants.green_tao_odd :
+    ∀ᶠ n : ℕ in atTop, Odd n → 3 * (n / 4) ≤ f n := by
+  sorry
 
-/-- The $n/2$ bound is best possible for sufficiently large even $n$. -/
-def erdos_210.variants.even_upper_bound : Prop :=
-  ∀ᶠ n : ℕ in atTop, Even n → 2 * f n ≤ n
+/-- Green and Tao [GrTa13, Proposition 2.1] give configurations attaining $n/2$
+ordinary lines for sufficiently large even $n$. -/
+@[category research solved, AMS 5 51]
+theorem erdos_210.variants.even_upper_bound :
+    ∀ᶠ n : ℕ in atTop, Even n → 2 * f n ≤ n := by
+  sorry
 
-/-- The Kelly–Moser bound is best possible at $n=7$. -/
-def erdos_210.variants.seven : Prop := f 7 = 3
+/-- Kelly and Moser [KeMo58] give a seven-point configuration with three ordinary
+lines, attaining their lower bound at $n=7$. -/
+@[category research solved, AMS 5 51]
+theorem erdos_210.variants.seven : f 7 = 3 := by
+  sorry
 
 open scoped Classical in
 /-- Membership records two distinct points generating a line with exactly two incidences. -/
+@[category API, AMS 5 51]
 theorem mem_ordinaryLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
     L ∈ ordinaryLines s ↔
       (∃ a ∈ s, ∃ b ∈ s, a ≠ b ∧ line[ℝ, a, b] = L) ∧
@@ -304,6 +325,7 @@ theorem mem_ordinaryLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
   aesop
 
 /-- Every line counted by `ordinaryLines` is one-dimensional. -/
+@[category API, AMS 5 51]
 theorem isLine_of_mem_ordinaryLines {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²}
     (hL : L ∈ ordinaryLines s) : IsLine L := by
   obtain ⟨⟨a, _, b, _, hab, rfl⟩, _⟩ := mem_ordinaryLines.mp hL
@@ -312,6 +334,7 @@ theorem isLine_of_mem_ordinaryLines {s : Finset ℝ²} {L : AffineSubspace ℝ �
   exact finrank_span_singleton (vsub_ne_zero.mpr hab)
 
 /-- The counted lines are precisely the geometric lines meeting the point set in two points. -/
+@[category API, AMS 5 51]
 theorem ordinaryLines_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
     L ∈ ordinaryLines s ↔ IsLine L ∧ ((s : Set ℝ²) ∩ (L : Set ℝ²)).ncard = 2 := by
   classical
@@ -342,6 +365,7 @@ theorem ordinaryLines_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
     exact mem_ordinaryLines.mpr ⟨⟨a, ha.1, b, hb.1, hab, heq⟩, h⟩
 
 /-- Sylvester–Gallai supplies an ordinary line for every noncollinear finite set. -/
+@[category API, AMS 5 51]
 theorem ordinaryLines_nonempty {s : Finset ℝ²} (hs : ¬ Collinear ℝ (s : Set ℝ²)) :
     (ordinaryLines s).Nonempty := by
   classical
@@ -361,11 +385,13 @@ theorem ordinaryLines_nonempty {s : Finset ℝ²} (hs : ¬ Collinear ℝ (s : Se
   simp [heq, hab]
 
 /-- A configuration bounds the sharp guarantee from above. -/
+@[category API, AMS 5 51]
 theorem f_le {n : ℕ} {s : Finset ℝ²} (hn : s.card = n)
     (hs : ¬ Collinear ℝ (s : Set ℝ²)) : f n ≤ (ordinaryLines s).card :=
   csInf_le ⟨0, fun _ _ => Nat.zero_le _⟩ ⟨s, hn, hs, rfl⟩
 
 /-- A right triangle is noncollinear. -/
+@[category API, AMS 5 51]
 theorem triangle_not_collinear :
     ¬ Collinear ℝ ({!₂[(0 : ℝ), 0], !₂[(1 : ℝ), 0], !₂[(0 : ℝ), 1]} : Set ℝ²) := by
   intro h
@@ -380,6 +406,7 @@ theorem triangle_not_collinear :
   norm_num [AffineMap.lineMap_apply] at this
 
 /-- Every cardinality at least three has a noncollinear configuration. -/
+@[category API, AMS 5 51]
 theorem exists_configuration {n : ℕ} (hn : 3 ≤ n) :
     ∃ s : Finset ℝ², s.card = n ∧ ¬ Collinear ℝ (s : Set ℝ²) := by
   classical
@@ -395,6 +422,7 @@ theorem exists_configuration {n : ℕ} (hn : 3 ≤ n) :
   simpa [t] using hp
 
 /-- The infimum defining $f(n)$ is attained when $n\geq3$. -/
+@[category API, AMS 5 51]
 theorem f_attained {n : ℕ} (hn : 3 ≤ n) :
     ∃ s : Finset ℝ², s.card = n ∧ ¬ Collinear ℝ (s : Set ℝ²) ∧
       (ordinaryLines s).card = f n := by
@@ -404,6 +432,7 @@ theorem f_attained {n : ℕ} (hn : 3 ≤ n) :
   exact ⟨(ordinaryLines s).card, s, hs, hcol, rfl⟩
 
 /-- The infimum is exactly the largest uniform lower bound over all configurations. -/
+@[category API, AMS 5 51]
 theorem le_f_iff {n m : ℕ} (hn : 3 ≤ n) :
     m ≤ f n ↔ ∀ s : Finset ℝ², s.card = n → ¬ Collinear ℝ (s : Set ℝ²) →
       m ≤ (ordinaryLines s).card := by
@@ -414,13 +443,16 @@ theorem le_f_iff {n m : ℕ} (hn : 3 ≤ n) :
     simpa [hcard] using h s hs hc
 
 /-- The Sylvester–Gallai theorem states that $f(n)\geq1$. -/
+@[category research solved, AMS 5 51]
 theorem erdos_210.variants.sylvester_gallai {n : ℕ} (hn : 3 ≤ n) : 1 ≤ f n := by
   apply (le_f_iff hn).mpr
   intro s _ hs
   exact (ordinaryLines_nonempty hs).card_pos
 
 /-- The bound of Kelly–Moser implies the positive answer to the divergence question. -/
-theorem tendsto_of_kelly_moser (h : erdos_210.lower_bound) : Tendsto f atTop atTop := by
+@[category API, AMS 5 51]
+theorem tendsto_of_kelly_moser (h : ∀ n : ℕ, 3 ≤ n → 3 * n ≤ 7 * f n) :
+    Tendsto f atTop atTop := by
   apply tendsto_atTop.mpr
   intro m
   filter_upwards [eventually_ge_atTop (max 3 (7 * m))] with n hn
@@ -429,7 +461,8 @@ theorem tendsto_of_kelly_moser (h : erdos_210.lower_bound) : Tendsto f atTop atT
   omega
 
 /-- The sufficiently-large $n/2$ bound implies divergence. -/
-theorem tendsto_of_green_tao (h : erdos_210.variants.green_tao) : Tendsto f atTop atTop := by
+@[category API, AMS 5 51]
+theorem tendsto_of_green_tao (h : ∀ᶠ n : ℕ in atTop, n ≤ 2 * f n) : Tendsto f atTop atTop := by
   apply tendsto_atTop.mpr
   intro m
   filter_upwards [h, eventually_ge_atTop (2 * m)] with n hn hm
@@ -447,18 +480,21 @@ noncomputable def nearPencil (n : ℕ) : Finset ℝ² := by
   exact insert apex ((Finset.range (n - 1)).image axisPoint)
 
 /-- Distinct indices give distinct axis points. -/
+@[category API, AMS 5 51]
 theorem axisPoint_injective : Function.Injective axisPoint := by
   intro i j h
   have := congrArg (fun p : ℝ² => p 0) h
   simpa [axisPoint] using this
 
 /-- The apex is distinct from every axis point. -/
+@[category API, AMS 5 51]
 theorem apex_ne_axisPoint (i : ℕ) : apex ≠ axisPoint i := by
   intro h
   have := congrArg (fun p : ℝ² => p 1) h
   norm_num [apex, axisPoint] at this
 
 /-- Each axis point is on the horizontal line. -/
+@[category API, AMS 5 51]
 theorem axisPoint_mem (i : ℕ) : axisPoint i ∈ line[ℝ, axisPoint 0, axisPoint 1] := by
   apply mem_affineSpan_pair_iff_exists_lineMap_eq.mpr
   refine ⟨(i : ℝ), ?_⟩
@@ -466,6 +502,7 @@ theorem axisPoint_mem (i : ℕ) : axisPoint i ∈ line[ℝ, axisPoint 0, axisPoi
   fin_cases j <;> simp [axisPoint, AffineMap.lineMap_apply]
 
 /-- The near-pencil construction has the requested cardinality. -/
+@[category API, AMS 5 51]
 theorem nearPencil_card {n : ℕ} (hn : 1 ≤ n) : (nearPencil n).card = n := by
   classical
   have hap : apex ∉ (Finset.range (n - 1)).image axisPoint := by
@@ -477,6 +514,7 @@ theorem nearPencil_card {n : ℕ} (hn : 1 ≤ n) : (nearPencil n).card = n := by
   omega
 
 /-- For $n\geq3$, the near-pencil construction contains a noncollinear triangle. -/
+@[category API, AMS 5 51]
 theorem nearPencil_not_collinear {n : ℕ} (hn : 3 ≤ n) :
     ¬ Collinear ℝ (nearPencil n : Set ℝ²) := by
   classical
@@ -496,6 +534,7 @@ theorem nearPencil_not_collinear {n : ℕ} (hn : 3 ≤ n) :
 
 open scoped Classical in
 /-- Every ordinary line of a near-pencil is either horizontal or joins an axis point to the apex. -/
+@[category API, AMS 5 51]
 theorem ordinaryLines_nearPencil_subset (n : ℕ) :
     ordinaryLines (nearPencil n) ⊆
       insert (line[ℝ, axisPoint 0, axisPoint 1])
@@ -517,6 +556,7 @@ theorem ordinaryLines_nearPencil_subset (n : ℕ) :
       exact Finset.mem_insert.mpr (Or.inl heq)
 
 /-- The near-pencil construction has at most $n$ ordinary lines. -/
+@[category API, AMS 5 51]
 theorem ordinaryLines_nearPencil_le {n : ℕ} (hn : 1 ≤ n) :
     (ordinaryLines (nearPencil n)).card ≤ n := by
   classical
@@ -530,22 +570,29 @@ theorem ordinaryLines_nearPencil_le {n : ℕ} (hn : 1 ≤ n) :
     _ = n := by rw [Finset.card_range]; omega
 
 /-- An explicit near-pencil gives the linear upper bound $f(n)\leq n$. -/
+@[category research solved, AMS 5 51]
 theorem erdos_210.upper_bound {n : ℕ} (hn : 3 ≤ n) : f n ≤ n :=
   (f_le (nearPencil_card (by omega)) (nearPencil_not_collinear hn)).trans
     (ordinaryLines_nearPencil_le (by omega))
 
-/-- How fast does $f(n)$ tend to infinity? Its growth is linear. -/
-def erdos_210.parts.ii : Prop :=
-  (fun n : ℕ => (f n : ℝ)) =Θ[atTop] (fun n : ℕ => (n : ℝ))
+/-- How fast does $f(n)$ tend to infinity? Kelly–Moser [KeMo58] and the near-pencil
+construction show that its growth is linear. -/
+@[category research solved, AMS 5 51]
+theorem erdos_210.parts.ii :
+    (fun n : ℕ => (f n : ℝ)) =Θ[atTop] (fun n : ℕ => (n : ℝ)) := by
+  sorry
 
 /-- The proved upper bound is the upper half of the linear-growth assertion. -/
+@[category API, AMS 5 51]
 theorem f_isBigO : (fun n : ℕ => (f n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ)) := by
   apply Asymptotics.IsBigO.of_bound 1
   filter_upwards [eventually_ge_atTop 3] with n hn
   simpa using (Nat.cast_le.mpr (erdos_210.upper_bound hn) : (f n : ℝ) ≤ (n : ℝ))
 
 /-- Kelly–Moser and the explicit upper construction together imply linear growth. -/
-theorem linear_growth_of_kelly_moser (h : erdos_210.lower_bound) : erdos_210.parts.ii := by
+@[category API, AMS 5 51]
+theorem linear_growth_of_kelly_moser (h : ∀ n : ℕ, 3 ≤ n → 3 * n ≤ 7 * f n) :
+    (fun n : ℕ => (f n : ℝ)) =Θ[atTop] (fun n : ℕ => (n : ℝ)) := by
   refine ⟨f_isBigO, Asymptotics.IsBigO.of_bound 7 ?_⟩
   filter_upwards [eventually_ge_atTop 3] with n hn
   have hb := h n hn
@@ -554,13 +601,16 @@ theorem linear_growth_of_kelly_moser (h : erdos_210.lower_bound) : erdos_210.par
   simpa using hr
 
 /-- The Green–Tao bound likewise implies linear growth. -/
-theorem linear_growth_of_green_tao (h : erdos_210.variants.green_tao) : erdos_210.parts.ii := by
+@[category API, AMS 5 51]
+theorem linear_growth_of_green_tao (h : ∀ᶠ n : ℕ in atTop, n ≤ 2 * f n) :
+    (fun n : ℕ => (f n : ℝ)) =Θ[atTop] (fun n : ℕ => (n : ℝ)) := by
   refine ⟨f_isBigO, Asymptotics.IsBigO.of_bound 2 ?_⟩
   filter_upwards [h] with n hn
   have hr : (n : ℝ) ≤ 2 * (f n : ℝ) := by exact_mod_cast hn
   simpa using hr
 
 /-- Fewer than three points are collinear. -/
+@[category API, AMS 5 51]
 theorem collinear_of_card_lt_three {s : Finset ℝ²} (hs : s.card < 3) :
     Collinear ℝ (s : Set ℝ²) := by
   classical
@@ -574,6 +624,7 @@ theorem collinear_of_card_lt_three {s : Finset ℝ²} (hs : s.card < 3) :
     simpa using collinear_pair ℝ a b
 
 /-- The definition uses the default value zero where no noncollinear configuration exists. -/
+@[category API, AMS 5 51]
 theorem f_eq_zero_of_lt_three {n : ℕ} (hn : n < 3) : f n = 0 := by
   have he : {m : ℕ | ∃ s : Finset ℝ²,
       s.card = n ∧ ¬ Collinear ℝ (s : Set ℝ²) ∧ (ordinaryLines s).card = m} = ∅ := by
@@ -583,7 +634,8 @@ theorem f_eq_zero_of_lt_three {n : ℕ} (hn : n < 3) : f n = 0 := by
   simp [f, he]
 
 /-- Kelly–Moser's extremal-function formulation is equivalent to its configuration formulation. -/
-theorem kelly_moser_iff : erdos_210.lower_bound ↔
+@[category API, AMS 5 51]
+theorem kelly_moser_iff : (∀ n : ℕ, 3 ≤ n → 3 * n ≤ 7 * f n) ↔
     ∀ s : Finset ℝ², ¬ Collinear ℝ (s : Set ℝ²) →
       3 * s.card ≤ 7 * (ordinaryLines s).card := by
   constructor
@@ -597,7 +649,8 @@ theorem kelly_moser_iff : erdos_210.lower_bound ↔
     simpa [hs, hf] using h s hc
 
 /-- The eventual Green–Tao bound has a single threshold uniform over all configurations. -/
-theorem green_tao_iff : erdos_210.variants.green_tao ↔
+@[category API, AMS 5 51]
+theorem green_tao_iff : (∀ᶠ n : ℕ in atTop, n ≤ 2 * f n) ↔
     ∃ N : ℕ, 3 ≤ N ∧ ∀ s : Finset ℝ², N ≤ s.card →
       ¬ Collinear ℝ (s : Set ℝ²) → s.card ≤ 2 * (ordinaryLines s).card := by
   constructor
@@ -615,6 +668,7 @@ theorem green_tao_iff : erdos_210.variants.green_tao ↔
     simpa [hs, hf] using h s (by simpa [hs] using hn) hc
 
 /-- A sharp extremal guarantee is uniquely characterized by uniform validity and attainment. -/
+@[category API, AMS 5 51]
 theorem f_unique {n m : ℕ} (hn : 3 ≤ n)
     (hlower : ∀ s : Finset ℝ², s.card = n → ¬ Collinear ℝ (s : Set ℝ²) →
       m ≤ (ordinaryLines s).card)
@@ -625,8 +679,10 @@ theorem f_unique {n m : ℕ} (hn : 3 ≤ n)
   simpa [hm] using f_le hs hc
 
 /-- The two sharp eventual bounds imply the exact value on sufficiently large even inputs. -/
+@[category API, AMS 5 51]
 theorem eventually_even_exact
-    (hl : erdos_210.variants.green_tao) (hu : erdos_210.variants.even_upper_bound) :
+    (hl : ∀ᶠ n : ℕ in atTop, n ≤ 2 * f n)
+    (hu : ∀ᶠ n : ℕ in atTop, Even n → 2 * f n ≤ n) :
     ∀ᶠ n : ℕ in atTop, Even n → 2 * f n = n := by
   filter_upwards [hl, hu] with n hl hu
   intro hn
