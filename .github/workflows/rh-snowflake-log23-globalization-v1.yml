@@ -586,6 +586,14 @@ jobs:
           lake env lean -o .lake/build/lib/lean/RHSignedPrimeChebyshevFiniteBridgeV6.olean RHSignedPrimeChebyshevFiniteBridgeV6.lean 2>&1 | tee evidence-krein/RHSignedPrimeChebyshevFiniteBridgeV6.log
           python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHSignedPrimeChebyshevFiniteBridgeV6.lean evidence-krein/RHSignedPrimeChebyshevFiniteBridgeV6.log
 
+      - name: Compile and audit Chebyshev V7 arithmetic integrability
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp AEGISOverlay/RHSignedPrimeConvolutionIntegrabilityV7.lean RHSignedPrimeConvolutionIntegrabilityV7.lean
+          lake env lean -o .lake/build/lib/lean/RHSignedPrimeConvolutionIntegrabilityV7.olean RHSignedPrimeConvolutionIntegrabilityV7.lean 2>&1 | tee evidence-krein/RHSignedPrimeConvolutionIntegrabilityV7.log
+          python3 scripts/verify_rh_overlay_axioms.py AEGISOverlay/RHSignedPrimeConvolutionIntegrabilityV7.lean evidence-krein/RHSignedPrimeConvolutionIntegrabilityV7.log
+
       - name: Upload Krein bridge replay logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
