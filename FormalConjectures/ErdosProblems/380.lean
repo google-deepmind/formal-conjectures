@@ -358,8 +358,8 @@ Tao [Ta26c] has proved this asymptotic.
 Intervals are positive and nonempty. The integer $1$ is not bad because it has no prime factors.
 The witness interval for a counted integer may extend beyond $x$.
 -/
-@[category research solved, AMS 11]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos380.lean#L63"]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos380.lean#L63"]
 theorem erdos_380 : answer(True) ↔ MainTarget := by
   sorry
 
