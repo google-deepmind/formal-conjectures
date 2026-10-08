@@ -203,7 +203,7 @@ theorem riemannHypothesis_of_primeOnly_growth_and_kernel_bridge_v1
     have h := hBound t ht
     simpa only [norm_neg,
       AEGIS.WeilZeroKernelHermitianV11.zero_translation_kernel_neg_eq_conj_v11
-        detectingPacket t detectingPacket_moments, norm_conj] using h
+        detectingPacket t detectingPacket_moments, Complex.norm_conj] using h
   exact riemannHypothesis_of_fixed_detecting_packet_subexponential hKernel
 
 /-- The same two analytic premises produce the *exact* universal residual
