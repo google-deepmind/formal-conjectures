@@ -25,7 +25,6 @@ public import FormalConjecturesUtil
 - [Er44] Erdős, P., *On highly composite numbers*. J. London Math. Soc. (1944), 130–133.
 - [Ni71] Nicolas, Jean-Louis, *Répartition des nombres hautement composés de Ramanujan*.
   Canadian J. Math. (1971), 116–130.
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos381.md)
 -/
 
 @[expose] public section
@@ -249,6 +248,7 @@ Is it true that $Q(x)\gg_k (\log x)^k$ for every $k\geq 1$?
 The answer to this problem is no: Nicolas [Ni71] proved that $Q(x) \ll (\log x)^{O(1)}$.
 -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos381.lean#L18"]
 theorem erdos_381 : answer(False) ↔
     ∀ k : ℝ, 1 ≤ k → ∃ c : ℝ, 0 < c ∧ ∃ X : ℝ,
       ∀ x : ℝ, X ≤ x → c * (Real.log x) ^ k ≤ (Q x : ℝ) := by
@@ -256,6 +256,7 @@ theorem erdos_381 : answer(False) ↔
 
 /-- Nicolas [Ni71] proved that $Q(x) \ll (\log x)^{O(1)}$. -/
 @[category research solved, AMS 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos381/Nicolas.lean#L2038"]
 theorem erdos_381.variants.nicolas_upper_bound : nicolasUpperBound := by
   sorry
 
