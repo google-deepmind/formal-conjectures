@@ -256,8 +256,8 @@ theorem quadratic_of_erdos_211 (h : MainBound) : QuadraticBound := by
 /-- Let $1\leq k<n$. Given $n$ points in $\mathbb{R}^2$, at most $n-k$ on any line,
 there are $\gg kn$ many lines which contain at least two points.
 Solved by Beck [Be83] and Szemerédi and Trotter [SzTr83]. -/
-@[category research solved, AMS 5 52]
-@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos211.lean#L900"]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos211.lean#L900"]
 theorem erdos_211 : MainBound := by
   sorry
 
