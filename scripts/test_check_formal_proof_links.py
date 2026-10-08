@@ -226,6 +226,18 @@ class DeclarationNearTest(unittest.TestCase):
     def test_anchor_far_from_any_declaration(self):
         self.assertFalse(declaration_near(self.BODY, (2, 2)))
 
+    def test_an_alias_at_the_anchor_counts(self):
+        body = "\n".join(["-- header"] * 20 + ["alias statement_t := Foo.t"] + [""] * 20)
+        self.assertTrue(declaration_near(body, (21, 21)))
+
+    def test_a_theorem_after_a_custom_command_counts(self):
+        body = "\n".join(["-- header"] * 20 + ["fc_compact_decl theorem t :", "    True :=", "  trivial"] + [""] * 20)
+        self.assertTrue(declaration_near(body, (21, 21)))
+
+    def test_the_word_theorem_in_a_name_does_not_count(self):
+        body = "\n".join(["-- header"] * 20 + ["def my_theorem_list := 3", "#check Nat.theorem_like"] + [""] * 20)
+        self.assertFalse(declaration_near(body, (21, 21)))
+
     def test_a_theorem_inside_a_block_comment_near_the_anchor_does_not_count(self):
         body = "\n".join(["-- header"] * 20 + ["/-", "theorem t : True := trivial", "-/"] + [""] * 20)
         self.assertFalse(declaration_near(body, (22, 22)))
@@ -256,6 +268,15 @@ class CheckLinkTest(unittest.TestCase):
         cache = {raw_url(link()["url"]): (200, "theorem erdos_1.variants.two : True := trivial")}
         kinds = [f["kind"] for f in check_link(link(), cache, compare=False)]
         self.assertEqual(kinds, ["name-not-found"])
+
+    def test_anchor_on_an_alias_is_clean(self):
+        l = link(kind="lean4", url="https://github.com/x/y/blob/c/F.lean#L3")
+        body = "/-- The statement linked from formal-conjectures. -/\n\nalias statement_erdos_1 := Gallery.erdos_1\n"
+        self.assertEqual(check_link(l, {raw_url(l["url"]): (200, body)}, compare=False), [])
+
+    def test_name_declared_as_an_alias_in_a_fork_is_found(self):
+        cache = {raw_url(link()["url"]): (200, "alias erdos_1 := Elsewhere.erdos_1_proof")}
+        self.assertEqual(check_link(link(), cache, compare=False), [])
 
     def test_name_missing_in_an_external_repo_is_not_reported(self):
         l = link(kind="lean4")

@@ -8,8 +8,10 @@ For each `formal_proof using <kind> at "<url>"` in `FormalConjectures/`:
 
 1. Fetch the target. A GitHub `blob` URL is fetched as raw content. Report HTTP errors, and
    whether the Wayback Machine holds a copy, which helps re-pointing but is not the proof.
-2. If the link has a line anchor (`#L123`), check that a `theorem` or `lemma` starts within
-   a few lines of it. An anchor that lands on nothing is stale. Report it.
+2. If the link has a line anchor (`#L123`), check that a `theorem`, `lemma` or `alias`
+   declaration starts within a few lines of it. The keyword may follow modifiers, attributes
+   or a custom command (`fc_compact_decl theorem ...`). An anchor that lands on nothing is
+   stale. Report it.
 3. If the link has no anchor and is a `formal_conjectures` link (a fork of this repository),
    check that a declaration whose name agrees with the annotated one exists in the target.
    Names agree when one equals the other or ends with it at a `.` boundary, so a namespace
@@ -69,7 +71,7 @@ DECLARATION_AFTER = re.compile(
 )
 
 # A `theorem` or `lemma` and its name as written. `foo.{u}` is captured as `foo.`.
-DECLARATION_NAME = re.compile(r"\b(?:theorem|lemma)\s+([^\s:({]+)")
+DECLARATION_NAME = re.compile(r"\b(?:theorem|lemma|alias)\s+([^\s:({]+)")
 
 # A GitHub `blob` URL with optional line anchor `#L12` or range `#L12-L34`.
 GITHUB_BLOB = re.compile(r"https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/(.+?)(?:#L(\d+)(?:-L(\d+))?)?$")
@@ -84,7 +86,10 @@ FAILING_KINDS = {"unreachable", "anchor-not-on-declaration", "name-not-found"}
 ANCHOR_SLACK_ABOVE = 12
 ANCHOR_SLACK_BELOW = 3
 
-DECLARATION_LINE = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+)?(?:theorem|lemma)\b")
+# A line, comments blanked, that declares a theorem, lemma or alias. The keyword may follow
+# attributes, modifiers or a custom command such as `fc_compact_decl`, so it is searched for
+# anywhere on the line, as a whole word followed by a name.
+DECLARATION_LINE = re.compile(r"(?<![\w.'])(?:theorem|lemma|alias)\s+[^\s:({]")
 
 
 def mask_comments(text):
@@ -217,7 +222,7 @@ def declaration_near(body, anchor):
     lines = mask_comments(body).splitlines()
     lo = max(0, first - 1 - ANCHOR_SLACK_ABOVE)
     hi = min(len(lines), last + ANCHOR_SLACK_BELOW)
-    return any(DECLARATION_LINE.match(l) for l in lines[lo:hi])
+    return any(DECLARATION_LINE.search(l) for l in lines[lo:hi])
 
 
 def fetch(url):
