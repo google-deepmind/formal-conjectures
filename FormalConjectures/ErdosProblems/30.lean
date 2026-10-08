@@ -71,10 +71,13 @@ theorem erdos_30.variants.O_one : answer(sorry) ↔
 
 /--
 Erdős and Turán [ErTu41] proved $h(N) \le \sqrt N + O(N^{1/4})$.
+
+This is an upper bound only. A statement with `=O` would also assert the lower bound
+$h(N) \ge \sqrt N - O(N^{1/4})$, which is not part of this result.
 -/
 @[category research solved, AMS 11]
 theorem erdos_30.variants.erdos_turan :
-    (fun N => h N - (N : ℝ).sqrt) =O[atTop] fun N => (N : ℝ) ^ (4⁻¹ : ℝ) := by
+    ∃ C : ℝ, ∀ᶠ N in atTop, (h N : ℝ) ≤ (N : ℝ).sqrt + C * (N : ℝ) ^ (4⁻¹ : ℝ) := by
   sorry
 
 /--
