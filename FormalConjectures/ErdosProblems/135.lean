@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
   Discrete Math. (1997), 227-231.
 - [Ta24c] Tao, Terence, *Planar point sets with forbidden 4-point patterns and few distinct
   distances*. [arXiv:2409.01343](https://arxiv.org/abs/2409.01343) (2024).
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos135.md)
 -/
 
 @[expose] public section
@@ -66,8 +65,7 @@ determining only $\ll n^2 / \sqrt{\log n}$ distinct distances (see `erdos_135.va
 The hypothesis $2 \le n$ only excludes the degenerate empty and one-point sets, which
 determine no distances at all.
 -/
-@[category research solved, AMS 5 52,
-  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos135.lean"]
+@[category research solved, AMS 5 52]
 theorem erdos_135 : answer(False) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ A : Finset ℝ², 2 ≤ A.card → FourFive A →
       C * (A.card : ℝ) ^ 2 ≤ distinctDistances A := by
