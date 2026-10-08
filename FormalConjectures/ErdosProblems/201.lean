@@ -39,19 +39,19 @@ sets of $N$ integers. -/
 noncomputable def G (k N : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ s : Finset ℤ, s.card = N ∧ s.maxAPFreeCard k = m}
 
-set_option linter.style.category_attribute false in
 /-- Let $G_k(N)$ be such that any set of $N$ integers contains a subset of size at least
 $G_k(N)$ which does not contain a $k$-term arithmetic progression. Determine the size of $G_k(N)$.
 How does it relate to $R_k(N)$, the size of the largest subset of $\{1,\ldots,N\}$
 without a $k$-term arithmetic progression? -/
 @[category research open, AMS 5 11]
-def erdos_201.parts.i (g : ℕ → ℕ → ℕ) : Prop := answer(g) = G
+theorem erdos_201.parts.i : answer(sorry) = G := by
+  sorry
 
-set_option linter.style.category_attribute false in
 /-- Is it true that $\lim_{N\to\infty} R_3(N)/G_3(N)=1$? -/
 @[category research open, AMS 5 11]
-def erdos_201.parts.ii (a : Prop) : Prop :=
-  answer(a) ↔ Tendsto (fun N : ℕ => (R 3 N : ℝ) / (G 3 N : ℝ)) atTop (𝓝 1)
+theorem erdos_201.parts.ii :
+    answer(sorry) ↔ Tendsto (fun N : ℕ => (R 3 N : ℝ) / (G 3 N : ℝ)) atTop (𝓝 1) := by
+  sorry
 
 /-- An integer interval $\{1,\ldots,N\}$ has $N$ elements, including when $N=0$. -/
 @[category API, AMS 5 11]
@@ -266,11 +266,12 @@ theorem one_le_ratio {N : ℕ} (hN : 0 < N) : 1 ≤ (R 3 N : ℝ) / (G 3 N : ℝ
   simpa using (show (G 3 N : ℝ) ≤ R 3 N from by exact_mod_cast erdos_201.variants.G_le_R 3 N)
 
 /-- Komlós, Sulyok, and Szemerédi have shown that $R_k(N)\ll_k G_k(N)$.
-This proposition records the cited comparison; it is not a proof of it. -/
+-/
 @[category research solved, AMS 5 11]
-def erdos_201.variants.comparison : Prop :=
-  ∀ k : ℕ, 2 ≤ k →
-    (fun N : ℕ => (R k N : ℝ)) =O[atTop] (fun N : ℕ => (G k N : ℝ))
+theorem erdos_201.variants.comparison :
+    ∀ k : ℕ, 2 ≤ k →
+      (fun N : ℕ => (R k N : ℝ)) =O[atTop] (fun N : ℕ => (G k N : ℝ)) := by
+  sorry
 
 /-- $G_3(5)=3$. -/
 @[category research solved, AMS 5 11]
@@ -361,10 +362,11 @@ theorem G_zero (k : ℕ) : G k 0 = 0 := Nat.eq_zero_of_le_zero (G_le k 0)
 
 /-- The known comparison has a constant depending on $k$, uniform for sufficiently large $N$. -/
 @[category API, AMS 5 11]
-theorem comparison_iff : erdos_201.variants.comparison ↔
+theorem comparison_iff :
+    (∀ k : ℕ, 2 ≤ k →
+      (fun N : ℕ => (R k N : ℝ)) =O[atTop] (fun N : ℕ => (G k N : ℝ))) ↔
     ∀ k : ℕ, 2 ≤ k → ∃ C : ℝ, 0 < C ∧
       ∀ᶠ N : ℕ in atTop, (R k N : ℝ) ≤ C * (G k N : ℝ) := by
-  unfold erdos_201.variants.comparison
   apply forall_congr'
   intro k
   apply imp_congr_right
