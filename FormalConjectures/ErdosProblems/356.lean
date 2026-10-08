@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
   theory*. Monographies de L'Enseignement Mathematique (1980), p. 58.
 - [Be23b] Beker, A., *On a problem of Erdős and Graham about consecutive sums in strictly
   increasing sequences*. arXiv:2311.10087 (2023).
-- [Lean formalisation (plby)](https://github.com/plby/lean-proofs/blob/main/ErdosProblems/Erdos356.md)
 -/
 
 @[expose] public section
@@ -53,6 +52,7 @@ The original problem was solved (in the affirmative) by Beker [Be23b].
 We require $1\leq a_i$, as in Beker's formulation of the problem.
 -/
 @[category research solved, AMS 5 11]
+@[formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos356.lean#L1135"]
 theorem erdos_356 : answer(True) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in Filter.atTop,
       ∃ (k : ℕ) (a : ℕ → ℤ), IsAdmissible n k a ∧
