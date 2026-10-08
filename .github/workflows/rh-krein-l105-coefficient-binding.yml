@@ -192,7 +192,7 @@ jobs:
       - name: Checkout exact fork HEAD
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: \${{ github.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 1
           persist-credentials: false
       - name: Checkout exact AEGIS base and window dependencies
@@ -214,7 +214,7 @@ jobs:
       - name: Download generated exact-head certificate sources
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-coefficient-binding-\${{ github.sha }}
+          name: rh-l105-coefficient-binding-${{ github.sha }}
           path: evidence-l105
       - name: Verify pins and materialize source-only AEGIS modules
         shell: bash
@@ -347,7 +347,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-kernel-replay-\${{ github.sha }}-\${{ github.run_id }}
+          name: rh-l105-kernel-replay-${{ github.sha }}-${{ github.run_id }}
           path: evidence-l105/replay/
           if-no-files-found: warn
           retention-days: 30
