@@ -106,8 +106,10 @@ are $3$, $5$ and $7$.
 
 This was proved by Terence Tao in a [MathOverflow answer](https://mathoverflow.net/a/490348),
 using that $a(n)$ divides $a(n+3)$ for all $n$.
+Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/0a23974e54b90afd1453ef02c27cf8f617bad940/LeanOeisProofs/NewFormalization/A382590.lean#L201"]
 theorem kthPrimeFactor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
     ∀ n : ℕ, n ≥ N₀ → kthPrimeFactor k (a (n + p)) = kthPrimeFactor k (a n) := by
     sorry
