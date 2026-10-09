@@ -254,4 +254,95 @@ theorem lambert_series_eq_num_divisor_sum : ∀ t : ℚ,
   · exact lambert_convergent (t : ℝ) ht
   · exact lambert_divergent (t : ℝ) ht
 
+namespace RationalBaseContour
+
+open scoped BigOperators
+
+noncomputable def paperLambert (x : ℝ) : ℝ :=
+  ∑' n : ℕ, 1 / (x ^ (n + 1) - 1)
+
+noncomputable def trigammaSeries (x : ℝ) : ℝ :=
+  ∑' k : ℕ, 1 / ((k : ℝ) + x) ^ 2
+
+noncomputable def zudilinJTerm (u v : ℝ) : ℝ :=
+  trigammaSeries u - trigammaSeries v
+
+noncomputable def zudilinJ : ℝ :=
+  zudilinJTerm (1 / 14) (1 / 12) + zudilinJTerm (1 / 7) (1 / 6) +
+    zudilinJTerm (3 / 14) (1 / 4) + zudilinJTerm (2 / 7) (1 / 3) +
+    zudilinJTerm (5 / 14) (2 / 5) + zudilinJTerm (3 / 7) (7 / 15) +
+    zudilinJTerm (1 / 2) (8 / 15) + zudilinJTerm (4 / 7) (3 / 5) +
+    zudilinJTerm (9 / 14) (2 / 3) + zudilinJTerm (5 / 7) (11 / 15) +
+    zudilinJTerm (11 / 14) (4 / 5) + zudilinJTerm (6 / 7) (13 / 15) +
+    zudilinJTerm (13 / 14) (14 / 15)
+
+noncomputable def zudilinC1 : ℝ := 1091 / 2
+noncomputable def zudilinC0 : ℝ := 266 - 3 / Real.pi ^ 2 * (225 - zudilinJ)
+noncomputable def zudilinContour : ℝ := zudilinC0 / zudilinC1
+
+def ZudilinContourRegion (a b : ℕ) : Prop :=
+  Real.log b / Real.log a < zudilinContour
+
+def reducedApproximationPairs (ξ ν : ℝ) : Set (ℤ × ℕ) :=
+  {r | 0 < r.2 ∧ Nat.Coprime r.1.natAbs r.2 ∧
+    |ξ - (r.1 : ℝ) / (r.2 : ℝ)| < (r.2 : ℝ) ^ (-ν)}
+
+def approximationExponents (ξ : ℝ) : Set ℝ :=
+  {ν | (reducedApproximationPairs ξ ν).Infinite}
+
+/-- Supremum of exponents admitting infinitely many reduced rational approximations.
+This real-valued definition is used here only at the finite-exponent irrational values
+in the theorem below. -/
+noncomputable def irrationalityExponent (ξ : ℝ) : ℝ :=
+  sSup (approximationExponents ξ)
+
+noncomputable def rationalBaseMeasureBound (a b : ℕ) : ℝ :=
+  (1 - Real.log b / Real.log a) /
+    (zudilinContour - Real.log b / Real.log a)
+
+end RationalBaseContour
+
+open RationalBaseContour
+
+/--
+For $a>b>0$, write $\theta=\log b/\log a$ and
+$\theta^*=C_0/C_1=0.4056830213840605\ldots$, with the exact constants above.
+If $\theta<\theta^*$, then every positive integral power of $a/b$ has
+irrational Lambert series, with irrationality exponent at most
+$(1-\theta)/(\theta^*-\theta)$.
+
+This specialises Zudilin's 2004 approximation forms and exponent argument
+([Zu04], p. 162) to rational bases;
+his published theorem in [Zu04] concerns integer bases.
+Zudilin's 2016 rational-base remark gives a computable but unspecified constant
+([Zu16], Section 2, p. 4 of arXiv:1601.02688v2).
+Bundschuh--Väänänen's criterion ([BV94], Theorem 2 at $\alpha=-1$, p. 177)
+specialises to $\log b/\log a<1/2-1/\pi^2$.
+The strict contour contains the earlier $81/200$ sufficient region, including
+all positive powers of $31/4$.
+The question for every rational base above one remains open.
+
+*References:*
+- [Cook, Erdős #1049, rational-base theorem](https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/paper/1049/erdos-1049-rational-base-lambert.tex).
+- [Zu04] W. Zudilin, *Heine's basic transform and a permutation group for $q$-harmonic series*,
+  Acta Arith. 111 (2004), no. 2, 153--164,
+  [doi:10.4064/aa111-2-4](https://doi.org/10.4064/aa111-2-4).
+- [Zu16] W. Zudilin, *On the irrationality of generalized $q$-logarithm*,
+  Res. Number Theory 2 (2016), Art. 15,
+  [arXiv:1601.02688v2, Section 2, p. 4](https://arxiv.org/abs/1601.02688v2).
+- [BV94] P. Bundschuh and K. Väänänen, *Arithmetical investigations of a certain infinite product*,
+  Compositio Math. 91 (1994), no. 2, 175--199,
+  [Theorem 2](https://numdam.org/item/CM_1994__91_2_175_0.pdf).
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/32ee6e7214506f3188fcafb77fc1844541086e98/Solutions/ExternalVerification1049ContourMeasurePowers.lean#L53-L66"]
+theorem erdos_1049.variants.rational_base_contour_measure
+    (a b : ℕ) (hb : 0 < b) (hab : b < a)
+    (hregion : ZudilinContourRegion a b) :
+    ∀ r : ℕ, 0 < r →
+      Irrational (paperLambert (((a : ℝ) / b) ^ r)) ∧
+      irrationalityExponent (paperLambert (((a : ℝ) / b) ^ r)) ≤
+        rationalBaseMeasureBound a b := by
+  sorry
+
 end Erdos1049
