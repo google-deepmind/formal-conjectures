@@ -162,6 +162,32 @@ theorem conditional_artin_primitive_roots.parts.ii
     (S a).HasDensity ArtinConstant {p | p.Prime} := by
   sorry
 
+/-- If `a` is a square or `-1`, then the only primes `p` for which `a` is a primitive root
+modulo `p` are `2` and `3`. -/
+@[category API, AMS 11]
+lemma S_subset_of_isSquare_or_eq_neg_one {a : ℤ} (ha : IsSquare a ∨ a = -1) :
+    S a ⊆ {2, 3} := by
+  rintro p ⟨hp, hord⟩
+  have := Fact.mk hp
+  have h2 := hp.two_le
+  by_contra hne
+  have hp3 : 3 < p := by
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hne
+    omega
+  have hdvd : ∀ k : ℕ, 0 < k → (a : ZMod p) ^ k = 1 → p - 1 ≤ k := fun k hk h =>
+    hord ▸ Nat.le_of_dvd hk (orderOf_dvd_of_pow_eq_one h)
+  rcases ha with ⟨r, rfl⟩ | rfl
+  · by_cases hr : (r : ZMod p) = 0
+    · simp [hr, orderOf_zero] at hord
+      omega
+    · have h1 := hdvd ((p - 1) / 2) (by omega) (by
+        push_cast
+        rw [← sq, ← pow_mul, Nat.mul_div_cancel' ((hp.even_sub_one (by omega)).two_dvd)]
+        exact ZMod.pow_card_sub_one_eq_one hr)
+      omega
+  · have := hdvd 2 (by norm_num) (by simp)
+    omega
+
 /--
 **Artin's Conjecture on Primitive Roots**, second half, different residue version
 If $a$ is a square number or $a = −1$, then the density of the set $S(a)$ of primes
@@ -172,7 +198,9 @@ $p$ such that $a$ is a primitive root modulo $p$ is $0$.
 theorem artin_primitive_roots.variants.part_ii_square_or_minus_one
     (a : ℤ) (ha : IsSquare a ∨ a = -1) :
     (S a).HasDensity 0 {p | p.Prime} := by
-  sorry
+  have hfin : (S a).Finite :=
+    (Set.toFinite {2, 3}).subset (S_subset_of_isSquare_or_eq_neg_one ha)
+  exact Nat.hasDensity_zero_of_finite_of_infinite hfin Nat.infinite_setOfPred_prime
 
 /--
 **Artin's Conjecture on Primitive Roots**, second half, power version
