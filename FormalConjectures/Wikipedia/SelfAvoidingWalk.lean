@@ -31,7 +31,8 @@ $n$ on specific lattices (e.g. length 79 on the square lattice $\mathbb{Z}^2$, d
 Iwan Jensen).
 
 The *connective constant* $\mu(L) = \lim_{n \to \infty} c_n(L)^{1/n}$ controls the exponential
-growth rate of $c_n(L)$.  It is explicitly known only for the hexagonal lattice, where
+growth rate of $c_n(L)$.  Apart from the trivial lattices $\mathbb{Z}^0$ and $\mathbb{Z}$ (where
+$\mu = 0$ and $\mu = 1$), it is explicitly known only for the hexagonal lattice, where
 Duminil-Copin and Smirnov (2012) proved $\mu = \sqrt{2 + \sqrt{2}}$.
 
 *References:*
@@ -150,9 +151,12 @@ theorem tendsto_connectiveConstant_integerLattice (d : ℕ) :
 
 /--
 **Connective constant of the integer lattice (open).**  The exact value of the connective constant
-$\mu(\mathbb{Z}^d)$ is not known in closed form in any dimension $d \ge 1$; on the square lattice
-$\mathbb{Z}^2$ it is known only numerically, $\mu \approx 2.638$.  (Choosing the dimension `d` picks
-out a different open problem for each lattice $\mathbb{Z}^d$.)
+$\mu(\mathbb{Z}^d)$ is not known in closed form in any dimension $d \ge 2$; on the square lattice
+$\mathbb{Z}^2$ it is known only numerically, $\mu \approx 2.638$.  The cases $d \le 1$ are trivial:
+$\mathbb{Z}^0$ is a single vertex, so $c_n = 0$ for $n \ge 1$ and $\mu = 0$; on $\mathbb{Z}$,
+$c_n = 2$ for $n \ge 1$, so $\mu = 1$ (see §1.6.1 of the lecture notes by
+Bauerschmidt, Duminil-Copin, Goodman and Slade).  (Choosing a dimension $d \ge 2$ picks out a
+different open problem for each lattice $\mathbb{Z}^d$.)
 -/
 @[category research open, AMS 5 82]
 theorem connectiveConstant_integerLattice (d : ℕ) :
@@ -162,8 +166,8 @@ theorem connectiveConstant_integerLattice (d : ℕ) :
 /--
 **Connective constant of the hexagonal lattice (Duminil-Copin and Smirnov, 2012).**  The
 connective constant of the hexagonal (honeycomb) lattice equals $\sqrt{2 + \sqrt 2}$, confirming a
-prediction of Nienhuis (1982).  This is the only lattice whose connective constant is known in
-closed form.
+prediction of Nienhuis (1982).  Apart from the trivial lattices $\mathbb{Z}^0$ and $\mathbb{Z}$,
+this is the only lattice whose connective constant is known in closed form.
 -/
 @[category research solved, AMS 5 82]
 theorem connectiveConstant_hexagonalLattice :
