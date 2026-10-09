@@ -34,17 +34,9 @@ public import FormalConjecturesUtil
 
 namespace Erdos167
 
+open SimpleGraph
+
 variable {V : Type*} [DecidableEq V]
-
-/-- `T` is a family of edge-disjoint triangles in `G`: every member is a triangle of `G`, and
-two distinct members share at most one vertex. -/
-def IsTrianglePacking (G : SimpleGraph V) (T : Finset (Finset V)) : Prop :=
-  (∀ t ∈ T, G.IsNClique 3 t) ∧ (T : Set (Finset V)).Pairwise (fun s t ↦ (s ∩ t).card ≤ 1)
-
-/-- `G` can be made triangle-free by deleting at most `m` of its edges. -/
-def CanBeMadeTriangleFree (G : SimpleGraph V) (m : ℕ) : Prop :=
-  ∃ S : Finset (Sym2 V), (S : Set (Sym2 V)) ⊆ G.edgeSet ∧ S.card ≤ m ∧
-    (G.deleteEdges (S : Set (Sym2 V))).CliqueFree 3
 
 /--
 If $G$ is a graph with at most $k$ edge disjoint triangles then can $G$ be made triangle-free
