@@ -183,8 +183,8 @@ jobs:
           retention-days: 30
 
 
-  kernel-replay:
-    name: replay reconstructed L105 modules in Lean 4.33.1
+  kernel-base:
+    name: compile source-exact L105 common Lean closure
     needs: data-rebind
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -232,6 +232,24 @@ jobs:
           test "$(git -C .aegis-window rev-parse HEAD)" = "2c3d041b633147ec97c7ef753aa9d157a47bb9f5"
           test "$(git -C .aegis-base rev-parse HEAD)" = "cfe368ce2ffa0d196a4319c02b956997edf9f3fa"
           mkdir -p .lake/l105-generated .lake/l105-source evidence-l105/replay
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          root=Path('evidence-l105/generated')
+          found={}
+          for line in (root/'source-sha256.txt').read_text().splitlines():
+              digest,original=line.split(maxsplit=1)
+              name=Path(original).name
+              assert len(digest)==64 and name not in found, 'L105_BAD_MANIFEST'
+              found[name]=digest
+          expected={f'RHKreinL105Batch{i:03d}.lean' for i in range(116)}
+          expected.update({'RHKreinL105AllV1.lean','design105F.json','batches105.json'})
+          assert set(found)==expected, 'L105_MANIFEST_INCOMPLETE'
+          for name,expected_hash in found.items():
+              assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected_hash, ('L105_SOURCE_HASH_MISMATCH',name)
+          print('L105_GENERATED_HASH_BINDING=119/119')
+          PY
           cp evidence-l105/generated/RHKreinL105Batch[0-9][0-9][0-9].lean .lake/l105-generated/
           cp evidence-l105/generated/RHKreinL105AllV1.lean .lake/l105-generated/
           for source_root in \
@@ -309,7 +327,7 @@ jobs:
           mkdir -p .lake/l105-build
           cp -a .li-l105/.lake/build/lib/lean/. .lake/l105-build/
           printf 'LI_PROVIDER_SHA=35df682f3b709ffe5fbcfdd452dfa964bd622b87\nLI_PROVIDER_SOURCE_BLOB=10d38a54580ff72d698a30be64fe1c3c44f862a2\nMATHLIB_SHA=0df444a360eaa60ab8c11dca51a86af692955474\n' >> evidence-l105/replay/pins.txt
-      - name: Compute and compile exact L105 dependency closure
+      - name: Compute and compile exact L105 dependency closure (common modules)
         shell: bash
         run: |
           set -euo pipefail
@@ -381,7 +399,11 @@ jobs:
           while IFS="$(printf '\t')" read -r name module_path file; do
             test -n "$name" || continue
             test -n "$module_path" || { echo "L105_IMPORT_NAME_MISSING:$name" >&2; exit 1; }
-            echo "=== L105 $name [$module_path] ==="
+            # The 116 generated certificates and final joins compile in separate jobs.
+            case "$name" in
+              RHKreinL105Batch[0-9][0-9][0-9]|RHKreinL105AllV1|RHWindowL105FinalV1) continue ;;
+            esac
+            echo "=== L105 BASE $name [$module_path] ==="
             # Emit exactly where Lean resolves the actual import spelling.
             olean="$OUT/$module_path.olean"
             mkdir -p "$(dirname "$olean")"
@@ -389,36 +411,34 @@ jobs:
             test -s "$olean" || { echo "L105_OLEAN_MISSING:$olean" >&2; exit 1; }
           done < .lake/l105-order.txt
           ! grep -R -n -E 'sorryAx|declaration uses .sorry.' evidence-l105/replay
-      - name: Audit exact L105 theorem axioms
+      - name: Export independently verifiable base oleans
         shell: bash
         run: |
           set -euo pipefail
-          GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
-          L105="$GITHUB_WORKSPACE/research/rh/krein_L105_v1"
-          REFLECTIVE="$GITHUB_WORKSPACE/research/rh/krein_reflective_v1"
-          OVERLAY="$GITHUB_WORKSPACE/AEGISOverlay"
-          SRC="$GITHUB_WORKSPACE/AegisRH/PR606/Source"
-          COMPAT="$GITHUB_WORKSPACE/AegisRH/PR606/Compat"
-          L105SRC="$GITHUB_WORKSPACE/.lake/l105-source"
-          WIN="$GITHUB_WORKSPACE/.aegis-window/sovereign-omega-v2/formal/bridges/lean"
-          BASE="$GITHUB_WORKSPACE/.aegis-base/sovereign-omega-v2/formal/bridges/lean"
           OUT="$GITHUB_WORKSPACE/.lake/l105-build"
-          ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
-          export LEAN_PATH="$OUT:$GITHUB_WORKSPACE:$GEN:$L105:$REFLECTIVE:$OVERLAY:$SRC:$COMPAT:$L105SRC:$WIN:$BASE:$ROOT_LEAN_PATH"
-          cat > /tmp/RHL105Axioms.lean <<'LEAN'
-          import RHWindowL105FinalV1
-          #print axioms AEGIS.RHKreinL105AllV1.zero_quadratic_nonneg_width_21_20
-          #print axioms AEGIS.RHWindowL105FinalV1.window_lt_21_40
-          #print axioms AEGIS.RHWindowL105FinalV1.rh_of_windows_from_21_40
-          LEAN
-          lean /tmp/RHL105Axioms.lean 2>&1 | tee evidence-l105/replay/axioms.log
-          ! grep -F 'sorryAx' evidence-l105/replay/axioms.log
-          printf 'L105_BATCH_KERNEL_REPLAY=PASS\nWINDOW_LT_21_OVER_40=PROVED\nWINDOWS_L_GE_21_OVER_40=OPEN\nRIEMANN_HYPOTHESIS=NOT_PROVED\n' > evidence-l105/replay/disposition.txt
-      - name: Upload exact-head L105 kernel evidence
+          test -s "$OUT/RHKreinL105BatchV1.olean"
+          test -s "$OUT/RHKreinL105BridgeV1.olean"
+          test ! -e "$OUT/RHKreinL105Batch000.olean"
+          test ! -e "$OUT/RHKreinL105AllV1.olean"
+          mkdir -p l105-base-upload
+          cp -a "$OUT/." l105-base-upload/
+          printf '%s\n' "$GITHUB_SHA" > l105-base-upload/exact-head.txt
+          (cd l105-base-upload && find . -type f -name '*.olean' -print0 | sort -z | xargs -0 sha256sum > olean-sha256.txt)
+          test "$(wc -l < l105-base-upload/olean-sha256.txt)" -gt 100
+          echo 'L105_BASE_CLOSURE=PASS' > evidence-l105/replay/base-disposition.txt
+      - name: Upload pinned L105 base modules
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-l105-base-${{ github.sha }}
+          path: l105-base-upload/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1
+      - name: Upload base replay evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-kernel-replay-${{ github.sha }}-${{ github.run_id }}
+          name: rh-l105-base-logs-${{ github.sha }}-${{ github.run_id }}
           path: evidence-l105/replay/
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 14
