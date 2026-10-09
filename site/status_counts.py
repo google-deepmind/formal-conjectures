@@ -6,7 +6,9 @@ needs a full Lean build and so cannot be repeated for every commit. The counts
 here are read from the source text instead, following the rules that decide
 which declarations `extract_names` reports:
 
-* Only `theorem`, `lemma` and `instance` declarations carry a category.
+* Only `theorem`, `lemma`, `instance` and `alias` declarations carry a
+  category. An `alias` of a theorem is itself a theorem and gets the
+  attributes written on it.
 * Declarations Lean treats as internal are dropped, that is `private` ones and
   those with a `_`-prefixed name component.
 * A declaration counts once towards `formally proved` however many
@@ -14,7 +16,9 @@ which declarations `extract_names` reports:
 
 Before #3645 a formal proof was recorded as the category
 `research formally solved` rather than as a separate `formal_proof` attribute,
-so both spellings are recognised.
+so both spellings are recognised. Likewise `textbook` replaced the categories
+`high_school`, `undergraduate` and `graduate` in #3900; statements in those
+count for neither open nor solved, but their formal proofs still count.
 """
 
 import re
@@ -29,11 +33,12 @@ SOURCE_PATH = re.compile(r'^FormalConjectures/(?!ForMathlib/).*\.lean$')
 DECLARATION = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)*"
     r"(?:protected\s+|noncomputable\s+|public\s+|nonrec\s+)*"
-    r"(private|theorem|lemma|instance|def|abbrev|example)\b[ \t]*([^\s:({\[]*)")
-CATEGORISED = ('theorem', 'lemma', 'instance')
+    r"(private|theorem|lemma|instance|alias|def|abbrev|example)\b[ \t]*([^\s:({\[]*)")
+CATEGORISED = ('theorem', 'lemma', 'instance', 'alias')
 
 CATEGORY = re.compile(
-    r'\bcategory\s+(research\s+solved|research\s+open|textbook|test|API)\b')
+    r'\bcategory\s+(research\s+solved|research\s+open|textbook|test|API'
+    r'|high_school|undergraduate|graduate)\b')
 FORMAL_PROOF = re.compile(r'\bformal_proof\s+using\b')
 FORMALLY_SOLVED = re.compile(r'\bcategory\s+research\s+formally\s+solved\b')
 

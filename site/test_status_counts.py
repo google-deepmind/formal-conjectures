@@ -36,7 +36,7 @@ class CategoryTest(unittest.TestCase):
                          {'open': 0, 'solved': 1, 'formal': 0})
 
     def test_other_categories_count_for_nothing(self):
-        for category in ('test', 'API', 'textbook'):
+        for category in ('test', 'API', 'textbook', 'high_school', 'undergraduate', 'graduate'):
             with self.subTest(category=category):
                 self.assertEqual(counts(f'@[category {category}]\ntheorem a : True := trivial'),
                                  {'open': 0, 'solved': 0, 'formal': 0})
@@ -73,6 +73,16 @@ class FormalProofTest(unittest.TestCase):
                   'theorem a : True := trivial')
         self.assertEqual(counts(source), {'open': 0, 'solved': 0, 'formal': 1})
 
+    def test_formal_proof_on_a_category_from_before_textbook(self):
+        # #3900 merged these into `textbook`; before that their formal proofs
+        # were dropped, so the series jumped by three at the rename.
+        for category in ('high_school', 'undergraduate', 'graduate'):
+            with self.subTest(category=category):
+                source = (f'@[category {category}, AMS 11,\n'
+                          'formal_proof using lean4 at "https://example.com"]\n'
+                          'theorem a : True := trivial')
+                self.assertEqual(counts(source), {'open': 0, 'solved': 0, 'formal': 1})
+
     def test_every_formal_proof_kind(self):
         for kind in ('lean4', 'formal_conjectures', 'other_system'):
             with self.subTest(kind=kind):
@@ -102,6 +112,16 @@ class DeclarationKindTest(unittest.TestCase):
 
     def test_instance_counts(self):
         source = '@[category test]\ninstance foo : Nonempty Nat := ⟨0⟩'
+        self.assertEqual(counts(source), {'open': 0, 'solved': 0, 'formal': 0})
+
+    def test_alias_counts(self):
+        # As in Erdős 1135, which is stated by pointing at the Collatz conjecture.
+        source = ('@[category research open, AMS 11 37]\n'
+                  'alias erdos_1135 := CollatzConjecture.collatzConjecture')
+        self.assertEqual(counts(source), {'open': 1, 'solved': 0, 'formal': 0})
+
+    def test_uncategorised_alias(self):
+        source = 'alias no_three_in_line := green_72'
         self.assertEqual(counts(source), {'open': 0, 'solved': 0, 'formal': 0})
 
     def test_definitions_do_not_count(self):
