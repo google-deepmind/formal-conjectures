@@ -23,6 +23,8 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/675](https://www.erdosproblems.com/675)
 - [Er79] Erdős, Paul, *Some unconventional problems in number theory*. Math. Mag. (1979), 67-70.
+- [Ho26] Ho, B. S., *A squarefree lower bound for Erdős Problem 675*.
+  [PDF](https://boonsuan.github.io/erdos675_squarefree.pdf) (2026).
 -/
 
 @[expose] public section
@@ -114,9 +116,13 @@ If $A$ is the set of squarefree numbers then how fast does the minimal such $t_n
 true that $t_n>\exp(n^c)$ for some constant $c>0$?
 
 We ask for the inequality for all sufficiently large $n$, since $t_1 = 1$.
+
+Ho [Ho26] proved that the answer is yes: for every fixed $0 < c < 25/72$, $t_n > \exp(n^c)$ for
+all sufficiently large $n$ (Theorem 1.2 and Corollary 3.2); see also the
+[forum discussion](https://www.erdosproblems.com/forum/thread/675#post-6002).
 -/
-@[category research open, AMS 11]
-theorem erdos_675.parts.iii : answer(sorry) ↔
+@[category research solved, AMS 11]
+theorem erdos_675.parts.iii : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       Real.exp ((n : ℝ) ^ c) < (minTranslation {m : ℕ | Squarefree m} n : ℝ) := by
   sorry
