@@ -125,4 +125,24 @@ theorem erdos_482.variants.binary_explicit (t : ℝ) (ht1 : 1 ≤ t) (ht2 : t < 
       Real.ofDigits (fun k ↦ binaryDigit t (k + 2)) = t - 1 := by
   sorry
 
+/-- The explicit base-$g$ construction in Stoll [St05, Theorem 1.3]. For a normalized
+$t \in [1,g)$, take $a = g/((g-1)(t+g))$ and $b = (g-1)(t+g)$. Every parameter
+$-1/g \le \varepsilon < (g+1)(g-2)/g$ gives the same significant digits of $t$.
+
+The sequence is indexed from zero, so the difference at $2n+2$ and $2n$ gives digit $n$,
+including the leading digit at $n=0$. The floor difference uses the terminating expansion
+when $t$ has two base-$g$ expansions. -/
+@[category research solved, AMS 11]
+theorem erdos_482.variants.stoll_explicit (g : ℕ) (hg : 2 ≤ g) (t : ℝ)
+    (ht : 1 ≤ t) (htg : t < g) (ε : ℝ)
+    (hεlo : -1 / (g : ℝ) ≤ ε)
+    (hεhi : ε < ((g : ℝ) + 1) * ((g : ℝ) - 2) / g) :
+    let a := (g : ℝ) / (((g : ℝ) - 1) * (t + g))
+    let b := ((g : ℝ) - 1) * (t + g)
+    ∀ n : ℕ,
+      generalRecurrence g a b ε (2 * n + 2) -
+          (g : ℤ) * generalRecurrence g a b ε (2 * n) =
+        ⌊t * (g : ℝ) ^ n⌋ - (g : ℤ) * ⌊t * (g : ℝ) ^ n / g⌋ := by
+  sorry
+
 end Erdos482
