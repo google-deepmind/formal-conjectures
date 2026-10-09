@@ -120,12 +120,11 @@ theorem erdos_468.parts.ii :
       ∀ N : ℕ, N₀ ≤ N → SmallWitness N ε := by
   sorry
 
-/-- If $f(N)$ is the minimal $n$ such that $N\in D_n$ then is it true that $f(N)=o(N)$?
-Perhaps just for almost all $N$?
+/-- Perhaps just for almost all $N$?
 
-Here almost all means outside a single exceptional set of natural density zero. -/
+This asks whether $f(N)=o(N)$ outside a single exceptional set of natural density zero. -/
 @[category research open, AMS 11]
-theorem erdos_468.variants.almost_all :
+theorem erdos_468.parts.iii :
     answer(sorry) ↔ ∃ E : Set ℕ, E.HasDensity 0 ∧
       ∀ ε : ℝ, 0 < ε → ∃ N₀ : ℕ, 2 ≤ N₀ ∧
         ∀ N : ℕ, N₀ ≤ N → N ∉ E → SmallWitness N ε := by
