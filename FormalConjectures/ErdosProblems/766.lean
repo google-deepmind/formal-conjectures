@@ -57,9 +57,10 @@ edges.
 Give good estimates for $f(n;k,l)$ in the range $k<l\leq k^2/4$.
 -/
 @[category research open, AMS 5]
-theorem erdos_766.parts.i (k l : ℕ) (h₁ : k < l) (h₂ : l ≤ k ^ 2 / 4) :
-    (fun n ↦ ((minExtremalNumber n k l).toNat : ℝ)) =Θ[atTop]
-      (answer(sorry) : ℕ → ℕ → ℕ → ℝ) k l := by
+theorem erdos_766.parts.i :
+    let f : ℕ → ℕ → ℕ → ℝ := answer(sorry)
+    ∀ k l : ℕ, k < l → l ≤ k ^ 2 / 4 →
+      (fun n ↦ ((minExtremalNumber n k l).toNat : ℝ)) =Θ[atTop] f k l := by
   sorry
 
 /--
