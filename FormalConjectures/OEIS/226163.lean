@@ -25,6 +25,8 @@ where $p_n$ is the $n$-th prime ($n \ge 2$).
 
 *References:*
 - [A226163](https://oeis.org/A226163)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA226163
@@ -83,8 +85,10 @@ theorem a_6 : a 6 = -8 := by
 
 /--
 Conjecture: $a(n) = 0$ if and only if $p_n \equiv 3 \pmod 4$.
+
+Proved by Adamczewski (2026).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture (n : ℕ) (hn : 2 ≤ n) :
     a n = 0 ↔ Nat.nth Nat.Prime (n - 1) % 4 = 3 := by
   sorry
