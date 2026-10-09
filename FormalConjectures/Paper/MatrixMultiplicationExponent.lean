@@ -36,7 +36,7 @@ $\langle n, n, n\rangle$ (`Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)`) is $O(
   [Preprint](https://arxiv.org/abs/1706.05074). Used for
   `matrix_multiplication_exponent_two`.
 * [Strassen69] V. Strassen,
-  [*Gaussian elimination is not optimal*](https://doi.org/10.1007/BF01343649),
+  [*Gaussian elimination is not optimal*](https://doi.org/10.1007/BF02165411),
   Numerische Mathematik 13 (1969), 354–356. Used for
   `matrix_multiplication_exponent_strassen`.
 * [CW90] D. Coppersmith and S. Winograd,
@@ -84,8 +84,7 @@ theorem matrix_multiplication_exponent_coppersmith_winograd :
       (fun n : ℕ ↦ (n : ℝ) ^ (2.376 : ℝ)) := by
   sorry
 
-/-- The current best bound $\omega < 2.371177$, obtained by Dupont et al. (2026) using
-AlphaEvolve. -/
+/-- The bound $\omega < 2.371177$, obtained by Dupont et al. (2026) using AlphaEvolve. -/
 @[category research solved, AMS 15 68]
 theorem matrix_multiplication_exponent_alphaevolve :
     (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
