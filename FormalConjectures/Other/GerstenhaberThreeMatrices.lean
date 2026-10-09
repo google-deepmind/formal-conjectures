@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Gerstenhaber problem for three commuting matrices
@@ -34,6 +35,8 @@ commuting matrices. The bound fails for four or more pairwise commuting matrices
   *A computing strategy and programs to resolve the Gerstenhaber Problem for
   commuting triples of matrices*.
 -/
+
+@[expose] public section
 
 namespace Gerstenhaber
 
@@ -74,6 +77,43 @@ theorem exists_finrank_adjoin_quadruple_gt (K : Type*) [Field K] :
     ∃ A B C D : Matrix (Fin 4) (Fin 4) K,
       ({A, B, C, D} : Set (Matrix (Fin 4) (Fin 4) K)).Pairwise Commute ∧
       4 < Module.finrank K (Algebra.adjoin K {A, B, C, D}) := by
-  sorry
+  refine ⟨Matrix.single 0 2 1, Matrix.single 0 3 1, Matrix.single 1 2 1, Matrix.single 1 3 1,
+    ?_, ?_⟩
+  · -- All pairwise products vanish: the column index of one factor is `2` or `3` and the row
+    -- index of the other is `0` or `1`.
+    intro x hx y hy _
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx hy
+    rcases hx with rfl | rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl | rfl <;>
+      first
+      | exact Commute.refl _
+      | exact (show _ * _ = _ * _ by simp (disch := decide) [Matrix.single_mul_single_of_ne])
+  · -- `1, e₁₃, e₁₄, e₂₃, e₂₄` are linearly independent elements of the subalgebra.
+    set S := Algebra.adjoin K ({Matrix.single 0 2 1, Matrix.single 0 3 1, Matrix.single 1 2 1,
+      Matrix.single 1 3 1} : Set (Matrix (Fin 4) (Fin 4) K)) with hS
+    let v : Fin 5 → Matrix (Fin 4) (Fin 4) K :=
+      ![1, Matrix.single 0 2 1, Matrix.single 0 3 1, Matrix.single 1 2 1, Matrix.single 1 3 1]
+    have hv : ∀ i, v i ∈ S := by
+      intro i
+      fin_cases i
+      · exact one_mem S
+      all_goals exact Algebra.subset_adjoin (by simp [v])
+    have hw : LinearIndependent K fun i => (⟨v i, hv i⟩ : S) := by
+      rw [Fintype.linearIndependent_iff]
+      intro g hg i
+      have h := congrArg Subtype.val hg
+      simp only [Subalgebra.coe_zero] at h
+      change ∑ j, g j • v j = 0 at h
+      have e : ∀ a b : Fin 4, (∑ j, g j • v j) a b = 0 := fun a b => by rw [h]; rfl
+      simp only [Matrix.sum_apply, Matrix.smul_apply, Fin.sum_univ_five, v] at e
+      have e00 := e 0 0
+      have e02 := e 0 2
+      have e03 := e 0 3
+      have e12 := e 1 2
+      have e13 := e 1 3
+      simp at e00 e02 e03 e12 e13
+      fin_cases i <;> simp_all
+    have := hw.fintype_card_le_finrank
+    simp only [Fintype.card_fin] at this
+    omega
 
 end Gerstenhaber

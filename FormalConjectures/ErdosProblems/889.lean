@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 889
 
 *Reference:* [erdosproblems.com/889](https://www.erdosproblems.com/889)
 -/
+
+@[expose] public section
 
 open Finset Nat Filter Topology
 
@@ -108,11 +111,17 @@ Does $V_1(n) = 1$ have finite solutions?
 This is a modification of `erdos_889.variants.v1_eq_1_finite`,
 which might make it more amenable to attack according to [ErSe67].
 
+Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
+([erdos-889-capital-v1-finite](https://github.com/KitaKen1/erdos-889-capital-v1-finite))
+that there are only finitely many $n$ with $V_1(n) = 1$.
+
 [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-889-capital-v1-finite/blob/44d38dd7f618dbaa0b08fb976c0378b4897021cd/lean/Erdos889V1FiniteFC.lean#L999-L1004"]
 theorem erdos_889.variants.V1_eq_1_finite :
-    answer(sorry) ↔ {n | V_l 1 n = 1}.Finite := by
+    answer(True) ↔ {n | V_l 1 n = 1}.Finite := by
   sorry
 
 end Erdos889

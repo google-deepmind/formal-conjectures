@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A100474
@@ -25,6 +26,8 @@ prime factors not used before in this construction.
 *References:*
 - [A100474](https://oeis.org/A100474)
 -/
+
+@[expose] public section
 
 namespace OeisA100474
 

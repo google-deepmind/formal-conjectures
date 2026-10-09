@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 91
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Ko24c] Z. Kovács, A note on Erdős's mysterious remark. arXiv:2412.05190 (2024).
 - [erdosproblems.com/91](https://www.erdosproblems.com/91)
 -/
+
+@[expose] public section
 
 open Finset EuclideanGeometry Filter
 
@@ -145,7 +148,7 @@ distances between points in $A$. Prove that for large $n$ there are at least two
 -/
 @[category research open, AMS 52]
 theorem erdos_91 :
-    (∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n) ↔ answer(sorry) := by
+    answer(sorry) ↔ ∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n := by
   sorry
 
 
