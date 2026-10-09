@@ -7,12 +7,14 @@ on:
     paths:
       - 'research/rh/krein_L105_v1/tools/**'
       - '.github/workflows/rh-krein-l105-coefficient-binding.yml'
+      - 'scripts/test_rh_l105_workflow_contract.py'
   pull_request:
     branches:
       - main
     paths:
       - 'research/rh/krein_L105_v1/tools/**'
       - '.github/workflows/rh-krein-l105-coefficient-binding.yml'
+      - 'scripts/test_rh_l105_workflow_contract.py'
   workflow_dispatch:
 
 permissions:
@@ -35,6 +37,9 @@ jobs:
           ref: ${{ env.L105_SOURCE_SHA }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Run offline L105 workflow contract tests
+        shell: bash
+        run: python3 -m unittest discover -s scripts -p 'test_rh_l105_workflow_contract.py' -v
       - name: Verify pinned source and generators
         shell: bash
         run: |
