@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/958](https://www.erdosproblems.com/958)
 - [CDL25] Clemen, F., Dumitrescu, A. and Liu, D., *On multiplicities of interpoint distances*.
   arXiv:2505.04283 (2025).
+- [PALOMAR-2026-10-05-000004](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000004&version=1)
 -/
 
 @[expose] public section
@@ -62,7 +63,7 @@ The classification is asked for all sufficiently large $n$. Small exceptions suc
 $\{(0,0), (1,0), (0,1), (0,-1)\}$ exist, so the negative answer asserts
 counterexamples of arbitrarily large size, as in [CDL25].
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/08152671ab394392fd941b18654daba734c26518/erdos-958/Solution.lean#L60"]
 theorem erdos_958 : answer(False) ↔
     ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
       ((#(distanceSet A) = n - 1 ∧
