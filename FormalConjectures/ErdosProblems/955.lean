@@ -32,6 +32,8 @@ public import FormalConjecturesUtil
   (2018), 330--342.
 - [Po14b] Pollack, Paul, Some arithmetic properties of the sum of proper divisors and the sum of
   prime divisors. Illinois J. Math. (2014), 125--147.
+- [PoPo16] Pollack, Paul and Pomerance, Carl, Some problems of Erdős on the sum-of-divisors
+  function. Trans. Amer. Math. Soc. Ser. B (2016), 1--26.
 - [Tr15] Troupe, Lee, On the number of prime factors of values of the sum-of-proper-divisors
   function. J. Number Theory (2015), 120--135.
 - [Tr20] Troupe, Lee, Divisor sums representable as the sum of two squares. Proc. Amer. Math. Soc.
@@ -87,10 +89,15 @@ theorem erdos_955.variants.positive_density :
 
 /--
 Erdős [Er73b] proved that there are sets $A$ of positive density such that $s^{-1}(A)$ is empty.
+
+Here "positive density" means positive lower density: Erdős proved that the set of untouchable
+numbers (those not of the form $s(n)$) has positive lower density [Er73b, Satz I]. Pollack and
+Pomerance [PoPo16] conjecture that this set has a natural density and give a heuristic for its
+value. The same result is stated as `erdos_418.variants.sigma` in Erdős Problem 418.
 -/
 @[category research solved, AMS 11]
 theorem erdos_955.variants.empty_preimage :
-    ∃ A : Set ℕ, (∃ d > 0, A.HasDensity d) ∧ { x | s x ∈ A } = ∅ := by
+    ∃ A : Set ℕ, 0 < A.lowerDensity ∧ { x | s x ∈ A } = ∅ := by
   sorry
 
 /--

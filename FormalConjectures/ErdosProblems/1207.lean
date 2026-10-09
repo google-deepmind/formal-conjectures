@@ -26,6 +26,8 @@ public import FormalConjecturesUtil
   (2005), xii+499.
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
+- [LPZ26] Lee, S., Pohoata, C., and Zhu, D. G., *The Minkowski grid has robustly many repeated
+  distances*. [arXiv:2607.05374](https://arxiv.org/abs/2607.05374) (2026).
 - [PaTa02] Pach, János and Tardos, Gábor, *Isosceles triangles determined by a planar point set*.
   Graphs Combin. (2002), 769--779.
 -/
@@ -47,9 +49,12 @@ noncomputable def P (d n : ℕ) : ℕ :=
 
 /--
 Let $P_d(n)$ be such that in any set of $n$ points in $\mathbb{R}^d$ there exist at least $P_d(n)$ many points which do not contain an isosceles triangle. Estimate $P_d(n)$ - in particular, is it true that $$P_2(n)<n^{1-c}$$ for some constant $c>0$?
+
+Lee, Pohoata, and Zhu [LPZ26] proved the stated planar bound. Their isosceles-free subsets
+also exclude degenerate triangles of equally spaced collinear points.
 -/
-@[category research open, AMS 52]
-theorem erdos_1207 : answer(sorry) ↔
+@[category research solved, AMS 52]
+theorem erdos_1207 : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (P 2 n : ℝ) < (n : ℝ) ^ (1 - c) := by
   sorry
 

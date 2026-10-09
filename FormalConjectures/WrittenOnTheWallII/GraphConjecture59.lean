@@ -46,8 +46,16 @@ See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for 
 This conjecture is false. There is a connected counterexample on 123 vertices
 with `residue G = 101`, `b G = 122`, and `G.largestInducedForestSize = 111`.
 Indeed, `101 * 122 = 12322 = 111 ^ 2 + 1`, so the conjectured lower bound is 112.
+
+There is also an 18-vertex counterexample. Take a bipartite chain graph on
+vertices `0, ..., 9`, with parts `{0, ..., 4}` and `{5, ..., 9}`, a hub `10`
+adjacent to every core vertex, and leaves `11, ..., 17` attached at the hub.
+It has residue 10, `b = 17`, and largest induced forest 13.
+`⌈√170⌉ = 14`, so it falsifies the bound.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean"]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean",
+  formal_proof using formal_conjectures at "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/69388817d384ea44a5ef4b2aed1097c8281f9c3a/FormalConjectures/WrittenOnTheWallII/GraphConjecture59.lean"]
 theorem conjecture59 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected),

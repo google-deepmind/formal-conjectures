@@ -25,8 +25,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter
-
 namespace Erdos361
 
 /--
@@ -69,16 +67,6 @@ Does this depend on $n$ in an irregular way?
 @[category research open, AMS 11]
 theorem erdos_361 (c : ℝ) (hc : 0 < c) :
     subsetSumAvoidanceNumber c = answer(sorry) := by
-  sorry
-
-/--
-Asymptotic version of Erdős Problem 361: determine the order of growth of the largest cardinality
-as $n \to \infty$.
--/
-@[category research open, AMS 11]
-theorem erdos_361.asymptotic (c : ℝ) (hc : 0 < c) :
-    (fun n ↦ (subsetSumAvoidanceNumber c n : ℝ)) =Θ[atTop]
-      (answer(sorry) : ℕ → ℝ) := by
   sorry
 
 end Erdos361

@@ -44,8 +44,13 @@ for some constant $c=c(s)>0$.
 According to Chung and Graham [ChGr98] this was first conjectured by Erdős in 1947.
 
 Proved by Bradač [Br26], with $c=2s-4$.
+
+The linked formal proof (Codex and GPT-5.6 Sol) gives `k ^ (s - 1) / (log k) ^ c = O(R(s, k))`
+for a natural `c > 0`, with the Ramsey number defined through `CliqueFree`/`IndepSetFree`; this
+implies the statement below.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos986.lean#L92"]
 theorem erdos_986 :
     ∀ (s : ℕ) (hs : 3 ≤ s),
       ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧
