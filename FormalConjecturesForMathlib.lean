@@ -21,6 +21,7 @@ public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Bas
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
 public import FormalConjecturesForMathlib.Algebra.Homology.DerivedCategory.Ext.GradedAlgebra
+public import FormalConjecturesForMathlib.Algebra.MvPolynomial.Encodable
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
 public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
