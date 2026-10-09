@@ -73,7 +73,7 @@ Proved by Bloom and Sisask [BlSi20].
 -/
 @[category research solved, AMS 11,
   conditional formal_proof using lean4 at
-    "https://github.com/wilsonwu-ai/sundai-erdos-3/blob/8a58287a16558bf1e708eaa2d0f7cba4c86566a3/lean/Erdos3ThreeCase.lean"
+    "https://github.com/wilsonwu-ai/sundai-erdos-3/blob/8a58287a16558bf1e708eaa2d0f7cba4c86566a3/lean/Erdos3ThreeCase.lean#L96-L97"
     assuming erdos_3.variants.kelley_meka]
 theorem erdos_3.variants.three : ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
