@@ -162,8 +162,8 @@ theorem conditional_artin_primitive_roots.parts.ii
     (S a).HasDensity ArtinConstant {p | p.Prime} := by
   sorry
 
-/-- If `a` is a square or `-1`, then the only primes `p` for which `a` is a primitive root
-modulo `p` are `2` and `3`. -/
+/-- If `a` is a square or `-1`, every prime `p` for which `a` is a primitive root
+modulo `p` belongs to `{2, 3}`. -/
 @[category API, AMS 11]
 lemma S_subset_of_isSquare_or_eq_neg_one {a : ℤ} (ha : IsSquare a ∨ a = -1) :
     S a ⊆ {2, 3} := by
