@@ -46,7 +46,7 @@ theorem r_six : r 6 = 1 := by decide
 /--
 Let $r(n)$ count the number of $d_1,d_2$ such that $d_1\mid n$ and $d_2\mid n$ and
 $d_1<d_2<2d_1$. Is it true that, for every $\epsilon>0$,
-\[r(n) < \epsilon \tau(n)\]
+$$r(n) < \epsilon \tau(n)$$
 for almost all $n$, where $\tau(n)$ is the number of divisors of $n$?
 
 This is false - indeed, for any constant $K>0$ we have $r(n)>K\tau(n)$ for a positive
