@@ -51,6 +51,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
 
 -- Formalisation note: it's possible that solution to `erdos_319` needs to be
 -- expressed asymptotically. To handle this we include an `IsTheta` variant below.
+
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
