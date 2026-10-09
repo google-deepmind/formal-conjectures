@@ -89,8 +89,9 @@ $k_c(n) \geq n^{c'/\log\log n}$ for some $c' > 0$ (as reported on erdosproblems.
 -/
 @[category research open, AMS 5]
 theorem erdos_611.parts.ii :
+    let f : ℝ → ℕ → ℝ := answer(sorry)
     ∀ c : ℝ, 0 < c → c < 1 →
-      (fun n ↦ (cliqueThreshold c n : ℝ)) =Θ[atTop] (answer(sorry) : ℝ → ℕ → ℝ) c := by
+      (fun n ↦ (cliqueThreshold c n : ℝ)) =Θ[atTop] f c := by
   sorry
 
 /--
