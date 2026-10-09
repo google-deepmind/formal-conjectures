@@ -45,9 +45,11 @@ public import FormalConjectures.Wikipedia.HasseWeil
 `localEulerFactor`, read off a minimal model over each `p`-adic completion.
 `weak_iff_analyticOrder` shows that, once an entire continuation of this series exists, `Weak ℚ`
 is the equality of its analytic order at $s = 1$ with `AddCommGroup.freeRank`. Wiles' account of
-the Clay problem is this equality for the product over primes of good reduction. That product and
-`E.LSeries` differ by the Euler factors at primes of bad reduction, which are holomorphic and
-non-zero at $s = 1$. The comparison of those two products is left unformalised.
+the Clay problem uses the incomplete product omitting primes dividing $2\Delta$ in the chosen
+integral equation. That product and `E.LSeries` differ by finitely many omitted Euler factors,
+which may include factors at primes of good reduction. These factors are holomorphic and
+nonzero at $s = 1$, so they do not change the order there. The comparison of those two products
+is left unformalised.
 -/
 
 @[expose] public section
