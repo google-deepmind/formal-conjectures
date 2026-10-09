@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 309
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 
 The conjecture is false for the clique blow-ups $C_5[K_k]$ for every $k \geq 3$.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture309
 

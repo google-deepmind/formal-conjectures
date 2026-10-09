@@ -83,15 +83,6 @@ def formalProofKindToString : FormalProofKind → String
   | .lean4 => "lean4"
   | .otherSystem => "other_system"
 
-def nameAny (n : Name) (p : String → Bool) : Bool :=
-  match n with
-  | .anonymous => false
-  | .str p' s => p s || nameAny p' p
-  | .num p' _ => nameAny p' p
-
-def isInternal (n : Name) : Bool :=
-  nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
-
 /-- Determine the `answerKinds` for a theorem's type expression.
 
 For each `answer(...)` occurrence found in the type,
@@ -292,7 +283,7 @@ unsafe def main (args : List String) : IO Unit := do
         let name := info.name
         match info with
         | ConstantInfo.thmInfo .. =>
-          if !isInternal name then
+          if !isPrivateName name then
             let cats := categoryMap.getD name []
             let subjs := subjectMap.getD name []
             if !cats.isEmpty || !subjs.isEmpty then

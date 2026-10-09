@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 181
@@ -30,6 +32,8 @@ most 16 leaves in a spanning tree, largest induced bipartite subgraph order 6,
 and independence number 3. Its square is `K₂₁`, whose vertices all have
 degree 20, so the claimed inequality would give `22 ≥ 23`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture181
 

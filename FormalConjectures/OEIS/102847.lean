@@ -50,6 +50,18 @@ theorem a_3 : a 3 = 123 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 15131 := by rfl
 
+@[category test, AMS 11]
+theorem a_5 : a 5 = 228947163 := by rfl
+
+@[category test, AMS 11]
+theorem a_6 : a 6 = 52416803445748571 := by rfl
+
+@[category test, AMS 11]
+theorem not_prime_a_5 : ¬ (a 5).Prime := by
+  have heq : a 5 = 3 * 76315721 := by rw [a_5]
+  rw [heq]
+  exact Nat.not_prime_mul (by decide) (by decide)
+
 /--
 Prime for $a(1) = 3$, $a(2) = 11$, $a(4) = 15131$; semiprime for $a(3) = 123 = 3 * 41$,
 $a(5) = 228947163 = 3 * 76315721$.

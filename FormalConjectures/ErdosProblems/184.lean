@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
   intersections. Canadian J. Math. (1966), 106-112.
 - [Er71] Erdős, P., Some unsolved problems in graph theory and combinatorial analysis. Combinatorial
   Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
+- [Py85] Pyber, L., An Erdős-Gallai conjecture. Combinatorica (1985), 67-79.
 -/
 
 @[expose] public section
@@ -80,7 +81,7 @@ open scoped Classical in
 The graph $K_{3,n-3}$ shows that at least $(1+c)n$ many cycles and edges are required, for some
 constant $c>0$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_Erdos184_erdos_184_variants_lower_bound.lean#L285"]
 theorem erdos_184.variants.lower_bound :
     ∃ c > 0, ∀ᶠ n in atTop,
       let G : SimpleGraph (Fin n) := fromRel (fun (i j : Fin n) => (i : ℕ) < 3 ∧ 3 ≤ (j : ℕ));
@@ -93,11 +94,11 @@ theorem erdos_184.variants.lower_bound :
 open scoped Classical in
 /--
 In [Er71] Erdős suggests that only $n-1$ many cycles and edges are required if we do not
-require them to be edge-disjoint.
+require them to be edge-disjoint. Pyber [Py85] proved this.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_184.variants.covering :
-    answer(sorry) ↔
+    answer(True) ↔
       ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
       ∃ (D : Finset G.Subgraph),
         (∀ H ∈ D, IsCycleOrEdge H.coe) ∧

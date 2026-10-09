@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 430a
@@ -27,6 +29,8 @@ orders `(1,4,12,19,12,4,1)`. Its independent domination number is three, its
 center-neighborhood independence number is two, and its Caro--Wei sum is less
 than two. The claimed inequality therefore becomes `3 ≤ 2`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture430a
 

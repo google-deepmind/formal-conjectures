@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Pisot orbits on the Cantor set
 
@@ -51,6 +53,8 @@ $n \ge 0$, is stated.
     the Cantor set $C(\alpha)$." Preprint, 2026.
     https://doi.org/10.13140/RG.2.2.13923.52001
 -/
+
+@[expose] public section
 
 namespace Bugeaud61
 

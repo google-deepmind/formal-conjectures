@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 172
@@ -28,6 +30,8 @@ leaves in a spanning tree. Its peripheral vertices have degree two, while the
 two maximum-degree vertices of its square are at distance seven in the
 original graph, so the claimed inequality would give `4 ≥ 8`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture172
 

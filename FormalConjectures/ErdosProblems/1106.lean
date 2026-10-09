@@ -20,7 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 1106
 
-*Reference:* [erdosproblems.com/1064](https://www.erdosproblems.com/1106)
+*References:*
+- [erdosproblems.com/1106](https://www.erdosproblems.com/1106)
+- [ScWi87] Schinzel, A. and Wirsing, E., Multiplicative properties of the partition function.
+  Proc. Indian Acad. Sci. Math. Sci. (1987), 297--303.
 -/
 
 @[expose] public section
@@ -36,10 +39,12 @@ def p : ℕ → ℕ := fun n => Fintype.card (Nat.Partition n)
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
 $∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
+
+The answer is yes: Schinzel and Wirsing [ScWi87] proved $F(n) \gg \log n$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_1106.parts.i :
-    answer(sorry) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
+    answer(True) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
   sorry
 
 /--

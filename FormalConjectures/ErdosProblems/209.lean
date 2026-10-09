@@ -37,10 +37,6 @@ open EuclideanGeometry Affine
 
 namespace Erdos209
 
-/-- A line in the plane: an affine subspace whose direction is one-dimensional. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
-
 /-- The number of lines from `A` that pass through the point `p`. -/
 noncomputable def pointMultiplicity (A : Finset (AffineSubspace ℝ ℝ²)) (p : ℝ²) : ℕ :=
   {L ∈ (A : Set (AffineSubspace ℝ ℝ²)) | p ∈ L}.ncard

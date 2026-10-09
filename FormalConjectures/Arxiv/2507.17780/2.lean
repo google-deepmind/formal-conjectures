@@ -30,6 +30,8 @@ $$Z(G) \le \alpha(G) + 1,$$
 where $Z(G)$ is the zero forcing number and $\alpha(G)$ the independence number.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»
@@ -63,13 +65,17 @@ TxGraffiti [Conjecture 2](https://arxiv.org/abs/2507.17780):
 for every connected graph $G$ with $\Delta(G) \le 3$ and $G \ne K_4$,
 $$Z(G) \le \alpha(G) + 1.$$
 
-This conjecture is **open**.
+This conjecture is **false**. Fischer gives a connected 24-vertex
+counterexample with maximum degree $3$; see
+[arXiv:2607.23664](https://arxiv.org/abs/2607.23664).
 -/
-@[category research open, AMS 5]
-theorem tx_graffiti_conjecture_2 (V : Type) [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] (_hConn : G.Connected)
-    (_hDeg : G.maxDegree ≤ 3) (_hNotK4 : G = ⊤ → Fintype.card V ≠ 4) :
-    zeroForcingNumber G ≤ G.indepNum + 1 := by
+@[category research solved, AMS 5]
+theorem tx_graffiti_conjecture_2 : answer(False) ↔
+    ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+      [DecidableRel G.Adj] (_hConn : G.Connected)
+      (_hDeg : G.maxDegree ≤ 3)
+      (_hNotK4 : G = ⊤ → Fintype.card V ≠ 4),
+      zeroForcingNumber G ≤ G.indepNum + 1 := by
   sorry
 
 end Arxiv.«2507.17780»

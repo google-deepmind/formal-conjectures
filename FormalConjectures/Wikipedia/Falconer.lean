@@ -31,6 +31,10 @@ has positive Lebesgue measure. The restriction $d \ge 2$ is needed; see `falcone
 * [Wikipedia, *Falconer's conjecture*](https://en.wikipedia.org/wiki/Falconer%27s_conjecture)
 -/
 
+@[expose] public section
+
+namespace Falconer
+
 open MeasureTheory Set
 
 open scoped ENNReal EuclideanGeometry
@@ -51,3 +55,5 @@ therefore null; its distance set is the image of $E - E$ under $|\cdot|$ and is 
 lemma falconer_conjecture (d : ℕ) (h2d : 2 ≤ d) (E : Set <| ℝ^d) (hc : IsCompact E)
     (hd : d < 2 * dimH E) :
     0 < volume (image2 dist E E) := sorry
+
+end Falconer
