@@ -37,21 +37,22 @@ variable {R : Type*} [CommSemiring R] {ι : Type*} {s : ι → Type*}
   [∀ i, AddCommMonoid (s i)] [∀ i, Module R (s i)]
 
 /-- The tensor rank of `x : ⨂[R] i, s i`: the least `r` such that `x` is the sum of `r` pure
-tensors `tprod R f`. Every tensor is a finite sum of pure tensors, so the infimum is attained;
-see `PiTensorProduct.exists_eq_sum_tprod`. -/
-noncomputable def tensorRank (x : ⨂[R] i, s i) : ℕ :=
+tensors `tprod R f`. Since `ι` is nonempty, every tensor is a finite sum of pure tensors, so the
+infimum is attained; see `PiTensorProduct.exists_eq_sum_tprod`. (For empty `ι`, a tensor need not
+be such a sum, and the infimum over the empty set would be `0`.) -/
+noncomputable def tensorRank [Nonempty ι] (x : ⨂[R] i, s i) : ℕ :=
   sInf {r | ∃ f : Fin r → ∀ i, s i, x = ∑ j, tprod R (f j)}
 
-theorem tensorRank_sum_tprod_le {τ : Type*} [Fintype τ] (f : τ → ∀ i, s i) :
+theorem tensorRank_sum_tprod_le [Nonempty ι] {τ : Type*} [Fintype τ] (f : τ → ∀ i, s i) :
     tensorRank (∑ t, tprod R (f t)) ≤ Fintype.card τ :=
   Nat.sInf_le ⟨fun j ↦ f ((Fintype.equivFin τ).symm j),
     (Equiv.sum_comp (Fintype.equivFin τ).symm fun t ↦ tprod R (f t)).symm⟩
 
 @[simp]
-theorem tensorRank_zero : tensorRank (0 : ⨂[R] i, s i) = 0 := by
+theorem tensorRank_zero [Nonempty ι] : tensorRank (0 : ⨂[R] i, s i) = 0 := by
   simpa using tensorRank_sum_tprod_le (R := R) (s := s) (τ := Empty) fun e ↦ e.elim
 
-theorem tensorRank_tprod_le (f : ∀ i, s i) : tensorRank (tprod R f) ≤ 1 := by
+theorem tensorRank_tprod_le [Nonempty ι] (f : ∀ i, s i) : tensorRank (tprod R f) ≤ 1 := by
   have h := tensorRank_sum_tprod_le (R := R) (τ := Unit) fun _ ↦ f
   rwa [Finset.univ_unique, Finset.sum_singleton, Fintype.card_unique] at h
 
