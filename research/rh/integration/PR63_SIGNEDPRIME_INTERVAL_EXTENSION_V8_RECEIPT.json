@@ -1,0 +1,33 @@
+{
+  "schema": "aegis.rh.signedprime.interval_extension_v8.candidate.v1",
+  "repository": "tarikskalic33/formal-conjectures",
+  "pr": 63,
+  "parent_head": "bcfb967612c0c1f1d37fcd2d678af70b616f7c17",
+  "new_source": {
+    "path": "AEGISOverlay/RHSignedPrimeIntervalExtensionV8.lean",
+    "git_blob_sha": "9497f6ca534bc1d19b9dc52adbcc889807dbfbaa"
+  },
+  "upstream_dependency": {
+    "module": "RHSignedPrimeConvolutionIntegrabilityV7",
+    "result": "eventual_arithmetic_convolutions_integrable_v7",
+    "status": "LEANCHECK_PENDING"
+  },
+  "target_theorems": [
+    "eventually_finite_chebyshev_integral_extends_v8",
+    "eventual_signed_prime_equals_combined_v8"
+  ],
+  "asserted_logic": "Use archived exact support cutoffs, derivative of locally constant zero function on the two tails, a.e. exclusion of x=1, and exact Chebyshev integrand equality to extend finite integral to positive axis; compose with V7 integrability",
+  "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "lean": "leanprover/lean4:v4.33.1",
+  "workflow": {
+    "path": ".github/workflows/rh-snowflake-log23-globalization-v1.yml",
+    "blob_sha": "053a542b2af32e36b3ac32565bde11d0aa91e893",
+    "step": "Compile and audit Chebyshev V8 interval extension and dictionary"
+  },
+  "status": "SOURCE_CANDIDATE_UNCOMPILED",
+  "axioms_added": 0,
+  "sorry_added": false,
+  "requires_prime_only_subexponential_growth_for_RH": true,
+  "rh_proven": false,
+  "no_authority_change": true
+}

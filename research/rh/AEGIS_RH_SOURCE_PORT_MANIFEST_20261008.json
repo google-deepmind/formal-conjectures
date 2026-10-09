@@ -1,0 +1,2644 @@
+{
+  "schema": "AEGIS_RH_SOURCE_PORT_V1",
+  "generated_on": "2026-10-08",
+  "target_repo": "tarikskalic33/formal-conjectures",
+  "target_pr": 63,
+  "artifact_role": "SOURCE_SNAPSHOT_ONLY",
+  "proof_disposition": "RH_PROVEN_UNCONDITIONALLY=false",
+  "authority_effect": "NONE",
+  "upstream": {
+    "lean": {
+      "repo": "Aegis-Omega/AEGIS-OMEGA",
+      "pr": 679,
+      "sha": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "folder": "research/rh/aegis_source_4d7578e"
+    },
+    "krein": {
+      "repo": "Aegis-Omega/AEGIS-OMEGA",
+      "pr": 699,
+      "sha": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "folder": "research/rh/aegis_source_0c1477f"
+    },
+    "epstein": {
+      "repo": "Aegis-Omega/AEGIS-OMEGA",
+      "pr": 693,
+      "sha": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "folder": "research/rh/aegis_source_4f93fff"
+    }
+  },
+  "files_total": 323,
+  "inventory_counts": {
+    "aegis_679_formal": 191,
+    "aegis_699_research": 80,
+    "aegis_679_research_variant": 4,
+    "aegis_693_epstein_variant": 16,
+    "unported_binary": 2,
+    "aegis_679_lean_tests": 10,
+    "aegis_679_coq": 22
+  },
+  "files": [
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/blocks_N16_NP10000.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/blocks_N16_NP10000.json",
+      "blob_sha": "fe51d2a21d819ec397bf2cf663ec53b16fbcb8cd",
+      "bytes": 244325
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/complement_lp.json",
+      "blob_sha": "901801e5e663730139277fb9eff40aa62729dacd",
+      "bytes": 52845
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/complement_lp.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/complement_lp.py",
+      "blob_sha": "b5eb0ae2b675c2ede64bfe30faf89ee342a5a18b",
+      "bytes": 1440
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/complement_trace_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/complement_trace_arb.py",
+      "blob_sha": "b33151b4dd4e8bf7e85711312bd45d253f4997a0",
+      "bytes": 3624
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/cvs_entries.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/cvs_entries.py",
+      "blob_sha": "d34e81c7b905bbcab1061e203ef937b1ad90ac32",
+      "bytes": 2817
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/feshbach_blocks_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/feshbach_blocks_arb.py",
+      "blob_sha": "efb4dda30b9425d2c7962a479fc1237ebdea0f69",
+      "bytes": 5542
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/lean_digamma/krein_cells.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/lean_digamma/krein_cells.json",
+      "blob_sha": "12ac29a7ed5e6d8ad3dd6b93df9ad4e4c3ed8a00",
+      "bytes": 546498
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/lean_digamma/krein_lemma.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/lean_digamma/krein_lemma.log",
+      "blob_sha": "62744c9bb8ba76f0c24a8fda92dbbc66d74507d9",
+      "bytes": 1159
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/README.md",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/README.md",
+      "blob_sha": "2f8963f95e590a197435c7ebc70c6736c4f01d96",
+      "bytes": 3262
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/RECEIPT.json",
+      "blob_sha": "3071b19428977c999bea2850b491b23b3c19abaf",
+      "bytes": 2293
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/run_all.sh",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/run_all.sh",
+      "blob_sha": "0c645ee4ba09b86658f79ec4b090f1d09d8509e8",
+      "bytes": 780
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/sbar.json",
+      "blob_sha": "462915f9d50c48d0845a398ac128e1deacbd9efc",
+      "bytes": 2614
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/schur_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/schur_arb.py",
+      "blob_sha": "646595b4060979b2bd77d3a94c284ff8df950cdd",
+      "bytes": 1365
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/trace_arb.json",
+      "blob_sha": "df98e0562f5d79bcf57633f5576270f25001f6a2",
+      "bytes": 207
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v1/verify_krein_slack_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v1/verify_krein_slack_arb.py",
+      "blob_sha": "2c77a9709e7dba2fcfe037d2cb446b5b90ba82cc",
+      "bytes": 6897
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/complement_lp.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/complement_lp.py",
+      "blob_sha": "9f58f924b5a215870654db89d8f773996c1297c7",
+      "bytes": 1850
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/complement_trace_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/complement_trace_arb.py",
+      "blob_sha": "b33151b4dd4e8bf7e85711312bd45d253f4997a0",
+      "bytes": 3624
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/cvs_entries.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/cvs_entries.py",
+      "blob_sha": "d34e81c7b905bbcab1061e203ef937b1ad90ac32",
+      "bytes": 2817
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/feshbach_blocks_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/feshbach_blocks_arb.py",
+      "blob_sha": "22e6048ed1c74b500b6c8ad23a3f9a4a72d71d77",
+      "bytes": 7350
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.2/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.2/complement_lp.json",
+      "blob_sha": "9438b418a8d62389f4d3d532b2b055847024c93c",
+      "bytes": 182977
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.2/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.2/RECEIPT.json",
+      "blob_sha": "eb83760a6549e51122748d56d83285fb08b6fd1f",
+      "bytes": 1350
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.2/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.2/sbar.json",
+      "blob_sha": "9d639cc83d92d50f475578129195800421b16111",
+      "bytes": 5024
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.2/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.2/trace_arb.json",
+      "blob_sha": "e66017b206dd6a0b0b8d33a5dd3ccdb28007a751",
+      "bytes": 205
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.3/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.3/complement_lp.json",
+      "blob_sha": "2997fc2445ab6126b5e5fc6e3a4cf9f434e6df4a",
+      "bytes": 182593
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.3/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.3/RECEIPT.json",
+      "blob_sha": "f15de7f1d64aca50838e32f91fe2dd93cfb946c2",
+      "bytes": 1467
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.3/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.3/sbar.json",
+      "blob_sha": "a9a1fa6bca8cba02f8a730b972331bc8c3c37511",
+      "bytes": 5031
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.3/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.3/trace_arb.json",
+      "blob_sha": "bc05caa2127071529a59263f5aefba84a99362a1",
+      "bytes": 205
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.4/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.4/complement_lp.json",
+      "blob_sha": "a41edfe135808929cf2775668a813674f6f8d96f",
+      "bytes": 188442
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.4/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.4/RECEIPT.json",
+      "blob_sha": "d9684268eabb0acd8d77b2d7dac36dd65fa14dd0",
+      "bytes": 1535
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.4/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.4/sbar.json",
+      "blob_sha": "056b16bacf258aeb4690dc0ff2a5c3bb72525b1e",
+      "bytes": 5395
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.4/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.4/trace_arb.json",
+      "blob_sha": "f8a2bcf4f7e4af250f9670a21b456df78eb3bfbc",
+      "bytes": 205
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.6/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.6/complement_lp.json",
+      "blob_sha": "09203e97b38e06b0f4aa782b8e77c0895cc0898c",
+      "bytes": 188372
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.6/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.6/RECEIPT.json",
+      "blob_sha": "7ca4e74386aa8d878ee44d33f4d056975df98ac5",
+      "bytes": 1698
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.6/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.6/sbar.json",
+      "blob_sha": "20fbc58142b96bb5b28c0c3baee409d5c8aa17f7",
+      "bytes": 5358
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.6/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.6/trace_arb.json",
+      "blob_sha": "c08f4a9eb7454c246a4161e445b6cdcbf81e0269",
+      "bytes": 204
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/blocks.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/blocks.log",
+      "blob_sha": "673e7ce20ccc744a20c2c050d3f8a2d3076fd1f2",
+      "bytes": 1026
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/bottom_ritz.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/bottom_ritz.log",
+      "blob_sha": "7a1710603fde61e03c043c27d083df435d06c203",
+      "bytes": 105
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/complement_lp.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/complement_lp.json",
+      "blob_sha": "af7e1460f04cabde4ece71eb09ace371357ead7e",
+      "bytes": 559311
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/krein_slack.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/krein_slack.log",
+      "blob_sha": "64be65f6354ca584823468f2a7acd79de581be06",
+      "bytes": 847
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/RECEIPT.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/RECEIPT.json",
+      "blob_sha": "fbf51ae190548eacd3e16259fb05afaa2330657a",
+      "bytes": 2197
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/sbar.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/sbar.json",
+      "blob_sha": "faf0a94ab62fadcf5193e45adf94c790b0fb860e",
+      "bytes": 16062
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/schur.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/schur.log",
+      "blob_sha": "914adc17d57df3465f4e7e4f527c4c4032495399",
+      "bytes": 666
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/trace_arb.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/trace_arb.json",
+      "blob_sha": "2c86eba7df07ee8e2f4f893c117858f183eaa5ee",
+      "bytes": 204
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.8/trace.log",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/L1.8/trace.log",
+      "blob_sha": "1cff483c442c9ea8619bd2a7a65772e9a45a5017",
+      "bytes": 322
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/README.md",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/README.md",
+      "blob_sha": "409c3a73452d8234ce7fbb4ccecaab299e085538",
+      "bytes": 2553
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/run_all.sh",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/run_all.sh",
+      "blob_sha": "e8a79003142d842fdad0bb5b2d2f8660791ca498",
+      "bytes": 1197
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/schur_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/schur_arb.py",
+      "blob_sha": "60f44fee601c00677dbc2fd868baf583430f027b",
+      "bytes": 1365
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/verify_krein_slack_arb.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/verify_krein_slack_arb.py",
+      "blob_sha": "ca19aa5c06c9d5335e6ea12306d80179c5662e4f",
+      "bytes": 7377
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/verify_krein_slack_lemma.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/feshbach_arb_v2/verify_krein_slack_lemma.py",
+      "blob_sha": "07eed64719a21b494b0f935b3058589bfdb2177c",
+      "bytes": 9073
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L0.8.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L0.8.json",
+      "blob_sha": "33b85d3002f43b4ff33981e43d44868b01bca6e7",
+      "bytes": 1933
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L0.9.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L0.9.json",
+      "blob_sha": "56dadf2bba2c1df4fe88284b099a63ea480b98c3",
+      "bytes": 1799
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L0.98.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L0.98.json",
+      "blob_sha": "f08a3c7ec06918290dbc3c6c8d78ae84388b1e2d",
+      "bytes": 2323
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L1.0.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L1.0.json",
+      "blob_sha": "5d5933d716179f3750ca41172f3347d1166c6150",
+      "bytes": 2291
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L1.05.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L1.05.json",
+      "blob_sha": "53e52e665ec25992d4b92d221cd1714e5b573b4c",
+      "bytes": 3099
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_ARB_CERTIFICATE_L49_51.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_ARB_CERTIFICATE_L49_51.json",
+      "blob_sha": "10756d1432a22ffc5e2d7a2014008269a9ef9d55",
+      "bytes": 2662
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_CERTIFICATE_RECEIPT_V2_L0.98.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_CERTIFICATE_RECEIPT_V2_L0.98.json",
+      "blob_sha": "7ce5d5d520ed1ec7fd71fd7f14dd3b26153f0a33",
+      "bytes": 1730
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_CERTIFICATE_RECEIPT_V2_L1.0.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_CERTIFICATE_RECEIPT_V2_L1.0.json",
+      "blob_sha": "76f114d291af417b3b07b8c8d0eaa1081a7da849",
+      "bytes": 1697
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_certificate_receipt_v2.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_certificate_receipt_v2.py",
+      "blob_sha": "9cc83c08fee155dfe09d4bad7551e048fc54d04a",
+      "bytes": 13120
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_dual_beyond_log2.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_dual_beyond_log2.py",
+      "blob_sha": "cb5aaa842b90b49172bbc129f0e3a8ee93923a84",
+      "bytes": 3542
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_FESHBACH_FEASIBILITY_L1.05_V1.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_FESHBACH_FEASIBILITY_L1.05_V1.json",
+      "blob_sha": "cf18f133894dd85e4009b8b51da266c9e23b06ed",
+      "bytes": 767
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_feshbach_feasibility_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_feshbach_feasibility_v1.py",
+      "blob_sha": "0de12b2e2fa55b0eb1a4e1f14cd063a295427ac5",
+      "bytes": 6410
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_cutting_plane_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_cutting_plane_v1.py",
+      "blob_sha": "7e29f85bd239ed92fbf893041530fd68d27d3959",
+      "bytes": 1569
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L0.8.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L0.8.json",
+      "blob_sha": "3a4ce57d2bcce0a6478cae47cfc61d0141215ab7",
+      "bytes": 6507
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L0.9.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L0.9.json",
+      "blob_sha": "a397699cd26666307ed8793651fedb1adbb5f996",
+      "bytes": 6394
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L0.98.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L0.98.json",
+      "blob_sha": "1a253779b1df1a0245b8a41956144d212597ae54",
+      "bytes": 13171
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L1.0.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L1.0.json",
+      "blob_sha": "b44296a5864978e4cfdf4796213114acd26fbde5",
+      "bytes": 13171
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L1.05.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L1.05.json",
+      "blob_sha": "8693c140b4be1f785074aa7040b5c50be5ef5fd2",
+      "bytes": 15994
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_L49_51.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_L49_51.json",
+      "blob_sha": "6fdd87fe2d0712d06e9344d2d6a2ab2de7c77e92",
+      "bytes": 13101
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_solve_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_solve_v1.py",
+      "blob_sha": "e013f163ee10c84d211c46de55cd6d4e88de508b",
+      "bytes": 844
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_lp_svd_cp_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_lp_svd_cp_v1.py",
+      "blob_sha": "7ad4069a578ad7ddebe8a0608cf56737171b6b92",
+      "bytes": 3475
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_primal_complementary_basis_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_primal_complementary_basis_v1.py",
+      "blob_sha": "81c13703df9a48ef7e9387811c4c359e73dd8ab4",
+      "bytes": 13042
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_PRIMAL_COMPLEMENTARY_L1.05_V1.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_PRIMAL_COMPLEMENTARY_L1.05_V1.json",
+      "blob_sha": "ee0c566853be70897e913d4f15929f7fca1fe6ea",
+      "bytes": 8237
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_PRIMAL_COMPLEMENTARY_L1.05_V1.md",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_PRIMAL_COMPLEMENTARY_L1.05_V1.md",
+      "blob_sha": "c4a813e76cc2cc0d3edbc3f13462dab12769f5a2",
+      "bytes": 3127
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/KREIN_PRIMAL_CONVERGENCE_L1.05_V2.json",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/KREIN_PRIMAL_CONVERGENCE_L1.05_V2.json",
+      "blob_sha": "24db597371010c6a5dc39f599c07c311e1c5bafc",
+      "bytes": 786
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/krein_primal_convergence_v2.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/krein_primal_convergence_v2.py",
+      "blob_sha": "982bb18e3d8acdf88cde795d4fcd921d9581a972",
+      "bytes": 3607
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/test_krein_certificate_receipt_v2.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/test_krein_certificate_receipt_v2.py",
+      "blob_sha": "33166922f6e235fa5a6d9fcddc29bc3d5c11c913",
+      "bytes": 13921
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/test_rkhs_dominance_kernel.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/test_rkhs_dominance_kernel.py",
+      "blob_sha": "55a18fbc0e21f0e1dd0bfaa02e104a415a8124c5",
+      "bytes": 4769
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/test_weil_prime_support_kernel.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/test_weil_prime_support_kernel.py",
+      "blob_sha": "7bbffb4730a22959441aabe73f6a978994c6d679",
+      "bytes": 2713
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/test_weil_spectral_inertia_probe.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/test_weil_spectral_inertia_probe.py",
+      "blob_sha": "44c6697aadcfaa449c52773d70bb11e92853f305",
+      "bytes": 7192
+    },
+    {
+      "group": "aegis_699_research",
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/verify_krein_arb_v1.py",
+      "archive_path": "research/rh/aegis_source_0c1477f/research/verify_krein_arb_v1.py",
+      "blob_sha": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a",
+      "bytes": 6567
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/BombieriWeilTargetProbe.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/BombieriWeilTargetProbe.lean.src",
+      "blob_sha": "9942a2b51c8ded2dfe70076435faddca2ef74321",
+      "bytes": 2406
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/BoundedZeroFinitenessV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/BoundedZeroFinitenessV1.lean.src",
+      "blob_sha": "11aa2ce7c4223b85a36a429233facbc0a862e35b",
+      "bytes": 1926
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/MellinDecayEstimateV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/MellinDecayEstimateV1.lean.src",
+      "blob_sha": "948204a796d85cd9ff3a65dd558218211006f6ef",
+      "bytes": 20681
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/MeromorphicIdentityPreconnectedV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/MeromorphicIdentityPreconnectedV11.lean.src",
+      "blob_sha": "86342713dd7a998302ae8f5cbac49d2e83ea2b14",
+      "bytes": 2081
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/NineFacesAcceptanceCheck.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/NineFacesAcceptanceCheck.lean.src",
+      "blob_sha": "f6cbcadf36d0040377b98e79bd47ceb32cfdbe50",
+      "bytes": 628
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionFinalV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionFinalV13.lean.src",
+      "blob_sha": "2d69dd3344e4cc014643cdc70e3912bb3df38777",
+      "bytes": 2331
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionKernelBridgeV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionKernelBridgeV10.lean.src",
+      "blob_sha": "f17336332f25070f16152e420f8d8c44b60d254f",
+      "bytes": 12259
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionLaplaceV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionLaplaceV10.lean.src",
+      "blob_sha": "391203427c15f5f1218a4e75e5c0d168a1356b70",
+      "bytes": 20502
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionPoleIsolationV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionPoleIsolationV10.lean.src",
+      "blob_sha": "d33b05639ab5cd1254578a16257a80897425ecc6",
+      "bytes": 3774
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionResidueCoefficientV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionResidueCoefficientV11.lean.src",
+      "blob_sha": "5cd89d137524992348d43912438b82da49dd12b9",
+      "bytes": 3427
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionResidueWitnessV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionResidueWitnessV11.lean.src",
+      "blob_sha": "6d9f5d8df77bcf21f61198867255cf4d02bb3b9d",
+      "bytes": 12498
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionTargetWitnessV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionTargetWitnessV11.lean.src",
+      "blob_sha": "e0331945275e58e0b0c3c1236c32b4af54cb3b31",
+      "bytes": 13769
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionZeroKernelV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RestrictedWeilCriterionZeroKernelV10.lean.src",
+      "blob_sha": "04a6e49e81c593e939d25d81235a0e7cf057decb",
+      "bytes": 11202
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHBonusClassV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHBonusClassV13.lean.src",
+      "blob_sha": "fe9ed72d58d4a064ec906847e5a9c378900b1638",
+      "bytes": 8001
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHBonusGainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHBonusGainV13.lean.src",
+      "blob_sha": "566640692bab3175998271f4b94b8c3dbab992d0",
+      "bytes": 12230
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHCell4CapV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHCell4CapV13.lean.src",
+      "blob_sha": "846b3fc2d9adb97964b3e54fc46479a0daf6c83d",
+      "bytes": 12838
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHCell5CapV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHCell5CapV13.lean.src",
+      "blob_sha": "eabe6053b2c8fc61daf732ab8a453c5b88e7af45",
+      "bytes": 17906
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHCell6CapV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHCell6CapV13.lean.src",
+      "blob_sha": "b3ace5c5d0ef165fe793179d67c4642a057fe1d5",
+      "bytes": 23914
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHCell7CapV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHCell7CapV13.lean.src",
+      "blob_sha": "517d953ee6b6523351f661eb3de55dad900c27a0",
+      "bytes": 30980
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHCellCapsV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHCellCapsV13.lean.src",
+      "blob_sha": "1baba1be86aeda001444e9f466154add775a6b01",
+      "bytes": 1111
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHDyadicDiagonalV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHDyadicDiagonalV13.lean.src",
+      "blob_sha": "d80ebc02cd36ddc02d25c19c6bd9c2cb46d7aa11",
+      "bytes": 13785
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHDyadicTowerV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHDyadicTowerV13.lean.src",
+      "blob_sha": "a7dbe8ff995e8cace45cdccfd60f05f59928129b",
+      "bytes": 11804
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHDyadicWindowV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHDyadicWindowV13.lean.src",
+      "blob_sha": "37c336714e7043a1abc1fdc5054d7c6e3a96eafb",
+      "bytes": 12745
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHEulerGammaV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHEulerGammaV13.lean.src",
+      "blob_sha": "7dc54d2ddad7a1edbda4ec8968fdeebbc35fef63",
+      "bytes": 2673
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFinalClosureSpineV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFinalClosureSpineV1.lean.src",
+      "blob_sha": "58e52abd3e52d8087a64ec6624a41ce731285059",
+      "bytes": 2916
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFineMomentPacketV3.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFineMomentPacketV3.lean.src",
+      "blob_sha": "5b16969689ad798cc9b9afa6ddbe735a468aba9a",
+      "bytes": 7944
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockActualBridgeV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockActualBridgeV2.lean.src",
+      "blob_sha": "af77d02a41d993462b0613055f94a19fffc3d190",
+      "bytes": 6101
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockBoundObstructionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockBoundObstructionV1.lean.src",
+      "blob_sha": "9318f46c5155c37792dccd22ae25ffab81b651ee",
+      "bytes": 1279
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockCertificateLimitV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockCertificateLimitV13.lean.src",
+      "blob_sha": "e028cc832048c0794bc7f1aec7fa5fe42c9adc9a",
+      "bytes": 3433
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockComparisonV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockComparisonV2.lean.src",
+      "blob_sha": "488d702efc2830dd21ee1fc25e2c892c97422366",
+      "bytes": 4440
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockConcreteV3.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockConcreteV3.lean.src",
+      "blob_sha": "1dbb003a189e7ec7ba3c58265c7b8202214b740a",
+      "bytes": 8704
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourBlockPrimeEightV3.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourBlockPrimeEightV3.lean.src",
+      "blob_sha": "f0905517b12b25eab1e8b9162755afd6ec9c6870",
+      "bytes": 11841
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHFourPacketZeroQuadraticV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHFourPacketZeroQuadraticV13.lean.src",
+      "blob_sha": "d770bc0cd5753075f3e5a56e8eed84bd2512a4c8",
+      "bytes": 4402
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHGlobalizationChainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHGlobalizationChainV13.lean.src",
+      "blob_sha": "a22f69608bda8e32b96a604d32d68d78f067d282",
+      "bytes": 4974
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHGoldenFourPacketV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHGoldenFourPacketV1.lean.src",
+      "blob_sha": "17eeb4018af2deb06e99ba9f78f7341a01195f42",
+      "bytes": 8433
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHGoldenPrimeWindowV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHGoldenPrimeWindowV1.lean.src",
+      "blob_sha": "10f6dd01092da7f18d0c121700694ff12855bd5e",
+      "bytes": 5278
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHGramExpansionV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHGramExpansionV13.lean.src",
+      "blob_sha": "684a7e8bf72a76f36b81a2d66c45413bfdbe89e9",
+      "bytes": 10515
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHalfCapClassV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHalfCapClassV13.lean.src",
+      "blob_sha": "237eb2c543271be1062625e853009459357eb4d0",
+      "bytes": 7108
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHalfCapGainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHalfCapGainV13.lean.src",
+      "blob_sha": "7c5fd4671941d61cf3be9945a22a00a0f52d10d8",
+      "bytes": 6269
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHalfCapV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHalfCapV13.lean.src",
+      "blob_sha": "802bd2f1112d4a0b727417738eb77422d2dd579a",
+      "bytes": 5755
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatBudgetV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatBudgetV13.lean.src",
+      "blob_sha": "5a00eb5eb414f468f363f7b3576d1b5928586389",
+      "bytes": 24266
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatCellsV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatCellsV13.lean.src",
+      "blob_sha": "7761f746f6b10179c43141ee7e35e1b54c62d3f9",
+      "bytes": 11060
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatCellsWideV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatCellsWideV13.lean.src",
+      "blob_sha": "f3a885f01035ef442c610178e0bac612f01b76c0",
+      "bytes": 8619
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatClass13V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatClass13V13.lean.src",
+      "blob_sha": "1f18047b6e6b63e658da8e0e8e6a6f10e59a71c9",
+      "bytes": 25185
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatClass310V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatClass310V13.lean.src",
+      "blob_sha": "557d049db6f41d2d0a1109c7deadf562bef3ea8b",
+      "bytes": 13486
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatClass69200V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatClass69200V13.lean.src",
+      "blob_sha": "9f95b8b576754ed9a09fe8490cb2054a666233a5",
+      "bytes": 39715
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatClassV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatClassV13.lean.src",
+      "blob_sha": "fb3272278dc40714d43238fedcc30810d52d8626",
+      "bytes": 9399
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatCoxBudgetV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatCoxBudgetV13.lean.src",
+      "blob_sha": "eedd3baaaa30ff0b7bca9b6da2bb1f9cff9fd11f",
+      "bytes": 13486
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatCoxClass693V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatCoxClass693V13.lean.src",
+      "blob_sha": "84f11e4960fb8f53dc5c303693070625d4894b49",
+      "bytes": 41438
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatKernelV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatKernelV13.lean.src",
+      "blob_sha": "9ae585e91fae957fe51335ad0154a80046f68d19",
+      "bytes": 6990
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHHatPosDefV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHHatPosDefV13.lean.src",
+      "blob_sha": "2383193c36823215f46974081991537fa698dde1",
+      "bytes": 19453
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHKreinCertificateV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHKreinCertificateV1.lean.src",
+      "blob_sha": "68033c5c5027d1711752909a24b20d6c297b5249",
+      "bytes": 9387
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHKreinDeltaPairingV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHKreinDeltaPairingV1.lean.src",
+      "blob_sha": "3b6b52460d2b0c019e9fee6a11d0639b942199a3",
+      "bytes": 8694
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHKreinFactorV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHKreinFactorV13.lean.src",
+      "blob_sha": "e18340eeb30b900b99dd1103b56061f8492f6aab",
+      "bytes": 19201
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHKreinPairingV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHKreinPairingV13.lean.src",
+      "blob_sha": "1943fc9ed3d2c4e4dd946ae84a2bf2ca51cccd11",
+      "bytes": 5209
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMillenniumGateV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHMillenniumGateV10.lean.src",
+      "blob_sha": "9d562ffd211c6dae8df802c9aec23f065115def6",
+      "bytes": 4994
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMomentGainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHMomentGainV13.lean.src",
+      "blob_sha": "a6e5d8943bbabdaf7bfe6fe9dcb4c72c1acd7cc9",
+      "bytes": 13835
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMomentIdentityV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHMomentIdentityV13.lean.src",
+      "blob_sha": "4c1791a7fad5411f7495db036a4df7c029552efa",
+      "bytes": 7620
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMomentNumericsV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHMomentNumericsV13.lean.src",
+      "blob_sha": "c7d8eb11ea5b434ecaa068fb7b9d69034a8eb8d3",
+      "bytes": 5428
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMomentPiecesV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHMomentPiecesV13.lean.src",
+      "blob_sha": "cb6e39b79eb7f935be65c43bd44a573982d16060",
+      "bytes": 8036
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNarrowDiagonalUpgradeV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNarrowDiagonalUpgradeV2.lean.src",
+      "blob_sha": "5861f8808015c4bee93efbbac5d032dd30522289",
+      "bytes": 7515
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNarrowMomentPacketV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNarrowMomentPacketV1.lean.src",
+      "blob_sha": "08ad4e9610a544152a223417eafc28ff3434a678",
+      "bytes": 7737
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNarrowRetainedSignV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNarrowRetainedSignV1.lean.src",
+      "blob_sha": "d42d307a2ceb92ae2b8f85437fa4d8b4dfc67d79",
+      "bytes": 1792
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNarrowSupportPositivityV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNarrowSupportPositivityV13.lean.src",
+      "blob_sha": "ee024cfdb0c05cfa3204ee5a9a499b1c1366417f",
+      "bytes": 3960
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNineFacesV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNineFacesV13.lean.src",
+      "blob_sha": "19da141ee9d81c490555364a687fccdca6ae21b5",
+      "bytes": 3038
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHNinePacket33Over16V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHNinePacket33Over16V13.lean.src",
+      "blob_sha": "4534a6897933d259f2e790518083dfda9ae4e748",
+      "bytes": 8434
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHRatio33Over16V13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHRatio33Over16V13.lean.src",
+      "blob_sha": "52ddda7729faa6fd40687ebba55ed3b478c5f8ab",
+      "bytes": 5927
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHRatioWindowV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHRatioWindowV13.lean.src",
+      "blob_sha": "18f83dac081526fb0bac77a4e2980849436e6e78",
+      "bytes": 4883
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHRestrictedWeilBridgeV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHRestrictedWeilBridgeV13.lean.src",
+      "blob_sha": "cda7c59f0bfa97ed9a8b5fb78791890a3dc3904b",
+      "bytes": 19509
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHThreeCellClassV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHThreeCellClassV13.lean.src",
+      "blob_sha": "babdf3a671ea7a2cfcbacc693059ed38f11cb396",
+      "bytes": 10322
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHThreeCellGainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHThreeCellGainV13.lean.src",
+      "blob_sha": "03263c914df499a62cb8b7b08b53c93957694265",
+      "bytes": 13220
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHThreeCellV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHThreeCellV13.lean.src",
+      "blob_sha": "a17c5b8a76d0618ed1736729ab63243e6486cece",
+      "bytes": 10159
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHThresholdClassV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHThresholdClassV13.lean.src",
+      "blob_sha": "ce80ca2afdb85d2047c82a293e0cc586524a0603",
+      "bytes": 9257
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHThresholdGainV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHThresholdGainV13.lean.src",
+      "blob_sha": "32e1e1dae8bd7da8f2af1e3afdbcd526460e75b1",
+      "bytes": 8763
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHTranslatedKernelDominanceV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHTranslatedKernelDominanceV1.lean.src",
+      "blob_sha": "8848cdf312417cd24b1312ef1aa09b793259d147",
+      "bytes": 7344
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHWindowConnectedV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHWindowConnectedV13.lean.src",
+      "blob_sha": "f5debcdad67d519b592190a2a785953c83a15f72",
+      "bytes": 3078
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelBoundV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHZeroKernelBoundV11.lean.src",
+      "blob_sha": "87d79320ae5fbecddb916e82e3e600fa9c8c54f5",
+      "bytes": 6804
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelLaplaceAnalyticV12.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHZeroKernelLaplaceAnalyticV12.lean.src",
+      "blob_sha": "49757c0413c2dd8f9362f33e159234dcf59f4bb4",
+      "bytes": 13143
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelLaplaceV12.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/RHZeroKernelLaplaceV12.lean.src",
+      "blob_sha": "432e0cb10b3f7a12127ec1965d881b46550ea06d",
+      "bytes": 10438
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAbjadFourPhaseBridgeV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAbjadFourPhaseBridgeV1.lean.src",
+      "blob_sha": "e631a19ff29eababf6546519a386f9014b71ba7f",
+      "bytes": 7741
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilActualZeroSummandWitnessV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilActualZeroSummandWitnessV10.lean.src",
+      "blob_sha": "f6d388f4494d08ffe35e63ba8850c33203c09662",
+      "bytes": 2109
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchFiniteQuadraticV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchFiniteQuadraticV1.lean.src",
+      "blob_sha": "4f8ba8db61b696465a4b80a9a3006ce94245d42c",
+      "bytes": 927
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanConvergenceV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchimedeanConvergenceV1.lean.src",
+      "blob_sha": "8c04ac6f254abb5a19c25f600e25ffb8af0c7f6d",
+      "bytes": 7202
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanCorrectionV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchimedeanCorrectionV10.lean.src",
+      "blob_sha": "99e9b6eb8a7aabbbf22e4e469833adebab82ba6c",
+      "bytes": 3788
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanCothTailV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchimedeanCothTailV1.lean.src",
+      "blob_sha": "67606ca99e96ecd0a7cbd4861ca48fe9471ffa7b",
+      "bytes": 8188
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanPacketWitnessV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchimedeanPacketWitnessV1.lean.src",
+      "blob_sha": "7c117e9ff2a1b5078e2a2c54e0100cf450f30eea",
+      "bytes": 7011
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchSineKernelIntegerV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchSineKernelIntegerV1.lean.src",
+      "blob_sha": "7f16181960884f1a2254bc409f30b26158c0a59e",
+      "bytes": 24348
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchSineKernelV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchSineKernelV1.lean.src",
+      "blob_sha": "cab69e4ec0e921977a25dfb79cdee7e4467839ff",
+      "bytes": 3992
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchTailIntegralV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilArchTailIntegralV1.lean.src",
+      "blob_sha": "ec35e6d8bbf7d3b1f175691f35164529542eeba3",
+      "bytes": 2077
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationClosureV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationClosureV1.lean.src",
+      "blob_sha": "8a578da0d379d2a643c2ce436a97a4ff5e3531eb",
+      "bytes": 7248
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationExplicitFormulaV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationExplicitFormulaV10.lean.src",
+      "blob_sha": "72e756c4386c6478cac301f4d1e82fbc9d6fe8f6",
+      "bytes": 3529
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinFactorV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationMellinFactorV10.lean.src",
+      "blob_sha": "cc790562e0b89f34cdcb68b6d3b2040ebf1c054a",
+      "bytes": 9400
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationMellinV11.lean.src",
+      "blob_sha": "eaf488412c46a51d7f5f68c2432576ccd04e79fa",
+      "bytes": 10827
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationPoleAggregationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationPoleAggregationV1.lean.src",
+      "blob_sha": "bb785359eda0b4e03cea65de65bc21c9a0a70191",
+      "bytes": 11159
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationRealityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilAutocorrelationRealityV1.lean.src",
+      "blob_sha": "84d389c16b46427d1432f16a3f76baf031fba67c",
+      "bytes": 5987
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilCriterionCompactSmoothV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilCriterionCompactSmoothV1.lean.src",
+      "blob_sha": "48039592aa281da1aa514586e09aab09720dd679",
+      "bytes": 3982
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDiagonalConstantFromCothTailV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDiagonalConstantFromCothTailV1.lean.src",
+      "blob_sha": "717898a116c52ce8de0a91a1dd00479607e590d7",
+      "bytes": 7844
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDiagonalKernelReductionV21.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDiagonalKernelReductionV21.lean.src",
+      "blob_sha": "9c0e36523a528ce1268fe6ec3bb42bc320b3a29b",
+      "bytes": 4874
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaIntegralReductionV1_Control.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDigammaIntegralReductionV1_Control.lean.src",
+      "blob_sha": "d9d501b245dc4303c590a1619540b2d210ebfa02",
+      "bytes": 6335
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaIntegralReductionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDigammaIntegralReductionV1.lean.src",
+      "blob_sha": "4d96c2be8104e05131bca08448dbe18513191f96",
+      "bytes": 14958
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesHalfPlaneV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDigammaSeriesHalfPlaneV1.lean.src",
+      "blob_sha": "d4cf0622d8f9f98cb60691073e721725bb716d94",
+      "bytes": 10952
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesRealV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDigammaSeriesRealV1.lean.src",
+      "blob_sha": "75744f1593cb6b94bb43ae186a41ad7ad56825f7",
+      "bytes": 12091
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDisjointEnergyV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilDisjointEnergyV2.lean.src",
+      "blob_sha": "5565d644ed0c436dcc4fee41074b758974e93df1",
+      "bytes": 3530
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilExplicitFormulaV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilExplicitFormulaV10.lean.src",
+      "blob_sha": "e7d4d31eb6053d5f7325f23071322580b441c8a0",
+      "bytes": 7756
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFinalSignTranslationBoundV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFinalSignTranslationBoundV10.lean.src",
+      "blob_sha": "477907d51c31bfa21b820f7ae01d6a84d153d39c",
+      "bytes": 6382
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFiniteDilationFilterV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFiniteDilationFilterV10.lean.src",
+      "blob_sha": "6970c598b8af0e25cc051567359f46cff63244bc",
+      "bytes": 9183
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFiniteDilationFilterV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFiniteDilationFilterV11.lean.src",
+      "blob_sha": "9be6f2b01a7caf976ab5f2bd4208f17bbb08908d",
+      "bytes": 8746
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFiniteSourceCalculusV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFiniteSourceCalculusV1.lean.src",
+      "blob_sha": "8098853100b7bdd7410e03f2347e7b40c3e94516",
+      "bytes": 18492
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineArithmeticV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineArithmeticV10.lean.src",
+      "blob_sha": "b3849e4333230e251d3713cce2056956cc5e3ded",
+      "bytes": 11242
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineCompletedGammaV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineCompletedGammaV10.lean.src",
+      "blob_sha": "ebe723ef8ebd6cafd4c2dd43d805ad44c3801883",
+      "bytes": 7856
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineExplicitFormulaContractV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineExplicitFormulaContractV2.lean.src",
+      "blob_sha": "45c80a60ab06688dbb25f5fb992dfc53b8d0843f",
+      "bytes": 5702
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineFubiniCoreV3.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineFubiniCoreV3.lean.src",
+      "blob_sha": "0142808a951121f0dea831a45438d75773d9dc4d",
+      "bytes": 15557
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineFubiniSwapV4.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineFubiniSwapV4.lean.src",
+      "blob_sha": "e61d4ea8aa619d8856134d3c39fd17936d6f02ef",
+      "bytes": 8116
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaAssemblyV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineGammaAssemblyV10.lean.src",
+      "blob_sha": "426c3d185e816160cf7c26437a63f70772f08453",
+      "bytes": 7344
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaCoreV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineGammaCoreV10.lean.src",
+      "blob_sha": "8996442368a775a34b0f651a398217d884729a4a",
+      "bytes": 3355
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaFubiniV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineGammaFubiniV10.lean.src",
+      "blob_sha": "fd28a9b0f0bb5c79d544e3f8c190a4db28d1ee1f",
+      "bytes": 10548
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaXSpaceV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineGammaXSpaceV10.lean.src",
+      "blob_sha": "3328fe14cee624ef11a4e79c3660f6be1b6282d3",
+      "bytes": 9291
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineKernelIntegralV6.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineKernelIntegralV6.lean.src",
+      "blob_sha": "743d826ee6de8f6b0d48297f08f5796310db373d",
+      "bytes": 11295
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineXSpaceTailV7.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineXSpaceTailV7.lean.src",
+      "blob_sha": "909936d435c36e56c09b9a8a1ca137a02d330024",
+      "bytes": 3096
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineZeroSideV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilFixedLineZeroSideV10.lean.src",
+      "blob_sha": "91bdc1eaec1bfa6c84e9fc77e142c58fa97e4968",
+      "bytes": 8193
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogAutocorrelationV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilLogAutocorrelationV10.lean.src",
+      "blob_sha": "b5815fa6fd8c6956d762703691504b8bb873586c",
+      "bytes": 2415
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogChangeOfVariablesV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilLogChangeOfVariablesV1.lean.src",
+      "blob_sha": "73c1c5666ca4320b2eacb202b7262cd0ce389e37",
+      "bytes": 18501
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogCoordinateIsometryV21.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilLogCoordinateIsometryV21.lean.src",
+      "blob_sha": "481b2dce81fdfc9ba44602058e602f8eccb56e14",
+      "bytes": 4023
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogLiftCompactSupportV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilLogLiftCompactSupportV10.lean.src",
+      "blob_sha": "b6649ce91ff7e8cfab2a16f5da7b1aa8d97606fb",
+      "bytes": 2336
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogTransportCanonicalV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilLogTransportCanonicalV1.lean.src",
+      "blob_sha": "75e8f3c9d0d987785cfdec3279ad19e52757b96d",
+      "bytes": 9583
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMellinInversionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMellinInversionV1.lean.src",
+      "blob_sha": "b88e90577394aa5cd800d5ea7c8fd411bc4f2468",
+      "bytes": 5581
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMellinWeightedFixedLineV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMellinWeightedFixedLineV2.lean.src",
+      "blob_sha": "8ea59852a6b9fc81de7cef4395b6aaf568b8a998",
+      "bytes": 7955
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMixedAlgebraV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMixedAlgebraV2.lean.src",
+      "blob_sha": "0478a41a967df5340a931f4452f1105078edff16",
+      "bytes": 10401
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMixedClosureV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMixedClosureV2.lean.src",
+      "blob_sha": "57263c1acd5f57bb45a0f9b5e47669ca6cf511b7",
+      "bytes": 5157
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMixedMellinFactorV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMixedMellinFactorV10.lean.src",
+      "blob_sha": "d6ba9e1eb6c46e62cef257267c7368e1572f825d",
+      "bytes": 6071
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMomentAnnihilatorV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMomentAnnihilatorV1.lean.src",
+      "blob_sha": "0fe118c9a62b240beb3469805d50fb3ec1dccb4e",
+      "bytes": 6844
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMomentKillerConstructionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMomentKillerConstructionV1.lean.src",
+      "blob_sha": "f599d884d0d59f7e652887fb9e055ce95ea54aa6",
+      "bytes": 12596
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMomentZeroDetectionV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilMomentZeroDetectionV10.lean.src",
+      "blob_sha": "93d296a7b0e650ae1aaabeefd62e177d85cfac9f",
+      "bytes": 3251
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilOffLineSeedV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilOffLineSeedV10.lean.src",
+      "blob_sha": "255cfa30537da17af7ee3f7fe64b6845808af246",
+      "bytes": 9192
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedHadamardFixedLineV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPairedHadamardFixedLineV1.lean.src",
+      "blob_sha": "68cecb9909b9ca270a34803b0fcf7f4b1697ad75",
+      "bytes": 7991
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedHadamardKernelTsumV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPairedHadamardKernelTsumV2.lean.src",
+      "blob_sha": "bd87f1d650f85d5f6c3e7eab5a52863ee9ac248d",
+      "bytes": 7028
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedHadamardTsumFusionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPairedHadamardTsumFusionV1.lean.src",
+      "blob_sha": "f5bdb087535964b881403e5ad68565f0cdc4ea32",
+      "bytes": 8014
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedMellinProfileV5.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPairedMellinProfileV5.lean.src",
+      "blob_sha": "b1d74f57f9533fc1592c156a4fb61fe950a3cee5",
+      "bytes": 7047
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedZeroEvaluationV9.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPairedZeroEvaluationV9.lean.src",
+      "blob_sha": "af91865be83cf031bbc8e1dc38c840c54f2b9565",
+      "bytes": 11338
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPoleTermV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPoleTermV1.lean.src",
+      "blob_sha": "5fd2deba32811877aaac64837fb81c895f30e882",
+      "bytes": 3597
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPrimeLineIdentityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPrimeLineIdentityV1.lean.src",
+      "blob_sha": "4db96b150c658897e571a157acd29831c7838ec5",
+      "bytes": 7822
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPrimeSummabilityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilPrimeSummabilityV1.lean.src",
+      "blob_sha": "5952cac81f515a5ac784cd51e9b3c187d1727d8a",
+      "bytes": 4291
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilReciprocalPairedTestV8.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilReciprocalPairedTestV8.lean.src",
+      "blob_sha": "89127d6b57ec7376a027f8cacac091cfc6431dbf",
+      "bytes": 6578
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilRHImpliesFinalSignV13.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilRHImpliesFinalSignV13.lean.src",
+      "blob_sha": "7b00e26bcfd923f93386663aa7fb4c15085a293b",
+      "bytes": 5500
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilSeparatedArchBridgeV31.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilSeparatedArchBridgeV31.lean.src",
+      "blob_sha": "d6e44db91730618053a67977c9d32c3f5159bf9a",
+      "bytes": 20458
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilStrictStripSeedV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilStrictStripSeedV11.lean.src",
+      "blob_sha": "6683b2dfebef8166545c12f53815701d8219dfd0",
+      "bytes": 7755
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockAnalyticConstantsV21.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockAnalyticConstantsV21.lean.src",
+      "blob_sha": "92271bb57ba91d977f1c19573a55d7978e79a329",
+      "bytes": 5435
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockComplexV2.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockComplexV2.lean.src",
+      "blob_sha": "854b90da12ce0aaa4ce97d79cfaa6a2a2b91a31e",
+      "bytes": 3940
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockCrossAssemblyV30.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockCrossAssemblyV30.lean.src",
+      "blob_sha": "25a01843658d02b5a62a1077b77885cce7e95b18",
+      "bytes": 12269
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockCrossPrimeV28.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockCrossPrimeV28.lean.src",
+      "blob_sha": "51206472ec9347f16fa793585de193b2b9087703",
+      "bytes": 7219
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockCrossPrimeWindowV29.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockCrossPrimeWindowV29.lean.src",
+      "blob_sha": "faf44e2953292416cf98b50cbd041a997ae4496f",
+      "bytes": 8170
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockNormBridgeV21.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockNormBridgeV21.lean.src",
+      "blob_sha": "96cc55e2402da367483f751ac382521622f0eeb1",
+      "bytes": 4983
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockPrimeEvaluationV30.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockPrimeEvaluationV30.lean.src",
+      "blob_sha": "1aa66fb90ef94aabdbb228c71fe95610c95ba1b7",
+      "bytes": 8112
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockRationalV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockRationalV1.lean.src",
+      "blob_sha": "7baba140b1cd6d44177b17000fbb93167edec3ba",
+      "bytes": 6042
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilThreeBlockTranslatedPacketsV22.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilThreeBlockTranslatedPacketsV22.lean.src",
+      "blob_sha": "85d3ff56e185b306a370d0e30c0b991afd1d5b6b",
+      "bytes": 13543
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslatedKernelBoundV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilTranslatedKernelBoundV11.lean.src",
+      "blob_sha": "9bd5935decf8e03011e8fd7fcb584b5e44662aef",
+      "bytes": 7307
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslatedZeroSeriesV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilTranslatedZeroSeriesV10.lean.src",
+      "blob_sha": "8a7fb4166df522853aa1487336904fe3bf57fe38",
+      "bytes": 6984
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslationGapInvariantV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilTranslationGapInvariantV10.lean.src",
+      "blob_sha": "f04dc662e4fcdd3c108ba3be758843849535ce0b",
+      "bytes": 3330
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTwoPointPositivityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilTwoPointPositivityV1.lean.src",
+      "blob_sha": "98d906659b860aac90267a3cc2578f6665621788",
+      "bytes": 2541
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWidthArchBudgetV26.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWidthArchBudgetV26.lean.src",
+      "blob_sha": "0045d85ed311eb9e684ef1e9e23abe7a6e0df5d1",
+      "bytes": 9154
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWidthArchCorrelationV25.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWidthArchCorrelationV25.lean.src",
+      "blob_sha": "99e5e77ff0c44b0589df2a2a472e3f5dfe93f509",
+      "bytes": 9513
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWidthArchIntegralV27.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWidthArchIntegralV27.lean.src",
+      "blob_sha": "281162e0e52425affbdfb052f8093bef5143cb96",
+      "bytes": 9723
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWidthDiagonalArchFrontierV24.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWidthDiagonalArchFrontierV24.lean.src",
+      "blob_sha": "e3f056ba0345b3e0a0c0562b41c38d1ab6432526",
+      "bytes": 2944
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWidthPrimeVanishingV23.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWidthPrimeVanishingV23.lean.src",
+      "blob_sha": "dcb7132c480738283c8c4d88ae0aba46c9f44907",
+      "bytes": 4108
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilWindowExhaustionV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilWindowExhaustionV1.lean.src",
+      "blob_sha": "98e15e9320c68f7f956cf3012fa992e3fb211985",
+      "bytes": 6972
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilXiLogDerivDecompositionV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilXiLogDerivDecompositionV10.lean.src",
+      "blob_sha": "656c63ee9ca75c02c3cdb382eb099740d23aeb08",
+      "bytes": 10423
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroCarrierBridgeV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroCarrierBridgeV10.lean.src",
+      "blob_sha": "c538186c1f71a012d9f0961ddcd1c2cfb89966b1",
+      "bytes": 4151
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroCarrierRebindV10.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroCarrierRebindV10.lean.src",
+      "blob_sha": "0c78e7e42b53e1c759d5a306d9b031c55f2d8b87",
+      "bytes": 4402
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroKernelHermitianV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroKernelHermitianV11.lean.src",
+      "blob_sha": "78c3644ec51f78b35a524355a3cf891d97f4c51c",
+      "bytes": 5602
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroSideIdentificationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroSideIdentificationV1.lean.src",
+      "blob_sha": "49ff916bf877160b02635913e4f964f86190a63b",
+      "bytes": 3963
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroSideInterfaceV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroSideInterfaceV1.lean.src",
+      "blob_sha": "7473dcc87365bfb30bde6fc660a99ff5bcc3581b",
+      "bytes": 1894
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroTranslationV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroTranslationV11.lean.src",
+      "blob_sha": "6755931c48fabad03273660555b5d97e3e333474",
+      "bytes": 5134
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroTwoPointV11.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/WeilZeroTwoPointV11.lean.src",
+      "blob_sha": "ca57381c3aa6f4682be8a335da8fb232604c8784",
+      "bytes": 9916
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroCountingBoundV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroCountingBoundV1.lean.src",
+      "blob_sha": "f8ac3c31ee0afa85f35bbc9539ad842e3d3335ef",
+      "bytes": 15572
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroCountingMellinSummabilityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroCountingMellinSummabilityV1.lean.src",
+      "blob_sha": "01509b3933039aa595c83f366bbe90a44f2a4d81",
+      "bytes": 7170
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroCriticalStripV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroCriticalStripV1.lean.src",
+      "blob_sha": "8dd25b1e5bf55d902fe5b57e8572e8e564d4c983",
+      "bytes": 4374
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroFiniteTruncationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroFiniteTruncationV1.lean.src",
+      "blob_sha": "3d2fff0e0731e819c270e2cca50f071044bb8e5e",
+      "bytes": 3440
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroHeightFiniteSumV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroHeightFiniteSumV1.lean.src",
+      "blob_sha": "94415f65ae85e1e9993916a22891ca2248d65d4d",
+      "bytes": 9908
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroHeightLimitContractV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroHeightLimitContractV1.lean.src",
+      "blob_sha": "5d0d065113d9076db4eab6cf4be7a9868eec56a4",
+      "bytes": 1674
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroHeightShellMassV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroHeightShellMassV1.lean.src",
+      "blob_sha": "e7af2be4e5f0b1bbb1f605bbee19e919b92e5bd0",
+      "bytes": 6007
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroHeightSummabilityBridgeV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroHeightSummabilityBridgeV1.lean.src",
+      "blob_sha": "f72516a9ee50f8b5457f4a99c55ddc296d15d8dd",
+      "bytes": 6677
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroHeightTruncationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroHeightTruncationV1.lean.src",
+      "blob_sha": "d276682f56e9638e99609ba57667904bd40b0007",
+      "bytes": 5872
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroLowerLocalizationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroLowerLocalizationV1.lean.src",
+      "blob_sha": "16e974aeb1dd830a0edaf6cdc75f5e45c7d1cd04",
+      "bytes": 4184
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroMajorantSummabilityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroMajorantSummabilityV1.lean.src",
+      "blob_sha": "4c100d1f84188deddd1e00dc6cb8aca851fc4eea",
+      "bytes": 3334
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroMultiplicityV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroMultiplicityV1.lean.src",
+      "blob_sha": "d6ae78f4f359bde8841ab254838ed4fedfbfcc29",
+      "bytes": 4363
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroNonpositiveIntegerV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroNonpositiveIntegerV1.lean.src",
+      "blob_sha": "bdcd12283b71270bf645eab5422f5242e26cd143",
+      "bytes": 1691
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroNonpositiveTrivialV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroNonpositiveTrivialV1.lean.src",
+      "blob_sha": "e227c9c30351eb16fba8c0a0e45c6a71a70d45b1",
+      "bytes": 3867
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroShellAnalyticSynthesisV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroShellAnalyticSynthesisV1.lean.src",
+      "blob_sha": "257ef4b003206b816555acb0f72ff702e0daac65",
+      "bytes": 4909
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroShellQuadraticBoundV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroShellQuadraticBoundV1.lean.src",
+      "blob_sha": "45e7f91166b32832c54e6538041d1a5d12171b12",
+      "bytes": 3985
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroTrivialClassificationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroTrivialClassificationV1.lean.src",
+      "blob_sha": "159170fbec1b1fa168bd0fb05f8c5b501d9ce1d6",
+      "bytes": 3007
+    },
+    {
+      "group": "aegis_679_formal",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/ZeroUpperLocalizationV1.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/lean/ZeroUpperLocalizationV1.lean.src",
+      "blob_sha": "7ea5a2a43c6d98fda39ba5491ecba67bebdbd19d",
+      "bytes": 1073
+    },
+    {
+      "group": "aegis_679_research_variant",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "research/rh/krein_arb_receipt_v2.py",
+      "archive_path": "research/rh/aegis_source_4d7578e/research/krein_arb_receipt_v2.py",
+      "blob_sha": "a2381f75d1874c1d0e8193b083c8f3402b82ed91",
+      "bytes": 6231
+    },
+    {
+      "group": "aegis_679_research_variant",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "research/rh/krein_autocert_v1.py",
+      "archive_path": "research/rh/aegis_source_4d7578e/research/krein_autocert_v1.py",
+      "blob_sha": "73692cdd297f35e10ebe90ed1680bb83e16f5239",
+      "bytes": 6174
+    },
+    {
+      "group": "aegis_679_research_variant",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "research/rh/krein_lp_cutting_plane_v1.py",
+      "archive_path": "research/rh/aegis_source_4d7578e/research/krein_lp_cutting_plane_v1.py",
+      "blob_sha": "ff3f12dd29d446af0559e31110020ff4f86725ef",
+      "bytes": 1432
+    },
+    {
+      "group": "aegis_679_research_variant",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "research/rh/krein_lp_L1.05_svd.json",
+      "archive_path": "research/rh/aegis_source_4d7578e/research/krein_lp_L1.05_svd.json",
+      "blob_sha": "8693c140b4be1f785074aa7040b5c50be5ef5fd2",
+      "bytes": 15994
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/EpsteinGaussCriticalLineV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/EpsteinGaussCriticalLineV1.lean.src",
+      "blob_sha": "d2850a9f0f008bef44451a8f790a3a376f63a124",
+      "bytes": 6275
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/EpsteinWeilXSpaceIdentityV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/EpsteinWeilXSpaceIdentityV1.lean.src",
+      "blob_sha": "101476488aded736e88d9caa834e672a2be47778",
+      "bytes": 4844
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHKreinZetaBridgeV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/RHKreinZetaBridgeV1.lean.src",
+      "blob_sha": "9d23fe77d6d7fe1ebb349be9c819047a8f00b4a7",
+      "bytes": 21316
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilCriticalLineArchV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilCriticalLineArchV1.lean.src",
+      "blob_sha": "fe6319e5682158cd151586c960b39b0654009f85",
+      "bytes": 2988
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilCriticalLineBridgeV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilCriticalLineBridgeV1.lean.src",
+      "blob_sha": "52a06809b4b953bcad44f28e6c871d5b6443f92c",
+      "bytes": 5146
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilCriticalLineKreinFormV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilCriticalLineKreinFormV1.lean.src",
+      "blob_sha": "752a5719d42ac3848b24b50c4b58b7578f5fe78e",
+      "bytes": 6841
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilCriticalLinePrimeV1.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilCriticalLinePrimeV1.lean.src",
+      "blob_sha": "624bad6d99e0011020228a9f869fce3632b51c1e",
+      "bytes": 6919
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineCompletedGammaV10.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilFixedLineCompletedGammaV10.lean.src",
+      "blob_sha": "1efcc19f2469d58bb3af8936d304c13d24fe2586",
+      "bytes": 7908
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaAssemblyV10.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilFixedLineGammaAssemblyV10.lean.src",
+      "blob_sha": "9cfe7edb2076f96cece0e36dd7ba68f8be9cc78e",
+      "bytes": 7344
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaFubiniV10.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilFixedLineGammaFubiniV10.lean.src",
+      "blob_sha": "24b031d7e9225a89e8ce3ed94103d94a6b3e9335",
+      "bytes": 10548
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaXSpaceV10.lean",
+      "archive_path": "research/rh/aegis_source_4f93fff/lean/WeilFixedLineGammaXSpaceV10.lean.src",
+      "blob_sha": "42a514aaf8cfd01e5b317b9dd8d4da436fafefd9",
+      "bytes": 9291
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "research/rh/epstein_d20_arb_xspace_certificate.py",
+      "archive_path": "research/rh/aegis_source_4f93fff/research/epstein_d20_arb_xspace_certificate.py",
+      "blob_sha": "bc79122d3d964eb370b09da8fda8c5715bab4fe4",
+      "bytes": 10937
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "research/rh/EPSTEIN_D20_REPLAY_RECEIPT_63bf9349.json",
+      "archive_path": "research/rh/aegis_source_4f93fff/research/EPSTEIN_D20_REPLAY_RECEIPT_63bf9349.json",
+      "blob_sha": "6175ed727e98619887aab6bbb2adbfa2de98a22d",
+      "bytes": 7305
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "research/rh/EPSTEIN_LATTICE_WEIL_CONTROL_V1.md",
+      "archive_path": "research/rh/aegis_source_4f93fff/research/EPSTEIN_LATTICE_WEIL_CONTROL_V1.md",
+      "blob_sha": "da3e1b24481610e4ae3eb750ac8c098658dc90e5",
+      "bytes": 8630
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "research/rh/test_epstein_d20_offline_zero.py",
+      "archive_path": "research/rh/aegis_source_4f93fff/research/test_epstein_d20_offline_zero.py",
+      "blob_sha": "2cf9c56dd243439e913e6a30f41940c604debf03",
+      "bytes": 1412
+    },
+    {
+      "group": "aegis_693_epstein_variant",
+      "source_pin": "4f93fffcea401e8ede433cc27d525ff7ad1579e3",
+      "source_path": "research/rh/test_epstein_lattice_weil_probe.py",
+      "archive_path": "research/rh/aegis_source_4f93fff/research/test_epstein_lattice_weil_probe.py",
+      "blob_sha": "b7b9fd9cc3458b9a6751fdc59988708ea2acff54",
+      "bytes": 7562
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/bridges/coq/SemanticBridgeObstruction.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/bridges/coq/SemanticBridgeObstruction.v",
+      "blob_sha": "c643fbb7b597e5d895f3f34097c3efedffd35dd8",
+      "bytes": 1342
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilAutocorrelationMellinV11Spec.lean",
+      "blob_sha": "938657931b5f5458916db0722151fd57046a3096",
+      "bytes": 485
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineAssemblyV4Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineAssemblyV4Spec.lean",
+      "blob_sha": "8df1dfa7f8856a529160a6bc548b9542fde206f3",
+      "bytes": 1327
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineExplicitFormulaContractV2Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineExplicitFormulaContractV2Spec.lean",
+      "blob_sha": "f1d8dcf688825556c0ca9903eaa3844918ff0b1f",
+      "bytes": 1577
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineFubiniCoreV3Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineFubiniCoreV3Spec.lean",
+      "blob_sha": "2fee3871f1e8290bcc73bc869e3f53bb8473a7c7",
+      "bytes": 1318
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineKernelIntegralV6Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineKernelIntegralV6Spec.lean",
+      "blob_sha": "860716607c21cfe08b132a6abb4fdb407bf42fb4",
+      "bytes": 525
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilFixedLineXSpaceTailV7Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilFixedLineXSpaceTailV7Spec.lean",
+      "blob_sha": "916af0e22acabdd78909d0d42eb2df43a24f0f3d",
+      "bytes": 771
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedHadamardFixedLineV1Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedHadamardFixedLineV1Spec.lean",
+      "blob_sha": "6b6dacc4ac5b880a6a933e9296fb20ededbf6aec",
+      "bytes": 1851
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedHadamardKernelTsumV2Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedHadamardKernelTsumV2Spec.lean",
+      "blob_sha": "6c1db482f8d26c9b2c16417f906550bf8d12616e",
+      "bytes": 1462
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilPairedMellinProfileV5Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilPairedMellinProfileV5Spec.lean",
+      "blob_sha": "f2e9e185666020353379148a85e23245d9ca7f81",
+      "bytes": 846
+    },
+    {
+      "group": "aegis_679_lean_tests",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilReciprocalPairedTestV8Spec.lean",
+      "archive_path": "research/rh/aegis_source_4d7578e/tests/lean/WeilReciprocalPairedTestV8Spec.lean",
+      "blob_sha": "7b74bd92df466011cae3317df5bc76de0f928a08",
+      "bytes": 700
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Bisimulation/ThreeWay.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Bisimulation/ThreeWay.v",
+      "blob_sha": "a235224fa19846118508b8171e4d201493823708",
+      "bytes": 473
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Event.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Event.v",
+      "blob_sha": "401a6403755cf88e7d7145aee9cdc3675a4c887c",
+      "bytes": 111
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Hash.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Hash.v",
+      "blob_sha": "8c00641484233b0faab4c348dbab28cf0f876610",
+      "bytes": 185
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/LatticeConvergence.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/LatticeConvergence.v",
+      "blob_sha": "aaa697aab3694b956df5a35b9a74afe2775d221d",
+      "bytes": 6820
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/LockIrreversibility.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/LockIrreversibility.v",
+      "blob_sha": "a551219d459f444b7bc1864bb260c04c18f7f250",
+      "bytes": 4317
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Core/Reducer.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Core/Reducer.v",
+      "blob_sha": "2d2924de5cd2adfb796814d9f9d97ee8af41ee6a",
+      "bytes": 300
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/AnalyticDefinitions.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/AnalyticDefinitions.v",
+      "blob_sha": "45e57d4bef0c227917bab901bf555386a2f24756",
+      "bytes": 3860
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/ConcreteFiniteGuinandWeilSemanticsV1.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/ConcreteFiniteGuinandWeilSemanticsV1.v",
+      "blob_sha": "a2fe539ea09813f4b0b38d2b4cd5149cb81ff90f",
+      "bytes": 14344
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/FiniteBridge.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/FiniteBridge.v",
+      "blob_sha": "ec9ab44b0eeb08d6062689e0d64ca53711179607",
+      "bytes": 2696
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/FiniteEntryDictionary.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/FiniteEntryDictionary.v",
+      "blob_sha": "420a776ad4642f32cb9454dad7d11fea58e07fdf",
+      "bytes": 3570
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/Globalization.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/Globalization.v",
+      "blob_sha": "d8f687841db4fd362778a9ba034e0f26316fdaa0",
+      "bytes": 5302
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0.v",
+      "blob_sha": "b78765a0a5db31bbc9f36a2b073191e5d248a90f",
+      "bytes": 326
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0ClosureProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0ClosureProbe.v",
+      "blob_sha": "dc397ed41ca17ba130e4bfbb45f1d2418a404afc",
+      "bytes": 166
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0DependencyProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0DependencyProbe.v",
+      "blob_sha": "8429ccdfcc4ba63b47555ef3c91e0930d6973ab9",
+      "bytes": 152
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0ProductionConstructiveProbe.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0ProductionConstructiveProbe.v",
+      "blob_sha": "2595ea0e78359a71bbe87d460d49fffd111f1564",
+      "bytes": 416
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeCompact.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeCompact.v",
+      "blob_sha": "1f9aeec8644c30062a6b260c769a5188027ce301",
+      "bytes": 513
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeConstructive.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeConstructive.v",
+      "blob_sha": "04bea158f497008a7efabccef1275b651c5b6967",
+      "bytes": 707
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeContinuity.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeContinuity.v",
+      "blob_sha": "3b8218d6d970f2366da5328b1b694d1447bd0df1",
+      "bytes": 366
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeFunction.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeFunction.v",
+      "blob_sha": "56b4f96af1b2acfeea8b48a013c4b4fa7cc6345d",
+      "bytes": 275
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/O0TrustProbeReals.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/O0TrustProbeReals.v",
+      "blob_sha": "eb0efe6f225df339cbd2f1b762a2a8d59ebeb344",
+      "bytes": 208
+    },
+    {
+      "group": "aegis_679_coq",
+      "source_pin": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+      "source_path": "sovereign-omega-v2/formal/theories/Weil/WeilCriterion.v",
+      "archive_path": "research/rh/aegis_source_4d7578e/coq/theories/Weil/WeilCriterion.v",
+      "blob_sha": "de49cbc6eb48b2dc5e41db6e08bd5342df0932c6",
+      "bytes": 689
+    }
+  ],
+  "external_binary_blobs": [
+    {
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.2/blocks_N100_NP10000.json.gz",
+      "source_blob_sha": "11b7f66ce9245b825f01b249212a9ec52bd2360b",
+      "size_bytes": 3272172,
+      "source_url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/0c1477fb032bb979a1bc61efd23caa4cacfe376c/research/rh/feshbach_arb_v2/L1.2/blocks_N100_NP10000.json.gz",
+      "reason": "Binary .gz unsupported by active UTF-8-only repository connector; NOT ported"
+    },
+    {
+      "source_pin": "0c1477fb032bb979a1bc61efd23caa4cacfe376c",
+      "source_path": "research/rh/feshbach_arb_v2/L1.3/blocks_N100_NP42000.json.gz",
+      "source_blob_sha": "610da292e15b7fd72a754fa72ed50a98f7a73587",
+      "size_bytes": 3275497,
+      "source_url": "https://github.com/Aegis-Omega/AEGIS-OMEGA/blob/0c1477fb032bb979a1bc61efd23caa4cacfe376c/research/rh/feshbach_arb_v2/L1.3/blocks_N100_NP42000.json.gz",
+      "reason": "Binary .gz unsupported by active UTF-8-only repository connector; NOT ported"
+    }
+  ],
+  "remaining_proof_goal": "AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10"
+}

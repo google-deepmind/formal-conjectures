@@ -1,0 +1,149 @@
+import WeilMomentKillerConstructionV1
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Tactic
+
+/-!
+AEGIS Omega -- explicit potential and localization identities, V4 candidate.
+Base: f707302f79c6a5ce7f5efb84492151234cff5bc7.
+
+This reuses the repository REAL operator momentKiller = D + D^2.
+It gives a candidate differential right inverse on continuous real profiles
+and the localization product rule. The accompanying written proof establishes
+compactness under two zero moments and finite local generation, including
+complex profiles componentwise. Those full statements are NOT claimed to be
+formalized by this file. No sign, PSD, density or RH premise is hidden here.
+
+Lean compilation and transitive axiom audit: NOT_RUN at preparation.
+Authority effect: NONE.
+-/
+
+open MeasureTheory Set
+open scoped ContDiff
+set_option autoImplicit false
+noncomputable section
+
+namespace AEGIS.RHMomentPotentialV4
+open AEGIS.WeilMomentKillerConstructionV1
+
+def primitive (phi : ℝ → ℝ) (a t : ℝ) : ℝ :=
+  ∫ u in a..t, phi u
+
+def weightedPrimitive (phi : ℝ → ℝ) (a t : ℝ) : ℝ :=
+  ∫ u in a..t, Real.exp u * phi u
+
+def tailPrimitive (phi : ℝ → ℝ) (a t : ℝ) : ℝ :=
+  Real.exp (-t) * weightedPrimitive phi a t
+
+def potential (phi : ℝ → ℝ) (a t : ℝ) : ℝ :=
+  primitive phi a t - tailPrimitive phi a t
+
+private theorem exp_neg_derivative_v4 (t : ℝ) :
+    HasDerivAt (fun u : ℝ => Real.exp (-u)) (-Real.exp (-t)) t := by
+  simpa using ((hasDerivAt_id t).neg).exp
+
+theorem primitive_hasDerivAt_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a t : ℝ) :
+    HasDerivAt (primitive phi a) (phi t) t := by
+  exact (hphi.integral_hasStrictDerivAt a t).hasDerivAt
+
+theorem weightedPrimitive_hasDerivAt_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a t : ℝ) :
+    HasDerivAt (weightedPrimitive phi a) (Real.exp t * phi t) t := by
+  exact ((Real.continuous_exp.mul hphi).integral_hasStrictDerivAt a t).hasDerivAt
+
+theorem tailPrimitive_hasDerivAt_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a t : ℝ) :
+    HasDerivAt (tailPrimitive phi a) (phi t - tailPrimitive phi a t) t := by
+  have he : Real.exp (-t) * Real.exp t = 1 := by
+    rw [← Real.exp_add]
+    simp
+  have hp := (exp_neg_derivative_v4 t).mul
+    (weightedPrimitive_hasDerivAt_v4 phi hphi a t)
+  have hs : -Real.exp (-t) * weightedPrimitive phi a t +
+      Real.exp (-t) * (Real.exp t * phi t) =
+      phi t - tailPrimitive phi a t := by
+    unfold tailPrimitive
+    calc
+      _ = -Real.exp (-t) * weightedPrimitive phi a t +
+          (Real.exp (-t) * Real.exp t) * phi t := by ring
+      _ = _ := by rw [he]; ring
+  rw [hs] at hp
+  exact hp
+
+theorem potential_hasDerivAt_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a t : ℝ) :
+    HasDerivAt (potential phi a) (tailPrimitive phi a t) t := by
+  have hp : HasDerivAt (fun u => primitive phi a u - tailPrimitive phi a u)
+      (phi t - (phi t - tailPrimitive phi a t)) t :=
+    (primitive_hasDerivAt_v4 phi hphi a t).sub
+      (tailPrimitive_hasDerivAt_v4 phi hphi a t)
+  unfold potential
+  convert hp using 1 <;> ring
+
+theorem potential_deriv_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a : ℝ) :
+    deriv (potential phi a) = tailPrimitive phi a := by
+  funext t
+  exact (potential_hasDerivAt_v4 phi hphi a t).deriv
+
+/-- This is a differential right inverse, NOT a compact-support theorem.
+The two moment conditions are needed for compactness in the written proof. -/
+theorem momentKiller_potential_v4 (phi : ℝ → ℝ)
+    (hphi : Continuous phi) (a : ℝ) :
+    momentKiller (potential phi a) = phi := by
+  funext t
+  unfold momentKiller
+  rw [potential_deriv_v4 phi hphi a,
+    (tailPrimitive_hasDerivAt_v4 phi hphi a t).deriv]
+  ring
+
+theorem potential_at_anchor_v4 (phi : ℝ → ℝ) (a : ℝ) :
+    potential phi a a = 0 := by
+  simp [potential, primitive, tailPrimitive, weightedPrimitive]
+
+/-- Algebraic tail statement. Deriving its two premises from vanishing
+moments and source support remains part of the written analytic proof. -/
+theorem potential_zero_of_primitive_zeros_v4 (phi : ℝ → ℝ) (a t : ℝ)
+    (h0 : primitive phi a t = 0) (h1 : weightedPrimitive phi a t = 0) :
+    potential phi a t = 0 := by
+  simp [potential, tailPrimitive, h0, h1]
+
+/-- The error terms that direct cutoff multiplication would lose. -/
+theorem localization_product_rule_v4 (chi psi : ℝ → ℝ)
+    (hchi : ContDiff ℝ ∞ chi) (hpsi : ContDiff ℝ ∞ psi) (t : ℝ) :
+    momentKiller (fun u => chi u * psi u) t =
+      chi t * momentKiller psi t +
+      (deriv (deriv chi) t + deriv chi t) * psi t +
+      2 * deriv chi t * deriv psi t := by
+  have hc : Differentiable ℝ chi := hchi.differentiable (by simp)
+  have hp : Differentiable ℝ psi := hpsi.differentiable (by simp)
+  have hc' : Differentiable ℝ (deriv chi) :=
+    ((contDiff_infty_iff_deriv.mp hchi).2).differentiable (by simp)
+  have hp' : Differentiable ℝ (deriv psi) :=
+    ((contDiff_infty_iff_deriv.mp hpsi).2).differentiable (by simp)
+  have hd : deriv (fun u => chi u * psi u) =
+      (fun u => deriv chi u * psi u + chi u * deriv psi u) := by
+    funext u
+    exact deriv_mul (hc u) (hp u)
+  unfold momentKiller
+  rw [hd]
+  have hsecond : HasDerivAt
+      (fun u => deriv chi u * psi u + chi u * deriv psi u)
+      (deriv (deriv chi) t * psi t + deriv chi t * deriv psi t +
+        (deriv chi t * deriv psi t + chi t * deriv (deriv psi) t)) t :=
+    ((hc' t).hasDerivAt.mul (hp t).hasDerivAt).add
+      ((hc t).hasDerivAt.mul (hp' t).hasDerivAt)
+  rw [hsecond.deriv]
+  ring
+
+end AEGIS.RHMomentPotentialV4
+
+#print axioms AEGIS.RHMomentPotentialV4.primitive_hasDerivAt_v4
+#print axioms AEGIS.RHMomentPotentialV4.weightedPrimitive_hasDerivAt_v4
+#print axioms AEGIS.RHMomentPotentialV4.tailPrimitive_hasDerivAt_v4
+#print axioms AEGIS.RHMomentPotentialV4.potential_hasDerivAt_v4
+#print axioms AEGIS.RHMomentPotentialV4.potential_deriv_v4
+#print axioms AEGIS.RHMomentPotentialV4.momentKiller_potential_v4
+#print axioms AEGIS.RHMomentPotentialV4.potential_at_anchor_v4
+#print axioms AEGIS.RHMomentPotentialV4.potential_zero_of_primitive_zeros_v4
+#print axioms AEGIS.RHMomentPotentialV4.localization_product_rule_v4

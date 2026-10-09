@@ -1,0 +1,29 @@
+zero cell [0,1/20]: lower bound of F = [0.0155173619365862736136331764920231943588603832404239555596131455 +/- 2.56e-65]
+  at xi = 10.55 cells 500
+  at xi = 119.3 cells 1000
+  at xi = 244.3 cells 1500
+  at xi = 369.3 cells 2000
+  at xi = 494.3 cells 2500
+  at xi = 619.3 cells 3000
+  at xi = 744.3 cells 3500
+  at xi = 869.3 cells 4000
+  at xi = 994.3 cells 4500
+  at xi = 1119.3 cells 5000
+  at xi = 1244.3 cells 5500
+  at xi = 1369.3 cells 6000
+  at xi = 1494.3 cells 6500
+  at xi = 1619.3 cells 7000
+  at xi = 1744.3 cells 7500
+  at xi = 1869.3 cells 8000
+  at xi = 1994.3 cells 8500
+  at xi = 2119.3 cells 9000
+  at xi = 2244.3 cells 9500
+  at xi = 2369.3 cells 10000
+  at xi = 2494.3 cells 10500
+  at xi = 2619.3 cells 11000
+  at xi = 2744.3 cells 11500
+  at xi = 2869.3 cells 12000
+  at xi = 2994.3 cells 12500
+cells verified on [1/20, 3000]: 12523
+tail lower bound (F/W for xi >= X): [3.623051968637760339900346624818055795419704728170539367909691254875819786 +/- 2.18e-73]
+CERTIFIED: F(xi) >= 0 for all real xi, m = [0.9900000000000000000000000000000000000000000000000000000000000000000000000000 +/- 1.42e-77] (Re psi via Lean minorant, NPSI = 1024 )

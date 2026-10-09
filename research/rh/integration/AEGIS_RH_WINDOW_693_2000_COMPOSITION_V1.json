@@ -1,0 +1,19 @@
+{
+  "schema": "AEGIS_RH_WINDOW_693_2000_COMPOSITION_V1",
+  "source_repository": "Aegis-Omega/AEGIS-OMEGA",
+  "source_commit": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5",
+  "also_identical_at": "4d7578ef3df6ae4d1bcd6e2eaefeb2f7f5309afe",
+  "source_file": "sovereign-omega-v2/formal/bridges/lean/RHHatCoxClass693V13.lean",
+  "source_blob_sha": "84f11e4960fb8f53dc5c303693070625d4894b49",
+  "source_theorem": "AEGIS.RHHatCoxClass693V13.universal_on_class",
+  "source_already_archived_at": "research/rh/aegis_source_4d7578e/lean/RHHatCoxClass693V13.lean.src",
+  "new_module": "AEGISOverlay/RHWindow693Over2000V1.lean",
+  "new_theorems": [
+    "AEGIS.RHWindow693Over2000V1.window_693_over_2000_arithmetic_nonpositive_v1",
+    "AEGIS.RHWindow693Over2000V1.window_le_693_over_2000_arithmetic_nonpositive_v1"
+  ],
+  "scope": "L<=693/2000 only",
+  "claim_riemann_hypothesis_unconditional": false,
+  "verification_required": "fresh exact-head Lean compile with standard-axiom audit",
+  "base_head": "e3e44d6c07782365a113c95a437aa6592d03d185"
+}

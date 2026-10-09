@@ -1,0 +1,318 @@
+{
+ "packet": "replay #693@63bf9349 → two committed certificate tests → raw endpoints → Arb/FLINT independent x-space recompute",
+ "tests_run": [
+  "test_tail_free_same_discriminant_arithmetic_interval_certificate",
+  "test_absolute_fixed_witness_weil_value_interval_certificate"
+ ],
+ "tests_result": "2 passed",
+ "python_side": {
+  "replay_commit": "63bf9349d1dcb3453f1cde1eef262636f3b65991",
+  "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]",
+  "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+  "mpmath": "1.4.1",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "source_blobs": {
+   "harness/sdk/epstein_lattice_weil_probe.py": "3a2d59c6b0ab9d6f2c9f03dd1c33c883bfab690f",
+   "research/rh/test_epstein_lattice_weil_probe.py": "b7b9fd9cc3458b9a6751fdc59988708ea2acff54"
+  },
+  "arithmetic_displacement_receipt": {
+   "schema_version": "1.0.0",
+   "certificate_scope": "FINITE_PAIRWISE_ARITHMETIC_DISPLACEMENT_ONLY",
+   "backend": "mpmath.iv",
+   "decimal_digits": 80,
+   "support_length_exact": "7/2",
+   "modes": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    18
+   ],
+   "integer_coefficients": [
+    22,
+    10,
+    6,
+    3,
+    2,
+    -2,
+    -1
+   ],
+   "total_interval": [
+    "-5.433709724838392",
+    "-5.433709724838392"
+   ],
+   "non_prime_power_interval": [
+    "-2.610467055146453",
+    "-2.610467055146453"
+   ],
+   "prime_power_interval": [
+    "-2.823242669691939",
+    "-2.823242669691939"
+   ],
+   "n6_interval": [
+    "-1.0678273563359553",
+    "-1.0678273563359553"
+   ],
+   "certified_strictly_negative": true,
+   "archimedean_difference_exactly_zero": true,
+   "tail_bound_needed": false,
+   "t_grid_used": false,
+   "symbolic_logder_rows": [
+    {
+     "n": 2,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "2": -1
+     }
+    },
+    {
+     "n": 3,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "3": -2
+     }
+    },
+    {
+     "n": 4,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "2": 1
+     }
+    },
+    {
+     "n": 6,
+     "prime_power": false,
+     "prime_log_coefficients": {
+      "2": 2,
+      "3": 2
+     }
+    },
+    {
+     "n": 7,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "7": -2
+     }
+    },
+    {
+     "n": 8,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "2": -1
+     }
+    },
+    {
+     "n": 9,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "3": 4
+     }
+    },
+    {
+     "n": 14,
+     "prime_power": false,
+     "prime_log_coefficients": {
+      "2": 2,
+      "7": 2
+     }
+    },
+    {
+     "n": 16,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "2": 1
+     }
+    },
+    {
+     "n": 21,
+     "prime_power": false,
+     "prime_log_coefficients": {
+      "3": 4,
+      "7": 4
+     }
+    },
+    {
+     "n": 23,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "23": -2
+     }
+    },
+    {
+     "n": 27,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "3": -2
+     }
+    },
+    {
+     "n": 32,
+     "prime_power": true,
+     "prime_log_coefficients": {
+      "2": -1
+     }
+    }
+   ],
+   "absolute_principal_weil_value_certified": false,
+   "absolute_euler_weil_value_certified": false,
+   "formula_to_target_weil_identity_machine_formalized": false,
+   "proof_authority": false,
+   "rh_proven": false
+  },
+  "absolute_quadratic_receipt": {
+   "schema_version": "1.0.0",
+   "certificate_scope": "ABSOLUTE_FIXED_WITNESS_EXPLICIT_FORMULA_VALUE",
+   "backend": "mpmath.iv",
+   "decimal_digits": 40,
+   "series_terms": 2000,
+   "support_length_exact": "7/2",
+   "modes": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    18
+   ],
+   "integer_coefficients": [
+    22,
+    10,
+    6,
+    3,
+    2,
+    -2,
+    -1
+   ],
+   "principal_rayleigh_interval": [
+    "-0.0648649002520263",
+    "-0.06474175495106765"
+   ],
+   "euler_classsum_rayleigh_interval": [
+    "5.368844824586366",
+    "5.368967969887325"
+   ],
+   "difference_interval": [
+    "-5.433832870139351",
+    "-5.433586579537433"
+   ],
+   "principal_certified_strictly_negative": true,
+   "euler_classsum_certified_strictly_positive": true,
+   "t_grid_used": false,
+   "t_tail_needed": false,
+   "series_remainder_bounded": true,
+   "absolute_principal_weil_value_certified": true,
+   "formula_to_target_weil_identity_machine_formalized": false,
+   "proof_authority": false,
+   "rh_proven": false
+  }
+ },
+ "arb_side": {
+  "python_flint": "0.8.0",
+  "script_blob": "bc79122d3d964eb370b09da8fda8c5715bab4fe4",
+  "output": {
+   "L": "7/2",
+   "ks": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    18
+   ],
+   "c": [
+    22,
+    10,
+    6,
+    3,
+    2,
+    -2,
+    -1
+   ],
+   "prec_bits": 160,
+   "E_h0": "[221312.56036691657564 +/- 4.08e-16]",
+   "const": "[-3.9048198770442787577 +/- 1.75e-20]",
+   "arch_integral": "[1768151.961291057598409839 +/- 4.67e-19]",
+   "moment_plus": "[+/- 1.66e-45]",
+   "moment_minus": "[+/- 2.91e-46]",
+   "n_range": [
+    2,
+    33
+   ],
+   "principal": {
+    "arith_sum": "[918299.6340080772369618205 +/- 4.46e-20]",
+    "composite_part_of_arith_sum": "[577729.14772794640763 +/- 2.79e-15]",
+    "W_numerator": "[-14333.35747731734155055492 +/- 8.52e-22]",
+    "W_numerator_interval": [
+     "[-14333.35747731734155055 +/- 4.92e-18]",
+     "[-14333.35747731734155055 +/- 4.92e-18]"
+    ],
+    "rayleigh": "[-0.06476522368885845183891395 +/- 9.19e-28]",
+    "rayleigh_interval": [
+     "[-0.06476522368885845183891 +/- 3.96e-24]",
+     "[-0.06476522368885845183891 +/- 3.96e-24]"
+    ],
+    "sign": "NEGATIVE (certified)",
+    "lambda_support": {
+     "4": "2*log2",
+     "5": "1*log5",
+     "6": "2*log2 + 2*log3",
+     "9": "6*log3",
+     "14": "2*log2 + 2*log7",
+     "16": "2*log2",
+     "21": "4*log3 + 4*log7",
+     "25": "1*log5",
+     "29": "2*log29"
+    }
+   },
+   "euler": {
+    "arith_sum": "[-284248.5774865211844620379 +/- 4.16e-20]",
+    "composite_part_of_arith_sum": "0",
+    "W_numerator": "[1188214.854017281079873303 +/- 3.95e-19]",
+    "W_numerator_interval": [
+     "[1188214.854017281079873 +/- 3.04e-16]",
+     "[1188214.854017281079873 +/- 3.04e-16]"
+    ],
+    "rayleigh": "[5.368944501149534164317180 +/- 3.53e-25]",
+    "rayleigh_interval": [
+     "[5.368944501149534164317 +/- 1.80e-22]",
+     "[5.368944501149534164317 +/- 1.80e-22]"
+    ],
+    "sign": "POSITIVE (certified)",
+    "lambda_support": {
+     "2": "1*log2",
+     "3": "2*log3",
+     "4": "1*log2",
+     "5": "1*log5",
+     "7": "2*log7",
+     "8": "1*log2",
+     "9": "2*log3",
+     "16": "1*log2",
+     "23": "2*log23",
+     "25": "1*log5",
+     "27": "2*log3",
+     "29": "2*log29",
+     "32": "1*log2"
+    }
+   }
+  }
+ },
+ "agreement": {
+  "principal_arb_inside_mpmath_interval": true,
+  "euler_arb_inside_mpmath_interval": true,
+  "difference_arb_inside_mpmath_interval": true,
+  "arb_principal_strictly_negative": true,
+  "arb_euler_strictly_positive": true,
+  "arb_difference": "[-5.433709724838392616156094 +/- 4.04e-25]",
+  "committed_arithmetic_displacement_total": [
+   "-5.433709724838392",
+   "-5.433709724838392"
+  ],
+  "arb_difference_minus_displacement": "[-6.16156094e-16 +/- 4.04e-25]"
+ },
+ "note": "mpmath endpoints are serialized by the producer as Python floats (nearest rounding, not outward); the Arb balls are rigorous at 160 bits and lie strictly inside them."
+}

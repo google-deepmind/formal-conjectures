@@ -1,0 +1,5 @@
+# Independent replay and primary rigorous certificate
+python-flint==0.9.0
+# Discovery only
+numpy==2.3.5
+scipy==1.17.0

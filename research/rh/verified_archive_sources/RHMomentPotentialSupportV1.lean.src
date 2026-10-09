@@ -1,0 +1,110 @@
+import RHMomentPotentialV4
+
+open MeasureTheory Set
+open scoped ContDiff
+set_option autoImplicit false
+noncomputable section
+
+namespace AEGIS.RHMomentPotentialSupportV1
+open AEGIS.RHMomentPotentialV4
+
+theorem primitive_contDiff_v1 (phi : ℝ → ℝ) (a : ℝ)
+    (hc : ContDiff ℝ ∞ phi) : ContDiff ℝ ∞ (primitive phi a) := by
+  apply contDiff_infty_iff_deriv.mpr
+  constructor
+  · intro t
+    exact (primitive_hasDerivAt_v4 phi hc.continuous a t).differentiableAt
+  · have heq : deriv (primitive phi a) = phi := by
+      funext t
+      exact (primitive_hasDerivAt_v4 phi hc.continuous a t).deriv
+    rw [heq]
+    exact hc
+
+theorem potential_contDiff_v1 (phi : ℝ → ℝ) (a : ℝ)
+    (hc : ContDiff ℝ ∞ phi) : ContDiff ℝ ∞ (potential phi a) := by
+  have hw : ContDiff ℝ ∞ (weightedPrimitive phi a) :=
+    primitive_contDiff_v1 (fun x => Real.exp x * phi x) a
+      (Real.contDiff_exp.mul hc)
+  have ht : ContDiff ℝ ∞ (tailPrimitive phi a) :=
+    (Real.contDiff_exp.comp contDiff_id.neg).mul hw
+  exact (primitive_contDiff_v1 phi a hc).sub ht
+
+theorem primitive_zero_outside_v1 (phi : ℝ → ℝ) (a b : ℝ)
+    (hc : Continuous phi)
+    (hs : ∀ x, x < a ∨ b < x → phi x = 0)
+    (hz : ∫ x in a..b, phi x = 0)
+    (t : ℝ) (ht : t < a ∨ b < t) : primitive phi a t = 0 := by
+  unfold primitive
+  rcases ht with ht | ht
+  · have h : (∫ x in t..a, phi x) = 0 := by
+      calc
+        _ = ∫ x in t..a, (0 : ℝ) :=
+          intervalIntegral.integral_congr_Ioo_of_le ht.le
+            (fun x hx => hs x (Or.inl hx.2))
+        _ = 0 := by simp
+    rw [intervalIntegral.integral_symm, h, neg_zero]
+  · have h : (∫ x in b..t, phi x) = 0 := by
+      calc
+        _ = ∫ x in b..t, (0 : ℝ) :=
+          intervalIntegral.integral_congr_Ioo_of_le ht.le
+            (fun x hx => hs x (Or.inr hx.1))
+        _ = 0 := by simp
+    rw [← intervalIntegral.integral_add_adjacent_intervals
+      (hc.intervalIntegrable a b) (hc.intervalIntegrable b t), hz, h, add_zero]
+
+theorem potential_zero_outside_v1 (phi : ℝ → ℝ) (a b : ℝ)
+    (hc : Continuous phi)
+    (hs : ∀ x, x < a ∨ b < x → phi x = 0)
+    (h0 : ∫ x in a..b, phi x = 0)
+    (h1 : ∫ x in a..b, Real.exp x * phi x = 0)
+    (t : ℝ) (ht : t < a ∨ b < t) : potential phi a t = 0 := by
+  apply potential_zero_of_primitive_zeros_v4
+  · exact primitive_zero_outside_v1 phi a b hc hs h0 t ht
+  · exact primitive_zero_outside_v1 (fun x => Real.exp x * phi x) a b
+      (Real.continuous_exp.mul hc)
+      (fun x hx => by rw [hs x hx, mul_zero]) h1 t ht
+
+theorem potential_tsupport_subset_v1 (phi : ℝ → ℝ) (a b : ℝ)
+    (hc : Continuous phi)
+    (hs : ∀ x, x < a ∨ b < x → phi x = 0)
+    (h0 : ∫ x in a..b, phi x = 0)
+    (h1 : ∫ x in a..b, Real.exp x * phi x = 0) :
+    tsupport (potential phi a) ⊆ Icc a b := by
+  apply closure_minimal _ isClosed_Icc
+  intro x hx
+  by_contra hn
+  have hout : x < a ∨ b < x := by
+    simpa only [mem_Icc, not_and_or, not_le] using hn
+  exact hx (potential_zero_outside_v1 phi a b hc hs h0 h1 x hout)
+
+theorem potential_hasCompactSupport_v1 (phi : ℝ → ℝ) (a b : ℝ)
+    (hc : Continuous phi)
+    (hs : ∀ x, x < a ∨ b < x → phi x = 0)
+    (h0 : ∫ x in a..b, phi x = 0)
+    (h1 : ∫ x in a..b, Real.exp x * phi x = 0) :
+    HasCompactSupport (potential phi a) :=
+  isCompact_Icc.of_isClosed_subset (isClosed_tsupport _)
+    (potential_tsupport_subset_v1 phi a b hc hs h0 h1)
+
+theorem exists_compact_smooth_right_inverse_v1 (phi : ℝ → ℝ) (a b : ℝ)
+    (hc : ContDiff ℝ ∞ phi)
+    (hs : ∀ x, x < a ∨ b < x → phi x = 0)
+    (h0 : ∫ x in a..b, phi x = 0)
+    (h1 : ∫ x in a..b, Real.exp x * phi x = 0) :
+    ∃ psi : ℝ → ℝ, ContDiff ℝ ∞ psi ∧ HasCompactSupport psi ∧
+      tsupport psi ⊆ Icc a b ∧
+      AEGIS.WeilMomentKillerConstructionV1.momentKiller psi = phi :=
+  ⟨potential phi a, potential_contDiff_v1 phi a hc,
+    potential_hasCompactSupport_v1 phi a b hc.continuous hs h0 h1,
+    potential_tsupport_subset_v1 phi a b hc.continuous hs h0 h1,
+    momentKiller_potential_v4 phi hc.continuous a⟩
+
+end AEGIS.RHMomentPotentialSupportV1
+
+#print axioms AEGIS.RHMomentPotentialSupportV1.primitive_zero_outside_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.potential_zero_outside_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.potential_tsupport_subset_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.potential_hasCompactSupport_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.primitive_contDiff_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.potential_contDiff_v1
+#print axioms AEGIS.RHMomentPotentialSupportV1.exists_compact_smooth_right_inverse_v1

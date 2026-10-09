@@ -1,0 +1,292 @@
+{
+  "schema": "AEGIS_PR606_FORMAL_CONJECTURES_PORT_V1",
+  "source_repository": "Aegis-Omega/AEGIS-OMEGA",
+  "source_pull_request": 606,
+  "source_base_sha": "cfe368ce2ffa0d196a4319c02b956997edf9f3fa",
+  "source_head_sha": "589adf0480bd4d7c12c9828027ea6228398377f4",
+  "fork_repository": "tarikskalic33/formal-conjectures",
+  "fork_base_sha": "02da1ad1288b4881ea1f8e575fbe84af7db04364",
+  "imported_changed_file_count": 54,
+  "imported_lean_bridge_count": 50,
+  "compatibility_overlay_files": [
+    "WeilZeroTranslationV11.lean",
+    "WeilZeroTwoPointV11.lean",
+    "WeilZeroKernelHermitianV11.lean",
+    "RHZeroKernelLaplaceV12.lean"
+  ],
+  "terminal_fork_bridge": "AegisRH/PR606/V13Scratch.lean",
+  "files": [
+    {
+      "source_path": ".github/workflows/rh-autocorrelation-mellin-v11.yml",
+      "port_path": "AegisRH/PR606/UpstreamWorkflows/rh-autocorrelation-mellin-v11.yml",
+      "source_status": "added"
+    },
+    {
+      "source_path": ".github/workflows/rh-digamma-series-real-v1.yml",
+      "port_path": "AegisRH/PR606/UpstreamWorkflows/rh-digamma-series-real-v1.yml",
+      "source_status": "added"
+    },
+    {
+      "source_path": ".github/workflows/rh-restricted-weil-criterion-v10.yml",
+      "port_path": "AegisRH/PR606/UpstreamWorkflows/rh-restricted-weil-criterion-v10.yml",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/MeromorphicIdentityPreconnectedV11.lean",
+      "port_path": "AegisRH/PR606/Source/MeromorphicIdentityPreconnectedV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHMillenniumGateV10.lean",
+      "port_path": "AegisRH/PR606/Source/RHMillenniumGateV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHTranslatedKernelDominanceV1.lean",
+      "port_path": "AegisRH/PR606/Source/RHTranslatedKernelDominanceV1.lean",
+      "source_status": "modified"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelBoundV11.lean",
+      "port_path": "AegisRH/PR606/Source/RHZeroKernelBoundV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelLaplaceAnalyticV12.lean",
+      "port_path": "AegisRH/PR606/Source/RHZeroKernelLaplaceAnalyticV12.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RHZeroKernelLaplaceV12.lean",
+      "port_path": "AegisRH/PR606/Source/RHZeroKernelLaplaceV12.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionKernelBridgeV10.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionKernelBridgeV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionLaplaceV10.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionLaplaceV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionPoleIsolationV10.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionPoleIsolationV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionResidueCoefficientV11.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionResidueCoefficientV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionResidueWitnessV11.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionResidueWitnessV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionTargetWitnessV11.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionTargetWitnessV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/RestrictedWeilCriterionZeroKernelV10.lean",
+      "port_path": "AegisRH/PR606/Source/RestrictedWeilCriterionZeroKernelV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilActualZeroSummandWitnessV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilActualZeroSummandWitnessV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilArchimedeanCorrectionV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilArchimedeanCorrectionV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationExplicitFormulaV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilAutocorrelationExplicitFormulaV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinFactorV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilAutocorrelationMellinFactorV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilAutocorrelationMellinV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesHalfPlaneV1.lean",
+      "port_path": "AegisRH/PR606/Source/WeilDigammaSeriesHalfPlaneV1.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilDigammaSeriesRealV1.lean",
+      "port_path": "AegisRH/PR606/Source/WeilDigammaSeriesRealV1.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilExplicitFormulaV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilExplicitFormulaV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFinalSignTranslationBoundV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFinalSignTranslationBoundV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFiniteDilationFilterV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFiniteDilationFilterV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFiniteDilationFilterV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFiniteDilationFilterV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineArithmeticV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineArithmeticV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineCompletedGammaV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineCompletedGammaV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaAssemblyV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineGammaAssemblyV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaCoreV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineGammaCoreV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaFubiniV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineGammaFubiniV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineGammaXSpaceV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineGammaXSpaceV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilFixedLineZeroSideV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilFixedLineZeroSideV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogAutocorrelationV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilLogAutocorrelationV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilLogLiftCompactSupportV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilLogLiftCompactSupportV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMixedMellinFactorV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilMixedMellinFactorV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilMomentZeroDetectionV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilMomentZeroDetectionV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilOffLineSeedV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilOffLineSeedV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedHadamardTsumFusionV1.lean",
+      "port_path": "AegisRH/PR606/Source/WeilPairedHadamardTsumFusionV1.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilPairedZeroEvaluationV9.lean",
+      "port_path": "AegisRH/PR606/Source/WeilPairedZeroEvaluationV9.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilRHImpliesFinalSignV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilRHImpliesFinalSignV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilStrictStripSeedV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilStrictStripSeedV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslatedKernelBoundV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilTranslatedKernelBoundV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslatedZeroSeriesV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilTranslatedZeroSeriesV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilTranslationGapInvariantV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilTranslationGapInvariantV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilXiLogDerivDecompositionV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilXiLogDerivDecompositionV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroCarrierBridgeV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroCarrierBridgeV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroCarrierRebindV10.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroCarrierRebindV10.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroKernelHermitianV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroKernelHermitianV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroSideIdentificationV1.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroSideIdentificationV1.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroTranslationV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroTranslationV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/bridges/lean/WeilZeroTwoPointV11.lean",
+      "port_path": "AegisRH/PR606/Source/WeilZeroTwoPointV11.lean",
+      "source_status": "added"
+    },
+    {
+      "source_path": "sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean",
+      "port_path": "AegisRH/PR606/Test/WeilAutocorrelationMellinV11Spec.lean",
+      "source_status": "added"
+    }
+  ],
+  "fork_apache2_header_prepended_to_imported_lean": true,
+  "upstream_lean_body_preserved": true
+}

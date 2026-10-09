@@ -1,0 +1,45 @@
+{
+ "L": 0.9607843137254902,
+ "L_note": "L is the IEEE double 0.9607843137254902 = 8653975754555071/2^53 >= 49/51 (excess 2.83e-17), so the certificate covers log-support width < 49/51",
+ "L_rational_target": "49/51",
+ "authority_effect": "NONE",
+ "claim": "F(xi)=W(xi)(S(xi)-m)+Hhat(xi) >= 0 for every real xi, W=(xi^2+1/4)^2, S=Re psi(1/4+i xi/2)-log pi-sqrt2 log2 cos(xi log2), H = 399 hats (half-width 0.02, centres L+0.02k) + delta^(j)(|u|-L), j<=4",
+ "files": {
+  "KREIN_ARB_VERIFY_L49_51.log": "d27cc1ce72c35a69a089035fcda0f6630b27bbbc",
+  "krein_lp_L49_51.json": "6fdd87fe2d0712d06e9344d2d6a2ab2de7c77e92",
+  "krein_lp_cutting_plane_v1.py": "ff3f12dd29d446af0559e31110020ff4f86725ef",
+  "verify_krein_arb_v1.py": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a"
+ },
+ "lean_consumer": "RHKreinZetaBridgeV1.certificate_zero_quadratic_nonneg (PR #693): with this F as hypothesis hcert, Re sum_rho Z_rho(A_g) >= 0 for every moment-zero packet of log-support width < L",
+ "lp_coefficient_scale": {
+  "delta": [
+   -19439.706876314027,
+   8960.909611403707,
+   688.4291502054252,
+   -10.94023967225988,
+   0.39921599867023216
+  ],
+  "max_abs_hat": 1000000.0,
+  "sum_abs_hat": 350883115.26219416
+ },
+ "lp_source": "research/rh/krein_lp_cutting_plane_v1.py 0.9607843137254902 8 1e6 1e6 L49_51 (cutting-plane: re-solve until no violation on a 0.001 grid at 0.9 m)",
+ "m_certified": "0.006",
+ "m_lp_float": 0.006919095934758493,
+ "method": "Arb (python-flint 0.8.0, 256-bit) degree-20 Taylor models via verify_krein_arb_v1.py (unchanged); zero cell [0,0.004]; xi>=3000 monotone tail bound",
+ "not_covered": "the pointwise inequality is Arb-checked, not Lean-checked; widths >= 49/51; RH",
+ "receipt_sha256": "18406c067b029db429d479fe485b23daa195028ef4ad4f3257b45a241f8f10ee",
+ "results": [
+  "zero cell [0,[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80]]: lower bound of F = [5.47053898768347587001457747568036984882420586707503899663426e-5 +/- 6.30e-65]",
+  "cells verified on [[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80], 3000.000000000000000000000000000000000000000000000000000000000000000000000000]: 12151",
+  "tail lower bound (F/W for xi >= X): [4.779292783469205619286159855323133844219629086883821220608598751604572010182 +/- 8.66e-76]",
+  "CERTIFIED: F(xi) >= 0 for all real xi, m = [0.006000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 1.25e-79]"
+ ],
+ "rh_proven": false,
+ "schema": "aegis.rh.krein-arb-certificate.v1",
+ "versions": {
+  "numpy": "2.4.6",
+  "python": "3.11.15",
+  "python_flint": "0.8.0",
+  "scipy": "1.17.1"
+ }
+}

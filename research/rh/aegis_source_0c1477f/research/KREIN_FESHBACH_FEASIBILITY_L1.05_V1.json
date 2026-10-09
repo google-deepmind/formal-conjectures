@@ -1,0 +1,25 @@
+{
+ "L": 1.05,
+ "basis_dim": 54,
+ "c_b_on_lowest_ritz": 0.0007759215163483441,
+ "c_inf_hs": 0.7291064231198198,
+ "c_inf_top": 0.7363025801769651,
+ "c_target": 1.0,
+ "fine_grid_min_F_plus_s": -0.00016849837368537735,
+ "k": 24,
+ "lp_slack_integral": 9.56870100194689,
+ "ritz_lambda_k_plus_1": 2.4757688072579827,
+ "ritz_lambda_min": 0.0035249335136797733,
+ "schema": "AEGIS_KREIN_FESHBACH_FEASIBILITY_V1",
+ "schur_margin_hs": {
+  "0.00025": 0.0021260845403402485,
+  "0.001": 0.0013747995176104277,
+  "0.0015": 0.0008739412274242986,
+  "0.002": 0.0003730816471387961,
+  "0.0025": -0.00012777922617583933
+ },
+ "status": "FLOATING_POINT_DIAGNOSTIC_NOT_A_CERTIFICATE",
+ "tail_hs_bound": 0.27072507850649485,
+ "tail_top_eig": 0.26352892144934953,
+ "xi0_slack_support": 40.0
+}

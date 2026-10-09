@@ -1,0 +1,21 @@
+{
+  "schema": "aegis-rh-pr12-small-window-intake-v1",
+  "integration_pr": 63,
+  "integration_branch": "integration/rh-proof-spine-main-root-v1",
+  "integration_parent_sha": "3fa88cf8897dbfd41f6cd14a3cc40199085fdbfe",
+  "source_pr": 12,
+  "source_exact_head": "069400c0593d1577a420beb55f68b231713f2961",
+  "unchanged_blobs": {
+    "AegisRH/SmallWindow/RHSmallWindowProducerV1.lean": "83dc604781d62aa36f8cc36edb9f2c57e7fe829e",
+    "AegisRH/SmallWindow/WeilWindowExhaustionV1.lean": "10be98e215f0e310499948d87a96e692ac49f9f4",
+    ".github/workflows/aegis-rh-small-window-producer-v1.yml": "ecf38dc51015a69c3e4c20a591e186d9d783a9de"
+  },
+  "canonical_replay_aegis_sha": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5",
+  "independent_pr12_aegis_sha": "4f1b52a454be9779bf39245cb4343d8d8e4b7270",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_sha": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "largest_preexisting_window": "693/2000",
+  "unconditional_RH_claim": false,
+  "external_authority_effect": "NONE",
+  "exact_head_evidence": "CI exact-head checkout, Lean logs, #print axioms, immutable Git blob identity"
+}

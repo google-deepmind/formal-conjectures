@@ -1,0 +1,29 @@
+{
+  "schema": "aegis.rh.signed_prime.integrability_v7.v1",
+  "repository": "tarikskalic33/formal-conjectures",
+  "pr": 63,
+  "base_head": "6a554eee9cfead07a821b8b059ab133c43dcfc6b",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "parent_module": {
+    "path": "AEGISOverlay/RHSignedPrimeChebyshevFiniteBridgeV6.lean",
+    "git_blob_sha": "888ba8dcefacb7248db48b2d5069c11ab919c415"
+  },
+  "candidate_module": {
+    "path": "AEGISOverlay/RHSignedPrimeConvolutionIntegrabilityV7.lean",
+    "git_blob_sha": "db7be9d0844b3daaee5f2b90df65964fc96835a2",
+    "asserted_scope": "local theta/psi integrability and actual compact kernel convolution integrability",
+    "required_input_removed_if_proven": "EventuallyArithmeticConvolutionsIntegrableV6",
+    "explicit_input_still_required": "EventuallyChebyshevFiniteIntegralExtendsV6"
+  },
+  "workflow": {
+    "path": ".github/workflows/rh-snowflake-log23-globalization-v1.yml",
+    "git_blob_sha": "e278709bee04c7530a70cdaf9b8a80376199cb40",
+    "step": "Compile and audit Chebyshev V7 arithmetic integrability"
+  },
+  "new_axioms": 0,
+  "added_sorry": false,
+  "theorem_statements_preexisting_unchanged": true,
+  "admission": "SOURCE_CANDIDATE_EXACT_HEAD_LEAN_REPLAY_REQUIRED",
+  "rh_unconditional_claim": false
+}

@@ -1,0 +1,210 @@
+name: RH Autocorrelation Mellin V11
+
+on:
+  push:
+    branches:
+      - 'proof/rh-digamma-series-completion-v1'
+    paths:
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinV11.lean'
+      - 'sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean'
+      - '.github/workflows/rh-autocorrelation-mellin-v11.yml'
+  pull_request:
+    paths:
+      - 'sovereign-omega-v2/formal/bridges/lean/WeilAutocorrelationMellinV11.lean'
+      - 'sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean'
+      - '.github/workflows/rh-autocorrelation-mellin-v11.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rh-autocorrelation-mellin-v11-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+  LI_CRITERION_SHA: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+  LI_CRITERION_ORIGINAL_MATHLIB_SHA: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+  FACTORIZATION_SOURCE_BLOB: 10d38a54580ff72d698a30be64fe1c3c44f862a2
+
+jobs:
+  verify:
+    name: compile autocorrelation Mellin factorization
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - name: Checkout exact LiCriterion provider
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: nicholasbulka/li-criterion-rh-equivalence-lean
+          ref: ${{ env.LI_CRITERION_SHA }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout exact AEGIS candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: ${{ env.SOURCE_SHA }}
+          path: .aegis
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Bind exact pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .aegis rev-parse HEAD)" = "$SOURCE_SHA"
+          printf '%s\n' "$LEAN_TOOLCHAIN" > lean-toolchain
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          p=Path('lakefile.lean')
+          text=p.read_text()
+          old=os.environ['LI_CRITERION_ORIGINAL_MATHLIB_SHA']
+          new=os.environ['MATHLIB_SHA']
+          assert old in text
+          p.write_text(text.replace(old,new))
+          PY
+          rm -f lake-manifest.json
+          mkdir -p evidence .lake/build/lib/lean
+
+      - name: Install pinned Lean and Mathlib cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake update mathlib
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          m=json.loads(Path('lake-manifest.json').read_text())
+          p=next(x for x in m['packages'] if x['name']=='mathlib')
+          assert (p.get('rev') or p.get('inputRev')) == os.environ['MATHLIB_SHA']
+          PY
+          lake exe cache get
+          lean --version | tee evidence/lean-version.log
+
+      - name: Apply audited old-pin provider overlay
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object Hadamard/General/Factorization.lean)" = "$FACTORIZATION_SOURCE_BLOB"
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('Hadamard/General/Factorization.lean')
+          text=p.read_text()
+          replacements=[
+            ('eventually_nhdsWithin_of_forall fun w hw => ite_eq_right hw',
+             'eventually_nhdsWithin_of_forall fun w hw => if_neg hw'),
+            ('have hgz : g z = Q z := ite_eq_left rfl',
+             'have hgz : g z = Q z := by simp [g]'),
+            ('rw [ite_eq_right heq, hQ_eq_div z (hz heq)]',
+             'rw [if_neg heq, hQ_eq_div z (hz heq)]'),
+          ]
+          for old,new in replacements:
+            assert text.count(old)==1
+            text=text.replace(old,new)
+          p.write_text(text)
+          PY
+          git diff --check -- Hadamard/General/Factorization.lean
+
+      - name: Build pinned provider
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build             Hadamard.OrderOne.LogDerivMultiplicity             Lc.LiCriterion.XiGrowth             Lc.LiCriterion.HadamardSummabilityBridge             Lc.LiCriterion.HadamardBridge
+
+      - name: Compile AEGIS dependency chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=.aegis/sovereign-omega-v2/formal/bridges/lean
+          files=(
+            WeilCriterionCompactSmoothV1
+            ZeroCriticalStripV1
+            ZeroHeightFiniteSumV1
+            ZeroHeightLimitContractV1
+            ZeroHeightSummabilityBridgeV1
+            ZeroMajorantSummabilityV1
+            ZeroHeightShellMassV1
+            ZeroShellQuadraticBoundV1
+            ZeroShellAnalyticSynthesisV1
+            ZeroCountingBoundV1
+            MellinDecayEstimateV1
+            ZeroCountingMellinSummabilityV1
+            WeilMellinInversionV1
+            WeilPrimeLineIdentityV1
+            WeilPrimeSummabilityV1
+            WeilArchimedeanConvergenceV1
+            WeilAutocorrelationRealityV1
+            WeilAutocorrelationClosureV1
+            WeilAutocorrelationPoleAggregationV1
+            WeilPoleTermV1
+            WeilFixedLineExplicitFormulaContractV2
+            WeilPairedHadamardFixedLineV1
+            WeilPairedHadamardKernelTsumV2
+            WeilFixedLineFubiniCoreV3
+            WeilMellinWeightedFixedLineV2
+            WeilFixedLineFubiniSwapV4
+            WeilPairedMellinProfileV5
+            WeilFixedLineKernelIntegralV6
+            WeilFixedLineXSpaceTailV7
+            WeilReciprocalPairedTestV8
+            WeilPairedZeroEvaluationV9
+            WeilDisjointEnergyV2
+            WeilLogCoordinateIsometryV21
+            WeilThreeBlockTranslatedPacketsV22
+            WeilWidthPrimeVanishingV23
+            WeilDiagonalKernelReductionV21
+            WeilArchimedeanCothTailV1
+            WeilWidthDiagonalArchFrontierV24
+            WeilWidthArchCorrelationV25
+            WeilAutocorrelationMellinV11
+          )
+          : > evidence/modules.txt
+          : > evidence/source-sha256.txt
+          for f in "${files[@]}"; do
+            test -f "$ROOT/$f.lean"
+            cp "$ROOT/$f.lean" "$f.lean"
+            sha256sum "$f.lean" >> evidence/source-sha256.txt
+            echo "$f" >> evidence/modules.txt
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean" 2>&1 | tee "evidence/$f.log"
+          done
+
+      - name: Compile preregistered V11 spec
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .aegis/sovereign-omega-v2/formal/tests/lean/WeilAutocorrelationMellinV11Spec.lean .
+          lake env lean WeilAutocorrelationMellinV11Spec.lean 2>&1 | tee evidence/v11-spec.log
+          ! grep -F 'sorryAx' evidence/v11-spec.log
+
+      - name: Emit bounded disposition
+        if: always()
+        shell: bash
+        run: |
+          cat > evidence/DISPOSITION.txt <<EOF
+          SOURCE_SHA=$SOURCE_SHA
+          AUTOCORRELATION_MELLIN_FACTORIZATION=TARGETED
+          CENTERED_CORRELATION_TRANSFORM=TARGETED
+          RH_RESTRICTED_CRITERION_ANALYTIC_CORE=ADVANCED_NOT_COMPLETE
+          UNIVERSAL_FINAL_SIGN=NOT_CLAIMED
+          RIEMANN_HYPOTHESIS=NOT_CLAIMED
+          AUTHORITY_EFFECT=NONE
+          EOF
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-autocorrelation-mellin-v11-${{ env.SOURCE_SHA }}
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 30

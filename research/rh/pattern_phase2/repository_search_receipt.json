@@ -1,0 +1,167 @@
+{
+  "status": "BOUNDED_SOURCE_INSPECTION_ONLY",
+  "inspected_at_utc": "2026-09-26",
+  "exhaustive": false,
+  "source_heads": {
+    "formal_conjectures": "ab791e06dd9368fdcc8684b8bc8dec2feb0ee3ac",
+    "aegis_source": "2c3d041b633147ec97c7ef753aa9d157a47bb9f5",
+    "aegis_omega_distributed": "ed426124475cc9ee8b4d138b2928ae547352e97b",
+    "sovereign_guard": "3c6568684fc58bbab015f0ea34a87f9df4cfe1aa",
+    "tarikskalic33_info": "bb1c637e809fcdcc4ff7dd10a027deb0d076677f"
+  },
+  "branch_searches": [
+    {
+      "query": "global",
+      "branches": [
+        {
+          "branch": "agent/global-launch-wave-1"
+        },
+        {
+          "branch": "proof/rh-window-eighth-globalization-v13"
+        },
+        {
+          "branch": "proof/rh-window-nine-over-64-globalization-v14"
+        },
+        {
+          "branch": "proof/weil-o0-globalization-v1"
+        }
+      ],
+      "cursor": "NA"
+    },
+    {
+      "query": "partition",
+      "branches": [],
+      "cursor": null
+    },
+    {
+      "query": "spline",
+      "branches": [],
+      "cursor": null
+    },
+    {
+      "query": "frame",
+      "branches": [
+        {
+          "branch": "codex/introduce-evidenceclaim-divergence-framework"
+        },
+        {
+          "branch": "research/gravity-quantum-crossframework-v1"
+        }
+      ],
+      "cursor": "Mg"
+    },
+    {
+      "query": "krein",
+      "branches": [],
+      "cursor": null
+    },
+    {
+      "query": "weier",
+      "branches": [],
+      "cursor": null
+    },
+    {
+      "query": "density",
+      "branches": [],
+      "cursor": null
+    },
+    {
+      "query": "moment",
+      "branches": [
+        {
+          "branch": "evidence/rh-millennium-moment-589adf-v1"
+        },
+        {
+          "branch": "evidence/rh-millennium-moment-2026-09-23"
+        },
+        {
+          "branch": "evidence/rh-millennium-moment-20260923-v1"
+        },
+        {
+          "branch": "proof/rh-mellin-fixed-line-moment1-v2-77adaa32"
+        },
+        {
+          "branch": "proof/weil-moment-restriction-bridge-v1"
+        },
+        {
+          "branch": "research/weil-moment-restricted-gap-t1-v1"
+        }
+      ],
+      "cursor": "Ng"
+    }
+  ],
+  "branch_refs": [
+    {
+      "branch": "proof/rh-window-nine-over-64-globalization-v14",
+      "sha": "7630d13ce4c29b0ffee77b1fbf68881bcd816ff4"
+    },
+    {
+      "branch": "proof/rh-window-eighth-globalization-v13",
+      "sha": "10800b9a1aaf9cd275b312b751b74e6dda0632f4"
+    },
+    {
+      "branch": "proof/weil-o0-globalization-v1",
+      "sha": "41ad4ea70c09eb2b88c8457d3b7185c5db4f986a"
+    },
+    {
+      "branch": "proof/weil-moment-restriction-bridge-v1",
+      "sha": "56ab4921ceea294ebf3d5dd092225b2c2ed53fde"
+    },
+    {
+      "branch": "research/weil-moment-restricted-gap-t1-v1",
+      "sha": "a43dd157c8ee93ee4f3f52d378f883bfe95c10ca"
+    }
+  ],
+  "primary_results": [
+    {
+      "path": "RHWindowNineOver64GlobalizationV14.lean",
+      "sha": "7630d13ce4c29b0ffee77b1fbf68881bcd816ff4",
+      "result": "Actual arithmetic coercivity only on half-width 9/64, margin 1/10; not a cofinal family."
+    },
+    {
+      "path": "RHWindowEighthGlobalizationV13.lean",
+      "sha": "10800b9a1aaf9cd275b312b751b74e6dda0632f4",
+      "result": "Actual arithmetic nonpositivity on half-width 1/8 and smaller."
+    },
+    {
+      "path": "sovereign-omega-v2/formal/theories/Weil/Globalization.v",
+      "sha": "41ad4ea70c09eb2b88c8457d3b7185c5db4f986a",
+      "result": "Consumes GlobalizationReadyV1: convergence, vanishing error and finite lower bounds. No producer of the conjunction."
+    },
+    {
+      "path": "sovereign-omega-v2/formal/theories/Weil/FiniteBridge.v",
+      "sha": "56ab4921ceea294ebf3d5dd092225b2c2ed53fde",
+      "result": "Scalar finite matrix symmetry and tail transfer conditional on independent bounds; no actual global Weil producer."
+    },
+    {
+      "path": "sovereign-omega-v2/python/tests/test_guinand_weil_moment_restriction.py",
+      "sha": "56ab4921ceea294ebf3d5dd092225b2c2ed53fde",
+      "result": "Arb finite moment restriction explicitly leaves MOMENT_BASIS_IDENTIFICATION_NOT_MACHINE_FORMALIZED and rh_proven false."
+    },
+    {
+      "repo": "Aegis-Omega/AegisOmega",
+      "tree_paths": 2202,
+      "truncated": false,
+      "result": "Only six Coq paths found; Core/Event,Hash,Reducer,LockIrreversibility,LatticeConvergence and Bisimulation/ThreeWay. No RH, Weil, spline, Fourier, theta or multiresolution path. Path search only, not all file contents."
+    },
+    {
+      "repo": "Aegis-Omega/sovereign-guard",
+      "tree_paths": 53,
+      "truncated": false,
+      "result": "No Lean/Coq or relevant mathematical filename match."
+    },
+    {
+      "repo": "tarikskalic33/info",
+      "tree_paths": 32,
+      "truncated": false,
+      "result": "No Lean/Coq or relevant mathematical filename match."
+    }
+  ],
+  "limitations": [
+    "Branch-name queries are not a complete content search over every historical ref.",
+    "No claim that all available mathematics or the entire search space is exhausted.",
+    "AegisOmega Rust/TypeScript lattice files refer to distributed-state structures; path inventory does not prove semantic absence in all source.",
+    "Search names with nonempty cursors were not fully paginated; listed exact refs were explicitly fetched and relevant sources inspected.",
+    "No newly discovered unconditional producer in the inspected sources."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+ "L": 1.0,
+ "L_exact": "1/1",
+ "authority_effect": "NONE",
+ "claim": "F(xi)=W(xi)(S(xi)-m)+Hhat(xi) >= 0 for every real xi, W=(xi^2+1/4)^2, S=Re psi(1/4+i xi/2)-log pi-sqrt2 log2 cos(xi log2), H = 399 hats (half-width 0.02, centres L+0.02k) + delta^(j)(|u|-L), j<=4",
+ "files": {
+  "krein_lp_L1.0.json": "b44296a5864978e4cfdf4796213114acd26fbde5",
+  "verify_krein_arb_v1.py": "84453dbcbce67087fb46fbd63cdd7e1e9f88576a"
+ },
+ "lean_consumer": "RHKreinZetaBridgeV1.certificate_zero_quadratic_nonneg (PR #693): Re sum_rho Z_rho(A_g) >= 0 for every moment-zero packet of log-support width < L",
+ "lp_coefficient_scale": {
+  "delta": [
+   90845.6240930442,
+   -9170.854058574836,
+   -696.4447499931947,
+   47.774562212078656,
+   1.3786253969725484
+  ],
+  "max_abs_hat": 1000000.0,
+  "sum_abs_hat": 356877315.3756572
+ },
+ "lp_source": "bounded LP as krein_lp_cutting_plane_v1.py first iterate, span 8, hat bound 1e6, delta bound 1e7",
+ "m_certified": "0.0015",
+ "m_lp_float": 0.0033878046662312042,
+ "method": "Arb (python-flint 0.8.0, 256-bit) via verify_krein_arb_v1.py (unchanged); zero cell [0,0.004]; xi>=3000 monotone tail bound. m_certified chosen below min F/W on a 0.0002 float grid, then certified by Arb.",
+ "not_covered": "the pointwise inequality is Arb-checked, not Lean-checked; widths >= L; RH",
+ "receipt_sha256": "eab480498053bace81066cf2c04a04d9e713bc4f240d5823520431c3293ff39e",
+ "results": [
+  "zero cell [0,[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80]]: lower bound of F = [0.0001247108245301879293338303183767709209453631999256551964851253 +/- 7.57e-65]",
+  "cells verified on [[0.004000000000000000000000000000000000000000000000000000000000000000000000000000 +/- 8.32e-80], 3000.000000000000000000000000000000000000000000000000000000000000000000000000]: 12186",
+  "tail lower bound (F/W for xi >= X): [3.792104378370854040667093697334418867001409542121331641417870393823906828621 +/- 4.09e-76]",
+  "CERTIFIED: F(xi) >= 0 for all real xi, m = [0.001500000000000000000000000000000000000000000000000000000000000000000000000000 +/- 3.12e-80]"
+ ],
+ "rh_proven": false,
+ "schema": "aegis.rh.krein-arb-certificate.v1",
+ "versions": {
+  "numpy": "2.4.6",
+  "python": "3.11.15",
+  "python_flint": "0.8.0",
+  "scipy": "1.17.1"
+ }
+}

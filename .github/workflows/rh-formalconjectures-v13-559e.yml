@@ -1,0 +1,436 @@
+name: AEGIS RH FormalConjectures V13 559e Full-Closure Replay
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/rh-formalconjectures-v13-559e.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: aegis-rh-v13-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  FORMAL_CONJECTURES_SHA: 02da1ad1288b4881ea1f8e575fbe84af7db04364
+  AEGIS_SHA: 514e4493b5896b18f12e55e4119a7439b1cd8eef
+  MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+  LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+  AEGIS_TARGETS: WeilRHImpliesFinalSignV13 RHNineFacesV13 RHFourPacketZeroQuadraticV13 RHFourBlockCertificateLimitV13 RHNinePacket33Over16V13 RHDyadicTowerV13 RHMomentGainV13 RHHalfCapClassV13 RHThresholdClassV13 RHBonusClassV13 RHThreeCellClassV13 RHHatClassV13 RHHatClass310V13 RHHatClass13V13 RHHatClass69200V13
+  LI_CRITERION_SHA: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+  LI_CRITERION_ORIGINAL_MATHLIB_SHA: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+  FACTORIZATION_SOURCE_BLOB: 10d38a54580ff72d698a30be64fe1c3c44f862a2
+
+jobs:
+  verify:
+    name: run AEGIS through FormalConjectures RH target
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+
+    steps:
+      - name: Checkout exact FormalConjectures fork
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.FORMAL_CONJECTURES_SHA }}
+          persist-credentials: false
+
+      - name: Bind FormalConjectures / Mathlib pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$FORMAL_CONJECTURES_SHA"
+          test "$(cat lean-toolchain)" = "$LEAN_TOOLCHAIN"
+          grep -Fq "$MATHLIB_SHA" lake-manifest.json
+          mkdir -p evidence
+          sha256sum FormalConjectures/Millennium/RiemannHypothesis.lean             | tee evidence/formalconjectures-target-sha256.log
+          printf 'FORMAL_CONJECTURES_SHA=%s\nAEGIS_SHA=%s\nMATHLIB_SHA=%s\nLEAN_TOOLCHAIN=%s\n'             "$FORMAL_CONJECTURES_SHA" "$AEGIS_SHA" "$MATHLIB_SHA" "$LEAN_TOOLCHAIN"             | tee evidence/pins.txt
+
+      - name: Obtain exact Lean and project cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake update
+          lake exe cache get
+          lean --version | tee evidence/lean-version.log
+          actual_mathlib="$(git -C .lake/packages/mathlib rev-parse HEAD)"
+          test "$actual_mathlib" = "$MATHLIB_SHA"
+          printf 'ACTUAL_MATHLIB_SHA=%s\n' "$actual_mathlib" >> evidence/pins.txt
+
+      - name: Compile untouched FormalConjectures RiemannHypothesis.lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build FormalConjecturesUtil 2>&1 | tee evidence/formalconjectures-util-build.log
+          mkdir -p .lake/build/lib/lean/FormalConjectures/Millennium
+          lake env lean \
+            -o ".lake/build/lib/lean/FormalConjectures/Millennium/RiemannHypothesis.olean" \
+            FormalConjectures/Millennium/RiemannHypothesis.lean \
+            2>&1 | tee evidence/formalconjectures-rh-compile.log
+          cat > FormalConjecturesRHTargetAudit.lean <<'LEAN'
+          import FormalConjectures.Millennium.RiemannHypothesis
+          #check RiemannHypothesis
+          #check RiemannHypothesis.riemannHypothesis
+          #print axioms RiemannHypothesis.riemannHypothesis
+          LEAN
+          lake env lean FormalConjecturesRHTargetAudit.lean \
+            2>&1 | tee evidence/formalconjectures-rh-axioms.log
+          grep -F 'sorryAx' evidence/formalconjectures-rh-axioms.log
+
+      - name: Checkout exact AEGIS RH source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: ${{ env.AEGIS_SHA }}
+          path: .aegis
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Compute AEGIS target closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .aegis rev-parse HEAD)" = "$AEGIS_SHA"
+          ROOT=.aegis/sovereign-omega-v2/formal/bridges/lean
+          python3 - "$ROOT" "$AEGIS_TARGETS" evidence/aegis-modules.txt <<'PY'
+          import pathlib,sys
+          root=pathlib.Path(sys.argv[1]); targets=sys.argv[2].split(); out=pathlib.Path(sys.argv[3])
+          mods={p.stem:p for p in root.glob("*.lean")}
+          for target in targets:
+              if target not in mods:
+                  raise SystemExit(f"missing target: {target}")
+          deps={}
+          for m,p in mods.items():
+              ds=[]
+              for line in p.read_text(encoding="utf-8").splitlines():
+                  s=line.strip()
+                  if not s.startswith("import "):
+                      continue
+                  for token in s[len("import "):].split():
+                      local=token.split(".")[0]
+                      if local in mods:
+                          ds.append(local)
+              deps[m]=ds
+          seen=set(); active=set(); order=[]
+          def visit(m):
+              if m in seen: return
+              if m in active: raise SystemExit("cycle:"+m)
+              active.add(m)
+              for d in deps[m]: visit(d)
+              active.remove(m); seen.add(m); order.append(m)
+          for target in targets: visit(target)
+          out.write_text("\n".join(order)+"\n")
+          print("AEGIS_LOCAL_CLOSURE_COUNT",len(order))
+          print("\n".join(order))
+          PY
+          mkdir -p .lake/build/lib/lean
+          : > evidence/aegis-source-sha256.log
+          while IFS= read -r m; do
+            cp "$ROOT/$m.lean" "$m.lean"
+            sha256sum "$m.lean" >> evidence/aegis-source-sha256.log
+          done < evidence/aegis-modules.txt
+
+      - name: Checkout exact LiCriterion provider
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: nicholasbulka/li-criterion-rh-equivalence-lean
+          ref: ${{ env.LI_CRITERION_SHA }}
+          path: .li-provider
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build exact LiCriterion provider against pinned Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C .li-provider rev-parse HEAD)" = "$LI_CRITERION_SHA"
+          test "$(git -C .li-provider hash-object Hadamard/General/Factorization.lean)" = "$FACTORIZATION_SOURCE_BLOB"
+
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          root=Path('.li-provider')
+          p=root/'lakefile.lean'
+          text=p.read_text()
+          old=os.environ['LI_CRITERION_ORIGINAL_MATHLIB_SHA']
+          new=os.environ['MATHLIB_SHA']
+          assert old in text
+          p.write_text(text.replace(old,new))
+
+          fp=root/'Hadamard/General/Factorization.lean'
+          text=fp.read_text()
+          replacements=[
+            ('eventually_nhdsWithin_of_forall fun w hw => ite_eq_right hw',
+             'eventually_nhdsWithin_of_forall fun w hw => if_neg hw'),
+            ('have hgz : g z = Q z := ite_eq_left rfl',
+             'have hgz : g z = Q z := by simp [g]'),
+            ('rw [ite_eq_right heq, hQ_eq_div z (hz heq)]',
+             'rw [if_neg heq, hQ_eq_div z (hz heq)]'),
+          ]
+          for old,new in replacements:
+            assert text.count(old)==1
+            text=text.replace(old,new)
+          fp.write_text(text)
+          PY
+
+          rm -f .li-provider/lake-manifest.json
+          printf '%s\n' "$LEAN_TOOLCHAIN" > .li-provider/lean-toolchain
+          (
+            cd .li-provider
+            export PATH="$HOME/.elan/bin:$PATH"
+            lake update mathlib
+            lake exe cache get
+            lake build \
+              Hadamard.OrderOne.LogDerivMultiplicity \
+              Lc.LiCriterion.XiGrowth \
+              Lc.LiCriterion.HadamardSummabilityBridge \
+              Lc.LiCriterion.HadamardBridge
+          )
+
+          # Make the exact provider source and oleans visible to the FormalConjectures project.
+          cp -R .li-provider/Lc .
+          cp -R .li-provider/Hadamard .
+          cp -R .li-provider/FunctionsOfOneComplexVariable .
+          mkdir -p .lake/build/lib/lean/Lc .lake/build/lib/lean/Hadamard \
+            .lake/build/lib/lean/FunctionsOfOneComplexVariable
+          cp -R .li-provider/.lake/build/lib/lean/Lc/. .lake/build/lib/lean/Lc/
+          cp -R .li-provider/.lake/build/lib/lean/Hadamard/. .lake/build/lib/lean/Hadamard/
+          cp -R .li-provider/.lake/build/lib/lean/FunctionsOfOneComplexVariable/. \
+            .lake/build/lib/lean/FunctionsOfOneComplexVariable/
+
+          {
+            printf 'LI_CRITERION_SHA=%s\n' "$LI_CRITERION_SHA"
+            printf 'FACTORIZATION_SOURCE_BLOB=%s\n' "$FACTORIZATION_SOURCE_BLOB"
+          } >> evidence/pins.txt
+
+      - name: Compile exact AEGIS RH gate closure in FormalConjectures environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r m; do
+            echo "=== COMPILE $m ==="
+            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean"               2>&1 | tee "evidence/aegis-$m.log"
+          done < evidence/aegis-modules.txt
+          cat > AEGISGateAudit.lean <<'LEAN'
+          import RHMillenniumGateV10
+          #check AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10
+          #check AEGIS.RHMillenniumGateV10.RestrictedWeilCriterionKernelBridgeV10
+          #check AEGIS.RHMillenniumGateV10.MillenniumMomentReachedV10
+          #check AEGIS.RHMillenniumGateV10.millennium_moment_reached_implies_rh_v10
+          #print axioms AEGIS.RHMillenniumGateV10.millennium_moment_reached_implies_rh_v10
+          LEAN
+          lake env lean AEGISGateAudit.lean 2>&1 | tee evidence/aegis-gate-axioms.log
+          ! grep -F 'sorryAx' evidence/aegis-gate-axioms.log
+
+      - name: Axiom audit of every V13 result theorem (hard fail on sorryAx or any non-standard axiom)
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            for t in $AEGIS_TARGETS; do echo "import $t"; done
+            echo "import RHRestrictedWeilBridgeV13"
+            echo '#print axioms AEGIS.RHRestrictedWeilBridgeV13.final_sign_implies_rh_v13'
+            echo '#print axioms AEGIS.RHRestrictedWeilBridgeV13.restricted_weil_criterion_kernel_bridge_v13'
+            echo '#print axioms AEGIS.RHRestrictedWeilBridgeV13.millennium_moment_iff_universal_v13'
+            echo '#print axioms AEGIS.WeilRHImpliesFinalSignV13.rh_implies_final_sign_residual_v13'
+            echo '#print axioms AEGIS.WeilRHImpliesFinalSignV13.rh_iff_final_sign_v13'
+            echo '#print axioms AEGIS.WeilRHImpliesFinalSignV13.rh_iff_universal_v13'
+            echo '#print axioms AEGIS.WeilRHImpliesFinalSignV13.millennium_moment_iff_rh_v13'
+            echo '#print axioms AEGIS.RHNineFacesV13.nine_faces_of_rh_v13'
+            echo '#print axioms AEGIS.RHFourPacketZeroQuadraticV13.fourPacket_zero_quadratic_nonnegative_v13'
+            echo '#print axioms AEGIS.RHFourBlockCertificateLimitV13.five_block_certificate_impossible'
+            echo '#print axioms AEGIS.RHDyadicDiagonalV13.diagonal_lower'
+            echo '#print axioms AEGIS.RHDyadicDiagonalV13.cothTail_ge_below_32'
+            echo '#print axioms AEGIS.RHDyadicWindowV13.gap_B_norm_bound_pair'
+            echo '#print axioms AEGIS.RHGramExpansionV13.B_packetSum'
+            echo '#print axioms AEGIS.RHGramExpansionV13.gram_re_le'
+            echo '#print axioms AEGIS.RHGramExpansionV13.rowSum_le'
+            echo '#print axioms AEGIS.RHRatio33Over16V13.window_all'
+            echo '#print axioms AEGIS.RHNinePacket33Over16V13.ninePacket_coercive'
+            echo '#print axioms AEGIS.RHNinePacket33Over16V13.ninePacket_zero_quadratic_nonnegative'
+            echo '#print axioms AEGIS.RHNarrowSupportPositivityV13.narrow_coercive'
+            echo '#print axioms AEGIS.RHNarrowSupportPositivityV13.universal_on_narrow_class'
+            echo '#print axioms AEGIS.RHDyadicTowerV13.margin_pos'
+            echo '#print axioms AEGIS.RHDyadicTowerV13.tower_coercive'
+            echo '#print axioms AEGIS.RHDyadicTowerV13.dyadic_tower'
+            echo '#print axioms AEGIS.RHMomentIdentityV13.moment_log_identity'
+            echo '#print axioms AEGIS.RHMomentNumericsV13.momentGain_eighth'
+            echo '#print axioms AEGIS.RHMomentGainV13.arch_moment_budget'
+            echo '#print axioms AEGIS.RHMomentGainV13.moment_diagonal'
+            echo '#print axioms AEGIS.RHMomentGainV13.wide_coercive'
+            echo '#print axioms AEGIS.RHMomentGainV13.wide_zero_quadratic_nonnegative'
+            echo '#print axioms AEGIS.RHMomentGainV13.universal_on_wide_class'
+            echo '#print axioms AEGIS.RHHalfCapV13.half_cap_logCorrelation'
+            echo '#print axioms AEGIS.RHHalfCapV13.half_cap_exp_re_lower'
+            echo '#print axioms AEGIS.RHHalfCapGainV13.arch_half_cap_budget'
+            echo '#print axioms AEGIS.RHHalfCapGainV13.half_cap_diagonal'
+            echo '#print axioms AEGIS.RHHalfCapClassV13.halfGain_11_64'
+            echo '#print axioms AEGIS.RHHalfCapClassV13.half_cap_coercive'
+            echo '#print axioms AEGIS.RHHalfCapClassV13.universal_on_half_cap_class'
+            echo '#print axioms AEGIS.RHThresholdGainV13.arch_threshold_budget'
+            echo '#print axioms AEGIS.RHThresholdGainV13.threshold_diagonal'
+            echo '#print axioms AEGIS.RHThresholdClassV13.thrGain_5_32_one_fifth'
+            echo '#print axioms AEGIS.RHThresholdClassV13.universal_on_one_fifth_class'
+            echo '#print axioms AEGIS.RHBonusGainV13.half_le_bonus'
+            echo '#print axioms AEGIS.RHBonusGainV13.bonus_diagonal'
+            echo '#print axioms AEGIS.RHBonusClassV13.bonusGain_5_32_21_100'
+            echo '#print axioms AEGIS.RHBonusClassV13.universal_on_bonus_class'
+            echo '#print axioms AEGIS.RHThreeCellV13.three_cell_logCorrelation'
+            echo '#print axioms AEGIS.RHThreeCellGainV13.cell_diagonal'
+            echo '#print axioms AEGIS.RHThreeCellClassV13.cellGain_5_32_7_32'
+            echo '#print axioms AEGIS.RHThreeCellClassV13.universal_on_cell_class'
+            echo '#print axioms AEGIS.RHHatPosDefV13.hat_posdef'
+            echo '#print axioms AEGIS.RHHatPosDefV13.hat_posdef_Ioi'
+            echo '#print axioms AEGIS.RHHatKernelV13.hatK_node'
+            echo '#print axioms AEGIS.RHHatKernelV13.hatK_run_integral'
+            echo '#print axioms AEGIS.RHHatBudgetV13.hat_arch_budget'
+            echo '#print axioms AEGIS.RHHatBudgetV13.hat_diagonal'
+            echo '#print axioms AEGIS.RHHatCellsV13.Q_of_checks'
+            echo '#print axioms AEGIS.RHHatClassV13.Q_all'
+            echo '#print axioms AEGIS.RHHatClassV13.gain_bound'
+            echo '#print axioms AEGIS.RHHatClassV13.universal_on_class'
+            echo '#print axioms AEGIS.RHHatClass310V13.Q_all'
+            echo '#print axioms AEGIS.RHHatClass310V13.gain_bound'
+            echo '#print axioms AEGIS.RHHatClass310V13.universal_on_class'
+            echo '#print axioms AEGIS.RHHatClass13V13.Q_all'
+            echo '#print axioms AEGIS.RHHatClass13V13.gain_bound'
+            echo '#print axioms AEGIS.RHHatClass13V13.hat_coercive'
+            echo '#print axioms AEGIS.RHHatClass13V13.universal_on_class'
+            echo '#print axioms AEGIS.RHHatCellsWideV13.Q_of_checksW'
+            echo '#print axioms AEGIS.RHHatClass69200V13.Q_all'
+            echo '#print axioms AEGIS.RHHatClass69200V13.gain_bound'
+            echo '#print axioms AEGIS.RHHatClass69200V13.hat_coercive'
+            echo '#print axioms AEGIS.RHHatClass69200V13.universal_on_class'
+          } > AEGISV13ResultAxiomAudit.lean
+          cat AEGISV13ResultAxiomAudit.lean
+          lake env lean AEGISV13ResultAxiomAudit.lean > evidence/aegis-v13-result-axioms.log 2>&1
+          cat evidence/aegis-v13-result-axioms.log
+          python3 - evidence/aegis-v13-result-axioms.log AEGISV13ResultAxiomAudit.lean <<'PY'
+          import re,sys
+          log=open(sys.argv[1]).read(); src=open(sys.argv[2]).read()
+          names=re.findall(r"#print axioms (\S+)",src)
+          flat=re.sub(r"\s+"," ",log)
+          allowed={'propext','Classical.choice','Quot.sound'}
+          bad=[]
+          required={'AEGIS.'+c+'.'+n for c in ('RHHatClass13V13','RHHatClass69200V13') for n in
+                    ('Q_all','gain_bound','hat_coercive','universal_on_class')}
+          if len(names)!=72 or len(set(names))!=72 or not required<=set(names):
+              bad.append('expected 72 distinct declarations including all four RHHatClass13V13 and RHHatClass69200V13 producers')
+          if 'sorryAx' in log or 'error' in log: bad.append('sorryAx or error in audit log')
+          for n in names:
+              m=re.search(r"'"+re.escape(n)+r"' depends on axioms: \[([^\]]*)\]",flat)
+              if m:
+                  ax={a.strip() for a in m.group(1).split(',') if a.strip()}
+                  if not ax<=allowed: bad.append(f'{n}: {sorted(ax)}')
+              elif ("'"+n+"' does not depend on any axioms") not in flat:
+                  bad.append(f'{n}: missing from audit output')
+          print('AUDITED_THEOREMS',len(names))
+          if bad:
+              print('\n'.join(bad)); raise SystemExit(1)
+          print('ALL_STANDARD_AXIOMS_ONLY')
+          PY
+
+      - name: Run exact FormalConjectures RH target through V13 criterion
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > AEGISFormalConjecturesRHV13Probe.lean <<'LEAN'
+          import FormalConjectures.Millennium.RiemannHypothesis
+          import WeilRHImpliesFinalSignV13
+          import RHRestrictedWeilBridgeV13
+
+          namespace AEGISFormalConjecturesRHV13Probe
+
+          #check RiemannHypothesis.riemannHypothesis
+          #check AEGIS.RHRestrictedWeilBridgeV13.final_sign_implies_rh_v13
+          #check AEGIS.WeilRHImpliesFinalSignV13.rh_iff_universal_v13
+
+          theorem exact_external_target_from_universal_v13
+              (hU : AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10) :
+              RiemannHypothesis :=
+            (AEGIS.WeilRHImpliesFinalSignV13.rh_iff_universal_v13).2 hU
+
+          theorem exact_external_target_from_final_sign_v13
+              (h : AEGIS.RHFinalClosureV1.FinalSignResidualV1) :
+              RiemannHypothesis :=
+            AEGIS.RHRestrictedWeilBridgeV13.final_sign_implies_rh_v13 h
+
+          #print axioms exact_external_target_from_universal_v13
+          #print axioms exact_external_target_from_final_sign_v13
+
+          end AEGISFormalConjecturesRHV13Probe
+          LEAN
+          lake env lean AEGISFormalConjecturesRHV13Probe.lean \
+            2>&1 | tee evidence/aegis-formalconjectures-v13-conditional.log
+          ! grep -F 'sorryAx' evidence/aegis-formalconjectures-v13-conditional.log
+
+          cat > AEGISFormalConjecturesRHV13UnconditionalProbe.lean <<'LEAN'
+          import FormalConjectures.Millennium.RiemannHypothesis
+          import WeilRHImpliesFinalSignV13
+
+          namespace AEGISFormalConjecturesRHV13UnconditionalProbe
+
+          theorem exact_external_target_unconditional_v13 : RiemannHypothesis := by
+            rw [AEGIS.WeilRHImpliesFinalSignV13.rh_iff_universal_v13]
+
+          end AEGISFormalConjecturesRHV13UnconditionalProbe
+          LEAN
+
+          set +e
+          lake env lean AEGISFormalConjecturesRHV13UnconditionalProbe.lean \
+            > evidence/aegis-formalconjectures-v13-unconditional.log 2>&1
+          rc=$?
+          set -e
+          cat evidence/aegis-formalconjectures-v13-unconditional.log
+          test "$rc" -ne 0
+          python3 - evidence/aegis-formalconjectures-v13-unconditional.log <<'PY'
+          import pathlib,re,sys
+          log=pathlib.Path(sys.argv[1]).read_text()
+          errors=re.findall(r'^.*\berror:\s*(.*)$',log,re.M)
+          goals=re.findall(r'^\s*⊢\s*(.*)$',log,re.M)
+          expected='AEGIS.RHMillenniumGateV10.UniversalZeroQuadraticNonnegativeV10'
+          if errors!=['unsolved goals'] or goals!=[expected] or 'sorryAx' in log:
+              raise SystemExit('FORENSIC_REVIEW_REQUIRED: unexpected unconditional probe diagnostics')
+          print('UNCONDITIONAL_PROBE_RESIDUAL=EXACT_UNIVERSAL_ZERO_QUADRATIC')
+          PY
+
+      - name: Emit exact diagnostic disposition
+        if: always()
+        shell: bash
+        run: |
+          if test -f evidence/aegis-modules.txt; then
+            count="$(wc -l < evidence/aegis-modules.txt)"
+          else
+            count=0
+          fi
+          cat > evidence/DISPOSITION.txt <<EOF
+          FORMAL_CONJECTURES_SHA=$FORMAL_CONJECTURES_SHA
+          AEGIS_SHA=$AEGIS_SHA
+          MATHLIB_SHA=$MATHLIB_SHA
+          LEAN_TOOLCHAIN=$LEAN_TOOLCHAIN
+          TARGET_FILE=FormalConjectures/Millennium/RiemannHypothesis.lean
+          TARGET_THEOREM=RiemannHypothesis.riemannHypothesis
+          AEGIS_GATE_TARGETS=$AEGIS_TARGETS
+          V13_RESULT_AXIOM_AUDIT=REQUIRED_STANDARD_AXIOMS_ONLY
+          AEGIS_LOCAL_CLOSURE_COUNT=$count
+          FORMAL_CONJECTURES_TARGET_USES_SORRYAX=EXPECTED_CURRENT_UPSTREAM_STATE
+          AEGIS_GATE_COMPILED_IN_FORMAL_CONJECTURES_ENV=REQUIRED
+          V13_CRITERION_TO_EXTERNAL_TARGET=REQUIRED_GREEN
+          UNCONDITIONAL_EXTERNAL_TARGET=EXPECTED_RED_ON_UNIVERSAL_ZERO_QUADRATIC
+          RH_PROVEN=FALSE
+          AUTHORITY_EFFECT=NONE
+          EOF
+
+      - name: Upload exact target evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-formalconjectures-v13-${{ env.AEGIS_SHA }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/
+          if-no-files-found: error
+          retention-days: 30

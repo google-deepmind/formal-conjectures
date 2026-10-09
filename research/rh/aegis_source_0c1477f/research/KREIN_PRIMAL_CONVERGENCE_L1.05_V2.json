@@ -1,0 +1,25 @@
+{
+  "L": 1.05,
+  "L_lt_log3": true,
+  "authority_effect": "NONE",
+  "basis": "(1/4-D^2)(sin(pi*x/L)*sin(k*pi*x/L)), k=1..n",
+  "interpretation": "Each value is the minimum over a finite subspace, hence an upper bound on the unrestricted infimum. Positive values do not prove positivity.",
+  "lambda_min_by_dimension": {
+    "32": 0.0035075542174278,
+    "64": 0.0033632615891208296,
+    "96": 0.003341292324069011,
+    "128": 0.003333792929111577,
+    "160": 0.003330945397030777,
+    "192": 0.0033295043286506436,
+    "224": 0.003328783178465928,
+    "256": 0.0033284003619889462
+  },
+  "quadrature": {
+    "chunk": 4000,
+    "dt": 0.02,
+    "xi_midpoint_T": 3000
+  },
+  "rh_proven": false,
+  "schema": "aegis.rh.krein-primal-convergence.v2",
+  "status": "NUMERICAL_DIAGNOSTIC_ONLY"
+}

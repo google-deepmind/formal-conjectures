@@ -190,6 +190,56 @@ jobs:
           python3 scripts/lake-build-wrapper.py /tmp/build_summary_formathlib.json lake --wfail build FormalConjecturesForMathlib FormalConjecturesUtil
           lake --wfail test
 
+      # Prepare the PR606 terminal import before standard Lake builds the RH file.
+      # A successful import is NOT a proof of universal zero-quadratic positivity.
+      - name: Checkout pinned AEGIS RH base
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: cfe368ce2ffa0d196a4319c02b956997edf9f3fa
+          path: .aegis-base
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout pinned Li criterion provider
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: nicholasbulka/li-criterion-rh-equivalence-lean
+          ref: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+          path: .li
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Restore pinned Li criterion build
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .li/.lake/build
+          key: li-provider-v1-${{ runner.os }}-${{ runner.arch }}-35df682f3b709ffe5fbcfdd452dfa964bd622b87-0df444a360eaa60ab8c11dca51a86af692955474
+
+      - name: Checkout certified 693/2000 window source
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Aegis-Omega/AEGIS-OMEGA
+          ref: 2c3d041b633147ec97c7ef753aa9d157a47bb9f5
+          path: .aegis-window
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Prebuild and audit exact RH terminal import
+        if: steps.mode.outputs.website_only != 'true' && hashFiles('AegisRH/PR606/RHRestrictedWeilCriterionV13.lean') != ''
+        env:
+          AEGIS_BASE_SHA: cfe368ce2ffa0d196a4319c02b956997edf9f3fa
+          LI_PROVIDER_SHA: 35df682f3b709ffe5fbcfdd452dfa964bd622b87
+          MATHLIB_SHA: 0df444a360eaa60ab8c11dca51a86af692955474
+          LI_PROVIDER_ORIGINAL_MATHLIB_SHA: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+          LI_FACTORIZATION_BLOB: 10d38a54580ff72d698a30be64fe1c3c44f862a2
+          LEAN_TOOLCHAIN: leanprover/lean4:v4.33.1
+        run: bash scripts/rh_pr63_import_prebuild.sh
+
       - name: Build problems
         if: steps.mode.outputs.website_only != 'true'
         run: |

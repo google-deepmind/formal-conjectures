@@ -1,0 +1,14 @@
+{
+  "status": "INDEPENDENT_EXPLICIT_SYMBOL_REPLAY_PASS",
+  "RH_PROVEN": false,
+  "authority_effect": "NONE",
+  "certificate_sha256": "790fb6ee2e8cf6c07cf2d829e8d1046dee214d41dea19ee1009f19afb03323a6",
+  "input_cover_intervals": 2199,
+  "accepted_intervals": 2199,
+  "additional_subdivisions": 0,
+  "tail_enclosure": "[1.6574176193791273036960556380077574575193413529872476094129711530966424280 +/- 6.04e-74]",
+  "spline_support_integer_identities": 19,
+  "precision_bits": 256,
+  "psi_partial_sum_terms": 256,
+  "duration_seconds": 8.263005256652832
+}
