@@ -89,7 +89,7 @@ theorem erdos_1041 :
 There is an $i<n-1$ such that, for every $x\in[y_i,y_{i+1}]$,
 $$
 \left|\prod_{j=0}^{n-1}(x-y_j)\right|
-\le \frac{1}{\left(2^{n-1}\cos\frac{\pi}{2n}\right)^n}.
+\le \frac{1}{2^{n-1}\left(\cos\frac{\pi}{2n}\right)^n}.
 $$
 Here the formal statement uses $n=m+2$. This is Will Cook's
 [quantitative whole-gap theorem](https://github.com/wcook04/plectis-erdos/blob/a14777b3219873bc8343205cca0bb3bb6530e8fa/paper/1041/erdos1041-lemniscate-reasoning-surface.tex#L1745-L1832).
