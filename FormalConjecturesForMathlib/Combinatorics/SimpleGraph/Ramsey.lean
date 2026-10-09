@@ -38,8 +38,9 @@ The Erdős–Hajnal "exceptional pair" trio of predicates:
 These were introduced for Erdős Problem 596 but are reusable for Problem 595 and other
 Ramsey-type questions; we factor them out per mo271's review.
 
-It also defines the two-colour graph Ramsey number `graphRamsey G H` and the notion of a
-**Ramsey size linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
+It also defines the two-colour graph Ramsey number `graphRamsey G H`, the multicolour graph
+Ramsey number `multicolourRamsey k G`, and the notion of a **Ramsey size linear** graph
+`IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
 
 ## References
 
@@ -112,5 +113,15 @@ def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
   ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
     (∀ v, 0 < H.degree v) →
     (graphRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
+
+/--
+The multicolour graph Ramsey number `multicolourRamsey k G`, often written $R_k(G)$: the least
+`m` such that every colouring of the edges of the complete graph on `Fin m` with `k` colours has
+a colour class that contains a copy of `G` (`G ⊑ H` means that `H` has a subgraph isomorphic to
+`G`). For $k \geq 1$ and finite `G` the set is nonempty by Ramsey's theorem. For $k = 0$ there is
+no colouring of $K_m$ with $m \geq 2$, so $R_0(G) = 2$.
+-/
+noncomputable def multicolourRamsey {α : Type*} (k : ℕ) (G : SimpleGraph α) : ℕ :=
+  sInf {m : ℕ | ∀ C : TopEdgeLabeling (Fin m) (Fin k), ∃ i, G ⊑ C.labelGraph i}
 
 end SimpleGraph

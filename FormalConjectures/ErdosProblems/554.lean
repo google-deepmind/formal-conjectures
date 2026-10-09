@@ -49,16 +49,6 @@ open scoped Topology
 
 namespace Erdos554
 
-/--
-`multicolourRamsey k G` is $R_k(G)$: the least $m$ such that every colouring of the edges of
-$K_m$ with $k$ colours has a colour class that contains a copy of `G` (`G ⊑ H` means that `H`
-has a subgraph isomorphic to `G`). For $G = K_3$ this is `Erdos183.multicolourTriangleRamsey k`.
-For $k \geq 1$ and finite `G` the set is nonempty by Ramsey's theorem. For $k = 0$ there is no
-colouring of $K_m$ with $m \geq 2$, so $R_0(G) = 2$.
--/
-noncomputable def multicolourRamsey {α : Type*} (k : ℕ) (G : SimpleGraph α) : ℕ :=
-  sInf {m : ℕ | ∀ C : TopEdgeLabeling (Fin m) (Fin k), ∃ i, G ⊑ C.labelGraph i}
-
 /-- $R_k(K_3)$ agrees with `Erdos183.multicolourTriangleRamsey`: a colouring has a monochromatic
 triangle exactly when it is not $3$-clique-free. -/
 @[category test, AMS 5]
