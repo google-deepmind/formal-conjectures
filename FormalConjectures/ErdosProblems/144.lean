@@ -20,13 +20,12 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 144
 
-*Reference:* [erdosproblems.com/144](https://www.erdosproblems.com/144)
-
-[ErHa79] Erdős, P. and Hall, R. R., *The propinquity of divisors*.
+*Reference:*
+- [erdosproblems.com/144](https://www.erdosproblems.com/144)
+- [ErHa79] Erdős, P. and Hall, R. R., *The propinquity of divisors*.
   Bull. London Math. Soc. 11 (1979), 304–307.
-  [Paper](https://users.renyi.hu/~p_erdos/1979-26.pdf)
-
-[MaTe84] Maier, H. and Tenenbaum, G., On the set of divisors of an integer.
+ [Paper](https://users.renyi.hu/~p_erdos/1979-26.pdf)
+ - [MaTe84] Maier, H. and Tenenbaum, G., On the set of divisors of an integer.
   Invent. Math. 76 (1984), 121-128.
 -/
 
