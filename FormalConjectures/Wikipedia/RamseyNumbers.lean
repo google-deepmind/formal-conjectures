@@ -123,17 +123,17 @@ remain open. The values below are collected in the dynamic survey [Rad] (see als
 for $3 \le k \le 9$, and $R(4,5) = 25$. -/
 
 /-- $R(3,3) = 6$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_RamseyNumbers_ramsey_number_three_three.lean#L214"]
 theorem ramsey_number_three_three : R(3, 3) = 6 := by
   sorry
 
 /-- $R(3,4) = 9$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_RamseyNumbers_ramsey_number_three_four.lean#L302"]
 theorem ramsey_number_three_four : R(3, 4) = 9 := by
   sorry
 
 /-- $R(3,5) = 14$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_RamseyNumbers_ramsey_number_three_five.lean#L637"]
 theorem ramsey_number_three_five : R(3, 5) = 14 := by
   sorry
 
@@ -158,7 +158,7 @@ theorem ramsey_number_three_nine : R(3, 9) = 36 := by
   sorry
 
 /-- The diagonal Ramsey number $R(4,4) = 18$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_RamseyNumbers_ramsey_number_four_four.lean#L811"]
 theorem ramsey_number_four_four : R(4, 4) = 18 := by
   sorry
 
