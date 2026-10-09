@@ -81,7 +81,7 @@ partition into $n$ parts each of which has $\sum_{k\in A_i}\frac{1}{k}<1$.
 A `Finpartition` has no empty parts, so partitions into at most $n$ parts are tested. Testing
 exactly $n$ parts would let the singleton $\{2\}$ satisfy the statement vacuously.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos316_erdos_316_variants_generalized.lean#L252"]
 theorem erdos_316.variants.generalized (n : ℕ) (hn : 2 ≤ n) : ∃ A : Finset ℕ,
     A.Nonempty ∧ 0 ∉ A ∧ 1 ∉ A ∧ ∑ k ∈ A, (1 / k : ℚ) < n ∧ ∀ P : Finpartition A,
     P.parts.card ≤ n → ∃ p ∈ P.parts, 1 ≤ ∑ n ∈ p, (1 / n : ℚ) := by
