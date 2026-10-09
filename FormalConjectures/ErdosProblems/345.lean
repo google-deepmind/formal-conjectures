@@ -33,15 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos345
 
-/-- The admissible thresholds of $A$: every integer at or above the threshold is a finite
-subset sum of $A$. -/
-def thresholds (A : Set ℕ) : Set ℕ :=
-  {m | ∀ n, m ≤ n → n ∈ subsetSums A}
-
-/-- The least admissible threshold of $A$. For an incomplete set this returns $0$.
-`threshold_isLeast` identifies it with the least threshold when `IsAddComplete A` holds. -/
-noncomputable def threshold (A : Set ℕ) : ℕ :=
-  sInf (thresholds A)
+open IsAddComplete
 
 /-- The set of $k$-th powers of positive integers. -/
 def kthPowers (k : ℕ) : Set ℕ :=
@@ -70,33 +62,6 @@ theorem erdos_345 : answer(sorry) ↔
 theorem kthPowers_isAddComplete : ∀ k : ℕ, 0 < k → IsAddComplete (kthPowers k) := by
   sorry
 
-@[category API, AMS 5 11]
-theorem thresholds_mono {A : Set ℕ} {m m' : ℕ} (hm : m ∈ thresholds A) (h : m ≤ m') :
-    m' ∈ thresholds A :=
-  fun n hn ↦ hm n (h.trans hn)
-
-@[category API, AMS 5 11]
-theorem threshold_isLeast {A : Set ℕ} (hA : IsAddComplete A) :
-    IsLeast (thresholds A) (threshold A) := by
-  obtain ⟨m, hm⟩ := Filter.eventually_atTop.mp hA
-  exact ⟨Nat.sInf_mem ⟨m, hm⟩, fun _ hn ↦ Nat.sInf_le hn⟩
-
-@[category API, AMS 5 11]
-theorem threshold_eq_of_isLeast {A : Set ℕ} {a : ℕ} (h : IsLeast (thresholds A) a) :
-    threshold A = a :=
-  le_antisymm (Nat.sInf_le h.1) (h.2 (Nat.sInf_mem ⟨a, h.1⟩))
-
-@[category API, AMS 5 11]
-theorem threshold_descent_iff {A B : Set ℕ} (hA : IsAddComplete A) (hB : IsAddComplete B) :
-    threshold B < threshold A ↔
-      ∃ a b : ℕ, IsLeast (thresholds A) a ∧ IsLeast (thresholds B) b ∧ b < a := by
-  constructor
-  · intro h
-    exact ⟨_, _, threshold_isLeast hA, threshold_isLeast hB, h⟩
-  · rintro ⟨a, b, ha, hb, hab⟩
-    rw [threshold_eq_of_isLeast ha, threshold_eq_of_isLeast hb]
-    exact hab
-
 /-- Under the convention $0\in\mathbb{N}$, the threshold of the first powers is $0$:
 the empty sum represents $0$, and every positive integer is a singleton sum. -/
 @[category test, AMS 5 11]
@@ -112,15 +77,5 @@ theorem isLeast_thresholds_one : IsLeast (thresholds (kthPowers 1)) 0 := by
 @[category test, AMS 5 11]
 theorem threshold_one : threshold (kthPowers 1) = 0 :=
   threshold_eq_of_isLeast isLeast_thresholds_one
-
-@[category test, AMS 5 11]
-theorem threshold_empty : threshold ∅ = 0 := by
-  have h : thresholds (∅ : Set ℕ) = ∅ := by
-    apply Set.eq_empty_iff_forall_notMem.mpr
-    intro m hm
-    obtain ⟨B, hB, hs⟩ := hm (m + 1) (by omega)
-    have hB0 : B = ∅ := Finset.eq_empty_iff_forall_notMem.mpr fun x hx ↦ hB hx
-    simp [hB0] at hs
-  simp [threshold, h]
 
 end Erdos345
