@@ -24,7 +24,9 @@ The number of distinct products (including the empty product 1) of any subset
 of $\{1, 2, \dots, n\}$.
 
 *References:*
-- [A060957](https://oeis.org/A060957)-/
+- [A060957](https://oeis.org/A060957)
+- [Li26] Wentao Li, [A counterexample to the A060957 interpolation conjecture](https://github.com/VictorLiwentao/lean-oeis-proofs/blob/3be119e75ba5b31f034dc0c0b249975d17def711/proofs/new-proofs/A060957/PROOF.md), 2026.
+-/
 
 @[expose] public section
 
@@ -66,12 +68,16 @@ def productsOfSubsets (n : ℕ) : Set ℕ :=
 Conjecture: let $p \le n$ be prime. If $m$ and $p^a m$ are two such products, then so is $p^k m$
 for all $0 < k < a$.
 - Yan Sheng Ang, Feb 13 2020
+
+Disproved by Wentao Li (2026), with AI assistance; see [Li26]. The counterexample has
+$p = 7 \cdot 2^{120} + 1$, $n = p \cdot 2^{189}$, $a = 6$, and $k = 5$.
 -/
-@[category research open, AMS 5 11]
-theorem conjecture (n : ℕ) (p : ℕ) (hp : p.Prime) (hpn : p ≤ n)
-    (m a_exp : ℕ) (h1 : m ∈ productsOfSubsets n) (h2 : p ^ a_exp * m ∈ productsOfSubsets n)
-    (k : ℕ) (hk1 : 0 < k) (hk2 : k < a_exp) :
-    p ^ k * m ∈ productsOfSubsets n := by
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/3be119e75ba5b31f034dc0c0b249975d17def711/LeanOeisProofs/NewProofs/A060957.lean#L1499"]
+theorem conjecture :
+    ¬ ∀ (n p : ℕ), p.Prime → p ≤ n →
+      ∀ (m a_exp : ℕ), m ∈ productsOfSubsets n → p ^ a_exp * m ∈ productsOfSubsets n →
+        ∀ k : ℕ, 0 < k → k < a_exp → p ^ k * m ∈ productsOfSubsets n := by
   sorry
 
 end OeisA60957
