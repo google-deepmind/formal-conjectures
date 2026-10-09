@@ -85,7 +85,7 @@ That $c(p, q)$ is *nondecreasing* in $q$ for fixed $p$ is a straightforward cons
 definitions: enlarging $q$ shrinks the family of $(p, q)$-locally dense graphs, which can only
 increase the guaranteed clique size $H(n)$, and hence the exponent.
 -/
-@[category textbook solved, AMS 5]
+@[category textbook, AMS 5]
 theorem erdos_667.variants.monotoneOn (p : ℕ) :
     MonotoneOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
   sorry
