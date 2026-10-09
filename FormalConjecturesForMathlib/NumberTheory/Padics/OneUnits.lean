@@ -25,7 +25,7 @@ public import Mathlib.Topology.Algebra.Constructions
 
 Let `K` be a complete ultrametric field with `‖p‖ < 1`, for instance a finite extension of `ℚ_p`,
 the field `ℂ_[p]`, or the completion of a number field at a prime above `p`. The principal units,
-or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` form a pro-`p` group: `u ^ (p ^ k) → 1`
+or `1`-units, `oneUnits K = {u : Kˣ | ‖u - 1‖ < 1}` satisfy `u ^ (p ^ k) → 1`
 (`IsUltrametricDist.tendsto_pow_pow_sub_one`). Hence a principal unit `x` has `p`-adic powers
 `x ^ a = lim x ^ aₙ` for `a ∈ ℤ_p` and integers `aₙ → a`, and `Additive (oneUnits K)` is a
 `ℤ_[p]`-module. Mathlib has no such module structure.
