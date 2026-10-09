@@ -170,7 +170,8 @@ Conjecture: let $p \le n$ be prime. If $m$ and $p^a m$ are two such products, th
 for all $0 < k < a$.
 - Yan Sheng Ang, Feb 13 2020
 
-Disproved by Wentao Li (2026), with AI assistance; see [Li26]. The counterexample has
+This interpolation conjecture is false. Disproved by Wentao Li (2026), with AI assistance;
+see [Li26]. The counterexample has
 $p = 7 \cdot 2^{120} + 1$, $n = p \cdot 2^{189}$, $a = 6$, and $k = 5$.
 -/
 @[category research solved, AMS 5 11,
