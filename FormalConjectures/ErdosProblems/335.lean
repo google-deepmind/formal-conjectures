@@ -26,9 +26,6 @@ circle construction and periodic examples. These examples do not characterize al
 Source: T. F. Bloom, *Erdős Problem #335*, https://www.erdosproblems.com/335
 originally [ErGr80, p. 51].
 
-> Let `d(A)` denote the density of `A ⊆ ℕ`. Characterise those `A, B ⊆ ℕ` with positive
-> density such that `d(A + B) = d(A) + d(B)`.
-
 Conventions, following the paper the problem page cites
 (E. Ackelsberg, F. K. Richter, *An inverse theorem for sumsets of sets of positive density
 in the integers*, arXiv:2604.12864v1, 14 Apr 2026):
@@ -65,6 +62,13 @@ def IsErdos335Pair (A B : Set ℕ) : Prop :=
   A ⊆ Set.Ioi 0 ∧ B ⊆ Set.Ioi 0 ∧
     ∃ dA dB : ℝ, 0 < dA ∧ 0 < dB ∧ HasDensity A dA ∧ HasDensity B dB ∧
       HasDensity (A + B) (dA + dB)
+
+/-- Let $d(A)$ denote the density of $A \subseteq \mathbb{N}$. Characterise those
+$A, B \subseteq \mathbb{N}$ with positive density such that $d(A + B) = d(A) + d(B)$. -/
+@[category research open, AMS 11 28]
+theorem erdos_335 :
+    {(A, B) : Set ℕ × Set ℕ | IsErdos335Pair A B} = answer(sorry) := by
+  sorry
 
 /-- The circle `ℝ/ℤ`. -/
 abbrev Circle1 : Type := AddCircle (1 : ℝ)
@@ -111,10 +115,12 @@ def bohrPreimage (h : ℕ) (θ : ℝ) (I : Set Circle1) : Set ℕ :=
 /-- `A - t = {n ≥ 1 : n + t ∈ A}`. -/
 def shiftDown (A : Set ℕ) (t : ℕ) : Set ℕ := {n | 0 < n ∧ n + t ∈ A}
 
-/-- Theorem 1.4 of Ackelsberg–Richter (arXiv:2604.12864v1), transcribed. It gives the
-partial answer to Problem #335 mentioned on the problem page. It is recorded here only as a
-statement; it is **not** proved in this project. -/
-def AckelsbergRichterTheorem14 : Prop :=
+/-- Ackelsberg–Richter, Theorem 1.4 (arXiv:2604.12864v1): if $d(A)>0$,
+$d(A)+d(B)<1$, $B$ meets every residue class, and $d_{\mathbf{N}}(A+B)=d(A)+d(B)$,
+then $A,B$ admit either a parallel Bohr-interval decomposition or a decomposition
+with density-zero differences along $\mathbf{N}$. -/
+@[category research solved, AMS 11 28]
+theorem AckelsbergRichterTheorem14 :
   ∀ (A B : Set ℕ) (dA dB : ℝ) (Ns : ℕ → ℕ),
     A ⊆ Set.Ioi 0 → B ⊆ Set.Ioi 0 → HasDensity A dA → HasDensity B dB →
     0 < dA → dA + dB < 1 → MeetsEveryResidueClass B →
@@ -129,7 +135,8 @@ def AckelsbergRichterTheorem14 : Prop :=
             HasDensity (bohrPreimage h θ I \ A0) 0 ∧ HasDensity (bohrPreimage h θ J \ B0) 0) ∨
         (HasDensityAlong Ns ((Set.Ioi 0 \ multiples h) \ B1) 0 ∧ HasDensityAlong Ns B0 0 ∧
           ∀ t ∈ multiples h, HasDensityAlong Ns (symmDiff A (shiftDown A t)) 0 ∧
-            HasDensityAlong Ns (symmDiff B (shiftDown B t)) 0))
+            HasDensityAlong Ns (symmDiff B (shiftDown B t)) 0)) := by
+  sorry
 
 
 /-
@@ -371,6 +378,9 @@ theorem hasDensity_periodicSet {m : ℕ} [NeZero m] (X : Finset (ZMod m)) :
     split_ifs <;> simp
   have hite0 : (0 : ℝ) ≤ ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) := by positivity
   have key' := count_periodicSet_div_mod X N
+  change (count (periodicSet X) N : ℝ) +
+    ((if ((0 : ℕ) : ZMod m) ∈ X then 1 else 0 : ℕ) : ℝ) =
+      (q : ℝ) * X.card + Nat.count (fun n : ℕ => (n : ZMod m) ∈ X) r at key'
   have hcr' : (Nat.count (fun n : ℕ => (n : ZMod m) ∈ X) r : ℝ) ≤ r := by exact_mod_cast hcr
   have hr' : (r : ℝ) < m := by exact_mod_cast hr
   have hr0 : (0 : ℝ) ≤ r := by positivity
