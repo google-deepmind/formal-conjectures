@@ -69,4 +69,3 @@ theorem erdos_449.variants.positive_density :
       S ⊆ {n : ℕ | K * (n.divisors.card : ℝ) < (r n : ℝ)} := by sorry
 
 end Erdos449
-
