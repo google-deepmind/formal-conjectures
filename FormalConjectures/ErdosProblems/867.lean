@@ -94,7 +94,7 @@ theorem erdos_867.variants.lower_bound :
 Adenwalla has observed that
 $$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos867_erdos_867_variants_adenwalla.lean#L262"]
 theorem erdos_867.variants.adenwalla (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ N : ℕ in atTop, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
       (A.card : ℝ) ≤ (2 / 3 + ε) * (N : ℝ) := by

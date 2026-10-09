@@ -69,7 +69,7 @@ theorem erdos_283 : answer(True) ↔ ∀ p : ℚ[X], Condition p := by
 /--
 Graham [Gr63] has proved this when $p(x)=x$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos283_erdos_283_variants_graham.lean#L383"]
 theorem erdos_283.variants.graham : Condition X := by
   sorry
 
