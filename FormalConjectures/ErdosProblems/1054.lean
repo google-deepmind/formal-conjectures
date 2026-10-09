@@ -38,9 +38,14 @@ noncomputable def f (n : ℕ) : ℕ :=
   else 0
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?-/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.i : answer(sorry) ↔ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
+of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?
+
+The strong claim that $f(n)=o(n)$ was disproved by Tao in the comments to
+[468](https://www.erdosproblems.com/468), in which he proves that the upper density of
+$\{ n : f(n)\leq \delta n\}$ is $\ll \delta^2$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1054.parts.i : answer(False) ↔ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors

@@ -64,10 +64,14 @@ theorem mathoverflow_347178.variants.bounded_iff :
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Does the equality
 $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$
 hold when both suprema are finite?
+
+Answer: Yes. Upper boundedness of $f$ alone suffices.
 -/
-@[category research open, AMS 26]
+@[category research solved, AMS 26,
+  formal_proof using lean4 at
+    "https://github.com/inozemtsev/gradient-supremum/blob/56743ea06dd2953e02274841c16e0f56927b5a44/GradientSupremum/Mathoverflow347178.lean#L30"]
 theorem mathoverflow_347178.variants.bounded_only :
-    answer(sorry) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
+    answer(True) ↔ ∀ᵉ (n ≥ 2) (f : ℝ^n → ℝ) (hf : ContDiff ℝ 1 f)
         (h : BddAbove (range f)) (h' : BddAbove (range (fun x ↦ f (x + gradient f x)))),
         (⨆ x, f x) = ⨆ x, f (x + gradient f x) := by
   sorry
