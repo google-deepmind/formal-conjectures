@@ -32,28 +32,25 @@ open Nat Finset Filter Topology
 
 namespace Erdos1106
 
-/-- The partition function p(n) is the number of ways to write n as a sum of positive
-integers (where the order of the summands does not matter). -/
-def p : ℕ → ℕ := fun n => Fintype.card (Nat.Partition n)
-
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
-$∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
+$\prod_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinity.
 
 The answer is yes: Schinzel and Wirsing [ScWi87] proved $F(n) \gg \log n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1106.parts.i :
-    answer(True) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
+    answer(True) ↔
+      Tendsto (fun n ↦ #(∏ i ∈ Icc 1 n, partitionNumber i).primeFactors) atTop atTop := by
   sorry
 
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
-$∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
+$\prod_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
 @[category research open, AMS 11]
 theorem erdos_1106.parts.ii :
-    answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
+    answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, partitionNumber i).primeFactors > n := by
   sorry
 
 end Erdos1106
