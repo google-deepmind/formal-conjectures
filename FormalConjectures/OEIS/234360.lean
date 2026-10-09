@@ -21,6 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [A234360](https://oeis.org/A234360)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA234360
@@ -60,10 +62,13 @@ theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
 /--
 Conjecture (i): For any $n > 5$ there is a positive integer $k < n$ with
 $(k + 1)^{\phi(n - k) / 2} - k$ prime.
+
+Disproved by Adamczewski (2026) for $n = 1408$.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 5 < n) :
-    ∃ k, 0 < k ∧ k < n ∧ Nat.Prime ((k + 1) ^ ((n - k).totient / 2) - k) := by
+@[category research solved, AMS 11]
+theorem conjecture2 :
+    ¬ ∀ n : ℕ, 5 < n →
+      ∃ k, 0 < k ∧ k < n ∧ Nat.Prime ((k + 1) ^ ((n - k).totient / 2) - k) := by
   sorry
 
 /--
@@ -79,7 +84,8 @@ Conjecture (ii): If $n > 3$, then $k(k + 1)^{\phi(n - k) / 2} - 1$ is prime for 
 -/
 @[category research open, AMS 11]
 theorem conjecture4 (n : ℕ) (hn : 3 < n) :
-    ∃ k, 0 < k ∧ k < n ∧ Nat.Prime (k * (k + 1) ^ ((n - k).totient / 2) - 1) := by
+    ∃ k, 0 < k ∧ k < n ∧
+      ∃ p : ℕ, p.Prime ∧ (p + 1) ^ 2 = k ^ 2 * (k + 1) ^ (n - k).totient := by
   sorry
 
 end OeisA234360

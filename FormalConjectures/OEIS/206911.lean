@@ -24,6 +24,8 @@ with the set $\{\log(k+1)\}$; complement of A206912.
 
 *References:*
 - [A206911](https://oeis.org/A206911)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA206911
@@ -141,8 +143,10 @@ noncomputable def count2 (N : ℕ) : ℕ :=
 /--
 "Conjecture: the difference sequence of A206911 consists of $2$s and $3$s, and the ratio
 (number of $3$s)/(number of $2$s) tends to a number between $3.5$ and $3.6$."
+
+Proved by Adamczewski (2026).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture :
     (∀ n : ℕ, 1 ≤ n → diff n = 2 ∨ diff n = 3) ∧
     (∃ l : ℝ, 3.5 < l ∧ l < 3.6 ∧

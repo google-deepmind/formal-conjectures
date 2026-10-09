@@ -94,7 +94,7 @@ is a triangular number for some $0 < k < n$.
 -/
 @[category research open, AMS 11]
 theorem conjecture5 (n : ℕ) (hn : 7 < n) (hne10 : n ≠ 10) (hne19 : n ≠ 19) :
-    ∃ k, 0 < k ∧ k < n ∧ ∃ m : ℕ, (k.totient + (n - k).totient) / 2 = m * (m + 1) / 2 := by
+    ∃ k, 0 < k ∧ k < n ∧ ∃ m : ℕ, k.totient + (n - k).totient = m * (m + 1) := by
   sorry
 
 end OeisA234246

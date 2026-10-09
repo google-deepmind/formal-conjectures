@@ -26,6 +26,8 @@ a square, where $x, y, z, w$ are nonnegative integers with $z > 0$.
 - [A261876](https://oeis.org/A261876)
 - [Refining Lagrange's four-square theorem](https://arxiv.org/abs/1604.06723)
   by *Zhi-Wei Sun*, arXiv:1604.06723 (2016)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA261876
@@ -68,13 +70,22 @@ def SpecialSet : Finset ℕ :=
   {1, 7, 23, 647, 863}
 
 /--
-Conjecture (i): $a(n) > 0$ for all $n > 0$, and $a(n) = 1$ only for $n = 4^k m$
-($k = 0, 1, 2, \dots$ and $m \in \{1, 7, 23, 647, 863\}$).
+Conjecture (i): $a(n) > 0$ for all $n > 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) :
-    (0 < n → 0 < a n) ∧
-    (a n = 1 ↔ ∃ k : ℕ, ∃ m ∈ SpecialSet, n = 4 ^ k * m) := by
+theorem conjecture1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture (i): $a(n) = 1$ only for $n = 4^k m$ ($k = 0, 1, 2, \dots$ and
+$m \in \{1, 7, 23, 647, 863\}$).
+
+Disproved by Adamczewski (2026) at $n = 69383$, where $(x, y, z, w) = (187, 147, 6, 113)$ is the
+unique representation, so $a(69383) = 1$.
+-/
+@[category research solved, AMS 11]
+theorem conjecture2 :
+    ¬ ∀ n : ℕ, (a n = 1 ↔ ∃ k : ℕ, ∃ m ∈ SpecialSet, n = 4 ^ k * m) := by
   sorry
 
 /-- The set of coefficient triples $(c_1, c_2, c_3)$ for part (ii) of the conjecture. -/
@@ -88,7 +99,7 @@ $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative integers such that
 $xy(c_1 x^2 + c_2 y^2 + c_3 z^2)$ is a square.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (t : ℕ × ℕ × ℕ) (ht : t ∈ Triples) (n : ℕ) :
+theorem conjecture3 (t : ℕ × ℕ × ℕ) (ht : t ∈ Triples) (n : ℕ) :
     ∃ x y z w : ℕ, n = x ^ 2 + y ^ 2 + z ^ 2 + w ^ 2 ∧
       IsSquare (x * y * (t.1 * x ^ 2 + t.2.1 * y ^ 2 + t.2.2 * z ^ 2)) := by
   sorry

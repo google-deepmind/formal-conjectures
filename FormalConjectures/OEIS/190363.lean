@@ -104,12 +104,12 @@ The conjecture is false: $a(140) = 471$ is the first counterexample.
 Since
 $\lim_{n\to\infty} \frac{a(n)}{n} = \frac{9}{4} + \frac{\sqrt{5}}{2}$ is irrational,
 no linear recurrence with constant integer coefficients can hold. Indeed, it follows
-from known results that if $a(n)$ satisifies a linear recurrence with constant integer coefficients
+from known results that if $a(n)$ satisfies a linear recurrence with constant integer coefficients
 and $\lim_{n \to \infty} \frac{a_n}{n} = \alpha$ exists, then $\alpha$ must be rational.
 -/
 @[category research solved, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 ≤ n) :
-    (a (n + 21) : ℤ) = a (n + 17) + a (n + 4) - a n := by
+theorem conjecture :
+    ¬ ∀ n : ℕ, 1 ≤ n → (a (n + 21) : ℤ) = a (n + 17) + a (n + 4) - a n := by
   sorry
 
 end OeisA190363

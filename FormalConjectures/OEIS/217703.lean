@@ -26,6 +26,8 @@ $S_{n+1}(x) = (x + 2n(n+1)) S_n(x) - n^4 S_{n-1}(x)$ for $n > 0$.
 
 *References:*
 - [A217703](https://oeis.org/A217703)
+- [Sun-Conjectures-ii-iii-](https://github.com/anshM123/Sun-Conjectures-ii-iii-)
+  by *Ansh Mishra* and *Aryan Senthilkumar* (2026)
 -/
 
 namespace OeisA217703
@@ -77,18 +79,26 @@ theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) :
 /--
 Conjecture, (ii): $a(n) = S_n(0)$ is negative if and only if
 $1 < n < 58$ or $n > 2177$.
+- _Zhi-Wei Sun_, Mar 20 2013
+
+Disproved by Ansh Mishra and Aryan Senthilkumar: $a(81935) > 0$.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) :
-    a n < 0 ↔ (1 < n ∧ n < 58) ∨ 2177 < n := by
+@[category research solved, AMS 11]
+theorem conjecture2 :
+    ¬ ∀ n : ℕ, (a n < 0 ↔ (1 < n ∧ n < 58) ∨ 2177 < n) := by
   sorry
 
 /--
 Conjecture, (iii): $|a(n)|^{1/n} = o(n^2)$ as $n$ tends to infinity.
+- _Zhi-Wei Sun_, Mar 20 2013
+
+Disproved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with Claude).
 -/
-@[category research open, AMS 11 26]
+@[category research solved, AMS 11 26,
+  formal_proof using lean4 at
+    "https://github.com/anshM123/Sun-Conjectures-ii-iii-/blob/7016c789cbe3b36aff4a5bcaa3ece16ea9331f8e/lean/DMSolutions/OEIS_A217703/Solution.lean#L19-L23"]
 theorem conjecture3 :
-    Filter.Tendsto (fun n : ℕ => |(a n : ℝ)| ^ (1 / (n : ℝ)) / (n : ℝ) ^ 2)
+    ¬ Filter.Tendsto (fun n : ℕ => |(a n : ℝ)| ^ (1 / (n : ℝ)) / (n : ℝ) ^ 2)
       Filter.atTop (nhds 0) := by
   sorry
 

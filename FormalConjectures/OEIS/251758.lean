@@ -73,8 +73,7 @@ p\#15/p\#4, p\#16/p\#4$, etc. But is $p\#12/p\#4$ the least such $x$?"
 @[category research open, AMS 11]
 theorem conjecture :
     answer(sorry) ↔
-      IsLeast {x : ℕ | ∃ k > numPrimesLt 8,
-        x = primorial k / primorial (numPrimesLt 8) ∧ a x = 8}
+      IsLeast {x : ℕ | 2 ≤ x ∧ a x = 8}
         (primorial 12 / primorial (numPrimesLt 8)) := by
   sorry
 

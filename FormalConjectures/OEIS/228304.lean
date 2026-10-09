@@ -24,6 +24,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^4 (-1)^k.$$
 
 *References:*
 - [A228304](https://oeis.org/A228304)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA228304
@@ -62,8 +64,10 @@ Conjecture: Let $p$ be any odd prime, and let $A(p)$ be the $p \times p$ determi
 $(i,j)$-entry equal to $a(i+j)$ for all $i, j = 0, \dots, p-1$. Then
 $A(p) \equiv (-1)^{(p-1)/2} \pmod p$. Similarly, if $C(p)$ is the $p \times p$ determinant with
 $(i,j)$-entry equal to $c(i+j)$ for all $i, j = 0, \dots, p-1$, then $C(p) \equiv 1 \pmod p$.
+
+Proved by Adamczewski (2026).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem conjecture1 (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) :
     let A : Matrix (Fin p) (Fin p) ℤ := fun i j => a (i.val + j.val)
     let C : Matrix (Fin p) (Fin p) ℤ := fun i j => c (i.val + j.val)

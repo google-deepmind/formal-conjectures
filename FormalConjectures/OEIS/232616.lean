@@ -21,6 +21,8 @@ import FormalConjecturesUtil
 
 *References:*
 - [A232616](https://oeis.org/A232616)
+- [OEIS Open](https://arxiv.org/abs/2608.11941)
+  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
 
 namespace OeisA232616
@@ -87,7 +89,7 @@ where $\text{prime}(n)$ is the $n$-th prime number (1-indexed).
 Disproved by Adamczewski for $n = 550172$.
 -/
 @[category research solved, AMS 11]
-theorem conjecture1 : ∀ n > 0, a n < 2 * (Nat.nth Nat.Prime (n - 1) - 1) := by
+theorem conjecture1 : ¬ ∀ n > 0, a n < 2 * (Nat.nth Nat.Prime (n - 1) - 1) := by
   sorry
 
 /--
