@@ -36,7 +36,9 @@ rank is known to be $\min(m_3, m_1m_2)$, so the interesting case is the *critica
 $3 \leq m_1 \leq m_2 \leq m_3 \leq (m_1-1)(m_2-1)$ [Fri12, Conjecture 5.1; BFZ24, (4.14)]. There
 the bound $r_0$ is attained in every case that has been settled, except for the formats
 $(3, 2p+1, 2p+1)$, where the generic rank is $r_0 + 1$. Friedland's conjecture, stated here as
-`isGenericRank_of_le_critical`, is that these are the only exceptions.
+`isGenericRank_of_le_critical`, is that these are the only exceptions. The boundary case
+$m_3 = (m_1-1)(m_2-1)$ is settled in [Fri12, Corollary 6.4(2)] and recorded as
+`isGenericRank_of_eq_critical`.
 
 The maximal rank is much less well understood. It is known for the formats
 $2 \times m \times n$ and for a range of small formats, but no formula is known even for
@@ -224,12 +226,51 @@ theorem isGenericRank_cube {n : ℕ} (hn : 1 ≤ n) (hn3 : n ≠ 3) :
     IsGenericRank [n, n, n] (n ^ 3 ⌈/⌉ (3 * n - 2)) := by
   sorry
 
+/-- At the boundary $m_3 = (m_1-1)(m_2-1)$, the dimension-count ceiling is $m_3+1$.
+This is the arithmetic identity in [Fri12, (5.11)]. -/
+@[category API, AMS 14 15]
+theorem critical_ceilDiv {m₁ m₂ : ℕ} (h₁ : 3 ≤ m₁) (h₂ : 3 ≤ m₂) :
+    m₁ * m₂ * ((m₁ - 1) * (m₂ - 1)) ⌈/⌉
+      (m₁ + m₂ + (m₁ - 1) * (m₂ - 1) - 2) = (m₁ - 1) * (m₂ - 1) + 1 := by
+  set b := (m₁ - 1) * (m₂ - 1)
+  set d := m₁ + m₂ + b - 2
+  have hb : 0 < b := Nat.mul_pos (by omega) (by omega)
+  have hbd : b < d := by omega
+  have hd : d + 1 = m₁ * m₂ := by
+    have hdadd : d + 2 = m₁ + m₂ + b := by omega
+    have hsub₁ : m₁ - 1 + 1 = m₁ := by omega
+    have hsub₂ : m₂ - 1 + 1 = m₂ := by omega
+    have hmul : b + m₁ + m₂ = m₁ * m₂ + 1 := by
+      dsimp [b]
+      rw [← hsub₁, ← hsub₂]
+      simp only [Nat.add_sub_cancel]
+      ring
+    omega
+  apply Nat.le_antisymm
+  · apply (ceilDiv_le_iff_le_mul (by omega : 0 < d)).2
+    nlinarith
+  · have hle := le_smul_ceilDiv (by omega : 0 < d) (b := m₁ * m₂ * b)
+    change m₁ * m₂ * b ≤ d * (m₁ * m₂ * b ⌈/⌉ d) at hle
+    by_contra h
+    have : m₁ * m₂ * b ⌈/⌉ d ≤ b := by omega
+    nlinarith
+
+/-- The generic rank at the critical boundary is $(m_1-1)(m_2-1)+1$
+[Fri12, Corollary 6.4(2)]. By `critical_ceilDiv`, this is the dimension-count value in
+`isGenericRank_of_le_critical`. -/
+@[category research solved, AMS 14 15]
+theorem isGenericRank_of_eq_critical {m₁ m₂ : ℕ} (h₁ : 3 ≤ m₁) (h₁₂ : m₁ ≤ m₂) :
+    IsGenericRank [m₁, m₂, (m₁ - 1) * (m₂ - 1)] ((m₁ - 1) * (m₂ - 1) + 1) := by
+  sorry
+
 /--
 **Friedland's conjecture.** In the critical range $m_3 \leq (m_1 - 1)(m_2 - 1)$, and away from the
 formats $(3, 2p+1, 2p+1)$, the generic rank of a tensor of format $(m_1, m_2, m_3)$ is the value
 $\lceil m_1m_2m_3 / (m_1 + m_2 + m_3 - 2) \rceil$ predicted by a dimension count
-[Fri12, Conjecture 5.1]. It is known for $m_1 \leq 4$ and for $(n, n, n)$, and has been verified
-numerically throughout the critical range for $m_3 \leq 20$ [BFZ24, Section 4.5].
+[Fri12, Conjecture 5.1]. The boundary $m_3 = (m_1-1)(m_2-1)$ is settled by
+`isGenericRank_of_eq_critical` [Fri12, (5.11)]. It is known for $m_1 \leq 4$ and for $(n, n, n)$,
+and has been verified numerically throughout the critical range for $m_3 \leq 20$
+[BFZ24, Section 4.5].
 -/
 @[category research open, AMS 14 15]
 theorem isGenericRank_of_le_critical {m₁ m₂ m₃ : ℕ} (h₁ : 3 ≤ m₁) (h₁₂ : m₁ ≤ m₂) (h₂₃ : m₂ ≤ m₃)
