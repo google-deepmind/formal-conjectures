@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The matrix multiplication exponent
@@ -53,6 +54,8 @@ $\langle n, n, n\rangle$ (`Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)`) is $O(
   preprint, October 2, 2026, Theorem 1.1. Used for
   `matrix_multiplication_exponent_nine_fourths`.
 -/
+
+@[expose] public section
 
 namespace MatrixMultiplicationExponent
 
