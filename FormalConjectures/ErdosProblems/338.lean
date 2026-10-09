@@ -78,8 +78,9 @@ This uses the `answer(sorry)` mechanism. A solution must supply the condition an
 equivalence. Whether a condition is a satisfactory answer is up to human judgement.
 -/
 @[category research open, AMS 11]
-theorem erdos_338 (A : Set ℕ) (hA : ∃ h, HasOrder A h) :
-    (∃ t, HasRestrictedOrder A t) ↔ (answer(sorry) : Set ℕ → Prop) A := by
+theorem erdos_338 :
+    let P : Set ℕ → Prop := answer(sorry)
+    ∀ A : Set ℕ, (∃ h, HasOrder A h) → ((∃ t, HasRestrictedOrder A t) ↔ P A) := by
   sorry
 
 /--
@@ -105,8 +106,9 @@ For a basis, `basisOrder A` is finite, so the equality also says that the restri
 This uses the `answer(sorry)` mechanism, as in `Erdos338.erdos_338`.
 -/
 @[category research open, AMS 11]
-theorem erdos_338.variants.eq_order (A : Set ℕ) (hA : ∃ h, HasOrder A h) :
-    restrictedOrder A = basisOrder A ↔ (answer(sorry) : Set ℕ → Prop) A := by
+theorem erdos_338.variants.eq_order :
+    let P : Set ℕ → Prop := answer(sorry)
+    ∀ A : Set ℕ, (∃ h, HasOrder A h) → (restrictedOrder A = basisOrder A ↔ P A) := by
   sorry
 
 /--
