@@ -65,7 +65,7 @@ noncomputable def roughSum (includeZero : Bool) (n : ℕ) : ℝ := by
 /--
 Let $a_0=0$ and $a_1=1$, and in general define $a_k$ to be the least integer
 $>a_{k-1}$ for which $(n-a_k,n-a_i)=1$ for all $0\leq i<k$. Does
-\[\sum_{0<a_i<n}\frac{1}{a_i}\to \infty\]
+$$\sum_{0<a_i<n}\frac{1}{a_i}\to \infty$$
 as $n\to \infty$?
 
 The finite scan records the positive selected values below $n$. The prescribed
