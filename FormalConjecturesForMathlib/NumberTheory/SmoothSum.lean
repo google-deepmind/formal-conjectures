@@ -15,10 +15,12 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Analysis.Complex.ExponentialBounds
 public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 public import Mathlib.Data.Nat.Prime.Nth
-public import Mathlib.Data.Real.Archimedean
 public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.NumberTheory.PrimeCounting
 public import Mathlib.Tactic
 
 /-!
@@ -383,7 +385,7 @@ theorem exists_prime_nonresidue_le_of_sumOfTwoSmooth {p : ℕ} [hp : Fact p.Prim
     (h4 : p % 4 = 3) {y : ℝ} (h : SumOfTwoSmooth y p) :
     ∃ q : ℕ, q.Prime ∧ (q : ℝ) ≤ y ∧ ¬ IsSquare (q : ZMod p) := by
   by_contra hne
-  push_neg at hne
+  push Not at hne
   obtain ⟨a, b, hab, ha, hb⟩ := h
   have hb0 : b ≠ 0 := by rintro rfl; exact not_isSmooth_zero y hb
   have ha0 : a ≠ 0 := by rintro rfl; exact not_isSmooth_zero y ha
@@ -421,7 +423,7 @@ theorem eventually_small_nonresidue_of_eventually_sumOfTwoSmooth (θ : ℝ)
     ∀ᶠ p : ℕ in atTop, p.Prime → p % 4 = 3 →
       ∃ q : ℕ, q.Prime ∧ (q : ℝ) ≤ (p : ℝ) ^ θ ∧ ¬ IsSquare (q : ZMod p) := by
   filter_upwards [h] with p hp hprime h4
-  haveI := Fact.mk hprime
+  have := Fact.mk hprime
   exact exists_prime_nonresidue_le_of_sumOfTwoSmooth h4 hp
 
 end Erdos334
@@ -527,7 +529,7 @@ theorem not_sumOfTwoSmooth_of_negPseudosquare {P : ℝ} {m : ℕ} (h8 : m % 8 = 
     ¬ SumOfTwoSmooth P m := by
   have hJ : ∀ p : ℕ, p.Prime → p ≠ 2 → (p : ℝ) ≤ P → jacobiSym (-(m : ℤ)) p = 1 := by
     intro p hp hp2 hpP
-    haveI := Fact.mk hp
+    have := Fact.mk hp
     obtain ⟨hsq, hne⟩ := hq p hp hp2 hpP
     rw [← jacobiSym.legendreSym.to_jacobiSym]
     have hcast : (((-(m : ℤ)) : ℤ) : ZMod p) = -(m : ZMod p) := by push_cast; rfl
@@ -556,7 +558,7 @@ theorem exists_negPseudosquare (n : ℕ) : ∃ m : ℕ, 0 < m ∧ IsNegPseudosqu
   have hNpos : 0 < N := Finset.prod_pos fun i _ => (Nat.prime_nth_prime (i + 1)).pos
   refine ⟨8 * N - 1, by omega, by omega, fun i hi => ?_⟩
   set q := Nat.nth Nat.Prime (i + 1)
-  haveI : Fact q.Prime := ⟨Nat.prime_nth_prime (i + 1)⟩
+  have : Fact q.Prime := ⟨Nat.prime_nth_prime (i + 1)⟩
   have hdvd : q ∣ 8 * N := dvd_mul_of_dvd_right (Finset.dvd_prod_of_mem _ (by simpa using hi)) 8
   have hm1 : ((8 * N - 1 : ℕ) : ZMod q) = -1 := by
     have : ((8 * N - 1 + 1 : ℕ) : ZMod q) = 0 := by
@@ -581,7 +583,7 @@ theorem A062241_le_A045535 (n : ℕ) (hn : 1 ≤ n) : A062241 n ≤ A045535 (n -
   set k := Nat.count Nat.Prime p
   have hk : Nat.nth Nat.Prime k = p := Nat.nth_count hp
   have hkn : k ≤ n - 1 := by
-    rw [← Nat.nth_le_nth Nat.infinite_setOf_prime, hk]; exact hpP'
+    rw [← Nat.nth_le_nth Nat.infinite_setOfPred_prime, hk]; exact hpP'
   have hk0 : k ≠ 0 := by
     intro h0; rw [h0, Nat.nth_prime_zero_eq_two] at hk; exact hp2 hk.symm
   have := hq (k - 1) (by omega)
