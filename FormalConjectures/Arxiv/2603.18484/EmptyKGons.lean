@@ -66,7 +66,6 @@ the quadratic term.
 - OEIS sequences of minimum k-hole counts: [A063541](https://oeis.org/A063541)
   (3-holes), [A063542](https://oeis.org/A063542) (4-holes),
   [A276096](https://oeis.org/A276096) (5-holes).
-- [Wikipedia: Empty triangle](https://en.wikipedia.org/wiki/Empty_triangle)
 -/
 
 open EuclideanGeometry
