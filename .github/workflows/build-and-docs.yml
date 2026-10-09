@@ -68,7 +68,9 @@ jobs:
           python-version: '3.12.9'
 
       - name: Run script tests
-        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+        run: |
+          python3 -m unittest discover -s scripts -p 'test_*.py' -v
+          python3 -m unittest discover -s site -p 'test_*.py' -v
 
       - name: Run website post-processing tests
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
@@ -356,6 +358,13 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         run: python3 scripts/check_category_warnings.py site/data/conjectures.json
 
+      # The stats plot counts categories by reading the Lean source, which is
+      # the only way to count them for past commits. This confirms that doing
+      # so still agrees with `extract_names` over the tree both just saw.
+      - name: Check status counts
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: python3 site/check_status_counts.py site/data/conjectures.json
+
       - name: Extract Verso fragments for website
         if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
         run: |
@@ -375,6 +384,8 @@ jobs:
           echo "Downloading growth plots from $LIVE_URL ..."
           curl -sfL "$LIVE_URL/data/file_counts_white.html" -o site/data/file_counts_white.html || true
           curl -sfL "$LIVE_URL/data/file_counts_dark.html" -o site/data/file_counts_dark.html || true
+          curl -sfL "$LIVE_URL/data/status_counts_white.html" -o site/data/status_counts_white.html || true
+          curl -sfL "$LIVE_URL/data/status_counts_dark.html" -o site/data/status_counts_dark.html || true
           node -e "
             const fs = require('fs');
             const data = JSON.parse(fs.readFileSync('/tmp/live_conjectures.json', 'utf8'));
