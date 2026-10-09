@@ -143,7 +143,7 @@ theorem erdos_30.variants.elementary_difference_count (A : Finset ℕ) (N : ℕ)
       (({p ∈ A ×ˢ A | p.2 < p.1} : Finset (ℕ × ℕ)) : Set (ℕ × ℕ)) := by
     intro ⟨a₁, b₁⟩ h₁ ⟨a₂, b₂⟩ h₂ heq
     simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product] at h₁ h₂
-    have := Finset.sidon_diff_injective hS h₁.1.1 h₁.1.2 h₂.1.1 h₂.1.2 h₁.2 h₂.2 heq
+    have := Finset.IsSidon.eq_of_tsub hS h₁.1.1 h₁.1.2 h₂.1.1 h₂.1.2 h₁.2 h₂.2 heq
     exact Prod.ext this.1 this.2
   have h_sub : {p ∈ A ×ˢ A | p.2 < p.1}.image (fun p : ℕ × ℕ ↦ p.1 - p.2) ⊆ Finset.Icc 1 N := by
     simp only [Finset.image_subset_iff, Finset.mem_filter, Finset.mem_product, Finset.mem_Icc,

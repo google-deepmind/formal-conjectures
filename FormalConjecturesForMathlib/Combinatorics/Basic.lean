@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
+public import Mathlib.Algebra.Order.Sub.Unbundled.Basic
 public import Mathlib.Analysis.Normed.Field.Lemmas
 public import Mathlib.Order.CompletePartialOrder
 
@@ -176,19 +177,6 @@ end Set
 
 namespace Finset
 
-/-- The sum of `{0, …, m}` and `{0, …, n}` is `{0, …, m + n}`. -/
-theorem range_add_range (m n : ℕ) :
-    range (m + 1) + range (n + 1) = range (m + n + 1) := by
-  ext k
-  simp only [mem_add, mem_range]
-  constructor
-  · rintro ⟨a, ha, b, hb, rfl⟩
-    lia
-  · intro hk
-    by_cases hkm : k ≤ m
-    · exact ⟨k, by lia, 0, by lia, by simp⟩
-    · exact ⟨m, by lia, k - m, by lia, by lia⟩
-
 instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := by
   refine decidable_of_iff (∀ᵉ (i₁ ∈ A) (j₁ ∈ A) (i₂ ∈ A) (j₂ ∈ A),
     i₁ + i₂ = j₁ + j₂ → (i₁ = j₁ ∧ i₂ = j₂) ∨ (i₁ = j₂ ∧ i₂ = j₁)) ?_
@@ -196,33 +184,20 @@ instance (A : Finset α) [DecidableEq α] : Decidable (IsSidon (A : Set α)) := 
 
 /-- In a Sidon set, a positive difference determines its endpoints: if `a₁ - b₁ = a₂ - b₂` with
 `b₁ < a₁` and `b₂ < a₂`, then `a₁ = a₂` and `b₁ = b₂`. -/
-theorem sidon_diff_injective {A : Finset ℕ} (hS : IsSidon (A : Set ℕ))
-    {a₁ b₁ a₂ b₂ : ℕ} (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
+theorem IsSidon.eq_of_tsub {β : Type*} [AddCommMonoid β] [PartialOrder β]
+    [ExistsAddOfLE β] [AddLeftMono β] [Sub β] [OrderedSub β]
+    {A : Finset β} (hS : IsSidon (A : Set β))
+    {a₁ b₁ a₂ b₂ : β} (ha₁ : a₁ ∈ A) (hb₁ : b₁ ∈ A) (ha₂ : a₂ ∈ A) (hb₂ : b₂ ∈ A)
     (hlt₁ : b₁ < a₁) (hlt₂ : b₂ < a₂) (heq : a₁ - b₁ = a₂ - b₂) :
     a₁ = a₂ ∧ b₁ = b₂ := by
-  -- `a₁ + b₂ = a₂ + b₁`, so the Sidon property applies to the pairs `(a₁, b₂)` and `(a₂, b₁)`
-  rcases hS a₁ ha₁ a₂ ha₂ b₂ hb₂ b₁ hb₁ (by lia) with h | h <;> lia
-
-/-- Twice the number of pairs `(a, b) ∈ A ×ˢ A` with `a < b` is `|A| * (|A| - 1)`. -/
-theorem two_mul_card_product_filter_lt (A : Finset ℕ) :
-    2 * #{p ∈ A ×ˢ A | p.1 < p.2} = #A * (#A - 1) := by
-  have h_swap : #{p ∈ A ×ˢ A | p.2 < p.1} = #{p ∈ A ×ˢ A | p.1 < p.2} :=
-    card_equiv (.prodComm ..) (by simp [and_comm])
-  have h_union : A.offDiag = {p ∈ A ×ˢ A | p.1 < p.2} ∪ {p ∈ A ×ˢ A | p.2 < p.1} := by
-    ext ⟨a, b⟩
-    simp only [mem_offDiag, mem_union, mem_filter, mem_product, ne_iff_lt_or_gt]
-    tauto
-  have h_disj : Disjoint {p ∈ A ×ˢ A | p.1 < p.2} {p ∈ A ×ˢ A | p.2 < p.1} :=
-    disjoint_filter.2 fun _ _ h₁ h₂ ↦ absurd h₂ h₁.not_gt
-  rw [Nat.mul_sub_one, ← A.offDiag_card, h_union, card_union_of_disjoint h_disj, h_swap, two_mul]
-
-/-- Twice the number of pairs `(a, b) ∈ A ×ˢ A` with `b < a` is `|A| * (|A| - 1)`. -/
-theorem two_mul_card_product_filter_gt (A : Finset ℕ) :
-    2 * #{p ∈ A ×ˢ A | p.2 < p.1} = #A * (#A - 1) := by
-  rw [← two_mul_card_product_filter_lt]
-  congr 1
-  exact card_equiv (.prodComm ..) (by simp [and_comm])
-
+  have hsum : a₁ + b₂ = a₂ + b₁ := by
+    calc
+      a₁ + b₂ = (a₁ - b₁ + b₁) + b₂ := by rw [tsub_add_cancel_of_le hlt₁.le]
+      _ = (a₂ - b₂ + b₂) + b₁ := by rw [heq]; ac_rfl
+      _ = a₂ + b₁ := by rw [tsub_add_cancel_of_le hlt₂.le]
+  rcases hS a₁ ha₁ a₂ ha₂ b₂ hb₂ b₁ hb₁ hsum with h | h
+  · exact ⟨h.1, h.2.symm⟩
+  · exact (hlt₁.ne' h.1).elim
 
 /-- The maximum size of a Sidon set in the supplied `Finset`. -/
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
