@@ -7,10 +7,21 @@ on:
     paths:
       - 'research/rh/krein_L105_v1/tools/**'
       - '.github/workflows/rh-krein-l105-coefficient-binding.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'research/rh/krein_L105_v1/tools/**'
+      - '.github/workflows/rh-krein-l105-coefficient-binding.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# Workflow events and artifact names are bound to the actual PR head, not its
+# synthetic merge commit. For push, this is exactly the pushed branch head.
+env:
+  L105_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 
 jobs:
   data-rebind:
@@ -21,13 +32,14 @@ jobs:
       - name: Checkout exact fork HEAD
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
+          ref: ${{ env.L105_SOURCE_SHA }}
           persist-credentials: false
           fetch-depth: 1
       - name: Verify pinned source and generators
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$L105_SOURCE_SHA"
           mkdir -p evidence-l105
           test "$(git hash-object research/rh/krein_L105_v1/RHKreinL105DataV1.lean)" = 1b88c253ed33ab041880bc0cd3c117d1d2e09e34
           test "$(git hash-object research/rh/aegis_source_4d7578e/research/krein_lp_L1.05_svd.json)" = 8693c140b4be1f785074aa7040b5c50be5ef5fd2
@@ -38,7 +50,7 @@ jobs:
           test "$(git hash-object research/rh/krein_L105_v1/tools/sweep.py)" = ed523d5040912814843f6028d7a576c28fca32c8
           test "$(git hash-object research/rh/krein_L105_v1/tools/minN.py)" = 1f34cdd274ad09fb7f58818733258721bf817ddd
           test "$(git hash-object research/rh/krein_L105_v1/tools/deg16.py)" = fc93a9781c89103418a558c06d5382eea9c9b047
-          printf 'EXACT_HEAD=%s\nLEAN_DATA_BLOB=1b88c253ed33ab041880bc0cd3c117d1d2e09e34\nJSON_BLOB=8693c140b4be1f785074aa7040b5c50be5ef5fd2\n' "$GITHUB_SHA" > evidence-l105/source.txt
+          printf 'EXACT_HEAD=%s\nLEAN_DATA_BLOB=1b88c253ed33ab041880bc0cd3c117d1d2e09e34\nJSON_BLOB=8693c140b4be1f785074aa7040b5c50be5ef5fd2\n' "$L105_SOURCE_SHA" > evidence-l105/source.txt
       - name: Run exact dyadic binding test without Lean or extra mathematical assumptions
         shell: bash
         run: |
@@ -177,7 +189,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-coefficient-binding-${{ github.sha }}
+          name: rh-l105-coefficient-binding-${{ env.L105_SOURCE_SHA }}
           path: evidence-l105/
           if-no-files-found: warn
           retention-days: 30
@@ -192,7 +204,7 @@ jobs:
       - name: Checkout exact fork HEAD
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ env.L105_SOURCE_SHA }}
           fetch-depth: 1
           persist-credentials: false
       - name: Checkout exact AEGIS base and window dependencies
@@ -222,17 +234,17 @@ jobs:
       - name: Download generated exact-head certificate sources
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-coefficient-binding-${{ github.sha }}
+          name: rh-l105-coefficient-binding-${{ env.L105_SOURCE_SHA }}
           path: evidence-l105
       - name: Verify pins and materialize source-only AEGIS modules
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$L105_SOURCE_SHA"
           test "$(git -C .aegis-window rev-parse HEAD)" = "2c3d041b633147ec97c7ef753aa9d157a47bb9f5"
           test "$(git -C .aegis-base rev-parse HEAD)" = "cfe368ce2ffa0d196a4319c02b956997edf9f3fa"
           mkdir -p .lake/l105-generated .lake/l105-source evidence-l105/replay
-          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$L105_SOURCE_SHA"
           python3 - <<'PY'
           import hashlib
           from pathlib import Path
@@ -260,7 +272,7 @@ jobs:
               cp "$source" ".lake/l105-source/$(basename "$source" .src)"
             done
           done
-          printf 'EXACT_HEAD=%s\nAEGIS_WINDOW=2c3d041b633147ec97c7ef753aa9d157a47bb9f5\nAEGIS_BASE=cfe368ce2ffa0d196a4319c02b956997edf9f3fa\n' "$GITHUB_SHA" > evidence-l105/replay/pins.txt
+          printf 'EXACT_HEAD=%s\nAEGIS_WINDOW=2c3d041b633147ec97c7ef753aa9d157a47bb9f5\nAEGIS_BASE=cfe368ce2ffa0d196a4319c02b956997edf9f3fa\n' "$L105_SOURCE_SHA" > evidence-l105/replay/pins.txt
       - name: Install pinned Lean 4.33.1 and Mathlib
         shell: bash
         run: |
@@ -422,14 +434,14 @@ jobs:
           test ! -e "$OUT/RHKreinL105AllV1.olean"
           mkdir -p l105-base-upload
           cp -a "$OUT/." l105-base-upload/
-          printf '%s\n' "$GITHUB_SHA" > l105-base-upload/exact-head.txt
+          printf '%s\n' "$L105_SOURCE_SHA" > l105-base-upload/exact-head.txt
           (cd l105-base-upload && find . -type f -name '*.olean' -print0 | sort -z | xargs -0 sha256sum > olean-sha256.txt)
           test "$(wc -l < l105-base-upload/olean-sha256.txt)" -gt 100
           echo 'L105_BASE_CLOSURE=PASS' > evidence-l105/replay/base-disposition.txt
       - name: Upload pinned L105 base modules
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-base-${{ github.sha }}
+          name: rh-l105-base-${{ env.L105_SOURCE_SHA }}
           path: l105-base-upload/
           if-no-files-found: error
           retention-days: 14
@@ -438,7 +450,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-base-logs-${{ github.sha }}-${{ github.run_id }}
+          name: rh-l105-base-logs-${{ env.L105_SOURCE_SHA }}-${{ github.run_id }}
           path: evidence-l105/replay/
           if-no-files-found: warn
           retention-days: 14
@@ -457,13 +469,13 @@ jobs:
       - name: Checkout exact fork SHA
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ env.L105_SOURCE_SHA }}
           persist-credentials: false
       - name: Install pinned Lean and Mathlib
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$L105_SOURCE_SHA"
           test "$(cat lean-toolchain)" = "leanprover/lean4:v4.33.1"
           grep -Fq "0df444a360eaa60ab8c11dca51a86af692955474" lake-manifest.json
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
@@ -475,12 +487,12 @@ jobs:
       - name: Download source-exact certificate modules
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-coefficient-binding-${{ github.sha }}
+          name: rh-l105-coefficient-binding-${{ env.L105_SOURCE_SHA }}
           path: evidence-l105
       - name: Download pinned base closure
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-base-${{ github.sha }}
+          name: rh-l105-base-${{ env.L105_SOURCE_SHA }}
           path: .lake/l105-build
       - name: Replay assigned certificate batches with exact-source hashes
         shell: bash
@@ -488,8 +500,8 @@ jobs:
           L105_SHARD: ${{ matrix.shard }}
         run: |
           set -euo pipefail
-          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
-          test "$(cat .lake/l105-build/exact-head.txt)" = "$GITHUB_SHA"
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$L105_SOURCE_SHA"
+          test "$(cat .lake/l105-build/exact-head.txt)" = "$L105_SOURCE_SHA"
           (cd .lake/l105-build && sha256sum -c olean-sha256.txt)
           OUT="$GITHUB_WORKSPACE/.lake/l105-build"
           GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
@@ -524,14 +536,14 @@ jobs:
           expected_count=0
           for ((i=L105_SHARD; i<116; i+=12)); do expected_count=$((expected_count+1)); done
           test "$(find l105-shard-upload -maxdepth 1 -name '*.olean' | wc -l)" -eq "$expected_count"
-          printf '%s\n' "$GITHUB_SHA" > l105-shard-upload/exact-head.txt
+          printf '%s\n' "$L105_SOURCE_SHA" > l105-shard-upload/exact-head.txt
           printf '%s\n' "$L105_SHARD" > l105-shard-upload/shard.txt
           (cd l105-shard-upload && sha256sum ./*.olean > olean-sha256.txt)
           ! grep -R -n -E 'sorryAx|declaration uses .sorry.' evidence-l105/shard
       - name: Upload verified batch objects
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-shard-${{ matrix.shard }}-${{ github.sha }}
+          name: rh-l105-shard-${{ matrix.shard }}-${{ env.L105_SOURCE_SHA }}
           path: l105-shard-upload/
           if-no-files-found: error
           retention-days: 14
@@ -540,7 +552,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-shard-logs-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_id }}
+          name: rh-l105-shard-logs-${{ matrix.shard }}-${{ env.L105_SOURCE_SHA }}-${{ github.run_id }}
           path: evidence-l105/shard/
           if-no-files-found: warn
           retention-days: 14
@@ -554,13 +566,13 @@ jobs:
       - name: Checkout exact fork HEAD
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ env.L105_SOURCE_SHA }}
           persist-credentials: false
       - name: Install pinned Lean and Mathlib
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$L105_SOURCE_SHA"
           test "$(cat lean-toolchain)" = "leanprover/lean4:v4.33.1"
           grep -Fq "0df444a360eaa60ab8c11dca51a86af692955474" lake-manifest.json
           curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
@@ -572,24 +584,24 @@ jobs:
       - name: Download source-exact certificate modules
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-coefficient-binding-${{ github.sha }}
+          name: rh-l105-coefficient-binding-${{ env.L105_SOURCE_SHA }}
           path: evidence-l105
       - name: Download compiled source-exact common closure
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: rh-l105-base-${{ github.sha }}
+          name: rh-l105-base-${{ env.L105_SOURCE_SHA }}
           path: .lake/l105-build
       - name: Download all independently checked shard artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          pattern: rh-l105-shard-*-${{ github.sha }}
+          pattern: rh-l105-shard-*-${{ env.L105_SOURCE_SHA }}
           path: l105-shards
       - name: Verify exact-head shard completeness and compile full L105 theorem
         shell: bash
         run: |
           set -euo pipefail
-          test "$(cat .lake/l105-build/exact-head.txt)" = "$GITHUB_SHA"
-          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
+          test "$(cat .lake/l105-build/exact-head.txt)" = "$L105_SOURCE_SHA"
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$L105_SOURCE_SHA"
           (cd .lake/l105-build && sha256sum -c olean-sha256.txt)
           OUT="$GITHUB_WORKSPACE/.lake/l105-build"
           GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
@@ -597,9 +609,9 @@ jobs:
           cp evidence-l105/generated/RHKreinL105AllV1.lean "$GEN/"
           test "$(find l105-shards -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 12
           for shard in {0..11}; do
-            dir="l105-shards/rh-l105-shard-$shard-$GITHUB_SHA"
+            dir="l105-shards/rh-l105-shard-$shard-$L105_SOURCE_SHA"
             test -d "$dir"
-            test "$(cat "$dir/exact-head.txt")" = "$GITHUB_SHA"
+            test "$(cat "$dir/exact-head.txt")" = "$L105_SOURCE_SHA"
             test "$(cat "$dir/shard.txt")" = "$shard"
             (cd "$dir" && sha256sum -c olean-sha256.txt)
             expected_count=0
@@ -613,7 +625,7 @@ jobs:
             test "$(find "$dir" -maxdepth 1 -type f -name '*.olean' | wc -l)" -eq "$expected_count"
           done
           test "$(find "$OUT" -maxdepth 1 -type f -name 'RHKreinL105Batch[0-9][0-9][0-9].olean' | wc -l)" -eq 116
-          printf 'EXACT_HEAD=%s\nL105_SHARDS=12_OF_12_SHA256_VERIFIED\nL105_BATCHES=116_OF_116_OLEANS_PRESENT\n' "$GITHUB_SHA" > evidence-l105/replay/completeness.txt
+          printf 'EXACT_HEAD=%s\nL105_SHARDS=12_OF_12_SHA256_VERIFIED\nL105_BATCHES=116_OF_116_OLEANS_PRESENT\n' "$L105_SOURCE_SHA" > evidence-l105/replay/completeness.txt
           ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
           export LEAN_PATH="$OUT:$GEN:$ROOT_LEAN_PATH"
           lean -o "$OUT/RHKreinL105AllV1.olean" "$GEN/RHKreinL105AllV1.lean" 2>&1 |
@@ -637,7 +649,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rh-l105-kernel-replay-${{ github.sha }}-${{ github.run_id }}
+          name: rh-l105-kernel-replay-${{ env.L105_SOURCE_SHA }}-${{ github.run_id }}
           path: evidence-l105/replay/
           if-no-files-found: warn
           retention-days: 30
