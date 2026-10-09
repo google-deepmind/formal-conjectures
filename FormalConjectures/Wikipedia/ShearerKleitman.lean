@@ -162,7 +162,7 @@ theorem shearer_kleitman (n : ℕ) :
   sorry
 
 /--
-**The Shearer–Kleitman conjecture, symmetric form.** For every `n`, the `n`-cube
+**The Shearer–Kleitman conjecture, symmetric form.** For `n ≥ 5`, the `n`-cube
 has `n / 2 + 1` pairwise almost-orthogonal *symmetric* chain decompositions.
 
 This is the notion Spink and [DJMS20] actually work with: strict orthogonality is
@@ -170,9 +170,15 @@ impossible for two symmetric chain decompositions once `n ≥ 1` (their forced
 maximal chains share `∅` and `univ`), so one relaxes to `AlmostOrthogonal`, which
 exempts exactly that pair. This form implies the classical `shearer_kleitman` for
 `n ≥ 5` (by moving `∅`), and is what the constructed lower bounds below establish.
+
+The hypothesis `n ≥ 5` excludes `n = 4`, where `n / 2 + 1 = 3` would demand three
+pairwise almost-orthogonal SCDs. [DJMS20, §1.2 (p.4)] rule this out by exact
+enumeration of `Q₄`: there are `240` SCDs forming `408` almost-orthogonal pairs but
+no almost-orthogonal triple (and no self-almost-orthogonal SCD), so the symmetric
+form is false at `n = 4`.
 -/
 @[category research open, AMS 5 6]
-theorem shearer_kleitman_symmetric (n : ℕ) :
+theorem shearer_kleitman_symmetric (n : ℕ) (hn : 5 ≤ n) :
     ∃ F : Fin (n / 2 + 1) → Finset (Finset (Finset (Fin n))),
       (∀ i, IsSCD (F i)) ∧ (∀ i j, i ≠ j → AlmostOrthogonal (F i) (F j)) := by
   sorry
