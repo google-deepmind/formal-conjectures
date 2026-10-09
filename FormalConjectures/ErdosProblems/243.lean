@@ -62,9 +62,18 @@ noncomputable def recordLogLog (x : ℝ) : ℝ :=
   Real.log (Real.log (max 4 x) / Real.log 2) / Real.log 2
 
 /--
-The slow-growth clause of Cook's theorem on bounded or slowly growing increments
-of the product ratio: a rational reciprocal sum and quadratic growth force
-an eventual Sylvester recurrence if the product defect has this extra bound.
+Let $(a_n)_{n\ge 0}$ be a strictly increasing sequence of positive integers with
+$\sum_{n\ge 0}1/a_n=p/q$, where $p\in\mathbb{Z}$ and $q\ge 1$, and suppose
+$a_{n+1}/a_n^2\to 1$. Put
+$$
+P_n=\prod_{j<n}a_j,\qquad
+D_n=\frac{P_n}{a_n}\left(\frac{a_n^2}{a_{n+1}}-1\right),\qquad
+L(x)=\log_2\log_2(\max\{4,x\}).
+$$
+If there is a $\delta>0$ such that eventually
+$D_n\le (1-\delta)L(P_n/a_n)/q$, then eventually
+$a_{n+1}=a_n^2-a_n+1$. This is the slow-growth clause of Cook's theorem
+on increments of the product ratio.
 See the [slow-growth clause of Theorem `long243:res:strausbounded`](https://github.com/wcook04/plectis-erdos/blob/40008384cb6e343c5a93841701ecc25b97974141/paper/reasoning-parts/erdos243/core.tex#L2307-L2320)
 in Cook’s long Erdős 243 paper. The related Erdős–Straus criterion
 ([Theorem 3, p. 132](https://users.renyi.hu/~p_erdos/1964-19.pdf))
