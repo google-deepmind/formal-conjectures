@@ -27,7 +27,9 @@ public import FormalConjecturesUtil
   **Some new results on Sylvester colorings of cubic graphs**
   by *Luca Ferrarini, Vahan Mkrtchyan*, where this is Conjecture 4.
 
-Every bridgeless graph has a list of cycles covering every edge whose lengths sum to at most
+This file states the finite simple-graph specialization of the source, which allows parallel edges.
+
+Every bridgeless simple graph has a list of cycles covering every edge whose lengths sum to at most
 $\frac{7}{5}|E|$.
 -/
 
@@ -46,8 +48,41 @@ def IsCycleCover (G : SimpleGraph V) [DecidableRel G.Adj] (C : Multiset (Cycle G
 /-- The total length of a family of cycles. -/
 def totalLength {G : SimpleGraph V} (C : Multiset (Cycle G)) : ℕ := (C.map SimpleGraph.Cycle.length).sum
 
+omit [Fintype V] [DecidableEq V] in
+/-- The empty family has total length zero. -/
+@[simp, category API, AMS 5]
+theorem totalLength_zero {G : SimpleGraph V} : totalLength (0 : Multiset (Cycle G)) = 0 := by
+  simp [totalLength]
+
+omit [Fintype V] [DecidableEq V] in
+/-- Joining cycle families adds their total lengths, counting repetitions. -/
+@[simp, category API, AMS 5]
+theorem totalLength_add {G : SimpleGraph V} (C D : Multiset (Cycle G)) :
+    totalLength (C + D) = totalLength C + totalLength D := by
+  simp [totalLength]
+
+omit [DecidableEq V] in
+/-- The empty family covers exactly the graphs with no edges. -/
+@[simp, category API, AMS 5]
+theorem isCycleCover_zero_iff (G : SimpleGraph V) [DecidableRel G.Adj] :
+    IsCycleCover G 0 ↔ G.edgeFinset = ∅ := by
+  simp [IsCycleCover, Finset.eq_empty_iff_forall_notMem]
+
+omit [DecidableEq V] in
+/-- Clearing the rational denominator gives an equivalent natural-number bound. -/
+@[category API, AMS 5]
+theorem totalLength_le_seven_fifths_iff (G : SimpleGraph V) [DecidableRel G.Adj]
+    (C : Multiset (Cycle G)) :
+    (totalLength C : ℚ) ≤ 7 / 5 * #G.edgeFinset ↔
+      5 * totalLength C ≤ 7 * #G.edgeFinset := by
+  have h : (totalLength C : ℚ) ≤ 7 / 5 * #G.edgeFinset ↔
+      5 * (totalLength C : ℚ) ≤ 7 * (#G.edgeFinset : ℚ) := by
+    constructor <;> intro h <;> linarith
+  exact_mod_cast h
+
 /--
-**Conjecture 4 (Alon-Tarsi, 1985).** Every bridgeless graph has a list of cycles covering
+**Conjecture 4 (Alon-Tarsi, 1985), simple-graph specialization.** Every bridgeless simple graph
+has a list of cycles covering
 every edge, with $\sum_{C} |E(C)| \leq \frac{7}{5}|E(G)|$.
 -/
 @[category research open, AMS 5]
