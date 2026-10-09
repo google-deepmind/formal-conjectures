@@ -23,8 +23,10 @@ PROVED = ('@[category research solved, formal_proof using lean4 at "https://e.co
 
 
 def problem(category, kind=None):
-    return {'theorem': 'a', 'module': 'FormalConjectures.Example',
-            'category': category, 'formalProofKind': kind}
+    entry = {'theorem': 'a', 'module': 'FormalConjectures.Example', 'category': category}
+    if kind is not None:
+        entry['formalProofs'] = [{'kind': kind, 'url': 'https://e.com'}]
+    return entry
 
 
 class CountSourceTest(unittest.TestCase):
@@ -84,13 +86,28 @@ class CountExtractionTest(unittest.TestCase):
         self.assertEqual(cs.count_extraction(path),
                          {'open': 0, 'solved': 0, 'formal': 2})
 
-    def test_null_kind_is_not_a_formal_proof(self):
-        path = self.extraction([problem('research solved', None)])
+    def test_several_formal_proofs_count_once(self):
+        entry = problem('research solved', 'lean4')
+        entry['formalProofs'].append({'kind': 'other_system', 'url': 'https://f.com'})
+        self.assertEqual(cs.count_extraction(self.extraction([entry]))['formal'], 1)
+
+    def test_empty_formal_proofs_is_not_a_formal_proof(self):
+        entry = problem('research solved')
+        entry['formalProofs'] = []
+        self.assertEqual(cs.count_extraction(self.extraction([entry]))['formal'], 0)
+
+    def test_absent_formal_proofs_is_not_a_formal_proof(self):
+        path = self.extraction([problem('research solved')])
         self.assertEqual(cs.count_extraction(path)['formal'], 0)
 
-    def test_absent_kind_is_not_a_formal_proof(self):
+    def test_old_formal_proof_kind_field(self):
         entry = problem('research solved')
-        del entry['formalProofKind']
+        entry['formalProofKind'] = 'lean4'
+        self.assertEqual(cs.count_extraction(self.extraction([entry]))['formal'], 1)
+
+    def test_old_null_formal_proof_kind_is_not_a_formal_proof(self):
+        entry = problem('research solved')
+        entry['formalProofKind'] = None
         self.assertEqual(cs.count_extraction(self.extraction([entry]))['formal'], 0)
 
     def test_missing_category(self):

@@ -90,8 +90,10 @@ def count_extraction(path):
         elif problem['category'] == 'research solved':
             totals['solved'] += 1
         # A formal proof is recorded independently of the category, and the
-        # repository has them on `textbook` and `test` statements too.
-        if problem.get('formalProofKind'):
+        # repository has them on `textbook` and `test` statements too. Since
+        # #4894 they are listed in `formalProofs`; `formalProofKind` is the
+        # older single-valued field.
+        if problem.get('formalProofs') or problem.get('formalProofKind'):
             totals['formal'] += 1
     return totals
 

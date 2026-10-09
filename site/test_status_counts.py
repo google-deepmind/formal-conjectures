@@ -148,13 +148,13 @@ class InternalDeclarationTest(unittest.TestCase):
         source = '@[category research open]\nprivate theorem a : True := trivial'
         self.assertEqual(counts(source)['open'], 0)
 
-    def test_underscore_prefixed_name_component_is_skipped(self):
+    def test_underscore_prefixed_name_component_counts(self):
         source = '@[category research solved]\ntheorem foo.variants._1000_le_bar : True := trivial'
-        self.assertEqual(counts(source)['solved'], 0)
+        self.assertEqual(counts(source)['solved'], 1)
 
-    def test_underscore_at_the_start_is_skipped(self):
-        source = '@[category research solved]\ntheorem _private_helper : True := trivial'
-        self.assertEqual(counts(source)['solved'], 0)
+    def test_underscore_at_the_start_counts(self):
+        source = '@[category research open]\ntheorem _08375_le_density : True := trivial'
+        self.assertEqual(counts(source)['open'], 1)
 
     def test_underscore_inside_a_component_still_counts(self):
         source = '@[category research solved]\ntheorem erdos_370.variants.le_bar : True := trivial'

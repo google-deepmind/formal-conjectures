@@ -9,8 +9,8 @@ which declarations `extract_names` reports:
 * Only `theorem`, `lemma`, `instance` and `alias` declarations carry a
   category. An `alias` of a theorem is itself a theorem and gets the
   attributes written on it.
-* Declarations Lean treats as internal are dropped, that is `private` ones and
-  those with a `_`-prefixed name component.
+* `private` declarations are dropped. Names with a `_`-prefixed component
+  were dropped too until #6624 and are now counted, also for earlier commits.
 * A declaration counts once towards `formally proved` however many
   `formal_proof` attributes it carries.
 
@@ -135,8 +135,6 @@ def count_statuses(source):
     for attributes, following in attribute_blocks(strip_comments(source)):
         declaration = DECLARATION.match(following)
         if not declaration or declaration.group(1) not in CATEGORISED:
-            continue
-        if any(part.startswith('_') for part in declaration.group(2).split('.')):
             continue
         if FORMALLY_SOLVED.search(attributes):
             counts['solved'] += 1
