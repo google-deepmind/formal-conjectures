@@ -44,7 +44,7 @@ The $n$-th partial least common multiple, $[a_0, \dots, a_{n-1}]$, which is
 the LCM of the first $n$ integers in the sequence.
 -/
 noncomputable def partialLcm (P : Set ℕ) (n : ℕ) : ℕ :=
-  -- We take the LCM of `{a P 0, ..., a P n}`.
+  -- We take the LCM of the first `n` terms of `a P`.
   (Finset.range n).lcm (a P)
 
 /--
@@ -58,9 +58,17 @@ $\{a_1 < a_2 < \dots\}$ be the set of positive integers whose prime factors
 are all in $P$. Is the sum
 $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 rational?
+
+No. For $P=\{2,3\}$, Fan showed that the sum is transcendental by reducing it to a
+Hecke--Mahler value. The required transcendence theorem is due to Loxton and van der Poorten;
+see also Bugeaud and Laurent, Theorem 1.1. The `series` definition includes one extra
+empty-prefix term equal to $1$, which does not affect transcendence.
+
+*Reference:* [Fan's argument](https://www.erdosproblems.com/forum/thread/269#post-7218),
+[Bugeaud--Laurent](https://arxiv.org/abs/2203.12901).
 -/
-@[category research open, AMS 11]
-theorem erdos_269.variants.rational : answer(sorry) ↔
+@[category research solved, AMS 11]
+theorem erdos_269.variants.rational : answer(False) ↔
     ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
     ∃ (q : ℚ), q = (series (P : Set ℕ)) := by
   sorry
