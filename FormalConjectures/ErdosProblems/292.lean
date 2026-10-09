@@ -70,12 +70,49 @@ theorem erdos_292.variants.martin :
 /-- Straus observed that $A$ is closed under multiplication. -/
 @[category research solved, AMS 11]
 theorem erdos_292.variants.mul : ∀ m ∈ A, ∀ n ∈ A, m * n ∈ A := by
-  sorry
+  rintro m ⟨S, hS, hm, hsumS⟩ n ⟨T, hT, hn, hsumT⟩
+  have hmpos : 0 < m := (Finset.mem_Icc.mp (hS hm)).1
+  have hnpos : 0 < n := (Finset.mem_Icc.mp (hT hn)).1
+  have hdisj : Disjoint (S.erase m) (T.image (m * ·)) := by
+    refine Finset.disjoint_left.mpr ?_
+    intro x hx hy
+    obtain ⟨y, hyT, rfl⟩ := Finset.mem_image.mp hy
+    have hypos := (Finset.mem_Icc.mp (hT hyT)).1
+    have hxle := (Finset.mem_Icc.mp (hS (Finset.mem_of_mem_erase hx))).2
+    have hxne := (Finset.mem_erase.mp hx).1
+    have := Nat.le_mul_of_pos_right m hypos
+    omega
+  refine ⟨S.erase m ∪ T.image (m * ·), ?_, ?_, ?_⟩
+  · intro x hx
+    rcases Finset.mem_union.mp hx with hx | hx
+    · have hbounds := Finset.mem_Icc.mp (hS (Finset.mem_of_mem_erase hx))
+      exact Finset.mem_Icc.mpr ⟨hbounds.1,
+        hbounds.2.trans (Nat.le_mul_of_pos_right m hnpos)⟩
+    · obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hx
+      have hbounds := Finset.mem_Icc.mp (hT hy)
+      exact Finset.mem_Icc.mpr ⟨Nat.mul_pos hmpos hbounds.1,
+        Nat.mul_le_mul_left m hbounds.2⟩
+  · exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨n, hn, rfl⟩)
+  · rw [Finset.sum_union hdisj, Finset.sum_image]
+    · rw [Finset.sum_erase_eq_sub hm]
+      have hscale : ∑ x ∈ T, (1 : ℚ) / ((m * x : ℕ) : ℚ) =
+          (1 / m) * ∑ x ∈ T, (1 : ℚ) / x := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro x _
+        simp only [Nat.cast_mul, one_div_mul_one_div_rev, mul_comm]
+      rw [hscale, hsumS, hsumT]
+      ring
+    · intro a _ b _ hab
+      exact Nat.eq_of_mul_eq_mul_left hmpos hab
 
 /-- $A$ does not contain any prime power. -/
 @[category research solved, AMS 11]
 theorem erdos_292.variants.prime_pow : ∀ n ∈ A, ¬ IsPrimePow n := by
-  sorry
+  rintro n ⟨S, hS, hn, hsum⟩ hpow
+  obtain ⟨p, k, hp, hk, rfl⟩ := (isPrimePow_nat_iff n).mp hpow
+  exact EgyptianFraction.sum_reciprocals_ne_one_of_max_prime_pow S hp hk
+    (fun a ha ↦ Finset.mem_Icc.mp (hS ha)) hn hsum
 
 /-- van Doorn observed that if $n\in A$ (with $n>1$) then $2n\in A$ also. -/
 @[category research solved, AMS 11]
