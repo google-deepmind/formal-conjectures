@@ -20,7 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Open questions on irrationality of numbers
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
+- [OAI26a] OpenAI, *Catalan's constant is irrational*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Catalans-constant-is-irrational-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -98,10 +101,13 @@ theorem irrational_eulerMascheroniConstant :
 
 /--
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
 -/
-@[category research open, AMS 11 33]
+@[category research solved, AMS 11 33, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Catalan/Results/Conclusions.lean#L11"]
 theorem irrational_catalanConstant :
-    answer(sorry) ↔ Irrational catalanConstant := by
+    answer(True) ↔ Irrational catalanConstant := by
   sorry
 
 end Irrational

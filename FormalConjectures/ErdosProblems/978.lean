@@ -25,6 +25,9 @@ public import FormalConjecturesUtil
  - [Ho67] Hooley, C., On the power free values of polynomials. Mathematika (1967), 21--26.
  - [Br11] Browning, T. D., Power-free values of polynomials. Arch. Math. (Basel) (2011), 139--150.
  - [Er53] Erdős, P., Arithmetical properties of polynomials. J. London Math. Soc. (1953), 416--425.
+ - [OAI26a] OpenAI, *Squarefree values of quartics and power-free values of polynomials*. OpenAI
+   Math Release preprint (2026).
+   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Squarefree-values-of-quartics-and-power-free-values-of-polynomials-September-24-2026/manuscript.pdf
 -/
 
 @[expose] public section
@@ -80,18 +83,26 @@ theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
 /--
 If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
 then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
+which gives positive density and does not need $k \neq 2^l$ or a positive leading coefficient.
 -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.ii : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
+theorem erdos_978.parts.ii : answer(True) ↔
     ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
-/-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers? -/
-@[category research open, AMS 11]
-theorem erdos_978.parts.iii : answer(sorry) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
+/-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers?
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
+which gives positive density for every irreducible quartic with no fixed square divisor. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
+theorem erdos_978.parts.iii : answer(True) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
   sorry
 
 end Erdos978

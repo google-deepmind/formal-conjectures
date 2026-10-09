@@ -20,9 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # Zariski Cancellation
 
-*Reference:* [arxiv/2208.14736](https://arxiv.org/abs/2208.14736)
-**The Zariski Cancellation Problem and related problems in Affine Algebraic Geometry**
-by *Neena Gupta*
+*References:*
+- [arxiv/2208.14736](https://arxiv.org/abs/2208.14736)
+  **The Zariski Cancellation Problem and related problems in Affine Algebraic Geometry**
+  by *Neena Gupta*
+- [OAI26a] OpenAI, *An explicit failure of complex affine-space cancellation*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/An-explicit-failure-of-complex-affine-space-cancellation-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -41,12 +45,30 @@ def IsCancellative (k A : Type*) [Field k]
     Nonempty (A ≃ₐ[k] B)
 
 /--
-The **Zariski Cancellation Problem**: every polynomial ring over a field `k` of characteristic
-`0` is cancellative.
+The **Zariski Cancellation Problem**: is every polynomial ring over a field `k` of characteristic
+`0` cancellative?
+
+The answer is no: the polynomial ring in four variables over $\mathbb{C}$ is not cancellative.
+This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof and `zariski_cancellation_problem.variants.false_complex_four`.
 -/
-@[category research open, AMS 13 14]
-theorem zariski_cancellation_problem {k : Type*} [Field k]
-    [CharZero k] {ι : Type*} [Fintype ι] : IsCancellative k (MvPolynomial ι k) := by
+@[category research solved, AMS 13 14, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AffineCancellation/Main.lean#L32"]
+theorem zariski_cancellation_problem :
+    ¬ ∀ {k : Type} [Field k] [CharZero k] {ι : Type} [Fintype ι],
+      IsCancellative k (MvPolynomial ι k) := by
+  sorry
+
+/--
+The polynomial ring in four variables over $\mathbb{C}$ is not cancellative: there is a finitely
+generated $\mathbb{C}$-domain $A$ of Krull dimension $4$ with
+$A[w] \cong \mathbb{C}[x_1, \dots, x_5]$ but $A \not\cong \mathbb{C}[x_1, \dots, x_4]$.
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
+-/
+@[category research solved, AMS 13 14, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AffineCancellation/Main.lean#L32"]
+theorem zariski_cancellation_problem.variants.false_complex_four :
+    ¬ IsCancellative ℂ (MvPolynomial (Fin 4) ℂ) := by
   sorry
 
 /--

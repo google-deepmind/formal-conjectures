@@ -25,6 +25,9 @@ public import FormalConjecturesUtil
 - [FGKMT18] Ford, Kevin and Green, Ben and Konyagin, Sergei and Maynard, James and Tao, Terence,
   *Long gaps between primes*. J. Amer. Math. Soc. (2018), 65-105.
 - [Iw78] Iwaniec, Henryk, *On the problem of {J}acobsthal*. Demonstratio Math. (1978), 225--231.
+- [OAI26a] OpenAI, *A quadratic bound for Jacobsthal's function*. OpenAI Math Release preprint
+  (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-quadratic-bound-for-Jacobsthals-function-September-25-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -47,10 +50,24 @@ noncomputable def jacobsthalFunction (k : ℕ) : ℕ :=
 
 /--
 Let $h(k)$ be Jacobsthal's function, defined to as the minimal $m$ such that, if $n$ has at most $k$ prime factors, then in any set of $m$ consecutive integers there exists an integer coprime to $n$. Determine the order of magnitude of $h(k)$. In particular, is it true that $$h(k) \ll k^2?$$
+
+The bound $h(k) \ll k^2$ was proved by an internal OpenAI model in September 2026 [OAI26a]; see
+the linked Lean proof. The order of magnitude of $h(k)$ remains open.
 -/
-@[category research open, AMS 11]
-theorem erdos_970 : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
+theorem erdos_970 : answer(True) ↔
     ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 := by
+  sorry
+
+/--
+The stronger bound $$h(k) \ll \frac{k^2}{(\log\log 3k)^2}$$ proved in [OAI26a].
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/IteratedLogBound.lean#L59"]
+theorem erdos_970.variants.iterated_log :
+    ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k →
+      (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2 := by
   sorry
 
 end Erdos970

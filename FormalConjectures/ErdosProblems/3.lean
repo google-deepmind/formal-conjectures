@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   Annual Symposium on Foundations of Computer Science (FOCS) (2023).
 - [LSS24] Leng, James, Sah, Ashwin and Sawhney, Mehtaab, *Improved bounds for Szemerédi's
   theorem*. arXiv:2402.17995 (2024).
+- [OAI26] OpenAI, *Quasipolynomial Bounds for Arithmetic Progressions*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Quasipolynomial-Bounds-for-Arithmetic-Progressions-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -42,9 +45,13 @@ namespace Erdos3
 /--
 If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
 long arithmetic progressions?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
+proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Progressions/Results/Conclusions.lean#L38"]
+theorem erdos_3 : answer(True) ↔ ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry

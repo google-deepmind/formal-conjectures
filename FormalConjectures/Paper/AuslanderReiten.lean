@@ -28,16 +28,19 @@ An *Artin algebra* is a ring $\Lambda$ that is an algebra over a commutative Art
 and is finitely generated as an $A$-module.
 
 Auslander and Reiten [AR75] derived this from the generalized Nakayama conjecture. The
-commutative version, obtained by replacing $\Lambda$ with a commutative Noetherian ring $R$, is
-also open and is what the commutative algebra literature calls the Auslander-Reiten conjecture.
-The two hypotheses are together equivalent to
+conjecture for Artin algebras is false: an internal OpenAI model gave an explicit counterexample
+in September 2026 [OAI26], a finite-dimensional algebra over the field
+$\mathbb{F}_2(q, H_1, H_2)$ with a finite-dimensional non-projective module satisfying both
+vanishing conditions. The commutative version, obtained by replacing $\Lambda$ with a
+commutative Noetherian ring $R$, is open and is what the commutative algebra literature calls
+the Auslander-Reiten conjecture. The two hypotheses are together equivalent to
 $\operatorname{Ext}^i_R(M, R \oplus M) = 0$ for all $i > 0$.
 
 Known cases of the commutative version include: $R$ a locally excellent Cohen-Macaulay normal
 ring containing $\mathbb Q$ [HL04]; $R$ a Gorenstein normal ring [Ar09]; $R$ a Cohen-Macaulay
 normal ring [KOT22]; and, most generally, $R$ any normal ring [Ki23]. Auslander, Ding and Solberg
-[ADS93] proved it for local complete intersections. The conjecture is open in general, already
-for commutative Noetherian local rings.
+[ADS93] proved it for local complete intersections. The commutative version is open in general,
+already for commutative Noetherian local rings.
 
 *References:*
 - [AR75] M. Auslander, I. Reiten, *On a generalized version of the Nakayama conjecture*, Proc.
@@ -56,6 +59,9 @@ for commutative Noetherian local rings.
 - [Ki23] K. Kimura, *Auslander-Reiten conjecture for normal rings*,
   [arXiv:2304.03956](https://arxiv.org/abs/2304.03956). The statements of the conjecture
   formalised below follow this paper.
+- [OAI26] OpenAI, *An explicit counterexample to the Auslander-Reiten conjecture*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/An-explicit-counterexample-to-the-Auslander-Reiten-conjecture-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -84,22 +90,27 @@ end Converse
 
 section ArtinAlgebra
 
-variable (Λ : Type u) [Ring Λ] (M : Type u) [AddCommGroup M] [Module Λ M] [Module.Finite Λ M]
-
 /--
-**The Auslander-Reiten conjecture** [AR75]. Let $\Lambda$ be an Artin algebra and $M$ a finitely
-generated $\Lambda$-module with $\operatorname{Ext}^i_\Lambda(M, \Lambda) = 0$ and
-$\operatorname{Ext}^i_\Lambda(M, M) = 0$ for all $i > 0$. Then $M$ is projective.
+**The Auslander-Reiten conjecture** [AR75] is false. The conjecture states: let $\Lambda$ be an
+Artin algebra and $M$ a finitely generated $\Lambda$-module with
+$\operatorname{Ext}^i_\Lambda(M, \Lambda) = 0$ and $\operatorname{Ext}^i_\Lambda(M, M) = 0$
+for all $i > 0$. Then $M$ is projective.
 
 That $\Lambda$ is an Artin algebra is the hypothesis that it is an algebra over some commutative
 Artinian ring `A` and is finitely generated as an `A`-module.
+
+This was disproved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
+proof. The counterexample is a finite-dimensional algebra over the field
+$\mathbb{F}_2(q, H_1, H_2)$, which is the ring `A` there.
 -/
-@[category research open, AMS 13 16 18]
-theorem auslander_reiten (A : Type u) [CommRing A] [IsArtinianRing A] [Algebra A Λ]
-    [Module.Finite A Λ]
-    (hMΛ : ∀ i > 0, Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ Λ) i))
-    (hMM : ∀ i > 0, Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ M) i)) :
-    Module.Projective Λ M := by
+@[category research solved, AMS 13 16 18, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AuslanderReiten/All.lean#L738"]
+theorem auslander_reiten :
+    ¬ ∀ (Λ : Type) [Ring Λ] (M : Type) [AddCommGroup M] [Module Λ M] [Module.Finite Λ M]
+      (A : Type) [CommRing A] [IsArtinianRing A] [Algebra A Λ] [Module.Finite A Λ],
+      (∀ i > 0, Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ Λ) i)) →
+      (∀ i > 0, Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ M) i)) →
+      Module.Projective Λ M := by
   sorry
 
 end ArtinAlgebra

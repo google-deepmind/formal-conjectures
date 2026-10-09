@@ -70,7 +70,10 @@ $k$ is the maximum number of mutually unbiased orthonormal bases in dimension $d
 - the open theorem `mutuallyUnbiasedBases` expresses the full problem for all $d \ge 2$;
 - the open theorem `mutuallyUnbiasedBases_dim6` expresses the especially important case
   $d = 6$;
-- the solved theorem `mutuallyUnbiasedBases_dim2` proves the qubit case $\mu(2) = 3$.
+- the solved theorem `mutuallyUnbiasedBases_dim2` proves the qubit case $\mu(2) = 3$;
+- the solved theorems `mutuallyUnbiasedBases_dim6_bounds` and
+  `mutuallyUnbiasedBases_dim6_bounds.variants.upper_five` record the bounds
+  $3 \le \mu(6) \le 7$ and $\mu(6) \le 5$.
 
 ## References
 
@@ -109,12 +112,22 @@ $k$ is the maximum number of mutually unbiased orthonormal bases in dimension $d
   *Mutually unbiased bases in dimension six: The four most distant bases*,
   Phys. Rev. A 83, 062303 (2011),
   arXiv:1103.1025.
+- [OAI26a] OpenAI,
+  *Exact Fourier certificates for complex Hadamard matrices of order six*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Exact-Fourier-certificates-for-complex-Hadamard-matrices-of-order-six-September-24-2026/Exact-Fourier-certificates-for-complex-Hadamard-matrices-of-order-six-September-24-2026.pdf
+- [OAI26b] OpenAI,
+  *The maximum number of mutually unbiased bases in dimension six*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-maximum-number-of-mutually-unbiased-bases-in-dimension-six-September-24-2026/The-maximum-number-of-mutually-unbiased-bases-in-dimension-six-September-24-2026.pdf
 
 ## Remark on the status of $d = 6$
 
 The dimension-six case is not known to be solved. At present, the best-known general picture is:
-- $3 \le \mu(6) \le 7$,
-- complete sets of $7$ MUBs are not known,
+- $3 \le \mu(6) \le 5$, where the upper bound was proved by an internal OpenAI model in
+  September 2026 [OAI26a] with a formal Lean proof,
+- a companion preprint [OAI26b] claims $\mu(6) = 3$ by a computer-assisted argument that is not
+  formalised,
 - and several analytic and numerical works give strong evidence that one cannot go beyond $3$.
 
 This is why the theorem `mutuallyUnbiasedBases_dim6` is marked as an open research statement.
@@ -519,6 +532,16 @@ satisfies $3 \le \mu(6) \le 7$. -/
 formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/c8733543568e8011288a9fa7ef33375f5e5907d3/FormalConjectures/OpenQuantumProblems/13.lean#L1168"]
 theorem mutuallyUnbiasedBases_dim6_bounds :
     HasMUBs 6 3 ∧ ∀ m : ℕ, HasMUBs 6 m → m ≤ 7 := by
+  sorry
+
+/-- The upper bound $\mu(6) \le 5$: every family of mutually unbiased bases in $\mathbb{C}^6$
+has at most five members. This was proved by an internal OpenAI model in September 2026
+[OAI26a]; see the linked Lean proof. That proof represents each basis as an `OrthonormalBasis`
+of `EuclideanSpace ℂ (Fin 6)`, which corresponds to the columns of a unitary matrix here. -/
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/MutuallyUnbiased/Main.lean#L22"]
+theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
+    ∀ m : ℕ, HasMUBs 6 m → m ≤ 5 := by
   sorry
 
 /- ## Open problems -/

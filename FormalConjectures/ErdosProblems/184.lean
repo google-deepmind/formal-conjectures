@@ -30,6 +30,9 @@ public import FormalConjecturesUtil
   intersections. Canadian J. Math. (1966), 106-112.
 - [Er71] Erdős, P., Some unsolved problems in graph theory and combinatorial analysis. Combinatorial
   Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
+- [OAI26a] OpenAI, *A linear cycle-and-edge decomposition of every graph*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-linear-cycle-and-edge-decomposition-of-every-graph-September-24-2026/main.pdf
 - [Py85] Pyber, L., An Erdős-Gallai conjecture. Combinatorica (1985), 67-79.
 -/
 
@@ -49,8 +52,12 @@ def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
 open scoped Classical in
 /--
 Any graph on $n$ vertices can be decomposed into $O(n)$ many edge-disjoint cycles and edges.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/CycleDecomposition/Main.lean#L207"]
 theorem erdos_184 :
     ∃ f : ℕ → ℝ,
       (f =O[atTop] fun n : ℕ ↦ (n : ℝ)) ∧
@@ -108,8 +115,8 @@ theorem erdos_184.variants.covering :
 
 open scoped Classical in
 /--
-The best bound available is due to Bucić and Montgomery [BM22], who prove that $O(n\log^* n)$ many
-cycles and edges suffice, where $\log^*$ is the iterated logarithm function.
+Before [OAI26a], the best bound was due to Bucić and Montgomery [BM22], who prove that
+$O(n\log^* n)$ many cycles and edges suffice, where $\log^*$ is the iterated logarithm function.
 -/
 @[category research solved, AMS 5]
 theorem erdos_184.variants.bucic_montgomery :

@@ -36,6 +36,9 @@ increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ 
 in the distribution of prime numbers, Springer (2018), 1–21.
 
 [Ma15] Maynard, J., _Small gaps between primes_. Ann. of Math. (2015), 383–413.
+
+[OAI26a] OpenAI, _Positive lower density of large prime gaps_. OpenAI Math Release preprint (2026).
+https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Positive-lower-density-of-large-prime-gaps-September-25-2026/main.pdf
 -/
 
 @[expose] public section
@@ -57,9 +60,13 @@ noncomputable def u (n : ℕ) : ℝ :=
 
 /--
 Does the set `{n | u n < u (n+1)}` have positive lower density?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_968 : answer(sorry) ↔ 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PrimeGaps/RatioCorollary.lean#L30"]
+theorem erdos_968 : answer(True) ↔ 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
   sorry
 
 /--

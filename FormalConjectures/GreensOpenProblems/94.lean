@@ -23,6 +23,9 @@ public import FormalConjecturesUtil
 *Reference:*
 - [Ben Green's Open Problem 94](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.94)
 - [erdosproblems.com/120](https://www.erdosproblems.com/120)
+- [OAI26a] OpenAI, *The dyadic case of the Erdős similarity conjecture*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-dyadic-case-of-the-Erdos-similarity-conjecture-September-25-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -45,10 +48,15 @@ theorem green_94_outer_measure :
 
 /--
 Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+
+The answer is "no": there are compact sets of measure arbitrarily close to $1$ in $[0, 1]$
+that contain no affine copy of $\{2^{-n} : n \geq 1\}$. This was proved by an internal OpenAI
+model in September 2026 [OAI26a]; see the linked Lean proof.
 -/
-@[category research open, AMS 28]
+@[category research solved, AMS 28, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/DyadicAvoidance/Main.lean#L103"]
 theorem green_94 :
-   answer(sorry) ↔ ∀ A : Set ℝ,
+   answer(False) ↔ ∀ A : Set ℝ,
    MeasurableSet A ∧ volume A > 0 →
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry

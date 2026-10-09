@@ -20,7 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 371
 
-*Reference:* [erdosproblems.com/371](https://www.erdosproblems.com/371)
+*References:*
+- [erdosproblems.com/371](https://www.erdosproblems.com/371)
+- [OAI26a] OpenAI, *The joint Dickman law for consecutive integers*. OpenAI Math Release preprint
+  (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-joint-Dickman-law-for-consecutive-integers-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -30,8 +34,11 @@ namespace Erdos371
 /--
 Let $P(n)$ denote the largest prime factor of $n$. Show that the set of $n$
 with $P(n+1) > P(n)$ has density $\frac{1}{2}$.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/JointDickman/PaperMain.lean#L21"]
 theorem erdos_371 :
     { n | Nat.maxPrimeFac (n + 1) > Nat.maxPrimeFac n }.HasDensity (1/2) := by
   sorry

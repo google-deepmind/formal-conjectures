@@ -20,7 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 1150
 
-*Reference:* [erdosproblems.com/1150](https://www.erdosproblems.com/1150)
+*References:*
+- [erdosproblems.com/1150](https://www.erdosproblems.com/1150)
+- [OAI26a] OpenAI, *Asymptotically minimal maxima of real Littlewood polynomials*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Asymptotically-minimal-maxima-of-real-Littlewood-polynomials-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -33,10 +37,14 @@ namespace Erdos1150
 Is there some constant $c > 0$ such that, for all large enough $n$ and all polynomials $P$ of
 degree $n$ with coefficients in $\{-1, 1\}$,
 $$\max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?$$
+
+No. This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof.
 -/
-@[category research open, AMS 12 30]
+@[category research solved, AMS 12 30, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/Littlewood/Main.lean#L187"]
 theorem erdos_1150 :
-    answer(sorry) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop,
+    answer(False) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop,
       ∀ P : ℂ[X],  (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n →
         ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n := by
   sorry

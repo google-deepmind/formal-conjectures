@@ -20,7 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Kaplansky's Conjectures
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Kaplansky%27s_conjectures)
+*References:*
+* [Wikipedia](https://en.wikipedia.org/wiki/Kaplansky%27s_conjectures)
+* [OAI26a] OpenAI, *A Torsion-Free Group Algebra with Zero Divisors*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Torsion-Free-Group-Algebra-with-Zero-Divisors-September-23-2026/paper.pdf
 
 Throughout, "torsion-free" means that the identity is the only element of finite order
 (`Monoid.IsTorsionFree`). This is weaker than Mathlib's `IsMulTorsionFree`, which asks for
@@ -35,13 +39,22 @@ include hG
 
 namespace Kaplansky
 
+omit hG in
 /--
 **The zero-divisor conjecture**
 
 If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero divisors.
+
+This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a], which
+constructed a finitely presented torsion-free group $G$ and non-zero
+$\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$; see
+`counter_zero_divisor_conjecture` and the linked Lean proof.
 -/
-@[category research open, AMS 16 20]
-theorem zero_divisor_conjecture : NoZeroDivisors (MonoidAlgebra K G) := by
+@[category research solved, AMS 16 20, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
+theorem zero_divisor_conjecture :
+    ¬ ∀ (K : Type) [Field K] (G : Type) [Group G], Monoid.IsTorsionFree G →
+      NoZeroDivisors (MonoidAlgebra K G) := by
   sorry
 
 /--
@@ -130,5 +143,19 @@ theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
       (K : Type) (_ : Field K) (_ :  CharP K p) (u : (MonoidAlgebra K G)ˣ), ¬IsTrivialUnit u.val :=
   have ⟨G, _, _, hG⟩ := counter_unit_conjecture
   ⟨G, _, ‹_›, hG p hp⟩
+
+/--
+The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
+and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof.
+-/
+@[category research solved, AMS 16 20, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
+theorem counter_zero_divisor_conjecture :
+    ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ : Group.IsFinitelyPresented G)
+      (α β : MonoidAlgebra (ZMod 2) G), α ≠ 0 ∧ β ≠ 0 ∧ α * β = 0 := by
+  sorry
 
 end Kaplansky
