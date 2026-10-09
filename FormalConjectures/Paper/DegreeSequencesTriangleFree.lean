@@ -298,13 +298,21 @@ noncomputable def F (n : ℕ) : ℕ :=
     G.CliqueFree 3 ∧ G.chromaticNumber = n ∧ degreeSequenceMultiplicity G = 3 }
 
 /-- The smallest number of vertices of a triangle-free graph with chromatic number 3 and f=3 is 7. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/fc4f1f1d43b54106b0f932518075fef57829d6fb/Proofs/T_SimpleGraph_F_three.lean#L569"]
 theorem F_three : F 3 = 7 := by
   sorry
 
 /-- The smallest number of vertices of a triangle-free graph with chromatic number 4 and f=3 is at most 19. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/fc4f1f1d43b54106b0f932518075fef57829d6fb/Proofs/T_SimpleGraph_F_four_le.lean#L469"]
 theorem F_four_le : F 4 ≤ 19 := by
+  sorry
+
+/-- There is a triangle-free graph with chromatic number 4 and f=3 on 15 vertices: the Grötzsch
+graph with four more vertices, with degrees 2,2,2,3,3,3,4,4,4,5,5,5,6,6,6. This improves the bound
+19 of Erdős, Fajtlowicz and Staton. An exhaustive computer search, not formalized, shows that 15 is
+optimal; see https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/fc4f1f1d43b54106b0f932518075fef57829d6fb/docs/EFS_F4.md. -/
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/fc4f1f1d43b54106b0f932518075fef57829d6fb/Proofs/T_SimpleGraph_F_four_le.lean#L464"]
+theorem F_four_le_fifteen : F 4 ≤ 15 := by
   sorry
 
 end SimpleGraph
