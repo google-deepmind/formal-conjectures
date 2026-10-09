@@ -39,7 +39,8 @@ Does there exist an infinite Sidon set which is an asymptotic basis of order $3$
 
 Yes, as shown by Pilatte [Pi23].
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos157/Unconditional.lean"]
 theorem erdos_157 : answer(True) ↔
     ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧ A.IsAsymptoticAddBasisOfOrder 3 := by
   sorry
