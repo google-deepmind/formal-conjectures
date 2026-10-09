@@ -53,6 +53,10 @@ chirotope.
   Conjecture 1.1 for pseudohyperplane arrangements / oriented matroids.
 - [Rou91] J.-P. Roudneff, *Cells with many facets in arrangements of hyperplanes*,
   Discrete Mathematics 98(3) (1991), 185–191. The original conjecture.
+- [RA99] J. L. Ramírez Alfonsín, *Cyclic arrangements and Roudneff's conjecture in the
+  space*, Information Processing Letters 71(5) (1999), 179–182,
+  [doi:10.1016/S0020-0190(99)00115-5](https://doi.org/10.1016/S0020-0190(99)00115-5).
+  Proves the case `d = 3`.
 - [BLSWZ99] A. Björner, M. Las Vergnas, B. Sturmfels, N. White, and G. M. Ziegler,
   *Oriented Matroids*, Encyclopedia of Mathematics and its Applications 46,
   Cambridge University Press, 2nd ed., 1999. Source of the chirotope axioms.
@@ -102,11 +106,46 @@ in the projective plane), the conjectured bound is
 does *not* contradict the fact that a rank-`3` arrangement has at least `n`
 simplicial cells (mutations), because a complete cell is a different object from a
 simplicial cell.
+
+This case is known: [HKMS24], p. 1, states that Conjecture 1.1 holds for `d = 2`
+(an arrangement of `n` pseudolines in `ℙ^2` contains at most one complete cell),
+so it is marked `solved`.
 -/
-@[category research open, AMS 5 52]
+@[category research solved, AMS 5 52]
 theorem roudneff_dim_two (n : ℕ) (hn : 5 ≤ n)
     (χ : Chirotope 3 n) (hχ : IsUniformChirotope 3 n χ) :
     numCompleteCells χ ≤ ∑ i ∈ Finset.range 1, Nat.choose (n - 1) i := by
+  sorry
+
+/--
+**The case `d = 3` (rank `4`), known.** For a uniform chirotope of rank `4` on `Fin n`
+with `n ≥ 7` the bound is `∑_{i=0}^{1} binomial(n-1, i) = 1 + (n-1) = n`. Proved by
+[RA99]; [HKMS24] also give it as Corollary 3.4.
+
+All the solved variants here keep the conjecture's own hypothesis `n ≥ 2d + 1`
+(equivalently `n ≥ 2r - 1` in rank `r = d + 1`). This is not the sharpest range:
+by [HKMS24, Remark 3.3] for `n ≤ r + 2` there is only one reorientation class and the
+(cyclic) extremal example is safe, so the bound holds trivially there and only becomes
+nontrivial at `n ≥ r + 3`. The individual solved dimensions therefore actually hold on a
+wider range than `n ≥ 2d + 1`; we state the conjecture's range for uniformity.
+-/
+@[category research solved, AMS 5 52]
+theorem roudneff_dim_three (n : ℕ) (hn : 7 ≤ n)
+    (χ : Chirotope 4 n) (hχ : IsUniformChirotope 4 n χ) :
+    numCompleteCells χ ≤ ∑ i ∈ Finset.range 2, Nat.choose (n - 1) i := by
+  sorry
+
+/--
+**The case `d = 4` (rank `5`), known — the main result of this paper.** For a uniform
+chirotope of rank `5` on `Fin n` with `n ≥ 9` the bound is
+`∑_{i=0}^{2} binomial(n-1, i)`. This is Theorem 4.3 of [HKMS24] (arXiv:2303.14212), the
+first proof of Roudneff's conjecture in dimension `4`. The conjecture remains open for
+`d ≥ 5`.
+-/
+@[category research solved, AMS 5 52]
+theorem roudneff_dim_four (n : ℕ) (hn : 9 ≤ n)
+    (χ : Chirotope 5 n) (hχ : IsUniformChirotope 5 n χ) :
+    numCompleteCells χ ≤ ∑ i ∈ Finset.range 3, Nat.choose (n - 1) i := by
   sorry
 
 end variants

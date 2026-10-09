@@ -29,7 +29,7 @@ public import Mathlib.Data.Fintype.Powerset
 Mathlib has no oriented matroids (as of 2026). This file defines a *chirotope* of
 rank `r` on the ground set `Fin n`: a map `χ : (Fin r → Fin n) → SignType`
 (a sign `{-1, 0, +1}` per `r`-tuple) that is *alternating* and satisfies the
-*3-term Grassmann–Plücker relations*. This encodes a rank-`r` oriented matroid on
+*Grassmann–Plücker relations*. This encodes a rank-`r` oriented matroid on
 `n` elements. A *uniform* chirotope is nonzero on all injective tuples (general
 position). A *mutation* is a flippable `r`-subset; mutations correspond to the
 *simplicial* cells (simplicial topes) of the associated pseudohyperplane
@@ -63,23 +63,33 @@ matroid, an arrangement with no special incidences). -/
 def IsUniform (χ : Chirotope r n) : Prop :=
   ∀ t : Fin r → Fin n, Function.Injective t → χ t ≠ 0
 
-/-- **3-term Grassmann–Plücker relations** (`satisfies_3term_gp`): for any two
-ground-set elements `b₁ b₂` and any injective tuple `a` disjoint from `{b₁, b₂}`,
-if `χ(b₁,a₂,…) = χ(a₁,b₂,a₃,…)` and `χ(b₂,a₂,…) = χ(b₁,a₁,a₃,…)`, then
-`χ(a₁,…,a_r) = χ(b₁,b₂,a₃,…)`. -/
-def Satisfies3TermGP (χ : Chirotope r n) : Prop :=
-  ∀ (hr : 2 ≤ r) (b₁ b₂ : Fin n) (a : Fin r → Fin n),
-    Function.Injective a → b₁ ∉ Set.range a → b₂ ∉ Set.range a → b₁ ≠ b₂ →
-      let i0 : Fin r := ⟨0, by omega⟩
-      let i1 : Fin r := ⟨1, by omega⟩
-      χ (Function.update a i0 b₁) = χ (Function.update a i1 b₂) →
-      χ (Function.update a i0 b₂) = χ (Function.update (Function.update a i0 (a i1)) i1 b₁) →
-        χ a = χ (Function.update (Function.update a i0 b₁) i1 b₂)
+/-- **Grassmann–Plücker relations** (`satisfies_gp`), the exchange / interior axiom (iii)
+of a chirotope. For any two `r`-tuples `a, b : Fin r → Fin n`: if for *every* position
+`i` the sign product
+`χ(bᵢ, a₂, …, a_r) · χ(b₁, …, b_{i-1}, a₁, b_{i+1}, …, b_r) ≥ 0`
+holds — i.e. swapping `a₁ ↔ bᵢ` between the two tuples, one each way — then also
+`χ(a₁, …, a_r) · χ(b₁, …, b_r) ≥ 0`.
 
-/-- A **chirotope** of rank `r` on `Fin n`: alternating and satisfying the 3-term
+Here `a₁` is `a` at slot `0` and `bᵢ` is `b` at slot `i`; `χ(bᵢ, a₂, …, a_r)` is `a`
+with slot `0` set to `b i`, and `χ(b₁, …, a₁, …, b_r)` is `b` with slot `i` set to `a 0`.
+`0 ≤ s * t` in `SignType` is exactly "`s·t ≥ 0`".
+
+This is the standard directed Grassmann–Plücker chirotope axiom (Björner–Las Vergnas–
+Sturmfels–White–Ziegler; see also the Wikipedia "Oriented matroid" exchange axiom B2).
+It uses sign *products* `≥ 0`, not sign equalities, and quantifies the premise over *all*
+`i`. It holds for every chirotope, including the alternating / moment-curve one (cf. the
+verification in `scripts/probe/AlternatingC3_5.lean`). -/
+def SatisfiesGP (χ : Chirotope r n) : Prop :=
+  ∀ (hr : 0 < r) (a b : Fin r → Fin n),
+    let i0 : Fin r := ⟨0, hr⟩
+    (∀ i : Fin r,
+      0 ≤ χ (Function.update a i0 (b i)) * χ (Function.update b i (a i0))) →
+    0 ≤ χ a * χ b
+
+/-- A **chirotope** of rank `r` on `Fin n`: alternating and satisfying the
 Grassmann–Plücker relations. Encodes a rank-`r` oriented matroid on `n` elements. -/
 def IsChirotope (r n : ℕ) (χ : Chirotope r n) : Prop :=
-  IsAlternating χ ∧ Satisfies3TermGP χ
+  IsAlternating χ ∧ SatisfiesGP χ
 
 /-- A **uniform chirotope**: a chirotope that is additionally uniform. This is the
 oriented matroid of an arrangement of `n` pseudohyperplanes in general position in
@@ -103,7 +113,11 @@ def IsMutation (χ : Chirotope r n) (I : Finset (Fin n)) : Prop :=
 
 open Classical in
 /-- The **number of mutations** (simplicial cells / simplicial topes) of `χ`: the
-number of `r`-subsets of the ground set that are mutations. -/
+number of `r`-subsets of the ground set that are mutations. Note that at `n = r`
+(i.e. `d + 1` hyperplanes in dimension `d = r - 1`, where every cell of the
+arrangement is a simplex) the ground set has a single `r`-subset, so
+`numMutations χ ≤ 1`: the subset count collapses all those simplicial cells to one
+and loses their multiplicity. -/
 noncomputable def numMutations (χ : Chirotope r n) : ℕ :=
   (Finset.univ.filter (fun I : Finset (Fin n) => IsMutation χ I)).card
 

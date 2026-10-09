@@ -77,13 +77,14 @@ theorem rank_three (n : ℕ) (hn : 3 ≤ n)
   sorry
 
 /--
-**Rank-3 lower bound (Levi–Shannon).** Every simple arrangement of `n ≥ 3`
+**Rank-3 lower bound (Levi–Shannon).** Every simple arrangement of `n ≥ 4`
 pseudolines has at least `n` simplicial cells (triangles): the number of mutations of
 a uniform rank-`3` chirotope on `Fin n` is at least `n`. This sharper, solved bound
-implies `rank_three`.
+implies `rank_three`. (Stated for `n ≥ 4`: at `n = 3` the ground set has a single
+`3`-subset, so `numMutations` counts at most `1` and loses the cell multiplicity.)
 -/
 @[category research solved, AMS 5 52]
-theorem rank_three_lower_bound (n : ℕ) (hn : 3 ≤ n)
+theorem rank_three_lower_bound (n : ℕ) (hn : 4 ≤ n)
     (χ : Chirotope 3 n) (hχ : IsUniformChirotope 3 n χ) :
     n ≤ numMutations χ := by
   sorry
