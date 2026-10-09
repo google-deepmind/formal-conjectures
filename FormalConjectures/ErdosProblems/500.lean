@@ -26,6 +26,10 @@ public import FormalConjecturesUtil
   Discrete Math. (2010), 946-963.
 - [BaTa11] Baber, Rahil and Talbot, John, *Hypergraphs do jump*. Combin. Probab. Comput. (2011),
   161-171.
+- [Ba12] Baber, Rahil, *Turán densities of hypercubes*. arXiv:1201.3587 (2012).
+- [JPILY26] Jeong, Gyeongwon and Park, Seonghun and Im, Seonghyuk and Lee, Joonkyung and Yang,
+  Hongseok, *A New Upper Bound for the Turán Density of the Tetrahedron*. arXiv:2609.27495
+  (2026).
 -/
 
 @[expose] public section
@@ -80,8 +84,14 @@ the bound fails at $n=4$, where $\mathrm{ex}_3(4,K_4^3)=3>0.561666\binom{4}{3}$.
 
 [Ra10, (2)] gives this bound in complementary form, as a result that numerical computations
 suggest, not as a theorem. [BaTa11] reproduce the computation.
+
+This is no longer the best bound: Baber [Ba12, §5.1] gives $\pi(K_4^3)\leq 0.5615$, where
+$\pi(K_4^3)$ is the Turán density of `erdos_500.variants.asymptotic`. Jeong, Park, Im, Lee and
+Yang [JPILY26, Theorem 1.1] prove that $\pi(K_4^3)<0.557789$, with a formal proof in Lean 4.
+The bound above follows from this result.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/taeyool/tetrahedron-turan/blob/28b83b6f215cb886d2abdc89b33fdae3f17a7e3f/LeanFlagAlgebras/Core/Examples/FullSevenConverged/TetrahedronDifferential.lean#L251"]
 theorem erdos_500.variants.upper_bound (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop,
       (Hypergraph.cliqueExtremalNumber n 3 4 : ℝ) ≤ (0.561666 + ε) * (n.choose 3 : ℝ) := by
