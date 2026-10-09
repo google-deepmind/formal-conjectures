@@ -373,7 +373,7 @@ theorem c_inf_lower : 0.64 ≤ c ∞ := by
 open StepFunction StepFunction.MV10 in
 /-- Upper bound for $c(\infty)$ due to Matolcsi and Vinuesa ([MV10]); their step function has
 autoconvolution supremum $1.50972\ldots$, which rescales to $0.75486\ldots$. -/
-@[category research solved, AMS 26 28 42]
+@[category research solved formal_proof using formal_conjectures at "https://github.com/casens5/formal-conjectures/commit/485732602d00faef71bdd42220b79b4791420678", AMS 26 28 42]
 theorem c_inf_upper : c ∞ ≤ 0.7549 := by
   have hS : (0 : ℝ) < S := by norm_num [S]
   have hw : ∀ i, 0 ≤ w i := fun i ↦ by unfold w; positivity
