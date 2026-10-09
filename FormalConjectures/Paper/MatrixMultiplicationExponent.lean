@@ -47,6 +47,11 @@ $\langle n, n, n\rangle$ (`Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)`) is $O(
   [*Improving the matrix multiplication exponent with modern optimization and
   AlphaEvolve*](https://arxiv.org/abs/2608.16884), 2026. Used for
   `matrix_multiplication_exponent_alphaevolve`.
+* [OpenAI26] OpenAI,
+  [*An upper bound of 9/4 for the matrix multiplication
+  exponent*](https://github.com/openai/math/blob/main/preprints/Matrix-Multiplication-Nine-Fourths-October-2-2026/paper.pdf),
+  preprint, October 2, 2026, Theorem 1.1. Used for
+  `matrix_multiplication_exponent_nine_fourths`.
 -/
 
 namespace MatrixMultiplicationExponent
@@ -89,6 +94,15 @@ theorem matrix_multiplication_exponent_coppersmith_winograd :
 theorem matrix_multiplication_exponent_alphaevolve :
     (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
       (fun n : ℕ ↦ (n : ℝ) ^ (2.371177 : ℝ)) := by
+  sorry
+
+/-- The bound $\omega \le 9/4$ over $\mathbb{C}$ claimed in [OpenAI26]: tensor rank is
+$O(n^{9/4+\varepsilon})$ for every $\varepsilon > 0$. The claimed proof is a recent preprint that has
+not yet been independently verified, so this is tagged as open. -/
+@[category research open, AMS 15 68]
+theorem matrix_multiplication_exponent_nine_fourths {ω : ℝ} (hω : 9 / 4 < ω) :
+    (fun n : ℕ ↦ ((Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)).tensorRank : ℝ)) =O[atTop]
+      (fun n : ℕ ↦ (n : ℝ) ^ ω) := by
   sorry
 
 /-- The conjecture $\omega = 2$ over $\mathbb{C}$: tensor rank is $O(n^{2+\varepsilon})$
