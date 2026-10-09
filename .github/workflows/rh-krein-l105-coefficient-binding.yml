@@ -442,3 +442,105 @@ jobs:
           path: evidence-l105/replay/
           if-no-files-found: warn
           retention-days: 14
+
+  kernel-batches:
+    name: L105 batch shard ${{ matrix.shard }} of 12
+    needs: [data-rebind, kernel-base]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - name: Checkout exact fork SHA
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Install pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.33.1"
+          grep -Fq "0df444a360eaa60ab8c11dca51a86af692955474" lake-manifest.json
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "0df444a360eaa60ab8c11dca51a86af692955474"
+      - name: Download source-exact certificate modules
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: rh-l105-coefficient-binding-${{ github.sha }}
+          path: evidence-l105
+      - name: Download pinned base closure
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: rh-l105-base-${{ github.sha }}
+          path: .lake/l105-build
+      - name: Replay assigned certificate batches with exact-source hashes
+        shell: bash
+        env:
+          L105_SHARD: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
+          test "$(cat .lake/l105-build/exact-head.txt)" = "$GITHUB_SHA"
+          (cd .lake/l105-build && sha256sum -c olean-sha256.txt)
+          OUT="$GITHUB_WORKSPACE/.lake/l105-build"
+          GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
+          ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$GEN:$ROOT_LEAN_PATH"
+          mkdir -p "$GEN" l105-shard-upload evidence-l105/shard
+          cp evidence-l105/generated/RHKreinL105Batch[0-9][0-9][0-9].lean "$GEN/"
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          root=Path('evidence-l105/generated')
+          found={}
+          for line in (root/'source-sha256.txt').read_text().splitlines():
+              digest,path=line.split(maxsplit=1)
+              name=Path(path).name
+              assert len(digest)==64 and name not in found, 'L105_BAD_GENERATED_MANIFEST'
+              found[name]=digest
+          expected={f'RHKreinL105Batch{i:03d}.lean' for i in range(116)}
+          expected.update({'RHKreinL105AllV1.lean','design105F.json','batches105.json'})
+          assert set(found)==expected, 'L105_BATCH_MANIFEST_INCOMPLETE'
+          for name,digest in found.items():
+              assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest, ('L105_BATCH_SOURCE_MISMATCH',name)
+          print('L105_SHARD_SOURCE_HASHES=119/119_PASS')
+          PY
+          for ((i=L105_SHARD; i<116; i+=12)); do
+            name="$(printf 'RHKreinL105Batch%03d' "$i")"
+            echo "=== L105 BATCH $name (shard $L105_SHARD) ==="
+            lean -o "$OUT/$name.olean" "$GEN/$name.lean" 2>&1 | tee "evidence-l105/shard/$name.log"
+            test -s "$OUT/$name.olean" || { echo "L105_BATCH_OLEAN_MISSING:$name" >&2; exit 1; }
+            cp "$OUT/$name.olean" l105-shard-upload/
+          done
+          expected_count=0
+          for ((i=L105_SHARD; i<116; i+=12)); do expected_count=$((expected_count+1)); done
+          test "$(find l105-shard-upload -maxdepth 1 -name '*.olean' | wc -l)" -eq "$expected_count"
+          printf '%s\n' "$GITHUB_SHA" > l105-shard-upload/exact-head.txt
+          printf '%s\n' "$L105_SHARD" > l105-shard-upload/shard.txt
+          (cd l105-shard-upload && sha256sum ./*.olean > olean-sha256.txt)
+          ! grep -R -n -E 'sorryAx|declaration uses .sorry.' evidence-l105/shard
+      - name: Upload verified batch objects
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-l105-shard-${{ matrix.shard }}-${{ github.sha }}
+          path: l105-shard-upload/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1
+      - name: Upload diagnostic logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-l105-shard-logs-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_id }}
+          path: evidence-l105/shard/
+          if-no-files-found: warn
+          retention-days: 14
