@@ -92,10 +92,19 @@ theorem erdos_1180.variants.glibichuk : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε
       ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 2 ∧ Represents ε p a s := by
   sorry
 
-/-- It is trivial that at least $\gg \epsilon^{-1}$ summands are required. -/
+/--
+It is trivial that at least $\gg \epsilon^{-1}$ summands are required: for every sufficiently
+large prime $p$, where the threshold may depend on $\epsilon$, some residue modulo $p$ is not the
+sum of fewer than $K \epsilon^{-1}$ elements of $\{ n^{-1} : 1\leq n\leq p^\epsilon\}$, because
+there are too few such sums.
+
+This is stated without `C ε`: since `sInf ∅ = 0` in `ℕ`, a lower bound on `C ε` would also assert
+that some number of summands suffices for every prime, which is the main result `erdos_1180`.
+-/
 @[category research solved, AMS 11]
 theorem erdos_1180.variants.lower_bound : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
-    K * ε⁻¹ ≤ C ε := by
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∃ a : ZMod p,
+      ∀ s : Multiset ℕ, Represents ε p a s → K * ε⁻¹ ≤ s.card := by
   sorry
 
 /-- Is $C_\epsilon\leq \epsilon^{-1-o(1)}$? -/
