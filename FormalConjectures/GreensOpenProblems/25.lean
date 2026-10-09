@@ -108,19 +108,6 @@ theorem green_25.variants.upper_ess89 :
   sorry
 
 /--
-For $k \gg N / \log N$, it need not be true [Gr24].
-
-In this version, cases like $k(N) = N$ or $N-1$ can produce trivial counter examples.
--/
-@[category research solved, AMS 5 11]
-theorem green_25.variants.upper_ess89_trivial :
-  ∃ k : ℕ → ℕ,
-    (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
-    ((fun N => (k N : ℝ)) ≫ bestUpper) ∧
-    ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
-  sorry
-
-/--
 For $k(N) = \lceil N^{23/40} \rceil$, it need not be true: for all sufficiently large $N$
 there is a partition of $[N]$ into $\lceil N^{23/40} \rceil$ parts with
 $\left|\bigcup^k_{i=1} (A_i \hat{+} A_i)\right| < \frac{1}{10} N$.
