@@ -408,9 +408,7 @@ largest `n ≤ bound` for which `ℤ_p^n` admits a continuous injective homomorp
 
 For a closed subgroup of the semilocal units this is the usual free `ℤ_p`-rank: such a subgroup
 is isomorphic to `Δ × ℤ_p^d` with `Δ` finite, and continuous injections from `ℤ_p^n` exist
-exactly for `n ≤ d`. Continuity is essential — as abstract groups `ℤ_p^n` embeds into `ℤ_p`
-for every `n`; and since `ℤ_p^n` is compact and the target Hausdorff, a continuous injection is
-automatically a closed embedding.
+exactly for `n ≤ d`.
 
 The `bound` is carried only so that the supremum is visibly taken over a bounded set and never
 falls back on the junk value of `sSup` on an unbounded set of naturals. Any `bound` at least as
