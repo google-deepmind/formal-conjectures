@@ -107,7 +107,7 @@ theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
   sorry
 
 /-- Erdős, Hardy, and Subbarao proved that $P$ is infinite. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos1074_erdos_1074_variants_PillaiPrimes_infinite.lean#L178"]
 theorem erdos_1074.variants.PillaiPrimes_infinite : PillaiPrimes.Infinite := by
   sorry
 
