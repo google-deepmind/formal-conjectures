@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Floor of sum of $\{n/k\}$
@@ -26,6 +27,8 @@ Conjecture: a(n) ~ (1-EulerGamma)n.
 *References:*
 - [A102722](https://oeis.org/A102722)
 -/
+
+@[expose] public section
 
 namespace OeisA102722
 

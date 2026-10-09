@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 18
@@ -26,6 +27,8 @@ Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève
 sections on Egyptian fractions or practical numbers).
 * [Vo85] Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 

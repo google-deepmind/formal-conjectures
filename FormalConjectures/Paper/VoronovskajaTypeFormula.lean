@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Voronovskaja-type Formula for the Bezier Variant of the Bernstein Operators
@@ -63,12 +64,26 @@ $\alpha \neq 1$:
     \textbf{Explicit form of the limit:}
     If the limit exists, determine an explicit expression for it in terms of $f$, $x$, and $\alpha$.
 
+## Provenance
+
+The limit formula recorded here, together with the elementary identities and the endpoint
+reduction in this file, was first proposed by *Samuel Schlesinger*. The first complete proof
+is the Lean 4 formalisation by *Kenta Kitamura*
+([KitaKen1 on GitHub](https://github.com/KitaKen1)) in [K26], which is linked from
+`voronovskaja_theorem.bezier_bernstein_operators`.
+
 *References:*
 
 * [Voronovskaja-type Formula for the Bézier Variant of the Bernstein Operators](https://www.math.bas.bg/mathmod/Proceedings_CTF/CTF-2010/files_CTF-2010/Open_problems.pdf),
   by *Ulrich Abel*, in *Constructive Theory of Functions, Sozopol 2010*.
+* [K26] [A Formal Conjectures Bézier--Bernstein Theorem in
+  Lean](https://github.com/KitaKen1/bezier-bernstein-voronovskaja-lean), by *Kenta Kitamura*.
 -/
+
+@[expose] public section
+
 open Topology Filter MeasureTheory ProbabilityTheory Real unitInterval Polynomial
+
 namespace VoronovskajaTypeFormula
 
 /--
@@ -126,6 +141,18 @@ lemma bernsteinTail_eval_eq_binomial_tail (n k : ℕ) (x : ℝ) :
     (bernsteinTail n k).eval x =
       ∑ j ∈ Finset.Icc k n, (n.choose j : ℝ) * x ^ j * (1 - x) ^ (n - j) := by
   simp [bernsteinTail, Polynomial.eval_finsetSum, bernsteinPolynomial]
+
+/--
+The Bézier--Bernstein operator written directly in terms of the explicit binomial tails
+$J_{n,k}(x) = \sum_{j=k}^{n}\binom{n}{j}x^{j}(1-x)^{n-j}$.
+-/
+@[category API, AMS 26 40 47]
+lemma bezierBernstein_eq_sum_binomial_tail (n : ℕ) (α : ℝ) (f : ℝ → ℝ) (x : ℝ) :
+    bezierBernstein n α f x =
+      ∑ k ∈ Finset.range (n + 1), f (k / n) *
+        ((∑ j ∈ Finset.Icc k n, (n.choose j : ℝ) * x ^ j * (1 - x) ^ (n - j)) ^ α -
+          (∑ j ∈ Finset.Icc (k + 1) n, (n.choose j : ℝ) * x ^ j * (1 - x) ^ (n - j)) ^ α) := by
+  simp [bezierBernstein, bernsteinTail_eval_eq_binomial_tail]
 
 @[category API, AMS 26 40 47]
 private lemma bernsteinTail_eval_nonneg {n k : ℕ} {x : ℝ} (hx : x ∈ I) :
@@ -275,6 +302,138 @@ noncomputable def bezierBias (α : ℝ) : ℝ :=
   ∫ t in Set.Ioi 0,
     (1 - cdf (gaussianReal 0 1) t) ^ α + cdf (gaussianReal 0 1) t ^ α - 1
 
+/-- Chernoff bound for the standard Gaussian: $1 - \Phi(t) \le e^{-t^2/2}$ for $t \ge 0$. -/
+@[category API, AMS 26 60]
+lemma one_sub_cdf_gaussianReal_le_exp {t : ℝ} (ht : 0 ≤ t) :
+    1 - cdf (gaussianReal 0 1) t ≤ Real.exp (-(t ^ 2 / 2)) := by
+  have hcompl : 1 - cdf (gaussianReal 0 1) t = (gaussianReal 0 1).real (Set.Ioi t) := by
+    rw [ProbabilityTheory.cdf_eq_real, ← Set.compl_Iic, measureReal_compl measurableSet_Iic]
+    simp
+  have hmono : (gaussianReal 0 1).real (Set.Ioi t) ≤
+      (gaussianReal 0 1).real {ω : ℝ | t ≤ id ω} :=
+    measureReal_mono Set.Ioi_subset_Ici_self
+  have hchernoff := measure_ge_le_exp_mul_mgf (μ := gaussianReal 0 1) (X := id) (t := t) t ht
+    (by simpa using integrable_exp_mul_gaussianReal (μ := 0) (v := 1) t)
+  rw [hcompl]
+  refine hmono.trans (hchernoff.trans_eq ?_)
+  rw [mgf_id_gaussianReal, ← Real.exp_add]
+  norm_num
+  ring_nf
+
+@[category API, AMS 26 60]
+private lemma antitone_one_sub_cdf_rpow {α : ℝ} (hα : 0 ≤ α) :
+    Antitone fun t : ℝ => (1 - cdf (gaussianReal 0 1) t) ^ α := fun a b hab =>
+  Real.rpow_le_rpow (by linarith [cdf_le_one (gaussianReal 0 1) b])
+    (by linarith [monotone_cdf (gaussianReal 0 1) hab]) hα
+
+@[category API, AMS 26 60]
+private lemma antitone_one_sub_cdf_pow {α : ℝ} (hα : 0 ≤ α) :
+    Antitone fun t : ℝ => 1 - cdf (gaussianReal 0 1) t ^ α := fun a _b hab =>
+  sub_le_sub_left (Real.rpow_le_rpow (cdf_nonneg (gaussianReal 0 1) a)
+    (monotone_cdf (gaussianReal 0 1) hab) hα) 1
+
+/-- The positive-tail part of the bias integrand is integrable on $(0, \infty)$. -/
+@[category API, AMS 26 60]
+lemma integrableOn_one_sub_cdf_gaussianReal_rpow {α : ℝ} (hα : 0 < α) :
+    IntegrableOn (fun t : ℝ => (1 - cdf (gaussianReal 0 1) t) ^ α) (Set.Ioi 0) := by
+  refine Integrable.mono ((integrable_exp_neg_mul_sq (b := α / 2) (by positivity)).integrableOn)
+    (antitone_one_sub_cdf_rpow hα.le).measurable.aestronglyMeasurable ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  have ht0 : (0 : ℝ) ≤ t := le_of_lt ht
+  have hnonneg : 0 ≤ 1 - cdf (gaussianReal 0 1) t := by
+    linarith [cdf_le_one (gaussianReal 0 1) t]
+  rw [Real.norm_eq_abs, Real.norm_eq_abs,
+    abs_of_nonneg (Real.rpow_nonneg hnonneg α), abs_of_nonneg (Real.exp_nonneg _)]
+  refine (Real.rpow_le_rpow hnonneg (one_sub_cdf_gaussianReal_le_exp ht0) hα.le).trans_eq ?_
+  rw [← Real.exp_mul]
+  ring_nf
+
+/-- The negative-tail part of the bias integrand is integrable on $(0, \infty)$. -/
+@[category API, AMS 26 60]
+lemma integrableOn_one_sub_cdf_gaussianReal_pow {α : ℝ} (hα : 0 < α) :
+    IntegrableOn (fun t : ℝ => 1 - cdf (gaussianReal 0 1) t ^ α) (Set.Ioi 0) := by
+  have hmeas : AEStronglyMeasurable (fun t : ℝ => 1 - cdf (gaussianReal 0 1) t ^ α)
+      (volume.restrict (Set.Ioi 0)) :=
+    (antitone_one_sub_cdf_pow hα.le).measurable.aestronglyMeasurable
+  rcases le_or_gt α 1 with hα1 | hα1
+  · refine Integrable.mono ((integrable_exp_neg_mul_sq (b := α / 2) (by positivity)).integrableOn)
+      hmeas ?_
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    have ht0 : (0 : ℝ) ≤ t := le_of_lt ht
+    have hnonneg : 0 ≤ 1 - cdf (gaussianReal 0 1) t := by
+      linarith [cdf_le_one (gaussianReal 0 1) t]
+    have hsplit : 1 ≤ cdf (gaussianReal 0 1) t ^ α + (1 - cdf (gaussianReal 0 1) t) ^ α := by
+      have := Real.rpow_add_le_add_rpow (cdf_nonneg (gaussianReal 0 1) t) hnonneg hα.le hα1
+      simpa using this
+    have hupper : 1 - cdf (gaussianReal 0 1) t ^ α ≤ (1 - cdf (gaussianReal 0 1) t) ^ α := by
+      linarith
+    have hlower : 0 ≤ 1 - cdf (gaussianReal 0 1) t ^ α := by
+      have := Real.rpow_le_one (cdf_nonneg (gaussianReal 0 1) t)
+        (cdf_le_one (gaussianReal 0 1) t) hα.le
+      linarith
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hlower,
+      abs_of_nonneg (Real.exp_nonneg _)]
+    refine hupper.trans ((Real.rpow_le_rpow hnonneg
+      (one_sub_cdf_gaussianReal_le_exp ht0) hα.le).trans_eq ?_)
+    rw [← Real.exp_mul]
+    ring_nf
+  · refine Integrable.mono
+      (((integrable_exp_neg_mul_sq (b := 1 / 2) (by positivity)).const_mul α).integrableOn)
+      hmeas ?_
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    have ht0 : (0 : ℝ) ≤ t := le_of_lt ht
+    have hnonneg : 0 ≤ 1 - cdf (gaussianReal 0 1) t := by
+      linarith [cdf_le_one (gaussianReal 0 1) t]
+    have hbern : 1 - α * (1 - cdf (gaussianReal 0 1) t) ≤ cdf (gaussianReal 0 1) t ^ α := by
+      have := one_add_mul_self_le_rpow_one_add (s := -(1 - cdf (gaussianReal 0 1) t))
+        (by linarith [cdf_nonneg (gaussianReal 0 1) t]) hα1.le
+      have hrw : 1 + -(1 - cdf (gaussianReal 0 1) t) = cdf (gaussianReal 0 1) t := by ring
+      rw [hrw] at this
+      linarith
+    have hlower : 0 ≤ 1 - cdf (gaussianReal 0 1) t ^ α := by
+      have := Real.rpow_le_one (cdf_nonneg (gaussianReal 0 1) t)
+        (cdf_le_one (gaussianReal 0 1) t) hα.le
+      linarith
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hlower,
+      abs_of_nonneg (by positivity : (0 : ℝ) ≤ α * Real.exp (-(1 / 2) * t ^ 2))]
+    have hstep : 1 - cdf (gaussianReal 0 1) t ^ α ≤ α * Real.exp (-(t ^ 2 / 2)) := by
+      have hmul := mul_le_mul_of_nonneg_left (one_sub_cdf_gaussianReal_le_exp ht0)
+        (by linarith : (0 : ℝ) ≤ α)
+      linarith
+    refine hstep.trans_eq ?_
+    ring_nf
+
+/--
+`bezierBias` is the difference of the two tail integrals
+$\int_0^\infty (1 - \Phi(t))^\alpha\,dt$ and $\int_0^\infty (1 - \Phi(t)^\alpha)\,dt$.
+-/
+@[category API, AMS 26 60]
+lemma bezierBias_eq_sub {α : ℝ} (hα : 0 < α) :
+    bezierBias α =
+      (∫ t in Set.Ioi 0, (1 - cdf (gaussianReal 0 1) t) ^ α) -
+        ∫ t in Set.Ioi 0, 1 - cdf (gaussianReal 0 1) t ^ α := by
+  rw [bezierBias, ← integral_sub (integrableOn_one_sub_cdf_gaussianReal_rpow hα)
+    (integrableOn_one_sub_cdf_gaussianReal_pow hα)]
+  refine setIntegral_congr_fun measurableSet_Ioi fun t _ => ?_
+  ring
+
+/--
+On the unit interval the limit value may equivalently be written with `deriv` instead of
+`iteratedDerivWithin`: at the endpoints the factor $\sqrt{x(1-x)}$ vanishes, and in the
+interior $[0,1]$ is a neighbourhood of $x$.
+-/
+@[category API, AMS 26 40 47]
+lemma bezierBias_mul_sqrt_mul_iteratedDerivWithin (α : ℝ) (f : ℝ → ℝ) {x : ℝ} (hx : x ∈ I) :
+    bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x =
+      bezierBias α * Real.sqrt (x * (1 - x)) * deriv f x := by
+  obtain ⟨hx0, hx1⟩ := hx
+  rcases hx0.eq_or_lt with rfl | hx0
+  · simp
+  rcases hx1.eq_or_lt with rfl | hx1
+  · simp
+  rw [iteratedDerivWithin_one, derivWithin_of_mem_nhds]
+  exact Icc_mem_nhds hx0 hx1
+
 /--
 Classical Voronovskaja theorem (α = 1).
 
@@ -296,21 +455,13 @@ theorem voronovskaja_theorem.bernstein_operators
   sorry
 
 /--
-Conjecture: Voronovskaja-type formula for Bézier--Bernstein operators
-with shape parameter $\alpha > 0$, $\alpha \neq 1$.
-
-A proposed answer for the limit is
-$$
-\mu_\alpha\sqrt{x(1-x)}\,f'(x).
-$$
-This candidate is recorded here for future investigation, but is not asserted
-in the theorem statement.
+Voronovskaja-type formula for Bézier--Bernstein operators with shape parameter
+$\alpha > 0$, $\alpha \neq 1$.
 
 The source asks for sufficiently smooth functions. This concrete version uses
 `ContDiffOn ℝ 2 f I` as a readable baseline regularity assumption; since the
 domain is the compact interval $[0,1]$, this also explains why no separate
-boundedness assumption is included here. The variants below record the unknown
-smoothness threshold more explicitly.
+boundedness assumption is included here.
 
 The limit exists and equals $\mu(\alpha)\,\sqrt{x(1-x)}\,f'(x)$, where
 $\mu(\alpha) = \int_0^\infty \bigl( (1 - \Phi(t))^{\alpha}
@@ -334,6 +485,9 @@ $$
 \sqrt{n} \sum_{k=0}^{n} (k/n - x)^2 w_{n,k} \longrightarrow 0,
 $$
 so multiplying by $\sqrt{n}$ gives the stated limit.
+
+The linked formal proof is a self-contained Lean 4 formalisation by *Kenta Kitamura*
+([KitaKen1 on GitHub](https://github.com/KitaKen1)); see [K26].
 -/
 @[category research solved, AMS 26 40 47,
   formal_proof using lean4 at "https://github.com/KitaKen1/bezier-bernstein-voronovskaja-lean/blob/3f35c631d215b3841242275bf3ed2c59ea153a2d/Voronovskaja.lean"]
@@ -347,19 +501,15 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
   sorry
 
 /--
-Conjecture: the limit for sufficiently smooth functions is
-$$
-μ_α\sqrt{x(1-x)}\,f'(x).
-$$
+The answer recorded in `voronovskaja_theorem.bezier_bernstein_operators` is
+$\mu_\alpha\sqrt{x(1-x)}\,f'(x)$.
 -/
-@[category research open, AMS 26 40 47]
-theorem voronovskaja_theorem.bezier_bernstein_operators.variants.proposed_formula
-    (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
-    (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
-    (hf : ContDiffOn ℝ 2 f I) :
-    Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-      (𝓝 (bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x)) := by
-  sorry
+@[category test, AMS 26 40 47]
+example (α : ℝ) (f : ℝ → ℝ) (x : ℝ) :
+    (answer(fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y) :
+        ℝ → (ℝ → ℝ) → ℝ → ℝ) α f x =
+      bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x := by
+  rfl
 
 /--
 The proposed asymptotic formula holds unconditionally at the two endpoints of the unit interval.
@@ -384,26 +534,27 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.boundary
     ring
 
 /--
-Variant of the Bézier-Bernstein Voronovskaja problem which treats "sufficiently smooth" as an
-eventual condition in the smoothness order $m$: for all sufficiently large finite $m$, every
-$C^m$ function on $[0,1]$ should have the asserted asymptotic formula.
+Version of the asymptotic formula which treats "sufficiently smooth" as an eventual condition
+in the smoothness order $m$: for all sufficiently large finite $m$, every $C^m$ function on
+$[0,1]$ satisfies the formula.
 -/
-@[category research open, AMS 26 40 47]
+@[category API, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let limitFormula : (ℝ → ℝ) → ℝ → ℝ := (answer(sorry) : ℝ → (ℝ → ℝ) → ℝ → ℝ) α
     ∀ᶠ m : ℕ in atTop,
       ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
         Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-          (𝓝 (limitFormula f x)) := by
-  sorry
+          (𝓝 (bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x)) := by
+  filter_upwards [eventually_ge_atTop 2] with m hm f x hx hf
+  exact voronovskaja_theorem.bezier_bernstein_operators α hα_pos hα f x hx
+    (hf.of_le (by exact_mod_cast hm))
 
 /--
 Existence-only version of the eventual-smoothness variant. This separates the first part of the
-source problem, proving that the scaled sequence has some limit, from the stronger task of finding
-an explicit expression for that limit.
+source problem, that the scaled sequence has some limit, from the stronger task of finding an
+explicit expression for that limit.
 -/
-@[category research open, AMS 26 40 47]
+@[category API, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smooth.limit_exists
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
     ∀ᶠ m : ℕ in atTop,
@@ -411,22 +562,23 @@ theorem voronovskaja_theorem.bezier_bernstein_operators.variants.eventually_smoo
         ∃ L : ℝ,
           Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
             (𝓝 L) := by
-  sorry
+  filter_upwards [variants.eventually_smooth α hα_pos hα] with m hm f x hx hf
+  exact ⟨_, hm f x hx hf⟩
 
 /--
-Variant of the Bézier-Bernstein Voronovskaja problem with the required smoothness order itself
-left as an answer. Replacing `(answer(sorry) : ℝ → ℕ × ((ℝ → ℝ) → ℝ → ℝ))` by a concrete function
-of $\alpha$ lets one state the conjecture for a chosen regularity threshold.
+Version of the asymptotic formula which records the sufficient smoothness order together with
+the limit: the order $2$ and the formula $\mu_\alpha\sqrt{x(1-x)}\,f'(x)$ work.
 -/
-@[category research open, AMS 26 40 47]
+@[category API, AMS 26 40 47]
 theorem voronovskaja_theorem.bezier_bernstein_operators.variants.answer_smoothness
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1) :
-    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) := (answer(sorry) : ℝ → ℕ × ((ℝ → ℝ) → ℝ → ℝ)) α
+    let p : ℕ × ((ℝ → ℝ) → ℝ → ℝ) :=
+      (2, fun g y => bezierBias α * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y)
     let m := p.1
     let limitFormula := p.2
     ∀ (f : ℝ → ℝ) (x : ℝ), x ∈ I → ContDiffOn ℝ m f I →
       Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-        (𝓝 (limitFormula f x)) := by
-  sorry
+        (𝓝 (limitFormula f x)) :=
+  fun f x hx hf => voronovskaja_theorem.bezier_bernstein_operators α hα_pos hα f x hx hf
 
 end VoronovskajaTypeFormula

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²
@@ -26,6 +28,8 @@ This file states that every convex set in ℝⁿ has finite VCₙ dimension, con
 ℝⁿ⁺² with infinite VCₙ dimension (even more strongly, which n-shatters an infinite set),
 and conjectures that every convex set in ℝⁿ⁺¹ has finite VCₙ dimension.
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry Pointwise
 
@@ -67,10 +71,26 @@ lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C
     HasAddVCNDimAtMost C 2 2 := sorry
 
 /-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
-$\mathrm{VC}_n$ dimension at most $d$. -/
-@[category research open, AMS 5 52]
+$\mathrm{VC}_n$ dimension at most $d$.
+
+This holds with the explicit bound $d = 2^{8(n + 2)^n} - 1$; see
+[Kitamura's Lean formalization](https://github.com/KitaKen1/vcdim-convex-finite-bound).
+-/
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/vcdim-convex-finite-bound/blob/9d7685c7c7c8c8e82f47d59da5495a8d5374db99/lean/VCDimConvexBoundFC.lean#L14-L17"]
 lemma exists_hasAddVCNDimAtMost_n_of_convex_rn_add_one (n : ℕ) (hn : 1 ≤ n) :
     ∃ d : ℕ, ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n d := sorry
+
+/-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
+$\mathrm{VC}_n$ dimension at most $d$.
+
+The bound can be taken to be $d = c^n$ for some constant $c \ge 2$ independent of $n$.
+-/
+@[category research open, AMS 5 52]
+lemma exists_exponential_bound_hasAddVCNDimAtMost_n_of_convex_rn_add_one :
+    ∃ c : ℕ, 2 ≤ c ∧ ∀ (n : ℕ) (hn : 1 ≤ n),
+      ∀ C : Set (Fin (n + 1) → ℝ), Convex ℝ C → HasAddVCNDimAtMost C n (c ^ n) := sorry
 
 /-- Is it true that, for all $n$, every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most 3? -/

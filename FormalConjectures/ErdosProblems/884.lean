@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 884
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Tao25](https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf)
 - [Larsen](https://github.com/Larsen-Daniel/Erdos-884/blob/main/884.pdf)
 -/
+
+@[expose] public section
 
 namespace Erdos884
 

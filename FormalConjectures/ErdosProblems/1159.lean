@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1159
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*.
   Combinatorica (1981), 25-42.
 -/
+
+@[expose] public section
 
 open Configuration
 

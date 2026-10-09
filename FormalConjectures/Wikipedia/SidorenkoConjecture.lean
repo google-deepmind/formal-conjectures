@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sidorenko's conjecture (1993)
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 * [BR65] Blakley, G. R. and Roy, P. (1965). "A Hölder type inequality for symmetric matrices
   with nonnegative entries." *Proc. Amer. Math. Soc.* 16, pp. 1244--1245.
 -/
+
+@[expose] public section
 
 open Finset SimpleGraph
 

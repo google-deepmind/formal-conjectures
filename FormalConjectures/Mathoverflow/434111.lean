@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Are prime numbers among sums of prime numbers distributed as $\frac n{2\ln(n)}$?
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 Among the Sums of the First `2n` Primes*, [arXiv:1804.04198](https://arxiv.org/abs/1804.04198)
 (2018), Conjecture 3.3.
 -/
+
+@[expose] public section
 
 namespace MathOverflow434111
 

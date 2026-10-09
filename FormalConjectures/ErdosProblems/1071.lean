@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1071
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 * [Da85] Danzer, L., _Some combinatorial and metric problems in geometry_.
   Intuitive geometry (Siófok, 1985), 167-177.
 -/
+
+@[expose] public section
 
 open Set Metric EuclideanGeometry Order
 

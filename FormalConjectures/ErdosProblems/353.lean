@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 353
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ko25] J. Koizumi, *Isosceles trapezoids of unit area with vertices in sets of infinite planar
   measure*. arXiv:2501.01914 (2025).
 -/
+
+@[expose] public section
 
 open Affine EuclideanGeometry MeasureTheory
 

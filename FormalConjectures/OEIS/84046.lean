@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest prime $p$ such that $p + n$ is an $n$-th power
@@ -24,6 +25,8 @@ That is, the smallest prime of the form $k^n - n$.
 
 *References:*
 - [A084046](https://oeis.org/A084046)-/
+
+@[expose] public section
 
 namespace OeisA84046
 

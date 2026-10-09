@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization constant 1a / An autocorrelation constant related to Sidon sets
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   for the Sidon autocorrelation constant $C_{1a}$," 2026,
   [GitHub](https://github.com/AndreiPiterbarg/sidon-autocorrelation)
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 
@@ -59,9 +62,12 @@ theorem c1a_lower_bound : 1.2748 ≤ C1a := by
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
-/-- How can the best known upper bound $1.502862$ of [T2026] be improved? -/
+/-- How can the best known upper bound $1.5028628587\ldots$ of [T2026] be improved?
+
+The step function published with [T2026] gives $1.50286285870\ldots$. The figure $1.502862$ in
+the table of the first reference is this value truncated, so it is not a known upper bound. -/
 @[category research open, AMS 5 11 26]
-theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.502862 := by
+theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5028628587 := by
   sorry
 
 /-- How can the best known lower bound $1.292$ of [PBV2026] be improved? -/

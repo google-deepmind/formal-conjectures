@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.HardyLittlewood
+module
+
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
 # Erdős Problem 855
@@ -23,6 +25,8 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 
 This is an "eventually" formulation of the Second Hardy–Littlewood conjecture.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Nat.Prime
