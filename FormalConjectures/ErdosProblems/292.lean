@@ -80,6 +80,47 @@ theorem erdos_292.variants.prime_pow : ∀ n ∈ A, ¬ IsPrimePow n := by
 /-- van Doorn observed that if $n\in A$ (with $n>1$) then $2n\in A$ also. -/
 @[category research solved, AMS 11]
 theorem erdos_292.variants.two_mul : ∀ n ∈ A, 1 < n → 2 * n ∈ A := by
-  sorry
+  rintro n ⟨S, hS, hn, hsum⟩ hn1
+  have hpos : ∀ m ∈ S, 0 < m := fun m hm => (Finset.mem_Icc.mp (hS hm)).1
+  have h1 : 1 ∉ S := by
+    intro h
+    have hsub : ({1, n} : Finset ℕ) ⊆ S := by
+      intro x hx
+      rcases Finset.mem_insert.mp hx with rfl | hx
+      · exact h
+      · rwa [Finset.mem_singleton.mp hx]
+    have hle := Finset.sum_le_sum_of_subset_of_nonneg hsub
+      (f := fun m : ℕ => (1 : ℚ) / m) (fun i _ _ => by positivity)
+    rw [Finset.sum_pair (by omega)] at hle
+    have : (0 : ℚ) < 1 / n := by
+      have : (0 : ℚ) < n := by exact_mod_cast (by omega : 0 < n)
+      positivity
+    simp only [Nat.cast_one, ne_eq, one_ne_zero, not_false_eq_true, div_self] at hle
+    linarith
+  refine ⟨insert 2 (S.image (2 * ·)), ?_, ?_, ?_⟩
+  · intro x hx
+    rcases Finset.mem_insert.mp hx with rfl | hx
+    · have := hpos n hn
+      simp only [Finset.mem_Icc]
+      omega
+    · obtain ⟨m, hm, rfl⟩ := Finset.mem_image.mp hx
+      have := (Finset.mem_Icc.mp (hS hm)).2
+      have := hpos m hm
+      simp only [Finset.mem_Icc]
+      omega
+  · exact Finset.mem_insert_of_mem (Finset.mem_image.mpr ⟨n, hn, rfl⟩)
+  · have h2 : (2 : ℕ) ∉ S.image (2 * ·) := by
+      intro h
+      obtain ⟨m, hm, hm2⟩ := Finset.mem_image.mp h
+      exact h1 (by rwa [show m = 1 by omega] at hm)
+    rw [Finset.sum_insert h2, Finset.sum_image (fun a _ b _ h => by omega)]
+    have : ∑ m ∈ S, (1 : ℚ) / ((2 * m : ℕ) : ℚ) = (1 / 2) * ∑ m ∈ S, (1 : ℚ) / m := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun m _ => ?_
+      push_cast
+      rw [one_div_mul_one_div_rev]
+      ring_nf
+    rw [this, hsum]
+    norm_num
 
 end Erdos292
