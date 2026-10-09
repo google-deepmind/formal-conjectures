@@ -544,3 +544,100 @@ jobs:
           path: evidence-l105/shard/
           if-no-files-found: warn
           retention-days: 14
+
+  kernel-replay:
+    name: assemble all 116 L105 certificates and audit final Lean axioms
+    needs: [data-rebind, kernel-base, kernel-batches]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact fork HEAD
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Install pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.33.1"
+          grep -Fq "0df444a360eaa60ab8c11dca51a86af692955474" lake-manifest.json
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "0df444a360eaa60ab8c11dca51a86af692955474"
+      - name: Download source-exact certificate modules
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: rh-l105-coefficient-binding-${{ github.sha }}
+          path: evidence-l105
+      - name: Download compiled source-exact common closure
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: rh-l105-base-${{ github.sha }}
+          path: .lake/l105-build
+      - name: Download all independently checked shard artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: rh-l105-shard-*-${{ github.sha }}
+          path: l105-shards
+      - name: Verify exact-head shard completeness and compile full L105 theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat .lake/l105-build/exact-head.txt)" = "$GITHUB_SHA"
+          test "$(cat evidence-l105/generated/exact-head.txt)" = "$GITHUB_SHA"
+          (cd .lake/l105-build && sha256sum -c olean-sha256.txt)
+          OUT="$GITHUB_WORKSPACE/.lake/l105-build"
+          GEN="$GITHUB_WORKSPACE/.lake/l105-generated"
+          mkdir -p "$GEN" evidence-l105/replay
+          cp evidence-l105/generated/RHKreinL105AllV1.lean "$GEN/"
+          test "$(find l105-shards -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 12
+          for shard in {0..11}; do
+            dir="l105-shards/rh-l105-shard-$shard-$GITHUB_SHA"
+            test -d "$dir"
+            test "$(cat "$dir/exact-head.txt")" = "$GITHUB_SHA"
+            test "$(cat "$dir/shard.txt")" = "$shard"
+            (cd "$dir" && sha256sum -c olean-sha256.txt)
+            expected_count=0
+            for ((i=shard; i<116; i+=12)); do
+              name="$(printf 'RHKreinL105Batch%03d' "$i")"
+              test -s "$dir/$name.olean"
+              test ! -e "$OUT/$name.olean"
+              cp "$dir/$name.olean" "$OUT/"
+              expected_count=$((expected_count+1))
+            done
+            test "$(find "$dir" -maxdepth 1 -type f -name '*.olean' | wc -l)" -eq "$expected_count"
+          done
+          test "$(find "$OUT" -maxdepth 1 -type f -name 'RHKreinL105Batch[0-9][0-9][0-9].olean' | wc -l)" -eq 116
+          printf 'EXACT_HEAD=%s\nL105_SHARDS=12_OF_12_SHA256_VERIFIED\nL105_BATCHES=116_OF_116_OLEANS_PRESENT\n' "$GITHUB_SHA" > evidence-l105/replay/completeness.txt
+          ROOT_LEAN_PATH="$(lake env printenv LEAN_PATH)"
+          export LEAN_PATH="$OUT:$GEN:$ROOT_LEAN_PATH"
+          lean -o "$OUT/RHKreinL105AllV1.olean" "$GEN/RHKreinL105AllV1.lean" 2>&1 |
+            tee evidence-l105/replay/RHKreinL105AllV1.log
+          test -s "$OUT/RHKreinL105AllV1.olean"
+          lean -o "$OUT/RHWindowL105FinalV1.olean" \
+            research/rh/krein_L105_v1/RHWindowL105FinalV1.lean 2>&1 |
+            tee evidence-l105/replay/RHWindowL105FinalV1.log
+          test -s "$OUT/RHWindowL105FinalV1.olean"
+          cat > /tmp/RHL105Axioms.lean <<'LEAN'
+          import RHWindowL105FinalV1
+          #print axioms AEGIS.RHKreinL105AllV1.zero_quadratic_nonneg_width_21_20
+          #print axioms AEGIS.RHWindowL105FinalV1.window_lt_21_40
+          #print axioms AEGIS.RHWindowL105FinalV1.rh_of_windows_from_21_40
+          LEAN
+          lean /tmp/RHL105Axioms.lean 2>&1 | tee evidence-l105/replay/axioms.log
+          test "$(grep -c 'depends on axioms:' evidence-l105/replay/axioms.log)" -eq 3
+          ! grep -R -n -E 'sorryAx|declaration uses .sorry.|error:' evidence-l105/replay
+          printf 'L105_BATCH_KERNEL_REPLAY=PASS\nWINDOW_LT_21_OVER_40=PROVED\nWINDOWS_L_GE_21_OVER_40=OPEN\nRIEMANN_HYPOTHESIS=NOT_PROVED\n' > evidence-l105/replay/disposition.txt
+      - name: Upload final source-bound L105 kernel evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rh-l105-kernel-replay-${{ github.sha }}-${{ github.run_id }}
+          path: evidence-l105/replay/
+          if-no-files-found: warn
+          retention-days: 30
