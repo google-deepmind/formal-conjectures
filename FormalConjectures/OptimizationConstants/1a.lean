@@ -58,7 +58,7 @@ theorem c1a_lower_bound : 1.2748 ≤ C1a := by
   sorry
 
 /-- An upper bound, proven by Yuksekgonul et al. in [Y2026]. -/
-@[category research solved, AMS 5 11 26]
+@[category research solved, AMS 5 11 26, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Constant1a_c1a_upper_bound.lean#L907"]
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
