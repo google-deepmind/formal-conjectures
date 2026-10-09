@@ -101,4 +101,120 @@ theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
+/-! ### Finite-prime weighted supports -/
+
+/-- The part of `a` supported on the primes in `P`. -/
+def erdos_257.variants.primeSetPart (P : Finset ℕ) (a : ℕ) : ℕ :=
+  ∏ p ∈ P, p ^ a.factorization p
+
+/-- The weighted cost of an exponent in base `b`. -/
+noncomputable def erdos_257.variants.primeWeightedTerm
+    (b : ℕ) (P : Finset ℕ) (a : ℕ) : ℝ :=
+  (erdos_257.variants.primeSetPart P a : ℝ) /
+    ((a : ℝ) * ((b : ℝ) ^ erdos_257.variants.primeSetPart P a - 1))
+
+@[category test, AMS 11]
+example : erdos_257.variants.primeSetPart {2} 12 = 4 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeSetPart, hfac]
+
+@[category test, AMS 11]
+example : erdos_257.variants.primeWeightedTerm 2 {2} 12 = (1 : ℝ) / 45 := by
+  have hfac : (12 : ℕ).factorization 2 = 2 := by
+    rw [show (12 : ℕ) = 2 ^ 2 * 3 by norm_num,
+      Nat.factorization_mul (by norm_num) (by norm_num), Finsupp.add_apply,
+      Nat.factorization_pow_self (by norm_num : Nat.Prime 2),
+      Nat.factorization_eq_zero_of_not_dvd (by decide : ¬2 ∣ 3)]
+  norm_num [erdos_257.variants.primeWeightedTerm, erdos_257.variants.primeSetPart, hfac]
+
+/-- A support has summable weighted cost for some finite nonempty prime set. -/
+noncomputable def erdos_257.variants.finitePrimeWeighted (b : ℕ) (A : Set ℕ) : Prop :=
+  ∃ P : Finset ℕ, P.Nonempty ∧ (∀ p ∈ P, Nat.Prime p) ∧
+    Summable (Set.indicator A (erdos_257.variants.primeWeightedTerm b P))
+
+/--
+Let $b \ge 2$ be an integer and $A$ an infinite set of positive integers.
+For a finite nonempty set of primes $P$, put $h_P(a)=\prod_{p\in P}p^{v_p(a)}$.
+If
+$$
+\sum_{a\in A}\frac{h_P(a)}{a(b^{h_P(a)}-1)}<\infty,
+$$
+then $\sum_{a\in A}1/(b^a-1)$ is irrational. If a positive-integer host $H$
+has this summable weighted cost at base $2$, the series
+$\sum_{a\in A}1/(b^a-1)$ is irrational for every infinite subset $A\subseteq H$
+and every integer base $b\ge 2$.
+
+Source: W. Cook, *Reciprocal Mersenne Subseries*, Theorem 1 and its
+hereditary consequence:
+https://github.com/wcook04/plectis-erdos/blob/6917e15ec4abc2623512254da93221e446eeb707/docs/papers/full-text/erdos257-mersenne-reasoning-surface.md
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/fd5388a4ea3a19f0b950395b137fda261c05f9a0/Solutions/PalomarCorpus/E257_01/DivisibilityWeightedSupport.lean#L42-L44"]
+theorem erdos_257.variants.finite_prime_weighted_support :
+    (∀ (b : ℕ) (A : Set ℕ), 2 ≤ b → 0 ∉ A → A.Infinite →
+      erdos_257.variants.finitePrimeWeighted b A →
+        Irrational (∑' a : ℕ,
+          Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a)) ∧
+    (∀ H : Set ℕ, 0 ∉ H → erdos_257.variants.finitePrimeWeighted 2 H →
+      ∀ A : Set ℕ, A ⊆ H → A.Infinite →
+        ∀ b : ℕ, 2 ≤ b →
+          Irrational (∑' a : ℕ,
+            Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a)) := by
+  sorry
+
+namespace MixedSupport
+
+open Finset
+open scoped BigOperators
+
+noncomputable def erdosSupportSeries (b : ℕ) (A : Set ℕ) : ℝ :=
+  ∑' a : ℕ, Set.indicator A (fun a => (1 : ℝ) / ((b : ℝ) ^ a - 1)) a
+
+/-- Positive-weight finite divisor frames covering the support. The weights sum
+to one; fractional divisor-count majorants have a summable weighted budget. -/
+structure LogBudgetCover (A : Set ℕ) where
+  frame : ℕ → Finset ℕ
+  weight : ℕ → ℝ
+  exponent : ℕ → ℝ
+  coefficient : ℕ → ℕ → ℝ
+  frame_positive : ∀ j, 0 ∉ frame j
+  weight_positive : ∀ j, 0 < weight j
+  weight_sum : HasSum weight 1
+  exponent_bounds : ∀ j, 0 < exponent j ∧ exponent j ≤ 1
+  coefficient_nonneg : ∀ j d, 0 < d → 0 ≤ coefficient j d
+  column_summable : ∀ j, Summable (fun d : ℕ => coefficient j d / (d : ℝ))
+  covers : ∀ a ∈ A, ∃ j, a ∈ frame j
+  majorises : ∀ j n, 0 < n →
+    (((frame j).filter (fun a => a ∣ n)).card : ℝ) ^ exponent j ≤
+      ∑ d ∈ n.divisors, coefficient j d
+  budget_summable : Summable (fun j =>
+    (∑' d : ℕ, coefficient j d / (d : ℝ)) /
+      (weight j ^ exponent j) / ((2 : ℝ) ^ exponent j - 1))
+
+end MixedSupport
+
+open MixedSupport
+
+/-- Let $E$ be a set of positive integers with summable finite-prime weighted
+cost at base $2$, and let $V$ admit a `LogBudgetCover`. For every infinite
+$A\subseteq E\cup V$ and every integer base $b\ge 2$, the series
+$$
+\sum_{a\in A}\frac{1}{b^a-1}
+$$
+is irrational. These sufficient support classes do not settle arbitrary infinite support.
+The classical digit-block method is due to Erdős; the mixed cover formulation is
+formalized in Cook's source, with priority unadjudicated. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/fd5388a4ea3a19f0b950395b137fda261c05f9a0/Solutions/PalomarCorpus/E257_01/PaperStructuresBO.lean#L65-L69"]
+theorem erdos_257.variants.arbitrary_weight_mixed_support
+    (E V : Set ℕ) (hE0 : 0 ∉ E) (hE : erdos_257.variants.finitePrimeWeighted 2 E)
+    (D : LogBudgetCover V) :
+    ∀ A : Set ℕ, A ⊆ E ∪ V → A.Infinite → ∀ b : ℕ, 2 ≤ b →
+      Irrational (erdosSupportSeries b A) := by
+  sorry
+
 end Erdos257
