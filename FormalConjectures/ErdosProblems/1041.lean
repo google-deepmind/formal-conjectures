@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Polynomial MeasureTheory ENNReal
+open Polynomial MeasureTheory ENNReal Finset
 
 namespace Erdos1041
 
@@ -83,6 +83,32 @@ theorem erdos_1041 :
       f.rootSet ℂ ⊆ Metric.ball 0 1 →
       ∃ (z₁ z₂ : ℂ) (h : ({z₁, z₂} : Multiset ℂ) ≤ f.roots) (γ : Path z₁ z₂),
         Set.range γ ⊆ { z : ℂ | ‖f.eval z‖ < 1 } ∧ length (Set.range γ) < 2 := by
+  sorry
+
+/-- Let $n\ge 2$ and $-1=y_0<y_1<\cdots<y_{n-1}=1$ be real roots.
+There is an $i<n-1$ such that, for every $x\in[y_i,y_{i+1}]$,
+$$
+\left|\prod_{j=0}^{n-1}(x-y_j)\right|
+\le \frac{1}{2^{n-1}\left(\cos\frac{\pi}{2n}\right)^n}.
+$$
+Here the formal statement uses $n=m+2$. This is Will Cook's
+[quantitative whole-gap theorem](https://github.com/wcook04/plectis-erdos/blob/a14777b3219873bc8343205cca0bb3bb6530e8fa/paper/1041/erdos1041-lemniscate-reasoning-surface.tex#L1745-L1832).
+[Erdős, Herzog and Piranian (1958)](https://users.renyi.hu/~p_erdos/1958-05.pdf)
+proved a qualitative collinear result; the sharp constant comes from the
+classical Chebyshev extremal configuration. This is the affine-normalized
+collinear core: the endpoints `-1` and `1` lie on the unit-circle boundary.
+Scaling a real root set of diameter less than `2` gives the strict-disc
+collinear consequence. The parent `erdos_1041` is the settled negative path
+assertion. -/
+@[category research solved, AMS 32, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos/blob/fd9f1ca7c491349aed2091620160eb32212dd930/verification/ExternalVerification/FC1041SharpGap/Solution.lean#L16-L26"]
+theorem erdos_1041.variants.sharp_collinear_gap {m : ℕ} (Y : Fin (m + 2) → ℝ)
+    (hY : StrictMono Y) (hY0 : Y 0 = -1)
+    (hY1 : Y (Fin.last (m + 1)) = 1) :
+    ∃ i : Fin (m + 1), ∀ x ∈ Set.Icc (Y i.castSucc) (Y i.succ),
+      |∏ j, (x - Y j)| ≤
+        1 / (2 ^ ((m + 2) - 1) *
+          Real.cos (Real.pi / (2 * (((m + 2 : ℕ) : ℝ)))) ^ (m + 2)) := by
   sorry
 
 end Erdos1041
