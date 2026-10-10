@@ -530,8 +530,11 @@ initialize Lean.registerBuiltinAttribute {
       let idStr := id.getString
       unless isValidOptimizationConstantId idStr do
         logWarningAt id
-          s!"An `optimization_constant` id should be one or more digits followed by one \
-            lowercase letter (e.g. \"1a\" or \"21a\"), but got: \"{idStr}\"."
+          s!"An `optimization_constant` id should be the name of the entry's page \
+            `https://teorth.github.io/optimizationproblems/constants/<id>.html`. \
+            This is one or more digits followed by one lowercase letter (e.g. \"1a\" or \"21a\"). \
+            The letter is required even when the database table shows only the number. \
+            Got: \"{idStr}\"."
       unless (← getConstInfo decl) matches .defnInfo _ do
         logWarning m!"An `optimization_constant` annotation should be applied to the \
           definition of the constant, but `{decl}` is not a definition. Theorems about \

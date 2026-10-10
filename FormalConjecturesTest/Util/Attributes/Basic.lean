@@ -144,7 +144,7 @@ noncomputable def anOptimizationConstant : ℝ := 1
 def anotherOptimizationConstant : ℕ := 4
 
 /--
-warning: An `optimization_constant` id should be one or more digits followed by one lowercase letter (e.g. "1a" or "21a"), but got: "21".
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "21".
 -/
 #guard_msgs in
 @[optimization_constant "21"]
@@ -156,7 +156,7 @@ run_meta do
     throwError "unexpected optimization constant tags for anOptimizationConstant"
 
 /--
-warning: An `optimization_constant` id should be one or more digits followed by one lowercase letter (e.g. "1a" or "21a"), but got: "a1".
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "a1".
 -/
 #guard_msgs in
 @[optimization_constant "a1"]
