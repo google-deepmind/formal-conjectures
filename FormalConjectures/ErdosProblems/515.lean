@@ -30,7 +30,7 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Set MeasureTheory
+open Set MeasureTheory Polynomial
 open scoped ENNReal
 
 namespace Erdos515
@@ -64,8 +64,7 @@ Let $f(z)$ be an entire function, not a polynomial. Does there exist a locally r
 $C$ tending to infinity such that, for every $\lambda>0$, the integral
 $\int_C \lvert f(z)\rvert^{-\lambda}\,\mathrm{d}s$ is finite?
 
-The general case was proved by Lewis, Rossi, and Weitsman [LRW84], who in fact proved this
-with $\lvert f\rvert$ replaced by $e^u$ where $u$ is any subharmonic function.
+The general case was proved by Lewis, Rossi, and Weitsman [LRW84].
 This formulation records the stronger conclusion that the path can be a polygonal ray.
 -/
 @[category research solved, AMS 30]
