@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 504
@@ -38,8 +39,13 @@ $\alpha_N$ for every $N$.
 geometry_. Ann. Univ. Sci. Budapest. Eötvös Sect. Math. 3-4 (1960-61), 53-62.
 
 [Se95] Sendov, Bl., _Minimax of the angles in a plane configuration of points_.
-Acta Math. Hungar. 69 (1995), 27-46.
+Acta Math. Hungar. 69 (1995), 27-46. (Reviewed in Zbl 0853.52009, which states the
+main theorem as $\alpha_N = \pi\left(1 - \frac{2}{2n+1}\right)$ for
+$2^n < N \le 2^n + 2^{n-2}$ and $\alpha_N = \pi\left(1 - \frac{1}{n+1}\right)$ for
+$2^n + 2^{n-2} < N \le 2^{n+1}$, $n \ge 2$.)
 -/
+
+@[expose] public section
 
 open Real EuclideanGeometry
 
@@ -105,8 +111,9 @@ theorem erdos_504.variants.szekeres_lower {n : ℕ} (hn : 0 < n) (S : Finset ℂ
 there is a set of exactly $2^t$ points of the plane all of whose angles are
 less than $\pi(1 - 1/t) + \varepsilon$. Together with
 `erdos_504.variants.erdos_szekeres_1960` this pins down
-$\alpha_{2^t} = \pi(1 - 1/t)$: the supremum is approached but not attained by
-any finite configuration.
+$\alpha_{2^t} = \pi(1 - 1/t)$ for $t \ge 3$, where the supremum is approached
+but not attained by any finite configuration. (For $t = 2$ it is attained:
+a square has all angles at most $\pi/2 = \alpha_4$.)
 -/
 @[category research solved, AMS 52,
   formal_proof using lean4 at "https://github.com/ToshiDad/erdos-504/blob/fd344a9/Erdos504.lean#L801"]
@@ -120,15 +127,22 @@ theorem erdos_504.variants.szekeres_upper {t : ℕ} (ht : 0 < t) {ε : ℝ}
 /--
 **Sendov (1995).** The complete determination: for $n \ge 3$,
 $\alpha_N = \pi(1 - 1/n)$ whenever $2^{n-1} + 2^{n-3} < N \le 2^n$, and
-$\alpha_N = \pi\left(1 - \frac{1}{2n - 1}\right)$ whenever
+$\alpha_N = \pi\left(1 - \frac{2}{2n - 1}\right)$ whenever
 $2^{n-1} < N \le 2^{n-1} + 2^{n-3}$.
+
+This is the statement of [Se95] (as given in Zbl 0853.52009) with $n$ shifted by one.
+For $n = 3$ the second branch gives $\alpha_5 = 3\pi/5$, the value computed in [ErSz60],
+and $\alpha_N$ is nondecreasing in $N$ across the two branches.
+The problem page [erdosproblems.com/504](https://www.erdosproblems.com/504) prints the
+second branch as $\pi(1 - \frac{1}{2n-1})$, which would give $\alpha_5 = 4\pi/5 > \alpha_6$;
+that appears to be a typo.
 -/
 @[category research solved, AMS 52]
 theorem erdos_504.variants.sendov {n N : ℕ} (hn : 3 ≤ n)
     (h1 : 2 ^ (n - 1) < N) (h2 : N ≤ 2 ^ n) :
     minimaxAngle N =
       if 2 ^ (n - 1) + 2 ^ (n - 3) < N then (1 - 1 / (n : ℝ)) * π
-      else (1 - 1 / (2 * (n : ℝ) - 1)) * π := by
+      else (1 - 2 / (2 * (n : ℝ) - 1)) * π := by
   sorry
 
 end Erdos504
