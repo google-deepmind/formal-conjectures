@@ -41,7 +41,7 @@ $\langle n, n, n\rangle$ (`Matrix.mulTensor ℂ (Fin n) (Fin n) (Fin n)`) is $O(
   Numerische Mathematik 13 (1969), 354–356. Used for
   `matrix_multiplication_exponent_strassen`.
 * [CW90] D. Coppersmith and S. Winograd,
-  [*Matrix multiplication via arithmetic progressions*](https://doi.org/10.1016/0747-7171(90)90013-N),
+  [*Matrix multiplication via arithmetic progressions*](https://doi.org/10.1016/S0747-7171(08)80013-2),
   Journal of Symbolic Computation 9 (1990), 251–280. Used for
   `matrix_multiplication_exponent_coppersmith_winograd`.
 * [AE26] E. Dupont et al.,
