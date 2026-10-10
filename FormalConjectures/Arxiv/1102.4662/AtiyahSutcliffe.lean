@@ -35,7 +35,7 @@ verified in Lean against the definitions of this file; see the linked proof.
 - Marcin Mazur and Bogdan V. Petrenko,
   [On the conjectures of Atiyah and Sutcliffe](https://arxiv.org/abs/1102.4662)
 - Formal counterexample:
-  [AtiyahSutcliffeDisproof.lean](https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean)
+  [AtiyahSutcliffeDisproof.lean](https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/6d837898caee85aee956e6ee643dde59b307a5a1/AtiyahSutcliffeDisproof.lean)
 -/
 
 @[expose] public section
@@ -119,7 +119,7 @@ theorem twoPoint_xAxis_polynomial :
 Conjecture 1.1 in [Mazur–Petrenko](https://arxiv.org/abs/1102.4662): the configuration
 polynomials are linearly independent. The conjecture is false. -/
 @[category research solved, AMS 51 70,
-  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean"]
+  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/6d837898caee85aee956e6ee643dde59b307a5a1/AtiyahSutcliffeDisproof.lean"]
 theorem conjecture_one :
     answer(False) ↔ ∀ {n : ℕ} (x : Fin n → Point), Function.Injective x →
       LinearIndependent ℂ (pointPolynomial x) := by
@@ -129,7 +129,7 @@ theorem conjecture_one :
 a half-turn symmetric helix, with one pair moved to a zero of the Schur residual of the even
 coefficient block. -/
 @[category research solved, AMS 51 70,
-  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/460575014f08e644c524fbf2082dc386d14d30b5/AtiyahSutcliffeDisproof.lean"]
+  formal_proof using lean4 at "https://github.com/azakhtyamov/atiyah-sutcliffe-disproof/blob/6d837898caee85aee956e6ee643dde59b307a5a1/AtiyahSutcliffeDisproof.lean"]
 theorem conjecture_one_false :
     ¬ ∀ {n : ℕ} (x : Fin n → Point), Function.Injective x →
       LinearIndependent ℂ (pointPolynomial x) := by
