@@ -33,7 +33,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter
-open scoped Topology
+open scoped NNReal Topology
 
 namespace Erdos524
 
@@ -53,7 +53,7 @@ instance : Nonempty Interval := ⟨⟨0, by norm_num⟩⟩
 /-- The polynomial with coefficients indexed from $1$ through $n$. -/
 noncomputable def randomPoly (a : ℕ → ℝ) (n : ℕ) : C(Interval, ℝ) :=
   ⟨fun x => ∑ k ∈ Finset.range n, a (k + 1) * (x : ℝ) ^ (k + 1),
-    continuous_finset_sum _ fun k _ => continuous_const.mul (continuous_subtype_val.pow _)⟩
+    continuous_finsetSum _ fun _k _ => continuous_const.mul (continuous_subtype_val.pow _)⟩
 
 /-- The paper's polynomial, which also includes the constant coefficient. -/
 noncomputable def fullPoly (a : ℕ → ℝ) (n : ℕ) : C(Interval, ℝ) :=
@@ -64,6 +64,10 @@ noncomputable def supNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖randomPoly a n
 
 /-- The maximum absolute value for the paper's indexing $0,\ldots,n$. -/
 noncomputable def fullSupNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖fullPoly a n‖
+
+@[simp, category API]
+lemma norm_const_interval (c : ℝ) : ‖ContinuousMap.const Interval c‖ = |c| := by
+  simp [ContinuousMap.norm_eq_iSup_norm]
 
 @[simp, category API]
 lemma randomPoly_zero (a : ℕ → ℝ) : randomPoly a 0 = 0 := by
