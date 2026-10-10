@@ -28,7 +28,7 @@ References:
   Lecture Notes in Mathematics 351 (1973), Section 8.
   https://link.springer.com/chapter/10.1007/BFb0060005
 - [Ki26] K. Kitamura, *A characteristic-zero Tachikawa counterexample* (2026).
-  https://github.com/KitaKen1/tachikawa-characteristic-zero/tree/689ffa39ff4ddb5f8a6dadb50bd42d75a4bef825
+  https://github.com/KitaKen1/tachikawa-characteristic-zero/tree/46963814be5cc80f781fd78a3c27d3d93d2c2bd3
 -/
 
 @[expose] public section
@@ -45,7 +45,7 @@ def SymmetricOver (K A : Type) [Field K] [Ring A]
 /-- The rational symmetric case of Tachikawa's second conjecture [Tac73, Section 8].
 The answer is no [Ki26]. -/
 @[category research solved, AMS 16,
-    formal_proof using lean4 at "https://github.com/KitaKen1/tachikawa-characteristic-zero/blob/689ffa39ff4ddb5f8a6dadb50bd42d75a4bef825/lean/Tachikawa/Main.lean#L21"]
+    formal_proof using lean4 at "https://github.com/KitaKen1/tachikawa-characteristic-zero/blob/46963814be5cc80f781fd78a3c27d3d93d2c2bd3/lean/Tachikawa/Main.lean#L21"]
 theorem tachikawaSecondConjecture :
     answer(False) ↔
       ∀ (Γ : Type) [Ring Γ] [Algebra ℚ Γ] [Module.Finite ℚ Γ],
