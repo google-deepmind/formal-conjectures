@@ -140,6 +140,13 @@ theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
 noncomputable def anOptimizationConstant : ℝ := 1
 
 #guard_msgs in
+@[optimization_constant "21a"]
+def anotherOptimizationConstant : ℕ := 4
+
+/--
+warning: An `optimization_constant` id should be one or more digits followed by one lowercase letter (e.g. "1a" or "21a"), but got: "21".
+-/
+#guard_msgs in
 @[optimization_constant "21"]
 def anOptimizationConstantWithoutLetter : ℕ := 4
 
@@ -149,7 +156,7 @@ run_meta do
     throwError "unexpected optimization constant tags for anOptimizationConstant"
 
 /--
-warning: An `optimization_constant` id should be one or more digits followed by an optional lowercase letter (e.g. "21" or "1a"), but got: "a1".
+warning: An `optimization_constant` id should be one or more digits followed by one lowercase letter (e.g. "1a" or "21a"), but got: "a1".
 -/
 #guard_msgs in
 @[optimization_constant "a1"]

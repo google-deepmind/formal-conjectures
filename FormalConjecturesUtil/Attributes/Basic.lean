@@ -137,9 +137,11 @@ takes the entry's id as a string, e.g.:
 noncomputable def C1a : ℝ :=
   ...
 ```
-The id consists of the entry's number followed by an optional letter suffix
-(`"21"`, `"1a"`, ...), matching the database's page
+The id consists of the entry's number followed by a lowercase letter
+(`"1a"`, `"21a"`, ...), matching the database's page
 `https://teorth.github.io/optimizationproblems/constants/<id>.html`.
+We require a letter even when the database table shows only the number:
+note that the table shows `21`, but the page and the id are `21a`.
 
 The attribute belongs on the definition of the constant itself, not on theorems
 about it (bounds, exact values): those may get a separate annotation later.
@@ -457,7 +459,7 @@ optimization problems database at <https://teorth.github.io/optimizationproblems
 structure OptimizationConstantTag where
   /-- The name of the declaration with the given tag. -/
   declName : Name
-  /-- The id of the database entry, e.g. `"21"` or `"1a"`. -/
+  /-- The id of the database entry, e.g. `"1a"` or `"21a"`. -/
   constantId : String
   deriving Inhabited, BEq, Hashable, ToExpr
 
@@ -476,11 +478,12 @@ def addOptimizationConstantEntry {m : Type → Type} [MonadEnv m]
     { declName := declName, constantId := constantId })
 
 /-- Check that an optimization constant id has the form used by the database:
-one or more digits followed by an optional lowercase letter (e.g. `"21"` or `"1a"`). -/
+one or more digits followed by one lowercase letter (e.g. `"1a"` or `"21a"`). -/
 def isValidOptimizationConstantId (id : String) : Bool :=
   match id.toList.span Char.isDigit with
   | ([], _) => false
-  | (_, rest) => rest.isEmpty || (rest.length == 1 && rest.all Char.isLower)
+  | (_, [c]) => c.isLower
+  | _ => false
 
 syntax (name := OptimizationConstant_attr) "optimization_constant" str : attr
 
@@ -488,8 +491,9 @@ syntax (name := OptimizationConstant_attr) "optimization_constant" str : attr
 problems database at <https://teorth.github.io/optimizationproblems/>.
 
 Usage: `@[optimization_constant "<id>"]` on the definition of the constant, where
-`<id>` is the entry's id in the database, i.e. the entry's number followed by an
-optional letter suffix (`"21"`, `"1a"`, ...). The corresponding database page is
+`<id>` is the entry's id in the database, i.e. the entry's number followed by a
+lowercase letter (`"1a"`, `"21a"`, ...). The letter is required even when the database
+table shows only the number. The corresponding database page is
 `https://teorth.github.io/optimizationproblems/constants/<id>.html`. -/
 initialize Lean.registerBuiltinAttribute {
   name := `OptimizationConstant_attr
@@ -500,8 +504,8 @@ initialize Lean.registerBuiltinAttribute {
       let idStr := id.getString
       unless isValidOptimizationConstantId idStr do
         logWarningAt id
-          s!"An `optimization_constant` id should be one or more digits followed by an optional \
-            lowercase letter (e.g. \"21\" or \"1a\"), but got: \"{idStr}\"."
+          s!"An `optimization_constant` id should be one or more digits followed by one \
+            lowercase letter (e.g. \"1a\" or \"21a\"), but got: \"{idStr}\"."
       unless (← getConstInfo decl) matches .defnInfo _ do
         logWarning m!"An `optimization_constant` annotation should be applied to the \
           definition of the constant, but `{decl}` is not a definition. Theorems about \
