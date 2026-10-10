@@ -65,48 +65,48 @@ noncomputable def supNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖randomPoly a n
 /-- The maximum absolute value for the paper's indexing $0,\ldots,n$. -/
 noncomputable def fullSupNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖fullPoly a n‖
 
-@[simp, category API]
+@[simp, category API, AMS 26]
 lemma norm_const_interval (c : ℝ) : ‖ContinuousMap.const Interval c‖ = |c| := by
   simp [ContinuousMap.norm_eq_iSup_norm]
 
-@[simp, category API]
+@[simp, category API, AMS 26]
 lemma randomPoly_zero (a : ℕ → ℝ) : randomPoly a 0 = 0 := by
   ext x
   simp [randomPoly]
 
-@[simp, category API]
+@[simp, category API, AMS 26]
 lemma supNorm_zero (a : ℕ → ℝ) : supNorm a 0 = 0 := by
   simp [supNorm]
 
-@[simp, category API]
+@[simp, category API, AMS 26]
 lemma fullSupNorm_zero (a : ℕ → ℝ) : fullSupNorm a 0 = |a 0| := by
   simp [fullSupNorm, fullPoly]
 
-@[category API]
+@[category API, AMS 26]
 lemma supNorm_nonneg (a : ℕ → ℝ) (n : ℕ) : 0 ≤ supNorm a n := norm_nonneg _
 
 /-- Adding the constant coefficient changes the maximum by at most its absolute value. -/
-@[category API]
+@[category API, AMS 26]
 lemma abs_fullSupNorm_sub_supNorm_le (a : ℕ → ℝ) (n : ℕ) :
     |fullSupNorm a n - supNorm a n| ≤ |a 0| := by
   have h := abs_norm_sub_norm_le (fullPoly a n) (randomPoly a n)
   simpa [fullSupNorm, supNorm, fullPoly] using h
 
 /-- Evaluation at zero bounds the paper's maximum below by the constant coefficient. -/
-@[category API]
+@[category API, AMS 26]
 lemma abs_constant_le_fullSupNorm (a : ℕ → ℝ) (n : ℕ) :
     |a 0| ≤ fullSupNorm a n := by
   have h := (fullPoly a n).norm_coe_le_norm ⟨0, by norm_num⟩
   simpa [fullPoly, randomPoly, fullSupNorm] using h
 
 /-- A sign constant coefficient ensures that the paper's maximum is at least one. -/
-@[category API]
+@[category API, AMS 26]
 lemma one_le_fullSupNorm (a : ℕ → ℝ) (n : ℕ) (h : |a 0| = 1) :
     1 ≤ fullSupNorm a n := by
   simpa [h] using abs_constant_le_fullSupNorm a n
 
 /-- On $[-1,1]$, a polynomial with $n$ sign coefficients has maximum at most $n$. -/
-@[category API]
+@[category API, AMS 26]
 lemma supNorm_le (a : ℕ → ℝ) (n : ℕ) (h : ∀ k, |a k| = 1) :
     supNorm a n ≤ n := by
   apply ((randomPoly a n).norm_le (Nat.cast_nonneg n)).mpr
