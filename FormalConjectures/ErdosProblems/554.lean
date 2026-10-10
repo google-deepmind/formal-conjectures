@@ -135,6 +135,19 @@ theorem ratio_tendsto_zero_of_base_ratio (n : ℕ) (u v : ℕ → ℝ)
   filter_upwards [h, hsmall] with k hk hks
   exact ⟨hk.1, hk.2.1, hk.2.2.1, hk.2.2.2, hks.le⟩
 
+/-- For $n\geq4$, the displayed cycle upper bound and triangle lower bound imply the ratio
+limit. The positive exponent gap is $1/3-1/n$; both combinatorial bounds are hypotheses. -/
+@[category API, AMS 5, formal_proof using lean4 at
+  "https://github.com/AItoBit/erdos554-lean/blob/911121c29b7d4ddd90ec3856a821a9790ee3c7f8/Verified554.lean#L42"]
+theorem ratio_tendsto_zero_of_power_log_bounds (n : ℕ) (hn : 4 ≤ n) (c : ℝ) (hc : 0 < c)
+    (h : ∀ᶠ k in atTop,
+      (oddCycleRamsey k n : ℝ) ≤ (4 * (n : ℝ)) ^ k * (k : ℝ) ^ ((k : ℝ) / n) ∧
+      (c * (k : ℝ) ^ (1 / 3 : ℝ) / Real.log k) ^ k ≤
+        (Erdos183.multicolourTriangleRamsey k : ℝ)) :
+    Tendsto (fun k : ℕ => (oddCycleRamsey k n : ℝ) /
+      (Erdos183.multicolourTriangleRamsey k : ℝ)) atTop (𝓝 0) := by
+  sorry
+
 /-- Let $R_k(G)$ denote the minimal $m$ such that if the edges of $K_m$ are $k$-coloured then
 there is a monochromatic copy of $G$. Show that
 $$\lim_{k\to\infty}\frac{R_k(C_{2n+1})}{R_k(K_3)}=0$$
