@@ -1,0 +1,216 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: FC100 whole-set audit
+
+# The whole-set run lean-eval#536 gates the FC import on, as a CI artifact.
+# It is two halves, and they are split because they cost differently.
+#
+#   source  import every declaration of the frozen set, elaborate each
+#           marked-up module at this repository's pins, generate every
+#           workspace through the pinned generator, and classify the set.
+#           One Mathlib, this repository's. This is where an FC-side defect
+#           shows, so it runs on every pull request that changes what it
+#           measures — the adapter, pins, ledger, templates or tooling.
+#
+#   target  compile every generated Challenge at LeanEval's pins in one
+#           shared project. A second Mathlib at a second toolchain, which is
+#           most of the cost, and it catches target-pin drift rather than an
+#           FC-side defect. Drift comes from the other repository bumping,
+#           not from a pull request here, so it runs weekly and on demand.
+#
+# Failures on either side must match comparator/known_failures.toml exactly:
+# an unexpected failure and a silently fixed one both fail, because a gate
+# that only ever passes proves nothing. Ordinary statement edits rely on the
+# per-PR jobs' representative declarations and the weekly run as backstop.
+
+concurrency:
+  group: fc100-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly, early Monday UTC.
+    - cron: '17 4 * * 1'
+  # Dispatch and schedule only reach a workflow on the default branch, so a
+  # pull request that changes what the audit measures could never show its
+  # run. Trigger on everything the audit's outcome depends on: the adapter,
+  # the templates and problem overrides, the pins, the ledger, the composite
+  # actions that build its tools, and the toolchain the modules elaborate
+  # under. Ordinary statement edits stay out — the weekly run is their
+  # backstop, and a whole-set run per problem PR would be two Mathlib builds
+  # of noise.
+  pull_request:
+    paths:
+      - 'comparator/adapter/**'
+      - 'comparator/templates/**'
+      - 'comparator/problems/**'
+      - 'comparator/tools.toml'
+      - 'comparator/known_failures.toml'
+      - '.github/actions/build-lean-eval-generator/**'
+      - '.github/actions/prepare-extractor/**'
+      - '.github/workflows/fc100-audit.yml'
+      - 'FormalConjectures/Subsets/FC100OpenSet1.lean'
+      - 'lean-toolchain'
+      - 'lake-manifest.json'
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    name: Import, verify and generate FC100
+    timeout-minutes: 120
+    steps:
+      - name: Checkout Formal Conjectures
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # The importer pins each workspace to the merge base with upstream
+          # main, so that ref has to be present.
+          fetch-depth: 0
+          persist-credentials: false
+
+      # The category tags, source ranges and answer-slot types come from the
+      # elaborated environment, so every module in the set has to be built.
+      - name: Prepare the extractor and the whole set
+        uses: ./.github/actions/prepare-extractor
+        with:
+          modules: FormalConjectures.Subsets.FC100OpenSet1
+
+      - name: Build the pinned lean-eval-generator
+        uses: ./.github/actions/build-lean-eval-generator
+
+      # `--verify` elaborates every marked-up module at this repository's
+      # pins; generation runs each import through the pinned binary. Failures
+      # are recorded per declaration, and the run fails unless they are
+      # exactly the recorded ones.
+      - name: Import and verify the whole set
+        run: |
+          python3 comparator/adapter/make_comparator_workspace.py --set FC100OpenSet1 \
+            --verify --out .fc100 --report fc100-report.json \
+            --known-failures comparator/known_failures.toml
+
+      # The open/solved split is a fact about the set the report must state.
+      # The list is frozen but its members keep getting solved — that is
+      # designed lifecycle, not an anomaly (formal-conjectures#5075) — so
+      # the check here is structural: every member accounted for, every
+      # category a research one. The report carries the current split.
+      - name: Check the set classification
+        run: |
+          python3 - <<'PY'
+          import json
+
+          with open("fc100-report.json") as handle:
+              report = json.load(handle)
+          categories = report["categories"]
+          print("classification:", categories)
+          assert sum(categories.values()) == report["imported"], categories
+          assert set(categories) <= {"research open", "research solved"}, categories
+          assert sum(categories.values()) + report["source_failed"] == 100, categories
+          PY
+
+      # The artifact is the review evidence, so it carries what produced the
+      # result, not just the result: the exact request bytes, every workspace
+      # with its provenance sidecar, the report, and a manifest digesting
+      # each file so the bundle can vouch for itself. The target job below
+      # consumes this same artifact rather than generating its own.
+      - name: Digest the audit bundle
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import sys
+
+          sys.path.insert(0, "comparator/adapter")
+          from leaneval_interface import dump_json, sha256_text
+
+          # The same digest and the same serialisation the sidecars use, so a
+          # reader can compare a manifest entry with the digest recorded
+          # inside the artifact it names.
+          def digest(path):
+              return sha256_text(path.read_text(encoding="utf-8"))
+
+          manifest = {}
+          for name in ("fc100-report.json",):
+              path = pathlib.Path(name)
+              if path.is_file():
+                  manifest[str(path)] = digest(path)
+          root = pathlib.Path(".fc100")
+          if root.is_dir():
+              for path in sorted(root.rglob("*")):
+                  if path.is_file():
+                      manifest[str(path)] = digest(path)
+          pathlib.Path("bundle-manifest.json").write_text(
+              dump_json(manifest, sort_keys=True), encoding="utf-8"
+          )
+          print(f"{len(manifest)} files digested")
+          PY
+
+      - name: Upload the generated set
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fc100-source-bundle
+          path: |
+            fc100-report.json
+            bundle-manifest.json
+            .fc100/
+          if-no-files-found: warn
+          include-hidden-files: true
+
+  # The second Mathlib. It answers "does LeanEval's toolchain still accept
+  # what we generate", and that changes when the other repository bumps, not
+  # when a pull request here edits the adapter. So it runs weekly and on
+  # demand, against the set the job above generated rather than regenerating
+  # it. `merge_group` is deliberately not a trigger: it does not support path
+  # filters, so this would then run on every merge in the repository.
+  target:
+    runs-on: ubuntu-latest
+    name: Compile FC100 at LeanEval pins
+    timeout-minutes: 240
+    needs: source
+    if: github.event_name != 'pull_request'
+    steps:
+      - name: Checkout Formal Conjectures
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Install elan
+        uses: ./.github/actions/install-elan
+
+      - name: Download the generated set
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: fc100-source-bundle
+
+      # Kim's shared-project arrangement: every generated ChallengeDeps and
+      # Challenge compiles in one Lake project at LeanEval's pins, so Mathlib
+      # is built once for the whole set rather than once per workspace.
+      - name: Compile every generated Challenge at LeanEval pins
+        run: |
+          python3 comparator/adapter/compile_fc100_target.py .fc100 \
+            --project "$RUNNER_TEMP/fc100-target" \
+            --report fc100-target-report.json \
+            --known-failures comparator/known_failures.toml
+
+      - name: Upload the target report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fc100-target-report
+          path: fc100-target-report.json
+          if-no-files-found: warn
