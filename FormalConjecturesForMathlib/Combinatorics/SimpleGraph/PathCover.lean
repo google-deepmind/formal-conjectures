@@ -23,6 +23,27 @@ public import Mathlib.Order.Lattice.Nat
 
 namespace SimpleGraph
 
+/-- The vertices of `G` can be covered by at most `k` paths. Paths may overlap, and a
+single vertex counts as a path. -/
+def HasPathCover {α : Type*} (G : SimpleGraph α) (k : ℕ) : Prop :=
+  ∃ (m : ℕ) (P : Fin m → (u : α) × (v : α) × G.Walk u v), m ≤ k ∧
+    (∀ i, (P i).2.2.IsPath) ∧ ∀ x : α, ∃ i, x ∈ (P i).2.2.support
+
+lemma HasPathCover.mono {α : Type*} {G : SimpleGraph α} {k l : ℕ}
+    (h : G.HasPathCover k) (hkl : k ≤ l) : G.HasPathCover l := by
+  obtain ⟨m, P, hm, hp, hc⟩ := h
+  exact ⟨m, P, hm.trans hkl, hp, hc⟩
+
+@[simp] lemma hasPathCover_zero_iff {α : Type*} (G : SimpleGraph α) :
+    G.HasPathCover 0 ↔ IsEmpty α := by
+  constructor
+  · rintro ⟨m, P, hm, hp, hc⟩
+    have hm0 : m = 0 := Nat.eq_zero_of_le_zero hm
+    subst m
+    exact ⟨fun x => by obtain ⟨i, hi⟩ := hc x; exact Fin.elim0 i⟩
+  · intro h
+    exact ⟨0, Fin.elim0, le_rfl, fun i => Fin.elim0 i, fun x => False.elim (h.false x)⟩
+
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- A family of paths covering all vertices without overlaps. -/
