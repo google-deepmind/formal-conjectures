@@ -93,9 +93,7 @@ excluded, the answer is no: OpenAI [OpenAI26] give a finite nonempty family of c
 graphs, none of them acyclic, for which no single member controls the family extremal number
 (see `erdos_575.variants.counterexample` and Problem 180).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L189"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L189"]
 theorem erdos_575 : answer(False) ↔
     ∀ family : Finset FiniteGraph,
       family.Nonempty → IsCyclicFamily family →
@@ -107,9 +105,7 @@ The literal catalog statement without `IsCyclicFamily family` is also false, alr
 forest family $\mathcal{F}=\{K_{1,2}, 2K_2\}$, where $\mathrm{ex}(n;\mathcal{F})=1$ for $n\ge 4$
 while $\mathrm{ex}(n;K_{1,2})=\lfloor n/2\rfloor$ and $\mathrm{ex}(n;2K_2)=n-1$.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L197"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L197"]
 theorem erdos_575.variants.unrestricted : answer(False) ↔
     ∀ family : Finset FiniteGraph,
       family.Nonempty → ContainsBipartiteMember family → IsBipartiteCompactFamily family := by
@@ -119,9 +115,7 @@ theorem erdos_575.variants.unrestricted : answer(False) ↔
 The non-forest counterexample: a nonempty cyclic family of connected bipartite graphs that is not
 bipartite-compact.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L111"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L111"]
 theorem erdos_575.variants.counterexample :
     ∃ family : Finset FiniteGraph,
       family.Nonempty ∧
