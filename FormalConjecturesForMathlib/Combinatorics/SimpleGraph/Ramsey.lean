@@ -38,8 +38,9 @@ The Erdős–Hajnal "exceptional pair" trio of predicates:
 These were introduced for Erdős Problem 596 but are reusable for Problem 595 and other
 Ramsey-type questions; we factor them out per mo271's review.
 
-It also defines the two-colour graph Ramsey number `graphRamsey G H` and the notion of a
-**Ramsey size linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
+It also defines the two-colour graph Ramsey number `graphRamsey G H`, the `k`-colour Ramsey
+number `multicolourRamsey G k` of a single graph `G`, and the notion of a **Ramsey size
+linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
 
 ## References
 
@@ -99,6 +100,15 @@ noncomputable def classicalRamsey (k l : ℕ) : ℕ :=
 /-- The diagonal classical Ramsey number `R(k) = R(K_k, K_k)`. -/
 noncomputable def diagonalRamsey (k : ℕ) : ℕ :=
   classicalRamsey k k
+
+/--
+The `k`-colour Ramsey number of a graph `G`: the least `N` such that every `k`-colouring of
+the edges of the complete graph on `Fin N` (an edge-colouring `c : Fin k → SimpleGraph (Fin N)`
+of `⊤`) contains a monochromatic copy of `G`, i.e. `G ⊑ c i` for some colour `i`.
+-/
+noncomputable def multicolourRamsey {V : Type*} (G : SimpleGraph V) (k : ℕ) : ℕ :=
+  sInf {N : ℕ | ∀ c : Fin k → SimpleGraph (Fin N),
+    (⊤ : SimpleGraph (Fin N)).IsEdgeColouring c → ∃ i, G ⊑ c i}
 
 /--
 A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
