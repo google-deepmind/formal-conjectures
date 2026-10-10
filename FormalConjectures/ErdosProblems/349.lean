@@ -102,7 +102,7 @@ and no large integer can be a subset sum. A partial result on the open Erdős Pr
 complementing the $2 < \alpha$ and integer-coefficient cases. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean"]
 theorem alpha_le_one_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα0 : 0 < α) (hα1 : α ≤ 1) :
     ¬ IsGoodPair t α := by
   sorry
@@ -113,7 +113,7 @@ subtract the largest power $2^m \le k$, recurse on the remainder. A textbook-lev
 block for `one_two_isGoodPair` below; it says nothing about `IsGoodPair` itself. -/
 @[category textbook, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean#L319"]
 theorem exists_finsetSum_two_pow (k : ℕ) :
     ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
   sorry
@@ -122,7 +122,7 @@ theorem exists_finsetSum_two_pow (k : ℕ) :
 additively complete set: every $k \ge 1$ is a finite sum of distinct powers of two. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean"]
 theorem one_two_isGoodPair : IsGoodPair 1 2 := by
   sorry
 
@@ -132,7 +132,7 @@ the exact power $2^m$, so its range contains all powers of two, which already fo
 complete set. Uses monotonicity `IsAddComplete.mono`. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean"]
 theorem dyadic_two_isGoodPair (k : ℕ) : IsGoodPair (1 / 2 ^ k) 2 := by
   sorry
 
@@ -143,7 +143,7 @@ cannot both be multiples of $t$. Generalizes the parity obstruction ($t = 2$). A
 on Erdős Problem 349. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean"]
 theorem int_coeff_ge_two_not_isGoodPair (t : ℤ) (ht : 2 ≤ t) (α : ℤ) :
     ¬ IsGoodPair (t : ℝ) (α : ℝ) := by
   sorry
@@ -155,7 +155,7 @@ good, $\alpha \le 1$ fails, $2 < \alpha$ fails (`alpha_gt_two_not_isGoodPair`), 
 $t \ge 2$ fails. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-integer-characterization-proof/FormalConjectures/ErdosProblems/349.lean"]
+  "https://github.com/cepadugato/formal-conjectures/blob/19e39e33be27d46713a423263d38312fe40c9e78/FormalConjectures/ErdosProblems/349.lean"]
 theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
     IsGoodPair (t : ℝ) (α : ℝ) ↔ t = 1 ∧ α = 2 := by
   sorry
