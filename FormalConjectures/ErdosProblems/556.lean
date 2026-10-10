@@ -21,9 +21,10 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 556
 
-A problem of Bondy and Erdős: for the cycle $C_n$, the $3$-colour Ramsey number satisfies
+A problem of Bondy and Erdős: for the cycle $C_n$ with $n \ge 4$, the $3$-colour Ramsey number
+satisfies
 $$R(C_n; 3) \le 4n - 3.$$
-The bound is best possible for odd $n$, where equality is conjectured (and known for large odd
+The triangle is excluded: $C_3 = K_3$ and $R(K_3; 3) = 17 > 9$ [Rad]. The bound is best possible for odd $n$, where equality is conjectured (and known for large odd
 $n$). Łuczak proved the asymptotic bound $R(C_n; 3) \le (4 + o(1))n$, and $(3 + o(1))n$ for even
 $n$; Kohayakawa, Simonovits and Skokan settled large odd $n$, and Benevides and Skokan large even
 $n$, but the inequality for all $n$ remains open.
@@ -38,6 +39,8 @@ $n$, but the inequality for all $n$ remains open.
   Proceedings of GRACO2005 (2005), 397-402.
 - [BeSk09] F. S. Benevides, J. Skokan, *The 3-colored Ramsey number of even cycles*, J. Combin.
   Theory Ser. B 99 (2009), 690-708.
+- [Rad] S. P. Radziszowski, *Small Ramsey Numbers*, Electron. J. Combin. Dynamic Survey DS1,
+  revision 18, [p. 61](https://www.combinatorics.org/ojs/index.php/eljc/article/download/DS1/pdf/#page=61).
 -/
 
 @[expose] public section
@@ -49,11 +52,12 @@ namespace Erdos556
 open SimpleGraph
 
 /--
-Erdős Problem 556 (Bondy–Erdős): for all $n \ge 3$,
+Erdős Problem 556 (Bondy–Erdős): for all $n \ge 4$,
 $$R(C_n; 3) \le 4n - 3.$$
+The case $n = 3$ is excluded since $R(K_3; 3) = 17$.
 -/
 @[category research open, AMS 5]
-theorem erdos_556 (n : ℕ) (hn : 3 ≤ n) :
+theorem erdos_556 (n : ℕ) (hn : 4 ≤ n) :
     multicolourRamsey (cycleGraph n) 3 ≤ 4 * n - 3 := by
   sorry
 
