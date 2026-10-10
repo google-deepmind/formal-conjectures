@@ -156,6 +156,7 @@ public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
 public import FormalConjecturesForMathlib.Geometry.Group.WordProd
 public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
+public import FormalConjecturesForMathlib.Geometry.OrdinaryLines
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
