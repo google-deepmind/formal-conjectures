@@ -73,8 +73,8 @@ def DecaysFasterThanInvSqrt (a : ℕ → ℝ) : Prop :=
 /--
 Let $a_n\in \mathbb{R}$ be such that $\sum_n \lvert a_n\rvert^2=\infty$ and $\lvert
 a_n\rvert=o(1/\sqrt{n})$. Is it true that, for almost all $\epsilon_n=\pm 1$, there exists some
-$z$ with $\lvert z\rvert=1$ (depending on the choice of signs) such that\[\sum_n \epsilon_n a_n
-z^n\]converges?
+$z$ with $\lvert z\rvert=1$ (depending on the choice of signs) such that$$\sum_n \epsilon_n a_n
+z^n$$converges?
 
 This is true, and was proved by Michelen and Sawhney [MiSa25], who in fact proved
 that the set of such $z$ has Hausdorff dimension $1$.
