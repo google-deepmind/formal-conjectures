@@ -38,10 +38,11 @@ is a monochromatic copy of $G$. Is it true that
 $$R_k(T)\leq kn+O(1)$$
 for any tree $T$ on $n$ vertices?
 
-The answer is yes, with an absolute constant: $R_k(T) \leq k(n-2)+3 \leq kn + 3$ for all $k$
-and $n$. This follows from the Erdős–Sós theorem (Erdős problem 548) by the pigeonhole principle,
-as recorded on the problem page; Reed and Stein [ReSt26] derived it for $n$ large in terms of $k$
-from their dense-graph case of Erdős–Sós.
+The answer is yes, with an absolute constant: $R_k(T) \leq kn + 3$ for all $k$ and $n$. For
+$n \geq 2$ this follows from the explicit bound $R_k(T) \leq k(n-2)+3$, a consequence of the
+Erdős–Sós theorem (Erdős problem 548) by the pigeonhole principle, as recorded on the problem page;
+Reed and Stein [ReSt26] derived that bound for $n$ large in terms of $k$ from their dense-graph case
+of Erdős–Sós. For the one-vertex tree, $R_k(T) \leq 2$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/zhangjun725/erdos557/blob/c4e0ab13027f8bb50defade11cf8a53c7b8b0ba9/Erdos557/Basic.lean#L153"]
@@ -51,7 +52,12 @@ theorem erdos_557 :
   sorry
 
 /--
-The explicit bound $R_k(T) \leq k(n-2)+3$ for every tree $T$ on $n$ vertices and every $k$.
+The explicit bound $R_k(T) \leq k(n-2)+3$ for every $k$ and every tree $T$ on $n \geq 2$ vertices.
+The problem page states this bound for $n$ sufficiently large in terms of $k$.
+
+The Lean statement uses natural-number subtraction, so for $n = 1$ it reads $R_k(T) \leq 3$, which
+also holds (the one-vertex tree has $R_k(T) \leq 2$). With ordinary subtraction the displayed formula
+would be false for $n = 1$ and $k \geq 3$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/zhangjun725/erdos557/blob/c4e0ab13027f8bb50defade11cf8a53c7b8b0ba9/Erdos557/Basic.lean#L147"]
