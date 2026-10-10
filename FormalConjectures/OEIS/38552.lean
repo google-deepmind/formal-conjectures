@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A038552
@@ -26,8 +28,9 @@ The conjectures state that:
 2. This is also the largest absolute value of negative fundamental discriminant $d$ for
    class number $n$.
 3. For even $n$, if $k$ is the largest odd number with $h(-k) = n$ and $k'$ is the largest
-   even number with $h(-k') = n$, then $k > k'$. The $n$-th term is the larger of $k$ and
-   $k'$, so this says that the $n$-th term is odd. Conjecture 1 implies it.
+   even number with $h(-k') = n$, then $k > k'$. Here $h(D)$ is the class number of the
+   quadratic field with discriminant $D$, so $k$ and $k'$ are absolute values of negative
+   fundamental discriminants, not radicands. The source states conjecture 2 in this form.
 
 The squarefree condition in the definition is needed for the maximum to exist, since
 $\mathbb{Q}(\sqrt{-k}) = \mathbb{Q}(\sqrt{-4k})$.
@@ -45,6 +48,8 @@ number $n$.
   class-number one." Michigan Mathematical Journal 14.1 (1967): 1-27.
 - [oeis.org/A038552](https://oeis.org/A038552)
 -/
+
+@[expose] public section
 
 open NumberField Polynomial
 
@@ -119,10 +124,15 @@ theorem isA038552_eq_largestNegFundDisc {n k : ℕ} (h : IsA038552 n k) :
     IsLargestNegFundDiscrForClassNumber (n := n) k := by
   sorry
 
-/-- For even class number $n$, the $n$-th term of A038552 is odd. The source states this as:
-the largest odd squarefree $k$ with $h(-k) = n$ is greater than the largest even one. -/
+/-- For even class number $n$, let $k$ be the largest odd number such that the quadratic field
+with discriminant $-k$ has class number $n$, and let $k'$ be the largest even such number, when
+they exist. Then $k > k'$. -/
 @[category research open, AMS 11]
-theorem odd_of_isA038552 {n k : ℕ} (hn : Even n) (h : IsA038552 n k) : Odd k := by
+theorem largestEven_lt_largestOdd_negFundDisc {n k k' : ℕ} (hn : Even n)
+    (hk : IsGreatest {m : ℕ | Odd m ∧ IsFundamentalDiscr (-m : ℤ) ∧
+      classNumberOfDiscriminant (-m : ℤ) = n} k)
+    (hk' : IsGreatest {m : ℕ | Even m ∧ IsFundamentalDiscr (-m : ℤ) ∧
+      classNumberOfDiscriminant (-m : ℤ) = n} k') : k' < k := by
   sorry
 
 end OeisA38552

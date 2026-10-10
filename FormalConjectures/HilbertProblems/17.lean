@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's 17th problem
@@ -27,6 +28,8 @@ $f = g_1^2 + g_2^2 + \cdots + g_m^2$. Resolved affirmatively by Artin in 1927.
 - [Wikipedia](https://en.wikipedia.org/wiki/Hilbert%27s_seventeenth_problem)
 - Motzkin, "The arithmetic-geometric inequality". In Shisha, Oved (ed.). Inequalities. Academic Press. pp. 205–224.
 -/
+
+@[expose] public section
 
 open Real MvPolynomial
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 940
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [He88] Heath-Brown, D. R., _Ternary quadratic forms and sums of three square-full numbers_.
   (1988), 137-163.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -67,13 +70,13 @@ theorem erdos_940.variants.three_cubes :
 
 
 /--
-Let $r \ge 3$. It is not known if all large integers are the sum of at most $r$-many
-$r$-powerful numbers.
+Let $r \ge 3$. Are there infinitely many integers which are not the sum of at most $r$-many
+$r$-powerful numbers?
 -/
 @[category research open, AMS 11]
 theorem erdos_940.variants.large_integers :
     answer(sorry) ↔
-    ∀ r ≥ 3, (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
+    ∀ r ≥ 3, ¬ (∀ᶠ x in atTop, ∃ (S : Multiset ℕ), S.card ≤ r ∧ (∀ s ∈ S, r.Full s) ∧ x = S.sum) := by
   sorry
 
 /--

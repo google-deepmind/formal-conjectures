@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 970
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   *Long gaps between primes*. J. Amer. Math. Soc. (2018), 65-105.
 - [Iw78] Iwaniec, Henryk, *On the problem of {J}acobsthal*. Demonstratio Math. (1978), 225--231.
 -/
+
+@[expose] public section
 
 namespace Erdos970
 

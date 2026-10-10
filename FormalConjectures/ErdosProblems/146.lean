@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 146
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   <https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy>. Generalises the construction
   of [OpenAI26, Ch. 10] to every $r$, and builds on its Lean development.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

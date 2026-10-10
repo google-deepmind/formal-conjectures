@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Lovász–Plummer conjecture (proved 2011) and Sheehan's conjecture
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 * [Th98] Thomassen, C. (1998). "Independent dominating sets and a second Hamiltonian cycle in
   regular graphs." *J. Combin. Theory Ser. B* 72, pp. 104--109.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -49,7 +52,7 @@ Every bridgeless cubic graph on $n$ vertices has exponentially many perfect matc
 a constant $c > 0$ such that the number of perfect matchings is at least $2^{cn}$.
 [EKKKN11] prove this with $2^{n/3656}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/da6d56610c43a6eadd15945a3b80a62f223293f8/Proofs/T_LovaszPlummerConjecture_lovasz_plummer_conjecture.lean#L16602"]
 theorem lovasz_plummer_conjecture :
     ∃ c : ℝ, 0 < c ∧ ∀ {V : Type} [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
@@ -64,7 +67,7 @@ Every bridgeless cubic graph on $n$ vertices has at least $2^{n/3656}$ perfect m
 
 *Reference:* [EKKKN11].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/e1059f02264088e9fc4e2866855b8cf68d9cbeda/Proofs/T_LovaszPlummerConjecture_lovasz_plummer_conjecture_variants_explicit.lean#L34280"]
 theorem lovasz_plummer_conjecture.variants.explicit
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hcubic : ∀ v, G.degree v = 3) (hbridgeless : G.IsBridgeless) :

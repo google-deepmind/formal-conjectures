@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 713
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [FuGe21] Füredi, Zoltán and Gerbner, Dániel, *Hypergraphs without exponents*. J. Combin. Theory
   Ser. A (2021), Paper No. 105517, 9.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 

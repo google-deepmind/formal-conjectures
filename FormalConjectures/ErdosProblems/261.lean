@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 261
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
  - [TUZ20] Tengely, Szabolcs and Ulas, Maciej and Zygadlo, Jakub, On a Diophantine equation of
     Erdős and Graham. J. Number Theory (2020), 445--459.
 -/
+
+@[expose] public section
 
 open scoped Cardinal
 
@@ -68,7 +71,7 @@ distinct integers $a_1, \ldots, a_t \ge 1$ satisfying
 $$\frac{n}{2^n} = \sum_{1 \le k \le t} \frac{a_k}{2^{a_k}}?$$
 
 In [Er88c], Erdős notes that Cusick had a simple proof that infinitely many such $n$ exist. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos261_erdos_261_parts_i.lean#L102"]
 theorem erdos_261.parts.i : answer(True) ↔ {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
   sorry
 
@@ -95,9 +98,15 @@ theorem erdos_261.parts.iii : answer(sorry) ↔ ∃ x : ℚ,
 /-- In [Er88c], Erdős asks the weaker question of whether there exists a rational $x$ with at
 least two representations
 $$x = \sum_{k=1}^{\infty} \frac{a_k}{2^{a_k}}$$
-by pairwise distinct positive integers $a_k$. -/
-@[category research open, AMS 11]
-theorem erdos_261.variants.two_representations : answer(sorry) ↔ ∃ x : ℚ,
+by pairwise distinct positive integers $a_k$.
+
+The answer is yes: Z. Rafik (erdosproblems.com forum, 27 Apr 2026) observed that
+$4/2^4 = 5/2^5 + 6/2^6$ and $\sum_{m \ge 1} m/2^m = 2$, so $7/4$ is represented both by
+$\mathbb{N}_{>0} \setminus \{4\}$ and by $\mathbb{N}_{>0} \setminus \{5, 6\}$. It is generally believed that
+"two" here is a misprint for $2^{\aleph_0}$ (see `erdos_261.parts.iii`, which remains open). -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/g8r-b8/erdos261-lean/blob/976bddf21eafc93ea86a7a1bfd92b847070a6f31/Erdos261.lean#L87"]
+theorem erdos_261.variants.two_representations : answer(True) ↔ ∃ x : ℚ,
     2 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 

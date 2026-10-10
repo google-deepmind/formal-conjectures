@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of parts in the symmetric representation of $\sigma(n)$
@@ -31,6 +32,8 @@ which is a known characterization of the sequence.
 - [A237271](https://oeis.org/A237271)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA237271
 
@@ -185,8 +188,17 @@ That is, $a(k) \ge 3$ for every Carmichael number $k$.
 A002997 is the sequence of Carmichael numbers: the composite numbers $k$ such that
 $b^{k-1} \equiv 1 \pmod k$ for every $b$ coprime to $k$. This is `IsCarmichael`,
 which also forces $k$ to be composite.
+
+The observation holds for every odd composite $k$, so in particular for every Carmichael
+number. Write $p$ for the least prime factor of $k$ and $q = k/p$. The two smallest divisors
+of $k$ are $1$ and $p$, and the two largest are $q$ and $k$, so $(1, p)$ and $(q, k)$ are both
+consecutive pairs in the sorted divisor list, and they are distinct because $1 < q$. Both
+qualify: $p$ and $k$ are odd, $p \ge 2 \cdot 1$, and $k = pq \ge 3q > 2q$. Hence the count is
+at least $2$ and $a(k) \ge 3$. A Carmichael number is odd: it is composite by the $b = 1$ case
+of `IsCarmichael`, so $k > 2$, and if $k$ were even then the coprime base $k - 1 \equiv -1$
+would give $k \mid (-1)^{k-1} - 1 = -2$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem observation_carmichael (k : ℕ) (hk : IsCarmichael k) :
     3 ≤ a k := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $k \ge 1$ such that $2 \cdot n^k - 1$ is prime
@@ -23,6 +24,8 @@ $a(n) = \min \{k \ge 1 \mid \text{Prime}(2 \cdot n^k - 1)\}$ for $n \ge 2$.
 
 *References:*
 - [A119591](https://oeis.org/A119591)-/
+
+@[expose] public section
 
 namespace OeisA119591
 

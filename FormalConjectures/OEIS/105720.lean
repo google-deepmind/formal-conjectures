@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Triangular matchstick numbers in the class of prime numbers
@@ -24,6 +25,8 @@ $a(n) = \sum_{k = n}^{2n} p_k$, where $p_k$ is the $k$-th prime.
 *References:*
 - [A105720](https://oeis.org/A105720)
 -/
+
+@[expose] public section
 
 namespace OeisA105720
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 85
@@ -29,6 +30,8 @@ has minimum even-distance count $9$ and largest induced-tree order $4$. The
 conjectured lower bound is therefore $\lceil\sqrt{1 + 2 \cdot 9}\rceil =
 \lceil\sqrt{19}\rceil = 5 > 4$.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture85
 

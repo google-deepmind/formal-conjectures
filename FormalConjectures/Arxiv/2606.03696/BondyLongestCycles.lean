@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bondy's conjecture on longest cycles in highly connected graphs
@@ -31,6 +32,8 @@ longest cycle holds no long path.
 The case `k = 1` is Dirac's theorem and the case `k = 2` is the theorem of Nash-Williams. The
 case `k = 3` is proved. The cases `k ≥ 4` are open.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 

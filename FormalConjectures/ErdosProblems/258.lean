@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 258
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ch26] P. Chojecki and GPT-5.4 Pro, [Erdős problem 258](https://www.ulam.ai/research/erdos258.pdf) (2026)
 - [St26] ster-oc, [Lean formalisation of Erdős problem 258](https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/ster-oc/2b7adcf9d753cf6e29d782f7374cc57e/raw/689a8483895cbe147634dfbf2d7b1db93a3b5b5f/Erdos258.lean) (2026)
 -/
+
+@[expose] public section
 
 namespace Erdos258
 
@@ -35,7 +38,7 @@ This was proved affirmatively by Chojecki and GPT-5.4 Pro [Ch26], and formalised
 by ster-oc [St26].
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/ster-oc/2b7adcf9d753cf6e29d782f7374cc57e/raw/689a8483895cbe147634dfbf2d7b1db93a3b5b5f/Erdos258.lean"]
+  "https://gist.githubusercontent.com/ster-oc/2b7adcf9d753cf6e29d782f7374cc57e/raw/689a8483895cbe147634dfbf2d7b1db93a3b5b5f/Erdos258.lean"]
 theorem erdos_258 : answer(True) ↔ ∀ (a : ℕ → ℕ), (∀ n, 2 ≤ a n) →
     Filter.Tendsto a Filter.atTop Filter.atTop →
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 (n + 1), a i)) := by
@@ -61,7 +64,8 @@ Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 
 Solution: True (proved by Erdős, see Erdős Problems website)
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-lean-erdos249-257/blob/a9104f2f12aa0d4e9da8a93574b14990ed02dc2a/adapters/FormalConjecturesAdapter.lean#L109-L117"]
 theorem erdos_258.variants.constant : answer(True) ↔ ∀ t ≥ (2 : ℕ),
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / t^(n + 1))) := by
   sorry

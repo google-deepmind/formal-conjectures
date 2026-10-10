@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primality of continued fraction denominators $a(n)$ for $n \ge 3$
@@ -32,6 +33,8 @@ The formula is valid for $n \ge 3$.
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A051403](https://oeis.org/A051403)
 -/
+
+@[expose] public section
 
 namespace OeisA363102
 

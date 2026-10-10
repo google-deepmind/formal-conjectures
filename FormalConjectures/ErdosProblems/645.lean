@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 645
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BrLa99] Brown, Tom C. and Landman, Bruce M., Monochromatic arithmetic progressions with large
   differences. Bull. Austral. Math. Soc. (1999), 21--35.
 -/
+
+@[expose] public section
 
 
 namespace Erdos645
