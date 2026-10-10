@@ -128,9 +128,12 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
 
 /--
 Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
-non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can tafrake any
-non-trivial subspace . If not, one can take any nontrivial spectral subspace of `T`. -/
-@[category research solved, AMS 47]
+non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
+non-trivial subspace. If not, one can take any nontrivial spectral subspace of `T`. -/
+@[category research solved, AMS 47, formal_proof using lean4 at
+"https://github.com/baobingzhang/jsp-000024-lomonosov-lean/blob/8b43adc9781d70deb3d23bcdf38ec6195683669b/InvariantSubspaceLomonosov.lean#L422-L424",
+formal_proof using lean4 at
+"https://github.com/zblore/fc-isp-normal/blob/399f8bd8b68d4e24f33a6077e01a4adf3ae51df6/ISPNormal/Normal.lean#L143-L144"]
 theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [CompleteSpace H]
     (hdim : 2 ≤ Module.rank ℂ H) (T : H →L[ℂ] H) [IsStarNormal T]:
     Nonempty (ClosedInvariantSubspace T) := by
