@@ -67,7 +67,8 @@ $\max_{|z|=1}|\sum_{k\leq n}\epsilon_k(t)z^k|=(C+o(1))\sqrt{n\log n}$?
 
 This was settled by Halász [Ha73], who proved this is true with $C=1$.
 -/
-@[category research solved, AMS 30 60]
+@[category research solved, AMS 30 60, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos523.lean"]
 theorem erdos_523 : answer(True) ↔ ∃ C : ℝ, 0 < C ∧
     ∀ᵐ ω ∂signMeasure, Tendsto
       (fun n : ℕ ↦ maximumModulus ω n / Real.sqrt ((n : ℝ) * Real.log n))
@@ -75,7 +76,8 @@ theorem erdos_523 : answer(True) ↔ ∃ C : ℝ, 0 < C ∧
   sorry
 
 /-- Halász [Ha73] proved that the almost-sure limit in Erdős Problem 523 is $1$. -/
-@[category research solved, AMS 30 60]
+@[category research solved, AMS 30 60, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos523.lean"]
 theorem erdos_523.variants.constant_one :
     ∀ᵐ ω ∂signMeasure, Tendsto
       (fun n : ℕ ↦ maximumModulus ω n / Real.sqrt ((n : ℝ) * Real.log n))
