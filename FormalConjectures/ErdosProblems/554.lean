@@ -71,8 +71,9 @@ theorem forcesMonochromaticOddCycle_one_iff (m n : ℕ) :
       exact ⟨h, Subsingleton.elim _ _⟩
   constructor
   · intro h
-    obtain ⟨c, hc⟩ := h (fun _ => 0)
-    rw [hlabel, isContained_top_iff] at hc
+    let C : TopEdgeLabeling (Fin m) (Fin 1) := fun _ => 0
+    obtain ⟨c, hc⟩ := h C
+    rw [hlabel C c, isContained_top_iff] at hc
     obtain ⟨e⟩ := hc
     simpa using Fintype.card_le_of_injective e e.injective
   · intro h C
