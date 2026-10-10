@@ -113,4 +113,16 @@ def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
     (∀ v, 0 < H.degree v) →
     (graphRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
 
+/--
+The `k`-colour Ramsey number `multicolourGraphRamsey k G` is the minimum number of vertices `n`
+such that every `k`-colouring of the edges of the complete graph on `n` vertices contains a
+monochromatic copy of `G`.
+
+A `k`-colouring of the edges of the complete graph on `Fin n` is a `TopEdgeLabeling (Fin n) (Fin k)`,
+and `C.labelGraph i` is the graph formed by the edges of colour `i`. For `k = 2` this agrees with
+`diagonalGraphRamsey`.
+-/
+noncomputable def multicolourGraphRamsey {α : Type*} [Fintype α] (k : ℕ) (G : SimpleGraph α) : ℕ :=
+  sInf {n : ℕ | ∀ C : TopEdgeLabeling (Fin n) (Fin k), ∃ i, G.IsContained (C.labelGraph i)}
+
 end SimpleGraph
