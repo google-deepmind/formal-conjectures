@@ -28,10 +28,7 @@ public import FormalConjecturesUtil
   985-986.
 - [Ch26] Chojecki, P., *Erdős Problem 956*.
   [ulam.ai/research/erdos956.pdf](https://www.ulam.ai/research/erdos956.pdf) (April 2026).
-- [PALOMAR-2026-10-04-000008](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-04-000008&version=1):
-  a Lean 4 proof of the affirmative answer (`erdos_956`) and explicit $\Omega(n^{4/3})$ lower
-  bounds (`omega_four_thirds`, `eventual_two_fifths`), checked by Comparator and NanoDa against
-  the definitions below and registered with the Palomar registry.
+- [PALOMAR-2026-10-04-000008](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-04-000008&version=1)
 -/
 
 @[expose] public section
@@ -91,37 +88,30 @@ $h(n) > n^{1+c}$ for all sufficiently large $n$?
 The compact convex body $C$ may depend on $n$. Erdős and Pach [ErPa90] proved the upper bound
 $h(n) = O(n^{4/3})$ and posed this superlinear lower-bound question. Valtr [Va05] announced the
 matching growth exponent $h(n) = \Theta(n^{4/3})$, and Chojecki [Ch26] gave an explicit Euclidean
-parabolic-cap construction. The formal proof registered as [PALOMAR-2026-10-04-000008] proves the
-affirmative answer with $c = 1/4$ for the exact definitions above.
+parabolic-cap construction.
 -/
-@[category research solved, AMS 5 52,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L61"]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L61"]
 theorem erdos_956 : answer(True) ↔
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 + c) < (h n : ℝ) := by
   sorry
 
 /--
 Explicit $\Omega(n^{4/3})$ lower bound: for all $n \ge 80$, $\frac{1}{26} n^{4/3} < h(n)$.
-Proved in [PALOMAR-2026-10-04-000008] via a centrally symmetric signed parabolic cap and a
+Constructed via a centrally symmetric signed parabolic cap and a
 four-layer rectangular grid of disjoint translates.
 -/
-@[category research solved, AMS 5 52,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L67"]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L67"]
 theorem erdos_956.variants.omega_four_thirds :
     ∀ n : ℕ, 80 ≤ n → (1 / 26 : ℝ) * (n : ℝ) ^ ((4 : ℝ) / 3) < (h n : ℝ) := by
   sorry
 
 /--
 Sharper eventual $\Omega(n^{4/3})$ lower bound: for all sufficiently large $n$ (in fact for all
-$n \ge 204{,}525{,}328$), $\frac{2}{5} n^{4/3} < h(n)$. Proved in [PALOMAR-2026-10-04-000008] from
+$n \ge 204{,}525{,}328$), $\frac{2}{5} n^{4/3} < h(n)$, obtained from
 the four-layer signed parabolic grid bound
 $h(48q^3 + 16q^2 + 12q + 4) \ge 72q^4 + 32q^3 + 24q^2 + 13q + 3$.
 -/
-@[category research solved, AMS 5 52,
-  formal_proof using lean4 at
-    "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L91"]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/2afe25fe500b036dfabef8e00c369a434bfff763/erdos-956/Solution.lean#L91"]
 theorem erdos_956.variants.eventual_two_fifths :
     ∀ᶠ n : ℕ in atTop, (2 / 5 : ℝ) * (n : ℝ) ^ ((4 : ℝ) / 3) < (h n : ℝ) := by
   sorry
