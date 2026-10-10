@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1136
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Mu11] Müller, Helmut, *Über ein additiv-zahlentheoretisches Problem von P. Erdős*.
   Mitt. Math. Ges. Hamburg (2011), 75-78.
 -/
+
+@[expose] public section
 
 namespace Erdos1136
 

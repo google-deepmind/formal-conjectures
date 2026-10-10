@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Alon-Tarsi short cycle cover conjecture
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 Every bridgeless graph has a list of cycles covering every edge whose lengths sum to at most
 $\frac{7}{5}|E|$.
 -/
+
+@[expose] public section
 
 open Finset SimpleGraph
 

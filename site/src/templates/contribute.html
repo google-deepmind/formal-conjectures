@@ -19,6 +19,7 @@
     <ul class="site-nav__links" id="nav-links" role="list">
       <li><a href="/browse/">Browse</a></li>
       <li><a href="/stats/">Stats</a></li>
+      <li><a href="/modules/">Modules</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contribute/">Contribute</a></li>
       <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
@@ -90,13 +91,16 @@ Copyright YYYY The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 …
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Problem Title
 *Reference:* [source](https://…)
 -/
+
+@[expose] public section
 
 namespace MyProblem
 

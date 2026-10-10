@@ -192,7 +192,6 @@ theorem isConvexPolygon_triangle (t : Affine.Triangle ℝ P) : IsConvexPolygon t
 noncomputable def triangle_area (a b c : P) : ℝ :=
   positiveOrientation.areaForm (a -ᵥ c) (b -ᵥ c) / 2
 
-set_option backward.isDefEq.respectTransparency false in
 lemma triangle_area_eq_det (a b c : ℝ²) :
     triangle_area a b c =
     Matrix.det !![a 0, b 0, c 0;
@@ -204,12 +203,6 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
       a 0 * b 1 - a 0 * c 1 - b 0 * a 1 + b 0 * c 1 + c 0 * a 1 - c 0 * b 1 by
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
-
-/--
-The minimum number of distinct distances guaranteed for any set of $n$ points.
--/
-noncomputable def minimalDistinctDistances (n : ℕ) : ℕ :=
-  sInf {(distinctDistances points : ℝ) | (points : Finset ℝ²) (_ : points.card = n)}
 
 /-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
 where the points are ordered such that
@@ -242,6 +235,10 @@ def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
   (affineSpan ℝ {a, b}).Parallel (affineSpan ℝ {c, d}) ∧
   dist a c = dist b d
 
+/-- A line in the plane: an affine subspace of `ℝ²` whose direction is one-dimensional. -/
+def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
+  Module.finrank ℝ L.direction = 1
+
 end EuclideanGeometry
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
@@ -249,3 +246,11 @@ def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
 
 nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
   Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)
+
+/-- A set is isosceles-free if no three distinct points in it form an isosceles triangle. -/
+def Set.IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
+  A.Triplewise fun x y z ↦ ¬ _root_.IsIsosceles x y z
+
+theorem Set.IsIsoscelesFree.mono {α : Type*} [Dist α] {s t : Set α} (h : t ⊆ s)
+    (hs : s.IsIsoscelesFree) : t.IsIsoscelesFree :=
+  Set.Triplewise.mono h hs

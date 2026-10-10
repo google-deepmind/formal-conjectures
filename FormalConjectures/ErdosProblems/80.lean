@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 80
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/80](https://www.erdosproblems.com/80)
 - [erdosproblems.com/600](https://www.erdosproblems.com/600), stated in
   `FormalConjectures/ErdosProblems/600.lean`
+- [FoLo12] Fox, Jacob and Loh, Po-Shen, On a problem of Erdős and Rothschild on edges in
+  triangles. Combinatorica (2012), 619--628.
 
 600 asks the same question from the other side. `Erdos600.eFunction n r` is the least edge
 count forcing some edge into `r` triangles; `f c n` here is the largest book forced once the
@@ -30,6 +33,8 @@ edge count is at least $cn^2$. So `r ≤ f c n` and `Erdos600.eFunction n r ≤ 
 same thing, and the two functions are inverse to each other in that sense. Both are built on
 `SimpleGraph.trianglesContaining`, which 600 introduced.
 -/
+
+@[expose] public section
 
 open Filter Finset SimpleGraph
 
@@ -70,12 +75,16 @@ at least $cn^2$ edges, where each edge is contained in at least one triangle, mu
 book of size $m$, that is, an edge shared by at least $m$ different triangles. Estimate
 $f_c(n)$. In particular, is it true that $f_c(n)>n^\epsilon$ for some $\epsilon>0$?
 
+The answer is no. Fox and Loh [FoLo12] proved that $f_c(n) \leq n^{O(1/\log\log n)}$ for every
+fixed $c < 1/4$, so no $\epsilon > 0$ works for, say, $c = 1/8$. For $c > 1/4$ the situation is
+different: $f_c(n) \geq n/6$, see [erdosproblems.com/80](https://www.erdosproblems.com/80).
+
 The bound $c < 1/2$ is what makes the hypothesis satisfiable: a simple graph on $n$ vertices
 has at most $n(n-1)/2$ edges, so no graph has $cn^2$ of them once $c \geq 1/2$.
 -/
-@[category research open, AMS 5]
-theorem erdos_80 :
-    answer(sorry) ↔ ∀ c : ℝ, 0 < c → c < 1 / 2 →
+@[category research solved, AMS 5]
+theorem erdos_80.parts.i :
+    answer(False) ↔ ∀ c : ℝ, 0 < c → c < 1 / 2 →
       ∃ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ ε < f c n := by
   sorry
 
@@ -85,7 +94,7 @@ The weaker question from the same problem: is $f_c(n) \gg \log n$?
 Same feasibility bound on `c` as above.
 -/
 @[category research open, AMS 5]
-theorem erdos_80.variants.log :
+theorem erdos_80.parts.ii :
     answer(sorry) ↔ ∀ c : ℝ, 0 < c → c < 1 / 2 →
       (fun n : ℕ ↦ (f c n : ℝ)) ≫ (fun n : ℕ ↦ Real.log n) := by
   sorry

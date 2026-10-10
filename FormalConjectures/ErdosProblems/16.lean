@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 16
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
   (1950), 113-123.
 - [Ro34] Romanoff, N. P., Über einige Sätze der additiven Zahlentheorie. Math. Ann. (1934), 668-678.
 -/
+
+@[expose] public section
 
 open Nat Filter Set
 open scoped Topology
@@ -83,7 +86,7 @@ theorem erdos_16.variant.romanoff :
 Using covering congruences Erdős [Er50] proved that the set of odd integers which are not of this
 form contains an infinite arithmetic progression.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos16_erdos_16_variant_erdos.lean#L103"]
 theorem erdos_16.variant.erdos :
     ∃ a d : ℕ, d > 0 ∧ { x | ∃ m : ℕ, x = a + m * d } ⊆ Erdos16Set := by
   sorry

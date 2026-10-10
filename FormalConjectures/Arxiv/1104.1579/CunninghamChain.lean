@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Cunningham chains — Jones's conjecture
@@ -34,6 +35,8 @@ primes start a chain of exact length $k$, for each of the two kinds.
 - [OEIS A181697](https://oeis.org/A181697), first-kind chain lengths
 - [OEIS A181715](https://oeis.org/A181715), second-kind chain lengths
 -/
+
+@[expose] public section
 
 namespace CunninghamChain
 

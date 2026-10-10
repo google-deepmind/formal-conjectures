@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinantal conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Determinantal_conjecture)
 -/
+
+@[expose] public section
 
 /- Formalisation note: Here, we represent the two normal matrices as $U_1 D_1 U_1^*$ and
 $U_2 D_2 U_2^*$ respectively, where $U_1, U_2$ are unitary and $D_1, D_2$
@@ -34,10 +37,10 @@ namespace DeterminantalConjecture
 /--
 Does the determinant of the sum $A + B$ of two $n \times n$ normal
 complex matrices $A$ and $B$ always lie in the convex hull
-of the $n!$ points $\prod_i (\lambda(A)_i + \lambda(B)_{\sigma(i)})$?
-Here the numbers $\lambda(A)_i$ and $\lambda(B)_i$ are
+of the $n!$ points $\prod\_i (\lambda(A)\_i + \lambda(B)\_{\sigma(i)})$?
+Here the numbers $\lambda(A)\_i$ and $\lambda(B)\_i$ are
 the eigenvalues of $A$ and $B$, and $\sigma$ is an element of the symmetric
-group $S_n$.
+group $S\_n$.
 -/
 @[category research open, AMS 15]
 theorem determinantal_conjecture

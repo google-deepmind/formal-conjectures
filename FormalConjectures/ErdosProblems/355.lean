@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [DoKo25] W. van Doorn and V. Kovač, Lacunary sequences whose reciprocal sums represent all
   rationals in an interval. arXiv:2509.24971 (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos355
 
