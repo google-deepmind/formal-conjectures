@@ -20,7 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 1054
 
-*Reference:* [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+*References:*
+- [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+- [PALOMAR-2026-10-05-000005](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000005&version=1)
 -/
 
 @[expose] public section
@@ -44,21 +46,28 @@ The strong claim that $f(n)=o(n)$ was disproved by Tao in the comments to
 [468](https://www.erdosproblems.com/468), in which he proves that the upper density of
 $\{ n : f(n)\leq \delta n\}$ is $\ll \delta^2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L97"]
 theorem erdos_1054.parts.i : answer(False) ↔ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$? -/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.ii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
+of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$?
+
+No: combining the Tao–Kovač small-ratio bound $\#\{n \leq X : 0 < f(n) \leq \delta n\} \ll \delta^2 X$
+with the fact that almost all odd integers are represented (or via the lower-density bound below),
+$f(n)$ is not $o(n)$ along any density-one set $A$. -/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L103"]
+theorem erdos_1054.parts.ii : answer(False) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
     (fun (n : A) ↦ (f ↑n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$? -/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
+of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$?
+
+Yes: for every $A \geq 1$, a positive lower density of odd integers satisfy $f(n) > A n$, so
+$\limsup f(n)/n = \infty$. -/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L110"]
+theorem erdos_1054.parts.iii : answer(True) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
     atTop.limsup (fun n ↦ (f n : EReal) / n) = ⊤ := by
   sorry
 
