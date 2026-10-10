@@ -56,7 +56,7 @@ noncomputable def squareRootSum (l : List ℕ) (t : ℕ) : Bool :=
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
 @[category research open, AMS 68]
 theorem isPolyTime_squareRootSum :
-    answer(sorry) ↔ IsPolyTime (fun (⟨l, t⟩ : List ℕ × ℕ) => squareRootSum l t) := by
+    answer(sorry) ↔ IsPolyTime (Function.uncurry squareRootSum) := by
   sorry
 
 /--
@@ -76,8 +76,7 @@ noncomputable def squareRootSumTwoSided (l₁ l₂ : List ℕ) : Bool :=
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
 @[category research open, AMS 68]
 theorem isPolyTime_squareRootSumTwoSided :
-    answer(sorry) ↔
-      IsPolyTime (fun (⟨l₁, l₂⟩ : List ℕ × List ℕ) => squareRootSumTwoSided l₁ l₂) := by
+    answer(sorry) ↔ IsPolyTime (Function.uncurry squareRootSumTwoSided) := by
   sorry
 
 end PolyTime
