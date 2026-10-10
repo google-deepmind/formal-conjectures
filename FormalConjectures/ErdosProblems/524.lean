@@ -65,6 +65,19 @@ noncomputable def supNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖randomPoly a n
 /-- The maximum absolute value for the paper's indexing $0,\ldots,n$. -/
 noncomputable def fullSupNorm (a : ℕ → ℝ) (n : ℕ) : ℝ := ‖fullPoly a n‖
 
+@[simp, category API]
+lemma randomPoly_zero (a : ℕ → ℝ) : randomPoly a 0 = 0 := by
+  ext x
+  simp [randomPoly]
+
+@[simp, category API]
+lemma supNorm_zero (a : ℕ → ℝ) : supNorm a 0 = 0 := by
+  simp [supNorm]
+
+@[simp, category API]
+lemma fullSupNorm_zero (a : ℕ → ℝ) : fullSupNorm a 0 = |a 0| := by
+  simp [fullSupNorm, fullPoly]
+
 @[category API]
 lemma supNorm_nonneg (a : ℕ → ℝ) (n : ℕ) : 0 ≤ supNorm a n := norm_nonneg _
 
@@ -100,7 +113,7 @@ lemma supNorm_le (a : ℕ → ℝ) (n : ℕ) (h : ∀ k, |a k| = 1) :
       Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ _k ∈ Finset.range n, (1 : ℝ) := by
       apply Finset.sum_le_sum
-      intro k hk
+      intro k _hk
       rw [abs_mul, h, one_mul, abs_pow]
       exact pow_le_one₀ (abs_nonneg _) (abs_le.mpr x.property)
     _ = n := by simp
