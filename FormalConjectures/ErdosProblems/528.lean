@@ -83,12 +83,29 @@ theorem walkCount_zero (k : ℕ) : walkCount 0 k = 1 := by
     exact (Fin.eq_zero i).trans (Fin.eq_zero j).symm
   simp [walkCount, h]
 
+@[simp, category API, AMS 5]
+theorem walkCount_one (k : ℕ) : walkCount 1 k = 2 * k := by
+  classical
+  have h (w : Fin 1 → Direction k) : IsSelfAvoiding w := by
+    intro i j hij
+    fin_cases i <;> fin_cases j
+    · rfl
+    · exact False.elim (displacement_ne_zero (w 0) (by simpa [vertices] using hij.symm))
+    · exact False.elim (displacement_ne_zero (w 0) (by simpa [vertices] using hij))
+    · rfl
+  simp [walkCount, h, Direction, Nat.mul_comm]
+
 @[category API, AMS 5]
 theorem walkCount_le (n k : ℕ) : walkCount n k ≤ (2 * k) ^ n := by
   classical
   calc
     walkCount n k ≤ Fintype.card (Fin n → Direction k) := Finset.card_filter_le _ _
     _ = (2 * k) ^ n := by simp [Direction, Nat.mul_comm]
+
+@[simp, category API, AMS 5]
+theorem walkCount_zero_dimension (n : ℕ) : walkCount (n + 1) 0 = 0 := by
+  apply Nat.eq_zero_of_le_zero
+  simpa using walkCount_le (n + 1) 0
 
 /-- Let $f(n,k)$ count the number of self-avoiding walks of $n$ steps (beginning at
 the origin) in $\mathbb{Z}^k$ (i.e. those walks which do not intersect themselves).
