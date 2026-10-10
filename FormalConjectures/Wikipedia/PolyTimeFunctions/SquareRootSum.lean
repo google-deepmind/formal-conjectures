@@ -28,6 +28,13 @@ is at most a cutoff (or alternatively, at most another such sum).
 This problem is relevant to questions in computational geometry
 (for example, in determining which of two polygonal paths in Euclidean space is longer).
 
+Wikipedia states the problem for positive integers, an integer threshold, and lists of
+equal length.
+The versions here allow zeros, a natural-number threshold, and lists of any length.
+This slightly more general formulation can be reduced to the fixed length form
+(by removing zeros and introducing copies of $\sqrt{4}$ to the longer list and
+$\sqrt{1} + \sqrt{1}$ to the shorter one).
+
 *References:*
 - [Wikipedia: List of unsolved problems in computer science](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_computer_science)
 - [Wikipedia: Square-root sum problem](https://en.wikipedia.org/wiki/Square-root_sum_problem)
