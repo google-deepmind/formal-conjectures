@@ -119,7 +119,8 @@ theorem erdos_528 :
   sorry
 
 /-- Hammersley and Morton [HM54] showed that the connective constant exists. -/
-@[category research solved, AMS 5 60]
+@[category research solved, AMS 5 60, formal_proof using lean4 at
+  "https://github.com/AItoBit/erdos528-lean/blob/4623928ab07ca701a03e81a3c2f13f5b50c22b0f/Erdos528.lean#L147"]
 theorem erdos_528.variants.limit_exists (k : ℕ) (hk : 0 < k) :
     ∃ C : ℝ, Tendsto (fun n : ℕ => (walkCount n k : ℝ) ^ (1 / (n : ℝ)))
       atTop (𝓝 C) := by
