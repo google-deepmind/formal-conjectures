@@ -31,10 +31,11 @@ Check:
 Be careful with `∃ x, P x → Q`. The intended statement is usually `∃ x, P x ∧ Q`; the first
 form can be trivially true.
 
-For a yes-or-no problem, check that `answer(True)` states a positive answer and `answer(False)`
-states a negative answer. Also check the scope and expected type of `answer(sorry)`. The rest of
-the statement must constrain the unknown answer. It must not make the theorem true for every
-possible answer.
+Check that a theorem carries `@[question]` exactly when the source asks a question rather than
+makes a claim. For a yes-or-no question, check that `answer(True)` states a positive answer and
+`answer(False)` states a negative answer. For a question that asks for a value, check the scope
+and expected type of `answer(sorry)`. The rest of the statement must constrain the unknown
+answer. It must not make the theorem true for every possible answer.
 
 ## Check boundary cases
 

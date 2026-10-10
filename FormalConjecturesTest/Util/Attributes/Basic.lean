@@ -46,6 +46,54 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   rfl
 
+-- The `question` attribute
+
+#guard_msgs in
+/-- Is `2 + 2` equal to `4`? -/
+@[category research solved, question, AMS 11]
+theorem a_question : 2 + 2 = 4 := by
+  rfl
+
+-- The attribute is independent of the order of attributes.
+#guard_msgs in
+@[question, category research open]
+theorem a_question_first : 2 + 2 = 4 := by
+  sorry
+
+-- `question` is not a keyword.
+#guard_msgs in
+example (question : Nat) : question = question := rfl
+
+/--
+error: the `question` attribute only applies to theorems, but the type of 'not_a_theorem' is not a proposition
+-/
+#guard_msgs in
+@[question]
+def not_a_theorem : Prop := True
+
+-- A statement with a non-`Prop` answer is a value question.
+#guard_msgs in
+/-- What is `2 + 2`? -/
+@[category research open, question, AMS 11]
+theorem a_value_question : 2 + 2 = answer(sorry) := by
+  sorry
+
+-- The kind is detected under binders too.
+#guard_msgs in
+@[category research open, question, AMS 11]
+theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
+  sorry
+
+open ProblemAttributes in
+/--
+info: [some QuestionKind.yesNo, some QuestionKind.yesNo, some QuestionKind.value, some QuestionKind.value, none]
+-/
+#guard_msgs in
+#eval show Lean.CoreM _ from do
+  return [← getQuestionKind? `a_question, ← getQuestionKind? `a_question_first,
+    ← getQuestionKind? `a_value_question, ← getQuestionKind? `a_value_question_under_binders,
+    ← getQuestionKind? `a_formally_solved_problem]
+
 -- formal_proof on non-research categories
 #guard_msgs in
 @[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]

@@ -38,6 +38,8 @@ inputs. See [STATEMENTS.md](STATEMENTS.md) for the detailed checks.
 
 Use `answer(sorry)` only for the information that the problem asks to determine. Put all
 quantifiers after it. A tautological term inside `answer()` is not a mathematical solution.
+Tag a theorem with `@[question]` when the source asks a question, yes-or-no or for a value,
+rather than makes a claim.
 
 ## Write clear documentation
 
