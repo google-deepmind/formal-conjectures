@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of times $n^2 + s^2$ is prime for positive integers $s < n$
@@ -25,6 +26,8 @@ $$a(n) = \sum_{s=1}^{n-1} [\text{Prime}(n^2 + s^2)]$$
 
 *References:*
 - [A069004](https://oeis.org/A069004)-/
+
+@[expose] public section
 
 namespace OeisA69004
 

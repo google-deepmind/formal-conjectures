@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.Dickson
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.Dickson
 
 /-!
 # Erdős Problem 891
@@ -25,6 +26,8 @@ import FormalConjectures.Wikipedia.Dickson
 - [Po18] Pólya, Georg, Zur arithmetischen {U}ntersuchung der {P}olynome. Math. Z. (1918), 143--148.
 - [Wikipedia] https://en.wikipedia.org/wiki/Dickson%27s_conjecture
 -/
+
+@[expose] public section
 
 open Nat Filter Finset
 open scoped ArithmeticFunction.omega

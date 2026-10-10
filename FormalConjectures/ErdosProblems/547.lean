@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 547
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Zh11] Zhao, Y., Proof of the $(n/2-n/2-n/2)$ conjecture for large $n$.
   Electron. J. Combin. (2011), Paper 27, 61.
 -/
+
+@[expose] public section
 
 open Filter
 

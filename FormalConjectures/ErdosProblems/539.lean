@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 539
@@ -38,6 +39,8 @@ it is not clear whether this remains open, but we include it here either way.
 - [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 - [Sc+26] Schmitt, J., Gehrunger, T., Dekoninck, J., Bérczi, G., Kreitner, U., Price, L., & Holmes, D. (2026). _ProofCouncil: An LLM Agent for Solving Open Mathematical Problems_. [arXiv:2607.09474](https://arxiv.org/abs/2607.09474), Appendix A, Theorem A.1.
 -/
+
+@[expose] public section
 
 open Filter
 

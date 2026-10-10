@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 242
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Si56] Sierpiński, W., Sur les décompositions de nombres rationnels en fractions primaires.
   Mathesis (1956), 16--32.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 25
@@ -27,6 +28,8 @@ References:
 - [Ru04] Ruzsa, Imre Z. "A problem on restricted sumsets." CONTEMPORARY MATHEMATICS 342 (2004):
   245-248.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter Finset
 
@@ -115,6 +118,22 @@ theorem green_25.variants.upper_ess89_trivial :
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
     ((fun N => (k N : ℝ)) ≫ bestUpper) ∧
     ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
+  sorry
+
+/--
+For $k(N) = \lceil N^{23/40} \rceil$, it need not be true: for all sufficiently large $N$
+there is a partition of $[N]$ into $\lceil N^{23/40} \rceil$ parts with
+$\left|\bigcup^k_{i=1} (A_i \hat{+} A_i)\right| < \frac{1}{10} N$.
+In particular, the best-known upper bound $N / \log N$ can be lowered.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green-25-upper-bound/blob/3a54a688dfc4d7b9c8990bbaeb1a124c075454e4/lean/Green25UpperFC.lean#L3043-L3051"]
+theorem green_25.variants.upper_pow_23_40 :
+    let k : ℕ → ℕ := fun N => Nat.ceil ((N : ℝ) ^ (23 / 40 : ℝ))
+    (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
+    (fun N => (k N : ℝ)) =o[atTop] bestUpper ∧
+    ∀ᶠ N in atTop, ¬ Property25 (k N) N := by
   sorry
 
 end Green25

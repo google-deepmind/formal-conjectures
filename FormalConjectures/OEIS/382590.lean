@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
@@ -28,6 +29,8 @@ where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(0) = b(0) = b(1) = 1$ and $a
   recurrence formula where for $n>1$ if you take the $n$-th prime factor of each term, you get an
   eventually periodic sequence", Mar. 31, 2025.
 -/
+
+@[expose] public section
 
 namespace OeisA382590
 

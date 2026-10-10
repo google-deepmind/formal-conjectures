@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primality and primitive root property from divisibility $n \mid (a(n-1) + 2^{n-2})$
@@ -27,6 +28,8 @@ as a function $\mathbb{N} \to \mathbb{N}$.
 - [A091669](https://oeis.org/A091669)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA91669
 

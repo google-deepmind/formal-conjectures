@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 609
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [JaYi25] Janzer, O. and Yip, F., Short monochromatic odd cycles.
   arXiv:2506.14910 (2025).
 -/
+
+@[expose] public section
 
 open Filter
 

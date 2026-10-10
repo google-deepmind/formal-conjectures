@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # (m,k)-perfect numbers
@@ -26,6 +27,8 @@ sum of divisors function.
  - [Wikipedia](https://en.wikipedia.org/wiki/Superperfect_number#Generalizations)
  - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
+
+@[expose] public section
 
 open ArithmeticFunction.sigma
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The first Atiyah--Sutcliffe conjecture
@@ -29,6 +30,8 @@ conjecture says that these polynomials are always linearly independent.
 - Marcin Mazur and Bogdan V. Petrenko,
   [On the conjectures of Atiyah and Sutcliffe](https://arxiv.org/abs/1102.4662)
 -/
+
+@[expose] public section
 
 namespace AtiyahSutcliffe
 
