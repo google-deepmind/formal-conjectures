@@ -28,6 +28,7 @@ with $\binom{n}{-1} = 0$.
 *References:*
 - [A003162](https://oeis.org/A003162)
 - H. W. Gould, Problem E2384 (proposal), Amer. Math. Monthly, 81 (1974), 170-171
+- [Li26] Wentao Li, [A supercongruence for A003162](https://github.com/VictorLiwentao/lean-oeis-proofs/blob/41f7b2ba762827a74f1651e76a2ad6d77be6a021/proofs/new-formalization/A003162/PROOF.md), 2026.
 -/
 
 @[expose] public section
@@ -41,10 +42,6 @@ def a (n : ℕ) : ℚ :=
     diff ^ 3
   let denominator : ℚ := (n.choose (n / 2) : ℚ)
   numerator / denominator
-
-/-- Auxiliary sequence $b(n) = a(2n-1)$. -/
-def b (n : ℕ) : ℚ :=
-  a (2 * n - 1)
 
 macro "eval_a" : tactic =>
   `(tactic| (dsimp [a]
@@ -70,22 +67,33 @@ theorem a_3 : a 3 = 3 := by eval_a
 @[category test, AMS 11]
 theorem a_4 : a 4 = 6 := by eval_a
 
+/-- Auxiliary sequence $b(n) = a(2n-1)$. -/
+def b (n : ℕ) : ℚ :=
+  a (2 * n - 1)
+
 /--
 $a(n)$ is an integer for all $n \ge 0$.
 
 Gould proposed this as Monthly Problem E2384. The 1974 reference in the module docstring
 is that proposal, not a solution to it.
+
+Lean formalization by Wentao Li, with AI assistance; see [Li26].
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/41f7b2ba762827a74f1651e76a2ad6d77be6a021/LeanOeisProofs/NewFormalization/A003162.lean#L72"]
 theorem a_is_integer (n : ℕ) : (a n).den = 1 := by
   sorry
 
 /--
-Let $b(n) = a(2n-1)$. Then the supercongruence $b(n p^k) \equiv b(n p^{k-1}) \pmod{p^{3k}}$
-holds for positive integers $n$ and $k$ and all primes $p \ge 5$.
-- Zhi-Wei Sun, Nov 16 2019
+"Conjecture: Let $b(n) = a(2n-1)$. Then the supercongruence
+$b(np^k) \equiv b(np^{k-1}) \pmod{p^{3k}}$ holds for positive integers $n$ and $k$
+and all primes $p \ge 5$."
+- Peter Bala, Mar 26 2023.
+
+Lean formalization by Wentao Li, with AI assistance; see [Li26].
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/41f7b2ba762827a74f1651e76a2ad6d77be6a021/LeanOeisProofs/NewFormalization/A003162.lean#L115"]
 theorem conjecture (n k p : ℕ) (hn : 0 < n) (hk : 0 < k) (hp : p.Prime) (hp_ge : 5 ≤ p) :
     (b (n * p ^ k)).num ≡ (b (n * p ^ (k - 1))).num [ZMOD (p : ℤ) ^ (3 * k)] := by
   sorry
