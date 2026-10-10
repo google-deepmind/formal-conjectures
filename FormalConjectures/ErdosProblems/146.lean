@@ -73,11 +73,11 @@ polynomial gain $n^\varepsilon$ outgrows any constant. The statement negated her
 right-hand side of `erdos_146`. -/
 @[category API, AMS 5]
 theorem not_bigO_of_lower_bound {q r : ℕ} {H : SimpleGraph (Fin q)} {c ε : ℝ}
-    (hr : 0 < r) (hbip : H.IsBipartite) (hdeg : IsDegenerate r H) (hc : 0 < c) (hε : 0 < ε)
+    (hr : 0 < r) (hbip : H.IsBipartite) (hdeg : H.IsDegenerate r) (hc : 0 < c) (hε : 0 < ε)
     (hlow : ∀ᶠ n : ℕ in atTop,
       c * (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ) + ε) ≤ (extremalNumber n H : ℝ)) :
     ¬ ∀ (r q : ℕ) (H : SimpleGraph (Fin q)),
-        0 < r → H.IsBipartite → IsDegenerate r H →
+        0 < r → H.IsBipartite → H.IsDegenerate r →
           Asymptotics.IsBigO atTop
             (fun n : ℕ => (extremalNumber n H : ℝ))
             (fun n : ℕ => (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ))) := by
@@ -115,7 +115,7 @@ $\varepsilon = \frac{1}{112}$. The Lean development of [FGLO26] imports that of 
   "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/6b03c462e13ff1517de6eaea02417d68c5f34b49/proofs/Theorem12.lean"]
 theorem erdos_146.variants.counterexample (r : ℕ) (hr : 2 ≤ r) :
     ∃ (q : ℕ) (H : SimpleGraph (Fin q)),
-      H.Connected ∧ H.IsBipartite ∧ IsDegenerate r H ∧ ¬ IsDegenerate (r - 1) H ∧
+      H.Connected ∧ H.IsBipartite ∧ H.IsDegenerate r ∧ ¬ H.IsDegenerate (r - 1) ∧
       ∃ c : ℝ, 0 < c ∧
         ∀ᶠ n : ℕ in atTop,
           c * (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ) + 1 / (28 * (r : ℝ) ^ 2)) ≤
@@ -135,7 +135,7 @@ certified sharply at $r = 3$ in place of the bound uniform in $r$ that gives
   "https://github.com/EvolvingPrograms/erdos-simonovits-degeneracy/blob/6b03c462e13ff1517de6eaea02417d68c5f34b49/proofs/Theorem12r3.lean"]
 theorem erdos_146.variants.counterexample_three :
     ∃ (q : ℕ) (H : SimpleGraph (Fin q)),
-      H.Connected ∧ H.IsBipartite ∧ IsDegenerate 3 H ∧ ¬ IsDegenerate 2 H ∧
+      H.Connected ∧ H.IsBipartite ∧ H.IsDegenerate 3 ∧ ¬ H.IsDegenerate 2 ∧
       ∃ c : ℝ, 0 < c ∧
         ∀ᶠ n : ℕ in atTop,
           c * (n : ℝ) ^ ((5 : ℝ) / 3 + 1 / 160) ≤ (extremalNumber n H : ℝ) := by
