@@ -67,7 +67,8 @@ $\int_C \lvert f(z)\rvert^{-\lambda}\,\mathrm{d}s$ is finite?
 The general case was proved by Lewis, Rossi, and Weitsman [LRW84].
 This formulation records the stronger conclusion that the path can be a polygonal ray.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos515.lean"]
 theorem erdos_515 : answer(True) ↔ ∀ f : ℂ → ℂ, Differentiable ℂ f →
     (¬ ∃ p : ℂ[X], ∀ z : ℂ, p.eval z = f z) →
     ∃ C : PolygonalRay, ∀ lambda : ℝ, 0 < lambda → lineIntegral C f lambda ≠ ⊤ := by
