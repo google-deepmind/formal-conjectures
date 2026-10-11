@@ -74,7 +74,8 @@ theorem green_35.lower :
   sorry
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$. The TTT-Discover construction gives
-$c(\infty) \le 0.751435$ after rescaling to $[0,1]$ [YD26]. -/
+$c(\infty) \le 0.751435$ after rescaling to $[0,1]$ [YD26].
+The answer is informative only at $p = \infty$ and is `⊤` otherwise. -/
 @[category research solved, AMS 26 28 42]
 theorem green_35.upper :
     let ub : ℝ≥0∞ → ℝ≥0∞ := answer(fun p : ℝ≥0∞ ↦ if p = ∞ then 0.7515 else ⊤)
