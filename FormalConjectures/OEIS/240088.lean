@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ways of writing $n$ as an ordered sum of a triangular, square, and pentagonal number
@@ -28,6 +29,8 @@ $$a(n) = |\{(i, j, k) \in \mathbb{N}^3 : i(i+1)/2 + j^2 + k(3k-1)/2 = n\}|$$
 - [On universal sums of polygonal numbers](https://doi.org/10.1007/s11425-015-4994-4)
   by *Zhi-Wei Sun*, Sci. China Math. **58** (2015), 1367–1396.
 -/
+
+@[expose] public section
 
 namespace OeisA240088
 

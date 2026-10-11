@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ways to write $n = x + y$ with $2^x + y(y+1)/2$ prime
@@ -24,6 +25,8 @@ Number of ways to write $n = x + y$ ($x, y > 0$) with $2^x + y(y+1)/2$ prime.
 *References:*
 - [A231577](https://oeis.org/A231577)
 -/
+
+@[expose] public section
 
 namespace OeisA231577
 

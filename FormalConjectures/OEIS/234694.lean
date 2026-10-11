@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integers $0 < k < n$ with $p = k + \mathrm{prime}(n - k)$ and $\mathrm{prime}(p) - p + 1$ prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A234694](https://oeis.org/A234694)
 -/
+
+@[expose] public section
 
 namespace OeisA234694
 

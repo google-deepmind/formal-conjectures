@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes between $n^2$ and $n^2 + (\log_2 n)^2$
@@ -25,6 +26,8 @@ given by $\pi(\lfloor n^2 + (\log_2 n)^2 \rfloor) - \pi(n^2)$.
 *References:*
 - [A217317](https://oeis.org/A217317)
 -/
+
+@[expose] public section
 
 namespace OeisA217317
 
@@ -78,7 +81,7 @@ theorem a_16 : a 16 = 4 := by
   have h2 : Int.toNat ⌊(16 : ℝ) ^ 2 + (4 : ℝ) ^ 2⌋ = 272 := by norm_num; rfl
   unfold a
   simp only [OfNat.ofNat_ne_zero, ↓reduceIte, Nat.cast_ofNat, h, h2]
-  native_decide
+  decide +kernel
 
 /--
 Conjecture: For every $n > 4765516$, $a(n) > 0$.

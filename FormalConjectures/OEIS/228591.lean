@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinant of odd composite sum indicator matrix
@@ -25,6 +26,8 @@ if and only if $i + j$ is $2$ or an odd composite number.
 *References:*
 - [A228591](https://oeis.org/A228591)
 -/
+
+@[expose] public section
 
 namespace OeisA228591
 
@@ -54,7 +57,13 @@ theorem a_3 : a 3 = 0 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_7 : a 7 = -1 := by native_decide
+theorem a_7 : a 7 = -1 := by
+  change (Matrix.of fun i j : Fin 7 =>
+    let k := i.val + j.val + 2
+    if k = 2 ∨ (k % 2 = 1 ∧ ¬ k.Prime) then (1 : ℤ) else 0).det = -1
+  rw [det_succ_row_zero, Fin.sum_univ_seven]
+  norm_num
+  decide +kernel
 
 /--
 Conjecture: $a(n) = 0$ for no $n > 15$.

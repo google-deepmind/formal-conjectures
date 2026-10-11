@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Floor of $n^2$ divided by the sum of products of consecutive divisors of $n$
@@ -26,6 +27,8 @@ $\lfloor n^2 / s \rfloor$.
 *References:*
 - [A251758](https://oeis.org/A251758)
 -/
+
+@[expose] public section
 
 namespace OeisA251758
 

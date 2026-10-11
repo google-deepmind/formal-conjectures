@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primes of the form $3^n \pm 3^k \pm 1$
@@ -24,6 +25,8 @@ Number of primes of the form $3^n \pm 3^k \pm 1$ with $0 \le k < n$.
 *References:*
 - [A196698](https://oeis.org/A196698)
 -/
+
+@[expose] public section
 
 namespace OeisA196698
 

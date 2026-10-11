@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sequence designed to show there are infinitely many primes congruent to $1$ modulo $4$
@@ -25,6 +26,8 @@ $a(n) = (a(n-1) - 1) \cdot a(n-1)^2 + 1 = 1 + 4 \prod_{i=1}^{n-1} a(i)^2$.
 *References:*
 - [A231830](https://oeis.org/A231830)
 -/
+
+@[expose] public section
 
 namespace OeisA231830
 

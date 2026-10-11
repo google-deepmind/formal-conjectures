@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of integers $0 < k < n$ such that $p = k + \phi(n - k)$ and $2(n - p) + 1$ are both prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A234809](https://oeis.org/A234809)
 -/
+
+@[expose] public section
 
 namespace OeisA234809
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Triples summing to $n$ with $2m+1$ and $2m^3+1$ prime
@@ -25,6 +26,8 @@ such that $2m + 1$ and $2m^3 + 1$ are both prime for $m \in \{x, y, z\}$.
 *References:*
 - [A230507](https://oeis.org/A230507)
 -/
+
+@[expose] public section
 
 namespace OeisA230507
 

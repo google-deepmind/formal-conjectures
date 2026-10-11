@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Position of $n$-th partial sum of the harmonic series when jointly ranked with $\{\log(k+1)\}$
@@ -27,6 +28,8 @@ with the set $\{\log(k+1)\}$; complement of A206912.
 - [OEIS Open](https://arxiv.org/abs/2608.11941)
   by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA206911
 

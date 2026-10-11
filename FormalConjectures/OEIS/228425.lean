@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Partitions of $n$ into $x + y$ with $x(x+1)/2 + y^2$ prime
@@ -24,6 +25,8 @@ Number of ways to write $n = x + y$ ($x, y > 0$) with $x(x+1)/2 + y^2$ prime.
 *References:*
 - [A228425](https://oeis.org/A228425)
 -/
+
+@[expose] public section
 
 namespace OeisA228425
 

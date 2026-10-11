@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Trajectory of $64$ under the map $n \to \text{A006368}(n)$
@@ -29,6 +30,8 @@ $$f(n) = \begin{cases}
 *References:*
 - [A223086](https://oeis.org/A223086)
 -/
+
+@[expose] public section
 
 namespace OeisA223086
 

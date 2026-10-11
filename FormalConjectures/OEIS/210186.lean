@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least integer $m > 1$ dividing no sum of two distinct primorials up to $P_n$
@@ -25,6 +26,8 @@ $0 < i < j \le n$, where $P_k$ is the product of the first $k$ primes.
 *References:*
 - [A210186](https://oeis.org/A210186)
 -/
+
+@[expose] public section
 
 namespace OeisA210186
 

@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.OEIS.«69191»
+public import FormalConjecturesUtil
+public import FormalConjectures.OEIS.«69191»
 
 /-!
 # Square root of the absolute value of the determinant of the prime sum indicator matrix
@@ -26,6 +27,8 @@ $(i,j)$-entry ($1 \le i, j \le n$) equal to $1$ if $i + j$ is prime, and $0$ oth
 *References:*
 - [A228552](https://oeis.org/A228552)
 -/
+
+@[expose] public section
 
 namespace OeisA228552
 
@@ -47,7 +50,7 @@ theorem a_3 : a 3 = 1 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by native_decide
+theorem a_5 : a 5 = 1 := by decide +kernel
 
 /--
 We conjecture that $a(n) > 0$ for all $n > 15$.

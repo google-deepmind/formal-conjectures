@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations of $n$ as $x^2 + \phi(y^2) + \phi(z^2)$
@@ -25,6 +26,8 @@ with $y$ or $z$ prime, where $\phi(\cdot)$ is Euler's totient function.
 *References:*
 - [A262781](https://oeis.org/A262781)
 -/
+
+@[expose] public section
 
 namespace OeisA262781
 

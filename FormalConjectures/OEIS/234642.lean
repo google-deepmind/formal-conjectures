@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $x$ such that $x \bmod \phi(x) = n$, or $0$ if no such $x$ exists
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A234642](https://oeis.org/A234642)
 -/
+
+@[expose] public section
 
 namespace OeisA234642
 

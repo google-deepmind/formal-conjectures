@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of ways to write $n = p + q$ ($q > 0$) with $p$ and $(\phi(p)\phi(q))^4 + 1$ prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A233549](https://oeis.org/A233549)
 -/
+
+@[expose] public section
 
 namespace OeisA233549
 

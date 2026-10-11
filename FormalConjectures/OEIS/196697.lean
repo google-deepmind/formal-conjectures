@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes of the form $2^n \pm 2^k \pm 1$ with $0 \le k < n$
@@ -25,6 +26,8 @@ $0 \le k < n$.
 *References:*
 - [A196697](https://oeis.org/A196697)
 -/
+
+@[expose] public section
 
 namespace OeisA196697
 

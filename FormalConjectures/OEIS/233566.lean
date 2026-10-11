@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $p < n$ such that $p \phi(n - p) - 1$ is also prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A233566](https://oeis.org/A233566)
 -/
+
+@[expose] public section
 
 namespace OeisA233566
 

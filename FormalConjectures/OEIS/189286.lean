@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Normalized convolution of $\binom{6k}{3k}\binom{3k}{k}$
@@ -28,6 +29,8 @@ $$a(n) = \frac{\sum_{k=0}^n \binom{6k}{3k}\binom{3k}{k}
 - [OEIS Open](https://arxiv.org/abs/2608.11941)
   by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA189286
 

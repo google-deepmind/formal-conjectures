@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sums of four binary palindromes
@@ -27,6 +28,8 @@ $u + v + w + x = n$.
 - [Sums of Palindromes: an Approach via Nested-Word Automata](https://arxiv.org/abs/1706.10206)
   by *Aayush Rajasekaran*, *Jeffrey Shallit*, and *Tim Smith*, arXiv:1706.10206 (2017)
 -/
+
+@[expose] public section
 
 namespace OeisA261680
 

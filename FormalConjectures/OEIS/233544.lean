@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations $n = k^2 + m$ ($0 < k^2 \le m$) with $\sigma(k^2) + \phi(m)$ prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A233544](https://oeis.org/A233544)
 -/
+
+@[expose] public section
 
 namespace OeisA233544
 

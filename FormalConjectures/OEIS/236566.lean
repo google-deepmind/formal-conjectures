@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ordered ways to write $2n = p + q$ with $p, q$ and $p_{p+2} + 2$ all prime
@@ -25,6 +26,8 @@ write $2n = p + q$ with $p, q$, and $p_{p+2} + 2$ all prime.
 *References:*
 - [A236566](https://oeis.org/A236566)
 -/
+
+@[expose] public section
 
 namespace OeisA236566
 

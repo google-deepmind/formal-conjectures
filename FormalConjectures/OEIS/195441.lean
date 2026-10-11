@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Denominator of $B_{n+1}(x) - B_{n+1}$
@@ -28,6 +29,8 @@ $m$-th Bernoulli polynomial and $B_m$ is the $m$-th Bernoulli number.
 - [Finiteness of Bernoulli polynomials](https://arxiv.org/abs/2310.01325)
   by *Bernd C. Kellner*, J. Integer Seq. 27 (2024)
 -/
+
+@[expose] public section
 
 namespace OeisA195441
 
@@ -45,23 +48,23 @@ def radical (n : ℕ) : ℕ := ∏ p ∈ n.primeFactors, p
 
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by decide +native
+theorem a_0 : a 0 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by decide +native
+theorem a_1 : a 1 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by decide +native
+theorem a_2 : a 2 = 2 := by decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by decide +native
+theorem a_3 : a 3 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 6 := by decide +native
+theorem a_4 : a 4 = 6 := by decide +kernel
 
 /--
 The equation $a(n-1) = \operatorname{rad}(n+1)$ has only finitely many solutions, where

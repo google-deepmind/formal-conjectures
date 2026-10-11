@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Catalan numbers modulo $6$
@@ -25,6 +26,8 @@ Catalan number (A000108).
 *References:*
 - [A259667](https://oeis.org/A259667)
 -/
+
+@[expose] public section
 
 namespace OeisA259667
 

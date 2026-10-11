@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sequence $\frac{(8n)! n!}{(4n)! (3n)! (2n)!}$
@@ -28,6 +29,8 @@ The sequence $a(n) = \frac{(8n)! n!}{(4n)! (3n)! (2n)!}$, which is always an int
 - [OEIS-A211420](https://github.com/anshM123/OEIS-A211420)
   by *Ansh Mishra* and *Aryan Senthilkumar* (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA211420
 

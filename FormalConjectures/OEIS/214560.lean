@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of $0$'s in the binary expansion of $n^2$
@@ -25,6 +26,8 @@ For $n \ge 0$, $a(n)$ is the number of $0$'s in the base-$2$ representation of $
 *References:*
 - [A214560](https://oeis.org/A214560)
 -/
+
+@[expose] public section
 
 namespace OeisA214560
 

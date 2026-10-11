@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes between $n^3 - n$ and $n^3$
@@ -25,6 +26,8 @@ given by $\pi(n^3) - \pi(n^3 - n)$.
 *References:*
 - [A216265](https://oeis.org/A216265)
 -/
+
+@[expose] public section
 
 namespace OeisA216265
 
@@ -42,10 +45,10 @@ theorem a_2 : a 2 = 1 := by decide
 theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by native_decide
+theorem a_5 : a 5 = 0 := by decide +kernel
 
 /--
 Conjecture: For every $n > 13$, $a(n) > 0$.

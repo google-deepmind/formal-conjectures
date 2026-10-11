@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least index $i$ for which $\text{num}(\sigma_1(i)/i) - \text{den}(\sigma_1(i)/i) = n$
@@ -27,6 +28,8 @@ or $0$ if no such index exists.
 *References:*
 - [A243512](https://oeis.org/A243512)
 -/
+
+@[expose] public section
 
 namespace OeisA243512
 

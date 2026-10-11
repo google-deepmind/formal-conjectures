@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pairs $\{j, k\}$ with $0 < j < k \le n$, $k \equiv 1 \pmod j$, and $\pi(jn) \mid \pi(kn)$
@@ -25,6 +26,8 @@ $(j, k)$ with $0 < j < k \le n$ and $k \equiv 1 \pmod j$ such that $\pi(jn)$ div
 *References:*
 - [A238224](https://oeis.org/A238224)
 -/
+
+@[expose] public section
 
 namespace OeisA238224
 

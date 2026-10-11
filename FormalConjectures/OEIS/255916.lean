@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations of $n$ as a sum of generalized heptagonal, octagonal, and nonagonal numbers
@@ -27,9 +28,13 @@ $P_8(x) = x(3x - 2)$ ($x \ge 0$), and a nonagonal number $P_9(y) = \frac{y(7y - 
 - [A255916](https://oeis.org/A255916)
 -/
 
+@[expose] public section
+
 namespace OeisA255916
 
-open Nat Int Finset
+open Nat Finset
+
+attribute [-instance] Int.instConditionallyCompleteLinearOrder
 
 /-- The primary sequence $a(n)$: number of ways to write $n$ as the sum of a generalized heptagonal
 number, an octagonal number, and a nonagonal number. -/

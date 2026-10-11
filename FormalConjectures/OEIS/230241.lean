@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Partitions $n = p + q$ with $p$, $3p - 10$, and $(p - 1)q - 1$ prime
@@ -25,6 +26,8 @@ positive integer.
 *References:*
 - [A230241](https://oeis.org/A230241)
 -/
+
+@[expose] public section
 
 namespace OeisA230241
 

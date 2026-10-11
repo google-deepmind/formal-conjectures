@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Alternating sum of fourth powers of binomial coefficients
@@ -27,6 +28,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^4 (-1)^k.$$
 - [OEIS Open](https://arxiv.org/abs/2608.11941)
   by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA228304
 

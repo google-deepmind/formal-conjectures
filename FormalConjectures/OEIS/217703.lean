@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence $a(n+1) = 2n(n+1)a(n) - n^4 a(n-1)$ and associated polynomials
@@ -29,6 +30,8 @@ $S_{n+1}(x) = (x + 2n(n+1)) S_n(x) - n^4 S_{n-1}(x)$ for $n > 0$.
 - [Sun-Conjectures-ii-iii-](https://github.com/anshM123/Sun-Conjectures-ii-iii-)
   by *Ansh Mishra* and *Aryan Senthilkumar* (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA217703
 

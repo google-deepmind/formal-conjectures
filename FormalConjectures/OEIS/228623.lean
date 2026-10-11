@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinant of prime sum/difference matrix
@@ -25,6 +26,8 @@ or $0$ according as $n + i - j$ and $n - i + j$ are both prime or not.
 *References:*
 - [A228623](https://oeis.org/A228623)
 -/
+
+@[expose] public section
 
 namespace OeisA228623
 
@@ -52,10 +55,10 @@ theorem a_3 : a 3 = 1 := by decide
 theorem a_4 : a 4 = 1 := by rfl
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by native_decide
+theorem a_5 : a 5 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = -1 := by native_decide
+theorem a_6 : a 6 = -1 := by decide +kernel
 
 /--
 Conjecture: $a(n)$ is nonzero if $n$ is odd and greater than $120$.

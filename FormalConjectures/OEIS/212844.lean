@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Remainder of $2^{n+2}$ modulo $n$
@@ -24,6 +25,8 @@ The sequence $a(n) = 2^{n+2} \bmod n$.
 *References:*
 - [A212844](https://oeis.org/A212844)
 -/
+
+@[expose] public section
 
 namespace OeisA212844
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Refining Lagrange's four-square theorem with $(5x^2 + 7y^2 + 9z^2)yz$ a square
@@ -29,6 +30,8 @@ a square, where $x, y, z, w$ are nonnegative integers with $z > 0$.
 - [OEIS Open](https://arxiv.org/abs/2608.11941)
   by *Tom Adamczewski*, arXiv:2608.11941 (2026)
 -/
+
+@[expose] public section
 
 namespace OeisA261876
 

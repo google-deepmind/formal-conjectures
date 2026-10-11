@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations of $n = p + q + (n \bmod 2)q$ with Jacobi symbol constraints
@@ -28,6 +29,8 @@ $\left(\frac{(q+1)/2}{n+1}\right) = 1$ if $n$ is even.
 - [Conjectures involving primes and quadratic forms](https://arxiv.org/abs/1211.1588)
   by *Zhi-Wei Sun*, arXiv:1211.1588 (2012)
 -/
+
+@[expose] public section
 
 namespace OeisA191004
 
@@ -70,11 +73,11 @@ theorem a_5 : a 5 = 0 := by decide
 
 /-- Value of the sequence `a` at 6. -/
 @[category test, AMS 11]
-theorem a_6 : a 6 = 1 := by decide +native
+theorem a_6 : a 6 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 14. -/
 @[category test, AMS 11]
-theorem a_14 : a 14 = 2 := by decide +native
+theorem a_14 : a 14 = 2 := by decide +kernel
 
 /--
 Conjecture: $a(n) > 0$ for all $n > 5$.
