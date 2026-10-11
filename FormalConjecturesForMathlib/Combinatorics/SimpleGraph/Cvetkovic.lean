@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Algebra.Polynomial.Roots
 public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 
 @[expose] public section

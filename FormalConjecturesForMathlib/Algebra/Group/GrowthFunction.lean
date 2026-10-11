@@ -17,7 +17,7 @@ module
 
 public import FormalConjecturesForMathlib.Order.Filter.atTopBot.Finset
 public import Mathlib.Data.Fin.VecNotation
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.Data.Set.Card
 public import Mathlib.GroupTheory.Finiteness
 public import Mathlib.Tactic.SetNotationForOrder

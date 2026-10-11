@@ -178,7 +178,7 @@ theorem one_mem_pisotCantorSet {α : ℝ} (hα : 1 < α) : 1 ∈ pisotCantorSet 
   refine ⟨fun _ => true, ?_⟩
   have hsum : ∑' k : ℕ, (if (fun _ : ℕ => true) k then (1 : ℝ) else 0) * α⁻¹ ^ (k + 1)
       = α⁻¹ * (1 - α⁻¹)⁻¹ := by
-    simp only [if_true, one_mul, pow_succ']
+    simp only [ite_true, one_mul, pow_succ']
     rw [tsum_mul_left, tsum_geometric_of_lt_one (by positivity) hinv]
   rw [cantorPoint, hsum]
   have h1 : α - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt hα)

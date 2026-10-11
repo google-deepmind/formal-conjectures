@@ -83,10 +83,10 @@ theorem linearFactor_directionLift_ne_zero (v : Point) :
   rw [directionLift]
   split
   · intro h
-    have := congrArg (MvPolynomial.coeff (Finsupp.single 0 1)) h
+    have := congrArg (fun p : MvPolynomial (Fin 2) ℂ => p.coeff (Finsupp.single 0 1)) h
     simp [linearFactor, coeff_X] at this
   · intro h
-    have := congrArg (MvPolynomial.coeff (Finsupp.single 1 1)) h
+    have := congrArg (fun p : MvPolynomial (Fin 2) ℂ => p.coeff (Finsupp.single 1 1)) h
     simp [linearFactor, coeff_X, Finsupp.single_eq_single_iff] at this
 
 @[category test, AMS 51 70]

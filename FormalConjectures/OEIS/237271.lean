@@ -199,7 +199,7 @@ of `IsCarmichael`, so $k > 2$, and if $k$ were even then the coprime base $k - 1
 would give $k \mid (-1)^{k-1} - 1 = -2$.
 -/
 @[category research solved, AMS 11]
-theorem observation_carmichael (k : ℕ) (hk : IsCarmichael k) :
+theorem observation_carmichael (k : ℕ) (hk : _root_.IsCarmichael k) :
     3 ≤ a k := by
   sorry
 

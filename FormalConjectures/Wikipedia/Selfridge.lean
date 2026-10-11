@@ -84,8 +84,8 @@ This test does not work.
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
     ∃ n > 1, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
-  refine ⟨?_, ⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
-  decide +kernel
+  set_option exponentiation.threshold 6600 in
+    refine ⟨?_, ⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
 
 /--
 Selfridge's test variant:
@@ -97,8 +97,8 @@ The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 @[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
     IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
-  decide +kernel
+  set_option exponentiation.threshold 6600 in
+    refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
 
 /--
 Selfridge's test variant:
@@ -110,8 +110,8 @@ The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mo
 @[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
     IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
-  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
-  decide +kernel
+  set_option exponentiation.threshold 30888 in
+    refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
 
 end PrimalityTesting
 

@@ -46,7 +46,7 @@ namespace Erdos1057
 Let $C(x)$ count the number of Carmichael numbers in the interval $[1,x]$.
 -/
 noncomputable def carmichaelCounting (x : ℝ) : ℝ :=
-  ({n : ℕ | IsCarmichael n ∧ (n : ℝ) ≤ x}.ncard : ℝ)
+  ({n : ℕ | _root_.IsCarmichael n ∧ (n : ℝ) ≤ x}.ncard : ℝ)
 
 /--
 Is it true that $C(x)=x^{1-o(1)}$?

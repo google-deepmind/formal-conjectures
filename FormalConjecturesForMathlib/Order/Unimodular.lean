@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.Order.Interval.Set.Defs
 public import Mathlib.Order.Monotone.Basic
 

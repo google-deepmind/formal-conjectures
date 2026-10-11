@@ -17,7 +17,7 @@ limitations under the License.
 module
 
 public import Mathlib.Topology.MetricSpace.Bounded
-public import FormalConjecturesForMathlib.Topology.MetricSpace.GromovProduct
+public import Mathlib.Topology.MetricSpace.GromovProduct
 
 /-!
 # Gromov hyperbolic pseudometric spaces
