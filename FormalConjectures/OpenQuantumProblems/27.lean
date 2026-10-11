@@ -67,8 +67,8 @@ input of each party.
   `dkz_noise_of_le_twenty`). For $d \ge 21$, [MS26] gives a proof that also uses
   interval-arithmetic certificates checked outside Lean; it has not been refereed.
 - The noise clause for the violation of local realism (all Bell inequalities) with complete von
-  Neumann measurements (`dkz_noise_allBell`) is open for $d \ge 4$. It holds for $d = 2$ (Tsirelson's
-  bound and Fine's theorem); [MS26] reports a computer-assisted proof for $d = 3$.
+  Neumann measurements (`dkz_noise_allBell`) is open for $d \ge 5$. It holds for $d = 2$ (Tsirelson's
+  bound and Fine's theorem); [MS26] reports computer-assisted proofs for $d = 3$ and $d = 4$.
 - The Kullback-Leibler clause (`dkz_klOptimal`): [MS26] reports explicit complete von Neumann
   measurements that beat DKZ for every $d \ge 4$ (for $d = 4$ first found by Y. Zhang, 2026), with
   exact certificates; $d = 3$ is open (`dkz_klOptimal_three`).
