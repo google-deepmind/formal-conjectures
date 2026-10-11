@@ -118,7 +118,7 @@ theorem k_singleton (a : ℤ) : k [a] = 1 := by
   omega
 
 /-- The conjecture holds immediately for every one-term starting sequence. -/
-@[category textbook, AMS 11]
+@[category test, AMS 11]
 theorem curling_number_conjecture_singleton (a : ℤ) : ∃ m, k (S [a] m) = 1 := by
   exact ⟨0, k_singleton a⟩
 
