@@ -354,14 +354,14 @@ lemma unitary_mul_conjTranspose {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ}
 
 /-- The DKZ bases are orthonormal: Alice's DKZ matrices are unitary. -/
 @[category test, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34730"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34682"]
 theorem dkzUnitaryA_mem_unitaryGroup (d : ℕ) [NeZero d] (x : Fin 2) :
     dkzUnitaryA d x ∈ unitaryGroup (Fin d) ℂ := by
   sorry
 
 /-- The DKZ bases are orthonormal: Bob's DKZ matrices are unitary. -/
 @[category test, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34739"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34691"]
 theorem dkzUnitaryB_mem_unitaryGroup (d : ℕ) [NeZero d] (y : Fin 2) :
     dkzUnitaryB d y ∈ unitaryGroup (Fin d) ℂ := by
   sorry
@@ -546,7 +546,7 @@ $p(\cdot,\cdot \mid x,y)$ is a probability distribution, the CGLMP expression of
 $I_d(p) = 4 - \frac{2}{d-1} F(p')$, where $F$ is the functional of the problem page and $p'$ is `p`
 with the two inputs exchanged. In particular $I_d(p) \le 2$ if and only if $F(p') \ge d - 1$. -/
 @[category API, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L777"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L729"]
 theorem cglmpExpr_eq_cglmpFunctional {d : ℕ} (hd : 2 ≤ d) (p : Behaviour d)
     (hp : ∀ x y, ∑ a, ∑ b, p x y a b = 1) :
     cglmpExpr p = 4 - 2 * cglmpFunctional (swapInputs p) / ((d : ℝ) - 1) := by
@@ -605,7 +605,7 @@ theorem cglmpMaxEntValue_two : cglmpMaxEntValue 2 = 2 * Real.sqrt 2 := by
 
 /-- **The value of the DKZ measurements**: $F(\mathrm{DKZ}) = \frac{d-1}{2} (4 - I_{ME}(d))$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34763"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34715"]
 theorem cglmpFunctional_dkz {d : ℕ} [NeZero d] (h2 : 2 ≤ d) :
     cglmpFunctional (vonNeumannBehaviour d (dkzUnitaryA d) (dkzUnitaryB d)) =
       ((d : ℝ) - 1) * (4 - cglmpMaxEntValue d) / 2 := by
@@ -613,7 +613,7 @@ theorem cglmpFunctional_dkz {d : ℕ} [NeZero d] (h2 : 2 ≤ d) :
 
 /-- The DKZ measurements violate the CGLMP inequality: $F(\mathrm{DKZ}) < d - 1$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34774"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34726"]
 theorem cglmpFunctional_dkz_lt {d : ℕ} [NeZero d] (h2 : 2 ≤ d) :
     cglmpFunctional (vonNeumannBehaviour d (dkzUnitaryA d) (dkzUnitaryB d)) < (d : ℝ) - 1 := by
   sorry
@@ -647,7 +647,7 @@ theorem dkz_unique (d : ℕ) [NeZero d] (h2 : 2 ≤ d)
 
 /-- `dkz_optimal` for $2 \le d \le 20$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34917"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34869"]
 theorem dkz_optimal_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤ 20)
     (UA UB : Fin 2 → Matrix (Fin d) (Fin d) ℂ) (hUA : ∀ x, UA x ∈ unitaryGroup (Fin d) ℂ)
     (hUB : ∀ y, UB y ∈ unitaryGroup (Fin d) ℂ) :
@@ -657,7 +657,7 @@ theorem dkz_optimal_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d �
 
 /-- `dkz_unique` for $2 \le d \le 20$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L34941"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L34893"]
 theorem dkz_unique_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤ 20)
     (UA UB : Fin 2 → Matrix (Fin d) (Fin d) ℂ) (hUA : ∀ x, UA x ∈ unitaryGroup (Fin d) ℂ)
     (hUB : ∀ y, UB y ∈ unitaryGroup (Fin d) ℂ) :
@@ -671,7 +671,7 @@ theorem dkz_unique_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤
 dimension**, for $2 \le d \le 20$: no $d$-outcome projective measurements (of any ranks) on
 $\Phi_D$ give a smaller value of the CGLMP functional than $\frac{d-1}{2}(4 - I_{ME}(d))$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L35177"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L35129"]
 theorem dkz_optimal_any_dim_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤ 20) (D : ℕ)
     (hD : 0 < D) (A B : Fin 2 → Fin d → Matrix (Fin D) (Fin D) ℂ)
     (hA : ∀ x, IsProjectiveMeasurement (A x)) (hB : ∀ y, IsProjectiveMeasurement (B y)) :
@@ -684,7 +684,7 @@ the bound of `dkz_optimal_any_dim_of_le_twenty` is attained if and only if $D = 
 $V : \mathbb{C}^D \to \mathbb{C}^d \otimes \mathbb{C}^K$ maps the measurements to the DKZ
 measurements tensored with the identity. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L35197"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L35149"]
 theorem dkz_unique_any_dim_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤ 20) (D : ℕ)
     (hD : 0 < D) (A B : Fin 2 → Fin d → Matrix (Fin D) (Fin D) ℂ)
     (hA : ∀ x, IsProjectiveMeasurement (A x)) (hB : ∀ y, IsProjectiveMeasurement (B y)) :
@@ -701,7 +701,7 @@ theorem dkz_unique_any_dim_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20
 $\frac{4 - \mathrm{CHSH}}{2}$; on two maximally entangled qubits no complete von Neumann measurements
 go below $2 - \sqrt{2}$ (that is, CHSH $\le 2\sqrt{2}$), and the DKZ measurements attain it. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L35229"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L35181"]
 theorem dkz_tsirelson (UA UB : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ)
     (hUA : ∀ x, UA x ∈ unitaryGroup (Fin 2) ℂ) (hUB : ∀ y, UB y ∈ unitaryGroup (Fin 2) ℂ) :
     2 - Real.sqrt 2 ≤ cglmpFunctional (vonNeumannBehaviour 2 UA UB) ∧
@@ -714,7 +714,7 @@ $(|00\rangle + \tfrac{4}{5} |11\rangle + |22\rangle)/\sqrt{2 + 16/25}$ gives a s
 CGLMP functional than any complete von Neumann measurements on $\Phi_3$. So the restriction to
 $\Phi_d$ in the problem matters. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L35250"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L35202"]
 theorem adglState_beats_maxEntangledState (UA UB : Fin 2 → Matrix (Fin 3) (Fin 3) ℂ)
     (hUA : ∀ x, UA x ∈ unitaryGroup (Fin 3) ℂ) (hUB : ∀ y, UB y ∈ unitaryGroup (Fin 3) ℂ) :
     cglmpFunctional (quantumBehaviour (densityMatrix (adglState (4 / 5)))
@@ -746,7 +746,7 @@ theorem dkz_noise (d : ℕ) [NeZero d] (h2 : 2 ≤ d)
 
 /-- `dkz_noise` for $2 \le d \le 20$. -/
 @[category research solved, AMS 15 81, formal_proof using lean4 at
-  "https://github.com/anshM123/IQOQI-OQP-27/blob/e3d6e5b2c474e2d834c603688b218ac98752a464/formal-conjectures-27/27.lean#L35064"]
+  "https://github.com/anshM123/IQOQI-OQP-27/blob/24181eb95966a2078f35fd9662be695010d7c0e9/formal-conjectures-27/27.lean#L35016"]
 theorem dkz_noise_of_le_twenty (d : ℕ) [NeZero d] (h2 : 2 ≤ d) (h20 : d ≤ 20)
     (UA UB : Fin 2 → Matrix (Fin d) (Fin d) ℂ) (hUA : ∀ x, UA x ∈ unitaryGroup (Fin d) ℂ)
     (hUB : ∀ y, UB y ∈ unitaryGroup (Fin d) ℂ) :
