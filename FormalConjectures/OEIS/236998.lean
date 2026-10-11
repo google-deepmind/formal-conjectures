@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of $0 < k < n/2$ such that $\phi(k)\phi(n-k)$ is a square
@@ -26,6 +27,8 @@ $0 < k < n/2$ such that $\phi(k)\phi(n-k)$ is a square.
 - [A236998](https://oeis.org/A236998)
 -/
 
+@[expose] public section
+
 namespace OeisA236998
 
 /-- $a(n)$ is the number of integers $0 < k < n/2$ such that $\phi(k)\phi(n-k)$ is a square. -/
@@ -35,31 +38,31 @@ def a (n : ℕ) : ℕ :=
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by decide +native
+theorem a_1 : a 1 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 0 := by decide +native
+theorem a_2 : a 2 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by decide +native
+theorem a_3 : a 3 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 0 := by decide +native
+theorem a_4 : a 4 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by decide +native
+theorem a_5 : a 5 = 0 := by decide +kernel
 
 /-- Value of the sequence `a` at 6. -/
 @[category test, AMS 11]
-theorem a_6 : a 6 = 1 := by decide +native
+theorem a_6 : a 6 = 1 := by decide +kernel
 
 /-- Value of the sequence `a` at 7. -/
 @[category test, AMS 11]
-theorem a_7 : a 7 = 2 := by decide +native
+theorem a_7 : a 7 = 2 := by decide +kernel
 
 /--
 Conjecture: (i) $a(n) > 0$ for all $n > 8$.

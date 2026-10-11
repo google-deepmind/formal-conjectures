@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ways to write $n$ as the sum of three elements of $\{\lfloor T(x)/3 \rfloor : x \ge 1\}$
@@ -26,6 +27,8 @@ the $x$-th triangular number.
 *References:*
 - [A256544](https://oeis.org/A256544)
 -/
+
+@[expose] public section
 
 namespace OeisA256544
 

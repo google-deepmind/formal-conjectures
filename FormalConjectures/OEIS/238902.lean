@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of integers $0 < k \le n$ such that $\pi(\pi(k n))$ is a square
@@ -28,6 +29,8 @@ $$a(n) = |\{0 < k \le n : \pi(\pi(k n)) \text{ is a square}\}|$$
 - [Problems on combinatorial properties of primes](https://arxiv.org/abs/1402.6641)
   by *Zhi-Wei Sun* (2014)
 -/
+
+@[expose] public section
 
 namespace OeisA238902
 
@@ -52,17 +55,17 @@ theorem a_2 : a 2 = 2 := by
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  native_decide
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
-  native_decide
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 2 := by
-  native_decide
+  decide +kernel
 
 /--
 Conjecture (i): $a(n) > 0$ for all $n > 0$.

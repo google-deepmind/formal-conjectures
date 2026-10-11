@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest integer $s > n$ such that $1 + 2s + 3s^2 + \dots + n s^{n-1}$ is prime
@@ -25,6 +26,8 @@ $P_n(s) = \sum_{k=0}^{n-1} (k+1) s^k$ is a prime number.
 *References:*
 - [A217785](https://oeis.org/A217785)
 -/
+
+@[expose] public section
 
 namespace OeisA217785
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $m > 0$ coprime to $n$ such that $mn \mid C(m+n)$
@@ -25,6 +26,8 @@ $m \cdot n \mid C(m+n)$, where $C(k) = \frac{1}{k+1} \binom{2k}{k}$ is the $k$-t
 *References:*
 - [A248123](https://oeis.org/A248123)
 -/
+
+@[expose] public section
 
 namespace OeisA248123
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ordered ways to write $n = k + m$ with $p_k + 4$ and $p_{p_m} + 4$ both prime
@@ -25,6 +26,8 @@ write $n = k + m$ with $k > 0$ and $m > 0$ such that $p_k + 4$ and $p_{p_m} + 4$
 *References:*
 - [A237348](https://oeis.org/A237348)
 -/
+
+@[expose] public section
 
 namespace OeisA237348
 

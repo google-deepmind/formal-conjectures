@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of $0 < k < n-2$ with $p = \phi(k) + \phi(n-k)/2 + 1$ and $p_p - p \pm 1$ prime
@@ -26,6 +27,8 @@ $p = \phi(k) + \phi(n-k)/2 + 1$, $p_p - p - 1$, and $p_p - p + 1$ are all prime.
 *References:*
 - [A236097](https://oeis.org/A236097)
 -/
+
+@[expose] public section
 
 namespace OeisA236097
 

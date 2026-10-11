@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Twin primes of the form $(3^n - k) 2^n \pm 1$
@@ -25,6 +26,8 @@ $(3^n - k) 2^n + 1$ form a twin prime pair.
 *References:*
 - [A214497](https://oeis.org/A214497)
 -/
+
+@[expose] public section
 
 namespace OeisA214497
 

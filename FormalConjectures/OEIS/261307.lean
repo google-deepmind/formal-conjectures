@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime values in recurrence $a(n+1) = |a(n) - \gcd(a(n), 7n+6)|$
@@ -25,6 +26,8 @@ It is conjectured that whenever $a(n) = 0$ for $n > 2$, the value $7n+6 = a(n+1)
 *References:*
 - [A261307](https://oeis.org/A261307)
 -/
+
+@[expose] public section
 
 namespace OeisA261307
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sums of a triangular number and three weighted cubes
@@ -25,6 +26,8 @@ $0 \le x \le y$, and $z \ge 0$.
 *References:*
 - [A262880](https://oeis.org/A262880)
 -/
+
+@[expose] public section
 
 namespace OeisA262880
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Odd part of the digital sum of $3^n$ divided by the maximal power of $3$
@@ -25,6 +26,8 @@ possible power of $3$.
 *References:*
 - [A250131](https://oeis.org/A250131)
 -/
+
+@[expose] public section
 
 namespace OeisA250131
 
@@ -54,19 +57,19 @@ def sievedIndices : Set ℕ :=
   { n | 1 ≤ n ∧ b n ≠ 1 ∧ ∀ k, (1 ≤ k ∧ k < n ∧ b k ≠ 1) → ¬ (b k ∣ b n) }
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by native_decide
+theorem a_3 : a 3 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_14 : a 14 = 5 := by native_decide
+theorem a_14 : a 14 = 5 := by decide +kernel
 
 /-- Conjecture: Consider the sequence $b(n)$ such that $b(1)=2$, $b(2)=3$, and for $n \ge 3$,
 $b(n)=a(n-2)$. If we apply the Eratosthenes-like sieve to $b(n)$ and remove $1$s, then we obtain a

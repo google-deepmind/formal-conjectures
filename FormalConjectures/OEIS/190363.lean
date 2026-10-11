@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sequence $a(n) = n + \lfloor n r / t \rfloor + \lfloor n s / t \rfloor$
@@ -26,6 +27,8 @@ $$a(n) = 2n + \lfloor n \sqrt{5/4} \rfloor + \lfloor n/4 \rfloor.$$
 *References:*
 - [A190363](https://oeis.org/A190363)
 -/
+
+@[expose] public section
 
 namespace OeisA190363
 

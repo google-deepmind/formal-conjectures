@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Equal prime counts in adjacent intervals $(kn, (k+1)n)$ and $((k+1)n, (k+2)n)$
@@ -26,6 +27,8 @@ of primes.
 *References:*
 - [A238281](https://oeis.org/A238281)
 -/
+
+@[expose] public section
 
 namespace OeisA238281
 

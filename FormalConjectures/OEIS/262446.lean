@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Additive decompositions of $\pi(\frac{n(n+1)}{2} + 1)$
@@ -27,6 +28,8 @@ Number of ways to write $\pi(\frac{n(n+1)}{2} + 1) = \pi(\frac{k(k+1)}{2} + 1) +
 - [Problems on combinatorial properties of primes](https://arxiv.org/abs/1402.6641)
   by *Zhi-Wei Sun*, arXiv:1402.6641 (2014)
 -/
+
+@[expose] public section
 
 namespace OeisA262446
 

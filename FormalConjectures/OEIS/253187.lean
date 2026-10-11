@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations of $n$ as the sum of two pentagonal and a generalized decagonal number
@@ -26,6 +27,8 @@ and a generalized decagonal number $m(4m-3)$ ($m \in \mathbb{Z}$).
 *References:*
 - [A253187](https://oeis.org/A253187)
 -/
+
+@[expose] public section
 
 namespace OeisA253187
 

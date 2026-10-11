@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of ways to write $n = x + y$ ($0 < x < y < n$) with $6x \pm 1$ and $6y \pm 1$ prime
@@ -27,6 +28,8 @@ $6x - 1$, $6x + 1$, $6y - 1$, and $6y + 1$ are all prime numbers.
 - [Conjectures involving primes and quadratic forms](https://arxiv.org/abs/1211.1588)
   by *Zhi-Wei Sun*, arXiv:1211.1588 (2012)
 -/
+
+@[expose] public section
 
 namespace OeisA187759
 

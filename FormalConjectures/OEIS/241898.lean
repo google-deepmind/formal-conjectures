@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Largest smallest-base in a decomposition of $n$ into at most four squares
@@ -27,6 +28,8 @@ $$a(n) = \max \{k \ge 1 : \exists b_1, b_2, b_3 \in \{0\} \cup [k, n],
 *References:*
 - [A241898](https://oeis.org/A241898)
 -/
+
+@[expose] public section
 
 namespace OeisA241898
 

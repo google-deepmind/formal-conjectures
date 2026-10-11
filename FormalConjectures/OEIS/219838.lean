@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Partitions of $n$ into $x + y$ with $(xy)^2 + xy + 1$ prime
@@ -24,6 +25,8 @@ Number of ways to write $n$ as $x + y$ with $0 < x \le y$ and $(xy)^2 + xy + 1$ 
 *References:*
 - [A219838](https://oeis.org/A219838)
 -/
+
+@[expose] public section
 
 namespace OeisA219838
 

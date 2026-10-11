@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations of $n$ using prime pairs with prime gaps of $6$
@@ -24,6 +25,8 @@ Number of ways to write $n = p + q(3 - (-1)^n)/2$ with $p > q$ and $p, q, p - 6,
 *References:*
 - [A219055](https://oeis.org/A219055)
 -/
+
+@[expose] public section
 
 namespace OeisA219055
 

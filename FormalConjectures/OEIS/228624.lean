@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinant of square/cube sum matrix
@@ -25,6 +26,8 @@ $0$ according as $i + j$ is a square or not.
 *References:*
 - [A228624](https://oeis.org/A228624)
 -/
+
+@[expose] public section
 
 namespace OeisA228624
 
@@ -48,19 +51,19 @@ noncomputable def b (n : ℕ) : ℤ :=
   M.det
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by native_decide
+theorem a_1 : a 1 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 0 := by native_decide
+theorem a_2 : a 2 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = -1 := by native_decide
+theorem a_3 : a 3 = -1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 0 := by native_decide
+theorem a_4 : a 4 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by native_decide
+theorem a_5 : a 5 = 1 := by decide +kernel
 
 /--
 Conjecture: $a(n)$ is nonzero for any $n > 21$.

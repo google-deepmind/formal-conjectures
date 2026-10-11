@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $m$ such that $m + n$ divides $\mathrm{prime}(m) + \mathrm{prime}(n)$
@@ -26,6 +27,8 @@ $\mathrm{prime}(m) + \mathrm{prime}(n)$, where $\mathrm{prime}(k)$ denotes the $
 *References:*
 - [A247824](https://oeis.org/A247824)
 -/
+
+@[expose] public section
 
 namespace OeisA247824
 

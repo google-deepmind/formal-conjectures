@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primes $p < n$ with $n^2 - n + p$ and $n^2 + n - p$ prime
@@ -25,6 +26,8 @@ are both prime.
 *References:*
 - [A219023](https://oeis.org/A219023)
 -/
+
+@[expose] public section
 
 namespace OeisA219023
 

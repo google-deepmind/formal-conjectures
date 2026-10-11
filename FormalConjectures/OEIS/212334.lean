@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Balanced walks on a 4-dimensional cubic lattice with neighbor steps
@@ -28,6 +29,8 @@ for $n \ge 1$ and $a(0) = 1$.
 *References:*
 - [A212334](https://oeis.org/A212334)
 -/
+
+@[expose] public section
 
 namespace OeisA212334
 

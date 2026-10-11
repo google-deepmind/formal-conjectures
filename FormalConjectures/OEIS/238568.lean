@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of positive integers $k < n$ such that $n^2 - \pi(k n)$ is prime
@@ -28,6 +29,8 @@ $$a(n) = |\{0 < k < n : n^2 - \pi(k n) \text{ is prime}\}|$$
 - [Problems on combinatorial properties of primes](https://arxiv.org/abs/1402.6641)
   by *Zhi-Wei Sun* (2014)
 -/
+
+@[expose] public section
 
 namespace OeisA238568
 

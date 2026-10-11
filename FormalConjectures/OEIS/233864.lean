@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Values $m = \sigma(k)$ ($0 < m < 2n$) with $2n - 1 - m$ and $2n - 1 + m$ prime
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A233864](https://oeis.org/A233864)
 -/
+
+@[expose] public section
 
 namespace OeisA233864
 

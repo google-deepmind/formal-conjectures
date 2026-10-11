@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of $0 < k < n$ such that $\pi(kn)$ is prime
@@ -25,6 +26,8 @@ $0 < k < n$ such that $\pi(kn)$ is prime.
 *References:*
 - [A237578](https://oeis.org/A237578)
 -/
+
+@[expose] public section
 
 namespace OeisA237578
 

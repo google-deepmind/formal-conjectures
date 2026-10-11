@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Lerch quotients of odd primes
@@ -27,6 +28,8 @@ quotient. For $n > 1$, $a(n)$ is the Lerch quotient of the $n$-th prime $p_n$.
 *References:*
 - [A197630](https://oeis.org/A197630)
 -/
+
+@[expose] public section
 
 namespace OeisA197630
 

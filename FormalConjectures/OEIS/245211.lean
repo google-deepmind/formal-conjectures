@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of $d \cdot \tau(d)$ over proper divisors $d$ of $n$
@@ -26,6 +27,8 @@ $$a(n) = \sum_{d \mid n, d < n} d \cdot \tau(d)$$
 *References:*
 - [A245211](https://oeis.org/A245211)
 -/
+
+@[expose] public section
 
 namespace OeisA245211
 

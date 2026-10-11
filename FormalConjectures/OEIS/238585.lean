@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $p < n$ with $\text{prime}(p)^2 + (\text{prime}(n) - 1)^2$ prime
@@ -28,6 +29,8 @@ $i$-th prime number (1-indexed).
 - [Problems on combinatorial properties of primes](https://arxiv.org/abs/1402.6641)
   by *Zhi-Wei Sun* (2014)
 -/
+
+@[expose] public section
 
 namespace OeisA238585
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least primitive prime divisor of the Franel numbers of order $4$
@@ -26,6 +27,8 @@ term $f_4(k)$ with $1 \le k < n$, or $1$ if no such prime divisor exists.
 *References:*
 - [A242174](https://oeis.org/A242174)
 -/
+
+@[expose] public section
 
 namespace OeisA242174
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Undirected circular permutations with adjacent products minus one all prime
@@ -25,6 +26,8 @@ numbers $\pi(1)\pi(2)-1, \pi(2)\pi(3)-1, \dots, \pi(n-1)\pi(n)-1, \pi(n)\pi(1)-1
 *References:*
 - [A229232](https://oeis.org/A229232)
 -/
+
+@[expose] public section
 
 namespace OeisA229232
 

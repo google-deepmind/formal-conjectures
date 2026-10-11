@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Difference between $n \tau(n)$ and $\sum_{d \mid n, d < n} d \tau(d)$
@@ -25,6 +26,8 @@ of divisors of $n$.
 *References:*
 - [A245212](https://oeis.org/A245212)
 -/
+
+@[expose] public section
 
 namespace OeisA245212
 

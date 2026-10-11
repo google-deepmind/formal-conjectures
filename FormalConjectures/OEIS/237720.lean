@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $p \le (n+1)/2$ with $\lfloor\sqrt{n-p}\rfloor$ prime
@@ -25,6 +26,8 @@ $\lfloor\sqrt{n-p}\rfloor$ is prime.
 *References:*
 - [A237720](https://oeis.org/A237720)
 -/
+
+@[expose] public section
 
 namespace OeisA237720
 

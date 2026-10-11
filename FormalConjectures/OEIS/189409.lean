@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primorial squared plus one
@@ -25,6 +26,8 @@ is the $n$-th primorial (A002110).
 *References:*
 - [A189409](https://oeis.org/A189409)
 -/
+
+@[expose] public section
 
 namespace OeisA189409
 

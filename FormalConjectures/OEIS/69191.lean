@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinant of prime sum indicator matrix
@@ -25,6 +26,8 @@ if $i + j$ is prime, and $0$ otherwise.
 *References:*
 - [A069191](https://oeis.org/A069191)
 -/
+
+@[expose] public section
 
 namespace OeisA69191
 
@@ -53,13 +56,16 @@ theorem a_3 : a 3 = -1 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by native_decide
+theorem a_5 : a 5 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = -1 := by native_decide
+theorem a_6 : a 6 = -1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_7 : a 7 = -4 := by native_decide
+theorem a_7 : a 7 = -4 := by
+  rw [a, det_succ_row_zero, Fin.sum_univ_seven]
+  norm_num [primeMatrix]
+  decide +kernel
 
 /--
 Conjecture: Let $M(n)$ be the $n \times n$ matrix with $(i,j)$-entry equal to $1$ or $0$ according as

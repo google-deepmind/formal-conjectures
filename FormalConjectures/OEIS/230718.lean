@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $n$-th power equal to a sum of consecutive immediately preceding positive $n$-th powers
@@ -25,6 +26,8 @@ powers, or $0$ if none.
 *References:*
 - [A230718](https://oeis.org/A230718)
 -/
+
+@[expose] public section
 
 namespace OeisA230718
 

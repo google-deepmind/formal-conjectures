@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $m \in [1, n]$ such that $\binom{n}{m}$ is evil
@@ -26,6 +27,8 @@ exists.
 *References:*
 - [A249609](https://oeis.org/A249609)
 -/
+
+@[expose] public section
 
 namespace OeisA249609
 

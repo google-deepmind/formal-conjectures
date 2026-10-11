@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ways to write $n = x + y + z$ with six linear and quadratic forms prime
@@ -25,6 +26,8 @@ $2x-1, 2y-1, 2z-1, 2xy-1, 2xz-1, 2yz-1$ are prime.
 *References:*
 - [A229969](https://oeis.org/A229969)
 -/
+
+@[expose] public section
 
 namespace OeisA229969
 

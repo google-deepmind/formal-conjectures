@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Partitions $2n + 1 = x + y$ with $x^4 + y^4$ prime
@@ -25,6 +26,8 @@ $x^4 + y^4$ is prime.
 *References:*
 - [A218656](https://oeis.org/A218656)
 -/
+
+@[expose] public section
 
 namespace OeisA218656
 

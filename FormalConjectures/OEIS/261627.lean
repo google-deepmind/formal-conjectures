@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primes $p$ such that $n - (p n' - 1)$ and $n + (p n' - 1)$ are both prime
@@ -27,6 +28,8 @@ where $n'$ is $1$ or $2$ according as $n$ is odd or even.
 - [Conjectures involving primes and quadratic forms](https://arxiv.org/abs/1211.1588)
   by *Zhi-Wei Sun*, arXiv:1211.1588 (2012-2015)
 -/
+
+@[expose] public section
 
 namespace OeisA261627
 
