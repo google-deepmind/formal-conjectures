@@ -51,11 +51,10 @@ $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$, then we
 must have $C > 2$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_825.variants.necessary_cond (C : ℝ) (hC : 0 < C)
+theorem erdos_825.variants.necessary_cond (C : ℝ) (_hC : 0 < C)
     (h : ∀ (n : ℕ) (_ : σ 1 n > C * n),
         ∃ s ⊆ n.properDivisors, n = s.sum id) :
     2 < C := by
-  have _hC := hC
   by_contra hle
   have hC2 : C ≤ 2 := not_lt.mp hle
   have hsig : σ 1 70 = 144 := by
