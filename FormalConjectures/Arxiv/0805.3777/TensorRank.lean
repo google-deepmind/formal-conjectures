@@ -54,8 +54,8 @@ below therefore writes the format in the order its own source uses.
 * [BFZ24] W. Bruzda, S. Friedland, K. Życzkowski, *Rank of a tensor and quantum entanglement*,
   Linear Multilinear Algebra 72 (2024), 1796-1859,
   https://doi.org/10.1080/03081087.2023.2211717
-  ([arxiv/1912.06854](https://arxiv.org/abs/1912.06854)). A survey; the numbering used below is
-  that of the arXiv version. Conjecture 4.12 restates [Fri12, Conjecture 5.1], and Sections 4.5
+  ([arxiv/1912.06854v4](https://arxiv.org/pdf/1912.06854v4)). A survey; the numbering used below is
+  that of the arXiv v4 PDF. Conjecture 4.12 restates [Fri12, Conjecture 5.1], and Sections 4.5
   and 4.6 collect the current status.
 * [CGG02] M. V. Catalisano, A. V. Geramita, A. Gimigliano, *Ranks of tensors, secant varieties of
   Segre varieties and fat points*, Linear Algebra Appl. 355 (2002), 263-285,
@@ -71,7 +71,8 @@ below therefore writes the format in the order its own source uses.
 * [AS79] M. D. Atkinson, N. M. Stephens, *On the maximal multiplicative complexity of a family of
   bilinear forms*, Linear Algebra Appl. 27 (1979), 1-8,
   https://doi.org/10.1016/0024-3795(79)90026-0. Used for `isMaxRank_two`,
-  `cprank_le_of_three_slices`, `isMaxRank_of_le_min` and `isMaxRank_three_three_five_bounds`.
+  `cprank_le_of_three_slices`, `cprank_le_of_square_slices`, `isMaxRank_of_le_min` and
+  `isMaxRank_three_three_five_bounds`.
 * [JaJa79] J. JáJá, *Optimal evaluation of pairs of bilinear forms*, SIAM J. Comput. 8 (1979),
   443-462, https://doi.org/10.1137/0208037, and J. B. Kruskal, *Rank, decomposition, and
   uniqueness for 3-way and N-way arrays*, in Multiway Data Analysis, North-Holland (1989), 7-18.
@@ -81,6 +82,9 @@ below therefore writes the format in the order its own source uses.
   https://doi.org/10.1007/s10463-010-0294-5 ([arxiv/0806.4048](https://arxiv.org/abs/0806.4048)).
   Theorem 4.5 proves the first of the two bounds that [AS79] states without proof; Proposition
   4.9(1) is the special case used for `isMaxRank_three`.
+* [Ki26] K. Kitamura, *A Lean proof that the maximal rank of complex $3 \times 3 \times 5$
+  tensors is 6*, GitHub repository (2026), https://github.com/KitaKen1/mrank-3-3-5-lean. Used
+  for `isMaxRank_three_three_five`.
 * [BT15] G. Blekherman, Z. Teitler, *On maximum, typical and generic ranks*, Math. Ann. 362
   (2015), 1021-1031, https://doi.org/10.1007/s00208-014-1150-3
   ([arxiv/1402.2371](https://arxiv.org/abs/1402.2371)), Theorem 1. Used for
@@ -267,11 +271,13 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
     6 ≤ R ∧ R ≤ 7 := by
   sorry
 
-/-- **Open problem.** Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It is the one
+/-- Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It was the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
-[BFZ24, (4.20)]. -/
-@[category research open, AMS 15]
-theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(sorry) := by
+[BFZ24, (4.20)]. The answer is `6`. A Lean proof is given in [Ki26]. -/
+@[category research solved, AMS 15,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/mrank-3-3-5-lean/blob/fbec93aa021bd994380cd27eb60e444e7cc85e93/lean/TensorRank335FC.lean#L3365-L3367"]
+theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(6) := by
   sorry
 
 /-- The maximal rank is at most twice the generic rank [BT15, Theorem 1]. -/
@@ -280,10 +286,30 @@ theorem isMaxRank_le_two_mul_isGenericRank {ds : List ℕ} {r R : ℕ} (hr : IsG
     (hR : IsMaxRank ds R) : R ≤ 2 * r := by
   sorry
 
+/-- Every complex $m \times n \times n$ tensor has rank at most
+$\lfloor (m+1)n/2 \rfloor$ for $m,n \geq 3$ [BFZ24, (4.22)]. -/
+@[category research solved, AMS 15]
+theorem cprank_le_of_square_slices {m n : ℕ} (hm : 3 ≤ m) (hn : 3 ≤ n)
+    (T : Holor ℂ [m, n, n]) : T.cprank ≤ (m + 1) * n / 2 := by
+  sorry
+
+/-- For $n \geq 4$, the maximal rank $R$ of a complex cubic tensor satisfies
+$\lceil n^3/(3n-2) \rceil \leq R \leq n(n+1)/2$ [BFZ24, (4.22), (4.25)-(4.28)].
+The lower bound is the generic rank; the upper bound is the square-slice estimate. -/
+@[category research solved, AMS 14 15]
+theorem isMaxRank_cube_bounds {n R : ℕ} (hn : 4 ≤ n) (hR : IsMaxRank [n, n, n] R) :
+    n ^ 3 ⌈/⌉ (3 * n - 2) ≤ R ∧ R ≤ n * (n + 1) / 2 := by
+  constructor
+  · exact (isGenericRank_cube (by omega) (by omega)).le_of_isMaxRank hR
+  · obtain ⟨T, hT⟩ := hR.1
+    rw [← hT]
+    simpa [Nat.mul_comm] using cprank_le_of_square_slices (by omega) (by omega) T
+
 /--
 **Open problem.** Determine the maximal rank of a complex $n \times n \times n$ tensor. No formula
 is known: for $n = 1, 2, 3$ the values are `1`, `3` and `5`, while for $4 \leq n \leq 7$ only
-bounds such as $\operatorname{mrank}(4, 4, 4) \leq 10$ are available [BFZ24, (4.25)-(4.28)].
+the bounds in `isMaxRank_cube_bounds`, such as $7 \leq \operatorname{mrank}(4,4,4) \leq 10$,
+are available [BFZ24, (4.25)-(4.28)].
 -/
 @[category research open, AMS 15]
 theorem isMaxRank_cube {n : ℕ} (hn : 1 ≤ n) :

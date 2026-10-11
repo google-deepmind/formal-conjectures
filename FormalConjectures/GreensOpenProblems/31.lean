@@ -44,6 +44,9 @@ Related to Erdős Problem 30.
   Series A 7 (1969): 276-277.
 - [CLZ01] Cohen, G.D., Litsyn, S., & Zémor, G. (2001). Binary B2-Sequences : A New Upper Bound.
   J. Comb. Theory A, 94, 152-155.
+- [BS85] Babai, László, and Vera T. Sós. "Sidon sets in groups and induced subgraphs of Cayley
+  graphs." European Journal of Combinatorics 6.2 (1985): 101-114.
+  [doi:10.1016/S0195-6698(85)80001-9](https://doi.org/10.1016/S0195-6698%2885%2980001-9)
 -/
 
 @[expose] public section
@@ -137,13 +140,71 @@ theorem green_31.variants.zmod_p : answer(sorry) ↔
   sorry
 
 /--
+A subset $S$ of an abelian group is a Sidon set of the first kind in the sense of Babai and Sós
+[BS85] if $a + b = c + d$ with $a, b, c, d \in S$ implies $|\{a, b, c, d\}| \le 2$.
+
+Unlike `IsSidon`, this allows $a + a = b + b$ with $a \ne b$.
+-/
+def IsGroupSidon {G : Type*} [AddCommGroup G] (S : Set G) : Prop :=
+  ∀ ⦃a b c d : G⦄, a ∈ S → b ∈ S → c ∈ S → d ∈ S → a + b = c + d →
+    (a = c ∧ b = d) ∨ (a = d ∧ b = c) ∨ (a = b ∧ c = d)
+
+@[category API, AMS 5 11]
+theorem isGroupSidon_of_isSidon {G : Type*} [AddCommGroup G] {S : Set G} (hS : IsSidon S) :
+    IsGroupSidon S := by
+  intro a b c d ha hb hc hd h
+  rcases hS a ha c hc b hb d hd h with h | h
+  · exact .inl h
+  · exact .inr (.inl h)
+
+/--
+The two notions agree in a group where $2a = 2b$ implies $a = b$, such as a group of odd order.
+-/
+@[category API, AMS 5 11]
+theorem isGroupSidon_iff_isSidon {G : Type*} [AddCommGroup G]
+    (hG : Function.Injective fun a : G ↦ a + a) {S : Set G} : IsGroupSidon S ↔ IsSidon S := by
+  refine ⟨fun hS a ha c hc b hb d hd h ↦ ?_, isGroupSidon_of_isSidon⟩
+  rcases hS ha hb hc hd h with h' | h' | ⟨rfl, rfl⟩
+  · exact .inl h'
+  · exact .inr h'
+  · exact .inl ⟨hG h, hG h⟩
+
+/-- In a group of exponent $2$ an `IsSidon` set has at most one element. -/
+@[category API, AMS 5 11]
+theorem subsingleton_of_isSidon_of_exponent_two {G : Type*} [AddCommGroup G]
+    (hG : ∀ a : G, a + a = 0) {S : Set G} (hS : IsSidon S) : S.Subsingleton := by
+  intro a ha b hb
+  rcases hS a ha b hb a ha b hb (by rw [hG a, hG b]) with ⟨h, _⟩ | ⟨h, _⟩ <;> exact h
+
+/-- Three points of the Klein four-group form a Sidon set in the sense of Babai and Sós. -/
+@[category test, AMS 5 11]
+theorem isGroupSidon_klein :
+    IsGroupSidon ({(0, 0), (1, 0), (0, 1)} : Set (ZMod 2 × ZMod 2)) := by
+  rintro a b c d (rfl | rfl | rfl) (rfl | rfl | rfl) (rfl | rfl | rfl) (rfl | rfl | rfl) <;> decide
+
+/--
+The whole Klein four-group is not a Sidon set in the sense of Babai and Sós, since
+$(0, 0) + (1, 1) = (1, 0) + (0, 1)$.
+-/
+@[category test, AMS 5 11]
+theorem not_isGroupSidon_klein_univ : ¬ IsGroupSidon (Set.univ : Set (ZMod 2 × ZMod 2)) :=
+  fun h ↦ absurd (h (a := (0, 0)) (b := (1, 1)) (c := (1, 0)) (d := (0, 1)) trivial trivial
+    trivial trivial (by decide)) (by decide)
+
+/--
 It is not known whether, if $G$ is an abelian group of size $n$, there always exists a Sidon subset
 of $G$ of size $0.01\sqrt{n}$ [Gr24].
+
+Green defines a Sidon set by $r_A(n) \le 1$ [Gr24, Section 4]. Read literally, this forbids
+$a + a = b + b$ with $a \ne b$, and the answer is trivially negative: a Sidon subset of a group
+of exponent $2$ then has at most one element. We use the definition of Babai and Sós [BS85]
+instead, see `IsGroupSidon`.
 -/
 @[category research open, AMS 5 11]
 theorem green_31.variants.abelian : answer(sorry) ↔
     ∀ (G : Type) [AddCommGroup G] [Fintype G],
-      ∃ S : Finset G, IsSidon (S : Set G) ∧ 0.01 * Real.sqrt (Fintype.card G) ≤ S.card := by
+      ∃ S : Finset G, IsGroupSidon (S : Set G) ∧
+        0.01 * Real.sqrt (Fintype.card G) ≤ S.card := by
   sorry
 
 /--

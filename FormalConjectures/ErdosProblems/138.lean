@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   Formal Proof Search* by George Tsoukalas et al.
 - [CFS26] Campos, M., Fox, J. and Schildkraut, C., A new lower bound for two-color van der Waerden
   numbers. [arXiv:2608.20824](https://arxiv.org/abs/2608.20824) (2026).
+- [OAI26] OpenAI, *Quantitative Superexponential Bounds for van der Waerden Numbers*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Quantitative-Superexponential-Bounds-for-van-der-Waerden-Numbers-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -86,9 +89,13 @@ theorem monoAPNumber_two_two : W 2 = 3 := by
 /--
 In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26], which shows
+$W(k) > k^{k/100000}$ for all large $k$; see the linked Lean proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/ProgressionColoring/Main.lean#L12"]
+theorem erdos_138 : answer(True) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
