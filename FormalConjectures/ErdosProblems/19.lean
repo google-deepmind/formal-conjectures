@@ -125,7 +125,7 @@ theorem colorable_of_sharedColoring (c : V → Fin n)
     have key : ∀ i (hi : i = j) (p : v ∈ P i), ((e i ⟨v, p⟩ : F i) : Fin n) =
         ((e j ⟨v, Finset.mem_filter.2 ⟨hj, hv⟩⟩ : F j) : Fin n) := by
       rintro i rfl p; rfl
-    simp only [col, dif_neg hv]
+    simp only [col, dite_eq_right hv]
     exact key _ (C.eq_of_not_shared hv (hidx v) hj) _
   have col_free : ∀ v (hv : ¬ C.IsShared v) j (hj : v ∈ C.A j), col v ∈ F j := by
     intro v hv j hj
@@ -133,15 +133,15 @@ theorem colorable_of_sharedColoring (c : V → Fin n)
   refine ⟨SimpleGraph.Coloring.mk col ?_⟩
   rintro u v ⟨huv, j, hu, hv⟩ heq
   by_cases su : C.IsShared u <;> by_cases sv : C.IsShared v
-  · have : col u = c u := dif_pos su
-    have : col v = c v := dif_pos sv
+  · have : col u = c u := dite_eq_left su
+    have : col v = c v := dite_eq_left sv
     exact huv (hc j u v hu hv su sv (by simp_all))
   · have h1 := col_free v sv j hv
-    have : col u = c u := dif_pos su
+    have : col u = c u := dite_eq_left su
     simp only [F, Finset.mem_sdiff, Finset.mem_univ, true_and, Finset.mem_image] at h1
     exact h1 ⟨u, Finset.mem_filter.2 ⟨hu, su⟩, by rw [← this, heq]⟩
   · have h1 := col_free u su j hu
-    have : col v = c v := dif_pos sv
+    have : col v = c v := dite_eq_left sv
     simp only [F, Finset.mem_sdiff, Finset.mem_univ, true_and, Finset.mem_image] at h1
     exact h1 ⟨v, Finset.mem_filter.2 ⟨hv, sv⟩, by rw [← this, ← heq]⟩
   · rw [col_priv u su j hu, col_priv v sv j hv] at heq
@@ -162,7 +162,7 @@ theorem card_sharedSet_le : C.sharedSet.card ≤ n.choose 2 := by
     intro v hv
     have hs : C.IsShared v := (Finset.mem_filter.1 hv).2
     obtain ⟨hij, hi, hj⟩ := Classical.choose_spec (Classical.choose_spec hs)
-    simp only [f, dif_pos hs]
+    simp only [f, dite_eq_left hs]
     refine ⟨Finset.mem_powersetCard.2 ⟨Finset.subset_univ _, Finset.card_pair hij⟩, ?_⟩
     intro x hx
     rcases Finset.mem_insert.1 hx with rfl | hx
@@ -219,7 +219,7 @@ theorem erdos_19.variants.le_three {V : Type*} {n : ℕ} (C : EFLConfig V n) (hn
   intro i u v hu hv su sv huv
   have mu : u ∈ C.sharedSet := Finset.mem_filter.2 ⟨Finset.mem_biUnion.2 ⟨i, by simp, hu⟩, su⟩
   have mv : v ∈ C.sharedSet := Finset.mem_filter.2 ⟨Finset.mem_biUnion.2 ⟨i, by simp, hv⟩, sv⟩
-  simp only [c, dif_pos mu, dif_pos mv] at huv
+  simp only [c, dite_eq_left mu, dite_eq_left mv] at huv
   have := C.sharedSet.equivFin.injective (Fin.castLE_injective hS huv)
   exact congrArg Subtype.val this
 

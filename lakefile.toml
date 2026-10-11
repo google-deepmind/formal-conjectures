@@ -28,9 +28,15 @@ weak.linter.style.stubs = true
 weak.linter.style.openClassical = true
 
 [[require]]
+name = "cslib"
+scope = "leanprover"
+rev = "v4.34.1"
+
+# Keep Mathlib last so its transitive dependency versions take precedence.
+[[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.33.1"
+rev = "v4.34.1"
 
 # We make this a separate library so that we can apply different lean options.
 [[lean_lib]]

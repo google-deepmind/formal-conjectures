@@ -64,8 +64,7 @@ theorem erdos_931.variants.additional_condition_nonempty : ∃ (k₁ k₂ : ℕ)
       (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Nonempty := by
   use 10, 3, (by norm_num), (by norm_num)
   use (0, 13)
-  norm_num [Finset.prod_Icc_succ_top]
-  norm_num +decide [Nat.primeFactors, Nat.primeFactorsList]
+  decide +kernel
 
 /--
 Erdős was unable to prove that if the two products have the same factors

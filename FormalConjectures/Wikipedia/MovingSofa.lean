@@ -219,7 +219,7 @@ def sofaConstant : ℝ≥0∞ := ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s 
 theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
   calc
     _ = volume unitSquare := (OrthonormalBasis.volume_parallelepiped _).symm
-    _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
+    _ ≤ sofaConstant := le_iSup₂ (f := fun s _ => volume s) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
 @[category research solved, AMS 49,

@@ -227,7 +227,7 @@ lemma IsTree.girth_le_length_add_two_of_two_adj
     dsimp [c]
     exact (Walk.cons_isCycle_iff r hza).2 ⟨hr, hclose⟩
   have hclen : c.length = q.length + 2 := by simp [c, r]
-  have hg := G.girth_le_length hc
+  have hg := hc.girth_le_length
   omega
 
 /-- **Triangle-free bridge**: in a graph of girth at least `4`, the
@@ -256,7 +256,7 @@ lemma isIndepSet_neighborSet_of_four_le_girth (hg4 : 4 ≤ G.girth) (v : α) :
   have hc : ((Walk.cons hadj (Walk.cons hvy.symm Walk.nil)).cons hvx).IsCycle :=
     (Walk.cons_isCycle_iff _ hvx).2 ⟨hr, hclose⟩
   have hg : G.girth ≤ 3 := by
-    have hlen := G.girth_le_length hc
+    have hlen := hc.girth_le_length
     simpa using hlen
   omega
 

@@ -51,7 +51,7 @@ lemma a_of_isLeast (hm : IsLeast {m | m ≠ 0 ∧ ((2 * n - 1) * 2 ^ m - 1).Prim
   have hn : n ≠ 0 := by
     rintro rfl
     simpa using hm.1
-  rw [a, if_neg hn, dif_pos ⟨m, hm.1⟩, find_of_isLeast hm]
+  rw [a, ite_eq_right hn, dite_eq_left ⟨m, hm.1⟩, find_of_isLeast hm]
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := a_of_isLeast <| by decide

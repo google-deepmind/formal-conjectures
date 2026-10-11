@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Copy
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.Data.Set.Card
 public import Mathlib.Order.Lattice.Nat
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColouring

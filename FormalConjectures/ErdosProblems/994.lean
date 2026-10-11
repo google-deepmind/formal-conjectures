@@ -81,7 +81,7 @@ theorem erdos_994.variants.simultaneous :
     rw [Finset.sum_eq_zero, zero_div]
     intro k hk
     rw [Finset.mem_Icc] at hk
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨-, hmem⟩
     exact hmem ⟨k - 1, by simp only [Nat.sub_add_cancel hk.1]⟩
   rw [hzero, hvol, ENNReal.toReal_one] at hE

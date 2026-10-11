@@ -96,7 +96,7 @@ theorem erdos_400.variants.g_pos (k n : ℕ) (h: k ≥ 2) : 0 < g k n := by
           Finset.sum_le_sum fun i _ => Nat.self_le_factorial _
       _ ≤ Finset.univ.card • n ! := by
           apply Finset.sum_le_card_nsmul; intro i _
-          exact le_trans (Finset.single_le_prod' (fun j _ =>
+          exact le_trans (Finset.single_le_prod (fun j _ =>
             Nat.one_le_iff_ne_zero.mpr (Nat.factorial_ne_zero _))
             (Finset.mem_univ i)) (Nat.le_of_dvd (Nat.factorial_pos n) hb)
       _ = (k' + 2) * n ! := by simp [smul_eq_mul]

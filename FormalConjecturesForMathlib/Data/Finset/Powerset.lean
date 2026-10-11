@@ -20,16 +20,9 @@ public import Mathlib.Data.Finset.Powerset
 @[expose] public section
 
 namespace Finset
-variable {α : Type*} [DecidableEq α] {s t : Finset α} {n : ℕ}
+variable {α : Type*} [DecidableEq α] {s t : Finset α}
 
 attribute [gcongr] powersetCard_mono
-
-lemma powersetCard_inter : powersetCard n (s ∩ t) = powersetCard n s ∩ powersetCard n t := by
-  ext; simpa [subset_inter_iff] using and_and_right
-
-@[simp] lemma disjoint_powersetCard_powersetCard :
-    Disjoint (powersetCard n s) (powersetCard n t) ↔ #(s ∩ t) < n := by
-  simp [disjoint_iff_inter_eq_empty, ← powersetCard_inter]
 
 /-- The `(#t + 1)`-subsets of `s` that contain `t ⊆ s` are exactly the sets `insert a t` with
 `a ∈ s \ t`. -/

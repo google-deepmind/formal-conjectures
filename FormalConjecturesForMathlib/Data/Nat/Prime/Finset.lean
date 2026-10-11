@@ -15,7 +15,6 @@ limitations under the License.
 -/
 module
 
-public import Batteries.Data.Nat.Gcd
 public import Mathlib.Algebra.GCDMonoid.Finset
 public import Mathlib.Algebra.GCDMonoid.Nat
 

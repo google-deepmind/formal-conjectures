@@ -279,7 +279,7 @@ noncomputable def toDualNumber (φ : Additive Fˣ →+ ZMod ℓ) :
         φ.toIntLinearMap)).toRingHom, by
     intro x y h
     cases h with
-    | steinberg a b _ => simp
+    | steinberg a b _ => simp [-DualNumber.inr_eq_smul_eps]
     | natCast =>
         refine (TrivSqZeroExt.ext ?_ ?_).trans (map_zero _).symm <;>
           simp [TrivSqZeroExt.fst_natCast, TrivSqZeroExt.snd_natCast]⟩
