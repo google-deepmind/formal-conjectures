@@ -45,7 +45,9 @@ guidelines.
 
 ## Usage, Structure & Features
 
-This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
+This is a Lean 4 project managed with `lake`, with dependencies on
+[Mathlib](https://github.com/leanprover-community/mathlib4) and
+[CSLib](https://github.com/leanprover/cslib). You
 first need to
 [install elan, lake, lean and if you want vscode](https://leanprover-community.github.io/get_started.html)
 and then run
@@ -71,6 +73,15 @@ There are two special directories:
 For details on the `@[category]`, `@[formal_proof]`, `@[AMS]` attributes and
 the `answer( )` elaborator that statements in this repository use, see
 [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+### Complexity theory
+
+The [circuit lower-bound conjectures](./FormalConjectures/Other/ComplexityTheory/README.md)
+range from linear to asymptotically maximal hardness for families whose truth tables
+can be printed in time polynomial in their length. They use CSLib's circuits and
+deterministic multitape Turing machines. The collection also includes
+[one-way functions against polynomial-size circuit adversaries](./FormalConjectures/Books/Goldreich/OneWayFunctions.lean)
+and the existing [P versus NP statements](./FormalConjectures/Millennium/PvsNP.lean).
 
 ## Versioning
 
