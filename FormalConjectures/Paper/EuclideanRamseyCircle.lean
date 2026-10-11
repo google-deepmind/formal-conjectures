@@ -37,10 +37,10 @@ copy with the same pairwise distances. Singletons and radius-zero circles are in
 theorem at_most_five_circle_points_ramsey {s : ℕ} (a : Fin s → E (Fin 2))
     (hs : 0 < s) (hs5 : s ≤ 5) (ha : Function.Injective a)
     (hsphere : ∃ c : E (Fin 2), ∃ r : ℝ, ∀ i, dist (a i) c = r) :
-    ∀ r : ℕ, 2 ≤ r → ∃ D : ℕ, 1 ≤ D ∧
-      ∀ c : E (Fin D) → Fin r, ∃ b : Fin s → E (Fin D),
+    ∀ colors : ℕ, 2 ≤ colors → ∃ D : ℕ, 1 ≤ D ∧
+      ∀ c : E (Fin D) → Fin colors, ∃ b : Fin s → E (Fin D),
         (∀ i j, dist (b i) (b j) = dist (a i) (a j)) ∧
-          ∃ k : Fin r, ∀ i, c (b i) = k := by
+          ∃ k : Fin colors, ∀ i, c (b i) = k := by
   sorry
 
 end EuclideanRamseyCircle
