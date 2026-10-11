@@ -25,6 +25,7 @@ public import FormalConjecturesUtil
 - [Su11] Sudakov, B., A conjecture of Erdős on graph Ramsey numbers. Adv. Math. (2011), 3148-3155.
 - [AKS03] Alon, N., Krivelevich, M. and Sudakov, B., Turán numbers of bipartite graphs and Ramsey
   graphs of bounded degree. Combin. Probab. Comput. (2003), 477-483.
+- [PALOMAR-2026-10-04-000010](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-04-000010&version=1)
 -/
 
 @[expose] public section
@@ -39,7 +40,7 @@ This is true, and was proved by Sudakov [Su11].
 
 This problem is #11 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-546/Proofs/OriginalStatement546.lean#L33"]
 theorem erdos_546 : answer(True) ↔
     ∃ C > (0 : ℝ), ∀ (m : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, 0 < G.degree v) →
