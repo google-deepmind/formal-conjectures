@@ -28,20 +28,13 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open scoped BigOperators
 open Filter
 
 namespace Erdos404
 
-/-- The sum of the factorials indexed by a finite set. -/
-def factorialSum (s : Finset ℕ) : ℕ := ∑ n ∈ s, n.factorial
-
-/-- The least element of the finite set is $a$. -/
-def StartsAt (a : ℕ) (s : Finset ℕ) : Prop := a ∈ s ∧ ∀ n ∈ s, a ≤ n
-
 /-- Some sum of distinct factorials starting at $a!$ is divisible by $p^k$. -/
 def Achievable (a p k : ℕ) : Prop :=
-  ∃ s : Finset ℕ, StartsAt a s ∧ p ^ k ∣ factorialSum s
+  ∃ s : Finset ℕ, a ∈ s ∧ (∀ n ∈ s, a ≤ n) ∧ p ^ k ∣ ∑ n ∈ s, n.factorial
 
 /-- The supremum of the attainable exponents, with $\infty$ for unbounded exponents. -/
 noncomputable def f (a p : ℕ) : ℕ∞ :=
@@ -50,9 +43,7 @@ noncomputable def f (a p : ℕ) : ℕ∞ :=
 @[category API, AMS 11]
 theorem achievable_of_dvd_factorial {a p k : ℕ} (h : p ^ k ∣ a.factorial) :
     Achievable a p k := by
-  refine ⟨{a}, ?_, ?_⟩
-  · simp [StartsAt]
-  · simpa [factorialSum] using h
+  exact ⟨{a}, by simp, by simp, by simpa using h⟩
 
 @[category API, AMS 11]
 theorem achievable_zero (a p : ℕ) : Achievable a p 0 := by
