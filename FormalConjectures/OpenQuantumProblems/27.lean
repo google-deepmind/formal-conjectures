@@ -48,8 +48,10 @@ input of each party.
   `cglmpExpr_eq_cglmpFunctional` relates the two.
 - `maxEntangledState`, `densityMatrix`, `bornProb`, `quantumBehaviour`: the state $\Phi_D$ and the
   quantum behaviours $p(a,b \mid x,y) = \operatorname{Tr}[\rho (A_{x,a} \otimes B_{y,b})]$.
-- `vonNeumannMeasurement`, `vonNeumannBehaviour`: the complete von Neumann measurement in the
-  orthonormal basis given by the columns of a unitary $U$.
+- `vonNeumannBehaviour`: the behaviour of complete von Neumann measurements in the orthonormal bases
+  given by the columns of unitaries. The measurements `Matrix.vonNeumannMeasurement` and the
+  predicate `Matrix.IsProjectiveMeasurement` are defined in
+  `FormalConjecturesForMathlib/LinearAlgebra/Matrix/ProjectiveMeasurement.lean`.
 - `dkzUnitaryA`, `dkzUnitaryB`: the DKZ measurements.
 - `whiteNoiseState`, `noisyVonNeumannBehaviour`: white noise,
   $\rho_v = v \, |\Phi_d\rangle\langle\Phi_d| + (1 - v) \, \mathbb{1}/d^2$.
@@ -161,18 +163,6 @@ noncomputable def quantumBehaviour {d D : ℕ} (ρ : Matrix (Fin D × Fin D) (Fi
     (A B : Fin 2 → Fin d → Matrix (Fin D) (Fin D) ℂ) : Behaviour d :=
   fun x y a b => bornProb ρ (A x a) (B y b)
 
-/-- `P` is a projective measurement with outcomes `Fin m` on $\mathbb{C}^D$: every `P a` is an
-orthogonal projection (Hermitian and idempotent), and $\sum_a P_a = 1$. -/
-def IsProjectiveMeasurement {m D : ℕ} (P : Fin m → Matrix (Fin D) (Fin D) ℂ) : Prop :=
-  (∀ a, (P a).IsHermitian ∧ P a * P a = P a) ∧ ∑ a, P a = 1
-
-/-- The complete von Neumann measurement in the orthonormal basis formed by the columns
-$u_0, \dots, u_{d-1}$ of a unitary `U`: outcome `a` has the rank-one projection
-$|u_a\rangle\langle u_a| = U |a\rangle\langle a| U^{\dagger}$. -/
-noncomputable def vonNeumannMeasurement {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ) (a : Fin d) :
-    Matrix (Fin d) (Fin d) ℂ :=
-  U * single a a 1 * Uᴴ
-
 /-- The behaviour of complete von Neumann measurements in the bases `UA x` (Alice) and `UB y` (Bob)
 on the maximally entangled state $\Phi_d$ of two qudits. -/
 noncomputable def vonNeumannBehaviour (d : ℕ) (UA UB : Fin 2 → Matrix (Fin d) (Fin d) ℂ) :
@@ -275,7 +265,8 @@ noncomputable def cglmpExpr {d : ℕ} (p : Behaviour d) : ℝ :=
 def swapInputs {d : ℕ} (p : Behaviour d) : Behaviour d := fun x y a b => p x.rev y.rev a b
 
 /-- $I_{ME}(d) = \frac{4}{d(d-1)} \sum_{j=1}^{d-1} \frac{d - j}{\cos(\pi j / (2d))}$, the value of
-`cglmpExpr` for the DKZ measurements on $\Phi_d$ (`cglmpFunctional_dkz`). -/
+`cglmpExpr` for the DKZ measurements on $\Phi_d$ after `swapInputs`
+(`cglmpExpr_eq_cglmpFunctional` and `cglmpFunctional_dkz`). -/
 noncomputable def cglmpMaxEntValue (d : ℕ) : ℝ :=
   4 / ((d : ℝ) * ((d : ℝ) - 1)) *
     ∑ j ∈ Finset.Ico 1 d, ((d : ℝ) - j) / Real.cos (Real.pi * j / (2 * d))
@@ -360,40 +351,6 @@ lemma unitary_mul_conjTranspose {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ}
     (hU : U ∈ unitaryGroup (Fin d) ℂ) : U * Uᴴ = 1 := by
   have h := mem_unitaryGroup_iff.1 hU
   rwa [star_eq_conjTranspose] at h
-
-@[category API, AMS 15 81]
-lemma sum_single_self_one (d : ℕ) : ∑ a : Fin d, single a a (1 : ℂ) = 1 := by
-  ext i j
-  rw [Matrix.sum_apply, Finset.sum_eq_single i]
-  · by_cases hij : i = j <;> simp [one_apply, hij]
-  · intro b _ hbi
-    simp [hbi]
-  · simp
-
-/-- A complete von Neumann measurement is a projective measurement. -/
-@[category test, AMS 15 81]
-theorem isProjectiveMeasurement_vonNeumannMeasurement {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ}
-    (hU : U ∈ unitaryGroup (Fin d) ℂ) : IsProjectiveMeasurement (vonNeumannMeasurement U) := by
-  have h1 := unitary_conjTranspose_mul hU
-  have h2 := unitary_mul_conjTranspose hU
-  refine ⟨fun a => ⟨?_, ?_⟩, ?_⟩
-  · unfold vonNeumannMeasurement
-    rw [IsHermitian, conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose,
-      conjTranspose_single, star_one, Matrix.mul_assoc]
-  · unfold vonNeumannMeasurement
-    calc U * single a a 1 * Uᴴ * (U * single a a 1 * Uᴴ)
-        = U * (single a a 1 * (Uᴴ * U) * single a a 1) * Uᴴ := by simp only [Matrix.mul_assoc]
-      _ = U * single a a 1 * Uᴴ := by
-          rw [h1, Matrix.mul_one, single_mul_single_same, mul_one, Matrix.mul_assoc]
-  · unfold vonNeumannMeasurement
-    rw [← Finset.sum_mul, ← Finset.mul_sum, sum_single_self_one, Matrix.mul_one, h2]
-
-/-- The projections of a complete von Neumann measurement have rank one (trace $1$). -/
-@[category test, AMS 15 81]
-theorem trace_vonNeumannMeasurement {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ}
-    (hU : U ∈ unitaryGroup (Fin d) ℂ) (a : Fin d) : (vonNeumannMeasurement U a).trace = 1 := by
-  rw [vonNeumannMeasurement, trace_mul_comm, ← Matrix.mul_assoc, unitary_conjTranspose_mul hU,
-    Matrix.one_mul, trace_single_eq_same]
 
 /-- The DKZ bases are orthonormal: Alice's DKZ matrices are unitary. -/
 @[category test, AMS 15 81, formal_proof using lean4 at
@@ -608,11 +565,6 @@ theorem bornProb_maxEntangledState_single {D : ℕ} (a b : Fin D) :
     simp
   · rw [if_neg h]
     simp [h]
-
-@[category API, AMS 15 81]
-lemma vonNeumannMeasurement_one {d : ℕ} (a : Fin d) :
-    vonNeumannMeasurement 1 a = single a a 1 := by
-  simp [vonNeumannMeasurement]
 
 /-- On $\Phi_d$, measuring both systems in the computational basis for both inputs gives exactly
 the local bound $d - 1$: there is no violation without the Fourier-phase bases. -/
