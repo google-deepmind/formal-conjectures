@@ -59,6 +59,20 @@ theorem erdos_265 : answer(False) ↔ ∃ a : ℕ → ℕ, IsRationalPair a ∧
   sorry
 
 /--
+Can one achieve $\limsup a_n^{1/2^n}>1$ when $\sum\frac{1}{a_n}$ and
+$\sum\frac{1}{a_n-1}$ are both rational?
+
+The exponent uses $n+1$ because the source indexes the sequence from $1$.
+The limsup is taken in the extended reals to include unbounded sequences.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/AItoBit/formal-conjectures/blob/2a18dc351bdf5a45d75c232c79c9f609e177b13d/Erdos265Proof.lean"]
+theorem erdos_265.variants.limsup : answer(False) ↔ ∃ a : ℕ → ℕ, IsRationalPair a ∧
+    1 < atTop.limsup (fun n : ℕ ↦
+      ((a n : ℝ) ^ (1 / (2 : ℝ) ^ (n + 1)) : EReal)) := by
+  sorry
+
+/--
 Kovač and Tao [KoTa24] proved that such a sequence can grow doubly exponentially: there is a
 sequence with $a_n^{1/\beta^n} \to \infty$ for some $\beta > 1$.
 -/
