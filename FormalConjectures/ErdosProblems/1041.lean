@@ -101,7 +101,7 @@ Scaling a real root set of diameter less than `2` gives the strict-disc
 collinear consequence. The parent `erdos_1041` is the settled negative path
 assertion. -/
 @[category research solved, AMS 32, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/fd9f1ca7c491349aed2091620160eb32212dd930/verification/ExternalVerification/FC1041SharpGap/Solution.lean#L16-L26"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/45bcf390b6e027ecea1214e774e484095c213305/verification/FC1041SharpGapCurrent/FC6576Solution.lean#L5-L12"]
 theorem erdos_1041.variants.sharp_collinear_gap {m : ℕ} (Y : Fin (m + 2) → ℝ)
     (hY : StrictMono Y) (hY0 : Y 0 = -1)
     (hY1 : Y (Fin.last (m + 1)) = 1) :
