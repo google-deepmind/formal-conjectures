@@ -170,9 +170,10 @@ $L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as corre
 formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
 question negatively under the Prolonger-first convention.
 
-This was formalized in Lean 4 by Ilia Pauzner using Gemini 4 Argon, almost certainly inspired by the
-$L(n) \leq (23/48 + o(1)) \cdot n$ Shortener strategy proof from the forum thread. -/
-@[category research solved, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d0fddbec861cf633834c64b22fe5111e1732a7f3/FormalConjectures/ErdosProblems/872.lean#L1167"]
+The $23/48$ upper bound for `C`-respecting plays (following old-bielefelder's strategy in the
+forum thread) was formalized in Lean 4 by Pommeret using Aristotle and Claude Opus 4.7, and
+completed to a proof for the full minimax game value `L n` by Ilia Pauzner using Gemini 4 Argon. -/
+@[category research solved, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d9299da16287d2347e375d9eec253eec455bae75/FormalConjectures/ErdosProblems/872.lean#L1180"]
 theorem erdos_872.parts.ii : answer(False) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
