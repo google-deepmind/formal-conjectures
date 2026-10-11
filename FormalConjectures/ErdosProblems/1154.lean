@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1154
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
   Proc. Cambridge Philos. Soc. (2016), 157--165.
 
 -/
+
+@[expose] public section
 
 open scoped ENNReal Cardinal
 open Set MeasureTheory
