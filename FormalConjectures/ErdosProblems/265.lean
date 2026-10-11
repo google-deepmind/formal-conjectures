@@ -69,7 +69,7 @@ The limsup is taken in the extended reals to include unbounded sequences.
   "https://github.com/AItoBit/formal-conjectures/blob/2a18dc351bdf5a45d75c232c79c9f609e177b13d/Erdos265Proof.lean"]
 theorem erdos_265.variants.limsup : answer(False) ↔ ∃ a : ℕ → ℕ, IsRationalPair a ∧
     1 < atTop.limsup (fun n : ℕ ↦
-      ((a n : ℝ) ^ (1 / (2 : ℝ) ^ (n + 1)) : EReal)) := by
+      (Real.rpow (a n : ℝ) (1 / (2 : ℝ) ^ (n + 1)) : EReal)) := by
   sorry
 
 /--
