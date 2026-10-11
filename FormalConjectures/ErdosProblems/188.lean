@@ -26,6 +26,10 @@ public import FormalConjecturesUtil
   and Straus, E. G., Euclidean {R}amsey theorems. {II}. (1975), 529--557.
 - [Ts17] Tsaturian, Sergei, A {E}uclidean {R}amsey result in the plane. Electron. J. Combin. (2017),
   Paper No. 4.35, 9.
+- [CMXZ26] Currier, G., Mody, P., Xie, Z. and Zhang, J., Improved bounds for lines and
+  $1$-separated sets in Euclidean Ramsey theory, arXiv:2606.17194 (2026).
+- [Cr26] Crocker, C., Bounds for Erdős Problem #188: $7 \le k \le 60$, Zenodo (2026),
+  https://doi.org/10.5281/zenodo.23151059
 -/
 
 @[expose] public section
@@ -67,6 +71,14 @@ In the other direction, it has just been shown by R. Juhász [Ju (79)] that we m
 -/
 @[category research solved, AMS 5]
 theorem erdos_188.variants.estimate : (∀ k, k ∈ s → 5 ≤ k) ∧ (∃ k ∈ s, k ≤ 10000000) := by
+  sorry
+
+/--
+Tsaturian [Ts17] proved $k \ge 6$. Currier, Mody, Xie and Zhang [CMXZ26] proved $k \le 6330$.
+Crocker [Cr26] proved $7 \le k \le 60$ with computer-checked certificates.
+-/
+@[category research solved, AMS 5]
+theorem erdos_188.variants.bounds : (∀ k, k ∈ s → 7 ≤ k) ∧ (∃ k ∈ s, k ≤ 60) := by
   sorry
 
 end Erdos188
