@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1020
@@ -45,16 +46,14 @@ import FormalConjecturesUtil
   hypergraphs*. J. Combin. Theory Ser. A (2014), 178--194.
 -/
 
+@[expose] public section
+
 namespace Erdos1020
 
 /-- The maximum number of edges in an `r`-uniform hypergraph on `n` vertices containing no
 matching of size `k` (i.e. no `k` pairwise vertex-disjoint edges). -/
 noncomputable def f (n r k : ℕ) : ℕ :=
-  sSup {m : ℕ | ∃ H : Hypergraph (Fin n),
-    H.vertexSet = Set.univ ∧
-    (∀ e ∈ H.edgeSet, e.ncard = r) ∧
-    (¬ ∃ M ⊆ H.edgeSet, M.ncard = k ∧ M.PairwiseDisjoint id) ∧
-    H.edgeSet.ncard = m}
+  Hypergraph.extremalNumber n r fun H ↦ ¬ H.HasHypergraphMatching k
 
 /--
 Let $f(n;r,k)$ be the maximal number of edges in an $r$-uniform hypergraph which contains no set of $k$ many independent edges.

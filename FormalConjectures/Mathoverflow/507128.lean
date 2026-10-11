@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Mathoverflow 507128
 
 *Reference:* [mathoverflow/507128](https://mathoverflow.net/questions/507128/embeddability-order-on-picard-groups)
 asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 -/
+
+@[expose] public section
 
 namespace Mathoverflow507128
 
@@ -38,7 +41,7 @@ The desired ideal is the range of the multiplication map `R ⊗[D] P → R`.
 -/
 @[category research solved, AMS 13,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/mo507128-lean/commit/e9507429c01c4288089e4af1c92a03b7d1e17f74"]
+    "https://github.com/KitaKen1/mo507128-lean/blob/e9507429c01c4288089e4af1c92a03b7d1e17f74/MO507128.lean#L265"]
 theorem exists_isFractionRing_self_ideal_ne_top_invertible :
     ∃ (R : Type) (_ : CommRing R) (_ : IsFractionRing R R) (I : Ideal R),
       I ≠ ⊤ ∧ Module.Invertible R I := by

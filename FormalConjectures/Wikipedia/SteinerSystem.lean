@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Steiner Systems
@@ -27,6 +28,8 @@ an $n$-element set such that every $t$-element subset is contained in exactly on
 - [Large Steiner Systems](https://epoch.ai/frontiermath/open-problems/large-steiner-systems)
   by Kunal Marwaha
 -/
+
+@[expose] public section
 
 namespace SteinerSystems
 

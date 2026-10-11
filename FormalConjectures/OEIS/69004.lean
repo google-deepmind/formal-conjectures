@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of times $n^2 + s^2$ is prime for positive integers $s < n$
@@ -24,7 +25,12 @@ $n^2 + s^2$ is prime:
 $$a(n) = \sum_{s=1}^{n-1} [\text{Prime}(n^2 + s^2)]$$
 
 *References:*
-- [A069004](https://oeis.org/A069004)-/
+- [A069004](https://oeis.org/A069004)
+- [CE26] j2d9w5xtjn-png, [Counterexample to the upper bound](https://github.com/google-deepmind/formal-conjectures/pull/5453), 2026.
+- [Li26] Wentao Li, [Lean certificate for the A069004 counterexample](https://github.com/VictorLiwentao/lean-oeis-proofs/blob/a16a2711b082ccab4ba941330148e7b7c78b11c1/proofs/new-formalization/A069004/PROOF.md), 2026.
+-/
+
+@[expose] public section
 
 namespace OeisA69004
 
@@ -66,15 +72,20 @@ theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
   sorry
 
 /--
-Stronger conjecture: Let $\pi(n)$ be the prime counting function (A000720).
-Then $\pi(n) \ge a(n) \ge \pi(n)/5$ for $n > 1$, with the following equalities:
-$\pi(2) = a(2)$, $\pi(10) = a(10)$ and $a(12) = \pi(12)/5$.
+Stronger conjecture: Let pi(n) be the prime counting function (A000720). Then
+pi(n) >= a(n) >= pi(n)/5 for n>1, with the following equalities: pi(2)=a(2),
+pi(10)=a(10) and a(12)=pi(12)/5.
+- T. D. Noe, Feb 26 2007
 
-This conjunction is false: its upper bound $\pi(n) \ge a(n)$ fails at
-$n = 512720 = 2^4 \cdot 5 \cdot 13 \cdot 17 \cdot 29$, where $a(n) = 42666$ and
-$\pi(n) = 42493$. The OEIS entry tabulates $a$ only up to $n = 10^4$. The lower bound and the
-three equalities are unaffected; see `conjecture2.variants.without_upper_bound`.-/
-@[category research solved, AMS 11]
+This conjunction is false. The upper bound fails at $n = 512720$:
+a Lean certificate proves $a(512720) \ge 42494 > 42493 = \pi(512720)$.
+The counterexample was recorded by j2d9w5xtjn-png [CE26].
+
+Lean formalization by Wentao Li, with AI assistance, adapting Epoch Research's
+certificate attempt; see [Li26].
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/a16a2711b082ccab4ba941330148e7b7c78b11c1/LeanOeisProofs/NewFormalization/A069004.lean#L58"]
 theorem conjecture2 : ¬ (
     (∀ n : ℕ, 1 < n → Nat.primeCounting n ≥ a n) ∧
     (∀ n : ℕ, 1 < n → 5 * a n ≥ Nat.primeCounting n) ∧
@@ -84,9 +95,15 @@ theorem conjecture2 : ¬ (
   sorry
 
 /--
-The upper bound of the stronger conjecture on its own. It is false: $a(512720) = 42666$ while
-$\pi(512720) = 42493$.-/
-@[category research solved, AMS 11]
+The upper bound from T. D. Noe's stronger conjecture: "pi(n) >= a(n)" for "n>1".
+It is false at $n = 512720$: $a(512720) \ge 42494 > 42493 = \pi(512720)$.
+The counterexample was recorded by j2d9w5xtjn-png [CE26].
+
+Lean formalization by Wentao Li, with AI assistance, adapting Epoch Research's
+certificate attempt; see [Li26].
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/a16a2711b082ccab4ba941330148e7b7c78b11c1/LeanOeisProofs/NewFormalization/A069004.lean#L49"]
 theorem conjecture2.variants.upper_bound_false :
     ¬ ∀ n : ℕ, 1 < n → Nat.primeCounting n ≥ a n := by
   sorry

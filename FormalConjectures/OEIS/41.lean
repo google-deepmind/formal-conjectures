@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import Mathlib.Combinatorics.Enumerative.Partition.Basic
+
 
 /-!
 # No powers as partition numbers
@@ -23,6 +26,8 @@ There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1
 
 *Reference:* [A41](https://oeis.org/A41)
 -/
+
+@[expose] public section
 
 namespace OeisA41
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 104
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [HaMe86] Harborth, Heiko and Mengersen, Ingrid, *Point sets with many unit circles*. Discrete
   Math. (1986), 193--197.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped EuclideanGeometry

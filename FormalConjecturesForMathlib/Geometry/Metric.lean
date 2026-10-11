@@ -16,8 +16,11 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Data.Sym.Sym2
+public import Mathlib.Algebra.BigOperators.Ring.Finset
 public import Mathlib.Data.Finset.Sym
+public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Sym.Card
+public import Mathlib.Data.ZMod.Basic
 public import Mathlib.Order.Lattice.Nat
 public import Mathlib.Topology.MetricSpace.Defs
 
@@ -71,3 +74,34 @@ theorem unitDistNum_le_choose_two (s : Finset X) : unitDistNum s ≤ (#s).choose
     obtain ⟨-, rfl⟩ : _ ∧ x = y := Finset.mem_diag.mp hxy
     simp at hpd
   · exact h
+
+/-- The ordered pairs of distinct points of `points` at distance `d` come in swapped pairs, so
+there are evenly many of them. -/
+theorem even_card_offDiag_filter_dist_eq (points : Finset X) (d : ℝ) :
+    Even #(points.offDiag.filter fun (pair : X × X) => dist pair.1 pair.2 = d) := by
+  set F := points.offDiag.filter fun (pair : X × X) => dist pair.1 pair.2 = d with hF
+  rw [← ZMod.natCast_eq_zero_iff_even]
+  have h : ∑ _a ∈ F, (1 : ZMod 2) = 0 := by
+    refine Finset.sum_involution (fun a _ => a.swap) (fun a _ => by decide) ?_ ?_
+      (fun a _ => Prod.swap_swap a)
+    · intro a ha _ hsw
+      have := (Finset.mem_offDiag.1 (Finset.mem_filter.1 ha).1).2.2
+      exact this (Prod.ext_iff.1 hsw).1.symm
+    · intro a ha
+      obtain ⟨hoff, hd⟩ := Finset.mem_filter.1 ha
+      obtain ⟨h1, h2, h3⟩ := Finset.mem_offDiag.1 hoff
+      exact Finset.mem_filter.2 ⟨Finset.mem_offDiag.2 ⟨h2, h1, Ne.symm h3⟩, by
+        simpa [dist_comm] using hd⟩
+  simpa [Finset.sum_const, nsmul_eq_mul] using h
+
+/-- The multiplicities of the distances determined by `points` add up to the number of
+unordered pairs of distinct points. -/
+theorem sum_distanceMultiplicity (points : Finset X) :
+    ∑ d ∈ distanceSet points, distanceMultiplicity points d = (#points).choose 2 := by
+  unfold distanceSet distanceMultiplicity
+  rw [← Nat.sum_div (fun d _ => even_iff_two_dvd.1 (even_card_offDiag_filter_dist_eq points d)),
+    ← Finset.card_eq_sum_card_image (fun (pair : X × X) => dist pair.1 pair.2) points.offDiag,
+    Finset.offDiag_card, Nat.choose_two_right]
+  rcases Nat.eq_zero_or_pos #points with h | h
+  · simp [h]
+  · rw [Nat.mul_sub_one]
