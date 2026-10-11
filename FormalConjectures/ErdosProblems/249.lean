@@ -49,7 +49,7 @@ This solved variant concerns bounded least-residue coefficients. The irrationali
 of the unreduced totient series in `erdos_249` remains open.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/d85765c9ead139e1c562c93e675ad92616923f6b/Solutions/ExternalVerification249CountableDilationIndependence.lean#L12-L19"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/c513ed5ed17985567bf55b6a191afcc21cceb028/verification/FC249CountableIndependenceCurrent/FC6577Solution.lean#L5-L11"]
 theorem erdos_249.variants.least_residue_dilation_independence
     (m B : ℕ) (hm : 3 ≤ m) (hB : 2 ≤ B) :
     LinearIndependent ℚ (fun d : ℕ =>
