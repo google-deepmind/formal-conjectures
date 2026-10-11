@@ -14,37 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Geometry.Euclidean.Sphere.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Data.Finset.Card
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Tactic
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 217: crescent configurations
 
-Source: https://www.erdosproblems.com/217 and the supplied 217.pdf, pp. 1–3.
-The supplied source labels the classification problem OPEN.
-
-Verified with Lean v4.35.0-rc3 and Mathlib commit
-25730c7c759d108ef87ab70af2342a196760f79d (2026-10-01).
-
-`Admissible n` formalizes the existence question for positive n.
-`admissibleSizes` is the set the problem asks to determine.
-`EventuallyImpossible` is the separate eventual-nonexistence conjecture.
-Neither the classification nor that conjecture is asserted as a theorem.
-
-The distance labels are indexed by multiplicity, NOT by increasing distance.
-Pairs are counted once using their increasing indices. General position means
-both no three collinear and no four concyclic points. No lattice restriction
-or diameter bound is imposed. The unverified forum search reports are not
-asserted as theorems in this file.
-
-Convention: n = 0 is excluded; n = 1 has no pairs and no distance labels.
+*References:*
+- [erdosproblems.com/217](https://www.erdosproblems.com/217)
+- [Er83c] Erdős, Paul, *Combinatorial problems in geometry*. Math. Chronicle (1983), 35–54.
 -/
+
+@[expose] public section
 
 namespace Erdos217
 
+/-- The Euclidean plane. -/
 abbrev Plane := EuclideanSpace ℝ (Fin 2)
 
 /-- Strictly increasing index pairs represent unordered pairs without repetition. -/
@@ -85,13 +71,32 @@ def admissibleSizes : Set ℕ := {n | Admissible n}
 def EventuallyImpossible : Prop :=
   ∃ N : ℕ, ∀ n : ℕ, N ≤ n → ¬ Admissible n
 
+/--
+For which $n$ are there $n$ points in $\mathbb{R}^2$, no three on a line and no four on a circle,
+which determine $n-1$ distinct distances and so that (in some ordering of the distances)
+the $i$th distance occurs $i$ times?
+-/
+@[category research open, AMS 5 51]
+theorem erdos_217 : admissibleSizes = answer(sorry) := by
+  sorry
+
+/--
+Erdős believed this is impossible for all sufficiently large $n$.
+See [erdosproblems.com/217](https://www.erdosproblems.com/217).
+-/
+@[category research open, AMS 5 51]
+theorem erdos_217.variants.eventually_impossible : EventuallyImpossible := by
+  sorry
+
 /-- Positive multiplicity means that the distance is actually attained. -/
+@[category API, AMS 5 51]
 theorem multiplicity_pos_iff {n : ℕ} (p : Fin n → Plane) (r : ℝ) :
     0 < multiplicity p r ↔ ∃ i j, i < j ∧ dist (p i) (p j) = r := by
   classical
   simp [multiplicity, pairs, Finset.card_pos, Finset.Nonempty]
 
 /-- Distinct multiplicities force distinct distance labels. -/
+@[category API, AMS 5 51]
 theorem labels_injective {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
     (h : DistancePattern p d) : Function.Injective d := by
   intro a b hab
@@ -101,6 +106,7 @@ theorem labels_injective {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → �
   omega
 
 /-- Every label is realized, including when the definition is used independently. -/
+@[category API, AMS 5 51]
 theorem label_realized {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
     (h : DistancePattern p d) (k : Fin (n - 1)) :
     ∃ i j, i < j ∧ dist (p i) (p j) = d k := by
@@ -109,6 +115,7 @@ theorem label_realized {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
   exact Nat.zero_lt_succ _
 
 /-- Distinct points ensure that none of the distance labels is zero or negative. -/
+@[category API, AMS 5 51]
 theorem label_pos {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
     (hp : Function.Injective p) (h : DistancePattern p d) (k : Fin (n - 1)) :
     0 < d k := by
@@ -117,6 +124,7 @@ theorem label_pos {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
   exact dist_pos.mpr (fun heq => (ne_of_lt hij) (hp heq))
 
 /-- The enumerated labels are precisely the determined distances. -/
+@[category API, AMS 5 51]
 theorem distances_eq_labels {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
     (h : DistancePattern p d) : distances p = Finset.univ.image d := by
   classical
@@ -133,6 +141,7 @@ theorem distances_eq_labels {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) →
     exact Finset.mem_image.mpr ⟨(i, j), by simp [pairs, hij], hd⟩
 
 /-- In particular, the statement really requires exactly n - 1 distinct distances. -/
+@[category API, AMS 5 51]
 theorem card_distances {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
     (h : DistancePattern p d) : (distances p).card = n - 1 := by
   classical
@@ -140,11 +149,13 @@ theorem card_distances {n : ℕ} {p : Fin n → Plane} {d : Fin (n - 1) → ℝ}
   simp
 
 /-- The positivity convention prevents a spurious empty configuration. -/
+@[category API, AMS 5 51]
 theorem not_admissible_zero : ¬ Admissible 0 := by
   rintro ⟨h, _⟩
   exact (Nat.lt_irrefl 0) h
 
 /-- Eventual impossibility is equivalent to finiteness of the set being classified. -/
+@[category API, AMS 5 51]
 theorem eventuallyImpossible_iff_finite : EventuallyImpossible ↔ admissibleSizes.Finite := by
   rw [Set.finite_iff_bddAbove]
   constructor
