@@ -60,7 +60,7 @@ theorem erdos_649.variants.no_solution_two_seven :
     ¬ ∃ n : ℕ, n.maxPrimeFac = 2 ∧ (n + 1).maxPrimeFac = 7 := by
   rintro ⟨n, hn, hn'⟩
   have h1n : 1 < n := by
-    have := (Nat.one_lt_maxPrimeFac_iff n).mp (by omega)
+    have := (Nat.one_lt_maxPrimeFac_iff (n := n)).mp (by omega)
     omega
   -- Since `2` is the greatest prime factor of `n`, it is the only one, so `n` is a power of `2`.
   obtain ⟨k, hpow⟩ : ∃ k, n = 2 ^ k :=

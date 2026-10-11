@@ -156,6 +156,7 @@ theorem oeis_358684_conjecture_0 (n : ℕ) :
   · rw [Nat.log2_eq_log_two]
     apply Nat.le_log_of_pow_le (by decide)
     refine le_trans ?_ <| sub_le _ 1
+    rw [← Nat.factorization_def _ Nat.prime_two]
     apply Nat.ordProj_le 2
     exact Nat.sub_ne_zero_of_lt (Nat.minFac_prime (by norm_num)).one_lt
   · rw [Nat.log2_eq_log_two]

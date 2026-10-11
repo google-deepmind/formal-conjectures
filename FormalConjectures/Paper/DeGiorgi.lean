@@ -109,7 +109,7 @@ theorem DeGiorgi_one : (DeGiorgi_conclusion 1) := by
   intro u ⟨hu_sol, hu_deriv⟩ y hy
   obtain ⟨x, rfl⟩ := Set.mem_range.mp hy
   refine ⟨affineSpan ℝ {x}, ?_, ?_⟩
-  · rw [AffineSubspace.coe_affineSpan_singleton, ← image_singleton]
+  · rw [AffineSubspace.affineSpan_singleton, AffineSubspace.coe_singleton, ← image_singleton]
     apply preimage_image_eq
     refine .of_comp_right (g := fun t ↦ EuclideanSpace.single 0 t) ?_ ?_
     · refine (strictMono_of_deriv_pos fun t ↦ ?_).injective
@@ -119,7 +119,7 @@ theorem DeGiorgi_one : (DeGiorgi_conclusion 1) := by
       convert hu_deriv
       aesop
     · exact fun t ↦ ⟨t 0, by ext; simp; grind⟩
-  · simp [direction_affineSpan]
+  · simp
 
 /--
 De Giorgi's conjecture holds in dimension $n = 2$.

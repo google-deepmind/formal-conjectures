@@ -211,7 +211,7 @@ theorem mem_iSup_columnIdeal {I : TwoSidedIdeal R} {M : Matrix n n R}
   rw [this]
   refine sum_mem fun j _ => Submodule.mem_iSup_of_mem j fun i k => ?_
   simp only [Matrix.of_apply]
-  refine ⟨?_, fun hk => if_neg hk⟩
+  refine ⟨?_, fun hk => ite_eq_right hk⟩
   split_ifs
   · exact hM i k
   · exact I.zero_mem

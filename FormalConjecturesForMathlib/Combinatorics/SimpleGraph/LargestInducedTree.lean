@@ -243,7 +243,7 @@ theorem girth_sub_one_le_largestInducedTreeSize (G : SimpleGraph α)
         omega
       have hq_length : q.length = d.length := by
         simp [q]
-      have hg_le : G.girth ≤ q.length := G.girth_le_length hq
+      have hg_le : G.girth ≤ q.length := hq.girth_le_length
       have hs_type_card : Fintype.card (s : Set α) = s.card := by
         simp
       rw [hq_length] at hg_le
@@ -406,7 +406,7 @@ lemma IsTree.girth_add_one_le_card_of_two_leaves_of_two_adj
   rw [hqcard, Finset.card_erase_of_mem hy_erase,
     Finset.card_erase_of_mem hxs] at hcard
   have hclen : c.length = q.length + 2 := by simp [c, r]
-  have hg := G.girth_le_length hc
+  have hg := hc.girth_le_length
   omega
 
 /-- Two distinct leaves in a connected cyclic graph yield an induced tree of order at least girth plus one. -/

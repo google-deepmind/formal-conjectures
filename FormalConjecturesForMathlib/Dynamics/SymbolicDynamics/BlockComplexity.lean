@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
 public import Mathlib.Data.EReal.Inv
-public import Mathlib.Data.Real.ENatENNReal
+public import Mathlib.Basic.Real.ENatENNReal
 public import Mathlib.Data.Set.Card
 public import Mathlib.Order.LiminfLimsup
 
