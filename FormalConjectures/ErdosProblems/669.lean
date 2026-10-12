@@ -132,14 +132,16 @@ but with lines passing through exactly $k$ points.
 Estimate $f_k(n)$ and $F_k(n)$ - in particular, determine $\lim F_k(n)/n^2$ and
 $\lim f_k(n)/n^2$.
 
-This part asks for $\lim F_k(n)/n^2$, as a function `L` of $k \geq 3$ (the case $k = 2$ is
-trivial). The statement includes that the limit exists.
+This part asks for $\lim F_k(n)/n^2$ for $k \geq 3$ (the case $k = 2$ is trivial). The
+original question [Er97f, Problem 16] asks for the limits "if they exist", so the answer allows
+nonexistence: `L k = some x` if the limit exists and equals $x$, and `L k = none` otherwise.
 -/
 @[category research open, AMS 52]
 theorem erdos_669.parts.i :
-    let L : ℕ → ℝ := answer(sorry)
-    ∀ k : ℕ, 3 ≤ k →
-      Tendsto (fun n : ℕ => (maxLinesAtLeast k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 (L k)) := by
+    let L : ℕ → Option ℝ := answer(sorry)
+    ∀ k : ℕ, 3 ≤ k → ∀ x : ℝ,
+      L k = some x ↔
+        Tendsto (fun n : ℕ => (maxLinesAtLeast k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 x) := by
   sorry
 
 /--
@@ -150,14 +152,16 @@ but with lines passing through exactly $k$ points.
 Estimate $f_k(n)$ and $F_k(n)$ - in particular, determine $\lim F_k(n)/n^2$ and
 $\lim f_k(n)/n^2$.
 
-This part asks for $\lim f_k(n)/n^2$, as a function `L` of $k \geq 3$ (the case $k = 2$ is
-trivial). The statement includes that the limit exists.
+This part asks for $\lim f_k(n)/n^2$ for $k \geq 3$ (the case $k = 2$ is trivial). The
+original question [Er97f, Problem 16] asks for the limits "if they exist", so the answer allows
+nonexistence: `L k = some x` if the limit exists and equals $x$, and `L k = none` otherwise.
 -/
 @[category research open, AMS 52]
 theorem erdos_669.parts.ii :
-    let L : ℕ → ℝ := answer(sorry)
-    ∀ k : ℕ, 3 ≤ k →
-      Tendsto (fun n : ℕ => (maxLinesExactly k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 (L k)) := by
+    let L : ℕ → Option ℝ := answer(sorry)
+    ∀ k : ℕ, 3 ≤ k → ∀ x : ℝ,
+      L k = some x ↔
+        Tendsto (fun n : ℕ => (maxLinesExactly k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 x) := by
   sorry
 
 /--
