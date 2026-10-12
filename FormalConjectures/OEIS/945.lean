@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Euclid-Mullin sequence
@@ -38,6 +39,8 @@ write $b(n)$ for the product of the first $n$ official terms.
   [arXiv:1605.08929](https://arxiv.org/abs/1605.08929), *Journal of Integer Sequences* **19**
   (2016), Article 16.6.4.
 -/
+
+@[expose] public section
 
 namespace OeisA945
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 698
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   Math. Soc. (2011), 138--157.
 -/
 
+@[expose] public section
+
 namespace Erdos698
 
 open Filter
@@ -38,8 +41,13 @@ $$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq h(n)?$$
 This was resolved by Bergman [Be11], who proved that for any $2\leq i<j\leq n/2$
 $$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},$$
 where the implied constant is absolute.
+
+The linked formal proof (van Doorn and Aristotle, see `erdos_698.variants.bergman`) gives the
+explicit bound $\gcd > \frac{2^i \sqrt n}{4 i \sqrt{i - 1}}$, so $h(n) = \lfloor \sqrt n / 4 \rfloor$
+works since $i \sqrt{i - 1} \le 2^i$ for $i \ge 2$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos698.lean#L452"]
 theorem erdos_698 : answer(True) ↔
     ∃ h : ℕ → ℕ, Tendsto h atTop atTop ∧
       ∀ n i j : ℕ, 2 ≤ i → i < j → j ≤ n / 2 →

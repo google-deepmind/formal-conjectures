@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 188
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ts17] Tsaturian, Sergei, A {E}uclidean {R}amsey result in the plane. Electron. J. Combin. (2017),
   Paper No. 4.35, 9.
 -/
+
+@[expose] public section
 
 namespace Erdos188
 

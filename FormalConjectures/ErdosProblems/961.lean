@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 961
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [Ju74] Jutila, Matti, On numbers with a large prime factor. {II}. J. Indian Math. Soc. (N.S.) (1974), 125--130.
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
+
+@[expose] public section
 
 open Filter Real
 
