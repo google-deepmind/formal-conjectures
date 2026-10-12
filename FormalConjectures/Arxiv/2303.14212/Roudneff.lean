@@ -118,16 +118,16 @@ theorem roudneff_dim_two (n : ℕ) (hn : 5 ≤ n)
   sorry
 
 /--
-**The case `d = 3` (rank `4`), known.** For a uniform chirotope of rank `4` on `Fin n`
-with `n ≥ 7` the bound is `∑_{i=0}^{1} binomial(n-1, i) = 1 + (n-1) = n`. Proved by
-[RA99]; [HKMS24] also give it as Corollary 3.4.
+**The case `d = 3` (rank `4`), known.** For a uniform chirotope of rank `4` the bound is
+`∑_{i=0}^{1} binomial(n-1, i) = 1 + (n-1) = n`. Proved by [RA99] (for `n ≥ 4`); [HKMS24]
+also give it as Corollary 3.4. Stated here with the conjecture's `n ≥ 7 = 2d + 1` (see
+the range note above).
 
 All the solved variants here keep the conjecture's own hypothesis `n ≥ 2d + 1`
-(equivalently `n ≥ 2r - 1` in rank `r = d + 1`). This is not the sharpest range:
-by [HKMS24, Remark 3.3] for `n ≤ r + 2` there is only one reorientation class and the
-(cyclic) extremal example is safe, so the bound holds trivially there and only becomes
-nontrivial at `n ≥ r + 3`. The individual solved dimensions therefore actually hold on a
-wider range than `n ≥ 2d + 1`; we state the conjecture's range for uniformity.
+(equivalently `n ≥ 2r - 1` in rank `r = d + 1`). The individual results actually hold for
+smaller `n` too ([RA99] gives `d = 3` for `n ≥ 4`, [HKMS24, Thm 4.3] gives `d = 4` for
+`n ≥ 5`), and the case `n ≤ 2r - 2` has been studied as well, but we state the
+conjecture's original `n ≥ 2r - 1` range here.
 -/
 @[category research solved, AMS 5 52]
 theorem roudneff_dim_three (n : ℕ) (hn : 7 ≤ n)
@@ -137,10 +137,10 @@ theorem roudneff_dim_three (n : ℕ) (hn : 7 ≤ n)
 
 /--
 **The case `d = 4` (rank `5`), known — the main result of this paper.** For a uniform
-chirotope of rank `5` on `Fin n` with `n ≥ 9` the bound is
-`∑_{i=0}^{2} binomial(n-1, i)`. This is Theorem 4.3 of [HKMS24] (arXiv:2303.14212), the
-first proof of Roudneff's conjecture in dimension `4`. The conjecture remains open for
-`d ≥ 5`.
+chirotope of rank `5` the bound is `∑_{i=0}^{2} binomial(n-1, i)`. This is Theorem 4.3 of
+[HKMS24] (arXiv:2303.14212, for `n ≥ 5`), the first proof of Roudneff's conjecture in
+dimension `4`. Stated here with the conjecture's `n ≥ 9 = 2d + 1` (see the range note
+above). The conjecture remains open for `d ≥ 5`.
 -/
 @[category research solved, AMS 5 52]
 theorem roudneff_dim_four (n : ℕ) (hn : 9 ≤ n)

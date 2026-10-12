@@ -28,8 +28,9 @@ public import Mathlib.Data.Fintype.Powerset
 
 Mathlib has no oriented matroids (as of 2026). This file defines a *chirotope* of
 rank `r` on the ground set `Fin n`: a map `χ : (Fin r → Fin n) → SignType`
-(a sign `{-1, 0, +1}` per `r`-tuple) that is *alternating* and satisfies the
-*Grassmann–Plücker relations*. This encodes a rank-`r` oriented matroid on
+(a sign `{-1, 0, +1}` per `r`-tuple) satisfying the *chirotope axioms*
+`(B0)`/`(B1)`/`(B2)` (non-trivial, alternating, exchange). This encodes a rank-`r`
+oriented matroid on
 `n` elements. A *uniform* chirotope is nonzero on all injective tuples (general
 position). A *mutation* is a flippable `r`-subset; mutations correspond to the
 *simplicial* cells (simplicial topes) of the associated pseudohyperplane
@@ -51,7 +52,10 @@ variable {r n : ℕ}
 a sign in `{-1, 0, +1}` (a `SignType`) to every `r`-tuple of ground-set elements. -/
 abbrev Chirotope (r n : ℕ) : Type := (Fin r → Fin n) → SignType
 
-/-- **Alternating axiom.** Permuting the `r` slots of a tuple multiplies the sign
+/-- **(B0) Non-triviality.** The chirotope is not identically zero. -/
+def IsNonTrivial (χ : Chirotope r n) : Prop := χ ≠ 0
+
+/-- **(B1) Alternating.** Permuting the `r` slots of a tuple multiplies the sign
 by the sign of the permutation (`perm_sign`). -/
 def IsAlternating (χ : Chirotope r n) : Prop :=
   ∀ (t : Fin r → Fin n) (σ : Equiv.Perm (Fin r)),
@@ -63,33 +67,31 @@ matroid, an arrangement with no special incidences). -/
 def IsUniform (χ : Chirotope r n) : Prop :=
   ∀ t : Fin r → Fin n, Function.Injective t → χ t ≠ 0
 
-/-- **Grassmann–Plücker relations** (`satisfies_gp`), the exchange / interior axiom (iii)
-of a chirotope. For any two `r`-tuples `a, b : Fin r → Fin n`: if for *every* position
-`i` the sign product
+/-- **(B2) Exchange axiom.** For any two `r`-tuples `a, b : Fin r → Fin n`: if for
+*every* position `i` the sign product
 `χ(bᵢ, a₂, …, a_r) · χ(b₁, …, b_{i-1}, a₁, b_{i+1}, …, b_r) ≥ 0`
-holds — i.e. swapping `a₁ ↔ bᵢ` between the two tuples, one each way — then also
-`χ(a₁, …, a_r) · χ(b₁, …, b_r) ≥ 0`.
-
-Here `a₁` is `a` at slot `0` and `bᵢ` is `b` at slot `i`; `χ(bᵢ, a₂, …, a_r)` is `a`
-with slot `0` set to `b i`, and `χ(b₁, …, a₁, …, b_r)` is `b` with slot `i` set to `a 0`.
-`0 ≤ s * t` in `SignType` is exactly "`s·t ≥ 0`".
-
-This is the standard directed Grassmann–Plücker chirotope axiom (Björner–Las Vergnas–
-Sturmfels–White–Ziegler; see also the Wikipedia "Oriented matroid" exchange axiom B2).
-It uses sign *products* `≥ 0`, not sign equalities, and quantifies the premise over *all*
-`i`. It holds for every chirotope, including the alternating / moment-curve one (cf. the
-verification in `scripts/probe/AlternatingC3_5.lean`). -/
-def SatisfiesGP (χ : Chirotope r n) : Prop :=
+holds (swap `a₁ ↔ bᵢ` between the two tuples, one each way), then also
+`χ(a₁, …, a_r) · χ(b₁, …, b_r) ≥ 0`. Here `χ(bᵢ, a₂, …)` is `a` with slot `0` set to
+`b i`, `χ(b₁, …, a₁, …)` is `b` with slot `i` set to `a 0`, and `0 ≤ s * t` is exactly
+`s·t ≥ 0` in `SignType`. This is axiom (B2) of the Wikipedia "Oriented matroid"
+chirotope axioms. -/
+def SatisfiesExchange (χ : Chirotope r n) : Prop :=
   ∀ (hr : 0 < r) (a b : Fin r → Fin n),
     let i0 : Fin r := ⟨0, hr⟩
     (∀ i : Fin r,
       0 ≤ χ (Function.update a i0 (b i)) * χ (Function.update b i (a i0))) →
     0 ≤ χ a * χ b
 
-/-- A **chirotope** of rank `r` on `Fin n`: alternating and satisfying the
-Grassmann–Plücker relations. Encodes a rank-`r` oriented matroid on `n` elements. -/
+/-- A **chirotope** of rank `r` on `Fin n`: the chirotope axioms `(B0)` non-trivial,
+`(B1)` alternating, `(B2)` exchange. Encodes a rank-`r` oriented matroid on `n`
+elements.
+
+We use the standard chirotope axioms. There are several cryptomorphic axiom systems for
+chirotopes and oriented matroids, such as the 3-term Grassmann–Plücker relations, which
+are more economical (fewer relations to check, useful in computation / SAT encodings).
+However, the equivalence between these axiom systems needs more machinery. -/
 def IsChirotope (r n : ℕ) (χ : Chirotope r n) : Prop :=
-  IsAlternating χ ∧ SatisfiesGP χ
+  IsNonTrivial χ ∧ IsAlternating χ ∧ SatisfiesExchange χ
 
 /-- A **uniform chirotope**: a chirotope that is additionally uniform. This is the
 oriented matroid of an arrangement of `n` pseudohyperplanes in general position in
