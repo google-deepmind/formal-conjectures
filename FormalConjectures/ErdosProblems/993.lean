@@ -51,11 +51,6 @@ The independent set sequence of any tree or forest is unimodal.
 In other words, if $i_k(G)$ counts the number of independent sets of vertices of size $k$ in a
 graph $G$, and $T$ is any tree or forest, then for some $m\geq 0$
 $$i_{0}(T)\leq i_{1}(T)\leq\cdots\leq i_{m}(T)\geq i_{m+1}(T)\geq i_{m+2}(T)\geq\cdots.$$
-
-Forests are the acyclic graphs (`SimpleGraph.IsAcyclic`), so this statement includes trees. The
-tree case alone is `erdos_993.variants.tree`. [AMSE87, p. 21] notes that a convolution of
-unimodal sequences need not be unimodal, so the forest case does not follow from the tree case
-by convolution alone, and suggests that the two cases "need to be attacked separately".
 -/
 @[category research open, AMS 5]
 theorem erdos_993 : ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
@@ -83,20 +78,6 @@ $$N_r = \sum_{t} (t - r)\, c_t\, c_r^{t}\, c_{r+1}^{k+1-t} \ge 0,$$
 equivalently $\mu(\lambda_r) \ge r$ at $\lambda_r = c_r / c_{r+1}$. Here $I(x) = \sum_t c_t x^t$
 and $\mu(\lambda) = \lambda I'(\lambda) / I(\lambda)$ is the mean size of an independent set of
 $S(2^k)$ under the hard-core measure at fugacity $\lambda$.
-
-Context [Re26, Remark "Tie-fugacity condition", L329–L343]: for a tree $T$ on $n$ vertices with
-leftmost mode $m$ and tie fugacity $\lambda_m = i_{m-1}(T)/i_m(T)$, the inequality
-$\mu_T(\lambda_m) \ge m - 1$, together with the mean bound $\mu_T(1) < n/3$ proved there for
-trees on $n \ge 3$ vertices in which every vertex has at most one leaf neighbour, would give
-$\operatorname{mode} \le \lfloor n/3 \rfloor + 1$ for those trees (Conjecture A of [Re26]).
-That is a bound on the mode, not unimodality. The route in [Re26, L259–L298] from Conjecture A
-toward unimodality also needs the Case B hub bound (verified there only for $n \le 22$) and an
-injection, or Hall-condition, argument between consecutive levels, both of which remain open.
-[Re26] proves the tie-fugacity inequality for $S(2^k)$ at the leftmost mode (with
-$6 \le k \le 11$ checked by direct computation); the statement here holds at every rising tie
-and is proved in closed form. Spiders are already known to have log-concave independence
-sequences ([Re26, L106, L645]), so this gives no new unimodality result. It does not prove
-Conjecture A, and `erdos_993` remains open.
 -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at
@@ -119,11 +100,7 @@ def mixedSpiderSeq (a t : ℕ) : ℕ :=
 independence sequence of $S(2^a, 1)$. For every $r < a$, with no rising-tie hypothesis,
 $$N_r = \sum_{t} (t - r)\, c_t\, c_r^{t}\, c_{r+1}^{a+1-t} \ge 0,$$
 equivalently $\mu(\lambda_r) \ge r$ at $\lambda_r = c_r / c_{r+1}$, in the notation of
-`erdos_993.variants.equal_spider_local_tie_balance`. [Re26, Proposition "Mixed-spider
-tie-fugacity", L649–L687] proves the tie-fugacity inequality for $S(2^a, 1)$, $a \ge 3$, at the
-leftmost mode $m$ (the case $r = m - 1$ here), by exact computation for $a \le 200$ and an
-asymptotic argument beyond; the statement here holds at every $r < a$. It does not prove
-Conjecture A of [Re26], and `erdos_993` remains open.
+`erdos_993.variants.equal_spider_local_tie_balance`.
 -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at
