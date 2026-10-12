@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Group structure via subgroup counts
@@ -42,6 +43,8 @@ if $\mathrm{cyc}(G) < 2^{t+2}$, then $G$ is solvable.
 * **OpenConjecture ID:** 1512
 -/
 
+@[expose] public section
+
 namespace Arxiv.«2604.08040»
 
 variable (G : Type*) [Group G] [Fintype G]
@@ -64,10 +67,18 @@ noncomputable def numPrimeFactors : ℕ :=
 **Conjecture 5.5** (Das, Dey, Sharma 2026):
 If a finite group `G` satisfies $\mathrm{cyc}(G) < 2^{t+2}$, where $t = \pi(G)$ is the
 number of distinct prime divisors of $|G|$, then `G` is solvable.
+
+This is Theorem 7.1 of the second version of the paper,
+[arXiv:2604.08040v2](https://arxiv.org/abs/2604.08040v2) (Das, Dey, Galindo, Sharma),
+proved there using the classification of finite simple groups.
+
+The Lean proof here by Kenta Kitamura instead uses only the Feit–Thompson theorem and the Gorenstein–Walter classification of groups with dihedral Sylow 2-subgroups, together with counting arguments on Sylow 2-subgroups and families of cyclic subgroups.
 -/
-@[category research open, AMS 20]
+@[category research solved, AMS 20,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/das-dey-sharma-conjecture-5-5/blob/7a2600dd6471536cf246ad8d78d756e130d2fe9e/lean/Conjecture55FC.lean#L15-L18"]
 theorem solvable_of_cyc_lt :
-    answer(sorry) ↔ ∀ (G : Type) [Group G] [Fintype G],
+    answer(True) ↔ ∀ (G : Type) [Group G] [Fintype G],
       cyc G < 2 ^ (numPrimeFactors G + 2) → Group.IsSolvable G := by
   sorry
 

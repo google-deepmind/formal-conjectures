@@ -13,14 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 172
 
-*Reference:* [erdosproblems.com/172](https://www.erdosproblems.com/172)
+*References:*
+- [erdosproblems.com/172](https://www.erdosproblems.com/172)
+- [OpenAI26] OpenAI, *Monochromatic finite sums and products in the positive integers*. OpenAI Math
+  Release preprint (September 2026).
+  [github.com/openai/math](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Monochromatic-finite-sums-and-products-in-the-positive-integers-September-23-2026/paper.pdf)
 -/
+
+@[expose] public section
 
 namespace Erdos172
 
@@ -28,8 +35,9 @@ namespace Erdos172
 Is it true that in any finite colouring of $\mathbb{N}$ there exist arbitrarily large finite $A$ such that all sums
 and products of distinct elements in $A$ are the same colour?
 -/
-@[category research open, AMS 5]
-theorem erdos_172 : answer(sorry) ↔
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/cadamcat/hindman-sums-products-lean4/blob/3064cac5f9133a968482886ab1c7a1d69c16207f/audit/Erdos172.lean#L18"]
+theorem erdos_172 : answer(True) ↔
     ∀ (n : ℕ) (color : ℕ → Fin n) (m), ∃ (A : Finset ℕ), A.card ≥ m ∧ ∃ c, ∀ (S : Finset A),
     S.Nonempty → color (∑ x ∈ S, x) = c ∧ color (∏ x ∈ S, x) = c := by
   sorry

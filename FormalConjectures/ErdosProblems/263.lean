@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 263
 
 *Reference:* [erdosproblems.com/263](https://www.erdosproblems.com/263)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
@@ -43,6 +46,16 @@ FormalConjectures/ErdosProblems/264.lean for another possible definition.
 def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
   (∀ n : ℕ, a n > 0) ∧
     StrictMono a ∧
+    (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
+      atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
+      Irrational (∑' n, 1 / (b n : ℝ)))
+
+/-- The nondecreasing version of `IsIrrationalitySequence`, as used by Koizumi [Ko25]: the sequence
+is positive and nondecreasing, and every positive sequence asymptotic to it has irrational
+reciprocal sum. -/
+def IsWeakIrrationalitySequence (a : ℕ → ℕ) : Prop :=
+  (∀ n : ℕ, a n > 0) ∧
+    Monotone a ∧
     (∀ b : ℕ → ℕ, (∀ n : ℕ, b n > 0) ∧
       atTop.Tendsto (fun n : ℕ => (a n : ℝ) / (b n : ℝ)) (𝓝 1) →
       Irrational (∑' n, 1 / (b n : ℝ)))
@@ -76,7 +89,7 @@ theorem erdos_263.parts.ii : answer(sorry) ↔
 A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_folklore.lean#L399"]
 theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
     (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
     Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
@@ -114,15 +127,34 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
   sorry
 
 /--
+The same folklore result with the growth hypothesis stated as an eventual lower bound
+$a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
+`erdos_263.variants.super_doubly_exponential`, this form also covers sequences such as
+$a_n = 2^{(n+1)!}$, for which the ratio $a_{n+1} / a_n^{2+\varepsilon}$ tends to $+\infty$ and the
+real `liminf` defaults to $0$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_super_doubly_exponential_eventual.lean#L515"]
+theorem erdos_263.variants.super_doubly_exponential_eventual (a : ℕ → ℕ)
+    (ha : ∀ n : ℕ, a n > 0)
+    (ha' : StrictMono a)
+    (ha'' : ∃ ε c : ℝ, 0 < ε ∧ 0 < c ∧
+      ∀ᶠ n in atTop, c * (a n : ℝ) ^ (2 + ε) ≤ (a (n + 1) : ℝ)) :
+    IsIrrationalitySequence a := by
+  sorry
+
+/--
 Koizumi [Ko25] showed that $a_n = \lfloor \alpha^{2^n} \rfloor$ is an irrationality sequence
-for all but countably many $\alpha > 1$.
+for all but countably many $\alpha > 1$, in the nondecreasing sense `IsWeakIrrationalitySequence`.
+The strictly increasing predicate would fail on the whole interval $1 < \alpha < 4/3$, where
+$a_0 = a_1 = 1$.
 
 [Ko25] Koizumi, J., Irrationality of the reciprocal sum of doubly exponential sequences,
        arXiv:2504.05933 (2025).
 -/
 @[category research solved, AMS 11]
 theorem erdos_263.variants.doubly_exponential_all_but_countable :
-    ∀ᶠ (α : ℝ) in .cocountable, α > 1 → IsIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
+    ∀ᶠ (α : ℝ) in .cocountable, α > 1 →
+      IsWeakIrrationalitySequence (fun n : ℕ => ⌊α ^ 2 ^ n⌋₊) := by
   sorry
 
 end Erdos263

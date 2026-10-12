@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Smallest $r$ such that (concatenation of $n$, $r$ times) $\cdot 10 + 1$ is prime
@@ -26,6 +28,8 @@ $n \cdot \sum_{i=0}^{r-1} (10^d)^i$, where $d$ is the number of digits of $n$.
 
 *References:*
 - [A086766](https://oeis.org/A086766)-/
+
+@[expose] public section
 
 namespace OeisA86766
 
@@ -52,7 +56,7 @@ theorem a_1 : a 1 = 1 := by
     constructor
     · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
-      have : (Nat.digits 10 1).length = 1 := by decide +native
+      have : (Nat.digits 10 1).length = 1 := by decide
       rw [this]
       norm_num
     · intro r hr
@@ -67,7 +71,7 @@ theorem a_1 : a 1 = 1 := by
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
-  have h_digits : (Nat.digits 10 2).length = 1 := by decide +native
+  have h_digits : (Nat.digits 10 2).length = 1 := by decide
   have h_least : IsLeast {r : ℕ | 0 < r ∧ ((2 * ∑ i ∈ Finset.range r, (10 ^ (Nat.digits 10
   2).length) ^ i) * 10 + 1).Prime} 3 := by
     constructor
@@ -102,7 +106,7 @@ theorem a_3 : a 3 = 1 := by
     constructor
     · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
-      have : (Nat.digits 10 3).length = 1 := by decide +native
+      have : (Nat.digits 10 3).length = 1 := by decide
       rw [this]
       norm_num
     · intro r hr
@@ -122,7 +126,7 @@ theorem a_4 : a 4 = 1 := by
     constructor
     · simp only [Set.mem_ofPred_eq]
       refine ⟨by omega, ?_⟩
-      have : (Nat.digits 10 4).length = 1 := by decide +native
+      have : (Nat.digits 10 4).length = 1 := by decide
       rw [this]
       norm_num
     · intro r hr

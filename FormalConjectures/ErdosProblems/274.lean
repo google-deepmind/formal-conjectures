@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 274
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 * [PMC7247885](https://pmc.ncbi.nlm.nih.gov/articles/PMC7247885/)
 * [arXiv:1804.11103](https://arxiv.org/abs/1804.11103)
 -/
+
+@[expose] public section
 
 open scoped Pointwise Cardinal
 
@@ -57,10 +60,9 @@ The conjectured answer is no: in every such exact covering, two of the subgroups
 the same cardinality.
 -/
 @[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∀ (G : Type*) [Group G],
-    1 < ENat.card G → ∀ (ι : Type*) [Fintype ι],
-    ∀ (P : Group.ExactCovering G ι), 1 < Fintype.card ι →
-    ∃ i j, i ≠ j ∧ #(P.parts i) = #(P.parts j) := by
+theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (_ : Group G),
+    1 < ENat.card G ∧ ∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
+    1 < Fintype.card ι ∧ ∀ i j, i ≠ j → #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
 /--

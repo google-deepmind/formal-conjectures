@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 867
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Fr93] Freud, R., *Adding numbers - on a problem of P. Erdős*. James Cook Mathematical
   Notes (1993), 6199-6202.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -62,13 +65,36 @@ Taking $A=(N/2,N]\cap \mathbb{N}$ shows $\lvert A\rvert \geq N/2-O(1)$ is possib
 theorem erdos_867.variants.lower_bound :
     ∃ C : ℝ, ∀ N : ℕ, ∃ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A ∧
       ((N : ℝ) / 2 - C ≤ (A.card : ℝ)) := by
-  sorry
+  -- Take `A = (N/2, N]`: any two of its elements already sum to more than `N`.
+  refine ⟨0, fun N => ⟨Finset.Icc (N / 2 + 1) N, ?_, ?_, ?_⟩⟩
+  · intro x hx
+    simp only [Finset.mem_Icc] at hx ⊢
+    omega
+  · intro m n hcard hmem
+    set T := Finset.Icc m n ∩ Finset.Icc (N / 2 + 1) N with hT
+    have hlow : ∀ x ∈ T, N / 2 + 1 ≤ x := by
+      intro x hx
+      simp only [hT, Finset.mem_inter, Finset.mem_Icc] at hx
+      omega
+    have hsum : T.card * (N / 2 + 1) ≤ ∑ a ∈ T, a := by
+      simpa [mul_comm] using Finset.card_nsmul_le_sum T _ _ hlow
+    have h2 : 2 * (N / 2 + 1) ≤ ∑ a ∈ T, a :=
+      le_trans (Nat.mul_le_mul_right _ hcard) hsum
+    simp only [Finset.mem_Icc] at hmem
+    omega
+  · rw [Nat.card_Icc, sub_zero]
+    have h2 : N + 1 - (N / 2 + 1) = N - N / 2 := by omega
+    rw [h2]
+    have h3 : N ≤ 2 * (N - N / 2) := by omega
+    have h4 : (N : ℝ) ≤ ((2 * (N - N / 2) : ℕ) : ℝ) := by exact_mod_cast h3
+    push_cast at h4
+    linarith
 
 /--
 Adenwalla has observed that
 $$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos867_erdos_867_variants_adenwalla.lean#L262"]
 theorem erdos_867.variants.adenwalla (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ N : ℕ in atTop, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
       (A.card : ℝ) ≤ (2 / 3 + ε) * (N : ℝ) := by

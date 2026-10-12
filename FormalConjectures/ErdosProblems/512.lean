@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 512
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [MPS81] McGehee, O. Carruth and Pigno, Louis and Smith, Brent, *Hardy's inequality and the
   $L^1$ norm of exponential sums*. Ann. of Math. (2) (1981), 613-618.
 -/
+
+@[expose] public section
 
 open scoped ExponentialSum
 
