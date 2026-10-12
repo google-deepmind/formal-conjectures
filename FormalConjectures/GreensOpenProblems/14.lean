@@ -38,6 +38,8 @@ public import FormalConjecturesUtil
   Advances in Applied Mathematics 44.3 (2010): 243-247.
 - [Ko15] Kouril, Michal. "Leveraging FPGA clusters for SAT computations." Parallel Computing:
   On the Road to Exascale (2015): 525-532.
+- [CCH23] Chowdhury, Md Solimul, Cayden R. Codel, and Marijn J. H. Heule. "A linear weight
+  transfer rule for local search." NASA Formal Methods (NFM 2023), Springer (2023).
 -/
 
 @[expose] public section
@@ -305,17 +307,19 @@ theorem W_3_28_eq : answer(sorry) ↔ W 3 28 = 827 := sorry
 @[category research solved, AMS 5 11]
 theorem W_3_29_lower : answer(True) ↔ W 3 29 ≥ 868 := sorry
 
-/-- [AKS14, Table 2] conjectures that $W(3, 29) = 868$. -/
-@[category research open, AMS 5 11]
-theorem W_3_29_eq : answer(sorry) ↔ W 3 29 = 868 := sorry
+/-- [AKS14, Table 2] conjectures that $W(3, 29) = 868$. This is false: Chowdhury, Codel, and Heule
+[CCH23, Section 6.3] found a good partition of $\{1, \ldots, 868\}$, so $W(3, 29) \geq 869$. -/
+@[category research solved, AMS 5 11]
+theorem W_3_29_eq : answer(False) ↔ W 3 29 = 868 := sorry
 
 /-- $W(3, 30) \ge 903$ from [AKS14, Table 2], proved by an explicit good partition. -/
 @[category research solved, AMS 5 11]
 theorem W_3_30_lower : answer(True) ↔ W 3 30 ≥ 903 := sorry
 
-/-- [AKS14, Table 2] conjectures that $W(3, 30) = 903$. -/
-@[category research open, AMS 5 11]
-theorem W_3_30_eq : answer(sorry) ↔ W 3 30 = 903 := sorry
+/-- [AKS14, Table 2] conjectures that $W(3, 30) = 903$. This is false: Chowdhury, Codel, and Heule
+[CCH23, Section 6.3] found a good partition of $\{1, \ldots, 903\}$, so $W(3, 30) \geq 904$. -/
+@[category research solved, AMS 5 11]
+theorem W_3_30_eq : answer(False) ↔ W 3 30 = 903 := sorry
 
 -- Further lower bounds for W(3,r) from [AKS14, Table 3], established by the good partitions
 -- (certificates) in [AKS14, Appendix A]; [AKS14] expects these can be improved.

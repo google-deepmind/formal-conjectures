@@ -111,10 +111,18 @@ see `erdos_522.variants.zero_one` for the alternate version.
 
 This is true. Proofs were posted on the erdosproblems.com forum in April 2026 [Ch26], [KZ26],
 and Lean proofs were given independently in September 2026 [Ka26], [Ki26].
+
+More generally, [Ka26] proves an almost-sure radial law: the number of roots in
+$\{\lvert z\rvert \le 1 + x/n\}$ is $\Phi(x)\,n + o(n)$ for every $x$, where
+$\Phi(x) = \tfrac12\left(1 + \coth x - \tfrac1x\right)$. This problem is the case $x = 0$.
 -/
 @[category research solved, AMS 12 60,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089"]
+    "https://github.com/KitaKen1/erdos-522-strong-law/blob/9374493206d192708ef50f90f2752aa0dc690e16/lean/Erdos522StrongLawFC.lean#L9086-L9089",
+  formal_proof using lean4 at
+    "https://github.com/chreia/erdos-522/blob/b3c1d7c089fcada59cc48cf664cd3d02157407ca/lean/Erdos522/Probability/IndependentCoefficientRadialLaws.lean#L39-L47",
+  formal_proof using lean4 at
+    "https://github.com/chreia/erdos-522/blob/57af1556d1b40f37d09d1270495acc0f282ff0fc/lean/Erdos522/Bridge/FormalConjectures.lean#L238-L253"]
 theorem erdos_522 :
     answer(True) ↔ ∀ {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (c : KacCoefficients ({-1, 1} : Set ℂ) Ω),

@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
     Math. (1963), 661--667.
  - [Ko65] Kövari, Thomas, A gap-theorem for entire functions of infinite order. Michigan Math. J.
     (1965), 133--140.
+ - [Ki26] Kitamura, Kenta, A Lean counterexample to the Fejér-gap variant of Erdős Problem 516.
+    [GitHub](https://github.com/KitaKen1/erdos-516-fejer-counterexample) (2026).
 -/
 
 @[expose] public section
@@ -65,9 +67,13 @@ theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → �
   sorry
 
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
-`limsup (fun r => ratio r f) atTop = 1`? -/
-@[category research open, AMS 30]
-theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
+`limsup (fun r => ratio r f) atTop = 1`?
+
+The answer is no: [Ki26] gives an explicit counterexample whose `limsup` is not `1`. -/
+@[category research solved, AMS 30,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-516-fejer-counterexample/blob/675d078d1c9fee4fcaa1c1a2eecde1c174853ff5/lean/Erdos516FejerFC.lean#L1304-L1314"]
+theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(False) ↔
     ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
