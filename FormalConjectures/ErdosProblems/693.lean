@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 693
@@ -22,10 +24,13 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/693](https://www.erdosproblems.com/693)
 - [Er79e] Erdős, Paul, *Some unconventional problems in number theory*.
-  Astérisque (1979), 73–82.
+  Astérisque **61** (1979), 73–82.
+  https://www.numdam.org/article/AST_1979__61__73_0.pdf
 
 See also [Erdős problem 446](https://www.erdosproblems.com/446).
 -/
+
+@[expose] public section
 
 namespace Erdos693
 
@@ -52,9 +57,13 @@ theorem divisorWindowSet_two_two : divisorWindowSet 2 2 = {3} := by
 
 /-- Let $k \geq 2$ and let $n$ be sufficiently large depending on $k$. Let
 $A = \{a_1 < a_2 < \cdots\}$ be the set of integers in $[n,n^k]$ which have a divisor in
-$(n,2n)$. Is $\max_i (a_{i+1} - a_i) \leq (\log n)^{O(1)}$? -/
+$(n,2n)$. Is $\max_i (a_{i+1} - a_i) \leq (\log n)^{O(1)}$?
+
+The exponent is independent of $k$, while the threshold for $n$ may depend on $k$
+[Er79e, p. 78].
+-/
 @[category research open, AMS 11]
-theorem erdos_693 : answer(sorry) ↔ ∀ k ≥ 2, ∃ C : ℕ, ∀ᶠ n in atTop,
+theorem erdos_693 : answer(sorry) ↔ ∃ C : ℕ, ∀ k ≥ 2, ∀ᶠ n in atTop,
     MaxGapAtMost (divisorWindowSet k n) ((Real.log (n : ℝ)) ^ C) := by
   sorry
 
