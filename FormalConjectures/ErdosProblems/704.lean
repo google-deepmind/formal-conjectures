@@ -116,6 +116,18 @@ theorem erdos_704.variants.raigorodskii :
   sorry
 
 /--
+Davies [Da26, Theorem 1.4] proved
+$$\chi(G_n) \geq (2 + o(1))^n,$$
+improving the bound of Raigorodskii (see `Erdos704.erdos_704.variants.raigorodskii`): for every
+$0 < c < 2$ we have $\chi(G_n) \geq c^n$ for all large $n$.
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_704.variants.davies_lower :
+    ∀ c ∈ Set.Ioo (0 : ℝ) 2, ∀ᶠ n : ℕ in atTop,
+      ∀ k : ℕ, (unitDistanceGraph n).Colorable k → c ^ n ≤ (k : ℝ) := by
+  sorry
+
+/--
 Larman and Rogers [LaRo72] proved
 $$\chi(G_n) \leq (3 + o(1))^n.$$
 Prosanov [Pr20] has given an alternative proof of this bound.
@@ -133,7 +145,7 @@ improving the bound of Larman and Rogers (see `Erdos704.erdos_704.variants.larma
 (The abstract of [Da26] prints $3\sqrt{3}/4$; Theorem 1.5 has $3\sqrt{3}/2 \approx 2.598$.)
 -/
 @[category research solved, AMS 5 52]
-theorem erdos_704.variants.davies :
+theorem erdos_704.variants.davies_upper :
     ∀ C > 3 * Real.sqrt 3 / 2, ∀ᶠ n : ℕ in atTop,
       ∃ k : ℕ, (unitDistanceGraph n).Colorable k ∧ (k : ℝ) ≤ C ^ n := by
   sorry
@@ -143,7 +155,7 @@ Larman and Rogers [LaRo72] conjecture that the truth may be
 $$\chi(G_n) = (2^{3/2} + o(1))^n,$$
 that is, $\chi(G_n)^{1/n} \to 2^{3/2}$.
 
-This is false: by `Erdos704.erdos_704.variants.davies` [Da26] we have
+This is false: by `Erdos704.erdos_704.variants.davies_upper` [Da26] we have
 $\limsup \chi(G_n)^{1/n} \leq 3\sqrt{3}/2 < 2^{3/2}$. Whether the limit exists remains open
 (`Erdos704.erdos_704.parts.ii`).
 -/
