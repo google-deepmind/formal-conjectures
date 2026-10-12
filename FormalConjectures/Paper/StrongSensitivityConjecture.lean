@@ -34,11 +34,16 @@ paper of Nisan and Szegedy, where the sensitivity conjecture first appeared,
 already speculated that a *quadratic* upper bound might be the correct
 relation. On the lower bound side, Rubinstein
 (https://link.springer.com/article/10.1007/BF01200762) constructed Boolean functions
-exhibiting the first quadratic separation. The best currently
-known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
+exhibiting the first quadratic separation. The best gap known before [OAI26],
+due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), was
 `bs(f) ≥ (2/3)⋅s(f)^2`.
 
+In September 2026 an internal OpenAI model disproved the quadratic bound [OAI26]: it
+constructs total Boolean functions with `bs(f) / s(f)^2` arbitrarily large.
+
 *References:*
+* [OAI26] [A superquadratic separation between sensitivity and block sensitivity](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-superquadratic-separation-between-sensitivity-and-block-sensitivity-September-25-2026/paper.pdf)
+  by OpenAI, OpenAI Math Release preprint (2026)
 * [Induced Subgraphs of Hypercubes and a Proof of the Sensitivity Conjecture](https://arxiv.org/abs/1907.00847)
   by Hao Huang (see Section 3, Concluding Remarks)
 * [Variations on the Sensitivity Conjecture](https://arxiv.org/abs/1011.0354)
@@ -98,10 +103,14 @@ for every Boolean function `f : {0,1}^n → {0,1}`,
 We call this the *strong* sensitivity conjecture because the original sensitivity
 conjecture only asked for a polynomial bound in terms of `s(f)`. Huang's
 celebrated result (often called the sensitivity theorem) gives a quartic bound,
-`bs(f) ≤ s(f)^4`, thereby settling the original conjecture. -/
-@[category research open, AMS 68]
-theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) :
-    blockSensitivity f ≤ sensitivity f ^ 2 := by
+`bs(f) ≤ s(f)^4`, thereby settling the original conjecture.
+
+The quadratic bound is false. This was disproved by an internal OpenAI model in September 2026
+[OAI26]; see the linked Lean proof. -/
+@[category research solved, AMS 68, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sensitivity/Separation.lean#L12"]
+theorem strong_sensitivity_conjecture :
+    ¬ ∀ (n : ℕ) (f : (Fin n → Bool) → Bool), blockSensitivity f ≤ sensitivity f ^ 2 := by
   sorry
 
 

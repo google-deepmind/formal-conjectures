@@ -47,7 +47,8 @@ def LargestPrimeRepeated (u v : ℕ) : Prop :=
 \cdot 7^2$, and the largest prime $7$ appears with exponent $2$. -/
 @[category test, AMS 11]
 theorem largestPrimeRepeated_48_50 : LargestPrimeRepeated 48 50 := by
-  sorry
+  unfold LargestPrimeRepeated
+  decide +kernel
 
 /-- If the condition holds, then $v < 2u$.
 
