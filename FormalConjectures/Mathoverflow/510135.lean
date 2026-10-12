@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
 - [mathoverflow/510135](https://mathoverflow.net/questions/510135)
   asked by user [*Luc Duponcheel*](https://mathoverflow.net/users/513435/lucdupatstackexchange)
 
-- [A note on the generalized n-queens problem](https://sysmath.cjoe.ac.cn/jssc/CN/PDF/44564#page=2)
+- [A Generalization of the n-Queen Problem, by Le Maohua, Li Weixuan and Edward T. Wang](https://sysmath.cjoe.ac.cn/jssc/CN/PDF/44564#page=2)
   by *Mao-Hua Le, Kang-Di Li and Zhen-Fa Wang* (1990)
 -/
 
