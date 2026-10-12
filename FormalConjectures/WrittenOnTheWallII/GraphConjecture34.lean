@@ -49,6 +49,8 @@ Let $G$ be the tree on $39$ vertices formed by a vertex with three
 pendant leaves, joined by a path of five edges to the root of a perfect binary tree of depth
 four. Then $\operatorname{path}(G) = 11$, while $C$ and $M$ are singletons whose distance sums
 are $154$ and $266$, so the bound is $\lceil (154 + 266) / 38 \rceil = 12$.
+
+Lean formalization by Wentao Li, with AI assistance.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII34.lean#L350"]
