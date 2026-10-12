@@ -58,12 +58,21 @@ theorem erdos_887.variants.rosenfeld_infinite : ∃ C > (0 : ℝ),
   sorry
 
 /--
-Erdős and Rosenfeld, ask whether $4$ is the best possible $K$ for the infinitude of $n$
-with (at least) $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
+Erdős and Rosenfeld ask whether $4$ is the best possible $K$ for the infinitude of $n$
+with (at least) $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$, for some
+constant $C > 0$. The constant cannot be taken to be $1$. Distinct divisors $d > \sqrt{n}$ give
+distinct integers $d + n/d$, and a divisor in the interval has
+$2\sqrt{n} < d + n/d < 2\sqrt{n} + C^2$, so for $C = 1$ there is at most one such divisor.
+
+The answer is no. In a [forum post](https://www.erdosproblems.com/forum/thread/887#post-7374)
+(July 2026), m-czech showed that for $C = 31$ infinitely many $n$ have $5$ divisors in the
+interval. The construction is $n = (x^2 - 1)(x^2 - 4)(x^2 - 16)(x^2 - 49)$ with
+$z^2 = 56 x^2 + 65$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos887.lean#L538"]
 theorem erdos_887.variants.rosenfeld_4 :
-    IsGreatest {K | ∃ C > (0 : ℝ),
+    ¬ IsGreatest {K | ∃ C > (0 : ℝ),
       Infinite {n : ℕ | K ≤ #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n }}} 4 := by
   sorry
 
