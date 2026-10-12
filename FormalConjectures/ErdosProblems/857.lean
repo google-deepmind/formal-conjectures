@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 857
@@ -25,6 +26,8 @@ For fixed `n, k`, let `m(n, k)` be minimal such that every family of subsets of 
 of size at least `m(n, k)` contains a `k`-sunflower.
 The problem asks to estimate `m(n, k)`, ideally asymptotically.
 -/
+
+@[expose] public section
 
 open Filter
 

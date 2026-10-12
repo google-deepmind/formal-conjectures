@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 105
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [SzTr83] Szemerédi, Endre and Trotter, Jr., William T., *Extremal problems in discrete
   geometry*. Combinatorica (1983), 381-392.
 -/
+
+@[expose] public section
 
 open EuclideanGeometry
 

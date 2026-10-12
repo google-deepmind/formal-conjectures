@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 65
@@ -35,6 +36,8 @@ Every induced forest must omit at least one vertex from each of the two vertex-d
 triangles, so it has at most $15$ vertices. Conversely, deleting one non-path vertex
 from each triangle leaves a tree on $15$ vertices.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture65
 
@@ -198,7 +201,7 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero
 /-- In the complete graph `K₃`, min degree equals max degree (regular graph). -/
 @[category test, AMS 5]
 example : (⊤ : SimpleGraph (Fin 3)).minDegree = (⊤ : SimpleGraph (Fin 3)).maxDegree := by
-  decide +native
+  decide
 
 /-- `distMin G S` is always nonneg. -/
 @[category test, AMS 5]
