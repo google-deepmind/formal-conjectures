@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 411
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Ste25] S. Steinerberger, *On an iterated arithmetic function problem of Erdős and Graham*,
   arXiv:2504.08023 (2025), §2.1.
 -/
+
+@[expose] public section
 
 namespace Erdos411
 
@@ -61,9 +64,9 @@ Cambie conjectures (comments on the problem page) that the only solutions have $
 the orbit of $n$ reaches $2^l p$ for some $l \geq 1$ and $p \in \{2, 3, 5, 7, 35, 47\}$.
 
 The membership is stated for an iterate `g^[j] p.1` rather than for `p.1` itself. Requiring it of
-the seed would be strictly stronger and false: `(18, 2)` is a solution whose odd part is `9`, so
+the seed would be strictly stronger and false: $(18, 2)$ is a solution whose odd part is $9$, so
 it is excluded by any condition imposed directly on the seed, while `g^[1] 18 = 24 = 2 ^ 3 * 3`
-lies in the family. Taking `j = 0` recovers the seed case.
+lies in the family. Taking $j = 0$ recovers the seed case.
 -/
 @[category research open, AMS 11]
 theorem erdos_411.variants.cambie : answer(sorry) ↔
