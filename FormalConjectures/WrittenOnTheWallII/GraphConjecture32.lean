@@ -48,6 +48,10 @@ in $M$.
 The conjecture is false, the authors present a counterexample: "The path on 5 vertices
 is a counterexample, path = 5, distavg(A) = 4 and the average of eccentricity of maximum
 degree vertices is 8/3."
+
+Independent Lean formalization by Wentao Li, with AI assistance. An earlier Lean proof
+is recorded in the Epoch review archived in
+[tadamcz/fc-review-results](https://github.com/tadamcz/fc-review-results/blob/971290dd3e0e4dce063f98feaa8ecb9e51acd5ec/data/782312817c/files/WrittenOnTheWallII/GraphConjecture32.json).
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII32.lean#L114"]
