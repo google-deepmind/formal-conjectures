@@ -121,8 +121,8 @@ theorem erdos_554.variants.upper_bound :
 /--
 Axenovich, Cames van Batenburg, Janzer, Michel and Rundström [ACJMR26, Theorem 1.1] proved that
 $$R_k(C_{2n+1}) \leq (4n-2)^k k^{k/n}+1$$
-for all $n, k \geq 1$, which improves the exponent of the upper bound in
-`Erdos554.erdos_554.variants.upper_bound`.
+for all $n, k \geq 1$. For $n \geq 2$ this improves the upper bound in
+`Erdos554.erdos_554.variants.upper_bound`, since $k^{k/n}$ grows much more slowly than $(k+2)!$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_554.variants.acjmr :
