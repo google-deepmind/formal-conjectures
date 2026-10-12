@@ -37,14 +37,6 @@ open Filter Finset EuclideanGeometry
 
 namespace Erdos654
 
-/-- `NoFourConcyclic A` means that no four distinct points of $A$ lie on a common circle.
-
-In the plane, `Cospherical` means lying on a common circle. Four distinct collinear points are
-never cospherical, so collinear points are allowed. Stated for `Set ℝ²`; a `Finset` argument
-coerces. -/
-def NoFourConcyclic (A : Set ℝ²) : Prop :=
-  ∀ T ⊆ A, T.ncard = 4 → ¬Cospherical T
-
 /--
 Let $f(n)$ be such that, given any $x_1,\ldots,x_n\in \mathbb{R}^2$ with no four points on a
 circle, there exists some $x_i$ with at least $f(n)$ many distinct distances to the other $x_j$.
