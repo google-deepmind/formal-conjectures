@@ -43,7 +43,9 @@ namespace Erdos626
 exactly $k$ and girth $> m$, that is, no cycle of length $\leq m$.
 
 The girth is `SimpleGraph.egirth`, which is `⊤` for an acyclic graph. The value `sSup ∅ = 0`
-for $n < k$ affects only finitely many $n$.
+for $n < k$ affects only finitely many $n$. For $k \leq 2$ the set is unbounded whenever an
+acyclic graph on $n$ vertices with chromatic number $k$ exists, and then `sSup` is also $0$; this
+case is not used below, where $k \geq 4$.
 -/
 noncomputable def g (k n : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ G : SimpleGraph (Fin n), G.chromaticNumber = k ∧ (m : ℕ∞) < G.egirth}
@@ -59,7 +61,15 @@ noncomputable def h (m n : ℕ) : ℕ :=
 $h^{(m)}(n) = n$. -/
 @[category test, AMS 5]
 theorem h_of_le_two (m n : ℕ) (hm : m ≤ 2) : h m n = n := by
-  sorry
+  unfold h
+  apply IsGreatest.csSup_eq
+  refine ⟨⟨⊤, ?_, by simp [SimpleGraph.chromaticNumber_top]⟩, ?_⟩
+  · exact lt_of_lt_of_le (by exact_mod_cast (by omega : m < 3))
+      (⊤ : SimpleGraph (Fin n)).three_le_egirth
+  · rintro c ⟨G, -, hG⟩
+    have hle := G.chromaticNumber_le_card
+    rw [hG, Fintype.card_fin] at hle
+    exact_mod_cast hle
 
 /--
 Let $k \geq 4$ and let $g_k(n)$ denote the largest $m$ such that there is a graph on $n$
@@ -80,8 +90,9 @@ theorem erdos_626.parts.i : answer(sorry) ↔
 /--
 Kostochka [Ko88] proved that for $k \geq 4$
 $$g_k(n) \geq \frac{1}{4\log k}\log n.$$
-The bound is usually stated for the girth itself, while $g_k(n)$ here is the largest $m$ below
-the girth, so we state it with an $\varepsilon$ of slack: for every $\varepsilon > 0$ and all
+Kostochka's theorem bounds the girth, and $g_k(n)$ is one less than the largest possible girth.
+The statement below is a consequence of his theorem, not the theorem itself: for every
+$\varepsilon > 0$ and all
 sufficiently large $n$,
 $g_k(n) \geq \left(\frac{1}{4\log k} - \varepsilon\right)\log n$.
 -/
