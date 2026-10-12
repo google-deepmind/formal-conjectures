@@ -27,6 +27,10 @@ public import FormalConjecturesUtil
 - [EGIP96] Erdős, P. and Graham, S. W. and Ivić, A. and Pomerance, C., *On the number of divisors
   of $n!$*. Analytic number theory, Vol. 1 (Allerton Park, IL, 1995), Progr. Math. 138, Birkhäuser
   Boston (1996), 337-355.
+
+In the solved variants, $K(n)$ is the least $K \geq 1$ with $\tau((n+K)!) \geq 2\tau(n!)$, so that
+$K(n) > h$ if and only if $F(h, n) < 2$. These variants state Corollaries 2 and 3 of [EGIP96] as
+printed; the stronger claims on erdosproblems.com are not stated.
 -/
 
 @[expose] public section
@@ -121,8 +125,8 @@ theorem erdos_420.parts.iii : answer(sorry) ↔
 
 /--
 Erdős, Graham, Ivić and Pomerance proved [EGIP96, Corollary 2] that $K(n)/\log n$ is unbounded,
-where $K(n)$ is the least $K \geq 1$ with $\tau((n+K)!) \geq 2\tau(n!)$. Equivalently, for every
-$c > 0$ we have $F(c\log n, n) < 2$ for infinitely many $n$. In particular
+with $K(n)$ as in the module docstring. Equivalently, for every $c > 0$ we have
+$F(c\log n, n) < 2$ for infinitely many $n$. In particular
 $\liminf F(c\log n, n) \leq 2$.
 -/
 @[category research solved, AMS 11]
@@ -133,7 +137,7 @@ theorem erdos_420.variants.log_frequently_lt_two :
 /--
 Erdős, Graham, Ivić and Pomerance proved [EGIP96, Corollary 2] that for infinitely many $n$,
 $$K(n) > \frac{\log n \cdot \log\log n \cdot \log\log\log\log n}{9(\log\log\log n)^3},$$
-where $K(n)$ is the least $K \geq 1$ with $\tau((n+K)!) \geq 2\tau(n!)$. Equivalently,
+with $K(n)$ as in the module docstring. Equivalently,
 $F(f,n) < 2$ for infinitely many $n$, where $f(n)$ is the right-hand side.
 -/
 @[category research solved, AMS 11]
@@ -145,8 +149,8 @@ theorem erdos_420.variants.rankin_frequently_lt_two :
 
 /--
 Erdős, Graham, Ivić and Pomerance proved [EGIP96, Corollary 3] that for all sufficiently large
-$n$ we have $K(n) < n^{4/9}$, where $K(n)$ is the least $K \geq 1$ with
-$\tau((n+K)!) \geq 2\tau(n!)$. Hence $F(n^{4/9}, n) \geq 2$ for all large $n$.
+$n$ we have $K(n) < n^{4/9}$, with $K(n)$ as in the module docstring. Hence
+$F(n^{4/9}, n) \geq 2$ for all large $n$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_420.variants.pow_four_ninths :
