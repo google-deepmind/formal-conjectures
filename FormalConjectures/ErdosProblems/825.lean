@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 825
 
 *Reference:* [erdosproblems.com/825](https://www.erdosproblems.com/825)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 
@@ -48,10 +51,21 @@ $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$, then we
 must have $C > 2$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_825.variants.necessary_cond (C : ℝ) (hC : 0 < C)
+theorem erdos_825.variants.necessary_cond (C : ℝ) (_hC : 0 < C)
     (h : ∀ (n : ℕ) (_ : σ 1 n > C * n),
         ∃ s ⊆ n.properDivisors, n = s.sum id) :
     2 < C := by
-  sorry
+  by_contra hle
+  have hC2 : C ≤ 2 := not_lt.mp hle
+  have hsig : σ 1 70 = 144 := by
+    rw [ArithmeticFunction.sigma_one_apply]
+    decide
+  have hgt : σ 1 70 > C * (70 : ℕ) := by
+    rw [hsig]
+    push_cast
+    linarith
+  obtain ⟨s, hs, hsum⟩ := h 70 hgt
+  have hall : ∀ t ∈ (Nat.properDivisors 70).powerset, t.sum id ≠ 70 := by decide +kernel
+  exact hall s (Finset.mem_powerset.mpr hs) hsum.symm
 
 end Erdos825
