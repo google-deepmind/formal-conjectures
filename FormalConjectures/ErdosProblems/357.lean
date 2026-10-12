@@ -13,14 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 357
 
-*Reference:* [erdosproblems.com/357](https://www.erdosproblems.com/357)
+*References:*
+- [erdosproblems.com/357](https://www.erdosproblems.com/357)
+- [He86] Hegyvári, Norbert, On consecutive sums in sequences. Acta Math. Hungar. (1986), 193--200.
 -/
+
+@[expose] public section
 
 namespace Erdos357
 
@@ -131,9 +136,10 @@ noncomputable def g (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ a : Fin k → ℕ, (Set.range a ⊆ Set.Icc 1 n) ∧ HasDistinctSums a}
 
 /-- Let $g(n)$ be the maximal $k$ such that there exist integers $1 \le a_1, \dotsc, a_k \le n$
-such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. It is known that
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. Hegyvári [He86] proved
+that
 $$\left(\frac 1 3 + o(1) \right)n \leq g(n) \leq \left(\frac 2 3 + o(1) \right)n.$$ -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
     o' =o[atTop] (1 : ℕ → ℝ) ∧
       ∀ᶠ n in atTop, (g n : ℝ) ∈ Set.Icc ((1 / 3 + o n) * n) ((2 / 3 + o' n)*n) := by

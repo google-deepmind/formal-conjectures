@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 516
@@ -24,7 +25,11 @@ import FormalConjecturesUtil
     Math. (1963), 661--667.
  - [Ko65] Kövari, Thomas, A gap-theorem for entire functions of infinite order. Michigan Math. J.
     (1965), 133--140.
+ - [Ki26] Kitamura, Kenta, A Lean counterexample to the Fejér-gap variant of Erdős Problem 516.
+    [GitHub](https://github.com/KitaKen1/erdos-516-fejer-counterexample) (2026).
 -/
+
+@[expose] public section
 
 open scoped Nat
 open Filter Real Set
@@ -42,26 +47,33 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos516.lean#L4812"]
 theorem erdos_516 {f : ℂ → ℂ} {n : ℕ → ℕ}
     (hn : HasFabryGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) (hf : OfFiniteOrder f) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
-/-- Let `f = ∑ aₖzⁿₖ` be an entire function such that `nₖ > k (log k) ^ (2 + c)`.
-Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65]. -/
+/-- Let `f = ∑ aₖzⁿₖ` be an entire function with strictly increasing exponents such that
+`nₖ > k (log k) ^ (2 + c)`. Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Ko65].
+Without `StrictMono n`, repeated exponents let nonzero coefficients cancel, and `f = 0` satisfies
+the other hypotheses. -/
 @[category research solved, AMS 30]
-theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ}
+theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → ℕ} (hmono : StrictMono n)
     (hn : ∃ c > (0 : ℝ), ∀ k, n k > k * log k ^ (2 + c)) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)) :
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
-`limsup (fun r => ratio r f) atTop = 1`? -/
-@[category research open, AMS 30]
-theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(sorry) ↔
+`limsup (fun r => ratio r f) atTop = 1`?
+
+The answer is no: [Ki26] gives an explicit counterexample whose `limsup` is not `1`. -/
+@[category research solved, AMS 30,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-516-fejer-counterexample/blob/675d078d1c9fee4fcaa1c1a2eecde1c174853ff5/lean/Erdos516FejerFC.lean#L1304-L1314"]
+theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(False) ↔
     ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by

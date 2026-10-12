@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1022
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Wo13b] Wood, D. R., *Hypergraph colouring and degeneracy*. arXiv:1310.2972 (2013).
 -/
 
+@[expose] public section
+
 namespace Erdos1022
 
 /-- `SparseImpliesPropertyB t c` asserts that every finite family `F` of finite sets, all of
@@ -35,7 +38,7 @@ size at least `t`, such that for every nonempty finite set `X` there are `< c * 
 `A ∈ F` with `A ⊆ X`, has property B. -/
 def SparseImpliesPropertyB (t : ℕ) (c : ℝ) : Prop :=
   ∀ F : Finset (Finset ℕ), (∀ A ∈ F, t ≤ A.card) →
-    (∀ X : Finset ℕ, X.Nonempty → ((F.filter (· ⊆ X)).card : ℝ) < c * (X.card : ℝ)) →
+    (∀ X : Finset ℕ, X.Nonempty → ((F.hypergraphInduce X).card : ℝ) < c * (X.card : ℝ)) →
     F.HasPropertyB
 
 /--
