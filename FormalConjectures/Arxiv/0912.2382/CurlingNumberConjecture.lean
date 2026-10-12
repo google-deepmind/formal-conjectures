@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Curling Number Conjecture
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **The Curling Number Conjecture**
 by *Benjamin Chaffin and N. J. A. Sloane*
 -/
+
+@[expose] public section
 
 namespace Arxiv.«0912.2382»
 

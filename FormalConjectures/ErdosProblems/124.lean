@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 124
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/124](https://www.erdosproblems.com/124)
 - [BEGL96] Burr, S. A. and Erdős, P. and Graham, R. L. and Li, W. Wen-Ching, Complete sequences of sets of integer powers. Acta Arith. (1996), 133-138.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Pointwise
@@ -89,17 +93,22 @@ lemma erdos124.converse {D : Finset ℕ} (hD₃ : ∀ d ∈ D, 3 ≤ d)
 
 /--
 For any $\varepsilon > 0$, there exists an infinite sequence $2 \le d_0 < d_1 < \dots$ such
-that all sufficiently large integer can be written as $\sum_{i \in I} a_i$ where $a_i$ has only
-the digits $0, 1$ when written in base $d_i$,
-but $\sum_{i \in I} \frac 1{d_i - 1} \le \varepsilon$.
+that the series $\sum_{i=0}^{\infty} \frac{1}{d_i - 1}$ converges to a value at most
+$\varepsilon$, and yet for every $k \ne 0$ all sufficiently large integers can be written as
+$\sum_{i \in I} a_i$ for some finite set $I$, where each $a_i$ is divisible by $d_i^k$ and has
+only the digits $0, 1$ when written in base $d_i$.
 
-Proved by Melfi [Me04]
+The restriction $k \ne 0$ excludes the degenerate representation of $n$ as a sum of $n$ copies
+of $1 = d_i^0$ taken from $n$ distinct bases.
+
+Proved by Melfi [Me04, Proposition 1]
 -/
 @[category research solved, AMS 11]
 lemma erdos124.melfi_construction {ε : ℝ} (hε : 0 < ε) :
-    ∃ d : ℕ → ℕ, StrictMono d ∧ ∑' i, (d i - 1 : ℝ)⁻¹ ≤ ε ∧ ∀ᶠ n in atTop,
-      ∃ (I : Finset ℕ) (a : ℕ → ℕ), (∀ i ∈ I, a i ∈ sumsOfDistinctPowers (d i) 0) ∧
-        ∑ i ∈ I, a i = n :=
+    ∃ d : ℕ → ℕ, StrictMono d ∧ 2 ≤ d 0 ∧
+      Summable (fun i ↦ (d i - 1 : ℝ)⁻¹) ∧ ∑' i, (d i - 1 : ℝ)⁻¹ ≤ ε ∧ ∀ k ≠ 0, ∀ᶠ n in atTop,
+      ∃ (I : Finset ℕ) (a : ℕ → ℕ), (∀ i ∈ I, a i ∈ sumsOfDistinctPowers (d i) k) ∧
+        ∑ i ∈ I, a i = n := by
   sorry
 
 end Erdos124

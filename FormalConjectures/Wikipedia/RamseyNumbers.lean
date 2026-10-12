@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ramsey numbers
@@ -39,6 +40,8 @@ $2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForM
 - [OEIS A212954](https://oeis.org/A212954)
 - [MathWorld: Ramsey Number](https://mathworld.wolfram.com/RamseyNumber.html)
 -/
+
+@[expose] public section
 
 namespace RamseyNumbers
 
@@ -73,15 +76,16 @@ theorem IsGraphRamsey.symm (n k l : ℕ) :
   · simpa [IsGraphRamsey, and_comm, and_left_comm, and_assoc] using h (Gᶜ)
   · simpa [IsGraphRamsey, and_comm, and_left_comm, and_assoc] using h (Gᶜ)
 
-/--
-The (graph) Ramsey number `R(k,l)` is the least natural number `n` such that `IsGraphRamsey n k l`
-holds.
--/
-noncomputable def graphRamseyNumber (k l : ℕ) : ℕ :=
-  sInf {n : ℕ | IsGraphRamsey n k l}
+/-- The shared Ramsey number agrees with the clique-free formulation. -/
+@[category API, AMS 5]
+theorem classicalRamsey_eq_sInf (k l : ℕ) :
+    SimpleGraph.classicalRamsey k l = sInf {n : ℕ | IsGraphRamsey n k l} := by
+  classical
+  simp only [SimpleGraph.classicalRamsey, SimpleGraph.graphRamsey,
+    IsGraphRamsey, not_and_or, SimpleGraph.not_cliqueFree_iff_top_isContained]
 
 -- Notation used in the literature.
-notation "R(" k ", " l ")" => graphRamseyNumber k l
+local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
 /--
 The open problem: determine the Ramsey number $R(5,5)$.
@@ -109,6 +113,84 @@ independent set of size $5$.
 @[category research solved, AMS 5]
 theorem ramsey_number_five_five_upper_bound :
     IsGraphRamsey 46 5 5 := by
+  sorry
+
+/- ## Other small Ramsey numbers
+
+Besides $R(5,5)$, several small Ramsey numbers are known exactly, while others (such as $R(6,6)$)
+remain open. The values below are collected in the dynamic survey [Rad] (see also
+[OEIS A212954]): the exact diagonal value $R(4,4) = 18$, the exact off-diagonal values $R(3,k)$
+for $3 \le k \le 9$, and $R(4,5) = 25$. -/
+
+/-- $R(3,3) = 6$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_three : R(3, 3) = 6 := by
+  sorry
+
+/-- $R(3,4) = 9$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_four : R(3, 4) = 9 := by
+  sorry
+
+/-- $R(3,5) = 14$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_five : R(3, 5) = 14 := by
+  sorry
+
+/-- $R(3,6) = 18$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_six : R(3, 6) = 18 := by
+  sorry
+
+/-- $R(3,7) = 23$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_seven : R(3, 7) = 23 := by
+  sorry
+
+/-- $R(3,8) = 28$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_eight : R(3, 8) = 28 := by
+  sorry
+
+/-- $R(3,9) = 36$ (Grinstead–Roberts). -/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_nine : R(3, 9) = 36 := by
+  sorry
+
+/-- The diagonal Ramsey number $R(4,4) = 18$. -/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_four : R(4, 4) = 18 := by
+  sorry
+
+/-- $R(4,5) = 25$ (McKay–Radziszowski). -/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_five : R(4, 5) = 25 := by
+  sorry
+
+/--
+The diagonal Ramsey number $R(6,6)$ is unknown. The best known bounds recorded in [Rad] are
+$102 \le R(6,6) \le 165$.
+-/
+@[category research open, AMS 5]
+theorem ramsey_number_six_six : R(6, 6) = answer(sorry) := by
+  sorry
+
+/--
+Lower bound $102 \le R(6,6)$, equivalently: there exists a graph on $101$ vertices with no
+$6$-clique and no independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_six_six_lower_bound :
+    ∃ G : SimpleGraph (Fin 101), G.CliqueFree 6 ∧ (Gᶜ).CliqueFree 6 := by
+  sorry
+
+/--
+Upper bound $R(6,6) \le 165$, i.e. every graph on $165$ vertices contains a $6$-clique or an
+independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_six_six_upper_bound :
+    IsGraphRamsey 165 6 6 := by
   sorry
 
 end RamseyNumbers

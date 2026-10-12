@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Jacobian conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
+
+@[expose] public section
 
 namespace JacobianConjecture
 

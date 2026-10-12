@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 868
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [LaLa26] Larsen and Larsen, [Erdős problem 868](https://github.com/Larsen-Daniel/Erdos-868/blob/main/868.pdf) (2026)
 -/
 
+@[expose] public section
+
 open Filter
 
 open scoped Pointwise
@@ -31,10 +34,11 @@ open scoped Pointwise
 namespace Erdos868
 
 /-- The number of ways in which a natural `n` can be written as the sum of
-`o` members of the set `A`. -/
+`o` members of the set `A`. Representations are counted as nondecreasing tuples, so that
+two representations differing only in the order of their summands are counted once. -/
 noncomputable
 def ncard_add_repr (A : Set ℕ) (o : ℕ) (n : ℕ) : ℕ :=
-  { a : Fin o → ℕ | Set.range a ⊆ A ∧ ∑ i, a i = n }.ncard
+  { a : Fin o → ℕ | Monotone a ∧ Set.range a ⊆ A ∧ ∑ i, a i = n }.ncard
 
 /-- Let $A$ be an additive basis of order $2$, let $f(n)$ denote the number of ways in which
 $n$ can be written as the sum of two elements from $A$. If $f(n) \to \infty$ as $n \to \infty$, then
@@ -63,18 +67,20 @@ theorem erdos_868.parts.ii :
       B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
-/-- Erdős and Nathanson proved that this is true if $f(n) > (\log \frac{4}{3})^{-1} \log n$ for
-all large $n$. -/
+/-- Erdős and Nathanson proved that this is true if $f(n) > c \log n$ for all large $n$, for
+some fixed constant $c > (\log \frac{4}{3})^{-1}$. -/
 @[category research solved, AMS 5 11]
 theorem erdos_868.variants.fixed_ε :
-    answer(True) ↔ ∀ (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder 2 →
-      (∀ᶠ (n : ℕ) in atTop, (Real.log (4 / 3))⁻¹ * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
+    answer(True) ↔ ∀ᵉ (A : Set ℕ) (c > (Real.log (4 / 3))⁻¹), A.IsAsymptoticAddBasisOfOrder 2 →
+      (∀ᶠ (n : ℕ) in atTop, c * Real.log n < ncard_add_repr A 2 n) → ∃ B ⊆ A,
       B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/868.lean#L132"]
 theorem erdos_868.variants.Hartter_Nathanson (o : ℕ) (ho : 1 < o) : ∃ (A : Set ℕ),
     A.IsAsymptoticAddBasisOfOrder o ∧ ∀ B ⊆ A, B.IsAsymptoticAddBasisOfOrder o →
     ∃ b ∈ B, (B \ {b}).IsAsymptoticAddBasisOfOrder o := by
