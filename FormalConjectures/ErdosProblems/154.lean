@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 154
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., *On Sum Sets of Sidon Sets, I*.
   Journal of Number Theory (1994), 329-347.
 -/
+
+@[expose] public section
 
 open Filter Finset
 
@@ -50,7 +53,7 @@ modulus $m\geq 2$, the proportion of elements of $A_k+A_k$ congruent to $i\pmod 
 divided by $\lvert A_k+A_k\rvert$) tends to $1/m$ for every residue $i<m$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/willblair0708/lean-proofs/blob/main/ErdosProblems/Erdos154Sumset.lean"]
+  formal_proof using lean4 at "https://github.com/willblair0708/lean-proofs/blob/f297d710018270c66b296082766334974260bcbc/ErdosProblems/Erdos154/Sumset.lean#L555"]
 theorem erdos_154 : answer(True) ↔
     ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
       Tendsto (fun k => (N k : ℝ)) atTop atTop →

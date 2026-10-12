@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«28»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 1145
@@ -24,6 +25,8 @@ import FormalConjectures.ErdosProblems.«28»
 - [erdosproblems.com/28](https://www.erdosproblems.com/28)
 - [erdosproblems.com/1145](https://www.erdosproblems.com/1145)
 -/
+
+@[expose] public section
 
 open Set Filter Pointwise Topology AdditiveCombinatorics
 

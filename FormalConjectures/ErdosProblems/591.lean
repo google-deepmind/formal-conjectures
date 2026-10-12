@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 591
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/591](https://www.erdosproblems.com/591)
 - [Sc10] Schipperus, Rene, Countable partition ordinals. Ann. Pure Appl. Logic (2010), 1195-1215.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 

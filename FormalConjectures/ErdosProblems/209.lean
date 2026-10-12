@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 209
@@ -30,13 +31,11 @@ import FormalConjecturesUtil
   plane*. C. R. Math. Acad. Sci. Paris (2016), 551-554.
 -/
 
+@[expose] public section
+
 open EuclideanGeometry Affine
 
 namespace Erdos209
-
-/-- A line in the plane: an affine subspace whose direction is one-dimensional. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
 
 /-- The number of lines from `A` that pass through the point `p`. -/
 noncomputable def pointMultiplicity (A : Finset (AffineSubspace ℝ ℝ²)) (p : ℝ²) : ℕ :=

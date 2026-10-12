@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 250
 
 *Reference:* [erdosproblems.com/250](https://www.erdosproblems.com/250)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 
@@ -38,7 +41,8 @@ The answer is yes, as shown by Nesterenko [Ne96].
 [Ne96] Nesterenko, Yu V., _Modular functions and transcendence questions_,
 Mat. Sb. 187 *9* (1996), 1319--1348.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos250.lean#L97"]
 theorem erdos_250  : (∀ x, HasSum (fun (n : ℕ) => σ 1 n / (2 : ℝ) ^ n) x → Irrational x) ↔
     answer(True):= by
   sorry
