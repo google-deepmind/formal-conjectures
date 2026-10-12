@@ -94,6 +94,7 @@ and $k \ge 1$.
 
 Proved in Lean by Jensen Kohlmeyer and Liam Kruer, extending the positive-index
 proof by Epoch Research.
+Independently verified by Wentao Li, with AI assistance.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/JENW1N/complete-math-solutions/blob/8b9db1d8c0ded5398d5e4e4bbdf8f2ec14ce5c23/proofs/BalaA141057Conjecture.lean#L1416"]
