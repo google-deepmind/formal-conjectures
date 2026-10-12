@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 89
@@ -34,6 +35,8 @@ Lean 4 code in this file was drafted with assistance from OpenAI Codex.
 The mathematical content and references are the author's own work.
 -/
 
+@[expose] public section
+
 open Filter
 open EuclideanGeometry
 
@@ -45,7 +48,8 @@ determines $\gg \frac{n}{\sqrt{\log n}}$ many distinct distances.
 -/
 @[category research open, AMS 52]
 theorem erdos_89 :
-    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log.sqrt) =O[atTop]
+      (fun n => (minimalDistinctDistances ℝ² n : ℝ)) := by
   sorry
 
 /--
@@ -54,7 +58,8 @@ many distinct distances.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.n_dvd_log_n :
-    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop] (fun n => (minimalDistinctDistances n : ℝ)) := by
+    (fun (n : ℕ) => n/(n : ℝ).log) =O[atTop]
+      (fun n => (minimalDistinctDistances ℝ² n : ℝ)) := by
   sorry
 
 /--
@@ -65,7 +70,7 @@ $O(\frac{n}{\sqrt{\log n}})$.
 -/
 @[category research solved, AMS 52]
 theorem erdos_89.variants.grid_upper_bound :
-    (fun n => (minimalDistinctDistances n : ℝ)) =O[atTop]
+    (fun n => (minimalDistinctDistances ℝ² n : ℝ)) =O[atTop]
       (fun (n : ℕ) => n/(n : ℝ).log.sqrt) := by
   sorry
 

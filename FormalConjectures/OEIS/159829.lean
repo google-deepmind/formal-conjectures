@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $m$ such that $n^3 + m^3 + 1$ is prime
@@ -23,6 +24,8 @@ $a(n)$ is the smallest natural number $m \ge 1$ such that $n^3 + m^3 + 1$ is pri
 
 *References:*
 - [A159829](https://oeis.org/A159829)-/
+
+@[expose] public section
 
 namespace OeisA159829
 

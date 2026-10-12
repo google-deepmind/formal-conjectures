@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 115
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   Soc. (1994), 191-193.
 - [Po59a] Pommerenke, Ch., *On the derivative of a polynomial*. Michigan Math. J. (1959), 373-375.
 -/
+
+@[expose] public section
 
 open Filter
 

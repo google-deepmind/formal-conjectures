@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Tug of war score between prime gap increases and decreases
@@ -25,6 +26,8 @@ if the $k$-th prime gap is greater (resp. less) than the previous prime gap.
 
 *References:*
 - [A092243](https://oeis.org/A092243)-/
+
+@[expose] public section
 
 namespace OeisA92243
 

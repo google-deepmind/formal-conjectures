@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 672
 
 *Reference:* [erdosproblems.com/672](https://www.erdosproblems.com/672)
 -/
+
+@[expose] public section
 
 namespace Erdos672
 
@@ -31,15 +34,17 @@ def Erdos672With (k l : ℕ) : Prop :=
 
 /--
 Can the product of an arithmetic progression of positive integers $n, n + d, ..., n + (k - 1)d$
-of length ≥ 4, with $(n, d) = 1$, be a perfect power?
+of length $k ≥ 4$, with $(n, d) = 1$, be a perfect power?
+
+Erdős believed not, i.e. that `Erdos672With k l` holds for all $k ≥ 4$ and $l > 1$.
 -/
 @[category research open, AMS 11]
 theorem erdos_672 :
-    answer(sorry) ↔ ∀ᵉ (k) (l > 1), k ≥ 4 → Erdos672With k l := by
+    answer(sorry) ↔ ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/herakles-dev/erdos672-four-squares-lean/blob/68adec55180c6103ac5511a5c91c84b25a5044f9/Erdos672/Statement.lean#L41"]
 lemma erdos_672.variants.euler :
     Erdos672With 4 2 := by
   sorry
