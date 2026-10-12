@@ -51,7 +51,7 @@ $$f(n,t) \gg \frac{t}{\log t}.$$
 -/
 @[category research open, AMS 11]
 theorem erdos_461 : answer(sorry) ↔
-    ∃ c : ℝ, 0 < c ∧ ∀ n t : ℕ, 1 ≤ t → c * (t : ℝ) ≤ (f n t : ℝ) := by
+    ∃ c : ℝ, 0 < c ∧ ∀ n t : ℕ, c * (t : ℝ) ≤ (f n t : ℝ) := by
   sorry
 
 /-- The $t$-smooth component is $t$-smooth in the sense of `Nat.smoothNumbers`. -/
@@ -64,6 +64,13 @@ theorem smoothComponent_mem_smoothNumbers (t n : ℕ) : smoothComponent t n ∈ 
 theorem smoothComponent_prime_pow {p : ℕ} (hp : p.Prime) (k t : ℕ) :
     smoothComponent t (p ^ k) = if p < t then p ^ k else 1 := by
   by_cases h : p < t <;> simp [smoothComponent, hp.primeFactorsList_pow, h]
+
+/-- For $t = 0$ the interval $[n+1, n]$ is empty, so $f(n,0) = 0$ and the bound in `erdos_461`
+holds trivially. -/
+@[category test, AMS 11]
+theorem f_zero (n : ℕ) : f n 0 = 0 := by
+  simp only [f, Nat.add_zero, Finset.Icc_eq_empty_of_lt (Nat.lt_add_one n), Finset.image_empty,
+    Finset.card_empty]
 
 /-- For $t = 1$ the interval $[n+1, n+1]$ has one element, so $f(n,1) = 1$. -/
 @[category test, AMS 11]
