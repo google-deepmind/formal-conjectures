@@ -118,8 +118,8 @@ theorem erdos_554.variants.upper_bound :
   sorry
 
 /--
-Axenovich, Cames van Batenburg, Janzer, Michel and Rundström [ACJMR26] proved that
-$$R_k(C_{2n+1}) \leq (4n)^k k^{k/n}$$
+Axenovich, Cames van Batenburg, Janzer, Michel and Rundström [ACJMR26, Theorem 1.1] proved that
+$$R_k(C_{2n+1}) \leq (4n-2)^k k^{k/n}+1$$
 for all $n, k \geq 1$, which improves the exponent of the upper bound in
 `Erdos554.erdos_554.variants.upper_bound`.
 -/
@@ -127,7 +127,7 @@ for all $n, k \geq 1$, which improves the exponent of the upper bound in
 theorem erdos_554.variants.acjmr :
     ∀ n : ℕ, 1 ≤ n → ∀ k : ℕ, 1 ≤ k →
       (multicolourRamsey k (cycleGraph (2 * n + 1)) : ℝ) ≤
-        (4 * n : ℝ) ^ k * (k : ℝ) ^ ((k : ℝ) / n) := by
+        (4 * n - 2 : ℝ) ^ k * (k : ℝ) ^ ((k : ℝ) / n) + 1 := by
   sorry
 
 /--
