@@ -72,7 +72,31 @@ classes. -/
 @[category test, AMS 11]
 theorem lt_primorial_of_isCoveredByResidues {x y : ℕ} (h : Green46.IsCoveredByResidues x y) :
     y < primorial x := by
-  sorry
+  obtain ⟨a, ha⟩ := h
+  refine lt_of_not_ge fun hy ↦ ?_
+  let t := (Finset.range (x + 1)).filter Nat.Prime
+  have hs : ∀ p ∈ t, (fun p : ℕ ↦ p) p ≠ 0 := fun p hp ↦ (Finset.mem_filter.1 hp).2.ne_zero
+  have pp : Set.Pairwise (t : Set ℕ) (Function.onFun Nat.Coprime fun p : ℕ ↦ p) :=
+    fun p hp q hq hpq ↦
+      (Nat.coprime_primes (Finset.mem_filter.1 hp).2 (Finset.mem_filter.1 hq).2).2 hpq
+  -- By the Chinese remainder theorem, `k ≡ a p + 1 (mod p)` for every prime `p ≤ x`.
+  let k := Nat.chineseRemainderOfFinset (fun p ↦ a p + 1) (fun p ↦ p) t hs pp
+  have hk : (k : ℕ) < primorial x := Nat.chineseRemainderOfFinset_lt_prod _ _ hs pp
+  -- Shift `k` into `[1, primorial x]` without changing its residues.
+  obtain ⟨m, hm1, hmP, hmk⟩ :
+      ∃ m, 1 ≤ m ∧ m ≤ primorial x ∧ ∀ p ∈ t, m ≡ k [MOD p] := by
+    by_cases h0 : (k : ℕ) = 0
+    · refine ⟨primorial x, primorial_pos x, le_rfl, fun p hp ↦ ?_⟩
+      have hp' := Finset.mem_filter.1 hp
+      rw [h0]
+      exact Nat.modEq_zero_iff_dvd.2
+        (hp'.2.dvd_primorial_iff.2 (Nat.lt_succ_iff.1 (Finset.mem_range.1 hp'.1)))
+    · exact ⟨k, Nat.one_le_iff_ne_zero.2 h0, hk.le, fun p _ ↦ Nat.ModEq.refl _⟩
+  obtain ⟨p, hpx, hp, hpm⟩ := ha m (Finset.mem_Icc.2 ⟨hm1, hmP.trans hy⟩)
+  have hpt : p ∈ t := Finset.mem_filter.2 ⟨Finset.mem_range.2 (Nat.lt_succ_of_le hpx), hp⟩
+  have h1 : a p ≡ a p + 1 [MOD p] := hpm.symm.trans ((hmk p hpt).trans (k.2 p hpt))
+  have hd : p ∣ 1 := by simpa using (Nat.modEq_iff_dvd' (Nat.le_add_right (a p) 1)).1 h1
+  exact hp.not_dvd_one hd
 
 /-- With the single prime $2$, one class covers $1$ but no class covers both $1$ and $2$, so
 $Y(2) = 1$. -/
