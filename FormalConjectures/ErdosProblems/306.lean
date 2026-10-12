@@ -13,15 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
 # Erdős Problem 306
 
-*Reference:* [erdosproblems.com/306](https://www.erdosproblems.com/306)
+*References:*
+- [erdosproblems.com/306](https://www.erdosproblems.com/306)
+- [Ta26] [Tang, Yuren, *A Lean 4 formalisation of Erdős Problem
+  306*](https://github.com/Yuren-Tang/erdos-306), which derives the statement below from two
+  results of Rosser and Schoenfeld, *Approximate formulas for some functions of prime numbers*,
+  Illinois J. Math. **6** (1962), 64-94, declared there as axioms
 -/
+
+@[expose] public section
 
 open ArithmeticFunction
 open scoped omega Omega

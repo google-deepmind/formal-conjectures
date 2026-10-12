@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beaver Math Olympiad (BMO)
@@ -37,6 +38,8 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra web page](https://bbchallenge.org/antihydra)
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
+
+@[expose] public section
 
 namespace BeaverMathOlympiad
 
@@ -134,7 +137,9 @@ some positive integer $k$?
 The machine was found and informally proven not to halt by [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at
+    "https://github.com/gotrevor/collatz-cryptid/blob/62a4b7b0c0af9400098694cb5c5e65120ad4dc67/lean/Collatz/BMO/Problem3.lean#L296"]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -163,7 +168,9 @@ is equivalent to the non-termination of 2-state 5-symbol Turing machine
 The machine was informally proven not to halt [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at
+    "https://github.com/gotrevor/collatz-cryptid/blob/62a4b7b0c0af9400098694cb5c5e65120ad4dc67/lean/Collatz/BMO/Problem4.lean#L106"]
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)

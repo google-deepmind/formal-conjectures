@@ -79,3 +79,36 @@ structure IsLucasWieferichPrime (a b : ℤ) (p : ℕ) : Prop where
   odd : Odd p
   not_dvd : ¬(p : ℤ) ∣ a ^ 2 - 4 * b
   modeq : LucasSequence.U a b (p - J(a^2 - 4*b | p)).toNat ≡ 0 [ZMOD (p^2)]
+
+/-- The parameter $P$ divides every even-indexed term of the Lucas sequence $U(P, Q)$. -/
+theorem LucasSequence.dvd_U_two_mul (P Q : ℤ) (k : ℕ) : P ∣ LucasSequence.U P Q (2 * k) := by
+  induction k with
+  | zero => simp [LucasSequence.U]
+  | succ k ih =>
+    rw [Nat.mul_succ]
+    simp only [LucasSequence.U]
+    exact dvd_sub (dvd_mul_right P _) (dvd_mul_of_dvd_right ih Q)
+
+/-- If $p^2 \mid a$, then every odd prime $p$ not dividing $a^2 - 4b$ is a Lucas–Wieferich prime
+associated with $(a, b)$: the index $p - \left(\tfrac{a^2-4b}{p}\right)$ is even, and $a$ divides
+every even-indexed term of $U(a, b)$. -/
+theorem IsLucasWieferichPrime.of_sq_dvd {a b : ℤ} {p : ℕ} (hp : p.Prime) (hodd : Odd p)
+    (hpd : ¬(p : ℤ) ∣ a ^ 2 - 4 * b) (ha : (p : ℤ) ^ 2 ∣ a) : IsLucasWieferichPrime a b p := by
+  refine ⟨hp, hodd, hpd, ?_⟩
+  rw [Int.modEq_zero_iff_dvd]
+  have hgcd : (a ^ 2 - 4 * b).gcd (p : ℤ) = 1 := by
+    have hpnat : ¬p ∣ (a ^ 2 - 4 * b).natAbs := fun h ↦ hpd (Int.natCast_dvd.mpr h)
+    rw [Int.gcd_eq_natAbs, Int.natAbs_natCast, Nat.gcd_comm]
+    exact hp.coprime_iff_not_dvd.mpr hpnat
+  obtain ⟨k, hk⟩ := hodd
+  rcases jacobiSym.eq_one_or_neg_one hgcd with hJ | hJ
+  · have hindex : ((p : ℤ) - J(a ^ 2 - 4 * b | p)).toNat = 2 * k := by
+      rw [hJ, hk]
+      omega
+    rw [hindex]
+    exact ha.trans (LucasSequence.dvd_U_two_mul a b k)
+  · have hindex : ((p : ℤ) - J(a ^ 2 - 4 * b | p)).toNat = 2 * (k + 1) := by
+      rw [hJ, hk]
+      omega
+    rw [hindex]
+    exact ha.trans (LucasSequence.dvd_U_two_mul a b (k + 1))

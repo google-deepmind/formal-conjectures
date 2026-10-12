@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Weak tiling problems
@@ -26,6 +28,8 @@ Problems 4.1, 4.2, and 4.3 from [arxiv/2506.23631](https://arxiv.org/abs/2506.23
 See also `FormalConjectures.Wikipedia.Fuglede` for Fuglede's spectral set conjecture, which
 motivates the study of weak tilings.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set ENNReal NNReal
 
@@ -74,10 +78,16 @@ def HasBoundedDensity (Λ : Set ℝ) : Prop :=
   ∃ C : ℕ, ∀ x : ℝ, (Λ ∩ Set.Ioo x (x + 1)).Finite ∧ (Λ ∩ Set.Ioo x (x + 1)).ncard ≤ C
 
 /-- **Problem 4.1.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
-    a weak tiling measure for $\Omega$. Must $\mathrm{supp}(\nu)$ have bounded density? -/
-@[category research open, AMS 42 46]
+    a weak tiling measure for $\Omega$. Must $\mathrm{supp}(\nu)$ have bounded density?
+
+The answer is positive: Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
+([weak-tiling-bounded-density](https://github.com/KitaKen1/weak-tiling-bounded-density)).
+-/
+@[category research solved, AMS 42 46,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/weak-tiling-bounded-density/blob/5d10499e1932cc017b7aaf8e931926dc969bd8f7/lean/WeakTilingProblem41FC.lean#L11484-L11487"]
 theorem problem_4_1 :
-    answer(sorry) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
+    answer(True) ↔ ∀ (Ω : Set ℝ) (_ : IsFiniteUnionOfIntervals Ω)
       (ν : Measure ℝ) (_ : IsWeakTilingMeasure Ω ν), HasBoundedDensity ν.support := by
   sorry
 
