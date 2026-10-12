@@ -14,13 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 468
 
-*Reference:* [erdosproblems.com/468](https://www.erdosproblems.com/468)
+*References:*
+- [erdosproblems.com/468](https://www.erdosproblems.com/468)
+- [Ko26] Kovač, V., *An improved bound in Erdős problem #1054* (2026).
+  https://web.math.pmf.unizg.hr/~vjekovac/files/Erdos_problem_1054.pdf
+- [Ku] Kumchev, A., *On the Piatetski-Shapiro–Vinogradov theorem*.
+  https://tigerweb.towson.edu/akumchev/a3.pdf
 -/
+
+@[expose] public section
 
 namespace Erdos468
 
@@ -72,15 +81,29 @@ theorem erdos_468.parts.i :
 
 /--
 If $f(N)$ is the minimal $n$ such that $N\in D_n$, is it true that $f(N)=o(N)$?
+Here the minimal-preimage condition is restricted to representable values of $N$.
+
+The answer is no. Kovač's counting bound [Ko26, Lemma 2 and the proof of Theorem 1] gives
+upper density $O(\delta^4)$ for represented values with minimal preimage at most $\delta N$.
+Including the divisor $1$ shifts each prefix sum by one, so the bound applies here.
+Vinogradov's counting theorem [Ku, equation (1)] implies that all sufficiently large odd
+$N$ are representable: they are sums of three distinct primes greater than $\sqrt{N}$.
+Thus the represented values have positive lower density, which rules out $f(N)=o(N)$.
 -/
-@[category research open, AMS 11]
-theorem erdos_468.parts.ii : answer(sorry) ↔ Erdos468MinimalPreimageLittleO := by
+@[category research solved, AMS 11]
+theorem erdos_468.parts.ii : answer(False) ↔ Erdos468MinimalPreimageLittleO := by
   sorry
 
-/-- The "perhaps just for almost all $N$" variant from the problem page. -/
-@[category research open, AMS 11]
+/--
+Perhaps just for almost all $N$?
+
+The answer is no by Kovač's counting bound [Ko26, Lemma 2 and the proof of Theorem 1].
+After shifting prefix sums by one to account for the omitted divisor $1$, this bound rules
+out a set of density one on which the minimal preimage is $o(N)$.
+-/
+@[category research solved, AMS 11]
 theorem erdos_468.variants.almost_all :
-    answer(sorry) ↔ Erdos468MinimalPreimageLittleOAlmostAll := by
+    answer(False) ↔ Erdos468MinimalPreimageLittleOAlmostAll := by
   sorry
 
 end Erdos468
