@@ -22,6 +22,8 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/704](https://www.erdosproblems.com/704)
+- [Da26] Davies, J., *Measurable obstructions for unmeasurable colourings*. Preprint (2026).
+  [arXiv:2610.12301](https://arxiv.org/abs/2610.12301)
 - [Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*.
   Combinatorica (1981), 25-42.
 - [FrWi81] Frankl, P. and Wilson, R. M., *Intersection theorems with geometric consequences*.
@@ -125,13 +127,29 @@ theorem erdos_704.variants.larman_rogers :
   sorry
 
 /--
+Davies [Da26, Theorem 1.5] proved
+$$\chi(G_n) \leq (3\sqrt{3}/2 + o(1))^n,$$
+improving the bound of Larman and Rogers (see `Erdos704.erdos_704.variants.larman_rogers`).
+(The abstract of [Da26] prints $3\sqrt{3}/4$; Theorem 1.5 has $3\sqrt{3}/2 \approx 2.598$.)
+-/
+@[category research solved, AMS 5 52]
+theorem erdos_704.variants.davies :
+    ∀ C > 3 * Real.sqrt 3 / 2, ∀ᶠ n : ℕ in atTop,
+      ∃ k : ℕ, (unitDistanceGraph n).Colorable k ∧ (k : ℝ) ≤ C ^ n := by
+  sorry
+
+/--
 Larman and Rogers [LaRo72] conjecture that the truth may be
 $$\chi(G_n) = (2^{3/2} + o(1))^n,$$
 that is, $\chi(G_n)^{1/n} \to 2^{3/2}$.
+
+This is false: by `Erdos704.erdos_704.variants.davies` [Da26] we have
+$\limsup \chi(G_n)^{1/n} \leq 3\sqrt{3}/2 < 2^{3/2}$. Whether the limit exists remains open
+(`Erdos704.erdos_704.parts.ii`).
 -/
-@[category research open, AMS 5 52]
+@[category research solved, AMS 5 52]
 theorem erdos_704.variants.larman_rogers_conjecture :
-    Tendsto
+    ¬ Tendsto
       (fun n : ℕ ↦ ((unitDistanceGraph n).chromaticNumber.toNat : ℝ) ^ (1 / (n : ℝ)))
       atTop (𝓝 ((2 : ℝ) ^ ((3 : ℝ) / 2))) := by
   sorry
