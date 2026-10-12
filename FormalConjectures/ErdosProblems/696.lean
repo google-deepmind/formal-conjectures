@@ -38,21 +38,21 @@ the auxiliary predicate $P$.
 def ValidChain (n : ℕ) (P : ℕ → Prop) (s : List ℕ) : Prop :=
   s.IsChain (fun a b => a < b ∧ b ≡ 1 [MOD a]) ∧ ∀ d ∈ s, d ∣ n ∧ P d
 
+open Classical in
 /--
 $h(n)$ is the largest $\ell$ such that there is a sequence of primes $p_1<\cdots < p_\ell$
 all dividing $n$ with $p_{i+1}\equiv 1\pmod{p_i}$.
 -/
-noncomputable def h (n : ℕ) : ℕ := by
-  classical
-  exact Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n Nat.Prime s) n
+noncomputable def h (n : ℕ) : ℕ :=
+  Nat.findGreatest (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n Nat.Prime s) n
 
+open Classical in
 /--
 $H(n)$ is the largest $u$ such that there is a sequence of integers $d_1<\cdots < d_u$
 all dividing $n$ with $d_{i+1}\equiv 1\pmod{d_i}$.
 -/
-noncomputable def H (n : ℕ) : ℕ := by
-  classical
-  exact Nat.findGreatest
+noncomputable def H (n : ℕ) : ℕ :=
+  Nat.findGreatest
     (fun k => ∃ s : List ℕ, s.length = k ∧ ValidChain n (fun _ => True) s) n
 
 /-- The prime-chain definition has the expected value at $n = 1$. -/
@@ -65,11 +65,8 @@ theorem h_one : h 1 = 0 := by
   subst k
   rintro ⟨s, hslen, hvalid⟩
   obtain ⟨p, rfl⟩ := List.length_eq_one_iff.mp hslen
-  rw [ValidChain] at hvalid
-  have hp := hvalid.2 p (by simp)
-  have hp_one : p = 1 := Nat.dvd_one.mp hp.1
-  subst p
-  exact Nat.not_prime_one hp.2
+  suffices p = 1 by grind [Nat.not_prime_one, ValidChain]
+  exact Nat.dvd_one.mp (hvalid.2 p (by simp)).1
 
 /--
 Is it true that $H(n)/h(n)\to \infty$ for almost all $n$?
