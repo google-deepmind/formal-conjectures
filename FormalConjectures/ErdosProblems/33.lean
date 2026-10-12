@@ -13,16 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 33
 
 *Reference:* [erdosproblems.com/33](https://www.erdosproblems.com/33)
 -/
+
+@[expose] public section
 variable {α : Type} [AddCommMonoid α]
-open Classical Set
+open Set
 open scoped goldenRatio
 
 namespace Erdos33
@@ -44,11 +47,14 @@ theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTo
   sorry
 
 /--
-Erdos observed that this value is finite and > 1.
+Erdos observed that this value is finite and > 1. This records the lower bound `> 1`,
+i.e. that `1` is a strict lower bound for every admissible `A`; the finiteness is
+`erdos_33.variants.vanDoorn`.
 -/
 @[category research solved, AMS 11]
-theorem erdos_33.variants.one_mem_lowerBounds : ∃ A, AdditiveBasisCondition A ∧
-    1 < Filter.atTop.limsup (fun N => (A ∩ Icc 1 N).ncard / √N) := by
+theorem erdos_33.variants.one_mem_lowerBounds :
+    1 < ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
+      (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) := by
   sorry
 
 /--

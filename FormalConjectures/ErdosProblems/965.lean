@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 965
@@ -30,6 +31,8 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour?
 - [SWCol] Sokoup Dániel and Weiss, William, Sums and Anti-Ramsey Colourings of ℝ. https://danieltsoukup.github.io/academic/finset_colouring.pdf
 -/
 
+@[expose] public section
+
 namespace Erdos965
 
 /--
@@ -39,18 +42,24 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.
 In [Ko16] Péter Komjáth constructed a counterexample.
 The same result was proven independently in [SWCol] by Sokoup and Weiss.
 -/
-@[category research solved, AMS 3 5]
+@[category research solved, AMS 3 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos965.lean#L42"]
 theorem erdos_965 :
     answer(False) ↔ ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧
       ∀ᵉ (a ∈ A) (b ∈ A) (c ∈ A) (d ∈ A), a ≠ b → c ≠ d → f (a + b) = f (c + d) := by
   sorry
 
 /--
-In fact, in both [Ko16] and [SWCol] a generalized example for $k$-sums is constructed.
+For every 2-coloring of ℝ, is there some $k ≥ 2$ and an uncountable set $A ⊆ ℝ$ such that all
+sums $a_1 + \cdots + a_k$ of $k$ distinct elements of $A$ have the same colour?
+
+In fact, in both [Ko16] and [SWCol] a single 2-coloring of ℝ is constructed such that for every
+$k ≥ 2$ and every uncountable $A ⊆ ℝ$ the sums of $k$ distinct elements of $A$ are not
+monochromatic.
 -/
 @[category research solved, AMS 3 5]
 theorem erdos_965.variants.generalization : answer(False) ↔
-     ∀ᵉ (k ≥ 2), ∀ f : ℝ → Fin 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
+    ∀ f : ℝ → Fin 2, ∃ k ≥ 2, ∃ A : Set ℝ, ¬ A.Countable ∧ ∀ s t : Finset ℝ,
       ↑s ⊆ A → ↑t ⊆ A → s.card = k → t.card = k → f (s.sum id) = f (t.sum id) := by
   sorry
 

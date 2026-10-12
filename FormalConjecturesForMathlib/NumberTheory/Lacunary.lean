@@ -49,3 +49,7 @@ lemma IsLacunaryReal.eventually_lt {a : ℕ → ℝ} (ha : IsLacunaryReal a)
     (hpos : ∀ᶠ k in atTop, 0 < a k) : ∀ᶠ k in atTop, a k < a (k + 1) := by
   obtain ⟨c, hc, hlac⟩ := ha
   filter_upwards [hlac, hpos] with k hk hp using by nlinarith
+
+def IsSublacunary (m : ℕ → ℕ) : Prop :=
+  Filter.Tendsto (fun n => (m (n + 1) : ℝ) / m n) Filter.atTop (nhds 1)
+

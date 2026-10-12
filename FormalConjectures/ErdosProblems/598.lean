@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 598
@@ -22,11 +23,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/598](https://www.erdosproblems.com/598)
 -/
 
+@[expose] public section
+
 namespace Erdos598
 
 open Cardinal
-
-variable (m : Type*) [Infinite m]
 
 /--
 Let $\kappa = (2^{\aleph_0})^+$. This is the successor cardinal of the continuum.
@@ -41,6 +42,7 @@ $X \subseteq m$ with $|X| = \kappa$ contains subsets of all possible colours?
 -/
 @[category research open, AMS 3 5]
 theorem erdos_598 : answer(sorry) ↔
+    ∀ (m : Type*) [Infinite m],
     ∃ c : { s : Set m // s.Countable } → κ.out,
     ∀ X : Set m, #X = κ →
     c '' { s : { sub : Set m // sub.Countable } | s.1 ⊆ X } = Set.univ := by

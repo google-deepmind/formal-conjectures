@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 562
 
 *Reference:* [erdosproblems.com/562](https://www.erdosproblems.com/562)
 -/
+
+@[expose] public section
 
 open Combinatorics Filter Real
 open scoped Asymptotics
@@ -37,7 +41,7 @@ where $\log_{r-1}$ denotes the $(r-1)$-fold iterated logarithm.
 -/
 @[category research open, AMS 5]
 theorem erdos_562 : answer(sorry) ↔
-    ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) ~[atTop] (fun n ↦ (n : ℝ)) := by
+    ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) =Θ[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 end Erdos562

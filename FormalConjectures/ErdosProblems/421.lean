@@ -13,24 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 421
 
-*Reference:* [erdosproblems.com/421](https://www.erdosproblems.com/421)
+*References:*
+- [erdosproblems.com/421](https://www.erdosproblems.com/421)
+- [Pratt26] K. Pratt, [A proof of Erdős Problem 421](https://www.erdosproblems.com/static/421-Pratt.pdf).
 -/
+
+@[expose] public section
 
 open Set
 
 namespace Erdos421
 
 /--
-Is there a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
-$\prod_{u \le i \le v} d_i$ are distinct? -/
-@[category research open, AMS 11]
-theorem erdos_421 : answer(sorry) ↔
+There exists a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
+$\prod_{u \le i \le v} d_i$ are distinct. This was solved affirmatively; see [Pratt26]. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos421.lean#L121"]
+theorem erdos_421 : answer(True) ↔
     ∃ (d : ℕ → ℕ), StrictMono d ∧ 1 ≤ d 0 ∧ HasDensity (Set.range d) 1 ∧
     {(u, v) : ℕ × ℕ | u ≤ v}.InjOn fun (u, v) => ∏ i ∈ Finset.Icc u v, d i := by
   sorry

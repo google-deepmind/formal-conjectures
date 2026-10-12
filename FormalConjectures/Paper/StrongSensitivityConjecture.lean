@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Strong Sensitivity Conjecture (`bs(f) ≤ s(f)^2`)
@@ -33,11 +34,16 @@ paper of Nisan and Szegedy, where the sensitivity conjecture first appeared,
 already speculated that a *quadratic* upper bound might be the correct
 relation. On the lower bound side, Rubinstein
 (https://link.springer.com/article/10.1007/BF01200762) constructed Boolean functions
-exhibiting the first quadratic separation. The best currently
-known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
+exhibiting the first quadratic separation. The best gap known before [OAI26],
+due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), was
 `bs(f) ≥ (2/3)⋅s(f)^2`.
 
+In September 2026 an internal OpenAI model disproved the quadratic bound [OAI26]: it
+constructs total Boolean functions with `bs(f) / s(f)^2` arbitrarily large.
+
 *References:*
+* [OAI26] [A superquadratic separation between sensitivity and block sensitivity](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-superquadratic-separation-between-sensitivity-and-block-sensitivity-September-25-2026/paper.pdf)
+  by OpenAI, OpenAI Math Release preprint (2026)
 * [Induced Subgraphs of Hypercubes and a Proof of the Sensitivity Conjecture](https://arxiv.org/abs/1907.00847)
   by Hao Huang (see Section 3, Concluding Remarks)
 * [Variations on the Sensitivity Conjecture](https://arxiv.org/abs/1011.0354)
@@ -46,9 +52,11 @@ known gap, due to Ambainis and Sun (https://arxiv.org/abs/1108.3494), is
   by Noam Nisan, and Mario Szegedy (see Section 4, Open Problems)
 -/
 
+@[expose] public section
+
 namespace StrongSensitivityConjecture
 
-open Finset Function Classical
+open Finset Function
 
 section Sensitivity
 
@@ -80,6 +88,7 @@ def IsValidBlockConfig (f : (Fin n → Bool) → Bool) (x : Fin n → Bool)
 /-- Local block sensitivity bs(f,x),
 maximum size of a collection of sensitive, disjoint blocks for `f` at `x`. -/
 noncomputable def blockSensitivityAt (f : (Fin n → Bool) → Bool) (x : Fin n → Bool) : ℕ :=
+  open scoped Classical in
   Finset.sup {cB | IsValidBlockConfig f x cB} card
 
 /-- Global block sensitivity of `f`,
@@ -94,19 +103,24 @@ for every Boolean function `f : {0,1}^n → {0,1}`,
 We call this the *strong* sensitivity conjecture because the original sensitivity
 conjecture only asked for a polynomial bound in terms of `s(f)`. Huang's
 celebrated result (often called the sensitivity theorem) gives a quartic bound,
-`bs(f) ≤ s(f)^4`, thereby settling the original conjecture. -/
-@[category research open, AMS 68]
-theorem strong_sensitivity_conjecture {n : ℕ} (f : (Fin n → Bool) → Bool) :
-    blockSensitivity f ≤ sensitivity f ^ 2 := by
+`bs(f) ≤ s(f)^4`, thereby settling the original conjecture.
+
+The quadratic bound is false. This was disproved by an internal OpenAI model in September 2026
+[OAI26]; see the linked Lean proof. -/
+@[category research solved, AMS 68, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sensitivity/Separation.lean#L12"]
+theorem strong_sensitivity_conjecture :
+    ¬ ∀ (n : ℕ) (f : (Fin n → Bool) → Bool), blockSensitivity f ≤ sensitivity f ^ 2 := by
   sorry
 
 
-/-- Simple test example,
-A Boolean function whose block sensitivity is strictly greater than
-its sensitivity. Source: [Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038).
+/-- Simple test example.
+For multiples of four with $n \ge 12$, this Boolean function has block sensitivity
+strictly greater than its sensitivity. Source:
+[Nisan1989](https://dl.acm.org/doi/10.1145/73007.73038).
 
-`nisanExample(x) = 1` iff the Hamming weight of `x` is either
-`n/2` or `n/2 + 1`. We assume `n` is a multiple of 4.
+`nisanExample(x) = 1` iff the Hamming weight of $x$ is either
+$n/2$ or $n/2 + 1$.
 The function is symmetric, so its value only depends on the Hamming weight
 of the input. -/
 @[category test, AMS 68]
@@ -114,19 +128,20 @@ def nisanExample (n : ℕ) (x : Fin n → Bool) : Bool :=
   let w := #{i | x i}
   decide ((w : ℚ) ∈ ({(n / 2 : ℚ), (n / 2 : ℚ) + 1} : Finset ℚ))
 
-/-- Assuming `n` is a multiple of 4, the sensitivity of `nisanExample`
-is `n/2`, achieved by any `x` with Hamming weight `n/2`. -/
+/-- Assuming `n` is a positive multiple of 4, the sensitivity of `nisanExample`
+is $n/2 + 2$. It is achieved by any $x$ with Hamming weight $n/2 + 2$: flipping
+any of its $n/2 + 2$ one-bits moves the input into the accepting layer of weight $n/2 + 1$. -/
 @[category test, AMS 68]
-lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) :
-    sensitivity (nisanExample n) = n / 2 := by
+lemma nisanExample_sensitivity (n : ℕ) (hn : 4 ∣ n) (hn_pos : 0 < n) :
+    sensitivity (nisanExample n) = n / 2 + 2 := by
   sorry
 
-/-- Assuming `n` is a multiple of 4, the block sensitivity of `nisanExample`
-is `3n/4`, achieved by any `x` with Hamming weight `n/2`.
-An optimal block configuration uses all `n/2` 1-bits as singleton blocks
-and forms `n/4` disjoint size-2 blocks from the 0-bits. -/
+/-- Assuming `n` is a multiple of 4 and $n \ge 8$, the block sensitivity of
+`nisanExample` is $3n/4$, achieved by any $x$ with Hamming weight $n/2$.
+An optimal block configuration uses all $n/2$ one-bits as singleton blocks
+and forms $n/4$ disjoint size-2 blocks from the zero-bits. -/
 @[category test, AMS 68]
-lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) :
+lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) (hn_large : 8 ≤ n) :
     blockSensitivity (nisanExample n) = 3 * n / 4 := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 590
@@ -26,6 +27,8 @@ import FormalConjectures.Util.ProblemImports
  - [La73] Larson, Jean A., A short proof of a partition theorem for the ordinal {$\omega \sp{\omega }$}. Ann. Math. Logic (1973/74), 129-145.
 -/
 
+@[expose] public section
+
 open Cardinal Ordinal
 
 namespace Erdos590
@@ -36,7 +39,7 @@ universe u
 Let $α$ be the infinite ordinal $\omega^{\omega}$. It was proved by Chang [Ch72] that any red/blue
 colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
-@[category research solved, AMS 3]
+@[category research solved, AMS 3, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos590.lean#L7928"]
 theorem erdos_590 : OrdinalCardinalRamsey (ω ^ ω) (ω ^ ω) 3 := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Confined Powers of Non-Pisot Numbers
@@ -26,7 +27,9 @@ import FormalConjectures.Util.ProblemImports
     of real numbers close to 1." Mathematische Zeitschrift 271.3 (2012): 627-637.
 -/
 
-namespace Bugeaud
+@[expose] public section
+
+namespace Bugeaud07
 
 /--
 Problem 10.7. Let $\varepsilon$ be a positive real number. Are there arbitrarily
@@ -40,4 +43,4 @@ theorem problem_10_7 : answer(sorry) ↔
       ∃ c : ℝ, ∀ n : ℕ, 1 ≤ n → Int.fract (α ^ n) ∈ Set.Icc c (c + ε / α) := by
   sorry
 
-end Bugeaud
+end Bugeaud07

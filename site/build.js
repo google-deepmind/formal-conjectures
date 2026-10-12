@@ -94,7 +94,7 @@ const SOURCE_COLLECTIONS = {
   Wikipedia:           { name: 'Wikipedia',                url: 'https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics' },
   GreensOpenProblems:  { name: "Green's Open Problems",    url: 'https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf' },
   HilbertProblems:     { name: 'Hilbert Problems',         url: 'https://en.wikipedia.org/wiki/Hilbert%27s_problems' },
-  Millenium:           { name: 'Millennium Prize Problems', url: 'https://www.claymath.org/millennium-problems/' },
+  Millennium:           { name: 'Millennium Prize Problems', url: 'https://www.claymath.org/millennium-problems/' },
   Mathoverflow:        { name: 'MathOverflow',             url: 'https://mathoverflow.net' },
   OEIS:                { name: 'OEIS',                     url: 'https://oeis.org' },
   Arxiv:               { name: 'arXiv',                    url: 'https://arxiv.org/archive/math' },
@@ -177,7 +177,11 @@ function processEntry(entry) {
   // Pick only the fields the website actually uses. Avoids leaking large
   // unused fields (statement, docstring) into the client-side JSON.
   // Docstrings come from versoFragments instead.
-  const hasFormalProof = !!entry.formalProofKind;
+  // A declaration can carry several `formal_proof` annotations. `hasFormalProof` stays a
+  // boolean about the conjecture, so the landing-page and stats counts keep counting
+  // conjectures rather than proofs.
+  const formalProofs = entry.formalProofs || [];
+  const hasFormalProof = formalProofs.length > 0;
   return {
     theorem: entry.theorem,
     module: entry.module,
@@ -193,8 +197,7 @@ function processEntry(entry) {
     categoryCss: catMeta.css,
     subjects,
     hasFormalProof,
-    formalProofKind: entry.formalProofKind || null,
-    formalProofLink: entry.formalProofLink || null,
+    formalProofs,
   };
 }
 
@@ -204,12 +207,23 @@ function computeStats(conjectures) {
   const byCollection = {};
   const bySubject = {};
 
+  // Track distinct files (modules) per collection for the "Browse by source" list
+  const filesByCollection = {};
+
   for (const c of conjectures) {
     byCategory[c.category] = (byCategory[c.category] || 0) + 1;
     byCollection[c.collection] = (byCollection[c.collection] || 0) + 1;
     for (const s of c.subjects) {
       bySubject[s.name] = (bySubject[s.name] || 0) + 1;
     }
+    if (!filesByCollection[c.collection]) filesByCollection[c.collection] = new Set();
+    filesByCollection[c.collection].add(c.module);
+  }
+
+  // Convert Sets to counts
+  const fileCountByCollection = {};
+  for (const [col, modules] of Object.entries(filesByCollection)) {
+    fileCountByCollection[col] = modules.size;
   }
 
   return {
@@ -217,6 +231,7 @@ function computeStats(conjectures) {
     byCategory,
     byCollection,
     bySubject,
+    fileCountByCollection,
   };
 }
 
@@ -564,10 +579,13 @@ function categoryStatsHTML(byCategory) {
     .join('\n');
 }
 
-function collectionListHTML(byCollection) {
+function collectionListHTML(byCollection, fileCountByCollection) {
   return Object.entries(byCollection)
     .sort((a, b) => b[1] - a[1])
-    .map(([name, count]) => `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => {
+      const files = fileCountByCollection?.[name] || 0;
+      return `<li><a href="/browse/?collection=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${files} files with ${count} statements</span></li>`;
+    })
     .join('\n');
 }
 
@@ -575,8 +593,128 @@ function subjectListHTML(bySubject) {
   return Object.entries(bySubject)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20) // top 20 subjects on landing page
-    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count}</span></li>`)
+    .map(([name, count]) => `<li><a href="/browse/?subject=${encodeURIComponent(name)}">${name}</a> <span class="count-badge">${count} statements</span></li>`)
     .join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// Modules page
+// ---------------------------------------------------------------------------
+
+/** Libraries with literate pages, in display order, with a one-line description. */
+const LIBRARIES = {
+  FormalConjectures: {
+    lede: 'The problem statements themselves, organised by the collection they come from.',
+  },
+  FormalConjecturesForMathlib: {
+    lede: 'Definitions and lemmas that the statements need but Mathlib does not yet have; candidates for upstreaming.',
+  },
+  FormalConjecturesUtil: {
+    lede: 'Attributes, linters, and metadata infrastructure used by the problem files.',
+  },
+  FormalConjecturesTest: {
+    lede: 'Tests of the infrastructure.',
+  },
+};
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** Split a module name on dots, keeping «quoted» segments intact. */
+function moduleSegments(module) {
+  return module.replace(/«[^»]*»|\./g, (m) => (m[0] === '«' ? m : '/')).split('/');
+}
+
+/**
+ * The list of modules with a literate page. Verso's output is authoritative;
+ * without it (no literate build), fall back to the modules the conjectures
+ * live in, which covers `FormalConjectures` only.
+ */
+function literateModules(versoFragments, conjectures) {
+  if (Array.isArray(versoFragments.modules) && versoFragments.modules.length > 0) {
+    return versoFragments.modules.map(m => ({ name: m.name, href: `/src${m.url}` }));
+  }
+  const names = [...new Set(conjectures.map(c => c.module))].sort();
+  return names.map(name => ({ name, href: moduleToSourceURL(name) }));
+}
+
+/**
+ * Render the module index: one section per library, each split into groups by
+ * the segment after the library name (the source collection, for problems).
+ * A library whose modules all share that segment is shown as a flat list.
+ */
+function modulesPageHTML(modules) {
+  const byLibrary = new Map();
+  for (const m of modules) {
+    const segs = moduleSegments(m.name);
+    const lib = segs[0];
+    if (!byLibrary.has(lib)) byLibrary.set(lib, []);
+    byLibrary.get(lib).push({ ...m, segs });
+  }
+
+  const order = Object.keys(LIBRARIES);
+  const libraries = [...byLibrary.keys()].sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    if (ia !== -1 || ib !== -1) return (ia === -1 ? order.length : ia) - (ib === -1 ? order.length : ib);
+    return a.localeCompare(b);
+  });
+
+  const listHTML = (items, depth) => `<ul class="module-list">
+${items.map(m => {
+    const label = m.segs.length > depth ? m.segs.slice(depth).join('.') : m.name;
+    return `  <li data-name="${escapeHtml(m.name)}"><a href="${escapeHtml(m.href)}">${escapeHtml(label)}</a></li>`;
+  }).join('\n')}
+</ul>`;
+
+  return libraries.map(lib => {
+    const items = byLibrary.get(lib).sort((a, b) => a.name.localeCompare(b.name));
+    const lede = LIBRARIES[lib]?.lede;
+
+    // Group by the segment after the library name; the library's root module
+    // (no such segment) and any module directly below it stay ungrouped.
+    const groups = new Map();
+    for (const m of items) {
+      const key = m.segs.length > 2 ? m.segs[1] : '';
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(m);
+    }
+    const keys = [...groups.keys()].sort((a, b) => {
+      if (a === '') return -1;
+      if (b === '') return 1;
+      return (SOURCE_COLLECTIONS[a]?.name || a).localeCompare(SOURCE_COLLECTIONS[b]?.name || b);
+    });
+
+    let body;
+    if (keys.filter(k => k !== '').length < 2) {
+      body = listHTML(items, 1);
+    } else {
+      body = keys.map(key => {
+        const members = groups.get(key);
+        if (key === '') {
+          return `<div class="module-group">\n${listHTML(members, 1)}\n</div>`;
+        }
+        const collection = lib === 'FormalConjectures' ? SOURCE_COLLECTIONS[key] : null;
+        const title = collection
+          ? `<a href="/browse/?collection=${encodeURIComponent(collection.name)}">${escapeHtml(collection.name)}</a>`
+          : escapeHtml(key);
+        return `<div class="module-group">
+<h3 class="module-group__title">${title} <span class="count-badge">${members.length} modules</span></h3>
+${listHTML(members, 2)}
+</div>`;
+      }).join('\n');
+    }
+
+    return `  <section class="section module-library" id="${escapeHtml(lib)}">
+    <div class="container">
+      <h2 class="section__title">${escapeHtml(lib)} <span class="count-badge">${items.length} modules</span></h2>
+      ${lede ? `<p class="module-library__lede">${lede}</p>` : ''}
+${body}
+    </div>
+  </section>`;
+  }).join('\n');
 }
 
 /** Render the subject × category cross-tab as an HTML table. */
@@ -670,6 +808,10 @@ async function main() {
     'site/data/conjectures.json',
     JSON.stringify({ conjectures, stats, advancedStats, amsSubjects: AMS_SUBJECTS, versoFragments, contributors }),
   );
+  const whitePlotPath = path.join('data', 'file_counts_white.html');
+  const darkPlotPath = path.join('data', 'file_counts_dark.html');
+  if (fs.existsSync(whitePlotPath)) fs.copyFileSync(whitePlotPath, 'site/data/file_counts_white.html');
+  if (fs.existsSync(darkPlotPath)) fs.copyFileSync(darkPlotPath, 'site/data/file_counts_dark.html');
 
   // ---- Landing page ----
   const indexHtml = readTemplate('index.html');
@@ -682,7 +824,7 @@ async function main() {
     solvedCount,
     formalCount,
     categoryStats:   categoryStatsHTML(stats.byCategory),
-    collectionList:  collectionListHTML(stats.byCollection),
+    collectionList:  collectionListHTML(stats.byCollection, stats.fileCountByCollection),
     subjectList:     subjectListHTML(stats.bySubject),
   })));
 
@@ -699,11 +841,40 @@ async function main() {
   copyStaticTemplate('about.html', 'site/about/index.html');
 
   // ---- Stats page ----
+  let growthPlot = '';
+  if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {
+    const graphHtmlLight = fs.readFileSync(whitePlotPath, 'utf8');
+    const graphHtmlDark = fs.readFileSync(darkPlotPath, 'utf8');
+    growthPlot = `
+      <style>
+        .theme-dark { display: none; }
+        @media (prefers-color-scheme: dark) {
+          .theme-light { display: none; }
+          .theme-dark { display: block; }
+        }
+      </style>
+      <div class="theme-light">${graphHtmlLight}</div>
+      <div class="theme-dark">${graphHtmlDark}</div>
+    `;
+    console.log('  Loaded repository growth plots.');
+  } else {
+    console.log('  Repository growth plots not found (skipping growth plot).');
+  }
+
   const statsHtml = readTemplate('stats.html');
   writePage('site/stats/index.html', applyBasePath(fill(statsHtml, {
     totalCount:           stats.total,
+    growthPlot:           growthPlot,
     subjectStatusTable:   subjectStatusTableHTML(advancedStats.subjectByCategory),
   })));
+
+  // ---- Modules page ----
+  const modules = literateModules(versoFragments, conjectures);
+  writePage('site/modules/index.html', applyBasePath(fill(readTemplate('modules.html'), {
+    moduleCount: modules.length,
+    libraries:   modulesPageHTML(modules),
+  })));
+  console.log(`  Module index lists ${modules.length} modules.`);
 
   console.log('Done. Output in site/');
 }
