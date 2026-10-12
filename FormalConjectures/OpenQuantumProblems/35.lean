@@ -734,7 +734,8 @@ theorem ame_6_2_exists : ExistsAME 6 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(4,2)$ state exists; see Higuchi--Sudbery (2000) and the OQP page. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-4-2/blob/201550986844ea1e7fff36dc48681ca8b3c1600b/AME42/FormalTarget.lean#L26-L33"]
 theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
   sorry
 

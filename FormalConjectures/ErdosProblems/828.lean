@@ -49,7 +49,7 @@ It is an easy exercise to show that $\phi(n) | n$ if and only if $n = 0, 1$ or $
 some $a > 0$.
 -/
 @[category textbook, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/XC0R/formal-conjectures/blob/03e00cf8d44098d0fb06e891fca30c29769df619/FormalConjectures/ErdosProblems/828.lean#L49"]
+"https://github.com/XC0R/formal-conjectures/blob/d252395a9c80fc8eca30d9e5feb6e3b0bc7fc612/FormalConjectures/ErdosProblems/828.lean#L49"]
 theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 {n : ℕ} :
     φ n ∣ n ↔ n ≤ 1 ∨ ∃ᵉ (a > 0) (b), n = 2 ^ a * 3 ^ b := by
   sorry
