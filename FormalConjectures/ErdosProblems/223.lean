@@ -91,8 +91,8 @@ theorem extremal_le_choose (d n : ℕ) : extremal d n ≤ n.choose 2 := by
 noncomputable def axis {d : ℕ} (hd : 0 < d) (t : ℝ) : Space d :=
   PiLp.single 2 ⟨0, hd⟩ t
 
-@[category API, AMS 5 52]
-@[simp] theorem dist_axis {d : ℕ} (hd : 0 < d) (s t : ℝ) :
+@[category API, AMS 5 52, simp]
+theorem dist_axis {d : ℕ} (hd : 0 < d) (s t : ℝ) :
     dist (axis hd s) (axis hd t) = dist s t := by
   simp [axis]
 
