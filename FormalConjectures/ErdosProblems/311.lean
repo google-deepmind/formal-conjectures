@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 311
@@ -25,13 +26,16 @@ import FormalConjecturesUtil
   theory*. Monographies de L'Enseignement Mathématique (1980), p. 40.
 -/
 
+@[expose] public section
+
 namespace Erdos311
 
 open Finset Filter Topology
 
 /--
-`δ N` is the minimal non-zero value of $|1 - \sum_{n \in A} 1/n|$ as `A` ranges over all subsets
-of `{1, …, N}`. The empty set gives the value `1`, so the set below is nonempty for every `N`.
+`delta N` is the minimal non-zero value of $\lvert 1-\sum_{n\in A}\frac{1}{n}\rvert$ as $A$
+ranges over all subsets of $\{1,\ldots,N\}$. The empty set gives the value $1$, so the set
+below is nonempty for every $N$.
 -/
 noncomputable def delta (N : ℕ) : ℝ :=
   sInf {x : ℝ | x ≠ 0 ∧ ∃ A ⊆ Icc 1 N, x = |1 - ∑ n ∈ A, (1 : ℝ) / n|}
@@ -66,7 +70,8 @@ theorem delta_ge_inv_lcm (N : ℕ) : 1 / (((Icc 1 N).lcm id : ℕ) : ℝ) ≤ de
 theorem delta_ge_exp : ∀ ε > 0, ∀ᶠ N : ℕ in atTop, Real.exp (-(1 + ε) * N) ≤ delta N := by
   sorry
 
-/-- For `N = 1` the only non-zero value is `|1 - 0| = 1` (from `A = ∅`), so `δ(1) = 1`. -/
+/-- For $N = 1$ the only non-zero value is $\lvert 1-0\rvert = 1$ (from $A = \emptyset$),
+so $\delta(1) = 1$. -/
 @[category test, AMS 11]
 theorem delta_one : delta 1 = 1 := by
   have hset : {x : ℝ | x ≠ 0 ∧ ∃ A ⊆ Icc (1 : ℕ) 1, x = |1 - ∑ n ∈ A, (1 : ℝ) / n|} = {1} := by
