@@ -71,10 +71,7 @@ theorem erdos_573 : answer(sorry) ↔
 Erdős and Simonovits [ErSi82] proved that
 $$\mathrm{ex}(n;\{C_4,C_5\})=(n/2)^{3/2}+O(n).$$
 
-Here $O(n)$ is an upper error term, so we state the upper bound
-$\mathrm{ex}(n;\{C_4,C_5\}) \leq (n/2)^{3/2} + O(n)$. A matching lower bound up to $O(n)$ is not
-known for every $n$: the known constructions come from projective planes and lose more than
-$O(n)$ edges when $n$ is not of a special form.
+The source writes an equality; only the upper bound is stated here.
 -/
 @[category research solved, AMS 5]
 theorem erdos_573.variants.c4_c5 :
