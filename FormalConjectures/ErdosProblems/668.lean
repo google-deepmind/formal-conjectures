@@ -41,23 +41,20 @@ namespace Erdos668
 
 open Erdos90
 
-/-- Two finite sets of points of the plane are *congruent* if an isometry of the plane maps one
-onto the other. -/
-def Congruent (A B : Finset ℝ²) : Prop :=
-  ∃ f : ℝ² ≃ᵢ ℝ², f '' A = B
-
 /--
 Is it true that the number of incongruent sets of $n$ points in $\mathbb{R}^2$ which maximise the
 number of unit distances tends to infinity as $n\to\infty$?
 
 The actual maximal number of unit distances is the subject of
 [Erdős Problem 90](https://www.erdosproblems.com/90).
+
+Two sets of points are congruent if an isometry of the plane maps one onto the other.
 -/
 @[category research open, AMS 52]
 theorem erdos_668.parts.i : answer(sorry) ↔
     ∀ m : ℕ, ∀ᶠ n in atTop, ∃ A : Fin m → Finset ℝ²,
       (∀ i, (A i).card = n ∧ unitDistNum (A i) = maxUnitDistances n) ∧
-      ∀ i j, i ≠ j → ¬ Congruent (A i) (A j) := by
+      ∀ i j, i ≠ j → ¬ ∃ f : ℝ² ≃ᵢ ℝ², f '' A i = A j := by
   sorry
 
 /--
@@ -75,7 +72,7 @@ congruency).
 theorem erdos_668.parts.ii : answer(False) ↔
     ∀ n : ℕ, 3 < n → ∃ A B : Finset ℝ², A.card = n ∧ B.card = n ∧
       unitDistNum A = maxUnitDistances n ∧ unitDistNum B = maxUnitDistances n ∧
-      ¬ Congruent A B := by
+      ¬ ∃ f : ℝ² ≃ᵢ ℝ², f '' A = B := by
   sorry
 
 /--
@@ -88,7 +85,7 @@ theorem erdos_668.variants.four_points :
     ∃ a b c d : ℝ², dist a b = 1 ∧ dist a c = 1 ∧ dist b c = 1 ∧ dist b d = 1 ∧ dist c d = 1 ∧
       ({a, b, c, d} : Finset ℝ²).card = 4 ∧
       ∀ B : Finset ℝ², B.card = 4 →
-        (unitDistNum B = maxUnitDistances 4 ↔ Congruent {a, b, c, d} B) := by
+        (unitDistNum B = maxUnitDistances 4 ↔ ∃ f : ℝ² ≃ᵢ ℝ², f '' {a, b, c, d} = B) := by
   sorry
 
 /-- `Erdos668.erdos_668.variants.four_points` settles `Erdos668.erdos_668.parts.ii` at
