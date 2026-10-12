@@ -51,24 +51,24 @@ namespace DirichletDivisorProblem
 
 /-- The divisor summatory function $D(x) = \sum_{n \le x} d(n)$, where $d(n)$ is the number of
 divisors of $n$. -/
-noncomputable def D (x : ℝ) : ℝ :=
+noncomputable def divisorSummatory (x : ℝ) : ℝ :=
   ∑ n ∈ Finset.Icc 1 ⌊x⌋₊, (n.divisors.card : ℝ)
 
 /-- The error term $\Delta(x) = D(x) - x \log x - (2\gamma - 1) x$ in the divisor summatory
 asymptotic, where $\gamma$ is the Euler–Mascheroni constant. -/
-noncomputable def Δ (x : ℝ) : ℝ :=
-  D x - x * Real.log x - (2 * eulerMascheroniConstant - 1) * x
+noncomputable def divisorError (x : ℝ) : ℝ :=
+  divisorSummatory x - x * Real.log x - (2 * eulerMascheroniConstant - 1) * x
 
 /-- $D(1) = d(1) = 1$. -/
 @[category test, AMS 11]
-theorem D_one : D 1 = 1 := by
-  simp only [D, Nat.floor_one, Finset.Icc_self, Finset.sum_singleton, Nat.divisors_one,
+theorem divisorSummatory_one : divisorSummatory 1 = 1 := by
+  simp only [divisorSummatory, Nat.floor_one, Finset.Icc_self, Finset.sum_singleton, Nat.divisors_one,
     Finset.card_singleton, Nat.cast_one]
 
 /-- Dirichlet's bound [Di49]: $\Delta(x) = O(x^{1/2})$. -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem divisor_error_dirichlet :
-    Δ =O[atTop] fun x => Real.sqrt x := by
+    divisorError =O[atTop] fun x => Real.sqrt x := by
   sorry
 
 /--
@@ -77,7 +77,7 @@ $\varepsilon > 0$? (Equivalently, is the infimum of admissible exponents equal t
 -/
 @[category research open, AMS 11]
 theorem dirichlet_divisor_problem :
-    ∀ ε > (0 : ℝ), Δ =O[atTop] fun x => x ^ ((1 : ℝ) / 4 + ε) := by
+    ∀ ε > (0 : ℝ), divisorError =O[atTop] fun x => x ^ ((1 : ℝ) / 4 + ε) := by
   sorry
 
 /--
@@ -86,7 +86,7 @@ Dirichlet divisor problem cannot be improved.
 -/
 @[category research solved, AMS 11]
 theorem divisor_error_hardy :
-    ¬ (Δ =o[atTop] fun x => x ^ ((1 : ℝ) / 4)) := by
+    ¬ (divisorError =o[atTop] fun x => x ^ ((1 : ℝ) / 4)) := by
   sorry
 
 end DirichletDivisorProblem
