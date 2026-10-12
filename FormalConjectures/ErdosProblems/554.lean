@@ -52,22 +52,23 @@ namespace Erdos554
 /-- $R_k(K_3)$ agrees with `Erdos183.multicolourTriangleRamsey`: a colouring has a monochromatic
 triangle exactly when it is not $3$-clique-free. -/
 @[category test, AMS 5]
-theorem multicolourRamsey_completeGraph_three (k : ℕ) :
-    multicolourRamsey k (completeGraph (Fin 3)) = Erdos183.multicolourTriangleRamsey k := by
-  simp only [multicolourRamsey, Erdos183.multicolourTriangleRamsey,
+theorem multicolourGraphRamsey_completeGraph_three (k : ℕ) :
+    multicolourGraphRamsey k (completeGraph (Fin 3)) = Erdos183.multicolourTriangleRamsey k := by
+  simp only [multicolourGraphRamsey, Erdos183.multicolourTriangleRamsey,
     Erdos183.ForcesMonochromaticTriangle, TopEdgeLabeling.CliqueFree, not_forall,
     not_cliqueFree_iff_top_isContained]
 
 /-- The cycle $C_3$ is the triangle $K_3$, so $R_k(C_3) = R_k(K_3)$. -/
 @[category test, AMS 5]
-theorem multicolourRamsey_cycleGraph_three (k : ℕ) :
-    multicolourRamsey k (cycleGraph 3) = multicolourRamsey k (completeGraph (Fin 3)) :=
-  congrArg (multicolourRamsey k) cycleGraph_three_eq_top
+theorem multicolourGraphRamsey_cycleGraph_three (k : ℕ) :
+    multicolourGraphRamsey k (cycleGraph 3) = multicolourGraphRamsey k (completeGraph (Fin 3)) :=
+  congrArg (multicolourGraphRamsey k) cycleGraph_three_eq_top
 
 /-- With one colour the only colouring of $K_m$ is $K_m$ itself, and $K_m$ contains $C_5$
 exactly when $m \geq 5$. -/
 @[category test, AMS 5]
-theorem multicolourRamsey_one_cycleGraph_five : multicolourRamsey 1 (cycleGraph 5) = 5 := by
+theorem multicolourGraphRamsey_one_cycleGraph_five :
+    multicolourGraphRamsey 1 (cycleGraph 5) = 5 := by
   sorry
 
 /--
@@ -81,8 +82,8 @@ A problem of Erdős and Graham. The case $n = 1$ is excluded since $C_3 = K_3$. 
 -/
 @[category research open, AMS 5]
 theorem erdos_554 (n : ℕ) (hn : 2 ≤ n) :
-    Tendsto (fun k : ℕ ↦ (multicolourRamsey k (cycleGraph (2 * n + 1)) : ℝ) /
-      (multicolourRamsey k (completeGraph (Fin 3)) : ℝ)) atTop (𝓝 0) := by
+    Tendsto (fun k : ℕ ↦ (multicolourGraphRamsey k (cycleGraph (2 * n + 1)) : ℝ) /
+      (multicolourGraphRamsey k (completeGraph (Fin 3)) : ℝ)) atTop (𝓝 0) := by
   sorry
 
 /--
@@ -91,8 +92,8 @@ $$\lim_{k\to \infty}\frac{R_k(C_5)}{R_k(K_3)}=0.$$
 -/
 @[category research open, AMS 5]
 theorem erdos_554.variants.n_eq_two :
-    Tendsto (fun k : ℕ ↦ (multicolourRamsey k (cycleGraph 5) : ℝ) /
-      (multicolourRamsey k (completeGraph (Fin 3)) : ℝ)) atTop (𝓝 0) := by
+    Tendsto (fun k : ℕ ↦ (multicolourGraphRamsey k (cycleGraph 5) : ℝ) /
+      (multicolourGraphRamsey k (completeGraph (Fin 3)) : ℝ)) atTop (𝓝 0) := by
   sorry
 
 /--
@@ -103,7 +104,7 @@ for all $n, k \geq 1$. The condition $k \geq 1$ excludes the junk value $R_0(G) 
 @[category research solved, AMS 5]
 theorem erdos_554.variants.lower_bound :
     ∀ n : ℕ, 1 ≤ n → ∀ k : ℕ, 1 ≤ k →
-      n * 2 ^ k + 1 ≤ multicolourRamsey k (cycleGraph (2 * n + 1)) := by
+      n * 2 ^ k + 1 ≤ multicolourGraphRamsey k (cycleGraph (2 * n + 1)) := by
   sorry
 
 /--
@@ -114,7 +115,7 @@ for all $n, k \geq 1$.
 @[category research solved, AMS 5]
 theorem erdos_554.variants.upper_bound :
     ∀ n : ℕ, 1 ≤ n → ∀ k : ℕ, 1 ≤ k →
-      multicolourRamsey k (cycleGraph (2 * n + 1)) ≤ 2 * n * (k + 2).factorial := by
+      multicolourGraphRamsey k (cycleGraph (2 * n + 1)) ≤ 2 * n * (k + 2).factorial := by
   sorry
 
 /--
@@ -126,7 +127,7 @@ for all $n, k \geq 1$, which improves the exponent of the upper bound in
 @[category research solved, AMS 5]
 theorem erdos_554.variants.acjmr :
     ∀ n : ℕ, 1 ≤ n → ∀ k : ℕ, 1 ≤ k →
-      (multicolourRamsey k (cycleGraph (2 * n + 1)) : ℝ) ≤
+      (multicolourGraphRamsey k (cycleGraph (2 * n + 1)) : ℝ) ≤
         (4 * n - 2 : ℝ) ^ k * (k : ℝ) ^ ((k : ℝ) / n) + 1 := by
   sorry
 
@@ -139,7 +140,8 @@ is not sharp for fixed $n$ and large $k$.
 @[category research solved, AMS 5]
 theorem erdos_554.variants.day_johnson :
     ∀ n : ℕ, 1 ≤ n → ∃ c > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
-      (2 * n : ℝ) * (2 + c) ^ (k - 1) < (multicolourRamsey k (cycleGraph (2 * n + 1)) : ℝ) := by
+      (2 * n : ℝ) * (2 + c) ^ (k - 1) <
+        (multicolourGraphRamsey k (cycleGraph (2 * n + 1)) : ℝ) := by
   sorry
 
 /--
@@ -152,7 +154,7 @@ for all sufficiently large $n$.
 @[category research solved, AMS 5]
 theorem erdos_554.variants.jenssen_skokan :
     ∀ k : ℕ, 2 ≤ k → ∀ᶠ n : ℕ in atTop,
-      multicolourRamsey k (cycleGraph (2 * n + 1)) = n * 2 ^ k + 1 := by
+      multicolourGraphRamsey k (cycleGraph (2 * n + 1)) = n * 2 ^ k + 1 := by
   sorry
 
 end Erdos554
