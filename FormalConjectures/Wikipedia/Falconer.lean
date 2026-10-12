@@ -29,6 +29,9 @@ has positive Lebesgue measure. The restriction $d \ge 2$ is needed; see `falcone
 
 * [K. Falconer, *On the Hausdorff dimensions of distance sets*](https://doi.org/10.1112/S0025579300010998)
 * [Wikipedia, *Falconer's conjecture*](https://en.wikipedia.org/wiki/Falconer%27s_conjecture)
+* [OAI26a] OpenAI, *The Falconer distance conjecture in all dimensions*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Falconer-distance-conjecture-in-all-dimensions-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -39,8 +42,12 @@ open MeasureTheory Set
 
 open scoped ENNReal EuclideanGeometry
 
-/-- Falconer's distance set conjecture, $d = 2$ case. -/
-@[category research open, AMS 28 42]
+/-- Falconer's distance set conjecture, $d = 2$ case.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof. -/
+@[category research solved, AMS 28 42, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/Falconer/Main.lean#L50"]
 lemma falconer_conjecture_two (E : Set <| ℝ²) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
     0 < volume (image2 dist E E) := sorry
 
@@ -50,8 +57,12 @@ The hypothesis $2 \le d$ excludes a degenerate case: the conclusion is false for
 The base-$7$ Cantor set $E = \{\sum_{n \ge 1} a_n 7^{-n} : a_n \in \{0, 1, 2\}\}$ is compact
 with $\dim_H E = \log 3 / \log 7 > 1/2$, but $E - E$ has digits in $\{-2, \dots, 2\}$, so
 after fixing $n$ digits it is covered by $5^n$ intervals of length $\frac{2}{3} 7^{-n}$ and is
-therefore null; its distance set is the image of $E - E$ under $|\cdot|$ and is null too. -/
-@[category research open, AMS 28 42]
+therefore null; its distance set is the image of $E - E$ under $|\cdot|$ and is null too.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof. -/
+@[category research solved, AMS 28 42, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/Falconer/Campaign123PlanarFurstenbergProof.lean#L47"]
 lemma falconer_conjecture (d : ℕ) (h2d : 2 ≤ d) (E : Set <| ℝ^d) (hc : IsCompact E)
     (hd : d < 2 * dimH E) :
     0 < volume (image2 dist E E) := sorry

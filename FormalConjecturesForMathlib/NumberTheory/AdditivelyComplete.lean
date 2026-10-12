@@ -21,6 +21,7 @@ public import Mathlib.Data.Set.Finite.Lattice
 public import Mathlib.Order.Filter.AtTopBot.Basic
 public import Mathlib.Order.Filter.AtTopBot.Defs
 public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Order.Lattice.Nat
 public import Mathlib.Order.WellFounded
 
 @[expose] public section
@@ -53,6 +54,58 @@ def IsAddComplete (A : Set M) : Prop :=
 theorem IsAddComplete.mono {A B : Set M} (h : A ⊆ B) (ha : IsAddComplete A) : IsAddComplete B := by
   filter_upwards [ha] with x hx
   exact (subsetSums_mono h) hx
+
+namespace IsAddComplete
+
+/-- The admissible thresholds of a set of natural numbers: every integer at or above the
+threshold is a finite subset sum of the set. -/
+def thresholds (A : Set ℕ) : Set ℕ :=
+  {m | ∀ n, m ≤ n → n ∈ subsetSums A}
+
+/-- The least admissible threshold of a set of natural numbers. For an incomplete set this
+returns `0`. See `threshold_isLeast` for complete sets. -/
+noncomputable def threshold (A : Set ℕ) : ℕ :=
+  sInf (thresholds A)
+
+/-- Every natural number at or above an admissible threshold is also an admissible threshold. -/
+theorem thresholds_mono {A : Set ℕ} {m m' : ℕ} (hm : m ∈ thresholds A) (h : m ≤ m') :
+    m' ∈ thresholds A :=
+  fun n hn ↦ hm n (h.trans hn)
+
+/-- The threshold of a complete set is its least admissible threshold. -/
+theorem threshold_isLeast {A : Set ℕ} (hA : IsAddComplete A) :
+    IsLeast (thresholds A) (threshold A) := by
+  obtain ⟨m, hm⟩ := Filter.eventually_atTop.mp hA
+  exact ⟨Nat.sInf_mem ⟨m, hm⟩, fun _ hn ↦ Nat.sInf_le hn⟩
+
+/-- A least admissible threshold equals the threshold of the set. -/
+theorem threshold_eq_of_isLeast {A : Set ℕ} {a : ℕ} (h : IsLeast (thresholds A) a) :
+    threshold A = a :=
+  le_antisymm (Nat.sInf_le h.1) (h.2 (Nat.sInf_mem ⟨a, h.1⟩))
+
+/-- Comparing thresholds of complete sets is equivalent to comparing their least-threshold
+witnesses. -/
+theorem threshold_descent_iff {A B : Set ℕ} (hA : IsAddComplete A) (hB : IsAddComplete B) :
+    threshold B < threshold A ↔
+      ∃ a b : ℕ, IsLeast (thresholds A) a ∧ IsLeast (thresholds B) b ∧ b < a := by
+  constructor
+  · intro h
+    exact ⟨_, _, threshold_isLeast hA, threshold_isLeast hB, h⟩
+  · rintro ⟨a, b, ha, hb, hab⟩
+    rw [threshold_eq_of_isLeast ha, threshold_eq_of_isLeast hb]
+    exact hab
+
+/-- The empty set has no admissible threshold, so its threshold has the fallback value `0`. -/
+theorem threshold_empty : threshold ∅ = 0 := by
+  have h : thresholds (∅ : Set ℕ) = ∅ := by
+    apply Set.eq_empty_iff_forall_notMem.mpr
+    intro m hm
+    obtain ⟨B, hB, hs⟩ := hm (m + 1) (Nat.le_succ m)
+    have hB0 : B = ∅ := Finset.eq_empty_iff_forall_notMem.mpr fun x hx ↦ hB hx
+    simp [hB0] at hs
+  simp [threshold, h]
+
+end IsAddComplete
 
 /-- A set `A ⊆ M` is complete if every sufficiently large element of `M` is a subset sum of `A`. -/
 def IsAddStronglyComplete (A : Set M) : Prop :=
