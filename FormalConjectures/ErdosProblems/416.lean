@@ -13,14 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 416
 
-*Reference:* [erdosproblems.com/416](https://www.erdosproblems.com/416)
+*References:*
+- [erdosproblems.com/416](https://www.erdosproblems.com/416)
+- [OAI26a] OpenAI, *An asymptotic formula for the number of totients*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/An-asymptotic-formula-for-the-number-of-totients-September-25-2026/An-asymptotic-formula-for-the-number-of-totients-September-25-2026.pdf
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology Real
@@ -34,10 +41,25 @@ noncomputable abbrev V (x : ℝ) : ℝ :=
 
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Does `V(2x)/V(x)→2` ?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof, which gives `V(cx)/V(x)→c` for every fixed `c>0`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/TotientAsymptotic/UnconditionalMain.lean#L12"]
 theorem erdos_416.parts.i :
     Filter.Tendsto (fun x => (V (2 * x) / V (x))) Filter.atTop (𝓝 2) := by
+  sorry
+
+/--
+Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Then `V(cx)/V(x)→c` for
+every fixed `c>0`, which answers a question of Erdős and Hall. This was proved by an internal
+OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/TotientAsymptotic/UnconditionalMain.lean#L12"]
+theorem erdos_416.variants.regularly_varying (c : ℝ) (hc : 0 < c) :
+    Filter.Tendsto (fun x => V (c * x) / V x) Filter.atTop (𝓝 c) := by
   sorry
 
 /--

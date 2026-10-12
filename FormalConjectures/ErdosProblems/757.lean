@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 757
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [GyLe95] Gyárfás, András and Lehel, Jenő, Linear sets with five distinct differences among any
     four elements. J. Combin. Theory Ser. B (1995), 108-118.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 open Filter

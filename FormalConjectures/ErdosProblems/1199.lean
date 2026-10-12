@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1199
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   J. Combin. Theory Ser. A (1979), 19--32.
 - [Ow74] J. Owings, E2494. Amer. Math. Monthly (1974), 902.
 -/
+
+@[expose] public section
 
 open Pointwise
 

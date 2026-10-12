@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Perfect numbers
@@ -36,6 +37,8 @@ formalised here:
 - [Wikipedia](https://en.wikipedia.org/wiki/Perfect_number)
 - [Wikipedia, Odd perfect numbers](https://en.wikipedia.org/wiki/Perfect_number#Odd_perfect_numbers)
 -/
+
+@[expose] public section
 
 namespace PerfectNumbers
 

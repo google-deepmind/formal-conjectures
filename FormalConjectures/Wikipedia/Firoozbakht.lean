@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Firoozbakht's conjecture
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Firoozbakht%27s_conjecture)
 - [primepuzzles](https://www.primepuzzles.net/conjectures/conj_030.htm)
 -/
+
+@[expose] public section
 
 open Real
 
