@@ -28,6 +28,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Filter
+open scoped Pointwise
 
 namespace Green65
 
@@ -39,14 +40,6 @@ def IsNonzeroSquare (d : ℤ) : Prop :=
 def IsPrimeMinusOne (d : ℤ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ d = (p : ℤ) - 1
 
-/-- The interval $[N] = \{1, \ldots, N\}$, viewed as a finite set of integers. -/
-noncomputable def interval (N : ℕ) : Finset ℤ :=
-  Finset.Icc (1 : ℤ) (N : ℤ)
-
-/-- The signed difference set $A - A$. -/
-def differenceSet (A : Finset ℤ) : Set ℤ :=
-  {d | ∃ a ∈ A, ∃ b ∈ A, d = a - b}
-
 /--
 There is a fixed density exponent $c > 0$ such that every sufficiently large subset
 $A \subseteq [N]$ with $|A| \geq N^{1-c}$ has a difference satisfying $P$.
@@ -56,24 +49,22 @@ the literal small-$N$ version is false for the nonzero-square question.
 -/
 def LargeDifferencePattern (P : ℤ → Prop) : Prop :=
   ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℤ,
-    A ⊆ interval N →
+    A ⊆ Finset.Icc 1 (N : ℤ) →
       (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
-        ∃ d ∈ differenceSet A, P d
+        ∃ d ∈ A - A, P d
 
 /-- Without "sufficiently large $N$" the question is false for every $c$:
 $A = \{1\} \subseteq [1]$ has $|A| = 1 = 1^{1-c}$ and $A - A = \{0\}$. -/
 @[category test, AMS 5 11]
 theorem not_forall_of_isNonzeroSquare :
     ¬ ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ N : ℕ, ∀ A : Finset ℤ,
-      A ⊆ interval N → (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
-        ∃ d ∈ differenceSet A, IsNonzeroSquare d := by
+      A ⊆ Finset.Icc 1 (N : ℤ) → (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
+        ∃ d ∈ A - A, IsNonzeroSquare d := by
   rintro ⟨c, -, -, h⟩
-  obtain ⟨d, ⟨a, ha, b, hb, rfl⟩, n, hn, hdn⟩ :=
+  obtain ⟨d, hd, n, hn, hdn⟩ :=
     h 1 {1} (by decide) (by norm_num [Real.one_rpow])
-  simp only [Finset.mem_singleton] at ha hb
-  subst ha
-  subst hb
-  rw [eq_comm] at hdn
+  have hd0 : d = 0 := by simpa using hd
+  rw [hd0, eq_comm] at hdn
   simp at hdn
   exact hn hdn
 
