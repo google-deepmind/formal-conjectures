@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1148
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -42,9 +45,13 @@ Can every large integer $n$ be written as $n=x^2+y^2-z^2$ with $\max(x^2,y^2,z^2
 
 This was proved affirmatively by Chojecki [Ch26], using a Duke-type equidistribution theorem.
 A Lean formalisation of the reduction (conditional on a Duke-type equidistribution theorem) exists;
-see the [forum discussion](https://www.erdosproblems.com/forum/thread/1148#post-4849).
+see the [forum discussion](https://www.erdosproblems.com/forum/thread/1148#post-4849). The linked
+formal proof (plby/lean-proofs) removes the Duke hypothesis; it is stated over `ℤ`, as
+`∃ N, ∀ n ≥ N, ∃ x y z : ℤ, n = x ^ 2 + y ^ 2 - z ^ 2 ∧ max (x ^ 2) (max (y ^ 2) (z ^ 2)) ≤ n`,
+which gives the statement below by taking absolute values.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1148.lean#L238"]
 theorem erdos_1148 : answer(True) ↔ ∀ᶠ n in atTop, Erdos1148Prop n := by
   sorry
 

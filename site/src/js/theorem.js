@@ -13,6 +13,7 @@
 const detailEl = document.getElementById('theorem-detail');
 const _base = document.documentElement.dataset.base || '';
 
+
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const name   = params.get('name');
@@ -75,6 +76,12 @@ function loadVersoAssets() {
   codeLink.href = `${_base}/src/code.css`;
   document.head.appendChild(codeLink);
 
+  // Load the shared token theme after Verso's stylesheet.
+  const syntaxLink = document.createElement('link');
+  syntaxLink.rel = 'stylesheet';
+  syntaxLink.href = `${_base}/assets/css/lean-syntax.css`;
+  document.head.appendChild(syntaxLink);
+
   // Load tippy border CSS for hover tooltips
   const tippyLink = document.createElement('link');
   tippyLink.rel = 'stylesheet';
@@ -102,18 +109,6 @@ function loadVersoAssets() {
     }
     /* Inter-text spacing */
     .hl.lean .inter-text { white-space: pre; }
-    /* Make the code container match Verso's clean look */
-    .verso-code-container {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      padding: 0;
-    }
-    .verso-code-container code.hl.lean.block {
-      font-size: 16px;
-      display: block;
-      padding: 1.25rem;
-    }
     /* Tooltip spacing: separator between type signature and docstring */
     .hover-info .sep {
       display: block;

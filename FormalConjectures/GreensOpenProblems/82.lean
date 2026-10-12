@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 82
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [An improved lower bound for a problem of Littlewood on the zeros of cosine polynomials](https://arxiv.org/abs/2407.16075) (Bedert, 2025)
 - [Cosine polynomials with few zeros](https://arxiv.org/abs/2005.01695) (Juškevičius & Sahasrabudhe, 2020)
 -/
+
+@[expose] public section
 
 open Filter Real Set
 open scoped Finset
