@@ -14,16 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
-# Duponcheel's Generalized n-Queens Conjecture
+# Generalized n-Queens Conjecture
 # (replacing the traditional n-queens problem with a coin placement problem)
 
 *References:*
 - [mathoverflow/510135](https://mathoverflow.net/questions/510135)
   asked by user [*Luc Duponcheel*](https://mathoverflow.net/users/513435/lucdupatstackexchange)
+
+- [A note on the generalized n-queens problem](https://sysmath.cjoe.ac.cn/jssc/CN/PDF/44564#page=2)
+  by *Mao-Hua Le, Kang-Di Li and Zhen-Fa Wang* (1990)
 -/
+
+@[expose] public section
 
 namespace Mathoverflow510135
 
@@ -92,8 +99,8 @@ def n_c_placement_conjecture_prop (n c : ℕ) (board : Matrix (Fin n) (Fin n) �
 /--
 Can the coins placement problem be solved for every $n \ge 4$ and $0 \le c \le n$?
 -/
-@[category research open, AMS 5]
-theorem n_c_coins_placement_conjecture : answer(sorry) ↔
+@[category research solved, AMS 5]
+theorem n_c_coins_placement_conjecture : answer(True) ↔
   ∀ᵉ (n : ℕ) (c : ℕ) (hn : n ≥ 4) (hc : c ≤ n),
     ∃ board : Matrix (Fin n) (Fin n) ℕ,
     n_c_placement_conjecture_prop n c board := by
@@ -105,6 +112,7 @@ Note that I duplicate code to avoid `Decidable` issues.
 -/
 
 def cells_ok_bool (n : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
+  have : ∀ i : Fin n, Decidable (∀ j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1) := fun _ => inferInstance
   decide (∀ i j : Fin n, 0 ≤ board i j ∧ board i j ≤ 1)
 
 def rows_ok_bool (n c : ℕ) (board : Matrix (Fin n) (Fin n) ℕ) : Bool :=
