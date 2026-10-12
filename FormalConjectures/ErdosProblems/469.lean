@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 469
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Le25] Lewis, Z. J., *On the convergence of the reciprocal sum of primitive pseudoperfect
   numbers*. Preprint (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos469
 

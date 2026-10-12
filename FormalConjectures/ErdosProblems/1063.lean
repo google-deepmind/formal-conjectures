@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1063
@@ -25,7 +26,13 @@ import FormalConjecturesUtil
  * [Gu04] Guy, Richard K., _Unsolved problems in number theory_. (2004), Problem B31.
  * [Mo85] Monier, Jean-Marie, _Problems and Solutions: Solutions of Advanced Problems: 6447_.
    Amer. Math. Monthly **92** (1985), 435-436.
+ * [Ku+26] Kung, P.-N., Song, L., Hwang, D., Yoon, J., Li, C.-L., Severini, S., Olšák, M.,
+   Lockhart, E., Le, Q. V., Gokturk, B., Luong, T., Pfister, T., & Peng, N. (2026). _LEAP:
+   Supercharging LLMs for Formal Mathematics with Agentic Frameworks_.
+   [arXiv:2606.03303](https://arxiv.org/abs/2606.03303).
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Nat Topology
@@ -57,10 +64,31 @@ theorem erdos_1063.better_upper :
   sorry
 
 /--
+An improved upper bound
+$n_k \ll \exp\left(\frac{k}{\log k}(\log \log k + \log \log \log k + \log 2)\right)$,
+which is $o\bigl(k \cdot \operatorname{lcm}(1, \dotsc, k - 1)\bigr)$, was formally proved in
+Lean 4 by the LEAP prover agent [Ku+26] (see the linked `formal_proof`).
+This is an improvement over another upper bound propsed [here](https://github.com/pw/erdos1063-upper-bound/blob/a28481f5b4bda374086533397269c5b550c759b8/README.md).
+  -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5524"]
+theorem erdos_1063.variants.subexponential_upper_bound :
+    let upper_bound : ℕ → ℝ := fun k =>
+      Real.exp ((k : ℝ) / Real.log k *
+        (Real.log (Real.log k) + Real.log (Real.log (Real.log k)) + Real.log 2))
+    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
+    upper_bound =o[atTop] fun k =>
+      (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
+  sorry
+
+/--
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
 $n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5533"]
 theorem erdos_1063.variants.exists_exception {n k : ℕ} (hk : 2 ≤ k) (h : 2 * k ≤ n) :
     ∃ i < k, ¬ (n - i) ∣ n.choose k := by
   sorry
@@ -108,7 +136,9 @@ theorem erdos_1063.variants.small_values :
 by $k! - i$ for $1 \le i < k$.
 
 The hypothesis `3 ≤ k` is necessary. At $k = 2$ the bound is false: $n_2 = 4$ and $2! = 2$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5537"]
 theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
   sorry
@@ -121,13 +151,17 @@ $2 \cdot \operatorname{lcm}(1) = 2$, while $n_2 = 4$.
 
 The source writes the bound as $k[2, 3, \dotsc, k-1]$. That agrees with the range used here,
 because including $1$ does not change a least common multiple. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5541"]
 theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
   sorry
 
 /-- The least common multiple bound implies $n_k \le \exp((1 + o(1))k)$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/1063.lean#L5545"]
 theorem erdos_1063.variants.exp_upper_bound :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ k, (n k : ℝ) ≤ exp ((1 + f k) * k) := by

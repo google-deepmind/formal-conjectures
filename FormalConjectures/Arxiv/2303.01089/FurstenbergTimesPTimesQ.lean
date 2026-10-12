@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Furstenberg's `times p, times q` conjectures
@@ -25,20 +26,17 @@ with some large Fourier coefficients**
 by *Catalin Badea, Sophie Grivaux*
 -/
 
+@[expose] public section
+
 noncomputable section
 
 open scoped Topology
 open Filter MeasureTheory UnitAddCircle
+open Nat (MultiplicativelyIndependent)
 
 namespace Arxiv.id2303_01089
 
 notation "𝕋" => UnitAddCircle
-
-/--
-Two integers $p, q \ge 2$ are multiplicatively independent if
-$\log p / \log q$ is irrational.
--/
-def MultiplicativelyIndependent (p q : ℕ) : Prop := Irrational (Real.log p / Real.log q)
 
 /--
 The map $T_n$ sends $x$ to $nx \bmod 1$ on the additive circle.

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 844
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ch74] Chvátal, V., *Intersecting families of edges in hypergraphs having the hereditary
   property*. (1974), 61-66.
 -/
+
+@[expose] public section
 
 namespace Erdos844
 

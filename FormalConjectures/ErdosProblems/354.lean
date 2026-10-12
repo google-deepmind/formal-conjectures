@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 
 # Erdős Problem 354
 *Reference:* [erdosproblems.com/354](https://www.erdosproblems.com/354)
 
 -/
+
+@[expose] public section
 namespace Erdos354
 
 /-- The sequence `⌊a⌋, ⌊γ * a⌋, ⌊γ ^ 2 * a⌋, ..., ⌊γ ^ i * a⌋, ...`. -/

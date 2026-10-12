@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 769
 
 *Reference:* [erdosproblems.com/769](https://www.erdosproblems.com/769)
 -/
+
+@[expose] public section
 
 namespace Erdos769
 
@@ -86,11 +89,13 @@ What refuting $c(n)\gg n^n$ leaves open: give good bounds for $c(n)$. Asked here
 scale the problem itself sets, $n^n$: does $c$ have a well-defined order
 $$\lim_{n\to\infty}\frac{\log c(n)}{n\log n}?$$
 The refuted conjecture would have forced this limit to be at least $1$.
+The cutoff condition is restricted to positive dimensions: in dimension zero,
+exact coverage permits only one tile, so no cutoff exists.
 -/
 @[category research open, AMS 52]
 theorem erdos_769.variants.growth_rate :
     answer(sorry) ↔
-      ∃ c : ℕ → ℕ, (∀ n, IsCutoff n (c n)) ∧
+      ∃ c : ℕ → ℕ, (∀ n, 0 < n → IsCutoff n (c n)) ∧
         ∃ γ : ℝ, Tendsto (fun n : ℕ => Real.log (c n) / (n * Real.log n)) atTop (𝓝 γ) := by
   sorry
 
