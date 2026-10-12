@@ -100,7 +100,7 @@ theorem erdos_10.variants.grechuk_example :
 /--
 There are infinitely many even integers not the sum of a prime and $2$ powers of $2$
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos10_erdos_10_variants_two_pows.lean#L340"]
 theorem erdos_10.variants.two_pows :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 2 := by
   sorry
