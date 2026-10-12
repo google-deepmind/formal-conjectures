@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 49
@@ -34,6 +35,8 @@ Also known as the *Marton's conjecture* or the *Polynomial Freiman-Ruzsa conject
 - [Sa12] T. Sanders, On the Bogolyubov-Ruzsa lemma, Anal. PDE 5 (2012), no. 3, 627–655.
 - [Ta08] T. C. Tao, A counterexample to a strong polynomial Freiman-Ruzsa conjecture, blog post November 2008, available at http://tinyurl.com/36j6hyxv.
 -/
+
+@[expose] public section
 
 open scoped Pointwise Finset
 

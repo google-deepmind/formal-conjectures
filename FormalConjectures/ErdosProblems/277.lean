@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 277
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ha79] Haight, J. A., Covering systems of congruences, a negative result. Mathematika (1979),
   53--61.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 

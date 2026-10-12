@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 101
 
-*Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [LM11] V. E. Levit and E. Mandrescu, [A Set and Collection Lemma](https://arxiv.org/abs/1101.4564), 2011, Corollaries 2.3–2.4.
+- [Li26] Wentao Li, [Lean proof of WOWII 101](https://github.com/VictorLiwentao/lean-graph-proofs/blob/9ce66be23570e0a9c8a6ae3f19f52e642878a8a9/proofs/WOWII101/PROOF.md), 2026.
 
 ## Definitions
 
@@ -31,6 +34,8 @@ where $G - v$ is the subgraph of $G$ induced on $V(G) \setminus \{v\}$.
 
 These vertices are also called "critical vertices for independence."
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture101
 
@@ -57,9 +62,12 @@ where $\alpha(G) = G.\mathrm{indepNum}$ is the independence number, $n$ is the
 number of vertices, and $\mathrm{alphaCore}(G)$ is the set of vertices whose
 removal decreases the independence number.
 
-This is a theorem known to follow from inclusion-exclusion principles.
+This is Hajnal's inequality in its independent-set form; see [LM11].
+
+Lean formalization by Wentao Li, with AI assistance; see [Li26].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/9ce66be23570e0a9c8a6ae3f19f52e642878a8a9/LeanGraphProofs/WOWII101.lean#L318"]
 theorem conjecture101 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     G.indepNum ≤ (Fintype.card α + (alphaCore G).card) / 2 := by
   sorry

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 263
 
 *Reference:* [erdosproblems.com/263](https://www.erdosproblems.com/263)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
@@ -86,7 +89,7 @@ theorem erdos_263.parts.ii : answer(sorry) ↔
 A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_folklore.lean#L399"]
 theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
     (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
     Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
@@ -130,7 +133,7 @@ $a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
 $a_n = 2^{(n+1)!}$, for which the ratio $a_{n+1} / a_n^{2+\varepsilon}$ tends to $+\infty$ and the
 real `liminf` defaults to $0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_super_doubly_exponential_eventual.lean#L515"]
 theorem erdos_263.variants.super_doubly_exponential_eventual (a : ℕ → ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : StrictMono a)

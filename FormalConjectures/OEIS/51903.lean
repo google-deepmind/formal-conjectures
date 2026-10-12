@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Maximum exponent in the prime factorization of $n$
 
 *References:*
 - [A051903](https://oeis.org/A051903)-/
+
+@[expose] public section
 
 namespace OeisA51903
 

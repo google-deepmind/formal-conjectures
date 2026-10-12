@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 42
@@ -29,8 +30,13 @@ import FormalConjecturesUtil
   The sphere packing problem in dimension 24. Annals of mathematics, 185(3), 1017-1033.
 - [Sa21] Sardari, Naser Talebizadeh. "Higher Fourier interpolation on the plane."
   arXiv preprint arXiv:2102.08753 (2021).
+- [OAI26a] OpenAI, *A sharp Fourier certificate for planar circle packing*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-sharp-Fourier-certificate-for-planar-circle-packing-September-23-2026/paper.pdf
 
 -/
+
+@[expose] public section
 
 open Real Complex MeasureTheory
 open scoped EuclideanGeometry FourierTransform
@@ -82,10 +88,15 @@ def CohnElkiesOptimal (d : ℕ) (bound : ℝ) : Prop :=
 
 /--
 Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packings in 2 dimensions?
+
+The answer is "yes". This was proved by an internal OpenAI model in September 2026 [OAI26a]; see
+the linked Lean proof, which constructs a radial Schwartz certificate normalised to minimum
+distance $1$.
 -/
-@[category research open, AMS 51 52]
+@[category research solved, AMS 51 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/PlanarPacking/Main.lean#L32"]
 theorem green_42 :
-    answer(sorry) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
+    answer(True) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
 /-- [CoEl03] proved this when $d = 1$. -/

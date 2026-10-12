@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 40
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [St94] R. Struik, Covering codes, PhD Thesis, Eindhoven University of Technology, the Netherlands, 106 pp, 1994.
 
 -/
+
+@[expose] public section
 
 open Filter Topology Fintype
 open scoped ENNReal Pointwise
@@ -62,12 +65,12 @@ theorem green_40 : answer(sorry) ↔ Tendsto f atTop (𝓝 ⊤) := by
   sorry
 
 /-- The only value known is $f(1) = 1$, which follows from the existence of the Hamming code [Gr24]. -/
-@[category research solved, AMS 5 94]
+@[category research solved, AMS 5 94, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green40_green_40_sanity_f_one.lean#L216"]
 theorem green_40.sanity_f_one : f 1 = 1 := by
   sorry
 
 /-- $f(r) \le r^r / r! \sim e^r$ [Gr24]. -/
-@[category research solved, AMS 5 94]
+@[category research solved, AMS 5 94, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green40_green_40_upper_bound.lean#L245"]
 theorem green_40.upper_bound (r : ℕ) : f r ≤ (r ^ r : ℝ≥0∞) / (r.factorial : ℝ≥0∞) := by
   sorry
 

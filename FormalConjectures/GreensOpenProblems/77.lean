@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«507»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«507»
 
 /-!
 # Ben Green's Open Problem 77
@@ -23,6 +24,8 @@ import FormalConjectures.ErdosProblems.«507»
 *Reference:*
 - [Ben Green's Open Problem 77](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.77)
 -/
+
+@[expose] public section
 
 open Erdos507 Filter Topology
 

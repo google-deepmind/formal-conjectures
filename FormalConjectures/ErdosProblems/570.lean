@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 570
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [CFMPP26] Cambie, S., Freschi, A., Morawski, P., Petrova, K. and Pokrovskiy, A.,
   Ramsey number of a cycle versus a graph of a given size. arXiv:2601.10238 (2026).
 -/
+
+@[expose] public section
 
 open Filter
 
