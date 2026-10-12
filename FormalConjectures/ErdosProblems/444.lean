@@ -37,16 +37,16 @@ namespace Erdos444
 open scoped Classical in
 /-- $d_A(n)$ is the number of $a \in A$ which divide $n$. Only the positive divisors of $n$ are
 counted, so $0 \in A$ does not change $d_A(n)$ for $n \ge 1$. -/
-noncomputable def d (A : Set ℕ) (n : ℕ) : ℕ :=
+noncomputable def divisorCount (A : Set ℕ) (n : ℕ) : ℕ :=
   #{a ∈ n.divisors | a ∈ A}
 
 @[category test, AMS 11]
-theorem d_zero (A : Set ℕ) : d A 0 = 0 := by
-  simp [d]
+theorem divisorCount_zero (A : Set ℕ) : divisorCount A 0 = 0 := by
+  simp [divisorCount]
 
 @[category test, AMS 11]
-theorem d_zero_two_three_four_twelve : d {0, 2, 3, 4} 12 = 3 := by
-  simp [d, show Nat.divisors 12 = {1, 2, 3, 4, 6, 12} by decide, filter_insert]
+theorem divisorCount_zero_two_three_four_twelve : divisorCount {0, 2, 3, 4} 12 = 3 := by
+  simp [divisorCount, show Nat.divisors 12 = {1, 2, 3, 4, 6, 12} by decide, filter_insert]
 
 open scoped Classical in
 /--
@@ -62,7 +62,7 @@ The maximum is over $1 \le n < x$, since every $a \in A$ divides $0$.
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos444.lean#L38"]
 theorem erdos_444 : answer(True) ↔ ∀ A : Set ℕ, A.Infinite → ∀ k : ℕ,
-    atTop.limsup (fun x : ℝ ↦ (((Ico 1 ⌈x⌉₊).sup (d A) /
+    atTop.limsup (fun x : ℝ ↦ (((Ico 1 ⌈x⌉₊).sup (divisorCount A) /
       (∑ n ∈ Ico 1 ⌈x⌉₊ with n ∈ A, (n : ℝ)⁻¹) ^ k : ℝ) : EReal)) = ⊤ := by
   sorry
 
