@@ -29,9 +29,12 @@ public import Mathlib.GroupTheory.OrderOfElement
   order at most `2`;
 * `MulAction.maxInvolutionFixedPoints G α`: the largest number of points fixed by an involution.
 
-If `G` is the Galois group of a real polynomial acting on its roots, complex conjugation is an
-element of order at most `2`, and the number of real roots is the number of points it fixes; so
-these bound the number of real roots.
+If `G` is the Galois group of a polynomial over $\mathbb{Q}$, acting on its complex roots, then
+complex conjugation restricts to an element of `G` of order at most `2`, and the real roots are
+the points that it fixes. So the number of real roots is at least `minInvolutionFixedPoints G α`.
+If some root is not real, complex conjugation has order `2`, and the number of real roots is also
+at most `maxInvolutionFixedPoints G α`. This upper bound needs a non-real root: the roots of
+$x^2 - 2$ are real and the only involution swaps them, so the maximum is `0`.
 -/
 
 namespace MulAction
