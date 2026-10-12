@@ -121,6 +121,8 @@ The linked Lean proof certifies the twelve-vertex member ($m = 6$) of the family
 The hypothesis $n > 2$ is stated in the source's full list of conjectures (as for the
 neighbouring Conjectures 290, 292 and 293) but omitted on its list of open conjectures;
 the counterexample has $12$ vertices, so it refutes both readings.
+
+Lean formalization by Wentao Li, with AI assistance.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII291.lean#L253"]
