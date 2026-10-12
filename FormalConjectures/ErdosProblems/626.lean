@@ -90,11 +90,10 @@ theorem erdos_626.parts.i : answer(sorry) ↔
 /--
 Kostochka [Ko88] proved that for $k \geq 4$
 $$g_k(n) \geq \frac{1}{4\log k}\log n.$$
-Kostochka's theorem bounds the girth, and $g_k(n)$ is one less than the largest possible girth.
-The statement below is a consequence of his theorem, not the theorem itself: for every
-$\varepsilon > 0$ and all
-sufficiently large $n$,
-$g_k(n) \geq \left(\frac{1}{4\log k} - \varepsilon\right)\log n$.
+Kostochka's theorem gives this lower bound for the girth itself, and $g_k(n)$ is one less than the
+largest possible girth, so the inequality above holds only up to $1$. The statement below is a
+consequence of his theorem, not the theorem itself: for every $\varepsilon > 0$ and all
+sufficiently large $n$, $g_k(n) \geq \left(\frac{1}{4\log k} - \varepsilon\right)\log n$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_626.variants.kostochka :
