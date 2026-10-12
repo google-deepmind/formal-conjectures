@@ -80,4 +80,22 @@ theorem erdos_617.variants.r2 :
           ∀ (k : Fin r), ∃ u ∈ S, ∃ v ∈ S, u ≠ v ∧ coloring s(u, v) = k}.Infinite := by
   sorry
 
+/--
+Every five-colouring of the edges of $K_{26}$ has a six-vertex set on which
+at least one colour is absent.
+
+Jonas J. Gebendorfer proved this case in
+[A Noncomputational Proof of the Five-Colour Case of the Erdős–Gyárfás
+Balanced-Colouring Conjecture](https://doi.org/10.5281/zenodo.22344189),
+Theorem 1.1 (5 September 2026). The proof uses Turán's theorem, Brooks' theorem,
+and the Kang–Pikhurko bound. The general conjecture remains open.
+-/
+@[category research solved, AMS 5]
+theorem erdos_617.variants.r_eq_5 {V : Type} [Fintype V] [DecidableEq V]
+    (hV : Fintype.card V = 5^2 + 1) (coloring : Sym2 V → Fin 5) :
+    ∃ (S : Finset V) (k : Fin 5),
+      S.card = 5 + 1 ∧
+      ∀ u ∈ S, ∀ v ∈ S, u ≠ v → coloring s(u, v) ≠ k := by
+  sorry
+
 end Erdos617
