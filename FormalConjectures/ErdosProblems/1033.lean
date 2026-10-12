@@ -45,13 +45,15 @@ $$h(n)\geq (2(\sqrt{3}-1)-o(1))n?$$
 
 A conjecture of Bollobás and Erdős.
 
-A construction posted on the
-[Erdős problems forum](https://www.erdosproblems.com/forum/thread/1033) in June and July 2026,
-a blow-up of the butterfly graph, is claimed to give $h(n)\leq 1.4639n+O(1)$. This would make
-the answer to this question negative. The problem is still listed as open on the site.
+The answer is no. A blow-up of the butterfly graph, posted on the
+[Erdős problems forum](https://www.erdosproblems.com/forum/thread/1033) in June and July 2026 and
+written up in [this note](https://woutercvb.github.io/Erdos1033_smalloptimization.pdf), gives
+arbitrarily large graphs with more than $n^2/4$ edges in which every triangle has degree sum at
+most $1.464n$, which is less than $2(\sqrt{3}-1)n$. Estimating the optimal value of $h(n)$ is
+still open.
 -/
-@[category research open, AMS 5]
-theorem erdos_1033 : answer(sorry) ↔
+@[category research solved, AMS 5]
+theorem erdos_1033 : answer(False) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
       n ^ 2 < 4 * #G.edgeFinset →
         ∃ t, G.IsNClique 3 t ∧
