@@ -43,12 +43,15 @@ $C$ is the set of center vertices (those with minimum eccentricity), $M$ is the 
 maximum-degree vertices, and $\operatorname{dist}\_{\operatorname{avg}}(S, V)$ is the average
 of all nonzero distances $\operatorname{dist}\_G(s, v)$ with $s \in S$ and $v \in V$.
 
-The conjecture is false. Let $G$ be the tree on $39$ vertices formed by a vertex with three
+The conjecture is false. The counterexample below was documented by
+[Salvatore Mercuri](https://github.com/google-deepmind/formal-conjectures/pull/5733).
+Let $G$ be the tree on $39$ vertices formed by a vertex with three
 pendant leaves, joined by a path of five edges to the root of a perfect binary tree of depth
 four. Then $\operatorname{path}(G) = 11$, while $C$ and $M$ are singletons whose distance sums
 are $154$ and $266$, so the bound is $\lceil (154 + 266) / 38 \rceil = 12$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII34.lean#L350"]
 theorem conjecture34 :
   answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
