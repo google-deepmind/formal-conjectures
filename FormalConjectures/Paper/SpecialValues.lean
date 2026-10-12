@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Special values of $L$-functions
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [Ne99] J. Neukirch, Algebraic Number Theory, Springer (1999), Ch. VII §2. The Gamma factor
   of a Dirichlet L-function, with shift 0 or 1 according to the parity of the character.
 -/
+
+@[expose] public section
 
 namespace Deligne
 
@@ -497,8 +501,9 @@ theorem isCritical_pkg_iff (M : Obj m) (n : ℤ) : (pkg m).IsCritical M n ↔ n 
 `Λ(m + 1)` divided by `Deligne.SymPow.criticalPeriod` is rational, where `Λ` is the `Sym^(2m+1)`
 `L`-function of `E`.
 
-Known cases encompass `m = 0` and `m = 1`, while for `m ≥ 2` it is known only when `E` has
-complex multiplication, and is open otherwise. -/
+It is known for `m = 0`. For `m = 1` it is known when `E` has complex multiplication or
+`L(E, 1) ≠ 0`. For `m ≥ 2` it is known only when `E` has complex multiplication. It is open
+otherwise. -/
 @[category research open, AMS 11 14]
 theorem conjecture (m : ℕ) (M : Obj m) : (pkg m).Conjecture M := by
   sorry
@@ -510,13 +515,23 @@ for the modular form attached to `E` (Manin). -/
 theorem conjecture.variants.zero (M : Obj 0) : (pkg 0).Conjecture M := by
   sorry
 
-/-- The known case `m = 1`, Deligne's conjecture for `Sym³ E` at its critical point `2`:
-`L(Sym³ E, 2) · 2πi / (Ω⁺ (Ω⁻)³) ∈ ℚ`. A theorem of Garrett–Harris, via the triple product
-`L`-function `L(s, φ × φ × φ)`; reproved by Kim–Shahidi. See P. Garrett and M. Harris,
-*Special values of triple product L-functions*, Amer. J. Math. 115 (1993), and H. Kim and F.
-Shahidi, *Symmetric cube L-functions for GL₂ are entire*, Ann. of Math. 150 (1999). -/
-@[category research solved, AMS 11 14]
+/-- The case `m = 1`, Deligne's conjecture for `Sym³ E` at its critical point `2`:
+`L(Sym³ E, 2) · 2πi / (Ω⁺ (Ω⁻)³) ∈ ℚ`. It is known when `L(E, 1) ≠ 0`
+(`Deligne.SymPow.conjecture.variants.one_of_L_ne_zero`) and when `E` has complex
+multiplication. It is open for `E` without complex multiplication and with `L(E, 1) = 0`. -/
+@[category research open, AMS 11 14]
 theorem conjecture.variants.one (M : Obj 1) : (pkg 1).Conjecture M := by
+  sorry
+
+/-- The case `m = 1` when `L(E, 1) ≠ 0`: `L(Sym³ E, 2) · 2πi / (Ω⁺ (Ω⁻)³) ∈ ℚ`.
+Garrett–Harris prove algebraicity of the triple product value
+`L(f × f × f, 2) = L(Sym³ E, 2) · L(E, 1)²`, and Kim–Shahidi divide by `L(E, 1)²`.
+See P. Garrett and M. Harris, *Special values of triple product L-functions*, Amer. J. Math. 115
+(1993), and H. Kim and F. Shahidi, *Holomorphy of Rankin triple L-functions; special values and
+root numbers for symmetric cube L-functions*, Israel J. Math. 120 (2000), Proposition 4.1. -/
+@[category research solved, AMS 11 14]
+theorem conjecture.variants.one_of_L_ne_zero (M : Obj 1) {L : ℂ → ℂ}
+    (hL : IsLFunction 1 M.W L) (h : L 1 ≠ 0) : (pkg 1).Conjecture M := by
   sorry
 
 end SymPow
