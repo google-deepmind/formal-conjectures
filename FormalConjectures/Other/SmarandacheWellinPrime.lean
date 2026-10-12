@@ -49,42 +49,25 @@ noncomputable def a : ℕ → ℕ
   | 0 => 2
   | n + 1 => decimalAppend (a n) ((n + 1).nth Nat.Prime)
 
-@[category API, AMS 11]
-theorem nth_prime_one : (1).nth Nat.Prime = 3 :=
-  Nat.nth_count Nat.prime_three
-
-@[category API, AMS 11]
-theorem nth_prime_two : (2).nth Nat.Prime = 5 :=
-  Nat.nth_count Nat.prime_five
-
-@[category API, AMS 11]
-theorem nth_prime_three : (3).nth Nat.Prime = 7 :=
-  Nat.nth_count Nat.prime_seven
-
-@[category API, AMS 11]
-theorem nth_prime_four : (4).nth Nat.Prime = 11 :=
-  Nat.nth_count Nat.prime_eleven
-
 @[category test, AMS 11]
 theorem a_0 : a 0 = 2 := by
   rfl
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 23 := by
-  norm_num [a, nth_prime_one, decimalAppend, decimalDigitCount]
+  norm_num [a, decimalAppend, decimalDigitCount]
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 235 := by
-  norm_num [a, nth_prime_one, nth_prime_two, decimalAppend, decimalDigitCount]
+  norm_num [a, decimalAppend, decimalDigitCount]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2357 := by
-  norm_num [a, nth_prime_one, nth_prime_two, nth_prime_three, decimalAppend, decimalDigitCount]
+  norm_num [a, decimalAppend, decimalDigitCount]
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 235711 := by
-  norm_num [a, nth_prime_one, nth_prime_two, nth_prime_three, nth_prime_four, decimalAppend,
-    decimalDigitCount]
+  norm_num [a, decimalAppend, decimalDigitCount]
 
 @[category test, AMS 11]
 theorem prime_a_0 : (a 0).Prime := by
