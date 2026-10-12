@@ -61,21 +61,6 @@ lemma a_eq_of_minimal (n L : ℕ)
     by_contra h
     exact hmin m (by omega) hm
 
-/-- Feasibility can be checked using subsets with exactly the prescribed number of marks. -/
-@[category API, AMS 5 11]
-private lemma le_max_sidon_subset_card_iff (n : ℕ) (hn : 0 < n) (A : Finset ℕ) :
-    n ≤ A.maxSidonSubsetCard ↔
-      ∃ B ⊆ A, B.card = n ∧ IsSidon (B : Set ℕ) := by
-  rw [Finset.maxSidonSubsetCard, Finset.le_sup_iff hn]
-  constructor
-  · rintro ⟨B, hB, hnB⟩
-    obtain ⟨C, hCB, hC⟩ := Finset.exists_subset_card_eq hnB
-    obtain ⟨hBA, hB⟩ := Finset.mem_filter.mp hB
-    exact ⟨C, hCB.trans (Finset.mem_powerset.mp hBA), hC,
-      Set.IsSidon.subset hB (Finset.coe_subset.mpr hCB)⟩
-  · rintro ⟨B, hBA, rfl, hB⟩
-    exact ⟨B, Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr hBA, hB⟩, le_rfl⟩
-
 /-- The sorted marks of a bounded ruler occur in the finite list search. -/
 @[category API, AMS 5 11]
 private lemma sort_sublist_range {L : ℕ} {C : Finset ℕ} (hC : C ⊆ Finset.range L) :
@@ -117,9 +102,9 @@ lemma a_eq_of_witness (n L : ℕ) (hn : 0 < n) (B : Finset ℕ)
     (hno : ∀ l ∈ (List.range L).sublistsLen n, ¬ IsSidon (l.toFinset : Set ℕ)) :
     a n = L := by
   apply a_eq_of_minimal
-  · exact (le_max_sidon_subset_card_iff n hn _).mpr ⟨B, hB, hcard, hSidon⟩
+  · exact (Finset.le_maxSidonSubsetCard_iff n hn _).mpr ⟨B, hB, hcard, hSidon⟩
   · intro m hm h
-    obtain ⟨C, hC, hcard, hSidon⟩ := (le_max_sidon_subset_card_iff n hn _).mp h
+    obtain ⟨C, hC, hcard, hSidon⟩ := (Finset.le_maxSidonSubsetCard_iff n hn _).mp h
     have hCR : C ⊆ Finset.range L := by
       intro x hx
       have hxm := (Finset.mem_Icc.mp (hC hx)).2
