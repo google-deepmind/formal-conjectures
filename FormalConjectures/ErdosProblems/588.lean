@@ -42,16 +42,6 @@ open EuclideanGeometry Filter Asymptotics
 namespace Erdos588
 
 /--
-The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
-
-Only lines through two distinct points of $S$ are considered, so a line with fewer than two
-points of $S$ is never counted.
--/
-noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
-  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
-  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
-
-/--
 `numLinesWithPointsMax k n` is $f_k(n)$: the maximum number of lines containing exactly $k$
 points among all sets $S$ of $n$ points in $\mathbb{R}^2$ with no $k + 1$ points on a line.
 
