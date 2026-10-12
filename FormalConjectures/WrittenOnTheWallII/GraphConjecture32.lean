@@ -49,7 +49,8 @@ The conjecture is false, the authors present a counterexample: "The path on 5 ve
 is a counterexample, path = 5, distavg(A) = 4 and the average of eccentricity of maximum
 degree vertices is 8/3."
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII32.lean#L114"]
 theorem conjecture32 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
