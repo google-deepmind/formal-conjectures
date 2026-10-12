@@ -20,20 +20,20 @@ public import FormalConjecturesUtil
 /-!
 # The Courtade–Kumar (most informative Boolean function) conjecture
 
-Let `X` be uniform on the Boolean cube `{0,1}ⁿ`. Independently of `X`, let the coordinates of `Z`
-be i.i.d. Bernoulli random variables with parameter `p ∈ [0, 1]`, and put `Y = X xor Z`, so that
-`Y` is the output of `n` independent binary symmetric channels with crossover probability `p` on
-input `X`. The **Courtade–Kumar conjecture** asserts that for every Boolean function
-`f : {0,1}ⁿ → {0,1}`,
+Let $X$ be uniform on the Boolean cube $\{0,1\}^n$. Independently of $X$, let the coordinates of $Z$
+be i.i.d. Bernoulli random variables with parameter $p \in [0, 1]$, and put $Y = X \oplus Z$,
+so that $Y$ is the output of $n$ independent binary symmetric channels with crossover
+probability $p$ on input $X$. The **Courtade–Kumar conjecture** asserts that for every
+Boolean function $f : \{0,1\}^n \to \{0,1\}$,
 
-  `I(f(X); Y) ≤ 1 - h(p)`,
+  $I(f(X); Y) \le 1 - h(p)$,
 
 where mutual information and binary entropy are measured in bits.
 
-The usual restriction to `p ∈ [0, 1/2]` is equivalent to the range used here. For `p > 1/2`,
-complementing every output bit replaces `Z` by its bitwise complement, which is i.i.d.
-Bernoulli(`1 - p`) noise still independent of `X`; this bijective relabelling of the output
-preserves `I(f(X); Y)`, and `h(1 - p) = h(p)`.
+The usual restriction to $p \in [0, 1/2]$ is equivalent to the range used here. For $p > 1/2$,
+complementing every output bit replaces $Z$ by its bitwise complement, which is i.i.d.
+Bernoulli($1 - p$) noise still independent of $X$; this bijective relabelling of the output
+preserves $I(f(X); Y)$, and $h(1 - p) = h(p)$.
 
 This file contains two formulations:
 
@@ -48,17 +48,27 @@ equivalent, without using either research statement. Shannon entropy and mutual 
 finite-valued random variables are defined in
 `FormalConjecturesForMathlib.InformationTheory.FiniteEntropy`.
 
-For `n ≥ 1`, coordinate dictators attain the bound: `I(X_i; Y) = I(X_i; Y_i) = 1 - h(p)`, since
-the other output coordinates are independent of `(X_i, Y_i)`. The test `mutualInfo_dictator`
-checks `n = 1`.
+For $n \ge 1$, coordinate dictators attain the bound: $I(X_i; Y) = I(X_i; Y_i) = 1 - h(p)$, since
+the other output coordinates are independent of $(X_i, Y_i)$. The test `mutualInfo_dictator`
+checks $n = 1$.
 
 *References:*
 - [CK14] T. A. Courtade and G. R. Kumar, *Which Boolean functions maximize mutual information on
   noisy inputs?*, IEEE Trans. Inf. Theory 60 (2014), no. 8, 4515–4525.
+
+Independent work on the conjecture from September 2026, in alphabetical order:
 - [CGJLMNW26] Z. Chen, A. Gohari, A. Javanmard, H. Lin, V. Mirrokni, C. Nair, D. P. Woodruff,
   *A Proof of the Most Informative Boolean Function Conjecture*,
   [arXiv:2609.24931](https://arxiv.org/abs/2609.24931). A Lean 4 formalisation of the proof is at
   https://github.com/dpwoodru/general-courtade-kumar-lean.
+- [KS26] D. Kramer and M. Saglam, *On the most informative Boolean function under noise*,
+  manuscript, https://github.com/deepinfra/courtade-kumar.
+- [KT26] Vu Khac Ky and Tuan Tran, *Dictators are most informative*,
+  [arXiv:2609.24184](https://arxiv.org/abs/2609.24184). See also their follow-up *Stability of
+  the Courtade–Kumar inequality*, [arXiv:2609.31797](https://arxiv.org/abs/2609.31797).
+- [MB26] H. Mahdavifar and A. Beirami, *The Most Informative Bit and Beyond: A Proof of the
+  Courtade–Kumar Conjecture and Multibit Extensions*,
+  [arXiv:2609.26444](https://arxiv.org/abs/2609.26444).
 -/
 
 @[expose] public section
@@ -70,37 +80,39 @@ open MeasureTheory
 
 /-! ## The elementary formulation
 
-The probability interpretations of `bsc`, `jointProb` and `mutualInfo` assume `0 ≤ p ≤ 1`, and
-`entropy q` is Shannon entropy when the masses `q` are nonnegative and sum to one; otherwise these
+The probability interpretations of `bsc`, `jointProb` and `mutualInfo` assume $0 \le p \le 1$, and
+`entropy q` is Shannon entropy when the masses $q$ are nonnegative and sum to one; otherwise these
 definitions are just total real-valued expressions. -/
 
-/-- The Boolean cube `{0,1}ⁿ`, with bits represented by `Bool`. -/
+/-- The Boolean cube $\{0,1\}^n$, with bits represented by `Bool`. -/
 abbrev Cube (n : ℕ) := Fin n → Bool
 
-/-- Binary entropy in bits, `h(p) = -p log₂ p - (1 - p) log₂ (1 - p)`, with `h(0) = h(1) = 0`. -/
+/-- Binary entropy in bits, $h(p) = -p \log_2 p - (1 - p) \log_2 (1 - p)$, with
+$h(0) = h(1) = 0$. -/
 noncomputable def binEntropyBits (p : ℝ) : ℝ := Real.binEntropy p / Real.log 2
 
-/-- Transition probability of `n` independent binary symmetric channels with crossover probability
-`p`: `P(Y = y | X = x) = ∏ᵢ (if xᵢ = yᵢ then 1 - p else p)`. -/
+/-- Transition probability of $n$ independent binary symmetric channels with crossover probability
+$p$: $P(Y = y \mid X = x) = \prod_i q_i$, where $q_i = 1 - p$ if $x_i = y_i$ and $q_i = p$
+otherwise. -/
 noncomputable def bsc {n : ℕ} (p : ℝ) (x y : Cube n) : ℝ :=
   ∏ i, if x i = y i then 1 - p else p
 
-/-- The joint probability `P(f(X) = b, Y = y)` for `X` uniform on the cube and `Y` the channel
-output on input `X`. -/
+/-- The joint probability $P(f(X) = b, Y = y)$ for $X$ uniform on the cube and $Y$ the channel
+output on input $X$. -/
 noncomputable def jointProb {n : ℕ} (f : Cube n → Bool) (p : ℝ) (b : Bool) (y : Cube n) : ℝ :=
   (2 : ℝ) ^ (-(n : ℤ)) * ∑ x, if f x = b then bsc p x y else 0
 
-/-- Shannon entropy in bits of a probability mass function `q` on a finite type. -/
+/-- Shannon entropy in bits of a probability mass function $q$ on a finite type. -/
 noncomputable def entropy {α : Type*} [Fintype α] (q : α → ℝ) : ℝ :=
   (∑ a, Real.negMulLog (q a)) / Real.log 2
 
-/-- The mutual information `I(f(X); Y) = H(f(X)) + H(Y) - H(f(X), Y)`, in bits. -/
+/-- The mutual information $I(f(X); Y) = H(f(X)) + H(Y) - H(f(X), Y)$, in bits. -/
 noncomputable def mutualInfo {n : ℕ} (f : Cube n → Bool) (p : ℝ) : ℝ :=
   entropy (fun b => ∑ y, jointProb f p b y) + entropy (fun y => ∑ b, jointProb f p b y) -
     entropy (fun z : Bool × Cube n => jointProb f p z.1 z.2)
 
-/-- **The Courtade–Kumar conjecture.** For every `n`, every Boolean function `f` on `{0,1}ⁿ` and
-every crossover probability `p ∈ [0, 1]`, `I(f(X); Y) ≤ 1 - h(p)`. -/
+/-- **The Courtade–Kumar conjecture.** For every $n$, every Boolean function $f$ on
+$\{0,1\}^n$ and every crossover probability $p \in [0, 1]$, $I(f(X); Y) \le 1 - h(p)$. -/
 @[category research solved, AMS 94,
   formal_proof using lean4 at "https://github.com/dpwoodru/general-courtade-kumar-lean/blob/c3599c05181ad357331b701edf8fd8ec75c88305/verification/comparator/CKChallenge/Solution.lean#L6"]
 theorem courtade_kumar (n : ℕ) (f : Cube n → Bool) (p : ℝ) (hp₀ : 0 ≤ p) (hp₁ : p ≤ 1) :
@@ -132,16 +144,16 @@ namespace variants
 
 /-- **The Courtade–Kumar conjecture, in random-variable form.**
 
-The pushforward in the hypothesis is the joint distribution of `(X, Z)`. The uniform measure on
-`Cube n` is the law of `n` i.i.d. Bernoulli(1/2) bits. The product law makes the coordinates of
-`Z` i.i.d. Bernoulli(`p`) and makes the whole noise vector independent of `X`. In
-`bernoulliMeasure true false p`, `true` has probability `p` and denotes a flip.
+The pushforward in the hypothesis is the joint distribution of $(X, Z)$. The uniform measure on
+`Cube n` is the law of $n$ i.i.d. Bernoulli($1/2$) bits. The product law makes the coordinates of
+$Z$ i.i.d. Bernoulli($p$) and makes the whole noise vector independent of $X$. In
+`bernoulliMeasure true false p`, `true` has probability $p$ and denotes a flip.
 
-Conditional on `X`, `Y = X xor Z` flips each input coordinate independently with probability
-`p`: this is the memoryless binary symmetric channel with crossover probability `p` from `X` to
-`Y`. Every Boolean function is allowed, including constants. All maps between these finite
-discrete types are measurable, so `f ∘ X` and `Y` are measurable. The conclusion is
-`I(f(X); Y) ≤ 1 - h(p)` in bits, for the entire output vector `Y`.
+Conditional on $X$, $Y = X \oplus Z$ flips each input coordinate independently with probability
+$p$: this is the memoryless binary symmetric channel with crossover probability $p$ from $X$ to
+$Y$. Every Boolean function is allowed, including constants. All maps between these finite
+discrete types are measurable, so $f \circ X$ and $Y$ are measurable. The conclusion is
+$I(f(X); Y) \le 1 - h(p)$ in bits, for the entire output vector $Y$.
 
 The linked proof proves the elementary statement `CourtadeKumar.courtade_kumar`, and
 `CourtadeKumar.courtade_kumar_iff_random_variable` transfers it to this formulation. -/
@@ -206,7 +218,7 @@ private theorem inputNoiseLaw_real_singleton (n : ℕ) (p : ℝ)
     ENNReal.toReal_mul, ENNReal.toReal_prod]
   simp [hB, Cube, zpow_neg]
 
-/-- The joint probability of `(f(X), X xor Z)` on the product probability space is
+/-- The joint probability of $(f(X), X \oplus Z)$ on the product probability space is
 the elementary `jointProb`. -/
 @[category API, AMS 94]
 private theorem inputNoiseLaw_jointProb (n : ℕ) (f : Cube n → Bool) (p : ℝ)
@@ -340,7 +352,7 @@ private theorem negMulLog_div_two (x : ℝ) :
   rw [h]
   ring
 
-/-- Algebraic identity for the one-coordinate dictator `f(x) = x₀`. For `p ∈ [0, 1]`, it shows
+/-- Algebraic identity for the one-coordinate dictator $f(x) = x_0$. For $p \in [0, 1]$, it shows
 that the bound is attained, so the conjecture is sharp and the statement is not vacuous. -/
 @[category test, AMS 94]
 theorem mutualInfo_dictator (p : ℝ) :
