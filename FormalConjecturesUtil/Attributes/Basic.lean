@@ -568,7 +568,7 @@ that holds: unchanged for a yes, negated with `¬` for a no. -/
 initialize Lean.registerBuiltinAttribute {
   name := `Question_attr
   descr := "Annotation that a statement is posed as a question."
-  add := fun decl _stx _attrKind => do
+  add decl _stx _attrKind := do
     -- Inside a `module`, a theorem is still registered as an axiom when attributes run, so
     -- the check is on the type rather than on the kind of the constant.
     let some info := (← getEnv).find? decl
