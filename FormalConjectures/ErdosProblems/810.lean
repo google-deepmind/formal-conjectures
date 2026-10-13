@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 810
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
 - [Er91] Erdős, P., *Problems and results in combinatorial analysis and combinatorial number
   theory*. Graph theory, combinatorics, and applications, Vol. 1 (1991), 397–406.
 -/
+
+@[expose] public section
 
 namespace Erdos810
 
