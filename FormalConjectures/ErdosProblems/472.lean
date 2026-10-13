@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 472
 
 *Reference:* [erdosproblems.com/472](https://www.erdosproblems.com/472)
 -/
+
+@[expose] public section
 
 namespace Erdos472
 
