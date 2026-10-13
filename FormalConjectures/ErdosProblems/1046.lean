@@ -26,6 +26,12 @@ public import FormalConjecturesUtil
   Analyse Math. (1958), 125-148.
 - [Po59] Pommerenke, Ch., *On some problems by Erdős, Herzog and Piranian*. Michigan Math. J.
   (1959), 221-225.
+- [BPS02] Barnard, Roger W. and Pearce, Kent and Solynin, Alexander Yu., *An isoperimetric
+  inequality for logarithmic capacity*. Ann. Acad. Sci. Fenn. Math. (2002), 419-436.
+- [Po28] Pólya, G., *Beitrag zur Verallgemeinerung des Verzerrungssatzes auf mehrfach
+  zusammenhängende Gebiete*. S.-B. Preuss. Akad. Wiss. (1928), 280-282.
+- [Ra95] Ransford, Thomas, *Potential theory in the complex plane*. London Mathematical Society
+  Student Texts 28, Cambridge University Press (1995).
 -/
 
 @[expose] public section
@@ -75,9 +81,14 @@ theorem erdos_1046.variants.centroid : ∀ f : ℂ[X], f.Monic → IsConnected (
 /--
 Erdős, Herzog, and Piranian [EHP58] conjecture that if $\{ z: \lvert f(z)\rvert\leq 1\}$ is
 connected then its diameter is at least $2$.
+
+The answer is yes, and connectedness is not needed. For monic $f$ of degree $n \geq 1$ the set
+$\{ z: \lvert f(z)\rvert\leq 1\}$ has logarithmic capacity $1$ [Ra95, Theorem 5.2.5], and Pólya
+[Po28] proved $\mathrm{cap}(E) \leq \frac{1}{2}\operatorname{diam}(E)$ for every compact
+$E \subseteq \mathbb{C}$, see [BPS02, (1.2)]. Hence the diameter is at least $2$.
 -/
-@[category research open, AMS 30]
-theorem erdos_1046.variants.diameter : answer(sorry) ↔ ∀ f : ℂ[X], f.Monic →
+@[category research solved, AMS 30]
+theorem erdos_1046.variants.diameter : answer(True) ↔ ∀ f : ℂ[X], f.Monic →
     IsConnected (closedLemniscate f) → 2 ≤ Metric.ediam (closedLemniscate f) := by
   sorry
 
