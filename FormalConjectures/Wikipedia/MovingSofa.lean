@@ -215,6 +215,7 @@ open MeasureTheory
 open scoped ENNReal
 
 /-- The **sofa constant** is the maximal area of a moving sofa. -/
+@[optimization_constant "41a"]
 def sofaConstant : ℝ≥0∞ := ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s
 
 /-- The sofa constant is at least 1, as witnessed by the unit square. -/

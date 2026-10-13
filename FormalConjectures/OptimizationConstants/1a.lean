@@ -47,6 +47,7 @@ The inequality is only required for square-integrable $f$. This does not change 
 (see [M2010, §2]), and it guarantees that every autoconvolution integral exists and that the
 supremum over $t$ is finite.
 This number is related to the maximal size of Sidon sets in additive combinatorics. -/
+@[optimization_constant "1a"]
 noncomputable def C1a : ℝ :=
   sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f → MemLp f 2 →
     C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
