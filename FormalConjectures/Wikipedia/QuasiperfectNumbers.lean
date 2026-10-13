@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Quasiperfect Numbers
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
 -/
+
+@[expose] public section
 
 namespace QuasiperfectNumbers
 

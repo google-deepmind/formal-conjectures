@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 17
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
@@ -121,8 +124,7 @@ theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ �
   · -- `97` is a lower bound: every prime `< 97` is a cluster prime, so cannot lie
     -- in the set of non-cluster primes.
     rintro b ⟨hbp, hbnc⟩
-    by_contra hlt
-    push_neg at hlt
+    by_contra! hlt
     interval_cases b <;>
       first
         | exact absurd hbp (by decide)

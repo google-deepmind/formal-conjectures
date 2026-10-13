@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 456
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/456](https://www.erdosproblems.com/456)
 - [Er79e] Erdős, Paul, Some unconventional problems in number theory. Astérisque (1979), 73--82.
 -/
+
+@[expose] public section
 
 open Nat Filter
 open scoped Topology Asymptotics
@@ -48,7 +51,7 @@ Is it true that $m_n<p_n$ for almost all $n$?
 @[category research open, AMS 11]
 theorem erdos_456.parts.i :
     answer(sorry) ↔
-      Tendsto (fun N ↦ (count { n | m n < p n } N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
+      Tendsto (fun N ↦ (count (fun n ↦ m n < p n) N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
   sorry
 
 open scoped Classical in
@@ -58,7 +61,7 @@ Does $p_n/m_n \to \infty$ for almost all $n$?
 @[category research open, AMS 11]
 theorem erdos_456.parts.ii :
     answer(sorry) ↔
-      ∃ A : Set ℕ, Tendsto (fun N ↦ (count A N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
+      ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
         Tendsto (fun n ↦ (p n : ℝ) / (m n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
   sorry
 
@@ -90,7 +93,7 @@ theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
   · subst hn
     have hempty : {k | 0 < k ∧ (0 : ℕ) ∣ totient k} = (∅ : Set ℕ) := by
       ext k
-      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
       intro hk
       rw [zero_dvd_iff]
       have := Nat.totient_pos.mpr hk
@@ -159,7 +162,7 @@ Erdős [Er79e] writes it is 'easy to show' that $m_n/n \to \infty$ for almost al
 -/
 @[category research solved, AMS 11]
 theorem erdos_456.variants.m_div_n :
-    ∃ A : Set ℕ, Tendsto (fun N ↦ (count A N : ℝ) / N) atTop (𝓝 1) ∧
+    ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / N) atTop (𝓝 1) ∧
       Tendsto (fun n ↦ (m n : ℝ) / (n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
   sorry
 

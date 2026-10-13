@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 470
 
 *Reference:* [erdosproblems.com/470](https://www.erdosproblems.com/470)
 -/
+
+@[expose] public section
 
 namespace Erdos470
 
@@ -122,7 +125,8 @@ theorem erdos_470.variants.odd_weird_prime_div :
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/HowieHwong/lean-erdos-proofs/blob/40216cfee225ec5c9f122a48703e671a9f47db90/Erdos/P470.lean#L88"]
 theorem erdos_470.variants.abundancy_index :
     (∀ n : ℕ, n.Weird → ¬Odd n) → ∀ n, n.Weird → AbundancyIndex n < 4 := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 178
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Be81] Beck, József, *Balancing families of integer sequences*. Combinatorica (1981), 209-216.
 - [Be17] Beck, József, *A discrepancy problem: balancing infinite dimensional vectors*. Number theory—Diophantine problems, uniform distribution and applications (2017), 61-82.
 -/
+
+@[expose] public section
 
 namespace Erdos178
 

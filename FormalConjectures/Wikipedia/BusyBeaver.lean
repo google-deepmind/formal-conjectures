@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Busy Beaver
@@ -26,6 +27,8 @@ machine can take before halting, when started on an empty tape.
 
 - [The Busy Beaver Challenge](https://wiki.bbchallenge.org/wiki/Main_Page)
 -/
+
+@[expose] public section
 
 universe u v
 

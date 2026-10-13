@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Planar $L_p$-Rogers-Shephard, the equality case
@@ -23,10 +24,15 @@ import FormalConjecturesUtil
 **$L_p$-Rogers-Shephard type inequalities for $L_p$-zonoids and symmetric bodies**
 by *Matthieu Fradelizi, Auttawich Manui, Mark Meyer, Cheikh Saliou Ndiaye*
 
+*Formal proof of Conjecture 5:* Kenta Kitamura,
+[Lean proofs for the symmetric L_p Rogers–Shephard conjectures](https://github.com/KitaKen1/lp-rogers-shephard-conjectures-lean/tree/c646c668c0568b8533bf5534abcf02aab4d2df72).
+
 Corollary 29 bounds $|K \oplus_p -K|$ against $|K|$ for planar convex bodies with a centre of
 symmetry containing the origin, and notes that parallelograms with a vertex at the origin
 attain it. Conjecture 5 asks whether they are the only bodies that do.
 -/
+
+@[expose] public section
 
 open MeasureTheory Real
 
@@ -87,9 +93,11 @@ theorem volume_lpSum_eq_of_isParallelogramAtOrigin (K : Set ℝ²)
 centre of symmetry containing the origin, for $p > 1$, equality in Corollary 29 holds only for
 parallelograms with a vertex at the origin.
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/lp-rogers-shephard-conjectures-lean/blob/c646c668c0568b8533bf5534abcf02aab4d2df72/lean/LpRogersShephardFC.lean#L108-L128"]
 theorem isParallelogramAtOrigin_of_volume_lpSum_eq :
-    answer(sorry) ↔ ∀ (K : Set ℝ²), Convex ℝ K → IsCompact K → (interior K).Nonempty →
+    answer(True) ↔ ∀ (K : Set ℝ²), Convex ℝ K → IsCompact K → (interior K).Nonempty →
       HasCentreOfSymmetry K → (0 : ℝ²) ∈ K → ∀ p q : ℝ, 1 < p → 1 / p + 1 / q = 1 →
         volume (lpSum p K (-K)) = ENNReal.ofReal (rsConstant q) * volume K →
           IsParallelogramAtOrigin K := by

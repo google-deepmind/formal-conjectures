@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
 
 /-!
 # Written on the Wall II - Conjecture 103
@@ -22,6 +25,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture103
 
@@ -38,7 +43,7 @@ abbrev wowii103Counterexample : SimpleGraph (Fin 11) :=
 /-- The counterexample is connected. -/
 @[category test, AMS 5]
 theorem wowii103Counterexample_connected : wowii103Counterexample.Connected := by
-  decide +native
+  decide
 
 /-- The counterexample has independence number nine. -/
 @[category test, AMS 5]
@@ -60,7 +65,7 @@ theorem wowii103Counterexample_averageEccentricity :
   unfold averageEccentricity
   have hsum : (∑ v : Fin 11, (wowii103Counterexample.eccent v).toNat) = 30 := by
     simp_rw [eccent_eq_computable wowii103Counterexample wowii103Counterexample_connected]
-    decide +native
+    decide
   rw [hsum]
   norm_num
 

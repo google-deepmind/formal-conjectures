@@ -13,13 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 304
 *Reference:* [erdosproblems.com/304](https://www.erdosproblems.com/304)
+
+[OAI26a] OpenAI, *Short Egyptian fractions*. OpenAI Math Release preprint (2026).
+https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Short-Egyptian-fractions-September-25-2026/Short-Egyptian-fractions-September-25-2026.pdf
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 
@@ -41,7 +47,7 @@ lemma unitFractionExpressible_of_zero {a b : ℕ} (h : a = 0 ∨ b = 0) :
     unitFractionExpressible a b = {0} := by
   simp only [Set.eq_singleton_iff_unique_mem, zero_mem_unitFractionExpressible_iff, *]
   have : (a / b : ℚ) = 0 := by simpa
-  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, forall_exists_index, and_imp,
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_ofPred_eq, forall_exists_index, and_imp,
     true_and, this]
   rintro _ s rfl hs h
   rw [eq_comm, Finset.sum_eq_zero_iff_of_nonneg (fun i hi ↦ by positivity)] at h
@@ -66,7 +72,7 @@ lemma zero_notMem_unitFractionExpressible {a b : ℕ} :
 @[category API, AMS 11]
 lemma eq_inv_of_one_mem_unitFractionExpressible {a b : ℕ}
     (h : 1 ∈ unitFractionExpressible a b) : ∃ m : ℕ, 1 < m ∧ (a / b : ℚ) = (m : ℚ)⁻¹ := by
-  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_setOf_eq, Finset.card_eq_one] at h
+  simp only [unitFractionExpressible, gt_iff_lt, Set.mem_ofPred_eq, Finset.card_eq_one] at h
   obtain ⟨_, ⟨m, rfl⟩, h₁, h₂⟩ := h
   simp only [Finset.mem_singleton, forall_eq, Finset.sum_singleton] at h₁ h₂
   use m
@@ -150,7 +156,7 @@ theorem erdos_304.variants.upper_1950 :
 In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/thepriceisright/publications/blob/8f055eb3fd1485477c92cbfbdfa4b3c56f192610/erdos/304/Lower1950.lean"]
 theorem erdos_304.variants.lower_1950 :
     (fun b : ℕ => Real.log (Real.log b)) =O[atTop]
       (fun b => (smallestCollectionTo b : ℝ)) := by
@@ -168,9 +174,13 @@ theorem erdos_304.variants.upper_1985 :
 
 /--
 Is it true that $$N(b) \ll \log \log b$$?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof.
 -/
-@[category research open, AMS 11]
-theorem upper_bound : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/ShortEgyptian/Main.lean#L33"]
+theorem upper_bound : answer(True) ↔
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 

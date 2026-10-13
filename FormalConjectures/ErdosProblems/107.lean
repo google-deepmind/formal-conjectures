@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 107
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/107](https://www.erdosproblems.com/107)
 - [Wikipedia](https://en.wikipedia.org/wiki/Happy_ending_problem)
 -/
+
+@[expose] public section
 
 open Filter
 open EuclideanGeometry
@@ -74,7 +77,7 @@ private lemma convexIndep_triple_of_not_collinear {a b c : ℝ²}
   have hx_aff : x ∈ affineSpan ℝ (({a, b, c} : Set ℝ²) \ {x}) :=
     convexHull_subset_affineSpan _ hmem
   rw [show ({a, b, c} : Set ℝ²) = insert x (({a, b, c} : Set ℝ²) \ {x}) from
-        (Set.insert_diff_self_of_mem hx).symm,
+        (Set.insert_sdiff_self_of_mem hx).symm,
       collinear_insert_iff_of_mem_affineSpan hx_aff]
   -- The two-element complement is collinear.
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx

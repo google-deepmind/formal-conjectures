@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The first Atiyah--Sutcliffe conjecture
@@ -29,6 +30,8 @@ conjecture says that these polynomials are always linearly independent.
 - Marcin Mazur and Bogdan V. Petrenko,
   [On the conjectures of Atiyah and Sutcliffe](https://arxiv.org/abs/1102.4662)
 -/
+
+@[expose] public section
 
 namespace AtiyahSutcliffe
 
@@ -81,10 +84,10 @@ theorem linearFactor_directionLift_ne_zero (v : Point) :
   split
   · intro h
     have := congrArg (MvPolynomial.coeff (Finsupp.single 0 1)) h
-    simp [linearFactor, coeff_X'] at this
+    simp [linearFactor, coeff_X] at this
   · intro h
     have := congrArg (MvPolynomial.coeff (Finsupp.single 1 1)) h
-    simp [linearFactor, coeff_X', Finsupp.single_eq_single_iff] at this
+    simp [linearFactor, coeff_X, Finsupp.single_eq_single_iff] at this
 
 @[category test, AMS 51 70]
 theorem onePoint_polynomial (x : Fin 1 → Point) : pointPolynomial x 0 = 1 := by

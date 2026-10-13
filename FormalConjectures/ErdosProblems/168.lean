@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 168
 
 *Reference:* [erdosproblems.com/168](https://www.erdosproblems.com/168)
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -79,8 +82,7 @@ lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N) (hS' : No
     refine Finset.sup_le ?_
     intro T hT
     rw [mem_IntervalNonTernarySets_iff] at hT
-    by_contra h_lt
-    push_neg at h_lt
+    by_contra! h_lt
     have h_eq := hS'' T hT.2 hT.1 (by omega)
     omega
   omega

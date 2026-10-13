@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Leinster Groups
@@ -35,8 +36,11 @@ TODO: The following properties from the Wikipedia article can also be formalized
 - All abelian Leinster groups are cyclic with order equal to a perfect number.
 -/
 
+@[expose] public section
+
 namespace LeinsterGroup
 
+open scoped Classical in
 /--
 A finite group `G` is a **Leinster group** if the sum of the orders of all its normal subgroups
 equals twice the group's order.

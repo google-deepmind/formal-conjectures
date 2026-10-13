@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 700
@@ -30,6 +31,8 @@ A problem of Erdős and Szekeres [ErSz78].
  * Guy, R. K., _Unsolved Problems in Number Theory_, B31, B33.
 -/
 
+@[expose] public section
+
 namespace Erdos700
 
 open Finset
@@ -41,6 +44,10 @@ noncomputable def f (n : ℕ) : ℕ :=
 
 /-- `P n` is the largest prime factor of `n` (and `0` if `n ≤ 1`). -/
 noncomputable def P (n : ℕ) : ℕ := n.primeFactors.sup id
+
+/-- $Q(n)$ is the largest prime-power divisor of $n$: the maximum of $p^{v_p(n)}$ over
+prime divisors $p$ of $n$. It is `0` when `n ≤ 1`. -/
+noncomputable def Q (n : ℕ) : ℕ := n.primeFactors.sup (fun p => p ^ n.factorization p)
 
 /-- The set whose infimum defines `f`. -/
 def fSet (n : ℕ) : Set ℕ := {m | ∃ k, 1 < k ∧ k ≤ n / 2 ∧ m = Nat.gcd n (n.choose k)}
@@ -66,11 +73,37 @@ dividing $n$.
 
 Erdős–Szekeres [ErSz78] note that $f(n) = n/P(n)$ when $n$ is a product of two primes
 (`erdos_700.variants.prime_mul`), with $n = 30$ a further example. The characterisation itself is
-open; we state it as the (unknown) predicate that is equivalent to being such an `n`. -/
+open; we state it as the (unknown) set of all composite `n` with `f n = n / P n`.
+
+This follows the largest-prime reading on erdosproblems.com. In [ErSz78, p. 98], the first prose
+line below (7) reads: "where $P(n)$ is the greatest prime power which divides $n$."
+The paper's reading is stated with $Q(n)$ in `erdos_700.variants.prime_power_divisor`. -/
 @[category research open, AMS 11]
-theorem erdos_700.parts.i (n : ℕ) (hn : ¬ n.Prime) (hn1 : 1 < n) :
-    f n = n / P n ↔ answer(sorry) := by
+theorem erdos_700.parts.i :
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
   sorry
+
+/-- Characterise those composite $n$ such that $f(n) = n/Q(n)$, where $Q(n)$ is the largest
+prime-power divisor of $n$. This is the reading of part (a) in Erdős–Szekeres
+[ErSz78, pp. 98–99](https://combinatorica.hu/~p_erdos/1978-46.pdf). -/
+@[category research open, AMS 11]
+theorem erdos_700.variants.prime_power_divisor :
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = answer(sorry) := by
+  sorry
+
+/-- At $n = 12$, $f(n) = 3 = n/Q(n)$, whereas $n/P(n) = 4$. -/
+@[category test, AMS 11]
+theorem prime_power_divisor_separation : f 12 = 3 ∧ 12 / P 12 = 4 ∧ 12 / Q 12 = 3 := by
+  refine ⟨le_antisymm ?_ ?_, ?_, ?_⟩
+  · exact f_le 12 4 (by decide) (by decide)
+  · have hne : (fSet 12).Nonempty := ⟨_, f_mem 12 4 (by decide) (by decide)⟩
+    obtain ⟨k, hk1, hk2, hkeq⟩ := Nat.sInf_mem hne
+    rw [f_eq, hkeq]
+    interval_cases k <;> decide
+  · unfold P
+    decide +kernel
+  · unfold Q
+    decide +kernel
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
 
@@ -103,7 +136,7 @@ theorem erdos_700.parts.iii :
 @[category API, AMS 11]
 lemma prime_dvd_of_not_dvd_choose (P n k : ℕ) (hP : P.Prime) (hPn : P ∣ n)
     (h : ¬ P ∣ n.choose k) : P ∣ k := by
-  haveI := Fact.mk hP
+  have := Fact.mk hP
   by_contra hk
   apply h
   have hmod : n.choose k ≡ (n % P).choose (k % P) * (n / P).choose (k / P) [MOD P] :=
@@ -151,7 +184,7 @@ theorem erdos_700.variants.prime_pow (p a : ℕ) (hp : p.Prime) (ha : 2 ≤ a) :
       · rw [pow_zero, Nat.dvd_one] at hpg; omega
       · exact hj0
     have hj2 : j ≤ 1 := by
-      by_contra h; push_neg at h
+      by_contra! h
       exact hp2g ((Nat.pow_dvd_pow_iff_le_right hp.one_lt).2 h)
     rw [hjeq, show j = 1 from by omega, pow_one]
   have hle : f (p ^ a) ≤ p := by
@@ -176,8 +209,8 @@ so any `k` with `gcd(pq, C(pq,k)) = 1` must be a multiple of `pq`, of which ther
 @[category research solved, AMS 11]
 theorem erdos_700.variants.prime_mul (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p < q) :
     f (p * q) = p := by
-  haveI := Fact.mk hp
-  haveI := Fact.mk hq
+  have := Fact.mk hp
+  have := Fact.mk hq
   have hp2 : 2 ≤ p := hp.two_le
   have hq2 : 2 ≤ q := hq.two_le
   have hpndq : ¬ p ∣ q := fun h => by

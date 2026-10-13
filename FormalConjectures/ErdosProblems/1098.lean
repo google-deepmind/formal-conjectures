@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1098
@@ -25,14 +26,15 @@ import FormalConjecturesUtil
   467-472.
 -/
 
+@[expose] public section
+
 namespace Erdos1098
 
 /-- The non-commuting graph $\Gamma = \Gamma(G)$ of a group `G`, with vertices the elements of `G`
 and an edge between `g` and `h` if and only if `g` and `h` do not commute, $gh \neq hg$. -/
 def nonCommutingGraph (G : Type*) [Group G] : SimpleGraph G where
   Adj g h := g * h ≠ h * g
-  symm := fun _ _ h => h.symm
-  loopless := fun _ h => h rfl
+  symm.symm := fun _ _ h => h.symm
 
 @[simp, category API, AMS 5 20]
 theorem nonCommutingGraph_adj {G : Type*} [Group G] (g h : G) :

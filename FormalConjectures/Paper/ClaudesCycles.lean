@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Claude's Cycles
@@ -53,6 +54,8 @@ explicit solutions in [Kn26], whose header gives even `m ≥ 4`.
   <https://github.com/kim-em/KnuthClaudeLean>
 -/
 
+@[expose] public section
+
 namespace ClaudesCycles
 
 /-- The vertex type: vectors in `(ZMod m)³`. -/
@@ -89,7 +92,7 @@ coincide. It needs `1 < m`. -/
 @[category test, AMS 5]
 theorem bumpAt_injective {m : ℕ} [NeZero m] (hm : 1 < m) (v : Vertex m) :
     Function.Injective fun b => bumpAt b v := by
-  haveI : Fact (1 < m) := ⟨hm⟩
+  have : Fact (1 < m) := ⟨hm⟩
   intro b b' h
   by_contra hne
   have hb : bumpAt b v b = bumpAt b' v b := congrFun h b
@@ -114,7 +117,7 @@ theorem not_hasHamiltonianArcDecomposition_one : ¬ HasHamiltonianArcDecompositi
 
 /-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
 into three directed cycles [Knu26]. -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean"]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean/blob/bdda6025fb7954f614ed9a7ac7382455fd064940/Solution.lean#L5"]
 theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm' : 1 < m) :
     HasHamiltonianArcDecomposition m := by
   sorry

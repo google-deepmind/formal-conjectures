@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 621
@@ -29,10 +30,13 @@ import FormalConjecturesUtil
   (2016).
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Erdos621
 
+open scoped Classical in
 /--
 Let $G$ be a graph on $n$ vertices, $\alpha_1(G)$ be the maximum number of edges that contain
 at most one edge from every triangle, and $\tau_1(G)$ be the minimum number of edges that
