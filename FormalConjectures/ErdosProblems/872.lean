@@ -196,7 +196,7 @@ The answer is yes. For each prime $q \le n$, let $q^k$ be the largest power of $
 $n$. Maximality gives an element of $A$ comparable with $q^k$ under divisibility, and no element is
 comparable with two such prime powers, so $|A| \ge \pi(n)$. This argument was posted on the forum
 by old-bielefelder (May 2026); the statement also appears as Theorem 2.3(i) of
-[El23] M. Elsakhawy, *Independence and domination in divisor graph and mod-difference graphs*,
+[El23] S. Elsakhawy, *Independence and domination in divisor graph and mod-difference graphs*,
 J. Egyptian Math. Soc. 31 (2023). -/
 @[category research solved, AMS 5 11 91, formal_proof using lean4 at
   "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos872.lean#L114"]
