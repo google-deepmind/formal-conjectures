@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 676
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*.
   Ann. Discrete Math. (1980), 89–115.
 -/
+
+@[expose] public section
 
 namespace Erdos676
 
