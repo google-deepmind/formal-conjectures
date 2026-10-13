@@ -533,12 +533,10 @@ def addQuestionEntry {m : Type → Type} [MonadEnv m] (declName : Name) (kind : 
 /-- The kind of question a statement of type `type` asks: a value question if it contains a
 non-`Prop` `answer(...)`, a yes-or-no question otherwise. -/
 def questionKindOfType (type : Expr) : MetaM QuestionKind := do
-  for ans in Google.findAnswerExprs type do
-    -- An answer under a binder may mention bound variables, so `isProp` may fail; such an
-    -- answer is not a proposition either way.
-    let isProp ← try Meta.isProp ans catch _ => pure false
-    unless isProp do return .value
-  return .yesNo
+  let hasValueAnswer ← IO.mkRef false
+  Google.forEachAnswer type fun ans => do
+    unless ← Meta.isProp ans do hasValueAnswer.set true
+  return if ← hasValueAnswer.get then .value else .yesNo
 
 syntax (name := Question_attr) &"question" : attr
 

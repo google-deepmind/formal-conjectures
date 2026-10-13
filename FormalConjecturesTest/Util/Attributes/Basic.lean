@@ -84,15 +84,21 @@ theorem a_value_question : 2 + 2 = answer(sorry) := by
 theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
   sorry
 
+-- A bound `Prop`-valued answer is a yes-or-no question, not a value question.
+#guard_msgs in
+@[category research solved, question, AMS 11]
+theorem a_bound_prop_answer : let P := True; answer(P) ↔ True := Iff.rfl
+
 open ProblemAttributes in
 /--
-info: [some QuestionKind.yesNo, some QuestionKind.yesNo, some QuestionKind.value, some QuestionKind.value, none]
+info: [some QuestionKind.yesNo, some QuestionKind.yesNo, some QuestionKind.value, some QuestionKind.value,
+  some QuestionKind.yesNo, none]
 -/
 #guard_msgs in
 #eval show Lean.CoreM _ from do
   return [← getQuestionKind? `a_question, ← getQuestionKind? `a_question_first,
     ← getQuestionKind? `a_value_question, ← getQuestionKind? `a_value_question_under_binders,
-    ← getQuestionKind? `a_formally_solved_problem]
+    ← getQuestionKind? `a_bound_prop_answer, ← getQuestionKind? `a_formally_solved_problem]
 
 -- formal_proof on non-research categories
 #guard_msgs in

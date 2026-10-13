@@ -89,12 +89,10 @@ For each `answer(...)` occurrence found in the type,
 returns `"Prop"` or `"non-Prop"` depending on the type
 of the annotated subexpression. -/
 def getAnswerKinds (type : Expr) : MetaM (List String) := do
-  let ansExprs := findAnswerExprs type
-  ansExprs.toList.mapM fun ansExpr => do
-    if ← Meta.isProp ansExpr then
-      return "Prop"
-    else
-      return "non-Prop"
+  let kinds ← IO.mkRef #[]
+  forEachAnswer type fun ansExpr => do
+    kinds.modify (·.push (if ← Meta.isProp ansExpr then "Prop" else "non-Prop"))
+  return (← kinds.get).toList
 
 /-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
 def gitOutput (args : Array String) : IO (Option String) := do
