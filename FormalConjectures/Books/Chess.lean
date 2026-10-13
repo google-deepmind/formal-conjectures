@@ -34,7 +34,7 @@ the current FIDE rules.
 *References:*
 - [Société d'Amateurs, *Traité théorique et pratique du jeu des échecs*, pp. 162–163
   (1775)](https://archive.org/details/traitthoriqueet00damgoog)
-- [FIDE Laws of Chess](https://rcc.fide.com/fide-laws-of-chess_fulltexthtml/)
+- [FIDE Laws of Chess](https://handbook.fide.com/chapter/E012023)
 - [Wikipedia, Solving chess](https://en.wikipedia.org/wiki/Solving_chess)
 - [Wikipedia, First-move advantage in chess](https://en.wikipedia.org/wiki/First-move_advantage_in_chess)
 -/
