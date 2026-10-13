@@ -41,6 +41,7 @@ public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
+public import FormalConjecturesForMathlib.Analysis.Matrix.Holevo
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
