@@ -99,6 +99,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Johnson
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInducedTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LovaszTheta
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Mycielski
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Prod
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
