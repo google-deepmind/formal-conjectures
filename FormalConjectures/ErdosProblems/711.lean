@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 711
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   [*On the length of an interval that contains distinct multiples of the first $n$ positive
   integers*](https://arxiv.org/abs/2601.16972). Integers 26 (2026), #A7.
 -/
+
+@[expose] public section
 
 namespace Erdos711
 
