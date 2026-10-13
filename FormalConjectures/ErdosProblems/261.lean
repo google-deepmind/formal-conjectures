@@ -71,7 +71,7 @@ distinct integers $a_1, \ldots, a_t \ge 1$ satisfying
 $$\frac{n}{2^n} = \sum_{1 \le k \le t} \frac{a_k}{2^{a_k}}?$$
 
 In [Er88c], Erdős notes that Cusick had a simple proof that infinitely many such $n$ exist. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos261_erdos_261_parts_i.lean#L102"]
 theorem erdos_261.parts.i : answer(True) ↔ {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
   sorry
 
