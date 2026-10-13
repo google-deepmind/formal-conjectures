@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-! # Shelah-Spencer's Zero-One Law for Sparse Random Graphs
 
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
   in the restricted predicate calculus](https://doi.org/10.1007/BF01071084),
   Cybernetics, 5(2), 142-154 (1969) (for $\alpha = 0$).
 -/
+
+@[expose] public section
 
 open FirstOrder Filter MeasureTheory Topology
 namespace ShelahSpencerZeroOneLaw
@@ -54,7 +58,7 @@ language of graphs, the probability that $G(n, n^{-\alpha})$ satisfies $\varphi$
 zero or one as $n \to \infty$. -/
 @[category research solved, AMS 3 5]
 theorem zeroOne_irrational
-  (α : ℝ) (hα : 0 < α ∧ α < 1) (hirr : Irrational α) (φ : Language.graph.Sentence) :
+   (α : ℝ) (hα : 0 < α ∧ α < 1) (hirr : Irrational α) (φ : Language.graph.Sentence) :
    Tendsto (fun n =>
      sparseRandomGraph n α hα.1
        {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure φ}) atTop (𝓝 0) ∨
@@ -68,11 +72,12 @@ language of graphs whose probability in $G(n, n^{-\alpha})$ does not converge as
 $n \to \infty$. -/
 @[category research solved, AMS 3 5]
 theorem zeroOne_rational
-  (α : ℝ) (hα : 0 < α ∧ α < 1) (hrat : ¬Irrational α) :
+   (α : ℝ) (hα : 0 < α ∧ α < 1) (hrat : ¬Irrational α) :
    ∃ φ : Language.graph.Sentence,
    ∀ b : ENNReal,
    ¬ Tendsto (fun n =>
      sparseRandomGraph n α hα.1
        {G | @Language.Sentence.Realize Language.graph (Fin n) G.structure φ}) atTop (𝓝 b) := by
   sorry
+
 end ShelahSpencerZeroOneLaw
