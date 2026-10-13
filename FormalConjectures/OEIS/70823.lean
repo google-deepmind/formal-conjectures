@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence $a(n+2) = |a(n+1)a(n) - a(n)a(n+1)|$ via concatenation
@@ -26,6 +27,8 @@ where concatenation is in decimal representation.
 *References:*
 - [A070823](https://oeis.org/A070823)
 -/
+
+@[expose] public section
 
 namespace OeisA70823
 

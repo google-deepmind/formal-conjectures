@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primes congruent to $\{3, 5, 6\} \pmod 7$
@@ -24,6 +25,8 @@ Primes congruent to $3, 5, \text{ or } 6 \pmod 7$.
 *References:*
 - [A003625](https://oeis.org/A003625)
 -/
+
+@[expose] public section
 
 namespace OeisA3625
 
@@ -66,8 +69,13 @@ theorem a_19 : A 19 := by
 /--
 Conjecture: Represents primes $p$ where the polynomial $x^2 + x + 2$ is irreducible over $\text{GF}(p)$.
 - _Federico Provvedi_, Jul 21 2018
+
+Answer: true, the equivalence is classical (complete the square: $4(x^2+x+2) = (2x+1)^2 + 7$,
+then use quadratic reciprocity).
 -/
-@[category research open, AMS 11 12]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a003625-irreducibility/blob/d6c9f90827805142d81eee4e3d9099c8b48cbcc8/lean/OeisA3625FC.lean#L103-L104"]
 theorem conjecture (p : ℕ) (hp : p.Prime) :
     A p ↔ Irreducible (X ^ 2 + X + 2 : (ZMod p)[X]) := by
   sorry

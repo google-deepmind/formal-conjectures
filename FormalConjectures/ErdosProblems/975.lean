@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
  - [Mc99] McKee, James, The average number of divisors of an irreducible quadratic polynomial. Math. Proc. Cambridge Philos. Soc. (1999), 17--22.
  - [T] T. Tao, Erdos' divisor bound, https://terrytao.wordpress.com/2011/07/23/erdos-divisor-bound/
 -/
+
+@[expose] public section
 
 open Filter Real Polynomial
 open scoped ArithmeticFunction.sigma Topology
@@ -72,6 +75,9 @@ theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg 
     (fun x ↦ x * log x) =O[atTop] Erdos975Sum f := by
   sorry
 
+-- The constant is only known in terms of Hurwitz class numbers, which are not yet formalized
+-- (see the `TODO` below), so the answer stays a placeholder.
+set_option linter.style.category_answer false in
 /--
 When $f$ is an irreducible quadratic polynomial, the question is answered first by Hooley [Ho63].
 More compact expression of the constant in terms of Hurwitz class numbers (when $a = 1$)
