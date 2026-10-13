@@ -19,22 +19,14 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Factor-Peel map (OEIS A401006)
+# Decimal concatenation of a cofactor and the largest prime factor
 
-For a composite positive integer $n$, let $p$ be its largest prime factor. The Factor-Peel map
-concatenates the decimal representations of $n/p$ and $p$, in that order. It fixes primes and one,
-and is extended here by $a(0)=0$.
-
-For example,
-
-$$49 \longmapsto 77 \longmapsto 711 \longmapsto 979 \longmapsto 1189
-  \longmapsto 2941 \longmapsto 17173 \longmapsto 131321.$$
+For a composite positive integer $n$, let $p$ be its largest prime factor. The sequence value
+$a(n)$ concatenates the decimal representations of $n/p$ and $p$, in that order. It fixes primes
+and one, and is extended here by $a(0)=0$.
 
 *References:*
-- [OEIS A401006 draft](https://oeis.org/draft/A401006)
-- Nicholas Zoller,
-  ["Home Primes and Foreign Primes"](https://pillars.taylor.edu/acms-2015/23/),
-  ACMS Conference Proceedings 2015.
+- [OEIS A401006](https://oeis.org/A401006)
 -/
 
 @[expose] public section
@@ -49,34 +41,12 @@ def decimalDigitCount (n : ℕ) : ℕ :=
 def decimalAppend (a b : ℕ) : ℕ :=
   a * 10 ^ decimalDigitCount b + b
 
-/-- One Factor-Peel step. Zero, one, and primes are fixed; a composite number is replaced by its
+/-- Zero, one, and primes are fixed; a composite number is replaced by its
 cofactor after removing one largest prime factor, followed by that prime factor in decimal. -/
 def a (n : ℕ) : ℕ :=
   if n ≤ 1 then n
   else if n.Prime then n
   else decimalAppend (n / n.maxPrimeFac) n.maxPrimeFac
-
-/-- A starting value reaches a prime after finitely many Factor-Peel steps. -/
-def ReachesPrime (n : ℕ) : Prop :=
-  ∃ k : ℕ, ((a^[k]) n).Prime
-
-/-- Decimal append is larger than the corresponding product when both inputs are positive. -/
-@[category API, AMS 11]
-theorem mul_lt_decimalAppend {x y : ℕ} (hx : 0 < x) (hy : 0 < y) :
-    x * y < decimalAppend x y := by
-  have hypow : y < 10 ^ decimalDigitCount y := by
-    simpa [decimalDigitCount, hy.ne'] using
-      (Nat.lt_base_pow_length_digits (b := 10) (m := y) (by norm_num))
-  exact (Nat.mul_lt_mul_of_pos_left hypow hx).trans (Nat.lt_add_of_pos_right hy)
-
-/-- Every Factor-Peel step from a composite integer above one strictly increases. -/
-@[category API, AMS 11]
-theorem lt_a_of_not_prime {n : ℕ} (hn : 1 < n) (hprime : ¬n.Prime) : n < a n := by
-  have hp : n.maxPrimeFac.Prime := Nat.prime_maxPrimeFac_of_one_lt n hn
-  have hq : 0 < n / n.maxPrimeFac := Nat.div_pos Nat.maxPrimeFac_le hp.pos
-  have hlt := mul_lt_decimalAppend hq hp.pos
-  rw [Nat.div_mul_cancel Nat.maxPrimeFac_dvd] at hlt
-  simpa [a, not_le.mpr hn, hprime] using hlt
 
 /-- Zero is the artificial fixed point outside the official OEIS indexing. -/
 @[category API, AMS 11]
@@ -132,22 +102,63 @@ theorem a_8 : a 8 = 42 := by
   norm_num [a, decimalAppend, decimalDigitCount, Nat.maxPrimeFac,
     Nat.primeFactorsList, List.getLastI]
 
+@[category test, AMS 11]
+theorem a_44 : a 44 = 411 := by
+  norm_num [a, decimalAppend, decimalDigitCount, Nat.maxPrimeFac,
+    Nat.primeFactorsList, List.getLastI]
+
+/-- Decimal append is larger than the corresponding product when both inputs are positive. -/
+@[category API, AMS 11]
+theorem mul_lt_decimal_append {x y : ℕ} (hx : 0 < x) (hy : 0 < y) :
+    x * y < decimalAppend x y := by
+  have hypow : y < 10 ^ decimalDigitCount y := by
+    simpa [decimalDigitCount, hy.ne'] using
+      (Nat.lt_base_pow_length_digits (b := 10) (m := y) (by norm_num))
+  exact (Nat.mul_lt_mul_of_pos_left hypow hx).trans (Nat.lt_add_of_pos_right hy)
+
+/-- Applying $a$ to a composite integer above one strictly increases its value. -/
+@[category API, AMS 11]
+theorem lt_a_of_not_prime {n : ℕ} (hn : 1 < n) (hprime : ¬n.Prime) : n < a n := by
+  have hp : n.maxPrimeFac.Prime := Nat.prime_maxPrimeFac_of_one_lt n hn
+  have hq : 0 < n / n.maxPrimeFac := Nat.div_pos Nat.maxPrimeFac_le hp.pos
+  have hlt := mul_lt_decimal_append hq hp.pos
+  rw [Nat.div_mul_cancel Nat.maxPrimeFac_dvd] at hlt
+  simpa [a, not_le.mpr hn, hprime] using hlt
+
+/-- A starting value reaches a prime after finitely many iterations of $a$. -/
+def ReachesPrime (n : ℕ) : Prop :=
+  ∃ k : ℕ, ((a^[k]) n).Prime
+
+/-- Zero never reaches a prime under iteration. -/
+@[category test, AMS 11]
+theorem not_reaches_prime_zero : ¬ ReachesPrime 0 := by
+  rintro ⟨k, hk⟩
+  rw [Function.iterate_fixed a_zero k] at hk
+  exact Nat.not_prime_zero hk
+
+/-- One never reaches a prime under iteration. -/
+@[category test, AMS 11]
+theorem not_reaches_prime_one : ¬ ReachesPrime 1 := by
+  rintro ⟨k, hk⟩
+  rw [Function.iterate_fixed a_one k] at hk
+  exact Nat.not_prime_one hk
+
 set_option maxRecDepth 10000 in
 /-- The orbit starting from $49$ reaches the prime $131321$ after seven steps. -/
 @[category test, AMS 11]
-theorem reachesPrime_49 : ReachesPrime 49 := by
+theorem reaches_prime_49 : ReachesPrime 49 := by
   refine ⟨7, ?_⟩
   norm_num [Function.iterate_succ_apply, a, decimalAppend, decimalDigitCount,
     Nat.maxPrimeFac, Nat.primeFactorsList, List.getLastI]
 
 /--
-"Conjecture: every orbit starting at an integer n >= 2 eventually reaches a prime, which is then
-a fixed point."
+"Conjecture: if we start at n >= 2, and repeatedly apply the map k -> a(k), we will eventually
+reach a prime, which is then a fixed point."
 
-— [OEIS A401006 draft](https://oeis.org/draft/A401006)
+— [OEIS A401006](https://oeis.org/A401006)
 -/
 @[category research open, AMS 11]
-theorem factor_peel_conjecture : ∀ n : ℕ, 2 ≤ n → ReachesPrime n := by
+theorem eventually_prime : ∀ n : ℕ, 2 ≤ n → ReachesPrime n := by
   sorry
 
 end OeisA401006
