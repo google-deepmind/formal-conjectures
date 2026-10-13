@@ -69,7 +69,8 @@ def declNames (stx decl : Syntax) : CommandElabM (Array Name) := do
     else currNamespace ++ shortName
   return #[if modifiers.isPrivate then mkPrivateName env declName else declName]
 
-/-- Whether every declaration in `declNames` is `Prop`-valued, and there is at least one.
+/-- Whether every non-internal declaration in `declNames` is `Prop`-valued,
+and there is at least one.
 
 A `Prop`-valued declaration whose proof is `sorry` is a statement waiting to be proved, exactly
 like a `theorem`, rather than a placeholder definition. This is what lets a `Prop`-valued
