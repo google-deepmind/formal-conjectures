@@ -175,8 +175,7 @@ theorem ordered_pair_count (s : Finset ℝ²) :
     _ = _ := by
       apply Finset.sum_congr rfl
       intro L hL
-      rw [pair_fiber_eq (isLine_of_mem_determinedLines hL), Finset.offDiag_card]
-      rw [Nat.mul_sub_left_distrib, Nat.mul_one]
+      rw [pair_fiber_eq (isLine_of_mem_determinedLines hL), Finset.offDiag_card, Nat.mul_sub_left_distrib, Nat.mul_one]
 
 /-- Elementary bound when no line contains more than $r$ points.
 This is weaker than the Erdős–Beck bound and is not a proof of `erdos_211`. -/
