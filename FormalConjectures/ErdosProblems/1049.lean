@@ -335,7 +335,7 @@ The question for every rational base above one remains open.
   [Theorem 2](https://numdam.org/item/CM_1994__91_2_175_0.pdf).
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/32ee6e7214506f3188fcafb77fc1844541086e98/Solutions/ExternalVerification1049ContourMeasurePowers.lean#L53-L66"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC1049ContourMeasureCurrent/FC6527Solution.lean#L55-L68"]
 theorem erdos_1049.variants.rational_base_contour_measure
     (a b : ℕ) (hb : 0 < b) (hab : b < a)
     (hregion : ZudilinContourRegion a b) :
