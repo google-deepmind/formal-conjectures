@@ -30,7 +30,6 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter
 open scoped Pointwise
 
 namespace Erdos339
@@ -47,10 +46,11 @@ The answer to both questions is yes, as proved by Hegyvári, Hennecart, and Plag
 
 Here a basis of order $r$ represents every sufficiently large integer using at most $r$
 summands, as in the website's definitions. Repetitions are allowed in the basis hypothesis.
+The hypothesis uses `insert 0 A` to pad these representations to exactly $r$ summands.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_339 : answer(True) ↔
-    ∀ (A : Set ℕ) (r : ℕ), (∀ᶠ n in atTop, ∃ k ≤ r, n ∈ k • A) →
+    ∀ (A : Set ℕ) (r : ℕ), (insert 0 A).IsAsymptoticAddBasisOfOrder r →
       0 < (distinctSums r A).lowerDensity := by
   sorry
 
