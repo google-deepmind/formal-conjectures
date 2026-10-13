@@ -41,7 +41,8 @@ This is WOWII Conjecture 317, dated 4 March 2007. Gebendorfer's Theorem 4.5
 (28 July 2026) proves the stronger conclusion that every minimal total
 dominating set has cardinality two.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+"https://github.com/RhudeJJJJ/formal-conjectures/blob/e048fac1dc110d92b7e71d542eca7c14c0302b62/Proofs/WOWII317Proof.lean"]
 theorem conjecture317 {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (hG : G.Connected)
     (h : (Gᶜ).edgeFinset.card ≤ G.largestInducedTreeSize) :
