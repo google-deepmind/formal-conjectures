@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 663
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 - [Er97e] Erdős, Paul, *Some of my favourite unsolved problems*.
   Math. Japon. (1997), 527–537.
 -/
+
+@[expose] public section
 
 namespace Erdos663
 
