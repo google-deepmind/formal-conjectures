@@ -81,7 +81,7 @@ uses an LCM prefactor rather than this prefix-product hypothesis.
 This sufficient condition leaves the unrestricted parent open.
 -/
 @[category research solved, AMS 11 40, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/d1be0b5416aa58e84f7bcd72c961c525f24e4910/Solutions/PalomarCorpus/E243_06/PaperStatementsL.lean#L65-L77"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC243DualCurrent/FC6523Solutions.lean#L24-L41"]
 theorem slow_growth_product_defect
     (a : ℕ → ℕ) (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
     (p : ℤ) (q : ℕ) (hq : 0 < q)
@@ -113,7 +113,7 @@ shifting $n$ would change its lower-order terms.
 This variant does not settle the unrestricted Erdős problem above.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/db97307d0f70dcddb29bcf482679ab2a5251a663/verification/ExternalVerification/FC243CubicRate/Solution.lean#L53-L60"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC243DualCurrent/FC6523Solutions.lean#L45-L50"]
 theorem erdos_243.variants.cubic_rate (a : ℕ → ℕ)
     (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
     (hrate : Tendsto (fun n : ℕ => (n : ℝ) ^ 3 *
