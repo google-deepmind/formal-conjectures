@@ -45,9 +45,8 @@ noncomputable local instance (L : AffineSubspace ℝ ℝ²) : DecidablePred (fun
 noncomputable local instance : DecidableEq (AffineSubspace ℝ ℝ²) := Classical.decEq _
 
 /-- Distinct lines containing two distinct points of the configuration. -/
-noncomputable def determinedLines (s : Finset ℝ²) : Finset (AffineSubspace ℝ ℝ²) := by
-  classical
-  exact s.offDiag.image fun p => line[ℝ, p.1, p.2]
+noncomputable def determinedLines (s : Finset ℝ²) : Finset (AffineSubspace ℝ ℝ²) :=
+  s.offDiag.image fun p => line[ℝ, p.1, p.2]
 
 /-- The uniform Erdős–Beck lower bound. -/
 def MainBound : Prop :=
