@@ -229,7 +229,7 @@ theorem a_of_primitive_mul_squarefree (m s : ℕ) (hm : IsPrimitiveTerm m)
 
 /-- Non-primitive terms have the form $m \cdot s$ where $m$ is primitive and $s$ is
 squarefree with $\gcd(m, s) = 1$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA63880_exists_primitive_of_a.lean#L491"]
 theorem exists_primitive_of_a {n : ℕ} (h : A n) :
     ∃ m s, IsPrimitiveTerm m ∧ Squarefree s ∧ m.Coprime s ∧ n = m * s := by
   sorry

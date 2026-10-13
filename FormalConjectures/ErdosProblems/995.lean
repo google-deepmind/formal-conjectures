@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 995
@@ -37,6 +38,8 @@ for almost all $\alpha$, and believed this lower bound to be close to the truth.
 The mean-zero hypothesis $\int_0^1 f = 0$ is the natural normalisation: otherwise the sum has a
 linear main term coming from the average of $f$.
 -/
+
+@[expose] public section
 
 open MeasureTheory Filter Asymptotics Set
 

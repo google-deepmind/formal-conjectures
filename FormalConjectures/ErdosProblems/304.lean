@@ -20,6 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 304
 *Reference:* [erdosproblems.com/304](https://www.erdosproblems.com/304)
+
+[OAI26a] OpenAI, *Short Egyptian fractions*. OpenAI Math Release preprint (2026).
+https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Short-Egyptian-fractions-September-25-2026/Short-Egyptian-fractions-September-25-2026.pdf
 -/
 
 @[expose] public section
@@ -171,9 +174,13 @@ theorem erdos_304.variants.upper_1985 :
 
 /--
 Is it true that $$N(b) \ll \log \log b$$?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof.
 -/
-@[category research open, AMS 11]
-theorem upper_bound : answer(sorry) ↔
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/ShortEgyptian/Main.lean#L33"]
+theorem upper_bound : answer(True) ↔
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 
