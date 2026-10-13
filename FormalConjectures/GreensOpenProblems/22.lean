@@ -103,11 +103,16 @@ theorem green_22.variants.moreira_infinite :
   sorry
 
 /--
-Since $x, y \geq 3$, we must have $xy \geq 9$, so $N_0(r) \geq 9$
-(assuming $N_0(r)$ is well-defined, which follows from [Mo17]).
+Since $x, y \geq 3$, we must have $xy \geq 9$, so every $N$ such that all $r$-colourings of
+$\{1, \ldots, N\}$ have the monochromatic sum-product property is at least $9$. In particular
+$N_0(r) \geq 9$ once $N_0(r)$ is well-defined, which follows from [Mo17].
+
+The bound is stated for every such $N$ and not as `9 ≤ N₀ r`: since `sInf ∅ = 0` in `ℕ`, the
+latter is equivalent to the existence of such an $N$.
 -/
 @[category research solved, AMS 5 11]
-theorem green_22.variants.lower_nine : ∀ r : ℕ, r ≠ 0 → 9 ≤ N₀ r := by
+theorem green_22.variants.lower_nine : ∀ r : ℕ, r ≠ 0 →
+    ∀ N : ℕ, (∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c) → 9 ≤ N := by
   sorry
 
 -- TODO(jeangud) Add Hindman's problem versions mentioned in [Gr26].
