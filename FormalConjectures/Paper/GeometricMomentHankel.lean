@@ -87,7 +87,7 @@ displayed ratio to one for each fixed base, with no uniformity as $q\to1$.
 It does not settle irrationality of the Lambert value at every rational base.
 -/
 @[category research solved, AMS 11 15 40, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/cc7e541cf2081c6fef5a5e377d52e365e33b01eb/Solutions/PalomarCorpus/E1049_08/PaperStatementsU.lean#L25-L30"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC1049HankelCurrent/FC6780Solution.lean#L34-L40"]
 theorem fixed_base_asymptotic {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) :
     ∃ K : ℝ, 0 < K ∧
       Tendsto (fun N : ℕ => (actualMomentHankel q N).det /
