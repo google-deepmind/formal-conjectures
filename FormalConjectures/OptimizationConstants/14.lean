@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 module
+
 public import FormalConjecturesUtil
 
 /-!
@@ -58,7 +59,6 @@ known bounds and related conjectures. The known bounds use `sorry`; formalizing 
 substantial achievement.
 
 -/
-
 @[expose] public section
 
 universe u v₁ v₂ v
