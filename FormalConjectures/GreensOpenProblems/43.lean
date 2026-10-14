@@ -32,10 +32,11 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter Topology Classical
+open Filter Topology
 
 namespace Green43
 
+open Classical in
 /-- The *sieved subset* of `[1, N]`: those `n ∈ [1, N]` with `n ≡ a p (mod p)` for some prime
 `p` in the range `lo ≤ p < hi`. This is the set counted in `green_43`. -/
 noncomputable def sievedSet (N : ℕ) (a : ℕ → ℤ) (lo hi : ℝ) : Finset ℤ :=
@@ -72,6 +73,7 @@ theorem green_43 : answer(sorry) ↔ SievedLowerBoundExp (0.51 : ℝ) := by
 @[category test, AMS 11]
 theorem green_43.sieved_card_le (N : ℕ) (a : ℕ → ℤ) (lo hi : ℝ) :
     sievedCard N a lo hi ≤ N := by
+  classical
   unfold sievedCard sievedSet
   exact le_trans (Finset.card_filter_le _ _) (by simp [Int.card_Icc])
 
@@ -79,6 +81,7 @@ theorem green_43.sieved_card_le (N : ℕ) (a : ℕ → ℤ) (lo hi : ℝ) :
 @[category test, AMS 11]
 theorem green_43.sieved_card_eq_zero (a : ℕ → ℤ) (lo hi : ℝ) :
     sievedCard 0 a lo hi = 0 := by
+  classical
   unfold sievedCard sievedSet
   simp
 
@@ -91,6 +94,7 @@ least `1`. -/
 theorem green_43.sieved_nonempty (N : ℕ) (a : ℕ → ℤ) (lo hi : ℝ) (p : ℕ) (hp : Nat.Prime p)
     (hpN : (p : ℤ) ≤ (N : ℤ)) (hlb : lo ≤ (p : ℝ)) (hub : (p : ℝ) < hi) :
     (sievedSet N a lo hi).Nonempty := by
+  classical
   have hp0 : (0 : ℤ) < (p : ℤ) := by exact_mod_cast hp.pos
   set m : ℤ := a p % (p : ℤ) with hm
   have hm_nonneg : 0 ≤ m := Int.emod_nonneg _ (by positivity)
@@ -132,7 +136,7 @@ length more than `p^{0.49}`?
 The question is asymptotic, so it is stated for all sufficiently large primes `p` (see the
 large-prime discussion in [AP92, §2]); for small primes it fails trivially, e.g. `p = 3`, `A = {0}`.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_43.variants.alon_peres :
     answer(sorry) ↔ ∀ᶠ p : ℕ in atTop, p.Prime → ∀ A : Finset (ZMod p), A.card = p / 2 →
     ∃ n : ZMod p, ∀ L : ℕ, (p : ℝ) ^ (0.49 : ℝ) < (L : ℝ) → ¬ HasGap (Dilate n A) L := by
@@ -143,7 +147,7 @@ theorem green_43.variants.alon_peres :
 ranging over `N^{0.51} ≤ p < N^{0.52}`. Obtaining the lower bound `N^{1-o(1)}` here is no harder
 than Problem 43, but is not known.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_43.variants.range_N051_N052 :
     answer(sorry) ↔
     SievedLowerBound (fun N => (N : ℝ) ^ (0.51 : ℝ)) (fun N => (N : ℝ) ^ (0.52 : ℝ)) := by
@@ -153,7 +157,7 @@ theorem green_43.variants.range_N051_N052 :
 [Gr24, Comments to Problem 43] For the range `N^{0.51} ≤ p < N^{0.52}` there may even be a
 linear lower bound `c N`.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_43.variants.range_N051_N052_linear :
     answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop, ∀ a : ℕ → ℤ,
       c * N ≤ sievedCard N a ((N : ℝ) ^ (0.51 : ℝ)) ((N : ℝ) ^ (0.52 : ℝ)) := by
@@ -166,7 +170,7 @@ does the lower bound `N^{1-o(1)}` hold for sieving primes in `[N^α, 2 N^α)` fo
 `0 < α < 1`? Problem 43 is the case `α = 0.51`; the regime `α < 1/2` is the solved special case
 `green_43.variants.general_exponent_lt_half`, while progress for `α ≈ 1` would imply Kakeya.
 -/
-@[category research open, AMS 05 11]
+@[category research open, AMS 5 11]
 theorem green_43.variants.general_exponent :
     answer(sorry) ↔ ∀ α : ℝ, 0 < α → α < 1 → SievedLowerBoundExp α := by
   sorry
@@ -176,7 +180,7 @@ theorem green_43.variants.general_exponent :
 straightforward (by an inclusion–exclusion or Cauchy–Schwarz argument). This is the solved
 special case of `green_43.variants.general_exponent`.
 -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 5 11]
 theorem green_43.variants.general_exponent_lt_half :
     ∀ α : ℝ, 0 < α → α < 1 / 2 → SievedLowerBoundExp α := by
   sorry
