@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization Constant 14 / Smallest $n$ for which the value of $BB(n)$ is undecidable
@@ -57,6 +58,8 @@ known bounds and related conjectures. The known bounds use `sorry`; formalizing 
 substantial achievement.
 
 -/
+
+@[expose] public section
 
 universe u v₁ v₂ v
 
