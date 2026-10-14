@@ -43,11 +43,15 @@ register_option linter.style.conditional_formal_proof : Bool := {
 
 namespace FormalProofLinter
 
-/-- Whether `declName` has a proof term with no `sorry` in it, waiting on the
-declaration to finish elaborating. -/
-def isProved (declName : Name) : CommandElabM Bool := do
-  let some info := (← getEnv).findAsync? declName | return false
-  return info.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry)
+/-- Whether `declName` is established without `sorry`, following the declarations that its
+statement and its proof use, and waiting on the declaration to finish elaborating.
+
+The transitive test matters here: an assumed hypothesis discharged by an admitted helper is
+still assumed, and testing its proof term alone would report it as proved. Because the walk
+covers the statement too, a declaration whose type mentions an admitted definition is reported
+as not established even when its own proof is complete. -/
+def isProved (declName : Name) : CommandElabM Bool :=
+  ProblemAttributes.hasSorryFreeProof declName
 
 /-- Return every formal-proof tag attached to `declName`.
 

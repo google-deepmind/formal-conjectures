@@ -80,8 +80,10 @@ def checkNotOpenIfSorryFree (mods : TSyntax ``Lean.Parser.Command.declModifiers)
   unless ← hasConst declName do return
   unless (← ProblemAttributes.getTags).any
       (fun t => t.declName == declName && t.category == .research .open) do return
-  let some asyncInfo := (← getEnv).findAsync? declName | return
-  if asyncInfo.toConstantInfo.value? (allowOpaque := true) |>.any (!·.hasSorry) then
+  -- `ProblemAttributes.hasSorryFreeProof` follows the declarations that the statement and the
+  -- proof use. Testing the proof term alone would report `theorem wrapper : P :=
+  -- admitted_helper` as proved.
+  if ← ProblemAttributes.hasSorryFreeProof declName then
     logLintIf linter.style.category_attribute declId
       "If a problem has a sorry-free proof, it should not be categorised as `open`."
 

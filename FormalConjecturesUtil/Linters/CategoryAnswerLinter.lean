@@ -26,8 +26,8 @@ do not leave `answer(sorry)` in their statement: once a problem is solved, the a
 be filled in explicitly, e.g. `answer(True)`.
 
 The check is syntactic. Under the default `google.answer` setting, `answer(sorry)` at `Prop`
-elaborates to a bare `True` carrying no annotation, so the placeholder is no longer visible
-in the elaborated term.
+elaborates to `True`, which is what `answer(True)` elaborates to as well, so the elaborated
+term does not say which one was written.
 
 A statement that deliberately keeps `answer(sorry)` (for instance because the problem is
 independent of ZFC, or because the answer is a constant that is not known explicitly) can opt
