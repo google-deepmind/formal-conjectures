@@ -61,11 +61,17 @@ $\min(x,y)>1$ and at least one of $x$ or $y$ is composite?
 
 The weaker version (only $\min(x,y) > 1$) was solved by C. Stewart via the prime-pair path
 $(p_k, p_{k+1}) \to (p_{k+1}, p_{k+2})$, as recounted in [Er80]; the compositeness condition
-forbids those anchors and the question is open.
+forbids those anchors.
+
+The strengthened problem was solved by Alex Chengyu Li; see
+[Li's construction](https://crabresearch.com/research/erdos-1212-algebraic-corridors)
+and the accompanying
+[Lean formalization](https://github.com/crabsatellite/erdos-1212-visible-lattice-path).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/kernel/Erdos1212Kernel/AlgebraicCorridorKernelAudit.lean"]
 theorem erdos_1212 :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
+    answer(True) ↔ ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
       (∀ n, Valid (f n)) ∧
       Tendsto (fun n => (f n).1 + (f n).2) atTop atTop := by
   sorry
