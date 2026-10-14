@@ -33,6 +33,8 @@ import FormalConjecturesUtil
   [*metamath-turing-machines*](https://github.com/sorear/metamath-turing-machines) (2016).
 - [W2025] Wade, A. J.,
   [*turing_machine_explorer*](https://codeberg.org/ajwade/turing_machine_explorer) (2025).
+- [MK2026] Mira-Cult and Ketchersid, J., [*A verified 254-state Turing machine that halts iff ZFC
+  is inconsistent*](https://github.com/jeff87654/busy-beaver/tree/zf-254/ZF/m254) (2026).
 - [A2020] Aaronson, S., [*The Busy Beaver
   Frontier*](https://doi.org/10.1145/3427361.3427369). ACM SIGACT News **51** (2020), 32–54.
 
@@ -1749,14 +1751,19 @@ enumerates proofs in ZF. -/
 @[category research solved, AMS 3 68]
 theorem c14_le_748 : C14 ≤ 748 := by sorry
 
-/-- The current best known upper bound, proved by Wade in [W2025]. It refines the proof-enumerating
+/-- An intermediate upper bound, proved by Wade in [W2025]. It refines the proof-enumerating
 machine construction from [O2016]. -/
 @[category research solved, AMS 3 68]
-theorem c14_upper_bound : C14 ≤ 432 := by sorry
+theorem c14_le_432 : C14 ≤ 432 := by sorry
+
+/-- The current best known upper bound, from [MK2026]. The machine was built by Mira-Cult.
+Ketchersid proved in Rocq, without axioms, that it halts if and only if ZFC is inconsistent. -/
+@[category research solved, AMS 3 68]
+theorem c14_upper_bound : C14 ≤ 254 := by sorry
 
 /-- Can the current best upper bound be improved? -/
 @[category research open, AMS 3 68]
-theorem c14_upper_bound_improved : answer(sorry) ↔ C14 < 432 := by sorry
+theorem c14_upper_bound_improved : answer(sorry) ↔ C14 < 254 := by sorry
 
 /-- Conjecture 11 in [A2020] by Scott Aaronson -/
 @[category research open, AMS 3 68]
