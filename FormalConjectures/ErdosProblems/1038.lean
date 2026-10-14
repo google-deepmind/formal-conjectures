@@ -36,10 +36,13 @@ open MeasureTheory Set
 
 namespace Erdos1038
 
+def erdos_1038.parts.i.answer : ℝ≥0∞ := sorry
+
+open erdos_1038.parts.i in
 /-- What is the infimum of `|{x ∈ ℝ : |f x| < 1}|` over all nonconstant monic polynomials `f` such
 that all of its roots are real and contained in `[-1,1]`? -/
 @[category research open, question value, AMS 28]
-theorem erdos_1038.parts.i : answer(sorry) =
+theorem erdos_1038.parts.i : answer =
     ⨅ f : {f : Polynomial ℝ // f.Monic ∧ f ≠ 1 ∧
     (f.roots.filter fun x => x ∈ Set.Icc (-1 : ℝ) 1).card = f.natDegree},
     volume {x | |f.1.eval x| < 1} := by

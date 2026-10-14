@@ -58,11 +58,14 @@ for $n$. -/
 noncomputable def cofactorThreshold (n : ℕ) : ℕ :=
   sSup {m | IsCofactorLowerBound n m}
 
+def erdos_539.answer : ℕ → ℝ := sorry
+
+open erdos_539 in
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$. Estimate $h(n)$. -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_539 :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] (answer : ℕ → ℝ) := by
   sorry
 
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
@@ -116,6 +119,9 @@ theorem erdos_539.variants.sq_cube_root_isBigO :
       fun n ↦ (cofactorThreshold n : ℝ)) := by
   sorry
 
+def erdos_539.variants.limit.answer : Filter ℝ := nhds ((1 : ℝ) / 2)
+
+open erdos_539.variants.limit in
 /-- From [Er73]: The determination of
 $$
   \lim_{n\to\infty}\frac{\log(h(n))}{\log(n)}
@@ -129,7 +135,7 @@ The limit is $1/2$; see [Sc+26, Theorem A.1] and the linked Lean proof.
 theorem erdos_539.variants.limit :
     atTop.Tendsto
       (fun n ↦ Real.log (cofactorThreshold n) / Real.log n)
-      answer(nhds ((1 : ℝ) / 2)) := by
+      answer := by
   sorry
 
 end Erdos539

@@ -62,13 +62,16 @@ theorem erdos_416.variants.regularly_varying (c : ℝ) (hc : 0 < c) :
     Filter.Tendsto (fun x => V (c * x) / V x) Filter.atTop (𝓝 c) := by
   sorry
 
+def erdos_416.parts.ii.answer : ℝ → ℝ := sorry
+
+open erdos_416.parts.ii in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 Is there an asymptotic formula for `V(x)`?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_416.parts.ii :
-    let f : ℝ → ℝ := answer(sorry)
+    let f : ℝ → ℝ := answer
     Filter.Tendsto (fun x => V x / f x) atTop (𝓝 1) := by
   sorry
 
@@ -92,7 +95,9 @@ theorem erdos_416.variants.Erdos : ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ →
   sorry
 
 -- TODO: define the constant from the paper, 0.8178146... here and add it in the statement
-set_option linter.style.category_answer false in
+def erdos_416.variants.Maier_Pomerance.answer : ℝ := sorry
+
+open erdos_416.variants.Maier_Pomerance in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
@@ -100,13 +105,15 @@ Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Eule
 -/
 @[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Maier_Pomerance :
-    let C : ℝ := answer(sorry)
+    let C : ℝ := answer
     0 < C ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
       ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
   sorry
 
 -- TODO: add the constants `C₁, C₂, C₃` from the paper here
-set_option linter.style.category_answer false in
+def erdos_416.variants.Ford.answer : ℝ × ℝ × ℝ := sorry
+
+open erdos_416.variants.Ford in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`
@@ -114,7 +121,7 @@ Ref: Ford, Kevin, _The distribution of totients_.
 -/
 @[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Ford :
-    let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer(sorry)
+    let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer
     0 < C₁ ∧ 0 < C₂ ∧ 0 < C₃ ∧
     let G (x : ℝ) : ℝ := x / x.log * (rexp <| C₁ * (x.log.log.log - x.log.log.log.log) ^ 2
         + C₂* x.log.log.log - C₃ * x.log.log.log.log)

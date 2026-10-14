@@ -30,6 +30,9 @@ public import FormalConjecturesUtil
 
 namespace Erdos569
 
+def erdos_569.answer : ℕ → ℝ := sorry
+
+open erdos_569 in
 /--
 Let $k\geq 1$. What is the best possible $c_k$ such that
 $$R(C_{2k+1},H)\leq c_k m$$
@@ -39,7 +42,7 @@ This problem is #34 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_569 :
-    let c : ℕ → ℝ := answer(sorry)
+    let c : ℕ → ℝ := answer
     ∀ (k : ℕ) (hk : 1 ≤ k),
       sInf {C : ℝ | 0 < C ∧
         ∀ (m : ℕ) (W : Type) [Fintype W] (H : SimpleGraph W) [DecidableRel H.Adj],

@@ -62,6 +62,9 @@ theorem not_prime_a_5 : ¬ (a 5).Prime := by
   rw [heq]
   exact Nat.not_prime_mul (by decide) (by decide)
 
+def conjecture.answer : ℕ := sorry
+
+open conjecture in
 /--
 Prime for $a(1) = 3$, $a(2) = 11$, $a(4) = 15131$; semiprime for $a(3) = 123 = 3 * 41$,
 $a(5) = 228947163 = 3 * 76315721$.
@@ -70,7 +73,7 @@ $a(7) = 41 * 811^2 * 106693969 * 317171188688357726699 * 82722369255409960544401
 When is the next prime in the sequence?
 -/
 @[category research open, question value, AMS 11]
-theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
+theorem conjecture : answer = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
   sorry
 
 end OeisA102847

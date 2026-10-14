@@ -225,13 +225,16 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ = volume unitSquare := (OrthonormalBasis.volume_parallelepiped _).symm
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
+def sofaConstant_eq.answer : ℝ≥0∞ := volume gerversSofa
+
+open sofaConstant_eq in
 /-- What is the sofa constant? -/
 @[category research solved, question value, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
   formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26",
   formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173",
   formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L124-L125"]
-theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
+theorem sofaConstant_eq : sofaConstant = answer := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/

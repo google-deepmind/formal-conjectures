@@ -40,12 +40,15 @@ noncomputable def m (n k : ℕ) : ℕ :=
   sInf {t : ℕ | ∀ (F : Set (Set (Fin n))), t ≤ F.ncard →
     ∃ S ⊆ F, S.ncard = k ∧ IsSunflower S}
 
+def erdos_857.answer : ℕ → ℕ → ℝ := sorry
+
+open erdos_857 in
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_857 :
-    let f : ℕ → ℕ → ℝ := answer(sorry)
+    let f : ℕ → ℕ → ℝ := answer
     ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / f k n) atTop (nhds 1) := by
   sorry
 

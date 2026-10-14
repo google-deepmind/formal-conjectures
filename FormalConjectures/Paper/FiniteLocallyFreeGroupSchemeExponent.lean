@@ -192,6 +192,9 @@ theorem killed_by_rank.variants.commutative (n : ℕ+) (R : Type*) [CommRing R] 
     IsKilledBy R A n := by
   sorry
 
+def optimal_exponent.answer : ℕ+ → ℕ := sorry
+
+open optimal_exponent in
 /--
 Determine the function assigning to each positive integer $n$ the least positive integer $m$
 such that every finite locally free group scheme of rank $n$, over every commutative ring, is
@@ -204,7 +207,7 @@ multiples of the least one, so minimality for $\le$ agrees with minimality for d
 -/
 @[category research open, question value, AMS 14 16]
 theorem optimal_exponent :
-    let exponent : ℕ+ → ℕ := answer(sorry)
+    let exponent : ℕ+ → ℕ := answer
     ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = exponent n := by
   sorry
 

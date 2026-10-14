@@ -31,6 +31,9 @@ open scoped Topology Finset Real
 
 namespace Erdos319
 
+def erdos_319.answer : ℕ := sorry
+
+open erdos_319 in
 /-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -46,12 +49,15 @@ theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) }
-    answer(sorry) := by
+    answer := by
   sorry
 
 -- Formalisation note: it's possible that solution to `erdos_319` needs to be
 -- expressed asymptotically. To handle this we include an `IsTheta` variant below.
 
+def erdos_319.variants.isTheta.answer : ℕ → ℝ := fun N ↦ (N : ℝ)
+
+open erdos_319.variants.isTheta in
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -71,7 +77,7 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(fun N ↦ (N : ℝ)) : ℕ → ℝ) := by
+    c =Θ[atTop] (answer : ℕ → ℝ) := by
   sorry
 
 /-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of

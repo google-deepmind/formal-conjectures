@@ -42,6 +42,9 @@ intersection set. -/
 noncomputable def maxArithInterCard (N : ℕ) : ℕ :=
   sSup {#A | (A : _) (_ : IsArithInterSet N A)}
 
+def erdos_272.answer : ℕ → ℕ := sorry
+
+open erdos_272 in
 /--
 Let $N\geq 1$. What is the largest $t$ such that there are
 $A_1,\ldots,A_t\subseteq \{1,\ldots,N\}$ with $A_i\cap A_j$ a non-empty
@@ -49,7 +52,7 @@ arithmetic progression for all $i\neq j$?
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_272 :
-    ∀ N ≥ 1, maxArithInterCard N = (answer(sorry) : ℕ → ℕ) N := by
+    ∀ N ≥ 1, maxArithInterCard N = (answer : ℕ → ℕ) N := by
   sorry
 
 /--

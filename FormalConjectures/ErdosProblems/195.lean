@@ -32,6 +32,9 @@ public import FormalConjecturesUtil
 
 namespace Erdos195
 
+def erdos_195.answer : ℕ := sorry
+
+open erdos_195 in
 /--
 What is the largest $k$ such that in any permutation of $\mathbb{Z}$ there must exist a
 monotone $k$-term arithmetic progression $x_1 < \cdots < x_k$?
@@ -43,7 +46,7 @@ increasing or decreasing arithmetic progression.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_195 :
-    answer(sorry) = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
+    answer = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
 /--

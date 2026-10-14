@@ -50,26 +50,35 @@ noncomputable def lowerBest (p : ℕ) : ℝ :=
 /-- Best-known upper bound [Be23, Theorem 5]. -/
 noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 
+def green_27.equivalent.answer : ℕ → ℝ := sorry
+
+open green_27.equivalent in
 /--
 What is the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
 for which no element in the sumset $A + A$ has a unique representation?
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_27.equivalent :
-  (answer(sorry) : ℕ → ℝ) ~[primesAtTop] m := by
+  (answer : ℕ → ℝ) ~[primesAtTop] m := by
   sorry
 
+def green_27.lower.answer : ℕ → ℝ := sorry
+
+open green_27.lower in
 /-- Propose a better lower bound along primes. -/
 @[category research open, question value, AMS 5 11]
 theorem green_27.lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := (answer : ℕ → ℝ)
     (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
   sorry
 
+def green_27.upper.answer : ℕ → ℝ := sorry
+
+open green_27.upper in
 /-- Propose a better upper bound along primes. -/
 @[category research open, question value, AMS 5 11]
 theorem green_27.upper :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := (answer : ℕ → ℝ)
     (ans =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] ans) := by
   sorry
 

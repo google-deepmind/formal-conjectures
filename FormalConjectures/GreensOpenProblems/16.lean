@@ -43,11 +43,14 @@ def SolutionFree (A : Finset ℕ) : Prop :=
 noncomputable def f (N : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧ A.card = k}
 
+def green_16.answer : ℕ → ℕ := sorry
+
+open green_16 in
 /-- What is the largest subset of $[N]$ with no solution to $x + 3y = 2z + 2w$ in distinct integers $x, y, z, w$? -/
 @[category research open, question value, AMS 5 11]
 theorem green_16 (N : ℕ) :
     ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧
-      A.card = (answer(sorry) : ℕ → ℕ) N ∧
+      A.card = (answer : ℕ → ℕ) N ∧
       MaximalFor (fun B => B ⊆ Icc 1 N ∧ SolutionFree B) Finset.card A := by
   sorry
 

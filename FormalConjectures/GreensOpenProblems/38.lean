@@ -79,6 +79,9 @@ noncomputable def C₁ : ℝ := (367 : ℝ) ^ (5⁻¹ : ℝ)
 /-- The upper bound constant $C_2 \approx 3.3177$ from [La79]. -/
 noncomputable def C₂ : ℝ := (7 * Real.cos (Real.pi / 7)) / (1 + Real.cos (Real.pi / 7))
 
+def green_38.lower.answer : ℕ → ℝ := fun n : ℕ ↦ (134753 : ℝ) ^ (n / 10)
+
+open green_38.lower in
 /-- Can we improve the lower bound? The answer sequence must be eventually nonnegative, since
 `=O` compares norms.
 
@@ -91,16 +94,19 @@ Polak and Zuiddam [BPZ26] improved the rate further, to $3.258789\ldots$ and $3.
 respectively; the latter is formalised in Lean. The exact growth rate remains open. -/
 @[category research solved, question value, AMS 5 11]
 theorem green_38.lower :
-    let ans := (answer(fun n : ℕ ↦ (134753 : ℝ) ^ (n / 10)) : ℕ → ℝ)
+    let ans := (answer : ℕ → ℝ)
     (∀ᶠ n in atTop, 0 ≤ ans n) ∧ ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
     ∃ c > C₁, (fun n ↦ c ^ n) =O[atTop] ans := by
   sorry
 
+def green_38.upper.answer : ℕ → ℝ := sorry
+
+open green_38.upper in
 /-- Can we improve the best upper bound? The base `c` must be positive, since `=O` compares
 norms. -/
 @[category research open, question value, AMS 5 11]
 theorem green_38.upper :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := (answer : ℕ → ℝ)
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧
     ∃ c : ℝ, 0 < c ∧ c < C₂ ∧ ans =O[atTop] (fun n ↦ c ^ n) := by
   sorry

@@ -91,12 +91,15 @@ theorem conjecture3 :
     ∃ C : ℝ, 0 < C ∧ (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry
 
+def conjecture3_value.answer : ℝ := sorry
+
+open conjecture3_value in
 /--
 Conjecture: the constant $C$ in $a(n) \sim C \log(n)^2$ is approximately $1.4$.
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture3_value :
-    let C : ℝ := answer(sorry)
+    let C : ℝ := answer
     |C - 1.4| < 0.1 ∧
       (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry

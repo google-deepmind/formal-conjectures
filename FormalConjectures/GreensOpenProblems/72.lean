@@ -84,6 +84,9 @@ theorem allowedSetSize_le {k : ℕ} {N : ℕ} :
 def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
+def NoKInLine.answer : Set ℕ := sorry
+
+open NoKInLine in
 /-- The **no-k-in-line problem**:
 For which $k > 2$ does every $N \times N$ grid with $N \geq k$ contain a set of $(k - 1) N$ points
 with no $k$ on a line, so that `AllowedSetSize k N` is the pigeonhole bound $(k - 1) N$?
@@ -93,7 +96,7 @@ and does not optimise this constant. At $k = 3$ it is the property that Green ex
 for large $N$, see `green_72`.
 -/
 @[category research open, question value, AMS 5 52]
-theorem NoKInLine : answer(sorry) = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineFor k N} := by
+theorem NoKInLine : answer = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineFor k N} := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:

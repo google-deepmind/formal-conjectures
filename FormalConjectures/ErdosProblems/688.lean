@@ -42,12 +42,15 @@ def Erdos688Prop (n : ℕ) (ε : ℝ) : Prop :=
 
 noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Prop n ε}
 
+def erdos_688.parts.i.answer : ℕ → ℝ := sorry
+
+open erdos_688.parts.i in
 /--
 Estimate $\epsilon_n$.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_688.parts.i :
-    epsilonFunction =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    epsilonFunction =Θ[atTop] (answer : ℕ → ℝ) := by
   sorry
 
 /--

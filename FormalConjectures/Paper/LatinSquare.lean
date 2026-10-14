@@ -205,6 +205,9 @@ theorem maxTransversalsBound :
       (T n : ℝ) ∈ Set.Icc ((15 : ℝ) ^ ((n : ℝ) / 5)) (c ^ n * Real.sqrt n * n.factorial) := by
   sorry
 
+def molsExistenceProblem.answer : Set ℕ := sorry
+
+open molsExistenceProblem in
 /--
 MOLS existence problem: determine exactly which orders `n` admit a complete set of `n - 1`
 mutually orthogonal latin squares.
@@ -213,7 +216,7 @@ Equivalently, this asks for which orders affine planes of order `n` exist. Compl
 for prime-power orders; the smallest currently unresolved order is `12`.
 -/
 @[category research open, question value, AMS 5]
-theorem molsExistenceProblem : answer(sorry) = {n : ℕ | HasCompleteMOLS n} := by
+theorem molsExistenceProblem : answer = {n : ℕ | HasCompleteMOLS n} := by
   sorry
 
 /--

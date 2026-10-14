@@ -34,6 +34,9 @@ open SimpleGraph
 
 namespace Erdos596
 
+def erdos_596.answer {U₁ : Type} {U₂ : Type} : SimpleGraph U₁ → SimpleGraph U₂ → Prop := sorry
+
+open erdos_596 in
 /--
 **Erdős Problem 596** (Erdős–Hajnal, [Er87]). For which graph pairs $(G_1, G_2)$ is it
 true that
@@ -52,8 +55,7 @@ See Problem 595 for the specific case $(G_1, G_2) = (K_4, K_3)$.
 @[category research open, question value, AMS 5]
 theorem erdos_596 :
     ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
-      IsErdosHajnalExceptional G₁ G₂ ↔
-      (answer(sorry) : ∀ {U₁ U₂ : Type}, SimpleGraph U₁ → SimpleGraph U₂ → Prop) G₁ G₂ := by
+      IsErdosHajnalExceptional G₁ G₂ ↔ answer G₁ G₂ := by
   sorry
 
 /-- Erdős–Hajnal exceptional pairs exist — recorded as a known direction of `erdos_596`. -/

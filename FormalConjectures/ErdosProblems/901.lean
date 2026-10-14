@@ -42,6 +42,9 @@ namespace Erdos901
 
 open Filter Asymptotics
 
+def erdos_901.answer : ℕ → ℝ := sorry
+
+open erdos_901 in
 /--
 Let $m(n)$ be minimal such that there is an $n$-uniform hypergraph with $m(n)$ edges which is
 $3$-chromatic. Estimate $m(n)$.
@@ -49,7 +52,7 @@ $3$-chromatic. Estimate $m(n)$.
 @[category research open, question value, AMS 5]
 theorem erdos_901 :
     (fun n ↦ ((Hypergraph.minChromaticEdges n 3).toNat : ℝ)) =Θ[atTop]
-    (answer(sorry) : ℕ → ℝ) := by
+    (answer : ℕ → ℝ) := by
   sorry
 
 end Erdos901

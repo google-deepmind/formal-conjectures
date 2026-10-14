@@ -57,12 +57,15 @@ def IsEvenCycleRamseyNumber (k n r : ℕ) : Prop :=
 def EvenCycleRamseyFunction (R : ℕ → ℕ → ℕ) : Prop :=
   ∀ k n : ℕ, 1 ≤ k → 2 ≤ n → IsEvenCycleRamseyNumber k n (R k n)
 
+def erdos_555.answer : ℕ → ℕ → ℕ := sorry
+
+open erdos_555 in
 /--
 Let $R_k(G)$ be the least $m$ such that every $k$-colouring of the edges of $K_m$ contains a
 monochromatic copy of $G$. Determine $R_k(C_{2n})$.
 -/
 @[category research open, question value, AMS 5]
-theorem erdos_555 : EvenCycleRamseyFunction answer(sorry) := by
+theorem erdos_555 : EvenCycleRamseyFunction answer := by
   sorry
 
 end Erdos555

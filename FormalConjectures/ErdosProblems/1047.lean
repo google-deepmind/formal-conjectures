@@ -119,6 +119,9 @@ theorem erdos_1047.variants.referee :
         (5 * (6 : ℝ) ^ (-(6 : ℝ) / 5))), ¬ Convex ℝ t := by
   sorry
 
+def erdos_1047.variants.max_non_convex_components.answer (n : ℕ) : ℕ := if n ≤ 1 then 0 else if n = 2 then 1 else if n = 3 then 2 else n
+
+open erdos_1047.variants.max_non_convex_components in
 /--
 Goodman raises the question of the maximum number of non-convex components of
 $\{ z: \lvert f(z)\rvert < c\}$ that are possible as a function of the degree of $f$, where
@@ -131,7 +134,7 @@ The maximum is $0$ for $n \le 1$, $1$ for $n = 2$, $2$ for $n = 3$, and $n$ for 
 theorem erdos_1047.variants.max_non_convex_components (n : ℕ) :
     IsGreatest {k : ℕ | ∃ (f : ℂ[X]) (c : ℝ), f.Monic ∧ f.natDegree = n ∧ 0 < c ∧
       {t ∈ componentsIn (strictSublevelSet f c) | ¬ Convex ℝ t}.ncard = k}
-      answer(if n ≤ 1 then 0 else if n = 2 then 1 else if n = 3 then 2 else n) := by
+      answer n := by
   sorry
 
 end Erdos1047

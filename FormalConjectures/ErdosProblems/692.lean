@@ -72,6 +72,9 @@ theorem erdos_692.parts.i :
     ¬ ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) → ∀ n, UnimodularOn (δ n) (n + 1) := by
   sorry
 
+def erdos_692.parts.ii.answer : ℕ := sorry
+
+open erdos_692.parts.ii in
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 For fixed $n$, where does $\delta_1(n,m)$ achieve its maximum?
@@ -79,7 +82,7 @@ For fixed $n$, where does $\delta_1(n,m)$ achieve its maximum?
 @[category research open, question value, AMS 11]
 theorem erdos_692.parts.ii (n : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
-      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n answer(sorry)) := by
+      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n answer) := by
   sorry
 
 /--

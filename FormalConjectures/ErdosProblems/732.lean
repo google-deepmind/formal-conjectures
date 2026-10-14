@@ -30,6 +30,9 @@ namespace Erdos732
 
 open Filter Asymptotics
 
+def erdos_732.parts.i.answer : ℕ → List ℕ → Prop := sorry
+
+open erdos_732.parts.i in
 /--
 Call a sequence $1< X_1\leq \cdots \leq X_m\leq n$ block-compatible if there is a pairwise balanced
 block design $A_1,\ldots,A_m\subseteq \{1,\ldots,n\}$ such that $\lvert A_i\rvert=X_i$ for $1\leq
@@ -41,7 +44,7 @@ many block-compatible sequences for $\{1,\ldots,n\}$?
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_732.parts.i :
-    let P : ℕ → List ℕ → Prop := answer(sorry)
+    let P : ℕ → List ℕ → Prop := answer
     ∀ (n : ℕ) (s : List ℕ), s ∈ Hypergraph.blockSizeProfiles n ↔ P n s := by
   sorry
 

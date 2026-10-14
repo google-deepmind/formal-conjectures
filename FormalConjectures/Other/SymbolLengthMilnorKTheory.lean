@@ -109,6 +109,9 @@ open MilnorK
 
 namespace SymbolLengthMilnorKTheory
 
+def symbol_length_problem.answer : ℕ → ℕ → ℕ → ℕ∞ := sorry
+
+open symbol_length_problem in
 /--
 **The symbol length problem** for complex rational function fields [Krashen2024, Problem 2.1.3.12
 and §2.1.3.4]: determine, as a function of $m$, $n$ and the prime $p$, the symbol length of
@@ -118,7 +121,7 @@ characterised by: `k` is such a bound if and only if `sl m n p ≤ k`.
 -/
 @[category research open, question value, AMS 12 19]
 theorem symbol_length_problem :
-    let sl : ℕ → ℕ → ℕ → ℕ∞ := answer(sorry)
+    let sl : ℕ → ℕ → ℕ → ℕ∞ := answer
     ∀ m n p : ℕ, p.Prime → ∀ k : ℕ,
       k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n ↔ sl m n p ≤ k := by
   sorry

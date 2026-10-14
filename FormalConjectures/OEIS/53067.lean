@@ -67,6 +67,9 @@ theorem a_4 : a 4 = 78910 := by
 theorem a_5 : a 5 = 1112131415 := by
   decide
 
+def conjecture.answer : Option ℕ := sorry
+
+open conjecture in
 open scoped Classical in
 /--
 "The second term is a prime. When is the next prime, if there is another?
@@ -74,7 +77,7 @@ open scoped Classical in
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture :
-    answer(sorry) =
+    answer =
       if h : ∃ n, 2 < n ∧ (a n).Prime then
         some (sInf {n | 2 < n ∧ (a n).Prime})
       else

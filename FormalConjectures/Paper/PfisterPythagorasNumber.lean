@@ -77,6 +77,9 @@ theorem isLeast_pythagorasBounds_real : IsLeast (pythagorasBounds ℝ) 1 := by
       simp at hf
     · exact h
 
+def pfister_problem.answer : ℕ → ℕ := sorry
+
+open pfister_problem in
 /--
 **Pfister's problem** (Problem 1 of [Pfister1971, §4]): what is the true value of
 $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for $n = 0, 1, 2$
@@ -86,7 +89,7 @@ $n + 2 \le p(\mathbb{R}(X_1, \dots, X_n)) \le 2^n$ are known.
 -/
 @[category research open, question value, AMS 11 12 14]
 theorem pfister_problem :
-    let p : ℕ → ℕ := answer(sorry)
+    let p : ℕ → ℕ := answer
     ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (p n) := by
   sorry
 

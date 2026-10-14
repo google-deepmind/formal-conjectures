@@ -66,6 +66,9 @@ lemma f_mem (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
 lemma f_le (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
     f n ≤ Nat.gcd n (n.choose k) := Nat.sInf_le (f_mem n k h1 h2)
 
+def erdos_700.parts.i.answer : Set ℕ := sorry
+
+open erdos_700.parts.i in
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$ and let $P(n)$ be the largest prime
 dividing $n$.
 
@@ -80,15 +83,18 @@ line below (7) reads: "where $P(n)$ is the greatest prime power which divides $n
 The paper's reading is stated with $Q(n)$ in `erdos_700.variants.prime_power_divisor`. -/
 @[category research open, question value, AMS 11]
 theorem erdos_700.parts.i :
-    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer := by
   sorry
 
+def erdos_700.variants.prime_power_divisor.answer : Set ℕ := sorry
+
+open erdos_700.variants.prime_power_divisor in
 /-- Characterise those composite $n$ such that $f(n) = n/Q(n)$, where $Q(n)$ is the largest
 prime-power divisor of $n$. This is the reading of part (a) in Erdős–Szekeres
 [ErSz78, pp. 98–99](https://combinatorica.hu/~p_erdos/1978-46.pdf). -/
 @[category research open, question value, AMS 11]
 theorem erdos_700.variants.prime_power_divisor :
-    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = answer(sorry) := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = answer := by
   sorry
 
 /-- At $n = 12$, $f(n) = 3 = n/Q(n)$, whereas $n/P(n) = 4$. -/

@@ -53,6 +53,9 @@ theorem erdos_440.parts.i :
       (fun x : ℕ ↦ (count a x : ℝ)) =O[atTop] fun x : ℕ ↦ √x := by
   sorry
 
+def erdos_440.parts.ii.answer : ℝ := 1
+
+open erdos_440.parts.ii in
 /--
 How large can
 $$\liminf \frac{A(x)}{x^{1/2}}$$
@@ -65,7 +68,7 @@ Taking $A=\mathbb{N}$ shows that $\liminf A(x)/x^{1/2}=1$ is possible. Erdős an
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos440.lean#L602"]
 theorem erdos_440.parts.ii :
     IsGreatest {l : ℝ | ∃ a : ℕ → ℕ, StrictMono a ∧ (∀ i, 0 < a i) ∧
-      l = liminf (fun x : ℕ ↦ (count a x : ℝ) / √x) atTop} answer(1) := by
+      l = liminf (fun x : ℕ ↦ (count a x : ℝ) / √x) atTop} answer := by
   sorry
 
 /-- The Erdős–Szemerédi constant $c=\sum_{n\geq 1}\frac{1}{n^{1/2}(n+1)}\approx 1.86$

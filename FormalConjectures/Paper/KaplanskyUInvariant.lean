@@ -118,6 +118,9 @@ theorem not_bddAbove_anisotropicDims_real : ¬ BddAbove (anisotropicDims ℝ) :=
   rw [anisotropicDims_eq_univ]
   exact not_bddAbove_univ
 
+def u_invariant_values.answer : Set ℕ := sorry
+
+open u_invariant_values in
 /--
 **The values of the $u$-invariant**, stated as in [MerkurjevParimala2025, §5.1]: which integers
 are $u$-invariants of fields (of characteristic not $2$)? The question goes back to
@@ -132,7 +135,7 @@ and $n = 2^r - 3$ with $r \ge 4$.
 -/
 @[category research open, question value, AMS 11 12]
 theorem u_invariant_values :
-    let S : Set ℕ := answer(sorry)
+    let S : Set ℕ := answer
     ∀ n, n ∈ S ↔ IsUInvariant n := by
   sorry
 

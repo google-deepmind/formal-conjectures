@@ -29,6 +29,9 @@ namespace Erdos503
 
 open scoped EuclideanGeometry
 
+def erdos_503.answer : ℕ := sorry
+
+open erdos_503 in
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
 determine an isosceles triangle? That is, for any three points $x$, $y$, $z$ from $A$, at least two
@@ -36,7 +39,7 @@ of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_503 (n : ℕ) :
-    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} answer(sorry) := by
+    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} answer := by
   sorry
 
 /--

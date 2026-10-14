@@ -32,6 +32,9 @@ namespace Erdos1157
 
 open Filter Asymptotics
 
+def erdos_1157.answer : ℕ → ℕ → ℕ → ℕ → ℕ := sorry
+
+open erdos_1157 in
 /--
 Let $s,k,r\geq 2$. Let $\mathcal{F}$ be the family of all $r$-uniform hypergraphs with $k$ vertices
 and $s$ edges. Determine
@@ -39,7 +42,7 @@ $$\mathrm{ex}_r(n,\mathcal{F}).$$
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_1157 :
-    let f : ℕ → ℕ → ℕ → ℕ → ℕ := answer(sorry)
+    let f : ℕ → ℕ → ℕ → ℕ → ℕ := answer
     ∀ r k s : ℕ, 2 ≤ r → 2 ≤ k → 2 ≤ s → ∀ n : ℕ,
       Hypergraph.configurationExtremalNumber n r k s = f n r k s := by
   sorry

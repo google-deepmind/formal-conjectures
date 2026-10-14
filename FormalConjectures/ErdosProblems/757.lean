@@ -40,10 +40,13 @@ of size at least `c * A.ncard`. The difference condition is equivalent to
 def IsAdmissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
   B.ncard = 4 → 11 ≤ (B - B).ncard) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
 
+def erdos_757.answer : ℝ := sorry
+
+open erdos_757 in
 /-- What is the supremum of the set of admissible numbers? -/
 @[category research open, question value, AMS 5]
 theorem erdos_757 {A : Set ℝ} :
-    answer(sorry) = sSup {c | IsAdmissible c} := by
+    answer = sSup {c | IsAdmissible c} := by
   sorry
 
 /-- The supremum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/

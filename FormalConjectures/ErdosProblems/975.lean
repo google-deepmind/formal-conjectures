@@ -77,7 +77,9 @@ theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg 
 
 -- The constant is only known in terms of Hurwitz class numbers, which are not yet formalized
 -- (see the `TODO` below), so the answer stays a placeholder.
-set_option linter.style.category_answer false in
+def erdos_975.variants.quadratic.answer : ℝ := sorry
+
+open erdos_975.variants.quadratic in
 /--
 When $f$ is an irreducible quadratic polynomial, the question is answered first by Hooley [Ho63].
 More compact expression of the constant in terms of Hurwitz class numbers (when $a = 1$)
@@ -88,7 +90,7 @@ TODO: formalize Hurwitz class numbers and the expression of the constant in term
 @[category research solved, question value, AMS 11]
 theorem erdos_975.variants.quadratic (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) (hf_degree : f.degree = 2) (c : ℝ) :
-    c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
+    c = answer → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry
 
 /--

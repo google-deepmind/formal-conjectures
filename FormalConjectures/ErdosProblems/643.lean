@@ -34,6 +34,9 @@ namespace Erdos643
 
 open Filter Asymptotics
 
+def erdos_643.parts.i.answer : ℕ → ℕ → ℝ := sorry
+
+open erdos_643.parts.i in
 /--
 Let $f(n;t)$ be minimal such that if a $t$-uniform hypergraph on $n$ vertices contains at least
 $f(n;t)$ edges then there must be four edges $A,B,C,D$ such that
@@ -45,7 +48,7 @@ $$f(n;t)=(1+o(1))\binom{n}{t-1}?$$
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_643.parts.i :
-    let f : ℕ → ℕ → ℝ := answer(sorry)
+    let f : ℕ → ℕ → ℝ := answer
     ∀ t : ℕ, 1 ≤ t →
       (fun n ↦ ((Hypergraph.extremalNumber n t
         (fun H ↦ ¬ H.HasRepeatedDisjointUnion) + 1 : ℕ) : ℝ)) ~[atTop] f t := by

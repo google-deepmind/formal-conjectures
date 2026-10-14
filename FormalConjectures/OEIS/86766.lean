@@ -138,6 +138,9 @@ theorem a_4 : a 4 = 1 := by
     split <;> [omega; rfl]
   rw [ha4, h_least.csInf_eq]
 
+def conjecture1.answer : Option ℕ := sorry
+
+open conjecture1 in
 open scoped Classical in
 /--
 What is the smallest integer $m > 1$ such that $a(10^m)$ is nonzero?
@@ -145,7 +148,7 @@ What is the smallest integer $m > 1$ such that $a(10^m)$ is nonzero?
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture1 :
-    answer(sorry) =
+    answer =
       if h : ∃ m, 1 < m ∧ a (10 ^ m) ≠ 0 then
         some (sInf {m | 1 < m ∧ a (10 ^ m) ≠ 0})
       else
@@ -161,6 +164,9 @@ Conjecture: If $n$ is not of the form $10^m$ then $a(n)$ is nonzero.
 theorem conjecture2 (n : ℕ) (hn : 0 < n) (h : ∀ m : ℕ, n ≠ 10 ^ m) : a n ≠ 0 := by
   sorry
 
+def conjecture3.answer : Option ℕ := sorry
+
+open conjecture3 in
 open scoped Classical in
 /--
 What is the smallest odd prime $p$ such that $(10^{p^2}-1)/(10^p-1)$ is a prime number
@@ -169,7 +175,7 @@ What is the smallest odd prime $p$ such that $(10^{p^2}-1)/(10^p-1)$ is a prime 
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture3 :
-    answer(sorry) =
+    answer =
       if h : ∃ p, p.Prime ∧ 2 < p ∧ ((10 ^ (p ^ 2) - 1) / (10 ^ p - 1)).Prime then
         some (sInf {p | p.Prime ∧ 2 < p ∧ ((10 ^ (p ^ 2) - 1) / (10 ^ p - 1)).Prime})
       else

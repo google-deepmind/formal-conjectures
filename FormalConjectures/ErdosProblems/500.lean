@@ -32,6 +32,9 @@ namespace Erdos500
 
 open Filter Asymptotics
 
+def erdos_500.answer : ℕ → ℕ := sorry
+
+open erdos_500 in
 /--
 What is $\mathrm{ex}_3(n,K_4^3)$? That is, the largest number of $3$-edges which can placed on $n$
 vertices so that there exists no $K_4^3$, a set of 4 vertices which is covered by all 4 possible
@@ -39,7 +42,7 @@ $3$-edges.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_500 :
-    (fun n ↦ Hypergraph.cliqueExtremalNumber n 3 4) = answer(sorry) := by
+    (fun n ↦ Hypergraph.cliqueExtremalNumber n 3 4) = answer := by
   sorry
 
 end Erdos500

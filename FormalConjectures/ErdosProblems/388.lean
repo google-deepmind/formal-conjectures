@@ -51,6 +51,9 @@ theorem erdos_388 :
       ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂, (m₂ + j)}.Finite := by
   sorry
 
+def erdos_388.variants.classification.answer : Set (ℕ × ℕ × ℕ × ℕ) := sorry
+
+open erdos_388.variants.classification in
 /--
 Can one classify all solutions of
 $$\prod_{1\leq i\leq k_1}(m_1+i)=\prod_{1\leq j\leq k_2}(m_2+j)$$
@@ -62,7 +65,7 @@ this set is a satisfactory classification is up to human judgement.
 @[category research open, question value, AMS 11]
 theorem erdos_388.variants.classification :
     {(m₁, k₁, m₂, k₂) : ℕ × ℕ × ℕ × ℕ | 3 < k₁ ∧ 3 < k₂ ∧ m₁ + k₁ ≤ m₂ ∧
-      ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂, (m₂ + j)} = answer(sorry) := by
+      ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂, (m₂ + j)} = answer := by
   sorry
 
 /--

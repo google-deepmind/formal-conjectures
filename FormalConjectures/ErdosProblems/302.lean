@@ -51,6 +51,9 @@ $\frac{1}{a} = \frac{1}{b} + \frac{1}{c}$ with distinct $a, b, c ∈ A$.
 def IsMaxNoTripleCard (N m : ℕ) : Prop :=
   IsGreatest {k | ∃ A ⊆ Finset.Icc 1 N, NoUnitFractionTriple A ∧ A.card = k} m
 
+def erdos_302.parts.i.answer : ℝ := sorry
+
+open erdos_302.parts.i in
 /--
 Let $f(N)$ be the size of the largest $A\subseteq \{1,\ldots,N\}$ such that there are no
 solutions to
@@ -61,7 +64,7 @@ The colouring version of this is [303], which was solved by Brown and Rödl [BrR
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_302.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N)) :
-    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 answer(sorry)) := by
+    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 answer) := by
   sorry
 
 /--

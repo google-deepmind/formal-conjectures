@@ -40,6 +40,9 @@ local notation "SL₂" p => SL(2, ZMod p)
 
 namespace Green5
 
+def green_5.answer : ℝ := sorry
+
+open green_5 in
 /--
 Which finite groups have the smallest biggest product-free sets?
 
@@ -55,7 +58,7 @@ theorem green_5 :
     IsLUB {α : ℝ | ∃ c > (0 : ℝ), ∀ (G : Type) [Group G] [Fintype G], Nontrivial G →
       ∃ S : Finset G, IsProductFree (S : Set G) ∧
         c * (Fintype.card G : ℝ) ^ α ≤ (S.card : ℝ)}
-      answer(sorry) := by
+      answer := by
   sorry
 
 /--
@@ -72,13 +75,16 @@ theorem green_5.variants.kedlaya :
 
 -- TODO(theebayuser): implement Ree groups variant (candidate sharp example for `green_5`)
 
+def green_5.variants.sl_two.answer (p : ℕ) : Finset SL(2, ZMod p) := sorry
+
+open green_5.variants.sl_two in
 /--
 A good model problem would be to determine the largest product-free subsets of
 $\mathrm{SL}_2(\mathbb{F}_p)$.
 -/
 @[category research open, question value, AMS 5 20]
 theorem green_5.variants.sl_two (p : ℕ) [Fact p.Prime] :
-    let S : Finset (SL₂ p) := answer(sorry)
+    let S : Finset (SL₂ p) := answer p
     MaximalFor (IsProductFree (M := SL₂ p)) Set.ncard (S : Set (SL₂ p)) := by
   sorry
 

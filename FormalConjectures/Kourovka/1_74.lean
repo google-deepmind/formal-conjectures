@@ -51,6 +51,9 @@ def IsMinimalTopologicalGroup (G : Type*) [Group G] [TopologicalSpace G] : Prop 
   IsTopologicalGroup G ∧ T2Space G ∧ ¬ DiscreteTopology G ∧
     ∀ H : Subgroup G, H ≠ ⊤ → IsClosed (H : Set G) → DiscreteTopology H
 
+def kourovka_1_74.answer : (G : Type) → [Group G] → [TopologicalSpace G] → Prop := sorry
+
+open kourovka_1_74 in
 /--
 Describe all minimal topological groups, that is, all non-discrete Hausdorff
 topological groups whose proper closed subgroups are all discrete.
@@ -59,7 +62,7 @@ topological groups whose proper closed subgroups are all discrete.
 theorem kourovka_1_74 :
     ∀ (G : Type) [Group G] [TopologicalSpace G],
       IsMinimalTopologicalGroup G ↔
-        (answer(sorry) : ∀ (G : Type) [Group G] [TopologicalSpace G], Prop) G := by
+        (answer : ∀ (G : Type) [Group G] [TopologicalSpace G], Prop) G := by
   sorry
 
 /--

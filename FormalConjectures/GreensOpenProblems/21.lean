@@ -88,6 +88,9 @@ theorem green_21.variants.fox_kleitman (a : Fin 3 → ℤ) (ha : ¬ RadoConditio
     minColours a ≤ 24 := by
   sorry
 
+def green_21.variants.fox_kleitman_sharp.answer : ℕ := sorry
+
+open green_21.variants.fox_kleitman_sharp in
 /--
 Green [Gr24] is not sure that the constant $24$ of [FoKl06] is sharp, and remarks that it might
 be interesting to determine the sharp constant.
@@ -97,7 +100,7 @@ the values form a non-empty set of naturals bounded above by $24$.
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_21.variants.fox_kleitman_sharp :
-    IsGreatest {c | ∃ a : Fin 3 → ℤ, ¬ RadoCondition a ∧ minColours a = c} answer(sorry) := by
+    IsGreatest {c | ∃ a : Fin 3 → ℤ, ¬ RadoCondition a ∧ minColours a = c} answer := by
   sorry
 
 /--

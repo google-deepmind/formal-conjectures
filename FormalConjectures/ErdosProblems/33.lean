@@ -37,13 +37,16 @@ and `n ≥ 0`. -/
 def AdditiveBasisCondition (A : Set ℕ) : Prop :=
   ∀ (k : ℕ), ∃ (n : ℕ) (a : ℕ), a ∈ A ∧ k = a + n^2
 
+def erdos_33.answer : EReal := sorry
+
+open erdos_33 in
 /-- Let `A ⊆ ℕ` be a set such that every integer can be written as `n^2 + a`
 for some `a` in `A` and `n ≥ 0`. What is the smallest possible value of
 `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTop.limsup (fun N =>
-    (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) = answer(sorry) := by
+    (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) = answer := by
   sorry
 
 /--

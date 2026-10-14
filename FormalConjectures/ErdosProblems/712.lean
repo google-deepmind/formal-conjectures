@@ -33,6 +33,9 @@ namespace Erdos712
 open Filter Asymptotics
 open scoped Topology
 
+def erdos_712.answer : ℕ → ℕ → ℝ := sorry
+
+open erdos_712 in
 /--
 Determine, for any $k>r>2$, the limiting value as $n\to\infty$ of
 $$\frac{\mathrm{ex}_r(n,K_k^r)}{\binom{n}{r}},$$
@@ -42,7 +45,7 @@ $r$-edges.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_712 :
-    let L : ℕ → ℕ → ℝ := answer(sorry)
+    let L : ℕ → ℕ → ℝ := answer
     ∀ k r : ℕ, 2 < r → r < k →
       Tendsto (fun n ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
         atTop (𝓝 (L k r)) := by
