@@ -73,7 +73,8 @@ many for every $r \ge 6$. This statement quantifies over every $r \ge 4$, so it 
 $r = 4$ and $r = 5$. The category is unchanged because the construction is recorded in the
 comments and not in the literature.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ce3554c83d599aa373c7b9426438454ca8f766fb/erdos-939/Solution.lean#L33"]
 theorem erdos_939.variants.finite : answer(False) ↔ ∀ r ≥ 4, (Erdos939Sums r).Finite := by
   sorry
 
@@ -88,7 +89,8 @@ $\lfloor r/2 \rfloor - 2$ distinct pieces to obtain exactly $r - 2$ summands, an
 $X = q^r$, $Y = B^r$ with $B$ divisible by all primes in the coefficients and $q > B$ a prime not
 dividing $B$; varying $q$ gives infinitely many solutions.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ce3554c83d599aa373c7b9426438454ca8f766fb/erdos-939/Solution.lean#L36"]
 theorem erdos_939.variants.infinite_of_six_le : ∀ r ≥ 6, (Erdos939Sums r).Infinite := by
   sorry
 
@@ -100,7 +102,8 @@ example. In Nitaj's construction at least two of $a, b, c$ are perfect cubes. Co
 constructed infinitely many triples of which none is a perfect cube, and Walsh [Wa24] gave a
 further construction.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ce3554c83d599aa373c7b9426438454ca8f766fb/erdos-939/Solution.lean#L39"]
 theorem erdos_939.variants.triples :
     answer(True) ↔ {(a,b,c) | ({a, b, c} : Finset ℕ).Coprime ∧
       0 < a ∧ 0 < b ∧
@@ -128,7 +131,8 @@ theorem erdos_939.variants.examples : (∃ r ≥ 4, (Erdos939Sums r).Nonempty) :
 
 
 /-- Cambie has also found solutions when $r=7$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ce3554c83d599aa373c7b9426438454ca8f766fb/erdos-939/Solution.lean#L46"]
 theorem erdos_939.variants.seven : (Erdos939Sums 7).Nonempty := by
   sorry
 
@@ -139,7 +143,8 @@ The source adds that the $r=8$ solution works "even with the sum of $5$ $8$-powe
 That is a stronger result than this statement, which asks for the $r - 2 = 6$ summands of
 `Erdos939Sums`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ce3554c83d599aa373c7b9426438454ca8f766fb/erdos-939/Solution.lean#L49"]
 theorem erdos_939.variants.eight : (Erdos939Sums 8).Nonempty := by
   sorry
 
