@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   without large prime factors. arXiv:2211.09641 (2022).
 - [LuPo11] Luca, Florian and Pollack, Paul, An arithmetic function arising from {C}armichael's
   conjecture. J. Théor. Nombres Bordeaux (2011), 697--714.
+- [OpenAI26] OpenAI, *Weighted dilation graphs, smooth shifted primes and totient fibers*.
+  OpenAI Math Release preprint (September 2026).
+  [github.com/openai/math](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Weighted-Dilation-Graphs-Smooth-Shifted-Primes-and-Totient-Fibers-September-24-2026/paper.pdf)
 -/
 
 @[expose] public section
@@ -49,7 +52,8 @@ noncomputable def g (n : ℕ) : ℕ :=
 Is it true that, for every $\epsilon>0$, there exist infinitely many $n$ such that
 $g(n) > n^{1-\epsilon}$?
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at "https://github.com/cadamcat/totient-fibers-lean4/blob/dfce35707a67fce7362cb2bd95af8b80a0b0373e/Erdos821/Theorem.lean#L18"]
 theorem erdos_821 :
     ∀ ε > (0 : ℝ), { n : ℕ | (g n : ℝ) > (n : ℝ) ^ (1 - ε) }.Infinite := by
   sorry
