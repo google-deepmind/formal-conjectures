@@ -50,7 +50,7 @@ A problem of Erdős, Hajnal, and Rado [ErHa71], proved by Shelah [Sh75].
 -/
 @[category research solved, question, AMS 3 5, formal_proof using lean4 at
   "https://github.com/jbaelaw/erdos1219-lean/blob/00e696a9cd2bbd8cad33d2cdc90ad385058c1466/Solution.lean#L22"]
-theorem erdos_1219 : answer(True) ↔
+theorem erdos_1219 :
     ∀ n : ℕ → ℕ, StrictMono n →
       StrictMono (fun k => (2 : Cardinal.{u}) ^ ℵ_ (n k)) →
       ℵ_ ω < (2 : Cardinal.{u}) ^ ℵ_ (n 0) →

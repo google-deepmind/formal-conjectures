@@ -64,8 +64,8 @@ $\{(0,0), (1,0), (0,1), (0,-1)\}$ exist, so the negative answer asserts
 counterexamples of arbitrarily large size, as in [CDL25].
 -/
 @[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/08152671ab394392fd941b18654daba734c26518/erdos-958/Solution.lean#L60"]
-theorem erdos_958 : answer(False) ↔
-    ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
+theorem erdos_958 :
+    ¬ ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
       ((#(distanceSet A) = n - 1 ∧
             (distanceSet A).image (distanceMultiplicity A) = Finset.Icc 1 (n - 1)) →
         (IsEquidistantOnLine A ∨ IsEquidistantOnCircle A)) := by

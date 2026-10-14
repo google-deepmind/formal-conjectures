@@ -96,7 +96,7 @@ distance $1$.
 @[category research solved, question, AMS 51 52, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/PlanarPacking/Main.lean#L32"]
 theorem green_42 :
-    answer(True) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
+    CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
 /-- [CoEl03] proved this when $d = 1$. -/

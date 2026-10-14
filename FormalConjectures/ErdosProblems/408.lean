@@ -115,7 +115,7 @@ Lean, which does not affect densities. Erdős, Granville, Pomerance and Spiro [E
 that the answer is yes, conditional on a form of the Elliott–Halberstam conjecture.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_408.parts.i : answer(sorry) ↔
+theorem erdos_408.parts.i :
     ∃ F : ℝ → ℝ, Monotone F ∧ Tendsto F atBot (𝓝 0) ∧ Tendsto F atTop (𝓝 1) ∧
       ∀ c : ℝ, ContinuousAt F c →
         {n : ℕ | (f n : ℝ) / Real.log n ≤ c}.HasDensity (F c) := by
@@ -131,7 +131,7 @@ conjecture, $f(n)$ has normal order $\alpha \log n$ for some constant $\alpha > 
 answer is yes under this hypothesis.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_408.parts.ii : answer(sorry) ↔
+theorem erdos_408.parts.ii :
     ∃ α : ℝ, ∀ ε > (0 : ℝ),
       {n : ℕ | |(f n : ℝ) / Real.log n - α| < ε}.HasDensity 1 := by
   sorry

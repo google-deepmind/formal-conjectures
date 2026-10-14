@@ -64,7 +64,7 @@ If $G$ is a graph on $n$ vertices, is $\tau(G)\leq n-H(n)$?
 Erdős remarked that this is perhaps completely wrongheaded [Er88].
 -/
 @[category research open, question, AMS 5]
-theorem erdos_151 : answer(sorry) ↔
+theorem erdos_151 :
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)), cliqueTransversalNumber G ≤ n - H n := by
   sorry
 
@@ -72,7 +72,7 @@ theorem erdos_151 : answer(sorry) ↔
 Erdős and Gallai made no progress on the question even when $G$ is $K_4$-free [Er88].
 -/
 @[category research open, question, AMS 5]
-theorem erdos_151.variants.cliqueFree_four : answer(sorry) ↔
+theorem erdos_151.variants.cliqueFree_four :
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.CliqueFree 4 →
       cliqueTransversalNumber G ≤ n - H n := by
   sorry

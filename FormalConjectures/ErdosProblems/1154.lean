@@ -47,8 +47,7 @@ $\alpha$?
 -/
 @[category research open, question, AMS 28]
 theorem erdos_1154.parts.i :
-    answer(sorry) ↔
-      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH (R : Set ℝ) = a := by
+    ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
 /--
@@ -57,8 +56,7 @@ $\alpha$?
 -/
 @[category research open, question, AMS 28]
 theorem erdos_1154.parts.ii :
-    answer(sorry) ↔
-      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
+    ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
 /--

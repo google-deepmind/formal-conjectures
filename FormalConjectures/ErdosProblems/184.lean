@@ -105,12 +105,11 @@ require them to be edge-disjoint. Pyber [Py85] proved this.
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_184.variants.covering :
-    answer(True) ↔
-      ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
-      ∃ (D : Finset G.Subgraph),
-        (∀ H ∈ D, IsCycleOrEdge H.coe) ∧
-        (⋃ H ∈ D, H.edgeSet) = G.edgeSet ∧
-        (D.card : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
+    ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
+    ∃ (D : Finset G.Subgraph),
+      (∀ H ∈ D, IsCycleOrEdge H.coe) ∧
+      (⋃ H ∈ D, H.edgeSet) = G.edgeSet ∧
+      (D.card : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
   sorry
 
 open scoped Classical in

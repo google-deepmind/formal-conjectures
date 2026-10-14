@@ -51,7 +51,7 @@ The actual maximal number of unit distances is the subject of
 Two sets of points are congruent if an isometry of the plane maps one onto the other.
 -/
 @[category research open, question, AMS 52]
-theorem erdos_668.parts.i : answer(sorry) ↔
+theorem erdos_668.parts.i :
     ∀ m : ℕ, ∀ᶠ n in atTop, ∃ A : Fin m → Finset ℝ²,
       (∀ i, (A i).card = n ∧ unitDistNum (A i) = maxUnitDistances n) ∧
       ∀ i j, i ≠ j → ¬ ∃ f : ℝ² ≃ᵢ ℝ², f '' A i = A j := by
@@ -69,8 +69,8 @@ Mixon, and Parshall [AMP25] suggests that this count is $=1$ for various other $
 congruency).
 -/
 @[category research solved, question, AMS 52]
-theorem erdos_668.parts.ii : answer(False) ↔
-    ∀ n : ℕ, 3 < n → ∃ A B : Finset ℝ², A.card = n ∧ B.card = n ∧
+theorem erdos_668.parts.ii :
+    ¬ ∀ n : ℕ, 3 < n → ∃ A B : Finset ℝ², A.card = n ∧ B.card = n ∧
       unitDistNum A = maxUnitDistances n ∧ unitDistNum B = maxUnitDistances n ∧
       ¬ ∃ f : ℝ² ≃ᵢ ℝ², f '' A = B := by
   sorry
@@ -94,7 +94,7 @@ $n = 4$. -/
 theorem erdos_668.variants.four_points_implies_parts_ii :
     type_of% erdos_668.variants.four_points → type_of% erdos_668.parts.ii := by
   rintro ⟨a, b, c, d, -, -, -, -, -, -, h⟩
-  refine ⟨False.elim, fun H => ?_⟩
+  intro H
   obtain ⟨A, B, hA, hB, hAm, hBm, hAB⟩ := H 4 (by norm_num)
   obtain ⟨f, hf⟩ := (h A hA).1 hAm
   obtain ⟨g, hg⟩ := (h B hB).1 hBm

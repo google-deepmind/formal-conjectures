@@ -54,7 +54,7 @@ divided by $\lvert A_k+A_k\rvert$) tends to $1/m$ for every residue $i<m$.
 -/
 @[category research solved, question, AMS 5 11,
   formal_proof using lean4 at "https://github.com/willblair0708/lean-proofs/blob/f297d710018270c66b296082766334974260bcbc/ErdosProblems/Erdos154/Sumset.lean#L555"]
-theorem erdos_154 : answer(True) ↔
+theorem erdos_154 :
     ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
       Tendsto (fun k => (N k : ℝ)) atTop atTop →
       (∀ k, ∀ x ∈ A k, x ≤ N k) →

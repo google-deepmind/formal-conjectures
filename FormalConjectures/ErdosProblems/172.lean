@@ -37,7 +37,7 @@ and products of distinct elements in $A$ are the same colour?
 -/
 @[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/cadamcat/hindman-sums-products-lean4/blob/3064cac5f9133a968482886ab1c7a1d69c16207f/audit/Erdos172.lean#L18"]
-theorem erdos_172 : answer(True) ↔
+theorem erdos_172 :
     ∀ (n : ℕ) (color : ℕ → Fin n) (m), ∃ (A : Finset ℕ), A.card ≥ m ∧ ∃ c, ∀ (S : Finset A),
     S.Nonempty → color (∑ x ∈ S, x) = c ∧ color (∏ x ∈ S, x) = c := by
   sorry

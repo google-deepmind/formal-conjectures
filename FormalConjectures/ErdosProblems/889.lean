@@ -86,7 +86,7 @@ Does $v_1(n) = 1$ have finite solutions?
 -/
 @[category research open, question, AMS 11]
 theorem erdos_889.variants.v1_eq_1_finite :
-    answer(sorry) ↔ {n | v_l 1 n = 1}.Finite := by
+    {n | v_l 1 n = 1}.Finite := by
   sorry
 
 /--
@@ -121,7 +121,7 @@ that there are only finitely many $n$ with $V_1(n) = 1$.
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-889-capital-v1-finite/blob/44d38dd7f618dbaa0b08fb976c0378b4897021cd/lean/Erdos889V1FiniteFC.lean#L999-L1004"]
 theorem erdos_889.variants.V1_eq_1_finite :
-    answer(True) ↔ {n | V_l 1 n = 1}.Finite := by
+    {n | V_l 1 n = 1}.Finite := by
   sorry
 
 end Erdos889

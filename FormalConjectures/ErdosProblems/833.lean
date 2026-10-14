@@ -41,7 +41,7 @@ contained in at least $\frac{2^{r-1}}{4r}$ many edges.
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_833 :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ r : ℕ, 2 ≤ r →
+    ∃ c : ℝ, 0 < c ∧ ∀ r : ℕ, 2 ≤ r →
     ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
       H.IsUniform r → H.HasHypergraphChromaticNumber 3 →
         ∃ v : Fin n, (1 + c) ^ r ≤ (H.hypergraphDegree v : ℝ) := by

@@ -71,7 +71,7 @@ theorem erdos_166.variants.mattheus_verstraete :
 theorem erdos_166.variants.mattheus_verstraete_implies :
     type_of% erdos_166.variants.mattheus_verstraete → type_of% erdos_166 := by
   rintro ⟨C, hC, h⟩
-  refine ⟨fun _ ↦ ⟨4, C, by norm_num, hC, h.mono fun k hk ↦ ?_⟩, fun _ ↦ trivial⟩
+  refine ⟨4, C, by norm_num, hC, h.mono fun k hk ↦ ?_⟩
   simpa using hk
 
 end Erdos166

@@ -51,7 +51,7 @@ $$(1+o(1))\, k \sum_{k < p < n} \frac{1}{p}?$$
 The $o(1)$ is uniform in $k$.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_685.parts.i : answer(sorry) ↔
+theorem erdos_685.parts.i :
     ∀ ε > (0 : ℝ), ∀ δ > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ k : ℕ,
       (n : ℝ) ^ ε < (k : ℝ) → (k : ℝ) ≤ (n : ℝ) ^ (1 - ε) →
         |(ω (n.choose k) : ℝ) - (k : ℝ) * primeRecipSum k n| ≤
@@ -67,7 +67,7 @@ even for all $(\log n)^c \leq k \leq n^{1-\epsilon}$?
 Here $\epsilon > 0$ is as in the first question, and the $o(1)$ is uniform in $k$.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_685.parts.ii : answer(sorry) ↔
+theorem erdos_685.parts.ii :
     ∃ c > (0 : ℝ), ∀ ε > (0 : ℝ), ∀ δ > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ k : ℕ,
       Real.log (n : ℝ) ^ c ≤ (k : ℝ) → (k : ℝ) ≤ (n : ℝ) ^ (1 - ε) →
         |(ω (n.choose k) : ℝ) - (k : ℝ) * primeRecipSum k n| ≤

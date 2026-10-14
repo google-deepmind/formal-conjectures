@@ -89,7 +89,7 @@ This problem asks whether any Sidon set can be extended to achieve a density
 arbitrarily close to the optimal density for Sidon sets.
 -/
 @[category research open, question, AMS 5 11]
-theorem erdos_44 : answer(sorry) ↔ ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) →
+theorem erdos_44 : ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) →
     ∀ᵉ (ε > (0 : ℝ)), ∃ᵉ (M > N) (B ⊆ Finset.Icc (N + 1) M),
       IsSidon (A ∪ B : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card := by
   sorry
@@ -103,7 +103,7 @@ this gives Sidon sets of size $(1 - o(1))M^{1/2}$ in $\{1, \ldots, M\}$ for ever
 [erdosproblems.com/30](https://www.erdosproblems.com/30).
 -/
 @[category research solved, question, AMS 5 11]
-theorem erdos_44.variants.empty_start : answer(True) ↔ ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
+theorem erdos_44.variants.empty_start : ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
     ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon (A : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
   sorry
 

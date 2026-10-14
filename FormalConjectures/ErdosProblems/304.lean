@@ -180,7 +180,7 @@ Lean proof.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/ShortEgyptian/Main.lean#L33"]
-theorem upper_bound : answer(True) ↔
+theorem upper_bound :
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 

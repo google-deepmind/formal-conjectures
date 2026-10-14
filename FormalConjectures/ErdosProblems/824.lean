@@ -62,7 +62,7 @@ $x$? According to erdosproblems.com, Erdős [Er74b] proved that $\limsup h(x)/x 
 claimed a similar proof for this problem.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_824 : answer(sorry) ↔
+theorem erdos_824 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (2 - ε) < (h x : ℝ) := by
   sorry
 
@@ -81,7 +81,7 @@ and $b$ are squarefree. Let $h'(x)$ count the number of squarefree integers $1\l
 $\sigma(a)=\sigma(b)$. Is it true that $h'(x)>x^{2-o(1)}$?
 -/
 @[category research open, question, AMS 11]
-theorem erdos_824.variants.squarefree : answer(sorry) ↔
+theorem erdos_824.variants.squarefree :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (2 - ε) < (hSquarefree x : ℝ) := by
   sorry
 

@@ -73,7 +73,7 @@ $$\frac{n}{2^n} = \sum_{1 \le k \le t} \frac{a_k}{2^{a_k}}?$$
 
 In [Er88c], Erdős notes that Cusick had a simple proof that infinitely many such $n$ exist. -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos261_erdos_261_parts_i.lean#L102"]
-theorem erdos_261.parts.i : answer(True) ↔ {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
+theorem erdos_261.parts.i : {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
   sorry
 
 /-- Tengely, Ulas, and Zygadlo [TUZ20] verified that every positive integer $n \le 10000$ has
@@ -85,14 +85,14 @@ theorem erdos_261.variants.le_10000 {n : ℕ} (hn_pos : 0 < n) (hn : n ≤ 10000
 
 /-- Do all positive integers $n$ have the required property? -/
 @[category research open, question, AMS 11]
-theorem erdos_261.parts.ii : answer(sorry) ↔ ∀ n > 0, Erdos261Prop n := by
+theorem erdos_261.parts.ii : ∀ n > 0, Erdos261Prop n := by
   sorry
 
 /-- Is there a rational number $x$ such that
 $$x = \sum_{k=1}^{\infty} \frac{a_k}{2^{a_k}}$$
 has at least $2^{\aleph_0}$ representations by pairwise distinct positive integers $a_k$? -/
 @[category research open, question, AMS 11]
-theorem erdos_261.parts.iii : answer(sorry) ↔ ∃ x : ℚ,
+theorem erdos_261.parts.iii : ∃ x : ℚ,
     𝔠 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 
@@ -107,7 +107,7 @@ $\mathbb{N}_{>0} \setminus \{4\}$ and by $\mathbb{N}_{>0} \setminus \{5, 6\}$. I
 "two" here is a misprint for $2^{\aleph_0}$ (see `erdos_261.parts.iii`, which remains open). -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/g8r-b8/erdos261-lean/blob/976bddf21eafc93ea86a7a1bfd92b847070a6f31/Erdos261.lean#L87"]
-theorem erdos_261.variants.two_representations : answer(True) ↔ ∃ x : ℚ,
+theorem erdos_261.variants.two_representations : ∃ x : ℚ,
     2 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 

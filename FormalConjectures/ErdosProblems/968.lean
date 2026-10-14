@@ -66,7 +66,7 @@ Lean proof.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PrimeGaps/RatioCorollary.lean#L30"]
-theorem erdos_968 : answer(True) ↔ 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
+theorem erdos_968 : 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
   sorry
 
 /--
@@ -100,7 +100,7 @@ prime gaps all of size `≫ log pₙ · log log pₙ · log log log log pₙ / l
 -/
 @[category research solved, question, AMS 11]
 theorem erdos_968.variants.infinite_increasingTriples :
-    answer(True) ↔ {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
+    {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
   sorry
 
 /--
@@ -112,7 +112,7 @@ infinitely many `n` with `pₙ₊₂ - pₙ` bounded, because `pₙ / n → ∞`
 -/
 @[category research solved, question, AMS 11]
 theorem erdos_968.variants.infinite_decreasingTriples :
-    answer(True) ↔ {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
+    {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
   sorry
 
 end Erdos968

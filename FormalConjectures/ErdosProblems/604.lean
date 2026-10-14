@@ -73,7 +73,7 @@ every $\varepsilon > 0$ and all large $n$, the bound is at least $n^{1-\varepsil
 count the distance $d(x, x) = 0$; this changes the count by one.
 -/
 @[category research open, question, AMS 52]
-theorem erdos_604 : answer(sorry) ↔
+theorem erdos_604 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 - ε) ≤ (pinnedDistinctDistances n : ℝ) := by
   sorry
@@ -83,7 +83,7 @@ Given $n$ distinct points $A\subset\mathbb{R}^2$, must there be a point $x\in A$
 $$\#\{ d(x,y) : y \in A\} \gg \frac{n}{\sqrt{\log n}}?$$
 -/
 @[category research open, question, AMS 52]
-theorem erdos_604.variants.sqrt_log : answer(sorry) ↔
+theorem erdos_604.variants.sqrt_log :
     (fun n : ℕ => (n : ℝ) / (n : ℝ).log.sqrt) =O[atTop]
       (fun n => (pinnedDistinctDistances n : ℝ)) := by
   sorry

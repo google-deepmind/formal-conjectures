@@ -98,7 +98,7 @@ number of edges of $K_n$. Hence the copies $f_k(T_k)$ of a packing cover every e
 So a packing is the same as a decomposition of $K_n$ into copies of $T_2, \ldots, T_n$.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_743 : answer(sorry) ↔
+theorem erdos_743 :
     ∀ n : ℕ, ∀ T : (k : ℕ) → SimpleGraph (Fin k),
       (∀ k ∈ Set.Icc 2 n, (T k).IsTree) → IsPacking n (Set.Icc 2 n) T := by
   sorry

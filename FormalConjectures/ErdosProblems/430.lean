@@ -71,7 +71,7 @@ factors of $a_k$ are $>n-a_k$.
 Is it true that, for sufficiently large $n$, not all of this sequence can be prime?
 -/
 @[category research open, question, AMS 11]
-theorem erdos_430 : answer(sorry) ↔ ∀ᶠ n in atTop, ¬ ∀ m ∈ terms n, m.Prime := by
+theorem erdos_430 : ∀ᶠ n in atTop, ¬ ∀ m ∈ terms n, m.Prime := by
   sorry
 
 end Erdos430

@@ -76,8 +76,7 @@ formalised here.
 -/
 @[category research open, question, AMS 5]
 theorem erdos_667 :
-    answer(sorry) ↔
-      ∀ p : ℕ, StrictMonoOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
+    ∀ p : ℕ, StrictMonoOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
   sorry
 
 /--

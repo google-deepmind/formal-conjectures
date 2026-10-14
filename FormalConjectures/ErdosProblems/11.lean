@@ -33,7 +33,7 @@ namespace Erdos11
 Is every large odd integer $n$ the sum of a squarefree number and a power of 2?
 -/
 @[category research open, question, AMS 11]
-theorem erdos_11 : answer(sorry) ↔
+theorem erdos_11 :
     ∀ᶠ n : ℕ in atTop, Odd n → ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l := by
   sorry
 

@@ -81,9 +81,8 @@ def IsWeaklyAdmissible {d : ℕ} (f : EuclideanSpace ℝ (Fin d) → ℝ) : Prop
 @[category research solved, question, AMS 35 60,
     formal_proof using lean4 at "https://github.com/KitaKen1/fisher-information-nonconvexity/blob/fe6ade9846c53e5cb0dcbc00eca359c83f8d0f55/lean/Fisher41/FC/Main.lean#L37"]
 theorem fisherInformationConvexity :
-    answer(False) ↔
-      ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsAdmissible f →
-        ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
+    ¬ ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsAdmissible f →
+      ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
   sorry
 
 /-- The same question for every smooth positive probability density with finite Fisher
@@ -91,9 +90,8 @@ information. The answer is no [Ki26]. -/
 @[category research solved, question, AMS 35 60,
     formal_proof using lean4 at "https://github.com/KitaKen1/fisher-information-nonconvexity/blob/fe6ade9846c53e5cb0dcbc00eca359c83f8d0f55/lean/Fisher41/FC/Main.lean#L48"]
 theorem fisherInformationConvexity.variants.smooth :
-    answer(False) ↔
-      ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsWeaklyAdmissible f →
-        ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
+    ¬ ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsWeaklyAdmissible f →
+      ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
   sorry
 
 end Arxiv.«2605.18081»

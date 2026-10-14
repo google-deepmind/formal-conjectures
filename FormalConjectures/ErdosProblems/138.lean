@@ -95,7 +95,7 @@ $W(k) > k^{k/100000}$ for all large $k$; see the linked Lean proof.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/ProgressionColoring/Main.lean#L12"]
-theorem erdos_138 : answer(True) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
+theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
@@ -118,7 +118,7 @@ In [Er81] Erdős asks whether $\frac{W(k+1)}{W(k)} \to \infty$.
 -/
 @[category research open, question, AMS 11]
 theorem erdos_138.variants.quotient :
-    answer(sorry) ↔ atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
+    atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
 /--
@@ -129,7 +129,7 @@ The DeepMind prover agent has found a formal proof of this statement.
 @[category research solved, question, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/6ac8d0cbe1a85e71747c62c1391a84788015ebc1/FormalConjectures/ErdosProblems/138.lean#L844"]
 theorem erdos_138.variants.difference :
-    answer(True) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
+    atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
 /--
@@ -148,5 +148,5 @@ Solved: a Lean 4 proof, derived from the Atlas proofs in
   formal_proof using lean4 at
     "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Erdos138.lean#L1033"]
 theorem erdos_138.variants.dvd_two_pow :
-    answer(True) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
+    atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

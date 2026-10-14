@@ -64,7 +64,7 @@ $\frac{z_1+\cdots+z_n}{n}$, where the $z_i$ are the roots of $f$, as shown by Po
 -/
 @[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1046.lean#L329"]
-theorem erdos_1046 : answer(True) ↔ ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
+theorem erdos_1046 : ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
     ∃ c : ℂ, lemniscate f ⊆ ball c 2 := by
   sorry
 
@@ -88,7 +88,7 @@ $\{ z: \lvert f(z)\rvert\leq 1\}$ has logarithmic capacity $1$ [Ra95, Theorem 5.
 $E \subseteq \mathbb{C}$, see [BPS02, (1.2)]. Hence the diameter is at least $2$.
 -/
 @[category research solved, question, AMS 30]
-theorem erdos_1046.variants.diameter : answer(True) ↔ ∀ f : ℂ[X], f.Monic →
+theorem erdos_1046.variants.diameter : ∀ f : ℂ[X], f.Monic →
     IsConnected (closedLemniscate f) → 2 ≤ Metric.ediam (closedLemniscate f) := by
   sorry
 

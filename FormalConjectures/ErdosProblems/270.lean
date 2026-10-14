@@ -60,8 +60,8 @@ $$\sum_{n\geq 1} \frac{1}{(n+1)\cdots (n+f(n))}=\alpha.$$
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos270.lean#L1027"]
-theorem erdos_270 : answer(False) ↔
-    ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
+theorem erdos_270 :
+    ¬ ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
 /--
@@ -82,14 +82,14 @@ Crmarić and Kovač [CrKo25] show that the set of the possible values of such a 
 measure zero.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_270.variants.monotone : answer(sorry) ↔
+theorem erdos_270.variants.monotone :
     ∀ f : ℕ → ℕ, Monotone f → Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
 /-- The case $f(n)=n$ has a positive answer, as observed by Crmarić and Kovač [Ko26]:
 $\sum_{n\geq 1} n!/(2n)!$ is irrational. -/
 @[category research solved, question, AMS 11]
-theorem erdos_270.variants.linear : answer(True) ↔ Irrational (series id) := by
+theorem erdos_270.variants.linear : Irrational (series id) := by
   sorry
 
 end Erdos270

@@ -37,7 +37,7 @@ $$
 This was formalized in Lean by Baretto and van Doorn using Aristotle.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem457.lean"]
-theorem erdos_457 : answer(True) ↔ ∃ ε > (0 : ℝ),
+theorem erdos_457 : ∃ ε > (0 : ℝ),
     { (n : ℕ) | ∀ (p : ℕ), p ≤ (2 + ε) * Real.log n → p.Prime →
       p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite := by
   sorry
@@ -59,19 +59,16 @@ divides $\prod_{1 \le i \le \log n} (n + i)$, then $q(n, \log n)$, the least
 prime not dividing this product, must exceed $(2 + \epsilon) \log n$.
 -/
 @[category research solved, question, AMS 11]
-theorem erdos_457.variants.qnk : answer(True) ↔ ∃ ε > (0 : ℝ),
+theorem erdos_457.variants.qnk : ∃ ε > (0 : ℝ),
     { (n : ℕ) | (2 + ε) * Real.log n ≤ q n (Real.log n) }.Infinite := by
-  constructor
-  · intro _
-    obtain ⟨ε, hε, hinf⟩ := erdos_457.1 trivial
-    refine ⟨ε, hε, hinf.mono ?_⟩
-    intro n hn
-    by_contra h
-    obtain ⟨hp, hndvd⟩ : (q n (Real.log n)).Prime ∧
-        ¬q n (Real.log n) ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) :=
-      Nat.find_spec (Nat.exists_prime_not_dvd (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
-    exact hndvd (hn _ (not_le.1 h).le hp)
-  · exact fun _ => trivial
+  obtain ⟨ε, hε, hinf⟩ := erdos_457
+  refine ⟨ε, hε, hinf.mono ?_⟩
+  intro n hn
+  by_contra h
+  obtain ⟨hp, hndvd⟩ : (q n (Real.log n)).Prime ∧
+      ¬q n (Real.log n) ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) :=
+    Nat.find_spec (Nat.exists_prime_not_dvd (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
+  exact hndvd (hn _ (not_le.1 h).le hp)
 
 /--
 Taking $n$ to be the product of primes
@@ -83,7 +80,7 @@ Can one prove that $q(n, \log n) < (1 - \epsilon) (\log n)^2$
 for all large $n$ and some $\epsilon > 0$?
 -/
 @[category research open, question, AMS 11]
-theorem erdos_457.variants.one_sub : answer(sorry) ↔ ∃ ε > (0 : ℝ),
+theorem erdos_457.variants.one_sub : ∃ ε > (0 : ℝ),
     ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2 := by
   sorry
 

@@ -50,7 +50,7 @@ We require $n \geq 1$. For $n = 0$ the only monic polynomial is $1$, whose level
 $\mathbb{C}$, while $z^0 - 1 = 0$ has an empty level set.
 -/
 @[category research open, question, AMS 28 30]
-theorem erdos_114 : answer(sorry) ↔
+theorem erdos_114 :
     ∀ n : ℕ, 1 ≤ n → ∀ p : ℂ[X], p.Monic → p.natDegree = n →
       lemniscateLength p ≤ lemniscateLength (X ^ n - 1) := by
   sorry

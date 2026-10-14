@@ -49,7 +49,7 @@ The colouring is arbitrary. No measurability is assumed. `≅` compares vertices
 label, so the conclusion allows a relabelling `σ`.
 -/
 @[category research open, question, AMS 5 51]
-theorem erdos_173 : answer(sorry) ↔ ∀ (c : ℝ² → Fin 2) (T₁ T₂ : Triangle ℝ ℝ²),
+theorem erdos_173 : ∀ (c : ℝ² → Fin 2) (T₁ T₂ : Triangle ℝ ℝ²),
     ¬ HasMonochromaticCopy c T₁ → ¬ HasMonochromaticCopy c T₂ →
       ∃ σ : Equiv.Perm (Fin 3), T₁.points ∘ σ ≅ T₂.points := by
   sorry

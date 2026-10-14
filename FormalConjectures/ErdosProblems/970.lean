@@ -56,7 +56,7 @@ the linked Lean proof. The order of magnitude of $h(k)$ remains open.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
-theorem erdos_970 : answer(True) ↔
+theorem erdos_970 :
     ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 := by
   sorry
 

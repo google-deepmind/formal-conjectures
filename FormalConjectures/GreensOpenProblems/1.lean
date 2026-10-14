@@ -40,7 +40,7 @@ Bedert [Be25] proved that every set of $n$ integers contains a sum-free subset o
 $\frac n 3 + c \log\log n$ for some absolute constant $c > 0$, so the answer is yes.
 -/
 @[category research solved, question, AMS 5 11]
-theorem green_1 : answer(True) ↔ ∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
+theorem green_1 : ∃ Ω : ℕ → ℝ, atTop.Tendsto Ω atTop ∧
      ∀ n, ∀ (A : Finset ℕ), (∀ a ∈ A, 0 < a) → A.card = n →
      ∃ (S : Finset ℕ), S ⊆ A ∧ IsSumFree (S : Set ℕ) ∧ ((n : ℝ) / 3) + Ω n ≤ S.card := by
   sorry

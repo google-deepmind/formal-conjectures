@@ -56,8 +56,8 @@ definition is equivalent to `Group.IsHyperbolic`, but the equivalence is not par
 proof.
 -/
 @[category research solved, question, AMS 20]
-theorem hyperbolic_residuallyFinite : answer(False) ↔
-    ∀ (G : Type) [Group G] [Group.IsHyperbolic G], Group.ResiduallyFinite G := by
+theorem hyperbolic_residuallyFinite :
+    ¬ ∀ (G : Type) [Group G] [Group.IsHyperbolic G], Group.ResiduallyFinite G := by
   sorry
 
 /--
@@ -70,8 +70,8 @@ No. By [KaWi00] (see `hyperbolic_residuallyFinite_iff_exists_finiteIndex_ne_top`
 is equivalent to `hyperbolic_residuallyFinite`, which was disproved in [OAI26a].
 -/
 @[category research solved, question, AMS 20]
-theorem hyperbolic_exists_finiteIndex_ne_top : answer(False) ↔
-    ∀ (G : Type) [Group G] [Group.IsHyperbolic G] [Nontrivial G],
+theorem hyperbolic_exists_finiteIndex_ne_top :
+    ¬ ∀ (G : Type) [Group G] [Group.IsHyperbolic G] [Nontrivial G],
       ∃ H : Subgroup G, H ≠ ⊤ ∧ H.FiniteIndex := by
   sorry
 

@@ -42,8 +42,8 @@ hypergraph on $n$ vertices contains at most $n-f_k(n)$ different sizes of clique
 $f_k(n)\to \infty$ as $n\to \infty$.
 -/
 @[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
-theorem erdos_775 : answer(False) ↔
-    ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
+theorem erdos_775 :
+    ¬ ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
       n - C ≤ (UniformHypergraph.cliqueSizes H).ncard := by
   sorry
 

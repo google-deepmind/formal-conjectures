@@ -47,7 +47,7 @@ This was proved by Keevash [Ke14] for all $(r,k)$.
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_722 :
-    answer(True) ↔ ∀ r k : ℕ, 1 ≤ r → r < k → ∀ᶠ n : ℕ in atTop,
+    ∀ r k : ℕ, 1 ≤ r → r < k → ∀ᶠ n : ℕ in atTop,
     (∀ i < r, (k - i).choose (r - i) ∣ (n - i).choose (r - i)) →
       ∃ H : Finset (Finset (Fin n)), H.IsBlockDesign r k := by
   sorry

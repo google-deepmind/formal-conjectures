@@ -78,7 +78,7 @@ The primes are indexed from $p_0 = 2$, as in `primeGap`. Shifting the index by o
 the question.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_852.parts.i : answer(sorry) ↔
+theorem erdos_852.parts.i :
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ x : ℝ in atTop,
       ∃ n : ℕ, (n : ℝ) < x ∧ ∃ H : ℕ, (Real.log x) ^ c < (H : ℝ) ∧ DistinctGapRun n H := by
   sorry
@@ -97,7 +97,7 @@ such run.
 The indexing is as in `Erdos852.erdos_852.parts.i`.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_852.parts.ii : answer(sorry) ↔
+theorem erdos_852.parts.ii :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
       ∀ n : ℕ, (n : ℝ) < x → ∀ H : ℕ, DistinctGapRun n H → (H : ℝ) ≤ ε * Real.log x := by
   sorry

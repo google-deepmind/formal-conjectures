@@ -64,7 +64,7 @@ See also [415](https://www.erdosproblems.com/415).
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos49.lean#L120"]
-theorem erdos_49 : answer(True) ↔ ∀ ε : ℝ, 0 < ε →
+theorem erdos_49 : ∀ ε : ℝ, 0 < ε →
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ (1 + ε) * Nat.primeCounting N := by
   sorry
 
@@ -89,7 +89,7 @@ theorem erdos_49.variants.tao : ∃ C : ℝ, 0 ≤ C ∧ ∀ N : ℕ, 10 ≤ N �
 
 /-- Are the primes the largest possible example, i.e. is $f(N) = \pi(N)$ for all $N \geq 2$? -/
 @[category research open, question, AMS 11]
-theorem erdos_49.variants.primes_maximal : answer(sorry) ↔
+theorem erdos_49.variants.primes_maximal :
     ∀ N : ℕ, 2 ≤ N → f N = Nat.primeCounting N := by
   sorry
 

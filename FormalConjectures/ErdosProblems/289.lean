@@ -51,7 +51,7 @@ this formalization follows an independent, different proof path.
 @[category research solved, question, AMS 11,
   formal_proof using formal_conjectures at
     "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/289.lean#L9514"]
-theorem erdos_289 : answer(True) ↔
+theorem erdos_289 :
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
     (∀ i, (I i).1 < (I i).2) ∧
     (∀ i j, i ≠ j → (I i).2 + 1 < (I j).1 ∨ (I j).2 + 1 < (I i).1) ∧

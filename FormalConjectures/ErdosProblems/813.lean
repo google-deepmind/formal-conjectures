@@ -106,7 +106,7 @@ The lower half has a positive answer (`Erdos813.erdos_813.variants.lower`); the 
 `Erdos813.erdos_813.variants.upper`.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_813 : answer(sorry) ↔
+theorem erdos_813 :
     ∃ c₁ > (0 : ℝ), ∃ c₂ > (0 : ℝ),
       (fun n : ℕ ↦ (n : ℝ) ^ (1 / 3 + c₁ : ℝ)) =O[atTop] (fun n ↦ (h n : ℝ)) ∧
         (fun n : ℕ ↦ (h n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 - c₂ : ℝ)) := by
@@ -138,7 +138,7 @@ with $n^{1/3+c_1} \ll h(n)$. This follows from the bound $h(n) \gg n^{5/12-o(1)}
 Sudakov [BuSu23], since $5/12 > 1/3$.
 -/
 @[category research solved, question, AMS 5]
-theorem erdos_813.variants.lower : answer(True) ↔
+theorem erdos_813.variants.lower :
     ∃ c₁ > (0 : ℝ), (fun n : ℕ ↦ (n : ℝ) ^ (1 / 3 + c₁ : ℝ)) =O[atTop] (fun n ↦ (h n : ℝ)) := by
   sorry
 
@@ -147,7 +147,7 @@ The upper half of `Erdos813.erdos_813`: is there a constant $c_2 > 0$ with
 $h(n) \ll n^{1/2-c_2}$?
 -/
 @[category research open, question, AMS 5]
-theorem erdos_813.variants.upper : answer(sorry) ↔
+theorem erdos_813.variants.upper :
     ∃ c₂ > (0 : ℝ), (fun n : ℕ ↦ (h n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 - c₂ : ℝ)) := by
   sorry
 

@@ -44,7 +44,7 @@ The answer is yes: Schinzel and Wirsing [ScWi87] proved $F(n) \gg \log n$.
 -/
 @[category research solved, question, AMS 11]
 theorem erdos_1106.parts.i :
-    answer(True) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
+    Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
   sorry
 
 /--
@@ -53,7 +53,7 @@ $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
 @[category research open, question, AMS 11]
 theorem erdos_1106.parts.ii :
-    answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
+    ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
   sorry
 
 end Erdos1106

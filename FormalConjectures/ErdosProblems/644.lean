@@ -43,7 +43,6 @@ $$f(k,r)=(1+o(1))c_rk?$$
 -/
 @[category research open, question, AMS 5]
 theorem erdos_644.parts.i :
-    answer(sorry) ↔
     (fun k ↦ ((Hypergraph.subfamilyTransversalBound k 7 2).toNat : ℝ)) ~[atTop]
       (fun k ↦ (3 / 4 : ℝ) * k) := by
   sorry
@@ -53,7 +52,7 @@ For every $r\geq 3$, is there $c_r>0$ such that $f(k,r)=(1+o(1))c_rk$?
 -/
 @[category research open, question, AMS 5]
 theorem erdos_644.parts.ii :
-    answer(sorry) ↔ ∀ r : ℕ, 3 ≤ r → ∃ c : ℝ, 0 < c ∧
+    ∀ r : ℕ, 3 ≤ r → ∃ c : ℝ, 0 < c ∧
     (fun k ↦ ((Hypergraph.subfamilyTransversalBound k r 2).toNat : ℝ)) ~[atTop]
       (fun k ↦ c * k) := by
   sorry

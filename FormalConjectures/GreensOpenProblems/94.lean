@@ -41,7 +41,7 @@ The answer is "no".
 -/
 @[category research solved, question, AMS 28, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/153d79d6c82c76fe1bee860742af800840c974d9/FormalConjectures/GreensOpenProblems/94.lean#L174"]
 theorem green_94_outer_measure :
-   answer(False) ↔ ∀ A : Set ℝ,
+   ¬ ∀ A : Set ℝ,
    volume A > 0 →
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
@@ -56,7 +56,7 @@ model in September 2026 [OAI26a]; see the linked Lean proof.
 @[category research solved, question, AMS 28, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/DyadicAvoidance/Main.lean#L103"]
 theorem green_94 :
-   answer(False) ↔ ∀ A : Set ℝ,
+   ¬ ∀ A : Set ℝ,
    MeasurableSet A ∧ volume A > 0 →
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry

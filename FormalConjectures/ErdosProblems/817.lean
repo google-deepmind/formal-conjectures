@@ -59,7 +59,7 @@ The answer is no: Costa [Co26, Corollary 1.2] proved that $\liminf_{n \to \infty
 @[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://zenodo.org/records/22638810"]
 theorem erdos_817 :
-    answer(False) ↔ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
+    ¬ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

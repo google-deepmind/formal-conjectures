@@ -59,7 +59,7 @@ This follows the interpretation on the Erdős Problems website, which notes that
 source omits some crucial quantifiers.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_467 : answer(sorry) ↔
+theorem erdos_467 :
     ∀ᶠ x in atTop, ∃ residue : ℕ → ℕ, ∃ A B : Finset ℕ,
       PrimePartitionUpTo x A B ∧ CongruenceCover x residue A B := by
   sorry

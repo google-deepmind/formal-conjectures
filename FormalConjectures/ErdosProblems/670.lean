@@ -51,7 +51,7 @@ which may depend on $d$. The case $d = 1$ was proved by Erdős
 (`Erdos670.erdos_670.variants.dim_one`), so the question is open for $d \geq 2$.
 -/
 @[category research open, question, AMS 52]
-theorem erdos_670 : answer(sorry) ↔
+theorem erdos_670 :
     ∀ d : ℕ, 1 ≤ d → ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
@@ -63,7 +63,7 @@ such that all pairwise distances differ by at least $1$, then the diameter of $A
 $(1+o(1))n^2$.
 -/
 @[category research solved, question, AMS 52]
-theorem erdos_670.variants.dim_one : answer(True) ↔
+theorem erdos_670.variants.dim_one :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin 1)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin 1))) := by
@@ -109,8 +109,8 @@ The version of the problem where the $o(1)$ term must be uniform in the dimensio
 negative answer. This follows from `Erdos670.erdos_670.variants.ho` (Ho [Ho26]).
 -/
 @[category research solved, question, AMS 52]
-theorem erdos_670.variants.uniform_in_dim : answer(False) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
+theorem erdos_670.variants.uniform_in_dim :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry

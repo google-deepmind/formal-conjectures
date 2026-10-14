@@ -55,8 +55,8 @@ is recorded in the Epoch review archived in
 -/
 @[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII32.lean#L114"]
-theorem conjecture32 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem conjecture32 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let A : Finset α := Finset.univ.filter (fun v => G.degree v = G.minDegree)
       let M : Finset α := Finset.univ.filter (fun v => G.degree v = G.maxDegree)

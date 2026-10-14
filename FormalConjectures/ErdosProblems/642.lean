@@ -59,7 +59,7 @@ A problem of Hamburger and Szegedy. A chord is an edge between two vertices of t
 not consecutive in the cycle.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_642 : answer(sorry) ↔
+theorem erdos_642 :
     (fun n : ℕ => (maxEdges n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry
 

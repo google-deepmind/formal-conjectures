@@ -46,7 +46,7 @@ negative for $d = 1$, so the dimension is restricted to $d \ge 2$, where the pro
 -/
 @[category research open, question, AMS 42 46]
 theorem exists_nowhereDense_spectralSet :
-    answer(sorry) ↔ ∃ d : ℕ, 2 ≤ d ∧
+    ∃ d : ℕ, 2 ≤ d ∧
       ∃ Ω : Set (Fin d → ℝ), Bornology.IsBounded Ω ∧ MeasurableSet Ω ∧
         IsNowhereDense Ω ∧ 0 < volume Ω ∧ isSpectral Ω := by
   sorry
@@ -77,8 +77,7 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
 @[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_one_dimensional :
-    answer(True) ↔
-      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
+    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
   sorry
 
 /--
@@ -87,8 +86,7 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
 @[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_two_dimensional :
-    answer(True) ↔
-      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
+    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
   sorry
 
 /--
@@ -101,8 +99,7 @@ The answer is yes. For the Lean proof, see [Ki26].
   formal_proof using lean4 at
     "https://github.com/KitaKen1/klm-7-2-spectral-product-3d/blob/2874890904e117df17d8abf1dd27254eebfb2829/lean/SpectralProduct3DFC.lean#L20962-L20966"]
 theorem isSpectral_right_of_product_three_dimensional :
-    answer(True) ↔
-      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
+    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
   sorry
 
 /--
@@ -111,9 +108,8 @@ measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 -/
 @[category research open, question, AMS 42 46]
 theorem isSpectral_right_of_product_of_convexBody :
-    answer(sorry) ↔
-      ∀ (n m : ℕ), 0 < n → 0 < m →
-        spectralProductImpliesRightSpectral n m := by
+    ∀ (n m : ℕ), 0 < n → 0 < m →
+      spectralProductImpliesRightSpectral n m := by
   sorry
 
 end SpectralSetProduct

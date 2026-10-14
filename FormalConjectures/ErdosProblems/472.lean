@@ -53,7 +53,7 @@ smallest prime of the form $q_n+q_i-1$ for $n\geq m$. Is there an initial sequen
 this process continues forever?
 -/
 @[category research open, question, AMS 11]
-theorem erdos_472 : answer(sorry) ↔ ∃ m : ℕ, ∃ q : ℕ → ℕ, UlamPrimeExtension m q := by
+theorem erdos_472 : ∃ m : ℕ, ∃ q : ℕ → ℕ, UlamPrimeExtension m q := by
   sorry
 
 end Erdos472

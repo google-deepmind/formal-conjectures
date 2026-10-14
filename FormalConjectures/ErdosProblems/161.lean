@@ -58,7 +58,7 @@ For fixed $t\geq 3$, do all positive densities below $1/2$ give the same asympto
 -/
 @[category research open, question, AMS 5]
 theorem erdos_161.parts.ii :
-    answer(sorry) ↔ ∀ t : ℕ, 3 ≤ t → ∀ α β : ℝ,
+    ∀ t : ℕ, 3 ≤ t → ∀ α β : ℝ,
     0 < α → α < 1 / 2 → 0 < β → β < 1 / 2 →
     (fun n ↦ (Hypergraph.balancedColoringThreshold n t α : ℝ)) =Θ[atTop]
       (fun n ↦ (Hypergraph.balancedColoringThreshold n t β : ℝ)) := by

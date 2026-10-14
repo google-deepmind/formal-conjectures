@@ -45,7 +45,6 @@ Yang [Ya26, Theorem 2.1] proved this, including repeated nodes, by taking $\rho=
 -/
 @[category research solved, question, AMS 26 41]
 theorem erdos_1133 :
-    answer(True) ↔
     ∀ C > (0 : ℝ), ∃ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ x : Fin n → Icc (-1 : ℝ) 1,
         ∃ y : Fin n → Icc (-1 : ℝ) 1,

@@ -39,7 +39,7 @@ of $K_r^r$ and $K_{r+1}^r$, no two of which share a $K_r^r$?
 -/
 @[category research open, question, AMS 5]
 theorem erdos_719 :
-    answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r → ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
+    ∀ r : ℕ, 2 ≤ r → ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
     H.IsUniform r → ∃ D : Finset (Finset (Fin n)),
       H.IsCompleteHypergraphDecomposition r D ∧
         D.card ≤ Hypergraph.cliqueExtremalNumber n r (r + 1) := by

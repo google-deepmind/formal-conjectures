@@ -52,7 +52,7 @@ ensure that the thresholds exist. We restrict to $k\geq 1$, since the zeroth pow
 $\{1\}$, which is incomplete. Positive powers are complete [Ki17].
 -/
 @[category research open, question, AMS 5 11]
-theorem erdos_345 : answer(sorry) ↔
+theorem erdos_345 :
     {k : ℕ | 0 < k ∧ ∃ a b : ℕ, IsLeast (thresholds (kthPowers k)) a ∧
       IsLeast (thresholds (kthPowers (k + 1))) b ∧ b < a}.Infinite := by
   sorry

@@ -77,7 +77,7 @@ theorem not_a_11 : ¬ IsEmirp 11 := by
 whether there are infinitely many emirps." -/
 @[category research open, question, AMS 11]
 theorem infinitude_question :
-    answer(sorry) ↔ {p : ℕ | IsEmirp p}.Infinite := by
+    {p : ℕ | IsEmirp p}.Infinite := by
   sorry
 
 end Emirp

@@ -54,7 +54,7 @@ which are block-compatible for $n$.
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_732.parts.ii :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
     Real.exp (c * Real.sqrt n * Real.log n) ≤ (Hypergraph.blockSizeProfiles n).card := by
   sorry
 

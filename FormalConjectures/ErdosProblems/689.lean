@@ -41,7 +41,7 @@ unconditional Fourier-analytic proof of the required three-prime counting estima
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/54f272582dd71321ab9d458663d675edd3d0a463/erdos-689/Solution.lean#L18"]
 theorem erdos_689 :
-    answer(True) ↔ ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
+    ∀ᶠ n in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 n,
       2 ≤ (Finset.Icc 1 n |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 

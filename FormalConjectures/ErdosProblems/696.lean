@@ -76,7 +76,7 @@ has natural density $1$. This is false: in fact, $H(n)/h(n) = 2 + o(1)$ for almo
 -/
 @[category research solved, question, AMS 11]
 theorem erdos_696 :
-    answer(False) ↔ ∀ M : ℝ,
+    ¬ ∀ M : ℝ,
       {n : ℕ | (h n : ℝ) > 0 ∧ (H n : ℝ) / (h n : ℝ) > M}.HasDensity 1 := by
   sorry
 

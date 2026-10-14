@@ -44,7 +44,6 @@ problem).
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_716 :
-    answer(True) ↔
     (fun n ↦ (Hypergraph.configurationExtremalNumber n 3 6 3 : ℝ)) =o[atTop]
       (fun n ↦ (n : ℝ) ^ 2) := by
   sorry

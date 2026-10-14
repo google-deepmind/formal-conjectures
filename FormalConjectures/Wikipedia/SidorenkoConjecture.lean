@@ -68,8 +68,8 @@ host $G$ with $t(H, G) < t(K_2, G)^{66}$.
 -/
 @[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sidorenko/RandomHost.lean#L319"]
-theorem sidorenko_conjecture : answer(False) ↔
-    ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] [Nonempty W]
+theorem sidorenko_conjecture :
+    ¬ ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] [Nonempty W]
       (H : SimpleGraph V) (G : SimpleGraph W)
       [DecidableRel H.Adj] [DecidableRel G.Adj],
       H.IsBipartite →
@@ -89,8 +89,8 @@ densities and the same edge density as the host. This reduction is not part of t
 proof of the finite form.
 -/
 @[category research solved, question, AMS 5]
-theorem sidorenko_conjecture_graphon : answer(False) ↔
-    ∀ {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
+theorem sidorenko_conjecture_graphon :
+    ¬ ∀ {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
       H.IsBipartite →
       ∀ (W : Graphon),
         (graphonEdgeDensity W) ^ H.edgeFinset.card ≤ graphonHomDensity H W := by
@@ -147,7 +147,7 @@ $$ t_{\vec{T}}(G) \le 2^{-e(T)} $$
 where $e(T)$ is the total number of edges in $T$.
 -/
 @[category research open, question, AMS 5]
-theorem tournament_anti_sidorenko_trees_conjecture : answer(sorry) ↔
+theorem tournament_anti_sidorenko_trees_conjecture :
     ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
       T.IsTree →
       ∃ (D : Digraph V),
@@ -168,7 +168,7 @@ $$ t_{\vec{T}}(W) \le 2^{-e(T)} $$
 where $e(T)$ is the total number of edges in $T$.
 -/
 @[category research open, question, AMS 5]
-theorem tournament_anti_sidorenko_trees_conjecture_tournamenton : answer(sorry) ↔
+theorem tournament_anti_sidorenko_trees_conjecture_tournamenton :
     ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
       T.IsTree →
       ∃ (D : Digraph V),

@@ -70,7 +70,7 @@ between primes; for example, it follows from Cramér's conjecture. See also Erd�
 383.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_382.parts.i : answer(sorry) ↔
+theorem erdos_382.parts.i :
     ∀ ε > (0 : ℝ), ∀ᶠ v : ℕ in atTop, ∀ u : ℕ, LargestPrimeRepeated u v →
       ((v - u : ℕ) : ℝ) ≤ (v : ℝ) ^ ε := by
   sorry
@@ -83,7 +83,7 @@ That is, for every $k$, is there such a pair with $v - u \geq k$? Cambie gives a
 suggests the answer is yes.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_382.parts.ii : answer(sorry) ↔
+theorem erdos_382.parts.ii :
     ∀ k : ℕ, ∃ u v : ℕ, LargestPrimeRepeated u v ∧ k ≤ v - u := by
   sorry
 

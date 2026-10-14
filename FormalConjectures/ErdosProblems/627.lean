@@ -62,7 +62,7 @@ Since $f(n) \asymp n/(\log_2 n)^2$ (see `Erdos627.erdos_627.variants.theta`), th
 exists, is a finite real number.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_627 : answer(sorry) ↔
+theorem erdos_627 :
     ∃ L : ℝ, Tendsto (fun n : ℕ ↦ maxChromaticCliqueRatio n / ((n : ℝ) / Real.logb 2 n ^ 2))
       atTop (𝓝 L) := by
   sorry

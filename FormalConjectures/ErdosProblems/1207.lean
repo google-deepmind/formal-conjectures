@@ -54,7 +54,7 @@ Lee, Pohoata, and Zhu [LPZ26] proved the stated planar bound. Their isosceles-fr
 also exclude degenerate triangles of equally spaced collinear points.
 -/
 @[category research solved, question, AMS 52]
-theorem erdos_1207 : answer(True) ↔
+theorem erdos_1207 :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (P 2 n : ℝ) < (n : ℝ) ^ (1 - c) := by
   sorry
 

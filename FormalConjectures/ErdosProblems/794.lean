@@ -55,8 +55,8 @@ $3$-uniform graph on $\{1,\ldots,9\}$ with $28$ edges, formed by taking $27$ edg
 one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge $\{1,2,3\}$.
 -/
 @[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
-theorem erdos_794 : answer(False) ↔
-    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
+theorem erdos_794 :
+    ¬ ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
       n ^ 3 + 1 ≤ H.card → H.ContainsSubgraph 4 3 ∨ H.ContainsSubgraph 5 7 := by
   sorry
 
