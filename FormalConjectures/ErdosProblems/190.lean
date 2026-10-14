@@ -103,7 +103,7 @@ The statement is formalised without assuming the existence of $H(k)$: for every 
 canonical $N$ exceeds $(Ck)^k$ for all large $k$. Given the existence of $H(k)$ this is
 equivalent to $H(k)^{1/k}/k\to\infty$ (see `erdos_190.variants.H`).
 
-The formal proof (Lean 4 / Mathlib v4.33.0, following Section 4.3 of [Ba26]) is registered in
+The formal proof (Lean 4 / Mathlib v4.33.0, following [Ba26]) is registered in
 the Palomar registry as PALOMAR-2026-09-15-000003.  A bridge deriving this exact statement
 (with the definitions above) from the registered proof is available at
 [jbaelaw/erdos190-fc-bridge](https://github.com/jbaelaw/erdos190-fc-bridge).
