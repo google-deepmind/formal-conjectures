@@ -47,10 +47,10 @@ $\lvert A_i\rvert \geq \tfrac{2}{5}\sqrt{n}$ for all $i$ and $\lvert A_i\cap A_j
 all $i\neq j$, and yet if $B$ has non-empty intersection with all $A_i$ then there exists $A_j$
 such that $\lvert B\cap A_j\rvert \gg \log n$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos664.lean#L214"]
-theorem erdos_664 : answer(False) ↔
-    ∀ c : ℝ, 0 < c → c < 1 → ∃ K : ℕ, ∀ (n m : ℕ) (A : Fin m → Finset (Fin n)),
+theorem erdos_664 :
+    ¬ ∀ c : ℝ, 0 < c → c < 1 → ∃ K : ℕ, ∀ (n m : ℕ) (A : Fin m → Finset (Fin n)),
       (∀ i, c * √n < (A i).card) → (∀ i j, i ≠ j → (A i ∩ A j).card ≤ 1) →
         ∃ B : Finset (Fin n), (∀ i, (B ∩ A i).Nonempty) ∧
           ∀ i, (B ∩ A i).card ≤ K := by
@@ -73,8 +73,8 @@ $A_1,\ldots,A_m$ is a pairwise balanced block design. The bound $\lvert A_i\rver
 kept, only the condition $c<1$ is omitted. This weaker version remains open, although Alon
 conjectures the answer there to also be no.
 -/
-@[category research open, AMS 5]
-theorem erdos_664.variants.block_design : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_664.variants.block_design :
     ∀ c : ℝ, 0 < c → ∃ K : ℕ, ∀ (n m : ℕ) (A : Fin m → Finset (Fin n)),
       (∀ i, c * √n < (A i).card) → (∀ x y : Fin n, x ≠ y → ∃! i, x ∈ A i ∧ y ∈ A i) →
         ∃ B : Finset (Fin n), (∀ i, (B ∩ A i).Nonempty) ∧

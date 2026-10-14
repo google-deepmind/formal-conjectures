@@ -86,9 +86,9 @@ theorem erdos_596.variants.C4_C6_is_exceptional :
 
 /-- The original Erdős–Hajnal conjecture (that no exceptional pair exists) is **false** —
 witnessed by $(C_4, C_6)$ via `C4_C6_is_exceptional`. -/
-@[category research solved, AMS 5]
-theorem erdos_596.variants.original_conjecture_is_false : answer(False) ↔
-    ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+@[category research solved, question, AMS 5]
+theorem erdos_596.variants.original_conjecture_is_false :
+    ¬ ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       ¬IsErdosHajnalExceptional G₁ G₂ := by
   sorry
 
@@ -96,8 +96,8 @@ theorem erdos_596.variants.original_conjecture_is_false : answer(False) ↔
 Erdős Problem 595. The finite Ramsey property holds (Folkman 1970, Nešetřil–Rödl
 [NeRo75]); the open part is whether every $K_4$-free graph is a countable union of
 triangle-free graphs. -/
-@[category research open, AMS 5]
-theorem erdos_596.variants.K4_K3_exceptional_iff : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_596.variants.K4_K3_exceptional_iff :
     IsErdosHajnalExceptional (completeGraph (Fin 4)) (completeGraph (Fin 3)) := by
   sorry
 

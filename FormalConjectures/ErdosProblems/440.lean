@@ -46,9 +46,9 @@ indices for which $\mathrm{lcm}(a_i,a_{i+1})\leq x$. Is it true that $A(x) \ll x
 The answer is yes: Tao has given a simple proof, and Erdős and Szemerédi [ErSz80] proved the
 sharp bound $A(x)\leq (c+o(1))x^{1/2}$ (see `erdos_440.variants.erdos_szemeredi`).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos440.lean#L602"]
-theorem erdos_440.parts.i : answer(True) ↔
+theorem erdos_440.parts.i :
     ∀ a : ℕ → ℕ, StrictMono a → (∀ i, 0 < a i) →
       (fun x : ℕ ↦ (count a x : ℝ)) =O[atTop] fun x : ℕ ↦ √x := by
   sorry

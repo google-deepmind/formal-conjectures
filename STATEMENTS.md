@@ -32,10 +32,11 @@ Be careful with `∃ x, P x → Q`. The intended statement is usually `∃ x, P 
 form can be trivially true.
 
 Check that a theorem carries `@[question]` exactly when the source asks a question rather than
-makes a claim. For a yes-or-no question, check that `answer(True)` states a positive answer and
-`answer(False)` states a negative answer. For a question that asks for a value, tagged
-`@[question value]`, check the scope and expected type of `answer(sorry)`. The rest of the statement must constrain the unknown
-answer. It must not make the theorem true for every possible answer.
+makes a claim. A yes-or-no question states the proposition it asks about, negated with `¬` if
+the answer is known to be no; do not use a `Prop`-valued `answer(sorry)`. For a question that
+asks for a value, tagged `@[question value]`, check the scope and expected type of
+`answer(sorry)`. The rest of the statement must constrain the unknown answer. It must not make
+the theorem true for every possible answer.
 
 ## Check boundary cases
 
