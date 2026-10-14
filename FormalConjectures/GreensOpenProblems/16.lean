@@ -49,7 +49,7 @@ def green_16.answer : ℕ → ℕ := sorry
 @[category research open, question value, AMS 5 11]
 theorem green_16 (N : ℕ) :
     ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧
-      A.card = (green_16.answer : ℕ → ℕ) N ∧
+      A.card = green_16.answer N ∧
       MaximalFor (fun B => B ⊆ Icc 1 N ∧ SolutionFree B) Finset.card A := by
   sorry
 

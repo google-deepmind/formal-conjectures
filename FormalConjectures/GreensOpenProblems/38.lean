@@ -93,7 +93,7 @@ Polak and Zuiddam [BPZ26] improved the rate further, to $3.258789\ldots$ and $3.
 respectively; the latter is formalised in Lean. The exact growth rate remains open. -/
 @[category research solved, question value, AMS 5 11]
 theorem green_38.lower :
-    let ans := (green_38.lower.answer : ℕ → ℝ)
+    let ans := green_38.lower.answer
     (∀ᶠ n in atTop, 0 ≤ ans n) ∧ ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
     ∃ c > C₁, (fun n ↦ c ^ n) =O[atTop] ans := by
   sorry
@@ -104,7 +104,7 @@ def green_38.upper.answer : ℕ → ℝ := sorry
 norms. -/
 @[category research open, question value, AMS 5 11]
 theorem green_38.upper :
-    let ans := (green_38.upper.answer : ℕ → ℝ)
+    let ans := green_38.upper.answer
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧
     ∃ c : ℝ, 0 < c ∧ c < C₂ ∧ ans =O[atTop] (fun n ↦ c ^ n) := by
   sorry

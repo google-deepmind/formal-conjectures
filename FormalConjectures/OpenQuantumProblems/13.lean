@@ -597,7 +597,7 @@ def mutuallyUnbiasedBases.answer : ℕ → ℕ := sorry
 bases in $\mathbb{C}^d$ for $d \ge 2$. -/
 @[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases (d : ℕ) (hd : 2 ≤ d) :
-    IsMaxMUBCount d ((mutuallyUnbiasedBases.answer : ℕ → ℕ) d) := by
+    IsMaxMUBCount d (mutuallyUnbiasedBases.answer d) := by
   sorry
 
 end OpenQuantumProblem13

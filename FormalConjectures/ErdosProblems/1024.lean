@@ -43,7 +43,7 @@ Phelps and Rödl [PhRo86] proved $f(n) \asymp (n\log n)^{1/2}$.
 @[category research solved, question value, AMS 5]
 theorem erdos_1024 :
     (fun n ↦ (Hypergraph.linearIndependenceNumber n : ℝ)) =Θ[atTop]
-    (erdos_1024.answer : ℕ → ℝ) := by
+    erdos_1024.answer := by
   sorry
 
 end Erdos1024

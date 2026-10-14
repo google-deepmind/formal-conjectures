@@ -61,7 +61,7 @@ topological groups whose proper closed subgroups are all discrete.
 theorem kourovka_1_74 :
     ∀ (G : Type) [Group G] [TopologicalSpace G],
       IsMinimalTopologicalGroup G ↔
-        (kourovka_1_74.answer : ∀ (G : Type) [Group G] [TopologicalSpace G], Prop) G := by
+        kourovka_1_74.answer G := by
   sorry
 
 /--

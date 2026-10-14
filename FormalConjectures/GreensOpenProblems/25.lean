@@ -65,7 +65,7 @@ def green_25.upper.answer : ℕ → ℕ := sorry
 /-- We conjecture that the best-known upper bound can be lowered. -/
 @[category research open, question value, AMS 5 11]
 theorem green_25.upper :
-    let ans := (green_25.upper.answer : ℕ → ℕ)
+    let ans := green_25.upper.answer
     (∀ᶠ N in atTop, 1 ≤ ans N ∧ ans N ≤ N) ∧ -- Ensure k is a valid partition size
     (fun N => (ans N : ℝ)) =o[atTop] bestUpper ∧
     ¬ ∀ᶠ N in atTop, Property25 (ans N) N := by
@@ -76,7 +76,7 @@ def green_25.lower.answer : ℕ → ℝ := sorry
 /-- We conjecture that the best-known lower bound can be raised. -/
 @[category research open, question value, AMS 5 11]
 theorem green_25.lower :
-    let ans := (green_25.lower.answer : ℕ → ℝ)
+    let ans := green_25.lower.answer
     (bestLower =o[atTop] ans) ∧
     (∀ᶠ N in atTop, 1 ≤ ans N ∧ ans N ≤ N) ∧
     ∀ k : ℕ → ℕ,

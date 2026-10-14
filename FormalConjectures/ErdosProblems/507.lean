@@ -73,7 +73,7 @@ determine a triangle of area at most $\alpha(n)$. Estimate $\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.equivalent:
-    α ~[atTop] (erdos_507.equivalent.answer : ℕ → ℝ) := by
+    α ~[atTop] erdos_507.equivalent.answer := by
   sorry
 
 def erdos_507.lower.answer : ℕ → ℝ := sorry
@@ -83,7 +83,7 @@ Estimate a lower bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.lower:
-    let ans := (erdos_507.lower.answer : ℕ → ℝ)
+    let ans := erdos_507.lower.answer
     (lowerBest =o[atTop] ans) ∧ (ans ≪ α) := by
   sorry
 
@@ -94,7 +94,7 @@ Estimate an upper bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.upper:
-    let ans := (erdos_507.upper.answer : ℕ → ℝ)
+    let ans := erdos_507.upper.answer
     (α ≪ ans) ∧ (ans =o[atTop] upperBarrier) := by
   sorry
 

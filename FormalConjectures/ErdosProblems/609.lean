@@ -66,7 +66,7 @@ then there must be a monochromatic odd cycle of length at most $m$. Estimate $f(
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_609 :
-    (fun n ↦ (f n : ℝ)) =Θ[atTop] (erdos_609.answer : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =Θ[atTop] erdos_609.answer := by
   sorry
 
 -- TODO: Add variants of the problem.

@@ -64,7 +64,7 @@ def erdos_539.answer : ℕ → ℝ := sorry
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$. Estimate $h(n)$. -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_539 :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] (erdos_539.answer : ℕ → ℝ) := by
+    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] erdos_539.answer := by
   sorry
 
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the

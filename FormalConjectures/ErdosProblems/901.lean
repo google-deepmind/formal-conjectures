@@ -51,7 +51,7 @@ $3$-chromatic. Estimate $m(n)$.
 @[category research open, question value, AMS 5]
 theorem erdos_901 :
     (fun n ↦ ((Hypergraph.minChromaticEdges n 3).toNat : ℝ)) =Θ[atTop]
-    (erdos_901.answer : ℕ → ℝ) := by
+    erdos_901.answer := by
   sorry
 
 end Erdos901

@@ -94,7 +94,7 @@ for all $\varepsilon > 0$ and large $N$?
 @[category research open, question value, AMS 5]
 theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ)) =Θ[atTop]
-      (erdos_340.variants.isTheta.answer : ℕ → ℝ) := by
+      erdos_340.variants.isTheta.answer := by
   sorry
 
 /--

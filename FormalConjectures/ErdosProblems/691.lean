@@ -39,7 +39,7 @@ $M_A = \{n \geq 1 : a \mid n \text{ for some } a \in A\}$. Find a necessary and 
 condition on $A$ for $M_A$ to have density $1$. -/
 @[category research open, question value, AMS 11]
 theorem erdos_691 :
-    (erdos_691.answer : Set ℕ → Prop) = fun A ↦ (multiples A).HasDensity 1 := by
+    erdos_691.answer = fun A ↦ (multiples A).HasDensity 1 := by
   sorry
 
 end Erdos691

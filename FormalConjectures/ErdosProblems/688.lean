@@ -49,7 +49,7 @@ Estimate $\epsilon_n$.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_688.parts.i :
-    epsilonFunction =Θ[atTop] (erdos_688.parts.i.answer : ℕ → ℝ) := by
+    epsilonFunction =Θ[atTop] erdos_688.parts.i.answer := by
   sorry
 
 /--

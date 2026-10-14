@@ -39,7 +39,7 @@ of $\{1, \dots, N\}$ that does not contain any non-trivial $k$-term arithmetic p
 That is, find $f_k$ with $r_k(N) / f_k(N) \to 1$ as $N \to \infty$.
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) ~[atTop] (erdos_142.answer : ℕ → ℝ) := by
+theorem erdos_142 (k : ℕ) : (fun N => (r k N : ℝ)) ~[atTop] erdos_142.answer := by
   sorry
 
 /--
@@ -61,7 +61,7 @@ That is, find $f_k$ with $r_k(N) \asymp_k f_k(N)$.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_142.variants.isTheta (k : ℕ) :
-    (fun N => (r k N : ℝ)) =Θ[atTop] (erdos_142.variants.isTheta.answer : ℕ → ℝ) := by
+    (fun N => (r k N : ℝ)) =Θ[atTop] erdos_142.variants.isTheta.answer := by
   sorry
 
 
@@ -75,7 +75,8 @@ of $\{1, \dots, N\}$ that does not contain any non-trivial $3$-term arithmetic p
 That is, find $f$ with $r_3(N) / f(N) \to 1$ as $N \to \infty$.
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) ~[atTop] (erdos_142.variants.three.answer : ℕ → ℝ) := by
+theorem erdos_142.variants.three : (fun N => (r 3 N : ℝ)) ~[atTop] erdos_142.variants.three.answer
+    := by
   sorry
 
 end Erdos142

@@ -63,7 +63,7 @@ def green_31.lower.answer : ℕ → ℝ := sorry
 /-- Can we improve the lower bound $N^{1/2} + O(1)$, at least for infinitely many $N$? -/
 @[category research open, question value, AMS 5 11]
 theorem green_31.lower :
-    let ans := (green_31.lower.answer : ℕ → ℝ)
+    let ans := green_31.lower.answer
     Filter.Tendsto (fun N ↦ ans N - Real.sqrt (N : ℝ)) atTop atTop ∧ -- Break the O(1) barrier
     ∃ᶠ N in atTop, ans N ≤ F N := by
   sorry
@@ -73,7 +73,7 @@ def green_31.variants.lower_eventually.answer : ℕ → ℝ := sorry
 /-- Can we improve the lower bound $N^{1/2} + O(1)$, for all sufficiently large $N$? -/
 @[category research open, question value, AMS 5 11]
 theorem green_31.variants.lower_eventually :
-    let ans := (green_31.variants.lower_eventually.answer : ℕ → ℝ)
+    let ans := green_31.variants.lower_eventually.answer
     Filter.Tendsto (fun N ↦ ans N - Real.sqrt (N : ℝ)) atTop atTop ∧ -- Break the O(1) barrier
     ∀ᶠ N in atTop, ans N ≤ F N := by
   sorry
@@ -86,7 +86,7 @@ many $N$?
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_31.upper :
-    let ans := (green_31.upper.answer : ℕ → ℝ)
+    let ans := green_31.upper.answer
     (∃ᶠ N in atTop, F N ≤ ans N) ∧
     ∃ c < (0.94349 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry
@@ -99,7 +99,7 @@ large $N$?
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_31.variants.upper_eventually :
-    let ans := (green_31.variants.upper_eventually.answer : ℕ → ℝ)
+    let ans := green_31.variants.upper_eventually.answer
     (∀ᶠ N in atTop, F N ≤ ans N) ∧
     ∃ c < (0.94349 : ℝ), ∃ C : ℝ, ∀ᶠ N in atTop, ans N - Real.sqrt (N : ℝ) ≤ c * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry

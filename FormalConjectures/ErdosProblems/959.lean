@@ -83,7 +83,7 @@ where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
 -/
 @[category research open, question value, AMS 52]
 theorem erdos_959 :
-    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (erdos_959.answer : ℕ → ℝ) := by
+    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] erdos_959.answer := by
   sorry
 
 /--

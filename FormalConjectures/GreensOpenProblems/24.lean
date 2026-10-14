@@ -55,7 +55,7 @@ $\lbrace 0,1,3 \rbrace$ that $A$ can contain?
 Conjectured in [Aa19] p.579: $\left(\frac{1}{3} + o(1)\right) n^2$.
 -/
 @[category research open, question value, AMS 5 11]
-theorem green_24 : ∀ n, max013AffineTranslates n = (green_24.answer : ℕ → ℕ) n := by
+theorem green_24 : ∀ n, max013AffineTranslates n = green_24.answer n := by
   sorry
 
 /-  A collection of associated bounds and conjectured values. -/

@@ -64,7 +64,8 @@ this set is a satisfactory classification is up to human judgement.
 @[category research open, question value, AMS 11]
 theorem erdos_388.variants.classification :
     {(m₁, k₁, m₂, k₂) : ℕ × ℕ × ℕ × ℕ | 3 < k₁ ∧ 3 < k₂ ∧ m₁ + k₁ ≤ m₂ ∧
-      ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂, (m₂ + j)} = erdos_388.variants.classification.answer := by
+      ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂,
+        (m₂ + j)} = erdos_388.variants.classification.answer := by
   sorry
 
 /--

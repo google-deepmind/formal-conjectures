@@ -317,7 +317,7 @@ are available [BFZ24, (4.25)-(4.28)].
 -/
 @[category research open, question value, AMS 15]
 theorem isMaxRank_cube {n : ℕ} (hn : 1 ≤ n) :
-    IsMaxRank [n, n, n] ((isMaxRank_cube.answer : ℕ → ℕ) n) := by
+    IsMaxRank [n, n, n] (isMaxRank_cube.answer n) := by
   sorry
 
 end Arxiv.«0805.3777»

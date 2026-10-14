@@ -51,7 +51,7 @@ arithmetic progression for all $i\neq j$?
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_272 :
-    ∀ N ≥ 1, maxArithInterCard N = (erdos_272.answer : ℕ → ℕ) N := by
+    ∀ N ≥ 1, maxArithInterCard N = erdos_272.answer N := by
   sorry
 
 /--

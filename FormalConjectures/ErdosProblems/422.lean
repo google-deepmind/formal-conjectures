@@ -95,7 +95,7 @@ How does $f$ grow?
 @[category research open, question value, AMS 11]
 theorem erdos_422.variants.growth_rate :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f →
-    (fun n ↦ (f n : ℝ)) =O[atTop] (erdos_422.variants.growth_rate.answer : ℕ+ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =O[atTop] erdos_422.variants.growth_rate.answer := by
   sorry
 
 /--

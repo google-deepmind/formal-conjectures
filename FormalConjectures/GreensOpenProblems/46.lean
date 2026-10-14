@@ -57,7 +57,7 @@ def green_46.improve_lower.answer : ℕ → ℝ := sorry
 /-- We conjecture that the best-known lower bound can be improved. -/
 @[category research open, question value, AMS 11]
 theorem green_46.improve_lower :
-    let ans := (green_46.improve_lower.answer : ℕ → ℝ)
+    let ans := green_46.improve_lower.answer
     (bestLower =o[atTop] ans) ∧ (ans ≪ maxY) := by
   sorry
 
@@ -66,7 +66,7 @@ def green_46.improve_upper.answer : ℕ → ℝ := sorry
 /-- We conjecture that the best-known upper bound can be improved. -/
 @[category research open, question value, AMS 11]
 theorem green_46.improve_upper :
-    let ans := (green_46.improve_upper.answer : ℕ → ℝ)
+    let ans := green_46.improve_upper.answer
     (ans =o[atTop] bestUpper) ∧ (maxY ≪ ans) := by
   sorry
 

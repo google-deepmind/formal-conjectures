@@ -119,7 +119,8 @@ Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, question value, AMS 51]
 theorem least_eleven_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))} least_eleven_square_packing_in_square.answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))}
+      least_eleven_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -141,7 +142,8 @@ Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, question value, AMS 51]
 theorem least_seventeen_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))} least_seventeen_square_packing_in_square.answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))}
+      least_seventeen_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -193,7 +195,8 @@ What is the smallest square that can contain 21 unit circles?
 -/
 @[category research open, question value, AMS 51]
 theorem least_twenty_one_circle_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))} least_twenty_one_circle_packing_in_square.answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))}
+      least_twenty_one_circle_packing_in_square.answer := by
   sorry
 
 /--
@@ -223,7 +226,8 @@ Dense packings of congruent circles in a circle. Discrete Math 1998;181:139–15
 -/
 @[category research open, question value, AMS 51]
 theorem least_fifteen_circle_packing_in_circle :
-    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))} least_fifteen_circle_packing_in_circle.answer := by
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))}
+      least_fifteen_circle_packing_in_circle.answer := by
   sorry
 
 end SquarePacking

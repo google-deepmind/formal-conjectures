@@ -355,7 +355,8 @@ Find a better lower bound!
 -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.lower:
-    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = erdos_36.variants.lower.answer := by
+    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c =
+      erdos_36.variants.lower.answer := by
   sorry
 
 def erdos_36.variants.upper.answer : ℝ := sorry
@@ -365,7 +366,8 @@ Find a better upper bound!
 -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.upper :
-    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = erdos_36.variants.upper.answer := by
+    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c =
+      erdos_36.variants.upper.answer := by
   sorry
 
 /--

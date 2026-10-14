@@ -171,7 +171,7 @@ $$ 1= \frac{1}{n_1}+\cdots+\frac{1}{n_k},$$
 where $1\leq n_1<\cdots<n_k$ are distinct integers. Find good estimates for $F(k)$.
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_148 : (fun k ↦ (F k : ℝ)) =Θ[atTop] (erdos_148.answer : ℕ → ℝ) := by
+theorem erdos_148 : (fun k ↦ (F k : ℝ)) =Θ[atTop] erdos_148.answer := by
   sorry
 
 /--

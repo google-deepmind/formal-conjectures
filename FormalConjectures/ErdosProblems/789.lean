@@ -73,7 +73,7 @@ Estimate $h(n)$.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_789 :
-    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] (erdos_789.answer : ℕ → ℝ) := by
+    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] erdos_789.answer := by
   sorry
 
 /--

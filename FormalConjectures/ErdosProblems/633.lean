@@ -86,7 +86,7 @@ number of congruent triangles, settling this problem. The classification is too 
 in the answer slot here, so the answer is left as `sorry` and the reference records the result.
 -/
 @[category research solved, question value, AMS 5 51]
-lemma erdos_633 : T ∈ (erdos_633.answer : Set <| Triangle ℝ ℝ²) ↔
+lemma erdos_633 : T ∈ erdos_633.answer ↔
     ∀ n, IsCuttable n T → IsSquare n := sorry
 
 variable (n T) in

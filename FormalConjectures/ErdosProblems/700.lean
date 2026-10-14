@@ -92,7 +92,8 @@ prime-power divisor of $n$. This is the reading of part (a) in Erdős–Szekeres
 [ErSz78, pp. 98–99](https://combinatorica.hu/~p_erdos/1978-46.pdf). -/
 @[category research open, question value, AMS 11]
 theorem erdos_700.variants.prime_power_divisor :
-    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = erdos_700.variants.prime_power_divisor.answer := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = erdos_700.variants.prime_power_divisor.answer
+      := by
   sorry
 
 /-- At $n = 12$, $f(n) = 3 = n/Q(n)$, whereas $n/P(n) = 4$. -/

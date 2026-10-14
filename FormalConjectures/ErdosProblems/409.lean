@@ -83,7 +83,7 @@ is reached. What is $\Theta(c(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isTheta (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =Θ[atTop] (erdos_409.parts.i.isTheta.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =Θ[atTop] erdos_409.parts.i.isTheta.answer := by
   sorry
 
 def erdos_409.parts.i.isBigO.answer : ℕ → ℝ := sorry
@@ -95,7 +95,7 @@ is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isBigO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =O[atTop] (erdos_409.parts.i.isBigO.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =O[atTop] erdos_409.parts.i.isBigO.answer := by
   sorry
 
 def erdos_409.parts.i.isLittleO.answer : ℕ → ℝ := sorry
@@ -107,7 +107,7 @@ is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =o[atTop] (erdos_409.parts.i.isLittleO.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =o[atTop] erdos_409.parts.i.isLittleO.answer := by
   sorry
 
 /--
@@ -161,7 +161,7 @@ is reached. What is $\Theta(c(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isTheta (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =Θ[atTop] (erdos_409.variants.sigma_isTheta.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =Θ[atTop] erdos_409.variants.sigma_isTheta.answer := by
   sorry
 
 def erdos_409.variants.sigma_isBigO.answer : ℕ → ℝ := sorry
@@ -173,7 +173,7 @@ is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isBigO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =O[atTop] (erdos_409.variants.sigma_isBigO.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =O[atTop] erdos_409.variants.sigma_isBigO.answer := by
   sorry
 
 def erdos_409.variants.sigma_isLittleO.answer : ℕ → ℝ := sorry
@@ -185,7 +185,7 @@ is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 @[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =o[atTop] (erdos_409.variants.sigma_isLittleO.answer : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =o[atTop] erdos_409.variants.sigma_isLittleO.answer := by
   sorry
 
 /--

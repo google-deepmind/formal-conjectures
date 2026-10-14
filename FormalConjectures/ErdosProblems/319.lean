@@ -75,7 +75,7 @@ theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (erdos_319.variants.isTheta.answer : ℕ → ℝ) := by
+    c =Θ[atTop] erdos_319.variants.isTheta.answer := by
   sorry
 
 /-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of

@@ -54,7 +54,7 @@ has to provide what the sufficient conditions are, and proof that they imply the
 If the condition is a solution to the problem is up to human judgement.
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_332 (A : Set ℕ) : (erdos_332.answer : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
+theorem erdos_332 (A : Set ℕ) : erdos_332.answer A → HasBoundedGaps (D_A A) := by
   sorry
 
 -- TODO(firsching): formalize additional statements
