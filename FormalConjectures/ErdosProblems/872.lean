@@ -165,13 +165,16 @@ theorem erdos_872.parts.i : answer(sorry) ↔
 /-- Erdős Problem 872, part (ii) (strong form): for every $\epsilon > 0$, the game length is at
 least $(1-\epsilon) \cdot n / 2$ for all sufficiently large $n$.
 
-Status note: the forum thread (April-May 2026) records Shortener strategies giving
+The forum thread (April-May 2026) records Shortener strategies giving
 $L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as correct, with a Lean
 formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
-question negatively under the Prolonger-first convention. Neither is published, so the statement
-is recorded here as the original Erdős question. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.parts.ii : answer(sorry) ↔
+question negatively under the Prolonger-first convention.
+
+The $23/48$ upper bound for `C`-respecting plays (following old-bielefelder's strategy in the
+forum thread) was formalized in Lean 4 by Pommeret using Aristotle and Claude Opus 4.7, and
+completed to a proof for the full minimax game value `L n` by Ilia Pauzner using Gemini 4 Argon. -/
+@[category research solved, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d9299da16287d2347e375d9eec253eec455bae75/FormalConjectures/ErdosProblems/872.lean#L1180"]
+theorem erdos_872.parts.ii : answer(False) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
