@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 701
 
 *Reference:* [erdosproblems.com/701](https://www.erdosproblems.com/701)
 -/
+
+@[expose] public section
 
 namespace Erdos701
 
@@ -33,7 +36,7 @@ whenever $\mathcal{F}'\subseteq \mathcal{F}$ is an intersecting subfamily we hav
 $$\lvert \mathcal{F}'\rvert \leq \lvert \{ A\in \mathcal{F} : x\in A\}\rvert.$$
 -/
 @[category research open, AMS 5]
-theorem erdos_701 {X : Type*} [Nonempty X] :
+theorem erdos_701 : answer(sorry) ↔ ∀ {X : Type} [Nonempty X] [Fintype X],
     ∀ (F : Set (Set X)), IsLowerSet F →
       ∃ x : X, ∀ᵉ (F' ⊆ F),
         F'.Intersecting →

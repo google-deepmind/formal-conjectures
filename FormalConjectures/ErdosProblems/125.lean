@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 125
@@ -27,6 +28,8 @@ There are four possibilities for the density of $A+B$:
 3. $A+B$ has positive upper and lower density that are equal (and hence positive density).
 4. $A+B$ has positive upper and lower density that are unequal (and hence no density).
 -/
+
+@[expose] public section
 
 open Nat Pointwise
 
@@ -107,10 +110,13 @@ theorem erdos_125.variants.zero_lower_positive_upper_density :
 /--
 Case 4:
 Does $A + B$ have positive upper and lower density that are unequal?
+
+This follows from the disproof `erdos_125.variants.positive_lower_density` above.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/0bc740d2351c53713e66d9340e83f7d2c1ddecab/FormalConjectures/ErdosProblems/125.lean#L860"]
 theorem erdos_125.variants.positive_unequal_density :
-    answer(sorry) ↔ 0 < (A + B).lowerDensity ∧ (A + B).lowerDensity < (A + B).upperDensity := by
+    answer(False) ↔ 0 < (A + B).lowerDensity ∧ (A + B).lowerDensity < (A + B).upperDensity := by
   sorry
 
 end Erdos125

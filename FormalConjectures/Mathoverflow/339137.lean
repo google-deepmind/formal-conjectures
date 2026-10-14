@@ -13,11 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.GreensOpenProblems.«28»
-
-open scoped Polynomial
+public import FormalConjecturesUtil
+public import FormalConjectures.GreensOpenProblems.«28»
 
 /-!
 # Mathoverflow 339137
@@ -30,6 +29,9 @@ Why do polynomials with coefficients 0,1
 asked by user [*Sil*](https://mathoverflow.net/users/136794/sil)
 -/
 
+@[expose] public section
+
+open scoped Polynomial
 namespace Mathoverflow339137
 
 /--

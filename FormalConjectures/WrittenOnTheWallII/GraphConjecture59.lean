@@ -1,0 +1,77 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import FormalConjecturesUtil
+
+/-!
+# Written on the Wall II - Conjecture 59
+
+*References:*
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+-/
+
+@[expose] public section
+
+namespace WrittenOnTheWallII.GraphConjecture59
+
+open SimpleGraph
+
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+
+/--
+WOWII [Conjecture 59](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+
+For a simple connected graph $G$, the size $f(G)$ of a largest induced forest
+satisfies $f(G) \ge \lceil \sqrt{\mathrm{residue}(G) \cdot b(G)} \rceil$, where
+$\mathrm{residue}(G)$ is the Havel-Hakimi residue (the number of zeros remaining
+after applying the Havel-Hakimi algorithm to the degree sequence until termination)
+and $b(G)$ is the size of a largest induced bipartite subgraph.
+
+See: Favaron, Mahéo, Saclé (1991) for the residue; DeLaVina's Graffiti.pc for the conjecture.
+
+This conjecture is false. There is a connected counterexample on 123 vertices
+with `residue G = 101`, `b G = 122`, and `G.largestInducedForestSize = 111`.
+Indeed, `101 * 122 = 12322 = 111 ^ 2 + 1`, so the conjectured lower bound is 112.
+
+There is also an 18-vertex counterexample. Take a bipartite chain graph on
+vertices `0, ..., 9`, with parts `{0, ..., 4}` and `{5, ..., 9}`, a hub `10`
+adjacent to every core vertex, and leaves `11, ..., 17` attached at the hub.
+It has residue 10, `b = 17`, and largest induced forest 13.
+`⌈√170⌉ = 14`, so it falsifies the bound.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/QDKStorm/wowii59-counterexample/blob/main/Counterexample59.lean",
+  formal_proof using formal_conjectures at "https://github.com/anagnorisis2peripeteia/formal-conjectures/blob/69388817d384ea44a5ef4b2aed1097c8281f9c3a/FormalConjectures/WrittenOnTheWallII/GraphConjecture59.lean"]
+theorem conjecture59 : answer(False) ↔
+    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+      (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected),
+      ⌈Real.sqrt ((residue G : ℝ) * b G)⌉ ≤ (G.largestInducedForestSize : ℝ) := by
+  sorry
+
+-- Sanity checks
+
+/-- The `largestInducedForestSize` is nonneg. -/
+@[category test, AMS 5]
+example (G : SimpleGraph (Fin 3)) : 0 ≤ G.largestInducedForestSize := Nat.zero_le _
+
+/-- The residue of $K_2$ equals $1$: degree sequence is $[1, 1]$; one Havel-Hakimi
+step gives $[0]$, leaving a single zero. -/
+@[category test, AMS 5]
+example : residue (⊤ : SimpleGraph (Fin 2)) = 1 := by
+  simp [residue, Fin.univ_succ, Multiset.sort_cons, residueAux, havelHakimiStep]
+
+end WrittenOnTheWallII.GraphConjecture59

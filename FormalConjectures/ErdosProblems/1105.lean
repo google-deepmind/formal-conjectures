@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1105
@@ -28,6 +29,8 @@ import FormalConjectures.Util.ProblemImports
   (1984), 101--110.
 - [Yu21] L.-T. Yuan, The anti-Ramsey number for paths. arXiv:2102.00807 (2021).
 -/
+
+@[expose] public section
 
 namespace Erdos1105
 
@@ -45,7 +48,7 @@ Montellano-Ballesteros and Neumann-Lara [MoNe05] gave an exact formula for $\mat
 which implies in particular that
 $\mathrm{AR}(n,C_k)=\left(\frac{k-2}{2}+\frac{1}{k-1}\right)n+O(1).$
 -/
-@[category research solved, AMS 05]
+@[category research solved, AMS 5]
 theorem erdos_1105.parts.i : answer(True) ↔
     ∀ k, 3 ≤ k →
     ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
@@ -61,7 +64,7 @@ $\epsilon=2$ otherwise?
 A proof of the formula for $\mathrm{AR}(n,P_k)$ for all $n\geq k\geq 5$ has been announced by
 Yuan [Yu21].
 -/
-@[category research solved, AMS 05]
+@[category research solved, AMS 5]
 theorem erdos_1105.parts.ii : answer(True) ↔
     ∀ (k n : ℕ), 5 ≤ k → k ≤ n →
     let ℓ := (k - 1) / 2

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 389
 
 *Reference:* [erdosproblems.com/389](https://www.erdosproblems.com/389)
 -/
+
+@[expose] public section
 
 namespace Erdos389
 
@@ -44,6 +47,9 @@ theorem erdos_389.variants.mehta_four :
     IsLeast
       { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (4 + i) ∣ ∏ i ∈ Finset.range k, (4 + k + i) }
       207 := by
-  sorry
+  refine ⟨⟨by norm_num, by native_decide⟩, ?_⟩
+  intro k ⟨_, hdvd⟩
+  by_contra! hlt
+  interval_cases k <;> revert hdvd <;> native_decide
 
 end Erdos389

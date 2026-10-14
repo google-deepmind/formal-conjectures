@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1077
@@ -22,10 +23,13 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1077](https://www.erdosproblems.com/1077)
 -/
 
-open Classical Finset Filter SimpleGraph
+@[expose] public section
+
+open Finset Filter SimpleGraph
 
 namespace Erdos1077
 
+open scoped Classical in
 /--
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.
@@ -34,7 +38,8 @@ Let $ε, α > 0$ and $D$ and $n$ be sufficiently large. If $G$ is a graph on $n$
 least $n^{1+α}$ edges, then must $G$ contain a $D$-balanced subgraph on $m > n^{1-α}$ vertices with
 at least $εm^{1+α}$ edges?
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos1077.lean#L265"]
 theorem erdos_1077 :
     answer(False) ↔ ∀ ε > (0 : ℝ), ε < 1 → ∀ α > (0 : ℝ), α < 1 → ∀ᶠ D in atTop, ∀ᶠ n in atTop,
       ∀ G : SimpleGraph (Fin n), G.edgeSet.ncard > (n : ℝ) ^ (1 + α) →

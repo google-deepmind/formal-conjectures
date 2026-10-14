@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 26
@@ -28,16 +29,13 @@ References:
 - [Yu25] Yu, Yang. "Note on the Additive Basis Conjecture." arXiv preprint arXiv:2510.01300 (2025).
 -/
 
+@[expose] public section
+
 open Set
 open scoped Pointwise
 
 namespace Green26
 
-/-- The vector space $\mathbb{F}_p^n$. -/
-abbrev 𝔽 (p n : ℕ) [Fact p.Prime] := Fin n → ZMod p
-
-/-- The vector space $\mathbb{F}_3^n$. -/
-abbrev 𝔽₃ (n : ℕ) := 𝔽 3 n
 
 /-- The standard cube in $\mathbb{F}_p^n$ is the set of points with coordinates in $\{0, 1\}$. -/
 def StandardCube {p : ℕ} [Fact p.Prime] (n : ℕ) : Set (𝔽 p n) :=

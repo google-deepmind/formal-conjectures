@@ -13,18 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
 
-open Filter Real Set
-open scoped Cardinal Ordinal
-
-namespace Erdos623
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 623
 
 *Reference:* [erdosproblems.com/623](https://www.erdosproblems.com/623)
 -/
+
+@[expose] public section
+
+open Filter Real Set
+open scoped Cardinal Ordinal
+namespace Erdos623
 universe u
 
 /--

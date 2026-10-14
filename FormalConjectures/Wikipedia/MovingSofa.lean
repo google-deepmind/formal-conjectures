@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Moving Sofa Problem
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 - [Ro18] Romik, D. _Differential equations and exact solutions in the moving sofa problem_. Experimental mathematics 27.3 (2018): 316-330.
 - [Ba24] Baek, J. _Optimality of Gerver's Sofa_. arXiv preprint arXiv:2411.19826 (2024).
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -65,6 +68,16 @@ structure IsMovingSofa (s : Set ℝ²) (m : I → E(2)) : Prop where
 /-- The unit square. -/
 def unitSquare : Set ℝ² := parallelepiped (EuclideanSpace.basisFun (Fin 2) ℝ)
 
+/-- Coordinates of points in the unit square lie in `[0,1]`. -/
+@[category API, AMS 49]
+private lemma mem_Icc_of_mem_unitSquare {p : ℝ²} (hp : p ∈ unitSquare) (i : Fin 2) :
+    p i ∈ Set.Icc (0:ℝ) 1 := by
+  have h := parallelepiped_basis_eq (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis
+  rw [unitSquare, show parallelepiped ⇑(EuclideanSpace.basisFun (Fin 2) ℝ) =
+    parallelepiped (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis by
+      rw [OrthonormalBasis.coe_toBasis], h] at hp
+  simpa using hp i
+
 /--
 The unit square $[0,1]^2$ is a valid moving sofa (with the identity motion).
 It sits in the corner where both hallways overlap, so the stationary motion works.
@@ -72,15 +85,46 @@ This is a sanity check that the `IsMovingSofa` definition is not vacuous.
 -/
 @[category test, AMS 49]
 theorem isMovingSofa_unitSquare : ∃ m, IsMovingSofa unitSquare m := by
-  sorry
+  refine ⟨fun _ => .refl ℝ ℝ², ?_, ?_, continuous_const, rfl, ?_, ?_, ?_⟩
+  · unfold unitSquare parallelepiped
+    refine ⟨⟨0, 0, by simp, by simp⟩, (convex_Icc _ _).isPreconnected.image _ ?_⟩
+    exact (continuous_finsetSum _ fun i _ =>
+      (continuous_apply i).smul continuous_const).continuousOn
+  · unfold unitSquare parallelepiped
+    exact (isCompact_Icc.image
+      (continuous_finsetSum _ fun i _ =>
+        (continuous_apply i).smul continuous_const)).isClosed
+  · intro p hp
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.2.trans (by norm_num), h1.1, h1.2⟩,
+      by ext i; fin_cases i <;> rfl⟩
+  · rintro t q ⟨p, hp, rfl⟩
+    rw [show (AffineIsometryEquiv.refl ℝ ℝ²) p = p from rfl]
+    refine .inl ?_
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.2.trans (by norm_num), h1.1, h1.2⟩,
+      by ext i; fin_cases i <;> rfl⟩
+  · rintro q ⟨p, hp, rfl⟩
+    rw [show (AffineIsometryEquiv.refl ℝ ℝ²) p = p from rfl]
+    have h0 := mem_Icc_of_mem_unitSquare hp 0
+    have h1 := mem_Icc_of_mem_unitSquare hp 1
+    exact ⟨p 0, p 1, ⟨h0.1, h0.2, h1.2.trans (by norm_num)⟩,
+      by ext i; fin_cases i <;> rfl⟩
 
 /--
 The rigid motion that translates by $p$ and then rotates counterclockwise by $\alpha$.
 Note that [Ge92] used this definition while [Ro18] used rotation first and then translation.
 -/
 def rotateTranslate (α : Real.Angle) (p : ℝ²) : E(2) :=
-  (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
-    |>.trans (AffineIsometryEquiv.vaddConst ℝ p)
+  (AffineIsometryEquiv.vaddConst ℝ p).trans
+    (EuclideanGeometry.o.rotation α).toAffineIsometryEquiv
+
+/-- `rotateTranslate α p` sends $q$ to $R_\alpha(q + p)$: the translation is applied first. -/
+@[category test, AMS 49]
+theorem rotateTranslate_apply (α : Real.Angle) (p q : ℝ²) :
+    rotateTranslate α p q = EuclideanGeometry.o.rotation α (q + p) := rfl
 
 /--
 The sofa according to a rotation path $p : [0, \pi/2] \to \mathbb{R}^2$ as in [Ge92] is the
@@ -113,7 +157,10 @@ def ABφθSpec (A B φ θ : ℝ) : Prop :=
   A * φ.cos - (φ.sin + 1 / 2 - φ.cos / 2 + B * φ.sin) = 0 ∧
   (A + π / 2 - φ - θ) - (B - (θ - φ) * (1 + A) / 2 - (θ - φ)^2 / 4) = 0
 
-@[category textbook, AMS 49]
+/-- There exist unique constants $A$, $B$, $\varphi$, and $\theta$ satisfying the spec. -/
+@[category textbook, AMS 49,
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Defs.lean#L173",
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/blob/v1.0.0/GerverSofa/KernelOnly/PartE/E24KC6KernelFinalClosure.lean"]
 theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry
@@ -155,10 +202,20 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+/-- Gerver's concrete sofa admits a valid hallway motion. -/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0",
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L161-L168",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L120-L121"]
+theorem isMovingSofa_gerversSofa : ∃ m, IsMovingSofa gerversSofa m := by
+  sorry
+
 open MeasureTheory
 open scoped ENNReal
 
 /-- The **sofa constant** is the maximal area of a moving sofa. -/
+@[optimization_constant "41a"]
 def sofaConstant : ℝ≥0∞ := ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s
 
 /-- The sofa constant is at least 1, as witnessed by the unit square. -/
@@ -169,19 +226,36 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49]
-theorem sofaConstant_eq : sofaConstant = answer(sorry) := by
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L124-L125"]
+theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
   sorry
 
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L30",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L124-L125"]
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
-/-- Gerver's sofa is the unique sofa that attains the sofa constant. -/
-@[category research open, AMS 49]
-theorem sofaConstant_eq_volume_iff_eq_gerversSofa :
-    ∀ s : Set ℝ², sofaConstant = volume s ↔ s = gerversSofa := by
+/--
+Gerver's sofa is the unique sofa that attains the sofa constant, up to a rigid motion.
+
+The motion is needed: `horizontalHallway` is $(-\infty, 1] \times [0, 1]$, so a leftward
+translate of any moving sofa is again one, obtained by sliding right and then following the
+original motion. It has the same area, so uniqueness cannot hold on the nose.
+-/
+@[category research solved, AMS 49,
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L176-L190",
+  formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L128-L131"]
+theorem volume_eq_sofaConstant_iff_congruent_gerversSofa (s : Set ℝ²)
+    (hs : ∃ m, IsMovingSofa s m) :
+    volume s = sofaConstant ↔ ∃ g : E(2), s = g '' gerversSofa := by
   sorry
 
 end MovingSofa

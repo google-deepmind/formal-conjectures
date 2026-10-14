@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.Wikipedia.LegendreConjecture
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.LegendreConjecture
 
 /-!
 # Erdős Problem 375
@@ -28,6 +29,8 @@ import FormalConjectures.Wikipedia.LegendreConjecture
     factorisation of a block of consecutive integers. J. Reine Angew. Math. (1975), 109-124.
  -
 -/
+
+@[expose] public section
 
 open Set Filter Topology Asymptotics
 
@@ -73,7 +76,7 @@ theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n 
     by_contra! hr
     wlog hq : x < y
     · exact this n hn k hk h p hp y x hxy.symm hr.symm (by grind)
-    · have hy : y = x + 1 := by grind
+    · have hy : y = x + 1 := by fin_cases x <;> fin_cases y <;> simp_all
       have := hy ▸ Nat.dvd_sub (hp y).2 (hxy ▸ (hp x).2)
       have := (hp 1).1
       simp_all [Nat.not_prime_one]

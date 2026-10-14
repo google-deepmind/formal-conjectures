@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Magic Squares
@@ -26,6 +27,8 @@ import FormalConjectures.Util.ProblemImports
 * [Semi-Magic Square of Cubes](https://unsolvedproblems.org/index_files/SquareofCubes.htm)
 * [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
+
+@[expose] public section
 
 namespace MagicSquares
 

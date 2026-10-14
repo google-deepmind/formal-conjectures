@@ -13,7 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Wikipedia.HardyLittlewood
+module
+
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.HardyLittlewood
 
 /-!
 # Erdős Problem 855
@@ -23,6 +26,8 @@ import FormalConjectures.Wikipedia.HardyLittlewood
 This is an "eventually" formulation of the Second Hardy–Littlewood conjecture.
 -/
 
+@[expose] public section
+
 open Filter
 open scoped Nat.Prime
 
@@ -30,11 +35,11 @@ namespace Erdos855
 
 /--
 Erdős Problem 855 (Segal's conjecture): $\pi(x + y) \le \pi(x) + \pi(y)$
-for sufficiently large $x, y$.
+for all sufficiently large $x, y$, i.e. for all $x, y \ge N$ for some $N$.
 -/
 @[category research open, AMS 11]
 theorem erdos_855 : answer(sorry) ↔
-    ∀ᶠ x in atTop, ∀ᶠ y in atTop, π (x + y) ≤ π x + π y := by
+    ∀ᶠ (xy : ℕ × ℕ) in atTop ×ˢ atTop, π (xy.1 + xy.2) ≤ π xy.1 + π xy.2 := by
   sorry
 
 end Erdos855

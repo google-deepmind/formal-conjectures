@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's 17th problem
@@ -28,11 +29,11 @@ $f = g_1^2 + g_2^2 + \cdots + g_m^2$. Resolved affirmatively by Artin in 1927.
 - Motzkin, "The arithmetic-geometric inequality". In Shisha, Oved (ed.). Inequalities. Academic Press. pp. 205–224.
 -/
 
+@[expose] public section
+
 open Real MvPolynomial
 
 namespace Hilbert17
-
-abbrev MvRatFunc (σ K : Type*) [CommRing K] := FractionRing (MvPolynomial σ K)
 
 /--
 Hilbert's 17th problem: every non-negative multivariate polynomial is a sum of
@@ -53,6 +54,7 @@ noncomputable def f : MvPolynomial (Fin 2) ℝ :=
   X 0 ^ 4 * X 1 ^ 2 + X 0 ^ 2 * X 1 ^ 4 - 3 * X 0 ^ 2 * X 1 ^ 2 + 1
 
 -- Proof taken from `motzkin_polynomial_nonneg` in mathlib
+/-- The Motzkin polynomial is non-negative everywhere. -/
 @[category textbook, AMS 12]
 theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
   intro x y
@@ -66,6 +68,7 @@ theorem f_nonneg : ∀ x y : ℝ, 0 ≤ f.eval ![x, y] := by
     + (x ^ 2 - y ^ 2) ^ 2 := by positivity
   linear_combination H
 
+/-- The Motzkin polynomial cannot be written as a sum of squares of polynomials. -/
 @[category textbook, AMS 12]
 theorem f_not_sum_of_squares :
     ¬∃ (n : ℕ) (hn : 0 < n) (S : Fin n → MvPolynomial (Fin 2) ℝ), f = ∑ i, S i ^ 2 := by
@@ -100,7 +103,8 @@ theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
   rcases eq_or_ne f 0 with (rfl | hf_zero); · exact ⟨0, 0, by simp⟩
   have hfd := f.totalDegree_eq_zero_iff_eq_C.1 <| by simpa using hf.totalDegree hf_zero
   use 1, fun _ ↦ C √(f.coeff 0)
-  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by
+    simpa [constantCoeff] using hf₀ 0]
   simpa using hfd
 
 /--

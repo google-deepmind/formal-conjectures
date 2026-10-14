@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Schanuel's Conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture)
 -/
+
+@[expose] public section
 
 open scoped Real Complex
 open IntermediateField
@@ -34,7 +37,6 @@ has transcendence degree at least $n$ over $\mathbb{Q}$.
 -/
 @[category research open, AMS 11 33]
 theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
-    let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
     n ≤ Algebra.trdeg ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) := by
   sorry
 

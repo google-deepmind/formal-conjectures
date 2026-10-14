@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Polynomial
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 21003
@@ -27,6 +26,11 @@ $f : \mathbb{Q} \times \mathbb{Q} \rightarrow \mathbb{Q}$ is a bijection?
 *Reference:* [mathoverflow/21003](https://mathoverflow.net/questions/21003)
 asked by user [*Z.H.*](https://mathoverflow.net/users/5098/z-h)
 -/
+
+@[expose] public section
+
+open scoped Polynomial
+
 
 namespace Mathoverflow21003
 
