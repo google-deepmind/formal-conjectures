@@ -39,15 +39,12 @@ namespace Erdos211
 
 open EuclideanGeometry Filter
 
-noncomputable local instance (L : AffineSubspace ℝ ℝ²) : DecidablePred (fun p : ℝ² => p ∈ L) :=
-  Classical.decPred _
-
-noncomputable local instance : DecidableEq (AffineSubspace ℝ ℝ²) := Classical.decEq _
-
+open scoped Classical in
 /-- Distinct lines containing two distinct points of the configuration. -/
 noncomputable def determinedLines (s : Finset ℝ²) : Finset (AffineSubspace ℝ ℝ²) :=
   s.offDiag.image fun p => line[ℝ, p.1, p.2]
 
+open scoped Classical in
 /-- The uniform Erdős–Beck lower bound. -/
 def MainBound : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∀ (n k : ℕ), 1 ≤ k → k < n →
@@ -55,6 +52,7 @@ def MainBound : Prop :=
       (∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ n - k) →
       c * (k : ℝ) * (n : ℝ) ≤ ((determinedLines s).card : ℝ)
 
+open scoped Classical in
 /-- The quadratic lower bound for configurations with at most half the points on a line. -/
 def QuadraticBound : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 1 ≤ n →
@@ -62,6 +60,7 @@ def QuadraticBound : Prop :=
       (∀ L : AffineSubspace ℝ ℝ², IsLine L → (s.filter fun p => p ∈ L).card ≤ n) →
       c * (n : ℝ) ^ 2 ≤ ((determinedLines s).card : ℝ)
 
+open scoped Classical in
 /-- Erdős speculates that there are at least $(1+o(1))kn/6$ determined lines [Er84].
 The asymptotic bound is uniform over $1 \leq k < n$. -/
 @[category research open, AMS 5 52]
@@ -72,6 +71,7 @@ theorem erdos_211.variants.one_sixth :
       (1 - ε) / 6 * (k : ℝ) * (n : ℝ) ≤ ((determinedLines s).card : ℝ) := by
   sorry
 
+open scoped Classical in
 /-- There are arbitrarily large configurations with no four collinear points and
 $\sim n^2/6$ three-point lines, constructed by Burr, Grünbaum, and Sloane [BGS74]
 and Füredi and Palásti [FuPa84]. The index need not equal the number of points. -/
@@ -144,6 +144,7 @@ theorem determinedLines_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} :
       b, (Finset.mem_filter.mp hb).1,
       hab, line_pair_eq hL (Finset.mem_filter.mp ha).2 (Finset.mem_filter.mp hb).2 hab⟩
 
+open scoped Classical in
 /-- The fiber over a geometric line consists of the ordered pairs of distinct incident points. -/
 @[category API, AMS 5 52]
 theorem pair_fiber_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} (hL : IsLine L) :
@@ -159,6 +160,7 @@ theorem pair_fiber_eq {s : Finset ℝ²} {L : AffineSubspace ℝ ℝ²} (hL : Is
   · rintro ⟨⟨ha, haL⟩, ⟨hb, hbL⟩, hab⟩
     exact ⟨⟨ha, hb, hab⟩, line_pair_eq hL haL hbL hab⟩
 
+open scoped Classical in
 /-- Exact double counting: each ordered pair belongs to its unique determined line. -/
 @[category API, AMS 5 52]
 theorem ordered_pair_count (s : Finset ℝ²) :
@@ -176,6 +178,7 @@ theorem ordered_pair_count (s : Finset ℝ²) :
       intro L hL
       rw [pair_fiber_eq (isLine_of_mem_determinedLines hL), Finset.offDiag_card, Nat.mul_sub_left_distrib, Nat.mul_one]
 
+open scoped Classical in
 /-- Elementary bound when no line contains more than $r$ points.
 This is weaker than the Erdős–Beck bound and is not a proof of `erdos_211`. -/
 @[category API, AMS 5 52]
@@ -192,6 +195,7 @@ theorem pair_count_bound {s : Finset ℝ²} {r : ℕ}
       exact Nat.mul_le_mul h (Nat.sub_le_sub_right h 1)
     _ = _ := by simp
 
+open scoped Classical in
 /-- In a configuration with no three collinear points, every unordered pair gives a line. -/
 @[category API, AMS 5 52]
 theorem line_count_no_three {s : Finset ℝ²}
@@ -215,6 +219,7 @@ theorem line_count_no_three {s : Finset ℝ²}
       simp [heq]
     _ = _ := by simp [Nat.mul_comm]
 
+open scoped Classical in
 /-- With at most three points on each line, double counting gives the sharp
 leading coefficient $1/6$ in a quadratic lower bound. -/
 @[category API, AMS 5 52]
@@ -223,6 +228,7 @@ theorem six_mul_lines_no_four {s : Finset ℝ²}
     s.card * (s.card - 1) ≤ 6 * (determinedLines s).card := by
   simpa [Nat.mul_comm] using pair_count_bound hs
 
+open scoped Classical in
 /-- The real-valued form of the preceding bound, including empty configurations. -/
 @[category API, AMS 5 52]
 theorem real_lower_bound_no_four {s : Finset ℝ²}
