@@ -124,8 +124,9 @@ its author expects it to be true. A question leaves the answer open. There are t
   a conjectured value. "What is $R(5,5)$?" is a question, stated as `R(5, 5) = answer(sorry)`;
   "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
 
-The attribute records the kind itself: a statement containing a non-`Prop` `answer(...)` is a
-value question, any other is a yes-or-no question. Both are written `@[question]`.
+A yes-or-no question is written `@[question]`, a value question `@[question value]`. The
+attribute checks the form against the statement: `value` requires a non-`Prop` `answer(...)`
+in the statement, and plain `question` forbids one.
 
 The attribute is independent of `category`, but it only makes sense on a `research open` or
 `research solved` problem: a textbook exercise, a `test`, or an `API` statement is not a
@@ -141,7 +142,7 @@ theorem catalan_dickson :
   sorry
 
 /-- What is the chromatic number of the plane? -/
-@[category research open, question, AMS 5]
+@[category research open, question value, AMS 5]
 theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
   sorry
 ```
@@ -573,26 +574,34 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
-/-- The kind of question a statement of type `type` asks: a value question if it contains a
-non-`Prop` `answer(...)`, a yes-or-no question otherwise. -/
-def questionKindOfType (type : Expr) : MetaM QuestionKind := do
-  let hasValueAnswer ← IO.mkRef false
+/-- Whether a statement of type `type` contains a non-`Prop` `answer(...)`, which marks the
+unknown of a value question. -/
+def hasValueAnswer (type : Expr) : MetaM Bool := do
+  let found ← IO.mkRef false
   Google.forEachAnswer type fun ans => do
-    unless ← Meta.isProp ans do hasValueAnswer.set true
-  return if ← hasValueAnswer.get then .value else .yesNo
+    unless ← Meta.isProp ans do found.set true
+  found.get
 
-syntax (name := Question_attr) &"question" : attr
+syntax (name := Question_attr) &"question" (&"value")? : attr
 
 /-- Records that the source asks a question rather than makes a claim.
 
-Usage: `@[question]`, together with a `research` category. A statement containing a non-`Prop`
-`answer(...)` is recorded as a value question, any other as a yes-or-no question. For a
-yes-or-no question the statement is the proposition asked about; once answered, it is the one
-that holds: unchanged for a yes, negated with `¬` for a no. -/
+Usage, together with a `research` category:
+- `@[question]` for a yes-or-no question. The statement is the proposition asked about; once
+  answered, it is the one that holds: unchanged for a yes, negated with `¬` for a no.
+- `@[question value]` for a question that asks for a value. The statement marks the unknown
+  with a non-`Prop` `answer(sorry)`.
+
+The attribute checks the form against the statement: `value` requires a non-`Prop`
+`answer(...)`, and plain `question` forbids one. -/
 initialize Lean.registerBuiltinAttribute {
   name := `Question_attr
   descr := "Annotation that a statement is posed as a question."
-  add decl _stx _attrKind := do
+  add decl stx _attrKind := do
+    let kind ← match stx with
+      | `(attr| question) => pure QuestionKind.yesNo
+      | `(attr| question value) => pure QuestionKind.value
+      | _ => throwUnsupportedSyntax
     -- Inside a `module`, a theorem is still registered as an axiom when attributes run, so
     -- the check is on the type rather than on the kind of the constant.
     let some info := (← getEnv).find? decl
@@ -602,7 +611,15 @@ initialize Lean.registerBuiltinAttribute {
         but the type of '{decl}' is not a proposition"
     if let some tag := (categoryExt.getState (← getEnv)).toArray.find? (·.declName == decl) then
       checkQuestionCategory decl tag.category
-    addQuestionEntry decl (← Meta.MetaM.run' (questionKindOfType info.type))
+    match kind, ← Meta.MetaM.run' (hasValueAnswer info.type) with
+    | .value, false =>
+      throwError "`question value` requires a non-`Prop` `answer(...)` in the statement of \
+        '{decl}'; for a yes-or-no question use `question`"
+    | .yesNo, true =>
+      throwError "the statement of '{decl}' contains a non-`Prop` `answer(...)`, so it asks \
+        for a value; use `question value`"
+    | _, _ => pure ()
+    addQuestionEntry decl kind
   applicationTime := .afterTypeChecking
 }
 

@@ -74,14 +74,31 @@ def not_a_theorem : Prop := True
 -- A statement with a non-`Prop` answer is a value question.
 #guard_msgs in
 /-- What is `2 + 2`? -/
-@[category research open, question, AMS 11]
+@[category research open, question value, AMS 11]
 theorem a_value_question : 2 + 2 = answer(sorry) := by
   sorry
 
--- The kind is detected under binders too.
+-- The answer is found under binders too.
+#guard_msgs in
+@[category research open, question value, AMS 11]
+theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
+  sorry
+
+-- The form is checked against the statement, in both directions.
+/--
+error: the statement of 'a_value_question_tagged_yes_no' contains a non-`Prop` `answer(...)`, so it asks for a value; use `question value`
+-/
 #guard_msgs in
 @[category research open, question, AMS 11]
-theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
+theorem a_value_question_tagged_yes_no : 2 + 2 = answer(sorry) := by
+  sorry
+
+/--
+error: `question value` requires a non-`Prop` `answer(...)` in the statement of 'a_yes_no_question_tagged_value'; for a yes-or-no question use `question`
+-/
+#guard_msgs in
+@[category research open, question value, AMS 11]
+theorem a_yes_no_question_tagged_value : 2 + 2 = 4 := by
   sorry
 
 -- A bound `Prop`-valued answer is a yes-or-no question, not a value question.

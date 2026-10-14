@@ -286,8 +286,8 @@ a claim. A conjecture is a claim: its author expects it to be true. A question
 leaves the answer open. The tag is independent of the `category` attribute,
 but it only belongs on a `research open` or `research solved` problem.
 
-There are two kinds of question. Both are written `@[question]`; the kind is
-recorded from the statement.
+There are two kinds of question, written `@[question]` and `@[question value]`.
+The attribute checks the form against the statement.
 
 - A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?").
   The Lean statement is the proposition the question asks about. Once the
@@ -297,9 +297,9 @@ recorded from the statement.
   `¬`. Not a question: a conjecture that is merely phrased as one. "Is every
   even integer greater than 2 the sum of two primes?" is Goldbach's
   conjecture, a claim, and is stated without the tag.
-- A question that asks for a value ("What is...?", "How large can...be?").
-  The Lean statement marks the unknown with a non-`Prop` `answer(sorry)`, see
-  below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+- A question that asks for a value ("What is...?", "How large can...be?"),
+  written `@[question value]`. The Lean statement marks the unknown with a
+  non-`Prop` `answer(sorry)`, see below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
   question, stated as `R(5, 5) = answer(sorry)`; "$R(5,5) = 43$" is a claim,
   stated as `R(5, 5) = 43` without the tag.
 
@@ -312,7 +312,7 @@ theorem catalan_dickson :
   sorry
 
 /-- What is the chromatic number of the plane? -/
-@[category research open, question, AMS 5]
+@[category research open, question value, AMS 5]
 theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
   sorry
 ```
