@@ -72,7 +72,7 @@ This is the pinned distance problem, a stronger form of Problem 89. Here $n^{1-o
 every $\varepsilon > 0$ and all large $n$, the bound is at least $n^{1-\varepsilon}$. We do not
 count the distance $d(x, x) = 0$; this changes the count by one.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_604 : answer(sorry) ↔
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 - ε) ≤ (pinnedDistinctDistances n : ℝ) := by
@@ -82,7 +82,7 @@ theorem erdos_604 : answer(sorry) ↔
 Given $n$ distinct points $A\subset\mathbb{R}^2$, must there be a point $x\in A$ such that
 $$\#\{ d(x,y) : y \in A\} \gg \frac{n}{\sqrt{\log n}}?$$
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_604.variants.sqrt_log : answer(sorry) ↔
     (fun n : ℕ => (n : ℝ) / (n : ℝ).log.sqrt) =O[atTop]
       (fun n => (pinnedDistinctDistances n : ℝ)) := by

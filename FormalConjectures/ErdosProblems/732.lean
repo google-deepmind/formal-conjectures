@@ -52,7 +52,7 @@ $\exp(c n^{1/2}\log n)$ block-compatible sequences?
 Alon has proved there are at least $2^{(\frac{1}{2}+o(1))n^{1/2}\log n}$ many sequences
 which are block-compatible for $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_732.parts.ii :
     answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
     Real.exp (c * Real.sqrt n * Real.log n) ≤ (Hypergraph.blockSizeProfiles n).card := by

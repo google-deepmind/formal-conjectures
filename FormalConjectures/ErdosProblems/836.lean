@@ -41,7 +41,7 @@ so isolated vertices are excluded.
 Alon has provided a counterexample to the first question: this hypergraph is intersecting,
 its chromatic number is $3$, and it has $\asymp 4^r/\sqrt{r}$ many vertices.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/ad12db51383ed41ec8b6b54e0ffabfa828773d38/erdos-836/Solution.lean#L33"]
 theorem erdos_836.parts.i :
     answer(False) ↔ ∃ C : ℝ, 0 < C ∧ ∀ r : ℕ, 2 ≤ r →
@@ -54,7 +54,7 @@ theorem erdos_836.parts.i :
 In an intersecting $r$-uniform hypergraph with chromatic number $3$, must there be two
 distinct edges which meet in $\gg r$ many vertices?
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/ad12db51383ed41ec8b6b54e0ffabfa828773d38/erdos-836/Solution.lean#L41"]
 theorem erdos_836.parts.ii :
     answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ r : ℕ, 2 ≤ r →

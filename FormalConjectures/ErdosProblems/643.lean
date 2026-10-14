@@ -54,7 +54,7 @@ theorem erdos_643.parts.i :
 /--
 Is it true that $f(n;t)=(1+o(1))\binom{n}{t-1}$ for $t\geq 3$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_643.parts.ii :
     answer(sorry) ↔ ∀ t : ℕ, 3 ≤ t →
     (fun n ↦ ((Hypergraph.extremalNumber n t

@@ -114,7 +114,7 @@ $\{n : f(n)/\log n \leq c\}$ has natural density $F(c)$. For $n \leq 1$ the quot
 Lean, which does not affect densities. Erdős, Granville, Pomerance and Spiro [EGPS90] proved
 that the answer is yes, conditional on a form of the Elliott–Halberstam conjecture.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_408.parts.i : answer(sorry) ↔
     ∃ F : ℝ → ℝ, Monotone F ∧ Tendsto F atBot (𝓝 0) ∧ Tendsto F atTop (𝓝 1) ∧
       ∀ c : ℝ, ContinuousAt F c →
@@ -130,7 +130,7 @@ Pomerance and Spiro [EGPS90] proved that, conditional on a form of the Elliott�
 conjecture, $f(n)$ has normal order $\alpha \log n$ for some constant $\alpha > 0$, so that the
 answer is yes under this hypothesis.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_408.parts.ii : answer(sorry) ↔
     ∃ α : ℝ, ∀ ε > (0 : ℝ),
       {n : ℕ | |(f n : ℝ) / Real.log n - α| < ε}.HasDensity 1 := by

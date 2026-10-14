@@ -108,7 +108,7 @@ $F(N) > N^{1/2 - o(1)}$?
 The answer is no, by the bound of Pham and Zakharov [PhZa24]
 (`erdos_131.variants.pham_zakharov`).
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_131 : answer(False) ↔
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ᶠ N : ℕ in atTop, (N : ℝ) ^ ((1 : ℝ) / 2 - f N) < (F N : ℝ) := by

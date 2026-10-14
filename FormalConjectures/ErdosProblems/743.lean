@@ -97,7 +97,7 @@ A tree with $k$ vertices has $k - 1$ edges, and $\sum_{k=2}^{n} (k - 1) = \binom
 number of edges of $K_n$. Hence the copies $f_k(T_k)$ of a packing cover every edge of $K_n$.
 So a packing is the same as a decomposition of $K_n$ into copies of $T_2, \ldots, T_n$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_743 : answer(sorry) ↔
     ∀ n : ℕ, ∀ T : (k : ℕ) → SimpleGraph (Fin k),
       (∀ k ∈ Set.Icc 2 n, (T k).IsTree) → IsPacking n (Set.Icc 2 n) T := by

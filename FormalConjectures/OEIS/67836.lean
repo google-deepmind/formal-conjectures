@@ -134,7 +134,7 @@ theorem a_5 : a 5 = 13 := by
   decide
 
 /-- [OEIS A067836](https://oeis.org/A067836) asks: "Do all primes occur in the sequence?" -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
     answer(sorry) ↔ ∀ p, p.Prime → ∃ n ≥ 1, a n = p := by
   sorry

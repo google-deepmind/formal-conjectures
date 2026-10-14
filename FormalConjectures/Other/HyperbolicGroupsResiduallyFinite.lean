@@ -55,7 +55,7 @@ of [OAI26a] defines hyperbolicity by uniformly thin geodesic triangles in a Cayl
 definition is equivalent to `Group.IsHyperbolic`, but the equivalence is not part of the Lean
 proof.
 -/
-@[category research solved, AMS 20]
+@[category research solved, question, AMS 20]
 theorem hyperbolic_residuallyFinite : answer(False) ↔
     ∀ (G : Type) [Group G] [Group.IsHyperbolic G], Group.ResiduallyFinite G := by
   sorry
@@ -69,7 +69,7 @@ $G$ is nontrivial.
 No. By [KaWi00] (see `hyperbolic_residuallyFinite_iff_exists_finiteIndex_ne_top`), this problem
 is equivalent to `hyperbolic_residuallyFinite`, which was disproved in [OAI26a].
 -/
-@[category research solved, AMS 20]
+@[category research solved, question, AMS 20]
 theorem hyperbolic_exists_finiteIndex_ne_top : answer(False) ↔
     ∀ (G : Type) [Group G] [Group.IsHyperbolic G] [Nontrivial G],
       ∃ H : Subgroup G, H ≠ ⊤ ∧ H.FiniteIndex := by

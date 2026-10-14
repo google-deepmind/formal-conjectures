@@ -53,7 +53,7 @@ def IsMinimalIntervalLength (n m L : ℕ) : Prop :=
 /-- Let $f(n,m)$ be minimal such that $(m,m+f(n,m))$ contains distinct integers
 $a_1,\ldots,a_n$ with $k \mid a_k$ for $1 \leq k \leq n$. Prove that
 $\max_m f(n,m) \leq n^{1+o(1)}$. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_711.parts.i : answer(sorry) ↔ ∃ error : ℕ → ℝ,
     error =o[atTop] (fun _ ↦ (1 : ℝ)) ∧ ∀ᶠ n in atTop, ∀ m, ∃ L,
       HasDivisibleDistinctTuple n m L ∧ (L : ℝ) ≤ Real.rpow n (1 + error n) := by
@@ -63,7 +63,7 @@ theorem erdos_711.parts.i : answer(sorry) ↔ ∃ error : ℕ → ℝ,
 
 This was proved by van Doorn [vD26], who obtained the stronger lower bound
 $f(n,m)-f(n,n) \gg n\log n/\log\log n$ for a suitable $m=m(n)$ and all large $n$. -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_711.parts.ii : answer(True) ↔ ∀ B : ℕ, ∀ᶠ n in atTop,
     ∃ m Lm Ln : ℕ, IsMinimalIntervalLength n m Lm ∧
       IsMinimalIntervalLength n n Ln ∧ B ≤ Lm - Ln := by

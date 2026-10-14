@@ -38,7 +38,7 @@ Is it true that
 $$\mathrm{ex}_t(n,K_t(r)) \geq n^{t-r^{1-t}-o(1)}$$
 for all $t,r\geq 2$? The restriction $r\geq 2$ excludes forbidding a single edge.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1158 :
     answer(sorry) ↔ ∀ t r : ℕ, 2 ≤ t → 2 ≤ r →
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,

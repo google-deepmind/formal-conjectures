@@ -43,7 +43,7 @@ edges, with equality only for the complete graph on $(r-1)(k-1)+1$ vertices?
 
 This was disproved by Alon [Al85]. The validity of this conjecture for $r=3$ remains open.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_832 :
     answer(False) ↔ ∀ r : ℕ, 3 ≤ r → ∀ᶠ k : ℕ in atTop,
     ∀ (n : ℕ) (H : Finset (Finset (Fin n))),

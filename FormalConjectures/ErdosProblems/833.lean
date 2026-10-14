@@ -39,7 +39,7 @@ hypergraph with chromatic number $3$ there is a vertex contained in at least $(1
 This was solved by Erdős and Lovász [ErLo75], who proved in particular that there is a vertex
 contained in at least $\frac{2^{r-1}}{4r}$ many edges.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_833 :
     answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ r : ℕ, 2 ≤ r →
     ∀ (n : ℕ) (H : Finset (Finset (Fin n))),

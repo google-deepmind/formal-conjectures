@@ -50,7 +50,7 @@ The actual maximal number of unit distances is the subject of
 
 Two sets of points are congruent if an isometry of the plane maps one onto the other.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_668.parts.i : answer(sorry) ↔
     ∀ m : ℕ, ∀ᶠ n in atTop, ∃ A : Fin m → Finset ℝ²,
       (∀ i, (A i).card = n ∧ unitDistNum (A i) = maxUnitDistances n) ∧
@@ -68,7 +68,7 @@ Mixon, and Parshall [AMP25] suggests that this count is $=1$ for various other $
 (although these calculations were checking only up to graph isomorphism, rather than
 congruency).
 -/
-@[category research solved, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_668.parts.ii : answer(False) ↔
     ∀ n : ℕ, 3 < n → ∃ A B : Finset ℝ², A.card = n ∧ B.card = n ∧
       unitDistNum A = maxUnitDistances n ∧ unitDistNum B = maxUnitDistances n ∧

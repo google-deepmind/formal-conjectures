@@ -52,7 +52,7 @@ Given a finite sequence of primes $q_1<\cdots<q_m$, extend it by taking $q_{n+1}
 smallest prime of the form $q_n+q_i-1$ for $n\geq m$. Is there an initial sequence for which
 this process continues forever?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_472 : answer(sorry) ↔ ∃ m : ℕ, ∃ q : ℕ → ℕ, UlamPrimeExtension m q := by
   sorry
 

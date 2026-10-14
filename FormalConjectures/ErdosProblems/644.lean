@@ -41,7 +41,7 @@ $$f(k,7)=(1+o(1))\frac{3}{4}k?$$
 Is it true that for any $r\geq 3$ there exists some constant $c_r$ such that
 $$f(k,r)=(1+o(1))c_rk?$$
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_644.parts.i :
     answer(sorry) ↔
     (fun k ↦ ((Hypergraph.subfamilyTransversalBound k 7 2).toNat : ℝ)) ~[atTop]
@@ -51,7 +51,7 @@ theorem erdos_644.parts.i :
 /--
 For every $r\geq 3$, is there $c_r>0$ such that $f(k,r)=(1+o(1))c_rk$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_644.parts.ii :
     answer(sorry) ↔ ∀ r : ℕ, 3 ≤ r → ∃ c : ℝ, 0 < c ∧
     (fun k ↦ ((Hypergraph.subfamilyTransversalBound k r 2).toNat : ℝ)) ~[atTop]

@@ -50,7 +50,7 @@ the regime where $d$ is fixed and the $o(1)$ term tends to $0$ as $n \to \infty$
 which may depend on $d$. The case $d = 1$ was proved by Erdős
 (`Erdos670.erdos_670.variants.dim_one`), so the question is open for $d \geq 2$.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_670 : answer(sorry) ↔
     ∀ d : ℕ, 1 ≤ d → ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
@@ -62,7 +62,7 @@ Erdős [Er97f] proved the claim when $d = 1$: if $A\subseteq \mathbb{R}$ is a se
 such that all pairwise distances differ by at least $1$, then the diameter of $A$ is at least
 $(1+o(1))n^2$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_670.variants.dim_one : answer(True) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin 1)), A.card = n → HasSeparatedDistances A →
@@ -108,7 +108,7 @@ theorem erdos_670.variants.ho :
 The version of the problem where the $o(1)$ term must be uniform in the dimension $d$ has a
 negative answer. This follows from `Erdos670.erdos_670.variants.ho` (Ho [Ho26]).
 -/
-@[category research solved, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_670.variants.uniform_in_dim : answer(False) ↔
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →

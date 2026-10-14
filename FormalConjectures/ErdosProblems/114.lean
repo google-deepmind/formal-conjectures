@@ -49,7 +49,7 @@ $\{z \in \mathbb{C} : \lvert p(z)\rvert = 1\}$ maximised when $p(z) = z^n - 1$?
 We require $n \geq 1$. For $n = 0$ the only monic polynomial is $1$, whose level set is all of
 $\mathbb{C}$, while $z^0 - 1 = 0$ has an empty level set.
 -/
-@[category research open, AMS 28 30]
+@[category research open, question, AMS 28 30]
 theorem erdos_114 : answer(sorry) ↔
     ∀ n : ℕ, 1 ≤ n → ∀ p : ℂ[X], p.Monic → p.natDegree = n →
       lemniscateLength p ≤ lemniscateLength (X ^ n - 1) := by

@@ -50,7 +50,7 @@ The remainder and product in the radicand are computed in $\mathbb{N}$ before
 coercion to $\mathbb{R}$. Nontriviality excludes the one-vertex graph, whose
 maximum degree is zero.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
 "https://github.com/Kuberwastaken/c5-k4/blob/8c0a76079e5c7153bdc2dd6d97a9821ee25b2620/lean/GraphConjecture64.lean"]
 theorem conjecture64 : answer(False) ↔
     ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]

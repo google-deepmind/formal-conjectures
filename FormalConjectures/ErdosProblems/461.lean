@@ -49,7 +49,7 @@ $$f(n,t)\gg t$$
 Erdős and Graham report they can show
 $$f(n,t) \gg \frac{t}{\log t}.$$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_461 : answer(sorry) ↔
     ∃ c : ℝ, 0 < c ∧ ∀ n t : ℕ, c * (t : ℝ) ≤ (f n t : ℝ) := by
   sorry

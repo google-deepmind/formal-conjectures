@@ -61,7 +61,7 @@ exist?
 Since $f(n) \asymp n/(\log_2 n)^2$ (see `Erdos627.erdos_627.variants.theta`), the limit, if it
 exists, is a finite real number.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_627 : answer(sorry) ↔
     ∃ L : ℝ, Tendsto (fun n : ℕ ↦ maxChromaticCliqueRatio n / ((n : ℝ) / Real.logb 2 n ^ 2))
       atTop (𝓝 L) := by

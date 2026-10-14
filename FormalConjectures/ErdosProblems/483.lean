@@ -60,7 +60,7 @@ The exponential bound is stated directly: for every positive number of colours, 
 a forcing interval of length strictly below $c^k$. This is equivalent to the bound on the
 least forcing threshold and avoids choosing a default value for that threshold.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_483 : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, 0 < k →
       ∃ N : ℕ, (N : ℝ) < C ^ k ∧ Forces k N := by

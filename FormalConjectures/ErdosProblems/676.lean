@@ -39,7 +39,7 @@ open Filter
 
 /-- Is every sufficiently large integer of the form $ap^2+b$ for some prime $p$ and integers
 $a \geq 1$ and $0 \leq b < p$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_676 : answer(sorry) ↔ ∀ᶠ n in atTop,
     ∃ a p b : ℕ, p.Prime ∧ 1 ≤ a ∧ b < p ∧ n = a * p ^ 2 + b := by
   sorry

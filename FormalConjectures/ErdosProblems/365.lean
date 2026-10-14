@@ -76,7 +76,7 @@ $12168=2^3 3^2 13^2$ are powerful.
 
 We require $n>0$ since `Nat.Powerful` also includes $0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_365.parts.i : answer(False) ↔
     ∀ n : ℕ, 0 < n → Nat.Powerful n → Nat.Powerful (n + 1) →
       IsSquare n ∨ IsSquare (n + 1) := by
@@ -91,7 +91,7 @@ theorem erdos_365.parts.i : answer(False) ↔
 
 /-- Is the number of positive $n\leq x$ such that $n$ and $n+1$ are both powerful bounded
 by $(\log x)^{O(1)}$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_365.parts.ii : answer(sorry) ↔
     ∃ C : ℝ, 0 < C ∧ ∃ k : ℕ, ∀ᶠ x : ℕ in Filter.atTop,
       ({n : ℕ | 0 < n ∧ n ≤ x ∧ Nat.Powerful n ∧ Nat.Powerful (n + 1)}.ncard : ℝ) ≤

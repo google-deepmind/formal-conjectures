@@ -58,7 +58,7 @@ chosen class from $A$ and in a chosen class from $B$?
 This follows the interpretation on the Erdős Problems website, which notes that the original
 source omits some crucial quantifiers.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_467 : answer(sorry) ↔
     ∀ᶠ x in atTop, ∃ residue : ℕ → ℕ, ∃ A B : Finset ℕ,
       PrimePartitionUpTo x A B ∧ CongruenceCover x residue A B := by

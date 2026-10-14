@@ -39,7 +39,7 @@ open scoped BigOperators
 /-- Let $k \geq 2$, and let $q(n,k)$ denote the least prime which does not divide
 $\prod_{1 \leq i \leq k}(n+i)$. Is it true that, if $k$ is fixed and $n$ is sufficiently
 large, then $q(n,k) < (1+o(1))\log n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_663 : answer(sorry) ↔ ∀ k ≥ 2, ∃ error : ℕ → ℝ,
     error =o[atTop] (fun _ ↦ (1 : ℝ)) ∧ ∀ᶠ n in atTop,
       let P : ℕ := ∏ i ∈ Finset.Icc 1 k, (n + i)

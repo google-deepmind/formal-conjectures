@@ -151,7 +151,7 @@ The answer is no. There is a commutative Hopf algebra of rank $4$ over a finite 
 whose fourth power map is not trivial; its eighth power map is trivial. The formalised
 counterexample lives in `Type`, so the statement quantifies over rings and algebras in `Type`.
 -/
-@[category research solved, AMS 14 16, formal_proof using lean4 at
+@[category research solved, question, AMS 14 16, formal_proof using lean4 at
   "https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Counterexamples/GrothendieckPower.lean#L882-L892"]
 theorem killed_by_rank :
     answer(False) ↔ ∀ n : ℕ+, IsUniversalKillingExponent.{0, 0} n n := by
