@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 322
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   136-138.
 -/
 
+@[expose] public section
+
 namespace Erdos322
 
 /-- For `k ≥ 3`, the number of ordered representations of `n` as a sum of `k` many `k`th
@@ -42,8 +45,8 @@ def representationCount (k n : ℕ) : ℕ :=
 /--
 Let $k\geq 3$ and $A\subset \mathbb{N}$ be the set of $k$th powers. What is the order of growth of $1_A^{(k)}(n)$, i.e. the number of representations of $n$ as the sum of $k$ many $k$th powers? Does there exist some $c>0$ and infinitely many $n$ such that $$1_A^{(k)}(n) >n^c?$$
 -/
-@[category research open, AMS 11]
-theorem erdos_322 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_322 :
     ∀ k : ℕ, 3 ≤ k → ∃ c > (0 : ℝ),
       {n : ℕ | (n : ℝ) ^ c < representationCount k n}.Infinite := by
   sorry

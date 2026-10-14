@@ -23,6 +23,10 @@ Put each problem in `FormalConjectures/<Source>/`. Keep closely related variants
 file. Put reusable mathematics in `FormalConjecturesForMathlib/`. That directory must not
 contain `sorry`.
 
+`FormalConjecturesTest/` tests only the repository tooling in `FormalConjecturesUtil/`. Do not
+add tests for `FormalConjecturesForMathlib/` there. Put lemmas and sanity checks for a shared
+definition in the `FormalConjecturesForMathlib/` file that defines it.
+
 Problem files normally import only `FormalConjecturesUtil`.
 `FormalConjecturesForMathlib/` files import only the required Mathlib modules.
 
@@ -34,6 +38,8 @@ inputs. See [STATEMENTS.md](STATEMENTS.md) for the detailed checks.
 
 Use `answer(sorry)` only for the information that the problem asks to determine. Put all
 quantifiers after it. A tautological term inside `answer()` is not a mathematical solution.
+Tag a theorem with `@[question]` when the source asks a question, yes-or-no or for a value,
+rather than makes a claim.
 
 ## Write clear documentation
 

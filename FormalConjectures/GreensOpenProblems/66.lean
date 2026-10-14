@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 66
 
 *Reference:* [Ben Green's Open Problem 66](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -34,18 +37,17 @@ def IsSumOfTwoSquares (n : ℕ) : Prop :=
 Is there always a sum of two squares between $X - \frac{1}{10}X^{1/4}$ and $X$?
 We formalize this as an eventual statement for sufficiently large real $X$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_66 :
-    answer(sorry) ↔
-      ∀ᶠ X : ℝ in atTop,
-        ∃ n : ℕ, IsSumOfTwoSquares n ∧
-          (n : ℝ) ∈ Set.Icc (X - (1 / 10 : ℝ) * X ^ (1 / 4 : ℝ)) X := by
+    ∀ᶠ X : ℝ in atTop,
+      ∃ n : ℕ, IsSumOfTwoSquares n ∧
+        (n : ℝ) ∈ Set.Icc (X - (1 / 10 : ℝ) * X ^ (1 / 4 : ℝ)) X := by
   sorry
 
 /--
 Green notes that a well-known, almost trivial argument gives an $O(X^{1/4})$ bound on the left.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green66_green_66_variants_trivial_bound.lean#L52"]
 theorem green_66.variants.trivial_bound :
     ∃ C > (0 : ℝ), ∀ᶠ X : ℝ in atTop,
       ∃ n : ℕ, IsSumOfTwoSquares n ∧

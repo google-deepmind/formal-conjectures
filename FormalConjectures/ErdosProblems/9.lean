@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 9
 
 *Reference:* [erdosproblems.com/9](https://www.erdosproblems.com/9)
 -/
+
+@[expose] public section
 
 namespace Erdos9
 
@@ -69,8 +72,8 @@ theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
 Is the upper density of the set of odd numbers that cannot be expressed as a prime plus
 two powers of 2 positive?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_9 : answer(sorry) ↔ 0 < Erdos9A.upperDensity := by
+@[category research open, question, AMS 5 11]
+theorem erdos_9 : 0 < Erdos9A.upperDensity := by
   sorry
 
 end Erdos9

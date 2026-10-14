@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 821
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   conjecture. J. Théor. Nombres Bordeaux (2011), 697--714.
 -/
 
+@[expose] public section
+
 open Nat Filter
 
 namespace Erdos821
@@ -46,9 +49,9 @@ noncomputable def g (n : ℕ) : ℕ :=
 Is it true that, for every $\epsilon>0$, there exist infinitely many $n$ such that
 $g(n) > n^{1-\epsilon}$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_821 :
-    answer(sorry) ↔ ∀ ε > (0 : ℝ), { n : ℕ | (g n : ℝ) > (n : ℝ) ^ (1 - ε) }.Infinite := by
+    ∀ ε > (0 : ℝ), { n : ℕ | (g n : ℝ) > (n : ℝ) ^ (1 - ε) }.Infinite := by
   sorry
 
 /--

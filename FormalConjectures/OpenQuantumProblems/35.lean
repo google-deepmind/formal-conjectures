@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Open Quantum Problem 35: existence of absolutely maximally entangled pure states
@@ -57,6 +58,12 @@ of the parties, the corresponding reduced density matrix is maximally mixed.
   and K. Życzkowski,
   *Absolutely maximally entangled pure states of multipartite quantum systems*,
   arXiv:2508.04777 (2025).
+- S. Bevins and Y. Bidav,
+  *Symmetry-guided constructions of absolutely maximally entangled states in five open cases*,
+  [arXiv:2608.05781](https://arxiv.org/abs/2608.05781) (2026).
+- F. Shi, X. Zhang, Q. Zhao, and L. Li,
+  *Complete Existence Classification of Seven-Partite Absolutely Maximally Entangled States*,
+  [arXiv:2608.01011](https://arxiv.org/abs/2608.01011) (2026).
 
 This file formalizes the problem of determining for which pairs $(n,d)$ there exists an
 absolutely maximally entangled pure state $\mathrm{AME}(n,d)$.
@@ -74,6 +81,8 @@ then the reduced state on the first $m$ parties is maximally mixed.
 As demonstration, we show that the Bell states with $n=2$ and GHZ states with $n=3$ are
 AME states, and the GHZ state with $n=4$ is not an AME state.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -713,23 +722,36 @@ theorem ame_3_2_exists : ExistsAME 3 2 := by
   simpa using ame_3_exists (d := 2) (by decide)
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(5,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-5-2/blob/f0720e63065eb40c58a40f7b7af3d21f94d06453/AME52/FormalTarget.lean#L25-L26"]
 theorem ame_5_2_exists : ExistsAME 5 2 := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(6,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-6-2/blob/2a69b05aa65fec335b7e981deab2848865e9a688/AME62/FormalTarget.lean#L25-L26"]
 theorem ame_6_2_exists : ExistsAME 6 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(4,2)$ state exists; see Higuchi--Sudbery (2000) and the OQP page. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-4-2/blob/201550986844ea1e7fff36dc48681ca8b3c1600b/AME42/FormalTarget.lean#L26-L33"]
 theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(7,2)$ state exists; see Huber--Gühne--Siewert (2017) and the OQP page. -/
 @[category research solved, AMS 5 15 81 94]
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
+  sorry
+
+/-- For a physical local dimension $d \ge 2$, a seven-party AME state exists exactly when
+$d \ge 3$. The hypothesis excludes the degenerate dimension $d = 1$, for which the unique
+computational-basis state is AME under the definitions of this file.
+Shi--Zhang--Zhao--Li (2026) construct cyclic quadratic-phase states in every odd dimension and
+a coupled binary--odd-dimensional state in every dimension congruent to `2` modulo `4`; together
+with power-of-two constructions and the product property, this covers every `d ≥ 3`. -/
+@[category research solved, AMS 5 15 81 94]
+theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,3)$ state exists; see Helwig et al. (2012) and Goyeneche et al. (2015). -/
@@ -745,64 +767,80 @@ theorem ame_4_6_exists : ExistsAME 4 6 := by
 
 /- ## Open benchmark cases -/
 
-/-- Open benchmark statement: does an $\mathrm{AME}(7,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- An $\mathrm{AME}(7,6)$ state exists, by the complete seven-party classification of
+Shi--Zhang--Zhao--Li (2026). -/
+@[category research solved, question, AMS 5 15 81 94]
 theorem ame_7_6_open :
-    answer(sorry) ↔ ExistsAME 7 6 := by
-  sorry
+    ExistsAME 7 6 := by
+  exact (ame_7_exists_iff 6 (by norm_num)).2 (by norm_num)
 
-/-- Open benchmark statement: does an $\mathrm{AME}(7,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- An $\mathrm{AME}(7,10)$ state exists, by the complete seven-party classification of
+Shi--Zhang--Zhao--Li (2026). -/
+@[category research solved, question, AMS 5 15 81 94]
 theorem ame_7_10_open :
-    answer(sorry) ↔ ExistsAME 7 10 := by
-  sorry
+    ExistsAME 7 10 := by
+  exact (ame_7_exists_iff 10 (by norm_num)).2 (by norm_num)
 
 /-- Open benchmark statement: does an $\mathrm{AME}(8,4)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_8_4_open :
-    answer(sorry) ↔ ExistsAME 8 4 := by
+    ExistsAME 8 4 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(8,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_8_6_open :
-    answer(sorry) ↔ ExistsAME 8 6 := by
+    ExistsAME 8 6 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(8,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_8_10_open :
-    answer(sorry) ↔ ExistsAME 8 10 := by
+    ExistsAME 8 10 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(9,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(9,6)$ state exist?
+
+Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
+is given here:
+https://github.com/KitaKen1/ame-9-6-lean
+-/
+@[category research solved, question, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://github.com/KitaKen1/ame-9-6-lean/blob/500ee827dffbeed9bb2ed502adcd6690943a7463/lean/AME96/FormalTarget.lean#L13"]
 theorem ame_9_6_open :
-    answer(sorry) ↔ ExistsAME 9 6 := by
+    ExistsAME 9 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/--
+Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist?
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
+-/
+@[category research solved, question, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Oqp35.lean#L1238"]
 theorem ame_9_10_open :
-    answer(sorry) ↔ ExistsAME 9 10 := by
+    ExistsAME 9 10 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(10,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_10_6_open :
-    answer(sorry) ↔ ExistsAME 10 6 := by
+    ExistsAME 10 6 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(10,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_10_10_open :
-    answer(sorry) ↔ ExistsAME 10 10 := by
+    ExistsAME 10 10 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,3)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_11_3_open :
-    answer(sorry) ↔ ExistsAME 11 3 := by
+    ExistsAME 11 3 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist?
@@ -816,50 +854,61 @@ experimental pipeline
 
  Before, it was already known that there is a quantum code for `[11,0]]_5`, which corresponds to an `AME(11,4)` state (which is another approach to a solution).
       -/
-@[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 15 81 94, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/91bed229b434b68d66f5fd35cdcfee19a79985e8/FormalConjectures/OpenQuantumProblems/35.lean#L1861"]
 theorem ame_11_4_open :
-    answer(True) ↔ ExistsAME 11 4 := by
+    ExistsAME 11 4 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist?
 
 The DeepMind prover agent has shown that such a state exists.
  -/
-@[category research solved, AMS 5 15 81 94, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 15 81 94, formal_proof using formal_conjectures at
 "https://github.com/google-deepmind/formal-conjectures/blob/47383bf7fbe86effc9ac184446e320f26ddbee3a/FormalConjectures/OpenQuantumProblems/35.lean#L2138"]
 theorem ame_11_5_open :
-    answer(True) ↔ ExistsAME 11 5 := by
+    ExistsAME 11 5 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(11,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_11_6_open :
-    answer(sorry) ↔ ExistsAME 11 6 := by
+    ExistsAME 11 6 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist?
+
+Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
+is given here:
+https://github.com/KitaKen1/ame-11-10-lean
+-/
+@[category research solved, question, AMS 5 15 81 94,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/ame-11-10-lean/blob/6b7d009a43970587a3386b690221bec4339ce271/lean/AME11_10FC.lean#L15-L21"]
 theorem ame_11_10_open :
-    answer(sorry) ↔ ExistsAME 11 10 := by
+    ExistsAME 11 10 := by
   sorry
 
-/-- Open benchmark statement: does an $\mathrm{AME}(12,5)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+/-- Does an $\mathrm{AME}(12,5)$ state exist?
+
+The answer is yes. Bevins and Bidav construct an explicit Hermitian self-dual MDS code with
+parameters $[12,6,7]_{25}$, whose associated nonbinary stabilizer state is an
+$\mathrm{AME}(12,5)$ state. -/
+@[category research solved, question, AMS 5 15 81 94]
 theorem ame_12_5_open :
-    answer(sorry) ↔ ExistsAME 12 5 := by
+    ExistsAME 12 5 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(12,6)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_12_6_open :
-    answer(sorry) ↔ ExistsAME 12 6 := by
+    ExistsAME 12 6 := by
   sorry
 
 /-- Open benchmark statement: does an $\mathrm{AME}(12,10)$ state exist? -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question, AMS 5 15 81 94]
 theorem ame_12_10_open :
-    answer(sorry) ↔ ExistsAME 12 10 := by
+    ExistsAME 12 10 := by
   sorry
 
 /- ## General conjecture -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 51
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ruz91] Ruzsa, Imre Z. "Arithmetic progressions in sumsets."
   Acta Arithmetica 60.2 (1991): 191-202.
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped Pointwise
@@ -68,9 +71,9 @@ theorem green_51.upper :
 Suppose that $A \subset \mathbb{F}_2^n$ has density $\alpha > 1/2 - C/\sqrt{n}$.
 Does $A + A$ contain a subspace of co-dimension $O_C(1)$? [Sa11, Question 5.1]
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_51.one_half :
-    answer(sorry) ↔ ∀ (k : ℝ), 0 < k →
+    ∀ (k : ℝ), 0 < k →
       ∃ (c : ℕ), ∀ᶠ (n : ℕ) in atTop,
         ∀ (α : ℝ), α > (1/2 : ℝ) - k / sqrt (n : ℝ) → α ≤ 1 →
           n ≤ guaranteedMaxCosetDim n α + c := by
@@ -92,12 +95,15 @@ theorem green_51.lower_ap :
         exp (c * log (N : ℝ) ^ (1/2 : ℝ)) ≤ guaranteedMaxAPLength N α := by
   sorry
 
-/-- It is known that $A + A$ need not contain an arithmetic progression of length $\sim \exp(c (\log N)^{2/3})$ [Ruz91]. -/
+/--
+It is known that $A + A$ need not contain an arithmetic progression of length
+$\sim \exp(c (\log N)^{2/3 + \varepsilon})$, for any $\varepsilon > 0$ [Ruz91].
+-/
 @[category research solved, AMS 5 11]
 theorem green_51.upper_ap :
-    ∀ (α : ℝ), 0 < α → α < 1/2 →
+    ∀ (α : ℝ), 0 < α → α < 1/2 → ∀ (ε : ℝ), 0 < ε →
       ∃ c > 0, ∀ᶠ (N : ℕ) in atTop,
-        guaranteedMaxAPLength N α ≤ exp (c * log (N : ℝ) ^ (2/3 : ℝ)) := by
+        guaranteedMaxAPLength N α ≤ exp (c * log (N : ℝ) ^ (2/3 + ε : ℝ)) := by
   sorry
 
 end Green51

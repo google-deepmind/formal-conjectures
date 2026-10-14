@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 168
 
 *Reference:* [erdosproblems.com/168](https://www.erdosproblems.com/168)
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -91,8 +94,8 @@ theorem erdos_168.parts.i :
   sorry
 
 /-- Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
-@[category research open, AMS 5 11]
-theorem erdos_168.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_168.parts.ii :
     Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) := by
   sorry
 

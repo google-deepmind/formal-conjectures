@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 409
 
 *Reference:* [erdosproblems.com/409](https://www.erdosproblems.com/409)
 -/
+
+@[expose] public section
 
 open scoped Topology ArithmeticFunction.sigma Nat
 open Filter
@@ -102,27 +105,28 @@ theorem erdos_409.parts.i.isLittleO (c : ℕ → ℕ)
 /--
 Can infinitely many $n$ reach the same prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_409.parts.ii :
-    answer(sorry) ↔ ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
+    ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
   sorry
 
 /--
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
 @[category research open, AMS 11]
-theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) (α : ℝ)
-    (hα : { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity α) :
-    α = answer(sorry) := by
+theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
+    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity answer(sorry) := by
   sorry
 
 /--
-How many iterations of $n\mapsto\sigma(n) - 1$ are needed before a prime is reached?
+If the iteration $n\mapsto\sigma(n) - 1$ starting at $n > 1$ reaches a prime, how many
+iterations are needed before a prime is reached?
 -/
--- Formalisation note: non-termination of this sequence is less clear since
--- it is strictly increasing except at primes.
+-- Formalisation note: termination of this sequence is not known in general since
+-- it is strictly increasing except at primes, so it is assumed as a hypothesis.
 @[category research open, AMS 11]
-theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1) :
+theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1)
+    (hterm : ∃ i, (σ 1 · - 1)^[i] n |>.Prime) :
     IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
   sorry
 
@@ -169,9 +173,9 @@ theorem erdos_409.variants.sigma_isLittleO (c : ℕ → ℕ)
 /--
 Is it true that iterates of $n\mapsto\sigma(n) - 1$ always reach a prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_409.variants.sigma_prime_termination :
-    answer(sorry) ↔ ∀ n > 1, ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
+    ∀ n > 1, ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
   sorry
 
 end Erdos409

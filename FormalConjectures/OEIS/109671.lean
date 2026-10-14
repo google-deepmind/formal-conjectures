@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A109671
@@ -26,6 +27,8 @@ Conjecture: Does the sequence contain every positive integer?
 *References:*
 - [A109671](https://oeis.org/A109671)
 -/
+
+@[expose] public section
 
 namespace OeisA109671
 
@@ -67,9 +70,9 @@ theorem a_5 : a 5 = 1 := by native_decide
 /--
 Does the sequence contain every positive integer (cf. A169741)?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ m : ℕ, 0 < m → ∃ n : ℕ, 0 < n ∧ a n = m := by
+    ∀ m : ℕ, 0 < m → ∃ n : ℕ, 0 < n ∧ a n = m := by
   sorry
 
 end OeisA109671

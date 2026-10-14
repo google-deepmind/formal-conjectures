@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 
 /-!
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
  - [Mc99] McKee, James, The average number of divisors of an irreducible quadratic polynomial. Math. Proc. Cambridge Philos. Soc. (1999), 17--22.
  - [T] T. Tao, Erdos' divisor bound, https://terrytao.wordpress.com/2011/07/23/erdos-divisor-bound/
 -/
+
+@[expose] public section
 
 open Filter Real Polynomial
 open scoped ArithmeticFunction.sigma Topology
@@ -51,8 +54,8 @@ $\sum_{n \le x} \tau(f(n)) \approx c \cdot x \log x$?
 
 Note that it is unclear whether the polynomial should have integer coefficients or merely be
 integer-valued. We assume the former. -/
-@[category research open, AMS 11]
-theorem erdos_975 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_975 :
     ∀ f : ℤ[X], f.natDegree ≠ 0 → Irreducible f → (∀ᶠ n in atTop, 1 ≤ f.eval n) →
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry

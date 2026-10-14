@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 639
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   copies of a fixed graph*. J. Combin. Theory Ser. B (2004), 41-53.
 - [Py86] Pyber, L., *Clique covering of graphs*. Combinatorica (1986), 393-398.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -55,8 +58,8 @@ The linked file proves the bound for every finite vertex type with at least $10$
 gives the `atTop` reading below, and collects the uncovered edges as the edge set of a graph
 rather than as a set of pairs.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
-theorem erdos_639 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
+theorem erdos_639 :
     ∀ᶠ (n : ℕ) in atTop, ∀ C : Sym2 (Fin n) → Fin 2,
       {e : Sym2 (Fin n) | ¬e.IsDiag ∧
         ∀ x y : Fin n, e = s(x, y) →
