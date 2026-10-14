@@ -28,6 +28,7 @@ public import FormalConjecturesUtil
     in transcendence theory (Durham, 1986) (1988), 102--109.
  - [TUZ20] Tengely, Szabolcs and Ulas, Maciej and Zygadlo, Jakub, On a Diophantine equation of
     Erdős and Graham. J. Number Theory (2020), 445--459.
+ - [PALOMAR-2026-10-11-000016](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-11-000016&version=1)
 -/
 
 @[expose] public section
@@ -53,7 +54,7 @@ def Erdos261InfiniteRepresentation (x : ℚ) (a : ℕ → ℕ) : Prop :=
 $$\frac{n}{2^n} = \sum_{n < k \le n + m} \frac{k}{2^k}.$$
 
 This construction is due to Borwein and Loring [BoLo90]. -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b53791ff6294b4b90e3653970367f127a52fd16e/erdos-261/Solution.lean#L73"]
 theorem erdos_261.variants.borwein_loring (m : ℕ) (hm : 0 < m) :
     let n := 2 ^ (m + 1) - m - 2
     n / (2 ^ n : ℚ) = ∑ k ∈ Finset.Ioc n (n + m), k / (2 ^ k : ℚ) := by
@@ -61,7 +62,7 @@ theorem erdos_261.variants.borwein_loring (m : ℕ) (hm : 0 < m) :
 
 /-- The Borwein--Loring construction gives the required property when $m \ge 2$. This lower
 bound ensures that the representation contains at least two terms. -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b53791ff6294b4b90e3653970367f127a52fd16e/erdos-261/Solution.lean#L78"]
 theorem erdos_261.variants.borwein_loring_property (m : ℕ) (hm : 2 ≤ m) :
     Erdos261Prop (2 ^ (m + 1) - m - 2) := by
   sorry
@@ -71,27 +72,27 @@ distinct integers $a_1, \ldots, a_t \ge 1$ satisfying
 $$\frac{n}{2^n} = \sum_{1 \le k \le t} \frac{a_k}{2^{a_k}}?$$
 
 In [Er88c], Erdős notes that Cusick had a simple proof that infinitely many such $n$ exist. -/
-@[category research solved, question, AMS 11]
-theorem erdos_261.parts.i : {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos261_erdos_261_parts_i.lean#L102"]
+theorem erdos_261.parts.i : answer(True) ↔ {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
   sorry
 
 /-- Tengely, Ulas, and Zygadlo [TUZ20] verified that every positive integer $n \le 10000$ has
 the required property. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b53791ff6294b4b90e3653970367f127a52fd16e/erdos-261/Solution.lean#L85"]
 theorem erdos_261.variants.le_10000 {n : ℕ} (hn_pos : 0 < n) (hn : n ≤ 10000) :
     Erdos261Prop n := by
   sorry
 
 /-- Do all positive integers $n$ have the required property? -/
 @[category research open, question, AMS 11]
-theorem erdos_261.parts.ii : ∀ n > 0, Erdos261Prop n := by
+theorem erdos_261.parts.ii : answer(sorry) ↔ ∀ n > 0, Erdos261Prop n := by
   sorry
 
 /-- Is there a rational number $x$ such that
 $$x = \sum_{k=1}^{\infty} \frac{a_k}{2^{a_k}}$$
 has at least $2^{\aleph_0}$ representations by pairwise distinct positive integers $a_k$? -/
 @[category research open, question, AMS 11]
-theorem erdos_261.parts.iii : ∃ x : ℚ,
+theorem erdos_261.parts.iii : answer(sorry) ↔ ∃ x : ℚ,
     𝔠 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 
@@ -106,7 +107,7 @@ $\mathbb{N}_{>0} \setminus \{4\}$ and by $\mathbb{N}_{>0} \setminus \{5, 6\}$. I
 "two" here is a misprint for $2^{\aleph_0}$ (see `erdos_261.parts.iii`, which remains open). -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/g8r-b8/erdos261-lean/blob/976bddf21eafc93ea86a7a1bfd92b847070a6f31/Erdos261.lean#L87"]
-theorem erdos_261.variants.two_representations : ∃ x : ℚ,
+theorem erdos_261.variants.two_representations : answer(True) ↔ ∃ x : ℚ,
     2 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 

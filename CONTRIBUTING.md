@@ -184,13 +184,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Problem Title
 *Reference:* [source](https://…)
 -/
+
+@[expose] public section
 
 namespace MyProblem
 
@@ -203,6 +206,9 @@ end MyProblem
 
 Replace `YYYY` with the current year, and consider adding yourself to the list
 of authors in the `AUTHORS` file.
+
+Problem files are modules. Without `@[expose] public section`, all declarations
+of a module are private.
 
 ## The `@[category]` attribute
 
@@ -275,15 +281,27 @@ over the number.
 
 ## The `@[question]` attribute
 
-The `question` tag records that the source poses the statement as a yes-or-no
-question ("Is it true that...?", "Does...?", "Are there...?") rather than as a
-claim. It is independent of the `category` attribute, but it only belongs on a
-`research open` or `research solved` problem.
+The `question` tag records that the source asks a question rather than makes
+a claim. A conjecture is a claim: its author expects it to be true. A question
+leaves the answer open. The tag is independent of the `category` attribute,
+but it only belongs on a `research open` or `research solved` problem.
 
-The Lean statement is the proposition the question asks about. Once the
-question is answered, the statement is the one that holds: unchanged if the
-answer is yes, and negated with `¬` if the answer is no. Keep every quantifier
-inside the statement, so that a negative answer only prepends `¬`.
+There are two kinds of question. Both are written `@[question]`; the kind is
+recorded from the statement.
+
+- A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?").
+  The Lean statement is the proposition the question asks about. Once the
+  question is answered, the statement is the one that holds: unchanged if the
+  answer is yes, and negated with `¬` if the answer is no. Keep every
+  quantifier inside the statement, so that a negative answer only prepends
+  `¬`. Not a question: a conjecture that is merely phrased as one. "Is every
+  even integer greater than 2 the sum of two primes?" is Goldbach's
+  conjecture, a claim, and is stated without the tag.
+- A question that asks for a value ("What is...?", "How large can...be?").
+  The Lean statement marks the unknown with a non-`Prop` `answer(sorry)`, see
+  below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+  question, stated as `R(5, 5) = answer(sorry)`; "$R(5,5) = 43$" is a claim,
+  stated as `R(5, 5) = 43` without the tag.
 
 ```lean
 /-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
@@ -292,16 +310,12 @@ Guy and Selfridge conjectured that it is not. -/
 theorem catalan_dickson :
     ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
   sorry
+
+/-- What is the chromatic number of the plane? -/
+@[category research open, question, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+  sorry
 ```
-
-A genuine question is one where the source does not commit to an answer. A
-conjecture that is merely phrased as a question ("Is every even integer
-greater than 2 the sum of two primes?") is a claim, and is stated without the
-tag.
-
-Do not use `question` for a problem that asks for a value, such as "What is
-the chromatic number of the plane?". Those use a non-`Prop` `answer(sorry)`,
-see below.
 
 ## The `answer( )` elaborator
 

@@ -89,12 +89,10 @@ For each `answer(...)` occurrence found in the type,
 returns `"Prop"` or `"non-Prop"` depending on the type
 of the annotated subexpression. -/
 def getAnswerKinds (type : Expr) : MetaM (List String) := do
-  let ansExprs := findAnswerExprs type
-  ansExprs.toList.mapM fun ansExpr => do
-    if ← Meta.isProp ansExpr then
-      return "Prop"
-    else
-      return "non-Prop"
+  let kinds ← IO.mkRef #[]
+  forEachAnswer type fun ansExpr => do
+    kinds.modify (·.push (if ← Meta.isProp ansExpr then "Prop" else "non-Prop"))
+  return (← kinds.get).toList
 
 /-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
 def gitOutput (args : Array String) : IO (Option String) := do
@@ -135,8 +133,9 @@ structure TheoremInfo where
   formalProofs : List FormalProofInfo
   hasSorryFreeProof : Bool
   subsets : List String
-  /-- Whether the declaration carries the `question` attribute. -/
-  question : Bool
+  /-- The kind of question (`"yes_no"` or `"value"`) if the declaration carries the
+  `question` attribute. -/
+  question : Option String
   answerKinds : List String
   fileFirstAdded : Option String
   fileLastModified : Option String
@@ -156,8 +155,9 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
-    ++ (if exclude.contains "question" || !info.question then [] else
-        [("question", toJson info.question)])
+    ++ (match info.question with
+        | some kind => if exclude.contains "question" then [] else [("question", toJson kind)]
+        | none => [])
     ++ (if exclude.contains "answerKinds" then [] else
         [("answerKinds", toJson info.answerKinds)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
@@ -335,7 +335,7 @@ unsafe def main (args : List String) : IO Unit := do
                 formalProofs := formalProofs,
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
-                question := ← isQuestion name
+                question := (← getQuestionKind? name).map toString
                 answerKinds := answerKinds
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified

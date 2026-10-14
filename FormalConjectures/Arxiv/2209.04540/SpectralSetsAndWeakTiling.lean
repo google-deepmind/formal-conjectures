@@ -29,6 +29,8 @@ This file formalizes Problems 7.1 and 7.2 from Kolountzakis, Lev, and Matolcsi.
   *Journal of Functional Analysis* 271 (2016), 2808–2821.
 - [GL20] Rachel Greenfeld and Nir Lev, Spectrality of product domains and Fuglede's conjecture
   for convex polytopes, *Journal d'Analyse Mathématique* 140 (2020), 409–441.
+- [Ki26] Kenta Kitamura, A Lean proof of Problem 7.2 of Kolountzakis–Lev–Matolcsi in dimension
+  three, [GitHub repository](https://github.com/KitaKen1/klm-7-2-spectral-product-3d) (2026).
 -/
 
 @[expose] public section
@@ -44,7 +46,7 @@ negative for $d = 1$, so the dimension is restricted to $d \ge 2$, where the pro
 -/
 @[category research open, question, AMS 42 46]
 theorem exists_nowhereDense_spectralSet :
-    ∃ d : ℕ, 2 ≤ d ∧
+    answer(sorry) ↔ ∃ d : ℕ, 2 ≤ d ∧
       ∃ Ω : Set (Fin d → ℝ), Bornology.IsBounded Ω ∧ MeasurableSet Ω ∧
         IsNowhereDense Ω ∧ 0 < volume Ω ∧ isSpectral Ω := by
   sorry
@@ -75,7 +77,8 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
 @[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_one_dimensional :
-    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
+    answer(True) ↔
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 1 m := by
   sorry
 
 /--
@@ -84,16 +87,22 @@ measurable set $B$, if $A \times B$ is spectral, then $B$ is spectral.
 -/
 @[category research solved, question, AMS 42 46]
 theorem isSpectral_right_of_product_two_dimensional :
-    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
+    answer(True) ↔
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
   sorry
 
 /--
 [KLM2023, Problem 7.2] For a three-dimensional convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
+
+The answer is yes. For the Lean proof, see [Ki26].
 -/
-@[category research open, question, AMS 42 46]
+@[category research solved, question, AMS 42 46,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/klm-7-2-spectral-product-3d/blob/2874890904e117df17d8abf1dd27254eebfb2829/lean/SpectralProduct3DFC.lean#L20962-L20966"]
 theorem isSpectral_right_of_product_three_dimensional :
-    ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
+    answer(True) ↔
+      ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 3 m := by
   sorry
 
 /--
@@ -102,8 +111,9 @@ measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?
 -/
 @[category research open, question, AMS 42 46]
 theorem isSpectral_right_of_product_of_convexBody :
-    ∀ (n m : ℕ), 0 < n → 0 < m →
-      spectralProductImpliesRightSpectral n m := by
+    answer(sorry) ↔
+      ∀ (n m : ℕ), 0 < n → 0 < m →
+        spectralProductImpliesRightSpectral n m := by
   sorry
 
 end SpectralSetProduct

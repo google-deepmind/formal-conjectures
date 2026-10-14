@@ -124,7 +124,7 @@ The lower bound $101 \le \omega(p)$ makes the set size $\lfloor \omega(p) \rfloo
 With only $100 < \omega(p)$, a function with $100 < \omega(p) < 101$ asks for sets of size $100$
 with a gap of length $p - 1$ in some dilate, which is impossible.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green32_green_32_variants_dirichlet_regime.lean#L260"]
 theorem green_32.variants.dirichlet_regime :
     ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 101 ≤ ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by

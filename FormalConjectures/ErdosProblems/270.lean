@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
 - [Ha75] Hansen, E. R., *A Table of Series and Products*. Prentice-Hall (1975), 87.
 - [CrKo25] T. Crmarić and V. Kovač, *On the irrationality of certain super-polynomially decaying
   series*. arXiv:2504.18712 (2025).
+- [Ko26] V. Kovač, [solution of the linear case](https://www.erdosproblems.com/forum/thread/270#post-7469)
+  (2026).
 -/
 
 @[expose] public section
@@ -45,7 +47,8 @@ $$\sum_{n\geq 1} \frac{1}{(n+1)\cdots (n+f(n))}$$
 is irrational?
 
 Erdős and Graham [ErGr80] write 'the answer is almost surely in the affirmative if $f(n)$ is
-assumed to be nondecreasing'. Even the case $f(n)=n$ is unknown, although Hansen [Ha75] has
+assumed to be nondecreasing'. The case $f(n)=n$ was subsequently settled by Crmarić and Kovač
+[Ko26]. Hansen [Ha75] has
 shown that
 $$\sum_n \frac{1}{\binom{2n}{n}}=\sum_n \frac{n!}{(n+1)\cdots (n+n)}=\frac{1}{3}+\frac{2\pi}{3^{5/2}}$$
 is transcendental.
@@ -57,8 +60,8 @@ $$\sum_{n\geq 1} \frac{1}{(n+1)\cdots (n+f(n))}=\alpha.$$
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos270.lean#L1027"]
-theorem erdos_270 :
-    ¬ ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
+theorem erdos_270 : answer(False) ↔
+    ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
 /--
@@ -79,13 +82,14 @@ Crmarić and Kovač [CrKo25] show that the set of the possible values of such a 
 measure zero.
 -/
 @[category research open, question, AMS 11]
-theorem erdos_270.variants.monotone :
+theorem erdos_270.variants.monotone : answer(sorry) ↔
     ∀ f : ℕ → ℕ, Monotone f → Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
-/-- Even the case $f(n)=n$ is unknown. -/
-@[category research open, question, AMS 11]
-theorem erdos_270.variants.linear : Irrational (series id) := by
+/-- The case $f(n)=n$ has a positive answer, as observed by Crmarić and Kovač [Ko26]:
+$\sum_{n\geq 1} n!/(2n)!$ is irrational. -/
+@[category research solved, question, AMS 11]
+theorem erdos_270.variants.linear : answer(True) ↔ Irrational (series id) := by
   sorry
 
 end Erdos270

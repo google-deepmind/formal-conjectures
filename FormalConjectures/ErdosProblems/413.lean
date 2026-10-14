@@ -23,6 +23,8 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/413](https://www.erdosproblems.com/413)
 - [A5236](https://oeis.org/A5236)
+- [La26] Lau, C. F., *On the Number of Prime Factors of Consecutive Integers*.
+  [arXiv:2604.15042](https://arxiv.org/abs/2604.15042) (2026).
 
 Erdős called a natural number `n` a *barrier* for `ω`, the number of distinct prime divisors,
 if `m + ω(m) ≤ n` for all `m < n`. He believed there should be infinitely many such barriers, and
@@ -45,7 +47,7 @@ def IsBarrier (f : ℕ → ℝ) (n : ℕ) : Prop :=
 /-- Are there infinitely many barriers for `ω`? -/
 @[category research open, question, AMS 11]
 theorem erdos_413.parts.i :
-    { n | IsBarrier (fun m => ω m) n }.Infinite := by
+    answer(sorry) ↔ { n | IsBarrier (fun m => ω m) n }.Infinite := by
   sorry
 
 /-- `expProd n` is `∏ kᵢ` when `n = ∏ pᵢ ^ kᵢ`, i.e. the product of the prime exponents of `n`. -/
@@ -71,7 +73,7 @@ theorem erdos_413.variants.hasPosDensity_barrier_expProd :
 /-- Erdős believed there should be infinitely many barriers for `Ω`, the total prime multiplicity. -/
 @[category research open, question, AMS 11]
 theorem erdos_413.variants.bigOmega :
-    { n | IsBarrier (fun m => Ω m) n }.Infinite := by
+    answer(sorry) ↔ { n | IsBarrier (fun m => Ω m) n }.Infinite := by
   sorry
 
 /-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
@@ -80,10 +82,12 @@ theorem erdos_413.variants.bigOmega_largest_barrier_lt_100k :
     IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => Ω m) n} 99840 := by
   sorry
 
-/-- Does there exist some `ε > 0` such that there are infinitely many `ε`-barriers for `ω`? -/
-@[category research open, question, AMS 11]
+/-- Does there exist some $\epsilon > 0$ such that there are infinitely many
+$\epsilon$-barriers for $\omega$? Lau [La26, Theorem 1.3] gives a positive answer. -/
+@[category research solved, question, AMS 11]
 theorem erdos_413.parts.ii :
-    (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * ω n) n }.Infinite) := by
+    answer(True) ↔
+        (∃ ε > (0 : ℝ), { n | IsBarrier (fun n => ε * ω n) n }.Infinite) := by
   sorry
 
 end Erdos413

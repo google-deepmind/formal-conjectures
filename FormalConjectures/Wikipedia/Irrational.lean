@@ -20,7 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Open questions on irrationality of numbers
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Irrational_number#Open_questions)
+- [OAI26a] OpenAI, *Catalan's constant is irrational*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Catalans-constant-is-irrational-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -37,7 +40,7 @@ namespace Irrational
 /-- Are $e$ and $\pi$ algebraically independent? -/
 @[category research open, question, AMS 33]
 theorem algebraicIndependent_e_pi :
-    AlgebraicIndependent ℚ ![e, π] := by
+    answer(sorry) ↔ AlgebraicIndependent ℚ ![e, π] := by
   sorry
 
 /--
@@ -45,7 +48,7 @@ Is $e + \pi$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_e_plus_pi :
-    Irrational (e + π) := by
+    answer(sorry) ↔ Irrational (e + π) := by
   sorry
 
 /--
@@ -53,7 +56,7 @@ Is $e \pi$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_e_times_pi :
-    Irrational (e * π) := by
+    answer(sorry) ↔ Irrational (e * π) := by
   sorry
 
 /--
@@ -61,7 +64,7 @@ Is $e ^ e$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_e_to_e :
-    Irrational (e ^ e) := by
+    answer(sorry) ↔ Irrational (e ^ e) := by
   sorry
 
 /--
@@ -69,7 +72,7 @@ Is $\pi ^ e$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_pi_to_e :
-    Irrational (π ^ e) := by
+    answer(sorry) ↔ Irrational (π ^ e) := by
   sorry
 
 /--
@@ -77,7 +80,7 @@ Is $\pi ^ \pi$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_pi_to_pi :
-    Irrational (π ^ π) := by
+    answer(sorry) ↔ Irrational (π ^ π) := by
   sorry
 
 /--
@@ -85,7 +88,7 @@ Is $\ln(\pi)$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_ln_pi :
-    Irrational (log π) := by
+    answer(sorry) ↔ Irrational (log π) := by
   sorry
 
 /--
@@ -93,15 +96,18 @@ Is the Euler-Mascheroni constant $\gamma$ irrational?
 -/
 @[category research open, question, AMS 33]
 theorem irrational_eulerMascheroniConstant :
-    Irrational eulerMascheroniConstant := by
+    answer(sorry) ↔ Irrational eulerMascheroniConstant := by
   sorry
 
 /--
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
 -/
-@[category research open, question, AMS 11 33]
+@[category research solved, question, AMS 11 33, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Catalan/Results/Conclusions.lean#L11"]
 theorem irrational_catalanConstant :
-    Irrational catalanConstant := by
+    answer(True) ↔ Irrational catalanConstant := by
   sorry
 
 end Irrational

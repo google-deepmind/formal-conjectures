@@ -106,7 +106,7 @@ squares [Pfister1995, p. 95]; this is Corollary 1 of Theorem 2 in [Pfister1971].
 semidefinite polynomials it is [Pfister1967, Theorem 1], the quantitative refinement of Artin's
 theorem `Hilbert17.hilbert_17th_problem` in `FormalConjectures/HilbertProblems/17.lean`.
 -/
-@[category research solved, AMS 11 12 14]
+@[category research solved, AMS 11 12 14, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/a25a41b3e51f6987edeafcc1602e80e6d30e6f05/Proofs/T_PfisterPythagorasNumber_pfister_problem_variants_upper_bound.lean#L1006"]
 theorem pfister_problem.variants.upper_bound (n : ℕ) :
     2 ^ n ∈ pythagorasBounds (MvRatFunc (Fin n) ℝ) := by
   sorry
@@ -115,7 +115,7 @@ theorem pfister_problem.variants.upper_bound (n : ℕ) :
 **Cassels' theorem** [Cassels1964], as quoted in Problem 1 of [Pfister1971, §4]:
 $1 + X_1^2 + \dots + X_n^2$ is not a sum of $n$ squares in $\mathbb{R}(X_1, \dots, X_n)$.
 -/
-@[category research solved, AMS 11 12 14]
+@[category research solved, AMS 11 12 14, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/a25a41b3e51f6987edeafcc1602e80e6d30e6f05/Proofs/T_PfisterPythagorasNumber_pfister_problem_variants_cassels.lean#L434"]
 theorem pfister_problem.variants.cassels (n : ℕ) :
     ¬IsSumSqOfLength n (algebraMap (MvPolynomial (Fin n) ℝ) (MvRatFunc (Fin n) ℝ)
       (1 + ∑ i, MvPolynomial.X i * MvPolynomial.X i)) := by
