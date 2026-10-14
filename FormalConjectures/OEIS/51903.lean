@@ -74,20 +74,30 @@ theorem conjecture1 :
 Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\lambda(n)}$?
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $b^n \equiv b^{a(n)} \pmod n$ for all $b$.)
 - Thomas Ordowski, Dec 02 2019
+
+The answer is no. Let $q^E \| n$ with $E = a(n) \ge 2$ and take $b = q + 1$: then
+$(q+1)^{n-E} \equiv 1 \pmod{q^E}$, so lifting the exponent gives $q^{E-1} \mid n - E$. Since also
+$q^{E-1} \mid n$, we get $q^{E-1} \mid E$, which is impossible for $q \ge 3$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/anshM123/OEIS-A051903/blob/c0104e7a9cc2d76d86c3a277c372f91a9553a0f6/lean/DMSolutions/OEIS_A051903/Solution.lean#L21-L24"]
 theorem conjecture2 :
-    answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
+    answer(False) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
   sorry
 
 /--
 Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\operatorname{ord}_n(2)}$?
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $2^n \equiv 2^{a(n)} \pmod n$.)
 - Thomas Ordowski, Dec 02 2019
+
+The answer is yes: $n = 7 \cdot 631 \cdot 881 \cdot 3511^2 \cdot 201961 = 9687963167864344937$ is odd,
+$a(n) = 2$ and $2^n \equiv 2^2 \pmod n$. A square factor $q^2 \mid n$ forces $q$ to be a Wieferich
+prime; $3511$ works because $\operatorname{ord}_{3511^2}(2) = 1755$ is odd and $n \equiv 2 \pmod{1755}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/anshM123/OEIS-A051903/blob/c0104e7a9cc2d76d86c3a277c372f91a9553a0f6/lean/DMSolutions/OEIS_A051903/Solution.lean#L27-L30"]
 theorem conjecture3 :
-    answer(sorry) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
+    answer(True) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
   sorry
 
 end OeisA51903
