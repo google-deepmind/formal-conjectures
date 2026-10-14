@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 433
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - J. Dixmier, *Proof of a conjecture by Erdős and Graham on Frobenius' coin problem*,
   Proceedings of the AMS 109 (1990), 567–577.
 -/
+
+@[expose] public section
 
 namespace Erdos433
 

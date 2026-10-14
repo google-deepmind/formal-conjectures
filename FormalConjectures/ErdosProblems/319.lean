@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 319
 
 *Reference:* [erdosproblems.com/319](https://www.erdosproblems.com/319)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -48,6 +51,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
 
 -- Formalisation note: it's possible that solution to `erdos_319` needs to be
 -- expressed asymptotically. To handle this we include an `IsTheta` variant below.
+
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -57,14 +61,17 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?-/
-@[category research open, AMS 5]
+for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?
+
+Trivially $c(N) \leq N$, and `erdos_319.variants.lb` gives $c(N) \geq (1 - \frac{1}{e} + o(1))N$,
+so $c(N) = \Theta(N)$. -/
+@[category research solved, AMS 5]
 theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    c =Θ[atTop] (answer(fun N ↦ (N : ℝ)) : ℕ → ℝ) := by
   sorry
 
 /-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of

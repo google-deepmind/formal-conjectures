@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 672
 
 *Reference:* [erdosproblems.com/672](https://www.erdosproblems.com/672)
 -/
+
+@[expose] public section
 
 namespace Erdos672
 
@@ -41,7 +44,7 @@ theorem erdos_672 :
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/herakles-dev/erdos672-four-squares-lean/blob/68adec55180c6103ac5511a5c91c84b25a5044f9/Erdos672/Statement.lean#L41"]
 lemma erdos_672.variants.euler :
     Erdos672With 4 2 := by
   sorry

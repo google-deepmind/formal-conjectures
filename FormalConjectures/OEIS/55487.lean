@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least $m$ such that $\phi(m) = n!$
@@ -23,6 +24,8 @@ The smallest positive integer $m$ whose Euler totient equals $n!$.
 
 *References:*
 - [A055487](https://oeis.org/A055487)-/
+
+@[expose] public section
 
 namespace OeisA55487
 

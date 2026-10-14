@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Lehmer's Mahler measure problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
 -/
+
+@[expose] public section
 
 namespace LehmerMahlerMeasureProblem
 
@@ -72,10 +75,16 @@ def Polynomial.HasOddCoeffs (f : Polynomial ℤ) : Prop :=
 /--
 If $f$ is not reciprocal, all the coefficients of $f$ are odd and $M(f) > 1$, then
 $M(f) \ge M(X^2 - X - 1)$.
+
+A polynomial $f$ of degree $d$ is *reciprocal* when $X^d f(1/X) = \pm f$, so nonreciprocity
+rules out both signs. The negative sign has to be excluded as well: the polynomial
+$X^7 - X^6 - X^5 - X^4 + X^3 + X^2 + X - 1$ has all coefficients odd and satisfies
+$X^7 f(1/X) = -f$, but $1 < M(f) = 1.5823\dots < M(X^2 - X - 1)$.
 -/
 @[category research solved, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
-    (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) (hf'' : f.HasOddCoeffs) :
+    (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) (hf'' : f.reverse ≠ -f)
+    (hodd : f.HasOddCoeffs) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^2 - X - 1) := by
   sorry
 

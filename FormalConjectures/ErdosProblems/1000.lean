@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1000
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   52-65.
 - [Ha] Haight, J. A., *Metric Diophantine approximation and related topics*. PhD thesis.
 -/
+
+@[expose] public section
 
 open Filter Topology
 
@@ -80,7 +83,41 @@ It is trivial that $\phi_A(k)\geq \phi(n_k)$, where $\phi$ is the Euler totient 
 theorem erdos_1000.variants.totient_le (n : ℕ → ℕ) (hn : StrictMono n) (hn0 : 0 < n 0)
     (k : ℕ) :
     (n k).totient ≤ phiSeq n k := by
-  sorry
+  rw [Nat.totient, phiSeq]
+  apply Finset.card_le_card_of_injOn (fun a => if a = 0 then n k else a)
+  · intro a ha
+    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_range] at ha ⊢
+    obtain ⟨ha1, ha2⟩ := ha
+    have hgcd : Nat.gcd (if a = 0 then n k else a) (n k) = 1 := by
+      by_cases h : a = 0
+      · subst h
+        have : n k = 1 := by simpa [Nat.coprime_zero_right] using ha2
+        simp [this]
+      · simp only [h, if_false]
+        rw [Nat.gcd_comm]; exact ha2
+    have hpos : 0 < n k := lt_of_le_of_lt (Nat.zero_le a) ha1
+    have hmem : 1 ≤ (if a = 0 then n k else a) ∧ (if a = 0 then n k else a) ≤ n k := by
+      by_cases h : a = 0
+      · subst h
+        rw [if_pos rfl]
+        omega
+      · rw [if_neg h]
+        omega
+    simp only [Finset.mem_Icc]
+    refine ⟨hmem, ?_⟩
+    intro j hj
+    rw [hgcd, Nat.div_one]
+    exact Nat.not_dvd_of_pos_of_lt (hn0.trans_le (hn.monotone (Nat.zero_le j))) (hn hj)
+  · intro a ha b hb hab
+    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_range] at ha hb
+    simp only at hab
+    by_cases h1 : a = 0 <;> by_cases h2 : b = 0
+    · simp [h1, h2]
+    · have : n k = 1 := by simpa [h1, Nat.coprime_zero_right] using ha.2
+      omega
+    · have : n k = 1 := by simpa [h2, Nat.coprime_zero_right] using hb.2
+      omega
+    · simpa [h1, h2] using hab
 
 /--
 The study of $\phi_A$ was introduced by Cassels [Ca50b], who proved that there exist sequences

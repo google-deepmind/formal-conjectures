@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Černý Conjecture
@@ -45,6 +46,8 @@ We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with t
 - Y. Shitov, *An improvement to a recent upper bound for synchronizing words of finite automata*,
   J. Autom. Lang. Comb. Vol. 24 (2019), 367--373.
 -/
+
+@[expose] public section
 
 open Filter
 

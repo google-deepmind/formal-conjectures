@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 90: The unit distance problem
@@ -36,6 +37,8 @@ This file records the main statement (`erdos_90`), the two constructive disproof
 logical implications between them, and the load-bearing reductions of Sawin's proof
 (`sawin_lattice_reduction` and `sawin_totally_real_tower`) as further benchmark challenges.
 -/
+
+@[expose] public section
 
 open Filter EuclideanGeometry NumberField
 open scoped EuclideanGeometry
@@ -94,7 +97,8 @@ Tsimerman–Wang–Matchett Wood, [*Remarks on the disproof of the unit distance
 unit distance problem*](https://arxiv.org/abs/2605.20579) (2026); see
 `erdos_90.variants.sawin_explicit` below.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at "https://github.com/plby/Erdos90/blob/2062b0e6c9770c81e397bfe41148e90b92ca0567/src/submission/Solution.lean#L6"]
 theorem erdos_90.variants.polynomial_lower_bound :
     ∃ c > (0 : ℝ),
       {n : ℕ | (n : ℝ) ^ (1 + c) ≤ (maxUnitDistances n : ℝ)}.Infinite := by

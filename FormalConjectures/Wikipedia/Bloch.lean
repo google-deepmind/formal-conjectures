@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bloch and Landau constants
@@ -38,6 +39,9 @@ import FormalConjecturesUtil
   Journal of Universal Computer Science 14 (2008), 896–907. In particular, a schlicht disk is the
   image of a subdomain under a biholomorphic restriction.
 -/
+
+@[expose] public section
+
 open scoped Topology ENNReal
 open Metric Set Filter
 namespace Bloch
@@ -121,6 +125,7 @@ noncomputable def landauRadius (f : ℂ → ℂ) : ℝ≥0∞ :=
 
 /-- The **Bloch constant** $B$ is the largest radius such that every holomorphic function on the
 unit disk with $f'(0) = 1$ has a schlicht (univalent) disk of that radius in its image. -/
+@[optimization_constant "57a"]
 noncomputable def blochConstant : ℝ :=
   sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
     ∃ S, IsOpen S ∧ S ⊆ ball 0 1 ∧ ∃ x, f '' S = ball x B ∧ InjOn f S}
@@ -150,6 +155,7 @@ theorem blochConstant_exact_value :
 /-- The **Univalent Bloch constant** $B_u$ is the largest radius such that every univalent
 holomorphic function on the unit disk with $f'(0) = 1$ has a schlicht disk of that radius in its
 image. -/
+@[optimization_constant "57c"]
 noncomputable def univalentBlochConstant : ℝ :=
   sSup {B : ℝ | ∀ f : ℂ → ℂ, InjOn f (ball 0 1) → DifferentiableOn ℂ f (ball 0 1) →
     deriv f 0 = 1 → ∃ S, IsOpen S ∧ S ⊆ ball 0 1 ∧
@@ -178,6 +184,7 @@ theorem univalentBlochConstant_upper_bound : univalentBlochConstant ≤ 1 := by
 
 /-- The **Landau constant** $L$ is the largest radius such that every holomorphic function on the
 unit disk with $f'(0) = 1$ has a disk of that radius contained in its image. -/
+@[optimization_constant "57b"]
 noncomputable def landauConstant : ℝ :=
   sSup {B : ℝ | ∀ f : ℂ → ℂ, DifferentiableOn ℂ f (ball 0 1) → deriv f 0 = 1 →
     ∃ x, ball x B ⊆ f '' (ball 0 1)}

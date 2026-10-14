@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 951
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [Er77c] Erdős, Paul, Problems and results on combinatorial number theory. III. Number theory day (Proc. Conf., Rockefeller Univ.,
     New York, 1976) (1977), 43-72.
 -/
+
+@[expose] public section
 
 open scoped Finsupp Nat.Prime Topology
 open Filter

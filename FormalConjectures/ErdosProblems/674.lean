@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 674
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ko40] Ko, Chao, *Note on the Diophantine equation $x^xy^y=z^z$*. J. Chinese Math. Soc.
   (1940), 31-39.
 -/
+
+@[expose] public section
 
 namespace Erdos674
 

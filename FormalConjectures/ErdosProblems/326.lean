@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 326
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ca57] Cassels, J. W. S., *Über Basen der natürlichen Zahlenreihe*.
   Abh. Math. Sem. Univ. Hamburg (1957), 247-257.
 -/
+
+@[expose] public section
 
 open Filter
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Catalan-Mersenne numbers
@@ -24,6 +25,8 @@ Catalan-Mersenne numbers: $a(0) = 2$; for $n \ge 0$, $a(n+1) = 2^{a(n)} - 1$.
 *References:*
 - [A007013](https://oeis.org/A007013)
 -/
+
+@[expose] public section
 
 namespace OeisA7013
 

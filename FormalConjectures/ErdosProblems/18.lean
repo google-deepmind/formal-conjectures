@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 18
@@ -26,6 +27,8 @@ Theory. Monographies de L'Enseignement Mathématique, 28. Université de Genève
 sections on Egyptian fractions or practical numbers).
 * [Vo85] Vose, Michael D., Egyptian fractions. Bull. London Math. Soc. (1985), 21-24.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
@@ -153,6 +156,19 @@ theorem practicalH_twelve : practicalH 12 = 3 := by
         have key : ∀ S ∈ ({a, b} : Finset ℕ).powerset, S.sum (fun x => x) ≠ 11 := by
           fin_cases ha <;> fin_cases hb <;> decide
         exact key B (Finset.mem_powerset.mpr hBp) hBsum.symm
+
+/-- $h(56) = 5$: the hard value is `55`, which needs five divisors of `56`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L301"]
+theorem practicalH_fiftysix : practicalH 56 = 5 := by
+  sorry
+
+/-- $h(7200) = 6$. The upper bound uses `7200 = 60 * 120`;
+the hard value is `6667`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L396"]
+theorem practicalH_7200 : practicalH 7200 = 6 := by
+  sorry
 
 /-- For any practical number $n$, $h(n)$ ≤ number of divisors of $n$. -/
 @[category test, AMS 11]

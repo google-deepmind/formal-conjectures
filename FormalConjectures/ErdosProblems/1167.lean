@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1167
@@ -29,6 +30,8 @@ Without $\kappa_\alpha > r$ it is also false: with $r = 2$, $\lambda = \aleph_0$
 $(2, \aleph_1)$, the premise $2^{\aleph_0} \to (3, \aleph_1)^3$ holds, but a constant colouring
 of the pairs of $\aleph_0$ has neither a red pair nor a blue set of size $\aleph_1$.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal Combinatorics
 

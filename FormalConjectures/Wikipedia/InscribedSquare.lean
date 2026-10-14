@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Inscribed square problem
@@ -29,6 +30,8 @@ There are several open and solved variants of this conjecture.
    by *Benjamin Matschke*
  - [arxiv/2005.09193](https://arxiv.org/abs/2005.09193)
 -/
+
+@[expose] public section
 
 open Topology ContDiff Manifold
 open scoped EuclideanGeometry

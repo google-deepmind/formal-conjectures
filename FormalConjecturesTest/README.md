@@ -1,8 +1,8 @@
 # FormalConjecturesTest
 
 This directory is the `lake test` driver of the repository. It tests the repository's own
-tooling in `FormalConjecturesUtil/`: the `category`, `AMS`, and `formal_proof` attributes, the
-`answer( )` elaborator, and the linters.
+tooling in `FormalConjecturesUtil/`: the `category`, `AMS`, `formal_proof`, and `question`
+attributes, the `answer( )` elaborator, and the linters.
 
 ## What belongs here
 

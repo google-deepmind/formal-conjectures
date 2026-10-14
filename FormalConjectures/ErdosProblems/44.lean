@@ -13,14 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 44: Extending Sidon Sets
 
-*Reference:* [erdosproblems.com/44](https://www.erdosproblems.com/44)
+*References:*
+- [erdosproblems.com/44](https://www.erdosproblems.com/44)
+- [Si38] Singer, James, A theorem in finite projective geometry and some applications to number
+  theory. Trans. Amer. Math. Soc. (1938), 377--385.
 -/
+
+@[expose] public section
 
 open Function Set Finset
 
@@ -90,9 +96,14 @@ theorem erdos_44 : answer(sorry) ↔ ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 
 
 /--
 The case where we start with an empty set (constructing large Sidon sets).
+
+The answer is yes. Singer [Si38] constructed Sidon sets of size $q + 1$ in
+$\{1, \ldots, q^2 + q + 1\}$ for every prime $q$. Since $p_{n+1}/p_n \to 1$ for consecutive primes,
+this gives Sidon sets of size $(1 - o(1))M^{1/2}$ in $\{1, \ldots, M\}$ for every $M$; see
+[erdosproblems.com/30](https://www.erdosproblems.com/30).
 -/
-@[category research open, AMS 5 11]
-theorem erdos_44.variants.empty_start : answer(sorry) ↔ ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
+@[category research solved, AMS 5 11]
+theorem erdos_44.variants.empty_start : answer(True) ↔ ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
     ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon (A : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
   sorry
 
@@ -116,7 +127,7 @@ For any `N`, there exists a Sidon set of size at least `√N/2`.
 -/
 @[category textbook, AMS 5 11]
 theorem sidon_set_lower_bound (N : ℕ) (hN : 1 ≤ N) :
-    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ N.sqrt / 2 ≤ A.card := by
+    ∃ᵉ (A ⊆ Finset.Icc 1 N), IsSidon (A : Set ℕ) ∧ Real.sqrt N / 2 ≤ A.card := by
   sorry
 
 /--

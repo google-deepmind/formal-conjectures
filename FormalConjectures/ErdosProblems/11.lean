@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 11
@@ -22,15 +23,35 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/11](https://www.erdosproblems.com/11)
 -/
 
+@[expose] public section
+
+open Filter
+
 namespace Erdos11
 
 /--
-Is every odd $n > 1$ the sum of a squarefree number and a power of 2?
+Is every large odd integer $n$ the sum of a squarefree number and a power of 2?
 -/
 @[category research open, AMS 11]
-theorem erdos_11 (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
+theorem erdos_11 : answer(sorry) ↔
+    ∀ᶠ n : ℕ in atTop, Odd n → ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l := by
+  sorry
+
+/--
+Every odd $n > 1$ is the sum of a squarefree number and a power of 2. This is the form in
+earlier versions of erdosproblems.com/11 and the hypothesis of [GrSo98]. It is stronger than
+`erdos_11`, which asks only about large $n$: a single exception would refute it.
+-/
+@[category research open, AMS 11]
+theorem erdos_11.variants.all_odd (n : ℕ) (hn : Odd n) (hn' : 1 < n) :
     ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l := by
   sorry
+
+/-- The form for every odd $n > 1$ implies the form for large odd $n$. -/
+@[category test, AMS 11]
+theorem eventually_of_all_odd (H : type_of% erdos_11.variants.all_odd) :
+    ∀ᶠ n : ℕ in atTop, Odd n → ∃ k l : ℕ, Squarefree k ∧ n = k + 2 ^ l :=
+  eventually_atTop.2 ⟨2, fun n hn hodd => H n hodd (by omega)⟩
 
 /--
 Erdős often asked this under the weaker assumption that $n > 1$
@@ -68,11 +89,11 @@ theorem erdos_11.variants.finite_bound2 (n : ℕ) (hn : Odd n) (h : n < 2^50) (h
 /--
 Suppose that every odd $n > 1$ is the sum of a squarefree number and a power of 2. Then the set of
 primes $p$ such that $2^p \not\equiv 2 \pmod{p^2}$ (the non-Wieferich primes) is infinite.
-This is Theorem 1 in [GrSo98].
+This follows from Theorem 1 in [GrSo98].
 [GrSo98] Granville, A. and Soundararajan, K., A Binary Additive Problem of Erdős and the Order of $2$ mod $p^2$. The Ramanujan Journal (1998), 283-298.
 -/
 @[category research solved, AMS 11]
-theorem erdos_11.variants.granville_soundararajan (H : type_of% erdos_11) :
+theorem erdos_11.variants.granville_soundararajan (H : type_of% erdos_11.variants.all_odd) :
     {p : ℕ | p.Prime ∧ ¬ 2 ^ p ≡ 2 [MOD p ^ 2]}.Infinite := by
   sorry
 

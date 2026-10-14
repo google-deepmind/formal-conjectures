@@ -92,6 +92,29 @@ where
     | .letE _ t v b _ => go b (go v (go t acc))
     | _ => acc
 
+/-- Run `f` on the inner expression of every `answer` annotation in `e`, in order of
+occurrence. Unlike `findAnswerExprs`, the binders above an annotation are in the local context
+when `f` runs, so an answer that mentions a bound variable can be examined with `inferType`
+or `isProp`. -/
+partial def forEachAnswer (e : Expr) (f : Expr → MetaM Unit) : MetaM Unit :=
+  match e with
+  | .mdata m inner => do
+    if m.contains `answer then f inner
+    forEachAnswer inner f
+  | .app fn a => do forEachAnswer fn f; forEachAnswer a f
+  | .lam n t b bi => do
+    forEachAnswer t f
+    withLocalDecl n bi t fun x => forEachAnswer (b.instantiate1 x) f
+  | .forallE n t b bi => do
+    forEachAnswer t f
+    withLocalDecl n bi t fun x => forEachAnswer (b.instantiate1 x) f
+  | .letE n t v b _ => do
+    forEachAnswer t f
+    forEachAnswer v f
+    withLetDecl n t v fun x => forEachAnswer (b.instantiate1 x) f
+  | .proj _ _ s => forEachAnswer s f
+  | _ => pure ()
+
 def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
     (postpone : Bool := false) :=
   mkAnswerAnnotation <$> do
