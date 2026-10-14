@@ -83,3 +83,34 @@ def MyNormalType : Type := Nat
 
 #guard_msgs in
 theorem MyTheoremWithSorry : 1 = 1 := by sorry
+
+/-- A `Prop`-valued class: its instances are statements, not data. -/
+class MyPropClass (α : Type) : Prop where
+  out : α = α
+
+/-- A data-valued class: its instances carry data. -/
+class MyDataClass (α : Type) where
+  out : α
+
+-- A `Prop`-valued instance proved by `sorry` states a conjecture, just like a `theorem` does.
+#guard_msgs in
+instance myPropInstance : MyPropClass Nat := by sorry
+
+#guard_msgs in
+instance : MyPropClass Bool := by sorry
+
+/--
+warning: Placeholder definitions (e.g., `def foo : Type := sorry`) are not allowed.
+
+Note: This linter can be disabled with `set_option linter.style.stubs false`
+-/
+#guard_msgs(warning) in
+instance myDataInstance : MyDataClass Nat := by sorry
+
+/--
+warning: Placeholder definitions (e.g., `def foo : Type := sorry`) are not allowed.
+
+Note: This linter can be disabled with `set_option linter.style.stubs false`
+-/
+#guard_msgs(warning) in
+instance : MyDataClass Bool := by sorry

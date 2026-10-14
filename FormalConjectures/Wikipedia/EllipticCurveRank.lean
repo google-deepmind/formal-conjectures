@@ -64,7 +64,7 @@ The proof linked via `formal_proof` is  Michael Stoll's formalization of the Mor
 [Stoll]-/
 @[category research solved, AMS 11 14, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/e58a03a23e0efb40f891f34d3afceca2ce4ccf9b/FormalConjectures/Wikipedia/EllipticCurveRank.lean#L64"]
-theorem mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
+instance mordell_weil {K} [Field K] [NumberField K] [DecidableEq K] (E : Affine K) [E.IsElliptic] :
     Module.Finite ℤ E.Point := by
   sorry
 
