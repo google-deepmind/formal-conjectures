@@ -52,7 +52,8 @@ theorem erdos_107 : answer(sorry) ↔ ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
 
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-107/Solution.lean#L59"]
 theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty := by
   sorry
 
