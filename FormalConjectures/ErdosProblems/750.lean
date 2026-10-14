@@ -109,10 +109,15 @@ def IsRecursivelyBuiltMr : ∀ (_r : ℕ) {_V : Type u} (_G : SimpleGraph _V), P
 **Stiebitz's theorem** [St85]: every graph in $M_r$ has chromatic number at least $r$. The
 matching upper bound follows from the construction, so the chromatic number is exactly $r$.
 
-This is stated ahead of `erdos_750` because the formal proof linked there assumes it, and the
-`assuming` clause must name a declaration that already exists. See also [SaSt89] and [MuSt19].
+See also [SaSt89] and [MuSt19].
+
+The linked formal proof (Alexeev and Codex, via signed-biclique chains and a `ℤ_p`-Tucker
+lemma) uses the same `IsRecursivelyBuiltMr`, except that its `genMyc s G` has `MycAdj s G`
+directly as adjacency relation instead of `SimpleGraph.fromRel (MycAdj s G)`; the two graphs are
+equal since `MycAdj` is symmetric and irreflexive.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos750/Stiebitz.lean#L41"]
 theorem erdos_750.variants.stiebitz {V : Type u} (G : SimpleGraph V) (r : ℕ)
     (h : IsRecursivelyBuiltMr r G) : (r : ℕ∞) ≤ G.chromaticNumber := by
   sorry
@@ -128,10 +133,16 @@ where $\epsilon > 0$. Hence we should assume it is non-negative valued.
 The existence of such a graph was proved [UlamErdos750] by GPT 5.5 Pro (prompted by Chojecki).
 Indeed, this constructs a graph with infinite chromatic number such that every subgraph on $m$
 vertices can be made bipartite after deleting at most $f(m)$ many vertices.
+
+The proof in plby/lean-proofs uses the proof of `erdos_750.variants.stiebitz` linked above.
+It produces a graph on a `V : Type`, which gives the statement below in any universe by
+lifting `V`.
 -/
 @[category research solved, question, AMS 5,
   formal_proof using lean4 at
-    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/750/Erdos750.lean"]
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/750/Erdos750.lean",
+  formal_proof using lean4 at
+    "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos750.lean#L50"]
 theorem erdos_750 :
     answer(True) ↔ ∀ (f : ℕ → ℝ≥0) (hf : atTop.Tendsto f atTop),
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧

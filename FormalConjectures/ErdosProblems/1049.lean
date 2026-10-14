@@ -48,7 +48,7 @@ theorem erdos_1049 :
 Erdős [Er48] proved that this is true if $t\geq 2$ is an integer.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos/blob/b9f1eb80aa11bbf66fb1df88804502b8c9c27d8e/research/adapters/FormalConjecturesAdapter.lean#L96-L107"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/c4eab2571b4692ee9c08d3ec138176f7fbfa09a9/verification/FCMergedIntegerAdapters/research/adapters/FormalConjecturesAdapter.lean#L96-L107"]
 theorem erdos_1049.variants.geq_2_integer :
      ∀ t : ℤ, t ≥ 2 → Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
   sorry

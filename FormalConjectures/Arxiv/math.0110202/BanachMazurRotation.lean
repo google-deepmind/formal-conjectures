@@ -39,6 +39,48 @@ instance {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
   one_smul _ := rfl
   mul_smul _ _ _ := rfl
 
+/-- Transitivity on the unit sphere is the unit-vector formulation in the source. -/
+@[category API, AMS 46]
+theorem isPretransitive_sphere_iff {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
+    IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1) ↔
+      ∀ x y : E, ‖x‖ = 1 → ‖y‖ = 1 → ∃ T : E ≃ₗᵢ[ℝ] E, T x = y := by
+  constructor
+  · intro h x y hx hy
+    let := h
+    obtain ⟨T, hT⟩ := exists_smul_eq (E ≃ₗᵢ[ℝ] E)
+      (⟨x, mem_sphere_zero_iff_norm.2 hx⟩ : sphere (0 : E) 1)
+      (⟨y, mem_sphere_zero_iff_norm.2 hy⟩ : sphere (0 : E) 1)
+    exact ⟨T, congrArg Subtype.val hT⟩
+  · intro h
+    constructor
+    intro x y
+    obtain ⟨T, hT⟩ := h x y (mem_sphere_zero_iff_norm.1 x.property)
+      (mem_sphere_zero_iff_norm.1 y.property)
+    exact ⟨T, Subtype.ext hT⟩
+
+/-- A linear isometric equivalence transports transitivity of the unit sphere. -/
+@[category API, AMS 46]
+theorem isPretransitive_sphere_of_linearIsometryEquiv {E F : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F]
+    (U : E ≃ₗᵢ[ℝ] F) (h : IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1)) :
+    IsPretransitive (F ≃ₗᵢ[ℝ] F) (sphere (0 : F) 1) := by
+  apply isPretransitive_sphere_iff.2
+  intro x y hx hy
+  obtain ⟨T, hT⟩ := isPretransitive_sphere_iff.1 h (U.symm x) (U.symm y)
+    (by simpa using hx) (by simpa using hy)
+  refine ⟨U.symm.trans (T.trans U), ?_⟩
+  simpa using congrArg U hT
+
+/-- Transitivity of the unit sphere is invariant under linear isometric equivalence. -/
+@[category API, AMS 46]
+theorem isPretransitive_sphere_iff_of_linearIsometryEquiv {E F : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F]
+    (U : E ≃ₗᵢ[ℝ] F) :
+    IsPretransitive (E ≃ₗᵢ[ℝ] E) (sphere (0 : E) 1) ↔
+      IsPretransitive (F ≃ₗᵢ[ℝ] F) (sphere (0 : F) 1) :=
+  ⟨isPretransitive_sphere_of_linearIsometryEquiv U,
+    isPretransitive_sphere_of_linearIsometryEquiv U.symm⟩
+
 /--
 The Banach--Mazur rotation problem asks whether every separable Banach space whose group of linear
 isometric equivalences acts transitively on the unit sphere is linearly isometric to a Hilbert

@@ -167,7 +167,7 @@ Every power of $2$ is a $u$-invariant [Kaplansky1953, p. 202]: Theorem 3 of [Kap
 gives $u(F((t))) = 2u(F)$, so $u(\mathbb{C}((t_1)) \cdots ((t_k))) = 2^k$; see also
 [EKM2008, §38].
 -/
-@[category research solved, AMS 11 12]
+@[category research solved, AMS 11 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/47cc44ab944b6fd29b98a256ed4f92c8316f86bf/Proofs/T_KaplanskyUInvariant_u_invariant_values_variants_two_pow.lean#L563"]
 theorem u_invariant_values.variants.two_pow (k : ℕ) : IsUInvariant (2 ^ k) := by
   sorry
 

@@ -71,12 +71,99 @@ error: the `question` attribute only applies to theorems, but the type of 'not_a
 @[question]
 def not_a_theorem : Prop := True
 
-open ProblemAttributes in
-/-- info: [true, true, false] -/
+-- A statement with a non-`Prop` answer is a value question.
 #guard_msgs in
-#eval show Lean.CoreM _ from do
-  return [← isQuestion `a_question, ← isQuestion `a_question_first,
-    ← isQuestion `a_formally_solved_problem]
+/-- What is `2 + 2`? -/
+@[category research open, question, AMS 11]
+theorem a_value_question : 2 + 2 = answer(sorry) := by
+  sorry
+
+-- The kind is detected under binders too.
+#guard_msgs in
+@[category research open, question, AMS 11]
+theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
+  sorry
+
+-- A bound `Prop`-valued answer is a yes-or-no question, not a value question.
+#guard_msgs in
+@[category research solved, question, AMS 11]
+theorem a_bound_prop_answer : let P := True; answer(P) ↔ True := Iff.rfl
+
+open ProblemAttributes
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question_first
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_under_binders
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_bound_prop_answer
+
+-- An untagged theorem has no kind.
+/-- info: none -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_formally_solved_problem
+
+-- A question belongs to a research problem, whichever attribute comes first.
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+@[category test, question]
+theorem question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_api' is categorised as `API`
+-/
+#guard_msgs in
+@[question, category API]
+theorem question_on_api : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_textbook' is categorised as `textbook`
+-/
+#guard_msgs in
+@[category textbook, question]
+theorem question_on_textbook : 1 + 1 = 2 := by
+  rfl
+
+-- The check also covers the `attribute` command.
+#guard_msgs in
+@[category test]
+theorem later_question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'later_question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+attribute [question] later_question_on_test
+
+#guard_msgs in
+@[category research open]
+theorem later_question : 1 + 1 = 2 := by
+  sorry
+
+#guard_msgs in
+attribute [question] later_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `later_question
 
 -- formal_proof on non-research categories
 #guard_msgs in
@@ -164,6 +251,43 @@ warning: A `formal_proof` link should be a URL (http:// or https://), but got: "
 @[category test, formal_proof using lean4 at "not-a-url"]
 theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
   rfl
+
+-- The `optimization_constant` attribute
+
+#guard_msgs in
+@[optimization_constant "1a"]
+noncomputable def anOptimizationConstant : ℝ := 1
+
+#guard_msgs in
+@[optimization_constant "21a"]
+def anotherOptimizationConstant : ℕ := 4
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "21".
+-/
+#guard_msgs in
+@[optimization_constant "21"]
+def anOptimizationConstantWithoutLetter : ℕ := 4
+
+run_meta do
+  let tags ← ProblemAttributes.getOptimizationConstants ``anOptimizationConstant
+  unless tags.map (·.constantId) = #["1a"] do
+    throwError "unexpected optimization constant tags for anOptimizationConstant"
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "a1".
+-/
+#guard_msgs in
+@[optimization_constant "a1"]
+noncomputable def anOptimizationConstantWithMalformedId : ℝ := 3
+
+/--
+warning: An `optimization_constant` annotation should be applied to the definition of the constant, but `an_optimization_constant_theorem` is not a definition. Theorems about the constant (e.g. bounds) should not carry this attribute.
+-/
+#guard_msgs in
+@[category research open, AMS 11, optimization_constant "1a"]
+theorem an_optimization_constant_theorem : 3 + 3 = 6 := by
+  sorry
 
 -- The `#AMS` command
 

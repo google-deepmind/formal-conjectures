@@ -47,6 +47,7 @@ The inequality is only required for square-integrable $f$. This does not change 
 (see [M2010, §2]), and it guarantees that every autoconvolution integral exists and that the
 supremum over $t$ is finite.
 This number is related to the maximal size of Sidon sets in additive combinatorics. -/
+@[optimization_constant "1a"]
 noncomputable def C1a : ℝ :=
   sSup {C : ℝ | ∀ ⦃f : ℝ → ℝ⦄, 0 ≤ f → MemLp f 2 →
     C * (∫ x in (- 1 / 4)..(1 / 4), f x) ^ 2
@@ -62,9 +63,12 @@ theorem c1a_lower_bound : 1.2748 ≤ C1a := by
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
-/-- How can the best known upper bound $1.502862$ of [T2026] be improved? -/
+/-- How can the best known upper bound $1.5028628587\ldots$ of [T2026] be improved?
+
+The step function published with [T2026] gives $1.50286285870\ldots$. The figure $1.502862$ in
+the table of the first reference is this value truncated, so it is not a known upper bound. -/
 @[category research open, AMS 5 11 26]
-theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.502862 := by
+theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5028628587 := by
   sorry
 
 /-- How can the best known lower bound $1.292$ of [PBV2026] be improved? -/
