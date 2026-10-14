@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+module
 
-/-
+public import FormalConjecturesUtil
+
+/-!
 # Ben Green's Open Problem 43
 
 *References:*
@@ -28,6 +30,7 @@ import FormalConjectures.Util.ProblemImports
   2 (1992), no. 1, 1–28. (Source of the favourite variant in [Gr24, Comments to Problem 43].)
 -/
 
+@[expose] public section
 
 open Filter Topology Classical
 
@@ -125,10 +128,13 @@ def Dilate {p : ℕ} (n : ZMod p) (A : Finset (ZMod p)) : Finset (ZMod p) :=
 [Gr24, Comments to Problem 43; AP92] One of Green's favourite related conjectures: if
 `A ⊆ ℤ/pℤ` is a set of size `⌊p/2⌋`, does some dilation `n A` (`n` an integer) have no gaps of
 length more than `p^{0.49}`?
+
+The question is asymptotic, so it is stated for all sufficiently large primes `p` (see the
+large-prime discussion in [AP92, §2]); for small primes it fails trivially, e.g. `p = 3`, `A = {0}`.
 -/
 @[category research open, AMS 05 11]
 theorem green_43.variants.alon_peres :
-    answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∀ A : Finset (ZMod p), A.card = p / 2 →
+    answer(sorry) ↔ ∀ᶠ p : ℕ in atTop, p.Prime → ∀ A : Finset (ZMod p), A.card = p / 2 →
     ∃ n : ZMod p, ∀ L : ℕ, (p : ℝ) ^ (0.49 : ℝ) < (L : ℝ) → ¬ HasGap (Dilate n A) L := by
   sorry
 
