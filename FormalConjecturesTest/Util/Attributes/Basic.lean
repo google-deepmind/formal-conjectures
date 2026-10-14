@@ -84,17 +84,38 @@ theorem a_value_question : 2 + 2 = answer(sorry) := by
 theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
   sorry
 
+-- The unknown of a value question is a definition `<theorem>.answer`.
+def a_value_question_with_def.answer : Nat := sorry
+
+#guard_msgs in
+open a_value_question_with_def in
+/-- What is `2 + 2`? -/
+@[category research open, question value, AMS 11]
+theorem a_value_question_with_def : 2 + 2 = answer := by
+  sorry
+
 -- The form is checked against the statement, in both directions.
 /--
-error: the statement of 'a_value_question_tagged_yes_no' contains a non-`Prop` `answer(...)`, so it asks for a value; use `question value`
+error: the statement of 'a_value_question_tagged_yes_no' refers to the unknown of a value question; use `question value`
 -/
 #guard_msgs in
 @[category research open, question, AMS 11]
 theorem a_value_question_tagged_yes_no : 2 + 2 = answer(sorry) := by
   sorry
 
+def a_value_question_with_def_tagged_yes_no.answer : Nat := sorry
+
 /--
-error: `question value` requires a non-`Prop` `answer(...)` in the statement of 'a_yes_no_question_tagged_value'; for a yes-or-no question use `question`
+error: the statement of 'a_value_question_with_def_tagged_yes_no' refers to the unknown of a value question; use `question value`
+-/
+#guard_msgs in
+open a_value_question_with_def_tagged_yes_no in
+@[category research open, question, AMS 11]
+theorem a_value_question_with_def_tagged_yes_no : 2 + 2 = answer := by
+  sorry
+
+/--
+error: `question value` requires the statement of 'a_yes_no_question_tagged_value' to refer to the definition `a_yes_no_question_tagged_value.answer`; for a yes-or-no question use `question`
 -/
 #guard_msgs in
 @[category research open, question value, AMS 11]
@@ -123,6 +144,10 @@ open ProblemAttributes
 /-- info: some QuestionKind.value -/
 #guard_msgs in
 #eval show Lean.CoreM _ from getQuestionKind? `a_value_question_under_binders
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_with_def
 
 /-- info: some QuestionKind.yesNo -/
 #guard_msgs in

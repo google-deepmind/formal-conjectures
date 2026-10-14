@@ -298,10 +298,10 @@ The attribute checks the form against the statement.
   even integer greater than 2 the sum of two primes?" is Goldbach's
   conjecture, a claim, and is stated without the tag.
 - A question that asks for a value ("What is...?", "How large can...be?"),
-  written `@[question value]`. The Lean statement marks the unknown with a
-  non-`Prop` `answer(sorry)`, see below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
-  question, stated as `R(5, 5) = answer(sorry)`; "$R(5,5) = 43$" is a claim,
-  stated as `R(5, 5) = 43` without the tag.
+  written `@[question value]`. The unknown is a definition `<theorem>.answer`,
+  see below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+  question, stated as `R(5, 5) = answer` with `def ramsey_5_5.answer : ℕ := sorry`;
+  "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43` without the tag.
 
 ```lean
 /-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
@@ -311,38 +311,56 @@ theorem catalan_dickson :
     ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
   sorry
 
+def hadwiger_nelson.answer : ℕ := sorry
+
+open hadwiger_nelson in
 /-- What is the chromatic number of the plane? -/
 @[category research open, question value, AMS 5]
-theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer := by
   sorry
 ```
 
-## The `answer( )` elaborator
+## The unknown of a value question
 
-Some open questions are formulated in a way that requires a user-provided
-answer, for instance the
+Some questions ask for a value, for instance the
 [Hadwiger–Nelson problem](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
 asks for the minimum number of colours needed to colour the plane such that
-no two points exactly one unit distance apart have the same colour. The
-`answer( )` elaborator allows us to formulate the problem without deciding
-for an answer.
+no two points exactly one unit distance apart have the same colour. Such a
+question is tagged `@[question value]`. Its unknown is a plain definition
+named `<theorem>.answer`, declared with `sorry` right before the theorem, and
+the theorem refers to it as `answer`:
 
 ```lean
-@[category research open]
-theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+def hadwiger_nelson.answer : ℕ := sorry
+
+open hadwiger_nelson in
+/-- What is the chromatic number of the plane? -/
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer := by
   sorry
 ```
+
+- Give the definition the type of the unknown. If that type depends on
+  parameters of the theorem, make them parameters of the definition and apply
+  `answer` to them in the statement.
+- Once the question is answered, fill in the definition, for example
+  `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
+  proves the statement for that value.
+- Do not use the `answer(sorry)` elaborator for new problems. It is being
+  replaced by this convention.
 
 ### Problems that require answers
 
-Note that providing a term inside the `answer( )` elaborator together with a
-proof that the statement is true *does not* by itself mean that the problem
-has been solved. For example, a question of the form "Which natural numbers
-satisfy the predicate $P$?" might be formalised as
+Note that filling in the definition together with a proof that the statement
+is true *does not* by itself mean that the problem has been solved. For
+example, a question of the form "Which natural numbers satisfy the predicate
+$P$?" might be formalised as
 
 ```lean
-theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
+def myOpenProblem.answer : Set ℕ := sorry
+
+open myOpenProblem in
+theorem myOpenProblem : {n : ℕ | P n} = answer := by
   sorry
 ```
 
