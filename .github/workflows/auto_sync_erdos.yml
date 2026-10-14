@@ -12,6 +12,7 @@ permissions:
 jobs:
   auto-sync:
     runs-on: ubuntu-latest
+    if: github.repository == 'google-deepmind/formal-conjectures'
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
