@@ -23,6 +23,8 @@ public import FormalConjecturesUtil
 References:
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.27)
 - [Be23] Bedert, Benjamin. "On unique sums in Abelian groups." Combinatorica 44.2 (2024): 269-298.
+- [CY26] Cao, Jiao-Long, and Ye Yuan. "A Second-Logarithm Lower Bound for Sets with No Unique
+  Sums." arXiv preprint arXiv:2608.06728 (2026).
 - [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
 
@@ -42,7 +44,8 @@ noncomputable def m (p : ℕ) : ℝ :=
 /-- `atTop` restricted to prime numbers. -/
 def primesAtTop : Filter ℕ := atTop ⊓ 𝓟 {p : ℕ | p.Prime}
 
-/-- Best-known lower bound [Be23, Theorem 3]. -/
+/-- Bedert's lower bound [Be23, Theorem 3]. This was the best known bound when Green's list was
+written; it has since been improved, see `green_27.lower`. -/
 noncomputable def lowerBest (p : ℕ) : ℝ :=
   (Real.sqrt (Real.log (Real.log (Real.log (p : ℝ)))) /
    Real.log (Real.log (Real.log (Real.log (p : ℝ))))) * Real.log (p : ℝ)
@@ -59,10 +62,14 @@ theorem green_27.equivalent :
   (answer(sorry) : ℕ → ℝ) ~[primesAtTop] m := by
   sorry
 
-/-- Propose a better lower bound along primes. -/
-@[category research open, AMS 5 11]
+/-- Propose a better lower bound along primes.
+
+Cao and Yuan [CY26, Theorem 1.1] prove $m(p) \gg \log p \log \log p$. This beats `lowerBest`,
+since $\sqrt{\log \log \log p} / \log \log \log \log p = o(\log \log p)$. The exact order of
+$m(p)$ remains open. -/
+@[category research solved, AMS 5 11]
 theorem green_27.lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := (answer(fun p : ℕ ↦ Real.log (p : ℝ) * Real.log (Real.log (p : ℝ))) : ℕ → ℝ)
     (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
   sorry
 
@@ -81,6 +88,12 @@ theorem green_27.variants.lower_be23 :
   ∃ ω : ℕ → ℝ, Tendsto ω primesAtTop atTop ∧
     ∀ᶠ p in primesAtTop,
       ω p * Real.log (p : ℝ) ≤ m p := by
+  sorry
+
+/-- Lower bound: $\log p \log \log p \ll m(p)$ [CY26, Theorem 1.1]. -/
+@[category research solved, AMS 5 11]
+theorem green_27.variants.lower_cy26 :
+  (fun p ↦ Real.log (p : ℝ) * Real.log (Real.log (p : ℝ))) =O[primesAtTop] m := by
   sorry
 
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
