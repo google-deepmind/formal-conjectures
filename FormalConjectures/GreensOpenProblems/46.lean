@@ -53,14 +53,14 @@ noncomputable def bestLower (x : ℕ) : ℝ :=
 noncomputable def bestUpper (x : ℕ) : ℝ := (x : ℝ) ^ 2
 
 /-- We conjecture that the best-known lower bound can be improved. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem green_46.improve_lower :
     let ans := (answer(sorry) : ℕ → ℝ)
     (bestLower =o[atTop] ans) ∧ (ans ≪ maxY) := by
   sorry
 
 /-- We conjecture that the best-known upper bound can be improved. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem green_46.improve_upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     (ans =o[atTop] bestUpper) ∧ (maxY ≪ ans) := by

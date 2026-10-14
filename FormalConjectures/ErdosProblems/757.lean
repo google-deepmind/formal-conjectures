@@ -41,7 +41,7 @@ def IsAdmissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ 
   B.ncard = 4 → 11 ≤ (B - B).ncard) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
 
 /-- What is the supremum of the set of admissible numbers? -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_757 {A : Set ℝ} :
     answer(sorry) = sSup {c | IsAdmissible c} := by
   sorry

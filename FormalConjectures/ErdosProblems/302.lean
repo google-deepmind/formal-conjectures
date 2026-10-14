@@ -59,7 +59,7 @@ with distinct $a,b,c\in A$? Estimate $f(N)$.
 
 The colouring version of this is [303], which was solved by Brown and Rödl [BrRo91].
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_302.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N)) :
     Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 answer(sorry)) := by
   sorry

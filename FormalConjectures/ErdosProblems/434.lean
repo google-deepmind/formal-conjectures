@@ -58,7 +58,7 @@ The maximal choice is indeed $\{n, \dots, n - k + 1\}$, as proved by Kiss [Ki02]
 The Lean theorem assumes $2 \le k$. When $k = 1 < n$, the proposed singleton $\{n\}$ does not
 have gcd $1$; the gcd condition instead forces the unique admissible choice $A = \{1\}$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
+@[category research solved, question value, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/434#post-4437"]
 theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 2 ≤ k) (h : k ≤ n) :
     IsGreatest
       { Nat.NcardUnrepresentable S | (S : Finset ℕ) (_ : S ⊆ Finset.Icc 1 n)

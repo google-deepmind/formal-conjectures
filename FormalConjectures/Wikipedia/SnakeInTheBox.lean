@@ -139,7 +139,7 @@ theorem coil_small_dimensions :
 For dimension $9$, the length of the longest snake in the box is not known.
 This is currently the smallest dimension where this question is open.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
   sorry
 

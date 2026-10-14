@@ -48,7 +48,7 @@ $$\lim_{k\to \infty}R(k)^{1/k}.$$
 
 This problem is #3 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_77 :
     Filter.Tendsto (fun k : ℕ ↦ (SimpleGraph.diagonalRamsey k : ℝ) ^ (1 / (k : ℝ)))
       Filter.atTop (𝓝 answer(sorry)) := by

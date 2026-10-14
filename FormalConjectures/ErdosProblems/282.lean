@@ -69,7 +69,7 @@ theorem erdos_282 {x : ℚ} (hx : x ∈ Set.Ioo 0 1) (hx_den : Odd x.den) :
   sorry
 
 /-- More generally, for which pairs $x$ and $A$ does this process terminate? -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_282.variants.general (x : ℚ) (A : Set ℕ) :
       greedyUnitFractionRem A x =ᶠ[atTop] 0 ↔ (x, A) ∈ (answer(sorry) : Set (ℚ × Set ℕ)) := by
   sorry

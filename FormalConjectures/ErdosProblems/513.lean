@@ -38,7 +38,7 @@ noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
 
 /-- Let `f` be a transcendental entire function. What is the greatest possible value of
 `liminf (fun r : ℝ => ratio r f) atTop`? -/
-@[category research open, AMS 30]
+@[category research open, question value, AMS 30]
 theorem erdos_513 : answer(sorry) =
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
     (liminf (fun r : ℝ => ratio r f) atTop) := by

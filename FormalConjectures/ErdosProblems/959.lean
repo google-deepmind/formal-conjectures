@@ -79,7 +79,7 @@ $f(d_1)\geq f(d_2)\geq \cdots \geq f(d_k)$. Estimate
 $$\max (f(d_1)-f(d_2)),$$
 where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem erdos_959 :
     (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry

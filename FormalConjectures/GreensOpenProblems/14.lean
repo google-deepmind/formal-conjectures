@@ -141,7 +141,7 @@ theorem green_14_upper_bound_kelley_meka :
 It remains an interesting open problem to actually write down a colouring showing (say)
 $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_14_variant_2r2 :
     -- Provide a pair (r, associated coloring) that avoids the monochromatic APs
     -- To show $W(3, r) > 2r^2 - 1$, we need a coloring of $\{1, \ldots, 2r^2 - 1\}$

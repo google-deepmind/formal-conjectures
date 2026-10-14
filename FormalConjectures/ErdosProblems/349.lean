@@ -40,7 +40,7 @@ def IsGoodPair (t α : ℝ) : Prop :=
 For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\rfloor$ complete
 (that is, all sufficiently large integers are the sum of distinct integers of the form $\lfloor t\alpha^n\rfloor$)?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_349 :
     {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPair t α} = answer(sorry) := by
   sorry

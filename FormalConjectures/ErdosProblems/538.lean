@@ -55,7 +55,7 @@ order `Θ_r(log N / loglog N)` is known (see `erdos_538.matching_order`). The be
 upper bound is the asymptotic size of the largest reciprocal sum `maxMass r N` over
 admissible `A`.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_538 :
     let f : ℕ → ℕ → ℝ := answer(sorry)
     ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] f r := by

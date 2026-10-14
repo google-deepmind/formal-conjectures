@@ -39,7 +39,7 @@ Is there some constant $c>0$ such that for all large $n$ there are
 $$\geq \exp(c n^{1/2}\log n)$$
 many block-compatible sequences for $\{1,\ldots,n\}$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_732.parts.i :
     let P : ℕ → List ℕ → Prop := answer(sorry)
     ∀ (n : ℕ) (s : List ℕ), s ∈ Hypergraph.blockSizeProfiles n ↔ P n s := by

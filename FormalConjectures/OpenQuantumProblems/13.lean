@@ -548,42 +548,42 @@ theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
 
 /-- Special case in dimension $6$: determine the maximal number of mutually unbiased
 orthonormal bases in $\mathbb{C}^6$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim6 :
     IsMaxMUBCount 6 (answer(sorry)) := by
   sorry
 
 /-- Special case in dimension $10$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{10}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim10 :
     IsMaxMUBCount 10 (answer(sorry)) := by
   sorry
 
 /-- Special case in dimension $12$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{12}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim12 :
     IsMaxMUBCount 12 (answer(sorry)) := by
   sorry
 
 /-- Special case in dimension $14$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{14}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim14 :
     IsMaxMUBCount 14 (answer(sorry)) := by
   sorry
 
 /-- Special case in dimension $15$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{15}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim15 :
     IsMaxMUBCount 15 (answer(sorry)) := by
   sorry
 
 /-- Open Quantum Problem 13: determine the maximal number of mutually unbiased orthonormal
 bases in $\mathbb{C}^d$ for $d \ge 2$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases (d : ℕ) (hd : 2 ≤ d) :
     IsMaxMUBCount d ((answer(sorry) : ℕ → ℕ) d) := by
   sorry

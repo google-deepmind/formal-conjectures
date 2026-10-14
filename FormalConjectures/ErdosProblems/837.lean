@@ -40,7 +40,7 @@ $$\liminf \frac{e(H_n)}{\binom{\lvert H_n\rvert}{k}} >\beta,$$
 and further that this property does not necessarily hold if $>\alpha$ is replaced by $\geq \alpha$.
 What is $A_3$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_837 :
     {α : ℝ | α ∈ Set.Icc 0 1 ∧ ∃ β : ℝ, α < β ∧
     Hypergraph.HasDensityJump 3 α β true ∧ ¬ Hypergraph.HasDensityJump 3 α β false}

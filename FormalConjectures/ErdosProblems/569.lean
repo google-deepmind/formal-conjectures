@@ -37,7 +37,7 @@ for any graph $H$ on $m$ edges without isolated vertices?
 
 This problem is #34 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_569 :
     let c : ℕ → ℝ := answer(sorry)
     ∀ (k : ℕ) (hk : 1 ≤ k),

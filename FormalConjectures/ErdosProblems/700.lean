@@ -78,7 +78,7 @@ open; we state it as the (unknown) set of all composite `n` with `f n = n / P n`
 This follows the largest-prime reading on erdosproblems.com. In [ErSz78, p. 98], the first prose
 line below (7) reads: "where $P(n)$ is the greatest prime power which divides $n$."
 The paper's reading is stated with $Q(n)$ in `erdos_700.variants.prime_power_divisor`. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_700.parts.i :
     {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
   sorry
@@ -86,7 +86,7 @@ theorem erdos_700.parts.i :
 /-- Characterise those composite $n$ such that $f(n) = n/Q(n)$, where $Q(n)$ is the largest
 prime-power divisor of $n$. This is the reading of part (a) in Erdős–Szekeres
 [ErSz78, pp. 98–99](https://combinatorica.hu/~p_erdos/1978-46.pdf). -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_700.variants.prime_power_divisor :
     {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = answer(sorry) := by
   sorry

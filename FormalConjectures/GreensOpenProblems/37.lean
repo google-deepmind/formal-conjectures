@@ -47,7 +47,7 @@ noncomputable def m (N k : ℕ) : ℕ :=
 Given a natural number `N`, what is the smallest size of a subset of `ℕ` that contains, for each `d = 1, …, N`,
 an arithmetic progression of length `k` with common difference `d`.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_37 (N k : ℕ) :
     IsLeast { m | ∃ A : Finset ℕ, A.card = m ∧ IsAPCover (A : Set ℕ) N k }
       ((answer(sorry) : ℕ → ℕ → ℕ) N k) := by
@@ -58,13 +58,13 @@ Asymptotic version: determine the asymptotic behavior of `m(N, k)` as `N` grows.
 The solver should determine a function `f : ℕ → ℕ → ℝ` such that, for each `k`,
 `f k` eventually equals `(fun N ↦ (m N k : ℝ))`.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_37_asymptotic (k : ℕ) :
     ∀ᶠ N in atTop, (m N k : ℝ) = (answer(sorry) : ℕ → ℕ → ℝ) k N := by
   sorry
 
 /-- Determine, for each `k`, the asymptotic equivalence class (theta) of `m(N, k)` as `N` grows. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_37_theta (k : ℕ) :
     (fun N ↦ (m N k : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℕ → ℝ) k := by
   sorry

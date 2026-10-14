@@ -115,7 +115,7 @@ What is the smallest square that can contain 11 unit squares?
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_eleven_square_packing_in_square :
     IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))} answer(sorry) := by
   sorry
@@ -135,7 +135,7 @@ What is the smallest square that can contain 17 unit squares?
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_seventeen_square_packing_in_square :
     IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))} answer(sorry) := by
   sorry
@@ -162,7 +162,7 @@ References: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle
 [Vu-Le's Lean proof](https://github.com/vltanh/lean4-squares-in-circles), and
 [Kitamura's FC-target Lean proof](https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219).
 -/
-@[category research solved, AMS 51,
+@[category research solved, question value, AMS 51,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219"]
 theorem least_three_square_packing_in_circle :
@@ -183,7 +183,7 @@ theorem twenty_one_circle_packing_in_square_bound :
 /--
 What is the smallest square that can contain 21 unit circles?
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_twenty_one_circle_packing_in_square :
     IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))} answer(sorry) := by
   sorry
@@ -211,7 +211,7 @@ Graham RL, Lubachevsky BD, Nurmela KJ, Ostergard PRJ.
 Dense packings of congruent circles in a circle. Discrete Math 1998;181:139–154.
 [Pirl (1969)](https://doi.org/10.1002/mana.19690400110) conjectured this configuration to be optimal.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_fifteen_circle_packing_in_circle :
     IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))} answer(sorry) := by
   sorry

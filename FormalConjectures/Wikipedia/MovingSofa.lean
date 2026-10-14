@@ -226,7 +226,7 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49,
+@[category research solved, question value, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
   formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26",
   formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173",

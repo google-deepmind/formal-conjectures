@@ -72,7 +72,7 @@ theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
 What is the minimal area (or greatest lower bound on the area)
 of a shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem mosers_worm_problem :
     IsGLB {v | ∃ X ∈ WormCovers, volume X = v} answer(sorry) := by
   sorry
@@ -94,7 +94,7 @@ theorem mosers_worm_problem_upper_bound :
 What is the minimal area (or greatest lower bound on the area)
 of a *convex* shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem convex_mosers_worm_problem :
     IsGLB {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} answer(sorry) := by
   sorry

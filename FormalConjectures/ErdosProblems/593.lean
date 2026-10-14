@@ -58,7 +58,7 @@ bipartite graphs.
 A resolution has been claimed by E. Li (arXiv:2606.24882, 2026); at the time of writing
 erdosproblems.com still lists the problem as open.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_593 :
     {p : Σ n : ℕ, UniformHypergraph (Fin n) 3 | p.2.IsObligatory} = answer(sorry) := by
   sorry

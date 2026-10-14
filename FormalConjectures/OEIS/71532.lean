@@ -94,7 +94,7 @@ theorem conjecture3 :
 /--
 Conjecture: the constant $C$ in $a(n) \sim C \log(n)^2$ is approximately $1.4$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture3_value :
     let C : ℝ := answer(sorry)
     |C - 1.4| < 0.1 ∧

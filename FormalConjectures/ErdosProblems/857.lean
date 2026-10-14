@@ -43,7 +43,7 @@ noncomputable def m (n k : ℕ) : ℕ :=
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_857 :
     let f : ℕ → ℕ → ℝ := answer(sorry)
     ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / f k n) atTop (nhds 1) := by

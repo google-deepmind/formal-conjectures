@@ -66,7 +66,7 @@ $\mathbb{R}^2$?
 
 That is, determine the minimal number of rotations as a function of $\varepsilon > 0$.
 -/
-@[category research open, AMS 51 52]
+@[category research open, question value, AMS 51 52]
 theorem green_41 : ∀ ε > 0, minCopies ε = (answer(sorry) : ℝ → ℕ) ε := by
   sorry
 

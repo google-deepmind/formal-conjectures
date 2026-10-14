@@ -46,7 +46,7 @@ For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_40 :
     {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = answer(sorry) := by
   sorry

@@ -274,7 +274,7 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
 /-- Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It was the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
 [BFZ24, (4.20)]. The answer is `6`. A Lean proof is given in [Ki26]. -/
-@[category research solved, AMS 15,
+@[category research solved, question value, AMS 15,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/mrank-3-3-5-lean/blob/fbec93aa021bd994380cd27eb60e444e7cc85e93/lean/TensorRank335FC.lean#L3365-L3367"]
 theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(6) := by
@@ -311,7 +311,7 @@ is known: for $n = 1, 2, 3$ the values are `1`, `3` and `5`, while for $4 \leq n
 the bounds in `isMaxRank_cube_bounds`, such as $7 \leq \operatorname{mrank}(4,4,4) \leq 10$,
 are available [BFZ24, (4.25)-(4.28)].
 -/
-@[category research open, AMS 15]
+@[category research open, question value, AMS 15]
 theorem isMaxRank_cube {n : ℕ} (hn : 1 ≤ n) :
     IsMaxRank [n, n, n] ((answer(sorry) : ℕ → ℕ) n) := by
   sorry

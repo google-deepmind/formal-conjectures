@@ -37,7 +37,7 @@ Let $s,k,r\geq 2$. Let $\mathcal{F}$ be the family of all $r$-uniform hypergraph
 and $s$ edges. Determine
 $$\mathrm{ex}_r(n,\mathcal{F}).$$
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_1157 :
     let f : ℕ → ℕ → ℕ → ℕ → ℕ := answer(sorry)
     ∀ r k s : ℕ, 2 ≤ r → 2 ≤ k → 2 ≤ s → ∀ n : ℕ,

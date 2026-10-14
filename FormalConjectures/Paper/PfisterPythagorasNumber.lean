@@ -84,7 +84,7 @@ $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for 
 and open for every $n \ge 3$, where only the bounds
 $n + 2 \le p(\mathbb{R}(X_1, \dots, X_n)) \le 2^n$ are known.
 -/
-@[category research open, AMS 11 12 14]
+@[category research open, question value, AMS 11 12 14]
 theorem pfister_problem :
     let p : ℕ → ℕ := answer(sorry)
     ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (p n) := by

@@ -34,7 +34,7 @@ namespace Erdos887
 Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is sufficiently large then
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
     #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ answer(sorry) := by
   sorry

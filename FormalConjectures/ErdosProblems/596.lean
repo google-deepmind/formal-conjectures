@@ -49,7 +49,7 @@ class of all such pairs, recorded here as `answer(sorry)`.
 
 See Problem 595 for the specific case $(G_1, G_2) = (K_4, K_3)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_596 :
     ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       IsErdosHajnalExceptional G₁ G₂ ↔

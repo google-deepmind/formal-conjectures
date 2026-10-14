@@ -920,7 +920,7 @@ theorem ame_12_10_open :
 /- ## General conjecture -/
 
 /-- Open Quantum Problem 35: classify all pairs $(n,d)$ with $n \ge 2$ and $d \ge 2$ for which an $\mathrm{AME}(n,d)$ state exists. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem oqp_35 :
     {nd : ℕ × ℕ | 2 ≤ nd.1 ∧ 2 ≤ nd.2 ∧ ExistsAME nd.1 nd.2} = answer(sorry) := by
   sorry

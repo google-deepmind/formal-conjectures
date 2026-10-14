@@ -55,7 +55,7 @@ Determine
 $$\hat{R}(K_{n,n}),$$
 where $K_{n,n}$ is the complete bipartite graph with $n$ vertices in each component.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_560 : answer(sorry) = (fun n : ℕ ↦ r̂(n)) := by
   sorry
 

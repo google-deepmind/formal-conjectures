@@ -89,7 +89,7 @@ gives valid sets of size $134753^{\lfloor n/10 \rfloor}$ in $\mathbb{F}_7^n$, se
 $134753^{1/10} > 3.258020 > C_1$ (note $134753 > 367^2 = 134689$). Gao [Ga26] and then Buys,
 Polak and Zuiddam [BPZ26] improved the rate further, to $3.258789\ldots$ and $3.2588\ldots$
 respectively; the latter is formalised in Lean. The exact growth rate remains open. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question value, AMS 5 11]
 theorem green_38.lower :
     let ans := (answer(fun n : ℕ ↦ (134753 : ℝ) ^ (n / 10)) : ℕ → ℝ)
     (∀ᶠ n in atTop, 0 ≤ ans n) ∧ ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
@@ -98,7 +98,7 @@ theorem green_38.lower :
 
 /-- Can we improve the best upper bound? The base `c` must be positive, since `=O` compares
 norms. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_38.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧

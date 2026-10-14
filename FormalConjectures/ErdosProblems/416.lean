@@ -66,7 +66,7 @@ theorem erdos_416.variants.regularly_varying (c : ℝ) (hc : 0 < c) :
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 Is there an asymptotic formula for `V(x)`?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_416.parts.ii :
     let f : ℝ → ℝ := answer(sorry)
     Filter.Tendsto (fun x => V x / f x) atTop (𝓝 1) := by
@@ -98,7 +98,7 @@ Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
 Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Euler's $\phi$-function_.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Maier_Pomerance :
     let C : ℝ := answer(sorry)
     0 < C ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
@@ -112,7 +112,7 @@ Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`
 Ref: Ford, Kevin, _The distribution of totients_.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Ford :
     let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer(sorry)
     0 < C₁ ∧ 0 < C₂ ∧ 0 < C₃ ∧

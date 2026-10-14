@@ -60,7 +60,7 @@ noncomputable def cofactorThreshold (n : ℕ) : ℕ :=
 
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$. Estimate $h(n)$. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_539 :
     (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
@@ -127,7 +127,7 @@ $$
 will perhaps be not too difficult.
 The limit is $1/2$; see [Sc+26, Theorem A.1] and the linked Lean proof.
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question value, AMS 5 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.limit :

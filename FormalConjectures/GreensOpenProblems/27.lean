@@ -54,20 +54,20 @@ noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 What is the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
 for which no element in the sumset $A + A$ has a unique representation?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.equivalent :
   (answer(sorry) : ℕ → ℝ) ~[primesAtTop] m := by
   sorry
 
 /-- Propose a better lower bound along primes. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.lower :
     let ans := (answer(sorry) : ℕ → ℝ)
     (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
   sorry
 
 /-- Propose a better upper bound along primes. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     (ans =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] ans) := by

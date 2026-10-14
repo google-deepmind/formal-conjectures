@@ -40,7 +40,7 @@ where $\mathrm{ex}_r(n,K_k^r)$ is the largest number of $r$-edges which can plac
 so that there exists no set of $k$ vertices which is covered by all $\binom{k}{r}$ possible
 $r$-edges.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_712 :
     let L : ℕ → ℕ → ℝ := answer(sorry)
     ∀ k r : ℕ, 2 < r → r < k →

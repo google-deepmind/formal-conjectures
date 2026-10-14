@@ -116,7 +116,7 @@ $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$, that is the least $k$ such that every cl
 most $k$ symbols, or $\infty$ if there is no such $k$. The answer `sl m n p : ℕ∞` is
 characterised by: `k` is such a bound if and only if `sl m n p ≤ k`.
 -/
-@[category research open, AMS 12 19]
+@[category research open, question value, AMS 12 19]
 theorem symbol_length_problem :
     let sl : ℕ → ℕ → ℕ → ℕ∞ := answer(sorry)
     ∀ m n p : ℕ, p.Prime → ∀ k : ℕ,

@@ -263,14 +263,14 @@ theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
   No closed-form expression that allows efficient computation of Dedekind numbers is
   currently known.
 -/
-@[category research open, AMS 5 6]
+@[category research open, question value, AMS 5 6]
 theorem M_eq : M = answer(sorry) := by
   sorry
 
 /--
   In particular, the Dedekind number for `n = 10` is currently unknown.
 -/
-@[category research open, AMS 5 6]
+@[category research open, question value, AMS 5 6]
 theorem Dedekind_10 : M 10 = answer(sorry) := by sorry
 
 end DedekindNumber

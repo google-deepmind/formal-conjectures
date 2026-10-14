@@ -92,7 +92,7 @@ with no $k$ on a line, so that `AllowedSetSize k N` is the pigeonhole bound $(k 
 and does not optimise this constant. At $k = 3$ it is the property that Green expects to fail
 for large $N$, see `green_72`.
 -/
-@[category research open, AMS 5 52]
+@[category research open, question value, AMS 5 52]
 theorem NoKInLine : answer(sorry) = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineFor k N} := by
   sorry
 

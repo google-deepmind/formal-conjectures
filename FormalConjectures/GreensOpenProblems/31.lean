@@ -59,7 +59,7 @@ open Filter
 noncomputable def F (N : ℕ) : ℝ := Finset.maxSidonSubsetCard (Finset.Icc 1 N)
 
 /-- Can we improve the lower bound $N^{1/2} + O(1)$, at least for infinitely many $N$? -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_31.lower :
     let ans := (answer(sorry) : ℕ → ℝ)
     Filter.Tendsto (fun N ↦ ans N - Real.sqrt (N : ℝ)) atTop atTop ∧ -- Break the O(1) barrier
@@ -67,7 +67,7 @@ theorem green_31.lower :
   sorry
 
 /-- Can we improve the lower bound $N^{1/2} + O(1)$, for all sufficiently large $N$? -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_31.variants.lower_eventually :
     let ans := (answer(sorry) : ℕ → ℝ)
     Filter.Tendsto (fun N ↦ ans N - Real.sqrt (N : ℝ)) atTop atTop ∧ -- Break the O(1) barrier
@@ -78,7 +78,7 @@ theorem green_31.variants.lower_eventually :
 Can we improve the upper bound $N^{1/2} + 0.94349 N^{1/4} + O(1)$ [HZ26], at least for infinitely
 many $N$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_31.upper :
     let ans := (answer(sorry) : ℕ → ℝ)
     (∃ᶠ N in atTop, F N ≤ ans N) ∧
@@ -89,7 +89,7 @@ theorem green_31.upper :
 Can we improve the upper bound $N^{1/2} + 0.94349 N^{1/4} + O(1)$ [HZ26], for all sufficiently
 large $N$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_31.variants.upper_eventually :
     let ans := (answer(sorry) : ℕ → ℝ)
     (∀ᶠ N in atTop, F N ≤ ans N) ∧

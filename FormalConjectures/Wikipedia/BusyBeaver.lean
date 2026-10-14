@@ -97,7 +97,7 @@ theorem BB_5 : BB 5 = 47176870 := by
 /--
 Determine the value of the Busy Beaver function at n = 6.
 -/
-@[category research open, AMS 3]
+@[category research open, question value, AMS 3]
 theorem BB_6 : BB 6 = answer(sorry) := by
   sorry
 

@@ -60,7 +60,7 @@ with $k_1,k_2>3$ and $m_1+k_1\leq m_2$?
 A solution must supply the set of all solutions $(m_1, k_1, m_2, k_2)$. Whether a description of
 this set is a satisfactory classification is up to human judgement.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_388.variants.classification :
     {(m₁, k₁, m₂, k₂) : ℕ × ℕ × ℕ × ℕ | 3 < k₁ ∧ 3 < k₂ ∧ m₁ + k₁ ≤ m₂ ∧
       ∏ i ∈ Finset.Icc 1 k₁, (m₁ + i) = ∏ j ∈ Finset.Icc 1 k₂, (m₂ + j)} = answer(sorry) := by

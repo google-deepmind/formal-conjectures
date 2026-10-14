@@ -61,7 +61,7 @@ be?
 Taking $A=\mathbb{N}$ shows that $\liminf A(x)/x^{1/2}=1$ is possible. Erdős and Szemerédi
 [ErSz80] proved that it is always $\leq 1$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos440.lean#L602"]
 theorem erdos_440.parts.ii :
     IsGreatest {l : ℝ | ∃ a : ℕ → ℕ, StrictMono a ∧ (∀ i, 0 < a i) ∧

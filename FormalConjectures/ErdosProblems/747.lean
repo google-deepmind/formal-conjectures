@@ -41,7 +41,7 @@ vertices with $\ell(n)$ edges must contain $n$ vertex-disjoint edges?
 The precise asymptotic was given by Kahn [Ka23], proving that the threshold is $\sim n\log n$ (also
 for the general problem over $r$-uniform hypergraphs).
 -/
-@[category research solved, AMS 5 60]
+@[category research solved, question value, AMS 5 60]
 theorem erdos_747 :
     let threshold : ℕ → ℝ := answer(fun n : ℕ ↦ n * Real.log n)
     ∀ ε : ℝ, 0 < ε → ε < 1 →

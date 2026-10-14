@@ -57,7 +57,7 @@ def F (N : ℕ) : ℕ :=
                 (Finset.image_nonempty.mpr ⟨TrivialRuler N, trivial_ruler_is_perfect N⟩)
 
 /-- The problem is to determine the limit of the sequence $\frac{F(N)}{\sqrt{N}}$ as $N \to \infty$. -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 lemma erdos170 : Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 answer(sorry)) := by sorry
 
 /-- A known lower bound to the limit by Leech [Le56], which is $1.56\dots$. -/

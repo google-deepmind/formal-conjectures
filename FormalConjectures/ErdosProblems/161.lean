@@ -44,7 +44,7 @@ $F^{(t)}(n,\alpha)$ increase continuously or are there jumps? Only one jump?
 Here growth is compared up to constant factors as $n\to\infty$. At $\alpha=0$,
 each color must occur, following the source's Ramsey convention.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_161.parts.i :
     let E : ℕ → Set (ℝ × ℝ) := answer(sorry)
     ∀ t : ℕ, 1 ≤ t →

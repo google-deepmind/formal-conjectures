@@ -76,7 +76,7 @@ theorem erdos_692.parts.i : answer(False) ↔
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 For fixed $n$, where does $\delta_1(n,m)$ achieve its maximum?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_692.parts.ii (n : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
       IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n answer(sorry)) := by

@@ -50,7 +50,7 @@ guaranteed to be contained in $2A$?
 We phrase this by asking for the exact function $F(\alpha, n)$ giving the maximum dimension
 of a guaranteed coset.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_51 : answer(sorry) = guaranteedMaxCosetDim := by
   sorry
 

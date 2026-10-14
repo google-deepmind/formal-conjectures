@@ -69,7 +69,7 @@ $a(6)$, added by Jonathan Vos Post, has 4 prime factors.
 $a(7) = 41 * 811^2 * 106693969 * 317171188688357726699 * 8272236925540996054440172449761$.
 When is the next prime in the sequence?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
   sorry
 

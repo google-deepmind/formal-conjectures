@@ -58,7 +58,7 @@ $y(\epsilon,n)$ is the least such threshold (or $\infty$ if there is none).
 A **linear** scale $y \le C(\epsilon) n$ is known to suffice for fixed $\epsilon$
 and all large $n$ (see `erdos_450.linear_scale_suffices`).
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = answer(sorry) := by
   sorry
 

@@ -42,7 +42,7 @@ A problem of Burr, Erdős, Faudree, Rousseau, and Schelp [BEFRS89].
 
 This problem is #19 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_552.parts.i :
     ∀ (n : ℕ),
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)

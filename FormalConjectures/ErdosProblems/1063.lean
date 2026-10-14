@@ -55,7 +55,7 @@ The comparator takes its least common multiple in `ℕ` and casts the result. Wr
 ascription as `((… ).lcm (fun n : ℕ => n) : ℝ)` instead puts it on the `Finset.lcm`
 application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where `lcm` of
 non-zero elements is `1` and the whole comparator collapses to `k`. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_1063.better_upper :
     let upper_bound : ℕ → ℝ := answer(sorry)
     (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧

@@ -41,7 +41,7 @@ integers, i.e. a bijection $\mathbb{N} \to \mathbb{Z}$, and a monotone $k$-term 
 progression is a subsequence $a_{i_1}, \ldots, a_{i_k}$ with $i_1 < \cdots < i_k$ forming an
 increasing or decreasing arithmetic progression.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_195 :
     answer(sorry) = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry

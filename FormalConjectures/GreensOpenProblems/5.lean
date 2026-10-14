@@ -50,7 +50,7 @@ is empty.) Kedlaya [Ke97] showed that $\alpha = 11/14$ is admissible, and Green 
 exponent may well be sharp; the candidate extremal family is the Ree groups ${}^2G_2(q)$,
 $q = 3^{2m+1}$.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question value, AMS 5 20]
 theorem green_5 :
     IsLUB {α : ℝ | ∃ c > (0 : ℝ), ∀ (G : Type) [Group G] [Fintype G], Nontrivial G →
       ∃ S : Finset G, IsProductFree (S : Set G) ∧
@@ -76,7 +76,7 @@ theorem green_5.variants.kedlaya :
 A good model problem would be to determine the largest product-free subsets of
 $\mathrm{SL}_2(\mathbb{F}_p)$.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question value, AMS 5 20]
 theorem green_5.variants.sl_two (p : ℕ) [Fact p.Prime] :
     let S : Finset (SL₂ p) := answer(sorry)
     MaximalFor (IsProductFree (M := SL₂ p)) Set.ncard (S : Set (SL₂ p)) := by

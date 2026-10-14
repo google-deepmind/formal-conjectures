@@ -36,7 +36,7 @@ How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reache
 -- Formalisation note: the sequence of iterates always terminates if `n > 0`
 -- since it is strictly decreasing unless the input is prime, at which point
 -- it becomes static. See also https://oeis.org/A39651
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
     IsLeast { i | (φ · + 1)^[i] n |>.Prime } answer(sorry) := by
   sorry
@@ -76,7 +76,7 @@ theorem erdos_409.variants.termination (n : ℕ) (hn : 0 < n) :
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. What is $\Theta(c(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isTheta (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -86,7 +86,7 @@ theorem erdos_409.parts.i.isTheta (c : ℕ → ℕ)
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isBigO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -96,7 +96,7 @@ theorem erdos_409.parts.i.isBigO (c : ℕ → ℕ)
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -113,7 +113,7 @@ theorem erdos_409.parts.ii :
 /--
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
     { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity answer(sorry) := by
   sorry
@@ -124,7 +124,7 @@ iterations are needed before a prime is reached?
 -/
 -- Formalisation note: termination of this sequence is not known in general since
 -- it is strictly increasing except at primes, so it is assumed as a hypothesis.
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1)
     (hterm : ∃ i, (σ 1 · - 1)^[i] n |>.Prime) :
     IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
@@ -144,7 +144,7 @@ theorem erdos_409.variants.sigma_termination (n : ℕ) (hn : n > 1) :
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. What is $\Theta(c(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isTheta (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -154,7 +154,7 @@ theorem erdos_409.variants.sigma_isTheta (c : ℕ → ℕ)
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isBigO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
@@ -164,7 +164,7 @@ theorem erdos_409.variants.sigma_isBigO (c : ℕ → ℕ)
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
     (fun n => (c n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by

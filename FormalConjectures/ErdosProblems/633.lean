@@ -84,7 +84,7 @@ Beeson, Laczkovich, and Zhang [BLZ26] classify the triangles that can be tiled o
 number of congruent triangles, settling this problem. The classification is too involved to encode
 in the answer slot here, so the answer is left as `sorry` and the reference records the result.
 -/
-@[category research solved, AMS 5 51]
+@[category research solved, question value, AMS 5 51]
 lemma erdos_633 : T ∈ (answer(sorry) : Set <| Triangle ℝ ℝ²) ↔
     ∀ n, IsCuttable n T → IsSquare n := sorry
 

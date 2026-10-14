@@ -130,7 +130,7 @@ $u$-invariant (`u_invariant_values.variants.even`), $3$, $5$ and $7$ are not
 (`u_invariant_values.variants.karpenko`), the answer is known for every $n$ except $n = 2^r - 1$
 and $n = 2^r - 3$ with $r \ge 4$.
 -/
-@[category research open, AMS 11 12]
+@[category research open, question value, AMS 11 12]
 theorem u_invariant_values :
     let S : Set ℕ := answer(sorry)
     ∀ n, n ∈ S ↔ IsUInvariant n := by

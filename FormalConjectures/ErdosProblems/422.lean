@@ -90,7 +90,7 @@ theorem erdos_422.variants.surjective : answer(sorry) ↔
 /--
 How does $f$ grow?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_422.variants.growth_rate :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f →
     (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ+ → ℝ) := by

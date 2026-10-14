@@ -67,17 +67,17 @@ theorem c1a_upper_bound : C1a ≤ 1.5029 := by
 
 The step function published with [T2026] gives $1.50286285870\ldots$. The figure $1.502862$ in
 the table of the first reference is this value truncated, so it is not a known upper bound. -/
-@[category research open, AMS 5 11 26]
+@[category research open, question value, AMS 5 11 26]
 theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5028628587 := by
   sorry
 
 /-- How can the best known lower bound $1.292$ of [PBV2026] be improved? -/
-@[category research open, AMS 5 11 26]
+@[category research open, question value, AMS 5 11 26]
 theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.292 C1a := by
   sorry
 
 /-- What is the exact value of the constant? -/
-@[category research open, AMS 5 11 26]
+@[category research open, question value, AMS 5 11 26]
 theorem c1a_eq : C1a = answer(sorry) := by
   sorry
 

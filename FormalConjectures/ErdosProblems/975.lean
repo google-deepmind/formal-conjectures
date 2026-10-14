@@ -85,7 +85,7 @@ is given by McKey in [Mc95], [Mc97], [Mc99].
 
 TODO: formalize Hurwitz class numbers and the expression of the constant in terms of them.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_975.variants.quadratic (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) (hf_degree : f.degree = 2) (c : ℝ) :
     c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by

@@ -95,7 +95,7 @@ be interesting to determine the sharp constant.
 The largest value of $c(a_1, a_2, a_3)$ is attained, since by `green_21.variants.fox_kleitman`
 the values form a non-empty set of naturals bounded above by $24$.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_21.variants.fox_kleitman_sharp :
     IsGreatest {c | ∃ a : Fin 3 → ℤ, ¬ RadoCondition a ∧ minColours a = c} answer(sorry) := by
   sorry

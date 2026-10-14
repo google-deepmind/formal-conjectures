@@ -37,7 +37,7 @@ Let $f(n,k)$ be minimal such that there is a graph with $n$ vertices and $f(n,k)
 where every set of $k+2$ vertices induces a subgraph with maximum degree at least $k$.
 Determine $f(n,k)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_614 :
     let f : ℕ → ℕ → ℕ := answer(sorry)
     ∀ n k, IsLeast {m : ℕ | ∃ G : SimpleGraph (Fin n), G.edgeFinset.card = m ∧

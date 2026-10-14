@@ -43,7 +43,7 @@ $$A\cap B=C\cap D=\emptyset.$$
 Estimate $f(n;t)$ - in particular, is it true that for $t\geq 3$
 $$f(n;t)=(1+o(1))\binom{n}{t-1}?$$
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_643.parts.i :
     let f : ℕ → ℕ → ℝ := answer(sorry)
     ∀ t : ℕ, 1 ≤ t →

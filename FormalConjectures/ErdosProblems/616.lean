@@ -38,7 +38,7 @@ transversal number), the minimum size of a set of vertices which includes at lea
 edge in $G$. Determine the best possible $t$ such that, if $G$ is an $r$-uniform hypergraph $G$
 where every subgraph $G'$ on at most $3r-3$ vertices has $\tau(G')\leq 1$, we have $\tau(G)\leq t$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_616 :
     let f : ℕ → ℕ∞ := answer(sorry)
     ∀ r : ℕ, 3 ≤ r → Hypergraph.localTransversalBound r (3 * r - 3) 1 = f r := by

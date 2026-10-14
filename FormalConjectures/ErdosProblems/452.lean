@@ -41,7 +41,7 @@ noncomputable def largeOmegaIntervalLength (x : ℕ) : ℕ := by
 
 /-- Determine the largest length of an interval in $[x,2x]$ on which
 $\omega(n) > \log\log n$ everywhere. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_452 : largeOmegaIntervalLength = answer(sorry) := by
   sorry
 

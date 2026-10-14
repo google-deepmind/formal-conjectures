@@ -65,7 +65,7 @@ that $m! + 1 \equiv 0\pmod{p}$. What is
 $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_1074.parts.ii : EHSNumbers.HasDensity answer(sorry) := by
   sorry
 
@@ -84,7 +84,7 @@ $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$, then what is
 $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}?
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_1074.parts.iv :
     PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
   sorry

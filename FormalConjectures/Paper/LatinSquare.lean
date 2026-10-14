@@ -212,7 +212,7 @@ mutually orthogonal latin squares.
 Equivalently, this asks for which orders affine planes of order `n` exist. Complete sets are known
 for prime-power orders; the smallest currently unresolved order is `12`.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem molsExistenceProblem : answer(sorry) = {n : ℕ | HasCompleteMOLS n} := by
   sorry
 

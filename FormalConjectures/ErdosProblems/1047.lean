@@ -126,7 +126,7 @@ $f$ ranges over all monic polynomials of degree $n$ and $c$ over all positive co
 
 The maximum is $0$ for $n \le 1$, $1$ for $n = 2$, $2$ for $n = 3$, and $n$ for $n \ge 4$.
 -/
-@[category research solved, AMS 30 52, formal_proof using lean4 at
+@[category research solved, question value, AMS 30 52, formal_proof using lean4 at
 "https://github.com/KitaKen1/erdos-1047-max-nonconvex-components/blob/87cc8666968b8228778fae5c5e54465128a864f6/lean/Erdos1047MaxNonConvexFC.lean#L31160-L31164"]
 theorem erdos_1047.variants.max_non_convex_components (n : ℕ) :
     IsGreatest {k : ℕ | ∃ (f : ℂ[X]) (c : ℝ), f.Monic ∧ f.natDegree = n ∧ 0 < c ∧

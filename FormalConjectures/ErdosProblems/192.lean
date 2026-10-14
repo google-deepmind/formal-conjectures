@@ -62,7 +62,7 @@ $\{1,\ldots,d\}$ with no abelian squares. An infinite string without abelian squ
 constructed when $d=4$ by Keränen [Ke92]. We refer to a recent survey by Fici and Puzynina
 [FiPu23] for more background and related results.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question value, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos192.lean#L39"]
 theorem erdos_192 : {d : ℕ | ∀ a : ℕ → Fin d → ℝ, IsPositiveUnitWalk a →
     ∃ x ∈ Set.range a, ∃ y ∈ Set.range a, ∃ z ∈ Set.range a, x ≠ y ∧ ∀ j, x j + z j = 2 * y j} =

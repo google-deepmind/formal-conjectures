@@ -74,7 +74,7 @@ The OEIS comment currently says `$a(5) = 543$`, but this conflicts with its defi
 b-file, and examples: the actual index-five term is the composite number `135457`. Consequently the
 search for the next prime must begin after index `4`, not after index `5`.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture1 :
   answer(sorry) = a (sInf {n : ℕ | 4 < n ∧ (a n).Prime}) := by
   sorry

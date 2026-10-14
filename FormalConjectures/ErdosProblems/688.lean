@@ -45,7 +45,7 @@ noncomputable def epsilonFunction (n : ℕ) : ℝ := sSup {ε : ℝ | Erdos688Pr
 /--
 Estimate $\epsilon_n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_688.parts.i :
     epsilonFunction =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry

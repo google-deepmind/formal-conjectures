@@ -202,7 +202,7 @@ Grothendieck asked whether this least exponent is $n$ itself. It is not, already
 If some positive exponent kills every group scheme of rank $n$, then these exponents are the
 multiples of the least one, so minimality for $\le$ agrees with minimality for divisibility.
 -/
-@[category research open, AMS 14 16]
+@[category research open, question value, AMS 14 16]
 theorem optimal_exponent :
     let exponent : ℕ+ → ℕ := answer(sorry)
     ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = exponent n := by

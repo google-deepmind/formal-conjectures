@@ -54,7 +54,7 @@ First primes are $a(11) = 264353$ and $a(17) = 193622861$.
 Additional primes: $a(71)$, $a(91)$, $a(431)$.
 What is the next prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture : answer(sorry) = a (sInf {n : ℕ | 431 < n ∧ (a n).Prime}) := by
   sorry
 

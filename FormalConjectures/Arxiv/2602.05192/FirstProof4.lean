@@ -171,7 +171,7 @@ Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $3$, then
 $$\frac{1}{\Phi_3(p\boxplus_n q)} \ge \frac{1}{\Phi_3(p)}+\frac{1}{\Phi_3(q)}?$$
 -/
-@[category research solved, AMS 26]
+@[category research solved, question value, AMS 26]
 theorem four_3 : answer(True  ) ↔ ∀ (p q : ℝ[X]), FourProp p q 3 := by
   sorry
 

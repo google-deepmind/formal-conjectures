@@ -43,7 +43,7 @@ noncomputable def R (N : ℕ) : ℕ :=
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
 $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321 (N : ℕ) :
     R N = answer(sorry) := by
   sorry
@@ -61,7 +61,7 @@ the asymptotic variants should have a degree of optimality or non-triviality to 
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
 $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isTheta :
     (fun N ↦ (R N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
@@ -69,7 +69,7 @@ theorem erdos_321.variants.isTheta :
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = O(g(N))$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isBigO :
     (fun N ↦ (R N : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry
@@ -77,7 +77,7 @@ theorem erdos_321.variants.isBigO :
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = o(g(N))$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isLittleO :
     (fun N ↦ (R N : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
   sorry

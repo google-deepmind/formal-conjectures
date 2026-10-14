@@ -70,7 +70,7 @@ $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
 
 Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhney bound.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_22 :
     let ans := (answer(sorry) : ℕ → ℝ)
     ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
