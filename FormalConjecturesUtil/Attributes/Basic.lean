@@ -244,6 +244,14 @@ inductive Category
   | API
   deriving Inhabited, BEq, Hashable, ToExpr
 
+instance : ToString Category where
+  toString
+    | .textbook => "textbook"
+    | .research .open => "research open"
+    | .research .solved => "research solved"
+    | .test => "test"
+    | .API => "API"
+
 syntax CategorySyntax := &"textbook"
     <|> (&"research" problemStatus) <|> &"test" <|> &"API"
 
@@ -320,6 +328,50 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
   modifyEnv (subjectExt.addEntry ·
     { declName := name, subjects := subjects, informal := informal })
 
+/-- The kind of question a source asks. -/
+inductive QuestionKind
+  /-- A yes-or-no question. The statement is the proposition asked about. -/
+  | yesNo
+  /-- A question asking for a value. The statement marks the unknown with `answer(sorry)`. -/
+  | value
+  deriving Inhabited, BEq, Hashable, Repr, ToExpr
+
+instance : ToString QuestionKind where
+  toString
+    | .yesNo => "yes_no"
+    | .value => "value"
+
+/-- A tag recording that a declaration is posed as a question by its source. -/
+structure QuestionTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- The kind of question. -/
+  kind : QuestionKind
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `questionExt` extension recording which declarations are posed as
+questions by their source, keyed by declaration name. -/
+initialize questionExt :
+    SimplePersistentEnvExtension QuestionTag (Std.HashMap Name QuestionKind) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as =>
+      as.foldl (fun m tags => tags.foldl (fun m t => m.insert t.declName t.kind) m) {}
+    addEntryFn := fun m t => m.insert t.declName t.kind
+  }
+
+def addQuestionEntry {m : Type → Type} [MonadEnv m] (declName : Name) (kind : QuestionKind) :
+    m Unit :=
+  modifyEnv (questionExt.addEntry · { declName := declName, kind := kind })
+
+/-- Fails unless `cat` is a research category. A question is something a source asked and left
+open at some point, so it belongs to a research problem, not to a textbook exercise, a test, or
+an API statement. The `question` and `category` attributes both call this, so the check runs
+whichever of the two is applied second, and also for `attribute [question] foo`. -/
+def checkQuestionCategory (declName : Name) (cat : Category) : CoreM Unit :=
+  unless cat matches .research _ do
+    throwError "the `question` attribute belongs to a `research open` or `research solved` \
+      problem, but '{declName}' is categorised as `{cat}`"
+
 /-- Convert from a syntax node to a term of type `Category` and annotate the syntax
 with the corresponding name's docstring. -/
 def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
@@ -393,6 +445,8 @@ initialize Lean.registerBuiltinAttribute {
     -- theorem: attributes run before the proof term exists, since theorem bodies elaborate
     -- asynchronously, so `value?` was always `none`. It is now `CategoryLinter`'s
     -- `checkNotOpenIfSorryFree`, which runs once the command has finished.
+    if (questionExt.getState (← getEnv)).contains decl then
+      checkQuestionCategory decl status
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }
@@ -519,39 +573,6 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
-/-- The kind of question a source asks. -/
-inductive QuestionKind
-  /-- A yes-or-no question. The statement is the proposition asked about. -/
-  | yesNo
-  /-- A question asking for a value. The statement marks the unknown with `answer(sorry)`. -/
-  | value
-  deriving Inhabited, BEq, Hashable, Repr, ToExpr
-
-instance : ToString QuestionKind where
-  toString
-    | .yesNo => "yes_no"
-    | .value => "value"
-
-/-- A tag recording that a declaration is posed as a question by its source. -/
-structure QuestionTag where
-  /-- The name of the declaration with the given tag. -/
-  declName : Name
-  /-- The kind of question. -/
-  kind : QuestionKind
-  deriving Inhabited, BEq, Hashable, ToExpr
-
-/-- Defines the `questionExt` extension recording which declarations are posed as
-questions by their source. -/
-initialize questionExt : SimplePersistentEnvExtension QuestionTag (Std.HashSet QuestionTag) ←
-  registerSimplePersistentEnvExtension {
-    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
-    addEntryFn := .insert
-  }
-
-def addQuestionEntry {m : Type → Type} [MonadEnv m] (declName : Name) (kind : QuestionKind) :
-    m Unit :=
-  modifyEnv (questionExt.addEntry · { declName := declName, kind := kind })
-
 /-- The kind of question a statement of type `type` asks: a value question if it contains a
 non-`Prop` `answer(...)`, a yes-or-no question otherwise. -/
 def questionKindOfType (type : Expr) : MetaM QuestionKind := do
@@ -579,6 +600,8 @@ initialize Lean.registerBuiltinAttribute {
     unless ← Meta.MetaM.run' (Meta.isProp info.type) do
       throwError "the `question` attribute only applies to theorems, \
         but the type of '{decl}' is not a proposition"
+    if let some tag := (categoryExt.getState (← getEnv)).toArray.find? (·.declName == decl) then
+      checkQuestionCategory decl tag.category
     addQuestionEntry decl (← Meta.MetaM.run' (questionKindOfType info.type))
   applicationTime := .afterTypeChecking
 }
@@ -682,11 +705,11 @@ def getSubjectTags : m (Array SubjectTag) := do
 
 /-- The declarations tagged `@[question]`, with the kind of question each asks. -/
 def getQuestionTags : m (Array QuestionTag) := do
-  return questionExt.getState (← MonadEnv.getEnv) |>.toArray
+  return questionExt.getState (← MonadEnv.getEnv) |>.toArray.map fun (n, k) => ⟨n, k⟩
 
 /-- The kind of question a given declaration asks, if it is tagged `@[question]`. -/
 def getQuestionKind? (declName : Name) : m (Option QuestionKind) := do
-  return (← getQuestionTags).find? (·.declName == declName) |>.map (·.kind)
+  return (questionExt.getState (← MonadEnv.getEnv))[declName]?
 
 def getFormalProofTags : m (Array FormalProofTag) := do
   return formalProofExt.getState (← MonadEnv.getEnv) |>.toArray

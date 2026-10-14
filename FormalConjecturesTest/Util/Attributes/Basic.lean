@@ -116,6 +116,55 @@ open ProblemAttributes
 #guard_msgs in
 #eval show Lean.CoreM _ from getQuestionKind? `a_formally_solved_problem
 
+-- A question belongs to a research problem, whichever attribute comes first.
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+@[category test, question]
+theorem question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_api' is categorised as `API`
+-/
+#guard_msgs in
+@[question, category API]
+theorem question_on_api : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_textbook' is categorised as `textbook`
+-/
+#guard_msgs in
+@[category textbook, question]
+theorem question_on_textbook : 1 + 1 = 2 := by
+  rfl
+
+-- The check also covers the `attribute` command.
+#guard_msgs in
+@[category test]
+theorem later_question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'later_question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+attribute [question] later_question_on_test
+
+#guard_msgs in
+@[category research open]
+theorem later_question : 1 + 1 = 2 := by
+  sorry
+
+#guard_msgs in
+attribute [question] later_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `later_question
+
 -- formal_proof on non-research categories
 #guard_msgs in
 @[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
