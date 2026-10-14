@@ -117,9 +117,12 @@ its author expects it to be true. A question leaves the answer open. There are t
 - A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?"). The Lean
   statement is the proposition the question asks about. Once the question is answered, the
   statement is the one that holds: unchanged if the answer is yes, negated with `¬` if the
-  answer is no.
+  answer is no. Not a question: a conjecture that is merely phrased as one. "Is every even
+  integer greater than 2 the sum of two primes?" is Goldbach's conjecture, a claim.
 - A question that asks for a value ("What is...?", "How large can...be?"). The Lean statement
-  marks the unknown with `answer(sorry)`, see `FormalConjecturesUtil.Answer`.
+  marks the unknown with `answer(sorry)`, see `FormalConjecturesUtil.Answer`. Not a question:
+  a conjectured value. "What is $R(5,5)$?" is a question, stated as `R(5, 5) = answer(sorry)`;
+  "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
 
 The attribute records the kind itself: a statement containing a non-`Prop` `answer(...)` is a
 value question, any other is a yes-or-no question. Both are written `@[question]`.

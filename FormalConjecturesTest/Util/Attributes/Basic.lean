@@ -89,16 +89,32 @@ theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = a
 @[category research solved, question, AMS 11]
 theorem a_bound_prop_answer : let P := True; answer(P) ↔ True := Iff.rfl
 
-open ProblemAttributes in
-/--
-info: [some QuestionKind.yesNo, some QuestionKind.yesNo, some QuestionKind.value, some QuestionKind.value,
-  some QuestionKind.yesNo, none]
--/
+open ProblemAttributes
+
+/-- info: some QuestionKind.yesNo -/
 #guard_msgs in
-#eval show Lean.CoreM _ from do
-  return [← getQuestionKind? `a_question, ← getQuestionKind? `a_question_first,
-    ← getQuestionKind? `a_value_question, ← getQuestionKind? `a_value_question_under_binders,
-    ← getQuestionKind? `a_bound_prop_answer, ← getQuestionKind? `a_formally_solved_problem]
+#eval show Lean.CoreM _ from getQuestionKind? `a_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question_first
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_under_binders
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_bound_prop_answer
+
+-- An untagged theorem has no kind.
+/-- info: none -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_formally_solved_problem
 
 -- formal_proof on non-research categories
 #guard_msgs in

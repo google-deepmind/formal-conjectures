@@ -294,10 +294,14 @@ recorded from the statement.
   question is answered, the statement is the one that holds: unchanged if the
   answer is yes, and negated with `¬` if the answer is no. Keep every
   quantifier inside the statement, so that a negative answer only prepends
-  `¬`.
+  `¬`. Not a question: a conjecture that is merely phrased as one. "Is every
+  even integer greater than 2 the sum of two primes?" is Goldbach's
+  conjecture, a claim, and is stated without the tag.
 - A question that asks for a value ("What is...?", "How large can...be?").
   The Lean statement marks the unknown with a non-`Prop` `answer(sorry)`, see
-  below.
+  below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+  question, stated as `R(5, 5) = answer(sorry)`; "$R(5,5) = 43$" is a claim,
+  stated as `R(5, 5) = 43` without the tag.
 
 ```lean
 /-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
@@ -312,10 +316,6 @@ theorem catalan_dickson :
 theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
   sorry
 ```
-
-A conjecture that is merely phrased as a question ("Is every even integer
-greater than 2 the sum of two primes?") is a claim, and is stated without the
-tag.
 
 ## The `answer( )` elaborator
 
